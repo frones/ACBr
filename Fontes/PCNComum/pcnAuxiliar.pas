@@ -587,13 +587,8 @@ begin
 end;
 
 function ValidarNumeros(const s: string): boolean;
-var
-  i: integer;
 begin
-  result := true;
-  for i := 1 to length(s) do
-    if pos(s[i], '0123456789') = 0 then
-      result := false;
+  result := StrIsNumber(s);
 end;
 
 function ValidarUF(const UF: string): boolean;

@@ -624,7 +624,7 @@ const
 implementation
 
 uses
-  DateUtils, ACBrConsts;
+  DateUtils, ACBrConsts, ACBrUtil;
 
 { TGerador }
 
@@ -790,11 +790,11 @@ end;
 procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
 var
   NumeroDecimais: smallint;
-  Limite: Integer;
-  alerta, ConteudoProcessado: string;
+  valorInt, Limite: Integer;
+  valorDbl: Double;
+  alerta, ConteudoProcessado, ATag: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
   EstaVazio: boolean;
-//  VlrExt:Extended;
 begin
   ID                  := Trim(ID);
   Tag                 := Trim(TAG);
@@ -802,159 +802,173 @@ begin
   NumeroDecimais      := 0;
   ConteudoProcessado  := '';
   Limite              := max;
+
   case Tipo of
-    tcStr   : begin
-                ConteudoProcessado := trim(valor);
-                EstaVazio := ConteudoProcessado = '';
-
-              end;
-    tcDat,
-    tcDatCFe: begin
-                DecodeDate(valor, wAno, wMes, wDia);
-                ConteudoProcessado := FormatFloat('0000', wAno) + '-' + FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
-                if Tipo = tcDatCFe then
-                  ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
-                EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
-              end;
-    tcDatVcto:begin
-                 DecodeDate(valor, wAno, wMes, wDia);
-                 ConteudoProcessado := FormatFloat('00', wDia)+ '/' + FormatFloat('00', wMes)+ '/' +FormatFloat('0000', wAno);
-                 EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
-              end;
-    tcHor,
-    tcHorCFe: begin
-                DecodeTime(valor, wHor, wMin, wSeg, wMse);
-                ConteudoProcessado := FormatFloat('00', wHor) + ':' + FormatFloat('00', wMin) + ':' + FormatFloat('00', wSeg);
-                if Tipo = tcHorCFe then
-                   ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
-                EstaVazio := (wHor = 0) and (wMin = 0) and (wSeg = 0);
-              end;
-    tcDatHor : begin
-                DecodeDateTime(valor, wAno, wMes, wDia, wHor, wMin, wSeg, wMse);
-                ConteudoProcessado := FormatFloat('0000', wAno) + '-' +
-                FormatFloat('00', wMes) + '-' +
-                FormatFloat('00', wDia) + 'T' +
-                FormatFloat('00', wHor) + ':' +
-                FormatFloat('00', wMin) + ':' +
-                FormatFloat('00', wSeg);
-                EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
-              end;
-      tcDe2,
-      tcDe3,
-      tcDe4,
-      tcDe6,  
-      tcDe10 : begin
-                  // adicionar um para que o máximo não considere a virgula
-                  Limite := Limite + 1;
-
-                  // Tipo numerico com decimais
-                  (*
-                  case Tipo of
-                    tcDe2 : NumeroDecimais :=  2;
-                    tcDe3 : NumeroDecimais :=  3;
-                    tcDe4 : NumeroDecimais :=  4;
-                    tcDe6 : NumeroDecimais :=  6; // Incluido por Italo em 30/09/2010
-                    tcDe10: NumeroDecimais := 10;
-                  end;
-                  //VlrExt := StrToFloat(valor);
-                  ConteudoProcessado  := FormatFloat('0.0000000000', valor);
-                  *)
-
-                  case Tipo of
-                    tcDe2 : begin
-                      NumeroDecimais :=  2;
-                      ConteudoProcessado := FormatFloat('0.00', valor);
-                    end;
-                    tcDe3 : begin
-                      NumeroDecimais :=  3;
-                      ConteudoProcessado := FormatFloat('0.000', valor);
-                    end;
-                    tcDe4 : begin
-                      NumeroDecimais :=  4;
-                      ConteudoProcessado := FormatFloat('0.0000', valor);
-                    end;
-                    tcDe6 : begin
-                      NumeroDecimais :=  6;
-                      ConteudoProcessado := FormatFloat('0.000000', valor);
-                    end;
-                    tcDe10: begin
-                      NumeroDecimais := 10;
-                      ConteudoProcessado := FormatFloat('0.0000000000', valor);
-                    end;
-                  end;
-
-                  EstaVazio           := (valor = 0) and (ocorrencias = 0);
-                  if StrToIntDef(Copy(ConteudoProcessado,
-                    pos({$IFDEF DELPHI7_UP}FormatSettings.{$ENDIF}DecimalSeparator, ConteudoProcessado) +
-                    NumeroDecimais + 1, 10),0) > 0 then
-                    walerta(ID, Tag, Descricao, ERR_MSG_MAXIMO_DECIMAIS + ' ' + IntToStr(NumeroDecimais));
-
-                  ConteudoProcessado := FormatFloat('0.' + StringOfChar('0', NumeroDecimais), valor);
-                  ConteudoProcessado := StringReplace(ConteudoProcessado, ',', '.', [rfReplaceAll]);
-                  // Caso não seja um valor fracionário; retira os decimais.
-                  if FOpcoes.FSuprimirDecimais then
-                    if int(Valor) = Valor then
-                     ConteudoProcessado := IntToStr(Round(Integer(valor)));
-
-              end;
-      tcEsp : begin
-                  // Tipo String - somente numeros
-                  ConteudoProcessado  := trim(valor);
-                  EstaVazio           := valor = '';
-                  if not ValidarNumeros(ConteudoProcessado) then walerta(ID, Tag, Descricao, ERR_MSG_INVALIDO);
-              end;
-      tcInt : begin
-                  // Tipo Inteiro
-                  ConteudoProcessado := IntToStr(valor);
-                  EstaVazio := (valor = 0) and (ocorrencias = 0);
-                  if min = Limite then
-                  begin
-                    ConteudoProcessado := StringOfChar('0', 60) + ConteudoProcessado;
-                    ConteudoProcessado := copy(ConteudoProcessado, length(ConteudoProcessado) - Limite + 1, Limite);
-                  end;
-              end;
-    end;
-    alerta := '';
-    //(Existem tags obrigatórias que podem ser nulas ex. cEAN)  if (ocorrencias = 1) and (EstaVazio) then
-    if (ocorrencias = 1) and (EstaVazio) and (min > 0)                                            then alerta := ERR_MSG_VAZIO;
-    if (length(ConteudoProcessado) < min) and (alerta = '') and (length(ConteudoProcessado) > 1)  then alerta := ERR_MSG_MENOR;
-    if length(ConteudoProcessado) > Limite                                                        then alerta := ERR_MSG_MAIOR;
-      // Grava alerta //
-    if (alerta <> '') and (pos(ERR_MSG_VAZIO, alerta) = 0) and (not EstaVazio)                    then alerta := alerta + ' [' + VarToStr(valor) + ']';
-    walerta(ID, TAG, Descricao, alerta);
-    // Sai se for apenas para validar //
-    if FOpcoes.FSomenteValidar  then exit;
-    // Grava no Formato Texto
-    if not EstaVazio            then
-      gtCampo(tag, ConteudoProcessado)
-    else
-      gtCampo(tag, '');
-
-    // Grava a tag no arquivo - Quando não existir algum conteúdo
-    if ((ocorrencias = 1) and (EstaVazio)) then
-    begin
-      if FOpcoes.FIdentarXML then
+    tcStr:
       begin
-        if FOpcoes.FTagVaziaNoFormatoResumido then
-          FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '/>' + #13#10
-        else
-          FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '></' + tag + '>' + #13#10
-      end
-      else
-      begin
-        if FOpcoes.FTagVaziaNoFormatoResumido then
-          FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '/>'
-        else
-          FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '></' + tag + '>';
+        ConteudoProcessado := Trim( VarToStr(valor) );
+        EstaVazio := ConteudoProcessado = '';
       end;
-      exit;
-    end;
-    // Grava a tag no arquivo - Quando existir algum conteúdo
-    if ((ocorrencias = 1) or (not EstaVazio)) then
-      if FOpcoes.FIdentarXML then
-        FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '>' + FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) + '</' + tag + '>' + #13#10
+
+    tcDat, tcDatCFe:
+      begin
+        DecodeDate( VarToDateTime(valor), wAno, wMes, wDia);
+        ConteudoProcessado := FormatFloat('0000', wAno) + '-' + FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
+        if Tipo = tcDatCFe then
+          ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
+
+        EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+      end;
+
+    tcDatVcto:
+      begin
+        DecodeDate( VarToDateTime(valor), wAno, wMes, wDia);
+        ConteudoProcessado := FormatFloat('00', wDia)+ '/' + FormatFloat('00', wMes)+ '/' +FormatFloat('0000', wAno);
+        EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+      end;
+
+    tcHor, tcHorCFe:
+      begin
+        DecodeTime( VarToDateTime(valor), wHor, wMin, wSeg, wMse);
+        ConteudoProcessado := FormatFloat('00', wHor) + ':' + FormatFloat('00', wMin) + ':' + FormatFloat('00', wSeg);
+        if Tipo = tcHorCFe then
+          ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
+
+        EstaVazio := (wHor = 0) and (wMin = 0) and (wSeg = 0);
+      end;
+
+    tcDatHor:
+      begin
+        DecodeDateTime( VarToDateTime(valor), wAno, wMes, wDia, wHor, wMin, wSeg, wMse);
+        ConteudoProcessado := FormatFloat('0000', wAno) + '-' +
+                              FormatFloat('00', wMes) + '-' +
+                              FormatFloat('00', wDia) + 'T' +
+                              FormatFloat('00', wHor) + ':' +
+                              FormatFloat('00', wMin) + ':' +
+                              FormatFloat('00', wSeg);
+        EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+      end;
+
+    tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
+      begin
+        // adicionar um para que o máximo não considere a virgula
+        Limite := Limite + 1;
+
+        // Tipo numerico com decimais
+        case Tipo of
+          tcDe2 : NumeroDecimais :=  2;
+          tcDe3 : NumeroDecimais :=  3;
+          tcDe4 : NumeroDecimais :=  4;
+          tcDe6 : NumeroDecimais :=  6;
+          tcDe10: NumeroDecimais := 10;
+        end;
+
+        try
+          valorDbl := valor; // Converte Variant para Double
+          ConteudoProcessado := FloatToString( valorDbl, '.', FloatMask(NumeroDecimais));
+        except
+          valorDbl := 0;
+          ConteudoProcessado := '0.00';
+        end;
+
+        EstaVazio := (valorDbl = 0) and (ocorrencias = 0);
+
+        if StrToIntDef(Copy(ConteudoProcessado, pos('.', ConteudoProcessado) + NumeroDecimais + 1, 10),0) > 0 then
+          walerta(ID, Tag, Descricao, ERR_MSG_MAXIMO_DECIMAIS + ' ' + IntToStr(NumeroDecimais));
+
+        // Caso não seja um valor fracionário; retira os decimais.
+        if FOpcoes.FSuprimirDecimais then
+          if int(valorDbl) = valorDbl then
+            ConteudoProcessado := IntToStr(Round(valorDbl));
+      end;
+
+    tcEsp:
+      begin
+        // Tipo String - somente numeros
+        ConteudoProcessado  := trim(valor);
+        EstaVazio           := (valor = '');
+        if not ValidarNumeros(ConteudoProcessado) then
+          walerta(ID, Tag, Descricao, ERR_MSG_INVALIDO);
+      end;
+
+    tcInt:
+      begin
+        // Tipo Inteiro
+        try
+          valorInt := valor;
+          ConteudoProcessado := IntToStr(valorInt);
+        except
+          valorInt := 0;
+          ConteudoProcessado := '0';
+        end;
+
+        EstaVazio := (valorInt = 0) and (ocorrencias = 0);
+
+        if min = Limite then
+          ConteudoProcessado := PadLeft(ConteudoProcessado,Limite,'0');
+      end;
+  end;
+
+  alerta := '';
+  //(Existem tags obrigatórias que podem ser nulas ex. cEAN)  if (ocorrencias = 1) and (EstaVazio) then
+  if (ocorrencias = 1) and (EstaVazio) and (min > 0) then
+    alerta := ERR_MSG_VAZIO;
+
+  if (length(ConteudoProcessado) < min) and (alerta = '') and (length(ConteudoProcessado) > 1) then
+    alerta := ERR_MSG_MENOR;
+
+  if length(ConteudoProcessado) > Limite then
+     alerta := ERR_MSG_MAIOR;
+
+  // Grava alerta //
+  if (alerta <> '') and (pos(ERR_MSG_VAZIO, alerta) = 0) and (not EstaVazio) then
+    alerta := alerta + ' [' + VarToStr(valor) + ']';
+
+  walerta(ID, TAG, Descricao, alerta);
+  // Sai se for apenas para validar //
+  if FOpcoes.FSomenteValidar then
+    exit;
+
+  // Grava no Formato Texto
+  if not EstaVazio            then
+    gtCampo(tag, ConteudoProcessado)
+  else
+    gtCampo(tag, '');
+
+  // Grava a tag no arquivo - Quando não existir algum conteúdo
+  if ((ocorrencias = 1) and (EstaVazio)) then
+  begin
+    if FOpcoes.FIdentarXML then
+    begin
+      if FOpcoes.FTagVaziaNoFormatoResumido then
+        FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '/>' + #13#10
+      else
+        FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '></' + tag + '>' + #13#10
+    end
     else
-      FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '>' + FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) + '</' + tag + '>';
+    begin
+      if FOpcoes.FTagVaziaNoFormatoResumido then
+        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '/>'
+      else
+        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '></' + tag + '>';
+    end;
+    exit;
+  end;
+
+  // Grava a tag no arquivo - Quando existir algum conteúdo
+  if ((ocorrencias = 1) or (not EstaVazio)) then
+  begin
+    ATag := '<' + tag + '>' +
+         FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) +
+         '</' + tag + '>';
+
+    if FOpcoes.FIdentarXML then
+      FArquivoFormatoXML := FArquivoFormatoXML +
+         StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) +
+         ATag + sLineBreak
+    else
+      FArquivoFormatoXML := FArquivoFormatoXML + ATag;
+  end;
 end;
 
 procedure TGerador.wTexto(const Texto: string);

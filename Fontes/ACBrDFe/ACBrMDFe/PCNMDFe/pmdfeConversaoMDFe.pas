@@ -51,7 +51,10 @@ type
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
                      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc);
 
-  TSchemaMDFe     = (schMDFe, schEnvEventoMDFe);
+  TSchemaMDFe     = (schErro, schMDFe, schEventoMDFe,
+                     schmdfeModalAereo, schmdfeModalAquaviario,
+                     schmdfeModalFerroviario, schmdfeModalRodoviario,
+                     schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe);
 
   TStatusACBrMDFe = (stIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
@@ -139,6 +142,8 @@ function LayOutToServico(const t: TLayOutMDFe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
 
 function SchemaMDFeToStr(const t: TSchemaMDFe): String;
+function StrToSchemaMDFe(out ok: Boolean; const s: String): TSchemaMDFe;
+
 
 implementation
 
@@ -258,9 +263,25 @@ end;
 
 function SchemaMDFeToStr(const t: TSchemaMDFe): String;
 begin
-  Result := EnumeradoToStr(t,
-    ['mdfe', 'envEventoMDFe'],
-    [ schMDFe, schEnvEventoMDFe ] );
+  Result := GetEnumName(TypeInfo(TSchemaMDFe), Integer( t ) );
+  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
+end;
+
+function StrToSchemaMDFe(out ok: Boolean; const s: String): TSchemaMDFe;
+var
+  P: Integer;
+  SchemaStr: String;
+begin
+  P := pos('_', s);
+  if P > 0 then
+    SchemaStr := copy(s, 1, P-1)
+  else
+    SchemaStr := s;
+
+  if LeftStr(SchemaStr, 3) <> 'sch' then
+    SchemaStr := 'sch' + SchemaStr;
+
+  Result := TSchemaMDFe( GetEnumValue(TypeInfo(TSchemaMDFe), SchemaStr ) );
 end;
 
 end.

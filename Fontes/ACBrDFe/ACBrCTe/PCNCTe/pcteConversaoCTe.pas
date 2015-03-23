@@ -101,6 +101,7 @@ function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
 
 function SchemaCTeToStr(const t: TSchemaCTe): String;
+function StrToSchemaCTe(out ok: Boolean; const s: String): TSchemaCTe;
 
 function tpNFToStr(const t: TpcnTipoCTe): String;
 function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoCTe;
@@ -216,15 +217,25 @@ end;
 
 function SchemaCTeToStr(const t: TSchemaCTe): String;
 begin
-  Result := EnumeradoToStr(t,
-    ['', 'cte', 'inutCTe', 'eventoCTe',
-     'cteModalAereo', 'cteModalAquaviario', 'cteModalDutoviario',
-     'cteModalFerroviario', 'cteModalRodoviario', 'cteMultiModal',
-     'evEPECCTe', 'evCancCTe', 'evRegMultimodal', 'evCCeCTe'],
-    [ schErro, schCTe, schInutCTe, schEventoCTe,
-      schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
-      schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
-      schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe ] );
+  Result := GetEnumName(TypeInfo(TSchemaCTe), Integer( t ) );
+  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
+end;
+
+function StrToSchemaCTe(out ok: Boolean; const s: String): TSchemaCTe;
+var
+  P: Integer;
+  SchemaStr: String;
+begin
+  P := pos('_', s);
+  if P > 0 then
+    SchemaStr := copy(s, 1, P-1)
+  else
+    SchemaStr := s;
+
+  if LeftStr(SchemaStr, 3) <> 'sch' then
+    SchemaStr := 'sch' + SchemaStr;
+
+  Result := TSchemaCTe( GetEnumValue(TypeInfo(TSchemaCTe), SchemaStr ) );
 end;
 
 // B11 - Tipo do Documento Fiscal **********************************************

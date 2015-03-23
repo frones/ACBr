@@ -506,7 +506,6 @@ type
     property CEP         : String  read fCEP         write fCEP;
     property Telefone    : String  read fTelefone    write fTelefone;
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
-    property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
   end;
 
 
@@ -1946,10 +1945,10 @@ begin
      if NomeArqRetorno = '' then
         raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
-     NomeArq := fDirArqRetorno + PathDelim + NomeArqRetorno;
+     NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno;
 
      if not FilesExists( NomeArq ) then
-        raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
+       raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
 
      SlRetorno.LoadFromFile( NomeArq );
 

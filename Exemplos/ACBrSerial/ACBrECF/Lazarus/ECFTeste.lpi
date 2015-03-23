@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <SessionStorage Value="InIDEConfig"/>
+      <MainUnit Value="0"/>
+      <Title Value="ECFTeste"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="9"/>
+      <BuildNr Value="44"/>
+      <Language Value="0416"/>
+      <CharSet Value="04B0"/>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3">
+      <Item1 Name="Debug" Default="True"/>
+      <Item2 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="ECFTeste"/>
+          </Target>
+          <SearchPaths>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <UseAnsiStrings Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <CompilerPath Value="$(CompPath)"/>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Linux i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="ECFTeste"/>
+          </Target>
+          <SearchPaths>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <UseAnsiStrings Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+          </CodeGeneration>
+          <Linking>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <CompilerMessages>
+              <IgnoredMessages idx5024="True" idx5043="True"/>
+            </CompilerMessages>
+            <CompilerPath Value="$(CompPath)"/>
+          </Other>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="15">
+      <Item1>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="acbr_nfce_ecfvirtual"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="ACBr_SAT"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="ACBr_SAT_ECFVirtual"/>
+      </Item7>
+      <Item8>
+        <PackageName Value="ACBrDiversos"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="ACBrComum"/>
+      </Item9>
+      <Item10>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
+      </Item10>
+      <Item11>
+        <PackageName Value="MemDSLaz"/>
+        <MinVersion Major="1" Minor="2" Release="1" Valid="True"/>
+      </Item11>
+      <Item12>
+        <PackageName Value="LCLBase"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
+      </Item12>
+      <Item13>
+        <PackageName Value="ACBrSerial"/>
+      </Item13>
+      <Item14>
+        <PackageName Value="LCL"/>
+      </Item14>
+      <Item15>
+        <PackageName Value="TurboPowerIPro"/>
+      </Item15>
+    </RequiredPackages>
+    <Units Count="10">
+      <Unit0>
+        <Filename Value="ecfteste.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ECFTeste"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ecfteste1.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ECFTeste1"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="configuraserial.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfiguraSerial"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ConfiguraSerial"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="efetuapagamento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frPagamento"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="EfetuaPagamento"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="relatorio.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frRelatorio"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Relatorio"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="sobre.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSobre"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Sobre"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="vendeitem.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frVendeItem"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="VendeItem"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="uDAV.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDAV"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uDAV"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="uDAVOS.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDAVOS"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uDAVOS"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="RelatorioGerencialFormatado.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmGerencialFormatado"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="RelatorioGerencialFormatado"/>
+      </Unit9>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="ECFTeste"/>
+    </Target>
+    <SearchPaths>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <Linking>
+      <Debugging>
+        <UseHeaptrc Value="True"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerMessages>
+        <IgnoredMessages idx5024="True" idx5043="True"/>
+      </CompilerMessages>
+      <CustomOptions Value="-dDEBUG"/>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="8">
+      <Item1>
+        <Name Value="EACBrECFSemResposta"/>
+      </Item1>
+      <Item2>
+        <Name Value="EACBrECFNaoInicializado"/>
+      </Item2>
+      <Item3>
+        <Name Value="ESynaSerError"/>
+      </Item3>
+      <Item4>
+        <Name Value="Exception"/>
+      </Item4>
+      <Item5>
+        <Name Value="EACBrECFErro"/>
+      </Item5>
+      <Item6>
+        <Name Value="EStringListError"/>
+      </Item6>
+      <Item7>
+        <Name Value="EACBrECFCMDInvalido"/>
+      </Item7>
+      <Item8>
+        <Name Value="EACBrECFSemPapel"/>
+      </Item8>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

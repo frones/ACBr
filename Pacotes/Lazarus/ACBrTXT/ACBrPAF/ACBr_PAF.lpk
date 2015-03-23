@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_PAF"/>
+    <Author Value="Isaque Pinheiro - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrPAF\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <UseMsgFile Value="True"/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)"/>
+    <Files Count="20">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFRegistros.pas"/>
+        <UnitName Value="ACBrPAFRegistros"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrPAF"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_A.pas"/>
+        <UnitName Value="ACBrPAF_A"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_A_Class.pas"/>
+        <UnitName Value="ACBrPAF_A_Class"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_B.pas"/>
+        <UnitName Value="ACBrPAF_B"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_B_Class.pas"/>
+        <UnitName Value="ACBrPAF_B_Class"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_C.pas"/>
+        <UnitName Value="ACBrPAF_C"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_C_Class.pas"/>
+        <UnitName Value="ACBrPAF_C_Class"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_D.pas"/>
+        <UnitName Value="ACBrPAF_D"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_D_Class.pas"/>
+        <UnitName Value="ACBrPAF_D_Class"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_E.pas"/>
+        <UnitName Value="ACBrPAF_E"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_E_Class.pas"/>
+        <UnitName Value="ACBrPAF_E_Class"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_N.pas"/>
+        <UnitName Value="ACBrPAF_N"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_N_Class.pas"/>
+        <UnitName Value="ACBrPAF_N_Class"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_P.pas"/>
+        <UnitName Value="ACBrPAF_P"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_P_Class.pas"/>
+        <UnitName Value="ACBrPAF_P_Class"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_R.pas"/>
+        <UnitName Value="ACBrPAF_R"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_R_Class.pas"/>
+        <UnitName Value="ACBrPAF_R_Class"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_T.pas"/>
+        <UnitName Value="ACBrPAF_T"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_T_Class.pas"/>
+        <UnitName Value="ACBrPAF_T_Class"/>
+      </Item20>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -1,0 +1,407 @@
+object frmDAVOS: TfrmDAVOS
+  Left = 392
+  Height = 410
+  Top = 276
+  Width = 620
+  BorderStyle = bsDialog
+  Caption = 'Emissão de DAV-OS'
+  ClientHeight = 410
+  ClientWidth = 620
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '0.9.31'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 375
+    Top = 0
+    Width = 620
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = '1. Abertura'
+      ClientHeight = 349
+      ClientWidth = 612
+      object Label1: TLabel
+        Left = 15
+        Height = 14
+        Top = 24
+        Width = 92
+        Caption = 'Típo de documento'
+        ParentColor = False
+      end
+      object Label2: TLabel
+        Left = 195
+        Height = 14
+        Top = 24
+        Width = 38
+        Caption = 'Número'
+        ParentColor = False
+      end
+      object Label3: TLabel
+        Left = 195
+        Height = 14
+        Top = 67
+        Width = 39
+        Caption = 'Emissao'
+        ParentColor = False
+      end
+      object Label4: TLabel
+        Left = 15
+        Height = 14
+        Top = 67
+        Width = 42
+        Caption = 'Situação'
+        ParentColor = False
+      end
+      object Label5: TLabel
+        Left = 312
+        Height = 14
+        Top = 67
+        Width = 47
+        Caption = 'Vendedor'
+        ParentColor = False
+      end
+      object Label6: TLabel
+        Left = 15
+        Height = 14
+        Top = 187
+        Width = 77
+        Caption = 'Nome do cliente'
+        ParentColor = False
+      end
+      object Label7: TLabel
+        Left = 15
+        Height = 14
+        Top = 230
+        Width = 46
+        Caption = 'Endereço'
+        ParentColor = False
+      end
+      object Label11: TLabel
+        Left = 15
+        Height = 14
+        Top = 144
+        Width = 55
+        Caption = 'CNPJ / CPF'
+        ParentColor = False
+      end
+      object btnAbrirDAV: TButton
+        Left = 460
+        Height = 25
+        Top = 300
+        Width = 121
+        Caption = 'Abrir DAV'
+        OnClick = btnAbrirDAVClick
+        TabOrder = 8
+      end
+      object edtTipoDocumento: TComboBox
+        Left = 15
+        Height = 21
+        Top = 40
+        Width = 174
+        ItemHeight = 13
+        ItemIndex = 0
+        Items.Strings = (
+          'PEDIDO'
+          'ORÇAMENTO'
+        )
+        MaxLength = 30
+        TabOrder = 0
+        Text = 'PEDIDO'
+      end
+      object edtNumero: TEdit
+        Left = 195
+        Height = 21
+        Top = 40
+        Width = 111
+        MaxLength = 13
+        TabOrder = 1
+        Text = '1'
+      end
+      object edtSituacao: TEdit
+        Left = 15
+        Height = 21
+        Top = 83
+        Width = 174
+        MaxLength = 30
+        TabOrder = 2
+        Text = 'Aberto'
+      end
+      object edtVendedor: TEdit
+        Left = 312
+        Height = 21
+        Top = 83
+        Width = 269
+        MaxLength = 30
+        TabOrder = 4
+        Text = 'Nome do Vendedor'
+      end
+      object edtNomeCliente: TEdit
+        Left = 15
+        Height = 21
+        Top = 203
+        Width = 566
+        MaxLength = 50
+        TabOrder = 6
+        Text = 'Nome completo do cliente'
+      end
+      object edtEndereco: TEdit
+        Left = 15
+        Height = 21
+        Top = 246
+        Width = 566
+        TabOrder = 7
+        Text = 'Rua Teodoro Terêncio Pereira, 111 - Sala 999 - Salgados - São Paulo - SP'
+      end
+      object edtCNPJCPF: TEdit
+        Left = 15
+        Height = 21
+        Top = 160
+        Width = 156
+        MaxLength = 14
+        TabOrder = 5
+        Text = '11122233399'
+      end
+      object edtData: TDateEdit
+        Left = 196
+        Height = 21
+        Top = 83
+        Width = 88
+        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+        OKCaption = 'OK'
+        CancelCaption = 'Cancel'
+        DefaultToday = True
+        DateOrder = doNone
+        ButtonWidth = 23
+        CharCase = ecNormal
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
+          72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
+          52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
+          75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
+          C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
+          7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
+          ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
+          7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
+          B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
+          82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
+          BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
+          87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
+          75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
+          8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
+          73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
+          8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
+          71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
+          94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
+          ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
+          98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
+          FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
+          9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
+          FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
+          9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
+          FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
+          A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
+          F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
+          A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
+          8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+        }
+        NumGlyphs = 0
+        MaxLength = 0
+        TabOrder = 3
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = '2. Registro de item'
+      ClientHeight = 0
+      ClientWidth = 0
+      ImageIndex = 1
+      object Label14: TLabel
+        Left = 15
+        Height = 13
+        Top = 24
+        Width = 33
+        Caption = 'Código'
+        ParentColor = False
+      end
+      object Label15: TLabel
+        Left = 15
+        Height = 13
+        Top = 110
+        Width = 56
+        Caption = 'Quantidade'
+        ParentColor = False
+      end
+      object Label18: TLabel
+        Left = 148
+        Height = 13
+        Top = 110
+        Width = 25
+        Caption = 'Unid.'
+        ParentColor = False
+      end
+      object Label19: TLabel
+        Left = 15
+        Height = 13
+        Top = 67
+        Width = 46
+        Caption = 'Descrição'
+        ParentColor = False
+      end
+      object Label22: TLabel
+        Left = 188
+        Height = 13
+        Top = 110
+        Width = 63
+        Caption = 'Valor unitário'
+        ParentColor = False
+      end
+      object Label23: TLabel
+        Left = 321
+        Height = 13
+        Top = 110
+        Width = 71
+        Caption = 'Valor desconto'
+        ParentColor = False
+      end
+      object Label24: TLabel
+        Left = 454
+        Height = 13
+        Top = 110
+        Width = 74
+        Caption = 'Valor acréscimo'
+        ParentColor = False
+      end
+      object btnRegistrarItem: TButton
+        Left = 460
+        Height = 25
+        Top = 300
+        Width = 121
+        Caption = 'Registrar Item'
+        OnClick = btnRegistrarItemClick
+        TabOrder = 8
+      end
+      object edtProdCodigo: TEdit
+        Left = 15
+        Height = 21
+        Top = 40
+        Width = 156
+        MaxLength = 13
+        TabOrder = 0
+        Text = '7891113339871'
+      end
+      object edtProdQuantidade: TEdit
+        Left = 15
+        Height = 21
+        Top = 126
+        Width = 127
+        OnKeyPress = edtProdQuantidadeKeyPress
+        TabOrder = 2
+        Text = '1'
+      end
+      object edtProdUnidade: TEdit
+        Left = 148
+        Height = 21
+        Top = 126
+        Width = 34
+        MaxLength = 3
+        TabOrder = 3
+        Text = 'UND'
+      end
+      object edtProdDescricao: TEdit
+        Left = 15
+        Height = 21
+        Top = 83
+        Width = 566
+        TabOrder = 1
+        Text = 'Descrição completa da mercadoria '
+      end
+      object edtProdVlUnitario: TEdit
+        Left = 188
+        Height = 21
+        Top = 126
+        Width = 127
+        OnKeyPress = edtProdQuantidadeKeyPress
+        TabOrder = 4
+        Text = '1,23'
+      end
+      object edtProdVlDesconto: TEdit
+        Left = 321
+        Height = 21
+        Top = 126
+        Width = 127
+        OnKeyPress = edtProdQuantidadeKeyPress
+        TabOrder = 5
+        Text = '0,00'
+      end
+      object edtProdVlAcrescimo: TEdit
+        Left = 454
+        Height = 21
+        Top = 126
+        Width = 127
+        OnKeyPress = edtProdQuantidadeKeyPress
+        TabOrder = 6
+        Text = '0,00'
+      end
+      object ckbProdCancelado: TCheckBox
+        Left = 25
+        Height = 17
+        Top = 168
+        Width = 81
+        Caption = 'Cancelado'
+        TabOrder = 7
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = '3. Fechamento'
+      ClientHeight = 0
+      ClientWidth = 0
+      ImageIndex = 2
+      object btnFecharRelatorio: TButton
+        Left = 460
+        Height = 25
+        Top = 300
+        Width = 121
+        Caption = 'Fechar relatório'
+        OnClick = btnFecharRelatorioClick
+        TabOrder = 1
+      end
+      object memObervacao: TMemo
+        Left = 15
+        Height = 89
+        Top = 30
+        Width = 566
+        TabOrder = 0
+      end
+    end
+  end
+  object pnlRodape: TPanel
+    Left = 0
+    Height = 35
+    Top = 375
+    Width = 620
+    Align = alBottom
+    ClientHeight = 35
+    ClientWidth = 620
+    TabOrder = 1
+    object btnCancelar: TButton
+      Left = 519
+      Height = 33
+      Top = 1
+      Width = 100
+      Caption = 'Fechar'
+      OnClick = btnCancelarClick
+      TabOrder = 0
+    end
+  end
+end

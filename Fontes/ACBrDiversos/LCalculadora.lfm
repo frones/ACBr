@@ -1,0 +1,369 @@
+object FrCalculadora: TFrCalculadora
+  Left = 422
+  Height = 290
+  Top = 178
+  Width = 242
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsDialog
+  Caption = 'Calculadora'
+  ClientHeight = 290
+  ClientWidth = 242
+  Constraints.MaxHeight = 290
+  Constraints.MaxWidth = 242
+  Constraints.MinHeight = 290
+  Constraints.MinWidth = 242
+  KeyPreview = True
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnKeyUp = FormKeyUp
+  PopupMenu = PopupMenu1
+  ShowHint = True
+  LCLVersion = '0.9.29'
+  object b1: TButton
+    AnchorSideLeft.Control = b7
+    AnchorSideTop.Control = bce
+    Left = 52
+    Height = 33
+    Top = 216
+    Width = 42
+    Caption = '1'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 12
+  end
+  object b0: TButton
+    AnchorSideLeft.Control = b7
+    AnchorSideTop.Control = bc
+    Left = 52
+    Height = 33
+    Top = 256
+    Width = 42
+    Caption = '0'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b0Click
+    ParentFont = False
+    TabOrder = 17
+  end
+  object b2: TButton
+    AnchorSideLeft.Control = b8
+    AnchorSideTop.Control = bce
+    Left = 100
+    Height = 33
+    Top = 216
+    Width = 42
+    Caption = '2'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 13
+  end
+  object b3: TButton
+    AnchorSideLeft.Control = b9
+    AnchorSideTop.Control = bce
+    Left = 148
+    Height = 33
+    Top = 216
+    Width = 43
+    Caption = '3'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 14
+  end
+  object b4: TButton
+    AnchorSideLeft.Control = b7
+    AnchorSideTop.Control = bporc
+    Left = 52
+    Height = 33
+    Top = 176
+    Width = 42
+    Caption = '4'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 7
+  end
+  object b5: TButton
+    AnchorSideLeft.Control = b8
+    AnchorSideTop.Control = bporc
+    Left = 100
+    Height = 33
+    Top = 176
+    Width = 42
+    Caption = '5'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 8
+  end
+  object b6: TButton
+    AnchorSideLeft.Control = b9
+    AnchorSideTop.Control = bporc
+    Left = 148
+    Height = 33
+    Top = 176
+    Width = 43
+    Caption = '6'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 9
+  end
+  object b7: TButton
+    AnchorSideTop.Control = bapaga
+    Left = 52
+    Height = 33
+    Top = 136
+    Width = 42
+    Caption = '7'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 2
+  end
+  object b8: TButton
+    AnchorSideTop.Control = bapaga
+    Left = 100
+    Height = 33
+    Top = 136
+    Width = 42
+    Caption = '8'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 3
+  end
+  object b9: TButton
+    AnchorSideTop.Control = bapaga
+    Left = 148
+    Height = 33
+    Top = 136
+    Width = 43
+    Caption = '9'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = b1Click
+    ParentFont = False
+    TabOrder = 4
+  end
+  object bponto: TButton
+    AnchorSideLeft.Control = b8
+    AnchorSideTop.Control = bc
+    Left = 100
+    Height = 33
+    Top = 256
+    Width = 43
+    Caption = ','
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = bpontoClick
+    ParentFont = False
+    TabOrder = 18
+  end
+  object bigual: TButton
+    AnchorSideLeft.Control = b9
+    AnchorSideTop.Control = bc
+    Left = 148
+    Height = 33
+    Top = 256
+    Width = 42
+    Caption = '='
+    Default = True
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = AcaoClick
+    ParentFont = False
+    TabOrder = 19
+  end
+  object bmais: TButton
+    AnchorSideLeft.Control = bdiv
+    AnchorSideTop.Control = bc
+    Left = 196
+    Height = 33
+    Top = 256
+    Width = 42
+    Caption = '+'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = AcaoClick
+    ParentFont = False
+    TabOrder = 20
+  end
+  object bmenos: TButton
+    AnchorSideLeft.Control = bdiv
+    AnchorSideTop.Control = bce
+    Left = 196
+    Height = 33
+    Top = 216
+    Width = 42
+    Caption = '-'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = AcaoClick
+    ParentFont = False
+    TabOrder = 15
+  end
+  object bmulti: TButton
+    AnchorSideLeft.Control = bdiv
+    AnchorSideTop.Control = bporc
+    Left = 196
+    Height = 32
+    Top = 176
+    Width = 42
+    Caption = 'x'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = AcaoClick
+    ParentFont = False
+    TabOrder = 10
+  end
+  object bdiv: TButton
+    AnchorSideTop.Control = bapaga
+    Left = 196
+    Height = 33
+    Top = 136
+    Width = 43
+    Caption = '/'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = AcaoClick
+    ParentFont = False
+    TabOrder = 5
+  end
+  object bapaga: TButton
+    Left = 4
+    Height = 33
+    Top = 136
+    Width = 42
+    Caption = '<-'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = bapagaClick
+    ParentFont = False
+    TabOrder = 1
+  end
+  object bc: TButton
+    AnchorSideLeft.Control = bapaga
+    Left = 4
+    Height = 33
+    Top = 256
+    Width = 42
+    Caption = '&C'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = bcClick
+    ParentFont = False
+    TabOrder = 16
+  end
+  object bce: TButton
+    AnchorSideLeft.Control = bapaga
+    Left = 4
+    Height = 33
+    Top = 216
+    Width = 42
+    Caption = 'C&E'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = bceClick
+    ParentFont = False
+    TabOrder = 11
+  end
+  object bporc: TButton
+    AnchorSideLeft.Control = bapaga
+    Left = 4
+    Height = 33
+    Top = 176
+    Width = 42
+    Caption = '%'
+    Font.Height = -16
+    Font.Style = [fsBold]
+    OnClick = bporcClick
+    ParentFont = False
+    TabOrder = 6
+  end
+  object mBobina: TMemo
+    Left = 2
+    Height = 87
+    Hint = 'CTRL+ENTER copia Valor e encerra'
+    Top = 2
+    Width = 238
+    Align = alTop
+    Alignment = taRightJustify
+    BorderSpacing.Around = 2
+    PopupMenu = PopupMenu1
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 0
+    WantReturns = False
+  end
+  object pValor: TLabel
+    Left = 4
+    Height = 36
+    Hint = 'CTRL+ENTER copia Valor e encerra'
+    Top = 96
+    Width = 233
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = False
+    Caption = '0  '
+    Color = clBlack
+    Font.Color = clLime
+    Font.Height = 36
+    Font.Style = [fsBold]
+    Layout = tlCenter
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+    OptimalFill = True
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = pValor
+    AnchorSideTop.Control = pValor
+    AnchorSideRight.Control = pValor
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = pValor
+    AnchorSideBottom.Side = asrBottom
+    Left = 5
+    Height = 34
+    Top = 97
+    Width = 231
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Around = 1
+  end
+  object PopupMenu1: TPopupMenu
+    left = 60
+    top = 24
+    object Limpar1: TMenuItem
+      Caption = 'Limpar'
+      ShortCut = 69
+      OnClick = bceClick
+    end
+    object Salvar1: TMenuItem
+      Caption = 'Salvar'
+      ShortCut = 16467
+      OnClick = Salvar1Click
+    end
+    object Copias1: TMenuItem
+      Caption = 'Copiar'
+      ShortCut = 16451
+      OnClick = Copiar1Click
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '.TXT'
+    Filter = 'Arquivo Texto|*.TXT'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    left = 100
+    top = 24
+  end
+end

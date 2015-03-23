@@ -1,0 +1,352 @@
+object Form1: TForm1
+  Left = 270
+  Height = 336
+  Top = 172
+  Width = 452
+  ActiveControl = btnConectar
+  Caption = 'Form1'
+  ClientHeight = 336
+  ClientWidth = 452
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '1.2.4.0'
+  object Label2: TLabel
+    Left = 208
+    Height = 15
+    Top = 135
+    Width = 85
+    Caption = 'Ultima Resposta'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 208
+    Height = 15
+    Top = 90
+    Width = 93
+    Caption = 'Ultimo Peso Lido:'
+    ParentColor = False
+  end
+  object Label9: TLabel
+    Left = 208
+    Height = 15
+    Top = 288
+    Width = 47
+    Caption = 'TimeOut'
+    ParentColor = False
+  end
+  object Label10: TLabel
+    Left = 208
+    Height = 15
+    Top = 188
+    Width = 59
+    Caption = 'Mensagem'
+    ParentColor = False
+  end
+  object btnConectar: TButton
+    Left = 203
+    Height = 25
+    Top = 16
+    Width = 105
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Ativar'
+    OnClick = btnConectarClick
+    TabOrder = 0
+  end
+  object btnDesconectar: TButton
+    Left = 331
+    Height = 25
+    Top = 16
+    Width = 105
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Desativar'
+    Enabled = False
+    OnClick = btnDesconectarClick
+    TabOrder = 1
+  end
+  object btnLerPeso: TButton
+    Left = 256
+    Height = 25
+    Top = 56
+    Width = 129
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Ler Peso'
+    Enabled = False
+    OnClick = btnLerPesoClick
+    TabOrder = 2
+  end
+  object sttPeso: TStaticText
+    Left = 208
+    Height = 24
+    Top = 106
+    Width = 233
+    Caption = 'sttPeso'
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 7
+  end
+  object sttResposta: TStaticText
+    Left = 208
+    Height = 36
+    Top = 152
+    Width = 233
+    Caption = 'sttResposta'
+    TabOrder = 8
+  end
+  object edtTimeOut: TEdit
+    Left = 208
+    Height = 23
+    Top = 304
+    Width = 73
+    OnKeyPress = edtTimeOutKeyPress
+    TabOrder = 3
+    Text = '2000'
+  end
+  object chbMonitorar: TCheckBox
+    Left = 208
+    Height = 19
+    Top = 259
+    Width = 126
+    Caption = 'Monitorar a Balança'
+    OnClick = chbMonitorarClick
+    TabOrder = 4
+  end
+  object Memo1: TMemo
+    Left = 208
+    Height = 42
+    Top = 208
+    Width = 233
+    TabOrder = 5
+  end
+  object Panel1: TPanel
+    Left = 8
+    Height = 321
+    Top = 8
+    Width = 177
+    BevelOuter = bvLowered
+    ClientHeight = 321
+    ClientWidth = 177
+    TabOrder = 6
+    object Label1: TLabel
+      Left = 16
+      Height = 15
+      Top = 6
+      Width = 41
+      Caption = 'Balanca'
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 16
+      Height = 15
+      Top = 49
+      Width = 59
+      Caption = 'Porta Serial'
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 16
+      Height = 15
+      Top = 92
+      Width = 50
+      Caption = 'Baud rate'
+      ParentColor = False
+    end
+    object Label6: TLabel
+      Left = 16
+      Height = 15
+      Top = 137
+      Width = 46
+      Caption = 'Data Bits'
+      ParentColor = False
+    end
+    object Label7: TLabel
+      Left = 16
+      Height = 15
+      Top = 181
+      Width = 30
+      Caption = 'Parity'
+      ParentColor = False
+    end
+    object Label8: TLabel
+      Left = 16
+      Height = 15
+      Top = 271
+      Width = 70
+      Caption = 'Handshaking'
+      ParentColor = False
+    end
+    object Label11: TLabel
+      Left = 16
+      Height = 15
+      Top = 224
+      Width = 46
+      Caption = 'Stop Bits'
+      ParentColor = False
+    end
+    object cmbBalanca: TComboBox
+      Left = 16
+      Height = 23
+      Top = 22
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 1
+      Items.Strings = (
+        'Nenhuma'
+        'Filizola'
+        'Toledo'
+      )
+      Style = csDropDownList
+      TabOrder = 0
+      Text = 'Filizola'
+    end
+    object cmbPortaSerial: TComboBox
+      Left = 16
+      Height = 23
+      Top = 65
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'COM1'
+        'COM2'
+        'COM3'
+        'COM4'
+        'COM5'
+        'COM6'
+        'COM7'
+        'COM8'
+      )
+      TabOrder = 1
+      Text = 'COM1'
+    end
+    object cmbBaudRate: TComboBox
+      Left = 16
+      Height = 23
+      Top = 110
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 6
+      Items.Strings = (
+        '110'
+        '300'
+        '600'
+        '1200'
+        '2400'
+        '4800'
+        '9600'
+        '14400'
+        '19200'
+        '38400'
+        '56000'
+        '57600'
+      )
+      Style = csDropDownList
+      TabOrder = 2
+      Text = '9600'
+    end
+    object cmbDataBits: TComboBox
+      Left = 16
+      Height = 23
+      Top = 153
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 3
+      Items.Strings = (
+        '5'
+        '6'
+        '7'
+        '8'
+      )
+      Style = csDropDownList
+      TabOrder = 3
+      Text = '8'
+    end
+    object cmbHandShaking: TComboBox
+      Left = 16
+      Height = 23
+      Top = 289
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'Nenhum'
+        'XON/XOFF'
+        'RTS/CTS'
+        'DTR/DSR'
+      )
+      Style = csDropDownList
+      TabOrder = 6
+      Text = 'Nenhum'
+    end
+    object cmbParity: TComboBox
+      Left = 16
+      Height = 23
+      Top = 198
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        'none'
+        'odd'
+        'even'
+        'mark'
+        'space'
+      )
+      Style = csDropDownList
+      TabOrder = 4
+      Text = 'none'
+    end
+    object cmbStopBits: TComboBox
+      Left = 16
+      Height = 23
+      Top = 242
+      Width = 145
+      ItemHeight = 15
+      ItemIndex = 0
+      Items.Strings = (
+        's1'
+        's1,5'
+        's2'
+        ''
+      )
+      Style = csDropDownList
+      TabOrder = 5
+      Text = 's1'
+    end
+  end
+  object Label12: TLabel
+    Left = 294
+    Height = 15
+    Top = 288
+    Width = 45
+    Alignment = taRightJustify
+    Caption = 'Arq.Log:'
+    ParentColor = False
+  end
+  object edLog: TEdit
+    Cursor = crIBeam
+    Left = 294
+    Height = 23
+    Top = 304
+    Width = 122
+    TabOrder = 9
+    Text = 'BalLog.txt'
+  end
+  object SbArqLog: TSpeedButton
+    Left = 417
+    Height = 22
+    Top = 304
+    Width = 24
+    Caption = '...'
+    OnClick = SbArqLogClick
+  end
+  object ACBrBAL1: TACBrBAL
+    Modelo = balMagna
+    Porta = 'COM1'
+    ArqLOG = 'c:\temp\bal.txt'
+    OnLePeso = ACBrBAL1LePeso
+    left = 416
+    top = 56
+  end
+end

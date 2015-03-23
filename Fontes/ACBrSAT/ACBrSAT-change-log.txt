@@ -1,0 +1,217 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Daniel Simões de Almeida - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrSAT
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+Data: 16/03/2015
+-- ACBrSAT --
+[+] Adicionada a propriedade: CFe.Det[i].Prod.EhCombustivel: Boolean (defaul False)
+    Se para a mesma for atribuida "True":
+    - CFe.Det[i].Prod.vUnCom será "tcde3" caso contrário "tcde2" e
+    - CFe.Det[i].Prod.indRegra  será "irTruncamento" caso contrário "irArredondamento"
+[-] Removido "workaround" aplicado em 02/10/2014 para equipamentos que usam o
+    prefixo "Cfe" no cancelamento
+
+Data: 04/02/2015
+-- ACBrSAT --        (por: DSA)
+[*] Aplicado workaround para retorno incompleto do Emulador de SAT do Fisco
+    no comando: ConsultarStatusOperacional
+
+Data: 02/01/2015
+[*] correção ecf virtual SAT
+		por: Juliomar Marchetti
+
+Data: 21/12/2014
+-- ACBrSAT --        (por: DSA)
+[+] Adicionada nova propriedade "Status: TACBrSATStatus", que conterá os valores
+    já tratados da resposta ao método: "ConsultarStatusOperacional"
+
+Data: 20/12/2014
+-- ACBrSAT --        (por: DSA)
+[*] Mecanismo de Gravação de Log modificado, para permitir que a aplicação trate
+    a gravação das linhas por si..
+[*] TACBrSAT agora passa a descender de TACBrComponent
+[+] Adicionada a propriedade: Rede : TRede, para permitir gerar e manipular os
+    XMLs para configuração da Interface de Rede do SAT
+[*] ConfigurarInterfaceDeRede modificado para caso não receba o conteudo de um
+    XML como parâmetro de entrada, irá gerar um XML com os valores atribuidos a
+    ACBrSAT.Rede
+[*] Metodo TesteFimAFim modificado para salvar o conteudo do XML de resposta em
+    ACBrSAT.CFe, no caso de sucesso.
+
+
+Data: 22/10/2014     (por: DSA)
+-- ACBrSAT --
+[-] Metodo CFe.Clear e CFeCanc.Clear não limpavam a sessão de assinatura
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=18266
+
+Data: 07/10/2014     (por: DSA)
+-- ACBrSAT --
+[*] Metodo CFe.SaveToFile modificado para:
+    SaveToFile(AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
+[*] Adicionada verificação na Impressão de Extrato, se existe CFe ou CFeCanc
+    carregado na memória
+
+Data: 06/10/2014     (por: DSA)
+-- ACBrSAT --
+[*] Nome do arquivo XML da Venda salvo modificado de:
+    PastaCFeVenda + Chave + '-cfe.xml', para: PastaCFeVenda + 'CFe' + Chave + '.xml'
+[-] Correção de encoding em alguns Exceptions
+
+Data: 03/10/2014
+-- ACBrSAT --
+[-] Adicionado a uses StrUtils para resolver o problema no delphi da falta da função LeftStr na unit ACBrSAT.pas
+
+Data: 02/10/2014     (por: DSA)
+-- ACBrSAT --
+[-] Ajuste no método CancelarUltimaVenda, de acordo com a especificação 2.11.4,
+    prefixo de "chCanc" deve realmente ser informado como "CFe" e não "Cfe"
+[*] Aplicado workaround para equipamentos que usam o prefixo "Cfe" e ajustar o
+    XML e Chave, em caso de erro na tentativa de cancelamento.
+
+Data: 01/10/2014     (por: DSA)
+-- ACBrSAT --
+[-] Correção no método de CancelarUltimaVenda, prefixo de "chCanc" deve ser
+    informado como "Cfe" e não "CFe"
+[+] Adicionada as propriedades:
+    - SalvarCFes: Boolean   (opção para salvar XMLs enviados e recebidos do SAT)
+    - PastaCFeVenda: String         (Path para salvar XMLs de Venda)
+    - PastaCFeCancelamento: String  (Path para salvar XMLs de Cancelamento)
+
+-- ACBrSATExtratoFortes --
+[-] Ajuste para não exibir Warning de numero de versão do Fortes no Delphi
+[*] Compatibilização da Versão Delphi com as modificações recentes
+
+-- SATTeste --
+[+] Ajustes no Demo para as novas propriedades
+[*] Compatibilização da versão Delphi com a versão Lazarus (novos recursos)
+
+Data: 31/09/2013     (por: DSA)
+-- ACBrSAT --
+[*] Adicionada sobrecarga no método: ExtrairLogs
+     procedure ExtrairLogs( NomeArquivo : String ); overload;
+     procedure ExtrairLogs( AStringList : TStrings ); overload;
+     procedure ExtrairLogs( AStream : TStream ); overload;
+
+Data: 30/09/2013     (por: DSA)
+-- ACBrSAT --
+[*] Modificação no método "ExtrairLogs" para: ExtrairLogs(NomeArquivo: String)
+    Arquivo de Log será criado com o valor do retorno convertido de Base64 para
+    AscII
+[*] Remoção do método: DesligarSAT, pois o mesmo foi retirado da especificação:
+    2.11.4
+
+-- ACBrSATExtratoFortes --
+[+] Adicionado a propriedade: "PrinterName", para permitir atribuir a impressora
+    padrão
+[*] Tentativa de ajuste para correção de impressão de relatório em bobina com
+    muitos itens
+    (Também requer ajuste do tamanho da página da Impressora no Windows)
+
+Data: 23/09/2014     (por: DSA)
+-- ACBrSAT --
+[*] Remoção da propriedade "PathDll"
+[+] Adição da propriedade "NomeDll", que deve conter o Path e Nome da DLL
+    (alguns fabricantes não usam o nome "SAT.DLL")
+[*] Adicionada verificação de existência do nome da DLL antes da carga
+[*] Ignora erro de leitura de xSAT_DesligarSAT, pois alguns fabricantes não
+    implementam esse método
+
+Data: 20/09/2014     (por: DSA)
+-- ACBrSAT --
+[+] Adição de um novo modelo com carga de DLL dinâmica em stdcall 
+[*] Adicionado método para descarregar a DLL quando desativar
+
+Data: 26/08/2014     (por: DSA)
+-- ACBrSATExtratoFortes --
+[+] Adicionadas propriedades de controle de Largura e Margens
+[*] Ajustes no layout de impressao para suportar mudanças de Margens dinâmicas
+
+-- SATTeste - Lzarus --
+[*] Modificações para permitir a seleção de Tipo de Extrato (Fortes, EscPos)
+    e ajuste de Margens
+
+Data: 29/06/2014     (por: DSA)
+[-] Modificada a assinatura dos metodo AtivarSAT, para utilização de AnsiString, 
+    a fim de evitar erros nas IDEs do Delphi XE ou superiores
+
+Data: 24/02/2014     (por: DSA)
+[-] Modificada a assinatura dos metodo AssociarAssinatura, TrocarCodigoDeAtivacao
+    para utilização de AnsiString, a fim de evitar conflitos com algumas IDEs
+[-] Modificada a assinatura dos eventos: OnGetcodigoDeAtivacao e OnGetsignAC
+    para utilização de AnsiString, a fim de evitar conflitos com algumas IDEs
+[-] Modificada a propriedade: signAC e codigoDeAtivacao para utilização de
+    AnsiString, a fim de evitar conflitos com algumas IDEs
+[-] Métodos: CFe.GetAsXMLString e CFeCanc.GetAsXMLString modificados para
+    retornar dados em AnsiString
+[*] ACBrSAT.CancelarUltimaVenda modificado para conter em ACBrSAT1.CFeCanc, o XML
+    recebido pelo SAT, no caso de sucesso
+[-] ACBrSAT.EnviarDadosVenda corrigido para retornar a resposta do SAT
+[*] Refactoring em ACBrSAT.EnviarDadosVenda
+[*] Ajustes nos Demos em Delphi e Lazarus para contemplar as modificações
+[-] Correção em TACBrSATResposta.SetRetornoStr para tratar corretamentes
+    campos vazios
+[-] Método: TCFeR.LerXml modificado para ler corretamente os Atributos:
+    infCFe.ID, infCFe.versao, infCFe.versaoSB, infCFe.versaoDadosEnt
+[-] Corrigido bug de Loop infinito em TCFeR.LerXml na leitura de "obsFiscoDet"
+[-] Corrigido bug em TCFeW.GerarXml, atributo "Id" da Tag "infCFe" era gerado
+    com aspas abertas
+[-] Corrigido bugs em PCN2.TLeitor.rAtributo, onde valores inválidos eram
+    retornados quando o Atributo não existia
+[-] Aplicada correção em pcnCFeW, campo "pPIS" e "pCOFINS" estavam sendo Gerados
+    e Lidos com duas decimais, quando o correto são quatro.
+    http://www.projetoacbr.com.br/forum/index.php?/topic/14289-geração-xml-gerardetimpostocofins
+
+-- ACBrSATExtratoESCPOS --
+[-] Nétodo TACBrSATExtratoESCPOS.ImprimirExtratoCancelamento, não enviava
+    comandos gerados para a Impressora  (por: Larissa)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/14395-impressão-extrato-cancelamento
+
+
+
+
+

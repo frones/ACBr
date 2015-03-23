@@ -1,0 +1,53 @@
+package ACBr_SAT;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  PCNComum,
+  designide,
+  synapse,
+  ACBrComum;
+
+contains
+  ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',
+  ACBrSAT in '..\..\..\Fontes\ACBrSAT\ACBrSAT.pas',
+  ACBrSATClass in '..\..\..\Fontes\ACBrSAT\ACBrSATClass.pas',
+  ACBrSATDinamico_cdecl in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas',
+  ACBrSATDinamico_stdcall in '..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas',
+  ACBrSATExtratoClass in '..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas',
+  pcnCFe in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFe.pas',
+  pcnCFeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeR.pas',
+  pcnCFeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeW.pas',
+  pcnCFeCanc in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCanc.pas',
+  pcnCFeCancR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancR.pas',
+  pcnCFeCancW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancW.pas',
+  pcnRede in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRede.pas',
+  pcnRedeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas',
+  pcnRedeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas';
+
+end.

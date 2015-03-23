@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBrTCP"/>
+    <Author Value="Daniel Simoes de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <CStyleOperator Value="False"/>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)"/>
+    <License Value="LGPL
+"/>
+    <Version Minor="10"/>
+    <Files Count="16">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <UnitName Value="ACBrSocket"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
+        <UnitName Value="ACBrCEP"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrTCPReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrTCPReg"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIBGE.pas"/>
+        <UnitName Value="ACBrIBGE"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
+        <UnitName Value="ACBrCNIEE"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSuframa.pas"/>
+        <UnitName Value="ACBrSuframa"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrDownload.pas"/>
+        <UnitName Value="ACBrDownload"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrDownloadClass.pas"/>
+        <UnitName Value="ACBrDownloadClass"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas"/>
+        <UnitName Value="ACBrNFPws"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ.pas"/>
+        <UnitName Value="ACBrConsultaCNPJ"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrIBPTax.pas"/>
+        <UnitName Value="ACBrIBPTax"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas"/>
+        <UnitName Value="ACBrCotacao"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
+        <UnitName Value="ACBrMail"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas"/>
+        <UnitName Value="ACBrConsultaCPF"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas"/>
+        <UnitName Value="ACBrSpedTabelas"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
+        <UnitName Value="ACBrSedex"/>
+      </Item16>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDiversos"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

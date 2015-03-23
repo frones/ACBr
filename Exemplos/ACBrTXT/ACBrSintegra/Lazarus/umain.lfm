@@ -1,0 +1,422 @@
+object Form1: TForm1
+  Left = 729
+  Height = 400
+  Top = 230
+  Width = 545
+  Caption = 'ACBrSintegra'
+  ClientHeight = 400
+  ClientWidth = 545
+  Color = clBtnFace
+  Constraints.MinHeight = 400
+  Constraints.MinWidth = 545
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  LCLVersion = '1.3'
+  object GroupBox1: TGroupBox
+    Left = 0
+    Height = 120
+    Top = 0
+    Width = 545
+    Align = alTop
+    Caption = ' Cabeçalho do Arquivo '
+    ClientHeight = 102
+    ClientWidth = 541
+    TabOrder = 0
+    object Label3: TLabel
+      Left = 286
+      Height = 13
+      Top = 23
+      Width = 211
+      Caption = 'Código de Identificação do Convênio'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 3
+      Height = 13
+      Top = 68
+      Width = 207
+      Caption = 'Natureza das Operações Informadas'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 286
+      Height = 13
+      Top = 68
+      Width = 124
+      Caption = 'Finalidade do Arquivo'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label1: TLabel
+      Left = 3
+      Height = 13
+      Top = 24
+      Width = 32
+      Caption = 'CNPJ'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 154
+      Height = 13
+      Top = 23
+      Width = 13
+      Caption = 'IE'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object ComboBox1: TComboBox
+      Left = 286
+      Height = 21
+      Top = 39
+      Width = 245
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      ItemHeight = 13
+      ItemIndex = 2
+      Items.Strings = (
+        '1 - Convênio 57/95 Versão 31/99 Alt. 30/02'
+        '2 - Convênio 57/95 Versão 69/02 Alt. 142/02  '
+        '3 - Convênio 57/95 Alt. 76/03'
+      )
+      ParentFont = False
+      Style = csDropDownList
+      TabOrder = 2
+      Text = '3 - Convênio 57/95 Alt. 76/03'
+    end
+    object ComboBox2: TComboBox
+      Left = 3
+      Height = 21
+      Top = 84
+      Width = 282
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      ItemHeight = 13
+      ItemIndex = 2
+      Items.Strings = (
+        '1 - Interestaduais - Somente operações sujeitas ao regime de Substituição Tributária'
+        '2 - Interestaduais - Operações com ou sem Substituição Tributária'
+        '3 - Totalidade das operações do informante'
+      )
+      ParentFont = False
+      Style = csDropDownList
+      TabOrder = 3
+      Text = '3 - Totalidade das operações do informante'
+    end
+    object ComboBox3: TComboBox
+      Left = 286
+      Height = 21
+      Top = 84
+      Width = 245
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      ItemHeight = 13
+      ItemIndex = 0
+      Items.Strings = (
+        '1 - Normal'
+        '2 - Retificação Total de Arquivo'
+        '5 - Desfazimento de Arquivo'
+      )
+      ParentFont = False
+      Style = csDropDownList
+      TabOrder = 4
+      Text = '1 - Normal'
+    end
+    object Edit2: TEdit
+      Left = 2
+      Height = 21
+      Top = 40
+      Width = 138
+      CharCase = ecUppercase
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      MaxLength = 28
+      ParentFont = False
+      TabOrder = 0
+      Text = '11111111111111'
+    end
+    object Edit3: TEdit
+      Left = 153
+      Height = 21
+      Top = 39
+      Width = 127
+      CharCase = ecUppercase
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      MaxLength = 28
+      ParentFont = False
+      TabOrder = 1
+      Text = 'ISENTO'
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 0
+    Height = 85
+    Top = 120
+    Width = 545
+    Align = alTop
+    Caption = ' Dados Complementares '
+    ClientHeight = 67
+    ClientWidth = 541
+    TabOrder = 1
+    object Label6: TLabel
+      Left = 9
+      Height = 13
+      Top = 26
+      Width = 74
+      Caption = 'Responsável'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Edit1: TEdit
+      Left = 8
+      Height = 21
+      Top = 42
+      Width = 241
+      CharCase = ecUppercase
+      Font.Color = clNavy
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      MaxLength = 28
+      ParentFont = False
+      TabOrder = 0
+      Text = 'ACBR'
+    end
+    object GroupBox3: TGroupBox
+      Left = 256
+      Height = 74
+      Top = 7
+      Width = 273
+      Caption = ' Período '
+      ClientHeight = 56
+      ClientWidth = 269
+      TabOrder = 1
+      object Label7: TLabel
+        Left = 9
+        Height = 13
+        Top = 19
+        Width = 35
+        Caption = 'Inicial'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label8: TLabel
+        Left = 127
+        Height = 13
+        Top = 19
+        Width = 28
+        Caption = 'Final'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object MaskEdit1: TMaskEdit
+        Left = 10
+        Height = 21
+        Top = 35
+        Width = 89
+        CharCase = ecNormal
+        MaxLength = 10
+        TabOrder = 0
+        EditMask = '!99/99/0000;1;_'
+        Text = '01/07/2008'
+        SpaceChar = '_'
+      end
+      object MaskEdit2: TMaskEdit
+        Left = 127
+        Height = 21
+        Top = 35
+        Width = 89
+        CharCase = ecNormal
+        MaxLength = 10
+        TabOrder = 1
+        EditMask = '!99/99/0000;1;_'
+        Text = '31/07/2008'
+        SpaceChar = '_'
+      end
+    end
+  end
+  object GroupBox4: TGroupBox
+    Left = 0
+    Height = 114
+    Top = 205
+    Width = 545
+    Align = alClient
+    Caption = ' Gerar registros '
+    ClientHeight = 96
+    ClientWidth = 541
+    TabOrder = 2
+    object CheckListBox1: TCheckListBox
+      Left = 0
+      Height = 96
+      Top = 0
+      Width = 541
+      Align = alClient
+      Columns = 3
+      Items.Strings = (
+        'Gerar 50'
+        'Gerar 51'
+        'Gerar 53'
+        'Gerar 54'
+        'Gerar 60M'
+        'Gerar 60A'
+        'Gerar 60D'
+        'Gerar 70'
+      )
+      ItemHeight = 17
+      TabOrder = 0
+      Data = {
+        080000000000000000000000
+      }
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 81
+    Top = 319
+    Width = 545
+    Align = alBottom
+    ClientHeight = 81
+    ClientWidth = 545
+    TabOrder = 3
+    object Label9: TLabel
+      Left = 10
+      Height = 13
+      Top = 7
+      Width = 103
+      Caption = 'Engine de geração'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label10: TLabel
+      Left = 157
+      Height = 13
+      Top = 7
+      Width = 112
+      Caption = 'Versão do validador'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object ComboBox4: TComboBox
+      Left = 10
+      Height = 21
+      Top = 23
+      Width = 77
+      ItemHeight = 13
+      ItemIndex = 0
+      Items.Strings = (
+        'VCL'
+      )
+      Style = csDropDownList
+      TabOrder = 0
+      Text = 'VCL'
+    end
+    object ComboBox5: TComboBox
+      Left = 157
+      Height = 21
+      Top = 23
+      Width = 77
+      ItemHeight = 13
+      ItemIndex = 0
+      Items.Strings = (
+        '5.2.3'
+        '5.2.4'
+      )
+      Style = csDropDownList
+      TabOrder = 1
+      Text = '5.2.3'
+    end
+    object Button1: TButton
+      Left = 10
+      Height = 25
+      Top = 51
+      Width = 75
+      Caption = 'Gerar'
+      OnClick = Button1Click
+      TabOrder = 2
+    end
+    object Button2: TButton
+      Left = 449
+      Height = 25
+      Top = 51
+      Width = 75
+      Caption = 'Versão'
+      OnClick = Button2Click
+      TabOrder = 3
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    Title = 'Salvar Arquivo'
+    DefaultExt = '.txt'
+    Filter = 'Arquivos Texto|*.txt'
+    Options = [ofHideReadOnly]
+    left = 480
+    top = 236
+  end
+  object ACBrSintegra: TACBrSintegra
+    VersaoValidador = vv523
+    Informa88SME = False
+    Informa88SMS = False
+    Informa88EAN = False
+    Informa88C = False
+    InformaSapiMG = False
+    left = 448
+    top = 236
+  end
+end

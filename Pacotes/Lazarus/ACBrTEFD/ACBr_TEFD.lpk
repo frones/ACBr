@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_TEFD"/>
+    <Author Value="Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTEFD"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTEFD\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+          <UseMsgFile Value="True"/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Version Major="4" Minor="3" Release="9"/>
+    <Files Count="8">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrTEFD"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas"/>
+        <UnitName Value="ACBrTEFDClass"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas"/>
+        <UnitName Value="ACBrTEFDDial"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas"/>
+        <UnitName Value="ACBrTEFDDisc"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas"/>
+        <UnitName Value="ACBrTEFDHiper"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas"/>
+        <UnitName Value="ACBrTEFDCliSiTef"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas"/>
+        <UnitName Value="ACBrTEFDVeSPague"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
+        <UnitName Value="ACBrTEFDBanese"/>
+      </Item8>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

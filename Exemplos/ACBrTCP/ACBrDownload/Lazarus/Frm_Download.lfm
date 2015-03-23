@@ -1,0 +1,408 @@
+object Form1: TForm1
+  Left = 217
+  Height = 476
+  Top = 181
+  Width = 463
+  Caption = 'ACBr Download (HTTP/FTP)'
+  ClientHeight = 476
+  ClientWidth = 463
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.3'
+  object lConnectionInfo: TLabel
+    Left = 345
+    Height = 13
+    Top = 424
+    Width = 77
+    Alignment = taRightJustify
+    Caption = 'Connection Info'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object lFile: TLabel
+    Left = 24
+    Height = 13
+    Top = 280
+    Width = 61
+    Caption = 'Pasta Detino'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object Label1: TLabel
+    Left = 264
+    Height = 13
+    Top = 454
+    Width = 49
+    Anchors = [akRight, akBottom]
+    Caption = 'BufferSize'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object Label2: TLabel
+    Left = 24
+    Height = 13
+    Top = 240
+    Width = 69
+    Caption = 'URL Download'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object Label11: TLabel
+    Left = 24
+    Height = 13
+    Top = 322
+    Width = 109
+    Caption = 'Nome Arquivo a baixar'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object edURL: TComboBox
+    Left = 24
+    Height = 21
+    Top = 255
+    Width = 398
+    Anchors = [akTop, akLeft, akRight]
+    ItemHeight = 13
+    TabOrder = 3
+  end
+  object bDownload: TBitBtn
+    Left = 24
+    Height = 26
+    Top = 362
+    Width = 99
+    Caption = 'Download'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      33333333333333333333EEEEEEEEEEEEEEE333FFFFFFFFFFFFF3E00000000000
+      00E337777777777777F3E0F77777777770E337F33333333337F3E0F333333333
+      70E337F3333F333337F3E0F33303333370E337F3337FF33337F3E0F333003333
+      70E337F33377FF3337F3E0F33300033370E337F333777FF337F3E0F333000033
+      70E337F33377773337F3E0F33300033370E337F33377733337F3E0F333003333
+      70E337F33377333337F3E0F33303333370E337F33373333337F3E0F333333333
+      70E337F33333333337F3E0FFFFFFFFFFF0E337FFFFFFFFFFF7F3E00000000000
+      00E33777777777777733EEEEEEEEEEEEEEE33333333333333333
+    }
+    NumGlyphs = 2
+    OnClick = bDownloadClick
+    TabOrder = 6
+  end
+  object bStop: TBitBtn
+    Left = 353
+    Height = 26
+    Top = 362
+    Width = 69
+    Anchors = [akTop, akRight]
+    Caption = 'Stop'
+    Enabled = False
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      33333333333333333333EEEEEEEEEEEEEEE333FFFFFFFFFFFFF3E00000000000
+      00E337777777777777F3E0F77777777770E337F33333333337F3E0F333333333
+      70E337F33333333337F3E0F33333333370E337F333FFFFF337F3E0F330000033
+      70E337F3377777F337F3E0F33000003370E337F3377777F337F3E0F330000033
+      70E337F3377777F337F3E0F33000003370E337F3377777F337F3E0F330000033
+      70E337F33777773337F3E0F33333333370E337F33333333337F3E0F333333333
+      70E337F33333333337F3E0FFFFFFFFFFF0E337FFFFFFFFFFF7F3E00000000000
+      00E33777777777777733EEEEEEEEEEEEEEE33333333333333333
+    }
+    NumGlyphs = 2
+    OnClick = bStopClick
+    TabOrder = 8
+  end
+  object bPause: TBitBtn
+    Left = 195
+    Height = 26
+    Top = 362
+    Width = 76
+    Anchors = [akTop]
+    Caption = 'Pause'
+    Enabled = False
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      33333333333333333333EEEEEEEEEEEEEEE333FFFFFFFFFFFFF3E00000000000
+      00E337777777777777F3E0F77777777770E337F33333333337F3E0F333333333
+      70E337F33333333337F3E0F33333333370E337F333FF3FF337F3E0F330030033
+      70E337F3377F77F337F3E0F33003003370E337F3377F77F337F3E0F330030033
+      70E337F3377F77F337F3E0F33003003370E337F3377F77F337F3E0F330030033
+      70E337F33773773337F3E0F33333333370E337F33333333337F3E0F333333333
+      70E337F33333333337F3E0FFFFFFFFFFF0E337FFFFFFFFFFF7F3E00000000000
+      00E33777777777777733EEEEEEEEEEEEEEE33333333333333333
+    }
+    NumGlyphs = 2
+    OnClick = bPauseClick
+    TabOrder = 7
+  end
+  object ProgressBar1: TProgressBar
+    Left = 24
+    Height = 20
+    Top = 395
+    Width = 398
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 9
+  end
+  object edFile: TEdit
+    Left = 24
+    Height = 21
+    Top = 296
+    Width = 398
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 4
+    Text = '.\'
+  end
+  object Button1: TButton
+    Left = 24
+    Height = 25
+    Top = 447
+    Width = 47
+    Anchors = [akLeft, akBottom]
+    Caption = 'TXT'
+    OnClick = Button1Click
+    TabOrder = 11
+  end
+  object cbxBufferSize: TComboBox
+    Left = 322
+    Height = 21
+    Top = 449
+    Width = 100
+    Anchors = [akLeft, akBottom]
+    ItemHeight = 13
+    ItemIndex = 6
+    Items.Strings = (
+      '1024'
+      '2048'
+      '4096'
+      '8192'
+      '16384'
+      '32768'
+      '65536'
+    )
+    OnChange = cbxBufferSizeChange
+    Style = csDropDownList
+    TabOrder = 12
+    Text = '65536'
+  end
+  object edtProt: TComboBox
+    Left = 24
+    Height = 21
+    Top = 5
+    Width = 100
+    Anchors = [akTop, akLeft, akRight]
+    ItemHeight = 13
+    ItemIndex = 0
+    Items.Strings = (
+      'HTTP'
+      'FTP'
+    )
+    OnChange = edtProtChange
+    Style = csDropDownList
+    TabOrder = 0
+    Text = 'HTTP'
+  end
+  object GroupBox1: TGroupBox
+    Left = 23
+    Height = 98
+    Top = 34
+    Width = 399
+    Caption = 'FTP '
+    ClientHeight = 80
+    ClientWidth = 395
+    Enabled = False
+    TabOrder = 1
+    object Label3: TLabel
+      Left = 10
+      Height = 13
+      Top = 2
+      Width = 22
+      Caption = 'Host'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label4: TLabel
+      Left = 201
+      Height = 13
+      Top = 2
+      Width = 26
+      Caption = 'Porta'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label5: TLabel
+      Left = 10
+      Height = 13
+      Top = 38
+      Width = 36
+      Caption = 'Usuário'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label6: TLabel
+      Left = 201
+      Height = 13
+      Top = 38
+      Width = 30
+      Caption = 'Senha'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object edtHost: TEdit
+      Left = 10
+      Height = 21
+      Top = 18
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 0
+    end
+    object edtPort: TEdit
+      Left = 199
+      Height = 21
+      Top = 18
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 1
+    end
+    object edtUser: TEdit
+      Left = 10
+      Height = 21
+      Top = 54
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 2
+    end
+    object edtPass: TEdit
+      Left = 199
+      Height = 21
+      Top = 54
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 3
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 23
+    Height = 98
+    Top = 138
+    Width = 399
+    Caption = 'Proxy'
+    ClientHeight = 80
+    ClientWidth = 395
+    TabOrder = 2
+    object Label7: TLabel
+      Left = 10
+      Height = 13
+      Top = 2
+      Width = 22
+      Caption = 'Host'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label8: TLabel
+      Left = 201
+      Height = 13
+      Top = 2
+      Width = 26
+      Caption = 'Porta'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label9: TLabel
+      Left = 10
+      Height = 13
+      Top = 38
+      Width = 36
+      Caption = 'Usuário'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label10: TLabel
+      Left = 201
+      Height = 13
+      Top = 38
+      Width = 30
+      Caption = 'Senha'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object edtProxyHost: TEdit
+      Left = 10
+      Height = 21
+      Top = 18
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 0
+    end
+    object edtProxyPort: TEdit
+      Left = 199
+      Height = 21
+      Top = 18
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 1
+    end
+    object edtProxyUser: TEdit
+      Left = 10
+      Height = 21
+      Top = 54
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 2
+    end
+    object edtProxyPass: TEdit
+      Left = 199
+      Height = 21
+      Top = 54
+      Width = 183
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 3
+    end
+  end
+  object CheckBox1: TCheckBox
+    Left = 23
+    Height = 19
+    Top = 422
+    Width = 128
+    Caption = 'Fechar após download'
+    TabOrder = 10
+  end
+  object edArq: TEdit
+    Left = 24
+    Height = 21
+    Top = 338
+    Width = 398
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 5
+  end
+  object fACBrDownload: TACBrDownload
+    SizeRecvBuffer = 0
+    OnAfterDownload = fACBrDownloadAfterDownload
+    OnHookStatus = HookStatus
+    OnHookMonitor = HookMonitor
+    left = 358
+    top = 14
+  end
+end

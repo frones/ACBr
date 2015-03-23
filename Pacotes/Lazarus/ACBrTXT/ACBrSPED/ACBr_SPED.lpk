@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_SPED"/>
+    <Author Value="Isaque Pinheiro - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrSPED\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Version Release="1"/>
+    <Files Count="52">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSped.pas"/>
+        <UnitName Value="ACBrSped"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrSpedFiscal.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSpedFiscal"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBlocos.pas"/>
+        <UnitName Value="ACBrEFDBlocos"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0.pas"/>
+        <UnitName Value="ACBrEFDBloco_0"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_0_Class"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_1.pas"/>
+        <UnitName Value="ACBrEFDBloco_1"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_1_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_1_Class"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_9.pas"/>
+        <UnitName Value="ACBrEFDBloco_9"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_9_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_9_Class"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_C.pas"/>
+        <UnitName Value="ACBrEFDBloco_C"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_C_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_C_Class"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_D.pas"/>
+        <UnitName Value="ACBrEFDBloco_D"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_D_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_D_Class"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_E.pas"/>
+        <UnitName Value="ACBrEFDBloco_E"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_E_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_E_Class"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_G.pas"/>
+        <UnitName Value="ACBrEFDBloco_G"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_G_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_G_Class"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_H.pas"/>
+        <UnitName Value="ACBrEFDBloco_H"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_H_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_H_Class"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_K.pas"/>
+        <UnitName Value="ACBrEFDBloco_K"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_K_Class.pas"/>
+        <UnitName Value="ACBrEFDBloco_K_Class"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrSpedContabil.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSpedContabil"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBlocos.pas"/>
+        <UnitName Value="ACBrECDBlocos"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_0.pas"/>
+        <UnitName Value="ACBrECDBloco_0"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_0_Class.pas"/>
+        <UnitName Value="ACBrECDBloco_0_Class"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_9.pas"/>
+        <UnitName Value="ACBrECDBloco_9"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_9_Class.pas"/>
+        <UnitName Value="ACBrECDBloco_9_Class"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_I.pas"/>
+        <UnitName Value="ACBrECDBloco_I"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_I_Class.pas"/>
+        <UnitName Value="ACBrECDBloco_I_Class"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_J.pas"/>
+        <UnitName Value="ACBrECDBloco_J"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_J_Class.pas"/>
+        <UnitName Value="ACBrECDBloco_J_Class"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrSpedPisCofins.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSpedPisCofins"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_0.pas"/>
+        <UnitName Value="ACBrEPCBloco_0"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_0_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_0_Class"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_1.pas"/>
+        <UnitName Value="ACBrEPCBloco_1"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_1_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_1_Class"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_9.pas"/>
+        <UnitName Value="ACBrEPCBloco_9"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_9_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_9_Class"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_A.pas"/>
+        <UnitName Value="ACBrEPCBloco_A"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_A_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_A_Class"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_C.pas"/>
+        <UnitName Value="ACBrEPCBloco_C"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_C_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_C_Class"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_D.pas"/>
+        <UnitName Value="ACBrEPCBloco_D"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_D_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_D_Class"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_F.pas"/>
+        <UnitName Value="ACBrEPCBloco_F"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_F_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_F_Class"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_I.pas"/>
+        <UnitName Value="ACBrEPCBloco_I"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_I_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_I_Class"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_M.pas"/>
+        <UnitName Value="ACBrEPCBloco_M"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_M_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_M_Class"/>
+      </Item50>
+      <Item51>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_P.pas"/>
+        <UnitName Value="ACBrEPCBloco_P"/>
+      </Item51>
+      <Item52>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_P_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_P_Class"/>
+      </Item52>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

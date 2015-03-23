@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="acbr_nfce_ecfvirtual"/>
+    <Author Value="André Ferreira de Moraes"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrECFVirtualNFCe"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="Implementação de ECF Virtual para NFCe
+Permite que aplicações que usem o componente ACBrECF, emitam NFCe como se fosse um ECF"/>
+    <License Value="LGPL"/>
+    <Version Minor="1"/>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrECFVirtualNFCe\ACBrECFVirtualNFCe.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrECFVirtualNFCe"/>
+      </Item1>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="ACBr_NFe"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrSerial"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -1,0 +1,134 @@
+object frmContasList: TfrmContasList
+  Left = 464
+  Height = 369
+  Top = 175
+  Width = 627
+  BorderStyle = bsDialog
+  Caption = 'Gerenciar Contas'
+  ClientHeight = 369
+  ClientWidth = 627
+  KeyPreview = True
+  OnActivate = FormActivate
+  OnKeyDown = FormKeyDown
+  Position = poOwnerFormCenter
+  LCLVersion = '1.3'
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 66
+    Top = 0
+    Width = 627
+    AutoSize = True
+    ButtonHeight = 64
+    ButtonWidth = 74
+    Caption = 'ToolBar1'
+    EdgeBorders = [ebBottom]
+    Images = dm.ImagesContas
+    ShowCaptions = True
+    TabOrder = 0
+    object ToolButton1: TToolButton
+      Left = 1
+      Top = 0
+      Caption = 'Nova'
+      ImageIndex = 0
+      OnClick = ToolButton1Click
+    end
+    object ToolButton2: TToolButton
+      Left = 75
+      Top = 0
+      Caption = 'Editar'
+      ImageIndex = 2
+      OnClick = ToolButton2Click
+    end
+    object ToolButton3: TToolButton
+      Left = 149
+      Top = 0
+      Caption = 'Excluir'
+      ImageIndex = 1
+      OnClick = ToolButton3Click
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 41
+    Top = 66
+    Width = 627
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 41
+    ClientWidth = 627
+    TabOrder = 1
+    object Edit1: TEdit
+      Left = 418
+      Height = 23
+      Hint = 'Pesquisar por nome ou e-mail'
+      Top = 9
+      Width = 200
+      Anchors = [akTop, akRight]
+      OnChange = Edit1Change
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+    end
+    object Image1: TImage
+      Left = 398
+      Height = 16
+      Top = 12
+      Width = 16
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Picture.Data = {
+        1754506F727461626C654E6574776F726B477261706869636702000089504E47
+        0D0A1A0A0000000D49484452000000100000001008060000001FF3FF61000000
+        0467414D410000AFC837058AE90000001974455874536F667477617265004164
+        6F626520496D616765526561647971C9653C000001F94944415438CBA592BF6B
+        936110C7BFEF8F2446ACA99AA410833FE850F50F102A42A04570C8D4AD200E82
+        385477DDBA088E0EA6838B8BD24D043B54452122889A41D0C656D0440B31D1D8
+        0A266FDEE779EE9E73B056247995E267B99B3EF7BDE31C11C1FFE0FF6A1ED7D8
+        B5D69688A5C8CC39620B43DC20E2056378667A3C6D07091C1141B9C6AE65FB28
+        9590C2AEED0E7C5700014212ACB6437CFCD22B1BA289B393F93E890B00CCB6B4
+        33610BD91D0E42C3687718AD0E23D0160732496453B182D2541A94C00500222E
+        EE4E3AF8AE1881169015300BBA5AB0D663ECDD9384D2548C1418E29CE7028116
+        B015B0C54F89157495453CE6416BCA451E511B829518C80AAC05587E57B1000B
+        A00C213281D6D4088D85EF3A1B93B15963BE83203420AD3F470B0C2DD45B0186
+        122EE29E03DE4892F01D0C273DBC7ED7C648F7E5F0C3CBC5B18102A569A6D6EC
+        94973E7C43CC03B2433EB2291F7157F0BCDA44E76B1393B9D636A58227772E1E
+        1BEBFB0300B87AF7BD6B884AC6705113E7C8300CF1A7746F494FA45E1DCC1F3E
+        8AC6CA0BBCADDC6F1B131E3F75EDCDCA1F822816674FC4B50EE7D3FB0E4DED3F
+        328ED5E567A856EEB5CF5CAF673657F81B27671F68A582E97AF5E9EDE5CA22B2
+        F95168ADD27D2BFC8B1BE746E3446ADE8B25A682CEFA95F337D72E6D49000073
+        A7331E338D5CB8B5DED87282287E004AB837A1AA32CBA10000000049454E44AE
+        426082
+      }
+    end
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Height = 262
+    Top = 107
+    Width = 627
+    Align = alClient
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Alignment = taCenter
+        Title.Caption = 'E-mail'
+        Width = 300
+        FieldName = 'email'
+      end    
+      item
+        Title.Alignment = taCenter
+        Title.Caption = 'Nome'
+        Width = 300
+        FieldName = 'nome'
+      end>
+    DataSource = dm.dsContas
+    FixedCols = 0
+    Flat = True
+    Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgCellHints, dgTruncCellHints]
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabOrder = 2
+    OnDblClick = ToolButton2Click
+    OnTitleClick = DBGrid1TitleClick
+  end
+end

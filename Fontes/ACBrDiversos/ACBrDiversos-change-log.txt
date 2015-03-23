@@ -1,0 +1,1791 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Airton Stodulski               ECFDataRegis
+- Anderson Rogerio Bejatto       ECFDataRegis, TACBrTroco, ECFBugFix, TACBrETQ
+- Rodrigo Frühwirth              ECFIChash
+- Gabriel Rodrigo Frones         TACBrTER, ACBrMonitor
+- Fabio Farias                   TACBrBAL, ECFBugFix, DISKeyTec
+- Walmir Silva                   TACBrBAL, BalancaTeste.dpr
+- Rennes Moreira Pimentel        TACBrValidador (CEP)
+- Aurimenes Apolonio Silva       ECFUrano, ECFBugFix
+- Vinicius de Oliveira           TACBrFala
+- Carlos do Nascimento Filho     ECFDaruma, ECFYanco
+- Thiago Delgado Pinto           Compatibilidade com BCB6
+- Nei José Van Lare Junior       ECFFiscNET
+- Jhony Alceu Pereira            ECFDaruma
+- Alan Lucas                     ECFSchalter, ECFSweda
+- Ederson Selvati                ECFDaruma, ECFBematech, ECFSweda
+- José Luís Schiavo              ECFDaruma
+- Andrews Ricardo Bejatto        TACBrETQ
+- Douglas Fernando Scheibler     Lazarus
+- Wagner Leandro Bueno Angelo    Lazarus
+- Maicon da Silva Evangelista    ECFDaruma
+- Eduardo Durieux Lopes          ECFEpson
+- Andre Bohn                     ECFNCR, ECFBugFix (Daruma FS600)
+- Joao Victor Maia Fernandes     ECFQuattro
+- Sauli Bueno                    ECFYanco
+- Ivan Moreira                   ECFs
+- Isaque Pinheiro		 TACBrSPEDFiscal, TACBrSPEDContabil, TACBrSPEDPisCofins, TACBrPAF, ACBrInStore
+- Luiz Arlindo                   ECFs
+
+* Colaboradores:
+- Alexandre Rocha L.Marcondes    Administração
+- Mauro Sano (Sweda)             Emprestimo de ECFs
+- Valmor Florez                  ECFBugFix (Schalter)
+- Licerio Jose Rodrigues Neto    ECFBugFix (Mecaf, Sweda, NaoFiscal)
+- Adriano Alves Dornelas         ECFBugFix
+- Luciano Donato                 ACBr.INC D2006
+- Gabriel Fernandes              ECFBugFix (Mecaf)
+- Juliano Pereira dos Santos     ECFBufFix (Daruma FS600)
+- Fábio Rogério Baía             ACBrMonitor (TCP)
+- Waldir Paim                    LCBTeste (conf.serial)
+- Diogo Augusto Pereira          ACBrCMC7
+- Marcos Agostini                ECFBugFix (NaoFiscal)
+- João Carvalho                  ACBrConsts
+
+* Testadores / BugReport:
+- Rildecy de Queiroz Borba       ECFBugReport (Mecaf)
+- Claudio Borba                  ECFBugReport
+- Erique Costa                   ECFBugReport
+- Matheus Nogueira               CHQBugReport
+- Everton H. Cardoso (Bematech)
+- Miguel Silva (Perto S/A)
+
+{******************************************************************************
+|* ACBr
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+19/10/2014
+-- ACBrValidador --  (por: DSA)
+[*] Ajustes para permitir UnitTeste
+[*] Ajustes na formatação de mascaras de algumas Inscrição Estadual
+
+01/08/2013
+-- ACBrValidador --
+[*] Acertos de acentuação nas mensagens de Erro.
+    http://www.projetoacbr.com.br/forum/index.php?/topic/11666-mensagens-no-acbrvalidador/
+
+18/06/2013
+-- ACBrValidador --
+[+] Acerto no calculo da IE para o estado do ES
+    http://www.projetoacbr.com.br/forum/index.php?/topic/11003-erro-valida%C3%A7%C3%A3o-inscri%C3%A7%C3%A3o-estadual-estado-es/
+    por: regys.silveira
+
+26/03/2013
+-- ACBrCargaBal --
+[+] Adiconado o suporte a geração de nutricionais na carga de balança
+    por: Carlos Nascimento
+
+04/11/2012
+-- ACBrCMC7 --
+[-] Acerto para retornar corretamente o numero da conta do banco HSBC
+    por: regys silveira
+
+14/04/2012
+-- ACBrCMC7 --
+[+] Adicionada rotinas de verificação dos dígitos C1, C2 e C3 (por CrasH)
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=13&t=5747
+
+30/04/2012
+-- ACBrGIF --
+[-]    Remoção das warnings por conversão de string
+       (Régys Silveira)
+
+27/04/2012
+-- ACBrGIF --
+[-]    Acerto no Gif1.pas para que o ACBrGIF funcione no D2010
+       (Régys Silveira)
+
+13/12/2011
+-- ACBrValidador--
+[-]    Correção no calculo de Insc.Estadual da BA para numeros com 9 dígitos (DSA)
+[-]    Correção no calculo de DF, removida restrição do 3 digito ser '3,4,5' (DSA)
+[+]    Adicionada função rápida para verificação da IE (por: Régys silveira)
+
+-- ACBrCargaBal -- 02/01/2012
+[+]    Adicionado a geração de arquivos para o modelo Urano, contribuição
+       de reginaldocosta postado no fóru.
+       http://djsystem.com.br/acbr/forum/viewtopic.php?f=10&t=4355
+       (por: Régys Silveira, conciliação dos fontes)
+
+-- ACBrValidador-- 13/12/2011
+[-]    Acerto o calculo do GTIN 
+       (por: Régys silveira)
+
+-- ACBrValidador-- 28/11/2011
+[+]    Adição da validação do número do GTIN.
+       (por: Régys silveira)
+
+-- ACBrValidador-- 13/10/2011
+[+]    Adição da validação do número do SUFRAMA. 
+       (por: Régys silveira)
+
+-- ACBrCargaBal -- 19/09/2011
+[+]    Adição do componente ACBrCargaBal para gerar arquivos de produtos 
+       para balanças. (por: Régys silveira)
+
+-- ACBrTroco -- 03/09/2011
+[*]    Não considerar a existência da cédula de um real.  (DSA)
+
+-- ACBrInStore -- 03/05/2011
+[+]    Adicionado evento OnGetPrecoUnitario, para capturar o preço unitário do 
+       produto, este se vier na etiqueta valot total o componente acha o peso,
+       se vier peso o componente achar o valor totral.
+       idéia de DSA e criado por (Isaque Pinheiro)
+
+-- ACBrInStore -- 02/05/2011
+[+]    Criado um novo componente ACBrInStore, para desmembrar código de barra
+       gerado por balança por (Isaque Pinheiro)
+
+Versão 0.9.0b  21/04/10
+-- ACBrECF --
+[+]    Implementado propriedade "TotalTroco" para buscar e guadar o total do 
+       troco nos ECFs.
+[+]    Implementado propriedade "TotalTroco" na class "TACBrECFDadosRZ"
+
+Versão 0.8.9b  03/04/10
+-- ACBrECFDaruma --
+[-]    Corrigido Bug no método "UsuarioAtual", não carregava o numero do usuário 
+       atual no modelo FS345. (Por Isaque Pinheiro)
+
+Versão 0.9.0a  16/03/10
+-- ACBrECF --
+[*]    Propriedade renomeada de "ReducaoZClass" para "DadosReducaoZClass" 
+       para ficar compativel com os nomes das outras propriedades "DadosReducaoZ"
+       e "DadosUltimaReducaoZ". (por : Isaque Pinheiro)
+
+Versão 0.9.0a  14/03/10
+-- ACBrECF --
+[-]    Correção de vazamento de memoria em TACBrECFDadosRZ  (por: DSA)
+
+Versão 0.9.0a  13/03/10
+-- ACBrECF --
+[+]    Criada uma nova class "TACBrECFDadosRZ" para armazenar todas as informações
+       da Redução Z, centralizando os dados e melhorando a captura do dados, que
+       hoje esta sendo feita através de TXT. A Class esta sendo alimentada no 
+       método "GetDadosReducaoZ", para demonstrar como armazenar os dados nela.
+       A implementação no método "GetDadosUltimaReducaoZ", deverá ser implementada
+       em cada modelo, baseado no método "GetDadosReducaoZ" que está implementado.
+       por (Isaque Pinheiro)
+
+Versão 0.8.9b  25/02/10
+-- ACBrECF --
+[*]    Aplicada otimização no Fechamento de Cupom quando o ACBrECF está associado
+       a geraçao de Bobina gráfica. (Por: Lampada)
+       
+Versão 0.8.9b  24/02/10
+-- ACBrECFBematech --
+[-]    Corrigido Bug no método "CarregaAliquotas", que não carregava todas
+       aliquotas se houvesse alguma cadastrada com o valor 0.
+       Por:  cristian.custodio
+
+
+Versão 0.8.9b  16/02/10
+-- ACBrECFEpson --
+[+]    Implementado métodos, CarregaRelatoriosGerenciais e
+        ProgramaRelatorioGerencial    Por: WagnerPV
+[*]    Sobrecarga no método AchaCNFDescricao para considerar a busca por
+       "SUPRIMENTO" como "FUNDO DE TROCO" que já é pré-programado na Epson.
+       Por: WagnerPV
+
+-- ACBrECFBematech --
+[-]    Corrigido Bug no método "CortaPapel" (não funcionava)
+
+Versão 0.8.9b  12/02/10
+-- ACBrECF --
+[-]    Modificado HTML em MemoTitulo para exibir corretamente centralizado
+       titulo do documento
+
+-- ACBrECFDaruma --
+[*]    AbrePortaSerialDLL modificada, chave ControlePorta passa a gravar valor 0
+       - Adicionada a gravação da chave ECF, Path
+
+-- ACBrECFEpson --
+[-]    Corrigido bug em GetTotalIsencao. por: José Nilton Pace
+[-]    Corrigida ordem da detecção de Estado quando usando o Flag de Pagamento
+
+-- ACBrECFFiscNET --
+[-]    Corrigida ordem da detecção de Estado quando usando o Flag de Pagamento
+
+
+Versão 0.8.9b  08/02/10
+-- ACBrECFEpson --
+[*]    Modificada detecção de estado do ECF Epson. Após o envio do comando de
+       SubtotalizaCupom, sem Desconto ou Acrescimo, o estado ainda permanecia em
+       estVenda pois esse ECF não efetua a subtotalização com valor 0.
+
+Versão 0.8.9b  26/11/09
+-- ACBrValidador --
+[*]    Formatação de Inscrição Estadual modificada para inserir zeros a esquerda
+       quando Documento estiver incompleto. (Por: Maico)
+       http://acbr.sourceforge.net/mantis/view.php?id=421
+
+-- ACBrUtil --
+[+]    Adicionada:
+       Procedure FindFiles( const FileMask : String; AStringList : TStrings;
+                            IncludePath : Boolean = True ) ;
+
+       
+Versão 0.8.9b  24/11/09
+-- ACBrECFDaruma --
+[-]    Corrigida sintaxe dos comandos LerTotaisFormaPagamento e
+       LerTotaisComprovanteNaoFiscal. Removido [CR] no final do comando.
+       Que causavam Erro Estendido: (24) "Erro no verificador da comunicação"
+       no modelo FS700             (Por DSA)
+
+Versão 0.8.9b  23/11/09
+-- ACBrETQ --
+[+]    Implementado método:        (Por DSA)
+       CarregarImagem( MonoBMP : TBitmap; NomeImagem: String; Flipped : Boolean = True);
+
+[+]    Adicionada Propriedade "LimparMemoria: Boolean". 
+       Se For "True" (default), Limpa a memoria RAM a cada chamada do método "Imprimir"
+
+[+]    Implementado método:        (Por Anderson Rogerio Bejatto)
+       ImprimirImagem(MultiplicadorImagem, Linha, Coluna: Integer; NomeImagem: String);
+
+[*]    Demo ETQTeste modificado para demonstrar os métodos de Imagem
+       
+Versão 0.8.9b  16/11/09
+-- ACBrECF --
+[*]    Revisão das chamadas dos métodos que usam a DLL, substituindo declarações
+       de "String" para "AnsiString" para compatibilizar com D2009 e Lazarus
+
+-- ACBrECFDaruma --
+[+]    Implementado EspelhoMFD_DLL e ArquivoMFD_DLL por COO e Data, usando carga
+       dinâmica da DLL    (Por: Luiz Arlindo e DSA)
+       (Testes sem sucesso... Estou em contato com o suporte da Daruma (DSA))
+
+
+Versão 0.8.9b  12/11/09
+-- ACBrECF --
+[+]    Adicionada a assinatura do método:
+       Procedure DescontoAcrescimoItemAnterior(
+         ValorDescontoAcrescimo : Double = 0; DescontoAcrescimo : String = 'D' ) ;
+       ( porém ainda não foi implementado em nenhuma Classe )
+[*]    Calculo do Total do Item Vendido apresentado na bobina, usa TruncFix ao
+       invez de Round(N,0) quando o ECF Truncar
+
+-- ACBrECFBematech --
+[+]    Implementado ArquivoMFD_DLL por COO usando carga dinâmica da DLL, e um
+       mecanismo para detectar a Data Inicial e Final equivalentes ao COO
+       Inicial e Final     (Por: Luiz Arlindo)
+
+-- ACBrECFFiscNET --
+[-]    Corrigido problema quando informando parâmetros String com Cararteres de
+       controle suportados pelo ECF (Ex: /xB1)
+
+-- ACBrRFD --
+[*]    Calculo do Total do Item Vendido, usa TruncFix ao invez de Round(N,0)
+       quando o ECF Truncar
+
+
+Versão 0.8.9b  04/11/09
+-- ACBrECFBematech --
+[+]    Implementado ArquivoMFD_DLL por Periodo usando carga dinâmica da DLL.
+       Não há função disponível na DLL para efetuar a Leitura por COO
+       (Por: Luiz Arlindo e DSA)
+
+Versão 0.8.9b  03/11/09
+-- ACBrECF --
+[*]    VendeItem: Implementado tratamento para uso de aliquotas do ISSQN
+       SI = Isento ISSQN;
+       SN = Nao Incidencia ISSQN;
+       SF = Subst.Tributária ISSQN;
+
+       Os Valores abaixo, quando informados, serão convertidos:
+      { IS1, IS2 = "SI";   FS1, FS2 = "SF";   NS1, NS2 = "SN" }
+
+      Classes revisadas: Bematech, Daruma, Sweda, Epson, FiscNET
+
+[+]    Implementadas propriedades para Leitura de Totais por ISSQN
+       ( Por: Marciano Lizzoni )
+        Property TotalCancelamentosISSSQN         : Double ;
+        Property TotalDescontosISSQN              : Double ;
+        Property TotalAcrescimosISSQN             : Double ;
+        Property TotalSubstituicaoTributariaISSQN : Double ;
+        Property TotalNaoTributadoISSQN           : Double ;
+        Property TotalIsencaoISSQN                : Double ;
+
+-- ACBrECFFiscNet --
+[-]    Correção do método GetUsuarioAtual (por M.Ivan)
+[+]    Implementação dos métodos:         (por M.Ivan)
+         GetTotalCancelamentosISSSQN, GetTotalDescontosISSQN,
+         GetTotalAcrescimosISSQN, GetTotalSubstituicaoTributariaISSQN,
+         GetTotalNaoTributadoISSQN, GetTotalIsencaoISSQN
+
+-- ACBrECFDaruma --
+[+]    Implementação dos métodos:         (por M.Ivan)
+         GetTotalCancelamentosISSSQN, GetTotalDescontosISSQN,
+         GetTotalAcrescimosISSQN, GetTotalSubstituicaoTributariaISSQN,
+         GetTotalNaoTributadoISSQN, GetTotalIsencaoISSQN
+
+-- ACBrECFSweda --
+[+]    Implementação dos métodos:         (por Isaque Pinheiro)
+         GetTotalCancelamentosISSSQN, GetTotalDescontosISSQN,
+         GetTotalAcrescimosISSQN, GetTotalSubstituicaoTributariaISSQN,
+         GetTotalNaoTributadoISSQN, GetTotalIsencaoISSQN
+
+-- ACBrECFBematech --
+[+]    Implementação dos métodos:         (por Isaque Pinheiro)
+         GetTotalCancelamentosISSSQN, GetTotalDescontosISSQN,
+         GetTotalAcrescimosISSQN, GetTotalSubstituicaoTributariaISSQN,
+         GetTotalNaoTributadoISSQN, GetTotalIsencaoISSQN
+
+-- ACBrECFEpson --
+[+]    Implementação dos métodos:         (por: DSA)
+         GetTotalCancelamentosISSSQN, GetTotalDescontosISSQN,
+         GetTotalAcrescimosISSQN, GetTotalSubstituicaoTributariaISSQN,
+         GetTotalNaoTributadoISSQN, GetTotalIsencaoISSQN
+
+Versão 0.8.9b  29/10/09 (DSA)
+--ACBrValidador --
+[+]    Adicionado método: FormatarIE( AString, UF : AnsiString ) : AnsiString ;
+[*]    Erro de Validação de Documento vazio, retorna mensagem especificando o
+       Nome do Tipo do Documento
+
+-- ACBrECF --
+[*]    Método VendeItem, quando associado ao desenho de uma "Bobina", considera
+       o Flag de Arredondamento do ECF para calcular o Total do Item
+
+Versão 0.8.9b  27/10/09
+-- ACBrECFNaoFiscal --
+[+]    Adicionada várias propriedades e métodos (Por Ivan Moreira)
+        NumGNF, NumGRG, NumCDC, NumCER, GrandeTotal, VendaBruta, UsuarioAtual,
+        Cliche, DataHoraSB, SubModeloECF, TotalSubstituicaoTributaria,
+        TotalNaoTributado, TotalIsencao
+[+]    Alteração do tamanho do NumSerie.
+
+Versão 0.8.9b  26/10/09
+-- ACBrBAL --
+[+]    Adicionado novo Modelo "balUrano" (por: Ivan Carlos Martello)
+
+Versão 0.8.9b  23/10/09 (DSA)
+[*]    Método LeituraMFDSerialDLL renomeado para EspelhoMFD_DLL para melhor
+       compreensão no PAF-ECF
+[+]    Adicionado novos métodos para obter o Arquivo MFD (Ato Cotepe 17/04)
+    Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
+       NomeArquivo : String; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ;
+    Procedure ArquivoMFD_DLL( COOInicial, COOFinal : Integer;
+       NomeArquivo : String; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ;
+
+-- ACBrECFEpson --
+[+]    Implementado ArquivoMFD_DLL por Periodo e COO usando carga dinâmica da DLL.
+       Nos testes realizados não foi possivel efetuar a Leitura por COO (Erro 1)
+
+-- ACBrECFSweda --
+[+]    Implementado ArquivoMFD_DLL por Periodo e COO usando carga dinâmica da DLL.
+       (por Magno System)
+
+Versão 0.8.9b  21/10/09
+-- ACBrECF --
+[+]    Adicionada a propriedade ACBrECF.DaraHoraSB : TDateTime   ( por Ivan Moreira )
+       Retorma a Data e Hora do Software Básico. Para facilitar no PAF-ECF.
+	   Implementada para os Modelos: Sweda, Epson e Daruma;
+
+[+]    Adicionada a propriedade ACBrECF.SubModeloECF : String   ( por Ivan Moreira )
+       Retorma o Modelo do ECF. Para facilitar no PAF-ECF.
+	   Implementada para os Modelos: Sweda, Bematech, Epson, FiscNet e Daruma;
+
+-- ACBrECFBematech --
+[+]    Implementado LeituraMFDSerialDLL por periodo e COO usando carga dinâmica
+        da DLL  (DSA)
+
+-- ACBrECFSweda --
+[*]    Adicionada Sleep(1000) no método FechaCupom, Se o modelo for Matricial (JNP)
+[+]    Implementado LeituraMFDSerialDLL por periodo e COO usando carga dinâmica
+        da DLL  (por Magno System)
+
+Versão 0.8.9b  20/10/09 (DSA)
+-- ACBrECF --
+[+]    Implementados métodos para permitir o uso da DLL do fabricante na Leitura da MFD
+	   Implementação nas classes filhas *DEVE* usar carga dinâmica da DLL, para não criar
+	   dependência Estática da DLL do fabricante no componente.
+	   (Veja o exemplo de implementação na Classe ACBrECFEpson.pas )
+	   
+    Procedure LeituraMFDSerialDLL( DataInicial, DataFinal : TDateTime;
+       NomeArquivo : String; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ;
+    Procedure LeituraMFDSerialDLL( COOInicial, COOFinal : Integer;
+       NomeArquivo : String; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ;
+
+-- ACBrECFBematech --
+[-]    Corrigido calculo do intervalo tempo de Espera em LeituraMFDSerial por COO
+
+-- ACBrECFEpson --
+[+]    Implementado LeituraMFDSerialDLL por periodo e COO usando carga dinâmica da DLL
+
+-- ECFTeste --
+[+]    Adicionado opção no Menu "Relatório -> Leitura MFD Serial DLL"
+
+-- ACBrCalculadora --
+[*]    Criação do Form do Componente modificada para usar Owner como Application ao
+       invez de Nil
+   
+
+Versão 0.8.9b  17/10/09 (DSA)
+--ACBrValidador --
+[*]    ACBrValidador.MsgErro agora usa ACBrStr() para conversão de UTF8 se
+       necessário
+
+-- Lazarus --
+[+]    Inclusão de Novo Form LCalculadora.pas específico para Lazarus, usando
+       OptimalFill no Display
+[*]    Ajuste no número de versão do Package
+
+-- ACBrUtil --
+[*]    Adicionado Parâmetro "RaiseExceptionOnFail" na Procedure
+       DeleteFiles(const FileMask: String; RaiseExceptionOnFail : Boolean = True)  ;
+       Se for informado como False, não irá disparar Exception quando não conseguir
+       apagar determinado arquivo, e continuará o Loop para apagar demais arquivos
+       correpondentes a "FileMask". Se omitido, assume True (default)
+
+-- ACBrECFSweda --
+[-]    Corrigido Bug na detecção do Status do ECF, quando o ECF sinalizava Status = 'E'
+       www.forumweb.com.br/foruns/index.php?/topic/78701-ecf-sweda-st120-retornando-estdesconhecido/	
+ 	   
+Versão 0.8.9b  15/10/09 (DSA)
+-- ACBrECF --
+[*]    Modificada a assinatura dos comandos:
+       LeituraMFDSerial, LeituraMemoriaFiscalSerial, LeituraXSerial
+       removendo a declaração "var" do parâmetro Linhas (por ser desnecessário)
+
+-- ACBrUtil --
+[+]    Adicionada function RemoveStrings(const AText: AnsiString;
+            StringsToRemove: array of AnsiString): AnsiString;
+       Remove todas ocorrencias de String do Array <StringsToRemove> da String
+       <AText> retornando a String alterada
+
+-- ACBrECFBematech --
+[-]    Corrigido Bug de "espera inifinita" quando aguardando retorno de comandos
+       de Leitura (Ex: LeituraMFD), em que o ECF respondeu com "Erro"
+
+-- ACBrECFDaruma --
+[*]    Melhorada Rotina de Limpeza dos retorno de comandos de Leitura
+       (Ex: LeituraMFD)
+[-]    Corrigido Bug na rotina de Criação de Arquivo com conteudo do Retorno de
+       Leituras, que em algumas ocasições era Truncado
+
+-- ACBrECFFiscNet --
+[*]    Otimização da Rotina de Limpeza dos retorno de comandos de Leitura
+[-]    Corrigido Bug nos Retornos de Leitura, em que o arquivo era "deslocado",
+       perdendo o lay-out original 
+
+
+Versão 0.8.8b  12/10/09
+-- ACBrECF --
+[-]    No ECF da Daruma ao se comandar a impressão da Leitura da Memória Fiscal o
+       componete estavá invertendo o metodo simplificado pelo completo. (por Ivan Moreira)
+
+Versão 0.8.8b  10/10/09
+-- ACBrECF --
+[+]    Adicionada a propriedade ACBrECF.UsuarioAtual : String   ( por Ivan Moreira )
+       Retorma o usuario atual da Memória Fiscal
+	   Implementada para os Modelos: Sweda, Bematech, Epson, FiscNet e Daruma;
+
+-- ACBrECFEpson --
+[*]    Modificação na rotina VerificaFimLeitura, para tratar corretamente Respostas 
+       Fora da Sequencia, e Respostas com o CheckSum inválido.  (por Daniel Simões)
+
+-- ACBrECFDaruma --
+[+]    Implementado método ACBrECF.IM = Retorna a Inscrição Municipal; 
+[+]    Implementado método ACBrECF.Cliche = Retorna o Cabeçalho; 
+[*]    ECF.ModeloStr = Esta retornado 'Daruma "Modelo FS-600" ' em vez só de 'Daruma'.
+	   ( por Ivan Moreira )
+
+-- ACBrECFSweda -- 
+       Implementada as rotinas:           ( por Ivan Moreira )
+[+]    ECF.LeituraMFDSerial(dtInicial,dtFinal) = Retorna MFD por Data;
+[+]    ECF.LeituraMFDSerial(COOInicial,COOFinal) = Retorna MFD por COO;
+ 	   
+Versão 0.8.8b  08/10/09
+-- ACBr --
+[*]    Todas as Saidas de Mensagem do ACBr, através de Exceptions ou MessageDlg
+       foram revisadas para converter a saida para UTF8 quando o Compilador
+       suportar UNICODE.
+
+-- ACBrUtil --
+[+]    Adicionada: function ACBrStr( AString : AnsiString ) : String ;
+       Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade
+       com D5 a D2007, Porém D2009 e superiores e Lazarus0.9.27 e acima usam UTF8.
+       Essa função converte a "AString" para de ANSI, para UTF8, apenas se o
+       sistema usar UNICODE
+
+Versão 0.8.8b  02/10/09
+-- ACBrECF --
+[-]    Novo mecanismo usando BlockInput não liberava Mouse/Teclado durante a pergunta de ReTentar	
+
+-- ACBrECFCalculadora --
+[*]    Nova Propriedade BorderStyle, para permitir ajustar a Borda da Calculadora
+[*]	   Form melhorado para Lazarus, usando OptimalFill no Label do Display de Números
+
+Versão 0.8.8b  30/09/09
+-- ACBrECF --
+[+]    Sobrecarga nos métodos abaixo para permitir informa "NomeArquivo: String"
+       ao inves de um StringList.
+
+       Procedure LeituraXSerial( NomeArquivo : String  ); overload ;
+       Procedure LeituraMemoriaFiscalSerial( DataInicial, DataFinal : TDateTime;
+          NomeArquivo : String; Simplificada : Boolean = False ) ; overload ;
+       Procedure LeituraMemoriaFiscalSerial( ReducaoInicial, ReducaoFinal : Integer;
+          NomeArquivo : String; Simplificada : Boolean = False ) ; overload ;
+       Procedure LeituraMFDSerial( DataInicial, DataFinal : TDateTime;
+          NomeArquivo : String; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ;
+       Procedure LeituraMFDSerial( COOInicial, COOFinal : Integer;
+          NomeArquivo : String; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ;
+
+-- ACBrECFDaruma --
+[*]    Adicionado mecanismo de "limpeza" de código de controle de Impressao em
+       captura de Documentos pela Serial
+       
+Versão 0.8.8b  28/09/09
+ 
+[*]  Diversas alterações efetuadas por: Ivan Moreira
+     - ECF´s : Sweda, Bematech, Epson, FiscNet e NaoFiscal
+       Rotinas: ECF.IM = Retorna a Inscrição Municipal; 
+	   ECF.Cliche = Retorna o Cabeçalho;
+ 
+	 - ECF´s: NaoFiscal
+       Rotinas: ECF.CNPJ = Retorna CNPJ; ECF.PAF = Retorna Linha PAF;
+ 
+	 - ECF´s: Bematech
+		Rotinas: ECF.LeituraMFDSerial(dtInicial,dtFinal) = Retorna MFD por Data; 
+		ECF.LeituraMFDSerial(COOInicial,COOFinal) = Retorna MFD por COO;
+ 
+Versão 0.8.8b  01/12/08
+-- ACBrConsts --
+[+]    Mensagens de Erro e Alerta de ACBrECF centralizadas em ACBrConsts.pas,
+       por: João Carvalho
+
+-- ACBrECF --
+[*]    Adicionado Parâmetro "Simplificada : Boolean = False" nos métodos:
+       LeituraMemoriaFiscal e LeituraMemoriaFiscalSerial
+
+-- ACBrECFQuattro --
+[+]    Adicionado varios metodos e propriedades, por: Joao Victor Maia Fernandes
+
+-- ACBrECFYanco --
+[+]    Adicionado varios metodos e propriedades, por: Sauli Bueno
+
+-- ACBrUtil --
+[*]    Função IntToStrZero modificada para aceitar Int64. Esse problema
+       poderia causar "erro de conversão" na criação do arquivo ACBrRFD
+
+
+Versão 0.8.7b  14/04/08
+
+-- ECFTeste --
+[+]   Adicionada configuração das caracteristicas da Porta Serial
+      (Velocidade, bit de Parada, paridade, etc)
+[*]   Nova versao do ECFTeste convertida para Lazarus (Wagner Leandro)
+
+-- ACBrECF --
+[+]    Adicionado método IdentificaOperador(Nome: String);
+       - Ligado a propriedade Operador. Todos os modelos de ECF revisados com a
+         possibilidade de informar o Operador ao ECF
+[+]    Adicionado método: CortaPapel( CorteParcial : Boolean = false) ;
+[+]    Adicionado método: Sangria( const Valor: Double; Obs: String;
+         DescricaoCNF: String = 'SANGRIA'; DescricaoFPG: String = 'DINHEIRO')
+[+]    Adicionado método: Suprimento( const Valor: Double; Obs: String;
+         DescricaoCNF: String = 'SUPRIMENTO'; DescricaoFPG: String = 'DINHEIRO')
+[*]    Metodo VendeItem modificado, adicionado parametro:
+         DescontoAcrescimo : String = 'D' que permite definir se o Valor
+         informado no parametro "ValorDescontoAcrescimo" é Desconto "D" ou
+         Acréscimo "A".  Se nao informado, assume o Default = 'D'
+         - Todos os modelos revisados para permitir Acrescimo na Venda de Item
+           quando SW.Básico do ECF possuir esse comando
+[+]    Adicionada a propriedade: MsgTrabalhando = "Impressora está trabalhando"
+[*]    Modificado mecanismo TimeOut em LeResposta.
+       - LeResposta detecta quando o ECF está enviando dados pela serial e com
+         isso NAO inicia a contagem regressiva de TimeOut, e exibe o texto de
+         "MsgTrabalhando"
+
+-- ACBrFiscNet --
+[*]   Compatibilizada para trabalhar com a TermoPrinter (Fabio Farias)
+
+-- ACBrECFEpson --
+[+]   Novo modelo de ECF implementado Epson
+
+-- ACBrECFDaruma --
+[*]  Cancelamento de Cupom permite cancelar CCD se imediatemante apos o cupom
+     (Andre Bohn)
+[-]  Corrigido Bug na Leitura dos Totais de Pagamentos na FS600 (Andre Bohn)
+[+]  Implementado a Leitura dos Totais de CNFs para FS600 (Andre Bohn)
+
+
+Versão 0.8.6b  15/06/07
+
+-- ACBrETQ --
+[+]   - Novo Componente, para facilitar a Impressão de Etiquetas em Impressoras
+        termicas, compatíveis com a Linguagem PPLA
+        (por: Andrews R Bejatto/ Anderson R Bejatto)
+        
+-- ACBr_BCB6.bpk --
+[*]   Criado novo package para compatibilizar o projeto com o C++ Builder 6
+      - Compatibilidade feita por: Thiago Delgado Pinto
+[*]   Vários fontes do projeto foram revisados para permitir a compilação
+      condicional no C++ Builder, trocando a diretiva {$IFDEF Delphi6_UP} por
+      {$IFDEF COMPILER6_UP}.
+
+-- Lazarus --
+[+]   Todos os Demos do projeto agora também estão disponíveis no Lazarus
+      (convertido por: Wagner Leandro Bueno Angelo)
+
+-- Demos --
+[*]   Diretorio dos Demos melhor organizado, com a criação de uma sub-pasta para
+      cada Demo.
+
+[+]   Projeto Demo "ECFTeste" (ACBrECF) remodelado para exbir o uso de
+      "MemoBobina" e "OnBobinaAdicionaLinhas.
+      - Versões VCL, CLX e Lazarus foram modificadas
+
+-- ACBrECF --
+[+]   Adicionada a propriedade "ArqLOG : String"
+      - Se algum nome de aquivo for especificado nessa propriedade, todos os
+        comandos Enviados e Respostas do ECF serão gravadas neste arquivo TXT
+      - Atenção !!
+        - Ou uso de LOG pode comprometer a performace do programa.
+          (use apenas para debugar)
+        - Dados sigilosos, como número de cartão de crédito impresso no TEF,
+          podem ficar registrados no LOG
+
+[+]   Adicionada a propriedade "MemoBobina : TMemo"
+      - Se associado algum componente "Memo" a essa propriedade o ACBrECF
+        "desenhará" uma copia da Saida do Cupom no componente Memo.
+
+[+]   Adicionado evento "OnBobinaAdicionaLinhas"
+      - Evento é executado sempre que uma nova linha é adicionada no "MemoBobina"
+        - Util para desenho de Cupons em formato HTML
+      - Para visualizar o Cupom em HTML utilize controles visuais como:
+        TWebBrowser (VCL) TTextViewer (CLX) ou  TIpHTMLPanel (Lazarus)
+        - Veja exemplos no Projeto "ECFTeste" (em Demos)
+
+[+]   Adicionada a propriedade "MemoParams : TStrings"
+      - Usada para configurar o LayOut de desenho do cupom.
+      - Permite sintaxe em HTML.
+      - Utillizada apenas quando usando "MemoBobina" ou "OnBobinaAdicionaLinhas"
+
+[+]   Adicionado parametro "TipoDescontoAcrescimo : String = '%'" no método
+      "VendeItem".
+      - Se esse parametro for omitido, assume '%' (desconto em Percentagem),
+      - Qualquer outro caracter diferente de '%', assume que o Desconto
+        informado no parametro "DescontoPorc" é em Valor
+
+[*]   "ArredondaPorQtd" não será executado caso o ValorTotal com a Qtd acrescida
+      fique superior ao Valor Arredondado pretendido. Isso pode ocorrer se o
+      Preço Unitário é grande... nesses casos não há como ajustar... :-(
+
+-- ACBrECFBematech --
+[-]   Corrigido Bug na abertura de Cupom Fiscal com CNPJ na MP20
+
+-- ACBrECFDaruma --
+[-]   Corrigido Venda de Item com Qtd de 3 decimais (por Maicon da Silva)
+[-]   Corrigido Carregamento de Formas de Pagamento na MFD
+      (retornava posições não cadastradas)
+[*]   Melhorada Verificação de Fim da Impressão na MFD
+[*]   Corrigida Leitura da palavra de Status na MFD (GetEstado)
+[-]   Corrigida detecção do estado estRequerX na MFD
+[*]   Corrigido Retorno no Numero de Serie na MFD
+[*]   Impressao de Relatório Gerencial e Vinculado na MFD, otimizada para enviar
+      várias linhas simultaneamente (muito mais rápido)
+[-]   Corrigido bug na leitura do CRO
+
+-- ACBrECFFiscNET --
+[-]   Corrigido espacejamento de "PulaLinhas" ( considerando 1 linha = 30 dots )
+[-]   Corrigido BUG em Método "CorrigeEstadoErro", que sempre causava o Reinicio
+      do ECF
+[*]   Método "AbreRelatorioGerencial" modificado para cadastrar o Relatório
+      Gerencial  indice = 0 caso ele ainda não exista
+[-]   Método "VendeItem" gerava exceção quando Desconto era informado
+[-]   Método "LinhaRelatorioGerencial" nao imprimir linhas vazias e em textos
+      maiores que 492 caracteres poderia haver quebra do lay-out de impressao
+
+-- ACBrECFSweda --
+[-]   Corrigido bug nos Descontos de "VendeItem" e "SubtotalizaCupom" em alguns
+      ECFs NAO MFD ( matriciais linha 7000 )  (Bug Report por: Ederson Selvati)
+[-]   Corrigido bug no EfetuaPagamento dos modelos 'C' e 'B' em FPG com flag
+      de Vinculado ativado
+[*]   Aumentado o TimeOut da Reduçao Z para (150 sec)
+[*]   Ignorado Flag "SLIP" em modelo 'B' na verificaçao de erros de "EnviaComando"
+[-]   Corrigida a abertura da Gaveta de Dinheiro nos ECFs MFD
+[*]   Corrigido o TimeOut da Leitura da Memoria Fiscal no modelo 'B'
+[-]   Corrigido bug em "FechaRelatorio" no modelo 'B'
+[*]   Ativada a Impressao da palavra "SubTotal" na subtotalização do Cupom
+
+-- ACBrECFNaoFiscal --
+[-]   Corrigido Bug no Cancelamento de Item com Desconto (por Marcos Agostini)
+
+-- ACBrECFClass --
+[-]   Corrigido Bug em DoOnMsgRetentar, Resposta com sinal invertido
+      (por J. Luís Schiavo)
+
+-- ACBrCMC7 --
+[*]   Calculo de CMC7 compatiblizado com o Banrisul, por Diogo Augusto Pereira
+
+-- ACBrBALFilizola --
+[*]   Modelo balFilizola compatibilizado com a linha "CS"...
+      (por:  Juliano Pereira dos Santos)
+
+-- ACBrCHQ --
+[-]   Corrigido Problemas de FreeNotification com a propriedade "ECF" em Tempo
+      de Design
+
+-- ACBrGAV --
+[-]   Corrigido Problemas de FreeNotification com a propriedade "ECF" em Tempo
+      de Design
+
+-- ACBrExtenso --
+[+]   Adicionada a propriedade Formato: TACBrExtensoFormato (default extPadrao)
+        extPadrao -> 15,10 - Quinze Reais e Dez Centavos
+        extDolar  -> 15,10 - Dolares Americanos Quinze com 010/100
+
+-- ACBrCalculadora --
+[+]   Adicionada a propriedade "CorForm" : TColor (por: Nei José Van Lare Junior)
+
+
+Versão 0.8.5b  02/12/06
+
+-- ACBr --
+[+]   Modo CONSOLE. Todos os componentes e Units do ACBr foram compatibilizadas
+      para permitir a construção de aplicações em MODO CONSOLE
+      - IMPORTANTE: Quando alternar na compilação entre aplicações no Modo
+        CONSOLE e DESKTOP, SEMPRE execute: Project -> Build All
+
+-- ACBrECF --
+[+]   Adicionado propriedade: "GavetaSinalInvertido" : Boolean default False
+      - Útil quando a leitura do Retorno da propriedade "GavetaAberta" está
+        invertido... Isso ocorre em alguns casos, devido a diferença da pinagem
+        dos diversos modelos de Gavetas de dinheiro
+
+[+]   Adicionado novo evento "OnMsgRetentar". Que será disparado quando a
+      propriedade "Retentar" estiver ativa (True) e sempre que alguma msg do
+      tipo "Deseja tentar Novamente ?" precise ser exibida.
+      - Se o evento estiver programado o ACBrECF não exibe nenhuma Mensagem ou
+        Dialogo. Se o evento NAO estiver programado, é exibida a Mensagem padrão
+
+[+]   Adicionada Propriedade "IntervaloAposComando" : Integer.  (default 100)
+      - Essa propriedade permite definir um pequeno intervalo em Milesegundos
+        após a execução de cada comando. Um valor menor pode tornar a
+        comunicação com o ECF mais rápida porém pode causar problemas de comuni-
+        cação em alguns modelos/versões de ECF... Use valores entre 1 e 100
+
+[*]   Método: "ImpactoAgulhas" modificado. Removido o MessageDLG, agora o método
+      recebe um parâmetro:  ( NivelForca : Integer = 2), onde: 1-Fraco, 2-Normal
+      , 3-Forte
+
+[*]   Método "MudaHorarioVerao", modificado. Removido MessageDLG. Se o método
+      for chamado sem parâmetros ele tentará inverter o estado de HorarioVerao
+
+[-]   Corrigido Bug no método "FormMsgDoProcedure" (usado p/ bloqueio do teclado)
+      A pilha de retorno das Exceções não era executada corretamente
+      - Em algumas situações, ex: durante a impressão das Linhas do Relatório
+        Gerencial, caso houvesse alguma exceção durante a impressão o bloco
+        "Except" programado pelo usuário não era executado.
+
+[-]   Corrigido Bug em ArredondaPorQtd. Em algumas combinações de valores e Qtd
+      o ArredondaPorQtd falhava ao calcular o acréscimo na Qtd.
+
+[*]   Método VendeItem modificado para permitir Alíquotas como Índice mesmo nos
+      ECFs onde a Alíquota já possui a Letra "T" no inicio. Exemplo. Na Daruma,
+      a Alíquota "TA" pode ser informada como: "TTA" ou "TA" para o método
+      VendeItem
+
+[*]   Propriedade "NumSerie" não mais usa valor em cache. Sempre que houver uma
+      leitura a essa propriedade, haverá comunicação com o ECF.
+      ( Exigência do Fisco de Minas Gerais )
+
+[+]   Adicionada as propriedades ReadOnly  "MFD"  e "Termica"  que são ativadas
+      de acordo com o modelo de ECF Utilizado.
+
+[+]   Adicionada as propriedades "DecimaisPreco" e "DecimaisQtd"
+
+-- ACBrECFFiscNET --
+[+]   Novo modelo de ECF implementado FiscNET (ZPM), compatível com vários ECFs
+      MFDs que usam esse chip-set, como: Elgin MFD, Urano MFD, DataRegis MFD,
+      Olivetti MFD, ZPM, e outros
+
+-- ACBrECFDaruma --
+[+]   Finalmente adicionada a compatibilidade com o ECF FS600 MFD
+      ( com a ajuda de Juliano Pereira dos Santos )  
+[-]   Corrigido alguns bugs na compatibilidade com o modelo FS 2000 em:
+      GetEstado, VerificaFimImpressao, FechaRelatorio, GetGavetaAberta,
+      GetPoucoPapel, GetHorarioVerao e GetArredonda
+[-]   Corrigido bug na Impressão de Linhas do Vinculado e Gerencial. Bug
+      introduzido na versão 0.8.4b. (tentativa de otimizar a impressão nas MFDs)
+[+]   Adicionada a Impressao de Cheques na FS2000.
+[-]   Corrigido o método CarregaFormasPagamento na FS2000
+[-]   Corrigido o retorno do conteúdo de "ComprovantesNaoFiscais" na FS345
+[+]   Adicionada propriedade interna "ComprovantesNaoFiscaisVinculado" (somente
+      na Classe Daruma)
+
+-- ACBrECFBematech --
+[-]   Aumentado o TimeOut dos comandos "LeituraX" e "AbreRelatorioGerencial"
+[-]   Corrigido Bug no ECF MP40-FI II, esse modelo tem apenas 40 colunas e não
+      48 como nos demais modelos... Agora o modelo é detectado e a propriedade
+      "Colunas" ajustada corretamente.
+
+-- ACBrECFYanco --
+[*]   Diversos métodos implementados... Agora a classe da Yanco está operacional
+      ( por: Carlos do Nascimento Filho )
+
+-- ACBrECFMecaf --
+[*]   Diversos métodos que usam campo de "Texto livre" foram modificados para
+      filtrar os caracteres acentuados, pois a Mecaf não executa o comando se
+      houver caracteres acentuados
+
+-- ACBrDIS --
+[*]    Novo modelo de Display de Teclado implementado "disKeytecTeclado"
+       compatível com os displays de teclado das Marcas "KeyTec" e "Fourth"
+       ( por: Fabio Farias )
+
+-- ACBrLCB --
+[*]   Modificado mecanismo de leitura, para evitar a leitura de códigos
+      incompletos.
+      - Se a propriedade SUFIXO for VAZIA.  TUDO que estiver disponível no
+        buffer serial no momento do evento, será lido e retornado
+      -  Se SUFIXO NAO for VAZIO. Apenas lê os dados da serial SE e ATÉ
+         encontrar o Sufixo.
+         - Se houver dados alem do Sufixo, deixa o restante no buffer serial
+           para leitura no próximo evento (Mais de 1 código no buffer)
+         - Se o SUFIXO NAO for encontrado no Buffer da Serial NADA será
+           lido. Pois nesse caso, provavelmente o leitor ainda está enviando o
+           código e o Buffer da Serial está INCOMPLETO. O código completo será
+           lido no próximo evento...
+
+[*]   Demo do ACBrLCB, LCBTeste.dpr e QLCBTeste.dpr modificados para permitir
+      configurar as propriedades da Porta Serial     (por: Waldir Paim)
+
+-- ACBrCMC7 --
+[-]   Corrigido Bug no calculo do digito Verificador 2
+[+]   Adicionado Programa Demo para o componente ACBrCMC7   (CMC7Teste.dpr)
+      ( por: André Ferreira de Moraes )
+
+-- ACBrCHQUrano --
+[*]   Novo modelo de impressora de Cheques compatibilizado com o ACBrCHQ.
+      A Urano UR1000. (Usado o Protocolo "Genérico 2" na impressão de cheques)
+
+-- ACBrUtil --
+[+]   Adicionada as funções: "BinToInt" e "IntToBin" (http://delphi.about.com)
+      - Converte Strings de Binários para Inteiro e vice-versa.
+[*]   Função "TestBit" modificada para permitir Inteiros de 16 bits
+
+-- ACBrExtenso --
+[+]   Adicionada a propriedade "ZeroAEsquerda" : Boolean (default true)
+        - Quando True , o valor: 0,21 = Zero Reais e Vinte e Um Centavos
+        - Quando False, o valor: 0,21 = Vinte e Um Centavos
+
+-- ACBrFala --
+[-]   Corrigido Bug na fala de Valores com apenas centavos (removido Zero Reais)
+
+-- SynaSer --
+[*]  Fontes da Classe SynaSer atualizados para a versão: 007.000.001
+
+
+
+Versão 0.8.4b  25/05/06
+
+-- ACBr_LCL.lpk --
+[*]   Package do Lazarus corrigido para instalar corretamente... Testado no
+      Lazarus 0.9.12 e FreePascal 2.0.2 (versões Windows e Linux)
+[+]   Nova pasta criada para os Demos na versão Lazarus.
+      - Demo "ECFTeste.dpr" convertido para Lazarus.
+
+-- ACBrFala --
+[+]   Novo componente ACBrFala. Processa todas as palavras de uma String,
+      procurando por arquivos de Som correspondente a cada palavra.
+      - Permite informar Valores (Double) que são traduzidos para Extenso.
+      - Os arquivos de som podem estar em um Recurso (.RES / .LRS) ou em um
+      diretório.  Veja a pasta  \ACBr\source\Pascal\ACBrFalaWaves que contém
+      exemplos de sons e arquivos de recurso para falar valores por Extenso
+      (componente inicial, "FalaValor" escrito por Vinicius de Oliveira)
+
+-- ACBrCMC7 --
+[+]   Novo componente ACBrCMC7, que permite processar a Banda Magnética dos
+      Cheques, Validando e convertendo de CMC7 para Banco, Agencia, Conta e
+      vice-versa... (em desenvolvimento)          (por André Ferreira de Moraes)
+
+-- ACBrECF --
+[-]  Método "VerificaFimImpressao" poderia disparar exceção com ECF off-line
+     (Bug reportado por: Adriano Alves Dornelas)
+[*]  Diminuído o tempo de várias "pausas" (Sleeps) entre as rotinas de envio
+     e recepção de dados, a fim de agilizar a comunicação... (experimental)
+[*]  Adicionada sobrecarga ao método MudaHorarioVerao.
+     Procedure MudaHorarioVerao( EHorarioVerao : Boolean ) ;
+     - Nesse novo método não será aberta nenhuma janela ShowModal
+[*]  Métodos "CarregaFormasPagamento" e "CarregaComprovantesNaoFiscais" sempre
+     retornavam as Descrições em maiúsculas... corrigido.
+[*]  Métodos "ProgramaFormaPagamento" e "ProgramaComprovanteNaoFiscais" sempre
+     cadastravam as Descrições em maiúsculas... corrigido.
+[*]  Métodos "LinhaRelatorioGerencial" e "LinhaCupomVinculado" agora permitem
+     informar várias linhas separadas por #10 ou #13+#10
+     (Útil para agilizar a impressão desses documentos em alguns ECFs Térmicos)
+[+]  Adicionado método: PulaLinhas( NumLinhas : Integer = 0 ) ;
+
+-- ACBrECFClass --
+[*]  Métodos "ListaRelatorioGerencial" e "ListaCupomVinculado" abstraidos
+     pela classe TACBrECFClass... eliminando várias linhas de código nas
+     classes filhas
+
+-- ACBrECFQuattro --
+[+]   Novo modelo de ECF implementado: "Quattro" graças ao empréstimo de um
+      modelo (Easy IIF) para testes, concedido pela Quattro Eletrônica Ltda.
+      (por Daniel Simões)
+
+-- ACBrECFICash --
+[+]   Iniciado o desenvolvimento do modelo ECF IChash    (por Rodrigo Frühwirth)
+
+-- ACBrECFBematech --
+[*]   Melhorado suporte a VendaItem em MFD, usando o novo comando "63"
+      (antes não imprimia a Unidade)
+[*]   Método AchaFPGDescricao não tanta programar a Forma de Pagamento
+      dinamicamente caso ela não seja encontrada quando o modelo de ECF for MFD
+      (MP25/MPTH), pois nesses modelos as Formas de pagamento não são zeradas
+      após a Redução Z
+[*]   Método ProgramaFormaPagamento não mais modifica a Descrição da Forma de
+      Pagamento para 1a Maiúscula e o restante em Minúsculas, e sem espaços...
+      Essas recomendações eram do suporte da Bematech mas foi removida a pedido
+      de vários usuários.
+[+]   Adicionada a propriedade Publica "IsTH", que retorna Verdadeiro se o ECF
+      for Térmico (impressão mais rápida)
+[*]   Se o ECF for Térmico imprime todas as Linhas dos métodos "CupomVinculado"
+      e "RelatorioGerencial" em apenas um comando, (muito mais rápido)
+
+-- ACBrECFDataregis --
+[*]   Corrigido Bug na Venda de Item introduzido com a adição do Item Vendido
+      na versão 0.8.3b (Imprime o Item Vendido porém sem espaço entre o código)
+      - Bug Reportado por Fabio Farias
+[*]   Método Cancela cupom detecta o estado do ECF para permitir cancelamento
+      com o Cupom aberto (por Anderson Rogerio Bejatto)
+[*]   Modificado mecanismo de Gravação e Leitura de memória auxiliar (INI) para
+      ficar mais rápida a rotina de venda (por Anderson Rogerio Bejatto)
+[-]   Corrigido Bug na leitura de modelos de Cheques (por Airton Stodulski)
+[-]   Não reconhecia corretamente todas as versões de .03 e .05
+      (por Airton Stodulski)
+[*]   Inserido suporte a Venda de Item com 3 casas decimais
+[*]   Método VendeItem usará o Arredondamento sempre que necessário
+[-]   Corrigido bug em pulos de Linha em "ListaRelatorioGerencial" e
+      "ListaCupomVinculado"
+[-]   "SubTotal", não considerava Desconto / Acréscimo pendente informado em
+      "SubtotalizaCupom"
+[*]   Acerto das cordenadas para Impressão de Cheques
+      (por Anderson Rogerio Bejatto)
+
+-- ACBrECFSweda --
+[-]   Corrigido BUG em VendeItem quando havia desconto  (por Ederson Selvati)
+[*]   Melhorado o Suporte a linha ST (MFD), graças ao empréstimo de um modelo
+      ST100, por "Mauro Sano" da Sweda
+[*]   Descrição extra na linha ST pode atingir até 209 caracteres e não apenas
+      40... corrigido.
+[-]   Corrigido bugs na detecção da Versão e Modelo do ECF
+[-]   Corrigido Bug de TimeOut durante a Redução Z e Abertura de Cupom Fiscal
+      Vinculado em ECFs Matriciais (9000, 7000)
+[-]   Corrigido Bug em SubTotalizaCupom na linha 9000. Se houvesse Desconto o
+      comando não era processado.
+[-]   ProgramaFormaPagamento e ProgramaComprovanteNaoFiscal ajustados para a
+      linha ST (MFD)
+[-]   Corrigido Bug no tratamento de Pouco Papel e Fim de Papel, caso o Item
+      vendido não seja impresso, uma exceção será gerada.
+
+-- ACBrECFDaruma --
+[+]   Adicionada a compatibilidade com o modelo ECF FS2000
+      (por: Carlos do Nascimento Filho)
+[-]   Corrigido Bug em CarregaFormasPagamento e CarregaComprovantesNaoFiscais.
+      posições livres (não programadas) eram lidas como válidas
+[-]   Corrigido Bugs em ProgramaFormaPagamento.
+      - Detecção automática do próximo índice livre falhava
+      - Programação de FPG com Vinculado não causava a programação de um
+        Comprovante Não Fiscal (equalização)
+[-]   ProgramaComprovanteNaoFiscal, modificada para não permitir cadastrar já
+      existente
+[*]   Método interno "VerificaFimImpressao" otimizado para usar os flags da
+      "Palavra de Status" , pois o método antigo falhava algumas vezes
+[-]   Corrigido Bugs de TimeOut em vários comandos como "VendeItem",
+      "RelatorioGerencial", etc
+[-]   Corrigido Bug em "TotalPago", que retornava o Valor de "SubTotal" mesmo
+      antes do cupom ser SubTotalizado         (bug reportado por Fabio Farias)
+
+-- ACBrECFSchalter --
+[-]   Corrigido Bug em Método "ZeraVinculados", que não cancelava o Vinculo "0"
+      (por Alan Lucas)
+
+-- ACBrECFNaoFiscal --
+[-]   Usando Arquivos ou portas paralelas, em algumas ocasiões ocorria erro de
+      I/O ao Ativar / Desativar o componente    (bug reportado por Fabio Farias)
+
+-- ACBrUtil --
+[*]   Funções StringToAsc e AscToSTring movidas de ACBrECFNaoFiscal.pas para
+      ACBrUtil.pas
+[+]   Adicionada a Procedure: CopyFilesToDir(FileMask: string; ToDirName :
+        String; const ForceDirectory : Boolean = False)  ;
+      Copia todos os arquivos especificados na mascara <FileMask> para o
+      diretório <ToDirName> Gera Exceção se não conseguir copiar algum dos arquivos.
+[+]   Adicionada função   FunctionDetect (LibName, FuncName: String;
+                                         var LibPointer: Pointer): boolean;
+      - Útil para carregar funções de DLL / SO dinamicamente                                    
+[*]   Funções InPort e OutPort agora suportam a DLL inpout32.dll, que permite
+      acesso direto a portas no XP /NT / 98  http://www.logix4u.net/inpout32.htm
+[+]   Adicionada as funções:
+      StringToDateTime( DateTimeString : String ) : TDateTime ;
+      StringToDateTimeDef( DateTimeString : String ; DefaultValue : TDateTime )
+        : TDateTime ;
+      - Para evitar problemas com as diferenças entre o Separador de Data (/)
+        entre os diversos S.O.  
+[+]   Adicionada a função:  PosLast(const SubStr, S: string): Integer;
+        Retorna a última posição de "SubStr" dentro da String "S", ou 0 se não
+        encontrar a "SubStr" dentro de "S"
+
+-- ACBrValidador --
+[-]   Inscrição Estadual de "AL" aparentemente também aceita o numero 6 no 3
+      dígito, apesar do site do sintegra informar o contrário... Corrigido
+
+-- ACBr.INC --
+[*]   Adicionada compatibilidade com o Delphi 2006     (por  Luciano Donato)
+
+-- ACBrECFClass.pas --
+[*]   Várias modificações nos métodos LeResposta ocorreram para compatibilizar o
+      ACBr com o Lazarus. O mecanismo de Threads foi substituido por algo mais
+      simples, usando um Simples TTimer...
+      - O funcionamento de BloqueiaTeclado continua usando a "técnica" de uma
+        janela ShowModal
+
+-- ACBrBase.pas --
+[*]   Permite modificar alguns parâmetros da porta serial mesmo com ela aberta.
+[-]   Modificações em run-time nos parâmetros da serial não eram efetivadas na
+      SynaSer
+
+-- SynaSer --
+[*]  Fontes da Classe SynaSer atualizados para a versão: 006.003.007
+
+Versão 0.8.3b  20/10/05
+-- ACBrTER --
+[+]   Criado novo componente para controle de MicroTerminais. Com o ACBrTER fica
+      fácil interagir com Microterminais, enviando linhas para o display e
+      recebendo as teclas pressionadas pelos usuários em um evento.
+      - Implementado inicialmente para o modelo:  Wilbor
+      ( Componente criado por: Gabriel Rodrigo Frones )
+
+-- ACBrTroco --
+[+]   Criado um novo componente para calculo detalhado de Troco, informando as
+      Cédulas e moedas necessárias. Permite editar a lista de Cédulas/Moedas
+      ( Componente e Programa Demo enviado por: Anderson Rogério Bejatto )
+
+-- ACBrBAL --
+[+]   Criado novo componente para interação com Balanças Eletrônicas.
+      Através do método "LePeso : Double" é possível obter o peso aferido pela
+      Balança... Também há a possibilidade de monitorar o envio automático de
+      peso em balanças que possuem essa característica, ligando a propriedade
+      boleana "MonitorarBalanca". A cada peso lido o evento "OnLePeso" será
+      disparado.
+      - Inicialmente implementamos os modelos Filizola e Toledo PrixIII
+      ( Componente e Programa Demo elaborados por Fábio Farias,
+        Daniel Simões de Almeida e Walmir Silva)
+
+-- ACBr_D5.dpk --
+[+]   Criado novo package para compatibilizar o projeto com o Delphi 5
+[+]   Adicionada nova Unit ACBrD5.pas contendo todas as Functions e Procedures
+      que não existiam no Delphi 5, permitindo a compilação...
+      - Essa Unit NAO é utilizada ou compilada nas versões do Delphi 6 acima.
+      - Essa Unit NAO É LGPL pois contem códigos de propriedade da Borland
+[*]   Quase todos os fontes do projeto foram revisados para permitir a
+      compilação condicional no Delphi 5 usando {$IFDEF Delphi6_UP}
+
+-- ACBr_LCL.lpk --
+[+]   Criado novo package para compatibilizar o projeto com o Lazarus (FPC)
+      http://www.lazarus.freepascal.org/
+      - Compatibilidade feita por: Douglas Fernando Scheibler
+[*]   Vários fontes do projeto foram revisados para permitir a compilação
+      condicional no Lazarus usando {$IFDEF FPC}
+
+-- ACBrECF --
+[*]   Método "VendeItem" modificado para permitir informar o Tipo da Alíquota
+      - O parâmetro TIPO é opcional, a passagem de parâmetros antiga continua
+        funcionando
+      - O Tipo pode ser informado na mesma String, no final da alíquota,
+         exemplos: 18T (18% ICMS) , 2,5S  (2,5% ISS)
+      - Recurso adicionado para evitar conflito de alíquotas com o mesmo valor
+        porém de Tipos diferente: Exemplo: 01 12% ICMS,   02 12% ISS.
+        Usando "12T", o ACBrECF usa a alíquota 12 do ICMS, "12S" a do ISS
+[*]   Método "AchaICMSAliquota" modificado para receber o parâmetro Tipo.
+      AchaICMSAliquota( ValAliquota, Tipo = ' ')
+      Se o Tipo não for informado assume (vazio), e a busca por alíquota é feita
+      sem se importar com o Tipo de alíquota
+[*]   Melhorado suporte a todos os comandos que recebem uma Double. O componente
+      irá ajustar as Decimais dos valores para o máximo permitido pelo ECF
+      usando a função RoundTo()
+[-]   Corrigido Bug Inserido versão 0.8.2b. método FechaCupom e outros métodos
+      que recebiam um parâmetro Observação : String. O caracter de Pulo de Linha
+      na String ( representado por #10  ou  | (pipe)) não era processado.
+      - Bug reportado por: Cláudio Borba
+[*]   No Método ReduçãoZ, era obrigatória a passagem de um parâmetro
+      TDateTimTDateTime, que agora, é opcional.
+      - Para os ECFs em que esse parâmetro é obrigatório será usado "now" caso
+        o parâmetro não seja informado.
+      - Nos ECFs em que o parâmetro NAO é obrigatório o comando enviado ao ECF
+        não conterá String com a DataHora caso o parâmetro não seja informado.
+[*]   Método "SubtotalizaCupom" modificado para receber como 2o parâmetro a
+      Mensagem de Rodapé do Cupom... (Permite a omissão dessa parâmetro)
+      - Em alguns ECFs (como a DataRegis) é necessário informar a Mensagem antes
+        dos pagamentos pois o ECF não possui um comando para Fechamento de Cupom
+        O Fechamento é executado assim que o Total de pagamentos atinge o Total
+        do Cupom
+      - Nos ECFs que não usam a Mensagem de Rodapé nesse método ela será
+        acumulada internamente e usada em FechaCupom, caso nenhuma mensagem
+        seja informada em FechaCupom
+[+]   Criado um novo mecanismo de espera ao término da Impressão. Alguns ECFs
+      respondem ao comando muito antes do término da impressão, e isso poderia
+      causar problemas aos comandos enviados na sequencia.
+      - Adicionada a propriedade "AguardaImpressao", quando ela é ajustada para
+        True, o método "LeReposta" irá efetuar chamadas a função
+        "VerificaFimImpressao" até que ela retorne True
+      - "VerificaFimImpressao" foi implementada em cada Classe de ECF em substi-
+        tuição ao método "EnviaComandoEspera"
+[+]   Adicionado métodos e propriedades para Processar as Lista Unidades de
+      Medida, presente apenas em alguns modelos de ECF. (DataRegis)
+      procedure CarregaUnidadesMedida
+      Property UnidadesMedida : TACBrECFUnidadesMedid
+      function AchaUMDDescricao( Descricao : String ) : TACBrECFUnidadeMedida
+      function AchaUMDIndice( Indice : String ) : TACBrECFUnidadeMedida
+      Procedure ProgramaUnidadeMedida( var Descricao: String)
+      - O programa ECFTeste.dpr foi modificado para exemplificar o uso desses
+        novos métodos
+
+-- ACBrECFNaoFiscal --
+[-]  Corrigido Bug na Abertura do dia através da LeituraX. ECF não ficava no
+     estado estLivre mesmo após a LeituraX
+     -  Bug reportado por Fábio Farias
+[-]  Leitura do comando de Abertura de gaveta do arquivo INI não era
+     decodificada corretamente
+     -  Bug reportado por Fábio Farias
+[-]  Troco no cupom não era subtraído da forma de Pagamento: 01-Dinheiro
+     -  Bug reportado por Fábio Farias
+[-]  Corrigido Bug em Impressão de Relatório Gerencial... A primeira linha não
+     era impressa...   - Bug Reportado por:  Anderson Rogério Bejatto
+[-]  Corrigido consumo excessivo de CPU em Venda com Muitos Itens
+     - Bug Reportado por:  Anderson Rogério Bejatto
+[*]  Relatório Gerencial modificado para imprimir apenas um cabeçalho,
+     semelhante aos ECFs novos (não imprime mais uma Leitura X antes do Relat.)
+[+]  Propriedade "Operador" será gravada no arquivo ACBrECFxxx.INI
+[*]  Rodapé padrão modificado para incluir as Informações: Versão do ACBr e
+     Operador
+[*]  Modificado o Texto impresso após o término das Formas de pagamento de
+     "Valor Recebido" para "S O M A"...
+      - Essa linha será impressa apenas se tiver mais de 1 pagamento no Cupom
+
+-- ACBrECFSweda --
+[-]  Corrigido BUG na Rotina EnviaComando, que causava TimeOuts em vários
+     métodos e propriedades. ( O Controle de Fluxo de Hardware estava errado)
+[*]  Modelo "ecfSweda" Compatibilizado com a série ST (MFD). Testes realizados
+     usando o emulador "Sweda SIM Connect"
+[*]  Rotinas testadas e compatibilizadas com a série 9000. Testes realizados em
+     um ECF IF-S 9000IIIE ver 1.0
+[-]  Corrigido Bug em "VendeItem", em alguns valores Qtd x Preço Unitário a
+     função Trunc() do Delphi apresentava problemas, calculando errado o Total.
+[*]  Modificado o sistema de detecção de Firmaware através da propriedade
+     Publica "Versao : TACBrECFSwedaVersao"
+[*]  Modificado o mecanismo de Espera do término da Impressão usando a nova
+     propriedade "AguardaImpressao:=True" e a função "VerificaFimImpressao"
+[*]  Removido o método EnviaComandoEspera
+[*]  Adicionado suporte a Impressão de cheques
+
+-- ACBrECFBematech --
+[*]  Modificado o mecanismo de Espera do término da Impressão usando a nova
+     propriedade "AguardaImpressao:=True" e a função "VerificaFimImpressao"
+[*]  Removido o método EnviaComandoEspera
+[-]  Corrigido BUG em CarregaFormasPagamento. Todas as formas carregadas eram
+     convertidas para Maiúsculas   (Bug reportado por: Ederson Selvati)
+
+-- ACBrECFDaruma --
+[*]  Modificado o mecanismo de Espera do término da Impressão usando a nova
+     propriedade "AguardaImpressao:=True" e a função "VerificaFimImpressao"
+[*]  Removido o método EnviaComandoEspera
+[-]  Corrigido BUG na carga de Formas de Pagamento e CNF. A rotina anterior
+     carregava todas as formas de pagamento... mesmo as que não haviam sido
+     programadas   (bug corrigido por Ederson Selvati)
+
+-- ACBrECFDataregis --
+[*]  Ajuste de todos os métodos para compatibilizar com a versão 02.05
+     (por: Anderson Rogério Bejatto)
+[*]  Modificado o mecanismo de Espera do término da Impressão usando a nova
+     propriedade "AguardaImpressao:=True" e a função "VerificaFimImpressao"
+[*]  Removido o método EnviaComandoEspera
+[*]  VendeItem, Adicionado o Numero do Item Vendido antes da impressão do código
+     (DataRegis não imprime o No do Item, o que dificulta no Cancelamento de
+      de Item)
+
+-- ACBrECFMecaf --
+[*]  Corrigido BUG em VendeItem... para a MECAF imprimir o Item em 2 linhas (e
+     e não em 3 linhas) ela deve restringir a descrição em 20 caracteres
+     (Bug Reportado por Rildecy de Queiroz Borba)
+[*]  Compatibilizado com a versão 301
+[*]  Corrigido BUG. Quando a redução z ficava pendente de um dia para o outro
+     o ECF ficava em estDesconhecido. (Gabriel Fernandes - Duel Informática)
+
+-- ACBrECFUrano --
+[+]   Iniciado o desenvolvimento do modelo Urano (por Aurimenes Apolonio Silva)
+      - Métodos de Venda e Relatórios concluídos.
+
+-- ACBrCHQ --
+[-]   Arquivo BemaFi32.INI, não era lido e processado mesmo quando existente na
+      mesma pasta do Executável.
+      - Esse Bug também afeta o componente ACBrECF quando usando um modelo
+        ecfBematech ( apenas no método ACBrECF.ImprimeCheque )
+
+-- ACBrCHQSchalter (ImpreCheque) --
+[*]   Corrigido métodos ImprimeLinha e ImprimeVerso
+
+-- ACBrBase --
+[*]   Criado {$DEFINE ThreadEnviaLPT}, que quando desligado permite desativar a
+      ThreadEnviaLPT. Padrão é desabilitar a Thread por motivos de performance
+      - Use esse opção se você deseja ligar a Thread
+[*]   Adicionada função "IIsTXTFilePort" que retorna Verdadeiro se o conteúdo da
+      Porta termina com ".TXT"
+[*]   Caso a porta seja um arquivo TXT (IsTXTFilePort) o componente mantém os
+      dados no arquivo, acrescentando as linhas "impressas" no final
+
+-- ACBrUtil --
+[+]   Adicionada a Função  TruncFix( X : Real) : Integer
+      Essa função é usada para corrigir o bug de otimização da função Trunc()
+      original do Delphi
+
+
+Versão 0.8.2b  05/07/05
+-- ACBrECF --
+[-]   Corrigido BUG em ArredondaPorQtd. Em algumas ocasiões a Qtd era adicionada
+      desnecessariamente. Ex: Qtd = 1, Preço = 1,99 o resultado impresso era:
+      1,001 x 1,99 = 1,99
+      - Bug causado por Erro na otimização da função Trunc do Delphi:
+      ( http://www.activedelphi.com.br/modules.php?op=modload&name=News&file=
+         article&thold=-1&mode=flat&order=0&sid=87 )
+
+[*]   Melhorado suporte a todos os comandos que recebem uma String livre para
+      Observação, removendo os Acentos e ajustando as quebras de linha, a fim
+      de não causar erros na hora da Impressão.
+
+-- ACBrECFDataRegis --
+[+]   Iniciado o desenvolvimento do modelo DataRegis (por Airton Stodulski)
+
+-- ACBrECFBematech --
+[-]   Corrigido BUG em FechaCupom. Linhas de Observação eram impressas com
+      alinhamento errado.                    ( Bug reportado por: Erique Costa )
+[-]   Corrigido BUG em AbreCupom na MP25 / MFD. Mesmo que CPF/CNPJ não fosse
+      informado era impressa a linha de CPF/CNPJ.
+      ( Bug reportado por: Anderson Rogério Bejatto )
+
+-- ACBrECFMecaf --
+[*]   Fontes adaptados para suporte da Versao FCP201 da MECAF (antiga)
+[-]   Corrigido BUG em FechaCupom. Linhas de Observação eram impressas com
+      alinhamento errado.        (Bug reportado por Licerio José Rodrigues Neto)
+[-]   Corrigido BUG em Estado. No início do dia Estado sempre constava como
+      estBloqueda                (Bug reportado por Licerio José Rodrigues Neto)
+
+-- ACBrECFDaruma --
+[*]   Inicio do desenvolvimento para suporte a Daruma MFD (não concluído por
+      falta de documentação )
+
+-- ACBrECFSweda --
+[-]   Corrigido alguns Bugs nos ECFs versão 0.3, em VendeItem e
+      EfetuaPagamento        (Bugs reportados por Licerio José Rodrigues Neto)
+
+-- ACBrECFSchalter --
+[-]   Corrigido Bug na VendeItem, que interpretava errado Produtos vendidos sem
+      sem nenhuma casa decimal como 3 casas decimais.
+      (Bug corrigido por Valmor Florez)
+
+-- ACBrECFNaoFiscal --
+[-]   Variáveis Subtotal ou TotalPago poderiam, conter valores com mais de 2
+      decimais, o que poderia causar problemas nas comparações dos valores.
+      (Bug reportado por Licerio José Rodrigues Neto)
+
+-- ACBrValidador --
+[+]  Adicionada a propriedade Publica DigitoCalculado readonly, que assim como
+     MsgErro, terá um valor definido apenas após chamar o método Validar
+
+-- ACBrCHQ --
+[-]  Corrigido BUG no envio da Data em Linux (data como dd-mm-aa)
+     (Bug reportado por Matheus Nogueira)
+
+-- ACBrUtil --
+[+]   Adicionada as funçoefunções:
+      function OnlyNumber(const Value: string): String;
+      - Retorna uma String apenas com os char Numéricos contidos em <Value>
+      function OnlyAlpha(const Value: string): String;
+      - Retorna uma String apenas com os char Alpha contidos em <Value>
+      function OnlyAlphaNum(const Value: string): String;
+      - Retorna uma String apenas com os char Alpha-Numericos contidos em <Value>
+
+[*]   Função Poem_Zeros(Texto : String; Tamanho : Integer) modificada para
+      permitir Strings com numeros (Texto) maiores do que o máximo permitido
+      pelo tipo Inteiro.
+
+Versão 0.8.1b  01/04/05
+-- Estrutura de Diretórios --
+[*]   Alterada a estrutura de diretórios e pacotes para facilitar a distribuição
+
+-- ACBrMonitor --
+[+]   Lançada a primeira versão do programa ACBrMonitor.
+      - Permitirá o acesso remoto dos componentes ACBr por TCP/IP ou TXT, neces-
+        sario em aplicações rodando em ambientes de "Terminal Burro" como por
+        exemplo WTS (Windows Terminal Server), ou LTS, SSH, Telnet
+      - Permite que outras linguagens que consigam usar a comunicação por TCP/IP
+        ou ler e criar arquivos TXT, interagir com os componentes ACBr
+
+-- ACBrECF --
+[+]   Novo modelo de ECF implementado:   ecfSweda
+      - Deve ser compativel com os seguintes modelos da Sweda:
+        A - IF-7000III, B - IF-7000I,  C - IF-7000II, D - IF-7000IE,
+        E - IF-7000IIE, F - IFS-9000,  G - IFS9000IIIE e todas as versões do
+        modelo IF-7000I (0.03, 1.0, 1.5)
+      - Testado apenas em uma Sweda IFS-7000I v1.5  Favor reportar bugs em
+        demais modelos.
+[+]   Novo roteiro de teste de ECF (Source\Pascal\Demo\RoteiroTestesECF.TXT).
+      Ajude a testar o ACBr rodando o Roteiro de testes no seu equipamento.
+[+]   Adicionado evento OnMsgPoucoPapel: TNotifyEvent;  que é acionado sempre
+      que a msg de pouco papel precisa ser exibida. Para manter a funcionalidade
+      anterior, se nada for atribuído a esse evento, uma MessageDlg será exibida
+      com a mensagem: "Pouco Papel"
+[+]   Novas funções para localizar o ECF automaticamente:
+      Function AcharECF( ProcuraModelo: Boolean = true;
+                         ProcuraPorta : Boolean = true;
+                         ATimeOut : Integer = 0): Boolean ;
+      Function AcharPorta(ATimeOut: Integer = 0): Boolean;
+      - Se a propriedade Porta = '' (vazia) ou 'procurar' o Componente irá
+        tentar localizar o ECF definido em Modelo nas portas de COM1 a COM6
+[+]   Adicionada a propriedade   ArredondaPorQtd: Boolean (Published). Com essa
+      nova propriedade é possível Arredondar sempre, mesmo que o ECF não permita
+      Arredondamento (os novos ECF's MFD não permitem arredondar). Nesse caso o
+      arredondamento é feito, somando 0.001 na QTD do Item Vendido até o valor
+      Truncado ser igual ao Valor Arredondado.
+[+]   Adicionada a propriedade   HorarioVerao: Boolean (readonly) que lê o Flag
+      de Horario de Verão do ECF
+[+]   Adicionada a propriedade   Arredonda: Boolean (readonly) que lê o Flag de
+      Arredondamento do ECF
+[+]   Adicionada a propriedade   NumLoja : String  (4) (readonly)
+      - Apenas Bematech retorna corretamente o NumLoja, em todos outros modelos
+        será retornado '001'
+[+]   Adicionada a propriedade   NumCRO  : String  (4) (readonly)
+      - Não funciona na Schalter (retorno padrão '001')
+[+]   Adicionado Metodos para Impressão e Captura da Memória Fiscal.
+      Procedure LeituraMemoriaFiscal( DataInicial, DataFinal : TDateTime ) ;
+      Procedure LeituraMemoriaFiscal( ReducaoInicial, ReducaoFinal : Integer);
+      Procedure LeituraMemoriaFiscalSerial( DataInicial, DataFinal : TDateTime;
+         var Linhas : TStringList ) ;
+      Procedure LeituraMemoriaFiscalSerial( ReducaoInicial,ReducaoFinal:Integer;
+         var Linhas : TStringList ) ;
+      - Os métodos usam a Sobrecarga. A LeituraMemoriaFiscalSerial retornará o
+        conteúdo da leitura em um TStringList através do parâmetro "Linhas"
+[+]   Adicionada Procedure MudaArredondamento(Arredondar: Boolean);
+      - Alguns modelos de ECF não possuem ou não permitem ligar o Arredondamento
+      - Funciona somente após Redução Z e antes da 1a venda.
+[*]   Procedure VendeItem agora permite que o parâmetros AliquotaICMS seja
+      especificado em Valor da Aliquota ou Indice da Aliquota.
+      - Para especificar em Indice use o prefixo 'T' Exemplo:
+        'T03' = Aliquota na posiçao 03
+      - Se AliquotaICMS iniciar com 'I', 'F' ou 'N' usa os respectivos totali-
+        zadores internos para Isençao, SubstutiçaoTributaria ou NaoIncidêndia.
+      - Se for um Numero válido o componente irá usar o Indice da primeira
+        aliquota equivalente ao Numero encontrada.. Exemplos: 18  ,  2.26  , 12 
+[+]   Atendendo a pedidos, foi adicionado o método de Programação de Alíquotas
+         Procedure ProgramaAliquota( Aliquota : Double; Tipo : Char = 'T';
+            Posicao : String = '') ;
+      - Funciona somente após Redução Z e antes da 1a venda e/ou Leitura X
+      - Tipo pode ser: 'S' para Alíquota de Serviço (ISS) ou
+        'T' (default) para ICMS
+      - Se a posição não for informada (vazio = default) o componente achará a
+        próxima posição livre
+[*]   Adicionada o campo "Tipo : Char" em TACBrECFAliquota
+      - Se TACBrECFAliquota.Tipo = 'T' alíquota de ICMS, 'S' alíquota de ISS.
+[+]   Adicionado o método de Programação de Formas de Pagamento (FPG)
+         Procedure ProgramaFormaPagamento( var Descricao: String;
+            PermiteVinculado : Boolean = true; Posicao : String = '') ;
+      - Funciona somente após Redução Z e antes da 1a venda e/ou Leitura X
+      - Se a posição não for informada (vazio = default) o componente achará a
+        próxima posição livre
+      - Na Daruma e Schalter, se PermiteVinculado for True, também será
+        programado um comprovante não fiscal (CNF) com a mesma descrição.
+      - Bematech e Mecaf: não usam o parâmetro PermiteVinculado.
+[+]   Adicionado o método de Programação de Comprovantes não Fiscais (CNF)
+         Procedure ProgramaComprovanteNaoFiscal( var Descricao: String;
+            Tipo : String = ''; Posicao : String = '') ;
+      - Funciona somente após Redução Z e antes da 1a venda e/ou Leitura X
+      - Tipo pode varias de acordo com o Modelo do ECF. Se vazio, assume o
+        Default de cada ECF
+        - Bematech e Mecaf: não usam o parâmetro Tipo.
+        - Daruma: 'V'  Comprovante Vinculado,
+                  '+'  Entrada de Recursos,
+                  '-'  Saida de Recursos...
+                  - Se vazio assume: 'V'. Especifique apenas uma das opções.
+        - Schalter: 'D' - Permite Desconto em Item.
+                    'A' - Permite Acrescimo no Subtotal
+                    'C' - Permite Cancelamento de Item
+                    'P' - Obriga forma de Pagamento
+                    'Vnn' - Obriga emissão de vinculado na Forma de Pagamento nn
+                  - Se vazio assume Default = "DAC".
+                  - Se usada a opção V todas as outras opções são ignoradas.
+                    Exemplos:  V04 -> Torna a Emissão do Cupom Fiscal Vinculado.
+                                      obrigatória para a Forma de Pagamento 04
+      - Se a Posição não for informada (vazio = default) o componente achará a
+        próxima posição livre
+
+[-]   Corrigido Bug em Impressão de Relatório Gerencial e Cupom NÃO fiscal
+      Vinculado. Caso houvesse algum erro dentro desses relatórios não era
+      gerada nenhuma exceção.
+
+-- ACBrECFBematech --
+[+]   Implementada correção para BUG detectado no comando TotalPago (35 22) das
+      novas impressoras MP25FI e MFD versão 01.00.00.
+      - Esse modelo irá retornar o Total Pago sempre igual ao Subtotal, o que
+        pode ocasionar problemas em algumas aplicações.
+      - A correçao é feita por meio de uma váriável Interna, totalizando os
+        pagamentos efetuados no Cupom. Portanto, se o programa for re-iniciado
+        durante a fase de Pagamento do Cupom o problema ainda ocorrerá.
+[-]   Método FechaRelatorio, gerava exceção caso a Impressora não estivesse com
+      Relatório Gerencial, ou CV aberto.
+[-]   Falhava ao ler a Propriedade "NumSerie" em impressora não MFD.
+[-]   CarregaAliquotas retornava valores errados se a Impressora tivesse mais
+      de 8 alíquotas cadastradas.
+[-]   Procedure CorrigeEstadoErro gerava exceção em MFD pois essa não possui o
+      cmd #70
+
+-- ACBrECFDaruma --
+[+]   Implementado método: ImpactoAgulhas, que permite mudar a força de Impacto.
+[-]   Corrigido BUG em "FechaRelatorio", que não conseguia fechar corretamente
+      um Cupom NAO Fiscal Vinculado, na Daruma FS345 - 1.20
+      (Bug reportado por Aurimenes Apolonio Silva)
+
+-- ACBrECFSchalter --
+[-]   Corrigido Bug na AbreCupom, que omitia o Endereço do Emissor,
+      (Bug Reportado por: Valmor Florez - Evoluthiva)
+[*]   Inserido novo comando que permite imprimir o CNPJ / CPF do Cliente, na
+      AbreCupom
+
+-- ACBrECFMecaf --
+[-]   Propriedade "Estado" não era detectada corretamente em algumas situações,
+      retornando "estRelatorio" na maioria das vezes.
+
+-- ECFTeste.dpr --
+[*]   Programa de teste do ACBrECF atualizado para testar os novos recursos do
+      componente. (QECFTeste também foi atualizado)
+
+-- ACBrLCB --
+[-]   Corrigido bug em ACBrLCB. Quando o sufixo enviado pelo leitor era diferente
+      do sufixo informado no componente, gerava erro de TimeOut e não lia o
+      código. Agora o código é lido mesmo sem o sufixo ou com o sufixo errado.
+      IMPORTANTE: Informar o sufixo correto para o componente é importante para
+      ler corretamente um código de cada vez. O sufixo é quem separa os códigos
+      lidos, sem o sufixo o componente pode ler 2 códigos simultaneamente.
+
+-- ACBrDIS --
+[+]   Adicionado suporte a Linux para o Display de Mensagens modelo: Gertec Teclado
+      - A comunicação com a Porta AT não é tão rápida quando a Porta Serial,
+        por isso, evite o uso excessivo de textos "animados"
+      - A função TxKeyboard(), usada nesse modelo, funciona normalmente em Win9x,
+      - XP /NT /2000: deve-se usar um device driver que permita acesso direto
+        a porta AT (disponível em www.gertec.com.br)
+      - Linux: é necessário ter privilégios de ROOT para acessar /dev/port
+        (use: su   ou   chmod u+s SeuPrograma )
+
+-- ACBrValidador --
+[+]   Adicionada rotina de verificação de CEPs
+      (por Rennes Moreira Pimentel - InforSystem)
+[+]   Adicionado verificação de CARTOES de Crédito, extraída do site:
+      www.tcsystems.com.br
+      - Testada com os cartões: (Dinners, Credicard, Visa, American Express)
+[+]   Adicionada a propriedade: ExibeDigitoCorreto : Boolean ( default False )
+      - Se houver erro no Digito Verificador e essa propriedade for True, o
+        Digito calculado (correto) será exibido na Mensagem de Erro.
+[-]   Corrigido BUG na verificação de I.E. do Estado de GO para inscrições na
+      faixa de '101031050' a '101199979'
+
+-- ACBrUtil --
+[+]   Adicionada a Function   FilesExists(FileMask: string) : Boolean ;
+[+]   Adicionada a Procedure  DeleteFiles(FileMask: string)  ;
+[+]   Adicionada a Function   CopyFileTo(AFromFileName, AToFileName : String;
+                                const AFailIfExists : Boolean = true) : Boolean;
+[+]   Adicionada a Procedure: RunCommand(Command: String; Params: String = '';
+                                Wait : Boolean = false; WindowState : Word = 0);
+
+-- ACBrCalculadora --
+[-]   Posição na tela da Calculadora não era mantida.
+
+-- ACBrDevice --
+[*]   Função EnviaString quanto em Porta é Paralela ou Arquivo usa Thread para
+      detectar se os Dados estão sendo "gravados" com sucesso. Evitando que o
+      programa "congele" quando a Porta/Arquivo não está pronta.
+[*]   Implementada detecção de EmLinha quando Porta é Paralela ou Arquivo,
+      usando mecanismo de Thread citado acima.
+[*]   Porta Paralela ou arquivo é aberto e fechado em seguida quando há a neces-
+      sidade de enviar dados. Antes a Porta/Arquivo permanecia aberta enquanto
+      ACBrDevice estivesse Ativo, isso retardava a impressão da ultima linha.
+
+-- ACBr.inc --
+[*]   Definição VisualCLX agora funciona automaticamente (identificando se QTypes
+      ou QForms foram carregadas)
+[*]   Suporte para identificação do Kylix 1, 2 e 3 e seus recursos
+[*]   Suporte para identificação do Delphi 8 e 9 e seus recursos
+[*]   Suporte para identificação do Free Pascal (FPC) e do Lazarus
+
+
+Versão 0.07a  17/10/04
+-- ACBrDIS --
+[+]   Novo componente para Display de Mensagens para Cliente. Possui Procedures
+      para exibir textos "animados" no display, usando uma Thread própria para
+      não atrapanhar o desempenho da Aplicação. VEJA o demo DISTeste.EXE
+      - Modelo: disGertecSerial -  testado ok.
+      - Modelo: disGertecTeclado - Por enquanto, funciona apenas em Win9X. Irá
+        gerar exceção em WinXP/2000/NT ou Linux. Isso se deve ao fato da rotina
+        que envia os caractéres para a porta do Teclado ser escrita em ASSEMBLER
+        e os SO mencionados acima não permitem acesso direto a porta do teclado.
+[+]   Novo Demo para testar o ACBrDIS: DISTeste.dpr (VCL) e QDISTeste.dpr (CLX)
+
+-- ACBrLCB --
+[+]   Novo componente para Leitores de Código de Barra Seriais.
+      - Ajuste os parametros seriais de acordo com o seu modelo.
+      (padrão 9600,8,N,1).  O sufixo (caracter adicionado pelo Leitor) também
+      deve ser informado corretamente (geralmente igual a #13  ou #13,#10).
+      - Através da propriedade UsarFila é possível ter um controle apurado de
+        todos os códigos informados pelo Leitor.
+[+]   Novo Demo para testar o ACBrLCB: LCBTeste.dpr (VCL) e QLCBTeste.dpr (CLX)
+[+]   Novo Emulador de Leitor Serial.  Se você não dispoem de um Leitor serial
+      para testes, esse emulador pode ser bem útil. Use uma porta Serial dife-
+      rente da especificada no ACBrLCB. O Emulador envia Strings pela Serial
+      simulando um Leitor de Cod.Barras. Use o mesmo cabo utilizado pelos
+      Emuladores de ECF para ligar as duas Portas Seriais
+
+-- ACBrEnterTab --
+[+]   Novo componente somente para CLX. Tem como finalidade traduzir a tecla
+      ENTER como se fosse a tecla TAB, para poder mudar de campos com a tecla
+      ENTER. É necessário um ACBrEnterTab para cada Form a ser manipulado.
+      - Não há versão VCL, pois já existe o componente "JvEnterAsTab" da biblio-
+        teca JEDI ( http://jvcl.sourceforge.net ).
+      - Para ser compatível com Linux esse componente NAO usa captura de
+        mensagens ou chamadas a API. Ele utiliza KeyPreview e OnKeyPress do Form
+        dono (Owner) do componente. Entretanto se houver algum evento OnKeyPress
+        programado pelo usuário, ele continuará funcionando normalmente.
+
+-- ACBrECFSChalter --
+[-]  Corrigido retorno de DataHora (gerava exceção)
+[-]  Corrigido retorno de NumSerie, que retornava 2xchr(0) no final do número.
+[-]  Cancelamento de Cupom não era possível se a Impressora estivesse em modo
+     de Pagamento e com o Pagamento já finalizado.
+[-]  CarregaComprovantesNaoFiscais (CNF) não estava lendo Flag de Permite-
+     Vinculado e nem a Forma de Pagamento associada ao CNF,
+
+-- ACBrECFDaruma --
+[-]  Estado da Impressora sempre retornava Bloqueada
+[-]  Venda de Item com Descriçao Grande não funcionava
+[-]  Bloquear Mouse / Teclado  e  Exibir Msg de Aguarde não funcionavam, pois a
+     DARUMA responde muito antes da impressao acabar, finalizando a espera...
+     Corrigido com adiçao da procedure EnviaComandoEspera() como na BEMATECH.
+[-]  Abertura de Gaveta de Dinheiro gerava TimeOut (nesse comando não há nenhuma
+     resposta da impressora)
+
+Versão 0.06a  14/09/04
+-- ACBrCHQ --
+[+]  Novo componente para manipular Impressoras de Cheques. Fabricantes suporta-
+     dos: Bematech, Chronos, Schalter, Perto, ECF's, Imp.Comum.
+     - Imp.Comum: Transforme aquela velha matricial em uma Impressora de Cheques
+       O componente envia comandos diretamente para a porta das impressoras(LPT1
+       ,LPT2, LPTn) usando "AssignFile()", e comandos EPSON ESC/P2 para configu-
+       rar o Lay-Out da página do cheque. Portanto,impressoras "for Windows" não
+       devem funcionar..
+     - Para usar a impressao de cheques em ECF's é necessário um ECF 2 estaçoes
+       e um componente ACBrECF configurado para o Modelo do ECF.
+     - Modelo Bematech. Testada por "Everton H. Cardoso" da Bematech S/A - OK
+     - Modelo Chronos. Testada por mim mesmo - OK
+     - Modelo Schalter. Não testado. (mas para minha surpresa, a Impressora
+       Chronos funciona perfeitamente com os comandos da Schalter).
+     - Modelo Perto. Unit não está finalizada. Todo o desenvolvimento foi
+       baseado em Manuais, mas não pude "debugar" a Unit por não ter um Equipa-
+       mento disponível. Testes realizados pela Perto S/A por Miguel Silva,
+       acusaram o funcionamento incorreto. Terminarei assim que uma impressora
+       PertoCheck estiver disponível....
+
+-- ACBrECF --
+[+]  Mais 3 impressoras Suportada pelo ACBrECF - Daruma, Schalter e Mecaf.
+     Considerando os Modelos que utilizam chip-set da Mecaf o ACBrECF agora
+     suporta os ECF's:  Bematech, Daruma, Schalter, Mecaf, (Elgin, Digiarte,
+     Zanthus, Acr, Aoki, Chronos, Promcomp, TrendsSTS, Unigraph). Além do modelo
+     NAO FISCAL que é um Emulador de Impressora Fiscal em matriciais comuns
+     (leia Nota legal durante o uso do Emulador)
+     - Infelizmente não pude testar nenhum dos 3 ECF's lançados, por não ter um
+       exemplar no momento. Entretanto, o código desses Modelos de ECF's foram
+       migrados de uma rotina em Clipper 5.01 (DOS) que também funcionam usando
+       a comunicação direta na porta Serial.
+     - Se você possuir algum dos modelos de ECF citados acima, eu ficaria muito
+       agradecido em saber o resultado dos seus testes...
+       Por favor mande um e-mail...
+
+[-]  As rotinas de Relatório Gerencial e Cupom Fiscal Vinculado NAO estavam
+     imprimindo a Linha 1 do Relatório.  
+[+]  Novo Evento OnAguardandoRespostaChange. Que é executado toda vez que o
+     valor da propriedade AguardandoResposta for modificado. Muito útil para
+     bloquear os controles visuais e impedir que o usuário tente enviar novos
+     comandos se o anterior ainda não terminou.
+[+]  Adicionada propriedade "ComprovantesNaoFiscais" do tipo TObjectList,
+     contendo a descriçao de todos os CNF's  programados na Impressora.
+     - Adicionado Metodo:  CarregaComprovantesNaoFiscais
+     - Adcinada as funções: AchaCNFDescricao e AchaCNFIndice
+[*]  Adicionada Sobrecarga nos Metodo CupomVinculado e AbreCupomVinculado com
+     versão que é possivel informar o CodCompravanteNaoFiscal (necessário em
+     alguns modelos de ECF).
+[*]  Removida Exceção que era disparada quando novo comando era solicitado e
+     comando anterior ainda não havia sido concluido.
+[*]  Abertura de Cupom zera o Tempo de mensagem para pouco papel, ou seja, se
+     estiver com pouco papel, sempre haverá alerta no caso de Abertura de Cupom
+[*]  Propriedade (subcomponente) 'Serial' passou a se chamar 'Device'
+
+-- ACBrECFBematech --
+[*]  NumSerie adaptada para retornar 15 ou 20 carateres conforme a versão do ECF
+
+-- ACBrGAV --
+[*]  Propriedade (subcomponente) 'Serial' passou a se chamar 'Device'
+
+-- ACBrDevice --
+[+]  Adicionada propriedade Handshake, para facilitar a definicição do Handshake
+     necessário para cada equipamento. (RTS/CTS, DTR/DSR, XON/XOFF).
+     Essa propriedade está ligada diretamente a HardFlow (RTS/CTS) e SoftFlow
+     (XON/XOFF)
+[+]  Adicionado Metodo ImprimePos( Linha, Coluna, AString) para facilitar a
+     impressao direta de documentos em Matriciais.
+     - Propriedade PosImp : Tpoint, contem a cordenada atual da Impressora.
+
+
+Versão 0.05a  20/08/04
+[+] Demos de todos os componentes ACBr já compilados para Linux e Windows
+    adicionados no pacote final. DemosLinux_X.XXx.ZIP e DemosWin32_X.XXx.ZIP.
+    Onde X.XXx é a versão do ACBr. Os Demos Win32 são VCL, portanto nao devem
+    precisar de nenhuma biblioteca. Os Demos Linux devem precisar da QT
+    (libborqt-6.9-qt2.3.so) disponivel no Kylix
+-- ACBrValidador --
+[+] Novo Componente para validação de diversos documentos como por exemplo:
+    CPF, CNPJ, Num.Cheques, PIS, Inscrição Estadual (todos os estados).
+    Considerando as Inscrições Estaduais, esse componente verifica atualmente 31
+    documentos diferentes. Novos documentos poderão ser adicionados...
+[+] Novo Demo para testar o ACBrValidador: ValidadorTeste.dpr (VCL) e
+    QValidadorTeste.dpr (CLX)
+-- ACBrExtenso --
+[+] Novo Componente para traduzir Números para Extenso. Permite mudar o nome da
+    moeda e centavos
+[+] Novo Demo para testar o ACBrExtenso: ExtensoTeste.dpr (VCL) e
+    QExtensoTeste.dpr (CLX)
+-- ACBrGAV --
+[+] Adcionada String de abertura de Gavetas para Impressora NAO Fiscal Schalter
+[-] Corrigido BUG que não permitia atribuir uma Porta se modelo de gaveta igual
+    a gavImpressoraComum
+
+
+Versão 0.04a  19/07/04
+[-] Arquivos .DOF e .CFG não eram incluidos na pocote final de distribuição.
+    Os mesmos são necessários para compilação condicional usando a diretiva
+    CLX ou VisualCLX no Delphi (Windows)
+-- ACBrECF --
+[+] Nova impressora para o componente ACBrECF implementada. Modelo:  "NaoFiscal"
+    Na verdade esse modelo se trata de um pequeno "emulador" de impressora
+    Fiscal. Se comportando de forma muito semelhante a um ECF, inclusive possui
+    uma "memoria fiscal" que é gravada em um arquivo .INI. Muito útil para
+    ajudar no desenvolvimento de aplicações com ECF. Pode imprimir em Portas
+    Paralelas, Seriais, ou em arquivo, de acordo com a propriedade PORTA do
+    componente ACBrECF.       
+-- ACBrECFBematech --
+[*] Mensagem de pouco papel a cada n segundos não funcionava como o esperado.
+-- ACBrGAV --
+[+] Novo Componente ACBrGAV para acionamento de Gavetas de Dinheiro. As gavetas
+    podem ser ligadas a porta Serial, a uma impressora Fiscal ou a uma
+    Impressora NAO Fiscal (impressora comum). No caso de impressora Fiscal,
+    necessita de um componente ACBrECF.
+[+] Novo Demo para testar o ACBrGAV: GAVTeste.dpr (VCL) e   QGAVTeste.dpr (CLX)
+
+
+
+Versão 0.03a  28/06/04
+-- ACBrECF --
+[*] Propriedade NumVersao mudou de Integer para String para compatibilizar com
+    alguns modelos de ECF
+[*] Propriedades renomeadas: (Melhor organizaçao visual das Propriedades)
+    MsgTempoInicio -> TempoInicioMsg
+    MsgExibe       -> ExibeMensagem
+[*] Evento OnMsgAguarde teve seu parametro modificado de:
+    TempoRestante : Integer -> Mensagem : String
+    ( Peço perdão pelas mudanças acima. Mas achei necessário para tornar o
+      componente mais intuitivo. As propriedades não mais serão modificadas )
+[+] Novas Propriedades:
+    DescricaoGrande : Boolean default false;
+    MsgRelatorio, MsgPausaRelatorio : String;
+    PausaRelatorio : Integer  default 5
+    LinhasEntreCupons : Integer  default 7
+    FormMsgColor : TColor
+    FormMsgFonte : TFonte
+[+] Novos Metodos:
+    RelatorioGerencial(Relatorio : TStrings; Vias : Integer = 1)
+    AbreRelatorioGerencial
+    LinhaRelatorioGerencial( Linha : String )
+    CupomVinculado(COO, CodFormaPagto : String; Valor : Double
+              Relatorio : TStrings; Vias : Integer = 1)
+    AbreCupomVinculado(COO, CodFormaPagto : String; Valor : Double)
+    LinhaCupomVinculado( Linha : String )
+
+-- ACBrECFBematech --
+[+] Melhorado o suporte a impressora MFD, nova propriedade:  IsMFD : Boolean
+    ( Existe um bug na versão do Emulador EMULFITH 1.02 da Bematech, que não
+      retorna corretamente o TotalPago (Comando 35 22)  )
+[+] Suporte as novas propriedades e metodos de ACBrECF descritas acima.
+
+-- QECFTeste / ECFTeste --
+[+] Adcionadas rotinas de impressão de Relatório Gerencial e Cupom Vinculado
+[-] Rotina de exemplo "EnviarComando" corrigida para trabalhar com a Bematech
+
+
+Versão 0.02a  16/06/04
+---------------
+[+] Demo para o componente ACBrECF em VCL e CLX desenvolvido para todos os
+    comandos implementados no ACBrECF até o momento
+[-] Diversos Bugs corrigidos nas rotinas de Cupom Fiscal e Formas de Pagamento
+    da Impressora Bematech
+
+Versão 0.01a   14/06/04
+---------------
+[+] Início do Projeto
+[+] Primeira Versao finalmente lançada.
+[+] Componente ACBrCalculadora Finalizado,
+[+] Componente ACBrECF implementado parcialmente (80%)
+[+] Demo para o componente ACBrECF em VCL e CLX parcialmente desenvolvido (50%)

@@ -1,0 +1,112 @@
+object Form1: TForm1
+  Left = 211
+  Height = 301
+  Top = 184
+  Width = 843
+  Caption = 'Form1'
+  ClientHeight = 301
+  ClientWidth = 843
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  LCLVersion = '1.3'
+  object Label1: TLabel
+    Left = 164
+    Height = 13
+    Top = 13
+    Width = 100
+    Caption = 'Numero de Registros'
+    ParentColor = False
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Height = 255
+    Top = 46
+    Width = 843
+    Align = alBottom
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'NCM'
+        Width = 102
+        FieldName = 'CODNCM'
+      end    
+      item
+        Title.Caption = 'DESCRICAO'
+        Width = 350
+        FieldName = 'DESCRICAO'
+      end>
+    DataSource = DataSource1
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+    TabOrder = 0
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+  end
+  object BitBtn1: TBitBtn
+    Left = 8
+    Height = 25
+    Top = 8
+    Width = 145
+    Caption = 'Listar NCM''s'
+    OnClick = BitBtn1Click
+    TabOrder = 1
+  end
+  object BitBtn2: TBitBtn
+    Left = 695
+    Height = 25
+    Top = 8
+    Width = 137
+    Caption = 'Validar NCM'
+    OnClick = BitBtn2Click
+    TabOrder = 2
+  end
+  object Edit1: TEdit
+    Left = 616
+    Height = 21
+    Top = 10
+    Width = 73
+    MaxLength = 8
+    NumbersOnly = True
+    TabOrder = 3
+  end
+  object ACBrNcms1: TACBrNCMs
+    ProxyPort = '8080'
+    UrlConsulta = 'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?'
+    left = 744
+    top = 64
+  end
+  object DataSource1: TDatasource
+    DataSet = BufDataset1
+    left = 216
+    top = 112
+  end
+  object BufDataset1: TBufDataset
+    FieldDefs = <>
+    left = 309
+    top = 114
+    object BufDataset1CODNCM1: TStringField
+      DisplayWidth = 8
+      FieldKind = fkData
+      FieldName = 'CODNCM'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 8
+    end
+    object BufDataset1DESCRICAO1: TStringField
+      DisplayWidth = 200
+      FieldKind = fkData
+      FieldName = 'DESCRICAO'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+  end
+end

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_SEF2"/>
+    <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrSEF2\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)"/>
+    <Files Count="33">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSEF2"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2Conversao.pas"/>
+        <UnitName Value="ACBrSEF2Conversao"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_Bloco0.pas"/>
+        <UnitName Value="ACBrSEF2_Bloco0"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_Bloco0_1.pas"/>
+        <UnitName Value="ACBrSEF2_Bloco0_1"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_Bloco9.pas"/>
+        <UnitName Value="ACBrSEF2_Bloco9"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_eDoc_BlocoC.pas"/>
+        <UnitName Value="ACBrSEF2_eDoc_BlocoC"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_eDoc_BlocoC_Class.pas"/>
+        <UnitName Value="ACBrSEF2_eDoc_BlocoC_Class"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_BlocoE_1.pas"/>
+        <UnitName Value="ACBrSEF2_BlocoE_1"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_BlocoE.pas"/>
+        <UnitName Value="ACBrSEF2_BlocoE"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_BlocoH.pas"/>
+        <UnitName Value="ACBrSEF2_blocoH"/>
+      </Item10>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2\ACBrSEF2_BlocoH_1.pas"/>
+        <UnitName Value="ACBrSEF2_BlocoH_1"/>
+      </Item33>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="PCNComum"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

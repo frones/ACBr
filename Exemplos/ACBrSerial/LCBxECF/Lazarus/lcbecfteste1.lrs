@@ -1,0 +1,65 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TForm1','FORMDATA',[
+  'TPF0'#6'TForm1'#5'Form1'#4'Left'#3'#'#1#6'Height'#3'&'#1#3'Top'#3#175#0#5'Wi'
+  +'dth'#3'{'#1#18'HorzScrollBar.Page'#3'z'#1#18'VertScrollBar.Page'#3'%'#1#7'C'
+  +'aption'#6#5'Form1'#0#6'TLabel'#6'lInstr'#4'Left'#2#16#6'Height'#2'9'#3'Top'
+  +#3#224#0#5'Width'#3'Q'#1#9'Alignment'#7#8'taCenter'#8'AutoSize'#8#7'Caption'
+  +#6#195'Esse programa demonstra o uso dos componentes ACBrLCB e ACBrECF. '#201
+  +' necess'#225'rio configurar corretamente os componentes ACBr para o modelo '
+  +'de equipamento que vc possui,  antes de compilar o programa'#5'Color'#7#6'c'
+  +'lNone'#11'ParentColor'#8#8'WordWrap'#9#0#0#6'TLabel'#6'Label8'#4'Left'#3#24
+  +#1#6'Height'#2#14#3'Top'#2#14#5'Width'#2'O'#7'Caption'#6#15'Atraso Abertura'
+  +#5'Color'#7#6'clNone'#11'ParentColor'#8#0#0#6'TLabel'#7'lAtraso'#4'Left'#2'\'
+  +#6'Height'#2#25#3'Top'#3#240#0#5'Width'#3#190#0#7'Caption'#6#16'Simulando AT'
+  +'RASO'#5'Color'#7#6'clNone'#10'Font.Color'#7#7'clBlack'#11'Font.Height'#2#237
+  +#9'Font.Name'#6#20'Microsoft Sans Serif'#10'Font.Pitch'#7#10'fpVariable'#10
+  +'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#7'Visible'#8#0#0#6'TLabel'#6'L'
+  +'abel2'#4'Left'#3#24#1#6'Height'#2#14#3'Top'#2'3'#5'Width'#2'B'#7'Caption'#6
+  +#12'Atraso Venda'#5'Color'#7#6'clNone'#11'ParentColor'#8#0#0#7'TButton'#10'b'
+  +'LiberaECF'#4'Left'#3#24#1#6'Height'#2')'#3'Top'#3#160#0#5'Width'#2'S'#25'Bo'
+  +'rderSpacing.InnerBorder'#2#4#7'Caption'#6#13'Cancela Venda'#7'OnClick'#7#15
+  +'bLiberaECFClick'#8'TabOrder'#2#0#0#0#6'TPanel'#6'pVenda'#4'Left'#2#8#6'Heig'
+  +'ht'#3#193#0#3'Top'#2#8#5'Width'#3#1#1#8'TabOrder'#2#1#0#6'TLabel'#6'Label1'
+  +#4'Left'#2#16#6'Height'#2#13#3'Top'#2#24#5'Width'#2'X'#7'Caption'#6#17'C'#243
+  +'digo do Produto'#5'Color'#7#6'clNone'#11'ParentColor'#8#0#0#6'TLabel'#6'Lab'
+  +'el6'#4'Left'#3#152#0#6'Height'#2#13#3'Top'#2#24#5'Width'#2#17#7'Caption'#6#4
+  +'Aliq'#5'Color'#7#6'clNone'#11'ParentColor'#8#0#0#6'TLabel'#6'Label7'#4'Left'
+  +#3#200#0#6'Height'#2#13#3'Top'#2#24#5'Width'#2#16#7'Caption'#6#2'UN'#5'Color'
+  +#7#6'clNone'#11'ParentColor'#8#0#0#6'TLabel'#6'Label3'#4'Left'#2#16#6'Height'
+  +#2#13#3'Top'#2'D'#5'Width'#2'0'#7'Caption'#6#9'Descri'#231#227'o'#5'Color'#7
+  +#6'clNone'#11'ParentColor'#8#0#0#6'TLabel'#6'Label4'#4'Left'#2#16#6'Height'#2
+  +#13#3'Top'#2'p'#5'Width'#2'7'#7'Caption'#6#10'Quantidade'#5'Color'#7#6'clNon'
+  +'e'#11'ParentColor'#8#0#0#6'TLabel'#6'Label5'#4'Left'#2'h'#6'Height'#2#13#3
+  +'Top'#2'p'#5'Width'#2'C'#7'Caption'#6#14'Pre'#231'o Unit'#225'rio'#5'Color'#7
+  +#6'clNone'#11'ParentColor'#8#0#0#5'TEdit'#5'edCod'#4'Left'#2#16#6'Height'#2
+  +#21#3'Top'#2'('#5'Width'#2'e'#8'TabOrder'#2#0#4'Text'#6#13'7123456789012'#0#0
+  +#5'TEdit'#6'edAliq'#4'Left'#3#152#0#6'Height'#2#21#3'Top'#2'('#5'Width'#2'!'
+  +#8'TabOrder'#2#2#4'Text'#6#2'FF'#0#0#5'TEdit'#4'edUN'#4'Left'#3#200#0#6'Heig'
+  +'ht'#2#21#3'Top'#2'('#5'Width'#2'!'#8'TabOrder'#2#5#4'Text'#6#2'UN'#0#0#5'TE'
+  +'dit'#11'edDescricao'#4'Left'#2#16#6'Height'#2#21#3'Top'#2'T'#5'Width'#3#217
+  +#0#8'TabOrder'#2#1#4'Text'#6#20'DESCRICAO DO PRODUTO'#0#0#5'TEdit'#5'edQtd'#4
+  +'Left'#2#16#6'Height'#2#21#3'Top'#3#128#0#5'Width'#2'9'#8'TabOrder'#2#3#4'Te'
+  +'xt'#6#1'1'#0#0#5'TEdit'#6'edUnit'#4'Left'#2'h'#6'Height'#2#21#3'Top'#3#128#0
+  +#5'Width'#3#129#0#8'TabOrder'#2#4#4'Text'#6#4'0,01'#0#0#7'TButton'#10'bVende'
+  +'Item'#4'Left'#2'X'#6'Height'#2#25#3'Top'#3#160#0#5'Width'#2'K'#25'BorderSpa'
+  +'cing.InnerBorder'#2#4#7'Caption'#6#10'Vende Item'#7'Default'#9#7'OnClick'#7
+  +#15'bVendeItemClick'#8'TabOrder'#2#6#0#0#0#7'TButton'#7'Button1'#4'Left'#3#26
+  +#1#6'Height'#2#25#3'Top'#2'x'#5'Width'#2'K'#25'BorderSpacing.InnerBorder'#2#4
+  +#7'Caption'#6#10'Abre Cupom'#7'OnClick'#7#12'Button1Click'#8'TabOrder'#2#2#0
+  +#0#5'TEdit'#12'edAtrasoAbre'#4'Left'#3#24#1#6'Height'#2#21#3'Top'#2#30#5'Wid'
+  +'th'#2'9'#8'TabOrder'#2#3#4'Text'#6#4'6000'#0#0#5'TEdit'#13'edAtrasoVende'#4
+  +'Left'#3#24#1#6'Height'#2#21#3'Top'#2'C'#5'Width'#2'9'#8'TabOrder'#2#4#4'Tex'
+  +'t'#6#4'1000'#0#0#8'TACBrECF'#8'ACBrECF1'#6'Modelo'#7#12'ecfNaoFiscal'#5'Por'
+  +'ta'#6#17'C:\TEMP\SAIDA.TXT'#15'DescricaoGrande'#9#10'MsgAguarde'#6'0Aguarda'
+  +'ndo a resposta da Impressora: %d segundos'#12'MsgRelatorio'#6#23'Imprimindo'
+  +' %s  %d'#170' Via '#17'MsgPausaRelatorio'#6',Destaque a %d'#170' via, <ENTE'
+  +'R> proxima, %d seg.'#18'FormMsgFonte.Color'#7#7'clWhite'#19'FormMsgFonte.He'
+  +'ight'#2#11#17'FormMsgFonte.Name'#6#12'MS Shell Dlg'#18'FormMsgFonte.Pitch'#7
+  +#10'fpVariable'#12'FormMsgColor'#7#11'clHighlight'#26'OnAguardandoRespostaCh'
+  +'ange'#7' ACBrECF1AguardandoRespostaChange'#16'Device.HandShake'#7#9'hsRTS_C'
+  +'TS'#15'Device.HardFlow'#9#4'left'#3#200#0#3'top'#3#168#0#0#0#8'TACBrLCB'#8
+  +'ACBrLCB1'#5'Porta'#6#4'COM2'#6'Sufixo'#6#3'#13'#8'UsarFila'#9#12'FilaMaxIte'
+  +'ns'#2'd'#10'OnLeCodigo'#7#16'ACBrLCB1LeCodigo'#4'left'#3#230#0#3'top'#3#168
+  +#0#0#0#0
+]);

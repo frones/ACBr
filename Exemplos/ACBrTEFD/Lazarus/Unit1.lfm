@@ -1,0 +1,1346 @@
+object Form1: TForm1
+  Left = 371
+  Height = 452
+  Top = 104
+  Width = 731
+  Caption = 'TEFDDemo'
+  ClientHeight = 452
+  ClientWidth = 731
+  KeyPreview = True
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object Panel3: TPanel
+    Left = 0
+    Height = 194
+    Top = 208
+    Width = 731
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 194
+    ClientWidth = 731
+    TabOrder = 4
+    object Panel4: TPanel
+      Left = 561
+      Height = 194
+      Top = 0
+      Width = 170
+      Align = alRight
+      ClientHeight = 194
+      ClientWidth = 170
+      Constraints.MinWidth = 170
+      TabOrder = 0
+      object Panel5: TPanel
+        Left = 1
+        Height = 65
+        Top = 128
+        Width = 168
+        Align = alBottom
+        ClientHeight = 65
+        ClientWidth = 168
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        object spbAdicionaPagamento: TSpeedButton
+          AnchorSideTop.Side = asrCenter
+          Left = 14
+          Height = 22
+          Hint = 'Adiciona Pagamento'
+          Top = 5
+          Width = 23
+          Glyph.Data = {
+            36040000424D3604000000000000360000002800000010000000100000000100
+            2000000000000004000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00007D00FF007D00FF007D00FF007D
+            00FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00007D00FF31E38CFF31E78CFF007D
+            00FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00007D00FF42FBADFF42FFADFF007D
+            00FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00007D00FF00EF7BFF00EF7BFF007D
+            00FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00007D00FF29E37BFF29E37BFF007D
+            00FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00007D
+            00FF007D00FF007D00FF007D00FF007D00FF007D00FF39DB7BFF39DB73FF007D
+            00FF007D00FF007D00FF007D00FF007D00FF007D00FFFF00FF00FF00FF00219E
+            31FF63D384FF63D784FF5AD784FF5ADB84FF4AD77BFF42D373FF42D373FF4AD7
+            7BFF52D77BFF4AD37BFF4ACF73FF4ACB6BFF189E21FFFF00FF00FF00FF00219E
+            29FF73D37BFF6BD37BFF6BD37BFF63DB84FF5AD37BFF52D373FF52CF73FF52D3
+            73FF5AD773FF52CF73FF52CB6BFF52C763FF189A21FFFF00FF00FF00FF004FA5
+            4FFF4AA64FFF4BA650FF4BA650FF4BA050FF43AA5AFF6BD37BFF63D37BFF4BAA
+            5BFF4C9E51FF4BA650FF4BA650FF4AA64FFF4DA74DFFFF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF004BA358FF73D784FF73D384FF52A3
+            59FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF0050A257FF84D78CFF84D384FF58A3
+            58FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF0056A25EFF9CDF9CFF94DB94FF5FA3
+            5FFFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF005A9B60FF84C784FF84C784FF629B
+            69FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF0046974BFF3A983AFF3A983AFF4697
+            4BFFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          }
+          OnClick = spbAdicionaPagamentoClick
+        end
+        object spRemovePagamento: TSpeedButton
+          AnchorSideTop.Side = asrCenter
+          Left = 46
+          Height = 22
+          Hint = 'Remove Pagamento'
+          Top = 5
+          Width = 23
+          Glyph.Data = {
+            36040000424D3604000000000000360000002800000010000000100000000100
+            2000000000000004000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF000014
+            BDFF0014BDFF0014BDFF0014BDFF0014BDFF0014BDFF0014BDFF0014BDFF0014
+            BDFF0014BDFF0014BDFF0014BDFF0014BDFF0014BDFFFF00FF00FF00FF000014
+            BDFF4265E7FF3965E7FF3969EFFF3969EFFF396DEFFF396DEFFF396DEFFF396D
+            EFFF3969EFFF3969EFFF3965E7FF3961E7FF0014BDFFFF00FF00FF00FF000014
+            BDFF3169EFFF3171F7FF3175F7FF3179FFFF3179FFFF3179FFFF3179FFFF3179
+            FFFF3175F7FF3171F7FF3169EFFF3165EFFF0014BDFFFF00FF00FF00FF000014
+            BDFF7B96EFFF7B96F7FF7B9AF7FF7B9AF7FF7B9EF7FF7B9EF7FF7B9EF7FF7B9A
+            F7FF7B9AF7FF7B96F7FF7B92EFFF7B92EFFF0014BDFFFF00FF00FF00FF000014
+            BDFF7E92EAFF7E97F0FF7E99F0FF7E9EF5FF7EA1F5FF7EA1F5FF7EA1F5FF7EA1
+            F5FF7EA1F5FF7E9EF5FF7E99F0FF7E97F0FF0014BDFFFF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          }
+          OnClick = spRemovePagamentoClick
+        end
+        object spbLimpaPagamentos: TSpeedButton
+          AnchorSideTop.Side = asrCenter
+          Left = 134
+          Height = 22
+          Hint = 'Limpa Pagamentos'
+          Top = 5
+          Width = 23
+          Glyph.Data = {
+            36040000424D3604000000000000360000002800000010000000100000000100
+            2000000000000004000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00EDEDF000A3A3B300F2F2F300FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00F3F3F9000F0E170030312B001F1F2B0069697B00CBCBCD00F9F9
+            F900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00808085001F1F1E00FF00FF00E3E3E300E2E2E300D8D8D900BDBDBD007373
+            73003333330087878700FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00F2F3
+            FC0000000000CFCFD000F9F9F900CBCBCB00D0D0D000DADADA00F4F4F400F5F5
+            F5008F8F8F00171717000000000080808000FF00FF00FF00FF00FF00FF006161
+            5E006C6C8100D7D6CF00D1D1CF00D7D7D700DADADA00E1E1E100DCDCDC00DADA
+            DA00FF00FF00FF00FF00C9C9C9003A3A3A0063636300EDEDED00DADAD8000000
+            0B0027267D004746790094959A00C7C7C200DDDDDE00DFDFDF00E2E2E200E2E2
+            E200F6F6F600D2D2D2009B9B9B00929292000000000039393900C9C9C7000000
+            13003739BC00262579001E1D6B001D1C6E0082829500C1C2B900DEDEDC00F1F1
+            F3003939390069696900FF00FF00FF00FF00F1F1F100FF00FF00FF00FF007474
+            7300222880003C43D9002A2A8D00242372001B1A6D004F4E8000B2B2AA00E2E2
+            D90040404000F4F4F400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF001A190800141737002B2C8C0027267F0023236E0011116800242474005454
+            7000C7C7C700FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FEFEFE00FF00
+            FF00222224001E1E590023227300232371003132A00029287B00201F72001110
+            5F00C1C2C000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00A4A4
+            A20022236A0027267F00101046002A2926003E3F410000001C00000014002A2A
+            2A00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FCFCFC002929
+            27002524770028277E00000000009C9C9A00FAFAF900BAB9B600AFAFAC00F8F7
+            F700FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00A5A6A2000000
+            1D002C2A8F00000020004D4D4700FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BDBDB9000002
+            1F002224840000000000ECECEB00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FDFD
+            FC00D2D2D000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          }
+          OnClick = spbLimpaPagamentosClick
+        end
+        object spbAdicionaPagamento1: TSpeedButton
+          AnchorSideTop.Side = asrCenter
+          Left = 102
+          Height = 22
+          Hint = 'Saldo Restante'
+          Top = 5
+          Width = 23
+          Glyph.Data = {
+            36040000424D3604000000000000360000002800000010000000100000000100
+            2000000000000004000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00E3BDA500CFAD9700CFAD9700E3BD
+            A500FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00D8B39B00A78E7F007D7975007D79750066666600675E
+            5600806C6000C4A18C00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00C3A49100999999009AA1A50099999900958580008F827D008A89
+            8A006E7579004C4B4A0089706100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00CCAD9A00ACB0B300B5ACA700A46D5200964926008D3C18008D3C1800813F
+            28008663590087898B004C4B4A0089706100FF00FF00FF00FF00FF00FF00E3BD
+            A500C0C0C100C6B7A400AC5E2E00A54E1800AB7E6200ACB0B3009F7C69008D3C
+            18007E2E10007F4A3A0087898B004C4B4A00BE9C8700FF00FF00FF00FF00D8C5
+            B400CCCCCC00BC754000B76A2B00B76A2B00B6875B00B8A58E00A87E5D009652
+            26008D4621007E2E1000845C5000767E82007A675C00FF00FF00D8C5B400DCD8
+            D700CFAD9700C2752B00C4833B00C0813400BF8E5300C0AA9200B6875B00A15D
+            2000965226008C431D00813A1F008685850066666600D4AF9800D8C5B400E6E5
+            E600D7A56D00CD8A3700CE954000CD8A3700CDAD7600D7E5F900C6B7A400AD71
+            3000A15D2000965226008D3C1800977C72007B7B7900BE9C8700ECD4C700E6E5
+            E600D7A56D00D6993E00DDA44200DDA44200DDA44200D2B57E00D0D6DB00C9C4
+            BC00AF784100A15D200091401700977C720086858500BE9C8700ECD4C700E6E5
+            E600DCB37A00DDA44200E2B64E00E1BB4C00DBB43A00D09D2100D3B78200D7E1
+            F100C4A18C00A15D20009A4A1D00A08B83008A898A00D8B39B00FF00FF00E7DF
+            DD00E9C7B200DDA44200E7BE5000F0E0A600F0E0A600E1C57700DFD4BE00D7E5
+            F900C0AA9200AD611F00A55F3400A6ABAE00A3928800FF00FF00FF00FF00ECD4
+            C700E7EAEC00E6BC6800E8B44300F6E3AC00FFFFFF00F3F6FB00EEEDEE00DCCF
+            BA00C4833B00B15F1C00BE9C8700A6ABAE00CFAD9700FF00FF00FF00FF00FF00
+            FF00E8DDD900ECE7E800E6BC6800E8B44300E7BE5000E6BC6800DCAA5900CD88
+            2D00C2752B00C59E7D00BFC5CA00C0AA9C00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00E7DFDD00EEEDEE00E9D1A500E6BC6800DCA04E00DCA04E00D7A5
+            6D00D8C5B400D0D6DB00CDB7AB00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00ECD4C700ECE7E800EEEDEE00EEEDEE00ECE7E800ECE7
+            E800DCD8D700E1C2AF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00EEC5AC00ECD4C700ECD4C700ECD4C700E9C7
+            B200EEC5AC00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          }
+          OnClick = spbAdicionaPagamento1Click
+        end
+        object lMeuAcresDesc: TLabel
+          Left = 14
+          Height = 15
+          Top = 40
+          Width = 60
+          Alignment = taRightJustify
+          Caption = 'Acrec/Desc'
+          ParentColor = False
+        end
+        object edValorDescAcre: TEdit
+          Left = 81
+          Height = 25
+          Top = 32
+          Width = 72
+          Alignment = taRightJustify
+          AutoSize = False
+          TabOrder = 0
+          Text = '0,00'
+        end
+      end
+      object Label12: TLabel
+        Left = 1
+        Height = 15
+        Top = 1
+        Width = 168
+        Align = alTop
+        Alignment = taCenter
+        Caption = 'Pagamentos a Fazer'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object mPagamentos: TMemo
+        Left = 1
+        Height = 112
+        Top = 16
+        Width = 168
+        Align = alClient
+        ReadOnly = True
+        ScrollBars = ssAutoBoth
+        TabOrder = 1
+      end
+    end
+    object Splitter1: TSplitter
+      Left = 556
+      Height = 194
+      Top = 0
+      Width = 5
+      Align = alRight
+      ResizeAnchor = akRight
+    end
+    object Memo1: TMemo
+      Left = 0
+      Height = 194
+      Top = 0
+      Width = 556
+      Align = alClient
+      Lines.Strings = (
+        'Memo1'
+      )
+      ScrollBars = ssAutoBoth
+      TabOrder = 2
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 208
+    Top = 0
+    Width = 731
+    ActivePage = tsConfig
+    Align = alTop
+    TabIndex = 0
+    TabOrder = 1
+    object tsConfig: TTabSheet
+      Caption = 'Configuração'
+      ClientHeight = 180
+      ClientWidth = 723
+      object gbConfigECF: TGroupBox
+        Left = 0
+        Height = 180
+        Top = 0
+        Width = 308
+        Align = alLeft
+        Caption = 'ECF'
+        ClientHeight = 162
+        ClientWidth = 304
+        TabOrder = 0
+        object Label2: TLabel
+          Left = 10
+          Height = 15
+          Top = 1
+          Width = 44
+          Caption = 'Modelo:'
+          ParentColor = False
+        end
+        object cbxModelo: TComboBox
+          Left = 10
+          Height = 23
+          Top = 17
+          Width = 161
+          ItemHeight = 15
+          Items.Strings = (
+            ''
+          )
+          OnChange = cbxModeloChange
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object Label4: TLabel
+          Left = 10
+          Height = 15
+          Top = 44
+          Width = 28
+          Caption = 'Porta'
+          ParentColor = False
+        end
+        object cbxPorta: TComboBox
+          Left = 10
+          Height = 23
+          Top = 60
+          Width = 131
+          ItemHeight = 15
+          ItemIndex = 0
+          Items.Strings = (
+            'Procurar'
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'LPT1'
+            'LPT2'
+            'LPT3'
+            '/dev/ttyS0'
+            '/dev/ttyS1'
+            '/dev/ttyUSB0'
+            '/dev/ttyUSB1'
+            'c:\temp\ecf.txt'
+            '/tmp/ecf.txt'
+          )
+          OnChange = cbxPortaChange
+          TabOrder = 1
+          Text = 'Procurar'
+        end
+        object btSerial: TSpeedButton
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbxPorta
+          AnchorSideTop.Side = asrCenter
+          Left = 146
+          Height = 24
+          Hint = 'Serial'
+          Top = 59
+          Width = 25
+          BorderSpacing.Left = 8
+          Glyph.Data = {
+            36030000424D3603000000000000360000002800000010000000100000000100
+            1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+            3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+            000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+            6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+            008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+            56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+            FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+            008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+            6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+            008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+            3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+            00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          }
+          OnClick = btSerialClick
+        end
+        object bAtivar: TButton
+          AnchorSideLeft.Side = asrCenter
+          Left = 58
+          Height = 25
+          Top = 96
+          Width = 73
+          Caption = 'Ativar'
+          OnClick = bAtivarClick
+          TabOrder = 2
+        end
+        object Label6: TLabel
+          Left = 186
+          Height = 15
+          Top = 1
+          Width = 92
+          Caption = 'Indice "CARTAO"'
+          ParentColor = False
+        end
+        object edFPGCartao: TEdit
+          Left = 210
+          Height = 23
+          Top = 17
+          Width = 43
+          Alignment = taCenter
+          TabOrder = 3
+          Text = '2'
+        end
+        object Label7: TLabel
+          Left = 186
+          Height = 15
+          Top = 44
+          Width = 91
+          Caption = 'Indice "CHEQUE"'
+          ParentColor = False
+        end
+        object edFPGCheque: TEdit
+          Left = 210
+          Height = 23
+          Top = 60
+          Width = 43
+          Alignment = taCenter
+          TabOrder = 4
+          Text = '3'
+        end
+        object bFPG: TButton
+          AnchorSideLeft.Side = asrCenter
+          Left = 194
+          Height = 25
+          Top = 96
+          Width = 73
+          Caption = 'FPG'
+          OnClick = bFPGClick
+          TabOrder = 5
+        end
+      end
+      object Panel2: TPanel
+        Left = 308
+        Height = 180
+        Top = 0
+        Width = 415
+        Align = alClient
+        ClientHeight = 180
+        ClientWidth = 415
+        TabOrder = 1
+        object gbConfigTEF: TGroupBox
+          Left = 1
+          Height = 178
+          Top = 1
+          Width = 413
+          Align = alClient
+          Caption = 'TEF'
+          ClientHeight = 160
+          ClientWidth = 409
+          TabOrder = 0
+          object bInicializar: TButton
+            Left = 37
+            Height = 25
+            Top = 55
+            Width = 75
+            Caption = 'Inicializar'
+            OnClick = bInicializarClick
+            TabOrder = 1
+          end
+          object ckAutoAtivar: TCheckBox
+            Left = 153
+            Height = 19
+            Top = 10
+            Width = 104
+            Caption = 'Auto Ativar G.P.'
+            Checked = True
+            OnChange = ckAutoAtivarChange
+            State = cbChecked
+            TabOrder = 3
+          end
+          object cbxGP: TComboBox
+            Left = 5
+            Height = 23
+            Top = 20
+            Width = 133
+            ItemHeight = 15
+            OnChange = cbxGPChange
+            Style = csDropDownList
+            TabOrder = 0
+          end
+          object Label1: TLabel
+            Left = 26
+            Height = 15
+            Top = 0
+            Width = 88
+            Caption = 'Selecionar o G.P.'
+            ParentColor = False
+          end
+          object bAtivarGP: TButton
+            Left = 37
+            Height = 25
+            Top = 87
+            Width = 75
+            Caption = 'Ativar GP'
+            OnClick = bAtivarGPClick
+            TabOrder = 2
+          end
+          object ckMultiplosCartoes: TCheckBox
+            Left = 153
+            Height = 19
+            Top = 38
+            Width = 113
+            Caption = 'Multiplos Cartões'
+            OnChange = ckMultiplosCartoesChange
+            TabOrder = 4
+          end
+          object ckAutoFinalizarCupom: TCheckBox
+            Left = 153
+            Height = 19
+            Top = 89
+            Width = 129
+            Caption = 'AutoFinalizarCupom'
+            Checked = True
+            OnChange = ckAutoFinalizarCupomChange
+            State = cbChecked
+            TabOrder = 6
+          end
+          object ckAutoEfetuarPagamento: TCheckBox
+            Left = 153
+            Height = 19
+            Top = 64
+            Width = 144
+            Caption = 'AutoEfetuarPagamento'
+            OnChange = ckAutoEfetuarPagamentoChange
+            TabOrder = 5
+          end
+          object edEsperaSleep: TEdit
+            Left = 301
+            Height = 23
+            Top = 15
+            Width = 56
+            Alignment = taCenter
+            OnChange = edEsperaSleepChange
+            TabOrder = 7
+            Text = '250'
+          end
+          object Label8: TLabel
+            Left = 301
+            Height = 15
+            Top = -1
+            Width = 62
+            Caption = 'EsperaSleep'
+            ParentColor = False
+          end
+          object Label9: TLabel
+            Left = 301
+            Height = 15
+            Top = 55
+            Width = 53
+            Caption = 'EsperaSTS'
+            ParentColor = False
+          end
+          object edEsperaSTS: TEdit
+            Left = 301
+            Height = 23
+            Top = 71
+            Width = 56
+            Alignment = taCenter
+            OnChange = edEsperaSTSChange
+            TabOrder = 8
+            Text = '7'
+          end
+          object ckCHQemGerencial: TCheckBox
+            Left = 153
+            Height = 19
+            Top = 115
+            Width = 118
+            Caption = 'CHQ em Gerencial'
+            Checked = True
+            OnChange = ckCHQemGerencialChange
+            State = cbChecked
+            TabOrder = 9
+          end
+        end
+      end
+    end
+    object tsOperacao: TTabSheet
+      Caption = 'Operação'
+      ClientHeight = 180
+      ClientWidth = 723
+      object gbCupomECF: TGroupBox
+        Left = 0
+        Height = 180
+        Top = 0
+        Width = 292
+        Align = alLeft
+        Caption = 'ECF'
+        ClientHeight = 162
+        ClientWidth = 288
+        Enabled = False
+        TabOrder = 0
+        object bCancelar: TButton
+          Left = 108
+          Height = 25
+          Top = 64
+          Width = 93
+          Caption = 'Cancelar'
+          OnClick = bCancelarClick
+          TabOrder = 5
+        end
+        object bAbreCupom: TButton
+          Left = 6
+          Height = 25
+          Top = 0
+          Width = 93
+          Caption = 'Abrir'
+          OnClick = bAbreCupomClick
+          TabOrder = 0
+        end
+        object bVendeItem: TButton
+          Left = 108
+          Height = 25
+          Top = 0
+          Width = 93
+          Caption = 'Vende Item'
+          OnClick = bVendeItemClick
+          TabOrder = 1
+        end
+        object bSubTotaliza: TButton
+          Left = 6
+          Height = 25
+          Top = 32
+          Width = 93
+          Caption = 'SubTotalizar'
+          OnClick = bSubTotalizaClick
+          TabOrder = 2
+        end
+        object bFechar: TButton
+          Left = 6
+          Height = 25
+          Top = 64
+          Width = 93
+          Caption = 'Fechar'
+          OnClick = bFecharClick
+          TabOrder = 4
+        end
+        object bAbreVendeSubTotaliza: TButton
+          Left = 6
+          Height = 27
+          Top = 94
+          Width = 195
+          Caption = 'AbreVendeSubtotaliza'
+          OnClick = bAbreVendeSubTotalizaClick
+          TabOrder = 6
+        end
+        object edValorECF: TEdit
+          Left = 210
+          Height = 25
+          Top = 24
+          Width = 72
+          Alignment = taRightJustify
+          AutoSize = False
+          TabOrder = 9
+          Text = '1,00'
+        end
+        object Label5: TLabel
+          Left = 218
+          Height = 15
+          Top = 0
+          Width = 50
+          Alignment = taRightJustify
+          Caption = 'Valor ECF'
+          ParentColor = False
+        end
+        object bEstado: TButton
+          Left = 210
+          Height = 25
+          Top = 64
+          Width = 72
+          Caption = 'Estado'
+          OnClick = bEstadoClick
+          TabOrder = 8
+        end
+        object bReducaoZ: TButton
+          AnchorSideLeft.Side = asrCenter
+          Left = 210
+          Height = 27
+          Top = 128
+          Width = 72
+          Caption = 'Redução Z'
+          OnClick = bReducaoZClick
+          TabOrder = 11
+        end
+        object bLeituraX: TButton
+          AnchorSideLeft.Side = asrCenter
+          Left = 210
+          Height = 27
+          Top = 94
+          Width = 72
+          Caption = 'Leitura X'
+          OnClick = bLeituraXClick
+          TabOrder = 10
+        end
+        object bFechaRelatorio: TButton
+          AnchorSideLeft.Side = asrCenter
+          Left = 6
+          Height = 27
+          Top = 128
+          Width = 195
+          Caption = 'Fechar Gerencial/Vinculado'
+          OnClick = bFechaRelatorioClick
+          TabOrder = 7
+        end
+        object bPagamento: TButton
+          Left = 108
+          Height = 25
+          Top = 32
+          Width = 93
+          Caption = 'Pagamento'
+          OnClick = bPagamentoClick
+          TabOrder = 3
+        end
+      end
+      object gbComandosTEF: TGroupBox
+        Left = 292
+        Height = 180
+        Top = 0
+        Width = 431
+        Align = alClient
+        Caption = 'TEF'
+        ClientHeight = 162
+        ClientWidth = 427
+        TabOrder = 1
+        object bADM: TButton
+          Left = 6
+          Height = 25
+          Top = 40
+          Width = 68
+          Caption = 'ADM'
+          OnClick = bADMClick
+          TabOrder = 2
+        end
+        object bATV: TButton
+          Left = 153
+          Height = 25
+          Top = 0
+          Width = 68
+          Caption = 'ATV'
+          OnClick = bATVClick
+          TabOrder = 1
+        end
+        object bCNC: TButton
+          Left = 153
+          Height = 25
+          Top = 79
+          Width = 68
+          Caption = 'CNC'
+          OnClick = bCNCClick
+          TabOrder = 7
+        end
+        object bCNF: TButton
+          Left = 79
+          Height = 25
+          Top = 40
+          Width = 68
+          Caption = 'CNF'
+          OnClick = bCNFClick
+          TabOrder = 3
+        end
+        object bNCN: TButton
+          Left = 153
+          Height = 25
+          Top = 40
+          Width = 68
+          Caption = 'NCN'
+          OnClick = bNCNClick
+          TabOrder = 4
+        end
+        object bCRT: TButton
+          Left = 6
+          Height = 25
+          Top = 79
+          Width = 68
+          Caption = 'CRT'
+          OnClick = bCRTClick
+          TabOrder = 5
+        end
+        object bCHQ: TButton
+          Left = 79
+          Height = 25
+          Top = 79
+          Width = 68
+          Caption = 'CHQ'
+          OnClick = bCHQClick
+          TabOrder = 6
+        end
+        object Label3: TLabel
+          Left = 14
+          Height = 15
+          Top = 111
+          Width = 49
+          Alignment = taRightJustify
+          Caption = 'Valor TEF'
+          ParentColor = False
+        end
+        object edValorTEF: TEdit
+          Left = 6
+          Height = 25
+          Top = 128
+          Width = 72
+          Alignment = taRightJustify
+          AutoSize = False
+          TabOrder = 8
+          Text = '1,00'
+        end
+        object ckMultiplosCartoes1: TCheckBox
+          Left = 102
+          Height = 19
+          Top = 128
+          Width = 113
+          Caption = 'Multiplos Cartões'
+          Checked = True
+          OnChange = ckMultiplosCartoesChange
+          State = cbChecked
+          TabOrder = 9
+        end
+        object cbxGP1: TComboBox
+          Left = 6
+          Height = 23
+          Top = 2
+          Width = 142
+          ItemHeight = 15
+          OnChange = cbxGPChange
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object bAbreVendeSubTotaliza1: TButton
+          Left = 230
+          Height = 27
+          Top = 0
+          Width = 187
+          Caption = 'CancelarTransacoesPendentes'
+          OnClick = bAbreVendeSubTotaliza1Click
+          TabOrder = 10
+        end
+        object bAbreVendeSubTotaliza2: TButton
+          Left = 230
+          Height = 27
+          Top = 29
+          Width = 187
+          Caption = 'ConfirmarTransacoesPendentes'
+          OnClick = bAbreVendeSubTotaliza2Click
+          TabOrder = 11
+        end
+        object bAbreVendeSubTotaliza3: TButton
+          Left = 230
+          Height = 27
+          Top = 58
+          Width = 187
+          Caption = 'ImprimirTransacoesPendentes'
+          OnClick = bAbreVendeSubTotaliza3Click
+          TabOrder = 12
+        end
+        object bAbreVendeSubTotaliza4: TButton
+          Left = 230
+          Height = 27
+          Top = 87
+          Width = 187
+          Caption = 'FinalizarCupom'
+          OnClick = bAbreVendeSubTotaliza4Click
+          TabOrder = 13
+        end
+        object GroupBox1: TGroupBox
+          Left = 232
+          Height = 45
+          Top = 115
+          Width = 185
+          Caption = 'TEF Direção'
+          ClientHeight = 27
+          ClientWidth = 181
+          TabOrder = 14
+          object ComboBox1: TComboBox
+            Left = 9
+            Height = 23
+            Top = 1
+            Width = 166
+            ItemHeight = 15
+            Items.Strings = (
+              'Nenhuma Transação'
+              'Cartão de Crédito'
+              'Cartão de Débito'
+              'Cartão Voucher'
+              'Cartão Private Label'
+              'Cheque'
+              'Controle de Frota'
+            )
+            TabOrder = 0
+          end
+        end
+      end
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 429
+    Width = 731
+    Panels = <    
+      item
+        Width = 100
+      end    
+      item
+        Width = 100
+      end    
+      item
+        Width = 50
+      end>
+    SimplePanel = False
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 27
+    Top = 402
+    Width = 731
+    Align = alBottom
+    BevelInner = bvLowered
+    ClientHeight = 27
+    ClientWidth = 731
+    TabOrder = 2
+    object sECF: TShape
+      Left = 8
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object lECFName: TLabel
+      Left = 40
+      Height = 15
+      Top = 6
+      Width = 55
+      Caption = 'lECFName'
+      ParentColor = False
+    end
+    object sTEFDial: TShape
+      Left = 112
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object ckTEFDIAL: TCheckBox
+      Left = 136
+      Height = 19
+      Top = 5
+      Width = 69
+      Caption = 'TEF_DIAL'
+      Checked = True
+      OnChange = ckTEFDIALChange
+      State = cbChecked
+      TabOrder = 0
+    end
+    object sTEFDisc: TShape
+      Left = 208
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object ckTEFDISC: TCheckBox
+      Left = 232
+      Height = 19
+      Top = 6
+      Width = 69
+      Caption = 'TEF_DISC'
+      OnChange = ckTEFDISCChange
+      TabOrder = 1
+    end
+    object sHiperTEF: TShape
+      Left = 304
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object ckHIPERTEF: TCheckBox
+      Left = 328
+      Height = 19
+      Top = 7
+      Width = 76
+      Caption = 'HIPER_TEF'
+      OnChange = ckHIPERTEFChange
+      TabOrder = 2
+    end
+    object sCliSiTef: TShape
+      Left = 408
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object ckCliSiTef: TCheckBox
+      Left = 432
+      Height = 19
+      Top = 6
+      Width = 60
+      Caption = 'CliSiTef'
+      OnChange = ckCliSiTefChange
+      TabOrder = 3
+    end
+    object bCancelarResp: TButton
+      Left = 641
+      Height = 23
+      Top = 2
+      Width = 88
+      Align = alRight
+      Caption = 'CancelarResp'
+      OnClick = bCancelarRespClick
+      TabOrder = 4
+      Visible = False
+    end
+    object sVSPague: TShape
+      Left = 496
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object ckVSPague: TCheckBox
+      Left = 520
+      Height = 19
+      Top = 5
+      Width = 72
+      Caption = 'VeSPague'
+      OnChange = ckVSPagueChange
+      TabOrder = 5
+    end
+    object sAuttar: TShape
+      Left = 594
+      Height = 16
+      Top = 7
+      Width = 17
+      Brush.Color = clRed
+      Shape = stCircle
+    end
+    object ckAuttar: TCheckBox
+      Left = 618
+      Height = 19
+      Top = 6
+      Width = 53
+      Caption = 'Auttar'
+      OnChange = ckAuttarChange
+      TabOrder = 6
+    end
+  end
+  object pMensagem: TPanel
+    Left = 64
+    Height = 136
+    Top = 240
+    Width = 440
+    Anchors = []
+    BevelInner = bvLowered
+    BevelWidth = 2
+    BorderStyle = bsSingle
+    ClientHeight = 132
+    ClientWidth = 436
+    Font.Height = -16
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    Visible = False
+    OnResize = pMensagemResize
+    object pMensagemOperador: TPanel
+      Left = 4
+      Height = 62
+      Top = 4
+      Width = 428
+      Align = alClient
+      ClientHeight = 62
+      ClientWidth = 428
+      TabOrder = 0
+      Visible = False
+      OnClick = pMensagemOperadorClick
+      object lMensagemOperador: TLabel
+        Left = 1
+        Height = 60
+        Top = 1
+        Width = 426
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'lMensagemOperador'
+        Layout = tlCenter
+        ParentColor = False
+        WordWrap = True
+        OnClick = pMensagemOperadorClick
+      end
+      object Label10: TLabel
+        Left = 0
+        Height = 13
+        Top = 0
+        Width = 109
+        Caption = 'Mensagem Operador'
+        Font.Height = -11
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object pMensagemCliente: TPanel
+      Left = 4
+      Height = 62
+      Top = 66
+      Width = 428
+      Align = alBottom
+      ClientHeight = 62
+      ClientWidth = 428
+      TabOrder = 1
+      Visible = False
+      OnClick = pMensagemOperadorClick
+      object Label11: TLabel
+        Left = 0
+        Height = 13
+        Top = 0
+        Width = 95
+        Caption = 'Mensagem Cliente'
+        Font.Height = -11
+        ParentColor = False
+        ParentFont = False
+      end
+      object lMensagemCliente: TLabel
+        Left = 1
+        Height = 60
+        Top = 1
+        Width = 426
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'lMensagemCliente'
+        Layout = tlCenter
+        ParentColor = False
+        WordWrap = True
+        OnClick = pMensagemOperadorClick
+      end
+    end
+  end
+  object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
+    Modelo = ecfDaruma
+    Porta = 'COM1'
+    ReTentar = False
+    TimeOut = 6
+    IntervaloAposComando = 0
+    MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
+    MsgTrabalhando = 'Impressora estÃ¡ trabalhando'
+    ExibeMensagem = False
+    TempoInicioMsg = 6
+    BloqueiaMouseTeclado = False
+    MsgRelatorio = 'Imprimindo %s  %dÂª Via '
+    MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
+    MaxLinhasBuffer = 3
+    PaginaDeCodigo = 28591
+    FormMsgColor = clHighlight
+    OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
+    MemoParams.Strings = (
+      '[Cabecalho]'
+      'LIN000=<center><b>Nome da Empresa</b></center>'
+      'LIN001=<center>Nome da Rua , 1234  -  Bairro</center>'
+      'LIN002=<center>Cidade  -  UF  -  99999-999</center>'
+      'LIN003=<center>CNPJ: 01.234.567/0001-22    IE: 012.345.678.90</center>'
+      'LIN004=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>COO: <b><code>NumCupom</code></b></td></tr></table>'
+      'LIN005=<hr>'
+      ' '
+      '[Cabecalho_Item]'
+      'LIN000=ITEM   CODIGO     DESCRICAO'
+      'LIN001=QTD         x UNITARIO       Aliq     VALOR (R$)'
+      'LIN002=<hr>'
+      'MascaraItem=III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQQQQQ UU x VVVVVVVVVVVVV AAAAAA TTTTTTTTTTTTT'
+      ' '
+      '[Rodape]'
+      'LIN000=<hr>'
+      'LIN001=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>Projeto ACBr: <b><code>ACBR</code></b></td></tr></table>'
+      'LIN002=<center>Obrigado Volte Sempre</center>'
+      'LIN003=<hr>'
+      ' '
+      '[Formato]'
+      'Colunas=48'
+      'HTML=1'
+      'HTML_Title_Size=2'
+      'HTML_Font=<font size="2" face="Lucida Console">'
+    )
+    Device.HandShake = hsRTS_CTS
+    Device.HardFlow = True
+    ArqLOG = 'ecf.log'
+    ConfigBarras.MostrarCodigo = True
+    ConfigBarras.LarguraLinha = 3
+    ConfigBarras.Altura = 10
+    InfoRodapeCupom.Imposto.ModoCompacto = False
+    left = 16
+    top = 296
+  end
+  object ACBrTEFD1: TACBrTEFD
+    Identificacao.NomeAplicacao = 'TEFDDemo'
+    Identificacao.VersaoAplicacao = '3.0'
+    Identificacao.SoftwareHouse = 'ACBr'
+    Identificacao.RazaoSocial = 'Projeto ACBr'
+    MultiplosCartoes = True
+    EsperaSTS = 7
+    CHQEmGerencial = True
+    TrocoMaximo = 0
+    TEFDial.ArqLOG = 'TEF_DIAL.log'
+    TEFDial.Habilitado = True
+    TEFDial.ArqTemp = 'C:\TEF_DIAL\req\intpos.tmp'
+    TEFDial.ArqReq = 'C:\TEF_DIAL\req\intpos.001'
+    TEFDial.ArqSTS = 'C:\TEF_DIAL\resp\intpos.sts'
+    TEFDial.ArqResp = 'C:\TEF_DIAL\resp\intpos.001'
+    TEFDial.GPExeName = 'C:\TEF_DIAL\tef_dial.exe'
+    TEFDisc.ArqTemp = 'C:\TEF_Disc\req\intpos.tmp'
+    TEFDisc.ArqReq = 'C:\TEF_Disc\req\intpos.001'
+    TEFDisc.ArqSTS = 'C:\TEF_Disc\resp\intpos.sts'
+    TEFDisc.ArqResp = 'C:\TEF_Disc\resp\intpos.001'
+    TEFDisc.GPExeName = 'C:\TEF_Disc\tef_Disc.exe'
+    TEFHiper.ArqTemp = 'c:\HiperTEF\req\IntPos.tmp'
+    TEFHiper.ArqReq = 'C:\HiperTEF\req\IntPos.001'
+    TEFHiper.ArqSTS = 'C:\HiperTEF\resp\IntPos.sts'
+    TEFHiper.ArqResp = 'C:\HiperTEF\resp\IntPos.001'
+    TEFHiper.GPExeName = 'C:\HiperTEF\HiperTEF.exe'
+    TEFCliSiTef.ArqLOG = 'CliSiTef.log'
+    TEFCliSiTef.EnderecoIP = 'localhost'
+    TEFCliSiTef.CodigoLoja = '00000000'
+    TEFCliSiTef.NumeroTerminal = 'SE000001'
+    TEFCliSiTef.DataHoraFiscal = 0
+    TEFCliSiTef.OnExibeMenu = ACBrTEFD1CliSiTefExibeMenu
+    TEFCliSiTef.OnObtemCampo = ACBrTEFD1CliSiTefObtemCampo
+    TEFVeSPague.ArqLOG = 'VeSPague.log'
+    TEFVeSPague.Aplicacao = 'ACBr_TEFDDemo'
+    TEFVeSPague.AplicacaoVersao = '1.0'
+    TEFVeSPague.GPExeName = 'C:\VeSPague\Client\VeSPagueClient.bat'
+    TEFVeSPague.GPExeParams = '189.115.24.32 65432'
+    TEFVeSPague.EnderecoIP = 'localhost'
+    TEFVeSPague.Porta = '60906'
+    TEFVeSPague.TimeOut = 500
+    TEFVeSPague.TemPendencias = False
+    TEFVeSPague.TransacaoCRT = 'Cartao Vender'
+    TEFVeSPague.TransacaoCHQ = 'Cheque Consultar'
+    TEFVeSPague.TransacaoCNC = 'Administracao Cancelar'
+    TEFVeSPague.TransacaoReImpressao = 'Administracao Reimprimir'
+    TEFVeSPague.TransacaoPendente = 'Administracao Pendente'
+    TEFVeSPague.OnExibeMenu = ACBrTEFD1VeSPagueExibeMenu
+    TEFVeSPague.OnObtemCampo = ACBrTEFD1VeSPagueObtemCampo
+    TEFGPU.ArqTemp = 'C:\TEF_GPU\req\intpos.tmp'
+    TEFGPU.ArqReq = 'C:\TEF_GPU\req\intpos.001'
+    TEFGPU.ArqSTS = 'C:\TEF_GPU\resp\intpos.sts'
+    TEFGPU.ArqResp = 'C:\TEF_GPU\resp\intpos.001'
+    TEFGPU.GPExeName = 'C:\TEF_GPU\GPU.exe'
+    TEFBanese.ArqTemp = 'C:\bcard\req\pergunta.tmp'
+    TEFBanese.ArqReq = 'C:\bcard\req\pergunta.txt'
+    TEFBanese.ArqSTS = 'C:\bcard\resp\status.txt'
+    TEFBanese.ArqResp = 'C:\bcard\resp\resposta.txt'
+    TEFBanese.ArqRespBkp = 'C:\bcard\resposta.txt'
+    TEFBanese.ArqRespMovBkp = 'C:\bcard\copiamovimento.txt'
+    TEFBanese.OnObtemInformacao = BaneseObtemInformacao
+    TEFAuttar.ArqTemp = 'C:\Auttar_TefIP\req\intpos.tmp'
+    TEFAuttar.ArqReq = 'C:\Auttar_TefIP\req\intpos.001'
+    TEFAuttar.ArqSTS = 'C:\Auttar_TefIP\resp\intpos.sts'
+    TEFAuttar.ArqResp = 'C:\Auttar_TefIP\resp\intpos.001'
+    TEFAuttar.GPExeName = 'C:\Program Files (x86)\Auttar\IntegradorTEF-IP.exe'
+    TEFGood.ArqTemp = 'C:\good\gettemp.dat'
+    TEFGood.ArqReq = 'C:\good\getreq.dat'
+    TEFGood.ArqSTS = 'C:\good\getstat.dat'
+    TEFGood.ArqResp = 'C:\good\getresp.dat'
+    TEFGood.GPExeName = 'C:\good\GETGoodMed.exe'
+    TEFFoxWin.ArqTemp = 'C:\FwTEF\req\intpos.tmp'
+    TEFFoxWin.ArqReq = 'C:\FwTEF\req\intpos.001'
+    TEFFoxWin.ArqSTS = 'C:\FwTEF\rsp\intpos.sts'
+    TEFFoxWin.ArqResp = 'C:\FwTEF\rsp\intpos.001'
+    TEFFoxWin.GPExeName = 'C:\FwTEF\bin\FwTEF.exe'
+    TEFCliDTEF.OnExibeMenu = CliDTEFExibeMenu
+    TEFCliDTEF.OnObtemInformacao = CliDTEFObtemInformacao
+    TEFPetrocard.ArqTemp = 'C:\CardTech\req\intpos.tmp'
+    TEFPetrocard.ArqReq = 'C:\CardTech\req\intpos.001'
+    TEFPetrocard.ArqSTS = 'C:\CardTech\resp\intpos.sts'
+    TEFPetrocard.ArqResp = 'C:\CardTech\resp\intpos.001'
+    TEFPetrocard.GPExeName = 'C:\CardTech\sac.exe'
+    TEFCrediShop.ArqTemp = 'C:\tef_cshp\req\intpos.tmp'
+    TEFCrediShop.ArqReq = 'C:\tef_cshp\req\intpos.001'
+    TEFCrediShop.ArqSTS = 'C:\tef_cshp\resp\intpos.sts'
+    TEFCrediShop.ArqResp = 'C:\tef_cshp\resp\intpos.001'
+    TEFCrediShop.GPExeName = 'C:\tef_cshp\vpos_tef.exe'
+    TEFTicketCar.ArqTemp = 'C:\TCS\TX\INTTCS.tmp'
+    TEFTicketCar.ArqReq = 'C:\TCS\TX\INTTCS.001'
+    TEFTicketCar.ArqSTS = 'C:\TCS\RX\INTTCS.RET'
+    TEFTicketCar.ArqResp = 'C:\TCS\RX\INTTCS.001'
+    TEFTicketCar.GPExeName = 'C:\TCS\tcs.exe'
+    TEFTicketCar.NumLoja = 0
+    TEFTicketCar.NumCaixa = 0
+    TEFTicketCar.AtualizaPrecos = False
+    TEFConvCard.ArqTemp = 'C:\ger_convenio\tx\crtsol.tmp'
+    TEFConvCard.ArqReq = 'C:\ger_convenio\tx\crtsol.001'
+    TEFConvCard.ArqSTS = 'C:\ger_convenio\rx\crtsol.ok'
+    TEFConvCard.ArqResp = 'C:\ger_convenio\rx\crtsol.001'
+    TEFConvCard.GPExeName = 'C:\ger_convcard\convcard.exe'
+    OnAguardaResp = ACBrTEFD1AguardaResp
+    OnExibeMsg = ACBrTEFD1ExibeMsg
+    OnBloqueiaMouseTeclado = ACBrTEFD1BloqueiaMouseTeclado
+    OnRestauraFocoAplicacao = ACBrTEFD1RestauraFocoAplicacao
+    OnComandaECF = ACBrTEFD1ComandaECF
+    OnComandaECFSubtotaliza = ACBrTEFD1ComandaECFSubtotaliza
+    OnComandaECFPagamento = ACBrTEFD1ComandaECFPagamento
+    OnComandaECFAbreVinculado = ACBrTEFD1ComandaECFAbreVinculado
+    OnComandaECFImprimeVia = ACBrTEFD1ComandaECFImprimeVia
+    OnInfoECF = ACBrTEFD1InfoECF
+    OnAntesFinalizarRequisicao = ACBrTEFD1AntesFinalizarRequisicao
+    OnDepoisConfirmarTransacoes = ACBrTEFD1DepoisConfirmarTransacoes
+    OnAntesCancelarTransacao = ACBrTEFD1AntesCancelarTransacao
+    OnMudaEstadoReq = ACBrTEFD1MudaEstadoReq
+    OnMudaEstadoResp = ACBrTEFD1MudaEstadoResp
+    left = 16
+    top = 240
+  end
+end

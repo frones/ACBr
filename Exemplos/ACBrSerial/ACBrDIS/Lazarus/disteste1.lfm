@@ -1,0 +1,472 @@
+object Form1: TForm1
+  Left = 328
+  Height = 311
+  Top = 132
+  Width = 439
+  HorzScrollBar.Page = 440
+  HorzScrollBar.Range = 428
+  VertScrollBar.Page = 287
+  VertScrollBar.Range = 274
+  ActiveControl = edLinha1
+  Caption = 'Teste de Display Cliente'
+  ClientHeight = 311
+  ClientWidth = 439
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.2.4.0'
+  object Label2: TLabel
+    Left = 16
+    Height = 13
+    Top = 236
+    Width = 25
+    Caption = '&Porta'
+    FocusControl = cbxPorta
+    Font.Height = 11
+    Font.Name = 'MS Sans Serif'
+    Font.Pitch = fpVariable
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 88
+    Height = 13
+    Top = 236
+    Width = 35
+    Caption = '&Modelo'
+    FocusControl = cbxModelo
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 240
+    Height = 13
+    Top = 236
+    Width = 41
+    Caption = '&Intervalo'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 302
+    Height = 13
+    Top = 236
+    Width = 34
+    Caption = 'P&assos'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 296
+    Height = 13
+    Top = 284
+    Width = 34
+    Caption = 'Linhas:'
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 370
+    Height = 13
+    Top = 284
+    Width = 38
+    Caption = 'Colunas'
+    ParentColor = False
+  end
+  object lLinhas: TLabel
+    Left = 341
+    Height = 13
+    Top = 284
+    Width = 8
+    Caption = '0'
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'MS Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lColunas: TLabel
+    Left = 419
+    Height = 13
+    Top = 284
+    Width = 8
+    Caption = '0'
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'MS Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lLinha1: TLabel
+    Left = 24
+    Height = 15
+    Top = 80
+    Width = 385
+    AutoSize = False
+    Color = clWhite
+    Font.Color = clGreen
+    Font.Height = -13
+    Font.Name = 'Fixedsys'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+  end
+  object lLinha2: TLabel
+    Left = 24
+    Height = 15
+    Top = 104
+    Width = 385
+    AutoSize = False
+    Color = clWhite
+    Font.Color = clGreen
+    Font.Height = -13
+    Font.Name = 'Fixedsys'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+  end
+  object Label9: TLabel
+    Left = 8
+    Height = 13
+    Top = 144
+    Width = 58
+    Caption = '&Alinhamento'
+    FocusControl = cbxAlinhamento
+    ParentColor = False
+  end
+  object Label10: TLabel
+    Left = 134
+    Height = 13
+    Top = 144
+    Width = 55
+    Caption = 'Efeito Exibir'
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 288
+    Height = 13
+    Top = 144
+    Width = 55
+    Caption = 'Efeito Rolar'
+    ParentColor = False
+  end
+  object Label7: TLabel
+    Left = 24
+    Height = 15
+    Top = 119
+    Width = 385
+    AutoSize = False
+    Caption = '....+....1....+....2....+....3....+....4'
+    Font.Color = clBlack
+    Font.Height = 13
+    Font.Name = 'Fixedsys'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object cbLinha2: TCheckBox
+    Left = 8
+    Height = 19
+    Top = 46
+    Width = 20
+    Checked = True
+    OnClick = cbLinha1Click
+    State = cbChecked
+    TabOrder = 2
+  end
+  object cbLinha1: TCheckBox
+    Left = 8
+    Height = 19
+    Top = 14
+    Width = 20
+    Checked = True
+    OnClick = cbLinha1Click
+    State = cbChecked
+    TabOrder = 0
+  end
+  object edLinha1: TEdit
+    Cursor = crIBeam
+    Left = 24
+    Height = 21
+    Top = 12
+    Width = 209
+    TabOrder = 1
+    Text = 'DANIEL SIMOES DE ALMEIDA'
+  end
+  object edLinha2: TEdit
+    Cursor = crIBeam
+    Left = 24
+    Height = 21
+    Top = 44
+    Width = 209
+    TabOrder = 3
+    Text = 'D.J. SYSTEM'
+  end
+  object cbxPorta: TComboBox
+    Left = 16
+    Height = 21
+    Top = 252
+    Width = 65
+    ItemHeight = 13
+    ItemIndex = 0
+    Items.Strings = (
+      'COM1'
+      'COM2'
+      'COM3'
+      'COM4'
+      'COM5'
+    )
+    OnChange = cbxPortaChange
+    TabOrder = 14
+    Text = 'COM1'
+  end
+  object cbxModelo: TComboBox
+    Left = 88
+    Height = 21
+    Top = 252
+    Width = 140
+    ItemHeight = 13
+    Items.Strings = (
+      'disNenhum'
+      'disGertecSerial'
+      'disGertecTeclado'
+      'disKeytecTeclado'
+      'disSmakTeclado'
+    )
+    OnChange = cbxModeloChange
+    Style = csDropDownList
+    TabOrder = 15
+  end
+  object bDemo: TButton
+    Left = 272
+    Height = 25
+    Top = 12
+    Width = 89
+    BorderSpacing.InnerBorder = 4
+    Caption = '&Demonstração'
+    OnClick = bDemoClick
+    TabOrder = 4
+  end
+  object bLimpar: TButton
+    Left = 272
+    Height = 25
+    Top = 44
+    Width = 89
+    BorderSpacing.InnerBorder = 4
+    Caption = '&Limpar Display'
+    OnClick = bLimparClick
+    TabOrder = 5
+  end
+  object bParar: TButton
+    Left = 368
+    Height = 25
+    Top = 12
+    Width = 57
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Para&r'
+    OnClick = bPararClick
+    TabOrder = 6
+  end
+  object bContinuar: TButton
+    Left = 368
+    Height = 25
+    Top = 44
+    Width = 57
+    BorderSpacing.InnerBorder = 4
+    Caption = '&Continuar'
+    OnClick = bContinuarClick
+    TabOrder = 7
+  end
+  object cbxAlinhamento: TComboBox
+    Left = 8
+    Height = 21
+    Top = 160
+    Width = 113
+    ItemHeight = 13
+    Items.Strings = (
+      'Esquerda'
+      'Direita'
+      'Centro'
+      'Justificado'
+    )
+    OnChange = cbxAlinhamentoChange
+    Style = csDropDownList
+    TabOrder = 8
+  end
+  object cbxExibirEfeito: TComboBox
+    Left = 134
+    Height = 21
+    Top = 160
+    Width = 140
+    ItemHeight = 13
+    Items.Strings = (
+      'Esquerda para Direita'
+      'Direita para  Esquerda '
+    )
+    Style = csDropDownList
+    TabOrder = 10
+  end
+  object cbxRolarEfeito: TComboBox
+    Left = 288
+    Height = 21
+    Top = 160
+    Width = 140
+    ItemHeight = 13
+    Items.Strings = (
+      'rolParaEsquerda_Inicio'
+      'rolParaEsquerda_Sempre'
+      'rolParaDireita_Inicio'
+      'rolParaDireita_Sempre'
+      'rolVai_e_Volta'
+    )
+    Style = csDropDownList
+    TabOrder = 12
+  end
+  object bExibir: TButton
+    Left = 29
+    Height = 25
+    Top = 192
+    Width = 75
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Exibir Normal'
+    OnClick = bExibirClick
+    TabOrder = 9
+  end
+  object bExibirEfeito: TButton
+    Left = 163
+    Height = 25
+    Top = 192
+    Width = 75
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Exibir Efeito'
+    OnClick = bExibirEfeitoClick
+    TabOrder = 11
+  end
+  object bRolar: TButton
+    Left = 320
+    Height = 25
+    Top = 192
+    Width = 75
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Rolar'
+    OnClick = bRolarClick
+    TabOrder = 13
+  end
+  object Label8: TLabel
+    Left = 354
+    Height = 13
+    Top = 235
+    Width = 70
+    Caption = 'Intervalo Bytes'
+    ParentColor = False
+  end
+  object edIntervalo: TSpinEdit
+    Cursor = crIBeam
+    Left = 237
+    Height = 21
+    Top = 252
+    Width = 49
+    OnChange = edIntervaloChange
+    TabOrder = 16
+  end
+  object edPassos: TSpinEdit
+    Cursor = crIBeam
+    Left = 302
+    Height = 21
+    Top = 252
+    Width = 49
+    OnChange = edPassosChange
+    TabOrder = 17
+  end
+  object edIntervaloEnvioBytes: TSpinEdit
+    Cursor = crIBeam
+    Left = 368
+    Height = 21
+    Top = 252
+    Width = 49
+    OnChange = edIntervaloEnvioBytesChange
+    TabOrder = 18
+  end
+  object Button1: TButton
+    Left = 240
+    Height = 25
+    Top = 12
+    Width = 27
+    Caption = 'L1'
+    OnClick = Button1Click
+    TabOrder = 19
+  end
+  object Button2: TButton
+    Left = 240
+    Height = 25
+    Top = 44
+    Width = 27
+    Caption = 'L2'
+    OnClick = Button2Click
+    TabOrder = 20
+  end
+  object edLin: TSpinEdit
+    Cursor = crIBeam
+    Left = 32
+    Height = 21
+    Top = 280
+    Width = 40
+    TabOrder = 21
+  end
+  object edCol: TSpinEdit
+    Cursor = crIBeam
+    Left = 104
+    Height = 21
+    Top = 280
+    Width = 40
+    MaxValue = 200
+    TabOrder = 22
+  end
+  object Label12: TLabel
+    Left = 9
+    Height = 13
+    Top = 284
+    Width = 18
+    Caption = 'Lin'
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 80
+    Height = 13
+    Top = 284
+    Width = 19
+    Caption = 'Col'
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Button3: TButton
+    Left = 153
+    Height = 25
+    Top = 280
+    Width = 75
+    Caption = 'Posiciona'
+    OnClick = Button3Click
+    TabOrder = 23
+  end
+  object ACBrDIS1: TACBrDIS
+    Porta = 'COM1'
+    Intervalo = 200
+    OnAtualiza = ACBrDIS1Atualiza
+    left = 200
+    top = 88
+  end
+end

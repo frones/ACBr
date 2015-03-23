@@ -1,0 +1,68 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Juliana Tamizou - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrSEF2
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+Data: 29/12/2014
+-- ACBrSEF2
+[*] Adicionado validação na geração do bloco H
+		http://www.projetoacbr.com.br/forum/index.php?/topic/4822-arquivo-sef-pernambuco/page-6#entry122390
+		por : Juliomar Marchetti
+Data: 18/11/2014
+-- ACBrSEF2
+[+] Adicionado o registro E550 e correções
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18640-sef-pernambuco-n%C3%A3o-importa-os-valores-dos-arquivos/#entry117868
+
+Data: 30/04/2014
+-- ACBrSEF2
+[+] Adicionado o Bloco H para o SEF2 (Marcelo Santos)
+[*] Correções em outros blocos (Marcelo Santos)
+
+Data: 06/05/2014
+-- ACBrSEF2
+[+] Adicionado o Registro E120 no Bloco E para o SEF2 (Juliano Rosa)
+[*] Correções de LFill no Bloco 0 (Juliano Rosa)

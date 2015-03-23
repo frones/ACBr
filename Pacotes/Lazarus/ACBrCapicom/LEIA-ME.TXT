@@ -1,0 +1,3 @@
+A instalação do Pacote ACBrCapicom não é necessária no Lazarus
+
+Para permitir a compilação no Linux, os fontes de ACBrCapicom foram incorporados em ACBrDFeComum

@@ -1,0 +1,48 @@
+Foi utilizado a versão 5.02 do Quick Report (Delphi 7) para fazer o DANFSE.
+  
+Quando se utiliza uma versão diferente podem aparecer erro do tipo Property ...  dos not exist, 
+ou seja não existe a propriedade ...
+
+Para resolver você tem que seguir a risca os passos abaixo:
+ 
+ 
+ 
+Primeiro passo:
+========================================================================
+Utilizando o Delphi abra o fonte: ACBrNFSeDANFSeQR que encontra-se na pasta ...\Fontes\ACBrNFSe
+
+Se aparecer uma tela informando que a propriedade não existe, clique em ignorar todas.
+
+Mantendo o ACBrNFSeDANFSeQR aberto, abra o fonte: ACBrNFSeDANFSeQRRetrato que encontra-se na mesma pasta.
+
+Clique em ignorar todas se aparecer a tela informado que a propriedade não existe.
+========================================================================
+
+
+Segundo Passo:
+========================================================================
+Selecione o objeto QRNFSe que encontra-se no form: fqrDANFSeQR.
+ 
+Altere o valor das propriedades Left e Top para um valor entre 0 e 10, desde que seja diferente do atual.
+ 
+Exemplo: Se os valores atuais é 2 (dois) tanto par Left quanto para Top altere para 3 (tres).
+
+Inclua uma linha em branco no código onde não vai interferir em nada, por exemplo entre interface e uses.
+========================================================================
+
+
+Terceiro Passo:
+========================================================================
+Selecione o objeto QRNFSe que encontra-se no form: fqrDANFSeQRRetrato.
+
+Altere o valor das propriedades Left e Top para um valor entre 0 e 10, desde que seja diferente do atual.
+ 
+Exemplo: Se os valores atuais é 2 (dois) tanto par Left quanto para Top altere para 3 (tres).
+ 
+Inclua uma linha em branco no código onde não vai interferir em nada, por exemplo entre interface e uses.
+========================================================================
+
+
+Pronto agora, clique na opção em Save All e depois Close All.
+Abra a aplicação que utiliza o componente e compile utilizando a opção Build.
+Isso deve resolver o problema.

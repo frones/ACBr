@@ -1,0 +1,67 @@
+package synapse;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Synapse TCP/IP / Serial library - (http://www.synapse.ararat.cz)'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl;
+
+contains
+  asn1util in '..\..\..\Fontes\Terceiros\synalist\asn1util.pas',
+  blcksock in '..\..\..\Fontes\Terceiros\synalist\blcksock.pas',
+  clamsend in '..\..\..\Fontes\Terceiros\synalist\clamsend.pas',
+  dnssend in '..\..\..\Fontes\Terceiros\synalist\dnssend.pas',
+  ftpsend in '..\..\..\Fontes\Terceiros\synalist\ftpsend.pas',
+  ftptsend in '..\..\..\Fontes\Terceiros\synalist\ftptsend.pas',
+  httpsend in '..\..\..\Fontes\Terceiros\synalist\httpsend.pas',
+  imapsend in '..\..\..\Fontes\Terceiros\synalist\imapsend.pas',
+  ldapsend in '..\..\..\Fontes\Terceiros\synalist\ldapsend.pas',
+  mimeinln in '..\..\..\Fontes\Terceiros\synalist\mimeinln.pas',
+  mimemess in '..\..\..\Fontes\Terceiros\synalist\mimemess.pas',
+  mimepart in '..\..\..\Fontes\Terceiros\synalist\mimepart.pas',
+  nntpsend in '..\..\..\Fontes\Terceiros\synalist\nntpsend.pas',
+  pingsend in '..\..\..\Fontes\Terceiros\synalist\pingsend.pas',
+  pop3send in '..\..\..\Fontes\Terceiros\synalist\pop3send.pas',
+  slogsend in '..\..\..\Fontes\Terceiros\synalist\slogsend.pas',
+  smtpsend in '..\..\..\Fontes\Terceiros\synalist\smtpsend.pas',
+  snmpsend in '..\..\..\Fontes\Terceiros\synalist\snmpsend.pas',
+  sntpsend in '..\..\..\Fontes\Terceiros\synalist\sntpsend.pas',
+  ssl_openssl in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl.pas',
+  ssl_openssl_lib in '..\..\..\Fontes\Terceiros\synalist\ssl_openssl_lib.pas',
+  synachar in '..\..\..\Fontes\Terceiros\synalist\synachar.pas',
+  synacode in '..\..\..\Fontes\Terceiros\synalist\synacode.pas',
+  synacrypt in '..\..\..\Fontes\Terceiros\synalist\synacrypt.pas',
+  synadbg in '..\..\..\Fontes\Terceiros\synalist\synadbg.pas',
+  synafpc in '..\..\..\Fontes\Terceiros\synalist\synafpc.pas',
+  synaicnv in '..\..\..\Fontes\Terceiros\synalist\synaicnv.pas',
+  synaip in '..\..\..\Fontes\Terceiros\synalist\synaip.pas',
+  synamisc in '..\..\..\Fontes\Terceiros\synalist\synamisc.pas',
+  synaser in '..\..\..\Fontes\Terceiros\synalist\synaser.pas',
+  synautil in '..\..\..\Fontes\Terceiros\synalist\synautil.pas',
+  synsock in '..\..\..\Fontes\Terceiros\synalist\synsock.pas',
+  tlntsend in '..\..\..\Fontes\Terceiros\synalist\tlntsend.pas';
+
+end.

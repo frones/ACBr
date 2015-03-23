@@ -1,0 +1,294 @@
+object FrmSPEDFiscal: TFrmSPEDFiscal
+  Left = 391
+  Height = 508
+  Top = 181
+  Width = 653
+  Caption = 'ACBrSpedFiscal - Demo'
+  ClientHeight = 508
+  ClientWidth = 653
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Position = poScreenCenter
+  LCLVersion = '0.9.29'
+  object Label2: TLabel
+    Left = 8
+    Height = 14
+    Top = 128
+    Width = 66
+    Caption = 'Lista de erros'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Height = 14
+    Top = 232
+    Width = 76
+    Caption = 'Arquivo Gerado'
+    ParentColor = False
+  end
+  object memoError: TMemo
+    Left = 8
+    Height = 83
+    Top = 145
+    Width = 637
+    Anchors = [akTop, akLeft, akRight]
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object memoTXT: TMemo
+    Left = 8
+    Height = 208
+    Top = 248
+    Width = 637
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    ParentFont = False
+    ScrollBars = ssAutoBoth
+    TabOrder = 1
+    WantReturns = False
+    WordWrap = False
+  end
+  object btnError: TButton
+    Left = 395
+    Height = 25
+    Top = 478
+    Width = 100
+    Anchors = [akRight, akBottom]
+    Caption = 'Gerar TXT Error'
+    OnClick = btnErrorClick
+    TabOrder = 2
+  end
+  object btnTXT: TButton
+    Left = 521
+    Height = 25
+    Top = 478
+    Width = 100
+    Anchors = [akRight, akBottom]
+    Caption = 'Gerar TXT'
+    OnClick = btnTXTClick
+    TabOrder = 3
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 58
+    Top = 0
+    Width = 653
+    Align = alTop
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    ClientHeight = 54
+    ClientWidth = 649
+    TabOrder = 4
+    object Label1: TLabel
+      Left = 22
+      Height = 14
+      Top = 14
+      Width = 83
+      Caption = 'Nome do Arquivo'
+      ParentColor = False
+    end
+    object edtFile: TEdit
+      Left = 22
+      Height = 21
+      Top = 28
+      Width = 304
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = edtFileChange
+      TabOrder = 0
+      Text = 'ACBrSpedFiscal.txt'
+    end
+    object cbConcomitante: TCheckBox
+      Left = 350
+      Height = 19
+      Hint = 'Grava os Registros a medida que são alimentados'#13#10'Economizando memória. '#13#10'Útil para evitar erros em arquivos Enormes'
+      Top = 30
+      Width = 134
+      Anchors = [akTop, akRight]
+      Caption = 'Gerar Concomitante'
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      OnClick = cbConcomitanteClick
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+    end
+    object Label5: TLabel
+      Left = 0
+      Height = 17
+      Top = 0
+      Width = 649
+      Align = alTop
+      Alignment = taCenter
+      Caption = '1 - Informe o Nome do Arquivo e método de Geração'
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object edNotas: TEdit
+      Left = 526
+      Height = 21
+      Top = 28
+      Width = 80
+      TabOrder = 2
+      Text = '10'
+    end
+    object Label6: TLabel
+      Left = 526
+      Height = 14
+      Top = 14
+      Width = 72
+      Caption = 'Num.Notas (C)'
+      ParentColor = False
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 62
+    Top = 58
+    Width = 653
+    Align = alTop
+    BevelOuter = bvNone
+    BorderWidth = 1
+    BorderStyle = bsSingle
+    ClientHeight = 58
+    ClientWidth = 649
+    TabOrder = 5
+    object btnB_0: TButton
+      Left = 16
+      Height = 25
+      Top = 22
+      Width = 100
+      Caption = 'Registros Bloco 0'
+      OnClick = btnB_0Click
+      TabOrder = 0
+    end
+    object btnB_1: TButton
+      Left = 526
+      Height = 25
+      Top = 22
+      Width = 100
+      Caption = 'Registros Bloco 1'
+      OnClick = btnB_1Click
+      TabOrder = 1
+    end
+    object btnB_C: TButton
+      Left = 118
+      Height = 25
+      Top = 22
+      Width = 100
+      Caption = 'Registros Bloco C'
+      OnClick = btnB_CClick
+      TabOrder = 2
+    end
+    object btnB_D: TButton
+      Left = 220
+      Height = 25
+      Top = 22
+      Width = 100
+      Caption = 'Registros Bloco D'
+      OnClick = btnB_DClick
+      TabOrder = 3
+    end
+    object btnB_E: TButton
+      Left = 323
+      Height = 25
+      Top = 22
+      Width = 100
+      Caption = 'Registros Bloco E'
+      OnClick = btnB_EClick
+      TabOrder = 4
+    end
+    object btnB_H: TButton
+      Left = 424
+      Height = 25
+      Top = 22
+      Width = 100
+      Caption = 'Registros Bloco H'
+      OnClick = btnB_HClick
+      TabOrder = 5
+    end
+    object Label4: TLabel
+      Left = 1
+      Height = 17
+      Top = 1
+      Width = 647
+      Align = alTop
+      Alignment = taCenter
+      Caption = '2 - Clique em cada botão dos Blocos e em seguida no botão Gerar TXT'
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object btnB_9: TButton
+    Left = 272
+    Height = 25
+    Top = 478
+    Width = 100
+    Anchors = [akRight, akBottom]
+    Caption = 'Gravar Bloco 9'
+    Enabled = False
+    OnClick = btnB_9Click
+    TabOrder = 6
+  end
+  object Label7: TLabel
+    Left = 24
+    Height = 14
+    Top = 464
+    Width = 64
+    Caption = 'Buffer Linhas'
+    ParentColor = False
+  end
+  object edBufLinhas: TEdit
+    Left = 16
+    Height = 21
+    Top = 478
+    Width = 80
+    TabOrder = 7
+    Text = '1000'
+  end
+  object edBufNotas: TEdit
+    Left = 120
+    Height = 21
+    Top = 478
+    Width = 80
+    Enabled = False
+    TabOrder = 8
+    Text = '1000'
+  end
+  object Label8: TLabel
+    Left = 128
+    Height = 14
+    Top = 464
+    Width = 62
+    Caption = 'Buffer Notas'
+    ParentColor = False
+  end
+  object ProgressBar1: TProgressBar
+    Left = 200
+    Height = 20
+    Top = 122
+    Width = 348
+    TabOrder = 9
+    Visible = False
+  end
+  object ACBrSPEDFiscal1: TACBrSPEDFiscal
+    Path = '.\'
+    Arquivo = 'ACBrSpedFiscal.txt'
+    LinhasBuffer = 1000
+    Delimitador = '|'
+    TrimString = True
+    CurMascara = '#0.00'
+    OnError = ACBrSPEDFiscal1Error
+    left = 256
+    top = 278
+  end
+end

@@ -1,0 +1,48 @@
+object dmACBrGNREGuiaLazReport: TdmACBrGNREGuiaLazReport
+  OldCreateOrder = False
+  Height = 316
+  HorizontalOffset = 376
+  VerticalOffset = 257
+  Width = 486
+  object frReport1: TfrReport
+    Dataset = frUserDataset1
+    DefaultCopies = 0
+    InitialZoom = pzDefault
+    Options = []
+    PreviewButtons = [pbZoom, pbLoad, pbSave, pbPrint, pbFind, pbHelp, pbExit]
+    ShowProgress = False
+    DataType = dtDataSet
+    Title = 'Boleto'
+    left = 60
+    top = 60
+  end
+  object frUserDataset1: TfrUserDataset
+    left = 132
+    top = 60
+  end
+  object frBarCodeObject1: TfrBarCodeObject
+    left = 60
+    top = 124
+  end
+  object frShapeObject1: TfrShapeObject
+    left = 132
+    top = 124
+  end
+  object PrintDialog1: TPrintDialog
+    left = 212
+    top = 60
+  end
+  object frTNPDFExport1: TfrTNPDFExport
+    left = 92
+    top = 188
+  end
+  object frHTMExport1: TfrHTMExport
+    left = 180
+    top = 188
+  end
+  object BufGuia: TBufDataset
+    FieldDefs = <>
+    left = 306
+    top = 70
+  end
+end

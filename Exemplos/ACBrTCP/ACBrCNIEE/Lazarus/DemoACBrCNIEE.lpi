@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <MainUnit Value="0"/>
+      <Title Value="DemoACBrCNIEE"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+      <Icon Value="0"/>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="6">
+      <Item1>
+        <PackageName Value="ACBrTCP"/>
+        <MinVersion Minor="9" Valid="True"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrDiversos"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="MemDSLaz"/>
+        <MinVersion Major="1" Minor="2" Release="1" Valid="True"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="LCLBase"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
+    </RequiredPackages>
+    <Units Count="22">
+      <Unit0>
+        <Filename Value="DemoACBrCNIEE.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Principal"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="29" Y="17"/>
+        <UsageCount Value="26"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Principal.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frPrincipal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Principal"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="151"/>
+        <CursorPos X="35" Y="172"/>
+        <UsageCount Value="26"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1635"/>
+        <CursorPos X="25" Y="1665"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\Fontes\synalist\httpsend.pas"/>
+        <UnitName Value="httpsend"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="754"/>
+        <CursorPos X="21" Y="764"/>
+        <UsageCount Value="13"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\..\Lazarus\TOOLS\DJ_Registro.pas"/>
+        <ComponentName Value="DJRegForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DJ_Registro"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="4906"/>
+        <CursorPos X="22" Y="4916"/>
+        <UsageCount Value="12"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\..\Lazarus\TOOLS\DJ_ProxyAutentica.pas"/>
+        <ComponentName Value="frDJ_ProxyAutentica"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DJ_ProxyAutentica"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="ProxyConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frProxyConfig"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ProxyConfig"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="31"/>
+        <CursorPos X="26" Y="42"/>
+        <UsageCount Value="25"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\..\Lazarus\TOOLS\DJ_Sistema.pas"/>
+        <UnitName Value="DJ_Sistema"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="39" Y="9"/>
+        <UsageCount Value="12"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\fpc\2.5.1\source\packages\winunits-base\src\wininet.pp"/>
+        <UnitName Value="wininet"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1428"/>
+        <CursorPos X="6" Y="1441"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\fpc\2.5.1\source\rtl\win\wininc\func.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="122"/>
+        <CursorPos X="10" Y="135"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\lazarus\lcl\include\buttoncontrol.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="42"/>
+        <CursorPos X="1" Y="63"/>
+        <UsageCount Value="10"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="140"/>
+        <CursorPos X="1" Y="153"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <UnitName Value="ACBrUtil"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1856"/>
+        <CursorPos X="1" Y="1879"/>
+        <UsageCount Value="11"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\fpc\2.5.1\source\rtl\objpas\classes\classesh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="838"/>
+        <CursorPos X="14" Y="851"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="C:\lazarus\fpc\2.5.1\source\rtl\objpas\classes\streams.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="419"/>
+        <CursorPos X="3" Y="422"/>
+        <UsageCount Value="10"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="C:\lazarus\fpc\2.5.1\source\packages\fcl-db\src\memds\memds.pp"/>
+        <UnitName Value="memds"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="816"/>
+        <CursorPos X="3" Y="819"/>
+        <UsageCount Value="10"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\Fontes\ACBrSerial\ACBrETQEpl2.pas"/>
+        <UnitName Value="ACBrETQEpl2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="309"/>
+        <CursorPos X="38" Y="316"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="C:\lazarus\lcl\dbgrids.pas"/>
+        <UnitName Value="DBGrids"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1699"/>
+        <CursorPos X="1" Y="1712"/>
+        <UsageCount Value="10"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\..\..\..\Lazarus\TESTE\Zeos\unit1.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Unit1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="62"/>
+        <CursorPos X="65" Y="70"/>
+        <UsageCount Value="10"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="2274"/>
+        <CursorPos X="37" Y="2282"/>
+        <UsageCount Value="10"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
+        <UnitName Value="ACBrCNIEE"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="200"/>
+        <CursorPos X="33" Y="205"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <UnitName Value="ACBrSocket"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="680"/>
+        <CursorPos X="27" Y="353"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit21>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="292" Column="1" TopLine="279"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="293" Column="1" TopLine="291"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="290" Column="1" TopLine="277"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="312" Column="1" TopLine="299"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="313" Column="1" TopLine="299"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="315" Column="1" TopLine="299"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="304" Column="13" TopLine="299"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="313" Column="67" TopLine="299"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="214" Column="21" TopLine="209"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="215" Column="21" TopLine="210"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="223" Column="4" TopLine="219"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="222" Column="4" TopLine="218"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="221" Column="4" TopLine="217"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="101" Column="38" TopLine="84"/>
+      </Position14>
+      <Position15>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="120" Column="28" TopLine="120"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="192" Column="1" TopLine="112"/>
+      </Position16>
+      <Position17>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="73" Column="10" TopLine="60"/>
+      </Position17>
+      <Position18>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="142" Column="1" TopLine="138"/>
+      </Position18>
+      <Position19>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="159" Column="1" TopLine="144"/>
+      </Position19>
+      <Position20>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="13" Column="16" TopLine="1"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position21>
+      <Position22>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="171" Column="13" TopLine="158"/>
+      </Position22>
+      <Position23>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="164" Column="58" TopLine="158"/>
+      </Position23>
+      <Position24>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position24>
+      <Position25>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="38" Column="34" TopLine="27"/>
+      </Position25>
+      <Position26>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="13" Column="18" TopLine="9"/>
+      </Position26>
+      <Position27>
+        <Filename Value="Principal.pas"/>
+        <Caret Line="33" Column="11" TopLine="12"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
+        <Caret Line="205" Column="33" TopLine="200"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <Caret Line="205" Column="14" TopLine="201"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <Caret Line="219" Column="6" TopLine="203"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="Principal"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerMessages>
+        <UseMsgFile Value="True"/>
+      </CompilerMessages>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <BreakPoints Count="2">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsGlobal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas"/>
+        <Line Value="207"/>
+      </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
+        <Line Value="692"/>
+      </Item2>
+    </BreakPoints>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+  <EditorMacros Count="0"/>
+</CONFIG>

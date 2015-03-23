@@ -1,0 +1,946 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Wemerson P. Souto - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrNFePCN
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+09/03/2015
+[*] Removido o PathMDe, pois nunca foi utilizado.
+    Por: Italo Jurisato Junior
+		
+04/03/2015
+[*] Inclusão das URLs do QR-Code para DF.
+    Por: Gilson_ST
+		
+23/02/2015
+[*] Inclusão das novas URLs para atender o novo serviço de Administração do 
+    Código de Segurança do Contribuinte - CSC (Somente SEFAZ-AM).
+    por: Italo Jurisato Junior
+
+19/02/2015
+[*] Inclusão de novos tipos de eventos (NFe/CTe/MDFe).
+    por: Italo Jurisato Junior
+
+18/02/2015
+[-] correção pois sempre parecia uma nota
+	http://www.projetoacbr.com.br/forum/index.php?/topic/19867-salvando-em-txt-apenas-%C3%BAltima-nota-da-lista/
+	
+10/02/2015
+[*] Atribuição do conteudo de xMotivo a xMsg.
+    por: Vanessa Mocellin 
+[*] Corrigido nome do XML, estava salvando -NFe em vez de -nfe.
+    por: Italo Jurisato Junior
+
+09/02/2015
+[*] Incluida as URLs da NFC-e para BA e SP.
+    por: Italo Jurisato Junior
+
+05/02/2015
+[*] Incluida as URLs de QR-Code da NFC-e para PI.
+    por: Ricardo
+
+30/01/2015
+[+] Implementado a descompactação de retorno Zipado ao acessar o Web Services:
+    NFeDistribuicaoDFe
+    Por: Italo Jurisato Junior
+
+27/10/2015
+[*] Alteracao para validar campo por causa do formatos diferentes entre 2.00 e 3.10
+		http://www.projetoacbr.com.br/forum/index.php?/topic/19471-ajuste-valida%C3%A7%C3%A3o-pagamento/
+		por : Luis Fernando
+
+26/01/2014
+[*] Acertos na impressão do DANFC-e para EscPos
+    http://www.projetoacbr.com.br/forum/index.php?/topic/16371-componente-acbrnfedanfeescpos/#entry125002
+    Revisão feita por: Régys Silveira
+
+26/01/2015
+[*] DANFe em Fortes Report para armamentos!
+    por: ncc.star
+
+23/01/2015
+[*] Incluida as URLs de consulta da NFC-e para PB e RR.
+    por: Roberto Godinho
+		
+14/01/2015
+[*] correção para não popular campos que não existem em nf-e inferior a 3.10
+		http://www.projetoacbr.com.br/forum/index.php?/topic/19454-erro-em-nota-de-importa%C3%A7%C3%A3o-campo-vafrmm/
+		por: Juliomar Marchetti
+		
+20/01/2015
+[-] Correção de bug na impressão de evento com mais de 10 linhas.
+    por: regys.silveira
+
+08/01/2015
+[+] Adicionado o metodo de abertura da gaveta para impressoras bematech, epson e daruma
+    por: Regys Silveira
+
+05/01/2015
+[*] Correção na URL de produção do WebServices: NFeDistribuicaoDFe
+    por: LVR
+
+02/01/2015
+[*] Correção na virtual
+	  por: Juliomar Marchetti
+		
+22/12/2014
+[*] Removido da URL do PR o caracter "?" pois este já é incluido através do passo 6
+    ao montar a URL do QR-code.
+    por: Italo Jurisato Junior
+[*] Alteração na montagem da URL do QR-Code, para o Estado do Paraná tanto a 
+    data e hora de emissão e Digest Value ao serem convertidos para Hex devemos
+    converter as letras para minusculo.
+    por: Anderson.D
+[*] Para o Estado do Pará o componente utilizará as URLs da SV-AN para a NF-e
+    e as URLs da SV-RS para a NFC-e.
+    por: Italo Jurisato Junior
+
+18/12/2014
+[*] Adicionar informação do xCpl ao Danfe em fast
+    http://www.projetoacbr.com.br/forum/index.php?/topic/19191-inserir-campo-na-impress%C3%A3o-danfe-fastreports/
+		por : Juliomar Marchetti 
+		
+18/12/2014
+[*] Incluido a linha para alimentar a propriedade XML que conterá o resultado
+    do processamento do evento.
+    por: Italo Jurisato Junior
+
+16/12/2014
+[*] Para o Estado de Piaui o componente utilizará as URLs da SV-AN para a NF-e
+    e as URLs da SV-RS para a NFC-e.
+    por: Italo Jurisato Junior
+
+15/12/2014
+[*] Estava faltando o "Result" para pegar o retorno da function EnviarCartaCorrecao.
+    por: Italo Jurisato Junior
+
+12/12/2014
+[*] Refactoring em várias Units.
+    por: Italo Jurisato Junior
+
+03/12/2014
+[*] - Refatoração de código para remover funções duplicadas e aplicar padrões
+	por : Juliomar Marchetti
+	
+02/12/2014
+[*] - Alterado de posição a rotina que salva o XML da NF-e caso a propriedade
+      Configuracoes.Arquivos.Salvar seja True.
+      por: Italo Jurisato Junior
+
+01/12/2014
+[*] - acerto para formatar as decimais da quantidade somente quando for quantidade 
+      com decimais como no ECF.
+      por: regys silveira
+
+28/11/2014
+[*] - Adicionada a implementação das tags de formatação no ACBrNFeDANFeESCPOS
+      ele vai utilizar as mesmas tags que são utilizadas hoje no ACBrECF
+      o exemplo de utilização já possui botão e texto para teste
+    - Adiconados comandos de impressão de codigos de barra e logomarca na Daruma
+      por: regys silveira
+
+27/11/2014
+[*] Adição no DataModule para FastReport campos usados para medicamentos que devem ser impressos no danfe
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18720-declarar-vbcst-vst-e-xlote-no-report-designer/#entry118653
+	por: Juliomar Marchetti
+
+25/11/2014
+[*] -- ACBrNFeDANFeESCPOS -- por: Regys Silveira
+       - Identação da unit para o padrão correto.
+       - Acertos gerais no layout e textos para adequação a documentação de impressão do DANFC-e
+       - adicionada opção para impressão de via consumidor ou estabelecimento
+       - opção de impressão resumida ou não revisada
+       - adicionada opção para imprimir completo em 2 linhas ou somente 1 linha
+       - adicionada opção para impressão ou não de desconto/acrescimo por linha
+       - Acerto para que o ; nas observações quebre a linha corretamente
+       - impressão de relatórios normais (texto livre)
+       - impressão de eventos
+
+26/11/2014
+[*] Utilizacao da propriedade ImprimirTotalLiquido nos DANFEs (Quick Report).
+    Por: fpasqueto
+[+] Implementado o DANFE NFC-e (Quick Report) tamanho A4.
+    Criado o valor tiNFCeA4 para que o DANFE A4 seja impresso em vez de bobina.
+    Por: Italo Jurisato Junior
+[*] Na impressão do Evento (Quick Report) será checado o modelo, caso seja 55
+    será impresso NF-e caso contrario NFC-e.
+    Por: Italo Jurisato Junior
+[*] Na function TratarRespostaFinal, dentro do for J o if que compara o conteudo
+    da propriedade DigestValue com digVal estava utilizando indice [i] em vez de [J]
+    ao ler o conteudo de DigestValue.
+    Foi feita a correção e mais algumas melhorias.
+    Por: Italo Jurisato Junior
+
+25/11/2014
+[*] A bando com o valor aproximado dos tributos só será gerada no DANFE NFC-e 
+    (Quick Report) caso o valor de vTotTrib <> 0.
+    Por: Italo Jurisato Junior
+
+20/11/2014
+[*] Acerto para envio off-line da NFC-e usando ACBrECFVirtualNFCe
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18486-d%C3%BAvidas-acbrecfvirtualnfce/
+
+14/11/2014
+[+] Adicionas URLs de consulta da NFC-e pela chave e QR-Code para o estado do paraná
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18569-nfc-e-erro-url-n%C3%A3o-dispon%C3%ADvel-para-o-estado-solicitado/#entry117722
+    por: Italo JurisatoJunior
+[+] Adicionas URLs da NFC-e para o estado do paraná
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18569-nfc-e-erro-url-n%C3%A3o-dispon%C3%ADvel-para-o-estado-solicitado/#entry117722
+    por: regys.silveira
+
+14/11/2014
+[*] Incluido as URLs de Consulta as NF-e Destinadas e Download de NF-e para a 
+    SEFAZ-RS como consta na Relação de Serviços Web do Portal Nacional da NF-e.
+    por: Italo Jurisato Junior
+
+11/11/2014
+[*] Alterações realizadas conforme NT ACBr 2014/001 nas Units: ACBrNFeDANFERave e
+    ACBrNFeDANFERaveCB
+    por: Italo Jurisato Junior
+
+10/11/2014
+[-] Correções baseado nos relatos de Mauricio Guedes, nomes dos arquivos após ler
+    o XML usando o LoadFromStream.
+    por: Italo Jurisato Junior
+
+07/11/2014
+[*] Alterações realizadas conforme NT ACBr 2014/001
+    por: Italo Jurisato Junior
+
+31/10/2014
+[*] Alterações realizadas conforme NT ACBr 2014/001
+    por: Italo Jurisato Junior
+
+29/10/2014
+[*] Incluido nas classes que contem as estruturas dos XML de retornos a propriedade
+    versao, para que esta receba o conteudo do atributo versao.
+    por: Italo Jurisato Junior
+
+15/10/2014
+[*] Melhorias no DANFE - NFC-e (Quick Report) realizadas por Daniel Caus
+
+13/10/2014
+[-] Na unit ACBrNFeDANFeQR a propriedade FViaConsumidor estava com uma letra
+    a mais (FAViaConsumidor - letra A).
+    por: Italo Jurisato Junior
+
+10/10/2014
+[*] Incluido a propriedade boolean: ViaConsumidor para alternar as Mensagens:
+    Via Consumidor / Via Estabelecimento quando se tratar de emissão do DANFE 
+    em contingência.
+    por: Italo Jurisato Junior - Implementação feita por: Edilson
+
+06/10/2014
+[*] Faltou um begin em um procedimento!
+	por: Juliomar Marchetti
+	
+06/10/2014
+----------
+[-] Colocado uma condição checando se a UF=29 e versão 3.10, caso afirmativo
+    o nome do metodo é NfeInutilizacao em vez de NfeInutilizacao2
+    Motivo da alteração: Rejeicao: Cabecalho - Versao do arquivo XML nao suportada
+    Alterado a URL de Inutilização para a versão 3.10 da Bahia.    
+    por: Italo Jurisato Junior
+
+03/10/2014
+----------
+[*] Alterado a estrutura do envelope do metodo NFeDistribuicaoDFe
+    por: Italo Jurisato Junior
+
+02/10/2014
+----------
+[+] Incluido a URL de homologação e produção (não liberado ainda) para consumir o Web Service
+    NFeDistribuicaoDFe
+    por: Italo Jurisato Junior
+
+14/11/2013
+----------
+[-] Acerto na tag nItemPed, ela é um campo numérico e estava gerando zeros não significativos.
+    por: regys.silveira
+
+31/10/2013
+----------
+[*] Acerto para utilização dos novos links de homologação disponibilizados pelo estado do AM e válidos para uso em todo território nacional
+    http://portalnfce.sefaz.am.gov.br/desenvolvedor/ambiente-de-homologacao-para-desenvolvedores/
+
+27/05/2013 {por Fabio Gabriel e João Henrique}
+----------
+[+] - {ACBrNFeDANFEFR.pas} Inclusão da propriedade "ExibeCampoFatura", opção para cancelar a impressão do campo FATURA (Somente em FastReport)
+	Ps: Definido por padrão para True. 
+[*] - {ACBrNFeDANFEFRDM.dfm} Modificado no cdsDestinatarioIE (Inscr.Estadual) o campo de 14 para 18 caracteres	devido a utilização na formatação para 	alguns estados.
+[+] - {ACBrNFeDANFEFRDM.pas} CarregaFatura foi incluso a opção da impressão do campo (ExibeCampoFatura);  
+[*] - {ACBrNFeDANFEFRDM.pas} CarregaFatura, Indicação de pagamente será sempre de acordo com o a tag indPag (juaumkiko)
+[-] - {ACBrNFeDANFEFRDM.pas} CarregaParametros, modificado em vários locais:
+	  	TpAmb = taHomologação: (Várias opções para teste)
+		TpAmb = taProdução: (Várias opções para teste)
+		TpEmis = teDPEC: (Correção conforme relatado em: http://www.projetoacbr.com.br/forum/index.php?/topic/9203-normalização-danfe-em-fast-report/page-4#entry62155
+      		PS: Todos os testes precisam verificar primeiro a especificação do ProtocoloNfe e opção NFeCancelada diretamente pelo componente. (juaumkiko)
+[*] - {DANFeRetrato.fr3} No Canhoto foi incluso mais uma linha, para ficar padrão como a anterior (DANFE.FR3).  Isto se faz necessário, porque várias Empresas necessita de informações mas detalhadas, devido a despacho por transportadoras, entre outras, e o tamanho fica restrito.
+[*] - {DANFeRetrato.fr3} Na Fatura foi redimencionado o tamanho e incluso a opção de impressão (ExibeCampoFatura), ganhando mais espaço no produtos/serviços (obedecendo o manual).
+[+] - {DANFeRetrato.fr3} Incluso um ColumnFooter para ISSQN, assim podemos usar o recurso de exibição ou não, ganhando mais espaço com os produtos/serviços.
+[*] - {DANFeRetrato.fr3} Redimensionamento dos Dados Adicionais (obedecendo o manual)
+
+04/03/2013
+----------
+[-] Acerto no envio de e-mail normal, não estava anexando o XML
+    por regys.silveira
+
+29/01/12
+--------
+[-] Acertos feitos pelo usuário Luis Fernando para o DANFE quickreport.
+    http://www.projetoacbr.com.br/forum/index.php?/topic/8706-altera%C3%A7%C3%B5es-no-danfe-qreport-retrato-para-nf-e/
+    - Local impressão Canhoto.
+    - Mensagem obrigatória quando emitido em contingencia.
+    - Estouro da linha dos itens.
+    - Local Endereço Entrega.
+    - Mensagem livre no lugar do software que distribui.
+
+05/12/12 
+---------------
+[+] Acerto na na expansão do logotipo para o DANFE.FR3
+    conforme tópico: http://www.projetoacbr.com.br/forum/index.php?/topic/8668-logomarca-expandido-danfefr/
+
+05/12/12 (Regys Silveira, Itamar Bermond) 
+---------------
+[+] Inclusão da impressão e geração de PDF de Eventos com FastReport.  
+
+22/11/2012
+-- ACBrDFeUtil 
+[+] Unificação de funções de mesma funcionalidade das units:
+    ACBrNFeUtil, ACBrNFEsUtil, ACBrCTeUtil
+    (por Isaque Pinheiro)
+
+Alterações   08/11/12 (João Henrique)
+---------------
+[+] Inclusão da propriedade MostrarSetup (padrão FALSE) no componente Danfe Rave Code Base.     
+
+Alterações   31/10/12 (Regys Silveira)
+---------------
+[*] Ajuste para poder escolher entre enviar email com thread ou sem thread
+    o padrão continua sendo utilizando a Thread.
+
+Alterações   10/10/12 (João Henrique)
+---------------
+[*] Ajustes na Impressão do Danfe (Rave Arquivo e Code Base) de acordo com a 
+    NT 2012.003b onde prevê que o Cancelamento pode ter cStat como 101 e 151.
+
+Alterações   08/05/12 (beretta)
+---------------
+[-] Acerto para impressão da quantidade e unidade tributaveis e comercial 
+    quando forem diferentes.
+
+Alterações   08/05/12 (juaumkiko)
+---------------
+[-] Correção de memory leak. 
+    Incluído destructor da classe TNFeCartaCorrecao.
+
+Alterações   15/03/12 (Regys Silveira)
+---------------
+[-] Acerto para validar o tamanho maximo de campos decimais sem considerar a 
+    virgula, conforme apontado em:
+    http://djsystem.com.br/acbr/forum/viewtopic.php?f=6&t=5072
+
+Alterações   27/01/12 (Italo Jurisato Junior)
+---------------
+[-] Alteração na Emissão do DANFE - Quick Report código do status para CT-e DENEGADA 
+    estava 102 sendo que o correto é 110, conforme falha detectada por Moroni.
+
+Data: 24/01/2012 
+-- ACBrNFeWebServices -- 
+[-] Acerto conforme post no fórum:
+    http://djsystem.com.br/acbr/forum/viewtopic.php?f=6&t=3970
+
+
+Alteração    06/01/2012
+-----------------------
+[+] Adicionado endereço do webservice da CC-e para o Ceará
+
+Alteração    29/11/2011
+-----------------------
+[-] Acerto na passagem da senha para o certifico a cada sessão.
+    http://djsystem.com.br/acbr/forum/viewtopic.php?f=6&t=4054
+
+Alteração    08/09/2011
+-----------------------
+[-] Corrigido vazamento de memória, na emissão da CCe, o objeto "ReqResp"
+    estava sendo instanciado no método "TNFeCartaCorrecao.Executar", mas 
+    não estava sendo liberado.
+
+[-] Corrigido vazamento de memória na unit "pcnCCeNFe.pas", criado o método
+    "Destroy" na class TInfEvento, para liberar o objeto "TDetEvento", que
+    esta sendo instanciado no método Create.
+    (por Isaque Pinheiro)
+
+Alterações   14/07/2011
+---------------
+[+] Incluído recurso para imprimir informações do FISCO no respectivo quadro e não no quadro informaçõs complementares (juaumkiko)
+    Para usar o recurso basta descomentar as linhas: 1247 e 1248 do arquivo ACBrNFeDANFeRaveDM.pas e compilar o projeto ou monitor novamente
+    Não esqueça de atualizar os arquivos .RAV
+    IMPORTANTE: Esse recurso deverá ser utilizado por sua conta e risco, pois isso esta em desacordo com o que orienta o MANUAL DE INTEGRAÇÃO
+
+Alterações   07/06/2011
+---------------
+[-] Ajustado vazamento de memoria no arquivo ACBrNFeWebservices (NFeRetorno.Free) - juaumkiko
+
+Alterações   16/05/2011
+---------------
+[-] Correção nos arquivos ACBrNFeUtil, libxml2 e libxmlsec para conseguir assinar e validar uma NFe utilizando OpenSSL.
+    No Delphi XE isso não era possível. Para solucionar o problema foi alterado todos os valores PChar para PAnsiChar nos
+    arquivos libxml2 e libxmlsec. Isso levou a necessidade de alteração na unit ACBRNFeUtil da variavel schema_filename para AnsiString
+    "juaumkiko"
+
+Alterações   28/04/2011
+---------------
+[-] Correção do Layout da NFe. Retirada a propriedade RENAVAM, pois a mesma não contempla mais o Layout 2.0
+[+] Impressão da descrição do tipo de combustível no Danfe em Rave Arquivo e Code Base.
+
+Alterações   08/04/2011
+---------------
+[-] Correção de impressão do DANFE com RAVE CODE BASE quando estiver imprimindo em Formulario de Segurança no Ambiente de Producao.
+
+Alterações   10/03/2011
+---------------
+[-] Correção de impressão do NCM no DANFE com RAVE CODE BASE quando a fonte for COURIER
+
+Alterações   28/02/2011
+---------------
+[-] Retirado alguns vazamentos de memória conforme relatado em http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=6&t=1165 (Cezinha Anjos)
+ 
+Alterações   22/02/2011
+---------------
+[-] Inversão dos campos vBC e pRedBC quando ICMSSN900. Caso 892 do MANTIS
+[-] Correção para imprimir o cabeçãlho CSOSN somente quando for SIMPLES NACIONAL. Danfe em Rave Arquivo.
+
+Alterações   09/02/2011
+---------------
+[*] Adicionado endereço de produção da NFe 2.0 para os WebServices do Paraná
+
+Alterações   08/02/2011
+---------------
+[-] Correção da impressão do DANFE em PDF no Danfe em Rave Arquivo. Caso 878 do Mantis
+[+] Incluido opção de Salvar diretamente para arquivo TXT as NFs carregadas no componente
+    Utilizem o método: ACBrNFe1.NotasFiscais.SaveToTXT({caminho e nome do arquivo TXT});
+    Vejam o DEMO para exemplo.
+
+Alterações   25/01/2011
+---------------
+[*] Inclusão da Propriedade TamanhoFonte_ANTT nos Danfes em RAVE. Casos 853 e 868 do Mantis
+[-] Correção da cardinalidade das TAGs BALSA e VAGAO. Caso 860 do MANTIS.
+[-] Correção da cardinalidade das TAGs referente a CANA. Caso 863 do MANTIS.
+
+
+Alterações   07/12/2010
+---------------
+[-] Correção no método LoadFromFile no tratamento da TAG REFNFP. Caso 814 do Mantis
+[-] Correção no tratamento da TAG L120 referente de combustiveis. Caso 817 do Mantis
+
+Alterações   03/12/2010
+---------------
+[-] Correção na impressão do Danfe em Rave Arquivo quando CSOSN for Vazio.
+
+Alterações   26/11/2010
+---------------
+[+] Liberação dos Webservices de Produção 2.0 do estado de Pernambuco.
+
+Alterações   24/11/2010
+---------------
+[-] Correção de Loop infinito no DANFE_RAVE513.rav quando o DANFE conter mais de uma página
+    e existir ISSQN.
+
+Alterações   10/11/2010
+---------------
+[+] Criação de classe exception para a nota eletrônica (Régys Borges da Silveira)
+    - Foi criado uma classe de exception própria EACBrNFeException para o
+      componente de nota eletrônica, visando facilitar o tratamento de exceções 
+      vindas da nota fiscal eletrônica.
+
+Alterações   17/09/2010
+---------------
+[+] Envio de nota eletrônica por e-mail (Régys Borges da Silveira, Itamar Bermond)
+    - Adicionados dois novos parâmetros, um para o nome do remetente, permitindo 
+      que ao enviar o e-mail apareça o nome do remetente ao invés do e-mail e outro 
+      para instruir o método a ficar esperando ou não a execução da thread de
+      envio de e-mail.
+
+Alterações   26/08/2010
+---------------
+[-] DANFE em FAST REPORT (Régys Borges da Silveira, Itamar Bermond)
+    - Desmarcada a propriedade StoreInDFM do FastReport para não gravar
+      o relatório no DFM e evitar o erro de compilação em versão menores
+      do delphi, favor utilizar o arquivo externo.
+
+
+Alterações   25/08/2010
+---------------
+[-] DANFE em FAST REPORT (Régys Borges da Silveira)
+    - Configuração do preview do DANFE
+    - corrigido erro ao gerar pdf para uma nota só, gerava o arquivo sem extensão
+
+
+Alterações   24/08/2010
+---------------
+[-] DANFE em FAST REPORT (Régys Borges da Silveira)
+    - Correção da exportação para PDF
+    - Correção para checar se o relatório foi realmente preparado antes de continuar a imprir ou gerar o PDF
+    - Correção nas diretivas de compilação para Delphi 2009 e superior
+    - Correções para o Simples Nacional
+    - correção para utilizar o caminho da logomarca como nos outros DANFEs
+    - Correçã para informar as propriedades titulo, criador, etc do PDF corretamente
+    - Correções gerais no DANFE
+        . layout
+        . exibição da logomarca
+        . tamanho das colunas para conter valores grandes
+        . marca d'agua para ambiente de homologação
+        . complemento a descrição da mercadoria
+        . origem no CST
+        . mostrar o CST corretamente quando for Simples Nacional
+
+
+Alterações   16/08/10
+---------------
+[+] Danfe em FastReport por (Itamar Luiz Bermond)
+
+
+Alterações   23/06/10
+---------------
+[-] Danfe em Rave Arquivo e Code Base
+    - Correção da exibição do frete "1-DEST/REM" conforme NT 2010.004
+
+
+Alterações   17/02/10
+---------------
+[-] Correções no Preview e Fonte no DANFE em FORTES REPORTS (Peterson de Cerqueira Matos)
+    
+
+Alterações   12/02/10
+---------------
+[-] DANFE em FORTES REPORTS (Peterson de Cerqueira Matos)
+    Correção na exibição do 'Preview' para modo 'MODAL' 
+[*] DANFE em RAVE ARQUIVO
+    - Modificação para imprimir no corpo da nota o texto "NFe sem Autorização de Uso da SEFAZ", 
+      quando estiver em Ambiente PRODUÇÃO e não tiver Protocolo de autorizacao de uso.
+      OBS: O texto não será impresso se estiver em Producao e em Contingencia FS ou FS-DA.
+[-] DANFE em RAVE ARQUIVO
+    - Corrigido problema de geração do PDF quando existia mais de uma nota carregada no componente.(Caso 00473 do MANTIS)
+[-] Corrigida declaraçao de Units em libxml2.pas, libxmlsec.pas e libxslt.pas
+    para permitir a correta compilação no FreePascal no Linux
+
+Alterações   10/02/10
+---------------
+[*] DANFE em FORTES REPORTS (Peterson de Cerqueira Matos)
+    - Inserção da função 'BuscaDireita', que auxiliará a correção da
+      exibição dos 'DADOS ADICIONAIS' para evitar que a última palavra do
+      quadro fique pela metade devido à limitação da quantidade de caracteres
+    - Correção da formatação de CPF, no caso de NF-e emtida para pesso física
+
+Alterações   09/02/10
+---------------
+[*] Alteração do alinhamento (para esquerda) dos campos Inscr. Estadual e CNPJ no DANFE em RAVE CB.
+
+Alterações   08/02/10
+---------------
+[-] Correção da impressão no DANFE com  FORTES REPORTS, para o canhoto ser impresso apenas 
+    na primeira página. (Créditos: Peterson de Cerqueira Matos)
+[-] Correção da impressão no DANFE com  RAVE ARQUIVO. Quando a propriedade ExpandirLogoMarca estava 
+    como true, estava imprimindo "sujeira" dos dados do emitente
+
+
+Alterações   06/02/10
+---------------
+[*] Melhorias diversas no DANFE com  FORTES REPORTS (Créditos: Peterson de Cerqueira Matos)
+    - Alteração da quantidade de casas decimais dos campos 'QUANTIDADE' e
+      'VALOR UNITÁRIO' para 4 casas, conforme consta no 'MANUAL DE INTEGRAÇÃO DO CONTRIBUINTE'
+    - Correção na distribuição dos caracteres entre os 'DADOS ADICIONAIS' e a 'CONTINUAÇÃO DOS DADOS ADICIONAIS'
+    - Inclusão dos campos 'USUÁRIO' e 'SISTEMA' no rodapé do DANFE (só folha 1)
+    - Inclusão dos campos 'SITE', 'EMAIL' e 'FAX' no quadro do emitente
+    - Inclusão do 'RESUMO' da NF-e no canhoto
+
+Alterações   28/01/10
+---------------
+[+] Incluido Propriedade PathSchemas (ACBrNFe.Configuracoes.Geral.PathSchemas)
+    Se não informar nenhum caminho, o componente procura a pasta no diretorio do executavel (como esta atualmente)
+    Se informar um caminho, o componente irá procurar os Schemas neste caminho.
+    Util para quem quiser centralizar os arquivos de Schemas em um servidor por exemplo.
+
+Alterações   22/01/10
+---------------
+[+] Incluido pacote de Danfe em Fortes Reports (Creditos: Peterson de Cerqueira Matos)
+
+Alterações   22/01/10
+---------------
+[+] Propriedade ProdutosPorPagina nos componentes do DANFE RAVE CB (caso 458 MANTIS), agora esta funcional
+    Se propriedade estiver com o valor 0 (zero), o DANFE será impresso normalmente como agora. 
+    Se especificar um valor, será impresso a quantidade máxima de produtos por página.
+    (Créditos: João Paulo Leão)
+
+Alterações   19/01/10
+---------------
+[-] Fixado tamanho de fonte no RAVE CB RETRATO para o campo FRETE POR CONTA.
+
+Alterações   15/01/10
+---------------
+[*] Criado funcao UpperCase2 (NFeUtil) para transformar em caixa alta caracteres acentuados.
+    Com isso o caso 460 do mantis pode ser solucionado.
+
+Alterações   14/01/10
+---------------
+[+] Incluido Propriedade ProdutosPorPagina nos componentes do DANFE. (caso 458 MANTIS)
+    Se propriedade estiver com o valor 0 (zero), o DANFE será impresso normalmente como agora.
+    Se especificar um valor, será impresso a quantidade máxima de produtos por página.
+    NOTA 1: Essa propriedade NÃO FUNCIONARÁ com o arquivo NotaFiscalEletronica.RAV, funcionará somente com o DANFE_Rave513.rav ou
+            DANFE com RAVE CB
+    NOTA 2: Essa propriedade ainda nao esta funcional no DANFE com RAVE CB
+    NOTA 3: NÃO ESQUEÇA DE ATUALIZAR O ARQUIVO DANFE_RAVE513.RAV NO SEU SISTEMA 
+
+Alterações   12/01/10
+---------------
+[-] Corrigido impressão (DANFE RAVE CB) de SÉRIE e FOLHA quando for SCAN (caso 449 MANTIS)
+[-] Corrigido impressão (DANFE RAVE CB) de dizeres ENTRADA/SAIDA de acordo com o que for a NFe. (caso 457 MANTIS)
+
+Alterações   18/12/09
+---------------
+[-] Corrigido impressão de numeração de páginas no DANFE Rave CB. (créditos: João Paulo Leão)
+
+Alterações   14/12/09
+---------------
+[-] Fixado tamanho da fonte Courier New no Quadro Fatura/Duplicatas para o DANFE com RAVE CB. Estava cortando a data de vencimento.
+
+Alterações   27/11/09
+---------------
+[*] Adicionado parâmetro SalvaTXT na função SaveToFile, onde quando estiver True irá salvar o arquivo da NFe no padrão do emissor gratuíto de SP
+
+Alterações   18/11/09
+---------------
+[*] Alterado função LoadFromFile para mostrar erros na leitura de XMLs inválidos e adicionado recurso de ler vários XMLs no mesmo arquivo
+[+] Adicionado ao Demo do componente o botão "Importar XML" para servir de exemplo para quem deseja usar o componente para importar XMLs 
+    de NFes recebidas de fornecedores
+
+Alterações   12/11/09
+---------------
+[+] Adicionada propriedade EmissaoPathNFe onde quando estiver True e se estiver configurado para salvar as NFe na propriedade PathNFe 
+    com criação de pasta mensal, a NFe será salva na pasta conforme a propriedade dEmi(Data de Emissão) e não mais pela data do PC.
+    Propriedade criada para resolver o caso #410 relatado no MANTIS. 
+[-] Corrigido geração do campo CIDE.qBCProd pois estava sendo gerado com o p minúsculo e estava causando erro na validação.
+
+
+Alterações   11/11/09
+---------------
+[*] Modificada funcao ReverterFiltroTextoXML (unit pcnAuxilizr.pas) para também ler caracteres HEXADECIMAIS. (Créditos João Paulo Leão)
+[*] Modificado validação do Código do País conforme relato #407 no MANTIS.
+
+
+Alterações   09/11/09
+---------------
+[-] Corrigido impressão do DANFE RETRATO em RAVE CB quando a fonte for COURIER NEW. 
+[-] Corrigido impressão das Informações Adicionais quando a mesma necessitar ser impressa em mais de uma página.
+    Somente para DANFE em RAVE ARQUIVO (Danfe_Rave513.rav).
+
+
+Alterações   05/11/09
+---------------
+[-] Corrigido tamanho do campo CHAVE DE ACESSO no DANFE com RAVE CB (retrato). 
+    Estava cortando 3 digitos, agora o tamanho da fonte desse campo esta fixo
+[+] Incluídas as propriedades: CasasDecimais._Mask_qCom e CasasDecimais._Mask_vUnCom
+    nos componentes DANFE com RAVE CB e ARQUIVO.
+    - Se especificar uma mascara nessa propriedade, será desconsiderado o tamanho de casas decimais
+      estipulado da referida TAG. Se estiver em branco o componente considera a quantidade de casas
+      especificadas e montará a mascara padrão para a mesma (padrão).
+
+Alterações   04/11/09
+---------------
+[-] Corrigido Impressão no DANFE com RAVE ARQUIVO (DANFE_Rave513.rav).
+    - Não estava imprimindo corretamente quando especificava uma MargemInferior maior que 0,8 no componente
+    - Em alguns casos ficava um loop infinito no "Generating Page..." 
+    Importante: Atualizem os arquivos .RAV no sistema
+
+Alterações   03/11/09
+---------------
+[-] Corrigido Tamanho da Fonte no DANFE em RAVE CB e RAVE Arquivo.
+    Segundo o ítem 7.7.9 (Conteúdo dos Demais Campos) no Manual no Integração 4.0, os campos devem ter valor mínimo de 10 e estava com o 
+    valor padrão de 8.
+    Para corrigir o problema foi incluída uma propriedade chamada TamanhoFonte_DemaisCampos com valor padrão de 10, quem quiser usar outro valor 
+    basta estipular nessa propriedade.
+
+Alterações   28/10/09
+---------------
+[-] Corrigido geração das informações adicionais no xml, caso seja adicionado apenas uma linha de observação.
+
+Alterações   27/10/09
+---------------
+[-] Corrigido impressão do DANFE PAISAGEM em RAVE CB. 
+    Quando tinha mais de um ítem, só reimprimia as informações do primeiro ítem impresso.
+[-] Corrigido impressão do DANFE RETRATO em RAVE CB quando a fonte for COURIER NEW. 
+
+Alterações   22/10/09
+---------------
+[+] Adicionada propriedade MostrarStatus (padrão TRUE) nos componentes DANFE (RAVE arquivo e CB)
+    - Quando valor da propriedade for FALSE não será exibido a janela "Generating Page ..." do RAVE.
+      Útil (por exemplo) na criação do PDF para enviar no email e quando desejar mostrar uma janela personalizada enquanto gera o DANFE.
+
+Alterações   21/10/09
+---------------
+[*] Arquivo instala.bat das DLLs da versão CAPICOM alterado para copiar DLLs para o local correto nas versões 64 bits do Windows
+[-] Corrigido erro na leitura da data de vencimento do certificado(Versão CAPICOM) para quando número de série não estava informado
+[*] Sincronizada algumas units do PCN com as versões disponíveis no SVN do Projeto Cooperar.
+[+] Função de cancelamento da NFe, quando for feita com a nota carregada no componente, os campos da tag procNFe serão atualizados no
+    arquivo da NFe.
+[+] DANFE em RAVE CB
+    - Ao imprimir um DANFE de um XML que ainda não tem número de protocolo e o tipo de emissão é normal ou dpec, ele imprimirá uma 
+      mensagem no DANFE alertando o usuário que a nota ainda não foi autorizada (créditos João Paulo S. Leão)
+    - Incluída propriedade ImprimirDetalhamentoEspecifico (padrão TRUE).
+      Quando for false não serão impressos informações de Detahamento específico (Veiculos, Combustiveis, Medicamentos, etc). 
+      Será útil para quem quiser exibir as referidas informações de maneira personalizada.
+
+Alterações   16/10/09
+---------------
+[*] DANFE em RAVE ARQUIVO
+    - Modificada diretiva para compatibilidade com o Delphi 2010. (créditos Luis Henrique)
+
+Alterações   15/10/09
+---------------
+[*] DANFE em RAVE ARQUIVO
+    - Quando a TAG qVol tiver valor 0 (zero) a mesma não será impressa no DANFE.
+[-] Arquivo DANFE_Rave513.rav para o DANFE em Rave Arquivo, não estava imprimindo mais de uma duplicata quando ia reimprimir um XML.
+
+Alterações   14/10/09
+---------------
+[*] DANFE em RAVE CB (créditos João Paulo S. Leão)
+    - Corrigido local de impressão das Informações do Fisco, pois a mesma tem que ser impressa no quadro Informações Complementares
+    - Propriedade FormularioContinuo agora esta funcional em RAVE CB. Antes só estava funcionando em RAVE ARQUIVO.
+      Se estiver TRUE não será impresso molduras e descrições de campo no canhoto e EMITENTE.  
+[+] DANFE em RAVE CB (créditos João Paulo S. Leão)
+    - Incluída Propriedade EspessuraBorda (padrão 2). Em algumas impressoras esta propriedade pode não surtir efeito.
+    - Incluída Propriedade ExpandirLogoMarca (padrão FALSE). Se a mesma estiver TRUE o logo ocupará todo o espaço do quadro Dados do Emitente.
+      Funcional para quem quiser personalizar o quadro Dados do Emitente. Para isso basta estipular a imagem personalizada no campo LOGO e
+      setar essa propriedade para TRUE.
+[+] DANFE em Rave Arquivo (.rav): 
+    - Incluída Propriedade ExpandirLogoMarca (padrão FALSE). Se a mesma estiver TRUE o logo ocupará todo o espaço do quadro Dados do Emitente.
+      Funcional para quem quiser personalizar o quadro Dados do Emitente. Para isso basta estipular a imagem personalizada no campo LOGO e
+      setar essa propriedade para TRUE.
+
+Alterações   09/10/09
+---------------
+[*] DANFE em RAVE CB (créditos João Paulo S. Leão)
+    - Corrigido impressão de informações Complementares em mais de Uma Página (Retrato e Paisagem)
+[*] DANFE em Rave Arquivo (.rav): 
+    - Corrigido impressão de informações Complementares em mais de Uma Página 
+      IMPORTANTE: Recurso disponível SOMENTE em no Danfe_Rave513.rav, no arquivo NotaFiscalEletronica.rav essa correção não será implementada
+                  por falta de recursos do RAVE 5.0. 
+                  Nesse caso Utilizem o Danfe_Rave513.rav (somente para RAVE 5.1.3 ou superior) ou 
+                  utilizem o DANFE em Rave CB (somente para Rave 5.0.8 ou superior)
+    - Corrigido local de impressão das Informações do Fisco, pois a mesma tem que ser impressa no quadro Informações Complementares
+
+Alterações   06/10/09
+---------------
+[+] Adicionado evento  OnGerarLog, onde poderá ser usado para gravar as mensagens enviadas pelo componente(Veja no demo como utilizar para 
+    adicionar as mensagens em um memo).
+[+] Adicionada propriedade IntervaloTentativas para definir qual deve ser o intervalo entre as tentativas de consulta de retorno de envio 
+    da NFe. Valor mínimo deve ser 1000(1 segundo)
+[+] Adicionada propriedade AjustaAguardaConsultaRet onde quando for True, a propriedade AguardarConsultaRet será ajustada com o valor do
+    campo tmed do retorno de consulta de status do serviço.
+[-] Alterado geração do campo Dest.IE para permitir valor para quando for pessoa física. Em MG produtores rurais possuem CPF e IE
+[-] Alterado geração da tag qTemp para ser gerada apenas qdo tiver algum conteúdo
+[-] Corrigido criação da tag UFCons, estava como UFcons
+
+Alterações   05/10/09 
+---------------
+[-] Corrigido vazamentos de memória em Thread de envio de e-mail (Daniel Simões de Almeida)
+[+] Adicionada propriedades AguardarConsultaRet e Tentativas nas configurações do WebService. Estas propriedades apenas serão utilizadas
+    na consulta de retorno da autorização da NFe, por padrão o números de tentativas atual do componente está como 5, então está propriedade
+    será criada com este valor, mas poderá ser alterado para o valor que o desenvolvedor desejar. A propriedade AguardarConsultaRet  deve
+    ser informada em MiliSegundos, onde 1000 equivale a 1 segundo. O valor informado na propriedade AguardarConsultaRet será usado para 
+    aguardar antes de efetuar a primeira consulta, por padrão está com 0 que é o valor utilizado hoje no componente. Para dias em que os 
+    servidores do sefaz estiverem apresentando problemas de lentidão, esta propriedae poderá ser alterada. 
+
+Alterações   29/09/09
+---------------
+[-] Alterado linhas onde existia Path+'\' para PathWithDelim(Path)
+[-] Corrigido retorno das funções EnviarDPEC, ConsultarDPEC e Consulta de Cadastro, para retornarem True quando o comando for executado
+    com sucesso(Estava retornando sempre False)
+[+] Adicionado propriedade Fonte no componente ACBrNFeDanfeRaveCB, onde pode ser usado ftTimes - para Times New Romam e ftCourier - para
+    Courier New
+
+Alterações   25/09/09
+---------------
+[-] Impressão dos dados (quando houver) no quadro Inf. Adicional do Fisco no RAVE CB
+
+
+Alterações   24/09/09
+---------------
+[*] Alterado URLs do DF para usarem URLs do SVRS
+[-] Corrigida funcção TACBrNFe.Consultar que estava consultando apenas primeira nota quando existia mais de uma nota carregada no componente.
+[*] Alterado função Assinar para atualizar XML quando for usado o comando LoadFromFile
+[-] Corrigido retorno das propriedades PathNFe, PathInu, PathCan e PathDPEC
+
+Alterações   23/09/09
+---------------
+[+] Incluída propriedade ImprimirHoraSaida_Hora nos componentes DANFE.
+    Se a propriedade ImprimirHoraSaida estiver true e a propriedade ImprimirHoraSaida_Hora estiver preenchida
+    será impressa o valor estipulado na propriedade ImprimirHoraSaida_Hora. Caso não tenha nenhum valor especificado
+    será impresso a HORA ATUAL.
+[+] Incluído propriedade FormularioContinuo nos componentes DANFE.
+    Se estiver TRUE não será impresso molduras e descrições de campo no canhoto e EMITENTE.
+    OBS: Por enquanto essa propriedade esta funcional somente para opção do DANFE em ARQUIVO (.rav)
+
+
+Alterações   18/09/09
+---------------
+[+] Danfe em Rave Arquivo (.rav) imprime um resumo no canhoto igual ao RAVE em DANFE CB.
+    Quando a propriedade ExibirResumoCanhoto estiver TRUE será exibido esse resumo.
+    Funcionalidade já existia no DANFE em RAVE CB e agora foi incluida no DANFE em RAVE ARQUIVO.
+    IMPORTANTE: ATUALIZE OS ARQUIVOS .RAV NO SEU SISTEMA
+[+] Incluída propriedade TamanhoCampoCódigo no Danfe em RAVE CB.
+    Quando o valor dessa propriedade for ZERO será utilizado o valor padrão da mesma.
+[+] Incluída propriedade ImprimirTotalLiquido no componente DANFE (Arquivo e CB)
+    Se estiver TRUE será exibido V.LIQUIDO no quadro DADOS DO PRODUTO/SERVICO e o valor da mesma sera vProd-vDesc
+    Padrão da Propriedade é FALSE.
+[+] Incluído a impressão do campo VALOR DESCONTO/DESC % no DANFE em RAVE CB (retrato e paisagem)
+    Se a propriedade ImprimirDescPorc for TRUE será impresso o desconto em percentual.
+    Funcionalidade já existia no DANFE em RAVE ARQUIVO e agora foi incluida no DANFE em RAVE CB.
+
+
+Alterações   17/09/09
+---------------
+[+] Impressão dos campos de medicamento do DANFe Rave CB
+[*] Leitura da propriedade PathPDF modificada, para verificar se o diretório configurado existe e caso não exista será criado automaticamente
+[+] Adicionada novas propriedades no componente ACBrNFe para salvar arquivos em pastas separadas.
+    -Salvar  - Propriedade booleana para indicar se os arquivos devem ou não ser salvos em pastas específicas
+    -PathNfe - Pasta para salvar os arquivos da NFE, terminados com -nfe.xml
+    -PathCan - Pasta para salvar arquivos de pedido e resposta de cancelamento, terminados em -ped-can.xml e -can.xml
+    -PathInu - Pasta para salvar arquivos de pedido e resposta de inutilização, terminados em -ped-inu.xml e -inu.xml
+    -PathDPEC - Pasta para salvar arquivos de pedido e resposta de DPEC, terminados em -env-dpec.xml e ret-dpec.xml
+    -PastaMensal - Propriedade booleana para indicar se deve ser criado um subdiretório com mes e ano dentro das pastas configuradas
+		   nas propriedades Path.. citadas acima. Exemplo: PathNFe = C:\ACBr\NFe os arquivos serao salvos em C:\ACBr\NFe\200909
+
+    -AdicionarLiteral - Propriedade booleana para indicar se deve ser adicionada a literal do arquivo na pasta. Exemplo: 
+	                PathNFe = C:\ACBr\Arqs será criado a pasta C:\ACBr\Arqs\NFe
+			Caso a propriedade PastaMensal esteja True e AdicionarLiteral tabém esteja True, as pastas serão criadas da
+                        seguinte forma: PathNFe = C:\ACBr\Arqs será criado a pasta C:\ACBr\Arqs\200909\NFe 
+[-] Correção da impressão do canhoto no DANFE RAVE CB PAISAGEM, quando o nome do emitente for muito grande.
+
+
+Alterações   16/09/09
+---------------
+[*] Na impressão do DANFE (RAVE CB) quando a razão social for muito grande, a mesma será quebrada em duas linhas.
+    Se (devido ao tamanho Razão Social) o espaço do canhoto "estourar", o mesmo será impresso em duas linhas e será desconsiderado
+    a propriedade ExibirResumoCanhoto
+[-] Corrigido impressão de Separador de Milhar (.) na função FormatFloat da unit ACBrNFeUtil.pas
+
+Alterações   15/09/09
+---------------
+[*] Na rotina de consulta, adicionada linha para atualizar a propriedade Confirmada da NFe(cStat = 100).
+[-] Na impressão do DANFE, caso não exista o protocolo não será mais impresso a data 31/12/1899
+[-] Corrigido endereço da URL de recepção no ambiente de homologação do estado do CEARÁ
+
+Alterações   14/09/09
+---------------
+[-] Corrigido criação do arquivo PDF na pasta correta quando estiver configurado a propriedade PathPDF. Caso a propriedade PathPDF
+    não esteja preenchida, será usado o valor da variável PathSalvar e caso também não esteja preenchida, será gravado na 
+    pasta do programa.
+[-] Corrigido geração do campo cPais do destinatário, para sempre gerar com 4 dígitos.
+
+Alterações   11/09/09
+---------------
+[-] Correção para leitura da variável XML com o protocolo de autorização, quando lida após o envio da NFe
+
+Alterações   10/09/09
+---------------
+[-] Corrigido função LerCampo (unit pcnNFeRTXT), para quando ler um campo data vazio, não retornar erro.
+
+Alterações   09/09/09
+---------------
+[*] Adicionado URL de Consulta ao Cadastro em ambiente de produção para MG
+[-] Correção na rotina de consulta para quando não houver nota carregada no componente(Consulta efetuada apenas pela chave)
+[*] Impressão dos campos InfAdic.obsCont nas Informações Adicionais do RAVE em CB
+
+Alterações   08/09/09
+---------------
+[-] Alterado rotina de consulta da NFe para atualizar a tag procNfe qdo o arquivo for carregado(LoadFromFile)
+
+Alterações   06/09/09
+---------------
+[-] Alterado forma de atualização da tag procNFe no arquivo XML da NFe.
+
+Alterações   03/09/09
+---------------
+[*] Alterado URL de Rondônia para utilizarem os serviços da SEFAZ Virtual do Rio Grande do Sul (SVRS).  
+[*] Alterado função para calcular nome do arquivo PDF. Será gerado apenas com a chave da nfe .pdf sem a literal NFe
+[-] Alterado função NotasFiscais.SaveToFile para pegar apenas Path do Nome passado na função.
+[-] Corrigido CSTAT do retorno do envio para atribuir CSTAT da Nota apenas qdo lote estiver processado.
+[*] Alterado geração da Inutilização para CNPJ ser gerado somente com números, sem máscara.
+
+Alterações 02/04/09 - Realizadas por Dulcemar Zilli
+[*] Ajustes para o Pacote PL_005c
+[+] Acrescentado Observações do Fisco
+[+] Incluida Informações Reboque Transportador
+[+] Incluida Informações ISSQN e Retenções Tributos e Totalizadores Gerais
+[+] Adicionadas as Complementação Emitente, IEST, IM, CNAE
+[-] Separados GTIN da Unidade Tributavel, Unidade Tributavel, Quantidade Tributavel e 
+    Valor Unitario Tributavel de EAN, Unidade de Comercializações, Quantidade e 
+    Valor Unitario pois não necessariamente as duas são iguais e  nem todos os 
+    produtos tem estas informação, que é aplicado mais em casos de 
+    comercialização de combustiveis. No caso da Unidade de Tributação não ser 
+    informada ela usa por default a Unidade de Comercialização, neste caso a GTIN 
+    fica em branco e os demais campo zerado.  
+[*] Alterado relatorio da DANFE p/ impressão de ISSQN e totais, bem como IPI, 
+    Observações do Fisco, etc.
+
+
+Versão 0.02a   29/03/09
+---------------
+[+] Adicionado opção para gerar Danfe em PDF
+[-] Corrigido XML de Cancelamento e Inutilização para incluir o encoding=UTF-8
+[+] Adicionada função que permite que ; (ponto e vírgula) seja considerada que-
+    bra de linha no campo informações complementares.
+
+Versão 0.01a   18/02/09
+---------------
+[+] Início do Projeto
+[+] Primeira Versao lançada baseado no componente fornecido por Wemerson Souto.
+
+
+
+

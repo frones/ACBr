@@ -1,0 +1,722 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/gpl-license.php                           }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+unit ACBrECFVirtualNFCe;
+
+interface
+
+uses Classes, SysUtils,
+  {$IFDEF FPC} LResources, {$ENDIF}
+  ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrNFe, ACBrECF,  ACBrDevice,
+  pcnNFe, pcnConversao ;
+
+const
+  ACBrECFVirtualNFCe_VERSAO = '0.1.0a';
+  estCupomAberto = [estVenda, estPagamento];
+
+type
+
+  TACBrECFVirtualNFCeQuandoAbrirDocumento = procedure(NFe: TNFe) of object;
+
+  TACBrECFVirtualNFCeQuandoVenderItem = procedure(Det: TDetCollectionItem) of object;
+
+  TACBrECFVirtualNFCeQuandoEfetuarPagamento = procedure(Det: TpagCollectionItem) of object;
+
+  TACBrECFVirtualNFCeQuandoFecharDocumento = procedure(NFe: TNFe) of object;
+
+  TACBrECFVirtualNFCeQuandoCancelarDocumento = procedure(Justificativa : String) of object;
+
+  { TACBrECFVirtualNFCe }
+
+  TACBrECFVirtualNFCe = class(TACBrECFVirtualPrinter)
+  private
+    function GetACBrNFCe: TACBrNFe;
+    function GetQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
+    function GetQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
+    function GetQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
+    function GetQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
+    function GetQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
+
+    procedure SetQuandoAbrirDocumento(
+      AValue: TACBrECFVirtualNFCeQuandoAbrirDocumento);
+    procedure SetQuandoEfetuarPagamento(
+      AValue: TACBrECFVirtualNFCeQuandoEfetuarPagamento);
+    procedure SetQuandoVenderItem(AValue: TACBrECFVirtualNFCeQuandoVenderItem);
+    procedure SetQuandoFecharDocumento(
+      AValue: TACBrECFVirtualNFCeQuandoFecharDocumento);
+    procedure SetQuandoCancelarDocumento(
+      AValue: TACBrECFVirtualNFCeQuandoCancelarDocumento);
+    procedure SetACBrNFCe(AValue: TACBrNFe);
+  protected
+    procedure CreateVirtualClass; override;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+  published
+    property ACBrNFCe: TACBrNFe read GetACBrNFCe write SetACBrNFCe;
+
+    property QuandoAbrirDocumento : TACBrECFVirtualNFCeQuandoAbrirDocumento
+      read GetQuandoAbrirDocumento write SetQuandoAbrirDocumento ;
+    property QuandoVenderItem : TACBrECFVirtualNFCeQuandoVenderItem
+      read GetQuandoVenderItem write SetQuandoVenderItem ;
+    property QuandoEfetuarPagamento : TACBrECFVirtualNFCeQuandoEfetuarPagamento
+      read GetQuandoEfetuarPagamento write SetQuandoEfetuarPagamento ;
+    property QuandoFecharDocumento : TACBrECFVirtualNFCeQuandoFecharDocumento
+      read GetQuandoFecharDocumento write SetQuandoFecharDocumento ;
+    property QuandoCancelarDocumento : TACBrECFVirtualNFCeQuandoCancelarDocumento
+      read GetQuandoCancelarDocumento write SetQuandoCancelarDocumento ;
+  end;
+
+  { TACBrECFVirtualNFCeClass }
+
+  TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
+  private
+    fsACBrNFCe: TACBrNFe;
+    fsQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
+    fsQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
+    fsQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
+    fsQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
+    fsQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
+    fsNomeArqTempXML: String;
+    fsECF: TACBrECF;
+    fsDestCNPJ : String;
+    fsDestNome : String;
+    fsvTotTrib, fsvBC, fsvICMS, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
+    fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvNF : Currency;
+
+    function AdivinharFormaPagamento( const DescricaoPagto: String ): TpcnFormaPagamento;
+    procedure SomaTotais;
+    procedure CancelarNFCe;
+    function GetACBrECF: TACBrECF;
+  protected
+    function GetSubModeloECF: string; override;
+    function GetNumVersao: string; override;
+    procedure AtivarVirtual; override;
+
+    procedure AbreDocumentoVirtual ; override;
+    Procedure EnviaConsumidorVirtual ; override;
+    procedure VendeItemVirtual( ItemCupom: TACBrECFVirtualClassItemCupom); override;
+    Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; override ;
+    Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
+       MensagemRodape : AnsiString  = '' ) ; override ;
+    Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
+    procedure FechaCupomVirtual(Observacao: AnsiString; IndiceBMP: Integer);
+      override;
+    Procedure CancelaCupomVirtual ; override ;
+
+    procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
+    procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; override;
+
+    property ECF: TACBrECF read GetACBrECF;
+
+  public
+    constructor Create(AOwner: TComponent);
+    property ACBrNFCe: TACBrNFe read fsACBrNFCe write fsACBrNFCe;
+
+    property QuandoAbrirDocumento : TACBrECFVirtualNFCeQuandoAbrirDocumento
+      read fsQuandoAbrirDocumento write fsQuandoAbrirDocumento ;
+    property QuandoVenderItem : TACBrECFVirtualNFCeQuandoVenderItem
+      read fsQuandoVenderItem write fsQuandoVenderItem ;
+    property QuandoEfetuarPagamento : TACBrECFVirtualNFCeQuandoEfetuarPagamento
+      read fsQuandoEfetuarPagamento write fsQuandoEfetuarPagamento ;
+    property QuandoFecharDocumento : TACBrECFVirtualNFCeQuandoFecharDocumento
+      read fsQuandoFecharDocumento write fsQuandoFecharDocumento ;
+    property QuandoCancelarDocumento : TACBrECFVirtualNFCeQuandoCancelarDocumento
+      read fsQuandoCancelarDocumento write fsQuandoCancelarDocumento ;
+  end;
+
+
+procedure Register;
+
+implementation
+
+uses pcnConversaoNFe,
+  ACBrConsts, ACBrECFClass, ACBrUtil;
+
+procedure Register;
+begin
+  RegisterComponents('ACBrNFe', [TACBrECFVirtualNFCe]);
+end;
+
+{ TACBrECFVirtualNFCe }
+
+procedure TACBrECFVirtualNFCe.CreateVirtualClass;
+begin
+  fpECFVirtualClass := TACBrECFVirtualNFCeClass.Create(self);
+end;
+
+procedure TACBrECFVirtualNFCe.Notification(AComponent: TComponent;
+  Operation: TOperation);
+begin
+  inherited Notification(AComponent, Operation);
+
+  if (Operation = opRemove) then
+  begin
+    if (AComponent is TACBrNFe) and (ACBrNFCe <> nil) then
+      ACBrNFCe := nil;
+  end;
+end;
+
+function TACBrECFVirtualNFCe.GetACBrNFCe: TACBrNFe;
+begin
+  Result := TACBrECFVirtualNFCeClass( fpECFVirtualClass ).ACBrNFCe;
+end;
+
+procedure TACBrECFVirtualNFCe.SetACBrNFCe(AValue: TACBrNFe);
+begin
+  if AValue <> ACBrNFCe then
+  begin
+    if Assigned(ACBrNFCe) then
+      ACBrNFCe.RemoveFreeNotification(Self);
+
+    TACBrECFVirtualNFCeClass(fpECFVirtualClass).ACBrNFCe := AValue;
+
+    if AValue <> nil then
+      AValue.FreeNotification(Self);
+  end;
+end;
+
+function TACBrECFVirtualNFCe.GetQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
+begin
+  Result := TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoAbrirDocumento ;
+end;
+
+procedure TACBrECFVirtualNFCe.SetQuandoAbrirDocumento(
+  AValue: TACBrECFVirtualNFCeQuandoAbrirDocumento);
+begin
+  TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoAbrirDocumento := AValue ;
+end;
+
+function TACBrECFVirtualNFCe.GetQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
+begin
+  Result := TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoEfetuarPagamento ;
+end;
+
+procedure TACBrECFVirtualNFCe.SetQuandoEfetuarPagamento(
+  AValue: TACBrECFVirtualNFCeQuandoEfetuarPagamento);
+begin
+  TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoEfetuarPagamento := AValue ;
+end;
+
+function TACBrECFVirtualNFCe.GetQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
+begin
+  Result := TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoVenderItem ;
+end;
+
+function TACBrECFVirtualNFCe.GetQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
+begin
+  Result := TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoFecharDocumento ;
+end;
+
+function TACBrECFVirtualNFCe.GetQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
+begin
+  Result := TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoCancelarDocumento ;
+end;
+
+procedure TACBrECFVirtualNFCe.SetQuandoVenderItem(
+  AValue: TACBrECFVirtualNFCeQuandoVenderItem);
+begin
+  TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoVenderItem := AValue ;
+end;
+
+procedure TACBrECFVirtualNFCe.SetQuandoFecharDocumento(
+  AValue: TACBrECFVirtualNFCeQuandoFecharDocumento);
+begin
+  TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoFecharDocumento := AValue ;
+end;
+
+procedure TACBrECFVirtualNFCe.SetQuandoCancelarDocumento(
+  AValue: TACBrECFVirtualNFCeQuandoCancelarDocumento);
+begin
+  TACBrECFVirtualNFCeClass( fpECFVirtualClass ).QuandoCancelarDocumento := AValue ;
+end;
+
+{ TACBrECFVirtualNFCeClass }
+
+constructor TACBrECFVirtualNFCeClass.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  fsACBrNFCe := Nil;
+  fsECF     := Nil;
+  fsQuandoAbrirDocumento   := Nil;
+  fsQuandoEfetuarPagamento := Nil;
+  fsQuandoVenderItem       := Nil;
+  fsQuandoFecharDocumento   := Nil;
+  fsNomeArqTempXML := '';
+  fsDestNome       := '';
+  fsDestCNPJ       := '';
+end;
+
+function TACBrECFVirtualNFCeClass.AdivinharFormaPagamento(const DescricaoPagto: String
+  ): TpcnFormaPagamento;
+var
+  Descricao: String;
+begin
+  Descricao := TiraAcentos( LowerCase( DescricaoPagto ) );
+
+  if Descricao = 'dinheiro' then
+    Result := fpDinheiro
+  else if Descricao = 'cheque' then
+    Result := fpCheque
+  else if Descricao = 'cartao de credito' then
+    Result := fpCartaoCredito
+  else if Descricao = 'cartao de debito' then
+    Result := fpCartaoDebito
+  else if Descricao = 'credito loja' then
+    Result := fpCreditoLoja
+  else if Descricao = 'vale alimentacao' then
+    Result := fpValeAlimentacao
+  else if Descricao = 'vale refeicao' then
+    Result := fpValeRefeicao
+  else if Descricao = 'vale presente' then
+    Result := fpValePresente
+  else if Descricao = 'vale combustivel' then
+    Result := fpValeCombustivel
+  else
+  begin
+    if pos('cartao', Descricao) > 0 then
+    begin
+      if pos('debito', Descricao) > 0 then
+        Result := fpCartaoDebito
+      else
+        Result := fpCartaoCredito;
+    end
+    else
+      Result := fpOutro
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.SomaTotais;
+var
+  i : integer;
+begin
+  fsvTotTrib := 0;
+  fsvBC      := 0;
+  fsvICMS    := 0;
+  fsvBCST    := 0;
+  fsvST      := 0;
+  fsvProd    := 0;
+  fsvFrete   := 0;
+  fsvSeg     := 0;
+  fsvDesc    := 0;
+  fsvII      := 0;
+  fsvIPI     := 0;
+  fsvPIS     := 0;
+  fsvCOFINS  := 0;
+  fsvOutro   := 0;
+
+  with fsACBrNFCe.NotasFiscais.Items[0].NFe do
+  begin
+    for i:=0 to Det.Count -1 do
+    begin
+      fsvTotTrib := fsvTotTrib + Det.Items[i].Imposto.vTotTrib;
+      fsvBC      := fsvBC + Det.Items[i].Imposto.ICMS.vBC;
+      fsvICMS    := fsvICMS + Det.Items[i].Imposto.ICMS.vICMS;
+      fsvBCST    := fsvBCST + Det.Items[i].Imposto.ICMS.vBCST;
+      fsvST      := fsvST + Det.Items[i].Imposto.ICMS.vICMSST;
+      fsvProd    := fsvProd + Det.Items[i].Prod.vProd;
+      fsvFrete   := fsvFrete + Det.Items[i].Prod.vFrete;
+      fsvSeg     := fsvSeg + Det.Items[i].Prod.vSeg;
+      fsvDesc    := fsvDesc + Det.Items[i].Prod.vDesc;
+      fsvII      := fsvII + Det.Items[i].Imposto.II.vII;
+      fsvIPI     := fsvIPI + Det.Items[i].Imposto.IPI.vIPI;
+      fsvPIS     := fsvPIS + Det.Items[i].Imposto.PIS.vPIS;
+      fsvCOFINS  := fsvCOFINS + Det.Items[i].Imposto.COFINS.vCOFINS;
+      fsvOutro   := fsvOutro + Det.Items[i].Prod.vOutro;
+    end;
+  end;
+
+  fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI)-fsvDesc;
+
+end;
+
+procedure TACBrECFVirtualNFCeClass.CancelarNFCe;
+var
+  xJust : String;
+  ChaveNFe: String;
+begin
+  xJust := 'NFCe cancelado por erro na emissão';
+  if Assigned( fsQuandoCancelarDocumento ) then
+    fsQuandoCancelarDocumento( xJust );
+
+ with fsACBrNFCe do
+ begin
+   WebServices.Consulta.NFeChave := NotasFiscais.Items[0].NumID;
+
+   if not WebServices.Consulta.Executar then
+      raise Exception.Create(WebServices.Consulta.Msg);
+
+   EventoNFe.Evento.Clear;
+   with EventoNFe.Evento.Add do
+   begin
+     ChaveNFe := OnlyNumber(WebServices.Consulta.NFeChave);
+     infEvento.CNPJ   := copy(ChaveNFe,7,14) ;
+     infEvento.cOrgao := StrToIntDef(copy(ChaveNFe,1,2),0);
+     infEvento.dhEvento := now;
+     infEvento.tpEvento := teCancelamento;
+     infEvento.chNFe    := WebServices.Consulta.NFeChave;
+     infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
+     infEvento.detEvento.xJust := xJust;
+   end;
+
+   EnviarEventoNFe(NotasFiscais.Items[0].NFe.Ide.nNF);
+ end;
+end;
+
+function TACBrECFVirtualNFCeClass.GetACBrECF: TACBrECF;
+begin
+  if not Assigned(fsECF) then
+    fsECF := GetECFComponente(Self);
+
+  Result := fsECF;
+end;
+
+function TACBrECFVirtualNFCeClass.GetSubModeloECF: string;
+begin
+  Result := 'VirtualNFCe';
+end;
+
+function TACBrECFVirtualNFCeClass.GetNumVersao: string;
+begin
+  Result := ACBrECFVirtualNFCe_VERSAO;
+end;
+
+procedure TACBrECFVirtualNFCeClass.AtivarVirtual;
+begin
+  fsACBrNFCe.NotasFiscais.Clear;
+  inherited AtivarVirtual;
+
+  fsACBrNFCe.Configuracoes.Geral.ModeloDF := moNFCe;
+  fsACBrNFCe.Configuracoes.Geral.VersaoDF := ve310;
+
+  fsNomeArqTempXML := ChangeFileExt( NomeArqINI, '.xml' );
+end;
+
+procedure TACBrECFVirtualNFCeClass.AbreDocumentoVirtual;
+begin
+  if fpEstado = estVenda then
+  begin
+    with fsACBrNFCe do
+    begin
+      NotasFiscais.Clear;
+      NotasFiscais.Add;
+      Consumidor.Enviado := False ;
+
+      NotasFiscais.Items[0].NFe.Ide.modelo    := 65;
+      NotasFiscais.Items[0].NFe.Ide.serie := NumECF ;
+      NotasFiscais.Items[0].NFe.Ide.nNF   := StrToInt(NumCupom) ;
+
+      NotasFiscais.Items[0].NFe.Dest.CNPJCPF := fsDestCNPJ;
+      NotasFiscais.Items[0].NFe.Dest.xNome   := fsDestNome;
+      fsDestNome       := '';
+      fsDestCNPJ       := '';
+
+      if Assigned( fsQuandoAbrirDocumento ) then
+        fsQuandoAbrirDocumento( NotasFiscais.Items[0].NFe );
+    end;
+
+    exit; // Não Imprime
+  end;
+
+  inherited AbreDocumentoVirtual;
+end;
+
+procedure TACBrECFVirtualNFCeClass.EnviaConsumidorVirtual;
+begin
+  fsDestCNPJ := OnlyNumber(Consumidor.Documento);
+  fsDestNome   := Consumidor.Nome;
+
+  Consumidor.Enviado := True ;
+end;
+
+procedure TACBrECFVirtualNFCeClass.VendeItemVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom);
+var
+  Det: TDetCollectionItem;
+  AliqECF: TACBrECFAliquota;
+begin
+
+  with fsACBrNFCe do
+  begin
+    Det := NotasFiscais.Items[0].NFe.Det.Add;
+
+    Det.Prod.nItem    := ItemCupom.Sequencia;
+    Det.Prod.cProd    := ItemCupom.Codigo;
+    Det.Prod.xProd    := ItemCupom.Descricao;
+    Det.Prod.qCom     := ItemCupom.Qtd;
+    Det.Prod.vUnCom   := ItemCupom.ValorUnit;
+    Det.Prod.uCom     := ItemCupom.Unidade;
+
+    Det.Prod.qTrib    := ItemCupom.Qtd;
+    Det.Prod.vUnTrib  := ItemCupom.ValorUnit;
+    Det.Prod.uTrib    := ItemCupom.Unidade;
+
+    Det.Prod.vProd    := RoundABNT(ItemCupom.Qtd*ItemCupom.ValorUnit,2);
+
+    if ItemCupom.DescAcres > 0 then
+       Det.Prod.vOutro := ItemCupom.DescAcres
+    else
+       Det.Prod.vDesc  := ItemCupom.DescAcres;
+
+    if EAN13Valido(ItemCupom.Codigo) then
+      Det.Prod.cEAN := ItemCupom.Codigo;
+
+    AliqECF := fpAliquotas[ ItemCupom.PosAliq ];
+
+    Det.Prod.CFOP          := '5102';
+    if NotasFiscais.Items[0].NFe.Emit.CRT = crtSimplesNacional then
+    begin
+      Det.Imposto.ICMS.CSOSN := csosn101;
+      Det.Imposto.ICMS.vBC   := 0;
+      Det.Imposto.ICMS.pICMS := 0;
+      Det.Imposto.ICMS.vICMS := 0;
+
+      if AliqECF.Aliquota <= 0 then  // Isento(Precisa tratar qdo for FF)
+      begin
+        Det.Imposto.ICMS.CSOSN := csosn400;
+      end;
+    end
+    else
+    begin
+      Det.Imposto.ICMS.CST   := cst00;
+      Det.Imposto.ICMS.vBC   := RoundABNT(ItemCupom.Qtd*ItemCupom.ValorUnit,2);
+      Det.Imposto.ICMS.pICMS := AliqECF.Aliquota;
+      Det.Imposto.ICMS.vICMS := RoundABNT( Det.Imposto.ICMS.vBC*(Det.Imposto.ICMS.pICMS/100),2);
+
+      if AliqECF.Aliquota <= 0 then  // Isento(Precisa tratar qdo for FF)
+      begin
+        Det.Imposto.ICMS.CST := cst40;
+      end;
+    end;
+
+    if Assigned( fsQuandoVenderItem ) then
+      fsQuandoVenderItem( Det );
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.CancelaItemVendidoVirtual(NumItem: Integer);
+begin
+  with fsACBrNFCe do
+  begin
+    if (NumItem > NotasFiscais.Items[0].NFe.Det.Count) or (NumItem < 1) then
+      exit;
+
+    NotasFiscais.Items[0].NFe.Det.Delete(NumItem-1);
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.SubtotalizaCupomVirtual(
+  DescontoAcrescimo: Double; MensagemRodape: AnsiString);
+begin
+  with fsACBrNFCe do
+  begin
+    //TODO: Precisa ratear desconto entre os itens
+    if DescontoAcrescimo > 0 then
+      NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro := DescontoAcrescimo
+    else
+      NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  := DescontoAcrescimo;
+
+    NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.EfetuaPagamentoVirtual(
+  Pagto: TACBrECFVirtualClassPagamentoCupom);
+var
+  NFCePagto: TpagCollectionItem;
+begin
+  with fsACBrNFCe do
+  begin
+    NFCePagto := NotasFiscais.Items[0].NFe.pag.Add;
+
+    NFCePagto.vPag := Pagto.ValorPago;
+    NFCePagto.tPag := AdivinharFormaPagamento( fpFormasPagamentos[ Pagto.PosFPG ].Descricao );
+
+    if Assigned( fsQuandoEfetuarPagamento ) then
+      fsQuandoEfetuarPagamento( NFCePagto );
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.FechaCupomVirtual(Observacao: AnsiString;
+  IndiceBMP: Integer);
+var
+  cStat, xMotivo: String;
+begin
+  SomaTotais;
+
+  with fsACBrNFCe.NotasFiscais.Items[0] do
+  begin
+    NFe.Total.ICMSTot.vTotTrib := fsvTotTrib;
+    NFe.Total.ICMSTot.vBC      := fsvBC;
+    NFe.Total.ICMSTot.vICMS    := fsvICMS;
+    NFe.Total.ICMSTot.vBCST    := fsvBCST;
+    NFe.Total.ICMSTot.vST      := fsvST;
+    NFe.Total.ICMSTot.vProd    := fsvProd;
+    NFe.Total.ICMSTot.vFrete   := fsvFrete;
+    NFe.Total.ICMSTot.vSeg     := fsvSeg;
+    NFe.Total.ICMSTot.vDesc    := fsvDesc;
+    NFe.Total.ICMSTot.vII      := fsvII;
+    NFe.Total.ICMSTot.vIPI     := fsvIPI;
+    NFe.Total.ICMSTot.vPIS     := fsvPIS;
+    NFe.Total.ICMSTot.vCOFINS  := fsvCOFINS;
+    NFe.Total.ICMSTot.vOutro   := fsvOutro;
+    NFe.Total.ICMSTot.vNF      := fsvNF;
+
+    if Assigned( fsQuandoFecharDocumento ) then
+      fsQuandoFecharDocumento( NFe );
+  end;
+
+  fsDestNome       := '';
+  fsDestCNPJ       := '';
+
+  with fsACBrNFCe do
+  begin
+    NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + Observacao;
+
+    if Configuracoes.Geral.FormaEmissao = teOffLine then
+    begin
+      NotasFiscais.Validar;
+      NotasFiscais.Assinar;
+      //NotasFiscais.Items[0].Confirmada := True;
+    end
+    else
+    begin
+      Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
+
+      if WebServices.Enviar.cStat <> 100 then
+      begin
+        cStat   := IntToStr(WebServices.Enviar.cStat);
+        xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo );
+
+        raise EACBrNFeException.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
+          'cStat: '+cStat + sLineBreak +
+          'xMotivo: '+xMotivo );
+      end;
+    end;
+
+    ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
+    
+    if NotasFiscais.Items[0].Confirmada then
+       NotasFiscais.Items[0].Imprimir;
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.CancelaCupomVirtual;
+var
+  NomeNFCe, cStat, xMotivo: String;
+begin
+  with fsACBrNFCe do
+  begin
+    if (Estado in estCupomAberto) then    // Não precisa cancelar se ainda não enviou...d
+    begin
+      NotasFiscais.Clear;
+      exit ;
+    end;
+
+
+    if (NotasFiscais.Count > 0) and
+       (ChaveCupom = NotasFiscais.Items[0].NFe.infNFe.ID) then    // Está na memória ?
+      CancelarNFCe
+    else
+    begin
+      NomeNFCe := PathWithDelim(Configuracoes.Arquivos.PathSalvar) + OnlyNumber(ChaveCupom) + '-nfe.xml';
+
+      if FileExists( NomeNFCe ) then
+      begin
+        NotasFiscais.Clear;
+        NotasFiscais.LoadFromFile( NomeNFCe );
+        CancelarNFCe;
+      end
+      else
+        raise EACBrNFeException.Create( 'NFCe não encontrada: '+NomeNFCe);
+    end;
+
+    if (not(WebServices.EnvEvento.EventoRetorno.cStat in [128,135,136])) or
+       (not (WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat in [135,136])) then
+    begin
+      if WebServices.EnvEvento.EventoRetorno.retEvento.Count > 0 then
+      begin
+        cStat   := IntToStr(WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat);
+        xMotivo := WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
+      end
+      else
+      begin
+        cStat   := IntToStr(WebServices.EnvEvento.EventoRetorno.cStat);
+        xMotivo := WebServices.EnvEvento.EventoRetorno.xMotivo;
+      end;
+
+      raise EACBrNFeException.Create( 'Erro ao enviar cancelamento:' + sLineBreak +
+        'cStat: '+cStat + sLineBreak +
+        'xMotivo: '+xMotivo );
+    end;
+
+    ImprimirEvento;
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.LeArqINIVirtual(ConteudoINI: TStrings);
+begin
+  // Se o cupom está aberto, deve ler conteudo temporário do XML
+  if (fpEstado in estCupomAberto) then
+    if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then
+    begin
+      fsACBrNFCe.NotasFiscais.Clear;
+      fsACBrNFCe.NotasFiscais.LoadFromFile( fsNomeArqTempXML );
+    end;  
+
+  inherited LeArqINIVirtual(ConteudoINI);
+end;
+
+procedure TACBrECFVirtualNFCeClass.GravaArqINIVirtual(ConteudoINI: TStrings);
+begin
+  // Se cupom está aberto, deve persistir o CFe //
+  if (fpEstado in estCupomAberto) then
+    fsACBrNFCe.NotasFiscais.Items[0].GravarTXT( fsNomeArqTempXML )
+  else
+  begin
+    if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then
+      DeleteFile( fsNomeArqTempXML );
+  end;
+
+  inherited GravaArqINIVirtual(ConteudoINI);
+end;
+
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
+initialization
+   {$I ACBrECFVirtualNFCe.lrs}
+{$ENDIF}
+{$ENDIF}
+
+end.

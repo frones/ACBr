@@ -1,0 +1,55 @@
+package ACBrNFSeDanfseRLpkg;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  soaprtl,
+  ACBr_NFSe,
+  {$IFDEF VER150} RLibWinD7vcl, vcljpg, {$ENDIF} // D7
+  {$IFDEF VER200} RLibWinD2009, vclimg, {$ENDIF} // D2009
+  {$IFDEF VER210} RLibWinD2010, vclimg, {$ENDIF} // D2010
+  {$IFDEF VER220} RLibWinDXE, vclimg, {$ENDIF} // XE
+  {$IFDEF VER230} RLibWinDXE2, vclimg, {$ENDIF} //XE2
+  {$IFDEF VER240} RLibWinDXE3, vclimg, {$ENDIF} //XE3
+  {$IFDEF VER250} RLibWinDXE4, vclimg, {$ENDIF} //XE4
+  {$IFDEF VER260} RLibWinDXE5, vclimg, {$ENDIF} //XE5
+  {$IFDEF VER270} RLibWinDXE6, vclimg, dsnap, {$ENDIF} //XE6
+  {$IFDEF VER280} RLibWinDXE7, vclimg, dsnap, {$ENDIF} //XE7  
+  PCN2,
+  ACBrComum,
+  synapse,
+  ACBrCapicom,
+  ACBrDiversos;
+
+contains
+  ACBrNFSeDANFSeRL in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},
+  ACBrNFSeDANFSeRLClass in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLClass.pas',
+  ACBrNFSeDANFSeRLReg in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLReg.pas',
+  ACBrNFSeDANFSeRLRetrato in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLRetrato.pas' {frlDANFSeRLRetrato};
+
+end.

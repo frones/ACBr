@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_Convenio115"/>
+    <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrConvenio115"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrConvenio115\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)"/>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrConvenio115\ACBrConvenio115.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrConvenio115"/>
+      </Item1>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

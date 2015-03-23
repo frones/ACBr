@@ -1,0 +1,282 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 319
+  Height = 341
+  Top = 272
+  Width = 645
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsDialog
+  Caption = 'Consulta CPF (Receita Fazenda)'
+  ClientHeight = 341
+  ClientWidth = 645
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  KeyPreview = True
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object Panel2: TPanel
+    Left = 0
+    Height = 188
+    Top = 153
+    Width = 645
+    Align = alClient
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    ClientHeight = 188
+    ClientWidth = 645
+    TabOrder = 1
+    object Label3: TLabel
+      Left = 10
+      Height = 16
+      Top = 15
+      Width = 139
+      Caption = 'Nome da Pessoa Física'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label12: TLabel
+      Left = 465
+      Height = 16
+      Top = 15
+      Width = 110
+      Caption = 'Situação Cadastral'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object RzLabel1: TLabel
+      Left = 10
+      Height = 16
+      Top = 63
+      Width = 97
+      Caption = 'Digito Verificador'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object RzLabel2: TLabel
+      Left = 10
+      Height = 16
+      Top = 115
+      Width = 207
+      Caption = 'Código de controle do comprovante:'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object RzLabel3: TLabel
+      Left = 113
+      Height = 16
+      Top = 63
+      Width = 143
+      Caption = 'Comprovante emitido às:'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object EditRazaoSocial: TEdit
+      Left = 10
+      Height = 24
+      Top = 33
+      Width = 449
+      Color = clInfoBk
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      ReadOnly = True
+      TabStop = False
+      TabOrder = 0
+    end
+    object EditSituacao: TEdit
+      Left = 465
+      Height = 24
+      Top = 33
+      Width = 160
+      Color = clInfoBk
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      ReadOnly = True
+      TabStop = False
+      TabOrder = 1
+    end
+    object EdtDigitoVerificador: TEdit
+      Left = 10
+      Height = 24
+      Top = 85
+      Width = 97
+      Color = clInfoBk
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      ReadOnly = True
+      TabStop = False
+      TabOrder = 2
+    end
+    object EdtCodCtrlControle: TEdit
+      Left = 9
+      Height = 24
+      Top = 137
+      Width = 615
+      Color = clInfoBk
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      ReadOnly = True
+      TabStop = False
+      TabOrder = 3
+    end
+    object EdtEmissao: TEdit
+      Left = 113
+      Height = 24
+      Top = 85
+      Width = 512
+      Color = clInfoBk
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      ReadOnly = True
+      TabStop = False
+      TabOrder = 4
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 153
+    Top = 0
+    Width = 645
+    Align = alTop
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    ClientHeight = 153
+    ClientWidth = 645
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 361
+      Height = 16
+      Top = 12
+      Width = 78
+      Caption = 'Digite o CPF:'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label14: TLabel
+      Left = 361
+      Height = 16
+      Top = 78
+      Width = 96
+      Caption = 'Digite o Captcha'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object EditCaptcha: TEdit
+      Left = 361
+      Height = 41
+      Top = 97
+      Width = 137
+      CharCase = ecUppercase
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 2
+    end
+    object EditCNPJ: TEdit
+      Left = 361
+      Height = 41
+      Top = 31
+      Width = 264
+      Color = clInfoBk
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabStop = False
+      TabOrder = 1
+    end
+    object Panel3: TPanel
+      Left = 9
+      Height = 127
+      Top = 11
+      Width = 346
+      BevelOuter = bvLowered
+      ClientHeight = 127
+      ClientWidth = 346
+      Color = clWhite
+      ParentColor = False
+      TabOrder = 0
+      object Image1: TImage
+        Left = 1
+        Height = 106
+        Top = 1
+        Width = 344
+        Align = alClient
+        Center = True
+        Proportional = True
+        Stretch = True
+      end
+      object LabAtualizarCaptcha: TLabel
+        Cursor = crHandPoint
+        Left = 1
+        Height = 19
+        Top = 107
+        Width = 344
+        Align = alBottom
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'Atualizar Captcha'
+        Font.Color = clBlue
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold, fsUnderline]
+        ParentColor = False
+        ParentFont = False
+        OnClick = LabAtualizarCaptchaClick
+      end
+    end
+    object btnConsultar: TButton
+      Left = 504
+      Height = 40
+      Top = 97
+      Width = 120
+      Caption = 'Consultar'
+      OnClick = btnConsultarClick
+      TabOrder = 3
+    end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = Timer1Timer
+    left = 384
+    top = 208
+  end
+  object ACBrConsultaCPF1: TACBrConsultaCPF
+    left = 310
+    top = 170
+  end
+end

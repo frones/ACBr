@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBrDFeComum"/>
+    <Author Value="Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrCapicom;..\..\..\Fontes\Terceiros\JediWin32API"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFeComum\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos"/>
+    <Files Count="7">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
+        <UnitName Value="ACBrDFeConfiguracoes"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeUtil.pas"/>
+        <UnitName Value="ACBrDFeUtil"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeWebService.pas"/>
+        <UnitName Value="ACBrDFeWebService"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFe.pas"/>
+        <UnitName Value="ACBrDFe"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas"/>
+        <UnitName Value="ACBrDFeSSL"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas"/>
+        <UnitName Value="ACBrDFeOpenSSL"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="ACBrDFeCapicom"/>
+      </Item7>
+    </Files>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrTCP"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="PCNComum"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

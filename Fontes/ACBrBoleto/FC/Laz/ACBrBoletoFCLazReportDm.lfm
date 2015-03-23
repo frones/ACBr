@@ -1,0 +1,54 @@
+object dmACbrBoletoFCLazReport: TdmACbrBoletoFCLazReport
+  OnCreate = FormCreate
+  OldCreateOrder = False
+  left = 373
+  top = 183
+  Height = 217
+  HorizontalOffset = 517
+  VerticalOffset = 298
+  Width = 264
+  object frReport1: TfrReport
+    Dataset = frUserDataset1
+    InitialZoom = pzDefault
+    Options = []
+    PreviewButtons = [pbZoom, pbLoad, pbSave, pbPrint, pbFind, pbHelp, pbExit]
+    ShowProgress = False
+    DataType = dtDataSet
+    Title = 'Boleto'
+    OnGetValue = frReport1GetValue
+    OnEnterRect = frReport1EnterRect
+    left = 32
+    top = 32
+    ReportForm = {
+      19000000
+    }
+  end
+  object frUserDataset1: TfrUserDataset
+    OnCheckEOF = frUserDataset1CheckEOF
+    OnFirst = frUserDataset1First
+    OnNext = frUserDataset1Next
+    left = 104
+    top = 32
+  end
+  object frBarCodeObject1: TfrBarCodeObject
+    left = 32
+    top = 96
+  end
+  object frShapeObject1: TfrShapeObject
+    left = 104
+    top = 96
+  end
+  object PrintDialog1: TPrintDialog
+    OnShow = frUserDataset1First
+    left = 184
+    top = 32
+  end
+  object frTNPDFExport1: TfrTNPDFExport
+    left = 64
+    top = 160
+  end
+  object frHTMExport1: TfrHTMExport
+    left = 152
+    top = 160
+  end
+end

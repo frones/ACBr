@@ -1,0 +1,69 @@
+object dmACBrNFe: TdmACBrNFe
+  OldCreateOrder = False
+  Height = 369
+  HorizontalOffset = 486
+  VerticalOffset = 189
+  Width = 611
+  object frReport1: TfrReport
+    InitialZoom = pzDefault
+    PreviewButtons = [pbZoom, pbLoad, pbSave, pbPrint, pbFind, pbHelp, pbExit]
+    DataType = dtDataSet
+    left = 28
+    top = 16
+    ReportForm = {
+      18000000
+    }
+  end
+  object CustomIdentificacaoCXN: TfrUserDataset
+    left = 160
+    top = 16
+  end
+  object CustomEmitenteCXN: TfrUserDataset
+    left = 160
+    top = 72
+  end
+  object CustomDestinatarioCXN: TfrUserDataset
+    left = 160
+    top = 128
+  end
+  object CustomDadosProdutosCXN: TfrUserDataset
+    left = 160
+    top = 184
+  end
+  object CustomParametrosCXN: TfrUserDataset
+    left = 160
+    top = 240
+  end
+  object CustomInformacoesAdicionaisCXN: TfrUserDataset
+    left = 160
+    top = 296
+  end
+  object CustomDuplicatasCXN: TfrUserDataset
+    left = 352
+    top = 16
+  end
+  object CustomCalculoImpostoCXN: TfrUserDataset
+    left = 352
+    top = 72
+  end
+  object CustomTransportadorCXN: TfrUserDataset
+    left = 352
+    top = 128
+  end
+  object CustomVeiculoCXN: TfrUserDataset
+    left = 352
+    top = 184
+  end
+  object CustomVolumesCXN: TfrUserDataset
+    left = 352
+    top = 240
+  end
+  object CustomObservacaoFiscoCXN: TfrUserDataset
+    left = 352
+    top = 296
+  end
+  object CustomISSQNCXN: TfrUserDataset
+    left = 512
+    top = 16
+  end
+end

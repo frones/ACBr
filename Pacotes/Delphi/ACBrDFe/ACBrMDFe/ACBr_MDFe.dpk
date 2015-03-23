@@ -1,0 +1,67 @@
+package ACBr_MDFe;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  rtl,
+  designide,
+  xmlrtl,
+  dbrtl,
+  inet,
+  soaprtl,
+  ACBrComum,
+  ACBrOpenSSL,
+  ACBrCapicom,
+  //synapse,
+  PCN2;
+  
+contains
+  ACBrMDFe in '..\..\..\Fontes\ACBrMDFe\ACBrMDFe.pas',
+  ACBrMDFeConfiguracoes in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeConfiguracoes.pas',
+  ACBrMDFeManifestos in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeManifestos.pas',
+  ACBrMDFeUtil in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeUtil.pas',
+  ACBrMDFeWebServices in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeWebServices.pas',
+  ACBrMDFeDAMDFeClass in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeClass.pas',
+  ACBrMDFeReg in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeReg.pas',
+  pmdfeSignature in '..\..\..\Fontes\ACBrMDFe\pmdfeSignature.pas',
+  pmdfeConsReciMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeConsReciMDFe.pas',
+  pmdfeConsSitMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeConsSitMDFe.pas',
+  pmdfeConsStatServ in '..\..\..\Fontes\ACBrMDFe\pmdfeConsStatServ.pas',
+  pmdfeConversao in '..\..\..\Fontes\ACBrMDFe\pmdfeConversao.pas',
+  pmdfeEnvEventoMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeEnvEventoMDFe.pas',
+  pmdfeMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeMDFe.pas',
+  pmdfeMDFeR in '..\..\..\Fontes\ACBrMDFe\pmdfeMDFeR.pas',
+  pmdfeMDFeW in '..\..\..\Fontes\ACBrMDFe\pmdfeMDFeW.pas',
+  pmdfeProcMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeProcMDFe.pas',
+  pmdfeRetConsReciMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeRetConsReciMDFe.pas',
+  pmdfeRetConsSitMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeRetConsSitMDFe.pas',
+  pmdfeRetConsStatServ in '..\..\..\Fontes\ACBrMDFe\pmdfeRetConsStatServ.pas',
+  pmdfeRetEnvEventoMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeRetEnvEventoMDFe.pas',
+  pmdfeRetEnvMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeRetEnvMDFe.pas',
+  pmdfeEventoMDFe in '..\..\..\Fontes\ACBrMDFe\pmdfeEventoMDFe.pas';
+
+end.

@@ -1,0 +1,23 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TdmACBrNFe','FORMDATA',[
+  'TPF0'#10'TdmACBrNFe'#9'dmACBrNFe'#14'OldCreateOrder'#8#6'Height'#3'q'#1#16'H'
+  +'orizontalOffset'#3#230#1#14'VerticalOffset'#3#189#0#5'Width'#3'c'#2#0#9'Tfr'
+  +'Report'#9'frReport1'#11'InitialZoom'#7#9'pzDefault'#14'PreviewButtons'#11#6
+  +'pbZoom'#6'pbLoad'#6'pbSave'#7'pbPrint'#6'pbFind'#6'pbHelp'#6'pbExit'#0#8'Da'
+  +'taType'#7#9'dtDataSet'#4'left'#2#28#3'top'#2#16#10'ReportForm'#10#4#0#0#0#24
+  +#0#0#0#0#0#14'TfrUserDataset'#22'CustomIdentificacaoCXN'#4'left'#3#160#0#3't'
+  +'op'#2#16#0#0#14'TfrUserDataset'#17'CustomEmitenteCXN'#4'left'#3#160#0#3'top'
+  +#2'H'#0#0#14'TfrUserDataset'#21'CustomDestinatarioCXN'#4'left'#3#160#0#3'top'
+  +#3#128#0#0#0#14'TfrUserDataset'#22'CustomDadosProdutosCXN'#4'left'#3#160#0#3
+  +'top'#3#184#0#0#0#14'TfrUserDataset'#19'CustomParametrosCXN'#4'left'#3#160#0
+  +#3'top'#3#240#0#0#0#14'TfrUserDataset'#30'CustomInformacoesAdicionaisCXN'#4
+  +'left'#3#160#0#3'top'#3'('#1#0#0#14'TfrUserDataset'#19'CustomDuplicatasCXN'#4
+  +'left'#3'`'#1#3'top'#2#16#0#0#14'TfrUserDataset'#23'CustomCalculoImpostoCXN'
+  +#4'left'#3'`'#1#3'top'#2'H'#0#0#14'TfrUserDataset'#22'CustomTransportadorCXN'
+  +#4'left'#3'`'#1#3'top'#3#128#0#0#0#14'TfrUserDataset'#16'CustomVeiculoCXN'#4
+  +'left'#3'`'#1#3'top'#3#184#0#0#0#14'TfrUserDataset'#16'CustomVolumesCXN'#4'l'
+  +'eft'#3'`'#1#3'top'#3#240#0#0#0#14'TfrUserDataset'#24'CustomObservacaoFiscoC'
+  +'XN'#4'left'#3'`'#1#3'top'#3'('#1#0#0#14'TfrUserDataset'#14'CustomISSQNCXN'#4
+  +'left'#3#0#2#3'top'#2#16#0#0#0
+]);

@@ -1,0 +1,355 @@
+                  ROTEIRO DE TESTE DO COMPONENTE ACBrECF
+
+   Obrigado pelo seu interesse em ajudar nos Testes do ACBrECF. Por favor efetue
+os testes abaixo utilizando o programa ECFTeste (Windows ou Linux) e anote os
+resultados nesse mesmo arquivo TXT. Envie este arquivo com as respostas para o
+e-mail:  daniel@djsystem.com.br
+
+  Nome:________________________________  Empresa:___________________________
+
+  e-mail para contato (opcional): __________________________________________
+
+  Marca do ECF:_______________________  Modelo e Versão:____________________
+
+  Sistema Operacional: _____________________________________________________
+
+  Versão do ACBr: ___________          Data do Executável ECFTeste: __/__/__
+
+  Como ficou conhecendo o Projeto ACBr ? ___________________________________
+
+  Sugestões para os Projeto: _______________________________________________
+  __________________________________________________________________________
+  __________________________________________________________________________
+
+
+   Por favor anote nas respostas dos testes qualquer informação que você achar
+relevante, mesmo que não seja o que o teste esteja perguntado. Como por exemplo:
+"Demorou muito a executar", "Impressora não estava respondendo", etc...
+
+
+                           I N I C I A L I Z A Ç A O
+
+1 - Rode o ECFteste.exe e deixe o ECF desligado. Deixe o Modelo e Porta
+    ajustados em "Procurar" e clique em "Ativar". Após algum tempo tecle C para
+    cancelar a rotina de busca. A Busca foi interrompida corretamente ?
+______________________________________________________________________________
+
+2 - Conecte corretamente o ECF no micro e ligue-o. Deixe o Modelo e Porta
+    ajustados em "Procurar" e clique em "Ativar". O ACBrECF foi capaz de
+    encontrar o Modelo e Porta COM corretamente ? Tempo necessário ?
+______________________________________________________________________________
+
+3 - Desative e Ative novamente. A ativação demorou menos que 2 segundos ?
+______________________________________________________________________________
+
+
+                    P R O G R A M A Ç A O   D O   E C F
+
+ATENÇÃO !!! Os comandos de Programação costumam ser inversíveis, ou seja, não
+podem ser desfeitos, portanto efetue os testes com muito cuidado. Se você não
+puder alterar a Tabela de Aliquotas, Formas de Pagamento ou Comprovantes NAO
+fiscais, não há necessidade de rodar esses testes, pule para INFORMAÇOES DO ECF
+
+Os testes a seguir devem ser efetuados após uma Redução Z e antes de uma
+Leitura X, caso contrário os comandos de Programação não serão aceitos pelo ECF
+Importante: NAO imprima uma Leitura X para verificar o resultado dos testes,
+            caso contrário o ECF não permitirá novos comandos de Programação
+
+1 - Clique em "Utilitários", "Programa alíquota". Programe uma alíquota nova
+    (Ex: 2.46) do ICMS. alíquota adicionada ? Flag de ICMS está correto ?
+______________________________________________________________________________
+
+2 - Programe uma nova alíquota (Ex: 2.50) do ISS.
+    alíquota adicionada ? Flag de ISS está correto ?
+______________________________________________________________________________
+
+3 - Clique em "Utilitários", "Programa Forma de Pagamento". Programe uma nova
+    forma de Pagamento (Ex: CARTAO CREDITO), Permitindo o Cupom Vinculado para
+    essa FPG. FPG Programada ? Flag de Vinculado está OK ?
+______________________________________________________________________________
+
+4 - Programe uma nova Forma de Pagamento SEM permitir Vinculado (Ex: CHEQUE),
+    FPG Programada ? Flag de Vinculado está desabilitado ?
+______________________________________________________________________________
+
+5 - Clique em "Utilitários", "Programa Comprovante NAO Fiscal". Programe um novo
+    CNF (Ex: TEF), escolha o Tipo de acordo com o seu Modelo de ECF. Programado?
+______________________________________________________________________________
+
+6 - Imprima uma Leitura X e verifique se os comandos de Programação acima
+    correspondem com a Impressão da Leitura X.
+______________________________________________________________________________
+
+
+
+                    I N F O R M A Ç O E S   D O   E C F
+
+1 - Clique em "Relatórios, Leitura X". Impressão OK ? Houve Time-out ?
+______________________________________________________________________________
+
+2 - Clique em "Principal, Testar". Informações retornadas estão de acordo com
+    o conteúdo da Leitura X ?
+______________________________________________________________________________
+
+3 - Clique em "Variáveis" e verifique na Leitura X os valores retornados pelas
+    propriedades: Data Hora, Num ECF, Num Loja, Num Serie, Num Versão, Num CRO.
+______________________________________________________________________________
+
+4 - Verifique o Flag de "Horário de Verão ?" (Compare com a existência da letra
+    V perto da Hora na Leitura X)
+______________________________________________________________________________
+
+5 - Verifique o Flag de Estado de Papel em "Variáveis", "Pouco Papel ?"
+______________________________________________________________________________
+
+6 - Clique em "Variáveis" e "Carrega Alíquotas". As alíquotas estão de acordo
+    com a Leitura X ? Observe também os Flags de vinculação ao ISS.
+______________________________________________________________________________
+
+7 - Clique em "Variáveis" e "Carrega Formas Pagamento". As Formas de Pagamento
+   estão de acordo com a Leitura X ? Observe também os Flags "Permite Vinculado"
+______________________________________________________________________________
+
+8 - Clique em "Variáveis" e "Carrega Comprovantes NAO Fiscais" e compare com a
+    Leitura X. (Nota: Alguns ECFs podem não ter nenhum CNF programado)
+______________________________________________________________________________
+
+
+
+                            C U P O M   F I S C A L
+
+1 - Clique em "Cupom Fiscal" e "Testa Pode Abrir Cupom". Esse testes irá gerar
+    uma exceção se o estado do ECF não for Livre.
+______________________________________________________________________________
+
+2 - Clique em "Cupom Fiscal" e "Abre Cupom". Cupom Aberto ? Verifique se o
+     estado do ECF é "Venda". (Clique em "Variáveis" e "Estado")
+______________________________________________________________________________
+
+3 - Clique em "Cupom Fiscal" e "Vende Item". Venda um Item com QTD = 1,
+     Preço Unitário = 1, Unidade = UN, Alíquota = NN, Desconto = 0
+     Item Vendido ?  Unidade de medida foi impressa ?
+     Estado do ECF continua em "Venda" ? (Clique em "Variáveis" e "Estado")
+______________________________________________________________________________
+
+4 - Venda um Item com QTD = 1 e Preço Unitário = 1.116. Item Vendido ?
+     O Total impresso foi arredondado para 1.12 ?
+     Se o total foi Arredondado ou NAO, verifique se está de acordo com a
+     propriedade "Arredonda" (Clique em "Variaveis" e "Arredonda ?")
+_______________________________________________________________________________
+
+5 - Venda um Item com QTD = 1 e Preço Unitário = 1 e Desconto(%) = 10.
+     Item Vendido ? O Total impresso é 0.9 ? O Desconto foi destacado ?
+_______________________________________________________________________________
+
+6 - Venda um Item na Alíquota  II   (Isento)
+_______________________________________________________________________________
+
+7 - Venda um Item na Alíquota  FF   (Substituição Tributária)
+_______________________________________________________________________________
+
+8 - Venda um Item em uma das Alíquotas numéricas existentes na Leitura X
+    (Ex: 18)
+_______________________________________________________________________________
+
+9 - Venda um Item em uma Alíquota inválida (Exemplo: 99). ECF retornou o erro ?
+_______________________________________________________________________________
+
+10 - Feche a tela de Venda de Itens e Clique em "Cupom Fiscal",
+     "Cancela Item Vendido",  Cancele o Item 1.  Item cancelado ?
+_______________________________________________________________________________
+
+11 - Tente cancelar o Item 1 novamente. ECF retornou o erro ?
+_______________________________________________________________________________
+
+12 - Tente cancelar um Item fora da faixa válida (Ex: 99). ECF retornou o erro ?
+_______________________________________________________________________________
+
+13 - Clique em "Cupom Fiscal" e "Sub-totaliza Cupom". Informe o valor 0.
+     Cupom Sub-Totalizado ?
+_______________________________________________________________________________
+
+14 - Experimente vender um Item após a sub-totalização. ECF retornou o erro ?
+_______________________________________________________________________________
+
+15 - Clique em "Cupom Fiscal", "Variáveis" e verifique o retorno da propriedades
+     "Num Cupom", "Sub-Total" e "Total Pago"
+_______________________________________________________________________________
+
+16 - Clique em "Cupom Fiscal" e "Efetua Pagamento".  Formas de Pagamento
+     existentes foram carregadas ? Conteúdo de "Total do Cupom" e "Total Pago"
+     estão corretos ?
+_______________________________________________________________________________
+
+17 - Efetue um Pagamento usando o índice da Forma de Pagamento equivalente a
+     "Dinheiro" (ex: 01). Valor = METADE do valor do "Total do Cupom".
+                          Obs   = "Metade do pagamento".
+     Pagamento efetuado ? Conteúdo de "Total do Cupom" e "Total Pago" estão
+     corretos ? A observação foi impressa ?
+_______________________________________________________________________________
+
+18 - Efetue outro Pagamento usando o índice de outra Forma de Pagamento qualquer
+     (se houver). Valor = "Total do Cupom".
+                  Obs   = "Pagamento em excesso, TROCO".
+     Pagamento efetuado ? Conteúdo de "Total do Cupom" e "Total Pago" estão
+     corretos ? A observação foi impressa ?
+_______________________________________________________________________________
+
+19 - Tente efetuar outro pagamento. O ECF retornou ERRO ?
+     Conteúdo de "Total do Cupom" e "Total Pago" estão corretos ?
+_______________________________________________________________________________
+
+20 - Feche a janela de Pagamentos e clique em "Cupom Fiscal" e "Fecha Cupom"
+     Digite algo na observação (use | (pipe) para quebra de linhas).
+     Cupom Fechado ? Observação impressa corretamente ?
+_______________________________________________________________________________
+
+21 - Clique em "Cupom Fiscal" e "Cancela Cupom". Cancelado ?
+_______________________________________________________________________________
+
+22 - Tente cancelar o Cupom novamente. O ECF retornou ERRO ?
+_______________________________________________________________________________
+
+23 - Clique em "Cupom Fiscal" e "Teste de Velocidade". Venda 10 Itens.
+     Cupom Impresso corretamente ? Houve time-out em alguma etapa ?
+     Qual foi Tempo de Impressão ?  (Se necessário cancele o Cupom)
+_______________________________________________________________________________
+
+24 - Execute o teste acima mais 2 vezes e anote os tempos.
+_______________________________________________________________________________
+
+25 - Abra um novo cupom "Abre Cupom" e cancele-o "Cancela Cupom" (sem venda de
+     Itens).  Cancelado ?
+_______________________________________________________________________________
+
+26 - Abra um novo cupom , Venda 1 Item e cancele-o.  Cancelado ?
+_______________________________________________________________________________
+
+27 - Abra um novo cupom , Venda alguns itens, e Sub-totalize informando -1
+     (desconto de 1). Desconto foi destacado ?
+_______________________________________________________________________________
+
+28 - Cancele o Cupom do teste anterior. Cancelado ?
+_______________________________________________________________________________
+
+29 - Abra um novo cupom , Venda alguns itens, e Sub-totalize informando 1
+     (acrescimo de 1). Acrescimo foi destacado ?
+_______________________________________________________________________________
+
+30 - Continuando com o Cupom do teste anterior, Efetue um Pagamento com a METADE
+     do valor do cupom. Feche a janela de Pagamentos e Cancele o Cupom.
+     Cancelado ?
+_______________________________________________________________________________
+
+
+
+                             R E L A T O R I O S
+
+1 - Clique em "Relatórios", "Leitura da Memória Fiscal"., "Imprime por N.
+    Redução Z". Informe as 10 últimas reduções.
+    Leitura da Memória Fiscal Impressa corretamente ? Houve Time-out ?
+_______________________________________________________________________________
+
+2 - Clique em "Relatórios", "Leitura da Memória Fiscal"., "Imprime por Período"
+    Informe os 10 últimos Dias.
+    Leitura da Memória Fiscal Impressa corretamente ? Houve Time-out ?
+_______________________________________________________________________________
+
+3 - Clique em "Relatórios", "Leitura da Memória Fiscal"., "Captura por N.
+    Redução Z". Informe as 10 últimas reduções. Leitura da Memória Fiscal foi
+    capturada no Memo, exatamente como a Impressa ? Houve Time-out ?
+_______________________________________________________________________________
+
+4 - Clique em "Relatórios", "Leitura da Memória Fiscal"., "Captura por Período"
+    Informe os 10 últimos Dias. Leitura da Memória Fiscal foi capturada no Memo,
+    exatamente como a Impressa ? Houve Time-out ?
+_______________________________________________________________________________
+
+5 - Clique em "Relatórios", "Relatório Gerencial". Informe 2 Vias, modifique o
+    texto se desejar e clique em Imprimir. (Na maioria dos ECF o Relatório
+    Gerencial é precedido de uma Leitura X). Houve Time-Out ? O avanço de linhas
+    entre as 2 vias foi ok ? O Tempo de pausa entre as 2 vias está OK ?
+    A tecla ENTER foi capaz de interromper a Pausa ?
+_______________________________________________________________________________
+
+6 - Repita o teste anterior e Desligue o ECF durante a Impressão da Leitura X.
+    O ACBr retornou o erro ? A impressão do relatório Gerencial foi interrompida?
+    ( Nota: Alguns ECFs mantém a Leitura X no Buffer da Impressora )
+_______________________________________________________________________________
+
+7 -  Clique em "Relatórios", "Fecha Relatório".
+     O relatório Gerencial aberto no teste anterior foi finalizado ?
+_______________________________________________________________________________
+
+8 - Repita o teste 5 e Desligue o ECF durante a Impressão do texto do Relatório
+    Gerencial. O ACBr retornou o erro ? A impressão do relatório Gerencial foi
+    interrompida?
+_______________________________________________________________________________
+
+9 -  Clique em "Utilitários", "Corrige Estado de Erro". (Esse método efetua as
+     operações necessárias para tentar deixar o ECF em estado Livre)
+     O relatório Gerencial aberto no teste anterior foi finalizado ?
+_______________________________________________________________________________
+
+10 - Imprima um Cupom Fiscal e tente finaliza-lo com uma Forma de Pagamento que
+    NAO Permita Cupom Vinculado, porém marque a opção "Cupom Vinculado"
+    (Na tela de Pagamentos, marque a opção "Cupom Vinculado").
+    O ACBr bloqueou corretamente a impressão do Pagamento ?
+_______________________________________________________________________________
+
+11 - Continuando com o Cupom Anterior, Finalize-o com uma Forma de Pagamento que
+    Permita Cupom Vinculado (Na tela de Pagamentos, marque a opção "Cupom
+    Vinculado"). Pagamento impresso corretamente ?
+    - Anote o COO, o índice da Forma de Pagamento utilizada e o Valor.
+    - Feche o Cupom
+_______________________________________________________________________________
+
+12 - Clique em "Relatórios", "Cupom Vinculado". Informe 2 vias, informe o número
+    do Cupom (COO) do teste anterior, o Indice da Forma de Pagamento e o valor
+    anotados no teste anterior e Imprima.
+    ( Obs.: Nem todos os ECFs necessitam todos esses parâmetros, alguns só
+      precisam do COO )
+    Cupom NAO Fiscal Vinculado Impresso ? Houve Time-out ? O avanço de linhas
+    entre as 2 vias foi ok ? O Tempo de pausa entre as 2 vias está OK ?
+    A tecla ENTER foi capaz de interromper a Pausa ?
+_______________________________________________________________________________
+
+13 - Repita os testes 11 e 12 anteriores e desligue o ECF durante a abertura do
+     cabeçalho do Cupom não Fiscal Vinculado. O ACBr retornou o erro ?
+     A impressão do CNFV foi interrompida ?
+_______________________________________________________________________________
+
+14 - Clique em "Relatórios", "Fecha Relatório".
+     O CNFV aberto no teste anterior foi finalizado ?
+_______________________________________________________________________________
+
+15 - Repita os testes 11 e 12 anteriores e desligue o ECF durante a impressão do
+     texto do Cupom não Fiscal Vinculado. O ACBr retornou o erro ?
+     A impressão do CNFV foi interrompida ?
+_______________________________________________________________________________
+
+16 - Clique em "Utilitários", "Corrige Estado de Erro". (Esse método efetua as
+     operações necessárias para tentar deixar o ECF em estado Livre)
+     O CNFV aberto no teste anterior foi finalizado ?
+_______________________________________________________________________________
+
+
+
+                             D I S P O S I T I V O S
+
+1 - Clique em "Dispositivos", "Abrir Gaveta".  Gaveta aberta ?
+_______________________________________________________________________________
+
+2 - Verifique se o Estado da Gaveta Aberta e Fechada está correto na Propriedade
+   "Gaveta Aberta ?"
+_______________________________________________________________________________
+
+3 - Insira um Cheque no slot de Cheques e verifique o estado de "Cheque Pronto?"
+_______________________________________________________________________________
+
+4 - A rotina de impressão de Cheques não foi implementada em ECFTeste, porém já
+    está implementada em alguns modelos de ECF no ACBrECF. Se desejar, efetue um
+    teste de Impressão usando o demo de CHQTeste.exe. (Configure o componente
+    ACBrECF corretamente antes de compilar o Demo)
+_______________________________________________________________________________
+

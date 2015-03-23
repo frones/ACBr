@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFSe_DanfseRL"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\..\Fontes\ACBrNFSe"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrNFSe"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="4">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRL.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeRL"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLClass.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeRLClass"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFSeDANFSeRLReg"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLRetrato.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeRLRetrato"/>
+      </Item4>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="4">
+      <Item1>
+        <PackageName Value="ACBrDiversos"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBr_NFSe"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="fortes324forlaz"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="FCL"/>
+      </Item4>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

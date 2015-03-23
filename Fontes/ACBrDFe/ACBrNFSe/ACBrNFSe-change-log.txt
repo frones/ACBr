@@ -1,0 +1,587 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Juaumkiko - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrNFSe
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+19/03/2015
+[*] Alterado o formato da DataEmissao do provedor SisPMJP.
+    Por: Italo Jurisato Junior
+[-] Incluido a função para a conversão de string para o TipoRPS.
+    Por: Italo Jurisato Junior
+
+16/03/2015
+[*] Melhorias no DANSE em Rave.
+    Por: Andre(Prodez)
+
+13/03/2015
+[-] Tentativa de resolver o problema ao emitir o DANFSE com determinados valores
+    de ValorServicos e ValorISSRetido.
+    Por: Italo Jurisato Junior
+[*] Removido a cidade de Catanduvas (provedor pronim) para realizar a assinatura.
+    Por: Mauricio Guedes da Rosa
+
+03/03/2015
+[*] Implementado o provedor SJP para a cidade de São Jose dos Pinhais.
+    Por: Akai
+[*] Informado a URL correta de produção da cidade de Ibaté/SP provedor Fiorilli.
+    Por: Italo Jurisato Junior
+[-] Correção no provedor Vitoria.
+    Por: Junior Bindaco
+
+02/03/2015
+[*] Alteração para leitura do XML, provedor Infisc.
+    Por: Moro
+
+27/02/2015
+[-] Correção da leitura da TAG "Tipo", incluido a função de conversão de tipos.
+    Por: Italo Jurisato Junior
+[*] Inclusão da cidade Guanhães provedor EL.
+    Por: Pedro Peixoto
+[-] Tratamento na leitura do retorno referente ao Método GerarNFSe.
+    Por: Joel Takei
+
+26/02/2015
+[-] Correção para o provedor Fiorilli ao efetuar o cancelamento de uma NFS-e.
+    Por: jGuto
+
+25/02/2015
+[-] Incluido um teste para saber se o retorno do GerarNFSe contem pelo menos uma nota.
+    Por: Italo Jurisato Junior
+[*] Inclusão da cidade Guararapes/SP provedor Fiorilli.
+    Por: Lucas Moretti
+
+23/02/2015
+[-] Correção na unit pnfsNFSeR para o provedor ISSe com relação ao Valor do ISS
+    Retido.
+    Por: Armando Boza Gonçalves
+
+21/02/2015
+[-] Correção, estava faltando a definição da propriedade Sucesso.
+    Por: Italo Jurisato Junior
+
+20/02/2015
+[*] Alterado rotinas NFSe para provedor GovDigital.
+    Por: Nilton Olher
+
+18/02/2015
+[*] Alterado rotinas NFSe para provedor Infisc versão XML 1.1
+    Por: Moro	
+
+14/02/2015
+[*] Alterado o tipo da propriedade Quantidade na lista de serviços de Integer para
+    currency, pois o provedor SimplISS aceita que a quantidade de serviço seja um numero
+    fracionado.
+    Por: Italo Jurisato Junior
+
+12/02/2015
+[*] Alterações visando o provedor GovDigital.
+    Por: Nilton Olher
+
+10/02/2015
+[+] Implementado o provedor EL.
+    Por: jperim
+
+05/02/2015
+[*] Alteração na estrutura do Soap (Envio Sincrono e Gerar) do provedor GovDigital.
+    Por: Italo Jurisato Junior
+
+04/02/2015
+[*] Alteração na estrutura do Soap (Envio Sincrono) do provedor GovDigital.
+    Por: Italo Jurisato Junior
+[*] Melhorias visando a leitura correta dos itens de serviços do provedor SimplISS.
+    Por: Roger Rodrigues
+[*] Melhorias visando a emissao de RPS com tomador estrangeiro.
+    Por: Michel Ouriques
+[*] Inclusao da cidade Vargem Bonita no provedor Betha.
+    Por: Mauricio Guedes
+
+03/02/2015
+[+] Implementação do provedor Tinus.
+    Por: João Lenosi
+
+02/02/2015
+[*] Inclusao da cidade Taquaritinga/SP no provedor Ginfes.
+    Por: Alexandre Soares
+
+30/01/2015
+[*] Alterado o namespace do provedor GovDigital.
+    Por: Italo Jurisato Junior
+
+28/01/2015
+[*] Melhorias na Unit de leitura do XML.
+    Por: Roger Rodrigues
+[*] Alterações visando fazer funcionar o provedor GovDigital.
+    Por: Italo Jurisato Junior
+
+22/01/2015
+[*] Alterado para Assinar o Lote quando a cidade for Ijuí/RS.
+    Por: Diogo
+
+21/01/2015
+[*] Inclusão de novas cidades no provedor InFisc.
+    Por: Cleiver Batista
+
+20/01/2015
+[*] Migração da cidade Guarapari/ES do provedor GovBR para Pronim.
+    Por: Heronim Antonio Marçal
+[-] Correções na leitura do XML - provedor InFisc.
+    Por: Leandro Couto
+
+19/01/2015
+[-] Ficou faltando alguns ajustes em outras Units com relação ao provedor InFisc.
+    Por: Italo Jurisato Junior
+[*] Melhorias para o provedor InFisc.
+    Por: Leandro Couto
+[*] Incluidas linhas para detectar se a NF-e esta cancelada ou não ao realizar
+    os vários tipos de consultas.
+    Por: Julio_cld
+
+16/01/2015
+[+] Cidade de Campo Bom / RS
+		Por: Juliomar Marchetti
+		
+15/01/2015
+[*] Ao ler um XML (RPS ou NFS-e) o componente inicialmente assume como provedor
+    o que consta na configuração se não for realiza a troca.
+    Por: Italo Jurisato Junior
+
+14/01/2015
+[*] Inclusão de novas cidade no provedor Betha.
+    Por: Julio_cld
+[*] Atualização da lista de cidades que não seguem o código IBGE.
+    Por: Dangelo Porto
+[*] Incluido o CoInitialize na function AssinarXML (ACBrNFSeUtil).
+    Por: Julio_cld
+
+12/01/2015
+[*] Incluido a cidade de Pouso Alegre/MG no provedor Ginfes.
+    Por: Italo Jurisato Junior
+
+09/01/2015
+[*] Incluido a cidade de Congonhas/MG no provedor Betha.
+    Por: edulamy
+[*] Incluido a cidade de Mirante do Paranapanema/SP no provedor SimplISS.
+    Por: Alexandre Soares
+[*] Criado a propriedade interna chamada AssinaGerar, uma vez que existe provedor
+    que o RPS não é assinado ao enviar por lote, mas deve ser assinado ao enviar
+    através do metodo Gerar.
+    Por: Italo Jurisato Junior
+
+08/01/2015
+[*] Liberado o Envio Sincrono para o provedor GovDigital.
+    Por: Italo Jurisato Junior
+
+07/01/2015
+[*] Incluido uma condição para apresentar a Aliquota sempre no formato xx.xx %
+    no Fortes Report.
+    Por: Jair Carlos Muller
+
+06/01/2015
+[*] Incluido a cidade de Divinopolis/MG no provedor GovDigital.
+    Por: Italo Jurisato Junior
+[*] Alterado o provedor Pronim para que o Lote seja assinado quando a cidade for
+    Mirassol/SP.
+    Por: Emerson Teixeira
+
+05/01/2015
+[*] Alteração visando o provedor Vitoria que o código do item não deve ser 
+    conter zero a esquerda.
+    Por: Heronim Antonio Marçal
+
+30/12/2014
+[*] Alterações das URLs de homologação e de produção e NameSpace do provedor:
+    Salvador.
+    Por : Eduardo Alineri
+
+23/12/2014
+[-] Na unit pnfsNFSeR.pas e pnfsConsNfseResposta.pas continua ocorrendo o erro no lazarus
+		aplicado uma possível correção para manter compatível com o delphi
+		por : Juliomar Marchetti
+
+22/12/2014
+[-] Na unit pnfsNFSeR.pas esta ocorrendo um erro de compilação no lazarus,
+    foi feita uma alteração a fim de resolver o problema.
+    Por: Italo Jurisato Junior
+[*] Liberado a funcionalidade GerarNfse para o provedor Digifred.
+    Por: Italo Jurisato Junior
+[*] Alteração visando corrigir o problema de consultar lote rps no provedor
+    FISSLex.
+    Por: Italo Jurisato Junior
+
+17/12/2014
+[+] Implementado o provedor Infisc para a cidade de Farroupilha/RS.
+    Por: Dalvan
+
+16/12/2014
+[*] Alteração na rotina que faz a assinatura, excluida uma condição criada para o
+    provedor Natal
+    Por: Italo Jurisato Junior
+
+13/12/2014
+[*] Adição da unit ACBrConsts na unit pnfsNFSeW.pas
+    Por: Juliomar Marchetti
+		
+12/12/2014
+[*] Alterações no provedor Pronim para poder realizar a assinatura.
+    Por: Italo Jurisato Junior
+[*] Alterações realizadas visando gerar o XML do RPS segundo o layout do 
+    provedor Virtual.
+    Por: Italo Jurisato Junior
+
+09/12/2014
+[*] Padronização das Units dos provedores para atender a funcionalidade de
+    Substituição de NFS-e.
+    Por: Italo Jurisato Junior
+[+] Incluido a Unit: pnfsSubsNfseResposta.pas para processar a resposta de uma
+    solicitação de Substituição de NFS-e.
+    Não esta 100% requer testes.
+    Por: Italo Jurisato Junior
+
+08/12/2014
+[+] Incluido a Funcionalidade Substituição de NFS-e.
+    Não esta 100% requer testes.
+    Por: Italo Jurisato Junior
+
+04/12/2014
+[*] Alterado a propriedade que informa que o pedido de cancelamento deve ser
+    assinado (provedor Lexsom).
+    Por: Italo Jurisato Junior
+[*] Incluido na function AssinarXML a alteração de Id para id após a assinatura
+    para os provedores cujo identificador é id em vez de Id.
+    Por: Italo Jurisato Junior
+[*] Nova URL de produção de Pontal (provedor Fiorilli).
+    Por: Carlos César C. Silva
+[*] Para os provedores Lexsom e Publica o identificador estava sendo alterado para
+    id antes de ocorrer a assinatura.
+    Por: Italo Jurisato Junior
+
+02/12/2014
+[+] Incluido a cidade Iburubá/RS provedor Digifred.
+    Por: Italo Jurisato Junior
+
+28/11/2014
+[*] Alterado a condição de assinar o não RPS caso seja usado o metodo Gerar em
+    vez de Enviar.
+    Por: Italo Jurisato Junior
+
+27/11/2014
+[*] Ajustes no provedor Virtual.
+    Por: Italo Jurisato Junior
+[+] Incluido a cidade Rolandia/PR provedor Pronim.
+    Por: Armando Roza Gonçalvez
+[*] Alterado a montagem da mensagem de Consulta a NFS-e no que diz respeito ao
+    grupo <Tomador>.
+    Por: Italo Jurisato Junior
+[*] A cidade Assis Chateaubriand passa a usar o provedor Pronim em vez de GovBr.
+    Por: eazschomack
+
+24/11/2014
+[+] Incluido a cidade Porto Alegre/RS ao provedor BHISS.
+    Por: Italo Jurisato Junior
+
+24/11/2014
+[*] Alterado a forma de gerar a TAG Aliquota quando o provedor for Coplan.
+    Por: Italo Jurisato Junior
+[+] Incluido a cidade Vila Velha/ES ao provedor Vitória.
+    Por: Rodrigo
+[*] Incluido no DANFSE em Fast Report o controle de quebra de linha no campo
+    Discriminação.
+    Por: jGuto
+
+20/11/2014
+[*] Alteração na leitura do XML - layout Abrasf Versão 2.00
+    Por: jGuto
+
+19/11/2014
+[*] Alterações visando fazer funcionar o provedor Virtua.
+    Por: Italo Jurisato Junior
+[*] Incluido a cidade de Barrinha/SP (provedor Pronim)
+    Por: Marcelo Petrucio
+
+18/11/2014
+[*] Correção para o provedor DSF.
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18687-corre%C3%A7%C3%A3o-exclusiva-para-o-provedor-dsf-erro-de-valida%C3%A7%C3%A3o-ao-enviar-duas-notas-no-mesmo-lote/#entry118026
+    Por: Renato Henrique
+
+14/11/2014
+[*] Incluido o provedor na lista de provedores que não devem configurar o IE.
+    Por: ELJAK
+[*] Removido o provedor Araucaria, motivo a cidade Araucaria/PR se utiliza do
+    provedor Lexsom, efetua alterações em diversos fontes para atenter a cidade.
+    Por: ELJAK
+[*] Alterado as URLs de produção da cidade de Assis (provedor Pronim)
+    Por: Márcio Lopes
+[*] Alterado a forma de obter o código da cidade ao realizar as consultas
+    (provedor DSF), agora é utilizado a cidade que consta na configuração
+    e não mais extraida do XML da nota que não há necesside de ser carregado.
+    Por: Renado Henrique
+	
+10/11/2014
+[*] Trocado a função para formatar o numero da NFSe e NFSe Substituida.
+    Por: Valdir
+	
+08/11/2014
+[-] Correção para o provedor thema na cidade de Cachoeirinha/RS, foi posto https mas é http
+    http://www.projetoacbr.com.br/forum/index.php?/topic/18533-erro-em-acbrprovedorthema-cachoeirinha-rs/
+    por: Alex
+	
+06/11/2014
+[+] Inclusão de novas cidades no provedor Betha.
+[-] Correção na unit pnfsCancNfseResposta.
+    Por: Italo Jurisato Junior
+[-] Alterações necessárias para funcionar o provedor DBSeller.
+    por: Diogo
+
+03/11/2014
+[-] Correção na montagem do Id para o provedor Tecnos.
+    por: Rodrigo de Souza Crovador
+[-] Correções para o provedor DBSeller.
+    por: Fabio Cavol Suhs
+[+] Adicionado a cidade São Joaquim/SC ao provedor Betha.
+    por: Cleiton Silveira
+[-] Correções na geração de lotes modo sincrono para o provedor Tecnos.
+    por: Italo Jurisato Junior
+
+31/10/2014
+[-] Incluido o provedor Salvador para levantar exceção quando for utilizar os 
+    Web Services: GerarNFSe e EnviarLoteRpsSincrono.
+    Mototivo: O provedor não dispõe desses Web Services.
+    por: Italo Jurisato Junior
+
+30/10/2014
+[*] Alterado a URL do ambiente de homologação do provedor Publica.
+    por: Flavio Solvi
+[+] Adicionado a cidade Seberi/RS ao provedor Betha.
+    por: Alexandre Wener
+[-] Corrigido o problema de não realizar a assinatura do lote (provedor Natal).
+    por: Italo Jurisato Junior
+
+29/10/2014
+[*] Alterações na estrutura do XML de Cancelamento da NFS-e (provedor DBSeller).
+    por: Fabio Cavol Suhs
+[*] Alterações na estrutura do XML de consulta a situracao do lote e consulta ao
+    lote (provedor DBSeller).
+    por: Rodrigo Custório e Fabio Cavol Suhs
+
+28/10/2014
+[*] Alterações diversas efetuadas para o provedor ISSDsf.
+    por: Thiago Filiano
+[+] Adicionado a cidade Pirenópolis/GO ao provedor Prodata.
+    por: Gilvan
+[-] Alterado o indentificador para " id" com espaço em branco no inicio.
+    isso faz com que seja incluido o atributo ID todo em minusculo e ocorra a
+    assinatura digital (provedor DBSeller).
+    por: Rodrigo Custódio
+[-] Alteração para ler o endereço corretamente do xml da NFS-e (provedor DBSeller).
+    por: Italo Jurisato Junior
+[+] Adicionado a cidade Araguari/MG ao provedor SimplISS.
+    por: Renato Henrique
+
+27/10/2014
+[-] Alteração para extrar o xml da NFS-e (provedor DBSeller).
+    por: Italo Jurisato Junior
+[-] Alteração efetuada para sanar o problema de envio e consulta de situação do
+    lote de RPS para o provedor DBSeller.
+    por: Rodrigo Custódio
+[+] Adicionado a cidade Indiana/SP ao provedor SimplISS.
+    por: jhmontoia
+[+] Adicionado a cidade Cotriguaçu/MT ao provedor Betha.
+    por: Italo Jurisato Junior
+[-] Alterado varias units com o objetivo de sanar o problema do Valor Liquido Zerado
+    ao imprimir o DANFSE.
+    Espera-se que algora o problema esteja resolvido para todos os provedores e em
+    todas as situações.
+    por: Italo Jurisato Junior
+
+22/10/2014
+[*] Alterado para entender a quebradelinha no Fortes
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18141-quebra-de-linha-na-tag-discrimina%C3%A7%C3%A3o/#entry114679
+	por: Juliomar Marchetti
+	
+20/10/204
+[*] Alterado a rotida LoadFormStream visando executar as mesmas tratativas do
+    LoadFromFile - Unit ACBrNFSeNotasFiscais.
+    por: Thiago Filiano
+	
+[*] Alterado o parâmetro: QuebradeLinha de ";" para "\s\n" - provedor Fiorilli.
+    Conforme Manual versão 2.00 da ABRASF.
+    por: Italo Jurisato Junior
+	
+17/10/204
+[+] Adicionando a propriedade QuebradeLinha na configuração de cada provedor.
+    O valor padrão é ";" ponto e virgula
+    Ao alimentar o componente devemos sempre utilizar o ";" para indicar uma quebra de linha no
+    campo Discriminacao.
+    O componente vai substituir o ";" pelo caracter ou sequencia de caracters parametrizado no
+    provedor que esta sendo utilizado no momento de gerar o XML.
+    A impressão do DANFSE vai transcorrer normalmente.
+    Sugestão de brsamn
+    por: Italo Jurisato Junior
+	
+16/10/204
+[+] Adicionando o QrCode no DANFSe em Fortes Report caso exista uma URL nos dados adicionais da NFS-e
+	por: Juliomar Marchetti
+	
+16/10/2014
+[+] Alterado a cidade de São José/SC do provedor Betha para o o provedor
+    Pronim.
+    por: Pauloclv
+
+15/10/2014
+[+] Implementado os provedores ABRASFv1 e ABRASFv2 visando as cidades que ainda
+    não possui um Web Servive, tem por finalidade apenas gerar o XML do RPS e 
+    importa-lo através do site.
+    Implementado o provedor Lexsom visando atender a cidade de Foz do Iguaçu/PR 
+    por: Italo Jurisato Junior
+
+14/10/2014
+[-] Alterações feitas nas units: pnfsNFSeG e pnfsNFSeW - com relação ao atributo
+    ID dos RPS e do Lote, visando resolver problemas de validação no Web Service
+    por: Rodrigo de Souza Crovador
+[-] Para os provedores Araucaria, DBSeller e Publica ao gerar o XML do RPS
+    o atributo ID será id uma vez que o RPS não é assinado.
+    Para o Lote o ID será Id para poder receber a assinatura e depois alterado
+    para id.
+    por: Italo Jurisato Junior
+
+10/10/2014
+[-] Ajustes na geração do XML para ficar de acordo com o Schema da DBSeller.
+    por: Italo Jurisato Junior
+
+08/10/2014
+[+] Incluida a cidade Esteio/RS no provedor Thema.
+    por: Rodolfo
+[-] Ao fazer a conversão de str para int estava ocorrendo erro quando a str era 
+    nula.
+    por: Paulo Henrique
+[*] Diversas alterações realiadas conforme post:
+    http://www.projetoacbr.com.br/forum/index.php?/topic/17988-mudan%C3%A7a-da-cidade-de-governador-valadares-do-provedor-4r-para-actcon/#entry112822 
+    por: Herbert da Silva Costa
+
+07/10/2014
+[*] Incluido o provedor Betha na lista de provedores que não aceitam
+    o código do ItemListaServico com formatação.
+[+] Incluida a cidade Gramado/RS no provedor Betha.
+    por: Italo Jurisato Junior
+
+03/10/2014
+[*] Alterações acrescentado a cidade Encantado/RS no provedor Tecnos
+    por: Italo Jurisato Junior a pedido de Rodrigo de Souza Crovador
+
+03/10/2014
+[*] Alterações nas units: ACBrProvedorDBSeller, pnfsEnvLoteRpsResposta na tentativa
+    de fazer o provedor DBSeller funcionar.
+    por: Italo Jurisato Junior
+
+02/10/2014
+[*] Alteração para poder compilar com o instalador do DANFSe em Rave Report
+[*] Alterado o pacote inicial do Rave para suportar as diversas versões conforme delphi!
+
+14/11/2013
+[+] Integração com o provedor Equiplano (por Michel Ouriques)
+
+01/07/2013
+[+] Diponibilizado o pacote de instalação do DANFSE em Fast Report, 
+    Fontes do componente escrito por Ney Robson. 
+
+04/04/2013
+-- ACBrNFSeReg --
+[*] Alterado para por a imagem no componente para Lazarus
+-- ACBrNFSeWebServices --
+[*] Alterado para compatibilizar ao Lazarus
+   (Juliomar Marchetti)
+
+25/02/2012
+-- ACBrNFSe --
+[-] Comentei as chamadas referentes ao Provedor de Natal porque estavam 
+    causando erros de compilação por falta do arquivo.
+    A pessoa responsável por adicionar o provedor de Natal por favor adicione 
+    o arquivo e descomente.    (por Regys Silveira)
+
+22/11/2012
+-- ACBrDFeUtil
+[+] Unificação de funções de mesma funcionalidade das units:
+    ACBrNFeUtil, ACBrNFEsUtil, ACBrCTeUtil
+    (por Isaque Pinheiro)
+
+Alterações   08/11/2012 (João Henrique)
+---------------
+[+] Incluido propriedade Webservices->ConsultarLoteAposEnvio (valor padrão TRUE).
+    Alguns servidores não processam o lote logo após o envio, e o componente fica
+    tentando obter o processamento em vão. Com essa propriedade é possível controlar
+    essas situações.
+
+Alterações   20/07/2012 (Italo Jurisato Junior)
+---------------
+[+] Diponibilizado o pacote de instalação do DANFSE em Fortes Report, 
+    Fontes do componente escrito por Danilo D.C.F. o pacote de instalação escrito
+    por Rafael Muler.
+
+Alterações   03/04/2012 (Italo Jurisato Junior)
+---------------
+[*] Incluido dentro da função CancelaNFSe a chamada para a função ConsutaNFSeporRps
+    desta forma o XML da NFSe cancelada será atualizado com as tags referente ao
+    cancelamento.
+
+Alterações   12/09/2011 (Italo Jurisato Junior)
+---------------
+[+] Implementado a função de Cancelamento de NFSe no padrão Ginfes e Abrasf.
+
+Alterações   09/09/2011 (Italo Jurisato Junior)
+---------------
+[+] Implementado as funções de Envio e consulta ao WebServices no padrão Ginfes e
+    Abrasf.
+[+] Criado o componente ACBrNFSeDANFSeQR, usado para imprimir o DANFSe.
+
+Versão 0.01a   
+---------------
+[+] Início do Projeto
+[+] Primeira Versao lançada baseado no componente fornecido por juaumkiko.
+
+
+
+

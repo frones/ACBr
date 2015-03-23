@@ -1,0 +1,7 @@
+  
+  Script do SQL Server 2000 , Tabelas utilizadas em produção !!!
+  Aqui o exemplo foi somente para facilitar a verificação da estrutura das tabelas de como está sendo utilizado o tramite de dados . (Logicamente vc vai utilizar o seu próprio banco Firebird , interbase , MySql , etc...etc...) .
+  Estamos tambem utilizando Store Procedures no exemplo .
+
+  
+ Marcelo .

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_CTe"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrCTe"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="24">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeConhecimentos.pas"/>
+        <UnitName Value="ACBrCTeConhecimentos"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetInutCTe.pas"/>
+        <UnitName Value="pcteRetInutCTe"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTe.pas"/>
+        <UnitName Value="ACBrCTe"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeConfiguracoes.pas"/>
+        <UnitName Value="ACBrCTeConfiguracoes"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrCTeReg"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeUtil.pas"/>
+        <UnitName Value="ACBrCTeUtil"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeWebServices.pas"/>
+        <UnitName Value="ACBrCTeWebServices"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteCancCTe.pas"/>
+        <UnitName Value="pcteCancCTe"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteConsCad.pas"/>
+        <UnitName Value="pcteConsCad"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteConsSitCTe.pas"/>
+        <UnitName Value="pcteConsSitCTe"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteConsStatServ.pas"/>
+        <UnitName Value="pcteConsStatServ"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteCTe.pas"/>
+        <UnitName Value="pcteCTe"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteCTeR.pas"/>
+        <UnitName Value="pcteCTeR"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteCTeW.pas"/>
+        <UnitName Value="pcteCTeW"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteInutCTe.pas"/>
+        <UnitName Value="pcteInutCTe"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetCancCTe.pas"/>
+        <UnitName Value="pcteRetCancCTe"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetConsCad.pas"/>
+        <UnitName Value="pcteRetConsCad"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetConsSitCTe.pas"/>
+        <UnitName Value="pcteRetConsSitCTe"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetConsStatServ.pas"/>
+        <UnitName Value="pcteRetConsStatServ"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetEnvCTe.pas"/>
+        <UnitName Value="pcteRetEnvCTe"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteRetConsReciCTe.pas"/>
+        <UnitName Value="pcteRetConsReciCTe"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteProcCTe.pas"/>
+        <UnitName Value="pcteProcCTe"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\pcteConsReciCTe.pas"/>
+        <UnitName Value="pcteConsReciCTe"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTEClass.pas"/>
+        <UnitName Value="ACBrCTeDACTEClass"/>
+      </Item24>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="5">
+      <Item1>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="PCN2"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="laz_synapse"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBrComum"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

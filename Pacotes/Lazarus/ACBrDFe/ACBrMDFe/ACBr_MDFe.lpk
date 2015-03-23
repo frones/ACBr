@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_MDFe"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrMDFe"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="23">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFe.pas"/>
+        <UnitName Value="ACBrMDFe"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeConfiguracoes.pas"/>
+        <UnitName Value="ACBrMDFeConfiguracoes"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeManifestos.pas"/>
+        <UnitName Value="ACBrMDFeManifestos"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeUtil.pas"/>
+        <UnitName Value="ACBrMDFeUtil"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeWebServices.pas"/>
+        <UnitName Value="ACBrMDFeWebServices"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEClass.pas"/>
+        <UnitName Value="ACBrMDFeDAMDFeClass"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrMDFeReg"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeSignature.pas"/>
+        <UnitName Value="pmdfeSignature"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeConsReciMDFe.pas"/>
+        <UnitName Value="pmdfeConsReciMDFe"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeConsSitMDFe.pas"/>
+        <UnitName Value="pmdfeConsSitMDFe"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeConsStatServ.pas"/>
+        <UnitName Value="pmdfeConsStatServ"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeConversao.pas"/>
+        <UnitName Value="pmdfeConversao"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeEnvEventoMDFe.pas"/>
+        <UnitName Value="pmdfeEnvEventoMDFe"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeMDFe.pas"/>
+        <UnitName Value="pmdfeMDFe"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeMDFeR.pas"/>
+        <UnitName Value="pmdfeMDFeR"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeMDFeW.pas"/>
+        <UnitName Value="pmdfeMDFeW"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeProcMDFe.pas"/>
+        <UnitName Value="pmdfeProcMDFe"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeRetConsReciMDFe.pas"/>
+        <UnitName Value="pmdfeRetConsReciMDFe"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeRetConsSitMDFe.pas"/>
+        <UnitName Value="pmdfeRetConsSitMDFe"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeRetConsStatServ.pas"/>
+        <UnitName Value="pmdfeRetConsStatServ"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeRetEnvEventoMDFe.pas"/>
+        <UnitName Value="pmdfeRetEnvEventoMDFe"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeRetEnvMDFe.pas"/>
+        <UnitName Value="pmdfeRetEnvMDFe"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\pmdfeEventoMDFe.pas"/>
+        <UnitName Value="pmdfeEventoMDFe"/>
+      </Item23>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="5">
+      <Item1>
+        <PackageName Value="ACBrOpenSSL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="laz_synapse"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="PCN2"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBrComum"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

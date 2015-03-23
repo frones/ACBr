@@ -1,0 +1,353 @@
+object FrmSPEDPisCofins: TFrmSPEDPisCofins
+  Left = 356
+  Height = 547
+  Top = 153
+  Width = 687
+  Caption = 'ACBrSpedPisCofins - Demo'
+  ClientHeight = 547
+  ClientWidth = 687
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Position = poScreenCenter
+  LCLVersion = '1.3'
+  object Label2: TLabel
+    Left = 8
+    Height = 13
+    Top = 160
+    Width = 65
+    Caption = 'Lista de erros'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Height = 13
+    Top = 272
+    Width = 75
+    Caption = 'Arquivo Gerado'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object Label7: TLabel
+    Left = 24
+    Height = 13
+    Top = 507
+    Width = 63
+    Caption = 'Buffer Linhas'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object Label8: TLabel
+    Left = 128
+    Height = 13
+    Top = 507
+    Width = 61
+    Caption = 'Buffer Notas'
+    Color = clBtnFace
+    ParentColor = False
+    Transparent = False
+  end
+  object memoError: TMemo
+    Left = 8
+    Height = 83
+    Top = 177
+    Width = 641
+    Anchors = [akTop, akLeft, akRight]
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object memoTXT: TMemo
+    Left = 8
+    Height = 201
+    Top = 288
+    Width = 641
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 1
+    WantReturns = False
+    WordWrap = False
+  end
+  object btnError: TButton
+    Left = 395
+    Height = 25
+    Top = 519
+    Width = 100
+    Anchors = [akRight, akBottom]
+    Caption = 'Gerar TXT Error'
+    OnClick = btnErrorClick
+    TabOrder = 2
+  end
+  object btnTXT: TButton
+    Left = 521
+    Height = 25
+    Top = 519
+    Width = 100
+    Anchors = [akRight, akBottom]
+    Caption = 'Gerar TXT'
+    OnClick = btnTXTClick
+    TabOrder = 3
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 58
+    Top = 0
+    Width = 687
+    Align = alTop
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    ClientHeight = 54
+    ClientWidth = 683
+    TabOrder = 4
+    object Label1: TLabel
+      Left = 22
+      Height = 13
+      Top = 14
+      Width = 82
+      Caption = 'Nome do Arquivo'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object Label5: TLabel
+      Left = 0
+      Height = 16
+      Top = 0
+      Width = 683
+      Align = alTop
+      Alignment = taCenter
+      Caption = '1 - Informe o Nome do Arquivo e método de Geração'
+      Color = clBtnFace
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+    end
+    object Label6: TLabel
+      Left = 526
+      Height = 13
+      Top = 14
+      Width = 71
+      Caption = 'Num.Notas (C)'
+      Color = clBtnFace
+      ParentColor = False
+      Transparent = False
+    end
+    object edtFile: TEdit
+      Left = 22
+      Height = 21
+      Top = 28
+      Width = 200
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = edtFileChange
+      OnExit = edtFileChange
+      TabOrder = 0
+      Text = 'ACBrSpedPISCofins.txt'
+    end
+    object cbConcomitante: TCheckBox
+      Left = 246
+      Height = 19
+      Hint = 'Grava os Registros a medida que são alimentados '#13#10'Economizando memória. '#13#10'Útil para evitar erros em arquivos Enormes'
+      Top = 30
+      Width = 134
+      Anchors = [akTop, akRight]
+      Caption = 'Gerar Concomitante'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      OnClick = cbConcomitanteClick
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+    end
+    object edNotas: TEdit
+      Left = 526
+      Height = 21
+      Top = 28
+      Width = 80
+      TabOrder = 2
+      Text = '5'
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 87
+    Top = 58
+    Width = 687
+    Align = alTop
+    BevelOuter = bvNone
+    BorderWidth = 1
+    BorderStyle = bsSingle
+    ClientHeight = 83
+    ClientWidth = 683
+    TabOrder = 5
+    object Label4: TLabel
+      Left = 1
+      Height = 16
+      Top = 1
+      Width = 681
+      Align = alTop
+      Alignment = taCenter
+      Caption = '2 - Clique em cada botão dos Blocos e em seguida no botão Gerar TXT'
+      Color = clBtnFace
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+    end
+    object btnB_0: TButton
+      Left = 23
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco 0'
+      OnClick = btnB_0Click
+      TabOrder = 0
+    end
+    object btnB_1: TButton
+      Left = 541
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco 1'
+      OnClick = btnB_1Click
+      TabOrder = 1
+    end
+    object btnB_C: TButton
+      Left = 153
+      Height = 25
+      Top = 51
+      Width = 60
+      Caption = 'Bloco C'
+      OnClick = btnB_CClick
+      TabOrder = 3
+    end
+    object btnB_D: TButton
+      Left = 216
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco D'
+      OnClick = btnB_DClick
+      TabOrder = 4
+    end
+    object btnB_A: TButton
+      Left = 88
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco A'
+      OnClick = btnB_AClick
+      TabOrder = 2
+    end
+    object btnB_F: TButton
+      Left = 281
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco F'
+      OnClick = btnB_FClick
+      TabOrder = 5
+    end
+    object btnB_M: TButton
+      Left = 476
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco M'
+      OnClick = btnB_MClick
+      TabOrder = 6
+    end
+    object btnVariosBlocos: TButton
+      Left = 22
+      Height = 25
+      Hint = 'Gera o arquivo com os bloco 0,1,A,C,9'
+      Top = 20
+      Width = 584
+      Caption = 'Todos os Blocos'
+      OnClick = btnVariosBlocosClick
+      TabOrder = 7
+    end
+    object btnB_I: TButton
+      Left = 346
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco I'
+      OnClick = btnB_IClick
+      TabOrder = 8
+    end
+    object btnB_P: TButton
+      Left = 411
+      Height = 25
+      Top = 51
+      Width = 62
+      Caption = 'Bloco P'
+      OnClick = btnB_PClick
+      TabOrder = 9
+    end
+  end
+  object btnB_9: TButton
+    Left = 272
+    Height = 25
+    Top = 519
+    Width = 100
+    Anchors = [akRight, akBottom]
+    Caption = 'Gravar Bloco 9'
+    Enabled = False
+    OnClick = btnB_9Click
+    TabOrder = 6
+  end
+  object edBufLinhas: TEdit
+    Left = 16
+    Height = 21
+    Top = 521
+    Width = 80
+    TabOrder = 7
+    Text = '1000'
+  end
+  object edBufNotas: TEdit
+    Left = 128
+    Height = 21
+    Top = 521
+    Width = 80
+    Enabled = False
+    TabOrder = 8
+    Text = '1000'
+  end
+  object ProgressBar1: TProgressBar
+    Left = 199
+    Height = 20
+    Top = 151
+    Width = 348
+    TabOrder = 9
+    Visible = False
+  end
+  object ACBrSPEDPisCofins1: TACBrSPEDPisCofins
+    Path = '.\'
+    Arquivo = 'ACBrSPEDPisCofins.txt'
+    Delimitador = '|'
+    TrimString = True
+    CurMascara = '#0.00'
+    OnError = ACBrSPEDPisCofins1Error
+    left = 352
+    top = 248
+  end
+end

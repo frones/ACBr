@@ -1,0 +1,291 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrNFSe                                                 }
+{  Biblioteca multiplataforma de componentes Delphi                            }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
+unit pnfsSubsNfseResposta;
+
+interface
+
+uses
+  SysUtils, Classes, Forms, 
+  pcnAuxiliar, pcnConversao, pcnLeitor,
+  pnfsConversao, pnfsNFSe, ACBrNFSeUtil;
+
+type
+
+ TMsgRetornoSubsCollection = class;
+ TMsgRetornoSubsCollectionItem = class;
+ TNotaSubstituidoraCollection = class;
+ TNotaSubstituidoraCollectionItem = class;
+
+ TretSubsNFSe = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    FMsgRetorno: TMsgRetornoSubsCollection;
+    FNotaSubstituidora: TNotaSubstituidoraCollection;
+    procedure SetMsgRetorno(const Value: TMsgRetornoSubsCollection);
+    procedure SetNotaSubstituidora(
+      const Value: TNotaSubstituidoraCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function LerXml: boolean;
+    function LerXml_provedorIssDsf: boolean;
+    function LerXML_provedorEquiplano: Boolean;
+  published
+    property Leitor: TLeitor   read FLeitor   write FLeitor;
+    property MsgRetorno: TMsgRetornoSubsCollection read FMsgRetorno write SetMsgRetorno;
+    property NotaSubstituidora: TNotaSubstituidoraCollection read FNotaSubstituidora write SetNotaSubstituidora;
+  end;
+
+ TMsgRetornoSubsCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TMsgRetornoSubsCollectionItem;
+    procedure SetItem(Index: Integer; Value: TMsgRetornoSubsCollectionItem);
+  public
+    constructor Create(AOwner: TretSubsNFSe);
+    function Add: TMsgRetornoSubsCollectionItem;
+    property Items[Index: Integer]: TMsgRetornoSubsCollectionItem read GetItem write SetItem; default;
+  end;
+
+ TMsgRetornoSubsCollectionItem = class(TCollectionItem)
+  private
+    FCodigo : String;
+    FMensagem : String;
+    FCorrecao : String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property Codigo: string   read FCodigo   write FCodigo;
+    property Mensagem: string read FMensagem write FMensagem;
+    property Correcao: string read FCorrecao write FCorrecao;
+  end;
+
+ TNotaSubstituidoraCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TNotaSubstituidoraCollectionItem;
+    procedure SetItem(Index: Integer; Value: TNotaSubstituidoraCollectionItem);
+  public
+    constructor Create(AOwner: TretSubsNFSe);
+    function Add: TNotaSubstituidoraCollectionItem;
+    property Items[Index: Integer]: TNotaSubstituidoraCollectionItem read GetItem write SetItem; default;
+  end;
+
+ TNotaSubstituidoraCollectionItem = class(TCollectionItem)
+  private
+    FNumeroNota : String;
+    FCodigoVerficacao : String;
+    FInscricaoMunicipalPrestador : String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property NumeroNota: string read FNumeroNota  write FNumeroNota;
+    property CodigoVerficacao: string read FCodigoVerficacao write FCodigoVerficacao;
+    property InscricaoMunicipalPrestador: string read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
+  end;
+
+implementation
+
+{ TMsgRetornoSubsCollection }
+
+function TMsgRetornoSubsCollection.Add: TMsgRetornoSubsCollectionItem;
+begin
+  Result := TMsgRetornoSubsCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TMsgRetornoSubsCollection.Create(AOwner: TretSubsNFSe);
+begin
+  inherited Create(TMsgRetornoSubsCollectionItem);
+end;
+
+function TMsgRetornoSubsCollection.GetItem(
+  Index: Integer): TMsgRetornoSubsCollectionItem;
+begin
+  Result := TMsgRetornoSubsCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TMsgRetornoSubsCollection.SetItem(Index: Integer;
+  Value: TMsgRetornoSubsCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TMsgRetornoSubsCollectionItem }
+
+constructor TMsgRetornoSubsCollectionItem.Create;
+begin
+
+end;
+
+destructor TMsgRetornoSubsCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TNotaSubstituidoraCollection }
+
+function TNotaSubstituidoraCollection.Add: TNotaSubstituidoraCollectionItem;
+begin
+  Result := TNotaSubstituidoraCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TNotaSubstituidoraCollection.Create(AOwner: TretSubsNFSe);
+begin
+  inherited Create(TNotaSubstituidoraCollectionItem);
+end;
+
+function TNotaSubstituidoraCollection.GetItem(
+  Index: Integer): TNotaSubstituidoraCollectionItem;
+begin
+  Result := TNotaSubstituidoraCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TNotaSubstituidoraCollection.SetItem(Index: Integer;
+  Value: TNotaSubstituidoraCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TNotaSubstituidoraCollectionItem }
+
+constructor TNotaSubstituidoraCollectionItem.Create;
+begin
+
+end;
+
+destructor TNotaSubstituidoraCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TretSubsNFSe }
+
+constructor TretSubsNFSe.Create;
+begin
+  FLeitor  := TLeitor.Create;
+  FMsgRetorno := TMsgRetornoSubsCollection.Create(Self);
+  FNotaSubstituidora := TNotaSubstituidoraCollection.Create(Self);
+end;
+
+destructor TretSubsNFSe.Destroy;
+begin
+  FLeitor.Free;
+  FMsgRetorno.Free;
+  FNotaSubstituidora.Free;
+  inherited;
+end;
+
+function TretSubsNFSe.LerXml: boolean;
+var
+  i: Integer;
+begin
+  result := True;
+
+  try
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if (leitor.rExtrai(1, 'SubstituirNfseResposta') <> '') then
+      begin
+        if (leitor.rExtrai(2, 'RetSubstituicao') <> '') then
+        begin
+          if (leitor.rExtrai(2, 'NfseSubstituidora') <> '') then
+          begin
+           // contem a nova NFS-e.
+           // Falta implementar
+          end;
+        end;
+        if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') then
+        begin
+          i := 0;
+          while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
+          begin
+            FMsgRetorno.Add;
+            FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+            FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+            inc(i);
+          end;
+        end;
+
+        if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then
+        begin
+          FMsgRetorno.Add;
+          FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+          FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+        end;
+
+      end;
+
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+     begin
+       FMsgRetorno.Add;
+       FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+       FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+       FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
+
+  except
+    result := False;
+  end;
+end;
+
+procedure TretSubsNFSe.SetMsgRetorno(const Value: TMsgRetornoSubsCollection);
+begin
+  FMsgRetorno := Value;
+end;
+
+procedure TretSubsNFSe.SetNotaSubstituidora(const Value: TNotaSubstituidoraCollection);
+begin
+  FNotaSubstituidora := Value;
+end;
+
+function TretSubsNFSe.LerXml_provedorIssDsf: boolean; //falta homologar
+begin
+  result := False;
+end;
+
+function TretSubsNFSe.LerXML_provedorEquiplano: Boolean;
+begin
+  result := False;
+end;
+
+end.
+

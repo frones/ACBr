@@ -1,0 +1,77 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 309
+  Height = 407
+  Top = 165
+  Width = 619
+  BorderStyle = bsDialog
+  Caption = 'Demo ACBrSuframa'
+  ClientHeight = 407
+  ClientWidth = 619
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.3'
+  object Label1: TLabel
+    Left = 8
+    Height = 13
+    Top = 8
+    Width = 37
+    Caption = 'Número'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 135
+    Height = 13
+    Top = 8
+    Width = 25
+    Caption = 'CNPJ'
+    ParentColor = False
+  end
+  object edtSuframa: TEdit
+    Left = 8
+    Height = 21
+    Top = 24
+    Width = 121
+    TabOrder = 0
+    Text = 'edtSuframa'
+  end
+  object btnConsultar: TButton
+    Left = 304
+    Height = 25
+    Top = 22
+    Width = 92
+    Caption = 'Consultar'
+    OnClick = btnConsultarClick
+    TabOrder = 2
+  end
+  object memResposta: TMemo
+    Left = 8
+    Height = 346
+    Top = 53
+    Width = 603
+    Lines.Strings = (
+      'memResposta'
+    )
+    ReadOnly = True
+    ScrollBars = ssBoth
+    TabOrder = 3
+    TabStop = False
+  end
+  object edtCnpj: TEdit
+    Left = 135
+    Height = 21
+    Top = 24
+    Width = 163
+    TabOrder = 1
+    Text = 'edtCnpj'
+  end
+  object ACBrSuframa1: TACBrSuframa
+    ProxyPort = '8080'
+    ParseText = True
+    left = 148
+    top = 69
+  end
+end

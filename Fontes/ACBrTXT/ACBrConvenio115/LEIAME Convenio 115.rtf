@@ -1,0 +1,88 @@
+{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Calibri;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sl276\slmult1\qj\lang22\f0\fs22 Disponibilizado por \i Cleber C. Ferreira\b\i0\par
+\par
+1 \f1\endash  O que contempla o Conv\f0\'eanio 115/03?\par
+\b0  \par
+                Trata da forma de emiss\'e3o, escritura\'e7\'e3o, apresenta\'e7\'e3o e guarda dos documentos fiscais, abrangendo os seguintes documentos fiscais:\par
+ \par
+- Nota Fiscal/Conta de Energia El\'e9trica (modelo 6);\par
+- Nota Fiscal de Servi\'e7o de Comunica\'e7\'e3o (modelo 21);\par
+- Nota Fiscal de Servi\'e7o de Telecomunica\'e7\'f5es (modelo 22).\par
+ \par
+\b 2 \f1\endash  Como se d\f0\'e1 emiss\'e3o desses documentos?\par
+\b0  \par
+                Ao contr\'e1rio do que muitos pensam, a sistem\'e1tica de emiss\'e3o dos documentos citados na quest\'e3o anterior em nada se assemelha \'e0 NF-e, CT-e ou NFS-e. Sendo assim n\'e3o h\'e1 uma transmiss\'e3o pr\'e9via e posterior emiss\'e3o de uma autoriza\'e7\'e3o no momento de sua emiss\'e3o.\par
+Trata-se portanto de uma emiss\'e3o realizada atrav\'e9s de aplicativo PED (Processamento Eletr\'f4nico de Dados). Nesse modelo, o aplicativo deve guardar as informa\'e7\'f5es (assinante, totais, impostos a recolher) assim como era feito com as antigas NF modelo 1 e, para posterior apresenta\'e7\'e3o ao Fisco.\par
+ \par
+\b 3 \f1\endash  Quanto \f0\'e0 numera\'e7\'e3o e serializa\'e7\'e3o das Notas Fiscais\par
+\b0                \par
+                A numera\'e7\'e3o ocorre em ordem crescente iniciando em 000.000.001 e finalizando em 999.999.999. Ao alcan\'e7ar o limite m\'e1ximo, a s\'e9rie dever\'e1 ser incrementada e a numera\'e7\'e3o reiniciada. Em se tratando de s\'e9rie \'fanica utilizar a letra \ldblquote U\rdblquote .\par
+                Lembrando que, a cada per\'edodo de apura\'e7\'e3o (mensal por exemplo) a numera\'e7\'e3o ser\'e1 novamente reiniciada.\par
+ \par
+\b 4 \f1\endash  E quanto \f0\'e0 impress\'e3o da Nota Fiscal?\b0\par
+               \par
+                Se olharmos bem grandes empresas do ramo (Vivo, Oi, Sky, etc.), iremos notar que as informa\'e7\'f5es da Nota Fiscal s\'e3o representadas nas faturas emitidas.\par
+                N\'e3o h\'e1 um layout pr\'e9-definido no Conv\'eanio, por\'e9m no mesmo cita a import\'e2ncia de apresentar algumas informa\'e7\'f5es relevantes incluindo o c\'f3digo de autentica\'e7\'e3o MD-5.\par
+ \par
+\b 5 \f1\endash  E aquele c\f0\'f3digo MD-5 impresso em todas as faturas/contas que recebo?\par
+\b0                \par
+                O c\'f3digo MD-5 impresso no campo \lquote RESERVADO AO FISCO\rquote  \'e9 o que garante a autenticidade do documento fiscal. Sua impress\'e3o \'e9 obrigat\'f3ria e o espa\'e7o onde o mesmo \'e9 impresso tem que seguir um tamanho m\'ednimo.\par
+                Ele \'e9 composto pelas seguintes informa\'e7\'f5es:\par
+ \par
+- CPF/CNPJ do assinante;\par
+- N\'famero da Nota Fiscal;\par
+- Valor Total da Nota Fiscal;\par
+- Base de C\'e1lculo do ICMS;\par
+- Valor do ICMS;\par
+ \par
+                O pr\'f3prio componente ACBrConvenio115 imprime o MD-5 no momento de sua impress\'e3o exemplo.\par
+ \par
+\b 6 \f1\endash  Se n\f0\'e3o h\'e1 uma autoriza\'e7\'e3o pr\'e9via, qual a finalidade dos arquivos eletr\'f4nicos citados no Conv\'eanio?\par
+\b0                \par
+                Os arquivos nada mais s\'e3o que a escritura\'e7\'e3o de todos os documentos emitidos durante o per\'edodo de apura\'e7\'e3o (podendo variar de Estado e regime do emitente), assim como Sintegra e SPED.\par
+                Nesse momento que entra o componente ACBRConvenio115, pois atrav\'e9s dele que ser\'e3o gerados os arquivos eletr\'f4nicos citados no Conv\'eanio. Olhando o pr\'f3prio exemplo fica f\'e1cil entender como \'e9 realizada a carga do componente para gera\'e7\'e3o dos respectivos arquivos.\par
+                Abaixo segue os arquivos gerados pelo componente com exce\'e7\'e3o do \'faltimo citado:\par
+ \par
+- Mestre de Documento Fiscal: cont\'e9m informa\'e7\'f5es da nota como data de emiss\'e3o, s\'e9rie, n\'famero, CPF/CNPJ, totais, etc.;\par
+- Item de Documento Fiscal: cont\'e9m as informa\'e7\'f5es dos servi\'e7os prestados bem como sua tributa\'e7\'e3o e totais:\par
+- Dados Cadastrais do Destinat\'e1rio: armazena dados dos assinantes utilizados nas Notas Fiscais (nome/raz\'e3o, endere\'e7o, etc.);\par
+- Identifica\'e7\'e3o e Controle: \'e9 o resumo dos outros 3 arquivos gerados contendo totalizadores e somat\'f3ria dos documentos fiscais informados.\par
+ \par
+                Cada registro constante nos arquivos gerados possuem uma autentica\'e7\'e3o. Isso \'e9 que d\'e1 valor e garante a integridade dos dados informados.\par
+Importante dizer que o \'faltimo arquivo citado n\'e3o \'e9 gerado pelo componente ACBrConvenio115, sendo esta responsabilidade do programa validador ao qual devem ser submetidos os 3 primeiros arquivos para verifica\'e7\'e3o da consist\'eancia dos documentos informados.\par
+ \par
+\b 7 \f1\endash  Etapas para gera\f0\'e7\'e3o dos arquivos eletr\'f4nicos\par
+\b0  \par
+1. Gerar os 3 arquivos eletr\'f4nicos utilizando o componente ACBrConvenio115;\par
+2. Validar os arquivos gerados no Programa Validador v2.08. Se tudo estiver ok, o arquivo de Identifica\'e7\'e3o e Controle ser\'e1 gerado;\par
+3.\par
+       a ) Carregar os 4 arquivos eletr\'f4nicos para o programa Gera M\'eddia TED v2.08. Nesse momento, ser\'e1 necess\'e1ria a utiliza\'e7\'e3o do certificado digital do contribuinte para gera\'e7\'e3o da m\'eddia e assinatura de                autenticidade da mesma, ou;\par
+       b )  Emitir Recibo de Entrega gerado pelo programa Validador com base no arquivo de Identifica\'e7\'e3o e Controle.\par
+ \par
+\b 8 \f1\endash  Transmitindo ao Fisco\par
+\b0  \par
+                Atualmente h\f0\'e1 duas formas de enviar os arquivos gerados:\par
+ \par
+1.       Transmiss\'e3o eletr\'f4nica atrav\'e9s do programa TED. \'c9 isso mesmo. O TED \'e9 aquele programa atualmente utilizado para transmiss\'e3o do arquivo Sintegra. Para isto, basta carregar a m\'eddia gerada e assinada no programa Gera M\'eddia TED v2.08 e em seguida realizar a transmiss\'e3o;\par
+2.       Gravar em m\'eddia \'f3ptica n\'e3o regrav\'e1vel (CD-R ou DVD-R) devidamente identificada os 4 arquivos eletr\'f4nicos citados anteriormente juntamente com 2(duas) vias do Recibo de Entrega assinado pelo respons\'e1vel pelas informa\'e7\'f5es. Ap\'f3s isso enviar por correio \'e0 Secretaria de Fazenda ou ao \'f3rg\'e3o respons\'e1vel.\par
+ \par
+\b 9 \f1\endash  Guarda dos arquivos eletr\f0\'f4nicos\b0\par
+ \par
+                Todos os 4 arquivos gerados, inclusive a m\'eddia devidamente assinada dever\'e3o ser armazenados em m\'eddia \'f3ptica n\'e3o regrav\'e1vel (CD-R ou DVD-R) pelo prazo estipulado em lei que gira em torno de 5 anos.\par
+                Dever\'e1 ser utilizada uma m\'eddia \'f3ptica para cada per\'edodo de apura\'e7\'e3o e estas dever\'e3o ficar em poder do contribuinte. Pois, dentro desse per\'edodo de guarda os arquivos podem ser novamente requisitados pelo Fisco.\par
+                A m\'eddia dever\'e1 ser corretamente identificada da forma como consta no manual do Conv\'eanio 115/03\par
+ \par
+\b 10 \f1\endash  Prazo de entrega\par
+\b0  \par
+                De acordo com o Conv\f0\'eanio 115/03, o prazo para envio/entrega dos arquivos dever\'e1 ocorrer at\'e9 o 5\'ba dia \'fatil do per\'edodo subsequente, podendo variar de acordo com cada Estado. Ap\'f3s esse per\'edodo, o contribuinte poder\'e1 ser penalizado.\par
+ \par
+ \par
+Links:\par
+ \par
+- Conv\'eanio 115/03:\par
+\pard\sl240\slmult1\qj{\field{\*\fldinst{HYPERLINK "http://www1.fazenda.gov.br/confaz/confaz/convenios/ICMS/1998/..%5C2003%5CCV115_03.htm"}}{\fldrslt{\ul\cf1 http://www1.fazenda.gov.br/confaz/confaz/convenios/ICMS/1998/..%5C2003%5CCV115_03.htm}}}\f0\fs22  \par
+\pard\sl276\slmult1\qj - Downloads:\par
+{\field{\*\fldinst{HYPERLINK "http://www.fazenda.sp.gov.br/download/comunica_energia.shtm"}}{\fldrslt{\ul\cf1 http://www.fazenda.sp.gov.br/download/comunica_energia.shtm}}}\f0\fs22\par
+}
+ 

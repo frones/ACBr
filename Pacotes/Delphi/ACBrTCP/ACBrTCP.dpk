@@ -1,0 +1,57 @@
+package ACBrTCP;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  ACBrComum,
+  ACBrDiversos,
+  synapse;
+
+contains
+  ACBrSocket in '..\..\..\Fontes\ACBrTCP\ACBrSocket.pas',
+  ACBrCEP in '..\..\..\Fontes\ACBrTCP\ACBrCEP.pas',
+  ACBrTCPReg in '..\..\..\Fontes\ACBrTCP\ACBrTCPReg.pas',
+  ACBrIBGE in '..\..\..\Fontes\ACBrTCP\ACBrIBGE.pas',
+  ACBrCNIEE in '..\..\..\Fontes\ACBrTCP\ACBrCNIEE.pas',
+  ACBrSuframa in '..\..\..\Fontes\ACBrTCP\ACBrSuframa.pas',
+  ACBrDownload in '..\..\..\Fontes\ACBrTCP\ACBrDownload.pas',
+  ACBrDownloadClass in '..\..\..\Fontes\ACBrTCP\ACBrDownloadClass.pas',
+  ACBrFTPDownload in '..\..\..\Fontes\ACBrTCP\ACBrFTPDownload.pas',
+  ACBrHTTPDownload in '..\..\..\Fontes\ACBrTCP\ACBrHTTPDownload.pas',
+  ACBrIBPTax in '..\..\..\Fontes\ACBrTCP\ACBrIBPTax.pas',
+  ACBrConsultaCNPJ in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCNPJ.pas',
+  ACBrConsultaCPF in '..\..\..\Fontes\ACBrTCP\ACBrConsultaCPF.pas',
+  ACBrCotacao in '..\..\..\Fontes\ACBrTCP\ACBrCotacao.pas',
+  ACBrMail in '..\..\..\Fontes\ACBrTCP\ACBrMail.pas',
+  ACBrNFPws in '..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas',
+  ACBrSpedTabelas in '..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas',
+  ACBrSedex in '..\..\..\Fontes\ACBrTCP\ACBrSedex.pas',
+  ACBrNCMs in '..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas';
+
+end.
+

@@ -1,0 +1,88 @@
+object Form1: TForm1
+  Left = 238
+  Height = 260
+  Top = 163
+  Width = 759
+  Caption = 'Exemplo ACBrMail'
+  ClientHeight = 260
+  ClientWidth = 759
+  LCLVersion = '1.2.6.0'
+  object Button1: TButton
+    Left = 8
+    Height = 25
+    Top = 24
+    Width = 194
+    Caption = 'Enviar como HTML e com Anexo'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 8
+    Height = 25
+    Top = 64
+    Width = 194
+    Caption = 'Enviar Texto Puro'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object Memo1: TMemo
+    Left = 512
+    Height = 191
+    Top = 24
+    Width = 227
+    TabOrder = 2
+  end
+  object ProgressBar1: TProgressBar
+    Left = 213
+    Height = 20
+    Top = 224
+    Width = 534
+    Max = 11
+    Step = 1
+    TabOrder = 3
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 30
+    Top = 142
+    Width = 194
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Altere os parâmetros no código'#13#10'antes de fazer os envios.'
+    Font.Color = clRed
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Memo2: TMemo
+    Left = 213
+    Height = 160
+    Top = 56
+    Width = 286
+    Lines.Strings = (
+      'Linha 1'
+      'Linha 2'
+      '   Teste de e-mail'
+      'ÁÉÍÓÚçÇãÂ'
+    )
+    TabOrder = 4
+  end
+  object Edit1: TEdit
+    Left = 216
+    Height = 23
+    Top = 24
+    Width = 283
+    TabOrder = 5
+    Text = 'Teste de Envio ÁÉÍÓÚÇçáéíúó'
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    OnMailProcess = ACBrMail1MailProcess
+    left = 88
+    top = 192
+  end
+end

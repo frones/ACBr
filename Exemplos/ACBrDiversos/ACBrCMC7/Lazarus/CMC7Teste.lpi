@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <VersionInfo>
+      <Language Value=""/>
+      <CharSet Value=""/>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="3">
+      <Item1>
+        <PackageName Value="ACBrDiversos"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrSerial"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
+    </RequiredPackages>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="CMC7Teste.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CMC7Teste"/>
+        <UsageCount Value="25"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="cmc7teste1.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="CMC7Teste1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="2" Y="9"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="cmc7teste1.lfm"/>
+        <TopLine Value="118"/>
+        <CursorPos X="4" Y="145"/>
+        <SyntaxHighlighter Value="LFM"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <UnitName Value="ACBrCMC7"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="105"/>
+        <CursorPos X="1" Y="113"/>
+        <UsageCount Value="12"/>
+        <Bookmarks Count="1">
+          <Item0 X="28" Y="376" ID="1"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrDiversos-change-log.txt"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="86"/>
+        <CursorPos X="30" Y="93"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\fpc\2.6.0\source\packages\fcl-base\src\maskutils.pp"/>
+        <UnitName Value="maskutils"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="58"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="24" HistoryIndex="23">
+      <Position1>
+        <Filename Value="cmc7teste1.pas"/>
+        <Caret Line="67" Column="28" TopLine="58"/>
+      </Position1>
+      <Position2>
+        <Filename Value="cmc7teste1.pas"/>
+        <Caret Line="68" Column="28" TopLine="59"/>
+      </Position2>
+      <Position3>
+        <Filename Value="cmc7teste1.pas"/>
+        <Caret Line="67" Column="28" TopLine="58"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="97" Column="45" TopLine="87"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="73" Column="29" TopLine="58"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="97" Column="45" TopLine="80"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="261" Column="6" TopLine="244"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="349" Column="9" TopLine="332"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="103" Column="42" TopLine="93"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="122" Column="43" TopLine="122"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="72" Column="8" TopLine="54"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="167" Column="24" TopLine="157"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="386" Column="14" TopLine="371"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="387" Column="35" TopLine="374"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="379" Column="28" TopLine="367"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="276" Column="36" TopLine="272"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="73" Column="34" TopLine="63"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="276" Column="40" TopLine="265"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="353" Column="30" TopLine="340"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCMC7.pas"/>
+        <Caret Line="154" Column="15" TopLine="99"/>
+      </Position23>
+      <Position24>
+        <Filename Value="cmc7teste1.pas"/>
+        <Caret Line="73" Column="24" TopLine="56"/>
+      </Position24>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <SearchPaths>
+      <SrcPath Value="$(LazarusDir)\lcl;$(LazarusDir)\lcl\interfaces\$(LCLWidgetType)"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="ECodetoolError"/>
+      </Item1>
+      <Item2>
+        <Name Value="EFOpenError"/>
+      </Item2>
+      <Item3>
+        <Name Value="Exception"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+  <EditorMacros Count="0"/>
+</CONFIG>

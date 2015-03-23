@@ -1,0 +1,399 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************
+|* ACBr                                                                        
+|*                                                                        
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+15/03/2015
+-- ACBrMail --    (por: DSA)
+[+] Adicionada a propriedade IDECharset, que permite definir qual o CharSet usado
+    pela IDE para a composição da Mensagem.
+    Atua em conjunto com a propriedade DefaultCharset, que será o CharSet
+    utilizado no email. Se IDECharset for diferente de DefaultCharset será
+    efetuada conversão.
+[+] Adicionada a propriedade "UseThread", que permite definir o modo padrão de
+    envio em Segundo Plano
+[*] Métodos "AddAttachment" modificados para aceitar genérico "TStream"
+[*] Sobrecarga no método "Send", para permitir o envio usando o valor da ]
+    propriedade "UseThread"
+
+18/02/2015
+-- ACBrConsultaCNPJ --
+[*] Correção para consulta de CNPJ!
+    http://www.projetoacbr.com.br/forum/index.php?/topic/20046-corrigido-acbrconsultacnpj-para-p%C3%A1gina-nova/#entry127708
+
+07/02/2015
+-- ACBrConsultaCNPJ --
+[+] Adicionado suporte para leitura dos campos: EndEletronico, Telefone, EFR, 
+    MotivoSituacaoCad  (por: Eliomar0910)
+	http://www.projetoacbr.com.br/forum/index.php?/topic/11174-inclusão-de-3-campos-no-acbrconsultacnpj-e-inclusão-de-acbrtaxadolar/?p=126683
+
+02/01/2015
+-- ACBrIBGE --
+[+] Criado tipo EACBrIBGEException;
+[*] Modificação do Método BuscarPorNome, adicionado parâmetro 'ComparacaoCaseSensitive'
+    const ComparacaoCaseSensitive: Boolean = True
+    Se passado False, o método vai ignorar as diferenças entre maiúsculas e minúsculas 
+	ao fazer uma busca com o parâmetro Exata.
+    Se Exata = False, esse parâmetro é ignorado.
+[-] Correção no evento OnBuscaEfetuada, pois estava sendo chamado antes do componente
+    fazer a filtragem dos Municípios no método BuscarPorNome.
+    Veja: http://www.projetoacbr.com.br/forum/index.php?/topic/11214-codigo-ibge-no-acbrcep/
+
+-- ACBrCEP --
+[-] Busca no provedor correios não estava retornando os dados 
+    de ID do Municipio conforme eta esperado. 
+    Veja: http://www.projetoacbr.com.br/forum/index.php?/topic/19315-correção-acbribge
+
+03/12/2014
+-- ACBrIBPTax --
+[-] Acertos na validação da primeira linha do arquivo, onde ficam as informações gerais
+
+02/12/2014
+-- ACBrIBPTax --
+[-] Alterado ACBrIBPTax.pas para a nova versão de tabelas 14.2.b
+
+26/11/2014
+-- ACBrConsultaCPF --  (por: Gelson Borsoi)
+[*] Correções para suportar o novo mecanismo de Captcha.
+http://www.projetoacbr.com.br/forum/index.php?/topic/11761-consulta-de-cpf-receita-fazenda/?p=119135
+
+13/11/2014
+-- ACBrDownload -- por : Juliomar
+[-] Possível correção aplicada em função de relatos de erros!
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18339-erro-acbrdownload/
+	http://www.projetoacbr.com.br/forum/index.php?/topic/6228-acbrdownload/
+   
+12/11/2014
+-- ACBrConsultaCPF --  (por: DSA)
+[*] Correções para suportar o novo mecanismo de Captcha.
+[*] Correções nos Demos de Delphi e Lazarus para suportar a Imagem em PNG
+
+-- ACBrSocket --
+[*] Ajustes em HTTPPost() para evitar perda de caracteres no formulário de envio
+
+07/11/2014
+-- ACBrIBPTax --
+[*] alteração do componente ACBrIBPTax para ler as novas tabelas de imposto no cupom,
+    foi removida a coluna "fonte", aproveitai para tar um "tapa" no demo
+    por: regys silveira
+
+05/11/2014
+-- ACBrConsultaCNPJ --
+[*] Alterado o codigo CNAE2 para mostrar um ou mais CNAEs, algumas empresas possuem mais 
+    de um CNAE secundário. por (regys.silveira)
+
+27/10/2014
+-- ACBrIBPTax --
+[*] alteração do componente ACBrIBPTax para ler as novas tabelas de imposto no cupom
+    por: regys silveira
+
+21/20/2014
+-- ACBrNCMs
+[*] Aplicado correção na váriavel que não era inicializada e formatado o código conforme solicitado
+	por: Juliomar Marchetti
+	
+13/10/2014
+-- ACBrSocket --   (por: DSA)
+[+] Adicionada propriedade URL, que permite ler a URL final utilizada na consulta
+    ( a URL pode modificar, se a consulta retornar código de redirecionamento )
+
+-- ACBrConsultaCNPJ --   (por: DSA)
+[-] Correção de bug na identificação dos Valores da Resposta
+[-] Correção de Erro Index out of bound quando captcha estava errado
+http://www.projetoacbr.com.br/forum/index.php?/topic/17449-acbrcnpj-list-index-out-of-bounds-123
+[+] Adicionada verificação de CNPJ antes da Consulta
+
+-- ACBrConsultaCPF --   (por: DSA)
+[-] Correção de bug na identificação dos Valores da Resposta
+www.projetoacbr.com.br/forum/index.php?/topic/15715-erro-não-foi-possível-obter-os-dados-acbrconsultacpf/
+[+] Adicionada verificação de CPF antes da Consulta
+
+10/10/2014
+---ACBrNCMs -- 
+[+] Adicionando o componente ACBrNCMs (por: Datilas)
+http://www.projetoacbr.com.br/forum/index.php?/topic/17549-criar-componente-de-consulta-a-ncm-online/?p=109863
+[*] Alterado o local onde estava o pacote ACBrTCP.lpk para Lazarus seguindo o padrão já usado no Delphi
+
+28/09/2014
+-- ACBrSedex -- (por: DSA)
+[*] Propriedades "MaoPropria" e "AvisoRecebimento" modificadas para Boolean
+[*] Melhorias no tratamento de erro do método "Rastrear"
+[*] Melhorias para suportar UTF8 e Lazarus
+[*] Identação e limpeza de código
+[-] Ajuste para tratar corretamente Valores com Separador Decimal diferente de '.'
+
+12/09/2014
+-- ACBrSedex --
+[+] Adicionado componente ACBrSedex (por: Datilas)
+http://www.projetoacbr.com.br/forum/index.php?/topic/17388-correios-calculo-de-sedex-pac/
+
+18/07/2014
+-- ACBrMail --
+[+] Adicionado o método SendThread, para enviar e-mail por thread;
+http://www.projetoacbr.com.br/forum/index.php?/topic/
+16592-altera%C3%A7%C3%A3o-no-acbrmail-inclus%C3%A3o-de-thread-no-processo-de-envio/#entry103309
+
+04/04/2014
+-- ACBrSpedTabelas --
+[+] Doação do componente por (datilas)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/13345-novo-componete-acbrtabelassped/#entry80872
+[+] Ajuste para o padrão dos componentes do projeto ACBr
+    (por: Isaque Pinheiro/Juliomar Marchetti)
+
+27/01/2013
+-- ACBrCEP --
+[+] Adicionada a propriedade: PesquisarIBGE: Boolean, para permitir desativar
+    a busca do Cod.IBGE no WebServices dos Correios  (por: Jéter Rabelo)
+    www.projetoacbr.com.br/forum/index.php?/topic/13934-erro-500-acbribge/
+
+30/12/2013
+-- ACBrMail --
+[*] A procedure Clear agora é publica;
+[*] Agora, quando ocorre um erro durante o envio, a procedure Clear é chamada
+    antes da exceção ser disparada;
+[-] Corrigido bug que não enviava o Assunto do e-mail ao alterar o
+    DefaultCharset para um valor diferente de ISO_8859_1;
+    (Por: Jean Patrick)
+
+04/11/2013
+-- ACBrMail --
+[-] Corrigido bug em charset's ao usar letras acentuadas nas mensagens
+    (Por: Jean Patrick)
+
+23/10/2013
+-- ACBrMail --
+[*] Pequenos acertos no enviador de e-mails de exemplo    (Por: Jean Patrick)
+
+22/10/2013
+-- ACBrMail --
+[+] Criado um completo enviador de e-mails como exemplo de uso do componente
+    para Lazarus  (Por: Jean Patrick)
+
+11/10/2013
+-- ACBrMail --
+[+] Adicionado novo componente ACBrMail, que é um completo Cliente SMTP
+    (Por: Jean Patrick)
+[+] Criado simples exemplo de uso
+
+28/09/2013
+-- ACBrCNIEE --
+[*] Ajuste para método BuscarECF com o Parametro RemoveEspacos  (por: DSA)
+http://www.projetoacbr.com.br/forum/index.php?/topic/
+12384-corre%C3%A7%C3%A3o-na-fun%C3%A7%C3%A3o-buscarecf-no-acbrcniee/
+
+15/07/2013
+-- ACBrCotacao --
+[+] Adicionado componente ACBrCotacao responsável pela leitura da cotação de 
+    moedas atualizado via Banco Central do Brasil.
+    por: regys.silveira
+
+13/07/2013
+-- ACBrConsultaCNPJ --
+[+] Adicionada a leitura da informação "Natureza Juridica"  (por: DSA)
+
+-- ACBrCEP --
+[+] Adição do WebService DevMedia (por: marcelopomarolli)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/11375-consulta-de-cep-pela-devmedia/?p=67922
+
+09/07/2013
+-- ACBrIBGE --
+[*] Modificação do Método BuscarPorNome( const ACidade : String;
+    const AUF: String = ''; const Exata: Boolean = False ) : Integer ;
+    Se "AUF" for informado, retorna apenas as cidades do UF informada
+    Se Exata = True, retorna apenas a Cidade com nome idêntico ao informado em
+    "ACidade"      (por: DSA)
+
+08/07/2013
+-- ACBrCEP --
+[*] Correção na busca do código do IBGE, para wsCorreios, (por: Jeter Rabelo)
+
+05/07/2013
+-- ACBrCEP, wsCorrreios --
+[*] Melhorado o interpretador de retorno do Correios, Refactoring de rotinas (por: DSA)
+[+] Adicionada integração com ACBrIBGE, na consulta dos Correios      (por: DSA)
+[*] Corrigido problemas na Busca por Logradouro com acentuação        (por: DSA)
+
+04/07/2013
+-- ACBrConsultaCNPJ --
+[*] Refactoring, substituindo alguns métodos que a classe (ACBrSocket) já possui...
+[-] Correção para compatibilizar com Linux, não funcionava devido a problemas de
+    conversão de UTF8 e Ansi.
+[*] Otimização da rotina que captura os campos do HTML.
+[+] Implemetada Leitura do CNAE Principal e CNAE Secundário
+[*] Campos do tipo Data modificados para TDateTime
+    (por: DSA)
+
+28/06/2013
+-- ACBrConsultaCNPJ --
+[*] Ajustes para compatibilizar o componente com Lazarus,
+[+] Adicionado Demo para Lazarus, migrado por: "Roberto Brandão"
+[*] Refactoring de funções que já existiam nos fontes do ACBr ou synapse:
+    HTTPEncode -> synacode.EncodeURLElement; PosEx -> strutils.PosEx
+    (por: DSA)
+
+17/06/2013
+-- ACBrConsultaCNPJ --
+[+] Adicionado parâmetro para limpeza de espaços duplos retornados nos campos 
+    da consulta.
+    pro: regys.silveira
+
+11/06/2013
+-- ACBrIBPTax --
+[+] Adicionado suporte ao tipo de tabela 2.
+[*] Acerto nos métodos de exportação.
+[+] Método de exportação agora aceita usar aspas duplas ou não para campos
+    por: regys.silveira
+
+10/06/2013
+-- ACBrIBPTax --
+[*] Acerto no componente para a nova versão da tabela ibpt (0.0.2).
+[*] Acerto na leitura do campo descrição para considerar somente o ';' 
+    como separador e sem gerar problemas com descrições que possuem o ';' 
+    dentro delas.
+[+] Adicionado evento para capturar erros de importação.
+    por: regys.silveira
+
+17/05/2013
+-- ACBrIBPTax --
+[+] Adicionada propriedade para informar o URL de onde o arquivo .csv vai ser 
+    baixado.
+    por: regys.silveira
+
+15/05/2013
+-- ACBrIBPTax --
+[+] Adicionado componente para baixar e manipular a tabela de impostos do IBPT
+    por: regys.silveira
+
+01/04/2013
+-- ACBrCEP --
+[*] Reformatação de Fontes na classe do provedor ByJG (por: DSA)
+
+23/03/2013
+-- ACBrCEP --
+[+] Adicionado suporte ao provedor ByJG (por: Rafael Dias)
+
+28/01/2013
+-- ACBrNFPws --
+[+] Adicionado componente para Enviar arquivos e Consultar status para o Nota
+    Fiscal Paulista (NFP)                         (por: DSA)
+[+] Adicionado Demo em Lazarus para o ACBrNFPws   (por: DSA)
+
+26/04/2012
+-- ACBrCEP --
+[+] Adicionado suporte ao provedor KingHost  (por: Sidnei alves)
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=14&t=8378
+
+13/09/2012
+-- ACBrSocket --
+[-] Corrigido Bug de perda de acentos em sistemas com Unicode na chamada da 
+    function ParseText      (por: DSA)
+
+14/08/2012
+-- ACBrCNIEE --
+[-] Correção feita por (Carlos do Nascimento Filho)
+
+08/05/2012
+-- ACBrCNIEE --
+[+] Acerto na busca de CNIEE (Regys Silveira)
+
+26/04/2012
+-- ACBrCEP --
+[+] Adicionado suporte ao provedor R&N Solucoes
+    http://djsystem.com.br/acbr/forum/viewtopic.php?f=14&t=5627
+
+06/03/2012
+-- ACBrCEP --
+[-] Removidas as aspas do retorno do CEPLivre (Regys Silveira)
+    http://djsystem.com.br/acbr/forum/viewtopic.php?f=14&t=3809
+
+01/03/2012
+-- ACBrSocket --
+[-] Corrigida interpretação do Retorno HTTP em UTF-8 para Delphi Ansi  (DSA)
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=14&t=3809
+
+11/11/2011
+-- ACBrCEP --
+[-] Acerto na busca de cep do CepLivre que mudou o endereço e passou a utilizar 
+    sistema de assinaturas. Agora é necessário utilizar uma chave para 
+    identificar o assinante.
+[+] Foi criada uma nova propriedade "ChaveAcesso" para guardar a chave de 
+    acesso utilizada pelo CEP Livre e o BuscaCEP.
+    (por: Régys Silveira)
+
+07/11/2011
+-- ACBrCEP --
+[-] Acerto da busca por CEP na República Virtual conforme post do fórum
+    http://djsystem.com.br/acbr/forum/viewtopic.php?f=14&t=3809
+
+30/10/2011
+-- ACBrDownload --
+[+] Liberado componente para download de arquivos
+    por: Isaque Pinheiro / Daniel Simões
+
+17/10/2011
+-- ACBrSocket --
+[+] Adicionado método post no TACBrHTTP.
+[+] Adicionada propriedade para controle de fazer o parse do retorno ou não
+    no TACBrHTTP.
+    por: Régys Silveira.
+
+-- ACBrSuframa --
+[+] Alterado ACBrSuframa para utilizar somente o OpenSSL para requisição.
+    por: Régys Silveira.
+
+13/10/2011
+-- ACBrSuframa --
+[+] Adicionado componente ACBrSuframa para consumir o webservice do suframa.
+    por: Régys Silveira.
+
+10/04/2011
+-- ACBrCNIEE --
+[+] Implementada a propriedade VersaoArquivo: String, que contem o Numero da
+    versão do aquivo no Site (no formato YYYYMMDD).  por: DSA
+
+07/04/2011
+-- ACBrCNIEE --
+[+] Liberados novos tipos de exportação para arquivo.
+[+] Método de busca do ECF, utiliza Marca, Modelo e versão do SB, retorn
+    classe com os dados do ECF.
+    por: Régys Silveira
+
+07/04/2011
+-- ACBrCNIEE --
+[+] Librado componente para download e leitura da tabela de CNIEE
+    por: Régys Silveira / Daniel Simões
+

@@ -1,0 +1,40 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TForm1','FORMDATA',[
+  'TPF0'#6'TForm1'#5'Form1'#4'Left'#3#193#1#6'Height'#3'M'#1#3'Top'#3#161#0#5'W'
+  +'idth'#3' '#1#18'HorzScrollBar.Page'#3''''#1#18'VertScrollBar.Page'#3'L'#1#19
+  +'VertScrollBar.Range'#2'C'#13'ActiveControl'#7#7'edtcmc7'#7'Caption'#6#8'ACB'
+  +'rCMC7'#12'ClientHeight'#3'M'#1#11'ClientWidth'#3' '#1#10'KeyPreview'#9#10'P'
+  +'arentFont'#9#10'LCLVersion'#6#3'1.1'#0#6'TLabel'#6'Label1'#4'Left'#2#8#6'He'
+  +'ight'#2#15#3'Top'#3#249#0#5'Width'#2'$'#7'Caption'#6#5'Comp.'#11'ParentColo'
+  +'r'#8#0#0#6'TLabel'#6'Label2'#4'Left'#2'?'#6'Height'#2#15#3'Top'#3#249#0#5'W'
+  +'idth'#2'!'#7'Caption'#6#5'Banco'#11'ParentColor'#8#0#0#6'TLabel'#6'Label3'#4
+  +'Left'#3#128#0#6'Height'#2#15#3'Top'#3#249#0#5'Width'#2'+'#7'Caption'#6#8'Ag'
+  +#195#170'ncia'#11'ParentColor'#8#0#0#6'TLabel'#6'Label4'#4'Left'#3#198#0#6'H'
+  +'eight'#2#15#3'Top'#3#249#0#5'Width'#2' '#7'Caption'#6#5'Conta'#11'ParentCol'
+  +'or'#8#0#0#6'TLabel'#6'Label5'#4'Left'#2#8#6'Height'#2#15#3'Top'#3'!'#1#5'Wi'
+  +'dth'#2':'#7'Caption'#6#10'N'#194#186' Cheque'#11'ParentColor'#8#0#0#6'TLabe'
+  +'l'#6'Label6'#4'Left'#3#138#0#6'Height'#2#15#3'Top'#3'!'#1#5'Width'#2':'#7'C'
+  +'aption'#6#13'Tipifica'#195#167#195#163'o'#11'ParentColor'#8#0#0#5'TEdit'#7
+  +'edtcmc7'#4'Left'#2#8#6'Height'#2#23#3'Top'#2#16#5'Width'#3#17#1#7'Anchors'
+  +#11#5'akTop'#6'akLeft'#7'akRight'#0#10'OnKeyPress'#7#15'edtcmc7KeyPress'#8'T'
+  +'abOrder'#2#0#0#0#7'TButton'#9'btnAtivar'#4'Left'#3#163#0#6'Height'#2#25#3'T'
+  +'op'#2'*'#5'Width'#2't'#7'Anchors'#11#5'akTop'#7'akRight'#0#25'BorderSpacing'
+  +'.InnerBorder'#2#4#7'Caption'#6#20'Ativar Leitor Serial'#7'OnClick'#7#14'btn'
+  +'AtivarClick'#8'TabOrder'#2#1#0#0#5'TMemo'#5'Memo1'#4'Left'#2#8#6'Height'#3
+  +#160#0#3'Top'#2'I'#5'Width'#3#15#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRigh'
+  +'t'#0#10'ScrollBars'#7#10'ssVertical'#8'TabOrder'#2#2#0#0#5'TEdit'#7'edtcomp'
+  +#4'Left'#2#8#6'Height'#2#23#3'Top'#3#9#1#5'Width'#2'1'#8'TabOrder'#2#3#0#0#5
+  +'TEdit'#8'edtbanco'#4'Left'#2'@'#6'Height'#2#23#3'Top'#3#9#1#5'Width'#2';'#8
+  +'TabOrder'#2#4#0#0#5'TEdit'#10'edtagencia'#4'Left'#3#131#0#6'Height'#2#23#3
+  +'Top'#3#9#1#5'Width'#2';'#8'TabOrder'#2#5#0#0#5'TEdit'#8'edtconta'#4'Left'#3
+  +#197#0#6'Height'#2#23#3'Top'#3#9#1#5'Width'#2'T'#8'TabOrder'#2#6#0#0#5'TEdit'
+  +#12'edtnumcheque'#4'Left'#2#8#6'Height'#2#23#3'Top'#3'1'#1#5'Width'#2'{'#8'T'
+  +'abOrder'#2#7#0#0#5'TEdit'#14'edttipificacao'#4'Left'#3#138#0#6'Height'#2#23
+  +#3'Top'#3'1'#1#5'Width'#2'B'#8'TabOrder'#2#8#0#0#7'TButton'#7'Button1'#4'Lef'
+  +'t'#3#213#0#6'Height'#2#25#3'Top'#3'-'#1#5'Width'#2'D'#25'BorderSpacing.Inne'
+  +'rBorder'#2#4#7'Caption'#6#10'Gerar CMC7'#7'OnClick'#7#12'Button1Click'#8'Ta'
+  +'bOrder'#2#9#0#0#8'TACBrLCB'#8'ACBrLCB1'#5'Porta'#6#4'COM1'#6'Sufixo'#6#3'#1'
+  +'3'#9'Intervalo'#3','#1#10'OnLeCodigo'#7#16'ACBrLCB1LeCodigo'#4'left'#2#8#3
+  +'top'#2'('#0#0#9'TACBrCMC7'#9'ACBrCMC71'#4'left'#2'('#3'top'#2'('#0#0#0
+]);

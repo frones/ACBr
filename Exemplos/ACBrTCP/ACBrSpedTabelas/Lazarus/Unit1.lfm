@@ -1,0 +1,239 @@
+object Form1: TForm1
+  Left = 386
+  Height = 511
+  Top = 194
+  Width = 784
+  Caption = 'Demo Tabelas Sped'
+  ClientHeight = 511
+  ClientWidth = 784
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.2.0.3'
+  object DBGrid1: TDBGrid
+    Left = 0
+    Height = 200
+    Top = 0
+    Width = 784
+    Align = alTop
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'Id'
+        FieldName = 'Id'
+      end    
+      item
+        Title.Caption = 'Versao'
+        FieldName = 'Versao'
+      end    
+      item
+        Title.Caption = 'Pacote'
+        Width = 294
+        FieldName = 'Pacote'
+      end    
+      item
+        Title.Caption = 'Tipo'
+        Width = 375
+        FieldName = 'Tipo'
+      end>
+    DataSource = DataSource1
+    TabOrder = 0
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+  end
+  object DBGrid2: TDBGrid
+    Left = 0
+    Height = 200
+    Top = 200
+    Width = 784
+    Align = alTop
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'Desc'
+        Width = 351
+        FieldName = 'Desc'
+      end    
+      item
+        Title.Caption = 'DtCriacao'
+        FieldName = 'DtCriacao'
+      end    
+      item
+        Title.Caption = 'DtVersao'
+        FieldName = 'DtVersao'
+      end    
+      item
+        Title.Caption = 'Hash'
+        Width = 263
+        FieldName = 'Hash'
+      end>
+    DataSource = DataSource1
+    TabOrder = 1
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 39
+    Top = 472
+    Width = 784
+    Align = alBottom
+    BevelInner = bvLowered
+    ClientHeight = 39
+    ClientWidth = 784
+    TabOrder = 2
+    object BtnListar: TBitBtn
+      Left = 40
+      Height = 25
+      Top = 5
+      Width = 161
+      Caption = 'Listar Tabelas'
+      OnClick = BtnListarClick
+      TabOrder = 0
+    end
+    object BtnDow: TBitBtn
+      Left = 288
+      Height = 25
+      Top = 5
+      Width = 161
+      Caption = 'Download Item Selecionado'
+      OnClick = BtnDowClick
+      TabOrder = 1
+    end
+    object BtnDowT: TBitBtn
+      Left = 588
+      Height = 25
+      Top = 5
+      Width = 161
+      Caption = 'Download Todos'
+      OnClick = BtnDowTClick
+      TabOrder = 2
+    end
+  end
+  object ComboBox1: TComboBox
+    Left = 40
+    Height = 21
+    Top = 440
+    Width = 164
+    ItemHeight = 13
+    TabOrder = 3
+    Text = 'ComboBox1'
+  end
+  object Label1: TLabel
+    Left = 40
+    Height = 13
+    Top = 424
+    Width = 77
+    Caption = 'Selecione o Tipo'
+    ParentColor = False
+  end
+  object BufDataset1: TBufDataset
+    FieldDefs = <>
+    left = 100
+    top = 40
+    object BufDataset1Id: TStringField
+      DisplayWidth = 5
+      FieldKind = fkData
+      FieldName = 'Id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object BufDataset1Versao: TStringField
+      DisplayWidth = 5
+      FieldKind = fkData
+      FieldName = 'Versao'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object BufDataset1Pacote: TStringField
+      DisplayWidth = 100
+      FieldKind = fkData
+      FieldName = 'Pacote'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object BufDataset1Tipo: TStringField
+      DisplayWidth = 100
+      FieldKind = fkData
+      FieldName = 'Tipo'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object BufDataset1Desc: TStringField
+      DisplayWidth = 200
+      FieldKind = fkData
+      FieldName = 'Desc'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+    object BufDataset1DtCriacao: TDateField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'DtCriacao'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object BufDataset1DtVersao: TDateField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'DtVersao'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object BufDataset1Hash: TStringField
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'Hash'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 50
+    end
+  end
+  object DataSource1: TDatasource
+    DataSet = BufDataset1
+    left = 170
+    top = 40
+  end
+  object ACBrSpedTabelas1: TACBrSpedTabelas
+    ProxyPort = '8080'
+    UrlConsulta = 'http://www.sped.fazenda.gov.br/spedtabelas/WsConsulta/WsConsulta.asmx/consultarVersoesTabelasExternas?codigoSistema='
+    DirDestino = '.\'
+    left = 282
+    top = 36
+  end
+end

@@ -1,0 +1,30 @@
+Hi,
+rounded rectangles really look good in reports!
+That's why I've written the QRRoundRect component for QuickReports.
+It should work well under Delphi 1, Delphi 2 and Delphi 3 -
+if not, please let me know.
+
+It's the FIRST component I have written, so I want to contribute
+it to the Delphi community. Delphi is such a GREAT development tool,
+and there are so many great people out there helping us all to achieve
+the results we need by donating their components for free ... this
+utility component is one of my reciprocal contributions for that.
+
+Since it's my first component, please tell me, how to get the 
+toolbar icon to show up correctly - I failed with that... :-)
+
+If you like, please visit our "DELPHI-BOX" website, one of the best
+starting points for Delphi programmers. It offers more than *1000*
+links and infos about and around Delphi!
+
+And if you are looking for a smart setup program that can create
+single-EXE-archives (and other types of very tiny distribution archives),
+which offer FULL setup functionality, but just require some KB's more
+than a regular ZIP file, we'd like to invite you to try INF-Tool, the
+INF setup generator. Available from our download page.
+__________________________________________________________________
+Visit http://www.Inner-Smile.com , home of:
+INF-Tool: the FREE alternative to overpriced, bloated setup builders
+Resource-Grabber: giving you 1000's of glyphs,images,icons,sounds..
+Richey's Delphi- & PHP-Box: 1000+ links and answers for developers
+One of the best starting points for Delphi & PHP developers worldwide.

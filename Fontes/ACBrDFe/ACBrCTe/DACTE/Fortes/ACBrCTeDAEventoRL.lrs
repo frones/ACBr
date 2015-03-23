@@ -1,0 +1,22 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TfrmCTeDAEventoRL','FORMDATA',[
+  'TPF0'#17'TfrmCTeDAEventoRL'#16'frmCTeDAEventoRL'#4'Left'#3'a'#1#6'Height'#3
+  +'e'#1#3'Top'#3#246#0#5'Width'#3'J'#3#7'Caption'#6#16'frmCTeDAEventoRL'#12'Cl'
+  +'ientHeight'#3'e'#1#11'ClientWidth'#3'J'#3#5'Color'#7#9'clBtnFace'#10'Font.C'
+  +'olor'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#13'MS Sans Se'
+  +'rif'#8'OnCreate'#7#10'FormCreate'#9'OnDestroy'#7#11'FormDestroy'#10'LCLVers'
+  +'ion'#6#3'1.3'#0#9'TRLReport'#11'RLCTeEvento'#4'Left'#2#2#6'Height'#3'c'#4#3
+  +'Top'#2#2#5'Width'#3#26#3#10'Font.Color'#7#12'clWindowText'#11'Font.Height'#2
+  +#243#9'Font.Name'#6#5'Arial'#18'Margins.LeftMargin'#5#0#0#0#0#0#0#0#224#1'@'
+  +#17'Margins.TopMargin'#5#0#0#0#0#0#0#0#224#1'@'#19'Margins.RightMargin'#5#0#0
+  +#0#0#0#0#0#224#1'@'#20'Margins.BottomMargin'#5#0#0#0#0#0#0#0#224#1'@'#15'Rea'
+  +'lBounds.Left'#5#0#0#0#0#0#0#0#0#0#0#14'RealBounds.Top'#5#0#0#0#0#0#0#0#0#0#0
+  +#16'RealBounds.Width'#5#0#0#0#0#0#0#0#0#0#0#17'RealBounds.Height'#5#0#0#0#0#0
+  +#0#0#0#0#0#12'ShowProgress'#8#0#0#12'TRLPDFFilter'#12'RLPDFFilter1'#20'Docum'
+  +'entInfo.Creator'#6'VFortesReport (Open Source) v3.24(B14)  \251 Copyright '
+  +#194#169' 1999-2008 Fortes Inform'#195#161'tica'#20'DocumentInfo.ModDate'#5#0
+  +#0#0#0#0#0#0#0#0#0#13'ViewerOptions'#11#0#12'FontEncoding'#7#12'feNoEncoding'
+  +#11'DisplayName'#6#13'Documento PDF'#4'left'#3'_'#1#3'top'#2''''#0#0#11'TDat'
+  +'asource'#11'Datasource1'#4'left'#3#0#1#3'top'#2'L'#0#0#0
+]);

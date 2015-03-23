@@ -1,0 +1,372 @@
+object Form1: TForm1
+  Left = 389
+  Height = 364
+  Top = 168
+  Width = 743
+  Caption = 'ACBrNFPws Demo'
+  ClientHeight = 364
+  ClientWidth = 743
+  OnCreate = FormCreate
+  LCLVersion = '1.1'
+  object Memo1: TMemo
+    Left = 0
+    Height = 180
+    Top = 184
+    Width = 743
+    Align = alClient
+    Lines.Strings = (
+      ''
+      'TESTE DO ACBrNFPws'
+    )
+    ScrollBars = ssBoth
+    TabOrder = 0
+    WordWrap = False
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 184
+    Top = 0
+    Width = 743
+    ActivePage = tsEnvio
+    Align = alTop
+    TabIndex = 1
+    TabOrder = 1
+    object tsConf: TTabSheet
+      Caption = 'Configuração'
+      ClientHeight = 156
+      ClientWidth = 735
+      object GroupBox1: TGroupBox
+        Left = 292
+        Height = 156
+        Top = 0
+        Width = 443
+        Align = alClient
+        Caption = 'Proxy'
+        ClientHeight = 138
+        ClientWidth = 439
+        TabOrder = 0
+        object Label2: TLabel
+          Left = 30
+          Height = 15
+          Top = 7
+          Width = 25
+          Caption = 'Host'
+          ParentColor = False
+        end
+        object edProxyHost: TEdit
+          Left = 30
+          Height = 23
+          Top = 23
+          Width = 154
+          TabOrder = 0
+        end
+        object Label3: TLabel
+          Left = 199
+          Height = 15
+          Top = 7
+          Width = 28
+          Caption = 'Porta'
+          ParentColor = False
+        end
+        object edProxyPort: TEdit
+          Left = 199
+          Height = 23
+          Top = 23
+          Width = 56
+          TabOrder = 1
+        end
+        object Label4: TLabel
+          Left = 30
+          Height = 15
+          Top = 55
+          Width = 40
+          Caption = 'Usuário'
+          ParentColor = False
+        end
+        object edProxyUser: TEdit
+          Left = 30
+          Height = 23
+          Top = 70
+          Width = 105
+          TabOrder = 2
+        end
+        object Label5: TLabel
+          Left = 150
+          Height = 15
+          Top = 55
+          Width = 32
+          Caption = 'Senha'
+          ParentColor = False
+        end
+        object edProxyPass: TEdit
+          Left = 150
+          Height = 23
+          Top = 70
+          Width = 105
+          TabOrder = 3
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 0
+        Height = 156
+        Top = 0
+        Width = 292
+        Align = alLeft
+        Caption = 'Dados do Usuário'
+        ClientHeight = 138
+        ClientWidth = 288
+        TabOrder = 1
+        object Label6: TLabel
+          Left = 18
+          Height = 15
+          Top = 8
+          Width = 40
+          Caption = 'Usuário'
+          ParentColor = False
+        end
+        object edUsuario: TEdit
+          Left = 18
+          Height = 23
+          Top = 23
+          Width = 105
+          TabOrder = 0
+        end
+        object Label7: TLabel
+          Left = 18
+          Height = 15
+          Top = 55
+          Width = 32
+          Caption = 'Senha'
+          ParentColor = False
+        end
+        object edSenha: TEdit
+          Left = 18
+          Height = 23
+          Top = 70
+          Width = 105
+          EchoMode = emPassword
+          PasswordChar = '*'
+          TabOrder = 1
+        end
+        object cbxTipoContr: TComboBox
+          Left = 152
+          Height = 23
+          Top = 70
+          Width = 110
+          ItemHeight = 15
+          ItemIndex = 0
+          Items.Strings = (
+            'nfpNenhum'
+            'nfpContribuinte'
+            'nfpContabilista'
+            'nfpConsumidor'
+          )
+          Style = csDropDownList
+          TabOrder = 2
+          Text = 'nfpNenhum'
+        end
+        object Label1: TLabel
+          Left = 152
+          Height = 15
+          Top = 55
+          Width = 110
+          Caption = 'Tipo de Contribuinte'
+          ParentColor = False
+        end
+        object edCNPJ: TEdit
+          Left = 152
+          Height = 23
+          Top = 23
+          Width = 110
+          TabOrder = 3
+        end
+        object Label8: TLabel
+          Left = 152
+          Height = 15
+          Top = 8
+          Width = 28
+          Caption = 'CNPJ'
+          ParentColor = False
+        end
+      end
+    end
+    object tsEnvio: TTabSheet
+      Caption = 'Enviar / Consultar'
+      ClientHeight = 156
+      ClientWidth = 735
+      object GroupBox3: TGroupBox
+        Left = 0
+        Height = 156
+        Top = 0
+        Width = 244
+        Align = alLeft
+        Caption = 'Consultar'
+        ClientHeight = 138
+        ClientWidth = 240
+        TabOrder = 0
+        object Label9: TLabel
+          Left = 26
+          Height = 15
+          Top = 24
+          Width = 52
+          Caption = 'Protocolo'
+          ParentColor = False
+        end
+        object edProtocolo: TEdit
+          Left = 26
+          Height = 23
+          Top = 39
+          Width = 185
+          TabOrder = 0
+        end
+        object btConsultar: TButton
+          AnchorSideLeft.Control = GroupBox3
+          AnchorSideLeft.Side = asrCenter
+          Left = 82
+          Height = 25
+          Top = 80
+          Width = 77
+          AutoSize = True
+          Caption = 'Consultar'
+          OnClick = btConsultarClick
+          TabOrder = 1
+        end
+      end
+      object GroupBox4: TGroupBox
+        Left = 244
+        Height = 156
+        Top = 0
+        Width = 491
+        Align = alClient
+        Caption = 'Enviar Arquivo'
+        ClientHeight = 138
+        ClientWidth = 487
+        TabOrder = 1
+        object Label10: TLabel
+          Left = 22
+          Height = 15
+          Top = 56
+          Width = 67
+          Caption = 'Observações'
+          ParentColor = False
+        end
+        object edObservacoes: TEdit
+          Left = 22
+          Height = 23
+          Top = 72
+          Width = 250
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 0
+        end
+        object btEnviar: TButton
+          AnchorSideLeft.Control = GroupBox4
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Side = asrCenter
+          Left = 214
+          Height = 25
+          Top = 104
+          Width = 58
+          Anchors = [akTop, akRight]
+          AutoSize = True
+          Caption = 'Enviar'
+          OnClick = btEnviarClick
+          TabOrder = 1
+        end
+        object edFileNameEdit: TFileNameEdit
+          Left = 22
+          Height = 23
+          Top = 24
+          Width = 232
+          FilterIndex = 0
+          HideDirectories = False
+          ButtonWidth = 23
+          NumGlyphs = 1
+          Anchors = [akTop, akLeft, akRight]
+          MaxLength = 0
+          TabOrder = 2
+        end
+        object Label11: TLabel
+          Left = 22
+          Height = 15
+          Top = 8
+          Width = 95
+          Caption = 'Nome do Arquivo'
+          ParentColor = False
+        end
+        object rgModo: TRadioGroup
+          Left = 295
+          Height = 95
+          Top = 0
+          Width = 80
+          Anchors = [akTop, akRight]
+          AutoFill = True
+          Caption = 'Modo'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.TopBottomSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 77
+          ClientWidth = 76
+          ItemIndex = 0
+          Items.Strings = (
+            'Teste'
+            'Normal'
+          )
+          TabOrder = 3
+        end
+        object rgDocto: TRadioGroup
+          Left = 391
+          Height = 95
+          Top = 0
+          Width = 80
+          Anchors = [akTop, akRight]
+          AutoFill = True
+          Caption = 'Docto'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.TopBottomSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 77
+          ClientWidth = 76
+          ItemIndex = 0
+          Items.Strings = (
+            'Cupom'
+            'NF mod1'
+          )
+          TabOrder = 4
+        end
+        object btEnviar1: TButton
+          AnchorSideLeft.Control = GroupBox4
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Side = asrCenter
+          Left = 22
+          Height = 25
+          Top = 104
+          Width = 121
+          Anchors = [akTop, akRight]
+          AutoSize = True
+          Caption = 'Enviar e Consultar'
+          OnClick = btEnviar1Click
+          TabOrder = 5
+        end
+      end
+    end
+  end
+  object ACBrNFPws1: TACBrNFPws
+    ProxyPort = '8080'
+    URL = 'https://www.nfp.fazenda.sp.gov.br/ws/arquivocf.asmx'
+    CategoriaUsuario = nfpNenhum
+    ModoTeste = True
+    TipoDocto = docCupomFiscal
+    left = 396
+    top = 212
+  end
+end

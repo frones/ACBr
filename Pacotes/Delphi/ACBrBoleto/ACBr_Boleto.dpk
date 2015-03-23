@@ -1,0 +1,54 @@
+package ACBr_Boleto;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Boleto - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  designide,
+  synapse,
+  ACBrDiversos,
+  ACBrComum;
+
+contains
+  ACBrBancoBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBradesco.pas',
+  ACBrBancoBrasil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas',
+  ACBrBoleto in '..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas',
+  ACBrBancoItau in '..\..\..\Fontes\ACBrBoleto\ACBrBancoItau.pas',
+  ACBrBancoSicredi in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSicredi.pas',
+  ACBrBancoCaixa in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCaixa.pas',
+  ACBrBancoBanrisul in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBanrisul.pas',
+  ACBrBancoBancoob in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBancoob.pas',
+  ACBrBancoMercantil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoMercantil.pas',
+  ACBrBancoSantander in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSantander.pas',
+  ACBrBancoCaixaSICOB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCaixaSICOB.pas',
+  ACBrBancoHSBC in '..\..\..\Fontes\ACBrBoleto\ACBrBancoHSBC.pas',
+  ACBrBancoBanestes in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBanestes.pas',
+  ACBrBancoNordeste in '..\..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas',
+  ACBrBancoBRB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas',
+  ACBrBancoBic in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBic.pas';
+
+end.

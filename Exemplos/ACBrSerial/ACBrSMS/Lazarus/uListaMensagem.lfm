@@ -1,0 +1,107 @@
+object frmListaMensagem: TfrmListaMensagem
+  Left = 244
+  Height = 450
+  Top = 206
+  Width = 790
+  BorderStyle = bsDialog
+  Caption = 'Lista de mensagens'
+  ClientHeight = 450
+  ClientWidth = 790
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  Position = poOwnerFormCenter
+  LCLVersion = '1.3'
+  object GroupBox4: TGroupBox
+    Left = 0
+    Height = 106
+    Top = 0
+    Width = 790
+    Align = alTop
+    ClientHeight = 88
+    ClientWidth = 786
+    TabOrder = 0
+    object btnListarMensagens: TButton
+      Left = 468
+      Height = 25
+      Top = 28
+      Width = 145
+      Caption = 'Listar mensagens'
+      OnClick = btnListarMensagensClick
+      TabOrder = 1
+    end
+    object rgdFiltroMsg: TRadioGroup
+      Left = 8
+      Height = 42
+      Top = 0
+      Width = 429
+      AutoFill = True
+      Caption = 'Filtro'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 3
+      ClientHeight = 24
+      ClientWidth = 425
+      Columns = 3
+      ItemIndex = 0
+      Items.Strings = (
+        'Todas'
+        'Somente lidas'
+        'Somente não lidas'
+      )
+      TabOrder = 0
+    end
+    object rdgBandeja: TRadioGroup
+      Left = 8
+      Height = 43
+      Top = 39
+      Width = 429
+      AutoFill = True
+      Caption = 'Bandeja'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 3
+      ClientHeight = 25
+      ClientWidth = 425
+      Columns = 3
+      ItemIndex = 0
+      Items.Strings = (
+        'Sincard 1'
+        'Sincard 2'
+      )
+      TabOrder = 2
+    end
+  end
+  object lstMensagens: TListView
+    Left = 0
+    Height = 344
+    Top = 106
+    Width = 790
+    Align = alClient
+    Columns = <    
+      item
+        Caption = 'Data/Hora'
+        Width = 150
+      end    
+      item
+        Caption = 'Número'
+        Width = 150
+      end    
+      item
+        Caption = 'Mensagem'
+        Width = 350
+      end>
+    TabOrder = 1
+    ViewStyle = vsReport
+  end
+end

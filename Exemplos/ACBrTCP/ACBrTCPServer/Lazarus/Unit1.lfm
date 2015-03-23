@@ -1,0 +1,216 @@
+object Form1: TForm1
+  Left = 247
+  Height = 347
+  Top = 165
+  Width = 430
+  Caption = 'ACBrTCPServer'
+  ClientHeight = 347
+  ClientWidth = 430
+  Constraints.MinHeight = 240
+  Constraints.MinWidth = 430
+  ParentFont = True
+  LCLVersion = '0.9.29'
+  object Panel1: TPanel
+    Left = 0
+    Height = 234
+    Top = 113
+    Width = 430
+    Align = alClient
+    ClientHeight = 234
+    ClientWidth = 430
+    TabOrder = 1
+    object Panel2: TPanel
+      Left = 1
+      Height = 232
+      Top = 1
+      Width = 233
+      Align = alClient
+      ClientHeight = 232
+      ClientWidth = 233
+      TabOrder = 0
+      object mOutput: TMemo
+        Left = 1
+        Height = 230
+        Top = 1
+        Width = 231
+        Align = alClient
+        Lines.Strings = (
+          'Conecte nesse servidor usando:'
+          ''
+          'telnet IP_dessa_maquina nPorta'
+          ''
+          'Exemplo:'
+          ''
+          'telnet localhost 3434'
+        )
+        TabOrder = 0
+      end
+    end
+    object Panel3: TPanel
+      Left = 234
+      Height = 232
+      Top = 1
+      Width = 195
+      Align = alRight
+      ClientHeight = 232
+      ClientWidth = 195
+      TabOrder = 1
+      object CheckListBox1: TCheckListBox
+        Left = 1
+        Height = 179
+        Top = 1
+        Width = 193
+        Align = alTop
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        ItemHeight = 0
+        TabOrder = 0
+      end
+      object Button1: TButton
+        Left = 12
+        Height = 27
+        Top = 193
+        Width = 75
+        Anchors = [akRight, akBottom]
+        Caption = 'Matar'
+        OnClick = Button1Click
+        TabOrder = 1
+      end
+      object bEnviar: TButton
+        Left = 104
+        Height = 27
+        Top = 193
+        Width = 75
+        Anchors = [akRight, akBottom]
+        Caption = 'Enviar Resp'
+        OnClick = bEnviarClick
+        TabOrder = 2
+      end
+    end
+  end
+  object Panel4: TPanel
+    Left = 0
+    Height = 113
+    Top = 0
+    Width = 430
+    Align = alTop
+    ClientHeight = 113
+    ClientWidth = 430
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 8
+      Height = 16
+      Top = 8
+      Width = 32
+      Caption = 'Porta:'
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 104
+      Height = 16
+      Top = 8
+      Width = 63
+      Caption = 'Terminador'
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 200
+      Height = 16
+      Top = 8
+      Width = 48
+      Caption = 'TimeOut'
+      ParentColor = False
+    end
+    object Label3: TLabel
+      Left = 315
+      Height = 16
+      Top = 89
+      Width = 55
+      Anchors = [akTop, akRight]
+      Caption = 'Conexões:'
+      ParentColor = False
+      OnClick = Label3Click
+    end
+    object lNConexoes: TLabel
+      Left = 379
+      Height = 16
+      Top = 89
+      Width = 22
+      Anchors = [akTop, akRight]
+      Caption = '000'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = Label3Click
+    end
+    object Label2: TLabel
+      Left = 9
+      Height = 16
+      Top = 56
+      Width = 51
+      Caption = 'Resposta:'
+      ParentColor = False
+    end
+    object edPorta: TEdit
+      Left = 8
+      Height = 23
+      Top = 24
+      Width = 73
+      TabOrder = 0
+      Text = '3434'
+    end
+    object edTerm: TEdit
+      Left = 104
+      Height = 23
+      Top = 24
+      Width = 73
+      TabOrder = 2
+      Text = '#13,#10'
+    end
+    object edTimeOut: TEdit
+      Left = 200
+      Height = 23
+      Top = 24
+      Width = 73
+      TabOrder = 5
+      Text = '10000'
+    end
+    object bDesativar: TButton
+      Left = 320
+      Height = 25
+      Top = 44
+      Width = 75
+      Caption = 'Desativar'
+      OnClick = bDesativarClick
+      TabOrder = 1
+    end
+    object bAtivar: TButton
+      Left = 320
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Ativar'
+      OnClick = bAtivarClick
+      TabOrder = 3
+    end
+    object edEnviar: TEdit
+      Left = 8
+      Height = 23
+      Top = 72
+      Width = 273
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 4
+      Text = 'OK'
+    end
+  end
+  object ACBrTCPServer1: TACBrTCPServer
+    IP = '0.0.0.0'
+    Port = '0'
+    TimeOut = 10000
+    Terminador = '#13,#10'
+    OnConecta = ACBrTCPServer1Conecta
+    OnDesConecta = ACBrTCPServer1DesConecta
+    OnRecebeDados = ACBrTCPServer1RecebeDados
+    left = 288
+    top = 32
+  end
+end

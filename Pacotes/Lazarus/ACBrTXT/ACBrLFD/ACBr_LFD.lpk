@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_LFD"/>
+    <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrLFD\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Livro Fiscal Digital - (http://www.projetoacbr.com.br/)"/>
+    <Files Count="32">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD3505.pas"/>
+        <UnitName Value="ACBrLFD3505"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDUtils.pas"/>
+        <UnitName Value="ACBrLFDUtils"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrLFD"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBlocos.pas"/>
+        <UnitName Value="ACBrLFDBlocos"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_0.pas"/>
+        <UnitName Value="ACBrLFDBloco_0"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_0_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_0_Class"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_8.pas"/>
+        <UnitName Value="ACBrLFDBloco_8"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_8_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_8_Class"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_9.pas"/>
+        <UnitName Value="ACBrLFDBloco_9"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_9_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_9_Class"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_A.pas"/>
+        <UnitName Value="ACBrLFDBloco_A"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_A_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_A_Class"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_B.pas"/>
+        <UnitName Value="ACBrLFDBloco_B"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_B_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_B_Class"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_C.pas"/>
+        <UnitName Value="ACBrLFDBloco_C"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_C_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_C_Class"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_D.pas"/>
+        <UnitName Value="ACBrLFDBloco_D"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_D_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_D_Class"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_E.pas"/>
+        <UnitName Value="ACBrLFDBloco_E"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_E_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_E_Class"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_H.pas"/>
+        <UnitName Value="ACBrLFDBloco_H"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_H_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_H_Class"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_I.pas"/>
+        <UnitName Value="ACBrLFDBloco_I"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_I_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_I_Class"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_J.pas"/>
+        <UnitName Value="ACBrLFDBloco_J"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_J_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_J_Class"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_K.pas"/>
+        <UnitName Value="ACBrLFDBloco_K"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_K_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_K_Class"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_L.pas"/>
+        <UnitName Value="ACBrLFDBloco_L"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_L_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_L_Class"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z.pas"/>
+        <UnitName Value="ACBrLFDBloco_Z"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z_Class.pas"/>
+        <UnitName Value="ACBrLFDBloco_Z_Class"/>
+      </Item32>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

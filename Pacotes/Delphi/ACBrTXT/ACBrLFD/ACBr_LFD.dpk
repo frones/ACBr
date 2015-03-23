@@ -1,0 +1,86 @@
+package ACBr_LFD;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Livro Fiscal Digital - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  ACBrTXTComum;
+
+contains
+  ACBrLFD in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD.pas',
+  ACBrLFD3505 in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD3505.pas',
+  ACBrLFDBloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_0.pas',
+  ACBrLFDBloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_0_Class.pas',
+  ACBrLFDBloco_0_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_0_Events.pas',
+  ACBrLFDBloco_8 in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_8.pas',
+  ACBrLFDBloco_8_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_8_Class.pas',
+  ACBrLFDBloco_8_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_8_Events.pas',
+  ACBrLFDBloco_9 in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_9.pas',
+  ACBrLFDBloco_9_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_9_Class.pas',
+  ACBrLFDBloco_9_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_9_Events.pas',
+  ACBrLFDBloco_A in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_A.pas',
+  ACBrLFDBloco_A_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_A_Class.pas',
+  ACBrLFDBloco_A_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_A_Events.pas',
+  ACBrLFDBloco_B in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_B.pas',
+  ACBrLFDBloco_B_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_B_Class.pas',
+  ACBrLFDBloco_B_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_B_Events.pas',
+  ACBrLFDBloco_C in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_C.pas',
+  ACBrLFDBloco_C_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_C_Class.pas',
+  ACBrLFDBloco_C_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_C_Events.pas',
+  ACBrLFDBloco_D in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_D.pas',
+  ACBrLFDBloco_D_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_D_Class.pas',
+  ACBrLFDBloco_D_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_D_Events.pas',
+  ACBrLFDBloco_E in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_E.pas',
+  ACBrLFDBloco_E_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_E_Class.pas',
+  ACBrLFDBloco_E_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_E_Events.pas',
+  ACBrLFDBloco_F in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_F.pas',
+  ACBrLFDBloco_F_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_F_Class.pas',
+  ACBrLFDBloco_F_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_F_Events.pas',
+  ACBrLFDBloco_G in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_G.pas',
+  ACBrLFDBloco_G_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_G_Class.pas',
+  ACBrLFDBloco_G_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_G_Events.pas',
+  ACBrLFDBloco_H in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_H.pas',
+  ACBrLFDBloco_H_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_H_Class.pas',
+  ACBrLFDBloco_H_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_H_Events.pas',
+  ACBrLFDBloco_I in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_I.pas',
+  ACBrLFDBloco_I_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_I_Class.pas',
+  ACBrLFDBloco_I_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_I_Events.pas',
+  ACBrLFDBloco_J in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_J.pas',
+  ACBrLFDBloco_J_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_J_Class.pas',
+  ACBrLFDBloco_J_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_J_Events.pas',
+  ACBrLFDBloco_K in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_K.pas',
+  ACBrLFDBloco_K_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_K_Class.pas',
+  ACBrLFDBloco_K_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_K_Events.pas',
+  ACBrLFDBloco_L in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_L.pas',
+  ACBrLFDBloco_L_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_L_Class.pas',
+  ACBrLFDBloco_L_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_L_Events.pas',
+  ACBrLFDBloco_Z in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z.pas',
+  ACBrLFDBloco_Z_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z_Class.pas',
+  ACBrLFDBloco_Z_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z_Events.pas',
+  ACBrLFDBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBlocos.pas',
+  ACBrLFDUtils in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDUtils.pas';
+
+end.

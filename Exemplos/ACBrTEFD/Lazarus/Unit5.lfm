@@ -1,0 +1,72 @@
+object Form5: TForm5
+  Left = 362
+  Height = 172
+  Top = 162
+  Width = 579
+  Caption = 'OnObtemCampo'
+  ClientHeight = 172
+  ClientWidth = 579
+  Font.Height = -19
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  LCLVersion = '0.9.29'
+  object Edit1: TEdit
+    Left = 32
+    Height = 33
+    Top = 72
+    Width = 513
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    OnKeyPress = Edit1KeyPress
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 100
+    Height = 35
+    Top = 119
+    Width = 70
+    Anchors = [akTop]
+    AutoSize = True
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object BitBtn2: TBitBtn
+    Left = 225
+    Height = 35
+    Top = 119
+    Width = 102
+    Anchors = [akTop]
+    AutoSize = True
+    Cancel = True
+    Caption = 'Cancel'
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 579
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 3
+  end
+  object BitBtn3: TBitBtn
+    Left = 386
+    Height = 35
+    Top = 120
+    Width = 88
+    Anchors = [akTop]
+    AutoSize = True
+    Caption = '&Retry'
+    Kind = bkRetry
+    ModalResult = 4
+    TabOrder = 4
+  end
+end

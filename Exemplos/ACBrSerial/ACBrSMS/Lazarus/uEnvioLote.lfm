@@ -1,0 +1,43 @@
+object frmEnvioLote: TfrmEnvioLote
+  Left = 261
+  Height = 310
+  Top = 253
+  Width = 645
+  BorderStyle = bsDialog
+  Caption = 'Envio de mensagens em lote'
+  ClientHeight = 310
+  ClientWidth = 645
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Position = poOwnerFormCenter
+  LCLVersion = '1.3'
+  object btnTrocarChip: TButton
+    Left = 431
+    Height = 25
+    Top = 277
+    Width = 100
+    Caption = 'Enviar'
+    OnClick = btnTrocarChipClick
+    TabOrder = 0
+  end
+  object btnCancelar: TButton
+    Left = 537
+    Height = 25
+    Top = 277
+    Width = 100
+    Cancel = True
+    Caption = 'Cancelar'
+    OnClick = btnCancelarClick
+    TabOrder = 1
+  end
+  object OpenDialog1: TOpenDialog
+    Title = 'Abrir arquivo'
+    DefaultExt = '.txt'
+    Filter = 'arquivos de texto delimitado|*.txt'
+    Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
+    left = 380
+    top = 100
+  end
+end

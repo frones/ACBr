@@ -1,0 +1,757 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Daniel Simões de Almeida - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrTEF
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+Data: 06/03/2014
+-- ACBrTEFDCliSiTEF --
+[*] Ajuste para não verificar se estado é pagamento nas consultas de CHQ, quando
+    ocorrem fora de Cupom Fiscal.
+    www.projetoacbr.com.br/forum/index.php?/topic/20302-função-consulta-cheque-sitef
+[+] Adicionada as propriedades DataHoraFiscal e DocumentoFiscal, para permitir
+    informar o mesmo valor quando se tratar de transações encadeadas
+
+Data: 20/09/2014  (por: DSA)
+-- ACBrTEFDCliSiTEF --
+[+] Adicionado suporte a propriedade "LogDebug", para gravar no Log todos os
+    retornos da CliSiTef
+[+] Adição de novas mensagens de erro, e modificação para a exibição das mesmas
+http://www.projetoacbr.com.br/forum/index.php?/topic/17301-tefdclisitef-avaliaerro/
+
+Data: 06/07/2014  (por: DSA)
+-- ACBrTEFDClass --
+[*] Modificada a mensagem de problema de comunicação com o ECF na leitura de
+    Estado, de acordo com Roteiro de Certificação da CERTIFIED
+
+Data: 04/07/2014  (por: DSA)
+-- ACBrTEFD --
+[*] Adicionado suporte a mensagem padrão quando há problemas com a comunicação
+    com o ECF, na Leitura do Estado do mesmo.    (por: DSA)
+[+] Adicionada a propriedade TACBrTEFDResp.digitado, que será "True" quando a
+    entrada do número do cartão for manual (suporte inicial apenas para SiTEF)
+
+Data: 11/06/2014  (por: DSA)
+-- ACBrTEFDClass --
+[+] Adicionada nova propriedade "LogDebug : Boolean = false".
+    Quando "True", irá gravar no Log todo o conteúdo dos arquivos de requisição
+    e resposta.
+[-] Correção de Bug no calculo da Via do Estabelecimento, de acordo com Fluxo do
+    Pay&Go
+
+Data: 10/06/2014  (por: DSA)
+-- ACBrTEFD --
+[+] Adicionada nova propriedade "EsperaMinimaMensagemFinal: Integer = 5"
+[+] Criado novo mecanismo em DoExibeMsg que permite especificar quais mensagens
+    devem permanecer na tela por pelo menos "EsperaMinimaMensagemFinal" segundos
+
+-- ACBrTEFDCliSiTEF --
+[*] Modificação para permitir o tratamento de Mensagens com o Tipo Definido.
+    Permitindo identificar quais mensagens devem persistir na tela por mais de
+    "EsperaMinimaMensagemFinal" segundos (Tipo = 5005).
+    IMPORTANTE: Para que essa funcionalidade seja ativada, é necessário modificar
+    a CliSiTef.ini, incluindo as linhas:
+    [Geral]
+    IdentificaMensagens=1
+
+Data: 28/05/2014
+[*] Ajuste solicitado pela Certified para exibição de multiplos NSU
+    www.projetoacbr.com.br/forum/index.php?showtopic=15632
+[*] Adicionada interface para método da CliSiTef "EnviaRecebeSiTefDireto"
+    (por: DSA)
+[*] Melhoria na gravação de caracteres especiais no LOG  (por: DSA)
+
+Data: 09/02/2014
+[-] Correção em TACBrTEFDArquivo.GravarArquivo, para criar corretamente os
+    arquivos em disco.                                       (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/14257-erro-ao-ativar-o-tefatv/
+
+Data: 04/01/2014 - 4.3.8
+-- ACBrTEFDClass --
+[*] Ajuste na interpretação do campo 710 com conteúdo zerado   (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/13679-adm-cancelamento/
+
+-- ACBrTEFDVeSPague --
+[*] Ajuste para interepretação da Resposta contendo um pulo de Linha no inicio
+    da String   (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/10926-problema-no-retorno-de-requisição-do-vpague
+
+Data: 04/12/2013 - 4.3.7
+-- ACBrTEFDClass --
+[*] Ajuste na função ConteudoToProperty() para preencher o campo DataPreDatado
+    nas operações com Débito Pré-Datado. (Juliana)
+
+Data:  19/08/2013 - 4.3.6
+-- ACBrTEFDClass --
+[*] Ajuste para retorno fora do padrão em Cancelamento de ADM no AMEX  (por:DSA)
+    www.projetoacbr.com.br/forum/index.php?showtopic=11915
+
+Data:  05/06/2013 - 4.3.5
+-- ACBrTEFD* --
+-- ACBrTEFDClass --
+[*] Adicionando as propriedades SuportaDesconto e SuportaSaque e 
+	alterado no metodo para verificar se existe o evento programado
+	para utilizar as propriedades (Por: Juliomar Marchetti e DSA)
+
+Data:  27/03/2013 - 4.3.4
+-- ACBrTEFD* --
+[*] Ajustes para compilação em modo CONSOLE  (Por: Juliana Tamizou e DSA)
+
+Data:  15/03/2013 - 4.3.3
+-- ACBrTEFDClass --
+[*] Removida verificação se limita a transação no mesmo valor do Saldo Restante
+    para o último cartão, quando for TEF dedicado, pois nos testes do TEF
+    dedicado, é permitido informar outra forma de pagamento mesmo após atingir o
+    número máximo de cartões.
+    Verificação permanece no caso de TEF derivado de TEF discado (por: DSA)
+
+Data:  11/03/2013 - 4.3.2
+-- ACBrTEFDCliSiTEF --
+[*] Envio da mensagem opmRemoverMsgOperador e opmRemoverMsgCliente no caso
+    de cancelamento de operações em OnObtemCampo  (por: DSA)
+
+Data:  08/03/2013 - 4.3.1
+-- ACBrTEFDClass --
+[-] Correção no metodo ConfirmarESolicitarImpressaoTransacoesPendentes,
+    utilizado pelos GPs CliSiTEF e VSPague. O metodo não fazia a chamada do
+    evento OnDepoisConfirmarTransacoes.   (por: DSA)
+
+Data:  24/01/2013 - 4.3.0
+-- ACBrTEFDConvCard --
+[+] Adicionada nova classe TEF ConvCard, (por: Marcio Batista)
+    http://www.projetoacbr.com.br/forum/index.php?/topic/8733-convcard/
+
+Data:  08/11/2012 - 4.2.3
+-- ACBrTEFD --
+[*] Modificação do método: FinalizarCupom, para:
+    FinalizarCupom( DesbloquearMouseTecladoNoTermino: Boolean = True);  (por:DSA)
+      Isso evita que o mouse e TEclado fiquem desbloqueado no pequeno intervalo
+    entre: FinalizarCupom e ImprimirTransacoesPendentes.
+[*] Inclusão de directivas de compilação para ACBrFramework (Por: Rafael Batiati)
+
+Data:  18/10/2012 - 4.2.2
+-- ACBrTEFDCliSitef --
+[*] Envio do Parametro Documento Vinculado em transações administrativas usando
+    HHMMSS e não um valor fixo.    (por: DSA)
+[-] Corrigido Bug introduzudo nas versões 3.3.0 e 4.2.1, que modificou o fluxo
+    de Impressão dos Comprovantes. Causando problemas na Confirmação de
+    transações ADM           (por: DSA)
+
+
+Data:  09/10/2012 - 4.2.1
+-- ACBrTEFDCliSitef --
+[-] Correção para Confirmar a transação de cancelamento mesmo quando ocorrer
+    falha de impressão
+[-] Correção para a re-impressão de apenas 2a via (do lojista)
+http://www.djsystem.com.br/acbr/forum/viewtopic.php?p=41140#p41140
+
+Data:  05/10/2012 - 4.2.0
+[+] Adicionada nova propriedade "TrocoMaximo: Double" valor Default 0, para
+    permitir o Troco em TEF conforme disposto no Requisito XIV, Item 4 do
+    PAF-ECF    (por: DSA)
+
+Data:  04/10/2012 - 4.1.7  (por: DSA)
+-- ACBrTEFDCliSitef --
+[*] Adicionado mapeamento para as propriedades: DataHoraTransacaoLocal,
+    DataHoraTransacaoCancelada, NSUTransacaoCancelada
+
+Data:  02/10/2012 - 4.1.6  (por: DSA)
+-- ACBrTEFDClass --
+[-] Correção no preenchimento de parcelas com valores inválidos, quando o G.P.
+    não as informa.   (por: DSA)
+
+Data:  19/09/2012 - 4.1.5  (por: DSA)
+-- ACBrTEFD --
+[-] Correção no algorítimo de ordenação do método: AgruparRespostasPendentes
+
+[*] Adicionada chamada a OnComandarECF( opeImprimePagamentos ) logo após a
+    execução do evento: OnComandaECFSubtotaliza, isso permite a aplicação
+    imprimir pagamentos em Dinheiro antes dos pagamentos do TEF.
+
+-- ACBrTEFDVeSPague --
+[-] Correção para correta exibição de mensagem no momento da Inicialização com
+    Transações pendentes a serem canceladas.
+
+Data:  06/09/2012 - 4.1.4
+-- ACBrTEFDClass --
+[*] Criado o tipo enumerado TACBrTEFDRespParceladoPor com os seguinte valores:
+    parcNenhum - Sem parcelamento, parcADM - Parcelado pela Administradora e 
+    parcLoja - Parcelado pela Loja, criado também a propriedade ParceladoPor
+    para armazenar esta informação. (Juliana Tamizou)
+[*] Criado o tipo enumerado TACBrTEFDRespTipoOperacao com os seguinte valores:
+    opOutras - Tipo Genérico, opAvista - Operação Avista, opParcelado - Operação 
+	Parcelada e opPreDatado - Operação Pré-Datada, criado também a propriedade 
+	TipoOperacao para armazenar esta informação. (Juliana Tamizou)
+[*]	Criadas as propriedade ValorEntradaCDC e DataEntradaCDC(atualmente essas
+    informações constam apenas no manual do Sitef). (Juliana Tamizou)
+[*]	Adicionado a função ConteudoToProperty a gravação das novas propriedades 
+    citadas acima. (Juliana Tamizou)
+[*]	Adicionado a verificação da propriedade Debito para ficar "TRUE" caso o campo
+    TipoTransacao seja igual a 40(Débito Parcelado CDC). (Juliana Tamizou)
+	
+-- ACBrTEFDCliSitef --
+[*]	Adicionado a função ConteudoToProperty a gravação das novas propriedades 
+    citadas acima. (Juliana Tamizou)
+[*]	Modificado forma de capturar as propriedades Credito e Debito, passado a 
+    utilizar  os 2 primeiros dígitos do campo 100.(Juliana Tamizou)
+[*]	Adicionado captura da quantidade de parcelas para operações de Débito
+    parcelado(CDC), esta informação está no campo 511.(Juliana Tamizou)
+
+Data:  04/09/2012 - 4.1.3
+-- ACBrTEFDClass --
+[*] Informando campo Moeda em CRT, CHQ e CNC, que agora são obrigatórios para
+    essas transações    (por: DSA)
+
+Data:  31/08/2012 - 4.1.2
+-- ACBrTEFDCliSitef --
+[+] Adicionada rotina de liberação das DLLs do CliSiTef32.dll (apesar de
+    aparentemente não estar funcionar adequadamente)           (por: DSA)
+
+Data:  31/08/2012 - 4.1.1
+-- ACBrTEFDClass --
+[-] Pequena correção para não exigir o retorno do novo tipo de Informação,
+    "ineTotalAPagar" pelo evento OnInfoECF, assumindo valor padrão igual a 0 
+    se nada for informado                  (por: DSA)
+
+Data:  31/08/2012 - 4.1.0
+-- ACBrTEFDCliSitef --
+[*] Método "ConfirmarEReimprimirTransacoesPendentes" movido para ACBrTEFDClass
+    como "ConfirmarESolicitarImpressaoTransacoesPendentes", para poder ser
+    utilizado em outras classes de TEF dedicado    (por: DSA)
+
+-- ACBrTEFDVeSPague --
+[+] Adicionado tratamento de Verificação de Transações Pendentes na Inicialização
+    aplicando a mesma lógica que a existente no ACBrTEFDCliSitef    (por: DSA)
+[+] Adicionado Suporte a Cielo Premia, coletando corretamente o Desconto a ser
+    utilizado no evento "OnComandaECFSubtotaliza"                   (por: DSA)
+
+
+Data:  31/08/2012 - 4.0.0
+-- ACBrTEFD --    (por: DSA)
+[*] Melhora no mecanismo de LOG do ACBrTEFD, adicionando a chamada e resposta do
+    evento OnInfoECF ao LOG
+[+] Adicionado nova operação para o Evento OnInfoECF, "ineTotalAPagar", que
+    permite a aplicação informar o total dos Pagamentos acumlados e não
+    impressos no ECF
+[+] Adicionado nova operação para o Evento OnComandaECF, "opeImprimePagamentos",
+    que deve ser tratada dentro do evento OnComandaECF (veja o exemplo no Demo)
+[*] Fluxo do método ACBrTEFD.FinalizarCupom modificado para chamar o evento
+    OnComandaECF( opeImprimePagamentos ) quando o SubTotal do ECF ainda não
+    estiver totalmente Pago (TotalPagoECF < SubTotalECF).
+       Isso permite a aplicação enviar as Formas de Pagamento que estejam
+    acumuladas pela aplicação, mas que não são do Tipo TEF (Ex: Dinheiro, Vale,
+    etc) permitindo assim, imprimi-las dentro da rotina de tratamento de erros
+    exigida pelos roteiros de homolgação TEF
+[*] TEFDDemo modificado para exemplificar funcionamento de pagamentos acumulados
+    pela aplicação
+
+
+Data:  27/08/2012 - 3.3.0
+-- ACBrTEFDCliSiTef --
+[*]  Modificação no fluxo de impressão de Relatórios administrativos. A versão
+    anterior imprimia o Relatório Gerencial logo após o SiTEF enviar a informação
+    dos Campos 121 (1a via) e 122 (2a via), dentro do Loop de chamadas a função
+    ContinuaFuncaoSiTefInterativo. Ou seja, a impressão ocorria antes mesmo de
+    ler todos os campos enviados pelo SiTEF, o que poderia causar problemas como
+    por exemplo não saber o NSU da transação no momento da Impressao, pois o
+    campo 134 (NSU), é enviado após o 121 e 122
+     O novo fluxo, lê todas as informações do SiTEF, e move os valores para as
+    propriedades internas do Objeto Resposta, e usa a rotina padrão de Impressão
+    da classe Mãe "ImprimirRelatorio", para a impressão de ADM...
+     Para voltar o modo de impressão antigo, modifique a constante:
+    CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante = True           (por: DSA)
+
+Data:  24/08/2012 - 3.2.0
+-- ACBrTEFD --
+[*] Ajustes nos fontes para o uso de constantes com as mensagens padrões (por: DSA)
+
+[*] Modificação no fluxo de transações de Multilplos Cartoes. Antes, o componente
+    já confirmava a transação (CNF) logo após o termino do CRT ou CHQ, caso
+    a propriedades MultiplosCartoes estivesse ativada... Isso poderia causar
+    problema quando necessário cancelar uma transação em aberto, e com alguns
+    cartões já aprovados.
+    O Novo fluxo só irá enviar a confirmação (CNF) para a transação anterior,
+    quando uma nova transação, para aquele mesmo G.P., for aberta     (por: DSA)
+
+Data:  20/08/2012
+-- ACBrTEFD 3.1 --
+[*] Adicionado tratamento para Impressão de via reduzida em CCD (campos 710 e
+    711). A opção por imprimir em CCD ao invez das linhas de Observação foi
+    utilizada, pois em aplicações PAF-ECF não há linhas restantes suficiente
+    para a impressão do comprovante...   (por: DSA)
+
+Data:  08/08/2012
+-- ACBrTEFD 3.0 --
+[+] Adicionada nova propriedade: CHQEmGerencial : Boolean, default False.
+    Quando a mesma for True, todos os comprovantes de Consulta de Cheque serão
+    impressos em Relatório Gerencial. No caso de multiplas transações no mesmo
+    Cupom, as consultas de CHQ serão Impressas após a impressão de todos os CDCs
+    (Vinculados). Atualmente os homologadores de PAF-ECF não permitem a impressão
+    de Consulta de Cheques em CDC (Vinculado)      (por: DSA)
+    www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&t=6043
+
+[+] Adicionada a propriedade: Identificacao : TACBrTEFDIdentificacao que contém:
+    NomeAplicacao, VersaoAplicacao, SoftwareHouse, RazaoSocial (todas String)
+    Serão utilizadas para o suporte a nova exigência do Cielo Premia.
+    É necessário o preenchimento dessas informações para que ocorra o retorno dos
+    novos campos, conforme descrito abaixo.      (por: DSA)
+
+-- ACBrTEFDClass --
+[*] Adicionado suporte aos novos campos retornados pelo novo G.P.
+    707-000=Valor Original, 708-000=Valor Saque, 709-000=Valor Desconto (por: DSA)
+
+[*] Adicionado suporte para os novas Vias de comprovante do Cliente (712 e 713)
+    e Estabelecimento (714 e 715).  (por: DSA)
+
+[*] Suporte a Descontos para suportar programa "Cielo Premia".       (por: DSA)
+    Para a ativar essa funcionalidade é necessário:
+    - Preencher as sub-propriedades de ACBrTEFD.Identificação
+    - Não usar ACBrTEFD.AutoEfetuarPagamento
+    - Programar o evento: ACBrTEFD.OnComandaECFSubtotaliza
+    - Não subtotalizar o Cupom Fiscal antes de chamar operações TEF
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&t=6677
+
+-- ACBrTEFDCliSiTef --
+[*] Suporte a Descontos para suportar programa "Cielo Premia"
+    Inicialização e transações CRT e CHQ modificadas para enviar informações
+    de suporte ao programa Cielo Premia    (por: DSA)
+[*] Adicionado tratamento para novo campo de Desconto (4029)   (por: DSA)
+[-] Corrigido Bug na gravação de Informações retornadas pelo SiTEF, com índice
+    maior do que 999 (o indice era truncado em 3 dígitos iniciais)  (por: DSA)
+
+Data:  22/06/2012
+-- ACBrTEFDCliSiTef --
+[*] Ajuste na exibição da Mensagem do Operador e Usuário (campos 1,2 e 3) para
+    suportar a quebra de linha com '@' ou '/n' introduzida no teste 58  (por:DSA)
+
+Data:  23/05/2012
+-- ACBrTEFDClass --
+[*] Transação CNC modificada para informar TipoPessoa apenas se o mesmo existir
+    (por: MarcioDC)
+
+Data:  04/04/2012
+-- ACBrTEFDAuttar --
+[-] TEF Auttar deve emitir msg de Desfazimento apenas no Final de todas
+    transações  (por: Juliomar Marchetti)
+
+-- ACBrTEFDVeSPague --
+[-] Modicada assinatura do Evento OnObtemCampo, para usar String ao invez de
+    AnsiString no parâmetro var Resposta. (por: Giuliano Naspolini Ribeiro)
+
+Data:  01/03/2012  = Ver: 2.00
+-- ACBrTEFD --
+[+] Adicionado suporte a diversos novos Gerenciadores.
+    GoodCard, FoxWin (Sorocred), DTEF (Direçao), PetroCard, CrediShop, TicketCar
+    (Por Marcio D.Carvalho)
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&t=2853
+[*] Correção de vários Hints e Warnings (DSA)
+
+-- ACBrTEFDVeSPague --
+[-] Corrigido Bug que não gravava informações com nomes semelhantes:
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&t=4942
+
+
+Data:  27/12/2011  - Ver: 1.35
+[+] Adicionado suporte para o TEF AUTTAR
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?p=20973#p20973
+
+Data:  02/09/2011  - Ver: 1.34
+[-] Correçao para consulta no Teste 10B / TecBan - Tele cheque Garantido,
+    que deveria exibir uma mensagem com botão de OK ao operador.
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&t=2955
+
+Data:  11/08/2011  - Ver: 1.33
+[-] Correção de Bug descrito em:
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&p=12735
+
+Data:  26/07/2011  - Ver: 1.32
+[+] Implementado recurso para que os TEF Discados, indentifique se o tipo
+    da transação é Débito ou Crédito.
+    por (Isaque Pinheiro)
+
+Data:  01/06/2011  - Ver: 1.32
+-- ACBrTEFDVeSPague --
+[*] Diversas correções implementadas na conclusão do processo de homologação
+    realizado por: Itamar Bermond
+    http://www.djsystem.com.br/acbr/forum/viewtopic.php?p=9687#p9687
+
+-- ACBrTEFDBanese --
+[+] Finalizada a doação dos fontes da implementação do G.P. do Banese:
+     (por: Moacir Ezequiel Lamego e Márcio D. Carvalho)
+     http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=16&t=1110
+
+Data:  10/05/2011
+-- ACBrTEFDCliSiTEF --
+[+] Padronização de código usando função "PathWithDelim", alertado 
+    (por Vanderlei).
+
+Data:  09/05/2011
+-- ACBrTEFDCliSiTEF --
+[+] Adicionada a propriedade PathDLL, que permite informar o caminho das DLLs
+    (por Isaque Pinheiro)
+    ex:
+
+    case TACBrTEFDTipo( ACBrTEF.GPAtual ) of
+       gpCliSiTef: ACBrTEF.TEFCliSiTef.PathDLL := '.\DLLs\TEF\SiTef';
+    end;
+
+
+Versão 1.30    13/03/11
+[+] Adicionado suporte ao tratamento de Cupons Não Fiscais. Porém, é necessário
+    modificar a aplicação Host para que a mesma distingua entre a necessidade de
+    executar um método de Cupom Fiscal ou Não Fiscal. Veja exemplo na aplicação
+    Demo, nos eventos "OnComandaECF, e "OnComandaECFPagamento". Também é
+    necessário modificar o evento "OnInfoECF" para sinalizar com "N" quando o
+    Estado do ECF for "estNaoFiscal".
+
+Versão 1.20b   06/07/10
+[-] Corrigido Bug em: TACBrTEFDArquivo.GravaInformacao, que não apagava
+    corretamente o valor anterior da Informaçao, em algumas ocasiões
+[*] Método TACBrTEFDClass.ImprimirRelatorio modificado para permitir a Impressão
+    de comprovantes com apenas a 1a ou 2a Via.
+
+Versão 1.20b   05/07/10
+[+] Adicionada nova classe de TEF dedicado compatível com V&SPague (por: DSA)
+    (http://www.vespague.com.br/)
+[*] Projeto Demo modificado para compatibilizar com V&SPague
+[+] Adicionada chamada de gravação no LOG com os Erros dos métodos que comandam
+    o ECF
+[-] Corrigido BUG no método TACBrTEFDLinha.SetLinha, que retornava a Informaçao
+    com um Espaço no Inicio do texto
+[*] Metodo TACBrTEFDLinha.SetLinha, compatibilizado com formato de Chaves do
+    TEF V&SPague
+
+Versão 1.17b   19/04/10
+[+] Adicionada a propriedade em TACBrTEFD.NumeroMaximoCartoes : Integer
+    Que permite limitar o número máximo de Cartões em transações com múltiplos-
+    cartões. Necessário para evitar estouro de Tempo de Impressão no Vinculado
+    ou Gerencial.  (exigência homologação SoftwareExpress)
+[+] Adicionada a propriedade em TACBrTEFDResp.Saque : Double ;
+    Que contem o Valor do Saque quando usado Saque de Dinheiro Visa ou RedeCard
+[*] RespostasPendentes.SaldoRestante e RespostasPendentes.TotalPago foram
+    modificados para subtrair o Valor do Saque no Valor Calculado
+[-] ACBrTEFD.ImprimirTransacoesPendentes modificaçao para Confirmar a transação
+    antes de exibir a Mensagem de autenticação de Cheque
+    (exigência homologação SoftwareExpress)
+
+-- ACBrTEFDCliSiTEF --
+[*] Metodo "ConfirmarEReimprimirTransacoesPendentes" modificado segundo
+    orientações do homologador da SoftwareExpress, para exibir o NSU (campo 134)
+    de Todas as transações confirmadas.
+[-] Bloqueio e Desbloqueio de Mouse/Teclado revisto dentro do loop de
+    "ContinuarRequisicao" para permitir o Desbloqueio dentro do evento
+    ACBrTEFD.OnAguardaResp, que é chamado quando o comando é "23"
+    Isso permite a aplicação, Cancelar a Espera do SiTEF na espera de Leitura de
+    Cartão e Senha (exigência homologação SoftwareExpress)
+[-] Código do método "ACBrTEFDCliSiTEF.AvaliaErro" inteiro removido pois não é
+    necessário (exigência homologação SoftwareExpress)
+
+Versão 1.16b   08/04/10
+[-] Corrigido Bug na Verificação de SaldoRestante quando a propriedade
+    AutoEfetuarPagamento := True  (reportado por:  Dassayev Barbosa)
+[+] Adicionada a propriedade (published) ArqLog : String. Se definida, irá
+    ajustar o ArqLOG de todas as classes de TEF que não tenham ArqLOG definido.
+[-] Corrigido bug no Cancelamento (CNC). Arquivo de Requisição estava sendo
+    criado contendo o campo 017 (Finalização) que NAO deve ser enviado no CNC.
+    Isso causava problemas em alguns módulos de TEF para localizar a transação
+    a ser cancelada (como por exemplo no RedeCard)
+
+Versão 1.15b   07/04/10
+(modificações efetuadas por Fernando Gutierres Damaceno )
+
+[+] Adicionada propriedades em TACBrTEFDResp:
+    property Instituicao    : String read fpInstituicao;
+    property ModalidadePagto :String read fpModalidadePagto;
+    property ModalidadePagtoDescrita:String read fpModalidadePagtoDescrita;
+    property ModalidadeExtenso:String read fpModalidadePagtoExtenso;
+    property CodigoRedeAutorizada:String read fpCodigoRedeAutorizada;
+
+--- ACBrTEFDCliSi---
+[+] Adicionado tratamento para preenchimento das propriedades novas do resp em
+    ConteudoToProperty;
+[*] Modificação da procedure "ConfirmarEReimprimirTransacoesPendentes" para
+    atender o roteiro, que diz apenas para confirmar transacao e mostrar mensagem:
+    "Transação TEF efetuada, por favor re-imprimir ultimo cupom"
+[*] Modificação da pergunta "Impressora não responde Tentar novamente?"
+    para "Impressora não responde. Deseja Imprimir novamente?"
+    Detalhe, essa pergunta deve ser feita mesmo que durante a impressão do cupom
+    fiscal como no roteiro de teste Seq.47.
+
+Versão 1.14b   12/03/10
+[-] Verificação de Teclado Bloqueado antes de processar comandos diferentes de
+    CNF e ATV.  (Em algumas situações o CNC era enviado com o Teclado Bloqueado)
+-- ACBrTEFDCliSiTEF --
+[-] Correçao do Tratamento do Comando 34, para aceitar Valores vazios e
+    considera-los '0,00'. Adicionada verificação do Separador Decimal (,)
+
+Versão 1.13b   10/03/10
+-- ACBrTEFDCliSiTEF --
+[*] Método "OnExibeMenu" modificado para permitir retornar ao Menu anterior
+    atraves da variavel boleana "VoltarMenu" informada por referencia.
+[*] Método "OnObtemCampo" modificado para permitir retornar ao Menu anterior
+    atraves da variavel boleana "VoltarMenu" informada por referencia.
+[*] Demos em Lazarus e Delphi ajustados para permitir o uso de "VoltarMenu"
+    (Créditos: Fernando Gutierres Damaceno)
+
+Versão 1.12b   09/03/10
+[-] Ajuste em "ImprimirTransacoesPendentes", para funcionar corretamente com
+    AutoEfetuarPagamento e AutoFinalizarCupom desativados
+[+] Adicionado o evento "OnDepoisCancelarTransacoes", que recebe como parâmetro
+    as Respostas que já foram canceladas
+
+Versão 1.11b   06/03/10
+[*] Gravaçao de Arquivo de LOG em TEF discado ajustada para melhor uso.
+[*] TACBrTEFD.FinalizarCupom - Adicionada verificação do Saldo Restante a pagar
+    antes de Efetuar o Pagamento no ECF, para o caso de Queda de Energia na fase
+    de Pagamentos.
+
+-- ACBrTEFDCliSiTEF --
+[-] Corrigido Bug na Inicialização. Se ECF estivesse desativado não terminava a
+    Inicialização.
+[*] Programa Demo ajustado para aproveitamento de Respostas Antecipadas no SiTEF
+
+
+Versão 1.10b   04/03/10
+[*] Gravaçao de Arquivo de LOG em TEF discado ajustada para melhor uso.
+
+-- ACBrTEFDCliSiTEF --
+[*] Método CNC faz uso de lista de Respostas para transmitir dados informados nos
+     parâmetros do método, e evitar re-digitação de dados
+[*] Compatibilização com D2010 (por: Fernando Gutierres Damaceno)
+
+
+Versão 1.9b   03/03/10
+[-] Corrigida declaração de TACBrTEFD.CHQ, que causava erro de compilação no
+    Delphi (bug introduzido na versão 1.8)
+[+] Adicionada a propriedade "ExibirMsgAutenticacao: Boolean = True"
+    Quando True será exibida a mensagem: "Favor anotar no verso do Cheque: XXXX"
+    onde XXXX é a Mensagem de autenticação de Cheques retorna pelo G.P.
+    (Campo 032-000 em Discado e 120 no SiTEF)
+[*] Método "ImprimirTransacoesPendentes" modificado para suportar Respostas sem
+    Impressão de nenhum Comprovante (geralmente isso ocorre em consultas CHQ)
+[*] Método "ImprimirTransacoesPendentes" modificado para exibir a Mensagem de
+    Autenticação após a Impressão (ou não) do Comprovantes, de acordo com a nova
+    propriedade "ExibirMsgAutenticacao"
+
+
+Versão 1.8b   01/03/10
+[+] Adicionado o parâmetro "Compensacao: String" no método CHQ (para
+    compatibilizar com SiTEF, não tem utilidade no TEF Discado)
+
+-- ACBrTEFDCliSiTEF --
+[+] Adicionada Propriedade publica "Respostas : TStringList", que pode conter
+    uma lista de Respostas de campos a serem perguntados pelo SiTEF. Nesse caso,
+    ao chamar o evendo "OnObtemCampo", já é exibida a Resposta coom o valor
+    pré-definido... Exemplo:
+      ACBrTEFD.TEFCliSiTef.Respostas.Values['502'] := '12345678910'
+      Quando o SiTEF perguntar o Valor do campo 502 o conteudo já será exibido.
+[*] Método CHQ faz uso de lista de Respostas para transmitir dados informados nos
+     parâmetros do método, e evitar re-digitação de dados
+[-] Corrigido o tratamento do parâmetro de referencia "Digitado" enviado para
+    "OnObtemCampo" quando o Comando do SiTEF era 31, 34 e 35
+
+Versão 1.7b   23/02/10
+[-] Corrigido Bug Introduzido na versao 1.6b, que impedia o funcionamento
+    da função CRT com Saque, removendo a conferência adicional de desligamentos
+    do ECF na fase de Pagamentos
+[-] Corrigido Bug no objeto "TACBrTEFDLinha" que em algumas situações
+    (muito raras) retornava o valor incorreto.
+[*] Valor informado em CRT ou CHQ é ajustado com RoundTo( Val, -2 ) para evitar
+    resultados inesperados na comparação de valores Double
+
+-- ACBrTEFDCliSiTEF --
+[-] Método "Inicializar" modificao para confirmar Transacoes Pendentes e
+    solicitar a re-Impressão, conforme roteiro de homologação, apenas se o Cupom
+    já estiver encerrado (na fase de Impressao dos Comprovantes); caso
+    contrário (Cupom ainda aberto) é executado "CancelarTransacoesPendentes"
+[-] Corrigida rotina de Impressao de Transaçãoes Administrativas, para funcionar
+    corretamente mesmo quando a informado apenas 1a ou 2a via do comprovante
+
+Versão 1.6b   18/02/10
+[*] Refactoring, criando função "SubTotalECF" para retornar o Total a Pagar
+    restante no ECF
+[*] Modificado metodo "OnExibeMensagem" para só trazer o Foco para a aplicação
+    quando mensagem a ser exibida for "Modal" [opmOK, opmYesNo, opmDestaqueVia]
+[-] Método "FinalizarCupom" modificado para suportar corretamente desligamentos
+    do ECF durante a fase de Impressão dos Pagamantos
+
+-- ACBrTEFDCliSiTEF --
+[+] Adicionado método interno: ConfirmarEReimprimirTransacoesPendentes
+[-] Método "Inicializar" modificao para confirmar Transacoes Pendentes e
+    solicitar a re-Impressão, conforme roteiro de homologação
+[-] Método "FazerRequisicao" modificado para sempre gravar um numero de
+    Documento quando o mesmo não for informado.
+[-] Corrigido tratamento de desligamento de ECF na impressão de Relatórios
+    Administrativos
+
+Versão 1.5b   08/02/10
+[*] Chamada a OnAntesCancelarTransacao envolvida em Try Except para evitar Loop
+    infinito no caso de exception dentro de OnAntesCancelarTransacao
+
+-- ACBrTEFDCliSiTEF --
+[*]  Modificada a ordem da gravação do Log de Debug dentro de ContinuarRequisicao
+[*]  Adicionada chamada de Pulo de Linhas e pausa entre vias na impressão de
+     Relatórios Gerenciais com 2 vias
+[-]  Corrigido tratamento na chamada do Evento "OnObtemCampo". Onde resposta
+     vazia era tratada como Cancelamento da Transação
+[+]  No caso de Finalização de Transação, sem confirmação (NCN), será disparada
+     mensagem: "Transação não efetuada. Favor reter o Cupom" conforme orientação
+     do Roteiro de Testes
+
+Versão 1.4b   08/02/10
+[+] Adicionado evento "OnAntesCancelarTransacao", que permite rodar algum código
+    na aplicação antes do Cancelamento de Transações TEF
+[*] ACBrTEFDCliSiTEF agora bloqueia o Teclado durante todo o Loop de conversação
+    com a DLL, liberando-o quando precisar perguntar algo ao operador.
+[-] Suprimida a mensagem de Retorno de Erro: -5 = 'Sem comunicação com o SiTef',
+    pois a própria DLL comanda essa Mensagem antes de encerrar, o que causava a
+    exibição por 2 vezes.
+
+Versão 1.3b   03/02/10
+[-] Corrigido Bug na verificação de transação Aprovada (retorno) em CRT e CHQ
+[-] Corrigido Bug na verificação de Saldo Restante a Pagar em transaçoes com
+    Multiplos Cartoes
+
+Versão 1.2b   03/02/10
+[*] Metodos ADM, CRT, CHQ, CNC modificados para Retornar o status da Transação
+    Ou seja, True = Aprovada (ou efetuada), False = Negada (ou cancelada)
+[-] Corrigido Bug em "CancelarTransacoesPendentes", que não verificava a
+    Resposta da Transação CNC antes de apagar o arquivo de Backup
+[*] Transacoes Administrativas com Impressao de Relatório agora também geram
+    chamada ao evento "OnDepoisConfirmarTransacoes"
+[*] Melhorado tratamento de Limpeza de RespostasPendentes (nao limpava no caso
+    de Exceptions)
+[*] Melhorado tratamento de FinalizarResposta (nao rodava no caso de Exceptions)
+[+] Adicionada nova Classe de G.P. (TEF GPU - Expansiva)  por: Evandro Mira
+[-] Corrigido bug de Arredondamento em "VerificarTransacaoPagamento"
+    por: Rodrigo Baltazar
+
+Versão 1.1b   28/01/10
+[-] ACBrTEFDCliSiTef revisada para carregar corretamente "libclisitef.so" no
+    Linux
+
+Versão 1.0b   22/01/10
+[+] Adicionada a propriedade ACBrTEFD.AguardandoResposta : Boolean (readonly)
+    Se retornar True, está aguardando arquivo do G.P. (intpos.sts ou intpos.001)
+[*] Evento OnAguardaResp é chamado quando arquivo for finalmente recebido.
+    (Nesse caso, o parâmetro "SegundosTimeOut" será igual a -1)
+
+Versão 0.9a   23/12/09
+[*] Adicionada verificação de Valor 0 ou negativo antes do inicio de CRT e CHQ
+[-] CliSiTef: Corrigido Bug processamento de Débito com Saque
+[*] CliSiTef: Modificado tratamento de Mensagens de Erro. Mudando de "Exception"
+    para uma chamada ao evento OnExibeMsg( opmOK, MsgErro )
+[*] TACBrTEFDLinhaInformacao.GetAsFloat modificado para permitir campos com a
+    presença de Separador Decimal (, ou .)
+[+] Adicionada verificação de Chamada Recursiva de Transações (impedindo Iniciar
+    uma nova Requisição enquanto a anterior ainda não foi concluída)
+
+Versão 0.8a   22/12/09
+[-] Corrigido bug introduzido na versão 0.7a, em relação ao envio de CNF
+    antecipado, para transações com Multiplos Cartões
+[-] Corrigida Mensagem de Pausa entre vias quando imprimindo a última Via
+    em trasações de Multiplos Cartões
+
+Versão 0.7a   22/12/09
+[*] Obteto Interno RespostasPendentes modificado novamente, para ser uma Lista
+    de Respostas de objetos "Resp", que possuem propriedades e métodos para
+    acessar os campos respondidos pelo G.P.
+[+] Adicionado o evento "OnDepoisConfirmarTransacoes", que é disparado após
+    a execução com sucesso de ConfirmarTransacoes
+    (Útil para ler os dados das Respostas do TEF, com o intuito de grava-las no BD)
+
+Versão 0.6a   20/12/09
+[*] Obteto Interno RespostasPendentes modificado para suportar CliSiTef
+[*] Rotinas ImprimirTransacoesPendentes, CancelarTransacoesPendentes e
+    ConfirmarTransacoesPendentes modificadas para suportar o novo modelo do
+    objeto RespostasPendentes
+[+] Classe ACBrTEFDCliSiTef. Adicionado métodos CRT, CHQ, CNF, NCN, CNC
+
+Versão 0.5a   17/12/09
+[*] OnBloqueiaMouseTeclado, OnRestauraFocoAplicacao e OnLimpaTeclado,
+    modificados para permitir informar se devem ou não executar o código do
+    ACBrTEFD  (adicionado Parametro "Tratado : Boolean")
+[*] Impressão de Vinculado e Gerencial modificadas para manter o Bloqueio de
+    Mouse e Teclado mesmo na fase de envio do CNF ou NCN
+[+] Adicionado o evento:
+    OnComandaECFImprimeVia( TipoRelatorio : TACBrTEFDTipoRelatorio;
+       Via : Integer; ImagemComprovante : TStringList;
+       var RetornoECF : Integer ) ; { -1 - Não tratado, 0 - Erro na Execucao, 1 - Sucesso }
+    Substituindo as Operaçoes de OnComandaECF() opeImprimirGerencial e
+    opeImprimirVinculado
+[*] Nomes de procuderes de uso interno renomeadas, para melhor padronização
+[*] Removido ACBrTEFD.Resp.ViaAtual (não é mais necessário)
+[*] Avanço no desenvolvimento da Classe CliSiTef (ATV e ADM estão funcionais)
+
+Versão 0.4a   15/12/09
+[-] Corrigido Bug em TACBrTEFDLinhaInformacao.SetAsFloat, que estava Truncando a
+    última casa decimal, em algumas situações (André Moraes)
+[+] Adicionado os Eventos:
+    OnBloqueiaMouseTeclado, OnRestauraFocoAplicacao e OnLimpaTeclado.
+    Se NAO forem programados, o ACBrTEFD executará código interno, para obter
+    a funcionalidade... caso contrário apenas o código do Evento será executado.
+[*] Ajuste de algumas Propriedades Internas de String para AnsiString (D2009)
+
+
+Versão 0.3a   13/12/09
+[-] Corrigido Bug em Re-Impressão de Vinculado / Gerencial após desligamento do
+    ECF
+[-] Corrigido Bug que não apagava Arquivo de Backup após Impressão de Gerencial
+
+Versão 0.2a   13/12/09
+[-] Correção de Bug em ImprimirComprovantesPendentes
+[+] Icone para o Componente em Lazarus e Delphi
+[+] Melhoria do Demo para Demostrar e Testar todos os métodos
+
+Versão 0.01a   08/12/09
+---------------
+[+] Início do Projeto
+[+] Primeira Versao lançada baseado no componente fornecido por:
+    Daniel Simões de Almeida
+
+
+
+

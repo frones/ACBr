@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_MDFe_DAMDFeRL"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrMDFe"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <UnitName Value="ACBrMDFeDAMDFeRLRetrato"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRL.pas"/>
+        <UnitName Value="ACBrMDFeDAMDFeRL"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAEventoRLRetrato.pas"/>
+        <UnitName Value="ACBrMDFeDAEventoRLRetrato"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAEventoRL.pas"/>
+        <UnitName Value="ACBrMDFeDAEventoRL"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLClass.pas"/>
+        <UnitName Value="ACBrMDFeDAMDFeRLClass"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrMDFeDAMDFeRLReg"/>
+      </Item6>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="ACBr_MDFe"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="fortes324forlaz"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

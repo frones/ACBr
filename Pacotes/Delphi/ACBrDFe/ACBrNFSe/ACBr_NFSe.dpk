@@ -1,0 +1,93 @@
+package ACBr_NFSe;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  ACBrComum,
+  designide,
+  ACBrCapicom,
+  synapse,
+  soaprtl,
+  xmlrtl,
+  inet,
+  dbrtl,
+  dsnap,
+  PCN2;
+
+contains
+  ACBrNFSe in '..\..\..\Fontes\ACBrNFSe\ACBrNFSe.pas',
+  ACBrNFSeConfiguracoes in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeConfiguracoes.pas',
+  ACBrNFSeDANFSeClass in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeClass.pas',
+  ACBrNFSeNotasFiscais in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeNotasFiscais.pas',
+  ACBrNFSeReg in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeReg.pas',
+  ACBrNFSeUtil in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeUtil.pas',
+  ACBrNFSeWebServices in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeWebServices.pas',
+  pnfsConversao in '..\..\..\Fontes\ACBrNFSe\pnfsConversao.pas',
+  pnfsNFSe in '..\..\..\Fontes\ACBrNFSe\pnfsNFSe.pas',
+  pnfsNFSeW in '..\..\..\Fontes\ACBrNFSe\pnfsNFSeW.pas',
+  pnfsEnvLoteRpsResposta in '..\..\..\Fontes\ACBrNFSe\pnfsEnvLoteRpsResposta.pas',
+  pnfsNFSeR in '..\..\..\Fontes\ACBrNFSe\pnfsNFSeR.pas',
+  pnfsConsSitLoteRpsResposta in '..\..\..\Fontes\ACBrNFSe\pnfsConsSitLoteRpsResposta.pas',
+  pnfsConsLoteRpsResposta in '..\..\..\Fontes\ACBrNFSe\pnfsConsLoteRpsResposta.pas',
+  pnfsConsNfseporRpsResposta in '..\..\..\Fontes\ACBrNFSe\pnfsConsNfseporRpsResposta.pas',
+  pnfsConsNfseResposta in '..\..\..\Fontes\ACBrNFSe\pnfsConsNfseResposta.pas',
+  pnfsSignature in '..\..\..\Fontes\ACBrNFSe\pnfsSignature.pas',
+  pnfsCancNfseResposta in '..\..\..\Fontes\ACBrNFSe\pnfsCancNfseResposta.pas',
+  ACBrProvedorBetha in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorBetha.pas',
+  ACBrProvedorDigifred in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorDigifred.pas',
+  ACBrProvedorEquiplano in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorEquiplano.pas',
+  ACBrProvedorfintelISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorfintelISS.pas',
+  ACBrProvedorGinfesV3 in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorGinfesV3.pas',
+  ACBrProvedorGovBR in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorGovBR.pas',
+  ACBrProvedorISSIntel in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSIntel.pas',
+  ACBrProvedorISSNet in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSNet.pas',
+  ACBrProvedorProdemge in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorProdemge.pas',
+  ACBrProvedorPublica in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorPublica.pas',
+  ACBrProvedorRecife in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorRecife.pas',
+  ACBrProvedorRJ in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorRJ.pas',
+  ACBrProvedorSimplISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorSimplISS.pas',
+  ACBrProvedorThema in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorThema.pas',
+  ACBrProvedorTiplan in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorTiplan.pas',
+  ACBrProvedorWebISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorWebISS.pas',
+  ACBrProvedorBetim in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorBetim.pas',
+  ACBrProvedorfISSLex in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorfISSLex.pas',
+  ACBrProvedorSaatri in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorSaatri.pas',
+  pnfsGerarNfseResposta in '..\..\..\Fontes\ACBrNFSe\pnfsGerarNfseResposta.pas',
+  ACBrProvedorAbaco in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorAbaco.pas',
+  ACBrProvedorGoiania in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorGoiania.pas',
+  ACBrProvedorISSCuritiba in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSCuritiba.pas',
+  ACBrProvedorBHISS in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorBHISS.pas',
+  ACBrProvedorNatal in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorNatal.pas',
+  ACBrProvedorISSe in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSe.pas',
+  ACBrProvedorISSDigital in '..\..\..\Fontes\ACBrNFSe\ACBrProvedorISSDigital.pas',
+  CryptSHA1 in '..\..\..\Fontes\ACBrNFSe\CryptSHA1.pas';
+
+end.

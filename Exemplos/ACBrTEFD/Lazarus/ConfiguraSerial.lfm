@@ -1,0 +1,405 @@
+object frConfiguraSerial: TfrConfiguraSerial
+  Left = 340
+  Height = 297
+  Top = 158
+  Width = 268
+  ActiveControl = cmbPortaSerial
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Porta Serial'
+  ClientHeight = 297
+  ClientWidth = 268
+  Constraints.MinWidth = 180
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  LCLVersion = '0.9.29'
+  object lBaud: TLabel
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = cmbPortaSerial
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 16
+    Top = 47
+    Width = 152
+    BorderSpacing.Top = 2
+    Caption = '&Baud rate (Bits por Segundo)'
+    FocusControl = cmbBaudRate
+    ParentColor = False
+  end
+  object lData: TLabel
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = cmbBaudRate
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 16
+    Top = 89
+    Width = 129
+    BorderSpacing.Top = 2
+    Caption = '&Data Bits (Bits de Dados)'
+    FocusControl = cmbDataBits
+    ParentColor = False
+  end
+  object lParity: TLabel
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = cmbDataBits
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 16
+    Top = 131
+    Width = 88
+    BorderSpacing.Top = 2
+    Caption = '&Parity (Paridade)'
+    FocusControl = cmbParity
+    ParentColor = False
+  end
+  object lStop: TLabel
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = cmbParity
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 16
+    Top = 173
+    Width = 132
+    BorderSpacing.Top = 2
+    Caption = '&Stop Bits (Bits de Parada)'
+    FocusControl = cmbStopBits
+    ParentColor = False
+  end
+  object lHandShaking: TLabel
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = cmbStopBits
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 16
+    Top = 215
+    Width = 175
+    BorderSpacing.Top = 2
+    Caption = '&Handshaking (Controle de Fluxo)'
+    FocusControl = cmbHandShaking
+    ParentColor = False
+  end
+  object lPortaSerial: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    Left = 8
+    Height = 16
+    Top = 5
+    Width = 60
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 5
+    Caption = '&Porta Serial'
+    FocusControl = cmbPortaSerial
+    ParentColor = False
+  end
+  object cmbBaudRate: TComboBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = lBaud
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 23
+    Top = 64
+    Width = 161
+    BorderSpacing.Top = 1
+    ItemHeight = 15
+    ItemIndex = 6
+    Items.Strings = (
+      '110'
+      '300'
+      '600'
+      '1200'
+      '2400'
+      '4800'
+      '9600'
+      '14400'
+      '19200'
+      '38400'
+      '56000'
+      '57600'
+      '115200'
+    )
+    OnChange = cmbBaudRateChange
+    TabOrder = 1
+    Text = '9600'
+  end
+  object cmbDataBits: TComboBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = lData
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 23
+    Top = 106
+    Width = 161
+    BorderSpacing.Top = 1
+    ItemHeight = 15
+    ItemIndex = 3
+    Items.Strings = (
+      '5'
+      '6'
+      '7'
+      '8'
+    )
+    OnChange = cmbDataBitsChange
+    Style = csDropDownList
+    TabOrder = 2
+    Text = '8'
+  end
+  object cmbParity: TComboBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = lParity
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 23
+    Top = 148
+    Width = 161
+    BorderSpacing.Top = 1
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'None'
+      'Odd'
+      'Even'
+      'Mark'
+      'Space'
+    )
+    OnChange = cmbParityChange
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'None'
+  end
+  object cmbStopBits: TComboBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = lStop
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 23
+    Top = 190
+    Width = 161
+    BorderSpacing.Top = 1
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      '1'
+      '1,5'
+      '2'
+      ''
+    )
+    OnChange = cmbStopBitsChange
+    Style = csDropDownList
+    TabOrder = 4
+    Text = '1'
+  end
+  object cmbHandShaking: TComboBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = lHandShaking
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 23
+    Top = 232
+    Width = 161
+    BorderSpacing.Top = 1
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Nenhum'
+      'XON/XOFF'
+      'RTS/CTS'
+      'DTR/DSR'
+    )
+    OnChange = cmbHandShakingChange
+    Style = csDropDownList
+    TabOrder = 5
+    Text = 'Nenhum'
+  end
+  object cmbPortaSerial: TComboBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = lPortaSerial
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 23
+    Top = 22
+    Width = 161
+    BorderSpacing.Top = 1
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'COM1'
+      'COM2'
+      'COM3'
+      'COM4'
+      'COM5'
+      'COM6'
+      'COM7'
+      'COM8'
+      '/dev/ttyS0'
+      '/dev/ttyS1'
+      '/dev/ttyUSB0'
+      '/dev/ttyUSB1'
+    )
+    OnChange = cmbPortaSerialChange
+    TabOrder = 0
+    Text = 'COM1'
+  end
+  object btOk: TBitBtn
+    AnchorSideLeft.Control = btCancel
+    AnchorSideRight.Control = btCancel
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = btCancel
+    Left = 181
+    Height = 25
+    Top = 101
+    Width = 75
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Bottom = 10
+    Caption = 'OK'
+    Default = True
+    Glyph.Data = {
+      36030000424D3603000000000000360000002800000010000000100000000100
+      18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+      FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+      FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000FF
+      00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+      FF00FFFF00FFFF00FF001808086531000400FF00FFFF00FFFF00FFFF00FFFF00
+      FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00180839A66B6BEBB539
+      925A000800FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+      FF00FF00180031A26339E39C18DB8C52E7AD398E5A000C00FF00FFFF00FFFF00
+      FFFF00FFFF00FFFF00FFFF00FFFF00FF001C00219E5229D78C18CF8418D38418
+      D78442DF9C318A4A000C00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF001C00
+      10924218C77318C36B18C77318C77B18CB7B18CF7B29D78C218642001000FF00
+      FFFF00FFFF00FFFF00FF002400108E3918BA6318B66331C37342CB8442D38C4A
+      CF8C39CB8429C77B21CB7B108A39001800FF00FFFF00FFFF00FF08712921B65A
+      52BE8473CF9C7BD7A542BE7B107D4252CF947BDBAD73D7A56BD39C42CB84108A
+      31002000FF00FFFF00FF0030104AB26B9CDBB594DBB542BA73003010FF00FF08
+      45215ACF8C9CDFBD94DBB594DBB55ACB8C108A31002800FF00FFFF00FF002008
+      52AE7342AA6B001C08FF00FFFF00FFFF00FF0030105ABE84B5E7CEB5E3C6B5E3
+      C673CF9C108629002C00FF00FFFF00FF001800001400FF00FFFF00FFFF00FFFF
+      00FFFF00FF00200852AE73D6F3DECEEBDEDEEFE794DBAD085D18FF00FFFF00FF
+      FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF001400529E63EFFF
+      F7DEF7E742965A001000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+      00FFFF00FFFF00FFFF00FF000000428E5239864A000000FF00FFFF00FFFF00FF
+      FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000C
+      00000C00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+      00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+    }
+    ModalResult = 1
+    TabOrder = 8
+  end
+  object btCancel: TBitBtn
+    AnchorSideLeft.Control = cmbParity
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideTop.Side = asrCenter
+    Left = 181
+    Height = 25
+    Top = 136
+    Width = 75
+    BorderSpacing.Left = 12
+    BorderSpacing.Right = 5
+    Caption = 'Cancela'
+    Glyph.Data = {
+      36030000424D3603000000000000360000002800000010000000100000000100
+      18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+      101073000029FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0004
+      3110106BFF00FFFF00FFFF00FF00008C3134F70808CE000031FF00FFFF00FFFF
+      00FFFF00FFFF00FFFF00FF000039080CCE3130EF00007BFF00FF0000630808E7
+      4A49F74A4DF70000C6000039FF00FFFF00FFFF00FFFF00FF00004A0004CE5A59
+      EF5A59F70808DE00004A0004842120FF3134FF5A59FF4A49EF0004C6000042FF
+      00FFFF00FF0000520808CE5A59EF7371FF5255FF3134FF00046B000473181CFF
+      2928FF3938FF5255FF4245EF0004C600004A00005A0808CE5255EF6B69FF5251
+      FF4241FF3130FF080C52FF00FF08087B181CFF2928FF3134FF4A49FF3134EF00
+      00BD0004C64245EF5A59FF4245FF393CFF292CFF080C63FF00FFFF00FFFF00FF
+      08086B1818FF292CFF393CFF4A4DFF3130EF3134EF4A49FF3938FF3130FF2124
+      F708084AFF00FFFF00FFFF00FFFF00FFFF00FF000452393CEF6361FF6361FF63
+      61FF6361FF6361FF5A59FF2928DE000439FF00FFFF00FFFF00FFFF00FFFF00FF
+      FF00FFFF00FF00048C393CF76361FF6361FF6365FF6365FF3134EF000463FF00
+      FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00005A0000A53130F76B69FF6B
+      69FF6B69FF6B69FF2120E700009C000042FF00FFFF00FFFF00FFFF00FFFF00FF
+      0000520000A53134F77B79FF7B79FF7B79FF7B79FF7B79FF7375FF2124E70000
+      94000039FF00FFFF00FFFF00FF00005200009C4241F78C8AFF8C8AFF8C8AFF31
+      30C64A49DE8C8EFF8C8AFF8486FF2928E700008C000039FF00FF00001800009C
+      4A49F79C9AFF9C9AFF9C9AFF3134BDFF00FF0000215255E79C9EFF9C9AFF9496
+      FF292CE700007BFF00FF0000295255FFADAEFFADAAFFADAAFF393CBDFF00FFFF
+      00FFFF00FF0000295A5DE7ADAEFFADAAFFADAAFF3130DEFF00FFFF00FF4245BD
+      BDBAFFBDBAFF393CBDFF00FFFF00FFFF00FFFF00FFFF00FF0000296B69E7CECB
+      FFA5A6FF21248CFF00FFFF00FFFF00FF393CBD4241C6FF00FFFF00FFFF00FFFF
+      00FFFF00FFFF00FFFF00FF0000295A59E7181C7BFF00FFFF00FF
+    }
+    ModalResult = 2
+    TabOrder = 9
+  end
+  object chHardFlow: TCheckBox
+    AnchorSideLeft.Control = lPortaSerial
+    AnchorSideTop.Control = cmbHandShaking
+    AnchorSideTop.Side = asrBottom
+    Left = 8
+    Height = 19
+    Top = 260
+    Width = 71
+    BorderSpacing.Top = 5
+    Caption = 'HardFlow'
+    OnClick = chHardFlowClick
+    TabOrder = 6
+  end
+  object chSoftFlow: TCheckBox
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = chHardFlow
+    AnchorSideRight.Control = cmbHandShaking
+    AnchorSideRight.Side = asrBottom
+    Left = 103
+    Height = 19
+    Top = 260
+    Width = 66
+    Anchors = [akTop, akRight]
+    BorderSpacing.Left = 10
+    BorderSpacing.Bottom = 5
+    Caption = 'SoftFlow'
+    OnClick = chSoftFlowClick
+    TabOrder = 7
+  end
+  object btPadrao: TBitBtn
+    AnchorSideLeft.Control = btCancel
+    AnchorSideTop.Control = btCancel
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = btCancel
+    AnchorSideRight.Side = asrBottom
+    Left = 181
+    Height = 25
+    Top = 171
+    Width = 75
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 10
+    Caption = 'Padrão'
+    Glyph.Data = {
+      36030000424D3603000000000000360000002800000010000000100000000100
+      18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+      FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+      FFFF00FFFF00FFFF00FFFF00FFFF00FFFCFCFCB7B7BBEBEBEBFF00FFFF00FFFF
+      00FFFF00FFFF00FFFBFBFB899C89A7ADA7FDFDFDFF00FFFF00FFFF00FFF9F9F9
+      6E7CA31045DE32489CA5A5AAF8F8F8FF00FFFF00FFF6F6F6699564299E101886
+      0853804EC0C1C0FF00FFF0F0F05F73A9105DFF1859FF104DFF083CDE455693C8
+      C8C9EEEEEE5B985618A60021A60818A20010A600188E097691765E7DB9186DFF
+      1869FF216DFF1861FF1861FF1861FF6A75A385AA7D18C30008B20018BA1018B6
+      0810B20010BE0033932D3E7DEA297DFF297DFF3986FF4A8AFF4A8EFF317DFF71
+      7DAA74AE6B08D70008CB0021C31831CB2942D73931DB293B9F354487E33192FF
+      2982FF1061FF2975FF63A2FF6BAEFF6577A879975310DF0810D71010B20810B6
+      0031D3215AF3524BAA444E93E24AA2FF3186FF317DFF2975FF2979FF428EFF92
+      7163F7930BBD9A0863AA2142D34242DF424ADB4242EF395BA956679CE684BEFF
+      94C3FF8CBAFF84BAFF73AAFFA58673FFAE00FFBA08FFB200FFA200C6A22994E3
+      7B73FF7B5BB755E0E1E0EDF0FA91B5F380B2F7BDE3FF9CD3FF9D938DFFBE00FF
+      C700FFCB10FFC708FFC700FFB600A5D76363C068EDEDEDFF00FFFF00FFFF00FF
+      E0E7F885B5FF7796D0B79D6FFFDF00FFD300FFC318FFD329FFE339FFD310899B
+      5AF6F6F6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFC2AB79FFEB08FF
+      C708FFAE00FFB608FFD731FFE342BBADA8FF00FFFF00FFFF00FFFF00FFFF00FF
+      FF00FFFF00FFFF00FFC7AC7EFFE739FFDB42FFD742FFD742FFDF42DBA03EDAD7
+      D7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFEFE9E5F6C58AF7
+      D97AFFFB9CFFFB94D7AC64DAD8D7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+      FF00FFFF00FFFF00FFFF00FFFF00FFF6E3D3F3C487D8B078E4E3E3FF00FFFF00
+      FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+      00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+    }
+    ModalResult = 2
+    OnClick = btPadraoClick
+    TabOrder = 10
+  end
+end

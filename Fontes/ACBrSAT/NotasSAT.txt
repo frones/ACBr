@@ -1,0 +1,79 @@
+*** Campos que devem ter na configuração
+
+infCFe
+  versaoDadosEnt
+ide
+  CNPJ
+  signAC
+  numeroCaixa
+emit
+  CNPJ
+  IE
+  IM
+  cRegTribISSQN
+  indRatISSQN
+  
+  
+*** Campos do CFe que não precisam ser informados, pois o SAT que irá calcula-los ou preenche-los
+
+det
+  prod
+    vProd
+	vItem
+	vRatDesc
+	vRatAcr
+	imposto
+	  ICMS
+	    ICMS00
+		  vICMS
+		ICMSSN900
+		  vICMS
+	  PIS
+	    PISAliq
+		  vPIS
+		PISQts
+		  vPIS
+		PISOutr
+		  vPIS
+		PISST
+		  vPIS
+	  COFINS
+	    COFINSAliq
+		  vCOFINS
+	    COFINSQtde
+		  vCOFINS
+	    COFINSOutr
+		  vCOFINS
+	    COFINSST
+		  vCOFINS
+	  ISSQN
+	    vBC
+		vISSQN
+  total
+    ICMSTot
+	  vICMS
+	  vProd
+	  vDesc
+	  vPIS
+	  vCOFINS
+	  vPISST
+	  vCOFINSST
+	  vOutro
+	  vCFe
+	ISSQNTot
+	  vBC
+	  vISS
+	  vPIS
+	  vCOFINS
+	  vPISST
+	  vCOFINSST
+  pagto
+    MP
+      vTROCO
+  infAdic
+    obsFisco
+	  xCampo
+	  xTexto
+Signature
+		  
+	

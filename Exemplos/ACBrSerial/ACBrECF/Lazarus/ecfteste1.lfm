@@ -1,0 +1,5089 @@
+object Form1: TForm1
+  Left = 648
+  Height = 418
+  Top = 243
+  Width = 641
+  Caption = 'Teste de Impressora Fiscal'
+  ClientHeight = 398
+  ClientWidth = 641
+  Constraints.MinHeight = 400
+  Constraints.MinWidth = 440
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Pitch = fpVariable
+  Icon.Data = {
+    BE1000000000010001002020000001002000A810000016000000280000002000
+    0000400000000100200000000000001000006400000064000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000000000000000000000000000000000FF000000FF000000FF0000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    00000000000000000000000000FF000000FFC0C0C0FF808080FF808080FF0000
+    00FF000000FF0000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000FF000000FFC0C0C0FFC0C0C0FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF000000FF000000FF000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000FF0000
+    00FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FF000000FF000000FF8080
+    80FF808080FF808080FF808080FF000000FF000000FF00000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000000000000000000000000000000000FF000000FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0C0FF808080FF808080FF0000
+    00FF000000FF808080FF808080FF808080FF808080FF000000FF000000FF0000
+    0000000000000000000000000000000000000000000000000000000000000000
+    00000000000000000000000000FF000000FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FF808080FF808080FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF000000FF000000FF808080FF808080FF808080FF808080FF0000
+    00FF000000FF0000000000000000000000000000000000000000000000000000
+    000000000000000000FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FF8080
+    80FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF000000FF000000FF808080FF808080FF8080
+    80FF808080FF000000FF000000FF000000000000000000000000000000000000
+    000000000000808080FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF808080FF000000FF000000FF8080
+    80FF808080FF808080FF808080FF000000FF0000000000000000000000000000
+    000000000000808080FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF0000
+    00FF000000FF808080FF808080FF000000FF0000000000000000000000000000
+    0000808080FF808080FFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF8080
+    80FF808080FF000000FF000000FF000000FF0000000000000000000000000000
+    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFFFFFFFFF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF000000FF000000FF00000000000000000000
+    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FFFFFFFFFF808080FF808080FFC0C0C0FFC0C0C0FF8080
+    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF000000FF000000FF000000000000
+    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FFFFFFFFFFFFFFFFFFC0C0C0FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0
+    C0FFC0C0C0FF808080FF808080FF808080FF808080FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF000000FF808080FF000000FF0000
+    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFFFFFFFFFFFFF
+    FFFFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FF8080
+    80FF808080FFC0C0C0FFC0C0C0FF808080FF808080FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF000000FFC0C0C0FF808080FF0000
+    00FF808080FFFFFFFFFFC0C0C0FF808080FFFFFFFFFFFFFFFFFFC0C0C0FFC0C0
+    C0FFC0C0C0FF0000FFFF0000FFFFC0C0C0FFC0C0C0FF808080FF808080FFC0C0
+    C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0C0FF808080FF808080FF8080
+    80FF808080FF808080FF808080FF808080FF000000FFC0C0C0FF808080FF8080
+    80FF808080FFFFFFFFFFFFFFFFFF808080FF808080FFC0C0C0FFC0C0C0FF00FF
+    00FF00FF00FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0
+    C0FFC0C0C0FFC0C0C0FF000000FF808080FF808080FFC0C0C0FFC0C0C0FF8080
+    80FF808080FF808080FF808080FF808080FF000000FF808080FF000000000000
+    0000808080FF808080FFFFFFFFFFC0C0C0FFC0C0C0FF808080FF808080FFC0C0
+    C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+    C0FF000000FF000000FFFFFFFFFFC0C0C0FF000000FF808080FF808080FFC0C0
+    C0FFC0C0C0FF808080FF808080FF808080FF000000FF00000000000000000000
+    00000000000000000000808080FF808080FFFFFFFFFFC0C0C0FFC0C0C0FF8080
+    80FF808080FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0C0FF000000FF0000
+    00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFC0C0C0FFC0C0C0FF8080
+    80FF808080FFC0C0C0FFC0C0C0FF808080FF000000FF00000000000000000000
+    000000000000000000000000000000000000808080FF808080FFFFFFFFFFC0C0
+    C0FFC0C0C0FF808080FF808080FF808080FF000000FF000000FFFFFFFFFFFFFF
+    FFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFC0C0C0FF000000FF808080FFC0C0
+    C0FFC0C0C0FF808080FF808080FF000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000808080FF8080
+    80FFFFFFFFFFC0C0C0FFC0C0C0FF808080FF808080FFFFFFFFFFFFFFFFFFFF00
+    00FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF808080FF8080
+    80FF808080FF0000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000808080FF808080FFFFFFFFFFC0C0C0FFC0C0C0FF808080FFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFC0C0C0FF000000FF0000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    00000000000000000000808080FF808080FFFFFFFFFF808080FFFFFFFFFFFFFF
+    FFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0C0C0FF0000
+    00FF000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000000000000000000000000000808080FF808080FF808080FFFFFF
+    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFC0C0
+    C0FF000000FF0000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000808080FFFFFF
+    FFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFFC0C0C0FF000000FF00000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000008080
+    80FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFF
+    FFFFFFFFFFFFC0C0C0FF000000FF000000FF0000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000808080FFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFFFFFF808080FF808080FF0000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000808080FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    FFFF808080FF808080FF00000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    00000000000000000000808080FFFFFFFFFFFFFFFFFFFFFFFFFF808080FF8080
+    80FF000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000808080FF808080FF808080FF000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000FFF1FFFFFFC07FFFFF001FFFFC0007FFF00001FFC000007F8000001F8000
+    000F8000000F0000000F00000007000000030000000100000000000000000000
+    000300000007C0000007F000001FFC00007FFF0001FFFFC000FFFFF0007FFFFC
+    003FFFFE000FFFFF000FFFFF803FFFFFC0FFFFFFE3FFFFFFFFFFFFFFFFFFFFFF
+    FFFF
+  }
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 375
+    Width = 641
+    Panels = <    
+      item
+        Width = 80
+      end    
+      item
+        Width = 50
+      end>
+    SimplePanel = False
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 335
+    Top = 0
+    Width = 641
+    ActivePage = tsECF
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object tsECF: TTabSheet
+      Caption = 'ECF'
+      ClientHeight = 309
+      ClientWidth = 633
+      ImageIndex = 3
+      object SbArqLog: TSpeedButton
+        Left = 168
+        Height = 22
+        Top = 224
+        Width = 24
+        Caption = '...'
+        OnClick = SbArqLogClick
+      end
+      object Label1: TLabel
+        Left = 20
+        Height = 13
+        Top = 8
+        Width = 35
+        Caption = 'Modelo'
+        ParentColor = False
+      end
+      object Label4: TLabel
+        Left = 140
+        Height = 13
+        Top = 8
+        Width = 25
+        Caption = 'Porta'
+        ParentColor = False
+      end
+      object Label5: TLabel
+        Left = 260
+        Height = 13
+        Top = 8
+        Width = 40
+        Caption = 'TimeOut'
+        ParentColor = False
+      end
+      object Label7: TLabel
+        Left = 327
+        Height = 13
+        Top = 8
+        Width = 41
+        Caption = 'Intervalo'
+        ParentColor = False
+      end
+      object Label6: TLabel
+        Left = 16
+        Height = 13
+        Top = 156
+        Width = 104
+        Caption = 'Mensagem Aguarde...'
+        ParentColor = False
+      end
+      object Label9: TLabel
+        Left = 10
+        Height = 13
+        Top = 232
+        Width = 40
+        Alignment = taRightJustify
+        Caption = 'Arq.Log:'
+        ParentColor = False
+      end
+      object cbxModelo: TComboBox
+        Left = 20
+        Height = 21
+        Top = 24
+        Width = 105
+        ItemHeight = 13
+        Items.Strings = (
+          'Procurar'
+          'ecfNaoFiscal'
+          'ecfBematech'
+          'ecfSweda'
+          'ecfDaruma'
+          'ecfSchalter'
+          'ecfMecaf'
+          'ecfYanco'
+          'ecfDataRegis'
+          'ecfUrano'
+          'ecfICash'
+          'ecfQuattro'
+        )
+        OnChange = cbxModeloChange
+        Style = csDropDownList
+        TabOrder = 0
+      end
+      object cbxPorta: TComboBox
+        Left = 140
+        Height = 21
+        Top = 24
+        Width = 105
+        ItemHeight = 13
+        OnChange = cbxPortaChange
+        TabOrder = 1
+        Text = 'Procurar'
+      end
+      object chTentar: TCheckBox
+        Left = 20
+        Height = 19
+        Top = 66
+        Width = 109
+        Caption = 'Tentar Novamente'
+        OnChange = chTentarChange
+        TabOrder = 6
+      end
+      object chBloqueia: TCheckBox
+        Left = 20
+        Height = 19
+        Top = 111
+        Width = 138
+        Caption = 'Bloqueia Mouse Teclado'
+        Checked = True
+        OnChange = chBloqueiaChange
+        State = cbChecked
+        TabOrder = 10
+      end
+      object chExibeMsg: TCheckBox
+        Left = 20
+        Height = 19
+        Top = 134
+        Width = 121
+        Caption = 'Exibe Msg Aguarde...'
+        Checked = True
+        OnChange = chExibeMsgChange
+        State = cbChecked
+        TabOrder = 12
+      end
+      object chArredondaPorQtd: TCheckBox
+        Left = 188
+        Height = 19
+        Top = 66
+        Width = 174
+        Caption = 'Arredondamento por Quantidade'
+        OnChange = chArredondaPorQtdChange
+        TabOrder = 7
+      end
+      object chGavetaSinalInvertido: TCheckBox
+        Left = 188
+        Height = 19
+        Top = 88
+        Width = 125
+        Caption = 'Gaveta Sinal Invertido'
+        OnChange = chGavetaSinalInvertidoChange
+        TabOrder = 9
+      end
+      object mMsg: TMemo
+        Left = 16
+        Height = 41
+        Top = 175
+        Width = 599
+        Anchors = [akTop, akLeft, akRight]
+        Lines.Strings = (
+          'Aguardando a resposta da Impressora: %d segundos'
+        )
+        OnChange = mMsgChange
+        ScrollBars = ssVertical
+        TabOrder = 15
+      end
+      object edLog: TEdit
+        Cursor = crIBeam
+        Left = 56
+        Height = 21
+        Top = 224
+        Width = 110
+        TabOrder = 16
+        Text = 'acbrlog.txt'
+      end
+      object seTimeOut: TSpinEdit
+        Left = 260
+        Height = 21
+        Top = 24
+        Width = 46
+        MinValue = 1
+        OnChange = seTimeOutChange
+        TabOrder = 2
+        Value = 3
+      end
+      object seIntervaloAposComando: TSpinEdit
+        Left = 324
+        Height = 21
+        Top = 24
+        Width = 54
+        Increment = 10
+        MaxValue = 1000
+        OnChange = seIntervaloAposComandoChange
+        TabOrder = 3
+        Value = 100
+      end
+      object btSerial: TBitBtn
+        Left = 394
+        Height = 26
+        Top = 19
+        Width = 71
+        Caption = 'Serial'
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+          3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+          000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+          6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+          008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+          56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+          FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+          008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+          6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+          008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+          3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+          00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        }
+        ModalResult = 1
+        OnClick = btSerialClick
+        TabOrder = 4
+      end
+      object Label20: TLabel
+        Left = 208
+        Height = 13
+        Top = 232
+        Width = 47
+        Alignment = taRightJustify
+        Caption = 'Operador:'
+        ParentColor = False
+      end
+      object edOperador: TEdit
+        Cursor = crIBeam
+        Left = 260
+        Height = 21
+        Top = 224
+        Width = 210
+        Anchors = [akTop, akLeft, akRight]
+        TabOrder = 17
+      end
+      object Label22: TLabel
+        Left = 476
+        Height = 13
+        Top = 8
+        Width = 53
+        Caption = 'BandWidth'
+        ParentColor = False
+      end
+      object seBandWidth: TSpinEdit
+        Left = 476
+        Height = 21
+        Top = 24
+        Width = 54
+        Increment = 10
+        MaxValue = 1000
+        OnChange = seBandWidthChange
+        TabOrder = 5
+      end
+      object chDescricaoGrande: TCheckBox
+        Left = 188
+        Height = 19
+        Top = 134
+        Width = 106
+        Caption = 'Descrição Grande'
+        Checked = True
+        OnChange = chDescricaoGrandeChange
+        State = cbChecked
+        TabOrder = 13
+      end
+      object chArredondamentoItemMFD: TCheckBox
+        Left = 188
+        Height = 19
+        Top = 111
+        Width = 147
+        Caption = 'Arredondamento Item MFD'
+        OnChange = chArredondamentoItemMFDChange
+        TabOrder = 11
+      end
+      object Label23: TLabel
+        Left = 14
+        Height = 13
+        Top = 265
+        Width = 82
+        Caption = 'MaxLinhasBuffer:'
+        ParentColor = False
+      end
+      object seMaxLinhasBuffer: TSpinEdit
+        Left = 112
+        Height = 21
+        Hint = 'Para homologaÃ§Ã£o TEF utilize 3'#13#10'(ImpressÃ£o de 3 em 3 linhas)'
+        Top = 258
+        Width = 54
+        MaxValue = 10
+        OnChange = seMaxLinhasBufferChange
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 19
+      end
+      object chAACUsar: TCheckBox
+        Left = 196
+        Height = 19
+        Top = 258
+        Width = 194
+        Caption = 'Usar Arq.Auxiliar Criptografado'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        OnChange = chAACUsarChange
+        ParentFont = False
+        TabOrder = 21
+      end
+      object chAACFlush: TCheckBox
+        Left = 415
+        Height = 19
+        Top = 258
+        Width = 50
+        Caption = 'Flush'
+        Checked = True
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        OnChange = chAACFlushChange
+        ParentFont = False
+        State = cbChecked
+        TabOrder = 23
+      end
+      object chProcessMessages: TCheckBox
+        Left = 415
+        Height = 19
+        Top = 280
+        Width = 121
+        Caption = 'ProcessMessages'
+        Checked = True
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        OnChange = chProcessMessagesChange
+        ParentFont = False
+        State = cbChecked
+        TabOrder = 24
+      end
+      object GroupBox1: TGroupBox
+        Left = 385
+        Height = 63
+        Top = 56
+        Width = 130
+        Caption = 'Decimais'
+        ClientHeight = 45
+        ClientWidth = 126
+        TabOrder = 14
+        object seDecimaisQTD: TSpinEdit
+          Left = 9
+          Height = 21
+          Top = 13
+          Width = 46
+          MaxValue = 4
+          OnChange = seDecimaisQTDChange
+          TabOrder = 0
+          Value = 3
+        end
+        object Label29: TLabel
+          Left = 17
+          Height = 13
+          Top = -1
+          Width = 17
+          Caption = 'Qtd'
+          ParentColor = False
+        end
+        object Label45: TLabel
+          Left = 65
+          Height = 13
+          Top = -1
+          Width = 28
+          Caption = 'Preço'
+          ParentColor = False
+        end
+        object seDecimaisPreco: TSpinEdit
+          Left = 65
+          Height = 21
+          Top = 13
+          Width = 46
+          MaxValue = 3
+          OnChange = seDecimaisPrecoChange
+          TabOrder = 1
+          Value = 3
+        end
+      end
+      object Label46: TLabel
+        Left = 14
+        Height = 13
+        Top = 286
+        Width = 87
+        Caption = 'Página de Código:'
+        ParentColor = False
+      end
+      object sePaginaCodigo: TSpinEdit
+        Left = 112
+        Height = 21
+        Top = 282
+        Width = 53
+        MaxValue = 9999999
+        OnChange = sePaginaCodigoChange
+        TabOrder = 20
+      end
+      object chCupomMania: TCheckBox
+        Left = 196
+        Height = 19
+        Top = 280
+        Width = 85
+        Caption = 'Cupom Mania'
+        OnChange = chCupomManiaChange
+        TabOrder = 22
+      end
+      object Button1: TButton
+        Left = 582
+        Height = 25
+        Top = 224
+        Width = 40
+        Anchors = [akTop, akRight]
+        Caption = 'Info'
+        OnClick = Button1Click
+        TabOrder = 25
+      end
+      object edInfo: TEdit
+        Cursor = crIBeam
+        Left = 502
+        Height = 21
+        Top = 225
+        Width = 80
+        Anchors = [akTop, akRight]
+        TabOrder = 18
+      end
+      object chControlePorta: TCheckBox
+        Left = 20
+        Height = 19
+        Top = 88
+        Width = 87
+        Caption = 'Controle Porta'
+        OnChange = chControlePortaChange
+        TabOrder = 8
+      end
+      object Label69: TLabel
+        Left = 400
+        Height = 13
+        Top = 128
+        Width = 52
+        Caption = 'ECF Virtual'
+        ParentColor = False
+      end
+      object cbxECFVirtual: TComboBox
+        Left = 400
+        Height = 21
+        Top = 144
+        Width = 105
+        Enabled = False
+        ItemHeight = 13
+        Items.Strings = (
+          'Não Fiscal'
+          'SAT'
+          'NFCe'
+        )
+        OnChange = cbxECFVirtualChange
+        Style = csDropDownList
+        TabOrder = 26
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'Cmd/Resp'
+      ClientHeight = 309
+      ClientWidth = 633
+      object Label2: TLabel
+        Left = 0
+        Height = 17
+        Top = 54
+        Width = 633
+        Align = alTop
+        AutoSize = False
+        Caption = 'Resposta'
+        Layout = tlBottom
+        ParentColor = False
+      end
+      object Label17: TLabel
+        Left = 0
+        Height = 15
+        Top = 0
+        Width = 633
+        Align = alTop
+        AutoSize = False
+        Caption = 'Comando Enviado'
+        Layout = tlBottom
+        ParentColor = False
+      end
+      object mResp: TMemo
+        Left = 0
+        Height = 238
+        Top = 71
+        Width = 633
+        Align = alClient
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Courier'
+        Font.Pitch = fpFixed
+        Font.Quality = fqDraft
+        ParentFont = False
+        ScrollBars = ssBoth
+        TabOrder = 1
+        WantReturns = False
+        WordWrap = False
+      end
+      object mEnviado: TMemo
+        Left = 0
+        Height = 39
+        Top = 15
+        Width = 633
+        Align = alTop
+        TabOrder = 0
+        WantReturns = False
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Cupom'
+      ClientHeight = 309
+      ClientWidth = 633
+      ImageIndex = 1
+      object Panel1: TPanel
+        Left = 0
+        Height = 268
+        Top = 41
+        Width = 633
+        Align = alClient
+        BevelOuter = bvNone
+        ClientHeight = 268
+        ClientWidth = 633
+        TabOrder = 0
+        object mBobina: TMemo
+          Left = 0
+          Height = 268
+          Top = 0
+          Width = 633
+          Align = alClient
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Fixedsys'
+          Font.Pitch = fpVariable
+          ParentFont = False
+          ScrollBars = ssVertical
+          TabOrder = 0
+          Visible = False
+          WordWrap = False
+        end
+        object wbBobina: TIpHtmlPanel
+          Left = 0
+          Height = 268
+          Top = 0
+          Width = 633
+          Align = alClient
+          FixedTypeface = 'Courier New'
+          DefaultTypeFace = 'default'
+          DefaultFontSize = 12
+          FlagErrors = False
+          PrintSettings.MarginLeft = 0.5
+          PrintSettings.MarginTop = 0.5
+          PrintSettings.MarginRight = 0.5
+          PrintSettings.MarginBottom = 0.5
+          TabOrder = 1
+        end
+      end
+      object Panel2: TPanel
+        Left = 0
+        Height = 41
+        Top = 0
+        Width = 633
+        Align = alTop
+        BevelOuter = bvNone
+        ClientHeight = 41
+        ClientWidth = 633
+        TabOrder = 1
+        object cbMemoHTML: TCheckBox
+          Left = 272
+          Height = 19
+          Top = 9
+          Width = 50
+          Caption = 'HTML'
+          Checked = True
+          OnClick = cbMemoHTMLClick
+          State = cbChecked
+          TabOrder = 2
+        end
+        object bBobinaParams: TButton
+          Left = 88
+          Height = 24
+          Top = 8
+          Width = 75
+          Caption = 'Parametros'
+          OnClick = bBobinaParamsClick
+          TabOrder = 0
+        end
+        object bBobinaLimpar: TButton
+          Left = 176
+          Height = 24
+          Top = 8
+          Width = 75
+          Caption = 'Limpar'
+          OnClick = bBobinaLimparClick
+          TabOrder = 1
+        end
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'RFD'
+      ClientHeight = 309
+      ClientWidth = 633
+      ImageIndex = 2
+      object PageControl2: TPageControl
+        Left = 0
+        Height = 254
+        Top = 55
+        Width = 633
+        ActivePage = TabSheet5
+        Align = alClient
+        TabIndex = 1
+        TabOrder = 1
+        object TabSheet6: TTabSheet
+          Caption = 'Sw.House'
+          ClientHeight = 232
+          ClientWidth = 535
+          ImageIndex = 1
+          object Label8: TLabel
+            Left = 12
+            Height = 14
+            Top = 10
+            Width = 64
+            Caption = 'Razao Social'
+            ParentColor = False
+          end
+          object Label13: TLabel
+            Left = 276
+            Height = 14
+            Top = 10
+            Width = 24
+            Caption = 'COO'
+            ParentColor = False
+          end
+          object Label10: TLabel
+            Left = 12
+            Height = 14
+            Top = 51
+            Width = 28
+            Caption = 'CNPJ'
+            ParentColor = False
+          end
+          object Label11: TLabel
+            Left = 143
+            Height = 14
+            Top = 51
+            Width = 65
+            Caption = 'Insc.Estadual'
+            ParentColor = False
+          end
+          object Label12: TLabel
+            Left = 276
+            Height = 14
+            Top = 51
+            Width = 69
+            Caption = 'Insc.Municipal'
+            ParentColor = False
+          end
+          object Label14: TLabel
+            Left = 12
+            Height = 14
+            Top = 91
+            Width = 47
+            Caption = 'Aplicativo'
+            ParentColor = False
+          end
+          object Label15: TLabel
+            Left = 192
+            Height = 14
+            Top = 91
+            Width = 38
+            Caption = 'Numero'
+            ParentColor = False
+          end
+          object Label16: TLabel
+            Left = 276
+            Height = 14
+            Top = 91
+            Width = 34
+            Caption = 'VersÃ£o'
+            ParentColor = False
+          end
+          object Label18: TLabel
+            Left = 12
+            Height = 14
+            Top = 132
+            Width = 36
+            Caption = 'Linha 1'
+            ParentColor = False
+          end
+          object Label19: TLabel
+            Left = 204
+            Height = 14
+            Top = 132
+            Width = 36
+            Caption = 'Linha 2'
+            ParentColor = False
+          end
+          object edSH_RazaoSocial: TEdit
+            Cursor = crIBeam
+            Left = 12
+            Height = 21
+            Top = 26
+            Width = 245
+            OnChange = edSH_RazaoSocialChange
+            TabOrder = 0
+          end
+          object edSH_COO: TEdit
+            Cursor = crIBeam
+            Left = 276
+            Height = 21
+            Top = 26
+            Width = 121
+            OnChange = edSH_COOChange
+            TabOrder = 1
+          end
+          object edSH_CNPJ: TEdit
+            Cursor = crIBeam
+            Left = 12
+            Height = 21
+            Top = 66
+            Width = 121
+            OnChange = edSH_CNPJChange
+            TabOrder = 5
+          end
+          object edSH_IE: TEdit
+            Cursor = crIBeam
+            Left = 144
+            Height = 21
+            Top = 66
+            Width = 114
+            OnChange = edSH_IEChange
+            TabOrder = 7
+          end
+          object edSH_IM: TEdit
+            Cursor = crIBeam
+            Left = 276
+            Height = 21
+            Top = 66
+            Width = 121
+            OnChange = edSH_IMChange
+            TabOrder = 9
+          end
+          object edSH_Aplicativo: TEdit
+            Cursor = crIBeam
+            Left = 12
+            Height = 21
+            Top = 106
+            Width = 169
+            OnChange = edSH_AplicativoChange
+            TabOrder = 2
+          end
+          object edSH_NumeroAP: TEdit
+            Cursor = crIBeam
+            Left = 192
+            Height = 21
+            Top = 106
+            Width = 65
+            OnChange = edSH_NumeroAPChange
+            TabOrder = 3
+          end
+          object edSH_VersaoAP: TEdit
+            Cursor = crIBeam
+            Left = 276
+            Height = 21
+            Top = 106
+            Width = 121
+            OnChange = edSH_VersaoAPChange
+            TabOrder = 4
+          end
+          object edSH_Linha1: TEdit
+            Cursor = crIBeam
+            Left = 12
+            Height = 21
+            Top = 146
+            Width = 181
+            OnChange = edSH_Linha1Change
+            TabOrder = 6
+          end
+          object edSH_Linha2: TEdit
+            Cursor = crIBeam
+            Left = 208
+            Height = 21
+            Top = 146
+            Width = 189
+            OnChange = edSH_Linha2Change
+            TabOrder = 8
+          end
+        end
+        object TabSheet5: TTabSheet
+          Caption = 'ACBrRFD.INI'
+          ClientHeight = 228
+          ClientWidth = 625
+          object Panel4: TPanel
+            Left = 0
+            Height = 34
+            Top = 194
+            Width = 625
+            Align = alBottom
+            BevelOuter = bvNone
+            ClientHeight = 34
+            ClientWidth = 625
+            TabOrder = 0
+            object bRFDLer: TButton
+              Left = 131
+              Height = 25
+              Top = 6
+              Width = 75
+              Caption = 'Ler'
+              OnClick = bRFDLerClick
+              TabOrder = 0
+            end
+            object bRFDSalvar: TButton
+              Left = 219
+              Height = 25
+              Top = 6
+              Width = 75
+              Caption = 'Salvar'
+              OnClick = bRFDSalvarClick
+              TabOrder = 1
+            end
+          end
+          object mRFDParam: TMemo
+            Left = 0
+            Height = 194
+            Top = 0
+            Width = 625
+            Align = alClient
+            Font.Color = clBlack
+            Font.Height = 12
+            Font.Name = 'Fixedsys'
+            Font.Pitch = fpVariable
+            ParentFont = False
+            TabOrder = 1
+          end
+        end
+      end
+      object Panel3: TPanel
+        Left = 0
+        Height = 55
+        Top = 0
+        Width = 633
+        Align = alTop
+        BevelOuter = bvNone
+        ClientHeight = 55
+        ClientWidth = 633
+        TabOrder = 0
+        object sbDirRFD: TSpeedButton
+          Left = 600
+          Height = 22
+          Top = 23
+          Width = 23
+          Anchors = [akTop, akRight]
+          Caption = '...'
+          Font.Color = clBlack
+          Font.Height = 11
+          Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Style = [fsBold]
+          OnClick = sbDirRFDClick
+          ParentFont = False
+        end
+        object Label3: TLabel
+          Left = 134
+          Height = 13
+          Top = 7
+          Width = 107
+          Caption = 'Diretório arquivos RFD'
+          ParentColor = False
+        end
+        object chRFD: TCheckBox
+          Left = 24
+          Height = 19
+          Top = 13
+          Width = 71
+          Caption = 'Gerar RFD'
+          OnClick = chRFDClick
+          TabOrder = 0
+        end
+        object edDirRFD: TEdit
+          Cursor = crIBeam
+          Left = 134
+          Height = 18
+          Top = 23
+          Width = 466
+          Anchors = [akTop, akLeft, akRight]
+          Font.Color = clBlack
+          Font.Height = 11
+          Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          OnChange = edDirRFDChange
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+    end
+    object tsTagsImpressao: TTabSheet
+      Caption = 'Tags de Impressao'
+      ClientHeight = 309
+      ClientWidth = 633
+      object speBarrasLargura: TSpinEdit
+        Left = 12
+        Height = 22
+        Top = 40
+        Width = 46
+        AutoSize = False
+        MaxValue = 6
+        OnChange = speBarrasLarguraChange
+        TabOrder = 0
+      end
+      object BitBtn6: TBitBtn
+        Left = 474
+        Height = 23
+        Top = 26
+        Width = 133
+        Anchors = [akTop, akRight]
+        AutoSize = True
+        Caption = 'Enviar Linha Gerencial'
+        Default = True
+        ModalResult = 1
+        OnClick = BitBtn6Click
+        TabOrder = 1
+      end
+      object MenTextoBarras: TMemo
+        Left = 0
+        Height = 204
+        Top = 105
+        Width = 633
+        Align = alBottom
+        Lines.Strings = (
+          'TEXTO LIVRE'
+          'Até 600 caracteres'
+          'ÁÉÍÓÚáéíóúçÇãõÃÕÊêÀà'
+          ''
+          '</linha_dupla>'
+          ''
+          '<CE>*** TAGS DE FORMATAÇÃO ***</CE>'
+          '<e>EXPANDIDO</e>'
+          '<N>Negrito</n>'
+          '<S>Sublinhado</s>'
+          '<C>CONDENSADO</C>'
+          '<i>ITALICO</I>'
+          '</linha_simples>'
+          ''
+          '<CE>*** TAGS DE CÓDIGO DE BARRAS ***</CE>'
+          'EAN 8:'
+          '<ean8>1234567</ean8>'
+          'EAN13:'
+          '<ean13>123456789012</ean13>'
+          'INT25:'
+          '<inter>1234567890</inter>'
+          'CODE39: '
+          '<code39>ABCDE12345</code39>'
+          'CODE93:'
+          '<code93>ABC123abc</code93>'
+          'CODE128:'
+          '<code128>$-=+ABC123abc</code128>'
+          'UPCA:'
+          '<upca>12345678901</upca>'
+          'CODABAR :'
+          '<codabar>$12345</codabar>'
+          '</linha_simples>'
+          ''
+          '<CE>*** TAGS DE FORMATAÇÃO ***</CE>'
+          '<ce>NO CENTRO</CE>'
+          '<AD>A Direira</ad>'
+          '</linha_simples>'
+          ''
+          '<CE>*** TESTE DE TAGS INVÁLIDAS ***</CE>'
+          '<ce> <>tags inválidas no texto">">><<</CE>'
+          '<AD><da><ec></</A Direira</ad>'
+          ''
+          '</linha_dupla>'
+        )
+        ScrollBars = ssAutoBoth
+        TabOrder = 2
+      end
+      object chBarrasImprimeTexto: TCheckBox
+        Left = 164
+        Height = 19
+        Top = 40
+        Width = 151
+        Caption = 'Imprime Texto na Barra'
+        Checked = True
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        OnChange = chBarrasImprimeTextoChange
+        ParentFont = False
+        State = cbChecked
+        TabOrder = 3
+      end
+      object speBarrasAltura: TSpinEdit
+        Left = 84
+        Height = 22
+        Top = 40
+        Width = 46
+        AutoSize = False
+        MaxValue = 200
+        OnChange = speBarrasAlturaChange
+        TabOrder = 4
+      end
+      object Label28: TLabel
+        Left = 84
+        Height = 13
+        Top = 24
+        Width = 34
+        Caption = 'Altura'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label27: TLabel
+        Left = 12
+        Height = 13
+        Top = 24
+        Width = 44
+        Caption = 'Largura'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label24: TLabel
+        Left = 0
+        Height = 16
+        Top = 0
+        Width = 633
+        Align = alTop
+        Alignment = taCenter
+        Caption = 'Tags de Formatação de Impressão e Código de Barras'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object chIgnorarTagsFormatacao: TCheckBox
+        Left = 164
+        Height = 19
+        Top = 66
+        Width = 183
+        Caption = 'Ignorar TAGs de Formatação'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        OnChange = chIgnorarTagsFormatacaoChange
+        ParentFont = False
+        TabOrder = 5
+      end
+      object Button2: TButton
+        Left = 551
+        Height = 23
+        Top = 56
+        Width = 56
+        Anchors = [akTop, akRight]
+        AutoSize = True
+        Caption = '1..255'
+        OnClick = Button2Click
+        TabOrder = 6
+      end
+    end
+    object tsDadosRedZ: TTabSheet
+      Caption = 'Dados Redução Z'
+      ClientHeight = 309
+      ClientWidth = 539
+      object mRZ: TMemo
+        Left = 0
+        Height = 248
+        Top = 17
+        Width = 539
+        Align = alTop
+        Anchors = [akLeft, akRight, akBottom]
+        Font.Color = clBlack
+        Font.Height = 13
+        Font.Name = 'Courier'
+        Font.Pitch = fpVariable
+        ParentFont = False
+        ScrollBars = ssBoth
+        TabOrder = 0
+        WantReturns = False
+        WordWrap = False
+      end
+      object bLerDadosRedZ: TButton
+        Left = 7
+        Height = 25
+        Top = 271
+        Width = 108
+        Anchors = [akLeft, akBottom]
+        Caption = 'Ler Dados RZ'
+        OnClick = bLerDadosRedZClick
+        TabOrder = 1
+      end
+      object Label37: TLabel
+        Left = 0
+        Height = 17
+        Top = 0
+        Width = 539
+        Align = alTop
+        AutoSize = False
+        Caption = 'Resposta'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Pitch = fpVariable
+        Font.Style = [fsBold]
+        Layout = tlBottom
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object tsMenuFiscal: TTabSheet
+      Caption = 'Menu Fiscal'
+      ClientHeight = 309
+      ClientWidth = 539
+      object pgcMenuFiscalTipo: TPageControl
+        Left = 0
+        Height = 68
+        Top = 241
+        Width = 539
+        ActivePage = tbsMenuFiscalTipoCOO
+        Align = alBottom
+        TabIndex = 1
+        TabOrder = 0
+        object tbsMenuFiscalTipoData: TTabSheet
+          Caption = 'Emissão por intervalo de data'
+          ClientHeight = 42
+          ClientWidth = 531
+          object Label25: TLabel
+            Left = 16
+            Height = 13
+            Top = 15
+            Width = 18
+            Alignment = taRightJustify
+            Caption = 'de :'
+            ParentColor = False
+          end
+          object Label26: TLabel
+            Left = 160
+            Height = 13
+            Top = 15
+            Width = 15
+            Caption = 'até'
+            ParentColor = False
+          end
+          object edtDtInicial: TDateEdit
+            Left = 40
+            Height = 21
+            Top = 8
+            Width = 80
+            CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+            OKCaption = 'OK'
+            CancelCaption = 'Cancel'
+            DefaultToday = True
+            DateOrder = doNone
+            ButtonWidth = 23
+            CharCase = ecNormal
+            NumGlyphs = 1
+            MaxLength = 0
+            TabOrder = 0
+          end
+          object edtDtFinal: TDateEdit
+            Left = 184
+            Height = 21
+            Top = 8
+            Width = 80
+            CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+            OKCaption = 'OK'
+            CancelCaption = 'Cancel'
+            DefaultToday = True
+            DateOrder = doNone
+            ButtonWidth = 23
+            CharCase = ecNormal
+            NumGlyphs = 1
+            MaxLength = 0
+            TabOrder = 1
+          end
+        end
+        object tbsMenuFiscalTipoCOO: TTabSheet
+          Caption = 'Emissão por intervalo de COO'
+          ClientHeight = 42
+          ClientWidth = 531
+          ImageIndex = 1
+          object Label30: TLabel
+            Left = 16
+            Height = 13
+            Top = 15
+            Width = 18
+            Alignment = taRightJustify
+            Caption = 'de :'
+            ParentColor = False
+          end
+          object Label31: TLabel
+            Left = 142
+            Height = 13
+            Top = 15
+            Width = 15
+            Caption = 'até'
+            ParentColor = False
+          end
+          object edtCOOInicial: TSpinEdit
+            Left = 40
+            Height = 21
+            Top = 10
+            Width = 96
+            MaxValue = 999999
+            TabOrder = 0
+          end
+          object edtCOOFinal: TSpinEdit
+            Left = 163
+            Height = 21
+            Top = 10
+            Width = 96
+            MaxValue = 999999
+            TabOrder = 1
+          end
+        end
+      end
+      object grpMenuFiscalOpcoes: TGroupBox
+        Left = 0
+        Height = 241
+        Top = 0
+        Width = 539
+        Align = alClient
+        Caption = 'Operações do Menu fiscal'
+        ClientHeight = 223
+        ClientWidth = 535
+        TabOrder = 1
+        object Label32: TLabel
+          AnchorSideLeft.Control = grpMenuFiscalOpcoes
+          AnchorSideLeft.Side = asrCenter
+          Left = 89
+          Height = 13
+          Top = 144
+          Width = 357
+          Caption = 'Dica: Para os menus que geram arquivos, verificar o DemoPAF'
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Pitch = fpVariable
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object btnMenuFiscalLX: TButton
+          Left = 10
+          Height = 25
+          Top = 10
+          Width = 149
+          Caption = 'LX'
+          OnClick = btnMenuFiscalLXClick
+          TabOrder = 0
+        end
+        object btnMenuFiscalLMFC: TButton
+          Left = 10
+          Height = 25
+          Top = 41
+          Width = 149
+          Caption = 'LMFC'
+          OnClick = btnMenuFiscalLMFCClick
+          TabOrder = 3
+        end
+        object btnMenuFiscalLMFS: TButton
+          Left = 10
+          Height = 25
+          Top = 72
+          Width = 149
+          Caption = 'LMFS'
+          OnClick = btnMenuFiscalLMFSClick
+          TabOrder = 6
+        end
+        object btnMenuFiscalMFDEspelho: TButton
+          Left = 178
+          Height = 25
+          Top = 10
+          Width = 149
+          Caption = 'Espelho MFD'
+          OnClick = btnMenuFiscalMFDEspelhoClick
+          TabOrder = 1
+        end
+        object btnMenuFiscalMFDArq: TButton
+          Left = 178
+          Height = 25
+          Top = 41
+          Width = 149
+          Caption = 'Arq. MFD'
+          OnClick = btnMenuFiscalMFDArqClick
+          TabOrder = 4
+        end
+        object btnMenuFiscalRelMeiosPagto: TButton
+          Left = 342
+          Height = 25
+          Top = 8
+          Width = 149
+          Caption = 'Meios Pagto.'
+          OnClick = btnMenuFiscalRelMeiosPagtoClick
+          TabOrder = 2
+        end
+        object btnMenuFiscalRelDAVEmitidos: TButton
+          Left = 342
+          Height = 25
+          Top = 41
+          Width = 149
+          Caption = 'DAV Emitidos'
+          OnClick = btnMenuFiscalRelDAVEmitidosClick
+          TabOrder = 5
+        end
+        object btnMenuFiscalRelIdentPAFECF: TButton
+          Left = 342
+          Height = 25
+          Top = 72
+          Width = 149
+          Caption = 'Identificação PAF-ECF'
+          OnClick = btnMenuFiscalRelIdentPAFECFClick
+          TabOrder = 8
+        end
+        object chkMenuFiscalGerarArquivo: TCheckBox
+          Left = 18
+          Height = 19
+          Top = 170
+          Width = 158
+          Caption = 'Efetuar a geração de arquivo'
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Pitch = fpVariable
+          ParentFont = False
+          TabOrder = 12
+        end
+        object chkMenuFiscalCotepe1704: TCheckBox
+          Left = 26
+          Height = 19
+          Top = 194
+          Width = 453
+          Caption = 'Gerar o arquivo no formato do ato Cotepe 17/04 (Somente para os menus: LMFC, Arq.MFD)'
+          TabOrder = 13
+        end
+        object btnMenuFiscalConfigPAFECF: TButton
+          Left = 342
+          Height = 25
+          Top = 104
+          Width = 149
+          Caption = 'Configurações do PAF-ECF'
+          OnClick = btnMenuFiscalConfigPAFECFClick
+          TabOrder = 11
+        end
+        object btnMenuFiscalNotaPaulista: TButton
+          Left = 178
+          Height = 25
+          Top = 72
+          Width = 149
+          Caption = 'CAT52'
+          OnClick = btnMenuFiscalNotaPaulistaClick
+          TabOrder = 7
+        end
+        object btnArqMFNovo: TButton
+          Left = 10
+          Height = 25
+          Top = 104
+          Width = 149
+          Caption = 'Arq.MF (novo)'
+          OnClick = btnArqMFNovoClick
+          TabOrder = 9
+        end
+        object btnArqMFDNovo: TButton
+          Left = 178
+          Height = 25
+          Top = 104
+          Width = 149
+          Caption = 'Arq.MFD (novo)'
+          OnClick = btnArqMFDNovoClick
+          TabOrder = 10
+        end
+      end
+    end
+    object tsArqAuxCript: TTabSheet
+      Caption = 'Arq.Aux.Cript.'
+      ClientHeight = 309
+      ClientWidth = 609
+      OnShow = tsArqAuxCriptShow
+      object bAACGravarArquivo: TButton
+        Left = 473
+        Height = 25
+        Top = 257
+        Width = 102
+        Anchors = [akRight, akBottom]
+        Caption = 'Gravar Arquivo'
+        OnClick = bAACGravarArquivoClick
+        TabOrder = 0
+      end
+      object Label33: TLabel
+        Left = 10
+        Height = 13
+        Top = 234
+        Width = 70
+        Alignment = taRightJustify
+        Anchors = [akLeft, akBottom]
+        Caption = 'Nome Arquivo:'
+        ParentColor = False
+      end
+      object edAACNomeArq: TEdit
+        Cursor = crIBeam
+        Left = 84
+        Height = 21
+        Top = 228
+        Width = 325
+        Anchors = [akLeft, akRight, akBottom]
+        TabOrder = 1
+        Text = 'arquivo_auxiliar_criptografado.txt'
+      end
+      object SbAACNomeArq: TSpeedButton
+        Left = 417
+        Height = 22
+        Top = 228
+        Width = 24
+        Anchors = [akRight, akBottom]
+        Caption = '...'
+        OnClick = SbAACNomeArqClick
+      end
+      object Label41: TLabel
+        Left = 20
+        Height = 13
+        Top = 263
+        Width = 60
+        Alignment = taRightJustify
+        Anchors = [akLeft, akBottom]
+        Caption = 'Arquivo Log:'
+        ParentColor = False
+      end
+      object edAACLog: TEdit
+        Cursor = crIBeam
+        Left = 84
+        Height = 21
+        Top = 257
+        Width = 325
+        Anchors = [akLeft, akRight, akBottom]
+        TabOrder = 2
+        Text = 'acbr_aac_log.txt'
+      end
+      object SbAACArqLog: TSpeedButton
+        Left = 417
+        Height = 22
+        Top = 257
+        Width = 24
+        Anchors = [akRight, akBottom]
+        Caption = '...'
+        OnClick = SbAACArqLogClick
+      end
+      object pgAAC: TPageControl
+        Left = 0
+        Height = 213
+        Top = 0
+        Width = 609
+        ActivePage = tsAACParams
+        Align = alTop
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        TabIndex = 2
+        TabOrder = 3
+        object tsAACDados: TTabSheet
+          Caption = 'Dados Cadastrais'
+          ClientHeight = 187
+          ClientWidth = 531
+          object gbAAC_SH: TGroupBox
+            Left = 0
+            Height = 99
+            Top = 0
+            Width = 531
+            Align = alTop
+            Caption = 'Dados da Software House'
+            ClientHeight = 81
+            ClientWidth = 527
+            TabOrder = 0
+            object Label21: TLabel
+              Left = 50
+              Height = 13
+              Top = -1
+              Width = 63
+              Caption = 'Razao Social'
+              ParentColor = False
+            end
+            object Label34: TLabel
+              Left = 50
+              Height = 13
+              Top = 38
+              Width = 27
+              Caption = 'CNPJ'
+              ParentColor = False
+            end
+            object Label35: TLabel
+              Left = 186
+              Height = 13
+              Top = 37
+              Width = 64
+              Caption = 'Insc.Estadual'
+              ParentColor = False
+            end
+            object Label36: TLabel
+              Left = 314
+              Height = 13
+              Top = 38
+              Width = 68
+              Caption = 'Insc.Municipal'
+              ParentColor = False
+            end
+            object edAAC_SH_RazaoSocial: TEdit
+              Cursor = crIBeam
+              Left = 50
+              Height = 21
+              Top = 15
+              Width = 385
+              MaxLength = 40
+              TabOrder = 0
+            end
+            object edAAC_SH_CNPJ: TEdit
+              Cursor = crIBeam
+              Left = 50
+              Height = 21
+              Top = 53
+              Width = 121
+              MaxLength = 14
+              TabOrder = 1
+            end
+            object edAAC_SH_IE: TEdit
+              Cursor = crIBeam
+              Left = 186
+              Height = 21
+              Top = 53
+              Width = 114
+              MaxLength = 14
+              TabOrder = 2
+            end
+            object edAAC_SH_IM: TEdit
+              Cursor = crIBeam
+              Left = 314
+              Height = 21
+              Top = 53
+              Width = 121
+              MaxLength = 14
+              TabOrder = 3
+            end
+          end
+          object gbAAC_PAF: TGroupBox
+            Left = 0
+            Height = 105
+            Top = 99
+            Width = 531
+            Align = alTop
+            Caption = 'Dados do PAF-ECF'
+            ClientHeight = 87
+            ClientWidth = 527
+            TabOrder = 1
+            object Label38: TLabel
+              Left = 50
+              Height = 13
+              Top = -3
+              Width = 46
+              Caption = 'Aplicativo'
+              ParentColor = False
+            end
+            object edAAC_PAF_Aplicativo: TEdit
+              Cursor = crIBeam
+              Left = 50
+              Height = 21
+              Top = 13
+              Width = 242
+              MaxLength = 40
+              TabOrder = 0
+            end
+            object Label40: TLabel
+              Left = 314
+              Height = 13
+              Top = -3
+              Width = 33
+              Caption = 'Versão'
+              ParentColor = False
+            end
+            object edAAC_PAF_Versao: TEdit
+              Cursor = crIBeam
+              Left = 314
+              Height = 21
+              Top = 13
+              Width = 121
+              MaxLength = 40
+              TabOrder = 1
+            end
+            object Label39: TLabel
+              Left = 50
+              Height = 13
+              Top = 35
+              Width = 23
+              Caption = 'MD5'
+              ParentColor = False
+            end
+            object edAAC_PAF_MD5: TEdit
+              Cursor = crIBeam
+              Left = 50
+              Height = 21
+              Top = 51
+              Width = 385
+              MaxLength = 32
+              TabOrder = 2
+            end
+            object SbAACMD5Atualizar: TSpeedButton
+              Left = 438
+              Height = 22
+              Top = 51
+              Width = 24
+              Anchors = [akLeft, akBottom]
+              Caption = '...'
+              OnClick = SbAACMD5AtualizarClick
+            end
+          end
+        end
+        object tsAACECFs: TTabSheet
+          Caption = 'ECFs'
+          ClientHeight = 187
+          ClientWidth = 531
+          object Label42: TLabel
+            Left = 8
+            Height = 13
+            Top = 12
+            Width = 49
+            Caption = 'Núm.Série'
+            ParentColor = False
+          end
+          object Label43: TLabel
+            Left = 184
+            Height = 13
+            Top = 12
+            Width = 23
+            Caption = 'CRO'
+            ParentColor = False
+          end
+          object Label44: TLabel
+            Left = 280
+            Height = 13
+            Top = 12
+            Width = 89
+            Caption = 'Valor Grande Total'
+            ParentColor = False
+          end
+          object DBGrid1: TDBGrid
+            Left = 0
+            Height = 120
+            Top = 67
+            Width = 531
+            Align = alBottom
+            Color = clWindow
+            Columns = <>
+            DataSource = dsAACECF
+            FixedCols = 2
+            TabOrder = 0
+            TitleFont.CharSet = ANSI_CHARSET
+            TitleFont.Color = clBlack
+            TitleFont.Height = -11
+            TitleFont.Name = 'MS Sans Serif'
+            TitleFont.Pitch = fpVariable
+          end
+          object edAAC_ECF_NumSerie: TDBEdit
+            Cursor = crIBeam
+            Left = 8
+            Height = 21
+            Top = 28
+            Width = 160
+            DataField = 'NumSerie'
+            DataSource = dsAACECF
+            CharCase = ecNormal
+            MaxLength = 0
+            TabOrder = 1
+          end
+          object edAAC_ECF_CRO: TDBEdit
+            Cursor = crIBeam
+            Left = 184
+            Height = 21
+            Top = 28
+            Width = 74
+            DataField = 'CRO'
+            DataSource = dsAACECF
+            CharCase = ecNormal
+            MaxLength = 0
+            TabOrder = 2
+          end
+          object edAAC_ECF_GT: TDBEdit
+            Cursor = crIBeam
+            Left = 280
+            Height = 21
+            Top = 28
+            Width = 136
+            DataField = 'ValorGT'
+            DataSource = dsAACECF
+            Anchors = [akTop, akLeft, akRight]
+            CharCase = ecNormal
+            MaxLength = 0
+            TabOrder = 3
+          end
+          object bACCVerificarGT: TButton
+            Left = 440
+            Height = 25
+            Top = 6
+            Width = 83
+            Caption = 'GT Valido ?'
+            OnClick = bACCVerificarGTClick
+            TabOrder = 4
+          end
+          object bAACAtualizarGT: TButton
+            Left = 440
+            Height = 25
+            Top = 34
+            Width = 83
+            Caption = 'Atualizar GT'
+            OnClick = bAACAtualizarGTClick
+            TabOrder = 5
+          end
+        end
+        object tsAACParams: TTabSheet
+          Caption = 'Params'
+          ClientHeight = 187
+          ClientWidth = 601
+          object mAACParams: TMemo
+            Left = 0
+            Height = 187
+            Top = 0
+            Width = 601
+            Align = alClient
+            Lines.Strings = (
+              'ExemploParametro1 = VALOR'
+              'ExemploParametro2 = 1'
+              'ExemploParametro3 = 20110504'
+              ''
+            )
+            TabOrder = 0
+          end
+        end
+      end
+      object bAACAbrirArquivo: TButton
+        Left = 473
+        Height = 25
+        Top = 225
+        Width = 102
+        Anchors = [akRight, akBottom]
+        Caption = 'Abrir Arquivo'
+        OnClick = bAACAbrirArquivoClick
+        TabOrder = 4
+      end
+    end
+    object tsSAT: TTabSheet
+      Caption = 'SAT Virtual'
+      ClientHeight = 309
+      ClientWidth = 609
+      object PageControl3: TPageControl
+        Left = 0
+        Height = 309
+        Top = 0
+        Width = 609
+        ActivePage = tsDadosSAT
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object tsDadosSAT: TTabSheet
+          Caption = 'Dados do SAT CFe'
+          ClientHeight = 283
+          ClientWidth = 601
+          object Label47: TLabel
+            Left = 16
+            Height = 13
+            Top = 7
+            Width = 40
+            Alignment = taRightJustify
+            Caption = 'Arq.Log:'
+            ParentColor = False
+          end
+          object edLogSAT: TEdit
+            Cursor = crIBeam
+            Left = 17
+            Height = 21
+            Top = 24
+            Width = 163
+            TabOrder = 0
+          end
+          object SbArqLog1: TSpeedButton
+            Left = 185
+            Height = 22
+            Top = 24
+            Width = 24
+            Caption = '...'
+            OnClick = SbArqLogClick
+          end
+          object Label48: TLabel
+            Left = 217
+            Height = 13
+            Top = 7
+            Width = 54
+            Alignment = taRightJustify
+            Caption = 'Nome DLL:'
+            ParentColor = False
+          end
+          object edNomeDLL: TEdit
+            Cursor = crIBeam
+            Left = 217
+            Height = 21
+            Top = 24
+            Width = 362
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 1
+          end
+          object edtCodigoAtivacao: TEdit
+            Left = 16
+            Height = 21
+            Top = 72
+            Width = 164
+            TabOrder = 2
+          end
+          object Label49: TLabel
+            Left = 16
+            Height = 13
+            Top = 56
+            Width = 93
+            Caption = 'Código de Ativação'
+            ParentColor = False
+          end
+          object Label50: TLabel
+            Left = 217
+            Height = 13
+            Top = 56
+            Width = 36
+            Caption = 'Cód.UF'
+            ParentColor = False
+          end
+          object edtCodUF: TEdit
+            Left = 218
+            Height = 21
+            Top = 72
+            Width = 61
+            TabOrder = 3
+          end
+          object Label51: TLabel
+            Left = 312
+            Height = 13
+            Top = 57
+            Width = 51
+            Caption = 'Num.Caixa'
+            ParentColor = False
+          end
+          object seNumeroCaixa: TSpinEdit
+            Left = 312
+            Height = 21
+            Top = 73
+            Width = 58
+            MaxValue = 999
+            MinValue = 1
+            TabOrder = 4
+            Value = 1
+          end
+          object cbxUTF8: TCheckBox
+            Left = 16
+            Height = 19
+            Top = 103
+            Width = 47
+            Caption = 'UTF8'
+            OnChange = cbxUTF8Change
+            TabOrder = 5
+          end
+          object sePagCod: TSpinEdit
+            Left = 152
+            Height = 21
+            Top = 123
+            Width = 83
+            MaxValue = 65001
+            OnChange = sePagCodChange
+            TabOrder = 6
+          end
+          object Label52: TLabel
+            AnchorSideTop.Side = asrCenter
+            Left = 152
+            Height = 13
+            Top = 106
+            Width = 58
+            BorderSpacing.Right = 5
+            Caption = 'Pág.Código:'
+            ParentColor = False
+          end
+          object Label53: TLabel
+            Left = 257
+            Height = 13
+            Top = 106
+            Width = 33
+            Caption = 'Versão'
+            ParentColor = False
+          end
+          object sfeVersaoEnt: TFloatSpinEdit
+            Left = 256
+            Height = 21
+            Top = 123
+            Width = 114
+            Increment = 0.01
+            MaxValue = 10
+            MinValue = 0
+            OnChange = sfeVersaoEntChange
+            TabOrder = 7
+            Value = 0.05
+          end
+          object cbxFormatXML: TCheckBox
+            Left = 17
+            Height = 19
+            Top = 127
+            Width = 86
+            Caption = 'Formatar XML'
+            Checked = True
+            State = cbChecked
+            TabOrder = 8
+          end
+          object cbxAmbiente: TComboBox
+            Left = 385
+            Height = 21
+            Top = 72
+            Width = 194
+            Anchors = [akTop, akLeft, akRight]
+            ItemHeight = 13
+            Style = csDropDownList
+            TabOrder = 9
+          end
+          object Label54: TLabel
+            Left = 385
+            Height = 13
+            Top = 55
+            Width = 44
+            Caption = 'Ambiente'
+            ParentColor = False
+          end
+          object cbxSalvarCFe: TCheckBox
+            Left = 424
+            Height = 19
+            Top = 120
+            Width = 77
+            Caption = 'Salvar CFes'
+            Checked = True
+            OnChange = cbxSalvarCFeChange
+            State = cbChecked
+            TabOrder = 10
+          end
+          object cbxModeloSAT: TComboBox
+            AnchorSideLeft.Side = asrCenter
+            Left = 17
+            Height = 21
+            Top = 192
+            Width = 133
+            ItemHeight = 13
+            Items.Strings = (
+              'Procurar'
+              'ecfNaoFiscal'
+              'ecfBematech'
+              'ecfSweda'
+              'ecfDaruma'
+              'ecfSchalter'
+              'ecfMecaf'
+              'ecfYanco'
+              'ecfDataRegis'
+              'ecfUrano'
+              'ecfICash'
+              'ecfQuattro'
+            )
+            OnChange = cbxModeloSATChange
+            Style = csDropDownList
+            TabOrder = 11
+          end
+          object Label70: TLabel
+            Left = 17
+            Height = 13
+            Top = 176
+            Width = 59
+            Alignment = taRightJustify
+            Caption = 'Modelo SAT'
+            ParentColor = False
+          end
+        end
+        object tsDadosEmit: TTabSheet
+          Caption = 'Dados Emitente'
+          ClientHeight = 283
+          ClientWidth = 601
+          object Label55: TLabel
+            Left = 12
+            Height = 13
+            Top = 23
+            Width = 27
+            Caption = 'CNPJ'
+            ParentColor = False
+          end
+          object Label56: TLabel
+            Left = 192
+            Height = 13
+            Top = 23
+            Width = 64
+            Caption = 'Insc.Estadual'
+            ParentColor = False
+          end
+          object Label57: TLabel
+            Left = 336
+            Height = 13
+            Top = 23
+            Width = 68
+            Caption = 'Insc.Municipal'
+            ParentColor = False
+          end
+          object edtEmitCNPJ: TEdit
+            Cursor = crIBeam
+            Left = 12
+            Height = 21
+            Top = 38
+            Width = 166
+            TabOrder = 0
+          end
+          object edtEmitIE: TEdit
+            Cursor = crIBeam
+            Left = 192
+            Height = 21
+            Top = 38
+            Width = 134
+            TabOrder = 1
+          end
+          object edtEmitIM: TEdit
+            Cursor = crIBeam
+            Left = 336
+            Height = 21
+            Top = 38
+            Width = 134
+            TabOrder = 2
+          end
+          object cbxRegTribISSQN: TComboBox
+            Left = 192
+            Height = 21
+            Top = 87
+            Width = 130
+            ItemHeight = 13
+            Style = csDropDownList
+            TabOrder = 4
+          end
+          object Label58: TLabel
+            Left = 192
+            Height = 13
+            Top = 71
+            Width = 96
+            Caption = 'Regime Trib. ISSQN'
+            ParentColor = False
+          end
+          object cbxIndRatISSQN: TComboBox
+            Left = 336
+            Height = 21
+            Top = 87
+            Width = 134
+            ItemHeight = 13
+            Style = csDropDownList
+            TabOrder = 5
+          end
+          object Label59: TLabel
+            Left = 336
+            Height = 13
+            Top = 71
+            Width = 71
+            Caption = 'Ind.Rat.ISSQN'
+            ParentColor = False
+          end
+          object Label60: TLabel
+            Left = 12
+            Height = 13
+            Top = 73
+            Width = 83
+            Caption = 'Regime Tributario'
+            ParentColor = False
+          end
+          object cbxRegTributario: TComboBox
+            Left = 12
+            Height = 21
+            Top = 87
+            Width = 166
+            ItemHeight = 13
+            Style = csDropDownList
+            TabOrder = 3
+          end
+        end
+        object tsDadosSwHouse: TTabSheet
+          Caption = 'Dados Sw.House'
+          ClientHeight = 283
+          ClientWidth = 601
+          object Label61: TLabel
+            Left = 10
+            Height = 13
+            Top = 15
+            Width = 27
+            Caption = 'CNPJ'
+            ParentColor = False
+          end
+          object edtSwHCNPJ: TEdit
+            Left = 10
+            Height = 21
+            Top = 31
+            Width = 303
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object Label62: TLabel
+            Left = 10
+            Height = 13
+            Top = 71
+            Width = 181
+            Caption = 'Assinatura Sw.House (344 caracteres)'
+            ParentColor = False
+          end
+          object edtSwHAssinatura: TEdit
+            Left = 10
+            Height = 21
+            Top = 89
+            Width = 568
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 1
+          end
+        end
+        object Impressao: TTabSheet
+          Caption = 'Impressao'
+          ClientHeight = 283
+          ClientWidth = 601
+          object GroupBox3: TGroupBox
+            Left = 0
+            Height = 283
+            Top = 0
+            Width = 345
+            Align = alClient
+            Caption = 'Fortes'
+            ClientHeight = 265
+            ClientWidth = 341
+            TabOrder = 0
+            object seLargura: TSpinEdit
+              Left = 8
+              Height = 21
+              Top = 14
+              Width = 64
+              MaxValue = 9999
+              TabOrder = 0
+            end
+            object Label63: TLabel
+              Left = 8
+              Height = 13
+              Top = 0
+              Width = 36
+              Caption = 'Largura'
+              ParentColor = False
+            end
+            object Label64: TLabel
+              Left = 96
+              Height = 13
+              Top = 0
+              Width = 25
+              Caption = 'Topo'
+              ParentColor = False
+            end
+            object seMargemTopo: TSpinEdit
+              Left = 96
+              Height = 21
+              Top = 14
+              Width = 64
+              MaxValue = 9999
+              TabOrder = 1
+            end
+            object Label65: TLabel
+              Left = 8
+              Height = 13
+              Top = 48
+              Width = 30
+              Caption = 'Fundo'
+              ParentColor = False
+            end
+            object seMargemFundo: TSpinEdit
+              Left = 8
+              Height = 21
+              Top = 62
+              Width = 64
+              MaxValue = 9999
+              TabOrder = 2
+            end
+            object Label66: TLabel
+              Left = 96
+              Height = 13
+              Top = 48
+              Width = 45
+              Caption = 'Esquerda'
+              ParentColor = False
+            end
+            object seMargemEsquerda: TSpinEdit
+              Left = 96
+              Height = 21
+              Top = 62
+              Width = 64
+              MaxValue = 9999
+              TabOrder = 3
+            end
+            object Label67: TLabel
+              Left = 184
+              Height = 13
+              Top = 48
+              Width = 30
+              Caption = 'Direita'
+              ParentColor = False
+            end
+            object seMargemDireita: TSpinEdit
+              Left = 184
+              Height = 21
+              Top = 62
+              Width = 64
+              MaxValue = 9999
+              TabOrder = 4
+            end
+            object bImpressora: TButton
+              Left = 8
+              Height = 23
+              Top = 96
+              Width = 110
+              AutoSize = True
+              Caption = 'Definir Impressora'
+              TabOrder = 5
+            end
+            object lImpressora: TLabel
+              Left = 136
+              Height = 13
+              Top = 104
+              Width = 93
+              Caption = 'Impresssora Default'
+              ParentColor = False
+            end
+            object cbUsarFortes: TRadioButton
+              Left = 192
+              Height = 19
+              Top = 0
+              Width = 74
+              Caption = 'Usar Fortes'
+              OnChange = cbUsarFortesChange
+              TabOrder = 6
+            end
+            object cbPreview: TCheckBox
+              Left = 192
+              Height = 19
+              Top = 24
+              Width = 58
+              Caption = 'Preview'
+              TabOrder = 7
+            end
+          end
+          object GroupBox4: TGroupBox
+            Left = 345
+            Height = 283
+            Top = 0
+            Width = 256
+            Align = alRight
+            Caption = 'EscPOS'
+            ClientHeight = 265
+            ClientWidth = 252
+            TabOrder = 1
+            object Label68: TLabel
+              Left = 26
+              Height = 13
+              Top = 56
+              Width = 79
+              Anchors = [akTop, akRight]
+              Caption = 'Porta Impressora'
+              ParentColor = False
+            end
+            object edtPorta: TEdit
+              Left = 16
+              Height = 21
+              Top = 73
+              Width = 215
+              Anchors = [akTop, akRight]
+              TabOrder = 0
+              Text = '\\127.0.0.1\EPSON'
+            end
+            object btSerial1: TBitBtn
+              Left = 179
+              Height = 43
+              Top = 8
+              Width = 52
+              Anchors = [akTop, akRight]
+              AutoSize = True
+              Caption = 'Serial'
+              Glyph.Data = {
+                36030000424D3603000000000000360000002800000010000000100000000100
+                1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+                3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+                000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+                6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+                008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+                56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+                FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+                008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+                6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+                008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+                3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+                00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              }
+              Layout = blGlyphTop
+              ModalResult = 1
+              OnClick = btSerial1Click
+              TabOrder = 1
+            end
+            object cbUsarEscPos: TRadioButton
+              Left = 8
+              Height = 19
+              Top = 0
+              Width = 85
+              Caption = 'Usar EscPOS'
+              OnChange = cbUsarEscPosChange
+              TabOrder = 2
+            end
+          end
+        end
+      end
+    end
+    object tsNFCe: TTabSheet
+      Caption = 'NFCe'
+      ClientHeight = 309
+      ClientWidth = 609
+      object PageControl4: TPageControl
+        Left = 0
+        Height = 309
+        Top = 0
+        Width = 609
+        ActivePage = TabSheet4
+        Align = alClient
+        Anchors = []
+        TabIndex = 0
+        TabOrder = 0
+        object TabSheet4: TTabSheet
+          Caption = 'Certificado'
+          ClientHeight = 283
+          ClientWidth = 601
+          object GroupBox2: TGroupBox
+            Left = 6
+            Height = 169
+            Top = 10
+            Width = 270
+            Caption = 'Certificado'
+            ClientHeight = 151
+            ClientWidth = 266
+            TabOrder = 0
+            object Label71: TLabel
+              Left = 8
+              Height = 13
+              Top = 16
+              Width = 41
+              Caption = 'Caminho'
+              ParentColor = False
+            end
+            object Label72: TLabel
+              Left = 8
+              Height = 13
+              Top = 56
+              Width = 31
+              Caption = 'Senha'
+              ParentColor = False
+            end
+            object sbtnCaminhoCert: TSpeedButton
+              Left = 234
+              Height = 24
+              Top = 32
+              Width = 24
+              Glyph.Data = {
+                36040000424D3604000000000000360000002800000010000000100000000100
+                2000000000000004000064000000640000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                000000000000000000000000000000000033000000330000000A469AD300469A
+                D300469AD300469AD300469AD300459AD400429DDC0071777C0075706D007472
+                700075726F007B736B00000000333A6EA0FF3B6E9EFF213F5A5D469AD3000000
+                000B0000000A0000000A0000000A0000000A0000000A00000011000000320000
+                00330000003300000033316EA7FF29B2FFFF44C8FFFF3A83CCFF0000002F2959
+                7A5F2655755C2655745C2655755C2555755B225578594D5359776B696AF96767
+                6BFF67676AFF6D6A69FF81746BFF3BC6FFFF57DBFFFF3980C9FF4598D0F14398
+                D2FF4094D0FF3E92CFFF3E92CFFF3D95D4FF4D8BB8FF79706BFFE9C890FFFFEE
+                A7FFFFF5B1FFE8D5A3FF77716CFFA08F85FF327ECDFF3881CB004499D2FF3F94
+                D0FFABFBFFFF9BF3FFFF92F2FFFF92F8FFFF797C7DFFEAC186FFFFE7A6FFFFE7
+                A6FFFFEFB3FFFFF9BBFFE9D6A2FF817772FF2F75A467469CD5004397D1FF56AC
+                DDFF8EDAF5FFA2EDFFFF82E6FFFF82EDFFFF766D6DFFFFE19DFFFFEFCAFFFFE7
+                B3FFFFE9ABFFFFEFB2FFFFF3AEFF7C7370FF3990CCC5449AD5004296D1FF71C4
+                EAFF6CBCE6FFBBF2FFFF75DFFFFF75E6FFFF7B7171FFFFDD97FFFFF7E4FFFFED
+                C8FFFFE7B2FFFFE6A5FFFFEBA3FF807674FF4AA3DFFF000000124095D0FF90DD
+                F8FF44A0D8FFDDFCFFFFDAFBFFFFDAFFFFFF8D8A8AFFEDBD7CFFFFF5DBFFFFF7
+                E4FFFFEECAFFFFE5A4FFEBC890FF89898AFF7BC6EFFF3277A6713E93CFFFB2F6
+                FFFF51ACDEFF358ACAFF358BCBFF348DCFFF4F8CB9FF93857DFFEEBE7DFFFFDD
+                96FFFFE09BFFECC589FF8C817DFF8AC8DCFFA9E4FCFF3A8AC2C83D92CFFFB8F3
+                FFFF77DFFEFF7BE0FEFF7BE1FFFF7BE1FFFF79E4FFFF69ACCEFF88878DFF9389
+                85FF928986FF9A9795FFBED8E2FFD4FCFFFFDBFDFFFF3E94D0FF3C92CFFFC0F3
+                FFFF70D9FBFF73DAFBFF74DAFBFF74DAFBFF73DBFDFF73DFFFFF4CAEE4FF3692
+                D5FF3692D5FF3591D3FF3390D1FF3791D0FF3D94D0FF4398D2AE3B92CFFFCAF6
+                FFFF69D5F9FF6CD5F9FF6AD4F9FF69D4F9FF69D5F9FF6AD6FBFF6BD9FCFF6CDB
+                FEFF6CDBFEFF6ADBFEFFDBFDFFFF3C93D0FF367BAA2F469AD3003B92CFFFD5F7
+                FFFF60D1F9FF61D0F8FFB4EBFDFFD9F6FFFFDAF8FFFFDAF8FFFFDAF9FFFFDBF9
+                FFFFDAF9FFFFDAFAFFFFDFFEFFFF3D94D0FF4599D335469AD3003D94D0FFDCFC
+                FFFFD8F7FFFFD8F7FFFFDBFAFFFF358ECDFF3991CEFF3A92CFFF3A92CFFF3A92
+                CFFF3A92CFFF3A92CFFF3D94D0FF4298D2EA469AD300469AD3004398D2EF3D94
+                D0FF3A92CFFF3A92CFFF3D94D0FF4197D1E44398D22B4498D2324498D2334498
+                D2334498D2334499D2334499D337459AD300469AD300469AD300
+              }
+              OnClick = sbtnCaminhoCertClick
+            end
+            object Label73: TLabel
+              Left = 8
+              Height = 13
+              Top = 96
+              Width = 79
+              Caption = 'Número de Série'
+              ParentColor = False
+            end
+            object sbtnGetCert: TSpeedButton
+              Left = 234
+              Height = 24
+              Top = 111
+              Width = 24
+              Glyph.Data = {
+                36040000424D3604000000000000360000002800000010000000100000000100
+                2000000000000004000064000000640000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                00000000001E0000003300000033000000330000001E000000005CA3D9005CA3
+                D9005CA3D9005CA3D9005CA3D9005CA3D9005EA3DB0065A3E50000A156000000
+                001E008C55AC009E5EFF009D5DFF009E5EFF008C55AC0000001E5CA3D9005CA3
+                D9005CA3D9005CA3D9005CA3D9005CA3D9005DA3DB0064A3E20000A05100008C
+                51AB00A669FF00BA84FF77DFC4FF00BA84FF00A66AFF008C55AC000000300000
+                003300000033000000330000003300000033000000330000003300000033009D
+                54FF00C089FF00BB82FFFFFFFFFF00BB82FF00C08BFF009E5EFF579FD5F2539E
+                D7FF509CD7FF4F9CD7FF509CD7FF509CD7FF509CD7FF529DD9FF5D9EE3FF009A
+                4FFF75E5CAFFFFFFFFFFFFFFFFFFFFFFFFFF77E5CCFF009C5BFF539ED7FFF0F7
+                F7FFEAF4F5FFEBF4F6FFECF5F6FFECF5F7FFECF5F7FFEEF6F9FFFBF9FFFF0098
+                4DFF00CB94FF00C88EFFFFFFFFFF00C88EFF00CC96FF009D58FF509CD7FFEAF4
+                F6FFE0EEF4FF90BEDFFF90BFDFFF8FBFE1FF8FC1E3FF91C2E6FF9AC6EDFF38AD
+                98FF00AD6BFF00D39CFF73EDD3FF00D29AFF00AD68FF289F97FF509CD7FFECF5
+                F6FF8ABCDCFF8ABCDCFFD6ECF3FFD3DBDEFFD0BCB2FFD2D2D1FFD3B9AFFFDFBA
+                B5FF52B28DFF009B55FF009952FF00984EFF65C49EFF60A0E4FF509CD7FFEDF5
+                F7FF84B9DBFFCFE8EFFFCAE6EFFFC9E9F6FFC47D5CFFC6947DFFC66940FFC98B
+                72FFD18A72FFD78972FFDCA294FF94BFEAFFF8F9FFFF559DDAFF509CD7FFEEF6
+                F7FF7EB4D9FFC5E3ECFFC2E2ECFFC2E4F0FFC2D8DFFFC3A89AFFC2B1A8FFC2EE
+                FEFFC3ECFBFFC5EBFAFFC8E9F6FF81B7DDFFEFF7F8FF519CD7FF509CD7FFEEF6
+                F7FF79B2D8FFBEE0ECFFBDE0EBFFBFE2EDFFC1E5EFFFBFE6F2FFBCE5F4FFACB0
+                B2FFA9ACACFFACAFB0FFBEE4F0FF79B3D9FFEEF6F7FF509CD7FF509CD7FFEFF6
+                F7FF74B1D6FFB9E0EAFFBAE1EAFF2876C5FF4A98D7FF4796D7FFB7E2EEFFACAC
+                AAFFB4E5F5FFAEADABFFB8E3EEFF74B2D6FFEFF6F7FF509CD7FF509CD7FFEEF6
+                F7FF6EAED3FF71B0D4FFB3DEE8FFB5DFE9FFB6E0E9FFB4DFE9FFB0DFEBFFAFB0
+                AFFFAFAFABFFB1B1B0FF71B2D7FF6EAFD4FFEEF6F7FF509CD7FF509CD7FFEDF5
+                F6FFA3D7E4FF68ABD1FF69ABD1FF69ABD1FF69ABD1FF69ABD1FF68ACD2FF68AD
+                D4FF68AED5FF69AED4FF68ACD2FFA3D7E4FFEDF5F6FF509CD7FF539ED7FFF2F8
+                F7FFEDF5F7FFEFF6F7FFF0F7F7FFF0F7F7FFF0F7F7FFF0F7F7FFF0F7F8FFF0F7
+                F8FFF0F7F8FFF0F7F8FFEFF6F7FFEDF5F7FFF2F8F7FF539ED7FF58A1D8EF539E
+                D7FF509CD7FF509CD7FF509DD7FF519DD7FF519DD7FF519DD7FF519DD7FF519D
+                D7FF519DD7FF509DD7FF509CD7FF509CD7FF539ED7FF58A1D8EF
+              }
+              OnClick = sbtnGetCertClick
+            end
+            object edtCaminho: TEdit
+              Left = 8
+              Height = 21
+              Top = 32
+              Width = 224
+              TabOrder = 0
+            end
+            object edtSenha: TEdit
+              Left = 8
+              Height = 21
+              Top = 72
+              Width = 249
+              EchoMode = emPassword
+              PasswordChar = '*'
+              TabOrder = 1
+            end
+            object edtNumSerie: TEdit
+              Left = 8
+              Height = 21
+              Top = 112
+              Width = 224
+              TabOrder = 2
+            end
+          end
+        end
+        object TabSheet7: TTabSheet
+          Caption = 'Geral'
+          ClientHeight = 283
+          ClientWidth = 601
+          ImageIndex = 1
+          object rgTipoDanfe: TRadioGroup
+            Left = 6
+            Height = 49
+            Top = 16
+            Width = 249
+            AutoFill = True
+            Caption = 'DANFE'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.TopBottomSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 31
+            ClientWidth = 245
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'Retrato'
+              'Paisagem'
+            )
+            TabOrder = 0
+          end
+          object rgFormaEmissao: TRadioGroup
+            Left = 6
+            Height = 97
+            Top = 72
+            Width = 249
+            AutoFill = True
+            Caption = 'Forma de Emissão'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.TopBottomSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 79
+            ClientWidth = 245
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'Normal'
+              'Contingência'
+              'SCAN'
+              'DPEC'
+              'FSDA'
+            )
+            TabOrder = 1
+          end
+          object Label74: TLabel
+            Left = 6
+            Height = 13
+            Top = 176
+            Width = 57
+            Caption = 'Logo Marca'
+            ParentColor = False
+          end
+          object edtLogoMarca: TEdit
+            Left = 6
+            Height = 21
+            Top = 192
+            Width = 223
+            TabOrder = 2
+          end
+          object sbtnLogoMarca: TSpeedButton
+            Left = 231
+            Height = 24
+            Top = 191
+            Width = 24
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000064000000640000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              000000000000000000000000000000000033000000330000000A469AD300469A
+              D300469AD300469AD300469AD300459AD400429DDC0071777C0075706D007472
+              700075726F007B736B00000000333A6EA0FF3B6E9EFF213F5A5D469AD3000000
+              000B0000000A0000000A0000000A0000000A0000000A00000011000000320000
+              00330000003300000033316EA7FF29B2FFFF44C8FFFF3A83CCFF0000002F2959
+              7A5F2655755C2655745C2655755C2555755B225578594D5359776B696AF96767
+              6BFF67676AFF6D6A69FF81746BFF3BC6FFFF57DBFFFF3980C9FF4598D0F14398
+              D2FF4094D0FF3E92CFFF3E92CFFF3D95D4FF4D8BB8FF79706BFFE9C890FFFFEE
+              A7FFFFF5B1FFE8D5A3FF77716CFFA08F85FF327ECDFF3881CB004499D2FF3F94
+              D0FFABFBFFFF9BF3FFFF92F2FFFF92F8FFFF797C7DFFEAC186FFFFE7A6FFFFE7
+              A6FFFFEFB3FFFFF9BBFFE9D6A2FF817772FF2F75A467469CD5004397D1FF56AC
+              DDFF8EDAF5FFA2EDFFFF82E6FFFF82EDFFFF766D6DFFFFE19DFFFFEFCAFFFFE7
+              B3FFFFE9ABFFFFEFB2FFFFF3AEFF7C7370FF3990CCC5449AD5004296D1FF71C4
+              EAFF6CBCE6FFBBF2FFFF75DFFFFF75E6FFFF7B7171FFFFDD97FFFFF7E4FFFFED
+              C8FFFFE7B2FFFFE6A5FFFFEBA3FF807674FF4AA3DFFF000000124095D0FF90DD
+              F8FF44A0D8FFDDFCFFFFDAFBFFFFDAFFFFFF8D8A8AFFEDBD7CFFFFF5DBFFFFF7
+              E4FFFFEECAFFFFE5A4FFEBC890FF89898AFF7BC6EFFF3277A6713E93CFFFB2F6
+              FFFF51ACDEFF358ACAFF358BCBFF348DCFFF4F8CB9FF93857DFFEEBE7DFFFFDD
+              96FFFFE09BFFECC589FF8C817DFF8AC8DCFFA9E4FCFF3A8AC2C83D92CFFFB8F3
+              FFFF77DFFEFF7BE0FEFF7BE1FFFF7BE1FFFF79E4FFFF69ACCEFF88878DFF9389
+              85FF928986FF9A9795FFBED8E2FFD4FCFFFFDBFDFFFF3E94D0FF3C92CFFFC0F3
+              FFFF70D9FBFF73DAFBFF74DAFBFF74DAFBFF73DBFDFF73DFFFFF4CAEE4FF3692
+              D5FF3692D5FF3591D3FF3390D1FF3791D0FF3D94D0FF4398D2AE3B92CFFFCAF6
+              FFFF69D5F9FF6CD5F9FF6AD4F9FF69D4F9FF69D5F9FF6AD6FBFF6BD9FCFF6CDB
+              FEFF6CDBFEFF6ADBFEFFDBFDFFFF3C93D0FF367BAA2F469AD3003B92CFFFD5F7
+              FFFF60D1F9FF61D0F8FFB4EBFDFFD9F6FFFFDAF8FFFFDAF8FFFFDAF9FFFFDBF9
+              FFFFDAF9FFFFDAFAFFFFDFFEFFFF3D94D0FF4599D335469AD3003D94D0FFDCFC
+              FFFFD8F7FFFFD8F7FFFFDBFAFFFF358ECDFF3991CEFF3A92CFFF3A92CFFF3A92
+              CFFF3A92CFFF3A92CFFF3D94D0FF4298D2EA469AD300469AD3004398D2EF3D94
+              D0FF3A92CFFF3A92CFFF3D94D0FF4197D1E44398D22B4498D2324498D2334498
+              D2334498D2334499D2334499D337459AD300469AD300469AD300
+            }
+            OnClick = sbtnLogoMarcaClick
+          end
+          object ckSalvar: TCheckBox
+            Left = 8
+            Height = 19
+            Top = 226
+            Width = 196
+            Caption = 'Salvar Arquivos de Envio e Resposta'
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            ParentFont = False
+            TabOrder = 3
+          end
+          object edtPathLogs: TEdit
+            Left = 6
+            Height = 21
+            Top = 248
+            Width = 223
+            TabOrder = 4
+          end
+          object sbtnPathSalvar: TSpeedButton
+            Left = 231
+            Height = 24
+            Top = 247
+            Width = 24
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000064000000640000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              000000000000000000000000000000000033000000330000000A469AD300469A
+              D300469AD300469AD300469AD300459AD400429DDC0071777C0075706D007472
+              700075726F007B736B00000000333A6EA0FF3B6E9EFF213F5A5D469AD3000000
+              000B0000000A0000000A0000000A0000000A0000000A00000011000000320000
+              00330000003300000033316EA7FF29B2FFFF44C8FFFF3A83CCFF0000002F2959
+              7A5F2655755C2655745C2655755C2555755B225578594D5359776B696AF96767
+              6BFF67676AFF6D6A69FF81746BFF3BC6FFFF57DBFFFF3980C9FF4598D0F14398
+              D2FF4094D0FF3E92CFFF3E92CFFF3D95D4FF4D8BB8FF79706BFFE9C890FFFFEE
+              A7FFFFF5B1FFE8D5A3FF77716CFFA08F85FF327ECDFF3881CB004499D2FF3F94
+              D0FFABFBFFFF9BF3FFFF92F2FFFF92F8FFFF797C7DFFEAC186FFFFE7A6FFFFE7
+              A6FFFFEFB3FFFFF9BBFFE9D6A2FF817772FF2F75A467469CD5004397D1FF56AC
+              DDFF8EDAF5FFA2EDFFFF82E6FFFF82EDFFFF766D6DFFFFE19DFFFFEFCAFFFFE7
+              B3FFFFE9ABFFFFEFB2FFFFF3AEFF7C7370FF3990CCC5449AD5004296D1FF71C4
+              EAFF6CBCE6FFBBF2FFFF75DFFFFF75E6FFFF7B7171FFFFDD97FFFFF7E4FFFFED
+              C8FFFFE7B2FFFFE6A5FFFFEBA3FF807674FF4AA3DFFF000000124095D0FF90DD
+              F8FF44A0D8FFDDFCFFFFDAFBFFFFDAFFFFFF8D8A8AFFEDBD7CFFFFF5DBFFFFF7
+              E4FFFFEECAFFFFE5A4FFEBC890FF89898AFF7BC6EFFF3277A6713E93CFFFB2F6
+              FFFF51ACDEFF358ACAFF358BCBFF348DCFFF4F8CB9FF93857DFFEEBE7DFFFFDD
+              96FFFFE09BFFECC589FF8C817DFF8AC8DCFFA9E4FCFF3A8AC2C83D92CFFFB8F3
+              FFFF77DFFEFF7BE0FEFF7BE1FFFF7BE1FFFF79E4FFFF69ACCEFF88878DFF9389
+              85FF928986FF9A9795FFBED8E2FFD4FCFFFFDBFDFFFF3E94D0FF3C92CFFFC0F3
+              FFFF70D9FBFF73DAFBFF74DAFBFF74DAFBFF73DBFDFF73DFFFFF4CAEE4FF3692
+              D5FF3692D5FF3591D3FF3390D1FF3791D0FF3D94D0FF4398D2AE3B92CFFFCAF6
+              FFFF69D5F9FF6CD5F9FF6AD4F9FF69D4F9FF69D5F9FF6AD6FBFF6BD9FCFF6CDB
+              FEFF6CDBFEFF6ADBFEFFDBFDFFFF3C93D0FF367BAA2F469AD3003B92CFFFD5F7
+              FFFF60D1F9FF61D0F8FFB4EBFDFFD9F6FFFFDAF8FFFFDAF8FFFFDAF9FFFFDBF9
+              FFFFDAF9FFFFDAFAFFFFDFFEFFFF3D94D0FF4599D335469AD3003D94D0FFDCFC
+              FFFFD8F7FFFFD8F7FFFFDBFAFFFF358ECDFF3991CEFF3A92CFFF3A92CFFF3A92
+              CFFF3A92CFFF3A92CFFF3D94D0FF4298D2EA469AD300469AD3004398D2EF3D94
+              D0FF3A92CFFF3A92CFFF3D94D0FF4197D1E44398D22B4498D2324498D2334498
+              D2334498D2334499D2334499D337459AD300469AD300469AD300
+            }
+            OnClick = sbtnPathSalvarClick
+          end
+        end
+        object TabSheet8: TTabSheet
+          Caption = 'WebService'
+          ClientHeight = 283
+          ClientWidth = 601
+          ImageIndex = 2
+          object GroupBox6: TGroupBox
+            Left = 8
+            Height = 161
+            Top = 9
+            Width = 265
+            Caption = 'WebService'
+            ClientHeight = 143
+            ClientWidth = 261
+            TabOrder = 0
+            object Label75: TLabel
+              Left = 8
+              Height = 13
+              Top = 16
+              Width = 121
+              Caption = 'Selecione UF de Destino:'
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              ParentColor = False
+              ParentFont = False
+            end
+            object ckVisualizar: TCheckBox
+              Left = 8
+              Height = 19
+              Top = 118
+              Width = 119
+              Caption = 'Visualizar Mensagem'
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              ParentFont = False
+              TabOrder = 0
+            end
+            object cbUF: TComboBox
+              Left = 8
+              Height = 24
+              Top = 32
+              Width = 249
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = 'MS Sans Serif'
+              ItemHeight = 16
+              ItemIndex = 24
+              Items.Strings = (
+                'AC'
+                'AL'
+                'AP'
+                'AM'
+                'BA'
+                'CE'
+                'DF'
+                'ES'
+                'GO'
+                'MA'
+                'MT'
+                'MS'
+                'MG'
+                'PA'
+                'PB'
+                'PR'
+                'PE'
+                'PI'
+                'RJ'
+                'RN'
+                'RS'
+                'RO'
+                'RR'
+                'SC'
+                'SP'
+                'SE'
+                'TO'
+              )
+              ParentFont = False
+              Style = csDropDownList
+              TabOrder = 1
+              Text = 'SP'
+            end
+            object rgTipoAmb: TRadioGroup
+              Left = 8
+              Height = 52
+              Top = 61
+              Width = 249
+              AutoFill = True
+              Caption = 'Selecione o Ambiente de Destino'
+              ChildSizing.LeftRightSpacing = 6
+              ChildSizing.TopBottomSpacing = 6
+              ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+              ChildSizing.EnlargeVertical = crsHomogenousChildResize
+              ChildSizing.ShrinkHorizontal = crsScaleChilds
+              ChildSizing.ShrinkVertical = crsScaleChilds
+              ChildSizing.Layout = cclLeftToRightThenTopToBottom
+              ChildSizing.ControlsPerLine = 2
+              ClientHeight = 34
+              ClientWidth = 245
+              Columns = 2
+              ItemIndex = 0
+              Items.Strings = (
+                'Produção'
+                'Homologação'
+              )
+              TabOrder = 2
+            end
+          end
+          object gbProxy: TGroupBox
+            Left = 280
+            Height = 123
+            Top = 9
+            Width = 265
+            Caption = 'Proxy'
+            ClientHeight = 105
+            ClientWidth = 261
+            TabOrder = 1
+            object Label76: TLabel
+              Left = 8
+              Height = 13
+              Top = 16
+              Width = 22
+              Caption = 'Host'
+              ParentColor = False
+            end
+            object Label77: TLabel
+              Left = 208
+              Height = 13
+              Top = 16
+              Width = 25
+              Caption = 'Porta'
+              ParentColor = False
+            end
+            object Label78: TLabel
+              Left = 8
+              Height = 13
+              Top = 56
+              Width = 36
+              Caption = 'Usuário'
+              ParentColor = False
+            end
+            object Label79: TLabel
+              Left = 138
+              Height = 13
+              Top = 56
+              Width = 31
+              Caption = 'Senha'
+              ParentColor = False
+            end
+            object edtProxyHost: TEdit
+              Left = 8
+              Height = 21
+              Top = 32
+              Width = 193
+              TabOrder = 0
+            end
+            object edtProxyPorta: TEdit
+              Left = 208
+              Height = 21
+              Top = 32
+              Width = 50
+              TabOrder = 1
+            end
+            object edtProxyUser: TEdit
+              Left = 8
+              Height = 21
+              Top = 72
+              Width = 123
+              TabOrder = 2
+            end
+            object edtProxySenha: TEdit
+              Left = 135
+              Height = 21
+              Top = 72
+              Width = 123
+              EchoMode = emPassword
+              PasswordChar = '*'
+              TabOrder = 3
+            end
+          end
+        end
+        object TabSheet9: TTabSheet
+          Caption = 'Emitente'
+          ClientHeight = 283
+          ClientWidth = 601
+          ImageIndex = 3
+          object Label80: TLabel
+            Left = 15
+            Height = 13
+            Top = 18
+            Width = 27
+            Caption = 'CNPJ'
+            ParentColor = False
+          end
+          object Label81: TLabel
+            Left = 143
+            Height = 13
+            Top = 18
+            Width = 41
+            Caption = 'Insc.Est.'
+            ParentColor = False
+          end
+          object Label82: TLabel
+            Left = 280
+            Height = 13
+            Top = 18
+            Width = 63
+            Caption = 'Razão Social'
+            ParentColor = False
+          end
+          object Label83: TLabel
+            Left = 15
+            Height = 13
+            Top = 60
+            Width = 40
+            Caption = 'Fantasia'
+            ParentColor = False
+          end
+          object Label84: TLabel
+            Left = 15
+            Height = 13
+            Top = 140
+            Width = 54
+            Caption = 'Logradouro'
+            ParentColor = False
+          end
+          object Label85: TLabel
+            Left = 215
+            Height = 13
+            Top = 140
+            Width = 37
+            Caption = 'Número'
+            ParentColor = False
+          end
+          object Label86: TLabel
+            Left = 15
+            Height = 13
+            Top = 188
+            Width = 64
+            Caption = 'Complemento'
+            ParentColor = False
+          end
+          object Label87: TLabel
+            Left = 143
+            Height = 13
+            Top = 188
+            Width = 27
+            Caption = 'Bairro'
+            ParentColor = False
+          end
+          object Label88: TLabel
+            Left = 16
+            Height = 13
+            Top = 228
+            Width = 61
+            Caption = 'Cód. Cidade '
+            ParentColor = False
+          end
+          object Label89: TLabel
+            Left = 84
+            Height = 13
+            Top = 228
+            Width = 33
+            Caption = 'Cidade'
+            ParentColor = False
+          end
+          object Label90: TLabel
+            Left = 233
+            Height = 13
+            Top = 228
+            Width = 14
+            Caption = 'UF'
+            ParentColor = False
+          end
+          object Label91: TLabel
+            Left = 143
+            Height = 13
+            Top = 100
+            Width = 21
+            Caption = 'CEP'
+            ParentColor = False
+          end
+          object Label92: TLabel
+            Left = 15
+            Height = 13
+            Top = 100
+            Width = 24
+            Caption = 'Fone'
+            ParentColor = False
+          end
+          object edtEmitCNPJNFe: TEdit
+            Left = 15
+            Height = 21
+            Top = 34
+            Width = 123
+            TabOrder = 0
+          end
+          object edtEmitIENFe: TEdit
+            Left = 144
+            Height = 21
+            Top = 34
+            Width = 123
+            TabOrder = 1
+          end
+          object edtEmitRazao: TEdit
+            Left = 280
+            Height = 21
+            Top = 34
+            Width = 312
+            TabOrder = 2
+          end
+          object edtEmitFantasia: TEdit
+            Left = 15
+            Height = 21
+            Top = 76
+            Width = 577
+            TabOrder = 3
+          end
+          object edtEmitFone: TEdit
+            Left = 15
+            Height = 21
+            Top = 116
+            Width = 125
+            TabOrder = 4
+          end
+          object edtEmitCEP: TEdit
+            Left = 144
+            Height = 21
+            Top = 116
+            Width = 123
+            TabOrder = 5
+          end
+          object edtEmitLogradouro: TEdit
+            Left = 15
+            Height = 21
+            Top = 156
+            Width = 196
+            TabOrder = 6
+          end
+          object edtEmitNumero: TEdit
+            Left = 217
+            Height = 21
+            Top = 156
+            Width = 50
+            TabOrder = 7
+          end
+          object edtEmitComp: TEdit
+            Left = 15
+            Height = 21
+            Top = 204
+            Width = 123
+            TabOrder = 8
+          end
+          object edtEmitBairro: TEdit
+            Left = 144
+            Height = 21
+            Top = 204
+            Width = 123
+            TabOrder = 9
+          end
+          object edtEmitCodCidade: TEdit
+            Left = 16
+            Height = 21
+            Top = 244
+            Width = 61
+            TabOrder = 10
+          end
+          object edtEmitCidade: TEdit
+            Left = 84
+            Height = 21
+            Top = 244
+            Width = 142
+            TabOrder = 11
+          end
+          object edtEmitUF: TEdit
+            Left = 233
+            Height = 21
+            Top = 244
+            Width = 35
+            TabOrder = 12
+          end
+        end
+      end
+    end
+  end
+  object pBotoes: TPanel
+    Left = 0
+    Height = 40
+    Hint = 'Sobre o ACBrMonitor ?'
+    Top = 335
+    Width = 641
+    Align = alBottom
+    ClientHeight = 40
+    ClientWidth = 641
+    TabOrder = 1
+    TabStop = True
+    object Image1: TImage
+      Cursor = crHelp
+      Left = 1
+      Height = 38
+      Top = 1
+      Width = 639
+      Align = alClient
+      OnClick = Image1Click
+      Picture.Data = {
+        1754506F727461626C654E6574776F726B47726170686963733A000089504E47
+        0D0A1A0A0000000D4948445200000400000000280802000000EFCF1F9C00003A
+        3A4944415478DAED9D0754D6E7DDF7D3A44DD3A7EDD33449CD689B9844F6BAD9
+        B204174345015136283204445CEC3D64EFBDC7CDDE7BEFBD97206E50519366AF
+        EE44DFEBBFC7FDBF31EDF3BCCFA3EF7B9DF3391C1251D31E0EE7F7B97EE3FB42
+        EAD00D8DEA071A55804D807AE5A646E57DF50AC03DF5728CBBEA65800DF5D20D
+        753E601DA05602B8A3568C52741BE5965AE12DB502C04D84FC9B3BF36FECCC43
+        C9BD8E726D670E606D67364AD65584CCABAA99ABAA19801584F42BAA6918CB2A
+        A9282980259564C0A24A12C6824A22605E25615E39615E257E4E191007984588
+        05CC28C700A695A351A2A6004A80C84984CB8009A588718470C0985218C6A852
+        E8A862086004211830AC180418520C4409180428F80FE0F8F523F8F621F8F4C9
+        FBF42278F72A78F7C87B01BAE53DBBE52F6174C95F44E05DEC94BFD0C9BBD021
+        7FBE8377BE9D770EC5A30DE16C2B40CEBD95E7DE22E7DEC23BD32277A659CE0D
+        D024E78AE2D288701AD020E70CA807C8029CEA641D316A651D0035B2A750ECAB
+        013227AB644F56CB9CA842A994B1AB94B1ADC0B12947B02E97B62E93B6029422
+        58F2112C50CC4B10CC4AA4CC8A118E17211C2B443045395A80922F69922F659C
+        2F699C876004C845389283703847D210900D9030CC9238942579109029013890
+        29619081928EA08FA29726AE9726A19B8AB03F557C7F0AC2BE14F1BDC9387B92
+        0062BB13C57727828F623A8004319D78316D945D8038312D40AC9826498CA846
+        8C98468CA87A34821A200A6727205254154744E5B2288A884A8488328112209C
+        42111046475439FCD889CCAADACE91E16108040281402090679F1748015007D5
+        3F290095340128A30940E9869AA00014D3040071809B3B0BD0EA1F1780EB082C
+        01C842D0C85EDD9BB77CA070C1A060CE207FC6206FDA206F463F6F5E276B4133
+        03170055BA0024A3D53F4D001007889F231C805300D0D29FACFE2327D0EA1F03
+        11004542001441F58FC0AAFE87F1EA3F10ADFE115802D08F0980824FAF022200
+        3D0A5E08B80078A2D53F22009D3878F5CF2D003C540040F54F1380E62D0440CE
+        891400ACFAAFC5ABFF533532A0FA070E701250254B56FF084C01401CA04C0613
+        004B14ACFAB7282104A0589A5B000A70013001E4031802702417AFFE0FE7481C
+        CEC605E0102A008790EA5FF2002A0007080140AA7FB4F44711D74D4520ABFF7D
+        58F59F84400800E600E248F59FC0A8FE71018813D58A15D50420D53F4A342100
+        64E98F57FF2248F57F19208295FE9CD53F5EF713D5BF020AF9894298D29EE8E2
+        D236F803050281402010C8F32300D55C1D800A9A0094D23A0025803BEC0E0051
+        FD63ECC43B00D70901C0AAFF6BDAF957ED6A57A3FAAED42F2C4E5C9F5CBF91F4
+        E56DEF2F6F9DFFF2A63BCAB9CF6F7A5F5F0E9C5F886E19CD4CEAA871AD1ADA9D
+        B9A08A57FF340148C00500ABFE55E267D902103DAD843085770022C90EC004AB
+        03A0483EFF878E2A611D8060460740612B01E8239A00D8F37F2FFAFC4F0A4017
+        D10140AA7F1EF5FC0F3E6202D02644009A7101706509400306FAF68FE2C8EA00
+        A00E604F7600D026005D0098CFFF284C01C03B0025524407401AADFEA591EA1F
+        C594250048F52F8555FFC6E4F33FBD0380090028FD110190409FFF912600A8FE
+        3101C0DFFED30901486508C07E4101209FFF13C4840B80182600ECEA3F9AF5F6
+        2F427BFB6796FEF4577FC6933F59F48B28840276A01F01DA07E2070686E0CF14
+        080402814020CF4D07001180CA4D75FCF9FF3E31FF0304E01E25006807408DD1
+        01B8CD1000AC0390CFE80068E65F3B5E3E1BDBD5383E9FF8E70DAF275FF73EF9
+        7602E79B81270F029F6C383CD938250487EF6E7B8CCF264634D599E48DAB2573
+        7400843EFFC7E00240EB00900230A1188E09C0B822D601C0478046D823404407
+        400119011A103602847400BCF10E00EE00821D005400D0EABF037FFEC705A095
+        2E0072E8F33FCF8D26002E4246809C6823400EEC112019F4F91F0800C708900D
+        E200D2E8F3BF342200A5840030E77F880E80B419F6FC4F1380A39400481A6370
+        CEFF309EFF25D0E77F7CFE87F1FC8F7400D0B77FF2F99FD501603CFF8B632340
+        B80090F33FB4E77F4DECF93F560C1BFE613DFFABA1D53F3EFC8395FEB800880A
+        8EFDB0EBFE503A3BE44345E4C1C710F011FC63426A1DFC99028140201008E479
+        1A0142056053A382BE0370972900E8FC0F1FADFE8577008000A8E5DF00EC2B5E
+        BDD4DC3F389BF2F52D8FC758957FFFEC936FFA2901007C3DF0E4A3A8271B8EC2
+        1D00E1F186E35737CFF74E249FABECD8933E4B3CFF730900730488B900408E00
+        611D8031620760141F01C2ABFF616A0428881A01A27600A8F99F7E72FE071300
+        6607804300F01120FAFC0FAD0320470800A8FE79C27600D00E809C135D00D823
+        40D4F3FF495AF56F57818F00D9E04D00E91F21005248F55F4C74000A191D00EC
+        F99F98FF916275009011204A00900EC0C12C86001C600B00FBF97F1F7304087D
+        FE17634CFF0B79FED7A43DFFAB0B7DFEC75121867F58CFFFAC811FB2FA9727EB
+        7E1C114400428006B89C2B803F532010080402813C671D008DCAFB1AF4F91FE6
+        0890DA164BC0F40580821B5A85D7833A7A57AE44FEED8E0BA394BF7FE1C937C3
+        0C0140FA00434F3E4EDCB20F40F1F73B2ECB8B5117AADAD5938006CC09E900CC
+        101BC0C412305D00389680D1F91FCE1D0074044801ED0028F8934BC0ACF99F3E
+        B60078922340D806302E00F2AC0E8087C00EC0196204C88DB6048C55FFE40810
+        DA01C0A7801C691D8053B5F40D60595400F0EAFF04D702007B03B854700358FA
+        691BC08C1120FA0200430090EA9F12007AF56F40AFFED3C439042019130031EC
+        F97F0F3EFDCFA8FE19CFFFF8EEEF9602C078FEC7414B7F5165F6DBFF0EA2F4DF
+        8196FE22B4A27F07060FADFE7908368E59F0670A040281402090675F00AE3347
+        80900E800663048821004F1901423B00CEF5E3D38B71DFAF3B7354F09BDE4FBE
+        1D630B00C2D8934FB29EDC75FA310E00F8C71DE7899978EBA251A600CC500210
+        83EF0028FD1801A06F00333A0043F42560457F6607C08F2D000AD408107905A8
+        8BB503C0D800A68F00610B006407E00C6D0398B503800900F6FC4FEF00D09FFF
+        3158F33FB41D00697C07A00C758052F61230DE01C0AA7F52008AD802807700F2
+        3001E01D2B30F76CD2B0E16BDAF2991BC05912B405006AFA9F4B00B01340D4F4
+        3F6B0180B8FF232E44004C1DF9E25A980060D53F220026F6C5628CF55F62F197
+        3DFA1F8E409FFC41ABFF1D08A126D67940038CAD72458109F088D29F8797FE18
+        56A732878606211008040281409E655E4819BC0604401DDD00469780911D000D
+        C608102600D41E305AFD2302A0CEBA015A78CBA06C953F52FADD6D77A1933C0F
+        83BFFF7AFCEF5F4D627CFF0DDD01C69F7C5AF4E49E2B73F28785F3E37BE71F3F
+        0C7BFC49EEE32F9ABFFA742CA967563B45780700BF028454FFCAAC11206C0720
+        8C3E02B49500A01BC0C001E80240EE00F49202C0B50040DD00253A00EDF24246
+        80A82560ECF91FEF0034B1E77F580B00B800D43204005D005071AE9DBAFAB177
+        F684E0123028FDCFA78C5806770A6C00F3192780D0EA5F9AD501204680B01BA0
+        980058FBB664D72C748EDD39E0528D7600B2E91BC0580740DA302B2C63B875E0
+        4653DFF5DCEA7925935CF20410760094B9FECBDE00261600B0EA3F41E0FA675C
+        7AD1B804F89C79FC677AE19ED4AE58F2F8CFCADAA386F62BCD5D2B998563D29A
+        D1A22A028BBF8CB97FFCED3F3D771894FE53B31B52E0EBC9A25F0E10BC838720
+        22176C619FDED7D70B814020100804F22C8308803AEB0450256B07807E05685D
+        937F6757F16D6D845BBB8A103488EADFA67666E54AD46321933CFF5C77BEBD1A
+        C41FAC0E6E9839533071AE60C231773CB07EA66A7A7EE3C1CCF7DF4CE20EF079
+        E5937B67B0DFF260D23CDE4F39D647114529D64F2B36D02836D42E36CC89C039
+        3ED2DD3538403BB84E25768AB603308D5D01C27700D81BC0EC100045F20C287E
+        056898708021FA0E00F709201F860070DD00658F00F14801C03A0067DBE81D00
+        F404500B4708804B03BD032027B8017C8A710208DB00B68F19A81DBCDD33739F
+        77B24AD6AED235618877B21254FF2E7183EACE356DE31B953DD73D928665ADCB
+        0E5E68F2CB1A3FEEDF2E63C1DFED5A6B13DCE916DBEF1CD9AB64537626B6CF31
+        BC5BD60CD100FBD04EBFB411E30B0D9800EC3F5DE59B32E418DA296B9A7FC0B5
+        C63B69E07458A78C499EE4E11C558BA28B717DCE21ED72C6B9E4FC8F4764777E
+        DD82DCE16C09830CDD93A50A46D9008F88CE33A1ED3CC32C09BD34D7A0D623CE
+        E55ED1DD6AA639479CCA3CA3BA548DB341F52FAD9B72CAABE1624487B2610670
+        0017BF2603DB22F7C06689DD09479D4ABD2F771C752C15D38A75F16910D78AD3
+        B3C8F30C6B73BC542B01EA7E860020C33FB34BF725D4A3445523DB7BD7F44CB3
+        F699649A9E2874F3AAD5314CB3722AF10A6E3E62990BAA7F71E5083B9752EFE0
+        2663ABDC1DF2A1A7CF55020DC00480A8FE8359589E8402008140201008E49917
+        80D4C1EBAC1D00C60D505400D4686740156D1BDE954EA0A3ECD80A1CE052EBE0
+        27373D853DFCDF5A0DF12F6B52B2A97E4732E157AF05FDFC173EAFBCE2F3B357
+        7C7EFD7AF0BBBC640DC7A688A6D9471F4DE3AD802F1A9E6C7A3ED9BC34D976FA
+        8CD56F27CBDFDE82E1A2B7CBA37FE766F3B6BC81B17A5837E20031B42560C11B
+        A08C1080714200842D016302406C00738600F892F33F821D00460A18B2017C01
+        9DFF61850078B00480B603C0108046D9D30DB2980038719D003AC54A01439A00
+        3583B74D83BA9A46D70F79B7C99EA89C58F948C5A10608C0E8D2436DB7BAF2EE
+        EB49558BA67EEDC6DEADE0DF3845F5B58CDE391337601FDEBDB6FE191080C6C1
+        5B9D131BAED17D2DC3B75DA37A79E6C5DEA9C3A7423B7BA7EE1EF6A83B7AA171
+        78EE3EA8FEDDA37A552D4B9C423B4F06B625944CA794CD2A1E2F189CB97B21A6
+        37A178AAB869599298FF691DBCA9E750464680C91CCAEC1CB9E51BDF17923AD8
+        D47B4DDA20FDC6FA679199C33EB13D8B6B8F22D287FCE37B9B7BAF010128AC99
+        0F4F1D700D68EE1DBD256F9036BFF230A560DCC2ADC227AAB3A675D9EE5C3528
+        FD8100CC2E6D4A6AC79FBA506377B62A2E7328296744548D1000E2F6FFDDCD2F
+        F24A274B6BE67A876EC8EF8E3B1FD038B774DFD1A34AF340F2858046DBD3A51D
+        3D578DACF2CEFBD6F3AB66AC1D4B1CCE94EF900F995BBC2786750094C3054AFF
+        2004D9602BFB8CA1C141080402814020906719C60E803A7606B4827E0694D101
+        D0CCBBFEDB3F5E7EE1858B74B689C69DAD1DFAF6F63921D77B1C06A713F4BD9A
+        5F7D27FC272F5E62FD5E8C175FF27C4734D6367DECDEC369EA34D0374393FD39
+        D117DE7CB2F2FE53F9C7E2F6A1A2B7D5F66BEF0CEFC3AB7F740780880116D601
+        60ED00700B8002108040E102E0438600F4200EC03D02843DFF77F2B648013B4B
+        A580F1B688014646801AD829608EEC0E005AFD57EF726F9CBBFE8949406754D9
+        5C76D38AAC1D2A008ED59800A83BD780EADF3D7148DAAA34BA74D6336D54DA82
+        6FECD552377013084051EBAAB459F1E9A8DEDCC62B52C78BDC63FB93CAE7546C
+        4A8B9A571A076F2EDDF8936FEA704AC59C5B540F7902C83F75A8A1EF7ADBF0AD
+        91B9FB866E354DFD37240DB3E58FE6CDAC3C243B009D23B7F79EE0931BC0EA66
+        F983531B9206E9D20732A69636798699F3AB0F650FA4CB18A42FAC3E92D64B95
+        33489B5EDA0402B0B1F9456AD14472C1F8F2DAA33D6679B3CB0FE4F553C5B4E3
+        8726D7771AA6E323409A880048E9C4FB4476D4B55D69EDB93A3471474C9D2E00
+        C8EEEFE2CA03CD43A9BAC7B2DA7AAEAAEA2682A23F36B55F44295C56333ABB68
+        ACBE656976E15E7064FBF11385EDDDAB21D11D3A079377F01001106509802C20
+        888EB57D26DC2B824020100804F2BC2C016FAA9339008229606577D5500150F2
+        1BFDE9CB5EACF2FDE55FF8DA25B6FDF5CE194E01B8B27C79CFF9A69FBDE2C359
+        FAD379637BA47BC9D4B79F4F925B019303793F5200302AE3DE5230F35089C537
+        8095A91430ACFA17BE03104A5C01A20B003A02A4800A007E054850007CE82780
+        F02B400A9EC205001F01EA60A48079D004C09D1E03CC2D0072CE5810581D7307
+        80F1FC8F3A405570D14CF3D84652CD126072F5A39DCEB5C38B0FB5DDEAE54F56
+        2EDEFC54DDB936B16AE16C1222004179931145D3D296FC1361DDFC8EB553E1DD
+        390D5780003845F664D42C4A1F2F728DEE4BA998BF9838985EBD2077BC087C0C
+        481F89CC9F041F25D1256085E385B3573F52B52C3EE0523DB6B0A9EF5CD93576
+        47EA70F64E8BA2C9A50764084044D64858C6B024BA04AC6094AD615E303A770F
+        54FFF287B3A6971EC81DCA98BDF240522F555A3F0D7C22BE2F59563F6D0608C0
+        9EA4B92B0F8D1CCB746D0AF56D8B6474936797372577233B00EDFDD7F5AD0A40
+        F52F8E380022000ABA49338BF7157593F5CC7347A7D67101D08AC5E67F445423
+        E7B0112095CB75AD4B87CC73CF073486C5750101703A57955B3C2EA17A392AA9
+        272CB6534C314C61578CB563F1D8E41D11B403208A8E004902016095FE322888
+        0064C09F291008040281409E1301A8469780A90500AE0E007FFD03FD12FAB33D
+        F6C94F7E7251D6B46C75254AB0FAFFFAD659C7F4D65FFE36905EE883AF7FF93F
+        7C7FFD46C82BBFF2FBC94F183D811D3AB9F5B3735B08C0A381779BD3DE6C4A7D
+        137C1CE3BFFDD5E47BF45FFD6AE23D33A31D0EB94D4408C03476024859480740
+        91B5044C8F00231700B01D8000220998BC01CAD10120CE807A72A780C9A32100
+        540E00EB06E859B2FA7F8A0060210072C24680ECF1256079879AB12B8F767B34
+        61EBBF056D6B2EF1437E3993BDB3F70BDBAEDEFBF81B75E71AA7E8FEC1F9CD98
+        D2D95DA76BBBA7EE96755EEB9BB96778A1C99E1000E7CB8800481D2F72430460
+        CEF05CC3D4CAA3A29695F1A507A0F4D73851D63E72BBB46D35AF7E49D3AEB473
+        EC4E45FBD5D2D615200032C6B939350BB5DD6BEDC3B73CE3FBC811209E510EBF
+        79B9BAE36A71E35275FBAADAF1FCF8FCF186EEB5A6DE6BE1E9435248DDFF9053
+        002E44743475AF1556CFE5964F2B18A4CD2E3F90DC9D0804C0E814BF77E45651
+        F56C5CE610D60190DD93D0D17FADAC6E9E5F338708800626003164F4EFBDCD2F
+        0ACAA6F8D5B3F5ADCB72BB62CEFBE302B0F748DAC4F47A41E9E4E0E8CDB0984E
+        970BD5FCAAE9F29AD902FE04DE01900F999AD990540A63D4FD08811850002010
+        080402813C4F1D000DCE0E005D00B2AFFDE69D70AC52FFE9CFBC76ECCC00A53C
+        F68FAF7F109DD15929B8FEDB33992EB92F8F5EE2BFF4B297CC21BE5DDA6868C3
+        8C63F618CFB4E2673FF7267F15288165DCD0775F4C0A138086946DA7ED0F1665
+        F91666FA44069D3C69C270807F2E6D77B77A637ED0CD22A75F257A5A33760221
+        665C331A412D6A42F9F2844A6087B2578DA26F8B72D808190486C70087B20480
+        7605284048078026005C31C0DD8202401B01E23A01E48EDF00159A02C611035C
+        2B2800181A6E0D68101822004A0E35CA0ED5B276959A2E75AA8E356A4E35B236
+        E5B236651A4E351A4ED53296A50AB6E55ACED54A272AA42DF83CEB5265BB3220
+        003C2BBE924D1910009E458992355FCAB450D5A654DDAE4CD1B244C1BC58D224
+        9F77BC303063C43EB85D0A3D03AA61C3E799E6AB5A14491ECE913E92AB6659A4
+        6256885C013A08C0628033A40E65AA1ECF5733CB9733CC92D04F973448DF699A
+        AB7A345702BD02A4629C8D9D005231CA42EFFF242B1FC9C43280150FA5AB1965
+        F1F453C57512940FA513F77FE279BAC93B0DD379FB93800028E9A78869C6C8E8
+        C4AB1E48051F15759344D5A295F627D1CEFF5F56D54DDAA997A4B23F51522D4A
+        4439425A3D4A46230A8BFDE269C528ED8E95518F94568B94500E57D28E55D28E
+        11530CDBC10B56D08CDA2117ACA011294255FF81F4EA1F0A00040281402090E7
+        4300B033A0024BC0C415203C06181100B58051F2D5FF3F7F17A2E937FCF3FFF0
+        C5FE1114F1D6F11DDFDD664C01FDB0E1E459D4FCCBD782E8022079B8AC626A01
+        94F83F7C33F9972F275B1717E48E55BE88EE06803FFC57BF0D54756A99BE312B
+        4C00EA93B6F173FDB15F7DFC45734A88667BE69B340178FFACF51B9B93E673B3
+        1106713D3BF71B68EED7D042D9B95B5DC7CE4BC9CAEFA08198BBDD3BC78C3E90
+        DC7D58C5B39A56FD134D002E0150E01600F61520A2FAEF61860074314F0009D9
+        0160DF0015580266CCFFD053C06AB7B802C4150250C14A019361850058E02100
+        C819508E108002FC06287A05C8C6BF757CF1C185B87E5A0A582E7E0394160280
+        9C01A56700634BC08C0CE0346602000A15008C64008BE319C0E80D501D320120
+        5E548B1E011623A61143458009847F89A85E46C0D27FB1DBFFECDC5F24EE174D
+        FB0A615FFB61CDFCA045FF87D2813BA4F18F9627D2FAFB7A211008040281409E
+        655E481E58A3EF00505340CC11200DFEBA986E3159C76FD7C8362A5A78FDFD28
+        F2DFC818972F2F4732E77FCEEDBBD0423A03E0D537437DEBE6FEFE3535E5FFF8
+        9B09DFDA59D1BD058A96D5472307439AE62AA7E61E12E780B61680271FC5A785
+        A8D205E0AB89F74E99BEFDDD55DBC71B0E55ADF1A7ADDEFFEBDCF6BF2F202CD6
+        BD232BBDDDCF791BF81C7CE50FCBEFFB3ABE2EEF94825F0162DC00A504400115
+        00054A00B01C807E0E01A05F01628D005DC23B00C802C085AD3A0072D41950CE
+        11A0A70A00A30320232800760C0190C105000D02B3E41321002584009448E139
+        00C578F57F8C960070341F8B019604A01BC048F56F4464006331C0CC10008600
+        604BC058F5AF4FCB00DE9F2A9000904C4F00E08E00D38A431D004DFFE5080066
+        E57F45E2F95F64F81733F96B072A00227401E0310580FEEA2F1DF0A17400F611
+        606E93D2D5D901814020100804F22CF342723F2500D815205A0A1825009A596B
+        AFBE1D460CF15FD2726DAC9F2A13D72FA45678DF8B4CEDA8A14F015D5F099332
+        2AA53FFFFF513DABF3CA3C2B03F8DABDD996C5F95BF767FFF2E5E463E62F718C
+        00256F3BE374A4B230B822DF373150CBF6C8EBF411A0AAB86D09FE4AD8DFFED1
+        AC8DABE5B6EF97F15FBAD6F27B5DF5573E197E17FBC76FA7DFDBAB2BAB12D4A3
+        144E0B01607700B01340B41120EE1430740488D101E8E6140079E6195079BC03
+        D0CA1080335B2C016F19034C0900F6FCCF25008C14309A00084901936274000A
+        D931C0A80048112780A4E802709826007806302900B418607A06301601A69B2A
+        2C020CEB0088530290C08A0013E51400AC03B093EA006002803DFF8B0A867FE1
+        A53FAD03C0F1FC8F95FEC8AB3F52FD4B057C88023E8102008140201008E47910
+        80012A0998E30C28710548C56B907CCBFFD9CF7DCEE4773DBAE167E8D7425EF6
+        7CE9254F8BD88EEFEE9C2505606A214964570E63FEE768D5ADCD5996006C81A0
+        003CE8FB636DC2B6EAF86DE0635FFE5B9F8FE1D5FFDFE6B737A7BE697FECDD4F
+        E62DB1BFFDE3190B578BD74801F8FBC276F07BC1278F51BA73DE52343DA3143E
+        CAEC006049C0822960438C1C003FE608902FB5044CE400740B5B02E69D7F4A07
+        40CE9DACFE490168145C02668600B097806588100059002500157401C0468064
+        A80E4029D501A0C7009B718D001DA56280B93B00877324881120097404488263
+        04289D230398128064410110A38F007109003A02142BC61000F2F93F8A10006C
+        FE27424807007FFE179127DEFE79C4A57FBA00E0633F78E98FE20F04C0C236A5
+        A7BB1B028140201008E459860C02632501B33B001FE8E4538FFDEF46160ED77C
+        BF713AA0BAFD955FF951F5FDA19285E53852008666B3B6C9A5D28FFF7C685E77
+        FFD1D47F450038F96AE2BD8B76FFB963FB2FE75A0F937F3B4B00306EB6FDE1E2
+        89DF5EB07DD570EF3615AF1A320998D8011861E600B062800715FC07191D00BF
+        3EF615202F9A00D0160078C40810C712301A032C7796ACFEB7EA00C8B2468018
+        57806AF01D8053D54276002AE83B005807602B013047AB7F6C04E8B8E0081022
+        00880318E763390092EC0E4036D101C8C6468024043B0006021D00CE11A03D49
+        62E808105AFD930210CF1200BCFAD78C11E5108048C60E80A000600B000AD402
+        00D207E08588B0E67F64E8CFFF013401F0470440D2DFFA443ADC2B8240201008
+        04F2CC5F01229280D11D80FBEC1D0074095833E71A7D9757E6307FF14A2C28B2
+        6BC70ADF914DA646FC7F1F91D25EFF049902727872FF42D544F31BB2293401B8
+        246251FF7F43001EAFBCFFDDCC7BA3256FDB1C7EAD2977EFE3756E01F86CECBD
+        FDFB44552E96297B56AB38C4AA848F120230CAD80108115C0266E600F831CE80
+        CA931BC0D41950A11D007C0488B101DC261002D0F26FED00900B0035D4020076
+        0248A003208D0AC0D61D002973620180DD0128A40B8094491E53007205478084
+        0A00B6048C7600C4F10D60960090CFFFC001D01D004C00B4C90E401C2100F8F3
+        BF282600EA821D00FC06285B0088E7FF1D8400EC606C0007B347800801D8412B
+        FD3F94C48102008140201008E4B91100757C07E0BE063B07001100DEB93E72FE
+        E7C5172FE90776FDF9CEB91FD61D6F5E0D53B6AEA14E7CFED4D328B4EDEB3B3E
+        4FFE94F6E4EBBE9EAB8BDBD5B3E82340126635F71F4DB3AAFC3F7F3975EFE1F4
+        DFBE9AFC310270A7F30F39C1BFCB097E035012F9BB89B277FE36BF9D2AF147DF
+        75347D7DA5DB9853009A53DF9237F74453C0B020B0317C01E0694BC0640740D1
+        9F7605C897B903809D01252F815237407101E05123404C01F06008005EFDA302
+        C0A357FFD419D07A810E00250032C40E800CD6013821B403206353465E01620A
+        009FEC00A057808A047600F00E8024DE01C0AA7F2E01A05D01DA6A07006F0220
+        1D0009BA0030E67FF01120F1DD821D8078FAFC8F2877078031FF234A0A805204
+        63FE077300792E0190A53A001FA2977FA8E11FA4F4F7FB5002F9686D07050002
+        81402010C8F3D301D060080055FD6B946E7CA0954B16F1BFFC4DC091A489C8C6
+        5A405843E31EFF0150F793BF2AA65738B4368E95EFB3B7E7C50C4AE802206250
+        327F7B8E55E54F5C9FD30F1B76CE19AF989ABFB539FDCFAFB74A02AE4FDAE679
+        F65847A94547916E43F65E7F37D9A0D3AFFD73897280C9F27702CE48FFB06E2F
+        2800416E6FA99E2F610681E121008A61423A00D80D50F4F95F9114003F761098
+        3C790588BD04DCCD3A032ACF1000C619506C04083B03CAA3EF00B808EB00D409
+        B9028456FF8257806C2B993B00C20480B903207C0958D2A4801C019232E21A01
+        3A4C1B013A48760032F11BA03F760938191780DDF81230A8FEC505468044F111
+        A0184200384E00115780E827802218374015046E800ADF00DE81ADFF4A92CFFF
+        C0018000A4C19F291008040281409E750148EEBFCA0E0263EE006867AFFD9A36
+        FFF3D24B9EAFFE2EE4D56D38BF793D888C0343A680DE0E0B6B5DFCFE1BA4887F
+        F4F18CBA730B3DEBF72DA944FEC4024B00A2DB66DFF820FA17BFF6FF836C929A
+        7DBD53EEC4C8DADCE3ADCF807E5EF3E4AED3938D53FFB875D2D9E27D6CBB17E3
+        9BA9F74E99BEF3976B762C01F861F97D478B3F28F936530210812401333A00F4
+        2B404194002806B242006841603EB800C8531BC0E40E80E00850278F880196E7
+        580226478088EA5FF8152039E1578064B025606207807309589A7480A77600C8
+        2600290047C91D8002EC0A9014A303403EFF131D007CFE47D80E403A1902F094
+        2B40F809A0446A03F85FD801203B00C8089028C70850387103143D032A1F2AC2
+        E3EA00080A80144D0024FDCCAD923ADADB201008040281409E655E4802025045
+        E500A8B33A00E57795CFF5BEF8E225FA43FE16FCF4675E0702FB3EF90499F3F9
+        FBD793F619E3F42DE19FFF87AF45CAF8A79F506B001B0F67B4CF7582DF85EF09
+        BC78E903B5CCFAB9F9A7E5008C3DF9281A08C03F3101E87F97FC82BFCF6F773A
+        BEEDCB651B9600FC6371BBBDF98E9D419DA8004C100230465E0152DA6A091869
+        0228B204803102D4879F00F2A6270177715C01BA800B007304A88D0C02933B43
+        CB017015BE03E0CCDA00A675008826808CD025E0726613805B00A4CC4AB02030
+        69D61230FD06287902C8388F9AFF61EE00481CCA96201700849F01C54680D857
+        80F625511D003C082C41C81230F30410E719506C04684B01104801133C011444
+        2D010BEC00985926B6B634432010080402813CCBBC90D477957E05883505A4C1
+        5FDFAE91F323AB7F0CD1BD05BDABF8337FF1F8C2BB0AA98C2800D92497C2E9FE
+        ABF32B1BB31D4BF31649A3AFBE194AFEEA8B2F796A3836DE7DB8551058A097ED
+        5877D668674C4F99E1E54BF27E8EBFA58F00FD6576BBC3B1B7BE5DB5153C037A
+        D24C5C23B447700448E00C287B0488BA02445F02F6E54802E60E0223468078E4
+        19D073AC33A09400309A00AEDC2340729C4BC0A7183900B8009CE01C0122A300
+        E802C01718012A619E01E5BE024446013076008EB09780B93B00FA5407405C97
+        DC03266280B93A0062BB855F01C27300582960EC1C00660C30730D007DFEC73B
+        00E415208111A00FC900602A01000A00040281402090E75300383A00C9577EF5
+        7A30F584FF2BBF5745E37F231A8F7DC478F5C3D89788277CC06FDE0C0D6A9CFB
+        E7D748057FFFD1CCC1A0BE977FE14377805FFF2E446C779E9249F9FB6A99BFF8
+        4F7FFA2FBDF6FB08BFAAE91FBE99142600375AFF90E0F97AA2E71B800CFF37FA
+        F2DFA22F0103D6BBFEE86EF3E1F7B7D93B00E0CB80006886F5521D80F07125B6
+        00B097801583A81D005A1018D90160ED003047800801E0D10480B103207404A8
+        859903404401106740310190632F01330500CB0138C17505C816BD0284760064
+        383B00164276004C990240048149D1F780A925E06CB203F0D42B40580740827E
+        0954A80024880B110051BA006C150476194D0266760094D02B40641300CD01C0
+        A780D86B00815C9740FDB18F50002010080402813C0702903A788D9E044C3DFF
+        A30E20E7DA459FFF11DD5F98DFDFD43555D23955DC398913D2D0B94D2496FE8A
+        6FE8DFF1D9FDDC275F36FEF0CD68D5CC82E4C112FA26C016E3439A2ECD4B7766
+        FFD533A0243F2CBF9FECFD466DC66EC12B404C0110D60118658F00E1F33FCC24
+        60FF01C124600522084C8112802EC10E80FC533B00580E80DB163900F572DC39
+        005410187304A852EE6495DAE93A5612B08CB5F011200BFC0C289503706C8B0E
+        401EBD03A06456246B922778065482430032E86740695100429680F120306204
+        8870009E6EF24EC374F15DE414508C98A000A8513B0084005C660A40B8085300
+        901120792C082C84B103409B02C23601E87160D6766943830310080402814020
+        CF322FA40E513900EACC0E8046E9C61F5432A943FE2F5EDA77A9E54F373CC9B0
+        2D8CA5E5182943C6B59F0F7572476653913DDD07FE7FFDB838B263F28F3B337F
+        B2E52201D00659A3B2F289B91FBE99F8F704E0F1CAFBBD796F9DB6FCE0CFD7EC
+        7E9C008C5141606142468082080108143803CA21004F5902C64680E49FD601E0
+        09490296A576001AE4E823400EB41C00C608103E05A47DB67160FE01AD035011
+        943F25675B01AA7FBBF01E43CF16B4FAE7BE028436018A624B6614ADF8400062
+        4BA6152D4BC80E80A4493E6B0FB8A465C5DCB391790614D901903CC43C037A80
+        B604AC8FE7007008001605405C01C2B2C0C46949C04A07D27A466E66974EC9EB
+        26630280340134585340EC112051FA089072044B0076906B00F81E7088BC6694
+        87670D2D0A80B8072A8D0E02610BC1A809D8C02B401008040281409E8333A043
+        D419500DAA0380E40068A4ADFEFA8DE09FBEEC8DF1ABDF067995B5FF73FD344B
+        003EBF79D128A8F5E5577C7EFAB217C6ABBF0FF7AD687E8C2482812F70F8C7C6
+        D99C9E4A75FBEAD7FE7819FC39AC6E00F8FAD7DE8BDC73A6B566661E1B1CA20B
+        4084C79B7F9DDF2E8CBFCC6DFF6AF2BD7B3D7F1CE5BF1DE9F1C6191B913FCD59
+        9249C0CE66AFFD7906FFCAAF27DFB33D860A003307003D034ACF02A38F000D11
+        6B00830AF81A004B00FAE93B00781400471018D601E820720048076009002D0A
+        C00DBD04CA5E0226D700582340751C4BC027A925601D54000C2EB59AF875F04E
+        54EE72ABBF76F70B9BF01EDD738DA55DD7122AE68DBD5B15EDCA0F9C6F041879
+        B6C859950201D0395DAD6257266556A46A57D634740B54FFAAB6658D8337A54C
+        0BF63A571DF76ADEE358893501142D8A8E9E6F38EC5E2B63920704E06440ABE9
+        F9FA5D76A54000765A14ED3E597AD8AD5ACDBC1054FFC00174EDCB8E79D4EEB6
+        2901D5BFA2718E895BD53EBB1209BD34D94399BA274A8000C818A4EB9D2891D8
+        9F72D09EAF792CF7C0C912897DC9BBCDF38F9E2E5737C90602C0D34F3572E0EF
+        B7CC0702E0ECDD303CB96E78A2487C57DCCE43E926A7F8EA873340F5AFAC9FA2
+        6D9C79D02A5F453F59615FA2D1894235831403F35C2000623B23F58E671B5AE6
+        49AA479102C0DB15A36398AA773453D72443540989029051BB6C6896BDF7702A
+        100033BB82F1A93B47AD736554C2698340441F801807021FA100402010080402
+        793E7200D4D12030720A88EC00EC2AB8A91434AE1838861030A67D79AC71A2F8
+        FB75C71FD61D1F6F383EC171004A90DED57022BECD2EB6C52E06E1445CAB77FD
+        E05FEE9CC35381374E7DBFEE7C65F972747D956968A3CAC95A4593B20FF7154A
+        1D2C56B6AE310AEE0D6F9CB9B23EFB5820086C71A2C4485FDCC55A5418A7AD25
+        9CAC153CEC65A3BD157A4BF5FF82BEFD637C3A6F65B4FF2D17F3375D2CDE021C
+        371655D5D6D20CEF17DC014004807E0694EB0A90229A0340DB0118E016002F44
+        0014849E01ED6067819DA325019F6D219A00CD5B2401CB3AE353407242CE800A
+        2E016B9F6DDCFCE4DBC4EAA5FAA1DBE1C5B3865EADF73EFE26923F6B13D6DD31
+        B151DD77F342CA889E47E3E69FBE4DA95EE477ACA5D72E010148289FB30A6C97
+        362BB60A688F2F9D953A56641DD01E5B32237BBC28A678FA72FE64D7F8BAE9C5
+        4615AB929EC98DC4D299F892691DFB322000DDE3EB51F91303D3770DDDAA3DA2
+        BA17D73E8EC91F3F78BA120880AD7753C7F0AD88AC91E0D44105E39C9EB1DB09
+        8513AD0337DC42DAF6D916B70DDE0002A06D5ED03D724B4A2FF5C6FA67D9E533
+        E7C33B2E447434F5AC45A40D7A5EEE04D57F6BDFB598ACE1DAB615B780A6CB69
+        034B571F7904B5E85B15F48FDE8A4C1DE819BE79D8AEC8C5A76171F561546AFF
+        51FBE2AEC1EB095943796553CB571F89A94526660D65158DA7E68E14964F89A9
+        5EC604C0CCBE6875ED5164624F67DF9A837B85F4CECB8D6DCB31C9BD55F57367
+        BD6A012B6B0F8322DA947745D3EE81122741B19D60F4A3B55DDAF0D0D0FF870C
+        0D0E4220C280DFFF10F8BD0ABF5721CF1A2F24F5AD524BC055E40810B9077C57
+        BD0CA57443BFF2BA6F477740677B70577BD2607BDE18A02D6FB4356FB4257BA4
+        3363B82B63B83363A82363B00DA52577B03A6FB0226FA03C6FA02CB7BF34B7BF
+        24A7AF24A9BBDAA77DF67CEB558BCA95D3F52B975A97E3FA17B347177247E773
+        47E70AC7E769CCE50D4F970E0DD78C0ED78CD019421904D48D0EB54E8F774F37
+        F48E25F48EC5F78EC5F58EC6F68EC6F48E46770F47D5B687D6B486D4B4065536
+        871C8A6D5609E95306D53F6D0780CA02630BC00853000615E941601C87809011
+        20AC03204FCF0263EE00C8B37700184160F814109503C07D0654963803BAF512
+        B0EC4914740958E76CE3E4EAC772272AF77834F6CDDE97B12D9FBDF627F91395
+        32D66549558BEE8943D296A5BA671B26571EC958F2156DCB67D63E96B5E41321
+        00C569D50BA65E2D4000D2AB174C2E35491F2BBC983850DEB136B6B89954367B
+        21BE3F913F431F01720DEF923C92E31CDA915139070420A77A815C023E15D0DA
+        3972DBDEAF45DE28C7C1BF25BB724E423F5DCBA270706A63AF80002CAE3D523A
+        9C29BE3779646643DD241B9B0272F16FEA18B87E21AC2D30AE6768F28E9E5541
+        53D7AAD8AEB8B8AC618FC06631CDD813E7AA734BA78000E4964D89AA475BBB55
+        E4974F8BAA45A91F489D5BDE94DF137F65EDD1C5A0E68B414D57AF7F24AF1387
+        0BC0A9E2AA860511C5704BC792BC92717BB7B2EEFEB573BE75BE21CD63937776
+        E927B577AF7284820998C071F384C68606C8FF300DF5F5906719F82D0ABFFFE1
+        F72A047EAF3E6B6002B0B9B77E5AAF3151BB2E14A116104251C32278774DC8BE
+        BA907DB524C10C6A4882F65523ECA90ED2AE0C4409009CEA2849989A4B989A4D
+        9E9E4B9D41992699C599C2499E9C499C4048189FC64801FF067C32069822983C
+        D552A0CDF7D90528C1F0C629C6F0D22AF6D62A22F1A22864B0A7285427A98EB5
+        03A0482C01D39A00B41D005FF20C680FD601602F01534D00440050B020B076D6
+        12B09C7B2B7E0588ED00B411202A084C9800E04160E421201D7C07A052CBAD7E
+        70E181AC6D052600D2A8009C0502608508C0F8F24320000A9800A069005266C5
+        3CCB92B6D13B72162572E6C5C82766C5663E2DAD23B7D5EDCABC920733AB172E
+        260CC4154F4B1161C040004E87750201700C69CFAA9A0702105B38812F011F42
+        4680F69D2C0D4A1D1C9ABEEB14D89A59310B0440DDAC6078E6EE6EEBA2AE915B
+        12BAA90627F95DA800CC5E7920B93F0508C0E8CCDD9D465998009C096AA96B5F
+        71F0AA77F0AC3F76BA9C1080F8849C9133FE4D625AB136EE9579E5D3AE3E0DF1
+        9943A2EA3136672A800F0001D8699032B7B429BF376171E581E3F96A7B8F4AFB
+        B395E41410108082D2492000C74E1416964F399CAD686C5B061A0030B5CDC705
+        4030144C80E3E6F1F0670A040281402090675F00AEEEAF5B32683EB9A7E1C0FF
+        0C4E0367FB3727FE7BA9B9D57AA4D5ECBFE53FEF60A3A5765C075300F033A0B8
+        00F8090A00D904E038038A77002ED282C0CEB33A008C3D600E01100802230E01
+        715E01AAA65F0295E11280AEA97B974B668E78B77AA68FD50DDC3A1D3BA0E7D1
+        F8E8D3EF624B67731BAFE437AF80EA3FBC60EAB86FAB89677346ED92D4F1A2A3
+        9ECDE9D50B52A68587CED68F2D3E08C81C1D98B9070440CD863F387B2F22773C
+        3C674CFB243E0214903AD43F7DD7C4A3CE23AA27AE700254FF850D4B3BCD0B4F
+        FAB584678D84678EF48CDF5136CD1B9CDE08CF18AEEF5EBB18D5AD78247B6CFE
+        5E50F200BF71A99B2900BEB1DDB51DAB3E31DDE742DB140FA6770FDF0C4BE90F
+        8CEB3913D0AC8B08C055B15D71076C0A07C66FFB4777F50CDF3CEAC077010290
+        0504205A7E5F62FFE8ADB0849E1CFE243202A41E95553C9E963FEA1DD61A91D8
+        23A91655D5B020A116890B8012220045E553729A511D3D57C3623BFDC25ADC3D
+        6B9577C74E4CAF5FF46F50D08AA6FA005C2670DC3C01FE4C814020100804F21C
+        08804E4DEDFF58F50F306EB3E8BC3BF4D49ABE6DA33F743A266A2E297539AF70
+        ADA2F26663C39DCEF6BB033DF747FB36C705BF3E6A36696FC3C1FF96FF428D94
+        546A04083B04C47D06B49F1504262000DDEC33A017E81D8036D608901CD204A0
+        4F013147805C684BC0AC4BA0D81520E210900C2E00F812B082438D6960171000
+        79FBAA63819D32B6155AAE75A7A2FAF4CE37F1EC2AAC42BAAC823BF53C1A3A27
+        368EFAB45A0676F0AC9125E0031E0DEAA72A63F9B336411D4000E24B67AD02DA
+        B04BA007DDEB6C03DBF73855EABBD64899E4AB5A95D8FAB79A7936C91CCD3FE0
+        5ABDDBBECCCEAF659F43B9E4E16C2D9B927DA7CA810018BBD7C819E5281FCBB7
+        BCD460E3D508AA7F09830C15D33C1BCF86434EE5581EB0A679BEEDA57A2DB3FC
+        23CEE512FB534CDD2AB14BA012FB920DEC8AED2ED4691FCF13DB9D286F9066E9
+        5E05503E98CED34B3964578C4401EC8AD334CEB43D5BA573345B543356ED50DA
+        1ED36CEC1690B25EB2B56BF951FB626002A23B23C5D4A28ED814D8B896E91C49
+        1755B96C6257003E2AEE8EDB7F34130880824EACAE4986886298AC4694D9C942
+        0BFB2245ED1811F9D07D8753ED4EF3E5D42377F0824578C10C0D900B42413E87
+        1D00080402814020CF8100A40C5CD3A8AAF83165F1FE46C3F8F914C7FE33FB1A
+        0F19341BEB371BD9F7B99CE8753ED872D4B4C35AAFE988519B9949BB25A8EFC1
+        BF39D06C72BCD346BFC9E8408BC9B10E6BFDA6235E63819E63FEE00FB1E83A59
+        7FBB1D94EC039B934B9FAE01963F5D1B7A3035FA6876E4E10CF2C9C3D981CD89
+        E0A948F01719B7991BB75B803FDCACD316FC81A7FA5C0121D3515EE341F10B69
+        B1F3A91D1BBDB9ABA57DF747461F4EA52FE7802F03FF01862DA647DBADC0EFD5
+        6D3A0CFE76F01FE3D8EFE63F11A2D774F8C7FC2F55498E638F0005D292808585
+        015397409902808E00F12EE06B001C1D00DA212039620488473F048485015323
+        400DB29C1D00A17BC058105825790694110560854401E8A202801C03A55D0295
+        322B91B72E95412F81CA5BF2A5A938302A084C924C0236CE658401536740B300
+        12DC5100C425502C07808A0248655E024D1623E2C0C476D3D200B405E3C09033
+        A062541C187206343A6D20AD60B477F8868B671DED1E28710C944A0463DE03C5
+        3301A85CB01D6434180E4B03102CAD93BBBBBA48BABA3A211008040281409E35
+        5E481FBEF12305E0CCD0C5BC95A28AEBD556DDF64153E1BE13C1498BE9DE6381
+        294B592E031E71F3C95957F21217D32F8DFA252CA4F94F84C6CE25812F885F48
+        75E83BE33A783E663EA9EA665DEC7C12F8735AD73B071F4C8E3D9ABBFEC51DA0
+        01A0F45FFCE42AE0EAE7376F7FB5B1F0C94AEFFDC1F09998B0E9E8FCD56200F8
+        331317D2D296B341F57F7EC43B622626682A0294FBC1539753163340951F391B
+        97BA9455BC56061C2367A5D0A9DF3D6A2EA1E246CDC5515FF0655E630171F349
+        19CB3906CD46FFB20004091700620A48DEA7971E064C5D02A577002E32048073
+        07005D03689173A78501BB32A2004801608F00914D0061028039802DE600E5A4
+        0048E35960653C9B721D975A5C00CC1951007818F0B1223C0E8C2B0B4C929605
+        461300220BCC9096057600831D062CAE279006B08F9907BC871200713C0E2C9E
+        1080381CAD58CA0134700750D64BDE6B9AAD7630558C0C042012C144588100CA
+        9C0E104A3800150E20C2C3648088092364E09453D6F8F8D8FF166363A310C833
+        08FCFE87C0EF55F8BD0A79D6400440ABBAEAC73CFF874C471E6DB7741BBA7071
+        D40F54F6B1F3C9E746BCBDC783C2A6A3FC27C37CC683C0BF3F3BEC65D6691B38
+        191E3F9FE23F190A2AF5D0E9A8B8F9145082C72FA4A42C657A8F05805F2DBB5E
+        0DEAFE8107932B9F5D5FFA746DF5B31B331F2F838F573FBF71E5B36BA9CBB921
+        5391F6BD2EA07C8F994FBC3C130B3E3F3DE0E13D1E08FE3AF097FA4E04252CA4
+        823FD9773CC86F3C786FC3416005C00142A723816980BFCBB1DF2D6A2E3E7929
+        03FCAEB09968F027F84F84044E86E9351DF93102A09E9A2428008C30603FEE2C
+        3022088C19054008008F3A04447600DA993B00ADD80E007509D495230C183B04
+        B46516181905508D5D022504406807000D03269380F90C01403B0084031079C0
+        47A92600D20720AE000911806C66187026BB03A0CFEC00E8A6107160C9820280
+        2782E9B09A0071F42680A8668C18DA0410D3A0C5819191C0442298880A33144C
+        4920189870801D783C30D10D60B50288CF7D03F8FF8B020081DEF5FF73510581
+        DFFFF07B15027F56FF0B02903A78CDA07E4AB7E9BFB441BBC5F0FDE1D6E3CE03
+        67C117905F033EB1EE76ECBD3F2638C7DFB7399EBD52AC2FFC9D7E8BBF88F54B
+        F4BFEE5FFADFB2BFC1583BAE8D1080612C095821905802C69B00C246807A39CE
+        805EA20480C71600B203D0466581D19780DD043A00E42120679A00D0F68065C8
+        4340B42C30620A8814800A2E01A039002E00251C02604A1780027A18B0145D00
+        185340D9C42550CC0132100730A03701D2D84D007A1EF05ECA01C4F6B0F280E3
+        A92920AD381CA20320A6410D0289AA9302C0E90011A2EC2600571F8008091691
+        A7E682C8EA5F4231A48CDFD8D7D70B81FCBF49EFBF0BFCBF0E0281409EB19FD5
+        D819D0FBBA0D5D875ABC8F77B80BA5FDCC7F19378436049BCE4BF957464B5666
+        00C52457660AAF0C38F6F8615FF3145A315CFF7D5AD81C6B713D58E3B137B340
+        296498DD0108182246800615FDFB592340E412B082778F02771830D501E06D11
+        05407400840B0075095496DE0110720954569800A04D00699B726CFE47061300
+        2B010130C705405AA800E01D004C00D026401ED71A004B00986B00FA5C6B00BA
+        EC35002000627BB03E00AD03A0435F03201D20167300A600448BAA45530E804F
+        01210E20741980D10708A55A01B80384885026102A2A1F7AD221A5A6BA1A0281
+        40201008E419870802ABDED4AABEAB5DB3AE53BDAE5D0D3EDED1AEBA8D508971
+        4BBBE2A6763941D90D84D21BBB4AAF23F001D7769500D676152368155DC5D855
+        B8AA85510058D1CABF829087A099BBAA997355336715217B05216B452B6B5933
+        6B413313308F930198D34C07CC6AA62168A4CE6068A64C6B009201531A498049
+        84C449F5C409F5048C71F5F871F538C018422C60142166542D66442D1A256A18
+        2112300450091F5222C3806902A010487FFE178802A004003904840A400FE70E
+        008FBC044A1F01E2108016BCFA6787016302504F09006B0A886B074056700F18
+        1D0192469A0065541300EB00600E60CE9762AC01080880295B009E3205848F00
+        D1A6800C3007C005401C6D0248E8A5323A00AC26002600C41410DE04D0214780
+        E2C93500BC09406E02A8330781880E00B609204AEB0308340168AD0005DA5A30
+        AD1B009440543EC4E64452795925FC81028140201008E4D9E7FF00C98BB758EF
+        BF0B0F0000000049454E44AE426082
+      }
+    end
+    object bAtivar: TBitBtn
+      Left = 532
+      Height = 32
+      Top = 4
+      Width = 96
+      Anchors = [akTop, akRight]
+      Caption = 'Ativar'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = [fsBold]
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFF0808391818A51818A51818A51818A51818A518
+        18A51818A51818A51818A51818A51818A51818A5101042FFFFFFFFFFFF1818AD
+        0000C60000C60000CE0000CE0000DE1818E71818EF0808EF0008EF1821EF2131
+        F73142FF2929BDFFFFFFFFFFFF1010AD0000B50000BD0000C66B6BE7DEDEFFFF
+        FFFFFFFFFFE7E7FF848CF71821EF1829EF2939EF2129C6FFFFFFFFFFFF1010AD
+        0000B50000BD8C8CE7FFFFFFDEDEF79494EF8C8CEFD6D6F7FFFFFFADB5FF2129
+        EF2939EF2129C6FFFFFFFFFFFF1010AD0000B56B6BD6FFFFFFADADEF0808CE00
+        00D60000DE0000E79494EFFFFFFF949CF71829EF2129C6FFFFFFFFFFFF1010A5
+        1010BDD6D6F7F7F7FF3131CE1818D61818DE1010DE0000E70008E7E7E7FFEFEF
+        FF2931EF2129C6FFFFFFFFFFFF1818A53131BDEFEFFFDEDEF72929CE3131D631
+        31DE3131DE3939E71010E7B5B5F7FFFFFF3139EF1821BDFFFFFFFFFFFF1818A5
+        3939BDE7E7F7EFEFFF4242CE3939D69C9CEF9C9CEF4A4AE74A4AEFDEDEFFEFF7
+        FF1821EF1818BDFFFFFFFFFFFF2121A54242BDADADDEFFFFFF9C9CE74A4AD6EF
+        EFFFF7F7FF5252E79494EFFFFFFFC6C6F70810E71010BDFFFFFFFFFFFF2929A5
+        5A5AC66363C6DEDEEFFFFFFF9494E7E7E7F7E7E7FFA5A5EFFFFFFFEFEFF78484
+        E76363EF1010BDFFFFFFFFFFFF2929A56B6BC66363C67373C6ADADD68484D6E7
+        E7FFEFEFFFA5A5E7D6D6EF8484DE7B7BE78C8CEF3131BDFFFFFFFFFFFF3131A5
+        7B7BC67373C67373CE7373C67B7BCEF7F7FFF7F7FF8484DE8484D68C8CE78C8C
+        E79494E74242BDFFFFFFFFFFFF313194ADADDEADADDEADADDEADADE7B5B5E7B5
+        B5E7B5B5E7BDBDEFBDBDEFC6C6EFC6C6F7D6D6F78C8CB5FFFFFFFFFFFF181894
+        21218C3131943131943131943131943131943131943131943131943131943131
+        94292994181884FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      }
+      ModalResult = 1
+      OnClick = bAtivarClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object ACBrGIF1: TACBrGIF
+      AnchorSideLeft.Control = pBotoes
+      AnchorSideTop.Control = pBotoes
+      AnchorSideBottom.Control = pBotoes
+      AnchorSideBottom.Side = asrBottom
+      Cursor = crHandPoint
+      Left = 1
+      Height = 38
+      Hint = 'Sobre o SAC ?'
+      Top = 1
+      Width = 319
+      Anchors = [akTop, akLeft, akBottom]
+      AutoSize = False
+    end
+  end
+  object Label98: TLabel
+    Left = 8
+    Height = 13
+    Top = 208
+    Width = 95
+    Caption = 'Mensagem do Email'
+    ParentColor = False
+  end
+  object Label97: TLabel
+    Left = 8
+    Height = 13
+    Top = 136
+    Width = 121
+    Caption = 'Assunto do email enviado'
+    ParentColor = False
+  end
+  object Label95: TLabel
+    Left = 8
+    Height = 13
+    Top = 96
+    Width = 36
+    Caption = 'Usuário'
+    ParentColor = False
+  end
+  object Label96: TLabel
+    Left = 137
+    Height = 13
+    Top = 96
+    Width = 31
+    Caption = 'Senha'
+    ParentColor = False
+  end
+  object Label94: TLabel
+    Left = 206
+    Height = 13
+    Top = 56
+    Width = 25
+    Caption = 'Porta'
+    ParentColor = False
+  end
+  object Label93: TLabel
+    Left = 8
+    Height = 13
+    Top = 56
+    Width = 72
+    Caption = 'Servidor SMTP'
+    ParentColor = False
+  end
+  object MainMenu1: TMainMenu
+    left = 24
+    top = 329
+    object Principal1: TMenuItem
+      Caption = 'Principal'
+      object Ativcar1: TMenuItem
+        Caption = 'Ativar'
+        OnClick = Ativcar1Click
+      end
+      object Desativar1: TMenuItem
+        Caption = 'Desativar'
+        OnClick = Desativar1Click
+      end
+      object Testar1: TMenuItem
+        Caption = 'Testar'
+        OnClick = Testar1Click
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem39: TMenuItem
+        Caption = 'Salvar Parâmetros'
+        OnClick = MenuItem39Click
+      end
+      object MenuItem40: TMenuItem
+        Caption = 'Ler Parâmetros'
+        OnClick = MenuItem40Click
+      end
+      object MenuItem36: TMenuItem
+        Caption = '-'
+      end
+      object Sobre1: TMenuItem
+        Caption = 'Sobre ACBr'
+        OnClick = Sobre1Click
+      end
+      object MenuItem37: TMenuItem
+        Caption = '-'
+      end
+      object Sair1: TMenuItem
+        Caption = 'Sair'
+        OnClick = Sair1Click
+      end
+    end
+    object Variaveis1: TMenuItem
+      Caption = 'Variaveis'
+      object Equipamento1: TMenuItem
+        Caption = 'Equipamento'
+        object Estado1: TMenuItem
+          Caption = 'Estado'
+          OnClick = Estado1Click
+        end
+        object DataHora1: TMenuItem
+          Caption = 'Data Hora'
+          OnClick = DataHora1Click
+        end
+        object MenuItem22: TMenuItem
+          Caption = '-'
+        end
+        object mModeloStr: TMenuItem
+          Caption = 'ModeloStr'
+          OnClick = mModeloStrClick
+        end
+        object MenuItem21: TMenuItem
+          Caption = 'SubModeloECF'
+          OnClick = MenuItem21Click
+        end
+        object MenuItem24: TMenuItem
+          Caption = '-'
+        end
+        object NumECF1: TMenuItem
+          Caption = 'Num ECF'
+          OnClick = NumECF1Click
+        end
+        object NumLoja1: TMenuItem
+          Caption = 'Num Loja'
+          OnClick = NumLoja1Click
+        end
+        object NSrie1: TMenuItem
+          Caption = 'Num Série'
+          OnClick = NSrie1Click
+        end
+        object NumSerieMFD: TMenuItem
+          Caption = 'Num Série MFD'
+          OnClick = NumSerieMFDClick
+        end
+        object NVerso1: TMenuItem
+          Caption = 'Num Versão'
+          OnClick = NVerso1Click
+        end
+        object CNPJIE1: TMenuItem
+          Caption = 'CNPJ'
+          OnClick = CNPJIE1Click
+        end
+        object IE1: TMenuItem
+          Caption = 'IE'
+          OnClick = IE1Click
+        end
+        object mIM: TMenuItem
+          Caption = 'IM'
+          OnClick = mIMClick
+        end
+        object mPAF: TMenuItem
+          Caption = 'PAF'
+          OnClick = mPAFClick
+        end
+        object mUsuarioAtual: TMenuItem
+          Caption = 'Usuário Atual'
+          OnClick = mUsuarioAtualClick
+        end
+        object mCliche: TMenuItem
+          Caption = 'Cliche'
+          OnClick = mClicheClick
+        end
+        object mDataHoraSwBasico: TMenuItem
+          Caption = 'Data Hora Sw.Basico'
+          OnClick = mDataHoraSwBasicoClick
+        end
+        object MenuItem28: TMenuItem
+          Caption = '-'
+        end
+        object MenuItem29: TMenuItem
+          Caption = 'Decimais'
+          OnClick = MenuItem29Click
+        end
+        object MenuItem31: TMenuItem
+          Caption = 'Colunas'
+          OnClick = MenuItem31Click
+        end
+      end
+      object N19: TMenuItem
+        Caption = '-'
+      end
+      object Flags1: TMenuItem
+        Caption = 'Flags'
+        object miTipoUltimoDoc: TMenuItem
+          Caption = 'TipoUltimoDocumento'
+          OnClick = miTipoUltimoDocClick
+        end
+        object MenuItem27: TMenuItem
+          Caption = '-'
+        end
+        object PoucoPapel1: TMenuItem
+          Caption = 'Pouco Papel ?'
+          OnClick = PoucoPapel1Click
+        end
+        object HorarioVerao2: TMenuItem
+          Caption = 'Horario Verao ?'
+          OnClick = HorarioVerao2Click
+        end
+        object Arredonda1: TMenuItem
+          Caption = 'Arredonda ?'
+          OnClick = Arredonda1Click
+        end
+        object MFD1: TMenuItem
+          Caption = 'É MFD ?'
+          OnClick = MFD1Click
+        end
+        object Termica1: TMenuItem
+          Caption = 'É Termica ?'
+          OnClick = Termica1Click
+        end
+        object mIdentificaConsumidor: TMenuItem
+          Caption = 'Identifica Consumidor Rodapé ?'
+          OnClick = mIdentificaConsumidorClick
+        end
+        object MenuItem20: TMenuItem
+          Caption = 'ParametroDescontoISSQN ?'
+          OnClick = MenuItem20Click
+        end
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object MapaResumo1: TMenuItem
+        Caption = 'Mapa Resumo'
+        object DataMovimento1: TMenuItem
+          Caption = 'Data Movimento'
+          OnClick = DataMovimento1Click
+        end
+        object mDataHoraUltimaReducaoZ: TMenuItem
+          Caption = 'Data/Hora Última Redução Z'
+          OnClick = mDataHoraUltimaReducaoZClick
+        end
+        object DadosReducaoZ1: TMenuItem
+          Caption = 'Dados Reducao Z (60M)'
+          OnClick = DadosReducaoZ1Click
+        end
+        object DadosUltimaReduoZ1: TMenuItem
+          Caption = 'Dados Última Redução Z'
+          OnClick = DadosUltimaReduoZ1Click
+        end
+        object MenuItem30: TMenuItem
+          Caption = 'Número Reduções Z restantes'
+          OnClick = MenuItem30Click
+        end
+        object N20: TMenuItem
+          Caption = '-'
+        end
+        object NumCOO1: TMenuItem
+          Caption = 'NumCOO'
+          OnClick = NumCOO1Click
+        end
+        object NumCRZ1: TMenuItem
+          Caption = 'Num CRZ'
+          OnClick = NumCRZ1Click
+        end
+        object NumCRO1: TMenuItem
+          Caption = 'Num CRO'
+          OnClick = NumCRO1Click
+        end
+        object NumCCF1: TMenuItem
+          Caption = 'Num CCF'
+          OnClick = NumCCF1Click
+        end
+        object NumCOOInicial1: TMenuItem
+          Caption = 'Num COO Inicial'
+          OnClick = NumCOOInicial1Click
+        end
+        object mNumGNF: TMenuItem
+          Caption = 'Num GNF'
+          OnClick = mNumGNFClick
+        end
+        object mNumGNFC: TMenuItem
+          Caption = 'Num GNFC'
+          OnClick = mNumGNFCClick
+        end
+        object mNumGRG: TMenuItem
+          Caption = 'Num GRG'
+          OnClick = mNumGRGClick
+        end
+        object mNumCDC: TMenuItem
+          Caption = 'Num CDC'
+          OnClick = mNumCDCClick
+        end
+        object mNumCCDC: TMenuItem
+          Caption = 'Num CCDC'
+          OnClick = mNumCCDCClick
+        end
+        object mNumCFD: TMenuItem
+          Caption = 'Num CFD'
+          OnClick = mNumCFDClick
+        end
+        object mNumNCN: TMenuItem
+          Caption = 'Num NCN'
+          OnClick = mNumNCNClick
+        end
+        object N26: TMenuItem
+          Caption = '-'
+        end
+        object VendaBruta1: TMenuItem
+          Caption = 'Venda Bruta'
+          OnClick = VendaBruta1Click
+        end
+        object GrandeTotal1: TMenuItem
+          Caption = 'Grande Total'
+          OnClick = GrandeTotal1Click
+        end
+        object mTotalTroco: TMenuItem
+          Caption = 'TotalTroco'
+          OnClick = mTotalTrocoClick
+        end
+        object N22: TMenuItem
+          Caption = '-'
+        end
+        object mTotaisICMS: TMenuItem
+          Caption = 'Totais ICMS'
+          object mICMSTotalCancelamentos: TMenuItem
+            Caption = 'Total Cancelamentos'
+            OnClick = mICMSTotalCancelamentosClick
+          end
+          object mICMSTotalDescontos: TMenuItem
+            Caption = 'Total Descontos'
+            OnClick = mICMSTotalDescontosClick
+          end
+          object mICMSTotalAcrescimos: TMenuItem
+            Caption = 'Total Acrescimos'
+            OnClick = mICMSTotalAcrescimosClick
+          end
+          object MenuItem1: TMenuItem
+            Caption = '-'
+          end
+          object mICMSTotalSubstituicaoTributaria: TMenuItem
+            Caption = 'Total Substituicao Tributaria'
+            OnClick = mICMSTotalSubstituicaoTributariaClick
+          end
+          object mICMSTotalNaoTributado: TMenuItem
+            Caption = 'Total Nao Tributado'
+            OnClick = mICMSTotalNaoTributadoClick
+          end
+          object mICMSTotalIsencao: TMenuItem
+            Caption = 'Total IsenÃ§ao'
+            OnClick = mICMSTotalIsencaoClick
+          end
+        end
+        object mTotaisISSQN: TMenuItem
+          Caption = 'Totais ISSQN'
+          object MenuItem2: TMenuItem
+            Caption = 'Total Cancelamentos'
+            OnClick = MenuItem2Click
+          end
+          object MenuItem3: TMenuItem
+            Caption = 'Total Descontos'
+            OnClick = MenuItem3Click
+          end
+          object MenuItem4: TMenuItem
+            Caption = 'Total Acrescimos'
+            OnClick = MenuItem4Click
+          end
+          object MenuItem5: TMenuItem
+            Caption = '-'
+          end
+          object MenuItem6: TMenuItem
+            Caption = 'Total Substituicao Tributaria'
+            OnClick = MenuItem6Click
+          end
+          object MenuItem7: TMenuItem
+            Caption = 'Total Nao Tributado'
+            OnClick = MenuItem7Click
+          end
+          object MenuItem8: TMenuItem
+            Caption = 'Total IsenÃ§ao'
+            OnClick = MenuItem8Click
+          end
+        end
+        object N21: TMenuItem
+          Caption = '-'
+        end
+        object mTotalNaoFiscal: TMenuItem
+          Caption = 'Total Não Fiscal'
+          object mValorTotalNaoFiscal: TMenuItem
+            Caption = 'Valor Total'
+            OnClick = mValorTotalNaoFiscalClick
+          end
+          object mCancNaoFiscal: TMenuItem
+            Caption = 'Total Cancelamentos'
+            OnClick = mCancNaoFiscalClick
+          end
+          object mDescNaoFiscal: TMenuItem
+            Caption = 'Total Descontos'
+            OnClick = mDescNaoFiscalClick
+          end
+          object mAcresNaoFiscal: TMenuItem
+            Caption = 'Total Acréscimos'
+            OnClick = mAcresNaoFiscalClick
+          end
+        end
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object Aliquotas1: TMenuItem
+        Caption = 'Aliquotas'
+        object AliquotasICMS1: TMenuItem
+          Caption = 'Carrega Aliquotas (ICMS)'
+          OnClick = AliquotasICMS1Click
+        end
+        object LerTotaisAliquotas1: TMenuItem
+          Caption = 'Ler Totais Aliquotas'
+          OnClick = LerTotaisAliquotas1Click
+        end
+        object MenuItem13: TMenuItem
+          Caption = '-'
+        end
+        object mAcharAliqPorIndice: TMenuItem
+          Caption = 'Achar Aliquota por Indice'
+          OnClick = mAcharAliqPorIndiceClick
+        end
+        object mAcharAliqPorValor: TMenuItem
+          Caption = 'Achar Aliquota por Valor'
+          OnClick = mAcharAliqPorValorClick
+        end
+      end
+      object FormasdePagamento2: TMenuItem
+        Caption = 'Formas de Pagamento'
+        object FormasdePagamento1: TMenuItem
+          Caption = 'Carrega Formas Pagamento'
+          OnClick = FormasdePagamento1Click
+        end
+        object LerTotaisFormadePagamento1: TMenuItem
+          Caption = 'Ler Totais Forma de Pagamento'
+          OnClick = LerTotaisFormadePagamento1Click
+        end
+        object MenuItem14: TMenuItem
+          Caption = '-'
+        end
+        object mAcharFPGIndice: TMenuItem
+          Caption = 'Achar Forma de Pagamento por Indice'
+          OnClick = mAcharFPGIndiceClick
+        end
+        object mAcharFPGDescricao: TMenuItem
+          Caption = 'Achar Forma de Pagamento por Descrição'
+          OnClick = mAcharFPGDescricaoClick
+        end
+        object MenuItem17: TMenuItem
+          Caption = '-'
+        end
+        object mLerTroco: TMenuItem
+          Caption = 'LerTroco'
+          OnClick = mLerTrocoClick
+        end
+      end
+      object ComprovantesNaoFiscais1: TMenuItem
+        Caption = 'Comprovantes Nao Fiscais'
+        object CarregaComprovantesNAOFiscais1: TMenuItem
+          Caption = 'Carrega Comprovantes Nao Fiscais'
+          OnClick = CarregaComprovantesNAOFiscais1Click
+        end
+        object LerTotaisComprovanetNaoFiscal1: TMenuItem
+          Caption = 'Ler Totais Comprovante Nao Fiscal'
+          OnClick = LerTotaisComprovanetNaoFiscal1Click
+        end
+        object MenuItem18: TMenuItem
+          Caption = '-'
+        end
+        object mAcharCNFIndice: TMenuItem
+          Caption = 'Achar CNF por Indice'
+          OnClick = mAcharCNFIndiceClick
+        end
+        object mAchaCNFDescricao: TMenuItem
+          Caption = 'Achar CNF por Descrição'
+          OnClick = mAchaCNFDescricaoClick
+        end
+      end
+      object mRelatorioGerenciais: TMenuItem
+        Caption = 'Relatórios Gerenciais'
+        object mCarregaRelatorioGerenciais: TMenuItem
+          Caption = 'Carrega Relatórios Gerenciais'
+          OnClick = mRelatorioGerenciaisClick
+        end
+        object mLerTotaisRelatoriosGerenciais: TMenuItem
+          Caption = 'Ler Totais Relatorios Gerenciais'
+          OnClick = mLerTotaisRelatoriosGerenciaisClick
+        end
+        object MenuItem19: TMenuItem
+          Caption = '-'
+        end
+        object mAcharRGIndice: TMenuItem
+          Caption = 'Achar Relatório Gerêncial por Indice'
+          OnClick = mAcharRGIndiceClick
+        end
+        object mAcharRGDescricao: TMenuItem
+          Caption = 'Achar Relatório Gerêncial por Descrição'
+          OnClick = mAcharRGDescricaoClick
+        end
+      end
+      object CarregaUnidadesdeMedida1: TMenuItem
+        Caption = 'Carrega Unidades de Medida'
+        OnClick = CarregaUnidadesdeMedida1Click
+      end
+      object N18: TMenuItem
+        Caption = '-'
+      end
+      object LerTodasasVariveis1: TMenuItem
+        Caption = 'Ler Todas as Variveis'
+        OnClick = LerTodasasVariveis1Click
+      end
+    end
+    object Relatrios1: TMenuItem
+      Caption = 'Relatórios'
+      object LeituraX1: TMenuItem
+        Caption = 'Leitura X'
+        OnClick = LeituraX1Click
+      end
+      object ReduoZ1: TMenuItem
+        Caption = 'Redução Z'
+        OnClick = ReduoZ1Click
+      end
+      object N9: TMenuItem
+        Caption = '-'
+      end
+      object CupomVinculado1: TMenuItem
+        Caption = 'Cupom Vinculado ou CCD'
+        object CupomVinculadoCompleto2: TMenuItem
+          Caption = 'Cupom Vinculado Completo'
+          OnClick = ListaCupomVinculado1Click
+        end
+        object N27: TMenuItem
+          Caption = '-'
+        end
+        object AbreCupomVinculado1: TMenuItem
+          Caption = 'Abre Cupom Vinculado'
+          OnClick = AbreCupomVinculado1Click
+        end
+        object ImprimeLinhaCupomVinculado2: TMenuItem
+          Caption = 'Imprime Linha Cupom Vinculado'
+          OnClick = ImprimeLinhaVinculado1Click
+        end
+        object MenuItem9: TMenuItem
+          Caption = '-'
+        end
+        object mTesteVinculado: TMenuItem
+          Caption = 'Teste de Vinculado'
+          OnClick = mTesteVinculadoClick
+        end
+        object MenuItem26: TMenuItem
+          Caption = '-'
+        end
+        object miEstornoCCD: TMenuItem
+          Caption = 'EstornaCCD'
+          OnClick = miEstornoCCDClick
+        end
+      end
+      object RelatorioGerencial1: TMenuItem
+        Caption = 'Relatorio Gerencial'
+        object ListaRelatorioGerencial1: TMenuItem
+          Caption = 'Relatorio Gerencial Completo'
+          OnClick = ListaRelatorioGerencial1Click
+        end
+        object mniRelatorioGerencialComFormatacao: TMenuItem
+          Caption = 'Relatorio Gerencial Com Formatação'
+          OnClick = mniRelatorioGerencialComFormatacaoClick
+        end
+        object N17: TMenuItem
+          Caption = '-'
+        end
+        object AbreRelatorioGerencial1: TMenuItem
+          Caption = 'Abre Relatorio Gerencial'
+          OnClick = AbreRelatorioGerencial1Click
+        end
+        object ImprimeLinhaRelatorio1: TMenuItem
+          Caption = 'Imprime Linha Relatorio'
+          OnClick = ImprimeLinhaRelatorio1Click
+        end
+      end
+      object PularLinhas1: TMenuItem
+        Caption = 'Pular Linhas'
+        OnClick = PularLinhas1Click
+      end
+      object mCortaPapel: TMenuItem
+        Caption = 'Corta Papel'
+        OnClick = mCortaPapelClick
+      end
+      object N15: TMenuItem
+        Caption = '-'
+      end
+      object FechaRelatrio1: TMenuItem
+        Caption = 'Fecha Relatório / Vinculado'
+        OnClick = FechaRelatrio1Click
+      end
+      object N12: TMenuItem
+        Caption = '-'
+      end
+      object LeituradeMemoriaFiscal1: TMenuItem
+        Caption = 'Leitura de Memoria Fiscal'
+        object CapturaporNReduaoZ1: TMenuItem
+          Caption = 'Captura por N.ReduçãoZ'
+          OnClick = CapturaporNReduaoZ1Click
+        end
+        object CapturaporPeriodo1: TMenuItem
+          Caption = 'Captura por Periodo'
+          OnClick = CapturaporPeriodo1Click
+        end
+        object ImprimeporNReduaoZ1: TMenuItem
+          Caption = 'Imprime por N.ReduçãoZ'
+          OnClick = ImprimeporNReduaoZ1Click
+        end
+        object ImprimeporPeriodo1: TMenuItem
+          Caption = 'Imprime por Periodo'
+          OnClick = ImprimeporPeriodo1Click
+        end
+      end
+      object N23: TMenuItem
+        Caption = '-'
+      end
+      object mLeituraXSerial: TMenuItem
+        Caption = 'Leitura X Serial'
+        OnClick = mLeituraXSerialClick
+      end
+      object LeituraMFD1: TMenuItem
+        Caption = 'Leitura MFD Serial'
+        object PorCOO1: TMenuItem
+          Caption = 'Por COO'
+          OnClick = PorCOO1Click
+        end
+        object PorPeriodo1: TMenuItem
+          Caption = 'Por Periodo'
+          OnClick = PorPeriodo1Click
+        end
+      end
+      object MenuItem10: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem11: TMenuItem
+        Caption = 'Espelho MFD DLL'
+        object mESPMFDDLLCoo: TMenuItem
+          Caption = 'Por COO'
+          OnClick = mESPMFDDLLCooClick
+        end
+        object mESPMFDDLLPeriodo: TMenuItem
+          Caption = 'Por Periodo'
+          OnClick = mESPMFDDLLPeriodoClick
+        end
+      end
+      object MenuItem12: TMenuItem
+        Caption = 'Arquivo MFD DLL'
+        object mARQMFDDLLCoo: TMenuItem
+          Caption = 'Por COO'
+          OnClick = mARQMFDDLLCooClick
+        end
+        object mARQMFDDLLPeriodo: TMenuItem
+          Caption = 'Por Periodo'
+          OnClick = mARQMFDDLLPeriodoClick
+        end
+      end
+      object MenuItem25: TMenuItem
+        Caption = '-'
+      end
+      object mDAV: TMenuItem
+        Caption = 'DAV'
+        OnClick = mDAVClick
+      end
+      object mDAVOS: TMenuItem
+        Caption = 'DAV-OS'
+        OnClick = mDAVOSClick
+      end
+    end
+    object Cupom1: TMenuItem
+      Caption = 'Cupom Fiscal'
+      object TestaPodeAbrirCupom1: TMenuItem
+        Caption = 'Testa Pode Abrir Cupom'
+        OnClick = TestaPodeAbrirCupom1Click
+      end
+      object IdentificaConsumidor1: TMenuItem
+        Caption = 'Identifica Consumidor'
+        OnClick = IdentificaConsumidor1Click
+      end
+      object N25: TMenuItem
+        Caption = '-'
+      end
+      object AbrirCupom1: TMenuItem
+        Caption = 'Abre Cupom'
+        OnClick = AbrirCupom1Click
+      end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object VenderItem1: TMenuItem
+        Caption = 'Vende Item'
+        OnClick = VenderItem1Click
+      end
+      object MenuItem42: TMenuItem
+        Caption = 'Vende Item Extendido'
+        OnClick = MenuItem42Click
+      end
+      object CancelarItemVendido1: TMenuItem
+        Caption = 'Cancela Item Vendido'
+        OnClick = CancelarItemVendido1Click
+      end
+      object MenuItem23: TMenuItem
+        Caption = 'Desconto de Item Anterior'
+        OnClick = MenuItem23Click
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object Sub1: TMenuItem
+        Caption = 'SubTotaliza Cupom'
+        OnClick = Sub1Click
+      end
+      object EfetuarPagamento1: TMenuItem
+        Caption = 'Efetua Pagamento'
+        OnClick = EfetuarPagamento1Click
+      end
+      object FecharCupom1: TMenuItem
+        Caption = 'Fecha Cupom'
+        OnClick = FecharCupom1Click
+      end
+      object N10: TMenuItem
+        Caption = '-'
+      end
+      object CancelaCupom1: TMenuItem
+        Caption = 'Cancela Cupom'
+        OnClick = CancelaCupom1Click
+      end
+      object N8: TMenuItem
+        Caption = '-'
+      end
+      object Variveis1: TMenuItem
+        Caption = 'Variáveis'
+        object NUltimoCupom1: TMenuItem
+          Caption = 'Num Cupom'
+          OnClick = NUltimoCupom1Click
+        end
+        object SubTotal1: TMenuItem
+          Caption = 'SubTotal'
+          OnClick = SubTotal1Click
+        end
+        object TotalPago1: TMenuItem
+          Caption = 'Total Pago'
+          OnClick = TotalPago1Click
+        end
+        object UltimoItemVendido1: TMenuItem
+          Caption = 'Num.Ultimo Item'
+          OnClick = UltimoItemVendido1Click
+        end
+      end
+      object N11: TMenuItem
+        Caption = '-'
+      end
+      object TestedeVelocidade1: TMenuItem
+        Caption = 'Teste de Velocidade'
+        OnClick = TestedeVelocidade1Click
+      end
+      object miTesteArredondamento: TMenuItem
+        Caption = 'Teste Arredondamento'
+        OnClick = miTesteArredondamentoClick
+      end
+    end
+    object NoFiscal1: TMenuItem
+      Caption = 'Não Fiscal'
+      object NoFiscalCompleto1: TMenuItem
+        Caption = 'Não Fiscal Completo'
+        OnClick = NoFiscalCompleto1Click
+      end
+      object N16: TMenuItem
+        Caption = '-'
+      end
+      object mSangria: TMenuItem
+        Caption = 'Sangria'
+        OnClick = mSangriaClick
+      end
+      object mSuprimento: TMenuItem
+        Caption = 'Suprimento'
+        OnClick = mSuprimentoClick
+      end
+      object MenuItem15: TMenuItem
+        Caption = '-'
+      end
+      object AbreNoFiscal1: TMenuItem
+        Caption = 'Abre Não Fiscal'
+        OnClick = AbreNoFiscal1Click
+      end
+      object RegistraItemNaoFiscal1: TMenuItem
+        Caption = 'Registra Item Não Fiscal'
+        OnClick = RegistraItemNaoFiscal1Click
+      end
+      object SubTotalizaNaoFiscal1: TMenuItem
+        Caption = 'SubTotaliza Não Fiscal'
+        OnClick = SubTotalizaNaoFiscal1Click
+      end
+      object EfetuaPagamentoNaoFiscal1: TMenuItem
+        Caption = 'Efetua Pagamento Não Fiscal'
+        OnClick = EfetuaPagamentoNaoFiscal1Click
+      end
+      object FechaNoFiscal1: TMenuItem
+        Caption = 'Fecha Não Fiscal'
+        OnClick = FechaNoFiscal1Click
+      end
+      object N24: TMenuItem
+        Caption = '-'
+      end
+      object CancelaNoFiscal1: TMenuItem
+        Caption = 'Cancela Não Fiscal'
+        OnClick = CancelaNoFiscal1Click
+      end
+    end
+    object Dispositivos1: TMenuItem
+      Caption = 'Dispositivos'
+      object Gaveta1: TMenuItem
+        Caption = '&Gaveta'
+        object AbreGaveta1: TMenuItem
+          Caption = 'Abre Gaveta'
+          OnClick = AbreGaveta1Click
+        end
+        object GavetaAberta1: TMenuItem
+          Caption = 'Gaveta Aberta ?'
+          OnClick = GavetaAberta1Click
+        end
+      end
+      object Cheque1: TMenuItem
+        Caption = '&Cheque'
+        object ChequePronto1: TMenuItem
+          Caption = 'Cheque Pronto ?'
+          OnClick = ChequePronto1Click
+        end
+        object ImprimeCheque1: TMenuItem
+          Caption = 'Imprime Cheque'
+          OnClick = ImprimeCheque1Click
+        end
+        object CancelaImpressoCheque1: TMenuItem
+          Caption = 'Cancela ImpressÃ£o Cheque'
+          OnClick = CancelaImpressoCheque1Click
+        end
+        object miLeituraCMC7: TMenuItem
+          Caption = 'Leitura CMC7'
+          OnClick = miLeituraCMC7Click
+        end
+      end
+    end
+    object Utilitrios1: TMenuItem
+      Caption = 'Utilitários'
+      object ProgramaAliquota1: TMenuItem
+        Caption = 'Programa Aliquota'
+        OnClick = ProgramaAliquota1Click
+      end
+      object ProgramaFormadePagamento1: TMenuItem
+        Caption = 'Programa Forma de Pagamento'
+        OnClick = ProgramaFormadePagamento1Click
+      end
+      object ProgramaComprovanteNAOFiscal1: TMenuItem
+        Caption = 'Programa Comprovante NAO Fiscal'
+        OnClick = ProgramaComprovanteNAOFiscal1Click
+      end
+      object ProgramaUnidadeMedida1: TMenuItem
+        Caption = 'Programa Unidade Medida'
+        OnClick = ProgramaUnidadeMedida1Click
+      end
+      object mProgramaRelatorioGerencial: TMenuItem
+        Caption = 'Programa Relatorio Gerencial'
+        OnClick = mProgramaRelatorioGerencialClick
+      end
+      object N13: TMenuItem
+        Caption = '-'
+      end
+      object mIdentificaOperador: TMenuItem
+        Caption = 'Identifica Operador'
+        OnClick = mIdentificaOperadorClick
+      end
+      object mIdentificaPAF: TMenuItem
+        Caption = 'Identifica PAF'
+        OnClick = mIdentificaPAFClick
+      end
+      object MenuItem16: TMenuItem
+        Caption = '-'
+      end
+      object HorarioVerao1: TMenuItem
+        Caption = 'Muda Horário Verão'
+        OnClick = HorarioVerao1Click
+      end
+      object MudaArredondamento1: TMenuItem
+        Caption = 'Muda Arredondamento'
+        OnClick = MudaArredondamento1Click
+      end
+      object ImpactoAgulhas1: TMenuItem
+        Caption = 'Impacto Agulhas'
+        OnClick = ImpactoAgulhas1Click
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object CorrigeEstadodeErro1: TMenuItem
+        Caption = 'Corrige Estado de Erro'
+        OnClick = CorrigeEstadodeErro1Click
+      end
+      object N14: TMenuItem
+        Caption = '-'
+      end
+      object EnviaComando1: TMenuItem
+        Caption = 'Envia Comando'
+        OnClick = EnviaComando1Click
+      end
+    end
+    object mSAT: TMenuItem
+      Caption = 'SAT'
+      object mConsultarStatusSAT: TMenuItem
+        Caption = 'Consultar Status Operacional'
+        OnClick = mConsultarStatusSATClick
+      end
+      object mConsultarSAT: TMenuItem
+        Caption = 'Consultar SAT'
+        OnClick = mConsultarSATClick
+      end
+      object mConsultarSessaoSAT: TMenuItem
+        Caption = 'Consultar Sessão SAT'
+        OnClick = mConsultarSessaoSATClick
+      end
+      object MenuItem32: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem38: TMenuItem
+        Caption = 'Carregar CFe'
+        OnClick = MenuItem38Click
+      end
+      object MenuItem41: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem33: TMenuItem
+        Caption = 'Imprimir Extrato Venda'
+        OnClick = MenuItem33Click
+      end
+      object MenuItem34: TMenuItem
+        Caption = 'Imprimir Extrato Resumido'
+        OnClick = MenuItem34Click
+      end
+      object MenuItem35: TMenuItem
+        Caption = 'Imprimir Extrato Cancelamento'
+        OnClick = MenuItem35Click
+      end
+    end
+  end
+  object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
+    Porta = 'procurar'
+    ReTentar = False
+    DescricaoGrande = True
+    MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
+    MsgTrabalhando = 'Impressora está trabalhando'
+    MsgRelatorio = 'Imprimindo %s  %dÂª Via '
+    MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
+    PaginaDeCodigo = 0
+    FormMsgColor = clHighlight
+    FormMsgFonte.Color = clWhite
+    FormMsgFonte.Height = 11
+    FormMsgFonte.Name = 'MS Sans Serif'
+    FormMsgFonte.Pitch = fpVariable
+    OnMsgAguarde = ACBrECF1MsgAguarde
+    OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
+    OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
+    MemoParams.Strings = (
+      '[Cabecalho]'
+      'LIN000=<center><b>Nome da Empresa</b></center>'
+      'LIN001=<center>Nome da Rua , 1234  -  Bairro</center>'
+      'LIN002=<center>Cidade  -  UF  -  99999-999</center>'
+      'LIN003=<center>CNPJ: 01.234.567/0001-22    IE: 012.345.678.90</center>'
+      'LIN004=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>COO: <b><code>NumCupom</code></b></td></tr></table>'
+      'LIN005=<hr>'
+      ' '
+      '[Cabecalho_Item]'
+      'LIN000=ITEM   CODIGO     DESCRICAO'
+      'LIN001=QTD         x UNITARIO       Aliq     VALOR (R$)'
+      'LIN002=<hr>'
+      'MascaraItem=III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQQQQQ UU x VVVVVVVVVVVVV AAAAAA TTTTTTTTTTTTT'
+      ' '
+      '[Rodape]'
+      'LIN000=<hr>'
+      'LIN001=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>Projeto ACBr: <b><code>ACBR</code></b></td></tr></table>'
+      'LIN002=<center>Obrigado Volte Sempre</center>'
+      'LIN003=<hr>'
+      ' '
+      '[Formato]'
+      'Colunas=48'
+      'HTML=1'
+      'HTML_Title_Size=2'
+      'HTML_Font=<font size="5" face="Fixed">'
+    )
+    OnBobinaAdicionaLinhas = ACBrECF1BobinaAdicionaLinhas
+    ECFVirtual = ACBrECFVirtualNFCe1
+    ArqLOG = 'acbrlog.txt'
+    OnGravarLog = ACBrECF1GravarLog
+    ConfigBarras.MostrarCodigo = True
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    InfoRodapeCupom.Imposto.ModoCompacto = False
+    left = 296
+    top = 200
+  end
+  object ACBrRFD1: TACBrRFD
+    left = 344
+    top = 328
+  end
+  object dlgDialogoSalvar: TSaveDialog
+    Title = 'Salvar arquivo texto'
+    DefaultExt = '.txt'
+    Filter = 'Arquivos texto|*.txt'
+    Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
+    left = 56
+    top = 328
+  end
+  object ACBrAAC1: TACBrAAC
+    CriarBAK = False
+    IdentPAF.VersaoER = '01.07'
+    IdentPAF.Paf.TipoFuncionamento = tpfStandAlone
+    IdentPAF.Paf.TipoDesenvolvimento = tpdComercializavel
+    IdentPAF.Paf.IntegracaoPAFECF = tpiRetaguarda
+    IdentPAF.Paf.RealizaPreVenda = False
+    IdentPAF.Paf.RealizaDAVECF = False
+    IdentPAF.Paf.RealizaDAVNaoFiscal = False
+    IdentPAF.Paf.RealizaDAVOS = False
+    IdentPAF.Paf.DAVConfAnexoII = False
+    IdentPAF.Paf.RealizaLancamentoMesa = False
+    IdentPAF.Paf.IndiceTecnicoProd = False
+    IdentPAF.Paf.BarSimilarECFRestaurante = False
+    IdentPAF.Paf.BarSimilarECFComum = False
+    IdentPAF.Paf.BarSimilarBalanca = False
+    IdentPAF.Paf.UsaImpressoraNaoFiscal = False
+    IdentPAF.Paf.DAVDiscrFormula = False
+    IdentPAF.Paf.ImpedeVendaVlrZero = False
+    IdentPAF.Paf.AcumulaVolumeDiario = False
+    IdentPAF.Paf.ArmazenaEncerranteIniFinal = False
+    IdentPAF.Paf.EmiteContrEncerrAposREDZLEIX = False
+    IdentPAF.Paf.IntegradoComBombas = False
+    IdentPAF.Paf.CriaAbastDivergEncerrante = False
+    IdentPAF.Paf.CadastroPlacaBomba = False
+    IdentPAF.Paf.TransportePassageiro = False
+    IdentPAF.Paf.TotalizaValoresLista = False
+    IdentPAF.Paf.TransfPreVenda = False
+    IdentPAF.Paf.TransfDAV = False
+    IdentPAF.Paf.RecompoeGT = False
+    IdentPAF.Paf.RecompoeNumSerie = False
+    IdentPAF.Paf.EmitePED = False
+    IdentPAF.Paf.CupomMania = False
+    IdentPAF.Paf.MinasLegal = False
+    IdentPAF.Paf.NotaLegalDF = False
+    IdentPAF.Paf.ParaibaLegal = False
+    IdentPAF.Paf.TrocoEmCartao = False
+    OnGetChave = ACBrAAC1GetChave
+    OnAntesAbrirArquivo = ACBrAAC1AntesAbrirArquivo
+    OnDepoisAbrirArquivo = ACBrAAC1DepoisAbrirArquivo
+    OnAntesGravarArquivo = ACBrAAC1AntesAbrirArquivo
+    left = 280
+    top = 329
+  end
+  object mdsAACECF: TMemDataset
+    FieldDefs = <    
+      item
+        Name = 'Indice'
+        DataType = ftInteger
+        Precision = 0
+        Size = 5
+      end    
+      item
+        Name = 'NumSerie'
+        DataType = ftString
+        Precision = 0
+        Size = 20
+      end    
+      item
+        Name = 'CRO'
+        DataType = ftInteger
+        Precision = 0
+        Size = 6
+      end    
+      item
+        Name = 'ValorGT'
+        DataType = ftFloat
+        Precision = 2
+        Size = 13
+      end    
+      item
+        Name = 'DtHrAtualizado'
+        DataType = ftDateTime
+        Precision = 0
+        Size = 0
+      end>
+    AfterOpen = mdsAACECFAfterOpen
+    left = 168
+    top = 328
+  end
+  object dsAACECF: TDataSource
+    DataSet = mdsAACECF
+    left = 133
+    top = 329
+  end
+  object ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal
+    QuandoGravarArqINI = ACBrECFVirtualNaoFiscal1QuandoGravarArqINI
+    QuandoLerArqINI = ACBrECFVirtualNaoFiscal1QuandoLerArqINI
+    ExibeAvisoLegal = True
+    Colunas = 48
+    NumECF = 1
+    NumCRO = 1
+    CNPJ = '01.234.567/0001-22'
+    IE = '012.345.678.90'
+    IM = '1234-0'
+    CmdImpCondensado = '#15'
+    CmdImpExpandidoUmaLinha = '#14'
+    CmdImpFimExpandido = '#20'
+    CmdImpZera = '#27,#64'
+    CmdGaveta = '#27,#118,#150'
+    CmdCortaPapelCompleto = '#27,#119'
+    CmdCortaPapelParcial = '#27,#109'
+    Cabecalho.Strings = (
+      'Nome da Empresa 4444'
+      'Nome da Rua , 1234  -  Bairro'
+      'Cidade  -  UF  -  99999-999'
+    )
+    CabecalhoItem.Strings = (
+      'ITEM   CODIGO             DESCRICAO'
+      '.             QTDxUNITARIO   Aliq    VALOR (R$)'
+      '------------------------------------------------'
+    )
+    MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
+    left = 344
+    top = 200
+  end
+  object ACBrECFVirtualSAT1: TACBrECFVirtualSAT
+    QuandoGravarArqINI = ACBrECFVirtualSAT1QuandoGravarArqINI
+    QuandoLerArqINI = ACBrECFVirtualSAT1QuandoLerArqINI
+    ACBrSAT = ACBrSAT1
+    QuandoAbrirDocumento = ACBrECFVirtualSAT1QuandoAbrirDocumento
+    QuandoVenderItem = ACBrECFVirtualSAT1QuandoVenderItem
+    QuandoEfetuarPagamento = ACBrECFVirtualSAT1QuandoEfetuarPagamento
+    left = 296
+    top = 264
+  end
+  object ACBrSAT1: TACBrSAT
+    Modelo = satDinamico_cdecl
+    Extrato = ACBrSATExtratoFortes1
+    NomeDLL = 'C:\SAT\SAT.DLL'
+    Config.infCFe_versaoDadosEnt = 0.04
+    Config.ide_CNPJ = '05481336000137'
+    Config.ide_numeroCaixa = 1
+    Config.ide_tpAmb = taHomologacao
+    Config.emit_CNPJ = '11111111111111'
+    Config.emit_IE = '111111111111'
+    Config.emit_IM = '123123'
+    Config.emit_cRegTrib = RTRegimeNormal
+    Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
+    Config.emit_indRatISSQN = irSim
+    Config.EhUTF8 = False
+    Config.PaginaDeCodigo = 0
+    Rede.tipoInter = infETHE
+    Rede.seg = segNONE
+    Rede.tipoLan = lanDHCP
+    Rede.proxy = 0
+    Rede.proxy_porta = 0
+    OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
+    OnGetsignAC = ACBrSAT1GetsignAC
+    SalvarCFes = True
+    left = 336
+    top = 264
+  end
+  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    ACBrSAT = ACBrSAT1
+    Mask_qCom = '0.0000'
+    Mask_vUnCom = '0.000'
+    left = 416
+    top = 264
+  end
+  object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    Mask_qCom = '0.0000'
+    Mask_vUnCom = '0.000'
+    left = 376
+    top = 264
+  end
+  object OpenDialog1: TOpenDialog
+    left = 384
+    top = 328
+  end
+  object ACBrECFVirtualNFCe1: TACBrECFVirtualNFCe
+    ECF = ACBrECF1
+    QuandoGravarArqINI = ACBrECFVirtualNFCe1QuandoGravarArqINI
+    QuandoLerArqINI = ACBrECFVirtualNFCe1QuandoLerArqINI
+    ACBrNFCe = ACBrNFe1
+    QuandoAbrirDocumento = ACBrECFVirtualNFCe1QuandoAbrirDocumento
+    QuandoVenderItem = ACBrECFVirtualNFCe1QuandoVenderItem
+    QuandoEfetuarPagamento = ACBrECFVirtualNFCe1QuandoEfetuarPagamento
+    QuandoFecharDocumento = ACBrECFVirtualNFCe1QuandoFecharDocumento
+    left = 296
+    top = 136
+  end
+  object ACBrNFe1: TACBrNFe
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = True
+    Configuracoes.Geral.ValidarDigest = False
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    DANFE = ACBrNFeDANFeESCPOS1
+    left = 336
+    top = 136
+  end
+  object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    ACBrNFe = ACBrNFe1
+    PathPDF = 'C:\lazarus\'
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    vTroco = 0
+    ViaConsumidor = True
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ImprimeEmUmaLinha = False
+    ImprimeDescAcrescItem = False
+    left = 376
+    top = 136
+  end
+  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = False
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimeItens = True
+    vTroco = 0
+    ViaConsumidor = True
+    left = 416
+    top = 136
+  end
+end

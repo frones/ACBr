@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="PCNComum"/>
+    <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\PCNComum"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\PCNComum\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <CStyleOperator Value="False"/>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)"/>
+    <Version Minor="1"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnAuxiliar.pas"/>
+        <UnitName Value="pcnAuxiliar"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnCabecalho.pas"/>
+        <UnitName Value="pcnCabecalho"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnConversao.pas"/>
+        <UnitName Value="pcnConversao"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnGerador.pas"/>
+        <UnitName Value="pcnGerador"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnLeitor.pas"/>
+        <UnitName Value="pcnLeitor"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnSignature.pas"/>
+        <UnitName Value="pcnSignature"/>
+      </Item6>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDiversos"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

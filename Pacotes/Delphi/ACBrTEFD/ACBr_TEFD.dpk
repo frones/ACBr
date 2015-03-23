@@ -1,0 +1,53 @@
+package ACBr_TEFD;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  ACBrComum,
+  synapse,
+  designide;
+
+contains
+  ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',
+  ACBrTEFDClass in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDClass.pas',
+  ACBrTEFDCliSiTef in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliSiTef.pas',
+  ACBrTEFDDial in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDial.pas',
+  ACBrTEFDDisc in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDDisc.pas',
+  ACBrTEFDGpu in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDGpu.pas',
+  ACBrTEFDHiper in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDHiper.pas',
+  ACBrTEFDVeSPague in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDVeSPague.pas',
+  ACBrTEFDBanese in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas',
+  ACBrTEFDCrediShop in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCrediShop.pas',
+  ACBrTEFDPetroCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDPetroCard.pas',
+  ACBrTEFDCliDTEF in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDCliDTEF.pas',
+  ACBrTEFDFoxWin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDFoxWin.pas',
+  ACBrTEFDGoodCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDGoodCard.pas',
+  ACBrTEFDAuttar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDAuttar.pas',
+  ACBrTEFDTicketCar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDTicketCar.pas';
+
+end.

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="8">
+      <Unit0>
+        <Filename Value="SPEDPisCofins.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="21"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrmSPEDPisCofins"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_SPEDPisCofins"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="29" Y="4"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_I_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_I_Class"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="73"/>
+        <CursorPos X="14" Y="83"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_I.pas"/>
+        <UnitName Value="ACBrEPCBloco_I"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="112"/>
+        <CursorPos X="14" Y="123"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBlocos.pas"/>
+        <UnitName Value="ACBrEPCBlocos"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="775"/>
+        <CursorPos X="54" Y="787"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_P_Class.pas"/>
+        <UnitName Value="ACBrEPCBloco_P_Class"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="73"/>
+        <CursorPos X="14" Y="83"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_P.pas"/>
+        <UnitName Value="ACBrEPCBloco_P"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="107"/>
+        <CursorPos X="96" Y="126"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins\ACBrSpedPisCofins.pas"/>
+        <UnitName Value="ACBrSpedPisCofins"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="25"/>
+        <CursorPos X="28" Y="46"/>
+        <UsageCount Value="10"/>
+        <Bookmarks Count="1">
+          <Item0 X="39" Y="667" ID="7"/>
+        </Bookmarks>
+      </Unit7>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="8" HistoryIndex="7">
+      <Position1>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="405" Column="1" TopLine="397"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="416" Column="1" TopLine="397"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="405" Column="1" TopLine="397"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="416" Column="1" TopLine="397"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="405" Column="1" TopLine="397"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="407" Column="38" TopLine="397"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="405" Column="1" TopLine="397"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Frm_SPEDPisCofins.pas"/>
+        <Caret Line="416" Column="1" TopLine="397"/>
+      </Position8>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="2">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="Frm_SPEDPisCofins.pas"/>
+        <Line Value="416"/>
+      </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="Frm_SPEDPisCofins.pas"/>
+        <Line Value="405"/>
+      </Item2>
+    </BreakPoints>
+  </Debugging>
+  <EditorMacros Count="0"/>
+</CONFIG>

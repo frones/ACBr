@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_SAT"/>
+    <Author Value="Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrSAT\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)"/>
+    <Version Minor="1"/>
+    <Files Count="14">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSAT.pas"/>
+        <UnitName Value="ACBrSAT"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSATReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_cdecl.pas"/>
+        <UnitName Value="ACBrSATDinamico_cdecl"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas"/>
+        <UnitName Value="ACBrSATDinamico_stdcall"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas"/>
+        <UnitName Value="ACBrSATExtratoClass"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFe.pas"/>
+        <UnitName Value="pcnCFe"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeR.pas"/>
+        <UnitName Value="pcnCFeR"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeW.pas"/>
+        <UnitName Value="pcnCFeW"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCanc.pas"/>
+        <UnitName Value="pcnCFeCanc"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancR.pas"/>
+        <UnitName Value="pcnCFeCancR"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancW.pas"/>
+        <UnitName Value="pcnCFeCancW"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRede.pas"/>
+        <UnitName Value="pcnRede"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas"/>
+        <UnitName Value="pcnRedeR"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas"/>
+        <UnitName Value="pcnRedeW"/>
+      </Item14>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="PCNComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

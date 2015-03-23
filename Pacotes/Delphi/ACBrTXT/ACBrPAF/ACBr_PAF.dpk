@@ -1,0 +1,57 @@
+package ACBr_PAF;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  designide,
+  ACBrTXTComum,
+  ACBrOpenSSL;
+
+contains
+  ACBrPAF in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF.pas',
+  ACBrPAF_D in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_D.pas',
+  ACBrPAF_D_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_D_Class.pas',
+  ACBrPAF_E in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_E.pas',
+  ACBrPAF_E_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_E_Class.pas',
+  ACBrPAF_P in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_P.pas',
+  ACBrPAF_P_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_P_Class.pas',
+  ACBrPAF_R in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_R.pas',
+  ACBrPAF_R_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_R_Class.pas',
+  ACBrPAF_T in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_T.pas',
+  ACBrPAF_T_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_T_Class.pas',
+  ACBrPAFRegistros in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFRegistros.pas',
+  ACBrPAF_N in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_N.pas',
+  ACBrPAF_N_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_N_Class.pas',
+  ACBrPAF_C in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_C.pas',
+  ACBrPAF_C_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_C_Class.pas',
+  ACBrPAF_TITP_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP_Class.pas',
+  ACBrPAF_TITP in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP.pas';
+
+end.
+
+

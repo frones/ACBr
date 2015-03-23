@@ -1,0 +1,615 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Isaque Pinheiro - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrSpedFiscal
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+Data 19/12/2014
+[*] Alteração da unit ACBrEFDBlocos.pas para informar a versão do arquivo e os procedimentos de conversão
+		por: Juliomar Marchetti
+		
+Data 03/12/2014
+[+] Adição da geração dos registros C800, C850..
+	http://www.projetoacbr.com.br/forum/index.php?/topic/18991-registros-cfe-modelo-59-sat/
+  
+Data 06/10/2014
+[*] Correções de alterações do registro C175 ACBrSpedPisCofins
+http://www.projetoacbr.com.br/forum/index.php?/topic/15798-registro-c175/
+
+Versão 1.02 05/05/2015
+-- ACBrSPEDPisCofins --
+[+] Implementado Before Eventos nos registros C491 e C195 do Bloco_C.
+[*] O Objeto do Registro agora é passado como parâmetro nos eventos, para que possa
+    ser lido alguma informação do registro atual a que o evento for disparado.
+    (por Isaque Pinheiro)
+
+Versão 1.02  16/01/2014
+-- ACBrSPEDFiscal --
+[+] Foram criados novos tipos para as propriedades para compatibilizar melhor com os nomes, 
+    mas os tipos antigos continuam existindo.
+    Foi criado funções de conversão de TipoToStr e StrToTipo, para várias propriedades.
+
+Versão 1.02  08/02/2013
+-- ACBrSPEDFiscal --
+[+] Modificado campo COD_GEN do registro 0200 para ter o mesmo comportamento
+    do campo NCM.(Juliana Tamizou)
+
+Versão 1.02 05/02/2013
+-- ACBrSPEDPisCofins --
+[+] Implementado controle de hierarquia nos registros filhos, no Bloco_0.
+    (por Isaque Pinheiro)
+
+Versão 1.01 05/02/2013
+-- ACBrSPEDFiscal --
+[*] A função LocalizaRegistro do Registro 0150, agora pesquisa o participante por:
+    CPF, CNPJ ou Código Interno (por Agnaldo Prates e Isaque Pinheiro)
+
+Versão 1.01 05/02/2013
+-- ACBrSPEDPisCofins --
+[*] A função LocalizaRegistro do Registro 0150, agora pesquisa o participante por:
+    CPF, CNPJ ou Código Interno (por Agnaldo Prates e Isaque Pinheiro)
+
+Versão 1.01 23/11/2012
+-- ACBrSPEDPisCofins --
+[+] Finalmente..., adicionado algumas funções de conversão de tipos:
+    TypeToStr()
+    StrToType()
+    Alguns nomes de tipos mudaram, mas não afetará seu código ainda, então aconselho
+    a irem passando para o novo nome, deem uma olhada na unit "ACBrEPCBlocos.pas"
+    (por Isaque Pinheiro) 
+
+Versão 1.00a 18/05/2012
+-- ACBrSPEDPisCofins --
+[+] Add bloco "P" (por carlessoflu)
+
+Versão 1.01   08/05/2012
+-- ACBrSPEDFiscal --
+  [+] Implementação do método TRegistro0450List.LocalizaRegistro; (por rubenshs)
+  [*] Não se pode gerar o registro E116 na vlVersao101; (por rubenshs)
+veja: http://www.djsystem.com.br/acbr/forum/viewtopic.php?p=29573
+
+Versão 1.01   16/04/2012
+-- ACBrSPEDFiscal --
+[*] Modificado a maneira de como foi implementado os eventos no componente, 
+    agrupando por bloco para ficar mais organizado e facil de usa-los, esses
+    eventos permite que possa ser modificado o leiaute do TXT do sped além de
+    permitir adicionar outros registros que não exitam, essa necessidade hoje
+    esta sendo usada para G5 da Contmatic.
+
+Versão 1.00b   25/03/2012
+-- ACBrSPEDFiscal --
+[+] Adicionado evento Before e After em alguns registros para a necessidade de
+    se gerar registros adicionais ou diferentes no arquivo TXT do SPED para que
+    atenda casos como o para gerar registros no formato do sistema .
+
+
+Versão 1.00b   17/02/2012
+-- ACBrSPEDFiscal --
+[+] Adicionado LocalizaRegistro para registros 460 conforme sugestão de odlawso
+    veja: http://www.djsystem.com.br/acbr/mantis/view.php?id=1145
+
+
+Versão 1.00b   13/03/2012
+-- ACBrSPEDPisCofins --
+[*] Alterado valores No bloco C registro C100 o campo 17 IND_FRT para 
+	validação a partir de 01/01/2012. Essa modificação pode gerar uma
+	incompatibilidade em valores armazenados anteriormente. Pedimos que 
+	verifique a correta geração do arquivo. Veja também discussão sobre:
+	http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=23&t=5010
+
+
+Versão 1.00b   17/02/2012
+-- ACBrSPEDFiscal --
+[*] Adicionado versão 005 para validação a partir de 01/01/2012
+[*] Modificações nos registros C500, para atender a possibilidade de 
+	cancelamento dos documentos. Campos TP_LIGACAO e COD_GRUPO_TENSAO.
+	A conversão pode gerar alguma incompatibilidade caso você utilize 
+	uma conversão direta de inteiro para o tipo TACBrTipoLigacao ou 
+	TACBrGrupoTensao. (EMBarbosa)
+
+Versão 1.00 Beta 15/06/2011
+[+] Lançado Versão Beta do SPEDFCont
+
+Versão 1.00 Beta 15/04/2011
+[*] Reestruturado as pastas dos Demos do SPED, agora cada demo tem sua pastas
+    ACBrSPED\Delphi\Contabil 
+    ACBrSPED\Delphi\Fiscal
+    ACBrSPED\Delphi\PisCofins
+
+Versão 1.00 Beta 08/04/2011
+-- ACBrSPEDPisCofins --
+[+] Lançado a versão 1.0 Beta do ACBrSPEDPisCofins, colaboração de vários 
+    contribuintes, os quais não vou citar nomes para não cometer o pecado
+    de deixar alguem de fora, mas os créditos estão nos fontes.
+    Obrigado a todos e agora é acertarmos os bugs.
+
+Versão 1.00b   24/01/2011
+-- ACBrSPEDFiscal --
+[+] Implementação do Registro G126 por (Edilson Alves de Oliveira)
+[*] Modificações nos registros G110 e G125, para atender a versão do leiaute 103
+    por (Edilson Alves de Oliveira e Isaque Pinheiro)
+
+Versão 0.01   06/12/10
+-- ACBrSPEDPisCofins --
+[+] Início do Projeto (Isaque Pinheiro)
+
+Versão 1.00b   10/11/10
+-- ACBrSPEDFiscal --
+[*] Implementação do Registro D190, o procedimento "SetCFOP" no atributo "CFOP" 
+    para que o componente trate o atibuto retirando dele os pontos caso o conteúdo 
+    venha com o mesmo. Por (Isaque Pinheiro)
+    Quem desejar siga o código de exemplo e implemente em outros registros e 
+    atibutos o tratamento em seguida me envie o código alterado.
+
+Versão 1.00b   12/09/10
+-- ACBrSPEDFiscal --
+[*] Implementação do Registro E100, para apuração de ICMS quinzenal por (Prevedello)
+
+Versão 1.00b   12/06/10
+-- ACBrSPEDContabil --
+[+] Adicionado hierarquia no bloco J, dos registros J100 e J150 por (luis.varanti)
+
+Versão 1.00b   27/04/10     (por: DSA)
+-- ACBrSPEDFiscal --
+[+] Nova propriedade  "Arquivo: String" , que deve ser informada com o Nome do
+    Arquivo a ser gerado. Se ela contiver o Path, o mesmo será extraido e movido
+    para a propriedade "Path".
+[+] Nova propriedade "LinhasBuffer : Integer" que permite informar o máximo
+    de linhas que o StringList pode conter, antes de "descarrega-lo" para o
+    disco (valor default 1000)
+[*] Médodo "SaveFileTXT" modificado para Procedure, e removido o parâmetro que
+    recebia o nome do arquivo (ajuste a propriedade "Arquivo" antes de chama-lo)
+[+] Implementado novo mecanismo que permite fazer a geração dos Registros com
+    Concomitância. Isso resolve o problema de falta de memória (veja no Demo
+    como usa-lo)
+    Novos métodos criados para permitir a geração com concomitância:
+    IniciaGeracao -> Deve ser chamado antes de alimentar o Bloco_0, apaga o
+                     arquivo e zera as variaveis de trabalho e Buffers
+
+    WriteBloco_0 -> Grava em disco os dados do Bloco 0 (chame-o somente após
+                    informar todos os dados deste Bloco)
+    WriteBloco_C( FechaBloco: Boolean )    -> True = Fecha o Bloco.
+                    Pode ser executado dentro do Loop de "alimentação" das Notas
+                    , com o parâmetro = False, Isso irá gravar todas as Notas
+                    em memória no Disco, e irá Zerar a memoria das Listas do
+                    Bloco_C. Por motivo de performance, não é aconselhado
+                    chama-lo a cada Nota informada, mas a cada multiplo de Notas
+                    (a cada 100 notas por exemplo, veja o Demo...)
+                    Após concluir todas as Notas chame-o com o parâmetro = True
+                    para fechar o bloco em definitivo
+
+    WriteBloco_D -> Grava em disco os dados do Bloco D
+    WriteBloco_E -> Grava em disco os dados do Bloco E
+    WriteBloco_G -> Grava em disco os dados do Bloco G
+    WriteBloco_H -> Grava em disco os dados do Bloco H
+    WriteBloco_1 -> Grava em disco os dados do Bloco 1
+    WriteBloco_9 -> Grava em disco os dados do Bloco 9, finalizando o ARQUIVO
+
+    PS: O método sem Concomitância continua funcional... Nesse caso não é neces-
+        sário ajustes nos fontes, apenas "alimente" todos registros e chame o
+        método "SaveFileTXT"
+
+Versão 0.04a   28/04/10
+-- ACBrSPEDContabil --
+[-] Correção, do recurso que os registros sem informações não sejam gerados no 
+    arquivo.
+
+Versão 0.10b   27/04/10     (por: DSA)
+[*] Metodo de geração modificado para usar TStringList ao invez de longas
+    cadeias de Strings. Isso provavelmente aumentará a performace e corrigirá os
+    erros de Estouro de Memória.
+[*] Compatibilizado com Lazarus
+[*] Criado novo método:   procedure WriteRegistros ;  que irá executar a rotina
+    de geração de Todos os registros e popular o resultado em:
+    ACBrSPED.Conteudo : TSTringList
+[*] Método SaveFileTXT modificado para usar o StringList Interno. Isso deve
+    acelerar o processo de geração do arquivo.
+[*] Melhorado o suporte a Unicode, traduzindo as mensagens de Erro e Exceptions
+    para UTF8 se necessário ( usando a função ACBrStr() )
+
+Versão 0.04a   20/04/10
+-- ACBrSPEDContabil --
+[-] Corrigido BUG do qual o camponente não aparecia no IDE.
+[-] Corrigido BUG onde o componente tava gerando o registros "0180" como "0175", 
+    no Registro9900.
+[-] Corrigido BUG onde o componente estava retirando o pipe no procedimento
+    "TotalizaTermos" dos registros "I030" e "J900".
+
+Versão 0.08b   20/04/10
+-- ACBrSPEDFiscal --
+[*] Devido uma quantidade muito grande de códigos disponíveis, as propriedades que
+    eram dos tipos: TACBrSituacaoTribIPI, TACBrSituacaoTribPIS e 
+    TACBrSituacaoTribCOFINS, passaram a ser do tipo "STRING"
+
+Versão 0.08b   19/04/10
+-- ACBrSPEDFiscal --
+[*] Foi feita uma verificação resgistro a geristro, para que o mesmo não seja gerado
+    caso não tenho informações.
+
+Versão 0.08b   16/04/10
+-- ACBrSPEDFiscal --
+[*] Criado novo recurso no ACBrSPEDFiscal, nos blocos C e D para verificar se o
+    registro deve ser gerado ou não, conforme perfil selecionado no Registro0000
+    do bloco 0. (por Isaque Pinheiro)
+
+Versão 0.08a   14/04/10
+-- ACBrSPEDFiscal --
+[-] corrigido BUG encontrado na geração do registro C300.
+
+Versão 0.08a   09/04/10
+-- ACBrSPEDFiscal --
+[*] Foi feito um tratamento, para que os Registro 0300, 0305, 0500, 0600 e todos
+    os Registros do Bloco G, só passe a ser gerado pelo componente apartir do dia
+    01/07/2010, conforme descrito no Art. 3º do AC 09/08 e no guia prático EFD 
+    Versão 2.0.
+
+Versão 0.07b   08/04/10
+-- ACBrSPEDFiscal --
+[-] Corrigido o Bug onde os campos IND_PGTO e IND_FRT do RegistroC100, estavam 
+    preenchendo '0', nos casos das notas com códigos 02, 03, 04 ou 05, e deveriam
+    se vazios. (por Isaque Pinheiro) e reportado (por francinaldoac)
+
+Versão 0.07b   07/04/10
+-- ACBrSPEDFiscal --
+[-] Corrigido o Bug onde se usava LFill( Integer(tipo) ) para 
+    LFill( Integer(tipo), 0 ), em todos blocos pois estava considerando uma data
+    (por Isaque Pinheiro)
+
+Versão 0.07b   22/03/10
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia no RegistroE250 (por Isaque Pinheiro)
+[*] Implementado hierarquia no RegistroE520 e E530 (por Isaque Pinheiro)
+
+Versão 0.07b   18/03/10
+-- ACBrSPEDFiscal e ACBrSPEDContabil --
+[-] Correção de validação da Inscrição Estadual de "TO".
+[*] Removido o parametro "Nulo" da função Fill que trata propriedades do tipo
+    Data, agora toda propriedade de data que não for definido uma data para ela
+    o valor de retorno será "|", automaticamente.
+
+Versão 0.07b   17/03/10
+-- ACBrSPEDFiscal --
+[-] Criado nova função "DFill" em ACBrUtilTXT, para atender a formatação de 
+    informações com várias casas deciamais. 
+    Todas as propriedades que precisa de mais de duas casas decimais foi 
+    substituido seu tipo de Currency para Double, e todos passaram a chamar
+    a função "DFill".
+    As variaveis do Create da class base TACBrTXT, foram comentadas, porque o 
+    esta substituindo as informações definidas em design.(solução temporária)
+
+    Note : Recompile seu pacote ACBrSPED.
+
+Versão 0.07a   16/03/10
+-- ACBrSPEDFiscal --
+[-] Corrigido BUG, quando a função LFill era chamada com o parametro NULL = True
+    para os tipos data data, mesmo tendo uma data, retornava vazio.
+
+Versão 0.07a   15/03/10
+-- ACBrSPEDFiscal --
+[*] Implementado o registro Registro0500 "TABELA DE PLANO DE CONTAS CONTÁBEIS"
+    do Bloco 0 por (Alessandro Yamasaki)
+[*] Implementado o registro Registro0600 "CENTRO DE CUSTOS" do Bloco 0 
+    por (Isaque Pinheiro)
+
+Versão 0.04a   08/03/10
+-- ACBrSPEDContabil --
+[+] Implementado todos os registros dos blocos que faltavam, e testado no validador
+    por (Claudinei)
+
+Versão 0.03a   27/01/10
+-- ACBrSPEDContabil --
+[*] Implementado geração do registro I200 e a hierarquia dos regsitros I155 
+    e I250 por (Mauricio)
+[-] Correções de totalizações no Bloco I por (Mauricio)
+
+Versão 0.07a   24/02/10
+-- ACBrSPEDFiscal --
+[*] Comentei a rotina que gera o BLOCO G, pois segundo o Art. 3o do AC 38/09
+    ele só deverá ser gerado apartir de 1 de julho de 2010.
+
+Versão 0.07a   12/02/10
+-- ACBrSPEDFiscal --
+[*] Implementado do Bloco 1 por (Ricardo JS)
+[+] Implemantado todo o código do Bloco G que faltava por (Ricardo JS)
+
+Versão 0.06a   25/01/10
+-- ACBrSPEDFiscal --
+[+] Implementação feita no Registro1500, conforme Guia Prático EFD 2.0.0 por
+    (Isaque Pinheiro)
+[+] Implementação feita no RegistroD500, conforme Guia Prático EFD 2.0.0 por
+    (Fernando_Totall)
+
+Versão 0.03a   23/01/10
+-- ACBrSPEDContabil --
+[*] Foi criado uma nova unit (ACBrUtilTXT.pas) na pasta ACBrComum, com o conteúdo
+    que está comentado na unit ACBrSped.pas
+
+Versão 0.06a   23/01/10
+-- ACBrSPEDFiscal --
+[*] Foi criado uma nova unit (ACBrUtilTXT.pas) na pasta ACBrComum, com o conteúdo
+    que está comentado na unit ACBrSped.pas
+
+Versão 0.05a   11/01/10
+-- ACBrSPEDFiscal --
+[-] Correções propriedades dos registros 1300 e 1310.
+
+Versão 0.04a   10/01/10
+-- ACBrSPEDContabil --
+[-] Corrigido bug na rotina de totalização dos termos de abertura e fechamento,
+    Registros I030 e J900.
+
+Versão 0.04a   29/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia dos registro 1360 e 1370 por ( Isaque Pinheiro )
+
+Versão 0.04a   28/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia dos registro 1310 e 1320 por ( Daniel (Totall) )
+
+Versão 0.03a   21/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia do registro E210 por (Márcio Lopes)
+[*] Implementado hierarquia dos registros C510 e C590 por (Márcio Lopes)
+[*] Implementado hierarquia do registro D190 por (Márcio Lopes)
+
+Versão 0.03a   15/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia dos registros 0175, 0205, 0206, 0220 e H010 
+    por (Isaque Pinheiro)
+
+Versão 0.03a   14/12/09
+-- ACBrSPEDFiscal --
+[+] Adicionado recurso para que um Bloco_X possa pesquisar registros no Bloco_Y
+
+Versão 0.02a   13/12/09
+-- ACBrSPEDContabil --
+[+] Adicionada propriedade "About" para melhor controle de Versao (DSA)
+Versão 0.02a   13/12/09
+
+-- ACBrSPEDFiscal --
+[+] Adicionada propriedade "About" para melhor controle de Versao (DSA)
+[*] Implementado hierarquia dos registros C120, C130, C160, C165, C171, C172, 
+    C173, C174, C175, C176, C177, C178, C179 e C195 por (Isaque Pinheiro)
+
+Versão 0.01a   13/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia dos registros C390, C405, C410, C420, C460 e C490 
+    por (Cezinha)
+[-] Correção na escrita dos registros C390 e C420.
+
+Versão 0.01a   11/12/09
+-- ACBrSPEDContabil --
+[+] Implementações nos Blocos I por (Italo J Jr)
+    o exemplo está no Bloco_C por (Isaque Pinheiro)
+
+Versão 0.01a   08/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia do registro C370 por (Rodrigo Felipe)
+
+Versão 0.01a   08/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado hierarquia do registro C470 por (Isaque Pinheiro)
+[-] Correção no método do WriteRegistroH010 por (SOFTCOM INFORMATICA)
+[-] Correção no método do WriteRegistroC321 por (Diego Verdan)
+[-] Correção no método do WriteRegistroC460 por (Agnaldo Partes)
+
+Versão 0.01a   07/12/09
+-- ACBrSPEDContabil --
+[+] Implementações nos Blocos 0, I e J por (Italo J Jr)
+
+Versão 0.01a   07/12/09
+-- ACBrSPEDFiscal --
+[*] Implementado RegistroH005List, para criar uma lista do RegistroH005
+[+] Adicionado na função SaveFileTXT as chamada:
+    if Bloco_H.RegistroH005.Count > 0 then Write(txtFile, WriteRegistroH005);
+    if Bloco_H.RegistroH010.Count > 0 then Write(txtFile, WriteRegistroH010);
+
+Versão 0.01a   04/12/09
+-- ACBrSPEDFiscal --
+[+] Implementado hierarquia do registro D590 por (Marcos e Jean)
+
+Versão 0.01a   01/12/09
+-- ACBrSPEDFiscal --
+[+] Adicionada:
+    procedure CriaRegistros;
+    procedure LiberaRegistros;
+    As procedures foram adiconadas em todos os Blocos para atender um vazamento
+    de memória ao finalizar o Demo. 
+    Motivo: 
+    Ao limpar os registros filhos com o método "Clear", e ao finalizar o Demo
+    os registros filhos não estavm sendo liberados da memória pelo método "Free".
+    Essas implementações corrigiram também um BUG, do qual os totais dos registros
+    filhos não estavam sendo zerados após a geração do TXT.
+
+Versão 0.01a   30/11/09
+-- ACBrSPEDFiscal --
+[+] Implementado hierarquia dos registros C140 e C141 por (Márcio Lopes)
+[-] Mudado tipo da propriedade "QTD_PARC" do Bloco_C, RegistroC140, para 
+    "Integer", conforme descrito no AC 09/08.
+
+Versão 0.01a   28/11/09
+-- ACBrSPEDFiscal --
+[+] Adicionada:
+    function LocalizaRegistro(pCOD_PART: AnsiString): boolean;
+    Bloco 0 - Registro0150
+[+] Adicionada por (Márcio Lopes)
+    function LocalizaRegistro(pUNID: AnsiString): boolean; 
+    Bloco 0 - Registro0190
+    function LocalizaRegistro(pCOD_ITEM: AnsiString): boolean;
+    Bloco 0 - Registro0200
+    function LocalizaRegistro(pCOD_NAT: AnsiString): boolean;
+    Bloco 0 - Registro0400
+
+Versão 0.01a   27/11/09
+-- ACBrSPEDFiscal --
+[+] Implementados a procedure "LimpaRegistros", para limpar os registros das
+    listas antes de gerar o TXT por (Isaque Pinheiro)
+
+Versão 0.01a   25/11/09
+-- ACBrSPEDFiscal --
+[*] Implementados checagem de NFs Canceladas no Bloco C método WriteRegistroC100
+    por (Jean Barreiros e Marcos Fernando)
+
+Versão 0.01a   24/11/09
+-- ACBrSPEDFiscal --
+[+] Implementados os métodos que faltavam do Bloco_1 e Bloco_H 
+    por (Agnaldo Prates)
+
+Versão 0.01a   19/11/09
+-- ACBrSPEDFiscal --
+[-] Limpeza de código após, modificações para geração de arquivos em hierarquia
+[-] Corrigido BUG, do qual não estava executando a função Trim do delphi 
+    corretamente, quando a propriedade TrimString = True
+
+Versão 0.01a   18/11/09
+-- ACBrSPEDFiscal --
+[-] Cercado no método "WriteRegistroC190" o campo "COD_OBS" por não passar na
+    validação do PVA.
+[+] Implementado a hierarquia de Pai-Filho do RegistroC190 (por Jean Barreiros)
+[-] Retirada as propriedades "ZeroRetornaVazio"
+[*] Susbstituído o tipo da propriedade "IND_MOV", novamente para "Integer"
+[*] Criado o parametro "Nulo" nas funções LFill com os parametros tipo
+    Integer, Currency e TDateTime.
+
+Versão 0.01a   17/11/09
+-- ACBrSPEDFiscal --
+[+] Adicionado ao demo o código de exemplo para gerar resgitros em hierarquia
+    do Bloco_C (por Jean Barreiros)
+[+] Criado nova propriedade "TrimString", onde se for TRUE, retorna a string
+    sem espaços em branco iniciais e finais. Usada nas Funções (LFill e RFill)
+[*] Susbstituído o tipo da propriedade "IND_MOV", de "Integer" para "AnsiString"
+    porque recebe o valor "0" e tava retornado vazio, por causa da propriedade
+    ZeroRetornaVazio
+[*] A propriedade "IND_MOV" agora será iniciada com valor padrão '1' 
+[*] Mudado o nome da propriedade "RetornoVazio" para "ZeroRetornaVazio", para 
+    melhor entendimento da funcionalidade dessa propriedade.
+[*] ACBrSPEDFiscal foi restruturado para gerar os registros por hierarquia de
+    Pai-Filho
+[*] Substituindo todas as declarações do tipo "String" para "AnsiString", 
+    para compatibilidade entre Lazarus, D2009, D2010 e superior
+
+Versão 0.01a   13/11/09
+-- ACBrSPEDFiscal --
+[+] Implementações do Bloco_D por (Agnaldo Prates)
+
+Versão 0.01a   12/11/09
+-- ACBrSPEDFiscal --
+[+] Novas implementações feitas por (Agnaldo Prates)
+[+] Criada função StrZero em (ACBrSpedUtils.pas)
+    Nota: Logo usaremos as funções do próprio ACBr.
+[+] Nova propriedade "CurMascara", para formatar os valores tipo Currency
+[-] Alterada "function LFill(Value: Currency..." em (ACBrSped.pas), 
+    para formatar o valor com a mascara que tiver na nova propriedade 
+    "CurMascara"
+[-] Adicionada em (ACBrSpedFiscal.pas) os métodos
+    procedure SetDelimitador(const Value: string); override;
+    procedure SetCurMascara(const Value: string); override;
+[-] No Bloco 9, foi alterado as propriedades do tipo Currency para Integer
+    para que essas proriedades não sejam formatadas como currency
+[-] Todos as Units (Bloco_?_Class.pas) foi alterada o método que totaliza a
+    quantidade de registros de LFill(QTD_LIN_?,0,0) para LFill(QTD_LIN_?,0),
+    porque tava formatando com a mascara
+
+Versão 0.01a   11/11/09
+-- ACBrSPEDFiscal --
+[+] Implementação de métodos no Bloco D por (Franklin Haut)
+[-] Correção no nome de propriedades nos Blocos C, D e E por (Franklin Haut)
+[+] Implementação de todos os métodos que faltavam no Bloco 1 por (Agnaldo Prates)
+[+] Implementação de vários métodos nos Blocos 0, C e E  por (Agnaldo Prates)
+[-] Correção de tipos de proriedades dos Blocos 0, C e E por (Agnaldo Prates)
+
+Versão 0.01a   01/11/09
+-- ACBrSPEDFiscal --
+[-] Algumas correções feitas por (Agnaldo Prates)
+
+Versão 0.01a   01/11/09
+-- ACBrSPEDFiscal --
+[*] Na Unit (ACBrSped.pas) a propriedade "Delimitador" e o evento "OnError"
+    passaram para "public". E na Unit (ACBrSpedFiscal.pas) foi adicionada
+    em "published" as linhas abaixo:
+    property Delimitador;
+    property OnError;
+[-] Para que o evento "OnError" dos Blocos fossem disparados foi incluído no
+    método "SaveFileTXT" do componente (ACBrSpedFiscal.pas), as linhas abaixo:
+    FBloco_0.OnError := OnError;
+    FBloco_1.OnError := OnError;
+    FBloco_C.OnError := OnError;
+    FBloco_D.OnError := OnError;
+    FBloco_E.OnError := OnError;
+    FBloco_H.OnError := OnError;
+    FBloco_9.OnError := OnError;
+[-] Foi incluído nos métodos "WriteRegistro" a linha (Result := '').
+[-] Nos métodos "WriteRegistro" que tem "FOR" a linha 
+    "Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1", foi mudada para
+    Dentro do For, como observado pelo (Marcio Lopes).
+
+Versão 0.01a   31/10/09
+-- ACBrSPEDFiscal --
+[*] O registro 0015 do Bloco 0, foi implementado para receber uma lista de 
+      registro, como observado pelo (Marcio Lopes).
+[-] Foi substituído em todos os métodos WriteRegistro, o caracter '|', pela
+    propriedade "Delimitador"
+[-] Modificado todas funções GetItem para compatibilidade com Lazarus de
+    "Result := Inherited Items[Index]" para 
+	"Result := TTipo(Inherited Items[Index])"   (Por: Isaque Pinheiro)
+	
+[+] Package para o Lazarus (ACBr_SPEDFiscal.lpk)    (Por: DSA)
+[+] Conversão do Demo para Lazarus (SPEDFiscal.lpi) (Por: DSA)
+	
+Versão 0.01a   30/10/09
+-- ACBrSPEDFiscal e ACBrSPEDContabil --
+[+] Início do Projeto
+[+] Primeira Versao lançada baseado no componente fornecido por Isaque Pinheiro.
+
+
+
+
+
+
+
+
+
+

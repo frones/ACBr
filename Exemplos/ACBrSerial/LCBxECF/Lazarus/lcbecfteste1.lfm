@@ -1,0 +1,237 @@
+object Form1: TForm1
+  Left = 291
+  Height = 294
+  Top = 175
+  Width = 379
+  HorzScrollBar.Page = 378
+  VertScrollBar.Page = 293
+  Caption = 'Form1'
+  object lInstr: TLabel
+    Left = 16
+    Height = 57
+    Top = 224
+    Width = 337
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Esse programa demonstra o uso dos componentes ACBrLCB e ACBrECF. É necessário configurar corretamente os componentes ACBr para o modelo de equipamento que vc possui,  antes de compilar o programa'
+    Color = clNone
+    ParentColor = False
+    WordWrap = True
+  end
+  object Label8: TLabel
+    Left = 280
+    Height = 14
+    Top = 14
+    Width = 79
+    Caption = 'Atraso Abertura'
+    Color = clNone
+    ParentColor = False
+  end
+  object lAtraso: TLabel
+    Left = 92
+    Height = 25
+    Top = 240
+    Width = 190
+    Caption = 'Simulando ATRASO'
+    Color = clNone
+    Font.Color = clBlack
+    Font.Height = -19
+    Font.Name = 'Microsoft Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentColor = False
+    Visible = False
+  end
+  object Label2: TLabel
+    Left = 280
+    Height = 14
+    Top = 51
+    Width = 66
+    Caption = 'Atraso Venda'
+    Color = clNone
+    ParentColor = False
+  end
+  object bLiberaECF: TButton
+    Left = 280
+    Height = 41
+    Top = 160
+    Width = 83
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Cancela Venda'
+    OnClick = bLiberaECFClick
+    TabOrder = 0
+  end
+  object pVenda: TPanel
+    Left = 8
+    Height = 193
+    Top = 8
+    Width = 257
+    TabOrder = 1
+    object Label1: TLabel
+      Left = 16
+      Height = 13
+      Top = 24
+      Width = 88
+      Caption = 'Código do Produto'
+      Color = clNone
+      ParentColor = False
+    end
+    object Label6: TLabel
+      Left = 152
+      Height = 13
+      Top = 24
+      Width = 17
+      Caption = 'Aliq'
+      Color = clNone
+      ParentColor = False
+    end
+    object Label7: TLabel
+      Left = 200
+      Height = 13
+      Top = 24
+      Width = 16
+      Caption = 'UN'
+      Color = clNone
+      ParentColor = False
+    end
+    object Label3: TLabel
+      Left = 16
+      Height = 13
+      Top = 68
+      Width = 48
+      Caption = 'Descrição'
+      Color = clNone
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 16
+      Height = 13
+      Top = 112
+      Width = 55
+      Caption = 'Quantidade'
+      Color = clNone
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 104
+      Height = 13
+      Top = 112
+      Width = 67
+      Caption = 'Preço Unitário'
+      Color = clNone
+      ParentColor = False
+    end
+    object edCod: TEdit
+      Left = 16
+      Height = 21
+      Top = 40
+      Width = 101
+      TabOrder = 0
+      Text = '7123456789012'
+    end
+    object edAliq: TEdit
+      Left = 152
+      Height = 21
+      Top = 40
+      Width = 33
+      TabOrder = 2
+      Text = 'FF'
+    end
+    object edUN: TEdit
+      Left = 200
+      Height = 21
+      Top = 40
+      Width = 33
+      TabOrder = 5
+      Text = 'UN'
+    end
+    object edDescricao: TEdit
+      Left = 16
+      Height = 21
+      Top = 84
+      Width = 217
+      TabOrder = 1
+      Text = 'DESCRICAO DO PRODUTO'
+    end
+    object edQtd: TEdit
+      Left = 16
+      Height = 21
+      Top = 128
+      Width = 57
+      TabOrder = 3
+      Text = '1'
+    end
+    object edUnit: TEdit
+      Left = 104
+      Height = 21
+      Top = 128
+      Width = 129
+      TabOrder = 4
+      Text = '0,01'
+    end
+    object bVendeItem: TButton
+      Left = 88
+      Height = 25
+      Top = 160
+      Width = 75
+      BorderSpacing.InnerBorder = 4
+      Caption = 'Vende Item'
+      Default = True
+      OnClick = bVendeItemClick
+      TabOrder = 6
+    end
+  end
+  object Button1: TButton
+    Left = 282
+    Height = 25
+    Top = 120
+    Width = 75
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Abre Cupom'
+    OnClick = Button1Click
+    TabOrder = 2
+  end
+  object edAtrasoAbre: TEdit
+    Left = 280
+    Height = 21
+    Top = 30
+    Width = 57
+    TabOrder = 3
+    Text = '6000'
+  end
+  object edAtrasoVende: TEdit
+    Left = 280
+    Height = 21
+    Top = 67
+    Width = 57
+    TabOrder = 4
+    Text = '1000'
+  end
+  object ACBrECF1: TACBrECF
+    Modelo = ecfNaoFiscal
+    Porta = 'C:\TEMP\SAIDA.TXT'
+    DescricaoGrande = True
+    MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
+    MsgRelatorio = 'Imprimindo %s  %dª Via '
+    MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
+    FormMsgFonte.Color = clWhite
+    FormMsgFonte.Height = 11
+    FormMsgFonte.Name = 'MS Shell Dlg'
+    FormMsgFonte.Pitch = fpVariable
+    FormMsgColor = clHighlight
+    OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
+    Device.HandShake = hsRTS_CTS
+    Device.HardFlow = True
+    left = 200
+    top = 168
+  end
+  object ACBrLCB1: TACBrLCB
+    Porta = 'COM2'
+    Sufixo = '#13'
+    UsarFila = True
+    FilaMaxItens = 100
+    OnLeCodigo = ACBrLCB1LeCodigo
+    left = 230
+    top = 168
+  end
+end

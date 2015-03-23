@@ -1,0 +1,176 @@
+object FrmTroco: TFrmTroco
+  Left = 211
+  Height = 337
+  Top = 223
+  Width = 560
+  HorzScrollBar.Page = 559
+  VertScrollBar.Page = 336
+  ActiveControl = eDescricao
+  Caption = 'Troco'
+  ClientHeight = 337
+  ClientWidth = 560
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object Label2: TLabel
+    Left = 8
+    Height = 13
+    Top = 80
+    Width = 48
+    Caption = 'Descricao'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 136
+    Height = 13
+    Top = 80
+    Width = 24
+    Caption = 'Valor'
+    ParentColor = False
+  end
+  object Bevel1: TBevel
+    Left = 260
+    Height = 321
+    Top = 8
+    Width = 1
+    Shape = bsLeftLine
+  end
+  object Label1: TLabel
+    Left = 24
+    Height = 20
+    Top = 16
+    Width = 218
+    Caption = 'Lista de Cédulas e Moedas'
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 328
+    Height = 16
+    Top = 16
+    Width = 46
+    Caption = 'Troco:'
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object eDescricao: TEdit
+    Left = 8
+    Height = 21
+    Top = 96
+    Width = 121
+    TabOrder = 0
+  end
+  object eValor: TEdit
+    Left = 136
+    Height = 21
+    Top = 96
+    Width = 113
+    TabOrder = 1
+  end
+  object Memo1: TMemo
+    Left = 8
+    Height = 201
+    Top = 128
+    Width = 241
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 2
+  end
+  object Button3: TButton
+    Left = 136
+    Height = 25
+    Top = 48
+    Width = 49
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Listar'
+    OnClick = Button3Click
+    TabOrder = 3
+  end
+  object Button4: TButton
+    Left = 8
+    Height = 25
+    Top = 48
+    Width = 57
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Adicionar'
+    OnClick = Button4Click
+    TabOrder = 4
+  end
+  object Button5: TButton
+    Left = 192
+    Height = 25
+    Top = 48
+    Width = 57
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Limpar'
+    OnClick = Button5Click
+    TabOrder = 5
+  end
+  object Memo2: TMemo
+    Left = 272
+    Height = 209
+    Top = 120
+    Width = 281
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 6
+  end
+  object bTroco: TButton
+    Left = 299
+    Height = 25
+    Top = 48
+    Width = 225
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Calcular Troco Completo'
+    OnClick = bTrocoClick
+    TabOrder = 7
+  end
+  object bTrocoDetalhado: TButton
+    Left = 299
+    Height = 25
+    Top = 80
+    Width = 225
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Caclcular Troco Detalhado'
+    OnClick = bTrocoDetalhadoClick
+    TabOrder = 8
+  end
+  object Button2: TButton
+    Left = 72
+    Height = 25
+    Top = 48
+    Width = 57
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Remover'
+    OnClick = Button2Click
+    TabOrder = 9
+  end
+  object edTroco: TEdit
+    Left = 384
+    Height = 21
+    Top = 8
+    Width = 121
+    TabOrder = 10
+    Text = '165,23'
+  end
+  object ACBrTroco1: TACBrTroco
+    StrCedula = 'Cédula'
+    StrMoeda = 'Moeda'
+    left = 392
+    top = 184
+  end
+end

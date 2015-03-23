@@ -1,0 +1,268 @@
+object frVendeItem: TfrVendeItem
+  Left = 409
+  Height = 254
+  Top = 225
+  Width = 383
+  HorzScrollBar.Page = 382
+  HorzScrollBar.Range = 329
+  VertScrollBar.Page = 253
+  VertScrollBar.Range = 225
+  ActiveControl = edCodigo
+  BorderStyle = bsSingle
+  Caption = 'Vende Item'
+  ClientHeight = 254
+  ClientWidth = 383
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poMainFormCenter
+  LCLVersion = '1.2.6.0'
+  object Bevel1: TBevel
+    Left = 8
+    Height = 78
+    Top = 139
+    Width = 169
+  end
+  object Bevel2: TBevel
+    Left = 184
+    Height = 142
+    Top = 107
+    Width = 185
+  end
+  object Label1: TLabel
+    Left = 29
+    Height = 13
+    Top = 24
+    Width = 33
+    Alignment = taRightJustify
+    Caption = '&Código'
+    ParentColor = False
+  end
+  object edCodigo: TEdit
+    Cursor = crIBeam
+    Left = 72
+    Height = 21
+    Top = 16
+    Width = 101
+    TabOrder = 0
+    Text = '111222333'
+  end
+  object Label2: TLabel
+    Left = 17
+    Height = 13
+    Top = 56
+    Width = 48
+    Alignment = taRightJustify
+    Caption = '&Descrição'
+    ParentColor = False
+  end
+  object edDescricao: TEdit
+    Cursor = crIBeam
+    Left = 72
+    Height = 21
+    Top = 48
+    Width = 289
+    TabOrder = 1
+    Text = 'TESTE DE PRODUTO'
+  end
+  object Label3: TLabel
+    Left = 42
+    Height = 13
+    Top = 88
+    Width = 17
+    Alignment = taRightJustify
+    Caption = '&Qtd'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 201
+    Height = 13
+    Top = 88
+    Width = 67
+    Alignment = taRightJustify
+    Caption = '&Preço Unitário'
+    ParentColor = False
+  end
+  object edPrecoUnita: TEdit
+    Cursor = crIBeam
+    Left = 272
+    Height = 21
+    Top = 80
+    Width = 89
+    OnKeyPress = edQtdKeyPress
+    TabOrder = 2
+    Text = '1'
+  end
+  object Label5: TLabel
+    Left = 191
+    Height = 13
+    Top = 120
+    Width = 76
+    Alignment = taRightJustify
+    Caption = '&Valor Aliq. ICMS'
+    ParentColor = False
+  end
+  object edICMS: TEdit
+    Cursor = crIBeam
+    Left = 272
+    Height = 21
+    Top = 112
+    Width = 89
+    OnKeyPress = edQtdKeyPress
+    TabOrder = 3
+    Text = 'NN'
+  end
+  object Label7: TLabel
+    Left = 22
+    Height = 13
+    Top = 120
+    Width = 40
+    Alignment = taRightJustify
+    Caption = '&Unidade'
+    ParentColor = False
+  end
+  object edUN: TEdit
+    Cursor = crIBeam
+    Left = 72
+    Height = 21
+    Top = 112
+    Width = 81
+    TabOrder = 4
+    Text = 'UN'
+  end
+  object Button1: TButton
+    Left = 15
+    Height = 25
+    Top = 226
+    Width = 75
+    Caption = '&Imprimir'
+    Default = True
+    OnClick = Button1Click
+    TabOrder = 5
+  end
+  object Label8: TLabel
+    Left = 189
+    Height = 13
+    Top = 143
+    Width = 47
+    Caption = 'II = Isento'
+    ParentColor = False
+  end
+  object Label9: TLabel
+    Left = 189
+    Height = 13
+    Top = 159
+    Width = 100
+    Caption = 'NN = Não Incidencia'
+    ParentColor = False
+  end
+  object Label10: TLabel
+    Left = 189
+    Height = 13
+    Top = 175
+    Width = 129
+    Caption = 'FF = Substituição Tributária'
+    ParentColor = False
+  end
+  object Button2: TButton
+    Left = 98
+    Height = 25
+    Top = 226
+    Width = 75
+    Cancel = True
+    Caption = 'Fechar'
+    ModalResult = 2
+    OnClick = Button2Click
+    TabOrder = 6
+  end
+  object edQtd: TEdit
+    Cursor = crIBeam
+    Left = 72
+    Height = 21
+    Top = 80
+    Width = 81
+    OnKeyPress = edQtdKeyPress
+    TabOrder = 7
+    Text = '1'
+  end
+  object rbPercentagem: TRadioButton
+    Left = 16
+    Height = 19
+    Top = 195
+    Width = 83
+    Caption = 'Percentagem'
+    Checked = True
+    TabOrder = 8
+    TabStop = True
+  end
+  object rbValor: TRadioButton
+    Left = 112
+    Height = 19
+    Top = 195
+    Width = 44
+    Caption = 'Valor'
+    TabOrder = 9
+  end
+  object Panel1: TPanel
+    Left = 11
+    Height = 49
+    Top = 143
+    Width = 164
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    ClientHeight = 49
+    ClientWidth = 164
+    TabOrder = 10
+    object rbAcrescimo: TRadioButton
+      Left = 16
+      Height = 19
+      Top = 24
+      Width = 69
+      Caption = 'Acrescimo'
+      TabOrder = 1
+    end
+    object rbDesconto: TRadioButton
+      Left = 16
+      Height = 19
+      Top = 8
+      Width = 66
+      Caption = 'Desconto'
+      Checked = True
+      TabOrder = 0
+      TabStop = True
+    end
+    object edDescAcres: TEdit
+      Cursor = crIBeam
+      Left = 101
+      Height = 21
+      Top = 14
+      Width = 55
+      OnKeyPress = edQtdKeyPress
+      TabOrder = 2
+      Text = '0'
+    end
+  end
+  object Label6: TLabel
+    Left = 189
+    Height = 13
+    Top = 191
+    Width = 87
+    Caption = 'SI = Isento ISSQN'
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 189
+    Height = 13
+    Top = 207
+    Width = 135
+    Caption = 'SN = Não Incidencia ISSQN'
+    ParentColor = False
+  end
+  object Label12: TLabel
+    Left = 189
+    Height = 13
+    Top = 223
+    Width = 135
+    Caption = 'SF = Subst.Tributária ISSQN'
+    ParentColor = False
+  end
+end

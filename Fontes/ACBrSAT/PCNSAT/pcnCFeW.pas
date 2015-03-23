@@ -183,7 +183,11 @@ begin
 end;
 
 procedure TCFeW.GerarEmit;
+var
+  TemISS: Boolean;
 begin
+  TemISS := (trim(CFe.Emit.IM) <> '') and (CFe.Emit.cRegTribISSQN <> RTISSNenhum);
+
   Gerador.wGrupo('emit', 'C01');
   Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJCPF, 1058);
   if not FApenasTagsAplicacao then
@@ -195,14 +199,17 @@ begin
   (**)GerarEmitEnderEmit;
 
   Gerador.wCampo(tcStr, 'C12', 'IE      ', 12, 12, 1, SomenteNumeros(CFe.Emit.IE), DSC_IE);
-  if trim(CFe.Emit.IM) <> '' then
+  if TemISS then
     Gerador.wCampo(tcStr, 'C13', 'IM      ', 01, 15, 1, CFe.Emit.IM, DSC_IM);
 
   if not FApenasTagsAplicacao then
      Gerador.wCampo(tcInt, 'C14', 'cRegTrib', 01, 01, 1, RegTribToStr(CFe.Emit.cRegTrib), DSC_REGTRIB);
 
-  Gerador.wCampo(tcInt, 'C15', 'cRegTribISSQN', 01, 02, 1, RegTribISSQNToStr(CFe.Emit.cRegTribISSQN), DSC_REGISSQN);
+  if TemISS then
+    Gerador.wCampo(tcInt, 'C15', 'cRegTribISSQN', 01, 02, 1, RegTribISSQNToStr(CFe.Emit.cRegTribISSQN), DSC_REGISSQN);
+
   Gerador.wCampo(tcStr, 'C16', 'indRatISSQN', 01, 01, 1, indRatISSQNToStr(CFe.Emit.indRatISSQN), DSC_RATISSQN);
+
   Gerador.wGrupo('/emit');
 end;
 

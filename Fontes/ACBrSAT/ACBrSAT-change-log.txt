@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/03/2015
+-- ACBrSAT --
+[-] Ajuste para não gerar: Tags de ISS caso:
+   CFe.Emit.IM for vazio ou CFe.Emit.cRegTribISSQN = RTISSNenhum
+
 Data: 16/03/2015
 -- ACBrSAT --
 [+] Adicionada a propriedade: CFe.Det[i].Prod.EhCombustivel: Boolean (defaul False)

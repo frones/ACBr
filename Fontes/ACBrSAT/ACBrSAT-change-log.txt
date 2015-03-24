@@ -47,8 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/03/2015
+-- ACBrSAT --  (por: DSA)
+[-] Ajuste para SAT Sweda, que insere CRLF no retorno do XML em Base64
+
 Data: 23/03/2015
--- ACBrSAT --
+-- ACBrSAT --  (por: DSA)
 [-] Ajuste para não gerar: Tags de ISS caso:
    CFe.Emit.IM for vazio ou CFe.Emit.cRegTribISSQN = RTISSNenhum
 

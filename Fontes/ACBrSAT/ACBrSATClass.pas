@@ -328,17 +328,19 @@ end;
 { TACBrSATRespostaClass }
 
 procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
-var
-  Buffer:String;
 begin
   fRetornoStr := AValue;
 
-  // Ajuste para Respostas do SAT com CR ou LF antes do Pipe
-  Buffer := StringReplace( AValue, CRLF+'|', '|', [rfReplaceAll] );
-  Buffer := StringReplace( Buffer, LF+'|', '|', [rfReplaceAll] );
-
   Clear;
-  fRetornoLst.Text := StringReplace( Buffer, '|', sLineBreak, [rfReplaceAll] );
+  fRetornoLst.Delimiter := '|';
+  {$IFDEF FPC}
+   fRetornoLst.StrictDelimiter := True;
+  {$ELSE}
+   AValue := '"' + StringReplace(AValue, fRetornoLst.Delimiter,
+                            '"' + fRetornoLst.Delimiter + '"', [rfReplaceAll]) +
+             '"';
+  {$ENDIF}
+  fRetornoLst.DelimitedText := AValue;
 
   if fRetornoLst.Count > 1 then
   begin

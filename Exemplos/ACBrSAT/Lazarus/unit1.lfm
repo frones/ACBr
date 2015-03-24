@@ -3048,15 +3048,6 @@ object Form1: TForm1
       end>
     SimplePanel = False
   end
-  object Button1: TButton
-    Left = 659
-    Height = 25
-    Top = 203
-    Width = 75
-    Caption = 'Button1'
-    OnClick = Button1Click
-    TabOrder = 4
-  end
   object MainMenu1: TMainMenu
     left = 224
     top = 224

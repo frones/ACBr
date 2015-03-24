@@ -30,7 +30,6 @@ type
     btLerParams: TButton;
     btSalvarParams: TButton;
     btSerial: TBitBtn;
-    Button1: TButton;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbxRedeProxy: TComboBox;
@@ -193,7 +192,6 @@ type
     procedure btLerParamsClick(Sender : TObject) ;
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
@@ -518,15 +516,6 @@ begin
   finally
      FreeAndNil( frConfiguraSerial ) ;
   end ;
-end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  XMLRec: AnsiString;
-begin
-  XMLRec := DecodeBase64(mLog.Text);
-  WriteToTXT( 'c:\temp\sweda.xml', XMLRec, False, False );
-  ACBrSAT1.CFe.AsXMLString := XMLRec;
 end;
 
 procedure TForm1.cbUsarEscPosClick(Sender: TObject);

@@ -9,7 +9,7 @@ interface
 uses
   ACBrSAT, ACBrSATReg, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, 
   ACBrSATExtratoClass, pcnCFe, pcnCFeR, pcnCFeW, pcnCFeCanc, pcnCFeCancR, 
-  pcnCFeCancW, pcnRede, pcnRedeR, pcnRedeW, LazarusPackageIntf;
+  pcnCFeCancW, pcnRede, pcnRedeR, pcnRedeW, ACBrSATClass, LazarusPackageIntf;
 
 implementation
 

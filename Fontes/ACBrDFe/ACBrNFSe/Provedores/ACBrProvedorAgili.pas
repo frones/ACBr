@@ -120,7 +120,8 @@ begin
   ConfigSchema.VersaoCabecalho       := '1.00';
   ConfigSchema.VersaoDados           := '1.00';
   ConfigSchema.VersaoXML             := '2';
-  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/ABRASF/arquivos/';
+//  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/ABRASF/arquivos/';
+  ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
   ConfigSchema.Cabecalho             := 'nfse.xsd';
   ConfigSchema.ServicoEnviar         := 'nfse.xsd';
   ConfigSchema.ServicoConSit         := 'nfse.xsd';
@@ -142,14 +143,10 @@ var
 begin
   case ACodCidade of
    5106224: begin // Nova Mutum/MT
-//            ConfigURL.HomNomeCidade := 'http://201.57.87.179:92';
-//            ConfigURL.ProNomeCidade := 'http://201.57.87.179:9292';
               ConfigURL.HomNomeCidade := '201.57.87.179:92';
               ConfigURL.ProNomeCidade := '201.57.87.179:9292';
             end;
    5105150: begin // Juina/MT
-//            ConfigURL.HomNomeCidade := 'http://187.6.65.35:92';
-//            ConfigURL.ProNomeCidade := 'http://187.6.65.35:9292';
               ConfigURL.HomNomeCidade := '187.6.65.35:92';
               ConfigURL.ProNomeCidade := '187.6.65.35:9292';
             end;

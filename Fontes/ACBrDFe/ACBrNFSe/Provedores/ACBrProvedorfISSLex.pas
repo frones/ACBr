@@ -112,6 +112,7 @@ begin
      5103007: ConfigCidade.NameSpaceEnvelope := 'https://chapada.fisslex.com.br';
      5104559: ConfigCidade.NameSpaceEnvelope := 'https://itauba.fisslex.com.br';
      5104609: ConfigCidade.NameSpaceEnvelope := 'https://itiquira.fisslex.com.br';
+     5105150: ConfigCidade.NameSpaceEnvelope := 'https://juina.fisslex.com.br'; 
      5107248: ConfigCidade.NameSpaceEnvelope := 'https://santacarmen.fisslex.com.br';
      5107800: ConfigCidade.NameSpaceEnvelope := 'https://leverger.fisslex.com.br';
      5107875: ConfigCidade.NameSpaceEnvelope := 'https://sapezal.fisslex.com.br';
@@ -182,6 +183,10 @@ begin
   5104609: begin // Itiquira/MT
             ConfigURL.HomNomeCidade := 'itiquira';
             ConfigURL.ProNomeCidade := 'itiquira';
+           end;
+  5105150: begin // Juina/MT
+            ConfigURL.HomNomeCidade := 'juina';
+            ConfigURL.ProNomeCidade := 'juina';
            end;
   5107248: begin // Santa Carmen/MT
             ConfigURL.HomNomeCidade := 'santacarmen';

@@ -726,9 +726,9 @@ begin
   3131307  // Ipatinga/MG
          : Provedor := 'Actcon';
 
-  5105150 // Juina/MT
+//  5105150 // Juina/MT
 //  5106224  // Nova Mutum/MT
-         : Provedor := 'Agili';
+//         : Provedor := 'Agili';
 
   3101607, // Alfenas/MG
   3118007, // Congonhas/MG
@@ -927,6 +927,7 @@ begin
   5103007, // Chapada dos Guimarães/MT
   5104559, // Itaúba/MT
   5104609, // Itiquira/MT
+  5105150, // Juina/MT
   5107248, // Santa Carmen/MT
   5107800, // Santo Antônio do Leverger/MT
   5107875, // Sapezal/MT

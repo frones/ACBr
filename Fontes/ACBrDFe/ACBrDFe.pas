@@ -114,6 +114,8 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFe: TStream = nil; NomeArq: String = ''); virtual;
 
+    procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
+      var Versao: Double; var URL: String);
     procedure LerServicoDeParams(const ModeloDFe, UF: String;
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
       var Versao: Double; var URL: String);
@@ -315,11 +317,10 @@ begin
   FPIniParamsCarregado := True;
 end;
 
-procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
-  const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
+procedure TACBrDFe.LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
   var Versao: Double; var URL: String);
 var
-  Sessao, Chave, K: String;
+  Chave, K: String;
   SL: TStringList;
   I: integer;
   VersaoAtual, VersaoAchada: Double;
@@ -329,15 +330,13 @@ begin
   VersaoAtual := Versao;
   LerParamsIni( True );
 
-  Sessao := ModeloDFe + '_' + UF + '_' + IfThen(TipoAmbiente = taProducao, 'P', 'H');
-
-  if not FPIniParams.SectionExists(Sessao) then
+  if not FPIniParams.SectionExists(NomeSessao) then
     exit;
 
   Chave := NomeServico + '_' + FloatToString(VersaoAtual,'.','0.00');
 
   // Achou com busca exata ? (mesma versao) //
-  if NaoEstaVazio(FPIniParams.ReadString(Sessao, Chave, '')) then
+  if NaoEstaVazio(FPIniParams.ReadString(NomeSessao, Chave, '')) then
     VersaoAchada := VersaoAtual;
 
   if VersaoAchada = 0 then
@@ -346,7 +345,7 @@ begin
     Chave := NomeServico + '_';
     SL := TStringList.Create;
     try
-      FPIniParams.ReadSection(Sessao, SL);
+      FPIniParams.ReadSection(NomeSessao, SL);
       for I := 0 to SL.Count-1 do
       begin
         K := SL[I];
@@ -369,7 +368,33 @@ begin
 
   Versao := VersaoAchada;
   if Versao > 0 then
-    URL := FPIniParams.ReadString(Sessao, Chave, '')
+    URL := FPIniParams.ReadString(NomeSessao, Chave, '')
+end;
+
+procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
+  const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
+  var Versao: Double; var URL: String);
+var
+  Sessao: String;
+  VersaoAchada: Double;
+begin
+  Sessao := ModeloDFe + '_' + UF + '_' + IfThen(TipoAmbiente = taProducao, 'P', 'H');
+  VersaoAchada := Versao;
+
+  LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+
+  // Se não achou, verifique se está fazendo redirecionamento "Usar="
+  if EstaVazio(URL) and FPIniParams.SectionExists(Sessao) then
+  begin
+    Sessao := FPIniParams.ReadString(Sessao, 'Usar', '');
+    if NaoEstaVazio(Sessao) then
+    begin
+      VersaoAchada := Versao;
+      LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+    end;
+  end;
+
+  Versao := VersaoAchada;
 end;
 
 function TACBrDFe.LerVersaoDeParams(const ModeloDFe, UF: String;

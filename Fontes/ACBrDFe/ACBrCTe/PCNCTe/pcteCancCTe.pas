@@ -50,7 +50,8 @@ unit pcteCancCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
+  pcteConversaoCTe;
 
 type
 

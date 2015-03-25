@@ -50,8 +50,7 @@ unit pcnConversaoNFe;
 interface
 
 uses
-  SysUtils,
-  Classes;
+  SysUtils, StrUtils, Classes;
 
 type
 
@@ -122,7 +121,8 @@ function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 
 implementation
 
-Uses pcnConversao, typinfo;
+uses
+  pcnConversao, typinfo;
 
 function LayOutToServico(const t: TLayOut): String;
 begin

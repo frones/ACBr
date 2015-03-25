@@ -2847,7 +2847,7 @@ begin
      {$ENDIF} ;
 
   {$ELSE}
-   if TextoIsUTF8 then
+   if StrIsUTF8 then
      Result := Utf8ToAnsi( ABinaryString ) ;
   {$ENDIF}
 

@@ -50,7 +50,8 @@ unit pcteProcCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor,
+  pcteConversaoCTe;
 
 type
 
@@ -71,6 +72,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FId: String;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -90,6 +92,7 @@ type
     property cStat: Integer             read FcStat              write FcStat;
     property xMotivo: String            read FxMotivo            write FxMotivo;
     property Id: String                 read FId                 write FId;
+    property Versao: String             read FVersao             write FVersao;
   end;
 
 implementation

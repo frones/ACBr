@@ -45,12 +45,12 @@
 
 {$I ACBr.inc}
 
-unit pcnConversaoCTe;
+unit pcteConversaoCTe;
 
 interface
 
 uses
-  SysUtils, Classes;
+  SysUtils, StrUtils, Classes;
 
 type
 
@@ -69,7 +69,7 @@ type
   TStatusACBrCTe = (stIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,
                     stCTeRecibo, stCTeCadastro, stCTeEmail, stCTeCCe,
-                    stCTeEvento, stEnvioWebService);
+                    stCTeEvento, stCTeEnvioWebService);
 
   TVersaoCTe = (ve200);
   TpcnSituacaoCTe = (snAutorizado, snDenegado, snCancelada);
@@ -96,6 +96,23 @@ type
   TpcteTipoPropriedade = (tpProprio, tpTerceiro);
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
 
+const
+  CTecabMsg       = '2.00';
+  CTeconsStatServ = '2.00';
+  CTeenviCTe      = '2.00';
+  CTeconsReciCTe  = '2.00';
+  CTeconsSitCTe   = '2.00';
+  CTecancCTe      = '1.04';
+  CTeinutCTe      = '2.00';
+  CTeconsCad      = '2.00';
+  CTeEventoCTe    = '2.00';
+
+  CTeModalRodo    = '2.00';
+  CTeModalAereo   = '2.00';
+  CTeModalAqua    = '2.00';
+  CTeModalFerro   = '2.00';
+  CTeModalDuto    = '2.00';
+  CTeMultiModal   = '2.00';
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -191,7 +208,7 @@ function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
 implementation
 
 uses
-  pcnConversao;
+  pcnConversao, typinfo;
 
 function LayOutToServico(const t: TLayOutCTe): String;
 begin

@@ -513,7 +513,7 @@ function TACBrNFe.GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoA
   const AChaveNFe, Destinatario: String; const DataHoraEmissao: TDateTime;
   const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String): String;
 var
-  idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdToken, cToken, sToken,
+  idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
   sEntrada, cHashQRCode, urlUF: String;
 begin
   urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
@@ -532,13 +532,13 @@ begin
   end;
 
   // Passo 3 e 4
-  cIdToken := Configuracoes.Geral.IdToken;
-  cToken := Configuracoes.Geral.Token;
+  cIdCSC := Configuracoes.Geral.IdCSC;
+  cCSC := Configuracoes.Geral.CSC;
 
-  if EstaVazio(cToken) then
-    cToken := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdToken, 3, 4);
+  if EstaVazio(cCSC) then
+    cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
 
-  sToken := cIdToken + cToken;
+  sCSC := cIdCSC + cCSC;
   sNF := StringReplace(FormatFloat('0.00', ValorTotalNF), ',', '.', [rfReplaceAll]);
   sICMS := StringReplace(FormatFloat('0.00', ValorTotalICMS), ',', '.', [rfReplaceAll]);
 
@@ -548,10 +548,10 @@ begin
     sICMS + '&digVal=' + sdigVal_HEX + '&cIdToken=';
 
   // Passo 5 calcular o SHA-1 da string sEntrada
-  cHashQRCode := AsciiToHex(SHA1(sEntrada + sToken));
+  cHashQRCode := AsciiToHex(SHA1(sEntrada + sCSC));
 
   // Passo 6
-  Result := urlUF + '?' + sEntrada + cIdToken + '&cHashQRCode=' + cHashQRCode;
+  Result := urlUF + '?' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
 
 end;
 

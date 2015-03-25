@@ -51,10 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-{$IFNDEF VER130}
-  Variants,
-{$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcteCTe;
+  pcnConversao, pcnLeitor, pcteCTe;
 
 type
 
@@ -72,6 +69,10 @@ type
   end;
 
 implementation
+
+uses
+  pcnAuxiliar, pcteConversaoCTe,
+  ACBrConsts, ACBrUtil;
 
 { TCTeR }
 
@@ -129,7 +130,7 @@ begin
   if J = 0 then
     raise Exception.Create('Não encontrei inicio do URI: aspas final');
 
-  CTe.infCTe.versao := copy(Leitor.Arquivo, I + 1, J - I -1);
+  CTe.infCTe.versao := StringToFloat(copy(Leitor.Arquivo, I + 1, J - I -1));
   //-- Fim inclusão por Thiago Pedro em 02/06/2014
 
   if Pos('Id="', Leitor.Arquivo) <> 0 then
@@ -387,7 +388,7 @@ begin
 
     // Incluído por Thiago Pedro em 02/06/2014 -- Compatibilidade com CTe 1
     i01 := 0;
-    if (Copy(CTe.infCTe.versao, 1, 1) = '1') then
+    if CTe.infCTe.versao < 2 then
     begin
       while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
       begin
@@ -942,7 +943,7 @@ begin
       CTe.infCTeNorm.rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
       // Alterado por Sergio Melchiori 29/12/2014 para gravar a dt. prev. entrega para a versão abaixo 2.00
-      if (Copy(CTe.infCTe.versao, 1, 1) = '1') then
+      if CTe.infCTe.versao < 2 then
       begin
         for i01 := 0 to CTe.infCTeNorm.infDoc.InfNFE.count-1 do
         begin

@@ -50,7 +50,7 @@ unit pcteConsStatServ;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe;
 
 type
 
@@ -59,6 +59,7 @@ type
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
     FcUF: Integer;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -68,6 +69,7 @@ type
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
     property cUF: Integer            read FcUF     write FcUF;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation

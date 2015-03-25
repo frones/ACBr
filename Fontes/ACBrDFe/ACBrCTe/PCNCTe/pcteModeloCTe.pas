@@ -57,7 +57,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcteCTe, pcteCTeW;
+  pcnAuxiliar, pcnConversao, pcteCTe, pcteCTeW, pcteConversaoCTe;
 
 procedure ModeloCTe;
 
@@ -102,7 +102,7 @@ begin
                                         //         (0)=fpPago
                                         //         (1)=fpAPagar
                                         //         (2)=fpOutras
-  CTe.Ide.modelo := 57;                 // - Código do Modelo do Documento Fiscal Utilizar o código 57 para identificação do CT-e.
+  CTe.Ide.modelo := '57';               // - Código do Modelo do Documento Fiscal Utilizar o código 57 para identificação do CT-e.
   CTe.Ide.serie := 0;                   // - Série do Documento Fiscal, informar 0 (zero) para série única.
   CTe.Ide.nCT := 0;                     // - Número do Documento Fiscal
   CTe.Ide.dhEmi := now;                 // - Data e Hora de emissão do Documento Fiscal

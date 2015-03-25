@@ -47,6 +47,7 @@
 package ACBr_CTe;
 
 {$R *.res}
+{$R '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.dcr'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -83,36 +84,46 @@ requires
   ACBrOpenSSL,
   synapse,
   ACBrCapicom,
-  PCN2;
+  PCNComum,
+  vclactnband,
+  vclx,
+  ACBrDFeComum,
+  ACBrDiversos,
+  ACBrTCP,
+  dsnap;
 
 contains
-  pcteRetInutCTe in '..\..\..\Fontes\ACBrCTe\pcteRetInutCTe.pas',
-  ACBrCTe in '..\..\..\Fontes\ACBrCTe\ACBrCTe.pas',
-  ACBrCTeConfiguracoes in '..\..\..\Fontes\ACBrCTe\ACBrCTeConfiguracoes.pas',
-  ACBrCTeConhecimentos in '..\..\..\Fontes\ACBrCTe\ACBrCTeConhecimentos.pas',
-  ACBrCTeReg in '..\..\..\Fontes\ACBrCTe\ACBrCTeReg.pas',
-  ACbrCteStatusServico in '..\..\..\Fontes\ACBrCTe\ACBrCTeStatusServico.pas',
-  ACBrCTeUtil in '..\..\..\Fontes\ACBrCTe\ACBrCTeUtil.pas',
-  ACBrCTeWebServices in '..\..\..\Fontes\ACBrCTe\ACBrCTeWebServices.pas',
-  pcteCancCTe in '..\..\..\Fontes\ACBrCTe\pcteCancCTe.pas',
-  pcteConsCad in '..\..\..\Fontes\ACBrCTe\pcteConsCad.pas',
-  pcteConsSitCTe in '..\..\..\Fontes\ACBrCTe\pcteConsSitCTe.pas',
-  pcteConsStatServ in '..\..\..\Fontes\ACBrCTe\pcteConsStatServ.pas',
-  pcteCTe in '..\..\..\Fontes\ACBrCTe\pcteCTe.pas',
-  pcteCTeR in '..\..\..\Fontes\ACBrCTe\pcteCTeR.pas',
-  pcteCTeW in '..\..\..\Fontes\ACBrCTe\pcteCTeW.pas',
-  pcteInutCTe in '..\..\..\Fontes\ACBrCTe\pcteInutCTe.pas',
-  pcteRetCancCTe in '..\..\..\Fontes\ACBrCTe\pcteRetCancCTe.pas',
-  pcteRetConsCad in '..\..\..\Fontes\ACBrCTe\pcteRetConsCad.pas',
-  pcteRetConsSitCTe in '..\..\..\Fontes\ACBrCTe\pcteRetConsSitCTe.pas',
-  pcteRetConsStatServ in '..\..\..\Fontes\ACBrCTe\pcteRetConsStatServ.pas',
-  pcteRetEnvCTe in '..\..\..\Fontes\ACBrCTe\pcteRetEnvCTe.pas',
-  pcteRetConsReciCTe in '..\..\..\Fontes\ACBrCTe\pcteRetConsReciCTe.pas',
-  pcteProcCTe in '..\..\..\Fontes\ACBrCTe\pcteProcCTe.pas',
-  pcteConsReciCTe in '..\..\..\Fontes\ACBrCTe\pcteConsReciCTe.pas',
-  ACBrCTeDACTEClass in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTEClass.pas',
-  pcteEnvEventoCTe in '..\..\..\Fontes\ACBrCTe\pcteEnvEventoCTe.pas',
-  pcteRetEnvEventoCTe in '..\..\..\Fontes\ACBrCTe\pcteRetEnvEventoCTe.pas',
-  pcteEventoCTe in '..\..\..\Fontes\ACBrCTe\pcteEventoCTe.pas';
+  ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',
+  ACBrCTeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConfiguracoes.pas',
+  ACBrCTeConhecimentos in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas',
+  ACBrCTeQRCodeBar in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeQRCodeBar.pas',
+  ACBrCTeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeReg.pas',
+  ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
+  pcteCabecalho in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCabecalho.pas',
+  pcteCancCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCancCTe.pas',
+  pcteConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsCad.pas',
+  pcteConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsReciCTe.pas',
+  pcteConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsSitCTe.pas',
+  pcteConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsStatServ.pas',
+  pcteConversaoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConversaoCTe.pas',
+  pcteCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas',
+  pcteCTeR in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeR.pas',
+  pcteCTeW in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas',
+  pcteEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEnvEventoCTe.pas',
+  pcteEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEventoCTe.pas',
+  pcteInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteInutCTe.pas',
+  pcteLayoutTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteLayoutTXT.pas',
+  pcteModeloCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteModeloCTe.pas',
+  pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
+  pcteRetCancCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetCancCTe.pas',
+  pcteRetConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsCad.pas',
+  pcteRetConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsReciCTe.pas',
+  pcteRetConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsSitCTe.pas',
+  pcteRetConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsStatServ.pas',
+  pcteRetEnvCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvCTe.pas',
+  pcteRetEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvEventoCTe.pas',
+  pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
+  pcteSignature in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteSignature.pas',
+  ACBrCTeDACTEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas';
 
 end.

@@ -88,7 +88,7 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=ACBrCTePCN - (http://acbr.sourceforge.net/)
+ExeDescription=ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)
 [Directories]
 OutputDir=
 UnitOutputDir=

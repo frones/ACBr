@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao;
+  pcnAuxiliar, pcnConversao, pcteConversaoCTe;
 
 type
   TInfEvento      = class;

@@ -76,7 +76,7 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesCTe;
-    procedure SetConfiguracoes(AValue: TConfiguracoeCTe);
+    procedure SetConfiguracoes(AValue: TConfiguracoesCTe);
   	procedure SetDACTE(const Value: TACBrCTeDACTEClass);
 
   protected
@@ -106,15 +106,15 @@ type
     function Consultar: Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
 
-    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String); reintroduce; overload;
-    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
+    procedure LerServicoDeParams(LayOutServico: TLayOutCTe; var Versao: Double; var URL: String); reintroduce; overload;
+    function LerVersaoDeParams(LayOutServico: TLayOutCTe): String; reintroduce; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaCTe;
     function IdentificaSchemaModal(const AXML: String): TSchemaCTe;
     function IdentificaSchemaEvento(const AXML: String): TSchemaCTe;
-    function IdentificaSchemaLayOut(const ALayOut: TLayOut): TSchemaCTe;
+    function IdentificaSchemaLayOut(const ALayOut: TLayOutCTe): TSchemaCTe;
 
-    function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: String): String;
+    function GerarNomeArqSchema(const ALayOut: TLayOutCTe; VersaoServico: String): String;
     function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: String): String;
     function GerarNomeArqSchemaEvento(const AXML: String; VersaoServico: String): String;
 
@@ -339,7 +339,7 @@ begin
   // Implementar
 end;
 
-function TACBrCTe.IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaCTe;
+function TACBrCTe.IdentificaSchemaLayout(const ALayOut: TLayOutCTe): TSchemaCTe;
 begin
   case ALayOut of
     LayCTeRecepcao:     Result := schCTe;
@@ -350,7 +350,7 @@ begin
   end;
 end;
 
-function TACBrCTe.GerarNomeArqSchema(const ALayOut: TLayOut;
+function TACBrCTe.GerarNomeArqSchema(const ALayOut: TLayOutCTe;
   VersaoServico: String): String;
 begin
   if EstaVazio(VersaoServico) then
@@ -384,7 +384,7 @@ function TACBrCTe.GerarChaveContingencia(FCTe:TCTe): String;
   const
     PESO = '43298765432987654329876543298765432';
   begin
-    chave  := LimpaNumero(chave);
+    chave  := OnlyNumber(chave);
     j      := 0;
     Digito := 0;
     result := True;
@@ -476,7 +476,7 @@ begin
   end;
 
   //VALOR DA CT-e
-  wchave := wchave + Poem_Zeros(LimpaNumero(FloatToStrf(FCTe.vPrest.vTPrest, ffFixed, 18, 2)), 14);
+  wchave := wchave + Poem_Zeros(OnlyNumber(FloatToStrf(FCTe.vPrest.vTPrest, ffFixed, 18, 2)), 14);
 
   //DESTAQUE ICMS PROPRIO E ST
   wicms_p := '2';
@@ -520,7 +520,7 @@ begin
   FPConfiguracoes := AValue;
 end;
 
-function TACBrCTe.LerVersaoDeParams(LayOutServico: TLayOut): String;
+function TACBrCTe.LerVersaoDeParams(LayOutServico: TLayOutCTe): String;
 var
   Versao: Double;
 begin
@@ -531,7 +531,7 @@ begin
   Result := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOut;
+procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOutCTe;
   var Versao: Double; var URL: String);
 begin
   Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
@@ -546,8 +546,8 @@ begin
   if (stNewStatus <> FStatus) then
   begin
     FStatus := stNewStatus;
-    if Assigned(fOnStatusChange) then
-      FOnStatusChange(Self);
+    if Assigned(OnStatusChange) then
+      OnStatusChange(Self);
   end;
 end;
 
@@ -631,7 +631,7 @@ begin
   begin
      for i := 0 to Conhecimentos.Count-1 do
      begin
-       if Conhecimentos.Items[i].Confirmada and Imprimir then
+       if Conhecimentos.Items[i].Confirmado and Imprimir then
        begin
          Conhecimentos.Items[i].Imprimir;
        end;

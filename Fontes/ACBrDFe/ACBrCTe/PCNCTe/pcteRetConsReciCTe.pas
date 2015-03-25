@@ -69,6 +69,8 @@ type
     FxMotivo: String;
     FcUF: Integer;
     FProtCTe: TProtCTeCollection;
+    FcMsg: Integer;
+    FxMsg: String;
 
     procedure SetProtCTe(const Value: TProtCTeCollection);
   public
@@ -84,6 +86,8 @@ type
     property cStat: Integer              read FcStat    write FcStat;
     property xMotivo: String             read FxMotivo  write FxMotivo;
     property cUF: Integer                read FcUF      write FcUF;
+    property cMsg: Integer               read FcMsg     write FcMsg;
+    property xMsg: String                read FxMsg     write FxMsg;
     property ProtCTe: TProtCTeCollection read FProtCTe  write SetProtCTe;
   end;
 
@@ -182,6 +186,8 @@ begin
       (*BR06 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
       (*BR07 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       (*BR08 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+               FcMsg     := Leitor.rCampo(tcInt, 'cMsg');
+               FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
 
       i := 0;
       while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do

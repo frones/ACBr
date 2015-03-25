@@ -141,8 +141,8 @@ type
     FExibirErroSchema: Boolean;
     FFormatoAlerta: String;
     FRetirarAcentos: Boolean;
-    FIdToken: String;
-    FToken: String;
+    FIdCSC: String;
+    FCSC: String;
     FUnloadSSLLib: Boolean;
     FValidarDigest: Boolean;
 
@@ -163,8 +163,8 @@ type
     property FormatoAlerta: String read GetFormatoAlerta write FFormatoAlerta;
     property RetirarAcentos: Boolean read FRetirarAcentos
       write FRetirarAcentos default True;
-    property IdToken: String read FIdToken write FIdToken;
-    property Token: String read FToken write FToken;
+    property IdCSC: String read FIdCSC write FIdCSC;
+    property CSC: String read FCSC write FCSC;
     property ValidarDigest: Boolean
       read FValidarDigest write FValidarDigest default True;
   end;
@@ -345,8 +345,8 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
   FRetirarAcentos := True;
-  FIdToken := '';
-  FToken := '';
+  FIdCSC := '';
+  FCSC := '';
   FValidarDigest := True;
 end;
 

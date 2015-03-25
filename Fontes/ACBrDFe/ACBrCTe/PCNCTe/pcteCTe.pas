@@ -57,7 +57,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pcteProcCTe, pcteSignature;
+  pcnConversao, pcteProcCTe, pcteSignature, pcteConversaoCTe;
 
 {$IFDEF PL_103}
  {$I pcteCTe_V103.inc}
@@ -273,8 +273,6 @@ type
 
   TCTe = class(TPersistent)
   private
-    FSchema : TpcnSchema;
-
     FinfCTe : TInfCTe;
     Fide    : TIde;
     Fcompl  : TCompl;
@@ -301,8 +299,6 @@ type
     constructor Create;
     destructor Destroy; override;
   published
-    property schema: TpcnSchema read Fschema write Fschema;
-
     property infCTe: TInfCTe read FinfCTe write FinfCTe;
     property ide: TIde       read Fide    write Fide;
     property compl: TCompl   read Fcompl  write Fcompl;
@@ -329,10 +325,10 @@ type
   TInfCTe = class(TPersistent)
   private
     FId : String;
-    FVersao : String;
+    FVersao : Double;
   published
     property Id: String     read FId     write FId;
-    property versao: String read FVersao write FVersao;
+    property versao: Double read FVersao write FVersao;
   end;
 
   TIde = class(TPersistent)
@@ -1082,14 +1078,14 @@ type
 
   TInfQCollectionItem = class(TCollectionItem)
   private
-    FcUnid  : UnidMed;
+    FcUnid  : TUnidMed;
     FtpMed  : String;
     FqCarga : Currency;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property cUnid: UnidMed   read FcUnid  write FcUnid;
+    property cUnid: TUnidMed  read FcUnid  write FcUnid;
     property tpMed: String    read FtpMed  write FtpMed;
     property qCarga: Currency read FqCarga write FqCarga;
   end;

@@ -50,13 +50,13 @@ type
 
   TGeralConfCTe = class(TGeralConf)
   private
-    FVersaoDF: TpcnVersaoDF;
+    FVersaoDF: TVersaoCTe;
 
-    procedure SetVersaoDF(const Value: TpcnVersaoDF);
+    procedure SetVersaoDF(const Value: TVersaoCTe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
   published
-    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
+    property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
   end;
 
   { TArquivosConfCTe }
@@ -145,7 +145,7 @@ begin
   FVersaoDF := ve200;
 end;
 
-procedure TGeralConfCTe.SetVersaoDF(const Value: TpcnVersaoDF);
+procedure TGeralConfCTe.SetVersaoDF(const Value: TVersaoCTe);
 begin
   FVersaoDF := Value;
 end;
@@ -164,17 +164,17 @@ begin
   FPathEvento := '';
 end;
 
-function TArquivosConf.GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
+function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
 begin
   Result := GetPath(FPathCTe, 'CTe', CNPJ, Data);
 end;
 
-function TArquivosConf.GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
+function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
 begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
-function TArquivosConf.GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0; CNPJ : String = ''): String;
+function TArquivosConfCTe.GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0; CNPJ : String = ''): String;
 var
   Dir, Evento: String;
 begin

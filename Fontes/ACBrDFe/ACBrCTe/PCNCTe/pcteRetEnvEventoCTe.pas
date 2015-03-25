@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe;
+  pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe, pcteConversaoCTe;
 
 type
   TRetInfEventoCollection     = class;

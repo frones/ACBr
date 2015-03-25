@@ -50,7 +50,8 @@ unit pcteConsSitCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
+  pcteConversaoCTe;
 
 type
 
@@ -59,6 +60,7 @@ type
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
     FchCTe: String;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -68,6 +70,7 @@ type
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
     property chCTe: String           read FchCTe   write FchCTe;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation

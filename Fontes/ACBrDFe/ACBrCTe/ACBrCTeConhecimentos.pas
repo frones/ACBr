@@ -92,7 +92,7 @@ type
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
 
-    function GravarStream(Stream: TStringStream): Boolean;
+    function GravarStream(AStream: TStringStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
@@ -211,7 +211,7 @@ begin
   end;
 end;
 
-procedure TConhecimento.Assinar;
+procedure Conhecimento.Assinar;
 var
   XMLAss: String;
   ArqXML: String;
@@ -256,7 +256,7 @@ procedure Conhecimento.Validar;
 var
   Erro, AXML, AXMLModal: String;
   CTeEhValido: Boolean;
-  ALayout: TLayOut;
+  ALayout: TLayOutCTe;
   VersaoStr: String;
 begin
   AXML := FXMLAssinado;
@@ -268,7 +268,7 @@ begin
   end;
 
   AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
-  case IdentificaSchemaModal(AXML) of
+  case TACBrCTe(TConhecimentos(Collection).ACBrCTe).IdentificaSchemaModal(AXML) of
    schcteModalAereo: begin
                        AXMLModal := '<aereo xmlns="' + ACBRCTE_NAMESPACE + '">' +
                                       AXMLModal +
@@ -307,7 +307,7 @@ begin
 
     VersaoStr := FloatToString(FCTe.infCTe.Versao, '.', '0.00');
 
-    if (FCTe.infCTe.tpCTe = tcNormal) or (FCTe.infCTe.tpCTe = tcSubstituto) then
+    if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
       CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VersaoStr), Erro) and
                    SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, VersaoStr), Erro)
     else
@@ -519,7 +519,7 @@ begin
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathCTe(Data, FCTe.Emit.CNPJCPF));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathCTe(Data, FCTe.Emit.CNPJ));
   end;
 end;
 
@@ -733,7 +733,7 @@ begin
   Result := Self.LoadFromString(XMLOriginal, AGerarCTe);
 end;
 
-function TConhecimentos.LoadFromString(AXMLString: String;
+function TConhecimentos.LoadFromString(AString: String;
   AGerarCTe: Boolean = True): Boolean;
 var
   AXML: AnsiString;
@@ -741,7 +741,7 @@ var
 
   function PosCTe: integer;
   begin
-    Result := pos('</CTe>', AXMLString);
+    Result := pos('</CTe>', AString);
   end;
 
 begin
@@ -749,16 +749,16 @@ begin
   N := PosCTe;
   while N > 0 do
   begin
-    P := pos('</cteProc>', AXMLString);
+    P := pos('</cteProc>', AString);
     if P > 0 then
     begin
-      AXML := copy(AXMLString, 1, P + 5);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+      AXML := copy(AString, 1, P + 5);
+      AString := Trim(copy(AString, P + 10, length(AString)));
     end
     else
     begin
-      AXML := copy(AXMLString, 1, N + 5);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+      AXML := copy(AString, 1, N + 5);
+      AString := Trim(copy(AString, N + 6, length(AString)));
     end;
 
     with Self.Add do

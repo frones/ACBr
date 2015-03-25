@@ -50,7 +50,7 @@ unit pcteConsCad;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe;
 
 type
 
@@ -61,6 +61,7 @@ type
     FIE: String;
     FCNPJ: String;
     FCPF: String;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -71,6 +72,7 @@ type
     property IE: String        read FIE      write FIE;
     property CNPJ: String      read FCNPJ    write FCNPJ;
     property CPF: String       read FCPF     write FCPF;
+    property Versao: String    read FVersao  write FVersao;
   end;
 
 implementation

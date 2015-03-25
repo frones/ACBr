@@ -54,7 +54,7 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteCTe,
-  ACBrUtil;
+  ACBrUtil, pcteConversaoCTe;
 
 {$IFDEF PL_103}
  {$I pcteCTeW_V103.inc}

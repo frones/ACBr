@@ -54,7 +54,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, ACBrUtil;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, ACBrUtil,
+  pcteConversaoCTe;
 
 
 type
@@ -73,6 +74,7 @@ type
     FxJust: String;
     FIDInutilizacao: String;
     FRetInutCTe: TRetInutCTe;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -93,6 +95,7 @@ type
     property xJust: String           read FxJust      write FxJust;
     property ID: String              read FIDInutilizacao;
     property RetInutCTe: TRetInutCTe read FRetInutCTe write FRetInutCTe;
+    property Versao: String          read FVersao     write FVersao; 
   end;
 
 implementation

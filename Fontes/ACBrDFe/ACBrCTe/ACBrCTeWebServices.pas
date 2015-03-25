@@ -64,7 +64,7 @@ type
   private
   protected
     FPStatus: TStatusACBrCTe;
-    FPLayout: TLayOut;
+    FPLayout: TLayOutCTe;
     FPConfiguracoesCTe: TConfiguracoesCTe;
 
     function ExtrairModeloChaveAcesso(AChaveCTE: String): String;
@@ -78,7 +78,7 @@ type
     constructor Create(AOwner: TACBrDFe); override;
 
     property Status: TStatusACBrCTe read FPStatus;
-    property Layout: TLayOut read FPLayout;
+    property Layout: TLayOutCTe read FPLayout;
   end;
 
   { TCTeStatusServico }
@@ -267,6 +267,7 @@ type
     FverAplic: String;
     FcStat: integer;
     FcUF: integer;
+    FRetCTeDFe: String;
 
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
@@ -291,6 +292,7 @@ type
     property verAplic: String read FverAplic;
     property cStat: integer read FcStat;
     property cUF: integer read FcUF;
+    property RetCTeDFe: String read FRetCTeDFe;
 
     property protCTe: TProcCTe read FprotCTe;
     property retCancCTe: TRetCancCTe read FretCancCTe;
@@ -418,6 +420,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
     procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
     procedure SalvarResposta; override;
@@ -501,7 +504,8 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrCTe,
+  StrUtils,
+  ACBrUtil, ACBrCTe, pcteCTeW,
   pcnGerador, pcteConsStatServ, pcteRetConsStatServ,
   pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcteConsReciCTe,
   pcteConsCad, pcnLeitor;
@@ -584,7 +588,7 @@ end;
 procedure TCTeStatusServico.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteStatusServico';
-  FPSoapAction := FFServico + '/cteStatusServicoCT';
+  FPSoapAction := FPServico + '/cteStatusServicoCT';
 end;
 
 procedure TCTeStatusServico.DefinirDadosMsg;
@@ -909,9 +913,9 @@ begin
 
         if FPConfiguracoesCTe.Arquivos.Salvar then
         begin
-          if FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessadas then
+          if FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados then
           begin
-            if FConhecimentos.Items[J].Processada then
+            if FConhecimentos.Items[J].Processado then
               FConhecimentos.Items[J].GravarXML;
           end
           else
@@ -926,7 +930,7 @@ begin
   //Verificando se existe algum Conhecimento confirmado
   for I := 0 to FConhecimentos.Count - 1 do
   begin
-    if FConhecimentos.Items[I].Confirmada then
+    if FConhecimentos.Items[I].Confirmado then
     begin
       Result := True;
       break;
@@ -936,7 +940,7 @@ begin
   //Verificando se existe algum Conhecimento nao confirmado
   for I := 0 to FConhecimentos.Count - 1 do
   begin
-    if not FConhecimentos.Items[I].Confirmada then
+    if not FConhecimentos.Items[I].Confirmado then
     begin
       FPMsg := ACBrStr('Conhecimento(s) não confirmados:') + LineBreak;
       break;
@@ -946,7 +950,7 @@ begin
   //Montando a mensagem de retorno para os Conhecimentos nao confirmados
   for I := 0 to FConhecimentos.Count - 1 do
   begin
-    if not FConhecimentos.Items[I].Confirmada then
+    if not FConhecimentos.Items[I].Confirmado then
       FPMsg := FPMsg + IntToStr(FConhecimentos.Items[I].CTe.Ide.nCT) +
         '->' + FConhecimentos.Items[I].Msg + LineBreak;
   end;
@@ -1301,7 +1305,7 @@ begin
           xMotivo := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.xMotivo;
           XML := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.XML;
 
-          ICTevento.ID := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.ID;
+          InfEvento.ID := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.ID;
           InfEvento.tpAmb := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.tpAmb;
           InfEvento.CNPJ := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.CNPJ;
           InfEvento.chCTe := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.chCTe;
@@ -1399,8 +1403,9 @@ begin
         if (OnlyNumber(FCTeChave) = NumID) then
         begin
           Atualiza := True;
-          if ((CTeRetorno.CStat in [101, 151, 155]) and
-            (not FPConfiguracoesCTe.Geral.AtualizarXMLCancelado)) then
+//          if ((CTeRetorno.CStat in [101, 151, 155]) and
+//            (not FPConfiguracoesCTe.Geral.AtualizarXMLCancelada)) then
+          if (CTeRetorno.CStat in [101, 151, 155]) then
             Atualiza := False;
 
           // Atualiza o Status da CTe interna //
@@ -1508,9 +1513,9 @@ begin
 
             if FPConfiguracoesCTe.Arquivos.Salvar then
             begin
-              if FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessadas then
+              if FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados then
               begin
-                if Processada then
+                if Processado then
                   GravarXML();
               end
               else
@@ -1518,16 +1523,15 @@ begin
             end;
 
 
-            if FPConfiguracoes.Arquivos.Salvar and (FRetCTeDFe <> '') then
+            if FPConfiguracoesCTe.Arquivos.Salvar and (FRetCTeDFe <> '') then
             begin
-              if FPConfiguracoes.Arquivos.EmissaoPathCTe then
+              if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
                 Data := TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe.Ide.dhEmi
               else
                 Data := Now;
 
-              FPConfiguracoes.Geral.Save(FCTeChave + '-CTeDFe.xml',
-                                         aCTeDFe,
-                                         PathWithDelim(FPConfiguracoes.Arquivos.GetPathCTe(Data)));
+              FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml', aCTeDFe,
+                                PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
           end;
           end;
 
@@ -1580,14 +1584,14 @@ begin
 
        if (FPConfiguracoes.Arquivos.Salvar) and (FRetCTeDFe <> '') then
        begin
-         if FPConfiguracoes.Arquivos.EmissaoPathCTe then
+         if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
            Data := TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe.Ide.dhEmi
          else
            Data := Now;
 
-         FPConfiguracoes.Geral.Save(FCTeChave + '-CTeDFe.xml',
+         FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
                                     aCTeDFe,
-                                    PathWithDelim(FPConfiguracoes.Arquivos.GetPathCTe(Data)));
+                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
        end;
       end;
     end;
@@ -1658,7 +1662,7 @@ begin
   else
     CNPJ := '';
 
-  Result := FPConfiguracoesCTe.Arquivos.GetPathInu(CNPJ);
+  Result := FPConfiguracoesCTe.Arquivos.GetPathInu(Now, CNPJ);
 end;
 
 procedure TCTeInutilizacao.DefinirServicoEAction;
@@ -1940,14 +1944,7 @@ function TCTeEnvEvento.GerarPathEvento: String;
 begin
   with FEvento.Evento.Items[0].Infevento do
   begin
-    if (tpEvento = teCCe) and
-      (not FPConfiguracoesCTe.Arquivos.SalvarCCeCanEvento) then
-      Result := FPConfiguracoesCTe.Arquivos.GetPathCCe
-    else if (tpEvento = teCancelamento) and
-      (not FPConfiguracoesCTe.Arquivos.SalvarCCeCanEvento) then
-      Result := FPConfiguracoesCTe.Arquivos.GetPathCan
-    else
-      Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(tpEvento);
+    Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(tpEvento);
   end;
 end;
 
@@ -1980,7 +1977,7 @@ begin
   EventoCTe := TEventoCTe.Create;
   try
     EventoCTe.idLote := FidLote;
-    FEveEPEC := False;
+//    FEveEPEC := False;
 
     for I := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count - 1 do
     begin
@@ -2026,7 +2023,7 @@ begin
 
           teEPEC:
           begin
-            FEveEPEC := True;
+//            FEveEPEC := True;
 
             infEvento.detEvento.xJust   := FEvento.Evento[i].InfEvento.detEvento.xJust;
             infEvento.detEvento.vICMS   := FEvento.Evento[i].InfEvento.detEvento.vICMS;
@@ -2144,7 +2141,7 @@ begin
     Texto := Texto + '</soap:Envelope>';
   end;
 
-  FEnvelopeSoap := Texto;
+  FPEnvelopeSoap := Texto;
 end;
 
 function TCTeEnvEvento.TratarResposta: Boolean;

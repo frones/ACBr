@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ Projeto: Componente ACBrCTe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de            }
+{  Conhecimento Eletrônico - CTe - http://www.cte.fazenda.gov.br               }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -44,10 +44,11 @@
 |* 18/08/2009: Wiliam Zacarias da Silva Rosa
 |*  - Componente convertido para utilizar CT-e
 ******************************************************************************}
+{$I ACBr.inc}
 package ACBr_CTe;
 
 {$R *.res}
-{$R '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -58,17 +59,19 @@ package ACBr_CTe;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
@@ -80,17 +83,18 @@ requires
   dbrtl,
   inet,
   soaprtl,
-  ACBrComum,
-  ACBrOpenSSL,
   synapse,
-  ACBrCapicom,
+  ACBrComum,
   PCNComum,
-  vclactnband,
-  vclx,
   ACBrDFeComum,
-  ACBrDiversos,
-  ACBrTCP,
-  dsnap;
+  ACBrOpenSSL,
+  ACBrCapicom;
+
+//  vclactnband,
+//  vclx,
+//  ACBrDiversos,
+//  ACBrTCP,
+//  dsnap;
 
 contains
   ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',

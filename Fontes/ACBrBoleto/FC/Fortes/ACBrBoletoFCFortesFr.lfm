@@ -3406,9 +3406,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     Font.Height = -13
     Font.Name = 'Arial'
     Margins.LeftMargin = 8
-    Margins.TopMargin = 5
+    Margins.TopMargin = 4
     Margins.RightMargin = 5
-    Margins.BottomMargin = 5
+    Margins.BottomMargin = 0
     PreviewOptions.ShowModal = True
     RealBounds.Left = 0
     RealBounds.Top = 0
@@ -3419,8 +3419,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Height = 360
-      Top = 19
+      Height = 352
+      Top = 15
       Width = 745
       RealBounds.Left = 0
       RealBounds.Top = 0

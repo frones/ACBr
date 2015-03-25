@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 20/03/2015 ver. 0.0.25a
+-- ACBrBoletoFCFortes --
+
+[*] Ajuste para que seja possível imprimir 3 boletos por página ao utilizar o
+    layout carnê. (adilsonpazzini)
+
 Data: 20/03/2015 ver. 0.0.121a
 -- Diversos --
 

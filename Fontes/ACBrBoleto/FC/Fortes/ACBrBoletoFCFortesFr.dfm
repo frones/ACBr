@@ -2772,35 +2772,35 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     Top = 27
     Width = 794
     Height = 1123
-    Margins.LeftMargin = 8.000000000000000000
-    Margins.TopMargin = 5.000000000000000000
-    Margins.RightMargin = 5.000000000000000000
-    Margins.BottomMargin = 5.000000000000000000
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
+    Margins.LeftMargin = 8.000000000000000000
+    Margins.TopMargin = 4.000000000000000000
+    Margins.RightMargin = 5.000000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     PreviewOptions.ShowModal = True
     BeforePrint = BoletoCarneBeforePrint
     OnDataCount = BoletoCarneDataCount
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Top = 19
+      Top = 15
       Width = 745
-      Height = 365
+      Height = 352
       BeforePrint = RLBand3BeforePrint
       object RLDraw30: TRLDraw
         Left = 150
-        Top = 274
+        Top = 270
         Width = 599
         Height = 17
         DrawKind = dkLine
       end
       object RLDraw31: TRLDraw
         Left = 2
-        Top = 228
+        Top = 223
         Width = 754
         Height = 1
         DrawKind = dkLine

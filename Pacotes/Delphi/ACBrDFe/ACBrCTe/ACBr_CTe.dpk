@@ -100,7 +100,6 @@ contains
   ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',
   ACBrCTeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConfiguracoes.pas',
   ACBrCTeConhecimentos in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas',
-  ACBrCTeQRCodeBar in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeQRCodeBar.pas',
   ACBrCTeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeReg.pas',
   ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
   pcteCabecalho in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCabecalho.pas',

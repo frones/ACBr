@@ -45,7 +45,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFeQRCodeBar;
+unit ACBrDFeQRCodeBar;
 
 {*********************************************************
  Código de barras Code128C com DV baseado na :
@@ -80,7 +80,7 @@ interface
 
 uses
   Windows,
-  Classes, ClipBrd, Controls, Graphics, Messages, SysUtils, ACBrNFe ;
+  Classes, ClipBrd, Controls, Graphics, Messages, SysUtils, ACBrDFe;
 
 const
   bcMaxBarCodeLen = 255;
@@ -593,7 +593,7 @@ var
         bcDigits[RLen + 1] := J;
         Inc (I);
       except
-        raise EACBrNFeException.Create( 'Caracteres inválidos' );
+        raise EACBrDFeException.Create( 'Caracteres inválidos' );
       end;
     end;
     Inc (I);

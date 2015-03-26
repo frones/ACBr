@@ -2979,23 +2979,26 @@ begin
            sdRegimeEspecNEsp:       strCOD_SIT := '08';
           end;
 
+          /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05 
+          booNFCancelada := Pos(strCOD_SIT,'02, 03, 04, 05') > 0;
+
           Add( LFill('C800') +
                LFill( COD_MOD,2 ) +
                LFill( strCOD_SIT  ) +
                LFill( NUM_CFE,6 ) +
-               LFill( DT_DOC ) +
-               LFill( VL_CFE,0,2 ) +
-               LFill( VL_PIS,0,2 ) +
-               LFill( VL_COFINS,0,2 ) +
-               LFill( CNPJ_CPF ) +
+               LFill( DT_DOC, 'ddmmyyyy', booNFCancelada ) +
+               LFill( VL_CFE,0,2, booNFCancelada ) +
+               LFill( VL_PIS,0,2, booNFCancelada ) +
+               LFill( VL_COFINS,0,2, booNFCancelada ) +
+               LFill( CNPJ_CPF, 14, booNFCancelada ) +
                LFill( NR_SAT,9 ) +
                LFill( CHV_CFE ) +
-               LFill( VL_DESC,0,2 ) +
-               LFill( VL_MERC,0,2 ) +
-               LFill( VL_OUT_DA,0,2 ) +
-               LFill( VL_ICMS,0,2 ) +
-               LFill( VL_PIS_ST,0,2 ) +
-               LFill( VL_COFINS_ST,0,2 ) ) ;
+               LFill( VL_DESC,0,2, booNFCancelada ) +
+               LFill( VL_MERC,0,2, booNFCancelada ) +
+               LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+               LFill( VL_ICMS,0,2, booNFCancelada ) +
+               LFill( VL_PIS_ST,0,2, booNFCancelada ) +
+               LFill( VL_COFINS_ST,0,2, booNFCancelada ) ) ;
         end;
 
         /// Registros FILHOS

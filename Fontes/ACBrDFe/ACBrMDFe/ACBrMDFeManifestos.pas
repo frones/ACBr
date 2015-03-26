@@ -43,7 +43,7 @@ interface
 uses
   Classes, SysUtils, Dialogs, Forms, StrUtils,
   ACBrMDFeConfiguracoes, ACBrDFeUtil,
-  pcnMDFe, pcnMDFeR, pcnMDFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
+  pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
 

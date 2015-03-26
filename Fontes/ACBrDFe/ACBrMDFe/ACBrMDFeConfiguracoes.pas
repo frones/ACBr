@@ -41,7 +41,7 @@ unit ACBrMDFeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeConfiguracoes, pcnConversao, pcnConversaoMDFe;
+  Classes, SysUtils, ACBrDFeConfiguracoes, pcnConversao, pmdfeConversaoMDFe;
 
 type
 
@@ -49,16 +49,13 @@ type
 
   TGeralConfMDFe = class(TGeralConf)
   private
-    FVersaoDF: TpcnVersaoDF;
-    FAtualizarXMLCancelado: Boolean;
+    FVersaoDF: TVersaoMDFe;
 
-    procedure SetVersaoDF(const Value: TpcnVersaoDF);
+    procedure SetVersaoDF(const Value: TVersaoMDFe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
   published
-    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
-    property AtualizarXMLCancelado: Boolean
-      read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
+    property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve100;
   end;
 
   { TArquivosConfMDFe }
@@ -145,10 +142,9 @@ begin
   inherited Create(AOwner);
 
   FVersaoDF := ve100;
-  FAtualizarXMLCancelado := True;
 end;
 
-procedure TGeralConfMDFe.SetVersaoDF(const Value: TpcnVersaoDF);
+procedure TGeralConfMDFe.SetVersaoDF(const Value: TVersaoMDFe);
 begin
   FVersaoDF := Value;
 end;

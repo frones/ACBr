@@ -41,7 +41,7 @@ unit pmdfeConversaoMDFe;
 interface
 
 uses
-  SysUtils, Classes;
+  SysUtils, StrUtils, Classes;
 
 type
   TTpEmitenteMDFe = (teTransportadora, teTranspCargaPropria);
@@ -56,12 +56,26 @@ type
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe);
 
-  TStatusACBrMDFe = (stIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
+  TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
-                     stEnvioWebService);
+                     stMDFeEnvioWebService);
 
 
 const
+
+  MDFeCabMsg       = '1.00';
+  MDFeConsStatServ = '1.00';
+  MDFeEnviMDFe     = '1.00';
+  MDFeConsReciMDFe = '1.00';
+  MDFeConsSitMDFe  = '1.00';
+  MDFeConsNaoEnc   = '1.00';
+  MDFeEventoMDFe   = '1.00';
+
+  MDFeModalRodo    = '1.00';
+  MDFeModalAereo   = '1.00';
+  MDFeModalAqua    = '1.00';
+  MDFeModalFerro   = '1.00';
+  MDFeModalDuto    = '1.00';
 
   DSC_NMDF        = 'Número do Manifesto';
   DSC_CMDF        = 'Código numérico que compõe a Chave de Acesso';
@@ -136,7 +150,7 @@ function ModalToStr(const t: TModalMDFe): String;
 function StrToModal(var ok: Boolean; const s: String): TModalMDFe;
 
 function GetVersaoMDFe(AVersaoDF: TVersaoMDFe; ALayOut: TLayOutMDFe): string;
-function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TMDFeModal): string;
+function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 
 function LayOutToServico(const t: TLayOutMDFe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
@@ -148,7 +162,7 @@ function StrToSchemaMDFe(out ok: Boolean; const s: String): TSchemaMDFe;
 implementation
 
 uses
-  pcnConversao;
+  pcnConversao, typinfo;
 
 function StrToEnumerado(var ok: boolean; const s: string; const AString:
   array of string; const AEnumerados: array of variant): variant;
@@ -226,7 +240,7 @@ begin
   end;
 end;
 
-function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TMDFeModal): string;
+function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 begin
   result := '';
 

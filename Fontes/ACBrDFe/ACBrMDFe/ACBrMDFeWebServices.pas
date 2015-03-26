@@ -61,7 +61,7 @@ type
   private
   protected
     FPStatus: TStatusACBrMDFe;
-    FPLayout: TLayOut;
+    FPLayout: TLayOutMDFe;
     FPConfiguracoesMDFe: TConfiguracoesMDFe;
 
     function ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
@@ -76,7 +76,7 @@ type
     constructor Create(AOwner: TACBrDFe); override;
 
     property Status: TStatusACBrMDFe read FPStatus;
-    property Layout: TLayOut read FPLayout;
+    property Layout: TLayOutMDFe read FPLayout;
   end;
 
   { TMDFeStatusServico }

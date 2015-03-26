@@ -42,8 +42,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador,
-  pmdfeConversao, pmdfeMDFe, ACBrUtil;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe,
+  pmdfeConversaoMDFe, pmdfeMDFe, ACBrUtil;
 
 type
 
@@ -54,7 +54,7 @@ type
     FGerador: TGerador;
     FMDFe: TMDFe;
     FOpcoes: TGeradorOpcoes;
-    FVersaoDF: TMDFeVersao;
+    FVersaoDF: TVersaoMDFe;
 
     procedure GerarInfMDFe;       // Nivel 0
 
@@ -88,7 +88,7 @@ type
     property Gerador: TGerador      read FGerador  write FGerador;
     property MDFe: TMDFe            read FMDFe     write FMDFe;
     property Opcoes: TGeradorOpcoes read FOpcoes   write FOpcoes;
-    property VersaoDF: TMDFeVersao  read FVersaoDF write FVersaoDF;
+    property VersaoDF: TVersaoMDFe  read FVersaoDF write FVersaoDF;
   end;
 
   TGeradorOpcoes = class(TPersistent)

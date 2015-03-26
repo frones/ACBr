@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pmdfeConversaoMDFe;
 
 type
 

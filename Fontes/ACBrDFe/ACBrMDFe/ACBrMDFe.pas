@@ -45,8 +45,8 @@ uses
   ACBrDFe, ACBrDFeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
   ACBrMDFeDAMDFEClass,
-  pcnMDFe, pcnConversao, pcnConversaoMDFe,
-  pcnEnvEventoMDFe,
+  pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
+  pmdfeEnvEventoMDFe,
   ACBrUtil;
 
 const
@@ -54,7 +54,7 @@ const
   ACBRMDFE_NAMESPACE = 'http://www.portalfiscal.inf.br/mdfe';
 
 type
-  EACBrMDFeException = class(EACBrDFeException)
+  EACBrMDFeException = class(EACBrDFeException);
 
   TACBrMDFe = class(TACBrDFe)
   private
@@ -96,13 +96,13 @@ type
     function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
-    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
+    procedure LerServicoDeParams(LayOutServico: TLayOutMDFe; var Versao: Double;
       var URL: String); reintroduce; overload;
-    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
+    function LerVersaoDeParams(LayOutServico: TLayOutMDFe): String; reintroduce; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaMDFe;
-    function IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaMDFe;
-    function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: String): String;
+    function IdentificaSchemaLayout(const ALayOut: TLayOutMDFe): TSchemaMDFe;
+    function GerarNomeArqSchema(const ALayOut: TLayOutMDFe; VersaoServico: String): String;
     function GerarChaveContingencia(FMDFe: TMDFe): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
@@ -259,27 +259,27 @@ begin
       lTipoEvento := StrToTpEvento(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
 
       case lTipoEvento of
-        teCancelamento: Result := schEnvEventoCancMDFe;
-        teEncerramento: Result := schEncerramentoMDFe;
-        else Result := schIncusaoCondMDFe;
+        teCancelamento: Result := schevCancMDFe;
+        teEncerramento: Result := schevEncMDFe;
+        else Result := schevIncCondutorMDFe;
       end;
     end;
   end;
 end;
 
-function TACBrMDFe.IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaMDFe;
+function TACBrMDFe.IdentificaSchemaLayout(const ALayOut: TLayOutMDFe): TSchemaMDFe;
 begin
   case ALayOut of
     LayMDFeRecepcao:
       Result := schMDFe;
     LayMDFeEvento:
-      Result := schEncerramentoMDFe;
+      Result := schevEncMDFe;
     else
       Result := schMDFe;
   end;
 end;
 
-function TACBrMDFe.GerarNomeArqSchema(const ALayOut: TLayOut;
+function TACBrMDFe.GerarNomeArqSchema(const ALayOut: TLayOutMDFe;
   VersaoServico: String): String;
 begin
   if EstaVazio(VersaoServico) then
@@ -334,7 +334,7 @@ begin
   FPConfiguracoes := AValue;
 end;
 
-function TACBrMDFe.LerVersaoDeParams(LayOutServico: TLayOut): String;
+function TACBrMDFe.LerVersaoDeParams(LayOutServico: TLayOutMDFe): String;
 var
   Versao: Double;
 begin

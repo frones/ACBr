@@ -45,7 +45,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pmdfeConversao, pmdfeSignature, pmdfeProcMDFe, pcnConversao;
+  pmdfeConversaoMDFe, pmdfeSignature, pmdfeProcMDFe, pcnConversao, pcteConversaoCTe;
 
 type
 
@@ -183,13 +183,13 @@ type
   private
     FcUF: Integer;
     FtpAmb: TpcnTipoAmbiente;
-    FtpEmit: TMDFeTpEmitente;
+    FtpEmit: TTpEmitenteMDFe;
     Fmod: String;
     Fserie: Integer;
     FnMDF: Integer;
     FcMDF: Integer;
     FcDV: Integer;
-    Fmodal: TMDFeModal;
+    Fmodal: TModalMDFe;
     FdhEmi: TDateTime;
     FtpEmis: TpcnTipoEmissao;
     FprocEmi: TpcnProcessoEmissao;
@@ -208,13 +208,13 @@ type
   published
     property cUF: Integer                            read FcUF           write FcUF;
     property tpAmb: TpcnTipoAmbiente                 read FtpAmb         write FtpAmb;
-    property tpEmit: TMDFeTpEmitente                 read FtpEmit        write FtpEmit;
+    property tpEmit: TTpEmitenteMDFe                 read FtpEmit        write FtpEmit;
     property modelo: String                          read Fmod           write Fmod;
     property serie: Integer                          read Fserie         write Fserie;
     property nMDF: Integer                           read FnMDF          write FnMDF;
     property cMDF: Integer                           read FcMDF          write FcMDF;
     property cDV: Integer                            read FcDV           write FcDV;
-    property modal: TMDFeModal                       read Fmodal         write Fmodal;
+    property modal: TModalMDFe                       read Fmodal         write Fmodal;
     property dhEmi: TDateTime                        read FdhEmi         write FdhEmi;
     property tpEmis: TpcnTipoEmissao                 read FtpEmis        write FtpEmis;
     property procEmi: TpcnProcessoEmissao            read FprocEmi       write FprocEmi;
@@ -961,17 +961,17 @@ type
     FqNF: Integer;
     FqMDFe: Integer;
     FvCarga: Double;
-    FcUnid: UnidMed;
+    FcUnid: TUnidMed;
     FqCarga: Double;
   published
-    property qCTe: Integer  read FqCTe   write FqCTe;
-    property qCT: Integer   read FqCT    write FqCT;
-    property qNFe: Integer  read FqNFe   write FqNFe;
-    property qNF: Integer   read FqNF    write FqNF;
-    property qMDFe: Integer read FqMDFe  write FqMDFe;
-    property vCarga: Double read FvCarga write FvCarga;
-    property cUnid: UnidMed read FcUnid  write FcUnid;
-    property qCarga: Double read FqCarga write FqCarga;
+    property qCTe: Integer   read FqCTe   write FqCTe;
+    property qCT: Integer    read FqCT    write FqCT;
+    property qNFe: Integer   read FqNFe   write FqNFe;
+    property qNF: Integer    read FqNF    write FqNF;
+    property qMDFe: Integer  read FqMDFe  write FqMDFe;
+    property vCarga: Double  read FvCarga write FvCarga;
+    property cUnid: TUnidMed read FcUnid  write FcUnid;
+    property qCarga: Double  read FqCarga write FqCarga;
   end;
 
   TlacresCollection = class(TCollection)

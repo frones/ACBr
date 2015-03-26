@@ -46,7 +46,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pmdfeConversao, pmdfeMDFe, ACBrUtil;
+  pmdfeConversaoMDFe, pmdfeMDFe, ACBrUtil, pcteConversaoCTe;
 
 type
 

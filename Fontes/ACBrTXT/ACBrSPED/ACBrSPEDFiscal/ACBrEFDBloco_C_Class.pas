@@ -2960,6 +2960,7 @@ procedure TBloco_C.WriteRegistroC800(RegC001: TRegistroC001);
 var
   intFor: integer;
   strCOD_SIT: AnsiString;
+	booNFCancelada : Boolean;
 begin
   if Assigned( RegC001.RegistroC800 ) then
   begin

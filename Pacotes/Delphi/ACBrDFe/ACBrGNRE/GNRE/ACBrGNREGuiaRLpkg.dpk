@@ -42,7 +42,8 @@ requires
   {$IFDEF VER240} RLibWinDXE3, vclimg;{$ENDIF} //XE3
   {$IFDEF VER250} RLibWinDXE4, vclimg;{$ENDIF} //XE4
   {$IFDEF VER260} RLibWinDXE5, vclimg;{$ENDIF} //XE5
-  {$IFDEF VER270} RLibWinDXE6, dsnap, vclimg;{$ENDIF} //XE6
+  {$IFDEF VER270} RLibWinDXE6, dsnap, vclimg,{$ENDIF} //XE6
+	{$IFDEF VER270} RLibWinDXE7, dsnap, vclimg;{$ENDIF} //XE7
 
 contains
   ACBrGNREGuiaFRFortes in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFRFortes.pas' {ACBrGNREGuiaFR_Fortes};

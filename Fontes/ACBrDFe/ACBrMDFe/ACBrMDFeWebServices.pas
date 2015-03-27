@@ -889,7 +889,7 @@ end;
 
 function TMDFeRetRecepcao.Executar: Boolean;
 var
-  IntervaloTentativas, vCont, qTent: integer;
+  IntervaloTentativas, Tentativas: integer;
 begin
   Result := False;
 
@@ -897,19 +897,14 @@ begin
   try
     Sleep(FPConfiguracoesMDFe.WebServices.AguardarConsultaRet);
 
-    vCont := 1000;
-    qTent := 0; // Inicializa o contador de tentativas
-    IntervaloTentativas := FPConfiguracoesMDFe.WebServices.IntervaloTentativas;
+    Tentativas := 0; // Inicializa o contador de tentativas
+    IntervaloTentativas := max(FPConfiguracoesMDFe.WebServices.IntervaloTentativas, 1000);
 
     while (inherited Executar) and
-      (qTent < FPConfiguracoesMDFe.WebServices.Tentativas) do
+      (Tentativas < FPConfiguracoesMDFe.WebServices.Tentativas) do
     begin
-      Inc(qTent);
-
-      if IntervaloTentativas > 0 then
-        sleep(IntervaloTentativas)
-      else
-        Sleep(vCont);
+      Inc(Tentativas);
+      sleep(IntervaloTentativas);
     end;
   finally
     TACBrMDFe(FPDFeOwner).SetStatus(stMDFeIdle);

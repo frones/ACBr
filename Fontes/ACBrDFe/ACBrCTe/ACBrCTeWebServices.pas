@@ -965,7 +965,7 @@ end;
 
 function TCTeRetRecepcao.Executar: Boolean;
 var
-  IntervaloTentativas, vCont, qTent: integer;
+  IntervaloTentativas, Tentativas: integer;
 begin
   Result := False;
 
@@ -973,19 +973,14 @@ begin
   try
     Sleep(FPConfiguracoesCTe.WebServices.AguardarConsultaRet);
 
-    vCont := 1000;
-    qTent := 0; // Inicializa o contador de tentativas
-    IntervaloTentativas := FPConfiguracoesCTe.WebServices.IntervaloTentativas;
+    Tentativas := 0; // Inicializa o contador de tentativas
+    IntervaloTentativas := max(FPConfiguracoesCTe.WebServices.IntervaloTentativas, 1000);
 
     while (inherited Executar) and
-      (qTent < FPConfiguracoesCTe.WebServices.Tentativas) do
+      (Tentativas < FPConfiguracoesCTe.WebServices.Tentativas) do
     begin
-      Inc(qTent);
-
-      if IntervaloTentativas > 0 then
-        sleep(IntervaloTentativas)
-      else
-        Sleep(vCont);
+      Inc(Tentativas);
+      sleep(IntervaloTentativas);
     end;
   finally
     TACBrCTe(FPDFeOwner).SetStatus(stIdle);

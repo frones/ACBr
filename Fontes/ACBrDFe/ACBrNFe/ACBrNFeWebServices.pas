@@ -1318,17 +1318,19 @@ begin
     Sleep(FPConfiguracoesNFe.WebServices.AguardarConsultaRet);
 
     Tentativas := 0;
-    IntervaloTentativas := FPConfiguracoesNFe.WebServices.IntervaloTentativas;
+    IntervaloTentativas := max(FPConfiguracoesNFe.WebServices.IntervaloTentativas, 1000);
 
     while (inherited Executar) and
       (Tentativas < FPConfiguracoesNFe.WebServices.Tentativas) do
     begin
       Inc(Tentativas);
-
+      sleep(IntervaloTentativas);
+      (*
       if IntervaloTentativas > 0 then
         sleep(IntervaloTentativas)
       else
         Sleep(Tentativas * 1000);
+      *)  
     end;
   finally
     TACBrNFe(FPDFeOwner).SetStatus(stIdle);

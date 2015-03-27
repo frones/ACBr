@@ -1481,7 +1481,7 @@ begin
              '0001'                                                         + // 004 a 007 - Lote de serviço = "0001"
              '3'                                                            + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5) + // 009 a 013 - Nº sequencial do registro do lote
+               (2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5) + // 009 a 013 - Nº sequencial do registro do lote
              'P'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                           + // 016 a 017 - Código de movimento remessa
@@ -1527,7 +1527,7 @@ begin
              '0001'                                                         + // 004 a 007 - Lote de serviço = "0001"
              '3'                                                            + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
+               (2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
              'Q'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                           + // 016 a 017 - Código de movimento de remessa

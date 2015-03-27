@@ -12,7 +12,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.2.4.0'
+  LCLVersion = '1.2.6.0'
   object LayoutBoleto: TRLReport
     Left = 8
     Height = 1123
@@ -1717,8 +1717,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 574
         Height = 10
         Top = 210
-        Width = 62
-        Caption = '( + ) Mora / Multa'
+        Width = 87
+        Caption = '( + ) Mora / Multa / Juros'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1959,7 +1959,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 14
         Top = 329
-        Width = 88
+        Width = 89
         Caption = 'Sacador/Avalista:'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -2966,8 +2966,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 552
         Height = 10
         Top = 221
-        Width = 62
-        Caption = '( + ) Mora / Multa'
+        Width = 87
+        Caption = '( + ) Mora / Multa / Juros'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3167,7 +3167,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 14
         Top = 330
-        Width = 88
+        Width = 89
         Caption = 'Sacador/Avalista:'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -3398,9 +3398,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 648
+    Left = 760
     Height = 1123
-    Top = 40
+    Top = 24
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -4069,7 +4069,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 150
         Height = 14
         Top = 268
-        Width = 88
+        Width = 89
         Caption = 'Sacador/Avalista:'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack

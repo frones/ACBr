@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/03/2015 ver. 0.0.26a
+-- ACBrBoletoFCFortes --
+
+[*] Compatibilização dos campos restantes com a nova nomeclatura para 
+    o Cedente que passou a ser Beneficiário. (Juliana Tamizou)
+
+ACBrBoleto ver. 0.0.121a
+-- ACBrBancoSicredi --
+[-] Correção no arquivo remessa CNAB240 (marcianobandeira)
+
 
 Data: 20/03/2015 ver. 0.0.25a
 -- ACBrBoletoFCFortes --

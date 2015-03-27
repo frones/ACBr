@@ -191,7 +191,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 46
         Width = 91
         Height = 10
-        Caption = 'Agencia / Codigo Cedente'
+        Caption = 'Agencia / Codigo Benefici'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1223,7 +1223,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Caption = 
           'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-          ' responsabilidade do cedente.)'
+          ' responsabilidade do benefici'#225'rio.)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1283,9 +1283,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel82: TRLLabel
         Left = 574
         Top = 69
-        Width = 106
+        Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1987,9 +1987,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel148: TRLLabel
         Left = 551
         Top = 85
-        Width = 91
+        Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2352,7 +2352,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 174
         Width = 171
         Height = 10
-        Caption = 'Instru'#231#245'es - Texto de responsabilidade do cedente.'
+        Caption = 'Instru'#231#245'es - Texto de responsabilidade do benefici'#225'rio.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3385,7 +3385,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 71
         Width = 91
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

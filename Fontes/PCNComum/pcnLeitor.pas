@@ -116,7 +116,7 @@ begin
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
-    FArquivo := ArquivoXML.Text; // .ToString;
+    FArquivo := AnsiString( ArquivoXML.Text );
     Result := True;
   finally
     ArquivoXML.Free;

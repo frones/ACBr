@@ -9,7 +9,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Position = poScreenCenter
-  LCLVersion = '1.3'
+  LCLVersion = '1.2.6.0'
   object Label2: TLabel
     Left = 8
     Height = 13

@@ -25,7 +25,7 @@
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos"/>
-    <Files Count="7">
+    <Files Count="8">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
         <UnitName Value="ACBrDFeConfiguracoes"/>
@@ -55,6 +55,10 @@
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="ACBrDFeCapicom"/>
       </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeQRCodeBar.pas"/>
+        <UnitName Value="ACBrDFeQRCodeBar"/>
+      </Item8>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

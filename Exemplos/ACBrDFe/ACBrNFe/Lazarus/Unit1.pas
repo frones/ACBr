@@ -437,9 +437,9 @@ begin
          FormaEmissao          := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); 
          ModeloDF              := TpcnModeloDF(cbModeloDF.ItemIndex);
          VersaoDF              := TpcnVersaoDF(cbVersaoDF.ItemIndex);
-         IdToken      := edtIdToken.Text;
-         Token        := edtToken.Text;
-         Salvar       := ckSalvar.Checked;
+         IdCSC                 := edtIdToken.Text;
+         CSC                   := edtToken.Text;
+         Salvar                := ckSalvar.Checked;
        end;
 
       cbUF.ItemIndex        := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP')) ;

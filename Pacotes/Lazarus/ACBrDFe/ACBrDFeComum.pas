@@ -8,7 +8,7 @@ interface
 
 uses
   ACBrDFeConfiguracoes, ACBrDFeUtil, ACBrDFeWebService, ACBrDFe, ACBrDFeSSL, 
-  ACBrDFeOpenSSL;
+  ACBrDFeOpenSSL, ACBrDFeQRCodeBar;
 
 implementation
 

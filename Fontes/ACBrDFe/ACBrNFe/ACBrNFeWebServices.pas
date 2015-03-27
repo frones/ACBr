@@ -640,7 +640,7 @@ type
 
 implementation
 
-uses StrUtils,
+uses StrUtils, Math,
   ACBrUtil, ACBrNFe,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
@@ -1325,12 +1325,6 @@ begin
     begin
       Inc(Tentativas);
       sleep(IntervaloTentativas);
-      (*
-      if IntervaloTentativas > 0 then
-        sleep(IntervaloTentativas)
-      else
-        Sleep(Tentativas * 1000);
-      *)  
     end;
   finally
     TACBrNFe(FPDFeOwner).SetStatus(stIdle);

@@ -2256,7 +2256,6 @@ object Form1: TForm1
     Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.RetirarAcentos = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
@@ -2350,6 +2349,8 @@ object Form1: TForm1
     SetSSL = False
     SetTLS = False
     Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
     left = 723
     top = 346
   end

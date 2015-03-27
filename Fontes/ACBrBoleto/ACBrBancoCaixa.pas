@@ -683,7 +683,7 @@ begin
             CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
             
             // prevenir quando o seunumero não vem informado no arquivo
-            if StrToInt(SeuNumero) = 0 then
+            if StrToIntDef(SeuNumero, 0) = 0 then
             begin
               SeuNumero := NossoNumero;
               NumeroDocumento := NossoNumero

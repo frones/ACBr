@@ -430,7 +430,7 @@ type
 implementation
 
 uses
-  StrUtils,
+  StrUtils, Math,
   ACBrUtil, ACBrMDFe,
   pcnGerador, pmdfeConsStatServ, pmdfeRetConsStatServ,
   pmdfeConsSitMDFe, pmdfeConsReciMDFe, pmdfeConsMDFeNaoEnc,

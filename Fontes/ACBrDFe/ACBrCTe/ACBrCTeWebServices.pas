@@ -504,7 +504,7 @@ type
 implementation
 
 uses
-  StrUtils,
+  StrUtils, Math,
   ACBrUtil, ACBrCTe, pcteCTeW,
   pcnGerador, pcteConsStatServ, pcteRetConsStatServ,
   pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcteConsReciCTe,

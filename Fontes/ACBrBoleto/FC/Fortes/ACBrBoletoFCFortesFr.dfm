@@ -191,7 +191,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 46
         Width = 91
         Height = 10
-        Caption = 'Agencia / Codigo Benefici'rio'
+        Caption = 'Agencia / Codigo Benefici'#225'rio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1394,9 +1394,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel86: TRLLabel
         Left = 574
         Top = 210
-        Width = 62
+        Width = 87
         Height = 10
-        Caption = '( + ) Mora / Multa'
+        Caption = '( + ) Mora / Multa / Juros'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2242,7 +2242,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 142
         Width = 29
         Height = 10
-        Caption = 'Esp'#233'cie'
+        Caption = 'Esp'#233'cie Moeda'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2411,9 +2411,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel163: TRLLabel
         Left = 552
         Top = 221
-        Width = 62
+        Width = 87
         Height = 10
-        Caption = '( + ) Mora / Multa'
+        Caption = '( + ) Mora / Multa / Juros'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

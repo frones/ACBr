@@ -120,8 +120,6 @@ type
     property DAMDFE: TACBrMDFeDAMDFEClass read FDAMDFE write SetDAMDFE;
   end;
 
-procedure ACBrAboutDialog;
-
 implementation
 
 uses
@@ -345,7 +343,7 @@ begin
   Result := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TACBrMDFe.LerServicoDeParams(LayOutServico: TLayOut;
+procedure TACBrMDFe.LerServicoDeParams(LayOutServico: TLayOutMDFe;
   var Versao: Double; var URL: String);
 begin
   Versao := VersaoMDFeToDbl(Configuracoes.Geral.VersaoDF);

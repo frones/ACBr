@@ -116,7 +116,7 @@ type
 implementation
 
 uses
- ACBrMDFe, ACBrUtil, ACBrDFeUtil, ACBrMDFeUtil;
+ ACBrMDFe, ACBrUtil;
 
 constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin
@@ -213,7 +213,7 @@ function TACBrMDFeDAMDFeClass.GetPathArquivos: String;
 begin
   if EstaVazio(FPathArquivos) then
      if Assigned(FACBrMDFe) then
-        FPathArquivos := TACBrMDFe(FACBrMDFe).Configuracoes.Geral.PathSalvar;
+        FPathArquivos := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.PathSalvar;
 
   if NaoEstaVazio(FPathArquivos) then
      if not DirectoryExists(FPathArquivos) then

@@ -62,6 +62,7 @@ type
     FdigVal: String;
     FcStat: Integer;
     FxMotivo: String;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -80,6 +81,7 @@ type
     property digVal: String              read FdigVal              write FdigVal;
     property cStat: Integer              read FcStat               write FcStat;
     property xMotivo: String             read FxMotivo             write FxMotivo;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation

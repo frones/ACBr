@@ -81,6 +81,7 @@ type
     FGerador: TGerador;
     FidLote: Integer;
     FEvento: TInfEventoCollection;
+    FVersao: String;
     
     procedure SetEvento(const Value: TInfEventoCollection);
   public
@@ -94,6 +95,7 @@ type
     property Gerador: TGerador             read FGerador write FGerador;
     property idLote: Integer               read FidLote  write FidLote;
     property Evento: TInfEventoCollection  read FEvento  write SetEvento;
+    property Versao: String                read FVersao  write FVersao;
   end;
 
 implementation

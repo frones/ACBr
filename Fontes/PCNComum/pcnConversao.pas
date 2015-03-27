@@ -142,6 +142,8 @@ type
   TpcnIndOperacao = (ioConsultaCSC, ioNovoCSC, ioRevogaCSC);
 
   TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal);
+  TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
+  TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
 
 const
   TpcnTpEventoString : array[0..18] of String =('110110',
@@ -310,6 +312,12 @@ function StrToIndOperacao(out ok: boolean; const s: string): TpcnIndOperacao;
 function TpModalToStr(const t: TpcteModal): string;
 function TpModalToStrText(const t: TpcteModal): string;
 function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
+
+function TpPropToStr(const t: TpcteProp): String;
+function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
+
+function UnidMedToStr(const t: TUnidMed): string;
+function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
 
 implementation
 
@@ -1172,6 +1180,28 @@ function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
                                   [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
+end;
+
+function TpPropToStr(const t: TpcteProp): String;
+begin
+  result := EnumeradoToStr(t, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
+end;
+
+function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
+end;
+
+function UnidMedToStr(const t: TUnidMed): string;
+begin
+  result := EnumeradoToStr(t, ['00', '01', '02', '03', '04', '05'],
+   [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
+end;
+
+function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
+begin
+  result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '05'],
+   [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
 end;
 
 end.

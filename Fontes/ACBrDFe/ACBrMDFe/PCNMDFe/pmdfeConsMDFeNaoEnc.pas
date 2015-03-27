@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil, pmdfeConversaoMDFe;
 
 type
 
@@ -51,6 +51,7 @@ type
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
+    FVersao: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -60,6 +61,7 @@ type
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
     property CNPJ: String            read FCNPJ    write FCNPJ;
+    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation

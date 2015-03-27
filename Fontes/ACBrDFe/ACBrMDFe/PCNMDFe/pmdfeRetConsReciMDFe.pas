@@ -61,6 +61,8 @@ type
     FxMotivo: String;
     FcUF: Integer;
     FProtMDFe: TProtMDFeCollection;
+    FcMsg: Integer;
+    FxMsg: String;
 
     procedure SetProtMDFe(const Value: TProtMDFeCollection);
   public
@@ -77,6 +79,8 @@ type
     property xMotivo: String               read FxMotivo  write FxMotivo;
     property cUF: Integer                  read FcUF      write FcUF;
     property ProtMDFe: TProtMDFeCollection read FProtMDFe write SetProtMDFe;
+    property cMsg: Integer           read FcMsg     write FcMsg;
+    property xMsg: String            read FxMsg     write FxMsg;
   end;
 
   TProtMDFeCollection = class(TCollection)
@@ -151,6 +155,8 @@ begin
       FcStat    := Leitor.rCampo(tcInt, 'cStat');
       FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       FcUF      := Leitor.rCampo(tcInt, 'cUF');
+      FcMsg     := Leitor.rCampo(tcInt, 'cMsg');
+      FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
 
       i := 0;
       while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do

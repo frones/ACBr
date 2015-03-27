@@ -81,9 +81,7 @@ type
   TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
   TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
   TpcteLotacao = (ltNao, ltSim);
-  TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
   TpcteMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
-  TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
   TpcteDirecao = (drNorte, drLeste, drSul, drOeste);
   TpcteTipoNavegacao = (tnInterior, tnCabotagem);
   TpcteTipoTrafego = (ttProprio, ttMutuo, ttRodoferroviario, ttRodoviario);
@@ -162,12 +160,6 @@ function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 
 function TpLotacaoToStr(const t: TpcteLotacao): string;
 function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
-
-function TpPropToStr(const t: TpcteProp): String;
-function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
-
-function UnidMedToStr(const t: TUnidMed): string;
-function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
 
 function TpMaskToStrText(const t: TpcteMask): string;
 function StrToTpMask(out ok: boolean; const s: string): TpcteMask;
@@ -430,11 +422,6 @@ begin
   result := EnumeradoToStr(t, ['0','1'], [ltNao, ltSim]);
 end;
 
-function TpPropToStr(const t: TpcteProp): String;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
-end;
-
 function StrToTpTomador(out ok: boolean; const s: String ): TpcteTomador;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'], [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
@@ -448,23 +435,6 @@ end;
 function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [ltNao, ltSim]);
-end;
-
-function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
-end;
-
-function UnidMedToStr(const t: TUnidMed): string;
-begin
-  result := EnumeradoToStr(t, ['00', '01', '02', '03', '04', '05'],
-   [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
-end;
-
-function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
-begin
-  result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '05'],
-   [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
 end;
 
 function TpDirecaoToStr(const t: TpcteDirecao): string;

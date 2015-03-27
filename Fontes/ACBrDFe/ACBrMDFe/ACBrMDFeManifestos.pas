@@ -155,7 +155,7 @@ type
 implementation
 
 uses
-  ACBrMDFe, ACBrUtil, pcnConversaoMDFe;
+  ACBrMDFe, ACBrUtil, pmdfeConversaoMDFe;
 
 { Manifesto }
 
@@ -175,8 +175,8 @@ begin
     FMDFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FMDFe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
 
-    if Assigned(DAMDFE) then
-      FMDFe.Ide.tpImp := DAMDFE.TipoDAMDFE;
+//    if Assigned(DAMDFE) then
+//      FMDFe.Ide.tpImp := DAMDFE.TipoDAMDFE;
   end;
 end;
 
@@ -255,7 +255,7 @@ procedure Manifesto.Validar;
 var
   Erro, AXML: String;
   MDFeEhValida: Boolean;
-  ALayout: TLayOut;
+  ALayout: TLayOutMDFe;
   VersaoStr: String;
 begin
   AXML := FXMLAssinado;
@@ -436,7 +436,7 @@ begin
   begin
     FMDFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-    FMDFeW.Opcoes.GerarTXTSimultaneamente := False;
+//    FMDFeW.Opcoes.GerarTXTSimultaneamente := False;
   end;
 
   FMDFeW.GerarXml;
@@ -465,11 +465,11 @@ begin
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     if Configuracoes.Arquivos.EmissaoPathMDFe then
-      Data := FMDFe.Ide.dEmi
+      Data := FMDFe.Ide.dhEmi
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathMDFe(Data, FMDFe.Emit.CNPJCPF));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathMDFe(Data, FMDFe.Emit.CNPJ));
   end;
 end;
 
@@ -491,14 +491,14 @@ function Manifesto.ValidarConcatChave: Boolean;
 var
   wAno, wMes, wDia: word;
 begin
-  DecodeDate(MDFe.ide.dEmi, wAno, wMes, wDia);
+  DecodeDate(MDFe.ide.dhEmi, wAno, wMes, wDia);
 
   Result := not
     ((Copy(MDFe.infMDFe.ID, 4, 2) <> IntToStrZero(MDFe.Ide.cUF, 2)) or
     (Copy(MDFe.infMDFe.ID, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
     (Copy(MDFe.infMDFe.ID, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(MDFe.infMDFe.ID, 10, 14)<> PadLeft(OnlyNumber(MDFe.Emit.CNPJCPF), 14, '0')) or
-    (Copy(MDFe.infMDFe.ID, 24, 2) <> IntToStrZero(MDFe.Ide.modelo, 2)) or
+    (Copy(MDFe.infMDFe.ID, 10, 14)<> PadLeft(OnlyNumber(MDFe.Emit.CNPJ), 14, '0')) or
+    (Copy(MDFe.infMDFe.ID, 24, 2) <> MDFe.Ide.modelo) or
     (Copy(MDFe.infMDFe.ID, 26, 3) <> IntToStrZero(MDFe.Ide.serie, 3)) or
     (Copy(MDFe.infMDFe.ID, 29, 9) <> IntToStrZero(MDFe.Ide.nMDF, 9)) or
     (Copy(MDFe.infMDFe.ID, 38, 1) <> TpEmisToStr(MDFe.Ide.tpEmis)) or

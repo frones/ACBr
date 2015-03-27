@@ -45,7 +45,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pmdfeConversaoMDFe, pmdfeSignature, pmdfeProcMDFe, pcnConversao, pcteConversaoCTe;
+  pcnConversao, pmdfeConversaoMDFe, pmdfeSignature, pmdfeProcMDFe;
 
 type
 
@@ -133,8 +133,10 @@ type
   TinfMDFe = class(TPersistent)
   private
     FId: String;
+    FVersao: Double;
   published
     property Id: String read FId write FId;
+    property versao: Double read FVersao write FVersao;
   end;
 
   TinfMunCarregaCollection = class(TCollection)

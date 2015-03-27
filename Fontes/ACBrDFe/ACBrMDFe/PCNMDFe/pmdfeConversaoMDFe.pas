@@ -158,6 +158,11 @@ function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
 function SchemaMDFeToStr(const t: TSchemaMDFe): String;
 function StrToSchemaMDFe(out ok: Boolean; const s: String): TSchemaMDFe;
 
+function StrToVersaoMDFe(out ok: Boolean; const s: String): TVersaoMDFe;
+function VersaoMDFeToStr(const t: TVersaoMDFe): String;
+
+function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
+function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;
 
 implementation
 
@@ -296,6 +301,39 @@ begin
     SchemaStr := 'sch' + SchemaStr;
 
   Result := TSchemaMDFe( GetEnumValue(TypeInfo(TSchemaMDFe), SchemaStr ) );
+end;
+
+function StrToVersaoMDFe(out ok: Boolean; const s: String): TVersaoMDFe;
+begin
+  Result := StrToEnumerado(ok, s, ['1.00', '1.00'], [ve100, ve100a]);
+end;
+
+function VersaoMDFeToStr(const t: TVersaoMDFe): String;
+begin
+  Result := EnumeradoToStr(t, ['1.00', '1.00'], [ve100, ve100a]);
+end;
+
+function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
+begin
+  ok := True;
+
+  if d = 1.0 then
+    Result := ve100
+  else
+  begin
+    Result := ve100;
+    ok := False;
+  end;
+end;
+
+function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;
+begin
+  case t of
+    ve100: Result := 1.0;
+    ve100a: Result := 1.0;
+  else
+    Result := 0;
+  end;
 end;
 
 end.

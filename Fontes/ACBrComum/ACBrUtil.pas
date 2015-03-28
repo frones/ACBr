@@ -95,10 +95,10 @@ function TestBit(const Value: Integer; const Bit: Byte): Boolean;
 function IntToBin (value: LongInt; digits: integer ): string;
 function BinToInt(Value: String): LongInt;
 
-Function BcdToAsc( const StrBCD : AnsiString) : AnsiString ;
-Function AscToBcd( const ANumStr: AnsiString ; const TamanhoBCD : Byte) : AnsiString ;
+Function BcdToAsc( const StrBCD : AnsiString) : String ;
+Function AscToBcd( const ANumStr: String ; const TamanhoBCD : Byte) : AnsiString ;
 
-function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): String;
+function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
 function LEStrToInt(ALEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
@@ -153,6 +153,8 @@ function CountStr(const AString, SubStr : AnsiString ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
 
+Function CreateFormatSettings: TFormatSettings;
+
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String;
 function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
 function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
@@ -176,7 +178,6 @@ function DTtoS( ADateTime : TDateTime) : String;
 function StrIsAlpha(const S: String): Boolean;
 function StrIsAlphaNum(const S: String): Boolean;
 function StrIsNumber(const S: String): Boolean;
-function VarIsNumber(const Value: Variant): Boolean;
 function CharIsAlpha(const C: Char): Boolean;
 function CharIsAlphaNum(const C: Char): Boolean;
 function CharIsNum(const C: Char): Boolean;
@@ -451,49 +452,59 @@ end;
 {-----------------------------------------------------------------------------
  Extraido de  http://delphi.about.com/od/mathematics/a/baseconvert.htm (Zago)
  Converte um Inteiro para uma string com a representação em Binário
+ 4,4 = '0100'; 15,4 = '1111'; 100,8 = '01100100'; 255,8 = '11111111'
  -----------------------------------------------------------------------------}
 function IntToBin ( value: LongInt; digits: integer ): string;
 begin
-    Result := StringOfChar ( '0', digits ) ;
-    while value > 0 do
-    begin
-      if ( value and 1 ) = 1 then
-        result [ digits ] := '1';
-      dec ( digits ) ;
-      value := value shr 1;
-    end;
+  Result := StringOfChar( '0', digits ) ;
+  while value > 0 do
+  begin
+    if ( value and 1 ) = 1 then
+      result [ digits ] := '1';
+
+    dec ( digits ) ;
+    value := value shr 1;
+  end;
 end;
 
 {-----------------------------------------------------------------------------
- Extraido de  http://delphi.about.com/od/mathematics/a/baseconvert.htm (Zago)
  converte uma String com a representação de Binário para um Inteiro
+ '0100' = 4; '1111' = 15; '01100100' = 100; '11111111' = 255
  -----------------------------------------------------------------------------}
 function BinToInt(Value: String): LongInt;
-var i: Integer;
+var
+  L, I, B: Integer;
 begin
   Result := 0;
   
-//remove leading zeroes
-  while Copy(Value,1,1)='0' do
-     Value := Copy(Value,2,Length(Value)-1) ;
+  // remove zeros a esquerda
+  while Copy(Value,1,1) = '0' do
+    Value := Copy(Value,2,Length(Value)-1) ;
 
-//do the conversion
-  for i:=Length(Value) downto 1 do
-     if Copy(Value,i,1)='1' then
-        Result:=Result+(1 shl (i-1)) ;
+  L := Length(Value);
+  for I := L downto 1 do
+  begin
+    if Value[I] = '1' then
+    begin
+      B := (1 shl (L-I));
+      Result := Result + B ;
+    end;
+  end;
 end;
 
 {-----------------------------------------------------------------------------
   Converte uma String no Formato BCD para uma String que pode ser convertida em
   Integer ou Double.  // Adaptada do manual da Bematech //   Exemplo:
-  - Se uma variável retornada for de 7 bytes BCD, e seu valor for R$ 1234,56 os
-    7 bytes retornados em caracter (14 dígitos BCD) serão:  00 00 00 00 12 34 56.
-    ou chr(00) + chr(00) + chr(00) + chr(00) + chr(12) + chr(34) + chr(56).
-    Nesse caso essa função irá retornar:  "00000000123456"
+  - Se uma variável retornada for de 9 bytes BCD, e seu valor for R$ 1478401.7 os
+    7 bytes retornados em caracter (14 dígitos BCD) serão:  0 0 0 0 1 71 132 1 112.
+    ou chr(00)+chr(00)+chr(00)+chr(00)+chr(01)+chr(71)+chr(132)+chr(01)+chr(112).
+    O retorno deve ser convertido para Hexa: 71dec = 47hex; 132dec = 84hex; 112dec = 70hex
+    Nesse caso essa função irá retornar:  "00 00 00 00 01 47 84 01 70"
  ---------------------------------------------------------------------------- }
-function BcdToAsc(const StrBCD: AnsiString): AnsiString;
-Var A,BCD_CHAR : Integer ;
-    BH,BL,ASC_CHAR : String ;
+function BcdToAsc(const StrBCD: AnsiString): String;
+Var
+  A,BCD_CHAR : Integer ;
+  BH,BL,ASC_CHAR : String ;
 begin
   result := '' ;
 
@@ -501,7 +512,7 @@ begin
   begin
      BCD_CHAR := ord( StrBCD[A] ) ;
      BH := IntToStr( Trunc(BCD_CHAR / 16) ) ;
-     If ( BCD_CHAR mod 16 ) > 9 Then        // Corrigido por Rodrigo Fruhwirth
+     If ( BCD_CHAR mod 16 ) > 9 Then
         BL := chr( 48 + BCD_CHAR mod 16 )
      Else
         BL := IntToStr( BCD_CHAR mod 16 ) ;
@@ -516,21 +527,26 @@ end;
   - TamanhoBCD define quantos bytes a String Resultante deve ter
   - Para transformar o valor for  "123456" em 7 bytes BCD, teriamos:
     00 00 00 00 12 34 56    ou
-    chr(00) + chr(00) + chr(00) + chr(00) + chr(12) + chr(34) + chr(56).
+    chr(00) + chr(00) + chr(00) + chr(00) + chr(18) + chr(52) + chr(86).
  ---------------------------------------------------------------------------- }
-function AscToBcd(const ANumStr : AnsiString ; const TamanhoBCD : Byte
-   ) : AnsiString ;
-  Var StrBCD : AnsiString ;
-      I      : Integer ;
+function AscToBcd(const ANumStr: String; const TamanhoBCD: Byte): AnsiString;
+Var
+  StrBCD, BCDChar : String ;
+  I, L, DecVal: Integer;
 begin
   Result := '' ;
 
   if not StrIsNumber( ANumStr ) then
      raise Exception.Create('Parâmetro "ANumStr" deve conter apenas números') ;
 
-  StrBCD := PadLeft( ANumStr, TamanhoBCD*2, '0' );
+  L := TamanhoBCD*2;
+  StrBCD := PadLeft( LeftStr(ANumStr,L), L , '0' );
   For I := 1 to TamanhoBCD do
-     Result := Result + AnsiChar( chr( StrToInt( copy(String(StrBCD), (I*2)-1, 2) ) ) ) ;
+  begin
+     BCDChar := copy(StrBCD, (I*2)-1, 2);
+     DecVal := StrToInt( '$'+BCDChar );
+     Result := Result + AnsiChar(chr( DecVal ))  ;
+  end;
 end ;
 
 
@@ -539,10 +555,10 @@ end ;
   no tamanho máximo de "BytesStr"
   Exemplos: IntToLEStr( 106 ) = chr(106) + chr(0)
  ---------------------------------------------------------------------------- }
-function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): String;
+function IntToLEStr(AInteger: Integer; BytesStr: Integer): AnsiString;
 var
    AHexStr: String;
-   LenHex, P : Integer ;
+   LenHex, P, DecVal: Integer;
 begin
   LenHex  := BytesStr * 2 ;
   AHexStr := IntToHex(AInteger,LenHex);
@@ -551,7 +567,8 @@ begin
   P := 1;
   while P < LenHex do
   begin
-    Result := chr( StrToInt('$'+copy(AHexStr,P,2) ) ) + Result;
+    DecVal := StrToInt('$'+copy(AHexStr,P,2)) ;
+    Result := chr( DecVal ) + Result;
     P := P + 2 ;
   end ;
 end;
@@ -636,7 +653,7 @@ begin
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
-    Result := copy(AString,1,nLen) ;
+    Result := LeftStr(AString,nLen) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -652,7 +669,7 @@ begin
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
-    Result := copy(AString,1,nLen) ;
+    Result := RightStr(AString,nLen) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -813,14 +830,12 @@ var
   I : Integer ;
 begin
   I := 0;
-  while I < AStringList.Count-1 do
+  while I < AStringList.Count do
   begin
     if trim(AStringList[I]) = '' then
-    begin
-      AStringList.Delete(I);
-      Inc(I,-1);
-    end;
-    Inc(I);
+      AStringList.Delete(I)
+    else
+      Inc(I);
   end;
 end;
 
@@ -1009,13 +1024,22 @@ end ;
  ---------------------------------------------------------------------------- }
 function Poem_Zeros(const Texto : String ; const Tamanho : Integer) : String ;
 begin
-  Result := PadLeft(Trim(Texto),Tamanho,'0') ;
+  Result := PadLeft(LeftStr(Trim(Texto),Tamanho),Tamanho,'0') ;
 end ;
 
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ;
 begin
   Result := IntToStrZero( NumInteiro, Tamanho) ;
 end ;
+
+function CreateFormatSettings: TFormatSettings;
+begin
+  {$IFDEF FPC}
+   Result := DefaultFormatSettings;
+  {$ELSE}
+   Result := TFormatSettings.Create('');
+  {$ENDIF}
+end;
 
 {-----------------------------------------------------------------------------
   Transforma <NumInteiro> em String, preenchendo com Zeros a Esquerda até
@@ -1057,6 +1081,7 @@ begin
      AFormat := '0.00';
 
   {$IFDEF HAS_FORMATSETTINGS}
+  FS := CreateFormatSettings;
   FS.DecimalSeparator := ',';
   FS.ThousandSeparator := '.';
   Result := FormatFloat(AFormat, AValue, FS);
@@ -1212,28 +1237,27 @@ Var
   {$ENDIF}
 begin
   {$IFDEF HAS_FORMATSETTINGS}
-  if Format <> '' then
-     FS.ShortDateFormat := Format
-  else
-     FS.ShortDateFormat := FormatSettings.ShortDateFormat;
 
-  AStr := Trim( StringReplace(DateTimeString,'/',FormatSettings.DateSeparator, [rfReplaceAll])) ;
-  AStr := StringReplace(AStr,':',FormatSettings.TimeSeparator, [rfReplaceAll]) ;
+   if Format <> '' then
+     FS.ShortDateFormat := Format;
 
-  Result := StrToDateTime(AStr, FS);
+   AStr := Trim( StringReplace(DateTimeString,'/',FormatSettings.DateSeparator, [rfReplaceAll])) ;
+   AStr := StringReplace(AStr,':',FormatSettings.TimeSeparator, [rfReplaceAll]) ;
+
+   Result := StrToDateTime(AStr, FS);
   {$ELSE}
-  OldShortDateFormat := ShortDateFormat ;
-  try
+   OldShortDateFormat := ShortDateFormat ;
+   try
      if Format <> '' then
-        ShortDateFormat := Format ;
+       ShortDateFormat := Format ;
 
      AStr := Trim( StringReplace(DateTimeString,'/',DateSeparator, [rfReplaceAll])) ;
      AStr := StringReplace(AStr,':',TimeSeparator, [rfReplaceAll]) ;
 
      Result := StrToDateTime( AStr ) ;
-  finally
+   finally
      ShortDateFormat := OldShortDateFormat ;
-  end ;
+   end ;
   {$ENDIF}
 end ;
 
@@ -1244,13 +1268,17 @@ function StoD( YYYYMMDDhhnnss: String) : TDateTime;
 begin
   YYYYMMDDhhnnss := trim( YYYYMMDDhhnnss ) ;
 
-  Result := EncodeDateTime( StrToIntDef(copy(YYYYMMDDhhnnss, 1,4),0),  // YYYY
-                            StrToIntDef(copy(YYYYMMDDhhnnss, 5,2),0),  // MM
-                            StrToIntDef(copy(YYYYMMDDhhnnss, 7,2),0),  // DD
-                            StrToIntDef(copy(YYYYMMDDhhnnss, 9,2),0),  // hh
-                            StrToIntDef(copy(YYYYMMDDhhnnss,11,2),0),  // nn
-                            StrToIntDef(copy(YYYYMMDDhhnnss,13,2),0),  // ss
-                            0 );
+  try
+    Result := EncodeDateTime( StrToIntDef(copy(YYYYMMDDhhnnss, 1,4),0),  // YYYY
+                              StrToIntDef(copy(YYYYMMDDhhnnss, 5,2),0),  // MM
+                              StrToIntDef(copy(YYYYMMDDhhnnss, 7,2),0),  // DD
+                              StrToIntDef(copy(YYYYMMDDhhnnss, 9,2),0),  // hh
+                              StrToIntDef(copy(YYYYMMDDhhnnss,11,2),0),  // nn
+                              StrToIntDef(copy(YYYYMMDDhhnnss,13,2),0),  // ss
+                              0 );
+  except
+    Result := 0;
+  end;
 end;
 
 {-----------------------------------------------------------------------------
@@ -2863,31 +2891,43 @@ var
 begin
   UTexto := AnsiUpperCase(AString);
   UChave := AnsiUpperCase(Chave);
+  PosIni := 0;
+  PosFim := 0;
 
   if MantemChave then
    begin
      PosIni := Pos('<' + UChave, UTexto);
-     PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
+     if PosIni > 0 then
+       PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
 
-     if (PosIni = 0) or (PosFim = 0) then
+     if (PosFim = 0) then
       begin
         PosIni := Pos('NS2:' + UChave, UTexto) - 1;
-        PosFim := Pos('/NS2:' + UChave, UTexto) + length(UChave) + 3;
+        if PosIni > 0 then
+          PosFim := Pos('/NS2:' + UChave, UTexto) + length(UChave) + 3;
       end;
    end
   else
    begin
-     PosIni := Pos('<' + UChave, UTexto) + Pos('>', copy(UTexto, Pos('<' + UChave, UTexto), length(UTexto)));
-     PosFim := Pos('/' + UChave, UTexto);
+     PosIni := Pos('<' + UChave, UTexto) ;
+     if PosIni > 0 then
+     begin
+       PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
+       PosFim := Pos('/' + UChave, UTexto);
+     end;
 
-     if (PosIni = 0) or (PosFim = 0) then
+     if (PosFim = 0) then
       begin
-        PosIni := Pos('NS2:' + UChave, UTexto) + Pos('>', copy(UTexto, Pos('NS2:' + UChave, UTexto), length(UTexto)));
-        PosFim := Pos('/NS2:' + UChave, UTexto);
+        PosIni := Pos('NS2:' + UChave, UTexto) ;
+        if PosIni > 0 then
+        begin
+          PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
+          PosFim := Pos('/NS2:' + UChave, UTexto);
+        end ;
       end;
    end;
 
-  Result := AnsiString(copy(AString, PosIni, PosFim - (PosIni + 1)));
+  Result := copy(AString, PosIni, PosFim - (PosIni + 1));
 end;
 
 {------------------------------------------------------------------------------
@@ -3040,15 +3080,6 @@ begin
     ALista.EndUpdate;
   end;
 end;
-
-function VarIsNumber(const Value: Variant): Boolean;
-var
-  valResult: Extended;
-  valCode: Integer;
-begin
-  Val(Value, valResult, valCode);
-  Result := (valCode = 0);
-end ;
 
 //*****************************************************************************************
 

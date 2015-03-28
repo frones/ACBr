@@ -418,6 +418,24 @@ type
    procedure ValorDefault;
   end;
 
+  { FormatDateBrTest }
+
+  FormatDateBrTest = class(TTestCase)
+  published
+   procedure Normal;
+   procedure Bissesto;
+   procedure ComMascara;
+  end;
+
+  { FormatDateTimeBrTest }
+
+  FormatDateTimeBrTest = class(TTestCase)
+  published
+   procedure Normal;
+   procedure BissestoMeiaNoite;
+   procedure ComMascara;
+  end;
+
   { StringToDateTimeTest }
 
   StringToDateTimeTest = class(TTestCase)
@@ -425,6 +443,7 @@ type
    procedure Data;
    procedure Hora;
    procedure DataEHora;
+   procedure ComFormatSettingsDiferente;
   end;
 
   { StringToDateTimeDefTest }
@@ -556,9 +575,45 @@ type
   StrIsIPTest = class(TTestCase)
   published
     procedure Normal;
-    procedure SemPonto;
+    procedure NormalComZerosAEsquerda;
     procedure ComNome;
     procedure Errados;
+  end;
+
+  { EstaVazio_NaoEstaVazioTest }
+
+  EstaVazio_NaoEstaVazioTest = class(TTestCase)
+  published
+    procedure Vazio;
+    procedure NaoVazio;
+    procedure ComEspacos;
+  end;
+
+  { EstaZerado_NaoEstaZeradoTest }
+
+  EstaZerado_NaoEstaZeradoTest = class(TTestCase)
+  published
+    procedure Zerado;
+    procedure NaoZerado;
+    procedure Negativo;
+  end;
+
+  { TamanhoIgualTest }
+
+  TamanhoIgualTest = class(TTestCase)
+  published
+    procedure Menor;
+    procedure Maior;
+    procedure Igual;
+  end;
+
+  { TamanhoMenorTest }
+
+  TamanhoMenorTest = class(TTestCase)
+  published
+    procedure Menor;
+    procedure Maior;
+    procedure Igual;
   end;
 
   { TiraAcentosTest }
@@ -580,6 +635,173 @@ implementation
 uses
   Math, dateutils,
   ACBrUtil;
+
+{ TamanhoMenorTest }
+
+procedure TamanhoMenorTest.Menor;
+begin
+  CheckTrue( TamanhoMenor('ABC',5) );
+end;
+
+procedure TamanhoMenorTest.Maior;
+begin
+  CheckFalse( TamanhoMenor('ABCDEF',5) );
+end;
+
+procedure TamanhoMenorTest.Igual;
+begin
+  CheckFalse( TamanhoMenor('ABCDE',5) );
+end;
+
+{ TamanhoIgualTest }
+
+procedure TamanhoIgualTest.Menor;
+begin
+  CheckFalse( TamanhoIgual('ABC',5) );
+  CheckFalse( TamanhoIgual(123,5) );
+end;
+
+procedure TamanhoIgualTest.Maior;
+begin
+  CheckFalse( TamanhoIgual('ABCDEF',5) );
+  CheckFalse( TamanhoIgual(123456,5) );
+end;
+
+procedure TamanhoIgualTest.Igual;
+begin
+  CheckTrue( TamanhoIgual('ABCDE',5) );
+  CheckTrue( TamanhoIgual(12345,5) );
+end;
+
+{ EstaZerado_NaoEstaZeradoTest }
+
+procedure EstaZerado_NaoEstaZeradoTest.Zerado;
+var
+  AInt : Integer;
+  ADbl : Double;
+begin
+  AInt := 0;
+  ADbl := 0;
+
+  CheckTrue( EstaZerado(AInt) );
+  CheckTrue( EstaZerado(ADbl) );
+
+  CheckFalse( NaoEstaZerado(AInt) );
+  CheckFalse( NaoEstaZerado(ADbl) );
+end;
+
+procedure EstaZerado_NaoEstaZeradoTest.NaoZerado;
+var
+  AInt : Integer;
+  ADbl : Double;
+begin
+  AInt := 1;
+  ADbl := 1.1;
+
+  CheckFalse( EstaZerado(AInt) );
+  CheckFalse( EstaZerado(ADbl) );
+
+  CheckTrue( NaoEstaZerado(AInt) );
+  CheckTrue( NaoEstaZerado(ADbl) );
+end;
+
+procedure EstaZerado_NaoEstaZeradoTest.Negativo;
+var
+  AInt : Integer;
+  ADbl : Double;
+begin
+  AInt := -1;
+  ADbl := -1.1;
+
+  CheckFalse( EstaZerado(AInt) );
+  CheckFalse( EstaZerado(ADbl) );
+
+  CheckTrue( NaoEstaZerado(AInt) );
+  CheckTrue( NaoEstaZerado(ADbl) );
+end;
+
+{ EstaVazio_NaoEstaVazioTest }
+
+procedure EstaVazio_NaoEstaVazioTest.Vazio;
+var
+  AStr: String;
+begin
+  AStr := '';
+  CheckTrue( EstaVazio(AStr) );
+  CheckFalse( NaoEstaVazio(AStr) );
+end;
+
+procedure EstaVazio_NaoEstaVazioTest.NaoVazio;
+var
+  AStr: String;
+begin
+  AStr := 'ACBr';
+  CheckFalse( EstaVazio(AStr) );
+  CheckTrue( NaoEstaVazio(AStr) );
+end;
+
+procedure EstaVazio_NaoEstaVazioTest.ComEspacos;
+var
+  AStr: Char;
+begin
+  AStr := ' ';
+  CheckFalse( EstaVazio(AStr) );
+  CheckTrue( NaoEstaVazio(AStr) );
+end;
+
+{ FormatDateTimeBrTest }
+
+procedure FormatDateTimeBrTest.Normal;
+Var
+  ADateTime: TDateTime;
+begin
+  ADateTime := EncodeDateTime(1971,08,14,12,13,14,0);
+  CheckEquals('14/08/1971 12:13:14', FormatDateTimeBr(ADateTime));
+end;
+
+procedure FormatDateTimeBrTest.BissestoMeiaNoite;
+var
+  ADateTime: TDateTime;
+begin
+  ADateTime := EncodeDateTime(2012,02,29,23,59,59,0);
+  CheckEquals('29/02/2012 23:59:59', FormatDateTimeBr(ADateTime));
+end;
+
+procedure FormatDateTimeBrTest.ComMascara;
+Var
+  ADateTime: TDateTime;
+begin
+  ADateTime := EncodeDateTime(1971,08,14,12,3,4,0);
+  CheckEquals('08/14/1971 12:03', FormatDateTimeBr(ADateTime, 'MM/DD/YYYY hh:nn'));
+  CheckEquals('14/08/71 12:3:4', FormatDateTimeBr(ADateTime, 'DD/MM/YY h:n:s'));
+end;
+
+{ FormatDateBrTest }
+
+procedure FormatDateBrTest.Normal;
+Var
+  ADate: TDateTime;
+begin
+  ADate := EncodeDate(1971,08,14);
+  CheckEquals('14/08/1971', FormatDateBr(ADate));
+end;
+
+procedure FormatDateBrTest.Bissesto;
+var
+  ADate: TDateTime;
+begin
+  ADate := EncodeDate(2012,02,29);
+  CheckEquals('29/02/2012', FormatDateBr(ADate));
+end;
+
+procedure FormatDateBrTest.ComMascara;
+Var
+  ADate: TDateTime;
+begin
+  ADate := EncodeDate(1971,08,14);
+  CheckEquals('08/14/1971', FormatDateBr(ADate, 'MM/DD/YYYY'));
+  CheckEquals('14/08/71', FormatDateBr(ADate, 'DD/MM/YY'));
+end;
 
 { FloatMaskTest }
 
@@ -1228,6 +1450,7 @@ end;
 
 procedure TiraAcentoTest.Normal;
 begin
+   // Nota: essa Unit usa CP1252
    CheckEquals('a', TiraAcento('á'));
    CheckEquals('a', TiraAcento('à'));
    CheckEquals('a', TiraAcento('ã'));
@@ -1290,13 +1513,12 @@ end;
 procedure StrIsIPTest.Normal;
 begin
   CheckTrue(StrIsIP('192.168.0.1'));
-  CheckTrue(StrIsIP('192.168.000.001'));
   CheckTrue(StrIsIP('127.0.0.1'));
 end;
 
-procedure StrIsIPTest.SemPonto;
+procedure StrIsIPTest.NormalComZerosAEsquerda;
 begin
-   CheckFalse(StrIsIP('19216801'));
+  CheckTrue(StrIsIP('192.168.000.001'));
 end;
 
 procedure StrIsIPTest.ComNome;
@@ -1306,6 +1528,7 @@ end;
 
 procedure StrIsIPTest.Errados;
 begin
+  CheckFalse(StrIsIP('19216801'));
   CheckFalse(StrIsIP('192168.0.1'));
   CheckFalse(StrIsIP('192.168'));
 end;
@@ -1507,46 +1730,46 @@ end;
 
 procedure DTtoSTest.DataEHora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDateTime(2015,01,14,12,51,49,0);
-  CheckEquals('20150114125149', DTtoS(Date));;
+  ADateTime := EncodeDateTime(2015,01,14,12,51,49,0);
+  CheckEquals('20150114125149', DTtoS(ADateTime));;
 end;
 
 procedure DTtoSTest.DataSemHora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDate(2015,01,14);
-  CheckEquals('20150114000000', DTtoS(Date));
+  ADateTime := EncodeDate(2015,01,14);
+  CheckEquals('20150114000000', DTtoS(ADateTime));
 end;
 
 { DtoSTest }
 
 procedure DtoSTest.Data;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDate(2015,01,14);
-  CheckEquals('20150114', DtoS(Date));
+  ADateTime := EncodeDate(2015,01,14);
+  CheckEquals('20150114', DtoS(ADateTime));
 end;
 
 { StoDTest }
 
 procedure StoDTest.Normal;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDateTime(2015,01,14,16,28,12,0);
-  CheckEquals(Date, StoD('20150114162812'));
+  ADateTime := EncodeDateTime(2015,01,14,16,28,12,0);
+  CheckEquals(ADateTime, StoD('20150114162812'));
 end;
 
 procedure StoDTest.DataSemHora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDate(2015,01,14);
-  CheckEquals(Date, StoD('20150114'));
+  ADateTime := EncodeDate(2015,01,14);
+  CheckEquals(ADateTime, StoD('20150114'));
 end;
 
 procedure StoDTest.DataInvalida;
@@ -1558,60 +1781,85 @@ end;
 
 procedure StringToDateTimeDefTest.Data;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDate(2015,01,02);
-  CheckEquals(Date, StringToDateTimeDef('02/01/2015', Date));
+  ADateTime := EncodeDate(2015,01,02);
+  CheckEquals(ADateTime, StringToDateTimeDef('02/01/2015', Now));
 end;
 
 procedure StringToDateTimeDefTest.Hora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeTime(12,45,12,0);
-  CheckEquals(Date, StringToDateTimeDef('12:45:12', Date));
+  ADateTime := EncodeTime(12,45,12,0);
+  CheckEquals(ADateTime, StringToDateTimeDef('12:45:12', Now));
 end;
 
 procedure StringToDateTimeDefTest.DataEHora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDateTime(2015,01,14,12,45,12,0);
-  CheckEquals(Date, StringToDateTimeDef('14/01/2015 12:45:12', Date));
+  ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
+  CheckEquals(ADateTime, StringToDateTimeDef('14/01/2015 12:45:12', Now));
 end;
 
 procedure StringToDateTimeDefTest.ValorDefault;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := EncodeDateTime(2015,01,14,12,45,12,0);
-  CheckEquals(Date, StringToDateTimeDef('99/99/2001 00:01:12', Date));
+  ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
+  // Data Errada
+  CheckEquals(ADateTime, StringToDateTimeDef('30/02/2001 00:01:12', ADateTime));
+  // Hora Errada
+  CheckEquals(ADateTime, StringToDateTimeDef('03/02/2001 10:61:12', ADateTime));
+  // Tudo Errado
+  CheckEquals(ADateTime, StringToDateTimeDef('Erro', ADateTime));
 end;
 
 { StringToDateTimeTest }
 
 procedure StringToDateTimeTest.Data;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := StrToDate('01/01/2015');
-  CheckEquals(Date, StringToDateTime('01/01/2015'));
+  ADateTime := EncodeDate(2015,02,03);
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015'));
 end;
 
 procedure StringToDateTimeTest.Hora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := StrToTime('12:45:12');
-  CheckEquals(Date, StringToDateTime('12:45:12'));
+  ADateTime := EncodeTime(12,45,12,0);
+  CheckEquals(ADateTime, StringToDateTime('12:45:12'));
 end;
 
 procedure StringToDateTimeTest.DataEHora;
 var
-  Date: TDateTime;
+  ADateTime: TDateTime;
 begin
-  Date := StrToDateTime('14/01/2015 12:45:12');
-  CheckEquals(Date, StringToDateTime('14/01/2015 12:45:12'));
+  ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
+  CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12'));
+end;
+
+procedure StringToDateTimeTest.ComFormatSettingsDiferente;
+var
+  OldDateSeprator, OldTimeSeparator: Char ;
+  ADateTime: TDateTime;
+begin
+  OldDateSeprator := DateSeparator ;
+  OldTimeSeparator := TimeSeparator;
+  try
+    DateSeparator := '-';
+    TimeSeparator := ';';
+
+    ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
+    CheckEquals(ADateTime, StringToDateTime('14-01-2015 12;45;12'));
+    CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12'));
+  finally
+    DateSeparator := OldDateSeprator;
+    TimeSeparator := OldTimeSeparator;
+  end ;
 end;
 
 { StringToFloatDefTest }
@@ -2139,26 +2387,28 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', FloatMaskTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StringToFloatTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StringToFloatDefTest{$ifndef FPC}.Suite{$endif});
-
-  (*
-  RegisterTest('ACBrComum.ACBrUtil', TiraAcentoTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', TiraAcentosTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', StrIsIPTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', OnlyNumberTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaNumTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', FormatDateBrTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', FormatDateTimeBrTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeDefTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StoDTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', DtoSTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', DTtoSTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaNumTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StrIsNumberTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaNumTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CharIsNumTest{$ifndef FPC}.suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', StoDTest{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', DtoSTest{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', DTtoSTest{$ifndef FPC}.suite{$endif});
-
-  RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeTest{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', StringToDateTimeDefTest{$ifndef FPC}.Suite{$endif});
-  *)
+  RegisterTest('ACBrComum.ACBrUtil', OnlyNumberTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', OnlyAlphaNumTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsIPTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', EstaVazio_NaoEstaVazioTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', EstaZerado_NaoEstaZeradoTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TamanhoIgualTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TamanhoMenorTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TiraAcentosTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TiraAcentoTest{$ifndef FPC}.suite{$endif});
 end.
 

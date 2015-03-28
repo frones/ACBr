@@ -1169,20 +1169,11 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
-  Converte uma <DateTimeString> para TDateTime, semelhante ao StrToDateTimeDef,
-  mas verifica se o seprador da Data é compativo com o S.O., efetuando a
-  conversão se necessário. Se não for possivel converter, retorna <DefaultValue>
+  Converte uma <ADateTime> para String, semelhante ao FormatDateTime,
+  porém garante que o separador de Data SEMPRE será a '/'.
+  Usa o padrão Brasileiro DD/MM/YYYY.
+  <AFormat> pode ser especificado, para mudar a apresentação.
  ---------------------------------------------------------------------------- }
-function StringToDateTimeDef(const DateTimeString : String ;
-   const DefaultValue : TDateTime ; const Format : String) : TDateTime ;
-begin
-  try
-     Result := StringToDateTime( DateTimeString, Format ) ;
-  except
-     Result := DefaultValue ;
-  end ;
-end ;
-
 function FormatDateBr(const ADateTime: TDateTime; AFormat: String): String;
 begin
   if AFormat = '' then
@@ -1191,6 +1182,12 @@ begin
   Result := FormatDateTimeBr( DateOf(ADateTime), AFormat);
 end;
 
+{-----------------------------------------------------------------------------
+  Converte uma <ADateTime> para String, semelhante ao FormatDateTime,
+  porém garante que o separador de Data SEMPRE será a '/', e o de Hora ':'.
+  Usa o padrão Brasileiro DD/MM/YYYY hh:nn:ss.
+  <AFormat> pode ser especificado, para mudar a apresentação.
+ ---------------------------------------------------------------------------- }
 function FormatDateTimeBr(const ADate: TDateTime; AFormat: String): String;
 Var
   {$IFDEF HAS_FORMATSETTINGS}
@@ -1204,6 +1201,7 @@ begin
      AFormat := 'DD/MM/YYYY hh:nn:ss';
 
   {$IFDEF HAS_FORMATSETTINGS}
+  FS := CreateFormatSettings;
   FS.DateSeparator := '/';
   FS.TimeSeparator := ':';
   Result := FormatDateTime(AFormat, ADate, FS);
@@ -1222,9 +1220,9 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
-  Converte uma <DateTimeString> para TDateTime, semelhante ao StrToDateTimeDef,
+  Converte uma <DateTimeString> para TDateTime, semelhante ao StrToDateTime,
   mas verifica se o seprador da Data é compativo com o S.O., efetuando a
-  conversão se necessário. Se não for possivel converter, retorna <DefaultValue>
+  conversão se necessário. Se não for possivel converter, dispara Exception
  ---------------------------------------------------------------------------- }
 function StringToDateTime(const DateTimeString : String ; const Format : String
    ) : TDateTime ;
@@ -1237,12 +1235,12 @@ Var
   {$ENDIF}
 begin
   {$IFDEF HAS_FORMATSETTINGS}
-
+   FS := CreateFormatSettings;
    if Format <> '' then
      FS.ShortDateFormat := Format;
 
-   AStr := Trim( StringReplace(DateTimeString,'/',FormatSettings.DateSeparator, [rfReplaceAll])) ;
-   AStr := StringReplace(AStr,':',FormatSettings.TimeSeparator, [rfReplaceAll]) ;
+   AStr := Trim( StringReplace(DateTimeString,'/',FS.DateSeparator, [rfReplaceAll])) ;
+   AStr := StringReplace(AStr,':',FS.TimeSeparator, [rfReplaceAll]) ;
 
    Result := StrToDateTime(AStr, FS);
   {$ELSE}
@@ -1259,6 +1257,21 @@ begin
      ShortDateFormat := OldShortDateFormat ;
    end ;
   {$ENDIF}
+end ;
+
+{-----------------------------------------------------------------------------
+  Converte uma <DateTimeString> para TDateTime, semelhante ao StrToDateTimeDef,
+  mas verifica se o seprador da Data é compativo com o S.O., efetuando a
+  conversão se necessário. Se não for possivel converter, retorna <DefaultValue>
+ ---------------------------------------------------------------------------- }
+function StringToDateTimeDef(const DateTimeString : String ;
+   const DefaultValue : TDateTime ; const Format : String) : TDateTime ;
+begin
+  try
+     Result := StringToDateTime( DateTimeString, Format ) ;
+  except
+     Result := DefaultValue ;
+  end ;
 end ;
 
 {-----------------------------------------------------------------------------

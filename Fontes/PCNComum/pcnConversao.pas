@@ -952,24 +952,24 @@ end;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;
 begin
-  result := EnumeradoToStr(t, ['','1', '3'], [RTRegimeNormal, RTSimplesNacional, RTRegimeNormal]);
+  result := EnumeradoToStr(t, ['0','1', '3'], [RTRegimeNormal, RTSimplesNacional, RTRegimeNormal]);
 end;
 
 function StrToRegTrib(out ok: boolean; const s: string): TpcnRegTrib ;
 begin
-  result := StrToEnumerado(ok, s, ['','1', '3'],[RTRegimeNormal, RTSimplesNacional, RTRegimeNormal]);
+  result := StrToEnumerado(ok, s, ['0','1', '3'],[RTRegimeNormal, RTSimplesNacional, RTRegimeNormal]);
 end;
 
 function RegTribISSQNToStr(const t: TpcnRegTribISSQN ): string;
 begin
-  result := EnumeradoToStr(t, ['', '1', '2', '3', '4', '5', '6'],
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6'],
                               [ RTISSNenhum, RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
                                RTISSCooperativa, RTISSMEI, RTISSMEEPP]);
 end;
 
 function StrToRegTribISSQN(out ok: boolean; const s: string): TpcnRegTribISSQN ;
 begin
-  result := StrToEnumerado(ok, s, ['', '1', '2', '3', '4', '5', '6'],
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6'],
                                   [RTISSNenhum, RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais,
                                    RTISSCooperativa, RTISSMEI, RTISSMEEPP]);
 end;

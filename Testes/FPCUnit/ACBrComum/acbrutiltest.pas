@@ -630,11 +630,323 @@ type
     procedure Normal;
   end;
 
+  { AjustaLinhasTest }
+
+  AjustaLinhasTest = class(TTestCase)
+  private
+    AStr1, AStr2: String;
+  protected
+    procedure SetUp; override;
+  published
+    procedure QuebraEmQuarentaColunas;
+    procedure QuebraEmTrintaColunasSemPad;
+    procedure QuebraEmTrintaColunasComPad;
+    procedure QuebraEmSeteColunas;
+    procedure ComLimiteDeLinhasSemPad;
+    procedure ComLimiteDeLinhasComPad;
+  end;
+
+  { QuebraLinhasTest }
+
+  QuebraLinhasTest = class(TTestCase)
+  private
+    AStr: String;
+  protected
+    procedure SetUp; override;
+  published
+    procedure QuebraEmNoventaColunas;
+    procedure QuebraEmQuarentaColunas;
+    procedure QuebraEmCinquentaComSeparadorE;
+  end;
+
+  { TraduzComandoTest }
+
+  TraduzComandoTest = class(TTestCase)
+  published
+    procedure ComPipeEComentario;
+    procedure ComPipeApenas;
+    procedure SemPipe;
+  end;
+
+  { StringToAscTest }
+
+  StringToAscTest = class(TTestCase)
+  published
+    procedure Normal;
+  end;
+
+  { AscToStringTest }
+
+  AscToStringTest = class(TTestCase)
+  published
+    procedure Normal;
+    procedure ComLetras;
+  end;
+
+  { StrCryptTest }
+
+  StrCryptTest = class(TTestCase)
+  published
+    procedure CryptDecrypt;
+  end;
+
+  { SomaAscIITest }
+
+  SomaAscIITest = class(TTestCase)
+  published
+    procedure Computar;
+  end;
+
+  { StringCrc16Test }
+
+  StringCrc16Test = class(TTestCase)
+  published
+    procedure Computar;
+  end;
+
+  { PathWithDelimTest }
+
+  PathWithDelimTest = class(TTestCase)
+  published
+    procedure SemDelimiter;
+    procedure ComDelimiter;
+  end;
+
+  { PathWithoutDelimTest }
+
+  PathWithoutDelimTest = class(TTestCase)
+  published
+    procedure SemDelimiter;
+    procedure ComDelimiter;
+  end;
+
 implementation
 
 uses
   Math, dateutils,
   ACBrUtil;
+
+{ PathWithoutDelimTest }
+
+procedure PathWithoutDelimTest.SemDelimiter;
+begin
+  CheckEquals('c:\temp', PathWithDelim('c:\temp'));
+end;
+
+procedure PathWithoutDelimTest.ComDelimiter;
+begin
+  CheckEquals('c:\temp', PathWithDelim('c:\temp\'));
+end;
+
+{ PathWithDelimTest }
+
+procedure PathWithDelimTest.SemDelimiter;
+begin
+  CheckEquals('c:\temp\', PathWithDelim('c:\temp'));
+end;
+
+procedure PathWithDelimTest.ComDelimiter;
+begin
+  CheckEquals('c:\temp\', PathWithDelim('c:\temp\'));
+end;
+
+{ StringCrc16Test }
+
+procedure StringCrc16Test.Computar;
+begin
+  CheckEquals(47933,StringCrc16('123456789'));
+  CheckEquals(14809,StringCrc16('987654321'));
+  CheckEquals(28843,StringCrc16('Projeto ACBr'));
+  CheckEquals(59551,StringCrc16('ACBr Projeto'));
+end;
+
+{ SomaAscIITest }
+
+procedure SomaAscIITest.Computar;
+var
+  Resp: Integer;
+begin
+  Resp := SomaAscII('Projeto ACBr. 123456 -=- ()[]');
+  CheckEquals(1950,Resp);
+
+  CheckEquals(294, SomaAscII('abc'));
+  CheckEquals(294, SomaAscII('cba'));
+end;
+
+{ StrCryptTest }
+
+procedure StrCryptTest.CryptDecrypt;
+var
+  AStr, Chave, Resp: String;
+begin
+  Chave := 'aRFD353+-k.as';
+  AStr := 'Projeto ACBr. Teste Unitário';
+  Resp := StrCrypt(AStr,Chave);
+
+  CheckNotEquals(AStr, Resp);
+  CheckEquals( AStr, StrCrypt(Resp, Chave) );
+end;
+
+{ AscToStringTest }
+
+procedure AscToStringTest.Normal;
+var
+  Resp: String;
+begin
+  Resp := AscToString('#13,#10,#255,#65,#150');
+  CheckTrue( (chr(13)+chr(10)+chr(255)+chr(65)+chr(150) = Resp) );
+end;
+
+procedure AscToStringTest.ComLetras;
+var
+  Resp: String;
+begin
+  Resp := AscToString('#13,A,#10,1,#255,B,#65,9,A,C,B,r,#150');
+  CheckTrue( (chr(13)+'A'+chr(10)+'1'+chr(255)+'BA'+'9ACBr'+chr(150) = Resp) );
+end;
+
+{ StringToAscTest }
+
+procedure StringToAscTest.Normal;
+var
+  Resp: String;
+begin
+  Resp := StringToAsc(chr(13)+chr(10)+chr(255)+chr(65)+chr(150));
+  CheckEquals('#13,#10,#255,#65,#150', Resp );
+end;
+
+{ TraduzComandoTest }
+
+procedure TraduzComandoTest.ComPipeEComentario;
+var
+  Resp: String;
+begin
+  Resp := TraduzComando('#13,v,#10 | Ignorar');
+  CheckEquals(chr(13)+'v'+chr(10), Resp );
+end;
+
+procedure TraduzComandoTest.ComPipeApenas;
+var
+  Resp: String;
+begin
+  Resp := TraduzComando('#13,v,#10 | ');
+  CheckEquals(chr(13)+'v'+chr(10), Resp );
+end;
+
+procedure TraduzComandoTest.SemPipe;
+var
+  Resp: String;
+begin
+  Resp := TraduzComando('#13,v,#10');
+  CheckEquals(chr(13)+'v'+chr(10), Resp );
+end;
+
+{ QuebraLinhasTest }
+
+procedure QuebraLinhasTest.SetUp;
+begin
+  // Nota Essa Unit está em CP1252
+  //              0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....
+  AStr := ACBrStr('Dez Milhões e Duzentos e Cinquenta e Cinco Mil e Quatrocentos e Trinta e Cinco Reais');
+end;
+
+procedure QuebraLinhasTest.QuebraEmNoventaColunas;
+begin
+  CheckEquals(AStr, QuebraLinhas(AStr,90));
+end;
+
+procedure QuebraLinhasTest.QuebraEmQuarentaColunas;
+var
+  Resp: String;
+begin
+  Resp := QuebraLinhas(AStr,40);
+         //   0....+....1....+....2....+....3....+....4
+  CheckEquals(ACBrStr('Dez Milhões e Duzentos e Cinquenta e ')+sLineBreak+
+              ACBrStr('Cinco Mil e Quatrocentos e Trinta e ')+sLineBreak+
+              ACBrStr('Cinco Reais') ,Resp );
+end;
+
+procedure QuebraLinhasTest.QuebraEmCinquentaComSeparadorE;
+var
+  Resp: String;
+begin
+  Resp := QuebraLinhas(AStr,50,'e');
+         //   0....+....1....+....2....+....3....+....4....+....5
+  CheckEquals(ACBrStr('Dez Milhões e Duzentos e Cinquenta e Cinco Mil e')+sLineBreak+
+              ACBrStr(' Quatrocentos e Trinta e Cinco Reais'), Resp );
+end;
+
+{ AjustaLinhasTest }
+
+procedure AjustaLinhasTest.SetUp;
+begin
+  AStr1 := '....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8';
+  AStr2 := 'Linha1'+sLineBreak+'   Linha2'+sLineBreak+sLineBreak+'Linha 4'+sLineBreak;
+end;
+
+procedure AjustaLinhasTest.QuebraEmQuarentaColunas;
+begin
+  CheckEquals( copy(AStr1,1,40) + #10 + copy(AStr1,41,80) + #10,
+               AjustaLinhas(AStr1,40));
+  CheckEquals( StringReplace(AStr2, sLineBreak, #10, [rfReplaceAll]),
+               AjustaLinhas(AStr2,40));
+end;
+
+procedure AjustaLinhasTest.QuebraEmTrintaColunasSemPad;
+begin
+  CheckEquals( copy(AStr1,1,30) + #10 + copy(AStr1,31,30) + #10 + copy(AStr1,61,80) + #10,
+               AjustaLinhas(AStr1,30));
+  CheckEquals( StringReplace(AStr2, sLineBreak, #10, [rfReplaceAll]),
+               AjustaLinhas(AStr2,40));
+end;
+
+procedure AjustaLinhasTest.QuebraEmTrintaColunasComPad;
+var
+  Resp: String;
+begin
+  Resp := AjustaLinhas(AStr1,30,0,True);
+  CheckEquals( copy(AStr1,1,30) + #10 + copy(AStr1,31,30) + #10 + PadRight(copy(AStr1,61,80),30) + #10,
+               Resp );
+
+  Resp := AjustaLinhas(AStr2,30,0,True);
+  CheckEquals('Linha1                        '#10+
+              '   Linha2                     '#10+
+              '                              '#10+
+              'Linha 4                       '#10, Resp );
+end;
+
+procedure AjustaLinhasTest.QuebraEmSeteColunas;
+var
+  Resp: String;
+begin
+  Resp := AjustaLinhas(AStr2,7);
+  CheckEquals('Linha1'#10'   Linh'#10'a2'#10#10'Linha 4'#10, Resp);
+end;
+
+procedure AjustaLinhasTest.ComLimiteDeLinhasSemPad;
+var
+  Resp: String;
+begin
+  Resp := AjustaLinhas(AStr1,30,2);
+  CheckEquals( copy(AStr1,1,30) + #10 + copy(AStr1,31,30) + #10, Resp );
+
+  Resp := AjustaLinhas(AStr2,30,2);
+  CheckEquals( 'Linha1'#10'   Linha2'#10, Resp );
+end;
+
+procedure AjustaLinhasTest.ComLimiteDeLinhasComPad;
+var
+  Resp: String;
+begin
+  Resp := AjustaLinhas(AStr1,30,3,True);
+  CheckEquals( copy(AStr1,1,30) + #10 + copy(AStr1,31,30) + #10 + PadRight(copy(AStr1,61,80),30) + #10,
+               Resp );
+
+  Resp := AjustaLinhas(AStr2,30,3,True);
+  CheckEquals( 'Linha1                        '#10+
+               '   Linha2                     '#10+
+               '                              '#10, Resp);
+end;
 
 { TamanhoMenorTest }
 
@@ -2410,5 +2722,15 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', TamanhoMenorTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TiraAcentosTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TiraAcentoTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', AjustaLinhasTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', QuebraLinhasTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TraduzComandoTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StringToAscTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', AscToStringTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrCryptTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', SomaAscIITest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StringCrc16Test{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', PathWithDelimTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', PathWithoutDelimTest{$ifndef FPC}.suite{$endif});
 end.
 

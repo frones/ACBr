@@ -208,9 +208,9 @@ function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : Char = ' '): String;
 
-function TraduzComando( AString : AnsiString ) : AnsiString ;
-Function StringToAsc( AString : AnsiString ) : AnsiString ;
-Function AscToString( AString : AnsiString ) : AnsiString ;
+function TraduzComando( AString : String ) : AnsiString ;
+Function StringToAsc( AString : AnsiString ) : String ;
+Function AscToString( AString : String ) : AnsiString ;
 
 function InPort(const PortAddr:word): byte;
 procedure OutPort(const PortAddr: word; const Databyte: byte); overload ;
@@ -1601,6 +1601,10 @@ end ;
 {-----------------------------------------------------------------------------
   Quebra Linhas grandes no máximo de Colunas especificado, ou caso encontre 
   uma quebra de Linha (CR ou CR+LF)
+  Retorna uma String usando o #10 como separador de Linha
+  Se <NumMaxLinhas> for especificado, para ao chegar no Limite de Linhas
+  Se <PadLinhas> for True, Todas as linhas terão o mesmo tamanho de Colunas
+    com espaços a esquerda se necessário.
  ---------------------------------------------------------------------------- }
 function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
    NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
@@ -1649,48 +1653,58 @@ begin
      Texto := copy(Texto, P+I, Length(Texto) ) ;
   end ;
 
-  { Permitir impressão de uma linha em branco --Acrescentado por Marciano Lizzoni }
+  { Permitir impressão de uma linha em branco }
   if Result = '' then
     Result := Result + #10;
 end;
 
+{-----------------------------------------------------------------------------
+  Quebra amigável de Linhas de um <Texto>, em um determinado numero de <Colunas>,
+  respeitando o espaço existente entre as palavras. Permite especificar um
+  separador diferente de espaço em <CaracterQuebrar>
+ ---------------------------------------------------------------------------- }
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : Char = ' '): String;
 Var
   PosIni, PosFim, Tamanho : Integer ;
+  AnsiStr, Resp: AnsiString;
 begin
-  Result  := '';
-  Tamanho := Length(Texto) ;
+  Resp := '';
+  // Converte para Ansi, para não se perder com caracteres UTF8
+  AnsiStr := ACBrStrToAnsi(Texto);
+  Tamanho := Length(AnsiStr) ;
   PosIni  := 1 ;
   repeat
      if PosIni > 1 then
-        Result := Result + sLineBreak;
+        Resp := Resp + sLineBreak;
 
      PosFim := PosIni + Colunas - 1 ;
 
      if Tamanho > PosFim then                  // Ainda tem proxima linha ?
-        if Texto[PosFim+1] <> CaracterQuebrar then   // Proximo já é uma Quebra ?
-           while (Texto[PosFim] <> CaracterQuebrar) and (PosFim > PosIni) do // Ache uma Quebra
+        if AnsiStr[PosFim+1] <> CaracterQuebrar then   // Proximo já é uma Quebra ?
+           while (AnsiStr[PosFim] <> CaracterQuebrar) and (PosFim > PosIni) do // Ache uma Quebra
               Dec(PosFim) ;
 
      if PosFim = PosIni then  // Não foi capaz de encontrar uma quebra
         PosFim := PosIni + Colunas - 1 ;
 
-     Result := Result + Copy( Texto, PosIni, (PosFim-PosIni)+1 );
+     Resp := Resp + Copy( AnsiStr, PosIni, (PosFim-PosIni)+1 );
      PosIni := PosFim + 1 ;
 
      // Pula CaracterQuebrar no Inicio da String
-     while (Texto[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
+     while (AnsiStr[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
         Inc(PosIni) ;
 
   until (PosIni > Tamanho);
+
+  Result := ACBrStr(Resp);
 end;
 
 {-----------------------------------------------------------------------------
   Traduz Strings do Tipo '#13,v,#10', substituindo #nn por chr(nn). Ignora todo
    texto apos a String ' | '
  ---------------------------------------------------------------------------- }
-function TraduzComando( AString : AnsiString ) : AnsiString ;
+function TraduzComando(AString: String): AnsiString;
 Var A : Integer ;
 begin
   A := pos(' | ', String( AString ) ) ;
@@ -1704,7 +1718,7 @@ end ;
   Traduz Strings do Tipo chr(13)+chr(10) para uma representação que possa ser
    lida por AscToString Ex: '#13,#10'
  ---------------------------------------------------------------------------- }
-function StringToAsc( AString: AnsiString): AnsiString;
+function StringToAsc(AString: AnsiString): String;
 Var A : Integer ;
 begin
   Result := '' ;
@@ -1719,7 +1733,7 @@ end;
   Usar , para separar um campo do outro... No exemplo acima o resultado seria
   chr(13)+'v'+chr(10) 
  ---------------------------------------------------------------------------- }
-function AscToString(AString: AnsiString): AnsiString;
+function AscToString(AString: String): AnsiString;
 Var A : Integer ;
     Token : AnsiString ;
     C : AnsiChar ;

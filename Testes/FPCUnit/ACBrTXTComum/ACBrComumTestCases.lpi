@@ -89,41 +89,39 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
         <PackageName Value="ACBrComum"/>
       </Item1>
       <Item2>
-        <PackageName Value="FPCUnitTestRunner"/>
+        <PackageName Value="ACBrTXTComum"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FPCUnitTestRunner"/>
       </Item3>
       <Item4>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="3">
       <Unit0>
         <Filename Value="ACBrComumTestCases.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrComumTestCases"/>
       </Unit0>
       <Unit1>
-        <Filename Value="acbrutiltest.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrUtilTest"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="acbrtxtclasstest.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrTXTClassTest"/>
-      </Unit2>
-      <Unit3>
+      </Unit1>
+      <Unit2>
         <Filename Value="acbrtxtclasstest2.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="acbrtxtclasstest2"/>
-      </Unit3>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

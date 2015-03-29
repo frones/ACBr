@@ -252,7 +252,6 @@ procedure WriteLog( const ArqTXT, ABinaryString : AnsiString ;
    const Traduz : Boolean = False) ;
 function TranslateUnprintable( const ABinaryString: AnsiString ): AnsiString;
 
-//funcoes para uso com o modulo ACBrSintegra
 function TiraPontos(Str: string): string;
 function TBStrZero(const i: string; const Casas: byte): string;
 function Space(Tamanho: Integer): string;
@@ -540,7 +539,7 @@ begin
      raise Exception.Create('Parâmetro "ANumStr" deve conter apenas números') ;
 
   L := TamanhoBCD*2;
-  StrBCD := PadLeft( LeftStr(ANumStr,L), L , '0' );
+  StrBCD := PadLeft( ANumStr, L , '0' );
   For I := 1 to TamanhoBCD do
   begin
      BCDChar := copy(StrBCD, (I*2)-1, 2);
@@ -653,7 +652,7 @@ begin
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
-    Result := LeftStr(AString,nLen) ;
+    Result := LeftStr(AString, nLen) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -669,7 +668,7 @@ begin
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
-    Result := RightStr(AString,nLen) ;
+    Result := LeftStr(AString, nLen) ;  //RightStr(AString,nLen) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -688,7 +687,7 @@ begin
     Result    := PadRight( StringOfChar(Caracter, nCharLeft) + AString, nLen, Caracter) ;
   end
   else
-    Result := copy(AString, 1, nLen) ;
+    Result := LeftStr(AString, nLen) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1024,7 +1023,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function Poem_Zeros(const Texto : String ; const Tamanho : Integer) : String ;
 begin
-  Result := PadLeft(LeftStr(Trim(Texto),Tamanho),Tamanho,'0') ;
+  Result := PadLeft(Trim(Texto),Tamanho,'0') ;
 end ;
 
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ;
@@ -2677,7 +2676,7 @@ function EAN13_DV(CodEAN13: String): String;
 Var A,DV : Integer ;
 begin
    Result   := '' ;
-   CodEAN13 := String( PadLeft(AnsiString(Trim(String(CodEAN13))),12,'0') ) ;
+   CodEAN13 := PadLeft(Trim(CodEAN13),12,'0');
    if not StrIsNumber( CodEAN13 ) then
       exit ;
 

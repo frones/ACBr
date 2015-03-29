@@ -720,22 +720,105 @@ type
     procedure ComDelimiter;
   end;
 
+  { TranslateUnprintableTest }
+
+  TranslateUnprintableTest = class(TTestCase)
+  published
+    procedure CaracteresNormais;
+    procedure CaracteresDeControle;
+    procedure Ambos;
+  end;
+
+  { EAN13Test }
+
+  EAN13Test = class(TTestCase)
+  published
+    procedure Valido;
+    procedure TamanhoMaior;
+    procedure TamanhoMenor;
+    procedure DigitoInvalido;
+    procedure ComLetras;
+  end;
+
+
 implementation
 
 uses
   Math, dateutils,
-  ACBrUtil;
+  ACBrUtil, ACBrConsts;
+
+{ EAN13Test }
+
+procedure EAN13Test.Valido;
+begin
+  CheckEquals( '8', EAN13_DV('123456789012'));
+  CheckEquals( '5', EAN13_DV('789835741001'));
+
+  CheckTrue( EAN13Valido('1234567890128') );
+  CheckTrue( EAN13Valido('7898357410015') );
+end;
+
+procedure EAN13Test.TamanhoMaior;
+begin
+   CheckFalse( EAN13Valido('78983574100156'));
+end;
+
+procedure EAN13Test.TamanhoMenor;
+begin
+  CheckFalse( EAN13Valido('789835741001'));
+end;
+
+procedure EAN13Test.DigitoInvalido;
+begin
+  CheckFalse( EAN13Valido('7898357410010'));
+  CheckFalse( EAN13Valido('1234567890129'));
+end;
+
+procedure EAN13Test.ComLetras;
+begin
+  CheckFalse( EAN13Valido('A89835741001D'));
+end;
+
+{ TranslateUnprintableTest }
+
+procedure TranslateUnprintableTest.CaracteresNormais;
+var
+  AStr: String;
+  I: Integer;
+begin
+  AStr := 'Projeto ACBr. - ';
+  For I := 32 to 126 do
+    AStr := AStr + chr(I);
+
+  CheckEquals(AStr, TranslateUnprintable(AStr));
+end;
+
+procedure TranslateUnprintableTest.CaracteresDeControle;
+var
+  Resp : String;
+begin
+  Resp := TranslateUnprintable(NUL+SOH+STX+ETX+ENQ+ACK+TAB+BS+LF+FF+CR+WAK+NAK+ESC+FS+GS);
+  CheckEquals('[NUL][SOH][STX][ETX][ENQ][ACK][TAB][BS][LF][FF][CR][WAK][NAK][ESC][FS][GS]', Resp);
+end;
+
+procedure TranslateUnprintableTest.Ambos;
+var
+  Resp: String;
+begin
+  Resp := TranslateUnprintable(STX+'Projeto ACBr.'+ETX+CR+LF);
+  CheckEquals('[STX]Projeto ACBr.[ETX][CR][LF]', Resp);
+end;
 
 { PathWithoutDelimTest }
 
 procedure PathWithoutDelimTest.SemDelimiter;
 begin
-  CheckEquals('c:\temp', PathWithDelim('c:\temp'));
+  CheckEquals('c:\temp', PathWithoutDelim('c:\temp'));
 end;
 
 procedure PathWithoutDelimTest.ComDelimiter;
 begin
-  CheckEquals('c:\temp', PathWithDelim('c:\temp\'));
+  CheckEquals('c:\temp', PathWithoutDelim('c:\temp\'));
 end;
 
 { PathWithDelimTest }
@@ -2489,7 +2572,8 @@ end;
 
 procedure padLeftTest.TruncarString;
 begin
-  CheckEquals('TruncaString', PadLeft('ACBrTruncaString', 12, 'Z'));
+  CheckEquals('ACBrTruncaSt', PadLeft('ACBrTruncaString', 12, 'Z'));
+// CheckEquals('TruncaString', PadLeft('ACBrTruncaString', 12, 'Z'));
 end;
 
 { padRightTest }
@@ -2732,5 +2816,9 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', StringCrc16Test{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', PathWithDelimTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', PathWithoutDelimTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', EAN13Test{$ifndef FPC}.suite{$endif});
+
+  //TODO: WriteToTXT, WriteLog,
 end.
 

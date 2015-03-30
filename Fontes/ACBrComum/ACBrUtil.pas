@@ -153,7 +153,9 @@ function CountStr(const AString, SubStr : AnsiString ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
 
+{$IFDEF HAS_FORMATSETTINGS}
 Function CreateFormatSettings: TFormatSettings;
+{$ENDIF}
 
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String;
 function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
@@ -1031,6 +1033,7 @@ begin
   Result := IntToStrZero( NumInteiro, Tamanho) ;
 end ;
 
+{$IFDEF HAS_FORMATSETTINGS}
 function CreateFormatSettings: TFormatSettings;
 begin
   {$IFDEF FPC}
@@ -1039,6 +1042,7 @@ begin
    Result := TFormatSettings.Create('');
   {$ENDIF}
 end;
+{$ENDIF}
 
 {-----------------------------------------------------------------------------
   Transforma <NumInteiro> em String, preenchendo com Zeros a Esquerda até

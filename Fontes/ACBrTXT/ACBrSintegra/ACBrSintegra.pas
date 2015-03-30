@@ -2560,7 +2560,7 @@ begin
   wregistro:=wregistro+TBStrZero(TiraPontos(
     FormatFloat('#,###0.000',Registros60I[i].Quantidade)),13);
   wregistro:=wregistro+TBStrZero(TiraPontos(
-    FormatFloat('#,##0.00',Registros60I[i].Valor)),13);
+    FormatFloat('#,##0.000',Registros60I[i].Valor)),13);
   wregistro:=wregistro+TBStrZero(TiraPontos(
     FormatFloat('#,##0.00',Registros60I[i].BaseDeCalculo)),12);
   wregistro:=wregistro+PadRight(TiraPontos(Registros60I[i].StAliquota),4);

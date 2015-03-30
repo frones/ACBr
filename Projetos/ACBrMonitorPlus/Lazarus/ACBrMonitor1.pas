@@ -45,7 +45,7 @@ uses
   blcksock, ACBrValidador, ACBrGIF, ACBrEAD,
   ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass,ACBrBoleto, ACBrBoletoFCFortesFr, Printers,
-  pcnConversao, pcnConversaoNFe;
+  pcnConversao, pcnConversaoNFe, types;
 
 const
   {$I versao.txt}
@@ -275,7 +275,7 @@ type
     edtFaxEmpresa: TEdit;
     edtFonteCampos: TEdit;
     edtFonteRazao: TEdit;
-    edtIdToken: TEdit;
+    edtIdCSC: TEdit;
     edTimeOutTCP: TEdit;
     edtIntervalo: TEdit;
     edtLogoMarca: TEdit;
@@ -317,7 +317,7 @@ type
     edtSmtpUser: TEdit;
     edtSoftwareHouse: TEdit;
     edtTentativas: TEdit;
-    edtToken: TEdit;
+    edtCSC: TEdit;
     edUSUCNPJ: TEdit;
     edUSUEndereco: TEdit;
     edUSUIE: TEdit;
@@ -2211,8 +2211,8 @@ begin
     ACBrNFe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
     ACBrNFe1.Configuracoes.Geral.VersaoDF  := StrToVersaoDF(ok,cbVersaoWS.Text);
 
-    edtIdToken.Text := Ini.ReadString( 'NFCe', 'IdToken', '') ;
-    edtToken.Text := Ini.ReadString( 'NFCe', 'Token', '') ;
+    edtIdCSC.Text := Ini.ReadString( 'NFCe', 'IdCSC', '') ;
+    edtCSC.Text := Ini.ReadString( 'NFCe', 'CSC', '') ;
 
     {$IFDEF ACBrNFeOpenSSL}
     lblCaminho.Caption := 'Arquivo PFX';
@@ -2327,9 +2327,9 @@ begin
     ACBrNFe1.Configuracoes.Arquivos.PathCCe  := edtPathCCe.Text;
     ACBrNFe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
 
-    // token da nfce
-    ACBrNFe1.Configuracoes.Geral.IdToken := Ini.ReadString( 'NFCe', 'IdToken', '') ;
-    ACBrNFe1.Configuracoes.Geral.Token   := Ini.ReadString( 'NFCe', 'Token', '') ;
+    // CSC da nfce
+    ACBrNFe1.Configuracoes.Geral.IdCSC := Ini.ReadString( 'NFCe', 'IdCSC', '') ;
+    ACBrNFe1.Configuracoes.Geral.CSC   := Ini.ReadString( 'NFCe', 'CSC', '') ;
   finally
     Ini.Free;
   end;
@@ -2831,8 +2831,8 @@ begin
     Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text) ;
     GravaINICrypt( INI, 'Proxy','Pass',edtProxySenha.Text, _C) ;
 
-    Ini.WriteString( 'NFCe', 'IdToken', edtIdToken.Text) ;
-    Ini.WriteString( 'NFCe', 'Token', edtToken.Text) ;
+    Ini.WriteString( 'NFCe', 'IdCSC', edtIdCSC.Text) ;
+    Ini.WriteString( 'NFCe', 'CSC', edtCSC.Text) ;
 
     Ini.WriteString( 'Email','Host'    ,edtSmtpHost.Text) ;
     Ini.WriteString( 'Email','Port'    ,edtSmtpPort.Text) ;

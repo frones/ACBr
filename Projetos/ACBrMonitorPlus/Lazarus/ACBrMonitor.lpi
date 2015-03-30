@@ -68,7 +68,7 @@
         <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="15">
+    <RequiredPackages Count="14">
       <Item1>
         <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item1>
@@ -103,18 +103,15 @@
         <PackageName Value="ACBrDFeComum"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBrCapicom"/>
+        <PackageName Value="ACBrComum"/>
       </Item12>
       <Item13>
-        <PackageName Value="ACBrComum"/>
-      </Item13>
-      <Item14>
         <PackageName Value="LCLBase"/>
         <MinVersion Major="1" Release="1" Valid="True"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <PackageName Value="LCL"/>
-      </Item15>
+      </Item14>
     </RequiredPackages>
     <Units Count="23">
       <Unit0>
@@ -261,6 +258,9 @@
       </Options>
     </Linking>
     <Other>
+      <CompilerMessages>
+        <IgnoredMessages idx5024="True"/>
+      </CompilerMessages>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

@@ -1294,19 +1294,19 @@ begin
               raise Exception.Create('Modelo Inválido(55/65).');
          end
 
-        else if Cmd.Metodo = 'settoken' then
+        else if Cmd.Metodo = 'setcsc' then
          begin
-           ACBrNFe1.Configuracoes.Geral.Token := Cmd.Params(0);
+           ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(0);
            if (Cmd.Params(1) <> '') then
-              ACBrNFe1.Configuracoes.Geral.IdToken := Cmd.Params(1);
+              ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(1);
            SalvarIni;
          end
 
-        else if Cmd.Metodo = 'setidtoken' then
+        else if Cmd.Metodo = 'setidcsc' then
          begin
-           ACBrNFe1.Configuracoes.Geral.IdToken := Cmd.Params(0);
+           ACBrNFe1.Configuracoes.Geral.IdCSC := Cmd.Params(0);
            if (Cmd.Params(1) <> '') then
-              ACBrNFe1.Configuracoes.Geral.Token := Cmd.Params(1);
+              ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(1);
            SalvarIni;
          end
 

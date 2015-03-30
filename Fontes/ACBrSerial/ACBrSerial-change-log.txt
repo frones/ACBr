@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/03/2015
+-- ACBrECFDaruma -- (por: DSA e Elias)
+[-] Corrigido Bug na leitura de COO após a emissão de Leitura de Memória Fiscal
+
 Data: 07/03/2015
 -- ACBrECFEscECF -- (por: DSA)
 [+] Adicionado suporte ao método: GetNumUltimoItem, usando cache de respostas

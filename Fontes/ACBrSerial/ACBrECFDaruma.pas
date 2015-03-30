@@ -3364,6 +3364,8 @@ procedure TACBrECFDaruma.LeituraMemoriaFiscal(ReducaoInicial,
  Var Espera : Integer ;
      Flag   : Char ;
 begin
+  fsNumCupom := '';
+
   Espera := 20 + (ReducaoFinal - ReducaoInicial) * 2 ;
   Flag   := 'x' ;
   if Simplificada then
@@ -3386,6 +3388,8 @@ procedure TACBrECFDaruma.LeituraMemoriaFiscal(DataInicial,
  Var Espera : Integer ;
      Flag   : Char ;
 begin
+  fsNumCupom := '';
+
   Espera := 20 + DaysBetween(DataInicial,DataFinal) * 2 ;
   Flag   := 'x' ;
   if Simplificada then
@@ -3409,6 +3413,8 @@ procedure TACBrECFDaruma.LeituraMemoriaFiscalSerial(ReducaoInicial,
      RetCmd : AnsiString ;
      Flag   : Char ;
 begin
+  fsNumCupom := '';
+
   Espera := 20 + (ReducaoFinal - ReducaoInicial) * 2  ;
   Flag   := 's' ;
   if Simplificada then
@@ -3434,6 +3440,8 @@ procedure TACBrECFDaruma.LeituraMemoriaFiscalSerial(DataInicial,
      RetCmd : AnsiString ;
      Flag   : Char ;
 begin
+  fsNumCupom := '';
+
   Espera := 20 + DaysBetween(DataInicial,DataFinal) * 2;
   Flag   := 's' ;
   if Simplificada then
@@ -3494,6 +3502,8 @@ begin
     grandes demais p/ um TimeOut de 300 seg., aconselha-se fazer a leitura por
     faixas de 50 em 50 COOs ( Aprox. 220 COOs em 8min em uma FS600 V.1.03) }
 
+  fsNumCupom := '';
+
   Espera := 20 + ((COOFinal - COOInicial) * 5) ;
   fsEsperaFFCR  :=  True ;
 
@@ -3515,6 +3525,8 @@ procedure TACBrECFDaruma.LeituraMFDSerial(DataInicial,
  Var Espera : Integer;
      RetCmd : AnsiString ;
 begin
+  fsNumCupom := '';
+
   Espera := 20 + ((DaysBetween(DataInicial,DataFinal)) * 30) ;
   fsEsperaFFCR := True ;
   
@@ -3768,6 +3780,8 @@ end;
 
 procedure TACBrECFDaruma.CancelaNaoFiscal;
 begin
+  fsNumCupom := '';
+
   if fpMFD then
      EnviaComando( FS + 'F' + #229 )
   else

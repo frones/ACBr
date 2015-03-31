@@ -2960,7 +2960,7 @@ procedure TBloco_C.WriteRegistroC800(RegC001: TRegistroC001);
 var
   intFor: integer;
   strCOD_SIT: AnsiString;
-	booNFCancelada : Boolean;
+  booNFCancelada: Boolean;
 begin
   if Assigned( RegC001.RegistroC800 ) then
   begin
@@ -2991,7 +2991,7 @@ begin
                LFill( VL_CFE,0,2, booNFCancelada ) +
                LFill( VL_PIS,0,2, booNFCancelada ) +
                LFill( VL_COFINS,0,2, booNFCancelada ) +
-               LFill( CNPJ_CPF, 14, booNFCancelada ) +
+               LFill( CNPJ_CPF, 14, True ) +
                LFill( NR_SAT,9 ) +
                LFill( CHV_CFE ) +
                LFill( VL_DESC,0,2, booNFCancelada ) +

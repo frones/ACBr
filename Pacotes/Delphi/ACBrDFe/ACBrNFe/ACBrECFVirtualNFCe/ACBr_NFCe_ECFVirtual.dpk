@@ -28,11 +28,11 @@ package ACBr_NFCe_ECFVirtual;
 requires
   rtl,
   designide,
-  ACBr_NFe2,
+  ACBr_NFe,
   ACBrDiversos,
   ACBrSerial;
 
 contains
-  ACBrECFVirtualNFCe in '..\..\..\Fontes\ACBrNFe2\ACBrECFVirtualNFCe.pas';
+  ACBrECFVirtualNFCe in '..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrECFVirtualNFCe\ACBrECFVirtualNFCe.pas';
 
 end.

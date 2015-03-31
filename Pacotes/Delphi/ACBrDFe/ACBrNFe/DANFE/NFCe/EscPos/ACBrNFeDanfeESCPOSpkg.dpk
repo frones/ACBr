@@ -42,7 +42,7 @@
 |* 25/06/2009: André Ferreira de Moraes
 |*  - Componente convertido para utilizar units do PCN
 ******************************************************************************}
-package ACBrNFeDanfeRV;
+package ACBrNFeDanfeESCPOSpkg;
 
 {$R *.res}
 {$ALIGN 8}
@@ -74,9 +74,9 @@ requires
   rtl,
   designide,
   ACBrSerial,
-  ACBr_NFe2;
+  ACBr_NFe;
 
 contains
-  ACBrNFeDANFeESCPOS in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeESCPOS.pas';
+  ACBrNFeDANFeESCPOS in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos\ACBrNFeDANFeESCPOS.pas';
 
 end.

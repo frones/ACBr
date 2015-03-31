@@ -94,7 +94,7 @@ OutputDir=
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=
+SearchPath=..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrECFVirtualNFCe
 Packages=rtl;vcl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;ibxpress;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;dclOffice2k;ACBrComum;ACBrTCP;synapse;ACBrDiversos;ACBrSerial;ACBr_TEFD;ACBr_SPED;ACBr_Sintegra;ACBr_SEF2;ACBr_PAF;ACBr_LFD;ACBr_Convenio115;ACBr_Boleto;Rave50CLX;Rave50VCL;qrpt;ACBr_NFe2;PCN2;ACBrCapicom;ACBrOpenSSL;ACBrNFeDanfeRVCodeBase;ACBrNFeDanfeRV;DJCL70;JVCL200_R70;tdbf_d7d;tdbf_d7r;PDBDataManD7
 Conditionals=
 DebugSourceDirs=
@@ -110,7 +110,7 @@ ActiveLang=
 ProjectLang=
 RootDir=C:\Program Files (x86)\Borland\Delphi7\Bin\
 [Version Info]
-IncludeVerInfo=0
+IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=1
 MinorVer=0

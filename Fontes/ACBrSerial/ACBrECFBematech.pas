@@ -1634,6 +1634,14 @@ begin
 
   Observacao := StrConsumidor + Observacao;
 
+  if Operador <> '' then
+  begin
+     if Observacao <> '' then
+       Observacao := Observacao + #10;
+
+     Observacao := Observacao + 'Operador: '+Operador;
+  end;
+
   if Copy( Observacao, length( Observacao ), 1) <> #10 then
      Observacao := Observacao + #10 ;
 

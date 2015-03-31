@@ -97,6 +97,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/03/2015
+-- ACBrECFBematech --  (por: DSA)
+[*] Adicionado suporte a impressão do Operador, no rodapé do Cupom Fiscal,
+    caso o mesmo tenha sido informado com "IdentificaOperador"
+
 Data: 30/03/2015
 -- ACBrECFDaruma -- (por: DSA e Elias)
 [-] Corrigido Bug na leitura de COO após a emissão de Leitura de Memória Fiscal

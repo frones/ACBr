@@ -84,17 +84,8 @@ requires
   inet,
   soaprtl,
   synapse,
-  ACBrComum,
   PCNComum,
-  ACBrDFeComum,
-  ACBrOpenSSL,
-  ACBrCapicom;
-
-//  vclactnband,
-//  vclx,
-//  ACBrDiversos,
-//  ACBrTCP,
-//  dsnap;
+  ACBrDFeComum;
 
 contains
   ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',

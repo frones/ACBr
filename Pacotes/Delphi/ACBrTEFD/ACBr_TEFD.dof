@@ -88,7 +88,7 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=ACBr Automação Comercial Brasil - TEFD (http://acbr.sourceforge.net/)
+ExeDescription=ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)
 [Directories]
 OutputDir=
 UnitOutputDir=

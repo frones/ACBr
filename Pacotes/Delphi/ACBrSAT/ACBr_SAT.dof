@@ -88,13 +88,13 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=ACBr Automação Comercial Brasil - ACBrSAT (http://acbr.sourceforge.net/) - Componente para comunicação com equipamentos SAT http://www.fazenda.sp.gov.br/sat/
+ExeDescription=ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)
 [Directories]
 OutputDir=
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=
+SearchPath=..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT
 Packages=vcl;rtl;vclx;indy;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;vcldb;soaprtl;VclSmp;dbexpress;dbxcds;inetdb;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;Rave50CLX;Rave50VCL;dclOfficeXP;ACBrComum;ACBrDiversos;ACBrSerial;synapse;ACBr_Boleto;RLibWinD7vcl;qrpt;teeqr
 Conditionals=
 DebugSourceDirs=

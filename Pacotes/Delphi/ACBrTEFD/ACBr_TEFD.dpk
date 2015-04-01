@@ -28,9 +28,10 @@ package ACBr_TEFD;
 requires
   rtl,
   vcl,
-  ACBrComum,
   synapse,
-  designide;
+  designide,
+  ACBrTCP,
+  ACBrDiversos;
 
 contains
   ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',

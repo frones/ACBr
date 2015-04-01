@@ -994,6 +994,11 @@ begin
                       Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16,
                       Pos('</Cpf>',ArquivoXML.Text) - (Pos('<Prestador><Cpf>', ArquivoXML.Text) + 16));
 
+       if ((Length(CNPJ) <> 11) and (Length(CNPJ) <> 14)) then
+          CNPJ := Copy(ArquivoXML.Text,
+                       Pos('<IdentificacaoPrestador><CpfCnpj>', ArquivoXML.Text) + 33,
+                       Pos('</CpfCnpj>', ArquivoXML.Text) - (Pos('<IdentificacaoPrestador><CpfCnpj>', ArquivoXML.Text) + 33));
+
        IM := Copy(ArquivoXML.Text,
                   Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20,
                   Pos('</InscricaoMunicipal>',ArquivoXML.Text) - (Pos('<InscricaoMunicipal>', ArquivoXML.Text) + 20));

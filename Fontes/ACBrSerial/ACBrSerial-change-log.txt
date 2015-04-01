@@ -97,6 +97,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 01/04/2015
+-- ACBrECFEscECF --  (por: DSA)
+[*] Ajuste para correta impressão de linhas sem conteudo no modelo Bematech MP4200
+
 Data: 31/03/2015
 -- ACBrECFBematech --  (por: DSA)
 [*] Adicionado suporte a impressão do Operador, no rodapé do Cupom Fiscal,

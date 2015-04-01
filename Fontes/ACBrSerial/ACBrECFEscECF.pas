@@ -366,7 +366,6 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure ReimpressaoVinculado; override;
 
     Procedure FechaRelatorio ; override ;
-    Procedure PulaLinhas( NumLinhas : Integer = 0 ) ; override ;
     Procedure CortaPapel( const CorteParcial : Boolean = false) ; override ;
 
     { TODO: Cheques
@@ -1705,7 +1704,7 @@ var
   P, Espera: Integer;
   Buffer   : AnsiString ;
 begin
-  Linha := AjustaLinhas( Linha, Colunas );  { Formata as Linhas de acordo com "Coluna" }
+  Linha := AjustaLinhas( Linha, Colunas, 0, (IsEpson or IsBematech) );  { Formata as Linhas de acordo com "Coluna" }
 
   while Length( Linha ) > 0 do
   begin
@@ -2749,23 +2748,6 @@ begin
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   fsEmPagamento := false ;
   SalvaRespostasMemoria(False);
-end;
-
-procedure TACBrECFEscECF.PulaLinhas(NumLinhas: Integer);
-var
-  Linha: String;
-begin
-  if NumLinhas = 0 then
-     NumLinhas := LinhasEntreCupons ;
-
-  if IsEpson then
-  begin
-    Linha := DupeString(' '+#10, NumLinhas ) ;
-    LinhaRelatorioGerencial( Linha ) ;
-    exit;
-  end;
-
-  inherited PulaLinhas(NumLinhas);
 end;
 
 procedure TACBrECFEscECF.CortaPapel(const CorteParcial: Boolean);

@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.122a' ;
+  CACBrBoleto_Versao = '0.0.123a' ;
 
 type
   TACBrTipoCobranca =

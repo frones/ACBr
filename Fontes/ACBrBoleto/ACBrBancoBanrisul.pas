@@ -538,7 +538,7 @@ var
 begin
    with ACBrTitulo do begin
       case Aceite of
-         atSim: aAceite := 'S';
+         atSim: aAceite := 'A';
          atNao: aAceite := 'N';
       end;
 

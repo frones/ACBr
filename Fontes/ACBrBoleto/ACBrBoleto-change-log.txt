@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/04/2015 ver. 0.0.123a
+-- ACBrBancoCaixa --
+[-] Correção na montagem do campo Código do Cedente (adrianoa)
+
+-- ACBrBancoBanrisul --
+[-] Correção na remessa CNAB240 (Gabriel Bonzanini)
+
+
 Data: 27/03/2015 ver. 0.0.122a
 -- ACBrBancoCaixa --
 [-] Correção no leitura do arquivo retorno CNAB240 (Pedro Peixoto)

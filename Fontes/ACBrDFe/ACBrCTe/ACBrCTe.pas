@@ -180,7 +180,7 @@ begin
   try
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq);
   finally
-    SetStatus( stIdle );
+    SetStatus( stCTeIdle );
   end;
 end;
 

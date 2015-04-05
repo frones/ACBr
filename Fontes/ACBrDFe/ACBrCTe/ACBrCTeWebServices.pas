@@ -518,7 +518,7 @@ begin
 
   FPConfiguracoesCTe := TConfiguracoesCTe(FPConfiguracoes);
   FPLayout := LayCTeStatusServico;
-  FPStatus := stIdle;
+  FPStatus := stCTeIdle;
 end;
 
 function TCTeWebService.ExtrairModeloChaveAcesso(AChaveCTe: String): String;
@@ -570,7 +570,7 @@ procedure TCTeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
 
-  TACBrCTe(FPDFeOwner).SetStatus(stIdle);
+  TACBrCTe(FPDFeOwner).SetStatus(stCTeIdle);
 end;
 
 { TCTeStatusServico }
@@ -983,7 +983,7 @@ begin
       sleep(IntervaloTentativas);
     end;
   finally
-    TACBrCTe(FPDFeOwner).SetStatus(stIdle);
+    TACBrCTe(FPDFeOwner).SetStatus(stCTeIdle);
   end;
 
   if FCTeRetorno.CStat = 104 then  // Lote processado ?

@@ -4,7 +4,8 @@ unit Frm_Demo_ACBrCTe;
 
 interface
 
-uses IniFiles, ShellAPI,
+uses
+  IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   ACBrCTe, ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrMail,
@@ -187,9 +188,10 @@ var
 implementation
 
 uses
- FileCtrl, DateUtils,
- ufrmStatus,
- ACBrCTeConhecimentos;
+  FileCtrl, DateUtils,
+  ufrmStatus,
+  pcnConversao, pcteConversaoCTe, ACBrUtil,
+  ACBrCTeConhecimentos;
 
 const
   SELDIRHELP = 1000;
@@ -314,8 +316,9 @@ begin
    4: ACBrCTe1.Configuracoes.Geral.FormaEmissao := tESVCSP;
   end;
   
-  ACBrCTe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
-  ACBrCTe1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
+  ACBrCTe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
+
+  ACBrCTe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
 
   cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
   rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
@@ -369,6 +372,14 @@ begin
   Ini.ReadBinaryStream( 'Email','Mensagem',StreamMemo);
   mmEmailMsg.Lines.LoadFromStream(StreamMemo);
   StreamMemo.Free;
+
+  ACBrCTe1.MAIL.Host := edtSmtpHost.Text;
+  ACBrCTe1.MAIL.Port := edtSmtpPort.Text;
+  ACBrCTe1.MAIL.Username := edtSmtpUser.Text;
+  ACBrCTe1.MAIL.Password := edtSmtpPass.Text;
+  ACBrCTe1.MAIL.SetSSL   := cbEmailSSL.Checked;
+  ACBrCTe1.MAIL.ReadingConfirmation := False;
+
  finally
   Ini.Free;
  end;
@@ -1121,9 +1132,7 @@ end;
 
 procedure TfrmDemo_ACBrCTe.sbtnGetCertClick(Sender: TObject);
 begin
- {$IFNDEF ACBrCTeOpenSSL}
-  edtNumSerie.Text := ACBrCTe1.Configuracoes.Certificados.SelecionarCertificado;
- {$ENDIF}
+  edtNumSerie.Text := ACBrCTe1.SSL.SelecionarCertificado;
 end;
 
 procedure TfrmDemo_ACBrCTe.sbtnLogoMarcaClick(Sender: TObject);
@@ -1318,7 +1327,7 @@ begin
 
  ACBrCTe1.Conhecimentos.Clear;
  GerarCTe(vAux);
- ACBrCTe1.Conhecimentos.Items[0].SaveToFile;
+ ACBrCTe1.Conhecimentos.Items[0].GravarXML('','');
 
  ShowMessage('Arquivo gerado em: '+ACBrCTe1.Conhecimentos.Items[0].NomeArq);
  MemoDados.Lines.Add('Arquivo gerado em: '+ACBrCTe1.Conhecimentos.Items[0].NomeArq);
@@ -1336,7 +1345,7 @@ begin
  if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento))
   then exit;
 
- Documento := Trim(DFeUtil.LimpaNumero(Documento));
+ Documento := Trim(OnlyNumber(Documento));
 
  ACBrCTe1.WebServices.ConsultaCadastro.UF := UF;
  if Length(Documento) > 11
@@ -1405,7 +1414,7 @@ begin
  OpenDialog1.Title := 'Selecione o CTe';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -1455,7 +1464,7 @@ begin
  OpenDialog1.Title := 'Selecione o CTe';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -2144,13 +2153,13 @@ begin
  OpenDialog1.Title := 'Selecione o CTe';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
    ACBrCTe1.Conhecimentos.Clear;
    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-   ACBrCTe1.Conhecimentos.Valida;
+   ACBrCTe1.Conhecimentos.Validar;
    showmessage('Conhecimento de Transporte Eletrônico Valido');
   end;
 end;
@@ -2163,7 +2172,7 @@ begin
  OpenDialog1.Title := 'Selecione o CTe a ser Cancelado';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -2186,7 +2195,7 @@ begin
     end;
 
    iLote := 1; // Numero do Lote do Evento
-   ACBrCTe1.EnviarEventoCTe(iLote);
+   ACBrCTe1.EnviarEvento(iLote);
 
    MemoResp.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
    memoRespWS.Lines.Text :=  UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
@@ -2201,7 +2210,7 @@ begin
  OpenDialog1.Title := 'Selecione o CTe';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -2216,7 +2225,7 @@ begin
  OpenDialog1.Title := 'Selecione o CTe';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute
   then begin
@@ -2237,7 +2246,7 @@ begin
  OpenDialog1.Title := 'Selecione o CTe';
  OpenDialog1.DefaultExt := '*-cte.xml';
  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -2246,19 +2255,14 @@ begin
    CC:=TstringList.Create;
    CC.Add('email_1@provedor.com'); //especifique um email válido
    CC.Add('email_2@provedor.com.br'); //especifique um email válido
-   ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(edtSmtpHost.Text
-                                             , edtSmtpPort.Text
-                                             , edtSmtpUser.Text
-                                             , edtSmtpPass.Text
-                                             , edtSmtpUser.Text
-                                             , Para
+
+   ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(Para
                                              , edtEmailAssunto.Text
                                              , mmEmailMsg.Lines
-                                             , cbEmailSSL.Checked
                                              , False //Enviar PDF junto
                                              , nil //Lista com emails que serão enviado cópias - TStrings
                                              , nil // Lista de anexos - TStrings
-                                             , False ); //Pede confirmação de leitura do email
+                                              );
    CC.Free;
   end;
 end;
@@ -2268,7 +2272,7 @@ begin
   OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-cte.xml';
   OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
   ACBrCTe1.Conhecimentos.Clear;
   if OpenDialog1.Execute then
@@ -2279,7 +2283,7 @@ begin
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*-procEventoCTe.xml';
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -2294,7 +2298,7 @@ begin
   OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-cte.xml';
   OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
   ACBrCTe1.Conhecimentos.Clear;
   if OpenDialog1.Execute then
@@ -2305,7 +2309,7 @@ begin
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*-procEventoCTe.xml';
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -2326,7 +2330,7 @@ begin
   OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-cte.xml';
   OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrCTe1.Conhecimentos.Clear;
@@ -2336,7 +2340,7 @@ begin
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*-procEventoCTe.xml';
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     Evento := TStringList.Create;
@@ -2347,6 +2351,7 @@ begin
     CC:=TstringList.Create;
     CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
     CC.Add('anfm@zipmail.com.br');    //especifique um email válido
+    (*
     ACBrCTe1.EnviarEmailEvento(edtSmtpHost.Text
                              , edtSmtpPort.Text
                              , edtSmtpUser.Text
@@ -2363,6 +2368,7 @@ begin
                              , False  //Aguarda Envio do Email(não usa thread)
                              , 'ACBrCTe' // Nome do Rementente
                              , cbEmailSSL.Checked ); // Auto TLS
+    *)                         
     CC.Free;
     Evento.Free;
   end;
@@ -2373,7 +2379,7 @@ begin
   OpenDialog1.Title := 'Selecione o ProcInutCTe';
   OpenDialog1.DefaultExt := '*-ProcInutCTe.xml';
   OpenDialog1.Filter := 'Arquivos ProcInutCTe (*-ProcInutCTe.xml)|*-ProcInutCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -2387,7 +2393,7 @@ begin
   OpenDialog1.Title := 'Selecione o ProcInutCTe';
   OpenDialog1.DefaultExt := '*-ProcInutCTe.xml';
   OpenDialog1.Filter := 'Arquivos ProcInutCTe (*-ProcInutCTe.xml)|*-ProcInutCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin

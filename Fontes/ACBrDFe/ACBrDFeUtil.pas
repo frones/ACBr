@@ -71,7 +71,13 @@ implementation
 uses
   Variants, DateUtils,
   pcnGerador,
-  ACBrConsts, ACBrDFe, ACBrUtil, ACBrValidador;
+  ACBrConsts, ACBrDFe, ACBrUtil, ACBrValidador
+  {$IFNDEF NOGUI}
+   {$IFDEF MSWINDOWS}
+    ,ACBrDFeQRCodeBar
+   {$ENDIF}
+  {$ENDIF}
+  ;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin
@@ -640,4 +646,4 @@ end;
 
 class function Modulo11(Valor: string; Peso: Integer = 2; Base: Integer = 9): String;
 
-*)
+*)

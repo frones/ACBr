@@ -1237,7 +1237,7 @@ Var
   OldShortDateFormat: String ;
   {$ENDIF}
 begin
-  Result := 0
+  Result := 0;
   if (DateTimeString = '0') or (DateTimeString = '') then
     exit;
 

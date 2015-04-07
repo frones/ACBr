@@ -6,7 +6,7 @@
 #define MyAppVersion copy( MyAppVersion, pos("'", MyAppVersion) + 1, pos(";", MyAppVersion) )
 #define MyAppVersion Copy( MyAppVersion, 0, pos("'", MyAppVersion) - 1 )
 
-#define MyAppName "ACBrMonitor"
+#define MyAppName "ACBrMonitorPLUS"
 #define MyAppVerName MyAppName + '-' + MyAppVersion
 #define MyAppPublisher "Projeto ACBr"
 #define MyAppURL "http://acbr.sourceforge.net/ACBrMonitor.htm"
@@ -68,9 +68,18 @@ Source: {#ACBrDIR}\DLLs\OpenSSL\libeay32.dll; DestDir: {app}; Flags: ; Component
 Source: {#ACBrDIR}\DLLs\OpenSSL\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
 Source: {#ACBrDIR}\DLLs\MSVCR\msvcr71.dll; DestDir: {app}; Flags: ; Components: programa
 Source: {#ACBrDIR}\Fontes\ACBrBoleto\Logos\Colorido\*.*; DestDir: {app}\Logos; Flags: ; Components: programa
-
-
-
+Source: ..\..\..\DLLs\Capicom\capicom.dll; DestDir: {sys}; Components: programa; Flags: regserver
+Source: ..\..\..\DLLs\Capicom\msxml5.dll; DestDir: {sys}; Components: programa; Flags: regserver
+Source: ..\..\..\DLLs\Capicom\msxml5r.dll; DestDir: {sys}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\Capicom\instala.bat; DestDir: {app}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\XMLSec\libxml2.dll; DestDir: {app}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\XMLSec\libxmlsec.dll; DestDir: {app}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\XMLSec\libxmlsec-openssl.dll; DestDir: {app}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
+Source: ..\..\..\DLLs\Diversos\iconv.dll; DestDir: {app}; Flags: ; Components: programa
+Source: Schemas\*.*; DestDir: {app}\Schemas; Components: programa;
+Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
 
 [INI]
 Filename: {app}\{#MyAppUrlName}; Section: InternetShortcut; Key: URL; String: {#MyAppURL}; Components: help
@@ -85,6 +94,6 @@ Name: {userstartup}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {
 Name: {group}\{cm:ProgramOnTheWeb,{#MyAppName}}; Filename: {app}\{#MyAppUrlName}; Components: help
 
 [Run]
+Filename: {app}\instala.bat; Description: {cm:LaunchProgram,instala.bat}; Flags: nowait postinstall skipifsilent
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#MyAppName}}; Flags: nowait postinstall skipifsilent
-Filename: {app}\ACBrMonitor.chm; Description: Novidades desta Versão; Flags: postinstall shellexec skipifsilent; Components: help
 

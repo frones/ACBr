@@ -226,7 +226,7 @@ Procedure FindFiles( const FileMask : String; AStringList : TStrings;
   IncludePath : Boolean = True ) ;
 Function FilesExists(const FileMask: String) : Boolean ;
 Procedure DeleteFiles(const FileMask: String; RaiseExceptionOnFail : Boolean = True)  ;
-Procedure TryDeleteFile(const AFile: String; WaitTime: Integer = 100)  ;
+Procedure TryDeleteFile(const AFile: String; WaitTime: Integer = 1000)  ;
 function CopyFileTo(const AFromFileName, AToFileName : String;
    const AFailIfExists : Boolean = false) : Boolean;
 Function PathWithDelim( const APath : String ) : String ;
@@ -2050,14 +2050,24 @@ end ;
   <WaitTime> milisegundos. Gera Exceção se não conseguir apagar o arquivo.
  ---------------------------------------------------------------------------- }
 procedure TryDeleteFile(const AFile : String ; WaitTime : Integer) ;
-  Var TFim : TDateTime ;
+Var
+  TFim : TDateTime ;
+  Ok: Boolean;
 begin
+  if EstaVazio(AFile) or (not FileExists(AFile)) then
+    exit ;
+
   TFim := IncMilliSecond(now,WaitTime) ;
   repeat
      SysUtils.DeleteFile( AFile ) ;
-  until (not FileExists( AFile )) or (now > TFim) ;
+     Ok := (not FileExists( AFile ));
+     if Ok then
+       Break;
 
-  if FileExists( AFile ) then
+     Sleep(100);
+  until (now > TFim) ;
+
+  if not Ok then
      raise Exception.Create('Erro ao apagar: ' + AFile);
 end ;
 {-----------------------------------------------------------------------------

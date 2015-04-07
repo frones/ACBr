@@ -6428,9 +6428,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = ConfiguracaoNFE
+            ActivePage = Testes
             Align = alClient
-            TabIndex = 0
+            TabIndex = 6
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -6515,6 +6515,30 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Log de Mensagens do Componente ACBrNFe'
                 OnClick = cbLogCompClick
                 TabOrder = 2
+              end
+              object rgVersaoSSL: TRadioGroup
+                Left = 8
+                Height = 57
+                Top = 144
+                Width = 354
+                AutoFill = True
+                Caption = 'Versão SSL'
+                ChildSizing.LeftRightSpacing = 6
+                ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                ChildSizing.ShrinkHorizontal = crsScaleChilds
+                ChildSizing.ShrinkVertical = crsScaleChilds
+                ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                ChildSizing.ControlsPerLine = 2
+                ClientHeight = 39
+                ClientWidth = 350
+                Columns = 2
+                ItemIndex = 1
+                Items.Strings = (
+                  'OpenSSL'
+                  'CAPICOM'
+                )
+                TabOrder = 3
               end
             end
             object Certificado: TTabSheet

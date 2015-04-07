@@ -44,7 +44,7 @@ uses
   ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
   Printers, SynHighlighterXML, SynMemo, pcnConversao,
-  pcnConversaoNFe;
+  pcnConversaoNFe,ACBrDFeConfiguracoes;
 
 const
   {$I versao.txt}
@@ -565,6 +565,7 @@ type
     pTopCmd: TPanel;
     pTopo: TPanel;
     pTopRespostas: TPanel;
+    rgVersaoSSL: TRadioGroup;
     rbLCBFila: TRadioButton;
     rbLCBTeclado: TRadioButton;
     rbTCP: TRadioButton;
@@ -943,6 +944,7 @@ type
     procedure SalvarIni;
     procedure ConfiguraDANFe;
     procedure VerificaDiretorios;
+    procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
   end;
 
@@ -1114,11 +1116,11 @@ begin
   cbPortaESCPOS.Items.Clear;
   ACBrNFeDANFeESCPOS1.Device.AcharPortasSeriais(cbPortaESCPOS.Items);
 
-  TrayIcon1.Hint := 'ACBrMonitor ' + Versao;
+  TrayIcon1.Hint := 'ACBrMonitor PLUS' + Versao;
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 
-  Caption := 'ACBrMonitor ' + Versao + ' - ACBr: ' + ACBR_VERSAO;
+  Caption := 'ACBrMonitorPLUS' + Versao + ' - ACBr: ' + ACBR_VERSAO;
   pgConfig.ActivePageIndex := 0;
 
   {$IFDEF LINUX}
@@ -1544,6 +1546,7 @@ procedure TFrmACBrMonitor.btnCancNFClick(Sender: TObject);
 var
   idLote, vAux: string;
 begin
+  LimparResp;
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter :=
@@ -1576,6 +1579,7 @@ end;
 
 procedure TFrmACBrMonitor.btnConsultarClick(Sender: TObject);
 begin
+  LimparResp;
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter :=
@@ -1594,6 +1598,7 @@ procedure TFrmACBrMonitor.btnEnviarClick(Sender: TObject);
 var
   vAux: string;
 begin
+  LimparResp;
   if not (InputQuery('WebServices Enviar', 'Numero do Lote', vAux)) then
     exit;
   OpenDialog1.Title := 'Selecione a NFE';
@@ -1614,6 +1619,7 @@ procedure TFrmACBrMonitor.btnEnviarEmailClick(Sender: TObject);
 var
   vPara: string;
 begin
+  LimparResp;
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter :=
@@ -1649,6 +1655,7 @@ end;
 
 procedure TFrmACBrMonitor.btnImprimirClick(Sender: TObject);
 begin
+  LimparResp;
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter :=
@@ -1668,6 +1675,7 @@ procedure TFrmACBrMonitor.btnInutilizarClick(Sender: TObject);
 var
   CNPJ, Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: string;
 begin
+  LimparResp;
   if not (InputQuery('WebServices Inutilização ', 'CNPJ', CNPJ)) then
     exit;
   if not (InputQuery('WebServices Inutilização ', 'Ano', Ano)) then
@@ -1690,12 +1698,14 @@ end;
 
 procedure TFrmACBrMonitor.btnStatusServClick(Sender: TObject);
 begin
+  LimparResp;
   ACBrNFe1.WebServices.StatusServico.Executar;
   ExibeResp(ACBrNFe1.WebServices.StatusServico.RetWS);
 end;
 
 procedure TFrmACBrMonitor.btnValidarXMLClick(Sender: TObject);
 begin
+  LimparResp;
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter :=
@@ -1980,7 +1990,7 @@ begin
   ACBrMonitorINI := ExtractFilePath(Application.ExeName) + 'ACBrMonitor.ini';
 
   if not FileExists(ACBrMonitorINI) then //verifica se o arq. de config existe
-  begin                                  //se nao existir vai para as configs
+  begin                                   //se nao existir, lê configurações default e vai para as configs
     WindowState := wsNormal;
     MessageDlg('Bem vindo ao ACBrMonitor',
       'Bem vindo ao ACBrMonitor,' + sLineBreak + sLineBreak +
@@ -1990,6 +2000,7 @@ begin
       sLineBreak + sLineBreak +
       'IMPORTANTE: Após configurar o Método de Monitoramento' +
       sLineBreak + ' o ACBrMonitor deve ser reiniciado', mtInformation, [mbOK], 0);
+    LerIni;
     bConfig.Click;
     exit;
   end;
@@ -2190,12 +2201,13 @@ var
   Ini: TIniFile;
   ECFAtivado, CHQAtivado, GAVAtivado, DISAtivado, BALAtivado,
   ETQAtivado, ESCPOSAtivado: boolean;
-  Senha, ECFDeviceParams, CHQDeviceParams: string;
+  Senha, ECFDeviceParams, CHQDeviceParams, PathApplication: string;
   wNomeArquivo: string;
   OK: boolean;
   StreamMemo: TMemoryStream;
 begin
   Ini := TIniFile.Create(ACBrMonitorINI);
+  PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
 
   ECFAtivado := ACBrECF1.Ativo;
   CHQAtivado := ACBrCHQ1.Ativo;
@@ -2225,7 +2237,7 @@ begin
 
     { Parametros do Monitor }
     rbTCP.Checked := Ini.ReadBool('ACBrMonitor', 'Modo_TCP', False);
-    rbTXT.Checked := Ini.ReadBool('ACBrMonitor', 'Modo_TXT', False);
+    rbTXT.Checked := Ini.ReadBool('ACBrMonitor', 'Modo_TXT', True);
     edPortaTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_Porta', 3434));
     edTimeOutTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_TimeOut', 10000));
     edEntTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Entrada', 'ENT.TXT');
@@ -2423,13 +2435,16 @@ begin
       (edLogComp.Text <> '');
     sedLogLinhasComp.Value := Ini.ReadInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', 0);
     ArqLogCompTXT := AcertaPath(edLogComp.Text);
+    rgVersaoSSL.ItemIndex := Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
+
+    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
 
     cbModoEmissao.Checked :=
       Ini.ReadBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', False);
     rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', 0);
     ckSalvar.Checked := Ini.ReadBool('Geral', 'Salvar', True);
     edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',
-      PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
+      PathApplication + 'Logs');
     cbxImpressora.ItemIndex :=
       cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
 
@@ -2478,18 +2493,10 @@ begin
     edtIdToken.Text := Ini.ReadString('NFCe', 'IdToken', '');
     edtToken.Text := Ini.ReadString('NFCe', 'Token', '');
 
-    {$IFDEF ACBrNFeOpenSSL}
-    lblCaminho.Caption := 'Arquivo PFX';
-    edtCaminho.Text := Ini.ReadString('Certificado', 'Caminho', '');
-    ACBrNFe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
-    ACBrNFe1.Configuracoes.Geral.IniFinXMLSECAutomatico := False;
-    {$ELSE}
-    lblCaminho.Caption := 'Número de Série';
+    lblCaminho.Caption := 'Dados Certificado';
     edtCaminho.Text := Ini.ReadString('Certificado', 'Caminho', '');
     ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtCaminho.Text;
     edtCaminho.Text := ACBrNFe1.Configuracoes.Certificados.NumeroSerie;
-
-    {$ENDIF}
     edtSenha.Text := LeINICrypt(INI, 'Certificado', 'Senha', _C);
     ACBrNFe1.Configuracoes.Certificados.Senha := edtSenha.Text;
 
@@ -2521,7 +2528,7 @@ begin
     edtMargemDir.Text := Ini.ReadString('DANFE', 'MargemDir', '0,51');
     edtMargemEsq.Text := Ini.ReadString('DANFE', 'MargemEsq', '0,6');
     edtPathPDF.Text :=
-      PathWithDelim(Ini.ReadString('DANFE', 'PathPDF', ExtractFilePath(Application.ExeName)));
+      Ini.ReadString('DANFE', 'PathPDF', PathApplication+'PDF');
     rgCasasDecimaisQtd.ItemIndex := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
     spedtDecimaisVUnit.Value := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
     cbxExibeResumo.Checked := Ini.ReadBool('DANFE', 'ExibeResumo', False);
@@ -2562,23 +2569,23 @@ begin
     mmEmailMsg.Lines.LoadFromStream(StreamMemo);
     StreamMemo.Free;
 
-    cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', False);
+    cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', True);
     VerificaDiretorios;
-    cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', False);
-    cbxAdicionaLiteral.Checked := Ini.ReadBool('Arquivos', 'AddLiteral', False);
-    cbxEmissaoPathNFe.Checked := Ini.ReadBool('Arquivos', 'EmissaoPathNFe', False);
+    cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
+    cbxAdicionaLiteral.Checked := Ini.ReadBool('Arquivos', 'AddLiteral', True);
+    cbxEmissaoPathNFe.Checked := Ini.ReadBool('Arquivos', 'EmissaoPathNFe', True);
     cbxSalvaCCeCancelamentoPathEvento.Checked :=
-      Ini.ReadBool('Arquivos', 'SalvarCCeCanPathEvento', False);
-    cbxSepararPorCNPJ.Checked := Ini.ReadBool('Arquivos', 'SepararPorCNPJ', False);
-    cbxSepararporModelo.Checked := Ini.ReadBool('Arquivos', 'SepararPorModelo', False);
+      Ini.ReadBool('Arquivos', 'SalvarCCeCanPathEvento', True);
+    cbxSepararPorCNPJ.Checked := Ini.ReadBool('Arquivos', 'SepararPorCNPJ', True);
+    cbxSepararporModelo.Checked := Ini.ReadBool('Arquivos', 'SepararPorModelo', True);
     cbxSalvarNFesProcessadas.Checked :=
       Ini.ReadBool('Arquivos', 'SalvarApenasNFesAutorizadas', False);
-    edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', '');
-    edtPathCan.Text := Ini.ReadString('Arquivos', 'PathCan', '');
-    edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', '');
-    edtPathDPEC.Text := Ini.ReadString('Arquivos', 'PathDPEC', '');
-    edtPathCCe.Text := Ini.ReadString('Arquivos', 'PathCCe', '');
-    edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', '');
+    edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', PathApplication+'Arqs');
+    edtPathCan.Text := Ini.ReadString('Arquivos', 'PathCan', PathApplication+'Arqs');
+    edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', PathApplication+'Arqs');
+    edtPathDPEC.Text := Ini.ReadString('Arquivos', 'PathDPEC', PathApplication+'Arqs');
+    edtPathCCe.Text := Ini.ReadString('Arquivos', 'PathCCe', PathApplication+'Arqs');
+    edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', PathApplication+'Arqs');
 
     ACBrNFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxPastaMensal.Checked;
@@ -2606,7 +2613,8 @@ begin
     Ini.Free;
   end;
 
-  LerSW;
+  if FileExists(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'swh.ini') then;
+     LerSW;
 
   with ACBrECF1 do
   begin
@@ -3098,6 +3106,7 @@ begin
     Ini.WriteBool('ACBrNFeMonitor', 'Gravar_Log_Comp', cbLogComp.Checked);
     Ini.WriteString('ACBrNFeMonitor', 'Arquivo_Log_Comp', edLogComp.Text);
     Ini.WriteInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', sedLogLinhasComp.Value);
+    Ini.WriteInteger('ACBrNFeMonitor', 'VersaoSSL', rgVersaoSSL.ItemIndex);
 
     Ini.WriteInteger('Geral', 'DANFE', rgTipoDanfe.ItemIndex);
     Ini.WriteInteger('Geral', 'FormaEmissao', rgFormaEmissao.ItemIndex);
@@ -3445,6 +3454,7 @@ begin
   pgConfig.ActivePageIndex := 0;
   tvMenu.Items.FindNodeWithText('Monitor').Selected := True;
   MudaPainel;
+  LimparResp;
 
   Application.ProcessMessages;
 end;
@@ -5511,6 +5521,11 @@ begin
     sbPathSalvar.Enabled := False;
   end;
 
+end;
+
+procedure TFrmACBrMonitor.LimparResp;
+begin
+  mResposta.Clear;
 end;
 
 procedure TFrmACBrMonitor.ExibeResp(Documento: ansistring);

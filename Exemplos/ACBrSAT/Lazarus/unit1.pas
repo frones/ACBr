@@ -856,10 +856,10 @@ begin
       Prod.cEAN := '6291041500213';
       Prod.xProd := 'Assinatura SAC';
       prod.NCM := '99';
-      Prod.CFOP := '5500';
-      Prod.uCom := 'mes';
+      Prod.CFOP := '5120';
+      Prod.uCom := 'UN';
       Prod.qCom := 1;
-      Prod.vUnCom := 120;
+      Prod.vUnCom := 120.00;
       Prod.indRegra := irTruncamento;
       Prod.vDesc := 1;
 
@@ -878,11 +878,11 @@ begin
 
       Imposto.PIS.CST := pis01;
       Imposto.PIS.vBC := TotalItem;
-      Imposto.PIS.pPIS := 0.65;
+      Imposto.PIS.pPIS := 0.0065;
 
       Imposto.COFINS.CST := cof01;
       Imposto.COFINS.vBC := TotalItem;
-      Imposto.COFINS.pCOFINS := 3;
+      Imposto.COFINS.pCOFINS := 0.0065;
       //
       //Imposto.COFINSST.vBC := 87206.46;
       //Imposto.COFINSST.pCOFINS := 1.8457;
@@ -899,7 +899,7 @@ begin
       Prod.CFOP := '5529';
       Prod.uCom := 'un';
       Prod.qCom := 1.1205;
-      Prod.vUnCom := 11.210;
+      Prod.vUnCom := 1.210;
       Prod.indRegra := irTruncamento;
       Prod.vOutro := 2;
 
@@ -934,7 +934,7 @@ begin
       Prod.CFOP := '5844';
       Prod.uCom := 'un';
       Prod.qCom := 1.1205;
-      Prod.vUnCom := 11.210;
+      Prod.vUnCom := 1.210;
       Prod.indRegra := irTruncamento;
 
       TotalItem := (Prod.qCom * Prod.vUnCom);
@@ -963,7 +963,7 @@ begin
       Prod.CFOP := '5025';
       Prod.uCom := 'horas';
       Prod.qCom := 1.1205;
-      Prod.vUnCom := 11.210;
+      Prod.vUnCom := 1.210;
       Prod.vProd := 8;
       Prod.indRegra := irTruncamento;
       Prod.vOutro := 93.31;
@@ -982,7 +982,7 @@ begin
     *)
 
     Total.DescAcrEntr.vDescSubtot := 5;
-    Total.vCFeLei12741 := 1234.56;
+    Total.vCFeLei12741 := 1.23;
 
     with Pagto.Add do
     begin

@@ -227,33 +227,43 @@ begin
                     result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))
                   else
                     result:=0;
-                  end;
+                end;
     tcDatHor  : begin
-                    if length(ConteudoTag)>0 then
-                      result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
+                  if length(ConteudoTag)>0 then
+                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
                       EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
-                    else
-                      result:=0;
-                  end;
+                  else
+                    result:=0;
+                end;
     tcHor     : begin
-                    if length(ConteudoTag)>0 then
+                  if length(ConteudoTag)>0 then
                     result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
-                    else
+                  else
                     result:=0;
-                  end;
+                end;
     tcHorCFe  : begin
-                    if length(ConteudoTag)>0 then
+                  if length(ConteudoTag)>0 then
                     result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 3, 2)), StrToInt(copy(ConteudoTag, 5, 2)), 0)
-                    else
+                  else
                     result:=0;
-                  end;
+                end;
     tcDe2,
     tcDe3,
     tcDe4,
     tcDe6,
-    tcDe10    : result := StringToFloatDef(ConteudoTag, 0);
+    tcDe10    : begin
+                  if length(ConteudoTag)>0 then
+                    result := StringToFloatDef(ConteudoTag, 0)
+                  else
+                    result := 0;
+                end;
     tcEsp     : result := ConteudoTag;
-    tcInt     : result := StrToIntDef(Trim(SomenteNumeros(ConteudoTag)),0);
+    tcInt     : begin
+                  if length(ConteudoTag)>0 then
+                    result := StrToIntDef(Trim(SomenteNumeros(ConteudoTag)),0)
+                  else
+                    result := 0;
+                end;
     else
       raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
   end;

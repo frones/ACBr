@@ -1573,9 +1573,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 0
             Height = 58
             Hint = 'Evita que usuÃ¡rios abram a tela de  ConfiguraÃ§Ã£o '#13#10' '#13#10'TambÃ©m Ã© usada para proteger o arquivo de ConfiguraÃ§Ãµes'#13#10'com dados da Sw.House para geraÃ§Ã£o da RFD'
-            Top = 237
+            Top = 178
             Width = 193
-            Anchors = []
             ClientHeight = 40
             ClientWidth = 189
             Enabled = False
@@ -1584,10 +1583,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Control = gbSenha
               AnchorSideTop.Side = asrCenter
               Cursor = crIBeam
-              Left = 65
+              Left = 48
               Height = 25
               Top = 8
-              Width = 96
+              Width = 136
               EchoMode = emPassword
               PasswordChar = '*'
               TabOrder = 0
@@ -1596,12 +1595,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Control = edSenha
               AnchorSideTop.Side = asrCenter
               AnchorSideRight.Control = edSenha
-              Left = 24
+              Left = 5
               Height = 17
               Top = 12
               Width = 38
               Anchors = [akTop, akRight]
-              BorderSpacing.Right = 3
+              BorderSpacing.Right = 5
               Caption = 'Senha:'
               ParentColor = False
             end
@@ -1609,20 +1608,20 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object gbLog: TGroupBox
             AnchorSideTop.Control = cbLog
             AnchorSideTop.Side = asrBottom
-            Left = 235
+            Left = 243
             Height = 87
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
-            Top = 136
-            Width = 377
+            Top = 133
+            Width = 369
             Anchors = [akTop, akLeft, akRight]
             ClientHeight = 69
-            ClientWidth = 373
+            ClientWidth = 365
             Enabled = False
             TabOrder = 6
             object sbLog: TSpeedButton
               AnchorSideTop.Control = edLogArq
               AnchorSideTop.Side = asrCenter
-              Left = 344
+              Left = 336
               Height = 23
               Top = 6
               Width = 23
@@ -1636,7 +1635,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 94
               Height = 25
               Top = 5
-              Width = 251
+              Width = 243
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 5
               TabOrder = 0
@@ -1691,10 +1690,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object cbLog: TCheckBox
             AnchorSideLeft.Control = gbLog
             AnchorSideTop.Side = asrBottom
-            Left = 250
+            Left = 258
             Height = 21
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
-            Top = 115
+            Top = 112
             Width = 128
             BorderSpacing.Left = 15
             Caption = 'Log de Comandos'
@@ -1703,27 +1702,26 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object cbSenha: TCheckBox
             AnchorSideLeft.Control = gbSenha
-            AnchorSideTop.Control = cbComandos
+            AnchorSideTop.Control = cbUmaInstancia
             AnchorSideTop.Side = asrBottom
             Left = 0
             Height = 21
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
-            Top = 180
+            Top = 157
             Width = 159
-            Anchors = [akLeft]
             Caption = 'Proteger Configurações'
             OnClick = cbSenhaClick
             TabOrder = 7
           end
           object gbTXT: TGroupBox
             AnchorSideTop.Side = asrBottom
-            Left = 235
+            Left = 243
             Height = 85
             Top = 29
-            Width = 377
+            Width = 369
             Anchors = [akTop, akLeft, akRight]
             ClientHeight = 67
-            ClientWidth = 373
+            ClientWidth = 365
             Enabled = False
             TabOrder = 10
             object Label6: TLabel
@@ -1763,7 +1761,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'Nome do arquivo de Entrada que serÃ¡ monitorado pelo ACBrMonitor'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 5
-              Width = 173
+              Width = 165
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 5
               TabOrder = 0
@@ -1778,7 +1776,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'Nome do arquivo de SaÃ­da que serÃ¡ criado pelo ACBrMonitor com as respostas'#13#10'Especifique o caminho completo.  '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 34
-              Width = 173
+              Width = 165
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 4
               TabOrder = 2
@@ -1788,7 +1786,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = sedIntervalo
               AnchorSideRight.Side = asrCenter
               AnchorSideBottom.Control = sedIntervalo
-              Left = 310
+              Left = 302
               Height = 17
               Top = 4
               Width = 50
@@ -1801,7 +1799,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object sedIntervalo: TSpinEdit
               AnchorSideTop.Control = gbTXT
               AnchorSideTop.Side = asrCenter
-              Left = 311
+              Left = 303
               Height = 25
               Hint = 'Intervalo de Tempo em Milissegundos que o ACBrMonitor'#10'verifica a presenÃ§a do arquivo de Entrada'
               Top = 21
@@ -1817,7 +1815,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = edEntTXT
               AnchorSideTop.Side = asrCenter
-              Left = 244
+              Left = 236
               Height = 21
               Top = 7
               Width = 48
@@ -1830,7 +1828,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = edSaiTXT
               AnchorSideTop.Side = asrCenter
-              Left = 244
+              Left = 236
               Height = 21
               Top = 36
               Width = 48
@@ -1842,7 +1840,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object rbTXT: TRadioButton
             AnchorSideLeft.Control = gbTXT
             AnchorSideBottom.Control = gbTXT
-            Left = 250
+            Left = 258
             Height = 25
             Hint = 'Configura o ACBrMonitor para monitorar arquivos TXT'
             Top = 1
@@ -6430,9 +6428,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = Certificado
+            ActivePage = ConfiguracaoNFE
             Align = alClient
-            TabIndex = 1
+            TabIndex = 0
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -6653,6 +6651,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 24
                       Top = 104
                       Width = 23
+                      Enabled = False
                       Glyph.Data = {
                         76010000424D7601000000000000760000002800000020000000100000000100
                         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -6731,6 +6730,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Font.Color = clWindowText
                       Font.Height = -11
                       Font.Name = 'MS Sans Serif'
+                      OnClick = ckSalvarClick
                       ParentFont = False
                       TabOrder = 3
                     end
@@ -6739,6 +6739,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Height = 25
                       Top = 104
                       Width = 249
+                      Enabled = False
                       TabOrder = 4
                     end
                     object rgTipoAmb: TRadioGroup
@@ -6771,14 +6772,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 56
                       Width = 61
                       ItemHeight = 17
-                      ItemIndex = 0
+                      ItemIndex = 2
                       Items.Strings = (
                         '2.00'
                         '3.00'
                         '3.10'
                       )
                       TabOrder = 2
-                      Text = '2.00'
+                      Text = '3.10'
                     end
                   end
                   object gbxProxy: TGroupBox
@@ -7734,6 +7735,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 96
                 Width = 23
+                Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -7772,6 +7774,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 136
                 Width = 23
+                Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -7802,6 +7805,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 96
                 Width = 23
+                Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -7832,6 +7836,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 136
                 Width = 23
+                Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -7892,6 +7897,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 176
                 Width = 23
+                Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -7922,6 +7928,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 176
                 Width = 23
+                Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -7944,6 +7951,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 176
                 Width = 252
+                Enabled = False
                 TabOrder = 11
               end
               object edtPathNFe: TEdit
@@ -7951,6 +7959,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 96
                 Width = 252
+                Enabled = False
                 TabOrder = 7
               end
               object edtPathCan: TEdit
@@ -7958,6 +7967,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 136
                 Width = 252
+                Enabled = False
                 TabOrder = 9
               end
               object edtPathInu: TEdit
@@ -7965,6 +7975,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 96
                 Width = 244
+                Enabled = False
                 TabOrder = 8
               end
               object edtPathDPEC: TEdit
@@ -7972,6 +7983,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 136
                 Width = 244
+                Enabled = False
                 TabOrder = 10
               end
               object edtPathPDF: TEdit
@@ -7986,6 +7998,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 176
                 Width = 244
+                Enabled = False
                 TabOrder = 12
               end
               object cbxSalvarArqs: TCheckBox
@@ -8003,6 +8016,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 18
                 Width = 171
                 Caption = 'Criar Pastas Mensalmente'
+                Enabled = False
                 OnClick = cbxPastaMensalClick
                 TabOrder = 1
               end
@@ -8012,6 +8026,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 36
                 Width = 237
                 Caption = 'Adicionar Literal no nome das pastas'
+                Enabled = False
                 TabOrder = 2
               end
               object cbxEmissaoPathNFe: TCheckBox
@@ -8047,6 +8062,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 54
                 Width = 244
                 Caption = 'Separar Arqs pelo Modelo(NFe/NFCe)'
+                Enabled = False
                 TabOrder = 3
               end
               object cbxSalvarNFesProcessadas: TCheckBox
@@ -8055,6 +8071,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 54
                 Width = 312
                 Caption = 'Salvar apenas NFes processadas na pasta da NFe'
+                Enabled = False
                 TabOrder = 14
               end
             end
@@ -9883,6 +9900,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

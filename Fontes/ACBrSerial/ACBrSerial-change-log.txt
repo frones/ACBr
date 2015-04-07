@@ -97,8 +97,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 07/04/2015
--- ACBrECFSwedaStx --  (por: DSA)
+Data: 07/04/2015       (por: DSA)
+-- ACBrECFEscECF --
+[*] Removida a restrição de apenas permitir Letras no cadastro de
+    Formas de Pagamento ou Relatório Gerencial
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=20904
+
+-- ACBrECFSwedaStx --
 [-] Ajuste para correta detecção de Tampa aberta ou fim de papel
     http://www.projetoacbr.com.br/forum/index.php?showtopic=20803
 

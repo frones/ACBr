@@ -1,7 +1,7 @@
 inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
   Left = 195
   Top = 122
-  Width = 835
+  Width = 852
   Height = 784
   Caption = 'Evento - Retrato'
   Font.Height = -8
@@ -11,8 +11,6 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited QRNFeEvento: TQuickRep
-    Left = 3
-    Top = 3
     BeforePrint = QREventoBeforePrint
     DataSet = cdsDocumentos
     Font.Height = -8
@@ -204,7 +202,7 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
+          34.395833333333340000
           1206.500000000000000000
           2.645833333333333000
           132.291666666666700000)
@@ -239,8 +237,8 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
-          232.833333333333300000
+          34.395833333333340000
+          232.833333333333400000
           2.645833333333333000
           132.291666666666700000)
         XLColumn = 0
@@ -467,10 +465,10 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
+          34.395833333333340000
           5.291666666666667000
           0.000000000000000000
-          367.770833333333300000)
+          367.770833333333400000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -500,7 +498,7 @@ inherited frmNFeDAEventoQRRetrato: TfrmNFeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
+          34.395833333333340000
           378.354166666666700000
           0.000000000000000000
           121.708333333333300000)

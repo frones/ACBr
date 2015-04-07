@@ -105,8 +105,9 @@ type
     function LerXML_provedorInfisc: Boolean;
     function LerXML_provedorEquiplano: Boolean;
     function LerXML_provedorEL: Boolean;
-	function LerXml_provedorNFSEBrasil: boolean;
-	 
+	  function LerXml_provedorNFSEBrasil: boolean;
+    function LerXml_provedorFissLex: boolean;
+
   published
     property Leitor: TLeitor  read FLeitor   write FLeitor;
     property InfSit: TInfSit  read FInfSit   write FInfSit;
@@ -226,7 +227,7 @@ begin
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
-
+          
           InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -523,6 +524,68 @@ begin
     end;
 
     result := True;
+  except
+    result := False;
+  end;
+end;
+
+function TretSitLote.LerXml_provedorFissLex: boolean;
+var
+  i: Integer;
+begin
+  result := True;
+
+  try
+    // Incluido por Ricardo Miranda em 14/03/2013
+    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    // Alterado por Akai - L. Massao Aihara 31/10/2013
+    if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'Consultarsituacaoloterpsresposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResult') <> '') then
+    begin
+      InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
+      InfSit.FSituacao   := Leitor.rCampo(tcStr, 'Situacao');
+
+      // FSituacao: 1 = Não Recebido
+      //            2 = Não Processado
+      //            3 = Processado com Erro
+      //            4 = Processado com Sucesso
+
+      // Ler a Lista de Mensagens
+      if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
+        begin
+          InfSit.FMsgRetorno.Add;
+
+        //  InfSit.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+        //  InfSit.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+        //  InfSit.FMsgRetorno[i].FIdentificacaoRps.Tipo   := Leitor.rCampo(tcStr, 'Tipo');
+          InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+          InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+          inc(i);
+        end;
+      end;
+
+    end;
+
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+     begin
+       InfSit.FMsgRetorno.Add;
+       InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+       InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+       InfSit.FMsgRetorno[i].FCorrecao := '';
+
+       inc(i);
+     end;
   except
     result := False;
   end;

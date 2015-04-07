@@ -173,7 +173,8 @@ begin
       tcDe2,
       tcDe3,
       tcDe4,
-      tcDe10    : result := StringToFloat('0' + ConteudoTag);
+      tcDe10    : result := StrToFloat(StringReplace('0' + ConteudoTag, '.', DecimalSeparator, []));
+//      tcDe10    : result := StringToFloat('0' + ConteudoTag);
       tcEsp     : result := ConteudoTag;
       tcInt     : result := StrToInt('0' + Trim(SomenteNumeros(ConteudoTag)));
       else
@@ -312,13 +313,13 @@ begin
         NFe.ide.NFref[i].refCTe := LerCampo(tcEsp, 'refCTe'); 
   end;
 
-  if ((ID = 'B20D') or (ID = 'B13')) and  (NFe.ide.NFref.Count > 0) then
+  if ((ID = 'B20D') or (ID = 'B13') or (ID = 'BA13')) and  (NFe.ide.NFref.Count > 0) then
    begin
      i := NFe.ide.NFref.Count - 1;
     (*B20d*)NFe.Ide.NFref[i].refNFP.CNPJCPF := LerCampo(tcEsp, 'CNPJ');
    end;
 
-  if ((ID = 'B20E') or (ID = 'B14')) and  (NFe.ide.NFref.Count > 0) then
+  if ((ID = 'B20E') or (ID = 'B14') or (ID = 'BA14')) and  (NFe.ide.NFref.Count > 0) then
    begin
      i := NFe.ide.NFref.Count - 1;
     (*B20e*)NFe.Ide.NFref[i].refNFP.CNPJCPF := LerCampo(tcEsp, 'CPF');
@@ -1052,7 +1053,7 @@ begin
   begin
     NFe.pag.Add;
     i := NFe.pag.Count - 1;
-    NFe.pag[i].tPag := LerCampo(tcStr, 'tPag');
+    NFe.pag[i].tPag :=  StrToFormaPagamento(ok, LerCampo(tcStr, 'tPag'));
     NFe.pag[i].vPag := LerCampo(tcDe2, 'vPag');
 //    NFe.pag[i].card := LerCampo(tcStr, 'card'); // é um grupo
     NFe.pag[i].CNPJ := LerCampo(tcStr, 'CNPJ');

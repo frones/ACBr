@@ -175,6 +175,8 @@ begin
     cURL_Producao := 'http://201.69.22.78:5667/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3519303 : // Ibaté/SP
     cURL_Producao := 'http://189.44.89.244:5661/IssWeb-ejb/IssWebWS/IssWebWS';  
+  3520103 : // Igarapava/SP
+    cURL_Producao := 'http://187.9.138.218:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3540200 : // Pontal/SP
     cURL_Producao := 'http://131.100.72.54:8080/IssWeb-ejb/IssWebWS/IssWebWS';
 //    cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
@@ -254,14 +256,14 @@ begin
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'Pedido>' +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                 SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+                                 ifThen(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio' + NameSpaceDad;
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio' + NameSpaceDad;
    acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio' + NameSpaceDad +
                              '<' + Prefixo3 + 'SubstituicaoNfse>' +
                               '<' + Prefixo3 + 'Pedido>' +
                                '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                  SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+                                  ifThen(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
   end;
 end;
 

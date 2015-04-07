@@ -4173,6 +4173,8 @@ begin
     NFSeRetorno.LerXML_provedorInfisc
   else if (FProvedor = proEL) then
     NFSeRetorno.LerXML_provedorEL
+  else if (FProvedor = proFissLex) Then
+    NFSeRetorno.LerXml_provedorFissLex
   else
     NFSeRetorno.LerXml;
 
@@ -4443,6 +4445,8 @@ begin
      NFSeRetorno.LerXml_provedorEquiplano
    else if (FProvedor = proEL) then
      NFSeRetorno.LerXml_provedorEL
+   else if (FProvedor = proFissLex) Then
+     NFSeRetorno.LerXml_provedorFissLex
    else
      NFSeRetorno.LerXml;
 
@@ -4929,6 +4933,7 @@ begin
       FNotasFiscais.Items[i].NFSe.IdentificacaoRps.Tipo  := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.IdentificacaoRps.Tipo;
       FNotasFiscais.Items[i].NFSe.CodigoVerificacao := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.CodigoVerificacao;
       FNotasFiscais.Items[i].NFSe.Numero            := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero;
+      FNotasFiscais.Items[i].NFSe.OutrasInformacoes := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.OutrasInformacoes;
       FNotasFiscais.Items[i].XML_NFSe               := FRetNfse;
       //Eduardo - DRD, adicionei
       FNotasFiscais.Items[i].NFSe.InfID.ID          := NFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.InfID.ID +

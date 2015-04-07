@@ -731,6 +731,7 @@ begin
 //         : Provedor := 'Agili';
 
   3101607, // Alfenas/MG
+  3108404, // Botelhos/MG
   3118007, // Congonhas/MG
   3302254, // Itatiaia/RJ
   3303955, // Pinheiral/RJ
@@ -750,13 +751,14 @@ begin
   4118402, // Paranavaí/PR
   4120853, // Quatro Pontes/PR
   4125605, // São Mateus do Sul/PR
-//  4127106, // Telemaco Borba/PR
+  4127106, // Telemaco Borba/PR
   4128203, // União da Vitória/PR
   4200309, // Agronomica/SC
   4201505, // Armazem/SC
   4202131, // Bela Vista do Toldo/SC
   4202305, // Biguaçu/SC
   4202453, // Bombinhas/SC
+  4202537, // Bom Jesus/SC
   4202800, // Braço do Norte/SC
   4203006, // Cacador/SC
   4203600, // Campos Novos/SC
@@ -777,6 +779,7 @@ begin
   4206702, // Herval D Oeste/SC
   4206900, // Ibirama/SC
   4207304, // Imbituba/SC
+  4207684, // Ipuaçu/SC
   4207700, // Ipumirim/SC
   4208302, // Itapema/SC
   4208401, // Itapiranga/SC
@@ -784,8 +787,10 @@ begin
   4209003, // Joaçaba/SC
   4209300, // Lages/SC
   4209409, // Laguna/SC
+  4209458, // Lajeado Grande/SC
   4210001, // Luiz Alves/SC
   4210035, // Luzerna (SC)
+  4210555, // Marema/SC
   4211058, // Monte Carlo/SC
   4211306, // Navegantes/SC
   4211702, // Orleans/SC
@@ -814,6 +819,7 @@ begin
   4217808, // Taió/SC
   4217907, // Tangará/SC
   4218004, // Tijucas/SC
+  4218509, // Treze Tilias (sc)
   4219002, // Urussanga/SC
   4219101, // Vargeao/SC
   4219507, // Xanxere/SC
@@ -828,17 +834,11 @@ begin
   4320206, // Seberi/RS
   4321501, // Torres/RS
   4321907, // Tres Passos/RS
-  4218509,  // Treze Tilias (sc)
   5006200, // Nova Andradina/MS
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
-  5103502, // Diamantino/MT
-  3108404,  // Botelhos/MG
-  4202537, // Bom Jesus/SC
-  4207684, // Ipuaçu/SC
-  4209458, // Lajeado Grande/SC
-  4210555  // Marema/SC
+  5103502  // Diamantino/MT
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG
@@ -889,7 +889,7 @@ begin
   4122008, // Rio Azul/PR
   4123501, // Santa Helena/PR
   4126306, // Senges/PR
-  4127106, // Telemaco Borba/PR
+//  4127106, // Telemaco Borba/PR
   4127700  // Toledo/PR
          : Provedor := 'Equiplano';
 

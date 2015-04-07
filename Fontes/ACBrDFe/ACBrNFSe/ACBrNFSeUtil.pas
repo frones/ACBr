@@ -1297,9 +1297,14 @@ begin
     then Numero := ''
     else Numero := '#';
 
-   AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+
-                     SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>'+
-                   '<SignedInfo>'+
+   AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"';
+
+   if AProvedor = proFiorilli then
+      AXML := AXML + SeSenao(FURISig = '', '',' Id="Ass_'+ StringReplace(FURISig, '/', '', [rfReplaceAll]) +'"')+'>'
+   else
+      AXML := AXML + SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>';
+
+   AXML := AXML +  '<SignedInfo>'+
                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
                     '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
                     '<Reference URI="'+SeSenao(FURIRef = '', '',Numero+FURIRef)+'">'+

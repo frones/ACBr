@@ -47,14 +47,14 @@ unit ACBrNFeDAEventoQRRetrato;
 // Quando enviar os fontes referentes ao DAEvento favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 27/11/2013 por Italo Jurisato Junior
+// 07/04/2015 por Italo Jurisato Junior
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls, XMLIntf, XMLDoc,
-  JPEG, ACBrNFeQRCodeBar, pcnConversao, DB,
+  JPEG, ACBrDFeQRCodeBar, pcnConversao, DB,
   DBClient, ACBrNFeDAEventoQR;
 
 type
@@ -216,7 +216,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrDFeUtil;
+  ACBrDFeUtil, ACBrNFeUtil;
 
 {$R *.dfm}
 
@@ -292,7 +292,7 @@ begin
     qrlModelo.Caption  := IntToStr(FNFe.ide.modelo);
     qrlSerie.Caption   := IntToStr(FNFe.ide.serie);
     qrlNumNFe.Caption  := FormatFloat( '000,000,000', FNFe.Ide.nNF );
-    qrlEmissao.Caption := FormatDateTime(DateTimeToStr(FNFe.Ide.dEmi));
+    qrlEmissao.Caption := DFeUtil.FormatDateTime(DateTimeToStr(FNFe.Ide.dEmi));
     SetBarCodeImage(Copy(FNFe.InfNFe.Id, 4, 44), qriBarCode);
     qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
    end;
@@ -315,14 +315,14 @@ begin
        taProducao:    qrlTipoAmbiente.Caption := 'PRODUÇÃO';
        taHomologacao: qrlTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
       end;
-      qrlEmissaoEvento.Caption   := FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
+      qrlEmissaoEvento.Caption   := DFeUtil.FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
       qrlTipoEvento.Caption      := InfEvento.TipoEvento;
       qrlDescricaoEvento.Caption := InfEvento.DescEvento;
       qrlSeqEvento.Caption       := IntToStr(InfEvento.nSeqEvento);
       qrlStatus.Caption          := IntToStr(RetInfEvento.cStat) + ' - ' +
                                     RetInfEvento.xMotivo;
       qrlProtocolo.Caption       := RetInfEvento.nProt + ' ' +
-                                    FormatDateTime(DateTimeToStr(RetInfEvento.dhRegEvento));
+                                    DFeUtil.FormatDateTime(DateTimeToStr(RetInfEvento.dhRegEvento));
     end;
 end;
 
@@ -338,12 +338,12 @@ begin
     PrintBand := True;
 
     qrlRazaoEmitente.Caption    := FNFe.emit.xNome;
-    qrlCNPJEmitente.Caption     := FormatarCNPJCPF(FNFe.emit.CNPJCPF);
+    qrlCNPJEmitente.Caption     := DFeUtil.FormatarCNPJCPF(FNFe.emit.CNPJCPF);
     qrlEnderecoEmitente.Caption := FNFe.emit.EnderEmit.xLgr + ', ' + FNFe.emit.EnderEmit.nro;
     qrlBairroEmitente.Caption   := FNFe.emit.EnderEmit.xBairro;
-    qrlCEPEmitente.Caption      := FormatarCEP(FormatFloat( '00000000', FNFe.emit.EnderEmit.CEP ));
+    qrlCEPEmitente.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FNFe.emit.EnderEmit.CEP ));
     qrlMunEmitente.Caption      := FNFe.emit.EnderEmit.xMun+' - '+FNFe.emit.EnderEmit.UF;
-    qrlFoneEmitente.Caption     := FormatarFone(FNFe.emit.enderEmit.fone);
+    qrlFoneEmitente.Caption     := DFeUtil.FormatarFone(FNFe.emit.enderEmit.fone);
     qrlInscEstEmitente.Caption  := FNFe.emit.IE;
    end;
 end;
@@ -360,12 +360,12 @@ begin
     PrintBand := True;
 
     qrlRazaoTomador.Caption    := FNFe.Dest.xNome;
-    qrlCNPJTomador.Caption     := FormatarCNPJCPF(FNFe.Dest.CNPJCPF);
+    qrlCNPJTomador.Caption     := DFeUtil.FormatarCNPJCPF(FNFe.Dest.CNPJCPF);
     qrlEnderecoTomador.Caption := FNFe.Dest.EnderDest.xLgr + ', ' + FNFe.Dest.EnderDest.nro;
     qrlBairroTomador.Caption   := FNFe.Dest.EnderDest.xBairro;
-    qrlCEPTomador.Caption      := FormatarCEP(FormatFloat( '00000000', FNFe.Dest.EnderDest.CEP));
+    qrlCEPTomador.Caption      := DFeUtil.FormatarCEP(FormatFloat( '00000000', FNFe.Dest.EnderDest.CEP));
     qrlMunTomador.Caption      := FNFe.Dest.EnderDest.xMun+' - '+FNFe.Dest.EnderDest.UF;
-    qrlFoneTomador.Caption     := FormatarFone(FNFe.Dest.EnderDest.fone);
+    qrlFoneTomador.Caption     := DFeUtil.FormatarFone(FNFe.Dest.EnderDest.fone);
     qrlInscEstTomador.Caption  := FNFe.Dest.IE;
    end;
 end;

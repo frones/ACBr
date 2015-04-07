@@ -85,6 +85,7 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     fsCache34   : TACBrECFSwedaCache ;
     fsRespostasComando : String ;
     fsFalhasRX : Byte ;
+    fsPoucoPapel: Boolean;
     fsSubModelo:String ;
     fsApplicationPath: String ;
 
@@ -362,6 +363,7 @@ begin
   fsSEQ              := 42 ;
   fsRespostasComando := '' ;
   fsFalhasRX         := 0 ;
+  fsPoucoPapel       := False;
   fpModeloStr        := 'SwedaSTX' ;
   fpRFDID            := 'SW' ;
   fpIdentificaConsumidorRodape := True ;
@@ -392,6 +394,7 @@ begin
   fsCache34.Clear ;
   fsRespostasComando := '' ;
   fsFalhasRX         := 0 ;
+  fsPoucoPapel       := False;
   
   fpColunas := 56;
   fpMFD     := True ;
@@ -440,6 +443,7 @@ begin
    fpRespostaComando  := '' ;
    fsRespostasComando := '' ;
    fsFalhasRX         := 0 ;
+   fsPoucoPapel       := False;
 
    if (LeftStr(cmd,2) <> '34') then
       fsCache34.Clear ;         // Limpa o Cache do 34
@@ -524,13 +528,18 @@ begin
                  sLineBreak+sLineBreak+
                  'Erro ('+Mensagem+') '+ErroMsg ) ;
 
-      if Trim(Mensagem) = '125' then
+      if Trim(Mensagem) = '0125' then
          DoOnErrorSemPapel
       else
          raise EACBrECFSemResposta.create(ErroMsg) ;
     end
    else
+    begin
+      if fsPoucoPapel then
+        DoOnMsgPoucoPapel;
+
       Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
+    end;
 
    { Descompactando Strings dentro do Retorno }
    Result := DescompactaRetorno( fpRespostaComando ) ;
@@ -728,14 +737,34 @@ begin
   GravaLog('                TimeOut estendido') ;
 
   { Verificando a Sequencia }
-  if Sequencia <> fsSEQ then
+  if (Sequencia <> fsSEQ) and (Tipo <> '!') then
   begin
      Result := False ;  // Ignore o Bloco, pois não é a resposta do CMD solicitado
      MsgLog := 'Sequencia diferente da enviada ('+IntToStr(fsSEQ)+')' ;
   end ;
 
   if Result and (Tipo = '!') then  // Bloco de Satus não solicitado, Verificando
-     Result := (Erro in [ 52, 110, 216, 240 ]) ;
+  begin
+     // TODO: Mapear mudanças de estado, que não são erros
+     Result := not (Erro in [40,  // Abertura de Movimento
+                             74,  // Ejetando a Folha
+                             98,  // Processando
+                             99,  // Confirme
+                             103..105, 109..111,   // Eventos de Cheque
+                             127, // Pouco Papel
+                             159, // Preenchendo
+                             172, // Preenchimento concluido
+                             198, // Processando
+                             200, // Leitura Mirc
+                             207, // Autenticando
+                             217, // Preparando Imp.Fita Det
+                             220 // Emitindo Red.Z
+                             ]);
+     if Erro = 217 then
+       fsPoucoPapel := True;
+
+      GravaLog('                Alteração de Estado: '+IntToStr(Erro)+'-'+DescreveErro(Erro) ) ;
+  end;
 
   { Verificando o CheckSum }
   ACK_PC := Ord(ACK) ;
@@ -786,7 +815,7 @@ end;
 function TACBrECFSwedaSTX.VerificaFimImpressao(var TempoLimite: TDateTime): Boolean;
 Var Cmd, Ret, RetCmd : AnsiString ;
     wACK : Byte ;
-    I : Integer ;
+    I, Erro: Integer;
 begin
   { Essa função só é chamada se AguardaImpressao = True,
     Como essa função é executada dentro da "LeResposta", que por sua vez foi
@@ -826,14 +855,13 @@ begin
               TempoLimite := IncSecond(now, TimeOut);
               try
                  Ret := fpDevice.Serial.RecvPacket(200) ;
-                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret, True ) ;
               except
               end ;
 
               if Length( Ret ) > 0 then
               begin
                  // DEBUG
-                 GravaLog('                RX <- '+IntToStr(I)+' = '+Ret, True ) ;
+                 //GravaLog('                RX <- '+IntToStr(I)+' = '+Ret, True ) ;
                  I := 0 ;
               end ;
 
@@ -845,7 +873,14 @@ begin
               Result :=  VerificaFimLeitura( RetCmd, TempoLimite) ;
            end ;
 
-           Result := Result and (pos(copy(RetCmd,11,1), 'ACDGI') > 0) ;
+           if Result then
+           begin
+              Erro := StrToIntDef( copy(RetCmd,6,4), 0 ) ;
+              if Erro <> 0 then
+                 fpRespostaComando := RetCmd
+              else
+                 Result := (pos(copy(RetCmd,11,1), 'ACDGI') > 0) ;
+           end;
         end ;
      except
        On E : Exception  do

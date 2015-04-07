@@ -97,7 +97,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 01/04/2015
+Data: 07/04/2015
+-- ACBrECFSwedaStx --  (por: DSA)
+[-] Ajuste para correta detecção de Tampa aberta ou fim de papel
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=20803
+
+Data: 01/04/2015
 -- ACBrECFEscECF --  (por: DSA)
 [*] Ajuste para correta impressão de linhas sem conteudo no modelo Bematech MP4200
 

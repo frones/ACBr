@@ -124,9 +124,10 @@ var
 begin
   AValue := OnlyNumber(AValue);
   I := 1;
+  Result := '';
   while I < Length(AValue) do
   begin
-    Result := copy(AValue,I,4)+' ';
+    Result := Result+copy(AValue,I,4)+' ';
     Inc( I, 4);
   end;
 

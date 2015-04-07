@@ -1,3 +1,0 @@
-Versao = '1.0' ;
-UrlDownloadWindows = 'http://downloads.sourceforge.net/acbr/ACBrMonitor-0.0.0.0-Windows-Instalador.exe?use_mirror=' ;
-UrlDownloadLinux   = 'http://downloads.sourceforge.net/acbr/ACBrMonitor-0.0.0.0-linux-installer.tar.gz?use_mirror=' ;

@@ -52,7 +52,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    Controls, Forms, Dialogs, ExtCtrls,
+    Controls, Forms, Dialogs, ExtCtrls, FileUtil,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
   pcnConversao, RLBarcode, ACBrNFeDANFeEventoRL;
@@ -205,16 +205,20 @@ implementation
 uses
   ACBrDFeUtil, ACBrNFeDANFeRLClass, ACBrValidador, ACBrUtil;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 procedure TfrlDANFeEventoRLRetrato.InitDados;
 begin
   // Carrega logomarca
-  if (FLogo <> '') and FileExists (FLogo) then
+  if (FLogo <> '') and FileExistsUTF8(FLogo) { *Converted from FileExists* } then
      rliLogo.Picture.LoadFromFile(FLogo);
 
   // Carrega marca d'água
-  if (FMarcaDagua <> '') and FileExists (FMarcaDagua) then
+  if (FMarcaDagua <> '') and FileExistsUTF8(FMarcaDagua) { *Converted from FileExists* } then
     begin
       rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
     end;
@@ -398,7 +402,7 @@ begin
     end;
 
   // Centraliza as linhas do cabeçalho caso o logo não seja informado
-  if (FLogo <> '') and FileExists (FLogo) then
+  if (FLogo <> '') and FileExistsUTF8(FLogo) { *Converted from FileExists* } then
     begin
       rllTitulo.Left := 88;
       rllCabecalhoLinha1.Left := 88;

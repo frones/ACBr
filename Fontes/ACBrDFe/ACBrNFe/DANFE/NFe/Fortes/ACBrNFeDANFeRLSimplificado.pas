@@ -126,7 +126,11 @@ uses
  ACBrUtil, ACBrValidador, ACBrDFeUtil,
  pcnNFe, pcnConversaoNFe;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 const
    _NUM_ITEMS_PAGE1      = 18;
@@ -219,10 +223,10 @@ begin
 
   rllEntradaSaida.Caption := tpNFToStr( FNFe.Ide.tpNF );
 
-  lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
-                       ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);
+  lblNumero.Caption := ACBrStr('Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
+                       ' - Série: '+ FormatFloat('000', FNFe.Ide.serie));
 
-  rllEmissao.Caption := 'Emissão: ' + FormatDateTimeBr(FNFe.Ide.dEmi);
+  rllEmissao.Caption := ACBrStr('Emissão: ' + FormatDateTimeBr(FNFe.Ide.dEmi));
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb04_DestinatarioBeforePrint(
@@ -243,13 +247,13 @@ begin
                             IfThen(XBairro = '', '', ', ' + XBairro) +
                             ', ' + XMun + '/ ' + UF);
      end;
-    rlmDestinatario.Lines.Add('CPF/CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
-                              ' IE: ' + IE);
+    rlmDestinatario.Lines.Add(ACBrStr('CPF/CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
+                              ' IE: ' + IE));
    end;
 
   if FNFe.Ide.tpAmb = taHomologacao then
    begin
-     rllMsgTipoEmissao.Caption := 'HOMOLOGAÇÂO - SEM VALOR FISCAL';
+     rllMsgTipoEmissao.Caption := ACBrStr('HOMOLOGAÇÂO - SEM VALOR FISCAL');
      rllMsgTipoEmissao.Enabled := True;
      rllMsgTipoEmissao.Visible := True;
    end;
@@ -284,12 +288,12 @@ begin
 
   case vTpEmissao of
    2: begin
-       rllMsgTipoEmissao.Caption := 'DANFE em Contingencia - impresso em decorrencia de problemas tecnicos';
+       rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
        rllMsgTipoEmissao.Visible := True;
        rllMsgTipoEmissao.Enabled := True;
       end;
    5: begin
-       rllMsgTipoEmissao.Caption := 'DANFE em Contingencia - impresso em decorrencia de problemas tecnicos';
+       rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
        rllMsgTipoEmissao.Visible := True;
        rllMsgTipoEmissao.Enabled := True;
       end;
@@ -324,9 +328,9 @@ begin
 //  PrintBand := RLNFe.PageNumber = 1;
 
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
-  rllTributos.Caption := 'Valor aprox. dos tributos: ' +
+  rllTributos.Caption := ACBrStr('Valor aprox. dos tributos: ' +
                          FormatFloatBr(FNFE.Total.ICMSTot.vTotTrib) +
-                         '(' + FormatFloatBr(Perc) + '%)(Fonte: IBPT)';
+                         '(' + FormatFloatBr(Perc) + '%)(Fonte: IBPT)');
 end;
 
 procedure TfrlDANFeRLSimplificado.rlmProdutoDescricaoPrint(sender: TObject;
@@ -564,13 +568,13 @@ begin
   if FNFe.Ide.tpEmis in [teNormal, teSCAN]
    then begin
     if FNFe.procNFe.cStat = 100
-     then rllDescricao.Caption := 'Protocolo de Autorização';
+     then rllDescricao.Caption := ACBrStr('Protocolo de Autorização');
 
     if FNFe.procNFe.cStat in [101, 151, 155]
-     then rllDescricao.Caption:= 'Protocolo de Homologação de Cancelamento';
+     then rllDescricao.Caption:= ACBrStr('Protocolo de Homologação de Cancelamento');
 
     if FNFe.procNFe.cStat = 110
-     then rllDescricao.Caption:= 'Protocolo de Denegação de Uso';
+     then rllDescricao.Caption:= ACBrStr('Protocolo de Denegação de Uso');
    end;
 
   if FProtocoloNFE <> ''

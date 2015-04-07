@@ -1237,29 +1237,34 @@ Var
   OldShortDateFormat: String ;
   {$ENDIF}
 begin
-  {$IFDEF HAS_FORMATSETTINGS}
-   FS := CreateFormatSettings;
-   if Format <> '' then
-     FS.ShortDateFormat := Format;
+  if (DateTimeString = '0') or (DateTimeString = '') then
+     Result := 0
+  else
+   begin
+       {$IFDEF HAS_FORMATSETTINGS}
+        FS := CreateFormatSettings;
+        if Format <> '' then
+          FS.ShortDateFormat := Format;
 
-   AStr := Trim( StringReplace(DateTimeString,'/',FS.DateSeparator, [rfReplaceAll])) ;
-   AStr := StringReplace(AStr,':',FS.TimeSeparator, [rfReplaceAll]) ;
+        AStr := Trim( StringReplace(DateTimeString,'/',FS.DateSeparator, [rfReplaceAll])) ;
+        AStr := StringReplace(AStr,':',FS.TimeSeparator, [rfReplaceAll]) ;
 
-   Result := StrToDateTime(AStr, FS);
-  {$ELSE}
-   OldShortDateFormat := ShortDateFormat ;
-   try
-     if Format <> '' then
-       ShortDateFormat := Format ;
+        Result := StrToDateTime(AStr, FS);
+       {$ELSE}
+        OldShortDateFormat := ShortDateFormat ;
+        try
+          if Format <> '' then
+            ShortDateFormat := Format ;
 
-     AStr := Trim( StringReplace(DateTimeString,'/',DateSeparator, [rfReplaceAll])) ;
-     AStr := StringReplace(AStr,':',TimeSeparator, [rfReplaceAll]) ;
+          AStr := Trim( StringReplace(DateTimeString,'/',DateSeparator, [rfReplaceAll])) ;
+          AStr := StringReplace(AStr,':',TimeSeparator, [rfReplaceAll]) ;
 
-     Result := StrToDateTime( AStr ) ;
-   finally
-     ShortDateFormat := OldShortDateFormat ;
-   end ;
-  {$ENDIF}
+          Result := StrToDateTime( AStr ) ;
+        finally
+          ShortDateFormat := OldShortDateFormat ;
+        end ;
+       {$ENDIF}
+  end;
 end ;
 
 {-----------------------------------------------------------------------------

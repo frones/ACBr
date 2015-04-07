@@ -95,6 +95,7 @@
 |* 22/03/2013: Peterson de Cerqueira Matos
 |*  - Impressão dos detalhamentos específicos e do desconto em percentual
 ******************************************************************************}
+
 {$I ACBr.inc}
 unit ACBrNFeDANFeRL;
 
@@ -107,7 +108,7 @@ uses
   {$ELSE}
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass,
+  pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 
@@ -155,7 +156,7 @@ type
     FExibirEAN: Boolean;
     FProtocoloNFe : String;
     FResumoCanhoto_Texto: String;
-    FNFeCancelada: Boolean; // Incluido em 22/02/2013 por Jorge Henrique
+    FNFeCancelada: Boolean;
     FImprimirDetalhamentoEspecifico: Boolean;
     iLimiteLinhas : Integer;
     iLinhasUtilizadas : Integer;
@@ -201,7 +202,7 @@ type
                     AExibirEAN: Boolean = False;
                     AProtocoloNFe: String = '';
                     AResumoCanhoto_Texto: String = '';
-                    ANFECancelada: Boolean = False; // Incluido em 22/02/2013 por Jorge Henrique
+                    ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
@@ -231,7 +232,7 @@ type
                     AExibirEAN: Boolean = False;
                     AProtocoloNFe: String = '';
                     AResumoCanhoto_Texto: String = '';
-                    ANFECancelada: Boolean = False; // Incluido em 22/02/2013 por Jorge Henrique
+                    ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
@@ -361,7 +362,7 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 AExibirEAN: Boolean = False;
                 AProtocoloNFe: String = '';
                 AResumoCanhoto_Texto: String = '';
-                ANFECancelada: Boolean = False; // Incluido em 22/02/2013 por Jorge Henrique
+                ANFECancelada: Boolean = False;
                 AImprimirDetalhamentoEspecifico: Boolean = True;
                 AImprimirDescPorc: Boolean = False;
                 ADetVeiculos: TDetVeiculos = [];
@@ -401,7 +402,7 @@ begin
       FExibirEAN := AExibirEAN;
       FProtocoloNFe := AProtocoloNFe;
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
-      FNFeCancelada := ANFeCancelada; // Incluido em 22/02/2013 por Jorge Henrique
+      FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
       FImprimirDescPorc := AImprimirDescPorc;
       FDetVeiculos := ADetVeiculos;
@@ -449,7 +450,7 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     AExibirEAN: Boolean = False;
                     AProtocoloNFe: String = '';
                     AResumoCanhoto_Texto: String = '';
-                    ANFECancelada: Boolean = False; // Incluido em 22/02/2013 por Jorge Henrique
+                    ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
@@ -487,7 +488,7 @@ begin
       FExibirEAN := AExibirEAN;
       FProtocoloNFe := AProtocoloNFe;
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
-      FNFeCancelada := ANFeCancelada; // Incluido em 22/02/2013 por Jorge Henrique
+      FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
       FImprimirDescPorc := AImprimirDescPorc;
       FDetVeiculos := ADetVeiculos;
@@ -497,13 +498,13 @@ begin
 
       with RLPDFFilter1.DocumentInfo do
         begin
-          Title := 'DANFE - Nota fiscal nº ' +
-                                      FormatFloat('000,000,000', FNFe.Ide.nNF);
-          KeyWords := 'Número:' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
+          Title := ACBrStr('DANFE - Nota fiscal nº ' +
+                                      FormatFloat('000,000,000', FNFe.Ide.nNF));
+          KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
                       '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi) +
                       '; Destinatário: ' + FNFe.Dest.xNome +
                       '; CNPJ: ' + FNFe.Dest.CNPJCPF +
-                      '; Valor total: ' + FormatFloat('###,###,###,###,##0.00', FNFe.Total.ICMSTot.vNF);
+                      '; Valor total: ' + FormatFloat('###,###,###,###,##0.00', FNFe.Total.ICMSTot.vNF));
         end;
 
       RLNFe.SaveToFile(AFile);

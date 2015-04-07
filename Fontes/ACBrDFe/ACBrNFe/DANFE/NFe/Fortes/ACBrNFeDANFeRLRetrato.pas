@@ -1,36 +1,36 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emiss„o de Nota Fiscal}
-{ eletrÙnica - NFe - http://www.nfe.fazenda.gov.br                             }
+{  Biblioteca multiplataforma de componentes Delphi para emiss√£o de Nota Fiscal}
+{ eletr√¥nica - NFe - http://www.nfe.fazenda.gov.br                             }
 
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
-{                                       AndrÈ Ferreira de Moraes               }
+{                                       Andr√© Ferreira de Moraes               }
 
 { Colaboradores nesse arquivo:                                                 }
 
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 
 
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 
-{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
 
 {******************************************************************************}
 
@@ -44,7 +44,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-  Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  Graphics, Controls, Forms, Dialogs, ExtCtrls, FileUtil,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, RLPrinters,
   {$IFDEF BORLAND}
@@ -590,7 +590,11 @@ uses DateUtils,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador, ACBrUtil,
   pcnNFe, pcnConversaoNFe;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 procedure TfrlDANFeRLRetrato.RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
@@ -635,7 +639,7 @@ begin
       if iQuantItens > q then
         begin
           rlbCabecalhoItens.Visible := True;
-          lblDadosDoProduto.Caption := 'CONTINUA«√O DOS DADOS DO PRODUTO / SERVI«OS';
+          lblDadosDoProduto.Caption := 'CONTINUA√á√ÉO DOS DADOS DO PRODUTO / SERVI√áOS';
           rliMarcaDagua1.Top := 300;
         end
       else
@@ -648,15 +652,15 @@ begin
     rlbISSQN.Visible := False;
     rlbDadosAdicionais.Visible := False;
     rlbReciboHeader.Visible := False;
-    // --> Silvio (Retirado por causa do controle de formul·rio da EIBrasil) - 30-08-2012
-    //      rlPainelRecibo.Visible:= False;  // n„o existe no dfm revis„o 6628--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+    // --> Silvio (Retirado por causa do controle de formul√°rio da EIBrasil) - 30-08-2012
+    //      rlPainelRecibo.Visible:= False;  // n√£o existe no dfm revis√£o 6628--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
     rlbReciboHeader.Height := 66;
     //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
     rlbDivisaoRecibo.Visible := False;
     if iQuantItens > q then
     begin
       rlbCabecalhoItens.Visible := True;
-      lblDadosDoProduto.Caption := 'CONTINUA«√O DOS DADOS DO PRODUTO / SERVI«OS';
+      lblDadosDoProduto.Caption := 'CONTINUA√á√ÉO DOS DADOS DO PRODUTO / SERVI√áOS';
       rliMarcaDagua1.Top := 300;
     end
     else
@@ -670,10 +674,10 @@ var
   i, b, h, iAlturaCanhoto: integer;
 begin
   // Carrega logomarca
-  if (FLogo <> '') and FileExists(FLogo) then
+  if (FLogo <> '') and FileExistsUTF8(FLogo) { *Converted from FileExists* } then
     rliLogo.Picture.LoadFromFile(FLogo);
 
-  if (FMarcaDagua <> '') and FileExists(FMarcaDagua) then
+  if (FMarcaDagua <> '') and FileExistsUTF8(FMarcaDagua) { *Converted from FileExists* } then
   begin
     rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
   end;
@@ -686,7 +690,7 @@ begin
     else
     begin
       rllResumo.Caption :=
-        'EMISS√O: ' + FormatDateTime('DD/MM/YYYY', FNFe.Ide.dEmi) +
+        'EMISS√ÉO: ' + FormatDateTime('DD/MM/YYYY', FNFe.Ide.dEmi) +
         '  -  ' + 'DEST. / REM.: ' +
         FNFe.Dest.xNome + '  -  ' + 'VALOR TOTAL: R$ ' +
         FormatFloatBr(FNFe.Total.ICMSTot.vNF,
@@ -716,20 +720,20 @@ begin
   else
     rllSistema.Visible := False;
 
-  // Exibe o nome do usu·rio
+  // Exibe o nome do usu√°rio
   if FUsuario <> '' then
   begin
-    rllUsuario.Caption := 'DATA / HORA DA IMPRESS√O: ' +
+    rllUsuario.Caption := 'DATA / HORA DA IMPRESS√ÉO: ' +
       DateTimeToStr(Now) + ' - ' + FUsuario;
     rllUsuario.Visible := True;
   end
   else
     rllUsuario.Visible := False;
 
-  // Exibe a informaÁ„o de Ambiente de HomologaÁ„o
+  // Exibe a informa√ß√£o de Ambiente de Homologa√ß√£o
   if FNFe.Ide.tpAmb = taHomologacao then
   begin
-    rllHomologacao.Caption := 'AMBIENTE DE HOMOLOGA«√O - NF-E SEM VALOR FISCAL';
+    rllHomologacao.Caption := 'AMBIENTE DE HOMOLOGA√á√ÉO - NF-E SEM VALOR FISCAL';
     rllHomologacao.Visible := True;
   end
   else
@@ -738,7 +742,7 @@ begin
     rllHomologacao.Visible := False;
   end;
 
-  // Exibe a informaÁ„o correta no label da chave de acesso
+  // Exibe a informa√ß√£o correta no label da chave de acesso
 
   if FNFe.procNFe.cStat > 0 then
   begin
@@ -746,7 +750,7 @@ begin
     begin
       rlbCodigoBarras.Visible := True;
       rllXMotivo.Visible := False;
-      rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE AUTORIZA«√O DE USO';
+      rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE AUTORIZA√á√ÉO DE USO';
       rllDadosVariaveis3_Descricao.Visible := True;
     end;
     // Adicionados o 151 e 155 ou a propriedade FNFeCancelada=True - Alterado por Jorge Henrique em 22/02/2013
@@ -756,7 +760,7 @@ begin
       rllXmotivo.Caption := 'NF-e CANCELADA';
       rllXmotivo.Visible := True;
       rllDadosVariaveis3_Descricao.Caption :=
-        'PROTOCOLO DE HOMOLOGA«√O DE CANCELAMENTO';
+        'PROTOCOLO DE HOMOLOGA√á√ÉO DE CANCELAMENTO';
       rllDadosVariaveis3_Descricao.Visible := True;
     end;
     // cStat de denegacao correto eh o 110 e nao 102 - Alterado por Jorge Henrique em 22/02/2013
@@ -765,7 +769,7 @@ begin
       rlbCodigoBarras.Visible := False;
       rllXmotivo.Caption := 'NF-e DENEGADA';
       rllXmotivo.Visible := True;
-      rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE DENEGA«√O DE USO';
+      rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE DENEGA√á√ÉO DE USO';
       rllDadosVariaveis3_Descricao.Visible := True;
     end;
 
@@ -784,14 +788,14 @@ begin
     if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
     begin
       rlbCodigoBarras.Visible := False;
-      rllXmotivo.Caption := 'NF-E N√O ENVIADA PARA SEFAZ';
+      rllXmotivo.Caption := 'NF-E N√ÉO ENVIADA PARA SEFAZ';
       rllXMotivo.Visible := True;
       rllDadosVariaveis3_Descricao.Visible := False;
       rllDadosVariaveis3.Visible := False;
     end;
   end;
 
-  // Ajusta a largura da coluna "CÛdigo do Produto"
+  // Ajusta a largura da coluna "C√≥digo do Produto"
   txtCodigo.Width := FLarguraCodProd;
   rlmCodProd.Width := FLarguraCodProd;
   rlsDivProd1.Left := FLarguraCodProd + 2;
@@ -805,7 +809,7 @@ begin
   rlmCodProd.Lines.BeginUpdate;
   rlmCodProd.Lines.Clear;
 
-  // ajusta a posiÁ„o do 'cÛdigo do produto'
+  // ajusta a posi√ß√£o do 'c√≥digo do produto'
   if rlmCodProd.Width > 90 then
   begin
     rlmCodProd.Top := 18;
@@ -817,14 +821,14 @@ begin
     rlmCodProd.Height := 14;
   end;
 
-  // Se a largura da coluna 'CÛdigo do produto' for suficiente,
-  // exibe o tÌtulo da coluna sem abreviaÁıes
+  // Se a largura da coluna 'C√≥digo do produto' for suficiente,
+  // exibe o t√≠tulo da coluna sem abrevia√ß√µes
   if rlmCodProd.Width > 113 then
-    rlmCodProd.Lines.Add('C”DIGO DO PRODUTO / SERVI«O')
+    rlmCodProd.Lines.Add('C√ìDIGO DO PRODUTO / SERVI√áO')
   else
-    rlmCodProd.Lines.Add('C”DIGO DO PROD. / SERV.');
+    rlmCodProd.Lines.Add('C√ìDIGO DO PROD. / SERV.');
 
-  // Ajusta a posiÁ„o da coluna 'DescriÁ„o do produto'
+  // Ajusta a posi√ß√£o da coluna 'Descri√ß√£o do produto'
   if rlmDescricaoProduto.Width > 128 then
   begin
     rlmDescricaoProduto.Top := 18;
@@ -836,17 +840,17 @@ begin
     rlmDescricaoProduto.Height := 14;
   end;
 
-  // Se a largura da coluna 'DescriÁ„o do produto' for suficiente,
-  // exibe o tÌtulo da coluna sem abreviaÁıes
+  // Se a largura da coluna 'Descri√ß√£o do produto' for suficiente,
+  // exibe o t√≠tulo da coluna sem abrevia√ß√µes
   if rlmDescricaoProduto.Width > 72 then
-    rlmDescricaoProduto.Lines.Add('DESCRI«√O DO PRODUTO / SERVI«O')
+    rlmDescricaoProduto.Lines.Add('DESCRI√á√ÉO DO PRODUTO / SERVI√áO')
   else
     rlmDescricaoProduto.Lines.Add('DESCR. PROD. / SERV.');
 
   rlmCodProd.Lines.EndUpdate;
   rlmDescricaoProduto.Lines.EndUpdate;
 
-  // Posiciona o canhoto do DANFE no cabeÁalho ou rodapÈ
+  // Posiciona o canhoto do DANFE no cabe√ßalho ou rodap√©
   case FPosCanhoto of
     pcCabecalho:
     begin
@@ -999,10 +1003,10 @@ begin
       end;
   end;
 
-  // Altera a fonte da Raz„o Social do Emitente
+  // Altera a fonte da Raz√£o Social do Emitente
   rlmEmitente.Font.Size := FTamanhoFonte_RazaoSocial;
 
-  // Verifica se ser· exibida a 'continuaÁ„o das informaÁıes complementares'
+  // Verifica se ser√° exibida a 'continua√ß√£o das informa√ß√µes complementares'
   if rlmDadosAdicionaisAuxiliar.Lines.Count > iLimiteLinhas then
   begin
     rlbContinuacaoInformacoesComplementares.Visible := True;
@@ -1027,10 +1031,10 @@ begin
   begin
     rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
-    rllNumNF0.Caption := 'N∫ ' + FormatFloat('000,000,000', nNF);
-    rllNumNF1.Caption := 'N∫ ' + FormatFloat('000,000,000', nNF);
-    rllSERIE0.Caption := 'S…RIE ' + IntToStr(Serie);
-    rllSERIE1.Caption := 'S…RIE ' + IntToStr(Serie);
+    rllNumNF0.Caption := 'N¬∫ ' + FormatFloat('000,000,000', nNF);
+    rllNumNF1.Caption := 'N¬∫ ' + FormatFloat('000,000,000', nNF);
+    rllSERIE0.Caption := 'S√âRIE ' + IntToStr(Serie);
+    rllSERIE1.Caption := 'S√âRIE ' + IntToStr(Serie);
     rllNatOperacao.Caption := NatOp;
     if tpNF = tnEntrada then // = entrada
       rllEntradaSaida.Caption := '0'
@@ -1084,11 +1088,11 @@ begin
       rllDadosVariaveis3_Descricao.Caption := 'DADOS DA NF-E';
       rllDadosVariaveis3.Caption := FormatarChaveAcesso(sChaveContingencia);
       rllAvisoContingencia.Caption :=
-        'DANFE em ContingÍncia - ' +
-        'Impresso em decorrÍncia de problemas tÈcnicos';
+        'DANFE em Conting√™ncia - ' +
+        'Impresso em decorr√™ncia de problemas t√©cnicos';
       if (dhCont > 0) and (xJust > '') then
         rllContingencia.Caption :=
-          'Data / Hora da entrada em contingÍncia: ' +
+          'Data / Hora da entrada em conting√™ncia: ' +
           FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
           '   Motivo: ' + xJust;
       rllAvisoContingencia.Visible := True;
@@ -1249,7 +1253,7 @@ begin
 
     //115 460 143
     // Exibe o Valor total dos tributos se vTotTrib for informado
-    // e ajusta a posiÁ„o dos outros campos para "abrir espaÁo" para ele.
+    // e ajusta a posi√ß√£o dos outros campos para "abrir espa√ßo" para ele.
     if vTotTrib > 0 then
     begin
       rllTotalTributos.Caption := FormatFloatBr(vTotTrib, '###,###,###,##0.00');
@@ -1370,37 +1374,37 @@ begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
 
-  // Protocolo de autorizaÁ„o, nos casos de emiss„o em contingÍncia
+  // Protocolo de autoriza√ß√£o, nos casos de emiss√£o em conting√™ncia
   if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS]) and
     (FNFe.procNFe.cStat = 100) then
   begin
-    sProtocolo := 'PROTOCOLO DE AUTORIZA«√O DE USO: ' +
+    sProtocolo := 'PROTOCOLO DE AUTORIZA√á√ÉO DE USO: ' +
       FNFe.procNFe.nProt + ' ' + DateTimeToStr(FNFe.procNFe.dhRecbto);
     InsereLinhas(sProtocolo, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  // InscriÁ„o Suframa
+  // Inscri√ß√£o Suframa
   if FNFe.Dest.ISUF > '' then
   begin
-    sSuframa := 'INSCRI«√O SUFRAMA: ' + FNFe.Dest.ISUF;
+    sSuframa := 'INSCRI√á√ÉO SUFRAMA: ' + FNFe.Dest.ISUF;
     InsereLinhas(sSuframa, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  // EndereÁo de retirada
+  // Endere√ßo de retirada
   if FNFe.Retirada.xLgr > '' then
   begin
     EnderecoRetirada;
     InsereLinhas(sRetirada, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  // EndereÁo de entrega
+  // Endere√ßo de entrega
   if FNFe.Entrega.xLgr > '' then
   begin
     EnderecoEntrega;
     InsereLinhas(sEntrega, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  // InformaÁıes de interesse do fisco
+  // Informa√ß√µes de interesse do fisco
   if FNFe.InfAdic.infAdFisco > '' then
   begin
     if FNFe.InfAdic.infCpl > '' then
@@ -1411,13 +1415,13 @@ begin
   else
     sInfAdFisco := '';
 
-  // InformaÁıes de interesse do contribuinte
+  // Informa√ß√µes de interesse do contribuinte
   if FNFe.InfAdic.infCpl > '' then
     sInfCompl := FNFe.InfAdic.infCpl
   else
     sInfCompl := '';
 
-  // InformaÁıes de uso livre do contribuinte com "xCampo" e "xTexto"
+  // Informa√ß√µes de uso livre do contribuinte com "xCampo" e "xTexto"
   if FNFe.InfAdic.obsCont.Count > 0 then
   begin
     sInfContr := '';
@@ -1437,7 +1441,7 @@ begin
   else
     sInfContr := '';
 
-  // InformaÁıes de uso livre do fisco com "xCampo" e "xTexto"
+  // Informa√ß√µes de uso livre do fisco com "xCampo" e "xTexto"
   if FNFe.InfAdic.obsFisco.Count > 0 then
   begin
     sObsFisco := '';
@@ -1457,7 +1461,7 @@ begin
   else
     sObsFisco := '';
 
-  // InformaÁıes do processo referenciado
+  // Informa√ß√µes do processo referenciado
   if FNFe.InfAdic.procRef.Count > 0 then
   begin
     sObsProcRef := '';
@@ -1466,19 +1470,19 @@ begin
     begin
       case FNFe.InfAdic.procRef.Items[i].indProc of
         ipSEFAZ: sIndProc := 'SEFAZ';
-        ipJusticaFederal: sIndProc := 'JUSTI«A FEDERAL';
-        ipJusticaEstadual: sIndProc := 'JUSTI«A ESTADUAL';
+        ipJusticaFederal: sIndProc := 'JUSTI√áA FEDERAL';
+        ipJusticaEstadual: sIndProc := 'JUSTI√áA ESTADUAL';
         ipSecexRFB: sIndProc := 'SECEX / RFB';
         ipOutros: sIndProc := 'OUTROS';
       end;
 
       if FNFe.InfAdic.procRef.Items[i].Index =
         (FNFe.InfAdic.procRef.Count - 1) then
-        sObsProcRef := sObsProcRef + 'PROCESSO OU ATO CONCESS”RIO N∫: ' +
+        sObsProcRef := sObsProcRef + 'PROCESSO OU ATO CONCESS√ìRIO N¬∫: ' +
           FNFe.InfAdic.procRef.Items[i].nProc +
           ' - ORIGEM: ' + sIndProc
       else
-        sObsProcRef := sObsProcRef + 'PROCESSO OU ATO CONCESS”RIO N∫: ' +
+        sObsProcRef := sObsProcRef + 'PROCESSO OU ATO CONCESS√ìRIO N¬∫: ' +
           FNFe.InfAdic.procRef.Items[i].nProc +
           ' - ORIGEM: ' + sIndProc + '; ';
     end; // for i := 0 to (FNFe.InfAdic.procRef.Count - 1)
@@ -1559,19 +1563,19 @@ begin
           if FImprimirDetalhamentoEspecifico = True then
           begin
             sDetalhamentoEspecifico := #13#10;
-            if Prod.veicProd.chassi > '' then // XML de veÌculo novo
+            if Prod.veicProd.chassi > '' then // XML de ve√≠culo novo
             begin
               if dv_tpOp in FDetVeiculos then
               begin
                 case Prod.veicProd.tpOP of
-                  toVendaConcessionaria: vAux := '1-VENDA CONCESSION¡RIA';
+                  toVendaConcessionaria: vAux := '1-VENDA CONCESSION√ÅRIA';
                   toFaturamentoDireto: vAux :=
                       '2-FAT. DIRETO CONS. FINAL';
                   toVendaDireta: vAux := '3-VENDA DIRETA';
                   toOutros: vAux := '0-OUTROS';
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'TIPO DA OPERA«√O: ' + vAux + #13#10;
+                  sDetalhamentoEspecifico + 'TIPO DA OPERA√á√ÉO: ' + vAux + #13#10;
               end;
 
               if dv_Chassi in FDetVeiculos then
@@ -1580,7 +1584,7 @@ begin
 
               if dv_cCor in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'C”DIGO DA COR: ' + Prod.veicProd.cCor + #13#10;
+                  sDetalhamentoEspecifico + 'C√ìDIGO DA COR: ' + Prod.veicProd.cCor + #13#10;
 
               if dv_xCor in FDetVeiculos then
                 sDetalhamentoEspecifico :=
@@ -1588,7 +1592,7 @@ begin
 
               if dv_pot in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'POT NCIA DO MOTOR: ' + Prod.veicProd.pot + #13#10;
+                  sDetalhamentoEspecifico + 'POT√äNCIA DO MOTOR: ' + Prod.veicProd.pot + #13#10;
 
               if dv_cilin in FDetVeiculos then
                 sDetalhamentoEspecifico :=
@@ -1596,7 +1600,7 @@ begin
 
               if dv_pesoL in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'PESO LÕQUIDO: ' + Prod.veicProd.pesoL + #13#10;
+                  sDetalhamentoEspecifico + 'PESO L√çQUIDO: ' + Prod.veicProd.pesoL + #13#10;
 
               if dv_pesoB in FDetVeiculos then
                 sDetalhamentoEspecifico :=
@@ -1604,47 +1608,47 @@ begin
 
               if dv_nSerie in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'N⁄MERO DE S…RIE: ' + Prod.veicProd.nSerie + #13#10;
+                  sDetalhamentoEspecifico + 'N√öMERO DE S√âRIE: ' + Prod.veicProd.nSerie + #13#10;
 
               if dv_tpComb in FDetVeiculos then
               begin
                 case StrToInt(Prod.veicProd.tpComb) of
-                  1: vAux := '01-¡LCOOL';
+                  1: vAux := '01-√ÅLCOOL';
                   2: vAux := '02-GASOLINA';
                   3: vAux := '03-DIESEL';
-                  4: vAux := '04-GASOG NIO';
-                  5: vAux := '05-G¡S METANO';
+                  4: vAux := '04-GASOG√äNIO';
+                  5: vAux := '05-G√ÅS METANO';
                   6: vAux := '06-ELETRICO/F INTERNA';
                   7: vAux := '07-ELETRICO/F EXTERNA';
                   8: vAux := '08-GASOLINA/GNC';
-                  9: vAux := '09-¡LCOOL/GNC';
+                  9: vAux := '09-√ÅLCOOL/GNC';
                   10: vAux := '10-DIESEL / GNC';
-                  11: vAux := '11-VIDE CAMPO OBSERVA«√O';
-                  12: vAux := '12-¡LCOOL/GNV';
+                  11: vAux := '11-VIDE CAMPO OBSERVA√á√ÉO';
+                  12: vAux := '12-√ÅLCOOL/GNV';
                   13: vAux := '13-GASOLINA/GNV';
                   14: vAux := '14-DIESEL/GNV';
-                  15: vAux := '15-G¡S NATURAL VEICULAR';
-                  16: vAux := '16-¡LCOOL/GASOLINA';
-                  17: vAux := '17-GASOLINA/¡LCOOL/GNV';
-                  18: vAux := '18-GASOLINA/EL…TRICO'
+                  15: vAux := '15-G√ÅS NATURAL VEICULAR';
+                  16: vAux := '16-√ÅLCOOL/GASOLINA';
+                  17: vAux := '17-GASOLINA/√ÅLCOOL/GNV';
+                  18: vAux := '18-GASOLINA/EL√âTRICO'
                   else
                     vAux := Prod.veicProd.tpComb;
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'COMBUSTÕVEL: ' + vAux + #13#10;
+                  sDetalhamentoEspecifico + 'COMBUST√çVEL: ' + vAux + #13#10;
               end;
 
               if dv_nMotor in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'N⁄MERO DO MOTOR: ' + Prod.veicProd.nMotor + #13#10;
+                  sDetalhamentoEspecifico + 'N√öMERO DO MOTOR: ' + Prod.veicProd.nMotor + #13#10;
 
               if dv_CMT in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'CAP. M¡X. TRA«√O: ' + Prod.veicProd.CMT + #13#10;
+                  sDetalhamentoEspecifico + 'CAP. M√ÅX. TRA√á√ÉO: ' + Prod.veicProd.CMT + #13#10;
 
               if dv_dist in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'DIST¬NCIA ENTRE EIXOS: ' + Prod.veicProd.dist + #13#10;
+                  sDetalhamentoEspecifico + 'DIST√ÇNCIA ENTRE EIXOS: ' + Prod.veicProd.dist + #13#10;
 
               if dv_anoMod in FDetVeiculos then
                 sDetalhamentoEspecifico :=
@@ -1652,7 +1656,7 @@ begin
 
               if dv_anoFab in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'ANO DE FABRICA«√O: ' +
+                  sDetalhamentoEspecifico + 'ANO DE FABRICA√á√ÉO: ' +
                   IntToStr(Prod.veicProd.anoFab) + #13#10;
 
               if dv_tpPint in FDetVeiculos then
@@ -1667,7 +1671,7 @@ begin
                   3: vAux := '03-MOTONETA';
                   4: vAux := '04-MOTOCICLETA';
                   5: vAux := '05-TRICICLO';
-                  6: vAux := '06-AUTOM”VEL';
+                  6: vAux := '06-AUTOM√ìVEL';
                   7: vAux := '07-MICROONIBUS';
                   8: vAux := '08-ONIBUS';
                   9: vAux := '09-BONDE';
@@ -1675,10 +1679,10 @@ begin
                   11: vAux := '11-SEMI-REBOQUE';
                   12: vAux := '12-CHARRETE';
                   13: vAux := '13-CAMIONETA';
-                  14: vAux := '14-CAMINH√O';
-                  15: vAux := '15-CARRO«A';
-                  16: vAux := '16-CARRO DE M√O';
-                  17: vAux := '17-CAMINH√O TRATOR';
+                  14: vAux := '14-CAMINH√ÉO';
+                  15: vAux := '15-CARRO√áA';
+                  16: vAux := '16-CARRO DE M√ÉO';
+                  17: vAux := '17-CAMINH√ÉO TRATOR';
                   18: vAux := '18-TRATOR DE RODAS';
                   19: vAux := '19-TRATOR DE ESTEIRAS';
                   20: vAux := '20-TRATOR MISTO';
@@ -1686,13 +1690,13 @@ begin
                   22: vAux := '22-CHASSI/PLATAFORMA';
                   23: vAux := '23-CAMINHONETE';
                   24: vAux := '24-SIDE-CAR';
-                  25: vAux := '25-UTILIT¡RIO';
+                  25: vAux := '25-UTILIT√ÅRIO';
                   26: vAux := '26-MOTOR-CASA'
                   else
                     vAux := IntToStr(Prod.veicProd.tpVeic);
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'TIPO DE VEÕCULO: ' + vAux + #13#10;
+                  sDetalhamentoEspecifico + 'TIPO DE VE√çCULO: ' + vAux + #13#10;
               end;
 
               if dv_espVeic in FDetVeiculos then
@@ -1702,14 +1706,14 @@ begin
                   2: vAux := '02-CARGA';
                   3: vAux := '03-MISTO';
                   4: vAux := '04-CORRIDA';
-                  5: vAux := '05-TRA«√O';
+                  5: vAux := '05-TRA√á√ÉO';
                   6: vAux := '06-ESPECIAL';
-                  7: vAux := '07-COLE«√O'
+                  7: vAux := '07-COLE√á√ÉO'
                   else
                     vAux := IntToStr(Prod.veicProd.espVeic);
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'ESP…CIE DO VEÕCULO: ' + vAux + #13#10;
+                  sDetalhamentoEspecifico + 'ESP√âCIE DO VE√çCULO: ' + vAux + #13#10;
               end;
 
               if dv_VIN in FDetVeiculos then
@@ -1733,12 +1737,12 @@ begin
                   cvSemiAcabado: vAux := '3-SEMI-ACABADO';
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'CONDI«√O DO VEÕCULO: ' + vAux + #13#10;
+                  sDetalhamentoEspecifico + 'CONDI√á√ÉO DO VE√çCULO: ' + vAux + #13#10;
               end;
 
               if dv_cMod in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'C”DIGO MARCA MODELO: ' + Prod.veicProd.cMod + #13#10;
+                  sDetalhamentoEspecifico + 'C√ìDIGO MARCA MODELO: ' + Prod.veicProd.cMod + #13#10;
 
               if dv_cCorDENATRAN in FDetVeiculos then
               begin
@@ -1749,7 +1753,7 @@ begin
                   4: vAux := '04-BRANCA';
                   5: vAux := '05-CINZA';
                   6: vAux := '06-DOURADA';
-                  7: vAux := '07-GREN¡';
+                  7: vAux := '07-GREN√Å';
                   8: vAux := '08-LARANJA';
                   9: vAux := '09-MARROM';
                   10: vAux := '10-PRATA';
@@ -1763,28 +1767,28 @@ begin
                     vAux := Prod.veicProd.cCorDENATRAN;
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'C”DIGO COR DENATRAN: ' + vAux + #13#10;
+                  sDetalhamentoEspecifico + 'C√ìDIGO COR DENATRAN: ' + vAux + #13#10;
               end;
 
               if dv_lota in FDetVeiculos then
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'CAPACIDADE M¡XIMA DE LOTA«√O: ' +
+                  sDetalhamentoEspecifico + 'CAPACIDADE M√ÅXIMA DE LOTA√á√ÉO: ' +
                   IntToStr(Prod.veicProd.lota) + #13#10;
 
               if dv_tpRest in FDetVeiculos then
               begin
                 case Prod.veicProd.tpRest of
-                  0: vAux := '0-N√O H¡';
-                  1: vAux := '1-ALIENA«√O FIDUCI¡RIA';
-                  2: vAux := '2-RESERVA DE DOMICÕLIO';
-                  3: vAux := '3-RESERVA DE DOMÕNIO';
-                  4: vAux := '4-PENHOR DE VEÕCULOS';
+                  0: vAux := '0-N√ÉO H√Å';
+                  1: vAux := '1-ALIENA√á√ÉO FIDUCI√ÅRIA';
+                  2: vAux := '2-RESERVA DE DOMIC√çLIO';
+                  3: vAux := '3-RESERVA DE DOM√çNIO';
+                  4: vAux := '4-PENHOR DE VE√çCULOS';
                   9: vAux := '9-OUTRAS'
                   else
                     vAux := IntToStr(Prod.veicProd.tpRest);
                 end;
                 sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'RESTRI«√O: ' + vAux;
+                  sDetalhamentoEspecifico + 'RESTRI√á√ÉO: ' + vAux;
               end;
 
               cdsItens.FieldByName('DESCRICAO').AsString :=
@@ -1798,7 +1802,7 @@ begin
                 begin
                   if dm_nLote in FDetMedicamentos then
                     sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + 'N⁄MERO DO LOTE: ' + Prod.med.Items[i].nLote + #13#10;
+                      sDetalhamentoEspecifico + 'N√öMERO DO LOTE: ' + Prod.med.Items[i].nLote + #13#10;
 
                   if dm_qLote in FDetMedicamentos then
                     sDetalhamentoEspecifico :=
@@ -1807,7 +1811,7 @@ begin
 
                   if dm_dFab in FDetMedicamentos then
                     sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + 'DATA DE FABRICA«√O: ' +
+                      sDetalhamentoEspecifico + 'DATA DE FABRICA√á√ÉO: ' +
                       DateToStr(Prod.med.Items[i].dFab) + #13#10;
 
                   if dm_dVal in FDetMedicamentos then
@@ -1817,7 +1821,7 @@ begin
 
                   if dm_vPMC in FDetMedicamentos then
                     sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + 'PRE«O M¡X. CONSUMIDOR: R$ ' +
+                      sDetalhamentoEspecifico + 'PRE√áO M√ÅX. CONSUMIDOR: R$ ' +
                       FormatFloat('###,##0.00', Prod.med.Items[i].vPMC) + #13#10;
 
                   if (sDetalhamentoEspecifico > '') and
@@ -1854,15 +1858,15 @@ begin
 
                     if da_nSerie in FDetArmamentos then
                       sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + 'No. S…RIE: ARMA' + Prod.arma.Items[i].nSerie + #13#10;
+                        sDetalhamentoEspecifico + 'No. S√âRIE: ARMA' + Prod.arma.Items[i].nSerie + #13#10;
 
                     if da_nCano in FDetArmamentos then
                       sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + 'No. S…RIE CANO: ' + Prod.arma.Items[i].nCano + #13#10;
+                        sDetalhamentoEspecifico + 'No. S√âRIE CANO: ' + Prod.arma.Items[i].nCano + #13#10;
 
                     if da_descr in FDetArmamentos then
                       sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + 'DESCRI«√O ARMA: ' + Prod.arma.Items[i].descr + #13#10;
+                        sDetalhamentoEspecifico + 'DESCRI√á√ÉO ARMA: ' + Prod.arma.Items[i].descr + #13#10;
 
                     if (sDetalhamentoEspecifico > '') and
                       (sDetalhamentoEspecifico <> #13#10) then
@@ -1886,12 +1890,12 @@ begin
                   begin
                     if dc_cProdANP in FDetCombustiveis then
                       sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + 'C”D. PRODUTO ANP: ' + IntToStr(Prod.comb.cProdANP) + #13#10;
+                        sDetalhamentoEspecifico + 'C√ìD. PRODUTO ANP: ' + IntToStr(Prod.comb.cProdANP) + #13#10;
 
                     if dc_CODIF in FDetCombustiveis then
                       if Prod.comb.CODIF > '' then
                         sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + 'AUTORIZA«√O/CODIF: ' + Prod.comb.CODIF + #13#10;
+                          sDetalhamentoEspecifico + 'AUTORIZA√á√ÉO/CODIF: ' + Prod.comb.CODIF + #13#10;
 
                     if dc_qTemp in FDetCombustiveis then
                       if Prod.comb.qTemp > 0 then
@@ -1907,12 +1911,12 @@ begin
                     begin
                       if dc_qBCProd in FDetCombustiveis then
                         sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + 'BASE DE C¡LCULO CIDE: ' +
+                          sDetalhamentoEspecifico + 'BASE DE C√ÅLCULO CIDE: ' +
                           FormatFloat('###,##0.0000', Prod.comb.CIDE.qBCProd) + #13#10;
 
                       if dc_vAliqProd in FDetCombustiveis then
                         sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + 'ALÕQUOTA CIDE: ' +
+                          sDetalhamentoEspecifico + 'AL√çQUOTA CIDE: ' +
                           FormatFloat('###,##0.0000', Prod.comb.CIDE.vAliqProd) + #13#10;
 
                       if dc_vCIDE in FDetCombustiveis then
@@ -1984,7 +1988,7 @@ begin
           begin
             //=============  Trecho copiado do Danfe em Quick Report =======================
             //==============================================================================
-            // Adicionado para imprimir alÌquotas
+            // Adicionado para imprimir al√≠quotas
             //==============================================================================
             if CSOSNIcmsToStr(Imposto.ICMS.CSOSN) > '' then
               cdsItens.FieldByName('CSOSN').AsString :=
@@ -1993,7 +1997,7 @@ begin
               cdsItens.FieldByName('CSOSN').AsString := '';
 
             //==============================================================================
-            // Resetando valores das qlÌquotas
+            // Resetando valores das ql√≠quotas
             //==============================================================================
             sBCICMS := '0,00';
             sALIQICMS := '0,00';
@@ -2150,9 +2154,9 @@ begin
   begin
     iColunas := 4; // Quantidade de colunas
     iAltLinha := 13;  // Altura de cada linha
-    iPosQuadro := 12; // PosiÁ„o (Top) do Quadro
+    iPosQuadro := 12; // Posi√ß√£o (Top) do Quadro
     iAltQuadro1Linha := 27; // Altura do quadro com 1 linha
-    iFolga := 5; // Dist‚ncia entre o final da Band e o final do quadro
+    iFolga := 5; // Dist√¢ncia entre o final da Band e o final do quadro
 
     if (iQuantDup mod iColunas) = 0 then // Quantidade de linhas
       iLinhas := iQuantDup div iColunas
@@ -2214,7 +2218,7 @@ begin
       rlbDivisaoRecibo.Visible := False;
     end;
 
-  // Posiciona a Marca D'·gua
+  // Posiciona a Marca D'√°gua
   rliMarcaDagua1.Top := rlbCabecalhoItens.Top +
                      ((rlbDadosAdicionais.Top - rlbCabecalhoItens.Top) div 2) -
                      (rliMarcaDagua1.Height div 2);}
@@ -2222,14 +2226,14 @@ begin
   if FPosCanhoto = pcCabecalho then
   begin
     rlbReciboHeader.Visible := False;
-    // --> Silvio (Retirado por causa do controle de formul·rio da EIBrasil - 30-08-2012
-    //      rlPainelRecibo.Visible:= False;   // n„o existe no dfm revis„o 6628- --> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
+    // --> Silvio (Retirado por causa do controle de formul√°rio da EIBrasil - 30-08-2012
+    //      rlPainelRecibo.Visible:= False;   // n√£o existe no dfm revis√£o 6628- --> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
     rlbReciboHeader.Height := 66;
     //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
     rlbDivisaoRecibo.Visible := False;
   end;
 
-  // Posiciona a Marca D'·gua
+  // Posiciona a Marca D'√°gua
   rliMarcaDagua1.Top := rlbCabecalhoItens.Top +
     ((rlbDadosAdicionais.Top - rlbCabecalhoItens.Top) div 2) -
     (rliMarcaDagua1.Height div 2);
@@ -2238,7 +2242,7 @@ end;
 
 procedure TfrlDANFeRLRetrato.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
-  // Controla os itens por p·gina
+  // Controla os itens por p√°gina
 {  iItemAtual := iItemAtual + 1;
 
   if FProdutosPorPagina = 0 then
@@ -2257,7 +2261,7 @@ begin
     FProdutosPorPagina := 60
   else
     FProdutosPorPagina := 20;
-  // Controla os itens por p·gina
+  // Controla os itens por p√°gina
   if rlmDescricao.Height > 10 then
     iItemAtual := iItemAtual + 2
   else

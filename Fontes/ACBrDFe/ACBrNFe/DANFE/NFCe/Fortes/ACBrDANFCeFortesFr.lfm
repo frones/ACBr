@@ -8,7 +8,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.1'
+  LCLVersion = '1.2.6.0'
   object rlVenda: TRLReport
     Left = 16
     Height = 1512
@@ -36,7 +36,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbRodape: TRLBand
       Left = 8
       Height = 197
-      Top = 442
+      Top = 407
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -372,7 +372,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlsbPagamentos: TRLSubDetail
       Left = 8
       Height = 65
-      Top = 228
+      Top = 193
       Width = 286
       InsideMargins.LeftMargin = 2
       InsideMargins.RightMargin = 2
@@ -603,7 +603,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbLei12741: TRLBand
       Left = 8
       Height = 28
-      Top = 293
+      Top = 258
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -873,7 +873,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
               Left = 0
               Height = 12
               Top = 43
-              Width = 286
+              Width = 285
               Align = faTop
               Alignment = taCenter
               Font.Color = clBlack
@@ -950,7 +950,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbConsumidor: TRLBand
       Left = 8
       Height = 55
-      Top = 387
+      Top = 352
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -1035,7 +1035,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbMensagemFiscal: TRLBand
       Left = 8
       Height = 66
-      Top = 321
+      Top = 286
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -1149,6 +1149,54 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
       end
     end
+    object rlbMensagemContribuinte: TRLBand
+      Left = 0
+      Top = 335
+      Width = 280
+      Height = 30
+      AutoSize = True
+      BandType = btSummary
+      BeforePrint = rlbMensagemContribuinteBeforePrint
+      object lMensagemContribuinte: TRLLabel
+        Left = 0
+        Top = 8
+        Width = 280
+        Height = 10
+        Align = faTop
+        Alignment = taCenter
+        Caption = #195#129'REA DE MENSAGEM DE INTERESSE DO CONTRIBUINTE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw3: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 280
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Style = psDot
+      end
+      object lObservacoes: TRLMemo
+        Left = 0
+        Top = 18
+        Width = 280
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+    end	
   end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2

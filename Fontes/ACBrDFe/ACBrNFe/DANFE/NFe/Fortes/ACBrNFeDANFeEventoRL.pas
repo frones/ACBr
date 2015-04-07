@@ -108,7 +108,11 @@ type
 implementation
 
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 class procedure TfrlDANFeEventoRL.Imprimir(ASender : TComponent; AEventoNFe: TInfEventoCollectionItem; ALogo: String = '';
                     AMarcaDagua: String = ''; ANumCopias: Integer = 1;

@@ -1,0 +1,105 @@
+object dm: Tdm
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  left = 239
+  top = 180
+  Height = 143
+  HorizontalOffset = 495
+  VerticalOffset = 323
+  Width = 481
+  object TcpServer: TACBrTCPServer
+    IP = '0.0.0.0'
+    Port = '0'
+    TimeOut = 10000
+    Terminador = '#13,#10,#46,#13,#10'
+    OnConecta = TcpServerConecta
+    OnDesConecta = TcpServerDesConecta
+    OnRecebeDados = TcpServerRecebeDados
+    left = 36
+    top = 12
+  end
+  object ACBrCHQ1: TACBrCHQ
+    Porta = 'COM1'
+    left = 36
+    top = 72
+  end
+  object ACBrGAV1: TACBrGAV
+    Porta = 'COM1'
+    AberturaAntecipada = aaException
+    left = 111
+    top = 72
+  end
+  object ACBrDIS1: TACBrDIS
+    Porta = 'COM1'
+    IntervaloEnvioBytes = 3
+    left = 186
+    top = 72
+  end
+  object ACBrLCB1: TACBrLCB
+    Porta = 'Sem Leitor'
+    Sufixo = '#13'
+    ExcluirSufixo = False
+    Intervalo = 100
+    OnLeCodigo = ACBrLCB1LeCodigo
+    left = 261
+    top = 72
+  end
+  object ACBrRFD1: TACBrRFD
+    OnGetKeyRSA = ACBrRFD1GetKeyRSA
+    left = 337
+    top = 72
+  end
+  object ACBrBAL1: TACBrBAL
+    Porta = 'COM1'
+    MonitorarBalanca = True
+    left = 337
+    top = 12
+  end
+  object ACBrETQ1: TACBrETQ
+    Porta = 'LPT1'
+    left = 261
+    top = 12
+  end
+  object ACBrCEP1: TACBrCEP
+    ProxyPort = '8080'
+    OnAntesAbrirHTTP = ACBrCEP1AntesAbrirHTTP
+    PesquisarIBGE = True
+    left = 111
+    top = 12
+  end
+  object ACBrIBGE1: TACBrIBGE
+    ProxyPort = '8080'
+    left = 186
+    top = 12
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    left = 417
+    top = 12
+  end
+  object ACBrSedex1: TACBrSedex
+    ProxyPort = '8080'
+    Peso = 0
+    Formato = TpfCaixaPacote
+    Comprimento = 0
+    Altura = 0
+    Largura = 0
+    ValorDeclarado = 0
+    Servico = Tps41106PAC
+    Diametro = 0
+    UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
+    left = 417
+    top = 80
+  end
+  object ACBrNCMs1: TACBrNCMs
+    ProxyPort = '8080'
+    UrlConsulta = 'http://www4.receita.fazenda.gov.br/simulador/PesquisarNCM.jsp?'
+    left = 240
+    top = 80
+  end
+end

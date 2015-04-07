@@ -1,0 +1,344 @@
+{******************************************************************************}
+{ Projeto: ACBrMonitor                                                         }
+{  Executavel que faz uso do conjunto de componentes ACBr para emissão de NFe  }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2006 Daniel Simoes de Almeida               }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+{                                                                              }
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
+{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{******************************************************************************
+|* ACBrMonitor
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+
+Para ver os comandos dispoíveis do ACBrMonitor acesse:
+http://acbr.sourceforge.net/drupal/?q=node/40
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+28/09/2014
+[+]   Adicionada configuração para Impressora padrão na Aba Boleto
+[+]   Adicionado suporte ao componente ACBrSedex
+
+Versão 0.10.9.1 16/09/14
+[-]   Correção para tratamento de arquivos de Entrada (ENT.TXT) com linhas em
+      branco no final do arquivo, ocasionando a não geração do arquivo SAI.TXT   (por: DSA)
+
+Versão 0.10.7.0  14/08/14
+[*]   Modificado mecanismo de criação do arquivo TXT para processar de forma
+      mais otimizada arquivos com lote de comandos  (por: DSA)
+
+Versão 0.9.26.1  01/08/13    (Por: DSA)
+[+]   Adicionado suporte para conversão do Arquivo de Entrada e Saida para ANSI
+
+Versão 0.9.5  22/10/11    (Por: DSA)
+[-]    Corrigido Bug que desativava a comunicação TCP/IP ao clicar no botão Salvar ou Cancelar
+[+]   Adicionado método: pafmf_lmfc_impressao( DtInicial, DtFinal )
+[+]   Adicionado método: pafmf_lmfc_impressao( CRZInicial, CRZFinal )
+[+]   Adicionado método: pafmf_lmfs_impressao( DtInicial, DtFinal )
+[+]   Adicionado método: pafmf_lmfs_impressao( CRZInicial, CRZFinal )
+[+]   Adicionado método: pafmf_lmfc_espelho( DtInicial, DtFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_lmfc_espelho( CRZInicial, CRZFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_lmfs_espelho( DtInicial, DtFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_lmfs_espelho( CRZInicial, CRZFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_lmfc_cotepe1704( DtInicial, DtFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_lmfc_cotepe1704( CRZInicial, CRZFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_mfd_cotepe1704( DtInicial, DtFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_mfd_cotepe1704( COOInicial, COOFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_mfd_espelho( DtInicial, DtFinal, NomeArquivo )
+[+]   Adicionado método: pafmf_mfd_espelho( COOInicial, COOFinal, NomeArquivo )
+
+
+
+Versão 0.9.00b  05/09/10    (Por: DSA)
+[*]    ACBrMonitor e ACBrMonitorConsole, e ECFTeste totalmente convertidos de Delphi para Lazarus/FPC
+[*]    Modificação do Terminador do envio de conexões TCP/IP, de:  CR+LF  para:  CR+LF+'.'+CR+LF
+[*]    Novo instalador em Linux, usando o InstallJammer
+[*]    Substituição dos componentes de comunicação TCP/IP (Indy/Delphi)  por (ACBrTCPServer/Synapse)
+[+]   Adicionado o Objeto BOLETO  (Por: Juliana Tamizou)
+[+]   Adicionado o Objeto CEP
+[+]   Adicionado o Objeto IBGE
+[*]    Revisão da documentação
+[*]    Novos Icones e Glyphs
+[+]   Suporte a UTF-8 (nativo do Lazarus)
+
+Versão 0.8.15b  27/10/09    (Por: DSA)
+[*]    Fontes revistos para corrigir declaração de "String" para "AnsiString"
+       quando necessário
+[*]    Rotina de Leitura do TXT de entrada aprimorada para Ler todo o conteudo
+       do TXT, mesmo que o arquivo contenha caracteres de controle. 
+
+Versão 0.8.14b  27/10/09    (Por: DSA)
+[+]    ECF.TotalCancelamentosISSQN
+[+]    ECF.TotalDescontosISSQN
+[+]    ECF.TotalAcrescimosISSQN
+[+]    ECF.TotalSubstituicaoTributariaISSQN
+[+]    ECF.TotalNaoTributadoISSQN
+[+]    ECF.TotalIsencaoISSQN                
+
+Versão 0.8.13b  27/10/09    (Por: Ivan Moreira)
+[+]    ECF.UsuarioAtual -> Retorna o Número do usuário (proprietário) atual
+[+]    ECF.DataHoraSB -> Retorna a DataHora de Gravação do SW básico
+[+]    ECF.SubModeloECF -> Retorna a Descrição do Modelo do ECF
+	   
+[+]    ECF.EspelhoMFD_DLL( dDataInicial, dDataFinal, cNomeArquivo )  ou
+       ECF.EspelhoMFD_DLL( cCOOInicial, cCOOFinal, cNomeArquivo )
+         Cria Arquivo informado em "cNomeArquivo" contendo o Espelho da MFD em 
+         um periodo de COO ou Data
+[+]    ECF.ArquivoMFD_DLL( dDataInicial, dDataFinal, cNomeArquivo )  ou
+       ECF.ArquivoMFD_DLL( cCOOInicial, cCOOFinal, cNomeArquivo )
+         Cria Arquivo informado em "cNomeArquivo" de acordo com o Ato Cotepe 1704 em
+         um periodo de COO ou Data
+
+Versão 0.8.12b  14/10/09    (Daniel Simões)
+[+]    LeituraMFDSerial. Adicionado novo parâmetro (opcional) "NomeArquivo : String"
+
+       - LeituraMFDSerial( DataInicial, DataFinal : TDateTime[, NomeArquivo : String] )
+       - LeituraMFDSerial( COOInicial, COOFinal : Integer[, NomeArquivo : String] )
+
+       Se NomeArquivo for especificado, o mesmo será criado com a resposta do ECF.
+
+[+]    LeituraMemoriaFiscalSerial. Adicionado novos parâmetros: (opcionais)
+         Simplificada : Boolean = False;  NomeArquivo : String
+
+       - LeituraMemoriaFiscalSerial( DataInicial, DataFinal : TDateTime,
+                               [Simplificada : Boolean, NomeArquivo : String] )
+       - LeituraMemoriaFiscalSerial( COOInicial, COOFinal : Integer,
+                               [Simplificada : Boolean, NomeArquivo : String] )
+                               
+       Se NomeArquivo for especificado, o mesmo será criado com a resposta do ECF.
+
+Versão 0.8.7b  01/12/08
+[+]    Adicionada aba para Servidor de Terminais de Consulta de Preços (Gertec)
+
+Versão 0.8.6b  21/10/08
+[+]    Implementado os métodos:
+       ACBr.SaveToFile( cNomeArquivo, cTextoArquivo ) -> Salva o o conteudo de
+         "cTextoArquivo" no arquivo chamado "cNomeArquivo". Para enviar
+         caracteres "não imprimiveis" use a noteção em Hexa do Caractere: "\xHH".
+          Exemplos:     CR = #13 -> '\x0D';   LF = #10 -> '\x0A'
+       ACBr.LoadFromFile( cNomeArquivo, nTempoEspera ) -> Lê e Retorna o
+         conteudo do arquivo "cNomeArquivo". Aguarda por "nTempoEspera" segundos
+         pela chagada (ou desbloqueio) do arquivo (default 0).
+       ACBr.FilesExists( cMascaraArquivo ) -> Retorna "True" se existem arquivos
+         de acordo com "cMascaraArquivo"
+       ACBr.DeleteFiles( cMascaraArquivo ) -> Apaga todos os arquivos que
+          correspondam a mascara "cMascaraArquivo"
+       ACBr.AppExists( cNomeJanela ) -> Retorna "True" se existir alguma
+          aplicação com o titulo idêntico a "cNomeJanela"
+
+Versão 0.8.5b  20/06/08
+[*]    Função interna IntToStrZero modificada para aceitar Int64. Esse problema
+       poderia causar "erro de conversão" na criação do arquivo ACBrRFD
+[*]    vários métodos implementados para o modelo ecfQuattro e ecfYanco       
+
+Versão 0.8.4b  22/04/08
+[+]    Adicionado método ECF.IdentificaOperador(Nome: String);
+[+]    Adicionado método: ECF.CortaPapel( CorteParcial : Boolean = false) ;
+[+]    Adicionado método: ECF.Sangria( const Valor: Double; Obs: String;
+         DescricaoCNF: String = 'SANGRIA'; DescricaoFPG: String = 'DINHEIRO')
+[+]    Adicionado método: ECF.Suprimento( const Valor: Double; Obs: String;
+         DescricaoCNF: String = 'SUPRIMENTO'; DescricaoFPG: String = 'DINHEIRO')
+[+]    Adicionada propriedade: ECF.TimeOut -> Retorna o TimeOut atual
+[+]    Adicionado o método: ECF.SetTimeOut( nTimeOut ) -> Ajusta o TimeOut
+[*]    Metodo VendeItem modificado, adicionado parametro:
+         cDescontoAcrescimo, permite definir se o Valor informado no parametro
+         "nValorDescontoAcrescimo" é Desconto "D" ou Acréscimo "A".
+         Se nao informado, assume o Default = "D"
+[*]    Diversas corrreções e melhoraria de performance nas Classes Daruma
+       e Bematech  
+
+Versão 0.8.3b  05/03/08
+[+]    Adicionado novos métodos em Objeto ACBr
+       ACBr.AppActivate( cTituloJanela, nWaitTime = 0)
+        - Posiciona o foco na Janela com o titulo Informado em cTituloJanela
+          após esperar por nWaitTime milisegundos
+       ACBr.BlockInput( bBlock )
+        - Se bBlock = "True", Bloqueia Mouse e Teclado; Se "False" desbloqueia
+[+]    Adicionado suporte a geração de arqquivos RFD (CAT 52/07)
+[+]    Adicionada aba para controle de Balanças (Gabriel Frones) 
+
+Versão 0.7b    02/12/06
+[*]    Vários bugs corrigidos e melhorias incorporadas na versão 0.8.6b do ACBr
+[+]    Novas propriedades:
+       - DadosReducaoZ : String
+       - DataMovimento : TDateTime
+       - CNPJ : String
+       - NumCRZ : String
+       - NumCOOInicial : String
+       - VendaBruta : Double
+       - GrandeTotal : Double
+       - TotalCancelamentos : Double
+       - TotalDescontos : Double
+       - TotalAcrescimos : Double
+       - TotalSubstituicaoTributaria : Double
+       - TotalNaoTributado : Double
+       - TotalIsencao : Double
+       - NumUltItem : Integer
+[+]    Novos métodos:
+       - LerTotaisAliquota
+       - LerTotaisFormaPagamento
+       - LerTotaisComprovanteNaoFiscal
+
+       - LeituraMFDSerial( DataInicial, DataFinal : TDateTime )
+       - LeituraMFDSerial( COOInicial, COOFinal : Integer )
+
+       - NaoFiscalCompleto( CodCNF : String; Valor : Double; CodFPG : String;
+                            Obs : String )
+       - AbreNaoFiscal( CPF_CNPJ : String = '')
+       - RegistraItemNaoFiscal( CodCNF : String; Valor : Double; Obs : String )
+       - SubtotalizaNaoFiscal( DescontoAcrescimo : Double = 0)
+       - EfetuaPagamentoNaoFiscal( CodFormaPagto : String; Valor : Double;
+                                   Observacao : String = '';
+                                   ImprimeVinculado : Boolean = false)
+       - FechaNaoFiscal( Observacao : String = '')
+       - CancelaNaoFiscal
+
+       PS.: As novas propriedades e métodos ainda não estão disponíveis em todos
+            os ECFs suportados pelo ACBrECF... Por favor consulte o link abaixo:
+            http://www.forumweb.com.br/foruns/index.php?showtopic=60802
+
+
+Versão 0.6b    02/12/06
+[+]    Definida a Licença do ACBrMonitor: GPL / GNU  Leia o arquivo: LICENCA.TXT
+[+]    Novo Instalador Windows, que permite Instalação: Completa / Mínima /
+       Customizada ( A instalação Mínima é util para usuários finais )
+[-]    Finalmente corrigido problema de congelamento do ACBrMonitor, em Win9X e
+       Linux, quando a janela estava aberta e o ACBrMonitor recebendo comandos
+       em TCP/IP... (Interface do programa não era atualizada)
+[-]    Corrigido bug na gravação do LOG. Em algumas situações, I/O error 103
+[+]    Novo executavel "ACBrMonitorConsole" disponivel no pacote de instalação
+       - Util para programas que trabalham apenas em modo Texto
+        (no Linux, não precisa do Servido X)
+       - Utiliza o mesmo arquivo de configuração "ACBrMonitor.ini"
+[*]    Novos Glyphs na Interface do programa  :)
+[*]    Inicialização acelerada... minimiza para o SysTray mais rapidamente
+[*]    Inicialização mais segura. Mesmo que ocorra alguma exceção durante a
+       inicialização, como por exemplo a falha ao ativar algum equipamento. O
+       ACBrMonitor inicializará e ficará ativo. Caso alguma exceção ocorra
+       durante a inicialização, o ACBrMonitor NÃO será minimizado para o SysTray
+[*]    Todas as Exceções do programa ACBrMonitor agora são capturadas e
+       registradas no Memo de Saída, evitando a paralisação do programa com
+       janelas ShowModal de exibição de erro. Se a gravação do LOG estiver
+       ligada, os erros também serão gravados no LOG
+[+]    Adicionada a funcionalidade da aba "Impressoras de Cheque". Agora é
+       possivel interagir com várias impressoras de Cheque como: Bematech,
+       Chronos, Schalter, Sotomaq, Perto, Urano, ECFs 2 estações, e até mesmo
+       Impressoras matriciais comuns (Ex: LX-300).
+       - Veja o manual do ACBrMonitor para os Novos comandos do Objeto CHQ.
+[+]    Adicionada a funcionalidade da aba "Display". Agora é possível
+       interagir com diversos tipos de Display de Teclados (Gertec, KeyTec,
+       Smak) ou Seriais (Gertec)
+       - Veja o manual do ACBrMonitor para os Novos comandos do Objeto DIS.
+[+]    Adicionada a funcionalidade da aba "Gavetas de Dinheiro". Agora é
+       possível interagir com vários tipos de gaveta de dinheiro. Ligadas ao
+       ECF, ligada a Impressoras de bobinas ou diretamente a Porta serial
+       - Veja o manual do ACBrMonitor para os Novos comandos do Objeto GAV.
+[*]    Aba do Leitor de Cod.Barras otimizada para trabalhar em conjunto com o
+       ECF. Códigos apenas são enviados para o buffer de teclado, quando o ECF
+       estiver livre. Porém, os dados permanecem no buffer da serial e são
+       todos enviados assim que possível.
+       - Isso evita o problema de enviar teclas dos códigos em momento indevido,
+         como por exemplo, quando o EDIT / GET do Campo código não está em FOCO
+[*]    Adicionado novo objeto: LCB, que permite interagir diretamento com o
+       Leitor de Cod.Barras Serial. Vários métodos novos criados para esse
+       Objeto, verifique o manual do ACBrMonitor
+
+Versão 0.5a    10/07/06
+[*]    Rotina de Gravação de Arquivo de Saída TXT mais segura... Agora ela
+       primeiro grava a resposta em um arquivo temporário para depois renomea-lo
+       para o arquivo  de Saída...
+       - Isso evita problemas com aplicações que controlam o ACBrMonitor, que
+         poderiam ler o arquivo de Saída incompleto
+[*]    Interface melhorada com a substituição de alguns Edits por SpinEdits
+[+]    Adicionada StatusBar que exibe o comando que está sendo processado.
+[+]    Adicionada opção de configuração para numero máximo de linhas no LOG.
+       - Se o valor for diferente de 0, o Arquivo de LOG será ajustado sempre
+         que o ACBrMonitor iniciar
+[+]    Adicionada opção para Inverter o Sinal da Gaveta de Dinheiro
+       - Em alguns modelos de Gaveta, com pinagem diferente, pode ocorrer a
+         leitura inversa do Estado da Gaveta
+[-]    Usando a versão 0.8.5b do ACBr, corrigido diversos bugs no ACBrECF
+       ( veja ACBr-change-log.txt )
+[+]    Novo modelo de ECF implementado FiscNET (ZPM).
+       ( experimental, testado apenas no Emulador... veja ACBr-change-log.txt )
+[-]    Corrigido bug no Interpretador de comandos do ACBrMonitor.
+       ( Problemas para detectar a separação de parâmetros (virgulas) sem
+         nenhum espaços entre os parâmetros )
+
+
+Versão 0.4a    20/05/06
+[*]    Melhorada a interface geral do programa
+[*]    Vários componentes da interface agora possuem "Hints" com dicas de ajuda
+[+]    Adicionado Form "Sobre o ACBrMonitor", com botão para exibir o manual de
+       ajuda
+[-]    Corrigido alguns bugs na comunicação TCP/IP: congelamento do programa,
+       não re-conectava pela 2a vez
+[+]    Adicionada opção para definir quantas conexões simultâneas são permitidas
+       em modo TCP/IP. Default = 1
+[+]    Adicionada opção para definir o tempo (em milisegundos) para
+       monitoramento do arquivo de Entrada em modo TXT... O Default é 100,
+       diminua esse tempo para obter respostas mais rápidas do ACBrMonitor
+       quando usando o modo TXT
+[-]    Corrigido Bug no método "ECF.TotalPago" (não era executado)
+[-]    Alguns métodos como "CupomVinculado" ou "AbreCupomVinculado" não
+       efetuavam a conversão de valores com Decimais corretamente
+[*]    Adicionado suporte ao caracter (") Aspas dupla dentro da String. Para
+       informar uma Aspas dentro da String use 2 aspas (""), ela será convertida
+       para apenas uma Aspas.. Exemplo: "Texto ""com aspas"" dentro"  será
+       considerado "Texto "com aspas" dentro"
+[+]    Adicionado o objeto "ACBR", para métodos genéricos
+[+]    Adicionado o método:
+          ACBr.Run( cComando [, cParams, bAguarda, nWindowState, bAltTab ] )
+       que permite executar comandos remotamente, na máquina do ACBrMonitor
+[+]    Adicionada opção na configuração que permite habilitar a execução de
+       comandos remotos (o padrão é desabilitado)
+[+]    Adicionado novos métodos no objeto ECF
+        - ECF.AchaICMSAliquota( nALiquota [, cTipo ] ) -> Procura por uma
+          alíquota previamente cadastrada. Se encontrar, retorna os dados da
+          Alíquota no mesmo formato de "CarregaAliquotas"
+        - ECF.AchaFPGDescricao( cDescricao ) -> Procura por uma Forma de
+          Pagamento pela Descrição, se encontrar, retorna os dados da Forma de
+          Pagamento no mesmo formato de "CarregaFormasPagamento"
+        - ECF.AchaCNFDescricao( cDescricao ) -> Procura por um Comprovante NAO
+          Fiscal pela Descrição, se encontrar, retorna os dados do Comprovante
+          NAO Fiscal no mesmo formato de "CarregaComprovantesNaoFiscais"
+[+]    Adicionada a funcionabilidade da aba "Leitor Serial". Ela permite desviar
+       toda a leitura de dados de um Leitor Serial para o buffer de teclado do
+       Windows. Permitindo modificar os sufixos / prefixos enviados pelo leitor
+       - Funciona mesmo quando em Prompt do MS-DOS tela cheia
+[*]    Métodos "LinhaCupomVinculado" e "LinhaRelatorioGerencial" agora permitem
+       informar várias linhas simultaneamente, sepradas por | (pipe).
+
+
+Versão 0.3a    09/03/06
+
+[+]    Primeira versão distribuida do ACBrMonitor com instaladores para Windows
+       e Linux

@@ -838,7 +838,8 @@ begin
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
-  5103502  // Diamantino/MT
+  5103502,  // Diamantino/MT
+  4117305  //Ortigueira/PR
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG

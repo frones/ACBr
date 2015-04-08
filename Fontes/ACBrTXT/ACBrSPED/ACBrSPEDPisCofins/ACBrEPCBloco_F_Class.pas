@@ -68,10 +68,14 @@ type
     FRegistroF210Count                  : integer;
     FRegistroF211Count                  : integer;
     FRegistroF500Count                  : integer;
+    FRegistroF509Count                  : integer;
     FRegistroF510Count                  : integer;
+    FRegistroF519Count                  : integer;
     FRegistroF525Count                  : integer;
     FRegistroF550Count                  : integer;
+    FRegistroF559Count                  : integer;
     FRegistroF560Count                  : integer;
+    FRegistroF569Count                  : integer;
     FRegistroF600Count                  : integer;
     FRegistroF700Count                  : integer;
     FRegistroF800Count                  : integer;
@@ -119,10 +123,14 @@ type
     function RegistroF210New            : TRegistroF210;
     function RegistroF211New            : TRegistroF211;
     function RegistroF500New            : TRegistroF500;
+    function RegistroF509New            : TRegistroF509;
     function RegistroF510New            : TRegistroF510;
+    function RegistroF519New            : TRegistroF519;
     function RegistroF525New            : TRegistroF525;
     function RegistroF550New            : TRegistroF550;
+    function RegistroF559New            : TRegistroF559;
     function RegistroF560New            : TRegistroF560;
+    function RegistroF569New            : TRegistroF569;
     function RegistroF600New            : TRegistroF600;
     function RegistroF700New            : TRegistroF700;
     function RegistroF800New            : TRegistroF800;
@@ -147,10 +155,14 @@ type
     property RegistroF210Count          : integer       read FRegistroF210Count write FRegistroF210Count;
     property RegistroF211Count          : integer       read FRegistroF211Count write FRegistroF211Count;
     property RegistroF500Count          : integer       read FRegistroF500Count write FRegistroF500Count;
+    property RegistroF509Count          : integer       read FRegistroF509Count write FRegistroF509Count;
     property RegistroF510Count          : integer       read FRegistroF510Count write FRegistroF510Count;
+    property RegistroF519Count          : integer       read FRegistroF519Count write FRegistroF519Count;
     property RegistroF525Count          : integer       read FRegistroF525Count write FRegistroF525Count;
     property RegistroF550Count          : integer       read FRegistroF550Count write FRegistroF550Count;
+    property RegistroF559Count          : integer       read FRegistroF559Count write FRegistroF559Count;
     property RegistroF560Count          : integer       read FRegistroF560Count write FRegistroF560Count;
+    property RegistroF569Count          : integer       read FRegistroF569Count write FRegistroF569Count;
     property RegistroF600Count          : integer       read FRegistroF600Count write FRegistroF600Count;
     property RegistroF700Count          : integer       read FRegistroF700Count write FRegistroF700Count;
     property RegistroF800Count          : integer       read FRegistroF800Count write FRegistroF800Count;
@@ -351,6 +363,17 @@ begin
    Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF500.New;
 end;
 
+function TBloco_F.RegistroF509New: TRegistroF509;
+  var
+    F010Count: integer;
+    F500Count: integer;
+begin
+   F010Count := FRegistroF001.RegistroF010.Count -1;
+   F500Count := FRegistroF001.RegistroF010.Items[F010Count].RegistroF500.Count -1;
+   //
+   Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF500.Items[F500Count].RegistroF509.New;
+end;
+
 function TBloco_F.RegistroF550New: TRegistroF550;
   var
     F010Count: integer;
@@ -358,6 +381,17 @@ begin
    F010Count := FRegistroF001.RegistroF010.Count -1;
    //
    Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF550.New;
+end;
+
+function TBloco_F.RegistroF559New: TRegistroF559;
+  var
+    F010Count: integer;
+    F550Count: integer;
+begin
+   F010Count := FRegistroF001.RegistroF010.Count -1;
+   F550Count := FRegistroF001.RegistroF010.Items[F010Count].RegistroF550.Count -1;
+   //
+   Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF550.Items[F550Count].RegistroF559.New;
 end;
 
 function TBloco_F.RegistroF600New: TRegistroF600;
@@ -1240,6 +1274,17 @@ begin
    Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF560.New;
 end;
 
+function TBloco_F.RegistroF569New: TRegistroF569;
+  var
+    F010Count: integer;
+    F560Count: integer;
+begin
+   F010Count := FRegistroF001.RegistroF010.Count -1;
+   F560Count := FRegistroF001.RegistroF010.Items[F010Count].RegistroF560.Count -1;
+   //
+   Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF560.Items[F560Count].RegistroF569.New;
+end;
+
 function TBloco_F.RegistroF510New: TRegistroF510;
   var
     F010Count: integer;
@@ -1247,6 +1292,17 @@ begin
    F010Count := FRegistroF001.RegistroF010.Count -1;
    //
    Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF510.New;
+end;
+
+function TBloco_F.RegistroF519New: TRegistroF519;
+  var
+    F010Count: integer;
+    F510Count: integer;
+begin
+   F010Count := FRegistroF001.RegistroF010.Count -1;
+   F510Count := FRegistroF001.RegistroF010.Items[F010Count].RegistroF510.Count -1;
+   //
+   Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF510.Items[F510Count].RegistroF519.New;
 end;
 
 (*Por: Edilson Alves de Oliveira*)
@@ -1300,7 +1356,6 @@ begin
    Result    := FRegistroF001.RegistroF010.Items[F010Count].RegistroF525.New;
 end;
 
-(*Por: Edilson Alves de Oliveira - *)
 procedure TBloco_F.WriteRegistroF525(RegF010: TRegistroF010);
   var
     intFor : integer;
@@ -1331,13 +1386,13 @@ begin
                   LFill( VL_REC,0,2 )     +
                   LFill( strIND_REC )     +
                   LFill( CNPJ_CPF   )     +
-                  LFill( NUM_DOC    )     +
+                  LFill( NUM_DOC, 60)     +
                   LFill( COD_ITEM   )     +
                   LFill( VL_REC_DET,0,2 ) +
                   LFill( CstPisToStr(CST_PIS) ) +
                   LFill( CstCofinsToStr(CST_COFINS)) +
                   LFill( INFO_COMPL)      +
-                  LFill( COD_CTA ) ) ;
+                  LFill( COD_CTA, 60) ) ;
            end;
            ///
            RegistroF990.QTD_LIN_F := RegistroF990.QTD_LIN_F + 1;

@@ -75,10 +75,6 @@ type
   TBloco_C = class(TACBrSPED)
   private
     FRegistroC001: TRegistroC001;      /// BLOCO 0 - Registro0001
-    FRegistroC860Count: Integer;
-    FRegistroC870Count: Integer;
-    FRegistroC880Count: Integer;
-    FRegistroC890Count: Integer;
     FRegistroC990: TRegistroC990;      /// BLOCO 0 - Registro0990
 
     FRegistroC010Count: Integer;
@@ -119,6 +115,15 @@ type
     FRegistroC601Count: Integer;
     FRegistroC605Count: Integer;
     FRegistroC609Count: Integer;
+    FRegistroC800Count: integer;
+    FRegistroC810Count: integer;
+    FRegistroC820Count: integer;
+    FRegistroC830Count: integer;
+    FRegistroC860Count: integer;
+    FRegistroC870Count: integer;
+    FRegistroC880Count: integer;
+    FRegistroC890Count: integer;
+
     FBloco_0: TBloco_0;
 
     procedure WriteRegistroC010(RegC001: TRegistroC001);
@@ -215,6 +220,11 @@ type
     function RegistroC601New: TRegistroC601;
     function RegistroC605New: TRegistroC605;
     function RegistroC609New: TRegistroC609;
+
+    function RegistroC800New: TRegistroC800;
+    function RegistroC810New: TRegistroC810;
+    function RegistroC820New: TRegistroC820;
+    function RegistroC830New: TRegistroC830;
     function RegistroC860New: TRegistroC860;
     function RegistroC870New: TRegistroC870;
     function RegistroC880New: TRegistroC880;
@@ -342,11 +352,14 @@ begin
   FRegistroC601Count      := 0;
   FRegistroC605Count      := 0;
   FRegistroC609Count      := 0;
+  FRegistroC800Count      := 0;
+  FRegistroC810Count      := 0;
+  FRegistroC820Count      := 0;
+  FRegistroC830Count      := 0;
   FRegistroC860Count      := 0;
   FRegistroC870Count      := 0;
   FRegistroC880Count      := 0;
   FRegistroC890Count      := 0;
-
 
   FRegistroC990.QTD_LIN_C := 0;
 end;
@@ -734,6 +747,45 @@ begin
    Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC600.Items[C600Count].RegistroC609.New;
 end;
 
+
+function TBloco_C.RegistroC800New: TRegistroC800;
+begin
+  Result := FRegistroC001.RegistroC010.Items[FRegistroC001.RegistroC010.Count -1].RegistroC800.New;
+end;
+
+function TBloco_C.RegistroC810New: TRegistroC810;
+  var
+    C010Count: integer;
+    C800Count: integer;
+begin
+   C010Count := FRegistroC001.RegistroC010.Count -1;
+   C800Count := FRegistroC001.RegistroC010.Items[C010Count].RegistroC800.Count -1;
+   //
+   Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC800.Items[C800Count].RegistroC810.New;
+end;
+
+function TBloco_C.RegistroC820New: TRegistroC820;
+  var
+    C010Count: integer;
+    C800Count: integer;
+begin
+   C010Count := FRegistroC001.RegistroC010.Count -1;
+   C800Count := FRegistroC001.RegistroC010.Items[C010Count].RegistroC800.Count -1;
+   //
+   Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC800.Items[C800Count].RegistroC820.New;
+end;
+
+function TBloco_C.RegistroC830New: TRegistroC830;
+  var
+    C010Count: integer;
+    C800Count: integer;
+begin
+   C010Count := FRegistroC001.RegistroC010.Count -1;
+   C800Count := FRegistroC001.RegistroC010.Items[C010Count].RegistroC800.Count -1;
+   //
+   Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC800.Items[C800Count].RegistroC830.New;
+end;
+
 function TBloco_C.RegistroC860New: TRegistroC860;
 begin
   Result := FRegistroC001.RegistroC010.Items[FRegistroC001.RegistroC010.Count -1].RegistroC860.New;
@@ -771,7 +823,6 @@ begin
  //
  Result    := FRegistroC001.RegistroC010.Items[C010Count].RegistroC860.Items[C860Count].RegistroC890.New;
 end;
-
 
 procedure TBloco_C.WriteRegistroC001 ;
 begin

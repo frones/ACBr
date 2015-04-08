@@ -59,10 +59,14 @@ type
   TRegistroF210List = class;
   TRegistroF211List = class;
   TRegistroF500List = class;
+  TRegistroF509List = class;
   TRegistroF510List = class;
+  TRegistroF519List = class;
   TRegistroF525List = class;
   TRegistroF550List = class;
+  TRegistroF559List = class;
   TRegistroF560List = class;
+  TRegistroF569List = class;
   TRegistroF600List = class;
   TRegistroF700List = class;
   TRegistroF800List = class;
@@ -622,8 +626,12 @@ type
      FCFOP                    : Integer;
      FCOD_CTA                 : string;
      FINFO_COMPL              : string;
+     FRegistroF509            : TRegistroF509List;
 
   public
+     constructor Create;  virtual;                     /// Create
+     destructor  Destroy; override;                    /// Destroy
+
      property VL_REC_CAIXA      : currency                read  FVL_REC_CAIXA   write FVL_REC_CAIXA  ;
      property CST_PIS           : TACBrCstPis             read  FCST_PIS        write FCST_PIS       ;
      property VL_DESC_PIS       : currency                read  FVL_DESC_PIS    write FVL_DESC_PIS   ;
@@ -638,7 +646,9 @@ type
      property COD_MOD           : string                  read  FCOD_MOD        write FCOD_MOD       ;
      property CFOP              : Integer                 read  FCFOP           write FCFOP          ;
      property COD_CTA           : string                  read  FCOD_CTA        write FCOD_CTA       ;
-     property INFO_COMPL        : string                  read  FINFO_COMPL     write FINFO_COMPL     ;
+     property INFO_COMPL        : string                  read  FINFO_COMPL     write FINFO_COMPL    ;
+
+     property RegistroF509      : TRegistroF509List       read  FRegistroF509   write FRegistroF509  ;
   end;
 
   // Registro F500 - Lista
@@ -650,6 +660,27 @@ type
     function New: TRegistroF500;
     property Items[Index: Integer]: TRegistroF500 read GetItem write SetItem;
   end;
+
+  //REGISTRO F509: PROCESSO REFERENCIADO
+  TRegistroF509 = class
+  private
+    fNUM_PROC         : string;              //02	Identificação do processo ou ato concessório.
+    fIND_PROC         : TACBrOrigemProcesso; //Indicador da origem do processo: 1 - Justiça Federal; 3 - Secretaria da Receita Federal do Brasil
+  public
+    property NUM_PROC : string              read FNUM_PROC write FNUM_PROC;
+    property IND_PROC : TACBrOrigemProcesso read FIND_PROC write FIND_PROC;
+  end;
+
+  TRegistroF509List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroF509;
+    procedure SetItem(Index: Integer; const Value: TRegistroF509);
+  public
+    function New: TRegistroF509;
+    property Items[Index: Integer]: TRegistroF509 read GetItem write SetItem;
+  end;
+
+
 
   (*Edilson Alves de oliveira (28/11/2011)
     Registro F510 - CONSOLIDAÇÃO  DAS  OPERAÇÕES  DA  PESSOA  JURÍDICA
@@ -673,8 +704,11 @@ type
      FCFOP                    : Integer;
      FCOD_CTA                 : string;
      FINFO_COMPL              : string;
-
+     FRegistroF519            : TRegistroF519List;
   public
+     constructor Create;  virtual;                     /// Create
+     destructor  Destroy; override;                    /// Destroy
+
      property  VL_REC_CAIXA        : currency                read FVL_REC_CAIXA       write FVL_REC_CAIXA     ;
      property  CST_PIS             : TACBrCstPis             read FCST_PIS            write FCST_PIS          ;
      property  VL_DESC_PIS         : currency                read FVL_DESC_PIS        write FVL_DESC_PIS      ;
@@ -689,7 +723,9 @@ type
      property  COD_MOD             : string                  read FCOD_MOD            write FCOD_MOD          ;
      property  CFOP                : Integer                 read FCFOP               write FCFOP             ;
      property  COD_CTA             : string                  read FCOD_CTA            write FCOD_CTA          ;
-     property  INFO_COMPL          : string                  read FINFO_COMPL         write FINFO_COMPL        ;
+     property  INFO_COMPL          : string                  read FINFO_COMPL         write FINFO_COMPL       ;
+
+     property RegistroF519         : TRegistroF519List       read FRegistroF519       write FRegistroF519;
   end;
 
   // Registro F510 - Lista
@@ -702,15 +738,31 @@ type
     property Items[Index: Integer]: TRegistroF510 read GetItem write SetItem;
   end;
 
-  (*Edilson Alves de oliveira (28/11/2011)
-    Registro F525 - COMPOSIÇÃO  DA  RECEITA  ESCRITURADA  NO  PERÍODO  –
-                    DETALHAMENTO DA RECEITA RECEBIDA PELO REGIME DE CAIXA  *)
+ //REGISTRO F519: PROCESSO REFERENCIADO
+  TRegistroF519 = class
+  private
+    fNUM_PROC         : string;              //02	Identificação do processo ou ato concessório.
+    fIND_PROC         : TACBrOrigemProcesso; //Indicador da origem do processo: 1 - Justiça Federal; 3 - Secretaria da Receita Federal do Brasil
+  public
+    property NUM_PROC : string              read FNUM_PROC write FNUM_PROC;
+    property IND_PROC : TACBrOrigemProcesso read FIND_PROC write FIND_PROC;
+  end;
+
+  TRegistroF519List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroF519;
+    procedure SetItem(Index: Integer; const Value: TRegistroF519);
+  public
+    function New: TRegistroF519;
+    property Items[Index: Integer]: TRegistroF519 read GetItem write SetItem;
+  end;
+
   TRegistroF525 = class
   private
      FVL_REC                   : Currency;
      FIND_REC                  : TACBrIndicadorDaComposicaoDaReceitaRecebida;
      FCNPJ_CPF                 : string;
-     FNUM_DOC                  : Integer;
+     FNUM_DOC                  : string;
      FCOD_ITEM                 : string;
      FVL_REC_DET               : Currency;
      FCST_PIS                  : TACBrCstPis;
@@ -721,7 +773,7 @@ type
      property  VL_REC       : Currency       read FVL_REC     write FVL_REC     ;
      property  IND_REC      : TACBrInd_Rec   read FIND_REC    write FIND_REC    ;
      property  CNPJ_CPF     : string         read FCNPJ_CPF   write FCNPJ_CPF   ;
-     property  NUM_DOC      : Integer        read FNUM_DOC    write FNUM_DOC    ;
+     property  NUM_DOC      : string         read FNUM_DOC    write FNUM_DOC    ;
      property  COD_ITEM     : string         read FCOD_ITEM   write FCOD_ITEM   ;
      property  VL_REC_DET   : Currency       read FVL_REC_DET write FVL_REC_DET ;
      property  CST_PIS      : TACBrCstPis    read FCST_PIS    write FCST_PIS    ;
@@ -758,22 +810,28 @@ type
     FCFOP                    : Integer;
     FCOD_CTA                 : String;
     FINFO_COMPL              : String;
+    FRegistroF559            : TRegistroF559List;
   public
-    property VL_REC_COMP     : currency       read FVL_REC_COMP          write FVL_REC_COMP;
-    property CST_PIS         : TACBrCstPis    read FCST_PIS              write FCST_PIS;
-    property VL_DESC_PIS     : currency       read FVL_DESC_PIS          write FVL_DESC_PIS;
-    property VL_BC_PIS       : currency       read FVL_BC_PIS            write FVL_BC_PIS;
-    property ALIQ_PIS        : currency       read FALIQ_PIS             write FALIQ_PIS;
-    property VL_PIS          : currency       read FVL_PIS               write FVL_PIS;
-    property CST_COFINS      : TACBrCstCofins read FCST_COFINS           write FCST_COFINS;
-    property VL_DESC_COFINS  : currency       read FVL_DESC_COFINS       write FVL_DESC_COFINS;
-    property VL_BC_COFINS    : currency       read FVL_BC_COFINS         write FVL_BC_COFINS;
-    property ALIQ_COFINS     : currency       read FALIQ_COFINS          write FALIQ_COFINS;
-    property VL_COFINS       : currency       read FVL_COFINS            write FVL_COFINS;
-    property COD_MOD         : String         read FCOD_MOD              write FCOD_MOD;
-    property CFOP            : Integer        read FCFOP                 write FCFOP;
-    property COD_CTA         : String         read FCOD_CTA              write FCOD_CTA;
-    property INFO_COMPL      : String         read FINFO_COMPL           write FINFO_COMPL;
+    constructor Create;  virtual;                     /// Create
+    destructor  Destroy; override;                    /// Destroy
+
+    property VL_REC_COMP     : currency          read FVL_REC_COMP          write FVL_REC_COMP;
+    property CST_PIS         : TACBrCstPis       read FCST_PIS              write FCST_PIS;
+    property VL_DESC_PIS     : currency          read FVL_DESC_PIS          write FVL_DESC_PIS;
+    property VL_BC_PIS       : currency          read FVL_BC_PIS            write FVL_BC_PIS;
+    property ALIQ_PIS        : currency          read FALIQ_PIS             write FALIQ_PIS;
+    property VL_PIS          : currency          read FVL_PIS               write FVL_PIS;
+    property CST_COFINS      : TACBrCstCofins    read FCST_COFINS           write FCST_COFINS;
+    property VL_DESC_COFINS  : currency          read FVL_DESC_COFINS       write FVL_DESC_COFINS;
+    property VL_BC_COFINS    : currency          read FVL_BC_COFINS         write FVL_BC_COFINS;
+    property ALIQ_COFINS     : currency          read FALIQ_COFINS          write FALIQ_COFINS;
+    property VL_COFINS       : currency          read FVL_COFINS            write FVL_COFINS;
+    property COD_MOD         : String            read FCOD_MOD              write FCOD_MOD;
+    property CFOP            : Integer           read FCFOP                 write FCFOP;
+    property COD_CTA         : String            read FCOD_CTA              write FCOD_CTA;
+    property INFO_COMPL      : String            read FINFO_COMPL           write FINFO_COMPL;
+
+    property RegistroF559    : TRegistroF559List read FRegistroF559         write FRegistroF559;
   end;
 
   // Registro F550 - Lista
@@ -785,6 +843,29 @@ type
     function New: TRegistroF550;
     property Items[Index: Integer]: TRegistroF550 read GetItem write SetItem;
   end;
+
+
+  //REGISTRO F559: PROCESSO REFERENCIADO
+  TRegistroF559 = class
+  private
+    fNUM_PROC         : string;              //02	Identificação do processo ou ato concessório.
+    fIND_PROC         : TACBrOrigemProcesso; //Indicador da origem do processo: 1 - Justiça Federal; 3 - Secretaria da Receita Federal do Brasil
+  public
+    property NUM_PROC : string              read FNUM_PROC write FNUM_PROC;
+    property IND_PROC : TACBrOrigemProcesso read FIND_PROC write FIND_PROC;
+  end;
+
+  TRegistroF559List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroF559;
+    procedure SetItem(Index: Integer; const Value: TRegistroF559);
+  public
+    function New: TRegistroF559;
+    property Items[Index: Integer]: TRegistroF559 read GetItem write SetItem;
+  end;
+
+
+
 
   (*Edilson Alves de oliveira (23/11/2011)
     Registro F560 - CONSOLIDAÇÃO  DAS  OPERAÇÕES  DA  PESSOA  JURÍDICA
@@ -809,24 +890,30 @@ type
      FCFOP                 : Integer;
      FCOD_CTA              : string;
      FINFO_COMPL           : string;
-
+     FRegistroF569: TRegistroF569List;
   public
-     property  VL_REC_COMP        : currency       read FVL_REC_COMP        write FVL_REC_COMP      ;
-     property  CST_PIS            : TACBrCstPis    read FCST_PIS            write FCST_PIS          ;
-     property  VL_DESC_PIS        : currency       read FVL_DESC_PIS        write FVL_DESC_PIS      ;
-     property  QUANT_BC_PIS       : currency       read FQUANT_BC_PIS       write FQUANT_BC_PIS     ;
-     property  ALIQ_PIS_QUANT     : currency       read FALIQ_PIS_QUANT     write FALIQ_PIS_QUANT   ;
-     property  VL_PIS             : currency       read FVL_PIS             write FVL_PIS           ;
-     property  CST_COFINS         : TACBrCstCofins read FCST_COFINS         write FCST_COFINS       ;
-     property  VL_DESC_COFINS     : currency       read FVL_DESC_COFINS     write FVL_DESC_COFINS   ;
-     property  QUANT_BC_COFINS    : currency       read FQUANT_BC_COFINS    write FQUANT_BC_COFINS  ;
-     property  ALIQ_COFINS_QUANT  : currency       read FALIQ_COFINS_QUANT  write FALIQ_COFINS_QUANT;
-     property  VL_COFINS          : currency       read FVL_COFINS          write FVL_COFINS        ;
-     property  COD_MOD            : string         read FCOD_MOD            write FCOD_MOD          ;
-     property  CFOP               : Integer        read FCFOP               write FCFOP             ;
-     property  COD_CTA            : string         read FCOD_CTA            write FCOD_CTA          ;
-     property  INFO_COMPL         : string         read FINFO_COMPL         write FINFO_COMPL        ;
+     constructor Create;  virtual;                     /// Create
+     destructor  Destroy; override;                    /// Destroy
+
+     property  VL_REC_COMP        : currency          read FVL_REC_COMP        write FVL_REC_COMP      ;
+     property  CST_PIS            : TACBrCstPis       read FCST_PIS            write FCST_PIS          ;
+     property  VL_DESC_PIS        : currency          read FVL_DESC_PIS        write FVL_DESC_PIS      ;
+     property  QUANT_BC_PIS       : currency          read FQUANT_BC_PIS       write FQUANT_BC_PIS     ;
+     property  ALIQ_PIS_QUANT     : currency          read FALIQ_PIS_QUANT     write FALIQ_PIS_QUANT   ;
+     property  VL_PIS             : currency          read FVL_PIS             write FVL_PIS           ;
+     property  CST_COFINS         : TACBrCstCofins    read FCST_COFINS         write FCST_COFINS       ;
+     property  VL_DESC_COFINS     : currency          read FVL_DESC_COFINS     write FVL_DESC_COFINS   ;
+     property  QUANT_BC_COFINS    : currency          read FQUANT_BC_COFINS    write FQUANT_BC_COFINS  ;
+     property  ALIQ_COFINS_QUANT  : currency          read FALIQ_COFINS_QUANT  write FALIQ_COFINS_QUANT;
+     property  VL_COFINS          : currency          read FVL_COFINS          write FVL_COFINS        ;
+     property  COD_MOD            : string            read FCOD_MOD            write FCOD_MOD          ;
+     property  CFOP               : Integer           read FCFOP               write FCFOP             ;
+     property  COD_CTA            : string            read FCOD_CTA            write FCOD_CTA          ;
+     property  INFO_COMPL         : string            read FINFO_COMPL         write FINFO_COMPL       ;
+
+     property  RegistroF569       : TRegistroF569List read FRegistroF569       write FRegistroF569     ;
   end;
+
 
   // Registro F560 - Lista
   TRegistroF560List = class(TObjectList)
@@ -838,6 +925,25 @@ type
     property Items[Index: Integer]: TRegistroF560 read GetItem write SetItem;
   end;
 
+
+ //REGISTRO F519: PROCESSO REFERENCIADO
+  TRegistroF569 = class
+  private
+    fNUM_PROC         : string;              //02	Identificação do processo ou ato concessório.
+    fIND_PROC         : TACBrOrigemProcesso; //Indicador da origem do processo: 1 - Justiça Federal; 3 - Secretaria da Receita Federal do Brasil
+  public
+    property NUM_PROC : string              read FNUM_PROC write FNUM_PROC;
+    property IND_PROC : TACBrOrigemProcesso read FIND_PROC write FIND_PROC;
+  end;
+
+  TRegistroF569List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroF569;
+    procedure SetItem(Index: Integer; const Value: TRegistroF569);
+  public
+    function New: TRegistroF569;
+    property Items[Index: Integer]: TRegistroF569 read GetItem write SetItem;
+  end;
 
   //REGISTRO F600: CONTRIBUIÇÃO RETIDA NA FONTE
   TRegistroF600 = class
@@ -1400,6 +1506,130 @@ procedure TRegistroF525List.SetItem(Index: Integer;
   const Value: TRegistroF525);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistroF509List }
+
+function TRegistroF509List.GetItem(Index: Integer): TRegistroF509;
+begin
+  Result := TRegistroF509(Inherited Items[Index]);
+end;
+
+function TRegistroF509List.New: TRegistroF509;
+begin
+  Result := TRegistroF509.Create;
+  Add(Result);
+end;
+
+procedure TRegistroF509List.SetItem(Index: Integer; const Value: TRegistroF509);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroF519List }
+
+function TRegistroF519List.GetItem(Index: Integer): TRegistroF519;
+begin
+  Result := TRegistroF519(Inherited Items[Index]);
+end;
+
+function TRegistroF519List.New: TRegistroF519;
+begin
+  Result := TRegistroF519.Create;
+  Add(Result);
+end;
+
+procedure TRegistroF519List.SetItem(Index: Integer; const Value: TRegistroF519);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroF559List }
+
+function TRegistroF559List.GetItem(Index: Integer): TRegistroF559;
+begin
+  Result := TRegistroF559(Inherited Items[Index]);
+end;
+
+function TRegistroF559List.New: TRegistroF559;
+begin
+  Result := TRegistroF559.Create;
+  Add(Result);
+end;
+
+procedure TRegistroF559List.SetItem(Index: Integer; const Value: TRegistroF559);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroF569List }
+
+function TRegistroF569List.GetItem(Index: Integer): TRegistroF569;
+begin
+  Result := TRegistroF569(Inherited Items[Index]);
+end;
+
+function TRegistroF569List.New: TRegistroF569;
+begin
+  Result := TRegistroF569.Create;
+  Add(Result);
+end;
+
+procedure TRegistroF569List.SetItem(Index: Integer; const Value: TRegistroF569);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroF500 }
+
+constructor TRegistroF500.Create;
+begin
+  FRegistroF509 := TRegistroF509List.Create;
+end;
+
+destructor TRegistroF500.Destroy;
+begin
+  FRegistroF509.Free;
+  inherited;
+end;
+
+{ TRegistroF510 }
+
+constructor TRegistroF510.Create;
+begin
+  FRegistroF519 := TRegistroF519List.Create;
+end;
+
+destructor TRegistroF510.Destroy;
+begin
+  FRegistroF519.Free;
+  inherited;
+end;
+
+{ TRegistroF550 }
+
+constructor TRegistroF550.Create;
+begin
+  FRegistroF559 := TRegistroF559List.Create;
+end;
+
+destructor TRegistroF550.Destroy;
+begin
+  FRegistroF559.Free;
+  inherited;
+end;
+
+{ TRegistroF560 }
+
+constructor TRegistroF560.Create;
+begin
+  FRegistroF569 := TRegistroF569List.Create;
+end;
+
+destructor TRegistroF560.Destroy;
+begin
+  FRegistroF569.Free;
+  inherited;
 end;
 
 end.

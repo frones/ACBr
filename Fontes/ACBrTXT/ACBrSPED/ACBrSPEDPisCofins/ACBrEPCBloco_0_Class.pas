@@ -385,6 +385,7 @@ begin
          indNenhum: strIND_SIT_ESP := '';
        end;
        case IND_NAT_PJ of
+         indNatPJNenhum               : strIND_NAT_PJ := '';
          indNatPJSocEmpresariaGeral   : strIND_NAT_PJ := '00'; //0 - Sociedade empresária geral
          indNatPJSocCooperativa       : strIND_NAT_PJ := '01'; //1 - Sociedade Cooperativa
          indNatPJEntExclusivaFolhaSal : strIND_NAT_PJ := '02'; //2 - Entidade sujeita ao PIS/Pasep exclusivamente com base  na folha de salários
@@ -513,7 +514,7 @@ begin
                LFill(COMPL) +
                LFill(BAIRRO) +
                LFill(FONE, 10) +
-               LFill(FAX, 10) +
+               LFill(FAX, 10, True) +
                LFill(EMAIL) +
                LFill(COD_MUN, 7) ) ;
         end;
@@ -781,7 +782,7 @@ begin
                LFill( EX_IPI ) +
                LFill( COD_GEN ) +
                LFill( COD_LST ) +
-               LFill( ALIQ_ICMS, 6, 2 ) ) ;
+               VLFill( ALIQ_ICMS, 6, 2 ) ) ;
         end;
         /// Registros FILHOS
         WriteRegistro0205( Reg0140.Registro0200.Items[intFor] ) ;

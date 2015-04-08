@@ -400,7 +400,7 @@ type
     FEX_IPI       : string;        //Código EX, conforme a TIPI
     FCOD_GEN      : string;        //Código do gênero do item, conforme a Tabela 4.2.1.
     FCOD_LST      : string;        //Código do serviço conforme lista do Anexo I da Lei Complementar Federal nº 116/03
-    FALIQ_ICMS    : currency;      //Alíquota de ICMS aplicável ao item nas operações internas
+    FALIQ_ICMS    : variant;      //Alíquota de ICMS aplicável ao item nas operações internas
 
     FRegistro0205 : TRegistro0205List;
     FRegistro0206 : TRegistro0206;
@@ -419,7 +419,7 @@ type
     property EX_IPI       : string            read FEX_IPI       write FEX_IPI;
     property COD_GEN      : string            read FCOD_GEN      write FCOD_GEN;
     property COD_LST      : string            read FCOD_LST      write FCOD_LST;
-    property ALIQ_ICMS    : currency          read FALIQ_ICMS    write FALIQ_ICMS;
+    property ALIQ_ICMS    : variant           read FALIQ_ICMS    write FALIQ_ICMS;
 
     property Registro0205 : TRegistro0205List read FRegistro0205 write FRegistro0205;
     property Registro0206 : TRegistro0206     read FRegistro0206 write FRegistro0206;

@@ -419,66 +419,6 @@ begin
 end;
 
 
-
-class function FormatarFone(AValue: String): String;
-var
-  lTemp: string;
-begin
-  AValue := LimpaNumero(AValue);
-
-  if Length(AValue) = 0 then
-     Result := AValue
-  else
-   begin
-     AValue := IntToStr(StrToInt64Def(AValue, 0));
-     Result := AValue;
-     lTemp  := '';
-   end;
-
-  if NaoEstaVazio(AValue) then
-  begin
-    if copy(AValue, 1, 3) = '800' then
-      Result := '0' + copy(AValue, 1, 3) + '-' + copy(AValue, 4, 3) + '-' + copy(AValue, 7, 4)
-    else
-    case length(AValue) of
-       8: Result := '(  )' + copy(AValue, 1, 4) + '-' + copy(AValue, 5, 4);
-       9: begin
-            if copy(AValue, 1, 1) = '9' // Celulares do Municipio de São Paulo tem 9 Digitos e o primeiro é 9
-              then Result := '(  )' + copy(AValue, 1, 5) + '-' + copy(AValue, 6, 4)
-              else begin
-               ltemp := '0' + copy(AValue, 1, 1);
-               Result := '(' + lTemp + ')' + copy(AValue, 2, 4) + '-' + copy(AValue, 6, 4);
-              end;
-         end;
-       12: begin // Exemplo: 551133220000
-             ltemp := copy(AValue, 1, 4);
-             Result := '(' + lTemp + ')' + copy(AValue, 5, 4) + '-' + copy(AValue, 9, 4);
-         end;
-       13: begin // Exemplo: 5511999220000
-             ltemp := copy(AValue, 1, 4);
-             Result := '(' + lTemp + ')' + copy(AValue, 5, 5) + '-' + copy(AValue, 10, 4);
-         end;
-       else
-       begin
-         AValue := Poem_Zeros(AValue, 12);
-         if (copy(AValue, 1, 1) = '0') and (copy(AValue, 2, 1) = '0')
-           then begin
-             ltemp := copy(AValue, 3, 2);
-             Result := '(' + lTemp + ')' + copy(AValue, 5, 4) + '-' + copy(AValue, 9, 4);
-           end
-           else begin
-             ltemp := copy(AValue, 2, 2);
-             Result := '(' + lTemp + ')' + copy(AValue, 4, 5) + '-' + copy(AValue, 9, 4);
-           end;
-       end;
-    end;
-  end;
-end;
-
-
-
-
-
 class function UpperCase2(Str: String): String;
 var
    i, wTamanho: integer;
@@ -647,4 +587,4 @@ end;
 
 class function Modulo11(Valor: string; Peso: Integer = 2; Base: Integer = 9): String;
 
-*)
+*)

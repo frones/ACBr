@@ -115,7 +115,7 @@ TACBrThreadTimer = class(TThread)
     procedure SetEnabled(const Value: Boolean);
     procedure SetInterval(const Value: Integer);
   protected
-    procedure ChamarEvento;
+    procedure DoCallEvent;
     procedure Execute; override;
   public
     constructor Create ;
@@ -219,66 +219,53 @@ end;
 {------------------------------ TACBrThreadTimer ------------------------------}
 constructor TACBrThreadTimer.Create ;
 begin
-  inherited Create( true );   { CreateSuspended }
-
-  fsInterval := 0 ;
-  fsEnabled  := false ;
+  fsInterval := 100 ;
+  fsEnabled  := False ;
   fsOnTimer  := nil ;
+
+  inherited Create( False );
 end;
 
 procedure TACBrThreadTimer.Execute;
-begin                              
+begin
   while not Terminated do
   begin
-     Sleep( fsInterval );
+    if fsEnabled then
+    begin
+      Sleep( fsInterval );
 
-     if fsEnabled and Assigned( fsOntimer ) then
-      {$IFNDEF NOGUI}
-        Synchronize( ChamarEvento ) 
-      {$ELSE}
-        fsOnTimer( self )
-      {$ENDIF}
-     else
-        Sleep( 100 );
+      if Assigned( fsOntimer ) then
+      begin
+        {$IFNDEF NOGUI}
+        Synchronize( DoCallEvent )
+        {$ELSE}
+        DoCallEvent;
+        {$ENDIF};
+      end;
+    end
+    else
+      Sleep(1);
   end ;
 end;
 
-procedure TACBrThreadTimer.ChamarEvento;
+procedure TACBrThreadTimer.DoCallEvent;
 begin
   fsOnTimer( self ) ;
 end;
 
 procedure TACBrThreadTimer.SetEnabled(const Value: Boolean);
 begin
-  if fsEnabled = Value then exit ;
+  if fsEnabled = Value then
+    exit ;
 
   fsEnabled := Value;
-
-  if Value then
-  begin
-    {$IFDEF DELPHI14_UP}
-      if Suspended then Start ;
-    {$ELSE}
-      if Suspended then Resume ;
-    {$ENDIF}
-  end
-  else
-  begin
-    {$IFNDEF NOGUI}
-      {$IFDEF DELPHI12_UP}
-        if not Suspended then Terminate ;
-      {$ELSE}
-        if not Suspended then Suspend ;
-      {$ENDIF}
-    {$ENDIF}
-  end;
 end;
 
 procedure TACBrThreadTimer.SetInterval(const Value: Integer);
 begin
   fsInterval := Value;
   if Value = 0 then
-     Enabled := false ;
+     Enabled := False ;
 end;
 { TACBrInformacao }
 

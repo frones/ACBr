@@ -473,8 +473,8 @@ begin
   if Erro <> 0 then
   begin
      Desativar;
-     raise Exception.Create( ACBrStr(AnsiString( 'Erro: '+IntToStr(Erro)+' - '+ErroDesc+sLineBreak+
-                                     'Não foi possível criar serviço na porta: '+Port ))) ;
+     raise Exception.Create( 'Erro: '+IntToStr(Erro)+' - '+ErroDesc+sLineBreak+
+                             ACBrStr('Não foi possível criar serviço na porta: ')+Port ) ;
   end ;
 end;
 

@@ -739,7 +739,8 @@ begin
                FieldByName('vDesc').AsString := FormatFloat(vDesc);
           end
           else
-            FieldByName('vDesc').AsString := FormatFloat(vDesc);
+//            FieldByName('vDesc').AsString := FormatFloat(vDesc);
+            FieldByName('vDesc').AsString := FloatToStr(vDesc);
 
           with FNFe.Det.Items[i].Imposto.ISSQN do
           begin

@@ -232,7 +232,9 @@ type
     edEmailUsuario: TEdit;
     edEntTXT: TEdit;
     edIBGECodNome: TEdit;
+    edtArquivoPFX: TEdit;
     edLogComp: TEdit;
+    edtArquivoWebServices: TEdit;
     edtEmailAssunto: TEdit;
     edLCBPreExcluir: TEdit;
     edLogArq: TEdit;
@@ -266,7 +268,7 @@ type
     edtBOLNumero: TEdit;
     edtBOLRazaoSocial: TEdit;
     edtBOLSH: TEdit;
-    edtCaminho: TEdit;
+    edtNumeroSerie: TEdit;
     edTCArqPrecos: TEdit;
     edTCNaoEncontrado: TEdit;
     edtCodCliente: TEdit;
@@ -500,6 +502,7 @@ type
     Label98: TLabel;
     Label99: TLabel;
     lAdSufixo: TLabel;
+    lblArquivoWebServices: TLabel;
     lblBOLAgencia: TLabel;
     lblBOLBairro: TLabel;
     lblBOLBanco: TLabel;
@@ -516,7 +519,8 @@ type
     lblBOLNomeRazao: TLabel;
     lblBOLNumero: TLabel;
     lblBOLPessoa: TLabel;
-    lblCaminho: TLabel;
+    lblNumeroSerie: TLabel;
+    lblArquivoPFX: TLabel;
     lblSenha: TLabel;
     lCEPCEP: TLabel;
     lCEPChave: TLabel;
@@ -579,6 +583,8 @@ type
     rgTipoAmb: TRadioGroup;
     rgTipoDanfe: TRadioGroup;
     rgTipoFonte: TRadioGroup;
+    sbArquivoWebServices: TSpeedButton;
+    sbNumeroSerieCert: TSpeedButton;
     sbArquivoCert: TSpeedButton;
     sbBALLog: TSpeedButton;
     sbCHQBemafiINI: TSpeedButton;
@@ -754,6 +760,8 @@ type
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure sbArquivoCertClick(Sender: TObject);
+    procedure sbArquivoWebServicesClick(Sender: TObject);
+    procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
     procedure sbPathCanClick(Sender: TObject);
@@ -1391,6 +1399,7 @@ begin
     Body.Add('de SMTP estão corretas.');
     Body.Add('');
     Body.Add('ACBrMonitor');
+    Body.Add('http://www.projetoacbr.com.br/');
 
     bEmailTestarConf.Enabled := False;
     bCancelar.Enabled := False;
@@ -2436,7 +2445,10 @@ begin
     sedLogLinhasComp.Value := Ini.ReadInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', 0);
     ArqLogCompTXT := AcertaPath(edLogComp.Text);
     rgVersaoSSL.ItemIndex := Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
+    edtArquivoWebServices.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServices',
+      PathApplication + 'ACBrNFeServicos.ini');
 
+    ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServices.Text;
     ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
 
     cbModoEmissao.Checked :=
@@ -2493,10 +2505,10 @@ begin
     edtIdToken.Text := Ini.ReadString('NFCe', 'IdToken', '');
     edtToken.Text := Ini.ReadString('NFCe', 'Token', '');
 
-    lblCaminho.Caption := 'Dados Certificado';
-    edtCaminho.Text := Ini.ReadString('Certificado', 'Caminho', '');
-    ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtCaminho.Text;
-    edtCaminho.Text := ACBrNFe1.Configuracoes.Certificados.NumeroSerie;
+    edtArquivoPFX.Text := Ini.ReadString('Certificado', 'ArquivoPFX', '');
+    ACBrNFe1.Configuracoes.Certificados.ArquivoPFX := edtArquivoPFX.Text;
+    edtNumeroSerie.Text := Ini.ReadString('Certificado', 'NumeroSerie', '');
+    ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumeroSerie.Text;
     edtSenha.Text := LeINICrypt(INI, 'Certificado', 'Senha', _C);
     ACBrNFe1.Configuracoes.Certificados.Senha := edtSenha.Text;
 
@@ -2939,6 +2951,7 @@ procedure TFrmACBrMonitor.SalvarIni;
 var
   Ini: TIniFile;
   OldMonitoraTXT, OldMonitoraTCP, OldMonitoraPasta: boolean;
+  OldVersaoSSL : Integer;
   StreamMemo: TMemoryStream;
 begin
   if cbSenha.Checked and (edSenha.Text <> 'NADAAQUI') and (edSenha.Text <> '') then
@@ -2969,6 +2982,7 @@ begin
     OldMonitoraTCP := Ini.ReadBool('ACBrMonitor', 'Modo_TCP', False);
     OldMonitoraTXT := Ini.ReadBool('ACBrMonitor', 'Modo_TXT', False);
     OldMonitoraPasta := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
+    OldVersaoSSL :=  Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
 
     // Parametros do Monitor //
     Ini.WriteBool('ACBrMonitor', 'Modo_TCP', rbTCP.Checked);
@@ -2979,8 +2993,8 @@ begin
       StrToIntDef(edTimeOutTCP.Text, 10000));
     if cbMonitorarPasta.Checked then
     begin
-      Ini.WriteString('ACBrNFeMonitor', 'TXT_Entrada', PathWithDelim(edEntTXT.Text));
-      Ini.WriteString('ACBrNFeMonitor', 'TXT_Saida', PathWithDelim(edSaiTXT.Text));
+      Ini.WriteString('ACBrMonitor', 'TXT_Entrada', PathWithDelim(edEntTXT.Text));
+      Ini.WriteString('ACBrMonitor', 'TXT_Saida', PathWithDelim(edSaiTXT.Text));
     end
     else
     begin
@@ -3098,7 +3112,8 @@ begin
     ini.WriteString('NCM', 'DirNCMSalvar', PathWithoutDelim(deNcmSalvar.Text));
 
     { Parametros NFe }
-    Ini.WriteString('Certificado', 'Caminho', edtCaminho.Text);
+    Ini.WriteString('Certificado', 'ArquivoPFX', edtArquivoPFX.Text);
+    Ini.WriteString('Certificado', 'NumeroSerie', edtNumeroSerie.Text);
     GravaINICrypt(INI, 'Certificado', 'Senha', edtSenha.Text, _C);
 
     Ini.WriteBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', cbModoEmissao.Checked);
@@ -3107,6 +3122,7 @@ begin
     Ini.WriteString('ACBrNFeMonitor', 'Arquivo_Log_Comp', edLogComp.Text);
     Ini.WriteInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', sedLogLinhasComp.Value);
     Ini.WriteInteger('ACBrNFeMonitor', 'VersaoSSL', rgVersaoSSL.ItemIndex);
+    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServices', edtArquivoWebServices.Text );
 
     Ini.WriteInteger('Geral', 'DANFE', rgTipoDanfe.ItemIndex);
     Ini.WriteInteger('Geral', 'FormaEmissao', rgFormaEmissao.ItemIndex);
@@ -3240,11 +3256,11 @@ begin
   end;
 
   if (OldMonitoraTXT <> rbTXT.Checked) or (OldMonitoraTCP <> rbTCP.Checked) or
-    (OldMonitoraPasta <> cbMonitorarPasta.Checked) then
+    (OldMonitoraPasta <> cbMonitorarPasta.Checked) or (OldVersaoSSL <> rgVersaoSSL.ItemIndex) then
   begin
-    MessageDlg('ACBrMonitor',
-      'O Método de Monitoramento do ACBrMonitor foi modificado' +
-      sLineBreak + sLineBreak + 'Será necessário reinicar o ACBrMonitor',
+    MessageDlg('ACBrMonitor PLUS',
+      'Configurações de inicialização do ACBrMonitorPLUS foram modificadas' +
+      sLineBreak + sLineBreak + 'Será necessário reinicar o ACBrMonitorPLUS',
       mtInformation, [mbOK], 0);
     Application.Terminate;
   end;
@@ -4064,7 +4080,40 @@ end;
 
 procedure TFrmACBrMonitor.sbArquivoCertClick(Sender: TObject);
 begin
-  edtCaminho.Text := ACBrNFe1.SSL.SelecionarCertificado;
+  OpenDialog1.Title := 'Selecione o certificado';
+  OpenDialog1.DefaultExt := '*.pfx';
+  OpenDialog1.Filter :=
+    'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoPFX.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbArquivoWebServicesClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoWebServices.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbNumeroSerieCertClick(Sender: TObject);
+var
+  OldSSL : TSSLLib;
+begin
+  OldSSL := ACBrNFe1.Configuracoes.Geral.SSLLib;
+
+  ACBrNFe1.Configuracoes.Geral.SSLLib  := libCapicom;
+  edtNumeroSerie.Text := ACBrNFe1.SSL.SelecionarCertificado;
+
+  ACBrNFe1.Configuracoes.Geral.SSLLib := OldSSL;
 end;
 
 procedure TFrmACBrMonitor.sbBALLogClick(Sender: TObject);
@@ -4165,7 +4214,7 @@ begin
   Conexao := TCPBlockSocket;
   mCmd.Lines.Clear;
   fsProcessar.Clear;
-  Resp := 'ACBrMonitor PLUS Ver. ' + Versao + sLineBreak + 'Conectado em: ' +
+  Resp := 'ACBrNFeMonitor PLUS Ver. ' + Versao + sLineBreak + 'Conectado em: ' +
     FormatDateTime('dd/mm/yy hh:nn:ss', now) + sLineBreak + 'Máquina: ' +
     Conexao.GetRemoteSinIP + sLineBreak + 'Esperando por comandos.';
 

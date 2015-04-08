@@ -60,7 +60,7 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
-    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve200;
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property AtualizarXMLCancelado: Boolean
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;

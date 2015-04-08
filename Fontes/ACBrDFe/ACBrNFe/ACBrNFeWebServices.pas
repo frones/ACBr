@@ -699,7 +699,9 @@ begin
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
 
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+//  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+  FPVersaoServico := GetVersaoServicoNFe(FPConfiguracoesNFe.Geral.ModeloDF,
+    FPConfiguracoesNFe.Geral.VersaoDF,FPLayout);
 end;
 
 
@@ -707,10 +709,14 @@ function TNFeWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
 
-  if EstaVazio(FPVersaoServico) then
+{  if EstaVazio(FPVersaoServico) then
     FPVersaoServico := TACBrNFe(FPDFeOwner).LerVersaoDeParams(FPLayout);
 
-  Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
+  Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';  }
+
+  Result := '<versaoDados>' + GetVersaoServicoNFe(FPConfiguracoesNFe.Geral.ModeloDF,
+    FPConfiguracoesNFe.Geral.VersaoDF,FPLayout)+ '</versaoDados>';
+
 end;
 
 procedure TNFeWebService.FinalizarServico;
@@ -1631,6 +1637,8 @@ begin
     FNFeChave := NFeRetorno.chNfe;
     FPMsg := FXMotivo;
 
+
+
     // Verifica se a nota fiscal está cancelada pelo método antigo. Se estiver,
     // então NFCancelada será True e já atribui Protocolo, Data e Mensagem
     if NFeRetorno.retCancNFe.cStat > 0 then
@@ -1755,7 +1763,7 @@ begin
     end;
     {*)}
 
-    if not NFCancelada then
+    if not NFCancelada and (NaoEstaVazio(NFeRetorno.protNFe.nProt))  then
     begin
       FProtocolo := NFeRetorno.protNFe.nProt;
       FDhRecbto := NFeRetorno.protNFe.dhRecbto;
@@ -2256,16 +2264,36 @@ begin
 end;
 
 procedure TNFeEnvEvento.DefinirURL;
+var
+  UF : String;
+  Versao: Double;
 begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
   if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento]) then
-    FPLayout := LayNFeEventoAN
+  begin
+    FPLayout := LayNFeEventoAN;
+    UF := 'AN';
+  end
   else
+   begin
     FPLayout := LayNFeEvento;
+    UF := FPConfiguracoesNFe.WebServices.UF;
+   end;
 
-  inherited DefinirURL;
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(TACBrNFe(FPDFeOwner).GetNomeModeloDFe, UF ,
+    FPConfiguracoesNFe.WebServices.Ambiente, LayOutToServico(FPLayout),
+    Versao, FPURL);
+
+  //FPVersaoServico := FloatToString(3.10, '.', '0.00');
+  FPVersaoServico := GetVersaoServicoNFe(FPConfiguracoesNFe.Geral.ModeloDF,
+    FPConfiguracoesNFe.Geral.VersaoDF,FPLayout);
 end;
 
 procedure TNFeEnvEvento.DefinirServicoEAction;

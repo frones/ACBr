@@ -1061,11 +1061,16 @@ end ;
 function StringToFloatDef(const NumString : String ; const DefaultValue : Double
    ) : Double ;
 begin
-  try
-     Result := StringToFloat( NumString ) ;
-  except
-     Result := DefaultValue ;
-  end ;
+  if EstaVazio(NumString) then
+     Result := DefaultValue
+  else
+   begin
+     try
+        Result := StringToFloat( NumString ) ;
+     except
+        Result := DefaultValue ;
+     end ;
+   end;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1274,11 +1279,16 @@ end ;
 function StringToDateTimeDef(const DateTimeString : String ;
    const DefaultValue : TDateTime ; const Format : String) : TDateTime ;
 begin
-  try
-     Result := StringToDateTime( DateTimeString, Format ) ;
-  except
-     Result := DefaultValue ;
-  end ;
+  if EstaVazio(DateTimeString) then
+     Result := DefaultValue
+  else
+   begin
+     try
+        Result := StringToDateTime( DateTimeString, Format ) ;
+     except
+        Result := DefaultValue ;
+     end ;
+   end;
 end ;
 
 {-----------------------------------------------------------------------------

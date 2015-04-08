@@ -268,7 +268,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="17">
+    <Exceptions Count="18">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -320,6 +320,9 @@
       <Item17>
         <Name Value="EOleException"/>
       </Item17>
+      <Item18>
+        <Name Value="EACBrNFeException"/>
+      </Item18>
     </Exceptions>
   </Debugging>
 </CONFIG>

@@ -80,6 +80,7 @@ type
 
     function GetMsg: String;
     function GetNumID: String;
+    function GetXMLAssinado: String;
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -115,7 +116,7 @@ type
 
     property XML: String read FXML;
     property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
-    property XMLAssinado: String read FXMLAssinado;
+    property XMLAssinado: String read GetXMLAssinado;
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;
@@ -559,11 +560,11 @@ begin
   FNFeR.LerXml;
 
   // Detecta o modelo e a versão do Documento Fiscal
-  with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
+{  with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     Configuracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(FNFeR.NFe.Ide.modelo));
     Configuracoes.Geral.VersaoDF := DblToVersaoDF(OK, FNFeR.NFe.infNFe.Versao);
-  end;
+  end; } //Problemas ao consultar NFe da versão 2.00 com os webservices da versão 3.10
 
   FXML := string(AXML);
   FXMLOriginal := FXML;
@@ -759,6 +760,17 @@ end;
 function NotaFiscal.GetNumID: String;
 begin
   Result := Trim(OnlyNumber(NFe.infNFe.ID));
+end;
+
+function NotaFiscal.GetXMLAssinado: String;
+begin
+  if EstaVazio(FXMLAssinado) then
+  begin
+    Assinar;
+    Result := FXMLAssinado;
+  end
+  else
+    Result := FXMLAssinado;
 end;
 
 
@@ -973,12 +985,15 @@ end;
 function TNotasFiscais.GravarXML(PathArquivo: String): Boolean;
 var
   i: integer;
+  NomeArq, PathArq : String;
 begin
   Result := True;
   i := 0;
   while Result and (i < Self.Count) do
   begin
-    Result := Self.Items[i].GravarXML('', PathArquivo);
+    PathArq := ExtractFilePath(PathArquivo);
+    NomeArq := ExtractFileName(PathArquivo);
+    Result := Self.Items[i].GravarXML(NomeArq, PathArq);
     Inc(i);
   end;
 end;

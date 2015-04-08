@@ -1310,9 +1310,18 @@ begin
          begin
            if (Cmd.Params(0)<>'') then
             begin
-              ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+              if FileExists(Cmd.Params(0)) then
+               begin
+                 ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                 edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
+               end
+              else
+               begin
+                 ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                 edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
+               end;
+
               ACBrNFe1.Configuracoes.Certificados.Senha       := Cmd.Params(1);
-              edtCaminho.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
               edtSenha.Text   := ACBrNFe1.Configuracoes.Certificados.Senha;
               SalvarIni;
             end
@@ -1607,7 +1616,7 @@ begin
      i := 0;
      while (i < list.count) and (result = 0) do
       begin
-       if pos(UpperCase(TiraAcentos(xMun)), UpperCase(TiraAcentos(List[i]))) > 0 then
+       if pos(UpperCase(TiraAcentos(xMun)), UpperCase(TiraAcentos(UTF8Encode(List[i])))) > 0 then
           result := StrToInt(Trim(copy(list[i],1,7)));
        inc(i);
       end;

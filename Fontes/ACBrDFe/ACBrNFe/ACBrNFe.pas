@@ -578,7 +578,7 @@ begin
       OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.ID);
 
     if not Self.WebServices.Consulta.Executar then
-      raise Exception.Create(Self.WebServices.Consulta.Msg);
+      GerarException(Self.WebServices.Consulta.Msg);
 
     Self.EventoNFe.Evento.Clear;
     with Self.EventoNFe.Evento.Add do
@@ -596,7 +596,7 @@ begin
     try
       Self.EnviarEventoNFe(ALote);
     except
-      raise Exception.Create(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
+      GerarException(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
     end;
   end;
   Result := True;
@@ -703,41 +703,38 @@ begin
   {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando não especificar}
   for i := 0 to EventoNFe.Evento.Count - 1 do
   begin
-    try
-      if EventoNFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
-        EventoNFe.Evento.Items[i].infEvento.nSeqEvento := 1;
-      if self.NotasFiscais.Count > 0 then
+    if EventoNFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
+      EventoNFe.Evento.Items[i].infEvento.nSeqEvento := 1;
+    if self.NotasFiscais.Count > 0 then
+    begin
+      if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
+        EventoNFe.Evento.Items[i].InfEvento.CNPJ :=
+          self.NotasFiscais.Items[i].NFe.Emit.CNPJCPF;
+
+      if trim(EventoNFe.Evento.Items[i].InfEvento.chNfe) = '' then
+        EventoNFe.Evento.Items[i].InfEvento.chNfe :=
+          copy(self.NotasFiscais.Items[i].NFe.infNFe.ID,
+          (length(self.NotasFiscais.Items[i].NFe.infNFe.ID) - 44) + 1, 44);
+
+      if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
       begin
-        if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
-          EventoNFe.Evento.Items[i].InfEvento.CNPJ :=
-            self.NotasFiscais.Items[i].NFe.Emit.CNPJCPF;
-
-        if trim(EventoNFe.Evento.Items[i].InfEvento.chNfe) = '' then
-          EventoNFe.Evento.Items[i].InfEvento.chNfe :=
-            copy(self.NotasFiscais.Items[i].NFe.infNFe.ID,
-            (length(self.NotasFiscais.Items[i].NFe.infNFe.ID) - 44) + 1, 44);
-
-        if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+        if EventoNFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
         begin
-          if EventoNFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+          EventoNFe.Evento.Items[i].infEvento.detEvento.nProt :=
+            self.NotasFiscais.Items[i].NFe.procNFe.nProt;
+
+          if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
           begin
+            WebServices.Consulta.NFeChave := EventoNFe.Evento.Items[i].InfEvento.chNfe;
+
+            if not WebServices.Consulta.Executar then
+              GerarException(WebServices.Consulta.Msg);
+
             EventoNFe.Evento.Items[i].infEvento.detEvento.nProt :=
-              self.NotasFiscais.Items[i].NFe.procNFe.nProt;
-
-            if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-            begin
-              WebServices.Consulta.NFeChave := EventoNFe.Evento.Items[i].InfEvento.chNfe;
-
-              if not WebServices.Consulta.Executar then
-                raise Exception.Create(WebServices.Consulta.Msg);
-
-              EventoNFe.Evento.Items[i].infEvento.detEvento.nProt :=
-                WebServices.Consulta.Protocolo;
-            end;
+              WebServices.Consulta.Protocolo;
           end;
         end;
       end;
-    except
     end;
   end;
 
@@ -772,7 +769,7 @@ end;
 procedure TACBrNFe.ImprimirEvento;
 begin
   if not Assigned(DANFE) then
-    raise EACBrNFeException.Create('Componente DANFE não associado.')
+    GerarException('Componente DANFE não associado.')
   else
     DANFE.ImprimirEVENTO(nil);
 end;
@@ -780,7 +777,7 @@ end;
 procedure TACBrNFe.ImprimirEventoPDF;
 begin
   if not Assigned(DANFE) then
-    raise EACBrNFeException.Create('Componente DANFE não associado.')
+    GerarException('Componente DANFE não associado.')
   else
     DANFE.ImprimirEVENTOPDF(nil);
 end;
@@ -788,7 +785,7 @@ end;
 procedure TACBrNFe.ImprimirInutilizacao;
 begin
   if not Assigned(DANFE) then
-    raise EACBrNFeException.Create('Componente DANFE não associado.')
+    GerarException('Componente DANFE não associado.')
   else
     DANFE.ImprimirINUTILIZACAO(nil);
 end;
@@ -796,7 +793,7 @@ end;
 procedure TACBrNFe.ImprimirInutilizacaoPDF;
 begin
   if not Assigned(DANFE) then
-    raise EACBrNFeException.Create('Componente DANFE não associado.')
+    GerarException('Componente DANFE não associado.')
   else
     DANFE.ImprimirINUTILIZACAOPDF(nil);
 end;

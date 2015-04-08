@@ -74,9 +74,9 @@ unit ACBrECFSchalter ;
 interface
 uses Classes,
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX} QDialogs, QControls {$ENDIF}
-       {$IFDEF VCL} Dialogs, Controls {$ENDIF}
-     {$ENDIF},
+       {$IFDEF VisualCLX} QDialogs, QControls, {$ENDIF}
+       {$IFDEF VCL} Dialogs, Controls, {$ENDIF}
+     {$ENDIF}
      ACBrECFClass, ACBrDevice;
 
 const

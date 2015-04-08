@@ -150,9 +150,9 @@ unit ACBrECFSweda ;
 interface
 uses Classes,
      {$IFNDEF NOGUI}
-       {$IFDEF VCL} Dialogs , Controls , Forms {$ENDIF}
-       {$IFDEF VisualCLX} QDialogs, QControls, QForms {$ENDIF}
-     {$ENDIF},
+       {$IFDEF VCL} Dialogs , Controls , Forms, {$ENDIF}
+       {$IFDEF VisualCLX} QDialogs, QControls, QForms, {$ENDIF}
+     {$ENDIF}
      ACBrECFClass, ACBrDevice;
 
 

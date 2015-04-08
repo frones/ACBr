@@ -987,32 +987,35 @@ begin
   begin
     Resp := TStringList.Create;
     TLog := TStringList.Create;
-    Logra := '';
-    Comp := '';
-    ExtractStrings([','],[], PChar(Buffer[1]), Resp);
-    ExtractStrings([' '],[], PChar(Resp[0]), TLog);
-    TipoLogradouro := Trim(TLog[0]);
-    TLog.Clear;
-    ExtractStrings(['-'],[], PChar(Resp[0]), TLog);
-    Logra := Trim(TLog[0]);
-    if(TLog.Count > 1) then
-      Comp := Trim(TLog[1]);
-    Delete(Logra, 1, Length(TipoLogradouro));
+		try
+			Logra := '';
+			Comp := '';
+			Buffer[1] := StringReplace(Buffer[1], '''', '', [rfReplaceAll]);
+			ExtractStrings([','],[], PChar(Buffer[1]), Resp);
+			ExtractStrings([' '],[], PChar(Resp[0]), TLog);
+			TipoLogradouro := Trim(TLog[0]);
+			TLog.Clear;
+			ExtractStrings(['-'],[], PChar(Resp[0]), TLog);
+			Logra := Trim(TLog[0]);
+			if(TLog.Count > 1) then
+				Comp := Trim(TLog[1]);
+			Delete(Logra, 1, Length(TipoLogradouro));
 
-    with fOwner.Enderecos.New do
-    begin
-      CEP             := Trim(FCepBusca);
-      Tipo_Logradouro := Trim(TipoLogradouro);
-      Logradouro      := Trim(Logra);
-      Complemento     := Trim(Comp);
-      Bairro          := Trim(Resp[1]);
-      Municipio       := Trim(Resp[2]);
-      UF              := Trim(Resp[3]);
-      IBGE_Municipio  := Trim(Resp[4]);
-    end;
-
-    Resp.Free;
-    TLog.Free;
+			with fOwner.Enderecos.New do
+			begin
+				CEP             := Trim(FCepBusca);
+				Tipo_Logradouro := Trim(TipoLogradouro);
+				Logradouro      := Trim(Logra);
+				Complemento     := Trim(Comp);
+				Bairro          := Trim(Resp[1]);
+				Municipio       := Trim(Resp[2]);
+				UF              := Trim(Resp[3]);
+				IBGE_Municipio  := Trim(Resp[4]);
+			end;
+		finally
+			Resp.Free;
+			TLog.Free;
+		end;
   end ;
   finally
     if Assigned(Buffer) then
@@ -1109,7 +1112,7 @@ end ;
 
 procedure TACBrWSCorreios.BuscarPorCEP(ACEP: String);
 var
-sParams: string;
+	sParams: string;
 begin
   ACEP := OnlyNumber( AnsiString( ACEP ) );
   sParams := 'relaxation='+ACEP+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';

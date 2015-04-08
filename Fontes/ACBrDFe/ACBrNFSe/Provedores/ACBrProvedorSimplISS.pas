@@ -169,7 +169,7 @@ begin
            end;
   3503307: begin // Araras/SP
             ConfigURL.ProNomeCidade      := 'araras';
-            ConfigURL.ProRecepcaoLoteRPS := 'http://200.144.16.82:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
+            ConfigURL.ProRecepcaoLoteRPS := 'http://189.56.68.34:8080/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
            end;
   3511508: begin // Cerquilho/SP
             ConfigURL.ProNomeCidade      := 'cerquilho';

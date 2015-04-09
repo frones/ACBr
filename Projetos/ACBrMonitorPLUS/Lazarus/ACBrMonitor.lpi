@@ -68,56 +68,65 @@
         <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="16">
+    <RequiredPackages Count="19">
       <Item1>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item1>
       <Item2>
-        <PackageName Value="FCL"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="SynEdit"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="FCL"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrSerial"/>
       </Item12>
       <Item13>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item13>
       <Item14>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item14>
       <Item15>
-        <PackageName Value="LCLBase"/>
-        <MinVersion Major="1" Release="1" Valid="True"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item15>
       <Item16>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item16>
+      <Item17>
+        <PackageName Value="ACBrComum"/>
+      </Item17>
+      <Item18>
+        <PackageName Value="LCLBase"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
+      </Item18>
+      <Item19>
+        <PackageName Value="LCL"/>
+      </Item19>
     </RequiredPackages>
     <Units Count="23">
       <Unit0>

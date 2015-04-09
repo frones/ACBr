@@ -37,14 +37,14 @@ unit ACBrMonitor1;
 interface
 
 uses
-  SysUtils, Classes, Forms, CmdUnit, ACBrECF, ACBrDIS, ACBrGAV,
-  ACBrDevice, ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons,
-  StdCtrls, ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL,
-  ACBrETQ, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador, ACBrGIF,
-  ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
+  SysUtils, Classes, Forms, CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice,
+  ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls,
+  ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
+  ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador, ACBrGIF, ACBrEAD,
+  ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, SynHighlighterXML, SynMemo, pcnConversao,
-  pcnConversaoNFe,ACBrDFeConfiguracoes;
+  Printers, SynHighlighterXML, SynMemo, pcnConversao, pcnConversaoNFe,
+  ACBrDFeConfiguracoes, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr;
 
 const
   {$I versao.txt}
@@ -73,6 +73,9 @@ type
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrSAT1: TACBrSAT;
+    ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
+    ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     ACBrSedex1: TACBrSedex;
     ACBrValidador1: TACBrValidador;
     ApplicationProperties1: TApplicationProperties;
@@ -347,6 +350,7 @@ type
     GroupBox5: TGroupBox;
     Image1: TImage;
     Image2: TImage;
+    ImageList1: TImageList;
     Label1: TLabel;
     Label10: TLabel;
     Label100: TLabel;
@@ -633,7 +637,6 @@ type
     SpeedButton1: TSpeedButton;
     Splitter1: TSplitter;
     StatusBar1: TStatusBar;
-    ImageList1: TImageList;
     ACBrCHQ1: TACBrCHQ;
     ACBrGAV1: TACBrGAV;
     ACBrDIS1: TACBrDIS;
@@ -650,6 +653,7 @@ type
     TabControl1: TTabControl;
     TabSheet1: TTabSheet;
     ConfiguracaoNFE: TTabSheet;
+    tsSat: TTabSheet;
     Testes: TTabSheet;
     tsDadosEmpresa: TTabSheet;
     tsDanfe: TTabSheet;
@@ -1128,7 +1132,7 @@ begin
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 
-  Caption := 'ACBrMonitorPLUS' + Versao + ' - ACBr: ' + ACBR_VERSAO;
+  Caption := 'ACBrMonitorPLUS ' + Versao + ' - ACBr: ' + ACBR_VERSAO;
   pgConfig.ActivePageIndex := 0;
 
   {$IFDEF LINUX}
@@ -1581,7 +1585,7 @@ begin
       infEvento.tpEvento := teCancelamento;
       infEvento.detEvento.xJust := vAux;
     end;
-    ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+    ACBrNFe1.EnviarEvento(StrToInt(idLote));
     ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
   end;
 end;
@@ -4214,7 +4218,7 @@ begin
   Conexao := TCPBlockSocket;
   mCmd.Lines.Clear;
   fsProcessar.Clear;
-  Resp := 'ACBrNFeMonitor PLUS Ver. ' + Versao + sLineBreak + 'Conectado em: ' +
+  Resp := 'ACBrMonitor/ACBrNFeMonitor PLUS Ver. ' + Versao + sLineBreak + 'Conectado em: ' +
     FormatDateTime('dd/mm/yy hh:nn:ss', now) + sLineBreak + 'Máquina: ' +
     Conexao.GetRemoteSinIP + sLineBreak + 'Esperando por comandos.';
 
@@ -5247,7 +5251,9 @@ begin
   else if No.Text = 'NCM' then
     Result := 15
   else if No.Text = 'NF-e/NFC-e' then
-    Result := 16;
+    Result := 16
+  else if No.Text = 'SAT' then
+    Result := 17;
 end;
 
 procedure TFrmACBrMonitor.PathClick(Sender: TObject);

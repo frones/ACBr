@@ -390,7 +390,7 @@ begin
      infEvento.detEvento.xJust := xJust;
    end;
 
-   EnviarEventoNFe(NotasFiscais.Items[0].NFe.Ide.nNF);
+   EnviarEvento(NotasFiscais.Items[0].NFe.Ide.nNF);
  end;
 end;
 

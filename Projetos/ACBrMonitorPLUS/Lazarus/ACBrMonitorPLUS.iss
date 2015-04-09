@@ -36,7 +36,7 @@ Name: custom; Description: Instalação Customizada; Flags: iscustom
 
 [Components]
 Name: programa; Description: Programa ACBrMonitor; Types: full compact custom; Flags: fixed
-Name: console; Description: ACBrMonitor modo Console; Types: full custom
+;Name: console; Description: ACBrMonitor modo Console; Types: full custom
 Name: help; Description: Arquivos de Ajuda; Types: full custom
 Name: exemplos; Description: Exemplos de Uso; Types: full custom
 
@@ -49,35 +49,35 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 [Files]
 Source: ACBrMonitor.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components: programa
-Source: ACBrMonitorConsole.exe; DestDir: {app}; Flags: ignoreversion; Components: console
-Source: {#ACBrDIR}\Exemplos\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
+;Source: ACBrMonitorConsole.exe; DestDir: {app}; Flags: ignoreversion; Components: console
+Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
-Source: ..\Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
-Source: ..\Exemplos\Clipper_TXT_xHarbour_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
-Source: ..\Exemplos\Cobol_TXT_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
-Source: ..\Exemplos\Java_socket.txt; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
-Source: ..\Exemplos\Oracle.txt; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
-Source: ..\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
+Source: Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
+Source: Exemplos\Clipper_TXT_xHarbour_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
+Source: Exemplos\Cobol_TXT_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
+Source: Exemplos\Java_socket.txt; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
+Source: Exemplos\Oracle.txt; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
+Source: Exemplos\php_socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: LICENCA.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: LICENSE.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ACBrMonitor.chm; DestDir: {app}; Flags: ignoreversion; Components: help
-Source: ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
+;Source: ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {sys}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\OpenSSL\openssl.exe; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\OpenSSL\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\OpenSSL\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\MSVCR\msvcr71.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\openssl.exe; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\Diversos\msvcr71.dll; DestDir: {app}; Flags: ; Components: programa
 Source: {#ACBrDIR}\Fontes\ACBrBoleto\Logos\Colorido\*.*; DestDir: {app}\Logos; Flags: ; Components: programa
-Source: ..\..\..\DLLs\Capicom\capicom.dll; DestDir: {sys}; Components: programa; Flags: regserver
-Source: ..\..\..\DLLs\Capicom\msxml5.dll; DestDir: {sys}; Components: programa; Flags: regserver
-Source: ..\..\..\DLLs\Capicom\msxml5r.dll; DestDir: {sys}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\Capicom\instala.bat; DestDir: {app}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\XMLSec\libxml2.dll; DestDir: {app}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\XMLSec\libxmlsec.dll; DestDir: {app}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\XMLSec\libxmlsec-openssl.dll; DestDir: {app}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
-Source: ..\..\..\DLLs\Diversos\iconv.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\Capicom\capicom.dll; DestDir: {sys}; Components: programa; Flags: regserver
+Source: {#ACBrDIR}\DLLs\Capicom\msxml5.dll; DestDir: {sys}; Components: programa; Flags: regserver
+Source: {#ACBrDIR}\DLLs\Capicom\msxml5r.dll; DestDir: {sys}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\Capicom\instala.bat; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\XMLSec\libxml2.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec-openssl.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
+Source: {#ACBrDIR}\DLLs\Diversos\iconv.dll; DestDir: {app}; Flags: ; Components: programa
 Source: Schemas\*.*; DestDir: {app}\Schemas; Components: programa;
 Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
 

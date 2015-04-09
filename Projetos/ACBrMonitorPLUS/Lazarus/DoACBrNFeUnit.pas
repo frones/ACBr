@@ -208,7 +208,7 @@ begin
               infEvento.detEvento.xJust := Cmd.Params(1);
             end;
            try
-              ACBrNFe1.EnviarEventoNFe(StrToIntDef(Cmd.Params(3),1));
+              ACBrNFe1.EnviarEvento(StrToIntDef(Cmd.Params(3),1));
 
               Cmd.Resposta := ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo+sLineBreak+
                               '[CANCELAMENTO]'+sLineBreak+
@@ -967,7 +967,7 @@ begin
 
            GerarIniEvento( Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao') );
 
-           ACBrNFe1.EnviarEventoNFe(ACBrNFe1.EventoNFe.idLote);
+           ACBrNFe1.EnviarEvento(ACBrNFe1.EventoNFe.idLote);
 
            Cmd.Resposta := Cmd.Resposta+sLineBreak+
                            'idLote='   +IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.idLote)+sLineBreak+

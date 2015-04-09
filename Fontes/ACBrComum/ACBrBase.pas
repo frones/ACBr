@@ -77,7 +77,7 @@
 Unit ACBrBase ;
 
 interface
-uses Classes, SysUtils, Contnrs, ACBrConsts,
+uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
      {$IFDEF COMPILER6_UP}
         Types
      {$ELSE}
@@ -107,11 +107,15 @@ TACBrGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of obje
 
 { Essa classe emula um TTimer, porem em uma Thread, evitando sobrecarregar
   o Application. Usada por ACBrLCB e ACBrDIS quando em modo CONSOLE, ou NOGUI }
+
+{ TACBrThreadTimer }
+
 TACBrThreadTimer = class(TThread)
   private
     fsOnTimer : TNotifyEvent;
     fsEnabled: Boolean;
     fsInterval: Integer;
+    fsEvent: TSimpleEvent;
     procedure SetEnabled(const Value: Boolean);
     procedure SetInterval(const Value: Integer);
   protected
@@ -119,6 +123,7 @@ TACBrThreadTimer = class(TThread)
     procedure Execute; override;
   public
     constructor Create ;
+    destructor Destroy; override;
 
     property OnTimer  : TNotifyEvent read fsOnTimer write fsOnTimer ;
     property Interval : Integer read fsInterval write SetInterval ;
@@ -222,18 +227,26 @@ begin
   fsInterval := 100 ;
   fsEnabled  := False ;
   fsOnTimer  := nil ;
+  fsEvent := TSimpleEvent.Create;
 
   inherited Create( False );
+end;
+
+destructor TACBrThreadTimer.Destroy;
+begin
+  fsEvent.Free;
+  inherited Destroy;
 end;
 
 procedure TACBrThreadTimer.Execute;
 begin
   while not Terminated do
   begin
+    fsEvent.ResetEvent;
+    fsEvent.WaitFor( fsInterval );
+
     if fsEnabled then
     begin
-      Sleep( fsInterval );
-
       if Assigned( fsOntimer ) then
       begin
         {$IFNDEF NOGUI}
@@ -243,8 +256,6 @@ begin
         {$ENDIF};
       end;
     end
-    else
-      Sleep(1);
   end ;
 end;
 
@@ -259,6 +270,7 @@ begin
     exit ;
 
   fsEnabled := Value;
+  fsEvent.SetEvent;
 end;
 
 procedure TACBrThreadTimer.SetInterval(const Value: Integer);

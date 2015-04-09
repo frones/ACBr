@@ -263,7 +263,7 @@ begin
       end;
     end
     else
-      fsEvent.WaitFor( INFINITE );
+      fsEvent.WaitFor( Cardinal(-1) );
   end ;
 end;
 

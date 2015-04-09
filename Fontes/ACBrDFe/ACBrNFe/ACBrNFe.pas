@@ -127,7 +127,7 @@ type
     function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
     function Consultar: Boolean;
     function EnviarCartaCorrecao(idLote: integer): Boolean;
-    function EnviarEventoNFe(idLote: integer): Boolean;
+    function EnviarEvento(idLote: integer): Boolean;
     function ConsultaNFeDest(CNPJ: String; IndNFe: TpcnIndicadorNFe;
       IndEmi: TpcnIndicadorEmissor; ultNSU: String): Boolean;
     function Download: Boolean;
@@ -142,7 +142,7 @@ type
       const AChaveNFe, Destinatario: String; const DataHoraEmissao: TDateTime;
       const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String): String;
 
-    function IdentificaSchemaNFe(const AXML: String): TSchemaNFe;
+    function IdentificaSchema(const AXML: String): TSchemaNFe;
     function IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaNFe;
     function GerarNomeArqSchema(const ALayOut: TLayOut;
       VersaoServico: String): String;
@@ -177,7 +177,8 @@ type
 
 implementation
 
-uses strutils, dateutils,
+uses
+  strutils, dateutils,
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
@@ -313,7 +314,7 @@ begin
     Result := not (Configuracoes.WebServices.UFCodigo in [13]); // AM
 end;
 
-function TACBrNFe.IdentificaSchemaNFe(const AXML: String): TSchemaNFe;
+function TACBrNFe.IdentificaSchema(const AXML: String): TSchemaNFe;
 var
   lTipoEvento: String;
   I: integer;
@@ -594,7 +595,7 @@ begin
     end;
 
     try
-      Self.EnviarEventoNFe(ALote);
+      Self.EnviarEvento(ALote);
     except
       GerarException(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
     end;
@@ -684,10 +685,10 @@ begin
     end;
   end;
 
-  Result := EnviarEventoNFe(idLote);
+  Result := EnviarEvento(idLote);
 end;
 
-function TACBrNFe.EnviarEventoNFe(idLote: integer): Boolean;
+function TACBrNFe.EnviarEvento(idLote: integer): Boolean;
 var
   i: integer;
 begin

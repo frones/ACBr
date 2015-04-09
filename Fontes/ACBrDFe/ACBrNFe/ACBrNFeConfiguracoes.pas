@@ -52,7 +52,6 @@ type
     FModeloDF: TpcnModeloDF;
     FVersaoDF: TpcnVersaoDF;
     FModeloDFCodigo: integer;
-    FAtualizarXMLCancelado: Boolean;
 
     procedure SetModeloDF(AValue: TpcnModeloDF);
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
@@ -62,8 +61,6 @@ type
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
-    property AtualizarXMLCancelado: Boolean
-      read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
   end;
 
   { TArquivosConfNFe }
@@ -163,7 +160,6 @@ begin
   FModeloDF := moNFe;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
   FVersaoDF := ve200;
-  FAtualizarXMLCancelado := True;
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);

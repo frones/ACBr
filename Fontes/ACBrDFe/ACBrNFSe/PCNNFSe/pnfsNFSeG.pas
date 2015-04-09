@@ -215,31 +215,31 @@ begin
  DadosMsg := '<' + Prefixo3 + 'LoteRps' +
 
                // Inclui a versão antes do Id para proCoplan
-               DFeUtil.SeSenao(AProvedor in [proCoplan],
-                               DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '' ),
+               ifThen(AProvedor in [proCoplan],
+                               ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"', '' ),
                                '') +
 
                // Inclui o Identificador ou não
-               DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
+               ifThen(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
 
                // Não Incluir a versão para os provedores abaixo
-               DFeUtil.SeSenao(AProvedor in [proAbaco, proBetha, proDBSeller,
+               ifThen(AProvedor in [proAbaco, proBetha, proDBSeller,
                                              proGinfes, proGoiania, proGovBR, proIssCuritiba,
                                              proISSNET, proLexsom, proNatal, proTinus, proRecife, proRJ,
                                              proSimplISS, proThema, proTiplan, proAgili,
                                              proFISSLex, proSpeedGov, proPronim, proCoplan,
                                              proSalvador, proSJP, proFintelISS],
                                '',
-                               DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
+                               ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
                               ) +
 
                // Inclui a versão com V em maiusculo
-               DFeUtil.SeSenao(AProvedor in [proFintelISS],
-                               DFeUtil.SeSenao(VersaoDados <> '', ' Versao="' + VersaoDados + '"', '' ),
+               ifThen(AProvedor in [proFintelISS],
+                               ifThen(VersaoDados <> '', ' Versao="' + VersaoDados + '"', '' ),
                                '') +
 
                // Inclui o Name Space ou não
-               DFeUtil.SeSenao(AProvedor = proSimplISS,
+               ifThen(AProvedor = proSimplISS,
                                ' ' + NameSpaceDad,
                                '>'
                               ) +
@@ -248,11 +248,11 @@ begin
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
 
-              DFeUtil.SeSenao((VersaoXML = '2') or
+              ifThen((VersaoXML = '2') or
                               (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
-                DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                ifThen(Length(OnlyNumber(Cnpj)) <= 11,
                  '<' + Prefixo4 + 'Cpf>' +
                    Cnpj +
                  '</' + Prefixo4 + 'Cpf>',
@@ -285,16 +285,16 @@ begin
   // Luiz Baião 2014.11.24 -
  if  AProvedor = proNFSEBrasil then begin
                    DadosMsg := '<' + Prefixo3 + 'LoteRps'+ tagCabecalhoCodigoMunicipio +
-//                       DFeUtil.SeSenao(codMunicipio <> '', ' codMunicipio="' + codMunicipio + '"','') +
-                       DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"','') +
-                       DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+//                       ifThen(codMunicipio <> '', ' codMunicipio="' + codMunicipio + '"','') +
+                       ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"','') +
+                       ifThen(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
 
                         '>' +
                       '<' + Prefixo4 + 'NumeroLote>' +
                         NumeroLote +
                       '</' + Prefixo4 + 'NumeroLote>' +
 
-                      DFeUtil.SeSenao(VersaoXML = '1',
+                      ifThen(VersaoXML = '1',
 
                         '<' + Prefixo4 + 'CpfCnpj>' +
                         '<' + Prefixo4 + 'Cnpj>' +
@@ -332,12 +332,12 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao((VersaoXML = '2') or
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen((VersaoXML = '2') or
                                (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
-                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
                   '<' + Prefixo4 + 'Cpf>' +
                     Cnpj +
                   '</' + Prefixo4 + 'Cpf>',
@@ -355,7 +355,7 @@ begin
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
               '</' + Prefixo3 + 'Prestador>' +
               '<' + Prefixo3 + 'Protocolo' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
                 Protocolo +
               '</' + Prefixo3 + 'Protocolo>';
 
@@ -380,13 +380,13 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-               DFeUtil.SeSenao((VersaoXML = '2') or
+               ifThen((VersaoXML = '2') or
                                (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
-                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
                   '<' + Prefixo4 + 'Cpf>' +
                     Cnpj +
                   '</' + Prefixo4 + 'Cpf>',
@@ -398,12 +398,12 @@ begin
                  '<' + Prefixo4 + 'Cnpj>' +
                    Cnpj +
                  '</' + Prefixo4 + 'Cnpj>') +
-               DFeUtil.SeSenao(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>' , '') +
+               ifThen(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>' , '') +
                '<' + Prefixo4 + 'InscricaoMunicipal>' +
                  IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
 
-              DFeUtil.SeSenao(AProvedor = proISSDigital,
+              ifThen(AProvedor = proISSDigital,
                '<' + Prefixo4 + 'Senha>' +
                  Senha +
                '</' + Prefixo4 + 'Senha>' +
@@ -413,7 +413,7 @@ begin
 
               '</' + Prefixo3 + 'Prestador>' +
               '<' + Prefixo3 + 'Protocolo' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
                 Protocolo +
               '</' + Prefixo3 + 'Protocolo>';
 
@@ -432,7 +432,7 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
 
  DadosMsg := '<' + Prefixo3 + 'IdentificacaoRps' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
               '<' + Prefixo4 + 'Numero>' +
                 NumeroRps +
               '</' + Prefixo4 + 'Numero>' +
@@ -444,13 +444,13 @@ begin
               '</' + Prefixo4 + 'Tipo>' +
              '</' + Prefixo3 + 'IdentificacaoRps>' +
              '<' + Prefixo3 + 'Prestador' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-              DFeUtil.SeSenao((VersaoXML = '2') or
+              ifThen((VersaoXML = '2') or
                               (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
-                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
                   '<' + Prefixo4 + 'Cpf>' +
                     Cnpj +
                   '</' + Prefixo4 + 'Cpf>',
@@ -462,12 +462,12 @@ begin
                 '<' + Prefixo4 + 'Cnpj>' +
                   Cnpj +
                 '</' + Prefixo4 + 'Cnpj>') +
-              DFeUtil.SeSenao(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>', '') +
+              ifThen(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>', '') +
               '<' + Prefixo4 + 'InscricaoMunicipal>' +
                 IM +
               '</' + Prefixo4 + 'InscricaoMunicipal>' +
 
-              DFeUtil.SeSenao(AProvedor = proISSDigital,
+              ifThen(AProvedor = proISSDigital,
                '<' + Prefixo4 + 'Senha>' +
                  Senha +
                '</' + Prefixo4 + 'Senha>' +
@@ -497,12 +497,12 @@ begin
  if AProvedor = proBetha then Prefixo3 := '';
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
-               DFeUtil.SeSenao(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               DFeUtil.SeSenao((VersaoXML = '2') or
+               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
+               ifThen((VersaoXML = '2') or
                                (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
-                  DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
                   '<' + Prefixo4 + 'Cpf>' +
                     Cnpj +
                   '</' + Prefixo4 + 'Cpf>',
@@ -519,7 +519,7 @@ begin
                 IM +
                '</' + Prefixo4 + 'InscricaoMunicipal>' +
 
-              DFeUtil.SeSenao(AProvedor = proISSDigital,
+              ifThen(AProvedor = proISSDigital,
                '<' + Prefixo4 + 'Senha>' +
                  Senha +
                '</' + Prefixo4 + 'Senha>' +
@@ -556,7 +556,7 @@ begin
   then begin
     DadosMsg := DadosMsg + '<Tomador>' +
                             '<' + Prefixo4 + 'CpfCnpj>' +
-                             DFeUtil.SeSenao(Length(OnlyNumber(CnpjTomador)) <= 11,
+                             ifThen(Length(OnlyNumber(CnpjTomador)) <= 11,
                              '<' + Prefixo4 + 'Cpf>' +
                                CnpjTomador +
                              '</' + Prefixo4 + 'Cpf>',
@@ -570,11 +570,11 @@ begin
                            '</Tomador>'
 (*
     DadosMsg := DadosMsg + '<Tomador>' +
-                            DFeUtil.SeSenao((VersaoXML = '2') or
+                            ifThen((VersaoXML = '2') or
                                             (AProvedor in [proThema]),
 
                             '<' + Prefixo4 + 'CpfCnpj>' +
-                             DFeUtil.SeSenao(Length(OnlyNumber(CnpjTomador)) <= 11,
+                             ifThen(Length(OnlyNumber(CnpjTomador)) <= 11,
                              '<' + Prefixo4 + 'Cpf>' +
                                CnpjTomador +
                              '</' + Prefixo4 + 'Cpf>',
@@ -601,10 +601,10 @@ begin
                              NomeInter +
                             '</' + Prefixo4 + 'RazaoSocial>' +
 
-                            DFeUtil.SeSenao(VersaoXML = '2',
+                            ifThen(VersaoXML = '2',
 
                             '<' + Prefixo4 + 'CpfCnpj>' +
-                             DFeUtil.SeSenao(Length(OnlyNumber(CnpjInter)) <= 11,
+                             ifThen(Length(OnlyNumber(CnpjInter)) <= 11,
                              '<' + Prefixo4 + 'Cpf>' +
                                CnpjInter +
                              '</' + Prefixo4 + 'Cpf>',
@@ -671,14 +671,14 @@ begin
                     '</' + Prefixo4 + 'Numero>' +
 
                     // alterado por Akai - L. Massao Aihara 12/11/2013
-                   DFeUtil.SeSenao(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
+                   ifThen(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
                                                  proDigifred, proSystempro, proVirtual,
                                                  proISSDigital, proSaatri, proCoplan,
                                                  proVitoria, proTecnos, proPVH,
                                                  proSisPMJP, proActcon, proGovDigital],
 
                     //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
-                    DFeUtil.SeSenao( length(Cnpj)=14,
+                    ifThen( length(Cnpj)=14,
                                                  ('<' + Prefixo4 + 'CpfCnpj>' +
                                                    '<' + Prefixo4 + 'Cnpj>' +
                                                     Cnpj +
@@ -743,16 +743,16 @@ begin
  case AProvedor of
   proWebISS: begin
                DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-                              DFeUtil.SeSenao(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
-                              DFeUtil.SeSenao(VersaoDados <> '', ' versao="' + VersaoDados + '"', '') + '>' +
+                              ifThen(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
+                              ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"', '') + '>' +
                              '<' + Prefixo4 + 'NumeroLote>' +
                                NumeroLote +
                              '</' + Prefixo4 + 'NumeroLote>' +
 
-                             DFeUtil.SeSenao((VersaoXML = '2') or (AProvedor = proISSNet),
+                             ifThen((VersaoXML = '2') or (AProvedor = proISSNet),
 
                              '<' + Prefixo4 + 'CpfCnpj>' +
-                                DFeUtil.SeSenao(Length(OnlyNumber(Cnpj)) <= 11,
+                                ifThen(Length(OnlyNumber(Cnpj)) <= 11,
                                '<' + Prefixo4 + 'Cpf>' +
                                   Cnpj +
                                '</' + Prefixo4 + 'Cpf>',

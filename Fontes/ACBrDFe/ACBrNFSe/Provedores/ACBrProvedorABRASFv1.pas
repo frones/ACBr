@@ -34,7 +34,7 @@ unit ACBrProvedorABRASFv1;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, strUtils,
   pnfsConversao, pcnAuxiliar,
   ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};

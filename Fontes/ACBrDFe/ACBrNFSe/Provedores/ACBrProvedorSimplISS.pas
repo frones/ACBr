@@ -34,7 +34,7 @@ unit ACBrProvedorSimplISS;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, strUtils,
   pnfsConversao, pcnAuxiliar,
   ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
@@ -281,14 +281,14 @@ begin
    acCancelar:    Result := '<' + Prefixo3 + 'CancelarNfseEnvio>' +
                              '<' + Prefixo3 + 'Pedido ' + NameSpaceDad +
                               '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                 SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+                                 ifThen(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
    acGerar:       Result := '<' + Prefixo3 + 'GerarNfseEnvio>';
    acRecSincrono: Result := '<' + Prefixo3 + 'EnviarLoteRpsSincronoEnvio>';
    acSubstituir:  Result := '<' + Prefixo3 + 'SubstituirNfseEnvio>' +
                              '<' + Prefixo3 + 'SubstituicaoNfse>' +
                               '<' + Prefixo3 + 'Pedido>' +
                                '<' + Prefixo4 + 'InfPedidoCancelamento' +
-                                  SeSenao(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
+                                  ifThen(Identificador <> '', ' ' + Identificador + '="' + URI + '"', '') + '>';
   end;
 end;
 

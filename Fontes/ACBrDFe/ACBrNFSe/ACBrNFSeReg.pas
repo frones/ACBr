@@ -34,20 +34,24 @@ unit ACBrNFSeReg;
 interface
 
 uses
- SysUtils, Classes,
-{$IFDEF FPC}
-  LResources,
-{$ENDIF}
- ACBrNFSe;
-
-type
+  SysUtils, Classes, ACBrNFSe, pcnConversao,
+  {$IFDEF FPC}
+     LResources, LazarusPackageIntf, PropEdits, componenteditors
+  {$ELSE}
+     {$IFNDEF COMPILER6_UP}
+        DsgnIntf
+     {$ELSE}
+        DesignIntf,
+        DesignEditors
+     {$ENDIF}
+  {$ENDIF} ;
 
 procedure Register;
 
 implementation
 
 uses
-  ACBrReg, ACBrNFSeConfiguracoes;
+  ACBrReg, ACBrDFe, ACBrDFeConfiguracoes, ACBrNFSeConfiguracoes;
 
 {$IFNDEF FPC}
    {$R ACBrNFSe.dcr}
@@ -82,10 +86,9 @@ begin
      TACBrDirProperty);
 end;
 
+{$ifdef FPC}
 initialization
-
-{$IFDEF FPC}
    {$i ACBrNFSe.lrs}
-{$ENDIF}
+{$endif}
 
 end.

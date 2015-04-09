@@ -1786,8 +1786,7 @@ begin
         if (OnlyNumber(FNFeChave) = NumID) then
         begin
           Atualiza := True;
-          if ((NFeRetorno.CStat in [101, 151, 155]) and
-            (not FPConfiguracoesNFe.Geral.AtualizarXMLCancelado)) then
+          if (NFeRetorno.CStat in [101, 151, 155]) then
             Atualiza := False;
 
           // Atualiza o Status da NFe interna //

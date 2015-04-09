@@ -721,18 +721,18 @@ begin
 
      AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                      '<SignedInfo>' +
-                      SeSenao((AProvedor in [proActcon, proNatal, proTinus]),
+                      ifThen((AProvedor in [proActcon, proNatal, proTinus]),
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                        '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                       '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
-                     '<Reference URI="' + SeSenao(URI = '', '">', '#' + URI + '">') +
+                     '<Reference URI="' + ifThen(URI = '', '">', '#' + URI + '">') +
                       '<Transforms>' +
                        '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                        SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proGovDigital, proPronim,
+                        ifThen((AProvedor in [proActcon, profintelISS, proGovBr, proGovDigital, proPronim,
                                                        proISSNet, proNatal, proIssDSF, proInfisc, proTinus]),
                                         '',
                                         '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                        SeSenao((AProvedor in [proIssDSF]),
+                        ifThen((AProvedor in [proIssDSF]),
                                         '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>',
                                         '') +
                       '</Transforms>' +
@@ -743,7 +743,7 @@ begin
                      '<SignatureValue></SignatureValue>' +
                      '<KeyInfo>' +
                       '<X509Data>' +
-//                       SeSenao((AProvedor in [proGovDigital]),
+//                       ifThen((AProvedor in [proGovDigital]),
 //                                       '<X509SubjectName></X509SubjectName>',
 //                                       '') +
                        '<X509Certificate></X509Certificate>' +
@@ -796,18 +796,18 @@ begin
 
        Assinatura := '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + AID +
                       '<SignedInfo>' +
-                        SeSenao((AProvedor in [proActcon, proNatal, proTinus]),
+                        ifThen((AProvedor in [proActcon, proNatal, proTinus]),
                          '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments" />',
                          '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                        '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
-                       '<Reference URI="' + SeSenao(URI = '', '">', '#' + URI + '">') +
+                       '<Reference URI="' + ifThen(URI = '', '">', '#' + URI + '">') +
                         '<Transforms>' +
                          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-                         SeSenao((AProvedor in [proActcon, profintelISS, proGovBr, proGovDigital, proPronim,
+                         ifThen((AProvedor in [proActcon, profintelISS, proGovBr, proGovDigital, proPronim,
                                                         proISSNet, proNatal, proIssDSF, proInfisc, proTinus]),
                                          '',
                                          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
-                         SeSenao((AProvedor in [proIssDSF]),
+                         ifThen((AProvedor in [proIssDSF]),
                                          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>',
                                          '') +
                         '</Transforms>' +
@@ -818,7 +818,7 @@ begin
                       '<SignatureValue></SignatureValue>' +
                       '<KeyInfo>' +
                        '<X509Data>' +
-//                         SeSenao((AProvedor in [proGovDigital]),
+//                         ifThen((AProvedor in [proGovDigital]),
 //                                         '<X509SubjectName></X509SubjectName>',
 //                                         '') +
                          '<X509Certificate></X509Certificate>' +
@@ -1189,14 +1189,14 @@ begin
    end;
 
   AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"'+
-                       SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>'+
+                       ifThen(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>'+
                   '<SignedInfo>'+
                    '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
                    '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
-                   '<Reference URI="'+SeSenao(FURIRef = '', '','#'+FURIRef)+'">'+
+                   '<Reference URI="'+ifThen(FURIRef = '', '','#'+FURIRef)+'">'+
                     '<Transforms>'+
                      '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                     SeSenao((AProvedor in [profintelISS, proGovBr, proGovDigital, proPronim{Dalvan}, proISSNet]), '',
+                     ifThen((AProvedor in [profintelISS, proGovBr, proGovDigital, proPronim{Dalvan}, proISSNet]), '',
                      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />') +
                     '</Transforms>'+
                     '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
@@ -1206,7 +1206,7 @@ begin
                   '<SignatureValue></SignatureValue>'+
                   '<KeyInfo>'+
                    '<X509Data>'+
-//                     SeSenao((AProvedor in [proGovDigital]),
+//                     ifThen((AProvedor in [proGovDigital]),
 //                                     '<X509SubjectName></X509SubjectName>',
 //                                     '') +
                      '<X509Certificate></X509Certificate>'+
@@ -1220,12 +1220,12 @@ begin
   I := pos( '?>', AXML );
 
   case Tipo of
-   1: AXML := copy(AXML, 1, StrToInt(VarToStr(SeSenao(I>0, I+1, I)))) +
+   1: AXML := copy(AXML, 1, StrToInt(VarToStr(ifThen(I>0, I+1, I)))) +
               cDTDLote +
-              copy(AXML, StrToInt(VarToStr(SeSenao(I>0, I+2, I))), Length(AXML));
-   2: AXML := copy(AXML, 1, StrToInt(VarToStr(SeSenao(I>0, I+1, I)))) +
+              copy(AXML, StrToInt(VarToStr(ifThen(I>0, I+2, I))), Length(AXML));
+   2: AXML := copy(AXML, 1, StrToInt(VarToStr(ifThen(I>0, I+1, I)))) +
               cDTDRps +
-              copy(AXML, StrToInt(VarToStr(SeSenao(I>0, I+2, I))), Length(AXML));
+              copy(AXML, StrToInt(VarToStr(ifThen(I>0, I+2, I))), Length(AXML));
   end;
 
   if FileExists(ArqPFX) then
@@ -1300,19 +1300,19 @@ begin
    AXML := AXML + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"';
 
    if AProvedor = proFiorilli then
-      AXML := AXML + SeSenao(FURISig = '', '',' Id="Ass_'+ StringReplace(FURISig, '/', '', [rfReplaceAll]) +'"')+'>'
+      AXML := AXML + ifThen(FURISig = '', '',' Id="Ass_'+ StringReplace(FURISig, '/', '', [rfReplaceAll]) +'"')+'>'
    else
-      AXML := AXML + SeSenao(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>';
+      AXML := AXML + ifThen(FURISig = '', '',' Id="Ass_'+ FURISig +'"')+'>';
 
    AXML := AXML +  '<SignedInfo>'+
                     '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />'+
                     '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />'+
-                    '<Reference URI="'+SeSenao(FURIRef = '', '',Numero+FURIRef)+'">'+
+                    '<Reference URI="'+ifThen(FURIRef = '', '',Numero+FURIRef)+'">'+
                      '<Transforms>'+
                       '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />'+
-                      SeSenao((AProvedor in [profintelISS, proGovBr, proGovDigital, proPronim{Dalvan}, proISSNet, proInfisc]), '',
+                      ifThen((AProvedor in [profintelISS, proGovBr, proGovDigital, proPronim{Dalvan}, proISSNet, proInfisc]), '',
                       '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315' +
-                      SeSenao(AProvedor in [proISSDSF,proInfisc], '#WithComments', '') + '" />') +
+                      ifThen(AProvedor in [proISSDSF,proInfisc], '#WithComments', '') + '" />') +
                      '</Transforms>'+
                      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />'+
                      '<DigestValue></DigestValue>'+
@@ -1321,7 +1321,7 @@ begin
                    '<SignatureValue></SignatureValue>'+
                    '<KeyInfo>'+
                     '<X509Data>'+
-//                      SeSenao((AProvedor in [proGovDigital]),
+//                      ifThen((AProvedor in [proGovDigital]),
 //                                      '<X509SubjectName></X509SubjectName>',
 //                                      '') +
                       '<X509Certificate></X509Certificate>'+
@@ -1452,11 +1452,11 @@ var
 // filename : String;
 // Tipo, I : Integer;
 begin
- if not DirectoryExists(SeSenao(EstaVazio(APathSchemas),
+ if not DirectoryExists(ifThen(EstaVazio(APathSchemas),
                         PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
                         PathWithDelim(APathSchemas)))
   then raise Exception.Create('Diretório de Schemas não encontrado' + sLineBreak +
-                              SeSenao(EstaVazio(APathSchemas),
+                              ifThen(EstaVazio(APathSchemas),
                               PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
                               PathWithDelim(APathSchemas)));
 
@@ -1568,15 +1568,15 @@ begin
 
     Schema := CoXMLSchemaCache50.Create;
 
-    if not DirectoryExists(SeSenao(EstaVazio(APathSchemas),
+    if not DirectoryExists(ifThen(EstaVazio(APathSchemas),
                            PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
                            PathWithDelim(APathSchemas)))
      then raise Exception.Create('Diretório de Schemas não encontrado' + sLineBreak +
-                                 SeSenao(EstaVazio(APathSchemas),
+                                 ifThen(EstaVazio(APathSchemas),
                                  PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas',
                                  PathWithDelim(APathSchemas)));
 
-    schema_filename := SeSenao(EstaVazio(APathSchemas),
+    schema_filename := ifThen(EstaVazio(APathSchemas),
                        PathWithDelim(ExtractFileDir(application.ExeName)) + 'Schemas\',
                        PathWithDelim(APathSchemas)) + Servico;
 

@@ -34,8 +34,8 @@ Unit ACBrProvedorSMARAPD;
 Interface
 
 Uses
-  Classes, SysUtils,
-  pnfsConversao, pcnAuxiliar, synacode,
+  Classes, SysUtils, strUtils,
+  pnfsConversao, pcnAuxiliar, // synacode,
   ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
 {$IFDEF COMPILER6_UP}DateUtils{$ELSE}ACBrD5, FileCtrl{$ENDIF};
 

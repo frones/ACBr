@@ -121,6 +121,7 @@ type
     function LerXml: boolean;
     function LerXml_provedorIssDsf: boolean;
     function LerXML_provedorEquiplano: boolean;
+    function LerXML_provedorEL: boolean;
   published
     property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
@@ -344,7 +345,7 @@ begin
             // Grupo da TAG <Servico> *****************************************************
             if Leitor.rExtrai(5, 'Servico') <> ''
              then begin
-              ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico          := LimpaNumero(Leitor.rCampo(tcStr, 'ItemListaServico'));
+              ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico          := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
               ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
               ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
               ListaNfse.FCompNfse[i].FNFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
@@ -979,6 +980,11 @@ begin
   except
     result := False;
   end;
+end;
+
+function TretNfseRps.LerXML_provedorEL: boolean;
+begin
+ Result := False;
 end;
 
 end.

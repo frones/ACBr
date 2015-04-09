@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2015
+[*] Correção na descrição do serviço 07.13.
+    Por: Italo Jurisato Junior
+
 24/03/2015
 [*] A cidade de Juina/MT passa a ser atendida pelo provedor fISSLex e não mais
     Agili.

@@ -528,8 +528,8 @@ begin
   0710: r := 'Limpeza, manutencao e conservacao de vias e logradouros publicos, imoveis, chamines, piscinas, parques, jardins e congeneres.';
   0711: r := 'Decoracao e jardinagem, inclusive corte e poda de arvores.';
   0712: r := 'Controle e tratamento de efluentes de qualquer natureza e de agentes fisicos, quimicos e biologicos.';
-  0713: r := 'Atividades de pos-Colheita.';
-//  0713: r := 'Dedetizacao, desinfeccao, desinsetizacao, imunizacao, higienizacao, desratizacao, pulverizacao e congeneres.';
+//  0713: r := 'Atividades de pos-Colheita.';
+  0713: r := 'Dedetizacao, desinfeccao, desinsetizacao, imunizacao, higienizacao, desratizacao, pulverizacao e congeneres.';
   0714: r := '(VETADO)';
   0715: r := '(VETADO)';
   0716: r := 'Florestamento, reflorestamento, semeadura, adubacao e congeneres.';

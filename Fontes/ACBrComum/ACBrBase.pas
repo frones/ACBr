@@ -234,6 +234,11 @@ end;
 
 destructor TACBrThreadTimer.Destroy;
 begin
+  fsEnabled := False;
+  Terminate;
+  fsEvent.SetEvent;  // libera Event.WaitFor()
+  WaitFor;
+
   fsEvent.Free;
   inherited Destroy;
 end;
@@ -243,11 +248,12 @@ begin
   while not Terminated do
   begin
     fsEvent.ResetEvent;
-    fsEvent.WaitFor( fsInterval );
 
     if fsEnabled then
     begin
-      if Assigned( fsOntimer ) then
+      fsEvent.WaitFor( fsInterval );
+
+      if fsEnabled and Assigned( fsOntimer ) then
       begin
         {$IFNDEF NOGUI}
         Synchronize( DoCallEvent )
@@ -256,6 +262,8 @@ begin
         {$ENDIF};
       end;
     end
+    else
+      fsEvent.WaitFor( INFINITE );
   end ;
 end;
 
@@ -532,4 +540,4 @@ begin
 end;
 
 end.
-
+

@@ -569,7 +569,7 @@ begin
      	NFSe.Tomador.Endereco.UF              := Leitor.rCampo(tcStr, 'Uf');
      	NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
      	NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CPFCNPJTomador');
-      NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro := 'DocTomadorEstrangeiro';
+      NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro := Leitor.rCampo(tcStr, 'DocTomadorEstrangeiro');
       NFSe.Tomador.Contato.Email := Leitor.rCampo(tcStr, 'EmailTomador');
       NFSe.Tomador.Contato.Telefone          := Leitor.rCampo(tcStr, 'DDDTomador') + Leitor.rCampo(tcStr, 'TelefoneTomador');
 

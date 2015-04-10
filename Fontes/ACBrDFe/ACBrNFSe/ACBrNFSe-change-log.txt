@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2015
+[*] Corrigido o nome da propriedade para armazenar a data de emissão do RPS
+    estava apenas DataEmissao sendo que o correto é DataEmissaoRPS.
+    Por: Italo Jurisato Junior
+
 09/04/2015
 [*] Correção na descrição do serviço 07.13.
     Por: Italo Jurisato Junior

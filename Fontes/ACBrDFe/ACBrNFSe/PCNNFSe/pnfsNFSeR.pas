@@ -544,8 +544,8 @@ begin
 
    if (Leitor.rExtrai(1, 'RPS') <> '') then begin
 
-      NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
-      NFSe.Status      := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'Status'),['N','C'],[srNormal, srCancelado]);
+      NFSe.DataEmissaoRPS := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
+      NFSe.Status         := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'Status'),['N','C'],[srNormal, srCancelado]);
 
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRPS');
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');
@@ -1452,10 +1452,10 @@ begin
    FNFSe.Numero            := Leitor.rCampo(tcStr, 'NumeroNota');
    FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
 
-   FNFSe.DataEmissaoRps    := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
-   FNFSe.Competencia       := Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),7,4) + Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),4,2);
-   FNFSe.DataEmissao       := Leitor.rCampo(tcDatHor, 'DataProcessamento');
-   FNFSe.Status            := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'SituacaoRPS'),['N','C'],[srNormal, srCancelado]);
+   FNFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
+   FNFSe.Competencia    := Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),7,4) + Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),4,2);
+   FNFSe.DataEmissao    := Leitor.rCampo(tcDatHor, 'DataProcessamento');
+   FNFSe.Status         := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'SituacaoRPS'),['N','C'],[srNormal, srCancelado]);
 
    NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRPS');
    NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');

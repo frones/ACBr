@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/04/2015
+[*] Estava faltando a linha que gera a TAG Aliquota para o provedor SisPMJP.
+    Por: Italo Jurisato Junior
 [*] Corrigido o nome da propriedade para armazenar a data de emissão do RPS
     estava apenas DataEmissao sendo que o correto é DataEmissaoRPS.
     Por: Italo Jurisato Junior

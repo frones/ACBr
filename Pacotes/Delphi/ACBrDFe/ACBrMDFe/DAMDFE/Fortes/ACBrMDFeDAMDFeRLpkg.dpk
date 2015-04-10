@@ -73,7 +73,7 @@ requires
   {$IFDEF VER250} RLibWinDXE4, vclimg, {$ENDIF} //XE4
   {$IFDEF VER260} RLibWinDXE5, vclimg, {$ENDIF} //XE5
   {$IFDEF VER270} RLibWinDXE6, vclimg, dsnap,{$ENDIF} //XE6
-	{$IFDEF VER270} RLibWinDXE7, vclimg, dsnap,{$ENDIF} //XE7
+	{$IFDEF VER280} RLibWinDXE7, vclimg, dsnap,{$ENDIF} //XE7
   ACBr_MDFe,  
   PCN2,
   ACBrComum,

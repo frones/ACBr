@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/04/2015 ver. 0.0.124a
+-- ACBrBancoBrasil --
+[-] Adicionado tratamento para códigos de retorno CNAB240 e CNAB400
+    (RobertoSchuster)
+http://www.projetoacbr.com.br/forum/index.php?/topic/20022-altera%C3%A7%C3%B5es-na-unit-banco-do-brasil/
+
 Data: 02/04/2015 ver. 0.0.123a
 -- ACBrBancoCaixa --
 [-] Correção na montagem do campo Código do Cedente (adrianoa)

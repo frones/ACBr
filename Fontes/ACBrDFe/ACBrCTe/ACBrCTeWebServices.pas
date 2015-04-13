@@ -2233,6 +2233,9 @@ begin
 
               if FPConfiguracoesCTe.Arquivos.Salvar then
                 FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+
+              if FPConfiguracoesCTe.Arquivos.SalvarEvento then
+                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
             finally
               wProc.Free;
             end;

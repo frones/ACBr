@@ -1718,6 +1718,9 @@ begin
 
               if FPConfiguracoesMDFe.Arquivos.Salvar then
                 FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+
+              if FPConfiguracoesMDFe.Arquivos.SalvarEvento then
+                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
             finally
               wProc.Free;
             end;

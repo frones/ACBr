@@ -200,7 +200,7 @@ end;
 
 function TACBrCTe.GetNomeArquivoServicos: String;
 begin
-  Result := 'ACBrServicosCTe.ini';
+  Result := 'ACBrCTeServicos.ini';
 end;
 
 function TACBrCTe.CreateConfiguracoes: TConfiguracoes;

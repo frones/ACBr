@@ -245,8 +245,8 @@ end;
 
 function TACBrNFe.GetNomeArquivoServicos: String;
 begin
-  Result := 'ACBrServicos' + IfThen(Configuracoes.Geral.ModeloDF =
-    moNFe, 'NFe', 'NFCe') + '.ini';
+  Result := 'ACBr' + IfThen(Configuracoes.Geral.ModeloDF =
+    moNFe, 'NFe', 'NFCe') + 'Servicos.ini';
 end;
 
 function TACBrNFe.CreateConfiguracoes: TConfiguracoes;

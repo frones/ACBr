@@ -180,7 +180,7 @@ end;
 
 function TACBrMDFe.GetNomeArquivoServicos: String;
 begin
-  Result := 'ACBrServicosMDFe.ini';
+  Result := 'ACBrMDFeServicos.ini';
 end;
 
 function TACBrMDFe.CreateConfiguracoes: TConfiguracoes;

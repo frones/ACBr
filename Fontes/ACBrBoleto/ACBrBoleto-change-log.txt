@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 14/04/2015 ver. 0.0.26a
+-- ACBrBoletoFCFortes --
+
+[*] Ajuste para que a linha pontilhada não seja cortada ao imprimir com layout carnê. 
+    (Juliana Tamizou)
+
+
 Data: 10/04/2015 ver. 0.0.124a
 -- ACBrBancoBrasil --
 [-] Adicionado tratamento para códigos de retorno CNAB240 e CNAB400

@@ -3398,9 +3398,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 760
+    Left = 184
     Height = 1123
-    Top = 24
+    Top = 72
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -3419,7 +3419,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Height = 352
+      Height = 364
       Top = 15
       Width = 745
       RealBounds.Left = 0
@@ -3597,8 +3597,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLDraw62: TRLDraw
         Left = 0
-        Height = 16
-        Top = 349
+        Height = 20
+        Top = 344
         Width = 756
         Angle = 0
         DrawKind = dkLine
@@ -4051,9 +4051,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel13: TRLLabel
         Left = 0
-        Height = 14
-        Top = 345
-        Width = 26
+        Height = 15
+        Top = 339
+        Width = 50
         Caption = '"'
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
@@ -4791,8 +4791,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object imgBarrasCarne: TRLBarcode
         Left = 154
-        Height = 66
-        Top = 286
+        Height = 64
+        Top = 285
         Width = 465
         AutoSize = False
         Caption = '23790-3571000000100120'

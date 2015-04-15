@@ -51,7 +51,7 @@ uses
   Classes, SysUtils, contnrs, ACBrSocket, ACBrDownload, ACBrUtil;
 
 type
-  TACBrCodSistema = (csSpedFiscal, csSpedPisCofins, csSpedContabil);
+  TACBrCodSistema = (csSpedFiscal, csSpedPisCofins, csSpedContabil, csSpedECF);
 
   EACBrTabelasSpedxception = class(Exception);
 
@@ -183,14 +183,16 @@ var
 
 begin
   fListou := False;
-  if fCodSistema = csSpedFiscal then
-    CodSis := 'spedfiscal'
-  else
-  if fCodSistema = csSpedPisCofins then
-    CodSis := 'spedPiscofins'
-  else
-  if fCodSistema = csSpedContabil then
-    CodSis := 'spedcontabil';
+  case fCodSistema of
+    csSpedFiscal :
+      CodSis := 'spedfiscal';
+    csSpedPisCofins :
+      CodSis := 'spedPiscofins';
+    csSpedContabil :
+      CodSis := 'spedcontabil';
+    csSpedECF :
+      CodSis := 'spedecf';
+  end;
 
   try
     Self.HTTPGet(fUrlConsulta + CodSis);

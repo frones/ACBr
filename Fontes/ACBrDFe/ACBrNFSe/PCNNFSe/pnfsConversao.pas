@@ -1378,6 +1378,7 @@ begin
   3150703, // Pirajuba/MG
   3152303, // Porto Firme/MG
   3155702, // Rio Piracicaba/MG
+  3157203, // Santa Bárbara/MG
   3159605, // Santa Rita do Sapucaí/MG
   3162104, // São Gotardo/MG
   3170107, // Uberaba/MG

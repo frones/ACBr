@@ -335,9 +335,11 @@ const
   TITULO_PDF = 'Nota Fiscal Eletrônica';
 var
   I: Integer;
+	fsShowDialog : Boolean;
 begin
   if PrepareReport(NFE) then
   begin
+	  fsShowDialog := FdmDanfe.frxPDFExport.ShowDialog;
     dmDanfe.frxPDFExport.Author     := Sistema;
     dmDanfe.frxPDFExport.Creator    := Sistema;
     dmDanfe.frxPDFExport.Producer   := Sistema;
@@ -353,6 +355,7 @@ begin
                                        '-nfe.pdf';
       dmDanfe.frxReport.Export(dmDanfe.frxPDFExport);
     end;
+		FdmDanfe.frxPDFExport.ShowDialog := fsShowDialog;
   end;
 end;
 

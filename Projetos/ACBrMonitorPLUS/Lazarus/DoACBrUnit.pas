@@ -187,6 +187,15 @@ begin
            if FilesExists( Files ) then
               raise Exception.Create('Arquivo(s) ['+Files+'] ainda existe(m)') ;
          end
+				 
+				else if Cmd.Metodo ='datahora' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yyyy dd:hh:mm', Now )
+					 
+        else if Cmd.Metodo ='data' then
+           Cmd.Resposta := FormatDateTime('dd/mm/yyyy', Now )
+					 
+        else if Cmd.Metodo ='hora' then
+           Cmd.Resposta := FormatDateTime('dd:hh:mm', Now ) 
 
         else if pos('|'+Cmd.Metodo+'|', '|exit|bye|fim|sair|') > 0 then {fecha conexao}
          begin

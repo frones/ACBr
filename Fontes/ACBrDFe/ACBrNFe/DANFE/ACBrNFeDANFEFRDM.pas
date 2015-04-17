@@ -1515,7 +1515,12 @@ begin
 
       if ((FDANFEClassOwner.NFeCancelada) or (FNFe.procNFe.cStat in [101,151,155])) then
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO'
-      else
+      else if ( FNFe.procNFe.cStat = 110 ) or
+              ( FNFe.procNFe.cStat = 301 ) or
+              ( FNFe.procNFe.cStat = 302 ) or
+              ( FNFe.procNFe.cStat = 303 ) then
+        FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE DENEGAÇÃO DE USO' 
+      else 
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
       if EstaVazio(FDANFEClassOwner.ProtocoloNFe) then

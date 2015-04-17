@@ -63,6 +63,9 @@ type
   TRetInfEvento   = class;
   EventoException = class(Exception);
 
+  TitemPedidoCollection  = class;
+  TitemPedidoCollectionItem = class;
+
   TInfEvento = class
   private
     FID: String;
@@ -112,6 +115,28 @@ type
     property IE: String            read FIE            write FIE;
   end;
 
+  TitemPedidoCollectionItem = class(TCollectionItem)
+  private
+    FqtdeItem: Currency;
+    FnumItem: Integer;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property numItem: Integer   read FnumItem  write FnumItem;
+    property qtdeItem: Currency read FqtdeItem write FqtdeItem;
+  end;
+
+  TitemPedidoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TitemPedidoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TitemPedidoCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TitemPedidoCollectionItem;
+    property Items[Index: Integer]: TitemPedidoCollectionItem read GetItem write SetItem; default;
+  end;
+
   TDetEvento = class
   private
     FVersao: String;
@@ -130,8 +155,11 @@ type
     FvNF: Currency;
     FvICMS: Currency;
     FvST: Currency;
+    FitemPedido: TitemPedidoCollection;
+    FidPedidoCancelado: String;
 
     procedure setCondUso(const Value: String);
+    procedure SetitemPedido(const Value: TitemPedidoCollection);
   public
     constructor Create(AOwner: TInfEvento);
     destructor Destroy; override;
@@ -152,6 +180,8 @@ type
     property vNF: Currency          read FvNF         write FvNF;
     property vICMS: Currency        read FvICMS       write FvICMS;
     property vST: Currency          read FvST         write FvST;
+    property itemPedido: TitemPedidoCollection read FitemPedido write SetitemPedido;
+    property idPedidoCancelado: String read FidPedidoCancelado write FidPedidoCancelado;
   end;
 
   TRetchNFePendCollection = class(TCollection)
@@ -264,6 +294,14 @@ begin
     teCTeCancelado                : Result := 'CT-e Cancelado';
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria Suframa';
+    tePedProrrog1,
+    tePedProrrog2              : Result := 'Pedido de Prorrogacao';
+    teCanPedProrrog1,
+    teCanPedProrrog2           : Result := 'Cancelamento de Pedido de Prorrogacao';
+    teEventoFiscoPP1,
+    teEventoFiscoPP2,
+    teEventoFiscoCPP1,
+    teEventoFiscoCPP1          : Result := 'Evento Fisco';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -305,6 +343,14 @@ begin
     teCTeCancelado                : Result := 'CT-e Cancelado';
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria Suframa';
+    tePedProrrog1,
+    tePedProrrog2              : Result := 'Pedido de Prorrogacao';
+    teCanPedProrrog1,
+    teCanPedProrrog2           : Result := 'Cancelamento de Pedido de Prorrogacao';
+    teEventoFiscoPP1,
+    teEventoFiscoPP2,
+    teEventoFiscoCPP1,
+    teEventoFiscoCPP1          : Result := 'Evento Fisco';
   else
     Result := 'Não Definido';
   end;
@@ -316,11 +362,13 @@ constructor TDetEvento.Create(AOwner: TInfEvento);
 begin
   inherited Create;
   Fdest := TDestinatario.Create;
+  FitemPedido := TitemPedidoCollection.Create(Self);
 end;
 
 destructor TDetEvento.Destroy;
 begin
   Fdest.Free;
+  FitemPedido.Free;
   inherited;
 end;
 
@@ -339,6 +387,11 @@ begin
                 ' II - a correcao de dados cadastrais que implique mudanca' +
                 ' do remetente ou do destinatario; III - a data de emissao ou' +
                 ' de saida.'
+end;
+
+procedure TDetEvento.SetitemPedido(const Value: TitemPedidoCollection);
+begin
+  FitemPedido := Value;
 end;
 
 { TRetchNFePendCollection }
@@ -377,6 +430,44 @@ destructor TRetInfEvento.Destroy;
 begin
   FchNFePend.Free;
   inherited;
+end;
+
+{ TitemPedidoCollectionItem }
+
+constructor TitemPedidoCollectionItem.Create;
+begin
+
+end;
+
+destructor TitemPedidoCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TitemPedidoCollection }
+
+function TitemPedidoCollection.Add: TitemPedidoCollectionItem;
+begin
+  Result := TitemPedidoCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TitemPedidoCollection.Create(AOwner: TPersistent);
+begin
+  inherited Create(TitemPedidoCollectionItem);
+end;
+
+function TitemPedidoCollection.GetItem(
+  Index: Integer): TitemPedidoCollectionItem;
+begin
+  Result := TitemPedidoCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TitemPedidoCollection.SetItem(Index: Integer;
+  Value: TitemPedidoCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

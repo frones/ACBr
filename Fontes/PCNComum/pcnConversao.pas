@@ -102,13 +102,17 @@ type
 
   TPosRecibo = (prCabecalho, prRodape);
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
+
   TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
                   teManifDestDesconhecimento, teManifDestOperNaoRealizada,
                   teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
                   teRegistroPassagem, teRegistroPassagemBRId, teEPECNFe,
                   teRegistroCTe, teRegistroPassagemNFeCancelado,
                   teRegistroPassagemNFeRFID, teCTeCancelado, teMDFeCancelado,
-                  teVistoriaSuframa);
+                  teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
+                  teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
+                  teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP1);
+
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
   TpcnSituacaoManifDest = (smdSemManifestacao, smdConfirmada, smdDesconhecida, smdOperacaoNaoRealizada, smdCiencia);
@@ -146,25 +150,15 @@ type
   TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
 
 const
-  TpcnTpEventoString : array[0..18] of String =('110110',
-                                                '110111',
-                                                '210200',
-                                                '210210',
-                                                '210220',
-                                                '210240',
-                                                '110112',
-                                                '110113',
-                                                '110114',
-                                                '110160',
-                                                '310620',
-                                                '510620',
-                                                '110140',
-                                                '610600',
-                                                '610501',
-                                                '610550',
-                                                '610601',
-                                                '610611',
-                                                '990900');
+  TpcnTpEventoString : array[0..26] of String =('110110', '110111', '210200',
+                                                '210210', '210220', '210240',
+                                                '110112', '110113', '110114',
+                                                '110160', '310620', '510620',
+                                                '110140', '610600', '610501',
+                                                '610550', '610601', '610611',
+                                                '990900', '111500', '111501',
+                                                '111502', '111503', '411500',
+                                                '411501', '411502', '411503');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',

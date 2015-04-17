@@ -134,6 +134,10 @@ begin
     teManifDestDesconhecimento,
     teManifDestOperNaoRealizada : Result := IntToStr(Self.idLote) + '-man-des.xml'; // Manifestação do Destinatário
     teEPECNFe                   : Result := Evento.Items[0].InfEvento.chNFe + '-ped-epec.xml'; // EPEC
+    tePedProrrog1,
+    tePedProrrog2               : Result := Evento.Items[0].InfEvento.chNFe + '-ped-prorr.xml';
+    teCanPedProrrog1,
+    teCanPedProrrog2            : Result := Evento.Items[0].InfEvento.chNFe + '-can-prorr.xml';
   else
     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
  end;
@@ -141,7 +145,7 @@ end;
 
 function TEventoNFe.GerarXML: Boolean;
 var
-  i: Integer;
+  i, j: Integer;
   sDoc, sModelo: String;
 begin
   Result := False;
@@ -249,13 +253,33 @@ begin
             Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
 
             if sModelo = '55' then
-              Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
+              Gerador.wCampo(tcDe2, 'P34', 'vST', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
 
             // Alterado em 22/07/2014 por Italo
             // para ficar em conformidade com o Schema
             Gerador.wGrupo('/dest');
 
           end;
+        tePedProrrog1,
+        tePedProrrog2:
+          begin
+            Gerador.wCampo(tcStr, 'P19', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
+
+            for j := 0 to Evento.Items[i].FInfEvento.detEvento.itemPedido.count  - 1 do
+            begin
+              Gerador.wGrupo('itemPedido numItem="' + intToStrDef(Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].numItem, 0) + '"');
+              Gerador.wCampo(tcDe2, 'P22', 'qtdeItem', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].qtdeItem, '***');
+              Gerador.wGrupo('/itemPedido');
+            end;
+
+          end;
+        teCanPedProrrog1,
+        teCanPedProrrog2:
+          begin
+            Gerador.wCampo(tcStr, 'P19', 'idPedidoCancelado', 54, 54, 1, Evento.Items[i].InfEvento.detEvento.idPedidoCancelado);
+            Gerador.wCampo(tcStr, 'P20', 'nProt', 15, 15, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+          end;
+
     end;
     Gerador.wGrupo('/detEvento');
     Gerador.wGrupo('/infEvento');

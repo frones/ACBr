@@ -48,9 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 16/04/2015 ver. 0.0.125a
+-- ACBrBancoCaixa --
+[*] Ajuste na calculo do DV do Código do Cedente para garantir que este campo
+    tenha o tamanho máximo permitido pelo banco. (emanuels_ces)
+
+
 Data: 14/04/2015 ver. 0.0.26a
 -- ACBrBoletoFCFortes --
-
 [*] Ajuste para que a linha pontilhada não seja cortada ao imprimir com layout carnê. 
     (Juliana Tamizou)
 

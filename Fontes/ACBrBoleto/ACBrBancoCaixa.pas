@@ -132,7 +132,7 @@ function TACBrCaixaEconomica.CalcularDVCedente(const ACBrTitulo: TACBrTitulo): S
 var
   Num, Res: string;
 begin 
-    Num := ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+    Num := RightStr(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,6);
     Modulo.CalculoPadrao;
     Modulo.MultiplicadorFinal   := 2;
     Modulo.MultiplicadorInicial := 9;

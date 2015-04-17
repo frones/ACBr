@@ -60,6 +60,17 @@ uses
   pcnNFe, pcnEnvEventoNFe, pcnConversao;
 
 type
+  TACBrCabecalhoNaoFiscal = class
+    RazaoSocial : string;
+    Endereco : string;
+    nro : string;
+    Complemento : string;
+    Bairro : string;
+    Cidade : string;
+    Estado : string;
+    CNPJ : string;
+    IE : string;
+  end;
   TACBrNFeMarcaImpressora = (iEpson, iBematech, iDaruma, iDiebold);
 
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
@@ -155,6 +166,11 @@ type
       const ACortaPapel: Boolean = True; const ALogo: Boolean = True);
     procedure CortarPapel;
     procedure AbrirGaveta;
+
+    procedure GerarCabecalhoGenerico;
+    procedure GerarRodapeGenerico(const CortaPapel : boolean = True);
+    procedure Suprimento(AValor : Double; AObserv, AFormaPag : string);
+    procedure Sangria(AValor : Double; AObserv, AFormaPag : string);
   published
     property Device: TACBrDevice read FDevice;
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
@@ -1200,6 +1216,85 @@ procedure TACBrNFeDANFeESCPOS.AbrirGaveta;
 begin
   InicializarComandos;
   ImprimePorta(cCmdImpZera + cCmdAbreGaveta);
+end;
+
+procedure TACBrNFeDANFeESCPOS.Suprimento(AValor : Double; AObserv, AFormaPag : string);
+begin
+  GerarCabecalhoGenerico;
+
+  AValor := 0;
+  FBuffer.Add('');
+  FBuffer.Add(cCmdFonteNormal+padC('SUPRIMENTO', 64, '|'));
+  FBuffer.Add(cCmdFontePequena+padS('(+) Entrada no Caixa | Valor: R$|'+FormatFloat('#,###,##0.00', AValor),64, '|'));
+  FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
+  FBuffer.Add(cCmdFonteNormal+padS('(=) TOTAL R$|'+FormatFloat('#,###,##0.00', AValor),64, '|'));
+
+  if Length(AObserv) > 0 then
+    FBuffer.Add(cCmdFonteNormal+padS(AObserv, 64, '|'));
+
+  GerarRodapeGenerico(FCortaPapel);
+  ImprimePorta(FBuffer.Text);
+end;
+
+procedure TACBrNFeDANFeESCPOS.GerarRodapeGenerico(const CortaPapel : boolean = True);
+var
+  nTotal : Integer;
+begin
+  for nTotal := 1 to FLinhasEntreCupons do
+    FBuffer.Add('');
+
+  if CortaPapel then
+     FBuffer.Add(cCmdCortaPapel);
+end;
+
+procedure TACBrNFeDANFeESCPOS.GerarCabecalhoGenerico;
+begin
+  FLinhaCmd := cCmdImpZera+cCmdEspacoLinha+cCmdPagCod+cCmdFonteNormal+cCmdAlinhadoCentro;
+  FBuffer.clear;
+  FBuffer.Add(FLinhaCmd+chr(29)+'(L'+chr(6)+chr(0)+'0E  '+chr(1)+chr(1)); // Imprimindo logo já gravado na memória
+
+//  FLinhaCmd := cCmdAlinhadoCentro+cCmdImpNegrito+FpCFe.Emit.xFant+cCmdImpFimNegrito;
+//  FBuffer.Add(FLinhaCmd);
+  FBuffer.Add(cCmdImpNegrito+FCabecalho.RazaoSocial+cCmdImpFimNegrito);
+  FLinhaCmd := cCmdImpNegrito+cCmdFontePequena+
+              'CNPJ:'+DFeUtil.FormatarCNPJ(FCabecalho.CNPJ)+'   '+
+              'Inscrição Estadual:'+Trim(FCabecalho.IE)+cCmdImpFimNegrito;
+  FBuffer.Add(FLinhaCmd);
+
+  FBuffer.Add(cCmdFontePequena+Trim(FCabecalho.Endereco)+' '+
+              Trim(FCabecalho.Nro)+' '+
+              Trim(FCabecalho.Complemento)+' '+
+              Trim(FCabecalho.Bairro)+'-'+
+              Trim(FCabecalho.Cidade));
+
+
+  FBuffer.Add(cCmdAlinhadoEsquerda+cCmdFonteNormal+'------------------------------------------------');
+
+  FLinhaCmd := cCmdFonteNormal+cCmdAlinhadoCentro+cCmdImpNegrito+
+                 'DANFE NFC-e - Documento Auxiliar';
+  FBuffer.Add(FLinhaCmd);
+  FLinhaCmd := 'da Nota Fiscal Eletrônica para Consumidor Final';
+  FBuffer.Add(FLinhaCmd);
+  FLinhaCmd := 'Não permite aproveitamento de crédito de ICMS'+cCmdImpFimNegrito;
+  FBuffer.Add(FLinhaCmd);
+end;
+
+procedure TACBrNFeDANFeESCPOS.Sangria(AValor : Double; AObserv, AFormaPag : string);
+begin
+  GerarCabecalhoGenerico;
+
+  AValor := 0;
+  FBuffer.Add('');
+  FBuffer.Add(cCmdFonteNormal+padC('SANGRIA', 64, '|'));
+  FBuffer.Add(cCmdFontePequena+padS('(-) Saida de Caixa | Valor: R$|'+FormatFloat('#,###,##0.00', AValor),64, '|'));
+  FBuffer.Add(cCmdFonteNormal+'------------------------------------------------');
+  FBuffer.Add(cCmdFonteNormal+padS('(=) TOTAL R$|'+FormatFloat('#,###,##0.00', AValor),64, '|'));
+
+  if Length(AObserv) > 0 then
+    FBuffer.Add(cCmdFonteNormal+padS(AObserv, 64, '|'));
+
+  GerarRodapeGenerico(FCortaPapel);
+  ImprimePorta(FBuffer.Text);
 end;
 
 procedure TACBrNFeDANFeESCPOS.DoLinesChange(Sender: TObject);

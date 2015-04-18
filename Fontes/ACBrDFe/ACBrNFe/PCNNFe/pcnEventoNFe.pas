@@ -132,7 +132,7 @@ type
     function GetItem(Index: Integer): TitemPedidoCollectionItem;
     procedure SetItem(Index: Integer; Value: TitemPedidoCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
+    constructor Create(AOwner: TDetEvento);
     function Add: TitemPedidoCollectionItem;
     property Items[Index: Integer]: TitemPedidoCollectionItem read GetItem write SetItem; default;
   end;
@@ -301,7 +301,7 @@ begin
     teEventoFiscoPP1,
     teEventoFiscoPP2,
     teEventoFiscoCPP1,
-    teEventoFiscoCPP1          : Result := 'Evento Fisco';
+    teEventoFiscoCPP2          : Result := 'Evento Fisco';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -350,7 +350,7 @@ begin
     teEventoFiscoPP1,
     teEventoFiscoPP2,
     teEventoFiscoCPP1,
-    teEventoFiscoCPP1          : Result := 'Evento Fisco';
+    teEventoFiscoCPP2          : Result := 'Evento Fisco';
   else
     Result := 'Não Definido';
   end;
@@ -453,7 +453,7 @@ begin
   Result.create;
 end;
 
-constructor TitemPedidoCollection.Create(AOwner: TPersistent);
+constructor TitemPedidoCollection.Create(AOwner: TDetEvento);
 begin
   inherited Create(TitemPedidoCollectionItem);
 end;

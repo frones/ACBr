@@ -2304,7 +2304,7 @@ end;
 procedure TNFeEnvEvento.DefinirDadosMsg;
 var
   EventoNFe: TEventoNFe;
-  I, F: integer;
+  I, J, F: integer;
   Lote, Evento, Eventos, EventosAssinados: String;
 begin
   EventoNFe := TEventoNFe.Create;
@@ -2358,6 +2358,30 @@ begin
             infEvento.detEvento.vICMS := FEvento.Evento[I].InfEvento.detEvento.vICMS;
             infEvento.detEvento.vST := FEvento.Evento[I].InfEvento.detEvento.vST;
           end;
+
+          tePedProrrog1,
+          tePedProrrog2:
+          begin
+            infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
+
+            for j := 0 to FEvento.Evento.Items[I].InfEvento.detEvento.itemPedido.count - 1 do
+            begin
+              with infEvento.detEvento.itemPedido.Add do
+              begin
+                numItem := FEvento.Evento[I].InfEvento.detEvento.itemPedido.Items[J].numItem;
+                qtdeItem := FEvento.Evento[I].InfEvento.detEvento.itemPedido.Items[J].qtdeItem;
+              end;
+            end;
+
+          end;
+
+          teCanPedProrrog1,
+          teCanPedProrrog2:
+          begin
+            infEvento.detEvento.idPedidoCancelado := FEvento.Evento[I].InfEvento.detEvento.idPedidoCancelado;
+            infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
+          end;
+
         end;
       end;
     end;

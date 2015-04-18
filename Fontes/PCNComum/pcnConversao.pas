@@ -111,7 +111,7 @@ type
                   teRegistroPassagemNFeRFID, teCTeCancelado, teMDFeCancelado,
                   teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
                   teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
-                  teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP1);
+                  teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);

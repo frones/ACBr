@@ -50,7 +50,7 @@ unit pcnEnvEventoNFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, 
   pcnConversao, pcnGerador, pcnEventoNFe;
 
 type
@@ -267,7 +267,7 @@ begin
 
             for j := 0 to Evento.Items[i].FInfEvento.detEvento.itemPedido.count  - 1 do
             begin
-              Gerador.wGrupo('itemPedido numItem="' + intToStrDef(Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].numItem, 0) + '"');
+              Gerador.wGrupo('itemPedido numItem="' + intToStr(Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].numItem) + '"');
               Gerador.wCampo(tcDe2, 'P22', 'qtdeItem', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.itemPedido.Items[j].qtdeItem, '***');
               Gerador.wGrupo('/itemPedido');
             end;

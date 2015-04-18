@@ -161,7 +161,7 @@ begin
 
       with IdentificacaoRps do
       begin
-        FieldByName('Numero').AsString    := FormatarNumeroDocumentoFiscal(Numero);
+        FieldByName('Numero').AsString    := FormatarNumeroDocumentoFiscalNFSe(Numero);
 //        FieldByName('Serie').AsString     := Serie;
 //        FieldByName('Tipo').AsString      := SeSenao(Tipo = trRPS, '0','1');
       end;

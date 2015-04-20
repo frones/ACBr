@@ -1414,37 +1414,31 @@ end;
 
 function TACBrECFFiscNET.AchaICMSAliquota( var AliquotaICMS: String):
    TACBrECFAliquota;
-var
-  AliquotaStr: string;
 begin
-  AliquotaStr := '' ;
-  Result      := nil ;
+  if upcase(AliquotaICMS[1]) = 'T' then
+  begin
+    try
+      AliquotaICMS := 'T'+IntToStr(StrToInt(copy(AliquotaICMS,2,2))) ; {Indice}
+    except
+      raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+    end ;
+  end;
 
-  if copy(AliquotaICMS,1,2) = 'SF' then
-     AliquotaStr := '-11'
-  else if copy(AliquotaICMS,1,2) = 'SN' then
-     AliquotaStr := '-13'
-  else if copy(AliquotaICMS,1,2) = 'SI' then
-     AliquotaStr := '-12'
-  else
-     case AliquotaICMS[1] of
-        'F' : AliquotaStr := '-2' ;
-        'I' : AliquotaStr := '-3' ;
-        'N' : AliquotaStr := '-4' ;
-        'T' :
-           try
-              AliquotaICMS := 'T'+IntToStr(StrToInt(copy(AliquotaICMS,2,2))) ; {Indice}
-           except
-               raise EACBrECFCMDInvalido.Create(ACBrStr('Aliquota Inválida: '+AliquotaICMS));
-           end ;
-     end ;
+  Result := inherited AchaICMSAliquota( AliquotaICMS );
 
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
+  if copy(AliquotaICMS,1,2) = 'FS' then
+    AliquotaICMS := '-11'
+  else if copy(AliquotaICMS,1,2) = 'NS' then
+    AliquotaICMS := '-13'
+  else if copy(AliquotaICMS,1,2) = 'IS' then
+    AliquotaICMS := '-12'
   else
-     AliquotaICMS := AliquotaStr ;
+    case AliquotaICMS[1] of
+      'F' : AliquotaICMS := '-2' ;
+      'I' : AliquotaICMS := '-3' ;
+      'N' : AliquotaICMS := '-4' ;
+    end ;
 end;
-
 
 procedure TACBrECFFiscNET.CarregaFormasPagamento;
   Function SubCarregaFormasPagamento(Indice : Integer) : Boolean ;

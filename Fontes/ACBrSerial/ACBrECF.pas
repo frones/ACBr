@@ -227,6 +227,7 @@ TACBrECF = class( TACBrComponent )
     function GetOnGravarLog: TACBrGravarLog;
     function GetPaginaDeCodigoClass : Word ;
     function GetTipoUltimoDocumentoClass : TACBrECFTipoDocumento ;
+
     procedure SetArredondaItemMFD(const AValue : Boolean) ;
     procedure SetAtivo(const AValue: Boolean);
     procedure SetIgnorarErroSemPapel(AValue : Boolean) ;
@@ -291,6 +292,7 @@ TACBrECF = class( TACBrComponent )
     function GetSubTotalClass: Double;
     function GetTotalPagoClass: Double;
     function GetAliquotasClass: TACBrECFAliquotas;
+    function GetTotalizadoresNaoTributadosClass: TACBrECFTotalizadoresNaoTributados;
     function GetFormasPagamentoClass: TACBrECFFormasPagamento;
     function GetComprovantesNaoFiscaisClass : TACBrECFComprovantesNaoFiscais;
     function GetRelatoriosGerenciaisClass : TACBrECFRelatoriosGerenciais;
@@ -531,6 +533,14 @@ TACBrECF = class( TACBrComponent )
     function AchaICMSIndice( Indice : String ) : TACBrECFAliquota ;
     Procedure ProgramaAliquota( Aliquota : Double; Tipo : Char = 'T';
        Posicao : String = '') ;
+
+    { TotalizadoresNaoTributados, F1, N1, I1, FS1, NS1, IS1 }
+    Property TotalizadoresNaoTributados : TACBrECFTotalizadoresNaoTributados
+       read GetTotalizadoresNaoTributadosClass ;
+    procedure CarregaTotalizadoresNaoTributados ;
+    procedure LerTotaisTotalizadoresNaoTributados ;
+    function AchaTotalizadorNaoTributadoIndice( Indice : String ) : TACBrECFTotalizadorNaoTributado ;
+    function SomaTotalizadorNaoTributadoIndice( Indice : String ) : Double;
 
     { Formas de Pagamento }
     Property FormasPagamento : TACBrECFFormasPagamento
@@ -1777,6 +1787,12 @@ begin
   Result := fsECF.TipoUltimoDocumento ;
 end;
 
+function TACBrECF.GetTotalizadoresNaoTributadosClass: TACBrECFTotalizadoresNaoTributados;
+begin
+  ComandoLOG := 'TotalizadoresNaoTributados' ;
+  Result := fsECF.TotalizadoresNaoTributados ;
+end;
+
 procedure TACBrECF.SetArredondaItemMFD(const AValue : Boolean) ;
 begin
   fsECF.ArredondaItemMFD := AValue;
@@ -2752,14 +2768,6 @@ begin
   { Retorna em "AliquotaECF" (por referencia) a String de aliquota que deve
     ser enviada para o ECF }
   AliquotaECF := AliquotaICMS ;
-
-  { convertendo IS1, IS2 = "SIx";   FS1, FS2 = "SFx";   NS1, NS2 = "SNx" }
-  if copy(AliquotaICMS,1,2) = 'FS' then
-     AliquotaECF := 'SF' + copy(AliquotaICMS,3,1)
-  else if copy(AliquotaICMS,1,2) = 'NS' then
-     AliquotaECF := 'SN' + copy(AliquotaICMS,3,1)
-  else if copy(AliquotaICMS,1,2) = 'IS' then
-     AliquotaECF := 'SI' + copy(AliquotaICMS,3,1);
 
   AchaICMSAliquota( AliquotaECF ) ;  // modifica AliquotaECF por referencia;
 
@@ -4634,6 +4642,32 @@ begin
   ComandoLOG := 'ProgramaAliquota( '+FloatToStr(Aliquota)+' , '+Tipo+' , '+
                     Posicao+' )';
   fsECF.ProgramaAliquota(Aliquota, Tipo, Posicao);
+end;
+
+procedure TACBrECF.CarregaTotalizadoresNaoTributados;
+begin
+  ComandoLOG := 'CarregaTotalizadoresNaoTributados' ;
+  fsECF.CarregaTotalizadoresNaoTributados ;
+end;
+
+procedure TACBrECF.LerTotaisTotalizadoresNaoTributados;
+begin
+  ComandoLOG := 'LerTotaisTotalizadoresNaoTributados' ;
+  fsECF.LerTotaisTotalizadoresNaoTributados ;
+end;
+
+function TACBrECF.AchaTotalizadorNaoTributadoIndice(Indice: String
+  ): TACBrECFTotalizadorNaoTributado;
+begin
+  Indice := Trim( Indice );
+  if ComandoLOG = '' then
+     ComandoLOG := 'AchaTotalizadorNaoTributadoIndice( '+Indice+' )' ;
+  Result := fsECF.AchaTotalizadorNaoTributadoIndice( Indice ) ;
+end;
+
+function TACBrECF.SomaTotalizadorNaoTributadoIndice(Indice: String): Double;
+begin
+  Result := fsECF.SomaTotalizadorNaoTributadoIndice(Trim(Indice));
 end;
 
 function TACBrECF.GetFormasPagamentoClass: TACBrECFFormasPagamento;

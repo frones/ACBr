@@ -1999,24 +1999,19 @@ end;
 
 function TACBrECFBematech.AchaICMSAliquota( var AliquotaICMS: String):
    TACBrECFAliquota;
-  Var AliquotaStr : String ;
 begin
-  Result      := nil ;
-  AliquotaStr := ''  ;
+  if upcase(AliquotaICMS[1]) = 'T' then
+    AliquotaICMS := 'T'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
 
-  AliquotaICMS := UpperCase( Trim( AliquotaICMS ) ) ;
-  case AliquotaICMS[1] of
-    'I' : AliquotaStr  := 'II' ;
-    'N' : AliquotaStr  := 'NN' ;
-    'F' : AliquotaStr  := 'FF' ;
-    'T' : AliquotaICMS := 'T'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
-    'S' : AliquotaStr  := PadRight( AliquotaICMS, 2, 'N') ;  { SN, SF, SI }
+  Result := inherited AchaICMSAliquota( AliquotaICMS );
+
+  if (pos(AliquotaICMS[1],'FIN') > 0) then
+  begin
+    if copy(AliquotaICMS,2,1) = 'S' then
+      AliquotaICMS  := 'S' + AliquotaICMS[1]                { SN, SF, SI }
+    else
+      AliquotaICMS := AliquotaICMS[1] + AliquotaICMS[1];    { NN, FF, II }
   end;
-
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
-  else
-     AliquotaICMS := AliquotaStr ;
 end;
 
 procedure TACBrECFBematech.CarregaFormasPagamento;  { funçao Lenta +- 3 sec. }

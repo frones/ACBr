@@ -26,64 +26,6 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-Agradecimentos:
-
-* Administradores:
-- Daniel Simões de Almeida
-- André Ferreira de Moraes
-
-* Desenvolvedores:
-- Airton Stodulski               ECFDataRegis
-- Anderson Rogerio Bejatto       ECFDataRegis, TACBrTroco, ECFBugFix, TACBrETQ
-- Rodrigo Frühwirth              ECFIChash
-- Gabriel Rodrigo Frones         TACBrTER, ACBrMonitor
-- Fabio Farias                   TACBrBAL, ECFBugFix, DISKeyTec
-- Walmir Silva                   TACBrBAL, BalancaTeste.dpr
-- Rennes Moreira Pimentel        TACBrValidador (CEP)
-- Aurimenes Apolonio Silva       ECFUrano, ECFBugFix
-- Vinicius de Oliveira           TACBrFala
-- Carlos do Nascimento Filho     ECFDaruma, ECFYanco
-- Thiago Delgado Pinto           Compatibilidade com BCB6
-- Nei José Van Lare Junior       ECFFiscNET
-- Jhony Alceu Pereira            ECFDaruma
-- Alan Lucas                     ECFSchalter, ECFSweda
-- Ederson Selvati                ECFDaruma, ECFBematech, ECFSweda
-- José Luís Schiavo              ECFDaruma
-- Andrews Ricardo Bejatto        TACBrETQ
-- Douglas Fernando Scheibler     Lazarus
-- Wagner Leandro Bueno Angelo    Lazarus
-- Maicon da Silva Evangelista    ECFDaruma
-- Eduardo Durieux Lopes          ECFEpson
-- Andre Bohn                     ECFNCR, ECFBugFix (Daruma FS600)
-- Joao Victor Maia Fernandes     ECFQuattro
-- Sauli Bueno                    ECFYanco
-- Ivan Moreira                   ECFs
-- Isaque Pinheiro		 TACBrSPEDFiscal, TACBrSPEDContabil, TACBrPAF
-- Luiz Arlindo                   ECFs
-- Fernando Gutierres Damaceno    ECF, TEFD
-
-* Colaboradores:
-- Alexandre Rocha L.Marcondes    Administração
-- Mauro Sano (Sweda)             Emprestimo de ECFs
-- Valmor Florez                  ECFBugFix (Schalter)
-- Licerio Jose Rodrigues Neto    ECFBugFix (Mecaf, Sweda, NaoFiscal)
-- Adriano Alves Dornelas         ECFBugFix
-- Luciano Donato                 ACBr.INC D2006
-- Gabriel Fernandes              ECFBugFix (Mecaf)
-- Juliano Pereira dos Santos     ECFBufFix (Daruma FS600)
-- Fábio Rogério Baía             ACBrMonitor (TCP)
-- Waldir Paim                    LCBTeste (conf.serial)
-- Diogo Augusto Pereira          ACBrCMC7
-- Marcos Agostini                ECFBugFix (NaoFiscal)
-- João Carvalho                  ACBrConsts
-
-* Testadores / BugReport:
-- Rildecy de Queiroz Borba       ECFBugReport (Mecaf)
-- Claudio Borba                  ECFBugReport
-- Erique Costa                   ECFBugReport
-- Matheus Nogueira               CHQBugReport
-- Everton H. Cardoso (Bematech)
-- Miguel Silva (Perto S/A)
 
 {******************************************************************************
 |* ACBr
@@ -96,6 +38,38 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+Data: 20/04/2015       (por: DSA)
+-- ACBrECF --
+[+] Adicionada a propriedade TotalizadoresNaoTributados, que retorna uma lista
+    de Objetos com os Totalizadores Não Tributados Disponíveis e ativados no ECF
+    { Exemplos: F1, F2, F3, N1, N2, N3, I1, I2, I3, FS1, NS1, IS1 }
+[+] Adicionado o método: CarregaTotalizadoresNaoTributados, para ler do ECF e
+    popular a lista de Totalizadores Nao Tributados existentes e ativados.
+[+] Adiconado o método: LerTotaisTotalizadoresNaoTributados, para ler o Valor
+    Total acumulado em Cada Totalizador Nao Tributado existente.
+[+] Adicionado método AchaTotalizadorNaoTributadoIndice( Indice : String )
+    para efetuar Busca e retornar o Objeto do Totalizador Nao Tributado
+    referente ao Indice. Se não encontrar, retorna NIL
+[+] Adicionado o método: SomaTotalizadorNaoTributadoIndice(Indice: String): Double;
+    que retorna o total de um Grupo de Totalizador Nao Tributado. Exemplo:
+    SomaTotalizadorNaoTributadoIndice('F'), retorna a Soma de F1, F2 e F3
+
+[*] Método AchaICMSAliquota, modificado, para:
+    - Considerar corretamente todos os Totalizadores Nao Tributados existentes no
+      ECF
+    - Um Exception será disparado, se o Totalizador Nao Tributado informado, não
+      existir no ECF
+
+-- ACBrECFEscECF --
+[*] Méotodo GetEstado modificado para considerar o Cupom Aberto, mesmo quando
+    existir uma Redução Z pendente em conformidade com os demais modelos
+
+
+-- ECFTeste --
+[+] Adiconado Menu "Variaveis -> Totalizadores Não Fiscais", para demonstrar e
+    testar o funcionamento dos métodos: CarregaTotalizadoresNaoTributados,
+    LerTotaisTotalizadoresNaoTributados, AchaTotalizadorNaoTributadoIndice.
 
 Data: 07/04/2015       (por: DSA)
 -- ACBrECFEscECF --

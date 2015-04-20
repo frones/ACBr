@@ -206,7 +206,7 @@ TACBrECFAliquota = class
     fsTotal: Double;
     function GetAsString: String;
     procedure SetAsString(AValue: String);
-    procedure SetTipo(const Value: Char);
+    procedure SetTipo(const AValue: Char);
  public
     constructor create ;
     procedure Assign( AAliquota : TACBrECFAliquota ) ;
@@ -221,6 +221,7 @@ TACBrECFAliquota = class
 end;
 
 { Lista de Objetos do tipo TACBrECFAliquota }
+
 TACBrECFAliquotas = class(TObjectList)
   protected
     procedure SetObject (Index: Integer; Item: TACBrECFAliquota);
@@ -233,6 +234,42 @@ TACBrECFAliquotas = class(TObjectList)
       read GetObject write SetObject; default;
   end;
 
+{ TACBrECFTotalizadorNaoTributado }
+
+TACBrECFTotalizadorNaoTributado = class
+ private
+   fsIndice: String;
+   fsTipo: Char;
+   fsTotal: Double;
+   function GetAsString: String;
+   procedure SetAsString(AValue: String);
+   procedure SetTipo(const AValue: Char);
+ public
+   constructor create ;
+   procedure Assign(ATotalizadorNaoTributado: TACBrECFTotalizadorNaoTributado);
+
+   property Indice : String read fsIndice write fsIndice ;
+   property Tipo   : Char   read fsTipo   write SetTipo ;
+   property Total  : Double read fsTotal  write fsTotal ;
+
+   property AsString : String read GetAsString write SetAsString;
+end;
+
+{ Lista de Objetos do tipo TACBrECFAliquota }
+
+{ TACBrECFTotalizadoresNaoTributados }
+
+TACBrECFTotalizadoresNaoTributados = class(TObjectList)
+  protected
+    procedure SetObject (Index: Integer; Item: TACBrECFTotalizadorNaoTributado);
+    function GetObject (Index: Integer): TACBrECFTotalizadorNaoTributado;
+    procedure Insert (Index: Integer; Obj: TACBrECFTotalizadorNaoTributado);
+  public
+    function New: TACBrECFTotalizadorNaoTributado;
+    function Add (Obj: TACBrECFTotalizadorNaoTributado): Integer;
+    property Objects [Index: Integer]: TACBrECFTotalizadorNaoTributado
+      read GetObject write SetObject; default;
+  end;
 
 { Definindo novo tipo para armazenar as Formas de Pagamento }
 
@@ -600,6 +637,7 @@ TACBrECFClass = class
     procedure AtivarPorta;
     procedure DesativarPorta;
     function GetPathDLL : string ;
+    function GetTotalizadoresNaoTributados: TACBrECFTotalizadoresNaoTributados;
     procedure SetAtivo(const Value: Boolean);
     procedure SetTimeOut(const Value: Integer);
     function GetTimeOut: Integer;
@@ -665,6 +703,8 @@ TACBrECFClass = class
 
     { Coleçao de objetos TACBrECFAliquota }
     fpAliquotas: TACBrECFAliquotas;
+    { Coleção de objetos TACBrECFTotalizadorNaoTributado }
+    fpTotalizadoresNaoTributados: TACBrECFTotalizadoresNaoTributados;
     { Coleçao de objetos TACBrECFFormasPagamento }
     fpFormasPagamentos : TACBrECFFormasPagamento;
     { Coleçao de objetos TACBrECFRelatórios Gerenciais }
@@ -960,6 +1000,15 @@ TACBrECFClass = class
     Procedure ProgramaAliquota( Aliquota : Double; Tipo : Char = 'T';
        Posicao : String = '') ; virtual ;
 
+    { TotalizadoresNaoTributados, F1, N1, I1, FS1, NS1, IS1 }
+    procedure CarregaTotalizadoresNaoTributados ; virtual;
+    procedure LerTotaisTotalizadoresNaoTributados ; virtual;
+    Property TotalizadoresNaoTributados : TACBrECFTotalizadoresNaoTributados
+       read GetTotalizadoresNaoTributados ;
+    function AchaTotalizadorNaoTributadoIndice( Indice : String ) :
+       TACBrECFTotalizadorNaoTributado ; virtual;
+    function SomaTotalizadorNaoTributadoIndice( Indice : String ) : Double;
+
     { Formas de Pagamento }
     procedure CarregaFormasPagamento ; virtual ;
     procedure LerTotaisFormaPagamento ; virtual ;
@@ -1239,6 +1288,88 @@ Uses ACBrECF, ACBrECFVirtual, ACBrUtil, Math,
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
      TypInfo ;
 
+{ TACBrECFTotalizadorNaoTributado }
+
+constructor TACBrECFTotalizadorNaoTributado.create;
+begin
+  fsIndice := ''  ;
+  fsTipo   := 'T' ;
+  fsTotal  := 0 ;
+end;
+
+function TACBrECFTotalizadorNaoTributado.GetAsString: String;
+begin
+  Result := Indice                  + '|' +
+            Tipo                    + '|' +
+            FloatToStr( Total )     + '|' ;
+end;
+
+procedure TACBrECFTotalizadorNaoTributado.SetAsString(AValue: String);
+var
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Text := StringReplace(AValue,'|',sLineBreak,[rfReplaceAll]);
+
+    if SL.Count < 3 then exit ;
+
+    Indice := SL[0];
+    Tipo   := SL[1][1];
+    Total  := StrToFloat( SL[2] );
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure TACBrECFTotalizadorNaoTributado.SetTipo(const AValue: Char);
+begin
+  if not (AValue in ['T','S']) then
+    raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
+
+  fsTipo := AValue;
+end;
+
+procedure TACBrECFTotalizadorNaoTributado.Assign(
+  ATotalizadorNaoTributado: TACBrECFTotalizadorNaoTributado);
+begin
+  fsIndice := ATotalizadorNaoTributado.Indice ;
+  fsTipo   := ATotalizadorNaoTributado.Tipo ;
+  fsTotal  := ATotalizadorNaoTributado.Total ;
+end;
+
+{ TACBrECFTotalizadoresNaoTributados }
+
+procedure TACBrECFTotalizadoresNaoTributados.SetObject(Index: Integer;
+  Item: TACBrECFTotalizadorNaoTributado);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TACBrECFTotalizadoresNaoTributados.GetObject(Index: Integer
+  ): TACBrECFTotalizadorNaoTributado;
+begin
+  Result := inherited GetItem(Index) as TACBrECFTotalizadorNaoTributado ;
+end;
+
+procedure TACBrECFTotalizadoresNaoTributados.Insert(Index: Integer;
+  Obj: TACBrECFTotalizadorNaoTributado);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TACBrECFTotalizadoresNaoTributados.New: TACBrECFTotalizadorNaoTributado;
+begin
+  Result := TACBrECFTotalizadorNaoTributado.create;
+  Add(Result);
+end;
+
+function TACBrECFTotalizadoresNaoTributados.Add(
+  Obj: TACBrECFTotalizadorNaoTributado): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
+
 { ---------------------------- TACBrECFAliquotas -------------------------- }
 
 { TACBrECFAliquota }
@@ -1260,16 +1391,18 @@ begin
   fsTotal     := AAliquota.Total ;
 end;
 
-procedure TACBrECFAliquota.SetTipo(const Value: Char);
-  Var NewVar : Char ;
+procedure TACBrECFAliquota.SetTipo(const AValue: Char);
+Var
+  NewVar : Char ;
 begin
-  NewVar := UpCase(Value) ;
+  NewVar := UpCase(AValue) ;
   if NewVar = ' ' then
      NewVar := 'T' ;
 
   if not (NewVar in ['T','S']) then
      raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
-  fsTipo := Value;
+
+  fsTipo := NewVar;
 end;
 
 function TACBrECFAliquota.GetAsString: String;
@@ -1691,6 +1824,7 @@ begin
   fpDecimaisPreco         := 3 ;
   fpDecimaisQtd           := 3 ;
   fpAliquotas             := nil ;
+  fpTotalizadoresNaoTributados := nil;
   fpFormasPagamentos      := nil ;
   fpRelatoriosGerenciais  := nil ;
   fpComprovantesNaoFiscais:= nil ;
@@ -1723,6 +1857,9 @@ begin
 
   if Assigned( fpAliquotas ) then
      fpAliquotas.Free ;
+
+  if Assigned( fpTotalizadoresNaoTributados ) then
+     fpTotalizadoresNaoTributados.Free ;
 
   if Assigned( fpFormasPagamentos ) then
      fpFormasPagamentos.Free ;
@@ -3394,46 +3531,73 @@ function TACBrECFClass.AchaICMSAliquota( var AliquotaICMS: String):
      end ;
    end;
 
-   Var AliquotaStr : String ;
-       Tipo        : Char ;
-       ValAliquota : Double ;
+Var
+  AliquotaStr : String ;
+  Tipo        : Char ;
+  ValAliquota : Double ;
+  N: Integer;
 begin
   GetAliquotas;
 
   Result := nil ;
 
-  AliquotaICMS := UpperCase( TrimLeft( AliquotaICMS ) ) ;
   case AliquotaICMS[1] of
-    'I' : AliquotaICMS := 'II' ;
-    'N' : AliquotaICMS := 'NN' ;
-    'F' : AliquotaICMS := 'FF' ;
-  else 
-     begin
-        if AliquotaICMS[1] = 'T' then  { Informou por Indice ? }
-         begin
-            AliquotaICMS := copy(AliquotaICMS,2,Length(AliquotaICMS)) ; {Remove o "T"}
-            Result := AchaICMSIndice( AliquotaICMS ) ;
-         end
-        else      { Informou por valor }
-         begin
-           { Verificando se informou T ou S no final da Aliquota (Tipo) }
-           AliquotaStr := AliquotaICMS ;
-           Tipo        := ' ' ;
-           VerificaTipoAliquota( AliquotaStr, Tipo) ;
+    'I','N','F' :
+      begin
+        if copy(AliquotaICMS,2,1) = 'S' then
+        begin
+          N := min(max(StrToIntDef(copy(AliquotaICMS,3,1),1),1),3);
+          AliquotaICMS := copy(AliquotaICMS,1,2) + IntToStr(N);
+        end
+        else
+        begin
+          N := min(max(StrToIntDef(copy(AliquotaICMS,2,1),1),1),3);
+          AliquotaICMS := AliquotaICMS[1] + IntToStr(N);
+        end;
 
-           try
-              ValAliquota := StringToFloat( AliquotaStr ) ;
-           except
-              raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
-           end ;
+        if (AchaTotalizadorNaoTributadoIndice(AliquotaICMS) = nil) then
+          raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+      end;
 
-           Result := AchaICMSAliquota( ValAliquota, Tipo ) ;
-         end ;
+    'T' :
+      begin
+        AliquotaICMS := copy(AliquotaICMS,2,Length(AliquotaICMS)) ; {Remove o "T"}
+        Result := AchaICMSIndice( AliquotaICMS ) ;
+      end;
 
-        if Result = nil then
-           raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSCMDInvalido) + AliquotaICMS)
-     end ;
-  end ;
+    'S' : {ISSQN}
+      begin
+        if pos(copy(AliquotaICMS,2,1),'INF') > 0 then
+        begin
+          N := min(max(StrToIntDef(copy(AliquotaICMS,3,1),1),1),3);
+          AliquotaICMS  := copy(AliquotaICMS,2,1)+'S'+ IntToStr(N);
+
+          if (AchaTotalizadorNaoTributadoIndice(AliquotaICMS) = nil) then
+            raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+        end
+        else
+        begin
+          AliquotaICMS := copy(AliquotaICMS,2,Length(AliquotaICMS)) ; {Remove o "S"}
+          Result := AchaICMSIndice( AliquotaICMS ) ;
+        end;
+      end;
+  else
+    { Verificando se informou T ou S no final da Aliquota (Tipo) }
+    AliquotaStr := AliquotaICMS ;
+    Tipo        := ' ' ;
+    VerificaTipoAliquota( AliquotaStr, Tipo) ;
+
+    try
+      ValAliquota := StringToFloat( AliquotaStr ) ;
+    except
+      raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSAliquotaInvalida) + AliquotaICMS);
+    end ;
+
+    Result := AchaICMSAliquota( ValAliquota, Tipo ) ;
+
+    if Result = Nil then
+      raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSCMDInvalido) + AliquotaICMS)
+  end;
 
   if Result <> nil then
      AliquotaICMS := Result.Indice ;
@@ -3470,7 +3634,8 @@ begin
 end;
 
 function TACBrECFClass.AchaICMSIndice(Indice: String): TACBrECFAliquota;
-var A : Integer ;
+var
+  A : Integer ;
 begin
   GetAliquotas;
 
@@ -3489,6 +3654,127 @@ begin
      end ;
   end ;
 end;
+
+{------------------------ TOTALIZADORESNAOTRIBUTADOS --------------------------}
+procedure TACBrECFClass.CarregaTotalizadoresNaoTributados;
+begin
+  if Assigned( fpTotalizadoresNaoTributados ) then
+     fpTotalizadoresNaoTributados.Free ;
+
+  fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
+
+  fpTotalizadoresNaoTributados.New.Indice := 'F1';
+  fpTotalizadoresNaoTributados.New.Indice := 'I1';
+  fpTotalizadoresNaoTributados.New.Indice := 'N1';
+
+  if fpMFD then
+  begin
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := 'FS1';
+      Tipo := 'S';
+    end;
+
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := 'IS1';
+      Tipo := 'S';
+    end;
+
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := 'NS1';
+      Tipo := 'S';
+    end;
+  end;
+end;
+
+function TACBrECFClass.GetTotalizadoresNaoTributados: TACBrECFTotalizadoresNaoTributados;
+var
+  ECF: TACBrECF;
+begin
+  if not Assigned( fpTotalizadoresNaoTributados ) then
+  begin
+     ECF := GetECFComponente(Self);
+     ECF.CarregaTotalizadoresNaoTributados ;
+  end;
+
+  Result := fpTotalizadoresNaoTributados ;
+end;
+
+
+procedure TACBrECFClass.LerTotaisTotalizadoresNaoTributados;
+var
+  A: Integer;
+begin
+  GetTotalizadoresNaoTributados ;
+
+  with fpTotalizadoresNaoTributados do
+  begin
+     For A := 0 to Count -1 do
+     begin
+        with Objects[A] do
+        begin
+           if Indice = 'F1' then
+             Total := TotalSubstituicaoTributaria
+           else if Indice = 'I1' then
+             Total := TotalIsencao
+           else if Indice = 'N1' then
+             Total := TotalNaoTributado
+           else if Indice = 'FS1' then
+             Total := TotalSubstituicaoTributariaISSQN
+           else if Indice = 'IS1' then
+             Total := TotalIsencaoISSQN
+           else if Indice = 'NS1' then
+             Total := TotalNaoTributadoISSQN;
+        end;
+     end;
+  end ;
+end;
+
+function TACBrECFClass.AchaTotalizadorNaoTributadoIndice(Indice: String
+  ): TACBrECFTotalizadorNaoTributado;
+var
+  A : Integer ;
+begin
+  GetTotalizadoresNaoTributados;
+
+  Result := nil ;
+  Indice := UpperCase(Indice) ;
+
+  with fpTotalizadoresNaoTributados do
+  begin
+     For A := 0 to Count -1 do
+     begin
+        if UpperCase( Objects[A].Indice ) = Indice then
+        begin
+           result := Objects[A] ;
+           Break ;
+        end ;
+     end ;
+  end ;
+end;
+
+function TACBrECFClass.SomaTotalizadorNaoTributadoIndice(Indice: String
+  ): Double;
+var
+  A : Integer ;
+begin
+  GetTotalizadoresNaoTributados;
+
+  Result := 0;
+  Indice := UpperCase(Indice) ;
+
+  For A := 0 to fpTotalizadoresNaoTributados.Count -1 do
+  begin
+    if (UpperCase( copy(fpTotalizadoresNaoTributados[A].Indice,1,Length(Indice)) ) = Indice) and
+       (StrToIntDef(copy(fpTotalizadoresNaoTributados[A].Indice, Length(Indice)+1, 1),0) > 0) then
+      Result := Result + fpTotalizadoresNaoTributados[A].Total;
+  end ;
+
+  Result := RoundTo(Result, -2);
+end;
+
 
 {--------------------------- FORMAS DE PAGAMENTO ------------------------------}
 procedure TACBrECFClass.CarregaFormasPagamento;

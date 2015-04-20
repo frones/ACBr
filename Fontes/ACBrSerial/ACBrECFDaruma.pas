@@ -303,6 +303,9 @@ TACBrECFDaruma = class( TACBrECFClass )
     function AchaICMSAliquota( var AliquotaICMS : String ) :
        TACBrECFAliquota ;  override;
 
+    procedure CarregaTotalizadoresNaoTributados ; override;
+    procedure LerTotaisTotalizadoresNaoTributados ; override;
+
     procedure CarregaFormasPagamento ; override ;
     procedure LerTotaisFormaPagamento ; override ;
     Procedure ProgramaFormaPagamento( var Descricao: String;
@@ -2663,76 +2666,128 @@ end;
 
 function TACBrECFDaruma.AchaICMSAliquota( var AliquotaICMS: String) :
   TACBrECFAliquota ;
-  Var AliquotaStr : String ;
 begin
-  AliquotaStr := '' ;
-  Result      := nil ;
+  if upcase(AliquotaICMS[1]) = 'T' then
+  begin
+    if StrIsAlpha(copy(AliquotaICMS,2,1)) then
+      AliquotaICMS := 'T'+copy(AliquotaICMS,1,2)       {Indice TA, TB, TC}
+    else
+      AliquotaICMS := 'T'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice T01, T1, T02}
+  end;
 
-  { Por indice, permite: TA, TTA (em FS345 e 2000);    T01, TT01, T1 (em MFD)  }
+  Result := inherited AchaICMSAliquota( AliquotaICMS );
 
-  if copy(AliquotaICMS,1,2) = 'TT' then { Corrige Duplo T  }
-     AliquotaICMS := copy(AliquotaICMS,2,5);
-
-   case AliquotaICMS[1] of
-     'F' :
-       begin
-          if (copy(AliquotaICMS,2,1)='2') then
-             AliquotaStr := IfThen(fpMFD,'18', 'F ')  {indice F2 }
-          else
-             AliquotaStr := IfThen(fpMFD,'17', 'F ') ;{indice F1 }
-       end;
-     'I' :
-       begin
-          if (copy(AliquotaICMS,2,1)='2') then
-             AliquotaStr := IfThen(fpMFD,'20', 'I ')  {indice I2 }
-          else
-             AliquotaStr := IfThen(fpMFD,'19', 'I ') ;{indice I1 }
-       end;
-     'N' :
-       begin
-          if (copy(AliquotaICMS,2,1)='2') then
-             AliquotaStr := IfThen(fpMFD,'22', 'N ')  {indice N2 }
-          else
-             AliquotaStr := IfThen(fpMFD,'21', 'N ') ;{indice N1 }
-       end;
-     'T' :
-       begin
-          if StrIsAlpha(copy(AliquotaICMS,2,1)) then
-             AliquotaICMS := 'T'+copy(AliquotaICMS,1,2)       {Indice TA, TB, TC}
-          else
-             AliquotaICMS := 'T'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice T01, T1, T02}
-       end ;
-     'S' :
-       begin
-          if copy(AliquotaICMS,2,1) = 'F' then
-          begin
-             if copy(AliquotaICMS,3,1) = '2' then
-               AliquotaStr := '24'
-             else
-               AliquotaStr := '23';
-          end
-          else if copy(AliquotaICMS,2,1) = 'I' then
-          begin
-             if copy(AliquotaICMS,3,1) = '2' then
-               AliquotaStr := '26'
-             else
-               AliquotaStr := '25';
-          end
-          else if copy(AliquotaICMS,2,1) = 'N' then
-          begin
-             if copy(AliquotaICMS,3,1) = '2' then
-               AliquotaStr := '28'
-             else
-               AliquotaStr := '27';
-          end;
-       end;
-   end;
-
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
+  if not fpMFD then
+  begin
+    if (AliquotaICMS[1] in ['F','I','N']) then
+      AliquotaICMS := AliquotaICMS[1]+' ';
+  end
   else
-     AliquotaICMS := AliquotaStr ;
+  begin
+    if AliquotaICMS = 'F1' then
+      AliquotaICMS := '17'
+    else if AliquotaICMS = 'F2' then
+      AliquotaICMS := '18'
+    else if AliquotaICMS = 'I1' then
+      AliquotaICMS := '19'
+    else if AliquotaICMS = 'I2' then
+      AliquotaICMS := '20'
+    else if AliquotaICMS = 'N1' then
+      AliquotaICMS := '21'
+    else if AliquotaICMS = 'N2' then
+      AliquotaICMS := '22'
+    else if AliquotaICMS = 'FS1' then
+      AliquotaICMS := '23'
+    else if AliquotaICMS = 'FS2' then
+      AliquotaICMS := '24'
+    else if AliquotaICMS = 'IS1' then
+      AliquotaICMS := '25'
+    else if AliquotaICMS = 'IS2' then
+      AliquotaICMS := '26'
+    else if AliquotaICMS = 'NS1' then
+      AliquotaICMS := '27'
+    else if AliquotaICMS = 'NS2' then
+      AliquotaICMS := '28'
+  end;
 end ;
+
+procedure TACBrECFDaruma.CarregaTotalizadoresNaoTributados;
+begin
+  if not fpMFD then
+  begin
+    inherited CarregaTotalizadoresNaoTributados;
+    exit;
+  end;
+
+  if Assigned( fpTotalizadoresNaoTributados ) then
+     fpTotalizadoresNaoTributados.Free ;
+
+  fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
+
+  fpTotalizadoresNaoTributados.New.Indice := 'F1';
+  fpTotalizadoresNaoTributados.New.Indice := 'F2';
+  fpTotalizadoresNaoTributados.New.Indice := 'I1';
+  fpTotalizadoresNaoTributados.New.Indice := 'I2';
+  fpTotalizadoresNaoTributados.New.Indice := 'N1';
+  fpTotalizadoresNaoTributados.New.Indice := 'N2';
+
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'FS1';
+    Tipo := 'S';
+  end;
+
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'FS2';
+    Tipo := 'S';
+  end;
+
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'IS1';
+    Tipo := 'S';
+  end;
+
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'IS2';
+    Tipo := 'S';
+  end;
+
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'NS1';
+    Tipo := 'S';
+  end;
+
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'NS2';
+    Tipo := 'S';
+  end;
+end;
+
+procedure TACBrECFDaruma.LerTotaisTotalizadoresNaoTributados;
+var
+   RetCmd: AnsiString;
+   A: Integer;
+begin
+  if not fpMFD then
+  begin
+    inherited LerTotaisTotalizadoresNaoTributados;
+    exit;
+  end;
+
+  if not Assigned(fpTotalizadoresNaoTributados) then
+    CarregaTotalizadoresNaoTributados;
+
+  RetCmd := RetornaInfoECF('003');
+
+  For A := 0 to fpTotalizadoresNaoTributados.Count -1 do
+    fpTotalizadoresNaoTributados[A].Total :=
+       RoundTo( StrToFloatDef(Copy(RetCmd, 209 + (13*A), 13),0)/100, -2);
+end;
 
 procedure TACBrECFDaruma.CarregaFormasPagamento;  { funçao Lenta +- 3 sec. }
 Var RetCmd, StrFPG, StrCNF, StrCNFVinc, Token, Descricao : AnsiString ;
@@ -3900,7 +3955,10 @@ begin
   Result := 0;
 
   if fpMFD then
-    Result := RoundTo( StrToFloatDef(Copy(RetornaInfoECF('003'), 286, 13),0)/100, -2) ;
+  begin
+    LerTotaisTotalizadoresNaoTributados;
+    Result := SomaTotalizadorNaoTributadoIndice('FS');
+  end;
 end;
 
 function TACBrECFDaruma.GetTotalIsencaoISSQN: Double;
@@ -3908,7 +3966,10 @@ begin
   Result := 0;
 
   if fpMFD then
-    Result := RoundTo( StrToFloatDef(Copy(RetornaInfoECF('003'), 312, 13),0)/100, -2) ;
+  begin
+    LerTotaisTotalizadoresNaoTributados;
+    Result := SomaTotalizadorNaoTributadoIndice('IS');
+  end;
 end;
 
 
@@ -3917,7 +3978,10 @@ begin
   Result := 0;
 
   if fpMFD then
-    Result := RoundTo( StrToFloatDef(Copy(RetornaInfoECF('003'), 338, 13),0)/100, -2) ;
+  begin
+    LerTotaisTotalizadoresNaoTributados;
+    Result := SomaTotalizadorNaoTributadoIndice('NS');
+  end;
 end;
 
 function TACBrECFDaruma.GetTotalAcrescimosOPNF: Double;
@@ -3951,7 +4015,10 @@ begin
   Result := 0;
 
   if fpMFD then
-    Result := (StrToFloatDef(Copy(RetornaInfoECF('003'), 235, 13),0)/100)
+  begin
+    LerTotaisTotalizadoresNaoTributados;
+    Result := SomaTotalizadorNaoTributadoIndice('I');
+  end
   else if fsNumVersao = '2000' then
   begin
     //Falta Implementar
@@ -3974,7 +4041,10 @@ begin
   Result := 0;
 
   if fpMFD then
-    Result := (StrToFloatDef(Copy(RetornaInfoECF('003'), 261, 13),0)/100)
+  begin
+    LerTotaisTotalizadoresNaoTributados;
+    Result := SomaTotalizadorNaoTributadoIndice('N');
+  end
   else if fsNumVersao = '2000' then
   begin
     //Falta Implementar
@@ -3996,7 +4066,10 @@ begin
   Result := 0;
 
   if fpMFD then
-    Result := (StrToFloatDef(Copy(RetornaInfoECF('003'), 209, 13),0)/100)
+  begin
+    LerTotaisTotalizadoresNaoTributados;
+    Result := SomaTotalizadorNaoTributadoIndice('F');
+  end
   else if fsNumVersao = '2000' then
   begin
     //Falta Implementar

@@ -36,7 +36,7 @@
 unit ACBrECFEpson ;
 
 interface
-uses ACBrECFClass, ACBrDevice, ACBrUtil,
+uses ACBrECFClass, ACBrDevice,
      Classes ;
 
 const
@@ -393,13 +393,10 @@ function RemoveEsc(const Campo : AnsiString) : AnsiString ;
 Function InsertEsc(const Campo: AnsiString): AnsiString ;
 
 implementation
-Uses ACBrECF, ACBrConsts,
-     {$IFDEF COMPILER6_UP}
-       DateUtils, StrUtils
-     {$ELSE}
-       ACBrD5, Windows
-     {$ENDIF},
-     SysUtils, Math ;
+Uses
+  Math, SysUtils,
+  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
+  ACBrECF, ACBrConsts, ACBrUtil ;
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 begin
@@ -2262,32 +2259,25 @@ end;
 
 function TACBrECFEpson.AchaICMSAliquota( var AliquotaICMS: String):
    TACBrECFAliquota;
-Var
-  AliquotaStr : String ;
 begin
-  AliquotaStr := '' ;
-  Result      := nil ;
-
-  if pos(copy(AliquotaICMS,1,2), 'TT,SS') > 0 then { Corrige Duplo T ou S }
-     AliquotaICMS := Trim(Copy(AliquotaICMS,2,5));
-
   if copy(AliquotaICMS,1,2) = 'SF' then
-     AliquotaStr := 'FS'
+     AliquotaICMS := 'FS'
   else if copy(AliquotaICMS,1,2) = 'SN' then
-     AliquotaStr := 'NS'
+     AliquotaICMS := 'NS'
   else if copy(AliquotaICMS,1,2) = 'SI' then
-     AliquotaStr := 'IS'
-  else
-     case AliquotaICMS[1] of
-        'F','I','N' : AliquotaStr := AliquotaICMS[1] ;
-        'T' : AliquotaICMS := 'TT'+copy(AliquotaICMS,2,2) ; {Indice}
-        'S' : AliquotaICMS := 'TS'+copy(AliquotaICMS,2,2) ; {Indice}
-     end ;
+     AliquotaICMS := 'IS'
+  else if (upcase(AliquotaICMS[1]) in ['T','S']) then
+    AliquotaICMS := 'T'+AliquotaICMS[1]+copy(AliquotaICMS,2,2) ; {Indice}
 
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
-  else
-     AliquotaICMS := AliquotaStr ;
+  Result := inherited AchaICMSAliquota( AliquotaICMS );
+
+  if (pos(AliquotaICMS[1],'FIN') > 0) then
+  begin
+    if copy(AliquotaICMS,2,1) = 'S' then
+      AliquotaICMS  := copy(AliquotaICMS,1,2)
+    else
+      AliquotaICMS := AliquotaICMS[1] ;
+  end;
 end;
 
 

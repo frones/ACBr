@@ -249,6 +249,15 @@ type
     MenuItem40: TMenuItem;
     MenuItem41: TMenuItem;
     MenuItem42: TMenuItem;
+    MenuItem43: TMenuItem;
+    MenuItem44: TMenuItem;
+    MenuItem45: TMenuItem;
+    MenuItem46: TMenuItem;
+    MenuItem47: TMenuItem;
+    MenuItem48: TMenuItem;
+    MenuItem49: TMenuItem;
+    MenuItem50: TMenuItem;
+    MenuItem51: TMenuItem;
     mniRelatorioGerencialComFormatacao: TMenuItem;
     mSAT: TMenuItem;
     mTotalTroco: TMenuItem;
@@ -694,6 +703,10 @@ type
     procedure MenuItem39Click(Sender: TObject);
     procedure MenuItem40Click(Sender: TObject);
     procedure MenuItem42Click(Sender: TObject);
+    procedure MenuItem47Click(Sender: TObject);
+    procedure MenuItem48Click(Sender: TObject);
+    procedure MenuItem50Click(Sender: TObject);
+    procedure MenuItem51Click(Sender: TObject);
     procedure miTesteArredondamentoClick(Sender: TObject);
     procedure miEstornoCCDClick(Sender : TObject) ;
     procedure miLeituraCMC7Click(Sender: TObject);
@@ -897,7 +910,7 @@ type
       var Picture: TPicture);
   public
     { Public declarations }
-    Procedure AtualizaMemos(VerificaEstado : Boolean = true) ;
+    Procedure AtualizaMemos(VerificaEstado : Boolean = False) ;
   end;
   
 const
@@ -1012,7 +1025,7 @@ begin
   MessageDlg( Erro,mtError,[mbOk],0) ;
 end ;
 
-procedure TForm1.AtualizaMemos(VerificaEstado : Boolean = true) ;
+procedure TForm1.AtualizaMemos(VerificaEstado : Boolean) ;
 begin
   if not ACBrECF1.Ativo then
      exit ;
@@ -2501,6 +2514,90 @@ begin
                          '"00", 0, 0, "900"');
 
   AtualizaMemos ;
+end;
+
+procedure TForm1.MenuItem47Click(Sender: TObject);
+var A : Integer ;
+begin
+  ACBrECF1.CarregaTotalizadoresNaoTributados ;
+
+  for A := 0 to ACBrECF1.TotalizadoresNaoTributados.Count -1 do
+  begin
+     mResp.Lines.Add( 'TotalizadorNaoTributado: - Indice: '+
+                      ACBrECF1.TotalizadoresNaoTributados[A].Indice + ' Tipo: '+
+                      ACBrECF1.TotalizadoresNaoTributados[A].Tipo );
+  end ;
+  mResp.Lines.Add('---------------------------------');
+end;
+
+procedure TForm1.MenuItem48Click(Sender: TObject);
+Var A : Integer ;
+begin
+  ACBrECF1.LerTotaisTotalizadoresNaoTributados ;
+
+  for A := 0 to ACBrECF1.TotalizadoresNaoTributados.Count -1 do
+  begin
+     mResp.Lines.Add( 'TotalizadorNaoTributado: '+
+                      ACBrECF1.TotalizadoresNaoTributados[A].Indice +' - '+
+                      ACBrECF1.TotalizadoresNaoTributados[A].Tipo+ ' -> '+
+                      FloatToStr( ACBrECF1.TotalizadoresNaoTributados[A].Total ) );
+  end ;
+  mResp.Lines.Add('---------------------------------');
+end;
+
+procedure TForm1.MenuItem50Click(Sender: TObject);
+var
+  TotalizadorNaoTributado : TACBrECFTotalizadorNaoTributado;
+  Indice : String;
+begin
+  ACBrECF1.CarregaTotalizadoresNaoTributados ;
+  try
+    ACBrECF1.LerTotaisTotalizadoresNaoTributados ;
+  except
+  end;
+
+  Indice := '';
+  if not InputQuery('Acha Totalizador Nao Tributado  por Indice',
+                    'Entre com o Indice:', Indice ) then
+    Exit;
+
+  TotalizadorNaoTributado :=  ACBrECF1.AchaTotalizadorNaoTributadoIndice(Indice);
+
+  if TotalizadorNaoTributado <> Nil then
+  begin
+    mResp.Lines.Add('Indice: ' + TotalizadorNaoTributado.Indice);
+    mResp.Lines.Add('Tipo..: ' + TotalizadorNaoTributado.Tipo);
+    mResp.Lines.Add('Valor atual do totalizador R$ ' + FormatFloat('###,##0.00',TotalizadorNaoTributado.Total));
+  end
+  else
+    mResp.Lines.Add('Indice (' + Indice + ') não encontrado!');
+
+  AtualizaMemos();
+end;
+
+procedure TForm1.MenuItem51Click(Sender: TObject);
+var
+  A: Integer;
+begin
+  ACBrECF1.CorrigeEstadoErro();
+  ACBrECF1.AbreCupom();
+
+  For A := 0 to ACBrECF1.TotalizadoresNaoTributados.Count-1 do
+  begin
+    ACBrECF1.VendeItem(
+      '1'+IntToStrZero(A,5),
+     'TOTALIZADOR NAO TRIBUTADO '+ ACBrECF1.TotalizadoresNaoTributados[A].Indice,
+      ACBrECF1.TotalizadoresNaoTributados[A].Indice,
+      1, 1+A );
+  end;
+
+  ACBrECF1.SubtotalizaCupom();
+  ACBrECF1.EfetuaPagamento(ACBrECF1.FormasPagamento[0].Indice, ACBrECF1.Subtotal);
+  ACBrECF1.FechaCupom('FIM DO TESTES|CONFIRA VALORES COM A LEITURAX');
+
+  ACBrECF1.LeituraX;
+
+  MenuItem48Click(Sender);
 end;
 
 procedure TForm1.miTesteArredondamentoClick(Sender: TObject);

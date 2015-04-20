@@ -252,8 +252,9 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     procedure LerTotaisAliquota ; override ;
     Procedure ProgramaAliquota( Aliquota : Double; Tipo : Char = 'T';
        Posicao : String = '') ; override ;
-    function AchaICMSAliquota( var AliquotaICMS: String ):
-       TACBrECFAliquota; override ;
+
+    procedure CarregaTotalizadoresNaoTributados ; override;
+    procedure LerTotaisTotalizadoresNaoTributados ; override;
 
     procedure CarregaFormasPagamento ; override ;
     procedure LerTotaisFormaPagamento ; override ;
@@ -395,7 +396,7 @@ begin
   fsRespostasComando := '' ;
   fsFalhasRX         := 0 ;
   fsPoucoPapel       := False;
-  
+
   fpColunas := 56;
   fpMFD     := True ;
   fpTermica := True ;
@@ -1892,35 +1893,146 @@ begin
    EnviaComando('32|'+sAliquota);
 end;
 
-function TACBrECFSwedaSTX.AchaICMSAliquota( var AliquotaICMS: String):
-   TACBrECFAliquota;
-Var AliquotaStr : String ;
+procedure TACBrECFSwedaSTX.CarregaTotalizadoresNaoTributados;
+var
+  RetCmd: String;
+  nF, nI, nN, nFS, nIS, nNS, A: Integer;
 begin
-   Result      := nil ;
-   AliquotaStr := '';
+  if Assigned( fpTotalizadoresNaoTributados ) then
+     fpTotalizadoresNaoTributados.Free ;
 
-  AliquotaICMS := UpperCase( Trim( AliquotaICMS ) ) ;
-  case AliquotaICMS[1] of
-    'I' : AliquotaStr  := 'I1' ;
-    'N' : AliquotaStr  := 'N1' ;
-    'F' : AliquotaStr  := 'F1' ;
-    'T' : AliquotaICMS := 'T'+AliquotaICMS; {Indice}
-    'S' : {ISSQN}
-        begin
-           case AliquotaICMS[2] of
-              'I':AliquotaStr := 'IS1';
-              'N':AliquotaStr := 'NS1';
-              'F':AliquotaStr := 'FS1';
-           else AliquotaICMS  := 'T'+AliquotaICMS;
-           end
-        end;
+  fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
+
+  RetCmd := TACBrECF(fpOwner).RetornaInfoECF( 'H8' ) ;
+
+  nF := StrToIntDef(copy(RetCmd,1,1),1);
+  nI := StrToIntDef(copy(RetCmd,2,1),1);
+  nN := StrToIntDef(copy(RetCmd,3,1),1);
+  nFS := StrToIntDef(copy(RetCmd,4,1),0);
+  nIS := StrToIntDef(copy(RetCmd,5,1),0);
+  nNS := StrToIntDef(copy(RetCmd,6,1),0);
+
+  For A := 1 to nF do
+    fpTotalizadoresNaoTributados.New.Indice := 'F'+IntToStr(A);
+
+  For A := 1 to nI do
+    fpTotalizadoresNaoTributados.New.Indice := 'I'+IntToStr(A);
+
+  For A := 1 to nN do
+    fpTotalizadoresNaoTributados.New.Indice := 'N'+IntToStr(A);
+
+  For A := 1 to nFS do
+  begin
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := 'FS'+IntToStr(A);
+      Tipo := 'S';
+    end;
   end;
 
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
-  else
-     AliquotaICMS := AliquotaStr ;
+  For A := 1 to nIS do
+  begin
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := 'IS'+IntToStr(A);
+      Tipo := 'S';
+    end;
+  end;
 
+  For A := 1 to nNS do
+  begin
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := 'NS'+IntToStr(A);
+      Tipo := 'S';
+    end;
+  end;
+end;
+
+procedure TACBrECFSwedaSTX.LerTotaisTotalizadoresNaoTributados;
+var
+  ATot: TACBrECFTotalizadorNaoTributado;
+  RetCMD: String;
+begin
+  if not Assigned(fpTotalizadoresNaoTributados) then
+    CarregaTotalizadoresNaoTributados;
+
+  RetCMD := Trim(RetornaInfoECF('D1'));
+
+  ATot := AchaTotalizadorNaoTributadoIndice('F1');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,40,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('F2');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,53,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('F3');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,66,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('N1');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,79,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('N2');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,92,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('N3');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,105,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('I1');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,118,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('I2');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,131,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('I3');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,144,13),0)/100;
+
+
+  RetCMD := Trim(RetornaInfoECF('E1'));
+
+  ATot := AchaTotalizadorNaoTributadoIndice('FS1');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,40,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('FS2');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,53,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('FS3');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,66,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('NS1');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,79,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('NS2');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,92,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('NS3');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,105,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('IS1');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,118,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('IS2');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,131,13),0)/100;
+
+  ATot := AchaTotalizadorNaoTributadoIndice('IS3');
+  if ATot <> Nil then
+    ATot.Total := StrToFloatDef(Copy(RetCMD,144,13),0)/100;
 end;
 
 procedure TACBrECFSwedaSTX.CarregaFormasPagamento;  { funçao Lenta +- 3 sec. }
@@ -2447,20 +2559,6 @@ begin
    Result := StrToFloatDef(Copy(RetCMD,1,14),0)/100;
 end;
 
-function TACBrECFSwedaSTX.GetTotalIsencao: Double;
-var
-   I1:Double;
-   I2:Double;
-   I3:Double;
-   RetCMD:String;
-begin
-   RetCMD := Trim(RetornaInfoECF('D1'));
-   I1:= StrToFloatDef(Copy(RetCMD,118,13),0)/100;
-   I2:= StrToFloatDef(Copy(RetCMD,131,13),0)/100;
-   I3:= StrToFloatDef(Copy(RetCMD,144,13),0)/100;
-   Result := I1+I2+I3;
-end;
-
 function TACBrECFSwedaSTX.GetTotalAcrescimosISSQN: Double;
 var
    RetCMD:String;
@@ -2486,45 +2584,21 @@ begin
 end;
 
 function TACBrECFSwedaSTX.GetTotalIsencaoISSQN: Double;
-var
-   I1:Double;
-   I2:Double;
-   I3:Double;
-   RetCMD:String;
 begin
-   RetCMD := Trim(RetornaInfoECF('E1'));
-   I1:= StrToFloatDef(Copy(RetCMD,118,13),0)/100;
-   I2:= StrToFloatDef(Copy(RetCMD,131,13),0)/100;
-   I3:= StrToFloatDef(Copy(RetCMD,144,13),0)/100;
-   Result := I1+I2+I3;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('IS');
 end;
 
 function TACBrECFSwedaSTX.GetTotalNaoTributadoISSQN: Double;
-var
-   RetCMD :String;
-   N1:Double;
-   N2:Double;
-   N3:Double;
 begin
-   RetCMD := Trim(RetornaInfoECF('E1'));
-   N1 := StrToFloatDef(Copy(RetCMD,79,13),0)/100;
-   N2 := StrToFloatDef(Copy(RetCMD,92,13),0)/100;
-   N3 := StrToFloatDef(Copy(RetCMD,105,13),0)/100;
-   Result := N1+N2+N3;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('NS');
 end;
 
 function TACBrECFSwedaSTX.GetTotalSubstituicaoTributariaISSQN: Double;
-var
-   RetCMD :String;
-   F1:Double;
-   F2:Double;
-   F3:Double;
 begin
-   RetCMD := Trim(RetornaInfoECF('E1'));
-   F1 := StrToFloatDef(Copy(RetCMD,40,13),0)/100;
-   F2 := StrToFloatDef(Copy(RetCMD,53,13),0)/100;
-   F3 := StrToFloatDef(Copy(RetCMD,66,13),0)/100;
-   Result := F1+F2+F3;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('FS');
 end;
 
 function TACBrECFSwedaSTX.GetTotalAcrescimosOPNF: Double;
@@ -2552,32 +2626,23 @@ begin
 end;
 
 function TACBrECFSwedaSTX.GetTotalNaoTributado: Double;
-var
-   RetCMD :String;
-   N1:Double;
-   N2:Double;
-   N3:Double;
 begin
-   RetCMD := Trim(RetornaInfoECF('D1'));
-   N1 := StrToFloatDef(Copy(RetCMD,79,13),0)/100;
-   N2 := StrToFloatDef(Copy(RetCMD,92,13),0)/100;
-   N3 := StrToFloatDef(Copy(RetCMD,105,13),0)/100;
-   Result := N1+N2+N3;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('N');
 end;
 
 function TACBrECFSwedaSTX.GetTotalSubstituicaoTributaria: Double;
-var
-   RetCMD :String;
-   F1:Double;
-   F2:Double;
-   F3:Double;
 begin
-   RetCMD := Trim(RetornaInfoECF('D1'));
-   F1 := StrToFloatDef(Copy(RetCMD,40,13),0)/100;
-   F2 := StrToFloatDef(Copy(RetCMD,53,13),0)/100;
-   F3 := StrToFloatDef(Copy(RetCMD,66,13),0)/100;
-   Result := F1+F2+F3;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('F');
 end;
+
+function TACBrECFSwedaSTX.GetTotalIsencao: Double;
+begin
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('I');
+end;
+
 
 function TACBrECFSwedaSTX.GetNumUltimoItem: Integer;
 var

@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 648
+  Left = 805
   Height = 418
-  Top = 243
+  Top = 322
   Width = 641
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -173,9 +173,9 @@ object Form1: TForm1
     Height = 335
     Top = 0
     Width = 641
-    ActivePage = tsECF
+    ActivePage = TabSheet1
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     object tsECF: TTabSheet
       Caption = 'ECF'
@@ -4246,6 +4246,37 @@ object Form1: TForm1
           Caption = 'Achar Aliquota por Valor'
           OnClick = mAcharAliqPorValorClick
         end
+        object MenuItem43: TMenuItem
+          Caption = '-'
+        end
+        object MenuItem44: TMenuItem
+          Caption = 'IndiceTotalizadoresNaoTributadosICMS'
+        end
+        object MenuItem45: TMenuItem
+          Caption = 'IndiceTotalizadoresNaoTributadosISSQN'
+        end
+      end
+      object MenuItem46: TMenuItem
+        Caption = 'Totalizadores Não Fiscais'
+        object MenuItem47: TMenuItem
+          Caption = 'Carrega Totalizadores Nao Tributados'
+          OnClick = MenuItem47Click
+        end
+        object MenuItem48: TMenuItem
+          Caption = 'Ler Totais Totalizadores Nao Tributados'
+          OnClick = MenuItem48Click
+        end
+        object MenuItem49: TMenuItem
+          Caption = '-'
+        end
+        object MenuItem50: TMenuItem
+          Caption = 'Acha Totalizador Nao Tributado Indice'
+          OnClick = MenuItem50Click
+        end
+        object MenuItem51: TMenuItem
+          Caption = 'Testar Leitura de Totais'
+          OnClick = MenuItem51Click
+        end
       end
       object FormasdePagamento2: TMenuItem
         Caption = 'Formas de Pagamento'
@@ -5017,10 +5048,9 @@ object Form1: TForm1
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libCapicom
-    Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.RetirarAcentos = True
     Configuracoes.Geral.ValidarDigest = False
+    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     DANFE = ACBrNFeDANFeESCPOS1

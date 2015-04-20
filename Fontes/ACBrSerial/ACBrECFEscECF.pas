@@ -177,7 +177,6 @@ TACBrECFEscECF = class( TACBrECFClass )
     Function TraduzErroMsg(EscECFResposta: TACBrECFEscECFResposta) : String;
     procedure Sincronizar;
 
-    Function GetValorTotalizador( N, I: Integer): Double;
     Function AjustaDescricao( ADescricao: String ): String;
 
     Procedure SalvaRespostasMemoria( AtualizaVB: Boolean = True );
@@ -276,6 +275,9 @@ TACBrECFEscECF = class( TACBrECFClass )
        TACBrECFAliquota ;  overload ; override;
     Procedure ProgramaAliquota( Aliquota : Double; Tipo : Char = 'T';
        Posicao : String = '') ; override ;
+
+    procedure CarregaTotalizadoresNaoTributados ; override;
+    procedure LerTotaisTotalizadoresNaoTributados ; override;
 
     { Formas de Pagamento }
     procedure CarregaFormasPagamento ; override ;
@@ -674,6 +676,7 @@ begin
   fsMarcaECF      := '' ;
   fsModeloECF     := '' ;
   fsEmPagamento   := False ;
+
   fsFalhas        := 0;
   fsACK           := False;
 
@@ -1296,19 +1299,6 @@ begin
   end;
 end;
 
-function TACBrECFEscECF.GetValorTotalizador(N, I : Integer) : Double ;
-var
-  StrValue: String;
-begin
-  Result := 0;
-  RetornaInfoECF( '6|'+IntToStr( N ) ) ;
-  if EscECFResposta.Params.Count >= I then
-  begin
-     StrValue := EscECFResposta.Params[ I ] ;
-     Result   := StrToInt( StrValue ) / 100;
-  end;
-end;
-
 function TACBrECFEscECF.AjustaDescricao(ADescricao : String) : String ;
 begin
   { Ajusta uma descrição de acordo com as regras do protocolo EscECF
@@ -1549,22 +1539,23 @@ begin
       begin
         fpEstado := estDesconhecido ;
 
-        FlagEst := StrToInt( RetornaInfoECF( '16|4' ) );
-        if FlagEst = 3 then
-           fpEstado := estBloqueada
-        else if fsEmPagamento then
-           fpEstado := estPagamento 
-        else
-         begin
-           FlagEst := StrToInt( RetornaInfoECF( '16|5' ) );
-           Case FlagEst of
-             0  :             fpEstado := estLivre;
-             10 :             fpEstado := estVenda;
-             11..13, 21..23 : fpEstado := estPagamento;
-             20 :             fpEstado := estNaoFiscal;
-             30..32 :         fpEstado := estRelatorio;
-           end;
-         end;
+        FlagEst := StrToInt( RetornaInfoECF( '16|5' ) );
+        Case FlagEst of
+          0  :             fpEstado := estLivre;
+          10 :             fpEstado := estVenda;
+          11..13, 21..23 : fpEstado := estPagamento;
+          20 :             fpEstado := estNaoFiscal;
+          30..32 :         fpEstado := estRelatorio;
+        end;
+
+        if (fpEstado in [estLivre,estDesconhecido]) then
+        begin
+          FlagEst := StrToInt( RetornaInfoECF( '16|4' ) );
+          if FlagEst = 3 then
+             fpEstado := estBloqueada
+          else if fsEmPagamento then
+             fpEstado := estPagamento ;
+        end;
 
         if fpEstado in [estLivre, estBloqueada] then
         begin
@@ -2485,6 +2476,36 @@ begin
   CarregaAliquotas;
 end;
 
+procedure TACBrECFEscECF.CarregaTotalizadoresNaoTributados;
+var
+  I: Integer;
+begin
+  if Assigned( fpTotalizadoresNaoTributados ) then
+     fpTotalizadoresNaoTributados.Free ;
+
+  fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
+
+  RetornaInfoECF( '6|0' );
+
+  I := 0;
+  while I < EscECFResposta.Params.Count-1 do
+  begin
+    with fpTotalizadoresNaoTributados.New do
+    begin
+      Indice := EscECFResposta.Params[I];
+      Tipo   := IfThen(pos('S',Indice)>0,'S','T')[1];
+      Total  := StrToFloatDef(EscECFResposta.Params[I+1],0)/100;
+    end;
+
+    Inc( I, 2 );
+  end;
+end;
+
+procedure TACBrECFEscECF.LerTotaisTotalizadoresNaoTributados;
+begin
+  CarregaTotalizadoresNaoTributados;
+end;
+
 procedure TACBrECFEscECF.CarregaFormasPagamento;
 Var
   I, N :Integer ;
@@ -3091,9 +3112,8 @@ end;
 
 function TACBrECFEscECF.GetTotalIsencao: Double;
 begin
-  Result := GetValorTotalizador( 1, 3 ) +
-            GetValorTotalizador( 2, 3 ) +
-            GetValorTotalizador( 3, 3 ) ;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('I');
 end;
 
 function TACBrECFEscECF.GetTotalAcrescimosISSQN : Double ;
@@ -3125,37 +3145,32 @@ end ;
 
 function TACBrECFEscECF.GetTotalIsencaoISSQN : Double ;
 begin
-  Result := GetValorTotalizador( 1, 9 ) +
-            GetValorTotalizador( 2, 9 ) +
-            GetValorTotalizador( 3, 9 ) ;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('IS');
 end ;
 
 function TACBrECFEscECF.GetTotalNaoTributadoISSQN : Double ;
 begin
-  Result := GetValorTotalizador( 1, 11 ) +
-            GetValorTotalizador( 2, 11 ) +
-            GetValorTotalizador( 3, 11 ) ;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('NS');
 end ;
 
 function TACBrECFEscECF.GetTotalSubstituicaoTributariaISSQN : Double ;
 begin
-  Result := GetValorTotalizador( 1, 7 ) +
-            GetValorTotalizador( 2, 7 ) +
-            GetValorTotalizador( 3, 7 ) ;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('FS');
 end ;
 
 function TACBrECFEscECF.GetTotalNaoTributado: Double;
 begin
-  Result := GetValorTotalizador( 1, 5 ) +
-            GetValorTotalizador( 2, 5 ) +
-            GetValorTotalizador( 3, 5 ) ;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('N');
 end;
 
 function TACBrECFEscECF.GetTotalSubstituicaoTributaria: Double;
 begin
-  Result := GetValorTotalizador( 1, 1 ) +
-            GetValorTotalizador( 2, 1 ) +
-            GetValorTotalizador( 3, 1 ) ;
+  LerTotaisTotalizadoresNaoTributados;
+  Result := SomaTotalizadorNaoTributadoIndice('F');
 end;
 
 function TACBrECFEscECF.GetCNPJ: String;
@@ -3228,36 +3243,11 @@ end;
 
 function TACBrECFEscECF.AchaICMSAliquota(var AliquotaICMS: String
    ): TACBrECFAliquota;
-Var
-  AliquotaStr : String ;
 begin
-  AliquotaStr := '' ;
-  Result      := nil ;
+  if (upcase(AliquotaICMS[1]) = 'T') then
+    AliquotaICMS := 'TT'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
 
-  if pos(copy(AliquotaICMS,1,2), 'TT,SS') > 0 then { Corrige Duplo T ou S }
-     AliquotaICMS := Trim(Copy(AliquotaICMS,2,5));
-
-  if copy(AliquotaICMS,1,2) = 'SF' then
-     AliquotaStr := 'FS1'
-  else if copy(AliquotaICMS,1,2) = 'SN' then
-     AliquotaStr := 'NS1'
-  else if copy(AliquotaICMS,1,2) = 'SI' then
-     AliquotaStr := 'IS1'
-  else if pos(copy(AliquotaICMS,1,2), 'IS|FS|NS') > 0 then
-     AliquotaStr := copy(AliquotaICMS,1,2) +
-                    ifthen( AliquotaICMS[3] in ['1'..'3'],AliquotaICMS[3],'1' )
-  else
-     case AliquotaICMS[1] of
-        'F','I','N' : AliquotaStr  := AliquotaICMS[1] +
-                        ifthen( AliquotaICMS[2] in ['1'..'3'],AliquotaICMS[2],'1' ) ;
-        'T','S'     : AliquotaStr  := AliquotaICMS[1] +
-                        PadLeft( Trim( Copy(AliquotaICMS,2,2) ), 2, '0' );
-     end ;
-
-  if AliquotaStr = '' then
-     Result := inherited AchaICMSAliquota( AliquotaICMS )
-  else
-     AliquotaICMS := AliquotaStr ;
+Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;
 
 end.

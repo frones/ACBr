@@ -967,33 +967,52 @@ begin
           end // if FImprimirDetalhamentoEspecifico = True
           else cdsItens.FieldByName('DESCRICAO').AsString := XProd;
 
-          case FCasasDecimaisqCom of
-            0: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0', QCom);
-            1: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0', QCom);
-            2: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00', QCom);
-            3: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000', QCom);
-            4: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000', QCom);
-            5: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000', QCom);
-            6: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000', QCom);
-            7: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000', QCom);
-            8: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000000', QCom);
-            9: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000000', QCom);
-           10: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000000', QCom);
-          end;
+          { Caso a máscara tenha sido informada é anulada a criação da máscara
+            de acordo com 'FCasasDecimaisqCom' }
+          if FCasasDecimaisMaskqCom <> '' then
+            cdsItens.FieldByName('QTDE').AsString := FormatFloat(FCasasDecimaisMaskqCom, QCom)
+          else
+            cdsItens.FieldByName('QTDE').AsString := FormatFloat(
+              '###,###,###,##0' + IfThen(FCasasDecimaisqCom > 0, '.') +
+              StringOfChar('0', FCasasDecimaisqCom), qCom);
+              
+            //case FCasasDecimaisqCom of
+            //  0: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0', QCom);
+            //  1: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0', QCom);
+            //  2: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00', QCom);
+            //  3: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000', QCom);
+            //  4: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000', QCom);
+            //  5: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000', QCom);
+            //  6: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000', QCom);
+            //  7: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000', QCom);
+            //  8: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000000', QCom);
+            //  9: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000000', QCom);
+            // 10: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000000', QCom);
+            //end;
 
-          case FCasasDecimaisvUnCom of
-            0: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0', vUnCom);
-            1: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0', vUnCom);
-            2: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00', vUnCom);
-            3: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000', vUnCom);
-            4: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000', vUnCom);
-            5: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000', vUnCom);
-            6: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000', vUnCom);
-            7: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000', vUnCom);
-            8: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000000', vUnCom);
-            9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
-           10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
-          end;
+          { Caso a máscara tenha sido informada é anulada a criação da máscara
+            de acordo com 'FCasasDecimaisvUnCom' }
+          if FCasasDecimaisMaskvUnCom <> '' then
+            cdsItens.FieldByName('VALOR').AsString := FormatFloat(FCasasDecimaisMaskvUnCom, vUnCom)
+          else
+            cdsItens.FieldByName('VALOR').AsString := FormatFloat(
+              '###,###,###,##0' + IfThen(FCasasDecimaisvUnCom > 0, '.') +
+              StringOfChar('0', FCasasDecimaisvUnCom), vUnCom);
+
+            //case FCasasDecimaisvUnCom of
+            //  0: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0', vUnCom);
+            //  1: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0', vUnCom);
+            //  2: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00', vUnCom);
+            //  3: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000', vUnCom);
+            //  4: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000', vUnCom);
+            //  5: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000', vUnCom);
+            //  6: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000', vUnCom);
+            //  7: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000', vUnCom);
+            //  8: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000000', vUnCom);
+            //  9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
+            // 10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
+            //end;
+
 
           // Fernando pasqueto para imprimir o desconto no danfe
           if FImprimirDescPorc = True then

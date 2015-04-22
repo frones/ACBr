@@ -96,6 +96,8 @@ type
     FMargemDireita      : double;
     FCasasDecimaisqCom  : Integer;
     FCasasDecimaisvUnCom: Integer;
+    FCasasDecimaisMaskqCom : String;
+    FCasasDecimaisMaskvUnCom : String;
     FImpressora         : String;
     FResumoCanhoto_Texto: String;
     // Incluido por Luis Fernando em  22/01/2013
@@ -146,7 +148,9 @@ type
                              AvTroco              : Currency = 0.0;
                              AImprimirDescPorc    : Boolean  = False;
                              AImprimirDetalhamentoEspecifico : Boolean  = False;
-                             AImprimirTotalLiquido: Boolean = False);
+                             AImprimirTotalLiquido: Boolean = False;
+                             ACasasDecimaisMaskqCom : String = '';
+                             ACasasDecimaisMaskvUncCom : String = '');
 
     class procedure SavePDF(AFile                : String;
                             ANFe                 : TNFe;
@@ -174,7 +178,9 @@ type
                             AvTroco              : Currency = 0.0;
                             AImprimirDescPorc    : Boolean  = False;
                             AImprimirDetalhamentoEspecifico : Boolean  = False;
-                            AImprimirTotalLiquido: Boolean = False);
+                            AImprimirTotalLiquido: Boolean = False;
+                            ACasasDecimaisMaskqCom : String = '';
+                            ACasasDecimaisMaskvUncCom : String = '');
   end;
 
 implementation
@@ -214,7 +220,9 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      AvTroco              : Currency = 0.0;
                                      AImprimirDescPorc    : Boolean  = False;
                                      AImprimirDetalhamentoEspecifico : Boolean  = False;
-                                     AImprimirTotalLiquido: Boolean = False);
+                                     AImprimirTotalLiquido: Boolean = False;
+                                     ACasasDecimaisMaskqCom : String = '';
+                                     ACasasDecimaisMaskvUncCom : String = '');
 begin
   with Create ( nil ) do
      try
@@ -234,6 +242,8 @@ begin
         FMargemDireita       := AMargemDireita;
         FCasasDecimaisqCom   := ACasasDecimaisqCom;
         FCasasDecimaisvUnCom := ACasasDecimaisvUncCom;
+        FCasasDecimaisMaskqCom := ACasasDecimaisMaskqCom;
+        FCasasDecimaisMaskvUnCom := ACasasDecimaisMaskvUncCom;
         FImpressora          := AImpressora;
         FResumoCanhoto_Texto := AResumoCanhoto_Texto;
         FExpandirLogoMarca   := AExpandirLogoMarca;
@@ -314,7 +324,9 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     AvTroco              : Currency = 0.0;
                                     AImprimirDescPorc    : Boolean  = False;
                                     AImprimirDetalhamentoEspecifico : Boolean  = False;
-                                    AImprimirTotalLiquido: Boolean = False);
+                                    AImprimirTotalLiquido: Boolean = False;
+                                    ACasasDecimaisMaskqCom : String = '';
+                                    ACasasDecimaisMaskvUncCom : String = '');
 {$IFDEF QReport_PDF}
 var
   qf : TQRPDFDocumentFilter;
@@ -340,6 +352,8 @@ begin
         FMargemDireita       := AMargemDireita;
         FCasasDecimaisqCom   := ACasasDecimaisqCom;
         FCasasDecimaisvUnCom := ACasasDecimaisvUncCom;
+        FCasasDecimaisMaskqCom := ACasasDecimaisMaskqCom;
+        FCasasDecimaisMaskvUnCom := ACasasDecimaisMaskvUncCom;
         FResumoCanhoto_Texto := AResumoCanhoto_Texto;
         FExpandirLogoMarca   := AExpandirLogoMarca;
         FNFeCancelada        := ANFeCancelada;

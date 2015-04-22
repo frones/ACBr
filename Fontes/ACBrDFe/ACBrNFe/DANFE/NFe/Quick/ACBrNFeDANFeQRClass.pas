@@ -131,7 +131,9 @@ begin
                                    LocalImpCanhoto, ImprimeItens, ViaConsumidor,
                                    vTroco, ImprimirDescPorc,
                                    ImprimirDetalhamentoEspecifico,
-                                   ImprimirTotalLiquido);
+                                   ImprimirTotalLiquido,
+                                   CasasDecimais._Mask_qCom,
+                                   CasasDecimais._Mask_vUnCom);
       end;
    end
   else
@@ -144,7 +146,9 @@ begin
                                 ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                 ImprimeItens, ViaConsumidor, vTroco,
                                 ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                                ImprimirTotalLiquido);
+                                ImprimirTotalLiquido,
+                                CasasDecimais._Mask_qCom,
+                                CasasDecimais._Mask_vUnCom);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -185,7 +189,9 @@ begin
                                   ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                   ImprimeItens, ViaConsumidor, vTroco,
                                   ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                                  ImprimirTotalLiquido);
+                                  ImprimirTotalLiquido,
+                                  CasasDecimais._Mask_qCom,
+                                  CasasDecimais._Mask_vUnCom);
       end;
    end
    else
@@ -201,7 +207,9 @@ begin
                                ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                ImprimeItens, ViaConsumidor, vTroco,
                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                               ImprimirTotalLiquido);
+                               ImprimirTotalLiquido,
+                               CasasDecimais._Mask_qCom,
+                               CasasDecimais._Mask_vUnCom);
    end;
 
   fqrDANFeQRRetrato.Free;

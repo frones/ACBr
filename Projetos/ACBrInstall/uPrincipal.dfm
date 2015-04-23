@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1118,13 +1118,11 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSelecDirInstallClick
       end
       object Label8: TLabel
-        Left = 33
+        Left = 34
         Top = 125
-        Width = 355
+        Width = 316
         Height = 13
-        Caption = 
-          'Experimental : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ B' +
-          'uilder'
+        Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -11
@@ -1268,20 +1266,71 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
+        ExplicitWidth = 554
+        ExplicitHeight = 499
         inherited Label18: TLabel
           Width = 509
           Caption = 
             'S'#243' selecione os pacotes abaixo, que voc'#234' tenha a suite do gerado' +
             'r instalada no seu delphi.'
+          ExplicitWidth = 509
         end
         inherited pnlBotoesPacotes: TPanel
           Top = 467
           Width = 554
+          ExplicitTop = 467
+          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 522
+            ExplicitLeft = 522
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 490
+            ExplicitLeft = 490
+          end
+        end
+        inherited PageControl1: TPageControl
+          inherited tsNFe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsCTe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsNFSe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsBoletos: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsMDFe: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsSAT: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
+          end
+          inherited tsGNRE: TTabSheet
+            ExplicitLeft = 4
+            ExplicitTop = 27
+            ExplicitWidth = 417
+            ExplicitHeight = 121
           end
         end
       end
@@ -1412,9 +1461,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object lstMsgInstalacao: TListBox
         Left = 20
-        Top = 79
+        Top = 111
         Width = 516
-        Height = 355
+        Height = 323
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1437,17 +1486,25 @@ object frmPrincipal: TfrmPrincipal
         Left = 20
         Top = 15
         Width = 516
-        Height = 58
+        Height = 90
         BevelOuter = bvLowered
         TabOrder = 2
-        object lblInfoCompilacao: TLabel
+        object lbInfo: TListBox
           Left = 1
           Top = 1
           Width = 514
-          Height = 56
+          Height = 88
           Align = alClient
-          AutoSize = False
-          Caption = 'Linha 1'#13#10'Linha 2'#13#10'Linha 3'#13#10'Linha 4'
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = []
+          ItemHeight = 14
+          ParentColor = True
+          ParentFont = False
+          TabOrder = 0
         end
       end
     end
@@ -1627,6 +1684,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

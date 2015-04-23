@@ -4,7 +4,9 @@ uses
   Forms,
   SVN_Class in 'SVN_Class.pas',
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
-  uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame};
+  uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame},
+  JclIDEUtils in 'D:\Axial Componentes\Jedi\Jcl\Jcl\source\common\JclIDEUtils.pas',
+  JclFileUtils in 'D:\Axial Componentes\Jedi\Jcl\Jcl\source\common\JclFileUtils.pas';
 
 {$R *.res}
 

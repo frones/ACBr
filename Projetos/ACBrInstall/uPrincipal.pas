@@ -50,8 +50,6 @@ uses
   JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista;
 
 type
-  ToACBr = TJclBorRADToolInstallation;
-
   TDestino = (tdSystem, tdDelphi, tdNone);
 
   TfrmPrincipal = class(TForm)
@@ -101,7 +99,6 @@ type
     ckbFecharTortoise: TCheckBox;
     btnVisualizarLogCompilacao: TSpeedButton;
     pnlInfoCompilador: TPanel;
-    lblInfoCompilacao: TLabel;
     ckbInstalarCapicom: TCheckBox;
     ckbInstalarOpenSSL: TCheckBox;
     wizPgPacotes: TJvWizardInteriorPage;
@@ -109,8 +106,9 @@ type
     ckbUtilizarOpenSSL: TCheckBox;
     rdgDLL: TRadioGroup;
     ckbCopiarTodasDll: TCheckBox;
-    Label8: TLabel;
     ckbBCB: TCheckBox;
+    lbInfo: TListBox;
+    Label8: TLabel;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -257,8 +255,8 @@ begin
     ComentarLinha('{$DEFINE ACBrNFeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrCTeOpenSSL}', not(AUtilizar));
     ComentarLinha('{$DEFINE ACBrNFSeOpenSSL}', not(AUtilizar));
-		ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
-		ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
+	 ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
+	 ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
 
     WriteToTXT(PathArquivo, F.Text, False, False);
   finally
@@ -588,6 +586,7 @@ var
   ListaPaths: TStringList;
   I: Integer;
   PathsAtuais: String;
+  PathFonte: string;
 begin
   with oACBr.Installations[iVersion] do
   begin
@@ -618,7 +617,7 @@ begin
       ListaPaths.Add(APath);
 
       // escrever a variavel no override da ide
-      ConfigData.WriteString('Environment Variables', 'PATH', ListaPaths.DelimitedText);
+      ConfigData.WriteString(cs, 'PATH', ListaPaths.DelimitedText);
 
       // enviar um broadcast de atualização para o windows
       wParam := 0;
@@ -672,13 +671,12 @@ procedure TfrmPrincipal.AddLibrarySearchPath;
    end;
 
 begin
-  // -- Adiciona todos os paths dos fontes na versão do delphi selecionada
-  // -- se os paths já existirem não serão duplicados.
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes');
 
   // --
   with oACBr.Installations[iVersion] do
   begin
+
     AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
     AddToLibrarySearchPath(sDirLibrary, tPlatform);
     AddToDebugDCUPath(sDirLibrary, tPlatform);
@@ -690,13 +688,16 @@ begin
   //-- ************ C++ Builder *************** //
   if ckbBCB.Checked then
   begin
-//  if oACBr.Installations[iVersion] is TJclBDSInstallation then
-//  begin
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppSearchPath(sDirLibrary, tPlatform);
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppLibraryPath(sDirLibrary, tPlatform);
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppBrowsingPath(sDirLibrary, tPlatform);
-//     TJclBDSInstallation(oACBr.Installations[iVersion]).AddToCppIncludePath(sDirLibrary, tPlatform);
-//  end;
+     if oACBr.Installations[iVersion] is TJclBDSInstallation then
+     begin
+        with TJclBDSInstallation(oACBr.Installations[iVersion]) do
+        begin
+           AddToCppSearchPath(sDirLibrary, tPlatform);
+           AddToCppLibraryPath(sDirLibrary, tPlatform);
+           AddToCppBrowsingPath(sDirLibrary, tPlatform);
+           AddToCppIncludePath(sDirLibrary, tPlatform);
+        end;
+     end;
   end;
 end;
 
@@ -710,10 +711,7 @@ begin
   sVersao  := AnsiUpperCase(oACBr.Installations[iVersion].VersionNumberStr);
   sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
-  if ckbBCB.Checked then
-    sTipo := 'Lib\BCB\'
-  else
-    sTipo := 'Lib\Delphi\';
+  sTipo := 'Lib\Delphi\';
 
   if edtPlatform.ItemIndex = 0 then // Win32
   begin
@@ -778,7 +776,7 @@ begin
   Sender.AddPathOption('LE', sDirLibrary);
   Sender.AddPathOption('LN', sDirLibrary);
 
-  //-- ************ C++ Builder *************** //
+  // ************ C++ Builder *************** //
   if ckbBCB.Checked then
   begin
      // -JL compila c++ builder
@@ -803,7 +801,7 @@ begin
      if VersionNumberStr = 'd16' then
         Sender.Options.Add('-NSData.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win');
 
-     if MatchText(VersionNumberStr, ['d17','d18','d19','d20', 'd21', 'd22']) then
+     if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
 
   end;
@@ -858,7 +856,11 @@ begin
     else if oACBr.Installations[iFor].VersionNumberStr = 'd21' then
       edtDelphiVersion.Items.Add('Delphi XE7')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd22' then
-      edtDelphiVersion.Items.Add('Delphi XE8');
+      edtDelphiVersion.Items.Add('Delphi XE8')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd23' then
+      edtDelphiVersion.Items.Add('Delphi XE9')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd24' then
+      edtDelphiVersion.Items.Add('Delphi XE10');
 
     // -- Evento disparado antes de iniciar a execução do processo.
     oACBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
@@ -928,11 +930,13 @@ begin
   wizPgInstalacao.EnableButton(bkBack, False);
   wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), False);
   try
-    Cabecalho :=
-      'Caminho: ' + edtDirDestino.Text + sLineBreak +
-      'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
-      'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
-      StringOfChar('=', 80);
+    Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak +
+                 'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
+                 'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
+                 'Última Revisão: ' + TSVN_Class.WCInfo.Revision  + sLineBreak +
+                 'Autor: ' + TSVN_Class.WCInfo.Author  + sLineBreak +
+                 'Data: ' + TSVN_Class.WCInfo.Date  + sLineBreak +
+                 StringOfChar('=', 80);
 
     // limpar o log
     lstMsgInstalacao.Clear;
@@ -1184,7 +1188,7 @@ begin
     edtPlatform.ItemIndex := 0;
 
   // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
-  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21']);
+  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24']);
   if not ckbBCB.Enabled then
      ckbBCB.Checked := False;
 end;
@@ -1206,6 +1210,7 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
+  {$IFNDEF DEBUG}
   if oACBr.AnyInstanceRunning then
   begin
     Stop := True;
@@ -1215,9 +1220,11 @@ begin
       MB_ICONERROR + MB_OK
     );
   end;
+  {$ENDIF}
 
   // Verificar se o tortoise está instalado
-  if not TSVN_Class.IsTortoiseInstalado then
+//  if not TSVN_Class.IsTortoiseInstalado then
+  if not TSVN_Class.SVNInstalled then
   begin
     Stop := True;
     Application.MessageBox(
@@ -1231,6 +1238,9 @@ end;
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;
   const FromPage: TJvWizardCustomPage);
 begin
+  // capturar informações da última revisão
+  TSVN_Class.GetRevision(edtDirDestino.Text);
+
   SetPlatformSelected;
   lstMsgInstalacao.Clear;
   pgbInstalacao.Position := 0;
@@ -1242,10 +1252,16 @@ begin
     btnInstalarACBr.Caption := 'Compilar';
 
   // mostrar ao usuário as informações de compilação
-  lblInfoCompilacao.Caption :=
-    edtDelphiVersion.Text + ' ' + edtPlatform.Text + sLineBreak +
-    'Dir. Instalação: ' + edtDirDestino.Text + sLineBreak +
-    'Dir. Bibliotecas:' + sDirLibrary;
+  with lbInfo.Items do
+  begin
+    Clear;
+    Add(edtDelphiVersion.Text + ' ' + edtPlatform.Text);
+    Add('Dir. Instalação  : ' + edtDirDestino.Text);
+    Add('Dir. Bibliotecas : ' + sDirLibrary);
+    Add('Última Revisão   : ' + TSVN_Class.WCInfo.Revision);
+    Add('Autor            : ' + TSVN_Class.WCInfo.Author);
+    Add('Data:            : ' + TSVN_Class.WCInfo.Date);
+  end;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoNextButtonClick(Sender: TObject;

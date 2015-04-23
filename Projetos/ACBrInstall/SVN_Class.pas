@@ -43,15 +43,29 @@ interface
 
 uses
   SysUtils, Windows, Dialogs, Menus, Registry, ShellApi,
-  Classes, Controls, Graphics, ImgList, ExtCtrls, ActnList;
+  Classes, Controls, Graphics, ImgList, ExtCtrls, ActnList,
+  Comobj, ActiveX, Variants;
 
 var
   TSVNTortoisePath: string;
   TSVNCollabNetPath: string;
   TTortoiseMergePath: string;
 
+const
+  SVN_OBJECT_NAME = 'SubWCRev.object';
+
 type
+  TWCInfo = record
+    Revision: string;
+    Author: string;
+    Date: string;
+    HasModifications: Boolean;
+  end;
+
   TSVN_Class = class
+  private class var
+    FSVNInstalled: boolean;
+    FWCInfo: TWCInfo;
   private
     class procedure SVNCollabNetExec(Params: String); static;
     class procedure SVNTortoiseExec( Params: String ); static;
@@ -62,7 +76,7 @@ type
     class function  WinExecAndWait32(CmdLine: AnsiString; Visibility: Integer = SW_SHOW): DWORD; static;
 
     // Métodos que utilizam o tortoise
-    class function IsTortoiseInstalado: Boolean; static;
+//    class function IsTortoiseInstalado: Boolean; static;
     class procedure SVNTortoise_CheckOut(const AUrl, APath: String;
       const AFecharAutomaticamente: Boolean); static;
     class procedure SVNTortoise_Update(const APath: String;
@@ -73,6 +87,11 @@ type
     class procedure SVNCollabNet_Checkout(const AUrl, APath: String); static;
     class procedure SVNCollabNet_Update(const AUrl, APath: String); static;
 
+    class function IsOLEObjectInstalled(const Name: string): boolean;
+    class function IsSvnDir(const ADir: string): boolean;
+    class function GetRevision(const ADir: string): Boolean;
+    class property SVNInstalled: boolean read FSVNInstalled;
+    class property WCInfo: TWCInfo read FWCInfo;
   end;
 
 implementation
@@ -82,6 +101,7 @@ implementation
 //  Executar um aplicativo e aguardar o retorno do mesmo
 //
 //******************************************************************************
+
 class function TSVN_Class.WinExecAndWait32(CmdLine: AnsiString; Visibility: Integer): DWORD;
 var
   zAppName: array[0..512] of Char;
@@ -168,6 +188,8 @@ const
     end;
   end;
 begin
+  FSVNInstalled := IsOLEObjectInstalled(SVN_OBJECT_NAME);
+
   Reg := TRegistry.Create;
   try
     Reg.RootKey := HKEY_LOCAL_MACHINE;
@@ -217,10 +239,10 @@ begin
   WinExecAndWait32(CmdLine, SW_SHOW);
 end;
 
-class function TSVN_Class.IsTortoiseInstalado: Boolean;
-begin
-  Result := FileExists(TSVNTortoisePath);
-end;
+//class function TSVN_Class.IsTortoiseInstalado: Boolean;
+//begin
+//  Result := FileExists(TSVNTortoisePath);
+//end;
 
 class procedure TSVN_Class.SVNTortoise_CheckOut(const AUrl, APath: String;
   const AFecharAutomaticamente: Boolean);
@@ -293,5 +315,62 @@ begin
     'up ' + AnsiQuotedStr( APath, '"' )
   );
 end;
+
+
+//-- Capturar informações da última revisão
+class function TSVN_Class.IsOLEObjectInstalled(const Name: string): boolean;
+var
+  ClassID: TCLSID;
+begin
+  Result := CLSIDFromProgID(PWideChar(WideString(Name)), ClassID) = S_OK;
+end;
+
+class function TSVN_Class.GetRevision(const ADir: string): Boolean;
+var
+  Svn: OLEVariant;
+begin
+  Result := False;
+
+  FWCInfo.Revision := '';
+  FWCInfo.Date     := '';
+  FWCInfo.Author   := '';
+
+  FWCInfo.HasModifications := False;
+
+  if (not FSvnInstalled) or (ADir = '') then
+    Exit;
+
+  Svn := CreateOLEObject(SVN_OBJECT_NAME);
+  Svn.GetWCInfo(ADir, True, True);
+
+//  if not Svn.IsSvnItem then
+//    Exit;
+
+  FWCInfo.Revision := Svn.Revision;
+  FWCInfo.Date     := Svn.Date;
+  FWCInfo.Author   := Svn.Author;
+
+  FWCInfo.HasModifications := Svn.HasModifications;
+
+  Svn := Unassigned;
+  Result := True;
+end;
+
+class function TSVN_Class.IsSvnDir(const ADir: string): boolean;
+var
+  Svn: OLEVariant;
+begin
+  Result := False;
+  if (not FSVNInstalled) or (ADir = '') then
+    Exit;
+
+  Svn := CreateOleObject(SVN_OBJECT_NAME);
+  Svn.GetWCInfo(ADir, True, True);
+
+  Result := Svn.IsSvnItem;
+
+  Svn := Unassigned;
+end;
+
 
 end.

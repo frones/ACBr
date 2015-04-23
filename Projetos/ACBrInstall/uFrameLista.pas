@@ -117,6 +117,7 @@ type
     ACBrNFeDanfeESCPOS_dpk: TCheckBox;
 	ACBr_SAT_Extrato_ESCPOS_dpk: TCheckBox;
 	ACBrGNREGuiaRLpkg_dpk: TCheckBox;
+    ACBr_SPED_Importar_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -266,8 +267,9 @@ end;
 
 function TframePacotes.IsPacoteSped(const ANomePacote: String): Boolean;
 const
-  PACOTES_SPED: array [0..3] of String =
+  PACOTES_SPED: array [0..4] of String =
     ('ACBr_SPED.dpk',
+     'ACBr_SPED_Importar.dpk',
      'ACBr_LFD.dpk',
      'ACBr_SEF2.dpk',
      'ACBr_Convenio115.dpk');

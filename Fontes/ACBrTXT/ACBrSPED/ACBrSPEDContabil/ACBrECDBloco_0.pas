@@ -69,7 +69,7 @@ type
     fIND_FIN_ESC: String;     /// Indicador de finalidade da escrituração
     fCOD_HASH_SUB: String;    /// Hash da escrituração substituída.
     fNIRE_SUBST: String;      /// NIRE da escrituração substituída.
-    fIND_EMP_GRD_PRT: String;
+    fIND_EMP_GRD_PRT: String; /// Indicador de empresa de grande porte:
     fTIP_ECD: String;         /// Indicador do tipo de ECD: 0 – ECD de empresa não participante de SCP como sócio ostensivo. 1 – ECD de empresa participante de SCP como sócio ostensivo. 2 – ECD da SCP.
     fCOD_SCP: String;         /// Identificação da SCP.
   public
@@ -142,7 +142,6 @@ type
     property IM: String read fIM write fIM;
     property NIRE: String read fNIRE write fNIRE;
   end;
-
 
   /// Registro 0020 - Lista
 

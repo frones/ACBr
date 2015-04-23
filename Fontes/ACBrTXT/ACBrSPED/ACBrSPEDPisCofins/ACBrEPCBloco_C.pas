@@ -43,7 +43,7 @@ unit ACBrEPCBloco_C;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, Controls, DateUtils, ACBrEPCBlocos;
+  Contnrs, ACBrEPCBlocos;
 
 type
   TRegistroC010List = class;
@@ -1514,7 +1514,7 @@ type
     FDT_DOC               : TDateTime;
     FVL_PIS               : Variant;
     FVL_COFINS            : Variant;
-    FVL_CFE               : Currency;
+    FVL_CFE               : Variant;
     FCNPJ_CPF             : String;
     FNR_SAT               : String;
     FCHV_CFE              : String;
@@ -1536,7 +1536,7 @@ type
     property COD_SIT      : TACBrCodSit read FCOD_SIT      write FCOD_SIT;
     property NUM_CFE      : Integer     read FNUM_CFE      write FNUM_CFE;
     property DT_DOC       : TDateTime   read FDT_DOC       write FDT_DOC;
-    property VL_CFE       : Currency    read FVL_CFE       write FVL_CFE;
+    property VL_CFE       : Variant     read FVL_CFE       write FVL_CFE;
     property VL_PIS       : Variant     read FVL_PIS       write FVL_PIS;
     property VL_COFINS    : Variant     read FVL_COFINS    write FVL_COFINS;
     property CNPJ_CPF     : String      read FCNPJ_CPF     write FCNPJ_CPF;
@@ -1674,7 +1674,7 @@ type
     fCOD_MOD: String;
     fDOC_FIM: Integer;
     fDOC_INI: Integer;
-    fDT_DOC: TDate;
+    fDT_DOC: TDateTime;
     fNR_SAT: Integer;
     FRegistroC870: TRegistroC870List;
     FRegistroC880: TRegistroC880List;
@@ -1685,7 +1685,7 @@ type
 
     property COD_MOD : String read fCOD_MOD write fCOD_MOD;
     property NR_SAT : Integer read fNR_SAT write fNR_SAT;
-    property DT_DOC : TDate read fDT_DOC write fDT_DOC;
+    property DT_DOC : TDateTime read fDT_DOC write fDT_DOC;
     property DOC_INI : Integer read fDOC_INI write fDOC_INI;
     property DOC_FIM : Integer read fDOC_FIM write fDOC_FIM;
 

@@ -1158,6 +1158,26 @@ sdFiscalCompl = sdfComplementar;
 sdExtempCompl = sdfExtComplementar;
 sdRegimeEspecNEsp = sdfEspecial;
 
+bcc00 = bccVazio;
+bcc01 = bccAqBensRevenda;
+bcc02 = bccAqBensUtiComoInsumo;
+bcc03 = bccAqServUtiComoInsumo;
+bcc04 = bccEnergiaEletricaTermica;
+bcc05 = bccAluguelPredios;
+bcc06 = bccAluguelMaqEquipamentos;
+bcc07 = bccArmazenagemMercadoria;
+bcc08 = bccConArrendamentoMercantil;
+bcc09 = bccMaqCredDepreciacao;
+bcc10 = bccMaqCredAquisicao;
+bcc11 = bccAmortizacaoDepreciacaoImoveis;
+bcc12 = bccDevolucaoSujeita;
+bcc13 = bccOutrasOpeComDirCredito;
+bcc14 = bccAtTransporteSubcontratacao;
+bcc15 = bccAtImobCustoIncorrido;
+bcc16 = bccAtImobCustoOrcado;
+bcc17 = bccAtPresServ;
+bcc18 = bccEstoqueAberturaBens;
+
 function CodVerToStr(AValue: TACBrCodVer): string;
 function StrToCodVer(AValue: string): TACBrCodVer;
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;
@@ -1208,7 +1228,399 @@ function IndFrtToStr(AValue: TACBrIndFrt): string;
 function StrToIndFrt(AValue: string): TACBrIndFrt;
 function StrToIndSitEsp(AValue: string): TACBrIndSitEsp;
 
+// 20-02-2015 - Data Lider - Novas Conversões para Importação
+function StrToIndCodIncidencia(const AValue: string): TACBrIndCodIncidencia;
+function StrToIndMov(const AValue: string): TACBrIndMov;
+function StrToNaturezaConta(const AValue: string): TACBrNaturezaConta;
+function StrToIndCTA(const AValue: string): TACBrIndCTA;
+function StrToOrigemProcesso(const AValue: string): TACBrOrigemProcesso;
+function StrToLocalExecServico(const AValue: string): TACBrLocalExecServico;
+function StrToIndEscrituracao(const AValue: string): TACBrIndEscrituracao;
+function StrToEmitente(const AValue: string): TACBrEmitente;
+function StrToDoctoImporta(const AValue: string): TACBrDoctoImporta;
+function StrToApuracaoIPI(const AValue: string): TACBrApuracaoIPI;
+function StrToNaturezaFrtContratado(const AValue: string): TACBrNaturezaFrtContratado;
+function StrToIndRec(const AValue: string): TACBrIndRec;
+function StrToIndTpOperacaoReceita(const AValue: string): TACBrIndTpOperacaoReceita;
+function StrToInd_Rec(const AValue: string):TACBrInd_Rec;
+function StrToIndNatRetFonte(const AValue: string):TACBrIndNatRetFonte;
+function StrToIndNatRec(const AValue: string):TACBrIndNatRec;
+function StrToIndOrigemDiversas(const AValue: string):TACBrIndOrigemDiversas;
+function StrToIndNatDeducao(const AValue: string):TACBrIndNatDeducao;
+function StrToCodCred(const AValue: string): TACBrCodCred;
+function StrToIndAJ(const AValue: string):TACBrIndAJ;
+function StrToCodAj(const AValue: string): TACBrCodAj;
+function StrToCodCont(const AValue: string): TACBrCodCont;
+function StrToIndTipCoop(const AValue: string): TACBrIndTipCoop;
+function StrToNatCredDesc(const AValue: string): TACBrNatCredDesc;
+function StrToIndCredOri(const AValue: string):TACBrIndCredOri;
+function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
+function StrToIndNatPJImporta(const AValue: string): TACBrIndNatPJ;
+
 implementation
+
+function StrToIndNatPJImporta(const AValue: string): TACBrIndNatPJ;
+begin
+  if AValue = '' then
+    Result := indNatPJNenhum
+  else if AValue = '00' then
+    Result := indNatPJSocEmpresariaGeral
+  else if AValue = '01' then
+    Result := indNatPJSocCooperativa
+  else if AValue = '02' then
+    Result := indNatPJEntExclusivaFolhaSal
+  else if AValue = '03' then
+    Result :=  indNatPJSocEmpresariaGeralSCP
+  else if AValue = '04' then
+    Result :=   indNatPJSocCooperativaSCP
+  else if AValue = '05' then
+    Result :=  indNatPJSocContaParticante;
+end;
+
+function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
+begin
+  Result := TACBrIndDescCred(StrToIntDef(AValue, 0));
+end;
+
+function StrToIndCredOri(const AValue: string):TACBrIndCredOri;
+begin
+  Result := TACBrIndCredOri(StrToIntDef(AValue, 0));
+end;
+
+function StrToNatCredDesc(const AValue: string): TACBrNatCredDesc;
+begin
+    if AValue = '01' then
+    Result := ncdAliqBasica
+  else if AValue = '02' then
+    Result :=  ncdAliqDiferenciada
+  else if AValue = '03' then
+    Result := ncdAliqUnidProduto
+  else if AValue = '04' then
+    Result := ncdPresAgroindustria;
+end;
+
+function StrToIndTipCoop(const AValue: string): TACBrIndTipCoop;
+begin
+    if AValue = '01' then
+    Result := itcProdAgropecuaria
+  else if AValue = '02' then
+    Result :=  itcConsumo
+  else if AValue = '03' then
+    Result := itcCredito
+  else if AValue = '04' then
+    Result := itcEletRural
+  else if AValue = '05' then
+    Result := itcTransCargas
+  else if AValue = '06' then
+    Result := itcMedicos
+  else if AValue = '99' then
+    Result := itcOutras;
+end;
+
+function StrToCodCont(const AValue: string): TACBrCodCont;
+begin
+  if AValue = '01' then
+    Result := ccNaoAcumAliqBasica
+  else if AValue = '02' then
+    Result :=  ccNaoAcumAliqDiferenciada
+  else if AValue = '03' then
+    Result := ccNaoAcumAliqUnidProduto
+  else if AValue = '04' then
+    Result := ccNaoAcumAliqBasicaAtivImobiliaria
+  else if AValue = '31' then
+    Result := ccApuradaPorST
+  else if AValue = '32' then
+    Result := ccApuradaPorSTManaus
+  else if AValue = '51' then
+    Result :=  ccAcumAliqBasica
+  else if AValue = '52' then
+    Result := ccAcumAliqDiferenciada
+  else if AValue = '53' then
+    Result := ccAcumAliqUnidProduto
+  else if AValue = '54' then
+    Result := ccAcumAliqBasicaAtivImobiliaria
+  else if AValue = '70' then
+    Result :=  ccApuradaAtivImobiliaria
+  else if AValue = '71' then
+    Result :=  ccApuradaSCPNaoCumulativa
+  else if AValue = '72' then
+    Result := ccApuradaSCPCumulativa
+  else if AValue = '99' then
+    Result := ccPISPasepSalarios;
+end;
+
+
+function StrToCodAj(const AValue: string): TACBrCodAj;
+begin
+  if AValue = '01' then
+    Result := codAjAcaoJudicial
+  else if AValue = '02' then
+    Result :=  codAjAcaoJudicial
+  else if AValue = '03' then
+    Result := codAjLegTributaria
+  else if AValue = '04' then
+    Result := codAjEspRTI
+  else if AValue = '05' then
+    Result := codAjOutrasSituacaoes
+  else if AValue = '06' then
+    Result := codAjEstorno;
+end;
+
+function StrToIndAJ(const AValue: string):TACBrIndAJ;
+begin
+  Result := TACBrIndAJ(StrToIntDef(AValue, 0));
+end;
+
+function StrToCodCred(const AValue: string): TACBrCodCred;
+begin
+   //CÓDIGOS VINCULADOS À RECEITA TRIBUTADA NO MERCADO INTERNO - Grupo 100
+  if AValue = '101' then
+    Result := ccRTMIAliqBasica
+  else if AValue = '102' then
+    Result :=  ccRTMIAliqDiferenciada
+  else if AValue = '103' then
+    Result := ccRTMIAliqUnidProduto
+  else if AValue = '104' then
+    Result := ccRTMIEstAbertura
+  else if AValue = '105' then
+    Result := ccRTMIAquiEmbalagem
+  else if AValue = '106' then
+    Result := ccRTMIPreAgroindustria
+  else if AValue = '108' then
+    Result :=  ccRTMIImportacao
+  else if AValue = '109' then
+    Result := ccRTMIAtivImobiliaria
+  else if AValue = '199' then
+    Result := ccRTMIOutros
+  //CÓDIGOS VINCULADOS À RECEITA NÃO TRIBUTADA NO MERCADO INTERNO - Grupo 200
+  else if AValue = '201' then
+    Result := ccRNTMIAliqBasica
+  else if AValue = '202' then
+    Result :=  ccRNTMIAliqDiferenciada
+  else if AValue = '203' then
+    Result :=  ccRNTMIAliqUnidProduto
+  else if AValue = '204' then
+    Result := ccRNTMIEstAbertura
+  else if AValue = '205' then
+    Result := ccRNTMIAquiEmbalagem
+  else if AValue = '206' then
+    Result :=  ccRNTMIPreAgroindustria
+  else if AValue = '208' then
+    Result :=  ccRNTMIImportacao
+  else if AValue = '299' then
+    Result := ccRNTMIOutros
+  //CÓDIGOS VINCULADOS À RECEITA DE EXPORTAÇÃO - Grupo 300
+  else if AValue = '301' then
+    Result := ccREAliqBasica
+  else if AValue = '302' then
+    Result := ccREAliqDiferenciada
+  else if AValue = '303' then
+    Result :=  ccREAliqUnidProduto
+  else if AValue = '304' then
+    Result :=  ccREEstAbertura
+  else if AValue = '305' then
+    Result := ccREAquiEmbalagem
+  else if AValue = '306' then
+    Result :=  ccREPreAgroindustria
+  else if AValue = '307' then
+    Result := ccREPreAgroindustriaPCR
+  else if AValue = '308' then
+    Result := ccREImportacao
+  else if AValue = '399' then
+    Result := ccREOutros;
+end;
+
+function StrToIndNatDeducao(const AValue: string):TACBrIndNatDeducao;
+begin
+  Result := TACBrIndNatDeducao(StrToIntDef(AValue, 0));
+end;
+
+function StrToIndOrigemDiversas(const AValue: string):TACBrIndOrigemDiversas;
+begin
+  if AValue = '01' then
+    Result := indCredPreMed
+  else if AValue = '02' then
+    Result := indCredAdmRegCumulativoBeb
+  else if AValue = '03' then
+    Result := indContribSTZFM
+  else if AValue = '04' then
+    Result := indSTNaoOCFatoGeradorPres
+  else if AValue = '99' then
+    Result := indOutrasDeducoes;
+end;
+
+function StrToIndNatRec(const AValue: string):TACBrIndNatRec;
+begin
+  Result := TACBrIndNatRec(StrToIntDef(AValue, 0));
+end;
+
+function StrToIndNatRetFonte(const AValue: string):TACBrIndNatRetFonte;
+begin
+  if AValue = '01' then
+    Result := indRetOrgAutarquiasFundFederais
+  else if AValue = '02' then
+    Result := indRetEntAdmPublicaFederal
+  else if AValue = '03' then
+    Result := indRetPesJuridicasDireitoPri
+  else if AValue = '04' then
+    Result := indRecolhimentoSociedadeCoop
+  else if AValue = '05' then
+    Result := indRetFabricanteMaqVeiculos
+  else if AValue = '99' then
+    Result := indOutrasRetencoes;
+end;
+
+function StrToInd_Rec(const AValue: string):TACBrInd_Rec;
+begin
+  if AValue = '01' then
+    Result := crCliente
+  else if AValue = '02' then
+    Result :=  crAdministradora
+  else if AValue = '03' then
+    Result :=   crDocumentoFiscal
+  else if AValue = '04' then
+    Result :=    crDocumentoFiscal
+  else if AValue = '05' then
+    Result :=   crItemVendido
+  else if AValue = '99' then
+    Result :=   crOutros;
+end;
+
+function StrToIndTpOperacaoReceita(const AValue: string): TACBrIndTpOperacaoReceita;
+begin
+  Result := TACBrIndTpOperacaoReceita(StrToIntDef(AValue, 0));
+end;
+
+function StrToIndRec(const AValue: string): TACBrIndRec;
+begin
+  Result := TACBrIndRec(StrToIntDef(AValue, 0));
+end;
+
+function StrToNaturezaFrtContratado(const AValue: string): TACBrNaturezaFrtContratado;
+begin
+  if AValue = '0' then
+    Result := nfcVendaOnusEstVendedor
+  else if AValue = '1' then
+    Result := nfcVendaOnusAdquirente
+  else if AValue = '2' then
+    Result := nfcCompraGeraCred
+  else if AValue = '3' then
+    Result := nfcCompraNaoGeraCred
+  else if AValue = '4' then
+    Result := nfcTransfAcabadosPJ
+  else if AValue = '5' then
+    Result :=  nfcTransfNaoAcabadosPJ
+  else if AValue = '9' then
+    Result := nfcOutras
+  else
+    Result := nfcOutras;
+end;
+
+
+function StrToApuracaoIPI(const AValue: string): TACBrApuracaoIPI;
+begin
+  if AValue = EmptyStr then
+    Result := iaVazio
+  else
+    Result := TACBrApuracaoIPI(StrToIntDef(AValue, 0));
+end;
+
+function StrToDoctoImporta(const AValue: string): TACBrDoctoImporta;
+begin
+  Result := TACBrDoctoImporta(StrToIntDef(AValue, 0));
+end;
+
+function StrToEmitente(const AValue: string): TACBrEmitente;
+begin
+  Result := TACBrEmitente(StrToIntDef(AValue, 0));
+end;
+
+function StrToIndEscrituracao(const AValue: string): TACBrIndEscrituracao;
+begin
+  if AValue = '2' then
+    Result := IndEscriConsolidado
+  else
+    Result := IndEscriConsolidado;
+end;
+
+// 20-02-2015 - Data Lider - Início da alteração nos arquivo.
+function StrToLocalExecServico(const AValue: string): TACBrLocalExecServico;
+begin
+  Result := TACBrLocalExecServico(StrToIntDef(AValue, 0));
+end;
+
+function StrToOrigemProcesso(const AValue: string): TACBrOrigemProcesso;
+begin
+  if AValue = '1' then
+    Result := opJusticaFederal
+  else if AValue = '3' then
+    Result := opSecexRFB
+  else if AValue = '9' then
+    Result := opOutros
+  else
+    Result := opNenhum;
+end;
+
+function StrToIndCTA(const AValue: string): TACBrIndCTA;
+begin
+  if AValue = 'S' then
+    Result := indCTASintetica
+  else if AValue = 'A' then
+    Result := indCTAnalitica;
+end;
+
+function StrToNaturezaConta(const AValue: string): TACBrNaturezaConta;
+begin
+  if (AValue = '01') then
+    Result := ncgAtivo
+  else if (AValue = '02') then
+    Result := ncgPassivo
+  else if (AValue = '03') then
+    Result := ncgLiquido
+  else if (AValue = '04') then
+    Result := ncgResultado
+  else if (AValue = '05') then
+    Result := ncgCompensacao
+  else if (AValue = '09') then
+    Result := ncgOutras;
+end;
+
+function StrToIndMov(const AValue: string): TACBrIndMov;
+begin
+  Result := TACBrIndMov(StrToIntDef(AValue, 0));
+end;
+
+function StrToIndCodIncidencia(const AValue: string): TACBrIndCodIncidencia;
+begin
+  if (AValue = '01') then
+    Result := codIndTabI // 01 - Tabela I
+  else if (AValue = '02') then
+    Result := codIndTabII // 02 - Tabela II
+  else if (AValue = '03') then
+    Result := codIndTabIII // 03 - Tabela III
+  else if (AValue = '04') then
+    Result := codIndTabIV // 04 - Tabela IV
+  else if (AValue = '05') then
+    Result := codIndTabV // 05 - Tabela V
+  else if (AValue = '06') then
+    Result := codIndTabVI // 06 - Tabela VI
+  else if (AValue = '07') then
+    Result := codIndTabVII // 07 - Tabela VII
+  else if (AValue = '08') then
+    Result := codIndTabVIII // 08 - Tabela VIII
+  else if (AValue = '09') then
+    Result := codIndTabIX // 09 - Tabela IX
+  else if (AValue = '10') then
+    Result := codIndTabX // 10 - Tabela X
+  else if (AValue = '11') then
+    Result := codIndTabXI // 11 - Tabela XI
+  else if (AValue = '12') then
+    Result := codIndiTabXII // 12 - Tabela XII
+  else
+    Result := codIndiTabNaoTem;
+end;
+
+// 20-02-2015 - Data Lider - Fim da alteração.
 
 { TOpenBlocos }
 
@@ -1388,7 +1800,7 @@ end;
 
 function IndOperToStr(AVAlue: TACBrIndOper): string;
 begin
-   Result := IntToStr( Integer( AValue ) + 1 );
+   Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndOper(AVAlue: string): TACBrIndOper;
@@ -1398,7 +1810,7 @@ end;
 
 function IndEmitToStr(AValue: TACBrIndEmit): string;
 begin
-   Result := IntToStr( Integer( AValue ) + 1 );
+   Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndEmit(AValue: string): TACBrIndEmit;
@@ -1478,7 +1890,7 @@ begin
    if AValue = bccVazio then
       Result := ''
    else
-      Result := FormatFloat('00', Integer( AValue ) + 1 );
+      Result := FormatFloat('00', Integer( AValue ) );
 end;
 
 function StrToNatBcCred(AValue: string): TACBrNatBcCred;
@@ -1494,7 +1906,7 @@ begin
    if AValue = opcVazio then
       Result := ''
    else
-      Result := IntToStr( Integer( AValue ) + 1 );
+      Result := IntToStr( Integer( AValue ) );
 end;
 
 function StrToIndOrigCred(AValue: String): TACBrIndOrigCred;

@@ -114,7 +114,7 @@ type
     property CurMascara: String read FCurMascara write FCurMascara;
     property OnError: TErrorEvent read FOnError write FOnError;
 
-    property Conteudo : TStringList read FConteudo ;
+    property Conteudo : TStringList read FConteudo write FConteudo;
   end;
 
 implementation

@@ -42,7 +42,7 @@ unit ACBrECDBloco_9_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrSped, ACBrECDBloco_9;
+uses SysUtils, Classes, DateUtils, ACBrSped, ACBrECDBloco_9, ACBrECDBloco_0_Class;
 
 type
   /// TBloco_9 -
@@ -52,15 +52,18 @@ type
     FRegistro9900: TRegistro9900List;  /// BLOCO 9 - Lista de Registro9900
     FRegistro9990: TRegistro9990;      /// BLOCO 9 - FRegistro9990
     FRegistro9999: TRegistro9999;      /// BLOCO 9 - Registro9999
+	FBloco_0: TBloco_0; 
   public
     constructor Create; /// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistro9001: String;
-    function WriteRegistro9900: String;
-    function WriteRegistro9990: String;
-    function WriteRegistro9999: String;
+    procedure WriteRegistro9001;
+    procedure WriteRegistro9900;
+    procedure WriteRegistro9990;
+    procedure WriteRegistro9999;
+
+    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
 
     property Registro9001: TRegistro9001     read FRegistro9001 write FRegistro9001;
     property Registro9900: TRegistro9900List read FRegistro9900 write FRegistro9900;
@@ -96,77 +99,65 @@ begin
   FRegistro9990.QTD_LIN_9 := 0;
 end;
 
-function TBloco_9.WriteRegistro9001: String;
+procedure TBloco_9.WriteRegistro9001;
 begin
-  Result := '';
-
   if Assigned(FRegistro9001) then
   begin
      with FRegistro9001 do
      begin
        Check(((IND_DAD = 0) or (IND_DAD = 1)), '(9-9001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
        ///
-       Result := LFill('9001') +
-                 LFill(IND_DAD, 1) +
-                 Delimitador +
-                 #13#10;
+       Add( LFill('9001') +
+            LFill(IND_DAD, 1) 
+            );
        ///
        FRegistro9990.QTD_LIN_9 := FRegistro9990.QTD_LIN_9 + 1;
      end;
   end;
 end;
 
-function TBloco_9.WriteRegistro9900: String;
+procedure TBloco_9.WriteRegistro9900;
 var
 intFor: integer;
-strRegistro9900: String;
 begin
-  strRegistro9900 := '';
-
   if Assigned(FRegistro9900) then
   begin
      for intFor := 0 to FRegistro9900.Count - 1 do
      begin
         with FRegistro9900.Items[intFor] do
         begin
-           strRegistro9900 := strRegistro9900 + LFill('9900') +
-                                                LFill(REG_BLC) +
-                                                LFill(QTD_REG_BLC, 0) +
-                                                Delimitador +
-                                                #13#10;
+           Add( LFill('9900') +
+                LFill(REG_BLC) +
+                LFill(QTD_REG_BLC, 0) 
+                );
         end;
      end;
      FRegistro9990.QTD_LIN_9 := FRegistro9990.QTD_LIN_9 + FRegistro9900.Count + 2;
   end;
-  Result := strRegistro9900;
 end;
 
-function TBloco_9.WriteRegistro9990: String;
+procedure TBloco_9.WriteRegistro9990;
 begin
-  Result := '';
-
   if Assigned(FRegistro9990) then
   begin
      with FRegistro9990 do
      begin
-        Result := LFill('9990') +
-                  LFill(QTD_LIN_9, 0) +
-                  Delimitador +
-                  #13#10;
+        Add( LFill('9990') +
+             LFill(QTD_LIN_9, 0) 
+             );
      end;
   end;
 end;
 
-function TBloco_9.WriteRegistro9999: String;
+procedure TBloco_9.WriteRegistro9999;
 begin
   if Assigned(Registro9999) then
   begin
      with FRegistro9999 do
      begin
-        Result := LFill('9999') +
-                  LFill(QTD_LIN, 0) +
-                  Delimitador +
-                  #13#10;
+        Add( LFill('9999') +
+             LFill(QTD_LIN, 0)
+             );
      end;
   end;
 end;

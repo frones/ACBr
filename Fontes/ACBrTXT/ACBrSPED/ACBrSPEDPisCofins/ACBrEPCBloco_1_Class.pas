@@ -358,16 +358,16 @@ begin
 
         if IND_MOV = imComDados then
         begin
-          WriteRegistro1010(FRegistro1001) ;
-          WriteRegistro1020(FRegistro1001) ;
-          WriteRegistro1100(FRegistro1001) ;
-          WriteRegistro1200(FRegistro1001) ;
-          WriteRegistro1300(FRegistro1001) ;
-          WriteRegistro1500(FRegistro1001) ;
-          WriteRegistro1600(FRegistro1001) ;
-          WriteRegistro1700(FRegistro1001) ;
-          WriteRegistro1800(FRegistro1001) ;
-          WriteRegistro1900(FRegistro1001) ;
+          WriteRegistro1010(FRegistro1001);
+          WriteRegistro1020(FRegistro1001);
+          WriteRegistro1100(FRegistro1001);
+          WriteRegistro1200(FRegistro1001);
+          WriteRegistro1300(FRegistro1001);
+          WriteRegistro1500(FRegistro1001);
+          WriteRegistro1600(FRegistro1001);
+          WriteRegistro1700(FRegistro1001);
+          WriteRegistro1800(FRegistro1001);
+          WriteRegistro1900(FRegistro1001);
         end;
      end;
      Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;

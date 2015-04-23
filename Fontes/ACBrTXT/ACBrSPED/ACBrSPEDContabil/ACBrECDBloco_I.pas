@@ -240,11 +240,12 @@ type
 
   TRegistroI051 = class
   private
-    fCOD_ENT_REF: String;    /// Código da instituição responsável pela manutenção do plano de contas referencial.
+    fCOD_PLAN_REF: String;    /// Código da instituição responsável pela manutenção do plano de contas referencial.
     fCOD_CCUS: String;       /// Código do centro de custo.
     fCOD_CTA_REF: String;    /// Código da conta de acordo com o plano de contas referencial, conforme tabela publicada pelos órgãos indicados no campo 02- COD_ENT_REF.
   public
-    property COD_ENT_REF: String read fCOD_ENT_REF write fCOD_ENT_REF;
+    //property COD_ENT_REF: String read fCOD_ENT_REF write fCOD_ENT_REF;
+    property COD_PLAN_REF: String read fCOD_PLAN_REF write fCOD_PLAN_REF;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
     property COD_CTA_REF: String read fCOD_CTA_REF write fCOD_CTA_REF;
   end;

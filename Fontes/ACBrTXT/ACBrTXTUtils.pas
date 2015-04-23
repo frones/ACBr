@@ -106,7 +106,7 @@ function funChecaUF(const UF: String): boolean;
 //var
 //intPosition: integer;
 begin
-  Result := ACBrValidador.ValidarDocumento(docUF, UF) = '';
+  Result := ACBrValidador.ACBrValidadorValidarDocumento(docUF, UF) = '';
 
 {
    Result := true;
@@ -325,7 +325,7 @@ function funChecaCEP(const CEP, UF: String): Boolean;
 //var
 //cCEP1: Integer;
 begin
-  Result := ACBrValidador.ValidarDocumento(docCEP, CEP, UF) = '';
+  Result := ACBrValidador.ACBrValidadorValidarDocumento(docCEP, CEP, UF) = '';
 
 {
   if CEP = '' then
@@ -410,7 +410,7 @@ function funChecaCNPJ(const CNPJ: String): Boolean;
 begin
   Result := True;
   if Length(CNPJ) > 0 then
-    Result := ACBrValidador.ValidarCNPJ(CNPJ) = '';
+    Result := ACBrValidador.ACBrValidadorValidarCNPJ(CNPJ) = '';
 
 //   Result := funChecaIE(CNPJ, 'CNPJ');
 (*
@@ -476,7 +476,7 @@ function funChecaCPF(const CPF: String): Boolean;
 begin
   Result := True;
   if Length(CPF) > 0 then
-    Result := ACBrValidador.ValidarCPF(CPF) = '';
+    Result := ACBrValidador.ACBrValidadorValidarCPF(CPF) = '';
 
 //   Result := funChecaIE(CPF, 'CPF');
 (*
@@ -605,7 +605,7 @@ Resultado: String;
 Retorno: Boolean;
 }
 begin
-  Result := ACBrValidador.ValidarIE(IE, TIPO) = '';
+  Result := ACBrValidador.ACBrValidadorValidarIE(IE, TIPO) = '';
 (*
   { Isento ja e aceito }
   if (IE = 'ISENTO') or (Trim(IE) = '') then

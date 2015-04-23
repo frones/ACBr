@@ -52,8 +52,7 @@ unit ACBrEPCBloco_A_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEPCBloco_A, ACBrEPCBlocos,
-     ACBrEPCBloco_0_Class, Dialogs;
+uses ACBrSped, ACBrEPCBloco_A, ACBrEPCBlocos, ACBrEPCBloco_0_Class;
 
 type
   /// TBloco_A - Abertura, Identificação e Referências

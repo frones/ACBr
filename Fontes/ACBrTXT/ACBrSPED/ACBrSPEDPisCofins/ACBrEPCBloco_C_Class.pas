@@ -275,6 +275,10 @@ type
     property RegistroC601Count: Integer read FRegistroC601Count write FRegistroC601Count;
     property RegistroC605Count: Integer read FRegistroC605Count write FRegistroC605Count;
     property RegistroC609Count: Integer read FRegistroC609Count write FRegistroC609Count;
+    property RegistroC800Count: Integer read FRegistroC800Count write FRegistroC800Count;
+    property RegistroC810Count: Integer read FRegistroC810Count write FRegistroC810Count;
+    property RegistroC820Count: Integer read FRegistroC820Count write FRegistroC820Count;
+    property RegistroC830Count: Integer read FRegistroC830Count write FRegistroC830Count;
     property RegistroC860Count: Integer read FRegistroC860Count write FRegistroC860Count;
     property RegistroC870Count: Integer read FRegistroC870Count write FRegistroC870Count;
     property RegistroC880Count: Integer read FRegistroC880Count write FRegistroC880Count;

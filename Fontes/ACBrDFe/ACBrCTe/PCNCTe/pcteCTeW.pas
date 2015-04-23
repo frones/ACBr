@@ -373,7 +373,7 @@ begin
   Gerador.wCampo(tcInt, '#022', 'cMunEnv ', 07, 07, 1, CTe.ide.cMunEnv, DSC_CMUNEMI);
   if not ValidarMunicipio(CTe.ide.cMunEnv) then
     Gerador.wAlerta('#022', 'cMunEnv', DSC_CMUNEMI, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#023', 'xMunEnv ', 01, 60, 1, CTe.ide.xMunEnv, DSC_XMUN);
+  Gerador.wCampo(tcStr, '#023', 'xMunEnv ', 02, 60, 1, CTe.ide.xMunEnv, DSC_XMUN);
   Gerador.wCampo(tcStr, '#024', 'UFEnv   ', 02, 02, 1, CTe.ide.UFEnv, DSC_UF);
   if not ValidarUF(CTe.ide.UFEnv) then
     Gerador.wAlerta('#024', 'UFEnv', DSC_UF, ERR_MSG_INVALIDO);
@@ -382,14 +382,14 @@ begin
   Gerador.wCampo(tcInt, '#027', 'cMunIni ', 07, 07, 1, CTe.ide.cMunIni, DSC_CMUNEMI);
   if not ValidarMunicipio(CTe.ide.cMunIni) then
     Gerador.wAlerta('#027', 'cMunIni', DSC_CMUNEMI, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#028', 'xMunIni ', 01, 60, 1, CTe.ide.xMunIni, DSC_XMUN);
+  Gerador.wCampo(tcStr, '#028', 'xMunIni ', 02, 60, 1, CTe.ide.xMunIni, DSC_XMUN);
   Gerador.wCampo(tcStr, '#029', 'UFIni   ', 02, 02, 1, CTe.ide.UFIni, DSC_UF);
   if not ValidarUF(CTe.ide.UFIni) then
     Gerador.wAlerta('#029', 'UFIni', DSC_UF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcInt, '#030', 'cMunFim ', 07, 07, 1, CTe.ide.cMunFim, DSC_CMUNEMI);
   if not ValidarMunicipio(CTe.ide.cMunFim) then
     Gerador.wAlerta('#030', 'cMunFim', DSC_CMUNEMI, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#031', 'xMunFim    ', 01, 60, 1, CTe.ide.xMunFim, DSC_XMUN);
+  Gerador.wCampo(tcStr, '#031', 'xMunFim    ', 02, 60, 1, CTe.ide.xMunFim, DSC_XMUN);
   Gerador.wCampo(tcStr, '#032', 'UFFim      ', 02, 02, 1, CTe.ide.UFFim, DSC_UF);
   if not ValidarUF(CTe.ide.UFFim) then
     Gerador.wAlerta('#032', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
@@ -498,8 +498,8 @@ begin
      (CTe.Compl.Entrega.TipoHora <> thNaoInformado)
    then GerarEntrega;
 
-  Gerador.wCampo(tcStr, '#088', 'origCalc ', 01, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
-  Gerador.wCampo(tcStr, '#089', 'destCalc ', 01, 40, 0, CTe.Compl.destCalc, DSC_DESTCALC);
+  Gerador.wCampo(tcStr, '#088', 'origCalc ', 02, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
+  Gerador.wCampo(tcStr, '#089', 'destCalc ', 02, 40, 0, CTe.Compl.destCalc, DSC_DESTCALC);
   Gerador.wCampo(tcStr, '#090', 'xObs     ', 01, 2000, 0, CTe.Compl.xObs, DSC_XOBS);
 
   GerarObsCont;

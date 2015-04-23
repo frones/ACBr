@@ -223,7 +223,7 @@
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:element name="unidRat" type="TDec_0303" minOccurs="0">
+													<xs:element name="unidRat" type="TDec_0302_0303" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>Unidade de medida rateada (Peso,Volume)</xs:documentation>
 														</xs:annotation>
@@ -242,7 +242,7 @@
 															<xs:documentation>Chave de acesso da NF-e</xs:documentation>
 														</xs:annotation>
 													</xs:element>
-													<xs:element name="unidRat" type="TDec_0303" minOccurs="0">
+													<xs:element name="unidRat" type="TDec_0302_0303" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>Unidade de medida rateada (Peso,Volume)</xs:documentation>
 														</xs:annotation>

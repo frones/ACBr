@@ -1790,8 +1790,8 @@ Opcional para Redespacho Intermediario e Serviço vinculado a multimodal.</xs:do
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
 																<xs:whiteSpace value="preserve"/>
-																<xs:minLength value="2"/>
-																<xs:maxLength value="60"/>
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1"/>
 																<xs:enumeration value="0"/>
 																<xs:enumeration value="1"/>
 																<xs:enumeration value="2"/>
@@ -3227,7 +3227,7 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 					<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="qtdRat" type="TDec_0303" minOccurs="0">
+			<xs:element name="qtdRat" type="TDec_0302_0303" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
 				</xs:annotation>
@@ -3274,7 +3274,7 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="qtdRat" type="TDec_0303" minOccurs="0">
+			<xs:element name="qtdRat" type="TDec_0302_0303" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
 				</xs:annotation>

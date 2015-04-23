@@ -73,7 +73,7 @@ const
 
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
-                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN ) ;
+                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -138,6 +138,7 @@ type
     procedure ValidarCartaoCredito ;
     procedure ValidarSuframa ;
     procedure ValidarGTIN;
+    procedure ValidarRenavam;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -177,6 +178,7 @@ function ValidarCNPJouCPF( const Documento : String ) : String ;
 function ValidarIE(const AIE, AUF: String): String ;
 function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
+function ValidarRenavam( const Documento : String ) : String ;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -225,6 +227,11 @@ end;
 function ValidarGTIN( const Documento : String ) : String ;
 begin
   Result := ValidarDocumento( docGTIN, Documento );
+end;
+
+function ValidarRenavam( const Documento : String ) : String ;
+begin
+  Result := ValidarDocumento( docRenavam, Documento );
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;
@@ -579,6 +586,7 @@ begin
           docCartaoCredito : NomeDocto := 'Número de Cartão' ;
           docSuframa       : NomeDocto := 'SUFRAMA';
           docGTIN          : NomeDocto := 'GTIN';
+          docRenavam       : NomeDocto := 'Renavam';
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -597,6 +605,7 @@ begin
        docCartaoCredito : ValidarCartaoCredito ;
        docSuframa       : ValidarSuframa ;
        docGTIN          : ValidarGTIN ;
+       docRenavam       : ValidarRenavam;
      end;
 
   if fsMsgErro <> '' then
@@ -1339,7 +1348,7 @@ begin
   if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
   begin
      fsMsgErro := 'PIS deve ter 11 dígitos. (Apenas números)' ;
-     exit
+     exit;
   end ;
 
   Modulo.CalculoPadrao ;
@@ -1351,6 +1360,40 @@ begin
   if (fsDigitoCalculado <> fsDocto[11]) then
   begin
      fsMsgErro := 'PIS inválido.' ;
+
+     if fsExibeDigitoCorreto then
+        fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
+  end ;
+end;
+
+procedure TACBrValidador.ValidarRenavam;
+const
+  vSequencia = '3298765432';
+var
+  iFor, vSoma, vDV: integer;
+begin
+  if fsAjustarTamanho then
+     fsDocto := PadLeft( fsDocto, 11, '0') ;
+
+  if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
+  begin
+     fsMsgErro := 'RENAVAM deve ter 11 dígitos. (Apenas números)' ;
+     exit;
+  end ;
+
+  vSoma := 0;
+  for iFor := 1 to 10 do
+     vSoma := vSoma + (StrtoInt(fsDocto[iFor]) * StrToInt(vSequencia[iFor]));
+
+  vDV := (vSoma * 10) mod 11;
+  if vDV = 10 then
+     vDV := 0;
+
+  fsDigitoCalculado := IntToStr(vDV);
+
+  if (fsDigitoCalculado <> fsDocto[11]) then
+  begin
+     fsMsgErro := 'RENAVAM inválido.' ;
 
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;

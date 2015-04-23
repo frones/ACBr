@@ -26,63 +26,6 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-Agradecimentos:
-
-* Administradores:
-- Daniel Simões de Almeida
-- André Ferreira de Moraes
-
-* Desenvolvedores:
-- Airton Stodulski               ECFDataRegis
-- Anderson Rogerio Bejatto       ECFDataRegis, TACBrTroco, ECFBugFix, TACBrETQ
-- Rodrigo Frühwirth              ECFIChash
-- Gabriel Rodrigo Frones         TACBrTER, ACBrMonitor
-- Fabio Farias                   TACBrBAL, ECFBugFix, DISKeyTec
-- Walmir Silva                   TACBrBAL, BalancaTeste.dpr
-- Rennes Moreira Pimentel        TACBrValidador (CEP)
-- Aurimenes Apolonio Silva       ECFUrano, ECFBugFix
-- Vinicius de Oliveira           TACBrFala
-- Carlos do Nascimento Filho     ECFDaruma, ECFYanco
-- Thiago Delgado Pinto           Compatibilidade com BCB6
-- Nei José Van Lare Junior       ECFFiscNET
-- Jhony Alceu Pereira            ECFDaruma
-- Alan Lucas                     ECFSchalter, ECFSweda
-- Ederson Selvati                ECFDaruma, ECFBematech, ECFSweda
-- José Luís Schiavo              ECFDaruma
-- Andrews Ricardo Bejatto        TACBrETQ
-- Douglas Fernando Scheibler     Lazarus
-- Wagner Leandro Bueno Angelo    Lazarus
-- Maicon da Silva Evangelista    ECFDaruma
-- Eduardo Durieux Lopes          ECFEpson
-- Andre Bohn                     ECFNCR, ECFBugFix (Daruma FS600)
-- Joao Victor Maia Fernandes     ECFQuattro
-- Sauli Bueno                    ECFYanco
-- Ivan Moreira                   ECFs
-- Isaque Pinheiro		 TACBrSPEDFiscal, TACBrSPEDContabil, TACBrSPEDPisCofins, TACBrPAF, ACBrInStore
-- Luiz Arlindo                   ECFs
-
-* Colaboradores:
-- Alexandre Rocha L.Marcondes    Administração
-- Mauro Sano (Sweda)             Emprestimo de ECFs
-- Valmor Florez                  ECFBugFix (Schalter)
-- Licerio Jose Rodrigues Neto    ECFBugFix (Mecaf, Sweda, NaoFiscal)
-- Adriano Alves Dornelas         ECFBugFix
-- Luciano Donato                 ACBr.INC D2006
-- Gabriel Fernandes              ECFBugFix (Mecaf)
-- Juliano Pereira dos Santos     ECFBufFix (Daruma FS600)
-- Fábio Rogério Baía             ACBrMonitor (TCP)
-- Waldir Paim                    LCBTeste (conf.serial)
-- Diogo Augusto Pereira          ACBrCMC7
-- Marcos Agostini                ECFBugFix (NaoFiscal)
-- João Carvalho                  ACBrConsts
-
-* Testadores / BugReport:
-- Rildecy de Queiroz Borba       ECFBugReport (Mecaf)
-- Claudio Borba                  ECFBugReport
-- Erique Costa                   ECFBugReport
-- Matheus Nogueira               CHQBugReport
-- Everton H. Cardoso (Bematech)
-- Miguel Silva (Perto S/A)
 
 {******************************************************************************
 |* ACBr
@@ -95,6 +38,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+23/04/2015
+-- ACBrValidador --
+[+] Adicionada verificação de RENAVAM   (sincronismo com Trunk)
 
 19/10/2014
 -- ACBrValidador --  (por: DSA)

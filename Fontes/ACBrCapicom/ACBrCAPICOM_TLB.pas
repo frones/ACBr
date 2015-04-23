@@ -58,8 +58,14 @@ unit ACBrCAPICOM_TLB;
 {$VARPROPSETTER ON}
 interface
 
-uses Windows, ActiveX, Classes, Graphics, OleServer, {$IFNDEF FPC} StdVCL, {$ENDIF} Variants;
-  
+uses Windows, ActiveX, Classes
+  {$IFDEF FMX}
+     ,FMX.Graphics, FMX.OleServer
+  {$ELSE}
+     ,Graphics, OleServer
+  {$ENDIF}
+  {$IFNDEF FPC}, StdVCL {$ENDIF}, Variants;
+
 
 // *********************************************************************//
 // GUIDS declared in the TypeLibrary. Following prefixes are used:        

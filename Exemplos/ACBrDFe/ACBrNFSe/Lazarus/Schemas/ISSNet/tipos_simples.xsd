@@ -1,0 +1,265 @@
+<?xml version="1.0" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
+	xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" attributeFormDefault="unqualified"
+	elementFormDefault="qualified">
+	<!-- Min Length Adicionado aos tipos simples String -->
+	<!-- WhiteSpace collapse aos tipos simples String -->
+	<xsd:simpleType name="tsNumeroNfse">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:totalDigits value="15" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoVerificacao">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsStatusRps">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsStatusNfse">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsNaturezaOperacao">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2|3|4|5|6" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsRegimeEspecialTributacao">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2|3|4" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsSimNao">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsNumeroRps">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:totalDigits value="15" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsSerieRps">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsTipoRps">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2|3" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsOutrasInformacoes">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsValor">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15" />
+			<xsd:fractionDigits value="2"/>
+			<xsd:minInclusive value="0" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsItemListaServico">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoCnae">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="8" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoTributacao">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsAliquota">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="5" />
+			<xsd:fractionDigits value="4" />
+			<xsd:minInclusive value="0" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsDiscriminacao">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoMunicipioIbge">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="7" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsInscricaoMunicipal">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsRazaoSocial">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="115" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsNomeFantasia">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCnpj">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="14" fixed="true" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsEndereco">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="125" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsNumeroEndereco">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsComplementoEndereco">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsBairro">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsUf">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="2" fixed="true" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCep">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="8" fixed="true" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsEmail">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsTelefone">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="11" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCpf">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="11" fixed="true" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsIndicacaoCpfCnpj">
+		<xsd:restriction base="xsd:byte">
+			<xsd:pattern value="1|2|3" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoObra">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsArt">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsNumeroLote">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:totalDigits value="15" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsNumeroProtocolo">
+		<xsd:restriction base="xsd:string">
+      <xsd:maxLength value="100" />
+      <xsd:minLength value="1" />
+      <xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsSituacaoLoteRps">
+		<xsd:restriction base="xsd:byte" />
+	</xsd:simpleType>
+	<xsd:simpleType name="tsQuantidadeRps">
+		<xsd:restriction base="xsd:int"></xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoMensagemAlerta">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsDescricaoMensagemAlerta">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="200" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCodigoCancelamentoNfse">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsIdTag">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tsCompetencia">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:pattern value="^20(?:09|[1-9]\d)(?:0[1-9]|1[0-2])$"></xsd:pattern>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

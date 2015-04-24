@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.equiplano.com.br/esnfs" xmlns:tipos="http://www.equiplano.com.br/esnfs/tipos" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+	<xsd:import namespace="http://www.equiplano.com.br/esnfs/tipos" schemaLocation="TiposEsnfs_v01.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+	<xsd:element name="enviarLoteRpsEnvio">
+		<xsd:complexType>
+	      	<xsd:sequence>
+				<xsd:element name="lote" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="nrLote" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+							<xsd:element name="qtRps" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+							<xsd:element name="nrVersaoXml" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+							<xsd:element name="prestador" type="tipos:tcPrestador" minOccurs="1" maxOccurs="1"/>
+							<xsd:element name="listaRps" minOccurs="1" maxOccurs="1">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="rps" type="tipos:tcRps" minOccurs="1" maxOccurs="unbounded" />
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="ds:Signature" minOccurs="1" maxOccurs="1" />
+	      	</xsd:sequence>
+		</xsd:complexType>
+	 </xsd:element>
+</xsd:schema>

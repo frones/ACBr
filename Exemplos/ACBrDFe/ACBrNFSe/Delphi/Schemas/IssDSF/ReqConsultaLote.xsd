@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+xmlns:tipos="http://localhost:8080/WsNFe2/tp"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:ns1="http://localhost:8080/WsNFe2/lote" targetNamespace="http://localhost:8080/WsNFe2/lote">
+	<xs:import namespace="http://localhost:8080/WsNFe2/tp" schemaLocation="Tipos.xsd"/>
+	<xs:element name="ReqConsultaLote">
+		<xs:annotation>
+			<xs:documentation>Schema utilizado para REQUISIçÂO de Consulta de Lote de RPS.</xs:documentation>
+			<xs:documentation>Este Schema XML é utilizado pelos Prestadores de serviços para consultarem Lote de RPS emitidos por eles.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Cabecalho">
+					<xs:annotation>
+						<xs:documentation>Cabeçalho do pedido.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CodCidade"  type="tipos:tpCodCidade" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Informe o Codigo da Cidade.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Informe o CPF/CNPJ do Remetente autorizado a transmitir a mensagem XML.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Versao" type="tipos:tpVersao" fixed="1" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Informe a Versão do Schema XML utilizado.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="NumeroLote" type="tipos:tpNumero" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Informe o Número do Lote a ser consultado.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

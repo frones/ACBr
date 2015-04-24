@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.equiplano.com.br/esnfs" xmlns:tipos="http://www.equiplano.com.br/esnfs/tipos" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+	<xsd:import namespace="http://www.equiplano.com.br/esnfs/tipos" schemaLocation="TiposEsnfs_v01.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+	<xsd:element name="esCancelarNfseResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="sucesso" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="dtCancelamento" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+		      	</xsd:sequence>
+		      	<xsd:element name="mensagemRetorno" type="tipos:tcMensagemRetorno"/>
+			</xsd:choice>
+		</xsd:complexType>
+	 </xsd:element>
+</xsd:schema>

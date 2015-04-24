@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.nfe.com.br/WSNacional/XSD/1/nfse_municipal_v01.xsd"
+            xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+            attributeFormDefault="unqualified"
+            elementFormDefault="qualified">
+  <xsd:import namespace="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" schemaLocation="tipos_nfse_v01.xsd" />
+  <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  
+  <xsd:element name="GerarNfseEnvio">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Rps" type="tcRps" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="GerarNfseResposta">
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:element ref="CompNfse" minOccurs="1" maxOccurs="1" />
+          <xsd:element ref="ListaMensagemRetorno"  minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1" />
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  
+</xsd:schema>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tipos="http://ws.speedgov.com.br/tipos_v1.xsd"  targetNamespace="http://ws.speedgov.com.br/consultar_lote_rps_resposta_v1.xsd"
+            xmlns="http://ws.speedgov.com.br/consultar_lote_rps_resposta_v1.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<xsd:import schemaLocation="tipos_v1.xsd"	namespace="http://ws.speedgov.com.br/tipos_v1.xsd" />	<xsd:element name="ConsultarLoteRpsResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="CompNfse" maxOccurs="unbounded" type="tipos:tcCompNfse" minOccurs="1"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

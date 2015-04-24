@@ -47,7 +47,7 @@ unit ACBrConsultaCNPJ;
 interface
 
 uses
-  SysUtils, Classes, ACBrSocket;
+  SysUtils, Classes, ACBrSocket, ACBrIBGE;
 
 type
   EACBrConsultaCNPJException = class ( Exception );
@@ -56,6 +56,7 @@ type
 
   TACBrConsultaCNPJ = class(TACBrHTTP)
   private
+    FACBrIBGE: TACBrIBGE;
     FNaturezaJuridica : String ;
     FViewState: String;
     FEmpresaTipo: String;
@@ -78,7 +79,11 @@ type
     FTelefone: String;
     FEFR: string;  //ENTE FEDERATIVO RESPONSÁVEL (EFR)
     FMotivoSituacaoCad: string;
+    FPesquisarIBGE: Boolean;
+    FCodigoIBGE: String;
+    FIBGE_UF: String;
     Function GetCaptchaURL: String;
+    function GetIBGE_UF : String ;
 
     function VerificarErros(Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
@@ -111,6 +116,9 @@ type
     property Telefone: String read FTelefone;
     property EFR: string read FEFR;
     property MotivoSituacaoCad: string read FMotivoSituacaoCad;
+    property IBGE_Municipio  : String read FCodigoIBGE;
+    property IBGE_UF         : String read GetIBGE_UF ;
+    property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE;
   end;
 
 implementation
@@ -229,6 +237,7 @@ var
   Erro: String;
   Resposta : TStringList;
   StrAux: String;
+  sMun:String;
 begin
   Erro := ValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
@@ -302,6 +311,22 @@ begin
         Resposta.Free;
       end ;
 
+
+      // Consulta Codigo da Cidade ACBrIBGE
+      fCodigoIBGE := '';
+      if (FCidade <> '') and
+         (FPesquisarIBGE) then
+      begin
+        if (sMun <> FCidade) then  // Evita buscar municipio já encontrado
+        begin
+          FACBrIBGE.BuscarPorNome( FCidade, FUF, True, False ) ;
+          sMun := FCidade;
+        end ;
+
+        if FACBrIBGE.Cidades.Count > 0 then  // Achou ?
+          FCodigoIBGE := IntToStr( FACBrIBGE.Cidades[0].CodMunicio );
+      end ;
+
       if Trim(FRazaoSocial) = '' then
         raise EACBrConsultaCNPJException.Create('Não foi possível obter os dados.');
 
@@ -330,10 +355,13 @@ constructor TACBrConsultaCNPJ.Create(AOwner: TComponent);
 begin
   inherited;
   FCNAE2 := TStringList.Create;
+  FPesquisarIBGE := True;
+  fACBrIBGE := TACBrIBGE.Create(nil);
 end;
 
 destructor TACBrConsultaCNPJ.Destroy;
 begin
+  fACBrIBGE.Free;
   FCNAE2.Free;
   inherited;
 end;
@@ -360,9 +388,14 @@ begin
   FTelefone         := '';
   FEFR              := '';
   FMotivoSituacaoCad:= '';
+  fCodigoIBGE       := '';
 
   FCNAE2.Clear;
 end;
 
-end.
+function TACBrConsultaCNPJ.GetIBGE_UF: String;
+begin
+ Result := copy(fCodigoIBGE,1,2) ;
+end;
 
+end.

@@ -52,7 +52,7 @@ uses
   ACBrBoleto ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.27a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.28a' ;
 
 type
 
@@ -131,6 +131,9 @@ type
     RLDraw9: TRLDraw;
     RLLabel102: TRLLabel;
     RLLabel11: TRLLabel;
+    RLLabel123: TRLMemo;
+    RLLabel161: TRLMemo;
+    RLLabel80: TRLMemo;
     txtSacadorAvalista3: TRLLabel;
     RLLabel14: TRLLabel;
     RLLabel145: TRLLabel;
@@ -149,7 +152,6 @@ type
     RLLabel158: TRLLabel;
     RLLabel159: TRLLabel;
     RLLabel160: TRLLabel;
-    RLLabel161: TRLLabel;
     RLLabel162: TRLLabel;
     RLLabel163: TRLLabel;
     RLLabel164: TRLLabel;
@@ -200,7 +202,6 @@ type
     RLLabel78: TRLLabel;
     RLLabel79: TRLLabel;
     RLLabel8: TRLLabel;
-    RLLabel80: TRLLabel;
     RLLabel81: TRLLabel;
     RLLabel82: TRLLabel;
     RLLabel83: TRLLabel;
@@ -290,7 +291,6 @@ type
     RLLabel117: TRLLabel;
     RLLabel119: TRLLabel;
     RLLabel121: TRLLabel;
-    RLLabel123: TRLLabel;
     RLLabel124: TRLLabel;
     RLLabel126: TRLLabel;
     RLLabel128: TRLLabel;

@@ -1514,21 +1514,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel80: TRLLabel
-        Left = 4
-        Height = 10
-        Top = 157
-        Width = 338
-        Caption = 'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário.)'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object txtInstrucoes2: TRLMemo
         Left = 5
         Height = 83
@@ -2137,10 +2122,27 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object RLLabel80: TRLMemo
+        Left = 4
+        Height = 10
+        Top = 157
+        Width = 537
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário. Qualquer dúvida sobre este boleto, contate o beneficiário)'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
     object RLBand2: TRLBand
       Left = 15
-      Height = 444
+      Height = 474
       Top = 632
       Width = 768
       RealBounds.UsedUnit = buMilimeters
@@ -2893,21 +2895,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel161: TRLLabel
-        Left = 4
-        Height = 10
-        Top = 174
-        Width = 184
-        Caption = 'Instruções - Texto de responsabilidade do beneficiário.'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object txtInstrucoes3: TRLMemo
         Left = 5
         Height = 82
@@ -3395,12 +3382,29 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object RLLabel161: TRLMemo
+        Left = 4
+        Height = 10
+        Top = 174
+        Width = 534
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário. Qualquer dúvida sobre este boleto, contate o beneficiário)'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
   end
   object BoletoCarne: TRLReport
-    Left = 184
+    Left = 824
     Height = 1123
-    Top = 72
+    Top = 64
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -3419,7 +3423,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Height = 364
+      Height = 371
       Top = 15
       Width = 745
       RealBounds.Left = 0
@@ -3913,21 +3917,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel123: TRLLabel
-        Left = 152
-        Height = 10
-        Top = 146
-        Width = 338
-        Caption = 'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário.)'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel124: TRLLabel
         Left = 572
         Height = 10
@@ -4051,9 +4040,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel13: TRLLabel
         Left = 0
-        Height = 15
+        Height = 14
         Top = 339
-        Width = 50
+        Width = 26
         Caption = '"'
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
@@ -4443,8 +4432,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object mIntrucoes: TRLMemo
         Left = 152
-        Height = 64
-        Top = 156
+        Height = 61
+        Top = 166
         Width = 410
         AutoSize = False
         Font.Color = clBlack
@@ -4866,6 +4855,23 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel123: TRLMemo
+        Left = 152
+        Height = 20
+        Top = 146
+        Width = 410
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário. Qualquer dúvida sobre este boleto contate o beneficiário)'''
+        )
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0

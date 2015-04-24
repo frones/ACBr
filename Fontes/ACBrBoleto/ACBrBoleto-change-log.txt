@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/04/2015 ver. 0.0.28a
+-- ACBrBoletoFCFortes --
+[*] Ajuste para imprimir mensagem ao pagador conforme solicitação do Itau.
+    (Juliana Tamizou)
+
 
 Data: 16/04/2015 ver. 0.0.125a
 -- ACBrBancoCaixa --

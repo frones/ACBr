@@ -1216,19 +1216,22 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLLabel80: TRLLabel
+      object RLLabel80: TRLMemo
         Left = 4
         Top = 157
-        Width = 338
+        Width = 549
         Height = 10
-        Caption = 
-          'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-          ' responsabilidade do benefici'#225'rio.)'
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = []
+        Lines.Strings = (
+          
+            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
+            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
+            'leto, contate o benefici'#225'rio)')
         ParentFont = False
       end
       object txtInstrucoes2: TRLMemo
@@ -2347,17 +2350,22 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object RLLabel161: TRLLabel
+      object RLLabel161: TRLMemo
         Left = 4
         Top = 174
-        Width = 184
+        Width = 530
         Height = 10
-        Caption = 'Instru'#231#245'es - Texto de responsabilidade do benefici'#225'rio.'
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = []
+        Lines.Strings = (
+          
+            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
+            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
+            'leto, contate o benefici'#225'rio)')
         ParentFont = False
       end
       object txtInstrucoes3: TRLMemo
@@ -2768,8 +2776,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 454
-    Top = 27
+    Left = 262
+    Top = 59
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET
@@ -2789,7 +2797,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Left = 30
       Top = 15
       Width = 745
-      Height = 360
+      Height = 362
       BeforePrint = RLBand3BeforePrint
       object RLDraw30: TRLDraw
         Left = 150
@@ -3157,19 +3165,22 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLLabel123: TRLLabel
+      object RLLabel123: TRLMemo
         Left = 152
         Top = 146
-        Width = 325
-        Height = 10
-        Caption = 
-          'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-          ' responsabilidade do cedente.)'
+        Width = 414
+        Height = 20
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = []
+        Lines.Strings = (
+          
+            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
+            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
+            'leto, contate o benefici'#225'rio)')
         ParentFont = False
       end
       object RLLabel124: TRLLabel
@@ -3598,9 +3609,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object mIntrucoes: TRLMemo
         Left = 152
-        Top = 156
+        Top = 168
         Width = 410
-        Height = 64
+        Height = 56
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET

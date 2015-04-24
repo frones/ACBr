@@ -408,7 +408,7 @@ begin
                        LFill('') +
                        LFill('');
          end;
-       ///
+       Add( strLinha);
        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
      end;
   end;

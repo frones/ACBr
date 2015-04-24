@@ -1236,7 +1236,7 @@ begin
                     Gerador.wCampo(tcDe2, 'N16a', 'vICMSOp ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS);
                     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N16b', 'pDif    ', 01, IIf(Usar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pDif, DSC_PICMS);
                     Gerador.wCampo(tcDe2, 'N16c', 'vICMSDif', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS);
-                    Gerador.wCampo(tcDe2, 'N17', 'vICMS    ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
+                    Gerador.wCampo(tcDe2, 'N17', 'vICMS    ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                   end;
                cst60 :
                   begin

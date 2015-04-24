@@ -306,9 +306,9 @@ end;
 class function GNREUtil.GetURL(const AAmbiente: Integer;  ALayOut: TLayOut): WideString;
 begin
   case ALayOut of
-    LayGNRERecepcao:          Result := SeSenao(AAmbiente = 1, 'https://www.gnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao?wsdl'   , 'https://www.gnre-h.pe.gov.br/gnreWS/services/GnreLoteRecepcao?wsdl');
-    LayGNRERetRecepcao:       Result := SeSenao(AAmbiente = 1, 'https://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote?wsdl'  , 'https://www.gnre-h.pe.gov.br/gnreWS/services/GnreResultadoLote?wsdl');
-    LayGNREConsultaConfigUF:  Result := SeSenao(AAmbiente = 1, 'https://www.gnre.pe.gov.br/gnreWS/services/GnreConfigUF?wsdl'       , 'https://www.gnre-h.pe.gov.br/gnreWS/services/GnreConfigUF?wsdl');
+    LayGNRERecepcao:          Result := SeSenao(AAmbiente = 1, 'https://www.gnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao?wsdl'   , 'https://www.testegnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao?wsdl');
+    LayGNRERetRecepcao:       Result := SeSenao(AAmbiente = 1, 'https://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote?wsdl'  , 'https://www.testegnre.pe.gov.br/gnreWS/services/GnreResultadoLote?wsdl');
+    LayGNREConsultaConfigUF:  Result := SeSenao(AAmbiente = 1, 'https://www.gnre.pe.gov.br/gnreWS/services/GnreConfigUF?wsdl'       , 'https://www.testegnre.pe.gov.br/gnreWS/services/GnreConfigUF?wsdl');
   end;
 end;
 

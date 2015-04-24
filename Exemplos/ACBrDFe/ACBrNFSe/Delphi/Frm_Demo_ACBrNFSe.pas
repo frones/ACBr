@@ -406,6 +406,9 @@ begin
    ACBrNFSe1.DANFSe.PrestLogo  := edtPrestLogo.Text;
    ACBrNFSe1.DANFSe.Prefeitura := edtPrefeitura.Text;
    ACBrNFSe1.DANFSe.PathPDF    := edtPathLogs.Text;
+
+//  TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
+   ACBrNFSe1.DANFSe.TipoDANFSE := tpPadrao;
   end;
 
  lblSchemas.Caption := ACBrNFSe1.Configuracoes.WebServices.xProvedor;

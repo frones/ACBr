@@ -29,7 +29,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFSeDANFSeQRRetrato;
+unit ACBrNFSeDANFSeQRRetratoFiorilli;
 
 // Atenção todos os comiters
 // Quando enviar os fontes referentes ao DANFSE favor alterar
@@ -49,7 +49,7 @@ uses
 
 type
 
-  TfqrDANFSeQRRetrato = class(TfqrDANFSeQR)
+  TfqrDANFSeQRRetratoFiorilli = class(TfqrDANFSeQR)
     cdsItens: TClientDataSet;
     cdsItensCODIGO: TStringField;
     cdsItensDESCRICAO: TStringField;
@@ -258,7 +258,7 @@ uses
 var
   FQuebradeLinha: String;
 
-procedure TfqrDANFSeQRRetrato.cdsItensAfterScroll(DataSet: TDataSet);
+procedure TfqrDANFSeQRRetratoFiorilli.cdsItensAfterScroll(DataSet: TDataSet);
 //var
 // intTamanhoDescricao: Integer;
 begin
@@ -268,7 +268,7 @@ begin
 
 end;
 
-procedure TfqrDANFSeQRRetrato.Itens;
+procedure TfqrDANFSeQRRetratoFiorilli.Itens;
 var
  i: Integer;
 begin
@@ -296,7 +296,7 @@ begin
  cdsItens.First;
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_1_CabecalhoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  t: integer;
@@ -357,7 +357,7 @@ begin
   else qrlCodigoMunicipio.Caption := '';
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_2_PrestadorServicoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  Ok: Boolean;
@@ -411,7 +411,7 @@ begin
  FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(FNFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)));
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_3_TomadorServicoBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_3_TomadorServicoBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -446,7 +446,7 @@ begin
  qrlMsgTeste.Repaint;
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_5_ItensBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_5_ItensBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -463,7 +463,7 @@ begin
  qrmDescricao.Lines.EndUpdate;
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_6_ISSQNBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_6_ISSQNBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 var
  MostrarObra: Boolean;
@@ -631,7 +631,7 @@ begin
 
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_7_OutrasInformacoesBeforePrint(Sender: TQRCustomBand;
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_7_OutrasInformacoesBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
   inherited;
@@ -666,7 +666,7 @@ begin
 
 end;
 
-procedure TfqrDANFSeQRRetrato.qrb_8_CanhotoBeforePrint(
+procedure TfqrDANFSeQRRetratoFiorilli.qrb_8_CanhotoBeforePrint(
   Sender: TQRCustomBand; var PrintBand: Boolean);
 begin
   inherited;
@@ -675,7 +675,7 @@ begin
 
 end;
 
-procedure TfqrDANFSeQRRetrato.QRNFSeBeforePrint(Sender: TCustomQuickRep;
+procedure TfqrDANFSeQRRetratoFiorilli.QRNFSeBeforePrint(Sender: TCustomQuickRep;
   var PrintReport: Boolean);
 begin
   inherited;
@@ -703,7 +703,7 @@ begin
 
 end;
 
-procedure TfqrDANFSeQRRetrato.QuebradeLinha(const sQuebradeLinha: String);
+procedure TfqrDANFSeQRRetratoFiorilli.QuebradeLinha(const sQuebradeLinha: String);
 begin
   FQuebradeLinha := sQuebradeLinha;
 end;

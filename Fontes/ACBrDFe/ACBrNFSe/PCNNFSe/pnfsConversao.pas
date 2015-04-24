@@ -108,6 +108,8 @@ type
   TnfseTEmissao = ( TeNormal, TeContigencia );
   TnfseTEmpreitadaGlobal = ( EgConstrucaoCivil, EgOutros);
 
+  TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
+
 function StrToHex(S: String): String;
 function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;

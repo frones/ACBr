@@ -15,7 +15,7 @@ object frValidador: TfrValidador
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.4.0'
+  LCLVersion = '1.2.6.0'
   object Label1: TLabel
     Left = 8
     Height = 13
@@ -82,6 +82,7 @@ object frValidador: TfrValidador
       'docCartaoCredito'
       'docSuframa'
       'docGTIN'
+      'docRenavam'
     )
     OnChange = cbTipoDoctoChange
     Style = csDropDownList

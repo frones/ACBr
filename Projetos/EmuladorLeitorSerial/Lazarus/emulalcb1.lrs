@@ -1,0 +1,40 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TfrEmulador','FORMDATA',[
+  'TPF0'#11'TfrEmulador'#10'frEmulador'#4'Left'#3#3#1#6'Height'#3#204#0#3'Top'#3
+  +#136#0#5'Width'#3'a'#1#18'HorzScrollBar.Page'#3'`'#1#19'HorzScrollBar.Range'
+  +#3'S'#1#18'VertScrollBar.Page'#3#203#0#19'VertScrollBar.Range'#3#180#0#13'Ac'
+  +'tiveControl'#7#7'edBarra'#11'BorderStyle'#7#8'bsSingle'#7'Caption'#6#22'Emu'
+  +'lando Leitor Serial'#12'ClientHeight'#3#204#0#11'ClientWidth'#3'a'#1#11'Fon'
+  +'t.Height'#2#245#9'Font.Name'#6#13'MS Sans Serif'#8'OnCreate'#7#10'FormCreat'
+  +'e'#10'LCLVersion'#6#7'1.2.6.0'#0#6'TLabel'#6'Label1'#4'Left'#2#8#6'Height'#2
+  +#13#3'Top'#2'M'#5'Width'#2'K'#7'Caption'#6#16'C'#195#179'digo a Enviar'#11'P'
+  +'arentColor'#8#0#0#6'TLabel'#6'Label4'#4'Left'#3#16#1#6'Height'#2#13#3'Top'#2
+  +'M'#5'Width'#2#25#7'Caption'#6#5'Porta'#11'ParentColor'#8#0#0#6'TLabel'#6'La'
+  +'bel2'#4'Left'#2#11#6'Height'#2'9'#3'Top'#2#8#5'Width'#3'C'#1#9'Alignment'#7
+  +#8'taCenter'#8'AutoSize'#8#7'Caption'#6#216'Use uma porta Serial diferente d'
+  +'a especificada no ACBrLCB. Essa janela envia Strings pela Serial simulando '
+  +'um Leitor de Cod.Barras. Use o mesmo cabo utilizado pelos Emuladores de ECF'
+  +' para ligar as duas Portas Seriais'#11'ParentColor'#8#8'WordWrap'#9#0#0#6'T'
+  +'Label'#6'Label5'#4'Left'#3#192#0#6'Height'#2#13#3'Top'#2'M'#5'Width'#2#29#7
+  +'Caption'#6#6'Sufixo'#11'ParentColor'#8#0#0#6'TLabel'#6'Label3'#4'Left'#2#16
+  +#6'Height'#2#13#3'Top'#3#160#0#5'Width'#2'Q'#7'Caption'#6#17'C'#195#179'digo'
+  +' Enviado: '#11'ParentColor'#8#0#0#6'TLabel'#8'lEnviado'#4'Left'#2'k'#6'Heig'
+  +'ht'#2#20#3'Top'#3#160#0#5'Width'#3#230#0#8'AutoSize'#8#10'Font.Color'#7#7'c'
+  +'lBlack'#11'Font.Height'#2#11#9'Font.Name'#6#13'MS Sans Serif'#10'Font.Pitch'
+  +#7#10'fpVariable'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentF'
+  +'ont'#8#0#0#5'TEdit'#7'edBarra'#6'Cursor'#7#7'crIBeam'#4'Left'#2#10#6'Height'
+  +#2#21#3'Top'#2']'#5'Width'#3#169#0#8'TabOrder'#2#0#4'Text'#6#13'789300044016'
+  +'6'#0#0#9'TComboBox'#8'cbxPorta'#4'Left'#3#16#1#6'Height'#2#21#3'Top'#2']'#5
+  +'Width'#2'A'#10'ItemHeight'#2#13#9'ItemIndex'#2#1#13'Items.Strings'#1#6#4'CO'
+  +'M1'#6#4'COM2'#6#4'COM3'#6#4'COM4'#6#4'COM5'#6#4'LPT1'#6#4'LPT2'#6#4'LPT3'#0
+  +#8'OnChange'#7#14'cbxPortaChange'#8'TabOrder'#2#2#4'Text'#6#4'COM2'#0#0#5'TE'
+  +'dit'#8'edSufixo'#6'Cursor'#7#7'crIBeam'#4'Left'#3#192#0#6'Height'#2#21#3'To'
+  +'p'#2']'#5'Width'#2'A'#8'TabOrder'#2#1#4'Text'#6#3'#13'#0#0#7'TButton'#7'But'
+  +'ton1'#4'Left'#3#8#1#6'Height'#2#25#3'Top'#3#129#0#5'Width'#2'K'#25'BorderSp'
+  +'acing.InnerBorder'#2#4#7'Caption'#6#6'Enviar'#7'Default'#9#7'OnClick'#7#12
+  +'Button1Click'#8'TabOrder'#2#4#0#0#9'TCheckBox'#12'cbMudaCodigo'#4'Left'#2#8
+  +#6'Height'#2#19#3'Top'#2'x'#5'Width'#3#171#0#7'Caption'#6#30'Mudar C'#195#179
+  +'digo Autom'#195#161'ticamente'#7'Checked'#9#5'State'#7#9'cbChecked'#8'TabOr'
+  +'der'#2#3#0#0#0
+]);

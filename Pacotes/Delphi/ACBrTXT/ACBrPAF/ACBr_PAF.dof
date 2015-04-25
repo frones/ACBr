@@ -88,7 +88,7 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=ACBr Automação Comercial Brasil - PAF-ECF (http://acbr.sourceforge.net/)
+ExeDescription=ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)
 [Directories]
 OutputDir=
 UnitOutputDir=

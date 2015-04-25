@@ -28,7 +28,7 @@ package ACBr_Sintegra;
 requires
   rtl,
   vcl,
-  ACBrTXTComum;
+  ACBr_TXTComum;
 
 contains
   ACBrSintegra in '..\..\..\..\Fontes\ACBrTXT\ACBrSintegra\ACBrSintegra.pas',

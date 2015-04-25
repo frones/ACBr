@@ -27,7 +27,7 @@ package ACBr_LFD;
 
 requires
   rtl,
-  ACBrTXTComum;
+  ACBr_TXTComum;
 
 contains
   ACBrLFD in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFD.pas',

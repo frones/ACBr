@@ -70,9 +70,9 @@ package ACBr_GNRE;
 {$IMPLICITBUILD ON}
 
 requires
-  ACBrComum,
+  ACBr_Comum,
   synapse,
-  ACBrDFeComum,
+  ACBr_DFeComum,
   PCNComum,
   rtl,
   vcl,

@@ -29,8 +29,8 @@ requires
   rtl,
   vcl,
   designide,
-  ACBrTXTComum,
-  ACBrOpenSSL;
+  ACBr_TXTComum,
+  ACBr_OpenSSL;
 
 contains
   ACBrPAF in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF.pas',

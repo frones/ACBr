@@ -31,7 +31,7 @@ requires
   PCNComum,
   designide,
   synapse,
-  ACBrComum;
+  ACBr_Comum;
 
 contains
   ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',

@@ -85,7 +85,7 @@ requires
   soaprtl,
   synapse,
   PCNComum,
-  ACBrDFeComum;
+  ACBr_DFeComum;
 
 contains
   ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',

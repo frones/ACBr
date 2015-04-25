@@ -36,17 +36,17 @@ requires
   inet,
   dbrtl,
   dsnap,
-  ACBrComum,
+  ACBr_Comum,
   synapse,
   designide,
   vclactnband,
   vclx,
-  ACBrOpenSSL,
-  ACBrCapicom,
-  ACBrDFeComum,
+  ACBr_OpenSSL,
+  ACBr_Capicom,
+  ACBr_DFeComum,
   PCNComum,
-  ACBrDiversos,
-  ACBrTCP;
+  ACBr_Diversos,
+  ACBr_TCP;
 
 contains
   ACBrNFSe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas',

@@ -96,7 +96,7 @@ PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=..\..\..\Fontes\ACBrDFe\ACBrNFe;..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe;..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE
 Packages=
-Conditionals=
+Conditionals=DEBUG
 DebugSourceDirs=
 UsePackages=0
 [Parameters]

@@ -88,7 +88,7 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=ACBr Automação Comercial Brasil - ACBrSintegra (http://acbr.sf.net/)
+ExeDescription=ACBr - Sintegra (http://www.projectoacbr.com.br/)
 [Directories]
 OutputDir=
 UnitOutputDir=

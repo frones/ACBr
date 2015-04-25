@@ -28,8 +28,8 @@ package ACBr_Convenio115;
 requires
   rtl,
   vcl,
-  ACBrTXTComum,
-  ACBrOpenSSL,
+  ACBr_TXTComum,
+  ACBr_OpenSSL,
   designide;
 
 contains

@@ -30,8 +30,8 @@ requires
   vcl,
   synapse,
   designide,
-  ACBrTCP,
-  ACBrDiversos;
+  ACBr_TCP,
+  ACBr_Diversos;
 
 contains
   ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',

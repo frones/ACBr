@@ -224,7 +224,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          656.166666666666800000
+          656.166666666666700000
           10.583333333333330000
           674.687500000000000000)
         XLColumn = 0
@@ -321,9 +321,9 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          695.854166666666800000
+          695.854166666666700000
           44.979166666666670000
-          597.958333333333400000)
+          597.958333333333300000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True
@@ -360,7 +360,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        52.916666666666660000
+        52.916666666666670000
         1989.666666666667000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -379,7 +379,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
           39.687500000000000000
           5.291666666666667000
           2.645833333333333000
-          60.854166666666680000)
+          60.854166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -575,7 +575,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          89.958333333333340000
+          89.958333333333330000
           2.645833333333333000
           100.541666666666700000)
         XLColumn = 0
@@ -701,7 +701,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        92.604166666666680000
+        92.604166666666670000
         1989.666666666667000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -797,7 +797,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        58.208333333333340000
+        58.208333333333330000
         1989.666666666667000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -1133,8 +1133,8 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          656.166666666666800000
-          399.520833333333400000
+          656.166666666666700000
+          399.520833333333300000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1166,8 +1166,8 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          656.166666666666800000
-          431.270833333333400000
+          656.166666666666700000
+          431.270833333333300000
           674.687500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1199,7 +1199,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          656.166666666666800000
+          656.166666666666700000
           10.583333333333330000
           674.687500000000000000)
         XLColumn = 0
@@ -1363,9 +1363,9 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          949.854166666666800000
+          949.854166666666700000
           230.187500000000000000
-          89.958333333333340000)
+          89.958333333333330000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True
@@ -1396,7 +1396,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          867.833333333333500000
+          867.833333333333300000
           10.583333333333330000
           254.000000000000000000)
         XLColumn = 0
@@ -1429,8 +1429,8 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          926.041666666666800000
-          42.333333333333340000
+          926.041666666666700000
+          42.333333333333330000
           134.937500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1495,7 +1495,7 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          780.520833333333400000
+          780.520833333333300000
           116.416666666666700000
           425.979166666666700000)
         XLColumn = 0
@@ -1528,8 +1528,8 @@ inherited fqrDANFeQRNFCeA4: TfqrDANFeQRNFCeA4
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          923.395833333333400000
-          82.020833333333340000
+          923.395833333333300000
+          82.020833333333330000
           140.229166666666700000)
         XLColumn = 0
         Alignment = taCenter

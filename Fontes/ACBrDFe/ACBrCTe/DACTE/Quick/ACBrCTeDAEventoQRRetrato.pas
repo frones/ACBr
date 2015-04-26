@@ -54,7 +54,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls, XMLIntf, XMLDoc,
-  JPEG, ACBrCTeQRCodeBar, pcnConversao, DB,
+  JPEG, ACBrDFeQRCodeBar, pcnConversao, DB,
   DBClient, ACBrCTeDAEventoQR;
 
 type
@@ -224,8 +224,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils,
-  ACBrDFeUtil, ACBrCTeUtil;
+  StrUtils, DateUtils, ACBrValidador, pcteConversaoCTe,
+  ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -332,10 +332,10 @@ begin
     qrlModelo.Caption  := FCTe.ide.modelo;
     qrlSerie.Caption   := IntToStr(FCTe.ide.serie);
     qrlNumCTe.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
-    qrlEmissao.Caption := FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
+    qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', FCTe.Ide.dhEmi);
 
     SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
-    qrlChave.Caption := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+    qrlChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
    end;
 end;
 
@@ -359,14 +359,14 @@ begin
        taHomologacao: qrlTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
       end;
 
-      qrlEmissaoEvento.Caption   := FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
+      qrlEmissaoEvento.Caption   := FormatDateTime('dd/mm/yyyy hh:nn', InfEvento.dhEvento);
       qrlTipoEvento.Caption      := InfEvento.TipoEvento;
       qrlDescricaoEvento.Caption := InfEvento.DescEvento;
       qrlSeqEvento.Caption       := IntToStr(InfEvento.nSeqEvento);
       qrlStatus.Caption          := IntToStr(RetInfEvento.cStat) + ' - ' +
                                     RetInfEvento.xMotivo;
       qrlProtocolo.Caption       := RetInfEvento.nProt + ' ' +
-                                    FormatDateTime(DateTimeToStr(RetInfEvento.dhRegEvento));
+                                    FormatDateTime('dd/mm/yyyy hh:nn', RetInfEvento.dhRegEvento);
     end;
 end;
 
@@ -382,7 +382,7 @@ begin
     PrintBand := True;
 
     qrlRazaoEmitente.Caption    := FCTe.emit.xNome;
-    qrlCNPJEmitente.Caption     := FormatarCNPJCPF(FCTe.emit.CNPJ);
+    qrlCNPJEmitente.Caption     := FormatarCNPJouCPF(FCTe.emit.CNPJ);
     qrlEnderecoEmitente.Caption := FCTe.emit.EnderEmit.xLgr + ', ' + FCTe.emit.EnderEmit.nro;
     qrlBairroEmitente.Caption   := FCTe.emit.EnderEmit.xBairro;
     qrlCEPEmitente.Caption      := FormatarCEP(FormatFloat('00000000', FCTe.emit.EnderEmit.CEP));
@@ -409,7 +409,7 @@ begin
       tmRemetente:
         begin
           qrlRazaoTomador.Caption    := FCTe.Rem.xNome;
-          qrlCNPJTomador.Caption     := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+          qrlCNPJTomador.Caption     := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
           qrlBairroTomador.Caption   := FCTe.Rem.EnderReme.xBairro;
           qrlCEPTomador.Caption      := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
@@ -420,7 +420,7 @@ begin
       tmExpedidor:
         begin
           qrlRazaoTomador.Caption    := FCTe.Exped.xNome;
-          qrlCNPJTomador.Caption     := FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
+          qrlCNPJTomador.Caption     := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
           qrlBairroTomador.Caption   := FCTe.Exped.EnderExped.xBairro;
           qrlCEPTomador.Caption      := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
@@ -431,7 +431,7 @@ begin
       tmRecebedor:
         begin
           qrlRazaoTomador.Caption    := FCTe.Receb.xNome;
-          qrlCNPJTomador.Caption     := FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
+          qrlCNPJTomador.Caption     := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
           qrlBairroTomador.Caption   := FCTe.Receb.EnderReceb.xBairro;
           qrlCEPTomador.Caption      := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
@@ -442,7 +442,7 @@ begin
       tmDestinatario:
         begin
           qrlRazaoTomador.Caption    := FCTe.Dest.xNome;
-          qrlCNPJTomador.Caption     := FormatarCNPJCPF(FCTe.Dest.CNPJCPF);
+          qrlCNPJTomador.Caption     := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
           qrlEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
           qrlBairroTomador.Caption   := FCTe.Dest.EnderDest.xBairro;
           qrlCEPTomador.Caption      := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
@@ -454,7 +454,7 @@ begin
      end
      else begin
       qrlRazaoTomador.Caption    := FCTe.Ide.Toma4.xNome;
-      qrlCNPJTomador.Caption     := FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
+      qrlCNPJTomador.Caption     := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
       qrlEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
       qrlBairroTomador.Caption   := FCTe.Ide.Toma4.EnderToma.xBairro;
       qrlCEPTomador.Caption      := FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));

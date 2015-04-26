@@ -46,7 +46,7 @@ uses
   {$IFDEF QReport_PDF}
      QRPDFFilt, QRPrntr,
   {$ENDIF}
-  ACBrMDFeDAMDFEQRCodeBar, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil, Printers;
+  ACBrDFeQRCodeBar, pmdfeMDFe, ACBrMDFe, Printers;
 
 type
   TfqrDAMDFEQR = class(TForm)
@@ -121,6 +121,7 @@ implementation
 
 uses
  MaskUtils;
+ 
 var
  Printer: TPrinter;
 

@@ -51,7 +51,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc, 
-  JPEG, ACBrNFeDANFeQR, ACBrNFeQRCodeBar, pcnConversao, DB, MidasLib,
+  JPEG, ACBrNFeDANFeQR, ACBrDFeQRCodeBar, pcnConversao, DB, MidasLib, pcnConversaoNFe,
   {$IFDEF QReport_PDF}
      QRPDFFilt,
   {$ENDIF}
@@ -458,7 +458,7 @@ type
 implementation
 
 uses
- StrUtils, DateUtils,
+ StrUtils, DateUtils, ACBrValidador, ACBrNFe,
  ACBrUtil, ACBrDFeUtil, pcnNFe;
 
 {$R *.dfm}
@@ -748,8 +748,7 @@ begin
                            '  -  ' +
                            'DEST. / REM.: ' + FNFe.Dest.xNome + '  -  ' +
                            'VALOR TOTAL: R$ ' +
-                           FormatFloat(FNFe.Total.ICMSTot.vNF,
-                           '###,###,###,##0.00');
+                           FormatFloat('###,###,###,##0.00', FNFe.Total.ICMSTot.vNF);
         end; // if FResumoCanhoto_Texto <> ''
     end // if FResumoCanhoto = True
   else
@@ -878,15 +877,15 @@ begin
          qrlDestBairro.Caption   := XBairro;
          qrlDestCidade.Caption   := XMun;
          qrlDestUF.Caption       := UF;
-         qrlDestCEP.Caption      := NotaUtil.FormatarCEP( FormatFloat( '00000000', CEP ) );
-         qrlDestFONE.Caption     := NotaUtil.FormatarFone( Fone );
+         qrlDestCEP.Caption      := FormatarCEP( FormatFloat( '00000000', CEP ) );
+         qrlDestFONE.Caption     := FormatarFone( Fone );
       end;
    end;
 
    // Emissao, saida
 
-   qrlEmissao.Caption   := FormatDate(DateToStr(FNFe.Ide.dEmi));
-   qrlSaida.Caption     := IfThen( FNFe.Ide.DSaiEnt <> 0, FormatDate(DateToStr(FNFe.Ide.dSaiEnt)));
+   qrlEmissao.Caption   := FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi);
+   qrlSaida.Caption     := IfThen( FNFe.Ide.DSaiEnt <> 0, FormatDateTime('dd/mm/yyy', FNFe.Ide.dSaiEnt));
    // Alterado por Italo em 22/03/2011
    qrlHoraSaida.Caption := IfThen( FNFe.Ide.hSaiEnt <> 0, FormatDateTime('hh:mm:ss', FNFe.Ide.hSaiEnt));
 
@@ -920,8 +919,8 @@ begin
      for x := 0 to (iQuantDup - 1) do with FNFe.Cobr.Dup[ x ] do
      begin
         TQRLabel( FindComponent( 'qrlFatNum'   + intToStr ( x + 1 ) ) ).Caption := NDup;
-        TQRLabel( FindComponent( 'qrlFatData'  + intToStr ( x + 1 ) ) ).Caption := FormatDate( DateToStr(DVenc) );
-        TQRLabel( FindComponent( 'qrlFatValor' + intToStr ( x + 1 ) ) ).Caption := FormatFloat(VDup);
+        TQRLabel( FindComponent( 'qrlFatData'  + intToStr ( x + 1 ) ) ).Caption := FormatDateTime('dd/mm/yyyy', DVenc);
+        TQRLabel( FindComponent( 'qrlFatValor' + intToStr ( x + 1 ) ) ).Caption := FormatFloat('###,###,###,##0.00', VDup);
      end;
     end;
 
@@ -929,17 +928,17 @@ begin
 
    with FNFe.Total.ICMSTot do
    begin
-      qrlBaseICMS.Caption      := FormatFloat( VBC );
-      qrlValorICMS.Caption     := FormatFloat( VICMS );
-      qrlBaseICMST.Caption     := FormatFloat( VBCST );
-      qrlValorICMST.Caption    := FormatFloat( VST );
-      qrlTotalProdutos.Caption := FormatFloat( VProd );
-      qrlValorFrete.Caption    := FormatFloat( VFrete );
-      qrlValorSeguro.Caption   := FormatFloat( VSeg );
-      qrlDescontos.Caption     := FormatFloat( VDesc );
-      qrlAcessorias.Caption    := FormatFloat( VOutro );
-      qrlValorIPI.Caption      := FormatFloat( VIPI );
-      qrlTotalNF.Caption       := FormatFloat( VNF );
+      qrlBaseICMS.Caption      := FormatFloat('###,###,###,##0.00', VBC );
+      qrlValorICMS.Caption     := FormatFloat('###,###,###,##0.00', VICMS );
+      qrlBaseICMST.Caption     := FormatFloat('###,###,###,##0.00', VBCST );
+      qrlValorICMST.Caption    := FormatFloat('###,###,###,##0.00', VST );
+      qrlTotalProdutos.Caption := FormatFloat('###,###,###,##0.00', VProd );
+      qrlValorFrete.Caption    := FormatFloat('###,###,###,##0.00', VFrete );
+      qrlValorSeguro.Caption   := FormatFloat('###,###,###,##0.00', VSeg );
+      qrlDescontos.Caption     := FormatFloat('###,###,###,##0.00', VDesc );
+      qrlAcessorias.Caption    := FormatFloat('###,###,###,##0.00', VOutro );
+      qrlValorIPI.Caption      := FormatFloat('###,###,###,##0.00', VIPI );
+      qrlTotalNF.Caption       := FormatFloat('###,###,###,##0.00', VNF );
    end;
 
    // Transporte
@@ -985,8 +984,8 @@ begin
       qrlTransEspecie.Caption   := Esp;
       qrlTransMarca.Caption     := Marca;
       qrlTransNumeracao.Caption := NVol;
-      qrlTransPesoLiq.Caption   := FormatFloat( PesoL, '#,0.000#' );
-      qrlTransPesoBruto.Caption := FormatFloat( PesoB, '#,0.000#' );
+      qrlTransPesoLiq.Caption   := FormatFloat('###,###,###,##0.000', PesoL);
+      qrlTransPesoBruto.Caption := FormatFloat('###,###,###,##0.000', PesoB);
    end
    else
    begin
@@ -1057,9 +1056,9 @@ begin
       if FNFE.Total.ISSQNtot.vISS > 0 then
       begin
          qrlInscMunicipal.Caption := FNFE.Emit.IM;
-         qrlTotalServicos.Caption := FormatFloat( FNFE.Total.ISSQNtot.vServ );
-         qrlBaseISSQN.Caption     := FormatFloat( FNFE.Total.ISSQNtot.vBC );
-         qrlValorISSQN.Caption    := FormatFloat( FNFE.Total.ISSQNtot.vISS );
+         qrlTotalServicos.Caption := FormatFloat('###,###,###,##0.00', FNFE.Total.ISSQNtot.vServ );
+         qrlBaseISSQN.Caption     := FormatFloat('###,###,###,##0.00', FNFE.Total.ISSQNtot.vBC );
+         qrlValorISSQN.Caption    := FormatFloat('###,###,###,##0.00', FNFE.Total.ISSQNtot.vISS );
       end
       else
       begin
@@ -1255,7 +1254,7 @@ begin
             if XCpl <> '' then qrmEndereco.Lines.Add(XCpl);
             if XBairro <> '' then qrmEndereco.Lines.Add(XBairro);
             qrmEndereco.Lines.Add(XMun + ' - ' + UF);
-            qrmEndereco.Lines.Add('CEP: ' + NotaUtil.FormatarCEP(FormatFloat( '00000000', CEP )));
+            qrmEndereco.Lines.Add('CEP: ' + FormatarCEP(FormatFloat( '00000000', CEP )));
             // Alterado por Italo em 23/03/2011
             if Trim(FSite) <> '' then qrmEndereco.Lines.Add ('SITE: ' + FSite);
             // Alterado por Italo em 18/06/2012
@@ -1263,12 +1262,12 @@ begin
             // telefone
             qrlFone.Caption:= '';
             // Alterado por Italo em 18/06/2012
-            if (fone <> '') and (FFax = '') then qrlFone.Caption := 'FONE: ' + NotaUtil.FormatarFone( Fone );
+            if (fone <> '') and (FFax = '') then qrlFone.Caption := 'FONE: ' + FormatarFone( Fone );
             // Alterado por Italo em 18/06/2012
             if (FFax <> '') and (fone = '') then qrlFone.Caption:= 'FAX: ' + FFax;
             // Alterado por Italo em 18/06/2012
             if (FFax <> '') and (fone <> '') then qrlFone.Caption:= 'FONE: ' +
-                            NotaUtil.FormatarFone( Fone ) + #13 +'FAX: ' + FFax;
+                            FormatarFone( Fone ) + #13 +'FAX: ' + FFax;
          end;
        end;
       end;
@@ -1277,7 +1276,7 @@ begin
       qrlEntradaSaida.Caption := tpNFToStr( FNFe.Ide.tpNF );
       qrlNumNF1.Caption       := FormatFloat( '000,000,000', FNFe.Ide.nNF );
       qrlSERIE1.Caption       := IntToStr( FNFe.Ide.serie );
-      qrlChave.Caption        := NotaUtil.FormatarChaveAcesso( Copy ( FNFe.InfNFe.Id, 4, 44 ) );
+      qrlChave.Caption        := FormatarChaveAcesso( Copy ( FNFe.InfNFe.Id, 4, 44 ) );
       qrlNatOperacao.Caption  := FNFe.Ide.natOp;
       SetBarCodeImage( Copy ( FNFe.InfNFe.Id, 4, 44 ), qriBarCode );
 
@@ -1306,7 +1305,7 @@ begin
                 qrlProtocolo.Caption        := FProtocoloNFE
             else
                 qrlProtocolo.Caption        :=  FNFe.procNFe.nProt + ' ' +
-                                                SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto),'');
+                                                ifThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto),'');
             IF FNFe.procNFe.cStat = 0 THEN
               BEGIN
               qrlProtocolo.Caption := 'NF-E NÃO ENVIADA PARA SEFAZ';
@@ -1319,12 +1318,12 @@ begin
         // Contingencia ********************************************************
         if FNFe.Ide.tpEmis in [teContingencia, teFSDA] then
         begin
-            strChaveContingencia:= NotaUtil.GerarChaveContingencia(FNFe);
+            strChaveContingencia:= TACBrNFe(FACBrNFe).GerarChaveContingencia(FNFe);
             SetBarCodeImage(strChaveContingencia,qriBarCodeContingencia);
             qriBarCodeContingencia.Visible  := True;
             qrlMsgAutorizado.Enabled        := False;
             qrlDescricao.Caption            := 'DADOS DA NF-E';
-            qrlProtocolo.Caption            := NotaUtil.FormatarChaveContigencia(strChaveContingencia);
+            qrlProtocolo.Caption            := FormatarChaveAcesso(strChaveContingencia);
         end;
     //************************************************************************
     end;

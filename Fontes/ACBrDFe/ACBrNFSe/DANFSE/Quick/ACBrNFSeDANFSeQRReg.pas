@@ -34,9 +34,9 @@ unit ACBrNFSeDANFSeQRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFSeDANFSeQRClass, 
+  SysUtils, Classes, ACBrNFSeDANFSeQRClass 
   {$IFDEF FPC}
-     LResources
+     , LResources
   {$ENDIF} ;
 
 procedure Register;

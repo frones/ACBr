@@ -246,12 +246,11 @@ type
     procedure QuebradeLinha(const sQuebradeLinha: String);
   end;
 
-
 implementation
 
 uses
- StrUtils, DateUtils,
- ACBrNFSe, ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil, pnfsNFSe;
+ StrUtils, DateUtils, ACBrValidador, ACBrNFSe,
+ ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil, pnfsNFSe;
 
 {$R *.dfm}
 
@@ -337,13 +336,13 @@ begin
  qrlNumNF0.Caption   := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
 
  if FNFSe.DataEmissao > 0
-  then qrlDataServ.Caption := FormatDateTime(DateTimeToStr(FNFSe.DataEmissao))
-  else qrlDataServ.Caption := FormatDateTime(DateTimeToStr(FNFSe.DataEmissaoRps));
+  then qrlDataServ.Caption := FormatDateTime('dd/mm/yyyy', FNFSe.DataEmissao)
+  else qrlDataServ.Caption := FormatDateTime('dd/mm/yyyy', FNFSe.DataEmissaoRps);
 
  // Alterado em 27/12/2012  Daniel Jr -> passando parâmetro para Comprovante de Entrega.
  qrlNumeroNotaCompEnt.Caption := FormatFloat('00000000000', StrToFloatDef(FNFSe.Numero, 0));
 
- qrlEmissao.Caption := FormatDateTime(DateTimeToStr(FNFSe.DataEmissao));
+ qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy', FNFSe.DataEmissao);
  qrlCodVerificacao.Caption := FNFSe.CodigoVerificacao;
  t:=length(FNFSe.Competencia);
  if t=6
@@ -476,7 +475,7 @@ begin
 //    FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
 
  qrlValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
-    FormatFloat( FNFSe.Servico.Valores.ValorServicos );
+    FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorServicos );
 
  qrmCodServico.Lines.BeginUpdate;
  qrmCodServico.Lines.Clear;
@@ -517,23 +516,23 @@ begin
  qrlCodigoArt.Enabled        := MostrarObra;
  qrlCodART.Enabled           := MostrarObra;
 
- qrlValorPIS.Caption    := FormatFloat( FNFSe.Servico.Valores.ValorPis );
- qrlValorCOFINS.Caption := FormatFloat( FNFSe.Servico.Valores.ValorCofins );
- qrlValorIR.Caption     := FormatFloat( FNFSe.Servico.Valores.ValorIr );
- qrlValorINSS.Caption   := FormatFloat( FNFSe.Servico.Valores.ValorInss );
- qrlValorCSLL.Caption   := FormatFloat( FNFSe.Servico.Valores.ValorCsll );
+ qrlValorPIS.Caption    := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorPis );
+ qrlValorCOFINS.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorCofins );
+ qrlValorIR.Caption     := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorIr );
+ qrlValorINSS.Caption   := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorInss );
+ qrlValorCSLL.Caption   := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorCsll );
 
- qrlValorServicos1.Caption      := FormatFloat( FNFSe.Servico.Valores.ValorServicos );
- qrlDescIncondicionado1.Caption := FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );
- qrlDescCondicionado.Caption    := FormatFloat( FNFSe.Servico.Valores.DescontoCondicionado );
- qrlRetencoesFederais.Caption   := FormatFloat( FNFSe.Servico.Valores.ValorPis +
+ qrlValorServicos1.Caption      := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorServicos );
+ qrlDescIncondicionado1.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.DescontoIncondicionado );
+ qrlDescCondicionado.Caption    := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.DescontoCondicionado );
+ qrlRetencoesFederais.Caption   := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorPis +
                                      FNFSe.Servico.Valores.ValorCofins + FNFSe.Servico.Valores.ValorInss +
                                      FNFSe.Servico.Valores.ValorIr + FNFSe.Servico.Valores.ValorCsll );
- qrlOutrasRetencoes.Caption     := FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );
+ qrlOutrasRetencoes.Caption     := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.OutrasRetencoes );
 
- qrlValorIssRetido.Caption      := FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );
+ qrlValorIssRetido.Caption      := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorIssRetido );
 
- qrlValorLiquido.Caption := FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
+ qrlValorLiquido.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorLiquidoNfse );
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
 
@@ -603,16 +602,16 @@ begin
   snNao : qrlIncentivador.Caption := 'Não';
  end;
 
- qrlValorServicos2.Caption      := FormatFloat( FNFSe.Servico.Valores.ValorServicos );
- qrlValorDeducoes.Caption       := FormatFloat( FNFSe.Servico.Valores.ValorDeducoes );
- qrlDescIncondicionado2.Caption := FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );
- qrlBaseCalc.Caption            := FormatFloat( FNFSe.Servico.Valores.BaseCalculo );
+ qrlValorServicos2.Caption      := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorServicos );
+ qrlValorDeducoes.Caption       := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorDeducoes );
+ qrlDescIncondicionado2.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.DescontoIncondicionado );
+ qrlBaseCalc.Caption            := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.BaseCalculo );
 
  // Checar os provedores que retornam a Aliquota dividida por 100
  // e multiplicar por 100 para que seja apresentada no formado x.xx %
  if FProvedor in [proThema, proWebISS, proActCon]
-  then qrlAliquota.Caption := FormatFloat( FNFSe.Servico.Valores.Aliquota * 100, ',0.00' )
-  else qrlAliquota.Caption := FormatFloat( FNFSe.Servico.Valores.Aliquota, ',0.00' );
+  then qrlAliquota.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.Aliquota * 100)
+  else qrlAliquota.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.Aliquota);
 
  // TnfseSimNao = ( snSim, snNao )
  case FNFSe.Servico.Valores.IssRetido of
@@ -625,7 +624,7 @@ begin
  // Alterado por Italo em 17/07/2013 (> removido a divisão por 100
  // qrlValorISS.Caption := FormatFloat( (FNFSe.Servico.Valores.ValorIss / 100) );
 
- qrlValorISS.Caption := FormatFloat( FNFSe.Servico.Valores.ValorIss );
+ qrlValorISS.Caption := FormatFloat('#,##0.00',  FNFSe.Servico.Valores.ValorIss );
 
 // qrlValorCredito.Caption := FormatFloat( FNFSe.ValorCredito );
 

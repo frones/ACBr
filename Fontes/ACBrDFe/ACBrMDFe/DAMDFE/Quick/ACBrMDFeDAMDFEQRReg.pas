@@ -41,9 +41,9 @@ unit ACBrMDFeDAMDFEQRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrMDFeDAMDFEQRClass,
+  SysUtils, Classes, ACBrMDFeDAMDFEQRClass
   {$IFDEF FPC}
-     LResources
+     , LResources
   {$ENDIF};
 
 procedure Register;

@@ -50,9 +50,8 @@ type
 implementation
 
 uses
- StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil, pcnAuxiliar, pnfsConversao,
- ACBrNFSeDANFSeQR, ACBrNFSeDANFSeQRRetrato, ACBrNFSeDANFSeQRRetratoCampinas,
- ACBrNFSeDANFSeQRRetratoFiorilli;
+ StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil, pcnAuxiliar,
+ ACBrNFSeDANFSeQRRetrato, ACBrNFSeDANFSeQRRetratoCampinas;
 
 constructor TACBrNFSeDANFSeQR.Create(AOwner: TComponent);
 begin
@@ -68,24 +67,17 @@ end;
 procedure TACBrNFSeDANFSeQR.ImprimirDANFSe(NFSe : TNFSe = nil);
 var
  i : Integer;
- fqrDANFSeQRRetrato : TfqrDANFSeQR; // TfqrDANFSeQRRetrato;
+ fqrDANFSeQRRetrato : TfqrDANFSeQRRetrato;
 begin
-// fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
+ fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
 
-  case TipoDANFSE of
-    tpIssDSF:   fqrDANFSeQRRetrato := TfqrDANFSeQRRetratoCampinas.Create(Self);
-    tpFiorilli: fqrDANFSeQRRetrato := TfqrDANFSeQRRetratoFiorilli.Create(Self);
-    else        fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
-  end;
-
-// fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
+ fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
 
  if NFSe = nil
   then begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
     begin
      fqrDANFSeQRRetrato.Imprimir(  TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
-                                 , TACBrNFSe(ACBrNFSe)
                                  , Logo
                                  , Email
                                  , Fax
@@ -106,7 +98,6 @@ begin
     end;
   end
   else fqrDANFSeQRRetrato.Imprimir(  NFSe
-                                   , TACBrNFSe(ACBrNFSe)
                                    , Logo
                                    , Email
                                    , Fax
@@ -290,17 +281,11 @@ procedure TACBrNFSeDANFSeQR.ImprimirDANFSePDF(NFSe : TNFSe = nil);
 var
  NomeArqPDF : String;
  i : Integer;
- fqrDANFSeQRRetrato : TfqrDANFSeQR; // TfqrDANFSeQRRetrato;
+ fqrDANFSeQRRetrato : TfqrDANFSeQRRetrato;
 begin
-// fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
+ fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
 
-  case TipoDANFSE of
-    tpIssDSF:   fqrDANFSeQRRetrato := TfqrDANFSeQRRetratoCampinas.Create(Self);
-    tpFiorilli: fqrDANFSeQRRetrato := TfqrDANFSeQRRetratoFiorilli.Create(Self);
-    else        fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
-  end;
-
-// fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
+ fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
 
  if NFSe = nil
   then begin
@@ -328,7 +313,6 @@ begin
 
       fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
                                , TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
-                               , TACBrNFSe(ACBrNFSe)
                                , Logo
                                , Email
                                , Fax
@@ -371,7 +355,6 @@ begin
 
    fqrDANFSeQRRetrato.SavePDF( NomeArqPDF
                              , NFSe
-                             , TACBrNFSe(ACBrNFSe)
                              , Logo
                              , Email
                              , Fax

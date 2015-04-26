@@ -2,7 +2,7 @@ inherited frmCTeDAInutQRRetrato: TfrmCTeDAInutQRRetrato
   Left = 199
   Top = 126
   Width = 844
-  Height = 834
+  Height = 784
   Caption = 'Inutiliza'#231#227'o - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -114,10 +114,10 @@ inherited frmCTeDAInutQRRetrato: TfrmCTeDAInutQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          42.333333333333330000
           481.541666666666700000
           63.500000000000000000
-          997.479166666666900000)
+          997.479166666666700000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True
@@ -190,7 +190,7 @@ inherited frmCTeDAInutQRRetrato: TfrmCTeDAInutQRRetrato
       ForceNewPage = False
       LinkBand = qrb_03_Inutilizacao
       Size.Values = (
-        84.666666666666680000
+        84.666666666666670000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -330,7 +330,7 @@ inherited frmCTeDAInutQRRetrato: TfrmCTeDAInutQRRetrato
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        407.458333333333400000
+        407.458333333333300000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False

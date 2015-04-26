@@ -71,7 +71,7 @@ uses
   {$IFDEF QReport_PDF}
      QRPDFFilt, QRPrntr,
   {$ENDIF}
-  ACBrCTeQRCodeBar, pcteCTe, ACBrCTe, ACBrCTeUtil, Printers, pcnConversao;
+  ACBrDFeQRCodeBar, pcteCTe, ACBrCTe, Printers, pcnConversao, pcteConversaoCTe;
 
 type
 
@@ -373,7 +373,7 @@ begin
   else
     Result := Result + FCTe.Ide.Toma4.xNome;
 
-  Result := Result + ' - VALOR A RECEBER: R$ ' + FormatFloat(FCTe.vPrest.vRec, '###,###,###,##0.00');
+  Result := Result + ' - VALOR A RECEBER: R$ ' + FormatFloat('###,###,###,##0.00', FCTe.vPrest.vRec);
 end;
 
 end.

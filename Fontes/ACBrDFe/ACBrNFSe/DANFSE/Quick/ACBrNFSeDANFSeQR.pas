@@ -82,7 +82,6 @@ type
   public
     { Public declarations }
     class procedure Imprimir(ANFSe           : TNFSe;
-                             AACBrNFSe       : TACBrNFSe;
                              ALogo           : String  = '';
                              AEmail          : String  = '';
                              AFax            : String  = '';
@@ -103,7 +102,6 @@ type
 
     class procedure SavePDF(AFile           : String;
                             ANFSe           : TNFSe;
-                            AACBrNFSe       : TACBrNFSe;
                             ALogo           : String  = '';
                             AEmail          : String  = '';
                             AFax            : String  = '';
@@ -133,7 +131,6 @@ var
 {$R *.dfm}
 
 class procedure TfqrDANFSeQR.Imprimir(ANFSe           : TNFSe;
-                                      AACBrNFSe       : TACBrNFSe;
                                       ALogo           : String  = '';
                                       AEmail          : String  = '';
                                       AFax            : String  = '';
@@ -159,7 +156,6 @@ begin
  with Create ( nil ) do
   try
    FNFSe           := ANFSe;
-   FACBrNFSe       := AACBrNFSe;
    FLogo           := ALogo;
    FEmail          := AEmail;
    FFax            := AFax;
@@ -219,7 +215,6 @@ end;
 
 class procedure TfqrDANFSeQR.SavePDF(AFile           : String;
                                      ANFSe           : TNFSe;
-                                     AACBrNFSe       : TACBrNFSe;
                                      ALogo           : String  = '';
                                      AEmail          : String  = '';
                                      AFax            : String  = '';
@@ -246,7 +241,6 @@ begin
   with Create ( nil ) do
    try
     FNFSe           := ANFSe;
-    FACBrNFSe       := AACBrNFSe;
     FLogo           := ALogo;
     FEmail          := AEmail;
     FFax            := AFax;

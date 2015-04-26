@@ -51,7 +51,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc,
-  JPEG, ACBrNFeDANFeQR, ACBrNFeQRCodeBar, pcnConversao, DB,
+  JPEG, ACBrNFeDANFeQR, ACBrDFeQRCodeBar, pcnConversao, DB, pcnConversaoNFe,
   {$IFDEF QReport_PDF}
      QRPDFFilt,
   {$ENDIF}
@@ -168,7 +168,7 @@ type
 implementation
 
 uses
- StrUtils, DateUtils, ACBrNFe,
+ StrUtils, DateUtils, ACBrNFe, ACBrValidador,
  ACBrUtil, ACBrDFeUtil, pcnNFe;
 
 {$R *.dfm}
@@ -551,20 +551,20 @@ begin
 
   qrmPagDesc.Lines.Add('VALOR TOTAL');
 //  qrmPagValor.Lines.Add(FormatFloat(FNFE.Total.ICMSTot.vNF));
-  qrmPagValor.Lines.Add(FormatFloat(FNFE.Total.ICMSTot.vProd));
+  qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vProd));
 
   if FNFE.Total.ICMSTot.vDesc > 0.0
    then begin
      qrmPagDesc.Lines.Add('TOTAL DESCONTOS');
-     qrmPagValor.Lines.Add(FormatFloat(FNFE.Total.ICMSTot.vDesc));
+     qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vDesc));
      qrmPagDesc.Lines.Add('TOTAL LIQUIDO');
-     qrmPagValor.Lines.Add(FormatFloat(FNFE.Total.ICMSTot.vNF));
+     qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vNF));
    end;
 
   if FvTroco > 0.0
    then begin
      qrmPagDesc.Lines.Add('TROCO');
-     qrmPagValor.Lines.Add(FormatFloat(FvTroco));
+     qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FvTroco));
    end;
 
   qrmPagDesc.Lines.Add('FORMA DE PAGAMENTO');
@@ -588,7 +588,7 @@ begin
      fpOutro:           qrmPagDesc.Lines.Add('Outro');
     end;
 
-    qrmPagValor.Lines.Add(FormatFloat(FNFE.pag.Items[i].vPag));
+    qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.pag.Items[i].vPag));
    end;
 end;
 
@@ -602,8 +602,8 @@ begin
   PrintBand := (FNFE.Total.ICMSTot.vTotTrib <> 0);
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   qrlTributos.Caption := 'Val Aprox. dos Tributos: ' +
-                         FormatFloat(FNFE.Total.ICMSTot.vTotTrib) +
-                         '(' + FormatFloat(Perc) + '%)(Fonte: IBPT)';
+                         FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vTotTrib) +
+                         '(' + FormatFloat('#,##0.00', Perc) + '%)(Fonte: IBPT)';
 end;
 
 procedure TfqrDANFeQRNFCe.qrb05a_InfComplementarBeforePrint(
@@ -651,12 +651,12 @@ begin
 
   { 10/10/2014 : Edilson Alves de Oliveira
     - Descrição Via do consumidor e Via do estabelecimento como pedi o manual}
-  qrlEmissao.Caption := 'Emissão: ' + FormatDateTime(DateToStr(FNFe.Ide.dEmi)) +
+  qrlEmissao.Caption := 'Emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi) +
                        IfThen(FViaConsumidor,' - Via do consumidor', ' - Via do estabelecimento');
                        
-  qrlSiteConsulta.Caption := NotaUtil.GetURLConsultaNFCe(FNFE.Ide.cUF, FNFe.Ide.tpAmb);
+  qrlSiteConsulta.Caption := TACBrNFe(FACBrNFe).GetURLConsultaNFCe(FNFE.Ide.cUF, FNFe.Ide.tpAmb);
 
-  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+  qrlChave.Caption := FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
 end;
 
 procedure TfqrDANFeQRNFCe.qrb07_ConsumidorBeforePrint(Sender: TQRCustomBand;
@@ -668,7 +668,7 @@ begin
   if FNFE.Dest.CNPJCPF <> ''
      then begin
             qrlDestCNPJ.lines.Add( 'CPF/CNPJ: ' +
-                                   FormatarCNPJCPF(FNFE.Dest.CNPJCPF) +
+                                   FormatarCNPJouCPF(FNFE.Dest.CNPJCPF) +
                                    FNFE.Dest.xNome);
             qrlDestCNPJ.lines.Add( FNFE.Dest.EnderDest.xLgr + ', ' +
                                    FNFE.Dest.EnderDest.nro + ' ' +
@@ -701,18 +701,14 @@ begin
       if FNFe.Dest.idEstrangeiro <> ''
        then cDest := FNFe.Dest.idEstrangeiro
        else cDest := FNFe.Dest.CNPJCPF;
-
-      sURL := NotaUtil.GetURLQRCode(FNFE.Ide.cUF,
+      sURL := TACBrNFe(FACBrNFe).GetURLQRCode(FNFE.Ide.cUF,
                                     FNFe.Ide.tpAmb,
                                     Copy(FNFe.InfNFe.Id, 4, 44),
                                     cDest,
                                     FNFe.Ide.dEmi,
                                     FNFe.Total.ICMSTot.vNF,
                                     FNFe.Total.ICMSTot.vICMS,
-                                    FNFe.signature.DigestValue,
-//                                    FNFe.procNFe.digVal,
-                                    TACBrNFe( FACBrNFe ).Configuracoes.Geral.IdToken,
-                                    TACBrNFe( FACBrNFe ).Configuracoes.Geral.Token);
+                                    FNFe.signature.DigestValue);
       QRCode.Data := sURL;
 
       // TQRCodeEncoding = (qrAuto, qrNumeric, qrAlphanumeric, qrISO88591, qrUTF8NoBOM, qrUTF8BOM);
@@ -775,7 +771,7 @@ begin
   if FProtocoloNFE <> ''
    then qrlProtocolo.Caption := FProtocoloNFE
    else qrlProtocolo.Caption := FNFe.procNFe.nProt + ' ' +
-                                SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                                ifThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
 end;
 
 end.

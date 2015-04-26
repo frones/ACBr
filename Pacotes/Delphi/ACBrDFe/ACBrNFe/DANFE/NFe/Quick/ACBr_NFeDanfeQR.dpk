@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -70,10 +70,28 @@ package ACBr_NFeDanfeQR;
 {$IMPLICITBUILD ON}
 
 requires
-  ACBr_NFe,
+  vcl,
+  rtl,
+  dbrtl,
   bdertl,
-  ACBr_Diversos,
-  {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
+  vclx,
+  vcldb,
+  ACBr_NFe,
+  ACBrCapicom,
+  ACBrComum,
+  synapse,
+  designide,
+  vclactnband,
+  ACBrOpenSSL,
+  ACBrDFeComum,
+  PCNComum,
+  ACBrDiversos,
+  ACBrTCP,
+  soaprtl,
+  xmlrtl,
+  inet,
+  dsnap,
+  {$IFDEF VER150} QR5RunD7, vcljpg; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
     {$IFNDEF VER185} QR5RunD2006, vcljpg; {$ENDIF} // D2006
@@ -87,13 +105,21 @@ requires
   {$IFDEF VER240} QR5RunDXE3, vclimg; {$ENDIF} //XE3
   {$IFDEF VER250} QR5RunDXE4, vclimg; {$ENDIF} //XE4
   {$IFDEF VER260} QR5RunDXE5, vclimg; {$ENDIF} //XE5
-  {$IFDEF VER270} QR5RunDXE6, vclimg, dsnap; {$ENDIF} //XE6
+  {$IFDEF VER270} QR5RunDXE6, vclimg,  dsnap; {$ENDIF} //XE6
+
 
 contains
-  ACBrNFeDANFeQRClass in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeQRClass.pas',
-  ACBrNFeDANFeQRReg in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeQRReg.pas',
-  ACBrNFeDANFeQRRetrato in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeQRRetrato.pas' {fqrDANFeQRRetrato},
-  ACBrNFeQRCodeBar in '..\..\..\Fontes\ACBrNFe2\ACBrNFeQRCodeBar.pas',
-  ACBrNFeDANFeQR in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFeQR.pas' {fqrDANFeQR};
+  ACBrNFeDAEventoQR in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDAEventoQR.pas' {frmNFeDAEventoQR},
+  ACBrNFeDAInutQR in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDAInutQR.pas' {frmNFeDAInutQR},
+  ACBrNFeDANFeQR in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDANFeQR.pas' {fqrDANFeQR},
+  ACBrNFeDAEventoQRRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDAEventoQRRetrato.pas' {frmNFeDAEventoQRRetrato},
+  ACBrNFeDAInutQRRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDAInutQRRetrato.pas' {frmNFeDAInutQRRetrato},
+  ACBrNFeDANFeQRClass in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDANFeQRClass.pas',
+  ACBrNFeDANFeQRPaisagem in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDANFeQRPaisagem.pas' {fqrDANFeQRPaisagem},
+  ACBrNFeDANFeQRReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDANFeQRReg.pas',
+  ACBrNFeDANFeQRRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDANFeQRRetrato.pas' {fqrDANFeQRRetrato},
+  ACBrNFeDANFeQRSimplificado in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Quick\ACBrNFeDANFeQRSimplificado.pas' {fqrDANFeQRSimplificado},
+  ACBrNFeDANFeQRNFCe in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Quick\ACBrNFeDANFeQRNFCe.pas' {fqrDANFeQRNFCe},
+  ACBrNFeDANFeQRNFCeA4 in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Quick\ACBrNFeDANFeQRNFCeA4.pas' {fqrDANFeQRNFCeA4};
 
 end.

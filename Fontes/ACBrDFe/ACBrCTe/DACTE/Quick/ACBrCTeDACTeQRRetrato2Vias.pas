@@ -51,8 +51,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, QuickRpt, QRCtrls, XMLIntf, XMLDoc, ACBrCTeUtil,
-  JPEG, ACBrCTeQRCodeBar, pcnConversao, DB,
+  Dialogs, ExtCtrls, QuickRpt, QRCtrls, XMLIntf, XMLDoc,
+  JPEG, ACBrDFeQRCodeBar, pcnConversao, DB,
   {$IFDEF QReport_PDF}
      QRPDFFilt,
      // Incluido por Italo em 13/01/2011
@@ -398,7 +398,7 @@ type
 implementation
 
 uses
-  StrUtils, ACBrDFeUtil, DateUtils;
+  StrUtils, ACBrDFeUtil, DateUtils, ACBrValidador, ACBrCTe, pcteConversaoCTe;
 
 {$R *.dfm}
 
@@ -476,7 +476,7 @@ begin
       begin}
         cdsDocumentos.Append;
         cdsDocumentosTIPO_1.AsString := 'NF-E';
-        sChave := CTeUtil.FormatarChaveAcesso(chave, True);
+        sChave := FormatarChaveAcesso(chave);
 
         cdsDocumentosCNPJCPF_1.AsString := Copy(sChave, 1, 22);
         cdsDocumentosDOCUMENTO_1.AsString := Copy(sChave, 23, 39);
@@ -625,7 +625,7 @@ begin
 
             cdsDocumentosTIPO_1.AsString := 'CT-E';
             // Alterado por Italo em 17/05/2011
-            sChave := CTeUtil.FormatarChaveAcesso(chave, True);
+            sChave := FormatarChaveAcesso(chave);
             cdsDocumentosCNPJCPF_1.AsString := Copy(sChave, 1, 22);
             cdsDocumentosDOCUMENTO_1.AsString := Copy(sChave, 23, 50);
           {end
@@ -917,12 +917,12 @@ begin
   qrlPageNumber_Compl.Caption := format('%2.2d', [2]) + '/' + format('%2.2d', [FTotalPages]); //QRCTe.PageNumber+1
   qrlEmissao_Compl.Caption := FormatDateTime('DD/MM/YYYY HH:NN', FCTe.Ide.dhEmi);
   SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode_Compl);
-  qrlChave_Compl.Caption := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  qrlChave_Compl.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
 
   if FProtocoloCTE <> ''
    then qrlProtocolo_Compl.Caption := FProtocoloCTE
    else qrlProtocolo_Compl.Caption := FCTe.procCTe.nProt + '   ' +
-                                   SeSenao(FCTe.procCTe.dhRecbto <> 0,
+                                   ifThen(FCTe.procCTe.dhRecbto <> 0,
                                     DateTimeToStr(FCTe.procCTe.dhRecbto), '');
 
   qrlTipoCte_Compl.Caption := tpCTToStrText(FCTe.Ide.tpCTe);
@@ -1403,7 +1403,7 @@ begin
   qrlEmissao.Caption := FormatDateTime('DD/MM/YYYY HH:NN', FCTe.Ide.dhEmi);
   SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
 //  SetBarCodeImage('318' + FormatFloat('0000000', FCTe.Ide.nCT), qriBarControle);
-  qrlChave.Caption := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  qrlChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
 
   // Incluido por Italo em 17/05/2012
   if not FExpandirLogoMarca then
@@ -1463,7 +1463,7 @@ begin
     if FProtocoloCTE <> ''
      then qrlProtocolo.Caption := FProtocoloCTE
      else qrlProtocolo.Caption := FCTe.procCTe.nProt + '   ' +
-                                     SeSenao(FCTe.procCTe.dhRecbto <> 0,
+                                     ifThen(FCTe.procCTe.dhRecbto <> 0,
                                       DateTimeToStr(FCTe.procCTe.dhRecbto), '');
    end;
 
@@ -1489,7 +1489,7 @@ begin
       if FProtocoloCTE <> ''
        then qrlProtocolo.Caption := FProtocoloCTE
        else qrlProtocolo.Caption := FCTe.procCTe.nProt + '   ' +
-                                    SeSenao(FCTe.procCTe.dhRecbto <> 0,
+                                    ifThen(FCTe.procCTe.dhRecbto <> 0,
                                         DateTimeToStr(FCTe.procCTe.dhRecbto), '');
      end
      else begin
@@ -1497,10 +1497,10 @@ begin
   //    qrlVariavel1.Enabled := False;
  //     qriBarCode2.Enabled  := True;
 
-      strChaveContingencia := CTeUtil.GerarChaveContingencia(FCTe);
+      strChaveContingencia := TACBrCTe(FACBrCTe).GerarChaveContingencia(FCTe);
     //  SetBarCodeImage(strChaveContingencia, qriBarCode2 );
 //      qrlDescricao.Caption := 'DADOS DO CT-E';
-      qrlProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
+      qrlProtocolo.Caption := FormatarChaveAcesso(strChaveContingencia);
      end;
    end;
 
@@ -1686,7 +1686,7 @@ begin
   qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vCarga);
 {$ENDIF}
 {$IFDEF PL_200}
-  qrlVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.infCTeNorm.infCarga.vCarga);
+  qrlVlrTotalMerc.Caption := FormatFloat('###,###,###,##0.00', FCTe.infCTeNorm.infCarga.vCarga);
 {$ENDIF}
 
   {
@@ -1712,32 +1712,32 @@ begin
     // Alterado por Italo em 17/05/2012
     //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid of
-          uM3: qrmQtdUnidMedida4.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga);
+          uM3: qrmQtdUnidMedida4.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga);
           uKg: begin
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BRUTO'
-                then qrmQtdUnidMedida1.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                then qrmQtdUnidMedida1.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then qrmQtdUnidMedida2.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                then qrmQtdUnidMedida2.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
-                then qrmQtdUnidMedida2.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
-                else qrmQtdUnidMedida3.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga);
+                then qrmQtdUnidMedida2.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                else qrmQtdUnidMedida3.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga);
                end;
          uTON: begin
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BRUTO'
-                then qrmQtdUnidMedida1.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                then qrmQtdUnidMedida1.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then qrmQtdUnidMedida2.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                then qrmQtdUnidMedida2.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
-                then qrmQtdUnidMedida2.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
-                else qrmQtdUnidMedida3.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga);
+                then qrmQtdUnidMedida2.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                else qrmQtdUnidMedida3.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga);
                end;
-     uUNIDADE: qrmQtdUnidMedida5.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed;
-     uLITROS:  qrmQtdUnidMedida5.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed;
-     uMMBTU:   qrmQtdUnidMedida5.Caption := CteUtil.FormatarValor(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed;
+     uUNIDADE: qrmQtdUnidMedida5.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed;
+     uLITROS:  qrmQtdUnidMedida5.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed;
+     uMMBTU:   qrmQtdUnidMedida5.Caption := FormatFloat('###,##0.000', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed;
     end;
    end;
 {$ELSE}
@@ -1796,11 +1796,11 @@ begin
   for i := 0 to FCTe.vPrest.comp.Count - 1 do
   begin
     qrmCompNome1.Lines.Add(FCTe.vPrest.comp[i].xNome);
-    qrmCompValor1.Lines.Add(CteUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+    qrmCompValor1.Lines.Add(FormatFloat('###,###,###,##0.00', FCTe.vPrest.comp[i].vComp));
   end;
 
-  qrlVlrTotServico.Caption := CteUtil.FormatarValor(msk13x2, FCTe.vPrest.vTPrest);
-  qrlVlrTotReceber.Caption := CteUtil.FormatarValor(msk13x2, FCTe.vPrest.vRec);
+  qrlVlrTotServico.Caption := FormatFloat('###,###,###,##0.00', FCTe.vPrest.vTPrest);
+  qrlVlrTotReceber.Caption := FormatFloat('###,###,###,##0.00', FCTe.vPrest.vRec);
 
   qrlSitTrib.Caption := CSTICMSToStr(FCTe.Imp.ICMS.SituTrib)+'-'+
                         CSTICMSToStrTagPosText(FCTe.Imp.ICMS.SituTrib);
@@ -1917,17 +1917,17 @@ begin
     cst00:
       begin
 //        qrlRedBaseCalc.Caption := '';
-        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS00.vBC);
-        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.pICMS);
-        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.vICMS);
+        qrlBaseCalc.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS00.vBC);
+        qrlAliqICMS.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS00.pICMS);
+        qrlVlrICMS.Caption     := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS00.vICMS);
         qrlVlrICMSST.Caption   := '';
       end;
     cst20:
       begin
 //        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pRedBC);
-        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS20.vBC);
-        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pICMS);
-        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.vICMS);
+        qrlBaseCalc.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS20.vBC);
+        qrlAliqICMS.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS20.pICMS);
+        qrlVlrICMS.Caption     := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS20.vICMS);
         qrlVlrICMSST.Caption   := '';
       end;
     cst40:
@@ -1965,25 +1965,25 @@ begin
     cst60:
       begin
 //        qrlRedBaseCalc.Caption := '';
-        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
-        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
-        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
+        qrlBaseCalc.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS60.vBCSTRet);
+        qrlAliqICMS.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
+        qrlVlrICMS.Caption     := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
         qrlVlrICMSST.Caption   := '';
       end;
     cst90:
       begin
 //        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pRedBC);
-        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
-        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
-        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
+        qrlBaseCalc.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS90.vBC);
+        qrlAliqICMS.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS90.pICMS);
+        qrlVlrICMS.Caption     := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMS90.vICMS);
         qrlVlrICMSST.Caption   := '';
       end;
     cstICMSOutraUF:
       begin
 //        qrlRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
-        qrlBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
-        qrlAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
-        qrlVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
+        qrlBaseCalc.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
+        qrlAliqICMS.Caption    := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
+        qrlVlrICMS.Caption     := FormatFloat('###,###,###,##0.00', FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
         qrlVlrICMSST.Caption   := '';
       end;
     cstICMSSN:

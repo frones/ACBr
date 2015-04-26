@@ -53,7 +53,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls, XMLIntf, XMLDoc,
-  JPEG, ACBrCTeQRCodeBar, pcnConversao, DB,
+  JPEG, ACBrDFeQRCodeBar, pcnConversao, DB,
   DBClient, ACBrCTeDAInutQR;
 
 type
@@ -150,7 +150,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrDFeUtil, ACBrCTeUtil;
+  ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -249,7 +249,7 @@ begin
       qrlStatus.Caption    := IntToStr(InutCTe.RetInutCTe.cStat) + ' - ' +
                               InutCTe.RetInutCTe.xMotivo;
       qrlProtocolo.Caption := InutCTe.RetInutCTe.nProt + ' ' +
-                              FormatDateTime(DateTimeToStr(InutCTe.RetInutCTe.dhRecbto));
+                              FormatDateTime('dd/mm/yyyy hh:nn', InutCTe.RetInutCTe.dhRecbto);
 
       qrlJustificativa.Caption := InutCTe.RetInutCTe.xJust;
     end;

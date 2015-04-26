@@ -47,7 +47,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls, XMLIntf, XMLDoc,
-  JPEG, ACBrMDFeDAMDFeQRCodeBar, pcnConversao, DB,
+  JPEG, ACBrDFeQRCodeBar, pcnConversao, DB,
   DBClient, ACBrMDFeDAEventoQR;
 
 type
@@ -218,8 +218,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils,
-  ACBrDFeUtil, ACBrMDFeUtil;
+  StrUtils, DateUtils, ACBrValidador,
+  ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -290,11 +290,11 @@ begin
     qrlModelo.Caption  := FMDFe.ide.modelo;
     qrlSerie.Caption   := IntToStr(FMDFe.ide.serie);
     qrlNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-    qrlEmissao.Caption := FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
+    qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', FMDFe.Ide.dhEmi);
 
     SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), qriBarCode);
 
-    qrlChave.Caption := MFormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+    qrlChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
    end;
 end;
 
@@ -315,14 +315,14 @@ begin
        taProducao:    qrlTipoAmbiente.Caption := 'PRODUÇÃO';
        taHomologacao: qrlTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
       end;
-      qrlEmissaoEvento.Caption   := FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
+      qrlEmissaoEvento.Caption   := FormatDateTime('dd/mm/yyyy hh:nn', InfEvento.dhEvento);
       qrlTipoEvento.Caption      := InfEvento.TipoEvento;
       qrlDescricaoEvento.Caption := InfEvento.DescEvento;
       qrlSeqEvento.Caption       := IntToStr(InfEvento.nSeqEvento);
       qrlStatus.Caption          := IntToStr(RetInfEvento.cStat) + ' - ' +
                                     RetInfEvento.xMotivo;
       qrlProtocolo.Caption       := RetInfEvento.nProt + ' ' +
-                                    FormatDateTime(DateTimeToStr(RetInfEvento.dhRegEvento));
+                                    FormatDateTime('dd/mm/yyyy hh:nn', RetInfEvento.dhRegEvento);
     end;
 end;
 
@@ -338,7 +338,7 @@ begin
     PrintBand := True;
 
     qrlRazaoEmitente.Caption    := FMDFe.emit.xNome;
-    qrlCNPJEmitente.Caption     := FormatarCNPJCPF(FMDFe.emit.CNPJ);
+    qrlCNPJEmitente.Caption     := FormatarCNPJouCPF(FMDFe.emit.CNPJ);
     qrlEnderecoEmitente.Caption := FMDFe.emit.EnderEmit.xLgr + ', ' + FMDFe.emit.EnderEmit.nro;
     qrlBairroEmitente.Caption   := FMDFe.emit.EnderEmit.xBairro;
     qrlCEPEmitente.Caption      := FormatarCEP(FormatFloat( '00000000', FMDFe.emit.EnderEmit.CEP ));

@@ -2,7 +2,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
   Left = 235
   Top = 132
   Width = 844
-  Height = 834
+  Height = 784
   Caption = 'Evento - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -115,7 +115,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333340000
+          42.333333333333330000
           476.250000000000000000
           63.500000000000000000
           1005.416666666667000000)
@@ -193,7 +193,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       ForceNewPage = False
       LinkBand = qrb_05_Evento
       Size.Values = (
-        84.666666666666680000
+        84.666666666666670000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -326,7 +326,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333340000
+          34.395833333333330000
           912.812500000000000000
           15.875000000000000000
           132.291666666666700000)
@@ -1358,7 +1358,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -1424,7 +1424,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           1608.666666666667000000
           50.270833333333330000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -3206,7 +3206,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
           23.812500000000000000
           10.583333333333330000
           222.250000000000000000
-          97.895833333333320000)
+          97.895833333333340000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False

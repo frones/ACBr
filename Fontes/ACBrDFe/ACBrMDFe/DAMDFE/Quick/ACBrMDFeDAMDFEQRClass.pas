@@ -61,7 +61,7 @@ implementation
 
 uses
   StrUtils, Dialogs,
-  ACBrUtil, ACBrMDFe, ACBrMDFeUtil, ACBrMDFeDAMDFEQRRetrato;
+  ACBrUtil, ACBrMDFe, ACBrMDFeDAMDFEQRRetrato;
 
 var
   frmMDFeDAEventoQR: TfrmMDFeDAEventoQR;

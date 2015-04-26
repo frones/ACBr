@@ -50,9 +50,9 @@ unit ACBrNFeDANFeQRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFeDANFeQRClass, 
+  SysUtils, Classes, ACBrNFeDANFeQRClass
   {$IFDEF FPC}
-     LResources
+     , LResources
   {$ENDIF} ;
 
 procedure Register;
@@ -60,7 +60,7 @@ procedure Register;
 implementation
 
 {$IFNDEF FPC}
-   {$R ACBrNFe.dcr}
+   {$R ..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe.dcr}
 {$ENDIF}
 
 procedure Register;

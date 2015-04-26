@@ -58,7 +58,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ParentFont = False
       Size.Values = (
         246.062500000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbPageHeader
@@ -488,7 +488,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ParentFont = False
       Size.Values = (
         127.000000000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb01_Emitente
@@ -507,7 +507,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
           39.687500000000000000
           79.375000000000000000
           2.645833333333333000
-          526.520833333333400000)
+          526.520833333333300000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True
@@ -572,8 +572,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           44.979166666666670000
-          66.145833333333340000
-          597.958333333333400000)
+          66.145833333333330000
+          597.958333333333300000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True
@@ -611,7 +611,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       Size.Values = (
         79.375000000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbColumnHeader
@@ -629,7 +629,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
           39.687500000000000000
           5.291666666666667000
           2.645833333333333000
-          60.854166666666680000)
+          60.854166666666670000)
         XLColumn = 0
         Alignment = taLeftJustify
         AlignToBand = False
@@ -694,7 +694,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           206.375000000000000000
-          34.395833333333340000
+          34.395833333333330000
           71.437500000000000000)
         XLColumn = 0
         Alignment = taLeftJustify
@@ -760,7 +760,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           330.729166666666700000
-          34.395833333333340000
+          34.395833333333330000
           156.104166666666700000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -793,7 +793,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           529.166666666666700000
-          34.395833333333340000
+          34.395833333333330000
           148.166666666666700000)
         XLColumn = 0
         Alignment = taRightJustify
@@ -825,7 +825,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          89.958333333333320000
+          89.958333333333330000
           2.645833333333333000
           100.541666666666700000)
         XLColumn = 0
@@ -865,7 +865,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       Size.Values = (
         50.270833333333330000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbSummary
@@ -951,8 +951,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        92.604166666666680000
-        687.916666666666800000)
+        92.604166666666670000
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb06_Chave
@@ -1047,8 +1047,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        84.666666666666680000
-        687.916666666666800000)
+        84.666666666666670000
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbDetail
@@ -1317,7 +1317,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       Size.Values = (
         0.000000000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb03b_Desc_Itens
@@ -1366,7 +1366,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ParentFont = False
       Size.Values = (
         484.187500000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb07_Consumidor
@@ -1506,7 +1506,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       Size.Values = (
         50.270833333333330000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb04_Totais
@@ -1563,7 +1563,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       Size.Values = (
         283.104166666666700000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb05a_InfComplementar
@@ -1615,7 +1615,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
           39.687500000000000000
           298.979166666666700000
           230.187500000000000000
-          89.958333333333320000)
+          89.958333333333330000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True
@@ -1646,7 +1646,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          216.958333333333400000
+          216.958333333333300000
           10.583333333333330000
           254.000000000000000000)
         XLColumn = 0
@@ -1680,7 +1680,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Size.Values = (
           39.687500000000000000
           275.166666666666700000
-          42.333333333333340000
+          42.333333333333330000
           134.937500000000000000)
         XLColumn = 0
         Alignment = taCenter
@@ -1778,8 +1778,8 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          272.520833333333400000
-          82.020833333333340000
+          272.520833333333300000
+          82.020833333333330000
           140.229166666666700000)
         XLColumn = 0
         Alignment = taCenter
@@ -1818,7 +1818,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
       ForceNewPage = False
       Size.Values = (
         47.625000000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb05_Tributos

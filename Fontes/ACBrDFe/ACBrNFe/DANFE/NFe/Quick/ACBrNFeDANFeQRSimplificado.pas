@@ -97,11 +97,12 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc,
-  JPEG, ACBrNFeDANFeQR, ACBrNFeQRCodeBar, pcnConversao, DB,
+  JPEG, ACBrNFeDANFeQR, ACBrDFeQRCodeBar, pcnConversao, DB, pcnConversaoNFe,
+  DBClient,
   {$IFDEF QReport_PDF}
      QRPDFFilt,
   {$ENDIF}
-  DBClient, ACBrNFeDANFEClass, ACBrNFeDANFeQRClass;
+  ACBrNFeDANFEClass, ACBrNFeDANFeQRClass;
 
 type
 
@@ -204,7 +205,7 @@ type
 implementation
 
 uses
- StrUtils, DateUtils, ACBrNFe,
+ StrUtils, DateUtils, ACBrNFe, ACBrValidador,
  ACBrUtil, ACBrDFeUtil, pcnNFe;
 
 {$R *.dfm}
@@ -489,7 +490,7 @@ begin
 
   SetBarCodeImage( Copy ( FNFe.InfNFe.Id, 4, 44 ), qriBarCode );
 
-  qrlChave.Caption := NotaUtil.FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+  qrlChave.Caption := FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
 
   // Normal **************************************************************
   if FNFe.Ide.tpEmis in [teNormal, teSCAN]
@@ -507,7 +508,7 @@ begin
   if FProtocoloNFE <> ''
    then qrlProtocolo.Caption := FProtocoloNFE
    else qrlProtocolo.Caption := FNFe.procNFe.nProt + ' ' +
-                                SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                                ifThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
 
   FTotalPages := HrTotalPages;
 end;
@@ -568,7 +569,7 @@ begin
   lblNumero.Caption := 'Número: ' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
                        ' - Série: '+ FormatFloat('000', FNFe.Ide.serie);
 
-  qrlEmissao.Caption := 'Emissão: ' + FormatDateTime(DateToStr(FNFe.Ide.dEmi));
+  qrlEmissao.Caption := 'Emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi);
 end;
 
 procedure TfqrDANFeQRSimplificado.qrb04_DestinatarioBeforePrint(
@@ -589,7 +590,7 @@ begin
                             IfThen(XBairro = '', '', ', ' + XBairro) +
                             ', ' + XMun + '/ ' + UF);
      end;
-    qrmDestinatario.Lines.Add('CPF/CNPJ: ' + FormatarCNPJCPF(CNPJCPF) +
+    qrmDestinatario.Lines.Add('CPF/CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
                               ' IE: ' + IE);
    end;
 
@@ -699,7 +700,7 @@ begin
   qrmPagValor.Lines.Add(IntToStr(TotalItens));
 
   qrmPagDesc.Lines.Add('Valor Total');
-  qrmPagValor.Lines.Add(FormatFloat(FNFE.Total.ICMSTot.vNF));
+  qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vNF));
 end;
 
 procedure TfqrDANFeQRSimplificado.qrb06b_TributosBeforePrint(Sender: TQRCustomBand;
@@ -712,8 +713,8 @@ begin
 
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   qrlTributos.Caption := 'Valor aprox. dos tributos: ' +
-                         FormatFloat(FNFE.Total.ICMSTot.vTotTrib) +
-                         '(' + FormatFloat(Perc) + '%)(Fonte: IBPT)';
+                         FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vTotTrib) +
+                         '(' + FormatFloat('#,##0.00', Perc) + '%)(Fonte: IBPT)';
 end;
 
 end.

@@ -2,6 +2,7 @@
 package ACBr_NFSe;
 
 {$R *.res}
+{$R '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.dcr'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -36,17 +37,17 @@ requires
   inet,
   dbrtl,
   dsnap,
-  ACBr_Comum,
+  ACBrComum,
   synapse,
   designide,
   vclactnband,
   vclx,
-  ACBr_OpenSSL,
-  ACBr_Capicom,
-  ACBr_DFeComum,
+  ACBrOpenSSL,
+  ACBrCapicom,
+  ACBrDFeComum,
   PCNComum,
-  ACBr_Diversos,
-  ACBr_TCP;
+  ACBrDiversos,
+  ACBrTCP;
 
 contains
   ACBrNFSe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas',
@@ -78,6 +79,7 @@ contains
   ACBrProvedorBetha in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorBetha.pas',
   ACBrProvedorBetim in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorBetim.pas',
   ACBrProvedorBHISS in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorBHISS.pas',
+  ACBrProvedorCONAM in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorCONAM.pas',
   ACBrProvedorCoplan in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorCoplan.pas',
   ACBrProvedorDBSeller in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorDBSeller.pas',
   ACBrProvedorDigifred in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorDigifred.pas',
@@ -98,6 +100,7 @@ contains
   ACBrProvedorISSDSF in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSDSF.pas',
   ACBrProvedorISSe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSe.pas',
   ACBrProvedorISSIntel in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSIntel.pas',
+  ACBrProvedorIssMatinhos in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSMatinhos.pas',
   ACBrProvedorISSNet in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSNet.pas',
   ACBrProvedorLexsom in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorLexsom.pas',
   ACBrProvedorLink3 in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorLink3.pas',

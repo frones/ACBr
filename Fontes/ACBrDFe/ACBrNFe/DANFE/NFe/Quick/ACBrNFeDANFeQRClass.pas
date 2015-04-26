@@ -131,9 +131,7 @@ begin
                                    LocalImpCanhoto, ImprimeItens, ViaConsumidor,
                                    vTroco, ImprimirDescPorc,
                                    ImprimirDetalhamentoEspecifico,
-                                   ImprimirTotalLiquido,
-                                   CasasDecimais._Mask_qCom,
-                                   CasasDecimais._Mask_vUnCom);
+                                   ImprimirTotalLiquido);
       end;
    end
   else
@@ -146,9 +144,7 @@ begin
                                 ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                 ImprimeItens, ViaConsumidor, vTroco,
                                 ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                                ImprimirTotalLiquido,
-                                CasasDecimais._Mask_qCom,
-                                CasasDecimais._Mask_vUnCom);
+                                ImprimirTotalLiquido);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -189,9 +185,7 @@ begin
                                   ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                   ImprimeItens, ViaConsumidor, vTroco,
                                   ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                                  ImprimirTotalLiquido,
-                                  CasasDecimais._Mask_qCom,
-                                  CasasDecimais._Mask_vUnCom);
+                                  ImprimirTotalLiquido);
       end;
    end
    else
@@ -207,9 +201,7 @@ begin
                                ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
                                ImprimeItens, ViaConsumidor, vTroco,
                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                               ImprimirTotalLiquido,
-                               CasasDecimais._Mask_qCom,
-                               CasasDecimais._Mask_vUnCom);
+                               ImprimirTotalLiquido);
    end;
 
   fqrDANFeQRRetrato.Free;

@@ -56,7 +56,7 @@ uses
   {$IFDEF QReport_PDF}
      QRPDFFilt, QRPrntr,
   {$ENDIF}
-  ACBrCTeQRCodeBar, pcteCTe, ACBrCTe, ACBrCTeUtil, Printers, pcnConversao;
+  ACBrDFeQRCodeBar, pcteCTe, ACBrCTe, Printers, pcnConversao;
 
 type
 

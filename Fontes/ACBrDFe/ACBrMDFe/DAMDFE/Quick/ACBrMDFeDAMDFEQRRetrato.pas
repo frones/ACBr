@@ -43,8 +43,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc, JPEG,
-  pcnConversao, pmdfeConversao, DB, DBClient,
-  ACBrMDFeDAMDFEQR, ACBrMDFeDAMDFEQRCodeBar, ACBrMDFeDAMDFEClass,
+  pcnConversao, pmdfeConversaoMDFe, DB, DBClient,
+  ACBrMDFeDAMDFEQR, ACBrDFeQRCodeBar, ACBrMDFeDAMDFEClass,
   ACBrMDFeDAMDFEQRClass;
 
 type
@@ -208,8 +208,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils,
-  pmdfeMDFe, ACBrUtil, ACBrDFeUtil, ACBrMDFeUtil;
+  StrUtils, DateUtils, ACBrValidador,
+  pmdfeMDFe, ACBrUtil, ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -309,7 +309,7 @@ begin
 
   SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), qriBarCode);
 
-  qrlChave.Caption := MFormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  qrlChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
 
   if (FMDFe.ide.tpEmis = teNormal) or (FProtocoloMDFE <> '') or
      (FMDFe.procMDFe.nProt <> '')
@@ -319,21 +319,21 @@ begin
     if FProtocoloMDFE <> ''
      then qrlProtocolo.Caption := FProtocoloMDFE
      else qrlProtocolo.Caption := FMDFe.procMDFe.nProt + '   ' +
-                                  SeSenao(FMDFe.procMDFe.dhRecbto <> 0,
+                                  ifThen(FMDFe.procMDFe.dhRecbto <> 0,
                                       DateTimeToStr(FMDFe.procMDFe.dhRecbto), '');
    end
    else begin
     qrlProtocolo.Font.Size  := 5;
     qrlProtocolo.Font.Style := [];
     qrlProtocolo.Caption := 'Impressão em contingência. Obrigatória a autorização em 24 horas' +
-     ' após esta impressão (' + FormatDateTime(DateTimeToStr(Now)) + ')';
+     ' após esta impressão (' + FormatDateTime('dd/mm/yyyy hh:nn', Now) + ')';
    end;
 
   qrlModelo.Caption       := FMDFe.Ide.modelo;
   qrlSerie.Caption        := FormatFloat('000', FMDFe.Ide.serie);
   qrlNumMDFe.Caption      := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
   qrlPageNumber.Caption   := format('%2.2d', [QRMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
-  qrlEmissao.Caption      := FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
+  qrlEmissao.Caption      := FormatDateTime('dd/mm/yyyy hh:nn', FMDFe.Ide.dhEmi);
   qrlUFCarrega.Caption    := FMDFe.Ide.UFIni;
   qrlUFDescarrega.Caption := FMDFe.Ide.UFFim;
 
@@ -556,11 +556,11 @@ begin
          then begin
           cdsItens.Append;
           cdsItensChave_1.AsString := 'CT-e          ' +
-                                      MFormatarChaveAcesso(chCTe, True);
+                                      FormatarChaveAcesso(chCTe);
          end
          else begin
           cdsItensChave_2.AsString := 'CT-e          ' +
-                                      MFormatarChaveAcesso(chCTe, True);
+                                      FormatarChaveAcesso(chCTe);
           cdsItens.Post;
          end;
         inc(nItem);
@@ -576,12 +576,12 @@ begin
          then begin
           cdsItens.Append;
           cdsItensChave_1.AsString := 'CT            ' +
-                              FormatarCNPJCPF(FMDFe.emit.CNPJ) + ' - ' +
+                              FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - ' +
                               IntToStr(serie) + '-' + nCT;
          end
          else begin
           cdsItensChave_2.AsString := 'CT            ' +
-                              FormatarCNPJCPF(FMDFe.emit.CNPJ) + ' - ' +
+                              FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - ' +
                               IntToStr(serie) + '-' + nCT;
           cdsItens.Post;
          end;
@@ -598,11 +598,11 @@ begin
          then begin
           cdsItens.Append;
           cdsItensChave_1.AsString := 'NF-e          ' +
-                                      MFormatarChaveAcesso(chNFe, True);
+                                      FormatarChaveAcesso(chNFe);
          end
          else begin
           cdsItensChave_2.AsString := 'NF-e          ' +
-                                      MFormatarChaveAcesso(chNFe, True);
+                                      FormatarChaveAcesso(chNFe);
           cdsItens.Post;
          end;
         inc(nItem);
@@ -618,12 +618,12 @@ begin
          then begin
           cdsItens.Append;
           cdsItensChave_1.AsString := 'NF            ' +
-                                      FormatarCNPJCPF(CNPJ) + ' - ' +
+                                      FormatarCNPJouCPF(CNPJ) + ' - ' +
                                       IntToStr(serie) + '-' + IntToStr(nNF);
          end
          else begin
           cdsItensChave_2.AsString := 'NF            ' +
-                                      FormatarCNPJCPF(CNPJ) + ' - ' +
+                                      FormatarCNPJouCPF(CNPJ) + ' - ' +
                                       IntToStr(serie) + '-' + IntToStr(nNF);
           cdsItens.Post;
          end;
@@ -640,11 +640,11 @@ begin
          then begin
           cdsItens.Append;
           cdsItensChave_1.AsString := 'MDF-e         ' +
-                                     MFormatarChaveAcesso(chMDFe, True);
+                                     FormatarChaveAcesso(chMDFe);
          end
          else begin
           cdsItensChave_2.AsString := 'MDF-e         ' +
-                                     MFormatarChaveAcesso(chMDFe, True);
+                                     FormatarChaveAcesso(chMDFe);
           cdsItens.Post;
          end;
         inc(nItem);

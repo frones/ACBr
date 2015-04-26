@@ -26,21 +26,27 @@ package ACBr_NFSeDanfseQR;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
   vcl,
-  vclx,
-  bdertl,
+  rtl,
   dbrtl,
-  ACBr_NFSe,
-  PCNComum,
-  ACBr_Comum,
+  xmlrtl,
+  inet,
+  dsnap,
+  bdertl,
+  vclx,
+  vcldb,
+  ACBrComum,
+  synapse,
   designide,
   vclactnband,
-  inet,
-  xmlrtl,
+  ACBrDFeComum,
+  PCNComum,
+  ACBrDiversos,
+  ACBrTCP,
+  ACBrCapicom,
+  ACBrOpenSSL,
   soaprtl,
-  synapse,
-  ACBr_Capicom,
+  ACBr_NFSe,
   {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
@@ -57,10 +63,13 @@ requires
   {$IFDEF VER260} QR5RunDXE5, vclimg; {$ENDIF} //XE5
   {$IFDEF VER270} QR5RunDXE6, vclimg, dsnap; {$ENDIF} //XE6
 
+
 contains
-  ACBrNFSeDANFSeQR in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeQR.pas' {fqrDANFSeQR},
-  ACBrNFSeDANFSeQRClass in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeQRClass.pas',
-  ACBrNFSeDANFSeQRReg in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeQRReg.pas',
-  ACBrNFSeDANFSeQRRetrato in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeQRRetrato.pas' {fqrDANFSeQRRetrato};
+  ACBrNFSeDANFSeQR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Quick\ACBrNFSeDANFSeQR.pas' {fqrDANFSeQR},
+  ACBrNFSeDANFSeQRClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Quick\ACBrNFSeDANFSeQRClass.pas',
+  ACBrNFSeDANFSeQRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Quick\ACBrNFSeDANFSeQRReg.pas',
+  ACBrNFSeDANFSeQRRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Quick\ACBrNFSeDANFSeQRRetrato.pas' {fqrDANFSeQRRetrato},
+  ACBrNFSeDANFSeQRRetratoCampinas in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Quick\ACBrNFSeDANFSeQRRetratoCampinas.pas' {fqrDANFSeQRRetratoCampinas},
+  ACBrNFSeDANFSeQRRetratoFiorilli in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Quick\ACBrNFSeDANFSeQRRetratoFiorilli.pas' {fqrDANFSeQRRetratoFiorilli};
 
 end.

@@ -56,7 +56,7 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ParentFont = False
       Size.Values = (
         346.604166666666700000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbPageHeader
@@ -267,8 +267,8 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        391.583333333333400000
-        687.916666666666800000)
+        391.583333333333300000
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb01_Chave
@@ -692,8 +692,8 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        89.958333333333340000
-        687.916666666666800000)
+        89.958333333333330000
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbColumnHeader
@@ -947,7 +947,7 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewPage = False
       Size.Values = (
         156.104166666666700000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbSummary
@@ -1040,8 +1040,8 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewPage = False
       ParentFont = False
       Size.Values = (
-        89.958333333333340000
-        687.916666666666800000)
+        89.958333333333330000
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       BandType = rbDetail
@@ -1310,7 +1310,7 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewPage = False
       Size.Values = (
         2.645833333333333000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb05b_Desc_Itens
@@ -1353,7 +1353,7 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewPage = False
       Size.Values = (
         63.500000000000000000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb06a_Totais
@@ -1409,8 +1409,8 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        232.833333333333400000
-        687.916666666666800000)
+        232.833333333333300000
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb02_Emitente
@@ -1619,7 +1619,7 @@ inherited fqrDANFeQRSimplificado: TfqrDANFeQRSimplificado
       ForceNewPage = False
       Size.Values = (
         264.583333333333400000
-        687.916666666666800000)
+        687.916666666666700000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
       ParentBand = qrb03_DadosGerais

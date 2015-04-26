@@ -50,7 +50,7 @@ uses
   {$IFDEF QReport_PDF}
      QRPDFFilt, QRPrntr,
   {$ENDIF}
-  ACBrMDFeDAMDFEQRCodeBar, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil, Printers,
+  ACBrDFeQRCodeBar, pmdfeMDFe, ACBrMDFe, Printers,
   pcnConversao, pmdfeEnvEventoMDFe;
 
 type

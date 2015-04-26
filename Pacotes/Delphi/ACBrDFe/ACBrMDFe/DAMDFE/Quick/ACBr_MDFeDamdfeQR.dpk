@@ -61,24 +61,28 @@ package ACBr_MDFeDamdfeQR;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
   vcl,
-  ACBr_Comum,
-  designide,
-  vclactnband,
+  rtl,
+  dbrtl,
+  bdertl,
   vclx,
+  vcldb,
   ACBr_MDFe,
   dsnap,
-  dbrtl,
   inet,
   xmlrtl,
   soaprtl,
+  ACBrOpenSSL,
+  ACBrComum,
   synapse,
-  ACBr_Capicom,
+  designide,
+  vclactnband,
+  ACBrCapicom,
+  ACBrTCP,
+  ACBrDiversos,
   PCNComum,
-  bdertl,
-  vcldb,
-  {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
+  ACBrDFeComum,
+  {$IFDEF VER150} QR5RunD7, vcljpg; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
     {$IFNDEF VER185} QR5RunD2006, vcljpg; {$ENDIF} // D2006
@@ -95,10 +99,11 @@ requires
   {$IFDEF VER270} QR5RunDXE6, vclimg,  dsnap; {$ENDIF} //XE6
 
 contains
-  ACBrMDFeDAMDFEQRClass in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEQRClass.pas',
-  ACBrMDFeDAMDFEQRReg in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEQRReg.pas',
-  ACBrMDFeDAMDFEQRCodeBar in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEQRCodeBar.pas',
-  ACBrMDFeDAMDFEQR in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEQR.pas' {fqrDAMDFEQR},
-  ACBrMDFeDAMDFEQRRetrato in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEQRRetrato.pas' {fqrDAMDFEQRRetrato};
+  ACBrMDFeDAEventoQR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Quick\ACBrMDFeDAEventoQR.pas' {frmMDFeDAEventoQR},
+  ACBrMDFeDAMDFEQR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Quick\ACBrMDFeDAMDFEQR.pas' {fqrDAMDFEQR},
+  ACBrMDFeDAEventoQRRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Quick\ACBrMDFeDAEventoQRRetrato.pas' {frmMDFeDAEventoQRRetrato},
+  ACBrMDFeDAMDFEQRClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Quick\ACBrMDFeDAMDFEQRClass.pas',
+  ACBrMDFeDAMDFEQRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Quick\ACBrMDFeDAMDFEQRReg.pas',
+  ACBrMDFeDAMDFEQRRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Quick\ACBrMDFeDAMDFEQRRetrato.pas' {fqrDAMDFEQRRetrato};
 
 end.

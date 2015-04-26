@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ Projeto: Componente ACBrCTe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de            }
+{  Conhecimento Eletrônico - CTe - http://www.cte.fazenda.gov.br               }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -70,10 +70,29 @@ package ACBr_CTeDacteQR;
 {$IMPLICITBUILD ON}
 
 requires
-  ACBr_CTe,
-  ACBr_Comum,
+  vcl,
+  rtl,
+  dbrtl,
   bdertl,
-  {$IFDEF VER150} QR5RunD7, vcljpg, visualclx; {$ENDIF} // D7
+  vclx,
+  vcldb,
+  ACBrDFeComum,
+  PCNComum,
+  ACBrDiversos,
+  ACBrComum,
+  synapse,
+  designide,
+  vclactnband,
+  ACBrTCP,
+  ACBrCapicom,
+  ACBrOpenSSL,
+  soaprtl,
+  xmlrtl,
+  inet,
+  dsnap,
+  ACBr_CTe,
+
+  {$IFDEF VER150} QR5RunD7, vcljpg; {$ENDIF} // D7
   {$IFDEF VER170} QR5RunD2005, vcljpg; {$ENDIF} // D2005
   {$IFDEF VER180}
     {$IFNDEF VER185} QR5RunD2006, vcljpg; {$ENDIF} // D2006
@@ -90,11 +109,15 @@ requires
   {$IFDEF VER270} QR5RunDXE6, vclimg,  dsnap; {$ENDIF} //XE6
 
 contains
-  ACBrCTeDACTeQR in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeQR.pas' {frmDACTeQR},
-  ACBrCTeQRCodeBar in '..\..\..\Fontes\ACBrCTe\ACBrCTeQRCodeBar.pas',
-  ACBrCTeDACTeQRRetrato in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeQRRetrato.pas' {frmDACTeQRRetrato},
-  ACBrCTeDACTeQRClass in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeQRClass.pas',
-  ACBrCTeDACTeQRReg in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeQRReg.pas',
-  qrRRect in '..\..\..\Fontes\ACBrCTe\qrRRect.pas';
+  ACBrCTeDACTeQR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDACTeQR.pas' {frmDACTeQR},
+  ACBrCTeDACTeQRClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDACTeQRClass.pas',
+  ACBrCTeDACTeQRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDACTeQRReg.pas',
+  ACBrCTeDACTeQRRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDACTeQRRetrato.pas' {frmDACTeQRRetrato},
+  ACBrCTeDACTeQRRetrato2Vias in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDACTeQRRetrato2Vias.pas' {frmDACTeQRRetrato2Vias},
+  ACBrCTeDACTeQRRetratoA5 in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDACTeQRRetratoA5.pas' {frmDACTeQRRetratoA5},
+  ACBrCTeDAEventoQR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDAEventoQR.pas' {frmCTeDAEventoQR},
+  ACBrCTeDAEventoQRRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDAEventoQRRetrato.pas' {frmCTeDAEventoQRRetrato},
+  ACBrCTeDAInutQR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDAInutQR.pas' {frmCTeDAInutQR},
+  ACBrCTeDAInutQRRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Quick\ACBrCTeDAInutQRRetrato.pas' {frmCTeDAInutQRRetrato};
 
 end.

@@ -110,7 +110,22 @@ var
   i, j, i01, i02, i03, i04: Integer;
   sCST, Aspas: String;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
 
+  if Pos('versao="', Leitor.Arquivo) <> 0 then
+    Aspas := '"'
+   else
+    Aspas := '''';
+
+  CTe.infCTe.Id := Leitor.rAtributo('Id=');
+  if OnlyNumber(CTe.infCTe.Id) = '' then
+    raise Exception.Create('Não encontrei o atributo: Id');
+
+  CTe.infCTe.versao := Leitor.rAtributo('versao=');
+  if OnlyNumber(CTe.infCTe.versao) = '' then
+    raise Exception.Create('Não encontrei o atributo: versao');
+
+  (*
   // Incluido por Thiago Pedro em 02/06/2014
   if Pos('versao="', Leitor.Arquivo) <> 0 then
     Aspas := '"'
@@ -153,7 +168,8 @@ begin
 
   // CTe.infCTe.ID := copy(Leitor.Arquivo, I + 4, J - I - 4);
   CTe.infCTe.ID := copy(Leitor.Arquivo, I + 1, J - I -1);
-
+  *)
+  
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin

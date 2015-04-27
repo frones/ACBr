@@ -119,6 +119,24 @@ var
     end;
   end;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
+
+  if Pos('versao="', Leitor.Arquivo) <> 0 then
+    Aspas := '"'
+   else
+    Aspas := '''';
+
+  NFe.infNFe.Id := Leitor.rAtributo('Id=');
+  if OnlyNumber(NFe.infNFe.Id) = '' then
+    raise Exception.Create('Não encontrei o atributo: Id');
+
+  NFe.infNFe.versao := Leitor.rAtributo('versao=');
+  if OnlyNumber(NFe.infNFe.versao) = '' then
+    raise Exception.Create('Não encontrei o atributo: versao');
+
+  VersaoInfNFe := FloatToStr(NFe.infNFe.Versao);
+
+  (*
   if Pos('Id="', Leitor.Arquivo) <> 0 then
     Aspas := '"'
    else
@@ -146,7 +164,8 @@ begin
 
   NFe.infNFe.ID := copy(Leitor.Arquivo, I+1, J - (I+1));
   NFe.infNFe.ID := StringReplace( UpperCase(NFe.infNFe.ID), 'NFE', '', [rfReplaceAll] ) ;
-
+  *)
+  
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin

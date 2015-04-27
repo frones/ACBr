@@ -238,6 +238,7 @@ var
   Resposta : TStringList;
   StrAux: String;
   sMun:String;
+  CountCid:Integer;
 begin
   Erro := ValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
@@ -319,12 +320,20 @@ begin
       begin
         if (sMun <> FCidade) then  // Evita buscar municipio já encontrado
         begin
-          FACBrIBGE.BuscarPorNome( FCidade, FUF, True, False ) ;
+          FACBrIBGE.BuscarPorNome( FCidade, FUF, False, False ) ;
           sMun := FCidade;
         end ;
 
         if FACBrIBGE.Cidades.Count > 0 then  // Achou ?
-          FCodigoIBGE := IntToStr( FACBrIBGE.Cidades[0].CodMunicio );
+        for CountCid := 0  to FACBrIBGE.Cidades.Count -1 do
+        Begin
+           if (TiraAcentos(FCidade)  = TiraAcentos(FACBrIBGE.Cidades[CountCid].Municipio)) And
+           (FUF =  FACBrIBGE.Cidades[CountCid].UF) then
+		   Begin
+             FCodigoIBGE := IntToStr( FACBrIBGE.Cidades[CountCid].CodMunicio );
+             Break;
+		   End;
+        End;
       end ;
 
       if Trim(FRazaoSocial) = '' then

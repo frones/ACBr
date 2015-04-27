@@ -78,7 +78,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnConversaoNFe,
+  pcnConversaoNFe,
   ACBrConsts, ACBrUtil;
 
 { TNFeR }
@@ -98,7 +98,7 @@ end;
 function TNFeR.LerXml: Boolean;
 var
   ok: Boolean;
-  i, j, k, z, nItem: Integer;
+  i, j, k, nItem: Integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: AnsiString;
   Aspas: String;
 
@@ -130,42 +130,12 @@ begin
   if OnlyNumber(NFe.infNFe.Id) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
-  NFe.infNFe.versao := Leitor.rAtributo('versao=');
-  if OnlyNumber(NFe.infNFe.versao) = '' then
+  VersaoInfNFe := Leitor.rAtributo('versao=');
+  if StringToFloatDef(VersaoInfNFe,-1) = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');
 
-  VersaoInfNFe := FloatToStr(NFe.infNFe.Versao);
-
-  (*
-  if Pos('Id="', Leitor.Arquivo) <> 0 then
-    Aspas := '"'
-   else
-    Aspas := '''';
-
-  I := 0;
-
-  I := RetornarPosEx('Id=', Leitor.Arquivo, I + 6);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: Id=');
-  I := RetornarPosEx(Aspas, Leitor.Arquivo, I + 2);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-  J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 1);
-  if J = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas final');
-
-  z:=pos('infnfe', LowerCase(Leitor.Arquivo));
-  VersaoInfNFe:=copy(LowerCase(Leitor.Arquivo),z,length(Leitor.Arquivo)-z);
-  z:=Pos('versao='+Aspas,VersaoInfNFe)+8;
-
-  VersaoInfNFe := copy(VersaoInfNFe,z,4);
-  VersaoInfNFe := StringReplace(Trim(VersaoInfNFe),Aspas,'',[rfReplaceAll] ) ;
   NFe.infNFe.Versao := StringToFloat(VersaoInfNFe);
 
-  NFe.infNFe.ID := copy(Leitor.Arquivo, I+1, J - (I+1));
-  NFe.infNFe.ID := StringReplace( UpperCase(NFe.infNFe.ID), 'NFE', '', [rfReplaceAll] ) ;
-  *)
-  
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin

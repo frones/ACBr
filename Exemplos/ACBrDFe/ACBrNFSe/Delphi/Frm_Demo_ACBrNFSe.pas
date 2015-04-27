@@ -4,7 +4,8 @@ unit Frm_Demo_ACBrNFSe;
 
 interface
 
-uses IniFiles, ShellAPI,
+uses
+  IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pnfsConversao,

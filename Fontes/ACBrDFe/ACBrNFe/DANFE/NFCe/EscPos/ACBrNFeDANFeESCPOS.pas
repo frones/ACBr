@@ -126,6 +126,7 @@ type
     FConfigBarras: TACBrECFConfigBarras;
     FUsaCodigoEanImpressao: Boolean;
     FArquivoLog: AnsiString;
+    FIntervaloBuffer: Integer;
 
     procedure InicializarComandos;
     procedure ImprimePorta(AString: AnsiString);
@@ -201,6 +202,7 @@ type
     property IgnorarTagsFormatacao: Boolean read FIgnorarTagsFormatacao write FIgnorarTagsFormatacao default False;
     property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer default 0;
     property CortaPapel: Boolean read FCortaPapel write FCortaPapel default True;
+    property IntervaloBuffer: Integer read FIntervaloBuffer write FIntervaloBuffer;
   end;
 
 procedure Register;
@@ -267,6 +269,9 @@ begin
   begin
     ImprimePorta(FBuffer.Text);
     FBuffer.Clear;
+
+    if FIntervaloBuffer > 0 then
+      Sleep(FIntervaloBuffer);
   end;
 end;
 

@@ -248,8 +248,6 @@ begin
 
   GravaLog('-- TX -> ' + AString, True);
   try
-    // limpa o buffer de envio
-    FDevice.Serial.Purge;
     // envia novo buffer
     FDevice.EnviaString(AString);
   except

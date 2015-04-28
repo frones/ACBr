@@ -105,7 +105,7 @@ type
   TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
 
   // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
-  TnfseTEmissao = ( TeNormal, TeContigencia );
+  TnfseTEmissao = ( teNormalNFSe, teContigenciaNFSe );
   TnfseTEmpreitadaGlobal = ( EgConstrucaoCivil, EgOutros);
 
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
@@ -18597,14 +18597,14 @@ function TipoEmissaoToStr(const t: TnfseTEmissao):string;
 begin
   result := EnumeradoToStr(t,
                            ['N', 'C'],
-                           [TeNormal, TeContigencia]);
+                           [teNormalNFSe, teContigenciaNFSe]);
 end;
 
 function StrToTipoEmissao(var ok: boolean; const s: string):TnfseTEmissao;
 begin
   result := StrToEnumerado(ok, s,
                            ['N', 'C'],
-                           [TeNormal, TeContigencia]);
+                           [teNormalNFSe, teContigenciaNFSe]);
 end;
 
 // Empreitada Global *********************************************************

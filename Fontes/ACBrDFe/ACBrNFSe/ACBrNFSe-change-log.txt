@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2015
+[*] Alterado os enumeradores teNormal e teContingencia para teNormalNFSe e
+    teContingenciaNFSe, conforme proposto por "ALA" para resolver o problema de
+    quando quando se utiliza tanto a NF-e quanto a NFS-e no mesmo Form.
+    Por: Italo Jurisato Junior
+
 10/04/2015
 [*] Estava faltando a linha que gera a TAG Aliquota para o provedor SisPMJP.
     Por: Italo Jurisato Junior

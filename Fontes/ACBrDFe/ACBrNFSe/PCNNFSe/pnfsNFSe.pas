@@ -810,7 +810,7 @@ begin
  FNfseSubstituidora            := '';
 
 // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
- FTipoEmissao                  := TeNormal;
+ FTipoEmissao                  := teNormalNFSe;
  FEmpreitadaGlobal             := EgOutros;
  FModeloNFSe                   := '55';
  FCancelada                    := snNao;

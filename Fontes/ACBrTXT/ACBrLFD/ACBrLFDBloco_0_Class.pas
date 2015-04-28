@@ -689,14 +689,14 @@ end;
 
 procedure TBloco_0.WriteRegistro0125(Reg0001: TRegistro0001);
 begin
-  if Assigned(Reg0001.Registro0100) then
+  if Assigned(Reg0001.Registro0125) then
   begin
-     with Reg0001.Registro0100 do
+     with Reg0001.Registro0125 do
      begin
-       Check(funChecaCPF(CPF),     '(0-0100) CONTADOR: %s, o CPF "%s" digitado é inválido!', [NOME, CPF]);
-       Check(funChecaCNPJ(CNPJ),   '(0-0100) CONTADOR: %s, o CNPJ "%s" digitado é inválido!', [NOME, CNPJ]);
-//       Check(funChecaCEP(CEP, Registro0000.UF), '(0-0100) CONTADOR: %s, o CEP "%s" digitada é inválido para a unidade de federação "%s"!', [NOME, CEP, Registro0000.UF]);
-       Check(NOME <> '', '(0-0100) CONTADOR: O nome do contabilista/escritório é obrigatório!');
+       Check(funChecaCPF(CPF),     '(0-0125) CONTADOR: %s, o CPF "%s" digitado é inválido!', [NOME, CPF]);
+       Check(funChecaCNPJ(CNPJ),   '(0-0125) CONTADOR: %s, o CNPJ "%s" digitado é inválido!', [NOME, CNPJ]);
+//       Check(funChecaCEP(CEP, Registro0000.UF), '(0-0125) CONTADOR: %s, o CEP "%s" digitada é inválido para a unidade de federação "%s"!', [NOME, CEP, Registro0000.UF]);
+       Check(NOME <> '', '(0-0125) CONTADOR: O nome do contabilista/escritório é obrigatório!');
        ///
        Add( LFill('0125')   +
             LFill(NOME)     +

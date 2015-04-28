@@ -638,7 +638,7 @@ begin
       end;
 
 
-      FNfse.Servico.Valores.ValorIss                          := (FNfse.Servico.Valores.ValorServicos * NFSe.Servico.Valores.Aliquota)/100;
+//      FNfse.Servico.Valores.ValorIss                          := (FNfse.Servico.Valores.ValorServicos * NFSe.Servico.Valores.Aliquota)/100;
       FNFSe.Servico.Valores.ValorLiquidoNfse                  := (FNfse.Servico.Valores.ValorServicos -
                                                                  (FNfse.Servico.Valores.ValorDeducoes +
                                                                   FNfse.Servico.Valores.DescontoCondicionado+
@@ -929,8 +929,8 @@ begin
                                           NFSe.Servico.Valores.ValorDeducoes -
                                           NFSe.Servico.Valores.DescontoIncondicionado;
 
-    if NFSe.Servico.Valores.ValorIss = 0 then
-      NFSe.Servico.Valores.ValorIss := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
+//    if NFSe.Servico.Valores.ValorIss = 0 then
+//      NFSe.Servico.Valores.ValorIss := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
    end; // fim serviço
 
   if Leitor.rExtrai(3, 'PrestadorServico') <> ''
@@ -1345,8 +1345,8 @@ begin
                                                        NFSe.Servico.Valores.ValorDeducoes -
                                                        NFSe.Servico.Valores.DescontoIncondicionado;
 
-        if NFSe.Servico.Valores.ValorIss = 0 then
-          NFSe.Servico.Valores.ValorIss             := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
+//        if NFSe.Servico.Valores.ValorIss = 0 then
+//          NFSe.Servico.Valores.ValorIss             := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
 
       end;
     end; // fim serviço
@@ -1578,7 +1578,7 @@ begin
    end;
   end;
 
-  FNfse.Servico.Valores.ValorIss                          := (FNfse.Servico.Valores.ValorServicos * NFSe.Servico.Valores.Aliquota)/100;
+//  FNfse.Servico.Valores.ValorIss                          := (FNfse.Servico.Valores.ValorServicos * NFSe.Servico.Valores.Aliquota)/100;
   FNFSe.Servico.Valores.ValorLiquidoNfse                  := (FNfse.Servico.Valores.ValorServicos -
                                                              (FNfse.Servico.Valores.ValorDeducoes +
                                                               FNfse.Servico.Valores.DescontoCondicionado+

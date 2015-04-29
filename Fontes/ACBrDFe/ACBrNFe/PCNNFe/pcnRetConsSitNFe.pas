@@ -173,6 +173,9 @@ begin
           end;
         end;
       end;
+
+      retCancNFe.cStat := 0;
+
       if FcStat in [101,151,155] then
       begin
         if Leitor.rExtrai(1, 'infCanc') <> '' then

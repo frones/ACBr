@@ -66,7 +66,7 @@ uses
      QRPDFFilt,
      QRPrntr,
   {$ENDIF}
-  ACBrDFeQRCodeBar, pcnNFe, ACBrNFe, Printers;
+  ACBrDFeQRCodeBar, pcnNFe, ACBrNFe, pcnConversao, Printers;
 
 type      
   TfqrDANFeQR = class(TForm)
@@ -100,8 +100,8 @@ type
     FResumoCanhoto_Texto: String;
     // Incluido por Luis Fernando em  22/01/2013
     FNFeCancelada       : Boolean;
-    FLocalImpCanhoto    : Integer;
-    FImprimirDescPorc    : Boolean; //incluido por Fernando pasqueto 11/07/2014
+    FLocalImpCanhoto    : TPosRecibo;
+    FImprimirDescPorc   : Boolean; //incluido por Fernando pasqueto 11/07/2014
     FImprimirDetalhamentoEspecifico : Boolean; //incluido por Fernando pasqueto 15/07/2014
     FImprimirTotalLiquido: Boolean; //incluido Fernando Pasqueto 29/10/2014
     // Incluido por Italo em 27/03/2014
@@ -140,7 +140,7 @@ type
                              AResumoCanhoto_Texto : String   = '';
                              AExpandirLogoMarca   : Boolean  = False;
                              ANFeCancelada        : Boolean  = False;
-                             ALocalImpCanhoto     : Integer  = 0;
+                             ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
                              AImprimeItens        : Boolean  = True;
                              AViaConsumidor       : Boolean  = True;
                              AvTroco              : Currency = 0.0;
@@ -168,7 +168,7 @@ type
                             AResumoCanhoto_Texto : String   = '';
                             AExpandirLogoMarca   : Boolean  = False;
                             ANFeCancelada        : Boolean  = False;
-                            ALocalImpCanhoto     : Integer  = 0;
+                            ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
                             AImprimeItens        : Boolean  = True;
                             AViaConsumidor       : Boolean  = True;
                             AvTroco              : Currency = 0.0;
@@ -208,7 +208,7 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      AResumoCanhoto_Texto : String   = '';
                                      AExpandirLogoMarca   : Boolean  = False;
                                      ANFeCancelada        : Boolean  = False;
-                                     ALocalImpCanhoto     : Integer  = 0;
+                                     ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
                                      AImprimeItens        : Boolean  = True;
                                      AViaConsumidor       : Boolean  = True;
                                      AvTroco              : Currency = 0.0;
@@ -308,7 +308,7 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     AResumoCanhoto_Texto : String   = '';
                                     AExpandirLogoMarca   : Boolean  = False;
                                     ANFeCancelada        : Boolean  = False;
-                                    ALocalImpCanhoto     : Integer  = 0;
+                                    ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
                                     AImprimeItens        : Boolean  = True;
                                     AViaConsumidor       : Boolean  = True;
                                     AvTroco              : Currency = 0.0;

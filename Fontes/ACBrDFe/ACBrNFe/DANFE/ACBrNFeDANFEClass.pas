@@ -109,7 +109,6 @@ type
     FProdutosPorPagina: Integer;
     FImprimirDetalhamentoEspecifico: Boolean;
     FNFeCancelada: Boolean;
-    FLocalImpCanhoto: Integer;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
@@ -161,7 +160,6 @@ type
     property ProdutosPorPagina: Integer              read FProdutosPorPagina              write FProdutosPorPagina;
     property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
     property NFeCancelada: Boolean                   read FNFeCancelada                   write FNFeCancelada;
-    property LocalImpCanhoto: Integer                read FLocalImpCanhoto                write FLocalImpCanhoto;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     property ImprimeItens: Boolean                   read FImprimeItens                   write FImprimeItens;
@@ -240,7 +238,6 @@ begin
   FImprimirDetalhamentoEspecifico := true;
   FImprimirTotalLiquido:= True;
   FNFeCancelada := False;
-  FLocalImpCanhoto := 0;
   FCasasDecimais := TCasasDecimais.Create(self);
   FCasasDecimais.Name:= 'CasasDecimais';
 

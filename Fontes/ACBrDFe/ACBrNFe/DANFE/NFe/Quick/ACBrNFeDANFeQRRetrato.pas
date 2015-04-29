@@ -1158,14 +1158,14 @@ var
   nRestItens : Integer;
 begin
   inherited;
-   if FLocalImpCanhoto = 0 then
+   if FLocalImpCanhoto = prRodape then
     begin
       QRShape69.Enabled:=False;
       qrlDataHoraImpressao.Top := QRShape70.Top-10;
       qrlSistema.Top := QRShape70.Top-10;
     end;
 
-   if (FLocalImpCanhoto = 1) or (FResumoCanhoto = False) then
+   if (FLocalImpCanhoto = prCabecalho) or (FResumoCanhoto = False) then
     begin
       QRShape70.Enabled := False;
       qrlDataHoraImpressao.Top := 122;
@@ -1190,7 +1190,7 @@ begin
       qrlMsgTeste.Top := 17;
     end;
 
-    if (FResumoCanhoto = True) and (FLocalImpCanhoto = 0) then
+    if (FResumoCanhoto = True) and (FLocalImpCanhoto = prRodape) then
       begin
         // Arrumar
         //qrlDataHoraImpressao.Top := QRShape70.Top;
@@ -1248,7 +1248,7 @@ procedure TfqrDANFeQRRetrato.qrbReciboBeforePrint(Sender: TQRCustomBand;
   var PrintBand: Boolean);
 begin
 
-  if FLocalImpCanhoto = 1 then
+  if FLocalImpCanhoto = prCabecalho then
   begin
     if FResumoCanhoto = True then
     begin

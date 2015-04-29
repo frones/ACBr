@@ -63,6 +63,7 @@ uses
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
    private
+    FLocalImpCanhoto: TPosRecibo;
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -72,6 +73,8 @@ type
     procedure ImprimirEVENTOPDF(NFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(NFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFe: TNFe = nil); override;
+  published
+    property LocalImpCanhoto: TPosRecibo read FLocalImpCanhoto write FLocalImpCanhoto  default prCabecalho;
   end;
 
 implementation

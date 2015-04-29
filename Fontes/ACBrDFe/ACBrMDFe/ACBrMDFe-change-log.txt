@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/04/2015
+[-] Correção no calculo do numero de paginas.
+    por: Italo Jurisato Junior
+
 06/03/2015
 [*] inclusão do CoInitialize no ValidaModalMSXML.
     por: Rafael Dal Bosco

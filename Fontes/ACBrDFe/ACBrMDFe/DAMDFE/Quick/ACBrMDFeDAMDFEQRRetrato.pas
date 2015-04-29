@@ -197,7 +197,7 @@ type
       var PrintBand: Boolean);
   private
     { Private declarations }
-    FTotalPages : Integer;
+//    FTotalPages : Integer;
     procedure Itens;
   public
     { Public declarations }
@@ -232,7 +232,7 @@ begin
   inherited;
    Itens;
    nItemControle := 0;
-   FTotalPages   := 1;
+//   FTotalPages   := 1;
 
    QRMDFe.ReportTitle := 'Manifesto Eletrônico de Documentos Fiscais - MDF-e';
 

@@ -48,7 +48,15 @@ unit ACBrNFeDANFEClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, pcnNFe, pcnConversao;
+  SysUtils, Classes,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
+  pcnNFe, pcnConversao;
 
 type
 
@@ -109,6 +117,7 @@ type
     FProdutosPorPagina: Integer;
     FImprimirDetalhamentoEspecifico: Boolean;
     FNFeCancelada: Boolean;
+    FLocalImpCanhoto: Integer;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
@@ -117,6 +126,14 @@ type
     // Destinado exclusivamente ao DANFE da NFC-e
     FViaConsumidor : Boolean;
     FvTroco: Currency;
+
+    // Incluido por Leandro da Silva Alves em 17/04/2015
+    FTributosSeparadamente : Boolean; //informação dos tributos separadamente
+    FvTribFed: Currency; //total tributos federais
+    FvTribEst: Currency; //total tributos estaduais
+    FvTribMun: Currency; //total tributos municipais
+    FFonteTributos: String;
+    FChaveTributos: String;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -160,17 +177,27 @@ type
     property ProdutosPorPagina: Integer              read FProdutosPorPagina              write FProdutosPorPagina;
     property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
     property NFeCancelada: Boolean                   read FNFeCancelada                   write FNFeCancelada;
+    property LocalImpCanhoto: Integer                read FLocalImpCanhoto                write FLocalImpCanhoto;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     property ImprimeItens: Boolean                   read FImprimeItens                   write FImprimeItens;
     property vTroco: Currency                        read FvTroco                         write FvTroco;
     property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
+
+    // Incluido por Leandro da Silva Alves em 17/04/2015
+    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;
+    property vTribFed: Currency                      read FvTribFed                       write FvTribFed;
+    property vTribEst: Currency                      read FvTribEst                       write FvTribEst;
+    property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
+    property FonteTributos: String                   read FFonteTributos                  write FFonteTributos;
+    property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
+
   end;
 
 implementation
 
 uses
-  ACBrNFe, ACBrUtil;
+  ACBrNFe, ACBrNFeUtil, ACBrUtil, ACBrDFeUtil;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);
@@ -238,12 +265,18 @@ begin
   FImprimirDetalhamentoEspecifico := true;
   FImprimirTotalLiquido:= True;
   FNFeCancelada := False;
+  FLocalImpCanhoto := 0;
   FCasasDecimais := TCasasDecimais.Create(self);
   FCasasDecimais.Name:= 'CasasDecimais';
 
   FImprimeItens := True;
   FViaConsumidor:= True;
   FvTroco       := 0.0;
+
+  FTributosSeparadamente:= False;
+  FvTribFed:= 0.0;
+  FvTribEst:= 0.0;
+  FvTribMun:= 0.0;
 
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
@@ -319,11 +352,11 @@ end;
 
 function TACBrNFeDANFEClass.GetPathArquivos: String;
 begin
-  if EstaVazio(FPathArquivos) then
+  if DFeUtil.EstaVazio(FPathArquivos) then
      if Assigned(FACBrNFe) then
-        FPathArquivos := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.PathSalvar;
+        FPathArquivos := TACBrNFe(FACBrNFe).Configuracoes.Geral.PathSalvar;
 
-  if NaoEstaVazio(FPathArquivos) then
+  if DFeUtil.NaoEstaVazio(FPathArquivos) then
      if not DirectoryExists(FPathArquivos) then
         ForceDirectories(FPathArquivos);
 

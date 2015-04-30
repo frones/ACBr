@@ -988,13 +988,32 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarTotTrib;
 begin
-  if FpNFe.Total.ICMSTot.vTotTrib > 0 then
+ if TributosSeparadamente = False then
   begin
-    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Informação dos Tributos Totais Incidentes|' +
+   if FpNFe.Total.ICMSTot.vTotTrib > 0 then
+    begin
+     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Informação dos Tributos Totais Incidentes|' +
       FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib), nColunasPapel, '|'))
-    );
-    FBuffer.Add(cCmdFontePequena + ParseTextESCPOS('(Lei Federal 12.741/2012)'));
-    FBuffer.Add(GetLinhaSimples);
+     );
+     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS('(Lei Federal 12.741/2012)'));
+     FBuffer.Add(GetLinhaSimples);
+    end;
+  end
+ else
+  begin
+   if (vTribFed > 0) or (vTribEst > 0) or (vTribMun > 0) then
+    begin
+     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS('Informação dos Tributos Totais (Lei Federal 12.741/2012)'));
+
+     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Tributos Federais   R$ :|' + FormatFloat('#,###,##0.00', vTribFed), nColunasPapel, '|')));
+     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Tributos Estaduais  R$ :|' + FormatFloat('#,###,##0.00', vTribEst), nColunasPapel, '|')));
+     FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Tributos Municipais R$ :|' + FormatFloat('#,###,##0.00', vTribMun), nColunasPapel, '|')));
+
+     if trim(FonteTributos) <> '' then
+      FBuffer.Add(cCmdFontePequena + ParseTextESCPOS(padS('Fonte : '+FonteTributos+'|' + ChaveTributos, nColunasPapel, '|')));
+
+     FBuffer.Add(GetLinhaSimples);
+    end;
   end;
 end;
 

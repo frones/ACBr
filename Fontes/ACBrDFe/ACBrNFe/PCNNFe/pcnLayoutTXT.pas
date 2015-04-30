@@ -269,7 +269,7 @@ begin
   else if versao = '3.10' then
   begin
     LoadLayout('<B>       NOTA FISCAL|1');
-    LoadLayout('<B01>     A|versao¨|^id^');
+    LoadLayout('<B01>     A|3.10|^id^');
     LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dhSaiEnt¨|tpNF¨|idDest¨|cMunFG¨|tpImp¨|tpEmis¨|CDV¨|tpAmb¨|finNFe¨|indFinal¨|indPres¨|procEmi¨|verProc¨|dhCont¨|xJust¨');
     LoadLayout('<BA>   BA02|refNFe¨');
     LoadLayout('<BA03> BA03|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨');

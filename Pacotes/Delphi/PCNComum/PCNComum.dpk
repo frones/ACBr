@@ -28,8 +28,8 @@ package PCNComum;
 
 requires
   rtl,
-  ACBr_Comum,
-  ACBr_Diversos;
+  ACBrComum,
+  ACBrDiversos;
 
 contains
   pcnAuxiliar in '..\..\..\Fontes\PCNComum\pcnAuxiliar.pas',

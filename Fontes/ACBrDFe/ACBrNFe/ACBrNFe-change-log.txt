@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2015
+[+] Implementado a propriedade PathDownload que pode ser utilizada para determinar
+    o Path onde é gravado os XML de NF-e retornados pelos métodos Download e DistribuicaoDFe.
+    por: Italo Jurisato Junior
+
 09/03/2015
 [*] Removido o PathMDe, pois nunca foi utilizado.
     Por: Italo Jurisato Junior

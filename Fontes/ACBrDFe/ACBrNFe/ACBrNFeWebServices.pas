@@ -40,7 +40,8 @@ unit ACBrNFeWebServices;
 
 interface
 
-uses Classes, SysUtils,
+uses
+  Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
   pcnNFe,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConversaoNFe,
@@ -478,6 +479,8 @@ type
     FDownload: TDownLoadNFe;
 
     FretDownloadNFe: TretDownloadNFe;
+
+    function GerarPathDownload: String;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -542,6 +545,8 @@ type
     FNSU: String;
 
     FretDistDFeInt: TretDistDFeInt;
+
+    function GerarPathDistribuicao: String;
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -640,7 +645,8 @@ type
 
 implementation
 
-uses StrUtils, Math,
+uses
+  StrUtils, Math,
   ACBrUtil, ACBrNFe,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
@@ -2752,7 +2758,8 @@ begin
     if FRetDownloadNFe.retNFe.Items[I].cStat = 140 then
     begin
       NomeArq := FRetDownloadNFe.retNFe.Items[I].chNFe + '-nfe.xml';
-      FPDFeOwner.Gravar(NomeArq, FRetDownloadNFe.retNFe.Items[I].procNFe);
+      FPDFeOwner.Gravar(NomeArq, FRetDownloadNFe.retNFe.Items[I].procNFe,
+                        GerarPathDownload);
     end;
   end;
 end;
@@ -2778,6 +2785,11 @@ function TNFeDownloadNFe.GerarMsgErro(E: Exception): String;
 begin
   Result := ACBrStr('WebService Download de NF-e:' + LineBreak +
                     '- Inativo ou Inoperante tente novamente.');
+end;
+
+function TNFeDownloadNFe.GerarPathDownload: String;
+begin
+  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload('');
 end;
 
 { TAdministrarCSCNFCe }
@@ -2937,6 +2949,13 @@ begin
     if (AXML <> '') then
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
+        schresNFe:
+          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
+        schresEvento:
+          NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
+             FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
+             Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+             '-resEventoNFe.xml';
         schprocNFe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
         schprocEventoNFe:
@@ -2945,7 +2964,7 @@ begin
       end;
 
       if NaoEstaVazio(NomeArq) then
-        FPDFeOwner.Gravar(NomeArq, AXML);
+        FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao);
     end;
   end;
 end;
@@ -2974,6 +2993,11 @@ function TDistribuicaoDFe.GerarMsgErro(E: Exception): String;
 begin
   Result := ACBrStr('WebService Distribuição de DFe:' + LineBreak +
                     '- Inativo ou Inoperante tente novamente.');
+end;
+
+function TDistribuicaoDFe.GerarPathDistribuicao: String;
+begin
+  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload('');
 end;
 
 { TNFeEnvioWebService }

@@ -82,11 +82,11 @@ requires
   inet,
   soaprtl,
   synapse,
-  ACBr_Comum,
+  ACBrComum,
   PCNComum,
-  ACBr_DFeComum,
-  ACBr_OpenSSL,
-  ACBr_Capicom;
+  ACBrDFeComum,
+  ACBrOpenSSL,
+  ACBrCapicom;
 
 contains
   ACBrNFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeConfiguracoes.pas',

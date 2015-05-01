@@ -75,6 +75,7 @@ type
     FPathInu: String;
     FPathCCe: String;
     FPathEvento: String;
+    FPathDownload: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
 
@@ -83,6 +84,7 @@ type
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathCCe(CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
+    function GetPathDownload(CNPJ: String = ''): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -95,6 +97,7 @@ type
     property PathInu: String read FPathInu write FPathInu;
     property PathCCe: String read FPathCCe write FPathCCe;
     property PathEvento: String read FPathEvento write FPathEvento;
+    property PathDownload: String read FPathDownload write FPathDownload;
   end;
 
   { TConfiguracoesNFe }
@@ -187,6 +190,7 @@ begin
   FPathInu := '';
   FPathCCe := '';
   FPathEvento := '';
+  FPathDownload := '';
 end;
 
 function TArquivosConfNFe.GetPathCan(CNPJ: String = ''): String;
@@ -197,6 +201,11 @@ end;
 function TArquivosConfNFe.GetPathCCe(CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathCCe, 'CCe', CNPJ);
+end;
+
+function TArquivosConfNFe.GetPathDownload(CNPJ: String): String;
+begin
+  Result := GetPath(FPathDownload, 'Down', CNPJ);
 end;
 
 function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento;

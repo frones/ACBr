@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/05/2015
+[*] Atualização das URLs de produção e homologação do MDF-e publicadas 
+    pela SEFAZ-RS.
+    por: Italo Jurisato Junior
+
 29/04/2015
 [-] Correção no calculo do numero de paginas.
     por: Italo Jurisato Junior

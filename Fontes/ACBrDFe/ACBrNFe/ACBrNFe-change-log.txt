@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/05/2015
+[*] Atualização das URLs de produção e homologação da NF-e e NFC-e publicadas 
+    pela SEFAZ-RS.
+    por: Italo Jurisato Junior
+
 30/04/2015
 [+] Implementado a propriedade PathDownload que pode ser utilizada para determinar
     o Path onde é gravado os XML de NF-e retornados pelos métodos Download e DistribuicaoDFe.

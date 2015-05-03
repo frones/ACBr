@@ -93,7 +93,7 @@ type
 
 implementation
 
-uses ACBrTXTUtils;
+uses Math, ACBrTXTUtils;
 
 { ordenações de registros }
 
@@ -524,7 +524,7 @@ begin
                                              RFill(RegR01.MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
                                              LFill(RegR04.NUM_USU, 2) +
                                              LFill(RegR04.COO, 9) +
-                                             LFill( IfThen(NUM_CONT=-1, RegR04.NUM_CONT, NUM_CONT), 9) +
+                                             LFill( Math.IfThen(NUM_CONT=-1, RegR04.NUM_CONT, NUM_CONT), 9) +
                                              LFill(NUM_ITEM, 3) +
                                              RFill(COD_ITEM, 14) +
                                              RFill(DESC_ITEM, 100) +

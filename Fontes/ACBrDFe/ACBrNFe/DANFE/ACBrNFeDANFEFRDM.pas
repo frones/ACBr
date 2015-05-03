@@ -1074,6 +1074,7 @@ begin
       else
       begin
         case FNFe.Ide.tpEmis of
+          teOffLine,
           teContingencia,
           teFSDA,
           teSCAN,

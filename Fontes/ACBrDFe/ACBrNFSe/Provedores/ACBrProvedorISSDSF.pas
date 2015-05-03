@@ -212,9 +212,9 @@ begin
      end;
     2111300: // Sao Luis/MA
      begin
-       ConfigURL.HomRecepcaoLoteRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.HomRecepcaoLoteRPS    := 'http://sistemas.semfaz.saoluis.ma.gov.br/WsNFe2/LoteRps.jws?wsdl';
 
-       ConfigURL.ProRecepcaoLoteRPS    := 'http://www.issdigitalslz.com.br/WsNFe2/LoteRps.jws?wsdl';
+       ConfigURL.ProRecepcaoLoteRPS    := 'http://sistemas.semfaz.saoluis.ma.gov.br/WsNFe2/LoteRps.jws?wsdl';
      end;
     3552205: // Sorocaba/SP
      begin

@@ -1772,6 +1772,7 @@ procedure TACBrECFSwedaSTX.VendeItem(Codigo, Descricao : String ;
 var
    Aliquota : TACBrECFAliquota;
    IAT:String;
+   LimiteDescricao: Integer;
 begin
   if Qtd > 9999 then
      raise EACBrECFCMDInvalido.Create( ACBrStr(
@@ -1801,12 +1802,14 @@ begin
      AliquotaECF := FormatFloat(Aliquota.Tipo+'00.00%',Aliquota.Aliquota);
   end;
 
+  LimiteDescricao := ifthen(DescricaoGrande, 233, 33);
+
   EnviaComando('02|' + AjustaValor(Qtd,fpDecimaisQtd)              +'|'+
                        Trim(LeftStr(Codigo,14))                    +'|'+
                        AjustaValor(ValorUnitario, fpDecimaisPreco) +'|'+
                        Trim(LeftStr(Unidade,2))                    +'|'+
                        AliquotaECF                                 +'|'+
-                       Trim(LeftStr(Descricao,33))                 +
+                       Trim(LeftStr(Descricao,LimiteDescricao))    +
                        IAT
                        );
 
@@ -3095,22 +3098,28 @@ const
   cITalicoOff = '';
 begin
 
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     -1: Result := ATag;
-     2 : Result := cExpandidoOn;
-     3 : Result := cExpandidoOff;
-     4 : Result := cNegritoOn;
-     5 : Result := cNegritoOff;
-     6 : Result := cSublinhadoOn;
-     7 : Result := cSublinhadoOff;
-     8 : Result := cCondensadoOn;
-     9 : Result := cCondensadoOff;
-     10: Result := cItalicoOn;
-     11: Result := cITalicoOff;
+  if ATag = cTagLigaExpandido then
+    Result := cExpandidoOn
+  else if ATag = cTagDesligaExpandido then
+    Result := cExpandidoOff
+  else if ATag = cTagLigaNegrito then
+    Result := cNegritoOn
+  else if ATag = cTagDesligaNegrito then
+    Result := cNegritoOff
+  else if ATag = cTagLigaSublinhado then
+    Result := cSublinhadoOn
+  else if ATag = cTagDesligaSublinhado then
+    Result := cSublinhadoOff
+  else if ATag = cTagLigaCondensado then
+    Result := cCondensadoOn
+  else if ATag = cTagDesligaCondensado then
+    Result := cCondensadoOff
+  else if ATag = cTagLigaItalico then
+    Result := cItalicoOn
+  else if ATag = cTagDesligaItalico then
+    Result := cITalicoOff
   else
      Result := '' ;
-  end;
-
 end;
 
 function TACBrECFSwedaSTX.TraduzirTagBloco(const ATag, Conteudo : AnsiString
@@ -3156,19 +3165,24 @@ const
   end;
 
 begin
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     12,13: Result := MontaCodBarras(cEAN8, Conteudo, 7);
-     14,15: Result := MontaCodBarras(cEAN13, Conteudo, 12);
-     18,19: Result := MontaCodBarras(cINTER25, Conteudo);
-     22,23: Result := MontaCodBarras(cCODE39, Conteudo ) ;
-     24,25: Result := ifthen(fsVerProtocolo > 'E', MontaCodBarras(cCODE93, Conteudo), '' ) ;
-     26,27: Result := IfThen(fsVerProtocolo > 'E', MontaCodBarras(cCODE128, Conteudo), ''  );
-     28,29: Result := MontaCodBarras(cUPCA, Conteudo, 11);
-     30,31: Result := MontaCodBarras(cCODABAR, Conteudo ) ;
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo, 7)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo, 12)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER25, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := MontaCodBarras(cCODE39, Conteudo)
+  else if ATag = cTagBarraCode93 then
+    Result := ifthen(fsVerProtocolo > 'E', MontaCodBarras(cCODE93, Conteudo), '' )
+  else if ATag = cTagBarraCode128 then
+    Result :=  IfThen(fsVerProtocolo > 'E', MontaCodBarras(cCODE128, Conteudo), ''  )
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo, 11)
+  else if ATag = cTagBarraCodaBar then
+    Result := MontaCodBarras(cCODABAR, Conteudo)
   else
-     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
-  end;
-
+     Result := Conteudo;
 end ;
 
 function TACBrECFSwedaSTX.GetNumReducoesZRestantes: String;

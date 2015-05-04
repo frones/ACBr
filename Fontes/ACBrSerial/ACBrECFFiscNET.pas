@@ -353,7 +353,9 @@ TACBrECFFiscNET = class( TACBrECFClass )
        Tipo : String = ''; Posicao : String = '') ; override ;
 
     procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
+
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
+    function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
  end ;
 
 implementation
@@ -3179,7 +3181,28 @@ const
   cNegritoOFF    = ESC + 'F' ;
   cNegritoON_B   = ESC + '!' + #8 ;
   cNegritoOFF_B  = ESC + '!' + #0 ;
+var
+  CodB : Boolean ;
+begin
 
+  // Modelos mais antigos usam comandos "B" //
+  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K') > 0 );
+
+  if ATag = cTagLigaExpandido then
+    Result := ifthen(CodB, cExpandidoON_B , cExpandidoON)
+  else if ATag = cTagDesligaExpandido then
+    Result := ifthen(CodB, cExpandidoOFF_B, cExpandidoOFF)
+  else if ATag = cTagLigaNegrito then
+    Result := ifthen(CodB, cNegritoON_B , cNegritoON)
+  else if ATag = cTagDesligaNegrito then
+    Result := ifthen(CodB, cNegritoOFF_B, cNegritoOFF)
+  else
+     Result := '' ;
+end ;
+
+function TACBrECFFiscNET.TraduzirTagBloco(const ATag, Conteudo: AnsiString
+  ): AnsiString;
+const
   cBarras           = #29 ;
   cBarrasAltura     = cBarras + 'h' ;
   cBarrasLargura    = cBarras + 'w' ;
@@ -3196,10 +3219,8 @@ const
   cUPCA     = 0 ; // <upca></upca>
   cCODABAR  = 6 ; // <codabar></codabar>
   cBarraFim = #0 ;
-var
-  CodB : Boolean ;
 
-  function ConfigurarBarras(const ACodigo: Integer): AnsiString;
+  function MontaCodBarras(const ATipo: Integer; ACodigo: AnsiString): AnsiString;
   Var
     Altura, Largura : Integer ;
   begin
@@ -3222,36 +3243,24 @@ var
        Result  := Result + cBarrasLargura + chr(Largura);
     end ;
 
-    Result := Result + cBarrasCodigo + Chr( ACodigo );
+    Result := Result + cBarrasCodigo + Chr( ATipo ) + ACodigo + cBarraFim;
   end;
 
 begin
-
-  // Modelos mais antigos usam comandos "B" //
-  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K') > 0 );
-
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     -1: Result := ATag;
-     2 : Result := ifthen(CodB, cExpandidoON_B , cExpandidoON);
-     3 : Result := ifthen(CodB, cExpandidoOFF_B, cExpandidoOFF);
-     4 : Result := ifthen(CodB, cNegritoON_B , cNegritoON);
-     5 : Result := ifthen(CodB, cNegritoOFF_B, cNegritoOFF);
-     12: Result := ConfigurarBarras(cEAN8);
-     13: Result := cBarraFim;
-     14: Result := ConfigurarBarras(cEAN13);
-     15: Result := cBarraFim;
-     18: Result := ConfigurarBarras(cINTER);
-     19: Result := cBarraFim;
-     22: Result := ConfigurarBarras(cCODE39);
-     23: Result := cBarraFim;
-     28: Result := ConfigurarBarras(cUPCA);
-     29: Result := cBarraFim;
-     30: Result := ConfigurarBarras(cCODABAR);
-     31: Result := cBarraFim;
-
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := MontaCodBarras(cCODE39, Conteudo)
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo)
+  else if ATag = cTagBarraCodaBar then
+    Result := MontaCodBarras(cCODABAR, Conteudo)
   else
-     Result := '' ;
-  end;
-end ;
+     Result := Conteudo;
+end;
 
 end.

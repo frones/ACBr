@@ -339,7 +339,9 @@ TACBrECFDaruma = class( TACBrECFClass )
       const AAlinhamento: TACBrAlinhamento = alCentro); override;
 
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
- end ;
+    function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
+
+end ;
 
 implementation
 Uses SysUtils, Math,
@@ -5447,7 +5449,35 @@ const
   //<i></i>
   cItalicoOn  = '';
   cITalicoOff = '';
+begin
 
+  if ATag = cTagLigaExpandido then
+    Result := cExpandidoOn
+  else if ATag = cTagDesligaExpandido then
+    Result := cExpandidoOff
+  else if ATag = cTagLigaNegrito then
+    Result := cNegritoOn
+  else if ATag = cTagDesligaNegrito then
+    Result := cNegritoOff
+  else if ATag = cTagLigaSublinhado then
+    Result := cSublinhadoOn
+  else if ATag = cTagDesligaSublinhado then
+    Result := cSublinhadoOff
+  else if ATag = cTagLigaCondensado then
+    Result := cCondensadoOn
+  else if ATag = cTagDesligaCondensado then
+    Result := cCondensadoOff
+  else if ATag = cTagLigaItalico then
+    Result := cItalicoOn
+  else if ATag = cTagDesligaItalico then
+    Result := cITalicoOff
+  else
+     Result := '' ;
+end;
+
+function TACBrECFDaruma.TraduzirTagBloco(const ATag, Conteudo: AnsiString
+  ): AnsiString;
+const
   // bAABCCDDEEEEEEEEEEEEE..EE
   // --------
   // b = Comando para impressão das barras
@@ -5472,7 +5502,7 @@ const
   cMSI      = ESC + 'b10'; // <msi></msi>
   cBarraFim = NUL;
 
-  function ConfigurarBarras(const ACodigo: AnsiString): AnsiString;
+  function MontaCodBarras(const ATipo, ACodigo: AnsiString): AnsiString;
   var
     Largura: AnsiString;
     Altura: AnsiString;
@@ -5482,48 +5512,34 @@ const
     Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 200), 50), 2);
     Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
 
-    Result := ACodigo + Largura + Altura + Mostrar;
+    Result := ATipo + Largura + Altura + Mostrar + ACodigo + cBarraFim;
   end;
+
 begin
-
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     -1: Result := ATag;
-     2 : Result := cExpandidoOn;
-     3 : Result := cExpandidoOff;
-     4 : Result := cNegritoOn;
-     5 : Result := cNegritoOff;
-     6 : Result := cSublinhadoOn;
-     7 : Result := cSublinhadoOff;
-     8 : Result := cCondensadoOn;
-     9 : Result := cCondensadoOff;
-     10: Result := cItalicoOn;
-     11: Result := cItalicoOff;
-     12: Result := ConfigurarBarras(cEAN8);
-     13: Result := cBarraFim;
-     14: Result := ConfigurarBarras(cEAN13);
-     15: Result := cBarraFim;
-     16: Result := ConfigurarBarras(cSTD25);
-     17: Result := cBarraFim;
-     18: Result := ConfigurarBarras(cINTER25);
-     19: Result := cBarraFim;
-     20: Result := ConfigurarBarras(cCODE11);
-     21: Result := cBarraFim;
-     22: Result := ConfigurarBarras(cCODE39);
-     23: Result := cBarraFim;
-     24: Result := ConfigurarBarras(cCODE93);
-     25: Result := cBarraFim;
-     26: Result := ConfigurarBarras(cCODE128);
-     27: Result := cBarraFim;
-     28: Result := ConfigurarBarras(cUPCA);
-     29: Result := cBarraFim;
-     30: Result := ConfigurarBarras(cCODABAR);
-     31: Result := cBarraFim;
-     32: Result := ConfigurarBarras(cMSI);
-     33: Result := cBarraFim;
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo)
+  else if ATag = cTagBarraStd then
+    Result := MontaCodBarras(cSTD25, Conteudo)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER25, Conteudo)
+  else if ATag = cTagBarraCode11 then
+    Result := MontaCodBarras(cCODE11, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := MontaCodBarras(cCODE39, Conteudo)
+  else if ATag = cTagBarraCode93 then
+    Result := MontaCodBarras(cCODE93, Conteudo)
+  else if ATag = cTagBarraCode128 then
+    Result := MontaCodBarras(cCODE128, Conteudo)
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo)
+  else if ATag = cTagBarraCodaBar then
+    Result := MontaCodBarras(cCODABAR, Conteudo)
+  else if ATag = cTagBarraMSI then
+    Result := MontaCodBarras(cMSI, Conteudo)
   else
-     Result := '' ;
-  end;
-
+     Result := Conteudo;
 end;
 
 end.

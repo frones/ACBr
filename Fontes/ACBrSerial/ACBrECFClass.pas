@@ -4704,51 +4704,18 @@ function TACBrECFClass.PossuiTagCodBarra(const ATexto: String): Boolean;
 var
   I: Integer;
 begin
-  for I := 12 to High(ARRAY_TAGS) do
+  I := low(cTAGS_BARRAS);
+  Result := False;
+  while (not Result) and (I <= High(cTAGS_BARRAS)) do
   begin
-    Result := pos(ARRAY_TAGS[I], ATexto) > 0;
-    if Result then
-      Exit;
+    Result := (pos(cTAGS_BARRAS[I], ATexto) > 0);
+    Inc( I );
   end;
 end;
 
 function TACBrECFClass.TraduzirTag(const ATag: AnsiString): AnsiString;
 begin
-  {*************************************************
-
-    TAGS ACEITAS
-    ============
-      </linha_simples>    - ------------------...
-      </linha_dupla>      - ==================...
-      <e></e>             - Expandido
-      <n></n>             - Negrito
-      <s></s>             - Sublinhado
-      <c></c>             - Condensado
-      <i></i>             - Itálico
-      <ad></ad>           - Alinhado a direita
-      <ce></ce>           - centralizado
-
-      <ean8></ean8>       - ean 8
-      <ean13></ean13>     - ean 13
-      <std></std>         - standart
-      <inter></inter>     - interleave
-      <code11></code11>   - code 11
-      <code39></code39>   - code 39
-      <code93></code93>   - code 93
-      <code128></code128> - code 128
-      <upca></upca>       - upca
-      <codabar></codabar> - codabar
-      <msi></msi>         - msi
-
-  *************************************************}
-
-  // retornar vazio para que não de problema nas
-  // impressoras que não implementaram ainda
-
-  if AnsiIndexText( ATag, ARRAY_TAGS) < 0 then  // Não é uma TAG conhecida ?
-     Result := ATag
-  else
-     Result := '' ;
+  Result := '';
 end;
 
 function TACBrECFClass.TraduzirTagBloco(const ATag, Conteudo : AnsiString

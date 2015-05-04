@@ -2069,6 +2069,8 @@ end;
 
 function TACBrECFEscECF.TraduzirTag(const ATag : AnsiString) : AnsiString ;
 begin
+  // TODO: Usar Tradução de classe original  ??
+
   if IsBematech then
     Result := BematechTraduzirTag( ATag )
   else
@@ -2078,13 +2080,10 @@ end ;
 function TACBrECFEscECF.TraduzirTagBloco(const ATag, Conteudo : AnsiString
    ) : AnsiString ;
 begin
-  Result := '';
-
   if IsBematech then
-    Result := BematechTraduzirTagBloco( ATag, Conteudo, Self);
-
-  if Result = '' then
-     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
+    Result := BematechTraduzirTagBloco( ATag, Conteudo, Self)
+  else
+    Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
 end ;
 
 procedure TACBrECFEscECF.AbreCupom ;

@@ -75,6 +75,9 @@ const
   CINPOUTDLL = 'inpout32.dll';
 {$ENDIF}
 
+type
+  TSetOfChars = set of AnsiChar;
+
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String;
@@ -103,6 +106,7 @@ function LEStrToInt(ALEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
+
 
 function BinaryStringToString(const AString: AnsiString): AnsiString;
 function StringToBinaryString(const AString: AnsiString): AnsiString;
@@ -186,6 +190,8 @@ function CharIsNum(const C: Char): Boolean;
 function OnlyNumber(const AValue: String): String;
 function OnlyAlpha(const AValue: String): String;
 function OnlyAlphaNum(const AValue: String): String;
+function OnlyCharsInSet(const AValue: String; SetOfChars: TSetOfChars): String;
+
 function StrIsIP(const AValue: String): Boolean;
 
 function EstaVazio(const AValue: String): Boolean;overload;
@@ -550,7 +556,6 @@ begin
   end;
 end ;
 
-
 {-----------------------------------------------------------------------------
   Converte um "AInteger" em uma String binária codificada como Little Endian,
   no tamanho máximo de "BytesStr"
@@ -639,7 +644,6 @@ begin
   for I := 1 to L do
      Result := Result + IntToHex(Ord(ABinaryString[I]), 2);
 end;
-
 
 {-----------------------------------------------------------------------------
   Completa <AString> com <Caracter> a direita, até o tamanho <nLen>, Alinhando
@@ -1456,6 +1460,20 @@ begin
         Result := Result + AValue[I];
   end;
 end ;
+
+function OnlyCharsInSet(const AValue: String; SetOfChars: TSetOfChars): String;
+Var
+  I : Integer ;
+  LenValue : Integer;
+begin
+  Result := '' ;
+  LenValue := Length( AValue ) ;
+  For I := 1 to LenValue do
+  begin
+     if AValue[I] in SetOfChars then
+        Result := Result + AValue[I];
+  end;
+end;
 
 {-----------------------------------------------------------------------------
  ** Baseada em "IsIp" de synautil.pas - Synapse http://www.ararat.cz/synapse/ **

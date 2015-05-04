@@ -103,18 +103,74 @@ const
 
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
 
-  ARRAY_TAGS: array[0..44] of String = ( '</linha_simples>', '</linha_dupla>',
-    '<e>', '</e>', '<n>', '</n>', '<s>', '</s>', '<c>', '</c>', '<i>', '</i>',
-    '<ean8>', '</ean8>', '<ean13>', '</ean13>',
-    '<std>', '</std>', '<inter>', '</inter>',
-    '<code11>', '</code11>', '<code39>', '</code39>',
-    '<code93>', '</code93>', '<code128>', '</code128>',
-    '<upca>', '</upca>', '<codabar>', '</codabar>',
-    '<msi>', '</msi>',
-    '<ad>','</ad>','<ce>','</ce>','<ae>','</ae>','<fn>', '</fn>', '<fp>', '</fp>', '<logo>' );
+  cTagLigaExpandido    = '<e>';
+  cTagDesligaExpandido = '</e>';
+  cTagLigaNegrito      = '<n>';
+  cTagDesligaNegrito   = '</n>';
+  cTagLigaSublinhado   = '<s>';
+  cTagDesligaSublinhado= '</s>';
+  cTagLigaCondensado   = '<c>';
+  cTagDesligaCondensado= '</c>';
+  cTagLigaItalico      = '<i>';
+  cTagDesligaItalico   = '</i>';
+  cTagLigaInvertido    = '<in>';
+  cTagDesligaInvertido = '</in>';
+  cTagFonteNormal      = '</fn>';
+  cTagFonteA           = '</fa>';
+  cTagFonteB           = '</fb>';
+  cTagFonteAlinhadaDireita = '</ad>';
+  cTagFonteAlinhadaEsquerda = '</ae>';
+  cTagfonteAlinhadaCentro = '</ce>';
 
-  TAGS_FORMATACAO: set of byte = [2..11] ;
-  TAGS_BLOCO: set of byte = [12..39] ;
+  cTAGS_CARACTER: array[0..10] of String = (
+    cTagLigaExpandido, cTagDesligaExpandido,
+    cTagLigaNegrito, cTagDesligaNegrito,
+    cTagLigaSublinhado, cTagDesligaSublinhado,
+    cTagLigaCondensado, cTagDesligaCondensado,
+    cTagLigaItalico, cTagDesligaItalico,
+    cTagFonteNormal);
+
+  cTagLinhaSimples = '</linha_simples>';
+  cTagLinhaDupla   = '</linha_dupla>';
+  cTagLogotipo     = '</logo>';
+  cTagCorteParcial = '</corte_parcial>';
+  cTagCorteTotal = '</corte_total>';
+  cTagBeep = '</beep>';
+  cTagZera = '</zera>';
+
+  cTAGS_FUNCOES: array[0..5] of String = (
+    cTagLinhaSimples, cTagLinhaDupla, cTagLogotipo,
+    cTagCorteParcial, cTagCorteTotal, CTagZera);
+
+  cTagAlinhadoDireita = '<ad>';
+  cTagAlinhadoEsquerda = '<ae>';
+  cTagAlinhadoCentro = '<ce>';
+
+  cTAGS_ALINHAMENTO: array[0..2] of String = (
+    cTagAlinhadoDireita, cTagAlinhadoEsquerda, cTagAlinhadoCentro );
+
+  cTagBarraEAN8 = '<ean8>';
+  cTagBarraEAN13 = '<ean13>';
+  cTagBarraStd = '<std>';
+  cTagBarraInter = '<inter>';
+  cTagBarraCode11 = '<code11>';
+  cTagBarraCode39 = '<code39>';
+  cTagBarraCode93 = '<code93>';
+  cTagBarraCode128 = '<code128>';
+  cTagBarraCode128a = '<code128a>';
+  cTagBarraCode128b = '<code128b>';
+  cTagBarraCode128c = '<code128c>';
+  cTagBarraUPCA = '<upca>';
+  cTagBarraCodaBar = '<codabar>';
+  cTagBarraMSI = '<msi>';
+
+  cTagQRCode = '<qrcode>';
+
+  cTAGS_BARRAS: array[0..13] of String = (
+    cTagBarraEAN8, cTagBarraEAN13, cTagBarraStd, cTagBarraInter, cTagBarraCode11,
+    cTagBarraCode39, cTagBarraCode93, cTagBarraCode128, cTagBarraUPCA,
+    cTagBarraCodaBar, cTagBarraMSI,
+    cTagBarraCode128a, cTagBarraCode128b, cTagBarraCode128c);
 
   cACBrDeviceAtivarPortaException    = 'Porta não definida' ;
   cACBrDeviceAtivarException         = 'Erro abrindo: %s ' + sLineBreak +' %s ' ;

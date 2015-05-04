@@ -385,6 +385,7 @@ TACBrECFEpson = class( TACBrECFClass )
     function GetDadosUltimaReducaoZ: AnsiString; override ;
 
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
+    function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
  end ;
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
@@ -3942,6 +3943,46 @@ const
   // <s></s>
   cSublinhadoOn = 2;
 
+var
+  Cmd : Integer ;
+begin
+  Result := '' ;
+
+  if ATag = cTagLigaExpandido then
+    fsALExpandido := True
+  else if ATag = cTagDesligaExpandido then
+    fsALExpandido := False
+  else if ATag = cTagLigaNegrito then
+    fsALNegrito := True
+  else if ATag = cTagDesligaNegrito then
+    fsALNegrito := False
+  else if ATag = cTagLigaSublinhado then
+    fsALSublinhado:= True
+  else if ATag = cTagDesligaSublinhado then
+    fsALSublinhado:= False
+  else
+    exit;
+
+  Cmd := C_OFF ;
+
+  if fsALNegrito then
+    Cmd := Cmd + cNegritoOn;
+
+  if fsALExpandido then
+    Cmd := Cmd + cExpandidoOn;
+
+  if fsALSublinhado then
+    Cmd := Cmd + cSublinhadoOn;
+
+  if fpDevice.IsDLLPort and (Cmd = C_OFF) then
+    Cmd := 32 ;
+
+  Result := ESC + chr( Cmd );
+end ;
+
+function TACBrECFEpson.TraduzirTagBloco(const ATag, Conteudo: AnsiString
+  ): AnsiString;
+const
   cBarras = ESC + #128 ;
   // ESC + #128 + T + H + W + HRIp + HRIl + EEEEEEEEEEEEE..EE
   // --------
@@ -3963,7 +4004,7 @@ const
   cCODABAR  = 71; // <codabar></codabar>
   cBarraFim = '';
 
-  function ConfigurarBarras(const ACodigo: Integer): AnsiString;
+  function MontaCodBarras(const ATipo: Integer; ACodigo: AnsiString): AnsiString;
   Var
     Altura, Largura, Mostrar : Integer ;
   begin
@@ -3973,62 +4014,31 @@ const
     if ConfigBarras.MostrarCodigo then
        Mostrar := 2;
 
-    Result := cBarras + chr(ACodigo) + chr( Altura ) + chr( Largura ) +
-              chr( Mostrar ) + #48;
+    Result := cBarras + chr(ATipo) + chr( Altura ) + chr( Largura ) +
+              chr( Mostrar ) + #48 + ACodigo + cBarraFim;
   end;
-var
-  TagNum, Cmd : Integer ;
+
 begin
 
-  TagNum := AnsiIndexText( ATag, ARRAY_TAGS) ;
-
-  case TagNum of
-     -1: Result := ATag;
-     2 : fsALExpandido := True ;
-     3 : fsALExpandido := False ;
-     4 : fsALNegrito   := True ;
-     5 : fsALNegrito   := False ;
-     6 : fsALSublinhado:= True ;
-     7 : fsALSublinhado:= False ;
-     12: Result := ConfigurarBarras(cEAN8);
-     13: Result := cBarraFim;
-     14: Result := ConfigurarBarras(cEAN13);
-     15: Result := cBarraFim;
-     18: Result := ConfigurarBarras(cINTER);
-     19: Result := cBarraFim;
-     22: Result := ConfigurarBarras(cCODE39);
-     23: Result := cBarraFim;
-     24: Result := ConfigurarBarras(cCODE93);
-     25: Result := cBarraFim;
-     26: Result := ConfigurarBarras(cCODE128);
-     27: Result := cBarraFim;
-     28: Result := ConfigurarBarras(cUPCA);
-     29: Result := cBarraFim;
-     30: Result := ConfigurarBarras(cCODABAR);
-     31: Result := cBarraFim;
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := MontaCodBarras(cCODE39, Conteudo)
+  else if ATag = cTagBarraCode93 then
+    Result := MontaCodBarras(cCODE93, Conteudo)
+  else if ATag = cTagBarraCode128 then
+    Result := MontaCodBarras(cCODE128, Conteudo)
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo)
+  else if ATag = cTagBarraCodaBar then
+    Result := MontaCodBarras(cCODABAR, Conteudo)
   else
-     Result := '' ;
-  end;
-
-  if (TagNum > 1) and (TagNum < 8) then
-  begin
-     Cmd := C_OFF ;
-
-     if fsALNegrito then
-        Cmd := Cmd + cNegritoOn;
-
-     if fsALExpandido then
-        Cmd := Cmd + cExpandidoOn;
-
-     if fsALSublinhado then
-        Cmd := Cmd + cSublinhadoOn;
-
-     if fpDevice.IsDLLPort and (Cmd = C_OFF) then
-        Cmd := 32 ;
-
-     Result := ESC + chr( Cmd );
-  end ;
-end ;
+     Result := Conteudo;
+end;
 
 end.
 

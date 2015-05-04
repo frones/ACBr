@@ -39,6 +39,34 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/05/2015       (por: DSA)
+-- ACBrDevice --
+[*] Ajustes de Units para FMX
+[+] Adicionado TCriticalSection para evitar chamadas concorrentes a escrita na
+    porta do Device
+[*] Tipo: TACBrECFTipoCodBarra modificado para: TACBrTipoCodBarra
+[+] Criada novas classes para processamento genérico de TAGs:
+    TACBrTag, TACBrTags, TACBrTagProcessor.
+
+-- ACBrECF --
+[*] Modificado para usar o TACBrTagProcessor
+
+-- ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, ACBrECFEpson, ACBrECFFiscNet,
+   ACBrECFSwedaStx, ACBrECFEscECF,  --
+[*] Mecanismo de tradução de Tags ajustado para TACBrTagProcessor e ACBrConsts
+
+-- ACBrPosPrinter --
+[+] Criado novo componente: TACBrPosPrinter, que permite manipular Impressoras
+    NAO fiscais, de bobina, usando a linguagem EscPos ou similares, por meio de
+    TAGS no texto. Controla a formatação de caracteres Ex: Negrito, expandido,
+    condensado, etc e a impressão de Cod.Barras e QRCode.
+    Compatível com: ppEscPosEpson, ppEscBematech, ppEscDaruma
+
+Data: 27/04/2015       (por: DSA)
+-- ACBrECFSwedaSTX --
+[-] Correção para correta impressão de Descrição Grande
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=21320
+
 Data: 20/04/2015       (por: DSA)
 -- ACBrECF --
 [+] Adicionada a propriedade TotalizadoresNaoTributados, que retorna uma lista

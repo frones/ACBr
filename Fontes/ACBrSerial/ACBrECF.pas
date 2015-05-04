@@ -111,6 +111,7 @@ TACBrECF = class( TACBrComponent )
   private
     fsDevice : TACBrDevice ;   { SubComponente ACBrDevice }
     fsConfigBarras: TACBrECFConfigBarras;
+    fsTagProcessor: TACBrTagProcessor;
 
     { Propriedades do Componente ACBrECF }
     fsAtivo  : Boolean;
@@ -888,8 +889,10 @@ TACBrECF = class( TACBrComponent )
 
     function DecodificarTagsFormatacao(AString: AnsiString;
       CodificarPaginaDeCodigo: Boolean =  True): AnsiString;
-    function TraduzirTag(const ATag: AnsiString): AnsiString;
-    function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString;
+    procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: String);
+    procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
+      var BlocoTraduzido: AnsiString);
+
     function CodificarPaginaDeCodigoECF(ATexto: String): AnsiString;
     function DecodificarPaginaDeCodigoECF(ATexto: AnsiString): String;
 
@@ -1215,6 +1218,14 @@ begin
   {$ENDIF}
   fsDevice.Porta := 'COM1';
 
+  fsTagProcessor := TACBrTagProcessor.Create;
+  fsTagProcessor.AddTags(cTAGS_CARACTER, False);
+  fsTagProcessor.AddTags(cTAGS_FUNCOES, False);
+  fsTagProcessor.AddTags(cTAGS_ALINHAMENTO, True);
+  fsTagProcessor.AddTags(cTAGS_BARRAS, True);
+  fsTagProcessor.OnTraduzirTag := TraduzirTag;
+  fsTagProcessor.OnTraduzirTagBloco := TraduzirTagBloco;
+
   {$IFNDEF NOGUI}
   {$IFNDEF FRAMEWORK}
     fsFormMsgFont  := TFont.create ;
@@ -1294,6 +1305,7 @@ begin
      FreeAndNil( fsEADInterno );
 
   FreeAndNil( fsDevice ) ;
+  FreeAndNil( fsTagProcessor );
 
   {$IFNDEF NOGUI}
     {$IFNDEF FRAMEWORK}
@@ -4928,138 +4940,75 @@ end;
 
 function TACBrECF.DecodificarTagsFormatacao(AString : AnsiString ;
    CodificarPaginaDeCodigo : Boolean) : AnsiString ;
-
-  Procedure AchaTag( const AString: AnsiString; const PosIni: Integer;
-    var ATag: AnsiString; var PosTag: Integer ) ;
-  var
-     PosTagAux, FimTag, LenTag : Integer ;
-  begin
-     ATag   := '';
-     PosTag := PosEx( '<', AString, PosIni);
-     if PosTag > 0 then
-     begin
-       PosTagAux := PosEx( '<', Result, PosTag + 1);  // Verificando se Tag é inválida
-       FimTag    := PosEx( '>', Result, PosTag + 1);
-       if FimTag = 0 then                             // Tag não fechada ?
-       begin
-         PosTag := 0;
-         exit ;
-       end ;
-
-       while (PosTagAux > 0) and (PosTagAux < FimTag) do  // Achou duas aberturas Ex: <<e>
-       begin
-         PosTag    := PosTagAux;
-         PosTagAux := PosEx( '<', Result, PosTag + 1);
-       end ;
-
-       LenTag := FimTag - PosTag + 1 ;
-       ATag   := copy( AString, PosTag, LenTag ) ;
-     end ;
-  end ;
-
-Var
-  Tag1, Tag2, Cmd, LowerTag : AnsiString ;
-  PosTag1, IndTag1, LenTag1, PosTag2, FimTag : Integer ;
 begin
   if CodificarPaginaDeCodigo then
      Result := CodificarPaginaDeCodigoECF( AString )
   else
      Result := AString;
 
-  Tag1    := '';
-  PosTag1 := 0;
-  AchaTag( Result, 1, Tag1, PosTag1);
-  while Tag1 <> '' do
-  begin
-    LenTag1  := Length( Tag1 );
-    LowerTag := LowerCase( Tag1 );
-    IndTag1  := AnsiIndexText( LowerTag, ARRAY_TAGS) ;
-    Tag2     := '' ;
-    PosTag2  := 0 ;
-
-    if (IndTag1 in TAGS_BLOCO) then  // Tag de Bloco, Procure pelo Fechamento
-    begin
-      Tag2    := '</'+ copy(LowerTag,2,LenTag1) ; // Calcula Tag de Fechamento
-      PosTag2 := PosEx(Tag2, LowerCase(Result), PosTag1+LenTag1 );
-      if PosTag2 = 0 then                         // Não achou Tag de Fechamento
-        Tag2 := ''
-    end ;
-
-    if Tag2 = '' then
-     begin
-       if IgnorarTagsFormatacao and (IndTag1 in TAGS_FORMATACAO) then
-          Cmd := ''
-       else
-          Cmd := TraduzirTag( Tag1 ) ;
-     end
-    else
-     begin
-       Cmd := TraduzirTagBloco( LowerTag, copy(Result, PosTag1+LenTag1, PosTag2-PosTag1-LenTag1) );
-
-       // Faz da Tag1, todo o Bloco para fazer a substituição abaixo //
-       LenTag1 := PosTag2-PosTag1+LenTag1+1;
-       Tag1    := copy(Result, PosTag1, LenTag1 )
-     end ;
-
-    FimTag := PosTag1 + LenTag1 -1 ;
-
-    if Cmd <> Tag1 then   // Houve mudança no conteudo  ? Se SIM, substitua
-    begin
-      Result := StuffString( Result, PosTag1, LenTag1, Cmd );
-      FimTag := FimTag + (Length(Cmd) - LenTag1);
-    end ;
-
-    Tag1    := '';
-    PosTag1 := 0;
-    AchaTag( Result, FimTag + 1, Tag1, PosTag1 );
-  end ;
+  Result := fsTagProcessor.DecodificarTagsFormatacao(Result);
 end;
 
-function TACBrECF.TraduzirTag(const ATag : AnsiString) : AnsiString ;
-var
-   I : Integer ;
-   LowerTag : AnsiString ;
+procedure TACBrECF.TraduzirTag(const ATag: AnsiString; var TagTraduzida: String
+  );
 begin
-   Result := '' ;
-   if ATag = '' then
-     exit ;
+  {*************************************************
 
-   LowerTag := LowerCase( ATag );
-   Result   := fsECF.TraduzirTag( LowerTag );
+    TAGS ACEITAS
+    ============
+      </linha_simples>    - ------------------...
+      </linha_dupla>      - ==================...
+      <e></e>             - Expandido
+      <n></n>             - Negrito
+      <s></s>             - Sublinhado
+      <c></c>             - Condensado
+      <i></i>             - Itálico
+      </fn>               - Fonte Normal
+      <ad></ad>           - Alinhado a direita
+      <ae></ae>           - Alinhado a esquerda
+      <ce></ce>           - centralizado
 
-   if Result = '' then
+      <ean8></ean8>       - ean 8
+      <ean13></ean13>     - ean 13
+      <std></std>         - standart
+      <inter></inter>     - interleave
+      <code11></code11>   - code 11
+      <code39></code39>   - code 39
+      <code93></code93>   - code 93
+      <code128></code128> - code 128
+      <upca></upca>       - upca
+      <codabar></codabar> - codabar
+      <msi></msi>         - msi
+
+  *************************************************}
+
+   TagTraduzida := fsECF.TraduzirTag( ATag );
+
+   if TagTraduzida = '' then
    begin
-     I := AnsiIndexText( LowerTag, ARRAY_TAGS) ;
-     case I of
-       0      : Result := StringOfChar('-', Colunas);
-       1      : Result := StringOfChar('=', Colunas);
-       34..37 : Result := ARRAY_TAGS[ I ] ;  // Mantem a TAGs de alinhamento no texto para serem tratadas depois
-     end ;
+     if ATag = cTagLinhaSimples then
+       TagTraduzida := StringOfChar('-', Colunas)
+     else if ATag = cTagLinhaDupla then
+       TagTraduzida := StringOfChar('=', Colunas);
    end ;
 end ;
 
-function TACBrECF.TraduzirTagBloco(const ATag, Conteudo : AnsiString
-   ) : AnsiString ;
+procedure TACBrECF.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
+  var BlocoTraduzido: AnsiString);
 var
-   I : Integer ;
-   LowerTag, AString : AnsiString ;
+  AString : AnsiString ;
 begin
-   Result := '' ;
-   if ATag = '' then
-     exit ;
+  BlocoTraduzido := fsECF.TraduzirTagBloco( ATag, AString );
 
-   { Chamada Recursiva, para no caso de "Conteudo" ter TAGs não resolvidas
-     dentro do Bloco }
-   AString := DecodificarTagsFormatacao( Conteudo, False ) ;
-
-   LowerTag := LowerCase( ATag );
-   I := AnsiIndexText( LowerTag, ARRAY_TAGS) ;
-   case I of
-     34,35  : Result := PadLeft( AString, Colunas );
-     36,37  : Result := PadCenter( AString, Colunas );
-   else
-      Result := fsECF.TraduzirTagBloco( ATag, AString );
-   end ;
+  if ConteudoBloco = BlocoTraduzido then  // Não traduziu...
+  begin
+    if ATag = cTagAlinhadoDireita then
+      BlocoTraduzido := PadLeft( AString, Colunas )
+    else if ATag = cTagAlinhadoEsquerda then
+      BlocoTraduzido := PadRight( AString, Colunas )
+    else if ATag = cTagAlinhadoCentro then
+      BlocoTraduzido := PadCenter( AString, Colunas );
+  end ;
 end ;
 
 function TACBrECF.CodificarPaginaDeCodigoECF(ATexto: String): AnsiString;

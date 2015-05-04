@@ -20,7 +20,8 @@ uses
   ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, ACBrRFD, ACBrTER, 
   ACBrTERClass, ACBrSerialReg, ACBrETQZplII, ACBrDISSmakTeclado, 
   ACBrECFEscECF, ACBrECFVirtual, ACBrECFVirtualPrinter, 
-  ACBrECFVirtualNaoFiscal, ACBrDISGertecTEC65lib, LazarusPackageIntf;
+  ACBrECFVirtualNaoFiscal, ACBrDISGertecTEC65lib, ACBrPosPrinter, 
+  ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, LazarusPackageIntf;
 
 implementation
 

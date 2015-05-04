@@ -662,21 +662,28 @@ const
   cITalicoOff = ESC + '5';
 begin
 
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     -1: Result := ATag;
-     2 : Result := cExpandidoOn;
-     3 : Result := cExpandidoOff;
-     4 : Result := cNegritoOn;
-     5 : Result := cNegritoOff;
-     6 : Result := cSublinhadoOn;
-     7 : Result := cSublinhadoOff;
-     8 : Result := cCondensadoOn;
-     9 : Result := cCondensadoOff;
-     10: Result := cItalicoOn;
-     11: Result := cITalicoOff;
+  if ATag = cTagLigaExpandido then
+    Result := cExpandidoOn
+  else if ATag = cTagDesligaExpandido then
+    Result := cExpandidoOff
+  else if ATag = cTagLigaNegrito then
+    Result := cNegritoOn
+  else if ATag = cTagDesligaNegrito then
+    Result := cNegritoOff
+  else if ATag = cTagLigaSublinhado then
+    Result := cSublinhadoOn
+  else if ATag = cTagDesligaSublinhado then
+    Result := cSublinhadoOff
+  else if ATag = cTagLigaCondensado then
+    Result := cCondensadoOn
+  else if ATag = cTagDesligaCondensado then
+    Result := cCondensadoOff
+  else if ATag = cTagLigaItalico then
+    Result := cItalicoOn
+  else if ATag = cTagDesligaItalico then
+    Result := cITalicoOff
   else
      Result := '' ;
-  end;
 end;
 
 function BematechTraduzirTagBloco(const ATag, Conteudo : AnsiString;
@@ -730,21 +737,29 @@ var
 begin
   // MP4000 ver 01.00.00 tem sérios problemas quando tenta imprimir CODE39 ou CODEBAR
   Is010000 := (StrToIntDef( AECFClass.NumVersao,0 ) <= 10000) ;
-  Result   := '';
 
-  case AnsiIndexText( ATag, ARRAY_TAGS) of
-     12,13: Result := MontaCodBarras(cEAN8, Conteudo, 7);
-     14,15: Result := MontaCodBarras(cEAN13, Conteudo, 12);
-     18,19: Result := MontaCodBarras(cINTER25, Conteudo);
-     22,23: Result := ifthen( Is010000, '',
-                              MontaCodBarras(cCODE39, AddStartStop(Conteudo) ) );
-     24,25: Result := MontaCodBarras(cCODE93, Conteudo);
-     26,27: Result := MontaCodBarras(cCODE128, Conteudo);
-     28,29: Result := MontaCodBarras(cUPCA, Conteudo, 11);
-     30,31: Result := ifthen( Is010000, '',
-                              MontaCodBarras(cCODABAR, AddStartStop(Conteudo) ) );
-     32,33: Result := MontaCodBarras(cMSI, Conteudo);
-  end;
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo, 7)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo, 12)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER25, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := ifthen( Is010000, '',
+                      MontaCodBarras(cCODE39, AddStartStop(Conteudo) ) )
+  else if ATag = cTagBarraCode93 then
+    Result := MontaCodBarras(cCODE93, Conteudo)
+  else if ATag = cTagBarraCode128 then
+    Result := MontaCodBarras(cCODE128, Conteudo)
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo, 11)
+  else if ATag = cTagBarraCodaBar then
+    Result := ifthen( Is010000, '',
+                      MontaCodBarras(cCODABAR, AddStartStop(Conteudo) ) )
+  else if ATag = cTagBarraMSI then
+    Result := MontaCodBarras(cMSI, Conteudo)
+  else
+     Result := Conteudo;
 end;
 
 { ----------------------------- TACBrECFBematech ------------------------------ }
@@ -4179,9 +4194,6 @@ function TACBrECFBematech.TraduzirTagBloco(const ATag, Conteudo : AnsiString
    ) : AnsiString ;
 begin
   Result := BematechTraduzirTagBloco( ATag, Conteudo, Self);
-
-  if Result = '' then
-     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
 end ;
 
 end.

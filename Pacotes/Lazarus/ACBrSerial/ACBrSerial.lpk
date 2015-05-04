@@ -29,7 +29,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="60">
+    <Files Count="64">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQ.pas"/>
         <UnitName Value="ACBrCHQ"/>
@@ -271,6 +271,22 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDISGertecTEC65lib.pas"/>
         <UnitName Value="ACBrDISGertecTEC65lib"/>
       </Item60>
+      <Item61>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrPosPrinter.pas"/>
+        <UnitName Value="ACBrPosPrinter"/>
+      </Item61>
+      <Item62>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscBematech.pas"/>
+        <UnitName Value="ACBrEscBematech"/>
+      </Item62>
+      <Item63>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosEpson.pas"/>
+        <UnitName Value="ACBrEscPosEpson"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscDaruma.pas"/>
+        <UnitName Value="ACBrEscDaruma"/>
+      </Item64>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">

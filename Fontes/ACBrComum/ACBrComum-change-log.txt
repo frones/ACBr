@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/05/2015       (por: DSA)
+-- ACBrUtil --
+[+] Adicionado o método: OnlyCharsInSet
+
+-- ACBrConsts --
+[*] Modificação dos Arrays de Tags de formatação
+
 Data: 22/12/2014
 -- ACBrTXTClass --  (por: DSA)
 [-] Ajustes para algumas situações de erro de calculo de arredondamento em LFILL

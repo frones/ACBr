@@ -127,7 +127,7 @@ begin
     FileStr.LoadFromFile(FArquivo);
 
     Delimitador.Delimiter := '|';
-    Delimitador.StrictDelimiter := True;
+    //Delimitador.StrictDelimiter := True;
 
     for I := 0 to FileStr.Count - 1 do
     begin

@@ -1,0 +1,545 @@
+unit Unit1;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase;
+
+type
+
+  { TFrPosPrinterTeste }
+
+  TFrPosPrinterTeste = class(TForm)
+    ACBrPosPrinter1: TACBrPosPrinter;
+    bAtivar: TBitBtn;
+    bImprimir: TBitBtn;
+    bLimpar: TBitBtn;
+    bTagFormtacaoCaracter: TButton;
+    bTagQRCode: TButton;
+    bTagsAlinhamento: TButton;
+    bTagsCodBarras: TButton;
+    bTagsTesteInvalidas: TButton;
+    bTagsTestePagCodigo: TButton;
+    cbHRI: TCheckBox;
+    cbxModelo: TComboBox;
+    cbxPagCodigo: TComboBox;
+    cbxPorta: TComboBox;
+    cbIgnorarTags: TCheckBox;
+    cbTraduzirTags: TCheckBox;
+    cbControlePorta: TCheckBox;
+    edLog: TEdit;
+    gbCodBarrasConfig1: TGroupBox;
+    gbConfiguracao: TGroupBox;
+    gbCodBarrasConfig: TGroupBox;
+    Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    mImp: TMemo;
+    mLog: TMemo;
+    PageControl1: TPageControl;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    SbArqLog: TSpeedButton;
+    btSerial: TSpeedButton;
+    seQRCodeLarguraModulo: TSpinEdit;
+    seQRCodeErrorLevel: TSpinEdit;
+    seQRCodeTipo: TSpinEdit;
+    seColunas: TSpinEdit;
+    seBarrasLargura: TSpinEdit;
+    seEspLinhas: TSpinEdit;
+    seBarrasAltura: TSpinEdit;
+    seLinhasBuffer: TSpinEdit;
+    seLinhasPular: TSpinEdit;
+    tsImprimir: TTabSheet;
+    tsLog: TTabSheet;
+    procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
+      var Tratado: Boolean);
+    procedure bAtivarClick(Sender: TObject);
+    procedure bImprimirClick(Sender: TObject);
+    procedure bLimparClick(Sender: TObject);
+    procedure bTagFormtacaoCaracterClick(Sender: TObject);
+    procedure bTagQRCodeClick(Sender: TObject);
+    procedure bTagsAlinhamentoClick(Sender: TObject);
+    procedure bTagsTesteInvalidasClick(Sender: TObject);
+    procedure bTagsCodBarrasClick(Sender: TObject);
+    procedure bTagsTestePagCodigoClick(Sender: TObject);
+    procedure cbControlePortaChange(Sender: TObject);
+    procedure cbHRIChange(Sender: TObject);
+    procedure cbIgnorarTagsChange(Sender: TObject);
+    procedure cbTraduzirTagsChange(Sender: TObject);
+    procedure cbxModeloChange(Sender: TObject);
+    procedure cbxPagCodigoChange(Sender: TObject);
+    procedure cbxPortaChange(Sender: TObject);
+    procedure SbArqLogClick(Sender: TObject);
+    procedure seBarrasAlturaChange(Sender: TObject);
+    procedure seBarrasLarguraChange(Sender: TObject);
+    procedure seEspLinhasChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btSerialClick(Sender: TObject);
+    procedure seColunasChange(Sender: TObject);
+    procedure seLinhasBufferChange(Sender: TObject);
+    procedure seLinhasPularChange(Sender: TObject);
+    procedure seQRCodeErrorLevelChange(Sender: TObject);
+    procedure seQRCodeLarguraModuloChange(Sender: TObject);
+    procedure seQRCodeTipoChange(Sender: TObject);
+  private
+    { private declarations }
+    Procedure GravarINI ;
+    Procedure LerINI ;
+
+  public
+    { public declarations }
+  end;
+
+var
+  FrPosPrinterTeste: TFrPosPrinterTeste;
+
+implementation
+
+Uses typinfo, IniFiles,
+  ConfiguraSerial,
+  ACBrUtil;
+
+{$R *.lfm}
+
+{ TFrPosPrinterTeste }
+
+procedure TFrPosPrinterTeste.FormCreate(Sender: TObject);
+var
+  I: TACBrPosPrinterModelo;
+  J: TACBrPosPaginaCodigo;
+begin
+  cbxModelo.Items.Clear ;
+  For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+     cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(I) ) ) ;
+
+  cbxPagCodigo.Items.Clear ;
+  For J := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
+     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(J) ) ) ;
+
+  cbxPorta.Items.Clear;
+  ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  cbxPorta.Items.Add('LPT1') ;
+  cbxPorta.Items.Add('LPT2') ;
+  cbxPorta.Items.Add('/dev/ttyS0') ;
+  cbxPorta.Items.Add('/dev/ttyS1') ;
+  cbxPorta.Items.Add('/dev/ttyUSB0') ;
+  cbxPorta.Items.Add('/dev/ttyUSB1') ;
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+
+  PageControl1.ActivePageIndex := 0;
+
+  LerINI;
+end;
+
+
+procedure TFrPosPrinterTeste.bLimparClick(Sender: TObject);
+begin
+  mImp.Clear;
+end;
+
+procedure TFrPosPrinterTeste.bTagFormtacaoCaracterClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
+  mImp.Lines.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
+  mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
+  mImp.Lines.Add('</c><n>FONTE NEGRITO</N>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
+  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<i>FONTE ITALICO</i>');
+  mImp.Lines.Add('FONTE NORMAL');
+  mImp.Lines.Add('</linha_simples>');
+  mImp.Lines.Add('<n>LIGA NEGRITO');
+  mImp.Lines.Add('<i>LIGA ITALICO');
+  mImp.Lines.Add('<S>LIGA SUBLINHADA');
+  mImp.Lines.Add('<c>LIGA CONDENSADA');
+  mImp.Lines.Add('<e>LIGA EXPANDIDA');
+  mImp.Lines.Add('</fn>FONTE NORMAL');
+  mImp.Lines.Add('</linha_simples>');
+  mImp.Lines.Add('<e><n>NEGRITO E EXPANDIDA</n></e>');
+  mImp.Lines.Add('</fn>FONTE NORMAL');
+  mImp.Lines.Add('<in><c>INVERTIDA E CONDENSADA</c></in>');
+  mImp.Lines.Add('</fn>FONTE NORMAL');
+  mImp.Lines.Add('</linha_simples>');
+  mImp.Lines.Add('</FB>FONTE TIPO B');
+  mImp.Lines.Add('<n>FONTE NEGRITO</N>');
+  mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
+  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<i>FONTE ITALICO</i>');
+  mImp.Lines.Add('</FA>FONTE TIPO A');
+  mImp.Lines.Add('</FN>FONTE NORMAL');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagQRCodeClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('<qrcode>http://projetoacbr.com.br</qrcode>');
+  mImp.Lines.Add('</ce>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('</ad>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/questoes_importantes.html</qrcode>');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagsAlinhamentoClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('TEXTO NORMAL');
+  mImp.Lines.Add('</ae>ALINHADO A ESQUERDA');
+  mImp.Lines.Add('1 2 3 TESTANDO');
+  mImp.Lines.Add('<n>FONTE NEGRITO</N>');
+  mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
+  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<i>FONTE ITALICO</i>');
+
+  mImp.Lines.Add('</fn></ce>ALINHADO NO CENTRO');
+  mImp.Lines.Add('1 2 3 TESTANDO');
+  mImp.Lines.Add('<n>FONTE NEGRITO</N>');
+  mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
+  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<i>FONTE ITALICO</i>');
+
+  mImp.Lines.Add('</fn></ad>ALINHADO A DIREITA');
+  mImp.Lines.Add('1 2 3 TESTANDO');
+  mImp.Lines.Add('<n>FONTE NEGRITO</N>');
+  mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
+  mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
+  mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
+  mImp.Lines.Add('<i>FONTE ITALICO</i>');
+
+  mImp.Lines.Add('</ae></fn>TEXTO NORMAL');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagsTesteInvalidasClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('<CE>*** TESTE DE TAGS INVÁLIDAS ***</CE>');
+  mImp.Lines.Add('<ce> <>tags inválidas no texto">">><<</CE>');
+  mImp.Lines.Add('<AD><da><ec></</A Direita</ad>');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagsCodBarrasClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('</ce>');
+  mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('EAN 8: 1234567');
+  mImp.Lines.Add('<ean8>1234567</ean8>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('EAN13: 123456789012');
+  mImp.Lines.Add('<ean13>123456789012</ean13>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('std25: 1234567890');
+  mImp.Lines.Add('<std>1234567890</std>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('INT25: 1234567890');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('CODE11: 1234567890');
+  mImp.Lines.Add('<code11>1234567890</code11>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('CODE39: ABCDE12345');
+  mImp.Lines.Add('<code39>ABCDE12345</code39>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('CODE93: ABC123abc');
+  mImp.Lines.Add('<code93>ABC123abc</code93>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('CODE128: $-=+ABC123abc');
+  mImp.Lines.Add('<code128>$-=+ABC123abc</code128>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('UPCA: 12345678901');
+  mImp.Lines.Add('<upca>12345678901</upca>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('CODABAR: A123456789012345A');
+  mImp.Lines.Add('<codabar>A123456789012345A</codabar>');
+  mImp.Lines.Add('</Linha_Simples>');
+  mImp.Lines.Add('MSI: 1234567890');
+  mImp.Lines.Add('<msi>1234567890</msi>');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagsTestePagCodigoClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('ÁÉÍÓÚáéíóúçÇãõÃÕÊêÀà');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbHRIChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigBarras.MostrarCodigo := cbHRI.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbIgnorarTagsChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbTraduzirTagsChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbxModeloChange(Sender: TObject);
+begin
+  try
+     ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex ) ;
+  except
+     cbxModelo.ItemIndex := Integer( ACBrPosPrinter1.Modelo ) ;
+     raise ;
+  end ;
+end;
+
+procedure TFrPosPrinterTeste.cbxPagCodigoChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
+end;
+
+procedure TFrPosPrinterTeste.cbxPortaChange(Sender: TObject);
+begin
+  try
+    ACBrPosPrinter1.Porta := cbxPorta.Text ;
+  finally
+    cbxPorta.Text := ACBrPosPrinter1.Porta ;
+  end ;
+end;
+
+procedure TFrPosPrinterTeste.SbArqLogClick(Sender: TObject);
+var
+  AFileLog: String;
+begin
+  if pos(PathDelim,edLog.Text) = 0 then
+    AFileLog := ExtractFilePath( Application.ExeName ) + edLog.Text
+  else
+    AFileLog := edLog.Text;
+
+  OpenURL( AFileLog );
+end;
+
+procedure TFrPosPrinterTeste.seBarrasAlturaChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigBarras.Altura := seBarrasAltura.Value;
+end;
+
+procedure TFrPosPrinterTeste.seBarrasLarguraChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigBarras.LarguraLinha := seBarrasLargura.Value;
+end;
+
+procedure TFrPosPrinterTeste.seEspLinhasChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
+end;
+
+procedure TFrPosPrinterTeste.btSerialClick(Sender: TObject);
+Var
+  frConfiguraSerial : TfrConfiguraSerial ;
+begin
+  frConfiguraSerial := TfrConfiguraSerial.Create(self);
+
+  try
+    frConfiguraSerial.Device.Porta        := ACBrPosPrinter1.Device.Porta ;
+    frConfiguraSerial.cmbPortaSerial.Text := cbxPorta.Text ;
+    frConfiguraSerial.Device.ParamsString := ACBrPosPrinter1.Device.ParamsString ;
+
+    if frConfiguraSerial.ShowModal = mrOk then
+    begin
+       cbxPorta.Text                       := frConfiguraSerial.Device.Porta ;
+       ACBrPosPrinter1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+    end ;
+  finally
+     FreeAndNil( frConfiguraSerial ) ;
+  end ;
+end;
+
+procedure TFrPosPrinterTeste.seColunasChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
+end;
+
+procedure TFrPosPrinterTeste.seLinhasBufferChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.LinhasBuffer := seLinhasBuffer.Value;
+end;
+
+procedure TFrPosPrinterTeste.seLinhasPularChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
+end;
+
+procedure TFrPosPrinterTeste.seQRCodeErrorLevelChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigQRCode.ErrorLevel := seQRCodeErrorLevel.Value;
+end;
+
+procedure TFrPosPrinterTeste.seQRCodeLarguraModuloChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigQRCode.LarguraModulo := seQRCodeLarguraModulo.Value;
+end;
+
+procedure TFrPosPrinterTeste.seQRCodeTipoChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigQRCode.Tipo := seQRCodeTipo.Value;
+end;
+
+procedure TFrPosPrinterTeste.GravarINI;
+Var
+  ArqINI : String ;
+  INI : TIniFile ;
+begin
+  ArqINI := ChangeFileExt( Application.ExeName,'.ini' ) ;
+
+  INI := TIniFile.Create(ArqINI);
+  try
+     INI.WriteInteger('PosPrinter','Modelo',cbxModelo.ItemIndex);
+     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
+     INI.WriteInteger('PosPrinter','Colunas',seColunas.Value);
+     INI.WriteInteger('PosPrinter','EspacoEntreLinhas',seEspLinhas.Value);
+     INI.WriteInteger('PosPrinter','LinhasBuffer',seLinhasBuffer.Value);
+     INI.WriteInteger('PosPrinter','LinhasPular',seLinhasPular.Value);
+     INI.WriteBool('PosPrinter','ControlePorta',cbControlePorta.Checked);
+     INI.WriteBool('PosPrinter','TraduzirTags',cbTraduzirTags.Checked);
+     INI.WriteBool('PosPrinter','IgnorarTags',cbIgnorarTags.Checked);
+     INI.WriteString('PosPrinter','ArqLog',edLog.Text);
+     INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
+     INI.WriteInteger('Barras','Largura',seBarrasLargura.Value);
+     INI.WriteInteger('Barras','Altura',seBarrasAltura.Value);
+     INI.WriteBool('Barras','HRI',cbHRI.Checked);
+     INI.WriteInteger('QRCode','Tipo',seQRCodeTipo.Value);
+     INI.WriteInteger('QRCode','LarguraModulo',seQRCodeLarguraModulo.Value);
+     INI.WriteInteger('QRCode','ErrorLevel',seQRCodeErrorLevel.Value);
+  finally
+     INI.Free ;
+  end ;
+end;
+
+procedure TFrPosPrinterTeste.LerINI;
+Var
+  ArqINI : String ;
+  INI : TIniFile ;
+begin
+  ArqINI := ChangeFileExt( Application.ExeName,'.ini' ) ;
+
+  INI := TIniFile.Create(ArqINI);
+  try
+     cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
+     cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
+     seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
+     seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
+     seLinhasBuffer.Value := INI.ReadInteger('PosPrinter','LinhasBuffer',ACBrPosPrinter1.LinhasBuffer);
+     seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular',ACBrPosPrinter1.LinhasEntreCupons);
+     cbControlePorta.Checked := INI.ReadBool('PosPrinter','ControlePorta',ACBrPosPrinter1.ControlePorta);
+     cbTraduzirTags.Checked := INI.ReadBool('PosPrinter','TraduzirTags',ACBrPosPrinter1.TraduzirTags);
+     cbIgnorarTags.Checked := INI.ReadBool('PosPrinter','IgnorarTags',ACBrPosPrinter1.IgnorarTags);
+     edLog.Text := INI.ReadString('PosPrinter','ArqLog',ACBrPosPrinter1.ArqLOG);
+     cbxPagCodigo.ItemIndex := INI.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));
+     seBarrasLargura.Value := INI.ReadInteger('Barras','Largura',ACBrPosPrinter1.ConfigBarras.LarguraLinha);
+     seBarrasAltura.Value := INI.ReadInteger('Barras','Altura',ACBrPosPrinter1.ConfigBarras.Altura);
+     cbHRI.Checked := INI.ReadBool('Barras','HRI',ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
+     seQRCodeTipo.Value := INI.ReadInteger('QRCode','Tipo',ACBrPosPrinter1.ConfigQRCode.Tipo);
+     seQRCodeLarguraModulo.Value := INI.ReadInteger('QRCode','LarguraModulo',ACBrPosPrinter1.ConfigQRCode.LarguraModulo);
+     seQRCodeErrorLevel.Value := INI.ReadInteger('QRCode','ErrorLevel',ACBrPosPrinter1.ConfigQRCode.ErrorLevel);
+  finally
+     INI.Free ;
+  end ;
+end;
+
+procedure TFrPosPrinterTeste.bImprimirClick(Sender: TObject);
+begin
+  if bAtivar.Caption = 'Ativar' then
+    bAtivar.Click;
+
+  ACBrPosPrinter1.Imprimir(mImp.Text);
+end;
+
+procedure TFrPosPrinterTeste.bAtivarClick(Sender: TObject);
+begin
+  if ACBrPosPrinter1.Ativo then
+  begin
+     ACBrPosPrinter1.Desativar ;
+     bAtivar.Caption := 'Ativar' ;
+     btSerial.Enabled := True ;
+  end
+  else
+  begin
+    try
+       Self.Enabled := False;
+       ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
+       ACBrPosPrinter1.Porta  := cbxPorta.Text;
+       ACBrPosPrinter1.ArqLOG := edLog.Text;
+       ACBrPosPrinter1.LinhasBuffer := seLinhasBuffer.Value;
+       ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
+       ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
+       ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
+       ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+       ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
+       ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
+       ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo( cbxPagCodigo.ItemIndex );
+       ACBrPosPrinter1.ConfigBarras.MostrarCodigo := cbHRI.Checked;
+       ACBrPosPrinter1.ConfigBarras.LarguraLinha := seBarrasLargura.Value;
+       ACBrPosPrinter1.ConfigBarras.Altura := seBarrasAltura.Value;
+       ACBrPosPrinter1.ConfigQRCode.Tipo := seQRCodeTipo.Value;
+       ACBrPosPrinter1.ConfigQRCode.LarguraModulo := seQRCodeLarguraModulo.Value;
+       ACBrPosPrinter1.ConfigQRCode.ErrorLevel := seQRCodeErrorLevel.Value;
+
+       ACBrPosPrinter1.Ativar ;
+
+       btSerial.Enabled := False ;
+       bAtivar.Caption := 'Desativar' ;
+
+       GravarINI ;
+    finally
+       Self.Enabled := True;
+       cbxModelo.ItemIndex   := Integer(ACBrPosPrinter1.Modelo) ;
+       cbxPorta.Text         := ACBrPosPrinter1.Porta ;
+    end ;
+  end;
+end;
+
+procedure TFrPosPrinterTeste.ACBrPosPrinter1GravarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  mLog.Lines.Add(ALogLine);
+  Tratado := False;
+end;
+
+end.
+

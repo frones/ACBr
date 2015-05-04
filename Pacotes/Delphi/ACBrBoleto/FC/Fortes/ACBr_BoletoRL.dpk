@@ -43,6 +43,7 @@ requires
   {$IFDEF VER260} RLibWinDXE5, vclimg,{$ENDIF} //XE5
   {$IFDEF VER270} RLibWinDXE6, vclimg,{$ENDIF} //XE6
   {$IFDEF VER280} RLibWinDXE7, vclimg,{$ENDIF} //XE7
+  {$IFDEF VER290} RLibWinDXE8, vclimg,{$ENDIF} //XE8
   ACBr_Boleto;
 
 contains

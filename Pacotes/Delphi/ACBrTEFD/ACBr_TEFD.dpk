@@ -28,8 +28,8 @@ package ACBr_TEFD;
 requires
   rtl,
   vcl,
-  synapse,
   designide,
+  ACBr_synapse,
   ACBr_TCP,
   ACBr_Diversos;
 

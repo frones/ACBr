@@ -29,7 +29,7 @@ requires
   rtl,
   vcl,
   designide,
-  synapse,
+  ACBr_synapse,
   ACBr_Diversos,
   ACBr_TCP,
   ACBr_Comum;

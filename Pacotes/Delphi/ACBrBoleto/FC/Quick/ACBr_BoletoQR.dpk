@@ -44,6 +44,8 @@ requires
   {$IFDEF VER250} QR5RunDXE4, vclimg; {$ENDIF} //XE4
   {$IFDEF VER260} QR5RunDXE5, vclimg; {$ENDIF} //XE5
   {$IFDEF VER270} QR5RunDXE6, vclimg; {$ENDIF} //XE6
+  {$IFDEF VER280} QR5RunDXE7, vclimg; {$ENDIF} //XE7
+  {$IFDEF VER290} QR5RunDXE8, vclimg; {$ENDIF} //XE8
 
 contains
   ACBrBoletoFCQuickFr in '..\..\..\..\..\Fontes\ACBrBoleto\FC\Quick\ACBrBoletoFCQuickFr.pas',

@@ -71,9 +71,9 @@ package ACBr_GNRE;
 
 requires
   ACBr_Comum,
-  synapse,
+  ACBr_synapse,
   ACBr_DFeComum,
-  PCNComum,
+  ACBr_PCNComum,
   rtl,
   vcl,
   designide,

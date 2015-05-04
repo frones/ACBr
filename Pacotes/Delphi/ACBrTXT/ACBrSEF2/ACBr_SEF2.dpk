@@ -28,7 +28,7 @@ package ACBr_SEF2;
 requires
   rtl,
   ACBr_TXTComum,
-  PCNComum,
+  ACBr_PCNComum,
   designide;
 
 contains

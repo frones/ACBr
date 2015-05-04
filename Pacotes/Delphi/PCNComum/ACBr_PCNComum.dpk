@@ -1,4 +1,4 @@
-package PCNComum;
+package ACBr_PCNComum;
 
 {$R *.res}
 {$ALIGN 8}
@@ -28,8 +28,8 @@ package PCNComum;
 
 requires
   rtl,
-  ACBrComum,
-  ACBrDiversos;
+  ACBr_Comum,
+  ACBr_Diversos;
 
 contains
   pcnAuxiliar in '..\..\..\Fontes\PCNComum\pcnAuxiliar.pas',

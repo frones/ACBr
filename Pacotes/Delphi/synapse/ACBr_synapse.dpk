@@ -1,4 +1,4 @@
-package synapse;
+package ACBr_synapse;
 
 {$R *.res}
 {$ALIGN 8}

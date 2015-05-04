@@ -74,10 +74,11 @@ requires
   {$IFDEF VER260} RLibWinDXE5, vclimg, {$ENDIF} //XE5
   {$IFDEF VER270} RLibWinDXE6, vclimg, dsnap,{$ENDIF} //XE6
   {$IFDEF VER280} RLibWinDXE7, vclimg, dsnap,{$ENDIF} //XE7
+  {$IFDEF VER290} RLibWinDXE8, vclimg, dsnap,{$ENDIF} //XE8
   ACBr_MDFe,  
-  PCNComum,
+  ACBr_PCNComum,
   ACBr_Comum,
-  synapse,
+  ACBr_synapse,
   ACBr_Capicom,
   ACBr_Diversos;
 

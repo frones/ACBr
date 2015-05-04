@@ -86,8 +86,8 @@ requires
   {$IFDEF VER280} RLibWinDXE7, vclimg, dsnap, {$ENDIF} //XE7
   ACBr_Comum,
   ACBr_NFe,
-  PCNComum,
-  synapse,
+  ACBr_PCNComum,
+  ACBr_synapse,
   ACBr_Capicom,
   ACBr_Diversos;
 

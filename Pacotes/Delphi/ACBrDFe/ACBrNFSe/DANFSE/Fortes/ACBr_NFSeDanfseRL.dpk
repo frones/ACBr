@@ -29,7 +29,6 @@ requires
   rtl,
   designide,
   soaprtl,
-  ACBr_NFSe,
   {$IFDEF VER150} RLibWinD7vcl, vcljpg, {$ENDIF} // D7
   {$IFDEF VER200} RLibWinD2009, vclimg, {$ENDIF} // D2009
   {$IFDEF VER210} RLibWinD2010, vclimg, {$ENDIF} // D2010
@@ -40,9 +39,11 @@ requires
   {$IFDEF VER260} RLibWinDXE5, vclimg, {$ENDIF} //XE5
   {$IFDEF VER270} RLibWinDXE6, vclimg, dsnap, {$ENDIF} //XE6
   {$IFDEF VER280} RLibWinDXE7, vclimg, dsnap, {$ENDIF} //XE7  
-  PCNComum,
+  {$IFDEF VER290} RLibWinDXE8, vclimg, dsnap, {$ENDIF} //XE8
+  ACBr_NFSe,
+  ACBr_PCNComum,
   ACBr_Comum,
-  synapse,
+  ACBr_synapse,
   ACBr_Capicom,
   ACBr_Diversos;
 

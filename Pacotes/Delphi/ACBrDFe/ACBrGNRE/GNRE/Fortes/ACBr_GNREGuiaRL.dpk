@@ -29,8 +29,8 @@ requires
   soaprtl,
   inet,
   ACBr_Comum,
-  synapse,
-  PCNComum,
+  ACBr_synapse,
+  ACBr_PCNComum,
   ACBr_Capicom,
   ACBr_GNRE,
   designide,
@@ -43,8 +43,8 @@ requires
   {$IFDEF VER250} RLibWinDXE4, vclimg;{$ENDIF} //XE4
   {$IFDEF VER260} RLibWinDXE5, vclimg;{$ENDIF} //XE5
   {$IFDEF VER270} RLibWinDXE6, dsnap, vclimg,{$ENDIF} //XE6
-  {$IFDEF VER270} RLibWinDXE7, dsnap, vclimg;{$ENDIF} //XE7
-
+  {$IFDEF VER280} RLibWinDXE7, dsnap, vclimg;{$ENDIF} //XE7
+  {$IFDEF VER290} RLibWinDXE8, dsnap, vclimg;{$ENDIF} //XE8
 contains
   ACBrGNREGuiaFRFortes in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFRFortes.pas' {ACBrGNREGuiaFR_Fortes};
 

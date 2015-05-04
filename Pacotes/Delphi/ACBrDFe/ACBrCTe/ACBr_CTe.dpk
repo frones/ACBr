@@ -83,8 +83,8 @@ requires
   dbrtl,
   inet,
   soaprtl,
-  synapse,
-  PCNComum,
+  ACBr_synapse,
+  ACBr_PCNComum,
   ACBr_DFeComum;
 
 contains

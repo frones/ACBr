@@ -31,7 +31,7 @@ requires
   designide,
   ACBr_Diversos,
   ACBr_OpenSSL,
-  synapse;
+  ACBr_synapse;
 
 contains
   ACBrBAL in '..\..\..\Fontes\ACBrSerial\ACBrBAL.pas',

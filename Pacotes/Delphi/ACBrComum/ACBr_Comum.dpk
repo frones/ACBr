@@ -29,7 +29,7 @@ requires
   rtl,
   vcl,
   designide,
-  synapse;
+  ACBr_synapse;
 
 contains
   ACBrBase in '..\..\..\Fontes\ACBrComum\ACBrBase.pas',

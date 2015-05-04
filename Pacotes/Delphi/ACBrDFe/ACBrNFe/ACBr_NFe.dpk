@@ -81,12 +81,12 @@ requires
   dbrtl,
   inet,
   soaprtl,
-  synapse,
-  ACBrComum,
-  PCNComum,
-  ACBrDFeComum,
-  ACBrOpenSSL,
-  ACBrCapicom;
+  ACBr_synapse,
+  ACBr_Comum,
+  ACBr_PCNComum,
+  ACBr_DFeComum,
+  ACBr_OpenSSL,
+  ACBr_Capicom;
 
 contains
   ACBrNFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeConfiguracoes.pas',

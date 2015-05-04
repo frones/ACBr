@@ -30,7 +30,7 @@ requires
   vcl,
   ACBr_Comum,
   ACBr_Diversos,
-  synapse;
+  ACBr_synapse;
 
 contains
   ACBrSocket in '..\..\..\Fontes\ACBrTCP\ACBrSocket.pas',

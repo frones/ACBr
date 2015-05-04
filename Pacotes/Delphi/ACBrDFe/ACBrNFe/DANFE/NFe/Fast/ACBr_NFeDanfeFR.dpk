@@ -88,6 +88,7 @@ requires
 {$IFDEF VER260} fs19, frx19, frxe19, frxDB19, {$ENDIF} // XE5
 {$IFDEF VER270} fs20, frx20, frxe20, frxDB20, dsnap, {$ENDIF} // XE6
 {$IFDEF VER280} fs21, frx21, frxe21, frxDB21, dsnap, {$ENDIF} // XE7
+{$IFDEF VER290} fs22, frx22, frxe22, frxDB22, dsnap, {$ENDIF} // XE8
   ACBr_NFe, ACBr_Diversos;
 
 contains

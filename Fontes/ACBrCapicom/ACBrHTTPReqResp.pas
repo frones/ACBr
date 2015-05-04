@@ -40,15 +40,7 @@ unit ACBrHTTPReqResp;
 interface
 
 uses
-  Windows, Classes, SysUtils, wininet,
-  {$IF DEFINED(VisualCLX)}
-     QDialog,
-  {$ELSEIF DEFINED(FMX)}
-     FMX.Dialogs,
-  {$ELSE}
-     Dialogs,
-  {$IFEND}
-  ACBrCAPICOM_TLB;
+  Windows, Classes, SysUtils, wininet, ACBrCAPICOM_TLB;
 
 type
 

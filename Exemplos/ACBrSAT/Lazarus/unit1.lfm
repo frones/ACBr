@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 408
+  Left = 595
   Height = 501
-  Top = 155
+  Top = 221
   Width = 793
   Caption = 'SAT Teste - Projeto ACBr'
   ClientHeight = 481
@@ -3208,6 +3208,7 @@ object Form1: TForm1
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    PosPrinter = ACBrPosPrinter1
     left = 64
     top = 280
   end
@@ -3356,5 +3357,21 @@ object Form1: TForm1
   object SaveDialog1: TSaveDialog
     left = 261
     top = 280
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    Modelo = ppEscPosEpson
+    PaginaDeCodigo = pcNone
+    EspacoEntreLinhas = 20
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 7
+    CortaPapel = True
+    ArqLOG = 'c:\temp\posprinter.log'
+    left = 103
+    top = 279
   end
 end

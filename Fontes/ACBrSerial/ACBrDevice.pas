@@ -510,7 +510,8 @@ begin
       begin
         Tag2    := '</'+ copy(Tag1, 2, LenTag1) ; // Calcula Tag de Fechamento
         PosTag2 := PosEx(Tag2, LowerCase(Result), PosTag1+LenTag1 );
-        if PosTag2 = 0 then                         // Não achou Tag de Fechamento
+
+        if PosTag2 = 0 then             // Não achou Tag de Fechamento
         begin
           Tag2 := '';
           Cmd  := '';

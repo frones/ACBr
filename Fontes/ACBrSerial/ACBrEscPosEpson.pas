@@ -1,40 +1,40 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 
 { Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
 
 { Colaboradores nesse arquivo:                                                 }
 
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/gpl-license.php                           }
 
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
-|* 20/04/2013:  Daniel Sim√µes de Almeida
+|* 20/04/2013:  Daniel Simıes de Almeida
 |*   Inicio do desenvolvimento
 ******************************************************************************}
 
@@ -97,8 +97,8 @@ begin
     DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := GS  + 'B' + #1;
     DesligaInvertido        := GS  + 'B' + #0;
-    LigaItalico             := ESC + '4';        // N√£o existe ?
-    DesligaItalico          := ESC + '5';        // N√£o existe ?
+    LigaItalico             := '';        // N„o existe ?
+    DesligaItalico          := '';        // N„o existe ?
     LigaCondensado          := FonteB;
     DesligaCondensado       := FonteA;
     AlinhadoEsquerda        := ESC + 'a' + #0;
@@ -108,7 +108,7 @@ begin
     CorteParcial            := GS  + 'V' + #1;
     AbreGaveta              := ESC + 'p' + #0 + #10 + #100;
     ImprimeLogo             := GS  + '(L'#6#0'0E  '#1#1;  //TODO: Testar
-    Beep                    := ESC + '(A' + #4 + #0 + #48 + #49 + #3 + #15;  // TODO: Testar
+    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #3 + #10;  // TODO: Testar
 
     TransmiteID             := '';  //TODO:
     TransmiteStatus         := '';  //TODO:
@@ -121,7 +121,7 @@ function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
 var
   L, A, M : Integer ;
   CmdBarCode: Char;
-  ACodBar, Cmd128: String;
+  ACodBar, Cmd128: AnsiString;
 begin
   if ATag = cTagBarraUPCA then
     CmdBarCode := 'A'
@@ -159,6 +159,8 @@ begin
     Result := ACodigo;
     Exit;
   end;
+
+  ACodBar := ACodigo;
 
   if CmdBarCode = 'I' then // Cod128
   begin

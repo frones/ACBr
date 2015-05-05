@@ -1,40 +1,40 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
-{ mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 
 { Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
 
 { Colaboradores nesse arquivo:                                                 }
 
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 
-{  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
-{ sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
-{ qualquer versÃ£o posterior.                                                   }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
 
-{  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
-{ ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
 
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
-{ com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/gpl-license.php                           }
 
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÃ§a Anita Costa, 34 - TatuÃ­ - SP - 18270-410                  }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
-|* 20/04/2013:  Daniel SimÃµes de Almeida
+|* 20/04/2013:  Daniel Simões de Almeida
 |*   Inicio do desenvolvimento
 ******************************************************************************}
 
@@ -167,7 +167,7 @@ type
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
 
     constructor Create(AOwner: TACBrPosPrinter);
-    destructor Destroy;
+    destructor Destroy; override;
 
     property RazaoColunaFonte: TACBrPosRazaoColunaFonte read FRazaoColunaFonte;
     property Cmd: TACBrPosComandos read FCmd;
@@ -224,7 +224,7 @@ type
     function GetColunasFonteCondensada: Integer;
     function GetColunasFonteExpandida: Integer;
     function GetNumeroPaginaDeCodigo(APagCod: TACBrPosPaginaCodigo): word;
-    function CodificarPaginaDeCodigo(ATexto: String): AnsiString;
+    function CodificarPaginaDeCodigo(ATexto: AnsiString): AnsiString;
 
     procedure DoLinesChange(Sender: TObject);
     function GetColunas: Integer;
@@ -258,7 +258,7 @@ type
     property Ativo: Boolean read GetAtivo write SetAtivo;
 
     procedure Imprimir(AString: AnsiString = ''; DecodificarTags: Boolean = True;
-      CodificarPagina: Boolean = True);
+      CodificarPagina: Boolean = True; Copias: Integer = 1);
     procedure ImprimirCmd(AString: AnsiString);
     procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
       AdicionaTempo: Boolean = True);
@@ -697,7 +697,7 @@ var
 begin
   BlocoTraduzido := FPosPrinterClass.TraduzirTagBloco(ATag, ConteudoBloco);
 
-  if ConteudoBloco = BlocoTraduzido then  // NÃ£o traduziu...
+  if ConteudoBloco = BlocoTraduzido then  // Não traduziu...
   begin
     if ATag = cTagAlinhadoEsquerda then
     begin
@@ -739,17 +739,17 @@ begin
     else if (AnsiIndexText(ATag, cTAGS_BARRAS) >= 0) then
     begin
 
-      // Ajustando os CÃ³digos de Barras, conforme regras do Tipo do CÃ³digo //
+      // Ajustando os Códigos de Barras, conforme regras do Tipo do Código //
       if (ATag = cTagBarraUPCA) then
-        // Apenas nÃºmeros, sempre 11 digitos, e 1 digito verificador
+        // Apenas números, sempre 11 digitos, e 1 digito verificador
         ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 11, '0')
 
       else if ATag = cTagBarraEAN13 then
-        // Apenas nÃºmeros, sempre 12 digitos, e 1 digito verificador
+        // Apenas números, sempre 12 digitos, e 1 digito verificador
         ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 12, '0')
 
       else if ATag = cTagBarraEAN8 then
-        // Apenas nÃºmeros, sempre 7 digitos, e 1 digito verificador
+        // Apenas números, sempre 7 digitos, e 1 digito verificador
         ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 7, '0')
 
       else if ATag = cTagBarraCode39 then
@@ -764,15 +764,15 @@ begin
 
       else if ATag = cTagBarraInter then
       begin
-        // Interleaved 2of5. Somente nÃºmeros, Tamanho deve ser PAR
+        // Interleaved 2of5. Somente números, Tamanho deve ser PAR
         ACodBar := OnlyNumber(ConteudoBloco);
 
-        if (Length(ACodBar) mod 2) <> 0 then  // Tamanho Ã© Par ?
+        if (Length(ACodBar) mod 2) <> 0 then  // Tamanho é Par ?
           ACodBar := '0' + ACodBar;
       end
 
       else if ATag = cTagBarraStd then
-        // Apenas nÃºmeros, Sem dÃ­gito verificador
+        // Apenas números, Sem dígito verificador
         ACodBar := OnlyNumber(ConteudoBloco)
 
       else if ATag = cTagBarraCodaBar then
@@ -781,17 +781,17 @@ begin
           ['0'..'9', 'A'..'D', 'a'..'d', '$', '+', '-', '.', '/', ':'])
 
       else if ATag = cTagBarraCode11 then
-        // Apenas nÃºmeros, Qualquer tamanho, dois dÃ­gitos verificador
+        // Apenas números, Qualquer tamanho, dois dígitos verificador
         ACodBar := OnlyNumber(ConteudoBloco)
 
       else if ATag = cTagBarraMSI then
-        // Apenas nÃºmeros, 1 dÃ­gito verificador
+        // Apenas números, 1 dígito verificador
         ACodBar := OnlyNumber(ConteudoBloco)
 
       else
         ACodBar := ConteudoBloco;
 
-      ACodBar := LeftStr(ACodBar, 255);  // Tamanho mÃ¡ximo para Cod.Barras Ã© 255 caracteres
+      ACodBar := LeftStr(ACodBar, 255);  // Tamanho máximo para Cod.Barras é 255 caracteres
 
       BlocoTraduzido := FPosPrinterClass.ComandoCodBarras(ATag, ACodBar);
     end;
@@ -914,25 +914,42 @@ begin
   FTagProcessor.TraduzirTags := AValue;
 end;
 
-procedure TACBrPosPrinter.Imprimir(AString: AnsiString; DecodificarTags: Boolean;
-  CodificarPagina: Boolean);
+procedure TACBrPosPrinter.Imprimir(AString: AnsiString;
+  DecodificarTags: Boolean; CodificarPagina: Boolean; Copias: Integer);
+var
+  i: Integer;
+  StrToPrint: AnsiString;
 begin
   if not (FDevice.Ativo or ControlePorta) then
-    raise EPosPrinterException.Create('NÃ£o estÃ¡ Ativo');
+    raise EPosPrinterException.Create('Não está Ativo');
 
-  AString := FBuffer.Text + AString;
+  StrToPrint := '';
+  if FBuffer.Count > 0 then
+  begin
+    For i := 0 to FBuffer.Count-1 do
+      StrToPrint := StrToPrint + FBuffer[i] + CRLF;
+  end;
   FBuffer.Clear;
+
+  StrToPrint := StrToPrint + AString;
+
+  //WriteToTXT('c:\temp\teste1.txt', StrToPrint);
 
   ConfigurarEspacoEntreLinhas;
   ConfigurarPaginaDeCodigo;
 
   if CodificarPagina then
-    AString := CodificarPaginaDeCodigo(AString);
+    StrToPrint := CodificarPaginaDeCodigo(StrToPrint);
+
+  //WriteToTXT('c:\temp\teste2.txt', StrToPrint);
 
   if DecodificarTags then
-    AString := FTagProcessor.DecodificarTagsFormatacao(AString);
+    StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
 
-  EnviarStringDevice(AString);
+  //WriteToTXT('c:\temp\teste3.txt', StrToPrint);
+
+  For i := 1 to Copias do
+    EnviarStringDevice(StrToPrint);
 end;
 
 procedure TACBrPosPrinter.ImprimirCmd(AString: AnsiString);
@@ -977,7 +994,8 @@ begin
   Result := FDevice.Ativo;
 end;
 
-function TACBrPosPrinter.CodificarPaginaDeCodigo(ATexto: String): AnsiString;
+function TACBrPosPrinter.CodificarPaginaDeCodigo(ATexto: AnsiString
+  ): AnsiString;
 var
   NumPagCod: word;
 begin

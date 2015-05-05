@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrBase;
+  ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -22,6 +22,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    ACBrPosPrinter1: TACBrPosPrinter;
     ACBrSAT1 : TACBrSAT ;
     ACBrSATExtratoESCPOS1 : TACBrSATExtratoESCPOS ;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
@@ -387,7 +388,8 @@ begin
     sePagCodChange(Sender);
 
     edtPorta.Text := INI.ReadString('Extrato','Porta','COM1');
-    ACBrSATExtratoESCPOS1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
+    ACBrPosPrinter1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
+    //ACBrSATExtratoESCPOS1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
 
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
@@ -455,7 +457,7 @@ begin
     INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
 
     INI.WriteString('Extrato','Porta',edtPorta.Text);
-    INI.WriteString('Extrato','ParamsString',ACBrSATExtratoESCPOS1.Device.ParamsString);
+    INI.WriteString('Extrato','ParamsString',ACBrPosPrinter1.Device.ParamsString);
 
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
@@ -504,14 +506,14 @@ begin
   frConfiguraSerial := TfrConfiguraSerial.Create(self);
 
   try
-    frConfiguraSerial.Device.Porta        := ACBrSATExtratoESCPOS1.Device.Porta ;
+    frConfiguraSerial.Device.Porta        := ACBrPosPrinter1.Device.Porta ;
     frConfiguraSerial.cmbPortaSerial.Text := edtPorta.Text ;
-    frConfiguraSerial.Device.ParamsString := ACBrSATExtratoESCPOS1.Device.ParamsString ;
+    frConfiguraSerial.Device.ParamsString := ACBrPosPrinter1.Device.ParamsString ;
 
     if frConfiguraSerial.ShowModal = mrOk then
     begin
        edtPorta.Text := frConfiguraSerial.Device.Porta ;
-       ACBrSATExtratoESCPOS1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+       ACBrPosPrinter1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
     end ;
   finally
      FreeAndNil( frConfiguraSerial ) ;
@@ -895,7 +897,7 @@ begin
       nItem := 2 + (A * 3);
       Prod.cProd := '6291041500213';
       Prod.cEAN := '6291041500213';
-      Prod.xProd := 'Outro produto Qualquer, com a Descrição Grande';
+      Prod.xProd := ACBrStr('Outro produto Qualquer, com a Descrição Grande');
       Prod.CFOP := '5529';
       Prod.uCom := 'un';
       Prod.qCom := 1.1205;
@@ -996,8 +998,8 @@ begin
       vMP := 100;
     end;
 
-    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
-                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
+    InfAdic.infCpl := ACBrStr('Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
+                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br');
   end;
 
   mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GetXMLString( True );    // True = Gera apenas as TAGs da aplicação
@@ -1087,8 +1089,10 @@ procedure TForm1.PrepararImpressao;
 begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
-    ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-    ACBrSATExtratoESCPOS1.Device.Ativar;
+    ACBrPosPrinter1.Device.Porta := edtPorta.Text;
+    //ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
+    //ACBrSATExtratoESCPOS1.Device.Ativar;
+    ACBrPosPrinter1.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
   end
   else

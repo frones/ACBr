@@ -55,11 +55,13 @@ uses
     StrUtils,
   {$ENDIF}
     Classes, SysUtils,
-  {$IFDEF CLX}
-    QDialogs,
+  {$IF DEFINED(VisualCLX)}
+     QDialog,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Dialogs,
   {$ELSE}
-    Dialogs,
-  {$ENDIF}
+     Dialogs,
+  {$IFEND}
   {$IFDEF ACBrGNREOpenSSL}
     HTTPSend,
   {$ELSE}
@@ -105,6 +107,7 @@ type
     procedure LoadMsgEntrada;
     procedure LoadURL;
     function Confirma(AResultado: string): Boolean;
+    procedure GerarException(Msg: AnsiString);    
   public
     function Executar: Boolean; virtual;
     constructor Create(AOwner : TComponent); virtual;
@@ -253,6 +256,12 @@ constructor TWebServicesBase.Create(AOwner: TComponent);
 begin
  FConfiguracoes := TConfiguracoes( TACBrGNRE( AOwner ).Configuracoes );
  FACBrGNRE      := TACBrGNRE( AOwner );
+end;
+
+procedure TWebServicesBase.GerarException(Msg: AnsiString);
+begin
+  //FazerLog( 'ERRO: ' + Msg, False );
+  raise Exception.Create( Msg );
 end;
 
 {$IFDEF ACBrGNREOpenSSL}
@@ -501,6 +510,7 @@ end;
 destructor TWebServices.Destroy;
 begin
   FEnviar.Free;
+  FRetorno.Free;
   FConsResLote.Free;
   FConsConfigUF.Free;
  inherited;
@@ -657,7 +667,7 @@ begin
       aMsg := 'Ambiente : '+TpAmbToStr(GNRERetorno.Ambiente)+LineBreak+
                       'Status Código : '+IntToStr(GNRERetorno.codigo)+LineBreak+
                       'Status Descrição : '+GNRERetorno.descricao+LineBreak+
-                      'Recebimento : '+SeSenao(GNRERetorno.dataHoraRecibo = 0, '', DateTimeToStr(GNRERetorno.dataHoraRecibo))+LineBreak+
+                      'Recebimento : '+DFeUtil.SeSenao(GNRERetorno.dataHoraRecibo = 0, '', DateTimeToStr(GNRERetorno.dataHoraRecibo))+LineBreak+
                       'Tempo Médio : '+IntToStr(GNRERetorno.tempoEstimadoProc)+LineBreak+
                       'Número Recibo: '+GNRERetorno.numero;
 
@@ -695,7 +705,7 @@ begin
   {$ENDIF}
     Acao.Free;
     Stream.Free;
-    ConfAmbiente;
+    DFeUtil.ConfAmbiente;
     TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
   end;
 end;
@@ -860,7 +870,7 @@ function TGNRERetRecepcaoLote.Executar: Boolean;
       {$ENDIF}
       Acao.Free;
       Stream.Free;
-      ConfAmbiente;
+      DFeUtil.ConfAmbiente;
       TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
     end;
   end;
@@ -1055,7 +1065,7 @@ begin
     {$ENDIF}
     Acao.Free;
     Stream.Free;
-    ConfAmbiente;
+    DFeUtil.ConfAmbiente;
     TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
   end;
 end;
@@ -1224,7 +1234,7 @@ begin
     {$ENDIF}
     Acao.Free;
     Stream.Free;
-    ConfAmbiente;
+    DFeUtil.ConfAmbiente;
     TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
   end;
 end;

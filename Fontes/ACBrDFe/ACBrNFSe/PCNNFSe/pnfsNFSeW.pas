@@ -1257,6 +1257,10 @@ begin
                    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
                    Gerador.wGrupoNFSe('Rps');
                  end;
+   proVirtual:   begin
+                   Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '=""');
+                   Gerador.wGrupoNFSe('Rps ' + FIdentificador + '=""');
+                 end;
    else          begin
                    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
                    if FIdentificador = ''

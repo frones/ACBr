@@ -101,9 +101,9 @@ begin
   ConfigCidade.QuebradeLinha     := ';';
 	ConfigCidade.NameSpaceEnvelope := 'http://www.abrasf.org.br';
 
- 	ConfigCidade.AssinaRPS   := True;
+ 	ConfigCidade.AssinaRPS   := False;
  	ConfigCidade.AssinaLote  := False;
-  ConfigCidade.AssinaGerar := True;
+  ConfigCidade.AssinaGerar := False;
 
  	Result := ConfigCidade;
 end;
@@ -182,7 +182,7 @@ end;
 
 function TProvedorVirtual.GetValidarLote: Boolean;
 begin
-  Result := False;
+  Result := True;
 end;
 
 function TProvedorVirtual.Gera_TagI(Acao: TnfseAcao; Prefixo3, Prefixo4,
@@ -313,23 +313,24 @@ end;
 function TProvedorVirtual.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
+//  DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
   result := '<?xml version="1.0" encoding="utf-8"?>' +
             '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
+//                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
              '<SOAP-ENV:Body>' +
-              '<gerarnfse_barradogarcas.Execute>' +
-               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                 '<nfseCabecMsg>' +
+              '<WSNfseBarraDoGarcas.GERARNFSE xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
                    CabMsg +
                  '</nfseCabecMsg>' +
-                 '<nfseDadosMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
+                   '<?xml version="1.0" encoding="utf-8"?>' +
                    DadosMsg +
                  '</nfseDadosMsg>' +
                '</Entrada>' +
-              '</gerarnfse_barradogarcas.Execute>' +
+              '</WSNfseBarraDoGarcas.GERARNFSE>' +
              '</SOAP-ENV:Body>' +
             '</SOAP-ENV:Envelope>';
 end;

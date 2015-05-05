@@ -364,7 +364,7 @@ constructor TACBrConsultaCNPJ.Create(AOwner: TComponent);
 begin
   inherited;
   FCNAE2 := TStringList.Create;
-  FPesquisarIBGE := True;
+  FPesquisarIBGE := False;
   fACBrIBGE := TACBrIBGE.Create(nil);
 end;
 

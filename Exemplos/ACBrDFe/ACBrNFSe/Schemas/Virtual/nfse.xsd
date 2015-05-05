@@ -309,7 +309,7 @@
 				minOccurs="0" maxOccurs="1" />
 			<xsd:element name="Uf" type="tsUf" minOccurs="0"
 				maxOccurs="1" />
-			<xsd:element name="CodigoPais" type="tsCodigoMunicipioIbge"
+			<xsd:element name="CodigoPais" type="tsCodigoPaisBacen"
 				minOccurs="0" maxOccurs="1" />
 			<xsd:element name="Cep" type="tsCep" minOccurs="0"
 				maxOccurs="1" />
@@ -351,6 +351,8 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="InscricaoEstadual" type="tsInscricaoMunicipal"
+				minOccurs="0" maxOccurs="1" />				
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -360,6 +362,8 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="InscricaoEstadual" type="tsInscricaoMunicipal"
+				minOccurs="0" maxOccurs="1" />				
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -369,6 +373,8 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="InscricaoEstadual" type="tsInscricaoMunicipal"
+				minOccurs="0" maxOccurs="1" />				
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -499,7 +505,7 @@
 		<xsd:sequence>
 			<xsd:element name="IdentificacaoRps" type="tcIdentificacaoRps"
 				minOccurs="1" maxOccurs="1" />
-			<xsd:element name="DataEmissao" type="xsd:dateTime"
+			<xsd:element name="DataEmissao" type="xsd:date"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="Status" type="tsStatusRps" minOccurs="1"
 				maxOccurs="1" />
@@ -513,7 +519,7 @@
 		<xsd:sequence>
 			<xsd:element name="Rps" type="tcInfRps" 
 				minOccurs="0" maxOccurs="1" />
-			<xsd:element name="Competencia" type="xsd:dateTime"
+			<xsd:element name="Competencia" type="xsd:date"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="Servico" type="tcDadosServico"
 				minOccurs="1" maxOccurs="1" />
@@ -532,13 +538,14 @@
 			<xsd:element name="IncentivoFiscal" type="tsSimNao"
 				minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
+		<xsd:attribute name="Id" type="tsIdTag" />
 	</xsd:complexType>
 
 	<xsd:complexType name="tcDeclaracaoPrestacaoServico">
 		<xsd:sequence>
 			<xsd:element name="InfDeclaracaoPrestacaoServico" type="tcInfDeclaracaoPrestacaoServico" minOccurs="1"
 				maxOccurs="1" />
-			<xsd:element ref="dsig:Signature" minOccurs="1"
+			<xsd:element ref="dsig:Signature" minOccurs="0"
 				maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
@@ -572,7 +579,7 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="ValorCredito" type="tsValor"
 				minOccurs="0" maxOccurs="1" />
-			<xsd:element name="EnderecoPrestadorServico" type="tcEndereco"
+			<xsd:element name="PrestadorServico" type="tcDadosPrestador"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="OrgaoGerador" type="tcIdentificacaoOrgaoGerador"
 				minOccurs="1" maxOccurs="1" />
@@ -605,7 +612,7 @@
 		<xsd:sequence>
 			<xsd:element name="InfPedidoCancelamento" type="tcInfPedidoCancelamento"
 				minOccurs="1" maxOccurs="1" />
-			<xsd:element ref="dsig:Signature" minOccurs="1"
+			<xsd:element ref="dsig:Signature" minOccurs="0"
 				maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
@@ -620,15 +627,6 @@
 		<xsd:attribute name="Id" type="tsIdTag" />
 	</xsd:complexType>
 
-	<xsd:element name="RetCancelamento">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="NfseCancelamento" type="tcCancelamentoNfse"
-					minOccurs="1" maxOccurs="unbounded" />
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-
 	<xsd:complexType name="tcCancelamentoNfse">
 		<xsd:sequence>
 			<xsd:element name="Confirmacao" type="tcConfirmacaoCancelamento"
@@ -638,6 +636,14 @@
 		</xsd:sequence>
 		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
+
+	<xsd:complexType name="tcRetCancelamento">
+		<xsd:sequence>
+			<xsd:element name="NfseCancelamento" type="tcCancelamentoNfse" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
 
 	<xsd:complexType name="tcInfSubstituicaoNfse">
 		<xsd:sequence>
@@ -704,7 +710,7 @@
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="Rps" type="tcDeclaracaoPrestacaoServico"
-							minOccurs="1" >
+							minOccurs="1" maxOccurs="unbounded" >
 						</xsd:element>
 					</xsd:sequence>
 				</xsd:complexType>
@@ -757,7 +763,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="LoteRps" type="tcLoteRps" />
-				<xsd:element ref="dsig:Signature" minOccurs="1"
+				<xsd:element ref="dsig:Signature" minOccurs="0"
 					maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
@@ -784,7 +790,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="LoteRps" type="tcLoteRps" />
-				<xsd:element ref="dsig:Signature" minOccurs="1"
+				<xsd:element ref="dsig:Signature" minOccurs="0"
 					maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
@@ -805,7 +811,7 @@
 						<xsd:complexType>
 							<xsd:sequence>
 								<xsd:element ref="CompNfse" 
-									minOccurs="1" />
+									minOccurs="1" maxOccurs="unbounded" />
 								<xsd:element ref="ListaMensagemAlertaRetorno" minOccurs="0" maxOccurs="1" />
 							</xsd:sequence>						
 						</xsd:complexType>
@@ -835,7 +841,7 @@
 						<xsd:complexType>
 							<xsd:sequence>
 								<xsd:element ref="CompNfse" 
-									minOccurs="1" />
+									minOccurs="1" maxOccurs="1" />
 								<xsd:element ref="ListaMensagemAlertaRetorno" minOccurs="0" maxOccurs="1" />
 							</xsd:sequence>						
 						</xsd:complexType>
@@ -858,10 +864,8 @@
 	<xsd:element name="CancelarNfseResposta">
 		<xsd:complexType>
 			<xsd:choice>
-				<xsd:element ref="RetCancelamento" minOccurs="1"
-					maxOccurs="1" />
-				<xsd:element ref="ListaMensagemRetorno" minOccurs="1"
-					maxOccurs="1" />
+				<xsd:element name="RetCancelamento" type="tcRetCancelamento" minOccurs="1" maxOccurs="1" />
+				<xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1" />
 			</xsd:choice>
 		</xsd:complexType>
 	</xsd:element>

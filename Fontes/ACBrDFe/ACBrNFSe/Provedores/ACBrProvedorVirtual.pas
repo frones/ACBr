@@ -112,8 +112,8 @@ function TProvedorVirtual.GetConfigSchema(ACodCidade: Integer): TConfigSchema;
 var
   ConfigSchema: TConfigSchema;
 begin
-  ConfigSchema.VersaoCabecalho       := '2.00';
-  ConfigSchema.VersaoDados           := '2.00';
+  ConfigSchema.VersaoCabecalho       := '2.02';
+  ConfigSchema.VersaoDados           := '1.00';
   ConfigSchema.VersaoXML             := '2';
   ConfigSchema.NameSpaceXML          := 'http://www.abrasf.org.br/';
   ConfigSchema.Cabecalho             := 'nfse.xsd';
@@ -136,15 +136,15 @@ var
  	ConfigURL: TConfigURL;
 begin
  	ConfigURL.HomNomeCidade         := '';
-  ConfigURL.HomRecepcaoLoteRPS    := '';
-  ConfigURL.HomConsultaLoteRPS    := '';
-  ConfigURL.HomConsultaNFSeRPS    := '';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomConsultaLoteRPS    := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomConsultaNFSeRPS    := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
   ConfigURL.HomConsultaSitLoteRPS := '';
-  ConfigURL.HomConsultaNFSe       := '';
-  ConfigURL.HomCancelaNFSe        := 'https://servidor.virtualtechnologia.com.br:8080/SCEMBGJavaEnvironment/servlet/acancelarnfse_barradogarcas'; //?wsdl';
-  ConfigURL.HomGerarNFSe          := 'https://servidor.virtualtechnologia.com.br:8080/SCEMBGJavaEnvironment/servlet/agerarnfse_barradogarcas'; //?wsdl';
-  ConfigURL.HomRecepcaoSincrono   := '';
-  ConfigURL.HomSubstituiNFSe      := '';
+  ConfigURL.HomConsultaNFSe       := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomCancelaNFSe        := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomGerarNFSe          := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomRecepcaoSincrono   := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomSubstituiNFSe      := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
 
  	ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := '';
@@ -241,7 +241,25 @@ end;
 function TProvedorVirtual.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  result := '';
+  DadosMsg := SeparaDados( DadosMsg, 'EnviarLoteRpsEnvio' );
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<WSNfseBarraDoGarcas.RECEPCIONARLOTERPS>' +
+               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+                 '<nfseCabecMsg>' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg>' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
+               '</Entrada>' +
+              '</WSNfseBarraDoGarcas.RECEPCIONARLOTERPS>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarSituacaoLoteRPS(
@@ -279,9 +297,13 @@ begin
                                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
              '<SOAP-ENV:Body>' +
               '<cancelarnfse_barradogarcas.Execute>' +
-               '<Entrada>' +
-                 DadosMsg +
-//                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
+                 '<nfseCabecMsg>' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg>' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
                '</Entrada>' +
               '</cancelarnfse_barradogarcas.Execute>' +
              '</SOAP-ENV:Body>' +
@@ -300,8 +322,12 @@ begin
              '<SOAP-ENV:Body>' +
               '<gerarnfse_barradogarcas.Execute>' +
                '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                 DadosMsg +
-//                 StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                 '<nfseCabecMsg>' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg>' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
                '</Entrada>' +
               '</gerarnfse_barradogarcas.Execute>' +
              '</SOAP-ENV:Body>' +
@@ -323,15 +349,15 @@ end;
 function TProvedorVirtual.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;
 begin
   case Acao of
-   acRecepcionar: Result := '';
+   acRecepcionar: Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.RECEPCIONARLOTERPS';
    acConsSit:     Result := '';
-   acConsLote:    Result := '';
-   acConsNFSeRps: Result := '';
-   acConsNFSe:    Result := '';
-   acCancelar:    Result := 'http://www.abrasf.org.br/nfse.xsdaction/ACANCELARNFSE_BARRADOGARCAS.Execute';
-   acGerar:       Result := 'http://www.abrasf.org.br/nfse.xsdaction/AGERARNFSE_BARRADOGARCAS.Execute';
-   acRecSincrono: Result := '';
-   acSubstituir:  Result := '';
+   acConsLote:    Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.CONSULTARLOTERPS';
+   acConsNFSeRps: Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.CONSULTARNFSEPORRPS';
+   acConsNFSe:    Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.CONSULTARNFSEFAIXA';
+   acCancelar:    Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.CANCELARNFSE';
+   acGerar:       Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.GERARNFSE';
+   acRecSincrono: Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.RECEPCIONARLOTERPSSINCRONO';
+   acSubstituir:  Result := 'http://nfse.abrasf.org.braction/AWSNFSEBARRADOGARCAS.SUBSTITUIRNFSE';
   end;
 end;
 

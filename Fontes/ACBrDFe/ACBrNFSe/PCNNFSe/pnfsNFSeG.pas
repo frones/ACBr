@@ -320,7 +320,7 @@ begin
          Result := TagI + DadosMsg + TagF;
  end;		 
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
@@ -419,7 +419,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
@@ -482,7 +482,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
@@ -630,7 +630,7 @@ begin
 
  Result := TagI + DadosMsg + TagF;
 
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proVirtual] then Result := '';
+ if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
 end;
 
 class function TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
@@ -805,7 +805,7 @@ begin
                   proISSIntel, proISSNet, proLexsom, proNatal, proTinus, proProdemge,
                   proPublica, proRecife, proRJ, proSaatri, proFreire,
                   proSimplISS, proThema, proTiplan, proWebISS, proProdata,
-                  proAgili, proSpeedGov, proPronim, proVirtual,
+                  proAgili, proSpeedGov, proPronim,
                   proSalvador,proNFSEBrasil] then Result := '';
 end;
 

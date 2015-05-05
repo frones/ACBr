@@ -5443,7 +5443,7 @@ const
   cSublinhadoOff = ESC + '-' + C_OFF;
 
   // <c></c>
-  cCondensadoOn  = SI;
+  cCondensadoOn  = ESC + SI;
   cCondensadoOff = DC2;
 
   //<i></i>
@@ -5509,7 +5509,7 @@ const
     Mostrar: AnsiString;
   begin
     Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
-    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 200), 50), 2);
+    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 99), 5), 2);
     Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
 
     Result := ATipo + Largura + Altura + Mostrar + ACodigo + cBarraFim;

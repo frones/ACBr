@@ -4995,19 +4995,17 @@ end ;
 
 procedure TACBrECF.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
   var BlocoTraduzido: AnsiString);
-var
-  AString : AnsiString ;
 begin
-  BlocoTraduzido := fsECF.TraduzirTagBloco( ATag, AString );
+  BlocoTraduzido := fsECF.TraduzirTagBloco( ATag, ConteudoBloco );
 
   if ConteudoBloco = BlocoTraduzido then  // Não traduziu...
   begin
     if ATag = cTagAlinhadoDireita then
-      BlocoTraduzido := PadLeft( AString, Colunas )
+      BlocoTraduzido := PadLeft( ConteudoBloco, Colunas )
     else if ATag = cTagAlinhadoEsquerda then
-      BlocoTraduzido := PadRight( AString, Colunas )
+      BlocoTraduzido := PadRight( ConteudoBloco, Colunas )
     else if ATag = cTagAlinhadoCentro then
-      BlocoTraduzido := PadCenter( AString, Colunas );
+      BlocoTraduzido := PadCenter( ConteudoBloco, Colunas );
   end ;
 end ;
 

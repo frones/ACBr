@@ -380,6 +380,7 @@ type
 //    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -1870,6 +1871,30 @@ begin
   finally
     ConCadCTe.Free;
   end;
+end;
+
+procedure TCTeConsultaCadastro.DefinirEnvelopeSoap;
+var
+  Texto: AnsiString;
+begin
+  Texto := '<?xml version="1.0" encoding="utf-8"?>';
+  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
+                                   ' xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
+  Texto := Texto +   '<soap12:Header>';
+  Texto := Texto +     '<nfeCabecMsg xmlns="' + FPServico + '">';
+  Texto := Texto +       GerarUFSoap;
+  Texto := Texto +       GerarVersaoDadosSoap;
+  Texto := Texto +     '</nfeCabecMsg>';
+  Texto := Texto +   '</soap12:Header>';
+  Texto := Texto +   '<soap12:Body>';
+  Texto := Texto +     '<nfeDadosMsg xmlns="' + FPServico + '">';
+  Texto := Texto +       FPDadosMsg;
+  Texto := Texto +     '</nfeDadosMsg>';
+  Texto := Texto +   '</soap12:Body>';
+  Texto := Texto + '</soap12:Envelope>';
+
+  FPEnvelopeSoap := Texto;
 end;
 
 function TCTeConsultaCadastro.TratarResposta: Boolean;

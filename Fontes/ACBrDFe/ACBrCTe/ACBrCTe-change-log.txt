@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2015
+[*] Criado uma nova definição do Envelope Soap para a consulta ao cadastro de
+    contribuinte.
+    por: Italo Jurisato Junior
+
 01/05/2015
 [*] Atualização das URLs de produção e homologação do CT-e publicadas 
     pela SEFAZ-RS.

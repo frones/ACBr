@@ -841,7 +841,8 @@ begin
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
   5103502,  // Diamantino/MT
-  4117305  //Ortigueira/PR
+  4117305,  //Ortigueira/PR
+  4116307  //Munhoz de Melo/PR
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG

@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/05/2015 ver. 0.0.126a
+-- ACBrBoleto --
+[+]Adição da propriedade Informativo para informar as mensagens adicionais
+   a serem incluídas na remessa (Atualmente utilizado somente pelo Sicredi) 
+   (andersonh)
+
+-- ACBrBancoCaixa --
+[*] Ajuste na montagem Código do Cedente conforme solicitação do banco. 
+    (adrianoa)
+
+
 Data: 23/04/2015 ver. 0.0.28a
 -- ACBrBoletoFCFortes --
 [*] Ajuste para imprimir mensagem ao pagador conforme solicitação do Itau.

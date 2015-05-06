@@ -2986,7 +2986,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 71
         Width = 91
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Ag'#234'ncia / C'#243'digo Beneficiario'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3555,7 +3555,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 318
         Width = 63
         Height = 10
-        Caption = 'Recibo do Sacado'
+        Caption = 'Recibo do Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

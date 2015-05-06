@@ -250,7 +250,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 57
         Width = 275
         AutoSize = False
-        Caption = 'Nome do Cedente'
+        Caption = 'Nome do Beneficiario'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -612,7 +612,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 84
         Width = 275
         AutoSize = False
-        Caption = 'Nome do Sacado'
+        Caption = 'Nome do Pagador'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1185,7 +1185,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 70
         Width = 521
         AutoSize = False
-        Caption = 'Nome do Cedente'
+        Caption = 'Nome do Beneficiario'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -1782,7 +1782,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 289
         Width = 456
         AutoSize = False
-        Caption = 'Nome do Sacado'
+        Caption = 'Nome do Pagador'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1993,7 +1993,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 15
         Top = 84
         Width = 106
-        Caption = 'Endereco Cedente'
+        Caption = 'Endereco Beneficiario'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -2469,7 +2469,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 85
         Width = 485
         AutoSize = False
-        Caption = 'Nome do Cedente'
+        Caption = 'Nome do Beneficiario'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -3032,7 +3032,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 293
         Width = 423
         AutoSize = False
-        Caption = 'Nome do Sacado'
+        Caption = 'Nome do Pagador'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -3343,7 +3343,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 15
         Top = 99
         Width = 106
-        Caption = 'Endereco Cedente'
+        Caption = 'Endereco Beneficiario'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -3982,7 +3982,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 229
         Width = 82
-        Caption = 'CPF / CNPJ do Sacado'
+        Caption = 'CPF / CNPJ do Pagador'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4349,7 +4349,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 256
         Width = 27
-        Caption = 'Sacado'
+        Caption = 'Pagador'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4364,7 +4364,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 318
         Width = 63
-        Caption = 'Recibo do Sacado'
+        Caption = 'Recibo do Pagador'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'

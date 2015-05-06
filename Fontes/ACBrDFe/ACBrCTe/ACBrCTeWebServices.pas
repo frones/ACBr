@@ -1850,7 +1850,7 @@ end;
 
 procedure TCTeConsultaCadastro.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'CadConsultaCadastro2';
+  FPServic := 'http://www.portalfiscal.inf.br/nfe/wsdl/CadConsultaCadastro2';
   FPSoapAction := FPServico;
 end;
 

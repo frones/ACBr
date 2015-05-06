@@ -81,8 +81,8 @@ type
 
   public
     {$IFDEF ACBrGNREOpenSSL}
-      class function sign_file(const Axml: PAnsiChar; const key_file: PChar; const senha: PChar): AnsiString;
-      class function sign_memory(const Axml: PChar; const key_file: Pchar; const senha: PChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
+      class function sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
+      class function sign_memory(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
       class Procedure InitXmlSec;
       class Procedure ShutDownXmlSec;
     {$ENDIF}
@@ -105,17 +105,17 @@ uses
 { GNREUtil }
 
 {$IFDEF ACBrGNREOpenSSL}
-class function GNREUtil.sign_file(const Axml: PAnsiChar; const key_file: PChar; const senha: PChar): AnsiString;
+class function GNREUtil.sign_file(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar): AnsiString;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
-  buffer: PChar;
+  buffer: PAnsiChar;
   bufSize: integer;
 label done;
 begin
     doc     := nil;
-    node    := nil;
+    //node    := nil;
     dsigCtx := nil;
     result  := '';
 
@@ -168,12 +168,12 @@ begin
    end;
 end;
 
-class function GNREUtil.sign_memory(const Axml: PChar; const key_file: Pchar; const senha: PChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
+class function GNREUtil.sign_memory(const Axml: PAnsiChar; const key_file: PAnsiChar; const senha: PAnsiChar; Size: Cardinal; Ponteiro: Pointer): AnsiString;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
-  buffer: PChar;
+  buffer: PAnsiChar;
   bufSize: integer;
 label done;
 begin
@@ -190,7 +190,7 @@ begin
          raise Exception.Create('Error: unable to parse');
 
        // find start node
-       node := xmlSecFindNode(xmlDocGetRootElement(doc), PChar(xmlSecNodeSignature), PChar(xmlSecDSigNs));
+       node := xmlSecFindNode(xmlDocGetRootElement(doc), PAnsiChar(xmlSecNodeSignature), PAnsiChar(xmlSecDSigNs));
        if (node = nil) then
          raise Exception.Create('Error: start node not found');
 

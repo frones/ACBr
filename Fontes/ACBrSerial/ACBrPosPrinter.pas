@@ -933,7 +933,8 @@ begin
 
   StrToPrint := StrToPrint + AString;
 
-  //WriteToTXT('c:\temp\teste1.txt', StrToPrint);
+  //DEBUG
+  //WriteLog('c:\temp\teste1.txt', StrToPrint, True);
 
   ConfigurarEspacoEntreLinhas;
   ConfigurarPaginaDeCodigo;
@@ -941,12 +942,14 @@ begin
   if CodificarPagina then
     StrToPrint := CodificarPaginaDeCodigo(StrToPrint);
 
-  //WriteToTXT('c:\temp\teste2.txt', StrToPrint);
+  //DEBUG
+  //WriteLog('c:\temp\teste2.txt', StrToPrint, True);
 
   if DecodificarTags then
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
 
-  //WriteToTXT('c:\temp\teste3.txt', StrToPrint);
+  //DEBUG
+  //WriteLog('c:\temp\teste3.txt', StrToPrint, True);
 
   For i := 1 to Copias do
     EnviarStringDevice(StrToPrint);

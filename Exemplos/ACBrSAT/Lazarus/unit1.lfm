@@ -3361,7 +3361,7 @@ object Form1: TForm1
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
     PaginaDeCodigo = pcNone
-    EspacoEntreLinhas = 20
+    EspacoEntreLinhas = 40
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0

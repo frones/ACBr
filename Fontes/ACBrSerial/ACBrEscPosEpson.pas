@@ -170,7 +170,7 @@ begin
 
   with fpPosPrinter.ConfigBarras do
   begin
-    L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),2) );
+    L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),1) );
     A := IfThen( Altura = 0, 50, max(min(Altura,255),1) );
     M := IfThen( MostrarCodigo, 2, 0 );
   end ;

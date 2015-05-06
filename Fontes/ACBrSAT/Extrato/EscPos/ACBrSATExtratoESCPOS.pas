@@ -115,9 +115,12 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho;
 begin
-  FPosPrinter.ConfigBarras.Altura := 50;
+  FPosPrinter.ConfigBarras.Altura := 40;
   FPosPrinter.ConfigBarras.LarguraLinha := 2;
   FPosPrinter.ConfigBarras.MostrarCodigo := False;
+
+  FPosPrinter.ConfigQRCode.LarguraModulo := 4;
+  FPosPrinter.ConfigQRCode.ErrorLevel := 0;
 
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
   FPosPrinter.Buffer.Add('<n>'+CFe.Emit.xFant+'</n>');
@@ -339,7 +342,7 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
-  QRCode, BarCodeID: AnsiString;
+  QRCode: AnsiString;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   if Cancelamento then
@@ -351,8 +354,8 @@ begin
   FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso(CFe.infCFe.ID)+'</fn>');
   FPosPrinter.Buffer.Add(' ');
 
-  BarCodeID := AscToBcd(CFe.infCFe.ID,22);
-  FPosPrinter.Buffer.Add('<code128c>'+BarCodeID+'</code128c>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');
   FPosPrinter.Buffer.Add(' ');
 
   if ImprimeQRCode then
@@ -372,7 +375,7 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
 var
-  QRCode, BarCodeID: AnsiString;
+  QRCode: AnsiString;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   FPosPrinter.Buffer.Add(ACBrStr('<n>DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO</n>'));
@@ -382,8 +385,8 @@ begin
   FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso((CFeCanc.infCFe.ID))+'</fn>');
   FPosPrinter.Buffer.Add('');
 
-  BarCodeID := AscToBcd(CFeCanc.infCFe.ID,22);
-  FPosPrinter.Buffer.Add('<code128c>'+BarCodeID+'</code128c>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFeCanc.infCFe.ID,1,22)+'</code128>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFeCanc.infCFe.ID,23,22)+'</code128>');
   FPosPrinter.Buffer.Add(' ');
 
   if ImprimeQRCode then

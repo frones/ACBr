@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2015
+[-] Correções para o provedor Virtual.
+    Por: Italo Jurisato Junior
+
 05/05/2015
 [*] Melhorias e correções para o provedor Virtual.
     Por: Italo Jurisato Junior e Thiago Garcia

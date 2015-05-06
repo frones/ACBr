@@ -15,6 +15,7 @@ type
   TFrPosPrinterTeste = class(TForm)
     ACBrPosPrinter1: TACBrPosPrinter;
     bAtivar: TBitBtn;
+    bImpTagsValidas: TButton;
     bImprimir: TBitBtn;
     bLimpar: TBitBtn;
     bTagFormtacaoCaracter: TButton;
@@ -71,6 +72,7 @@ type
       var Tratado: Boolean);
     procedure bAtivarClick(Sender: TObject);
     procedure bImprimirClick(Sender: TObject);
+    procedure bImpTagsValidasClick(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
     procedure bTagFormtacaoCaracterClick(Sender: TObject);
     procedure bTagQRCodeClick(Sender: TObject);
@@ -529,6 +531,12 @@ begin
     bAtivar.Click;
 
   ACBrPosPrinter1.Imprimir(mImp.Text);
+end;
+
+procedure TFrPosPrinterTeste.bImpTagsValidasClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.RetornarTags(mImp.Lines);
+  ACBrPosPrinter1.ImprimirTags;
 end;
 
 procedure TFrPosPrinterTeste.bAtivarClick(Sender: TObject);

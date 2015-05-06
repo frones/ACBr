@@ -185,6 +185,15 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bImpLinhaALinhaClick
         TabOrder = 8
       end
+      object bImpTagsValidas: TButton
+        Left = 392
+        Height = 25
+        Top = 80
+        Width = 183
+        Caption = 'Ajuda - Tags Validas'
+        OnClick = bImpTagsValidasClick
+        TabOrder = 9
+      end
     end
     object PageControl1: TPageControl
       Left = 1

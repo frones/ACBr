@@ -162,10 +162,12 @@ end;
 
 TACBrTag = class
   private
+    FAjuda: String;
     FEhBloco: Boolean;
     FNome: String;
     FSequencia: Integer;
     function GetTamanho: Integer;
+    procedure SetAjuda(AValue: String);
     procedure SetNome(AValue: String);
   public
     constructor Create;
@@ -173,6 +175,7 @@ TACBrTag = class
     property Sequencia: Integer read FSequencia write FSequencia;
     property EhBloco: Boolean read FEhBloco write FEhBloco;
     property Nome: String read FNome write SetNome;
+    property Ajuda: String read FAjuda write SetAjuda;
     property Tamanho: Integer read GetTamanho;
 end;
 
@@ -219,7 +222,10 @@ TACBrTagProcessor = class
     function TraduzirTag(const ATag: AnsiString): AnsiString;
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString;
 
-    procedure AddTags(ArrayTags: array of String; TagEhBloco: Boolean);
+    procedure RetornarTags( AStringList: TStrings; IncluiAjuda: Boolean = True);
+
+    procedure AddTags(ArrayTags: array of String; ArrayHelpTags: array of String;
+       TagEhBloco: Boolean);
 
     property Tags: TACBrTags read FTags;
     property IgnorarTags: Boolean read FIgnorarTags write FIgnorarTags;
@@ -370,6 +376,11 @@ Uses ACBrUtil ;
 function TACBrTag.GetTamanho: Integer;
 begin
   Result := Length(FNome);
+end;
+
+procedure TACBrTag.SetAjuda(AValue: String);
+begin
+  FAjuda := ACBrStr( AValue );
 end;
 
 procedure TACBrTag.SetNome(AValue: String);
@@ -570,8 +581,30 @@ begin
     FOnTraduzirTagBloco( ATag, AString, Result);
 end;
 
-procedure TACBrTagProcessor.AddTags(ArrayTags: array of String; TagEhBloco: Boolean
-  );
+procedure TACBrTagProcessor.RetornarTags(AStringList: TStrings;
+  IncluiAjuda: Boolean);
+var
+  ALine: String;
+  i: Integer;
+begin
+  AStringList.Clear;
+  For i := 0 to FTags.Count-1 do
+  begin
+    ALine := FTags[i].Nome;
+    if IncluiAjuda then
+    begin
+      if FTags[i].EhBloco then
+        ALine := ALine + ' - Bloco';
+
+      ALine := ALine + ' - '+FTags[i].Ajuda;
+    end;
+
+    AStringList.Add(ALine);
+  end;
+end;
+
+procedure TACBrTagProcessor.AddTags(ArrayTags: array of String;
+  ArrayHelpTags: array of String; TagEhBloco: Boolean);
 var
   i: Integer;
 begin
@@ -580,6 +613,9 @@ begin
      with FTags.New do
      begin
         Nome := ArrayTags[i];
+          if High(ArrayHelpTags) >= i then
+            Ajuda := ArrayHelpTags[i];
+
         EhBloco := TagEhBloco;
      end;
   end;

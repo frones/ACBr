@@ -129,12 +129,23 @@ const
     cTagLigaCondensado, cTagDesligaCondensado,
     cTagLigaItalico, cTagDesligaItalico,
     cTagFonteNormal);
+  cTAGS_CARACTER_HELP: array[0..10] of String = (
+    'Liga Expandido', 'Desliga Expandido',
+    'Liga Negrito', 'Desliga Negrito',
+    'Liga Sublinhado', 'Desliga Sublinhado',
+    'Liga Condensado', 'Desliga Condensado',
+    'Liga Italico', 'Desliga Italico',
+    'Fonte Normal');
 
   cTagLinhaSimples = '</linha_simples>';
   cTagLinhaDupla   = '</linha_dupla>';
+  cTagPuloDeLinhas = '</pular_linhas>';
 
-  cTAGS_LINHAS: array[0..1] of String = (
-    cTagLinhaSimples, cTagLinhaDupla);
+  cTAGS_LINHAS: array[0..2] of String = (
+    cTagLinhaSimples, cTagLinhaDupla, cTagPuloDeLinhas);
+  cTAGS_LINHAS_HELP: array[0..2] of String = (
+    'Imprime Linha Simples', 'Imprime Linha Dupla',
+    'Pula N Linhas de acordo com propriedade do componente');
 
   cTagLogotipo     = '</logo>';
   cTagCorteParcial = '</corte_parcial>';
@@ -142,10 +153,21 @@ const
   cTagAbreGaveta = '</abre_gaveta>';
   cTagBeep = '</beep>';
   cTagZera = '</zera>';
+  cTagPulodeLinha = '</lf>';
+  cTagRetornoDeCarro = '</cr>';
 
-  cTAGS_FUNCOES: array[0..5] of String = (
+  cTAGS_FUNCOES: array[0..7] of String = (
     cTagLogotipo, cTagCorteParcial, cTagCorteTotal, cTagAbreGaveta,
-    cTagBeep, CTagZera);
+    cTagBeep, CTagZera, cTagPulodeLinha, cTagRetornoDeCarro);
+  cTAGS_FUNCOES_HELP: array[0..7] of String = (
+    'Imprime Logotipo já gravado na Impressora (use utilitário do fabricante)',
+    'Efetua Corte Parcial no Papel (não disponivel em alguns modelos)',
+    'Efetua Corte Total no papel',
+    'Aciona a abertura da Gaveta de Dinheiro',
+    'Emite um Beep na Impressora (não disponivel em alguns modelos)',
+    'Reseta as configurações de Fonte Alinhamento.<LF>Ajusta Página de Código e Espaço entre Linhas',
+    'Pula para a própxima linha',
+    'Retorna para o Inicio da Linha');
 
   cTagAlinhadoDireita = '<ad>';
   cTagAlinhadoEsquerda = '<ae>';
@@ -153,6 +175,10 @@ const
 
   cTAGS_ALINHAMENTO: array[0..2] of String = (
     cTagAlinhadoDireita, cTagAlinhadoEsquerda, cTagAlinhadoCentro );
+  cTAGS_ALINHAMENTO_HELP: array[0..2] of String = (
+    'Texto Alinhado a Direita',
+    'Texto Alinhado a Esquerda',
+    'Texto Centralizado' );
 
   cTagBarraEAN8 = '<ean8>';
   cTagBarraEAN13 = '<ean13>';
@@ -168,7 +194,6 @@ const
   cTagBarraUPCA = '<upca>';
   cTagBarraCodaBar = '<codabar>';
   cTagBarraMSI = '<msi>';
-
   cTagQRCode = '<qrcode>';
 
   cTAGS_BARRAS: array[0..13] of String = (
@@ -176,6 +201,21 @@ const
     cTagBarraCode39, cTagBarraCode93, cTagBarraCode128, cTagBarraUPCA,
     cTagBarraCodaBar, cTagBarraMSI,
     cTagBarraCode128a, cTagBarraCode128b, cTagBarraCode128c);
+  cTAGS_BARRAS_HELP: array[0..13] of String = (
+    'Cod.Barras EAN8 - 7 numeros e 1 dig.verificador',
+    'Cod.Barras EAN13 - 12 numeros e 1 dig.verificador',
+    'Cod.Barras "Standard 2 of 5" - apenas números, tamanho livre',
+    'Cod.Barras "Interleaved 2 of 5" - apenas números, tamanho PAR',
+    'Cod.Barras Code11 - apenas números, tamanho livre',
+    'Cod.Barras Code39 - Aceita: 0~9,A~Z, ,$,%,*,+,-,.,/, tamanho livre',
+    'Cod.Barras Code93 - Aceita: 0~9,A~Z,-,., ,$,/,+,%, tamanho livre',
+    'Cod.Barras Code128 - Todos os caracteres ASCII, tamanho livre',
+    'Cod.Barras UPCA - 11 numeros e 1 dig.verificador',
+    'Cod.Barras CodaBar - Aceita: 0~9,A~D,a~d,$,+,-,.,/,:, tamanho livre',
+    'Cod.Barra MSI - Apenas números, 1 dígito verificador',
+    'Cod.Barras Code128 - Subtipo A',
+    'Cod.Barras Code128 - Subtipo B (padrão) = '+cTagBarraCode128,
+    'Cod.Barras Code128 - Subtipo C (informar valores em BCD)');
 
   cACBrDeviceAtivarPortaException    = 'Porta não definida' ;
   cACBrDeviceAtivarException         = 'Erro abrindo: %s ' + sLineBreak +' %s ' ;

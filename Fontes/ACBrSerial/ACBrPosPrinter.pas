@@ -265,9 +265,12 @@ type
     procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
       AdicionaTempo: Boolean = True);
 
+    procedure RetornarTags(AStringList: TStrings; IncluiAjuda: Boolean = True);
+    procedure ImprimirTags;
+
     procedure Zerar;
 
-    procedure PularLinhas(NumLinhas: Integer);
+    procedure PularLinhas(NumLinhas: Integer = 0);
     procedure CortarPapel(Parcial: Boolean = False);
 
     property Device: TACBrDevice read FDevice;
@@ -406,6 +409,13 @@ const
   CTAGS_TIPOFONTE: array[0..6] of String =
     (cTagFonteA, cTagFonteB, cTagLigaInvertido, cTagDesligaInvertido,
      cTagFonteAlinhadaEsquerda, cTagfonteAlinhadaCentro, cTagFonteAlinhadaDireita);
+  CTAGS_TIPOFONTE_HELP: array[0..6] of String =
+    ('Liga Fonte Tipo A (normal)',
+     'Liga Fonte Tipo B (condensada)',
+     'Liga Fonte Invertida (Fundo Preto)', 'Desliga Fonte Invertida',
+     'Liga Alinhamento a Esquerda',
+     'Liga Alinhamento ao Centro',
+     'Liga Alinhamento a Direita');
 begin
   inherited Create(AOwner);
 
@@ -419,15 +429,16 @@ begin
   FConfigQRCode := TACBrConfigQRCode.Create;
 
   FTagProcessor := TACBrTagProcessor.Create;
-  FTagProcessor.AddTags(cTAGS_CARACTER, False);
-  FTagProcessor.AddTags(CTAGS_TIPOFONTE, False);
-  FTagProcessor.AddTags(cTAGS_LINHAS, False);
-  FTagProcessor.AddTags(cTAGS_FUNCOES, False);
-  FTagProcessor.AddTags(cTAGS_ALINHAMENTO, True);
-  FTagProcessor.AddTags(cTAGS_BARRAS, True);
+  FTagProcessor.AddTags(cTAGS_CARACTER, cTAGS_CARACTER_HELP, False);
+  FTagProcessor.AddTags(CTAGS_TIPOFONTE, CTAGS_TIPOFONTE_HELP, False);
+  FTagProcessor.AddTags(cTAGS_LINHAS, cTAGS_LINHAS_HELP, False);
+  FTagProcessor.AddTags(cTAGS_FUNCOES, cTAGS_FUNCOES_HELP, False);
+  FTagProcessor.AddTags(cTAGS_ALINHAMENTO, cTAGS_ALINHAMENTO_HELP, True);
+  FTagProcessor.AddTags(cTAGS_BARRAS, cTAGS_BARRAS_HELP, True);
   with FTagProcessor.Tags.New do
   begin
     Nome := cTagQRCode;
+    Ajuda := 'Imprime QRCode de acordo com "ConfigQRCode"';
     EhBloco := True;
   end;
   FTagProcessor.OnTraduzirTag := TraduzirTag;
@@ -661,6 +672,9 @@ begin
   else if ATag = cTagLinhaDupla then
     TagTraduzida := StringOfChar('=', Colunas)
 
+  else if ATag = cTagPuloDeLinhas then
+    TagTraduzida := StringOfChar(LF,LinhasEntreCupons)
+
   else if ATag = cTagCorteParcial then
     TagTraduzida := StringOfChar(LF,LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteParcial
 
@@ -672,6 +686,12 @@ begin
 
   else if ATag = cTagBeep then
     TagTraduzida := FPosPrinterClass.Cmd.Beep
+
+  else if ATag = cTagPulodeLinha then
+    TagTraduzida := LF
+
+  else if ATag = cTagRetornoDeCarro then
+    TagTraduzida := CR
 
   else if ATag = cTagFonteAlinhadaEsquerda then
   begin
@@ -878,6 +898,33 @@ begin
       AString := '-- ' + FormatDateTime('dd/mm hh:nn:ss:zzz', now) + ' - ' + AString;
 
     WriteLog(FArqLog, AString);
+  end;
+end;
+
+procedure TACBrPosPrinter.RetornarTags(AStringList: TStrings;
+  IncluiAjuda: Boolean);
+begin
+  FTagProcessor.RetornarTags(AStringList, IncluiAjuda);
+end;
+
+procedure TACBrPosPrinter.ImprimirTags;
+var
+  OldTraduzirTags: Boolean;
+begin
+  OldTraduzirTags := TraduzirTags;
+  try
+    ImprimirCmd(FPosPrinterClass.Cmd.Zera);
+    ImprimirCmd(FPosPrinterClass.Cmd.LigaCondensado);
+
+    FTagProcessor.RetornarTags(FBuffer);
+    TraduzirTags := False;
+
+    Imprimir;
+
+    PularLinhas();
+    CortarPapel;
+  finally
+    TraduzirTags := OldTraduzirTags;
   end;
 end;
 

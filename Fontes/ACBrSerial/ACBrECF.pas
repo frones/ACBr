@@ -1219,10 +1219,10 @@ begin
   fsDevice.Porta := 'COM1';
 
   fsTagProcessor := TACBrTagProcessor.Create;
-  fsTagProcessor.AddTags(cTAGS_CARACTER, False);
-  fsTagProcessor.AddTags(cTAGS_LINHAS, False);
-  fsTagProcessor.AddTags(cTAGS_ALINHAMENTO, True);
-  fsTagProcessor.AddTags(cTAGS_BARRAS, True);
+  fsTagProcessor.AddTags(cTAGS_CARACTER, cTAGS_CARACTER_HELP, False);
+  fsTagProcessor.AddTags(cTAGS_LINHAS, cTAGS_LINHAS_HELP, False);
+  fsTagProcessor.AddTags(cTAGS_ALINHAMENTO, cTAGS_ALINHAMENTO_HELP, True);
+  fsTagProcessor.AddTags(cTAGS_BARRAS, cTAGS_BARRAS_HELP, True);
   fsTagProcessor.OnTraduzirTag := TraduzirTag;
   fsTagProcessor.OnTraduzirTagBloco := TraduzirTagBloco;
 
@@ -4989,7 +4989,9 @@ begin
      if ATag = cTagLinhaSimples then
        TagTraduzida := StringOfChar('-', Colunas)
      else if ATag = cTagLinhaDupla then
-       TagTraduzida := StringOfChar('=', Colunas);
+       TagTraduzida := StringOfChar('=', Colunas)
+     else if ATag = cTagPuloDeLinhas then
+       TagTraduzida := StringOfChar(#10, LinhasEntreCupons);
    end ;
 end ;
 

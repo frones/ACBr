@@ -1,35 +1,35 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 408
-  Height = 386
+  Height = 425
   Top = 125
-  Width = 726
+  Width = 841
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 386
-  ClientWidth = 726
+  ClientHeight = 425
+  ClientWidth = 841
   OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '1.2.6.0'
   object Panel1: TPanel
     Left = 256
-    Height = 386
+    Height = 425
     Top = 0
-    Width = 470
+    Width = 585
     Align = alClient
     Caption = 'Panel1'
-    ClientHeight = 386
-    ClientWidth = 470
+    ClientHeight = 425
+    ClientWidth = 585
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
       Height = 114
-      Top = 271
-      Width = 468
+      Top = 310
+      Width = 583
       Align = alBottom
       ClientHeight = 114
-      ClientWidth = 468
+      ClientWidth = 583
       TabOrder = 0
       object bImprimir: TBitBtn
-        Left = 368
+        Left = 483
         Height = 26
         Top = 7
         Width = 92
@@ -76,7 +76,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 0
       end
       object bLimpar: TBitBtn
-        Left = 280
+        Left = 395
         Height = 26
         Top = 7
         Width = 83
@@ -143,7 +143,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object bTagQRCode: TButton
         Left = 192
         Height = 25
-        Top = 80
+        Top = 32
         Width = 183
         Caption = 'Tags de QRCode'
         OnClick = bTagQRCodeClick
@@ -152,7 +152,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object bTagsCodBarras: TButton
         Left = 192
         Height = 25
-        Top = 56
+        Top = 8
         Width = 183
         Caption = 'Tags de Codigo de Barras'
         OnClick = bTagsCodBarrasClick
@@ -176,12 +176,21 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsTestePagCodigoClick
         TabOrder = 7
       end
+      object bImpLinhaALinha: TButton
+        Left = 192
+        Height = 25
+        Top = 80
+        Width = 183
+        Caption = 'Teste Impressão Linha a Linha'
+        OnClick = bImpLinhaALinhaClick
+        TabOrder = 8
+      end
     end
     object PageControl1: TPageControl
       Left = 1
-      Height = 270
+      Height = 309
       Top = 1
-      Width = 468
+      Width = 583
       ActivePage = tsLog
       Align = alClient
       TabIndex = 1
@@ -202,13 +211,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object tsLog: TTabSheet
         Caption = 'Eventos Log'
-        ClientHeight = 242
-        ClientWidth = 460
+        ClientHeight = 281
+        ClientWidth = 575
         object mLog: TMemo
           Left = 0
-          Height = 242
+          Height = 281
           Top = 0
-          Width = 460
+          Width = 575
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
@@ -218,11 +227,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   end
   object Panel2: TPanel
     Left = 0
-    Height = 386
+    Height = 425
     Top = 0
     Width = 256
     Align = alLeft
-    ClientHeight = 386
+    ClientHeight = 425
     ClientWidth = 256
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -630,10 +639,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     CortaPapel = False
     OnGravarLog = ACBrPosPrinter1GravarLog
-    left = 496
-    top = 376
+    left = 280
+    top = 256
   end
 end

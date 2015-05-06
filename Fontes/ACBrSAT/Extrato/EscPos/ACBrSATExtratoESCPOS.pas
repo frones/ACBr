@@ -400,7 +400,7 @@ end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirCopias;
 begin
-  FPosPrinter.Imprimir( '', True, True, NumCopias);   // Imprime o Buffer
+  FPosPrinter.Imprimir( '', False, True, True, NumCopias);   // Imprime o Buffer
 end;
 
 procedure TACBrSATExtratoESCPOS.SetPosPrinter(AValue: TACBrPosPrinter);

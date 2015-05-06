@@ -23,6 +23,7 @@ type
     bTagsCodBarras: TButton;
     bTagsTesteInvalidas: TButton;
     bTagsTestePagCodigo: TButton;
+    bImpLinhaALinha: TButton;
     cbHRI: TCheckBox;
     cbxModelo: TComboBox;
     cbxPagCodigo: TComboBox;
@@ -77,6 +78,7 @@ type
     procedure bTagsTesteInvalidasClick(Sender: TObject);
     procedure bTagsCodBarrasClick(Sender: TObject);
     procedure bTagsTestePagCodigoClick(Sender: TObject);
+    procedure bImpLinhaALinhaClick(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
     procedure cbIgnorarTagsChange(Sender: TObject);
@@ -296,6 +298,45 @@ begin
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('ÁÉÍÓÚáéíóúçÇãõÃÕÊêÀà');
   mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bImpLinhaALinhaClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.ImprimirLinha('</zera>');
+  ACBrPosPrinter1.ImprimirLinha('</linha_dupla>');
+  ACBrPosPrinter1.ImprimirLinha('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
+  ACBrPosPrinter1.ImprimirLinha(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
+  ACBrPosPrinter1.ImprimirLinha('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
+  ACBrPosPrinter1.ImprimirLinha(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
+  ACBrPosPrinter1.ImprimirLinha('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
+  ACBrPosPrinter1.ImprimirLinha(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
+  ACBrPosPrinter1.ImprimirLinha('</c><n>FONTE NEGRITO</N>');
+  ACBrPosPrinter1.ImprimirLinha('<in>FONTE INVERTIDA</in>');
+  ACBrPosPrinter1.ImprimirLinha('<S>FONTE SUBLINHADA</s>');
+  ACBrPosPrinter1.ImprimirLinha('<i>FONTE ITALICO</i>');
+  ACBrPosPrinter1.ImprimirLinha('FONTE NORMAL');
+  ACBrPosPrinter1.ImprimirLinha('</linha_simples>');
+  ACBrPosPrinter1.ImprimirLinha('<n>LIGA NEGRITO');
+  ACBrPosPrinter1.ImprimirLinha('<i>LIGA ITALICO');
+  ACBrPosPrinter1.ImprimirLinha('<S>LIGA SUBLINHADA');
+  ACBrPosPrinter1.ImprimirLinha('<c>LIGA CONDENSADA');
+  ACBrPosPrinter1.ImprimirLinha('<e>LIGA EXPANDIDA');
+  ACBrPosPrinter1.ImprimirLinha('</fn>FONTE NORMAL');
+  ACBrPosPrinter1.ImprimirLinha('</linha_simples>');
+  ACBrPosPrinter1.ImprimirLinha('<e><n>NEGRITO E EXPANDIDA</n></e>');
+  ACBrPosPrinter1.ImprimirLinha('</fn>FONTE NORMAL');
+  ACBrPosPrinter1.ImprimirLinha('<in><c>INVERTIDA E CONDENSADA</c></in>');
+  ACBrPosPrinter1.ImprimirLinha('</fn>FONTE NORMAL');
+  ACBrPosPrinter1.ImprimirLinha('</linha_simples>');
+  ACBrPosPrinter1.ImprimirLinha('</FB>FONTE TIPO B');
+  ACBrPosPrinter1.ImprimirLinha('<n>FONTE NEGRITO</N>');
+  ACBrPosPrinter1.ImprimirLinha('<e>FONTE EXPANDIDA</e>');
+  ACBrPosPrinter1.ImprimirLinha('<in>FONTE INVERTIDA</in>');
+  ACBrPosPrinter1.ImprimirLinha('<S>FONTE SUBLINHADA</s>');
+  ACBrPosPrinter1.ImprimirLinha('<i>FONTE ITALICO</i>');
+  ACBrPosPrinter1.ImprimirLinha('</FA>FONTE TIPO A');
+  ACBrPosPrinter1.ImprimirLinha('</FN>FONTE NORMAL');
+  ACBrPosPrinter1.ImprimirLinha('</corte_total>');
 end;
 
 procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);

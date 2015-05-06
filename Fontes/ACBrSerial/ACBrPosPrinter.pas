@@ -257,8 +257,10 @@ type
     procedure Desativar;
     property Ativo: Boolean read GetAtivo write SetAtivo;
 
-    procedure Imprimir(AString: AnsiString = ''; DecodificarTags: Boolean = True;
-      CodificarPagina: Boolean = True; Copias: Integer = 1);
+    procedure Imprimir(AString: AnsiString = ''; PulaLinha: Boolean = False;
+      DecodificarTags: Boolean = True; CodificarPagina: Boolean = True;
+      Copias: Integer = 1);
+    procedure ImprimirLinha(AString: AnsiString);
     procedure ImprimirCmd(AString: AnsiString);
     procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
       AdicionaTempo: Boolean = True);
@@ -917,7 +919,7 @@ begin
   FTagProcessor.TraduzirTags := AValue;
 end;
 
-procedure TACBrPosPrinter.Imprimir(AString: AnsiString;
+procedure TACBrPosPrinter.Imprimir(AString: AnsiString; PulaLinha: Boolean;
   DecodificarTags: Boolean; CodificarPagina: Boolean; Copias: Integer);
 var
   i: Integer;
@@ -951,11 +953,19 @@ begin
   if DecodificarTags then
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
 
+  if PulaLinha then
+    StrToPrint := StrToPrint + LF;
+
   //DEBUG
   //WriteLog('c:\temp\teste3.txt', StrToPrint, True);
 
   For i := 1 to Copias do
     EnviarStringDevice(StrToPrint);
+end;
+
+procedure TACBrPosPrinter.ImprimirLinha(AString: AnsiString);
+begin
+  Imprimir(AString, True);
 end;
 
 procedure TACBrPosPrinter.ImprimirCmd(AString: AnsiString);

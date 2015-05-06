@@ -331,6 +331,11 @@ begin
 {$ENDIF}
 end;
 
+{-----------------------------------------------------------------------------
+ Faz o mesmo que o comando chr(), porém retorna um AnsiChar ao invés de Char
+ Util quando for usada para compor valores em AnsiString,
+ veja exemplos nesse mesmo fonte...
+ -----------------------------------------------------------------------------}
 function AnsiChr(b: Byte): AnsiChar;
 begin
   Result := AnsiChar(chr(b));

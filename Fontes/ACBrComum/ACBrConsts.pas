@@ -132,15 +132,20 @@ const
 
   cTagLinhaSimples = '</linha_simples>';
   cTagLinhaDupla   = '</linha_dupla>';
+
+  cTAGS_LINHAS: array[0..1] of String = (
+    cTagLinhaSimples, cTagLinhaDupla);
+
   cTagLogotipo     = '</logo>';
   cTagCorteParcial = '</corte_parcial>';
   cTagCorteTotal = '</corte_total>';
+  cTagAbreGaveta = '</abre_gaveta>';
   cTagBeep = '</beep>';
   cTagZera = '</zera>';
 
   cTAGS_FUNCOES: array[0..5] of String = (
-    cTagLinhaSimples, cTagLinhaDupla, cTagLogotipo,
-    cTagCorteParcial, cTagCorteTotal, CTagZera);
+    cTagLogotipo, cTagCorteParcial, cTagCorteTotal, cTagAbreGaveta,
+    cTagBeep, CTagZera);
 
   cTagAlinhadoDireita = '<ad>';
   cTagAlinhadoEsquerda = '<ae>';

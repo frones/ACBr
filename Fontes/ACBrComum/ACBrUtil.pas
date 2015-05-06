@@ -89,6 +89,8 @@ procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
 
 function ACBrStr( AString : AnsiString ) : String ;
 function ACBrStrToAnsi( AString : String ) : AnsiString ;
+function AnsiChr( b: Byte) : AnsiChar;
+
 function TruncFix( X : Double ) : Integer ;
 function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
@@ -329,6 +331,11 @@ begin
 {$ENDIF}
 end;
 
+function AnsiChr(b: Byte): AnsiChar;
+begin
+  Result := AnsiChar(chr(b));
+end;
+
 {-----------------------------------------------------------------------------
  Corrige, bug da função Trunc.
  Deve calcular Trunc somente com variaveis e nunca com Expressoes, caso contrá-
@@ -552,7 +559,7 @@ begin
   begin
      BCDChar := copy(StrBCD, (I*2)-1, 2);
      DecVal := StrToInt( '$'+BCDChar );
-     Result := Result + AnsiChar(chr( DecVal ))  ;
+     Result := Result + AnsiChr( DecVal )  ;
   end;
 end ;
 
@@ -574,7 +581,7 @@ begin
   while P < LenHex do
   begin
     DecVal := StrToInt('$'+copy(AHexStr,P,2)) ;
-    Result := chr( DecVal ) + Result;
+    Result := AnsiChar( DecVal ) + Result;
     P := P + 2 ;
   end ;
 end;
@@ -625,7 +632,7 @@ begin
   while I < L do
   begin
      B := StrToIntDef('$' + copy(Cmd, I, 2), 32) ;
-     Result := Result + AnsiChar( chr(B) ) ;
+     Result := Result + AnsiChr( B ) ;
      Inc( I, 2) ;
   end ;
 end ;
@@ -1789,7 +1796,7 @@ begin
       begin
         if Token[1] = '#' then
         try
-           Token := AnsiChar( chr( StrToInt( copy(String(Token),2,length(String(Token))) ) ) );
+           Token := AnsiChr(StrToInt(copy(String(Token),2,length(String(Token)))));
         except
         end ;
 
@@ -1844,7 +1851,7 @@ begin
      Hex := copy(String(Result),P+2,2) ;
 
      try
-        CharHex := AnsiChar( Chr(StrToInt('$'+Hex)) ) ;
+        CharHex := AnsiChr(StrToInt('$'+Hex));
      except
         CharHex := ' ' ;
      end ;
@@ -1877,7 +1884,7 @@ begin
      if posLetra = 0 then
         posLetra := ord(Result[i]);
 
-     C := AnsiChar( chr(posLetra) );
+     C := AnsiChr(posLetra);
      Result[i] := C ;
   end;
 end ;

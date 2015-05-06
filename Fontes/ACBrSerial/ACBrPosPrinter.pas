@@ -419,10 +419,10 @@ begin
   FTagProcessor := TACBrTagProcessor.Create;
   FTagProcessor.AddTags(cTAGS_CARACTER, False);
   FTagProcessor.AddTags(CTAGS_TIPOFONTE, False);
+  FTagProcessor.AddTags(cTAGS_LINHAS, False);
   FTagProcessor.AddTags(cTAGS_FUNCOES, False);
   FTagProcessor.AddTags(cTAGS_ALINHAMENTO, True);
   FTagProcessor.AddTags(cTAGS_BARRAS, True);
-  FTagProcessor.Tags.New.Nome := cTagBeep;
   with FTagProcessor.Tags.New do
   begin
     Nome := cTagQRCode;
@@ -664,6 +664,9 @@ begin
 
   else if ATag = cTagCorteTotal then
     TagTraduzida := StringOfChar(LF,LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteTotal
+
+  else if ATag = cTagAbreGaveta then
+    TagTraduzida := FPosPrinterClass.Cmd.AbreGaveta
 
   else if ATag = cTagBeep then
     TagTraduzida := FPosPrinterClass.Cmd.Beep
@@ -1025,7 +1028,6 @@ procedure TACBrPosPrinter.CortarPapel(Parcial: Boolean);
 begin
   GravarLog('CortarPapel(' + IfThen(Parcial, 'Parcial', 'Total') + ')');
 
-
   if Parcial then
     ImprimirCmd(FPosPrinterClass.Cmd.CorteParcial)
   else
@@ -1035,3 +1037,49 @@ begin
 end;
 
 end.
+
+(* TODO:
+
+function TACBrNFeDANFeESCPOS.VersaoFirmware: String;
+var
+  Resposta: AnsiString;
+begin
+  case MarcaImpressora of
+    iEpson:    Result := 'não implementado para está marca';
+    iBematech: Result := 'não implementado para está marca';
+    iDiebold:  Result := 'não implementado para está marca';
+
+    iDaruma:
+      begin
+        FDevice.EnviaString(ESC + #199);
+        Resposta := FDevice.LeString(100);
+        Result := Trim(Copy(Resposta, 2, 8));
+      end;
+  end;
+
+  GravaLog('Versão Firmware: ' + Resposta);
+end;
+
+function TACBrNFeDANFeESCPOS.DataFirmware: TDateTime;
+var
+  Resposta: AnsiString;
+begin
+  case MarcaImpressora of
+    iEpson:    Result := 0.0;
+    iBematech: Result := 0.0;
+    iDiebold:  Result := 0.0;
+
+    iDaruma:
+      begin
+        FDevice.EnviaString(ESC + #199);
+        Resposta := FDevice.LeString(100);
+
+        Result := StrToDateTimeDef(Trim(Copy(Resposta, 12, 19)), 0.0);
+      end;
+  end;
+
+  GravaLog('Versão Firmware: ' + Resposta);
+end;
+
+
+*)

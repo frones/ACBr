@@ -175,10 +175,10 @@ begin
     M := IfThen( MostrarCodigo, 2, 0 );
   end ;
 
-  Result := GS + 'w' + chr( L ) + // Largura
-            GS + 'h' + chr( A ) + // Altura
-            GS + 'H' + chr( M ) + // HRI (numero impresso abaixo do cod.barras)
-            GS + 'k' + CmdBarCode + chr( Length(ACodBar) ) + ACodBar;
+  Result := GS + 'w' + AnsiChr( L ) + // Largura
+            GS + 'h' + AnsiChr( A ) + // Altura
+            GS + 'H' + AnsiChr( M ) + // HRI (numero impresso abaixo do cod.barras)
+            GS + 'k' + CmdBarCode + AnsiChr( Length(ACodBar) ) + ACodBar;
 end;
 
 function TACBrEscPosEpson.ComandoQrCode(ACodigo: AnsiString): AnsiString;
@@ -186,7 +186,7 @@ begin
   with fpPosPrinter.ConfigQRCode do
   begin
      Result := GS + '(k' + #4 + #0 + '1A' + IntToStr(Tipo) + #0 +  // Tipo
-               GS + '(k' + #3 + #0 + '1C' + chr(LarguraModulo) +   // Largura Modulo
+               GS + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
                GS + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
                GS + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
                GS + '(k' + #3 + #0 +'1Q0';  // Imprime
@@ -198,7 +198,7 @@ begin
   if Espacos = 0 then
     Result := Cmd.EspacoEntreLinhasPadrao
   else
-    Result := Cmd.EspacoEntreLinhas + chr(Espacos);
+    Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
 end;
 
 function TACBrEscPosEpson.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo
@@ -219,7 +219,7 @@ begin
     end;
   end;
 
-  Result := ESC + 't' + chr( CmdPag );
+  Result := ESC + 't' + AnsiChr( CmdPag );
 end;
 
 end.

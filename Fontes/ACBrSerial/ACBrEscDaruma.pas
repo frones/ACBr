@@ -158,10 +158,10 @@ begin
   end ;
 
   Result := ESC + 'b' +
-            chr( CmdBarCode ) +
-            chr( L ) + // Largura
-            chr( A ) + // Altura
-            chr( M ) + // HRI (numero impresso abaixo do cod.barras)
+            AnsiChr( CmdBarCode ) +
+            AnsiChr( L ) + // Largura
+            AnsiChr( A ) + // Altura
+            AnsiChr( M ) + // HRI (numero impresso abaixo do cod.barras)
             ACodigo +
             NUL;
 end;
@@ -169,7 +169,7 @@ end;
 function TACBrEscDaruma.ComandoQrCode(ACodigo: AnsiString): AnsiString;
 var
   iQtdBytes, bMenos, bMais, L: Integer;
-  E: Char;
+  E: AnsiChar;
 begin
   iQtdBytes      := Length(ACodigo);
   bMenos         := iQtdBytes shr 8;
@@ -188,8 +188,8 @@ begin
     end;
 
     Result := ESC + #129 +
-              chr(bMais) + chr(bMenos) +
-              chr(L) + E + ACodigo;
+              AnsiChr(bMais) + AnsiChr(bMenos) +
+              AnsiChr(L) + E + ACodigo;
   end;
 end;
 
@@ -198,7 +198,7 @@ begin
   if Espacos = 0 then
     Result := Cmd.EspacoEntreLinhasPadrao
   else
-    Result := Cmd.EspacoEntreLinhas + chr(Espacos);
+    Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
 end;
 
 end.

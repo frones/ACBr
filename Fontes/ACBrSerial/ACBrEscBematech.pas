@@ -124,9 +124,9 @@ begin
   with fpPosPrinter.ConfigQRCode do
   begin
     Result := GS  + 'kQ' + // Codigo QRCode
-              ETX + chr(12) +
-              chr(LarguraModulo) + chr(ErrorLevel) +
-              chr(cTam1) + chr(cTam2) + ACodigo;
+              ETX + AnsiChr(12) +
+              AnsiChr(LarguraModulo) + AnsiChr(ErrorLevel) +
+              AnsiChr(cTam1) + AnsiChr(cTam2) + ACodigo;
   end;
 end;
 
@@ -147,7 +147,7 @@ begin
     end;
   end;
 
-  Result := ESC + 't' + chr( CmdPag );
+  Result := ESC + 't' + AnsiChr( CmdPag );
 end;
 
 end.

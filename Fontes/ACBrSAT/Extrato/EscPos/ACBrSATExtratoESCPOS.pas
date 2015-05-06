@@ -63,6 +63,7 @@ type
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    procedure AtivarPosPrinter;
 
     procedure GerarCabecalho;
     procedure GerarItens;
@@ -75,7 +76,6 @@ type
     procedure GerarDadosCancelamento;
   public
     constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
 
     procedure ImprimirExtrato(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
@@ -106,11 +106,6 @@ begin
   FPosPrinter := Nil;
 
   inherited create( AOwner );
-end;
-
-destructor TACBrSATExtratoESCPOS.Destroy;
-begin
-  inherited Destroy ;
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho;
@@ -434,9 +429,19 @@ begin
   end;
 end;
 
+procedure TACBrSATExtratoESCPOS.AtivarPosPrinter;
+begin
+  if not Assigned( FPosPrinter ) then
+    raise Exception.Create('Componente PosPrinter não associado');
+
+  FPosPrinter.Ativar;
+end;
+
 procedure TACBrSATExtratoESCPOS.ImprimirExtrato(ACFe: TCFe);
 begin
   inherited;
+
+  AtivarPosPrinter;
 
   GerarCabecalho;
   GerarItens;
@@ -455,6 +460,8 @@ procedure TACBrSATExtratoESCPOS.ImprimirExtratoCancelamento(ACFe: TCFe;
 begin
   inherited;
 
+  AtivarPosPrinter;
+
   GerarCabecalho;
   GerarTotais(True);
   GerarRodape(False, True);
@@ -466,6 +473,8 @@ end;
 procedure TACBrSATExtratoESCPOS.ImprimirExtratoResumido(ACFe: TCFe);
 begin
   inherited;
+
+  AtivarPosPrinter;
 
   GerarCabecalho;
   GerarTotais(True);

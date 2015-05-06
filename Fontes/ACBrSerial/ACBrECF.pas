@@ -1220,7 +1220,7 @@ begin
 
   fsTagProcessor := TACBrTagProcessor.Create;
   fsTagProcessor.AddTags(cTAGS_CARACTER, False);
-  fsTagProcessor.AddTags(cTAGS_FUNCOES, False);
+  fsTagProcessor.AddTags(cTAGS_LINHAS, False);
   fsTagProcessor.AddTags(cTAGS_ALINHAMENTO, True);
   fsTagProcessor.AddTags(cTAGS_BARRAS, True);
   fsTagProcessor.OnTraduzirTag := TraduzirTag;

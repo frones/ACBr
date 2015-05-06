@@ -338,7 +338,7 @@ begin
     LoadLayout('<Q03>   Q03|CST¨|QBCProd¨|VAliqProd¨|VPIS¨');
     LoadLayout('<Q04>   Q04|CST¨');
     LoadLayout('<Q05>   Q05|CST¨|VPIS¨');
-    LoadLayout('<Q05>   Q07|VBC¨|PPIS¨');
+    LoadLayout('<Q05>   Q07|VBC¨|PPIS¨|VPIS¨');
     LoadLayout('<Q05>   Q10|QBCProd¨|VAliqProd¨');
     LoadLayout('<R01>     R|VPIS¨');
     LoadLayout('<R01>   R02|VBC¨|PPIS¨');

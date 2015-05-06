@@ -796,6 +796,8 @@ begin
     i := NFe.Det.Count - 1;
     (*Q07*)NFe.Det[i].Imposto.PIS.vBC := LerCampo(tcDe2, 'vBC');
     (*Q08*)NFe.Det[i].Imposto.PIS.pPIS := LerCampo(tcDe2, 'pPIS');
+		if (nfe.infNFe.Versao < 3.10) then
+			(*Q09*)NFe.Det[i].Imposto.PIS.pPIS := LerCampo(tcDe2, 'vPIS');		
   end;
 
   if ID = 'Q10' then (* Grupo da TAG <det><imposto><pis><pisqtde> *************)

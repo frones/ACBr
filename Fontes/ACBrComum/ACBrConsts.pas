@@ -207,15 +207,17 @@ const
     'Cod.Barras "Standard 2 of 5" - apenas números, tamanho livre',
     'Cod.Barras "Interleaved 2 of 5" - apenas números, tamanho PAR',
     'Cod.Barras Code11 - apenas números, tamanho livre',
-    'Cod.Barras Code39 - Aceita: 0~9,A~Z, ,$,%,*,+,-,.,/, tamanho livre',
-    'Cod.Barras Code93 - Aceita: 0~9,A~Z,-,., ,$,/,+,%, tamanho livre',
+    'Cod.Barras Code39 - Aceita: 0..9,A..Z, ,$,%,*,+,-,.,/, tamanho livre',
+    'Cod.Barras Code93 - Aceita: 0..9,A..Z,-,., ,$,/,+,%, tamanho livre',
     'Cod.Barras Code128 - Todos os caracteres ASCII, tamanho livre',
     'Cod.Barras UPCA - 11 numeros e 1 dig.verificador',
-    'Cod.Barras CodaBar - Aceita: 0~9,A~D,a~d,$,+,-,.,/,:, tamanho livre',
+    'Cod.Barras CodaBar - Aceita: 0..9,A..D,a..d,$,+,-,.,/,:, tamanho livre',
     'Cod.Barra MSI - Apenas números, 1 dígito verificador',
     'Cod.Barras Code128 - Subtipo A',
     'Cod.Barras Code128 - Subtipo B (padrão) = '+cTagBarraCode128,
     'Cod.Barras Code128 - Subtipo C (informar valores em BCD)');
+
+  cTagIgnorarTags = '<ignorar_tags>';
 
   cACBrDeviceAtivarPortaException    = 'Porta não definida' ;
   cACBrDeviceAtivarException         = 'Erro abrindo: %s ' + sLineBreak +' %s ' ;

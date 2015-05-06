@@ -441,6 +441,12 @@ begin
     Ajuda := 'Imprime QRCode de acordo com "ConfigQRCode"';
     EhBloco := True;
   end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagIgnorarTags;
+    Ajuda := 'Ignora todas as Tags contidas no Bloco';
+    EhBloco := True;
+  end;
   FTagProcessor.OnTraduzirTag := TraduzirTag;
   FTagProcessor.OnTraduzirTagBloco := TraduzirTagBloco;
 
@@ -908,24 +914,13 @@ begin
 end;
 
 procedure TACBrPosPrinter.ImprimirTags;
-var
-  OldTraduzirTags: Boolean;
 begin
-  OldTraduzirTags := TraduzirTags;
-  try
-    ImprimirCmd(FPosPrinterClass.Cmd.Zera);
-    ImprimirCmd(FPosPrinterClass.Cmd.LigaCondensado);
+  FTagProcessor.RetornarTags(FBuffer);
+  FBuffer.Insert(0,'</zera><c><ignorar_tags>');
+  FBuffer.Add('</ignorar_tags>');
+  FBuffer.Add('</corte_total>');
 
-    FTagProcessor.RetornarTags(FBuffer);
-    TraduzirTags := False;
-
-    Imprimir;
-
-    PularLinhas();
-    CortarPapel;
-  finally
-    TraduzirTags := OldTraduzirTags;
-  end;
+  Imprimir;
 end;
 
 function TACBrPosPrinter.GetIgnorarTags: Boolean;

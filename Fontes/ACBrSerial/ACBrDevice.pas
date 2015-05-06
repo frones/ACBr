@@ -571,7 +571,8 @@ var
   AString: String;
 begin
   Result := ConteudoBloco;
-  if (ATag = '') or IgnorarTags then exit ;
+  if (ATag = '') or IgnorarTags or (ATag = cTagIgnorarTags) then
+    exit ;
 
   { Chamada Recursiva, para no caso de "ConteudoBloco" ter TAGs não resolvidas
     dentro do Bloco }

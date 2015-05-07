@@ -10,19 +10,19 @@ uses
   {$IFDEF MSWINDOWS}
    Windows, Dialogs,
   {$ENDIF}
-  Forms, UtilUnit, ACBrMonitor1, CmdUnit, ConfiguraSerial, DoACBrUnit,
-  DoBALUnit, DoCHQUnit, DoDISUnit, DoECFBemafi32, DoECFObserver, DoECFUnit,
-  DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre, DoBoletoUnit,
-  DoCEPUnit, DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit;
+  Forms, printer4lazarus, UtilUnit, ACBrMonitor1, CmdUnit, ConfiguraSerial,
+  DoACBrUnit, DoBALUnit, DoCHQUnit, DoDISUnit, DoECFBemafi32, DoECFObserver,
+  DoECFUnit, DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre, DoBoletoUnit, DoCEPUnit,
+  DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit, DoSATUnit;
 
 {$R *.res}
 var
   Ini : TIniFile;
   UmaInstancia : Boolean;
 begin
-  Ini := TIniFile.Create(  ExtractFilePath(Application.ExeName)+ 'ACBrNFeMonitor.ini' ) ;
+  Ini := TIniFile.Create(  ExtractFilePath(Application.ExeName)+ 'ACBrMonitor.ini' ) ;
   try
-     UmaInstancia := Ini.ReadBool('ACBrNFeMonitor','Uma_Instancia',false);
+     UmaInstancia := Ini.ReadBool('ACBrMonitor','Uma_Instancia',false);
   finally
      Ini.Free;
   end;

@@ -188,7 +188,7 @@ begin
               raise Exception.Create('Arquivo(s) ['+Files+'] ainda existe(m)') ;
          end
 				 
-				else if Cmd.Metodo ='datahora' then
+		else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )
 					 
         else if Cmd.Metodo ='data' then

@@ -1664,14 +1664,14 @@ begin
          Ide.serie      := INIRec.ReadInteger( 'Identificacao','Serie'  ,1);
          Ide.nNF        := INIRec.ReadInteger( 'Identificacao','Numero' ,INIRec.ReadInteger( 'Identificacao','nNF' ,0));
          Ide.dEmi       := StringToDateTime(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi','0'))));
-         Ide.dSaiEnt    := StringToDateTime(INIRec.ReadString( 'Identificacao','Saida'  ,INIRec.ReadString( 'Identificacao','dSaiEnt'  ,'0')));
+         Ide.dSaiEnt    := StringToDateTime(INIRec.ReadString( 'Identificacao','Saida'  ,INIRec.ReadString( 'Identificacao','dSaiEnt'  ,INIRec.ReadString( 'Identificacao','dhSaiEnt'  ,'0'))));
          Ide.hSaiEnt    := StringToDateTime(INIRec.ReadString( 'Identificacao','hSaiEnt','0'));  //NFe2
          Ide.tpNF       := StrToTpNF(OK,INIRec.ReadString( 'Identificacao','Tipo',INIRec.ReadString( 'Identificacao','tpNF','1')));
 
          Ide.idDest     := StrToDestinoOperacao(OK,INIRec.ReadString( 'Identificacao','idDest','1'));
 
          Ide.tpImp      := StrToTpImp(  OK, INIRec.ReadString( 'Identificacao','tpImp',TpImpToStr(ACBrNFe1.DANFE.TipoDANFE)));  //NFe2
-         Ide.tpEmis     := StrToTpEmis( OK,INIRec.ReadString( 'Identificacao','tpemis',IntToStr(ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo)));
+         Ide.tpEmis     := StrToTpEmis( OK,INIRec.ReadString( 'Identificacao','tpEmis',IntToStr(ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo)));
 //         Ide.cDV
 //         Ide.tpAmb
          Ide.finNFe     := StrToFinNFe( OK,INIRec.ReadString( 'Identificacao','Finalidade',INIRec.ReadString( 'Identificacao','finNFe','0')));
@@ -1679,7 +1679,7 @@ begin
          Ide.indPres    := StrToPresencaComprador(OK,INIRec.ReadString( 'Identificacao','indPres','0'));
 
          Ide.procEmi    := StrToProcEmi(OK,INIRec.ReadString( 'Identificacao','procEmi','0')); //NFe2
-         Ide.verProc    := INIRec.ReadString(  'Identificacao','verProc' ,'ACBrNFeMonitor2' );
+         Ide.verProc    := INIRec.ReadString(  'Identificacao','verProc' ,'ACBrMonitorPLUS' );
          Ide.dhCont     := StringToDateTime(INIRec.ReadString( 'Identificacao','dhCont'  ,'0')); //NFe2
          Ide.xJust      := INIRec.ReadString(  'Identificacao','xJust' ,'' ); //NFe2
 
@@ -1891,7 +1891,6 @@ begin
 
                Prod.xPed      := INIRec.ReadString( sSecao,'xPed'    ,'');  //NFe2
                Prod.nItemPed  := INIRec.ReadInteger( sSecao,'nItemPed',0);  //NFe2
-               Prod.nFCI      := INIRec.ReadString( sSecao,'nFCI','');  //NFe2
 
                Prod.nFCI      := INIRec.ReadString( sSecao,'nFCI','');  //NFe3
                Prod.nRECOPI   := INIRec.ReadString( sSecao,'nRECOPI','');  //NFe3
@@ -2337,8 +2336,8 @@ begin
          Transp.veicTransp.UF    := INIRec.ReadString('Transportador','UFPlaca','');
          Transp.veicTransp.RNTC  := INIRec.ReadString('Transportador','RNTC'   ,'');
 
-         Transp.vagao := INIRec.ReadString( 'Transportador','vagao','') ;  //NFe2
-         Transp.balsa := INIRec.ReadString( 'Transportador','balsa','') ;  //NFe2
+         Transp.vagao := INIRec.ReadString( 'Transportador','vagao','') ;
+         Transp.balsa := INIRec.ReadString( 'Transportador','balsa','') ;
 
          J := 1 ;
          while true do
@@ -3343,7 +3342,6 @@ begin
            infEvento.nSeqEvento   := INIRec.ReadInteger( sSecao,'nSeqEvento' ,1);
            infEvento.versaoEvento := INIRec.ReadString(  sSecao,'versaoEvento' ,'1.00');;
 
-           // Alterado por Italo em 15/01/2015
            if infEvento.tpEvento = teEPECNFe then
            begin
              infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
@@ -3355,9 +3353,9 @@ begin
              infEvento.detEvento.tpNF        := StrToTpNF(ok,INIRec.ReadString(sSecao, 'tpNF', '1'));
              infEvento.detEvento.IE          := INIRec.ReadString(sSecao, 'IE', '');
 
-             infEvento.detEvento.dest.UF      := INIRec.ReadString('DEST', 'UF', '');
-             infEvento.detEvento.dest.CNPJCPF := INIRec.ReadString('DEST', 'CNPJCPF', '');
-             infEvento.detEvento.dest.IE      := INIRec.ReadString('DEST', 'IE', '');
+             infEvento.detEvento.dest.UF      := INIRec.ReadString('DEST', 'DestUF', '');
+             infEvento.detEvento.dest.CNPJCPF := INIRec.ReadString('DEST', 'DestCNPJCPF', '');
+             infEvento.detEvento.dest.IE      := INIRec.ReadString('DEST', 'DestIE', '');
 
              infEvento.detEvento.vNF   := StringToFloatDef(INIRec.ReadString(sSecao, 'vNF', ''), 0);
              infEvento.detEvento.vICMS := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);

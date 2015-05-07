@@ -68,67 +68,70 @@
         <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="19">
+    <RequiredPackages Count="20">
       <Item1>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item3>
       <Item4>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item4>
       <Item5>
-        <PackageName Value="FCL"/>
+        <PackageName Value="SynEdit"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="FCL"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item12>
       <Item13>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrSerial"/>
       </Item13>
       <Item14>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item14>
       <Item15>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item15>
       <Item16>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item16>
       <Item17>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item17>
       <Item18>
-        <PackageName Value="LCLBase"/>
-        <MinVersion Major="1" Release="1" Valid="True"/>
+        <PackageName Value="ACBrComum"/>
       </Item18>
       <Item19>
-        <PackageName Value="LCL"/>
+        <PackageName Value="LCLBase"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
       </Item19>
+      <Item20>
+        <PackageName Value="LCL"/>
+      </Item20>
     </RequiredPackages>
-    <Units Count="23">
+    <Units Count="24">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -253,6 +256,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="DoACBrNFeUnit"/>
       </Unit22>
+      <Unit23>
+        <Filename Value="DoSATUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="DoSATUnit"/>
+      </Unit23>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -277,7 +285,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="18">
+    <Exceptions Count="19">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -332,6 +340,9 @@
       <Item18>
         <Name Value="EACBrNFeException"/>
       </Item18>
+      <Item19>
+        <Name Value="EACBrSATErro"/>
+      </Item19>
     </Exceptions>
   </Debugging>
 </CONFIG>

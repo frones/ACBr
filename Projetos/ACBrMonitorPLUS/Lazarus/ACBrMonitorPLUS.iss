@@ -52,6 +52,7 @@ Source: banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components
 ;Source: ACBrMonitorConsole.exe; DestDir: {app}; Flags: ignoreversion; Components: console
 Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
+Source: ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: Exemplos\Clipper_TXT_xHarbour_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: Exemplos\Cobol_TXT_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
@@ -80,6 +81,7 @@ Source: {#ACBrDIR}\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: p
 Source: {#ACBrDIR}\DLLs\Diversos\iconv.dll; DestDir: {app}; Flags: ; Components: programa
 Source: Schemas\*.*; DestDir: {app}\Schemas; Components: programa;
 Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
+Source: SAT\*.*; DestDir: {app}\SAT; Flags: recursesubdirs; Components: programa;
 
 [INI]
 Filename: {app}\{#MyAppUrlName}; Section: InternetShortcut; Key: URL; String: {#MyAppURL}; Components: help

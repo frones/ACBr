@@ -3892,21 +3892,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsRFDINI
+            ActivePage = tsRFDConfig
             Align = alClient
-            TabIndex = 1
+            TabIndex = 0
             TabOrder = 0
             object tsRFDConfig: TTabSheet
               Caption = 'Geral'
-              ClientHeight = 205
-              ClientWidth = 582
+              ClientHeight = 281
+              ClientWidth = 615
               ImageIndex = 3
               object sbDirRFD: TSpeedButton
                 AnchorSideLeft.Control = edRFDDir
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideTop.Control = edRFDDir
                 AnchorSideTop.Side = asrCenter
-                Left = 405
+                Left = 438
                 Height = 22
                 Hint = 'Abre o diretÃ³rio RFD'
                 Top = 41
@@ -3946,13 +3946,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Hint = 'DiretÃ³rio para gravaÃ§Ã£o dos arquivos da RFD.'#13#10'Se nada for especificado serÃ¡ criado um subdiretÃ³rio '#13#10'"RFD" dentro da pasta do ACBrMonitor'#13#10#13#10'Para modifica-lo o componente ECF deve estar desativado'
                 Top = 40
-                Width = 238
+                Width = 271
                 Anchors = [akTop, akLeft, akRight]
                 Enabled = False
                 TabOrder = 1
               end
               object bRFDMF: TBitBtn
-                Left = 444
+                Left = 477
                 Height = 27
                 Hint = 'Captura dados Memoria Fiscal.'#13#10#13#10'Ãštil para ajudar a preencher os campos '#13#10'de ACBrRFD.ini'
                 Top = 30
@@ -3995,11 +3995,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 109
                 Top = 85
-                Width = 546
+                Width = 579
                 Anchors = [akTop, akLeft, akRight]
                 Caption = 'ECF'
                 ClientHeight = 91
-                ClientWidth = 542
+                ClientWidth = 575
                 TabOrder = 4
                 object Label43: TLabel
                   Left = 16
@@ -4021,7 +4021,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 176
                   Height = 23
                   Top = 13
-                  Width = 285
+                  Width = 318
                   Anchors = [akTop, akLeft, akRight]
                   ItemHeight = 17
                   OnChange = cbRFDModeloChange
@@ -4029,7 +4029,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 0
                 end
                 object Label45: TLabel
-                  Left = 480
+                  Left = 513
                   Height = 17
                   Top = -3
                   Width = 39
@@ -4041,7 +4041,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideLeft.Control = Label45
                   AnchorSideTop.Control = cbRFDModelo
                   AnchorSideTop.Side = asrCenter
-                  Left = 480
+                  Left = 513
                   Height = 23
                   Top = 13
                   Width = 49
@@ -4070,7 +4070,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = deRFDDataSwBasico
                   AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Control = deRFDDataSwBasico
-                  Left = 62
+                  Left = 95
                   Height = 17
                   Top = 62
                   Width = 266
@@ -4084,7 +4084,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = deRFDDataSwBasico
                   AnchorSideTop.Side = asrCenter
                   Cursor = crIBeam
-                  Left = 479
+                  Left = 512
                   Height = 25
                   Hint = 'Informe aqui a data do ultimo atestado de intervenÃ§Ã£o tÃ©cnica '#13#10'em que houve atualizaÃ§Ã£o do Sofware BÃ¡sico '#13#10' (numero de versÃ£o acrescido)'
                   Top = 58
@@ -4101,7 +4101,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object deRFDDataSwBasico: TDateEdit
                   Cursor = crIBeam
-                  Left = 331
+                  Left = 364
                   Height = 25
                   Hint = 'Informe aqui a data do ultimo atestado de intervenÃ§Ã£o tÃ©cnica'#13#10'em que houve atualizaÃ§Ã£o do Sofware BÃ¡sico'#13#10' (numero de versÃ£o acrescido)'
                   Top = 58
@@ -6516,10 +6516,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 2
               end
               object rgVersaoSSL: TRadioGroup
-                Left = 8
+                Left = 368
                 Height = 57
-                Top = 144
-                Width = 354
+                Top = 36
+                Width = 237
                 AutoFill = True
                 Caption = 'Versão SSL'
                 ChildSizing.LeftRightSpacing = 6
@@ -6530,7 +6530,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ChildSizing.Layout = cclLeftToRightThenTopToBottom
                 ChildSizing.ControlsPerLine = 2
                 ClientHeight = 39
-                ClientWidth = 350
+                ClientWidth = 233
                 Columns = 2
                 ItemIndex = 1
                 Items.Strings = (
@@ -6576,6 +6576,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 }
                 NumGlyphs = 2
                 OnClick = sbArquivoWebServicesClick
+              end
+              object cbValidarDigest: TCheckBox
+                Left = 8
+                Height = 21
+                Top = 144
+                Width = 244
+                Caption = 'Validar Digest Value ao consultar XML'
+                TabOrder = 5
               end
             end
             object Certificado: TTabSheet
@@ -8795,7 +8803,973 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsSat: TTabSheet
           Caption = 'SAT'
+          ClientHeight = 311
+          ClientWidth = 623
           ImageIndex = 27
+          object PageControl3: TPageControl
+            Left = 0
+            Height = 311
+            Top = 0
+            Width = 623
+            ActivePage = tsDadosSAT
+            Align = alClient
+            TabIndex = 0
+            TabOrder = 0
+            object tsDadosSAT: TTabSheet
+              Caption = 'Dados do SAT CFe'
+              ClientHeight = 281
+              ClientWidth = 615
+              object Label113: TLabel
+                Left = 16
+                Height = 17
+                Top = 7
+                Width = 49
+                Alignment = taRightJustify
+                Caption = 'Arq.Log:'
+                ParentColor = False
+              end
+              object edSATLog: TEdit
+                Cursor = crIBeam
+                Left = 17
+                Height = 25
+                Top = 24
+                Width = 163
+                OnChange = edSATLogChange
+                TabOrder = 0
+              end
+              object SbArqLog: TSpeedButton
+                Left = 184
+                Height = 22
+                Top = 24
+                Width = 24
+                Caption = '...'
+                OnClick = SbArqLogClick
+              end
+              object Label114: TLabel
+                Left = 217
+                Height = 17
+                Top = 7
+                Width = 64
+                Alignment = taRightJustify
+                Caption = 'Nome DLL:'
+                ParentColor = False
+              end
+              object edNomeDLL: TEdit
+                Cursor = crIBeam
+                Left = 217
+                Height = 25
+                Top = 24
+                Width = 376
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 1
+              end
+              object edtCodigoAtivacao: TEdit
+                Left = 16
+                Height = 25
+                Top = 73
+                Width = 164
+                TabOrder = 2
+              end
+              object Label115: TLabel
+                Left = 16
+                Height = 17
+                Top = 56
+                Width = 115
+                Caption = 'Código de Ativação'
+                ParentColor = False
+              end
+              object Label116: TLabel
+                Left = 217
+                Height = 17
+                Top = 56
+                Width = 42
+                Caption = 'Cód.UF'
+                ParentColor = False
+              end
+              object edtCodUF: TEdit
+                Left = 218
+                Height = 25
+                Top = 72
+                Width = 61
+                TabOrder = 3
+              end
+              object Label117: TLabel
+                Left = 312
+                Height = 17
+                Top = 57
+                Width = 62
+                Caption = 'Num.Caixa'
+                ParentColor = False
+              end
+              object seNumeroCaixa: TSpinEdit
+                Left = 312
+                Height = 25
+                Top = 73
+                Width = 58
+                MaxValue = 999
+                MinValue = 1
+                TabOrder = 4
+                Value = 1
+              end
+              object cbxUTF8: TCheckBox
+                Left = 16
+                Height = 21
+                Top = 103
+                Width = 49
+                Caption = 'UTF8'
+                OnChange = cbxUTF8Change
+                TabOrder = 5
+              end
+              object sePagCod: TSpinEdit
+                Left = 156
+                Height = 25
+                Top = 123
+                Width = 83
+                MaxValue = 65001
+                OnChange = sePagCodChange
+                TabOrder = 6
+              end
+              object Label118: TLabel
+                AnchorSideTop.Side = asrCenter
+                Left = 156
+                Height = 17
+                Top = 106
+                Width = 71
+                BorderSpacing.Right = 5
+                Caption = 'Pág.Código:'
+                ParentColor = False
+              end
+              object Label119: TLabel
+                Left = 257
+                Height = 17
+                Top = 106
+                Width = 41
+                Caption = 'Versão'
+                ParentColor = False
+              end
+              object sfeVersaoEnt: TFloatSpinEdit
+                Left = 256
+                Height = 25
+                Top = 123
+                Width = 114
+                Increment = 0.01
+                MaxValue = 10
+                MinValue = 0
+                OnChange = sfeVersaoEntChange
+                TabOrder = 7
+                Value = 0.05
+              end
+              object cbxFormatXML: TCheckBox
+                Left = 17
+                Height = 21
+                Top = 127
+                Width = 103
+                Caption = 'Formatar XML'
+                Checked = True
+                State = cbChecked
+                TabOrder = 8
+              end
+              object cbxAmbiente: TComboBox
+                Left = 385
+                Height = 25
+                Top = 72
+                Width = 208
+                Anchors = [akTop, akLeft, akRight]
+                ItemHeight = 17
+                Style = csDropDownList
+                TabOrder = 9
+              end
+              object Label120: TLabel
+                Left = 385
+                Height = 17
+                Top = 55
+                Width = 55
+                Caption = 'Ambiente'
+                ParentColor = False
+              end
+              object cbxSalvarCFe: TCheckBox
+                Left = 385
+                Height = 21
+                Top = 103
+                Width = 86
+                Caption = 'Salvar CFes'
+                Checked = True
+                OnChange = cbxSalvarCFeChange
+                State = cbChecked
+                TabOrder = 10
+              end
+              object cbxModeloSAT: TComboBox
+                AnchorSideLeft.Side = asrCenter
+                Left = 16
+                Height = 25
+                Top = 168
+                Width = 133
+                ItemHeight = 17
+                Items.Strings = (
+                  'satNenhum'
+                  'satDinamico_cdecl'
+                  'satDinamico_stdcall'
+                )
+                OnChange = cbxModeloSATChange
+                Style = csDropDownList
+                TabOrder = 11
+              end
+              object btAtivarsat: TButton
+                Left = 376
+                Height = 25
+                Top = 168
+                Width = 104
+                Caption = 'Ativar SAT'
+                OnClick = btAtivarsatClick
+                TabOrder = 12
+              end
+              object edSATPathArqs: TEdit
+                Cursor = crIBeam
+                Left = 385
+                Height = 25
+                Top = 123
+                Width = 163
+                TabOrder = 13
+              end
+              object SbArqLog2: TSpeedButton
+                Left = 561
+                Height = 22
+                Top = 126
+                Width = 24
+                Caption = '...'
+                OnClick = SbArqLog2Click
+              end
+              object btConsultarStatusOPSAT: TButton
+                Left = 267
+                Height = 25
+                Top = 168
+                Width = 104
+                Caption = 'Consultar Status'
+                OnClick = btConsultarStatusOPSATClick
+                TabOrder = 14
+              end
+              object bInicializar: TButton
+                AnchorSideLeft.Side = asrCenter
+                Left = 160
+                Height = 25
+                Top = 168
+                Width = 104
+                Caption = 'Inicializar'
+                OnClick = bInicializarClick
+                TabOrder = 15
+              end
+            end
+            object tsDadosEmit: TTabSheet
+              Caption = 'Dados Emitente'
+              ClientHeight = 281
+              ClientWidth = 615
+              object Label134: TLabel
+                Left = 12
+                Height = 17
+                Top = 10
+                Width = 30
+                Caption = 'CNPJ'
+                ParentColor = False
+              end
+              object Label135: TLabel
+                Left = 192
+                Height = 17
+                Top = 10
+                Width = 74
+                Caption = 'Insc.Estadual'
+                ParentColor = False
+              end
+              object Label167: TLabel
+                Left = 336
+                Height = 17
+                Top = 10
+                Width = 81
+                Caption = 'Insc.Municipal'
+                ParentColor = False
+              end
+              object edtEmitCNPJ: TEdit
+                Cursor = crIBeam
+                Left = 12
+                Height = 25
+                Top = 30
+                Width = 166
+                TabOrder = 0
+              end
+              object edtEmitIE: TEdit
+                Cursor = crIBeam
+                Left = 192
+                Height = 25
+                Top = 30
+                Width = 134
+                TabOrder = 1
+              end
+              object edtEmitIM: TEdit
+                Cursor = crIBeam
+                Left = 336
+                Height = 25
+                Top = 30
+                Width = 134
+                TabOrder = 2
+              end
+              object cbxRegTribISSQN: TComboBox
+                Left = 192
+                Height = 25
+                Top = 80
+                Width = 130
+                ItemHeight = 17
+                Style = csDropDownList
+                TabOrder = 4
+              end
+              object Label168: TLabel
+                Left = 192
+                Height = 17
+                Top = 60
+                Width = 115
+                Caption = 'Regime Trib. ISSQN'
+                ParentColor = False
+              end
+              object cbxIndRatISSQN: TComboBox
+                Left = 336
+                Height = 25
+                Top = 80
+                Width = 134
+                ItemHeight = 17
+                Style = csDropDownList
+                TabOrder = 5
+              end
+              object Label169: TLabel
+                Left = 336
+                Height = 17
+                Top = 60
+                Width = 80
+                Caption = 'Ind.Rat.ISSQN'
+                ParentColor = False
+              end
+              object Label170: TLabel
+                Left = 12
+                Height = 17
+                Top = 60
+                Width = 105
+                Caption = 'Regime Tributario'
+                ParentColor = False
+              end
+              object cbxRegTributario: TComboBox
+                Left = 12
+                Height = 25
+                Top = 80
+                Width = 166
+                ItemHeight = 17
+                Style = csDropDownList
+                TabOrder = 3
+              end
+            end
+            object tsDadosSwHouse: TTabSheet
+              Caption = 'Dados Sw.House'
+              ClientHeight = 281
+              ClientWidth = 615
+              object Label171: TLabel
+                Left = 10
+                Height = 17
+                Top = 15
+                Width = 30
+                Caption = 'CNPJ'
+                ParentColor = False
+              end
+              object edtSwHCNPJ: TEdit
+                Left = 10
+                Height = 25
+                Top = 31
+                Width = 317
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 0
+              end
+              object Label172: TLabel
+                Left = 10
+                Height = 17
+                Top = 71
+                Width = 217
+                Caption = 'Assinatura Sw.House (344 caracteres)'
+                ParentColor = False
+              end
+              object edtSwHAssinatura: TEdit
+                Left = 10
+                Height = 25
+                Top = 89
+                Width = 582
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 1
+              end
+              object btSATAssocia: TButton
+                Left = 10
+                Height = 25
+                Top = 215
+                Width = 134
+                Caption = 'Associar Assinatura'
+                OnClick = btSATAssociaClick
+                TabOrder = 2
+              end
+            end
+            object tsRede: TTabSheet
+              Caption = 'Rede'
+              ClientHeight = 281
+              ClientWidth = 615
+              object gbPPPoE: TGroupBox
+                Left = 160
+                Height = 105
+                Top = 48
+                Width = 289
+                Caption = 'PPPoE'
+                ClientHeight = 87
+                ClientWidth = 285
+                TabOrder = 4
+                Visible = False
+                object lSSID7: TLabel
+                  Left = 17
+                  Height = 17
+                  Top = 4
+                  Width = 45
+                  Caption = 'Usuario'
+                  ParentColor = False
+                end
+                object edRedeUsuario: TEdit
+                  Left = 64
+                  Height = 25
+                  Top = -4
+                  Width = 88
+                  TabOrder = 0
+                end
+                object lSSID8: TLabel
+                  Left = 17
+                  Height = 17
+                  Top = 34
+                  Width = 35
+                  Caption = 'Senha'
+                  ParentColor = False
+                end
+                object edRedeSenha: TEdit
+                  Left = 64
+                  Height = 25
+                  Top = 26
+                  Width = 88
+                  TabOrder = 1
+                end
+              end
+              object gbIPFix: TGroupBox
+                Left = 160
+                Height = 105
+                Top = 48
+                Width = 289
+                Caption = 'IPFIX'
+                ClientHeight = 87
+                ClientWidth = 285
+                TabOrder = 3
+                Visible = False
+                object lSSID2: TLabel
+                  Left = 32
+                  Height = 17
+                  Top = 4
+                  Width = 10
+                  Caption = 'IP'
+                  ParentColor = False
+                end
+                object edRedeIP: TEdit
+                  Left = 56
+                  Height = 25
+                  Top = -4
+                  Width = 88
+                  TabOrder = 0
+                end
+                object lSSID3: TLabel
+                  Left = 17
+                  Height = 17
+                  Top = 34
+                  Width = 31
+                  Caption = 'Mask'
+                  ParentColor = False
+                end
+                object edRedeMask: TEdit
+                  Left = 56
+                  Height = 25
+                  Top = 26
+                  Width = 88
+                  TabOrder = 1
+                end
+                object lSSID4: TLabel
+                  Left = 0
+                  Height = 17
+                  Top = 64
+                  Width = 49
+                  Caption = 'Gateway'
+                  ParentColor = False
+                end
+                object edRedeGW: TEdit
+                  Left = 56
+                  Height = 25
+                  Top = 56
+                  Width = 88
+                  TabOrder = 2
+                end
+                object lSSID5: TLabel
+                  Left = 152
+                  Height = 17
+                  Top = 4
+                  Width = 33
+                  Caption = 'DNS1'
+                  ParentColor = False
+                end
+                object lSSID6: TLabel
+                  Left = 152
+                  Height = 17
+                  Top = 34
+                  Width = 33
+                  Caption = 'DNS2'
+                  ParentColor = False
+                end
+                object edRedeDNS1: TEdit
+                  Left = 192
+                  Height = 25
+                  Top = -4
+                  Width = 87
+                  TabOrder = 3
+                end
+                object edRedeDNS2: TEdit
+                  Left = 192
+                  Height = 25
+                  Top = 26
+                  Width = 87
+                  TabOrder = 4
+                end
+              end
+              object rgRedeTipoInter: TRadioGroup
+                Left = 8
+                Height = 41
+                Top = 0
+                Width = 144
+                AutoFill = True
+                Caption = 'Tipo Rede'
+                ChildSizing.LeftRightSpacing = 6
+                ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                ChildSizing.ShrinkHorizontal = crsScaleChilds
+                ChildSizing.ShrinkVertical = crsScaleChilds
+                ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                ChildSizing.ControlsPerLine = 2
+                ClientHeight = 23
+                ClientWidth = 140
+                Columns = 2
+                ItemIndex = 0
+                Items.Strings = (
+                  'ETHE'
+                  'WIFI'
+                )
+                OnClick = rgRedeTipoInterClick
+                TabOrder = 0
+              end
+              object gbWiFi: TGroupBox
+                Left = 8
+                Height = 105
+                Top = 48
+                Width = 144
+                Caption = 'WiFi'
+                ClientHeight = 87
+                ClientWidth = 140
+                TabOrder = 1
+                Visible = False
+                object lSSID: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 4
+                  Width = 29
+                  Caption = 'SSID:'
+                  ParentColor = False
+                end
+                object edRedeSSID: TEdit
+                  Left = 47
+                  Height = 25
+                  Top = -4
+                  Width = 82
+                  TabOrder = 0
+                end
+                object Label173: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 34
+                  Width = 25
+                  Caption = 'Seg:'
+                  ParentColor = False
+                end
+                object cbxRedeSeg: TComboBox
+                  Left = 47
+                  Height = 25
+                  Top = 26
+                  Width = 82
+                  ItemHeight = 17
+                  ItemIndex = 1
+                  Items.Strings = (
+                    'NONE'
+                    'WEP'
+                    'WPA-PERSONAL'
+                    'WPA-ENTERPRISE'
+                  )
+                  Style = csDropDownList
+                  TabOrder = 1
+                  Text = 'WEP'
+                end
+                object lSSID1: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 64
+                  Width = 35
+                  Caption = 'Senha'
+                  ParentColor = False
+                end
+                object edRedeCodigo: TEdit
+                  Left = 47
+                  Height = 25
+                  Top = 56
+                  Width = 82
+                  TabOrder = 2
+                end
+              end
+              object rgRedeTipoLan: TRadioGroup
+                Left = 160
+                Height = 41
+                Top = 0
+                Width = 288
+                AutoFill = True
+                Caption = 'Tipo Rede'
+                ChildSizing.LeftRightSpacing = 6
+                ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                ChildSizing.ShrinkHorizontal = crsScaleChilds
+                ChildSizing.ShrinkVertical = crsScaleChilds
+                ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                ChildSizing.ControlsPerLine = 3
+                ClientHeight = 23
+                ClientWidth = 284
+                Columns = 3
+                ItemIndex = 0
+                Items.Strings = (
+                  'DHCP'
+                  'PPPoE'
+                  'IPFIX'
+                )
+                OnClick = rgRedeTipoLanClick
+                TabOrder = 2
+              end
+              object gbProxy: TGroupBox
+                Left = 455
+                Height = 153
+                Top = 0
+                Width = 150
+                Caption = 'Proxy'
+                ClientHeight = 135
+                ClientWidth = 146
+                TabOrder = 5
+                object cbxRedeProxy: TComboBox
+                  Left = 8
+                  Height = 25
+                  Top = 0
+                  Width = 129
+                  ItemHeight = 17
+                  ItemIndex = 0
+                  Items.Strings = (
+                    '0= Não usa proxy'
+                    '1= Proxy com configuração'
+                    '2= Proxy transparente'
+                  )
+                  OnChange = cbxRedeProxyChange
+                  Style = csDropDownList
+                  TabOrder = 0
+                  Text = '0= Não usa proxy'
+                end
+                object lSSID9: TLabel
+                  Left = 24
+                  Height = 17
+                  Top = 32
+                  Width = 10
+                  Caption = 'IP'
+                  ParentColor = False
+                end
+                object edRedeProxyIP: TEdit
+                  Left = 49
+                  Height = 25
+                  Top = 28
+                  Width = 88
+                  Enabled = False
+                  TabOrder = 1
+                end
+                object lSSID10: TLabel
+                  Left = 11
+                  Height = 17
+                  Top = 62
+                  Width = 31
+                  Caption = 'Porta'
+                  ParentColor = False
+                end
+                object lSSID11: TLabel
+                  Left = 3
+                  Height = 17
+                  Top = 88
+                  Width = 45
+                  Caption = 'Usuario'
+                  ParentColor = False
+                end
+                object edRedeProxyUser: TEdit
+                  Left = 49
+                  Height = 25
+                  Top = 80
+                  Width = 88
+                  Enabled = False
+                  TabOrder = 2
+                end
+                object lSSID12: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 114
+                  Width = 35
+                  Caption = 'Senha'
+                  ParentColor = False
+                end
+                object edRedeProxySenha: TEdit
+                  Left = 49
+                  Height = 25
+                  Top = 106
+                  Width = 88
+                  Enabled = False
+                  TabOrder = 3
+                end
+                object edRedeProxyPorta: TSpinEdit
+                  Left = 49
+                  Height = 25
+                  Top = 54
+                  Width = 88
+                  Enabled = False
+                  MaxValue = 999999
+                  TabOrder = 4
+                end
+              end
+              object btSATConfigRede: TButton
+                Left = 415
+                Height = 25
+                Top = 209
+                Width = 179
+                Caption = 'Configurar Interface Rede'
+                OnClick = btSATConfigRedeClick
+                TabOrder = 6
+              end
+            end
+            object Impressao: TTabSheet
+              Caption = 'Impressao'
+              ClientHeight = 281
+              ClientWidth = 615
+              object GroupBox7: TGroupBox
+                Left = 0
+                Height = 281
+                Top = 0
+                Width = 359
+                Align = alClient
+                Caption = 'Fortes'
+                ClientHeight = 263
+                ClientWidth = 355
+                TabOrder = 0
+                object seLargura: TSpinEdit
+                  Left = 8
+                  Height = 25
+                  Top = 20
+                  Width = 64
+                  MaxValue = 9999
+                  TabOrder = 0
+                end
+                object Label174: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 0
+                  Width = 45
+                  Caption = 'Largura'
+                  ParentColor = False
+                end
+                object Label175: TLabel
+                  Left = 96
+                  Height = 17
+                  Top = 0
+                  Width = 31
+                  Caption = 'Topo'
+                  ParentColor = False
+                end
+                object seMargemTopo: TSpinEdit
+                  Left = 96
+                  Height = 25
+                  Top = 20
+                  Width = 64
+                  MaxValue = 9999
+                  TabOrder = 1
+                end
+                object Label176: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 48
+                  Width = 36
+                  Caption = 'Fundo'
+                  ParentColor = False
+                end
+                object seMargemFundo: TSpinEdit
+                  Left = 8
+                  Height = 25
+                  Top = 68
+                  Width = 64
+                  MaxValue = 9999
+                  TabOrder = 2
+                end
+                object Label177: TLabel
+                  Left = 96
+                  Height = 17
+                  Top = 48
+                  Width = 55
+                  Caption = 'Esquerda'
+                  ParentColor = False
+                end
+                object seMargemEsquerda: TSpinEdit
+                  Left = 96
+                  Height = 25
+                  Top = 68
+                  Width = 64
+                  MaxValue = 9999
+                  TabOrder = 3
+                end
+                object Label178: TLabel
+                  Left = 184
+                  Height = 17
+                  Top = 48
+                  Width = 38
+                  Caption = 'Direita'
+                  ParentColor = False
+                end
+                object seMargemDireita: TSpinEdit
+                  Left = 184
+                  Height = 25
+                  Top = 68
+                  Width = 64
+                  MaxValue = 9999
+                  TabOrder = 4
+                end
+                object bImpressora: TButton
+                  Left = 8
+                  Height = 27
+                  Top = 104
+                  Width = 134
+                  AutoSize = True
+                  Caption = 'Definir Impressora'
+                  OnClick = bImpressoraClick
+                  TabOrder = 5
+                end
+                object lImpressora: TLabel
+                  Left = 152
+                  Height = 17
+                  Top = 112
+                  Width = 111
+                  Caption = 'Impressora Default'
+                  ParentColor = False
+                end
+                object cbUsarFortes: TRadioButton
+                  Left = 192
+                  Height = 21
+                  Top = 0
+                  Width = 87
+                  Caption = 'Usar Fortes'
+                  OnClick = cbUsarFortesClick
+                  TabOrder = 6
+                end
+                object cbPreview: TCheckBox
+                  Left = 192
+                  Height = 21
+                  Top = 24
+                  Width = 64
+                  Caption = 'Preview'
+                  TabOrder = 7
+                end
+              end
+              object GroupBox8: TGroupBox
+                Left = 359
+                Height = 281
+                Top = 0
+                Width = 256
+                Align = alRight
+                Caption = 'EscPOS'
+                ClientHeight = 263
+                ClientWidth = 252
+                TabOrder = 1
+                object Label179: TLabel
+                  Left = 4
+                  Height = 17
+                  Top = 56
+                  Width = 101
+                  Anchors = [akTop, akRight]
+                  Caption = 'Porta Impressora'
+                  ParentColor = False
+                end
+                object edtPorta: TEdit
+                  Left = 16
+                  Height = 25
+                  Top = 73
+                  Width = 215
+                  Anchors = [akTop, akRight]
+                  TabOrder = 0
+                  Text = '\\127.0.0.1\EPSON'
+                end
+                object btSerial: TBitBtn
+                  Left = 173
+                  Height = 47
+                  Top = 8
+                  Width = 58
+                  Anchors = [akTop, akRight]
+                  AutoSize = True
+                  Caption = 'Serial'
+                  Glyph.Data = {
+                    36030000424D3603000000000000360000002800000010000000100000000100
+                    1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+                    3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+                    000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+                    6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+                    008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+                    56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+                    FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+                    008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+                    6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+                    008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+                    3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+                    00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                  }
+                  Layout = blGlyphTop
+                  ModalResult = 1
+                  OnClick = btSerialClick
+                  TabOrder = 1
+                end
+                object cbUsarEscPos: TRadioButton
+                  Left = 8
+                  Height = 21
+                  Top = 0
+                  Width = 94
+                  Caption = 'Usar EscPOS'
+                  OnClick = cbUsarEscPosClick
+                  TabOrder = 2
+                end
+              end
+            end
+          end
         end
       end
       object pTitulo: TPanel
@@ -9131,7 +10105,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -10232,6 +11205,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Modelo = satDinamico_cdecl
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
+    OnGravarLog = ACBrSAT1GravarLog
     Config.infCFe_versaoDadosEnt = 0.05
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao
@@ -10245,6 +11219,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Rede.tipoLan = lanDHCP
     Rede.proxy = 0
     Rede.proxy_porta = 0
+    OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
+    OnGetsignAC = ACBrSAT1GetsignAC
     left = 552
     top = 492
   end
@@ -10260,5 +11236,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Mask_vUnCom = '0.000'
     left = 624
     top = 492
+  end
+  object PrintDialog1: TPrintDialog
+    left = 656
+    top = 488
   end
 end

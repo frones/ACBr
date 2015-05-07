@@ -81,8 +81,6 @@ type
     FLigaItalico: AnsiString;
     FLigaNegrito: AnsiString;
     FLigaSublinhado: AnsiString;
-    FTransmiteID: AnsiString;
-    FTransmiteStatus: AnsiString;
     FZera: AnsiString;
   public
     property Zera: AnsiString read FZera write FZera;
@@ -114,9 +112,6 @@ type
     property AlinhadoDireita: AnsiString read FAlinhadoDireita write FAlinhadoDireita;
     property AlinhadoCentro: AnsiString read FAlinhadoCentro write FAlinhadoCentro;
 
-    property TransmiteID: AnsiString read FTransmiteID write FTransmiteID;
-    property TransmiteStatus: AnsiString read FTransmiteStatus write FTransmiteStatus;
-
     property Beep: AnsiString read FBeep write FBeep;
     property AbreGaveta: AnsiString read FAbreGaveta write FAbreGaveta;
     property CorteTotal: AnsiString read FCorteTotal write FCorteTotal;
@@ -127,8 +122,13 @@ type
   TACBrPosTipoFonte = (ftNormal, ftCondensado, ftExpandido, ftNegrito,
     ftSublinhado, ftInvertido, ftItalico, ftFonteB);
   TACBrPosFonte = set of TACBrPosTipoFonte;
+
   TACBrPosTipoAlinhamento = (alEsquerda, alCentro, alDireita);
   TACBrPosPaginaCodigo = (pcNone, pc437, pc850, pc852, pc860, pcUTF8, pc1252);
+
+  TACBrPosTipoStatus = (stErro, stNaoSerial, stPoucoPapel, stSemPapel,
+                        stGavetaAberta, stImprimindo, stOffLine, stTampaAberta);
+  TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
 
   { TACBrPosRazaoColunaFonte }
 
@@ -165,6 +165,9 @@ type
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; virtual;
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
+
+    procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
+    function LerInfo: String; virtual;
 
     constructor Create(AOwner: TACBrPosPrinter);
     destructor Destroy; override;
@@ -204,6 +207,7 @@ type
     FDevice: TACBrDevice;
     FEspacoEntreLinhas: byte;
     FEspacoEntreLinhasAtual: byte;
+    FGavetaSinalInvertido: Boolean;
     FModelo: TACBrPosPrinterModelo;
     FOnGravarLog: TACBrGravarLog;
     FTagProcessor: TACBrTagProcessor;
@@ -265,6 +269,9 @@ type
     procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
       AdicionaTempo: Boolean = True);
 
+    function TxRx(ACmd: AnsiString; BytesToRead: Byte = 1;
+      ATimeOut: Integer = 500; WaitForTerminator: Boolean = False): AnsiString;
+
     procedure RetornarTags(AStringList: TStrings; IncluiAjuda: Boolean = True);
     procedure ImprimirTags;
 
@@ -272,6 +279,9 @@ type
 
     procedure PularLinhas(NumLinhas: Integer = 0);
     procedure CortarPapel(Parcial: Boolean = False);
+
+    function LerStatusImpressora: TACBrPosPrinterStatus;
+    function LerInfoImpressora: String;
 
     property Device: TACBrDevice read FDevice;
     property Buffer: TStringList read FBuffer;
@@ -296,6 +306,8 @@ type
 
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
     property ConfigQRCode: TACBrConfigQRCode read FConfigQRCode write FConfigQRCode;
+    property GavetaSinalInvertido: Boolean read FGavetaSinalInvertido
+      write FGavetaSinalInvertido default False;
 
     property LinhasEntreCupons: Integer read FLinhasEntreCupons
       write FLinhasEntreCupons default 21;
@@ -316,7 +328,7 @@ implementation
 
 uses
   strutils, Math, typinfo,
-  ACBrECFClass, ACBrUtil, ACBrConsts,
+  ACBrUtil, ACBrConsts,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma;
 
 { TACBrConfigQRCode }
@@ -402,6 +414,16 @@ begin
   Result := '';
 end;
 
+procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
+begin
+  {nada aqui, método virtual}
+end;
+
+function TACBrPosPrinterClass.LerInfo: String;
+begin
+  Result := '';
+end;
+
 { TACBrPosPrinter }
 
 constructor TACBrPosPrinter.Create(AOwner: TComponent);
@@ -459,6 +481,7 @@ begin
   FEspacoEntreLinhas := 0;
   FEspacoEntreLinhasAtual := 0;
   FControlePorta := False;
+  FGavetaSinalInvertido := False;
 
   FArqLog := '';
   FOnGravarLog := nil;
@@ -923,6 +946,20 @@ begin
   Imprimir;
 end;
 
+function TACBrPosPrinter.TxRx(ACmd: AnsiString; BytesToRead: Byte;
+  ATimeOut: Integer; WaitForTerminator: Boolean): AnsiString;
+begin
+  GravarLog('TX -> '+ACmd, True);
+  FDevice.EnviaString( ACmd );
+
+  if WaitForTerminator then
+    Result := FDevice.Serial.RecvTerminated(ATimeOut, chr(BytesToRead))
+  else
+    Result := FDevice.Serial.RecvBufferStr(BytesToRead, ATimeOut);
+
+  GravarLog('RX <- '+Result, True);
+end;
+
 function TACBrPosPrinter.GetIgnorarTags: Boolean;
 begin
   Result := FTagProcessor.IgnorarTags;
@@ -931,6 +968,31 @@ end;
 function TACBrPosPrinter.GetPorta: String;
 begin
   Result := FDevice.Porta;
+end;
+
+function TACBrPosPrinter.LerStatusImpressora: TACBrPosPrinterStatus;
+begin
+  Result := [];
+
+  if not FDevice.IsSerialPort then
+    Result := Result + [stNaoSerial];
+
+  if Result = [] then
+  begin
+    FPosPrinterClass.LerStatus( Result );
+
+    if (stGavetaAberta in Result) and GavetaSinalInvertido then
+      Result := Result - [stGavetaAberta];
+  end;
+end;
+
+function TACBrPosPrinter.LerInfoImpressora: String;
+begin
+  Result := '';
+  if not FDevice.IsSerialPort then
+    raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais');
+
+  Result := FPosPrinterClass.LerInfo;
 end;
 
 function TACBrPosPrinter.GetTraduzirTags: Boolean;
@@ -1089,49 +1151,3 @@ begin
 end;
 
 end.
-
-(* TODO:
-
-function TACBrNFeDANFeESCPOS.VersaoFirmware: String;
-var
-  Resposta: AnsiString;
-begin
-  case MarcaImpressora of
-    iEpson:    Result := 'não implementado para está marca';
-    iBematech: Result := 'não implementado para está marca';
-    iDiebold:  Result := 'não implementado para está marca';
-
-    iDaruma:
-      begin
-        FDevice.EnviaString(ESC + #199);
-        Resposta := FDevice.LeString(100);
-        Result := Trim(Copy(Resposta, 2, 8));
-      end;
-  end;
-
-  GravaLog('Versão Firmware: ' + Resposta);
-end;
-
-function TACBrNFeDANFeESCPOS.DataFirmware: TDateTime;
-var
-  Resposta: AnsiString;
-begin
-  case MarcaImpressora of
-    iEpson:    Result := 0.0;
-    iBematech: Result := 0.0;
-    iDiebold:  Result := 0.0;
-
-    iDaruma:
-      begin
-        FDevice.EnviaString(ESC + #199);
-        Resposta := FDevice.LeString(100);
-
-        Result := StrToDateTimeDef(Trim(Copy(Resposta, 12, 19)), 0.0);
-      end;
-  end;
-
-  GravaLog('Versão Firmware: ' + Resposta);
-end;
-
-
-*)

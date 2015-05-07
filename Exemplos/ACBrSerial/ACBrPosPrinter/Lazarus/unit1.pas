@@ -15,11 +15,13 @@ type
   TFrPosPrinterTeste = class(TForm)
     ACBrPosPrinter1: TACBrPosPrinter;
     bAtivar: TBitBtn;
-    bImpTagsValidas: TButton;
     bImprimir: TBitBtn;
+    bImpTagsValidas: TButton;
+    bLerInfo: TButton;
     bLimpar: TBitBtn;
     bTagFormtacaoCaracter: TButton;
     bTagQRCode: TButton;
+    bLerStatus: TButton;
     bTagsAlinhamento: TButton;
     bTagsCodBarras: TButton;
     bTagsTesteInvalidas: TButton;
@@ -55,6 +57,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
+    Panel4: TPanel;
     SbArqLog: TSpeedButton;
     btSerial: TSpeedButton;
     seQRCodeLarguraModulo: TSpinEdit;
@@ -73,6 +76,8 @@ type
     procedure bAtivarClick(Sender: TObject);
     procedure bImprimirClick(Sender: TObject);
     procedure bImpTagsValidasClick(Sender: TObject);
+    procedure bLerInfoClick(Sender: TObject);
+    procedure bLerStatusClick(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
     procedure bTagFormtacaoCaracterClick(Sender: TObject);
     procedure bTagQRCodeClick(Sender: TObject);
@@ -537,6 +542,34 @@ procedure TFrPosPrinterTeste.bImpTagsValidasClick(Sender: TObject);
 begin
   ACBrPosPrinter1.RetornarTags(mImp.Lines);
   ACBrPosPrinter1.ImprimirTags;
+end;
+
+procedure TFrPosPrinterTeste.bLerInfoClick(Sender: TObject);
+begin
+  mImp.Lines.Add( ACBrPosPrinter1.LerInfoImpressora );
+end;
+
+procedure TFrPosPrinterTeste.bLerStatusClick(Sender: TObject);
+var
+  Status: TACBrPosPrinterStatus;
+  i: TACBrPosTipoStatus;
+  AStr: String;
+begin
+  Status := ACBrPosPrinter1.LerStatusImpressora;
+
+  if Status = [] then
+    mImp.Lines.Add('Nennhum Erro encontrado')
+  else
+  begin
+    AStr := '';
+    For i := Low(TACBrPosTipoStatus) to High(TACBrPosTipoStatus) do
+    begin
+      if i in Status then
+        AStr := AStr + GetEnumName(TypeInfo(TACBrPosTipoStatus), integer(i) )+ ', ';
+    end;
+
+    mImp.Lines.Add( AStr );
+  end;
 end;
 
 procedure TFrPosPrinterTeste.bAtivarClick(Sender: TObject);

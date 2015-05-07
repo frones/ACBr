@@ -54,15 +54,14 @@ type
 
   TACBrEscBematech = class(TACBrEscPosEpson)
   private
-  protected
+  public
+    constructor Create(AOwner: TACBrPosPrinter);
+
     function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
-
-  public
-    constructor Create(AOwner: TACBrPosPrinter);
   end;
 
 
@@ -94,8 +93,6 @@ begin
     CorteTotal              := ESC + 'w';
     CorteParcial            := ESC + 'm';
     AbreGaveta              := ESC + 'v' + #200;
-    TransmiteID             := '';  //TODO:
-    TransmiteStatus         := '';  //TODO:
   end;
   {*)}
 end;

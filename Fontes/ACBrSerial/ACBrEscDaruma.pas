@@ -54,14 +54,16 @@ type
 
   TACBrEscDaruma = class(TACBrPosPrinterClass)
   private
-  protected
+  public
+    constructor Create(AOwner: TACBrPosPrinter);
+
     function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
     function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
 
-  public
-    constructor Create(AOwner: TACBrPosPrinter);
+    procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
+    function LerInfo: String; override;
   end;
 
 
@@ -108,9 +110,6 @@ begin
     AbreGaveta              := ESC + 'p';
     ImprimeLogo             := SYN + BS + SYN + TAB;  //TODO: Testar
     Beep                    := BELL;
-
-    TransmiteID             := '';  //TODO:
-    TransmiteStatus         := '';  //TODO:
   end;
   {*)}
 end;
@@ -199,6 +198,93 @@ begin
     Result := Cmd.EspacoEntreLinhasPadrao
   else
     Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
+end;
+
+procedure TACBrEscDaruma.LerStatus(var AStatus: TACBrPosPrinterStatus);
+var
+  B: Byte;
+  OldAtivo: Boolean;
+begin
+  if not fpPosPrinter.Device.IsSerialPort then exit;
+
+  OldAtivo := fpPosPrinter.Ativo;
+  try
+    try
+      fpPosPrinter.Ativo := True;
+      B := Ord(fpPosPrinter.TxRx( ENQ )[1]);
+      if TestBit(B, 0) then
+        AStatus := AStatus + [stImprimindo];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stErro];
+      if not TestBit(B, 4) then
+        AStatus := AStatus + [stOffLine];
+      if TestBit(B, 5) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 7) then
+        AStatus := AStatus + [stTampaAberta];
+
+      B := Ord(fpPosPrinter.TxRx( GS + ENQ )[1]);
+      if TestBit(B, 0) then
+        AStatus := AStatus + [stPoucoPapel];
+      if TestBit(B, 1) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stOffLine];
+      if not TestBit(B, 4) then
+        AStatus := AStatus + [stTampaAberta];  // Sem papel sobre o sensor
+      if TestBit(B, 6) then
+        AStatus := AStatus + [stErro];  // Impressora em falha
+      if TestBit(B, 7) then
+        AStatus := AStatus + [stGavetaAberta];  // Impressora em falha
+    except
+      AStatus := AStatus + [stErro];
+    end;
+  finally
+    fpPosPrinter.Ativo := OldAtivo ;
+  end;
+end;
+
+function TACBrEscDaruma.LerInfo: String;
+var
+  Ret, B: AnsiString;
+  Info: String;
+  OldAtivo: Boolean;
+
+  Procedure AddInfo( Titulo: String; AInfo: AnsiString);
+  begin
+    Info := Info + Titulo+'='+copy(AInfo, 2, Length(AInfo)) + sLineBreak;
+  end;
+
+begin
+  if not fpPosPrinter.Device.IsSerialPort then exit;
+
+  OldAtivo := fpPosPrinter.Ativo;
+  try
+    fpPosPrinter.Ativo := True;
+    Info := '';
+
+    AddInfo('Fabricante', ':Daruma');
+
+    Ret := fpPosPrinter.TxRx( ESC + #199, 13, 500, True );
+    AddInfo('Firmware', Ret);
+
+    Ret := fpPosPrinter.TxRx( ESC + #195, 13, 500, True );
+    AddInfo('Modelo', Ret);
+
+    //Ret := fpPosPrinter.TxRx( ESC + #199, 13, 500, True );  // Não encontrado
+    //AddInfo('Serial', ':');
+
+    Ret := fpPosPrinter.TxRx( ESC + #229, 13, 500, True );
+    Info := Info + 'Guilhotina='+Copy(Ret,9,1) + sLineBreak ;
+    B := Copy(Ret,12,1);
+    Info := Info + 'Colunas='+IntToStr(ifthen(B='0',48,ifthen(B='1',52,34))) + sLineBreak ;
+    B := Copy(Ret,40,1);
+    Info := Info + 'CodPage='+B + sLineBreak ;
+
+    Result := Info;
+  finally
+    fpPosPrinter.Ativo := OldAtivo;
+  end;
 end;
 
 end.

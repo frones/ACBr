@@ -30,9 +30,12 @@ type
     bInicializar : TButton ;
     btLerParams: TButton;
     btSalvarParams: TButton;
-    btSerial: TBitBtn;
+    btSerial: TSpeedButton;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
+    cbxModeloPosPrinter: TComboBox;
+    cbxPagCodigo: TComboBox;
+    cbxPorta: TComboBox;
     cbxRedeProxy: TComboBox;
     cbxSalvarCFe: TCheckBox;
     cbxModelo : TComboBox ;
@@ -59,7 +62,6 @@ type
     edRedeProxyIP: TEdit;
     edRedeSSID: TEdit;
     edRedeCodigo: TEdit;
-    edtPorta: TEdit;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -74,6 +76,11 @@ type
     Label22: TLabel;
     Label23: TLabel;
     Label24: TLabel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     lImpressora: TLabel;
@@ -105,7 +112,10 @@ type
     rgRedeTipoInter: TRadioGroup;
     rgRedeTipoLan: TRadioGroup;
     SaveDialog1: TSaveDialog;
+    seColunas: TSpinEdit;
+    seEspLinhas: TSpinEdit;
     seLargura: TSpinEdit;
+    seLinhasPular: TSpinEdit;
     seMargemDireita: TSpinEdit;
     seMargemEsquerda: TSpinEdit;
     seMargemFundo: TSpinEdit;
@@ -258,6 +268,8 @@ var
   K : TpcnRegTribISSQN ;
   L : TpcnindRatISSQN ;
   M : TpcnRegTrib ;
+  N: TACBrPosPrinterModelo;
+  O: TACBrPosPaginaCodigo;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -278,6 +290,27 @@ begin
   cbxRegTributario.Items.Clear ;
   For M := Low(TpcnRegTrib) to High(TpcnRegTrib) do
      cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(M) ) ) ;
+
+  cbxModeloPosPrinter.Items.Clear ;
+  For N := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+     cbxModeloPosPrinter.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(N) ) ) ;
+
+  cbxPagCodigo.Items.Clear ;
+  For O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
+     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
+
+  cbxPorta.Items.Clear;
+  ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  cbxPorta.Items.Add('LPT1') ;
+  cbxPorta.Items.Add('LPT2') ;
+  cbxPorta.Items.Add('/dev/ttyS0') ;
+  cbxPorta.Items.Add('/dev/ttyS1') ;
+  cbxPorta.Items.Add('/dev/ttyUSB0') ;
+  cbxPorta.Items.Add('/dev/ttyUSB1') ;
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+
 
   Application.OnException := @TrataErros ;
 
@@ -387,9 +420,13 @@ begin
     cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
     sePagCodChange(Sender);
 
-    edtPorta.Text := INI.ReadString('Extrato','Porta','COM1');
-    ACBrPosPrinter1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
-    //ACBrSATExtratoESCPOS1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
+    cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
+    cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
+    cbxPagCodigo.ItemIndex := INI.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));
+    ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','ParamsString','');
+    seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
+    seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
+    seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasEntreCupons',ACBrPosPrinter1.LinhasEntreCupons);
 
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
@@ -456,8 +493,13 @@ begin
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
     INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
 
-    INI.WriteString('Extrato','Porta',edtPorta.Text);
-    INI.WriteString('Extrato','ParamsString',ACBrPosPrinter1.Device.ParamsString);
+    INI.WriteInteger('PosPrinter','Modelo',cbxModelo.ItemIndex);
+    INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
+    INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
+    INI.WriteString('PosPrinter','ParamsString',ACBrPosPrinter1.Device.ParamsString);
+    INI.WriteInteger('PosPrinter','Colunas',seColunas.Value);
+    INI.WriteInteger('PosPrinter','EspacoLinhas',seEspLinhas.Value);
+    INI.WriteInteger('PosPrinter','LinhasEntreCupons',seLinhasPular.Value);
 
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
@@ -507,12 +549,12 @@ begin
 
   try
     frConfiguraSerial.Device.Porta        := ACBrPosPrinter1.Device.Porta ;
-    frConfiguraSerial.cmbPortaSerial.Text := edtPorta.Text ;
+    frConfiguraSerial.cmbPortaSerial.Text := cbxPorta.Text ;
     frConfiguraSerial.Device.ParamsString := ACBrPosPrinter1.Device.ParamsString ;
 
     if frConfiguraSerial.ShowModal = mrOk then
     begin
-       edtPorta.Text := frConfiguraSerial.Device.Porta ;
+       cbxPorta.Text := frConfiguraSerial.Device.Porta ;
        ACBrPosPrinter1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
     end ;
   finally
@@ -1089,10 +1131,13 @@ procedure TForm1.PrepararImpressao;
 begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
-    ACBrPosPrinter1.Device.Porta := edtPorta.Text;
-    //ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-    //ACBrSATExtratoESCPOS1.Device.Ativar;
-    ACBrPosPrinter1.Ativar;
+    ACBrPosPrinter1.Desativar;
+    ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModeloPosPrinter.ItemIndex );
+    ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo( cbxPagCodigo.ItemIndex );
+    ACBrPosPrinter1.Porta := cbxPorta.Text;
+    ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
+    ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
+    ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
   end
   else

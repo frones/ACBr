@@ -109,8 +109,8 @@ begin
     CorteTotal              := GS  + 'V' + #0;
     CorteParcial            := GS  + 'V' + #1;
     AbreGaveta              := ESC + 'p' + #0 + #10 + #100;
-    ImprimeLogo             := GS  + '(L'#6#0'0E  '#1#1;  //TODO: Testar
-    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #3 + #10;  // TODO: Testar
+    ImprimeLogo             := GS  + '(L' + #6 + #0 + #48 + #69 + #32 + #32 + #01 + #01;
+    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
   end;
   {*)}
 end;
@@ -309,5 +309,48 @@ begin
   end;
 end;
 
+(*
+procedure TACBrEscPosEpson.ProgramarLogo(ALogoFileBMP: String);
+var
+  AFileStream: TFileStream;
+  ABitMap: TBitmap;
+  Col, Row, W, H, P: Integer;
+  ACmd: AnsiString;
+begin
+  // Inspiração: http://stackoverflow.com/questions/13715950/writing-a-bitmap-to-epson-tm88iv-through-esc-p-commands-write-to-nvram
+
+  ABitMap := TBitmap.Create;
+  AFileStream := TFileStream.Create(ALogoFileBMP, fmOpenRead);
+  try
+    AFileStream.Position := 0;
+    ABitMap.LoadFromStream(AFileStream);
+
+    W := ABitMap.Width;
+    H := ABitMap.Height;
+
+    ACmd := #48 + #67 + #48 + 'AC' + #01 +
+            IntToLEStr(W) +
+            IntToLEStr(H) +
+            #49;  // 1 Cor, Mono
+
+    For Col := 0 to W do
+      For Row := 0 to H do
+      begin
+        P := ABitMap.Canvas.Pixels[Col, Row];
+        ACmd := ACmd + AnsiChr( P );
+      end;
+
+    ACmd := GS + 'L(' + IntToLEStr(Length(ACmd)) + ACmd;
+
+    fpPosPrinter.ImprimirCmd( ACmd ) ;
+
+    fpPosPrinter.ImprimirCmd( GS  + '(L' + #6 + #0 + #48 + #69 + 'AC' + #01 + #01 );
+
+  finally
+    AFileStream.Free;
+    ABitMap.Free;
+  end;
+end;
+*)
 end.
 

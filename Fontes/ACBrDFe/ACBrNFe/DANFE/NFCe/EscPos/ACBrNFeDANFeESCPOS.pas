@@ -727,9 +727,9 @@ begin
   if ACortaPapel then
     FPosPrinter.Buffer.Add('</corte_parcial>')
   else
-    FPosPrinter.Buffer.Add( StringOfChar(LF, FPosPrinter.LinhasEntreCupons) );
+    FPosPrinter.Buffer.Add('</pular_linhas>');
 
-  FPosPrinter.Imprimir('', True, True, AVias);
+  FPosPrinter.Imprimir('', True, True, True, AVias);
 end;
 
 {$IFDEF FPC}

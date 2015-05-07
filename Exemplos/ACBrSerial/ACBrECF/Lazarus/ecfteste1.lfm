@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 805
+  Left = 526
   Height = 418
-  Top = 322
+  Top = 188
   Width = 641
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -173,9 +173,9 @@ object Form1: TForm1
     Height = 335
     Top = 0
     Width = 641
-    ActivePage = TabSheet1
+    ActivePage = tsTagsImpressao
     Align = alClient
-    TabIndex = 1
+    TabIndex = 4
     TabOrder = 0
     object tsECF: TTabSheet
       Caption = 'ECF'
@@ -5021,14 +5021,15 @@ object Form1: TForm1
     ACBrSAT = ACBrSAT1
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
-    left = 416
+    left = 376
     top = 264
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
-    left = 376
-    top = 264
+    PosPrinter = ACBrPosPrinter1
+    left = 416
+    top = 248
   end
   object OpenDialog1: TOpenDialog
     left = 384
@@ -5082,13 +5083,15 @@ object Form1: TForm1
     ImprimeItens = True
     vTroco = 0
     ViaConsumidor = True
-    ConfigBarras.MostrarCodigo = False
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
+    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
-    left = 376
-    top = 136
+    left = 416
+    top = 184
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     MostrarPreview = True
@@ -5113,7 +5116,23 @@ object Form1: TForm1
     ImprimeItens = True
     vTroco = 0
     ViaConsumidor = True
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
     left = 416
     top = 136
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    CortaPapel = False
+    left = 416
+    top = 216
   end
 end

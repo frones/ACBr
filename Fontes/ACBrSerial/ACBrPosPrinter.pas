@@ -716,6 +716,9 @@ begin
   else if ATag = cTagBeep then
     TagTraduzida := FPosPrinterClass.Cmd.Beep
 
+  else if ATag = cTagLogotipo then
+    TagTraduzida := FPosPrinterClass.Cmd.ImprimeLogo
+
   else if ATag = cTagPulodeLinha then
     TagTraduzida := LF
 

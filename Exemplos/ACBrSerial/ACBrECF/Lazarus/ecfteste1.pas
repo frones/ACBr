@@ -10,7 +10,7 @@ uses
   ExtCtrls, ComCtrls, Spin, EditBtn, DBGrids, DbCtrls, memds, db, IniFiles,
   ACBrECFVirtualSAT, ACBrSAT, ACBrSATClass, ACBrSATExtratoFortesFr,
   ACBrSATExtratoESCPOS, pcnCFe, ACBrECFVirtualNFCe, ACBrNFe, ACBrNFeDANFeESCPOS,
-  ACBrDANFCeFortesFr, pcnNFe, ACBrECFVirtual;
+  ACBrDANFCeFortesFr, pcnNFe, ACBrECFVirtual, ACBrPosPrinter;
 
 type
   TSimpleIpHtml = class(TIpHtml)
@@ -35,6 +35,7 @@ type
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
+    ACBrPosPrinter1: TACBrPosPrinter;
     ACBrRFD1: TACBrRFD;
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
@@ -1552,14 +1553,14 @@ begin
   frConfiguraSerial := TfrConfiguraSerial.Create(self);
 
   try
-    frConfiguraSerial.Device.Porta        := ACBrSATExtratoESCPOS1.Device.Porta ;
+    frConfiguraSerial.Device.Porta        := ACBrPosPrinter1.Device.Porta ;
     frConfiguraSerial.cmbPortaSerial.Text := edtPorta.Text ;
-    frConfiguraSerial.Device.ParamsString := ACBrSATExtratoESCPOS1.Device.ParamsString ;
+    frConfiguraSerial.Device.ParamsString := ACBrPosPrinter1.Device.ParamsString ;
 
     if frConfiguraSerial.ShowModal = mrOk then
     begin
        edtPorta.Text := frConfiguraSerial.Device.Porta ;
-       ACBrSATExtratoESCPOS1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+       ACBrPosPrinter1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
     end ;
   finally
      FreeAndNil( frConfiguraSerial ) ;
@@ -1567,20 +1568,8 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender : TObject) ;
-//var
-//  I: Extended;
 begin
     ACBrECF1.RetornaInfoECF( edInfo.Text );
-
-   {
-   I := CompareVersions('1.0.3', '01.00.04');    // -1
-   I := CompareVersions('1.2.5', '01.01.04');    // 11
-   I := CompareVersions('1.2.3', '01.10.5555');  // -11
-   I := CompareVersions('8', '1');               // 1
-   I := CompareVersions('2.3.7', '1.9');         // 91
-   I := CompareVersions('2.0.0.9.8.6', '0.9.9.7.6.5.34.3.2');   // 89110889
-   I := CompareVersions('1.2a', '1.2d');         // -1
-   }
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -4951,7 +4940,7 @@ begin
      INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
 
      INI.WriteString('Extrato','Porta',edtPorta.Text);
-     INI.WriteString('Extrato','ParamsString',ACBrSATExtratoESCPOS1.Device.ParamsString);
+     INI.WriteString('Extrato','ParamsString',ACBrPosPrinter1.Device.ParamsString);
 
      INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
      INI.WriteString('Emit','IE',edtEmitIE.Text);
@@ -5071,7 +5060,7 @@ begin
      sePagCodChange(self);
 
      edtPorta.Text := INI.ReadString('Extrato','Porta','COM1');
-     ACBrSATExtratoESCPOS1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
+     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('Extrato','ParamsString','');
 
      edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
      edtEmitIE.Text   := INI.ReadString('Emit','IE','');
@@ -5299,8 +5288,7 @@ procedure TForm1.PrepararImpressao;
 begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
-    ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-    ACBrSATExtratoESCPOS1.Device.Ativar;
+    ACBrPosPrinter1.Device.Porta := edtPorta.Text;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
   end
   else
@@ -5328,14 +5316,9 @@ end;
 procedure TForm1.PrepararImpressaoNFCe;
 begin
   if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
-  begin
-    ACBrNFeDANFeESCPOS1.Device.Porta := edtPorta.Text;
-    ACBrNFeDANFeESCPOS1.Device.Ativar;
-  end
+    ACBrPosPrinter1.Porta := edtPorta.Text
   else
-  begin
-    ACBrNFeDANFCeFortes1.MostrarPreview   := cbPreview.Checked;
-  end;
+    ACBrNFeDANFCeFortes1.MostrarPreview := cbPreview.Checked;
 end;
 
 end.

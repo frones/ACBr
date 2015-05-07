@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 456
+  Left = 464
   Height = 632
-  Top = 58
+  Top = 144
   Width = 894
   Caption = 'ACBrNFe - Demonstração'
   ClientHeight = 632
@@ -131,10 +131,10 @@ object Form1: TForm1
           Height = 439
           Top = 0
           Width = 275
-          ActivePage = TabSheet3
+          ActivePage = TabSheet4
           Align = alClient
           MultiLine = True
-          TabIndex = 0
+          TabIndex = 1
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -429,28 +429,20 @@ object Form1: TForm1
                 ItemHeight = 13
                 TabOrder = 2
               end
-              object cbxAtualizarXML: TCheckBox
-                Left = 8
-                Height = 19
-                Top = 0
-                Width = 85
-                Caption = 'Atualizar XML'
-                TabOrder = 3
-              end
               object cbxExibirErroSchema: TCheckBox
                 Left = 8
                 Height = 19
                 Top = 16
                 Width = 109
                 Caption = 'Exibir Erro Schema'
-                TabOrder = 4
+                TabOrder = 3
               end
               object edtFormatoAlerta: TEdit
                 Left = 8
                 Height = 21
                 Top = 50
                 Width = 248
-                TabOrder = 5
+                TabOrder = 4
               end
               object cbModeloDF: TComboBox
                 Left = 8
@@ -458,7 +450,7 @@ object Form1: TForm1
                 Top = 126
                 Width = 248
                 ItemHeight = 13
-                TabOrder = 6
+                TabOrder = 5
               end
               object cbxRetirarAcentos: TCheckBox
                 Left = 8
@@ -466,7 +458,7 @@ object Form1: TForm1
                 Top = 265
                 Width = 189
                 Caption = 'Retirar Acentos dos XMLs enviados'
-                TabOrder = 7
+                TabOrder = 6
               end
               object cbVersaoDF: TComboBox
                 Left = 8
@@ -474,28 +466,28 @@ object Form1: TForm1
                 Top = 165
                 Width = 248
                 ItemHeight = 13
-                TabOrder = 8
+                TabOrder = 7
               end
               object edtIdToken: TEdit
                 Left = 8
                 Height = 21
                 Top = 203
                 Width = 248
-                TabOrder = 9
+                TabOrder = 8
               end
               object edtToken: TEdit
                 Left = 8
                 Height = 21
                 Top = 241
                 Width = 248
-                TabOrder = 10
+                TabOrder = 9
               end
               object edtPathSchemas: TEdit
                 Left = 8
                 Height = 21
                 Top = 340
                 Width = 228
-                TabOrder = 11
+                TabOrder = 10
               end
             end
           end
@@ -2256,6 +2248,7 @@ object Form1: TForm1
     Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
@@ -2286,9 +2279,11 @@ object Form1: TForm1
     ImprimeItens = True
     vTroco = 0
     ViaConsumidor = True
-    ConfigBarras.MostrarCodigo = False
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
+    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
     left = 526
@@ -2338,6 +2333,10 @@ object Form1: TForm1
     ImprimeItens = True
     vTroco = 0
     ViaConsumidor = True
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
     LarguraCodProd = 54
     ExibirEAN = False
     left = 763
@@ -2353,5 +2352,18 @@ object Form1: TForm1
     IDECharset = UTF_8
     left = 723
     top = 346
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    Porta = '\\localhost\Epson'
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 7
+    CortaPapel = False
+    left = 526
+    top = 392
   end
 end

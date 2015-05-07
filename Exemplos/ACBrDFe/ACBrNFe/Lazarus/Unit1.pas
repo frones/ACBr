@@ -8,7 +8,7 @@ interface
 uses IniFiles,
   SynMemo, SynHighlighterXML, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
-  ACBrNFe, ACBrMail, ACBrNFeDANFeRLClass, pcnNFeRTXT,
+  ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass, pcnNFeRTXT,
   ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS;
 
 type
@@ -18,6 +18,7 @@ type
   TForm1 = class(TForm)
     ACBrMail1: TACBrMail;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrPosPrinter1: TACBrPosPrinter;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
@@ -147,7 +148,6 @@ type
     edtLogoMarca: TEdit;
     sbtnLogoMarca: TSpeedButton;
     rgTipoDanfe: TRadioGroup;
-    cbxAtualizarXML: TCheckBox;
     cbxExibirErroSchema: TCheckBox;
     Label31: TLabel;
     edtFormatoAlerta: TEdit;
@@ -416,7 +416,6 @@ begin
          sbtnCaminhoCert.Visible := False;
       {$ENDIF}
 
-      cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True) ;
       cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True) ;
       edtFormatoAlerta.Text    := Ini.ReadString( 'Geral','FormatoAlerta'  ,'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.') ;
       cbFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0) ;
@@ -431,7 +430,6 @@ begin
 
       with ACBrNFe1.Configuracoes.Geral do
        begin
-         AtualizarXMLCancelado := cbxAtualizarXML.Checked;
          ExibirErroSchema      := cbxExibirErroSchema.Checked;
          FormatoAlerta         := edtFormatoAlerta.Text;
          FormaEmissao          := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); 
@@ -792,7 +790,7 @@ begin
      infEvento.tpEvento := teCancelamento;
      infEvento.detEvento.xJust := vAux;
     end;
-    ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+    ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
     MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
@@ -859,7 +857,7 @@ begin
      infEvento.dhEvento := now;
      infEvento.tpEvento := teManifDestConfirmacao;
    end;
-  ACBrNFe1.EnviarEventoNFe(StrToInt(IDLote));
+  ACBrNFe1.EnviarEvento(StrToInt(IDLote));
 
   with AcbrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
   begin
@@ -2864,7 +2862,7 @@ begin
      infEvento.detEvento.xJust := Justificativa;
      infEvento.detEvento.nProt := Protocolo;
    end;
-  ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
@@ -2992,7 +2990,7 @@ begin
      infEvento.nSeqEvento := StrToInt(nSeqEvento);
      infEvento.detEvento.xCorrecao := Correcao;
    end;
-  ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   //memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.EventoRetorno;

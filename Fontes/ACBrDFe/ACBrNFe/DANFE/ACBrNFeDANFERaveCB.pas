@@ -447,7 +447,8 @@ begin
     try
       ExisteLogoMarca := CarregaLogoMarca(LogoMarcaEmpresa);
 
-      NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID,'ID', '', [rfIgnoreCase]);
+//      NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID,'ID', '', [rfIgnoreCase]);
+      NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.InutNFe.Id,'ID', '', [rfIgnoreCase]);
       NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-procInutNFe.pdf';
 
       ImprimirInutilizacaoRave(TACBrNFe(ACBrNFe),

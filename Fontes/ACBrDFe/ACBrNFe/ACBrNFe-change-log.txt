@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2015
+[-] Ao gerar o PDF da Inutilizacao não estava gerando o nome do PDF corretamente.
+    por: Jose Roberto
+
 01/05/2015
 [*] Atualização das URLs de produção e homologação da NF-e e NFC-e publicadas 
     pela SEFAZ-RS.

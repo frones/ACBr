@@ -1961,6 +1961,7 @@ end;
 
 procedure TNFeInutilizacao.DefinirServicoEAction;
 begin
+(*
   if (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
     (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA
   begin
@@ -1972,6 +1973,9 @@ begin
     FPServico := GetUrlWsd + 'NfeInutilizacao2';
     FPSoapAction := FPServico;
   end;
+*)
+  FPServico := GetUrlWsd + 'NfeInutilizacao2';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;

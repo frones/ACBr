@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/05/2015
+[-] Alterado a definição do Serviço e SoapAction da Inutilização.
+    por: Gledson Silva Santos
 [-] Ao gerar o PDF da Inutilizacao não estava gerando o nome do PDF corretamente.
     por: Jose Roberto
 

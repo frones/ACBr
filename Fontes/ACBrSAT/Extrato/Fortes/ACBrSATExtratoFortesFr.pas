@@ -434,7 +434,8 @@ begin
     // Calculando o tamanho da Página em Pixels //
     TotalPaginaPixel := rlbsCabecalho.Height +
                         rlbRodape.Height +
-                        round( rlsbDetItem.Height * ACBrSATExtrato.CFe.Det.Count )
+                        round( rlsbDetItem.Height * ACBrSATExtrato.CFe.Det.Count ) +
+                        rlObsContrib.Height
   else
     TotalPaginaPixel := rlbCabecalhoCan.Height +
                         rlbDadosCupomCancelado.Height +

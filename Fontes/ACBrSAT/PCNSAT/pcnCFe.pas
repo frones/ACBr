@@ -91,6 +91,8 @@ type
     fPagto: TMPCollection;
     FInfAdic: TInfAdic;
     FSignature: TSignature;
+    FXMLOriginal: AnsiString;
+
     function GetAsXMLString: AnsiString;
     procedure SetDet(Value: TDetCollection);
     procedure SetPagto(Value: TMPCollection);
@@ -101,11 +103,12 @@ type
     procedure ClearSessao ;
 
     function LoadFromFile(AFileName : String): boolean;
-    function SaveToFile(AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
-    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
+    function SaveToFile(AFileName : String): boolean;
+    function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
     procedure SetXMLString(AValue : AnsiString) ;
 
     property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
+    property XMLOriginal: AnsiString read FXMLOriginal;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -1279,6 +1282,8 @@ end ;
 
 procedure TCFe.ClearSessao ;
 begin
+  FXMLOriginal := '';
+
   Fide.ClearSessao;
   FDest.Clear;
   FEntrega.Clear;
@@ -1304,15 +1309,14 @@ begin
   end;
 end ;
 
-function TCFe.SaveToFile(AFileName: String; ApenasTagsAplicacao: Boolean
-  ): boolean;
+function TCFe.SaveToFile(AFileName: String): boolean;
 var
   SL : TStringList;
 begin
   Result := False;
   SL := TStringList.Create;
   try
-    SL.Text := GetXMLString( ApenasTagsAplicacao );
+    SL.Text := AsXMLString;
     SL.SaveToFile( AFileName );
     Result := True;
   finally
@@ -1327,24 +1331,28 @@ end;
 
 function TCFe.GetAsXMLString: AnsiString;
 begin
-  Result := GetXMLString( false ) ;
+  if FXMLOriginal = '' then
+    Result := GerarXML( false )
+  else
+    Result := FXMLOriginal;
 end;
 
-function TCFe.GetXMLString(ApenasTagsAplicacao: Boolean): AnsiString;
+function TCFe.GerarXML(ApenasTagsAplicacao: Boolean): AnsiString;
 var
   LocCFeW : TCFeW ;
 begin
-  Result  := '';
   LocCFeW := TCFeW.Create(Self);
   try
     LocCFeW.Gerador.Opcoes.IdentarXML := FIdentarXML;
     LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
 
     LocCFeW.GerarXml( ApenasTagsAplicacao );
-    Result := LocCFeW.Gerador.ArquivoFormatoXML;
+    FXMLOriginal := LocCFeW.Gerador.ArquivoFormatoXML;
   finally
     LocCFeW.Free;
   end ;
+
+  Result := FXMLOriginal;
 end;
 
 procedure TCFe.SetXMLString(AValue : AnsiString) ;
@@ -1358,6 +1366,8 @@ begin
   finally
     LocCFeR.Free
   end;
+
+  FXMLOriginal := AValue;
 end;
 
 procedure TCFe.SetPagto(Value: TMPCollection);

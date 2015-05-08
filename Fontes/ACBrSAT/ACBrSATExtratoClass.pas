@@ -45,10 +45,15 @@ unit ACBrSATExtratoClass;
 interface
 
 uses SysUtils,
-     Classes,
-     {$IFDEF DELPHI16_UP}Vcl.Graphics,{$ELSE}Graphics,{$ENDIF}
-     ACBrBase, ACBrConsts,
-     pcnCFe, pcnCFeCanc;
+     Classes
+    {$IF DEFINED(VisualCLX)}
+       ,QGraphics
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Graphics
+    {$ELSE}
+       ,Graphics
+    {$IFEND}
+     ,ACBrBase, ACBrConsts, pcnCFe, pcnCFeCanc;
 
 type
    TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
@@ -90,7 +95,7 @@ type
     fNomeArquivo: String;
     fNumCopias: Integer;
     fPrinterName : String;
-    fPictureLogo: TPicture;
+    fPictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF};
     fSoftwareHouse: String;
 
     procedure ErroAbstract(NomeProcedure : String) ;
@@ -98,7 +103,7 @@ type
     function GetNomeArquivo: String;
     procedure SetAbout(AValue: String);
     procedure SetNumCopias(AValue: Integer);
-    procedure SetPictureLogo(AValue: TPicture);
+    procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
     procedure SetSAT(const Value: TComponent);
 
     procedure SetInternalCFe(ACFe: TCFe);
@@ -132,7 +137,7 @@ type
     property Mask_qCom      : String   read fMask_qCom      write fMask_qCom;
     property Mask_vUnCom    : String   read fMask_vUnCom    write fMask_vUnCom;
     property ImprimeQRCode  : Boolean  read fImprimeQRCode  write fImprimeQRCode  default True ;
-    property PictureLogo    : TPicture read fPictureLogo    write SetPictureLogo ;
+    property PictureLogo    : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF} read fPictureLogo    write SetPictureLogo ;
     property MostrarPreview : Boolean  read fMostrarPreview write fMostrarPreview default False ;
     property MostrarSetup   : Boolean  read fMostrarSetup   write fMostrarSetup   default False ;
     property NumCopias      : Integer  read fNumCopias      write SetNumCopias    default 1;
@@ -170,7 +175,7 @@ begin
   fCFe     := nil;
   fCFeCanc := nil;
 
-  fPictureLogo := TPicture.Create;
+  fPictureLogo := {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}.Create;
 
   fNumCopias      := 1;
   fMostrarPreview := False;
@@ -267,7 +272,7 @@ begin
   fNumCopias := AValue;
 end;
 
-procedure TACBrSATExtratoClass.SetPictureLogo(AValue: TPicture);
+procedure TACBrSATExtratoClass.SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
 begin
   fPictureLogo.Assign( AValue );
 end;

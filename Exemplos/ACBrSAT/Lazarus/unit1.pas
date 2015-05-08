@@ -634,7 +634,7 @@ begin
     ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
     ACBrSAT1.CFe2CFeCanc;
 
-    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString( True ) ;  // True = Gera apenas as TAGs da aplicação
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GerarXML( True ) ;  // True = Gera apenas as TAGs da aplicação
     edChaveCancelamento.Text := ACBrSAT1.CFeCanc.infCFe.chCanc;
     PageControl1.ActivePage := tsCancelamento;
   end ;
@@ -646,7 +646,7 @@ begin
   if mCancelamentoEnviar.Lines.Count < 1 then
   begin
     ACBrSAT1.CancelarUltimaVenda;
-    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString(True);
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GerarXML(True);
   end
   else
   begin
@@ -862,9 +862,10 @@ end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
-  TotalItem: Double;
+  TotalItem, TotalGeral: Double;
   A: Integer;
 begin
+  TotalGeral := 0;
   PageControl1.ActivePage := tsGerado;
 
   ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
@@ -914,6 +915,7 @@ begin
       end;
 
       TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalGeral := TotalGeral + TotalItem;
       Imposto.vItem12741 := TotalItem * 0.12;
 
       Imposto.ICMS.orig := oeNacional;
@@ -948,6 +950,7 @@ begin
       Prod.vOutro := 2;
 
       TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalGeral := TotalGeral + TotalItem;
       Imposto.vItem12741 := TotalItem * 0.30;
 
       Imposto.ICMS.orig := oeNacional;
@@ -982,6 +985,7 @@ begin
       Prod.indRegra := irTruncamento;
 
       TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalGeral := TotalGeral + TotalItem;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
       Imposto.ICMS.CSOSN := csosn102;
@@ -1030,21 +1034,21 @@ begin
 
     with Pagto.Add do
     begin
-      cMP := mpDinheiro;
-      vMP := 50;
+      cMP := mpCartaodeCredito;
+      vMP := TotalGeral/2;
     end;
 
     with Pagto.Add do
     begin
-      cMP := mpCartaodeCredito;
-      vMP := 100;
+      cMP := mpDinheiro;
+      vMP := TotalGeral/2 + 10;
     end;
 
     InfAdic.infCpl := ACBrStr('Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br');
   end;
 
-  mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GetXMLString( True );    // True = Gera apenas as TAGs da aplicação
+  mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação
 
   mLog.Lines.Add('Venda Gerada');
 end;

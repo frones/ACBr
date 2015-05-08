@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/05/2015
+-- ACBrSAT --  (por: DSA)
+[*] Método:   CFe/CFeCanc.GetXMLString(ApenasTagsAplicacao: Boolean): AnsiString;
+    renomeado CFe/CFeCanc.GerarXML(ApenasTagsAplicacao: Boolean): AnsiString;
+    para melhor compreensão do uso do mesmo.
+[+] Adicionada a propriedade:  CFe/CFeCanc.XMLOriginal: AnsiString (readonly)
+    que contem o XML retornado pelo SAT ou atribuido a CFe/CFeCanc.AsXMLString
+[*] GetXMLString e SetXMLString modificados para fazer uso do campo XMLOriginal,
+    previamente atribuido ao componente, evitando chamadas desnecessárias a
+    rotina de geração de XML
+[*] Método Cfe.SaveToFile modificado para sempre salvar o valor de
+    AsXMLString (que leva em consideração o conteudo de XMLOriginal)
+
 Data: 07/05/2015
 -- ACBrSAT -- (por: julioaguilar)
 [-] Correção na geração do XML, para CST = 49 e 99

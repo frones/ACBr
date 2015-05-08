@@ -70,6 +70,8 @@ type
     FTotal: TTotal;
     FInfAdic: TInfAdic;
     FSignature: TSignature;
+    FXMLOriginal: AnsiString;
+
     function GetAsXMLString : AnsiString ;
   public
     constructor Create;
@@ -79,10 +81,11 @@ type
 
     function LoadFromFile(AFileName : String): boolean;
     function SaveToFile(AFileName : String): boolean;
-    function GetXMLString( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
+    function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
     procedure SetXMLString(AValue : AnsiString) ;
 
     property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
+    property XMLOriginal: AnsiString read FXMLOriginal;
   published
     property infCFe: TinfCFe read FinfCFe write FinfCFe;
     property ide: Tide read Fide write Fide;
@@ -468,39 +471,6 @@ end ;
 
 { TCFeTCFeCanc }
 
-function TCFeCanc.GetAsXMLString : AnsiString ;
-begin
-  Result := GetXMLString( false ) ;
-end;
-
-function TCFeCanc.GetXMLString( ApenasTagsAplicacao: Boolean ): AnsiString;
-var
-  LocCFeCancW : TCFeCancW ;
-begin
-  Result  := '';
-  LocCFeCancW := TCFeCancW.Create(Self);
-  try
-    LocCFeCancW.GerarXml( ApenasTagsAplicacao );
-    Result := LocCFeCancW.Gerador.ArquivoFormatoXML;
-  finally
-    LocCFeCancW.Free;
-  end ;
-end;
-
-
-procedure TCFeCanc.SetXMLString(AValue : AnsiString) ;
-var
- LocCFeCancR : TCFeCancR;
-begin
-  LocCFeCancR := TCFeCancR.Create(Self);
-  try
-    LocCFeCancR.Leitor.Arquivo := AValue;
-    LocCFeCancR.LerXml;
-  finally
-    LocCFeCancR.Free
-  end;
-end;
-
 constructor TCFeCanc.Create;
 begin
   FinfCFe  := TInfCFe.Create;
@@ -536,12 +506,53 @@ end ;
 
 procedure TCFeCanc.ClearSessao ;
 begin
+  FXMLOriginal := '';
+
   Fide.ClearSessao;
   FDest.Clear;
   FTotal.Clear;
   FInfAdic.Clear;
   FSignature.Clear;
 end ;
+
+function TCFeCanc.GetAsXMLString : AnsiString ;
+begin
+  if FXMLOriginal = '' then
+    Result := GerarXML( false )
+  else
+    Result := FXMLOriginal;
+end;
+
+function TCFeCanc.GerarXML( ApenasTagsAplicacao: Boolean ): AnsiString;
+var
+  LocCFeCancW : TCFeCancW ;
+begin
+  LocCFeCancW := TCFeCancW.Create(Self);
+  try
+    LocCFeCancW.GerarXml( ApenasTagsAplicacao );
+    FXMLOriginal := LocCFeCancW.Gerador.ArquivoFormatoXML;
+  finally
+    LocCFeCancW.Free;
+  end ;
+
+  Result := FXMLOriginal;
+end;
+
+
+procedure TCFeCanc.SetXMLString(AValue : AnsiString) ;
+var
+ LocCFeCancR : TCFeCancR;
+begin
+  LocCFeCancR := TCFeCancR.Create(Self);
+  try
+    LocCFeCancR.Leitor.Arquivo := AValue;
+    LocCFeCancR.LerXml;
+  finally
+    LocCFeCancR.Free
+  end;
+
+  FXMLOriginal := AValue;
+end;
 
 function TCFeCanc.LoadFromFile(AFileName : String) : boolean ;
 var

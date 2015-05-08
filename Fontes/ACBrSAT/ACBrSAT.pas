@@ -93,6 +93,7 @@ type
      procedure SetPastaCFeCancelamento(AValue: String);
      procedure SetPastaCFeVenda(AValue: String);
 
+     procedure VerificaInicializado ;
      procedure IniciaComando ;
      function FinalizaComando(AResult: String): String;
      procedure VerificaCondicoesImpressao( EhCancelamento: Boolean = False);
@@ -110,7 +111,6 @@ type
      Procedure Inicializar;
      Procedure DesInicializar;
      property Inicializado : Boolean read fsInicializado write SetInicializado ;
-     procedure VerificaInicializado ;
 
      Property ModeloStr : String  read GetModeloStrClass;
 
@@ -408,7 +408,7 @@ begin
   if CFeCanc.infCFe.chCanc = '' then
      CFe2CFeCanc;
 
-  dadosCancelamento := CFeCanc.GetXMLString( true ); // True = Gera apenas as TAGs da aplicação
+  dadosCancelamento := CFeCanc.GerarXML( true ); // True = Gera apenas as TAGs da aplicação
 
   Result := CancelarUltimaVenda( CFeCanc.infCFe.chCanc, dadosCancelamento);
 end ;
@@ -566,7 +566,7 @@ end ;
 
 function TACBrSAT.EnviarDadosVenda: String;
 begin
-  Result := EnviarDadosVenda( CFe.GetXMLString( True ) );  // True = Gera apenas as TAGs da aplicação
+  Result := EnviarDadosVenda( CFe.GerarXML( True ) );  // True = Gera apenas as TAGs da aplicação
 end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;

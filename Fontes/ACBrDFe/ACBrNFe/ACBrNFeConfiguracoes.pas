@@ -132,6 +132,8 @@ uses
 constructor TConfiguracoesNFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  WebServices.ResourceName := 'ACBrNFeServicos';
 end;
 
 function TConfiguracoesNFe.GetArquivos: TArquivosConfNFe;

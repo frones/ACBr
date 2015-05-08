@@ -76,6 +76,7 @@ type
   TWebServicesConf = class(TComponent)
   private
     FConfiguracoes: TConfiguracoes;
+    FResourceName: String;
     FVisualizar: Boolean;
     FUF: String;
     FUFCodigo: integer;
@@ -107,6 +108,7 @@ type
 
     procedure LerParams; virtual;
 
+    property ResourceName: String read FResourceName write FResourceName;
   published
     property Visualizar: Boolean read FVisualizar write FVisualizar default False;
     property UF: String read FUF write SetUF;
@@ -404,6 +406,7 @@ begin
   FIntervaloTentativas := 1000;
   FAjustaAguardaConsultaRet := False;
   FSalvar := False;
+  FResourceName := 'ACBrServicos';
 end;
 
 destructor TWebServicesConf.Destroy;
@@ -465,7 +468,7 @@ var
 begin
   Result := '';
 
-  RS := TResourceStream.Create(HInstance, 'ACBrServicos', RT_RCDATA);
+  RS := TResourceStream.Create(HInstance, FResourceName, RT_RCDATA);
   try
     RS.Position := 0;
     SetLength(Result, RS.Size);

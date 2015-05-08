@@ -62,6 +62,7 @@ type
     function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
+    function ComandoLogo: AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -109,7 +110,6 @@ begin
     CorteTotal              := GS  + 'V' + #0;
     CorteParcial            := GS  + 'V' + #1;
     AbreGaveta              := ESC + 'p' + #0 + #10 + #100;
-    ImprimeLogo             := GS  + '(L' + #6 + #0 + #48 + #69 + #32 + #32 + #01 + #01;
     Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
   end;
   {*)}
@@ -219,6 +219,16 @@ begin
   end;
 
   Result := ESC + 't' + AnsiChr( CmdPag );
+end;
+
+function TACBrEscPosEpson.ComandoLogo: AnsiString;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    Result := GS + '(L' + #6 + #0 + #48 + #69 +
+              AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
+              AnsiChr(FatorX)   + AnsiChr(FatorY);
+  end;
 end;
 
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);

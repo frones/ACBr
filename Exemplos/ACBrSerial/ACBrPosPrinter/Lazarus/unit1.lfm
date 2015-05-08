@@ -1,28 +1,28 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 408
-  Height = 425
+  Height = 463
   Top = 125
   Width = 841
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 425
+  ClientHeight = 463
   ClientWidth = 841
   OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '1.2.6.0'
   object Panel1: TPanel
     Left = 256
-    Height = 425
+    Height = 463
     Top = 0
     Width = 585
     Align = alClient
     Caption = 'Panel1'
-    ClientHeight = 425
+    ClientHeight = 463
     ClientWidth = 585
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
       Height = 144
-      Top = 280
+      Top = 318
       Width = 583
       Align = alBottom
       ClientHeight = 144
@@ -89,7 +89,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Teste Impressão Linha a Linha'
         OnClick = bImpLinhaALinhaClick
-        TabOrder = 6
+        TabOrder = 7
       end
       object bImpTagsValidas: TButton
         Left = 392
@@ -98,7 +98,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Ajuda - Tags Validas'
         OnClick = bImpTagsValidasClick
-        TabOrder = 9
+        TabOrder = 10
       end
       object bLerStatus: TButton
         Left = 392
@@ -107,7 +107,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Leitura de Status'
         OnClick = bLerStatusClick
-        TabOrder = 8
+        TabOrder = 9
       end
       object bLerInfo: TButton
         Left = 392
@@ -116,7 +116,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Leitura de Informações'
         OnClick = bLerInfoClick
-        TabOrder = 7
+        TabOrder = 8
       end
       object Panel4: TPanel
         Left = 1
@@ -128,7 +128,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         BevelOuter = bvLowered
         ClientHeight = 39
         ClientWidth = 581
-        TabOrder = 10
+        TabOrder = 11
         object bLimpar: TBitBtn
           Left = 392
           Height = 26
@@ -224,10 +224,19 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           TabOrder = 1
         end
       end
+      object bTagLogo: TButton
+        Left = 192
+        Height = 25
+        Top = 88
+        Width = 183
+        Caption = 'Tags de Logotipo'
+        OnClick = bTagLogoClick
+        TabOrder = 6
+      end
     end
     object PageControl1: TPageControl
       Left = 1
-      Height = 279
+      Height = 317
       Top = 1
       Width = 583
       ActivePage = tsLog
@@ -250,11 +259,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object tsLog: TTabSheet
         Caption = 'Eventos Log'
-        ClientHeight = 251
+        ClientHeight = 289
         ClientWidth = 575
         object mLog: TMemo
           Left = 0
-          Height = 251
+          Height = 289
           Top = 0
           Width = 575
           Align = alClient
@@ -266,11 +275,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   end
   object Panel2: TPanel
     Left = 0
-    Height = 425
+    Height = 463
     Top = 0
     Width = 256
     Align = alLeft
-    ClientHeight = 425
+    ClientHeight = 463
     ClientWidth = 256
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -670,6 +679,93 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         MaxValue = 3
         OnChange = seQRCodeErrorLevelChange
         TabOrder = 2
+      end
+    end
+    object gbCodBarrasConfig2: TGroupBox
+      Left = 1
+      Height = 64
+      Top = 376
+      Width = 254
+      Align = alTop
+      Caption = 'LogoTipo'
+      ClientHeight = 46
+      ClientWidth = 250
+      TabOrder = 3
+      object Label14: TLabel
+        Left = 16
+        Height = 15
+        Top = 0
+        Width = 21
+        Caption = 'KC1'
+        ParentColor = False
+      end
+      object seLogoKC1: TSpinEdit
+        Left = 16
+        Height = 23
+        Top = 16
+        Width = 41
+        MaxValue = 126
+        MinValue = 32
+        OnChange = seLogoKC1Change
+        TabOrder = 0
+        Value = 32
+      end
+      object Label15: TLabel
+        Left = 72
+        Height = 15
+        Top = 0
+        Width = 21
+        Caption = 'KC2'
+        ParentColor = False
+      end
+      object seLogoKC2: TSpinEdit
+        Left = 72
+        Height = 23
+        Top = 16
+        Width = 41
+        MaxValue = 126
+        MinValue = 32
+        OnChange = seLogoKC2Change
+        TabOrder = 1
+        Value = 32
+      end
+      object Label16: TLabel
+        Left = 128
+        Height = 15
+        Top = 0
+        Width = 34
+        Caption = 'FatorX'
+        ParentColor = False
+      end
+      object seLogoFatorX: TSpinEdit
+        Left = 129
+        Height = 23
+        Top = 16
+        Width = 41
+        MaxValue = 4
+        MinValue = 1
+        OnChange = seLogoFatorXChange
+        TabOrder = 2
+        Value = 4
+      end
+      object Label17: TLabel
+        Left = 185
+        Height = 15
+        Top = 0
+        Width = 34
+        Caption = 'FatorY'
+        ParentColor = False
+      end
+      object seLogoFatorY: TSpinEdit
+        Left = 184
+        Height = 23
+        Top = 16
+        Width = 41
+        MaxValue = 4
+        MinValue = 1
+        OnChange = seLogoFatorYChange
+        TabOrder = 3
+        Value = 4
       end
     end
   end

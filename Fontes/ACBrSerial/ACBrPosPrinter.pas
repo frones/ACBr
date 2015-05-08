@@ -77,7 +77,6 @@ type
     FDesligaSublinhado: AnsiString;
     FFonteA: AnsiString;
     FFonteB: AnsiString;
-    FImprimeLogo: AnsiString;
     FLigaItalico: AnsiString;
     FLigaNegrito: AnsiString;
     FLigaSublinhado: AnsiString;
@@ -116,7 +115,6 @@ type
     property AbreGaveta: AnsiString read FAbreGaveta write FAbreGaveta;
     property CorteTotal: AnsiString read FCorteTotal write FCorteTotal;
     property CorteParcial: AnsiString read FCorteParcial write FCorteParcial;
-    property ImprimeLogo: AnsiString read FImprimeLogo write FImprimeLogo;
   end;
 
   TACBrPosTipoFonte = (ftNormal, ftCondensado, ftExpandido, ftNegrito,
@@ -165,6 +163,7 @@ type
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; virtual;
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
+    function ComandoLogo: AnsiString; virtual;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
     function LerInfo: String; virtual;
@@ -196,12 +195,31 @@ type
       property ErrorLevel: Integer read FErrorLevel write SetErrorLevel;
   end;
 
+  { TACBrConfigLogo }
+
+  TACBrConfigLogo = class(TPersistent)
+    private
+      FFatorX: Byte;
+      FFatorY: Byte;
+      FKeyCode1: Byte;
+      FKeyCode2: Byte;
+    public
+      constructor Create;
+
+    published
+      property KeyCode1: Byte read FKeyCode1 write FKeyCode1 default 32;
+      property KeyCode2: Byte read FKeyCode2 write FKeyCode2 default 32;
+      property FatorX: Byte read FFatorX write FFatorX default 1;
+      property FatorY: Byte read FFatorY write FFatorY default 1;
+  end;
+
   { TACBrPosPrinter }
 
   TACBrPosPrinter = class(TACBrComponent)
   private
     FColunasFonteNormal: Integer;
     FConfigBarras: TACBrECFConfigBarras;
+    FConfigLogo: TACBrConfigLogo;
     FConfigQRCode: TACBrConfigQRCode;
     FControlePorta: Boolean;
     FDevice: TACBrDevice;
@@ -306,6 +324,7 @@ type
 
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
     property ConfigQRCode: TACBrConfigQRCode read FConfigQRCode write FConfigQRCode;
+    property ConfigLogo: TACBrConfigLogo read FConfigLogo write FConfigLogo;
     property GavetaSinalInvertido: Boolean read FGavetaSinalInvertido
       write FGavetaSinalInvertido default False;
 
@@ -330,6 +349,16 @@ uses
   strutils, Math, typinfo,
   ACBrUtil, ACBrConsts,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma;
+
+{ TACBrConfigLogo }
+
+constructor TACBrConfigLogo.Create;
+begin
+  FKeyCode1 := 32;
+  FKeyCode2 := 32;
+  FFatorX := 1;
+  FFatorY := 1;
+end;
 
 { TACBrConfigQRCode }
 
@@ -414,6 +443,11 @@ begin
   Result := '';
 end;
 
+function TACBrPosPrinterClass.ComandoLogo: AnsiString;
+begin
+  Result := '';
+end;
+
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
 begin
   {nada aqui, método virtual}
@@ -449,6 +483,7 @@ begin
 
   FConfigBarras := TACBrECFConfigBarras.Create;
   FConfigQRCode := TACBrConfigQRCode.Create;
+  FConfigLogo   := TACBrConfigLogo.Create;
 
   FTagProcessor := TACBrTagProcessor.Create;
   FTagProcessor.AddTags(cTAGS_CARACTER, cTAGS_CARACTER_HELP, False);
@@ -494,6 +529,7 @@ begin
   FTagProcessor.Free;
   FConfigBarras.Free;
   FConfigQRCode.Free;
+  FConfigLogo.Free;
   FDevice.Free;
 
   inherited Destroy;
@@ -717,7 +753,7 @@ begin
     TagTraduzida := FPosPrinterClass.Cmd.Beep
 
   else if ATag = cTagLogotipo then
-    TagTraduzida := FPosPrinterClass.Cmd.ImprimeLogo
+    TagTraduzida := FPosPrinterClass.ComandoLogo
 
   else if ATag = cTagPulodeLinha then
     TagTraduzida := LF

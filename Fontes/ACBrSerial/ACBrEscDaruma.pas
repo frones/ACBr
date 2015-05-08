@@ -61,6 +61,7 @@ type
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
     function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
+    function ComandoLogo: AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -108,7 +109,6 @@ begin
     CorteTotal              := ESC + 'm';
     CorteParcial            := ESC + 'm';
     AbreGaveta              := ESC + 'p';
-    ImprimeLogo             := SYN + BS + SYN + TAB;  //TODO: Testar
     Beep                    := BELL;
   end;
   {*)}
@@ -198,6 +198,11 @@ begin
     Result := Cmd.EspacoEntreLinhasPadrao
   else
     Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
+end;
+
+function TACBrEscDaruma.ComandoLogo: AnsiString;
+begin
+  Result := SYN + BS + SYN + TAB;  //TODO: Testar
 end;
 
 procedure TACBrEscDaruma.LerStatus(var AStatus: TACBrPosPrinterStatus);

@@ -22,6 +22,7 @@ type
     bTagFormtacaoCaracter: TButton;
     bTagQRCode: TButton;
     bLerStatus: TButton;
+    bTagLogo: TButton;
     bTagsAlinhamento: TButton;
     bTagsCodBarras: TButton;
     bTagsTesteInvalidas: TButton;
@@ -36,6 +37,7 @@ type
     cbControlePorta: TCheckBox;
     edLog: TEdit;
     gbCodBarrasConfig1: TGroupBox;
+    gbCodBarrasConfig2: TGroupBox;
     gbConfiguracao: TGroupBox;
     gbCodBarrasConfig: TGroupBox;
     Label1: TLabel;
@@ -43,6 +45,10 @@ type
     Label11: TLabel;
     Label12: TLabel;
     Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -60,8 +66,11 @@ type
     Panel4: TPanel;
     SbArqLog: TSpeedButton;
     btSerial: TSpeedButton;
+    seLogoFatorX: TSpinEdit;
+    seLogoFatorY: TSpinEdit;
     seQRCodeLarguraModulo: TSpinEdit;
     seQRCodeErrorLevel: TSpinEdit;
+    seLogoKC2: TSpinEdit;
     seQRCodeTipo: TSpinEdit;
     seColunas: TSpinEdit;
     seBarrasLargura: TSpinEdit;
@@ -69,6 +78,7 @@ type
     seBarrasAltura: TSpinEdit;
     seLinhasBuffer: TSpinEdit;
     seLinhasPular: TSpinEdit;
+    seLogoKC1: TSpinEdit;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
@@ -80,6 +90,7 @@ type
     procedure bLerStatusClick(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
     procedure bTagFormtacaoCaracterClick(Sender: TObject);
+    procedure bTagLogoClick(Sender: TObject);
     procedure bTagQRCodeClick(Sender: TObject);
     procedure bTagsAlinhamentoClick(Sender: TObject);
     procedure bTagsTesteInvalidasClick(Sender: TObject);
@@ -102,6 +113,10 @@ type
     procedure seColunasChange(Sender: TObject);
     procedure seLinhasBufferChange(Sender: TObject);
     procedure seLinhasPularChange(Sender: TObject);
+    procedure seLogoFatorXChange(Sender: TObject);
+    procedure seLogoFatorYChange(Sender: TObject);
+    procedure seLogoKC1Change(Sender: TObject);
+    procedure seLogoKC2Change(Sender: TObject);
     procedure seQRCodeErrorLevelChange(Sender: TObject);
     procedure seQRCodeLarguraModuloChange(Sender: TObject);
     procedure seQRCodeTipoChange(Sender: TObject);
@@ -199,6 +214,18 @@ begin
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
   mImp.Lines.Add('</FA>FONTE TIPO A');
   mImp.Lines.Add('</FN>FONTE NORMAL');
+  mImp.Lines.Add('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagLogoClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('</ce>');
+  mImp.Lines.Add('Logo: '+chr(ACBrPosPrinter1.ConfigLogo.KeyCode1)+
+                          chr(ACBrPosPrinter1.ConfigLogo.KeyCode2) +
+                          ' - FatorX: ' + IntToStr(ACBrPosPrinter1.ConfigLogo.FatorX)+
+                          ' - FatorY: ' + IntToStr(ACBrPosPrinter1.ConfigLogo.FatorY));
+  mImp.Lines.Add('</logo>');
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -453,6 +480,26 @@ begin
   ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
 end;
 
+procedure TFrPosPrinterTeste.seLogoFatorXChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.FatorX := seLogoFatorX.Value;
+end;
+
+procedure TFrPosPrinterTeste.seLogoFatorYChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.FatorY := seLogoFatorY.Value;
+end;
+
+procedure TFrPosPrinterTeste.seLogoKC1Change(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.KeyCode1 := seLogoKC1.Value;
+end;
+
+procedure TFrPosPrinterTeste.seLogoKC2Change(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.KeyCode2 := seLogoKC2.Value;
+end;
+
 procedure TFrPosPrinterTeste.seQRCodeErrorLevelChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ConfigQRCode.ErrorLevel := seQRCodeErrorLevel.Value;
@@ -494,6 +541,10 @@ begin
      INI.WriteInteger('QRCode','Tipo',seQRCodeTipo.Value);
      INI.WriteInteger('QRCode','LarguraModulo',seQRCodeLarguraModulo.Value);
      INI.WriteInteger('QRCode','ErrorLevel',seQRCodeErrorLevel.Value);
+     INI.WriteInteger('Logo','KC1',seLogoKC1.Value);
+     INI.WriteInteger('Logo','KC2',seLogoKC2.Value);
+     INI.WriteInteger('Logo','FatorX',seLogoFatorX.Value);
+     INI.WriteInteger('Logo','FatorY',seLogoFatorY.Value);
   finally
      INI.Free ;
   end ;
@@ -525,6 +576,10 @@ begin
      seQRCodeTipo.Value := INI.ReadInteger('QRCode','Tipo',ACBrPosPrinter1.ConfigQRCode.Tipo);
      seQRCodeLarguraModulo.Value := INI.ReadInteger('QRCode','LarguraModulo',ACBrPosPrinter1.ConfigQRCode.LarguraModulo);
      seQRCodeErrorLevel.Value := INI.ReadInteger('QRCode','ErrorLevel',ACBrPosPrinter1.ConfigQRCode.ErrorLevel);
+     seLogoKC1.Value := INI.ReadInteger('Logo','KC1',ACBrPosPrinter1.ConfigLogo.KeyCode1);
+     seLogoKC2.Value := INI.ReadInteger('Logo','KC2',ACBrPosPrinter1.ConfigLogo.KeyCode2);
+     seLogoFatorX.Value := INI.ReadInteger('Logo','FatorX',ACBrPosPrinter1.ConfigLogo.FatorX);
+     seLogoFatorY.Value := INI.ReadInteger('Logo','FatorY',ACBrPosPrinter1.ConfigLogo.FatorY);
   finally
      INI.Free ;
   end ;
@@ -601,6 +656,10 @@ begin
        ACBrPosPrinter1.ConfigQRCode.Tipo := seQRCodeTipo.Value;
        ACBrPosPrinter1.ConfigQRCode.LarguraModulo := seQRCodeLarguraModulo.Value;
        ACBrPosPrinter1.ConfigQRCode.ErrorLevel := seQRCodeErrorLevel.Value;
+       ACBrPosPrinter1.ConfigLogo.KeyCode1 := seLogoKC1.Value;
+       ACBrPosPrinter1.ConfigLogo.KeyCode2 := seLogoKC2.Value;
+       ACBrPosPrinter1.ConfigLogo.FatorX := seLogoFatorX.Value;
+       ACBrPosPrinter1.ConfigLogo.FatorY := seLogoFatorY.Value;
 
        ACBrPosPrinter1.Ativar ;
 

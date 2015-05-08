@@ -576,7 +576,7 @@ begin
     ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
     ACBrSAT1.CFe2CFeCanc;
 
-    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString( True ) ;  // True = Gera apenas as TAGs da aplicação
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GerarXML( True ) ;  // True = Gera apenas as TAGs da aplicação
     edChaveCancelamento.Text := ACBrSAT1.CFeCanc.infCFe.chCanc;
     PageControl1.ActivePage := tsCancelamento;
   end ;
@@ -588,7 +588,7 @@ begin
   if mCancelamentoEnviar.Lines.Count < 1 then
   begin
     ACBrSAT1.CancelarUltimaVenda;
-    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GetXMLString(True);
+    mCancelamentoEnviar.Lines.Text := ACBrSAT1.CFeCanc.GerarXML(True);
   end
   else
   begin
@@ -971,7 +971,7 @@ begin
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
   end;
 
-  mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GetXMLString( True );    // True = Gera apenas as TAGs da aplicação
+  mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação
 
   mLog.Lines.Add('Venda Gerada');
 end;

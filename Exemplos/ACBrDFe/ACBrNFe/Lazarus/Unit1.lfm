@@ -131,10 +131,10 @@ object Form1: TForm1
           Height = 439
           Top = 0
           Width = 275
-          ActivePage = TabSheet4
+          ActivePage = TabSheet3
           Align = alClient
           MultiLine = True
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -1390,9 +1390,9 @@ object Form1: TForm1
         Height = 298
         Top = 1
         Width = 593
-        ActivePage = tsNFe
+        ActivePage = tsNFCe
         Align = alClient
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 0
         object tsNFe: TTabSheet
           Caption = 'NF-e'
@@ -2238,23 +2238,21 @@ object Form1: TForm1
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 688
-    top = 376
+    left = 392
+    top = 432
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFe1StatusChange
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libOpenSSL
-    Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     DANFE = ACBrNFeDANFeRL1
-    left = 723
-    top = 377
+    left = 688
+    top = 376
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     MostrarPreview = True
@@ -2286,8 +2284,8 @@ object Form1: TForm1
     PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
-    left = 526
-    top = 421
+    left = 688
+    top = 496
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
@@ -2339,8 +2337,8 @@ object Form1: TForm1
     vTribMun = 0
     LarguraCodProd = 54
     ExibirEAN = False
-    left = 763
-    top = 377
+    left = 688
+    top = 440
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2350,8 +2348,8 @@ object Form1: TForm1
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = UTF_8
-    left = 723
-    top = 346
+    left = 816
+    top = 376
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Porta = '\\localhost\Epson'
@@ -2363,7 +2361,7 @@ object Form1: TForm1
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 7
     CortaPapel = False
-    left = 526
-    top = 392
+    left = 816
+    top = 496
   end
 end

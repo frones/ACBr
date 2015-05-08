@@ -2562,6 +2562,7 @@ begin
                                     // a inclusão de serviços na NFe
       Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
+      Dest.indIEDest         := inNaoContribuinte;
       Dest.CNPJCPF           := '05481336000137';
 //      Dest.IE                := '687138770110'; //NFC-e não aceita IE
       Dest.ISUF              := '';

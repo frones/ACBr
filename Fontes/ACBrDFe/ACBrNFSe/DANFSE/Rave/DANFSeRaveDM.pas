@@ -139,7 +139,10 @@ begin
     Connection.WriteStrData('', ConstrucaoCivil.Art);
     Connection.WriteStrData('', IdentificacaoRps.Numero);
     Connection.WriteStrData('', IdentificacaoRps.Serie);
-    Connection.WriteStrData('', NFSe.Tomador.Endereco.xMunicipio);
+    if trim(NFSe.Servico.CodigoMunicipio) <> '' then
+      Connection.WriteStrData('', CodCidadeToCidade(StrToInt(NFSe.Servico.CodigoMunicipio)))
+    else
+      Connection.WriteStrData('', NFSe.Tomador.Endereco.xMunicipio);
   end;
 end;
 

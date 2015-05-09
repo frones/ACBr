@@ -457,7 +457,7 @@ begin
         begin
            ///
            Add( LFill('I051') +
-                LFill(COD_PLAN_REF, 2) +
+                LFill(COD_PLAN_REF, 1) +
                 LFill(COD_CCUS) +
                 LFill(COD_CTA_REF) 
                 );

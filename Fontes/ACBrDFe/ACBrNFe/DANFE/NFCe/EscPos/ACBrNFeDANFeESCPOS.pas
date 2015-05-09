@@ -138,7 +138,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBr', [TACBrNFeDANFeESCPOS]);
+  RegisterComponents('ACBrNFe', [TACBrNFeDANFeESCPOS]);
 end;
 
 { TACBrNFeDANFeESCPOS }

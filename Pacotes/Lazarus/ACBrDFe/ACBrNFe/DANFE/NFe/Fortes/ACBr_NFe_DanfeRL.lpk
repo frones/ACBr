@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe;..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\;..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -22,36 +22,36 @@
     <License Value="LGPL"/>
     <Files Count="8">
       <Item1>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas"/>
         <UnitName Value="ACBrNFeDANFeRL"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLClass.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLClass.pas"/>
         <UnitName Value="ACBrNFeDANFeRLClass"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLReg.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrNFeDANFeRLReg"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLRetrato.pas"/>
         <UnitName Value="ACBrNFeDANFeRLRetrato"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLPaisagem.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLPaisagem.pas"/>
         <UnitName Value="ACBrNFeDANFeRLPaisagem"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRL.pas"/>
         <UnitName Value="ACBrNFeDANFeEventoRL"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRLRetrato.pas"/>
         <UnitName Value="ACBrNFeDANFeEventoRLRetrato"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLSimplificado.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLSimplificado.pas"/>
         <UnitName Value="ACBrNFeDANFeRLSimplificado"/>
       </Item8>
     </Files>

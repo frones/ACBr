@@ -521,7 +521,7 @@ procedure TACBrECFVirtualSATClass.GravaArqINIVirtual(ConteudoINI: TStrings);
 begin
   // Se cupom está aberto, deve persistir o CFe //
   if (fpEstado in estCupomAberto) then
-    fsACBrSAT.CFe.SaveToFile( fsNomeArqTempXML, True )
+    WriteToTXT( fsNomeArqTempXML, fsACBrSAT.CFe.GerarXML(True), False, False )
   else
   begin
     if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then

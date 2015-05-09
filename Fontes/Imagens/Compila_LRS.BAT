@@ -116,7 +116,10 @@ echo.
 %1\tools\lazres.exe ACBrNFe.lrs TACBrNFe.bmp 
 move ACBrNFe.lrs ..\ACBrDFe\ACBrNFe
 
-%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.bmp 
+%1\tools\lazres.exe ACBrNFeDANFeRL.lrs TACBrNFeDANFeRL.bmp
+move ACBrNFeDANFeRL.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes
+
+%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.bmp
 move ACBrNFeDANFCeFortes.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes
 
 %1\tools\lazres.exe ACBrNFeDANFeESCPOS.lrs TACBrNFeDANFeESCPOS.bmp 

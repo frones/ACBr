@@ -22,11 +22,11 @@
     <License Value="LGPL"/>
     <Files Count="2">
       <Item1>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.lfm"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.lfm"/>
         <Type Value="LFM"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrDANFCeFortesFr"/>
       </Item2>

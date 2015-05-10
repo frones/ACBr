@@ -87,7 +87,7 @@ type
     FSite               : String;
     FUsuario            : String;
     AfterPreview        : Boolean;
-    FExpandirLogoMarca  : Boolean; 
+    FExpandirLogoMarca  : Boolean;
     ChangedPos          : Boolean;
     FSemValorFiscal     : Boolean;
     FMargemSuperior     : double;
@@ -100,13 +100,13 @@ type
     FResumoCanhoto_Texto: String;
     // Incluido por Luis Fernando em  22/01/2013
     FNFeCancelada       : Boolean;
-    FLocalImpCanhoto    : TPosRecibo;
+    FPosCanhoto         : TPosRecibo;
     FImprimirDescPorc   : Boolean; //incluido por Fernando pasqueto 11/07/2014
     FImprimirDetalhamentoEspecifico : Boolean; //incluido por Fernando pasqueto 15/07/2014
     FImprimirTotalLiquido: Boolean; //incluido Fernando Pasqueto 29/10/2014
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
-    FImprimeItens: Boolean;
+    FImprimirItens: Boolean;
     
     // Incluido por Edilson Alves de Oliveira em 10/10/2014
     // Destinado exclusivamente ao DANFE da NFC-e
@@ -121,6 +121,7 @@ type
 
     class procedure Imprimir(ANFe                 : TNFe;
                              AACBrNFe             : TACBrNFe;
+                             APosCanhoto          : TPosRecibo;
                              ALogo                : String   = '';
                              AEmail               : String   = '';
                              AResumoCanhoto       : Boolean  = False;
@@ -140,8 +141,8 @@ type
                              AResumoCanhoto_Texto : String   = '';
                              AExpandirLogoMarca   : Boolean  = False;
                              ANFeCancelada        : Boolean  = False;
-                             ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
-                             AImprimeItens        : Boolean  = True;
+//                             APosCanhoto          : TPosRecibo  = prCabecalho;
+                             AImprimirItens       : Boolean  = True;
                              AViaConsumidor       : Boolean  = True;
                              AvTroco              : Currency = 0.0;
                              AImprimirDescPorc    : Boolean  = False;
@@ -151,6 +152,7 @@ type
     class procedure SavePDF(AFile                : String;
                             ANFe                 : TNFe;
                             AACBrNFe             : TACBrNFe;
+                            APosCanhoto          : TPosRecibo;
                             ALogo                : String   = '';
                             AEmail               : String   = '';
                             AResumoCanhoto       : Boolean  = False;
@@ -168,8 +170,8 @@ type
                             AResumoCanhoto_Texto : String   = '';
                             AExpandirLogoMarca   : Boolean  = False;
                             ANFeCancelada        : Boolean  = False;
-                            ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
-                            AImprimeItens        : Boolean  = True;
+//                            APosCanhoto          : TPosRecibo  = prCabecalho;
+                            AImprimirItens       : Boolean  = True;
                             AViaConsumidor       : Boolean  = True;
                             AvTroco              : Currency = 0.0;
                             AImprimirDescPorc    : Boolean  = False;
@@ -189,6 +191,7 @@ var
 
 class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      AACBrNFe             : TACBrNFe;
+                                     APosCanhoto          : TPosRecibo;
                                      ALogo                : String   = '';
                                      AEmail               : String   = '';
                                      AResumoCanhoto       : Boolean  = False;
@@ -208,8 +211,8 @@ class procedure TfqrDANFeQR.Imprimir(ANFe                 : TNFe;
                                      AResumoCanhoto_Texto : String   = '';
                                      AExpandirLogoMarca   : Boolean  = False;
                                      ANFeCancelada        : Boolean  = False;
-                                     ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
-                                     AImprimeItens        : Boolean  = True;
+//                                     APosCanhoto          : TPosRecibo  = prCabecalho;
+                                     AImprimirItens       : Boolean  = True;
                                      AViaConsumidor       : Boolean  = True;
                                      AvTroco              : Currency = 0.0;
                                      AImprimirDescPorc    : Boolean  = False;
@@ -238,8 +241,8 @@ begin
         FResumoCanhoto_Texto := AResumoCanhoto_Texto;
         FExpandirLogoMarca   := AExpandirLogoMarca;
         FNFeCancelada        := ANFeCancelada;
-        FLocalImpCanhoto     := ALocalImpCanhoto;
-        FImprimeItens        := AImprimeItens;
+        FPosCanhoto          := APosCanhoto;
+        FImprimirItens       := AImprimirItens;
         FViaConsumidor       := AViaConsumidor;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;
@@ -291,6 +294,7 @@ end;
 class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     ANFe                 : TNFe;
                                     AACBrNFe             : TACBrNFe;
+                                    APosCanhoto          : TPosRecibo;
                                     ALogo                : String   = '';
                                     AEmail               : String   = '';
                                     AResumoCanhoto       : Boolean  = False;
@@ -308,8 +312,8 @@ class procedure TfqrDANFeQR.SavePDF(AFile                : String;
                                     AResumoCanhoto_Texto : String   = '';
                                     AExpandirLogoMarca   : Boolean  = False;
                                     ANFeCancelada        : Boolean  = False;
-                                    ALocalImpCanhoto     : TPosRecibo  = prCabecalho;
-                                    AImprimeItens        : Boolean  = True;
+//                                    APosCanhoto          : TPosRecibo  = prCabecalho;
+                                    AImprimirItens       : Boolean  = True;
                                     AViaConsumidor       : Boolean  = True;
                                     AvTroco              : Currency = 0.0;
                                     AImprimirDescPorc    : Boolean  = False;
@@ -343,8 +347,8 @@ begin
         FResumoCanhoto_Texto := AResumoCanhoto_Texto;
         FExpandirLogoMarca   := AExpandirLogoMarca;
         FNFeCancelada        := ANFeCancelada;
-        FLocalImpCanhoto     := ALocalImpCanhoto;
-        FImprimeItens        := AImprimeItens;
+        FPosCanhoto          := APosCanhoto;
+        FImprimirItens       := AImprimirItens;
         FViaConsumidor       := AViaConsumidor;
         FvTroco              := AvTroco;
         FImprimirDescPorc    := AImprimirDescPorc;

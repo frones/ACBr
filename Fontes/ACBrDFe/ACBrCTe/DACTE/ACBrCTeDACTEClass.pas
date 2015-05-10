@@ -51,22 +51,27 @@ unit ACBrCTeDACTEClass;
 interface
 
 uses
-  Forms, SysUtils, Classes,
+  SysUtils, Classes,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
   pcteCTE, pcnConversao;
 
 type
   TACBrCTeDACTEClass = class(TComponent)
-   private
+  private
     procedure SetCTE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
-    function GetPathArquivos: String;
-    procedure SetPathArquivos(const Value: String);
   protected
     FACBrCTE: TComponent;
     FLogo: String;
     FSistema: String;
     FUsuario: String;
-    FPathArquivos: String;
+    FPathPDF: String;
     FImpressora: String;
     FImprimirHoraSaida: Boolean;
     FImprimirHoraSaida_Hora: String;
@@ -79,7 +84,6 @@ type
     FFax: String;
     FSite: String;
     FEmail: String;
-    FImprimeDescPorc: Boolean;
 	  FProtocoloCTE: String;
     FMargemInferior: Double;
     FMargemSuperior: Double;
@@ -88,11 +92,15 @@ type
     FCTeCancelada: Boolean;
     FResumoCanhoto: Boolean; //Rodrigo DSP 22/01/2014 10:43:44:
     FEPECEnviado: Boolean;
+    FPosCanhoto: TPosRecibo;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    function GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
+
     procedure ImprimirDACTE(CTE: TCTE = nil); virtual;
     procedure ImprimirDACTEPDF(CTE: TCTE = nil); virtual;
     procedure ImprimirEVENTO(CTE: TCTe = nil); virtual;
@@ -104,7 +112,7 @@ type
     property Logo: String                   read FLogo                   write FLogo;
     property Sistema: String                read FSistema                write FSistema;
     property Usuario: String                read FUsuario                write FUsuario;
-    property PathPDF: String                read GetPathArquivos         write SetPathArquivos;
+    property PathPDF: String                read FPathPDF                write FPathPDF;
     property Impressora: String             read FImpressora             write FImpressora;
     property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
@@ -116,7 +124,6 @@ type
     property Fax: String                    read FFax                    write FFax;
     property Site: String                   read FSite                   write FSite;
     property Email: String                  read FEmail                  write FEmail;
-    property ImprimirDescPorc: Boolean      read FImprimeDescPorc        write FImprimeDescPorc;
     property ProtocoloCTE: String           read FProtocoloCTE           write FProtocoloCTE;
     property MargemInferior: Double         read FMargemInferior         write FMargemInferior;
     property MargemSuperior: Double         read FMargemSuperior         write FMargemSuperior;
@@ -124,25 +131,26 @@ type
     property MargemDireita: Double          read FMargemDireita          write FMargemDireita;
     property ExpandirLogoMarca: Boolean     read FExpandirLogoMarca      write FExpandirLogoMarca default false;
     property CTeCancelada: Boolean          read FCTeCancelada           write FCTeCancelada;
-    property ResumoCanhoto: Boolean         read FResumoCanhoto          write FResumoCanhoto; //Rodrigo DSP 22/01/2014 10:43:51:
+    property ExibirResumoCanhoto: Boolean   read FResumoCanhoto          write FResumoCanhoto; //Rodrigo DSP 22/01/2014 10:43:51:
     property EPECEnviado: Boolean           read FEPECEnviado            write FEPECEnviado;
+    property PosCanhoto: TPosRecibo         read FPosCanhoto             write FPosCanhoto;
   end;
 
 implementation
 
 uses
-  ACBrCTE, ACBrUtil;
+  ACBrCTE, ACBrUtil, ACBrDFeUtil, ACBrDFeConfiguracoes;
 
 constructor TACBrCTeDACTEClass.Create(AOwner: TComponent);
 begin
   inherited create(AOwner);
 
-  FACBrCTE      := nil;
-  FLogo         := '';
-  FSistema      := '';
-  FUsuario      := '';
-  FPathArquivos := '';
-  FImpressora   := '';
+  FACBrCTE    := nil;
+  FLogo       := '';
+  FSistema    := '';
+  FUsuario    := '';
+  FPathPDF    := '';
+  FImpressora := '';
 
   FImprimirHoraSaida      := False;
   FImprimirHoraSaida_Hora := '';
@@ -155,7 +163,6 @@ begin
   FSite  := '';
   FEmail := '';
 
-  FImprimeDescPorc := False;
   FProtocoloCTE    := '';
 
   FMargemInferior := 0.8;
@@ -226,22 +233,20 @@ begin
   raise Exception.Create(NomeProcedure);
 end;
 
-function TACBrCTeDACTEClass.GetPathArquivos: String;
+function TACBrCTeDACTEClass.GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
 begin
-  if EstaVazio(FPathArquivos) then
+  Result := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(FPathPDF, 'CTe', CNPJ, Data);
+(*
+  if EstaVazio(FPathPDF) then
      if Assigned(FACBrCTe) then
-        FPathArquivos := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.PathSalvar;
+        FPathPDF := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.PathSalvar;
 
-  if NaoEstaVazio(FPathArquivos) then
-     if not DirectoryExists(FPathArquivos) then
-        ForceDirectories(FPathArquivos);
+  if NaoEstaVazio(FPathPDF) then
+     if not DirectoryExists(FPathPDF) then
+        ForceDirectories(FPathPDF);
 
-  Result := PathWithDelim(FPathArquivos);
-end;
-
-procedure TACBrCTeDACTEClass.SetPathArquivos(const Value: String);
-begin
-  FPathArquivos := Value;
+  Result := PathWithDelim(FPathPDF);
+*)
 end;
 
 procedure TACBrCTeDACTEClass.ImprimirEVENTO(CTE: TCTe);

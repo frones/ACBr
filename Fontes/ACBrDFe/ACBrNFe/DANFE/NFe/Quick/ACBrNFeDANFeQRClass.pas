@@ -63,7 +63,7 @@ uses
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
    private
-    FLocalImpCanhoto: TPosRecibo;
+//    FLocalImpCanhoto: TPosRecibo;
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -74,7 +74,7 @@ type
     procedure ImprimirINUTILIZACAO(NFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFe: TNFe = nil); override;
   published
-    property LocalImpCanhoto: TPosRecibo read FLocalImpCanhoto write FLocalImpCanhoto  default prCabecalho;
+//    property LocalImpCanhoto: TPosRecibo read FLocalImpCanhoto write FLocalImpCanhoto  default prCabecalho;
   end;
 
 implementation
@@ -124,28 +124,28 @@ begin
      for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count-1 do
       begin
         fqrDANFeQRRetrato.Imprimir(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
-                                   TACBrNFe(ACBrNFe), Logo, Email,
+                                   TACBrNFe(ACBrNFe), PosCanhoto, Logo, Email,
                                    ExibirResumoCanhoto, Fax, NumCopias, Sistema,
                                    Site, Usuario, MostrarPreview, MargemSuperior,
                                    MargemInferior, MargemEsquerda, MargemDireita,
                                    CasasDecimais._qCom, CasasDecimais._vUnCom,
                                    Impressora, ExibirResumoCanhoto_Texto,
                                    ExpandirLogoMarca, NFeCancelada,
-                                   LocalImpCanhoto, ImprimeItens, ViaConsumidor,
+                                   ImprimirItens, ViaConsumidor,
                                    vTroco, ImprimirDescPorc,
                                    ImprimirDetalhamentoEspecifico,
                                    ImprimirTotalLiquido);
       end;
    end
   else
-     fqrDANFeQRRetrato.Imprimir(NFe, TACBrNFe(ACBrNFe), Logo, Email,
+     fqrDANFeQRRetrato.Imprimir(NFe, TACBrNFe(ACBrNFe), PosCanhoto, Logo, Email,
                                 ExibirResumoCanhoto, Fax, NumCopias, Sistema,
                                 Site, Usuario, MostrarPreview, MargemSuperior,
                                 MargemInferior, MargemEsquerda, MargemDireita,
                                 CasasDecimais._qCom, CasasDecimais._vUnCom,
                                 Impressora, ExibirResumoCanhoto_Texto,
-                                ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
-                                ImprimeItens, ViaConsumidor, vTroco,
+                                ExpandirLogoMarca, NFeCancelada,
+                                ImprimirItens, ViaConsumidor, vTroco,
                                 ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
                                 ImprimirTotalLiquido);
 
@@ -180,13 +180,13 @@ begin
         NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
         fqrDANFeQRRetrato.SavePDF(NomeArq, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
-                                  TACBrNFe(ACBrNFe), Logo, Email, ExibirResumoCanhoto,
+                                  TACBrNFe(ACBrNFe), PosCanhoto, Logo, Email, ExibirResumoCanhoto,
                                   Fax, NumCopias, Sistema, Site, Usuario,
                                   MargemSuperior, MargemInferior, MargemEsquerda,
                                   MargemDireita, CasasDecimais._qCom,
                                   CasasDecimais._vUnCom, ExibirResumoCanhoto_Texto,
-                                  ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
-                                  ImprimeItens, ViaConsumidor, vTroco,
+                                  ExpandirLogoMarca, NFeCancelada,
+                                  ImprimirItens, ViaConsumidor, vTroco,
                                   ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
                                   ImprimirTotalLiquido);
       end;
@@ -196,13 +196,13 @@ begin
      NomeArq := StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
-     fqrDANFeQRRetrato.SavePDF(NomeArq, NFe, TACBrNFe(ACBrNFe), Logo, Email,
+     fqrDANFeQRRetrato.SavePDF(NomeArq, NFe, TACBrNFe(ACBrNFe), PosCanhoto, Logo, Email,
                                ExibirResumoCanhoto, Fax, NumCopias, Sistema,
                                Site, Usuario, MargemSuperior, MargemInferior,
                                MargemEsquerda, MargemDireita, CasasDecimais._qCom,
                                CasasDecimais._vUnCom, ExibirResumoCanhoto_Texto,
-                               ExpandirLogoMarca, NFeCancelada, LocalImpCanhoto,
-                               ImprimeItens, ViaConsumidor, vTroco,
+                               ExpandirLogoMarca, NFeCancelada,
+                               ImprimirItens, ViaConsumidor, vTroco,
                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
                                ImprimirTotalLiquido);
    end;

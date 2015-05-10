@@ -41,7 +41,14 @@ unit ACBrMDFeDAMDFeClass;
 interface
 
 uses
-  Forms, SysUtils, Classes,
+  SysUtils, Classes,
+  {$IF DEFINED(VisualCLX)}
+     QForms,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Forms,
+  {$ELSE}
+     Forms,
+  {$IFEND}
   pmdfeMDFe, pcnConversao;
 
 type
@@ -49,13 +56,12 @@ type
    private
     procedure SetMDFe(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
-    function GetPathArquivos: String;
   protected
     FACBrMDFe: TComponent;
     FLogo: String;
     FSistema: String;
     FUsuario: String;
-    FPathArquivos: String;
+    FPathPDF: String;
     FImpressora: String;
     FImprimirHoraSaida: Boolean;
     FImprimirHoraSaida_Hora: String;
@@ -68,7 +74,6 @@ type
     FFax: String;
     FSite: String;
     FEmail: String;
-    FImprimeDescPorc: Boolean;
 	  FProtocoloMDFe: String;
     FMargemInferior: Double;
     FMargemSuperior: Double;
@@ -81,6 +86,9 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    function GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
+
     procedure ImprimirDAMDFe(MDFe: TMDFe = nil); virtual;
     procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); virtual;
     procedure ImprimirEVENTO(MDFe: TMDFe = nil); virtual;
@@ -90,7 +98,7 @@ type
     property Logo: String                   read FLogo                   write FLogo;
     property Sistema: String                read FSistema                write FSistema;
     property Usuario: String                read FUsuario                write FUsuario;
-    property PathPDF: String                read GetPathArquivos         write FPathArquivos;
+    property PathPDF: String                read FPathPDF                write FPathPDF;
     property Impressora: String             read FImpressora             write FImpressora;
     property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
@@ -102,7 +110,6 @@ type
     property Fax: String                    read FFax                    write FFax;
     property Site: String                   read FSite                   write FSite;
     property Email: String                  read FEmail                  write FEmail;
-    property ImprimirDescPorc: Boolean      read FImprimeDescPorc        write FImprimeDescPorc;
     property ProtocoloMDFe: String          read FProtocoloMDFe          write FProtocoloMDFe;
     property MargemInferior: Double         read FMargemInferior         write FMargemInferior;
     property MargemSuperior: Double         read FMargemSuperior         write FMargemSuperior;
@@ -116,18 +123,18 @@ type
 implementation
 
 uses
- ACBrMDFe, ACBrUtil;
+  ACBrMDFe, ACBrUtil, ACBrDFeUtil, ACBrDFeConfiguracoes;
 
 constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin
   inherited create(AOwner);
 
-  FACBrMDFe     := nil;
-  FLogo         := '';
-  FSistema      := '';
-  FUsuario      := '';
-  FPathArquivos := '';
-  FImpressora   := '';
+  FACBrMDFe   := nil;
+  FLogo       := '';
+  FSistema    := '';
+  FUsuario    := '';
+  FPathPDF    := '';
+  FImpressora := '';
 
   FImprimirHoraSaida      := False;
   FImprimirHoraSaida_Hora := '';
@@ -140,8 +147,7 @@ begin
   FSite  := '';
   FEmail := '';
 
-  FImprimeDescPorc := False;
-  FProtocoloMDFe    := '';
+  FProtocoloMDFe := '';
 
   FMargemInferior := 0.8;
   FMargemSuperior := 0.8;
@@ -209,17 +215,20 @@ begin
   raise Exception.Create(NomeProcedure);
 end;
 
-function TACBrMDFeDAMDFeClass.GetPathArquivos: String;
+function TACBrMDFeDAMDFeClass.GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
 begin
-  if EstaVazio(FPathArquivos) then
+  Result := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(FPathPDF, 'MDFe', CNPJ, Data);
+(*
+  if EstaVazio(FPathPDF) then
      if Assigned(FACBrMDFe) then
-        FPathArquivos := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.PathSalvar;
+        FPathPDF := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.PathSalvar;
 
-  if NaoEstaVazio(FPathArquivos) then
-     if not DirectoryExists(FPathArquivos) then
-        ForceDirectories(FPathArquivos);
+  if NaoEstaVazio(FPathPDF) then
+     if not DirectoryExists(FPathPDF) then
+        ForceDirectories(FPathPDF);
 
-  Result := PathWithDelim(FPathArquivos);
+  Result := PathWithDelim(FPathPDF);
+*)
 end;
 
 procedure TACBrMDFeDAMDFeClass.ImprimirEVENTO(MDFe: TMDFe);

@@ -2,7 +2,6 @@
 package ACBr_NFSe;
 
 {$R *.res}
-{$R '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.dcr'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -34,8 +33,8 @@ requires
   designide,
   xmlrtl,
   dbrtl,
-	inet,
-	soaprtl,
+  inet,
+  soaprtl,
   ACBr_Comum,
   ACBr_synapse,
   ACBr_OpenSSL,

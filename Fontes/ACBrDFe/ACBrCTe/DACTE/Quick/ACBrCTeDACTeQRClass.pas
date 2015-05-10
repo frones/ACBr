@@ -61,7 +61,7 @@ uses
 type
   TACBrCTeDACTeQR = class(TACBrCTeDACTeClass)
   private
-    FPosRecibo: TPosRecibo;
+//    FPosRecibo: TPosRecibo;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -72,7 +72,7 @@ type
     procedure ImprimirINUTILIZACAO(CTe: TCTe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(CTe: TCTe = nil); override;
   published
-    property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
+//    property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
   end;
 
 implementation
@@ -134,17 +134,17 @@ begin
     for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
       frmDACTeQRRetrato.Imprimir(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe,
                                  Logo, Email, ImprimirHoraSaida, ExpandirLogoMarca,
-                                 ImprimirHoraSaida_Hora, ResumoCanhoto, Fax, NumCopias,
+                                 ImprimirHoraSaida_Hora, ExibirResumoCanhoto, Fax, NumCopias,
                                  Sistema, Site, Usuario, MostrarPreview, MargemSuperior,
                                  MargemInferior, MargemEsquerda, MargemDireita,
-                                 Impressora, PosRecibo, CTeCancelada, EPECEnviado);
+                                 Impressora, PosCanhoto, CTeCancelada, EPECEnviado);
   end
   else
     frmDACTeQRRetrato.Imprimir(CTe, Logo, Email, ImprimirHoraSaida, ExpandirLogoMarca,
-                               ImprimirHoraSaida_Hora, ResumoCanhoto, Fax, NumCopias,
+                               ImprimirHoraSaida_Hora, ExibirResumoCanhoto, Fax, NumCopias,
                                Sistema, Site, Usuario, MostrarPreview, MargemSuperior,
                                MargemInferior, MargemEsquerda, MargemDireita,
-                               Impressora, PosRecibo, CTeCancelada, EPECEnviado);
+                               Impressora, PosCanhoto, CTeCancelada, EPECEnviado);
 
   if frmDACTeQRRetrato.QRCTe <> nil then
     frmDACTeQRRetrato.Free;
@@ -191,28 +191,26 @@ begin
     for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count-1 do
     begin
       NomeArq := StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]);
-//        NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '.pdf';
       NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-cte.pdf';
 
       frmDACTeQRRetrato.SavePDF(NomeArq, TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe,
                                 Logo, Email, ImprimirHoraSaida, ExpandirLogoMarca,
-                                ImprimirHoraSaida_Hora, ResumoCanhoto, Fax, NumCopias,
+                                ImprimirHoraSaida_Hora, ExibirResumoCanhoto, Fax, NumCopias,
                                 Sistema, Site, Usuario, MargemSuperior, MargemInferior,
-                                MargemEsquerda, MargemDireita, PosRecibo,
+                                MargemEsquerda, MargemDireita, PosCanhoto,
                                 CTeCancelada, EPECEnviado);
     end;
   end
   else
   begin
     NomeArq := StringReplace(CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]);
-//     NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '.pdf';
     NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-cte.pdf';
 
     frmDACTeQRRetrato.SavePDF(NomeArq, CTe, Logo, Email, ImprimirHoraSaida,
-                              ExpandirLogoMarca, ImprimirHoraSaida_Hora, ResumoCanhoto,
+                              ExpandirLogoMarca, ImprimirHoraSaida_Hora, exibirResumoCanhoto,
                               Fax, NumCopias, Sistema, Site, Usuario, MargemSuperior,
                               MargemInferior, MargemEsquerda, MargemDireita,
-                              PosRecibo, CTeCancelada, EPECEnviado);
+                              PosCanhoto, CTeCancelada, EPECEnviado);
   end;
 
   if frmDACTeQRRetrato.QRCTe <> nil then
@@ -288,10 +286,6 @@ begin
     begin
       for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
       begin
-//          NomeArq := TACBrCTe(ACBrCTe).DACTE.PathPDF +
-//                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 09, 44) +
-//                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 03, 06) +
-//                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
         NomeArq := TACBrCTe(ACBrCTe).DACTe.PathPDF +
                    StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.Id, 'ID', '', [rfIgnoreCase]) +
                    '-procEventoCTe.pdf';
@@ -299,7 +293,6 @@ begin
 
         for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
         begin
-//          if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
           if StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
           begin
             frmCTeDAEventoQR.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
@@ -325,10 +318,6 @@ begin
     begin
       for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
        begin
-//          NomeArq := TACBrCTe(ACBrCTe).DACTE.PathPDF +
-//                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 09, 44) +
-//                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 03, 06) +
-//                   Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
          NomeArq := TACBrCTe(ACBrCTe).DACTe.PathPDF +
                     StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.Id, 'ID', '', [rfIgnoreCase]) +
                     '-procEventoCTe.pdf';

@@ -188,9 +188,9 @@ var
 begin
   inherited;
 
-  qrb03a_Cab_Itens.Enabled := FImprimeItens;
-  qrb03b_Desc_Itens.Enabled := FImprimeItens;
-  qrb03c_Lin_Itens.Enabled := FImprimeItens;
+  qrb03a_Cab_Itens.Enabled := FImprimirItens;
+  qrb03b_Desc_Itens.Enabled := FImprimirItens;
+  qrb03c_Lin_Itens.Enabled := FImprimirItens;
 
   Itens;
   nItemControle := 0;

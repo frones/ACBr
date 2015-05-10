@@ -225,9 +225,9 @@ var
 begin
   inherited;
 
-  qrb05a_Cab_Itens.Enabled := FImprimeItens;
-  qrb05b_Desc_Itens.Enabled := FImprimeItens;
-  qrb05c_Lin_Itens.Enabled := FImprimeItens;
+  qrb05a_Cab_Itens.Enabled := FImprimirItens;
+  qrb05b_Desc_Itens.Enabled := FImprimirItens;
+  qrb05c_Lin_Itens.Enabled := FImprimirItens;
 
   Itens;
   nItemControle := 0;

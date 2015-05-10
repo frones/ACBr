@@ -85,14 +85,12 @@ type
    private
     procedure SetNFE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
-    function GetPathArquivos: String;
-    procedure SetPathArquivos(const Value: String);
   protected
     FACBrNFe: TComponent;
     FLogo: String;
     FSistema: String;
     FUsuario: String;
-    FPathArquivos: String;
+    FPathPDF: String;
     FImpressora: String;
     FImprimirTotalLiquido: Boolean;
     FMostrarPreview: Boolean;
@@ -121,7 +119,7 @@ type
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FImprimeItens: Boolean;
-    
+
     // Incluido por Edilson Alves de Oliveira em 10/10/2014
     // Destinado exclusivamente ao DANFE da NFC-e
     FViaConsumidor : Boolean;
@@ -135,10 +133,15 @@ type
     FFonteTributos: String;
     FChaveTributos: String;
 
+    FPosCanhoto: TPosRecibo;
+
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    function GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
+
     procedure ImprimirDANFE(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); virtual;
@@ -152,7 +155,7 @@ type
     property Logo: String                            read FLogo                           write FLogo;
     property Sistema: String                         read FSistema                        write FSistema;
     property Usuario: String                         read FUsuario                        write FUsuario;
-    property PathPDF: String                         read GetPathArquivos                 write SetPathArquivos;
+    property PathPDF: String                         read FPathPDF                        write FPathPDF;
     property Impressora: String                      read FImpressora                     write FImpressora;
     property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
     property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
@@ -180,7 +183,7 @@ type
     property LocalImpCanhoto: Integer                read FLocalImpCanhoto                write FLocalImpCanhoto;
     // Incluido por Italo em 27/03/2014
     // Destinado exclusivamente ao DANFE da NFC-e
-    property ImprimeItens: Boolean                   read FImprimeItens                   write FImprimeItens;
+    property ImprimirItens: Boolean                  read FImprimeItens                   write FImprimeItens;
     property vTroco: Currency                        read FvTroco                         write FvTroco;
     property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
 
@@ -192,12 +195,13 @@ type
     property FonteTributos: String                   read FFonteTributos                  write FFonteTributos;
     property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
 
+    property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto; // default prCabecalho;
   end;
 
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, ACBrDFeUtil;
+  ACBrNFe, ACBrUtil, ACBrDFeUtil, ACBrDFeConfiguracoes;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);
@@ -238,12 +242,13 @@ constructor TACBrNFeDANFEClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrNFe      := nil;
-  FLogo         := '';
-  FSistema      := '';
-  FUsuario      := '';
-  FPathArquivos := '';
-  FImpressora   := '';
+  FACBrNFe    := nil;
+  FLogo       := '';
+  FSistema    := '';
+  FUsuario    := '';
+  FPathPDF    := '';
+  FImpressora := '';
+  
   FImprimirTotalLiquido := False;
   FMostrarPreview       := True;
   FMostrarStatus        := True;
@@ -350,22 +355,20 @@ begin
   raise EACBrNFeException.Create( NomeProcedure );
 end;
 
-function TACBrNFeDANFEClass.GetPathArquivos: String;
+function TACBrNFeDANFEClass.GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
 begin
-  if EstaVazio(FPathArquivos) then
+  Result := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(FPathPDF, 'NFe', CNPJ, Data);
+(*
+  if EstaVazio(FPathPDF) then
      if Assigned(FACBrNFe) then
-        FPathArquivos := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.PathSalvar;
+        FPathPDF := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.PathSalvar;
 
-  if NaoEstaVazio(FPathArquivos) then
-     if not DirectoryExists(FPathArquivos) then
-        ForceDirectories(FPathArquivos);
+  if NaoEstaVazio(FPathPDF) then
+     if not DirectoryExists(FPathPDF) then
+        ForceDirectories(FPathPDF);
 
-  Result := PathWithDelim(FPathArquivos);
-end;
-
-procedure TACBrNFeDANFEClass.SetPathArquivos(const Value: String);
-begin
-  FPathArquivos := Value;
+  Result := PathWithDelim(FPathPDF);
+*)
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTO(NFE: TNFe);

@@ -175,8 +175,6 @@ begin
     cURL_Producao := 'http://201.69.22.78:5667/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3519303 : // Ibaté/SP
     cURL_Producao := 'http://189.44.89.244:5661/IssWeb-ejb/IssWebWS/IssWebWS';  
-  3520103 : // Igarapava/SP
-    cURL_Producao := 'http://187.9.138.218:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3540200 : // Pontal/SP
     cURL_Producao := 'http://131.100.72.54:8080/IssWeb-ejb/IssWebWS/IssWebWS';
 //    cURL_Producao := 'http://177.69.210.132:8080/IssWeb-ejb/IssWebWS/IssWebWS';
@@ -191,7 +189,9 @@ begin
 //  5102637 : // Campo Novo Do Parecis/MT
 //    cURL_Producao := 'http://179.252.22.226:3394/IssWeb-ejb/IssWebWS/IssWebWS';
   3515509 : // Fernandópolis/SP
-    cURL_Producao := 'http://servicos.fernandopolis.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';    
+    cURL_Producao := 'http://servicos.fernandopolis.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
+  3527504 : // Lucianopolis/SP
+    cURL_Producao := 'http://186.224.13.194:5661/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';    
  end;
 
   ConfigURL.HomNomeCidade         := '';

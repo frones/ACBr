@@ -151,6 +151,10 @@ begin
   end;
 
  case ACodCidade of
+  3521408: begin
+            ConfigURL.ProNomeCidade      := 'iracemapolis';
+            ConfigURL.ProRecepcaoLoteRPS := 'http://wsiracemapolis.simplissweb.com.br/nfseservice.svc';
+           end;
   3103504: begin
             ConfigURL.ProNomeCidade      := 'araguari';
             ConfigURL.ProRecepcaoLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';

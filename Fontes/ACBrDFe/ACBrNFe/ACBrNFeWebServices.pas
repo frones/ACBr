@@ -747,8 +747,8 @@ end;
 procedure TNFeStatusServico.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
-    (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-    (FPConfiguracoesNFe.WebServices.UFCodigo = 29) then
+     (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
+     (FPConfiguracoesNFe.WebServices.UFCodigo = 29) then
   begin
     FPServico := GetUrlWsd + 'NfeStatusServico';
     FPSoapAction := FPServico + '/NfeStatusServicoNF';
@@ -1579,8 +1579,9 @@ end;
 
 procedure TNFeConsulta.DefinirServicoEAction;
 begin
-  if (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-    (FPConfiguracoesNFe.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
+  if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+     (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
+     (FPConfiguracoesNFe.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
     FPServico := GetUrlWsd + 'NfeConsulta'
   else
     FPServico := GetUrlWsd + 'NfeConsulta2';
@@ -1961,9 +1962,9 @@ end;
 
 procedure TNFeInutilizacao.DefinirServicoEAction;
 begin
-(*
-  if (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-    (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA
+  if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+     (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
+     (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA
   begin
     FPServico := GetUrlWsd + 'NfeInutilizacao';
     FPSoapAction := FPServico + '/NfeInutilizacao';
@@ -1973,9 +1974,8 @@ begin
     FPServico := GetUrlWsd + 'NfeInutilizacao2';
     FPSoapAction := FPServico;
   end;
-*)
-  FPServico := GetUrlWsd + 'NfeInutilizacao2';
-  FPSoapAction := FPServico;
+//  FPServico := GetUrlWsd + 'NfeInutilizacao2';
+//  FPSoapAction := FPServico;
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;

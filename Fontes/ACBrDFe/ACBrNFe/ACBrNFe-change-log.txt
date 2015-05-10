@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2015
+[-] Mais algumas alterações de definição de Serviço e SoapAction.
+    por: Italo Jurisato Junior e Gledson Silva Santos
+
 08/05/2015
 [-] Alterado a definição do Serviço e SoapAction da Inutilização.
     por: Gledson Silva Santos

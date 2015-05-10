@@ -842,7 +842,8 @@ begin
   5103379, // Cotriguacu/MT
   5103502,  // Diamantino/MT
   4117305,  //Ortigueira/PR
-  4116307  //Munhoz de Melo/PR
+  4116307, //Munhoz de Melo/PR
+  4204004  // Catanduvas/SC
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG
@@ -1072,8 +1073,6 @@ begin
   4118501, // Pato Branco/PR
   4122404, // Rolandia/PR
   4201307, // Araquari/SC
-  4204004, // Catanduvas/SC
-//  4205902, // Gaspar/SC
   4210506, // Maravilha/SC
   4216602, // São José/SC
   4303509, // Camaqua/RS

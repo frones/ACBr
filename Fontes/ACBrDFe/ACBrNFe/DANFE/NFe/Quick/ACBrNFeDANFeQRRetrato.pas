@@ -967,6 +967,15 @@ begin
           end // if FImprimirDetalhamentoEspecifico = True
           else cdsItens.FieldByName('DESCRICAO').AsString := XProd;
 
+          { Caso a máscara tenha sido informada é anulada a criação da máscara
+            de acordo com 'FCasasDecimaisqCom' }
+          if FCasasDecimaisMaskqCom <> '' then
+            cdsItens.FieldByName('QTDE').AsString := FormatFloat(FCasasDecimaisMaskqCom, QCom)
+          else
+            cdsItens.FieldByName('QTDE').AsString := FormatFloat(
+              '###,###,###,##0' + IfThen(FCasasDecimaisqCom > 0, '.') +
+              StringOfChar('0', FCasasDecimaisqCom), qCom);
+          (*    
           case FCasasDecimaisqCom of
             0: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0', QCom);
             1: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0', QCom);
@@ -980,7 +989,17 @@ begin
             9: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000000', QCom);
            10: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000000', QCom);
           end;
-
+          *)
+  
+          { Caso a máscara tenha sido informada é anulada a criação da máscara
+            de acordo com 'FCasasDecimaisvUnCom' }
+          if FCasasDecimaisMaskvUnCom <> '' then
+            cdsItens.FieldByName('VALOR').AsString := FormatFloat(FCasasDecimaisMaskvUnCom, vUnCom)
+          else
+            cdsItens.FieldByName('VALOR').AsString := FormatFloat(
+              '###,###,###,##0' + IfThen(FCasasDecimaisvUnCom > 0, '.') +
+              StringOfChar('0', FCasasDecimaisvUnCom), vUnCom);
+          (*  
           case FCasasDecimaisvUnCom of
             0: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0', vUnCom);
             1: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0', vUnCom);
@@ -994,6 +1013,7 @@ begin
             9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
            10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
           end;
+          *)
 
           // Fernando pasqueto para imprimir o desconto no danfe
           if FImprimirDescPorc = True then
@@ -1301,7 +1321,7 @@ inherited;
       end;
    end;
 
-   intAlturaLinha := (intLinhasDescricao + intLinhasAdicionais) * 12;
+   intAlturaLinha := (intLinhasDescricao + intLinhasAdicionais) * 11;
 
     qrs2.Height:= intAlturaLinha;
     qrs3.Height:= intAlturaLinha;
@@ -1317,9 +1337,9 @@ inherited;
     qrs13.Height:= intAlturaLinha;
     qrs14.Height:= intAlturaLinha;
     qrs15.Height:= intAlturaLinha;
-    qrs16.Height:= intAlturaLinha;
-    qrs17.Height:= intAlturaLinha;
-    qrs18.Top   := intAlturaLinha;
+//    qrs16.Height:= intAlturaLinha;
+//    qrs17.Height:= intAlturaLinha;
+//    qrs18.Top   := intAlturaLinha;
 
     qrs2.Repaint;
     qrs3.Repaint;
@@ -1335,9 +1355,9 @@ inherited;
     qrs13.Repaint;
     qrs14.Repaint;
     qrs15.Repaint;
-    qrs16.Repaint;
-    qrs17.Repaint;
-    qrs18.Repaint;
+//    qrs16.Repaint;
+//    qrs17.Repaint;
+//    qrs18.Repaint;
  
 
    if cdsItensINFADIPROD.AsString<>'' then begin

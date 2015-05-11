@@ -552,8 +552,8 @@ begin
 end;
 
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
-var
-  Ok: Boolean;
+//var
+//  Ok: Boolean;
 begin
   Result := False;
   FNFeR.Leitor.Arquivo := AXML;
@@ -615,18 +615,10 @@ begin
     if Assigned(Anexos) then
       AnexosEmail.Assign(Anexos);
 
-    if NomeArq <> '' then
-    begin
-      GravarXML(NomeArq);
-      AnexosEmail.Add(NomeArq);
-    end
-    else
-    begin
-      GravarStream(StreamNFe);
-    end;
-
     with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
     begin
+      GravarStream(StreamNFe);
+
       if (EnviaPDF) then
       begin
         if Assigned(DANFE) then

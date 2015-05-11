@@ -110,7 +110,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil; NomeArq: String = ''); overload;
+      StreamNFe: TStream = nil; NomeArq: String = ''); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;

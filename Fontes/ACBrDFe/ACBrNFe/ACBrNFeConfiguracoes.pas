@@ -57,6 +57,8 @@ type
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
     constructor Create(AOwner: TConfiguracoes); override;
+    procedure Assign(DeGeralConfNFe: TGeralConfNFe); reintroduce;
+
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
@@ -78,6 +80,7 @@ type
     FPathDownload: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
+    procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); reintroduce;
 
     function GetPathCan(CNPJ: String = ''): String;
     function GetPathInu(CNPJ: String = ''): String;
@@ -167,6 +170,14 @@ begin
   FVersaoDF := ve200;
 end;
 
+procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
+begin
+  inherited Assign(DeGeralConfNFe);
+
+  FModeloDF       := DeGeralConfNFe.ModeloDF;
+  FVersaoDF       := DeGeralConfNFe.VersaoDF;
+end;
+
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);
 begin
   FModeloDF := AValue;
@@ -193,6 +204,21 @@ begin
   FPathCCe := '';
   FPathEvento := '';
   FPathDownload := '';
+end;
+
+procedure TArquivosConfNFe.Assign(DeArquivosConfNFe: TArquivosConfNFe);
+begin
+  inherited Assign(DeArquivosConfNFe);
+
+  FEmissaoPathNFe             := DeArquivosConfNFe.EmissaoPathNFe;
+  FSalvarEvento               := DeArquivosConfNFe.SalvarCCeCanEvento;
+  FSalvarApenasNFeProcessadas := DeArquivosConfNFe.SalvarApenasNFeProcessadas;
+  FPathNFe                    := DeArquivosConfNFe.PathNFe;
+  FPathCan                    := DeArquivosConfNFe.PathCan;
+  FPathInu                    := DeArquivosConfNFe.PathInu;
+  FPathCCe                    := DeArquivosConfNFe.PathCCe;
+  FPathEvento                 := DeArquivosConfNFe.PathEvento;
+  FPathDownload               := DeArquivosConfNFe.PathDownload;
 end;
 
 function TArquivosConfNFe.GetPathCan(CNPJ: String = ''): String;

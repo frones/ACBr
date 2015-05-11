@@ -63,6 +63,8 @@ type
     procedure SetNumeroSerie(const Value: String);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload;
+    procedure Assign(DeCertificadosConf: TCertificadosConf); virtual;
+
   published
     property ArquivoPFX: String read FArquivoPFX write FArquivoPFX;
     property DadosPFX: AnsiString read FDadosPFX write FDadosPFX;
@@ -105,6 +107,7 @@ type
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload;
     destructor Destroy; override;
+    procedure Assign(DeWebServicesConf: TWebServicesConf); virtual;
 
     procedure LerParams; virtual;
 
@@ -153,6 +156,8 @@ type
     function GetFormatoAlerta: String;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
+    procedure Assign(DeGeralConf: TGeralConf); virtual;
+
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
     property UnloadSSLLib: Boolean read FUnloadSSLLib write FUnloadSSLLib default True;
@@ -193,6 +198,7 @@ type
     function GetPathSchemas: String;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
+    procedure Assign(DeArquivosConf: TArquivosConf); virtual;
 
     function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
       Data: TDateTime = 0): String; virtual;
@@ -227,6 +233,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure Assign(DeConfiguracoes: TConfiguracoes); virtual;
 
     procedure LerParams(NomeArqParams: String = '');
 
@@ -306,6 +313,14 @@ begin
   inherited;
 end;
 
+procedure TConfiguracoes.Assign(DeConfiguracoes: TConfiguracoes);
+begin
+  FPGeral.Assign(DeConfiguracoes.Geral);
+  FPWebServices.Assign(DeConfiguracoes.WebServices);
+  FPCertificados.Assign(DeConfiguracoes.Certificados);
+  FPArquivos.Assign(DeConfiguracoes.Arquivos);
+end;
+
 procedure TConfiguracoes.LerParams(NomeArqParams: String);
 var
   SL: TStringList;
@@ -350,6 +365,20 @@ begin
   FIdCSC := '';
   FCSC := '';
   FValidarDigest := True;
+end;
+
+procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
+begin
+  FSSLLib           := DeGeralConf.SSLLib;
+  FFormaEmissao     := DeGeralConf.FormaEmissao;
+  FSalvar           := DeGeralConf.Salvar;
+  FExibirErroSchema := DeGeralConf.ExibirErroSchema;
+  FFormatoAlerta    := DeGeralConf.FormatoAlerta;
+  FRetirarAcentos   := DeGeralConf.RetirarAcentos;
+  FIdCSC            := DeGeralConf.IdCSC;
+  FCSC              := DeGeralConf.CSC;
+  FUnloadSSLLib     := DeGeralConf.UnloadSSLLib;
+  FValidarDigest    := DeGeralConf.ValidarDigest;
 end;
 
 function TGeralConf.GetFormatoAlerta: String;
@@ -413,6 +442,24 @@ destructor TWebServicesConf.Destroy;
 begin
   FParams.Free;
   inherited;
+end;
+
+procedure TWebServicesConf.Assign(DeWebServicesConf: TWebServicesConf);
+begin
+  FResourceName             := DeWebServicesConf.ResourceName;
+  FVisualizar               := DeWebServicesConf.Visualizar;
+  FUF                       := DeWebServicesConf.UF;
+  FAmbiente                 := DeWebServicesConf.Ambiente;
+  FProxyHost                := DeWebServicesConf.ProxyHost;
+  FProxyPort                := DeWebServicesConf.ProxyPort;
+  FProxyUser                := DeWebServicesConf.ProxyUser;
+  FProxyPass                := DeWebServicesConf.ProxyPass;
+  FAguardarConsultaRet      := DeWebServicesConf.AguardarConsultaRet;
+  FTentativas               := DeWebServicesConf.Tentativas;
+  FIntervaloTentativas      := DeWebServicesConf.IntervaloTentativas;
+  FAjustaAguardaConsultaRet := DeWebServicesConf.AjustaAguardaConsultaRet;
+  FSalvar                   := DeWebServicesConf.Salvar;
+  FParams.Assign(DeWebServicesConf.Params);
 end;
 
 procedure TWebServicesConf.LerParams;
@@ -517,6 +564,15 @@ begin
   FNumeroSerie := '';
 end;
 
+procedure TCertificadosConf.Assign(DeCertificadosConf: TCertificadosConf);
+begin
+  FCNPJ := DeCertificadosConf.CNPJ;
+  FDadosPFX := DeCertificadosConf.DadosPFX;
+  FSenha := DeCertificadosConf.Senha;
+  FNumeroSerie := DeCertificadosConf.NumeroSerie;
+  FArquivoPFX := DeCertificadosConf.ArquivoPFX;
+end;
+
 procedure TCertificadosConf.SetNumeroSerie(const Value: String);
 begin
   FNumeroSerie := Trim(UpperCase(StringReplace(Value, ' ', '', [rfReplaceAll])));
@@ -539,6 +595,18 @@ begin
   FAdicionarLiteral := False;
   FSepararCNPJ := False;
   FSepararModelo := False;
+end;
+
+procedure TArquivosConf.Assign(DeArquivosConf: TArquivosConf);
+begin
+  FPathSalvar       := DeArquivosConf.PathSalvar;
+  FPathSchemas      := DeArquivosConf.PathSchemas;
+  FIniServicos      := DeArquivosConf.IniServicos;
+  FSalvar           := DeArquivosConf.Salvar;
+  FAdicionarLiteral := DeArquivosConf.AdicionarLiteral;
+  FSepararCNPJ      := DeArquivosConf.SepararPorCNPJ;
+  FSepararModelo    := DeArquivosConf.SepararPorModelo;
+  FSepararPorMes    := DeArquivosConf.SepararPorMes;
 end;
 
 function TArquivosConf.GetPathSalvar: String;

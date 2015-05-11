@@ -57,7 +57,7 @@ interface
 
 uses
   Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
-  ACBrNFeDANFEClass, ACBrPosPrinter, ACBrDevice,
+  ACBrNFeDANFEClass, ACBrPosPrinter,
   pcnNFe, pcnEnvEventoNFe;
 
 type
@@ -81,7 +81,6 @@ type
 
     FImprimeEmUmaLinha: Boolean;
     FImprimeDescAcrescItem: Boolean;
-    FCabecalho : TACBrCabecalhoNaoFiscal;
     FUsaCodigoEanImpressao: Boolean;
 
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
@@ -91,7 +90,7 @@ type
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
 
-    procedure Notification(AComponent: TComponent; Operation: TOperation);
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure AtivarPosPrinter;
 
     procedure GerarCabecalho;
@@ -132,7 +131,7 @@ procedure Register;
 implementation
 
 uses
-  StrUtils, Math,
+  strutils, Math,
   ACBrNFe, ACBrConsts, ACBrValidador, ACBrUtil, ACBrDFeUtil,
    pcnConversao, pcnAuxiliar;
 
@@ -534,9 +533,6 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarRodape(Cancelamento: Boolean = False);
 var
   qrcode: AnsiString;
-  cCaracter: AnsiString;
-  i, cTam1, cTam2: Integer;
-  bMenos, bMais, iQtdBytes, iLargMod, iNivelCorrecao: Integer;
 begin
   FPosPrinter.Buffer.Add('</linha_simples>');
   FPosPrinter.Buffer.Add('</ce>Consulta via leitor de QR Code');

@@ -114,6 +114,8 @@ uses
 constructor TConfiguracoesCTe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  WebServices.ResourceName := 'ACBrCTeServicos';
 end;
 
 function TConfiguracoesCTe.GetGeral: TGeralConfCTe;

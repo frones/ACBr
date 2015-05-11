@@ -105,7 +105,7 @@ type
 implementation
 
 uses
- ACBrUtil, DateUtils;
+  ACBrUtil, DateUtils;
 
 { TConfiguracoesMDFe }
 
@@ -113,6 +113,8 @@ uses
 constructor TConfiguracoesMDFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  WebServices.ResourceName := 'ACBrMDFeServicos';
 end;
 
 function TConfiguracoesMDFe.GetArquivos: TArquivosConfMDFe;

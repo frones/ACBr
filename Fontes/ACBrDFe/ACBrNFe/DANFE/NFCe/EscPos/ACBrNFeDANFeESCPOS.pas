@@ -256,7 +256,7 @@ var
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
 begin
-  if ImprimeItens then
+  if ImprimirItens then
   begin
     FPosPrinter.Buffer.Add('</linha_simples>');
     FPosPrinter.Buffer.Add('</fn>#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$');
@@ -612,15 +612,15 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFEResumido(NFE: TNFe);
 var
-  OldImprimeItens: Boolean;
+  OldImprimirItens: Boolean;
 begin
   AtivarPosPrinter;
-  OldImprimeItens := ImprimeItens;
+  OldImprimirItens := ImprimirItens;
   try
-    ImprimeItens := False;
+    ImprimirItens := False;
     MontarEnviarDANFE(NFE, True);
   finally
-    ImprimeItens := OldImprimeItens;
+    ImprimirItens := OldImprimirItens;
   end;
 end;
 

@@ -139,7 +139,7 @@ type
 implementation
 
 uses
-  ACBrCTE, ACBrUtil, ACBrDFeUtil, ACBrDFeConfiguracoes;
+  ACBrCTE, ACBrUtil;
 
 constructor TACBrCTeDACTEClass.Create(AOwner: TComponent);
 begin

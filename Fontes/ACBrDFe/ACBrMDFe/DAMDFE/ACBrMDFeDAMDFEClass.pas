@@ -123,7 +123,7 @@ type
 implementation
 
 uses
-  ACBrMDFe, ACBrUtil, ACBrDFeUtil, ACBrDFeConfiguracoes;
+  ACBrMDFe, ACBrUtil;
 
 constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin

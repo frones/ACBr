@@ -2442,8 +2442,8 @@ begin
        Aliquota.Tipo      := EscECFResposta.Params[ 4*I + 1 ][1] ;
        { Adiciona o tipo no Indice, pois no comando de Venda de Item ele será necessario }
        Aliquota.Indice    := Aliquota.Tipo + EscECFResposta.Params[ 4*I ] ;
-       Aliquota.Aliquota  := StrToInt( OnlyNumber(EscECFResposta.Params[ 4*I + 2 ]) ) / 100 ;
-       Aliquota.Total     := StrToInt( EscECFResposta.Params[ 4*I + 3 ] ) / 100 ;
+       Aliquota.Aliquota  := StrToIntDef( OnlyNumber(EscECFResposta.Params[ 4*I + 2 ]), 0 ) / 100 ;
+       Aliquota.Total     := StrToIntDef( EscECFResposta.Params[ 4*I + 3 ], 0 ) / 100 ;
 
        fpAliquotas.Add(Aliquota);
      end;

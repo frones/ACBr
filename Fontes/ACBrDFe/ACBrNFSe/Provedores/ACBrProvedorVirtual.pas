@@ -313,10 +313,12 @@ end;
 function TProvedorVirtual.GeraEnvelopeGerarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-//  DadosMsg := SeparaDados( DadosMsg, 'GerarNfseEnvio' );
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
   result := '<?xml version="1.0" encoding="utf-8"?>' +
             '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
-//                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
              '<SOAP-ENV:Body>' +
@@ -326,7 +328,6 @@ begin
                    CabMsg +
                  '</nfseCabecMsg>' +
                  '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
-                   '<?xml version="1.0" encoding="utf-8"?>' +
                    DadosMsg +
                  '</nfseDadosMsg>' +
                '</Entrada>' +

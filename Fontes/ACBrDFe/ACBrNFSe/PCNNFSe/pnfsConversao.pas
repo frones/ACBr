@@ -69,7 +69,14 @@ type
                             noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
                             noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN
                             );
-
+(*
+  TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
+                            no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
+                            no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
+                            no70, no71, no72, no78, no79,
+                            no101, no111, no121, no201, no301,
+                            no501, no511, no541, no551, no601, no701 );
+*)
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
 
@@ -284,6 +291,42 @@ begin
                            noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN]);
 end;
 
+(*
+function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5', '6', '7',
+                            '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
+                            '61', '62', '63', '64', '65', '60', '66', '67', '68', '69',
+                            '70', '71', '72', '78', '79',
+                            '101', '111', '121', '201', '301',
+                            '501', '511', '541', '551', '601', '701'
+                           ],
+                           [no1, no2, no3, no4, no5, no6, no7,
+                            no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
+                            no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
+                            no70, no71, no72, no78, no79,
+                            no101, no111, no121, no201, no301,
+                            no501, no511, no541, no551, no601, no701]);
+end;
+
+function StrToNaturezaOperacao(var ok: boolean; const s: string):TnfseNaturezaOperacao;
+begin
+  result := StrToEnumerado(ok, s,
+                          ['1', '2', '3', '4', '5', '6', '7',
+                           '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
+                           '61', '62', '63', '64', '65', '60', '66', '67', '68', '69',
+                           '70', '71', '72', '78', '79',
+                           '101', '111', '121', '201', '301',
+                           '501', '511', '541', '551', '601', '701'],
+                          [no1, no2, no3, no4, no5, no6, no7,
+                           no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
+                           no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
+                           no70, no71, no72, no78, no79,
+                           no101, no111, no121, no201, no301,
+                           no501, no511, no541, no551, no601, no701]);
+end;
+*)
 // Exigibilidade ISS ***********************************************************
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS):string;

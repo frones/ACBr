@@ -47,9 +47,12 @@ uses ACBrDevice,
          {$IFDEF QT3CLX} QtLibrary, QtSignalHooks {$ELSE} Qt {$ENDIF},
           QControls, QForms, QGraphics, QDialogs, QExtCtrls
        {$ENDIF}
-       {$IFDEF VCL}
+       {$IF DEFINED(FMX)}
+          , FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.ExtCtrls
+          , System.UITypes, FMX.Types, FMX.TextLayout, FMX.Objects
+       {$ELSEIF DEFINED(VCL)}
           , Controls, Forms, Graphics, Dialogs, ExtCtrls
-       {$ENDIF}
+       {$IFEND}
        {$IFDEF MSWINDOWS}
          , Windows, messages
        {$ENDIF}
@@ -653,7 +656,12 @@ TACBrECFClass = class
     {$IFNDEF NOGUI}
       procedure FormMsgTimer(Sender: TObject);
       procedure FormMsgCloseQuery(Sender: TObject; var CanClose: Boolean);
+      {$IFDEF FMX}
+      procedure FormMsgKeyPress(Sender: TObject; var Key: Word; var KeyChar: Char;
+        Shift: TShiftState);
+      {$ELSE}
       procedure FormMsgKeyPress(Sender: TObject; var Key: Char);
+      {$ENDIF}
 
       {$IFDEF VisualCLX}
        procedure FormMsgEvent(Sender: QObjectH; Event: QEventH;
@@ -3366,7 +3374,11 @@ begin
 
         Mensagem := ACBrStr( Mensagem ) ;
         {$IFNDEF NOGUI}
+          {$IFDEF FMX}
+          MessageDlg(Mensagem, TMsgDlgType.mtError, [TMsgDlgBtn.mbOK],0);
+          {$ELSE}
           MessageDlg( Mensagem ,mtError,[mbOk],0)  ;
+          {$ENDIF}
         {$ELSE}
           writeln( Mensagem ) ;
         {$ENDIF}
@@ -3419,10 +3431,16 @@ begin
   else
    begin
      {$IFNDEF NOGUI}
+      {$IFDEF FMX}
+      if MessageDlg(ACBrStr( Mensagem+sLineBreak+sLineBreak + cACBrECFDoOnMsgRetentar ),
+                    TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes,TMsgDlgBtn.mbNo],0) = mrYes then
+        Result := True ;
+      {$ELSE}
       if Retentar and
         (MessageDlg( ACBrStr( Mensagem+sLineBreak+sLineBreak + cACBrECFDoOnMsgRetentar ),
                      mtConfirmation,[mbYes,mbNo],0) = mrYes) then
         Result := True ;
+      {$ENDIF}
      {$else}
        Result := Retentar;
      {$ENDIF}
@@ -4445,15 +4463,25 @@ end;
        fsFormMsgTeclaParaFechar    := TeclaParaFechar ;
        fsFormMsgEstado             := fmsProcessando ;
 
+       {$IFDEF FMX}
+//       fsFormMsg.KeyPreview   := true ;
+       fsFormMsg.OnKeyDown    := FormMsgKeyPress ;
+       fsFormMsg.Fill.Color   := ECF.FormMsgColor ;
+//       fsFormMsg.Font         := ECF.FormMsgFonte ;
+       fsFormMsg.Position     := TFormPosition.MainFormCenter ;
+       fsFormMsg.FormStyle    := TFormStyle.StayOnTop ;
+       {$ELSE}
        fsFormMsg.KeyPreview   := true ;
        fsFormMsg.OnKeyPress   := FormMsgKeyPress ;
-       fsFormMsg.OnCloseQuery := FormMsgCloseQuery ;
        fsFormMsg.Color        := ECF.FormMsgColor ;
        fsFormMsg.Font         := ECF.FormMsgFonte ;
-       fsFormMsg.BorderIcons  := [] ;
-       fsFormMsg.BorderStyle  := {$IFDEF VisualCLX} fbsNone {$ELSE} bsNone {$ENDIF};
        fsFormMsg.Position     := poMainFormCenter ;
        fsFormMsg.FormStyle    := fsStayOnTop ;
+       {$ENDIF}
+       fsFormMsg.OnCloseQuery := FormMsgCloseQuery ;
+       fsFormMsg.BorderIcons  := [] ;
+       fsFormMsg.BorderStyle  := {$IFDEF VisualCLX} fbsNone {$ELSE} {$IFDEF FMX}TFmxFormBorderStyle.{$ENDIF} bsNone {$ENDIF};
+
        fsFormMsg.Width        := 0 ;   { Cria o form escondido }
        fsFormMsg.Height       := 0 ;
        fsFormMsgException     := '' ;
@@ -4517,7 +4545,11 @@ end;
 
           fsFormMsg.Close ;
           //{$IFNDEF COMPLIB_CLX}
+          {$IFDEF FMX}
+          Application.MainForm.BringToFront ;
+          {$ELSE}
           Application.BringToFront ;
+          {$ENDIF}
           //{$ENDIF}
        end ;
     except
@@ -4529,7 +4561,18 @@ end;
       end ;
     end ;
   end;
-
+  {$IFDEF FMX}
+  procedure TACBrECFClass.FormMsgKeyPress(Sender: TObject; var Key: Word; var KeyChar: Char;
+    Shift: TShiftState);
+  begin
+    if (fsFormMsgTeclaParaFechar <> 0)  and
+       (Key = fsFormMsgTeclaParaFechar) and
+       (fsFormMsgEstado <> fmsAbortado) then
+       fsFormMsgEstado := fmsAbortado
+    else
+       Key := 0 ;
+  end;
+  {$ELSE}
   procedure TACBrECFClass.FormMsgKeyPress(Sender: TObject; var Key: Char);
   begin
     if (fsFormMsgTeclaParaFechar <> 0)  and
@@ -4539,6 +4582,7 @@ end;
     else
        Key := chr(0) ;
   end;
+  {$ENDIF}
 
   procedure TACBrECFClass.FormMsgCloseQuery(Sender: TObject;
     var CanClose: Boolean);
@@ -4627,12 +4671,16 @@ end;
     if fsFormMsg.Visible and ExibeMensagem then
     begin
        fsFormMsg.BringToFront ;
+       {$IFDEF FMX}
+       fsFormMsg.Active := True;
+       {$ELSE}
        fsFormMsg.SetFocus ;
+       {$ENDIF}
 
        with fsFormMsg.Canvas do      { Pintando <Texto> no Canvas do fpFormMsg }
        begin
-          H := TextHeight(Texto) + 10 ;    { Calcula o tamanho do Texto }
-          W := TextWidth (Texto) + 20 ;
+          H := Trunc(TextHeight(Texto) + 10) ;    { Calcula o tamanho do Texto }
+          W := Trunc(TextWidth (Texto) + 20) ;
 
           { Ajusta o Form para caber o Texto }
           if (abs(W - fsFormMsg.Width ) > 4) or
@@ -4643,14 +4691,22 @@ end;
              {$IFDEF FPC}
              fsFormMsg.Position := poDesktopCenter ;
              {$ELSE}
-             fsFormMsg.Position := poMainFormCenter ;
+             fsFormMsg.Position := {$IFDEF FMX}TFormPosition.{$ENDIF}poMainFormCenter ;
              {$ENDIF}
           end ;
 
+          {$IFDEF FMX}
+          Fill.Color := fsFormMsg.Fill.Color ;
+//          Font.Color  := fsFormMsg.Font.Color ;
+//          Pen.Color   := fsFormMsg.Font.Color ;
+          { TODO : Estudar qual comando subistituirá esse. }
+//          Rectangle(fsFormMsg.ClientRect);
+          {$ELSE}
           Brush.Color := fsFormMsg.Color ;
           Font.Color  := fsFormMsg.Font.Color ;
           Pen.Color   := fsFormMsg.Font.Color ;
           Rectangle(fsFormMsg.ClientRect);
+          {$ENDIF}
          {$IFDEF VisualCLX}
           X := 0 ;
           Y := 0 ;
@@ -4660,7 +4716,12 @@ end;
           Texto := StringReplace( Texto, #10, ' ', [rfReplaceAll,rfIgnoreCase] ) ;
           X := 10 ;
           Y := 5 ;
+          {$IFDEF FMX}
+          { TODO : Estudar qual comando subistituirá esse. }
+//          TextRect(fsFormMsg.ClientRect,X,Y, Texto ) ;
+          {$ELSE}
           TextRect(fsFormMsg.ClientRect,X,Y, Texto ) ;
+          {$ENDIF}
          {$ENDIF}
        end ;
 
@@ -4675,7 +4736,7 @@ end;
     Result := (ExibeMensagem or BloqueiaMouseTeclado) and
               (AguardaImpressao or ((TimeOut - TempoInicioMsg) > 1) ) and
               FormMsgControla and
-              Application.ShowMainForm ;
+              {$IFDEF FMX}Application.MainForm.Visible{$ELSE} Application.ShowMainForm{$ENDIF} ;
   end;
 
   {$IFDEF LINUX}

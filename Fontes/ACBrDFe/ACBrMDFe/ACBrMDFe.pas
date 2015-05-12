@@ -80,7 +80,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamMDFe: TStream = nil; NomeArq: String = ''); overload;
+      StreamMDFe: TStream = nil; NomeArq: String = ''); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;

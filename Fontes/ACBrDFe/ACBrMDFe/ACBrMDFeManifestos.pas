@@ -399,18 +399,10 @@ begin
     if Assigned(Anexos) then
       AnexosEmail.Assign(Anexos);
 
-    if NomeArq <> '' then
-    begin
-      GravarXML(NomeArq);
-      AnexosEmail.Add(NomeArq);
-    end
-    else
-    begin
-      GravarStream(StreamMDFe);
-    end;
-
     with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
     begin
+      GravarStream(StreamMDFe);
+
       if (EnviaPDF) then
       begin
         if Assigned(DAMDFE) then

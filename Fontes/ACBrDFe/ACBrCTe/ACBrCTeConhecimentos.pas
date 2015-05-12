@@ -449,18 +449,11 @@ begin
     AnexosEmail.Clear;
     if Anexos <> nil then
       AnexosEmail.Text := Anexos.Text;
-    if NomeArq <> '' then
-    begin
-      GravarXML(NomeArq);
-      AnexosEmail.Add(NomeArq);
-    end
-    else
-    begin
-      GravarStream(StreamCTe);
-    end;
 
     with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
     begin
+      GravarStream(StreamCTe);
+      
       if (EnviaPDF) then
       begin
        if Assigned(DACTE) then

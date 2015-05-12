@@ -91,7 +91,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamCTe: TStream = nil; NomeArq: String = ''); overload;
+      StreamCTe: TStream = nil; NomeArq: String = ''); override;
 
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;

@@ -54,6 +54,8 @@ type
     procedure SetVersaoDF(const Value: TVersaoMDFe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
+    procedure Assign(DeGeralConfMDFe: TGeralConfMDFe); reintroduce;
+
   published
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve100;
   end;
@@ -69,6 +71,7 @@ type
     FPathEvento: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
+    procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); reintroduce;
 
     function GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
@@ -139,6 +142,13 @@ end;
 
 { TGeralConfMDFe }
 
+procedure TGeralConfMDFe.Assign(DeGeralConfMDFe: TGeralConfMDFe);
+begin
+  inherited Assign(DeGeralConfMDFe);
+
+  FVersaoDF := DeGeralConfMDFe.VersaoDF;
+end;
+
 constructor TGeralConfMDFe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
@@ -152,6 +162,17 @@ begin
 end;
 
 { TArquivosConfMDFe }
+
+procedure TArquivosConfMDFe.Assign(DeArquivosConfMDFe: TArquivosConfMDFe);
+begin
+  inherited Assign(DeArquivosConfMDFe);
+
+  FEmissaoPathMDFe             := DeArquivosConfMDFe.EmissaoPathMDFe;
+  FSalvarEvento                := DeArquivosConfMDFe.SalvarEvento;
+  FSalvarApenasMDFeProcessados := DeArquivosConfMDFe.SalvarApenasMDFeProcessados;
+  FPathMDFe                    := DeArquivosConfMDFe.PathMDFe;
+  FPathEvento                  := DeArquivosConfMDFe.PathEvento;
+end;
 
 constructor TArquivosConfMDFe.Create(AOwner: TConfiguracoes);
 begin

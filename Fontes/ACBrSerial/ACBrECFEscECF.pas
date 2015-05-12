@@ -3255,7 +3255,7 @@ begin
   if (upcase(AliquotaICMS[1]) = 'T') then
     AliquotaICMS := 'TT'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
 
-Result := inherited AchaICMSAliquota( AliquotaICMS );
+  Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;
 
 end.

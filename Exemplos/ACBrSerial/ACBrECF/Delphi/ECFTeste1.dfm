@@ -2335,14 +2335,7 @@ object Form1: TForm1
     MsgTrabalhando = 'Impressora est'#225' trabalhando'
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
-    PaginaDeCodigo = 0
-    FormMsgColor = clBlack
-    FormMsgFonte.Charset = DEFAULT_CHARSET
-    FormMsgFonte.Color = clWhite
-    FormMsgFonte.Height = 11
-    FormMsgFonte.Name = 'MS Sans Serif'
-    FormMsgFonte.Pitch = fpVariable
-    FormMsgFonte.Style = []
+    PaginaDeCodigo = 0    
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel

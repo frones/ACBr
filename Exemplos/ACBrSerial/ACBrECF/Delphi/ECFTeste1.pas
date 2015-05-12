@@ -3149,7 +3149,7 @@ begin
   if not InputQuery('Sangria',
                     'Entre com o Valor da Sangria', cValor ) then
      exit ;
-  Valor := StrToIntDef(cValor,-1) ;
+  Valor := StrToFloatDef(cValor,-1) ;
   if Valor <= 0 then
      exit ;
 

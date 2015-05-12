@@ -77,11 +77,15 @@ type
     procedure GetValues(Proc : TGetStrProc) ; override;
   end;
 
+  TACBrDFeOnTransmitError = procedure(const HttpError: Integer;
+    const URL, DataSent, SoapAction: String; var TryAgain: Boolean) of object ;
+
   { TACBrDFe }
 
   TACBrDFe = class(TACBrComponent)
   private
     FMAIL: TACBrMail;
+    FOnTransmitError: TACBrDFeOnTransmitError;
     FSSL: TDFeSSL;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
@@ -132,6 +136,8 @@ type
 
   published
     property MAIL: TACBrMail read FMAIL write SetMAIL;
+    property OnTransmitError : TACBrDFeOnTransmitError read FOnTransmitError
+       write FOnTransmitError;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
     property About: String read GetAbout write SetAbout stored False;
     property OnGerarLog: TACBrGravarLog read FOnGerarLog write FOnGerarLog;
@@ -185,6 +191,7 @@ begin
   FMAIL := nil;
   FSSL := TDFeSSL.Create(Self);
   FOnGerarLog := nil;
+  FOnTransmitError := nil;
 
   FPIniParams := TMemIniFile.Create(Configuracoes.Arquivos.IniServicos);
   FPIniParamsCarregado := False;

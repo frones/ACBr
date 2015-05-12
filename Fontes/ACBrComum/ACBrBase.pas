@@ -116,8 +116,8 @@ TACBrThreadTimer = class(TThread)
     fsEnabled: Boolean;
     fsInterval: Integer;
     fsEvent: TSimpleEvent;
-    procedure SetEnabled(const Value: Boolean);
-    procedure SetInterval(const Value: Integer);
+    procedure SetEnabled(const AValue: Boolean);
+    procedure SetInterval(const AValue: Integer);
   protected
     procedure DoCallEvent;
     procedure Execute; override;
@@ -272,19 +272,19 @@ begin
   fsOnTimer( self ) ;
 end;
 
-procedure TACBrThreadTimer.SetEnabled(const Value: Boolean);
+procedure TACBrThreadTimer.SetEnabled(const AValue: Boolean);
 begin
-  if fsEnabled = Value then
+  if fsEnabled = AValue then
     exit ;
 
-  fsEnabled := Value;
+  fsEnabled := AValue;
   fsEvent.SetEvent;
 end;
 
-procedure TACBrThreadTimer.SetInterval(const Value: Integer);
+procedure TACBrThreadTimer.SetInterval(const AValue: Integer);
 begin
-  fsInterval := Value;
-  if Value = 0 then
+  fsInterval := AValue;
+  if AValue = 0 then
      Enabled := False ;
 end;
 { TACBrInformacao }

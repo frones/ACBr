@@ -58,6 +58,7 @@ type
     function GetCertNumeroSerie: String; virtual;
     function GetCertSubjectName: String; virtual;
     function GetCertCNPJ: String; virtual;
+    function GetHTTPResultCode: Integer; virtual;
 
     function SignatureElement(const URI: String; AddX509Data: Boolean): String;
       virtual;
@@ -85,6 +86,8 @@ type
     property CertDataVenc: TDateTime read GetCertDataVenc;
     property CertSubjectName: String read GetCertSubjectName;
     property CertCNPJ: String read GetCertCNPJ;
+
+    property HTTPResultCode: Integer read GetHTTPResultCode;
   end;
 
   { TDFeSSL }
@@ -100,6 +103,7 @@ type
     function GetCertDataVenc: TDateTime;
     function GetCertNumeroSerie: String;
     function GetCertSubjectName: String;
+    function GetHTTPResultCode: Integer;
 
     procedure InitSSLClass(LerCertificado: Boolean = True);
     procedure DeInitSSLClass;
@@ -129,6 +133,7 @@ type
     property CertSubjectName: String read GetCertSubjectName;
     property CertCNPJ: String read GetCertCNPJ;
 
+    property HTTPResultCode: Integer read GetHTTPResultCode;
   end;
 
 
@@ -240,6 +245,11 @@ begin
   Result := FSSLClass.CertSubjectName;
 end;
 
+function TDFeSSL.GetHTTPResultCode: Integer;
+begin
+  Result := FSSLClass.HTTPResultCode;
+end;
+
 procedure TDFeSSL.InitSSLClass(LerCertificado: Boolean);
 begin
   if FSSLClass.Inicializado then
@@ -345,6 +355,11 @@ end;
 procedure TDFeSSLClass.CarregarCertificado;
 begin
   raise EACBrDFeException.Create(ClassName + '.CarregarCertificado não implementado');
+end;
+
+function TDFeSSLClass.GetHTTPResultCode: Integer;
+begin
+  Result := 0;
 end;
 
 function TDFeSSLClass.GetCertDataVenc: TDateTime;

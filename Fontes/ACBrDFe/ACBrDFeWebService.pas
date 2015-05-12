@@ -277,6 +277,8 @@ begin
 end;
 
 procedure TDFeWebService.EnviarDados;
+Var
+  Tentar: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -290,7 +292,23 @@ begin
   if not XmlEstaAssinado(FPEnvelopeSoap) then
     FPEnvelopeSoap := ConverteXMLtoUTF8(FPEnvelopeSoap);
 
-  FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction);
+  Tentar := True;
+  while Tentar do
+  begin
+    Tentar := False;
+
+    try
+      FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction);
+    except
+      if Assigned(FPDFeOwner.OnTransmitError) then
+        FPDFeOwner.OnTransmitError( FPDFeOwner.SSL.HTTPResultCode,
+                                    FPURL, FPEnvelopeSoap, FPSoapAction,
+                                    Tentar) ;
+
+      if not Tentar then
+        raise;
+    end;
+  end;
 
   { Resposta sempre é UTF8, ParseTXT chamará DecodetoString, que converterá
     de UTF8 para o formato nativo de  String usada pela IDE }

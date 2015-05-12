@@ -73,6 +73,7 @@ type
     function GetCertNumeroSerie: String; override;
     function GetCertSubjectName: String; override;
     function GetCertCNPJ: String; override;
+    function GetHTTPResultCode: Integer; override;
   public
     property Certificado: ICertificate2 read FCertificado;
 
@@ -346,6 +347,11 @@ function TDFeCapicom.GetCertCNPJ: String;
 begin
   CarregarCertificadoSeNecessario;
   Result := FCNPJ;
+end;
+
+function TDFeCapicom.GetHTTPResultCode: Integer;
+begin
+  Result := FReqResp.HTTPResultCode;
 end;
 
 function TDFeCapicom.Assinar(const ConteudoXML, docElement, infElement: String): String;

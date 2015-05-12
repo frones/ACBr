@@ -67,6 +67,7 @@ type
     FProxyPass: String;
     FProxyPort: String;
     FProxyUser: String;
+    FHTTPResultCode: Integer;
     FUrl: String;
     FUseCertificate: Boolean;
     FShowCertStore: Boolean;
@@ -75,6 +76,7 @@ type
     function GetWinInetError(ErrorCode: cardinal): String;
     function OpenCertStore: String;
 
+    procedure UpdateHTTPResultCode(ARequest: HINTERNET);
   protected
 
   public
@@ -91,6 +93,8 @@ type
     property UseCertificate: Boolean read FUseCertificate write FUseCertificate;
     property UseSSL: Boolean read FUseSSL write FUseSSL;
     property ShowCertStore: Boolean read FShowCertStore write FShowCertStore;
+
+    property HTTPResultCode: Integer read FHTTPResultCode;
 
     procedure SetCertificate(pCertSerialNumber: String); overload;
     procedure SetCertificate(pCertificate: ICertificate2); overload;
@@ -180,6 +184,19 @@ begin
   end;
 
   Result := FNumeroSerie;
+end;
+
+procedure TACBrHTTPReqResp.UpdateHTTPResultCode(ARequest: HINTERNET);
+Var
+  dummy, bufLen: DWORD;
+  aBuffer: array [0..512] of AnsiChar;
+begin
+  dummy := 0;
+  bufLen := Length(aBuffer);
+  if not HttpQueryInfo(ARequest, HTTP_QUERY_STATUS_CODE, @aBuffer, bufLen, dummy ) then
+    FHTTPResultCode := 4
+  else
+    FHTTPResultCode := StrToIntDef( StrPas(aBuffer), 0);
 end;
 
 procedure TACBrHTTPReqResp.SetCertificate(pCertSerialNumber: String);
@@ -313,6 +330,8 @@ begin
       if not Assigned(pRequest) then
         raise EACBrHTTPReqResp.Create('Erro: Open Request');
 
+      UpdateHTTPResultCode(pRequest);
+
       try
         Header := 'Host: ' + AHost + sLineBreak + 'Content-Type: ' +
           FMimeType + SLineBreak + 'Accept-Charset: ' + FCharsets +
@@ -342,6 +361,7 @@ begin
         if HttpSendRequest(pRequest, nil, 0, Pointer(UTF8Encode(FData)),
           Length(UTF8Encode(FData))) then
         begin
+          BytesRead := 0;
           while InternetReadFile(pRequest, @aBuffer, SizeOf(aBuffer), BytesRead) do
           begin
             if (BytesRead = 0) then
@@ -376,6 +396,7 @@ begin
             sLineBreak + IntToStr(ErrorCode) + ' - ' + GetWinInetError(ErrorCode));
         end;
       finally
+
         InternetCloseHandle(pRequest);
       end;
     finally
@@ -396,6 +417,7 @@ begin
   FUseCertificate := True;
   FUseSSL := True;
   FShowCertStore := False;
+  FHTTPResultCode := 0;
 end;
 
 end.

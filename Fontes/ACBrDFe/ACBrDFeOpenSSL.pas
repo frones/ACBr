@@ -75,6 +75,7 @@ type
     function GetCertNumeroSerie: String; override;
     function GetCertSubjectName: String; override;
     function GetCertCNPJ: String; override;
+    function GetHTTPResultCode: Integer; override;
 
   public
     constructor Create(AConfiguracoes: TConfiguracoes);
@@ -688,6 +689,11 @@ begin
     CarregarCertificado;
 
   Result := FCNPJ;
+end;
+
+function TDFeOpenSSL.GetHTTPResultCode: Integer;
+begin
+  Result := FHTTP.ResultCode;
 end;
 
 procedure TDFeOpenSSL.Clear;

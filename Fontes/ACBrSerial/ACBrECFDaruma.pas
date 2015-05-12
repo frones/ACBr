@@ -343,6 +343,8 @@ TACBrECFDaruma = class( TACBrECFClass )
 
 end ;
 
+function DescricaoRetornoDaruma( Byte1, Byte2 : Byte ): String;
+
 implementation
 Uses SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
@@ -757,6 +759,127 @@ const
     { 401 } 'Chave inválida',
     { 402 } 'Erro na decodificação',
     { 403 } 'Erro na codificação');
+
+function DescricaoRetornoDaruma( Byte1, Byte2 : Byte ): String;
+begin
+  case Byte2 of
+      1: Result := 'Falha mecânica reportada pela bios';
+      4: Result := 'MFD esgotada';
+      6: Result := 'MFD em falha (não responde)';
+      8: Result := 'MFD não inicializada';
+      9: Result := 'MFD já inicializada';
+     12: Result := 'Erro inicializando MFD';
+     13: Result := 'Faltam parâmetros obrigató ios na MF';
+     15: Result := 'Superaquecimento da cabeça térmica 16.Dados da MT inconsistentes';
+     16: Result := 'Dados da MT inconsistentes';
+     17: Result := 'Operação permitida apenas em MIL';
+     18: Result := 'Operação permitida apenas em Modo Fiscal';
+     19: Result := 'Data inválida';
+     22: Result := 'Não existem dados no intervalo solicitado';
+     25: Result := 'Senha incorreta';
+     26: Result := 'Casas decimais para quantidade inválida';
+     27: Result := 'Casas decimais para valor unitário inválida';
+     28: Result := 'Tipo de reimpressão inválido (1=por Data  2=por COO)';
+     29: Result := 'Encontrado caracter não estampável';
+     40: Result := 'Índice inválido';
+     41: Result := 'Índice de pagamento inválido';
+     47: Result := 'Não pode utilizar totalizadores de entrada e saída em um mesmo CNF';
+     51: Result := 'Parâmetro não pode ser zero ou estar em branco';
+     56: Result := 'CNPJ inválido';
+     57: Result := 'MF vazia';
+     58: Result := 'Referência final inferior a referência inicial';
+     59: Result := 'Valores aceitos são 0 ou 1 apenas';
+     60: Result := 'Configuração permitida apenas imediatamente após a RZ';
+     67: Result := 'Data informada na RZ não pode ser aceita';
+     69: Result := 'Falha irrecuperável ao ajustar o relógio';
+     70: Result := 'MF esgotada';
+     71: Result := 'Versão do SB gravada na MF incorreta';
+     73: Result := 'Usuário não programado';
+     74: Result := 'Campo admite apenas valores numéricos';
+     75: Result := 'Encontrado campo em zero';
+     76: Result := 'Encontrado campo em branco';
+     77: Result := 'Valor da operação não pode ser zero';
+     82: Result := 'CF não está aberto';
+     83: Result := 'CNF não está aberto';
+     84: Result := 'CCD/ CCD Estorno não está aberto';
+     85: Result := 'RG não está aberto';
+     86: Result := 'Não existe CCD ou RG aberto';
+     90: Result := 'Carga tributária não programada';
+     91: Result := 'Campo do código vazio';
+     92: Result := 'Campo de descrição vazio';
+     93: Result := 'Valor unitário ou quantidade em zero';
+     94: Result := 'Ítem ainda nã   foi registrado';
+     95: Result := 'Desconto não pode   er zero';
+     97: Result := 'Item foi cancelado';
+     98: Result := 'Operação inibida por configuração';
+     99: Result := 'Opção inválida';
+    100: Result := 'Desconto supera valor bruto';
+    101: Result := 'Desconto final resulta em zero';
+    102: Result := 'Valor bruto resulta em zero';
+    103: Result := 'Overflow no valor do item';
+    104: Result := 'Overflow no valor do desconto';
+    105: Result := 'Overflow no valor do documento';
+    107: Result := 'Ítem não teve desconto';
+    108: Result := 'Ítem com desconto';
+    109: Result := 'Utilizado quantidade com mais de 2 decimais';
+    110: Result := 'Utilizado valor unitário com mais de 2 decimais';
+    111: Result := 'Quantidade a cancelar deve ser inferior à vendida';
+    113: Result := 'Subtotal não teve desconto';
+    114: Result := 'Não em estado de totalização';
+    115: Result := 'Não em estado de venda ou totalização';
+    116: Result := 'Permitido apenas 1 desconto e 1 acréscimo';
+    117: Result := 'Desconto supera subtotal';
+    118: Result := 'Pagamento não programado';
+    119: Result := 'Não em estado de pagamento ou totalização';
+    126: Result := 'Cancelamento não foi possível';
+    127: Result := 'Informação sobre o pagamento não mais disponível';
+    128: Result := 'Foram emididos CCDs relativos a este pagamento';
+    129: Result := 'RG não programado';
+    130: Result := 'Totalizador Não-Fiscal não programado';
+    131: Result := 'Segunda via não disponível';
+    132: Result := 'Já emitiu segunda via';
+    138: Result := 'Totalizador de Sangria e Suprimento inibidos neste CNF';
+    140: Result := 'Relógio está travado';
+    141: Result := 'Usuário sem CNPJ';
+    142: Result := 'Usuário sem IM';
+    143: Result := 'Nova configuração igual a atual';
+    146: Result := 'Documento especificado não foi encontrado';
+    149: Result := 'Século inválido';
+    150: Result := 'Usuário já programado';
+    151: Result := 'Pagamento já programado';
+    152: Result := 'Totalizador Não-Fiscal já programado';
+    153: Result := 'RG já programado';
+    155: Result := 'Atingiu limite de totalizadores de cada tipo';
+    157: Result := 'MFD em falha';
+    158: Result := 'Razão Social excede 40 caracteres';
+    159: Result := 'Nome Fantasia excede 40 caracteres';
+    160: Result := 'Endereço excede 120 caracteres';
+    166: Result := 'Efetivado igual ao estornado';
+    167: Result := 'Este símbolo da moeda já está programado';
+    176: Result := 'Informação programada é a mesma da atual';
+    177: Result := 'Utilize índice de 1 a 5';
+    178: Result := 'Tamanho da imagem inválido';
+    179: Result := 'Última data gravada a mais de 1 mês';
+    180: Result := 'Atingido o limite de documentos autorizados';
+    184: Result := 'Opção deve ser T ou A';
+    185: Result := 'Unidade de medida não encontrada';
+    194: Result := 'Seleção inválida';
+    196: Result := 'Chave não carregada';
+    197: Result := 'Chave inválida';
+    198: Result := 'IE inválida';
+    199: Result := 'IM inválida';
+    200: Result := 'Não é possível alterar dados';
+    201: Result := 'CPF ou CPNJ inválido';
+    202: Result := 'Capacidade de programação esgotada';
+    203: Result := 'Validade do comando expirada';
+    204: Result := 'Comando não pode ser executado';
+    205: Result := 'Comando não permitido';
+    206: Result := 'Inibido por comando';
+  else
+    Result := 'Erro não catalogado!';
+  end;
+end;
+
 
 constructor TACBrECFDaruma.create( AOwner : TComponent ) ;
 begin

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/05/2015 (por: regys.silveira)
+-- ACBrECFEscECF --
+[-] acertos no tratamento de aliquotas para o protocolo EscECF
+[-] Acertos no tratamento de retorno das impressoras Daruma EscECF
+[-] Acertos no retorno de aliquotas
+
 Data: 04/05/2015       (por: DSA)
 -- ACBrDevice --
 [*] Ajustes de Units para FMX

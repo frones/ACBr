@@ -74,6 +74,8 @@ type
     function GetCertSubjectName: String; override;
     function GetCertCNPJ: String; override;
     function GetHTTPResultCode: Integer; override;
+    function GetInternalErrorCode: Integer; override;
+
   public
     property Certificado: ICertificate2 read FCertificado;
 
@@ -99,7 +101,8 @@ type
 implementation
 
 uses
-  strutils, ACBrUtil, ACBrDFe, ACBrDFeUtil;
+  strutils,
+  ACBrUtil, ACBrDFe, ACBrDFeUtil, ACBrConsts;
 
 { TDFeCapicom }
 
@@ -354,6 +357,11 @@ begin
   Result := FReqResp.HTTPResultCode;
 end;
 
+function TDFeCapicom.GetInternalErrorCode: Integer;
+begin
+  Result := FReqResp.InternalErrorCode;
+end;
+
 function TDFeCapicom.Assinar(const ConteudoXML, docElement, infElement: String): String;
 var
   I, PosIni, PosFim: integer;
@@ -486,8 +494,18 @@ end;
 
 procedure TDFeCapicom.Executar(const ConteudoXML: String; Resp: TMemoryStream);
 begin
-  // Enviando, dispara exceptions no caso de erro //
-  FReqResp.Execute(ConteudoXML, Resp);
+  try
+    // Enviando, dispara exceptions no caso de erro //
+    FReqResp.Execute(ConteudoXML, Resp);
+  except
+    On E: Exception do
+    begin
+      raise EACBrDFeException.Create( Format( cACBrDFeSSLEnviarException,
+                                        [InternalErrorCode, HTTPResultCode] ) +
+                                      E.Message ) ;
+    end;
+
+  end;
 end;
 
 
@@ -596,6 +614,8 @@ begin
       FReqResp.ProxyUser := ProxyUser;
       FReqResp.ProxyPass := ProxyPass;
     end;
+
+    FReqResp.TimeOut := TimeOut;
   end;
 
   FReqResp.SetCertificate(FCertificado);

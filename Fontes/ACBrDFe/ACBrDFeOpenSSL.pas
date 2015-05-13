@@ -76,6 +76,7 @@ type
     function GetCertSubjectName: String; override;
     function GetCertCNPJ: String; override;
     function GetHTTPResultCode: Integer; override;
+    function GetInternalErrorCode: Integer; override;
 
   public
     constructor Create(AConfiguracoes: TConfiguracoes);
@@ -217,8 +218,8 @@ begin
   OK := FHTTP.HTTPMethod('POST', URL);
   OK := OK and (FHTTP.ResultCode = 200);
   if not OK then
-    raise EACBrDFeException.Create('Cod.Erro HTTP: ' + IntToStr(FHTTP.ResultCode) +
-      ' ' + FHTTP.ResultString);
+    raise EACBrDFeException.CreateFmt( cACBrDFeSSLEnviarException,
+                                       [InternalErrorCode, HTTPResultCode] );
 
   // Lendo a resposta //
   FHTTP.Document.Position := 0;
@@ -696,6 +697,11 @@ begin
   Result := FHTTP.ResultCode;
 end;
 
+function TDFeOpenSSL.GetInternalErrorCode: Integer;
+begin
+  Result := FHTTP.Sock.LastError;
+end;
+
 procedure TDFeOpenSSL.Clear;
 begin
   FCNPJ := '';
@@ -764,6 +770,7 @@ begin
   if FHTTP.Sock.SSL.PFX = '' then
     CarregarCertificado;
 
+  FHTTP.Timeout := Configuracoes.WebServices.TimeOut;
   FHTTP.ProxyHost := Configuracoes.WebServices.ProxyHost;
   FHTTP.ProxyPort := Configuracoes.WebServices.ProxyPort;
   FHTTP.ProxyUser := Configuracoes.WebServices.ProxyUser;

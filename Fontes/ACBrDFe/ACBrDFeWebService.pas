@@ -302,6 +302,7 @@ begin
     except
       if Assigned(FPDFeOwner.OnTransmitError) then
         FPDFeOwner.OnTransmitError( FPDFeOwner.SSL.HTTPResultCode,
+                                    FPDFeOwner.SSL.InternalErrorCode,
                                     FPURL, FPEnvelopeSoap, FPSoapAction,
                                     Tentar) ;
 

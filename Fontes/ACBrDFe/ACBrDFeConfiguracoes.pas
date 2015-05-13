@@ -79,6 +79,7 @@ type
   private
     FConfiguracoes: TConfiguracoes;
     FResourceName: String;
+    FTimeOut: Integer;
     FVisualizar: Boolean;
     FUF: String;
     FUFCodigo: integer;
@@ -132,6 +133,7 @@ type
       read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet default False;
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property Params: TStrings read FParams write SetParams;
+    property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
   end;
 
   { TGeralConf }
@@ -435,6 +437,7 @@ begin
   FIntervaloTentativas := 1000;
   FAjustaAguardaConsultaRet := False;
   FSalvar := False;
+  FTimeOut := 5000;
   FResourceName := 'ACBrServicos';
 end;
 

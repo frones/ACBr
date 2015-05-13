@@ -59,6 +59,7 @@ type
     function GetCertSubjectName: String; virtual;
     function GetCertCNPJ: String; virtual;
     function GetHTTPResultCode: Integer; virtual;
+    function GetInternalErrorCode: Integer; virtual;
 
     function SignatureElement(const URI: String; AddX509Data: Boolean): String;
       virtual;
@@ -88,6 +89,7 @@ type
     property CertCNPJ: String read GetCertCNPJ;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
+    property InternalErrorCode: Integer read GetInternalErrorCode;
   end;
 
   { TDFeSSL }
@@ -104,6 +106,7 @@ type
     function GetCertNumeroSerie: String;
     function GetCertSubjectName: String;
     function GetHTTPResultCode: Integer;
+    function GetInternalErrorCode: Integer;
 
     procedure InitSSLClass(LerCertificado: Boolean = True);
     procedure DeInitSSLClass;
@@ -134,6 +137,7 @@ type
     property CertCNPJ: String read GetCertCNPJ;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
+    property InternalErrorCode: Integer read GetInternalErrorCode;
   end;
 
 
@@ -250,6 +254,11 @@ begin
   Result := FSSLClass.HTTPResultCode;
 end;
 
+function TDFeSSL.GetInternalErrorCode: Integer;
+begin
+  Result := FSSLClass.InternalErrorCode;
+end;
+
 procedure TDFeSSL.InitSSLClass(LerCertificado: Boolean);
 begin
   if FSSLClass.Inicializado then
@@ -358,6 +367,11 @@ begin
 end;
 
 function TDFeSSLClass.GetHTTPResultCode: Integer;
+begin
+  Result := 0;
+end;
+
+function TDFeSSLClass.GetInternalErrorCode: Integer;
 begin
   Result := 0;
 end;

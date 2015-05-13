@@ -58,6 +58,8 @@ type
     FCertificate: ICertificate2;
     FCertSerialNumber: String;
     FCertStoreName: String;
+    FEncodeDataToUTF8: Boolean;
+    FInternalErrorCode: Integer;
     FSOAPAction: String;
     FMimeType: String;
     // (ex.: 'application/soap+xml' ou 'text/xml' - que é o Content-Type)
@@ -68,6 +70,7 @@ type
     FProxyPort: String;
     FProxyUser: String;
     FHTTPResultCode: Integer;
+    FTimeOut: Integer;
     FUrl: String;
     FUseCertificate: Boolean;
     FShowCertStore: Boolean;
@@ -76,10 +79,12 @@ type
     function GetWinInetError(ErrorCode: cardinal): String;
     function OpenCertStore: String;
 
-    procedure UpdateHTTPResultCode(ARequest: HINTERNET);
+    procedure UpdateErrorCodes(ARequest: HINTERNET);
   protected
 
   public
+    constructor Create;
+
     property SOAPAction: String read FSOAPAction write FSOAPAction;
     property MimeType: String read FMimeType write FMimeType;
     property Charsets: String read FCharsets write FCharsets;
@@ -93,14 +98,16 @@ type
     property UseCertificate: Boolean read FUseCertificate write FUseCertificate;
     property UseSSL: Boolean read FUseSSL write FUseSSL;
     property ShowCertStore: Boolean read FShowCertStore write FShowCertStore;
+    property EncodeDataToUTF8: Boolean read FEncodeDataToUTF8 write FEncodeDataToUTF8;
+    property TimeOut: Integer read FTimeOut write FTimeOut;
 
     property HTTPResultCode: Integer read FHTTPResultCode;
+    property InternalErrorCode: Integer read FInternalErrorCode;
 
     procedure SetCertificate(pCertSerialNumber: String); overload;
     procedure SetCertificate(pCertificate: ICertificate2); overload;
     procedure Execute(Resp: TStream); overload;
     procedure Execute(const DataMsg: String; Resp: TStream); overload;
-    constructor Create;
   end;
 
   {$EXTERNALSYM CERT_CONTEXT}
@@ -186,11 +193,13 @@ begin
   Result := FNumeroSerie;
 end;
 
-procedure TACBrHTTPReqResp.UpdateHTTPResultCode(ARequest: HINTERNET);
+procedure TACBrHTTPReqResp.UpdateErrorCodes(ARequest: HINTERNET);
 Var
   dummy, bufLen: DWORD;
   aBuffer: array [0..512] of AnsiChar;
 begin
+  FInternalErrorCode := GetLastError;
+
   dummy := 0;
   bufLen := Length(aBuffer);
   if not HttpQueryInfo(ARequest, HTTP_QUERY_STATUS_CODE, @aBuffer, bufLen, dummy ) then
@@ -238,7 +247,7 @@ var
   PCertContext: Pointer;
 
   Ok: Boolean;
-  port, i, AccessType, ErrorCode, PosError: integer;
+  port, i, AccessType: integer;
   ANone, AHost, APage, pProxy, ErrorMsg, Header: String;
 begin
 
@@ -294,10 +303,21 @@ begin
   else
     AccessType := INTERNET_OPEN_TYPE_PRECONFIG;
 
-  pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
+  //DEBUG
+  WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
 
+  pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
   if not Assigned(pSession) then
     raise EACBrHTTPReqResp.Create('Erro: Internet Open or Proxy');
+
+  //DEBUG
+  WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
+
+  if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
+
+  if not InternetSetOption(pSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');
 
   try
     if (FUseSSL) then
@@ -305,9 +325,15 @@ begin
     else
       Port := INTERNET_DEFAULT_HTTP_PORT;
 
+    //Debug, TimeOut Test
+    //AHost := 'www.google.com';
+    //port := 81;
+
+    //DEBUG
+    WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+IntToStr(port));
+
     pConnection := InternetConnect(pSession, PChar(AHost), Port,
       PChar(FProxyUser), PChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, cardinal(Self));
-
     if not Assigned(pConnection) then
       raise EACBrHTTPReqResp.Create('Erro: Internet Connect or Host');
 
@@ -324,13 +350,16 @@ begin
       else
         flags := INTERNET_SERVICE_HTTP;
 
+      //DEBUG
+      WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APage);
+
       pRequest := HttpOpenRequest(pConnection, PChar('POST'),
         PChar(APage), nil, nil, nil, flags, 0);
 
       if not Assigned(pRequest) then
         raise EACBrHTTPReqResp.Create('Erro: Open Request');
 
-      UpdateHTTPResultCode(pRequest);
+      UpdateErrorCodes(pRequest);
 
       try
         Header := 'Host: ' + AHost + sLineBreak + 'Content-Type: ' +
@@ -339,7 +368,7 @@ begin
           SLineBreak + SLineBreak;
 
         if (FUseCertificate) then
-          if not InternetSetOption(pRequest, 84 {INTERNET_OPTION_CLIENT_CERT_CONTEXT},
+          if not InternetSetOption(pRequest, {$IFDEF FPC}INTERNET_OPTION_CLIENT_CERT_CONTEXT{$ELSE}84{$ENDIF},
             PCertContext, SizeOf(CERT_CONTEXT)) then
             raise EACBrHTTPReqResp.Create('Erro: Problema ao inserir o certificado');
 
@@ -356,14 +385,26 @@ begin
         HttpAddRequestHeaders(pRequest, PChar(Header), Length(Header),
           HTTP_ADDREQ_FLAG_ADD);
 
+        if FEncodeDataToUTF8 then
+          FData := UTF8Encode(FData);
+
+        //DEBUG
+        WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+APage);
+        WriteToTXT('c:\temp\httpreqresp.log', FData);
+
         Ok := False;
         Resp.Size := 0;
-        if HttpSendRequest(pRequest, nil, 0, Pointer(UTF8Encode(FData)),
-          Length(UTF8Encode(FData))) then
+        if HttpSendRequest(pRequest, nil, 0, Pointer(FData), Length(FData)) then
         begin
           BytesRead := 0;
+          //DEBUG
+          WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Lendo Dados');
+
           while InternetReadFile(pRequest, @aBuffer, SizeOf(aBuffer), BytesRead) do
           begin
+            //DEBUG
+            WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Bytes Lido: '+IntToStr(BytesRead));
+
             if (BytesRead = 0) then
               Break;
 
@@ -373,8 +414,15 @@ begin
           if Resp.Size > 0 then
           begin
             aBuffer[0] := #0;
-            Resp.Write(aBuffer, 1);
+            Resp.Write(aBuffer, 1);   // Grava #0 no final da Stream, para definir finalizador de String
             Resp.Position := 0;
+
+            //DEBUG
+            WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
+            SetLength(FData, Resp.Size);
+            Resp.ReadBuffer(FData[1],Resp.Size);
+            Resp.Position := 0;
+            WriteToTXT('c:\temp\httpreqresp.log', FData);
 
             Ok := True;
 
@@ -391,9 +439,14 @@ begin
 
         if not OK then
         begin
-          ErrorCode := GetLastError;
+          UpdateErrorCodes(pRequest);
+
+          //DEBUG
+          WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+
+             ' - Erro WinNetAPI: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));
+
           raise EACBrHTTPReqResp.Create('Erro: Requisição não enviada.' +
-            sLineBreak + IntToStr(ErrorCode) + ' - ' + GetWinInetError(ErrorCode));
+            sLineBreak + IntToStr(InternalErrorCode) + ' - ' + GetWinInetError(InternalErrorCode));
         end;
       finally
 
@@ -418,6 +471,7 @@ begin
   FUseSSL := True;
   FShowCertStore := False;
   FHTTPResultCode := 0;
+  FEncodeDataToUTF8 := False;
 end;
 
 end.

@@ -77,7 +77,7 @@ type
     procedure GetValues(Proc : TGetStrProc) ; override;
   end;
 
-  TACBrDFeOnTransmitError = procedure(const HttpError: Integer;
+  TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
     const URL, DataSent, SoapAction: String; var TryAgain: Boolean) of object ;
 
   { TACBrDFe }

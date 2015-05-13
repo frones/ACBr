@@ -304,14 +304,14 @@ begin
     AccessType := INTERNET_OPEN_TYPE_PRECONFIG;
 
   //DEBUG
-  WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
+  //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
 
   pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
   if not Assigned(pSession) then
     raise EACBrHTTPReqResp.Create('Erro: Internet Open or Proxy');
 
   //DEBUG
-  WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
+  //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
 
   if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
     raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
@@ -330,7 +330,7 @@ begin
     //port := 81;
 
     //DEBUG
-    WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+IntToStr(port));
+    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+IntToStr(port));
 
     pConnection := InternetConnect(pSession, PChar(AHost), Port,
       PChar(FProxyUser), PChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, cardinal(Self));
@@ -351,7 +351,7 @@ begin
         flags := INTERNET_SERVICE_HTTP;
 
       //DEBUG
-      WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APage);
+      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APage);
 
       pRequest := HttpOpenRequest(pConnection, PChar('POST'),
         PChar(APage), nil, nil, nil, flags, 0);
@@ -389,8 +389,8 @@ begin
           FData := UTF8Encode(FData);
 
         //DEBUG
-        WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+APage);
-        WriteToTXT('c:\temp\httpreqresp.log', FData);
+        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+APage);
+        //WriteToTXT('c:\temp\httpreqresp.log', FData);
 
         Ok := False;
         Resp.Size := 0;
@@ -398,12 +398,12 @@ begin
         begin
           BytesRead := 0;
           //DEBUG
-          WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Lendo Dados');
+          //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Lendo Dados');
 
           while InternetReadFile(pRequest, @aBuffer, SizeOf(aBuffer), BytesRead) do
           begin
             //DEBUG
-            WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Bytes Lido: '+IntToStr(BytesRead));
+            //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Bytes Lido: '+IntToStr(BytesRead));
 
             if (BytesRead = 0) then
               Break;
@@ -418,11 +418,11 @@ begin
             Resp.Position := 0;
 
             //DEBUG
-            WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
-            SetLength(FData, Resp.Size);
-            Resp.ReadBuffer(FData[1],Resp.Size);
-            Resp.Position := 0;
-            WriteToTXT('c:\temp\httpreqresp.log', FData);
+            //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
+            //SetLength(FData, Resp.Size);
+            //Resp.ReadBuffer(FData[1],Resp.Size);
+            //Resp.Position := 0;
+            //WriteToTXT('c:\temp\httpreqresp.log', FData);
 
             Ok := True;
 
@@ -442,8 +442,8 @@ begin
           UpdateErrorCodes(pRequest);
 
           //DEBUG
-          WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+
-             ' - Erro WinNetAPI: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));
+          //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+
+          //   ' - Erro WinNetAPI: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));
 
           raise EACBrHTTPReqResp.Create('Erro: Requisição não enviada.' +
             sLineBreak + IntToStr(InternalErrorCode) + ' - ' + GetWinInetError(InternalErrorCode));

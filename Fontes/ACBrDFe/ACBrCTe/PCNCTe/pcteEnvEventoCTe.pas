@@ -346,6 +346,7 @@ begin
            FRetInfEvento.emailDest   := RetEventoCTe.retEvento.Items[0].RetInfEvento.emailDest;
            FRetInfEvento.dhRegEvento := RetEventoCTe.retEvento.Items[0].RetInfEvento.dhRegEvento;
            FRetInfEvento.nProt       := RetEventoCTe.retEvento.Items[0].RetInfEvento.nProt;
+           FRetInfEvento.XML         := RetEventoCTe.retEvento.Items[0].RetInfEvento.XML;
          end;
       end;
   finally

@@ -196,6 +196,7 @@ begin
   FdmDanfe.URLConsultaPublica    := FURLConsultaPublica;
   FdmDanfe.ImprimirDadosArma := FImprimirDadosArma;
 
+  FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFile) <> '' then
   begin
     if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then

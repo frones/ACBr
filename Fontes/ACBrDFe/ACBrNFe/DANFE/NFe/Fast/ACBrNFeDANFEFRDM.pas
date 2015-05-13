@@ -183,6 +183,7 @@ type
     property frxPDFExport: TfrxPDFExport read FfrxPDFExport write FfrxPDFExport;
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
 
+    procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
@@ -204,6 +205,28 @@ begin
     Inc(Result);
     i := PosEx(ASubString, AString, i + 1);
   until i = 0;
+end;
+
+procedure TACBrNFeFRClass.SetDataSetsToFrxReport;
+begin
+  frxReport.EnabledDataSets.Clear;
+  frxReport.EnabledDataSets.Add(FfrxIdentificacao);
+  frxReport.EnabledDataSets.Add(FfrxEmitente);
+  frxReport.EnabledDataSets.Add(FfrxDestinatario);
+  frxReport.EnabledDataSets.Add(FfrxDadosProdutos);
+  frxReport.EnabledDataSets.Add(FfrxCalculoImposto);
+  frxReport.EnabledDataSets.Add(FfrxTransportador);
+  frxReport.EnabledDataSets.Add(FfrxVeiculo);
+  frxReport.EnabledDataSets.Add(FfrxVolumes);
+  frxReport.EnabledDataSets.Add(FfrxEventos);
+  frxReport.EnabledDataSets.Add(FfrxISSQN);
+  frxReport.EnabledDataSets.Add(FfrxFatura);
+  frxReport.EnabledDataSets.Add(FfrxLocalRetirada);
+  frxReport.EnabledDataSets.Add(FfrxLocalEntrega);
+  frxReport.EnabledDataSets.Add(FfrxInformacoesAdicionais);
+  frxReport.EnabledDataSets.Add(FfrxPagamento);
+  frxReport.EnabledDataSets.Add(FfrxParametros);
+  frxReport.EnabledDataSets.Add(FfrxDuplicatas);
 end;
 
 function TACBrNFeFRClass.Split(const ADelimiter, AString: string): TSplitResult;
@@ -1610,6 +1633,7 @@ begin
   FDANFEClassOwner := TACBrNFeDANFEClass(AOwner);
 
   FfrxReport := TfrxReport.Create(nil);
+  FfrxReport.EngineOptions.UseGlobalDataSetList := False;
   with FfrxReport do
   begin
      EngineOptions.DoublePass := True;
@@ -1741,6 +1765,7 @@ begin
      FfrxDadosProdutos := TfrxDBDataset.Create(nil);
      with FfrxDadosProdutos do
      begin
+        Name := 'frxDadosProdutos';
         DataSet := cdsDadosProdutos;
         OpenDataSource := False;
         UserName := 'DadosProdutos';

@@ -163,7 +163,37 @@ type
     procedure FormatarTO;
   end;
 
+  {TTestCaseACBrValidadorTelefone}
+
+  TTestCaseACBrValidadorTelefone = class(TTestCase)
+  private
+    fACBrValidador : TACBrValidador;
+  protected
+    procedure TearDown; override;
+  published
+    procedure FormatarFone;
+  end;
+
 implementation
+
+{ TTestCaseACBrValidadorTelefone }
+
+procedure TTestCaseACBrValidadorTelefone.TearDown;
+begin
+  FreeAndNil(fACBrValidador);
+end;
+
+procedure TTestCaseACBrValidadorTelefone.FormatarFone;
+begin
+  CheckEquals('(00)0000-0000', ACBrValidador.FormatarFone('0000000000', ''));
+  CheckEquals('(  )99701-2345', ACBrValidador.FormatarFone('997012345', ''));
+  CheckEquals('(  )3322-0000', ACBrValidador.FormatarFone('33220000', ''));
+  CheckEquals('0800-123-4567', ACBrValidador.FormatarFone('08001234567', ''));
+  CheckEquals('(15)99701-2345', ACBrValidador.FormatarFone('015997012345',''));
+  CheckEquals('(15)3322-0000', ACBrValidador.FormatarFone('01533220000', ''));
+  CheckEquals('(5511)3322-0000', ACBrValidador.FormatarFone('551133220000', ''));
+  CheckEquals('(5511)99922-0000', ACBrValidador.FormatarFone('5511999220000', ''));
+end;
 
 { TTestCaseACBrValidadorIE }
 
@@ -1011,5 +1041,6 @@ initialization
   RegisterTest(TTestCaseACBrValidadorCNPJ{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorUF{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
+  RegisterTest(TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
 end.
 

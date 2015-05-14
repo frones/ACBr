@@ -796,7 +796,7 @@ procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min,
 
 var
   NumeroDecimais: smallint;
-  valorInt, Limite: Integer;
+  valorInt, TamMin, TamMax: Integer;
   valorDbl: Double;
   alerta, ConteudoProcessado, ATag: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
@@ -807,7 +807,8 @@ begin
   EstaVazio           := False;
   NumeroDecimais      := 0;
   ConteudoProcessado  := '';
-  Limite              := max;
+  TamMax              := max;
+  TamMin              := min;
 
   case Tipo of
     tcStr:
@@ -857,8 +858,9 @@ begin
 
     tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
       begin
-        // adicionar um para que o máximo não considere a virgula
-        Limite := Limite + 1;
+        // adicionar um para que o máximo e mínimo não considerem a virgula
+        TamMax := TamMax + 1;
+        TamMin := TamMin + 1;
 
         // Tipo numerico com decimais
         case Tipo of
@@ -887,8 +889,8 @@ begin
           if int(valorDbl) = valorDbl then
             ConteudoProcessado := IntToStr(Round(valorDbl));
 
-        if Length(ConteudoProcessado) < min then
-          ConteudoProcessado := PadLeft(ConteudoProcessado,min,'0');
+        if Length(ConteudoProcessado) < TamMin then
+          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
       end;
 
     tcEsp:
@@ -913,20 +915,20 @@ begin
 
         EstaVazio := (valorInt = 0) and (ocorrencias = 0);
 
-        if Length(ConteudoProcessado) < min then
-          ConteudoProcessado := PadLeft(ConteudoProcessado,min,'0');
+        if Length(ConteudoProcessado) < TamMin then
+          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
       end;
   end;
 
   alerta := '';
   //(Existem tags obrigatórias que podem ser nulas ex. cEAN)  if (ocorrencias = 1) and (EstaVazio) then
-  if (ocorrencias = 1) and (EstaVazio) and (min > 0) then
+  if (ocorrencias = 1) and (EstaVazio) and (TamMin > 0) then
     alerta := ERR_MSG_VAZIO;
 
-  if (length(ConteudoProcessado) < min) and (alerta = '') and (length(ConteudoProcessado) > 1) then
+  if (length(ConteudoProcessado) < TamMin) and (alerta = '') and (length(ConteudoProcessado) > 1) then
     alerta := ERR_MSG_MENOR;
 
-  if length(ConteudoProcessado) > Limite then
+  if length(ConteudoProcessado) > TamMax then
      alerta := ERR_MSG_MAIOR;
 
   // Grava alerta //

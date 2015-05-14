@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2015
+-- ACBrValidador -- (por: Graziele Rocha Serafim)
+[-] Correção FormatarFone() quando os primeiros digitos são 0.
+
 23/04/2015
 -- ACBrValidador --
 [+] Adicionada verificação de RENAVAM   (sincronismo com Trunk)

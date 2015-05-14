@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/05/2015
+-- ACBrSAT --  (por: DSA)
+[*] pcnCFeW, revisado para respeitar os valores máximos e mínimo da Especificaçao
+    atual
+
 Data: 08/05/2015
 -- ACBrSAT --  (por: DSA)
 [*] Método:   CFe/CFeCanc.GetXMLString(ApenasTagsAplicacao: Boolean): AnsiString;

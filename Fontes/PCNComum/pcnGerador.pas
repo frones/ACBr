@@ -788,6 +788,12 @@ begin
 end;
 
 procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
+
+  function IsEmptyDate( wAno, wMes, wDia: Word): Boolean;
+  begin
+    Result := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+  end;
+
 var
   NumeroDecimais: smallint;
   valorInt, Limite: Integer;
@@ -817,14 +823,14 @@ begin
         if Tipo = tcDatCFe then
           ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
 
-        EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+        EstaVazio := IsEmptyDate( wAno, wMes, wDia );
       end;
 
     tcDatVcto:
       begin
         DecodeDate( VarToDateTime(valor), wAno, wMes, wDia);
         ConteudoProcessado := FormatFloat('00', wDia)+ '/' + FormatFloat('00', wMes)+ '/' +FormatFloat('0000', wAno);
-        EstaVazio := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
+        EstaVazio := IsEmptyDate( wAno, wMes, wDia );
       end;
 
     tcHor, tcHorCFe:
@@ -880,6 +886,9 @@ begin
         if FOpcoes.FSuprimirDecimais then
           if int(valorDbl) = valorDbl then
             ConteudoProcessado := IntToStr(Round(valorDbl));
+
+        if Length(ConteudoProcessado) < min then
+          ConteudoProcessado := PadLeft(ConteudoProcessado,min,'0');
       end;
 
     tcEsp:
@@ -904,8 +913,8 @@ begin
 
         EstaVazio := (valorInt = 0) and (ocorrencias = 0);
 
-        if min = Limite then
-          ConteudoProcessado := PadLeft(ConteudoProcessado,Limite,'0');
+        if Length(ConteudoProcessado) < min then
+          ConteudoProcessado := PadLeft(ConteudoProcessado,min,'0');
       end;
   end;
 

@@ -106,11 +106,15 @@ begin
   else
     ConfigCidade.NameSpaceEnvelope := 'http://service.nfse.integracao.ws.publica/';
 
+  case ACodCidade of
+    4208203: ConfigCidade.Identificador := 'id';  // Itajai/SC
+  end;
+
   ConfigCidade.AssinaRPS   := False; // True;
   ConfigCidade.AssinaLote  := True;
   ConfigCidade.AssinaGerar := True;
 
- Result := ConfigCidade;
+  Result := ConfigCidade;
 end;
 
 function TProvedorPublica.GetConfigSchema(ACodCidade: Integer): TConfigSchema;

@@ -793,6 +793,8 @@ begin
   4107652, // Fazenda Rio Grande/PR
   4108601, // Goioerê/PR
   4114302, // Mandirituba/PR
+  4116307, // Munhoz de Melo/PR
+  4117305, // Ortigueira/PR
   4118402, // Paranavaí/PR
   4120853, // Quatro Pontes/PR
   4125605, // São Mateus do Sul/PR
@@ -809,6 +811,7 @@ begin
   4203600, // Campos Novos/SC
   4203808, // Canoinhas/SC
   4203907, // Capinzal/SC
+  4204004, // Catanduvas/SC
   4204202, // Chapecó/SC
   4204251, // Cocal Do Sul/SC
   4204350, // Cordilheira Alta/SC
@@ -854,6 +857,7 @@ begin
   4215505, // Santa Cecília/SC
   4215802, // São Bento do Sul/SC
   4216008, // São Carlos/SC
+  4216255, // Sao Joao Do Oeste/SC
   4216305, // São João Batista/SC
   4216503, // Sao Joaquim/SC
   4216909, // São Lourenço do Oeste/SC
@@ -883,10 +887,7 @@ begin
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
-  5103502,  // Diamantino/MT
-  4117305,  //Ortigueira/PR
-  4116307, //Munhoz de Melo/PR
-  4204004  // Catanduvas/SC
+  5103502  // Diamantino/MT
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG

@@ -136,15 +136,15 @@ var
  	ConfigURL: TConfigURL;
 begin
  	ConfigURL.HomNomeCidade         := '';
-  ConfigURL.HomRecepcaoLoteRPS    := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
-  ConfigURL.HomConsultaLoteRPS    := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
-  ConfigURL.HomConsultaNFSeRPS    := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomConsultaLoteRPS    := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomConsultaNFSeRPS    := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
   ConfigURL.HomConsultaSitLoteRPS := '';
-  ConfigURL.HomConsultaNFSe       := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
-  ConfigURL.HomCancelaNFSe        := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
-  ConfigURL.HomGerarNFSe          := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
-  ConfigURL.HomRecepcaoSincrono   := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
-  ConfigURL.HomSubstituiNFSe      := 'http://servidor1.virtualtechnologia.com.br:81/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomConsultaNFSe       := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomCancelaNFSe        := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomGerarNFSe          := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomRecepcaoSincrono   := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
+  ConfigURL.HomSubstituiNFSe      := 'http://servidor1.virtualtechnologia.com.br:82/WebServiceSCEMJavaEnvironment/servlet/awsnfsebarradogarcas';
 
  	ConfigURL.ProNomeCidade         := '';
   ConfigURL.ProRecepcaoLoteRPS    := '';

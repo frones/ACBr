@@ -273,15 +273,12 @@ var
 begin
   FoneNum := OnlyNumber(AValue);
 
-  if (Length(FoneNum) > 0) and (Copy(AValue,1,2) <> '00') then
+  if NaoEstaVazio(FoneNum) then
   begin
     // Remove Zeros a esquerda //
     while LeftStr(FoneNum,1) = '0' do
-      FoneNum := Copy(AValue,2,Length(FoneNum));
-  end;
+      FoneNum := Copy(FoneNum,2,Length(FoneNum));
 
-  if NaoEstaVazio(FoneNum) then
-  begin
     if copy(FoneNum, 1, 3) = '800' then
       FoneNum := '0' + copy(FoneNum, 1, 3) + '-' + copy(FoneNum, 4, 3) + '-' + copy(FoneNum, 7, 4)
     else

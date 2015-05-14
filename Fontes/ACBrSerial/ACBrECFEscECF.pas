@@ -1025,8 +1025,8 @@ end;
 
 function TACBrECFEscECF.IsBematech : Boolean ;
 begin
-   Result := (pos('BEMATECH',UpperCase(fsMarcaECF)) > 0) ;
-end ;
+  Result := (pos('BEMATECH',UpperCase(fsMarcaECF)) > 0) ;
+end;
 
 function TACBrECFEscECF.IsDaruma: Boolean;
 begin
@@ -2269,6 +2269,9 @@ end;
 procedure TACBrECFEscECF.AbreNaoFiscal(CPF_CNPJ: String; Nome: String;
    Endereco: String);
 begin
+  if Trim(CPF_CNPJ) <> '' then
+     Consumidor.AtribuiConsumidor(CPF_CNPJ,Nome,Endereco);
+
   EscECFComando.CMD := 16;
   EscECFComando.AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
   EscECFComando.AddParamString(LeftStr(Consumidor.Nome,30)) ;

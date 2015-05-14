@@ -59,6 +59,7 @@ type
     FSenha: AnsiString;
     FNumeroSerie: String;
     FArquivoPFX: String;
+    FVerificarValidade: Boolean;
 
     procedure SetNumeroSerie(const Value: String);
   public
@@ -71,6 +72,8 @@ type
     property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
     property Senha: AnsiString read FSenha write FSenha;
     property CNPJ: String read FCNPJ write FCNPJ;
+    property VerificarValidade: Boolean read FVerificarValidade write
+      FVerificarValidade default True;
   end;
 
   { TWebServicesConf }
@@ -565,6 +568,7 @@ begin
   FArquivoPFX := '';
   FDadosPFX := '';
   FNumeroSerie := '';
+  FVerificarValidade := True;
 end;
 
 procedure TCertificadosConf.Assign(DeCertificadosConf: TCertificadosConf);

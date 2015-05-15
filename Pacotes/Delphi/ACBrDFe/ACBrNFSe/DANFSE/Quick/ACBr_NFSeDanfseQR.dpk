@@ -32,7 +32,6 @@ requires
   xmlrtl,
   inet,
   dsnap,
-  bdertl,
   vclx,
   vcldb,
   designide,

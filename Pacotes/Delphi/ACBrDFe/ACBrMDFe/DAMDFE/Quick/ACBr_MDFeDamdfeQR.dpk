@@ -64,7 +64,6 @@ requires
   vcl,
   rtl,
   dbrtl,
-  bdertl,
   vclx,
   vcldb,
   dsnap,

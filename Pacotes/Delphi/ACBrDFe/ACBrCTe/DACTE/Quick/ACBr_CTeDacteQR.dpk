@@ -73,7 +73,6 @@ requires
   vcl,
   rtl,
   dbrtl,
-  bdertl,
   vclx,
   vcldb,
   designide,

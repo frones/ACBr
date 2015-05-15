@@ -1448,10 +1448,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsNFe
+        ActivePage = tsSat
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 17
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6427,9 +6427,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = ConfiguracaoNFE
+            ActivePage = WebService
             Align = alClient
-            TabIndex = 0
+            TabIndex = 2
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -9071,22 +9071,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'CNPJ'
                 ParentColor = False
               end
-              object Label135: TLabel
-                Left = 192
-                Height = 17
-                Top = 10
-                Width = 74
-                Caption = 'Insc.Estadual'
-                ParentColor = False
-              end
-              object Label167: TLabel
-                Left = 336
-                Height = 17
-                Top = 10
-                Width = 81
-                Caption = 'Insc.Municipal'
-                ParentColor = False
-              end
               object edtEmitCNPJ: TEdit
                 Cursor = crIBeam
                 Left = 12
@@ -9103,6 +9087,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 134
                 TabOrder = 1
               end
+              object Label135: TLabel
+                Left = 192
+                Height = 17
+                Top = 10
+                Width = 74
+                Caption = 'Insc.Estadual'
+                ParentColor = False
+              end
               object edtEmitIM: TEdit
                 Cursor = crIBeam
                 Left = 336
@@ -9110,6 +9102,31 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 30
                 Width = 134
                 TabOrder = 2
+              end
+              object Label167: TLabel
+                Left = 336
+                Height = 17
+                Top = 10
+                Width = 81
+                Caption = 'Insc.Municipal'
+                ParentColor = False
+              end
+              object cbxRegTributario: TComboBox
+                Left = 12
+                Height = 25
+                Top = 80
+                Width = 166
+                ItemHeight = 17
+                Style = csDropDownList
+                TabOrder = 3
+              end
+              object Label170: TLabel
+                Left = 12
+                Height = 17
+                Top = 60
+                Width = 105
+                Caption = 'Regime Tributario'
+                ParentColor = False
               end
               object cbxRegTribISSQN: TComboBox
                 Left = 192
@@ -9144,23 +9161,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 80
                 Caption = 'Ind.Rat.ISSQN'
                 ParentColor = False
-              end
-              object Label170: TLabel
-                Left = 12
-                Height = 17
-                Top = 60
-                Width = 105
-                Caption = 'Regime Tributario'
-                ParentColor = False
-              end
-              object cbxRegTributario: TComboBox
-                Left = 12
-                Height = 25
-                Top = 80
-                Width = 166
-                ItemHeight = 17
-                Style = csDropDownList
-                TabOrder = 3
               end
             end
             object tsDadosSwHouse: TTabSheet
@@ -10212,12 +10212,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
-    ConfigBarras.MostrarCodigo = False
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
+    PosCanhoto = prCabecalho
+    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
     left = 619
@@ -10243,9 +10246,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
+    PosCanhoto = prCabecalho
     left = 648
     top = 448
   end
@@ -10270,9 +10278,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
     LarguraCodProd = 54
     ExibirEAN = False
     left = 589
@@ -11227,6 +11239,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    PosPrinter = ACBrPosPrinter1
     left = 589
     top = 492
   end
@@ -11240,5 +11253,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object PrintDialog1: TPrintDialog
     left = 656
     top = 488
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    Modelo = ppEscPosEpson
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    CortaPapel = False
+    left = 464
+    top = 448
   end
 end

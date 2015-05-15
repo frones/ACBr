@@ -40,8 +40,8 @@ uses
   SysUtils, Classes, Forms, CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice,
   ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls,
   ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
-  ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador, ACBrGIF, ACBrEAD,
-  ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
+  ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
+  ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
   Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
   pcnConversaoNFe, ACBrDFeConfiguracoes, ACBrSAT, ACBrSATExtratoESCPOS,
@@ -74,6 +74,7 @@ type
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrPosPrinter1: TACBrPosPrinter;
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
@@ -1128,10 +1129,10 @@ var
   iTipo: TpcnTipoAmbiente;
   iRegISSQN: TpcnRegTribISSQN;
   iRatISSQN: TpcnindRatISSQN;
-  iTCP: TpcnRegTrib;
+  iRegTrib: TpcnRegTrib;
   AppDir: string;
   ILayout: TACBrBolLayOut;
-  iImpressoraESCPOS: TACBrNFeMarcaImpressora;
+  iImpressoraESCPOS: TACBrPosPrinterModelo;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1263,13 +1264,13 @@ begin
 
   { Criando lista modelos de Impressora ESC POS disponiveis }
   cbMarcaImpressoraESCPOS.Items.Clear;
-  for iImpressoraESCPOS := Low(TACBrNFeMarcaImpressora)
-    to High(TACBrNFeMarcaImpressora) do
-    cbMarcaImpressoraESCPOS.Items.Add(GetEnumName(TypeInfo(TACBrNFeMarcaImpressora),
+  for iImpressoraESCPOS := Low(TACBrPosPrinterModelo)
+    to High(TACBrPosPrinterModelo) do
+    cbMarcaImpressoraESCPOS.Items.Add(GetEnumName(TypeInfo(TACBrPosPrinterModelo),
       integer(iImpressoraESCPOS)));
 
   cbPortaESCPOS.Items.Clear;
-  ACBrNFeDANFeESCPOS1.Device.AcharPortasSeriais(cbPortaESCPOS.Items);
+  ACBrNFeDANFeESCPOS1.PosPrinter.Device.AcharPortasSeriais(cbPortaESCPOS.Items);
 
   {SAT}
   cbxModeloSAT.Items.Clear;
@@ -1289,8 +1290,8 @@ begin
      cbxIndRatISSQN.Items.Add( GetEnumName(TypeInfo(TpcnindRatISSQN), integer(iRatISSQN) ) ) ;
 
   cbxRegTributario.Items.Clear ;
-  For iTCP := Low(TpcnRegTrib) to High(TpcnRegTrib) do
-     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(iTCP) ) ) ;
+  For iRegTrib := Low(TpcnRegTrib) to High(TpcnRegTrib) do
+     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(iRegTrib) ) ) ;
 
   Application.OnException := @TrataErrosSAT ;
 
@@ -1985,14 +1986,14 @@ begin
   frConfiguraSerial := TfrConfiguraSerial.Create(self);
 
   try
-    frConfiguraSerial.Device.Porta        := ACBrSATExtratoESCPOS1.Device.Porta ;
+    frConfiguraSerial.Device.Porta        := ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta ;
     frConfiguraSerial.cmbPortaSerial.Text := edtPorta.Text ;
-    frConfiguraSerial.Device.ParamsString := ACBrSATExtratoESCPOS1.Device.ParamsString ;
+    frConfiguraSerial.Device.ParamsString := ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString ;
 
     if frConfiguraSerial.ShowModal = mrOk then
     begin
        edtPorta.Text := frConfiguraSerial.Device.Porta ;
-       ACBrSATExtratoESCPOS1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+       ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
     end ;
   finally
      FreeAndNil( frConfiguraSerial ) ;
@@ -2540,7 +2541,7 @@ begin
   DISAtivado := ACBrDIS1.Ativo;
   BALAtivado := ACBrBAL1.Ativo;
   ETQAtivado := ACBrETQ1.Ativo;
-  ESCPOSAtivado := ACBrNFeDANFeESCPOS1.Device.Ativo;
+  ESCPOSAtivado := ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo;
 
   try
     { Lendo Senha }
@@ -2751,7 +2752,7 @@ begin
     deNcmSalvar.Text := Ini.ReadString('NCM', 'DirNCMSalvar', '');
 
     {Parametros NFe}
-    ACBrNFeDANFeESCPOS1.Device.Desativar;
+    ACBrNFeDANFeESCPOS1.PosPrinter.Device.Desativar;
 
     cbModoXML.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ModoXML', False);
     edLogComp.Text :=
@@ -2938,7 +2939,7 @@ begin
     ACBrNFe1.Configuracoes.Geral.IdCSC := Ini.ReadString('NFCe', 'IdToken', '');
     ACBrNFe1.Configuracoes.Geral.CSC := Ini.ReadString('NFCe', 'Token', '');
 
-    ACBrNFeDANFeESCPOS1.Device.Ativo := ESCPOSAtivado;
+    ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo := ESCPOSAtivado;
 
     {Parametro SAT}
 
@@ -2958,7 +2959,7 @@ begin
     ACBrSAT1.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
 
     edtPorta.Text := INI.ReadString('SATExtrato','Porta','COM1');
-    ACBrSATExtratoESCPOS1.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
+    ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
 
     edtEmitCNPJ.Text := INI.ReadString('SATEmit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('SATEmit','IE','');
@@ -3607,7 +3608,7 @@ begin
     INI.WriteString('SAT','PathCFe',edSATPathArqs.Text);
 
     INI.WriteString('SATExtrato','Porta',edtPorta.Text);
-    INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.Device.ParamsString);
+    INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString);
 
     INI.WriteString('SATEmit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('SATEmit','IE',edtEmitIE.Text);
@@ -3943,9 +3944,9 @@ begin
     { Objeto BOLETO/NFE pode receber comandos com várias Linhas,
       portanto deve processar todas linhas de uma só vez... }
     Objeto := fsProcessar[0];
-    if (UpperCase(Copy(fsProcessar[0], 1, 6)) = 'BOLETO') or
-      (UpperCase(Copy(fsProcessar[0], 1, 3)) = 'NFE')  or
-      (UpperCase(Copy(fsProcessar[0], 1, 3)) = 'SAT') then
+    if (UpperCase(Copy(Trim(fsProcessar[0], 1, 6))) = 'BOLETO') or
+      (UpperCase(Copy(Trim(fsProcessar[0], 1, 3))) = 'NFE')  or
+      (UpperCase(Copy(Trim(fsProcessar[0], 1, 3))) = 'SAT') then
     begin
       Linha := Trim(fsProcessar.Text);
       fsProcessar.Clear;
@@ -5810,8 +5811,8 @@ procedure TFrmACBrMonitor.PrepararImpressaoSAT;
 begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
-    ACBrSATExtratoESCPOS1.Device.Porta := edtPorta.Text;
-    ACBrSATExtratoESCPOS1.Device.Ativar;
+    ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := edtPorta.Text;
+    ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
   end
   else
@@ -6082,16 +6083,16 @@ begin
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     begin
-      ACBrNFeDANFeESCPOS1.MarcaImpressora :=
-        TACBrNFeMarcaImpressora(cbMarcaImpressoraESCPOS.ItemIndex);
-      ACBrNFeDANFeESCPOS1.Device.Porta := cbPortaESCPOS.Text;
-      ACBrNFeDANFeESCPOS1.Device.Baud := StrToInt(cbVelocidadeESCPOS.Text);
+      ACBrNFeDANFeESCPOS1.PosPrinter.Modelo :=
+        TACBrPosPrinterModelo(cbMarcaImpressoraESCPOS.ItemIndex);
+      ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbPortaESCPOS.Text;
+      ACBrNFeDANFeESCPOS1.PosPrinter.Device.Baud := StrToInt(cbVelocidadeESCPOS.Text);
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaESCPOS.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem :=
         cbxImprimirDescAcresItemESCPOS.Checked;
 
-      if not ACBrNFeDANFeESCPOS1.Device.Ativo then
-        ACBrNFeDANFeESCPOS1.Device.Ativar;
+      if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
+        ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
     end;
   end;
 end;

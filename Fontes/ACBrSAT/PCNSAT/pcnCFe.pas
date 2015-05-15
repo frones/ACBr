@@ -508,7 +508,7 @@ type
     FcListServ: integer;
     FcServTribMun: string;
     FcNatOp: integer;
-    FindIncFisc: integer;
+    FindIncFisc: TpcnindIncentivo;
   public
     constructor Create;
     procedure Clear;
@@ -521,7 +521,7 @@ type
     property cListServ: integer read FcListServ write FcListServ;
     property cServTribMun: string read FcServTribMun write FcServTribMun;
     property cNatOp: integer read FcNatOp write FcNatOp;
-    property indIncFisc: integer read FindIncFisc write FindIncFisc;
+    property indIncFisc: TpcnindIncentivo read FindIncFisc write FindIncFisc;
   end;
 
   { TTotal }
@@ -811,7 +811,7 @@ begin
   FcListServ   := 0;
   FcServTribMun:= '';
   FcNatOp      := 0;
-  FindIncFisc  := 0;
+  FindIncFisc  := iiNao;
 end ;
 
 { TICMSTot }

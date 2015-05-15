@@ -620,7 +620,7 @@ begin
          Gerador.wAlerta('U07', 'cListServ', DSC_CLISTSERV, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'U08', 'cServTribMun', 20, 20, 0, CFe.Det[i].Imposto.ISSQN.cServTribMun, DSC_CSERVTRIBMUN);
     Gerador.wCampo(tcInt, 'U09', 'cNatOp      ', 02, 02, 1, CFe.Det[i].Imposto.ISSQN.cNatOp, DSC_CNATOP);
-    Gerador.wCampo(tcInt, 'U10', 'indIncFisc  ', 01, 01, 1, CFe.Det[i].Imposto.ISSQN.indIncFisc, DSC_INDINCFISC);
+    Gerador.wCampo(tcStr, 'U10', 'indIncFisc  ', 01, 01, 1, indIncentivoToStr(CFe.Det[i].Imposto.ISSQN.indIncFisc), DSC_INDINCFISC);
     Gerador.wGrupo('/ISSQN');
   end;
 end;

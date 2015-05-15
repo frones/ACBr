@@ -1518,8 +1518,8 @@ begin
            try
               MemoTXT.Clear ;
               MemoTXT.Text := ConvertStrRecived( cmd.Params(0) );
-              if not ACBrNFeDANFeESCPOS1.Device.Ativo then
-                 ACBrNFeDANFeESCPOS1.Device.Ativar;
+              if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
+                 ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
               ACBrNFeDANFeESCPOS1.ImprimirRelatorio(MemoTXT.Lines);
            finally
               MemoTXT.Free ;

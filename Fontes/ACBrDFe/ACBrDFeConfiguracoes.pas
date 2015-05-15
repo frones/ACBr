@@ -61,14 +61,16 @@ type
     FArquivoPFX: String;
     FVerificarValidade: Boolean;
 
+    procedure SetArquivoPFX(AValue: String);
+    procedure SetDadosPFX(AValue: AnsiString);
     procedure SetNumeroSerie(const Value: String);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload;
     procedure Assign(DeCertificadosConf: TCertificadosConf); virtual;
 
   published
-    property ArquivoPFX: String read FArquivoPFX write FArquivoPFX;
-    property DadosPFX: AnsiString read FDadosPFX write FDadosPFX;
+    property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
+    property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
     property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
     property Senha: AnsiString read FSenha write FSenha;
     property CNPJ: String read FCNPJ write FCNPJ;
@@ -583,6 +585,21 @@ end;
 procedure TCertificadosConf.SetNumeroSerie(const Value: String);
 begin
   FNumeroSerie := Trim(UpperCase(StringReplace(Value, ' ', '', [rfReplaceAll])));
+  TACBrDFe(FConfiguracoes.Owner).SSL.DescarregarCertificado;
+end;
+
+procedure TCertificadosConf.SetArquivoPFX(AValue: String);
+begin
+  if FArquivoPFX = AValue then Exit;
+  FArquivoPFX := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.DescarregarCertificado;
+end;
+
+procedure TCertificadosConf.SetDadosPFX(AValue: AnsiString);
+begin
+  if FDadosPFX = AValue then Exit;
+  FDadosPFX := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.DescarregarCertificado;
 end;
 
 

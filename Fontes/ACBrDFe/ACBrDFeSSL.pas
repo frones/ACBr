@@ -81,6 +81,7 @@ type
       out MsgErro: String): Boolean; virtual;
 
     procedure CarregarCertificado; virtual;
+    procedure DescarregarCertificado; virtual;
     function SelecionarCertificado: String; virtual;
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
@@ -128,7 +129,8 @@ type
     function VerificarAssinatura(const ConteudoXML: String;
       out MsgErro: String): Boolean;
 
-    procedure CarregarCertificado; virtual;
+    procedure CarregarCertificado;
+    procedure DescarregarCertificado;
     function SelecionarCertificado: String;
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
@@ -213,7 +215,13 @@ end;
 
 procedure TDFeSSL.CarregarCertificado;
 begin
-  InitSSLClass;
+  InitSSLClass( True );
+end;
+
+procedure TDFeSSL.DescarregarCertificado;
+begin
+  if FSSLClass.Inicializado then
+    FSSLClass.DescarregarCertificado;
 end;
 
 function TDFeSSL.SelecionarCertificado: String;
@@ -319,12 +327,18 @@ end;
 
 procedure TDFeSSLClass.Inicializar;
 begin
-  {nada aqui}
+  if FpInicializado then exit ;
+
+  CarregarCertificado;
+  FpInicializado := True;
 end;
 
 procedure TDFeSSLClass.DesInicializar;
 begin
-  {nada aqui}
+  if not FpInicializado then exit;
+
+  DescarregarCertificado;
+  FpInicializado := False;
 end;
 
 function TDFeSSLClass.Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -363,7 +377,12 @@ end;
 
 procedure TDFeSSLClass.CarregarCertificado;
 begin
-  raise EACBrDFeException.Create(ClassName + '.CarregarCertificado não implementado');
+  { nada aqui, método virtual}
+end;
+
+procedure TDFeSSLClass.DescarregarCertificado;
+begin
+  { nada aqui, método virtual}
 end;
 
 function TDFeSSLClass.GetHTTPResultCode: Integer;

@@ -427,13 +427,12 @@ begin
             Ok := True;
 
             //TODO: Tratar a resposta abaixo, ler o conteudo do documento... Precisa ????
-
-            //          if Pos('<TITLE',UpperCase(Result)) > 0 then
-            //          begin
-            //            PosError := Pos('<TITLE>',UpperCase(Result))+7;
-            //            ErrorMsg := trim(copy(Result, PosError, (pos('</TITLE>', UpperCase(Result)) - PosError)));
-            //            raise EACBrHTTPReqResp.Create('Erro: Requisição não enviada.'+sLineBreak+ErrorMsg);
-            //          end;
+            //if Pos('<TITLE',UpperCase(Result)) > 0 then
+            //begin
+            //  PosError := Pos('<TITLE>',UpperCase(Result))+7;
+            //  ErrorMsg := trim(copy(Result, PosError, (pos('</TITLE>', UpperCase(Result)) - PosError)));
+            //  raise EACBrHTTPReqResp.Create('Erro: Requisição não enviada.'+sLineBreak+ErrorMsg);
+            //end;
           end;
         end;
 

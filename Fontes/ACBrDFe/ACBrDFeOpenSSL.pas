@@ -95,6 +95,7 @@ type
       out MsgErro: String): Boolean; override;
 
     procedure CarregarCertificado; override;
+    procedure DescarregarCertificado; override;
   end;
 
 implementation
@@ -125,8 +126,7 @@ end;
 
 procedure TDFeOpenSSL.Inicializar;
 begin
-  if FpInicializado then
-    exit;
+  if FpInicializado then exit;
 
   InitXmlSec;
   Clear;
@@ -135,10 +135,9 @@ end;
 
 procedure TDFeOpenSSL.DesInicializar;
 begin
-  DestroyCtx;
-  Clear;
-  FHTTP.Sock.SSL.PFX := '';
-  FHTTP.Sock.SSL.KeyPassword := '';
+  if not FpInicializado then exit;
+
+  DescarregarCertificado;
 
   if FpInicializado and Configuracoes.Geral.UnloadSSLLib then
     ShutDownXmlSec;
@@ -489,6 +488,7 @@ procedure TDFeOpenSSL.CarregarCertificado;
 var
   LoadFromFile, LoadFromData: Boolean;
   FS: TFileStream;
+  PFXData: AnsiString;
 begin
   with Configuracoes.Certificados do
   begin
@@ -504,30 +504,39 @@ begin
           sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"');
     end;
 
-    LoadFromFile := EstaVazio(DadosPFX) and (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
+    LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
     LoadFromData := (not EstaVazio(DadosPFX));
 
     if not (LoadFromFile or LoadFromData) then
-      raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não preenchido');
+      raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
 
-    if LoadFromFile then
+    PFXData := '';
+    if LoadFromData then
+      PFXData := DadosPFX
+    else
     begin
       FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
       try
-        DadosPFX := ReadStrFromStream(FS, FS.Size);
+        PFXData := ReadStrFromStream(FS, FS.Size);
       finally
         FS.Free;
       end;
     end;
 
-    if EstaVazio(DadosPFX) then
-      raise EACBrDFeException.Create('DadosPFX está vazio');
+    if EstaVazio(PFXData) then
+      raise EACBrDFeException.Create('Erro ao Carregar Certificado');
 
-    FHTTP.Sock.SSL.PFX := DadosPFX;
+    FHTTP.Sock.SSL.PFX := PFXData;
     FHTTP.Sock.SSL.KeyPassword := Senha;
 
-    LerPFXInfo(DadosPFX);
+    LerPFXInfo(PFXData);
   end;
+end;
+
+procedure TDFeOpenSSL.DescarregarCertificado;
+begin
+  DestroyCtx;
+  Clear;
 end;
 
 function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
@@ -708,6 +717,8 @@ begin
   FNumSerie := '';
   FValidade := 0;
   FSubjectName := '';
+  FHTTP.Sock.SSL.PFX := '';
+  FHTTP.Sock.SSL.KeyPassword := '';
 end;
 
 procedure TDFeOpenSSL.InitXmlSec;

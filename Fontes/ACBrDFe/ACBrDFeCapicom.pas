@@ -96,6 +96,7 @@ type
 
     procedure CarregarCertificado; override;
     function SelecionarCertificado: String; override;
+    procedure DescarregarCertificado; override;
   end;
 
 implementation
@@ -141,7 +142,7 @@ procedure TDFeCapicom.DesInicializar;
 begin
   if FpInicializado {and Configuracoes.Geral.UnloadSSLLib} then
   begin
-    Clear;
+    DescarregarCertificado;
     CoUninitialize;
     FpInicializado := False;
   end;
@@ -170,6 +171,11 @@ begin
   end;
 
   Result := GetCertNumeroSerie;
+end;
+
+procedure TDFeCapicom.DescarregarCertificado;
+begin
+  Clear;
 end;
 
 procedure TDFeCapicom.CarregarCertificadoSeNecessario;

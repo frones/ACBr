@@ -526,6 +526,8 @@ begin
     if EstaVazio(PFXData) then
       raise EACBrDFeException.Create('Erro ao Carregar Certificado');
 
+    DadosPFX := PFXData; 
+
     FHTTP.Sock.SSL.PFX := PFXData;
     FHTTP.Sock.SSL.KeyPassword := Senha;
 

@@ -377,7 +377,9 @@ end;
 procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
 begin
   FSSLLib           := DeGeralConf.SSLLib;
+  SetSSLLib(FSSLLib);
   FFormaEmissao     := DeGeralConf.FormaEmissao;
+  SetFormaEmissao(FFormaEmissao);
   FSalvar           := DeGeralConf.Salvar;
   FExibirErroSchema := DeGeralConf.ExibirErroSchema;
   FFormatoAlerta    := DeGeralConf.FormatoAlerta;
@@ -457,17 +459,22 @@ begin
   FResourceName             := DeWebServicesConf.ResourceName;
   FVisualizar               := DeWebServicesConf.Visualizar;
   FUF                       := DeWebServicesConf.UF;
+  SetUF(FUF);
   FAmbiente                 := DeWebServicesConf.Ambiente;
+  SetAmbiente(FAmbiente);
   FProxyHost                := DeWebServicesConf.ProxyHost;
   FProxyPort                := DeWebServicesConf.ProxyPort;
   FProxyUser                := DeWebServicesConf.ProxyUser;
   FProxyPass                := DeWebServicesConf.ProxyPass;
   FAguardarConsultaRet      := DeWebServicesConf.AguardarConsultaRet;
   FTentativas               := DeWebServicesConf.Tentativas;
+  SetTentativas(FTentativas);
   FIntervaloTentativas      := DeWebServicesConf.IntervaloTentativas;
+  SetIntervaloTentativas(FIntervaloTentativas);
   FAjustaAguardaConsultaRet := DeWebServicesConf.AjustaAguardaConsultaRet;
   FSalvar                   := DeWebServicesConf.Salvar;
   FParams.Assign(DeWebServicesConf.Params);
+  SetParams(FParams);
 end;
 
 procedure TWebServicesConf.LerParams;
@@ -579,6 +586,7 @@ begin
   FDadosPFX := DeCertificadosConf.DadosPFX;
   FSenha := DeCertificadosConf.Senha;
   FNumeroSerie := DeCertificadosConf.NumeroSerie;
+  SetNumeroSerie(FNumeroSerie);
   FArquivoPFX := DeCertificadosConf.ArquivoPFX;
 end;
 

@@ -172,10 +172,12 @@ end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
 begin
-  inherited Assign(DeGeralConfNFe);
-
   FModeloDF       := DeGeralConfNFe.ModeloDF;
+  SetModeloDF(FModeloDF);
   FVersaoDF       := DeGeralConfNFe.VersaoDF;
+  SetVersaoDF(FVersaoDF);
+
+  inherited Assign(DeGeralConfNFe);
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);

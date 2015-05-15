@@ -84,7 +84,7 @@ type
 
     function GetPathCan(CNPJ: String = ''): String;
     function GetPathInu(CNPJ: String = ''): String;
-    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
     function GetPathCCe(CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
     function GetPathDownload(CNPJ: String = ''): String;
@@ -272,9 +272,15 @@ begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
-function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
+var
+  DescricaoModelo: String;
 begin
-  Result := GetPath(FPathNFe, 'NFe', CNPJ, Data);
+  case Modelo of
+    55: DescricaoModelo := 'NFe';
+    65: DescricaoModelo := 'NFCe';
+  end;
+  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data);
 end;
 
 

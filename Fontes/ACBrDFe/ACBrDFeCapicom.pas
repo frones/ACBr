@@ -79,7 +79,7 @@ type
   public
     property Certificado: ICertificate2 read FCertificado;
 
-    constructor Create(AConfiguracoes: TConfiguracoes);
+    constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
     procedure Inicializar; override;
@@ -107,12 +107,12 @@ uses
 
 { TDFeCapicom }
 
-constructor TDFeCapicom.Create(AConfiguracoes: TConfiguracoes);
+constructor TDFeCapicom.Create(ADFeSSL: TDFeSSL);
 begin
-  inherited Create(AConfiguracoes);
+  inherited Create(ADFeSSL);
 
   FNumCertCarregado := '';
-  FNumCertACarregar := Configuracoes.Certificados.NumeroSerie;
+  FNumCertACarregar := FpDFeSSL.NumeroSerie;
   FCNPJ := '';
   FCertificado := nil;
   FCertStoreMem := nil;
@@ -210,7 +210,7 @@ var
   Lista: TStringList;
 begin
   // Verificando se possui parâmetros necessários //
-  with Configuracoes.Certificados do
+  with FpDFeSSL do
   begin
     if EstaVazio(FNumCertACarregar) then
     begin
@@ -320,8 +320,6 @@ begin
             p := Pos('=', Propriedade);
             FCNPJ := copy(Propriedade, p + 1, Length(Propriedade));
             FCNPJ := OnlyNumber(HexToAscii(RemoveString(' ', FCNPJ)));
-
-            Configuracoes.Certificados.CNPJ := FCNPJ;
             break;
           end;
         end;
@@ -534,7 +532,7 @@ begin
       exit;
     end;
 
-    Schema.add(TACBrDFe(Configuracoes.Owner).GetNameSpaceURI, ArqSchema);
+    Schema.add(FpDFeSSL.NameSpaceURI, ArqSchema);
 
     DOMDocument.schemas := Schema;
     ParseError := DOMDocument.validate;
@@ -611,7 +609,7 @@ end;
 
 procedure TDFeCapicom.ConfiguraReqResp(const URL, SoapAction: String);
 begin
-  with Configuracoes.WebServices do
+  with FpDFeSSL do
   begin
     if ProxyHost <> '' then
     begin

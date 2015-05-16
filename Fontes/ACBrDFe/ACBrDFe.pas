@@ -189,7 +189,25 @@ begin
   {$ENDIF}
 
   FMAIL := nil;
-  FSSL := TDFeSSL.Create(Self);
+  // Criando uma instância de FSSL e atribuindo valores de "Configuracoes" a ela;
+  FSSL := TDFeSSL.Create;
+
+  with FSSL do
+  begin
+    ArquivoPFX := Configuracoes.Certificados.ArquivoPFX;
+    DadosPFX := Configuracoes.Certificados.DadosPFX;
+    NameSpaceURI := GetNameSpaceURI;
+    NumeroSerie := Configuracoes.Certificados.NumeroSerie;
+    Senha := Configuracoes.Certificados.Senha;
+    ProxyHost := Configuracoes.WebServices.ProxyHost;
+    ProxyPass := Configuracoes.WebServices.ProxyPass;
+    ProxyPort := Configuracoes.WebServices.ProxyPort;
+    ProxyUser := Configuracoes.WebServices.ProxyUser;
+    TimeOut := Configuracoes.WebServices.TimeOut;
+    SSLLib := Configuracoes.Geral.SSLLib;
+    UnloadSSLLib := Configuracoes.Geral.UnloadSSLLib;
+  end;
+
   FOnGerarLog := nil;
   FOnTransmitError := nil;
 

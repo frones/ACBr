@@ -41,11 +41,11 @@ unit ACBrDFeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, types, pcnConversao;
+  Classes, SysUtils, types,
+  pcnConversao,
+  ACBrDFeSSL;
 
 type
-
-  TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap);
 
   TConfiguracoes = class;
 
@@ -57,13 +57,16 @@ type
     FCNPJ: String;
     FDadosPFX: AnsiString;
     FSenha: AnsiString;
+    FK: String;
     FNumeroSerie: String;
     FArquivoPFX: String;
     FVerificarValidade: Boolean;
 
+    function GetSenha: AnsiString;
     procedure SetArquivoPFX(AValue: String);
     procedure SetDadosPFX(AValue: AnsiString);
     procedure SetNumeroSerie(const AValue: String);
+    procedure SetSenha(AValue: AnsiString);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload;
     procedure Assign(DeCertificadosConf: TCertificadosConf); reintroduce;
@@ -72,8 +75,7 @@ type
     property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
     property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
     property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
-    property Senha: AnsiString read FSenha write FSenha;
-    property CNPJ: String read FCNPJ write FCNPJ;
+    property Senha: AnsiString read GetSenha write SetSenha;
     property VerificarValidade: Boolean read FVerificarValidade write
       FVerificarValidade default True;
   end;
@@ -101,6 +103,11 @@ type
     FSalvar: Boolean;
     FParams: TStrings;
 
+    procedure SetProxyHost(AValue: String);
+    procedure SetProxyPass(AValue: String);
+    procedure SetProxyPort(AValue: String);
+    procedure SetProxyUser(AValue: String);
+    procedure SetTimeOut(AValue: Integer);
     procedure SetUF(AValue: String);
     procedure SetAmbiente(AValue: TpcnTipoAmbiente);
     procedure SetTentativas(const Value: integer);
@@ -125,10 +132,10 @@ type
     property Ambiente: TpcnTipoAmbiente
       read FAmbiente write SetAmbiente default taHomologacao;
     property AmbienteCodigo: integer read FAmbienteCodigo;
-    property ProxyHost: String read FProxyHost write FProxyHost;
-    property ProxyPort: String read FProxyPort write FProxyPort;
-    property ProxyUser: String read FProxyUser write FProxyUser;
-    property ProxyPass: String read FProxyPass write FProxyPass;
+    property ProxyHost: String read FProxyHost write SetProxyHost;
+    property ProxyPort: String read FProxyPort write SetProxyPort;
+    property ProxyUser: String read FProxyUser write SetProxyUser;
+    property ProxyPass: String read FProxyPass write SetProxyPass;
     property AguardarConsultaRet: cardinal read FAguardarConsultaRet
       write FAguardarConsultaRet;
     property Tentativas: integer read FTentativas write SetTentativas default 5;
@@ -138,7 +145,7 @@ type
       read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet default False;
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property Params: TStrings read FParams write SetParams;
-    property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
+    property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
   end;
 
   { TGeralConf }
@@ -161,13 +168,14 @@ type
     procedure SetSSLLib(AValue: TSSLLib);
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetFormatoAlerta: String;
+    procedure SetUnloadSSLLib(AValue: Boolean);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeGeralConf: TGeralConf); reintroduce;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
-    property UnloadSSLLib: Boolean read FUnloadSSLLib write FUnloadSSLLib default True;
+    property UnloadSSLLib: Boolean read FUnloadSSLLib write SetUnloadSSLLib default True;
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
       write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: integer read FFormaEmissaoCodigo;
@@ -399,6 +407,13 @@ begin
     Result := FFormatoAlerta;
 end;
 
+procedure TGeralConf.SetUnloadSSLLib(AValue: Boolean);
+begin
+  if FUnloadSSLLib = AValue then Exit;
+  FUnloadSSLLib := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.UnloadSSLLib := AValue;
+end;
+
 procedure TGeralConf.SetFormaEmissao(AValue: TpcnTipoEmissao);
 begin
   FFormaEmissao := AValue;
@@ -416,6 +431,7 @@ begin
     FSSLLib := libCapicom;
   {$ENDIF}
   {$ENDIF}
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLLib := FSSLLib;
 end;
 
 
@@ -562,6 +578,41 @@ begin
   FUFCodigo := Codigo;
 end;
 
+procedure TWebServicesConf.SetProxyHost(AValue: String);
+begin
+  if FProxyHost = AValue then Exit;
+  FProxyHost := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.ProxyHost := AValue;
+end;
+
+procedure TWebServicesConf.SetProxyPass(AValue: String);
+begin
+  if FProxyPass = AValue then Exit;
+  FProxyPass := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.ProxyPass := AValue;
+end;
+
+procedure TWebServicesConf.SetProxyPort(AValue: String);
+begin
+  if FProxyPort = AValue then Exit;
+  FProxyPort := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.ProxyPort := AValue;
+end;
+
+procedure TWebServicesConf.SetProxyUser(AValue: String);
+begin
+  if FProxyUser = AValue then Exit;
+  FProxyUser := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.ProxyUser := AValue;
+end;
+
+procedure TWebServicesConf.SetTimeOut(AValue: Integer);
+begin
+  if FTimeOut = AValue then Exit;
+  FTimeOut := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.TimeOut := AValue;
+end;
+
 { TCertificadosConf }
 
 constructor TCertificadosConf.Create(AConfiguracoes: TConfiguracoes);
@@ -578,7 +629,6 @@ end;
 
 procedure TCertificadosConf.Assign(DeCertificadosConf: TCertificadosConf);
 begin
-  CNPJ := DeCertificadosConf.CNPJ;
   DadosPFX := DeCertificadosConf.DadosPFX;
   Senha := DeCertificadosConf.Senha;
   NumeroSerie := DeCertificadosConf.NumeroSerie;
@@ -589,22 +639,35 @@ procedure TCertificadosConf.SetNumeroSerie(const AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
-  TACBrDFe(FConfiguracoes.Owner).SSL.DescarregarCertificado;
+  TACBrDFe(FConfiguracoes.Owner).SSL.NumeroSerie := AValue;
+end;
+
+procedure TCertificadosConf.SetSenha(AValue: AnsiString);
+begin
+  if FSenha = AValue then Exit;
+  FK := FormatDateTime('hhnnsszzz',Now);
+  FSenha := StrCrypt(AValue, FK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
+
+  TACBrDFe(FConfiguracoes.Owner).SSL.Senha := AValue;
 end;
 
 procedure TCertificadosConf.SetArquivoPFX(AValue: String);
 begin
   if FArquivoPFX = AValue then Exit;
   FArquivoPFX := AValue;
-  FDadosPFX := '';   // Força a releitura de DadosPFX;
-  TACBrDFe(FConfiguracoes.Owner).SSL.DescarregarCertificado;
+  TACBrDFe(FConfiguracoes.Owner).SSL.ArquivoPFX := AValue;
+end;
+
+function TCertificadosConf.GetSenha: AnsiString;
+begin
+  Result := StrCrypt(FSenha, FK)  // Descritografa a Senha
 end;
 
 procedure TCertificadosConf.SetDadosPFX(AValue: AnsiString);
 begin
   if FDadosPFX = AValue then Exit;
   FDadosPFX := AValue;
-  TACBrDFe(FConfiguracoes.Owner).SSL.DescarregarCertificado;
+  TACBrDFe(FConfiguracoes.Owner).SSL.DadosPFX := AValue;
 end;
 
 
@@ -682,7 +745,7 @@ begin
   if SepararPorCNPJ then
   begin
     if EstaVazio(CNPJ) then
-      CNPJ := FConfiguracoes.Certificados.CNPJ;
+      CNPJ := TACBrDFe(FConfiguracoes.Owner).SSL.CertCNPJ;
 
     if NaoEstaVazio(CNPJ) then
       Dir := PathWithDelim(Dir) + CNPJ;

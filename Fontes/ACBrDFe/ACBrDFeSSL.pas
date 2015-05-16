@@ -40,19 +40,18 @@ unit ACBrDFeSSL;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeConfiguracoes;
+  Classes, SysUtils;
 
 type
   { TDFeSSLClass }
 
+  TDFeSSL = class;
+
   TDFeSSLClass = class
   private
-    FConfiguracoes: TConfiguracoes;
-
   protected
+    FpDFeSSL: TDFeSSL;
     FpInicializado: Boolean;
-
-    property Configuracoes: TConfiguracoes read FConfiguracoes;
 
     function GetCertDataVenc: TDateTime; virtual;
     function GetCertNumeroSerie: String; virtual;
@@ -64,7 +63,7 @@ type
     function SignatureElement(const URI: String; AddX509Data: Boolean): String;
       virtual;
   public
-    constructor Create(AConfiguracoes: TConfiguracoes);
+    constructor Create(ADFeSSL: TDFeSSL); virtual;
 
     property Inicializado: Boolean read FpInicializado;
 
@@ -93,14 +92,27 @@ type
     property InternalErrorCode: Integer read GetInternalErrorCode;
   end;
 
+
+  TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap);
+
   { TDFeSSL }
 
   TDFeSSL = class
   private
-    FDFeOwner: TComponent;
-    FConfiguracoes: TConfiguracoes;
+    FArquivoPFX: String;
+    FDadosPFX: AnsiString;
+    FNameSpaceURI: String;
+    FNumeroSerie: String;
+    FProxyHost: String;
+    FProxyPass: String;
+    FProxyPort: String;
+    FProxyUser: String;
+    FSenha: AnsiString;
+    FK: String;
     FSSLClass: TDFeSSLClass;
     FSSLLib: TSSLLib;
+    FTimeOut: Integer;
+    FUnloadSSLLib: Boolean;
 
     function GetCertCNPJ: String;
     function GetCertDataVenc: TDateTime;
@@ -108,13 +120,19 @@ type
     function GetCertSubjectName: String;
     function GetHTTPResultCode: Integer;
     function GetInternalErrorCode: Integer;
+    function GetSenha: AnsiString;
 
     procedure InitSSLClass(LerCertificado: Boolean = True);
     procedure DeInitSSLClass;
+    procedure SetArquivoPFX(AValue: String);
+    procedure SetDadosPFX(AValue: AnsiString);
+    procedure SetNumeroSerie(AValue: String);
+    procedure SetSenha(AValue: AnsiString);
 
     procedure SetSSLLib(ASSLLib: TSSLLib);
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create;
+    procedure Clear;
     destructor Destroy; override;
 
     // Nota: ConteudoXML, DEVE estar em UTF8 //
@@ -140,6 +158,22 @@ type
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
+
+  published
+    property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
+    property UnloadSSLLib: Boolean read FUnloadSSLLib write FUnloadSSLLib default True;
+    property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
+    property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
+    property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
+    property Senha: AnsiString read GetSenha write SetSenha;
+
+    property ProxyHost: String read FProxyHost write FProxyHost;
+    property ProxyPort: String read FProxyPort write FProxyPort;
+    property ProxyUser: String read FProxyUser write FProxyUser;
+    property ProxyPass: String read FProxyPass write FProxyPass;
+
+    property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
+    property NameSpaceURI: String read FNameSpaceURI write FNameSpaceURI;
   end;
 
 
@@ -152,17 +186,32 @@ uses strutils, ACBrUtil, ACBrDFe, ACBrDFeOpenSSL
 
 { TDFeSSL }
 
-constructor TDFeSSL.Create(AOwner: TComponent);
+constructor TDFeSSL.Create;
 begin
-  if not (AOwner is TACBrDFe) then
-    raise EACBrDFeException.Create('Owner de TDFeSSL deve ser do tipo TACBrDFe');
-
   inherited Create;
 
-  FDFeOwner := AOwner;
-  FConfiguracoes := TACBrDFe(FDFeOwner).Configuracoes;
-  FSSLClass := TDFeSSLClass.Create(FConfiguracoes);
-  FSSLLib := libNone;
+  Clear;
+end;
+
+procedure TDFeSSL.Clear;
+begin
+  FArquivoPFX  := '';
+  FDadosPFX    := '';
+  FNumeroSerie := '';
+  FProxyHost   := '';
+  FProxyPass   := '';
+  FProxyPort   := '';
+  FProxyUser   := '';
+  FSenha       := '';
+  FSSLLib      := libNone;
+  FTimeOut     := 5000;
+  FNameSpaceURI:= '';
+  FUnloadSSLLib:= True;
+
+  if Assigned(FSSLClass) then
+    FSSLClass.Free;
+
+  FSSLClass := TDFeSSLClass.Create(Self);
 end;
 
 destructor TDFeSSL.Destroy;
@@ -196,9 +245,7 @@ function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
 begin
   InitSSLClass;
 
-  if pos(PathDelim, ArqSchema) = 0 then
-    ArqSchema := TACBrDFe(FDFeOwner).Configuracoes.Arquivos.PathSchemas + ArqSchema;
-
+  // ArqSchema deve vir com o Path Completo
   if not FileExists(ArqSchema) then
     raise EACBrDFeException.Create('Arquivo ' + sLineBreak + ArqSchema +
       sLineBreak + 'Não encontrado');
@@ -267,12 +314,16 @@ begin
   Result := FSSLClass.InternalErrorCode;
 end;
 
+function TDFeSSL.GetSenha: AnsiString;
+begin
+  Result := StrCrypt(FSenha, FK)  // Descritografa a Senha
+end;
+
 procedure TDFeSSL.InitSSLClass(LerCertificado: Boolean);
 begin
   if FSSLClass.Inicializado then
     exit;
 
-  SetSSLLib(FConfiguracoes.Geral.SSLLib);
   FSSLClass.Inicializar;
 
   if LerCertificado then
@@ -282,6 +333,37 @@ end;
 procedure TDFeSSL.DeInitSSLClass;
 begin
   FSSLClass.DesInicializar;
+end;
+
+procedure TDFeSSL.SetArquivoPFX(AValue: String);
+begin
+  if FArquivoPFX = AValue then Exit;
+  FArquivoPFX := AValue;
+  FDadosPFX := '';   // Força a releitura de DadosPFX;
+  DescarregarCertificado;
+end;
+
+procedure TDFeSSL.SetDadosPFX(AValue: AnsiString);
+begin
+  if FDadosPFX = AValue then Exit;
+  FDadosPFX := AValue;
+  DescarregarCertificado;
+end;
+
+procedure TDFeSSL.SetNumeroSerie(AValue: String);
+begin
+  if FNumeroSerie = AValue then Exit;
+  FNumeroSerie := AValue;
+  DescarregarCertificado;
+end;
+
+procedure TDFeSSL.SetSenha(AValue: AnsiString);
+begin
+  if FSenha = AValue then Exit;
+  FK := FormatDateTime('hhnnsszzz',Now);
+  FSenha := StrCrypt(AValue, FK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
+
+  DescarregarCertificado;
 end;
 
 procedure TDFeSSL.SetSSLLib(ASSLLib: TSSLLib);
@@ -294,23 +376,23 @@ begin
 
   {$IFDEF MSWINDOWS}
   case ASSLLib of
-    libCapicom: FSSLClass := TDFeCapicom.Create(FConfiguracoes);
-    libOpenSSL: FSSLClass := TDFeOpenSSL.Create(FConfiguracoes);
+    libCapicom: FSSLClass := TDFeCapicom.Create(Self);
+    libOpenSSL: FSSLClass := TDFeOpenSSL.Create(Self);
     libCapicomDelphiSoap:
     begin
        {$IFNDEF FPC}
       FSSLClass := TDFeCapicomDelphiSoap.Create(FConfiguracoes);
        {$ELSE}
-      FSSLClass := TDFeCapicom.Create(FConfiguracoes);
+      FSSLClass := TDFeCapicom.Create(Self);
        {$ENDIF}
     end
     else
-      FSSLClass := TDFeSSLClass.Create(FConfiguracoes);
+      FSSLClass := TDFeSSLClass.Create(Self);
   end;
   {$ELSE}
   case ASSLLib of
     libOpenSSL, libCapicom, libCapicomDelphiSoap: FSSLClass :=
-        TDFeOpenSSL.Create(FConfiguracoes);
+        TDFeOpenSSL.Create(Self);
   end;
   {$ENDIF}
 
@@ -319,9 +401,9 @@ end;
 
 { TDFeSSLClass }
 
-constructor TDFeSSLClass.Create(AConfiguracoes: TConfiguracoes);
+constructor TDFeSSLClass.Create(ADFeSSL: TDFeSSL);
 begin
-  FConfiguracoes := AConfiguracoes;
+  FpDFeSSL := ADFeSSL;
   FpInicializado := False;
 end;
 

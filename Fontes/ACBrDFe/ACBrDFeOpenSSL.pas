@@ -79,7 +79,7 @@ type
     function GetInternalErrorCode: Integer; override;
 
   public
-    constructor Create(AConfiguracoes: TConfiguracoes);
+    constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
     procedure Inicializar; override;
@@ -107,9 +107,9 @@ uses Math, strutils, dateutils,
 
 { TDFeOpenSSL }
 
-constructor TDFeOpenSSL.Create(AConfiguracoes: TConfiguracoes);
+constructor TDFeOpenSSL.Create(ADFeSSL: TDFeSSL);
 begin
-  inherited Create(AConfiguracoes);
+  inherited Create(ADFeSSL);
 
   FHTTP := THTTPSend.Create;
   FdsigCtx := nil;
@@ -139,7 +139,7 @@ begin
 
   DescarregarCertificado;
 
-  if FpInicializado and Configuracoes.Geral.UnloadSSLLib then
+  if FpInicializado and FpDFeSSL.UnloadSSLLib then
     ShutDownXmlSec;
 
   FpInicializado := False;
@@ -449,7 +449,7 @@ begin
   // Se FdsigCtx já existia, destrua e crie um novo //
   DestroyCtx;
 
-  with Configuracoes.Certificados do
+  with FpDFeSSL do
   begin
     if EstaVazio(DadosPFX) then
       CarregarCertificado;
@@ -489,7 +489,7 @@ var
   LoadFromFile, LoadFromData: Boolean;
   FS: TFileStream;
 begin
-  with Configuracoes.Certificados do
+  with FpDFeSSL do
   begin
     // Verificando se possui parâmetros necessários //
     if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
@@ -631,7 +631,7 @@ begin
         {$IFDEF USE_libeay32}
         if PKCS12_parse(p12, PAnsiChar(Configuracoes.Certificados.Senha), pkey, cert, ca) > 0 then
         {$ELSE}
-        if PKCS12parse(p12, Configuracoes.Certificados.Senha, pkey, cert, ca) > 0 then
+        if PKCS12parse(p12, FpDFeSSL.Senha, pkey, cert, ca) > 0 then
         {$ENDIF}
         begin
           FValidade := GetNotAfter( cert );
@@ -777,11 +777,11 @@ begin
   if FHTTP.Sock.SSL.PFX = '' then
     CarregarCertificado;
 
-  FHTTP.Timeout := Configuracoes.WebServices.TimeOut;
-  FHTTP.ProxyHost := Configuracoes.WebServices.ProxyHost;
-  FHTTP.ProxyPort := Configuracoes.WebServices.ProxyPort;
-  FHTTP.ProxyUser := Configuracoes.WebServices.ProxyUser;
-  FHTTP.ProxyPass := Configuracoes.WebServices.ProxyPass;
+  FHTTP.Timeout   := FpDFeSSL.TimeOut;
+  FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
+  FHTTP.ProxyPort := FpDFeSSL.ProxyPort;
+  FHTTP.ProxyUser := FpDFeSSL.ProxyUser;
+  FHTTP.ProxyPass := FpDFeSSL.ProxyPass;
 
   if (pos('SCERECEPCAORFB', UpperCase(URL)) <= 0) and
     (pos('SCECONSULTARFB', UpperCase(URL)) <= 0) then

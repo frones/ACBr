@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2015
+-- ACBrDownload (por: Isaque Pinheiro)
+[-] Correção para liberar o link arquivo Stream com o arquivo em disco
+    para que o mesmo pudesse ser liberado
+
 15/03/2015
 -- ACBrMail --    (por: DSA)
 [+] Adicionada a propriedade IDECharset, que permite definir qual o CharSet usado

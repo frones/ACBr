@@ -307,7 +307,7 @@ begin
        // 206 Pause HTTP ou fim de download HTTP
        // 226 Fim de download FTP
        if (fResultCode = 206) or (fResultCode = 200) or
-          (fResultCode = 150) then
+          (fResultCode = 150) or (fResultCode = 125) then
        begin
           if Assigned(fFileStream) then
           begin

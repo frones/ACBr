@@ -61,8 +61,8 @@ type
 
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
-    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
   end;
 
   { TArquivosConfNFe }
@@ -172,12 +172,10 @@ end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
 begin
-  FModeloDF       := DeGeralConfNFe.ModeloDF;
-  SetModeloDF(FModeloDF);
-  FVersaoDF       := DeGeralConfNFe.VersaoDF;
-  SetVersaoDF(FVersaoDF);
-
   inherited Assign(DeGeralConfNFe);
+
+  ModeloDF := DeGeralConfNFe.ModeloDF;
+  VersaoDF := DeGeralConfNFe.VersaoDF;
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);
@@ -212,15 +210,15 @@ procedure TArquivosConfNFe.Assign(DeArquivosConfNFe: TArquivosConfNFe);
 begin
   inherited Assign(DeArquivosConfNFe);
 
-  FEmissaoPathNFe             := DeArquivosConfNFe.EmissaoPathNFe;
-  FSalvarEvento               := DeArquivosConfNFe.SalvarCCeCanEvento;
-  FSalvarApenasNFeProcessadas := DeArquivosConfNFe.SalvarApenasNFeProcessadas;
-  FPathNFe                    := DeArquivosConfNFe.PathNFe;
-  FPathCan                    := DeArquivosConfNFe.PathCan;
-  FPathInu                    := DeArquivosConfNFe.PathInu;
-  FPathCCe                    := DeArquivosConfNFe.PathCCe;
-  FPathEvento                 := DeArquivosConfNFe.PathEvento;
-  FPathDownload               := DeArquivosConfNFe.PathDownload;
+  EmissaoPathNFe             := DeArquivosConfNFe.EmissaoPathNFe;
+  SalvarCCeCanEvento         := DeArquivosConfNFe.SalvarCCeCanEvento;
+  SalvarApenasNFeProcessadas := DeArquivosConfNFe.SalvarApenasNFeProcessadas;
+  PathNFe                    := DeArquivosConfNFe.PathNFe;
+  PathCan                    := DeArquivosConfNFe.PathCan;
+  PathInu                    := DeArquivosConfNFe.PathInu;
+  PathCCe                    := DeArquivosConfNFe.PathCCe;
+  PathEvento                 := DeArquivosConfNFe.PathEvento;
+  FPathDownload              := DeArquivosConfNFe.PathDownload;
 end;
 
 function TArquivosConfNFe.GetPathCan(CNPJ: String = ''): String;

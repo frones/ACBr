@@ -488,7 +488,6 @@ procedure TDFeOpenSSL.CarregarCertificado;
 var
   LoadFromFile, LoadFromData: Boolean;
   FS: TFileStream;
-  PFXData: AnsiString;
 begin
   with Configuracoes.Certificados do
   begin
@@ -510,28 +509,23 @@ begin
     if not (LoadFromFile or LoadFromData) then
       raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
 
-    PFXData := '';
-    if LoadFromData then
-      PFXData := DadosPFX
-    else
+    if LoadFromFile then
     begin
       FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
       try
-        PFXData := ReadStrFromStream(FS, FS.Size);
+        DadosPFX := ReadStrFromStream(FS, FS.Size);
       finally
         FS.Free;
       end;
     end;
 
-    if EstaVazio(PFXData) then
+    if EstaVazio(DadosPFX) then
       raise EACBrDFeException.Create('Erro ao Carregar Certificado');
 
-    DadosPFX := PFXData; 
-
-    FHTTP.Sock.SSL.PFX := PFXData;
+    FHTTP.Sock.SSL.PFX := DadosPFX;
     FHTTP.Sock.SSL.KeyPassword := Senha;
 
-    LerPFXInfo(PFXData);
+    LerPFXInfo(DadosPFX);
   end;
 end;
 

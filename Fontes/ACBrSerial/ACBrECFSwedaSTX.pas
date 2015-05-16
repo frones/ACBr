@@ -2659,7 +2659,6 @@ begin
   Result := SomaTotalizadorNaoTributadoIndice('I');
 end;
 
-
 function TACBrECFSwedaSTX.GetNumUltimoItem: Integer;
 var
    RetCMD :String;

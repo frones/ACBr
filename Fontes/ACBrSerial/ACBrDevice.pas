@@ -80,7 +80,7 @@ uses
        Forms, Printers,
     {$IFEND}
   {$ENDIF}
-  ACBrConsts, syncobjs;
+  ACBrConsts;
 
 type
 
@@ -253,7 +253,6 @@ TACBrDevice = class( TComponent )
     fsPorta: String;
     fsTimeOut: Integer ;
     fsAtivo: Boolean;
-    fsCriticalSection: TCriticalSection;
 
     fsHandShake: TACBrHandShake;
     fsSendBytesCount: Integer;
@@ -629,8 +628,6 @@ constructor TACBrDevice.Create(AOwner: TComponent);
 begin
   inherited Create( AOwner ) ;
 
-  fsCriticalSection := TCriticalSection.Create;
-
   { Classe SynaSer para acesso direto a Serial }
   Serial := TBlockSerial.Create ;
   Serial.RaiseExcept := true ;
@@ -653,7 +650,6 @@ end;
 destructor TACBrDevice.Destroy;
 begin
   Serial.Free ;
-  fsCriticalSection.Free;
   IOResult ;
 
   inherited Destroy ;
@@ -1209,24 +1205,19 @@ procedure TACBrDevice.EnviaStringSerial(const AString : AnsiString) ;
 Var
   I, Max, NBytes : Integer ;
 begin
-  fsCriticalSection.Acquire;
-  try
-    I   := 1 ;
-    Max := Length(AString) ;
-    NBytes := fsSendBytesCount ;
-    if NBytes = 0 then
-       NBytes := Max ;
+  I   := 1 ;
+  Max := Length(AString) ;
+  NBytes := fsSendBytesCount ;
+  if NBytes = 0 then
+     NBytes := Max ;
 
-    while I <= Max do
-    begin
-       Serial.SendString( copy(AString, I, NBytes ) ) ;    { Envia para Porta Serial }
-       if fsSendBytesInterval > 0 then
-          Sleep( fsSendBytesInterval ) ;
-       I := I + NBytes ;
-    end ;
-  finally
-    fsCriticalSection.Release;
-  end;
+  while I <= Max do
+  begin
+     Serial.SendString( copy(AString, I, NBytes ) ) ;    { Envia para Porta Serial }
+     if fsSendBytesInterval > 0 then
+        Sleep( fsSendBytesInterval ) ;
+     I := I + NBytes ;
+  end ;
 end ;
 
 procedure TACBrDevice.EnviaStringArquivo( const AString: AnsiString);

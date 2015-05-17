@@ -178,7 +178,7 @@ begin
     if Assigned(fOnBeforeDownload) then
        fOnBeforeDownload(Self);
 
-    fFTPSend.RetrieveFile(Path, False);
+    fFTPSend.RetrieveFile(Path, True);
 
     // Evento
     if Assigned(fOnAfterDownload) then

@@ -100,7 +100,7 @@ type
 procedure Register ;
 
 {$IFDEF  DELPHI9_UP}
-	{$R ACBrComum.res}
+	{$R ACBr_Comum.res}
 {$ENDIF}
 implementation
 

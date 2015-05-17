@@ -187,4 +187,4 @@
 {$IFDEF NOGUI}
   {$DEFINE CONSOLE}
 {$ENDIF}
-
+

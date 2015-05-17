@@ -216,7 +216,7 @@ function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
 function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
    NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
-   const CaracterQuebrar : Char = ' '): String;
+   const CaracterQuebrar : AnsiChar = ' '): String;
 
 function TraduzComando( AString : String ) : AnsiString ;
 Function StringToAsc( AString : AnsiString ) : String ;
@@ -1711,7 +1711,7 @@ end;
   separador diferente de espaço em <CaracterQuebrar>
  ---------------------------------------------------------------------------- }
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
-   const CaracterQuebrar : Char = ' '): String;
+   const CaracterQuebrar : AnsiChar = ' '): String;
 Var
   PosIni, PosFim, Tamanho : Integer ;
   AnsiStr, Resp: AnsiString;
@@ -1781,9 +1781,10 @@ end;
   chr(13)+'v'+chr(10) 
  ---------------------------------------------------------------------------- }
 function AscToString(AString: String): AnsiString;
-Var A : Integer ;
-    Token : AnsiString ;
-    C : AnsiChar ;
+Var
+  A : Integer ;
+  Token : AnsiString ;
+  C : Char ;
 begin
   AString := AnsiString( Trim( String( AString ) ) );
   Result  := '' ;

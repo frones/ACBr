@@ -142,6 +142,7 @@ procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFePDF(MDFe: TMDFe);
 var
   I:          Integer;
   TITULO_PDF: string;
+  OldShowDialog : Boolean;
 begin
   if PrepareReport(MDFe) then
   begin
@@ -156,9 +157,14 @@ begin
       dmDAMDFe.frxPDFExport.Title      := TITULO_PDF;
       dmDAMDFe.frxPDFExport.Subject    := TITULO_PDF;
       dmDAMDFe.frxPDFExport.Keywords   := TITULO_PDF;
-      dmDAMDFe.frxPDFExport.ShowDialog := False;
-      dmDAMDFe.frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '.pdf';
-      dmDAMDFe.frxReport.Export(dmDAMDFe.frxPDFExport);
+      OldShowDialog := dmDAMDFe.frxPDFExport.ShowDialog;
+	  try
+        dmDAMDFe.frxPDFExport.ShowDialog := False;
+        dmDAMDFe.frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '.pdf';
+        dmDAMDFe.frxReport.Export(dmDAMDFe.frxPDFExport);
+      finally
+        dmDAMDFe.frxPDFExport.ShowDialog := OldShowDialog;
+      end;
     end;
   end;
 end;
@@ -177,6 +183,7 @@ end;
 procedure TACBrMDFeDAMDFEFR.ImprimirEVENTOPDF(MDFe: TMDFe);
 var
   TITULO_PDF: string;
+  OldShowDialog : Boolean;
 begin
   if PrepareReportEvento then
   begin
@@ -188,10 +195,15 @@ begin
     dmDAMDFe.frxPDFExport.Title      := TITULO_PDF;
     dmDAMDFe.frxPDFExport.Subject    := TITULO_PDF;
     dmDAMDFe.frxPDFExport.Keywords   := TITULO_PDF;
-    dmDAMDFe.frxPDFExport.ShowDialog := False;
+    OldShowDialog := dmDAMDFe.frxPDFExport.ShowDialog;
+	try
+      dmDAMDFe.frxPDFExport.ShowDialog := False;
 
-    dmDAMDFe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + TITULO_PDF + '.pdf';
-    dmDAMDFe.frxReport.Export(dmDAMDFe.frxPDFExport);
+      dmDAMDFe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + TITULO_PDF + '.pdf';
+      dmDAMDFe.frxReport.Export(dmDAMDFe.frxPDFExport);
+    finally
+      dmDAMDFe.frxPDFExport.ShowDialog := OldShowDialog;
+    end;
   end;
 end;
 

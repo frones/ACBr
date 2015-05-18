@@ -148,6 +148,7 @@ const
   TITULO_PDF = 'Conhecimento de Transporte Eletrônico';
 var
   I: Integer;
+  OldShowDialog : Boolean;
 begin
   if PrepareReport(CTE) then
   begin
@@ -157,12 +158,17 @@ begin
     dmDacte.frxPDFExport.Title      := TITULO_PDF;
     dmDacte.frxPDFExport.Subject    := TITULO_PDF;
     dmDacte.frxPDFExport.Keywords   := TITULO_PDF;
-    dmDacte.frxPDFExport.ShowDialog := False;
+	OldShowDialog := dmDacte.frxPDFExport.ShowDialog;
+	try
+      dmDacte.frxPDFExport.ShowDialog := False;
 
-    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
-    begin
-      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '-cte.pdf';
-      dmDacte.frxReport.Export(dmDacte.frxPDFExport);
+      for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
+      begin
+        dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '-cte.pdf';
+        dmDacte.frxReport.Export(dmDacte.frxPDFExport);
+      end;
+    finally
+      dmDacte.frxPDFExport.ShowDialog := OldShowDialog;
     end;
   end;
 end;
@@ -184,6 +190,7 @@ const
 var
 //  I: Integer;
   NomeArq: String;
+  OldShowDialog : Boolean;
 begin
   if PrepareReportEvento then
   begin
@@ -193,17 +200,22 @@ begin
     dmDacte.frxPDFExport.Title      := TITULO_PDF;
     dmDacte.frxPDFExport.Subject    := TITULO_PDF;
     dmDacte.frxPDFExport.Keywords   := TITULO_PDF;
-    dmDacte.frxPDFExport.ShowDialog := False;
+    OldShowDialog := dmDacte.frxPDFExport.ShowDialog;
+	try
+      dmDacte.frxPDFExport.ShowDialog := False;
 
 //    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
 //    begin
-      NomeArq := StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
+        NomeArq := StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 
-      dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) +
+        dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) +
                                        NomeArq {dmDacte.CTe.procCTe.chCTe} +
                                        '-procEventoCTe.pdf';
-      dmDacte.frxReport.Export(dmDacte.frxPDFExport);
+        dmDacte.frxReport.Export(dmDacte.frxPDFExport);
 //    end;
+    finally
+      dmDacte.frxPDFExport.ShowDialog := OldShowDialog;
+    end;
   end;
 end;
 

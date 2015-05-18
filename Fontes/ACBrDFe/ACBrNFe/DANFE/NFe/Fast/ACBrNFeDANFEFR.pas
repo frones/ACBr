@@ -260,6 +260,7 @@ end;
 
 function TACBrNFeDANFEFR.PrepareReportEvento: Boolean;
 begin
+  FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFileEvento) <> '' then
   begin
     if FileExists(FastFileEvento) then

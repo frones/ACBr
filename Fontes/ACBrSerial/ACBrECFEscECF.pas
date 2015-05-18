@@ -2711,7 +2711,7 @@ begin
     if Assigned( CNF ) then
     begin
        CNF.Contador := StrToInt( EscECFResposta.Params[ 3*I + 1 ] ) ;
-       CNF.Total    := StrToInt( EscECFResposta.Params[ 3*I + 1 ] ) / 100 ;
+       CNF.Total    := StrToInt( EscECFResposta.Params[ 3*I + 2 ] ) / 100 ;
     end;
   end;
 end;

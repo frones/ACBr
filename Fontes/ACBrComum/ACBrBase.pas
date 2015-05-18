@@ -237,7 +237,8 @@ begin
   fsEnabled := False;
   Terminate;
   fsEvent.SetEvent;  // libera Event.WaitFor()
-  WaitFor;
+  if not Terminated then
+    WaitFor;
 
   fsEvent.Free;
   inherited Destroy;
@@ -540,4 +541,4 @@ begin
 end;
 
 end.
-
+

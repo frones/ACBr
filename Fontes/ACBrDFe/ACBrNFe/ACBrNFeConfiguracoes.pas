@@ -57,7 +57,7 @@ type
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfNFe: TGeralConfNFe); reintroduce;
+    procedure Assign(DeGeralConfNFe: TGeralConfNFe); overload;
 
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
@@ -80,7 +80,7 @@ type
     FPathDownload: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); reintroduce;
+    procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); overload;
 
     function GetPathCan(CNPJ: String = ''): String;
     function GetPathInu(CNPJ: String = ''): String;
@@ -115,6 +115,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
+    procedure Assign(DeConfiguracoesNFe: TConfiguracoesNFe); overload;
 
   published
     property Geral: TGeralConfNFe read GetGeral;
@@ -137,6 +138,14 @@ begin
   inherited Create(AOwner);
 
   WebServices.ResourceName := 'ACBrNFeServicos';
+end;
+
+procedure TConfiguracoesNFe.Assign(DeConfiguracoesNFe: TConfiguracoesNFe);
+begin
+  Geral.Assign(DeConfiguracoesNFe.Geral);
+  WebServices.Assign(DeConfiguracoesNFe.WebServices);
+  Certificados.Assign(DeConfiguracoesNFe.Certificados);
+  Arquivos.Assign(DeConfiguracoesNFe.Arquivos);
 end;
 
 function TConfiguracoesNFe.GetArquivos: TArquivosConfNFe;
@@ -282,4 +291,4 @@ begin
 end;
 
 
-end.
+end.

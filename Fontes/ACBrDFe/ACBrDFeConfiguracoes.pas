@@ -69,7 +69,7 @@ type
     procedure SetSenha(AValue: AnsiString);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload;
-    procedure Assign(DeCertificadosConf: TCertificadosConf); reintroduce;
+    procedure Assign(DeCertificadosConf: TCertificadosConf); reintroduce; virtual;
 
   published
     property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
@@ -120,7 +120,7 @@ type
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload;
     destructor Destroy; override;
-    procedure Assign(DeWebServicesConf: TWebServicesConf); reintroduce;
+    procedure Assign(DeWebServicesConf: TWebServicesConf); reintroduce; virtual;
 
     procedure LerParams; virtual;
 
@@ -171,7 +171,7 @@ type
     procedure SetUnloadSSLLib(AValue: Boolean);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
-    procedure Assign(DeGeralConf: TGeralConf); reintroduce;
+    procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
@@ -213,7 +213,7 @@ type
     function GetPathSchemas: String;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
-    procedure Assign(DeArquivosConf: TArquivosConf); reintroduce;
+    procedure Assign(DeArquivosConf: TArquivosConf); reintroduce; virtual;
 
     function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
       Data: TDateTime = 0): String; virtual;
@@ -248,7 +248,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Assign(DeConfiguracoes: TConfiguracoes); reintroduce;
+    procedure Assign(DeConfiguracoes: TConfiguracoes); reintroduce; virtual;
 
     procedure LerParams(NomeArqParams: String = '');
 
@@ -571,11 +571,11 @@ begin
     end;
   end;
 
-  if Codigo < 0 then
-    raise EACBrDFeException.Create('UF inválida');
-
-  FUF := AValue;
-  FUFCodigo := Codigo;
+  if Codigo > 0 then
+  begin
+    FUF := AValue;
+    FUFCodigo := Codigo;
+  end;
 end;
 
 procedure TWebServicesConf.SetProxyHost(AValue: String);
@@ -785,4 +785,4 @@ end;
 
 end.
 
-// TODO: Salvar senha do Certificado na memória de forma criptograda
+// TODO: Salvar senha do Certificado na memória de forma criptograda

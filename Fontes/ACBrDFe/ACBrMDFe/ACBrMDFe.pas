@@ -283,7 +283,8 @@ begin
   if EstaVazio(VersaoServico) then
     VersaoServico := LerVersaoDeParams(ALayOut);
 
-  Result := SchemaMDFeToStr(IdentificaSchemaLayout(ALayOut)) + '_v' +
+  Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
+            SchemaMDFeToStr(IdentificaSchemaLayout(ALayOut)) + '_v' +
             VersaoServico + '.xsd';
 end;
 

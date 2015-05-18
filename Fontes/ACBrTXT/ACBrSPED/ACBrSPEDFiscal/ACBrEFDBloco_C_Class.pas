@@ -2991,7 +2991,7 @@ begin
                LFill( VL_CFE,0,2, booNFCancelada ) +
                LFill( VL_PIS,0,2, booNFCancelada ) +
                LFill( VL_COFINS,0,2, booNFCancelada ) +
-               LFill( CNPJ_CPF, 14, True ) +
+               LFill( CNPJ_CPF, 0, True ) +
                LFill( NR_SAT,9 ) +
                LFill( CHV_CFE ) +
                LFill( VL_DESC,0,2, booNFCancelada ) +

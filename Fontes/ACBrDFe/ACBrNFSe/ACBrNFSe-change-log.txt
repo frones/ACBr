@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/05/2015
+[+] Incluido o método para ler o RPS do provedor EL na Unit pnfsNFSeR.pas.
+    Por: Laurivan Sareta
 [+] Incluido todos os Envelopes do provedore Virtual.
     Por: Italo Jurisato Junior
 [*] Incluido o provedor Ginfes na lista de provedores que geram a TAG

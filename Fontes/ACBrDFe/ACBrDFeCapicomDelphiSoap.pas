@@ -60,7 +60,7 @@ type
     procedure Executar(const ConteudoXML: String; Resp: TMemoryStream); override;
 
   public
-    constructor Create(AConfiguracoes: TConfiguracoes);
+    constructor Create(ADFeSSL: TDFeSSL);
     destructor Destroy; override;
   end;
 
@@ -73,9 +73,9 @@ uses
 
 { TDFeCapicomDelphiSoap }
 
-constructor TDFeCapicomDelphiSoap.Create(AConfiguracoes: TConfiguracoes);
+constructor TDFeCapicomDelphiSoap.Create(ADFeSSL: TDFeSSL);
 begin
-  inherited Create(AConfiguracoes);
+  inherited Create(ADFeSSL);
 
   FIndyReqResp := THTTPReqResp.Create(nil);
 end;
@@ -97,29 +97,32 @@ begin
   CertContext := Certificado as ICertContext;
   CertContext.Get_CertContext(integer(PCertContext));
 
-  if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-    PCertContext, SizeOf(CERT_CONTEXT)) then
-    raise EACBrDFeException.Create('OnBeforePost: ' + IntToStr(GetLastError));
-
-  if trim(Configuracoes.WebServices.ProxyUser) <> '' then
-    if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME,
-      PChar(Configuracoes.WebServices.ProxyUser),
-      Length(Configuracoes.WebServices.ProxyUser)) then
-      raise EACBrDFeException.Create('OnBeforePost: ' + IntToStr(GetLastError));
-
-  if trim(Configuracoes.WebServices.ProxyPass) <> '' then
-    if not InternetSetOption(Data, INTERNET_OPTION_PROXY_PASSWORD,
-      PChar(Configuracoes.WebServices.ProxyPass),
-      Length(Configuracoes.WebServices.ProxyPass)) then
-      raise EACBrDFeException.Create('OnBeforePost: ' + IntToStr(GetLastError));
-
-  if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
-    (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
+  with FpDFeSSL do
   begin
-    ContentHeader := Format(ContentTypeTemplate,
-      ['application/soap+xml; charset=utf-8']);
-    HttpAddRequestHeaders(Data, PChar(ContentHeader),
-      Length(ContentHeader), HTTP_ADDREQ_FLAG_REPLACE);
+    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+      PCertContext, SizeOf(CERT_CONTEXT)) then
+      raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
+                                     IntToStr(GetLastError));
+
+    if trim(ProxyUser) <> '' then
+      if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME,
+        PChar(ProxyUser), Length(ProxyUser)) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_USERNAME: ' +
+                                       IntToStr(GetLastError));
+
+    if trim(ProxyPass) <> '' then
+      if not InternetSetOption(Data, INTERNET_OPTION_PROXY_PASSWORD,
+        PChar(ProxyPass), Length(ProxyPass)) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_PASSWORD: ' +
+                                       IntToStr(GetLastError));
+
+    if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
+      (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
+    begin
+      ContentHeader := Format(ContentTypeTemplate, ['application/soap+xml; charset=utf-8']);
+      HttpAddRequestHeaders(Data, PChar(ContentHeader), Length(ContentHeader),
+                            HTTP_ADDREQ_FLAG_REPLACE);
+    end;
   end;
 
   FIndyReqResp.CheckContentType;
@@ -127,7 +130,7 @@ end;
 
 procedure TDFeCapicomDelphiSoap.ConfiguraReqResp(const URL, SoapAction: String);
 begin
-  with Configuracoes.WebServices do
+  with FpDFeSSL do
   begin
     if ProxyHost <> '' then
     begin

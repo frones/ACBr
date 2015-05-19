@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/05/2015
+[+] Incluido todos os Envelopes do provedore Virtual.
+    Por: Italo Jurisato Junior
 [*] Incluido o provedor Ginfes na lista de provedores que geram a TAG
     ValorDeducoes mesmo que o seu conteudo seja zero.
     Por: Thiago Pettean

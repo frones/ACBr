@@ -241,19 +241,21 @@ end;
 function TProvedorVirtual.GeraEnvelopeRecepcionarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  DadosMsg := SeparaDados( DadosMsg, 'EnviarLoteRpsEnvio' );
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
   result := '<?xml version="1.0" encoding="utf-8"?>' +
             '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
              '<SOAP-ENV:Body>' +
-              '<WSNfseBarraDoGarcas.RECEPCIONARLOTERPS>' +
-               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                 '<nfseCabecMsg>' +
+              '<WSNfseBarraDoGarcas.RECEPCIONARLOTERPS xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
                    CabMsg +
                  '</nfseCabecMsg>' +
-                 '<nfseDadosMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
                    DadosMsg +
                  '</nfseDadosMsg>' +
                '</Entrada>' +
@@ -271,41 +273,103 @@ end;
 function TProvedorVirtual.GeraEnvelopeConsultarLoteRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  result := '';
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<WSNfseBarraDoGarcas.CONSULTARLOTERPS xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
+               '</Entrada>' +
+              '</WSNfseBarraDoGarcas.CONSULTARLOTERPS>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarNFSeporRPS(URLNS: String;
   CabMsg, DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  result := '';
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<WSNfseBarraDoGarcas.CONSULTARNFSEPORRPS xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
+               '</Entrada>' +
+              '</WSNfseBarraDoGarcas.CONSULTARNFSEPORRPS>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeConsultarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  result := '';
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<WSNfseBarraDoGarcas.CONSULTARNFSEFAIXA xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
+               '</Entrada>' +
+              '</WSNfseBarraDoGarcas.CONSULTARNFSEFAIXA>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeCancelarNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  DadosMsg := SeparaDados( DadosMsg, 'CancelarNfseEnvio' );
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
   result := '<?xml version="1.0" encoding="utf-8"?>' +
             '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
-                               'xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" ' +
                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
              '<SOAP-ENV:Body>' +
-              '<cancelarnfse_barradogarcas.Execute>' +
-               '<Entrada xmlns="http://www.abrasf.org.br/nfse.xsd">' +
-                 '<nfseCabecMsg>' +
+              '<WSNfseBarraDoGarcas.CANCELARNFSE xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
                    CabMsg +
                  '</nfseCabecMsg>' +
-                 '<nfseDadosMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
                    DadosMsg +
                  '</nfseDadosMsg>' +
                '</Entrada>' +
-              '</cancelarnfse_barradogarcas.Execute>' +
+              '</WSNfseBarraDoGarcas.CANCELARNFSE>' +
              '</SOAP-ENV:Body>' +
             '</SOAP-ENV:Envelope>';
 end;
@@ -339,13 +403,53 @@ end;
 function TProvedorVirtual.GeraEnvelopeRecepcionarSincrono(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  Result := '';
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<WSNfseBarraDoGarcas.RECEPCIONARLOTERPSSINCRONO xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
+               '</Entrada>' +
+              '</WSNfseBarraDoGarcas.RECEPCIONARLOTERPSSINCRONO>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GeraEnvelopeSubstituirNFSe(URLNS: String; CabMsg,
   DadosMsg, DadosSenha: AnsiString): AnsiString;
 begin
-  Result := '';
+  CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  DadosMsg := '<?xml version="1.0" encoding="utf-8"?>' + DadosMsg;
+  DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  result := '<?xml version="1.0" encoding="utf-8"?>' +
+            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
+             '<SOAP-ENV:Body>' +
+              '<WSNfseBarraDoGarcas.SUBSTITUIRNFSE xmlns="http://nfse.abrasf.org.br">' +
+               '<Entrada>' +
+                 '<nfseCabecMsg xmlns="http://www.abrasf.org.br">' +
+                   CabMsg +
+                 '</nfseCabecMsg>' +
+                 '<nfseDadosMsg xmlns="http://www.abrasf.org.br">' +
+                   DadosMsg +
+                 '</nfseDadosMsg>' +
+               '</Entrada>' +
+              '</WSNfseBarraDoGarcas.SUBSTITUIRNFSE>' +
+             '</SOAP-ENV:Body>' +
+            '</SOAP-ENV:Envelope>';
 end;
 
 function TProvedorVirtual.GetSoapAction(Acao: TnfseAcao; NomeCidade: String): String;

@@ -1,0 +1,158 @@
+procedure TfrmMovManifestacao.btnLocalizarClick(Sender: TObject);
+var
+ CNPJ, Impresso, sChave, sEmissao, sCNPJ, sNome, sNumero, sSerie,
+ sIEst, sNSU, sTipoNFe: String;
+ Valor: Double;
+ i, j, k: integer;
+begin
+ // ======== Dados do Emitente =============================================
+ DM_CTA.Empresa.Close;
+ DM_CTA.Empresa.SQL.Clear;
+ DM_CTA.Empresa.SQL.Add('Select * From Sis_Empresa');
+ DM_CTA.Empresa.SQL.Add('Where Codigo = :xCodigo');
+ DM_CTA.Empresa.Params[0].AsString:=DM_CTA.ParamDFeEmitente.AsString;
+ DM_CTA.Empresa.Active:=True;
+ DM_CTA.Empresa.Open;
+
+ if copy(DM_CTA.EmpresaCNPJ.AsString,10,4) <> '0000'
+  then CNPJ := Copy(DM_CTA.EmpresaCNPJ.AsString, 2, 14)
+  else CNPJ := Copy(DM_CTA.EmpresaCNPJ.AsString, 1, 9) +
+               Copy(DM_CTA.EmpresaCNPJ.AsString, 14, 2);
+
+ MemoStatus.Lines.Add('------------------------------------------------------');
+ MemoStatus.Lines.Add(' =>  Consultando NFe Destinadas');
+ MemoStatus.Lines.Add('------------------------------------------------------');
+
+ Memo1.Text := '';
+ k := 0;
+ repeat
+   inc(k);
+   DMDFe.NFe.DistribuicaoDFe( DM_CTA.EmpresaCodigoEstado.AsInteger,
+                              CNPJ,
+                              edtUltNSU.Text, '' );
+
+   sStat   := IntToStr(DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.cStat);
+   sMotivo := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo;
+
+   if DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 137
+   then sTemMais := 'N'
+   else sTemMais := 'S';
+
+   sUltimoNSU := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU;
+
+   GravaUltimaConsulta;
+
+   if DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 138
+    then begin
+     MemoStatus.Lines.Add(' Documento Localizado para o Destinatário');
+     MemoStatus.Lines.Add(' Utilizar o número que esta no campo: Último NSU');
+     MemoStatus.Lines.Add(' Para uma nova pesquisa.');
+     MemoStatus.Lines.Add(' ');
+
+     j := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1;
+     lstChave1.Clear;
+     chkListaNotas.Clear;
+
+     for i := 0 to j do
+      begin
+       sSerie   := '';
+       sNumero  := '';
+       sCNPJ    := '';
+       sNome    := '';
+       sIEst    := '';
+       sNSU     := '';
+       sEmissao := '';
+       sTipoNFe := '';
+       Valor    := 0.0;
+       Impresso := ' ';
+
+       if DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.chNFe <> ''
+        then begin
+         // Conjunto de informações resumo da NF-e localizadas.
+         // Este conjunto de informação será gerado quando a NF-e for autorizada ou denegada.
+
+         sChave := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.chNFe;
+
+         sSerie  := Copy(sChave, 23, 3);
+         sNumero := Copy(sChave, 26, 9);
+         sCNPJ := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.CNPJCPF;
+         sNome := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.xNome;
+         sIEst := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.IE;
+         case DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.tpNF of
+          tnEntrada: sTipoNFe := 'E';
+          tnSaida:   sTipoNFe := 'S';
+         end;
+         sNSU  := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].NSU;
+         sEmissao := DateToStr(DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.dhEmi);
+         Valor := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.vNF;
+
+         case DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].resNFe.cSitNFe of
+          snAutorizado: Impresso := 'A';
+          snDenegado:   Impresso := 'D';
+          snCancelada:  Impresso := 'C';
+         end;
+        end;
+
+       // Registra no Banco de Dados as Notas Retornadas pela Consulta
+       DM_VEN.Manifestacao.Close;
+       DM_VEN.Manifestacao.SQL.Clear;
+       DM_VEN.Manifestacao.SQL.Add('Select * From Eve_Manifestacao');
+       DM_VEN.Manifestacao.SQL.Add('Where Empresa = :xEmpresa');
+       DM_VEN.Manifestacao.SQL.Add('and Chave = :xChave');
+       DM_VEN.Manifestacao.Params[0].AsString:=DM_CTA.xCodEmpresa;
+       DM_VEN.Manifestacao.Params[1].AsString:=sChave;
+       DM_VEN.Manifestacao.Active:=True;
+       DM_VEN.Manifestacao.Open;
+
+       if not ((DM_VEN.ManifestacaoEmpresa.AsString = DM_CTA.xCodEmpresa) and
+               (DM_VEN.ManifestacaoChave.AsString = sChave))
+        then begin
+         DM_VEN.IncAltDel.SQL.Clear;
+         DM_VEN.IncAltDel.SQL.Add('Insert into Eve_Manifestacao');
+         DM_VEN.IncAltDel.SQL.Add('(Empresa, Chave, CNPJ, Nome, IE, Emissao, Tipo, Valor,');
+         DM_VEN.IncAltDel.SQL.Add('Situacao, Confirmacao, NSU, DataEvento, Protocolo)');
+         DM_VEN.IncAltDel.SQL.Add('Values (:xEmpresa, :xChave, :xCNPJ, :xNome, :xIE, :xEmissao, :xTipo,');
+         DM_VEN.IncAltDel.SQL.Add(':xValor, :xSituacao, :xConfirmacao, :xNSU, :xDataEve, :xProtocolo)');
+         DM_VEN.IncAltDel.Params[0].AsString:=DM_CTA.xCodEmpresa;
+         DM_VEN.IncAltDel.Params[1].AsString:=sChave;
+         DM_VEN.IncAltDel.Params[2].AsString:=sCNPJ;
+         DM_VEN.IncAltDel.Params[3].AsString:=sNome;
+         DM_VEN.IncAltDel.Params[4].AsString:=sIEst;
+         DM_VEN.IncAltDel.Params[5].AsDateTime:=StrToDate(sEmissao);
+         DM_VEN.IncAltDel.Params[6].AsString:=sTipoNFe;
+         DM_VEN.IncAltDel.Params[7].AsFloat:=Valor;
+         DM_VEN.IncAltDel.Params[8].AsString:=Impresso;
+         DM_VEN.IncAltDel.Params[9].AsInteger:=-1;
+         DM_VEN.IncAltDel.Params[10].AsString:=sNSU;
+         DM_VEN.IncAltDel.Params[11].AsDateTime:=0;
+         DM_VEN.IncAltDel.Params[12].AsString:='';
+         DM_VEN.IncAltDel.ExecSQL;
+        end;
+
+      end; // Fim do For
+    end
+    else begin
+     // Nenhum Documento Localizado para o Destinatário
+     if DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 137
+      then begin
+       MemoStatus.Lines.Add(' Nenhum Documento Localizado para o Destinatário');
+       MemoStatus.Lines.Add(' Utilizar o número que esta no campo: Último NSU');
+       MemoStatus.Lines.Add(' Para uma nova pesquisa ('+edtUltNSU.Text+').');
+       MemoStatus.Lines.Add(' ');
+      end
+      else begin
+       MemoStatus.Lines.Add(' Falha ao realizar a consulta.');
+       MemoStatus.Lines.Add('  ' + sStat + ' - ' + sMotivo);
+       MemoStatus.Lines.Add(' ');
+      end;
+    end;
+
+   MontaChkLista;
+ until (k = edtConsultas.ValueInt) or (sTemMais = 'S');
+
+ if sTemMais = 'S'
+  then Memo1.Text := IntToStr(k) + ' Consultas Realizadas e tem mais Documentos.'
+  else Memo1.Text := IntToStr(k) + ' Consultas Realizadas e não tem mais Documentos.';
+
+ AtivaBotao;
+end;

@@ -55,6 +55,7 @@ type
      fsCFeCanc : TCFeCanc ;
      fsnumeroSessao : Integer ;
      fsOnGetcodigoDeAtivacao : TACBrSATGetChave ;
+     fsOnGetNumeroSessao: TACBrSATGetNumeroSessao;
      fsOnGetsignAC : TACBrSATGetChave ;
      fsOnGravarLog : TACBrGravarLog ;
      fsNomeDLL : String ;
@@ -181,6 +182,8 @@ type
      property OnGetcodigoDeAtivacao : TACBrSATGetChave read fsOnGetcodigoDeAtivacao
         write fsOnGetcodigoDeAtivacao;
      property OnGetsignAC : TACBrSATGetChave read fsOnGetsignAC write fsOnGetsignAC;
+     property OnGetNumeroSessao : TACBrSATGetNumeroSessao read fsOnGetNumeroSessao
+        write fsOnGetNumeroSessao;
 
      property SalvarCFes: Boolean read fsSalvarCFes write fsSalvarCFes default false;
      property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
@@ -208,6 +211,7 @@ begin
   fsOnGetcodigoDeAtivacao := nil;
   fsOnGetsignAC           := nil;
   fsOnGravarLog           := nil;
+  fsOnGetNumeroSessao     := nil;
 
   fsConfig  := TACBrSATConfig.Create;
   fsRede    := TRede.Create;
@@ -342,6 +346,10 @@ end ;
 function TACBrSAT.GerarnumeroSessao : Integer ;
 begin
   fsnumeroSessao := Random(999999);
+
+  if Assigned( fsOnGetNumeroSessao ) then
+     fsOnGetNumeroSessao( fsnumeroSessao ) ;
+
   Result := fsnumeroSessao;
 end ;
 

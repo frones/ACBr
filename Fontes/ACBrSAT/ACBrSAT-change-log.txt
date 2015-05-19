@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/05/2015    (por: DSA)
+[+] ACBrSAT, Adicionado o evento OnGetNumeroSessao, que permite que a aplicação
+    atribua (ou leia) o numero de sessão para o comando a ser enviado.
+
 Data: 13/05/2015
 -- ACBrSAT --  (por: DSA)
 [*] pcnCFeW, revisado para respeitar os valores máximos e mínimo da Especificaçao

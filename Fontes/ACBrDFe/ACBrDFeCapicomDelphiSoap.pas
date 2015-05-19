@@ -40,7 +40,8 @@ unit ACBrDFeCapicomDelphiSoap;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeCapicom, ACBrDFeConfiguracoes,
+  Classes, SysUtils,
+  ACBrDFeCapicom, ACBrDFeSSL,
   SoapHTTPClient, SOAPHTTPTrans;
 
 const

@@ -41,7 +41,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrHTTPReqResp,
+  ACBrDFeSSL, ACBrHTTPReqResp,
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
   JwaWinCrypt, Windows, ActiveX, ComObj;
 

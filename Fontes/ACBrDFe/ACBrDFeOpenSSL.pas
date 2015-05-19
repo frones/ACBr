@@ -41,7 +41,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFeConfiguracoes, ACBrDFeSSL,
+  ACBrDFeSSL,
   HTTPSend, ssl_openssl,
   libxmlsec, libxslt, libxml2;
 

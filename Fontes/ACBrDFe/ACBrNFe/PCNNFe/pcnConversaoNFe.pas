@@ -118,8 +118,6 @@ function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
 function tpArmaToStr(const t: TpcnTipoArma): string;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 
-function GetVersaoServicoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF; ALayOut: TLayOut): string;
-
 
 implementation
 
@@ -306,113 +304,6 @@ end;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
-end;
-
-function GetVersaoServicoNFe(AModeloDF: TpcnModeloDF; AVersaoDF: TpcnVersaoDF;
-  ALayOut: TLayOut): string;
-begin
-  result := '';
-
-  case AModeloDF of
-    moNFe:
-      begin
-        case AVersaoDF of
-          ve200:
-            begin
-              case ALayOut of
-                LayNfeStatusServico:  result := '2.00';
-                LayNfeRecepcao:       result := '2.00';
-                LayNfeRetRecepcao:    result := '2.00';
-                LayNfeConsulta:       result := '2.01';
-                LayNfeCancelamento:   result := '2.00';
-                LayNfeInutilizacao:   result := '2.00';
-                LayNfeCadastro:       result := '2.00';
-                LayNFeCCe:            result := '1.00';
-                LayNFeEvento:         result := '1.00';
-                LayNFeEventoAN:       result := '1.00';
-                LayNFeConsNFeDest:    result := '1.01';
-                LayNFeDownloadNFe:    result := '1.00';
-                LayNfeAutorizacao:    result := '2.00';
-                LayNfeRetAutorizacao: result := '2.00';
-                LayDistDFeInt:        result := '1.00';
-                LayAdministrarCSCNFCe:result := '0.00';
-              end;
-            end;
-
-          ve310:
-            begin
-              case ALayOut of
-                LayNfeStatusServico:  result := '3.10';
-                LayNfeRecepcao:       result := '3.10';
-                LayNfeRetRecepcao:    result := '3.10';
-                LayNfeConsulta:       result := '3.10';
-                LayNfeCancelamento:   result := '3.10';
-                LayNfeInutilizacao:   result := '3.10';
-                LayNfeCadastro:       result := '2.00';
-                LayNFeCCe:            result := '1.00';
-                LayNFeEvento:         result := '1.00';
-                LayNFeEventoAN:       result := '1.00';
-                LayNFeConsNFeDest:    result := '1.01';
-                LayNFeDownloadNFe:    result := '1.00';
-                LayNfeAutorizacao:    result := '3.10';
-                LayNfeRetAutorizacao: result := '3.10';
-                LayDistDFeInt:        result := '1.00';
-                LayAdministrarCSCNFCe: result := '0.00';
-              end;
-            end;
-        end;
-      end;
-
-    moNFCe:
-      begin
-        case AVersaoDF of
-          ve300:
-            begin
-              case ALayOut of
-                LayNfeStatusServico:  result := '3.00';
-                LayNfeRecepcao:       result := '3.00';
-                LayNfeRetRecepcao:    result := '3.00';
-                LayNfeConsulta:       result := '3.00';
-                LayNfeCancelamento:   result := '3.00';
-                LayNfeInutilizacao:   result := '3.00';
-                LayNfeCadastro:       result := '2.00';
-                LayNFeCCe:            result := '1.00';
-                LayNFeEvento:         result := '1.00';
-                LayNFeEventoAN:       result := '1.00';
-                LayNFeConsNFeDest:    result := '1.01';
-                LayNFeDownloadNFe:    result := '1.00';
-                LayNfeAutorizacao:    result := '3.00';
-                LayNfeRetAutorizacao: result := '3.00';
-                LayDistDFeInt:        result := '1.00';
-                LayAdministrarCSCNFCe: result := '1.00';
-              end;
-            end;
-
-          ve310:
-            begin
-              case ALayOut of
-                LayNfeStatusServico:  result := '3.10';
-                LayNfeRecepcao:       result := '3.10';
-                LayNfeRetRecepcao:    result := '3.10';
-                LayNfeConsulta:       result := '3.10';
-                LayNfeCancelamento:   result := '3.10';
-                LayNfeInutilizacao:   result := '3.10';
-                LayNfeCadastro:       result := '2.00';
-                LayNFeCCe:            result := '1.00';
-                LayNFeEvento:         result := '1.00';
-                LayNFeEventoAN:       result := '1.00';
-                LayNFeConsNFeDest:    result := '1.01';
-                LayNFeDownloadNFe:    result := '1.00';
-                LayNfeAutorizacao:    result := '3.10';
-                LayNfeRetAutorizacao: result := '3.10';
-                LayDistDFeInt:        result := '1.00';
-
-                LayAdministrarCSCNFCe: result := '1.00';
-              end;
-            end;
-        end;
-      end;
-  end;
 end;
 
 end.

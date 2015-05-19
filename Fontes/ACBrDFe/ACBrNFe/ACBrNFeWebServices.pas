@@ -704,10 +704,7 @@ begin
   FPURL := '';
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
-
-//  FPVersaoServico := FloatToString(Versao, '.', '0.00');
-  FPVersaoServico := GetVersaoServicoNFe(FPConfiguracoesNFe.Geral.ModeloDF,
-    FPConfiguracoesNFe.Geral.VersaoDF,FPLayout);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
 
@@ -715,14 +712,10 @@ function TNFeWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
 
-{  if EstaVazio(FPVersaoServico) then
+  if EstaVazio(FPVersaoServico) then
     FPVersaoServico := TACBrNFe(FPDFeOwner).LerVersaoDeParams(FPLayout);
 
-  Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';  }
-
-  Result := '<versaoDados>' + GetVersaoServicoNFe(FPConfiguracoesNFe.Geral.ModeloDF,
-    FPConfiguracoesNFe.Geral.VersaoDF,FPLayout)+ '</versaoDados>';
-
+  Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
 end;
 
 procedure TNFeWebService.FinalizarServico;
@@ -2300,9 +2293,7 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente, LayOutToServico(FPLayout),
     Versao, FPURL);
 
-  //FPVersaoServico := FloatToString(3.10, '.', '0.00');
-  FPVersaoServico := GetVersaoServicoNFe(FPConfiguracoesNFe.Geral.ModeloDF,
-    FPConfiguracoesNFe.Geral.VersaoDF,FPLayout);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
 procedure TNFeEnvEvento.DefinirServicoEAction;

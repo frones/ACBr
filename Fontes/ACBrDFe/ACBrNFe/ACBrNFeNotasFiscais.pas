@@ -163,8 +163,8 @@ type
     function LoadFromFile(CaminhoArquivo: String; AGerarNFe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarNFe: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarNFe: Boolean = True): Boolean;
-    function GravarXML(PathArquivo: String = ''): Boolean;
-    function GravarTXT(PathArquivo: String = ''): Boolean;
+    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarTXT(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrNFe: TComponent read FACBrNFe;
   end;
@@ -559,13 +559,6 @@ begin
   FNFeR.Leitor.Arquivo := AXML;
   FNFeR.LerXml;
 
-  // Detecta o modelo e a versão do Documento Fiscal
-{  with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
-  begin
-    Configuracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(FNFeR.NFe.Ide.modelo));
-    Configuracoes.Geral.VersaoDF := DblToVersaoDF(OK, FNFeR.NFe.infNFe.Versao);
-  end; } //Problemas ao consultar NFe da versão 2.00 com os webservices da versão 3.10
-
   FXML := string(AXML);
   FXMLOriginal := FXML;
   Result := True;
@@ -757,12 +750,9 @@ end;
 function NotaFiscal.GetXMLAssinado: String;
 begin
   if EstaVazio(FXMLAssinado) then
-  begin
     Assinar;
-    Result := FXMLAssinado;
-  end
-  else
-    Result := FXMLAssinado;
+
+  Result := FXMLAssinado;
 end;
 
 
@@ -974,7 +964,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.GravarXML(PathArquivo: String): Boolean;
+function TNotasFiscais.GravarXML(PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;
@@ -983,14 +973,14 @@ begin
   i := 0;
   while Result and (i < Self.Count) do
   begin
-    PathArq := ExtractFilePath(PathArquivo);
-    NomeArq := ExtractFileName(PathArquivo);
+    PathArq := ExtractFilePath(PathNomeArquivo);
+    NomeArq := ExtractFileName(PathNomeArquivo);
     Result := Self.Items[i].GravarXML(NomeArq, PathArq);
     Inc(i);
   end;
 end;
 
-function TNotasFiscais.GravarTXT(PathArquivo: String): Boolean;
+function TNotasFiscais.GravarTXT(PathNomeArquivo: String): Boolean;
 var
   SL: TStringList;
   ArqTXT: String;
@@ -1021,11 +1011,11 @@ begin
           Inc(i);
       end;
 
-      if EstaVazio(PathArquivo) then
-        PathArquivo := PathWithDelim(
+      if EstaVazio(PathNomeArquivo) then
+        PathNomeArquivo := PathWithDelim(
           TACBrNFe(FACBrNFe).Configuracoes.Arquivos.PathSalvar) + 'NFe.TXT';
 
-      SL.SaveToFile(PathArquivo);
+      SL.SaveToFile(PathNomeArquivo);
       Result := True;
     end;
   finally

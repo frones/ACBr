@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2015
+[*] Incluido o provedor Ginfes na lista de provedores que geram a TAG
+    ValorDeducoes mesmo que o seu conteudo seja zero.
+    Por: Thiago Pettean
+
 06/05/2015
 [-] Correções para o provedor Virtual.
     Por: Italo Jurisato Junior

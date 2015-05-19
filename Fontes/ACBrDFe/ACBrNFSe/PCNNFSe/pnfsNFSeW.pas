@@ -390,7 +390,7 @@ begin
    Gerador.wGrupoNFSe('Valores');
     Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
     { Alterado por Cleiver em 25/08/2014 }
-    if FProvedor in [proRecife, proFreire, proPronim, proISSNET, proNFSeBrasil]
+    if FProvedor in [proRecife, proFreire, proPronim, proISSNET, proNFSeBrasil, proGinfes]
       then begin
         Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
         Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');

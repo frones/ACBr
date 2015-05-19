@@ -480,7 +480,6 @@ begin
   FPURL := '';
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
-
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 

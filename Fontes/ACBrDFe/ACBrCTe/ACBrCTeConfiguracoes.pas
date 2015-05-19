@@ -55,7 +55,7 @@ type
     procedure SetVersaoDF(const Value: TVersaoCTe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
+    procedure Assign(DeGeralConfCTe: TGeralConfCTe); overload;
 
   published
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
@@ -73,7 +73,7 @@ type
     FPathEvento: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
+    procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); overload;
 
     function GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
     function GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
@@ -99,6 +99,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
+    procedure Assign(DeConfiguracoesCTe: TConfiguracoesCTe); overload;
 
   published
     property Geral: TGeralConfCTe            read GetGeral;
@@ -139,6 +140,14 @@ end;
 procedure TConfiguracoesCTe.CreateArquivosConf;
 begin
   FPArquivos := TArquivosConfCTe.Create(Self);
+end;
+
+procedure TConfiguracoesCTe.Assign(DeConfiguracoesCTe: TConfiguracoesCTe);
+begin
+  Geral.Assign(DeConfiguracoesCTe.Geral);
+  WebServices.Assign(DeConfiguracoesCTe.WebServices);
+  Certificados.Assign(DeConfiguracoesCTe.Certificados);
+  Arquivos.Assign(DeConfiguracoesCTe.Arquivos);
 end;
 
 { TGeralConfCTe }

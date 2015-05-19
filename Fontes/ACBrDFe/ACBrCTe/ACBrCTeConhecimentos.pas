@@ -73,6 +73,7 @@ type
 
     function GetMsg: String;
     function GetNumID: String;
+    function GetXMLAssinado: String;
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -145,7 +146,7 @@ type
     function LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarCTe: Boolean = True): Boolean;
     function LoadFromString(AString: String; AGerarCTe: Boolean = True): Boolean;
-    function GravarXML(PathArquivo: String = ''): Boolean;
+    function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrCTe: TComponent read FACBrCTe;
   end;
@@ -405,13 +406,6 @@ begin
   FCTeR.Leitor.Arquivo := AXML;
   FCTeR.LerXml;
 
-  // Detecta o modelo e a versão do Documento Fiscal
-  with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
-  begin
-//    Configuracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(FCTeR.CTe.Ide.modelo));
-    Configuracoes.Geral.VersaoDF := DblToVersaoCTe(OK, FCTeR.CTe.infCTe.Versao);
-  end;
-
   FXML := string(AXML);
   FXMLOriginal := FXML;
   Result := True;
@@ -567,6 +561,14 @@ end;
 function Conhecimento.GetNumID: String;
 begin
   Result := Trim(OnlyNumber(CTe.infCTe.ID));
+end;
+
+function Conhecimento.GetXMLAssinado: String;
+begin
+  if EstaVazio(FXMLAssinado) then
+    Assinar;
+
+  Result := FXMLAssinado;
 end;
 
 { TConhecimentos }
@@ -766,15 +768,18 @@ begin
   end;
 end;
 
-function TConhecimentos.GravarXML(PathArquivo: String): Boolean;
+function TConhecimentos.GravarXML(PathNomeArquivo: String): Boolean;
 var
   i: integer;
+  NomeArq, PathArq : String;
 begin
   Result := True;
   i := 0;
   while Result and (i < Self.Count) do
   begin
-    Result := Self.Items[i].GravarXML('', PathArquivo);
+    PathArq := ExtractFilePath(PathNomeArquivo);
+    NomeArq := ExtractFileName(PathNomeArquivo);
+    Result := Self.Items[i].GravarXML(NomeArq, PathArq);
     Inc(i);
   end;
 end;

@@ -54,7 +54,7 @@ type
     procedure SetVersaoDF(const Value: TVersaoMDFe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfMDFe: TGeralConfMDFe); reintroduce;
+    procedure Assign(DeGeralConfMDFe: TGeralConfMDFe); overload;
 
   published
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve100;
@@ -71,7 +71,7 @@ type
     FPathEvento: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); reintroduce;
+    procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); overload;
 
     function GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
@@ -97,6 +97,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
+    procedure Assign(DeConfiguracoesMDFe: TConfiguracoesMDFe); overload;
 
   published
     property Geral: TGeralConfMDFe read GetGeral;
@@ -138,6 +139,14 @@ end;
 procedure TConfiguracoesMDFe.CreateArquivosConf;
 begin
   FPArquivos := TArquivosConfMDFe.Create(self);
+end;
+
+procedure TConfiguracoesMDFe.Assign(DeConfiguracoesMDFe: TConfiguracoesMDFe);
+begin
+  Geral.Assign(DeConfiguracoesMDFe.Geral);
+  WebServices.Assign(DeConfiguracoesMDFe.WebServices);
+  Certificados.Assign(DeConfiguracoesMDFe.Certificados);
+  Arquivos.Assign(DeConfiguracoesMDFe.Arquivos);
 end;
 
 { TGeralConfMDFe }

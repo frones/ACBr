@@ -69,6 +69,7 @@ type
 
     function GetMsg: String;
     function GetNumID: String;
+    function GetXMLAssinado: String;
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -147,7 +148,7 @@ type
     function LoadFromFile(CaminhoArquivo: String; AGerarMDFe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarMDFe: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarMDFe: Boolean = True): Boolean;
-    function GravarXML(PathArquivo: String = ''): Boolean;
+    function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrMDFe: TComponent read FACBrMDFe;
   end;
@@ -355,11 +356,6 @@ begin
   FMDFeR.Leitor.Arquivo := AXML;
   FMDFeR.LerXml;
 
-  with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
-  begin
-    Configuracoes.Geral.VersaoDF := DblToVersaoMDFe(OK, FMDFeR.MDFe.infMDFe.Versao);
-  end;
-
   FXML := string(AXML);
   FXMLOriginal := FXML;
   Result := True;
@@ -517,6 +513,14 @@ end;
 function Manifesto.GetNumID: String;
 begin
   Result := Trim(OnlyNumber(MDFe.infMDFe.ID));
+end;
+
+function Manifesto.GetXMLAssinado: String;
+begin
+  if EstaVazio(FXMLAssinado) then
+    Assinar;
+
+  Result := FXMLAssinado;
 end;
 
 { TManifestos }
@@ -714,15 +718,18 @@ begin
   end;
 end;
 
-function TManifestos.GravarXML(PathArquivo: String): Boolean;
+function TManifestos.GravarXML(PathNomeArquivo: String): Boolean;
 var
   i: integer;
+  NomeArq, PathArq : String;
 begin
   Result := True;
   i := 0;
   while Result and (i < Self.Count) do
   begin
-    Result := Self.Items[i].GravarXML('', PathArquivo);
+    PathArq := ExtractFilePath(PathNomeArquivo);
+    NomeArq := ExtractFileName(PathNomeArquivo);
+    Result := Self.Items[i].GravarXML(NomeArq, PathArq);
     Inc(i);
   end;
 end;

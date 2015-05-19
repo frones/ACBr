@@ -8,8 +8,8 @@ interface
 
 uses
   ACBrNFSe, ACBrNFSeConfiguracoes, ACBrNFSeDANFSeClass, ACBrNFSeNotasFiscais, 
-  ACBrNFSeReg, ACBrNFSeUtil, ACBrNFSeWebServices, pnfsConversao, pnfsNFSe, 
-  pnfsNFSeW, pnfsEnvLoteRpsResposta, pnfsNFSeR, pnfsConsSitLoteRpsResposta, 
+  ACBrNFSeReg, ACBrNFSeWebServices, pnfsConversao, pnfsNFSe, pnfsNFSeW, 
+  pnfsEnvLoteRpsResposta, pnfsNFSeR, pnfsConsSitLoteRpsResposta, 
   pnfsConsLoteRpsResposta, pnfsConsNfseporRpsResposta, pnfsConsNfseResposta, 
   pnfsSignature, pnfsCancNfseResposta, ACBrProvedorBetha, 
   ACBrProvedorDigifred, ACBrProvedorEquiplano, ACBrProvedorfintelISS, 
@@ -20,7 +20,7 @@ uses
   ACBrProvedorfISSLex, ACBrProvedorSaatri, pnfsGerarNfseResposta, 
   ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorISSCuritiba, 
   ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSe, 
-  ACBrProvedorISSDigital, ACBrProvedorSalvador, CryptSHA1, LazarusPackageIntf;
+  ACBrProvedorISSDigital, ACBrProvedorSalvador, LazarusPackageIntf;
 
 implementation
 

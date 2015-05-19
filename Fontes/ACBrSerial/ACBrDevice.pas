@@ -198,7 +198,7 @@ TACBrTags = class(TObjectList)
 end;
 
 TACBrTagOnTraduzirTag = procedure(const ATag: AnsiString;
-  var TagTraduzida: String) of object ;
+  var TagTraduzida: AnsiString) of object ;
 TACBrTagOnTraduzirTagBloco = procedure(const ATag, ConteudoBloco: AnsiString;
   var BlocoTraduzido: AnsiString) of object ;
 

@@ -629,7 +629,7 @@ begin
       ca := nil;
       try
         {$IFDEF USE_libeay32}
-        if PKCS12_parse(p12, PAnsiChar(Configuracoes.Certificados.Senha), pkey, cert, ca) > 0 then
+        if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), pkey, cert, ca) > 0 then
         {$ELSE}
         if PKCS12parse(p12, FpDFeSSL.Senha, pkey, cert, ca) > 0 then
         {$ENDIF}

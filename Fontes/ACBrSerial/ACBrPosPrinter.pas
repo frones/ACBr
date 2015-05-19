@@ -264,7 +264,7 @@ type
 
   protected
     procedure EnviarStringDevice(const AString: AnsiString);
-    procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: String);
+    procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
     procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString);
 
@@ -626,7 +626,8 @@ begin
 end;
 
 
-procedure TACBrPosPrinter.TraduzirTag(const ATag: AnsiString; var TagTraduzida: String);
+procedure TACBrPosPrinter.TraduzirTag(const ATag: AnsiString;
+  var TagTraduzida: AnsiString);
 begin
   TagTraduzida := '';
 

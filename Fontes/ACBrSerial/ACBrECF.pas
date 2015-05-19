@@ -889,7 +889,7 @@ TACBrECF = class( TACBrComponent )
 
     function DecodificarTagsFormatacao(AString: AnsiString;
       CodificarPaginaDeCodigo: Boolean =  True): AnsiString;
-    procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: String);
+    procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
     procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString);
 
@@ -4949,8 +4949,8 @@ begin
   Result := fsTagProcessor.DecodificarTagsFormatacao(Result);
 end;
 
-procedure TACBrECF.TraduzirTag(const ATag: AnsiString; var TagTraduzida: String
-  );
+procedure TACBrECF.TraduzirTag(const ATag: AnsiString;
+  var TagTraduzida: AnsiString);
 begin
   {*************************************************
 

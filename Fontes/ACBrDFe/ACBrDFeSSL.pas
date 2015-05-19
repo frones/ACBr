@@ -381,7 +381,7 @@ begin
     libCapicomDelphiSoap:
     begin
        {$IFNDEF FPC}
-      FSSLClass := TDFeCapicomDelphiSoap.Create(FConfiguracoes);
+      FSSLClass := TDFeCapicomDelphiSoap.Create(Self);
        {$ELSE}
       FSSLClass := TDFeCapicom.Create(Self);
        {$ENDIF}

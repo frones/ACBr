@@ -192,7 +192,7 @@ var
 implementation
 
 uses
- StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrNFSeUtil, ACBrDFeUtil; //Astrogildo em 13/12/12
+ StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrDFeUtil; //Astrogildo em 13/12/12
 
 {$R *.dfm}
 

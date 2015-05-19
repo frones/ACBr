@@ -50,7 +50,7 @@ type
 implementation
 
 uses
- StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil, pcnAuxiliar,
+ StrUtils, Dialogs, ACBrUtil, ACBrNFSe, pcnAuxiliar,
  ACBrNFSeDANFSeQRRetrato, ACBrNFSeDANFSeQRRetratoCampinas;
 
 constructor TACBrNFSeDANFSeQR.Create(AOwner: TComponent);

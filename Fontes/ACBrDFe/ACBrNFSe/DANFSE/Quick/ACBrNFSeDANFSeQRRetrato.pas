@@ -250,7 +250,7 @@ implementation
 
 uses
  StrUtils, DateUtils, ACBrValidador,
- ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil, pnfsNFSe;
+ ACBrUtil, ACBrDFeUtil, pnfsNFSe;
 
 {$R *.dfm}
 

@@ -36,13 +36,8 @@ interface
 uses
   Classes, Sysutils,
   pnfsNFSe, pnfsConversao,
-{$IFDEF CLX}
-  QDialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes, ACBrNFSeWebServices,
-  ACBrDFeUtil, ACBrUtil, ACBrNFSeUtil, ACBrNFSeDANFSeClass, Forms,
+  ACBrDFeUtil, ACBrUtil, ACBrNFSeDANFSeClass, Forms,
   smtpsend, ssl_openssl, mimemess, mimepart; // units para enviar email
 
 const

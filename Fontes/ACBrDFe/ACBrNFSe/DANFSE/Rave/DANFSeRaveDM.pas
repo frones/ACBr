@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, RpCon, RpRender, RpRenderPDF, RpRave, RpDefine, RpBase,
-  RpSystem, ACBrNFSe, ACBrNFSeUtil, ACBrUtil,  pnfsConversao, RpConDS, pnfsNFSe,
+  RpSystem, ACBrNFSe, ACBrUtil,  pnfsConversao, RpConDS, pnfsNFSe,
   ACBrDFeUtil, IniFiles, ACBrNFSeDANFSeClass;
 
 type

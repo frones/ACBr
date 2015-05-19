@@ -6,7 +6,7 @@ interface
 
 uses
  Forms, SysUtils, Classes, pnfsNFSe, ACBrNFSeDANFSeClass, RpDefine, 
- pnfsConversao, DANFSeRaveDM, StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeUtil ;
+ pnfsConversao, DANFSeRaveDM, StrUtils, Dialogs, ACBrUtil, ACBrNFSe;
 
 type
   TACBrNFSeDANFSeRV = class( TACBrNFSeDANFSeClass )

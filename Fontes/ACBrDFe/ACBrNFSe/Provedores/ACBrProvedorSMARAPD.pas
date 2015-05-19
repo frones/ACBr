@@ -36,7 +36,7 @@ Interface
 Uses
   Classes, SysUtils, strUtils,
   pnfsConversao, pcnAuxiliar, // synacode,
-  ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
+  ACBrNFSeConfiguracoes, ACBrUtil, ACBrDFeUtil,
 {$IFDEF COMPILER6_UP}DateUtils{$ELSE}ACBrD5, FileCtrl{$ENDIF};
 
 Type

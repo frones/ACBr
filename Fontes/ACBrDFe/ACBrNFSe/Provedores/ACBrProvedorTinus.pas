@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils, strUtils,
   pnfsConversao, pcnAuxiliar,
-  ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
+  ACBrNFSeConfiguracoes, ACBrUtil, ACBrDFeUtil,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
 
 type

@@ -34,15 +34,7 @@ unit ACBrNFSeConfiguracoes;
 interface
 
 uses
-{$IFNDEF ACBrNFSeOpenSSL}
-  Windows, ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
-  JwaWinCrypt, JwaWinType,
-{$ENDIF}
   Classes, Sysutils, pnfsConversao, pcnConversao, ActiveX;
-
-{$IFNDEF ACBrNFSeOpenSSL}
-  const CAPICOM_STORE_NAME = 'My'; //My CA Root AddressBook
-{$ENDIF}
 
 type
 
@@ -409,7 +401,7 @@ type
 implementation
 
 uses
- IniFiles, DateUtils, Math, StrUtils, ACBrUtil, ACBrNFSe, ACBrNFSeUtil, ACBrDFeUtil,
+ IniFiles, DateUtils, Math, StrUtils, ACBrUtil, ACBrNFSe, ACBrDFeUtil,
  ACBrProvedorGinfesV3, ACBrProvedorPublica, ACBrProvedorRJ,
  ACBrProvedorTiplan, ACBrProvedorISSNet, ACBrProvedorWebISS,
  ACBrProvedorProdemge, ACBrProvedorISSIntel, ACBrProvedorGovBR,

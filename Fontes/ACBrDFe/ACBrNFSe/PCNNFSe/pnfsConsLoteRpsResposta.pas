@@ -36,7 +36,7 @@ interface
 uses
   SysUtils, Classes, Forms,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, ACBrUtil, ACBrNFSeUtil, ACBrDFeUtil;
+  pnfsConversao, pnfsNFSe, ACBrUtil, ACBrDFeUtil;
 
 type
 

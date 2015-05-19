@@ -46,7 +46,7 @@ uses
      QRPDFFilt,
      QRPrntr,
   {$ENDIF}
-  pnfsNFSe, ACBrNFSe, ACBrNFSeUtil, Printers;
+  pnfsNFSe, ACBrNFSe, Printers;
 
 type
   TfqrDANFSeQR = class(TForm)

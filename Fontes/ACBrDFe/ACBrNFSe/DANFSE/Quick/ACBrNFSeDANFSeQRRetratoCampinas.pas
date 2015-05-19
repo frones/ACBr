@@ -176,7 +176,7 @@ implementation
 
 uses
   StrUtils, DateUtils, ACBrValidador,
-  ACBrUtil, ACBrDFeUtil, ACBrNFSeUtil,
+  ACBrUtil, ACBrDFeUtil,
   ACBrNFSeNotasFiscais;
 
 {$R *.dfm}

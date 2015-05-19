@@ -142,7 +142,7 @@ type
 implementation
 
 uses
- ACBrNFSe, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil;
+ ACBrNFSe, ACBrUtil, ACBrDFeUtil;
 
 { TACBrNFSeDANFSeClass }
 

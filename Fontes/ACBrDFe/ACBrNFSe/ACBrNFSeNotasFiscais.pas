@@ -35,12 +35,8 @@ interface
 
 uses
   Classes, Sysutils, Dialogs, Forms,
-  ACBrNFSeUtil, ACBrNFSeConfiguracoes,
-//  {$IFDEF FPC}
-//     ACBrNFSeDMLaz,
-//  {$ELSE}
-     ACBrNFSeDANFSeClass,
-//  {$ENDIF}
+  ACBrNFSeConfiguracoes,
+  ACBrNFSeDANFSeClass,
   smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
   pnfsNFSe, pnfsNFSeR, pnfsNFSeW, pnfsConversao,
   pcnConversao, pcnAuxiliar, pcnLeitor;

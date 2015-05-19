@@ -36,7 +36,7 @@ interface
 uses
   Classes, SysUtils, Forms, strUtils,
   pnfsConversao, pcnAuxiliar, // IniFiles,
-  ACBrNFSeConfiguracoes, ACBrNFSeUtil, ACBrUtil, ACBrDFeUtil,
+  ACBrNFSeConfiguracoes, ACBrUtil, ACBrDFeUtil,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
 
 const

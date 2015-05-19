@@ -35,11 +35,8 @@ interface
 
 uses
   SysUtils, Classes, Forms, DateUtils,
-{$IFNDEF VER130}
-  Variants,
-{$ENDIF}
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
-  ACBrUtil, ACBrNFSeUtil, ACBrDFeUtil;
+  ACBrUtil, ACBrDFeUtil;
 
 type
 

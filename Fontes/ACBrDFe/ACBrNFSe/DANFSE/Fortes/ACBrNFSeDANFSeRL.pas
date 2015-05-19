@@ -53,7 +53,7 @@ uses
     {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  MaskUtils, pnfsNFSe, ACBrNFSe, ACBrNFSeUtil, Printers,
+  MaskUtils, pnfsNFSe, ACBrNFSe, Printers,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
   

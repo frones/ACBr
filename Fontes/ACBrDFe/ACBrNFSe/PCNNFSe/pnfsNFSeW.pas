@@ -131,7 +131,7 @@ type
 implementation
 
 uses
- ACBrUtil, ACBrNFSe, ACBrNFSeUtil;
+ ACBrUtil, ACBrNFSe;
 
 { TNFSeW }
 

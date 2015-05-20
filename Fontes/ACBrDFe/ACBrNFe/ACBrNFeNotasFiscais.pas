@@ -52,7 +52,7 @@ unit ACBrNFeNotasFiscais;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Forms, StrUtils,
+  Classes, SysUtils, Dialogs, StrUtils,
   ACBrNFeConfiguracoes, ACBrDFeUtil,
   pcnNFe, pcnNFeR, pcnNFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 

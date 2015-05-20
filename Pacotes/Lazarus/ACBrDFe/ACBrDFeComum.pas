@@ -7,8 +7,8 @@ unit ACBrDFeComum;
 interface
 
 uses
-  ACBrDFeConfiguracoes, ACBrDFeUtil, ACBrDFeWebService, ACBrDFe, ACBrDFeSSL, 
-  ACBrDFeOpenSSL;
+  ACBrDFeConfiguracoes, ACBrDFeUtil, ACBrDFe, ACBrDFeException, 
+  ACBrDFeRegUtil, ACBrDFeWebService, ACBrDFeSSL, ACBrDFeOpenSSL;
 
 implementation
 

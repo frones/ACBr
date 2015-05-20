@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFe, ACBrDFeConfiguracoes,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrNFeDANFEClass,
   pcnNFe, pcnConversao, pcnConversaoNFe, pcnCCeNFe,

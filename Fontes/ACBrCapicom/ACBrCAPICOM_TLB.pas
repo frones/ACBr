@@ -58,13 +58,13 @@ unit ACBrCAPICOM_TLB;
 {$VARPROPSETTER ON}
 interface
 
-uses Windows, ActiveX, Classes
+uses Windows, ActiveX, Classes,
   {$IFDEF FMX}
-     ,FMX.Graphics, FMX.OleServer
+     FMX.OleServer,
   {$ELSE}
-     ,Graphics, OleServer
+     OleServer,
   {$ENDIF}
-  {$IFNDEF FPC}, StdVCL {$ENDIF}, Variants;
+  {$IFNDEF FPC} StdVCL, {$ENDIF} Variants;
 
 
 // *********************************************************************//

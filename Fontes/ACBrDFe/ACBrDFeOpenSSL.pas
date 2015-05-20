@@ -101,7 +101,7 @@ type
 implementation
 
 uses Math, strutils, dateutils,
-  ACBrUtil, ACBrDFe, ACBrDFeUtil, ACBrConsts,
+  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   synautil,
   {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
 

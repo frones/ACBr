@@ -41,7 +41,6 @@ unit ACBrDFeUtil;
 interface
 
 uses
-  {$IFNDEF NOGUI} Forms, {$ENDIF}
   Classes, StrUtils, SysUtils;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
@@ -71,13 +70,7 @@ implementation
 uses
   Variants, DateUtils,
   pcnGerador,
-  ACBrConsts, ACBrDFe, ACBrUtil, ACBrValidador
-  {$IFNDEF NOGUI}
-   {$IFDEF MSWINDOWS}
-    ,ACBrDFeQRCodeBar
-   {$ENDIF}
-  {$ENDIF}
-  ;
+  ACBrConsts, ACBrDFeException, ACBrUtil, ACBrValidador ;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin

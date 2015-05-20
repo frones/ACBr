@@ -70,7 +70,7 @@ implementation
 uses
   strutils, WinInet, SOAPConst,
   ACBrCAPICOM_TLB, JwaWinCrypt,
-  ACBrUtil, ACBrDFeUtil, ACBrDFe;
+  ACBrUtil, ACBrDFeUtil, ACBrDFe, ACBrDFeException;
 
 { TDFeCapicomDelphiSoap }
 

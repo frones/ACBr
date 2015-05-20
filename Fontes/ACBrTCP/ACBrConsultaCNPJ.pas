@@ -81,7 +81,6 @@ type
     FMotivoSituacaoCad: string;
     FPesquisarIBGE: Boolean;
     FCodigoIBGE: String;
-    FIBGE_UF: String;
     Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
 
@@ -124,7 +123,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synacode, synautil, strutils;
+  ACBrUtil, ACBrValidador, synautil, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var

@@ -43,39 +43,14 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrBase, ACBrDFeConfiguracoes, ACBrMail, ACBrDFeSSL,
-  pcnConversao,
-  {$IFDEF FPC}
-     PropEdits
-  {$ELSE}
-    {$IFNDEF COMPILER6_UP}
-       DsgnIntf
-    {$ELSE}
-       DesignIntf,
-       DesignEditors
-    {$ENDIF}
-  {$ENDIF} ;
-
+  pcnConversao;
 
 const
   ACBRDFE_VERSAO = '0.1.0a';
 
 type
 
-  { EACBrDFeException }
 
-  EACBrDFeException = class(Exception)
-  public
-    constructor Create(const Msg: String);
-    constructor CreateDef(const Msg: String);
-  end;
-
-  { TACBrUFProperty }
-
-  TACBrUFProperty = class(TStringProperty)
-  public
-    function GetAttributes: TPropertyAttributes; override;
-    procedure GetValues(Proc : TGetStrProc) ; override;
-  end;
 
   TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
     const URL, DataSent, SoapAction: String; var TryAgain: Boolean) of object ;
@@ -146,35 +121,7 @@ type
 implementation
 
 uses strutils,
-  ACBrDFeUtil, ACBrUtil ;
-
-{ TACBrUFProperty }
-
-function TACBrUFProperty.GetAttributes: TPropertyAttributes;
-begin
-  Result := [paValueList, paAutoUpdate];
-end;
-
-procedure TACBrUFProperty.GetValues(Proc: TGetStrProc);
-var
- i : Integer;
-begin
-  inherited;
-  for i:= 0 to High(DFeUF) do
-    Proc(DFeUF[i]);
-end;
-
-{ EACBrDFeException }
-
-constructor EACBrDFeException.Create(const Msg: String);
-begin
-  inherited Create(ACBrStr(Msg));
-end;
-
-constructor EACBrDFeException.CreateDef(const Msg: String);
-begin
-  inherited Create(Msg);
-end;
+  ACBrDFeUtil, ACBrDFeException, ACBrUtil ;
 
 { TACBrDFe }
 

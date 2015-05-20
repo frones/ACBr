@@ -248,7 +248,7 @@ var
 
   Ok: Boolean;
   port, i, AccessType: integer;
-  ANone, AHost, APage, pProxy, ErrorMsg, Header: String;
+  ANone, AHost, APage, pProxy, Header: String;
 begin
 
   if (FUseCertificate) then

@@ -54,7 +54,6 @@ type
   TCertificadosConf = class(TComponent)
   private
     FConfiguracoes: TConfiguracoes;
-    FCNPJ: String;
     FDadosPFX: AnsiString;
     FSenha: AnsiString;
     FK: String;
@@ -262,7 +261,7 @@ implementation
 
 uses
   Math, strutils, DateUtils,
-  ACBrDFe, ACBrUtil;
+  ACBrDFe, ACBrDFeException, ACBrUtil;
 
 { TConfiguracoes }
 
@@ -785,4 +784,4 @@ end;
 
 end.
 
-// TODO: Salvar senha do Certificado na memória de forma criptograda
+// TODO: Salvar senha do Certificado na memória de forma criptograda

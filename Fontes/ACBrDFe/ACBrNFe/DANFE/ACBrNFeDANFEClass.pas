@@ -49,13 +49,6 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF DEFINED(VisualCLX)}
-     QForms,
-  {$ELSEIF DEFINED(FMX)}
-     FMX.Forms,
-  {$ELSE}
-     Forms,
-  {$IFEND}
   pcnNFe, pcnConversao;
 
 type

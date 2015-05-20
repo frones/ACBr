@@ -103,7 +103,7 @@ implementation
 
 uses
   strutils,
-  ACBrUtil, ACBrDFe, ACBrDFeUtil, ACBrConsts;
+  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts;
 
 { TDFeCapicom }
 

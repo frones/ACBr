@@ -179,7 +179,7 @@ type
 
 implementation
 
-uses strutils, ACBrUtil, ACBrDFe, ACBrDFeOpenSSL
+uses strutils, ACBrUtil, ACBrDFeException, ACBrDFeOpenSSL
   {$IFDEF MSWINDOWS}
   , ACBrDFeCapicom {$IFNDEF FPC}, ACBrDFeCapicomDelphiSoap{$ENDIF}
   {$ENDIF};

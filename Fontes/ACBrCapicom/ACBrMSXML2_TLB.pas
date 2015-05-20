@@ -55,9 +55,9 @@ interface
 
 uses Windows, ActiveX, Classes,
   {$IFDEF FMX}
-     FMX.Graphics, FMX.OleServer,
+     FMX.OleServer,
   {$ELSE}
-     Graphics, OleServer,
+     OleServer,
   {$ENDIF}
   {$IFNDEF FPC} StdVCL, {$ENDIF} Variants;
   

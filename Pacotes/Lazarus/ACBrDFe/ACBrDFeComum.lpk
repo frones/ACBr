@@ -19,13 +19,11 @@
       <Other>
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
-          <MsgFileName Value=""/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos"/>
-    <Files Count="7">
+    <Files Count="9">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
         <UnitName Value="ACBrDFeConfiguracoes"/>
@@ -35,26 +33,34 @@
         <UnitName Value="ACBrDFeUtil"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeWebService.pas"/>
-        <UnitName Value="ACBrDFeWebService"/>
-      </Item3>
-      <Item4>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFe.pas"/>
         <UnitName Value="ACBrDFe"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas"/>
+        <UnitName Value="ACBrDFeException"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas"/>
-        <UnitName Value="ACBrDFeSSL"/>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas"/>
+        <UnitName Value="ACBrDFeRegUtil"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas"/>
-        <UnitName Value="ACBrDFeOpenSSL"/>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeWebService.pas"/>
+        <UnitName Value="ACBrDFeWebService"/>
       </Item6>
       <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas"/>
+        <UnitName Value="ACBrDFeSSL"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas"/>
+        <UnitName Value="ACBrDFeOpenSSL"/>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="ACBrDFeCapicom"/>
-      </Item7>
+      </Item9>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

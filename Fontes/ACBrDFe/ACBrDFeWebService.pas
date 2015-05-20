@@ -126,7 +126,7 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrUtil, pcnGerador;
+  ACBrDFeUtil, ACBrDFeException, ACBrUtil, pcnGerador;
 
 { TDFeWebService }
 

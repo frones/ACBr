@@ -144,7 +144,7 @@ var
   i: Integer;
 begin
   Gerador.ArquivoFormatoXML := '';
-  Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + CTeEventoCTe + '"');
+  Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
 
   Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
                                         OnlyNumber(Evento.Items[0].InfEvento.chCTe) +
@@ -184,7 +184,7 @@ begin
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 06, 06, 1, Evento.Items[0].InfEvento.TipoEvento);
   Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 01, 02, 1, Evento.Items[0].InfEvento.nSeqEvento);
 
-  Gerador.wGrupo('detEvento versaoEvento="' + CTeEventoCTe + '"');
+  Gerador.wGrupo('detEvento versaoEvento="' + Versao + '"');
   case Evento.Items[0].InfEvento.tpEvento of
    teCCe:
      begin

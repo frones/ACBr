@@ -179,10 +179,10 @@ begin
   Gerador.wGrupo(ENCODING_UTF8, '', False);
 
   if MDFe.procMDFe.nProt <> ''
-   then Gerador.wGrupo('mdfeProc versao="' + MDFeEnviMDFe + '" ' + NAME_SPACE_MDFe, '');
+   then Gerador.wGrupo('mdfeProc ' + MDFe.infMDFe.VersaoStr + ' ' + NAME_SPACE_MDFe, '');
 
   Gerador.wGrupo('MDFe ' + NAME_SPACE_MDFe);
-  Gerador.wGrupo('infMDFe Id="' + MDFe.infMDFe.ID + '" versao="' + MDFeEnviMDFe + '"');
+  Gerador.wGrupo('infMDFe ' + MDFe.infMDFe.VersaoStr + ' Id="' + MDFe.infMDFe.ID + '"');
   GerarInfMDFe;
   Gerador.wGrupo('/infMDFe');
 
@@ -206,7 +206,7 @@ begin
   if MDFe.procMDFe.nProt <> '' then
    begin
      xProtMDFe :=
-           '<protMDFe versao="' + MDFeEnviMDFe + '">' +
+           '<protMDFe ' + MDFe.infMDFe.VersaoStr + '>' +
              '<infProt>'+
                '<tpAmb>'+TpAmbToStr(MDFe.procMDFe.tpAmb)+'</tpAmb>'+
                '<verAplic>'+MDFe.procMDFe.verAplic+'</verAplic>'+

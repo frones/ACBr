@@ -96,7 +96,7 @@ var
 begin
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('ConsCad ' + NAME_SPACE + ' versao="' + CTeconsCad + '"');
+  Gerador.wGrupo('ConsCad ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wGrupo('infCons');
   Gerador.wCampo(tcStr, 'GP04', 'xServ ', 008, 008, 1, 'CONS-CAD', DSC_XSERV);
   Gerador.wCampo(tcStr, 'GP05', 'UF    ', 002, 002, 1, FUF, DSC_UF);

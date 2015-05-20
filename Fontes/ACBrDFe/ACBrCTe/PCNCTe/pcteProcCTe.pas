@@ -115,7 +115,7 @@ begin
   Result := FchCTe + '-procCTe.xml';
   if PadraoNome = tpnPublico then
   begin
-    Result := FnProt + '_v' + CTeenviCTe + '-procCTe.xml';
+    Result := FnProt + '_v' + Versao + '-procCTe.xml';
   end;
 end;
 
@@ -213,7 +213,7 @@ begin
         xId := RetornarConteudoEntre(XMLinfProt2.text, 'Id="', '">');
 
         xProtCTe :=
-                '<protCTe versao="' + CTeenviCTe + '">' +
+                '<protCTe versao="' + Versao + '">' +
                   '<infProt' + IIf( (xId <> ''), ' Id="' + xId + '">', '>') +
                     PreencherTAG('tpAmb',    XMLinfProt2.text) +
                     PreencherTAG('verAplic', XMLinfProt2.text) +
@@ -241,7 +241,7 @@ begin
     if ProtLido
      then begin
       xProtCTe :=
-              '<protCTe versao="' + CTeenviCTe + '">' +
+              '<protCTe versao="' + Versao + '">' +
                 '<infProt' + IIf( (FId <> ''), ' Id="' + FId + '">', '>') +
                   '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
                   '<verAplic>' + FverAplic + '</verAplic>' +
@@ -260,7 +260,7 @@ begin
      then begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('cteProc versao="' + CTeenviCTe + '" ' + NAME_SPACE_CTE, '');
+      Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
       Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(XMLCTe.Text, '<CTe xmlns', '</CTe>') + '</CTe>');
       Gerador.wTexto(xProtCTe);
       Gerador.wGrupo('/cteProc');

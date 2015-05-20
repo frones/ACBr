@@ -231,7 +231,7 @@ procedure TfrmNFeDAInutQRRetrato.qrb_03_InutilizacaoBeforePrint(Sender: TQRCusto
 begin
   inherited;
 
-  with FACBrNFe.InutNFe.InutNFe do
+  with FACBrNFe.InutNFe.RetInutNFe do
     begin
       qrlOrgao.Caption := IntToStr(cUF);
 

@@ -273,9 +273,9 @@ begin
   Gerador.wGrupo(ENCODING_UTF8, '', False);
 
   if trim(CTe.procCTe.nProt) <> ''
-   then Gerador.wGrupo('cteProc versao="' + CTeenviCTe + '" ' + NAME_SPACE_CTE, '');
+   then Gerador.wGrupo('cteProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '');
   Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
-  Gerador.wGrupo('infCte versao="' + CTeenviCTe + '" Id="' + CTe.infCTe.ID + '"');
+  Gerador.wGrupo('infCte ' + CTe.infCTe.VersaoStr + ' Id="' + CTe.infCTe.ID + '"');
 
   GerarInfCTe;
   Gerador.wGrupo('/infCte');
@@ -304,7 +304,7 @@ begin
   if trim(CTe.procCTe.nProt) <> '' then
    begin
      xProtCTe :=
-           '<protCTe versao="' + CTeenviCTe + '">' +
+           '<protCTe ' + CTe.infCTe.VersaoStr + '>' +
              '<infProt' + IIf( (CTe.procCTe.Id <> ''), ' Id="' + CTe.procCTe.Id + '">', '>') +
                '<tpAmb>'+TpAmbToStr(CTe.procCTe.tpAmb)+'</tpAmb>'+
                '<verAplic>'+CTe.procCTe.verAplic+'</verAplic>'+

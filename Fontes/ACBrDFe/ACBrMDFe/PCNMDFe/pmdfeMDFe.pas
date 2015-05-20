@@ -45,7 +45,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pmdfeConversaoMDFe, pmdfeSignature, pmdfeProcMDFe;
+  pcnConversao, pmdfeConversaoMDFe, pmdfeSignature, pmdfeProcMDFe, pcnGerador;
 
 type
 
@@ -134,9 +134,11 @@ type
   private
     FId: String;
     FVersao: Double;
+    function GetVersaoStr: String;
   published
     property Id: String read FId write FId;
     property versao: Double read FVersao write FVersao;
+    property VersaoStr: String read GetVersaoStr;
   end;
 
   TinfMunCarregaCollection = class(TCollection)
@@ -1076,6 +1078,9 @@ const
   UF_EXTERIOR: String = 'EX';
 
 implementation
+
+Uses
+  ACBrUtil;
 
 { TMDFe }
 
@@ -2338,6 +2343,16 @@ destructor TautXMLCollectionItem.Destroy;
 begin
 
   inherited;
+end;
+
+{ TinfMDFe }
+
+function TinfMDFe.GetVersaoStr: String;
+begin
+  if FVersao <= 0 then
+     Result := V1_00
+  else
+     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
 end;
 
 end.

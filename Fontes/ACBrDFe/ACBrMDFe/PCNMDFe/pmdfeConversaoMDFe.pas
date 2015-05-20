@@ -63,13 +63,13 @@ type
 
 const
 
-  MDFeCabMsg       = '1.00';
-  MDFeConsStatServ = '1.00';
-  MDFeEnviMDFe     = '1.00';
-  MDFeConsReciMDFe = '1.00';
-  MDFeConsSitMDFe  = '1.00';
-  MDFeConsNaoEnc   = '1.00';
-  MDFeEventoMDFe   = '1.00';
+//  MDFeCabMsg       = '1.00';
+//  MDFeConsStatServ = '1.00';
+//  MDFeEnviMDFe     = '1.00';
+//  MDFeConsReciMDFe = '1.00';
+//  MDFeConsSitMDFe  = '1.00';
+//  MDFeConsNaoEnc   = '1.00';
+//  MDFeEventoMDFe   = '1.00';
 
   MDFeModalRodo    = '1.00';
   MDFeModalAereo   = '1.00';
@@ -149,7 +149,7 @@ function StrToTpEmitente(var ok: Boolean; const s: String): TTpEmitenteMDFe;
 function ModalToStr(const t: TModalMDFe): String;
 function StrToModal(var ok: Boolean; const s: String): TModalMDFe;
 
-function GetVersaoMDFe(AVersaoDF: TVersaoMDFe; ALayOut: TLayOutMDFe): string;
+//function GetVersaoMDFe(AVersaoDF: TVersaoMDFe; ALayOut: TLayOutMDFe): string;
 function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 
 function LayOutToServico(const t: TLayOutMDFe): String;
@@ -225,7 +225,7 @@ begin
                            ['1', '2', '3', '4'],
                            [moRodoviario, moAereo, moAquaviario, moFerroviario]);
 end;
-
+(*
 function GetVersaoMDFe(AVersaoDF: TVersaoMDFe; ALayOut: TLayOutMDFe): string;
 begin
   result := '';
@@ -244,7 +244,7 @@ begin
             end;
   end;
 end;
-
+*)
 function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 begin
   result := '';

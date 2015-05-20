@@ -1067,7 +1067,6 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     TipoDAMDFe = tiRetrato
     TamanhoPapel = tpA4
     NumCopias = 1
-    ImprimirDescPorc = False
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000

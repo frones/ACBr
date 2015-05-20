@@ -134,7 +134,9 @@ begin
                                    ImprimirItens, ViaConsumidor,
                                    vTroco, ImprimirDescPorc,
                                    ImprimirDetalhamentoEspecifico,
-                                   ImprimirTotalLiquido);
+                                   ImprimirTotalLiquido,
+                                   CasasDecimais._Mask_qCom,
+                                   CasasDecimais._Mask_vUnCom);
       end;
    end
   else
@@ -147,7 +149,9 @@ begin
                                 ExpandirLogoMarca, NFeCancelada,
                                 ImprimirItens, ViaConsumidor, vTroco,
                                 ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                                ImprimirTotalLiquido);
+                                ImprimirTotalLiquido,
+                                CasasDecimais._Mask_qCom,
+                                CasasDecimais._Mask_vUnCom);
 
   fqrDANFeQRRetrato.Free;
 end;
@@ -188,7 +192,9 @@ begin
                                   ExpandirLogoMarca, NFeCancelada,
                                   ImprimirItens, ViaConsumidor, vTroco,
                                   ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                                  ImprimirTotalLiquido);
+                                  ImprimirTotalLiquido,
+                                  CasasDecimais._Mask_qCom,
+                                  CasasDecimais._Mask_vUnCom);
       end;
    end
    else
@@ -204,7 +210,9 @@ begin
                                ExpandirLogoMarca, NFeCancelada,
                                ImprimirItens, ViaConsumidor, vTroco,
                                ImprimirDescPorc, ImprimirDetalhamentoEspecifico,
-                               ImprimirTotalLiquido);
+                               ImprimirTotalLiquido,
+                               CasasDecimais._Mask_qCom,
+                               CasasDecimais._Mask_vUnCom);
    end;
 
   fqrDANFeQRRetrato.Free;
@@ -353,7 +361,7 @@ begin
 
   NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
   if NomeArq = '' then
-    NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.InutNFe.Id, 'ID', '', [rfIgnoreCase]);
+    NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.RetInutNFe.Id, 'ID', '', [rfIgnoreCase]);
   NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
 
   frmNFeDAInutQR.SavePDF(TACBrNFe(ACBrNFe),

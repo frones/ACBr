@@ -1352,10 +1352,10 @@ begin
 
                   aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                               '<MDFeDFe>' +
-                               '<procMDFe versao="' + MDFeenviMDFe + '">' +
+                               '<procMDFe versao="' + FVersao + '">' +
                                  SeparaDados(aMDFe, 'MDFeProc') +
                                '</procMDFe>' +
-                               '<procEventoMDFe versao="' + MDFeEventoMDFe + '">' +
+                               '<procEventoMDFe versao="' + FVersao + '">' +
                                  aEventos +
                                '</procEventoMDFe>' +
                               '</MDFeDFe>';
@@ -1386,10 +1386,10 @@ begin
 
                   aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                               '<MDFeDFe>' +
-                               '<procMDFe versao="' + MDFeenviMDFe + '">' +
+                               '<procMDFe versao="' + FVersao + '">' +
                                  SeparaDados(aMDFe, 'MDFeProc') +
                                '</procMDFe>' +
-                               '<procEventoMDFe versao="' + MDFeEventoMDFe + '">' +
+                               '<procEventoMDFe versao="' + FVersao + '">' +
                                  aEventos +
                                '</procEventoMDFe>' +
                               '</MDFeDFe>';
@@ -1448,10 +1448,10 @@ begin
 
               aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                           '<MDFeDFe>' +
-                           '<procMDFe versao="' + MDFeenviMDFe + '">' +
+                           '<procMDFe versao="' + FVersao + '">' +
                              SeparaDados(aMDFe, 'MDFeProc') +
                            '</procMDFe>' +
-                           '<procEventoMDFe versao="' + MDFeEventoMDFe + '">' +
+                           '<procEventoMDFe versao="' + FVersao + '">' +
                              aEventos +
                            '</procEventoMDFe>' +
                           '</MDFeDFe>';

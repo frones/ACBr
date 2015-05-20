@@ -134,7 +134,7 @@ var
   sDoc: String;
 begin
   Gerador.ArquivoFormatoXML := '';
-  Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + MDFeEventoMDFe + '"');
+  Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
 
   Evento.Items[0].InfEvento.Id := 'ID'+ Evento.Items[0].InfEvento.TipoEvento +
                                         OnlyNumber(Evento.Items[0].InfEvento.chMDFe) +
@@ -173,7 +173,7 @@ begin
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 6, 6, 1, Evento.Items[0].InfEvento.TipoEvento);
   Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 1, 2, 1, Evento.Items[0].InfEvento.nSeqEvento);
 
-  Gerador.wGrupo('detEvento versaoEvento="' + MDFeEventoMDFe + '"');
+  Gerador.wGrupo('detEvento versaoEvento="' + Versao + '"');
   case Evento.Items[0].InfEvento.tpEvento of
    teCancelamento:
      begin

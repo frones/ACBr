@@ -1101,14 +1101,14 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     TipoDACTE = tiRetrato
     TamanhoPapel = tpA4
     NumCopias = 1
-    ImprimirDescPorc = False
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CTeCancelada = False
-    ResumoCanhoto = False
+    ExibirResumoCanhoto = False
     EPECEnviado = False
+    PosCanhoto = prCabecalho
     Left = 224
     Top = 416
   end

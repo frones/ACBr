@@ -57,7 +57,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pcteProcCTe, pcteSignature, pcteConversaoCTe;
+  pcnConversao, pcteProcCTe, pcteSignature, pcteConversaoCTe, pcnGerador;
 
 {$IFDEF PL_103}
  {$I pcteCTe_V103.inc}
@@ -326,9 +326,11 @@ type
   private
     FId : String;
     FVersao : Double;
+    function GetVersaoStr: String;
   published
     property Id: String     read FId     write FId;
     property versao: Double read FVersao write FVersao;
+    property VersaoStr: String read GetVersaoStr;
   end;
 
   TIde = class(TPersistent)
@@ -2400,6 +2402,9 @@ const
   UF_EXTERIOR   : String  = 'EX';
 
 implementation
+
+Uses
+  ACBrUtil;
 
 { TCTe }
 
@@ -4577,6 +4582,16 @@ begin
 end;
 
 {$ENDIF}
+
+{ TInfCTe }
+
+function TInfCTe.GetVersaoStr: String;
+begin
+  if FVersao <= 0 then
+     Result := V2_00
+  else
+     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
+end;
 
 end.
 

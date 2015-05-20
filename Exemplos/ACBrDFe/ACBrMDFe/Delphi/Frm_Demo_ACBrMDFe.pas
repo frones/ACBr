@@ -400,7 +400,6 @@ begin
   begin
    ACBrMDFe1.DAMDFe.PathPDF           := PathMensal;
    ACBrMDFe1.DAMDFe.ExpandirLogoMarca := False;
-   ACBrMDFe1.DAMDFe.ImprimirDescPorc  := False;
    ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
    ACBrMDFe1.DAMDFe.MostrarPreview    := True;
    ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex+1));

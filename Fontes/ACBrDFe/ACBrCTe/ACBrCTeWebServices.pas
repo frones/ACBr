@@ -1459,10 +1459,10 @@ begin
 
                   aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                              '<CTeDFe>' +
-                              '<procCTe versao="' + CTeenviCTe + '">' +
+                              '<procCTe versao="' + FVersao + '">' +
                                 SeparaDados(aCTe, 'cteProc') +
                               '</procCTe>' +
-                              '<procEventoCTe versao="' + CTeEventoCTe + '">' +
+                              '<procEventoCTe versao="' + FVersao + '">' +
                                 aEventos +
                               '</procEventoCTe>' +
                              '</CTeDFe>';
@@ -1491,10 +1491,10 @@ begin
 
                   aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                              '<CTeDFe>' +
-                              '<procCTe versao="' + CTeenviCTe + '">' +
+                              '<procCTe versao="' + FVersao + '">' +
                                 SeparaDados(aCTe, 'cteProc') +
                               '</procCTe>' +
-                              '<procEventoCTe versao="' + CTeEventoCTe + '">' +
+                              '<procEventoCTe versao="' + FVersao + '">' +
                                 aEventos +
                               '</procEventoCTe>' +
                              '</CTeDFe>';
@@ -1562,10 +1562,10 @@ begin
 
               aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                          '<CTeDFe>' +
-                          '<procCTe versao="' + CTeenviCTe + '">' +
+                          '<procCTe versao="' + FVersao + '">' +
                             SeparaDados(aCTe, 'cteProc') +
                           '</procCTe>' +
-                          '<procEventoCTe versao="' + CTeEventoCTe + '">' +
+                          '<procEventoCTe versao="' + FVersao + '">' +
                             aEventos +
                           '</procEventoCTe>' +
                          '</CTeDFe>';

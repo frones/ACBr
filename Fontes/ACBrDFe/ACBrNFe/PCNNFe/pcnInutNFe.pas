@@ -77,7 +77,7 @@ type
     FxJust: String;
     FIDInutilizacao: String;
     FVersao: String;
-    FInutNFe: TRetInutNFe;
+    FRetInutNFe: TRetInutNFe;
   public
     constructor Create;
     destructor Destroy; override;
@@ -86,19 +86,19 @@ type
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador       read FGerador write FGerador;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property cUF: Integer            read FcUF     write FcUF;
-    property ano: Integer            read Fano     write Fano;
-    property CNPJ: String            read FCNPJ    write FCNPJ;
-    property modelo: Integer         read Fmodelo  write Fmodelo;
-    property serie: Integer          read Fserie   write Fserie;
-    property nNFIni: Integer         read FnNFIni  write FnNFIni;
-    property nNFFin: Integer         read FnNFFin  write FnNFFin;
-    property xJust: String           read FxJust   write FxJust;
+    property Gerador: TGerador       read FGerador    write FGerador;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property cUF: Integer            read FcUF        write FcUF;
+    property ano: Integer            read Fano        write Fano;
+    property CNPJ: String            read FCNPJ       write FCNPJ;
+    property modelo: Integer         read Fmodelo     write Fmodelo;
+    property serie: Integer          read Fserie      write Fserie;
+    property nNFIni: Integer         read FnNFIni     write FnNFIni;
+    property nNFFin: Integer         read FnNFFin     write FnNFFin;
+    property xJust: String           read FxJust      write FxJust;
     property ID: String              read FIDInutilizacao;
-    property Versao: String          read FVersao  write FVersao;
-    property InutNFe: TRetInutNFe    read FInutNFe write FInutNFe;
+    property Versao: String          read FVersao     write FVersao;
+    property RetInutNFe: TRetInutNFe read FRetInutNFe write FRetInutNFe;
   end;
 
 implementation
@@ -111,13 +111,13 @@ Uses pcnAuxiliar,
 constructor TinutNFe.Create;
 begin
   FGerador := TGerador.Create;
-  FInutNFe := TRetInutNFe.Create;
+  FRetInutNFe := TRetInutNFe.Create;
 end;
 
 destructor TinutNFe.Destroy;
 begin
   FGerador.Free;
-  FInutNFe.Free;
+  FRetInutNFe.Free;
   inherited;
 end;
 
@@ -176,34 +176,34 @@ end;
 
 function TinutNFe.LerXMLFromString(const AXML: String): Boolean;
 var
-  RetInutNFe: TRetInutNFe;
+  RetornoInutNFe: TRetInutNFe;
 begin
-  RetInutNFe := TRetInutNFe.Create;
+  RetornoInutNFe := TRetInutNFe.Create;
   try
-    RetInutNFe.Leitor.Arquivo := AXML;
-    Result := RetInutNFe.LerXml;
+    RetornoInutNFe.Leitor.Arquivo := AXML;
+    Result := RetornoInutNFe.LerXml;
 
-    with FInutNFe do
+    with FRetInutNFe do
      begin
-      Id       := RetInutNFe.Id;
-      tpAmb    := RetInutNFe.tpAmb;
-      verAplic := RetInutNFe.verAplic;
-      cStat    := RetInutNFe.cStat;
-      xMotivo  := RetInutNFe.xMotivo;
-      cUF      := RetInutNFe.cUF;
-      xJust    := RetInutNFe.xJust; //Adicionada para trazer a Justificativa, caso seja um arquivo ProcInut
+      Id       := RetornoInutNFe.Id;
+      tpAmb    := RetornoInutNFe.tpAmb;
+      verAplic := RetornoInutNFe.verAplic;
+      cStat    := RetornoInutNFe.cStat;
+      xMotivo  := RetornoInutNFe.xMotivo;
+      cUF      := RetornoInutNFe.cUF;
+      xJust    := RetornoInutNFe.xJust; //Adicionada para trazer a Justificativa, caso seja um arquivo ProcInut
 
-      ano      := RetInutNFe.ano;
-      CNPJ     := RetInutNFe.CNPJ;
-      Modelo   := RetInutNFe.Modelo;
-      Serie    := RetInutNFe.Serie;
-      nNFIni   := RetInutNFe.nNFIni;
-      nNFFin   := RetInutNFe.nNFFin;
-      dhRecbto := RetInutNFe.dhRecbto;
-      nProt    := RetInutNFe.nProt;
+      ano      := RetornoInutNFe.ano;
+      CNPJ     := RetornoInutNFe.CNPJ;
+      Modelo   := RetornoInutNFe.Modelo;
+      Serie    := RetornoInutNFe.Serie;
+      nNFIni   := RetornoInutNFe.nNFIni;
+      nNFFin   := RetornoInutNFe.nNFFin;
+      dhRecbto := RetornoInutNFe.dhRecbto;
+      nProt    := RetornoInutNFe.nProt;
      end;
   finally
-     RetInutNFe.Free;
+     RetornoInutNFe.Free;
   end;
 end;
 

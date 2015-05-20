@@ -81,7 +81,7 @@ type
     property digVal: String              read FdigVal              write FdigVal;
     property cStat: Integer              read FcStat               write FcStat;
     property xMotivo: String             read FxMotivo             write FxMotivo;
-    property Versao: String          read FVersao  write FVersao;
+    property Versao: String              read FVersao              write FVersao;
   end;
 
 implementation
@@ -106,7 +106,7 @@ begin
   Result := FchMDFe + '-procMDFe.xml';
   if PadraoNome = tpnPublico then
   begin
-    s := '00' + MDFeEnviMDFe;
+    s := '00' + Versao;
     Result := FnProt + '_v' + copy(s, length(s) - 4, 5) + '-procMDFe.xml';
   end;
 end;
@@ -194,7 +194,7 @@ begin
          then XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>')
          else XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
 
-        xProtMDFe := '<protMDFe versao="' + MDFeEnviMDFe + '">' +
+        xProtMDFe := '<protMDFe versao="' + Versao + '">' +
                       '<infProt>' +
                         PreencherTAG('tpAmb', XMLinfProt.text) +
                         PreencherTAG('verAplic', XMLinfProt.text) +
@@ -211,7 +211,7 @@ begin
 
     if ProtLido
      then begin
-      xProtMDFe := '<protMDFe versao="' + MDFeEnviMDFe + '">' +
+      xProtMDFe := '<protMDFe versao="' + Versao + '">' +
                     '<infProt>' +
                      '<tpAmb>'+TpAmbToStr(FtpAmb)+'</tpAmb>'+
                      '<verAplic>'+FverAplic+'</verAplic>'+
@@ -230,7 +230,7 @@ begin
      then begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('mdfeProc versao="' + MDFeEnviMDFe + '" ' + NAME_SPACE_MDFE, '');
+      Gerador.wGrupo('mdfeProc versao="' + Versao + '" ' + NAME_SPACE_MDFE, '');
       Gerador.wTexto('<MDFe xmlns' + RetornarConteudoEntre(XMLMDFe.Text, '<MDFe xmlns', '</MDFe>') + '</MDFe>');
       Gerador.wTexto(xProtMDFe);
       Gerador.wGrupo('/mdfeProc');

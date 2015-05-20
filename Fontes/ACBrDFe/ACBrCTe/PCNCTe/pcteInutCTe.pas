@@ -128,7 +128,7 @@ begin
 
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('inutCTe ' + NAME_SPACE_CTE + ' versao="' + CTeinutCTe + '"');
+  Gerador.wGrupo('inutCTe ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
   Gerador.wGrupo('infInut Id="' + FIDInutilizacao + '"');
   if length(FIDInutilizacao) < 39 then
     Gerador.wAlerta('DP04', 'ID', '', 'ID de inutilização inválido');

@@ -105,7 +105,7 @@ function TConsStatServ.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('consStatServCte ' + NAME_SPACE_CTE + ' versao="' + CTeconsStatServ + '"');
+  Gerador.wGrupo('consStatServCte ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'FP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'FP04', 'xServ', 006, 006, 1, 'STATUS', DSC_XSERV);
   Gerador.wGrupo('/consStatServCte');

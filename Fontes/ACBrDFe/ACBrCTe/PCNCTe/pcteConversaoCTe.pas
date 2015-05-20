@@ -95,15 +95,15 @@ type
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
 
 const
-  CTecabMsg       = '2.00';
-  CTeconsStatServ = '2.00';
-  CTeenviCTe      = '2.00';
-  CTeconsReciCTe  = '2.00';
-  CTeconsSitCTe   = '2.00';
-  CTecancCTe      = '1.04';
-  CTeinutCTe      = '2.00';
-  CTeconsCad      = '2.00';
-  CTeEventoCTe    = '2.00';
+//  CTecabMsg       = '2.00';
+//  CTeconsStatServ = '2.00';
+//  CTeenviCTe      = '2.00';
+//  CTeconsReciCTe  = '2.00';
+//  CTeconsSitCTe   = '2.00';
+//  CTecancCTe      = '1.04';
+//  CTeinutCTe      = '2.00';
+//  CTeconsCad      = '2.00';
+//  CTeEventoCTe    = '2.00';
 
   CTeModalRodo    = '2.00';
   CTeModalAereo   = '2.00';

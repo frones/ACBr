@@ -169,15 +169,14 @@ end;
 
 function TACBrBancoBrasil.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
 var
-  ANossoNumero, AConvenio, wNossoNumero : String;
+  ANossoNumero, AConvenio: String;
   wTamNossoNum: Integer;
 begin
   with ACBrTitulo do
   begin
     AConvenio    := ACBrBoleto.Cedente.Convenio;
-    ANossoNumero := IntToStr(StrToInt64(OnlyNumber(NossoNumero)));
-    wNossoNumero := OnlyNumber(NossoNumero);
-    wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira,wNossoNumero);
+    ANossoNumero := NossoNumero;
+    wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira,ANossoNumero);
       
     if ((ACBrTitulo.Carteira = '16') or (ACBrTitulo.Carteira = '18')) and
         (Length(AConvenio) = 6) and (wTamNossoNum = 17) then
@@ -202,7 +201,7 @@ begin
    AConvenio    := ACBrTitulo.ACBrBoleto.Cedente.Convenio;
    ANossoNumero := FormataNossoNumero(ACBrTitulo);
    wTamNossNum  := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
-                                                OnlyNumber(ACBrTitulo.NossoNumero));
+                                                ACBrTitulo.NossoNumero);
 
    {Codigo de Barras}
    with ACBrTitulo.ACBrBoleto do

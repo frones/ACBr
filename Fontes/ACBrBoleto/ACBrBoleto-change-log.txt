@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/05/2015 ver. 0.0.127a
+-- ACBrBoleto --
+[+]Adição da função getOcorrenciasRemessa() retorno uma lista com todas as ocorrências
+   de remessa disponíveis no componente. (webjoel)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21106-retornar-listagem-com-os-tipos-de-ocorr%C3%AAncias-remessaretorno/
+
+
 Data: 06/05/2015 ver. 0.0.126a
 -- ACBrBoleto --
 [+]Adição da propriedade Informativo para informar as mensagens adicionais

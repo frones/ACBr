@@ -445,13 +445,16 @@ procedure TWebServicesBase.DoGNRERetRecepcaoLote;
 var ConsResLoteGNRE : TConsResLoteGNRE;
 begin
   ConsResLoteGNRE               := TConsResLoteGNRE.Create;
-  ConsResLoteGNRE.ambiente      := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
-  ConsResLoteGNRE.numeroRecibo  := TGNRERetRecepcaoLote(Self).FnumeroRecibo;
+	try
+		ConsResLoteGNRE.ambiente      := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
+		ConsResLoteGNRE.numeroRecibo  := TGNRERetRecepcaoLote(Self).FnumeroRecibo;
 
-  ConsResLoteGNRE.GerarXML;
+		ConsResLoteGNRE.GerarXML;
 
-  FDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
-  ConsResLoteGNRE.Free;
+		FDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
+	finally
+		ConsResLoteGNRE.Free;
+	end;
 end;
 
 function TWebServicesBase.Confirma(AResultado: string): Boolean;
@@ -655,7 +658,6 @@ begin
       {$ENDIF}
       FRetWS     := SeparaDados( FRetornoWS, 'processarResponse');
 
-      StrStream.Free;
     {$ENDIF}
 
       GNRERetorno                := TTretLote_GNRE.Create;

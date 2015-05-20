@@ -1082,8 +1082,10 @@ begin
 
   StrToPrint := StrToPrint + AString;
 
-  //DEBUG
-  //WriteLog('c:\temp\teste1.txt', StrToPrint, True);
+  GravarLog('Imprimir, Copias:' + IntToStr(Copias)+
+            ', DecodificarTags:'+IfThen(DecodificarTags,'SIM','NAO')+
+            ', TraduzirTags:'+IfThen(TraduzirTags,'SIM','NAO') );
+  GravarLog( StrToPrint );
 
   ConfigurarEspacoEntreLinhas;
   ConfigurarPaginaDeCodigo;

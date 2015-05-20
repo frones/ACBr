@@ -114,9 +114,11 @@ begin
   FPosPrinter.ConfigBarras.LarguraLinha := 2;
   FPosPrinter.ConfigBarras.MostrarCodigo := False;
 
+  FPosPrinter.ConfigQRCode.Tipo := 2;
   FPosPrinter.ConfigQRCode.LarguraModulo := 4;
   FPosPrinter.ConfigQRCode.ErrorLevel := 0;
 
+  FPosPrinter.Buffer.Clear;
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
   FPosPrinter.Buffer.Add('<n>'+CFe.Emit.xFant+'</n>');
 

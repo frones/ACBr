@@ -869,7 +869,7 @@ end;
 
 procedure TACBrSAT.ImprimirExtratoCancelamento;
 begin
-  VerificaCondicoesImpressao;
+  VerificaCondicoesImpressao( True );
   Extrato.ImprimirExtratoCancelamento;
 end;
 

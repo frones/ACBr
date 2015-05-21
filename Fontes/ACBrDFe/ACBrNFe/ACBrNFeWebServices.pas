@@ -2958,7 +2958,7 @@ begin
             '-procEventoNFe.xml';
       end;
 
-      if NaoEstaVazio(NomeArq) then
+      if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
         FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao);
     end;
   end;

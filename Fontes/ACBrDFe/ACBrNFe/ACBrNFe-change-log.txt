@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2015
+[*] Acrescentado uma condição para determinar se será salvo em disco ou não os
+    XML retornados pelo DistribuicaoDFe.
+    por: Italo Jurisato Junior e Dalpiaze
+
 10/05/2015
 [-] Mais algumas alterações de definição de Serviço e SoapAction.
     por: Italo Jurisato Junior e Gledson Silva Santos

@@ -1473,7 +1473,7 @@ begin
 
         else if Cmd.Metodo = 'cnpjcertificado' then //NFe.CNPJCertificado
          begin
-           Cmd.Resposta := ACBrNFe1.Configuracoes.Certificados.CNPJ;
+           Cmd.Resposta := ACBrNFe1.SSL.CertCNPJ ;
          end
 
         else if Cmd.Metodo = 'lerini' then //NFe.LerIni  Recarrega configurações do arquivo INI

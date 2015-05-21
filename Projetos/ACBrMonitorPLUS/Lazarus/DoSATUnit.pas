@@ -113,7 +113,7 @@ begin
             Cmd.Resposta :=  '[CFE]'+sLineBreak+
                              'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
                              IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                             'XML='+ACBrSAT1.CFe.GetXMLString( True );
+                             'XML='+ACBrSAT1.CFe.GerarXML( True );
           end
          else
           begin
@@ -149,7 +149,7 @@ begin
        begin
          CarregarDadosCancelamento(Cmd.Params(0));
          Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
-                         'Resultado='+ACBrSAT1.CancelarUltimaVenda(ACBrSAT1.CFeCanc.infCFe.chCanc,ACBrSAT1.CFeCanc.GetXMLString(True))+sLineBreak+
+                         'Resultado='+ACBrSAT1.CancelarUltimaVenda(ACBrSAT1.CFeCanc.infCFe.chCanc,ACBrSAT1.CFeCanc.GerarXML(True))+sLineBreak+
                          'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
                          'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
                          'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
@@ -189,7 +189,7 @@ begin
          ACBrSAT1.InicializaCFe;
          CarregarDadosVenda(cmd.Params(0));
          Cmd.Resposta := '[TESTEFIMAFIM]'+sLineBreak+
-                         'Resultado='+ACBrSAT1.TesteFimAFim(ACBrSAT1.CFe.GetXMLString(True))+sLineBreak+
+                         'Resultado='+ACBrSAT1.TesteFimAFim(ACBrSAT1.CFe.GerarXML(True))+sLineBreak+
                          'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
                          'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
                          'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak+
@@ -471,7 +471,7 @@ begin
                             cListServ := INIRec.ReadInteger(sSecao,'CodigoServico',INIRec.ReadInteger(sSecao,'cListServ',0));
                             cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
                             cNatOp    := INIRec.ReadInteger(sSecao,'cNatOp',0);
-                            indIncFisc:= INIRec.ReadInteger(sSecao,'indIncFisc',0);
+                            indIncFisc:= StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));
                           end;
                        end;
                      end;
@@ -545,7 +545,7 @@ begin
              Inc(I);
            end;
          end;
-         ACBrSAT1.CFe.GetXMLString(ApenasTagsAplicacao);
+         ACBrSAT1.CFe.GerarXML(ApenasTagsAplicacao);
      end;
   finally
     INIRec.Free;

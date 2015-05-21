@@ -45,7 +45,7 @@ uses
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
   Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
   pcnConversaoNFe, ACBrDFeConfiguracoes, ACBrSAT, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, types, ACBrBase;
+  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, types, ACBrBase, ACBrDFeSSL;
 
 const
   {$I versao.txt}
@@ -3944,9 +3944,9 @@ begin
     { Objeto BOLETO/NFE pode receber comandos com várias Linhas,
       portanto deve processar todas linhas de uma só vez... }
     Objeto := fsProcessar[0];
-    if (UpperCase(Copy(Trim(fsProcessar[0], 1, 6))) = 'BOLETO') or
-      (UpperCase(Copy(Trim(fsProcessar[0], 1, 3))) = 'NFE')  or
-      (UpperCase(Copy(Trim(fsProcessar[0], 1, 3))) = 'SAT') then
+    if (UpperCase(Copy(Trim(fsProcessar[0]), 1, 6)) = 'BOLETO') or
+      (UpperCase(Copy(Trim(fsProcessar[0]), 1, 3)) = 'NFE')  or
+      (UpperCase(Copy(Trim(fsProcessar[0]), 1, 3)) = 'SAT') then
     begin
       Linha := Trim(fsProcessar.Text);
       fsProcessar.Clear;

@@ -571,7 +571,7 @@ begin
           if FDANFEClassOwner.ImprimirDescPorc then
           begin
             if vDesc > 0 then
-               FieldByName('vDesc').AsString := DFeUtil.FormatFloat(((vDesc*100) / (VUnCom * QCom))) + '%'
+               FieldByName('vDesc').AsString := DFeUtil.FormatFloat(((vDesc*100) / (VUnCom * QCom)))
                //FieldByName('vDesc').AsString := DFeUtil.FormatFloat(RoundTo(100 - ((((VUnCom * QCom) - vDesc) / (VUnCom * QCom)) * 100), -1)) + '%'
             else
                FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);

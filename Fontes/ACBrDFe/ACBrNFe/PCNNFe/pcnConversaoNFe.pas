@@ -106,8 +106,8 @@ function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
 function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;
 function VersaoDFToStr(const t: TpcnVersaoDF): String;
 
-function DblToVersaoDF(out ok: Boolean; const d: Double): TpcnVersaoDF;
-function VersaoDFToDbl(const t: TpcnVersaoDF): Double;
+function DblToVersaoDF(out ok: Boolean; const d: Real): TpcnVersaoDF;
+function VersaoDFToDbl(const t: TpcnVersaoDF): Real;
 
 function tpOPToStr(const t: TpcnTipoOperacao): string;
 function StrTotpOP(out ok: boolean; const s: string): TpcnTipoOperacao;
@@ -245,29 +245,29 @@ begin
   Result := EnumeradoToStr(t, ['2.00', '3.00', '3.10'], [ve200, ve300, ve310]);
 end;
 
- function DblToVersaoDF(out ok: Boolean; const d: Double): TpcnVersaoDF;
+ function DblToVersaoDF(out ok: Boolean; const d: Real): TpcnVersaoDF;
  begin
    ok := True;
 
-   if d = 2.0 then
+   if (d = 2.0) or (d < 3.0)  then
      Result := ve200
-   else if d = 3.0 then
+   else if (d >= 3.0) and (d < 3.1) then
      Result := ve300
-   else if d = 3.10 then
+   else if (d >= 3.10) then
      Result := ve310
    else
    begin
-     Result := ve200;
+     Result := ve310;
      ok := False;
    end;
  end;
 
- function VersaoDFToDbl(const t: TpcnVersaoDF): Double;
+ function VersaoDFToDbl(const t: TpcnVersaoDF): Real;
  begin
    case t of
-     ve200: Result := 2.0;
-     ve300: Result := 3.0;
-     ve310: Result := 3.1;
+     ve200: Result := 2.00;
+     ve300: Result := 3.00;
+     ve310: Result := 3.10;
    else
      Result := 0;
    end;

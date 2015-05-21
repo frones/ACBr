@@ -670,7 +670,7 @@ begin
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
-    Result := RightStr(AString, nLen) ;
+    Result := LeftStr(AString, nLen);
 end ;
 
 {-----------------------------------------------------------------------------

@@ -720,6 +720,7 @@ end;
 procedure TDFeOpenSSL.InitXmlSec;
 begin
   { Init libxml and libxslt libraries }
+  xmlInitThreads();
   xmlInitParser();
   __xmlLoadExtDtdDefaultValue^ := XML_DETECT_IDS or XML_COMPLETE_ATTRS;
   xmlSubstituteEntitiesDefault(1);

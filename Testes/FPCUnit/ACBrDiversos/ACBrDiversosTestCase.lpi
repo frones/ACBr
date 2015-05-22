@@ -9,7 +9,6 @@
       <Title Value="ACBrDiversosTestCase"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -42,12 +41,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CompilerMessages>
-              <MsgFileName Value=""/>
-            </CompilerMessages>
-            <CompilerPath Value="$(CompPath)"/>
-          </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
@@ -77,7 +70,6 @@
       <Unit0>
         <Filename Value="ACBrDiversosTestCase.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrDiversosTestCase"/>
       </Unit0>
       <Unit1>
         <Filename Value="acbrvalidadortest.pas"/>
@@ -103,12 +95,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="4">

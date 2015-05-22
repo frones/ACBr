@@ -191,6 +191,8 @@ Function FormatarPIS( const AValue : String )    : String ;
 Function FormatarCEP( const AValue: String )     : String ;
 function FormatarSUFRAMA( const AValue: String ) : String ;
 
+Function FormatarMascaraNumerica(ANumValue, Mascara: String): String;
+
 
 function ValidarDocumento( const TipoDocto : TACBrValTipoDocto;
   const Documento : String; const Complemento : String = '') : String ;
@@ -269,60 +271,59 @@ end;
 
 function FormatarFone(const AValue : String; DDDPadrao: String = '') : String ;
 var
-  FoneNum, lTemp: string;
-begin
-  FoneNum := OnlyNumber(AValue);
+  FoneNum, Mascara : string;
+  ComecaComZero: Boolean;
+  LenFoneNum: Integer;
 
-  if NaoEstaVazio(FoneNum) then
+  function RemoveZerosEsquerda( ANumStr: String): String;
   begin
-    // Remove Zeros a esquerda //
-    while LeftStr(FoneNum,1) = '0' do
-      FoneNum := Copy(FoneNum,2,Length(FoneNum));
+    while LeftStr(ANumStr,1) = '0' do
+      ANumStr := Copy(ANumStr,2,Length(ANumStr));
 
-    if copy(FoneNum, 1, 3) = '800' then
-      FoneNum := '0' + copy(FoneNum, 1, 3) + '-' + copy(FoneNum, 4, 3) + '-' + copy(FoneNum, 7, 4)
-    else
-    case length(FoneNum) of
-       8: FoneNum := '(  )' + copy(FoneNum, 1, 4) + '-' + copy(FoneNum, 5, 4);
-       9:
-         begin
-            // Celulares do Municipio de São Paulo tem 9 Digitos e o primeiro é 9
-            if copy(FoneNum, 1, 1) = '9' then
-               FoneNum := '(  )' + copy(FoneNum, 1, 5) + '-' + copy(FoneNum, 6, 4)
-            else
-            begin
-               ltemp := '0' + copy(FoneNum, 1, 1);
-               FoneNum := '(' + lTemp + ')' + copy(FoneNum, 2, 4) + '-' + copy(FoneNum, 6, 4);
-            end;
-         end;
-       12:
-         begin // Exemplo: 551133220000
-           ltemp := copy(FoneNum, 1, 4);
-           FoneNum := '(' + lTemp + ')' + copy(FoneNum, 5, 4) + '-' + copy(FoneNum, 9, 4);
-         end;
-       13:
-         begin // Exemplo: 5511999220000
-           ltemp := copy(FoneNum, 1, 4);
-           FoneNum := '(' + lTemp + ')' + copy(FoneNum, 5, 5) + '-' + copy(FoneNum, 10, 4);
-         end;
-       else
-       begin
-         FoneNum := Poem_Zeros(FoneNum, 12);
-         if (copy(FoneNum, 1, 2) = '00') then
-         begin
-           ltemp := copy(FoneNum, 3, 2);
-           FoneNum := '(' + lTemp + ')' + copy(FoneNum, 5, 4) + '-' + copy(FoneNum, 9, 4);
-         end
-         else
-         begin
-           ltemp := copy(FoneNum, 2, 2);
-           FoneNum := '(' + lTemp + ')' + copy(FoneNum, 4, 5) + '-' + copy(FoneNum, 9, 4);
-         end;
-       end;
-    end;
+    Result := ANumStr;
   end;
 
-  Result := FoneNum;
+begin
+  Result := '';
+  FoneNum := OnlyNumber(AValue);
+  ComecaComZero := (LeftStr(FoneNum,1) = '0');
+  FoneNum := RemoveZerosEsquerda(FoneNum);
+
+  LenFoneNum := length(FoneNum);
+  if LenFoneNum = 0 then
+    exit;
+
+  if (LenFoneNum <= 9) and NaoEstaVazio(DDDPadrao) then
+  begin
+     FoneNum := LeftStr(DDDPadrao,2) + FoneNum;
+     LenFoneNum := LenFoneNum + 2;
+  end;
+
+  if LenFoneNum > 12 then
+  begin
+    FoneNum := LeftStr(FoneNum,2) + RemoveZerosEsquerda(copy(FoneNum,3,Length(FoneNum)));
+    LenFoneNum := length(FoneNum);
+  end;
+
+  case LenFoneNum of
+    9: Mascara := '*****-****';
+    10:
+      begin
+        if ComecaComZero and (copy(FoneNum,2,2) = '00') then  // 0300,0500,0800,0900
+          Mascara := '****-***-****'
+        else
+          Mascara := '(**)****-****';
+      end;
+    11: Mascara := '(**)*****-****';
+    12: Mascara := '+**(**)****-****';
+  else
+    if LenFoneNum > 12 then
+      Mascara := '+**(**)*****-****'
+    else
+      Mascara := '****-****';
+  end;
+
+  Result := FormatarMascaraNumerica( FoneNum, Mascara );
 end;
 
 function FormatarCPF(const AValue: String): String;
@@ -406,28 +407,7 @@ Begin
   IF UF = 'SE' Then Mascara := '**.***.***-*';
   IF UF = 'TO' Then Mascara := IfThen((LenDoc=11),'**.**.******-*','**.***.***-*');
 
-  Result := '';
-  LenMas := Length( Mascara ) ;
-  J := LenMas ;
-
-  For I := LenMas downto 1 do
-  begin
-     C := Mascara[I] ;
-
-     if C = '*' then
-     begin
-        if J <= ( LenMas - LenDoc ) then
-           C := '0'
-        else
-           C := AValue[( J - ( LenMas - LenDoc ) )] ;
-
-        Dec( J ) ;
-     end;
-
-     Result := C + Result;
-  End;
-
-  Result := Trim( Result );
+  Result := FormatarMascaraNumerica( AValue, Mascara);
 end;
 
 function FormatarCheque(const AValue: String): String;
@@ -455,6 +435,36 @@ end;
 function FormatarSUFRAMA(const AValue: String): String;
 begin
   Result := AValue;
+end;
+
+function FormatarMascaraNumerica(ANumValue, Mascara: String): String;
+var
+  LenMas, LenDoc: Integer;
+  I, J: Integer;
+  C: Char;
+begin
+  Result := '';
+  ANumValue := Trim( ANumValue );
+  LenMas := Length( Mascara ) ;
+  LenDoc := Length( ANumValue );
+
+  J := LenMas ;
+  For I := LenMas downto 1 do
+  begin
+    C := Mascara[I] ;
+
+    if C = '*' then
+    begin
+      if J <= ( LenMas - LenDoc ) then
+        C := '0'
+      else
+        C := ANumValue[( J - ( LenMas - LenDoc ) )] ;
+
+      Dec( J ) ;
+    end;
+
+    Result := C + Result;
+  end;
 end;
 
 function FormatarDocumento(const TipoDocto : TACBrValTipoDocto ;

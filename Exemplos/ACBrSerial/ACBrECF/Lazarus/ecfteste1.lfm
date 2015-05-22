@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 526
+  Left = 486
   Height = 418
-  Top = 188
+  Top = 181
   Width = 641
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -153,7 +153,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.4.0.4'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
@@ -173,9 +173,9 @@ object Form1: TForm1
     Height = 335
     Top = 0
     Width = 641
-    ActivePage = tsTagsImpressao
+    ActivePage = tsSAT
     Align = alClient
-    TabIndex = 4
+    TabIndex = 8
     TabOrder = 0
     object tsECF: TTabSheet
       Caption = 'ECF'
@@ -1376,7 +1376,6 @@ object Form1: TForm1
             DefaultToday = True
             DateOrder = doNone
             ButtonWidth = 23
-            CharCase = ecNormal
             NumGlyphs = 1
             MaxLength = 0
             TabOrder = 0
@@ -1392,7 +1391,6 @@ object Form1: TForm1
             DefaultToday = True
             DateOrder = doNone
             ButtonWidth = 23
-            CharCase = ecNormal
             NumGlyphs = 1
             MaxLength = 0
             TabOrder = 1
@@ -1970,20 +1968,20 @@ object Form1: TForm1
     object tsSAT: TTabSheet
       Caption = 'SAT Virtual'
       ClientHeight = 309
-      ClientWidth = 609
+      ClientWidth = 633
       object PageControl3: TPageControl
         Left = 0
         Height = 309
         Top = 0
-        Width = 609
-        ActivePage = tsDadosSAT
+        Width = 633
+        ActivePage = Impressao
         Align = alClient
-        TabIndex = 0
+        TabIndex = 3
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           object Label47: TLabel
             Left = 16
             Height = 13
@@ -2023,7 +2021,7 @@ object Form1: TForm1
             Left = 217
             Height = 21
             Top = 24
-            Width = 362
+            Width = 386
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
@@ -2137,7 +2135,7 @@ object Form1: TForm1
             Left = 385
             Height = 21
             Top = 72
-            Width = 194
+            Width = 218
             Anchors = [akTop, akLeft, akRight]
             ItemHeight = 13
             Style = csDropDownList
@@ -2200,7 +2198,7 @@ object Form1: TForm1
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           object Label55: TLabel
             Left = 12
             Height = 13
@@ -2304,7 +2302,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           object Label61: TLabel
             Left = 10
             Height = 13
@@ -2317,7 +2315,7 @@ object Form1: TForm1
             Left = 10
             Height = 21
             Top = 31
-            Width = 303
+            Width = 327
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 0
           end
@@ -2333,7 +2331,7 @@ object Form1: TForm1
             Left = 10
             Height = 21
             Top = 89
-            Width = 568
+            Width = 592
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
@@ -2341,16 +2339,16 @@ object Form1: TForm1
         object Impressao: TTabSheet
           Caption = 'Impressao'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           object GroupBox3: TGroupBox
             Left = 0
             Height = 283
             Top = 0
-            Width = 345
+            Width = 369
             Align = alClient
             Caption = 'Fortes'
             ClientHeight = 265
-            ClientWidth = 341
+            ClientWidth = 365
             TabOrder = 0
             object seLargura: TSpinEdit
               Left = 8
@@ -2468,7 +2466,7 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 345
+            Left = 369
             Height = 283
             Top = 0
             Width = 256
@@ -3767,9 +3765,9 @@ object Form1: TForm1
       }
     end
     object bAtivar: TBitBtn
-      Left = 532
+      Left = 528
       Height = 32
-      Top = 4
+      Top = 1
       Width = 96
       Anchors = [akTop, akRight]
       Caption = 'Ativar'
@@ -3876,8 +3874,7 @@ object Form1: TForm1
     ParentColor = False
   end
   object MainMenu1: TMainMenu
-    left = 24
-    top = 329
+    top = 368
     object Principal1: TMenuItem
       Caption = 'Principal'
       object Ativcar1: TMenuItem
@@ -4849,20 +4846,20 @@ object Form1: TForm1
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
     InfoRodapeCupom.Imposto.ModoCompacto = False
-    left = 296
-    top = 200
+    left = 232
+    top = 368
   end
   object ACBrRFD1: TACBrRFD
-    left = 344
-    top = 328
+    left = 200
+    top = 368
   end
   object dlgDialogoSalvar: TSaveDialog
     Title = 'Salvar arquivo texto'
     DefaultExt = '.txt'
     Filter = 'Arquivos texto|*.txt'
     Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
-    left = 56
-    top = 328
+    left = 24
+    top = 368
   end
   object ACBrAAC1: TACBrAAC
     CriarBAK = False
@@ -4905,8 +4902,8 @@ object Form1: TForm1
     OnAntesAbrirArquivo = ACBrAAC1AntesAbrirArquivo
     OnDepoisAbrirArquivo = ACBrAAC1DepoisAbrirArquivo
     OnAntesGravarArquivo = ACBrAAC1AntesAbrirArquivo
-    left = 280
-    top = 329
+    left = 168
+    top = 368
   end
   object mdsAACECF: TMemDataset
     FieldDefs = <    
@@ -4941,13 +4938,13 @@ object Form1: TForm1
         Size = 0
       end>
     AfterOpen = mdsAACECFAfterOpen
-    left = 168
-    top = 328
+    left = 88
+    top = 368
   end
   object dsAACECF: TDataSource
     DataSet = mdsAACECF
-    left = 133
-    top = 329
+    left = 56
+    top = 368
   end
   object ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal
     QuandoGravarArqINI = ACBrECFVirtualNaoFiscal1QuandoGravarArqINI
@@ -4959,13 +4956,6 @@ object Form1: TForm1
     CNPJ = '01.234.567/0001-22'
     IE = '012.345.678.90'
     IM = '1234-0'
-    CmdImpCondensado = '#15'
-    CmdImpExpandidoUmaLinha = '#14'
-    CmdImpFimExpandido = '#20'
-    CmdImpZera = '#27,#64'
-    CmdGaveta = '#27,#118,#150'
-    CmdCortaPapelCompleto = '#27,#119'
-    CmdCortaPapelParcial = '#27,#109'
     Cabecalho.Strings = (
       'Nome da Empresa 4444'
       'Nome da Rua , 1234  -  Bairro'
@@ -4977,18 +4967,19 @@ object Form1: TForm1
       '------------------------------------------------'
     )
     MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
-    left = 344
-    top = 200
+    left = 408
+    top = 368
   end
   object ACBrECFVirtualSAT1: TACBrECFVirtualSAT
     QuandoGravarArqINI = ACBrECFVirtualSAT1QuandoGravarArqINI
     QuandoLerArqINI = ACBrECFVirtualSAT1QuandoLerArqINI
+    PosPrinter = ACBrPosPrinter1
     ACBrSAT = ACBrSAT1
     QuandoAbrirDocumento = ACBrECFVirtualSAT1QuandoAbrirDocumento
     QuandoVenderItem = ACBrECFVirtualSAT1QuandoVenderItem
     QuandoEfetuarPagamento = ACBrECFVirtualSAT1QuandoEfetuarPagamento
-    left = 296
-    top = 264
+    left = 272
+    top = 368
   end
   object ACBrSAT1: TACBrSAT
     Modelo = satDinamico_cdecl
@@ -5014,38 +5005,39 @@ object Form1: TForm1
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
     SalvarCFes = True
-    left = 336
-    top = 264
+    left = 304
+    top = 368
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
     ACBrSAT = ACBrSAT1
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
-    left = 376
-    top = 264
+    left = 336
+    top = 368
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
     PosPrinter = ACBrPosPrinter1
-    left = 416
-    top = 248
+    left = 368
+    top = 368
   end
   object OpenDialog1: TOpenDialog
-    left = 384
-    top = 328
+    left = 120
+    top = 368
   end
   object ACBrECFVirtualNFCe1: TACBrECFVirtualNFCe
     ECF = ACBrECF1
     QuandoGravarArqINI = ACBrECFVirtualNFCe1QuandoGravarArqINI
     QuandoLerArqINI = ACBrECFVirtualNFCe1QuandoLerArqINI
+    PosPrinter = ACBrPosPrinter1
     ACBrNFCe = ACBrNFe1
     QuandoAbrirDocumento = ACBrECFVirtualNFCe1QuandoAbrirDocumento
     QuandoVenderItem = ACBrECFVirtualNFCe1QuandoVenderItem
     QuandoEfetuarPagamento = ACBrECFVirtualNFCe1QuandoEfetuarPagamento
     QuandoFecharDocumento = ACBrECFVirtualNFCe1QuandoFecharDocumento
-    left = 296
-    top = 136
+    left = 488
+    top = 370
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libCapicom
@@ -5055,8 +5047,8 @@ object Form1: TForm1
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     DANFE = ACBrNFeDANFeESCPOS1
-    left = 336
-    top = 136
+    left = 456
+    top = 368
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     ACBrNFe = ACBrNFe1
@@ -5080,18 +5072,19 @@ object Form1: TForm1
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
+    PosCanhoto = prCabecalho
     PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
-    left = 416
-    top = 184
+    left = 520
+    top = 368
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     MostrarPreview = True
@@ -5113,17 +5106,19 @@ object Form1: TForm1
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
-    left = 416
-    top = 136
+    PosCanhoto = prCabecalho
+    left = 552
+    top = 368
   end
   object ACBrPosPrinter1: TACBrPosPrinter
+    Modelo = ppEscPosEpson
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
@@ -5132,7 +5127,8 @@ object Form1: TForm1
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     CortaPapel = False
-    left = 416
-    top = 216
+    ArqLOG = 'c:\temp\posprinter.log'
+    left = 232
+    top = 336
   end
 end

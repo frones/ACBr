@@ -896,7 +896,7 @@ type
     { Private declarations }
     Function Converte( cmd : String) : String;
     procedure AjustaACBrSAT;
-    procedure PrepararImpressao;
+    procedure PrepararImpressaoSAT;
     procedure AjustaACBrNFe;
     procedure PrepararImpressaoNFCe;
     procedure TrataErros(Sender: TObject; E: Exception);
@@ -5281,30 +5281,25 @@ begin
     SalvarCFes := cbxSalvarCFe.Checked;
   end ;
 
-  PrepararImpressao;
+  PrepararImpressaoSAT;
 end ;
 
-procedure TForm1.PrepararImpressao;
+procedure TForm1.PrepararImpressaoSAT;
 begin
-  if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
-  begin
-    ACBrPosPrinter1.Device.Porta := edtPorta.Text;
-    ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-  end
-  else
-  begin
-    ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
-    ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
-    ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
-    ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
-    ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
-    ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+  ACBrPosPrinter1.Device.Porta := edtPorta.Text;
+  ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
 
-    try
-      if lImpressora.Caption <> '' then
-        ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
-    except
-    end;
+  ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
+  ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
+  ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
+  ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
+  ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
+  ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+
+  try
+    if lImpressora.Caption <> '' then
+      ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
+  except
   end;
 end;
 

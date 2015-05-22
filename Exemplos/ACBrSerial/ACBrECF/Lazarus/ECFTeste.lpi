@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="9"/>
-      <BuildNr Value="44"/>
+      <BuildNr Value="48"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable ProductVersion=""/>
@@ -55,9 +55,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CompilerPath Value="$(CompPath)"/>
-          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Linux i386">
@@ -88,9 +85,8 @@
           </Linking>
           <Other>
             <CompilerMessages>
-              <IgnoredMessages idx5024="True" idx5043="True"/>
+              <IgnoredMessages idx5043="True" idx5024="True"/>
             </CompilerMessages>
-            <CompilerPath Value="$(CompPath)"/>
           </Other>
         </CompilerOptions>
       </Item3>
@@ -164,7 +160,6 @@
       <Unit0>
         <Filename Value="ecfteste.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ECFTeste"/>
       </Unit0>
       <Unit1>
         <Filename Value="ecfteste1.pas"/>
@@ -179,7 +174,6 @@
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frConfiguraSerial"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ConfiguraSerial"/>
       </Unit2>
       <Unit3>
         <Filename Value="efetuapagamento.pas"/>
@@ -187,7 +181,6 @@
         <ComponentName Value="frPagamento"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="EfetuaPagamento"/>
       </Unit3>
       <Unit4>
         <Filename Value="relatorio.pas"/>
@@ -195,14 +188,12 @@
         <ComponentName Value="frRelatorio"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Relatorio"/>
       </Unit4>
       <Unit5>
         <Filename Value="sobre.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSobre"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Sobre"/>
       </Unit5>
       <Unit6>
         <Filename Value="vendeitem.pas"/>
@@ -210,7 +201,6 @@
         <ComponentName Value="frVendeItem"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="VendeItem"/>
       </Unit6>
       <Unit7>
         <Filename Value="uDAV.pas"/>
@@ -218,7 +208,6 @@
         <ComponentName Value="frmDAV"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="uDAV"/>
       </Unit7>
       <Unit8>
         <Filename Value="uDAVOS.pas"/>
@@ -226,7 +215,6 @@
         <ComponentName Value="frmDAVOS"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="uDAVOS"/>
       </Unit8>
       <Unit9>
         <Filename Value="RelatorioGerencialFormatado.pas"/>
@@ -234,7 +222,6 @@
         <ComponentName Value="frmGerencialFormatado"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="RelatorioGerencialFormatado"/>
       </Unit9>
     </Units>
   </ProjectOptions>
@@ -264,10 +251,9 @@
     </Linking>
     <Other>
       <CompilerMessages>
-        <IgnoredMessages idx5024="True" idx5043="True"/>
+        <IgnoredMessages idx5043="True" idx5024="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dDEBUG"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>

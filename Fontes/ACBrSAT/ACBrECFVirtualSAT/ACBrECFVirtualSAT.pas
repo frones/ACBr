@@ -117,7 +117,7 @@ type
     property ECF: TACBrECF read GetACBrECF;
 
   public
-    constructor Create(AOwner: TComponent);
+    Constructor Create( AECFVirtualPrinter : TACBrECFVirtualPrinter ); override;
     property ACBrSAT: TACBrSAT read fsACBrSAT write fsACBrSAT;
 
     property QuandoAbrirDocumento : TACBrECFVirtualSATQuandoAbrirDocumento
@@ -217,9 +217,10 @@ end;
 
 { TACBrECFVirtualSATClass }
 
-constructor TACBrECFVirtualSATClass.Create(AOwner: TComponent);
+constructor TACBrECFVirtualSATClass.Create(
+  AECFVirtualPrinter: TACBrECFVirtualPrinter);
 begin
-  inherited Create(AOwner);
+  inherited Create(AECFVirtualPrinter);
 
   fsACBrSAT := Nil;
   fsECF     := Nil;

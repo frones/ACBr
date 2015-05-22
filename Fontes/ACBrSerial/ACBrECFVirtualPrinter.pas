@@ -40,17 +40,11 @@
 unit ACBrECFVirtualPrinter ;
 
 interface
-uses ACBrECFVirtual, ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
-     Classes, SysUtils, IniFiles;
+uses
+  Classes, SysUtils, IniFiles,
+  ACBrDevice, ACBrECFVirtual, ACBrECFClass, ACBrUtil, ACBrConsts, ACBrPosPrinter ;
 
 const
-  cCmdImpCondensado        = #15 ;
-  cCmdImpExpandidoUmaLinha = #14 ;
-  cCmdImpFimExpandido      = #20;
-  cCmdImpZera              = #27+'@' ;
-  cCmdGaveta               = #27+'v'+#150;
-  cCmdCortaPapelCompleto   = #27+#119;
-  cCmdCortaPapelParcial    = #27+#109;
   ACBrECFVirtualPrinter_VERSAO = '0.1.0a';
 
 
@@ -60,47 +54,24 @@ type
 
 TACBrECFVirtualPrinter = class( TACBrECFVirtual )
   private
+    FPosPrinter: TACBrPosPrinter;
     function GetCabecalho: TStrings;
     function GetCabecalhoItem: TStrings;
     function GetMascaraItem: String;
-    function GetCmdCortaPapelCompleto: AnsiString;
-    function GetCmdCortaPapelParcial: AnsiString;
-    function GetCmdGaveta: AnsiString;
-    function GetCmdImpCondensado: AnsiString;
-    function GetCmdImpExpandidoUmaLinha: AnsiString;
-    function GetCmdImpFimExpandido: AnsiString;
-    function GetCmdImpZera: AnsiString;
     procedure SetCabecalho(AValue: TStrings);
     procedure SetCabecalhoItem(AValue: TStrings);
     procedure SetMascaraItem(AValue: String);
-    procedure SetCmdCortaPapelCompleto(AValue: AnsiString);
-    procedure SetCmdCortaPapelParcial(AValue: AnsiString);
-    procedure SetCmdGaveta(AValue: AnsiString);
-    procedure SetCmdImpCondensado(AValue: AnsiString);
-    procedure SetCmdImpExpandidoUmaLinha(AValue: AnsiString);
-    procedure SetCmdImpFimExpandido(AValue: AnsiString);
-    procedure SetCmdImpZera(AValue: AnsiString);
+    procedure SetPosPrinter(AValue: TACBrPosPrinter);
   protected
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure CreateVirtualClass ; override ;
-
-    property CmdImpCondensado : AnsiString read GetCmdImpCondensado
-       write SetCmdImpCondensado ;
-    property CmdImpExpandidoUmaLinha : AnsiString read GetCmdImpExpandidoUmaLinha
-       write SetCmdImpExpandidoUmaLinha ;
-    property CmdImpFimExpandido : AnsiString read GetCmdImpFimExpandido
-       write SetCmdImpFimExpandido ;
-    property CmdImpZera : AnsiString read GetCmdImpZera
-       write SetCmdImpZera ;
-    property CmdGaveta  : AnsiString read GetCmdGaveta
-       write SetCmdGaveta ;
-    property CmdCortaPapelCompleto : AnsiString read GetCmdCortaPapelCompleto
-       write SetCmdCortaPapelCompleto ;
-    property CmdCortaPapelParcial : AnsiString read GetCmdCortaPapelParcial
-       write SetCmdCortaPapelParcial ;
+    procedure AtivarPosPrinter;
 
     property Cabecalho     : TStrings read GetCabecalho     write SetCabecalho;
     property CabecalhoItem : TStrings read GetCabecalhoItem write SetCabecalhoItem;
     property MascaraItem   : String   read GetMascaraItem   write SetMascaraItem;
+  published
+    property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
   end ;
 
 { TACBrECFVirtualPrinterClass }
@@ -113,18 +84,11 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualClass )
       fsArqBuf : TextFile;
     {$ENDIF}
     fsBuffer : TStringList ;
+    fsECFVirtualPrinter: TACBrECFVirtualPrinter;
 
     fsCabecalho : TStringList ;
     fsCabecalhoItem : TStringList ;
     fsMascaraItem : String ;
-
-    fsCmdImpCondensado: AnsiString;
-    fsCmdImpExpandidoUmaLinha: AnsiString;
-    fsCmdImpFimExpandido: AnsiString;
-    fsCmdImpZera: AnsiString;
-    fsCmdGaveta: AnsiString;
-    fsCmdCortaPapelCompleto: AnsiString;
-    fsCmdCortaPapelParcial: AnsiString;
 
     procedure AbreBuffer ;
     procedure GravaBuffer ;
@@ -139,10 +103,13 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualClass )
     procedure AddBufferRodape;
     procedure AddBufferLinhas( AString: AnsiString) ;
 
-    function ColunasExpandido: Integer;
     function AjustaLinhaColunas( Linha: AnsiString ): AnsiString;
+    function ColunasExpandido(): Integer;
 
   protected
+    function GetDevice: TACBrDevice; override;
+    function GetColunas: Integer; override;
+
     procedure AtivarVirtual ; override;
 
     procedure AbreDocumento ; override;
@@ -178,24 +145,11 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualClass )
     function GetCliche: AnsiString ; override ;
 
   public
-    Constructor create( AOwner : TComponent  )  ;
+    Constructor Create( AECFVirtualPrinter : TACBrECFVirtualPrinter ); overload; virtual;
     Destructor Destroy  ; override ;
 
     procedure INItoClass( ConteudoINI: TStrings ) ; override;
     procedure ClasstoINI( ConteudoINI: TStrings ); override;
-
-    property CmdImpCondensado : AnsiString read fsCmdImpCondensado
-       write fsCmdImpCondensado ;
-    property CmdImpExpandidoUmaLinha : AnsiString read fsCmdImpExpandidoUmaLinha
-       write fsCmdImpExpandidoUmaLinha ;
-    property CmdImpFimExpandido : AnsiString read fsCmdImpFimExpandido
-       write fsCmdImpFimExpandido ;
-    property CmdImpZera : AnsiString read fsCmdImpZera write fsCmdImpZera ;
-    property CmdGaveta  : AnsiString read fsCmdGaveta  write fsCmdGaveta ;
-    property CmdCortaPapelCompleto : AnsiString read fsCmdCortaPapelCompleto
-       write fsCmdCortaPapelCompleto ;
-    property CmdCortaPapelParcial : AnsiString read fsCmdCortaPapelParcial
-       write fsCmdCortaPapelParcial ;
 
     property Cabecalho     : TStringList read fsCabecalho     write SetCabecalho;
     property CabecalhoItem : TStringList read fsCabecalhoItem write SetCabecalhoItem;
@@ -221,7 +175,8 @@ Function StuffMascaraItem( Linha, MascaraItem : AnsiString; Letra : AnsiChar;
 
 implementation
 
-Uses math ;
+Uses
+  math;
 
 Function StuffMascaraItem( Linha, MascaraItem : AnsiString; Letra : AnsiChar;
    TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
@@ -287,9 +242,12 @@ begin
   fpECFVirtualClass := TACBrECFVirtualPrinterClass.create( self );
 end;
 
-function TACBrECFVirtualPrinter.GetCmdCortaPapelCompleto: AnsiString;
+procedure TACBrECFVirtualPrinter.AtivarPosPrinter;
 begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdCortaPapelCompleto );
+  if not Assigned( FPosPrinter ) then
+    raise Exception.Create('Componente PosPrinter não associado');
+
+  FPosPrinter.Ativar;
 end;
 
 function TACBrECFVirtualPrinter.GetCabecalho: TStrings;
@@ -300,36 +258,6 @@ end;
 function TACBrECFVirtualPrinter.GetCabecalhoItem: TStrings;
 begin
   Result := TACBrECFVirtualPrinterClass(fpECFVirtualClass).CabecalhoItem;
-end;
-
-function TACBrECFVirtualPrinter.GetCmdCortaPapelParcial: AnsiString;
-begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdCortaPapelParcial );
-end;
-
-function TACBrECFVirtualPrinter.GetCmdGaveta: AnsiString;
-begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdGaveta );
-end;
-
-function TACBrECFVirtualPrinter.GetCmdImpCondensado: AnsiString;
-begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpCondensado );
-end;
-
-function TACBrECFVirtualPrinter.GetCmdImpExpandidoUmaLinha: AnsiString;
-begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpExpandidoUmaLinha );
-end;
-
-function TACBrECFVirtualPrinter.GetCmdImpFimExpandido: AnsiString;
-begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpFimExpandido );
-end;
-
-function TACBrECFVirtualPrinter.GetCmdImpZera: AnsiString;
-begin
-  Result := StringToAsc( TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpZera );
 end;
 
 function TACBrECFVirtualPrinter.GetMascaraItem: String;
@@ -347,60 +275,45 @@ begin
   TACBrECFVirtualPrinterClass(fpECFVirtualClass).CabecalhoItem.Assign( AValue );
 end;
 
-procedure TACBrECFVirtualPrinter.SetCmdCortaPapelCompleto(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdCortaPapelCompleto := AscToString( AValue );
-end;
-
-procedure TACBrECFVirtualPrinter.SetCmdCortaPapelParcial(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdCortaPapelParcial := AscToString( AValue );
-end;
-
-procedure TACBrECFVirtualPrinter.SetCmdGaveta(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdGaveta := AscToString( AValue );
-end;
-
-procedure TACBrECFVirtualPrinter.SetCmdImpCondensado(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpCondensado := AscToString( AValue );
-end;
-
-procedure TACBrECFVirtualPrinter.SetCmdImpExpandidoUmaLinha(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpExpandidoUmaLinha := AscToString( AValue );
-end;
-
-procedure TACBrECFVirtualPrinter.SetCmdImpFimExpandido(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpFimExpandido := AscToString( AValue );
-end;
-
-procedure TACBrECFVirtualPrinter.SetCmdImpZera(AValue: AnsiString);
-begin
-  TACBrECFVirtualPrinterClass(fpECFVirtualClass).CmdImpZera := AscToString( AValue );
-end;
-
 procedure TACBrECFVirtualPrinter.SetMascaraItem(AValue: String);
 begin
   TACBrECFVirtualPrinterClass(fpECFVirtualClass).MascaraItem := AValue;
 end;
 
+procedure TACBrECFVirtualPrinter.SetPosPrinter(AValue: TACBrPosPrinter);
+begin
+  if AValue <> FPosPrinter then
+  begin
+     if Assigned(FPosPrinter) then
+        FPosPrinter.RemoveFreeNotification(Self);
+
+     FPosPrinter := AValue;
+
+     if AValue <> nil then
+        AValue.FreeNotification(self);
+  end ;
+end;
+
+procedure TACBrECFVirtualPrinter.Notification(AComponent: TComponent;
+  Operation: TOperation);
+begin
+  inherited Notification(AComponent, Operation);
+
+  if (Operation = opRemove) then
+  begin
+    if (AComponent is TACBrPosPrinter) and (FPosPrinter <> nil) then
+       FPosPrinter := nil ;
+  end;
+end;
+
 { TACBrECFVirtualPrinterClass }
 
-constructor TACBrECFVirtualPrinterClass.create( AOwner : TComponent ) ;
+constructor TACBrECFVirtualPrinterClass.Create(
+  AECFVirtualPrinter: TACBrECFVirtualPrinter);
 begin
-  inherited create( AOwner ) ;
+  inherited create( AECFVirtualPrinter ) ;
 
-  fsCmdImpCondensado        := cCmdImpCondensado ;
-  fsCmdImpExpandidoUmaLinha := cCmdImpExpandidoUmaLinha ;
-  fsCmdImpFimExpandido      := cCmdImpFimExpandido;
-  fsCmdImpZera              := cCmdImpZera ;
-  fsCmdGaveta               := cCmdGaveta;
-  fsCmdCortaPapelCompleto   := cCmdCortaPapelCompleto;
-  fsCmdCortaPapelParcial    := cCmdCortaPapelParcial;
-
+  fsECFVirtualPrinter := AECFVirtualPrinter;
   fsBuffer := TStringList.create ;
 
   fsCabecalho := TStringList.create ;
@@ -430,16 +343,9 @@ end;
 
 procedure TACBrECFVirtualPrinterClass.AtivarVirtual;
 begin
-  if fpDevice.IsSerialPort then
-    fpDevice.Serial.Purge ;
-
-  if not EmLinha() then
-    raise EACBrECFERRO.Create(ACBrStr('Impressora: '+fpModeloStr+' não está pronta.')) ;
+  fsECFVirtualPrinter.AtivarPosPrinter;
 
   AbreBuffer ;
-
-  ImprimePorta( CmdImpZera + CmdImpCondensado );
-
   if fsBuffer.Count > 0 then
     ImprimeBuffer ;
 end;
@@ -489,6 +395,22 @@ begin
   For A := 0 to fsCabecalho.Count - 1 do
     Result := Result + PadCenter(fsCabecalho[A], Colunas) + CRLF;
 end ;
+
+function TACBrECFVirtualPrinterClass.GetDevice: TACBrDevice;
+begin
+  if Assigned(fsECFVirtualPrinter.PosPrinter) then
+    Result := fsECFVirtualPrinter.PosPrinter.Device
+  else
+    Result := inherited GetDevice;
+end;
+
+function TACBrECFVirtualPrinterClass.GetColunas: Integer;
+begin
+  if Assigned(fsECFVirtualPrinter.PosPrinter) then
+    Result := fsECFVirtualPrinter.PosPrinter.ColunasFonteNormal
+  else
+    Result := inherited GetColunas;
+end;
 
 procedure TACBrECFVirtualPrinterClass.AbreBuffer ;
 Var
@@ -673,7 +595,7 @@ begin
   begin
     Linha := PadCenter(fsCabecalho[A], Colunas) ;
     if A = 0 then
-      Linha := fsCmdImpCondensado + Linha ;
+      Linha := '</zera></logo><c>'+ Linha ;
 
     fsBuffer.Insert( A, Linha ) ;
   end ;
@@ -733,6 +655,8 @@ begin
     Add( StringOfChar('=',Colunas) ) ;
     For A := 1 to LinhasEntreCupons do
       Add( '' ) ;
+
+    Add('</corte_total>');
   end ;
 end;
 
@@ -749,14 +673,6 @@ begin
   end;
 end;
 
-function TACBrECFVirtualPrinterClass.ColunasExpandido: Integer;
-begin
-  if ( fsCmdImpExpandidoUmaLinha = '' ) then
-    Result := Colunas
-  else
-    Result := Round( Colunas / 2 );
-end;
-
 function TACBrECFVirtualPrinterClass.AjustaLinhaColunas(Linha: AnsiString
   ): AnsiString;
 begin
@@ -764,9 +680,14 @@ begin
   Result := StringReplace( Result, #10, sLineBreak, [rfReplaceAll] ) ;
 end;
 
+function TACBrECFVirtualPrinterClass.ColunasExpandido: Integer;
+begin
+  Result := fsECFVirtualPrinter.PosPrinter.ColunasFonteExpandida;
+end;
+
 procedure TACBrECFVirtualPrinterClass.AbreDocumento ;
 begin
-  if not EmLinha() then
+  if not Device.EmLinha() then
     raise EACBrECFERRO.Create(ACBrStr('Impressora: '+fpModeloStr+' não está pronta.')) ;
 
   inherited ;
@@ -824,11 +745,10 @@ begin
                        Colunas,'|') ) ;
   end ;
 
-  fsBuffer.Add(  fsCmdImpExpandidoUmaLinha +
-                 PadSpace( 'TOTAL  R$|'+FormatFloat('#,###,##0.00',
-                       SubTotal+DescontoAcrescimo),
-	               ColunasExpandido ,'|') +
-                 fsCmdImpFimExpandido ) ;
+  fsBuffer.Add(  '<e>' +
+                 PadSpace( 'TOTAL  R$|'+
+                           FormatFloat('#,###,##0.00', SubTotal+DescontoAcrescimo),
+	                   ColunasExpandido() ,'|') + '</e>' ) ;
   ImprimeBuffer ;
 end;
 
@@ -860,9 +780,10 @@ begin
      if TotalPago > SubTotal then  { Tem TROCO ? }
      begin
         Troco  := RoundTo(TotalPago - SubTotal,-2) ;
-        fsBuffer.Add( fsCmdImpExpandidoUmaLinha +
-                      PadSpace('TROCO  R$|'+FormatFloat('#,###,##0.00',Troco),
-		      ColunasExpandido() ,'|' ) + fsCmdImpFimExpandido ) ;
+        fsBuffer.Add( '<e>' +
+                      PadSpace( 'TROCO  R$|'+
+                               FormatFloat('#,###,##0.00',Troco),
+		               ColunasExpandido() ,'|' ) + '</e>' ) ;
      end ;
   end ;
 
@@ -887,17 +808,17 @@ end;
 procedure TACBrECFVirtualPrinterClass.CancelaCupomVirtual;
 begin
   ZeraBuffer;
-  fsBuffer.Add( fsCmdImpExpandidoUmaLinha +
+  fsBuffer.Add( '<e>' +
 		PadCenter('*** CUPOM CANCELADO ***', ColunasExpandido() ) +
-                fsCmdImpFimExpandido ) ;
+                '</e>' ) ;
 
   case Estado of
     estVenda :
       begin
-        fsBuffer.Insert(0, fsCmdImpExpandidoUmaLinha +
+        fsBuffer.Insert(0, '<e>' +
                            PadSpace('TOTAL  R$|'+FormatFloat('#,###,##0.00',Subtotal),
                            ColunasExpandido(), '|') +
-                           fsCmdImpFimExpandido ) ;
+                           '</e>' ) ;
         AddBufferRodape ;
       end ;
 
@@ -931,57 +852,13 @@ Var
 begin
   inherited INItoClass( ConteudoINI ) ;
 
-  Ini := TMemIniFile.Create( '' ) ;
-  try
-    Ini.Clear;
-    Ini.SetStrings( ConteudoINI );
-
-    fsCmdGaveta := AscToString( Ini.ReadString('Impressora',
-         'Comando_Abrir_Gaveta', cCmdGaveta) ) ;
-    fsCmdCortaPapelCompleto := AscToString( Ini.ReadString('Impressora',
-         'Comando_Corta_Papel_Completo', cCmdCortaPapelCompleto) ) ;
-    fsCmdCortaPapelParcial := AscToString( Ini.ReadString('Impressora',
-         'Comando_Corta_Papel_Parcial', cCmdCortaPapelParcial) ) ;
-    fsCmdImpZera := AscToString( Ini.ReadString('Impressora',
-         'Comando_Incializacao', cCmdImpZera) ) ;
-    fsCmdImpCondensado := AscToString( Ini.ReadString('Impressora',
-         'Comando_Ativar_Condensado', cCmdImpCondensado) ) ;
-    fsCmdImpExpandidoUmaLinha := AscToString( Ini.ReadString('Impressora',
-         'Comando_Expandido_uma_Linha', cCmdImpExpandidoUmaLinha) );
-    fsCmdImpFimExpandido := AscToString( Ini.ReadString('Impressora',
-         'Comando_Fim_Expandido', cCmdImpFimExpandido) );
-  finally
-    Ini.Free ;
-  end ;
-
   ZeraBuffer;
 end ;
 
-procedure TACBrECFVirtualPrinterClass.ClasstoINI( ConteudoINI: TStrings );
-var
-  Ini: TMemIniFile;
+procedure TACBrECFVirtualPrinterClass.ClasstoINI(ConteudoINI: TStrings);
 begin
-  inherited ClasstoINI( ConteudoINI ) ;
-
-  Ini := TMemIniFile.Create( '' ) ;
-  try
-    Ini.Clear;
-    Ini.SetStrings( ConteudoINI );
-
-    Ini.WriteString('Impressora','Comando_Abrir_Gaveta', StringToAsc(fsCmdGaveta) ) ;
-    Ini.WriteString('Impressora','Comando_Corta_Papel_Completo', StringToAsc(fsCmdCortaPapelCompleto) ) ;
-    Ini.WriteString('Impressora','Comando_Corta_Papel_Parcial', StringToAsc(fsCmdCortaPapelParcial) ) ;
-    Ini.WriteString('Impressora','Comando_Incializacao', StringToAsc(fsCmdImpZera) ) ;
-    Ini.WriteString('Impressora','Comando_Ativar_Condensado', StringToAsc(fsCmdImpCondensado) );
-    Ini.WriteString('Impressora','Comando_Expandido_uma_Linha', StringToAsc(fsCmdImpExpandidoUmaLinha) ) ;
-    Ini.WriteString('Impressora','Comando_Fim_Expandido', StringToAsc(fsCmdImpFimExpandido) ) ;
-
-    ConteudoINI.Clear;
-    Ini.GetStrings( ConteudoINI );
-  finally
-    Ini.Free;
-  end;
-end ;
+  inherited ClasstoINI(ConteudoINI);
+end;
 
 procedure TACBrECFVirtualPrinterClass.ImprimePorta(AString : AnsiString) ;
 Var
@@ -990,11 +867,11 @@ begin
   OldAguardandoResposta := AguardandoResposta ;
   AguardandoResposta    := True ;
   try
-    fpDevice.EnviaString( AString );
+    fsECFVirtualPrinter.PosPrinter.Imprimir(AString);
 
     repeat
       Sleep(IntervaloAposComando);
-    until fpDevice.EmLinha() ;
+    until Device.EmLinha() ;
   finally
     AguardandoResposta := OldAguardandoResposta ;
   end ;
@@ -1118,9 +995,9 @@ end;
 
 procedure TACBrECFVirtualPrinterClass.LeituraXVirtual;
 begin
-  fsBuffer.Add( fsCmdImpExpandidoUmaLinha +
+  fsBuffer.Add( '<e>' +
                 PadCenter('LEITURA X', ColunasExpandido() ) +
-                fsCmdImpFimExpandido );
+                '</e>' );
 
   AddBufferRelatorio ;
 end;
@@ -1133,9 +1010,9 @@ end;
 
 procedure TACBrECFVirtualPrinterClass.ReducaoZVirtual(DataHora: TDateTime);
 begin
-  fsBuffer.Add( fsCmdImpExpandidoUmaLinha +
+  fsBuffer.Add( '<e>' +
                 PadCenter('REDUCAO Z', ColunasExpandido() ) +
-                fsCmdImpFimExpandido );
+                '</e>' );
 
   AddBufferRelatorio ;
 end;
@@ -1153,9 +1030,9 @@ end;
 procedure TACBrECFVirtualPrinterClass.CortaPapel(const CorteParcial : Boolean) ;
 begin
   if CorteParcial Then
-    ImprimePorta( CmdCortaPapelParcial )
+    ImprimePorta( '</corte_parcial>' )
   else
-    ImprimePorta( CmdCortaPapelCompleto ) ;
+    ImprimePorta( '</corte_total>' ) ;
 
   Sleep(100);
 end ;
@@ -1197,9 +1074,9 @@ begin
   fsBuffer.Add( StringOfChar('-',Colunas) ) ;
   fsBuffer.Add( PadCenter('NAO E DOCUMENTO FISCAL',Colunas) ) ;
 
-  fsBuffer.Add( fsCmdImpExpandidoUmaLinha +
+  fsBuffer.Add( '<e>' +
 		PadCenter('RELATORIO GERENCIAL', ColunasExpandido() ) +
-                fsCmdImpFimExpandido );
+                '</e>' );
   fsBuffer.Add( '' ) ;
 end;
 
@@ -1229,7 +1106,7 @@ end;
 
 procedure TACBrECFVirtualPrinterClass.AbreGaveta ;
 begin
-  ImprimePorta( CmdGaveta );
+  ImprimePorta( '</abre_gaveta>' );
 end ;
 
 end.

@@ -73,14 +73,6 @@ TACBrECFVirtualNaoFiscal = class( TACBrECFVirtualPrinter )
     property IE ;
     property IM ;
 
-    property CmdImpCondensado ;
-    property CmdImpExpandidoUmaLinha ;
-    property CmdImpFimExpandido ;
-    property CmdImpZera ;
-    property CmdGaveta ;
-    property CmdCortaPapelCompleto ;
-    property CmdCortaPapelParcial ;
-
     property Cabecalho ;
     property CabecalhoItem ;
     property MascaraItem ;
@@ -98,7 +90,7 @@ TACBrECFVirtualNaoFiscalClass = class( TACBrECFVirtualPrinterClass )
     function GetNumVersao: String; override ;
     procedure AtivarVirtual ; override;
  public
-   Constructor create( AOwner : TComponent  )  ;
+   Constructor Create( AECFVirtualNaoFiscal : TACBrECFVirtualNaoFiscal ); overload;
 
    property ExibeAvisoLegal: Boolean read fsExibeAvisoLegal write fsExibeAvisoLegal;
  end ;
@@ -124,9 +116,9 @@ end;
 
 { TACBrECFVirtualNaoFiscalClass }
 
-constructor TACBrECFVirtualNaoFiscalClass.create(AOwner: TComponent);
+constructor TACBrECFVirtualNaoFiscalClass.Create(AECFVirtualNaoFiscal: TACBrECFVirtualNaoFiscal);
 begin
-  inherited create( AOwner ) ;
+  inherited create( AECFVirtualNaoFiscal ) ;
 
   fsExibeAvisoLegal := True;
 end;

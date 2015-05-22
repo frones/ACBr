@@ -140,7 +140,7 @@ type
     property ECF: TACBrECF read GetACBrECF;
 
   public
-    constructor Create(AOwner: TComponent);
+    Constructor Create( AECFVirtualPrinter : TACBrECFVirtualPrinter ); overload;
     property ACBrNFCe: TACBrNFe read fsACBrNFCe write fsACBrNFCe;
 
     property QuandoAbrirDocumento : TACBrECFVirtualNFCeQuandoAbrirDocumento
@@ -263,9 +263,10 @@ end;
 
 { TACBrECFVirtualNFCeClass }
 
-constructor TACBrECFVirtualNFCeClass.Create(AOwner: TComponent);
+constructor TACBrECFVirtualNFCeClass.Create(
+  AECFVirtualPrinter: TACBrECFVirtualPrinter);
 begin
-  inherited Create(AOwner);
+  inherited Create(AECFVirtualPrinter);
 
   fsACBrNFCe := Nil;
   fsECF     := Nil;

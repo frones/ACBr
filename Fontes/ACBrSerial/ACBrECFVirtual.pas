@@ -227,6 +227,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
 
     procedure SetColunas(AValue: Integer);
+    procedure SetDevice(AValue: TACBrDevice);
     procedure SetNumCRO(AValue: Integer);
     procedure SetNumECF(AValue: Integer);
     procedure SetNumSerie(AValue: String);
@@ -267,6 +268,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpItensCupom      : TACBrECFVirtualClassItensCupom ;
     fpPagamentosCupom : TACBrECFVirtualClassPagamentosCupom ;
     fpCNFCupom        : TACBrECFVirtualClassCNFsCupom ;
+
+    function GetDevice: TACBrDevice; virtual;
+    function GetColunas: Integer; virtual;
 
     procedure AtivarVirtual ; virtual ;
     procedure INItoClass( ConteudoINI: TStrings ); virtual ;
@@ -333,7 +337,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
 
     function GetDataMovimento: TDateTime; override;
  public
-    Constructor create( AOwner : TComponent  )  ;
+    Constructor Create( AECFVirtual : TACBrECFVirtual );
     Destructor Destroy  ; override ;
 
     procedure LeArqINI ;
@@ -345,10 +349,10 @@ TACBrECFVirtualClass = class( TACBrECFClass )
       write fsQuandoLerArqINI ;
 
     property ECFVirtual : TACBrECFVirtual read fsECFVirtualOwner ;
-    property Device     : TACBrDevice     read fpDevice write fpDevice;
+    property Device     : TACBrDevice     read GetDevice write SetDevice;
 
     property NomeArqINI : String read  fpNomeArqINI  write fpNomeArqINI ;
-    Property Colunas    : Integer read fpColunas     write SetColunas;
+    Property Colunas    : Integer read GetColunas     write SetColunas;
 
     property NumSerie   : String read  fpNumSerie    write SetNumSerie;
     property NumECF     : Integer read fpNumECF      write SetNumECF;
@@ -795,15 +799,12 @@ end;
 
 { --------------------------- TACBrECFVirtualClass --------------------------- }
 
-constructor TACBrECFVirtualClass.create( AOwner : TComponent ) ;
+constructor TACBrECFVirtualClass.Create(AECFVirtual: TACBrECFVirtual);
 begin
-  if not (AOwner is TACBrECFVirtual) then
-    raise EACBrECFErro.create( ACBrStr(cACBrECFVirtualClassCreateException) );
-
-  inherited create( AOwner ) ;
+  inherited create( AECFVirtual ) ;
 
   fpIdentificaConsumidorRodape := True ;
-  fsECFVirtualOwner := TACBrECFVirtual(AOwner);
+  fsECFVirtualOwner := AECFVirtual;
   fpItensCupom      := TACBrECFVirtualClassItensCupom.Create( true );
   fpPagamentosCupom := TACBrECFVirtualClassPagamentosCupom.Create( true );
   fpCNFCupom        := TACBrECFVirtualClassCNFsCupom.Create( true );
@@ -2035,6 +2036,21 @@ procedure TACBrECFVirtualClass.SetColunas(AValue: Integer);
 begin
   if fpColunas = AValue then Exit;
   fpColunas := AValue;
+end;
+
+function TACBrECFVirtualClass.GetColunas: Integer;
+begin
+    Result := fpColunas;
+end;
+
+function TACBrECFVirtualClass.GetDevice: TACBrDevice;
+begin
+  Result := fpDevice;
+end;
+
+procedure TACBrECFVirtualClass.SetDevice(AValue: TACBrDevice);
+begin
+  fpDevice := AValue;
 end;
 
 function TACBrECFVirtualClass.GetEstado: TACBrECFEstado;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/05/2015 ver. 0.0.128a
+-- ACBrBancoSicredi --
+[*]Refatorado código de montagem do nosso número. (Juliana Tamizou)
+
+
 Data: 19/05/2015 ver. 0.0.127a
 -- ACBrBoleto --
 [+]Adição da função getOcorrenciasRemessa() retorno uma lista com todas as ocorrências

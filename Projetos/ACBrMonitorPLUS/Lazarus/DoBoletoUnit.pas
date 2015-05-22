@@ -401,6 +401,7 @@ begin
          SeuNumero           := aIni.ReadString(Sessao,'SeuNumero',SeuNumero);
          PercentualMulta     := aIni.ReadFloat(Sessao,'PercentualMulta',PercentualMulta);
          CodigoMora          := aIni.ReadString(Sessao,'CodigoMora','1');
+         CodigoGeracao       := aIni.ReadString(Sessao,'CodigoGeracao','2');
       end;
    end;
 end;

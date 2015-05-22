@@ -100,7 +100,8 @@ begin
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+
                        ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente +
-                       ACBrTitulo.NossoNumero;
+                       FormatDateTime('yy',ACBrTitulo.DataDocumento) +
+                       ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5);
    Modulo.Calcular;
 
    if (Modulo.DigitoFinal > 9) then
@@ -160,13 +161,9 @@ function TACBrBancoSicredi.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo
 var
   aNossoNumero: String;
 begin
-   ACBrTitulo.NossoNumero := FormatDateTime('yy',ACBrTitulo.DataDocumento) +
-                             ACBrTitulo.CodigoGeracao +
-                             copy(ACBrTitulo.NossoNumero,4,6);
-
-   Result:= copy(ACBrTitulo.NossoNumero,1,2) + '/' +
-            copy(ACBrTitulo.NossoNumero,3,6) + '-' +
-            CalcularDigitoVerificador(ACBrTitulo);
+  Result:= FormatDateTime('yy',ACBrTitulo.DataDocumento) + '/' +
+           ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5) + '-' +
+           CalcularDigitoVerificador(ACBrTitulo);
 end;
 
 function TACBrBancoSicredi.MontarCampoCodigoCedente (const ACBrTitulo: TACBrTitulo ) : String;
@@ -204,7 +201,7 @@ end;
 
 procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  DigitoNossoNumero, CodProtesto, DiasProtesto: String;
+  wNossoNumeroCompleto, CodProtesto, DiasProtesto: String;
   TipoSacado, AceiteStr, wLinha, Ocorrencia   : String;
   TipoBoleto, wModalidade: Char;
   TextoRegInfo: String;
@@ -212,8 +209,7 @@ begin
 
    with ACBrTitulo do
    begin
-      MontarCampoNossoNumero(ACBrTitulo);
-      DigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
+      wNossoNumeroCompleto := OnlyNumber(MontarCampoNossoNumero(ACBrTitulo));
 
       {Pegando Código da Ocorrencia}
       case OcorrenciaOriginal.Tipo of
@@ -306,7 +302,7 @@ begin
                   'A'                                                                   +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual
                   trim(CodigoMora)                                                      +  // 019 a 019 - Tipo de juro: "A" Valor "B" percentual
                   Space(28)                                                             +  // 020 a 047 - Filler - Brancos
-                  PadLeft(NossoNumero + DigitoNossoNumero,9,'0');                          // 048 a 056 - Nosso número sem edição YYXNNNNND - YY=Ano, X-Emissao, NNNNN-Sequência, D-Dígito
+                  PadLeft(wNossoNumeroCompleto,9,'0');                                     // 048 a 056 - Nosso número sem edição YYXNNNNND - YY=Ano, X-Emissao, NNNNN-Sequência, D-Dígito
 
          if wModalidade = 'A' then
             wLinha:= wLinha +

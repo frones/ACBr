@@ -171,7 +171,17 @@ type
   protected
     procedure TearDown; override;
   published
-    procedure FormatarFone;
+    procedure FormatarZeros;
+    procedure FormatarSemDDD;
+    procedure FormatarComDDD;
+    procedure FormatarSemDDD9Dig;
+    procedure FormatarComDDD9Dig;
+    procedure Formatar0300;
+    procedure Formatar0500;
+    procedure Formatar0800;
+    procedure Formatar0900;
+    procedure Formatar55ComDDD;
+    procedure Formatar55ComDDD9Dig;
   end;
 
 implementation
@@ -183,17 +193,70 @@ begin
   FreeAndNil(fACBrValidador);
 end;
 
-procedure TTestCaseACBrValidadorTelefone.FormatarFone;
+procedure TTestCaseACBrValidadorTelefone.FormatarZeros;
 begin
   CheckEquals('(00)0000-0000', ACBrValidador.FormatarFone('0000000000', ''));
-  CheckEquals('(  )99701-2345', ACBrValidador.FormatarFone('997012345', ''));
-  CheckEquals('(  )3322-0000', ACBrValidador.FormatarFone('33220000', ''));
-  CheckEquals('0800-123-4567', ACBrValidador.FormatarFone('08001234567', ''));
-  CheckEquals('(15)99701-2345', ACBrValidador.FormatarFone('015997012345',''));
-  CheckEquals('(15)3322-0000', ACBrValidador.FormatarFone('01533220000', ''));
-  CheckEquals('(5511)3322-0000', ACBrValidador.FormatarFone('551133220000', ''));
-  CheckEquals('(5511)99922-0000', ACBrValidador.FormatarFone('5511999220000', ''));
 end;
+
+procedure TTestCaseACBrValidadorTelefone.FormatarSemDDD;
+begin
+  CheckEquals('3322-0000', ACBrValidador.FormatarFone('33220000', ''));
+  CheckEquals('4004-1234', ACBrValidador.FormatarFone('40041234', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.FormatarComDDD;
+begin
+  CheckEquals('(15)3322-0000', ACBrValidador.FormatarFone('01533220000', ''));
+  CheckEquals('(15)3322-0000', ACBrValidador.FormatarFone('1533220000', ''));
+  CheckEquals('(15)4004-1234', ACBrValidador.FormatarFone('01540041234', ''));
+  CheckEquals('(15)4004-1234', ACBrValidador.FormatarFone('1540041234', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.FormatarSemDDD9Dig;
+begin
+  CheckEquals('99701-2345', ACBrValidador.FormatarFone('997012345', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.FormatarComDDD9Dig;
+begin
+  CheckEquals('(15)99701-2345', ACBrValidador.FormatarFone('015997012345',''));
+  CheckEquals('(15)99701-2345', ACBrValidador.FormatarFone('15997012345',''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.Formatar0300;
+begin
+  CheckEquals('0300-123-4567', ACBrValidador.FormatarFone('03001234567', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.Formatar0500;
+begin
+  CheckEquals('0500-123-4567', ACBrValidador.FormatarFone('05001234567', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.Formatar0800;
+begin
+  CheckEquals('0800-123-4567', ACBrValidador.FormatarFone('08001234567', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.Formatar0900;
+begin
+  CheckEquals('0900-123-4567', ACBrValidador.FormatarFone('09001234567', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.Formatar55ComDDD;
+begin
+  CheckEquals('55(11)3322-0000', ACBrValidador.FormatarFone('551133220000', ''));
+  CheckEquals('55(11)3322-0000', ACBrValidador.FormatarFone('5501133220000', ''));
+  CheckEquals('55(11)4004-1234', ACBrValidador.FormatarFone('551140041234', ''));
+  CheckEquals('55(11)4004-1234', ACBrValidador.FormatarFone('5501140041234', ''));
+end;
+
+procedure TTestCaseACBrValidadorTelefone.Formatar55ComDDD9Dig;
+begin
+  CheckEquals('55(11)99922-0000', ACBrValidador.FormatarFone('5511999220000', ''));
+  CheckEquals('55(11)99922-0000', ACBrValidador.FormatarFone('55011999220000', ''));
+end;
+
 
 { TTestCaseACBrValidadorIE }
 

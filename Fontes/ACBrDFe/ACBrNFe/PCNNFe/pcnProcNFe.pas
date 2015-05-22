@@ -74,6 +74,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TPersistent); override;
     function GerarXML: Boolean;
     function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcNFe = tpnPrivado): String;
   published
@@ -263,6 +264,29 @@ begin
   XMLinfProt2.Free;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+procedure TProcNFe.Assign(Source: TPersistent);
+begin
+  if Source is TProcNFe then
+  begin
+//    Gerador.Assign(TprocNFe(Source).Gerador);
+//    Schema := TprocNFe(Source).Schema;
+    PathNFe := TprocNFe(Source).PathNFe;
+    PathRetConsReciNFe := TprocNFe(Source).PathRetConsReciNFe;
+    PathRetConsSitNFe := TprocNFe(Source).PathRetConsSitNFe;
+    tpAmb := TprocNFe(Source).tpAmb;
+    verAplic := TprocNFe(Source).verAplic;
+    chNFe := TprocNFe(Source).chNFe;
+    dhRecbto := TprocNFe(Source).dhRecbto;
+    nProt := TprocNFe(Source).nProt;
+    digVal := TprocNFe(Source).digVal;
+    cStat := TprocNFe(Source).cStat;
+    xMotivo := TprocNFe(Source).xMotivo;
+    Versao := TprocNFe(Source).Versao;
+  end
+  else
+    inherited; 
 end;
 
 end.

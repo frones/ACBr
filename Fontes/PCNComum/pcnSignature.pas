@@ -66,6 +66,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TPersistent); override;
     function GerarXML: Boolean;
     procedure Clear;
   published
@@ -127,6 +128,20 @@ begin
   (**)Gerador.wGrupo('/Signature');
   
   Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+procedure TSignature.Assign(Source: TPersistent);
+begin
+  if Source is TSignature then
+  begin
+//    Gerador.Assign(TSignature(Source).Gerador);
+    URI := TSignature(Source).URI;
+    DigestValue := TSignature(Source).DigestValue;
+    SignatureValue := TSignature(Source).SignatureValue;
+    X509Certificate := TSignature(Source).X509Certificate;
+  end
+  else
+    inherited; 
 end;
 
 end.

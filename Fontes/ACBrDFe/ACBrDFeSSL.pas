@@ -113,6 +113,7 @@ type
     FSSLLib: TSSLLib;
     FTimeOut: Integer;
     FUnloadSSLLib: Boolean;
+    FCertificadoLido: Boolean;
 
     function GetCertCNPJ: String;
     function GetCertDataVenc: TDateTime;
@@ -207,6 +208,7 @@ begin
   FTimeOut     := 5000;
   FNameSpaceURI:= '';
   FUnloadSSLLib:= True;
+  FCertificadoLido := False;
 
   if Assigned(FSSLClass) then
     FSSLClass.Free;
@@ -269,6 +271,8 @@ procedure TDFeSSL.DescarregarCertificado;
 begin
   if FSSLClass.Inicializado then
     FSSLClass.DescarregarCertificado;
+
+  FCertificadoLido := False;
 end;
 
 function TDFeSSL.SelecionarCertificado: String;
@@ -321,17 +325,19 @@ end;
 
 procedure TDFeSSL.InitSSLClass(LerCertificado: Boolean);
 begin
-  if FSSLClass.Inicializado then
-    exit;
+  if not FSSLClass.Inicializado then
+    FSSLClass.Inicializar;
 
-  FSSLClass.Inicializar;
-
-  if LerCertificado then
+  if LerCertificado and (not FCertificadoLido) then
+  begin
     FSSLClass.CarregarCertificado;
+    FCertificadoLido := True;
+  end;
 end;
 
 procedure TDFeSSL.DeInitSSLClass;
 begin
+  DescarregarCertificado;
   FSSLClass.DesInicializar;
 end;
 

@@ -55,7 +55,6 @@ type
   TDFeCapicom = class(TDFeSSLClass)
   private
     FNumCertCarregado: String;
-    FNumCertACarregar: String;
     FCNPJ: String;
     FCertificado: ICertificate2;
     FCertStoreMem: IStore3;
@@ -112,7 +111,6 @@ begin
   inherited Create(ADFeSSL);
 
   FNumCertCarregado := '';
-  FNumCertACarregar := FpDFeSSL.NumeroSerie;
   FCNPJ := '';
   FCertificado := nil;
   FCertStoreMem := nil;
@@ -166,7 +164,7 @@ begin
   if not (Certs2.Count = 0) then
   begin
     Cert := IInterface(Certs2.Item[1]) as ICertificate2;
-    FNumCertACarregar := Cert.SerialNumber;
+    FpDFeSSL.NumeroSerie := Cert.SerialNumber;
     CarregarCertificado;
   end;
 
@@ -212,7 +210,7 @@ begin
   // Verificando se possui parâmetros necessários //
   with FpDFeSSL do
   begin
-    if EstaVazio(FNumCertACarregar) then
+    if EstaVazio(FpDFeSSL.NumeroSerie) then
     begin
       if not EstaVazio(ArquivoPFX) then
         raise EACBrDFeException.Create(ClassName +
@@ -230,7 +228,7 @@ begin
     Inicializar;
 
     // Certificado já foi carregado ??
-    if (FCertificado <> nil) and (FNumCertCarregado = FNumCertACarregar) then
+    if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then
       exit;
 
     // Lendo lista de Certificados //
@@ -240,11 +238,11 @@ begin
     FCertificado := nil;
     Certs := Store.Certificates as ICertificates2;
 
-    // Verificando se "FNumCertACarregar" está na lista de certificados encontrados //;
+    // Verificando se "FpDFeSSL.NumeroSerie" está na lista de certificados encontrados //;
     for i := 1 to Certs.Count do
     begin
       Cert := IInterface(Certs.Item[i]) as ICertificate2;
-      if Cert.SerialNumber = FNumCertACarregar then
+      if Cert.SerialNumber = FpDFeSSL.NumeroSerie then
       begin
         FCertificado := Cert;
         Break;

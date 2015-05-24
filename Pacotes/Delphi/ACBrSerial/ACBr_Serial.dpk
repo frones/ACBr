@@ -103,6 +103,7 @@ contains
   ACBrSMSClass in '..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas',
   ACBrSMSDaruma in '..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas',
   ACBrECFVirtual in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtual.pas',
+  ACBrECFVirtualBuffer in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtualBuffer.pas',
   ACBrECFVirtualPrinter in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtualPrinter.pas',
   ACBrECFVirtualNaoFiscal in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtualNaoFiscal.pas',
   ACBrBALLider in '..\..\..\Fontes\ACBrSerial\ACBrBALLider.pas';

@@ -218,10 +218,6 @@ end ;
 
 TACBrECFVirtualClass = class( TACBrECFClass )
   private
-    // Não declare fpDevice ou fpColunas aqui... eles são protected em TACBrECFClass
-    //fpDevice: TACBrDevice;
-    //fpColunas: Integer;
-
     fsECFVirtualOwner: TACBrECFVirtual;
     fsQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
     fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;

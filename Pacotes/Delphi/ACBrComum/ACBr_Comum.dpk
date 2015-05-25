@@ -1,6 +1,6 @@
 package ACBr_Comum;
 
-//{$R *.res}
+{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}

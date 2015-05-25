@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/05/2015
+-- ACBrEscECF --
+[*] Ajuste para compatibilizar com Epson TM-T800F 01.01
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=21780
+
 Data: 12/05/2015 (por: regys.silveira)
 -- ACBrECFEscECF --
 [-] acertos no tratamento de aliquotas para o protocolo EscECF

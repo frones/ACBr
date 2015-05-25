@@ -1403,7 +1403,7 @@ end;
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
 begin
   if Pos('|',Registrador) = 0 then
-     Registrador := Registrador + '|' ;
+     Registrador := Registrador + '|0' ;
 
   EscECFComando.CMD := 26;
   EscECFComando.AddParamString(Registrador);

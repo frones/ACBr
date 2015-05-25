@@ -1,7 +1,7 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 259
+  Left = 238
   Height = 637
-  Top = 148
+  Top = 54
   Width = 838
   Caption = 'Manifesto - Retrato'
   ClientHeight = 637
@@ -11,8 +11,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Font.Style = [fsBold]
   inherited RLMDFe: TRLReport
     Tag = 1
-    Left = 8
-    Top = 8
+    Left = 24
+    Top = -312
     Font.Height = -8
     Font.Name = 'Courier New'
     Margins.LeftMargin = 7
@@ -1561,7 +1561,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Height = 0
       BeforePrint = rlb_2_RodoBeforePrint
       object rlShape8: TRLDraw
-        Left = 0
+        Left = 1
         Height = 201
         Top = 0
         Width = 752
@@ -2409,7 +2409,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Left = 4
         Height = 108
         Top = 21
-        Width = 741
+        Width = 735
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
@@ -2429,10 +2429,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
       end
       object rllMsgTeste: TRLLabel
-        Left = 14
+        Left = 11
         Height = 31
         Top = 38
-        Width = 718
+        Width = 724
         Alignment = taCenter
         Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
         Color = clWhite
@@ -2465,10 +2465,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rllSistema: TRLLabel
-        Left = 356
+        Left = 352
         Height = 11
         Top = 139
-        Width = 392
+        Width = 387
         Alignment = taRightJustify
         AutoSize = False
         Color = clWhite
@@ -2486,10 +2486,17 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_8_Documentos_Lista: TRLBand[6]
       Left = 26
-      Height = 24
-      Top = 887
+      Height = 22
+      Top = 885
       Width = 742
-      BandType = btColumnHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Borders.FixedLeft = True
+      Borders.FixedRight = True
+      Borders.FixedBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -2497,13 +2504,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       object rlmChave1: TRLDBText
-        Left = 3
+        Left = 5
         Height = 16
-        Top = 4
+        Top = 2
         Width = 366
         AutoSize = False
         Color = clWhite
-        DataField = 'Chave_1'
+        DataField = 'CHAVE1'
+        DataSource = dsItens
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
@@ -2517,7 +2525,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rls2: TRLDraw
         Left = 374
         Height = 22
-        Top = 0
+        Top = -1
         Width = 1
         Angle = 0
         RealBounds.Left = 0
@@ -2526,13 +2534,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
       end
       object rlmChave2: TRLDBText
-        Left = 380
+        Left = 384
         Height = 16
-        Top = 4
-        Width = 366
+        Top = 2
+        Width = 354
         AutoSize = False
         Color = clWhite
-        DataField = 'Chave_2'
+        DataField = 'CHAVE2'
+        DataSource = dsItens
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
@@ -2546,10 +2555,15 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_7_Documentos_Titulos: TRLBand[7]
       Left = 26
-      Height = 34
+      Height = 32
       Top = 853
       Width = 742
       BandType = btColumnHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -2557,10 +2571,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       object rlsQuadrado5: TRLDraw
-        Left = 0
+        Left = 1
         Height = 20
         Top = 0
-        Width = 752
+        Width = 751
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0

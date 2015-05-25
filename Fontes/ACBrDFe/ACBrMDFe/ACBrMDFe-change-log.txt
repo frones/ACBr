@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2015
+[*] Melhorias no DAMDFE em Fortes Report.
+    por: André J. da Silva
+
 01/05/2015
 [*] Atualização das URLs de produção e homologação do MDF-e publicadas 
     pela SEFAZ-RS.

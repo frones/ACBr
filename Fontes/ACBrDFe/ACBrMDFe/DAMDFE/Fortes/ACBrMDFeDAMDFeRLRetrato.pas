@@ -218,6 +218,12 @@ var
   vStringStream: TStringStream;
 begin
   inherited;
+
+  {$IFNDEF BORLAND}
+  rlLabel8.Layout := tlCenter;
+  rlLabel8.Font.Size := 6;
+  {$ENDIF}
+
   if (FLogo <> '') then
   begin
     if FilesExists(FLogo) then
@@ -249,6 +255,7 @@ begin
 
   if not FExpandirLogoMarca then
   begin
+    rliLogo.Stretch := true;
     rlmEmitente.Enabled := True;
     rlmDadosEmitente.Enabled := True;
     // Emitente
@@ -315,6 +322,9 @@ begin
     begin
       rllModal.Caption := 'MODAL RODOVIÁRIO DE CARGA';
       rllCIOT.Caption := FMDFe.rodo.CIOT;
+      rlb_3_Aereo.Visible := false;
+      rlb_4_Aquav.Visible := false;
+      rlb_5_Ferrov.Visible := false;
     end;
     moAereo:
     begin

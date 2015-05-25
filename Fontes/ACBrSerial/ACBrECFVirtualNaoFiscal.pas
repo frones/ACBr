@@ -76,7 +76,6 @@ TACBrECFVirtualNaoFiscal = class( TACBrECFVirtualPrinter )
     property Cabecalho ;
     property CabecalhoItem ;
     property MascaraItem ;
-
 end ;
 
 { TACBrECFVirtualNaoFiscalClass }

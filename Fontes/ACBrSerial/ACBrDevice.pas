@@ -366,6 +366,8 @@ TACBrThreadEnviaLPT = class(TThread)
     property BytesSent : Integer read fsBytesSent ;
   end;
 
+const
+  estCupomAberto = [estVenda, estPagamento];
 
 implementation
 Uses ACBrUtil ;

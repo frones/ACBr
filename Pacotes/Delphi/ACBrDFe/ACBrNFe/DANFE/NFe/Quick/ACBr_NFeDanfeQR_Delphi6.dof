@@ -88,7 +88,7 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=ACBrNFeDanfeQR - (http://acbr.sourceforge.net/)
+ExeDescription=ACBr - DANFe em QuickReport para Delphi6 - (http://www.projetoacbr.com.br/)
 [Directories]
 OutputDir=
 UnitOutputDir=

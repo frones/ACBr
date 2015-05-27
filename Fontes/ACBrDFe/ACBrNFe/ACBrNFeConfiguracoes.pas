@@ -258,7 +258,7 @@ begin
   Result := GetPath(FPathCCe, 'CCe', CNPJ);
 end;
 
-function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String): String;
+function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
 begin
   if EstaVazio(FDownloadNFe.PathDownload) then
      FDownloadNFe.PathDownload := PathSalvar;

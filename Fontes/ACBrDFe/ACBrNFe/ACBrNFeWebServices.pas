@@ -2784,7 +2784,7 @@ end;
 
 function TNFeDownloadNFe.GerarPathDownload(AItem :TRetNFeCollectionItem): String;
 begin
-  Result := FConfiguracoes.Arquivos.GetPathDownload('', Copy(AItem.chNFe,7,14));
+  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload('', Copy(AItem.chNFe,7,14));
 end;
 
 { TAdministrarCSCNFCe }

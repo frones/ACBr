@@ -44,7 +44,7 @@ uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
-  ACBrMDFeDAMDFEClass,
+  ACBrMDFeDAMDFEClass,ACBrDFeException,
   pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
   pmdfeEnvEventoMDFe,
   ACBrUtil;

@@ -101,7 +101,8 @@ function TcancCTe.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('cancCTe ' + NAME_SPACE_CTE + ' versao="' + CTecancCTe + '"');
+  //Gerador.wGrupo('cancCTe ' + NAME_SPACE_CTE + ' versao="' + CTecancCTe + '"');
+	Gerador.wGrupo('cancCTe ' + NAME_SPACE_CTE + ' versao="1.04"');
   Gerador.wGrupo('infCanc Id="ID' + OnlyNumber(FchCTe) + '"');
   Gerador.wCampo(tcStr, 'CP05', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'CP06', 'xServ', 008, 008, 1, 'CANCELAR', DSC_XSERV);

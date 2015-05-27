@@ -92,8 +92,8 @@ requires
   ACBr_NFe, ACBr_Diversos;
 
 contains
-  ACBrNFeDANFEFRReg in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFEFRReg.pas',
-  ACBrNFeDANFEFR in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFEFR.pas',
-  ACBrNFeDANFEFRDM in '..\..\..\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas';
+  ACBrNFeDANFEFRReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fast\ACBrNFeDANFEFRReg.pas',
+  ACBrNFeDANFEFR in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fast\ACBrNFeDANFEFR.pas',
+  ACBrNFeDANFEFRDM in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fast\ACBrNFeDANFEFRDM.pas';
 
 end.

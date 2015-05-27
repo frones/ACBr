@@ -352,8 +352,8 @@ type
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
-    function GerarMsgLog: AnsiString; override;
-    function GerarMsgErro(E: Exception): AnsiString; override;
+    function GerarMsgLog: String; override;
+    function GerarMsgErro(E: Exception): String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
@@ -1865,7 +1865,7 @@ begin
   Result := (FcStat in [111, 112]);
 end;
 
-function TMDFeConsultaMDFeNaoEnc.GerarMsgLog: AnsiString;
+function TMDFeConsultaMDFeNaoEnc.GerarMsgLog: String;
 begin
   Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +

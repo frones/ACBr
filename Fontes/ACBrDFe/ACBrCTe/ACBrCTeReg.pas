@@ -58,7 +58,7 @@ procedure Register;
 implementation
 
 uses
-  ACBrReg, ACBrDFe, ACBrDFeConfiguracoes, ACBrCTeConfiguracoes;
+  ACBrReg, ACBrDFe, ACBrDFeConfiguracoes, ACBrCTeConfiguracoes, ACBrDFeRegUtil;
 
 {$IFNDEF FPC}
    {$R ACBrCTe.dcr}

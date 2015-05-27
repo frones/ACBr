@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/05/2015
+[+] Adicionado recurso para salvar XML baixados por DistribuicaoDFe em pastas
+    separadas por Nome do Emitente.
+    por Isaque Pinheiro
+
+27/05/2015
 [-] Ao gerar o TXT de uma NF-e estava sendo setado a versão, e da forma que esta
     sendo feito sempre iria gerar o TXT segundo a versão 2.00, comentei a linha
     e aparentemente o problema resolveu.

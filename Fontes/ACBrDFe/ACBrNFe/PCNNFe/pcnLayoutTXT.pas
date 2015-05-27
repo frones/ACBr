@@ -274,8 +274,8 @@ begin
     LoadLayout('<BA>   BA02|refNFe¨');
     LoadLayout('<BA03> BA03|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨');
     LoadLayout('<BA10> BA10|cUF¨|AAMM¨|IE¨|Mod¨|serie¨|nNF¨|refCTe¨');
-    LoadLayout('<B13>   B13|CNPJ¨');
-    LoadLayout('<B14>   B14|CPF¨');
+    LoadLayout('<BA13> BA13|CNPJ¨');
+    LoadLayout('<BA14> BA14|CPF¨');
     LoadLayout('<BA20> BA20|mod¨|nECF¨|nCOO¨');
     LoadLayout('<C01>     C|XNome¨|XFant¨|IE¨|IEST¨|IM¨|CNAE¨|CRT¨'); 
     LoadLayout('<C01>   C02|CNPJ¨');

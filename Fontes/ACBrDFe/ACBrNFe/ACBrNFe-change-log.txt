@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2015
+[-] Ao gerar o TXT de uma NF-e estava sendo setado a versão, e da forma que esta
+    sendo feito sempre iria gerar o TXT segundo a versão 2.00, comentei a linha
+    e aparentemente o problema resolveu.
+    por: Italo Jurisato Junior
+
 20/05/2015
 [*] Acrescentado uma condição para determinar se será salvo em disco ou não os
     XML retornados pelo DistribuicaoDFe.

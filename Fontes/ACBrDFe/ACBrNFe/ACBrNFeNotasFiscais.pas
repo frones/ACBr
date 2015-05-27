@@ -651,7 +651,7 @@ function NotaFiscal.GerarTXT: String;
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-    NFe.infNFe.Versao := StringToFloat(LerVersaoDeParams(LayNfeRecepcao));
+//    NFe.infNFe.Versao := StringToFloat(LerVersaoDeParams(LayNfeRecepcao));
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;

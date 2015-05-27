@@ -82,8 +82,13 @@ var
   ok: boolean;
   i, j, nItem: integer;
   Arquivo, Itens, ItensTemp, NumItem: AnsiString;
+  Aspas: String;
 begin
   Result := False;
+  if Pos('versao="', Leitor.Arquivo) <> 0 then
+    Aspas := '"'
+   else
+    Aspas := '''';
   CFe.Clear;
 
   if Leitor.rExtrai(1, 'infCFe') <> '' then
@@ -180,13 +185,13 @@ begin
   begin
     Leitor.Arquivo := 'Item '+ItensTemp;
 
-    NumItem := copy(ItensTemp,Pos('nItem=',ItensTemp)+7,Pos('"',ItensTemp));
-    NumItem := copy(NumItem,1,Pos('"',NumItem)-1);
-    nItem := StrToInt(NumItem);
+    NumItem   := copy(ItensTemp,Pos('nItem=',ItensTemp)+7,Pos(Aspas,ItensTemp));
+    NumItem   := copy(NumItem,1,Pos(Aspas,NumItem)-1);
+    nItem     := StrToInt(NumItem);
     Itens     := StringReplace(Itens, ItensTemp, '',[]);
     ItensTemp := copy(Itens,Pos('<det nItem=',Itens),(Pos('</det>',Itens)+6)-Pos('<det nItem=',Itens));
 
-    Leitor.rExtrai(1, 'det nItem="' + IntToStr(nItem) + '"', 'det');
+    Leitor.rExtrai(1, 'det nItem=' + Aspas + IntToStr(nItem) + Aspas, 'det');
     CFe.Det.Add;
     (*   *)CFe.Det[i].nItem := nItem;
     (*V01*)CFe.Det[i].infAdProd := Leitor.rCampo(tcStr, 'infAdProd');

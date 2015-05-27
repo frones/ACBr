@@ -277,6 +277,8 @@ begin
         begin
           ACBrSAT1.Config.infCFe_versaoDadosEnt := StringToFloatDef( INIRec.ReadString('infCFe','versao',''),ACBrSAT1.Config.infCFe_versaoDadosEnt) ;
 
+          infCFe.versaoDadosEnt := ACBrSAT1.Config.infCFe_versaoDadosEnt;
+
           Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigo(INIRec.ReadString(  'Emitente','UF','')));
           Ide.cNF        := INIRec.ReadInteger( 'Identificacao','Codigo' ,INIRec.ReadInteger( 'Identificacao','cNF' ,0));
           Ide.modelo     := INIRec.ReadInteger( 'Identificacao','Modelo' ,INIRec.ReadInteger( 'Identificacao','mod' ,59));

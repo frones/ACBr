@@ -1161,7 +1161,6 @@ var
   codMesSicredi : String;
   Flag : Boolean;
 begin
-   Sequencia := 0;
    Flag := True;
    with ACBrBanco.ACBrBoleto do
    begin
@@ -1178,20 +1177,28 @@ begin
            12 : codMesSicredi := 'D';
          end;
 
-         Sequencia := 2;
          NomeFixo := DirArqRemessa + PathDelim +
                      Copy(Cedente.CodigoCedente,1,5)+ codMesSicredi +
                      FormatDateTime( 'dd', Now );
 
          NomeArq := NomeFixo + '.crm';
 
+         Sequencia := 1;
          while FilesExists(NomeArq) do
          begin
-            NomeArq := NomeFixo +'.rm'+IntToStr(Sequencia);
-            Inc(Sequencia);
+           Inc(Sequencia);
 
-            if Sequencia > 9 then
-               raise Exception.Create(ACBrStr('Número máximo de 10 arquivos de remessa alcançado'));
+           if Sequencia > 9 then
+           begin
+             if Sequencia = 10 then
+               NomeArq := NomeFixo +'.rm0'
+             else
+               raise Exception.Create(ACBrStr('Número máximo de 10 arquivos '+
+                                              'de remessa alcançado'));
+           end
+           else
+             NomeArq := NomeFixo +'.rm'+IntToStr(Sequencia);
+
          end;
 
          Result:= NomeArq;

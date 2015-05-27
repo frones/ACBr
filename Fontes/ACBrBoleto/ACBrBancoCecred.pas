@@ -658,7 +658,7 @@ begin
    begin
       Linha := ARetorno[ContLinha] ;
 
-      if (Copy(Linha,1,1) <> '1') then
+      if (Copy(Linha,1,1) <> '7') then
          Continue;
 
       Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
@@ -704,10 +704,10 @@ begin
          ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
          ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
          ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+         ValorRecebido        := StrToFloatDef(Copy(Linha,306,13),0)/100;
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-         NossoNumero          := Copy(Linha,63,11);
+         NossoNumero          := Copy(Linha,64,17);
          Carteira             := Copy(Linha,107,2);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,182,07),0)/100;
          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;

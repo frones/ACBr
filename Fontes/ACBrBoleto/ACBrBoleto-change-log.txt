@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 25/05/2015 ver. 0.0.129a
+-- ACBrBoleto --
+[-]Correção função getOcorrenciasRemessa (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21106-retornar-listagem-com-os-tipos-de-ocorr%C3%AAncias-remessaretorno/
+
+-- ACBrBancoDoBrasil --
+[-]Correção registro header CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21707-ajuda-com-banco-do-brasil/
+
+-- ACBrBancoSicredi --
+[*] Ajuste calculo do nome do arquivo remessa.
+http://www.projetoacbr.com.br/forum/index.php?/topic/21769-remessas-di%C3%A1rias-banco-sicredi/
+
+
 Data: 22/05/2015 ver. 0.0.128a
 -- ACBrBancoSicredi --
 [*]Refatorado código de montagem do nosso número. (Juliana Tamizou)

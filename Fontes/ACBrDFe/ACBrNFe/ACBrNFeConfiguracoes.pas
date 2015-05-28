@@ -65,10 +65,15 @@ type
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
   end;
 
+  { TDownloadConfNFe }
+
   TDownloadConfNFe = class(TPersistent)
   private
     FPathDownload: String;
     FSepararPorNome: Boolean;
+  public
+    Constructor Create;
+    procedure Assign(Source: TPersistent); override;
   published
     property PathDownload: String read FPathDownload write FPathDownload;
     property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
@@ -139,6 +144,25 @@ implementation
 uses
   ACBrUtil,
   DateUtils;
+
+{ TDownloadConfNFe }
+
+constructor TDownloadConfNFe.Create;
+begin
+  FPathDownload := '';
+  FSepararPorNome := False;
+end;
+
+procedure TDownloadConfNFe.Assign(Source: TPersistent);
+begin
+  if Source is TDownloadConfNFe then
+  begin
+    FPathDownload := TDownloadConfNFe(Source).PathDownload;
+    FSepararPorNome := TDownloadConfNFe(Source).SepararPorNome;
+  end
+  else
+    inherited Assign(Source);
+end;
 
 { TConfiguracoesNFe }
 
@@ -223,8 +247,6 @@ begin
   FPathInu := '';
   FPathCCe := '';
   FPathEvento := '';
-  FDownloadNFe.PathDownload := '';
-  FDownloadNFe.FSepararPorNome := False;
 end;
 
 destructor TArquivosConfNFe.Destroy;
@@ -245,7 +267,7 @@ begin
   PathInu                    := DeArquivosConfNFe.PathInu;
   PathCCe                    := DeArquivosConfNFe.PathCCe;
   PathEvento                 := DeArquivosConfNFe.PathEvento;
-  FDownloadNFe.PathDownload  := DeArquivosConfNFe.DownloadNFe.PathDownload;
+  FDownloadNFe.Assign(DeArquivosConfNFe.DownloadNFe);
 end;
 
 function TArquivosConfNFe.GetPathCan(CNPJ: String = ''): String;
@@ -316,4 +338,4 @@ begin
 end;
 
 
-end.
+end.

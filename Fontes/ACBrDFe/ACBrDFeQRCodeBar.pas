@@ -80,7 +80,7 @@ interface
 
 uses
   Windows,
-  Classes, ClipBrd, Controls, Graphics, Messages, SysUtils, ACBrDFe;
+  Classes, ClipBrd, Controls, Graphics, Messages, SysUtils, ACBrDFeException;
 
 const
   bcMaxBarCodeLen = 255;
@@ -173,7 +173,6 @@ type
     class procedure PaintCodeToCanvas( ACode : string ; ACanvas : TCanvas; ARect : TRect);
 
   end;
-
 
 implementation
 

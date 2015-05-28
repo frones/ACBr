@@ -187,8 +187,7 @@ function TRetDownloadNFe.LerXml: boolean;
 var
   ok: boolean;
   i: Integer;
-  StrAux, StrDecod: String;
-  oLeitorInfZip: TLeitor;
+  StrAux, StrDecod, versao: String;
 begin
   Result := False;
   try
@@ -218,13 +217,13 @@ begin
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
 
-          (*JR12*)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
+          FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                                 FretNFe.Items[i].FNFeZip;
         end;
 
         if pos('procNFe', Leitor.Grupo) > 0 then
         begin
-          (*JR12*)FretNFe.Items[i].FprocNFe := '<'+ENCODING_UTF8+'>' +
+          FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                            SeparaDados(Leitor.Grupo, 'procNFe');
         end;
 
@@ -240,14 +239,16 @@ begin
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FProtNFeZip := UnZip(StrDecod);
 
-          oLeitorInfZip := TLeitor.Create;
-          oLeitorInfZip.Arquivo := FretNFe.Items[i].FNFeZip;
+          versao := RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, 'versao="', '">');
 
-          (*JR12*)FretNFe.Items[i].FprocNFe := '<' + ENCODING_UTF8 + '>' +
-                  '<nfeProc versao="' + oLeitorInfZip.rAtributo('versao') + '" ' +
+          FretNFe.Items[i].FprocNFe := '<' + ENCODING_UTF8 + '>' +
+                  '<nfeProc versao="' + copy(versao, 1, 4) + '" ' +
                       NAME_SPACE + '>' +
                     FretNFe.Items[i].FNFeZip +
-                    FretNFe.Items[i].FProtNFeZip +
+                    '<protNFe' +
+                      RetornarConteudoEntre(FretNFe.Items[i].FProtNFeZip,
+                                                     '<protNFe', '</protNFe>') +
+                    '</protNFe>' +
                   '</nfeProc>';
         end;
 

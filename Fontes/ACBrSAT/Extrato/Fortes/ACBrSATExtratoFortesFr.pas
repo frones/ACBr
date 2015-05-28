@@ -874,7 +874,7 @@ end;
 
 destructor TACBrSATExtratoFortes.Destroy;
 begin
-  fMargens.Destroy;
+  fMargens.Free;
 
   inherited Destroy ;
 end;

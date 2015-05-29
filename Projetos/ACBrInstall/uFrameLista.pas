@@ -73,7 +73,6 @@ type
     PCN2_dpk: TCheckBox;
     ACBr_NFe2_dpk: TCheckBox;
     ACBr_CTe_dpk: TCheckBox;
-    ACBrNFeDanfeRVCodeBase_dpk: TCheckBox;
     Label8: TLabel;
     ACBr_NFSe_dpk: TCheckBox;
     Label18: TLabel;
@@ -88,30 +87,21 @@ type
     tsSAT: TTabSheet;
     tsGNRE: TTabSheet;
     ACBrNFeDanfeFR_dpk: TCheckBox;
-    ACBrNFeDanfeQR_dpk: TCheckBox;
-    ACBrNFeDanfeRV_dpk: TCheckBox;
     ACBrNFeDanfeRL_dpk: TCheckBox;
     ACBrCTeDacteFR_dpk: TCheckBox;
-    ACBrCTeDacteQR_dpk: TCheckBox;
     ACBrCTeDacteRLpkg: TCheckBox;
     ACBrNFSeDanfseRLpkg_dpk: TCheckBox;
     ACBrNFSeDanfseFRpkg_dpk: TCheckBox;
-    ACBrNFSeDanfseQRpkg_dpk: TCheckBox;
-	ACBrNFSeDANFSeRVpkg_dpk: TCheckBox;
     ACBr_BoletoFC_FR_dpk: TCheckBox;
-    ACBr_BoletoFC_Quick_dpk: TCheckBox;
     ACBr_BoletoFC_Fortes_dpk: TCheckBox;
     Label9: TLabel;
     Label11: TLabel;
-    Label10: TLabel;
-    Label12: TLabel;
     ACBr_GNRE_dpk: TCheckBox;
     ACBr_Convenio115_dpk: TCheckBox;
     ACBr_SEF2_dpk: TCheckBox;
     ACBr_SAT_dpk: TCheckBox;
     ACBrMDFeDAMDFEFRpkg_dpk: TCheckBox;
     ACBrMDFeDAMDFeRLpkg_dpk: TCheckBox;
-    ACBrMDFeDAMDFEQRpkg_dpk: TCheckBox;
     ACBr_SAT_Extrato_Fortes_dpk: TCheckBox;
     ACBrGNREGuiaFRpkg_dpk: TCheckBox;
     ACBrNFeDanfeESCPOS_dpk: TCheckBox;
@@ -377,31 +367,25 @@ begin
   		// quando não for selecionado o NFe devemos desmarcar
 		if not ACBr_NFe2_dpk.Checked then
 		begin
-    	  ACBrNFeDanfeFR_dpk.Checked := False;
-    	  ACBrNFeDanfeRL_dpk.Checked := False;
-    	  ACBrNFeDanfeQR_dpk.Checked := False;
-    	  ACBrNFeDanfeRV_dpk.Checked := False;
+      ACBrNFeDanfeFR_dpk.Checked := False;
+      ACBrNFeDanfeRL_dpk.Checked := False;
 		end;
   		// quando não for selecionado o CTe devemos desmarcar
 		if not ACBr_CTe_dpk.Checked then
 		begin
-    	  ACBrCTeDacteFR_dpk.Checked := False;
-    	  ACBrCTeDacteQR_dpk.Checked := False;
-    	  ACBrCTeDacteRLpkg.Checked := False;
+      ACBrCTeDacteFR_dpk.Checked := False;
+      ACBrCTeDacteRLpkg.Checked := False;
 		end;
   		// quando não for selecionado o NFSe devemos desmarcar
 		if not ACBr_NFSe_dpk.Checked then
 		begin
-    	  ACBrNFSeDanfseFRpkg_dpk.Checked := False;
-    	  ACBrNFSeDanfseRLpkg_dpk.Checked := False;
-    	  ACBrNFSeDanfseQRpkg_dpk.Checked := False;
-    	  ACBrNFSeDanfseRVpkg_dpk.Checked := False;
+      ACBrNFSeDanfseFRpkg_dpk.Checked := False;
+      ACBrNFSeDanfseRLpkg_dpk.Checked := False;
 		end;
 		// quando não for selecionado o Boleto devemos desmarcar
 		if not ACBr_Boleto_dpk.Checked then
 		begin
 		  ACBr_BoletoFC_FR_dpk.Checked := False;
-		  ACBr_BoletoFC_Quick_dpk.Checked := False;
 		  ACBr_BoletoFC_Fortes_dpk.Checked := False;
 		end;
 		// quando não for selecionado o MDF-e devemos desmarcar
@@ -409,7 +393,6 @@ begin
 		begin
 		  ACBrMDFeDAMDFEFRpkg_dpk.Checked := False;
 		  ACBrMDFeDAMDFeRLpkg_dpk.Checked := False;
-		  ACBrMDFeDAMDFEQRpkg_dpk.Checked := False;
 		end;
 		// quando não for selecionado o SAT devemos desmarcar
 		if not ACBr_SAT_dpk.Checked then
@@ -458,9 +441,6 @@ begin
 		// Dependencias do ACBrPaf
 		if not(ACBr_SPED_dpk.Checked) and ACBr_PAF_dpk.Checked then
 		  ACBr_SPED_dpk.Checked := True;
-
-		// Dependencia
-		ACBrNFeDanfeRVCodeBase_dpk.Checked := ACBrNFeDanfeRV_dpk.Checked;
 	finally
 	  FUtilizarBotoesMarcar := false;
 	end;

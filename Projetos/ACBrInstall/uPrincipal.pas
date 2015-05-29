@@ -79,11 +79,9 @@ type
     Label3: TLabel;
     pgbInstalacao: TProgressBar;
     lblUrlACBrSac1: TLabel;
-    lblUrlForum1: TLabel;
     lblUrlACBr1: TLabel;
     Label19: TLabel;
     Label20: TLabel;
-    Label21: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
@@ -103,7 +101,6 @@ type
     ckbInstalarOpenSSL: TCheckBox;
     wizPgPacotes: TJvWizardInteriorPage;
     frameDpk: TframePacotes;
-    ckbUtilizarOpenSSL: TCheckBox;
     rdgDLL: TRadioGroup;
     ckbCopiarTodasDll: TCheckBox;
     ckbBCB: TCheckBox;
@@ -132,7 +129,6 @@ type
     procedure wizPgInstalacaoEnterPage(Sender: TObject;
       const FromPage: TJvWizardCustomPage);
     procedure rdgDLLClick(Sender: TObject);
-    procedure ckbUtilizarOpenSSLClick(Sender: TObject);
   private
     FCountErros: Integer;
     oACBr: TJclBorRADToolInstallations;
@@ -208,89 +204,32 @@ begin
   end;
 end;
 
-
-// configuraração para utilizar ou não o openssl ao compilar
-procedure TfrmPrincipal.ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
-var
-  F: TStringList;
-  PathArquivo: String;
-
-  function BuscarTexto(const ATextoBusca: String; var ALinha: Integer): Boolean;
-  var
-    I: Integer;
-  begin
-    Result := False;
-    for I := 0 to F.Count - 1 do
-    begin
-      if Pos(UpperCase(ATextoBusca), UpperCase(F.Strings[I])) > 0 then
-      begin
-        ALinha := I;
-        Result := True;
-        Exit;
-      end;
-    end;
-  end;
-
-  procedure ComentarLinha(const ATextoBusca: String; const AComentar: Boolean);
-  var
-    Linha: Integer;
-  begin
-    if BuscarTexto(ATextoBusca, Linha) then
-    begin
-      if AComentar then
-        F.Strings[Linha] := '//' + StringReplace(F.Strings[Linha], '/', '', [rfReplaceAll])
-      else
-        F.Strings[Linha] := StringReplace(F.Strings[Linha], '/', '', [rfReplaceAll]);
-    end;
-  end;
-
-begin
-  PathArquivo :=
-    IncludeTrailingPathDelimiter(edtDirDestino.Text) +
-    'Fontes\ACBrComum\ACBr.inc';
-
-  F := TStringList.Create;
-  try
-    F.LoadFromFile(PathArquivo);
-    ComentarLinha('{$DEFINE ACBrNFeOpenSSL}', not(AUtilizar));
-    ComentarLinha('{$DEFINE ACBrCTeOpenSSL}', not(AUtilizar));
-    ComentarLinha('{$DEFINE ACBrNFSeOpenSSL}', not(AUtilizar));
-	 ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
-	 ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
-
-    WriteToTXT(PathArquivo, F.Text, False, False);
-  finally
-    F.Free;
-  end;
-end;
-
 function TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string): string;
 begin
-  // adicionar o nível do diretório da nota eletronica
   if frameDpk.IsPacoteNF2(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrNFe2\'
+    Result := '\Pacotes\Delphi\ACBrDFe\ACBr_NFe\'
   else if frameDpk.IsPacoteCTe(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrCTe\'
+    Result := '\Pacotes\Delphi\ACBrDFe\ACBr_CTe\'
   else if frameDpk.IsPacoteNFSe(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrNFSe\'
+    Result := '\Pacotes\Delphi\ACBrDFe\ACBr_NFSe\'
   else if frameDpk.IsPacoteMDFe(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrMDFe\'
-  else if frameDpk.IsPacoteBoleto(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrBoleto\'
-  else if frameDpk.IsPacoteSped(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrSPED\'
-  else if frameDpk.IsPacoteSintegra(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrSintegra\'
-  else if frameDpk.IsPacotePaf(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrPAF\'
-  else if frameDpk.IsPacoteSerial(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrSerial\'
-  else if frameDpk.IsPacoteTEFD(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrTEFD\'
-  else if frameDpk.IsPacoteSAT(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrSAT\'
+    Result := '\Pacotes\Delphi\ACBrDFe\ACBr_MDFe\'
   else if frameDpk.IsPacoteGNRE(NomePacote) then
-    Result := '\Pacotes\Delphi\ACBrGNRE\'
+    Result := '\Pacotes\Delphi\ACBrDFe\ACBr_GNRE\'
+  else if frameDpk.IsPacoteBoleto(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_Boleto\'
+  else if frameDpk.IsPacoteSped(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_SPED\'
+  else if frameDpk.IsPacoteSintegra(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_Sintegra\'
+  else if frameDpk.IsPacotePaf(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_PAF\'
+  else if frameDpk.IsPacoteSerial(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_Serial\'
+  else if frameDpk.IsPacoteTEFD(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_TEFD\'
+  else if frameDpk.IsPacoteSAT(NomePacote) then
+    Result := '\Pacotes\Delphi\ACBr_SAT\'
   else
     Result := '\Pacotes\Delphi\';
 end;
@@ -526,7 +465,6 @@ begin
     ckbFecharTortoise.Checked  := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
     ckbInstalarCapicom.Checked := ArqIni.ReadBool('CONFIG', 'InstalarCapicom', True);
     ckbInstalarOpenSSL.Checked := ArqIni.ReadBool('CONFIG', 'InstalarOpenSSL', True);
-    ckbUtilizarOpenSSL.Checked := ArqIni.ReadBool('CONFIG', 'UtilizarOpenSSL', False);
     rdgDLL.ItemIndex           := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
     ckbCopiarTodasDll.Checked  := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
     ckbBCB.Checked             := ArqIni.ReadBool('CONFIG','C++Builder',False);
@@ -557,7 +495,6 @@ begin
     ArqIni.WriteBool('CONFIG', 'FecharTortoise', ckbFecharTortoise.Checked);
     ArqIni.WriteBool('CONFIG', 'InstalarCapicom', ckbInstalarCapicom.Checked);
     ArqIni.WriteBool('CONFIG', 'InstalarOpenSSL', ckbInstalarOpenSSL.Checked);
-    ArqIni.WriteBool('CONFIG', 'UtilizarOpenSSL', ckbUtilizarOpenSSL.Checked);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
     ArqIni.WriteBool('CONFIG','CopiarTodasDLLs',ckbCopiarTodasDll.Checked);
     ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
@@ -954,7 +891,6 @@ begin
     WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
 
     // configurar o ACBr para utilizar o OpenSSL
-    ConfigurarParaUtilizarOpenSSL(ckbUtilizarOpenSSL.Checked);
     pgbInstalacao.Position := pgbInstalacao.Position + 1;
     lstMsgInstalacao.Items.Add('Configurando a utilização do OpenSSL...');
     Application.ProcessMessages;
@@ -1390,13 +1326,6 @@ end;
 procedure TfrmPrincipal.btnVisualizarLogCompilacaoClick(Sender: TObject);
 begin
   ShellExecute(Handle, 'open', PWideChar(PathArquivoLog), '', '', 1);
-end;
-
-procedure TfrmPrincipal.ckbUtilizarOpenSSLClick(Sender: TObject);
-begin
-  ckbInstalarOpenSSL.Enabled := not(ckbUtilizarOpenSSL.Checked);
-  if ckbUtilizarOpenSSL.Checked then
-    ckbInstalarOpenSSL.Checked := True;
 end;
 
 procedure TfrmPrincipal.wizPgObterFontesNextButtonClick(Sender: TObject;

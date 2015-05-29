@@ -57,11 +57,10 @@ type
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
-    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
-      override;
+    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString; override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
-    function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
-      override;
+    function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; override;
+    function ComandoLogo: AnsiString; override;
   end;
 
 
@@ -95,6 +94,11 @@ begin
     AbreGaveta              := ESC + 'v' + #200;
   end;
   {*)}
+end;
+
+function TACBrEscDaruma.ComandoLogo: AnsiString;
+begin
+  Result := FS + 'p'#1#3; 
 end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
@@ -148,4 +152,3 @@ begin
 end;
 
 end.
-

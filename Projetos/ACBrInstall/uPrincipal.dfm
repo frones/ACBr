@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = edtDirDestino
+  ActiveControl = frameDpk.ACBrSerial_dpk
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgConfiguracao
+    ActivePage = wizPgPacotes
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -914,25 +914,12 @@ object frmPrincipal: TfrmPrincipal
       object lblUrlACBrSac1: TLabel
         Left = 93
         Top = 200
-        Width = 268
+        Width = 383
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://www.djsystem.com.br/acbr/sac/index.php/sobre'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsUnderline]
-        ParentFont = False
-        OnClick = URLClick
-      end
-      object lblUrlForum1: TLabel
-        Left = 93
-        Top = 317
-        Width = 221
-        Height = 13
-        Cursor = crHandPoint
-        Caption = 'http://djsystem.com.br/acbr/forum/index.php'
+        Caption = 
+          'http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_' +
+          'sac.html'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -944,10 +931,10 @@ object frmPrincipal: TfrmPrincipal
       object lblUrlACBr1: TLabel
         Left = 93
         Top = 259
-        Width = 173
+        Width = 189
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://acbr.sourceforge.net/drupal/'
+        Caption = 'http://www.projetoacbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -959,9 +946,11 @@ object frmPrincipal: TfrmPrincipal
       object Label19: TLabel
         Left = 25
         Top = 243
-        Width = 259
+        Width = 450
         Height = 13
-        Caption = 'Para maiores informa'#231#245'es sobre o projeto ACBr visite:'
+        Caption = 
+          'Para maiores informa'#231#245'es sobre o projeto ACBr, tirar d'#250'vidas, aj' +
+          'udar ou dar sugest'#245'es visite:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGreen
         Font.Height = -11
@@ -984,22 +973,9 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label21: TLabel
-        Left = 25
-        Top = 301
-        Width = 241
-        Height = 13
-        Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGreen
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
       object Label11: TLabel
         Left = 93
-        Top = 374
+        Top = 324
         Width = 137
         Height = 13
         Cursor = crHandPoint
@@ -1014,7 +990,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label12: TLabel
         Left = 25
-        Top = 358
+        Top = 308
         Width = 250
         Height = 13
         Caption = 'Para baixar o cliente de SVN TORTOISE visite o site:'
@@ -1185,7 +1161,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 97
         Height = 17
         Caption = 'Instalar Capicom'
-        TabOrder = 5
+        TabOrder = 4
       end
       object ckbInstalarOpenSSL: TCheckBox
         Left = 17
@@ -1193,16 +1169,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 97
         Height = 17
         Caption = 'Instalar OpenSSL'
-        TabOrder = 6
-      end
-      object ckbUtilizarOpenSSL: TCheckBox
-        Left = 17
-        Top = 175
-        Width = 304
-        Height = 17
-        Caption = 'Utilizar o OpenSSL ao inv'#233's da Capicom na NF-e e similares'
-        TabOrder = 4
-        OnClick = ckbUtilizarOpenSSLClick
+        TabOrder = 5
       end
       object rdgDLL: TRadioGroup
         Left = 41
@@ -1215,7 +1182,7 @@ object frmPrincipal: TfrmPrincipal
           'Diret'#243'rio system do Windows (Recomendado)'
           'Diret'#243'rio bin'#225'rio do Delphi'
           'N'#227'o copiar (N'#227'o recomendado)')
-        TabOrder = 8
+        TabOrder = 7
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
@@ -1225,7 +1192,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
         Caption = 'Copiar Todas as DLL'#39's (CLX, Diversos, MSVCR, XMLSec)'
-        TabOrder = 7
+        TabOrder = 6
       end
       object ckbBCB: TCheckBox
         Left = 17
@@ -1266,71 +1233,20 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 499
         inherited Label18: TLabel
           Width = 509
           Caption = 
             'S'#243' selecione os pacotes abaixo, que voc'#234' tenha a suite do gerado' +
             'r instalada no seu delphi.'
-          ExplicitWidth = 509
         end
         inherited pnlBotoesPacotes: TPanel
           Top = 467
           Width = 554
-          ExplicitTop = 467
-          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 522
-            ExplicitLeft = 522
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 490
-            ExplicitLeft = 490
-          end
-        end
-        inherited PageControl1: TPageControl
-          inherited tsNFe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsCTe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsNFSe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsBoletos: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsMDFe: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsSAT: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
-          end
-          inherited tsGNRE: TTabSheet
-            ExplicitLeft = 4
-            ExplicitTop = 27
-            ExplicitWidth = 417
-            ExplicitHeight = 121
           end
         end
       end
@@ -1684,7 +1600,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 4
+        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
@@ -2807,10 +2723,10 @@ object frmPrincipal: TfrmPrincipal
       object Label10: TLabel
         Left = 14
         Top = 41
-        Width = 173
+        Width = 189
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://acbr.sourceforge.net/drupal/'
+        Caption = 'http://www.projetoacbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -11

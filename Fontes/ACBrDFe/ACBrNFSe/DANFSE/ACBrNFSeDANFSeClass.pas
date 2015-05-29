@@ -34,8 +34,8 @@ unit ACBrNFSeDANFSeClass;
 interface
 
 uses
- Forms, SysUtils, Classes,
- pnfsNFSe, pnfsConversao;
+  SysUtils, Classes,
+  pnfsNFSe, pnfsConversao;
 
 type
 
@@ -142,7 +142,7 @@ type
 implementation
 
 uses
- ACBrNFSe, ACBrUtil, ACBrDFeUtil;
+  ACBrNFSe, ACBrUtil;
 
 { TACBrNFSeDANFSeClass }
 
@@ -203,7 +203,7 @@ function TACBrNFSeDANFSeClass.GetPathArquivos: String;
 begin
  if EstaVazio(FPathArquivos)
   then if Assigned(FACBrNFSe)
-        then FPathArquivos := TACBrNFSe(FACBrNFSe).Configuracoes.Geral.PathSalvar;
+        then FPathArquivos := TACBrNFSe(FACBrNFSe).Configuracoes.Arquivos.PathSalvar;
 
  if NaoEstaVazio(FPathArquivos)
   then if not DirectoryExists(FPathArquivos)

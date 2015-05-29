@@ -199,7 +199,7 @@ begin
 
   try
     // Incluido por Ricardo Miranda em 14/03/2013
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
@@ -260,7 +260,7 @@ var
 begin
   try
     // Incluido por Dalvan em 21/11/2014
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'cLote');
@@ -302,7 +302,7 @@ var
 begin
   try
     // Incluido por Ricardo Miranda em 14/03/2013
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
@@ -362,7 +362,7 @@ begin
   (*
    // Luiz Baião 2014.12.03
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
@@ -493,7 +493,7 @@ var
   strAux: AnsiString;
 begin
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'numeroLote');
@@ -537,7 +537,7 @@ begin
 
   try
     // Incluido por Ricardo Miranda em 14/03/2013
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 

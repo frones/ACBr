@@ -264,7 +264,7 @@ begin
 
   try
     // Incluido por Ricardo Miranda em 14/03/2013
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
   { Incluído por Márcio Teixeira em 14/02/2013 para tratar os retornos do Ginfes.
@@ -385,7 +385,7 @@ begin
   result := False;
 
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
@@ -447,7 +447,7 @@ var
 begin
   Result := False;
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
     // Alterado por Moro em 27/02/2015
     // Trocado resAnulaNFSe por resCancelaNFSe
@@ -492,7 +492,7 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     InfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
@@ -548,7 +548,7 @@ begin
   (*
    // Luiz Baião 2014.12.03 
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 

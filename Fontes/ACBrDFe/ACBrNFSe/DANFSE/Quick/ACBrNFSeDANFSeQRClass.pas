@@ -34,7 +34,8 @@ unit ACBrNFSeDANFSeQRClass;
 interface
 
 uses
- Forms, SysUtils, Classes, pnfsNFSe, ACBrNFSeDANFSeClass, Printers;
+  Forms, SysUtils, Classes, Printers,
+  pnfsNFSe, ACBrNFSeDANFSeClass;
 
 type
   TACBrNFSeDANFSeQR = class( TACBrNFSeDANFSeClass )
@@ -50,8 +51,9 @@ type
 implementation
 
 uses
- StrUtils, Dialogs, ACBrUtil, ACBrNFSe, pcnAuxiliar,
- ACBrNFSeDANFSeQRRetrato, ACBrNFSeDANFSeQRRetratoCampinas;
+  StrUtils, Dialogs,
+  ACBrUtil, ACBrNFSe, pcnAuxiliar, pnfsConversao,
+  ACBrNFSeDANFSeQRRetrato, ACBrNFSeDANFSeQRRetratoCampinas;
 
 constructor TACBrNFSeDANFSeQR.Create(AOwner: TComponent);
 begin
@@ -63,7 +65,6 @@ begin
   inherited Destroy ;
 end;
 
-
 procedure TACBrNFSeDANFSeQR.ImprimirDANFSe(NFSe : TNFSe = nil);
 var
  i : Integer;
@@ -71,7 +72,7 @@ var
 begin
  fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
 
- fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
+// fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
 
  if NFSe = nil
   then begin
@@ -285,7 +286,7 @@ var
 begin
  fqrDANFSeQRRetrato := TfqrDANFSeQRRetrato.Create(Self);
 
- fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
+// fqrDANFSeQRRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
 
  if NFSe = nil
   then begin
@@ -294,7 +295,7 @@ begin
       // Alterado por Italo em 20/06/2014
 
       if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
-        NomeArqPDF := NotaUtil.GerarNomeNFSe(UFparaCodigo(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.PrestadorServico.Endereco.UF),
+        NomeArqPDF := GerarNomeNFSe(UFparaCodigo(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe.PrestadorServico.Endereco.UF),
                                              TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.DataEmissao,
                                              TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
                                              StrToIntDef(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].Nfse.Numero, 0))
@@ -336,7 +337,7 @@ begin
 
    // Alterado por Italo em 30/09/2014
    if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
-     NomeArqPDF := NotaUtil.GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
+     NomeArqPDF := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
                                           NFSe.DataEmissao,
                                           NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
                                           StrToIntDef(NFSe.Numero, 0))

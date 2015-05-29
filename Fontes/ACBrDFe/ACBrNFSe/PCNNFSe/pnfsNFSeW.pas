@@ -131,7 +131,7 @@ type
 implementation
 
 uses
- ACBrUtil, ACBrNFSe;
+ ACBrUtil{, ACBrNFSe};
 
 { TNFSeW }
 
@@ -201,7 +201,7 @@ begin
            else Gerador.wGrupo('Rps' + Atributo);
 
  case FProvedor of
-  proISSDigital: FNFSe.InfID.ID := NotaUtil.ChaveAcesso(FNFSe.Prestador.cUF,
+  proISSDigital: FNFSe.InfID.ID := ChaveAcesso(FNFSe.Prestador.cUF,
                          FNFSe.DataEmissao,
                          OnlyNumber(FNFSe.Prestador.Cnpj),
                          0, // Serie

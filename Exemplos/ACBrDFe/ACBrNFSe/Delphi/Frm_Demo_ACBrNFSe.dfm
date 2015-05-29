@@ -19,7 +19,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Left = 0
     Top = 0
     Width = 297
-    Height = 534
+    Height = 530
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -1062,14 +1062,14 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 565
-    Height = 534
+    Width = 557
+    Height = 530
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 563
+      Width = 555
       Height = 208
       Align = alTop
       TabOrder = 0
@@ -1218,9 +1218,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object PageControl2: TPageControl
       Left = 1
       Top = 209
-      Width = 563
-      Height = 324
-      ActivePage = TabSheet8
+      Width = 555
+      Height = 320
+      ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -1228,8 +1228,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 564
-          Height = 368
+          Width = 547
+          Height = 292
           Align = alClient
           TabOrder = 0
         end
@@ -1258,8 +1258,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object memoLog: TMemo
           Left = 0
           Top = 0
-          Width = 555
-          Height = 296
+          Width = 547
+          Height = 292
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1271,8 +1271,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object trvwNFSe: TTreeView
           Left = 0
           Top = 0
-          Width = 555
-          Height = 296
+          Width = 547
+          Height = 292
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1310,21 +1310,22 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 184
-    Top = 400
+    Left = 320
+    Top = 248
   end
   object ACBrNFSe1: TACBrNFSe
-    Configuracoes.Geral.PathSalvar = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
-    Configuracoes.WebServices.Salvar = True
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.IntervaloTentativas = 0
-    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
-    Configuracoes.WebServices.CodigoMunicipio = 0
-    Configuracoes.WebServices.ConsultaLoteAposEnvio = True
+    MAIL = ACBrMail1
     OnStatusChange = ACBrNFSe1StatusChange
-    DANFSe = ACBrNFSeDANFSeQR1
-    Left = 224
-    Top = 400
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.CodigoMunicipio = 0
+    Configuracoes.Geral.ConsultaLoteAposEnvio = False
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.Salvar = True
+    DANFSE = ACBrNFSeDANFSeQR1
+    Left = 360
+    Top = 248
   end
   object ACBrNFSeDANFSeQR1: TACBrNFSeDANFSeQR
     ACBrNFSe = ACBrNFSe1
@@ -1338,7 +1339,18 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     MargemDireita = 0.510000000000000000
     NFSeCancelada = False
     ImprimeCanhoto = True
-    Left = 256
-    Top = 400
+    Left = 392
+    Top = 248
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = CP1252
+    Left = 430
+    Top = 249
   end
 end

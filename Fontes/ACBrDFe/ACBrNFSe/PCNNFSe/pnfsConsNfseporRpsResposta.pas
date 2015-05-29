@@ -261,13 +261,13 @@ function TretNfseRps.LerXml: boolean;
 var
   ok: boolean;
   i, k, Item, J: Integer;
-  VersaoXML: String;
+  VersaodoXML: String;
 begin
   result := True;
-  
+
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
-    VersaoXML      := NotaUtil.VersaoXML(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    VersaodoXML    := VersaoXML(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     k        := 0; //length(Prefixo4);
@@ -350,7 +350,7 @@ begin
               ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
               ListaNfse.FCompNfse[i].FNFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
 
-              if VersaoXML='1'
+              if VersaodoXML='1'
                then ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
                else ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
@@ -368,7 +368,7 @@ begin
                      FormatFloat('00000', StrToIntDef(Copy(ListaNfse.FCompNfse[i].FNFSe.Servico.CodigoMunicipio, 3, 5), 0));
 
               if TabServicosExt
-               then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
+               then ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico))
                else ListaNfse.FCompNfse[i].FNFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(ListaNfse.FCompNfse[i].FNFSe.Servico.ItemListaServico));
 
               if Leitor.rExtrai(6, 'Valores') <> ''
@@ -434,7 +434,7 @@ begin
               ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
               ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-              if VersaoXML='1'
+              if VersaodoXML='1'
                then begin
                 ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
                 ListaNfse.FCompNfse[i].FNFSe.PrestadorServico.Endereco.UF              := Leitor.rCampo(tcStr, 'Estado');
@@ -461,7 +461,7 @@ begin
 
               if Leitor.rExtrai(6, 'IdentificacaoPrestador') <> ''
                then begin
-                if VersaoXML='1'
+                if VersaodoXML='1'
                  then begin
                   if Leitor.rExtrai(7, 'CpfCnpj') <> ''
                    then begin
@@ -500,7 +500,7 @@ begin
               ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
               ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-              if VersaoXML='1'
+              if VersaodoXML='1'
                then begin
                 ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
                 ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.UF              := Leitor.rCampo(tcStr, 'Estado');
@@ -558,7 +558,7 @@ begin
               ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
               ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-              if VersaoXML='1'
+              if VersaodoXML='1'
                then begin
                 ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
                 ListaNfse.FCompNfse[i].FNFSe.Tomador.Endereco.UF              := Leitor.rCampo(tcStr, 'Estado');
@@ -722,15 +722,15 @@ function TretNfseRps.LerXml_provedorIssDsf: boolean;  //falta homologar
 var
   ok: boolean;
   i, Item{, posI, count}: Integer;
-  sOperacao, sTributacao, VersaoXML: String;
+  sOperacao, sTributacao, VersaodoXML: String;
 //  strAux, strItem: AnsiString;
 //  leitorAux, leitorItem:TLeitor;
 begin
   result := true;
 
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
-    VersaoXML      := '1';
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    VersaodoXML    := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'RetornoConsultaNFSeRPS') <> '' then
@@ -928,7 +928,7 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'nfse') <> '' then
@@ -989,7 +989,7 @@ var
   strAux: AnsiString;
 begin
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'nfeRpsNotaFiscal') <> '' then

@@ -36,7 +36,7 @@ interface
 uses
   SysUtils, Classes, Forms, DateUtils,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
-  ACBrUtil, ACBrDFeUtil;
+  ACBrUtil, ACBrDFeUtil{, ACBrNFSe};
 
 type
 
@@ -173,7 +173,7 @@ begin
                                         Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
      if TabServicosExt
-      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+      then NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
       else NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
      if length(NFSe.Servico.CodigoMunicipio) < 7
@@ -328,7 +328,7 @@ begin
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
      if TabServicosExt
-      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+      then NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
       else NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
      //NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
@@ -401,7 +401,7 @@ begin
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
      if TabServicosExt
-      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+      then NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
       else NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
      NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
@@ -698,7 +698,7 @@ begin
                                        Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
       if TabServicosExt
-       then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+       then NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
        else NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
       NFSe.Servico.Valores.ValorServicos       := Leitor.rCampo(tcDe2, 'vlServico');
@@ -873,7 +873,7 @@ begin
                                      Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
     if TabServicosExt
-     then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+     then NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
      else NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
     NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
@@ -1282,7 +1282,7 @@ begin
                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
      if TabServicosExt
-      then NFSe.Servico.xItemListaServico := NotaUtil.ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+      then NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
       else NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 
      NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
@@ -2364,7 +2364,8 @@ begin
     then begin
       if (Leitor.rExtrai(3, 'Servico') <> '')
       then begin
-        NFSe.Servico.ItemListaServico := DFeUtil.LimpaNumero(Leitor.rCampo(tcStr, 'CodigoServico116'));
+        NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
+//        NFSe.Servico.ItemListaServico := LimpaNumero(Leitor.rCampo(tcStr, 'CodigoServico116'));
 
         with NFSe.Servico.ItemServico.Add
         do begin

@@ -34,20 +34,24 @@ unit pnfsConversao;
 interface
 
 uses
-  SysUtils,
+  Forms, SysUtils,
   {$IFNDEF VER130}
     Variants,
   {$ENDIF}
-  Classes{, pcnConversao};
+  Classes, typinfo, StrUtils, ACBrUtil;
 
 type
   TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta,
                      stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
-                     stNFSeSubstituicao);
+                     stNFSeSubstituicao, stNFSeEnvioWebService);
 
   TLayOut = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
              LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
              LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse);
+
+  TSchemaNFSe = (schErro, schNFSe, schCancNFSe);
+
+  TVersaoNFSe = (ve100, ve200);
 
   TnfseTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
                         taSomenteParaNaoAssinada);
@@ -174,6 +178,26 @@ function StrToEmpreitadaGlobal(var ok: boolean; const s: string):TnfseTEmpreitad
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
 function StrToCondicao(var ok: boolean; const s: string): TnfseCondicaoPagamento;
+
+function ObterDescricaoServico(cCodigo: String): String;
+function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
+                               ANumero,ACodigo: Integer; AModelo:Integer=56): String;
+function RetirarPrefixos(const AXML: String): String;
+function VersaoXML(AXML: String): String;
+function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+                               ANumero:Integer; AModelo: Integer = 56): String;
+
+function LayOutToServico(const t: TLayOut): String;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
+
+function SchemaNFSeToStr(const t: TSchemaNFSe): String;
+function StrToSchemaNFSe(out ok: Boolean; const s: String): TSchemaNFSe;
+
+function StrToVersaoNFSe(out ok: Boolean; const s: String): TVersaoNFSe;
+function VersaoNFSeToStr(const t: TVersaoNFSe): String;
+
+function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
+function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 
 implementation
 
@@ -18666,6 +18690,173 @@ begin
                            [EgConstrucaoCivil, EgOutros]);
 end;
 
+function ObterDescricaoServico(cCodigo: String): String;
+var
+ i: Integer;
+ PathArquivo: String;
+ List: TstringList;
+begin
+ result := '';
+ PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'TabServicos.txt';
+ if (FileExists(PathArquivo)) and (cCodigo <> '')
+  then begin
+   List := TstringList.Create;
+   try
+    List.LoadFromFile(PathArquivo);
+    i := 0;
+    while (i < list.count) and (result = '') do
+     begin
+      if pos(cCodigo, List[i]) > 0
+       then result := Trim(stringReplace(list[i], ccodigo, '', []));
+      inc(i);
+    end;
+   finally
+    List.free;
+   end;
+  end;
+end;
+
+function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime;
+  ACNPJ: String; ASerie, ANumero, ACodigo: Integer; AModelo: Integer): String;
+var
+  vUF, vDataEmissao, vSerie, vNumero,
+  vCodigo, vModelo: String;
+begin
+  vUF          := Poem_Zeros(AUF, 2);
+  vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
+  vModelo      := Poem_Zeros(AModelo, 2);
+  vSerie       := Poem_Zeros(ASerie, 3);
+  vNumero      := Poem_Zeros(ANumero, 9);
+  vCodigo      := Poem_Zeros(ACodigo, 9);
+
+  Result := vUF+vDataEmissao+ACNPJ+vModelo+vSerie+vNumero+vCodigo;
+//  Result := Result+NotaUtil.Modulo11(Result);
+end;
+
+function RetirarPrefixos(const AXML: String): String;
+var
+ XML: string;
+begin
+ XML := StringReplace( AXML, 'ns1:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns2:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'nfse:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
+
+ result := XML;
+end;
+
+function VersaoXML(AXML: String): String;
+var
+ i: Integer;
+begin
+ i := Pos( '<Cidade>', AXML );
+ if i > 0
+  then result := '1'
+  else result := '2';
+end;
+
+function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+                                 ANumero:Integer; AModelo: Integer = 56): String;
+var
+  vUF, vDataEmissao, vNumero, vModelo: String;
+begin
+  vUF          := Poem_Zeros(AUF, 2);
+  vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
+  vModelo      := Poem_Zeros(AModelo, 2);
+  vNumero      := Poem_Zeros(ANumero, 9);
+
+  Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
+end;
+
+function LayOutToServico(const t: TLayOut): String;
+begin
+  Result := EnumeradoToStr(t,
+    ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
+     'NfseConsultaSitLoteRps', 'NfseConsultaNfse', 'NfseCancelaNfse',
+     'NfseGerar', 'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse'],
+    [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
+      LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
+      LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
+end;
+
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
+begin
+  Result := StrToEnumerado(ok, s,
+  ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
+   'NfseConsultaSitLoteRps', 'NfseConsultaNfse', 'NfseCancelaNfse',
+   'NfseGerar', 'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse'],
+  [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
+    LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
+    LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
+end;
+
+function SchemaNFSeToStr(const t: TSchemaNFSe): String;
+begin
+  Result := GetEnumName(TypeInfo(TSchemaNFSe), Integer( t ) );
+  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
+end;
+
+function StrToSchemaNFSe(out ok: Boolean; const s: String): TSchemaNFSe;
+var
+  P: Integer;
+  SchemaStr: String;
+begin
+  P := pos('_',s);
+  if p > 0 then
+    SchemaStr := copy(s,1,P-1)
+  else
+    SchemaStr := s;
+
+  if LeftStr(SchemaStr,3) <> 'sch' then
+    SchemaStr := 'sch'+SchemaStr;
+
+  Result := TSchemaNFSe( GetEnumValue(TypeInfo(TSchemaNFSe), SchemaStr ) );
+end;
+
+function StrToVersaoNFSe(out ok: Boolean; const s: String): TVersaoNFSe;
+begin
+  Result := StrToEnumerado(ok, s, ['1.00', '2.00'], [ve100, ve200]);
+end;
+
+function VersaoNFSeToStr(const t: TVersaoNFSe): String;
+begin
+  Result := EnumeradoToStr(t, ['1.00', '2.00'], [ve100, ve200]);
+end;
+
+function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
+begin
+  ok := True;
+
+  if (d = 1.0) or (d < 2.0)  then
+    Result := ve100
+  else if (d >= 2.0) and (d < 2.02) then
+    Result := ve200
+  else if (d >= 2.02) then
+    Result := ve200
+  else
+  begin
+    Result := ve100;
+    ok := False;
+  end;
+end;
+
+function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
+begin
+  case t of
+    ve100: Result := 1.00;
+    ve200: Result := 2.00;
+  else
+    Result := 0;
+  end;
+end;
 
 end.
 

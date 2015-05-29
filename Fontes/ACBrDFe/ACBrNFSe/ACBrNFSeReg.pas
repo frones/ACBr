@@ -1,6 +1,13 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFSe                                                 }
-{  Biblioteca multiplataforma de componentes Delphi                            }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
+{  de Serviço eletrônica - NFSe                                                }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       André Ferreira de Moraes               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
@@ -59,31 +66,32 @@ uses
 
 procedure Register;
 begin
- RegisterComponents('ACBrNFSe', [TACBrNFSe]);
+  RegisterComponents('ACBrNFSe', [TACBrNFSe]);
 
- RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
+  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrNFSe, 'Configuracoes',
+  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrNFSe, 'Configuracoes',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
+  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
+  RegisterPropertyEditor(TypeInfo(TGeralConfNFSe), TConfiguracoes, 'Geral',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
+  RegisterPropertyEditor(TypeInfo(String), TGeralConfNFSe, 'PathSalvar',
      TACBrDirProperty);
 
- RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
+  RegisterPropertyEditor(TypeInfo(TArquivosConfNFSe), TConfiguracoes, 'Arquivos',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathNFSe',
+  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFSe, 'PathNFSe',
      TACBrDirProperty);
 
- RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathCan',
+  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFSe, 'PathCan',
      TACBrDirProperty);
+
 end;
 
 {$ifdef FPC}

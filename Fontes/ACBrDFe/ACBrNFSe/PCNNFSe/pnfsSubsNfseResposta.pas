@@ -215,7 +215,7 @@ begin
   result := True;
 
   try
-    Leitor.Arquivo := NotaUtil.RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'SubstituirNfseResposta') <> '') then

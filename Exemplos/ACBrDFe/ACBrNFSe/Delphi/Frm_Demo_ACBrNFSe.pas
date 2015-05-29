@@ -9,7 +9,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pnfsConversao,
-  ACBrNFSe, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeQRClass, pnfsNFSe;
+  ACBrNFSe, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeQRClass, pnfsNFSe, ACBrMail,
+  ACBrBase, ACBrDFe;
 
 type
   TfrmDemo_ACBrNFSe = class(TForm)
@@ -144,6 +145,7 @@ type
     Button1: TButton;
     ckSalvarSoap: TCheckBox;
     btnSubsNFSe: TButton;
+    ACBrMail1: TACBrMail;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -198,7 +200,7 @@ implementation
 uses
  FileCtrl, DateUtils, Math,
  ufrmStatus,
- ACBrNFSeNotasFiscais, ACBrDFeUtil, ACBrNFSeUtil;
+ ACBrNFSeNotasFiscais, ACBrDFeUtil{, ACBrNFSeUtil};
 
 const
   SELDIRHELP = 1000;
@@ -358,6 +360,13 @@ begin
   Ini.ReadBinaryStream( 'Email', 'Mensagem', StreamMemo);
   mmEmailMsg.Lines.LoadFromStream(StreamMemo);
   StreamMemo.Free;
+
+  ACBrNFSe1.MAIL.Host := edtSmtpHost.Text;
+  ACBrNFSe1.MAIL.Port := edtSmtpPort.Text;
+  ACBrNFSe1.MAIL.Username := edtSmtpUser.Text;
+  ACBrNFSe1.MAIL.Password := edtSmtpPass.Text;
+  ACBrNFSe1.MAIL.SetSSL   := cbEmailSSL.Checked;
+  ACBrNFSe1.MAIL.ReadingConfirmation := False;
  finally
   Ini.Free;
  end;
@@ -376,22 +385,22 @@ begin
 
  ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral:=True;
  ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe:=True;
- ACBrNFSe1.Configuracoes.Arquivos.PastaMensal:=True;
+ ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes:=True;
  ACBrNFSe1.Configuracoes.Arquivos.PathCan:=edtPathLogs.Text;
  ACBrNFSe1.Configuracoes.Arquivos.PathNFSe:=edtPathLogs.Text;
  ACBrNFSe1.Configuracoes.Arquivos.Salvar:=True;
 
  PathMensal:=ACBrNFSe1.Configuracoes.Arquivos.GetPathNFSe(0);
 
- ACBrNFSe1.Configuracoes.Geral.PathSchemas := edtSchemas.Text;
  ACBrNFSe1.Configuracoes.Geral.Salvar      := ckSalvar.Checked;
- ACBrNFSe1.Configuracoes.Geral.PathSalvar  := edtPathLogs.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.PathSchemas := edtSchemas.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.PathSalvar  := edtPathLogs.Text;
 
- ACBrNFSe1.Configuracoes.WebServices.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
+ ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
  ACBrNFSe1.Configuracoes.WebServices.Ambiente        := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
  ACBrNFSe1.Configuracoes.WebServices.Visualizar      := ckVisualizar.Checked;
- ACBrNFSe1.Configuracoes.WebServices.SenhaWeb        := edtSenhaWeb.Text;
- ACBrNFSe1.Configuracoes.WebServices.UserWeb         := edtUserWeb.Text;
+ ACBrNFSe1.Configuracoes.Geral.SenhaWeb        := edtSenhaWeb.Text;
+ ACBrNFSe1.Configuracoes.geral.UserWeb         := edtUserWeb.Text;
  ACBrNFSe1.Configuracoes.WebServices.Salvar          := ckSalvarSoap.Checked;
 
  ACBrNFSe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
@@ -399,7 +408,7 @@ begin
  ACBrNFSe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
  ACBrNFSe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
 
- ACBrNFSe1.Configuracoes.WebServices.SetConfigMunicipio(ACBrNFSe1.Configuracoes.Geral.PathSchemas);
+// ACBrNFSe1.Configuracoes.WebServices.SetConfigMunicipio(ACBrNFSe1.Configuracoes.Geral.PathSchemas);
 
  if ACBrNFSe1.DANFSe <> nil then
   begin
@@ -412,7 +421,7 @@ begin
    ACBrNFSe1.DANFSe.TipoDANFSE := tpPadrao;
   end;
 
- lblSchemas.Caption := ACBrNFSe1.Configuracoes.WebServices.xProvedor;
+ lblSchemas.Caption := ACBrNFSe1.Configuracoes.Geral.xProvedor;
 end;
 
 procedure TfrmDemo_ACBrNFSe.LoadXML(MyMemo: TMemo;
@@ -427,7 +436,7 @@ var
  ValorISS: Double;
 begin
  ACBrNFSe1.NotasFiscais.Clear;
-
+ (*
  with ACBrNFSe1 do
   begin
    NotasFiscais.NumeroLote:='1';
@@ -472,12 +481,11 @@ begin
      // WebService do provedor.
      OutrasInformacoes := 'Pagamento a Vista';
 
-     (* Usando quando o RPS for substituir outro
-     RpsSubstituido.Numero := FormatFloat('#########0', i);
-     RpsSubstituido.Serie  := 'UNICA';
+     // Usado quando o RPS for substituir outro
+//     RpsSubstituido.Numero := FormatFloat('#########0', i);
+//     RpsSubstituido.Serie  := 'UNICA';
      // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
-     RpsSubstituido.Tipo   := trRPS;
-     *)
+///     RpsSubstituido.Tipo   := trRPS;
 
      Servico.Valores.ValorServicos          := 1685.50;
      Servico.Valores.ValorDeducoes          := 0.00;
@@ -505,7 +513,7 @@ begin
                                     Servico.Valores.DescontoIncondicionado;
      // No caso do provedor Ginfes devemos informar a aliquota já dividida por 100
      // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
-     // do valor do ISS devemos dividir por 100                               
+     // do valor do ISS devemos dividir por 100
      Servico.Valores.Aliquota    := 0.03;
 
      // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
@@ -547,11 +555,11 @@ begin
 
      // Informar A Exigibilidade ISS para fintelISS [1/2/3/4/5/6/7]
      Servico.ExigibilidadeISS := exiExigivel;
-     
+
      // Informar para Saatri
      Servico.CodigoPais := 1058; // Brasil
      Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
-     
+
     // Somente o provedor SimplISS permite infomar mais de 1 serviço
      with Servico.ItemServico.Add do
       begin
@@ -585,26 +593,26 @@ begin
      Tomador.Endereco.CodigoPais      := 1058; // Brasil
      Tomador.Endereco.CEP             := edtEmitCEP.Text;
 	 //Provedor Equiplano é obrigatório o pais e IE
-     Tomador.Endereco.xPais           := 'BRASIL';	 
+     Tomador.Endereco.xPais           := 'BRASIL';
      Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
      Tomador.Contato.Telefone := '1122223333';
      Tomador.Contato.Email    := 'nome@provedor.com.br';
 
-     (* Usando quando houver um intermediario na prestação do serviço
-     IntermediarioServico.RazaoSocial        := 'razao';
-     IntermediarioServico.CpfCnpj            := '00000000000';
-     IntermediarioServico.InscricaoMunicipal := '12547478';
-     *)
+     // Usado quando houver um intermediario na prestação do serviço
+//     IntermediarioServico.RazaoSocial        := 'razao';
+//     IntermediarioServico.CpfCnpj            := '00000000000';
+//     IntermediarioServico.InscricaoMunicipal := '12547478';
 
-     (* Usando quando o serviço for uma obra
-     ConstrucaoCivil.CodigoObra := '88888';
-     ConstrucaoCivil.Art        := '433';
-     *)
+
+     // Usado quando o serviço for uma obra
+//     ConstrucaoCivil.CodigoObra := '88888';
+//     ConstrucaoCivil.Art        := '433';
+
     end;
 
   end;
-
+*)
 end;
 
 procedure TfrmDemo_ACBrNFSe.sbtnCaminhoCertClick(Sender: TObject);
@@ -622,9 +630,7 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.sbtnGetCertClick(Sender: TObject);
 begin
- {$IFNDEF ACBrNFSeOpenSSL}
-  edtNumSerie.Text := ACBrNFSe1.Configuracoes.Certificados.SelecionarCertificado;
- {$ENDIF}
+  edtNumSerie.Text := ACBrNFSe1.SSL.SelecionarCertificado;
 end;
 
 procedure TfrmDemo_ACBrNFSe.sbtnLogoMarcaClick(Sender: TObject);
@@ -710,9 +716,9 @@ begin
 
  ACBrNFSe1.ConsultarLoteRps(Lote, Protocolo);
 
- MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
- LoadXML(MemoResp, WBResposta);
+// MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
+// memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
+// LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnCancNFSeClick(Sender: TObject);
@@ -723,7 +729,7 @@ begin
  OpenDialog1.Title := 'Selecione a NFSe';
  OpenDialog1.DefaultExt := '*-NFSe.xml';
  OpenDialog1.Filter := 'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -749,11 +755,13 @@ begin
    MemoDados.Lines.Add('Arquivo Carregado de: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    MemoDados.Lines.Add('Retorno do Cancelamento:');
+(*
    MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.CancNfse.CodigoCancelamento);
    MemoDados.Lines.Add('Data / Hora      : ' +
     DFeUtil.SeSenao(ACBrNFSe1.WebServices.CancNfse.DataHora = 0, '',
                       DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora)));
    LoadXML(MemoResp, WBResposta);
+*)
    PageControl2.ActivePageIndex := 1;
   end;
 
@@ -768,9 +776,9 @@ begin
 
  ACBrNFSe1.ConsultarSituacao(edtEmitCNPJ.Text, edtEmitIM.Text, Protocolo);
 
- MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLote.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLote.RetWS);
- LoadXML(MemoResp, WBResposta);
+// MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLote.RetWS);
+// memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLote.RetWS);
+// LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnGerarRPSClick(Sender: TObject);
@@ -782,12 +790,13 @@ begin
 
  ACBrNFSe1.NotasFiscais.Clear;
  AlimentaComponente(vAux);
- ACBrNFSe1.NotasFiscais.Items[0].SaveToFile;
-
+// ACBrNFSe1.NotasFiscais.Items[0].SaveToFile;
+(*
  ShowMessage('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
  MemoDados.Lines.Add('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
  MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
  LoadXML(MemoResp, WBResposta);
+*)
  PageControl2.ActivePageIndex := 1;
 end;
 
@@ -796,7 +805,7 @@ begin
  OpenDialog1.Title := 'Selecione a NFSe';
  OpenDialog1.DefaultExt := '*-NFSe.xml';
  OpenDialog1.Filter := 'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -889,7 +898,7 @@ begin
  OpenDialog1.Title := 'Selecione o Rps';
  OpenDialog1.DefaultExt := '*-Rps.xml';
  OpenDialog1.Filter := 'Arquivos Rps (*-Rps.xml)|*-Rps.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -902,9 +911,9 @@ begin
                                 ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.Cnpj,
                                 ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal);
 
-   MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
-   LoadXML(MemoResp, WBResposta);
+//   MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
+//   memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
+//   LoadXML(MemoResp, WBResposta);
   end;
 end;
 
@@ -919,9 +928,9 @@ begin
 
  ACBrNFSe1.ConsultarNFSe(edtEmitCNPJ.Text, edtEmitIM.Text, StrToDate(DataInicial), StrToDate(DataFinal));
 
- MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
- LoadXML(MemoResp, WBResposta);
+// MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
+// memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
+// LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrNFSe.cbCidadesChange(Sender: TObject);
@@ -1000,7 +1009,7 @@ begin
  OpenDialog1.Title := 'Selecione a NFSe';
  OpenDialog1.DefaultExt := '*-NFSe.xml';
  OpenDialog1.Filter := 'Arquivos NFSe (*-NFSe.xml)|*-NFSe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -1013,23 +1022,13 @@ begin
    sCC:=TStringList.Create;
    sCC.Clear;  // Usando para add outros e-mail como Com-Cópia
 
-   ACBrNFSe1.NotasFiscais.Items[0].EnviarEmail(edtSmtpHost.Text,
-                                               edtSmtpPort.Text,
-                                               edtSmtpUser.Text,
-                                               edtSmtpPass.Text,
-                                               edtEmailRemetente.Text,
-                                               vAux,                 // e-mail do destinatário
-                                               edtEmailAssunto.Text, // Assunto
-                                               mmEmailMsg.Lines,     // Mensagem
-                                               cbEmailSSL.Checked,   // SSL
-                                               True,                 // Enviar em PDF
-                                               sCC,                  // sCC
-                                               nil,                  // Anexos
-                                               True,                 // Pede Confirmação de Recebimento
-                                               True,                 // Aguarda o Envio
-                                               edtEmitRazao.Text,    // Nome do remetente
-                                               True,                 // TLS
-                                               True);                // Usar Thread
+   ACBrNFSe1.NotasFiscais.Items[0].EnviarEmail(vAux
+                                               , edtEmailAssunto.Text
+                                               , mmEmailMsg.Lines
+                                               , False //Enviar PDF junto
+                                               , nil //Lista com emails que serão enviado cópias - TStrings
+                                               , nil // Lista de anexos - TStrings
+                                                );
 
    sCC.Free;
 
@@ -1142,8 +1141,8 @@ begin
   ACBrNFSe1.SubstituirNFSe(Codigo, sNumNFSe);
 
   MemoDados.Lines.Add('Retorno da Substituição:');
-  MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
-  LoadXML(MemoResp, WBResposta);
+//  MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
+//  LoadXML(MemoResp, WBResposta);
   PageControl2.ActivePageIndex := 1;
 end;
 

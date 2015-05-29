@@ -2427,7 +2427,7 @@ begin
     DescontoStr := StringOfChar('0',12) ;
 
     if ( fsModeloDaruma > fs700L) or
-       ( (fsModeloDaruma = fs700L) and (StrToInt(fsNumVersao) > 10000) ) then
+       ( (fsModeloDaruma = fs700L) and (StrToIntDef(fsNumVersao, -1) > 10000) ) then
     begin
       ModoCalculo :=  ifthen(fpArredondaItemMFD, 'A', 'T' );
       RetCmd := EnviaComando(FS + 'F' + #207 + AliquotaECF + QtdStr + ValorStr +
@@ -3986,7 +3986,7 @@ begin
   begin
      //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4008,7 +4008,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4030,7 +4030,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4148,7 +4148,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4174,7 +4174,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4199,7 +4199,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4221,7 +4221,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #251 + '00' );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4241,7 +4241,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #251 + '00' );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4261,7 +4261,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #251 + '00' );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4281,7 +4281,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #232 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4302,7 +4302,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     if Length(fsUsuarioAtual) = 0 then
     begin
@@ -4402,7 +4402,7 @@ begin
   begin
     Result := 0; // Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #250 );
     if LeftStr(RetCmd, 1) = ':' then
@@ -4463,7 +4463,7 @@ begin
   begin
       // Falta Implementar
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := EnviaComando( ESC + #240 );
     RetCmd := Copy(RetCmd, 92, Length(RetCmd));
@@ -4512,7 +4512,7 @@ begin
                                          / 100, -2 );
     end;
   end
-  else if StrToInt(fsNumVersao) >= 345 then
+  else if StrToIntDef(fsNumVersao, -1) >= 345 then
   begin
     RetCmd := Ret244 ;
     RetCmd := Copy(RetCmd, 50, 224);
@@ -4549,7 +4549,7 @@ begin
   begin
     //Falta Implementar
   end
-  else if (StrToInt(fsNumVersao) >= 345) then
+  else if (StrToIntDef(fsNumVersao, -1) >= 345) then
   begin
     RetCmd := Ret244 ;
 
@@ -4802,8 +4802,8 @@ begin
    //Result := False;
    if (fpMFD) then
    begin
-      if ( (fsModeloDaruma in [fs600, fs600USB]) and (StrToInt(fsNumVersao) > 10400) ) or
-         ( (fsModeloDaruma in [fs700L, fs700H, fs700M]) and (StrToInt(fsNumVersao) > 10000) ) then
+      if ( (fsModeloDaruma in [fs600, fs600USB]) and (StrToIntDef(fsNumVersao, -1) > 10400) ) or
+         ( (fsModeloDaruma in [fs700L, fs700H, fs700M]) and (StrToIntDef(fsNumVersao, -1) > 10000) ) then
        begin
          RetCmd   := EnviaComando(FS + 'F' + #244 + Operacao + Texto + cDELIMITADOR, 10);
          Resposta := copy(RetCmd, 10, Length(RetCmd) - 12);

@@ -48,6 +48,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 29/05/2015 ver. 0.0.130a
+-- ACBrBoleto --
+[*]Ajuste para atender as mudanças no calculo do fator de vencimento. (Big Wings)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21867-fator-de-vencimento-ap%C3%B3s-9999/
+
+-- ACBrBancoDoBrasil --
+[-]Ajuste leitura retorno CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/20022-altera%C3%A7%C3%B5es-na-unit-banco-do-brasil/
+
+-- ACBrBancoCaixaSICOB --
+[-]Ajuste remessa CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21826-remessa-cef-sicoob-dv-em-branco/
+
 Data: 25/05/2015 ver. 0.0.129a
 -- ACBrBoleto --
 [-]Correção função getOcorrenciasRemessa (Juliana Tamizou)

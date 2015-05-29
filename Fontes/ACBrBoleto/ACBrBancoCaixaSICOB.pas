@@ -880,12 +880,12 @@ begin
           (ACBrBoleto.Cedente.ResponEmissao <>  tbCliEmite)) then
        begin
          ANossoNumero       := '00000000000000000000';
-         ADigitoNossoNumero := '';
+         ADigitoNossoNumero := ' ';
        end
       else
        begin
          ANossoNumero := FormataNossoNumero(ACBrTitulo);
-         ADigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
+         ADigitoNossoNumero :=  CalcularDigitoVerificador(ACBrTitulo);
        end;
 
 
@@ -1035,52 +1035,53 @@ begin
          else
             wLinha:= '1';
 
-         wLinha:= wLinha                                     + // 1 até 1  -  ID Registro
-                  ATipoCendente                              +// 2 até 3   -  Tipo de inscrição da empresa 01-CPF / 02-CNPJ
-                  PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0')   +// 4  até 17 - Inscrição da empresa
-                  ACodCedente                                +// 18 até 33 - Identificação da Empresa na CAIXA - Cedente
-                  Space(2)                       +// 34 até 35 - Branco
-                  '00'                           +//36 até 37  - Default '00' - Acata Comissão por Dia (recomendável)
-                  PadRight( SeuNumero, 25 )          +//38 até 62  - Controle da empresa
-                  PadLeft( ANossoNumero,10)+ ADigitoNossoNumero + //63 até 73  - Nosso Numero
-                  Space(3)                       + // 74 Até 76  - Brancos
-                  PadRight( AMensagem, 30)           + //77 até  106 - mensagem impressa
+         wLinha:= wLinha                                                + // 1 até 1  -  ID Registro
+                  ATipoCendente                                         + // 2 até 3   -  Tipo de inscrição da empresa 01-CPF / 02-CNPJ
+                  PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0')           + // 4  até 17 - Inscrição da empresa
+                  ACodCedente                                           + // 18 até 33 - Identificação da Empresa na CAIXA - Cedente
+                  Space(2)                                              + // 34 até 35 - Branco
+                  '00'                                                  + //36 até 37  - Default '00' - Acata Comissão por Dia (recomendável)
+                  PadRight( SeuNumero, 25 )                             + //38 até 62  - Controle da empresa
+                  PadLeft( ANossoNumero,10)+ ADigitoNossoNumero         + //63 até 73  - Nosso Numero
+                  Space(3)                                              + // 74 Até 76  - Brancos
+                  PadRight( AMensagem, 30)                              + //77 até  106 - mensagem impressa
                   PadLeft(IntToStr(RetornaCodCarteira(Carteira)),2,'0') + //107 até 108 - Código Carteira
-                  ATipoOcorrencia                + //109 até 110 - Código da ocorrencia
-                  PadRight( NumeroDocumento, 10, ' ')+ //111 ate 120 - Seu Numero - Nr. titulo dado pelo cedente
-                  FormatDateTime( 'ddmmyy', Vencimento ) + //121 ate 126 -  Data de vencimento
-                  IntToStrZero( Round( ValorDocumento * 100 ), 13)+ // 127 ate 139 - Valor do titulo
-                  '104'                          +// 140 até 142 - Código de compensação da CAIXA
-                  '00000'                        +// 143 até 147 - Agencia Cobradora
-                  PadLeft(ATipoEspecieDoc, 2, '0')  +// 148 até 149 - Espécie
-                  ATipoAceite                    + // 150 até  150  A- aceito / N- não aceito
-                  FormatDateTime( 'ddmmyy', DataDocumento )   + //151 até 156 - Data de Emissão
-                  PadLeft(Instrucao1, 2, '0')      +  //157 até 158 - Primeira instrução de Cobrança
-                  PadLeft(Instrucao2, 2, '0')        +//159 até 160 - Primeira instrução de Cobrança
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)+ //161 até 173 Juros de mora por dia
-                  aDataDesconto                 + //174 até 179 Data limite para concessao de desconto
-                  IntToStrZero( round( ValorDesconto * 100), 13)    + //180 até 192  Valor do desconto
-                  IntToStrZero( round( ValorIOF * 100 ), 13)        + //193 até 205 Valor do IOF
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13) + //206 até 218 Valor do abatimento permitido
-                  ATipoSacado                                       +//219 até 220 "01" - CPF / "02"- CGC
-                  PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')   + // 221 até 234 CNPJ ou CPF do sacado
-                  PadRight( Sacado.NomeSacado, 40)             + // 235 até 274 Nome do sacado
-                    PadRight(trim(Sacado.Logradouro) + ', ' +
-                    trim(Sacado.Numero) + ' '+ trim(Sacado.Complemento), 40)   + //275 até 314 - Endereço do sacado
-                  PadRight( Sacado.Bairro, 12)                + //315 até  326 - Bairro Sacado
-                  PadLeft( OnlyNumber(Sacado.CEP), 8 )                       + // 327 até 334 - CEP do endereço do sacado
-                  PadRight( trim(Sacado.Cidade), 15)                          + // 335 até 349  - Cidade do sacado
-                  PadRight( Sacado.UF, 2 )                                    + // 350 até 351  - UF da cidade do sacado
-                  ADataMoraJuros                                          + //352 até 357  - Data Multa
-                  IntToStrZero( round( (ValorDocumento*PercentualMulta)/100), 10) + //358 até 367 - Valor nominal da multa
-                  PadRight( Sacado.NomeSacado, 22) + // 368 até 389 - Nome do Sacador Avalista
-                  '00'  +// 390  391 - Terceira instrução de Cobrança Default '00'
+                  ATipoOcorrencia                                       + //109 até 110 - Código da ocorrencia
+                  PadRight( NumeroDocumento, 10, ' ')                   + //111 ate 120 - Seu Numero - Nr. titulo dado pelo cedente
+                  FormatDateTime( 'ddmmyy', Vencimento )                + //121 ate 126 -  Data de vencimento
+                  IntToStrZero( Round( ValorDocumento * 100 ), 13)      + // 127 ate 139 - Valor do titulo
+                  '104'                                                 + // 140 até 142 - Código de compensação da CAIXA
+                  '00000'                                               + // 143 até 147 - Agencia Cobradora
+                  PadLeft(ATipoEspecieDoc, 2, '0')                      + // 148 até 149 - Espécie
+                  ATipoAceite                                           + // 150 até  150  A- aceito / N- não aceito
+                  FormatDateTime( 'ddmmyy', DataDocumento )             + //151 até 156 - Data de Emissão
+                  PadLeft(Instrucao1, 2, '0')                           + //157 até 158 - Primeira instrução de Cobrança
+                  PadLeft(Instrucao2, 2, '0')                           + //159 até 160 - Primeira instrução de Cobrança
+                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)       + //161 até 173 Juros de mora por dia
+                  aDataDesconto                                         + //174 até 179 Data limite para concessao de desconto
+                  IntToStrZero( round( ValorDesconto * 100), 13)        + //180 até 192  Valor do desconto
+                  IntToStrZero( round( ValorIOF * 100 ), 13)            + //193 até 205 Valor do IOF
+                  IntToStrZero( round( ValorAbatimento * 100 ), 13)     + //206 até 218 Valor do abatimento permitido
+                  ATipoSacado                                           + //219 até 220 "01" - CPF / "02"- CGC
+                  PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')            + // 221 até 234 CNPJ ou CPF do sacado
+                  PadRight( Sacado.NomeSacado, 40)                      + // 235 até 274 Nome do sacado
+                  PadRight(trim(Sacado.Logradouro) + ', ' +
+                           trim(Sacado.Numero) + ' ' +
+                           trim(Sacado.Complemento), 40) +                //275 até 314 - Endereço do sacado
+                  PadRight( Sacado.Bairro, 12)                          + //315 até  326 - Bairro Sacado
+                  PadLeft( OnlyNumber(Sacado.CEP), 8 )                  + // 327 até 334 - CEP do endereço do sacado
+                  PadRight( trim(Sacado.Cidade), 15)                    + // 335 até 349  - Cidade do sacado
+                  PadRight( Sacado.UF, 2 )                              +// 350 até 351  - UF da cidade do sacado
+                  ADataMoraJuros                                        + //352 até 357  - Data Multa
+                  IntToStrZero(round((ValorDocumento*PercentualMulta)/100), 10) + //358 até 367 - Valor nominal da multa
+                  PadRight( Sacado.NomeSacado, 22)                      + // 368 até 389 - Nome do Sacador Avalista
+                  '00'                                                  + // 390  391 - Terceira instrução de Cobrança Default '00'
                    IfThen((DataProtesto <> null) and
                       (DataProtesto > Vencimento),
                        PadLeft(IntToStr(DaysBetween(DataProtesto,
-                       Vencimento)), 2, '0'), '00')  + //392 até 393 - Quantidade de dias para início da ação de protesto ou devolução do Título
-                   '1'                                              + // 394 até 394 - Código da moeda: Real
-                   IntToStrZero( aRemessa.Count + 1, 6 ); // 395 até 400
+                       Vencimento)), 2, '0'), '00')                     + //392 até 393 - Quantidade de dias para início da ação de protesto ou devolução do Título
+                   '1'                                                  + // 394 até 394 - Código da moeda: Real
+                   IntToStrZero( aRemessa.Count + 1, 6 );                 // 395 até 400
          aRemessa.Text := aRemessa.Text + UpperCase(wLinha);
       end;
    end;

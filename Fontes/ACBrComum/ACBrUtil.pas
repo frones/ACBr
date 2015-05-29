@@ -1721,28 +1721,33 @@ begin
   AnsiStr := ACBrStrToAnsi(Texto);
   Tamanho := Length(AnsiStr) ;
   PosIni  := 1 ;
-  repeat
-     if PosIni > 1 then
-        Resp := Resp + sLineBreak;
+  if Colunas > 0 then
+  begin
+    repeat
+       if PosIni > 1 then
+          Resp := Resp + sLineBreak;
 
-     PosFim := PosIni + Colunas - 1 ;
+       PosFim := PosIni + Colunas - 1 ;
 
-     if Tamanho > PosFim then                  // Ainda tem proxima linha ?
-        if AnsiStr[PosFim+1] <> CaracterQuebrar then   // Proximo já é uma Quebra ?
-           while (AnsiStr[PosFim] <> CaracterQuebrar) and (PosFim > PosIni) do // Ache uma Quebra
-              Dec(PosFim) ;
+       if Tamanho > PosFim then                  // Ainda tem proxima linha ?
+          if AnsiStr[PosFim+1] <> CaracterQuebrar then   // Proximo já é uma Quebra ?
+             while (AnsiStr[PosFim] <> CaracterQuebrar) and (PosFim > PosIni) do // Ache uma Quebra
+                Dec(PosFim) ;
 
-     if PosFim = PosIni then  // Não foi capaz de encontrar uma quebra
-        PosFim := PosIni + Colunas - 1 ;
+       if PosFim = PosIni then  // Não foi capaz de encontrar uma quebra
+          PosFim := PosIni + Colunas - 1 ;
 
-     Resp := Resp + Copy( AnsiStr, PosIni, (PosFim-PosIni)+1 );
-     PosIni := PosFim + 1 ;
+       Resp := Resp + Copy( AnsiStr, PosIni, (PosFim-PosIni)+1 );
+       PosIni := PosFim + 1 ;
 
-     // Pula CaracterQuebrar no Inicio da String
-     while (AnsiStr[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
-        Inc(PosIni) ;
+       // Pula CaracterQuebrar no Inicio da String
+       while (AnsiStr[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
+          Inc(PosIni) ;
 
-  until (PosIni > Tamanho);
+    until (PosIni > Tamanho);
+  end
+  else
+    Resp := AnsiStr;
 
   Result := ACBrStr(Resp);
 end;

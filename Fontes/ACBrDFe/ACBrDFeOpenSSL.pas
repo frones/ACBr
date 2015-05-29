@@ -288,7 +288,8 @@ begin
     if (xmlSchemaValidateDoc(valid_ctxt, doc) <> 0) then
     begin
       schemError := xmlGetLastError();
-      MsgErro := IntToStr(schemError^.code) + ' - ' + schemError^.message;
+      if (schemError <> nil) then
+        MsgErro := IntToStr(schemError^.code) + ' - ' + schemError^.message;
     end
     else
       Result := True;

@@ -113,6 +113,8 @@ function TNFeRTXT.LerTxt: Boolean;
 var
   i: Integer;
   versao: String;
+  ok: Boolean;
+  vFormatSettings: TFormatSettings;
 begin
   Result := False;
   // Ler o arquivo
@@ -133,6 +135,10 @@ begin
   for i := 0 to FLayoutArquivoTXT.Count - 1 do
     FLayoutArquivoTXT[i] := '§' + trim(copy(FLayoutArquivoTXT[i], pos('>', FLayoutArquivoTXT[i]) + 1, maxInt));
   // Ler Registros
+
+  vFormatSettings.DecimalSeparator  := '.';
+  NFe.infNFe.Versao := StrToFloat(versao,vFormatSettings);
+
   for i := 1 to FConteudoArquivo.Count - 1 do
   begin
     LerRegistro(FconteudoArquivo[i])
@@ -234,10 +240,6 @@ begin
   FID := UpperCase(copy(Registro, 2, pos('|', FRegistro) - 2));
   if FID = '' then
     exit;
-  if ID = 'A' then
-  begin
-     NFe.infNFe.Versao := LerCampo(tcDe2, 'versao');
-  end;
 
   if ID = 'B' then (* Grupo da TAG <ide> **************************************)
   begin

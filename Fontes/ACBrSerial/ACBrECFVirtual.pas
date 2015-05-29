@@ -312,6 +312,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetTotalSubstituicaoTributaria: Double; override ;
     function GetTotalNaoTributado: Double; override ;
     function GetTotalIsencao: Double; override ;
+    function GetNumReducoesZRestantes: String; override ;
 
     function GetNumECF: String; override ;
     function GetCNPJ: String; override ;
@@ -966,6 +967,11 @@ end;
 function TACBrECFVirtualClass.GetTotalIsencao: Double;
 begin
   Result := RoundTo( fpAliquotas[2].Total, -2 ) ;
+end;
+
+function TACBrECFVirtualClass.GetNumReducoesZRestantes: String;
+begin
+  Result:= '9999';
 end;
 
 function TACBrECFVirtualClass.GetNumECF: String;

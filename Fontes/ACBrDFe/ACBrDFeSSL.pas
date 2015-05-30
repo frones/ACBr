@@ -228,10 +228,36 @@ begin
 end;
 
 function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String): String;
+Var
+  XmlAss, xmlHeaderAntes, xmlHeaderDepois: String;
+  I: integer;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
   InitSSLClass;
-  Result := FSSLClass.Assinar(ConteudoXML, docElement, infElement);
+
+  // Lendo Header antes de assinar //
+  xmlHeaderAntes := '';
+  I := pos('?>', ConteudoXML);
+  if I > 0 then
+    xmlHeaderAntes := copy(ConteudoXML, 1, I + 1);
+
+  XmlAss := FSSLClass.Assinar(ConteudoXML, docElement, infElement);
+
+  // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
+  if xmlHeaderAntes <> '' then
+  begin
+    I := pos('?>', XmlAss);
+    if I > 0 then
+    begin
+      xmlHeaderDepois := copy(XmlAss, 1, I + 1);
+      if xmlHeaderAntes <> xmlHeaderDepois then
+        XmlAss := StuffString(XmlAss, 1, length(xmlHeaderDepois), xmlHeaderAntes);
+    end
+    else
+      XmlAss := xmlHeaderAntes + XmlAss;
+  end;
+
+  Result := XmlAss;
 end;
 
 function TDFeSSL.Enviar(var ConteudoXML: String; const URL: String;

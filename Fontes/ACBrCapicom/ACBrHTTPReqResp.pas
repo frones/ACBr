@@ -64,7 +64,7 @@ type
     FMimeType: String;
     // (ex.: 'application/soap+xml' ou 'text/xml' - que é o Content-Type)
     FCharsets: String; //  (ex.: 'ISO-8859-1,utf-8' - que é o Accept-Charset)
-    FData: String;
+    FData: AnsiString;
     FProxyHost: String;
     FProxyPass: String;
     FProxyPort: String;
@@ -89,7 +89,7 @@ type
     property MimeType: String read FMimeType write FMimeType;
     property Charsets: String read FCharsets write FCharsets;
     property Url: String read FUrl write FUrl;
-    property Data: String read FData write FData;
+    property Data: AnsiString read FData write FData;
     property ProxyHost: String read FProxyHost write FProxyHost;
     property ProxyPort: String read FProxyPort write FProxyPort;
     property ProxyUser: String read FProxyUser write FProxyUser;
@@ -362,10 +362,10 @@ begin
       UpdateErrorCodes(pRequest);
 
       try
-        Header := 'Host: ' + AHost + sLineBreak + 'Content-Type: ' +
-          FMimeType + SLineBreak + 'Accept-Charset: ' + FCharsets +
-          SLineBreak + 'SOAPAction: "' + FSOAPAction + '"' +
-          SLineBreak + SLineBreak;
+        Header := 'Host: ' + AHost + sLineBreak +
+                  'Content-Type: ' + FMimeType + '; charset='+FCharsets + SLineBreak +
+                  'Accept-Charset: ' + FCharsets + SLineBreak +
+                  'SOAPAction: "' + FSOAPAction + '"' +SLineBreak;
 
         if (FUseCertificate) then
           if not InternetSetOption(pRequest, {$IFDEF FPC}INTERNET_OPTION_CLIENT_CERT_CONTEXT{$ELSE}84{$ENDIF},
@@ -419,7 +419,7 @@ begin
 
             //DEBUG
             //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
-            //SetLength(FData, Resp.Size);
+            //Resp.Position := 0;
             //FData := ReadStrFromStream(Resp, Resp.Size);
             //Resp.Position := 0;
             //WriteToTXT('c:\temp\httpreqresp.log', FData);

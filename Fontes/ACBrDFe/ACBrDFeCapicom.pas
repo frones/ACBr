@@ -366,9 +366,8 @@ end;
 
 function TDFeCapicom.Assinar(const ConteudoXML, docElement, infElement: String): String;
 var
-  I, PosIni, PosFim: integer;
+  PosIni, PosFim: integer;
   URI, AXml, TagEndDocElement, XmlAss: String;
-  xmlHeaderAntes, xmlHeaderDepois: String;
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignature;
   dsigKey: IXMLDSigKey;
@@ -387,12 +386,6 @@ begin
 
     AXml := AXml + SignatureElement(URI, False) + TagEndDocElement;
   end;
-
-  // Lendo Header antes de assinar //
-  xmlHeaderAntes := '';
-  I := pos('?>', AXml);
-  if I > 0 then
-    xmlHeaderAntes := copy(AXml, 1, I + 1);
 
   try
     // Criando XMLDOC //
@@ -443,20 +436,6 @@ begin
     PosIni := Pos('<X509Certificate>', XmlAss) - 1;
     PosFim := PosLast('<X509Certificate>', XmlAss);
     XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
-
-    // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
-    if xmlHeaderAntes <> '' then
-    begin
-      I := pos('?>', XmlAss);
-      if I > 0 then
-      begin
-        xmlHeaderDepois := copy(XmlAss, 1, I + 1);
-        if xmlHeaderAntes <> xmlHeaderDepois then
-          XmlAss := StuffString(XmlAss, 1, length(xmlHeaderDepois), xmlHeaderAntes);
-      end
-      else
-        XmlAss := xmlHeaderAntes + XmlAss;
-    end;
   finally
     dsigKey := nil;
     signedKey := nil;
@@ -479,7 +458,7 @@ begin
   Resp := TStringStream.Create('');
   try
     Executar(ConteudoXML, Resp);
-    Result := Resp.DataString;
+    Result := String(Resp.DataString);
     // DEBUG //
     //Resp.SaveToFile('c:\temp\ReqResp.xml');
   finally

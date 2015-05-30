@@ -188,12 +188,7 @@ begin
   // Considerando apenas o último Certificado //
   PosIni := Pos('<X509Certificate>', XmlAss) - 1;
   PosFim := PosLast('<X509Certificate>', XmlAss);
-  XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
-
-  // Removendo cabecalho de versao XML
-  XmlAss := StringReplace(XmlAss, '<?xml version="1.0"?>', '', []);
-
-  Result := XmlAss;
+  Result := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
 end;
 
 function TDFeOpenSSL.Enviar(const ConteudoXML: String; const URL: String;

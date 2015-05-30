@@ -113,7 +113,6 @@ function TNFeRTXT.LerTxt: Boolean;
 var
   i: Integer;
   versao: String;
-  ok: Boolean;
   vFormatSettings: TFormatSettings;
 begin
   Result := False;

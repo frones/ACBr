@@ -41,8 +41,8 @@ interface
 
 uses
   SysUtils, Classes, frxBarcode, frxClass, frxExportPDF, frxDBSet, DB, DBClient,
-  ACBrMDFeDAMDFeClass, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil, pcnConversao,
-  pmdfeConversao, Dialogs, pmdfeEnvEventoMDFe, StrUtils;
+  ACBrMDFeDAMDFeClass, pmdfeMDFe, ACBrMDFe, pcnConversao, Dialogs,
+  pmdfeEnvEventoMDFe, StrUtils;
 
 type
   TDMACBrMDFeDAMDFEFR = class(TDataModule)
@@ -106,7 +106,7 @@ var
 implementation
 
 uses
-  ACBrDFeUtil;
+  ACBrDFeUtil, pmdfeConversaoMDFe, ACBrValidador, ACBrUtil;
 
 type
   TSplitResult = array of string;
@@ -445,7 +445,7 @@ begin
         FieldByName('Numero').AsString      := Copy(InfEvento.chMDFe, 26, 9);
         FieldByName('MesAno').AsString      := Copy(InfEvento.chMDFe, 05, 2) + '/' + Copy(InfEvento.chMDFe, 03, 2);
         FieldByName('Barras').AsString      := InfEvento.chMDFe;
-        FieldByName('ChaveAcesso').AsString := MFormatarChaveAcesso(InfEvento.chMDFe);
+        FieldByName('ChaveAcesso').AsString := FormatarChaveAcesso(InfEvento.chMDFe);
 
         // Carta de correção eletrônica
         FieldByName('cOrgao').AsInteger := InfEvento.cOrgao;
@@ -505,7 +505,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'CTe';
-            FieldByName('Chave').AsString := MFormatarChaveAcesso(infCTe.Items[j].chCTe, True);
+            FieldByName('Chave').AsString := FormatarChaveAcesso(infCTe.Items[j].chCTe);
             Post;
             with infCTe[j] do
               for x := 0 to infUnidTransp.Count - 1 do
@@ -531,7 +531,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'CT';
-            FieldByName('Chave').AsString := FormatarCNPJCPF(FMDFe.emit.CNPJ) + '        ' +
+            FieldByName('Chave').AsString := FormatarCNPJ(FMDFe.emit.CNPJ) + '        ' +
               IntToStr(infCT.Items[j].serie) + '-' + infCT.Items[j].nCT;
             Post;
             with infCT[j] do
@@ -558,7 +558,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'NFe';
-            FieldByName('Chave').AsString := MFormatarChaveAcesso(infNFe.Items[j].chNFe, True);
+            FieldByName('Chave').AsString := FormatarChaveAcesso(infNFe.Items[j].chNFe);
             Post;
             with infNFe[j] do
               for x := 0 to infUnidTransp.Count - 1 do
@@ -584,7 +584,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'NF';
-            FieldByName('Chave').AsString := FormatarCNPJCPF(FMDFe.emit.CNPJ) + '        ' +
+            FieldByName('Chave').AsString := FormatarCNPJ(FMDFe.emit.CNPJ) + '        ' +
               IntToStr(infNF.Items[j].serie) + '-' + IntToStr(infNF.Items[j].nNF);
             Post;
             with infNF[j] do
@@ -611,7 +611,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'MDF-e';
-            FieldByName('Chave').AsString := MFormatarChaveAcesso(infMDFeTransp.Items[j].chMDFe, True);
+            FieldByName('Chave').AsString := FormatarChaveAcesso(infMDFeTransp.Items[j].chMDFe);
             Post;
             with infMDFeTransp[j] do
               for x := 0 to infUnidTransp.Count - 1 do
@@ -792,8 +792,8 @@ begin
 
     with FMDFe.infMDFe do
     begin
-      FieldByName('Id').AsString    := LimpaNumero(Id);
-      FieldByName('Chave').AsString := MFormatarChaveAcesso(Id);
+      FieldByName('Id').AsString    := OnlyNumber(Id);
+      FieldByName('Chave').AsString := FormatarChaveAcesso(Id);
     end;
 
     with FMDFe.Ide do
@@ -815,13 +815,13 @@ begin
           FieldByName('Protocolo').AsString := FDAMDFEClassOwner.ProtocoloMDFE
         else if not EstaVazio(FMDFe.procMDFe.nProt) then
           FieldByName('Protocolo').AsString := FMDFe.procMDFe.nProt + '   ' +
-            SeSenao(FMDFe.procMDFe.dhRecbto <> 0, DateTimeToStr(FMDFe.procMDFe.dhRecbto), '')
+            IfThen(FMDFe.procMDFe.dhRecbto <> 0, DateTimeToStr(FMDFe.procMDFe.dhRecbto), '')
         else
           FieldByName('Protocolo').AsString := 'MDFe sem Autorização de Uso da SEFAZ';
       end
       else
         FieldByName('Protocolo').AsString := 'Impressão em contingência. Obrigatória a autorização em 168 horas' +
-          ' após esta impressão (' + FormatDateTime(DateTimeToStr(dhEmi)) + ')';
+          ' após esta impressão (' + FormatDateTimeBr(dhEmi) + ')';
 
     end;
     with FMDFe.tot do

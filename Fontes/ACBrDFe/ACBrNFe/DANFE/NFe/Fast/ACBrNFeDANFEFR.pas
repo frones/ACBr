@@ -119,7 +119,7 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrUtil, StrUtils, Dialogs;
+uses ACBrNFe, ACBrUtil, StrUtils, Dialogs, pcnConversaoNFe;
 
 constructor TACBrNFeDANFEFR.Create(AOwner: TComponent);
 begin

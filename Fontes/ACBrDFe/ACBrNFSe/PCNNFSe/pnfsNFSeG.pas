@@ -677,7 +677,7 @@ begin
                                                  proVitoria, proTecnos, proPVH,
                                                  proSisPMJP, proActcon, proGovDigital],
 
-                    //Adicionei o SeSenao para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
+                    //Adicionei o IfThen para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
                     ifThen( length(Cnpj)=14,
                                                  ('<' + Prefixo4 + 'CpfCnpj>' +
                                                    '<' + Prefixo4 + 'Cnpj>' +

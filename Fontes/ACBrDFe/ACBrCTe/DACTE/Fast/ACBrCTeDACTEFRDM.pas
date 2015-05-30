@@ -136,7 +136,7 @@ var
 
 implementation
 
-uses ACBrCTe, ACBrCTeUtil, ACBrDFeUtil, StrUtils, Math;
+uses ACBrCTe, ACBrDFeUtil, StrUtils, Math;
 
 {$R *.dfm}
 
@@ -1004,7 +1004,7 @@ begin
     with FCTe.infCTe do
     begin
       //FieldByName('Versao').AsString := IntToStr(Versao);
-      FieldByName('Id').AsString := LimpaNumero(Id);
+      FieldByName('Id').AsString := OnlyNumber(Id);
       FieldByName('Chave').AsString := CTeUtil.FormatarChaveAcesso(Id);
     end;
 
@@ -1044,7 +1044,7 @@ begin
       FieldByName('UFEmi').AsString := UFEnv;
 {$ENDIF}
 
-      FieldByName('modal').AsString := SeSenao(modal = mdRodoviario, '0', '0');
+      FieldByName('modal').AsString := IfThen(modal = mdRodoviario, '0', '0');
 
       case tpServ of
         tsNormal: FieldByName('tpServ').AsString := 'Normal';
@@ -1059,11 +1059,11 @@ begin
       FieldByName('cMunFim').AsString := IntToStr(cMunFim);
       FieldByName('xMunFim').AsString := xMunFim;
       FieldByName('UFFim').AsString := UFFim;
-      FieldByName('TpImp').AsString := SeSenao(TpImp = tiRetrato, '1', '2');
-      FieldByName('TpEmis').AsString := SeSenao(TpEmis = teNormal, '1', '5');
+      FieldByName('TpImp').AsString := IfThen(TpImp = tiRetrato, '1', '2');
+      FieldByName('TpEmis').AsString := IfThen(TpEmis = teNormal, '1', '5');
       FieldByName('CDV').AsString := IntToStr(CDV);
-      FieldByName('TpAmb').AsString := SeSenao(TpAmb = taHomologacao, '2', '1');
-      FieldByName('ProcEmi').AsString := SeSenao(ProcEmi = peAplicativoContribuinte, '0', '');
+      FieldByName('TpAmb').AsString := IfThen(TpAmb = taHomologacao, '2', '1');
+      FieldByName('ProcEmi').AsString := IfThen(ProcEmi = peAplicativoContribuinte, '0', '');
       FieldByName('VerProc').AsString := VerProc;
 
       case Toma03.Toma of
@@ -1159,8 +1159,8 @@ begin
           wContingencia := 'DACTE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL';
 
         //            wContingencia := wContingencia + ';' +
-        //            'DATA/HORA INÍCIO: ' + SeSenao(FCTe.ide.dhCont = 0, ' ', DateTimeToStr(FCTe.ide.dhCont)) + ';'+
-        //            'MOTIVO CONTINGÊNCIA: ' + SeSenao(EstaVazio(FCTe.ide.xJust), ' ', FCTe.ide.xJust);
+        //            'DATA/HORA INÍCIO: ' + IfThen(FCTe.ide.dhCont = 0, ' ', DateTimeToStr(FCTe.ide.dhCont)) + ';'+
+        //            'MOTIVO CONTINGÊNCIA: ' + IfThen(EstaVazio(FCTe.ide.xJust), ' ', FCTe.ide.xJust);
       end;
       if Length(wObs) > 0 then
         wObs := wObs + ';';
@@ -1537,7 +1537,7 @@ begin
         if not (FCTe.Ide.tpEmis in [teContingencia, teFSDA]) and EstaVazio(FCTe.procCTe.nProt) then
           FieldByName('Contingencia_Valor').AsString := 'CTe sem Autorização de Uso da SEFAZ'
         else
-          FieldByName('Contingencia_Valor').AsString := FCTe.procCTe.nProt + ' ' + SeSenao(FCTe.procCTe.dhRecbto <> 0,
+          FieldByName('Contingencia_Valor').AsString := FCTe.procCTe.nProt + ' ' + IfThen(FCTe.procCTe.dhRecbto <> 0,
             DateTimeToStr(FCTe.procCTe.dhRecbto), '');
       end
       else
@@ -1569,7 +1569,7 @@ begin
           if (FCTe.Ide.tpEmis = teSVCSP) or (FCTe.Ide.tpEmis = teSVCRS) then
           begin
             FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
-            FieldByName('Contingencia_Valor').AsString := FCTe.procCTe.nProt + ' ' + SeSenao(FCTe.procCTe.dhRecbto <> 0,
+            FieldByName('Contingencia_Valor').AsString := FCTe.procCTe.nProt + ' ' + IfThen(FCTe.procCTe.dhRecbto <> 0,
               DateTimeToStr(FCTe.procCTe.dhRecbto), '');
           end;
     end;

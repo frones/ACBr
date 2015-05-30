@@ -163,7 +163,7 @@ begin
       begin
         FieldByName('Numero').AsString    := FormatarNumeroDocumentoFiscalNFSe(Numero);
 //        FieldByName('Serie').AsString     := Serie;
-//        FieldByName('Tipo').AsString      := SeSenao(Tipo = trRPS, '0','1');
+//        FieldByName('Tipo').AsString      := IfThen(Tipo = trRPS, '0','1');
       end;
 
       FieldByName('Competencia').AsString       := Competencia;
@@ -227,13 +227,13 @@ begin
        FieldByName('CodigoMunicipio').AsString          := CodCidadeToCidade(StrToInt(CodigoMunicipio))
       else
        FieldByName('CodigoMunicipio').AsString          := '';
-      FieldByName('ExigibilidadeISS').AsString          := SeSenao(ExigibilidadeISS = exiExigivel,               'Exigível',
-                                                           SeSenao(ExigibilidadeISS = exiNaoIncidencia,          'Não Incidência',
-                                                           SeSenao(ExigibilidadeISS = exiIsencao,                'Isenção',
-                                                           SeSenao(ExigibilidadeISS = exiExportacao,             'Exportação',
-                                                           SeSenao(ExigibilidadeISS = exiImunidade,              'Imunidade',
-                                                           SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial',
-                                                           SeSenao(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Processo Administrativo',
+      FieldByName('ExigibilidadeISS').AsString          := IfThen(ExigibilidadeISS = exiExigivel,               'Exigível',
+                                                           IfThen(ExigibilidadeISS = exiNaoIncidencia,          'Não Incidência',
+                                                           IfThen(ExigibilidadeISS = exiIsencao,                'Isenção',
+                                                           IfThen(ExigibilidadeISS = exiExportacao,             'Exportação',
+                                                           IfThen(ExigibilidadeISS = exiImunidade,              'Imunidade',
+                                                           IfThen(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial',
+                                                           IfThen(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Processo Administrativo',
                                                            '' )))))));
       FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(StrToIntDef(CodigoMunicipio,0)); // MunicipioIncidencia // removido pois sempre vem em branco.. (Oneide)
     end;
@@ -382,7 +382,7 @@ begin
 	  
       FieldByName('CodigoPais').AsString                := IntToStr(CodigoPais);
       FieldByName('NumeroProcesso').AsString            := NumeroProcesso;
-//      FieldByName('ResponsavelRetencao').AsString       := SeSenao(ResponsavelRetencao = rtPrestador,'0','1');
+//      FieldByName('ResponsavelRetencao').AsString       := IfThen(ResponsavelRetencao = rtPrestador,'0','1');
       FieldByName('Descricao').AsString                 := Descricao;
 
       with Valores do
@@ -394,7 +394,7 @@ begin
         FieldByName('ValorInss').AsFloat                := ValorInss;
         FieldByName('ValorIr').AsFloat                  := ValorIr;
         FieldByName('ValorCsll').AsFloat                := ValorCsll;
-//        FieldByName('IssRetido').AsString               := SeSenao(IssRetido = stRetencao,'0', SeSenao(IssRetido = stNormal,'2','3'));
+//        FieldByName('IssRetido').AsString               := IfThen(IssRetido = stRetencao,'0', IfThen(IssRetido = stNormal,'2','3'));
         FieldByName('ValorIss').AsFloat                 := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat          := OutrasRetencoes;
         FieldByName('BaseCalculo').AsFloat              := BaseCalculo;

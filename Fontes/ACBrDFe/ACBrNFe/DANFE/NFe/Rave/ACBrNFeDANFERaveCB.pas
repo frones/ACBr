@@ -72,7 +72,7 @@ type
      FimprimirDesconto: Boolean;
     FImprimirTributosItem: Boolean; 
 
-     function SeSenaoJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
+     function IfThenJPEG(ACondicao: Boolean; ATrue, AFalse: TJPEGImage): TJPEGImage;
      function BMPtoJPGString(aBMPFile: string): string;
      function CarregaLogoMarca(LogoMarcaEmpresa: TJPEGImage): boolean;
    public
@@ -137,7 +137,7 @@ var
 begin
   Result := True;
 
-  if DFeUtil.NaoEstaVazio(Logo) then
+  if NaoEstaVazio(Logo) then
   begin
     if FileExists(Logo) then
     begin
@@ -208,9 +208,9 @@ begin
                       Sistema,
                       Usuario,
                       ProtocoloNFe,
-                      SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
-                      DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
-                      DFeUtil.SeSenao(MostrarPreview,tsPreview,tsPrint),
+                      IfThenJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                      IfThen((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                      IfThen(MostrarPreview,tsPreview,tsPrint),
                       MostrarStatus,
                       MostrarSetup,
                       NumCopias,
@@ -276,8 +276,8 @@ begin
                        Sistema,
                        Usuario,
                        ProtocoloNFe,
-                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
-                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       IfThenJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       IfThen((TipoDANFE=tiRetrato),poPortrait,poLandScape),
                        tsPDF,
                        MostrarStatus,
                        MostrarSetup,
@@ -336,9 +336,9 @@ begin
                        Fax,
                        Sistema,
                        Usuario,
-                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
-                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
-                       DFeUtil.SeSenao(MostrarPreview,tsPreview,tsPrint),
+                       IfThenJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       IfThen((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       IfThen(MostrarPreview,tsPreview,tsPrint),
                        MostrarStatus,
                        MostrarSetup,
                        NumCopias,
@@ -378,8 +378,8 @@ begin
                        Fax,
                        Sistema,
                        Usuario,
-                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
-                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       IfThenJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       IfThen((TipoDANFE=tiRetrato),poPortrait,poLandScape),
                        tsPDF,
                        MostrarStatus,
                        MostrarSetup,
@@ -415,9 +415,9 @@ begin
                        Fax,
                        Sistema,
                        Usuario,
-                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
-                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
-                       DFeUtil.SeSenao(MostrarPreview,tsPreview,tsPrint),
+                       IfThenJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       IfThen((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       IfThen(MostrarPreview,tsPreview,tsPrint),
                        MostrarStatus,
                        MostrarSetup,
                        NumCopias,
@@ -457,8 +457,8 @@ begin
                        Fax,
                        Sistema,
                        Usuario,
-                       SeSenaoJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
-                       DFeUtil.SeSenao((TipoDANFE=tiRetrato),poPortrait,poLandScape),
+                       IfThenJPEG(ExisteLogoMarca,LogoMarcaEmpresa,nil),
+                       IfThen((TipoDANFE=tiRetrato),poPortrait,poLandScape),
                        tsPDF,
                        MostrarStatus,
                        MostrarSetup,
@@ -479,7 +479,7 @@ begin
     end;
 end;
 
-function TACBrNFeDANFERaveCB.SeSenaoJPEG(ACondicao: Boolean; ATrue,
+function TACBrNFeDANFERaveCB.IfThenJPEG(ACondicao: Boolean; ATrue,
   AFalse: TJPEGImage): TJPEGImage;
 begin
   Result := AFalse;

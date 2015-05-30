@@ -1,9 +1,9 @@
 object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   OldCreateOrder = False
   Height = 382
-  Width = 555
+  Width = 545
   object frxReport: TfrxReport
-    Version = '4.15.11'
+    Version = '4.15'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False
@@ -38,7 +38,6 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
-    CheckboxAsShape = False
     Left = 48
     Top = 92
   end

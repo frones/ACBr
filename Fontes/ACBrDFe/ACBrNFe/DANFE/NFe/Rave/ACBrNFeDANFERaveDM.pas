@@ -592,7 +592,7 @@ begin
                         vTemp2.Add(' QTDADE: '+FormatFloat(qLote));
                         vTemp2.Add(' FABR.: '+FormatDate(DateToStr(dFab)));
                         vTemp2.Add(' VAL.: '+FormatDate(DateToStr(dVal)));
-                        vTemp2.Add(SeSenao(vPMC>0,' PMC: '+FormatFloat(vPMC),''));
+                        vTemp2.Add(IfThen(vPMC>0,' PMC: '+FormatFloat(vPMC),''));
                     end;
                  end;
 
@@ -658,7 +658,7 @@ begin
             Connection.WriteStrData('', FormatFloat(vDesc));
          with Imposto.ICMS do
          begin
-           //SeSenao(orig = oeNacional,'0',SeSenao(orig = oeEstrangeiraImportacaoDireta,'1','2')));
+           //IfThen(orig = oeNacional,'0',IfThen(orig = oeEstrangeiraImportacaoDireta,'1','2')));
            //if not (CST = cstVazio) then
                Connection.WriteStrData('',OrigToStr(orig)) ;
            //else
@@ -1030,7 +1030,7 @@ begin
          if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) and EstaVazio(FNFe.procNFe.nProt) then
             Connection.WriteStrData('', 'NFe sem Autorização de Uso da SEFAZ')
          else
-            Connection.WriteStrData('', FNFe.procNFe.nProt+' '+SeSenao(FNFe.procNFe.dhRecbto<>0,DateTimeToStr(FNFe.procNFe.dhRecbto),''));
+            Connection.WriteStrData('', FNFe.procNFe.nProt+' '+IfThen(FNFe.procNFe.dhRecbto<>0,DateTimeToStr(FNFe.procNFe.dhRecbto),''));
        end
       else
          Connection.WriteStrData('', FDANFEClassOwner.ProtocoloNFe);
@@ -1086,7 +1086,7 @@ begin
   with FNFe.infNFe do
   begin
 //    Connection.WriteStrData('', IntToStr(Versao));
-    Connection.WriteStrData('', LimpaNumero(Id));
+    Connection.WriteStrData('', OnlyNumber(Id));
     Connection.WriteStrData('', NotaUtil.FormatarChaveAcesso(Id));
   end;
 
@@ -1095,20 +1095,20 @@ begin
     Connection.WriteStrData('', inttostr(CUF));
     Connection.WriteStrData('', inttostr(CNF));
     Connection.WriteStrData('', NatOp);
-    Connection.WriteStrData('', SeSenao(IndPag = ipVista,'0', SeSenao(IndPag = ipPrazo,'1','2')));
+    Connection.WriteStrData('', IfThen(IndPag = ipVista,'0', IfThen(IndPag = ipPrazo,'1','2')));
     Connection.WriteStrData('', inttostr(Modelo));
     Connection.WriteStrData('', inttostr(Serie));
     Connection.WriteStrData('', FormatarNumeroDocumentoFiscal(inttostr(NNF)));
     Connection.WriteStrData('', FormatDate(datetostr(DEmi)));
     Connection.WriteStrData('', IfThen(DSaiEnt <> 0, FormatDate(datetostr(DSaiEnt))));
-    Connection.WriteStrData('', SeSenao(TpNF=tnEntrada,'0','1'));
+    Connection.WriteStrData('', IfThen(TpNF=tnEntrada,'0','1'));
     Connection.WriteStrData('', inttostr(CMunFG));
-    Connection.WriteStrData('', SeSenao(TpImp=tiRetrato,'1','2'));
-    Connection.WriteStrData('', SeSenao(TpEmis=teNormal,'1','5'));
+    Connection.WriteStrData('', IfThen(TpImp=tiRetrato,'1','2'));
+    Connection.WriteStrData('', IfThen(TpEmis=teNormal,'1','5'));
     Connection.WriteStrData('', inttostr(CDV));
-    Connection.WriteStrData('', SeSenao(TpAmb = taHomologacao,'2','1'));
-    Connection.WriteStrData('', SeSenao(FinNFe=fnNormal,'1',SeSenao(FinNFe=fnComplementar,'2','3')));
-    Connection.WriteStrData('', SeSenao(ProcEmi=peAplicativoContribuinte,'0',''));
+    Connection.WriteStrData('', IfThen(TpAmb = taHomologacao,'2','1'));
+    Connection.WriteStrData('', IfThen(FinNFe=fnNormal,'1',IfThen(FinNFe=fnComplementar,'2','3')));
+    Connection.WriteStrData('', IfThen(ProcEmi=peAplicativoContribuinte,'0',''));
     Connection.WriteStrData('', VerProc);
   end;
 
@@ -1307,8 +1307,8 @@ begin
            (FNFe.Ide.tpEmis=teSCAN)) then
           wcontingencia:='DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS';
         wcontingencia:=wcontingencia+';'+
-                      'DATA/HORA INÍCIO: '+SeSenao(FNFe.ide.dhCont = 0,' ',DateTimeToStr(FNFe.ide.dhCont))+';'+
-                      'MOTIVO CONTINGÊNCIA: '+SeSenao(EstaVazio(FNFe.ide.xJust),' ',FNFe.ide.xJust);
+                      'DATA/HORA INÍCIO: '+IfThen(FNFe.ide.dhCont = 0,' ',DateTimeToStr(FNFe.ide.dhCont))+';'+
+                      'MOTIVO CONTINGÊNCIA: '+IfThen(EstaVazio(FNFe.ide.xJust),' ',FNFe.ide.xJust);
     end;
     if length(wobs)>0 then
       wobs:=wobs+';';

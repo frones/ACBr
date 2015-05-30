@@ -47,7 +47,16 @@ unit ACBrBoletoFCFRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrBoletoFCFR, ACBrReg;
+  SysUtils, Classes, ACBrBoletoFCFR, ACBrReg
+  {$IFDEF FPC}
+     , LResources, LazarusPackageIntf, PropEdits, componenteditors
+  {$ELSE}
+     {$IFNDEF COMPILER6_UP}
+        , DsgnIntf
+     {$ELSE}
+        , DesignIntf, DesignEditors
+     {$ENDIF}
+  {$ENDIF} ;
 
 Type
   { Editor de Proriedades de Componente para chamar OpenDialog dos Relatorios }

@@ -2365,7 +2365,7 @@ begin
       if (Leitor.rExtrai(3, 'Servico') <> '')
       then begin
         NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
-//        NFSe.Servico.ItemListaServico := LimpaNumero(Leitor.rCampo(tcStr, 'CodigoServico116'));
+//        NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
 
         with NFSe.Servico.ItemServico.Add
         do begin

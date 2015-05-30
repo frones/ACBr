@@ -39,10 +39,17 @@ unit ACBrMDFeDAMDFEFRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrMDFeDAMDFEFR, ACBrReg,
+  SysUtils, Classes, ACBrMDFeDAMDFEFR, ACBrReg
   {$IFDEF FPC}
-     LResources
-  {$ENDIF} ;
+    , LResources
+  {$ELSE}
+     {$IFNDEF COMPILER6_UP}
+       , DsgnIntf
+     {$ELSE}
+       , DesignIntf
+       , DesignEditors
+     {$ENDIF}
+   {$ENDIF} ;
 
 Type
   { Editor de Proriedades de Componente para chamar OpenDialog dos Relatorios }

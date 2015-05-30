@@ -49,9 +49,9 @@ requires
    ACBr_MDFe;
 
 contains
-  ACBrMDFeDAMDFEFRDM in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEFRDM.pas' {DMACBrMDFeDAMDFEFR: TDataModule},
-  ACBrMDFeDAMDFEFRReg in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEFRReg.pas',
-  ACBrMDFeDAMDFEFR in '..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFEFR.pas';
+  ACBrMDFeDAMDFEFRDM in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fast\ACBrMDFeDAMDFEFRDM.pas' {DMACBrMDFeDAMDFEFR: TDataModule},
+  ACBrMDFeDAMDFEFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fast\ACBrMDFeDAMDFEFRReg.pas',
+  ACBrMDFeDAMDFEFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fast\ACBrMDFeDAMDFEFR.pas';
 
 end.
 

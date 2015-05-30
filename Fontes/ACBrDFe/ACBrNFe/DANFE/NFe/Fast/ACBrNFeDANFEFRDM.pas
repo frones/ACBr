@@ -191,7 +191,8 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrNFeUtil, ACBrDFeUtil, StrUtils, Math, DateUtils;
+uses ACBrNFe, ACBrDFeUtil, StrUtils, Math, DateUtils, pcnConversaoNFe,
+  ACBrValidador;
 
 { TACBrNFeFRClass }
 
@@ -337,33 +338,33 @@ begin
 
     with FNFe.Total.ICMSTot do
     begin
-      FieldByName('VBC').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VBC), 0);
-      FieldByName('VICMS').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VICMS), 0);
-      FieldByName('VBCST').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VBCST), 0);
-      FieldByName('VST').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VST), 0);
-      FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd), 0);
-      FieldByName('VFrete').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VFrete), 0);
-      FieldByName('VSeg').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VSeg), 0);
-      FieldByName('VDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VDesc), 0);
-      FieldByName('VII').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VII), 0);
-      FieldByName('VIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VIPI), 0);
-      FieldByName('VPIS').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VPIS), 0);
-      FieldByName('VCOFINS').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VCOFINS), 0);
-      FieldByName('VOutro').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VOutro), 0);
-      FieldByName('VNF').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VNF), 0);
-      FieldByName('VTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib), 0);
+      FieldByName('VBC').AsFloat := StringToFloatDef(FloatToStr(VBC), 0);
+      FieldByName('VICMS').AsFloat := StringToFloatDef(FloatToStr(VICMS), 0);
+      FieldByName('VBCST').AsFloat := StringToFloatDef(FloatToStr(VBCST), 0);
+      FieldByName('VST').AsFloat := StringToFloatDef(FloatToStr(VST), 0);
+      FieldByName('VProd').AsFloat := StringToFloatDef(FloatToStr(VProd), 0);
+      FieldByName('VFrete').AsFloat := StringToFloatDef(FloatToStr(VFrete), 0);
+      FieldByName('VSeg').AsFloat := StringToFloatDef(FloatToStr(VSeg), 0);
+      FieldByName('VDesc').AsFloat := StringToFloatDef(FloatToStr(VDesc), 0);
+      FieldByName('VII').AsFloat := StringToFloatDef(FloatToStr(VII), 0);
+      FieldByName('VIPI').AsFloat := StringToFloatDef(FloatToStr(VIPI), 0);
+      FieldByName('VPIS').AsFloat := StringToFloatDef(FloatToStr(VPIS), 0);
+      FieldByName('VCOFINS').AsFloat := StringToFloatDef(FloatToStr(VCOFINS), 0);
+      FieldByName('VOutro').AsFloat := StringToFloatDef(FloatToStr(VOutro), 0);
+      FieldByName('VNF').AsFloat := StringToFloatDef(FloatToStr(VNF), 0);
+      FieldByName('VTotTrib').AsFloat := StringToFloatDef(FloatToStr(VTotTrib), 0);
       if TributosPercentual = ptPersonalizado then
-        FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(TributosPercentualPersonalizado), 0)
+        FieldByName('VTribPerc').AsFloat := StringToFloatDef(FloatToStr(TributosPercentualPersonalizado), 0)
       else
       begin
         if (TributosPercentual = ptValorProdutos) and (VProd > 0) then
-          FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VProd), 0)
+          FieldByName('VTribPerc').AsFloat := StringToFloatDef(FloatToStr(VTotTrib*100/VProd), 0)
         else if (TributosPercentual = ptValorNF) and (VNF > 0) then
-          FieldByName('VTribPerc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VTotTrib*100/VNF), 0)
+          FieldByName('VTribPerc').AsFloat := StringToFloatDef(FloatToStr(VTotTrib*100/VNF), 0)
         else
           FieldByName('VTribPerc').AsFloat := 0;
       end;
-      if DFeUtil.NaoEstaVazio(TributosFonte) then
+      if NaoEstaVazio(TributosFonte) then
         FieldByName('VTribFonte').AsString := '(Fonte: '+TributosFonte+')';
     end;
 
@@ -430,23 +431,23 @@ begin
           FieldByName('XProd').AsString := StringReplace(xProd, ';', #13, [rfReplaceAll]);
 
           if FDANFEClassOwner.ImprimirTotalLiquido then
-            FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd - vDesc), 0)
+            FieldByName('VProd').AsFloat := StringToFloatDef(FloatToStr(VProd - vDesc), 0)
           else
-            FieldByName('VProd').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VProd), 0);
+            FieldByName('VProd').AsFloat := StringToFloatDef(FloatToStr(VProd), 0);
 
           wInfAdProd := FNFe.Det.Items[i].infAdProd;
 
           if Self.ExibirTotalTributosItem then
-            FieldByName('vTotTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(FNFe.Det.Items[i].Imposto.vTotTrib), 0)
+            FieldByName('vTotTrib').AsFloat := StringToFloatDef(FloatToStr(FNFe.Det.Items[i].Imposto.vTotTrib), 0)
           else
             FieldByName('vTotTrib').AsFloat := 0;
 
           if FieldByName('vTotTrib').AsFloat <> 0 then
           begin
             wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
-            wInfAdProd := wInfAdProd+' ('+FloatToStrF(((DFeUtil.StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(DFeUtil.StringToFloatDef(FieldByName('VProd').AsString,0) +
-            DFeUtil.StringToFloatDef(FieldByName('VOutro').AsString,0) -
-            DFeUtil.StringToFloatDef(FieldByName('VDesc').AsString,0)) ),ffNumber,15,2)+'%)';
+            wInfAdProd := wInfAdProd+' ('+FloatToStrF(((StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(StringToFloatDef(FieldByName('VProd').AsString,0) +
+            StringToFloatDef(FieldByName('VOutro').AsString,0) -
+            StringToFloatDef(FieldByName('VDesc').AsString,0)) ),ffNumber,15,2)+'%)';
           end;
 
           vTemp2 := TStringList.Create;
@@ -478,10 +479,10 @@ begin
                     with med.Items[j] do
                       begin
                         vTemp2.Add('-LOTE: ' + nLote);
-                        vTemp2.Add(' QTDADE: ' + DFeUtil.FormatFloat(qLote));
-                        vTemp2.Add(' FABR.: ' + DFeUtil.FormatDate(DateToStr(dFab)));
-                        vTemp2.Add(' VAL.: ' + DFeUtil.FormatDate(DateToStr(dVal)));
-                        vTemp2.Add(DFeUtil.SeSenao(vPMC > 0, ' PMC: ' + DFeUtil.FormatFloat(vPMC), ''));
+                        vTemp2.Add(' QTDADE: ' + FormatFloatBr(qLote));
+                        vTemp2.Add(' FABR.: ' + FormatDateBr(dFab));
+                        vTemp2.Add(' VAL.: ' + FormatDateBr(dVal));
+                        vTemp2.Add(IfThen(vPMC > 0, ' PMC: ' + FormatFloatBr(vPMC), ''));
                       end;
                   end;
 
@@ -541,16 +542,16 @@ begin
           FieldByName('genero').AsString := '';
           FieldByName('CFOP').AsString := CFOP;
           FieldByName('Ucom').AsString := UCom;
-          FieldByName('QCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(QCom), 0);
-          FieldByName('VUnCom').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VUnCom), 0);
+          FieldByName('QCom').AsFloat := StringToFloatDef(FloatToStr(QCom), 0);
+          FieldByName('VUnCom').AsFloat := StringToFloatDef(FloatToStr(VUnCom), 0);
 
           FieldByName('cEANTrib').AsString := cEANTrib;
           FieldByName('UTrib').AsString := uTrib;
-          FieldByName('QTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(qTrib), 0);
-          FieldByName('VUnTrib').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vUnTrib), 0);
-          FieldByName('vFrete').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vFrete), 0);
-          FieldByName('vSeg').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vSeg), 0);
-          FieldByName('vOutro').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vOutro), 0);
+          FieldByName('QTrib').AsFloat := StringToFloatDef(FloatToStr(qTrib), 0);
+          FieldByName('VUnTrib').AsFloat := StringToFloatDef(FloatToStr(vUnTrib), 0);
+          FieldByName('vFrete').AsFloat := StringToFloatDef(FloatToStr(vFrete), 0);
+          FieldByName('vSeg').AsFloat := StringToFloatDef(FloatToStr(vSeg), 0);
+          FieldByName('vOutro').AsFloat := StringToFloatDef(FloatToStr(vOutro), 0);
 
           //especifica tipo de impressão
           case FImprimirUnQtVlComercial of
@@ -571,13 +572,13 @@ begin
           if FDANFEClassOwner.ImprimirDescPorc then
           begin
             if vDesc > 0 then
-               FieldByName('vDesc').AsString := DFeUtil.FormatFloat(((vDesc*100) / (VUnCom * QCom)))
-               //FieldByName('vDesc').AsString := DFeUtil.FormatFloat(RoundTo(100 - ((((VUnCom * QCom) - vDesc) / (VUnCom * QCom)) * 100), -1)) + '%'
+               FieldByName('vDesc').AsString := FormatFloatBr(((vDesc*100) / (VUnCom * QCom)))
+               //FieldByName('vDesc').AsString := FormatFloat(RoundTo(100 - ((((VUnCom * QCom) - vDesc) / (VUnCom * QCom)) * 100), -1)) + '%'
             else
-               FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc);
+               FieldByName('vDesc').AsString := FormatFloatBr(vDesc);
           end
           else
-//            FieldByName('vDesc').AsString := DFeUtil.FormatFloat(vDesc); //linha comentada por Rodrigo F. Ricardo em 07.04.2015 - erro quando valor do desconto passava dos 999,99 devido a formatação atribuida pelo DFeUtil.FormatFloat
+//            FieldByName('vDesc').AsString := FormatFloat(vDesc); //linha comentada por Rodrigo F. Ricardo em 07.04.2015 - erro quando valor do desconto passava dos 999,99 devido a formatação atribuida pelo FormatFloat
             FieldByName('vDesc').AsString := FloatToStr(vDesc);
 
           with FNFe.Det.Items[i].Imposto.ISSQN do
@@ -708,8 +709,8 @@ begin
           begin
             if (CST = ipi00) or (CST = ipi49) or (CST = ipi50) or (CST = ipi99) then
               begin
-                FieldByName('VIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VIPI), 0);
-                FieldByName('PIPI').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(PIPI), 0);
+                FieldByName('VIPI').AsFloat := StringToFloatDef(FloatToStr(VIPI), 0);
+                FieldByName('PIPI').AsFloat := StringToFloatDef(FloatToStr(PIPI), 0);
               end
             else if (CST = ipi01) or (CST = ipi02) or (CST = ipi03) or (CST = ipi04) or (CST = ipi51) or (CST = ipi52) or (CST = ipi53) or (CST = ipi54) or (CST = ipi55) then
               begin
@@ -746,12 +747,12 @@ begin
 
     with FNFe.Dest do
     begin
-      if DFeUtil.NaoEstaVazio(CNPJCPF) then
+      if NaoEstaVazio(CNPJCPF) then
        begin
          if Length(CNPJCPF) > 11 then
-            FieldByName('CNPJCPF').AsString := DFeUtil.FormatarCNPJ(CNPJCPF)
+            FieldByName('CNPJCPF').AsString := FormatarCNPJ(CNPJCPF)
          else
-            FieldByName('CNPJCPF').AsString := DFeUtil.FormatarCPF(CNPJCPF);
+            FieldByName('CNPJCPF').AsString := FormatarCPF(CNPJCPF);
        end
       else
          FieldByName('CNPJCPF').AsString := '';
@@ -766,10 +767,10 @@ begin
         FieldByName('CMun').AsString := IntToStr(CMun);
         FieldByName('XMun').AsString := CollateBr(XMun);
         FieldByName('UF').AsString := UF;
-        FieldByName('CEP').AsString := DFeUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString := FormatarCEP(Poem_Zeros(CEP, 8));
         FieldByName('CPais').AsString := IntToStr(CPais);
         FieldByName('XPais').AsString := XPais;
-        FieldByName('Fone').AsString := DFeUtil.FormatarFone(Fone);
+        FieldByName('Fone').AsString := FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
       if (cdsIdentificacao.FieldByName('Mod_').AsString = '65') then
@@ -818,8 +819,8 @@ begin
       begin
         FieldByName('ChaveNFe').AsString := FNFe.infNFe.ID;
         FieldByName('NDup').AsString := NDup;
-        FieldByName('DVenc').AsString := DFeUtil.FormatDate(DateToStr(DVenc));
-        FieldByName('VDup').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VDup), 0);
+        FieldByName('DVenc').AsString := FormatDateBr(DVenc);
+        FieldByName('VDup').AsFloat := StringToFloatDef(FloatToStr(VDup), 0);
       end;
 
       Post;
@@ -838,7 +839,7 @@ begin
 
     with FNFe.Emit do
     begin
-      FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(CNPJCPF);
+      FieldByName('CNPJ').AsString := FormatarCNPJ(CNPJCPF);
       FieldByName('XNome').AsString := XNome;
       FieldByName('XFant').AsString := XFant;
       with EnderEmit do
@@ -850,10 +851,10 @@ begin
         FieldByName('CMun').AsString := IntToStr(CMun);
         FieldByName('XMun').AsString := CollateBr(XMun);
         FieldByName('UF').AsString := UF;
-        FieldByName('CEP').AsString := DFeUtil.FormatarCEP(DFeUtil.Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString := FormatarCEP(Poem_Zeros(CEP, 8));
         FieldByName('CPais').AsString := IntToStr(CPais);
         FieldByName('XPais').AsString := XPais;
-        FieldByName('Fone').AsString := DFeUtil.FormatarFone(Fone);
+        FieldByName('Fone').AsString := FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
       FieldByName('IM').AsString := IM;
@@ -874,8 +875,8 @@ begin
        cdsEmitente.FieldByName('DADOS_ENDERECO').AsString := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + ' - ' +
 											 Trim(FieldByName('XBairro').AsString) + ' - ' + Trim(FieldByName('XMun').AsString) + ' - ' + Trim(FieldByName('UF').AsString) + #13 +
 											'Fone: ' + Trim(FieldByName('Fone').AsString) +
-        DFeUtil.SeSenao(trim(FDANFEClassOwner.Fax) <> '',
-                        ' - FAX: ' + DFeUtil.FormatarFone(trim(FDANFEClassOwner.Fax)),'')+
+        IfThen(trim(FDANFEClassOwner.Fax) <> '',
+                        ' - FAX: ' + FormatarFone(trim(FDANFEClassOwner.Fax)),'')+
         ' - CEP: ' + Trim(FieldByName('CEP').AsString);
       if trim(FDANFEClassOwner.Site) <> '' then
         cdsEmitente.FieldByName('DADOS_ENDERECO').AsString := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + #13 +
@@ -907,14 +908,14 @@ begin
       else
         FieldByName('Pagamento').AsString := '';
 
-      if DFeUtil.NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
+      if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
       begin
         with FNFe.Cobr.Fat do
         begin
           FieldByName('nfat').AsString := nFat;
-          FieldByName('vOrig').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vOrig), 0);
-          FieldByName('vDesc').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vDesc), 0);
-          FieldByName('vLiq').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(vLiq), 0);
+          FieldByName('vOrig').AsFloat := StringToFloatDef(FloatToStr(vOrig), 0);
+          FieldByName('vDesc').AsFloat := StringToFloatDef(FloatToStr(vDesc), 0);
+          FieldByName('vLiq').AsFloat := StringToFloatDef(FloatToStr(vLiq), 0);
         end;
       end;
 
@@ -952,11 +953,11 @@ begin
           fpOutro:           wPag:='Outros';
         end;
         FieldByName('tPag').AsString := wPag;
-        FieldByName('vPag').AsFloat  := DFeUtil.StringToFloatDef(FloatToStr(vPag), 0);
+        FieldByName('vPag').AsFloat  := StringToFloatDef(FloatToStr(vPag), 0);
 
         with FNFe.Pag do
         begin
-           FieldByName('CNPJ').AsString  := DFeUtil.FormatarCNPJ(CNPJ);
+           FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);
            case tBand of
              bcVisa:            bPag := 'Visa';
              bcMasterCard:      bPag := 'MasterCard';
@@ -985,8 +986,8 @@ begin
     with FNFe.infNFe do
     begin
       //FieldByName('Versao').AsString := IntToStr(Versao);
-      FieldByName('Id').AsString := DFeUtil.LimpaNumero(Id);
-      FieldByName('Chave').AsString := NotaUtil.FormatarChaveAcesso(Id);
+      FieldByName('Id').AsString := OnlyNumber(Id);
+      FieldByName('Chave').AsString := FormatarChaveAcesso(Id);
     end;
 
     with FNFe.Ide do
@@ -994,21 +995,21 @@ begin
       FieldByName('CUF').AsString := IntToStr(CUF);
       FieldByName('CNF').AsString := IntToStr(CNF);
       FieldByName('NatOp').AsString := NatOp;
-      FieldByName('IndPag').AsString := DFeUtil.SeSenao(IndPag = ipVista, '0', DFeUtil.SeSenao(IndPag = ipPrazo, '1', '2'));
+      FieldByName('IndPag').AsString := IfThen(IndPag = ipVista, '0', IfThen(IndPag = ipPrazo, '1', '2'));
       FieldByName('Mod_').AsString := IntToStr(Modelo);
       FieldByName('Serie').AsString := IntToStr(Serie);
-      FieldByName('NNF').AsString := DFeUtil.FormatarNumeroDocumentoFiscal(IntToStr(NNF));
+      FieldByName('NNF').AsString := FormatarNumeroDocumentoFiscal(IntToStr(NNF));
       if (IntToStr(Modelo) = '65') then
-        FieldByName('DEmi').AsString := DFeUtil.FormatDateTime(DateTimeToStr(DEmi))
+        FieldByName('DEmi').AsString := FormatDateTimeBr(DEmi)
       else
-        FieldByName('DEmi').AsString := DFeUtil.FormatDate(DateToStr(DEmi));
-      FieldByName('DSaiEnt').AsString := IfThen(DSaiEnt <> 0, DFeUtil.FormatDate(DateToStr(DSaiEnt)));
-      FieldByName('TpNF').AsString := DFeUtil.SeSenao(TpNF = tnEntrada, '0', '1');
+        FieldByName('DEmi').AsString := FormatDateBr(DEmi);
+      FieldByName('DSaiEnt').AsString := IfThen(DSaiEnt <> 0, FormatDateBr(DSaiEnt));
+      FieldByName('TpNF').AsString := IfThen(TpNF = tnEntrada, '0', '1');
       FieldByName('CMunFG').AsString := IntToStr(CMunFG);
-      FieldByName('TpImp').AsString := DFeUtil.SeSenao(TpImp = tiRetrato, '1', '2');
-      FieldByName('TpEmis').AsString := DFeUtil.SeSenao(TpEmis = teNormal, '1', '5');
+      FieldByName('TpImp').AsString := IfThen(TpImp = tiRetrato, '1', '2');
+      FieldByName('TpEmis').AsString := IfThen(TpEmis = teNormal, '1', '5');
       FieldByName('CDV').AsString := IntToStr(CDV);
-      FieldByName('TpAmb').AsString := DFeUtil.SeSenao(TpAmb = taHomologacao,'2','1');
+      FieldByName('TpAmb').AsString := IfThen(TpAmb = taHomologacao,'2','1');
 
       if (IntToStr(Modelo) = '65') then
       begin
@@ -1022,7 +1023,8 @@ begin
             FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
         end;
 
-        FieldByName('URL').AsString := NotaUtil.GetURLConsultaNFCe(cUF, tpAmb);
+        {todo: verificar o que fazer, pois o método se encontra na classe TACBrNFe}
+        //FieldByName('URL').AsString := GetURLConsultaNFCe(cUF, tpAmb);
       end
       else
       begin
@@ -1030,8 +1032,8 @@ begin
         FieldByName('URL').AsString            := '';
       end;
 
-      FieldByName('FinNFe').AsString := DFeUtil.SeSenao(FinNFe = fnNormal, '1', DFeUtil.SeSenao(FinNFe = fnComplementar, '2', '3'));
-      FieldByName('ProcEmi').AsString := DFeUtil.SeSenao(ProcEmi = peAplicativoContribuinte, '0', '');
+      FieldByName('FinNFe').AsString := IfThen(FinNFe = fnNormal, '1', IfThen(FinNFe = fnComplementar, '2', '3'));
+      FieldByName('ProcEmi').AsString := IfThen(ProcEmi = peAplicativoContribuinte, '0', '');
       FieldByName('VerProc').AsString := VerProc;
     end;
     if FNFe.infNFe.versao = 2.00 then
@@ -1110,8 +1112,8 @@ begin
           begin
             wContingencia := 'DANFE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL';
             wContingencia := wContingencia + ';' +
-                             'DATA/HORA INÍCIO: ' + DFeUtil.SeSenao(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
-                             'MOTIVO CONTINGÊNCIA: ' + DFeUtil.SeSenao(DFeUtil.EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust);
+                             'DATA/HORA INÍCIO: ' + IfThen(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
+                             'MOTIVO CONTINGÊNCIA: ' + IfThen(EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust);
           end;
         end;
       end;
@@ -1155,9 +1157,9 @@ begin
     Append;
     with FNFe.Total.ISSQNtot do
     begin
-      FieldByName('vSERV').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VServ), 0);
-      FieldByName('vBC').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VBC), 0);
-      FieldByName('vISS').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(VISS), 0);
+      FieldByName('vSERV').AsFloat := StringToFloatDef(FloatToStr(VServ), 0);
+      FieldByName('vBC').AsFloat := StringToFloatDef(FloatToStr(VBC), 0);
+      FieldByName('vISS').AsFloat := StringToFloatDef(FloatToStr(VISS), 0);
     end;
     Post;
   end;
@@ -1171,21 +1173,21 @@ begin
     Close;
     CreateDataSet;
 
-    if DFeUtil.NaoEstaVazio(FNFe.Entrega.CNPJCPF) then
+    if NaoEstaVazio(FNFe.Entrega.CNPJCPF) then
     begin
       Append;
 
       with FNFe.Entrega do
       begin
-        if DFeUtil.NaoEstaVazio(CNPJCPF) then
+        if NaoEstaVazio(CNPJCPF) then
         begin
           if Length(CNPJCPF) > 11 then
-             FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(CNPJCPF)
+             FieldByName('CNPJ').AsString := FormatarCNPJ(CNPJCPF)
           else
-             FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(CNPJCPF);
+             FieldByName('CNPJ').AsString := FormatarCPF(CNPJCPF);
         end
         else
-           FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(DFeUtil.Poem_Zeros(0, 18));
+           FieldByName('CNPJ').AsString := FormatarCNPJ(Poem_Zeros(0, 18));
 
         FieldByName('Xlgr').AsString := XLgr;
         FieldByName('Nro').AsString := Nro;
@@ -1208,21 +1210,21 @@ begin
     Close;
     CreateDataSet;
 
-    if DFeUtil.NaoEstaVazio(FNFe.Retirada.CNPJCPF) then
+    if NaoEstaVazio(FNFe.Retirada.CNPJCPF) then
     begin
       Append;
 
       with FNFe.Retirada do
       begin
-        if DFeUtil.NaoEstaVazio(CNPJCPF) then
+        if NaoEstaVazio(CNPJCPF) then
         begin
           if Length(CNPJCPF) > 11 then
-             FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(CNPJCPF)
+             FieldByName('CNPJ').AsString := FormatarCNPJ(CNPJCPF)
           else
-             FieldByName('CNPJ').AsString := DFeUtil.FormatarCPF(CNPJCPF);
+             FieldByName('CNPJ').AsString := FormatarCPF(CNPJCPF);
         end
         else
-           FieldByName('CNPJ').AsString := DFeUtil.FormatarCNPJ(DFeUtil.Poem_Zeros(0, 18));
+           FieldByName('CNPJ').AsString := FormatarCNPJ(Poem_Zeros(0, 18));
 
         FieldByName('Xlgr').AsString := XLgr;
         FieldByName('Nro').AsString := Nro;
@@ -1255,8 +1257,8 @@ begin
     vResumo := '';
     if DANFEClassOwner.ExibirResumoCanhoto then
     begin
-       if DFeUtil.EstaVazio(DANFEClassOwner.ExibirResumoCanhoto_Texto) then
-          vResumo := 'Emissão: ' + DFeUtil.FormatDate(DateToStr(FNFe.Ide.DEmi)) + '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' + DFeUtil.FormatFloat(FNFe.Total.ICMSTot.VNF)
+       if EstaVazio(DANFEClassOwner.ExibirResumoCanhoto_Texto) then
+          vResumo := 'Emissão: ' + FormatDateBr(FNFe.Ide.DEmi) + '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' + FormatFloatBr(FNFe.Total.ICMSTot.VNF)
        else
           vResumo := DANFEClassOwner.ExibirResumoCanhoto_Texto;
     end;
@@ -1283,7 +1285,7 @@ begin
       begin
         //prioridade para opção NFeCancelada
         if (FDANFEClassOwner.NFeCancelada) or
-           ((DFeUtil.NaoEstaVazio(FNFe.procNFe.nProt)) and
+           ((NaoEstaVazio(FNFe.procNFe.nProt)) and
             (FNFe.procNFe.cStat in [101,151,155])) then
           FieldByName('Mensagem0').AsString := 'NFe Cancelada'
         else if ( FNFe.procNFe.cStat = 110 ) or
@@ -1291,8 +1293,8 @@ begin
                 ( FNFe.procNFe.cStat = 302 ) or
                 ( FNFe.procNFe.cStat = 303 ) then
           FieldByName('Mensagem0').AsString := 'NFe denegada pelo Fisco'
-        else if ((DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
-                 (DFeUtil.EstaVazio(FNFe.procNFe.nProt))) then
+        else if ((EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
+                 (EstaVazio(FNFe.procNFe.nProt))) then
           FieldByName('Mensagem0').AsString := 'NFe sem Autorização de Uso da SEFAZ'
         else if (FNFe.Ide.tpImp = tiSimplificado) then
            FieldByName('Mensagem0').AsString := 'EMISSÃO NORMAL'
@@ -1304,13 +1306,13 @@ begin
     end;
 
     //Marca Dagua
-    FieldByName('Mensagem0').AsString := DFeUtil.SeSenao(trim(FieldByName('Mensagem0').AsString) = '',
+    FieldByName('Mensagem0').AsString := IfThen(trim(FieldByName('Mensagem0').AsString) = '',
                                                          '',
                                                          FieldByName('Mensagem0').AsString+#10#13)+
                                          MarcaDaguaMSG;
 
     // Carregamento da imagem
-    if DFeUtil.NaoEstaVazio(DANFEClassOwner.Logo) then
+    if NaoEstaVazio(DANFEClassOwner.Logo) then
     begin
       FieldByName('Imagem').AsString := DANFEClassOwner.Logo;
       vStream := TMemoryStream.Create;
@@ -1384,12 +1386,12 @@ begin
       else 
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
-      if DFeUtil.EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+      if EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
       begin
-        if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) and DFeUtil.EstaVazio(FNFe.procNFe.nProt) then
+        if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) and EstaVazio(FNFe.procNFe.nProt) then
           FieldByName('Contingencia_Valor').AsString := 'NFe sem Autorização de Uso da SEFAZ'
         else
-          FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+          FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
       end
       else
         FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
@@ -1398,34 +1400,36 @@ begin
     begin
       if ((FNFe.Ide.tpEmis = teContingencia) or (FNFe.Ide.tpEmis = teFSDA)) then
       begin
-        vChave_Contingencia := NotaUtil.GerarChaveContingencia(FNFe);
+        {todo: verificar o que fazer pois o método foi movido para TACBrNFe}
+        //vChave_Contingencia := GerarChaveContingencia(FNFe);
         FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
 
         FieldByName('Contingencia_ID').AsString := vChave_Contingencia;
         FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
-        FieldByName('Contingencia_Valor').AsString := NotaUtil.FormatarChaveContigencia(vChave_Contingencia);
+        {todo: verificar o que fazer pois o método foi movido para TACBrNFe}
+        //FieldByName('Contingencia_Valor').AsString := FormatarChaveContigencia(vChave_Contingencia);
         FieldByName('ConsultaAutenticidade').AsString := '';
       end
       else
       //Modificado em 22/05/2013 - Fábio Gabriel
       if (FNFe.Ide.tpEmis = teDPEC) then
       begin
-        if DFeUtil.NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
+        if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
         begin
            FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
-           FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+           FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
         end
         else
         begin
            FieldByName('Contingencia_Descricao').AsString := 'NÚMERO DE REGISTRO DPEC';
-           if DFeUtil.NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+           if NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
              FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
         end;
       end
       else
       if (FNFe.Ide.tpEmis = teOffLine) then
       begin
-        FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + DFeUtil.SeSenao(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+        FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
       end;
     end;
 
@@ -1469,12 +1473,12 @@ begin
 
       with Transporta do
       begin
-        if DFeUtil.NaoEstaVazio(CNPJCPF) then
+        if NaoEstaVazio(CNPJCPF) then
         begin
           if Length(CNPJCPF) > 11 then
-            FieldByName('CNPJCPF').AsString := DFeUtil.FormatarCNPJ(CNPJCPF)
+            FieldByName('CNPJCPF').AsString := FormatarCNPJ(CNPJCPF)
           else
-            FieldByName('CNPJCPF').AsString := DFeUtil.FormatarCPF(CNPJCPF);
+            FieldByName('CNPJCPF').AsString := FormatarCPF(CNPJCPF);
         end
         else
           FieldByName('CNPJCPF').AsString := '';
@@ -1524,12 +1528,12 @@ begin
       Append;
       with FNFe.Transp.Vol[i] do
       begin
-        FieldByName('QVol').AsFloat := DFeUtil.StringToFloatDef(IntToStr(QVol), 0);
+        FieldByName('QVol').AsFloat := StringToFloatDef(IntToStr(QVol), 0);
         FieldByName('Esp').AsString := Esp;
         FieldByName('Marca').AsString := Marca;
         FieldByName('NVol').AsString := NVol;
-        FieldByName('PesoL').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(PesoL), 0);
-        FieldByName('PesoB').AsFloat := DFeUtil.StringToFloatDef(FloatToStr(PesoB), 0);
+        FieldByName('PesoL').AsFloat := StringToFloatDef(FloatToStr(PesoL), 0);
+        FieldByName('PesoB').AsFloat := StringToFloatDef(FloatToStr(PesoB), 0);
       end;
       Post;
     end;
@@ -1585,7 +1589,7 @@ begin
         FieldByName('Numero').AsString      := Copy(InfEvento.chNFe, 26, 9);
         FieldByName('MesAno').AsString      := Copy(InfEvento.chNFe, 05, 2) + '/' + copy(InfEvento.chNFe, 03, 2);
         FieldByName('Barras').AsString      := InfEvento.chNFe;
-        FieldByName('ChaveAcesso').AsString := NotaUtil.FormatarChaveAcesso(InfEvento.chNFe);
+        FieldByName('ChaveAcesso').AsString := FormatarChaveAcesso(InfEvento.chNFe);
 
         // Carta de correção eletrônica
         FieldByName('cOrgao').AsInteger := InfEvento.cOrgao;
@@ -2244,10 +2248,12 @@ begin
         frxReport.FindObject('ImgLogo').Visible := True;
      end;
 
-     qrcode := NotaUtil.GetURLQRCode( NFe.ide.cUF,
+     {todo: verificar o que fazer pois o método foi movido para TACBrNFe}
+     {
+     qrcode := GetURLQRCode( NFe.ide.cUF,
                                       NFe.ide.tpAmb,
                                       OnlyNumber(NFe.InfNFe.ID),
-                                      DFeUtil.SeSenao(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
+                                      IfThen(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
                                       NFe.ide.dEmi,
                                       NFe.Total.ICMSTot.vNF,
                                       NFe.Total.ICMSTot.vICMS,
@@ -2256,6 +2262,7 @@ begin
                                       TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.Token );
 
       PintarQRCode( qrcode, TfrxPictureView(frxReport.FindObject('ImgQrCode')).Picture );
+      }
     end;
   end;
 end;

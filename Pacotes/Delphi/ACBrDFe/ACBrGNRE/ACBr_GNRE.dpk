@@ -83,24 +83,24 @@ requires
   dbrtl;
 
 contains
-  ACBrGNRE2 in '..\..\..\Fontes\ACBrGNRE\ACBrGNRE2.pas',
-  ACBrGNREConfiguracoes in '..\..\..\Fontes\ACBrGNRE\ACBrGNREConfiguracoes.pas',
-  ACBrGNREGuias in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuias.pas',
-  ACBrGNREReg in '..\..\..\Fontes\ACBrGNRE\ACBrGNREReg.pas',
-  ACBrGNREUtil in '..\..\..\Fontes\ACBrGNRE\ACBrGNREUtil.pas',
-  ACBrGNREWebServices in '..\..\..\Fontes\ACBrGNRE\ACBrGNREWebServices.pas',
-  pgnreConfigUF in '..\..\..\Fontes\ACBrGNRE\pgnreConfigUF.pas',
-  pgnreConsConfigUF in '..\..\..\Fontes\ACBrGNRE\pgnreConsConfigUF.pas',
-  pgnreConversao in '..\..\..\Fontes\ACBrGNRE\pgnreConversao.pas',
-  pgnreGNRE in '..\..\..\Fontes\ACBrGNRE\pgnreGNRE.pas',
-  pgnreRetCampoAdicional in '..\..\..\Fontes\ACBrGNRE\pgnreRetCampoAdicional.pas',
-  pgnreRetConsConfigUF in '..\..\..\Fontes\ACBrGNRE\pgnreRetConsConfigUF.pas',
-  pgnreRetDetalhamentoReceita in '..\..\..\Fontes\ACBrGNRE\pgnreRetDetalhamentoReceita.pas',
-  pgnreRetPeriodoApuracao in '..\..\..\Fontes\ACBrGNRE\pgnreRetPeriodoApuracao.pas',
-  pgnreRetProduto in '..\..\..\Fontes\ACBrGNRE\pgnreRetProduto.pas',
-  pgnreRetReceita in '..\..\..\Fontes\ACBrGNRE\pgnreRetReceita.pas',
-  pgnreRetTipoDocumentoOrigem in '..\..\..\Fontes\ACBrGNRE\pgnreRetTipoDocumentoOrigem.pas',
-  pgnreRetConsResLoteGNRE in '..\..\..\Fontes\ACBrGNRE\pgnreRetConsResLoteGNRE.pas',
-  pgnreRetEnvLoteGNRE in '..\..\..\Fontes\ACBrGNRE\pgnreRetEnvLoteGNRE.pas';
+  ACBrGNRE2 in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE2.pas',
+  ACBrGNREConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREConfiguracoes.pas',
+  ACBrGNREGuias in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREGuias.pas',
+  ACBrGNREReg in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREReg.pas',
+  ACBrGNREUtil in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREUtil.pas',
+  ACBrGNREWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREWebServices.pas',
+  pgnreConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConfigUF.pas',
+  pgnreConsConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConsConfigUF.pas',
+  pgnreConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConversao.pas',
+  pgnreGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRE.pas',
+  pgnreRetCampoAdicional in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetCampoAdicional.pas',
+  pgnreRetConsConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsConfigUF.pas',
+  pgnreRetDetalhamentoReceita in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetDetalhamentoReceita.pas',
+  pgnreRetPeriodoApuracao in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetPeriodoApuracao.pas',
+  pgnreRetProduto in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetProduto.pas',
+  pgnreRetReceita in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetReceita.pas',
+  pgnreRetTipoDocumentoOrigem in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetTipoDocumentoOrigem.pas',
+  pgnreRetConsResLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsResLoteGNRE.pas',
+  pgnreRetEnvLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetEnvLoteGNRE.pas';
 
 end.

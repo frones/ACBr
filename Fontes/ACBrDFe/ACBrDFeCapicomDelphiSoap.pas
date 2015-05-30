@@ -58,7 +58,7 @@ type
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data: Pointer);
   protected
     procedure ConfiguraReqResp(const URL, SoapAction: String); override;
-    procedure Executar(const ConteudoXML: String; Resp: TMemoryStream); override;
+    procedure Executar(const ConteudoXML: String; Resp: TStream); override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL);
@@ -147,7 +147,7 @@ begin
 end;
 
 procedure TDFeCapicomDelphiSoap.Executar(const ConteudoXML: String;
-  Resp: TMemoryStream);
+  Resp: TStream);
 begin
   // Enviando, dispara exceptions no caso de erro //
   FIndyReqResp.Execute(ConteudoXML, Resp);

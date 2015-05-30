@@ -297,7 +297,7 @@ begin
       rllProtocolo.Caption := FProtocoloMDFE
     else
       rllProtocolo.Caption := FMDFe.procMDFe.nProt + '   ' +
-        SeSenao(FMDFe.procMDFe.dhRecbto <> 0,
+        IfThen(FMDFe.procMDFe.dhRecbto <> 0,
         DateTimeToStr(FMDFe.procMDFe.dhRecbto), '');
   end
   else

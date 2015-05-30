@@ -81,7 +81,7 @@ type
 
 implementation
 
-uses ACBrMDFe, ACBrMDFeUtil, ACBrUtil, StrUtils, Dialogs;
+uses ACBrMDFe, ACBrUtil, StrUtils, Dialogs;
 
 constructor TACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
 begin

@@ -1172,7 +1172,7 @@ begin
       rllProtocolo.Caption := FProtocoloCTE
     else
       rllProtocolo.Caption := FCTe.procCTe.nProt + '   ' +
-        SeSenao(FCTe.procCTe.dhRecbto <> 0,
+        IfThen(FCTe.procCTe.dhRecbto <> 0,
         DateTimeToStr(FCTe.procCTe.dhRecbto), '');
   end;
 
@@ -1196,7 +1196,7 @@ begin
         rllProtocolo.Caption := FProtocoloCTE
       else
         rllProtocolo.Caption := FCTe.procCTe.nProt + '   ' +
-          SeSenao(FCTe.procCTe.dhRecbto <> 0,
+          IfThen(FCTe.procCTe.dhRecbto <> 0,
           DateTimeToStr(FCTe.procCTe.dhRecbto), '');
     end
     else

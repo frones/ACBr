@@ -1342,7 +1342,7 @@ begin
  if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento))
   then exit;
 
- Documento := Trim(DFeUtil.LimpaNumero(Documento));
+ Documento := Trim(OnlyNumber(Documento));
 
  ACBrCTe1.WebServices.ConsultaCadastro.UF := UF;
  if Length(Documento) > 11

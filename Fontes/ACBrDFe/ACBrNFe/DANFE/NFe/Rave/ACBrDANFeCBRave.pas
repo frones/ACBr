@@ -456,7 +456,7 @@ begin
      DANFeRave.FontNameUsed := 'Courier New'
   else
      DANFeRave.FontNameUsed := 'Times New Roman';
-  DANFeRave.FontSizeIdentDoc_Outros := DFeUtil.SeSenao(Pos('Courier',DANFeRave.FontNameUsed)>0,9,10);
+  DANFeRave.FontSizeIdentDoc_Outros := IfThen(Pos('Courier',DANFeRave.FontNameUsed)>0,9,10);
 
   rvPDF:=TRvRenderPDF.Create(DANFeRave);
   rvPDF.OnDecodeImage:=DANFeRave.RaveDecodeImage;
@@ -609,7 +609,7 @@ begin
      EventoRave.FontNameUsed := 'Courier New'
   else
      EventoRave.FontNameUsed := 'Times New Roman';
-  EventoRave.FontSizeIdentDoc_Outros := DFeUtil.SeSenao(Pos('Courier',EventoRave.FontNameUsed)>0,9,10);
+  EventoRave.FontSizeIdentDoc_Outros := IfThen(Pos('Courier',EventoRave.FontNameUsed)>0,9,10);
 
   rvPDF:=TRvRenderPDF.Create(EventoRave);
   rvPDF.OnDecodeImage:=EventoRave.RaveDecodeImage;
@@ -740,7 +740,7 @@ begin
      InutilizacaoRave.FontNameUsed := 'Courier New'
   else
      InutilizacaoRave.FontNameUsed := 'Times New Roman';
-  InutilizacaoRave.FontSizeIdentDoc_Outros := DFeUtil.SeSenao(Pos('Courier',InutilizacaoRave.FontNameUsed)>0,9,10);
+  InutilizacaoRave.FontSizeIdentDoc_Outros := IfThen(Pos('Courier',InutilizacaoRave.FontNameUsed)>0,9,10);
 
   rvPDF:=TRvRenderPDF.Create(InutilizacaoRave);
   rvPDF.OnDecodeImage:=InutilizacaoRave.RaveDecodeImage;
@@ -892,7 +892,7 @@ begin
          printAlingment:=pjLeft;
        end;
        ClearAllTabs;
-       SetTab(XX+1,printAlingment,aWith-2,0,0,DFeUtil.SeSenao(Zebrado,15,0));
+       SetTab(XX+1,printAlingment,aWith-2,0,0,IfThen(Zebrado,15,0));
        aText:=Trim(aText);
        PrintTab(aText);
        Bold:=False;
@@ -1052,7 +1052,7 @@ begin
          printAlingment:=pjLeft;
        end;
        ClearAllTabs;
-       SetTab(XX+1,printAlingment,aWith-2,0,0,DFeUtil.SeSenao(Zebrado,15,0));
+       SetTab(XX+1,printAlingment,aWith-2,0,0,IfThen(Zebrado,15,0));
        aText:=Trim(aText);
        PrintTab(aText);
        Bold:=False;
@@ -1215,7 +1215,7 @@ begin
          printAlingment:=pjLeft;
        end;
        ClearAllTabs;
-       SetTab(XX+1,printAlingment,aWith-2,0,0,DFeUtil.SeSenao(Zebrado,15,0));
+       SetTab(XX+1,printAlingment,aWith-2,0,0,IfThen(Zebrado,15,0));
        aText:=Trim(aText);
        PrintTab(aText);
        Bold:=False;

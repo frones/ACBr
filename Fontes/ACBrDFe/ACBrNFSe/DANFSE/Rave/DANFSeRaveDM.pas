@@ -221,11 +221,11 @@ begin
       Connection.WriteStrData('', Bairro);
       Connection.WriteStrData('', xMunicipio);
       Connection.WriteStrData('', CodigoMunicipio);
-      Connection.WriteStrData('', DfeUtil.FormatarCEP(CEP));
+      Connection.WriteStrData('', FormatarCEP(CEP));
       Connection.WriteStrData('', Uf);
     end;
-    Connection.WriteStrData('', DFEUtil.FormatarFone(Contato.Telefone));
-    Connection.WriteStrData('', DfeUtil.FormatarCNPJ(IdentificacaoPrestador.Cnpj)) ;
+    Connection.WriteStrData('', FormatarFone(Contato.Telefone));
+    Connection.WriteStrData('', FormatarCNPJ(IdentificacaoPrestador.Cnpj)) ;
     Connection.WriteStrData('', IdentificacaoPrestador.InscricaoMunicipal);
     Connection.WriteStrData('', Contato.Email);
     Connection.WriteStrData('', Endereco.Complemento);
@@ -340,9 +340,9 @@ begin
   begin
     Connection.WriteStrData('', RazaoSocial);
     if Length(IdentificacaoTomador.CPFCNPJ) > 11 then
-      Connection.WriteStrData('', DfeUtil.FormatarCNPJ(IdentificacaoTomador.CPFCNPJ))
+      Connection.WriteStrData('', FormatarCNPJ(IdentificacaoTomador.CPFCNPJ))
     else
-      Connection.WriteStrData('', DfeUtil.FormatarCPF(IdentificacaoTomador.CPFCNPJ)) ;
+      Connection.WriteStrData('', FormatarCPF(IdentificacaoTomador.CPFCNPJ)) ;
     Connection.WriteStrData('', '');
     with Endereco do
     begin
@@ -352,9 +352,9 @@ begin
       Connection.WriteStrData('', Bairro);
       Connection.WriteStrData('', xMunicipio);
       Connection.WriteStrData('', Uf);
-      Connection.WriteStrData('', DfeUtil.FormatarCEP(CEP));
+      Connection.WriteStrData('', FormatarCEP(CEP));
     end;
-    Connection.WriteStrData('', DfeUtil.FormatarFone(Contato.Telefone));
+    Connection.WriteStrData('', FormatarFone(Contato.Telefone));
     Connection.WriteStrData('', IdentificacaoTomador.InscricaoMunicipal);
     Connection.WriteStrData('', Endereco.CodigoMunicipio);
     Connection.WriteStrData('', Contato.Email);

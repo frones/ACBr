@@ -587,7 +587,7 @@ procedure TdmACBrNFe.CustomTransportadorCXNGetRow(
 begin
   with FNFe.Transp do
   begin
-    Connection.WriteStrData('', SeSenao(modFrete = mfContaEmitente,'0','1'));
+    Connection.WriteStrData('', IfThen(modFrete = mfContaEmitente,'0','1'));
     with Transporta do
     begin
       if NaoEstaVazio(CNPJCPF) then
@@ -628,7 +628,7 @@ var
   vStream: TMemoryStream;
 begin
   with FNFe.Ide do
-    Connection.WriteStrData('', SeSenao(TpAmb = taHomologacao,'Nota Fiscal sem valor Fiscal', ''));
+    Connection.WriteStrData('', IfThen(TpAmb = taHomologacao,'Nota Fiscal sem valor Fiscal', ''));
 
   vStream := TMemoryStream.Create;
   try
@@ -677,7 +677,7 @@ begin
   with FNFe.infNFe do
   begin
 //    Connection.WriteStrData('', IntToStr(Versao));
-    Connection.WriteStrData('', LimpaNumero(Id));
+    Connection.WriteStrData('', OnlyNumber(Id));
     Connection.WriteStrData('', NotaUtil.FormatarChaveAcesso(Id));
   end;
 
@@ -686,20 +686,20 @@ begin
     Connection.WriteStrData('', inttostr(CUF));
     Connection.WriteStrData('', inttostr(CNF));
     Connection.WriteStrData('', NatOp);
-    Connection.WriteStrData('', SeSenao(IndPag = ipVista,'0', SeSenao(IndPag = ipPrazo,'1','2')));
+    Connection.WriteStrData('', IfThen(IndPag = ipVista,'0', IfThen(IndPag = ipPrazo,'1','2')));
     Connection.WriteStrData('', inttostr(Modelo));
     Connection.WriteStrData('', inttostr(Serie));
     Connection.WriteStrData('', FormatarNumeroDocumentoFiscal(inttostr(NNF)));
     Connection.WriteStrData('', FormatDate(datetostr(DEmi)));
     Connection.WriteStrData('', IfThen(NaoEstaVazio(datetostr(DSaiEnt)), FormatDate(datetostr(DSaiEnt))));
-    Connection.WriteStrData('', SeSenao(TpNF=tnEntrada,'0','1'));
+    Connection.WriteStrData('', IfThen(TpNF=tnEntrada,'0','1'));
     Connection.WriteStrData('', inttostr(CMunFG));
-    Connection.WriteStrData('', SeSenao(TpImp=tiRetrato,'1','2'));
-    Connection.WriteStrData('', SeSenao(TpEmis=teNormal,'1','5'));
+    Connection.WriteStrData('', IfThen(TpImp=tiRetrato,'1','2'));
+    Connection.WriteStrData('', IfThen(TpEmis=teNormal,'1','5'));
     Connection.WriteStrData('', inttostr(CDV));
-    Connection.WriteStrData('', SeSenao(TpAmb = taHomologacao,'2','1'));
-    Connection.WriteStrData('', SeSenao(FinNFe=fnNormal,'1',SeSenao(FinNFe=fnComplementar,'2','3')));
-    Connection.WriteStrData('', SeSenao(ProcEmi=peAplicativoContribuinte,'0',''));
+    Connection.WriteStrData('', IfThen(TpAmb = taHomologacao,'2','1'));
+    Connection.WriteStrData('', IfThen(FinNFe=fnNormal,'1',IfThen(FinNFe=fnComplementar,'2','3')));
+    Connection.WriteStrData('', IfThen(ProcEmi=peAplicativoContribuinte,'0',''));
     Connection.WriteStrData('', VerProc);
   end;
 end;

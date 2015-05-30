@@ -156,7 +156,7 @@ type
 implementation
 
 uses
-  ACBrMDFe, ACBrUtil, pmdfeConversaoMDFe;
+  ACBrMDFe, ACBrUtil, pmdfeConversaoMDFe, synautil;
 
 { Manifesto }
 
@@ -374,7 +374,7 @@ begin
   GerarXML;
 
   AStream.Size := 0;
-  AStream.WriteBuffer(FXML[1], Length(FXML));  // Gravando no Buffer da Stream //
+  WriteStrToStream(AStream, AnsiString(FXML));
   Result := True;
 end;
 
@@ -667,15 +667,13 @@ end;
 function TManifestos.LoadFromStream(AStream: TStringStream;
   AGerarMDFe: Boolean = True): Boolean;
 var
-  XMLOriginal: String;
+  XMLOriginal: AnsiString;
 begin
   Result := False;
-  XMLOriginal := '';
   AStream.Position := 0;
-  SetLength(XMLOriginal, AStream.Size);
-  AStream.ReadBuffer(XMLOriginal[1], AStream.Size);
+  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(XMLOriginal, AGerarMDFe);
+  Result := Self.LoadFromString(String(XMLOriginal), AGerarMDFe);
 end;
 
 function TManifestos.LoadFromString(AXMLString: String;

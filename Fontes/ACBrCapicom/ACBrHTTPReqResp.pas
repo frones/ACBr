@@ -420,7 +420,7 @@ begin
             //DEBUG
             //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
             //SetLength(FData, Resp.Size);
-            //Resp.ReadBuffer(FData[1],Resp.Size);
+            //FData := ReadStrFromStream(Resp, Resp.Size);
             //Resp.Position := 0;
             //WriteToTXT('c:\temp\httpreqresp.log', FData);
 

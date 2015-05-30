@@ -49,7 +49,7 @@ unit ACBrUtil;
 
 interface
 
-Uses SysUtils, Math, Classes, ACBrConsts
+Uses SysUtils, Math, Classes, ACBrConsts, synautil
     {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
     {$IFDEF FPC}
       ,dynlibs, LazUTF8, zstream
@@ -2894,9 +2894,7 @@ begin
     until readCount < SizeOf(Buf);
 
     MS.Position := 0;
-    Result := '';
-    SetLength(Result, MS.Size);
-    MS.ReadBuffer(Result[1], MS.Size);
+    Result := ReadStrFromStream(MS, MS.Size);
   finally
     DS.Free;
     MS.Free;
@@ -2921,12 +2919,10 @@ function UnZip(S: TStream): AnsiString;
 Var
   DataStr: AnsiString;
 begin
-  DataStr := '';
   S.Position := 0;
-  SetLength(DataStr, S.Size);
-  S.ReadBuffer(DataStr[1], S.Size);
+  DataStr := ReadStrFromStream(S, S.Size);
   
-  Result := UnZip(S);
+  Result := UnZip(DataStr);
 end;
 
 function UnZip(S: AnsiString): AnsiString; overload;

@@ -172,7 +172,7 @@ type
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, pcnConversaoNFe;
+  ACBrNFe, ACBrUtil, pcnConversaoNFe, synautil;
 
 { NotaFiscal }
 
@@ -587,7 +587,7 @@ begin
   GerarXML;
 
   AStream.Size := 0;
-  AStream.WriteBuffer(FXML[1], Length(FXML));  // Gravando no Buffer da Stream //
+  WriteStrToStream(AStream, AnsiString(FXML));
   Result := True;
 end;
 
@@ -913,15 +913,13 @@ end;
 function TNotasFiscais.LoadFromStream(AStream: TStringStream;
   AGerarNFe: Boolean = True): Boolean;
 var
-  XMLOriginal: String;
+  XMLOriginal: AnsiString;
 begin
   Result := False;
-  XMLOriginal := '';
   AStream.Position := 0;
-  SetLength(XMLOriginal, AStream.Size);
-  AStream.ReadBuffer(XMLOriginal[1], AStream.Size);
+  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(XMLOriginal, AGerarNFe);
+  Result := Self.LoadFromString(String(XMLOriginal), AGerarNFe);
 end;
 
 function TNotasFiscais.LoadFromString(AXMLString: String;

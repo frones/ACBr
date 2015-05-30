@@ -194,7 +194,7 @@ type
 
 implementation
 
-Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall;
+Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, synautil;
 
 { TACBrSAT }
 
@@ -668,9 +668,8 @@ begin
   begin
     LogBin := DecodeBase64( Resposta.RetornoLst[5] );
 
-    AStream.Size     := 0;
-    AStream.Position := 0;
-    AStream.WriteBuffer(LogBin[1], Length(LogBin));
+    AStream.Size := 0;
+    WriteStrToStream(AStream, LogBin);
   end;
 end;
 

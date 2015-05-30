@@ -66,7 +66,7 @@ type
 
   protected
     procedure ConfiguraReqResp(const URL, SoapAction: String); virtual;
-    procedure Executar(const ConteudoXML: String; Resp: TMemoryStream); virtual;
+    procedure Executar(const ConteudoXML: String; Resp: TStream); virtual;
 
     function GetCertDataVenc: TDateTime; override;
     function GetCertNumeroSerie: String; override;
@@ -102,7 +102,7 @@ implementation
 
 uses
   strutils,
-  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts;
+  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts, synautil;
 
 { TDFeCapicom }
 
@@ -470,31 +470,24 @@ end;
 function TDFeCapicom.Enviar(const ConteudoXML: String; const URL: String;
   const SoapAction: String): String;
 var
-  RetornoWS: String;
-  Resp: TMemoryStream;
+  Resp: TStringStream;
 begin
-  RetornoWS := '';
+  Result := '';
 
   ConfiguraReqResp(URL, SoapAction);
 
-  Resp := TMemoryStream.Create;
+  Resp := TStringStream.Create('');
   try
     Executar(ConteudoXML, Resp);
-
-    // Movendo Resposta de Stream para String //
-    SetLength(RetornoWS, Resp.Size);
-    Resp.ReadBuffer(RetornoWS[1], Resp.Size);
-
+    Result := Resp.DataString;
     // DEBUG //
-    //Stream.SaveToFile('c:\temp\ReqResp.xml');
+    //Resp.SaveToFile('c:\temp\ReqResp.xml');
   finally
     Resp.Free;
   end;
-
-  Result := RetornoWS;
 end;
 
-procedure TDFeCapicom.Executar(const ConteudoXML: String; Resp: TMemoryStream);
+procedure TDFeCapicom.Executar(const ConteudoXML: String; Resp: TStream);
 begin
   try
     // Enviando, dispara exceptions no caso de erro //

@@ -261,7 +261,7 @@ implementation
 
 uses
   Math, strutils, DateUtils,
-  ACBrDFe, ACBrDFeException, ACBrUtil;
+  ACBrDFe, ACBrDFeException, ACBrUtil, synautil;
 
 { TConfiguracoes }
 
@@ -541,8 +541,7 @@ begin
   RS := TResourceStream.Create(HInstance, FResourceName, RT_RCDATA);
   try
     RS.Position := 0;
-    SetLength(Result, RS.Size);
-    RS.ReadBuffer(Result[1], RS.Size);
+    Result := ReadStrFromStream(RS, RS.Size);
   finally
     RS.Free;
   end;

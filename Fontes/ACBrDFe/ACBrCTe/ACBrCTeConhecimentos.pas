@@ -154,7 +154,7 @@ type
 implementation
 
 uses
-  ACBrCTe, ACBrUtil, pcteConversaoCTe;
+  ACBrCTe, ACBrUtil, pcteConversaoCTe, synautil;
 
 { Conhecimento }
 
@@ -423,7 +423,7 @@ begin
   Result := False;
   GerarXML;
   AStream.Size := 0;
-  AStream.WriteBuffer(FXML[1], Length(FXML));
+  WriteStrToStream(AStream, AnsiString(FXML));
   Result := True;
 end;
 
@@ -717,15 +717,13 @@ end;
 function TConhecimentos.LoadFromStream(AStream: TStringStream;
   AGerarCTe: Boolean = True): Boolean;
 var
-  XMLOriginal: String;
+  XMLOriginal: AnsiString;
 begin
   Result := False;
-  XMLOriginal := '';
   AStream.Position := 0;
-  SetLength(XMLOriginal, AStream.Size);
-  AStream.ReadBuffer(XMLOriginal[1], AStream.Size);
+  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(XMLOriginal, AGerarCTe);
+  Result := Self.LoadFromString(String(XMLOriginal), AGerarCTe);
 end;
 
 function TConhecimentos.LoadFromString(AString: String;

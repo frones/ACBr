@@ -200,7 +200,7 @@ function TDFeOpenSSL.Enviar(const ConteudoXML: String; const URL: String;
   const SoapAction: String): String;
 var
   OK: Boolean;
-  RetornoWS: String;
+  RetornoWS: AnsiString;
 begin
   RetornoWS := '';
 
@@ -208,7 +208,7 @@ begin
   ConfiguraHTTP(URL, 'SOAPAction: "' + SoapAction + '"');
 
   // Gravando no Buffer de Envio //
-  FHTTP.Document.WriteBuffer(ConteudoXML[1], Length(ConteudoXML));
+  WriteStrToStream(FHTTP.Document, AnsiString(ConteudoXML)) ;
 
   // DEBUG //
   //FHTTP.Document.SaveToFile( 'c:\temp\HttpSend.xml' );
@@ -222,13 +222,12 @@ begin
 
   // Lendo a resposta //
   FHTTP.Document.Position := 0;
-  SetLength(RetornoWS, FHTTP.Document.Size);
-  FHTTP.Document.ReadBuffer(RetornoWS[1], FHTTP.Document.Size);
+  RetornoWS := ReadStrFromStream(FHTTP.Document, FHTTP.Document.Size);
 
   // DEBUG //
   //HTTP.Document.SaveToFile('c:\temp\ReqResp.xml');
 
-  Result := RetornoWS;
+  Result := String( RetornoWS );
 end;
 
 function TDFeOpenSSL.Validar(const ConteudoXML, ArqSchema: String;
@@ -330,7 +329,7 @@ begin
 
   MS := TMemoryStream.Create;
   try
-    MS.WriteBuffer(Publico[1], Length(Publico));
+    WriteStrToStream(MS, Publico);
 
     //xmlSecCryptoAppKeyCertLoadMemory;
     MS.Position := 0;
@@ -462,7 +461,7 @@ begin
 
     MS := TMemoryStream.Create;
     try
-      MS.WriteBuffer(DadosPFX[1], Length(DadosPFX));
+      WriteStrToStream(MS, DadosPFX);
 
       FdsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(
         MS.Memory, MS.Size, xmlSecKeyDataFormatPkcs12,

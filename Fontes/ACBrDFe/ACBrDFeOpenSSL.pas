@@ -176,7 +176,7 @@ begin
   AXml := copy(AXml, 1, I - 1) + SignatureElement(URI, True) + TagEndDocElement;
 
   // Assinando com XMLSec //
-  XmlAss := XmlSecSign(PAnsiChar(AXml));
+  XmlAss := XmlSecSign(PAnsiChar(AnsiString(AXml)));
 
   // Removendo quebras de linha //
   XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
@@ -240,7 +240,7 @@ begin
   parser_ctxt := nil;
 
   try
-    doc := xmlParseDoc(PAnsiChar(ConteudoXML));
+    doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
       MsgErro := 'Erro: unable to parse';

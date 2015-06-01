@@ -149,6 +149,8 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
 
     Procedure LeituraX ; override ;
+    Procedure LeituraXSerial( Linhas : TStringList) ; override ;
+
     Procedure ReducaoZ(DataHora : TDateTime = 0 ) ; override ;
     Procedure LinhaRelatorioGerencial( Linha : AnsiString; IndiceBMP: Integer = 0 ) ; override ;
     Procedure LinhaCupomVinculado( Linha : AnsiString ) ; override ;
@@ -904,6 +906,13 @@ procedure TACBrECFVirtualBufferClass.LeituraX ;
 begin
   ZeraBuffer;
   inherited;
+end;
+
+procedure TACBrECFVirtualBufferClass.LeituraXSerial(Linhas: TStringList);
+begin
+  InsertBufferCabecalho ;
+  LeituraXVirtual;
+  Linhas.Assign(fsBuffer);
 end;
 
 procedure TACBrECFVirtualBufferClass.LeituraXVirtual;

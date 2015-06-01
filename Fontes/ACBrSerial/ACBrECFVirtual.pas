@@ -878,7 +878,7 @@ end;
 
 procedure TACBrECFVirtualClass.AtivarVirtual;
 begin
-  { Nada a fazer aqui }
+  fpMFD := True;
 end;
 
 procedure TACBrECFVirtualClass.Desativar;

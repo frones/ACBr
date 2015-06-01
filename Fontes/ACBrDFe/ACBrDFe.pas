@@ -53,7 +53,7 @@ type
 
 
   TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
-    const URL, DataSent, SoapAction: String; var TryAgain: Boolean) of object ;
+    const URL, DadosEnviados, SoapAction: String; var Retentar: Boolean; var Tratado: Boolean) of object ;
 
   { TACBrDFe }
 

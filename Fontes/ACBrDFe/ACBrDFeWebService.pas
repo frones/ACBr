@@ -278,7 +278,7 @@ end;
 
 procedure TDFeWebService.EnviarDados;
 Var
-  Tentar: Boolean;
+  Tentar, Tratado: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -296,6 +296,7 @@ begin
   while Tentar do
   begin
     Tentar := False;
+    Tratado := False;
 
     if FPConfiguracoes.Certificados.VerificarValidade and
        (FPDFeOwner.SSL.CertDataVenc < Now) then
@@ -309,9 +310,9 @@ begin
         FPDFeOwner.OnTransmitError( FPDFeOwner.SSL.HTTPResultCode,
                                     FPDFeOwner.SSL.InternalErrorCode,
                                     FPURL, FPEnvelopeSoap, FPSoapAction,
-                                    Tentar) ;
+                                    Tentar, Tratado) ;
 
-      if not Tentar then
+      if not (Tentar or Tratado) then
         raise;
     end;
   end;

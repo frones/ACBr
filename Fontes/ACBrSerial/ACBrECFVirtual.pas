@@ -417,6 +417,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure IdentificaOperador(Nome : String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override;
 
+    function TraduzirTag(const ATag: AnsiString): AnsiString; override;
+    function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
  end ;
 
 implementation
@@ -2267,6 +2269,20 @@ begin
 
     fpPAF := fpPAF + MD5 ;
   end;
+end;
+
+function TACBrECFVirtualClass.TraduzirTag(const ATag: AnsiString): AnsiString;
+begin
+  // Não Traduz... pois tradução será feita por TACBrPosPrinter
+  Result := ATag;
+end;
+
+function TACBrECFVirtualClass.TraduzirTagBloco(const ATag, Conteudo: AnsiString
+  ): AnsiString;
+begin
+  // Não Traduz... pois tradução será feita por TACBrPosPrinter
+  Result := ATag + Conteudo +
+            TraduzirTag( '</'+copy(ATag,2,Length(ATag)) );
 end;
 
 function TACBrECFVirtualClass.GetDataMovimento: TDateTime;

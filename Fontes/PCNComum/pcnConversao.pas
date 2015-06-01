@@ -225,6 +225,7 @@ function indProcToStr(const t: TpcnIndicadorProcesso): string;
 function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
 function CRTToStr(const t: TpcnCRT): string;
 function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
+function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
 function indTotToStr(const t: TpcnIndicadorTotal): string;
 function StrToindTot(out ok: boolean; const s: string): TpcnIndicadorTotal;
 
@@ -717,6 +718,14 @@ end;
 function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
 begin
   result := StrToEnumerado(ok, s, ['','1', '2', '3'],[crtRegimeNormal,crtSimplesNacional,crtSimplesExcessoReceita, crtRegimeNormal]);
+end;
+
+function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
+begin
+  case T of
+    crtSimplesNacional: Result := RTSimplesNacional;
+    crtSimplesExcessoReceita, crtRegimeNormal: Result := RTRegimeNormal;
+  end;
 end;
 
 // 117b - Indicador de soma no total da NFe **************************************

@@ -368,7 +368,8 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  NotasFiscais.Assinar; // (FConfiguracoes.Certificados.AssinaRPS);
+  if Configuracoes.Geral.AssinaRPS then
+    NotasFiscais.Assinar;
 
   Result := WebServices.Envia(ALote);
 
@@ -398,7 +399,8 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  NotasFiscais.Assinar; //(FConfiguracoes.Certificados.AssinaRPS);
+  if Configuracoes.Geral.AssinaRPS then
+    NotasFiscais.Assinar;
 
 //  Result := WebServices.EnviarSincrono(ALote);
 end;
@@ -412,7 +414,8 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  NotasFiscais.Assinar; //(FConfiguracoes.Certificados.AssinaGerar);
+  if Configuracoes.Geral.AssinaGerar then
+    NotasFiscais.Assinar;
 
 //  Result := WebServices.Gera(ARps);
 end;
@@ -514,7 +517,7 @@ begin
   if Self.NotasFiscais.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
- NotasFiscais.Assinar; // (True);
+ NotasFiscais.Assinar;
 
 // Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;
@@ -539,7 +542,8 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  NotasFiscais.Assinar; // (FConfiguracoes.Certificados.AssinaRPS);
+  if Configuracoes.Geral.AssinaRPS then
+    NotasFiscais.Assinar;
 
 //  Result := WebServices.GeraLote(ALote);
 end;

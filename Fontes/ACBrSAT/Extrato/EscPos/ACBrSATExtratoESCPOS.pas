@@ -245,9 +245,9 @@ begin
            FPosPrinter.ColunasFonteCondensada, '|')));
    end;
 
-  FPosPrinter.Buffer.Add('</ae><e>'+PadSpace('TOTAL R$|'+
+  FPosPrinter.Buffer.Add('</ae></fn><e>'+PadSpace('TOTAL R$|'+
      FormatFloatBr(CFe.Total.vCFe, '#,###,##0.00'),
-     trunc(FPosPrinter.ColunasFonteCondensada/2), '|')+'</e>');
+     trunc(FPosPrinter.ColunasFonteExpandida), '|')+'</e>');
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarPagamentos(Resumido : Boolean = False );

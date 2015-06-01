@@ -990,6 +990,7 @@ begin
   3549409, // Sao Joaquim Da Barra/SP
   3551603, // Serra Negra/SP
   3555000, // Tupã/SP
+  3511300, // Cedral / SP        Daniel Jr - Mirassol-SP
   5003207  // Corumba/MS
 //  5102637  // Campo Novo Do Parecis/MT
          : Provedor := 'Fiorilli';
@@ -1050,7 +1051,7 @@ begin
   3503208, // Araraquara/SP
   3506359, // Bertioga/SP
   3510401, // Capivari/SP
-  3511300, // Cedral/SP
+//  3511300, // Cedral/SP
   3512001, // Colina/SP
   3513009, // Cotia/SP
   3513801, // Diadema/SP

@@ -192,6 +192,8 @@ begin
     cURL_Producao := 'http://servicos.fernandopolis.sp.gov.br:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   3527504 : // Lucianopolis/SP
     cURL_Producao := 'http://186.224.13.194:5661/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';    
+  3511300 : // Cedral / SP  Daniel Jr - Mirassol-SP
+    cURL_Producao := 'http://187.120.209.20:8080/IssWeb-ejb/IssWebWS/IssWebWS';
  end;
 
   ConfigURL.HomNomeCidade         := '';

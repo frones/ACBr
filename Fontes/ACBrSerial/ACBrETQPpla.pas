@@ -348,7 +348,7 @@ begin
          'H' + Temp                    + CRLF +  // Ajusta a Temperatura
          'D11';                                  // Ajusta a resolução
 
-  if not EtqInicializada then
+  if not (EtqInicializada or EtqFinalizada) then
     ListaCmd.Insert(0, Cmd)        //Se Etiqueta não foi iniciada, comandos incluídos no início
   else
     ListaCmd.Add(Cmd);             //Se Etiqueta foi iniciada, comandos são concatenados

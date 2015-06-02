@@ -216,7 +216,7 @@ end;
 
 procedure TACBrETQZplII.IniciarEtiqueta;
 begin
-  if not EtqInicializada then
+  if not (EtqInicializada or EtqFinalizada) then
     ListaCmd.Insert(0, '^XA')     //Se Etiqueta não foi iniciada, comandos incluídos no início
   else
     ListaCmd.Add('^XA');          //Se Etiqueta foi iniciada, comandos são concatenados
@@ -243,6 +243,9 @@ begin
 
   if not EtqFinalizada then
     FinalizarEtiqueta(Copias, AvancoEtq);
+
+  fpEtqInicializada := False;
+  fpEtqFinalizada   := False;
 
   fpDevice.EnviaString(ListaCmd.Text);
   ListaCmd.Clear;

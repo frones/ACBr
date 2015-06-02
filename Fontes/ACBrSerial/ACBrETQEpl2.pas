@@ -359,7 +359,7 @@ begin
                'ZB' ;            // ZT = Printing from top of image buffer. (PADRÃO)
                                  // ZB = Printing from bottom of image buffer.
 
-  if not EtqInicializada then
+  if not (EtqInicializada or EtqFinalizada) then
     ListaCmd.Insert(0, Cmd)      //Se Etiqueta não foi iniciada, comandos incluídos no início
   else
     ListaCmd.Add(Cmd);           //Se Etiqueta foi iniciada, comandos são concatenados
@@ -398,6 +398,9 @@ begin
   Buffer := ListaCmd.Text;
   Buffer := StringReplace( Buffer, sLineBreak, LF, [rfReplaceAll] );
   ListaCmd.Clear;
+
+  fpEtqInicializada := False;
+  fpEtqFinalizada   := False;
 
   fpDevice.EnviaString( Buffer );
 

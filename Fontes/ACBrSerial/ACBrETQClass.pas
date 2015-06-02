@@ -180,6 +180,8 @@ begin
      fpDevice.Ativar ;
 
   fpAtivo := true ;
+  fpEtqInicializada := False;
+  fpEtqInicializada := False;
 end;
 
 procedure TACBrETQClass.Desativar;

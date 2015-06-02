@@ -371,7 +371,10 @@ begin
   for i:= Low(DFeUFCodigo) to High(DFeUFCodigo) do
   begin
     if DFeUFCodigo[I] = CUF then
+    begin
       Result := DFeUF[I];
+      exit;
+    end;
   end;
 end;
 

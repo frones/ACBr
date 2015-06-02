@@ -535,7 +535,7 @@ begin
   begin
     Linha := PadCenter(fsCabecalho[A], Colunas) ;
     if A = 0 then
-      Linha := '</zera></logo><c>'+ Linha ;
+      Linha := '</zera></logo>'+ Linha ;
 
     fsBuffer.Insert( A, Linha ) ;
   end ;
@@ -593,10 +593,8 @@ begin
               FormatDateTime('dd/mm/yy hh:nn:ss',now)+V,  Colunas,'|') );
     Add( PadCenter('** N A O   E   C U P O M   F I S C A L **',Colunas) );
     Add( StringOfChar('=',Colunas) ) ;
-    For A := 1 to LinhasEntreCupons do
-      Add( '' ) ;
 
-    Add('</corte_total>');
+    Add('</corte_total>'); // Corte total já pula linhas
   end ;
 end;
 
@@ -604,12 +602,15 @@ procedure TACBrECFVirtualBufferClass.AddBufferLinhas(AString: AnsiString);
 var
   Linhas: TStringList;
 begin
-  Linhas := TStringList.Create;
-  try
-    Linhas.Text := AjustaLinhaColunas(AString);
-    fsBuffer.AddStrings( Linhas );
-  finally
-    Linhas.Free;
+  if NaoEstaVazio(AString) then
+  begin
+    Linhas := TStringList.Create;
+    try
+      Linhas.Text := AjustaLinhaColunas(AString);
+      fsBuffer.AddStrings( Linhas );
+    finally
+      Linhas.Free;
+    end;
   end;
 end;
 
@@ -817,6 +818,11 @@ begin
           L   := 0 ;
         end;
       end;
+    end;
+    if Buf <> '' then
+    begin
+      Imprimir( Buf );
+      Buf := '';
     end;
   finally
     AguardandoResposta := False ;

@@ -341,6 +341,8 @@ begin
   Versao := VersaoAchada;
   if Versao > 0 then
     URL := FPIniParams.ReadString(NomeSessao, Chave, '')
+  else
+    URL := FPIniParams.ReadString(NomeSessao, NomeServico, '');
 end;
 
 procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;

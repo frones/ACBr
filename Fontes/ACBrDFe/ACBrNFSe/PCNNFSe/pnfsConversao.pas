@@ -912,6 +912,8 @@ begin
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
   5103502  // Diamantino/MT
+  4216602: // São José/SC
+
          : Provedor := 'Betha';
 
 //  3106705  // Betim/MG
@@ -1143,7 +1145,6 @@ begin
   4122404, // Rolandia/PR
   4201307, // Araquari/SC
   4210506, // Maravilha/SC
-  4216602, // São José/SC
   4303509, // Camaqua/RS
   4308102, // Feliz/RS
   4309407, // Guapore/RS

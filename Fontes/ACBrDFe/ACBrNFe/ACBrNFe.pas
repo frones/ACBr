@@ -132,6 +132,7 @@ type
       IndEmi: TpcnIndicadorEmissor; ultNSU: String): Boolean;
     function Download: Boolean;
 
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
@@ -143,9 +144,8 @@ type
       const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String): String;
 
     function IdentificaSchema(const AXML: String): TSchemaNFe;
-    function IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaNFe;
-    function GerarNomeArqSchema(const ALayOut: TLayOut;
-      VersaoServico: String): String;
+    function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
+      ): String;
     function GerarChaveContingencia(FNFe: TNFe): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
@@ -360,44 +360,23 @@ begin
   end;
 end;
 
-function TACBrNFe.IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaNFe;
+function TACBrNFe.GerarNomeArqSchema(const ALayOut: TLayOut;
+  VersaoServico: Double): String;
+var
+  NomeServico, NomeSchema, ArqSchema: String;
+  Versao: Double;
 begin
-  case ALayOut of
-    LayNfeRecepcao:
-      Result := schNfe;
-    //LayNfeRetRecepcao,
-    //LayNfeCancelamento,
-    //LayNfeInutilizacao,
-    //LayNfeConsulta,
-    //LayNfeStatusServico,
-    //LayNfeCadastro,
-    //LayNFeCCe,
-    LayNFeEvento:
-      Result := schEnvConfRecebto;
-    LayNFeEventoAN:
-      Result := schEnvConfRecebto;
-    //LayNFeConsNFeDest,
-    //LayNFeDownloadNFe,
-    LayNfeAutorizacao:
-      Result := schNfe;
-      //LayNfeRetAutorizacao,
-      //LayAdministrarCSCNFCe,
-      //LayDistDFeIn
-    else
-      Result := schNfe;
+  // Procura por Versão na pasta de Schemas //
+  NomeServico := LayOutToServico(ALayOut);
+  NomeSchema := NomeServicoToNomeSchema(NomeServico);
+  ArqSchema := '';
+  if NaoEstaVazio(NomeSchema) then
+  begin
+    Versao := VersaoServico;
+    AchaArquivoSchema( NomeSchema, Versao, ArqSchema );
   end;
 
-end;
-
-function TACBrNFe.GerarNomeArqSchema(const ALayOut: TLayOut;
-  VersaoServico: String): String;
-begin
-  if EstaVazio(VersaoServico) then
-    VersaoServico := LerVersaoDeParams(ALayOut);
-
-  Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
-            SchemaNFeToStr(IdentificaSchemaLayout(ALayOut)) + '_v' +
-            VersaoServico + '.xsd';
+  Result := ArqSchema;
 end;
 
 function TACBrNFe.GerarChaveContingencia(FNFe: TNFe): String;
@@ -766,6 +745,18 @@ begin
 
   if not Result then
     GerarException( WebServices.DownloadNFe.Msg );
+end;
+
+function TACBrNFe.NomeServicoToNomeSchema(const NomeServico: String): String;
+Var
+  ok: Boolean;
+  ALayout: TLayOut;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaNFeToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
 end;
 
 procedure TACBrNFe.ImprimirEvento;

@@ -64,9 +64,12 @@ type
     LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
     LayAdministrarCSCNFCe, LayDistDFeInt);
 
-  TSchemaNFe = (schErro, schNfe, schCancNFe, schInutNFe, schEnvCCe,
+  TSchemaNFe = (schErro, schNfe, schcancNFe, schInutNFe, schEnvCCe,
                 schEnvEventoCancNFe, schEnvConfRecebto, schEnvEPEC,
-                schresNFe, schresEvento, schprocNFe, schprocEventoNFe );
+                schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
+                schconsReciNFe, schconsSitNFe, schconsStatServ, schconsCad,
+                schenvEvento, schconsNFeDest, schdownloadNFe, schretEnviNFe,
+                schdistDFeInt);
 
   TStatusACBrNFe = (stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
@@ -84,6 +87,8 @@ type
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
+
+function LayOutToSchema(const t: TLayOut): TSchemaNFe;
 
 function SchemaNFeToStr(const t: TSchemaNFe): String;
 function StrToSchemaNFe(out ok: Boolean; const s: String): TSchemaNFe;
@@ -152,6 +157,27 @@ begin
     LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
     LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
     LayAdministrarCSCNFCe, LayDistDFeInt ] );
+end;
+
+function LayOutToSchema(const t: TLayOut): TSchemaNFe;
+begin
+  case t of
+    LayNfeRecepcao:       Result := schNfe;
+    LayNfeRetRecepcao:    Result := schconsReciNFe;
+    LayNfeCancelamento:   Result := schcancNFe;
+    LayNfeInutilizacao:   Result := schInutNFe;
+    LayNfeConsulta:       Result := schconsSitNFe;
+    LayNfeStatusServico:  Result := schconsStatServ;
+    LayNfeCadastro:       Result := schconsCad;
+    LayNFeEvento, LayNFeEventoAN: Result := schenvEvento;
+    LayNFeConsNFeDest   : Result := schconsNFeDest;
+    LayNFeDownloadNFe   : Result := schdownloadNFe;
+    LayNfeAutorizacao   : Result := schNfe;
+    LayNfeRetAutorizacao: Result := schretEnviNFe;
+    LayDistDFeInt:        Result := schdistDFeInt;
+  else
+    Result := schErro;
+  end;
 end;
 
 function SchemaNFeToStr(const t: TSchemaNFe): String;

@@ -279,7 +279,6 @@ var
   Erro, AXML: String;
   NotaEhValida: Boolean;
   ALayout: TLayOut;
-  VersaoStr: String;
 begin
   AXML := FXMLAssinado;
 
@@ -292,12 +291,11 @@ begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     if EhAutorizacao then
-      ALayout := LayNfeRetAutorizacao
+      ALayout := LayNfeAutorizacao
     else
-      ALayout := LayNfeRetRecepcao;
+      ALayout := LayNfeRecepcao;
 
-    VersaoStr := FloatToString( FNFe.infNFe.Versao, '.', '0.00');
-    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VersaoStr), Erro);
+    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FNFe.infNFe.Versao), Erro);
 
     if not NotaEhValida then
     begin

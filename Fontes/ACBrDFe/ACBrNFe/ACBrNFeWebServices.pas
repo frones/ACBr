@@ -2429,7 +2429,7 @@ begin
 
     with TACBrNFe(FPDFeOwner) do
     begin
-      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, FPVersaoServico), FPMsg);
+      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico,0)), FPMsg);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

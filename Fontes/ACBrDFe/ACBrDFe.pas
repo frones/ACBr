@@ -62,6 +62,7 @@ type
     FMAIL: TACBrMail;
     FOnTransmitError: TACBrDFeOnTransmitError;
     FSSL: TDFeSSL;
+    FListaDeSchemas: TStringList;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
     procedure SetAbout(AValue: String);
@@ -92,6 +93,10 @@ type
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFe: TStream = nil; NomeArq: String = ''); virtual;
+
+    function NomeServicoToNomeSchema(const NomeServico: String): String; virtual;
+    procedure AchaArquivoSchema(NomeSchema: String; var Versao: Double;
+      var ArqSchema: String);
 
     procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
       var Versao: Double; var URL: String);
@@ -138,6 +143,7 @@ begin
   FMAIL := nil;
   // Criando uma instância de FSSL e atribuindo valores de "Configuracoes" a ela;
   FSSL := TDFeSSL.Create;
+  FListaDeSchemas := TStringList.Create;
 
   with FSSL do
   begin
@@ -170,6 +176,7 @@ end;
 destructor TACBrDFe.Destroy;
 begin
   FSSL.Free;
+  FListaDeSchemas.Free;
 
   FPConfiguracoes.Free;
   FPIniParams.Free;
@@ -270,6 +277,80 @@ begin
   MAIL.Send;
 end;
 
+function TACBrDFe.NomeServicoToNomeSchema(const NomeServico: String): String;
+begin
+  Result := '';
+end;
+
+procedure TACBrDFe.AchaArquivoSchema(NomeSchema: String; var Versao: Double;
+  var ArqSchema: String);
+Var
+  VersaoMaisProxima, VersaoArq: Double;
+  Arq, VersaoStr: String;
+  I, P, LenNome: Integer;
+const
+  CSeparadorVersao = '_v';
+begin
+  if NomeSchema = '' then exit;
+
+  VersaoArq := 0;
+  VersaoMaisProxima := 0;
+  ArqSchema := '';
+
+  if FListaDeSchemas.Count = 0 then   // Carrega todos arquivos de Schema
+  begin
+    FindFiles(Configuracoes.Arquivos.PathSchemas +'*.xsd', FListaDeSchemas, False );
+
+    if FListaDeSchemas.Count = 0 then
+    begin
+      Versao := 0;
+      exit;
+    end;
+
+    FListaDeSchemas.Sort;
+  end;
+
+  if Versao = 0 then
+    P := FListaDeSchemas.IndexOf(NomeSchema+'.xsd')
+  else
+    P := FListaDeSchemas.IndexOf(NomeSchema + CSeparadorVersao + FloatToString(Versao,'.','0.00')+'.xsd');
+
+  if P >= 0 then
+  begin
+    ArqSchema := FListaDeSchemas[P];
+    VersaoMaisProxima := Versao;
+  end
+  else if Versao > 0 then
+  begin
+    NomeSchema := NomeSchema + CSeparadorVersao;
+    LenNome := Length(NomeSchema);
+
+    For I := 0 to FListaDeSchemas.Count-1 do
+    begin
+      Arq := FListaDeSchemas[I];
+
+      if copy(Arq, 1, LenNome) = NomeSchema then
+      begin
+        VersaoStr := copy( Arq, LenNome+1, Length(Arq));
+        VersaoStr := copy( VersaoStr, 1, Length(VersaoStr)-4);  // Remove '.xsd'
+        VersaoArq := StringToFloatDef(VersaoStr, 0);
+
+        if (VersaoArq > 0) and
+           (VersaoArq > VersaoMaisProxima) and
+           (VersaoArq <= Versao) then
+        begin
+          VersaoMaisProxima := VersaoArq;
+          ArqSchema := Arq;
+        end;
+      end;
+    end;
+  end;
+
+  Versao := VersaoMaisProxima;
+  if NaoEstaVazio(ArqSchema) then
+    ArqSchema := Configuracoes.Arquivos.PathSchemas + ArqSchema;
+end;
+
 function TACBrDFe.GetNomeArquivoServicos: String;
 begin
   Result := 'ACBrServicosDFe.ini';
@@ -349,8 +430,8 @@ procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
   var Versao: Double; var URL: String);
 var
-  Sessao: String;
-  VersaoAchada: Double;
+  Sessao, NomeSchema, ArqSchema: String;
+  VersaoAchada, VersaoSchema: Double;
 begin
   Sessao := ModeloDFe + '_' + UF + '_' + IfThen(TipoAmbiente = taProducao, 'P', 'H');
   VersaoAchada := Versao;
@@ -366,6 +447,16 @@ begin
       VersaoAchada := Versao;
       LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
     end;
+  end;
+
+  // tenta procura por Versão na pasta de Schemas //
+  NomeSchema := NomeServicoToNomeSchema(NomeServico);
+  if NaoEstaVazio(NomeSchema) then
+  begin
+    VersaoSchema := Versao;
+    AchaArquivoSchema( NomeSchema, VersaoSchema, ArqSchema );
+    if VersaoSchema > 0 then
+      VersaoAchada := VersaoSchema;
   end;
 
   Versao := VersaoAchada;

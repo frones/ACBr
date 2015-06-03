@@ -247,7 +247,7 @@ begin
       exit;
     end;
 
-    schema_doc := xmlReadFile(PAnsiChar(ArqSchema), nil, XML_DETECT_IDS);
+    schema_doc := xmlReadFile(PAnsiChar(AnsiString(ArqSchema)), nil, XML_DETECT_IDS);
     // the schema cannot be loaded or is not well-formed
     if (schema_doc = nil) then
     begin

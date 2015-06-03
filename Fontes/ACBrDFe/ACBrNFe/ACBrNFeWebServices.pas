@@ -1736,28 +1736,31 @@ begin
 
         with NFeRetorno.procEventoNFe.Items[I].RetEventoNFe do
         begin
-          aEventos := aEventos + LineBreak + LineBreak +
-            Format(ACBrStr('Número de sequência: %s ' + LineBreak +
-                           'Código do evento: %s ' + LineBreak +
-                           'Descrição do evento: %s ' + LineBreak +
-                           'Status do evento: %s ' + LineBreak +
-                           'Descrição do status: %s ' + LineBreak +
-                           'Protocolo: %s ' + LineBreak +
-                           'Data/Hora do registro: %s '),
-                   [IntToStr(InfEvento.nSeqEvento),
-                    TpEventoToStr(InfEvento.TpEvento),
-                    InfEvento.DescEvento,
-                    IntToStr(retEvento.Items[J].RetInfEvento.cStat),
-                    retEvento.Items[J].RetInfEvento.xMotivo,
-                    retEvento.Items[J].RetInfEvento.nProt,
-                    FormatDateTimeBr(retEvento.Items[J].RetInfEvento.dhRegEvento)]);
-
-          if retEvento.Items[J].RetInfEvento.tpEvento = teCancelamento then
+          for j := 0 to retEvento.Count -1 do
           begin
-            NFCancelada := True;
-            FProtocolo := retEvento.Items[J].RetInfEvento.nProt;
-            FDhRecbto := retEvento.Items[J].RetInfEvento.dhRegEvento;
-            FPMsg := retEvento.Items[J].RetInfEvento.xMotivo;
+            aEventos := aEventos + LineBreak + LineBreak +
+              Format(ACBrStr('Número de sequência: %s ' + LineBreak +
+                             'Código do evento: %s ' + LineBreak +
+                             'Descrição do evento: %s ' + LineBreak +
+                             'Status do evento: %s ' + LineBreak +
+                             'Descrição do status: %s ' + LineBreak +
+                             'Protocolo: %s ' + LineBreak +
+                             'Data/Hora do registro: %s '),
+                     [IntToStr(InfEvento.nSeqEvento),
+                      TpEventoToStr(InfEvento.TpEvento),
+                      InfEvento.DescEvento,
+                      IntToStr(retEvento.Items[J].RetInfEvento.cStat),
+                      retEvento.Items[J].RetInfEvento.xMotivo,
+                      retEvento.Items[J].RetInfEvento.nProt,
+                      FormatDateTimeBr(retEvento.Items[J].RetInfEvento.dhRegEvento)]);
+
+            if retEvento.Items[J].RetInfEvento.tpEvento = teCancelamento then
+            begin
+              NFCancelada := True;
+              FProtocolo := retEvento.Items[J].RetInfEvento.nProt;
+              FDhRecbto := retEvento.Items[J].RetInfEvento.dhRegEvento;
+              FPMsg := retEvento.Items[J].RetInfEvento.xMotivo;
+            end;
           end;
         end;
       end;

@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 02/06/2015 ver. 0.0.131a
+-- ACBrBancoCaixa --
+[-]Ajuste retorno CNAB240. (Jacinto Junior)
+http://www.projetoacbr.com.br/forum/index.php?/topic/20976-melhoria-acbrbancocaixapas-linha-686/
+
 Data: 29/05/2015 ver. 0.0.130a
 -- ACBrBoleto --
 [*]Ajuste para atender as mudanças no calculo do fator de vencimento. (Big Wings)

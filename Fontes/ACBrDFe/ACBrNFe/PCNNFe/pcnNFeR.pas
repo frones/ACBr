@@ -187,6 +187,7 @@ begin
     (* Grupo da TAG <ide><NFref> *)
     i := 0;
     Leitor.rExtrai(1, 'ide');
+    NFe.Ide.NFref.Clear;
     while Leitor.rExtrai(2, 'NFref', '', i + 1) <> '' do
     begin
       NFe.Ide.NFref.Add;
@@ -358,6 +359,7 @@ begin
 
   (* Grupo da TAG <autXML> ****************************************************)
   i := 0;
+  NFe.autXML.Clear;
   while Leitor.rExtrai(1, 'autXML', '', i + 1) <> '' do
   begin
     NFe.autXML.Add;
@@ -381,7 +383,7 @@ begin
     Pos('<det nItem=', Itens),
     (Pos('</det>', Itens) + 6) - Pos('<det nItem=', Itens)
   );
-
+  NFe.Det.Clear;
   while pos('<det nItem=',ItensTemp) <> 0 do
   begin
     Leitor.Arquivo := 'Item '+ItensTemp;
@@ -425,6 +427,7 @@ begin
     (*I70*)NFe.Det[i].Prod.nFCI     := Leitor.rCampo(tcStr, 'nFCI');
 
     j := 0;
+    NFe.Det[i].Prod.NVE.Clear;
     while Leitor.rExtrai(3, 'NVE', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.NVE.Add;
@@ -436,6 +439,7 @@ begin
 
     (* Grupo da TAG <det><prod><DI> *)
     j := 0;
+    NFe.Det[i].Prod.DI.Clear;
     while Leitor.rExtrai(3, 'DI', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.DI.Add;
@@ -455,6 +459,7 @@ begin
 
       (* Grupo da TAG <det><prod><DI><adi> *)
       k := 0;
+      NFe.Det[i].Prod.DI[j].adi.Clear;
       while Leitor.rExtrai(4, 'adi', '', k + 1) <> '' do
       begin
         NFe.Det[i].Prod.DI[j].adi.Add;
@@ -472,6 +477,7 @@ begin
 
     (* Grupo da TAG <det><prod><detExport> *)
     j := 0;
+    NFe.Det[i].Prod.detExport.Clear;
     while Leitor.rExtrai(3, 'detExport', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.detExport.Add;
@@ -517,6 +523,7 @@ begin
 
     (* Grupo da TAG <det><prod><med> *)
     j := 0;
+    NFe.Det[i].Prod.med.Clear;
     while Leitor.rExtrai(3, 'med', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.med.Add;
@@ -530,6 +537,7 @@ begin
 
     (* Grupo da TAG <det><prod><arma> *)
     j := 0;
+    NFe.Det[i].Prod.arma.Clear;
     while Leitor.rExtrai(3, 'arma', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.arma.add;
@@ -822,6 +830,7 @@ begin
     end;
 
     i := 0;
+    NFe.Transp.Reboque.Clear;
     while Leitor.rExtrai(2, 'reboque', '', i + 1) <> '' do
     begin
       NFe.Transp.Reboque.add;
@@ -832,6 +841,7 @@ begin
     end;
 
     i := 0;
+    NFe.Transp.Vol.Clear;
     while Leitor.rExtrai(2, 'vol', '', i + 1) <> '' do
     begin
       NFe.Transp.Vol.add;
@@ -842,6 +852,7 @@ begin
       (*X31*)NFe.Transp.Vol[i].pesoL := Leitor.rCampo(tcDe3, 'pesoL');
       (*X32*)NFe.Transp.Vol[i].pesoB := Leitor.rCampo(tcDe3, 'pesoB');
       j := 0;
+      NFe.transp.Vol[i].lacres.Clear;
       while Leitor.rExtrai(3, 'lacres', '', j + 1) <> '' do
       begin
         NFe.transp.Vol[i].lacres.add;
@@ -864,6 +875,7 @@ begin
       (*Y06*)NFe.Cobr.Fat.vLiq  := Leitor.rCampo(tcDe2, 'vLiq');
     end;
     i := 0;
+    NFe.Cobr.Dup.Clear;
     while Leitor.rExtrai(1, 'dup', '', i + 1) <> '' do
     begin
       NFe.Cobr.Dup.Add;
@@ -878,6 +890,7 @@ begin
    begin
     (* Grupo da TAG <pag> ******************************************************)
     i := 0;
+    NFe.pag.Clear;
     while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
      begin
        NFe.pag.Add;
@@ -900,6 +913,7 @@ begin
     (*Z02*)NFe.InfAdic.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
     (*Z03*)NFe.InfAdic.infCpl     := Leitor.rCampo(tcStr, 'infCpl');
     i := 0;
+    NFe.InfAdic.obsCont.Clear;
     while Leitor.rExtrai(2, 'obsCont', '', i + 1) <> '' do
     begin
       NFe.InfAdic.obsCont.Add;
@@ -908,6 +922,7 @@ begin
       inc(i);
     end;
     i := 0;
+    NFe.InfAdic.obsFisco.Clear;
     while Leitor.rExtrai(2, 'obsFisco', '', i + 1) <> '' do
     begin
       NFe.InfAdic.obsFisco.Add;
@@ -916,6 +931,7 @@ begin
       inc(i)
     end;
     i := 0;
+    NFe.InfAdic.procRef.Clear;
     while Leitor.rExtrai(2, 'procRef', '', i + 1) <> '' do
     begin
       NFe.InfAdic.procRef.Add;
@@ -958,6 +974,7 @@ begin
     (*ZC15*) NFe.cana.vLiqFor := Leitor.rCampo(tcDe2, 'vLiqFor');
 
     i := 0;
+    NFe.cana.fordia.Clear;
     while Leitor.rExtrai(2, 'forDia', '', i + 1) <> '' do
     begin
       NFe.cana.fordia.Add;
@@ -967,6 +984,7 @@ begin
     end;
 
     i := 0;
+    NFe.cana.deduc.Clear;
     while Leitor.rExtrai(2, 'deduc', '', i + 1) <> '' do
     begin
       NFe.cana.deduc.Add;

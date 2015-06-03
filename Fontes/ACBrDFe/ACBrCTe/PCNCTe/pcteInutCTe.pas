@@ -137,6 +137,8 @@ begin
   Gerador.wCampo(tcInt, 'DP07', 'cUF   ', 002, 002, 1, FcUF, DSC_CUF);
   if not ValidarCodigoUF(FcUF) then
     Gerador.wAlerta('DP07', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
+  if Fano > 2000 then
+    Fano := Fano - 2000;
   Gerador.wCampo(tcInt, 'DP08', 'ano   ', 002, 002, 1, Fano, DSC_ANO);
   Gerador.wCampo(tcStr, 'DP09', 'CNPJ  ', 014, 014, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
   if not ValidarCNPJ(FCNPJ) then

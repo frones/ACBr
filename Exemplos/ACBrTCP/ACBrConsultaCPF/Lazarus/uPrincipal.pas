@@ -5,11 +5,17 @@ unit uPrincipal;
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, ACBrBase, {ACBrSocket,} ACBrConsultaCPF;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, ExtCtrls, StdCtrls, maskedit, ACBrBase,
+  ACBrConsultaCPF;
 
 type
+
+  { TfrmPrincipal }
+
   TfrmPrincipal = class(TForm)
+    Label15: TLabel;
+    MaskNascimento: TMaskEdit;
     Panel2: TPanel;
     Label3: TLabel;
     Label12: TLabel;
@@ -52,7 +58,7 @@ procedure TfrmPrincipal.btnConsultarClick(Sender: TObject);
 begin
   if EditCaptcha.Text <> '' then
   begin
-    if ACBrConsultaCPF1.Consulta(EditCNPJ.Text, EditCaptcha.Text) then
+    if ACBrConsultaCPF1.Consulta(EditCNPJ.Text, MaskNascimento.Text, EditCaptcha.Text) then
     begin
       EditRazaoSocial.Text      := ACBrConsultaCPF1.Nome;
       EditSituacao.Text         := ACBrConsultaCPF1.Situacao;

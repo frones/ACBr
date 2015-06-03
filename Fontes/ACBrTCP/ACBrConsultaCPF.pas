@@ -56,6 +56,7 @@ type
 
   TACBrConsultaCPF = class(TACBrHTTP)
   private
+    FDataNascimento: String;
     FNome: String;
     FSituacao: String;
     FCPF: String;
@@ -68,10 +69,11 @@ type
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
   public
     procedure Captcha(Stream: TStream);
-    function Consulta(const ACPF, ACaptcha: String;
+    function Consulta(const ACPF, DataNasc, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
   published
     property CPF: String Read FCPF Write FCPF;
+    property DataNascimento : String Read FDataNascimento write FDataNascimento;
     property Nome: String Read FNome;
     property Situacao: String Read FSituacao;
     property DigitoVerificador: String Read FDigitoVerificador;
@@ -164,7 +166,7 @@ begin
   end
 end;
 
-function TACBrConsultaCPF.Consulta(const ACPF, ACaptcha: String;
+function TACBrConsultaCPF.Consulta(const ACPF, DataNasc,  ACaptcha: String;
   ARemoverEspacosDuplos: Boolean): Boolean;
 var
   Post: TStringStream;
@@ -178,10 +180,19 @@ begin
   //txtCPF=11122334410&txtToken_captcha_serpro_gov_br=299218104152138191166941752496584741018616278361624164&txtTexto_captcha_serpro_gov_br=ZCI8B9&Enviar=Consultar
   Post:= TStringStream.Create('');
   try
-    Post.WriteString('txtCPF='+OnlyNumber(ACPF)+'&');
+    {Post.WriteString('txtCPF='+OnlyNumber(ACPF)+'&');
+    //Post.WriteString('tempTxtNascimento='+dataNasc+'&');
     Post.WriteString('txtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
     Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
+    Post.WriteString('Enviar=Consultar');}
+
+    Post.WriteString('tempTxtCPF='+ACPF+'&');
+    Post.WriteString('tempTxtNascimento='+datanasc+'&');
+    Post.WriteString('temptxtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
+    Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
+    Post.WriteString('temptxtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
     Post.WriteString('Enviar=Consultar');
+
     Post.Position:= 0;
 
     HttpSend.Clear;
@@ -205,6 +216,7 @@ begin
 
         FCPF      := LerCampo(Resposta,'No do CPF:');
         FNome     := LerCampo(Resposta,'Nome da Pessoa Física:');
+        FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
         FSituacao := LerCampo(Resposta,'Situação Cadastral:');
         FEmissao  := LerCampo(Resposta,'Comprovante emitido às:');
         FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');

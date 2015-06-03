@@ -1,12 +1,12 @@
 object frmPrincipal: TfrmPrincipal
   Left = 319
-  Height = 341
+  Height = 434
   Top = 272
   Width = 645
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsDialog
   Caption = 'Consulta CPF (Receita Fazenda)'
-  ClientHeight = 341
+  ClientHeight = 434
   ClientWidth = 645
   Color = clBtnFace
   Font.Color = clWindowText
@@ -18,13 +18,13 @@ object frmPrincipal: TfrmPrincipal
   LCLVersion = '1.2.6.0'
   object Panel2: TPanel
     Left = 0
-    Height = 188
-    Top = 153
+    Height = 217
+    Top = 217
     Width = 645
     Align = alClient
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 188
+    ClientHeight = 217
     ClientWidth = 645
     TabOrder = 1
     object Label3: TLabel
@@ -160,13 +160,13 @@ object frmPrincipal: TfrmPrincipal
   end
   object Panel1: TPanel
     Left = 0
-    Height = 153
+    Height = 217
     Top = 0
     Width = 645
     Align = alTop
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 153
+    ClientHeight = 217
     ClientWidth = 645
     TabOrder = 0
     object Label1: TLabel
@@ -182,9 +182,9 @@ object frmPrincipal: TfrmPrincipal
       ParentFont = False
     end
     object Label14: TLabel
-      Left = 361
+      Left = 362
       Height = 16
-      Top = 78
+      Top = 136
       Width = 96
       Caption = 'Digite o Captcha'
       Font.Color = clWindowText
@@ -194,9 +194,9 @@ object frmPrincipal: TfrmPrincipal
       ParentFont = False
     end
     object EditCaptcha: TEdit
-      Left = 361
+      Left = 362
       Height = 41
-      Top = 97
+      Top = 155
       Width = 137
       CharCase = ecUppercase
       Font.Color = clWindowText
@@ -259,13 +259,41 @@ object frmPrincipal: TfrmPrincipal
       end
     end
     object btnConsultar: TButton
-      Left = 504
+      Left = 505
       Height = 40
-      Top = 97
+      Top = 155
       Width = 120
       Caption = 'Consultar'
       OnClick = btnConsultarClick
       TabOrder = 3
+    end
+    object Label15: TLabel
+      Left = 361
+      Height = 16
+      Top = 74
+      Width = 148
+      Caption = 'Digite a Data Nascimento'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      ParentColor = False
+      ParentFont = False
+    end
+    object MaskNascimento: TMaskEdit
+      Left = 362
+      Height = 41
+      Top = 96
+      Width = 167
+      CharCase = ecNormal
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Tahoma'
+      MaxLength = 10
+      ParentFont = False
+      TabOrder = 4
+      EditMask = '00/00/0000;1;_'
+      Text = '  /  /    '
+      SpaceChar = '_'
     end
   end
   object Timer1: TTimer
@@ -276,6 +304,7 @@ object frmPrincipal: TfrmPrincipal
     top = 208
   end
   object ACBrConsultaCPF1: TACBrConsultaCPF
+    ProxyPort = '8080'
     left = 310
     top = 170
   end

@@ -122,8 +122,11 @@ type
 
   TACBrSATResposta = class
   private
-    fcodigoDeRetorno : Integer ;
     fnumeroSessao : Integer ;
+    fcodigoDeRetorno : Integer ;
+    fmensagemRetorno : String;
+    fcodigoSEFAZ : Integer ;
+    fmensagemSEFAZ : String;
     fRetornoLst : TStringList ;
     fRetornoStr : String ;
     procedure SetRetornoStr(AValue : String) ;
@@ -134,6 +137,9 @@ type
 
     property numeroSessao : Integer read fnumeroSessao ;
     property codigoDeRetorno : Integer read  fcodigoDeRetorno;
+    property mensagemRetorno : String read fmensagemRetorno;
+    property codigoSEFAZ : Integer read  fcodigoSEFAZ;
+    property mensagemSEFAZ : String read fmensagemSEFAZ;
     property RetornoLst : TStringList read fRetornoLst ;
     property RetornoStr : String read fRetornoStr write SetRetornoStr ;
   end ;
@@ -329,6 +335,8 @@ end;
 { TACBrSATRespostaClass }
 
 procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
+var
+  index : integer;
 begin
   fRetornoStr := AValue;
 
@@ -347,6 +355,15 @@ begin
   begin
     fnumeroSessao    := StrToIntDef( fRetornoLst[0], 0);
     fcodigoDeRetorno := StrToIntDef( fRetornoLst[1], 0);
+
+    if Length(Trim(fRetornoLst[2])) = 4 then //Enviar e Cancelar venda tem um campo a mais no inicio da resposta(CCCC)
+      index := 3
+    else
+      index := 2;
+
+    fmensagemRetorno := fRetornoLst[index];
+    fcodigoSEFAZ     := StrToIntDef( fRetornoLst[index+1], 0);
+    fmensagemSEFAZ := fRetornoLst[index+2];
   end ;
 end;
 
@@ -369,6 +386,9 @@ begin
   fRetornoStr      := '';
   fnumeroSessao    := 0;
   fcodigoDeRetorno := 0;
+  fmensagemRetorno := '';
+  fcodigoSEFAZ := 0;
+  fmensagemSEFAZ := '';
 end ;
 
 { TACBrSATConfig }

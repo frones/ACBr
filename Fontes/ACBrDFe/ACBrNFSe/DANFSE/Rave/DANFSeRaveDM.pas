@@ -112,10 +112,12 @@ begin
       retNenhum                   : Connection.WriteStrData('', '0 - NENHUM');
       retMicroempresaMunicipal    : Connection.WriteStrData('', '1 - MICROEMPRESA MUNICIPAL');
       retEstimativa               : Connection.WriteStrData('', '2 - ESTIMATIVA');
-      retSociedadeProfissionais   : Connection.WriteStrData('', '3 - SOCIEDADE PROFICIONÁIS');
+      retSociedadeProfissionais   : Connection.WriteStrData('', '3 - SOCIEDADE PROFISSIONAIS');
       retCooperativa              : Connection.WriteStrData('', '4 - COOPERATIVA');
       retMicroempresarioIndividual: Connection.WriteStrData('', '5 - MICROEMPRESÁRIO INDIVIDUAL');
       retMicroempresarioEmpresaPP : Connection.WriteStrData('', '6 - MICROEMPRESÁRIO (EPP)');
+      retLucroReal                : Connection.WriteStrData('', '7 - LUCRO REAL');      
+      retLucroPresumido           : Connection.WriteStrData('', '8 - LUCRO PRESUMIDO'); 
     end;
 
     case OptanteSimplesNacional of
@@ -139,7 +141,8 @@ begin
     Connection.WriteStrData('', ConstrucaoCivil.Art);
     Connection.WriteStrData('', IdentificacaoRps.Numero);
     Connection.WriteStrData('', IdentificacaoRps.Serie);
-    if trim(NFSe.Servico.CodigoMunicipio) <> '' then
+    //Connection.WriteStrData('', NFSe.Tomador.Endereco.xMunicipio);
+    if trim(NFSe.Servico.CodigoMunicipio) <> '' then 
       Connection.WriteStrData('', CodCidadeToCidade(StrToInt(NFSe.Servico.CodigoMunicipio)))
     else
       Connection.WriteStrData('', NFSe.Tomador.Endereco.xMunicipio);

@@ -93,6 +93,7 @@ function AnsiChr( b: Byte) : AnsiChar;
 
 function TruncFix( X : Double ) : Integer ;
 function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
+function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
 
@@ -387,6 +388,14 @@ Begin
     end ;
 
    Result := (IntPart / Pow);
+end;
+
+function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
+var
+   Pow : Extended;
+begin
+   Pow      := intpower(10, abs(Digits) );
+   Result   := trunc(AValue*Pow)/Pow;
 end;
 
 {-----------------------------------------------------------------------------

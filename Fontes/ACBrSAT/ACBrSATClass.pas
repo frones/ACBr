@@ -364,7 +364,9 @@ begin
     fmensagemRetorno := fRetornoLst[index];
     fcodigoSEFAZ     := StrToIntDef( fRetornoLst[index+1], 0);
     fmensagemSEFAZ := fRetornoLst[index+2];
-  end ;
+  end
+  else
+    fmensagemRetorno := AValue;
 end;
 
 constructor TACBrSATResposta.Create ;

@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/06/2015
+-- ACBrETQ -- (por: DSA e Elias)
+[*] Refactoring em todas as classes para simplificação de código
+
 Data: 02/06/2015
 -- ACBrETQ -- (por: DSA e Elias)
 [-] Correção de bug na Impressão de Etiquetas, usando IniciarEtiqueta e

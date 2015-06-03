@@ -83,6 +83,12 @@ TACBrETQClass = class
     procedure SetUnidade(const AValue: TACBrETQUnidade); virtual;
     procedure SetDPI(const AValue : TACBrETQDPI) ; virtual;
 
+    procedure IniciarImpressao(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
+    procedure EnviarImpressao; virtual;
+    procedure FinalizarImpressao; virtual;
+    procedure CalcularComandoAbertura; virtual;
+    procedure CalcularComandoFinaliza(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
+
   public
     property Ativo  : Boolean read fpAtivo write SetAtivo;
     property ModeloStr: String read fpModeloStr;
@@ -120,9 +126,9 @@ TACBrETQClass = class
        NomeImagem: String); virtual;
     procedure CarregarImagem(AStream : TStream; NomeImagem: String;
        Flipped : Boolean = True; Tipo: String = 'BMP' ); virtual;
-    procedure IniciarEtiqueta; virtual;
-    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
-    procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
+    procedure IniciarEtiqueta;
+    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
+    procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
 end;
 
 implementation
@@ -310,9 +316,34 @@ begin
    FDPI := AValue ;
 end ;
 
+procedure TACBrETQClass.IniciarImpressao(Copias: Integer; AvancoEtq: Integer);
+begin
+  if not (EtqInicializada or EtqFinalizada) then
+    IniciarEtiqueta;
+
+  if not EtqFinalizada then
+    FinalizarEtiqueta(Copias, AvancoEtq);
+end;
+
+procedure TACBrETQClass.EnviarImpressao;
+begin
+  fpDevice.EnviaString(ListaCmd.Text);
+end;
+
+procedure TACBrETQClass.FinalizarImpressao;
+begin
+  Cmd := '';
+  ListaCmd.Clear;
+
+  fpEtqInicializada := False;
+  fpEtqFinalizada   := False;
+end;
+
 procedure TACBrETQClass.Imprimir(Copias: Integer; AvancoEtq: Integer);
 begin
-  raise Exception.Create(ACBrStr('Função Imprimir não implementada em: ') + ModeloStr);
+  IniciarImpressao(Copias, AvancoEtq);
+  EnviarImpressao;
+  FinalizarImpressao;
 end;
 
 procedure TACBrETQClass.ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal
@@ -329,12 +360,42 @@ end;
 
 procedure TACBrETQClass.IniciarEtiqueta;
 begin
-  //Sem Implementação
+  Cmd := '';
+
+  { Calcula comando de Abertura e atribui à Cmd }
+  CalcularComandoAbertura;
+
+  if not (EtqInicializada or EtqFinalizada) then
+    ListaCmd.Insert(0, Cmd)      //Se Etiqueta não foi iniciada, comandos incluídos no início
+  else
+    ListaCmd.Add(Cmd);           //Se Etiqueta foi iniciada, comandos são concatenados
+
+  fpEtqInicializada := True;
+  fpEtqFinalizada   := False;
 end;
 
 procedure TACBrETQClass.FinalizarEtiqueta(Copias: Integer; AvancoEtq: Integer);
 begin
-  //Sem Implementação
+  Cmd := '';
+
+  { Calcula comando de Finalização e atribui à Cmd }
+  CalcularComandoFinaliza(Copias, AvancoEtq);
+
+  ListaCmd.Add(Cmd);
+
+  fpEtqFinalizada   := True;
+  fpEtqInicializada := False;
+end;
+
+procedure TACBrETQClass.CalcularComandoAbertura;
+begin
+  // Sem Implementação
+end;
+
+procedure TACBrETQClass.CalcularComandoFinaliza(Copias: Integer;
+  AvancoEtq: Integer);
+begin
+  // Sem Implementação
 end;
 
 procedure TACBrETQClass.SetAdicionarComandoP(const Value: Boolean);

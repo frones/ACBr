@@ -342,6 +342,10 @@ end;
 function NotaFiscal.ValidarRegrasdeNegocios: Boolean;
 var
   Erros: String;
+  I: Integer;
+  fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
+  fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
+  FaturamentoDireto, NFImportacao : Boolean;
 
   procedure AdicionaErro(const Erro: String);
   begin
@@ -353,6 +357,9 @@ begin
   begin
     Erros := '';
 
+    if NFe.infNFe.Versao < 3.10 then
+      AdicionaErro('701-Rejeição: Versão inválida');
+
     if not ValidarConcatChave then  //A03-10
       AdicionaErro(
         '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
@@ -360,6 +367,8 @@ begin
     if copy(IntToStr(NFe.Emit.EnderEmit.cMun), 1, 2) <>
       IntToStr(Configuracoes.WebServices.UFCodigo) then //B02-10
       AdicionaErro('226-Rejeição: Código da UF do Emitente diverge da UF autorizadora');
+
+//    702-Rejeição: NFC-e não é aceita pela UF do Emitente
 
     if (NFe.Ide.serie > 899) and  //B07-20
       (NFe.Ide.tpEmis <> teSCAN) then
@@ -373,6 +382,9 @@ begin
 
     //GB09.02 - Data de Emissão posterior à 31/03/2011
     //GB09.03 - Data de Recepção posterior à 31/03/2011 e tpAmb (B24) = 2
+
+    if not ValidarChave(NFe.infNFe.ID) then
+      AdicionaErro('253-Rejeição: Digito Verificador da chave de acesso composta inválida');
 
     if not ValidarMunicipio(NFe.Ide.cMunFG) then //B12-10
       AdicionaErro('270-Rejeição: Código Município do Fato Gerador: dígito inválido');
@@ -429,6 +441,68 @@ begin
     if (NFe.Ide.dhCont > 0) and ((now - NFe.Ide.dhCont) > 30) then //B28-40
       AdicionaErro('559-Rejeição: Data de entrada em contingência muito atrasada');
 
+    if not ValidarCNPJ(NFe.Emit.CNPJCPF) then
+      AdicionaErro('207-Rejeição: CNPJ do emitente inválido');
+
+    if not ValidarMunicipio(NFe.Emit.EnderEmit.cMun) then
+      AdicionaErro('272-Rejeição: Código Município do Emitente: dígito inválido');
+
+    if (UFparaCodigo(NFe.Emit.EnderEmit.UF) <> StrToIntDef(
+      copy(IntToStr(NFe.Emit.EnderEmit.cMun), 1, 2), 0)) then
+      AdicionaErro('273-Rejeição: Código Município do Emitente: difere da UF do emitente');
+
+    if not EstaVazio(NFe.Emit.IE) then
+      AdicionaErro('229-Rejeição: IE do emitente não informada');
+
+    if not ValidarIE(NFe.Emit.IE,NFe.Emit.EnderEmit.UF) then
+      AdicionaErro('209-Rejeição: IE do emitente inválida ');
+
+    if (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) >= 14) and
+      not ValidarCNPJ(NFe.Dest.CNPJCPF) then
+      AdicionaErro('208-Rejeição: CNPJ do emitente inválido');
+
+    if (NFe.Retirada.UF = 'EX') and
+       (NFe.Retirada.cMun <> 9999999) then
+      AdicionaErro('513-Rejeição: Código Município do Local de Retirada deve ser 9999999 para UF retirada = "EX"');
+
+    if (NFe.Retirada.UF <> 'EX') and
+       not ValidarMunicipio(NFe.Retirada.cMun) then
+      AdicionaErro('276-Rejeição: Código Município do Local de Retirada: dígito inválido');
+
+    if (UFparaCodigo(NFe.Retirada.UF) <> StrToIntDef(
+      copy(IntToStr(NFe.Retirada.cMun), 1, 2), 0)) then
+      AdicionaErro('277-Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada');
+
+    if (NFe.Entrega.UF = 'EX') and
+       (NFe.Entrega.cMun <> 9999999) then
+      AdicionaErro('515-Rejeição: Código Município do Local de Entrega deve ser 9999999 para UF entrega = "EX"');
+
+    if (NFe.Entrega.UF <> 'EX') and
+       not ValidarMunicipio(NFe.Entrega.cMun) then
+      AdicionaErro('278-Rejeição: Código Município do Local de Entrega: dígito inválido');
+
+    if (UFparaCodigo(NFe.Entrega.UF) <> StrToIntDef(
+      copy(IntToStr(NFe.Entrega.cMun), 1, 2), 0)) then
+      AdicionaErro('279-Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega');
+
+    if NaoEstaVazio(Trim(NFe.Transp.Transporta.CNPJCPF)) and
+       (Length(Trim(OnlyNumber(NFe.Transp.Transporta.CNPJCPF))) >= 14) and
+       not ValidarCNPJ(NFe.Transp.Transporta.CNPJCPF) then
+      AdicionaErro('542-Rejeição: CNPJ do Transportador inválido');
+
+    if NaoEstaVazio(Trim(NFe.Transp.Transporta.CNPJCPF)) and
+       (Length(Trim(OnlyNumber(NFe.Transp.Transporta.CNPJCPF))) <= 11) and
+       not ValidarCPF(NFe.Transp.Transporta.CNPJCPF) then
+      AdicionaErro('543-Rejeição: CPF do Transportador inválido');
+
+    if NaoEstaVazio(Trim(NFe.Transp.Transporta.IE)) and
+       EstaVazio(Trim(NFe.Transp.Transporta.UF)) then
+      AdicionaErro('559-Rejeição: UF do Transportador não informada');
+
+    if NaoEstaVazio(Trim(NFe.Transp.Transporta.IE)) and
+       not ValidarIE(NFe.Transp.Transporta.IE,NFe.Transp.Transporta.UF) then
+      AdicionaErro('544-Rejeição: IE do Transportador inválida');
+
     if (NFe.Ide.modelo = 65) then  //Regras válidas apenas para NFC-e - 65
     begin
       if (NFe.Ide.dEmi < now - StrToTime('00:05:00')) and
@@ -474,11 +548,82 @@ begin
         //B25b-30  Qual estado não permite entrega a domicílio?
         AdicionaErro('785-Rejeição: NFC-e com entrega a domicílio não permitida pela UF');
 
-      if (NFe.Ide.NFref.Count > 0) then  //BA01-10
+      if (NFe.Ide.NFref.Count > 0) then
         AdicionaErro('708-Rejeição: NFC-e não pode referenciar documento fiscal');
 
-      if (NFe.Emit.IEST > '') then  //C18-10
+      if NaoEstaVazio(Trim(NFe.Emit.IEST)) then
         AdicionaErro('718-Rejeição: NFC-e não deve informar IE de Substituto Tributário');
+
+      if (NFe.Ide.indPres = pcEntregaDomicilio) and
+        EstaVazio(Trim(nfe.Entrega.xLgr)) then
+        AdicionaErro('787-Rejeição: NFC-e de entrega a domicílio sem a identificação do destinatário');
+
+      if (NFe.Dest.indIEDest <> inNaoContribuinte) then
+        AdicionaErro('789-Rejeição: NFC-e para destinatário contribuinte de ICMS');
+
+      if NaoEstaVazio(Trim(NFe.Dest.IE)) then
+        AdicionaErro('729-Rejeição: NFC-e com informação da IE do destinatário');
+
+      if NaoEstaVazio(Trim(NFe.Dest.ISUF)) then
+        AdicionaErro('730-Rejeição: NFC-e com Inscrição Suframa');
+
+      if (NFe.Transp.modFrete <> mfSemFrete) and
+         (NFe.Ide.indPres <> pcEntregaDomicilio)then
+        AdicionaErro('753-Rejeição: NFC-e com Frete');
+
+      if (NFe.Ide.indPres <> pcEntregaDomicilio) and
+         ((trim(NFe.Transp.Transporta.CNPJCPF) <> '') or
+         (trim(NFe.Transp.Transporta.xNome) <> '') or
+         (trim(NFe.Transp.Transporta.IE) <> '') or
+         (trim(NFe.Transp.Transporta.xEnder) <> '') or
+         (trim(NFe.Transp.Transporta.xMun) <> '') or
+         (trim(NFe.Transp.Transporta.UF) <> '')) then
+        AdicionaErro('754-Rejeição: NFC-e com dados do Transportador');
+
+      if (NFe.Ide.indPres = pcEntregaDomicilio) and
+         ((trim(NFe.Transp.Transporta.CNPJCPF) = '') or
+         (trim(NFe.Transp.Transporta.xNome) = '')) then
+        AdicionaErro('786-Rejeição: NFC-e de entrega a domicílio sem dados do Transportador');
+
+      if (NFe.Transp.retTransp.vServ > 0) or
+         (NFe.Transp.retTransp.vBCRet > 0) or
+         (NFe.Transp.retTransp.pICMSRet > 0) or
+         (NFe.Transp.retTransp.vICMSRet > 0) or
+         (Trim(NFe.Transp.retTransp.CFOP) <> '') or
+         (NFe.Transp.retTransp.cMunFG > 0) then
+        AdicionaErro('755-Rejeição: NFC-e com dados de Retenção do ICMS no Transporte');
+
+      if (Trim(NFe.Transp.veicTransp.placa) <> '') or
+         (Trim(NFe.Transp.veicTransp.UF) <> '') or
+         (Trim(NFe.Transp.veicTransp.RNTC) <> '') then
+        AdicionaErro('756-Rejeição: NFC-e com dados do veículo de Transporte');
+
+      if NFe.Transp.Reboque.Count > 0 then
+        AdicionaErro('757-Rejeição: NFC-e com dados de Reboque do veículo de Transporte');
+
+      if NaoEstaVazio(Trim(NFe.Transp.vagao)) then
+        AdicionaErro('758-Rejeição: NFC-e com dados do Vagão de Transporte');
+
+      if NaoEstaVazio(Trim(NFe.Transp.balsa)) then
+        AdicionaErro('759-Rejeição: NFC-e com dados da Balsa de Transporte');
+
+      if (Trim(nfe.Cobr.Fat.nFat) <> '') or
+         (NFe.Cobr.Fat.vOrig > 0) or
+         (NFe.Cobr.Fat.vDesc > 0) or
+         (NFe.Cobr.Fat.vLiq > 0) or
+         (NFe.Cobr.Dup.Count > 0) then
+        AdicionaErro('760-Rejeição: NFC-e com dados de cobrança (Fatura, Duplicata)');
+
+      if NFe.pag.Count <= 0 then
+        AdicionaErro('769-Rejeição: NFC-e deve possuir o grupo de Formas de Pagamento');
+
+      if Trim(NFe.compra.xNEmp) + Trim(NFe.compra.xPed) + Trim(NFe.compra.xCont) <> '' then
+        AdicionaErro('762-Rejeição: NFC-e com dados de compras (Empenho, Pedido, Contrato)');
+
+      if not(Trim(NFe.cana.safra) = '') or not(Trim(NFe.cana.ref) = '') or
+         (NFe.cana.fordia.Count > 0) or (NFe.cana.deduc.Count > 0) then
+        AdicionaErro('763-Rejeição: NFC-e com dados de aquisição de Cana');
+
     end;
 
     if (NFe.Ide.modelo = 55) then  //Regras válidas apenas para NF-e - 55
@@ -534,7 +679,281 @@ begin
 
       if (NFe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
+
+      if (NFe.Dest.CNPJCPF <> '') or
+         (NFe.Dest.idEstrangeiro <> '') then
+        AdicionaErro('719-Rejeição: NF-e sem a identificação do destinatário');
+
+      if (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) <= 11) and
+        not ValidarCPF(NFe.Dest.CNPJCPF) then
+        AdicionaErro('237-Rejeição: CPF do destinatário inválido');
+
+      if (nfe.Ide.idDest = doExterior) and
+         (EstaVazio(Trim(NFe.Dest.idEstrangeiro))) then
+        AdicionaErro('720-Rejeição: Na operação com Exterior deve ser informada tag idEstrangeiro');
+
+      if (nfe.Ide.idDest = doInterestadual) and
+         (EstaVazio(Trim(NFe.Dest.CNPJCPF))) then
+        AdicionaErro('721-Rejeição: Operação interestadual deve informar CNPJ ou CPF');
+
+      if (nfe.Ide.idDest = doInterna) and
+         (NaoEstaVazio(Trim(NFe.Dest.idEstrangeiro))) and
+         (NFe.Ide.indFinal <> cfConsumidorFinal)then
+        AdicionaErro('723-Rejeição: Operação interna com idEstrangeiro informado deve ser para consumidor final');
+
+      if EstaVazio(Trim(NFe.Dest.xNome)) then
+        AdicionaErro('724-Rejeição: NF-e sem o nome do destinatário');
+
+      if EstaVazio(Trim(NFe.Dest.EnderDest.xLgr)) then
+        AdicionaErro('726-Rejeição: NF-e sem a informação de endereço do destinatário');
+
+      if (NFe.Dest.EnderDest.UF <> 'EX') and
+         not ValidarMunicipio(NFe.Dest.EnderDest.cMun) then
+        AdicionaErro('509-Rejeição: Informado código de município diferente de "9999999" para operação com o exterior');
+
+      if (nfe.Ide.idDest = doExterior) and
+         (NFe.Dest.EnderDest.UF <> 'EX') then
+        AdicionaErro('727-Rejeição: Operação com Exterior e UF diferente de EX');
+
+      if (nfe.Ide.idDest = doInterestadual) and
+         (NFe.Dest.EnderDest.UF = 'EX') then
+        AdicionaErro('771-Rejeição: Operação Interestadual e UF de destino com EX');
+
+      if (nfe.Ide.idDest = doInterestadual) and
+         (NFe.Dest.EnderDest.UF = NFe.Emit.EnderEmit.UF) then
+        AdicionaErro('772-Rejeição: Operação Interestadual e UF de destino igual à UF do emitente');
+
+      if (nfe.Ide.idDest = doInterna) and
+         (NFe.Dest.EnderDest.UF <> NFe.Emit.EnderEmit.UF) then
+        AdicionaErro('773-Rejeição: Operação Interna e UF de destino difere da UF do emitente');
+
+      if (NFe.Ide.idDest = doExterior) and
+         (NFe.Dest.indIEDest <> inNaoContribuinte) then
+        AdicionaErro('790-Rejeição: Operação com Exterior para destinatário Contribuinte de ICMS');
+
+      if NFe.pag.Count > 0 then
+        AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
     end;
+
+    for I:=0 to NFe.autXML.Count-1 do
+    begin
+      if (Length(Trim(OnlyNumber(NFe.autXML[I].CNPJCPF))) <= 11) and
+        not ValidarCPF(NFe.autXML[I].CNPJCPF) then
+        AdicionaErro('325-Rejeição: CPF autorizado para download inválido');
+
+      if (Length(Trim(OnlyNumber(NFe.autXML[I].CNPJCPF))) > 11) and
+        not ValidarCNPJ(NFe.autXML[I].CNPJCPF) then
+        AdicionaErro('323-Rejeição: CNPJ autorizado para download inválido');
+    end;
+
+    fsvTotTrib := 0;
+    fsvBC      := 0;
+    fsvICMS    := 0;
+    fsvICMSDeson    := 0;
+    fsvBCST    := 0;
+    fsvST      := 0;
+    fsvProd    := 0;
+    fsvFrete   := 0;
+    fsvSeg     := 0;
+    fsvDesc    := 0;
+    fsvII      := 0;
+    fsvIPI     := 0;
+    fsvPIS     := 0;
+    fsvCOFINS  := 0;
+    fsvOutro   := 0;
+    fsvServ    := 0;
+    FaturamentoDireto := False;
+    NFImportacao := False;
+
+
+    for I:=0 to NFe.Det.Count-1 do
+    begin
+      if Length(Trim(NFe.Det[I].Prod.NCM)) < 8 then
+        AdicionaErro('777-Rejeição: Obrigatória a informação do NCM completo');
+
+      if (NFe.Ide.modelo = 65) then
+      begin
+        if (pos(OnlyNumber(NFe.Det[I].Prod.CFOP), 'XXXX,5101,5102,5103,5104,5115,5401,5403,5405,5653,5656,5667,5933') <= 0)  then
+          AdicionaErro('725-Rejeição: NFC-e com CFOP inválido');
+
+        if (NFe.Det[I].Prod.IndTot = itNaoSomaTotalNFe) then
+          AdicionaErro('774-Rejeição: NFC-e com indicador de item não participante do total');
+
+        if (NaoEstaVazio(NFe.Det[I].Prod.veicProd.chassi)) then
+          AdicionaErro('736-Rejeição: NFC-e com grupo de Veículos novos');
+
+        if (NFe.Det[I].Prod.med.Count > 0) then
+          AdicionaErro('737-Rejeição: NFC-e com grupo de Medicamentos');
+
+        if (NFe.Det[I].Prod.arma.Count > 0) then
+          AdicionaErro('738-Rejeição: NFC-e com grupo de Armamentos');
+
+        if (NaoEstaVazio(NFe.Det[I].Prod.comb.UFcons)) then
+          AdicionaErro('739-Rejeição: NFC-e com grupo de Combustível');
+
+        if (NaoEstaVazio(NFe.Det[I].Prod.nRECOPI)) then
+          AdicionaErro('348-Rejeição: NFC-e com grupo RECOPI');
+
+        if (NFe.Det[I].Imposto.ICMS.CST = cst50) then
+          AdicionaErro('766-Rejeição: NFC-e com CST 50-Suspensão');
+
+        if (NFe.Det[I].Imposto.ICMS.CST = cst51) then
+          AdicionaErro('740-Rejeição: NFC-e com CST 51-Diferimento');
+
+        if (NFe.Det[I].Imposto.ICMS.CST in [cstPart10,cstPart90]) then
+          AdicionaErro('741-Rejeição: NFC-e com Partilha de ICMS entre UF');
+
+        if ((NFe.Det[I].Imposto.IPI.cEnq  <> '') or
+            (NFe.Det[I].Imposto.IPI.vBC   <> 0) or
+            (NFe.Det[I].Imposto.IPI.qUnid <> 0) or
+            (NFe.Det[I].Imposto.IPI.vUnid <> 0) or
+            (NFe.Det[I].Imposto.IPI.pIPI  <> 0) or
+            (NFe.Det[I].Imposto.IPI.vIPI  <> 0)) then
+          AdicionaErro('742-Rejeição: NFC-e com grupo do IPI');
+
+        if (NFe.Det[I].Imposto.II.vBc > 0) or
+           (NFe.Det[I].Imposto.II.vDespAdu > 0) or
+           (NFe.Det[I].Imposto.II.vII > 0) or
+           (NFe.Det[I].Imposto.II.vIOF > 0) or
+           (Copy(NFe.Det[I].Prod.CFOP,1,1) = '3') then
+          AdicionaErro('743-Rejeição: NFC-e com grupo do II');
+
+        if (NFe.Det[I].Imposto.PISST.vBc > 0) or
+           (NFe.Det[I].Imposto.PISST.pPis > 0) or
+           (NFe.Det[I].Imposto.PISST.qBCProd > 0) or
+           (NFe.Det[I].Imposto.PISST.vAliqProd > 0) or
+           (NFe.Det[I].Imposto.PISST.vPIS > 0) then
+         AdicionaErro('746-Rejeição: NFC-e com grupo do PIS-ST');
+
+        if (NFe.Det[I].Imposto.COFINSST.vBC > 0) or
+           (NFe.Det[I].Imposto.COFINSST.pCOFINS > 0) or
+           (NFe.Det[I].Imposto.COFINSST.qBCProd > 0) or
+           (NFe.Det[I].Imposto.COFINSST.vAliqProd > 0) or
+           (NFe.Det[I].Imposto.COFINSST.vCOFINS > 0) then
+          AdicionaErro('749-Rejeição: NFC-e com grupo da COFINS-ST');
+
+      end;
+
+      if (NFe.Det[I].Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
+         (NFe.Ide.finNFe = fnNormal) and
+         (NFe.Det[I].Imposto.ICMS.vICMS <> (RoundABNT(NFe.Det[I].Imposto.ICMS.vBC * (NFe.Det[I].Imposto.ICMS.pICMS/100),-2)))then
+        AdicionaErro('528-Rejeição: Valor do ICMS difere do produto BC e Alíquota');
+
+      if (NFe.Det[I].Imposto.ICMS.motDesICMS = mdiSuframa) and
+         (EstaVazio(NFe.Dest.ISUF))then
+        AdicionaErro('625-Rejeição: Inscrição SUFRAMA deve ser informada na venda com isenção para ZFM');
+
+      if EstaVazio(NFe.Emit.IM) and
+        ((NFe.Det[I].Imposto.ISSQN.vBC > 0) or
+         (NFe.Det[I].Imposto.ISSQN.vAliq > 0) or
+         (NFe.Det[I].Imposto.ISSQN.vISSQN > 0) or
+         (NFe.Det[I].Imposto.ISSQN.cMunFG > 0) or
+         (NFe.Det[I].Imposto.ISSQN.cListServ <> '')) then
+        AdicionaErro('530-Rejeição: Operação com tributação de ISSQN sem informar a Inscrição Municipal');
+
+      if (NFe.Det[I].Imposto.ISSQN.cMunFG > 0) and
+         not ValidarMunicipio(NFe.Det[I].Imposto.ISSQN.cMunFG) then
+        AdicionaErro('287-Rejeição: Código Município do FG - ISSQN: dígito inválido');
+
+      if NFe.Det.Items[I].Prod.IndTot = itSomaTotalNFe then
+      begin
+        fsvTotTrib := fsvTotTrib + NFe.Det.Items[I].Imposto.vTotTrib;
+        fsvBC      := fsvBC + NFe.Det.Items[I].Imposto.ICMS.vBC;
+        fsvICMS    := fsvICMS + NFe.Det.Items[I].Imposto.ICMS.vICMS;
+        fsvICMSDeson := fsvICMSDeson + NFe.Det.Items[I].Imposto.ICMS.vICMSDeson;
+        fsvBCST    := fsvBCST + NFe.Det.Items[I].Imposto.ICMS.vBCST;
+        fsvST      := fsvST + NFe.Det.Items[I].Imposto.ICMS.vICMSST;
+        fsvProd    := fsvProd + NFe.Det.Items[I].Prod.vProd;
+        fsvFrete   := fsvFrete + NFe.Det.Items[I].Prod.vFrete;
+        fsvSeg     := fsvSeg + NFe.Det.Items[I].Prod.vSeg;
+        fsvDesc    := fsvDesc + NFe.Det.Items[I].Prod.vDesc;
+        fsvII      := fsvII + NFe.Det.Items[I].Imposto.II.vII;
+        fsvIPI     := fsvIPI + NFe.Det.Items[I].Imposto.IPI.vIPI;
+        fsvPIS     := fsvPIS + NFe.Det.Items[I].Imposto.PIS.vPIS;
+        fsvCOFINS  := fsvCOFINS + NFe.Det.Items[I].Imposto.COFINS.vCOFINS;
+        fsvOutro   := fsvOutro + NFe.Det.Items[I].Prod.vOutro;
+        fsvServ   := fsvServ + NFe.Det.Items[I].Imposto.ISSQN.vBC; //VERIFICAR
+      end;
+
+      if NFe.Det[I].Prod.veicProd.tpOP = toFaturamentoDireto then
+        FaturamentoDireto := True;
+
+      if Copy(NFe.Det[I].Prod.CFOP,1,1) = '3'then
+        NFImportacao := True;
+    end;
+
+    if FaturamentoDireto then
+      fsvNF := (fsvProd+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ)-(fsvDesc+fsvICMSDeson)
+    else
+      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ)-(fsvDesc+fsvICMSDeson);
+
+    if (NFe.Total.ICMSTot.vBC <> fsvBC) then
+      AdicionaErro('531-Rejeição: Total da BC ICMS difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vICMS <> fsvICMS) then
+      AdicionaErro('532-Rejeição: Total do ICMS difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vICMSDeson <> fsvICMSDeson) then
+      AdicionaErro('795-Rejeição: Total do ICMS desonerado difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vBCST <> fsvBCST) then
+      AdicionaErro('533-Rejeição: Total da BC ICMS-ST difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vST <> fsvST) then
+      AdicionaErro('534-Rejeição: Total do ICMS-ST difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vProd <> fsvProd) then
+      AdicionaErro('564-Rejeição: Total do Produto / Serviço difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vFrete <> fsvFrete) then
+      AdicionaErro('535-Rejeição: Total do Frete difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vSeg <> fsvSeg) then
+      AdicionaErro('536-Rejeição: Total do Seguro difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vDesc <> fsvDesc) then
+      AdicionaErro('537-Rejeição: Total do Desconto difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vII <> fsvII) then
+      AdicionaErro('601-Rejeição: Total do II difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vIPI <> fsvIPI) then
+      AdicionaErro('538-Rejeição: Total do IPI difere do somatório dos itens');
+
+    if (NFe.Total.ICMSTot.vPIS <> fsvPIS) then
+      AdicionaErro('602-Rejeição: Total do PIS difere do somatório dos itens sujeitos ao ICMS');
+
+    if (NFe.Total.ICMSTot.vCOFINS <> fsvCOFINS) then
+      AdicionaErro('603-Rejeição: Total da COFINS difere do somatório dos itens sujeitos ao ICMS');
+
+    if (NFe.Total.ICMSTot.vOutro <> fsvOutro) then
+      AdicionaErro('604-Rejeição: Total do vOutro difere do somatório dos itens');
+
+    if not NFImportacao and
+       (NFe.Total.ICMSTot.vNF <> fsvNF) then
+    begin
+      if (NFe.Total.ICMSTot.vNF <> (fsvNF+fsvICMSDeson)) then
+        AdicionaErro('610-Rejeição: Total da NF difere do somatório dos Valores compõe o valor Total da NF.');
+    end;
+
+    if (NFe.Total.ICMSTot.vTotTrib <> fsvTotTrib) then
+      AdicionaErro('685-Rejeição: Total do Valor Aproximado dos Tributos difere do somatório dos itens');
+
+    if NFe.Ide.modelo = 65 then
+    begin
+      fsvTotPag := 0;
+      for I:=0 to NFe.pag.Count-1 do
+      begin
+        fsvTotPag :=  fsvTotPag + NFe.pag[I].vPag;
+      end;
+
+      if (NFe.Total.ICMSTot.vNF <> fsvTotPag) then
+        AdicionaErro('767-Rejeição: NFC-e com somatório dos pagamentos diferente do total da Nota Fiscal');
+    end;
+
+
+    //TODO: Regrar W01. Total da NF-e / ISSQN
+
   end;
 
   Result := EstaVazio(Erros);

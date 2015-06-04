@@ -451,7 +451,7 @@ begin
       copy(IntToStr(NFe.Emit.EnderEmit.cMun), 1, 2), 0)) then
       AdicionaErro('273-Rejeição: Código Município do Emitente: difere da UF do emitente');
 
-    if not EstaVazio(NFe.Emit.IE) then
+    if EstaVazio(NFe.Emit.IE) then
       AdicionaErro('229-Rejeição: IE do emitente não informada');
 
     if not ValidarIE(NFe.Emit.IE,NFe.Emit.EnderEmit.UF) then
@@ -466,6 +466,7 @@ begin
       AdicionaErro('513-Rejeição: Código Município do Local de Retirada deve ser 9999999 para UF retirada = "EX"');
 
     if (NFe.Retirada.UF <> 'EX') and
+       NaoEstaVazio(NFe.Retirada.xMun) and
        not ValidarMunicipio(NFe.Retirada.cMun) then
       AdicionaErro('276-Rejeição: Código Município do Local de Retirada: dígito inválido');
 
@@ -478,6 +479,7 @@ begin
       AdicionaErro('515-Rejeição: Código Município do Local de Entrega deve ser 9999999 para UF entrega = "EX"');
 
     if (NFe.Entrega.UF <> 'EX') and
+       NaoEstaVazio(NFe.Entrega.xMun) and
        not ValidarMunicipio(NFe.Entrega.cMun) then
       AdicionaErro('278-Rejeição: Código Município do Local de Entrega: dígito inválido');
 

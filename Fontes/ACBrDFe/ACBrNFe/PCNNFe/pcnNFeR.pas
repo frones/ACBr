@@ -302,7 +302,9 @@ begin
      (*E18a*)NFe.Dest.IM := Leitor.rCampo(tcStr, 'IM');
 
     (*E19*)NFe.Dest.Email := Leitor.rCampo(tcStr, 'email');
-  end;
+  end
+  else
+    NFe.Dest.indIEDest := inNaoContribuinte;
 
   (* Grupo da TAG <dest> <EnderDest> *)
   if Leitor.rExtrai(1, 'dest') <> '' then

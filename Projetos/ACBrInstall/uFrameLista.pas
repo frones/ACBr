@@ -58,7 +58,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    synapse_dpk: TCheckBox;
+    ACBr_synapse_dpk: TCheckBox;
     ACBrComum_dpk: TCheckBox;
     ACBrDiversos_dpk: TCheckBox;
     ACBrSerial_dpk: TCheckBox;
@@ -356,7 +356,7 @@ procedure TframePacotes.VerificarCheckboxes(Sender: TObject);
 begin
   // pacotes base não podem ser desmarcados
   // instalação mínima do ACBr
-  synapse_dpk.Checked      := True;
+  ACBr_synapse_dpk.Checked      := True;
   ACBrComum_dpk.Checked    := True;
   ACBrDiversos_dpk.Checked := True;
 

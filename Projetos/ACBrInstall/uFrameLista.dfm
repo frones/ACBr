@@ -212,7 +212,7 @@ object framePacotes: TframePacotes
       OnClick = btnPacotesMarcarTodosClick
     end
   end
-  object synapse_dpk: TCheckBox
+  object ACBr_synapse_dpk: TCheckBox
     AlignWithMargins = True
     Left = 34
     Top = 16

@@ -340,6 +340,12 @@ var
 begin
   fRetornoStr := AValue;
 
+  fnumeroSessao    := 0;
+  fcodigoDeRetorno := 0;
+  fmensagemRetorno := '';
+  fcodigoSEFAZ := 0;
+  fmensagemSEFAZ := '';
+
   Clear;
   fRetornoLst.Delimiter := '|';
   {$IFDEF FPC}

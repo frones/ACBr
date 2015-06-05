@@ -359,7 +359,10 @@ begin
   for i:= Low(DFeUF) to High(DFeUF) do
   begin
     if DFeUF[I] = UF then
+    begin
       Result := DFeUFCodigo[I];
+      exit;
+    end;
   end;
 end;
 

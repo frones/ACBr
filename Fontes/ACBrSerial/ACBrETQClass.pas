@@ -48,7 +48,7 @@
 unit ACBrETQClass;
 
 interface
-uses ACBrDevice, Classes;
+uses ACBrDevice, ACBrBase, Classes;
 
 type
 
@@ -60,6 +60,8 @@ type
 
 TACBrETQClass = class
   private
+    fpArqLOG: String;
+    fpOnGravarLog: TACBrGravarLog;
     FTemperatura: Integer;
     FAvanco: Integer;
     FUnidade: TACBrETQUnidade;
@@ -103,12 +105,16 @@ TACBrETQClass = class
     property LimparMemoria: Boolean read fpLimparMemoria write fpLimparMemoria ;
     property AdicionarComandoP: Boolean read FpAdicionarComandoP write SetAdicionarComandoP;
 
+    property ArqLOG: String read fpArqLOG write fpArqLOG;
+    property OnGravarLog: TACBrGravarLog read fpOnGravarLog write fpOnGravarLog;
+
     constructor Create(AOwner: TComponent);
     destructor Destroy  ; override;
 
     procedure Ativar ; virtual;
     procedure Desativar ; virtual;
 
+    procedure GravaLog(AString: AnsiString; Traduz :Boolean = False);
     function ConverterUnidade( UnidadeSaida: TACBrETQUnidade;
        AValue : Integer) : Integer ; virtual;
 
@@ -182,6 +188,13 @@ procedure TACBrETQClass.Ativar;
 begin
   if fpAtivo then exit ;
 
+  GravaLog( sLineBreak + StringOfChar('-',80)+ sLineBreak +
+            'ATIVAR - '+FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now)+
+            ' - Modelo: '+ModeloStr+
+            ' - Porta: ' +fpDevice.Porta+
+            ' - Device: '+fpDevice.DeviceToString(False) + sLineBreak +
+            StringOfChar('-',80) + sLineBreak );
+
   if fpDevice.Porta <> '' then
      fpDevice.Ativar ;
 
@@ -198,6 +211,22 @@ begin
      fpDevice.Desativar ;
 
   fpAtivo := false ;
+end;
+
+procedure TACBrETQClass.GravaLog(AString: AnsiString; Traduz: Boolean);
+var
+  Tratado: Boolean;
+begin
+  Tratado := False;
+
+  if Traduz then
+    AString := TranslateUnprintable(AString);
+
+  if Assigned( fpOnGravarLog ) then
+    fpOnGravarLog( AString, Tratado);
+
+  if not Tratado then
+    WriteLog(fpArqLOG, '-- '+FormatDateTime('dd/mm hh:nn:ss:zzz',now)+' '+ AString);
 end;
 
 function TACBrETQClass.ConverterUnidade( UnidadeSaida : TACBrETQUnidade;
@@ -327,6 +356,8 @@ end;
 
 procedure TACBrETQClass.EnviarImpressao;
 begin
+  GravaLog(ListaCmd.Text, True);
+
   fpDevice.EnviaString(ListaCmd.Text);
 end;
 

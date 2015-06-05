@@ -68,9 +68,13 @@ TACBrETQ = class( TACBrComponent )
     fsModelo : TACBrETQModelo;
     fsETQ    : TACBrETQClass ;
 
+    function GetArqLOG: String;
     function GetLimparMemoria : Boolean;
+    function GetOnGravarLog: TACBrGravarLog;
+    procedure SetArqLOG(AValue: String);
     procedure SetLimparMemoria(const AValue : Boolean);
     procedure SetModelo(const Value: TACBrETQModelo);
+    procedure SetOnGravarLog(AValue: TACBrGravarLog);
     procedure SetPorta(const Value: String);
     procedure SetAtivo(const Value: Boolean);
 
@@ -140,6 +144,9 @@ TACBrETQ = class( TACBrComponent )
    property AdicionarComandoP: Boolean read GetAdicionarComandoP write SetAdicionarComandoP
      default False;
 
+   property ArqLOG: String read GetArqLOG write SetArqLOG;
+   property OnGravarLog: TACBrGravarLog read GetOnGravarLog write SetOnGravarLog;
+
     { Instancia do Componente ACBrDevice, será passada para fsETQ.create }
     property Device : TACBrDevice read fsDevice ;
   end ;
@@ -183,17 +190,22 @@ begin
 end;
 
 procedure TACBrETQ.SetModelo(const Value: TACBrETQModelo);
-  Var wTemperatura: Integer ;
-      wAvanco: Integer ;
-      wUnidade: TACBrETQUnidade;
-      wDPI: TACBrETQDPI;
+var
+  wTemperatura: Integer;
+  wAvanco: Integer;
+  wUnidade: TACBrETQUnidade;
+  wDPI: TACBrETQDPI;
+  wOnGravarLog: TACBrGravarLog;
+  wArqLog: String;
 begin
-  if fsModelo = Value then exit ;
+  if fsModelo = Value then Exit;
 
-  wTemperatura := Temperatura ;
-  wAvanco      := Avanco ;
+  wTemperatura := Temperatura;
+  wAvanco      := Avanco;
   wUnidade     := Unidade;
   wDPI         := DPI;
+  wOnGravarLog := OnGravarLog;
+  wArqLog      := ArqLOG;
 
   if fsAtivo then
      raise Exception.Create(ACBrStr('Não é possível mudar o Modelo com ACBrETQ Ativo'));
@@ -213,8 +225,15 @@ begin
   Avanco      := wAvanco ;
   Unidade     := wUnidade;
   DPI         := wDPI;
+  OnGravarLog := wOnGravarLog;
+  ArqLOG      := wArqLog;
 
   fsModelo := Value;
+end;
+
+procedure TACBrETQ.SetOnGravarLog(AValue: TACBrGravarLog);
+begin
+  fsETQ.OnGravarLog := AValue;
 end;
 
 procedure TACBrETQ.SetAtivo(const Value: Boolean);
@@ -260,6 +279,21 @@ end;
 function TACBrETQ.GetLimparMemoria : Boolean;
 begin
    Result := fsETQ.LimparMemoria;
+end;
+
+function TACBrETQ.GetArqLOG: String;
+begin
+  Result := fsETQ.ArqLOG;
+end;
+
+function TACBrETQ.GetOnGravarLog: TACBrGravarLog;
+begin
+  Result := fsETQ.OnGravarLog;
+end;
+
+procedure TACBrETQ.SetArqLOG(AValue: String);
+begin
+  fsETQ.ArqLOG := AValue;
 end;
 
 function TACBrETQ.GetEtqFinalizada: Boolean;

@@ -643,7 +643,7 @@ begin
   FPosPrinter.Buffer.Add( ACBrStr( PadRight('Orgão:', TAMCOLDESCR)) +
      IntToStr(FpEvento.Evento[0].InfEvento.cOrgao) );
   FPosPrinter.Buffer.Add( ACBrStr( PadRight('Ambiente:', TAMCOLDESCR) +
-     IfThen(FpEvento.Evento[0].InfEvento.tpAmb = taProducao,
+     IfThen(FpEvento.Evento[0].RetInfEvento.tpAmb = taProducao,
             'PRODUCAO', 'HOMOLOGAÇÃO - SEM VALOR FISCAL') ));
   FPosPrinter.Buffer.Add( ACBrStr( PadRight('Emissão:', TAMCOLDESCR)) +
      DateTimeToStr(FpEvento.Evento[0].InfEvento.dhEvento) );

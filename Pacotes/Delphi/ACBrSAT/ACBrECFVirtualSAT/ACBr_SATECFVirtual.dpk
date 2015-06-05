@@ -22,7 +22,7 @@ package ACBr_SATECFVirtual;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'Implementação de ECF Virtual para o SAT. Permite que aplicações que usem o componente ACBrECF, comandem um SAT como se fosse um ECF'}
+{$DESCRIPTION 'ACBr - Implementação de ECF Virtual para o SAT. Permite usar ACBrECF para comandar o SAT como se fosse um ECF'}
 {$IMPLICITBUILD ON}
 
 requires

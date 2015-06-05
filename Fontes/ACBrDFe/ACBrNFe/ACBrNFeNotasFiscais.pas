@@ -470,6 +470,8 @@ begin
        not ValidarMunicipio(NFe.Retirada.cMun) then
       AdicionaErro('276-Rejeição: Código Município do Local de Retirada: dígito inválido');
 
+    if NaoEstaVazio(NFe.Retirada.UF) and
+     (NFe.Retirada.cMun > 0)then
     if (UFparaCodigo(NFe.Retirada.UF) <> StrToIntDef(
       copy(IntToStr(NFe.Retirada.cMun), 1, 2), 0)) then
       AdicionaErro('277-Rejeição: Código Município do Local de Retirada: difere da UF do Local de Retirada');
@@ -483,6 +485,8 @@ begin
        not ValidarMunicipio(NFe.Entrega.cMun) then
       AdicionaErro('278-Rejeição: Código Município do Local de Entrega: dígito inválido');
 
+    if NaoEstaVazio(NFe.Entrega.UF)and
+      (NFe.Entrega.cMun > 0) then
     if (UFparaCodigo(NFe.Entrega.UF) <> StrToIntDef(
       copy(IntToStr(NFe.Entrega.cMun), 1, 2), 0)) then
       AdicionaErro('279-Rejeição: Código Município do Local de Entrega: difere da UF do Local de Entrega');
@@ -682,7 +686,7 @@ begin
       if (NFe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
 
-      if (NFe.Dest.CNPJCPF <> '') or
+      if (NFe.Dest.CNPJCPF = '') or
          (NFe.Dest.idEstrangeiro <> '') then
         AdicionaErro('719-Rejeição: NF-e sem a identificação do destinatário');
 

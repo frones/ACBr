@@ -167,7 +167,7 @@ begin
   TagEndDocElement := '</' + docElement + '>';
   I := pos('<signature', lowercase(AXml));
   if I = 0 then
-    I := pos(TagEndDocElement, AXml);
+    I := PosLast(TagEndDocElement, AXml);
 
   if I = 0 then
     raise EACBrDFeException.Create('Não encontrei final do elemento: ' +

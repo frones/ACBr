@@ -382,7 +382,7 @@ begin
     URI := ExtraiURI(AXml);
 
     TagEndDocElement := '</' + docElement + '>';
-    AXml := copy(AXml, 1, pos(TagEndDocElement, AXml) - 1);
+    AXml := copy(AXml, 1, PosLast(TagEndDocElement, AXml) - 1);
 
     AXml := AXml + SignatureElement(URI, False) + TagEndDocElement;
   end;

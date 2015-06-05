@@ -263,8 +263,7 @@ procedure NotaFiscal.Validar;
 var
   Erro, AXML: String;
   NotaEhValida: Boolean;
-  ALayout: TLayOut;
-  VersaoStr: String;
+  ALayout: TLayOutNFSe;
 begin
   AXML := FXMLAssinado;
 
@@ -282,8 +281,7 @@ begin
     else
       ALayout := LayNFSeRetRecepcao;
   *)
-    VersaoStr := FloatToString( 1.00 {FNFSe.infNFSe.Versao}, '.', '0.00');
-    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VersaoStr), Erro);
+    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, 1.00 {FNFSe.infNFSe.Versao}), Erro);
 
     if not NotaEhValida then
     begin

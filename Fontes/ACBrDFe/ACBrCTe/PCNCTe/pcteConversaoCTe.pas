@@ -61,7 +61,8 @@ type
                 LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
                 LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC);
 
-  TSchemaCTe = ( schErro, schCTe, schInutCTe, schEventoCTe,
+  TSchemaCTe = ( schErro, schCTe, schcancCTe, schInutCTe, schEventoCTe,
+                 schconsReciCTe, schconsSitCTe, schconsStatServ, schconsCad,
                  schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe );
@@ -114,6 +115,8 @@ const
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
+
+function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;
 
 function SchemaCTeToStr(const t: TSchemaCTe): String;
 function StrToSchemaCTe(out ok: Boolean; const s: String): TSchemaCTe;
@@ -222,6 +225,22 @@ begin
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
       LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC]);
+end;
+
+function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;
+begin
+  case t of
+    LayCTeRecepcao:       Result := schCTe;
+    LayCTeRetRecepcao:    Result := schconsReciCTe;
+    LayCTeCancelamento:   Result := schcancCTe;
+    LayCTeInutilizacao:   Result := schInutCTe;
+    LayCTeConsulta:       Result := schconsSitCTe;
+    LayCTeStatusServico:  Result := schconsStatServ;
+    LayCTeCadastro:       Result := schconsCad;
+    LayCTeEvento:         Result := schEventoCTe;
+  else
+    Result := schErro;
+  end;
 end;
 
 function SchemaCTeToStr(const t: TSchemaCTe): String;

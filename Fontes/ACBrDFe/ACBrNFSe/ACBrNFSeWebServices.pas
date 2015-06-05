@@ -59,7 +59,7 @@ type
   private
   protected
     FPStatus: TStatusACBrNFSe;
-    FPLayout: TLayOut;
+    FPLayout: TLayOutNFSe;
     FPConfiguracoesNFSe: TConfiguracoesNFSe;
 
     procedure ConfigurarSoapDEPC;
@@ -75,7 +75,7 @@ type
     constructor Create(AOwner: TACBrDFe); override;
 
     property Status: TStatusACBrNFSe read FPStatus;
-    property Layout: TLayOut read FPLayout;
+    property Layout: TLayOutNFSe read FPLayout;
   end;
 
   { TNFSeEnviarLoteRPS }

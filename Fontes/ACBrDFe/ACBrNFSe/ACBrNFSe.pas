@@ -121,14 +121,14 @@ type
     function cStatConfirmada(AValue: integer): Boolean;
     function cStatProcessado(AValue: integer): Boolean;
 
-    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    procedure LerServicoDeParams(LayOutServico: TLayOutNFSe; var Versao: Double;
       var URL: String); reintroduce; overload;
-    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
+    function LerVersaoDeParams(LayOutServico: TLayOutNFSe): String; reintroduce; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaNFSe;
-    function IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaNFSe;
-    function GerarNomeArqSchema(const ALayOut: TLayOut;
-      VersaoServico: String): String;
+    function GerarNomeArqSchema(const ALayOut: TLayOutNFSe;
+      VersaoServico: Double): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
@@ -277,38 +277,23 @@ begin
   end;
 end;
 
-function TACBrNFSe.IdentificaSchemaLayout(const ALayOut: TLayOut): TSchemaNFSe;
+function TACBrNFSe.GerarNomeArqSchema(const ALayOut: TLayOutNFSe;
+  VersaoServico: Double): String;
+var
+  NomeServico, NomeSchema, ArqSchema: String;
+  Versao: Double;
 begin
-  case ALayOut of
-    LayNfseRecepcaoLote:
-      Result := schNFSe;
-    //LayNFSeRetRecepcao,
-    //LayNFSeCancelamento,
-    //LayNFSeInutilizacao,
-    //LayNFSeConsulta,
-    //LayNFSeStatusServico,
-    //LayNFSeCadastro,
-    //LayNFSeCCe,
-    //LayNFSeConsNFSeDest,
-    //LayNFSeDownloadNFSe,
-      //LayNFSeRetAutorizacao,
-      //LayAdministrarCSCNFCe,
-      //LayDistDFeIn
-    else
-      Result := schErro;
+  // Procura por Versão na pasta de Schemas //
+  NomeServico := LayOutToServico(ALayOut);
+  NomeSchema := NomeServicoToNomeSchema(NomeServico);
+  ArqSchema := '';
+  if NaoEstaVazio(NomeSchema) then
+  begin
+    Versao := VersaoServico;
+    AchaArquivoSchema( NomeSchema, Versao, ArqSchema );
   end;
 
-end;
-
-function TACBrNFSe.GerarNomeArqSchema(const ALayOut: TLayOut;
-  VersaoServico: String): String;
-begin
-  if EstaVazio(VersaoServico) then
-    VersaoServico := LerVersaoDeParams(ALayOut);
-
-  Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
-            SchemaNFSeToStr(IdentificaSchemaLayout(ALayOut)) + '_v' +
-            VersaoServico + '.xsd';
+  Result := ArqSchema;
 end;
 
 function TACBrNFSe.GetConfiguracoes: TConfiguracoesNFSe;
@@ -321,7 +306,7 @@ begin
   FPConfiguracoes := AValue;
 end;
 
-function TACBrNFSe.LerVersaoDeParams(LayOutServico: TLayOut): String;
+function TACBrNFSe.LerVersaoDeParams(LayOutServico: TLayOutNFSe): String;
 var
   Versao: Double;
 begin
@@ -332,7 +317,19 @@ begin
   Result := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TACBrNFSe.LerServicoDeParams(LayOutServico: TLayOut;
+function TACBrNFSe.NomeServicoToNomeSchema(const NomeServico: String): String;
+Var
+  ok: Boolean;
+  ALayout: TLayOutNFSe;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaNFSeToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
+end;
+
+procedure TACBrNFSe.LerServicoDeParams(LayOutServico: TLayOutNFSe;
   var Versao: Double; var URL: String);
 begin
   Versao := VersaoNFSeToDbl( ve100 {Configuracoes.Geral.VersaoDF});

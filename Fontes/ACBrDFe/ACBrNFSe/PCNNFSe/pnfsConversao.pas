@@ -45,11 +45,11 @@ type
                      stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
                      stNFSeSubstituicao, stNFSeEnvioWebService);
 
-  TLayOut = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
-             LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
-             LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse);
+  TLayOutNFSe = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
+                 LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
+                 LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse);
 
-  TSchemaNFSe = (schErro, schNFSe, schCancNFSe);
+  TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe);
 
   TVersaoNFSe = (ve100, ve200);
 
@@ -187,8 +187,10 @@ function VersaoXML(AXML: String): String;
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
                                ANumero:Integer; AModelo: Integer = 56): String;
 
-function LayOutToServico(const t: TLayOut): String;
-function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
+function LayOutToServico(const t: TLayOutNFSe): String;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutNFSe;
+
+function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
 
 function SchemaNFSeToStr(const t: TSchemaNFSe): String;
 function StrToSchemaNFSe(out ok: Boolean; const s: String): TSchemaNFSe;
@@ -911,8 +913,8 @@ begin
   5100201, // Água Boa/MT
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
-  5103502  // Diamantino/MT
-  4216602: // São José/SC
+  5103502, // Diamantino/MT
+  4216602  // São José/SC
 
          : Provedor := 'Betha';
 
@@ -18778,7 +18780,7 @@ begin
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
 end;
 
-function LayOutToServico(const t: TLayOut): String;
+function LayOutToServico(const t: TLayOutNFSe): String;
 begin
   Result := EnumeradoToStr(t,
     ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
@@ -18789,7 +18791,7 @@ begin
       LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
 end;
 
-function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutNFSe;
 begin
   Result := StrToEnumerado(ok, s,
   ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
@@ -18798,6 +18800,23 @@ begin
   [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
     LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
+end;
+
+function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
+begin
+  case t of
+    LayNfseRecepcaoLote:         Result := schNFSe;
+    LayNfseConsultaLote:         Result := schConsNFSe;
+    LayNfseConsultaNfseRps:      Result := schConsNFSe;
+    LayNfseConsultaSitLoteRps:   Result := schConsNFSe;
+    LayNfseConsultaNfse:         Result := schConsNFSe;
+    LayNfseCancelaNfse:          Result := schCancNFSe;
+    LayNfseGerar:                Result := schNFSe;
+    LayNfseRecepcaoLoteSincrono: Result := schNFSe;
+    LayNfseSubstituiNfse:        Result := schSubNFSe;
+  else
+    Result := schErro;
+  end;
 end;
 
 function SchemaNFSeToStr(const t: TSchemaNFSe): String;

@@ -52,6 +52,7 @@ type
                      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc);
 
   TSchemaMDFe     = (schErro, schMDFe, schEventoMDFe,
+                     schconsReciMDFe, schconsSitMDFe, schconsStatServ,
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe);
@@ -146,6 +147,8 @@ function EnumeradoToStr(const t: variant; const AString:
 function TpEmitenteToStr(const t: TTpEmitenteMDFe): String;
 function StrToTpEmitente(var ok: Boolean; const s: String): TTpEmitenteMDFe;
 
+function LayOutToSchema(const t: TLayOutMDFe): TSchemaMDFe;
+
 function ModalToStr(const t: TModalMDFe): String;
 function StrToModal(var ok: Boolean; const s: String): TModalMDFe;
 
@@ -208,6 +211,19 @@ begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [teTransportadora, teTranspCargaPropria]);
+end;
+
+function LayOutToSchema(const t: TLayOutMDFe): TSchemaMDFe;
+begin
+  case t of
+    LayMDFeRecepcao:       Result := schMDFe;
+    LayMDFeRetRecepcao:    Result := schconsReciMDFe;
+    LayMDFeConsulta:       Result := schconsSitMDFe;
+    LayMDFeStatusServico:  Result := schconsStatServ;
+    LayMDFeEvento:         Result := schEventoMDFe;
+  else
+    Result := schErro;
+  end;
 end;
 
 // Modal************************************************************************

@@ -254,10 +254,9 @@ end;
 
 procedure Manifesto.Validar;
 var
-  Erro, AXML: String;
+  Erro, AXML, AXMLModal: String;
   MDFeEhValida: Boolean;
   ALayout: TLayOutMDFe;
-  VersaoStr: String;
 begin
   AXML := FXMLAssinado;
 
@@ -267,12 +266,36 @@ begin
     AXML := FXMLAssinado;
   end;
 
+  AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
+  case TACBrMDFe(TManifestos(Collection).ACBrMDFe).IdentificaSchemaModal(AXML) of
+   schmdfeModalAereo: begin
+                        AXMLModal := '<aereo xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                                       AXMLModal +
+                                     '</aereo>';
+                      end;
+   schmdfeModalAquaviario: begin
+                             AXMLModal := '<aquav xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                                            AXMLModal +
+                                          '</aquav>';
+                           end;
+   schmdfeModalFerroviario: begin
+                              AXMLModal := '<ferrov xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                                             AXMLModal +
+                                           '</ferrov>';
+                            end;
+   schmdfeModalRodoviario: begin
+                             AXMLModal := '<rodo xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                                            AXMLModal +
+                                          '</rodo>';
+                           end;
+  end;
+
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     ALayout := LayMDFeRetRecepcao;
 
-    VersaoStr := FloatToString( FMDFe.infMDFe.Versao, '.', '0.00');
-    MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VersaoStr), Erro);
+    MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro) and
+                    SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
 
     if not MDFeEhValida then
     begin

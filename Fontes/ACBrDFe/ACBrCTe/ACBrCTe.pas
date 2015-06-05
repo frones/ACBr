@@ -106,17 +106,18 @@ type
     function Consultar: Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
 
-    procedure LerServicoDeParams(LayOutServico: TLayOutCTe; var Versao: Double; var URL: String); reintroduce; overload;
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    procedure LerServicoDeParams(LayOutServico: TLayOutCTe; var Versao: Double;
+      var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutCTe): String; reintroduce; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaCTe;
     function IdentificaSchemaModal(const AXML: String): TSchemaCTe;
     function IdentificaSchemaEvento(const AXML: String): TSchemaCTe;
-    function IdentificaSchemaLayOut(const ALayOut: TLayOutCTe): TSchemaCTe;
 
-    function GerarNomeArqSchema(const ALayOut: TLayOutCTe; VersaoServico: String): String;
-    function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: String): String;
-    function GerarNomeArqSchemaEvento(const AXML: String; VersaoServico: String): String;
+    function GerarNomeArqSchema(const ALayOut: TLayOutCTe; VersaoServico: Double): String;
+    function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: Double): String;
+    function GerarNomeArqSchemaEvento(const AXML: String; VersaoServico: Double): String;
 
     function GerarChaveContingencia(FCTe: TCTe): String;
 
@@ -337,45 +338,45 @@ end;
 function TACBrCTe.IdentificaSchemaEvento(const AXML: String): TSchemaCTe;
 begin
   // Implementar
-end;
-
-function TACBrCTe.IdentificaSchemaLayout(const ALayOut: TLayOutCTe): TSchemaCTe;
-begin
-  case ALayOut of
-    LayCTeRecepcao:     Result := schCTe;
-    LayCTeInutilizacao: Result := schInutCTe;
-    LayCTeEvento:       Result := schEventoCTe;
-    LayCTeEventoEPEC:   Result := schEventoCTe;
-    else                Result := schErro;
-  end;
+  Result := schErro;
 end;
 
 function TACBrCTe.GerarNomeArqSchema(const ALayOut: TLayOutCTe;
-  VersaoServico: String): String;
+  VersaoServico: Double): String;
+var
+  NomeServico, NomeSchema, ArqSchema: String;
+  Versao: Double;
 begin
-  if EstaVazio(VersaoServico) then
-    VersaoServico := LerVersaoDeParams(ALayOut);
+  // Procura por Versão na pasta de Schemas //
+  NomeServico := LayOutToServico(ALayOut);
+  NomeSchema := NomeServicoToNomeSchema(NomeServico);
+  ArqSchema := '';
+  if NaoEstaVazio(NomeSchema) then
+  begin
+    Versao := VersaoServico;
+    AchaArquivoSchema( NomeSchema, Versao, ArqSchema );
+  end;
 
-  Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
-            SchemaCTeToStr(IdentificaSchemaLayout(ALayOut)) + '_v' +
-            VersaoServico + '.xsd';
+  Result := ArqSchema;
 end;
 
 function TACBrCTe.GerarNomeArqSchemaModal(const AXML: String;
-  VersaoServico: String): String;
+  VersaoServico: Double): String;
 begin
-  if EstaVazio(VersaoServico) then
+//  if EstaVazio(VersaoServico) then
+  if VersaoServico = 0.0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
               SchemaCTeToStr(IdentificaSchemaModal(AXML)) + '_v' +
-              VersaoServico + '.xsd';
+              FormatFloat('0.00', VersaoServico) + '.xsd';
 end;
 
 function TACBrCTe.GerarNomeArqSchemaEvento(const AXML: String;
-  VersaoServico: String): String;
+  VersaoServico: Double): String;
 begin
- // Implementar
+  // Implementar
+  Result := '';
 end;
 
 function TACBrCTe.GerarChaveContingencia(FCTe:TCTe): String;
@@ -531,6 +532,18 @@ begin
     VersaoCTeToDbl(Configuracoes.Geral.VersaoDF));
 
   Result := FloatToString(Versao, '.', '0.00');
+end;
+
+function TACBrCTe.NomeServicoToNomeSchema(const NomeServico: String): String;
+Var
+  ok: Boolean;
+  ALayout: TLayOutCTe;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaCTeToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
 end;
 
 procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOutCTe;

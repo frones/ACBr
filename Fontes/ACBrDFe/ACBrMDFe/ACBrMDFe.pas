@@ -96,13 +96,19 @@ type
     function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOutMDFe; var Versao: Double;
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutMDFe): String; reintroduce; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaMDFe;
-    function IdentificaSchemaLayout(const ALayOut: TLayOutMDFe): TSchemaMDFe;
-    function GerarNomeArqSchema(const ALayOut: TLayOutMDFe; VersaoServico: String): String;
+    function IdentificaSchemaModal(const AXML: String): TSchemaMDFe;
+    function IdentificaSchemaEvento(const AXML: String): TSchemaMDFe;
+
+    function GerarNomeArqSchema(const ALayOut: TLayOutMDFe; VersaoServico: Double): String;
+    function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: Double): String;
+    function GerarNomeArqSchemaEvento(const AXML: String; VersaoServico: Double): String;
+
     function GerarChaveContingencia(FMDFe: TMDFe): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
@@ -265,27 +271,78 @@ begin
   end;
 end;
 
-function TACBrMDFe.IdentificaSchemaLayout(const ALayOut: TLayOutMDFe): TSchemaMDFe;
+function TACBrMDFe.IdentificaSchemaModal(const AXML: String): TSchemaMDFe;
+var
+  XML: String;
+  I: Integer;
 begin
-  case ALayOut of
-    LayMDFeRecepcao:
-      Result := schMDFe;
-    LayMDFeEvento:
-      Result := schevEncMDFe;
-    else
-      Result := schMDFe;
+  XML := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
+
+  Result := schmdfeModalRodoviario;
+
+  I := pos( '<rodo>', XML);
+  if I = 0 then
+  begin
+    I := pos( '<aereo>', XML);
+    if I> 0 then
+      Result := schmdfeModalAereo
+    else begin
+      I := pos( '<aquav>', XML);
+      if I> 0 then
+        Result := schmdfeModalAquaviario
+      else begin
+        I := pos( '<ferrov>', XML);
+        if I> 0 then
+          Result := schmdfeModalFerroviario
+        else
+          Result := schErro;
+      end;
+    end;
   end;
 end;
 
-function TACBrMDFe.GerarNomeArqSchema(const ALayOut: TLayOutMDFe;
-  VersaoServico: String): String;
+function TACBrMDFe.IdentificaSchemaEvento(const AXML: String): TSchemaMDFe;
 begin
-  if EstaVazio(VersaoServico) then
-    VersaoServico := LerVersaoDeParams(ALayOut);
+  // Implementar
+  Result := schErro;
+end;
 
-  Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
-            SchemaMDFeToStr(IdentificaSchemaLayout(ALayOut)) + '_v' +
-            VersaoServico + '.xsd';
+function TACBrMDFe.GerarNomeArqSchema(const ALayOut: TLayOutMDFe;
+  VersaoServico: Double): String;
+var
+  NomeServico, NomeSchema, ArqSchema: String;
+  Versao: Double;
+begin
+  // Procura por Versão na pasta de Schemas //
+  NomeServico := LayOutToServico(ALayOut);
+  NomeSchema := NomeServicoToNomeSchema(NomeServico);
+  ArqSchema := '';
+  if NaoEstaVazio(NomeSchema) then
+  begin
+    Versao := VersaoServico;
+    AchaArquivoSchema( NomeSchema, Versao, ArqSchema );
+  end;
+
+  Result := ArqSchema;
+end;
+
+function TACBrMDFe.GerarNomeArqSchemaModal(const AXML: String;
+  VersaoServico: Double): String;
+begin
+//  if EstaVazio(VersaoServico) then
+  if VersaoServico = 0.0 then
+    Result := ''
+  else
+    Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
+              SchemaMDFeToStr(IdentificaSchemaModal(AXML)) + '_v' +
+              FormatFloat('0.00', VersaoServico) + '.xsd';
+end;
+
+function TACBrMDFe.GerarNomeArqSchemaEvento(const AXML: String;
+  VersaoServico: Double): String;
+begin
+  // Implementar
+  Result := '';
 end;
 
 function TACBrMDFe.GerarChaveContingencia(FMDFe: TMDFe): String;
@@ -342,6 +399,18 @@ begin
     VersaoMDFeToDbl(Configuracoes.Geral.VersaoDF));
 
   Result := FloatToString(Versao, '.', '0.00');
+end;
+
+function TACBrMDFe.NomeServicoToNomeSchema(const NomeServico: String): String;
+Var
+  ok: Boolean;
+  ALayout: TLayOutMDFe;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaMDFeToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
 end;
 
 procedure TACBrMDFe.LerServicoDeParams(LayOutServico: TLayOutMDFe;

@@ -258,7 +258,6 @@ var
   Erro, AXML, AXMLModal: String;
   CTeEhValido: Boolean;
   ALayout: TLayOutCTe;
-  VersaoStr: String;
 begin
   AXML := FXMLAssinado;
 
@@ -306,13 +305,11 @@ begin
   begin
     ALayout := LayCTeRetRecepcao;
 
-    VersaoStr := FloatToString(FCTe.infCTe.Versao, '.', '0.00');
-
     if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
-      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VersaoStr), Erro) and
-                   SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, VersaoStr), Erro)
+      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro) and
+                     SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro)
     else
-      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VersaoStr), Erro);
+      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
 
     if not CTeEhValido then
     begin

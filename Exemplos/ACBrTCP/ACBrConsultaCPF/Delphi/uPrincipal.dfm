@@ -4,7 +4,7 @@ object frmPrincipal: TfrmPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsDialog
   Caption = 'Consulta CPF (Receita Fazenda)'
-  ClientHeight = 341
+  ClientHeight = 421
   ClientWidth = 645
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,9 +20,9 @@ object frmPrincipal: TfrmPrincipal
   TextHeight = 13
   object Panel2: TPanel
     Left = 0
-    Top = 153
+    Top = 232
     Width = 645
-    Height = 188
+    Height = 189
     Align = alClient
     BevelInner = bvRaised
     BevelOuter = bvLowered
@@ -177,7 +177,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 0
     Width = 645
-    Height = 153
+    Height = 232
     Align = alTop
     BevelInner = bvRaised
     BevelOuter = bvLowered
@@ -197,7 +197,7 @@ object frmPrincipal: TfrmPrincipal
     end
     object Label14: TLabel
       Left = 361
-      Top = 78
+      Top = 142
       Width = 96
       Height = 16
       Caption = 'Digite o Captcha'
@@ -208,9 +208,22 @@ object frmPrincipal: TfrmPrincipal
       Font.Style = []
       ParentFont = False
     end
+    object Label2: TLabel
+      Left = 361
+      Top = 78
+      Width = 170
+      Height = 16
+      Caption = 'Digite a Data de Nascimento:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
     object EditCaptcha: TEdit
       Left = 361
-      Top = 97
+      Top = 161
       Width = 137
       Height = 41
       CharCase = ecUpperCase
@@ -277,12 +290,27 @@ object frmPrincipal: TfrmPrincipal
     end
     object btnConsultar: TButton
       Left = 504
-      Top = 97
+      Top = 161
       Width = 120
       Height = 40
       Caption = 'Consultar'
       TabOrder = 3
       OnClick = btnConsultarClick
+    end
+    object EditDtNasc: TEdit
+      Left = 361
+      Top = 95
+      Width = 264
+      Height = 41
+      TabStop = False
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
     end
   end
   object Timer1: TTimer

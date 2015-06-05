@@ -31,6 +31,8 @@ type
     RzLabel3: TLabel;
     ACBrConsultaCPF1: TACBrConsultaCPF;
     btnConsultar: TButton;
+    Label2: TLabel;
+    EditDtNasc: TEdit;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -51,7 +53,7 @@ procedure TfrmPrincipal.btnConsultarClick(Sender: TObject);
 begin
   if EditCaptcha.Text <> '' then
   begin
-    if ACBrConsultaCPF1.Consulta(EditCNPJ.Text, EditCaptcha.Text) then
+    if ACBrConsultaCPF1.Consulta(EditCNPJ.Text, EditDtNasc.Text, EditCaptcha.Text) then
     begin
       EditRazaoSocial.Text      := ACBrConsultaCPF1.Nome;
       EditSituacao.Text         := ACBrConsultaCPF1.Situacao;

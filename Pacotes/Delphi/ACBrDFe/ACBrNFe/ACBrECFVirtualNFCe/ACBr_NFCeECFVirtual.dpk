@@ -22,7 +22,7 @@ package ACBr_NFCeECFVirtual;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'Implementação de ECF Virtual para a NFCe. Permite que aplicações que usem o componente ACBrECF, emitam NFCe como se fosse um ECF'}
+{$DESCRIPTION 'ACBr - Implementação ECF Virtual NFCe. Permite usar ACBrECF para emitir NFCe como se fosse um ECF'}
 {$IMPLICITBUILD ON}
 
 requires

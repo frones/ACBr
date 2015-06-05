@@ -686,8 +686,8 @@ begin
       if (NFe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
 
-      if (NFe.Dest.CNPJCPF = '') or
-         (NFe.Dest.idEstrangeiro <> '') then
+      if (NFe.Dest.CNPJCPF = '') and 
+         (NFe.Dest.idEstrangeiro = '') then
         AdicionaErro('719-Rejeição: NF-e sem a identificação do destinatário');
 
       if (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) <= 11) and

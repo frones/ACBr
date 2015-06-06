@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/06/2015
+-- ACBrSMS --
+[+] Adicionado método para apagar mensagens
+    http://www.projetoacbr.com.br/forum/index.php?/topic/22003-acbrsms-apagar-mensagem/#entry141709
+
 Data: 03/06/2015
 -- ACBrETQ -- (por: DSA e Elias)
 [*] Refactoring em todas as classes para simplificação de código

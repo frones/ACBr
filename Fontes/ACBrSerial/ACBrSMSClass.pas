@@ -51,6 +51,7 @@ const
   FALHA_ENVIAR_MENSAGEM = 'Não foi possível enviar a mensagem de texto.';
   FALHA_INDICE_MENSAGEM = 'Indice retornado inválido, mensagem não foi enviada.';
   FALHA_LEITURA_MENSAGEM = 'Não foi possível ler as mensagens do SimCard.';
+  FALHA_APAGAR_MENSAGEM = 'Não foi possível apagar a mensagem de texto.';
 
 type
   EACBrSMSException = class(Exception);
@@ -120,6 +121,7 @@ type
     procedure TrocarBandeja(const ASimCard: TACBrSMSSimCard); virtual;
     procedure EnviarSMS(const ATelefone, AMensagem: String;
       var AIndice: String); virtual;
+    procedure ApagarSMS(const ANumeroMensagem: String); virtual;
     procedure ListarMensagens(const AFiltro: TACBrSMSFiltro;
       const APath: String); virtual;
 
@@ -491,6 +493,16 @@ end;
 procedure TACBrSMSClass.TrocarBandeja(const ASimCard: TACBrSMSSimCard);
 begin
   raise EACBrSMSException.Create('Dispositivo não possui suporte para a troca de bandejas SimCard.');
+end;
+
+procedure TACBrSMSClass.ApagarSMS(const ANumeroMensagem: String);
+var
+  Cmd: String;
+begin
+  Cmd := 'AT+CMGD=' + ANumeroMensagem;
+  Self.EnviarComando(Cmd);
+  if not Self.ATResult then
+    raise EACBrSMSException.Create(FALHA_APAGAR_MENSAGEM + sLineBreak + fpUltimaResposta);
 end;
 
 end.

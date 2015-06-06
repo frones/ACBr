@@ -48,6 +48,20 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 02/06/2015 ver. 0.0.132a
+-- ACBrBancoCaixa --
+[*]Ajuste leitura do campo SeuNumero retorno CNAB240. (Juliana Tamizou)
+
+-- ACBrBancoDoBrasil --
+[-]Ajuste conta remessa CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21762-boleto-corre%C3%A7%C3%A3o-de-fontes-banco-do-brasil/
+
+
+-- ACBrBoletoFCFortes --
+[*] Ajuste para imprimir 3 carnes por página.
+    (Juliana Tamizou)
+
+
 Data: 02/06/2015 ver. 0.0.131a
 -- ACBrBancoCaixa --
 [-]Ajuste retorno CNAB240. (Jacinto Junior)

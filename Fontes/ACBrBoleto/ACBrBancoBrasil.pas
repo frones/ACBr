@@ -671,7 +671,7 @@ begin
       
      TamConvenioMaior6:= Length(trim(ACBrBoleto.Cedente.Convenio)) > 6;
      aAgencia         := PadLeft(ACBrBoleto.Cedente.Agencia, 4, '0');
-     aConta           := PadLeft(ACBrBoleto.Cedente.Conta, 8, '0');
+     aConta           := RightStr(ACBrBoleto.Cedente.Conta, 8);
      aModalidade      := PadLeft(trim(ACBrBoleto.Cedente.Modalidade), 3, '0');
 
      {Pegando Código da Ocorrencia}

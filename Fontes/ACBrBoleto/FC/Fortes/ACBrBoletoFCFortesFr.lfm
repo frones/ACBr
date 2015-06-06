@@ -1992,7 +1992,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 38
         Height = 15
         Top = 84
-        Width = 106
+        Width = 124
         Caption = 'Endereco Beneficiario'
         Font.Color = clBlack
         Font.Height = -12
@@ -3342,7 +3342,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 37
         Height = 15
         Top = 99
-        Width = 106
+        Width = 124
         Caption = 'Endereco Beneficiario'
         Font.Color = clBlack
         Font.Height = -12
@@ -3402,7 +3402,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 824
+    Left = 720
     Height = 1123
     Top = 64
     Width = 794
@@ -3423,7 +3423,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Height = 371
+      Height = 365
       Top = 15
       Width = 745
       RealBounds.Left = 0
@@ -3981,7 +3981,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 571
         Height = 10
         Top = 229
-        Width = 82
+        Width = 86
         Caption = 'CPF / CNPJ do Pagador'
         Font.Color = clBlack
         Font.Height = -8
@@ -4348,7 +4348,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 10
         Top = 256
-        Width = 27
+        Width = 31
         Caption = 'Pagador'
         Font.Color = clBlack
         Font.Height = -8
@@ -4363,7 +4363,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 0
         Height = 10
         Top = 318
-        Width = 63
+        Width = 67
         Caption = 'Recibo do Pagador'
         Font.Color = clBlack
         Font.Height = -8

@@ -3,19 +3,19 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFe_DanfeESCPOS"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe;..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
-          <MsgFileName Value=""/>
+          <IgnoredMessages idx5024="True"/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - DANFe para NFC-e Impressora Serial - (http://www.projetoacbr.com.br/)"/>
@@ -27,7 +27,6 @@
         <UnitName Value="ACBrNFeDANFeESCPOS"/>
       </Item1>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBr_NFe"/>

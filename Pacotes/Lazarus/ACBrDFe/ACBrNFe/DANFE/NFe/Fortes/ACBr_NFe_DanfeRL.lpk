@@ -3,19 +3,19 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFe_DanfeRL"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\;..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
-          <MsgFileName Value=""/>
+          <IgnoredMessages idx5024="True"/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - DANFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
@@ -55,7 +55,6 @@
         <UnitName Value="ACBrNFeDANFeRLSimplificado"/>
       </Item8>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBr_NFe"/>

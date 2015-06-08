@@ -754,6 +754,7 @@ begin
   CheckEquals( '8', EAN13_DV('123456789012'));
   CheckEquals( '5', EAN13_DV('789835741001'));
 
+  CheckTrue( EAN13Valido('2004700001341') );
   CheckTrue( EAN13Valido('1234567890128') );
   CheckTrue( EAN13Valido('7898357410015') );
 end;

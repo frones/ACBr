@@ -99,9 +99,6 @@ type
 
 procedure Register ;
 
-{$IFDEF  DELPHI9_UP}
-	{$R ACBr_Comum.res}
-{$ENDIF}
 implementation
 
 Uses ACBrUtil, ACBrAAC ;

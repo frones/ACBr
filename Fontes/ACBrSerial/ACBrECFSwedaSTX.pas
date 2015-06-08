@@ -543,12 +543,16 @@ begin
     begin
       if PediuStatus then
       begin
-        if Length(fpRespostaComando) >= 12 then
-          BS1 := Ord(copy(fpRespostaComando,12,1)[1])
-        else
+        try
+          BS1 := Ord(fpRespostaComando[12]);
+        except
           BS1 := 0;
+        end;
 
-        fsPoucoPapel := TestBit(BS1, 5);
+        if TestBit(BS1, 6) then
+          DoOnErrorSemPapel
+        else
+          fsPoucoPapel := TestBit(BS1, 5);
       end;
 
       if fsPoucoPapel then
@@ -891,10 +895,11 @@ begin
 
            if Result then
            begin
-              if Length(RetCmd) >= 12 then
-                BS1 := Ord(copy(RetCmd,12,1)[1])
-              else
+              try
+                BS1 := Ord(RetCmd[12]);
+              except
                 BS1 := 0;
+              end;
 
               fsPoucoPapel := TestBit(BS1, 5);
 
@@ -3074,9 +3079,10 @@ begin
 end;
 
 function TACBrECFSwedaSTX.RetornaInfoECF(Registrador: String): AnsiString;
-Var RetCmd : AnsiString ;
-    I : Integer ;
-    Info : TACBrECFSwedaInfo34 ;
+Var
+  Cmd, RetCmd : AnsiString ;
+  I : Integer ;
+  Info : TACBrECFSwedaInfo34 ;
 begin
   I  := fsCache34.AchaSecao( Registrador ) ;
   if I >= 0 then
@@ -3085,7 +3091,11 @@ begin
      exit ;
   end ;
 
-  RetCmd := EnviaComando( '34|' + Registrador ) ;
+  Cmd := '34';
+  if Registrador <> '' then
+    Cmd := Cmd + '|' + Registrador;
+
+  RetCmd := EnviaComando( Cmd ) ;
 
   { Extraindo "DADOS" do bloco abaixo :
     STX[1]+Seq[1]+Tarefa[1]+Tipo[1]+Secao[4]+Dados[N]+ETX[1]+CHK[1] }

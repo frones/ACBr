@@ -24,7 +24,7 @@ package ACBr_PCNComum;
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)'}
 {$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,

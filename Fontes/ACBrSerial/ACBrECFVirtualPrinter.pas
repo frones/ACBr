@@ -37,7 +37,7 @@ unit ACBrECFVirtualPrinter ;
 
 interface
 uses
-  Classes, SysUtils, IniFiles,
+  Classes, SysUtils,
   ACBrDevice, ACBrECFVirtualBuffer, ACBrECFClass, ACBrUtil, ACBrConsts,
   ACBrPosPrinter ;
 
@@ -66,13 +66,14 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualBufferClass )
   private
     fsECFVirtualPrinter: TACBrECFVirtualPrinter;
 
-    function ColunasExpandido(): Integer; override;
   protected
     function GetDevice: TACBrDevice; override;
     function GetColunas: Integer; override;
 
     procedure AtivarVirtual ; override;
     procedure AbreDocumento ; override;
+
+    function ColunasExpandido(): Integer; override;
   protected
     procedure Imprimir( AString : AnsiString ) ; override ;
 
@@ -86,7 +87,6 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualBufferClass )
 implementation
 
 Uses
-  math,
   ACBrECF;
 
 { TACBrECFVirtualPrinter }

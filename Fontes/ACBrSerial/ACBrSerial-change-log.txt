@@ -45,6 +45,11 @@ Data: 06/06/2015
     http://www.projetoacbr.com.br/forum/index.php?/topic/22003-acbrsms-apagar-mensagem/#entry141709
 
 Data: 03/06/2015
+-- ACBrETQ -- (por: Elias)
+[+] Adicionado a propriedade ArqLOG
+[+] Adicionado o evento OnGravarLog
+
+Data: 03/06/2015
 -- ACBrETQ -- (por: DSA e Elias)
 [*] Refactoring em todas as classes para simplificação de código
 

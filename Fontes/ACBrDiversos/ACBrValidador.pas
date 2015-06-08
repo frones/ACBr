@@ -368,8 +368,7 @@ end;
 function FormatarIE(const AValue: String; UF: String): String;
 Var
   Mascara : String ;
-  C : Char ;
-  I, J, LenDoc, LenMas : Integer;
+  LenDoc : Integer;
 Begin
   Result := AValue ;
   if UpperCase( Trim(AValue) ) = 'ISENTO' then

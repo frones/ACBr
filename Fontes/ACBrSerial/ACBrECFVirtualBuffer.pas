@@ -42,7 +42,7 @@ unit ACBrECFVirtualBuffer ;
 interface
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDevice, ACBrECFVirtual, ACBrECFClass, ACBrUtil, ACBrConsts, ACBrPosPrinter ;
+  ACBrDevice, ACBrECFVirtual, ACBrECFClass, ACBrUtil, ACBrConsts ;
 
 const
   ACBrECFVirtualBuffer_VERSAO = '0.1.0a';
@@ -561,7 +561,6 @@ end;
 procedure TACBrECFVirtualBufferClass.AddBufferRodape;
 Var
   V : AnsiString ;
-  A : Integer ;
   SL : TStringList;
 begin
   if fpPAF <> '' then
@@ -780,8 +779,6 @@ begin
 end;
 
 procedure TACBrECFVirtualBufferClass.INItoClass( ConteudoINI: TStrings ) ;
-Var
-  Ini : TMemIniFile ;
 begin
   inherited INItoClass( ConteudoINI ) ;
 
@@ -819,6 +816,7 @@ begin
         end;
       end;
     end;
+
     if Buf <> '' then
     begin
       Imprimir( Buf );

@@ -42,15 +42,16 @@ interface
 
 uses
   ACBrBase, ACBrConsts, ACBrDevice, ACBrSMSClass,
-  SysUtils , Classes{$IFNDEF FRAMEWORK}
-                      {$IF DEFINED(VisualCLX)}
-                         ,QForms
-                      {$ELSEIF DEFINED(FMX)}
-                         ,FMX.Forms
-                      {$ELSE}
-                         ,Forms
-                      {$IFEND}
-                    {$ENDIF};
+  SysUtils , Classes
+  {$IFNDEF NOGUI}
+    {$IF DEFINED(VisualCLX)}
+       ,QForms
+    {$ELSEIF DEFINED(FMX)}
+       ,FMX.Forms
+    {$ELSE}
+       ,Forms
+    {$IFEND}
+  {$ENDIF};
 
 type
   TACBrSMS = class(TACBrComponent)
@@ -248,7 +249,7 @@ begin
     fsSMS.EnviarSMS(ALote[I].Telefone, ALote[I].Mensagem, IndMsgAtual);
     AIndice := AIndice + ',' + IndMsgAtual;
 
-    {$IFNDEF FRAMEWORK}
+    {$IFNDEF NOGUI}
     Application.ProcessMessages;
     {$ENDIF}
 

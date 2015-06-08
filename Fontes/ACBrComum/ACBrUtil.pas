@@ -52,7 +52,8 @@ interface
 Uses SysUtils, Math, Classes, ACBrConsts, synautil
     {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
     {$IFDEF FPC}
-      ,dynlibs, LazUTF8, zstream
+      ,dynlibs, zstream
+      {$IFNDEF NOGUI}, LazUTF8 {$ENDIF}
       {$IFDEF USE_LConvEncoding} ,LConvEncoding {$ENDIF}
       {$IFDEF USE_LCLIntf} ,LCLIntf {$ENDIF}
     {$ELSE}
@@ -302,7 +303,11 @@ begin
    Result := CP1252ToUTF8( AString ) ;
  {$ELSE}
    {$IFDEF FPC}
-     Result := SysToUTF8( AString ) ;
+     {$IFNDEF NOGUI}
+       Result := SysToUTF8( AString )
+     {$ELSE}
+       Result := AnsiToUtf8( AString ) ;
+     {$ENDIF}
    {$ELSE}
      Result := String(AnsiToUtf8( String(AString) )) ;
    {$ENDIF}

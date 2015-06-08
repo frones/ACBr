@@ -21,7 +21,8 @@ uses
   ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrDISSmakTeclado, 
   ACBrDISGertecTEC65lib, ACBrECFVirtual, ACBrECFVirtualBuffer, 
   ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, ACBrPosPrinter, 
-  ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, LazarusPackageIntf;
+  ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, ACBrSMS, ACBrSMSClass, 
+  ACBrSMSDaruma, ACBrSMSZTE, LazarusPackageIntf;
 
 implementation
 

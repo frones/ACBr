@@ -1675,6 +1675,8 @@ begin
           if FEvento.Evento.Items[I].InfEvento.chMDFe =
             EventoRetorno.retEvento.Items[J].RetInfEvento.chMDFe then
           begin
+            FEvento.Evento.Items[I].RetInfEvento.tpAmb :=
+              EventoRetorno.retEvento.Items[J].RetInfEvento.tpAmb;
             FEvento.Evento.Items[I].RetInfEvento.nProt :=
               EventoRetorno.retEvento.Items[J].RetInfEvento.nProt;
             FEvento.Evento.Items[I].RetInfEvento.dhRegEvento :=

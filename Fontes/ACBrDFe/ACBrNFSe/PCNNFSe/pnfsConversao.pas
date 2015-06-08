@@ -914,7 +914,8 @@ begin
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
   5103502, // Diamantino/MT
-  4216602  // São José/SC
+  4216602,  // São José/SC
+  4200051 // Abdon Batista/SC
 
          : Provedor := 'Betha';
 

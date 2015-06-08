@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/06/2015
+-- ACBrECFSwedaStx -- (por: DSA)
+[-] Correção na leitura do Status de Pouco Papel
+
 Data: 06/06/2015
 -- ACBrSMS --
 [+] Adicionado método para apagar mensagens

@@ -437,9 +437,11 @@ begin
 end;
 
 function TACBrECFSwedaSTX.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
-Var ErroMsg, Mensagem : String ;
-    FalhasTX : Integer;
-    ACK_ECF  : Byte ;
+Var
+  ErroMsg, Mensagem : String ;
+  FalhasTX : Integer;
+  ACK_ECF, BS1  : Byte ;
+  PediuStatus: Boolean;
 begin
    Result             := '' ;
    fpComandoEnviado   := '' ;
@@ -447,6 +449,7 @@ begin
    fsRespostasComando := '' ;
    fsFalhasRX         := 0 ;
    fsPoucoPapel       := False;
+   PediuStatus        := (cmd = '34');
 
    if (LeftStr(cmd,2) <> '34') then
       fsCache34.Clear ;         // Limpa o Cache do 34
@@ -538,6 +541,16 @@ begin
     end
    else
     begin
+      if PediuStatus then
+      begin
+        if Length(fpRespostaComando) >= 12 then
+          BS1 := Ord(copy(fpRespostaComando,12,1)[1])
+        else
+          BS1 := 0;
+
+        fsPoucoPapel := TestBit(BS1, 5);
+      end;
+
       if fsPoucoPapel then
         DoOnMsgPoucoPapel;
 
@@ -817,7 +830,7 @@ end;
 
 function TACBrECFSwedaSTX.VerificaFimImpressao(var TempoLimite: TDateTime): Boolean;
 Var Cmd, Ret, RetCmd : AnsiString ;
-    wACK : Byte ;
+    wACK, BS1 : Byte ;
     I, Erro: Integer;
 begin
   { Essa função só é chamada se AguardaImpressao = True,
@@ -878,6 +891,13 @@ begin
 
            if Result then
            begin
+              if Length(RetCmd) >= 12 then
+                BS1 := Ord(copy(RetCmd,12,1)[1])
+              else
+                BS1 := 0;
+
+              fsPoucoPapel := TestBit(BS1, 5);
+
               Erro := StrToIntDef( copy(RetCmd,6,4), 0 ) ;
               if Erro <> 0 then
                  fpRespostaComando := RetCmd

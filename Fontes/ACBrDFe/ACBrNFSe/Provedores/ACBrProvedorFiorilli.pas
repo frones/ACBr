@@ -194,6 +194,8 @@ begin
     cURL_Producao := 'http://186.224.13.194:5661/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';    
   3511300 : // Cedral / SP  Daniel Jr - Mirassol-SP
     cURL_Producao := 'http://187.120.209.20:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+  3544905 : // Sales Oliveira/SP 
+    cURL_Producao := 'http://issweb.salesoliveira.sp.gov.br:9090/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
  end;
 
   ConfigURL.HomNomeCidade         := '';

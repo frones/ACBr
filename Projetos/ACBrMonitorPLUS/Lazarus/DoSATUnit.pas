@@ -21,6 +21,7 @@ uses
 procedure DoSAT(Cmd: TACBrCmd);
 var
   ArqCFe : String;
+  Resultado: String;
 begin
    with FrmACBrMonitor do
    begin
@@ -97,6 +98,16 @@ begin
       else if (Cmd.Metodo = 'comunicarcertificado') or (Cmd.Metodo = 'comunicarcertificadoicpbrasil') then
          Cmd.Resposta := ACBrSAT1.ComunicarCertificadoICPBRASIL(Cmd.Params(0))
 
+      else if Cmd.Metodo = 'carregardadosvenda' then
+       begin
+         CarregarDadosVenda(Cmd.Params(0));
+       end
+
+      else if Cmd.Metodo = 'carregardadoscancelamento' then
+       begin
+         CarregarDadosCancelamento(Cmd.Params(0));
+       end
+
       else if (Cmd.Metodo = 'criarcfe') or (Cmd.Metodo = 'criarenviarcfe')  then
        begin
          AjustaACBrSAT;
@@ -147,9 +158,18 @@ begin
 
       else if Cmd.Metodo = 'cancelarcfe' then
        begin
-         CarregarDadosCancelamento(Cmd.Params(0));
+         if Cmd.Params(0) <> '' then
+          begin
+            CarregarDadosCancelamento(Cmd.Params(0));
+            Resultado := ACBrSAT1.CancelarUltimaVenda(ACBrSAT1.CFeCanc.infCFe.chCanc,ACBrSAT1.CFeCanc.GerarXML(True));
+          end
+         else
+          begin
+            Resultado := ACBrSAT1.CancelarUltimaVenda;
+          end;
+
          Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
-                         'Resultado='+ACBrSAT1.CancelarUltimaVenda(ACBrSAT1.CFeCanc.infCFe.chCanc,ACBrSAT1.CFeCanc.GerarXML(True))+sLineBreak+
+                         'Resultado='+Resultado+sLineBreak+
                          'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
                          'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
                          'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;

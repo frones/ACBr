@@ -1,0 +1,48 @@
+	    String      Retorno = "";
+            java.net.Socket TelnetACBr   = null;
+            java.io.PrintWriter out     = null;
+            java.io.BufferedReader in   = null;
+            String Leitura      = "";
+            String ETX          = "\u0003";
+            short b             = -1;
+	    String ComandoEnviar = "Ecf.ativar"+"\u0013\u0010"+".";
+            String OK = 'N';
+            // cria o socket
+                try {
+                    TelnetACBr = new java.net.Socket("localhost",3434);
+                    out = new java.io.PrintWriter(TelnetACBr.getOutputStream(), true);
+                    in = new java.io.BufferedReader(new java.io.InputStreamReader(TelnetACBr.getInputStream()));
+                    OK = 'S';
+                } 
+                catch (java.net.UnknownHostException e) {
+                    Retorno = "Erro: Host desconhecido! Verifique as configura��es de rede: " + "\n\n" + e.getMessage();
+                    }
+                catch (java.io.IOException e) {
+                    Retorno = "Erro: Falha de comunica��o com o ACBrMonitor, contate o suporte t�cnico: " + "\n\n" + e.getMessage();
+                    }
+                catch (Exception e) {
+                    Retorno = "Erro: tentando conectar com o ACBrMonitor. Contate o suporte t�cnico: " + "\n\n" + e.getMessage();
+                    }
+            if (OK == 'S')
+	    {
+                // envia o comando e busca o retorno
+                try {
+                           out.println(ComandoEnviar.trim());
+                           out.flush();
+            
+                            Leitura = "";
+                            while(b != 3)
+                            {
+                                b = (short) in.read();
+                                if (b != 3)
+                                    Leitura += (char)(b);
+                            }
+                            Retorno = Leitura;                        
+
+                            in.close();
+                            out.close();
+                            TelnetACBr.close();
+                }
+                catch (Exception e) {Retorno = "Erro: Falha ao ler o retorno do ACBrMonitor. Contate o suporte t�cnico: " + "\n\n" + e.getMessage();}
+            }
+

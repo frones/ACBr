@@ -1,0 +1,680 @@
+/*
+   EXEMPLO DE PROGRAMACAO DO ACBRMONITOR EM ORACLE
+   POR: Julio C. Fabio
+*/
+
+PACKAGE BODY FUNC_ACBR IS
+
+   v_comando     VARCHAR2(4000);
+   v_parametros  VARCHAR2(4000);
+   v_retorno     VARCHAR2(4000);
+   v_resacbr     VARCHAR2(4000);
+   arq_cmd       TEXT_IO.FILE_TYPE;
+   arq_res       TEXT_IO.FILE_TYPE;
+-------------------------------------------------------------------------------
+-- Funções de Formatação, Tratamento, Envio, Recebimento e Execução de Comandos
+-------------------------------------------------------------------------------
+FUNCTION FORMATA ( pi_entrada IN VARCHAR2
+                 , pi_tipo    IN VARCHAR2 ) RETURN VARCHAR IS
+   v_saida    VARCHAR2(4000);
+BEGIN
+    IF pi_tipo = 'c' THEN
+        v_saida := '"' || pi_entrada || '"';
+    ELSIF pi_tipo = 'd' THEN
+        v_saida := '"' || TO_DATE(pi_entrada, 'DD/MM/RR') || '"';
+    ELSIF pi_tipo = 'n' THEN
+        v_saida := REPLACE(TO_CHAR(NVL(pi_entrada, 0)), ',' , '.');
+    ELSIF pi_tipo = 'b' THEN
+        v_saida := UPPER(SUBSTR(pi_entrada,1,1)) || LOWER(SUBSTR(pi_entrada,1,LENGTH(pi_entrada)));
+    ELSE
+        v_saida := NULL;
+    END IF;
+    RETURN (v_saida);
+END;
+---------------------------------------------------------------------
+FUNCTION TRATA_RETORNO_IMPRESSORA (po_resposta IN OUT VARCHAR2) RETURN VARCHAR2 IS
+  v_resp     VARCHAR2(10);
+BEGIN
+     -- Esta função retorna todos os erros
+     -- Se OK, retorna na resposta da função 1 e na variavel de retorno po_resposta o conteúdo da mensatgem retornada pelo ACBrMonitor
+    -- Caso não esteja OK, retorna em ambas a resposta do ACBR Monitor ou as mensagens inseridas de acordo com a função executada como por ex. Monitor não executando
+    v_resacbr := po_resposta;
+    v_resp := UPPER(TRIM(SUBSTR(po_resposta,1,(INSTR(po_resposta,':')-1))));
+    IF v_resp = 'OK' THEN
+        po_resposta := TRIM(SUBSTR(po_resposta,INSTR(po_resposta,':')+1,LENGTH(po_resposta)-INSTR(po_resposta,':')));
+        RETURN ('1');
+    END IF;
+    IF v_resp IS NULL THEN
+        RETURN('Erro: Não Foi possível determinar o Erro');
+    END IF;
+    RETURN (po_resposta);
+
+END TRATA_RETORNO_IMPRESSORA;
+---------------------------------------------------------------------
+FUNCTION ENVIA ( pi_caminho IN VARCHAR2
+               , pi_comando IN VARCHAR2) RETURN VARCHAR2 IS
+BEGIN
+    -- ABRE ARQUIVO COMANDOS  cmd.txt para gravar o comando
+    BEGIN
+        arq_cmd := TEXT_IO.FOPEN( pi_caminho || 'cmd.txt','w');
+    EXCEPTION
+       WHEN OTHERS THEN
+          v_resacbr := 'Erro: Não foi possível abrir o arquivo para gravar comandos';
+         RETURN (v_resacbr);
+    END;
+    TEXT_IO.PUT_LINE(arq_cmd,pi_comando);
+    TEXT_IO.FCLOSE(arq_cmd);
+   --Copia o cmd.txt para o ent.txt (evitando que o monitor "pegue" o arquivo incompleto)
+    HOST('Move /Y ' || pi_caminho || 'cmd.txt ' || pi_caminho || 'ent.txt',NO_SCREEN);
+    --Tenta abrir o próprio arquivo de comandos ent.txt, se em 7 segundos este arquivo ainda não foi apagado então significa que o ACBrMonitor não está executando.
+    FOR I IN 1..7 LOOP
+        BEGIN
+            arq_cmd := TEXT_IO.FOPEN(pi_caminho || 'ent.txt','r');
+            TEXT_IO.FCLOSE(arq_cmd);
+            DBMS_LOCK.SLEEP(1);
+        EXCEPTION
+            WHEN OTHERS THEN
+               RETURN('1');
+        END;
+
+    END LOOP;
+    v_resacbr := 'Erro: O ACBrMonitor não está executando';
+   RETURN (v_resacbr);
+END ENVIA;
+---------------------------------------------------------------------
+FUNCTION RECEBE (pi_caminho IN VARCHAR2
+               , po_resposta OUT VARCHAR2) RETURN VARCHAR2 IS
+   v_linha VARCHAR2(4000);
+   v_resposta VARCHAR2(4000);
+BEGIN
+    v_resposta := 'Erro: Não foi possível abrir arquivo de respostas';
+    FOR I IN 1..60 LOOP
+        BEGIN
+            arq_cmd := TEXT_IO.FOPEN(pi_caminho || 'sai.txt','r');
+            v_resposta := '';
+            BEGIN
+                TEXT_IO.GET_LINE(arq_cmd, v_linha);  --LINHA DO ARQUIVO
+
+               v_resposta := SUBSTR(v_resposta || TRIM(v_linha),1,4000);
+            EXCEPTION
+                WHEN OTHERS THEN
+                  NULL;   --ACABOU O ARQUIVO
+            END;
+            TEXT_IO.FCLOSE(arq_cmd);
+            EXIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_LOCK.SLEEP(1);
+        END;
+    END LOOP;
+    FOR I IN 1..60 LOOP
+       BEGIN
+          HOST('del /f /q '||pi_caminho||'sai.txt',NO_SCREEN);
+          EXIT;
+       EXCEPTION
+           WHEN OTHERS THEN
+                NULL;
+      END;
+    END LOOP;
+    po_resposta := TRIM(v_resposta);
+    RETURN (TRATA_RETORNO_IMPRESSORA (po_resposta));
+END RECEBE;
+---------------------------------------------------------------------
+FUNCTION EXECUTA_CMD ( pi_cmd IN  VARCHAR2
+                     , pi_par IN  VARCHAR2
+                     , po_res OUT VARCHAR2 ) RETURN VARCHAR2 IS
+   v_sta     VARCHAR2(4000);
+
+BEGIN
+    v_sta := ENVIA('C:\ACBrMonitor', pi_cmd || pi_par);
+    IF v_sta <> '1' THEN
+        RETURN (v_sta);   --Caso de monitor não executando ou erro nas gravações/permissões de gravação
+    END IF;
+
+    v_sta := RECEBE(v_caminho, po_res);
+    RETURN(v_sta);
+
+END EXECUTA_CMD;
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+----  Montagem das Funções das Impressoras Fiscais
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+FUNCTION ABRE_CNF_VINCULADO ( pi_Num_Cupom IN VARCHAR2
+                            , pi_Cod_Pgto  IN VARCHAR2
+                            , pi_valor     IN NUMBER  ) RETURN VARCHAR2 IS
+  v_status VARCHAR2(4000);
+BEGIN
+    v_comando     := 'ECF.AbreCupomVinculado';   -- Abre Cupom Vinculado
+   v_parametros  := '('
+                 ||        FORMATA( pi_Num_Cupom    , 'c')
+                 || ',' || FORMATA( pi_Cod_Pgto     , 'c')
+                 || ',' || FORMATA( pi_valor        , 'n')
+                 || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    ECF.AbreCupomVinculado( cCOO , cCodFormaPagto , nValor )
+    */
+
+END ABRE_CNF_VINCULADO;
+---------------------------------------------------------------------
+FUNCTION ABRE_CUPOM ( pi_cnpj_cpf   IN VARCHAR2 )  RETURN VARCHAR2 IS
+BEGIN
+   v_comando    := 'Ecf.AbreCupom';
+   v_parametros := '(' || pi_cnpj_cpf || ')';
+
+   RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END ABRE_CUPOM;
+--------------------------------------------------------------------
+FUNCTION ABRE_RELATORIO_GERENCIAL RETURN VARCHAR2 IS
+BEGIN
+    v_comando     := 'ECF.AbreRelatorioGerencial';   -- Abre Relatorio Gerencial
+   v_parametros  := '';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    ECF.AbreRelatorioGerencial
+    */
+
+END ABRE_RELATORIO_GERENCIAL;
+---------------------------------------------------------------------
+FUNCTION ACIONA_GAVETA RETURN VARCHAR2 IS
+
+BEGIN
+   v_comando    := 'Ecf.Abregaveta';
+   v_parametros := '';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END ACIONA_GAVETA;
+--------------------------------------------------------------------
+FUNCTION ATIVA_APLICACAO ( pi_aplicacao IN VARCHAR2
+                         , pi_tempo     IN NUMBER DEFAULT 0 ) RETURN VARCHAR2 IS
+BEGIN
+    v_comando     := 'Acbr.AppActivate';   -- Coloca Foco na Aplicação
+   v_parametros  := '('
+                 ||        FORMATA( pi_aplicacao    , 'c')  -- Titulo da janelo no Windows
+                 || ',' || FORMATA( pi_tempo        , 'n')  -- milisegundos antes
+                 || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+           ACBr.AppActivate( cTituloJanela, nWaitTime = 0)
+         - Posiciona o foco na Janela com o titulo Informado em cTituloJanela
+           após esperar por nWaitTime milisegundos
+      */
+
+END ATIVA_APLICACAO;
+----------------------------------------------------------------------
+FUNCTION ATIVA_MONITOR RETURN VARCHAR2 IS
+BEGIN
+   v_comando    := 'Ecf.Ativar';
+   v_parametros := '';
+
+   RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END ATIVA_MONITOR;
+---------------------------------------------------------------------
+FUNCTION CANCELA_CUPOM RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'Ecf.CancelaCupom';
+    v_parametros := '';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    Cancela o Cupom Fiscal atual (se estiver aberto) em qualquer estágio do Cupom.
+    Se não houver cupom aberto, cancela o Último Cupom emitido, caso o último documento seja realmente um Cupom Fiscal.
+    */
+
+END CANCELA_CUPOM;
+---------------------------------------------------------------------
+FUNCTION CANCELA_ITEM_GENERICO ( pi_num_item   IN NUMBER ) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'Ecf.CancelaItemVendido';
+    v_parametros := '('|| FORMATA( pi_num_item , 'n') ||')';     -- Numero do Item, de acordo com a ordem de impressão no Cupom fiscal, a cancelar
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END CANCELA_ITEM_GENERICO;
+---------------------------------------------------------------------
+FUNCTION CARREGA_FORMAS_PAGAMENTO ( po_formas OUT VARCHAR2) RETURN VARCHAR2 IS
+    v_status varchar2(4000);
+BEGIN
+   v_comando    := 'ECF.CarregaFormasPagamento';   --      Retorna Formas de Pagamento Cadastradas na Impressora
+   v_parametros := '';
+
+    v_status  := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    po_formas := v_retorno;
+    RETURN(v_status);
+
+END CARREGA_FORMAS_PAGAMENTO;
+---------------------------------------------------------------------
+FUNCTION EFETUA_FORMA_PAGAMENTO ( pi_desc_forma_pgto   IN VARCHAR2
+                                , pi_vlr_pgto          IN NUMBER
+                                , pi_ind_pgto          IN VARCHAR2 DEFAULT '01') RETURN VARCHAR2 IS
+  v_vlr_pgto   NUMBER(14);
+BEGIN
+
+    v_comando    := 'Ecf.EfetuaPagamento';
+    v_parametros := '('
+                 ||        FORMATA( pi_ind_pgto , 'c')   -- Índice da Forma de pagamento cadastrada no ECF. Para conhecer todas as Formas de pagamento cadastradas e seus respectivos índices, utilize o comando ECF.FormasPagamento
+                 || ',' || FORMATA( pi_vlr_pgto ,        'n')   -- Valor pago para essa forma de pagamento.
+                 || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+    /*
+     ECF.EfetuaPagamento( cCodFormaPagto, nValor [, cObservacao, bImprimeVinculado ] );
+
+    Parâmetros:
+    cCodFormaPagto - Índice da Forma de pagamento cadastrada no ECF. Para conhecer todas as Formas de pagamento cadastradas e seus respectivos índices, utilize o comando ECF.FormasPagamento
+    nValor - Valor pago para essa forma de pagamento.
+    cObservacao - Pode ser omitido. Alguns ECFs permitem a impressão de até 2 linhas de observação para cada forma de pagamento
+    bImprimeVinculado - Pode ser omitido, nesse caso assume “False”. Se for informado “True” para este parâmetro, o ACBr apenas verifica se é permitido imprimir Cupom Não Fiscal Vinculado para essa forma de Pagamento.
+
+    Exemplos:
+    - EfetuaPagamento( “01”, 10 ) -> Pagando R$ 10,00 para a Forma de Pagamento 01
+    - EfetuaPagamento( “02”, 5.43, “Pagamento A PRAZO” ) -> Pagando R$ 5,43 para a Forma de Pagamento 02, imprimindo uma observação sobre o Pagamento
+    - EfetuaPagamento( “03”, 30, “TEF”, True ) -> Pagando R$ 30,00 para a Forma de Pagamento 03, imprimindo a Observação “TEF” e verificando se a Forma de pagamento 03 permite ou não a emissão de Cupom Vinculado
+    */
+
+
+END EFETUA_FORMA_PAGAMENTO;
+--------------------------------------------------------------------
+FUNCTION ESTADO_IMPRESSORA RETURN VARCHAR2 IS
+   v_resp     VARCHAR2(4000);
+BEGIN
+    v_comando     := 'ECF.Estado';   -- Retorno Impressora
+   v_parametros  := '';
+   v_resp        := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+
+   RETURN(v_retorno);
+    /*
+        Retorna o estado atual do ECF, podendo ser:
+
+      estNaoInicializada, Porta Serial ainda não foi aberta;
+      estDesconhecido, Porta aberta, mas estado ainda não definido;
+      estLivre, Impressora Livre, sem nenhum cupom aberto pronta para nova venda, Redução Z e Leitura X ok, pode ou não já ter ocorrido 1ª venda no dia...;
+      estVenda, Cupom de Venda Aberto com ou sem venda do 1º Item;
+      estPagamento, Iniciado Fechamento de Cupom com Formas Pagamento pode ou não ter efetuado o 1º pagamento. Não pode mais vender itens, ou alterar Sub-total;
+      estRelatorio, Imprimindo Cupom Fiscal Vinculado ou Relatório Gerencial;
+      estBloqueada, Redução Z já emitida, bloqueada até as 00:00;
+      estRequerZ, Redução Z do dia anterior ainda não foi emitida. Emitir agora;
+      estRequerX, Esta impressora requer Leitura X todo inicio de dia. É necessário imprimir uma Leitura X para poder vender
+
+    */
+
+END ESTADO_IMPRESSORA;
+---------------------------------------------------------------------
+FUNCTION FECHA_CUPOM ( pi_desc_forma_pgto  IN VARCHAR2
+                     , pi_tp_dctacr        IN VARCHAR2
+                     , pi_tp_vlr           IN VARCHAR2
+                     , pi_vlr_dctacr       IN NUMBER
+                     , pi_vlr              IN NUMBER
+                     , pi_msg              IN VARCHAR2
+                     , pi_linhas           IN NUMBER DEFAULT 0 ) RETURN VARCHAR2 IS
+  v_msg varchar2(4000);
+  v_status varchar2(4000);
+BEGIN
+    v_msg        := TRANSLATE(pi_msg,CHR(10),'|');
+    v_comando    := 'Ecf.FechaCupom';
+    v_parametros := '('
+                 || FORMATA( v_msg , 'c')   -- Parâmetro opcional. Informe até 8 linhas de mensagem a serem impressas no rodapé do cupom. Se esse parâmetro for omitido aqui, porém foi informado em ECF.SubtotalizaCupom , o texto informado anteriormente será utilizado.
+                 || ')';
+
+   v_status     := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    IF v_status <> 1 THEN
+       RETURN(v_status);
+    END IF;
+    IF pi_linhas > 0 THEN
+       RETURN(PULA_LINHAS(pi_linhas));
+    END IF;
+    RETURN(v_status);
+    /*
+        ( 'Mensagem Linha 1|Mensagem Linha 2') ->  Informando 2 linhas de mensagem para serem impressas no rodapé.
+        Notas: Utilize a mensagem no rodapé para identificar o Cliente, (Nome, Documento, Endereço, etc)
+        Este comando só pode ser executado após o Total de Pagamentos (ECF.TotalPago) efetuados com ECF.EfetuaPagamento atingir ou ultrapassar o valor de ECF.SubTotal
+    */
+
+END FECHA_CUPOM;
+---------------------------------------------------------------------
+FUNCTION FECHA_RELATORIO RETURN VARCHAR2 IS
+BEGIN
+    v_comando     := 'ECF.FechaRelatorio';   -- Fecha Cupom Vinculado/Relatorio Gerencial
+   v_parametros  := '';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    ECF.FechaRelatorio
+    */
+
+END FECHA_RELATORIO;
+---------------------------------------------------------------------
+FUNCTION FINALIZA_MODO_TEF  RETURN VARCHAR2 IS
+BEGIN
+   v_comando    := 'Acbr.BlockInput';       --Desbloqueia o mouse e o teclado
+   v_parametros := '('
+                 || FORMATA( 'False' , 'c')
+                 || ')';
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+END FINALIZA_MODO_TEF;
+---------------------------------------------------------------------
+FUNCTION INICIA_FECHAMENTO_CUPOM ( pi_tp_dctacr   IN VARCHAR2
+                                 , pi_tp_vlr      IN VARCHAR2
+                                 , pi_vlr_dctacr  IN NUMBER ) RETURN VARCHAR2 IS
+  v_vlr_dctacr   VARCHAR2(14);
+BEGIN
+    v_comando    := 'Ecf.SubtotalizaCupom';     --Subtotaliza o Cupom Fiscal
+    v_vlr_dctacr := TO_CHAR( NVL(pi_vlr_dctacr,0) );
+    IF pi_tp_dctacr = 'D' THEN
+        v_vlr_dctacr := TO_CHAR( NVL(pi_vlr_dctacr,0) * (-1) );
+    END IF;
+
+    v_parametros := '('
+                 || FORMATA( v_vlr_dctacr , 'n')   -- Parâmetro opcional. Para Descontos, informe valores negativos, para acréscimos valores positivos
+                 || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END INICIA_FECHAMENTO_CUPOM;
+---------------------------------------------------------------------
+FUNCTION INICIA_MODO_TEF  RETURN VARCHAR2 IS
+BEGIN
+   v_comando    := 'Acbr.BlockInput';       --Bloqueia o mouse e o teclado
+   v_parametros := '('
+                 || FORMATA( 'True' , 'c')
+                 || ')';
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+END INICIA_MODO_TEF;
+---------------------------------------------------------------------
+FUNCTION LEITURA_X  RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'Ecf.LeituraX';   -- Emite o relatório de Leitura X.
+   v_parametros := '';       -- Nota: em alguns estados, é necessário imprimir uma Leitura X todo inicio de dia e cada inicio de Bobina
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+END LEITURA_X;
+--------------------------------------------------------------------
+FUNCTION LINHA_CNF_VINCULADO ( pi_linha IN VARCHAR2) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'ECF.LinhaCupomVinculado';   -- Imprime linha no Cupom Vinculado
+   v_parametros := '('
+                ||        FORMATA( pi_linha  , 'c')
+                || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    ECF.LinhaCupomVinculado( cLinha )
+    */
+
+END LINHA_CNF_VINCULADO;
+--------------------------------------------------------------------
+FUNCTION LINHA_RELATORIO_GERENCIAL ( pi_linha IN VARCHAR2) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'ECF.LinhaRelatorioGerencial';   -- Imprime linha no Relatorio Gerencial
+   v_parametros := '('
+                ||        FORMATA( pi_linha  , 'c')
+                || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    ECF.LinhaRelatorioGerencial( cLinha )
+    */
+
+END LINHA_RELATORIO_GERENCIAL;
+---------------------------------------------------------------------
+FUNCTION NUMERO_CUPOM ( po_nro_cupom OUT NUMBER) RETURN VARCHAR2 IS
+    v_status varchar2(4000);
+BEGIN
+   v_comando    := 'Ecf.NumCupom';   --      Retorna numero do cupom
+   v_parametros := '';
+
+    --RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+    v_status := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    po_nro_cupom := v_retorno;
+    RETURN(v_status);
+
+END NUMERO_CUPOM;
+---------------------------------------------------------------------
+FUNCTION NUMERO_SERIE ( po_nro_serie OUT VARCHAR2) RETURN VARCHAR2 IS
+  v_status varchar2(4000);
+BEGIN
+    v_comando    := 'Ecf.NumSerie';   -- Retorna o Número de série do equipamento
+   v_parametros := '';
+
+    v_status     := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    po_nro_serie := v_retorno;
+    RETURN(v_status);
+END NUMERO_SERIE;
+---------------------------------------------------------------------
+FUNCTION PROGRAMA_ALIQUOTA ( pi_aliq      IN VARCHAR2
+                           , pi_ind_aliq  IN NUMBER ) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'Ecf.ProgramaAliquota';      -- Programa Alíquotas
+   v_parametros := '('
+                ||        FORMATA( pi_aliq    , 'n')
+                || ',' || FORMATA( 'T'        , 'c')
+                || ',' || FORMATA( pi_ind_aliq, 'c')
+                || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END PROGRAMA_ALIQUOTA;
+---------------------------------------------------------------------
+FUNCTION PROGRAMA_FORMA_PAGAMENTO ( pi_descricao     IN VARCHAR2
+                                  , pi_permvinc      IN VARCHAR2 DEFAULT 'False'
+                                  , po_posicao       OUT VARCHAR2 ) RETURN VARCHAR2 IS
+   v_status varchar2(4000);
+BEGIN
+   v_comando    := 'Ecf.ProgramaFormaPagamento';    --Programa Formas de Pagamento
+   v_parametros := '('
+                ||        FORMATA( pi_descricao , 'c')
+                || ',' || FORMATA( pi_permvinc  , 'c')
+                || ')';
+
+    v_status     := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    po_posicao   := v_retorno;
+    RETURN(v_status);
+    /*
+    ECF.ProgramaFormaPagamento( cDescricao [, bPermitevinculado, cPosicao] )
+    */
+END PROGRAMA_FORMA_PAGAMENTO;
+---------------------------------------------------------------------
+FUNCTION PROGRAMA_HORARIO_VERAO  RETURN VARCHAR2 IS
+   v_resp  VARCHAR2(50);
+   v_tf    VARCHAR2(10);
+BEGIN
+    v_comando    := 'Ecf.HorarioVerao';   -- Retorna “True” se  está em Horário de verão.
+    v_parametros := '';
+
+    v_resp       := EXECUTA_CMD(v_comando,v_parametros,v_tf);
+    IF v_resp <> 1 Then
+        RETURN(v_resp);
+    END IF;
+
+    IF UPPER(v_tf)='TRUE' THEN
+        v_tf := 'FALSE';
+    ELSE
+        v_tf := 'TRUE';
+    END IF;
+
+    v_comando    := 'Ecf.MudaHorarioVerao';   --        -- Muda para/de Horário de verão
+   v_parametros := '('
+                || FORMATA(v_tf, 'b')
+                || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END PROGRAMA_HORARIO_VERAO;
+---------------------------------------------------------------------
+FUNCTION PULA_LINHAS ( pi_linhas IN NUMBER) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'ECF.PulaLinhas';           -- Salta Linhas na ECF
+   v_parametros := '('
+                 || FORMATA( pi_linhas , 'n')
+                 || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END PULA_LINHAS;
+---------------------------------------------------------------------
+FUNCTION REDUCAO_Z ( pi_dt  IN DATE ) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'Ecf.ReducaoZ';
+   v_parametros := '('
+                   || FORMATA( TO_CHAR(pi_dt,'DD/MM/RRRR')||' '|| TO_CHAR(pi_dt,'HH24:MI:SS'), 'c') -- Data / Hora atual do micro. Parâmetro pode ser omitido. Se dDataHora for informado, o ACBrECF tentará acertar o relógio do ECF (disponível apenas em alguns ECFs), aumentando ou diminuindo o horário no máximo de 5 minutos por dia.
+                   || ')';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+    /*
+    Nota: Se emitido no mesmo dia fiscal, bloqueia o ECF até as 24:00hs.
+    Se não for emitida no mesmo dia fiscal o ECF ficará bloqueado, e o ACBr retornará o Estado como estRequerZ. Nesse caso será necessário emitir a Redução Z pendente (do dia anterior) para liberar o ECF
+    Cuidado: Apenas comande a Redução Z se o estado do ECF for estRequerZ ou se você deseja realmente bloquear o ECF até a meia-noite (fim de dia)
+    */
+END REDUCAO_Z;
+---------------------------------------------------------------------
+FUNCTION RETORNO_IMPRESSORA  RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'ECF.Estado';   -- Retorno Impressora
+   v_parametros := '';
+
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+    --Para manter Compatibilidade este comando retorna somente o Status
+    -- se OK = 1.
+
+END RETORNO_IMPRESSORA;
+---------------------------------------------------------------------
+FUNCTION TERMINA_FECHAMENTO_CUPOM ( pi_msg     IN VARCHAR2
+                                  , pi_linhas  IN NUMBER DEFAULT 0 ) RETURN VARCHAR2 IS
+   v_msg  varchar2(4000);
+   v_status varchar2(4000);
+BEGIN
+    v_msg        := TRANSLATE(pi_msg,CHR(10),'|');
+    v_comando    := 'Ecf.FechaCupom';
+    v_parametros := '('
+                 || FORMATA( v_msg , 'c')   -- Parâmetro opcional. Informe até 8 linhas de mensagem a serem impressas no rodapé do cupom. Se esse parâmetro for omitido aqui, porém foi informado em ECF.SubtotalizaCupom , o texto informado anteriormente será utilizado.
+                 || ')';
+
+    v_status     := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    IF v_status <> 1 THEN
+       RETURN(v_status);
+    END IF;
+    IF NVL(pi_linhas,0) > 0 THEN
+      RETURN(PULA_LINHAS(pi_linhas));
+    END IF;
+    RETURN(v_status);
+
+    /*
+        ( 'Mensagem Linha 1|Mensagem Linha 2') ->  Informando 2 linhas de mensagem para serem impressas no rodapé.
+        Notas: Utilize a mensagem no rodapé para identificar o Cliente, (Nome, Documento, Endereço, etc)
+        Este comando só pode ser executado após o Total de Pagamentos (ECF.TotalPago) efetuados com ECF.EfetuaPagamento atingir ou ultrapassar o valor de ECF.SubTotal
+    */
+
+
+END TERMINA_FECHAMENTO_CUPOM;
+---------------------------------------------------------------------
+FUNCTION VENDA_BRUTA ( po_vlr_bruto OUT NUMBER) RETURN VARCHAR2 IS
+    v_status VARCHAR2(4000);
+BEGIN
+    v_comando    := 'Ecf.VendaBruta';   --      Retorna Venda Bruta
+   v_parametros := '';
+    v_status     := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    po_vlr_bruto := v_retorno;
+    RETURN(v_status);
+
+END VENDA_BRUTA;
+---------------------------------------------------------------------
+FUNCTION VENDE_ITEM_DEPARTAMENTO ( pi_cod_item     IN VARCHAR2
+                                 , pi_descr_item   IN VARCHAR2
+                                 , pi_aliq         IN VARCHAR2
+                                 , pi_vlr_unit     IN NUMBER
+                                 , pi_qtde         IN NUMBER
+                                 , pi_vlr_acres    IN NUMBER
+                                 , pi_vlr_desc     IN NUMBER
+                                 , pi_ind_depart   IN VARCHAR2
+                                 , pi_cod_unid_med IN VARCHAR2 ) RETURN VARCHAR2 IS
+   v_cod_unid_med   VARCHAR2(2);
+   v_vlr_acr_des    VARCHAR2(20);
+   v_aliq           VARCHAR2(8);
+   v_tip_des_acr    VARCHAR2(1):='V';
+   v_des_acr        VARCHAR2(1):='D';
+BEGIN
+    v_aliq := pi_aliq;
+    IF  pi_aliq <> 'II'
+    AND pi_aliq <> 'FF'
+    AND pi_aliq <>    'NN' THEN
+       v_aliq := 'T'||pi_aliq;
+    END IF;
+   v_vlr_acr_des   := TO_CHAR(ABS(NVL(pi_vlr_acres,0) - NVL(pi_vlr_desc,0)));
+   v_cod_unid_med  := SUBSTR(pi_cod_unid_med,0,2);
+
+   v_comando    := 'Ecf.VendeItem';
+    v_parametros := '('
+                 ||        FORMATA( pi_cod_item,     'c')  -- Texto com o código do produto, geralmente á aceito até 13 caracteres, alguns ECFs apenas aceitam numéricos no código.
+                 || ',' || FORMATA( pi_descr_item,   'c')  -- Texto com a descrição do Produto vendido. Procure não usar acentos, pois alguns ECFs não aceitam caracteres acentuados. Para imprimir Descrições “grandes” habilite a opção “Descrição Grande” no ACBrMonitor.
+                 || ',' || FORMATA( v_aliq,          'c')  -- Texto com a representação da Alíquota do ICMS.
+                                                           -- As alíquotas podem ser informadas em Valor (mesmo sendo texto). Exemplos: “18”, “2.46”.
+                                                                             -- Se no ECF existem alíquotas iguais para ICMS e ISS, use o sufixo “T” para informar que a alíquota é do ICMS ou “S” para alíquotas do ISS. Exemplo: “18T” = alíquota de 18% do ICMS; “2.5S” alíquota de 2,5% do ISS
+                                                                             -- As alíquotas podem ser informadas em índice, de acordo com a Tabela de alíquotas do ECF, nesse caso use a letra “T”, seguida da posição da Alíquota: Exemplo: “T01”, “T10”
+                                                                             -- Existem alíquotas internas do ECF para tratar produtos Isentos, nesse caso use: “FF” para Substituição Tributária, “NN” = Não incidência ou “II” = Isento
+                 || ',' || FORMATA( pi_qtde,         'n')  -- Quantidade de Produtos a Vender. Permite valores com até 3 casas decimais. O ACBr verifica quantas casas decimais existem no valor informado e utiliza o comando apropriado para o ECF, otimizando a impressão para Inteiros o 2 casas decimais, sempre que possível
+                 || ',' || FORMATA( pi_vlr_unit,     'n')  -- Preço Unitário do produto vendido. Permite valores com até 3 casas decimais. O ACBr verifica quantas casas decimais existem no valor informado e utiliza o comando apropriado para o ECF, otimizando a impressão para 2 casas decimais, sempre que possível.
+                 || ',' || FORMATA( v_vlr_acr_des,   'n')  -- Parâmetro opcional, Se necessário, informe a Porcentagem de Desconto a aplicar no item Vendido. Dependendo do ECF o valor e porcentagem do Desconto será impresso no Cupom.
+                 || ',' || FORMATA( v_cod_unid_med,  'c')  -- Parâmetro opcional, Se necessário, informe o Texto com a unidade de medida do Item. Exemplo: “UN”, “LT”, “MT”, “KG”, etc
+                || ',' || FORMATA( v_tip_des_acr,   'c')  -- Tipo do Desconto ou Acrescimo '%' se for por Percentual ou se for outra coisa será por valor
+                || ',' || FORMATA( v_des_acr,       'c')  -- Indica se é Desconto 'D' ou Acrescimo 'A';
+                 || ')';
+
+    /*
+    ECF.VendeItem(cCodigo, cDescricao, cAliquotaICMS, nQtd, nValorUnitario [,nDescontoPorc, cUnidade, cTipoDescontoAcrescimo, cDescontoAcrescimo] )
+        Notas:
+        - O ACBr tentará otimizar a impressão ocupando o menor numero de linhas possíveis, de acordo com o tamanho dos parâmetros cCodigo e cDescricao. Espaços a direita de cDescricao são ignorados.
+        - Para evitar “diferenças” entre o seu programa e o impresso no ECF, procure informar os campos nQtd e nValorUnitario já arredondados para o número máximo de casas decimais que você deseja utilizar.
+    */
+
+   RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));
+
+END VENDE_ITEM_DEPARTAMENTO;
+---------------------------------------------------------------------
+FUNCTION VERIFICA_ESTADO_GAVETA ( pi_estado IN NUMBER ) RETURN VARCHAR2 IS
+BEGIN
+    v_comando    := 'Ecf.GavetaAberta';
+   v_parametros := '';
+    RETURN(EXECUTA_CMD(v_comando,v_parametros,v_retorno));    --Retorna “True” se a gaveta de dinheiro está aberta
+
+END VERIFICA_ESTADO_GAVETA;
+
+--------------------------------------------------------------------
+FUNCTION VERIFICA_IMPRESSORA_LIGADA  RETURN VARCHAR2 IS
+   v_resp     VARCHAR2(10);
+BEGIN
+
+    v_comando    := 'Ecf.Ativo';   -- Retorna “True” se  está ATIVO
+    v_parametros := '';
+    v_resp        := EXECUTA_CMD(v_comando,v_parametros,v_retorno);
+    IF UPPER(v_retorno) = 'FALSE' THEN
+        RETURN ('ERRO: Impressora Desligada');
+    ELSIF UPPER(v_retorno) = 'TRUE' THEN
+        RETURN ('1');
+    END IF;
+   RETURN(v_retorno);
+
+END VERIFICA_IMPRESSORA_LIGADA;
+---------------------------------------------------------------------
+BEGIN
+    NULL;
+EXCEPTION
+    WHEN OTHERS THEN    -- PROVISORIO PARA TESTE DA IMPRESSORA
+    NULL;      --'Erro ao carregar as funções da impressora.')
+END FUNC_ACBR;

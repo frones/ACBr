@@ -58,7 +58,7 @@ Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
 var
   I, J, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
-  Salva, EnviadoDPEC, OK, OldMostrarPreview, MudouDANFe, bImprimir, bMostrarPreview : Boolean;
+  Salva, OK, OldMostrarPreview, MudouDANFe, bImprimir, bMostrarPreview : Boolean;
   SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
@@ -1632,7 +1632,6 @@ var
   INIRec : TMemIniFile ;
   SL     : TStringList;
   OK     : boolean;
-  TributosFonte : String;
 begin
  INIRec := TMemIniFile.create( 'nfe.ini' ) ;
  SL := TStringList.Create;
@@ -2542,8 +2541,6 @@ begin
              end;
             Inc(I);
           end;
-
-          TributosFonte := INIRec.ReadString('Tributos','Fonte','');
        end;
    finally
       INIRec.Free ;
@@ -2556,7 +2553,6 @@ var
   I, J, K : Integer;
   sSecao : String;
   INIRec : TMemIniFile ;
-  OK     : boolean;
   IniNFe : TStringList;
   LocNFeR : TNFeR;
 begin

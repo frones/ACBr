@@ -50,9 +50,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CompilerPath Value="$(CompPath)"/>
-          </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
@@ -135,12 +132,10 @@
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrMonitor"/>
       </Unit0>
       <Unit1>
         <Filename Value="UtilUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="UtilUnit"/>
       </Unit1>
       <Unit2>
         <Filename Value="ACBrMonitor1.pas"/>
@@ -161,7 +156,6 @@
         <ComponentName Value="frConfiguraSerial"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ConfiguraSerial"/>
       </Unit4>
       <Unit5>
         <Filename Value="DoACBrUnit.pas"/>
@@ -171,32 +165,26 @@
       <Unit6>
         <Filename Value="DoBALUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoBALUnit"/>
       </Unit6>
       <Unit7>
         <Filename Value="DoCHQUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoCHQUnit"/>
       </Unit7>
       <Unit8>
         <Filename Value="DoDISUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoDISUnit"/>
       </Unit8>
       <Unit9>
         <Filename Value="DoECFBemafi32.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFBemafi32"/>
       </Unit9>
       <Unit10>
         <Filename Value="DoECFObserver.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFObserver"/>
       </Unit10>
       <Unit11>
         <Filename Value="DoECFUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFUnit"/>
       </Unit11>
       <Unit12>
         <Filename Value="DoETQUnit.pas"/>
@@ -206,12 +194,10 @@
       <Unit13>
         <Filename Value="DoGAVUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoGAVUnit"/>
       </Unit13>
       <Unit14>
         <Filename Value="DoLCBUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoLCBUnit"/>
       </Unit14>
       <Unit15>
         <Filename Value="Sobre.pas"/>
@@ -219,37 +205,30 @@
         <ComponentName Value="frmSobre"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Sobre"/>
       </Unit15>
       <Unit16>
         <Filename Value="DoBoletoUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoBoletoUnit"/>
       </Unit16>
       <Unit17>
         <Filename Value="DoCEPUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoCEPUnit"/>
       </Unit17>
       <Unit18>
         <Filename Value="DoIBGEUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoIBGEUnit"/>
       </Unit18>
       <Unit19>
         <Filename Value="DoEmailUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoEmailUnit"/>
       </Unit19>
       <Unit20>
         <Filename Value="DoSedexUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoSedexUnit"/>
       </Unit20>
       <Unit21>
         <Filename Value="DoNcmUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoNcmUnit"/>
       </Unit21>
       <Unit22>
         <Filename Value="DoACBrNFeUnit.pas"/>
@@ -259,7 +238,6 @@
       <Unit23>
         <Filename Value="DoSATUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoSATUnit"/>
       </Unit23>
     </Units>
   </ProjectOptions>
@@ -280,9 +258,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="19">

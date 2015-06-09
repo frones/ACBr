@@ -589,6 +589,7 @@ end;
 
 procedure TACBrSPEDContabil.WriteRegistroI150;
 begin
+   Bloco_I.WriteRegistroI150;
    if Bloco_I.RegistroI150.Count > 0 then
    begin
       with Bloco_9.Registro9900.New do
@@ -613,12 +614,11 @@ begin
          QTD_REG_BLC := Bloco_I.RegistroI155Count;
       end;
    end;
-   Bloco_I.WriteRegistroI150;
 end;
 
 procedure TACBrSPEDContabil.WriteRegistroI200;
 begin
-
+   Bloco_I.WriteRegistroI200;
    if Bloco_I.RegistroI200.Count > 0 then
    begin
       with Bloco_9.Registro9900.New do
@@ -635,11 +635,11 @@ begin
          QTD_REG_BLC := Bloco_I.RegistroI250Count;
       end;
    end;
-   Bloco_I.WriteRegistroI200;
 end;
 
 procedure TACBrSPEDContabil.WriteRegistroI300;
 begin
+   Bloco_I.WriteRegistroI300;
    if Bloco_I.RegistroI300.Count > 0 then
    begin
       with Bloco_9.Registro9900.New do
@@ -656,7 +656,6 @@ begin
          QTD_REG_BLC := Bloco_I.RegistroI310Count;
       end;
    end;
-   Bloco_I.WriteRegistroI300;
 end;
 
 procedure TACBrSPEDContabil.WriteRegistroI350;
@@ -738,27 +737,6 @@ begin
       QTD_REG_BLC := 1;
    end;
    Bloco_I.WriteRegistroI990;
-
-    with Bloco_9.Registro9900 do
-    begin
-       if Bloco_I.RegistroI155Count > 0 then
-       begin
-         with New do
-         begin
-           REG_BLC := 'I155';
-           QTD_REG_BLC := Bloco_I.RegistroI155Count;
-         end;
-       end;
-
-       if Bloco_I.RegistroI250Count > 0 then
-       begin
-         with New do
-         begin
-           REG_BLC := 'I250';
-           QTD_REG_BLC := Bloco_I.RegistroI250Count;
-         end;
-       end;
-    end;
 end;
 
 procedure TACBrSPEDContabil.WriteRegistroJ001;

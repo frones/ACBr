@@ -282,7 +282,7 @@ begin
   try
     SL := TStringList.Create;
     try
-      if FilesExists(Astr) then
+      if (Length(AStr) < 255) and FilesExists(Astr) then
          SL.LoadFromFile(AStr)
       else
          Sl.Text := ConvertStrRecived( Astr );

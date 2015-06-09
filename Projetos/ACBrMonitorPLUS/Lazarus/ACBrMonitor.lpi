@@ -189,7 +189,6 @@
       <Unit12>
         <Filename Value="DoETQUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoETQUnit"/>
       </Unit12>
       <Unit13>
         <Filename Value="DoGAVUnit.pas"/>
@@ -238,6 +237,7 @@
       <Unit23>
         <Filename Value="DoSATUnit.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="DoSATUnit"/>
       </Unit23>
     </Units>
   </ProjectOptions>

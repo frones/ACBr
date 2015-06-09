@@ -3002,6 +3002,7 @@ begin
     seNumeroCaixa.Value    := INI.ReadInteger('SAT','NumeroCaixa',1);
     cbxAmbiente.ItemIndex  := INI.ReadInteger('SAT','Ambiente',1);
     sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
+    sePagCodChange(self);
     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
     cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
@@ -4041,7 +4042,7 @@ begin
 
     { Objeto BOLETO/NFE pode receber comandos com várias Linhas,
       portanto deve processar todas linhas de uma só vez... }
-    Objeto := fsProcessar[0];
+    Objeto := TrimLeft(fsProcessar[0]);
     if (UpperCase(Copy(Objeto, 1, 6)) = 'BOLETO') or
       (UpperCase(Copy(Objeto, 1, 3)) = 'NFE')  or
       (UpperCase(Copy(Objeto, 1, 3)) = 'SAT') then

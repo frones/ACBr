@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsEscPos
+        ActivePage = tsSat
         Align = alClient
         Images = ImageList1
-        TabIndex = 18
+        TabIndex = 17
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -8732,9 +8732,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = Impressao
+            ActivePage = tsDadosSAT
             Align = alClient
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               Caption = 'Dados do SAT CFe'

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/06/2015 ver. 0.0.133a
+-- ACBrBancoDoBrasil --
+[-]Ajuste calculo do tamanho máximo do Nosso Número para convenio de 6 posições. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/index.php?/topic/21995-corre%C3%A7%C3%A3o-fontes-banco-do-brasil-carteira-11-conv%C3%AAnio-6-posi%C3%A7%C3%B5es/
 
 Data: 02/06/2015 ver. 0.0.132a
 -- ACBrBancoCaixa --

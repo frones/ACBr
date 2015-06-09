@@ -161,8 +161,12 @@ begin
       Result:= 17
    else if (wTamConvenio <= 4) then
       Result := 7
-   else if (wTamConvenio > 4) and (wTamConvenio <= 6) then
+   else if ((wTamConvenio > 4) and (wTamConvenio < 6)) or
+           ((wTamConvenio = 6) and ((wCarteira = '12') or (wCarteira = '15') or
+            (wCarteira = '17'))) then
       Result := 5
+   else if (wTamConvenio = 6) then
+      Result := 11
    else if (wTamConvenio = 7) then
       Result := 10;
 end;

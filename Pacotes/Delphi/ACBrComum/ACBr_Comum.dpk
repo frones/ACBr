@@ -1,6 +1,6 @@
 package ACBr_Comum;
 
-{$R *.res}
+//{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -23,7 +23,7 @@ package ACBr_Comum;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Biblioteca Comum, EAD, AAC  - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,

@@ -140,12 +140,11 @@ Item0=..\..\Fontes\ACBrComum
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=5
-Item0=..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrComum
-Item1=..\..\Fontes\ACBrTCP;..\..\Fontes\ACBrComum
-Item2=..\..\Fontes\ACBrComum
-Item3=../../Fontes/ACBrComum
-Item4=../../ACBrComum
+Count=4
+Item0=..\..\Fontes\ACBrTCP;..\..\Fontes\ACBrComum
+Item1=..\..\Fontes\ACBrComum
+Item2=../../Fontes/ACBrComum
+Item3=../../ACBrComum
 [HistoryLists\hlUnitOutputDirectory]
 Count=2
 Item0=..\..\lib

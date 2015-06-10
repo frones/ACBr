@@ -94,8 +94,8 @@ OutputDir=
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=
-Packages=
+SearchPath=..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\ZLibExGZ
+Packages=vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;ibxpress;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;dclOfficeXP;Rave50CLX;Rave50VCL;qrpt;teeqr
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
@@ -108,7 +108,7 @@ DebugCWD=
 [Language]
 ActiveLang=
 ProjectLang=
-RootDir=
+RootDir=C:\Program Files (x86)\Borland\Delphi7\Bin\
 [Version Info]
 IncludeVerInfo=1
 AutoIncBuild=0
@@ -121,7 +121,7 @@ PreRelease=0
 Special=0
 Private=0
 DLL=0
-Locale=1046
+Locale=1033
 CodePage=1252
 [Version Info Keys]
 CompanyName=
@@ -133,3 +133,25 @@ LegalTrademarks=
 OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
+Comments=
+[Excluded Packages]
+c:\program files (x86)\borland\delphi7\Projects\Bpl\B305cd70.bpl=TurboPower Abbrevia 3.05 CLX Design-time package - CLX70
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=..\..\Fontes\ACBrComum
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlSearchPath]
+Count=2
+Item0=..\..\..\Fontes\ACBrCapicom;..\..\..\Fontes\Terceiros\JediWin32API
+Item1=..\..\Fontes\synalist
+[HistoryLists\hlUnitOutputDirectory]
+Count=1
+Item0=..\..\lib
+[HistoryLists\hlBPLOutput]
+Count=1
+Item0=..\..\lib
+[HistoryLists\hlDCPOutput]
+Count=1
+Item0=..\..\lib

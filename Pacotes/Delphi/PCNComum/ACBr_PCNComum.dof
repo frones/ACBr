@@ -110,7 +110,7 @@ ActiveLang=
 ProjectLang=
 RootDir=C:\Arquivos de programas\Borland\Delphi7\Bin\
 [Version Info]
-IncludeVerInfo=1
+IncludeVerInfo=0
 AutoIncBuild=0
 MajorVer=1
 MinorVer=0

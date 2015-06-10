@@ -990,11 +990,10 @@ end;
 
 function TACBrECFEscECF.GetModeloStr: String;
 begin
-  Result := fsMarcaECF ;
-  if fsModeloECF <> '' then
-     Result := Result + ' - ' + fsModeloECF;
-  if Result = '' then
-     Result := fpModeloStr;
+  if Trim(fsMarcaECF) <> '' then
+    Result := fsMarcaECF
+  else
+    Result := fpModeloStr;
 end;
 
 

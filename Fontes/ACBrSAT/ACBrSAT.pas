@@ -369,6 +369,7 @@ begin
     ide.tpAmb             := fsConfig.ide_tpAmb;
     ide.numeroCaixa       := fsConfig.ide_numeroCaixa;
     ide.signAC            := signAC;
+    ide.modelo            := 59;
     Emit.CNPJCPF          := fsConfig.emit_CNPJ;
     Emit.IE               := fsConfig.emit_IE;
     Emit.IM               := fsConfig.emit_IM;

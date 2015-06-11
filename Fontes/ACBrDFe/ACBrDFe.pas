@@ -454,6 +454,7 @@ begin
   if NaoEstaVazio(NomeSchema) then
   begin
     VersaoSchema := Versao;
+    ArqSchema := '';
     AchaArquivoSchema( NomeSchema, VersaoSchema, ArqSchema );
     if VersaoSchema > 0 then
       VersaoAchada := VersaoSchema;

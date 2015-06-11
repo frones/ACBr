@@ -234,6 +234,8 @@ function StringCrc16(AString : AnsiString ) : word;
 function ApplicationPath: String;
 Procedure FindFiles( const FileMask : String; AStringList : TStrings;
   IncludePath : Boolean = True ) ;
+Procedure FindSubDirectories( const APath: String; AStringList : TStrings;
+  IncludePath : Boolean = True ) ;
 Function FilesExists(const FileMask: String) : Boolean ;
 Procedure DeleteFiles(const FileMask: String; RaiseExceptionOnFail : Boolean = True)  ;
 Procedure TryDeleteFile(const AFile: String; WaitTime: Integer = 1000)  ;
@@ -2059,10 +2061,11 @@ end;
 -----------------------------------------------------------------------------}
 procedure FindFiles(const FileMask : String ; AStringList : TStrings ;
    IncludePath : Boolean) ;
-var SearchRec : TSearchRec ;
-    RetFind   : Integer ;
-    LastFile  : string ;
-    Path      : String ;
+var
+  SearchRec : TSearchRec ;
+  RetFind   : Integer ;
+  LastFile  : string ;
+  Path      : String ;
 begin
   LastFile := '' ;
   Path     := ExtractFilePath(FileMask) ;
@@ -2084,6 +2087,33 @@ begin
   end ;
 end;
 
+procedure FindSubDirectories(const APath: String; AStringList: TStrings;
+  IncludePath: Boolean);
+var
+  SearchRec : TSearchRec ;
+  RetFind   : Integer ;
+  LastFile  : string ;
+  Path      : String ;
+begin
+  LastFile := '' ;
+  Path     := PathWithDelim(APath);
+  RetFind  := SysUtils.FindFirst(Path + '*.*', faDirectory, SearchRec);
+  AStringList.Clear;
+
+  try
+     while (RetFind = 0) and (LastFile <> SearchRec.Name) do
+     begin
+        LastFile := SearchRec.Name ;
+
+        if pos(LastFile, '..') = 0 then    { ignora . e .. }
+           AStringList.Add( IfThen(IncludePath, Path, '') + LastFile) ;
+
+        SysUtils.FindNext(SearchRec) ;
+     end ;
+  finally
+     SysUtils.FindClose(SearchRec) ;
+  end ;
+end;
 
 {-----------------------------------------------------------------------------
   Semelhante a FileExists, mas permite uso de mascaras Ex:(*.BAK, TEST*.PX, etc)

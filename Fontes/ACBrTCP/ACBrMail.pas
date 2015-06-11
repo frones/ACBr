@@ -69,13 +69,12 @@ type
   end;
 
   TACBrThread = class(TThread)
-  fOwner : TComponent;
   private
-
+    fOwner : TComponent;
   protected
     procedure Execute; override;
   public
-    constructor Criar(AOwner : TComponent);
+    constructor Create(AOwner : TComponent);
   end;
 
   TACBrOnMailProcess = procedure(const aStatus: TMailStatus) of object;
@@ -360,7 +359,7 @@ begin
     if fThread <> nil Then
       fThread.Terminate;
 
-    fThread := TACBrThread.Criar(Self);
+    fThread := TACBrThread.Create(Self);
   end
   else
     SendMail;
@@ -751,20 +750,18 @@ end;
 
 { TACBrThread }
 
-constructor TACBrThread.Criar(AOwner: TComponent);
+constructor TACBrThread.Create(AOwner: TComponent);
 begin
-  inherited Create(True);
   FreeOnTerminate := True;
   fOwner          := AOwner;
-  Resume;
+
+  inherited Create(False);
 end;
 
 procedure TACBrThread.Execute;
 begin
   if (not terminated) then
-    TACBrMail(FOwner).SendMail
-  else
-    Abort;
+    TACBrMail(FOwner).SendMail;
 end;
 
 end.

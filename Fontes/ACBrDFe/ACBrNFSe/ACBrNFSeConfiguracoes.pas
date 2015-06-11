@@ -41,40 +41,100 @@ unit ACBrNFSeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeConfiguracoes, pcnConversao, pnfsConversao;
+  Classes, SysUtils,
+  ACBrDFeConfiguracoes, pcnConversao, pnfsConversao;
 
 type
+
+ TConfigCidade = record
+    VersaoSoap: String;
+    Prefixo2: String;
+    Prefixo3: String;
+    Prefixo4: String;
+    Identificador: String;
+    NameSpaceEnvelope: String;
+    AssinarRPS: Boolean;
+    AssinarLote: Boolean;
+    AssinarGerar: Boolean;
+    QuebradeLinha: String;
+ end;
+
+ TConfigSchema = record
+    VersaoCabecalho: String;
+    VersaoDados: String;
+    VersaoXML: String;
+    NameSpaceXML: String;
+    Cabecalho: String;
+    ServicoEnviar: String;
+    ServicoConSit: String;
+    ServicoConLot: String;
+    ServicoConRps: String;
+    ServicoConSeqRps: String;
+    ServicoConNfse: String;
+    ServicoCancelar: String;
+    ServicoGerar: String;
+    ServicoEnviarSincrono: String;
+    ServicoSubstituir: String;
+    DefTipos: String;
+  end;
+
+ TConfigURL = record
+    HomNomeCidade:String;
+    HomRecepcaoLoteRPS: String;
+    HomConsultaLoteRPS: String;
+    HomConsultaNFSeRPS: String;
+    HomConsultaSitLoteRPS: String;
+    HomConsultaSeqRPS: String;
+    HomConsultaNFSe: String;
+    HomCancelaNFSe: String;
+    HomGerarNFSe: String;
+    HomRecepcaoSincrono: String;
+    HomSubstituiNFSe: String;
+
+    ProNomeCidade:String;
+    ProRecepcaoLoteRPS: String;
+    ProConsultaLoteRPS: String;
+    ProConsultaSeqRPS: String;
+    ProConsultaNFSeRPS: String;
+    ProConsultaSitLoteRPS: String;
+    ProConsultaNFSe: String;
+    ProCancelaNFSe: String;
+    ProGerarNFSe: String;
+    ProRecepcaoSincrono: String;
+    ProSubstituiNFSe: String;
+  end;
 
   { TGeralConfNFSe }
 
   TGeralConfNFSe = class(TGeralConf)
   private
-    FAssinaLote: Boolean;
-    FAssinaGerar: Boolean;
-    FAssinaRPS: Boolean;
+    FConfigCidade: TConfigCidade;
+    FConfigSchema: TConfigSchema;
+    FConfigURL: TConfigURL;
+
     FCodigoMunicipio: Integer;
     FProvedor: TnfseProvedor;
     FxProvedor: String;
     FSenhaWeb: AnsiString;
     FConsultaLoteAposEnvio: Boolean;
-    FQuebradeLinha: String;
     FUserWeb: String;
 
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); overload;
 
+    procedure SetConfigMunicipio;
   published
-    property AssinaRPS: Boolean  read FAssinaRPS;
-    property AssinaLote: Boolean read FAssinaLote;
-    property AssinaGerar: Boolean read FAssinaGerar;
+    property ConfigCidade: TConfigCidade read FConfigCidade;
+    property ConfigSchema: TConfigSchema read FConfigSchema;
+    property ConfigURL: TConfigURL read FConfigURL;
+
     property CodigoMunicipio: Integer read FCodigoMunicipio write FCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
     property xProvedor: String read FxProvedor;
     property SenhaWeb: AnsiString read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
-    property QuebradeLinha: String read FQuebradeLinha;
   end;
 
   { TArquivosConfNFSe }
@@ -188,6 +248,22 @@ begin
   inherited Assign(DeGeralConfNFSe);
 
   FProvedor := DeGeralConfNFSe.Provedor;
+end;
+
+procedure TGeralConfNFSe.SetConfigMunicipio;
+var
+ Ok:           Boolean;
+ ConfigCidade: TConfigCidade;
+ ConfigSchema: TConfigSchema;
+ ConfigURL:    TConfigURL;
+begin
+ FxProvedor := CodCidadeToProvedor(FCodigoMunicipio);
+ FProvedor  := StrToProvedor(Ok, FxProvedor);
+
+ if FProvedor = proNenhum
+  then raise Exception.Create('Código do Municipio ['+ IntToStr(FCodigoMunicipio) +'] não Encontrado.');
+
+
 end;
 
 { TArquivosConfNFSe }

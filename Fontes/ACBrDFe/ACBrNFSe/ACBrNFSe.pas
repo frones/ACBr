@@ -41,7 +41,7 @@ unit ACBrNFSe;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, IniFiles,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFSeDANFSEClass,
   ACBrNFSeConfiguracoes,
@@ -61,6 +61,8 @@ type
 
   TACBrNFSe = class(TACBrDFe)
   private
+    FPIniParams: TMemIniFile;
+
     FDANFSE: TACBrNFSeDANFSEClass;
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
@@ -163,12 +165,14 @@ begin
 
   FNotasFiscais := TNotasFiscais.Create(Self, NotaFiscal);
   FWebServices := TWebServices.Create(Self);
+  FPIniParams := TMemIniFile.Create(Configuracoes.Arquivos.IniServicos);
 end;
 
 destructor TACBrNFSe.Destroy;
 begin
   FNotasFiscais.Free;
   FWebServices.Free;
+  FPIniParams.Free;
 
   inherited;
 end;

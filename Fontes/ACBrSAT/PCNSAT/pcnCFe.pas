@@ -460,7 +460,6 @@ type
     FvBC: currency;
     FpCOFINS: currency;
     FvCOFINS: currency;
-    FvBCProd: currency;
     FvAliqProd: currency;
     FqBCProd: currency;
   public
@@ -471,7 +470,6 @@ type
     property vBC: currency read FvBC write FvBC;
     property pCOFINS: currency read FpCOFINS write FpCOFINS;
     property vCOFINS: currency read FvCOFINS write FvCOFINS;
-    property vBCProd: currency read FvBCProd write FvBCProd;
     property vAliqProd: currency read FvAliqProd write FvAliqProd;
     property qBCProd: currency read FqBCProd write FqBCProd;
   end;
@@ -771,7 +769,6 @@ begin
   FvBC       := 0;
   FpCOFINS   := 0;
   FvCOFINS   := 0;
-  FvBCProd   := 0;
   FvAliqProd := 0;
   FqBCProd   := 0;
 end ;

@@ -257,6 +257,9 @@ begin
       XmlAss := xmlHeaderAntes + XmlAss;
   end;
 
+  //remover um cabeçalho vazio que estava ficando na inutilização
+  XmlAss := StringReplace(XmlAss, '<?xml version="1.0"?>', '', []);
+
   Result := XmlAss;
 end;
 

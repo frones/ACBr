@@ -184,8 +184,6 @@ begin
 
   // Removendo DTD //
   XmlAss := StringReplace(XmlAss, DTD, '', []);
-  //remover um cabeçalho vazio que estava ficando na inutilização
-  XmlAss := StringReplace(XmlAss, '<?xml version="1.0"?>', '', []);
 
   // Considerando apenas o último Certificado //
   PosIni := Pos('<X509Certificate>', XmlAss) - 1;

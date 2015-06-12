@@ -1225,8 +1225,11 @@ function StrToIndTipoOper(AVAlue: string): TACBrIndTipoOper;
 function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
 function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
 function IndFrtToStr(AValue: TACBrIndFrt): string;
+function IndCTAToStr(AValue: TACBrIndCTA): string;
 function StrToIndFrt(AValue: string): TACBrIndFrt;
 function StrToIndSitEsp(AValue: string): TACBrIndSitEsp;
+function NatFrtContratadoToStr(AValue: TACBrNaturezaFrtContratado): string;
+function NaturezaContaToStr(AValue: TACBrNaturezaConta): string;
 
 // 20-02-2015 - Data Lider - Novas Conversões para Importação
 function StrToIndCodIncidencia(const AValue: string): TACBrIndCodIncidencia;
@@ -1901,6 +1904,26 @@ begin
       Result := TACBrNatBcCred( StrToIntDef( AValue, 1) );
 end;
 
+function NaturezaContaToStr(AValue: TACBrNaturezaConta): string;
+begin
+  case AValue of
+    ncgAtivo: Result := '01';
+    ncgPassivo: Result := '02';
+    ncgLiquido: Result := '03';
+    ncgResultado: Result := '04';
+    ncgCompensacao: Result := '05';
+    ncgOutras: Result := '09';
+  end;
+end;
+
+function NatFrtContratadoToStr(AValue: TACBrNaturezaFrtContratado): string;
+begin
+  if (AValue = nfcOutras) then
+    Result := '9'
+  else
+    Result := IntToStr(Integer(AValue));
+end;
+
 function IndOrigCredToStr(AValue: TACBrIndOrigCred): string;
 begin
    if AValue = opcVazio then
@@ -2020,6 +2043,14 @@ end;
 function StrToIndTipoOper(AValue: string): TACBrIndTipoOper;
 begin
    Result := TACBrIndTipoOper( StrToIntDef( AValue, 0) );
+end;
+
+function IndCTAToStr(AValue: TACBrIndCTA): string;
+begin
+  case AValue of
+    indCTASintetica: Result := 'S';
+    indCTAnalitica: Result := 'A';
+  end;
 end;
 
 function IndFrtToStr(AValue: TACBrIndFrt): string;

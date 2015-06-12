@@ -114,6 +114,8 @@ var
   FileStr, Delimitador: TStrings;
   I: integer;
   Bloco: Char;
+const
+  Delimiter = '|';
 begin
   if FArquivo = '' then
     raise Exception.Create(ACBrStr('Nome do arquivo de importação não foi informado.'));
@@ -126,9 +128,6 @@ begin
   try
     FileStr.LoadFromFile(FArquivo);
 
-    Delimitador.Delimiter := '|';
-    //Delimitador.StrictDelimiter := True;
-
     for I := 0 to FileStr.Count - 1 do
     begin
       LinhaAtual := FileStr[I];
@@ -136,7 +135,7 @@ begin
       if Assigned(FAntesDeInserirLinha) then
         FAntesDeInserirLinha(LinhaAtual, I);
 
-      Delimitador.DelimitedText := LinhaAtual;
+      Delimitador.Text := StringReplace(LinhaAtual, Delimiter, sLineBreak, [rfReplaceAll]);
       Bloco := Delimitador[1][1];
 
       if (Bloco = '0') then

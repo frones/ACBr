@@ -720,6 +720,7 @@ begin
     NAT_BC_CRED := StrToNatBcCred(Valor);
     VL_BC_PIS := ValorF;
     ALIQ_PIS := ValorF;
+    VL_PIS  := ValorF;
     COD_CTA := Valor;
   end;
 end;

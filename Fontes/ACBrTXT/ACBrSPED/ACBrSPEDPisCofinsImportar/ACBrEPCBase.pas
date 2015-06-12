@@ -55,7 +55,6 @@ type
   TACBrSpedPCImportar_Base = class
   private
     FAntesInserirValor: TACBrSpedPCImportarGetColumn;
-    procedure Inicializa(const inDelimitador: TStrings);
   protected
     Indice: integer;
     Delimitador: TStrings;
@@ -96,11 +95,6 @@ begin
   Result := Delimitador[1];
 end;
 
-procedure TACBrSpedPCImportar_Base.Inicializa(const inDelimitador: TStrings);
-begin
-  Indice := 1;
-end;
-
 function TACBrSpedPCImportar_Base.Valor: string;
 var
   vValor: string;
@@ -120,7 +114,7 @@ var
 begin
   S := Valor;
   if S <> EmptyStr then
-    Result := EncodeDate(StrToInt(Copy(S, 1, 4)), StrToInt(Copy(S, 5, 2)),StrToInt(Copy(S, 7, 2)))
+    Result := EncodeDate(StrToInt(Copy(S, 5, 4)), StrToInt(Copy(S, 3, 2)),StrToInt(Copy(S, 1, 2)))
   else
     Result := 0;
 end;

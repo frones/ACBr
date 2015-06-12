@@ -221,9 +221,9 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.GravarConfiguracao;
 var
- IniFile    : String;
- Ini        : TIniFile;
- StreamMemo : TMemoryStream;
+ IniFile: String;
+ Ini: TIniFile;
+ StreamMemo: TMemoryStream;
 begin
  IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
@@ -243,9 +243,9 @@ begin
   Ini.WriteString( 'Emitente', 'Cidade'     , edtEmitCidade.Text);
   Ini.WriteString( 'Emitente', 'UF'         , edtEmitUF.Text);
 
-  Ini.WriteString( 'Certificado', 'Caminho'    , edtCaminho.Text);
-  Ini.WriteString( 'Certificado', 'Senha'      , edtSenha.Text);
-  Ini.WriteString( 'Certificado', 'NumSerie'   , edtNumSerie.Text);
+  Ini.WriteString( 'Certificado', 'Caminho' , edtCaminho.Text);
+  Ini.WriteString( 'Certificado', 'Senha'   , edtSenha.Text);
+  Ini.WriteString( 'Certificado', 'NumSerie', edtNumSerie.Text);
 
   Ini.WriteString( 'Geral', 'Schemas'   , edtSchemas.Text);
   Ini.WriteString( 'Geral', 'LogoMarca' , edtLogoMarca.Text);
@@ -286,27 +286,29 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.LerConfiguracao;
 var
- IniFile    : String;
- Ini        : TIniFile;
- StreamMemo : TMemoryStream;
+ IniFile: String;
+ Ini: TIniFile;
+ StreamMemo: TMemoryStream;
 begin
  IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
  Ini := TIniFile.Create( IniFile );
  try
   {$IFDEF ACBrNFSeOpenSSL}
-   edtCaminho.Text  := Ini.ReadString( 'Certificado', 'Caminho' , '');
-   edtSenha.Text    := Ini.ReadString( 'Certificado', 'Senha'   , '');
+   edtCaminho.Text := Ini.ReadString( 'Certificado', 'Caminho' , '');
+   edtSenha.Text   := Ini.ReadString( 'Certificado', 'Senha'   , '');
+
    edtNumSerie.Visible := False;
    Label25.Visible     := False;
    sbtnGetCert.Visible := False;
   {$ELSE}
    edtNumSerie.Text := Ini.ReadString( 'Certificado', 'NumSerie', '');
-   Label1.Caption := 'Informe o número de série do certificado'#13+
-                     'Disponível no Internet Explorer no menu'#13+
-                     'Ferramentas - Opções da Internet - Conteúdo '#13+
-                     'Certificados - Exibir - Detalhes - '#13+
-                     'Número do certificado';
+   Label1.Caption   := 'Informe o número de série do certificado'#13+
+                       'Disponível no Internet Explorer no menu'#13+
+                       'Ferramentas - Opções da Internet - Conteúdo '#13+
+                       'Certificados - Exibir - Detalhes - '#13+
+                       'Número do certificado';
+
    Label2.Visible     := False;
    edtCaminho.Visible := False;
    edtSenha.Visible   := False;
@@ -330,12 +332,12 @@ begin
                                                     edtCodCidade.Text + '/' +
                                                     edtEmitUF.Text);
 
-  edtSchemas.Text       := Ini.ReadString( 'Geral', 'Schemas'   , '');
-  edtLogoMarca.Text     := Ini.ReadString( 'Geral', 'LogoMarca' , '');
-  edtPrestLogo.Text     := Ini.ReadString( 'Geral', 'PrestLogo' , '');
-  ckSalvar.Checked      := Ini.ReadBool(   'Geral', 'Salvar'    , True);
-  edtPathLogs.Text      := Ini.ReadString( 'Geral', 'PathSalvar', '');
-  edtPrefeitura.Text    := Ini.ReadString( 'Geral', 'Prefeitura', '');
+  edtSchemas.Text    := Ini.ReadString( 'Geral', 'Schemas'   , '');
+  edtLogoMarca.Text  := Ini.ReadString( 'Geral', 'LogoMarca' , '');
+  edtPrestLogo.Text  := Ini.ReadString( 'Geral', 'PrestLogo' , '');
+  ckSalvar.Checked   := Ini.ReadBool(   'Geral', 'Salvar'    , True);
+  edtPathLogs.Text   := Ini.ReadString( 'Geral', 'PathSalvar', '');
+  edtPrefeitura.Text := Ini.ReadString( 'Geral', 'Prefeitura', '');
 
   rgTipoAmb.ItemIndex  := Ini.ReadInteger( 'WebService', 'Ambiente'  , 0);
   ckVisualizar.Checked := Ini.ReadBool(    'WebService', 'Visualizar', False);
@@ -361,12 +363,6 @@ begin
   mmEmailMsg.Lines.LoadFromStream(StreamMemo);
   StreamMemo.Free;
 
-  ACBrNFSe1.MAIL.Host := edtSmtpHost.Text;
-  ACBrNFSe1.MAIL.Port := edtSmtpPort.Text;
-  ACBrNFSe1.MAIL.Username := edtSmtpUser.Text;
-  ACBrNFSe1.MAIL.Password := edtSmtpPass.Text;
-  ACBrNFSe1.MAIL.SetSSL   := cbEmailSSL.Checked;
-  ACBrNFSe1.MAIL.ReadingConfirmation := False;
  finally
   Ini.Free;
  end;
@@ -383,35 +379,35 @@ begin
    ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
  {$ENDIF}
 
- ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral:=True;
- ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe:=True;
- ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes:=True;
- ACBrNFSe1.Configuracoes.Arquivos.PathCan:=edtPathLogs.Text;
- ACBrNFSe1.Configuracoes.Arquivos.PathNFSe:=edtPathLogs.Text;
- ACBrNFSe1.Configuracoes.Arquivos.Salvar:=True;
+ ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
+ ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe  := True;
+ ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes    := True;
+ ACBrNFSe1.Configuracoes.Arquivos.PathCan          := edtPathLogs.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.Salvar           := True;
+ ACBrNFSe1.Configuracoes.Arquivos.PathSchemas      := edtSchemas.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.PathSalvar       := edtPathLogs.Text;
 
- PathMensal:=ACBrNFSe1.Configuracoes.Arquivos.GetPathNFSe(0);
+ PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathNFSe(0);
 
- ACBrNFSe1.Configuracoes.Geral.Salvar      := ckSalvar.Checked;
- ACBrNFSe1.Configuracoes.Arquivos.PathSchemas := edtSchemas.Text;
- ACBrNFSe1.Configuracoes.Arquivos.PathSalvar  := edtPathLogs.Text;
-
+ ACBrNFSe1.Configuracoes.Geral.Salvar          := ckSalvar.Checked;
  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
- ACBrNFSe1.Configuracoes.WebServices.Ambiente        := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
- ACBrNFSe1.Configuracoes.WebServices.Visualizar      := ckVisualizar.Checked;
  ACBrNFSe1.Configuracoes.Geral.SenhaWeb        := edtSenhaWeb.Text;
- ACBrNFSe1.Configuracoes.geral.UserWeb         := edtUserWeb.Text;
- ACBrNFSe1.Configuracoes.WebServices.Salvar          := ckSalvarSoap.Checked;
+ ACBrNFSe1.Configuracoes.Geral.UserWeb         := edtUserWeb.Text;
 
- ACBrNFSe1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
- ACBrNFSe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
- ACBrNFSe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
- ACBrNFSe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+ ACBrNFSe1.Configuracoes.WebServices.Salvar     := ckSalvarSoap.Checked;
+ ACBrNFSe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
+ ACBrNFSe1.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
+ ACBrNFSe1.Configuracoes.WebServices.ProxyHost  := edtProxyHost.Text;
+ ACBrNFSe1.Configuracoes.WebServices.ProxyPort  := edtProxyPorta.Text;
+ ACBrNFSe1.Configuracoes.WebServices.ProxyUser  := edtProxyUser.Text;
+ ACBrNFSe1.Configuracoes.WebServices.ProxyPass  := edtProxySenha.Text;
 
+ ACBrNFSe1.Configuracoes.Geral.SetConfigMunicipio;
 // ACBrNFSe1.Configuracoes.WebServices.SetConfigMunicipio(ACBrNFSe1.Configuracoes.Geral.PathSchemas);
 
  if ACBrNFSe1.DANFSe <> nil then
-  begin
+ begin
    ACBrNFSe1.DANFSe.Logo       := edtLogoMarca.Text;
    ACBrNFSe1.DANFSe.PrestLogo  := edtPrestLogo.Text;
    ACBrNFSe1.DANFSe.Prefeitura := edtPrefeitura.Text;
@@ -419,7 +415,14 @@ begin
 
 //  TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
    ACBrNFSe1.DANFSe.TipoDANFSE := tpPadrao;
-  end;
+ end;
+
+ ACBrNFSe1.MAIL.Host     := edtSmtpHost.Text;
+ ACBrNFSe1.MAIL.Port     := edtSmtpPort.Text;
+ ACBrNFSe1.MAIL.Username := edtSmtpUser.Text;
+ ACBrNFSe1.MAIL.Password := edtSmtpPass.Text;
+ ACBrNFSe1.MAIL.SetSSL   := cbEmailSSL.Checked;
+ ACBrNFSe1.MAIL.ReadingConfirmation := False;
 
  lblSchemas.Caption := ACBrNFSe1.Configuracoes.Geral.xProvedor;
 end;

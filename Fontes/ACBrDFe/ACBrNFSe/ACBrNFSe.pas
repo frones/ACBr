@@ -41,7 +41,7 @@ unit ACBrNFSe;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
+  Classes, SysUtils,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFSeDANFSEClass,
   ACBrNFSeConfiguracoes,
@@ -61,8 +61,6 @@ type
 
   TACBrNFSe = class(TACBrDFe)
   private
-    FPIniParams: TMemIniFile;
-
     FDANFSE: TACBrNFSeDANFSEClass;
     FNotasFiscais: TNotasFiscais;
     FStatus: TStatusACBrNFSe;
@@ -144,7 +142,6 @@ type
     property DANFSE: TACBrNFSeDANFSEClass read FDANFSE write SetDANFSE;
   end;
 
-
 implementation
 
 uses
@@ -165,14 +162,12 @@ begin
 
   FNotasFiscais := TNotasFiscais.Create(Self, NotaFiscal);
   FWebServices := TWebServices.Create(Self);
-  FPIniParams := TMemIniFile.Create(Configuracoes.Arquivos.IniServicos);
 end;
 
 destructor TACBrNFSe.Destroy;
 begin
   FNotasFiscais.Free;
   FWebServices.Free;
-  FPIniParams.Free;
 
   inherited;
 end;
@@ -369,7 +364,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.AssinaRPS then
+  if Configuracoes.Geral.ConfigAssinar.RPS then
     NotasFiscais.Assinar;
 
   Result := WebServices.Envia(ALote);
@@ -400,7 +395,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.AssinaRPS then
+  if Configuracoes.Geral.ConfigAssinar.RPS then
     NotasFiscais.Assinar;
 
 //  Result := WebServices.EnviarSincrono(ALote);
@@ -415,7 +410,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.AssinaGerar then
+  if Configuracoes.Geral.ConfigAssinar.Gerar then
     NotasFiscais.Assinar;
 
 //  Result := WebServices.Gera(ARps);
@@ -543,7 +538,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.AssinaRPS then
+  if Configuracoes.Geral.ConfigAssinar.RPS then
     NotasFiscais.Assinar;
 
 //  Result := WebServices.GeraLote(ALote);

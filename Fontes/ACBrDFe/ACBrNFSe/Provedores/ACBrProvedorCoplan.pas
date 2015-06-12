@@ -153,6 +153,7 @@ begin
    5106307: ConfigURL.ProNomeCidade := 'paranatinga';     // Paranatinga/MT
    5106455: ConfigURL.ProNomeCidade := 'planaltodaserra'; // Planalto da Serra/MT
    5108006: ConfigURL.ProNomeCidade := 'tapurah';         // Tapurah/MT
+   5100250: ConfigURL.ProNomeCidade := 'altafloresta';    // Alta Floresta/MT
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://ws.municipioweb.com.br:8080/webservice/NfseWSService?wsdl';

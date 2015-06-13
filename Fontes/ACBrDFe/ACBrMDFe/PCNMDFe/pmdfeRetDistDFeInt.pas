@@ -35,7 +35,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor, synacode;
+  pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe, pcnLeitor, synacode;
 
 type
   TresMDFe              = class;
@@ -135,24 +135,24 @@ type
     FxNome: String;
     FIE: String;
     FdhEmi: TDateTime;
-    FtpNF: TpcnTipoNFe;
+//    FtpNF: TpcnTipoNFe;
     FvNF: Double;
     FdigVal: String;
     FdhRecbto: TDateTime;
     FnProt: String;
-    FcSitMDFe: TpcnSituacaoNFe;
+    FcSitMDFe: TSituacaoMDFe;
   public
     property chMDFe: String           read FchMDFe   write FchMDFe;
     property CNPJCPF: String          read FCNPJCPF  write FCNPJCPF;
     property xNome: String            read FxNome    write FxNome;
     property IE: String               read FIE       write FIE;
     property dhEmi: TDateTime         read FdhEmi    write FdhEmi;
-    property tpNF: TpcnTipoNFe        read FtpNF     write FtpNF;
+//    property tpNF: TpcnTipoNFe        read FtpNF     write FtpNF;
     property vNF: Double              read FvNF      write FvNF;
     property digVal: String           read FdigVal   write FdigVal;
     property dhRecbto: TDateTime      read FdhRecbto write FdhRecbto;
     property nProt: String            read FnProt    write FnProt;
-    property cSitMDFe: TpcnSituacaoNFe read FcSitMDFe  write FcSitMDFe;
+    property cSitMDFe: TSituacaoMDFe  read FcSitMDFe  write FcSitMDFe;
   end;
   (*
   TresEvento = class
@@ -224,7 +224,7 @@ type
   private
     // Atributos do resumo da NFe ou Evento
     FNSU: String;
-    Fschema: TpcnTipoSchema;
+    Fschema: TSchemaMDFe;
 
     // A propriedade InfZip contem a informação Resumida ou documento fiscal
     // eletrônico Compactado no padrão gZip
@@ -243,7 +243,7 @@ type
     destructor Destroy; override;
   published
     property NSU: String             read FNSU        write FNSU;
-    property schema: TpcnTipoSchema  read Fschema     write Fschema;
+    property schema: TSchemaMDFe     read Fschema     write Fschema;
     property InfZip: String          read FInfZip     write FInfZip;
     property resMDFe: TresMDFe       read FresMDFe    write FresMDFe;
 //    property resEvento: TresEvento   read FresEvento  write FresEvento;
@@ -288,7 +288,7 @@ type
 implementation
 
 uses
-  Math, mdfeMDFeR
+  Math, pmdfeMDFeR
   {$IFDEF FPC},zstream {$ELSE},ACBrZLibExGZ{$ENDIF};
 
 { TprocEvento_DetEvento }
@@ -460,7 +460,7 @@ begin
       begin
         FdocZip.Add;
         FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU');
-        FdocZip.Items[i].schema := StrToTipoSchema(ok, Leitor.rAtributo('schema'));
+        FdocZip.Items[i].schema := StrToSchemaMDFe(ok, Leitor.rAtributo('schema'));
 
         StrStream := TStringStream.Create('');
 
@@ -560,8 +560,9 @@ begin
 
           case oLeitorInfZip.rCampo(tcInt, 'cStat') of
             100: FdocZip.Items[i].FresMDFe.FcSitMDFe := snAutorizado;
-            101: FdocZip.Items[i].FresMDFe.FcSitMDFe := snCancelada;
+            101: FdocZip.Items[i].FresMDFe.FcSitMDFe := snCancelado;
             110: FdocZip.Items[i].FresMDFe.FcSitMDFe := snDenegado;
+            132: FdocZip.Items[i].FresMDFe.FcSitMDFe := snEncerrado;
           end;
         end;
 

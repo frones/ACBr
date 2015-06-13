@@ -60,6 +60,20 @@ type
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve100;
   end;
 
+  { TDownloadConfMDFe }
+
+  TDownloadConfMDFe = class(TPersistent)
+  private
+    FPathDownload: String;
+    FSepararPorNome: Boolean;
+  public
+    Constructor Create;
+    procedure Assign(Source: TPersistent); override;
+  published
+    property PathDownload: String read FPathDownload write FPathDownload;
+    property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
+  end;
+
   { TArquivosConfMDFe }
 
   TArquivosConfMDFe = class(TArquivosConf)
@@ -69,12 +83,15 @@ type
     FSalvarApenasMDFeProcessados: boolean;
     FPathMDFe: String;
     FPathEvento: String;
+    FDownloadMDFe: TDownloadConfMDFe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
+    destructor Destroy; override;
     procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); overload;
 
     function GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
   published
     property EmissaoPathMDFe: boolean read FEmissaoPathMDFe
       write FEmissaoPathMDFe default False;
@@ -83,6 +100,7 @@ type
       read FSalvarApenasMDFeProcessados write FSalvarApenasMDFeProcessados default False;
     property PathMDFe: String read FPathMDFe write FPathMDFe;
     property PathEvento: String read FPathEvento write FPathEvento;
+    property DownloadMDFe: TDownloadConfMDFe read FDownloadMDFe write FDownloadMDFe;
   end;
 
   { TConfiguracoesMDFe }
@@ -181,17 +199,25 @@ begin
   FSalvarApenasMDFeProcessados := DeArquivosConfMDFe.SalvarApenasMDFeProcessados;
   FPathMDFe                    := DeArquivosConfMDFe.PathMDFe;
   FPathEvento                  := DeArquivosConfMDFe.PathEvento;
+  FDownloadMDFe.Assign(DeArquivosConfMDFe.DownloadMDFe);
 end;
 
 constructor TArquivosConfMDFe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
+  FDownloadMDFe := TDownloadConfMDFe.Create;
   FEmissaoPathMDFe := False;
   FSalvarEvento := False;
   FSalvarApenasMDFeProcessados := False;
   FPathMDFe := '';
   FPathEvento := '';
+end;
+
+destructor TArquivosConfMDFe.Destroy;
+begin
+  FDownloadMDFe.Free;
+  inherited;
 end;
 
 function TArquivosConfMDFe.GetPathEvento(tipoEvento: TpcnTpEvento;
@@ -221,6 +247,37 @@ end;
 function TArquivosConfMDFe.GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathMDFe, 'MDFe', CNPJ, Data);
+end;
+
+function TArquivosConfMDFe.GetPathDownload(xNome, CNPJ: String): String;
+begin
+  if EstaVazio(FDownloadMDFe.PathDownload) then
+     FDownloadMDFe.PathDownload := PathSalvar;
+
+  if FDownloadMDFe.SepararPorNome then
+     if NaoEstaVazio(xNome) then
+        FDownloadMDFe.PathDownload := PathWithDelim(FDownloadMDFe.PathDownload) + TiraAcentos(xNome);
+
+  Result := GetPath(FDownloadMDFe.PathDownload, 'Down', CNPJ);
+end;
+
+{ TDownloadConfMDFe }
+
+constructor TDownloadConfMDFe.Create;
+begin
+  FPathDownload := '';
+  FSepararPorNome := False;
+end;
+
+procedure TDownloadConfMDFe.Assign(Source: TPersistent);
+begin
+  if Source is TDownloadConfMDFe then
+  begin
+    FPathDownload := TDownloadConfMDFe(Source).PathDownload;
+    FSepararPorNome := TDownloadConfMDFe(Source).SepararPorNome;
+  end
+  else
+    inherited Assign(Source);
 end;
 
 end.

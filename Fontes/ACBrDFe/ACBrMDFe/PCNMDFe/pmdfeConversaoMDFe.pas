@@ -49,18 +49,22 @@ type
   TVersaoMDFe     = (ve100, ve100a);
 
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
-                     LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc);
+                     LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
+                     LayMDFeDistDFeInt);
 
   TSchemaMDFe     = (schErro, schMDFe, schEventoMDFe,
+                     schresMDFe, schresEvento, schprocMDFe, schprocEventoMDFe,
                      schconsReciMDFe, schconsSitMDFe, schconsStatServ,
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
-                     schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe);
+                     schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe,
+                     schdistDFeInt);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
-                     stMDFeEnvioWebService);
+                     stMDFeDistDFeInt, stMDFeEnvioWebService);
 
+  TSituacaoMDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
 const
 
@@ -282,18 +286,22 @@ function LayOutToServico(const t: TLayOutMDFe): String;
 begin
   Result := EnumeradoToStr(t,
     ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
-     'MDFeStatusServico', 'LayMDFeEvento', 'MDFeConsNaoEnc'],
+     'MDFeStatusServico', 'LayMDFeEvento', 'MDFeConsNaoEnc',
+     'MDFeDistribuicaoDFe'],
     [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
-      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc ] );
+      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
+      LayMDFeDistDFeInt ] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
 begin
   Result := StrToEnumerado(ok, s,
   ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
-     'MDFeStatusServico', 'LayMDFeEvento', 'MDFeConsNaoEnc'],
+   'MDFeStatusServico', 'LayMDFeEvento', 'MDFeConsNaoEnc',
+   'MDFeDistribuicaoDFe'],
   [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
-    LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc ] );
+    LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
+    LayMDFeDistDFeInt ] );
 end;
 
 function SchemaMDFeToStr(const t: TSchemaMDFe): String;

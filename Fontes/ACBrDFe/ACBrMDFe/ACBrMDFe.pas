@@ -46,7 +46,7 @@ uses
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
   ACBrMDFeDAMDFEClass,ACBrDFeException,
   pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
-  pmdfeEnvEventoMDFe,
+  pmdfeEnvEventoMDFe, pcnRetDistDFeInt,
   ACBrUtil;
 
 const
@@ -61,6 +61,7 @@ type
     FDAMDFE: TACBrMDFeDAMDFEClass;
     FManifestos: TManifestos;
     FEventoMDFe: TEventoMDFe;
+    FRetDistDFeInt: TRetDistDFeInt;
     FStatus: TStatusACBrMDFe;
     FWebServices: TWebServices;
 
@@ -114,11 +115,14 @@ type
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Manifestos: TManifestos read FManifestos write FManifestos;
     property EventoMDFe: TEventoMDFe read FEventoMDFe write FEventoMDFe;
+    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrMDFe read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
+    function DistribuicaoDFe(AcUFAutor: integer;
+      ACNPJCPF, AultNSU, ANSU: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesMDFe
@@ -146,6 +150,7 @@ begin
 
   FManifestos := TManifestos.Create(Self, Manifesto);
   FEventoMDFe := TEventoMDFe.Create;
+  FRetDistDFeInt := TRetDistDFeInt.Create;
   FWebServices := TWebServices.Create(Self);
 end;
 
@@ -153,6 +158,7 @@ destructor TACBrMDFe.Destroy;
 begin
   FManifestos.Free;
   FEventoMDFe.Free;
+  FRetDistDFeInt.Free;
   FWebServices.Free;
 
   inherited;
@@ -599,6 +605,20 @@ begin
      raise EACBrMDFeException.Create('Componente DAMDFE não associado.')
   else
      DAMDFE.ImprimirEVENTOPDF(nil);
+end;
+
+function TACBrMDFe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
+  ANSU: String): Boolean;
+begin
+  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+  WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
+  WebServices.DistribuicaoDFe.ultNSU := AultNSU;
+  WebServices.DistribuicaoDFe.NSU := ANSU;
+
+  Result := WebServices.DistribuicaoDFe.Executar;
+
+  if not Result then
+    GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
 
 end.

@@ -711,7 +711,7 @@ const
     begin
       L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),2) );
       A := IfThen( Altura = 0, 162, max(min(Altura,255),1) );
-      M1 := Byte(Margem SHR 0);
+	  M1 := Byte(Margem SHR 0);
       M2 := Byte(Margem SHR 8);
     end ;
 
@@ -721,7 +721,7 @@ const
 
     Result := GS + 'w' + chr( L ) + // Largura
               GS + 'h' + chr( A ) + // Altura
-              GS + 'k' + #132 + char(M1) + char(M2) + // Margem
+			  GS + 'k' + #132 + char(M1) + char(M2) + // Margem
               GS + 'H' + ifthen( AECFClass.ConfigBarras.MostrarCodigo, #1, #0 ) +
               ATipo + chr( Length( ACodigo ) ) + ACodigo;
   end;

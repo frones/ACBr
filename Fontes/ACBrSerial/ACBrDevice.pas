@@ -60,27 +60,27 @@ unit ACBrDevice ;
 
 interface
 
-uses
-  Classes, SysUtils, math, contnrs,
-  synaser, {Unit da SynaSer (comunicação serial) }
-  {$IFDEF COMPILER6_UP}
-    {$IFDEF MSWINDOWS}
-      Windows,
-    {$ENDIF}
-    DateUtils, Types, StrUtils,
-  {$ELSE}
-     Windows, ACBrD5,
-  {$ENDIF}
-  {$IFNDEF NOGUI}
-    {$IF DEFINED(VisualCLX)}
-       QForms, QPrinters,
-    {$ELSEIF DEFINED(FMX)}
-       FMX.Forms, FMX.Printer,
-    {$ELSE}
-       Forms, Printers,
-    {$IFEND}
-  {$ENDIF}
-  ACBrConsts;
+uses synaser, {Unit da SynaSer (comunicação serial) }
+     SysUtils, math,
+     ACBrConsts, 
+     {$IFDEF COMPILER6_UP}
+       {$IFDEF MSWINDOWS}
+         Windows,
+       {$ENDIF}
+       DateUtils, Types, StrUtils,
+     {$ELSE}
+        Windows, ACBrD5,
+     {$ENDIF}
+     {$IFNDEF NOGUI}
+       {$IF DEFINED(VisualCLX)}
+          QForms, QPrinters,
+       {$ELSEIF DEFINED(FMX)}
+          FMX.Forms, FMX.Printer,
+       {$ELSE}
+          Forms, Printers,
+       {$IFEND}
+     {$ENDIF}
+     Classes ;
 
 type
 
@@ -114,9 +114,9 @@ TACBrETQOrientacao = (orNormal, or270, or180, or90);
 TACBrETQBarraExibeCodigo = (becPadrao, becSIM, becNAO);
 
 {Criando o tipo enumerado para tipos de código de barras }
-TACBrTipoCodBarra =  ( barEAN13, barEAN8, barSTANDARD, barINTERLEAVED,
-                       barCODE128, barCODE39, barCODE93, barUPCA,
-                       barCODABAR, barMSI, barCODE11 );
+TACBrECFTipoCodBarra =  ( barEAN13, barEAN8, barSTANDARD, barINTERLEAVED,
+                         barCODE128, barCODE39, barCODE93, barUPCA,
+                         barCODABAR, barMSI, barCODE11 );
 
 {Criando tipo enumerado para a finalidade do arquivo MFD}
 TACBrECFFinalizaArqMFD = (finMF, finMFD, finTDM, finRZ, finRFD, finNFP,
@@ -152,90 +152,12 @@ TACBrECFConfigBarras = class(TPersistent)
     FMostrarCodigo: Boolean;
     FAltura: Integer;
     FLarguraLinha: Integer;
+    FMargem: Integer;
   published
     property MostrarCodigo: Boolean read FMostrarCodigo write FMostrarCodigo;
     property LarguraLinha: Integer read FLarguraLinha write FLarguraLinha;
     property Altura: Integer read FAltura write FAltura;
-end;
-
-{ TACBrTag }
-
-TACBrTag = class
-  private
-    FAjuda: String;
-    FEhBloco: Boolean;
-    FNome: String;
-    FSequencia: Integer;
-    function GetTamanho: Integer;
-    procedure SetAjuda(AValue: String);
-    procedure SetNome(AValue: String);
-  public
-    constructor Create;
-
-    property Sequencia: Integer read FSequencia write FSequencia;
-    property EhBloco: Boolean read FEhBloco write FEhBloco;
-    property Nome: String read FNome write SetNome;
-    property Ajuda: String read FAjuda write SetAjuda;
-    property Tamanho: Integer read GetTamanho;
-end;
-
-{ Lista de Objetos do tipo TACBrTag }
-
-{ TACBrTags }
-
-TACBrTags = class(TObjectList)
-  protected
-    procedure SetObject (Index: Integer; Item: TACBrTag);
-    function GetObject (Index: Integer): TACBrTag;
-    procedure Insert (Index: Integer; Obj: TACBrTag);
-  public
-    function New: TACBrTag;
-    function Add (Obj: TACBrTag): Integer;
-    property Objects [Index: Integer]: TACBrTag
-      read GetObject write SetObject; default;
-
-    function AcharTag( NomeTag: String): TACBrTag;
-end;
-
-TACBrTagOnTraduzirTag = procedure(const ATag: AnsiString;
-  var TagTraduzida: AnsiString) of object ;
-TACBrTagOnTraduzirTagBloco = procedure(const ATag, ConteudoBloco: AnsiString;
-  var BlocoTraduzido: AnsiString) of object ;
-
-{ TACBrTagProcessor }
-
-TACBrTagProcessor = class
-  private
-    FIgnorarTags: Boolean;
-    FOnTraduzirTag: TACBrTagOnTraduzirTag;
-    FOnTraduzirTagBloco: TACBrTagOnTraduzirTagBloco;
-    FTags: TACBrTags;
-    FTraduzirTags: Boolean;
-
-    procedure AcharProximaTag(const AString: AnsiString; const PosIni: Integer;
-      var ATag: AnsiString; var PosTag: Integer);
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
-    function TraduzirTag(const ATag: AnsiString): AnsiString;
-    function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString;
-
-    procedure RetornarTags( AStringList: TStrings; IncluiAjuda: Boolean = True);
-
-    procedure AddTags(ArrayTags: array of String; ArrayHelpTags: array of String;
-       TagEhBloco: Boolean);
-
-    property Tags: TACBrTags read FTags;
-    property IgnorarTags: Boolean read FIgnorarTags write FIgnorarTags;
-    property TraduzirTags: Boolean read FTraduzirTags write FTraduzirTags;
-
-    property OnTraduzirTag: TACBrTagOnTraduzirTag
-      read FOnTraduzirTag write FOnTraduzirTag;
-    property OnTraduzirTagBloco: TACBrTagOnTraduzirTagBloco
-      read FOnTraduzirTagBloco write FOnTraduzirTagBloco;
-
+    property Margem: Integer read FMargem write FMargem;
 end;
 
 { TACBrDevice }
@@ -366,266 +288,11 @@ TACBrThreadEnviaLPT = class(TThread)
     property BytesSent : Integer read fsBytesSent ;
   end;
 
-const
-  estCupomAberto = [estVenda, estPagamento];
 
 implementation
 Uses ACBrUtil ;
 
-{ TACBrTag }
-
-function TACBrTag.GetTamanho: Integer;
-begin
-  Result := Length(FNome);
-end;
-
-procedure TACBrTag.SetAjuda(AValue: String);
-begin
-  FAjuda := ACBrStr( AValue );
-end;
-
-procedure TACBrTag.SetNome(AValue: String);
-begin
-  FNome := LowerCase(Trim(AValue));
-
-  if LeftStr(FNome,1) <> '<' then
-    FNome := '<'+FNome;
-
-  if RightStr(AValue,1) <> '>' then
-    FNome := FNome+'>';
-end;
-
-constructor TACBrTag.Create;
-begin
-  FEhBloco := False;
-  FSequencia := 0;
-end;
-
-{ TACBrTags }
-
-procedure TACBrTags.SetObject(Index: Integer; Item: TACBrTag);
-begin
-  inherited SetItem (Index, Item) ;
-end;
-
-function TACBrTags.GetObject(Index: Integer): TACBrTag;
-begin
-  Result := inherited GetItem(Index) as TACBrTag ;
-end;
-
-procedure TACBrTags.Insert(Index: Integer; Obj: TACBrTag);
-begin
-  inherited Insert(Index, Obj);
-end;
-
-function TACBrTags.New: TACBrTag;
-begin
-  Result := TACBrTag.Create;
-  Add(Result);
-end;
-
-function TACBrTags.Add(Obj: TACBrTag): Integer;
-begin
-  Result := inherited Add(Obj) ;
-  Obj.Sequencia := Count ;
-end;
-
-function TACBrTags.AcharTag(NomeTag: String): TACBrTag;
-var
-  I: Integer;
-begin
-  NomeTag := LowerCase(NomeTag);
-  Result := Nil;
-
-  For I := 0 to Count-1 do
-  begin
-    if Objects[I].Nome = NomeTag then
-    begin
-      Result := Objects[I];
-      Break;
-    end;
-  end;
-end;
-
-{ TACBrTagProcessor }
-
-constructor TACBrTagProcessor.Create;
-begin
-  inherited Create;
-
-  FTags := TACBrTags.create( True );
-  FIgnorarTags := False;
-  FTraduzirTags := True;
-  FOnTraduzirTag := nil;
-  FOnTraduzirTagBloco := nil;
-end;
-
-destructor TACBrTagProcessor.Destroy;
-begin
-  FTags.Free;
-
-  inherited Destroy;
-end;
-
-procedure TACBrTagProcessor.AcharProximaTag(const AString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
-var
-   PosTagAux, FimTag, LenTag : Integer ;
-begin
-  ATag   := '';
-  PosTag := PosEx( '<', AString, PosIni);
-  if PosTag > 0 then
-  begin
-    PosTagAux := PosEx( '<', AString, PosTag + 1);  // Verificando se Tag é inválida
-    FimTag    := PosEx( '>', AString, PosTag + 1);
-    if FimTag = 0 then                             // Tag não fechada ?
-    begin
-      PosTag := 0;
-      exit ;
-    end ;
-
-    while (PosTagAux > 0) and (PosTagAux < FimTag) do  // Achou duas aberturas Ex: <<e>
-    begin
-      PosTag    := PosTagAux;
-      PosTagAux := PosEx( '<', AString, PosTag + 1);
-    end ;
-
-    LenTag := FimTag - PosTag + 1 ;
-    ATag   := LowerCase( copy( AString, PosTag, LenTag ) );
-  end ;
-end ;
-
-function TACBrTagProcessor.DecodificarTagsFormatacao(AString: AnsiString
-  ): AnsiString;
-Var
-  Tag1, Tag2, Cmd : AnsiString ;
-  PosTag1, LenTag1, PosTag2, FimTag : Integer ;
-  ATag: TACBrTag;
-begin
-  Result := AString;
-  if not TraduzirTags then exit ;
-
-  Tag1    := '';
-  PosTag1 := 0;
-
-  AcharProximaTag( Result, 1, Tag1, PosTag1);
-  while Tag1 <> '' do
-  begin
-    LenTag1  := Length( Tag1 );
-    ATag     := FTags.AcharTag( Tag1 ) ;
-    Tag2     := '' ;
-    PosTag2  := 0 ;
-
-    if ATag <> Nil then
-    begin
-      if (ATag.EhBloco) then  // Tag de Bloco, Procure pelo Fechamento
-      begin
-        Tag2    := '</'+ copy(Tag1, 2, LenTag1) ; // Calcula Tag de Fechamento
-        PosTag2 := PosEx(Tag2, LowerCase(Result), PosTag1+LenTag1 );
-
-        if PosTag2 = 0 then             // Não achou Tag de Fechamento
-        begin
-          Tag2 := '';
-          Cmd  := '';
-        end
-        else
-        begin
-          Cmd := TraduzirTagBloco( Tag1, copy(Result, PosTag1+LenTag1, PosTag2-PosTag1-LenTag1) );
-
-          // Faz da Tag1, todo o Bloco para fazer a substituição abaixo //
-          LenTag1 := PosTag2-PosTag1+LenTag1+1;
-          Tag1    := copy(Result, PosTag1, LenTag1 )
-        end;
-      end
-      else
-        Cmd := TraduzirTag( Tag1 ) ;
-    end
-    else
-      Cmd := Tag1;   // Tag não existe nesse TagProcessor
-
-    FimTag := PosTag1 + LenTag1 -1 ;
-
-    if Cmd <> Tag1 then   // Houve mudança no conteudo  ? Se SIM, substitua
-    begin
-      Result := StuffString( Result, PosTag1, LenTag1, Cmd );
-      FimTag := FimTag + (Length(Cmd) - LenTag1);
-    end ;
-
-    Tag1    := '';
-    PosTag1 := 0;
-    AcharProximaTag( Result, FimTag + 1, Tag1, PosTag1 );
-  end ;
-end;
-
-function TACBrTagProcessor.TraduzirTag(const ATag: AnsiString): AnsiString;
-begin
-  Result := '';
-  if (ATag = '') or IgnorarTags then exit ;
-
-  if Assigned( FOnTraduzirTag ) then
-    FOnTraduzirTag( ATag, Result);
-end;
-
-function TACBrTagProcessor.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString
-  ): AnsiString;
-var
-  AString: String;
-begin
-  Result := ConteudoBloco;
-  if (ATag = '') or IgnorarTags or (ATag = cTagIgnorarTags) then
-    exit ;
-
-  { Chamada Recursiva, para no caso de "ConteudoBloco" ter TAGs não resolvidas
-    dentro do Bloco }
-  AString := DecodificarTagsFormatacao( ConteudoBloco ) ;
-
-  if Assigned( FOnTraduzirTagBloco ) then
-    FOnTraduzirTagBloco( ATag, AString, Result);
-end;
-
-procedure TACBrTagProcessor.RetornarTags(AStringList: TStrings;
-  IncluiAjuda: Boolean);
-var
-  ALine: String;
-  i: Integer;
-begin
-  AStringList.Clear;
-  For i := 0 to FTags.Count-1 do
-  begin
-    ALine := FTags[i].Nome;
-    if IncluiAjuda then
-    begin
-      if FTags[i].EhBloco then
-        ALine := ALine + ' - Bloco';
-
-      ALine := ALine + ' - '+FTags[i].Ajuda;
-    end;
-
-    AStringList.Add(ALine);
-  end;
-end;
-
-procedure TACBrTagProcessor.AddTags(ArrayTags: array of String;
-  ArrayHelpTags: array of String; TagEhBloco: Boolean);
-var
-  i: Integer;
-begin
-  For i := Low(ArrayTags) to High(ArrayTags) do
-  begin
-     with FTags.New do
-     begin
-        Nome := ArrayTags[i];
-          if High(ArrayHelpTags) >= i then
-            Ajuda := ArrayHelpTags[i];
-
-        EhBloco := TagEhBloco;
-     end;
-  end;
-end;
-
-
 { TACBrDevice }
-
 constructor TACBrDevice.Create(AOwner: TComponent);
 begin
   inherited Create( AOwner ) ;

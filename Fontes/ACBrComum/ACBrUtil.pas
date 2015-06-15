@@ -1757,8 +1757,9 @@ begin
        PosIni := PosFim + 1 ;
 
        // Pula CaracterQuebrar no Inicio da String
-       while (AnsiStr[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
-          Inc(PosIni) ;
+       if (PosIni <= Tamanho) then
+          while (AnsiStr[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
+             Inc(PosIni) ;
 
     until (PosIni > Tamanho);
   end

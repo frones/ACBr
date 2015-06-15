@@ -1675,7 +1675,7 @@ begin
         FieldDefs.Add('Mod_', ftString, 2);
         FieldDefs.Add('Serie', ftString, 3);
         FieldDefs.Add('NNF', ftString, 11);
-        FieldDefs.Add('DEmi', ftString, 10);
+        FieldDefs.Add('DEmi', ftString, 19);
         FieldDefs.Add('DSaiEnt', ftString, 10);
         FieldDefs.Add('TpNF', ftString, 1);
         FieldDefs.Add('CMunFG', ftString, 7);

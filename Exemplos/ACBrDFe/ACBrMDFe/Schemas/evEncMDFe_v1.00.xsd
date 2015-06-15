@@ -32,7 +32,7 @@
 						<xs:documentation>Data que o Manifesto foi encerrado</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="cUF" type="TCodUfIBGE">
+				<xs:element name="cUF" type="TCodUfIBGE_EX">
 					<xs:annotation>
 						<xs:documentation>UF de encerramento do Manifesto</xs:documentation>
 					</xs:annotation>

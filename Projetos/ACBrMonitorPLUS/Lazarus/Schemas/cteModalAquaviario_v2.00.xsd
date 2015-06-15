@@ -157,6 +157,105 @@
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
+				<xs:element name="detCont" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Grupo de informações de detalhamento dos conteiners
+(Somente para Redespacho Intermediario)</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nCont" type="TContainer">
+								<xs:annotation>
+									<xs:documentation>Identificação do Container</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="lacre" minOccurs="0" maxOccurs="3">
+								<xs:annotation>
+									<xs:documentation>Grupo de informações dos lacres dos cointainers da qtde da carga </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nLacre">
+											<xs:annotation>
+												<xs:documentation>Lacre</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="TString">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="20"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="infDoc" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Informações dos documentos dos conteiners</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:choice>
+										<xs:element name="infNF" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Informações das NF</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="serie">
+														<xs:annotation>
+															<xs:documentation>Série</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TString">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="3"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="nDoc">
+														<xs:annotation>
+															<xs:documentation>Número </xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="TString">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="20"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="unidRat" type="TDec_0302_0303" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unidade de medida rateada (Peso,Volume)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="infNFe" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Informações das NFe</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="chave" type="TChNFe">
+														<xs:annotation>
+															<xs:documentation>Chave de acesso da NF-e</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="unidRat" type="TDec_0302_0303" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unidade de medida rateada (Peso,Volume)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

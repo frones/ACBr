@@ -53,9 +53,9 @@
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="forPag">
+									<xs:element name="forPag" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Forma de pagamento do serviço</xs:documentation>
+											<xs:documentation>Forma de pagamento do serviço *** TAG OBSOLETA - Será retirada em versão futura</xs:documentation>
 											<xs:documentation>Preencher com: 
 											0 - Pago;
 											1 - A pagar;
@@ -202,7 +202,7 @@
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 												<xs:maxLength value="60"/>
 											</xs:restriction>
 										</xs:simpleType>
@@ -251,7 +251,7 @@
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 												<xs:maxLength value="60"/>
 											</xs:restriction>
 										</xs:simpleType>
@@ -275,7 +275,7 @@
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 												<xs:maxLength value="60"/>
 											</xs:restriction>
 										</xs:simpleType>
@@ -389,7 +389,7 @@ Informar os zeros não significativos.</xs:documentation>
 															<xs:simpleType>
 																<xs:restriction base="TString">
 																	<xs:maxLength value="60"/>
-																	<xs:minLength value="1"/>
+																	<xs:minLength value="2"/>
 																</xs:restriction>
 															</xs:simpleType>
 														</xs:element>
@@ -400,7 +400,7 @@ Informar os zeros não significativos.</xs:documentation>
 															<xs:simpleType>
 																<xs:restriction base="TString">
 																	<xs:maxLength value="60"/>
-																	<xs:minLength value="1"/>
+																	<xs:minLength value="2"/>
 																</xs:restriction>
 															</xs:simpleType>
 														</xs:element>
@@ -759,7 +759,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 												<xs:maxLength value="40"/>
 											</xs:restriction>
 										</xs:simpleType>
@@ -770,7 +770,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 												<xs:maxLength value="40"/>
 											</xs:restriction>
 										</xs:simpleType>
@@ -880,7 +880,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -891,7 +891,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -938,7 +938,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -949,7 +949,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -970,12 +970,6 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TEmail"/>
 										</xs:simpleType>
-									</xs:element>
-									<xs:element name="locColeta" type="TEndReEnt" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Local da Coleta</xs:documentation>
-											<xs:documentation>Informar apenas quando diferente do endereço do remetente.</xs:documentation>
-										</xs:annotation>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -1014,7 +1008,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -1070,7 +1064,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -1130,7 +1124,7 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="60"/>
-												<xs:minLength value="1"/>
+												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
@@ -1159,12 +1153,6 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 									<xs:element name="email" type="TEmail" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Endereço de email</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="locEnt" type="TEndReEnt" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>Local de Entrega constante na Nota Fiscal</xs:documentation>
-											<xs:documentation>Informar apenas quando diferente do endereço do destinatário</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 								</xs:sequence>
@@ -1802,6 +1790,8 @@ Opcional para Redespacho Intermediario e Serviço vinculado a multimodal.</xs:do
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
 																<xs:whiteSpace value="preserve"/>
+																<xs:minLength value="1"/>
+																<xs:maxLength value="1"/>
 																<xs:enumeration value="0"/>
 																<xs:enumeration value="1"/>
 																<xs:enumeration value="2"/>
@@ -2419,7 +2409,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="60"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -2452,7 +2442,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="60"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -2468,7 +2458,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="60"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -2508,7 +2498,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="255"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -2541,7 +2531,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="60"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -2559,7 +2549,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="60"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -2600,7 +2590,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 				<xs:simpleType>
 					<xs:restriction base="TString">
 						<xs:maxLength value="60"/>
-						<xs:minLength value="1"/>
+						<xs:minLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -3237,7 +3227,7 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 					<xs:documentation>Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="qtdRat" type="TDec_0302" minOccurs="0">
+			<xs:element name="qtdRat" type="TDec_0302_0303" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
 				</xs:annotation>
@@ -3284,7 +3274,7 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="qtdRat" type="TDec_0302" minOccurs="0">
+			<xs:element name="qtdRat" type="TDec_0302_0303" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
 				</xs:annotation>

@@ -385,7 +385,7 @@
 											<xs:simpleType>
 												<xs:restriction base="TString">
 													<xs:maxLength value="60"/>
-													<xs:minLength value="1"/>
+													<xs:minLength value="2"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
@@ -461,7 +461,7 @@
 								<xs:simpleType>
 									<xs:restriction base="TString">
 										<xs:maxLength value="60"/>
-										<xs:minLength value="1"/>
+										<xs:minLength value="2"/>
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>

@@ -65,12 +65,12 @@
 							<xs:element name="nroItemAlterado" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation>Preencher com o indice do item alterado caso a alteração ocorra em uma lista. 
-Por exemplo: Se corrigir uma das NF-e do remetente, esta tag deverá indicar a posição da NF-e alterada na lista. 
 OBS: O indice inicia sempre  em 1</xs:documentation>
 								</xs:annotation>
 								<xs:simpleType>
 									<xs:restriction base="xs:string">
 										<xs:whiteSpace value="preserve"/>
+										<xs:pattern value="[1-9][0-9]|0?[1-9]"/>
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>

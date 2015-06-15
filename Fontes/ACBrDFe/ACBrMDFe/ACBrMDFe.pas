@@ -46,7 +46,7 @@ uses
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
   ACBrMDFeDAMDFEClass,ACBrDFeException,
   pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
-  pmdfeEnvEventoMDFe, pcnRetDistDFeInt,
+  pmdfeEnvEventoMDFe, pmdfeRetDistDFeInt,
   ACBrUtil;
 
 const

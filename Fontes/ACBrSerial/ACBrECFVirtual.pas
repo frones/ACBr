@@ -323,6 +323,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetDataHoraSB: TDateTime; override ;
     function GetSubModeloECF: String ; override ;
     function GetNumCRO: String; override ;
+    function GetNumCRZ: String; override ;
     function GetNumSerie: String; override ;
     function GetNumVersao: String; override ;
     function GetSubTotal: Double; override ;
@@ -1023,7 +1024,12 @@ end;
 
 function TACBrECFVirtualClass.GetNumCRO: String;
 begin
-  Result := IntToStrZero(fpNumCRO,3) ;
+  Result := IntToStrZero(fpNumCRO, 3) ;
+end;
+
+function TACBrECFVirtualClass.GetNumCRZ: String;
+begin
+  Result := IntToStrZero(fpReducoesZ, 6);
 end;
 
 function TACBrECFVirtualClass.GetNumVersao: String ;

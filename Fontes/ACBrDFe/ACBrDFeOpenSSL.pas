@@ -726,7 +726,7 @@ begin
     raise EACBrDFeException.Create('Error: xmlsec initialization failed.');
 
   { Check loaded library version }
-  if (xmlSecCheckVersionExt(1, 2, 8, xmlSecCheckVersionABICompatible) <> 1) then
+  if (xmlSecCheckVersionExt(1, 2, 18, xmlSecCheckVersionABICompatible) <> 1) then
     raise EACBrDFeException.Create(
       'Error: loaded xmlsec library version is not compatible.');
 

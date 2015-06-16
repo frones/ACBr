@@ -162,6 +162,8 @@ type
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
+    property SSLClass: TDFeSSLClass read FSSLClass;
+
     property UnloadSSLLib: Boolean read FUnloadSSLLib write FUnloadSSLLib default True;
     property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
     property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;

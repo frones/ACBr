@@ -54,6 +54,7 @@ type
 
   TDFeCapicom = class(TDFeSSLClass)
   private
+    FStoreLocation: CAPICOM_STORE_LOCATION;
     FNumCertCarregado: String;
     FCNPJ: String;
     FCertificado: ICertificate2;
@@ -76,8 +77,6 @@ type
     function GetInternalErrorCode: Integer; override;
 
   public
-    property Certificado: ICertificate2 read FCertificado;
-
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
@@ -96,6 +95,9 @@ type
     procedure CarregarCertificado; override;
     function SelecionarCertificado: String; override;
     procedure DescarregarCertificado; override;
+
+    property Certificado: ICertificate2 read FCertificado;
+    property StoreLocation: CAPICOM_STORE_LOCATION read FStoreLocation write FStoreLocation;
   end;
 
 implementation
@@ -114,7 +116,7 @@ begin
   FCNPJ := '';
   FCertificado := nil;
   FCertStoreMem := nil;
-
+  FStoreLocation := CAPICOM_CURRENT_USER_STORE;
   FReqResp := TACBrHTTPReqResp.Create;
 end;
 
@@ -154,8 +156,7 @@ var
   Cert: ICertificate2;
 begin
   Store := CoStore.Create;
-  Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME,
-    CAPICOM_STORE_OPEN_READ_ONLY);
+  Store.Open(FStoreLocation, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
   Certs := Store.Certificates as ICertificates2;
   Certs2 := Certs.Select(ACBrStr('Certificado(s) Digital(is) disponível(is)'),
@@ -233,8 +234,7 @@ begin
 
     // Lendo lista de Certificados //
     Store := CoStore.Create;
-    Store.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_STORE_NAME,
-      CAPICOM_STORE_OPEN_READ_ONLY);
+    Store.Open(FStoreLocation, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
     FCertificado := nil;
     Certs := Store.Certificates as ICertificates2;
 
@@ -259,8 +259,7 @@ begin
 
     // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //[
     FCertStoreMem := CoStore.Create;
-    FCertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr',
-      CAPICOM_STORE_OPEN_READ_ONLY);
+    FCertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
     FCertStoreMem.Add(FCertificado);
 
     // Atribuindo Senha para memória, se o Certificado for A3 //

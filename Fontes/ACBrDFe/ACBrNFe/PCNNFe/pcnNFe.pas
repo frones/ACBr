@@ -2002,12 +2002,13 @@ constructor TIde.Create(AOwner: TNFe);
 begin
   inherited Create;
   FNFref := TNFrefCollection.Create(Self);
-  refNFP := TRefNFP.Create;
+  FrefNFP := TRefNFP.Create;
 end;
 
 destructor TIde.Destroy;
 begin
   FNFref.Free;
+	FrefNFP.Free;
   inherited;
 end;
 

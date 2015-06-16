@@ -159,7 +159,7 @@ begin
   Store.Open(FStoreLocation, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
 
   Certs := Store.Certificates as ICertificates2;
-  Certs2 := Certs.Select(ACBrStr('Certificado(s) Digital(is) disponível(is)'),
+  Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)',
     ACBrStr('Selecione o Certificado Digital para uso no aplicativo'), False);
 
   if not (Certs2.Count = 0) then

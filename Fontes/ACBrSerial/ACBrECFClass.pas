@@ -2104,6 +2104,7 @@ begin
   if (pos('ACBrErro:',fpRespostaComando) = 1)  then
   begin
      fpRespostaComando := copy( fpRespostaComando, 11, Length( fpRespostaComando ) );
+     GravaLog( 'RespostaComando: '+fpRespostaComando, True );
      raise EACBrECFTimeOut.create( Format(ACBrStr(cACBrECFSemRespostaException), [ModeloStr]) ) ;
   end ;
 end;

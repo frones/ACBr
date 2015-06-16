@@ -51,6 +51,7 @@ Data: 16/06/2015    (por: DSA)
 -- pcnCFeR --
 [*] Modificação para ligar o Flag "EhCombustivel" quando produto tiver
    "indRegra = 'T'"
+[-] Correção de Bug na detecçao das aspas na leitura de XML
 
 Data: 28/05/2015    (por: DSA)
 -- ACBrSAT --

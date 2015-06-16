@@ -85,10 +85,11 @@ var
   Aspas: String;
 begin
   Result := False;
-  if Pos('versao="', Leitor.Arquivo) <> 0 then
-    Aspas := '"'
+  if Pos('versao=''', Leitor.Arquivo) <> 0 then
+    Aspas := ''''
    else
-    Aspas := '''';
+    Aspas := '"';
+
   CFe.Clear;
 
   if Leitor.rExtrai(1, 'infCFe') <> '' then

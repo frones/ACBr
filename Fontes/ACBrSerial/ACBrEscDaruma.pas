@@ -82,6 +82,8 @@ begin
 
   fpModeloStr := 'EscDaruma';
 
+  RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
+
 {(*}
   with Cmd  do
   begin

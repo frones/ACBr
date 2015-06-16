@@ -995,7 +995,12 @@ begin
   if WaitForTerminator then
     Result := FDevice.Serial.RecvTerminated(ATimeOut, chr(BytesToRead))
   else
-    Result := FDevice.Serial.RecvBufferStr(BytesToRead, ATimeOut);
+  begin
+    if BytesToRead < 1 then
+      Result := FDevice.Serial.RecvPacket(ATimeOut)
+    else
+      Result := FDevice.Serial.RecvBufferStr(BytesToRead, ATimeOut);
+  end;
 
   GravarLog('RX <- '+Result, True);
 end;

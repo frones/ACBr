@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/06/2015    (por: DSA)
+-- pcnCFeR --
+[*] Modificação para ligar o Flag "EhCombustivel" quando produto tiver
+   "indRegra = 'T'"
+
 Data: 28/05/2015    (por: DSA)
 -- ACBrSAT --
 [-] Corrigido Bug na leitura de Estado do SAT, quando o retorno vem em Numeral e

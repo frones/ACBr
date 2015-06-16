@@ -214,6 +214,8 @@ begin
     (*I15*)CFe.Det[i].Prod.vRatDesc := Leitor.rCampo(tcDe2, 'vRatDesc');
     (*I16*)CFe.Det[i].Prod.vRatAcr := Leitor.rCampo(tcDe2, 'vRatAcr');
 
+    CFe.Det[i].Prod.EhCombustivel := (CFe.Det[i].Prod.indRegra = irTruncamento) ;
+
     (* Grupo da TAG <det><prod><obsFiscoDet> *)
     j := 0;
     while Leitor.rExtrai(3, 'obsFiscoDet', '', j + 1) <> '' do

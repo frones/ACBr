@@ -98,6 +98,8 @@ type
     lSSID8: TLabel;
     lSSID9: TLabel;
     mCancelamentoEnviar: TSynMemo;
+    MenuItem14: TMenuItem;
+    MenuItem15: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -211,6 +213,7 @@ type
     procedure cbxUTF8Change(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem13Click(Sender: TObject);
+    procedure MenuItem15Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -420,7 +423,7 @@ begin
     cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
     sePagCodChange(Sender);
 
-    cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
+    cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
     cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
     cbxPagCodigo.ItemIndex := INI.ReadInteger('PosPrinter','PaginaDeCodigo',Integer(ACBrPosPrinter1.PaginaDeCodigo));
     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','ParamsString','');
@@ -493,7 +496,7 @@ begin
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
     INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
 
-    INI.WriteInteger('PosPrinter','Modelo',cbxModelo.ItemIndex);
+    INI.WriteInteger('PosPrinter','Modelo',cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
     INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
     INI.WriteString('PosPrinter','ParamsString',ACBrPosPrinter1.Device.ParamsString);
@@ -626,6 +629,18 @@ begin
   end;
 end;
 
+procedure TForm1.MenuItem15Click(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XML|*.xml';
+  if OpenDialog1.Execute then
+  begin
+    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+
+    mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
+    PageControl1.ActivePage := tsRecebido;
+  end ;
+end;
+
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
 begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
@@ -668,6 +683,8 @@ end;
 
 procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
 begin
+  //ACBrSAT1.CFeCanc.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesCancelados\CFe35150511111111111111591234567890000607158269-can.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000607158269.xml');
   PrepararImpressao;
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
@@ -1056,6 +1073,7 @@ end;
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
 begin
   PrepararImpressao;
+  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000757243865.xml');
   ACBrSAT1.ImprimirExtrato;
 end;
 

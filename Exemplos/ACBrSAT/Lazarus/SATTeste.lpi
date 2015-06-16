@@ -37,12 +37,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CompilerMessages>
-              <MsgFileName Value=""/>
-            </CompilerMessages>
-            <CompilerPath Value="$(CompPath)"/>
-          </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
@@ -83,7 +77,6 @@
       <Unit0>
         <Filename Value="SATTeste.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="SATTeste"/>
       </Unit0>
       <Unit1>
         <Filename Value="unit1.pas"/>
@@ -97,7 +90,6 @@
         <Filename Value="configuraserial.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-        <UnitName Value="configuraserial"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -125,12 +117,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="4" IgnoreAll="True">

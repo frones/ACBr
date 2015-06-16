@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 595
+  Left = 514
   Height = 501
-  Top = 221
+  Top = 169
   Width = 793
   Caption = 'SAT Teste - Projeto ACBr'
   ClientHeight = 481
@@ -9,7 +9,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.4.0.4'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -24,9 +24,9 @@ object Form1: TForm1
     Height = 250
     Top = 208
     Width = 793
-    ActivePage = tsLog
+    ActivePage = tsRecebido
     Align = alClient
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
@@ -490,7 +490,6 @@ object Form1: TForm1
           end>
         MouseActions = <>
         MouseSelActions = <>
-        SelectedColor.FrameEdges = sfeAround
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -508,7 +507,6 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clBtnFace
             MarkupInfo.Foreground = clNone
-            MarkupInfo.FrameEdges = sfeAround
             DigitCount = 2
             ShowOnlyLineNumbersMultiplesOf = 1
             ZeroStart = False
@@ -525,13 +523,11 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clWhite
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
           end
           object SynGutterCodeFolding1: TSynGutterCodeFolding
             MouseActions = <>
             MarkupInfo.Background = clNone
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
             MouseActionsExpanded = <>
             MouseActionsCollapsed = <>
           end
@@ -982,7 +978,6 @@ object Form1: TForm1
           end>
         MouseActions = <>
         MouseSelActions = <>
-        SelectedColor.FrameEdges = sfeAround
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -1000,7 +995,6 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clBtnFace
             MarkupInfo.Foreground = clNone
-            MarkupInfo.FrameEdges = sfeAround
             DigitCount = 2
             ShowOnlyLineNumbersMultiplesOf = 1
             ZeroStart = False
@@ -1017,13 +1011,11 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clWhite
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
           end
           object SynGutterCodeFolding1: TSynGutterCodeFolding
             MouseActions = <>
             MarkupInfo.Background = clNone
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
             MouseActionsExpanded = <>
             MouseActionsCollapsed = <>
           end
@@ -1474,7 +1466,6 @@ object Form1: TForm1
           end>
         MouseActions = <>
         MouseSelActions = <>
-        SelectedColor.FrameEdges = sfeAround
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -1492,7 +1483,6 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clBtnFace
             MarkupInfo.Foreground = clNone
-            MarkupInfo.FrameEdges = sfeAround
             DigitCount = 2
             ShowOnlyLineNumbersMultiplesOf = 1
             ZeroStart = False
@@ -1509,13 +1499,11 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clWhite
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
           end
           object SynGutterCodeFolding1: TSynGutterCodeFolding
             MouseActions = <>
             MarkupInfo.Background = clNone
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
             MouseActionsExpanded = <>
             MouseActionsCollapsed = <>
           end
@@ -1996,7 +1984,6 @@ object Form1: TForm1
           end>
         MouseActions = <>
         MouseSelActions = <>
-        SelectedColor.FrameEdges = sfeAround
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -2014,7 +2001,6 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clBtnFace
             MarkupInfo.Foreground = clNone
-            MarkupInfo.FrameEdges = sfeAround
             DigitCount = 2
             ShowOnlyLineNumbersMultiplesOf = 1
             ZeroStart = False
@@ -2031,13 +2017,11 @@ object Form1: TForm1
             MouseActions = <>
             MarkupInfo.Background = clWhite
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
           end
           object SynGutterCodeFolding1: TSynGutterCodeFolding
             MouseActions = <>
             MarkupInfo.Background = clNone
             MarkupInfo.Foreground = clGray
-            MarkupInfo.FrameEdges = sfeAround
             MouseActionsExpanded = <>
             MouseActionsCollapsed = <>
           end
@@ -2061,7 +2045,7 @@ object Form1: TForm1
       Width = 169
       Align = alLeft
       Caption = 'Inicialização'
-      ClientHeight = 182
+      ClientHeight = 180
       ClientWidth = 165
       TabOrder = 0
       object bInicializar: TButton
@@ -2104,12 +2088,12 @@ object Form1: TForm1
       object GroupBox2: TGroupBox
         Left = 5
         Height = 89
-        Top = 88
+        Top = 86
         Width = 155
         Align = alBottom
         BorderSpacing.Around = 5
         Caption = 'Parâmetros'
-        ClientHeight = 71
+        ClientHeight = 69
         ClientWidth = 151
         TabOrder = 2
         object btLerParams: TButton
@@ -2143,12 +2127,12 @@ object Form1: TForm1
       Width = 622
       Align = alClient
       Caption = 'Configuração'
-      ClientHeight = 182
+      ClientHeight = 180
       ClientWidth = 618
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 0
-        Height = 182
+        Height = 180
         Top = 0
         Width = 618
         ActivePage = Impressao
@@ -2490,7 +2474,7 @@ object Form1: TForm1
             Top = 48
             Width = 289
             Caption = 'PPPoE'
-            ClientHeight = 87
+            ClientHeight = 85
             ClientWidth = 285
             TabOrder = 4
             Visible = False
@@ -2531,7 +2515,7 @@ object Form1: TForm1
             Top = 48
             Width = 289
             Caption = 'IPFIX'
-            ClientHeight = 87
+            ClientHeight = 85
             ClientWidth = 285
             TabOrder = 3
             Visible = False
@@ -2625,7 +2609,7 @@ object Form1: TForm1
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 2
-            ClientHeight = 23
+            ClientHeight = 21
             ClientWidth = 140
             Columns = 2
             ItemIndex = 0
@@ -2642,7 +2626,7 @@ object Form1: TForm1
             Top = 48
             Width = 144
             Caption = 'WiFi'
-            ClientHeight = 87
+            ClientHeight = 85
             ClientWidth = 140
             TabOrder = 1
             Visible = False
@@ -2716,7 +2700,7 @@ object Form1: TForm1
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 3
-            ClientHeight = 23
+            ClientHeight = 21
             ClientWidth = 284
             Columns = 3
             ItemIndex = 0
@@ -2734,7 +2718,7 @@ object Form1: TForm1
             Top = 0
             Width = 150
             Caption = 'Proxy'
-            ClientHeight = 135
+            ClientHeight = 133
             ClientWidth = 146
             TabOrder = 5
             object cbxRedeProxy: TComboBox
@@ -2823,16 +2807,16 @@ object Form1: TForm1
         end
         object Impressao: TTabSheet
           Caption = 'Impressao'
-          ClientHeight = 154
+          ClientHeight = 152
           ClientWidth = 610
           object GroupBox3: TGroupBox
             Left = 0
-            Height = 154
+            Height = 152
             Top = 0
             Width = 288
             Align = alClient
             Caption = 'Fortes'
-            ClientHeight = 136
+            ClientHeight = 132
             ClientWidth = 284
             TabOrder = 0
             object seLargura: TSpinEdit
@@ -2953,12 +2937,12 @@ object Form1: TForm1
           end
           object GroupBox4: TGroupBox
             Left = 288
-            Height = 154
+            Height = 152
             Top = 0
             Width = 322
             Align = alRight
             Caption = 'EscPOS'
-            ClientHeight = 136
+            ClientHeight = 132
             ClientWidth = 318
             TabOrder = 1
             object cbUsarEscPos: TRadioButton
@@ -3180,6 +3164,13 @@ object Form1: TForm1
         Caption = 'Imprimir Extrato Venda Resumido'
         OnClick = mImprimirExtratoVendaResumidoClick
       end
+      object MenuItem14: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem15: TMenuItem
+        Caption = 'Carregar XML'
+        OnClick = MenuItem15Click
+      end
     end
     object MenuItem12: TMenuItem
       Caption = 'Cancelamento'
@@ -3293,19 +3284,6 @@ object Form1: TForm1
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
-    ElementAttri.FrameEdges = sfeAround
-    AttributeAttri.FrameEdges = sfeAround
-    NamespaceAttributeAttri.FrameEdges = sfeAround
-    AttributeValueAttri.FrameEdges = sfeAround
-    NamespaceAttributeValueAttri.FrameEdges = sfeAround
-    TextAttri.FrameEdges = sfeAround
-    CDATAAttri.FrameEdges = sfeAround
-    EntityRefAttri.FrameEdges = sfeAround
-    ProcessingInstructionAttri.FrameEdges = sfeAround
-    CommentAttri.FrameEdges = sfeAround
-    DocTypeAttri.FrameEdges = sfeAround
-    SpaceAttri.FrameEdges = sfeAround
-    SymbolAttri.FrameEdges = sfeAround
     WantBracesParsed = False
     left = 335
     top = 251

@@ -61,18 +61,6 @@ uses
   pcnNFe, pcnEnvEventoNFe;
 
 type
-  TACBrCabecalhoNaoFiscal = class
-    RazaoSocial : AnsiString;
-    Endereco : AnsiString;
-    nro : AnsiString;
-    Complemento : AnsiString;
-    Bairro : AnsiString;
-    Cidade : AnsiString;
-    Estado : AnsiString;
-    CNPJ : AnsiString;
-    IE : AnsiString;
-  end;
-
   { TACBrNFeDANFeESCPOS }
 
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)

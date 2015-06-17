@@ -115,7 +115,7 @@ begin
   FPosPrinter.ConfigBarras.MostrarCodigo := False;
 
   FPosPrinter.ConfigQRCode.Tipo := 2;
-  FPosPrinter.ConfigQRCode.LarguraModulo := 4;
+  //FPosPrinter.ConfigQRCode.LarguraModulo := 4;
   FPosPrinter.ConfigQRCode.ErrorLevel := 0;
 
   FPosPrinter.Buffer.Clear;

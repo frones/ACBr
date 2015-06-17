@@ -290,8 +290,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure ReducaoZVirtual(DataHora : TDateTime = 0 ) ; virtual ;
 
     Procedure AbreRelatorioGerencialVirtual(Indice: Integer = 0) ; virtual ;
-    Procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
-       CodComprovanteNaoFiscal : String; Valor : Double) ; virtual ;
+    procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
+      CodComprovanteNaoFiscal: String; SubtotalCupomAnterior, ValorFPG: Double ); virtual;
     Procedure FechaRelatorioVirtual ; virtual ;
 
     Procedure AbreNaoFiscalVirtual( CPF_CNPJ: String = ''; Nome: String = '';
@@ -1537,6 +1537,7 @@ Var
   FPG : TACBrECFFormaPagamento ;
   A, PosFPG : Integer ;
   UsouPagamento : Boolean ;
+  SubTotalCupomAnterior: Double;
 begin
   if COO = '' then
     raise EACBrECFERRO.create(ACBrStr('COO inválido'));
@@ -1569,11 +1570,12 @@ begin
   try
     fpNumGNF := fpNumGNF + 1 ;
     fpNumCDC := fpNumCDC + 1 ;
+    SubTotalCupomAnterior := Subtotal;
 
     ZeraCupom;
     fpEstado := estRelatorio ;
 
-    AbreCupomVinculadoVirtual(COO, FPG, CodComprovanteNaoFiscal, Valor);
+    AbreCupomVinculadoVirtual(COO, FPG, CodComprovanteNaoFiscal, SubTotalCupomAnterior, Valor);
     AbreDocumento ;
   except
      LeArqINI ;
@@ -1582,7 +1584,8 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.AbreCupomVinculadoVirtual(COO: String;
-  FPG: TACBrECFFormaPagamento; CodComprovanteNaoFiscal: String; Valor: Double);
+  FPG: TACBrECFFormaPagamento; CodComprovanteNaoFiscal: String;
+  SubtotalCupomAnterior, ValorFPG: Double);
 begin
   {}
 end;

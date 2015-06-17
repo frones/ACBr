@@ -120,8 +120,8 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     Procedure RegistraItemNaoFiscalVirtual( CNF : TACBrECFComprovanteNaoFiscal;
        Valor : Double; Obs : AnsiString = '') ; override ;
     procedure AbreRelatorioGerencialVirtual(Indice: Integer); override;
-    Procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
-       CodComprovanteNaoFiscal : String; Valor : Double) ; override ;
+    procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
+      CodComprovanteNaoFiscal: String; SubtotalCupomAnterior, ValorFPG: Double ); override;
     procedure FechaRelatorioVirtual; override;
 
   protected
@@ -1007,7 +1007,8 @@ begin
 end;
 
 procedure TACBrECFVirtualBufferClass.AbreCupomVinculadoVirtual(COO: String;
-  FPG: TACBrECFFormaPagamento; CodComprovanteNaoFiscal: String; Valor: Double);
+  FPG: TACBrECFFormaPagamento; CodComprovanteNaoFiscal: String;
+  SubtotalCupomAnterior, ValorFPG: Double);
 begin
   ZeraBuffer ;
   fsBuffer.Add( PadCenter('GNF:'+IntToStrZero(fpNumGNF,6) +'         '+
@@ -1017,9 +1018,9 @@ begin
   fsBuffer.Add( '' ) ;
   fsBuffer.Add( PadSpace('COO do documento de compra:|' + COO, Colunas,'|') ) ;
   fsBuffer.Add( PadSpace('VALOR TOTAL DA COMPRA   R$:|'+
-                FormatFloat('##,###,##0.00',fpSubTotal),Colunas,'|') ) ;
+                FormatFloat('##,###,##0.00',SubtotalCupomAnterior),Colunas,'|') ) ;
   fsBuffer.Add( PadSpace(PadRight(FPG.Descricao,23)+' R$:|'+
-                FormatFloat('##,###,##0.00',Valor),Colunas,'|') ) ;
+                FormatFloat('##,###,##0.00',ValorFPG),Colunas,'|') ) ;
   fsBuffer.Add( '' ) ;
 end;
 

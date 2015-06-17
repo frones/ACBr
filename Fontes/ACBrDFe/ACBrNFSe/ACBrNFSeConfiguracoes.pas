@@ -310,20 +310,39 @@ end;
 procedure TGeralConfNFSe.SetConfigMunicipio;
 var
   Ok: Boolean;
-  Texto, sCampo, sFim: String;
+  NomeArqParams, Texto, sCampo, sFim: String;
   I: Integer;
 begin
-  FPIniParams := TMemIniFile.Create(ApplicationPath + 'Cidades.ini');
+  // ===========================================================================
+  // Verifica se o código IBGE consta no arquivo de paramêtros: Cidades.ini
+  // se encontrar retorna o nome do Provedor
+  // ===========================================================================
+  NomeArqParams := ApplicationPath + 'Cidades.ini';
+
+  if not FileExists(NomeArqParams) then
+    raise EACBrDFeException.Create('Arquivo de Parâmetro não encontrado: ' +
+      NomeArqParams);
+
+  FPIniParams := TMemIniFile.Create(NomeArqParams);
 
   FxProvedor := FPIniParams.ReadString(IntToStr(FCodigoMunicipio), 'Provedor', '');
   FProvedor  := StrToProvedor(Ok, FxProvedor);
 
+  FPIniParams.Free;
+
   if FProvedor = proNenhum
    then raise Exception.Create('Código do Municipio ['+ IntToStr(FCodigoMunicipio) +'] não Encontrado.');
 
-  FPIniParams.Free;
+  // ===========================================================================
+  // Le as configurações especificas do Provedor refere a cidade desejada
+  // ===========================================================================
+  NomeArqParams := ApplicationPath + FxProvedor +'.ini';
 
-  FPIniParams := TMemIniFile.Create(ApplicationPath + FxProvedor +'.ini');
+  if not FileExists(NomeArqParams) then
+    raise EACBrDFeException.Create('Arquivo de Parâmetro não encontrado: ' +
+      NomeArqParams);
+
+  FPIniParams := TMemIniFile.Create(NomeArqParams);
 
   FConfigGeral.VersaoSoap := FPIniParams.ReadString('Geral', 'VersaoSoap', '');
   FConfigGeral.Prefixo2 := FPIniParams.ReadString('Geral', 'Prefixo2', '');

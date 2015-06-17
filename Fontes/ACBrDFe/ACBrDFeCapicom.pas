@@ -160,16 +160,17 @@ begin
 
   Certs := Store.Certificates as ICertificates2;
   Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)',
-    ACBrStr('Selecione o Certificado Digital para uso no aplicativo'), False);
+    'Selecione o Certificado Digital para uso no aplicativo', False);
 
-  if not (Certs2.Count = 0) then
+  if (Certs2.Count > 0) then
   begin
     Cert := IInterface(Certs2.Item[1]) as ICertificate2;
     FpDFeSSL.NumeroSerie := Cert.SerialNumber;
     CarregarCertificado;
-  end;
-
-  Result := GetCertNumeroSerie;
+    Result := GetCertNumeroSerie;
+  end
+  else
+    Result := '';
 end;
 
 procedure TDFeCapicom.DescarregarCertificado;

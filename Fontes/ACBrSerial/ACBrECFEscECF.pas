@@ -49,7 +49,7 @@ uses Classes,
 
 const
     cEscECFMaxBuffer = 4096 ;
-    SYN = #22;
+    cNumFalhasMax = 5;
 
 type
 
@@ -149,6 +149,7 @@ TACBrECFEscECF = class( TACBrECFClass )
  private
     fsFalhas : Byte;
     fsACK    : Boolean;
+    fsTimeOutStatus: TDateTime;
     fsSincronizou : Boolean;
     fsTentouSincronizar : Boolean;
     fsDeviceParams : String;
@@ -622,7 +623,7 @@ begin
   fsCHK      := ord( Value[ 12 + fsTBR ] ) ;
 
   Soma := 0 ;
-  LenCmd := LenCmd-1 ;  { -1 por causa do CHK }
+  LenCmd := fsTBR+11;
   For I := 2 to LenCmd do  
      Soma := Soma + ord( Value[I] ) ;
   CHK := Soma mod 256  ;
@@ -684,6 +685,7 @@ begin
 
   fsSincronizou       := False;
   fsTentouSincronizar := False;
+  fsTimeOutStatus     := 0;
 
   RespostasComando.Clear;
 end;
@@ -723,6 +725,7 @@ begin
   fsModeloECF    := '' ;
   fsSincronizou       := False;
   fsTentouSincronizar := False;
+  fsTimeOutStatus     := 0;
 
   fpMFD     := True ;
   fpTermica := True ;
@@ -784,6 +787,7 @@ Var
   ErroMsg : String ;
   OldTimeOut : Integer ;
 begin
+  fsTimeOutStatus := 0;
   Sincronizar;
 
   if cmd <> '' then
@@ -885,8 +889,9 @@ var
    procedure PedeStatus;
    begin
       GravaLog( '         Status TX -> '+ENQ+chr(fsSPR), True);
-      fpDevice.Serial.SendBlock( ENQ + chr(fsSPR) ); // ACK ok, Pede Resposta
+      fpDevice.Serial.SendBlock( ENQ + chr(fsSPR) );
       Retorno := '';
+      fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
       TempoLimite := IncSecond(now, TimeOut);
    end;
 
@@ -894,77 +899,82 @@ begin
   LenRet := Length( Retorno );
   Result := False;
 
-  if LenRet < 1 then exit;
+  if LenRet > 0 then
+  begin
+    Byte1 := Retorno[1];
 
-  Byte1 := Retorno[1];
+    case Byte1 of
+      SOH :
+         begin
+            if LenRet >= 11 then
+            begin
+               TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
+               Result := ( LenRet >=  (11 + TBR + 1) ) ;
+            end ;
+         end;
 
-  case Byte1 of
-    SOH :
-       begin
-          if LenRet >= 11 then
-          begin
-             TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
-             Result := ( LenRet >=  (11 + TBR + 1) ) ;
-          end ;
-       end;
-
-    ACK :
-      begin
-        fsSPR := 0;
-        fsACK := True;
-        GravaLog( '                RX <- '+Retorno, True);
-        PedeStatus ;
-      end;
-
-    WAK :
-      begin
-        Result := (LenRet >= 6) ;
-
-        if Result and (not fsACK) then  // Comando não foi recebido, re-envie
+      ACK :
         begin
-          GravaLog('                RX <- '+Retorno, True);
-          Sleep(100);
-          GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);
-          fpDevice.EnviaString( fpComandoEnviado ) ;
-          Retorno     := '';
-          Result      := False;
-          TempoLimite := IncSecond(now, TimeOut);
+          fsSPR := 0;
+          fsACK := True;
+          GravaLog( '                RX <- '+Retorno, True);
+          PedeStatus ;
+        end;
+
+      WAK :
+        begin
+          Result := (LenRet >= 6) ;
+
+          if Result and (not fsACK) then  // Comando não foi recebido, re-envie
+          begin
+            GravaLog('                RX <- '+Retorno, True);
+            Sleep(100);
+            GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);
+            fpDevice.EnviaString( fpComandoEnviado ) ;
+            Retorno     := '';
+            Result      := False;
+            TempoLimite := IncSecond(now, TimeOut);
+          end ;
+
         end ;
 
-      end ;
+      NAK :
+        Result := (LenRet >= 6) ;
+    end;
 
-    NAK :  Result := (LenRet >= 6) ;
+    if Result then
+    begin
+       try
+          { Esta atribuição, Já verifica o ChkSum, em caso de erro gera exception }
+          EscECFResposta.Resposta := Retorno ;
+
+          if (Byte1 = SOH) and
+             (EscECFResposta.SEQ <> EscECFComando.SEQ) then  // Despreza esse Bloco
+          begin
+             raise EACBrECFCMDInvalido.Create(
+                'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
+                'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
+                '). Bloco Desprezado' ) ;
+          end;
+       except
+          on E : EACBrECFCMDInvalido do
+           begin
+             GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
+             Result  := False ;
+             Retorno := '' ;
+             Inc( fsFalhas ) ;
+             GravaLog('         Falha: '+IntToStr(fsFalhas));
+             if fsFalhas <= cNumFalhasMax then
+             begin
+               fpDevice.Serial.Purge;
+               PedeStatus
+             end;
+           end
+          else
+             raise ;
+       end ;
+    end ;
   end;
-
-  if Result then
-  begin
-     try
-        { Esta atribuição, Já verifica o ChkSum, em caso de erro gera exception }
-        EscECFResposta.Resposta := Retorno ;
-
-        if (Byte1 = SOH) and
-           (EscECFResposta.SEQ <> EscECFComando.SEQ) then  // Despreza esse Bloco
-        begin
-           raise EACBrECFCMDInvalido.Create(
-              'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
-              'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
-              '). Bloco Desprezado' ) ;
-        end;
-     except
-        on E : EACBrECFCMDInvalido do
-         begin
-           GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
-           Result  := False ;
-           Retorno := '' ;
-
-           Inc( fsFalhas ) ;
-           if fsFalhas < 6 then
-             PedeStatus;
-         end
-        else
-           raise ;
-     end ;
-  end ;
 
   if Result then
   begin
@@ -977,7 +987,7 @@ begin
       end
      else if (Byte1 = SOH) and (EscECFResposta.CAT = 0) then
       begin
-        if not TestBit( EscECFResposta.RET.ECF, 0 ) then
+        if not TestBit( EscECFResposta.RET.ECF, 0 ) then // Existem mais dados ?
         begin
           GravaLog('     '+IntToStrZero(EscECFResposta.TBR,4)+' bytes RX <- '+Retorno, True);
           Inc( fsSPR );
@@ -985,6 +995,19 @@ begin
           Result := False;
         end;
       end;
+  end
+  else
+  begin
+    // Se ECF não respondeu a status... Envia comando novamente
+    if (fsTimeOutStatus > 0) and (fsTimeOutStatus < Now) and (fsFalhas < cNumFalhasMax) then
+    begin
+      Inc( fsFalhas ) ;
+      GravaLog('         Falha: '+IntToStr(fsFalhas));
+      fpDevice.Serial.Purge;
+      GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);
+      fpDevice.EnviaString( fpComandoEnviado ) ;
+      fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+    end;
   end;
 end;
 
@@ -1290,19 +1313,29 @@ procedure TACBrECFEscECF.Sincronizar;
 var
   Resp: AnsiString;
 begin
-  if fsSincronizou then exit;
-
-  GravaLog( '    Sincronismo TX -> '+SYN, True);
-  fpDevice.Serial.SendByte( ord(SYN) );
-  Resp := fpDevice.Serial.RecvBufferStr(2,2000);
-  GravaLog( '         Status RX <- '+Resp, True);
-
-  if Length(Resp) = 2 then
+  fsFalhas := 0;
+  while (not fsSincronizou) and (fsFalhas <= cNumFalhasMax) do
   begin
-    if Resp[1] = SYN then
+    GravaLog( '    Sincronismo TX -> '+SYN, True);
+    fpDevice.Serial.SendByte( ord(SYN) );
+    Resp := fpDevice.Serial.RecvBufferStr(2,2000);
+    GravaLog( '    Sincronismo RX <- '+Resp, True);
+
+    if Length(Resp) = 2 then
     begin
-      EscECFComando.SEQ := ord(Resp[2])+1;
-      fsSincronizou := True;
+      if Resp[1] = SYN then
+      begin
+        EscECFComando.SEQ := ord(Resp[2])+1;
+        fsSincronizou := True;
+      end;
+    end;
+
+    if not fsSincronizou then
+    begin
+      Inc( fsFalhas ) ;
+      GravaLog('         Falha: '+IntToStr(fsFalhas));
+      fpDevice.Serial.Purge;
+      Sleep(100);
     end;
   end;
 end;

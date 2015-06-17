@@ -26,64 +26,6 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-Agradecimentos:
-
-* Administradores:
-- Daniel Simões de Almeida
-- André Ferreira de Moraes
-
-* Desenvolvedores:
-- Airton Stodulski               ECFDataRegis
-- Anderson Rogerio Bejatto       ECFDataRegis, TACBrTroco, ECFBugFix, TACBrETQ
-- Rodrigo Frühwirth              ECFIChash
-- Gabriel Rodrigo Frones         TACBrTER, ACBrMonitor
-- Fabio Farias                   TACBrBAL, ECFBugFix, DISKeyTec
-- Walmir Silva                   TACBrBAL, BalancaTeste.dpr
-- Rennes Moreira Pimentel        TACBrValidador (CEP)
-- Aurimenes Apolonio Silva       ECFUrano, ECFBugFix
-- Vinicius de Oliveira           TACBrFala
-- Carlos do Nascimento Filho     ECFDaruma, ECFYanco
-- Thiago Delgado Pinto           Compatibilidade com BCB6
-- Nei José Van Lare Junior       ECFFiscNET
-- Jhony Alceu Pereira            ECFDaruma
-- Alan Lucas                     ECFSchalter, ECFSweda
-- Ederson Selvati                ECFDaruma, ECFBematech, ECFSweda
-- José Luís Schiavo              ECFDaruma
-- Andrews Ricardo Bejatto        TACBrETQ
-- Douglas Fernando Scheibler     Lazarus
-- Wagner Leandro Bueno Angelo    Lazarus
-- Maicon da Silva Evangelista    ECFDaruma
-- Eduardo Durieux Lopes          ECFEpson
-- Andre Bohn                     ECFNCR, ECFBugFix (Daruma FS600)
-- Joao Victor Maia Fernandes     ECFQuattro
-- Sauli Bueno                    ECFYanco
-- Ivan Moreira                   ECFs
-- Isaque Pinheiro		 TACBrSPEDFiscal, TACBrSPEDContabil, TACBrPAF
-- Luiz Arlindo                   ECFs
-- Fernando Gutierres Damaceno    ECF, TEFD
-
-* Colaboradores:
-- Alexandre Rocha L.Marcondes    Administração
-- Mauro Sano (Sweda)             Emprestimo de ECFs
-- Valmor Florez                  ECFBugFix (Schalter)
-- Licerio Jose Rodrigues Neto    ECFBugFix (Mecaf, Sweda, NaoFiscal)
-- Adriano Alves Dornelas         ECFBugFix
-- Luciano Donato                 ACBr.INC D2006
-- Gabriel Fernandes              ECFBugFix (Mecaf)
-- Juliano Pereira dos Santos     ECFBufFix (Daruma FS600)
-- Fábio Rogério Baía             ACBrMonitor (TCP)
-- Waldir Paim                    LCBTeste (conf.serial)
-- Diogo Augusto Pereira          ACBrCMC7
-- Marcos Agostini                ECFBugFix (NaoFiscal)
-- João Carvalho                  ACBrConsts
-
-* Testadores / BugReport:
-- Rildecy de Queiroz Borba       ECFBugReport (Mecaf)
-- Claudio Borba                  ECFBugReport
-- Erique Costa                   ECFBugReport
-- Matheus Nogueira               CHQBugReport
-- Everton H. Cardoso (Bematech)
-- Miguel Silva (Perto S/A)
 
 {******************************************************************************
 |* ACBr
@@ -97,10 +39,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/06/2015
+-- ACBrECFEscECF -- (por: DSA)
+[*] Melhorada rotina de Sincronismo com o ECF, adicionando 5 tentativas.
+[*] Melhorada a rotina de calculo de Checksum, para desprezar buffer de Resposta
+    adicional e não solicitado.
+[+] Adicionada verificação de Falha de Resposta ao pedido de Status (ECF mudo)
+    problema detectado na Leitura de DadosUltimaReducaoZ em Bematech MP4200-TH
+
 Data: 15/06/2015
 -- ACBrECFBematech e ACBrDevice -- (por: batiati)
 [*] Inclusão da propriedade "Margem" na classe ConfigBarras
-	http://www.projetoacbr.com.br/forum/index.php?/topic/22083-acbrecf-centralizar-c%C3%B3digo-de-barras/
+    http://www.projetoacbr.com.br/forum/index.php?/topic/22083-acbrecf-centralizar-c%C3%B3digo-de-barras/
 
 Data: 08/06/2015
 -- ACBrECFSwedaStx -- (por: DSA)
@@ -110,6 +60,11 @@ Data: 06/06/2015
 -- ACBrSMS --
 [+] Adicionado método para apagar mensagens
     http://www.projetoacbr.com.br/forum/index.php?/topic/22003-acbrsms-apagar-mensagem/#entry141709
+
+Data: 03/06/2015
+-- ACBrETQ -- (por: Elias)
+[+] Adicionado a propriedade ArqLOG
+[+] Adicionado o evento OnGravarLog
 
 Data: 03/06/2015
 -- ACBrETQ -- (por: DSA e Elias)
@@ -131,7 +86,35 @@ Data: 12/05/2015 (por: regys.silveira)
 [-] Acertos no tratamento de retorno das impressoras Daruma EscECF
 [-] Acertos no retorno de aliquotas
 
-Data: 20/04/2015       (por: Juliomar Marchetti) = Merge
+Data: 04/05/2015       (por: DSA)
+-- ACBrDevice --
+[*] Ajustes de Units para FMX
+[+] Adicionado TCriticalSection para evitar chamadas concorrentes a escrita na
+    porta do Device
+[*] Tipo: TACBrECFTipoCodBarra modificado para: TACBrTipoCodBarra
+[+] Criada novas classes para processamento genérico de TAGs:
+    TACBrTag, TACBrTags, TACBrTagProcessor.
+
+-- ACBrECF --
+[*] Modificado para usar o TACBrTagProcessor
+
+-- ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, ACBrECFEpson, ACBrECFFiscNet,
+   ACBrECFSwedaStx, ACBrECFEscECF,  --
+[*] Mecanismo de tradução de Tags ajustado para TACBrTagProcessor e ACBrConsts
+
+-- ACBrPosPrinter --
+[+] Criado novo componente: TACBrPosPrinter, que permite manipular Impressoras
+    NAO fiscais, de bobina, usando a linguagem EscPos ou similares, por meio de
+    TAGS no texto. Controla a formatação de caracteres Ex: Negrito, expandido,
+    condensado, etc e a impressão de Cod.Barras e QRCode.
+    Compatível com: ppEscPosEpson, ppEscBematech, ppEscDaruma
+
+Data: 27/04/2015       (por: DSA)
+-- ACBrECFSwedaSTX --
+[-] Correção para correta impressão de Descrição Grande
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=21320
+
+Data: 20/04/2015       (por: DSA)
 -- ACBrECF --
 [+] Adicionada a propriedade TotalizadoresNaoTributados, que retorna uma lista
     de Objetos com os Totalizadores Não Tributados Disponíveis e ativados no ECF
@@ -167,6 +150,7 @@ Data: 27/04/2015       (por: DSA)
 -- ACBrECFSwedaSTX --
 [-] Correção para correta impressão de Descrição Grande
     http://www.projetoacbr.com.br/forum/index.php?showtopic=21320
+
 Data: 07/04/2015       (por: DSA)
 -- ACBrECFEscECF --
 [*] Removida a restrição de apenas permitir Letras no cadastro de
@@ -180,6 +164,11 @@ Data: 07/04/2015       (por: DSA)
 Data: 01/04/2015
 -- ACBrECFEscECF --  (por: DSA)
 [*] Ajuste para correta impressão de linhas sem conteudo no modelo Bematech MP4200
+
+Data: 31/03/2015
+-- ACBrECFBematech --  (por: DSA)
+[*] Adicionado suporte a impressão do Operador, no rodapé do Cupom Fiscal,
+    caso o mesmo tenha sido informado com "IdentificaOperador"
 
 Data: 30/03/2015
 -- ACBrECFDaruma -- (por: DSA e Elias)

@@ -1574,57 +1574,59 @@ Var
 begin
   Result := fpEstado;
   try
-     if (not fpAtivo) then
-        fpEstado := estNaoInicializada
-     else
+    if (not fpAtivo) then
+      fpEstado := estNaoInicializada
+
+    else if fsEmPagamento then
+      fpEstado := estPagamento
+
+    else
+    begin
+      fpEstado := estDesconhecido ;
+
+      FlagEst := StrToInt( RetornaInfoECF( '16|5' ) );
+      Case FlagEst of
+        0  :             fpEstado := estLivre;
+        10 :             fpEstado := estVenda;
+        11..13, 21..23 : fpEstado := estPagamento;
+        20 :             fpEstado := estNaoFiscal;
+        30..32 :         fpEstado := estRelatorio;
+      end;
+
+      if (fpEstado in [estLivre,estDesconhecido]) then
       begin
-        fpEstado := estDesconhecido ;
+        FlagEst := StrToInt( RetornaInfoECF( '16|4' ) );
+        if FlagEst = 3 then
+          fpEstado := estBloqueada ;
+      end;
 
-        FlagEst := StrToInt( RetornaInfoECF( '16|5' ) );
-        Case FlagEst of
-          0  :             fpEstado := estLivre;
-          10 :             fpEstado := estVenda;
-          11..13, 21..23 : fpEstado := estPagamento;
-          20 :             fpEstado := estNaoFiscal;
-          30..32 :         fpEstado := estRelatorio;
-        end;
+      if fpEstado in [estLivre, estBloqueada] then
+      begin
+        RetornaInfoECF( '8' ) ;
+        FlagEst := StrToInt( EscECFResposta.Params[1] );
 
-        if (fpEstado in [estLivre,estDesconhecido]) then
+        if FlagEst = 2 then
         begin
-          FlagEst := StrToInt( RetornaInfoECF( '16|4' ) );
-          if FlagEst = 3 then
-             fpEstado := estBloqueada
-          else if fsEmPagamento then
-             fpEstado := estPagamento ;
-        end;
+          fpEstado := estRequerZ;
 
-        if fpEstado in [estLivre, estBloqueada] then
+          if IsBematech then  // Workaround para Bematech, que não responde corretamente após Z emitida
+          begin
+            RetornaInfoECF( '99|10' ) ;
+            if TestBit(StrToInt(EscECFResposta.Params[0]),3) then
+              fpEstado := estBloqueada;
+          end;
+        end
+        // Workaround para Epson que não responde Flag de Status de Movimento corretamente
+        else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
         begin
-           RetornaInfoECF( '8' ) ;
-           FlagEst := StrToInt( EscECFResposta.Params[1] );
-
-           if FlagEst = 2 then
-           begin
-              fpEstado := estRequerZ;
-
-              if IsBematech then  // Workaround para Bematech, que não responde corretamente após Z emitida
-              begin
-                 RetornaInfoECF( '99|10' ) ;
-                 if TestBit(StrToInt(EscECFResposta.Params[0]),3) then
-                   fpEstado := estBloqueada;
-              end;
-           end
-           // Workaround para Epson que não responde Flag de Status de Movimento corretamente
-           else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
-           begin
-              RetornaInfoECF( '99|21' ) ;
-              if (EscECFResposta.Params.Count > 11) and (EscECFResposta.Params[11] = 'S') then
-                fpEstado := estRequerZ;
-           end;
+          RetornaInfoECF( '99|21' ) ;
+          if (EscECFResposta.Params.Count > 11) and (EscECFResposta.Params[11] = 'S') then
+            fpEstado := estRequerZ;
         end;
-      end ;
+      end;
+    end ;
   finally
-     Result := fpEstado ;
+    Result := fpEstado ;
   end;
 end;
 

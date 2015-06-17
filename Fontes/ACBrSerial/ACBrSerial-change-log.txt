@@ -41,6 +41,8 @@ Símbolo : Significado
 
 Data: 16/06/2015
 -- ACBrECFEscECF -- (por: DSA)
+[-] Corrigido Bug na detecção do estado "estPagamento" após a Subtotalização do
+    Cupom
 [*] Melhorada rotina de Sincronismo com o ECF, adicionando 5 tentativas.
 [*] Melhorada a rotina de calculo de Checksum, para desprezar buffer de Resposta
     adicional e não solicitado.

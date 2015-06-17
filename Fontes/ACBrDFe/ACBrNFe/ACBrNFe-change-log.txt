@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2015
+[-] acerto de geração da tag conforme previsto na nt, mais informações no post
+    http://www.projetoacbr.com.br/forum/index.php?/topic/17819-nfe-310-icms-cst-51-redução-base/page-3
+
+
 27/05/2015
 [+] Adicionado recurso para salvar XML baixados por DistribuicaoDFe em pastas
     separadas por Nome do Emitente.

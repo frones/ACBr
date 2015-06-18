@@ -85,6 +85,7 @@ type
     FNotasFiscais: TNotasFiscais;
     FNumeroLote: String;
   protected
+    procedure EnviarDados; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -429,8 +430,14 @@ begin
   inherited Destroy;
 end;
 
+procedure TNFSeGerarLoteRPS.EnviarDados;
+begin
+  // O Gerar Lote RPS não ocorre o envio para o Web Service
+end;
+
 procedure TNFSeGerarLoteRPS.DefinirURL;
 begin
+  FPLayout := LayNfseRecepcaoLote;
   inherited DefinirURL;
 end;
 
@@ -441,14 +448,46 @@ begin
 end;
 
 procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
+var
+  I: integer;
+  vNotas: String;
 begin
-  inherited;
-{a}
+  vNotas := '';
+  if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
+  begin
+    for I := 0 to FNotasFiscais.Count - 1 do
+       vNotas := vNotas + '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>' +
+                             '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps' +
+                                RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                     '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps', '</Rps>') +
+                          '</' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>';
+  end
+  else begin
+    for I := 0 to FNotasFiscais.Count - 1 do
+       vNotas := vNotas + '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>' +
+                             '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps' +
+                                RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
+                                     '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps', '</Rps>') +
+                          '</' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>';
+  end;
+
+//  FPDadosMsg := '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="' +
+//    FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +
+//    vNotas + '</enviNFe>';
+
+  FPDadosMsg := vNotas;
+
+  // Lote tem mais de 500kb ? //
+  if Length(FPDadosMsg) > (500 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
+      IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 end;
 
 function TNFSeGerarLoteRPS.TratarResposta: Boolean;
 begin
-{a}
+  TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NomeArq :=
+    FPConfiguracoes.Arquivos.PathSalvar +
+    GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
 end;
 
 procedure TNFSeGerarLoteRPS.FinalizarServico;
@@ -464,7 +503,7 @@ end;
 
 function TNFSeGerarLoteRPS.GerarPrefixoArquivo: String;
 begin
-{a}
+  Result := NumeroLote;
 end;
 
 { TNFSeEnviarLoteRPS }

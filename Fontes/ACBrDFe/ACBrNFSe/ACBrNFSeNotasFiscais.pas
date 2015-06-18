@@ -76,7 +76,7 @@ type
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
       PathArquivo: String = ''): String;
 
-    procedure Assinar;
+    procedure Assinar(Assina: Boolean);
     procedure Validar;
   public
     constructor Create(Collection2: TCollection); override;
@@ -120,6 +120,8 @@ type
 
   TNotasFiscais = class(TOwnedCollection)
   private
+    FTransacao: Boolean;
+    FNumeroLote: String;
     FACBrNFSe: TComponent;
     FConfiguracoes: TConfiguracoesNFSe;
 
@@ -135,7 +137,7 @@ type
     function VerificarAssinatura(out Erros: String): Boolean;
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
 
-    procedure Assinar;
+    procedure Assinar(Assina: Boolean);
     procedure Imprimir;
     procedure ImprimirPDF;
 
@@ -152,6 +154,8 @@ type
     function LoadFromString(AXMLString: String; AGerarNFSe: Boolean = True): Boolean;
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
+    property NumeroLote: String read FNumeroLote write FNumeroLote;
+    property Transacao: Boolean read FTransacao write FTransacao;
     property ACBrNFSe: TComponent read FACBrNFSe;
   end;
 
@@ -218,7 +222,7 @@ begin
   end;
 end;
 
-procedure NotaFiscal.Assinar;
+procedure NotaFiscal.Assinar(Assina: Boolean);
 var
   XMLAss: String;
   ArqXML: String;
@@ -232,30 +236,33 @@ begin
 
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
-    XMLAss := SSL.Assinar(ArqXML, 'NFSe', 'infNFSe');
-    FXMLAssinado := XMLAss;
+    if Assina then
+    begin
+      XMLAss := SSL.Assinar(ArqXML, 'NFSe', 'infNFSe');
+      FXMLAssinado := XMLAss;
 
-    // Remove header, pois podem existir várias Notas no XML //
-    //TODO: Verificar se precisa
-    //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
-    //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
+      // Remove header, pois podem existir várias Notas no XML //
+      //TODO: Verificar se precisa
+      //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
+      //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
 
-    Leitor := TLeitor.Create;
-    try
-      leitor.Grupo := XMLAss;
-      NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
-      NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-      NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-      NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-    finally
-      Leitor.Free;
+      Leitor := TLeitor.Create;
+      try
+        leitor.Grupo := XMLAss;
+        NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
+        NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+        NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+        NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      finally
+        Leitor.Free;
+      end;
+
+      if Configuracoes.Geral.Salvar then
+        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
+
+      if NaoEstaVazio(NomeArq) then
+        Gravar(NomeArq, XMLAss);
     end;
-
-    if Configuracoes.Geral.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(), XMLAss);
-
-    if NaoEstaVazio(NomeArq) then
-      Gravar(NomeArq, XMLAss);
   end;
 end;
 
@@ -269,7 +276,7 @@ begin
 
   if EstaVazio(AXML) then
   begin
-    Assinar;
+//    Assinar;
     AXML := FXMLAssinado;
   end;
 
@@ -305,8 +312,8 @@ begin
 
   if EstaVazio(AXML) then
   begin
-    if EstaVazio(FXMLAssinado) then
-      Assinar;
+//    if EstaVazio(FXMLAssinado) then
+//      Assinar;
 
     AXML := FXMLAssinado;
   end;
@@ -342,181 +349,6 @@ begin
     if not ValidarConcatChave then  //A03-10
       AdicionaErro(
         '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
-
-    if copy(IntToStr(NFSe.Emit.EnderEmit.cMun), 1, 2) <>
-      IntToStr(Configuracoes.WebServices.UFCodigo) then //B02-10
-      AdicionaErro('226-Rejeição: Código da UF do Emitente diverge da UF autorizadora');
-
-    if (NFSe.Ide.serie > 899) and  //B07-20
-      (NFSe.Ide.tpEmis <> teSCAN) then
-      AdicionaErro('503-Rejeição: Série utilizada fora da faixa permitida no SCAN (900-999)');
-
-    if (NFSe.Ide.dEmi > now) then  //B09-10
-      AdicionaErro('703-Rejeição: Data-Hora de Emissão posterior ao horário de recebimento');
-
-    if ((now - NFSe.Ide.dEmi) > 30) then  //B09-20
-      AdicionaErro('228-Rejeição: Data de Emissão muito atrasada');
-
-    //GB09.02 - Data de Emissão posterior à 31/03/2011
-    //GB09.03 - Data de Recepção posterior à 31/03/2011 e tpAmb (B24) = 2
-
-    if not ValidarMunicipio(NFSe.Ide.cMunFG) then //B12-10
-      AdicionaErro('270-Rejeição: Código Município do Fato Gerador: dígito inválido');
-
-    if (UFparaCodigo(NFSe.Emit.EnderEmit.UF) <> StrToIntDef(
-      copy(IntToStr(NFSe.Ide.cMunFG), 1, 2), 0)) then//GB12.1
-      AdicionaErro('271-Rejeição: Código Município do Fato Gerador: difere da UF do emitente');
-
-    if ((NFSe.Ide.tpEmis in [teSCAN, teSVCAN, teSVCRS]) and
-      (Configuracoes.Geral.FormaEmissao = teNormal)) then  //B22-30
-      AdicionaErro(
-        '570-Rejeição: Tipo de Emissão 3, 6 ou 7 só é válido nas contingências SCAN/SVC');
-
-    if ((NFSe.Ide.tpEmis <> teSCAN) and (Configuracoes.Geral.FormaEmissao = teSCAN))
-    then  //B22-40
-      AdicionaErro('571-Rejeição: Tipo de Emissão informado diferente de 3 para contingência SCAN');
-
-    if ((Configuracoes.Geral.FormaEmissao in [teSVCAN, teSVCRS]) and
-      (not (NFSe.Ide.tpEmis in [teSVCAN, teSVCRS]))) then  //B22-60
-      AdicionaErro('713-Rejeição: Tipo de Emissão diferente de 6 ou 7 para contingência da SVC acessada');
-
-    //B23-10
-    if (NFSe.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
-      //B24-10
-      AdicionaErro('252-Rejeição: Ambiente informado diverge do Ambiente de recebimento '
-        + '(Tipo do ambiente da NF-e difere do ambiente do Web Service)');
-
-    if (not (NFSe.Ide.procEmi in [peAvulsaFisco, peAvulsaContribuinte])) and
-      (NFSe.Ide.serie > 889) then //B26-10
-      AdicionaErro('266-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)');
-
-    if (NFSe.Ide.procEmi in [peAvulsaFisco, peAvulsaContribuinte]) and
-      (NFSe.Ide.serie < 890) and (NFSe.Ide.serie > 899) then
-      //B26-20
-      AdicionaErro('451-Rejeição: Processo de emissão informado inválido');
-
-    if (NFSe.Ide.procEmi in [peAvulsaFisco, peAvulsaContribuinte]) and
-      (NFSe.Ide.tpEmis <> teNormal) then //B26-30
-      AdicionaErro('370-Rejeição: Nota Fiscal Avulsa com tipo de emissão inválido');
-
-    if (NFSe.Ide.tpEmis = teNormal) and ((NFSe.Ide.xJust > '') or
-      (NFSe.Ide.dhCont <> 0)) then
-      //B28-10
-      AdicionaErro(
-        '556-Justificativa de entrada em contingência não deve ser informada para tipo de emissão normal');
-
-    if (NFSe.Ide.tpEmis in [teContingencia, teFSDA, teOffLine]) and
-      (NFSe.Ide.xJust = '') then //B28-20
-      AdicionaErro('557-A Justificativa de entrada em contingência deve ser informada');
-
-    if (NFSe.Ide.dhCont > now) then //B28-30
-      AdicionaErro('558-Rejeição: Data de entrada em contingência posterior a data de recebimento');
-
-    if (NFSe.Ide.dhCont > 0) and ((now - NFSe.Ide.dhCont) > 30) then //B28-40
-      AdicionaErro('559-Rejeição: Data de entrada em contingência muito atrasada');
-
-    if (NFSe.Ide.modelo = 65) then  //Regras válidas apenas para NFC-e - 65
-    begin
-      if (NFSe.Ide.dEmi < now - StrToTime('00:05:00')) and
-        (NFSe.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS]) then
-        //B09-40
-        AdicionaErro('704-Rejeição: NFC-e com Data-Hora de emissão atrasada');
-
-      if (NFSe.Ide.dSaiEnt <> 0) then  //B10-10
-        AdicionaErro('705-Rejeição: NFC-e com data de entrada/saída');
-
-      if (NFSe.Ide.tpNF = tnEntrada) then  //B11-10
-        AdicionaErro('706-Rejeição: NFC-e para operação de entrada');
-
-      if (NFSe.Ide.idDest <> doInterna) then  //B11-10
-        AdicionaErro('707-NFC-e para operação interestadual ou com o exterior');
-
-      if (not (NFSe.Ide.tpImp in [tiNFCe, tiNFCeA4, tiMsgEletronica])) then
-        //B21-10
-        AdicionaErro('709-Rejeição: NFC-e com formato de DANFSE inválido');
-
-      if (NFSe.Ide.tpEmis = teOffLine) and
-        (AnsiIndexStr(NFSe.Emit.EnderEmit.UF, ['SP']) <> -1) then  //B22-20
-        AdicionaErro('712-Rejeição: NF-e com contingência off-line');
-
-      if (NFSe.Ide.tpEmis = teSCAN) then //B22-50
-        AdicionaErro('782-Rejeição: NFC-e não é autorizada pelo SCAN');
-
-      if (NFSe.Ide.tpEmis in [teSVCAN, teSVCRS]) then  //B22-70
-        AdicionaErro('783-Rejeição: NFC-e não é autorizada pela SVC');
-
-      if (NFSe.Ide.finNFSe <> fnNormal) then  //B25-20
-        AdicionaErro('715-Rejeição: Rejeição: NFC-e com finalidade inválida');
-
-      if (NFSe.Ide.indFinal = cfNao) then //B25a-10
-        AdicionaErro('716-Rejeição: NFC-e em operação não destinada a consumidor final');
-
-      if (not (NFSe.Ide.indPres in [pcPresencial, pcEntregaDomicilio])) then
-        //B25b-20
-        AdicionaErro('717-Rejeição: NFC-e em operação não presencial');
-
-      if (NFSe.Ide.indPres = pcEntregaDomicilio) and
-        (AnsiIndexStr(NFSe.Emit.EnderEmit.UF, ['XX']) <> -1) then
-        //B25b-30  Qual estado não permite entrega a domicílio?
-        AdicionaErro('785-Rejeição: NFC-e com entrega a domicílio não permitida pela UF');
-
-      if (NFSe.Ide.NFref.Count > 0) then  //BA01-10
-        AdicionaErro('708-Rejeição: NFC-e não pode referenciar documento fiscal');
-
-      if (NFSe.Emit.IEST > '') then  //C18-10
-        AdicionaErro('718-Rejeição: NFC-e não deve informar IE de Substituto Tributário');
-    end;
-
-    if (NFSe.Ide.modelo = 55) then  //Regras válidas apenas para NF-e - 55
-    begin
-      if ((NFSe.Ide.dSaiEnt - now) > 30) then  //B10-20  - Facultativo
-        AdicionaErro('504-Rejeição: Data de Entrada/Saída posterior ao permitido');
-
-      if ((now - NFSe.Ide.dSaiEnt) > 30) then  //B10-30  - Facultativo
-        AdicionaErro('505-Rejeição: Data de Entrada/Saída anterior ao permitido');
-
-      if (NFSe.Ide.dSaiEnt < NFSe.Ide.dEmi) then
-        //B10-40  - Facultativo
-        AdicionaErro('506-Rejeição: Data de Saída menor que a Data de Emissão');
-
-      if (NFSe.Ide.tpImp in [tiNFCe, tiMsgEletronica]) then  //B21-20
-        AdicionaErro('710-Rejeição: NF-e com formato de DANFSE inválido');
-
-      if (NFSe.Ide.tpEmis = teOffLine) then  //B22-10
-        AdicionaErro('711-Rejeição: NF-e com contingência off-line');
-
-      if (NFSe.Ide.finNFSe = fnComplementar) and (NFSe.Ide.NFref.Count = 0) then  //B25-30
-        AdicionaErro('254-Rejeição: NF-e complementar não possui NF referenciada');
-
-      if (NFSe.Ide.finNFSe = fnComplementar) and (NFSe.Ide.NFref.Count > 1) then  //B25-40
-        AdicionaErro('255-Rejeição: NF-e complementar possui mais de uma NF referenciada');
-
-      if (NFSe.Ide.finNFSe = fnComplementar) and (NFSe.Ide.NFref.Count = 1) and
-        (((NFSe.Ide.NFref.Items[0].RefNF.CNPJ > '') and
-        (NFSe.Ide.NFref.Items[0].RefNF.CNPJ <> NFSe.Emit.CNPJCPF)) or
-        ((NFSe.Ide.NFref.Items[0].RefNFP.CNPJCPF > '') and
-        (NFSe.Ide.NFref.Items[0].RefNFP.CNPJCPF <> NFSe.Emit.CNPJCPF))) then
-        //B25-50
-        AdicionaErro(
-          '269-Rejeição: CNPJ Emitente da NF Complementar difere do CNPJ da NF Referenciada');
-
-      if (NFSe.Ide.finNFSe = fnComplementar) and (NFSe.Ide.NFref.Count = 1) and
-        //Testa pelo número para saber se TAG foi preenchida
-        (((NFSe.Ide.NFref.Items[0].RefNF.nNF > 0) and
-        (NFSe.Ide.NFref.Items[0].RefNF.cUF <> UFparaCodigo(
-        NFSe.Emit.EnderEmit.UF))) or ((NFSe.Ide.NFref.Items[0].RefNFP.nNF > 0) and
-        (NFSe.Ide.NFref.Items[0].RefNFP.cUF <> UFparaCodigo(
-        NFSe.Emit.EnderEmit.UF))))
-      then  //B25-60 - Facultativo
-        AdicionaErro('678-Rejeição: NF referenciada com UF diferente da NF-e complementar');
-
-      if (NFSe.Ide.finNFSe = fnDevolucao) and (NFSe.Ide.NFref.Count = 0) then
-        //B25-70
-        AdicionaErro('321-Rejeição: NF-e devolução não possui NF referenciada');
-
-      if (NFSe.Ide.finNFSe = fnDevolucao) and (NFSe.Ide.NFref.Count > 1) then
-        //B25-80
-        AdicionaErro('322-Rejeição: NF-e devolução possui mais de uma NF referenciada');
 
       if (NFSe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
@@ -706,8 +538,8 @@ end;
 
 function NotaFiscal.GetXMLAssinado: String;
 begin
-  if EstaVazio(FXMLAssinado) then
-    Assinar;
+//  if EstaVazio(FXMLAssinado) then
+//    Assinar;
 
   Result := FXMLAssinado;
 end;
@@ -731,12 +563,12 @@ begin
   Result := NotaFiscal(inherited Add);
 end;
 
-procedure TNotasFiscais.Assinar;
+procedure TNotasFiscais.Assinar(Assina: Boolean);
 var
   i: integer;
 begin
   for i := 0 to Self.Count - 1 do
-    Self.Items[i].Assinar;
+    Self.Items[i].Assinar(Assina);
 end;
 
 procedure TNotasFiscais.GerarNFSe;

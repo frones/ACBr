@@ -320,7 +320,7 @@ begin
   NomeArqParams := ApplicationPath + 'Cidades.ini';
 
   if not FileExists(NomeArqParams) then
-    raise EACBrDFeException.Create('Arquivo de Parâmetro não encontrado: ' +
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
       NomeArqParams);
 
   FPIniParams := TMemIniFile.Create(NomeArqParams);
@@ -339,7 +339,7 @@ begin
   NomeArqParams := ApplicationPath + FxProvedor +'.ini';
 
   if not FileExists(NomeArqParams) then
-    raise EACBrDFeException.Create('Arquivo de Parâmetro não encontrado: ' +
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
       NomeArqParams);
 
   FPIniParams := TMemIniFile.Create(NomeArqParams);

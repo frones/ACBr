@@ -439,7 +439,7 @@ var
  ValorISS: Double;
 begin
  ACBrNFSe1.NotasFiscais.Clear;
- (*
+
  with ACBrNFSe1 do
   begin
    NotasFiscais.NumeroLote:='1';
@@ -615,8 +615,8 @@ begin
     end;
 
   end;
-*)
-end;
+
+  end;
 
 procedure TfrmDemo_ACBrNFSe.sbtnCaminhoCertClick(Sender: TObject);
 begin

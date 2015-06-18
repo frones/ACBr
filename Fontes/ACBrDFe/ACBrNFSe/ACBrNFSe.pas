@@ -333,11 +333,40 @@ end;
 procedure TACBrNFSe.LerServicoDeParams(LayOutServico: TLayOutNFSe;
   var Versao: Double; var URL: String);
 begin
+ if Configuracoes.WebServices.Ambiente = taHomologacao then
+ begin
+   case LayOutServico of
+     LayNfseRecepcaoLote: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoLoteRPS;
+     LayNfseConsultaSitLoteRps: URL := Configuracoes.Geral.ConfigURL.HomConsultaSitLoteRPS;
+     LayNfseConsultaLote: URL := Configuracoes.Geral.ConfigURL.HomConsultaLoteRPS;
+     LayNfseConsultaNfseRps: URL := Configuracoes.Geral.ConfigURL.HomConsultaNFSeRPS;
+     LayNfseConsultaNfse: URL := Configuracoes.Geral.ConfigURL.HomConsultaNFSe;
+     LayNfseCancelaNfse: URL := Configuracoes.Geral.ConfigURL.HomCancelaNFSe;
+     LayNfseGerar: URL := Configuracoes.Geral.ConfigURL.HomGerarNFSe;
+     LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoSincrono;
+     LayNfseSubstituiNfse: URL := Configuracoes.Geral.ConfigURL.HomSubstituiNFSe;
+   end;
+ end
+ else begin
+   case LayOutServico of
+     LayNfseRecepcaoLote: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoLoteRPS;
+     LayNfseConsultaSitLoteRps: URL := Configuracoes.Geral.ConfigURL.ProConsultaSitLoteRPS;
+     LayNfseConsultaLote: URL := Configuracoes.Geral.ConfigURL.ProConsultaLoteRPS;
+     LayNfseConsultaNfseRps: URL := Configuracoes.Geral.ConfigURL.ProConsultaNFSeRPS;
+     LayNfseConsultaNfse: URL := Configuracoes.Geral.ConfigURL.ProConsultaNFSe;
+     LayNfseCancelaNfse: URL := Configuracoes.Geral.ConfigURL.ProCancelaNFSe;
+     LayNfseGerar: URL := Configuracoes.Geral.ConfigURL.ProGerarNFSe;
+     LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoSincrono;
+     LayNfseSubstituiNfse: URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
+   end;
+ end;
+(*
   Versao := VersaoNFSeToDbl( ve100 {Configuracoes.Geral.VersaoDF});
   URL := '';
   LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
     Versao, URL);
+*)
 end;
 
 procedure TACBrNFSe.SetStatus(const stNewStatus: TStatusACBrNFSe);
@@ -364,8 +393,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.ConfigAssinar.RPS then
-    NotasFiscais.Assinar;
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
   Result := WebServices.GeraLote(ALote);
 end;
@@ -386,8 +414,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.ConfigAssinar.RPS then
-    NotasFiscais.Assinar;
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
   Result := WebServices.Envia(ALote);
 
@@ -417,8 +444,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.ConfigAssinar.RPS then
-    NotasFiscais.Assinar;
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
 //  Result := WebServices.EnviarSincrono(ALote);
 end;
@@ -437,8 +463,7 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
 
-  if Configuracoes.Geral.ConfigAssinar.Gerar then
-    NotasFiscais.Assinar;
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Gerar);
 
 //  Result := WebServices.Gera(ARps);
 end;
@@ -540,7 +565,7 @@ begin
   if Self.NotasFiscais.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
- NotasFiscais.Assinar;
+ NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
 
 // Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;

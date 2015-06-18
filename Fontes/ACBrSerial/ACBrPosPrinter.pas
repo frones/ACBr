@@ -794,36 +794,13 @@ begin
   if ConteudoBloco = BlocoTraduzido then  // Não traduziu...
   begin
     if ATag = cTagAlinhadoEsquerda then
-    begin
-      if EstaVazio(FPosPrinterClass.Cmd.AlinhadoEsquerda) then
-        BlocoTraduzido := PadRight(ConteudoBloco,Colunas)
-      else
-        BlocoTraduzido := FPosPrinterClass.Cmd.AlinhadoEsquerda + ConteudoBloco ;
-
-      FTipoAlinhamento := alEsquerda;
-    end
+      BlocoTraduzido := PadRight(ConteudoBloco,Colunas)
 
     else if ATag = cTagAlinhadoDireita then
-    begin
-      if EstaVazio(FPosPrinterClass.Cmd.AlinhadoDireita) then
-        BlocoTraduzido := PadLeft(ConteudoBloco,Colunas)
-      else
-        BlocoTraduzido := FPosPrinterClass.Cmd.AlinhadoDireita + ConteudoBloco +
-                          FPosPrinterClass.Cmd.AlinhadoEsquerda;
-
-      FTipoAlinhamento := alDireita;
-    end
+      BlocoTraduzido := PadLeft(ConteudoBloco,Colunas)
 
     else if ATag = cTagAlinhadoCentro then
-    begin
-      if EstaVazio(FPosPrinterClass.Cmd.AlinhadoCentro) then
-        BlocoTraduzido := PadCenter(ConteudoBloco,Colunas)
-      else
-        BlocoTraduzido := FPosPrinterClass.Cmd.AlinhadoCentro + ConteudoBloco +
-                          FPosPrinterClass.Cmd.AlinhadoEsquerda;
-
-      FTipoAlinhamento := alCentro;
-    end
+      BlocoTraduzido := PadCenter(ConteudoBloco,Colunas)
 
     else if ATag = cTagQRCode then
     begin

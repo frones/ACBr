@@ -154,7 +154,8 @@ begin
   1600303:  // Macapá/AP
     cURL_Producao := 'http://186.216.160.78:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl';
   2101202 : // Bacabal/MA
-    cURL_Producao := 'http://finanbbl.ddns.us:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+//WS antigo     cURL_Producao := 'http://finanbbl.ddns.us:8080/IssWeb-ejb/IssWebWS/IssWebWS';
+    cURL_Producao := 'http://1a7601e12b31.sn.mynetname.net:8080/IssWeb-ejb/IssWebWS/IssWebWS?wsdl'; //novo WS - alterado por Valdir Dill
   2103000 : // Caxias/MA
     cURL_Producao := 'http://177.105.209.118:8080/IssWeb-ejb/IssWebWS/IssWebWS';
   3305505 : // Saquarema/RJ

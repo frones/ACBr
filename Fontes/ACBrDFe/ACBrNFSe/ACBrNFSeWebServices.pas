@@ -60,6 +60,8 @@ type
   protected
     FPStatus: TStatusACBrNFSe;
     FPLayout: TLayOutNFSe;
+    FNameSpaceDad: String;
+    FNameSpaceCab: String;
     FPConfiguracoesNFSe: TConfiguracoesNFSe;
 
     procedure ConfigurarSoapDEPC;
@@ -76,6 +78,8 @@ type
 
     property Status: TStatusACBrNFSe read FPStatus;
     property Layout: TLayOutNFSe read FPLayout;
+    property NameSpaceCab: String read FNameSpaceCab;
+    property NameSpaceDad: String read FNameSpaceDad;
   end;
 
   { TNFSeGerarLoteRPS }
@@ -450,25 +454,102 @@ end;
 procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
 var
   I: integer;
-  vNotas: String;
+  URI,
+  Separador,
+  vNotas,
+  NameSpace,
+  ServicoEnviar,
+  DefTipos,
+  Cabecalho,
+  Prefixo2,
+  Prefixo3,
+  Prefixo4: String;
 begin
   vNotas := '';
+
+  NameSpace := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
+  DefTipos := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
+  ServicoEnviar := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
+  Cabecalho := FPConfiguracoesNFSe.Geral.ConfigSchemas.Cabecalho;
+  Prefixo2 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo2;
+  Prefixo3 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo3;
+  Prefixo4 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4;
+
+  if RightStr(NameSpace, 1) = '/' then
+    Separador := ''
+  else
+    Separador := '/';
+
+  if Cabecalho <> '' then
+  begin
+    if Prefixo2 <> '' then
+      FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) +
+                       '="' + NameSpace + Separador + Cabecalho +'">'
+    else
+      FNameSpaceCab := ' xmlns="' + NameSpace + Separador + Cabecalho +'">';
+  end
+  else
+    FNameSpaceCab := '>';
+
+  if FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar <> '' then
+  begin
+    if (FPConfiguracoesNFSe.Geral.Provedor = proIssDSF) then
+      FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + '" '
+    else
+      if (FPConfiguracoesNFSe.Geral.Provedor = proInfisc) then
+        FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + '" '
+      else begin
+        if (RightStr(NameSpace, 1) = '/') then
+        begin
+          if Prefixo3 <> '' then
+            FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + Separador + ServicoEnviar + '"'
+          else
+            FNameSpaceDad := 'xmlns="' + NameSpace + Separador + ServicoEnviar + '"';
+        end
+        else begin
+          if Prefixo3 <> '' then
+            FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + '"'
+          else
+            FNameSpaceDad := 'xmlns="' + NameSpace + '"';
+        end;
+      end;
+  end
+  else
+    FNameSpaceDad := '';
+
+  if (DefTipos = '') and (NameSpaceDad <> '') then
+    FNameSpaceDad := FNameSpaceDad + '>';
+
+  if DefTipos <> '' then
+  begin
+    if Prefixo4 <> '' then
+      FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
+                       StringReplace(Prefixo4, ':', '', []) + '="' + NameSpace + Separador + DefTipos + '">'
+    else
+      FNameSpaceDad := FNameSpaceDad + ' xmlns="' + NameSpace + Separador + DefTipos + '">';
+  end;
+
+  if FNameSpaceDad = '' then
+    FNameSpaceDad := '>'
+  else
+    FNameSpaceDad := ' ' + FNameSpaceDad;
+
   if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
   begin
     for I := 0 to FNotasFiscais.Count - 1 do
-       vNotas := vNotas + '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>' +
-                             '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps' +
+       vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                             '<' + Prefixo4 + 'InfRps' +
                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                     '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps', '</Rps>') +
-                          '</' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>';
+                                     '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                          '</' + Prefixo4 + 'Rps>';
   end
   else begin
     for I := 0 to FNotasFiscais.Count - 1 do
-       vNotas := vNotas + '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>' +
-                             '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps' +
+       vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                             '<' + Prefixo4 + 'InfRps' +
                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
-                                     '<' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'InfRps', '</Rps>') +
-                          '</' + FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4 + 'Rps>';
+                                     '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                          '</' + Prefixo4 + 'Rps>';
   end;
 
 //  FPDadosMsg := '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="' +
@@ -476,6 +557,19 @@ begin
 //    vNotas + '</enviNFe>';
 
   FPDadosMsg := vNotas;
+  (*
+  FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
+
+  URI := FProvedorClass.GetURI(URI);
+
+  FTagI := FProvedorClass.Gera_TagI(acRecepcionar, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
+
+  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
+                                               FConfiguracoes.WebServices.SenhaWeb);
+  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
+  *)
+
+
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then

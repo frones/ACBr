@@ -58,11 +58,16 @@ type
   TNFSeWebService = class(TDFeWebService)
   private
   protected
+    FPConfiguracoesNFSe: TConfiguracoesNFSe;
     FPStatus: TStatusACBrNFSe;
     FPLayout: TLayOutNFSe;
     FNameSpaceDad: String;
     FNameSpaceCab: String;
-    FPConfiguracoesNFSe: TConfiguracoesNFSe;
+    FURI: String;
+    FTagI: String;
+    FTagF: String;
+    FDadosSenha: String;
+    FDadosEnvelope: String;
 
     procedure ConfigurarSoapDEPC;
     function ExtrairModeloChaveAcesso(AChaveNFSe: String): String;
@@ -71,6 +76,7 @@ type
     procedure InicializarServico; override;
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
+    function GerarCabecalhoSoap: String; override;
     procedure FinalizarServico; override;
 
   public
@@ -80,6 +86,12 @@ type
     property Layout: TLayOutNFSe read FPLayout;
     property NameSpaceCab: String read FNameSpaceCab;
     property NameSpaceDad: String read FNameSpaceDad;
+    property URI: String read FURI;
+    property TagI: String read FTagI;
+    property TagF: String read FTagF;
+    property DadosSenha: String read FDadosSenha;
+    property DadosEnvelope: String read FDadosEnvelope;
+
   end;
 
   { TNFSeGerarLoteRPS }
@@ -313,6 +325,9 @@ type
     FConsulta: TNFSeConsulta;
    *)
     FEnvioWebService: TNFSeEnvioWebService;
+  protected
+    procedure DefinirEnvelopeSoap; override;
+
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
@@ -412,6 +427,11 @@ begin
   { Sobrescrever apenas se necessário }
 
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
+end;
+
+function TNFSeWebService.GerarCabecalhoSoap: String;
+begin
+ Result := FPCabMsg;
 end;
 
 { TNFSeGerarLoteRPS }
@@ -552,24 +572,27 @@ begin
                           '</' + Prefixo4 + 'Rps>';
   end;
 
-//  FPDadosMsg := '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="' +
-//    FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +
-//    vNotas + '</enviNFe>';
+  FPCabMsg := FPConfiguracoesNFSe.Geral.ConfigEnvelope.CabecalhoMsg;
+  FURI := '';
+//  FURI := FProvedorClass.GetURI(URI);
+  FTagI := '<' + Prefixo3 + 'EnviarLoteEnvio' + NameSpace;
+  FTagF := '</' + Prefixo3 + 'EnviarLoteEnvio>';
+  FDadosSenha := '';
+//  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb, FConfiguracoes.WebServices.SenhaWeb);
 
-  FPDadosMsg := vNotas;
-  (*
-  FCabMsg := FProvedorClass.Gera_CabMsg(Prefixo2, FVersaoLayOut, FVersaoDados, NameSpaceCab, FConfiguracoes.WebServices.CodigoMunicipio);
+  FPDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
+                                               FPConfiguracoesNFSe.Geral.Identificador,
+                                               NameSpace,
+                                               FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
+                                               FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
+                                               TNFSeGerarLoteRps(Self).NumeroLote,
+                                               OnlyNumber(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                               TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                               IntToStr(TNFSeGerarLoteRps(Self).FNotasFiscais.Count),
+                                               vNotas,
+                                               FTagI, FTagF, FPConfiguracoesNFSe.Geral.Provedor);
 
-  URI := FProvedorClass.GetURI(URI);
-
-  FTagI := FProvedorClass.Gera_TagI(acRecepcionar, Prefixo3, Prefixo4, NameSpaceDad, FConfiguracoes.WebServices.Identificador, URI);
-
-  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb,
-                                               FConfiguracoes.WebServices.SenhaWeb);
-  FTagF := FProvedorClass.Gera_TagF(acRecepcionar, Prefixo3);
-  *)
-
-
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -1715,6 +1738,26 @@ begin
 end;
 
 { TWebServices }
+
+procedure TWebServices.DefinirEnvelopeSoap;
+var
+  Texto: String;
+begin
+
+  {$IFDEF UNICODE}
+   Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
+  {$ELSE}
+   Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
+  {$ENDIF}
+
+  Texto := FDadosEnvelope;
+  // %CabMsg%   : Representa a Mensagem de Cabeçalho
+  // %DadosMsg% : Representa a Mensagem de Dados
+  Texto := stringReplace(Texto, '%CabMsg%', FPCabMsg, [rfReplaceAll]);
+  Texto := stringReplace(Texto, '%DadosMsg%', FPDadosMsg, [rfReplaceAll]);
+
+  FPEnvelopeSoap := Texto;
+end;
 
 constructor TWebServices.Create(AOwner: TACBrDFe);
 begin

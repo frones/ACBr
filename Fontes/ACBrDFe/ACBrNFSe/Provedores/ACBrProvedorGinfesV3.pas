@@ -104,11 +104,6 @@ begin
   case ACodCidade of
    2304400: begin // Fortaleza/CE
              ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br';
-             (*
-             if AAmbiente = 1
-              then ConfigCidade.NameSpaceEnvelope := 'http://producao.issfortaleza.com.br'
-              else ConfigCidade.NameSpaceEnvelope := 'http://homologacao.issfortaleza.com.br';
-             *)
             end;
    else     begin // Demais cidades
              if AAmbiente = 1
@@ -326,17 +321,6 @@ begin
              '</ns1:ConsultarSituacaoLoteRpsV3>' +
             '</s:Body>' +
            '</s:Envelope>';
-(*
- result := '<?xml version="1.0" encoding="UTF-8"?>' +
-           '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-            '<s:Body>' +
-             '<ns1:ConsultarSituacaoLoteRpsV3 xmlns:ns1="' + URLNS + '">' +
-              '<' + TagCab + '>' + CabMsg + '</' + TagCab + '>' +
-              '<' + TagDados + '>' + DadosMsg + '</' + TagDados + '>' +
-             '</ns1:ConsultarSituacaoLoteRpsV3>' +
-            '</s:Body>' +
-           '</s:Envelope>';
-*)
 end;
 
 function TProvedorGinfesV3.GeraEnvelopeConsultarLoteRPS(URLNS: String;
@@ -559,51 +543,6 @@ begin
  else
    Result := 'http://visualizar.ginfesh.com.br/report/consultarNota?__report=nfs_ver4&cdVerificacao=' +
              ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe) + '&cnpjPrestador=null';
-(*
- if AAmbiente = 1
-  then begin
-   case ACodMunicipio of
-    2304400: Result := 'http://nfse.issfortaleza.com.br/report/consultarNota?__report=nfs_ver4&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe) + '&cnpjPrestador=null';
-    3143906: Result := 'http://muriae.ginfes.com.br/birt/frameset?__report=nfs_novo.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3503208: Result := 'http://araraquara.ginfes.com.br/birt/frameset?_report=nfs_novo.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3506359: Result := 'http://bertioga.ginfes.com.br/birt/frameset?__report=nfs_ver4.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3518800: Result := 'http://guarulhos.ginfes.com.br/birt/frameset?_report=nfs_ver4.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3525102: Result := 'http://jardinopolis.ginfes.com.br/report/consultarNota?__report=nfs_ribeirao_preto&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3543402: Result := 'http://ribeiraopreto.ginfes.com.br/report/consultarNota?__report=nfs_ribeirao_preto&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3547809: Result := 'http://santoandre.ginfes.com.br/birt/frameset?_report=nfs_novo.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-   else Result := '';
-   end;
-  end
-  else begin
-   case ACodMunicipio of
-    2304400: Result := 'http://nfse.issfortaleza.com.br/report/consultarNota?__report=nfs_ver4&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe) + '&cnpjPrestador=null';
-    3143906: Result := 'http://muriae.ginfesh.com.br/birt/frameset?__report=nfs_novo.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3503208: Result := 'http://araraquara.ginfesh.com.br/birt/frameset?_report=nfs_novo.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3506359: Result := 'http://bertioga.ginfesh.com.br/birt/frameset?__report=nfs_ver4.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3518800: Result := 'http://guarulhos.ginfesh.com.br/birt/frameset?_report=nfs_ver4.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3525102: Result := 'http://jardinopolis.ginfesh.com.br/report/consultarNota?__report=nfs_ribeirao_preto&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3543402: Result := 'http://ribeiraopreto.ginfesh.com.br/report/consultarNota?__report=nfs_ribeirao_preto&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-    3547809: Result := 'http://santoandre.ginfesh.com.br/birt/frameset?_report=nfs_novo.rptdesign&cdVerificacao=' +
-                       ACodVerificacao + '&numNota=' + IntToStr(ANumeroNFSe);
-   else Result := '';
-   end;
-  end;
-*)
 end;
 
 end.

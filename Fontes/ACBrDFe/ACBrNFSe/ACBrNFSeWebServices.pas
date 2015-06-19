@@ -69,15 +69,12 @@ type
     FDadosSenha: String;
     FDadosEnvelope: String;
 
-    procedure ConfigurarSoapDEPC;
-    function ExtrairModeloChaveAcesso(AChaveNFSe: String): String;
-
-  protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
     function GerarCabecalhoSoap: String; override;
     procedure FinalizarServico; override;
+    procedure DefinirEnvelopeSoap; override;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -91,7 +88,6 @@ type
     property TagF: String read FTagF;
     property DadosSenha: String read FDadosSenha;
     property DadosEnvelope: String read FDadosEnvelope;
-
   end;
 
   { TNFSeGerarLoteRPS }
@@ -325,8 +321,6 @@ type
     FConsulta: TNFSeConsulta;
    *)
     FEnvioWebService: TNFSeEnvioWebService;
-  protected
-    procedure DefinirEnvelopeSoap; override;
 
   public
     constructor Create(AOwner: TACBrDFe); overload;
@@ -335,8 +329,8 @@ type
     function GeraLote(ALote: Integer): Boolean; overload;
     function GeraLote(ALote: String): Boolean; overload;
 
-    function Envia(ALote: Integer; const ASincrono: Boolean = False): Boolean; overload;
-    function Envia(ALote: String; const ASincrono: Boolean = False): Boolean; overload;
+    function Envia(ALote: Integer): Boolean; overload;
+    function Envia(ALote: String): Boolean; overload;
 
     property ACBrNFSe: TACBrDFe read FACBrNFSe write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
@@ -353,7 +347,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrNFSe,
+  ACBrUtil, ACBrNFSe, pnfsNFSeG,
   pcnGerador, pcnLeitor;
 
 { TNFSeWebService }
@@ -367,24 +361,24 @@ begin
   FPStatus := stNFSeIdle;
 end;
 
-procedure TNFSeWebService.ConfigurarSoapDEPC;
+procedure TNFSeWebService.DefinirEnvelopeSoap;
+var
+  Texto: String;
 begin
-  FPSoapVersion := 'soap';
-  FPHeaderElement := 'sceCabecMsg';
-  FPSoapEnvelopeAtributtes :=
-    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-    'xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
-    'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/';
-  FPBodyElement := 'sceDadosMsg';
-end;
 
-function TNFSeWebService.ExtrairModeloChaveAcesso(AChaveNFSe: String): String;
-begin
-  AChaveNFSe := OnlyNumber(AChaveNFSe);
-  if ValidarChave('NFSe' + AChaveNFSe) then
-    Result := copy(AChaveNFSe, 21, 2)
-  else
-    Result := '';
+  {$IFDEF UNICODE}
+   Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
+  {$ELSE}
+   Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
+  {$ENDIF}
+
+  Texto := FDadosEnvelope;
+  // %CabMsg%   : Representa a Mensagem de Cabeçalho
+  // %DadosMsg% : Representa a Mensagem de Dados
+  Texto := stringReplace(Texto, '%CabMsg%', FPCabMsg, [rfReplaceAll]);
+  Texto := stringReplace(Texto, '%DadosMsg%', FPDadosMsg, [rfReplaceAll]);
+
+  FPEnvelopeSoap := Texto;
 end;
 
 procedure TNFSeWebService.InicializarServico;
@@ -575,13 +569,13 @@ begin
   FPCabMsg := FPConfiguracoesNFSe.Geral.ConfigEnvelope.CabecalhoMsg;
   FURI := '';
 //  FURI := FProvedorClass.GetURI(URI);
-  FTagI := '<' + Prefixo3 + 'EnviarLoteEnvio' + NameSpace;
+  FTagI := '<' + Prefixo3 + 'EnviarLoteEnvio' + FNameSpaceDad;
   FTagF := '</' + Prefixo3 + 'EnviarLoteEnvio>';
   FDadosSenha := '';
 //  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb, FConfiguracoes.WebServices.SenhaWeb);
 
   FPDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
-                                               FPConfiguracoesNFSe.Geral.Identificador,
+                                               FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
                                                NameSpace,
                                                FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
                                                FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
@@ -1739,26 +1733,6 @@ end;
 
 { TWebServices }
 
-procedure TWebServices.DefinirEnvelopeSoap;
-var
-  Texto: String;
-begin
-
-  {$IFDEF UNICODE}
-   Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
-  {$ELSE}
-   Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
-  {$ENDIF}
-
-  Texto := FDadosEnvelope;
-  // %CabMsg%   : Representa a Mensagem de Cabeçalho
-  // %DadosMsg% : Representa a Mensagem de Dados
-  Texto := stringReplace(Texto, '%CabMsg%', FPCabMsg, [rfReplaceAll]);
-  Texto := stringReplace(Texto, '%DadosMsg%', FPDadosMsg, [rfReplaceAll]);
-
-  FPEnvelopeSoap := Texto;
-end;
-
 constructor TWebServices.Create(AOwner: TACBrDFe);
 begin
   FACBrNFSe := TACBrNFSe(AOwner);
@@ -1794,29 +1768,29 @@ end;
 
 function TWebServices.GeraLote(ALote: String): Boolean;
 begin
-  Result := True;
-
   FGerarLoteRPS.FNumeroLote := ALote;
 
-  if not GerarLoteRPS.Executar then
+  Result := GerarLoteRPS.Executar;
+
+  if not (Result) then
     GerarLoteRPS.GerarException( GerarLoteRPS.Msg );
 end;
 
-function TWebServices.Envia(ALote: Integer; const ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: Integer): Boolean;
 begin
-  Result := Envia(IntToStr(ALote), ASincrono);
+  Result := Envia(IntToStr(ALote));
 end;
 
-function TWebServices.Envia(ALote: String; const ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: String): Boolean;
 begin
-  Result := True;
-
   FEnviarLoteRPS.FNumeroLote := ALote;
-(*
-  FEnviarLoteRPS.FSincrono := ASincrono;
 
-  if not EnviarLoteRPS.Executar then
+  Result := EnviarLoteRPS.Executar;
+
+  if not (Result) then
     EnviarLoteRPS.GerarException( EnviarLoteRPS.Msg );
+
+  (*
 
   if not ASincrono then
   begin
@@ -1824,6 +1798,60 @@ begin
     if not FRetorno.Executar then
       FRetorno.GerarException( FRetorno.Msg );
   end;
+
+************************************************************
+
+ Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+ Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+ Self.ConsSitLote.Protocolo          := Self.Enviar.Protocolo;
+ Self.ConsSitLote.NumeroLote         := Self.Enviar.NumeroLote;
+
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital] ) then
+ begin
+   Self.ConsSitLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
+   Self.ConsSitLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
+ end;
+
+ Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
+
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital, proTecnos] ) then
+ begin
+   Self.ConsLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
+   Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
+ end;
+
+ if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
+ begin
+   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
+          proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan, proISSDigital,
+          proISSDSF, proFiorilli, proFreire, proTecnos, proDBSeller]) then //adicionei o provedor DBSeller - Rodrigo Custódio
+    begin
+     Result := Self.ConsSitLote.Executar;
+
+     if not (Result)
+      then begin
+       if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+        then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
+       if Self.ConsSitLote.Msg <> ''
+        then raise Exception.Create(Self.ConsSitLote.Msg)
+        else raise Exception.Create('Erro Desconhecido ao Consultar a Situação do Lote!')
+      end;
+    end;
+
+   if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor = proInfisc then
+     Result := True // Para Provedor Infisc já retorna a NFS-e ao Consultar Situação Lote
+   else
+     Result := Self.ConsLote.Executar;
+
+   if not (Result)
+    then begin
+     if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
+      then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
+     if Self.ConsLote.Msg <> ''
+      then raise Exception.Create(Self.ConsLote.Msg)
+      else raise Exception.Create('Erro Desconhecido ao Consultar o Lote!')
+    end;
+ end;
 *)
 end;
 

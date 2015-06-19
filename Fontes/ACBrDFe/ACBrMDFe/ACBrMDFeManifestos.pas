@@ -372,8 +372,8 @@ begin
 end;
 
 function Manifesto.LerXML(AXML: AnsiString): Boolean;
-var
-  Ok: Boolean;
+//var
+//  Ok: Boolean;
 begin
   Result := False;
   FMDFeR.Leitor.Arquivo := AXML;
@@ -381,6 +381,9 @@ begin
 
   FXML := string(AXML);
   FXMLOriginal := FXML;
+  if XmlEstaAssinado(FXML) then
+    FXMLAssinado := FXML;
+
   Result := True;
 end;
 

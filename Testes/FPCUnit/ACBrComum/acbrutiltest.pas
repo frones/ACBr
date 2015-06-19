@@ -19,11 +19,6 @@ type
   { TiraPontosTest }
 
   TiraPontosTest = class(TTestCase)
-  private
-
-  protected
-    procedure SetUp; override;
-    procedure TearDown; override;
   published
     procedure TiraPontos_StringInvalida_RetornaVazio;
     procedure TiraPontos_StringInicioInvalido_RetornaFinal;
@@ -788,18 +783,6 @@ uses
   ACBrUtil, ACBrConsts;
 
 { TiraPontosTest }
-
-procedure TiraPontosTest.SetUp;
-begin
-  inherited SetUp;
-
-end;
-
-procedure TiraPontosTest.TearDown;
-begin
-  inherited TearDown;
-
-end;
 
 procedure TiraPontosTest.TiraPontos_StringComEspacos_RetornaMeioSemEspacos;
 begin
@@ -1704,7 +1687,6 @@ end;
 procedure AscToBcdTest.TamanhoTres;
 var
   BCD: String;
-  A: String;
 begin
   BCD := AscToBcd('123456',3);
   CheckEquals(chr(18) + chr(52) + chr(86), BCD );

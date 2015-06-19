@@ -87,6 +87,8 @@ type
   TACBrECFVirtualSATClass = class(TACBrECFVirtualPrinterClass)
   private
     fsACBrSAT: TACBrSAT;
+    fsEhVenda: Boolean;
+
     fsQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirDocumento;
     fsQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
     fsQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
@@ -107,8 +109,7 @@ type
     Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
-    procedure FechaCupomVirtual(Observacao: AnsiString; IndiceBMP: Integer);
-      override;
+    Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupomVirtual ; override ;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -228,6 +229,7 @@ begin
   fsQuandoEfetuarPagamento := Nil;
   fsQuandoVenderItem       := Nil;
   fsNomeArqTempXML := '';
+  fsEhVenda := False;
 end;
 
 function TACBrECFVirtualSATClass.AdivinharCodigoMP(const DescricaoPagto: String
@@ -297,8 +299,12 @@ end;
 
 procedure TACBrECFVirtualSATClass.AbreDocumentoVirtual;
 begin
+  fsEhVenda := False;
+
   if fpEstado = estVenda then
   begin
+    fsEhVenda := True;
+
     with fsACBrSAT do
     begin
       InicializaCFe();
@@ -309,11 +315,9 @@ begin
       if Assigned( fsQuandoAbrirDocumento ) then
         fsQuandoAbrirDocumento( CFe );
     end;
-
-    exit; // Não Imprime
-  end;
-
-  inherited AbreDocumentoVirtual;
+  end
+  else
+    inherited AbreDocumentoVirtual;
 end;
 
 procedure TACBrECFVirtualSATClass.EnviaConsumidorVirtual;
@@ -442,27 +446,34 @@ procedure TACBrECFVirtualSATClass.FechaCupomVirtual(Observacao: AnsiString;
 var
   codigoDeRejeicao, mensagem: String;
 begin
-  with fsACBrSAT do
+  if fsEhVenda then
   begin
-    CFe.InfAdic.infCpl := Observacao;
-
-    EnviarDadosVenda;
-
-    if Resposta.codigoDeRetorno <> 6000 then
+    with fsACBrSAT do
     begin
-      codigoDeRejeicao := Resposta.RetornoLst[2];
-      mensagem         := ACBrStrToAnsi( Resposta.RetornoLst[3] );
+      CFe.InfAdic.infCpl := Observacao;
 
-      raise EACBrSATErro.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
-        'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +
-        ', Cod.Rejeição: '+codigoDeRejeicao + sLineBreak +
-        mensagem );
+      EnviarDadosVenda;
+
+      if Resposta.codigoDeRetorno <> 6000 then
+      begin
+        codigoDeRejeicao := Resposta.RetornoLst[2];
+        mensagem         := ACBrStrToAnsi( Resposta.RetornoLst[3] );
+
+        raise EACBrSATErro.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
+          'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +
+          ', Cod.Rejeição: '+codigoDeRejeicao + sLineBreak +
+          mensagem );
+      end;
+
+      ChaveCupom := CFe.infCFe.ID;
+
+      ImprimirExtrato;
     end;
+  end
+  else
+    inherited FechaCupomVirtual( Observacao, IndiceBMP);
 
-    ChaveCupom := CFe.infCFe.ID;
-
-    ImprimirExtrato;
-  end;
+  fsEhVenda := False;
 end;
 
 procedure TACBrECFVirtualSATClass.CancelaCupomVirtual;

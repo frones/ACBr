@@ -102,6 +102,8 @@ type
   TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
   private
     fsACBrNFCe: TACBrNFe;
+    fsEhVenda: Boolean;
+
     fsQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
     fsQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
     fsQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
@@ -130,8 +132,7 @@ type
     Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
-    procedure FechaCupomVirtual(Observacao: AnsiString; IndiceBMP: Integer);
-      override;
+    Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override;
     Procedure CancelaCupomVirtual ; override ;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -277,6 +278,7 @@ begin
   fsNomeArqTempXML := '';
   fsDestNome       := '';
   fsDestCNPJ       := '';
+  fsEhVenda        := False;
 end;
 
 function TACBrECFVirtualNFCeClass.AdivinharFormaPagamento(const DescricaoPagto: String
@@ -426,8 +428,12 @@ end;
 
 procedure TACBrECFVirtualNFCeClass.AbreDocumentoVirtual;
 begin
+  fsEhVenda := False;
+
   if fpEstado = estVenda then
   begin
+    fsEhVenda := True;
+
     with fsACBrNFCe do
     begin
       NotasFiscais.Clear;
@@ -446,11 +452,9 @@ begin
       if Assigned( fsQuandoAbrirDocumento ) then
         fsQuandoAbrirDocumento( NotasFiscais.Items[0].NFe );
     end;
-
-    exit; // Não Imprime
-  end;
-
-  inherited AbreDocumentoVirtual;
+  end
+  else
+    inherited AbreDocumentoVirtual;
 end;
 
 procedure TACBrECFVirtualNFCeClass.EnviaConsumidorVirtual;
@@ -574,63 +578,70 @@ procedure TACBrECFVirtualNFCeClass.FechaCupomVirtual(Observacao: AnsiString;
 var
   cStat, xMotivo: String;
 begin
-  SomaTotais;
-
-  with fsACBrNFCe.NotasFiscais.Items[0] do
+  if fsEhVenda then
   begin
-    NFe.Total.ICMSTot.vTotTrib := fsvTotTrib;
-    NFe.Total.ICMSTot.vBC      := fsvBC;
-    NFe.Total.ICMSTot.vICMS    := fsvICMS;
-    NFe.Total.ICMSTot.vBCST    := fsvBCST;
-    NFe.Total.ICMSTot.vST      := fsvST;
-    NFe.Total.ICMSTot.vProd    := fsvProd;
-    NFe.Total.ICMSTot.vFrete   := fsvFrete;
-    NFe.Total.ICMSTot.vSeg     := fsvSeg;
-    NFe.Total.ICMSTot.vDesc    := fsvDesc;
-    NFe.Total.ICMSTot.vII      := fsvII;
-    NFe.Total.ICMSTot.vIPI     := fsvIPI;
-    NFe.Total.ICMSTot.vPIS     := fsvPIS;
-    NFe.Total.ICMSTot.vCOFINS  := fsvCOFINS;
-    NFe.Total.ICMSTot.vOutro   := fsvOutro;
-    NFe.Total.ICMSTot.vNF      := fsvNF;
+    SomaTotais;
 
-    if Assigned( fsQuandoFecharDocumento ) then
-      fsQuandoFecharDocumento( NFe );
-  end;
-
-  fsDestNome       := '';
-  fsDestCNPJ       := '';
-
-  with fsACBrNFCe do
-  begin
-    NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + Observacao;
-
-    if Configuracoes.Geral.FormaEmissao = teOffLine then
+    with fsACBrNFCe.NotasFiscais.Items[0] do
     begin
-      NotasFiscais.Validar;
-      NotasFiscais.Assinar;
-      //NotasFiscais.Items[0].Confirmada := True;
-    end
-    else
-    begin
-      Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
+      NFe.Total.ICMSTot.vTotTrib := fsvTotTrib;
+      NFe.Total.ICMSTot.vBC      := fsvBC;
+      NFe.Total.ICMSTot.vICMS    := fsvICMS;
+      NFe.Total.ICMSTot.vBCST    := fsvBCST;
+      NFe.Total.ICMSTot.vST      := fsvST;
+      NFe.Total.ICMSTot.vProd    := fsvProd;
+      NFe.Total.ICMSTot.vFrete   := fsvFrete;
+      NFe.Total.ICMSTot.vSeg     := fsvSeg;
+      NFe.Total.ICMSTot.vDesc    := fsvDesc;
+      NFe.Total.ICMSTot.vII      := fsvII;
+      NFe.Total.ICMSTot.vIPI     := fsvIPI;
+      NFe.Total.ICMSTot.vPIS     := fsvPIS;
+      NFe.Total.ICMSTot.vCOFINS  := fsvCOFINS;
+      NFe.Total.ICMSTot.vOutro   := fsvOutro;
+      NFe.Total.ICMSTot.vNF      := fsvNF;
 
-      if WebServices.Enviar.cStat <> 100 then
-      begin
-        cStat   := IntToStr(WebServices.Enviar.cStat);
-        xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo );
-
-        raise EACBrNFeException.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
-          'cStat: '+cStat + sLineBreak +
-          'xMotivo: '+xMotivo );
-      end;
+      if Assigned( fsQuandoFecharDocumento ) then
+        fsQuandoFecharDocumento( NFe );
     end;
 
-    ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
-    
-    if NotasFiscais.Items[0].Confirmada then
-       NotasFiscais.Items[0].Imprimir;
-  end;
+    fsDestNome       := '';
+    fsDestCNPJ       := '';
+
+    with fsACBrNFCe do
+    begin
+      NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + Observacao;
+
+      if Configuracoes.Geral.FormaEmissao = teOffLine then
+      begin
+        NotasFiscais.Validar;
+        NotasFiscais.Assinar;
+        //NotasFiscais.Items[0].Confirmada := True;
+      end
+      else
+      begin
+        Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
+
+        if WebServices.Enviar.cStat <> 100 then
+        begin
+          cStat   := IntToStr(WebServices.Enviar.cStat);
+          xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo );
+
+          raise EACBrNFeException.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
+            'cStat: '+cStat + sLineBreak +
+            'xMotivo: '+xMotivo );
+        end;
+      end;
+
+      ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
+
+      if NotasFiscais.Items[0].Confirmada then
+         NotasFiscais.Items[0].Imprimir;
+    end;
+  end
+  else
+     inherited FechaCupomVirtual( Observacao, IndiceBMP);
+
+  fsEhVenda := False;
 end;
 
 procedure TACBrECFVirtualNFCeClass.CancelaCupomVirtual;

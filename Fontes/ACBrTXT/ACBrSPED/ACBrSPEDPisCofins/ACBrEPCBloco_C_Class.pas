@@ -2362,10 +2362,10 @@ procedure TBloco_C.WriteRegistroC860(RegC010: TRegistroC010);
           begin
             Add( LFill('C860')       +
                  LFill( COD_MOD, 2 ) +
-                 LFill( NR_SAT )     +
+                 LFill( NR_SAT, 9 )     +
                  LFill( DT_DOC)      +
-                 LFill( DOC_INI )    +
-                 LFill( DOC_FIM )    ) ;
+                 LFill( DOC_INI, 6 )    +
+                 LFill( DOC_FIM, 6 )    ) ;
           end;
           /// Registros FILHOS
           WriteRegistroC870( RegC010.RegistroC860.Items[intFor] ) ;

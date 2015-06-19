@@ -16,6 +16,23 @@ uses
 
 type
 
+  { TiraPontosTest }
+
+  TiraPontosTest = class(TTestCase)
+  private
+
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure TiraPontos_StringInvalida_RetornaVazio;
+    procedure TiraPontos_StringInicioInvalido_RetornaFinal;
+    procedure TiraPontos_StringFimInvalido_RetornaInicio;
+    procedure TiraPontos_StringMeioInvalido_RetornaExtremos;
+    procedure TiraPontos_StringExtremosInvalidos_RetornaMeio;
+    procedure TiraPontos_StringComEspacos_RetornaMeioSemEspacos;
+  end;
+
   { ParseTextTest }
 
   ParseTextTest = class(TTestCase)
@@ -738,6 +755,29 @@ type
     procedure TamanhoMenor;
     procedure DigitoInvalido;
     procedure ComLetras;
+    procedure EAN13Valido_StringInvalida_RetornaFalso;
+    procedure EAN13Valido_StringValida_RetornaTrue;
+    procedure EAN13Valido_String0000000000000_RetornaTrue;
+    procedure EAN13Valido_String7896232517828_RetornaTrue;
+    procedure EAN13Valido_String7896645900026_RetornaTrue;
+    procedure EAN13Valido_String7898908141016_RetornaTrue;
+    procedure EAN13Valido_String7893946087173_RetornaTrue;
+    procedure EAN13Valido_String7897186015095_RetornaTrue;
+    procedure EAN13Valido_String7891060886139_RetornaTrue;
+    procedure EAN13Valido_String7898132132019_RetornaTrue;
+    procedure EAN13Valido_String7506195185568_RetornaTrue;
+    procedure EAN13Valido_String2000100002629_RetornaTrue;
+    procedure EAN13_DV_StringAlphanumerica_RetornaVazio;
+    procedure EAN13_DV_Codigo000000000000_Retorna0;
+    procedure EAN13_DV_Codigo789623251782_Retorna8;
+    procedure EAN13_DV_Codigo789664590002_Retorna6;
+    procedure EAN13_DV_Codigo789890814101_Retorna6;
+    procedure EAN13_DV_Codigo789394608717_Retorna3;
+    procedure EAN13_DV_Codigo789718601509_Retorna5;
+    procedure EAN13_DV_Codigo789106088613_Retorna9;
+    procedure EAN13_DV_Codigo789813213201_Retorna9;
+    procedure EAN13_DV_Codigo750619518556_Retorna8;
+    procedure EAN13_DV_Codigo200010000262_Retorna9;
   end;
 
 
@@ -746,6 +786,53 @@ implementation
 uses
   Math, dateutils,
   ACBrUtil, ACBrConsts;
+
+{ TiraPontosTest }
+
+procedure TiraPontosTest.SetUp;
+begin
+  inherited SetUp;
+
+end;
+
+procedure TiraPontosTest.TearDown;
+begin
+  inherited TearDown;
+
+end;
+
+procedure TiraPontosTest.TiraPontos_StringComEspacos_RetornaMeioSemEspacos;
+begin
+  CheckEquals('AaBbCcDdç123', ACBrUtil.TiraPontos('/-.) (,/-. )AaBbCc Ddç 1 23 (,,( ).-/'));
+
+end;
+
+procedure TiraPontosTest.TiraPontos_StringExtremosInvalidos_RetornaMeio;
+begin
+  CheckEquals('AaBbCcDdç123', ACBrUtil.TiraPontos('/-.)(,/-.)AaBbCcDdç123(,,().-/'));
+
+end;
+
+procedure TiraPontosTest.TiraPontos_StringFimInvalido_RetornaInicio;
+begin
+  CheckEquals('AaBbCcDdç123', ACBrUtil.TiraPontos('AaBbCcDdç123/-.)(,/-.)(,,().-/'));
+
+end;
+
+procedure TiraPontosTest.TiraPontos_StringInicioInvalido_RetornaFinal;
+begin
+  CheckEquals('AaBbCcDdç123', ACBrUtil.TiraPontos('/-.)(,/-.)(,,().-/AaBbCcDdç123'));
+end;
+
+procedure TiraPontosTest.TiraPontos_StringInvalida_RetornaVazio;
+begin
+  CheckEquals('', ACBrUtil.TiraPontos('/-.)(,/-.)(,,().-/'));
+end;
+
+procedure TiraPontosTest.TiraPontos_StringMeioInvalido_RetornaExtremos;
+begin
+  CheckEquals('AaBbCcDdç123', ACBrUtil.TiraPontos('AaBbCc/-.)(,/-.)(,,().-/Ddç123'));
+end;
 
 { EAN13Test }
 
@@ -778,6 +865,122 @@ end;
 procedure EAN13Test.ComLetras;
 begin
   CheckFalse( EAN13Valido('A89835741001D'));
+end;
+
+procedure EAN13Test.EAN13Valido_String0000000000000_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('0000000000000'));
+end;
+
+procedure EAN13Test.EAN13Valido_String2000100002629_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('2000100002629'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7506195185568_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7506195185568'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7891060886139_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7891060886139'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7893946087173_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7893946087173'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7896232517828_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7896232517828'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7896645900026_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7896645900026'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7897186015095_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7897186015095'));
+end;
+
+procedure EAN13Test.EAN13Valido_String7898132132019_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7898132132019'));
+
+end;
+
+procedure EAN13Test.EAN13Valido_String7898908141016_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('7898908141016'));
+end;
+
+procedure EAN13Test.EAN13Valido_StringInvalida_RetornaFalso;
+begin
+  CheckFalse(ACBrUtil.EAN13Valido('abcdefghijklm'));
+end;
+
+procedure EAN13Test.EAN13Valido_StringValida_RetornaTrue;
+begin
+  CheckTrue(ACBrUtil.EAN13Valido('1234567890128'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo000000000000_Retorna0;
+begin
+  CheckEquals('0', ACBrUtil.EAN13_DV('000000000000'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo200010000262_Retorna9;
+begin
+  CheckEquals('9', ACBrUtil.EAN13_DV('200010000262'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo750619518556_Retorna8;
+begin
+  CheckEquals('8', ACBrUtil.EAN13_DV('750619518556'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789106088613_Retorna9;
+begin
+  CheckEquals('9', ACBrUtil.EAN13_DV('789106088613'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789394608717_Retorna3;
+begin
+  CheckEquals('3', ACBrUtil.EAN13_DV('789394608717'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789623251782_Retorna8;
+begin
+  CheckEquals('8', ACBrUtil.EAN13_DV('789623251782'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789664590002_Retorna6;
+begin
+  CheckEquals('6', ACBrUtil.EAN13_DV('789664590002'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789718601509_Retorna5;
+begin
+  CheckEquals('5', ACBrUtil.EAN13_DV('789718601509'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789813213201_Retorna9;
+begin
+  CheckEquals('9', ACBrUtil.EAN13_DV('789813213201'));
+end;
+
+procedure EAN13Test.EAN13_DV_Codigo789890814101_Retorna6;
+begin
+  CheckEquals('6', ACBrUtil.EAN13_DV('789890814101'));
+end;
+
+procedure EAN13Test.EAN13_DV_StringAlphanumerica_RetornaVazio;
+begin
+  CheckEquals('', ACBrUtil.EAN13_DV('1234567890ab'));
 end;
 
 { TranslateUnprintableTest }

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/06/2015
+-- ACBrCHQ --
+[-] Adicionado o suporte a impressora de cheques Elgin
+    Contribuição: Laercio
+
 Data: 16/06/2015
 -- ACBrECFEscECF -- (por: DSA)
 [-] Corrigido Bug na detecção do estado "estPagamento" após a Subtotalização do

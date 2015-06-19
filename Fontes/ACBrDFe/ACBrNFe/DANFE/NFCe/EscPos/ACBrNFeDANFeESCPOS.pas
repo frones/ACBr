@@ -330,10 +330,10 @@ begin
             (FpNFe.Det.Items[i].Prod.qCom * FpNFe.Det.Items[i].Prod.vUnCom) +
             FpNFe.Det.Items[i].Prod.vOutro;
 
-          LinhaCmd := '</ae><c>' + padSpace(
+          LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
               'acréscimo ' + padLeft(FormatFloatBr(FpNFe.Det.Items[i].Prod.vOutro, '+0.00'), 15, ' ')
               + '|' + FormatFloatBr(VlrLiquido, '0.00'),
-              FPosPrinter.ColunasFonteCondensada, '|');
+              FPosPrinter.ColunasFonteCondensada, '|'));
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
         end;
       end;
@@ -381,9 +381,9 @@ begin
 
   for i := 0 to FpNFe.pag.Count - 1 do
   begin
-    FPosPrinter.Buffer.Add('<c>' + PadSpace(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag) +
+    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag) +
        '|' + FormatFloat('#,###,##0.00', FpNFe.pag.Items[i].vPag),
-       FPosPrinter.ColunasFonteCondensada, '|'));
+       FPosPrinter.ColunasFonteCondensada, '|')));
     //Total := Total + FpNFe.pag.Items[i].vPag;
   end;
 

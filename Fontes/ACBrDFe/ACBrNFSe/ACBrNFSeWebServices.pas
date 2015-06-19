@@ -68,6 +68,7 @@ type
     FTagF: String;
     FDadosSenha: String;
     FDadosEnvelope: String;
+    FaMsg: String;
 
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -88,6 +89,7 @@ type
     property TagF: String read FTagF;
     property DadosSenha: String read FDadosSenha;
     property DadosEnvelope: String read FDadosEnvelope;
+    property aMsg: String read FaMsg;
   end;
 
   { TNFSeGerarLoteRPS }
@@ -95,6 +97,7 @@ type
   TNFSeGerarLoteRPS = Class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
+
     FNumeroLote: String;
   protected
     procedure EnviarDados; override;
@@ -119,10 +122,11 @@ type
   TNFSeEnviarLoteRPS = class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TretEnvLote;
+
     FNumeroLote: String;
     FDataRecebimento: TDateTime;
     FProtocolo: String;
-    FNFSeRetorno: TretEnvLote;
 
     function GetLote: String;
     function GetProtocolo: String;
@@ -140,34 +144,23 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
+    property NFSeRetorno: TretEnvLote read FNFSeRetorno write FNFSeRetorno;
+
     property NumeroLote: String read FNumeroLote;
     property DataRecebimento: TDateTime read FDataRecebimento;
     property Protocolo: String read FProtocolo;
-    property NFSeRetorno: TretEnvLote read FNFSeRetorno write FNFSeRetorno;
   end;
 
-(*
-  { TNFSeRetRecepcao }
-
-  TNFSeRetRecepcao = class(TNFSeWebService)
+  TNFSeEnviarSincrono = Class(TNFSeWebService)
   private
-    FRecibo: String;
-    FProtocolo: String;
-    FChaveNFSe: String;
     FNotasFiscais: TNotasFiscais;
-    Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
-    FcStat: Integer;
-    FcUF: Integer;
-    FxMotivo: String;
-    FcMsg: Integer;
-    FxMsg: String;
+    FNFSeRetorno: TGerarretNfse;
 
-    FNFSeRetorno: TRetConsReciNFSe;
+    FNumeroLote: String;
+    FProtocolo: String;
+    FDataRecebimento: TDateTime;
+    FSituacao: String;
 
-    function GetRecibo: String;
-    function TratarRespostaFinal: Boolean;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -182,105 +175,342 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
-    function Executar: Boolean; override;
+    property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
 
-    property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property cUF: Integer read FcUF;
-    property xMotivo: String read FxMotivo;
-    property cMsg: Integer read FcMsg;
-    property xMsg: String read FxMsg;
-    property Recibo: String read GetRecibo write FRecibo;
-    property Protocolo: String read FProtocolo write FProtocolo;
-    property ChaveNFSe: String read FChaveNFSe write FChaveNFSe;
-
-    property NFSeRetorno: TRetConsReciNFSe read FNFSeRetorno;
+    property NumeroLote: String read FNumeroLote;
+    property Protocolo: String read FProtocolo;
+    property DataRecebimento: TDateTime read FDataRecebimento;
+    property Situacao: String read FSituacao;
   end;
 
-  { TNFSeRecibo }
-
-  TNFSeRecibo = class(TNFSeWebService)
+  TNFSeGerarNFSe = Class(TNFSeWebService)
   private
-    FRecibo: String;
-    Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
-    FcStat: Integer;
-    FxMotivo: String;
-    FcUF: Integer;
-    FxMsg: String;
-    FcMsg: Integer;
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TGerarretNfse;
 
-    FNFSeRetorno: TRetConsReciNFSe;
-  protected
-    procedure DefinirServicoEAction; override;
-    procedure DefinirURL; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-
-    property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property xMotivo: String read FxMotivo;
-    property cUF: Integer read FcUF;
-    property xMsg: String read FxMsg;
-    property cMsg: Integer read FcMsg;
-    property Recibo: String read FRecibo write FRecibo;
-
-    property NFSeRetorno: TRetConsReciNFSe read FNFSeRetorno;
-  end;
-
-  { TNFSeConsulta }
-
-  TNFSeConsulta = class(TNFSeWebService)
-  private
-    FNFSeChave: String;
+    FNumeroRps: Integer;
     FProtocolo: String;
-    FDhRecbto: TDateTime;
-    FXMotivo: String;
-    Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
-    FverAplic: String;
-    FcStat: Integer;
-    FcUF: Integer;
+    FDataRecebimento: TDateTime;
+    FSituacao: String;
 
-    FprotNFSe: TProcNFSe;
-    FretCancNFSe: TRetCancNFSe;
-    FprocEventoNFSe: TRetEventoNFSeCollection;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
     destructor Destroy; override;
 
-    property NFSeChave: String read FNFSeChave write FNFSeChave;
-    property Protocolo: String read FProtocolo write FProtocolo;
-    property DhRecbto: TDateTime read FDhRecbto write FDhRecbto;
-    property XMotivo: String read FXMotivo write FXMotivo;
-    property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
-    property verAplic: String read FverAplic;
-    property cStat: Integer read FcStat;
-    property cUF: Integer read FcUF;
+    property NFSeRetorno: TGerarretNfse read FNFSeRetorno write FNFSeRetorno;
 
-    property protNFSe: TProcNFSe read FprotNFSe;
-    property retCancNFSe: TRetCancNFSe read FretCancNFSe;
-    property procEventoNFSe: TRetEventoNFSeCollection read FprocEventoNFSe;
+    property NumeroRps: integer read FNumeroRps;
+    property Protocolo: String read FProtocolo;
+    property DataRecebimento: TDateTime read FDataRecebimento;
+    property Situacao: String read FSituacao;
   end;
-  *)
+
+  TNFSeConsultarSituacaoLoteRPS = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TRetSitLote;
+
+    FCnpj: String;
+    FInscricaoMunicipal: String;
+    FProtocolo: String;
+    FNumeroLote: String;
+    FSituacao: String;
+    FSenha: String;
+    FFraseSecreta: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+    property NFSeRetorno: TRetSitLote read FNFSeRetorno write FNFSeRetorno;
+
+    property Cnpj: String read FCnpj write FCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property Protocolo: String read FProtocolo write FProtocolo;
+    property NumeroLote: String read FNumeroLote write FNumeroLote;
+    property Situacao: String read FSituacao;
+    property Senha: String read FSenha write FSenha;
+    property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
+  end;
+
+  TNFSeConsultarLoteRPS = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TRetLote;
+
+    FProtocolo: String;
+    FNumeroLote: String;
+    FCNPJ: String;
+    FIM: String;
+    FSenha: String;
+    FFraseSecreta: String;
+    FArquivoRetorno: String;
+    FRazaoSocial: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+//    property NotasFiscais: TNotasFiscais read FNotasFiscais;
+    property NFSeRetorno: TRetLote read FNFSeRetorno write FNFSeRetorno;
+
+    property Protocolo: String read FProtocolo write FProtocolo;
+      //usado pelo provedor IssDsf
+    property NumeroLote: String read FNumeroLote write FNumeroLote;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property IM: String read FIM write FIM;
+    property Senha: String read FSenha write FSenha;
+    property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
+    property ArquivoRetorno: WideString read FArquivoRetorno write FArquivoRetorno;
+    //usado pelo provedor Tecnos
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+  end;
+
+  TNFSeConsultarNfseRPS = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TRetNfseRps;
+
+    FNumero: String;
+    FSerie: String;
+    FTipo: String;
+    FCnpj: String;
+    FInscricaoMunicipal: String;
+    FSenha: String;
+    FFraseSecreta: String;
+    FRazaoSocial: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+    property NFSeRetorno: TRetNfseRps read FNFSeRetorno write FNFSeRetorno;
+
+    property Numero: String read FNumero write FNumero;
+    property Serie: String read FSerie write FSerie;
+    property Tipo: String read FTipo write FTipo;
+    property Cnpj: String read FCnpj write FCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property Senha: String read FSenha write FSenha;
+    property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+  end;
+
+  TNFSeConsultarNfse = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TRetNfse;
+
+    FCnpj: String;
+    FInscricaoMunicipal: String;
+    FDataInicial: TDateTime;
+    FDataFinal: TDateTime;
+    FNumeroNFSe: String;
+    FPagina: Integer;
+    FSenha: String;
+    FFraseSecreta: String;
+    FCNPJTomador: String;
+    FIMTomador: String;
+    FNomeInter: String;
+    FCNPJInter: String;
+    FIMInter: String;
+    FSerie: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+    property NFSeRetorno: TRetNfse      read FNFSeRetorno        write FNFSeRetorno;
+
+    property Cnpj: String               read FCnpj               write FCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property DataInicial: TDateTime     read FDataInicial        write FDataInicial;
+    property DataFinal: TDateTime       read FDataFinal          write FDataFinal;
+    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
+    property Pagina: Integer            read FPagina             write FPagina;
+    property Senha: String              read FSenha              write FSenha;
+    property FraseSecreta: String       read FFraseSecreta       write FFraseSecreta;
+    property CNPJTomador: String        read FCNPJTomador        write FCNPJTomador;
+    property IMTomador: String          read FIMTomador          write FIMTomador;
+    property NomeInter: String          read FNomeInter          write FNomeInter;
+    property CNPJInter: String          read FCNPJInter          write FCNPJInter;
+    property IMInter: String            read FIMInter            write FIMInter;
+    property Serie: String              read FSerie              write FSerie;
+
+  end;
+
+  TNFSeCancelarNfse = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TretCancNFSe;
+
+    FCodigoCancelamento: String;
+    FMotivoCancelamento: String;
+    FDataHora: TDateTime;
+    FCNPJ: String;
+    FIM: String;
+    FNumeroNFSe: String;
+    FCodigoMunicipio: String;
+    FArquivoRetorno: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+    property NFSeRetorno: TretCancNFSe read FNFSeRetorno write FNFSeRetorno;
+
+    property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
+    property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
+    property DataHora: TDateTime read FDataHora write FDataHora;
+    property NumeroNFSe: String read FNumeroNFSe write FNumeroNFSe;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property IM: String read FIM write FIM;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
+    property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
+  end;
+
+ TNFSeSubstituirNFSe = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    FNFSeRetorno: TretSubsNfse;
+
+    FCodigoCancelamento: String;
+    FMotivoCancelamento: String;
+    FDataHora: TDateTime;
+    FNumeroNFSe: String;
+    FCNPJ: String;
+    FIM: String;
+    FCodigoMunicipio: String;
+
+    FNumeroRps: Integer;
+    FProtocolo: String;
+    FDataRecebimento: TDateTime;
+    FSituacao: String;
+
+    FArquivoRetorno: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+    property NFSeRetorno: TretSubsNfse  read FNFSeRetorno    write FNFSeRetorno;
+
+    property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
+    property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
+    property DataHora: TDateTime        read FDataHora           write FDataHora;
+    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
+    property CNPJ: String               read FCNPJ               write FCNPJ;
+    property IM: String                 read FIM                 write FIM;
+    property CodigoMunicipio: String    read FCodigoMunicipio    write FCodigoMunicipio;
+
+    property NumeroRps: integer         read FNumeroRps;
+    property Protocolo: String          read FProtocolo;
+    property DataRecebimento: TDateTime read FDataRecebimento;
+    property Situacao: String           read FSituacao;
+
+    property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
+  end;
+
+  TNFSeLinkNFSe = Class(TNFSeWebService)
+  private
+    FNotasFiscais: TNotasFiscais;
+    
+    FNumeroNFSe: integer;
+    FCodVerif: String;
+    FLink: String;
+    FIM: String;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+
+    property NumeroNFSe: integer read FNumeroNFSe;
+    property CodVerif: String read FCodVerif;
+    property Link: String read FLink;
+    property IM: String read FIM;
+  end;
+
+// =============================================================================
 
   { TNFSeEnvioWebService }
 
@@ -315,11 +545,15 @@ type
     FACBrNFSe: TACBrDFe;
     FGerarLoteRPS: TNFSeGerarLoteRPS;
     FEnviarLoteRPS: TNFSeEnviarLoteRPS;
-    (*
-    FRetorno: TNFSeRetRecepcao;
-    FRecibo: TNFSeRecibo;
-    FConsulta: TNFSeConsulta;
-   *)
+    FEnviarSincrono: TNFSeEnviarSincrono;
+    FGerarNfse: TNFSeGerarNfse;
+    FConsSitLoteRPS: TNFSeConsultarSituacaoLoteRPS;
+    FConsLote: TNFSeConsultarLoteRPS;
+    FConsNfseRps: TNFSeConsultarNfseRps;
+    FConsNfse: TNFSeConsultarNfse;
+    FCancNfse: TNFSeCancelarNfse;
+    FSubNfse: TNFSeSubstituirNfse;
+    FLinkNfse: TNFSeLinkNfse;
     FEnvioWebService: TNFSeEnvioWebService;
 
   public
@@ -332,14 +566,61 @@ type
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
 
+    function EnviaSincrono(ALote:Integer): Boolean; overload;
+    function EnviaSincrono(ALote:String): Boolean; overload;
+
+    function Gera(ARps: Integer): Boolean; overload;
+    function Gera(ARps: String): Boolean; overload;
+
+    function ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String;
+                              const ANumLote: String = ''): Boolean;
+    function ConsultaLoteRps(AProtocolo: String;
+                             const CarregaProps: boolean = true): Boolean; overload;
+    function ConsultaLoteRps(AProtocolo,
+                             ACNPJ, AInscricaoMunicipal: String;
+                             const ASenha: String = '';
+                             const AFraseSecreta: String = '';
+                             const ARazaoSocial: String = ''): Boolean; overload;
+    function ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj, AInscricaoMunicipal: String;
+                                const ASenha: String = '';
+                                const AFraseSecreta: String = '';
+                                const ARazaoSocial: String = ''): Boolean;
+    function ConsultaNFSe(ACnpj,
+                          AInscricaoMunicipal: String;
+                          ADataInicial,
+                          ADataFinal: TDateTime;
+                          NumeroNFSe: String = '';
+                          APagina: Integer = 1;
+                          const ASenha: String = '';
+                          const AFraseSecreta: String = '';
+                          ACNPJTomador: String = '';
+                          AIMTomador: String = '';
+                          ANomeInter: String = '';
+                          ACNPJInter: String = '';
+                          AIMInter: String = '';
+                          ASerie: String = ''): Boolean;
+
+    function CancelaNFSe(ACodigoCancelamento: String;
+                         const CarregaProps: boolean = true): Boolean; overload;
+    function CancelaNFSe(ACodigoCancelamento, ANumeroNFSe, ACNPJ, AInscricaoMunicipal,
+                         ACodigoMunicipio: String): Boolean; overload;
+
+    function SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean; 
+
+    function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
+
     property ACBrNFSe: TACBrDFe read FACBrNFSe write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
     property EnviarLoteRPS: TNFSeEnviarLoteRPS read FEnviarLoteRPS write FEnviarLoteRPS;
-    (*
-    property Retorno: TNFSeRetRecepcao read FRetorno write FRetorno;
-    property Recibo: TNFSeRecibo read FRecibo write FRecibo;
-    property Consulta: TNFSeConsulta read FConsulta write FConsulta;
-    *)
+    property EnviarSincrono: TNFSeEnviarSincrono read FEnviarSincrono write FEnviarSincrono;
+    property GerarNfse: TNFSeGerarNfse read FGerarNfse write FGerarNfse;
+    property ConsSitLoteRPS: TNFSeConsultarSituacaoLoteRPS read FConsSitLoteRPS write FConsSitLoteRPS;
+    property ConsLote: TNFSeConsultarLoteRPS read FConsLote write FConsLote;
+    property ConsNfseRps: TNFSeConsultarNfseRps read FConsNfseRps write FConsNfseRps;
+    property ConsNfse: TNFSeConsultarNfse read FConsNfse write FConsNfse;
+    property CancNfse: TNFSeCancelarNfse read FCancNfse write FCancNfse;
+    property SubNfse: TNFSeSubstituirNfse read FSubNfse write FSubNfse;
+    property LinkNfse: TNFSeLinkNfse read FLinkNfse write FLinkNfse;
     property EnvioWebService: TNFSeEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -349,6 +630,8 @@ uses
   StrUtils, Math,
   ACBrUtil, ACBrNFSe, pnfsNFSeG,
   pcnGerador, pcnLeitor;
+
+// =============================================================================
 
 { TNFSeWebService }
 
@@ -405,7 +688,6 @@ begin
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-
 function TNFSeWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
@@ -428,6 +710,8 @@ begin
  Result := FPCabMsg;
 end;
 
+// =============================================================================
+
 { TNFSeGerarLoteRPS }
 
 constructor TNFSeGerarLoteRPS.Create(AOwner: TACBrDFe;
@@ -440,7 +724,7 @@ begin
   FPStatus := stNFSeRecepcao;
   FPLayout := LayNfseRecepcaoLote;
   FPArqEnv := 'lot-rps';
-  FPArqResp := ''; // O lote é apenas gerado não existe o envio
+  FPArqResp := ''; // O lote é apenas gerado não retorno de envio.
 end;
 
 destructor TNFSeGerarLoteRPS.Destroy;
@@ -586,6 +870,24 @@ begin
                                                vNotas,
                                                FTagI, FTagF, FPConfiguracoesNFSe.Geral.Provedor);
 
+  if FPDadosMsg <> '' then
+  begin
+    if FConfiguracoes.Certificados.AssinaLote then
+      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FPDadosMSg);
+
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+    begin
+      if not(NotaUtil.Valida(FDadosMsg, FMsg, FConfiguracoes.Geral.PathSchemas,
+                             FConfiguracoes.WebServices.URL,
+                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
+                             Prefixo4)) then
+        GerarException(ACBrStr('Falha na validação do Lote ' +
+                               TNFSeGerarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
+    end;
+  end
+  else
+    GerarException(ACBrStr('A funcionalidade [Gerar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor));
+
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
   // Lote tem mais de 500kb ? //
@@ -603,8 +905,7 @@ end;
 
 procedure TNFSeGerarLoteRPS.FinalizarServico;
 begin
-  inherited;
-{a}
+  inherited FinalizarServico;
 end;
 
 function TNFSeGerarLoteRPS.GerarMsgLog: String;
@@ -617,6 +918,8 @@ begin
   Result := NumeroLote;
 end;
 
+// =============================================================================
+
 { TNFSeEnviarLoteRPS }
 
 constructor TNFSeEnviarLoteRPS.Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
@@ -624,22 +927,17 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-//  FSincrono := False;
 
   FPStatus := stNFSeRecepcao;
   FPLayout := LayNfseRecepcaoLote;
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
 
-//  FNFSeRetornoSincrono := nil;
   FNFSeRetorno := nil;
 end;
 
 destructor TNFSeEnviarLoteRPS.Destroy;
 begin
-//  if Assigned(FNFSeRetornoSincrono) then
-//    FNFSeRetornoSincrono.Free;
-
   if Assigned(FNFSeRetorno) then
     FNFSeRetorno.Free;
 
@@ -664,208 +962,212 @@ end;
 
 procedure TNFSeEnviarLoteRPS.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'NFSeEnviarLoteRPS2';
+  FPServico := GetUrlWsd + 'NFSeEnviarLoteRPS';
   FPSoapAction := FPServico;
 end;
 
 procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
 var
-  I: Integer;
-  vNotas: String;
-  indSinc: String;
+  I: integer;
+  URI,
+  Separador,
+  vNotas,
+  NameSpace,
+  ServicoEnviar,
+  DefTipos,
+  Cabecalho,
+  Prefixo2,
+  Prefixo3,
+  Prefixo4: String;
 begin
-(*
-  if (FPLayout = LayNFSeAutorizacao) or (FPConfiguracoesNFSe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFSe.Geral.VersaoDF = ve310) then
-    indSinc := '<indSinc>' + IfThen(FSincrono, '1', '0') + '</indSinc>'
-  else
-    indSinc := '';
-
   vNotas := '';
-  for I := 0 to FNotasFiscais.Count - 1 do
-    vNotas := vNotas + '<NFSe' + RetornarConteudoEntre(
-      FNotasFiscais.Items[I].XMLAssinado, '<NFSe', '</NFSe>') + '</NFSe>';
 
-  FPDadosMsg := '<enviNFSe xmlns="http://www.portalfiscal.inf.br/NFSe" versao="' +
-    FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +
-    vNotas + '</enviNFSe>';
+  NameSpace := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
+  DefTipos := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
+  ServicoEnviar := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
+  Cabecalho := FPConfiguracoesNFSe.Geral.ConfigSchemas.Cabecalho;
+  Prefixo2 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo2;
+  Prefixo3 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo3;
+  Prefixo4 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4;
+
+  if RightStr(NameSpace, 1) = '/' then
+    Separador := ''
+  else
+    Separador := '/';
+
+  if Cabecalho <> '' then
+  begin
+    if Prefixo2 <> '' then
+      FNameSpaceCab := ' xmlns:' + StringReplace(Prefixo2, ':', '', []) +
+                       '="' + NameSpace + Separador + Cabecalho +'">'
+    else
+      FNameSpaceCab := ' xmlns="' + NameSpace + Separador + Cabecalho +'">';
+  end
+  else
+    FNameSpaceCab := '>';
+
+  if FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar <> '' then
+  begin
+    if (FPConfiguracoesNFSe.Geral.Provedor = proIssDSF) then
+      FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + '" '
+    else
+      if (FPConfiguracoesNFSe.Geral.Provedor = proInfisc) then
+        FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + '" '
+      else begin
+        if (RightStr(NameSpace, 1) = '/') then
+        begin
+          if Prefixo3 <> '' then
+            FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + Separador + ServicoEnviar + '"'
+          else
+            FNameSpaceDad := 'xmlns="' + NameSpace + Separador + ServicoEnviar + '"';
+        end
+        else begin
+          if Prefixo3 <> '' then
+            FNameSpaceDad := 'xmlns:' + StringReplace(Prefixo3, ':', '', []) + '="' + NameSpace + '"'
+          else
+            FNameSpaceDad := 'xmlns="' + NameSpace + '"';
+        end;
+      end;
+  end
+  else
+    FNameSpaceDad := '';
+
+  if (DefTipos = '') and (NameSpaceDad <> '') then
+    FNameSpaceDad := FNameSpaceDad + '>';
+
+  if DefTipos <> '' then
+  begin
+    if Prefixo4 <> '' then
+      FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
+                       StringReplace(Prefixo4, ':', '', []) + '="' + NameSpace + Separador + DefTipos + '">'
+    else
+      FNameSpaceDad := FNameSpaceDad + ' xmlns="' + NameSpace + Separador + DefTipos + '">';
+  end;
+
+  if FNameSpaceDad = '' then
+    FNameSpaceDad := '>'
+  else
+    FNameSpaceDad := ' ' + FNameSpaceDad;
+
+  if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
+  begin
+    for I := 0 to FNotasFiscais.Count - 1 do
+       vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                             '<' + Prefixo4 + 'InfRps' +
+                                RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                     '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                          '</' + Prefixo4 + 'Rps>';
+  end
+  else begin
+    for I := 0 to FNotasFiscais.Count - 1 do
+       vNotas := vNotas + '<' + Prefixo4 + 'Rps>' +
+                             '<' + Prefixo4 + 'InfRps' +
+                                RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
+                                     '<' + Prefixo4 + 'InfRps', '</Rps>') +
+                          '</' + Prefixo4 + 'Rps>';
+  end;
+
+  FPCabMsg := FPConfiguracoesNFSe.Geral.ConfigEnvelope.CabecalhoMsg;
+  FURI := '';
+//  FURI := FProvedorClass.GetURI(URI);
+  FTagI := '<' + Prefixo3 + 'EnviarLoteEnvio' + FNameSpaceDad;
+  FTagF := '</' + Prefixo3 + 'EnviarLoteEnvio>';
+  FDadosSenha := '';
+//  FDadosSenha := FProvedorClass.Gera_DadosSenha(FConfiguracoes.WebServices.UserWeb, FConfiguracoes.WebServices.SenhaWeb);
+
+  FPDadosMsg := TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
+                                               FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
+                                               NameSpace,
+                                               FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
+                                               FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
+                                               TNFSeEnviarLoteRps(Self).NumeroLote,
+                                               OnlyNumber(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                               TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                               IntToStr(TNFSeEnviarLoteRps(Self).FNotasFiscais.Count),
+                                               vNotas,
+                                               FTagI, FTagF, FPConfiguracoesNFSe.Geral.Provedor);
+
+  if FPDadosMsg <> '' then
+  begin
+    if FConfiguracoes.Certificados.AssinaLote then
+      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FPDadosMSg);
+
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+    begin
+      if not(NotaUtil.Valida(FDadosMsg, FMsg, FConfiguracoes.Geral.PathSchemas,
+                             FConfiguracoes.WebServices.URL,
+                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
+                             Prefixo4)) then
+        GerarException(ACBrStr('Falha na validação do Lote ' +
+                               TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
+    end;
+  end
+  else
+    GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor));
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
     GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
-  FRecibo := '';
-*)
 end;
 
 function TNFSeEnviarLoteRPS.TratarResposta: Boolean;
 var
   I: Integer;
   chNFSe, NomeArquivo: String;
-//  AProcNFSe: TProcNFSe;
 begin
-(*
-  if FPLayout = LayNFSeAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeAutorizacaoLoteResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'NFSeAutorizacaoResult');
-  end
+  FPRetWS := SeparaDados(FPRetornoWS, 'Return');
+  if FPRetWS = '' then
+    FPRetWS := SeparaDados(FPRetornoWS, 'EnviarLoteRpsResposta');
+  if FPRetWS = '' then
+    FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body')
   else
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeEnviarLoteRPSLote2Result');
+    `FPRetWS := FPRetWS + '</EnviarLoteRpsResposta>';
 
-  if ((FPConfiguracoesNFSe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFSe.Geral.VersaoDF = ve310)) and FSincrono then
+  FNFSeRetorno := TretEnvNFSe.Create;
+
+  FNFSeRetorno.Leitor.Arquivo := FPRetWS;
+  FNFSeRetorno.LerXml;
+
+  FDataRecebimento := NFSeRetorno.InfRec.DataRecebimento;
+  FProtocolo       := NFSeRetorno.InfRec.Protocolo;
+  FNumeroLote      := NFSeRetorno.InfRec.NumeroLote;
+
+  // Lista de Mensagem de Retorno
+  FMsg := '';
+  if NFSeRetorno.InfRec.MsgRetorno.Count > 0 then
   begin
-    FNFSeRetornoSincrono := TRetConsSitNFSe.Create;
-
-    if pos('retEnviNFSe', FPRetWS) > 0 then
-      FNFSeRetornoSincrono.Leitor.Arquivo :=
-        StringReplace(FPRetWS, 'retEnviNFSe', 'retConsSitNFSe',
-        [rfReplaceAll, rfIgnoreCase])
-    else if pos('retConsReciNFSe', FPRetWS) > 0 then
-      FNFSeRetornoSincrono.Leitor.Arquivo :=
-        StringReplace(FPRetWS, 'retConsReciNFSe', 'retConsSitNFSe',
-        [rfReplaceAll, rfIgnoreCase])
-    else
-      FNFSeRetornoSincrono.Leitor.Arquivo := FPRetWS;
-
-    FNFSeRetornoSincrono.LerXml;
-
-    Fversao := FNFSeRetornoSincrono.versao;
-    FTpAmb := FNFSeRetornoSincrono.TpAmb;
-    FverAplic := FNFSeRetornoSincrono.verAplic;
-
-    // Consta no Retorno da NFC-e
-    FRecibo := FNFSeRetornoSincrono.nRec;
-    FcUF := FNFSeRetornoSincrono.cUF;
-    chNFSe := FNFSeRetornoSincrono.ProtNFSe.chNFSe;
-
-    if (FNFSeRetornoSincrono.protNFSe.cStat > 0) then
-      FcStat := FNFSeRetornoSincrono.protNFSe.cStat
-    else
-      FcStat := FNFSeRetornoSincrono.cStat;
-
-    if (FNFSeRetornoSincrono.protNFSe.xMotivo <> '') then
+    FaMsg:='';
+    for i := 0 to NFSeRetorno.InfRec.MsgRetorno.Count - 1 do
     begin
-      FPMsg := FNFSeRetornoSincrono.protNFSe.xMotivo;
-      FxMotivo := FNFSeRetornoSincrono.protNFSe.xMotivo;
-    end
-    else
-    begin
-      FPMsg := FNFSeRetornoSincrono.xMotivo;
-      FxMotivo := FNFSeRetornoSincrono.xMotivo;
-    end;
+      FMsg := FMsg + NFSeRetorno.infRec.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
 
-    // Verificar se a NF-e foi autorizada com sucesso
-    Result := (FNFSeRetornoSincrono.cStat = 104) and
-      (TACBrNFSe(FPDFeOwner).CstatProcessado(FNFSeRetornoSincrono.protNFSe.cStat));
-
-    NomeArquivo := PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) + chNFSe;
-
-    if Result then
-    begin
-      for I := 0 to TACBrNFSe(FPDFeOwner).NotasFiscais.Count - 1 do
-      begin
-        if OnlyNumber(chNFSe) = TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].NumID then
-        begin
-          if (TACBrNFSe(FPDFeOwner).Configuracoes.Geral.ValidarDigest) and
-            (TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].NFSe.signature.DigestValue <>
-            FNFSeRetornoSincrono.protNFSe.digVal) and
-            (FNFSeRetornoSincrono.protNFSe.digVal <> '') then
-          begin
-            raise EACBrNFSeException.Create('DigestValue do documento ' +
-              TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].NumID + ' não coNFSere.');
-          end;
-          with TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I] do
-          begin
-            NFSe.procNFSe.cStat := FNFSeRetornoSincrono.protNFSe.cStat;
-            NFSe.procNFSe.tpAmb := FNFSeRetornoSincrono.tpAmb;
-            NFSe.procNFSe.verAplic := FNFSeRetornoSincrono.verAplic;
-            NFSe.procNFSe.chNFSe := FNFSeRetornoSincrono.ProtNFSe.chNFSe;
-            NFSe.procNFSe.dhRecbto := FNFSeRetornoSincrono.protNFSe.dhRecbto;
-            NFSe.procNFSe.nProt := FNFSeRetornoSincrono.ProtNFSe.nProt;
-            NFSe.procNFSe.digVal := FNFSeRetornoSincrono.protNFSe.digVal;
-            NFSe.procNFSe.xMotivo := FNFSeRetornoSincrono.protNFSe.xMotivo;
-          end;
-
-          if (FileExists(NomeArquivo + '-NFSe.xml')) or
-            NaoEstaVazio(TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].NomeArq) then
-          begin
-            AProcNFSe := TProcNFSe.Create;
-            try
-              if NaoEstaVazio(TACBrNFSe(
-                FPDFeOwner).NotasFiscais.Items[I].NomeArq) then
-                AProcNFSe.PathNFSe := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].NomeArq
-              else
-                AProcNFSe.PathNFSe := NomeArquivo + '-NFSe.xml';
-
-              AProcNFSe.PathRetConsSitNFSe := '';
-              AProcNFSe.PathRetConsReciNFSe := '';
-              AProcNFSe.tpAmb := FNFSeRetornoSincrono.protNFSe.tpAmb;
-              AProcNFSe.verAplic := FNFSeRetornoSincrono.protNFSe.verAplic;
-              AProcNFSe.chNFSe := FNFSeRetornoSincrono.protNFSe.chNFSe;
-              AProcNFSe.dhRecbto := FNFSeRetornoSincrono.protNFSe.dhRecbto;
-              AProcNFSe.nProt := FNFSeRetornoSincrono.protNFSe.nProt;
-              AProcNFSe.digVal := FNFSeRetornoSincrono.protNFSe.digVal;
-              AProcNFSe.cStat := FNFSeRetornoSincrono.protNFSe.cStat;
-              AProcNFSe.xMotivo := FNFSeRetornoSincrono.protNFSe.xMotivo;
-
-              AProcNFSe.Versao := FPVersaoServico;
-              AProcNFSe.GerarXML;
-
-              if NaoEstaVazio(AProcNFSe.Gerador.ArquivoFormatoXML) then
-                AProcNFSe.Gerador.SalvarArquivo(AProcNFSe.PathNFSe);
-            finally
-              AProcNFSe.Free;
-            end;
-          end;
-
-          if FPConfiguracoesNFSe.Arquivos.Salvar then
-          begin
-            if FPConfiguracoesNFSe.Arquivos.SalvarApenasNFSeProcessadas then
-            begin
-              if TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].Processada then
-                TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].GravarXML;
-            end
-            else
-              TACBrNFSe(FPDFeOwner).NotasFiscais.Items[I].GravarXML;
-          end;
-
-          Break;
-        end;
-      end;
+      FaMsg := FaMsg + 'Código Erro : ' + NFSeRetorno.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
+                       'Mensagem... : ' + NFSeRetorno.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                       'Correção... : ' + NFSeRetorno.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
+                       'Provedor... : ' + FxProvedor + LineBreak;
     end;
   end
-  else
-  begin
-    FNFSeRetorno := TretEnvNFSe.Create;
-
-    FNFSeRetorno.Leitor.Arquivo := FPRetWS;
-    FNFSeRetorno.LerXml;
-
-    Fversao := FNFSeRetorno.versao;
-    FTpAmb := FNFSeRetorno.TpAmb;
-    FverAplic := FNFSeRetorno.verAplic;
-    FcStat := FNFSeRetorno.cStat;
-    FxMotivo := FNFSeRetorno.xMotivo;
-    FdhRecbto := FNFSeRetorno.infRec.dhRecbto;
-    FTMed := FNFSeRetorno.infRec.tMed;
-    FcUF := FNFSeRetorno.cUF;
-    FPMsg := FNFSeRetorno.xMotivo;
-    FRecibo := FNFSeRetorno.infRec.nRec;
-
-    Result := (FNFSeRetorno.CStat = 103);
+  else begin
+    for i := 0 to FNotasFiscais.Count -1 do
+    begin
+      FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
+      FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
+    end;
+    FaMsg := 'Numero do Lote : ' + NFSeRetorno.InfRec.NumeroLote + LineBreak +
+             'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
+             'Protocolo..... : ' + FProtocolo + LineBreak +
+             'Provedor...... : ' + FxProvedor + LineBreak;
   end;
-*)
+
+  Result := (NFSeRetorno.InfRec.Protocolo <> '');
 end;
 
 procedure TNFSeEnviarLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
-
-//  if Assigned(FNFSeRetornoSincrono) then
-//    FreeAndNil(FNFSeRetornoSincrono);
 
   if Assigned(FNFSeRetorno) then
     FreeAndNil(FNFSeRetorno);
@@ -873,800 +1175,501 @@ end;
 
 function TNFSeEnviarLoteRPS.GerarMsgLog: String;
 begin
-(*
   if Assigned(FNFSeRetorno) then
-    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                             'Ambiente: %s ' + LineBreak +
-                             'Versão Aplicativo: %s ' + LineBreak +
-                             'Status Código: %s ' + LineBreak +
-                             'Status Descrição: %s ' + LineBreak +
-                             'UF: %s ' + sLineBreak +
-                             'Recibo: %s ' + LineBreak +
-                             'Recebimento: %s ' + LineBreak +
-                             'Tempo Médio: %s ' + LineBreak),
-                     [FNFSeRetorno.versao,
-                      TpAmbToStr(FNFSeRetorno.TpAmb),
-                      FNFSeRetorno.verAplic,
-                      IntToStr(FNFSeRetorno.cStat),
-                      FNFSeRetorno.xMotivo,
-                      CodigoParaUF(FNFSeRetorno.cUF),
-                      FNFSeRetorno.infRec.nRec,
-                      IfThen(FNFSeRetorno.InfRec.dhRecbto = 0, '',
-                             FormatDateTimeBr(FNFSeRetorno.InfRec.dhRecbto)),
-                      IntToStr(FNFSeRetorno.InfRec.TMed)])
+    Result := Format(ACBrStr(FaMsg))
   else
     Result := '';
-*)
 end;
 
 function TNFSeEnviarLoteRPS.GerarPrefixoArquivo: String;
 begin
-(*
-  if Assigned(FNFSeRetornoSincrono) then  // Esta procesando nome do Retorno Sincrono ?
-  begin
-    if FRecibo <> '' then
-    begin
-      Result := Recibo;
-      FPArqResp := 'pro-rec';
-    end
-    else
-    begin
-      Result := Lote;
-      FPArqResp := 'pro-lot';
-    end;
-  end
-  else
-    Result := Lote;
-*)
+  Result := NumeroLote;
 end;
 
-(*
-{ TNFSeRetRecepcao }
+{ TNFSeEnviarSincrono }
 
-constructor TNFSeRetRecepcao.Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+constructor TNFSeEnviarSincrono.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
 begin
-  inherited Create(AOwner);
-
-  FNotasFiscais := ANotasFiscais;
-  FNFSeRetorno := TRetConsReciNFSe.Create;
-
-  FPStatus := stNFSeRetRecepcao;
-  FPLayout := LayNFSeRetRecepcao;
-  FPArqEnv := 'ped-rec';
-  FPArqResp := 'pro-rec';
+{a}
 end;
 
-destructor TNFSeRetRecepcao.Destroy;
+procedure TNFSeEnviarSincrono.DefinirDadosMsg;
 begin
-  FNFSeRetorno.Free;
-
-  inherited Destroy;
+  inherited;
+{a}
 end;
 
-function TNFSeRetRecepcao.GetRecibo: String;
+procedure TNFSeEnviarSincrono.DefinirServicoEAction;
 begin
-  Result := Trim(FRecibo);
+  inherited;
+{a}
 end;
 
-function TNFSeRetRecepcao.TratarRespostaFinal: Boolean;
-var
-  I, J: Integer;
-  AProcNFSe: TProcNFSe;
-  AInfProt: TProtNFSeCollection;
+procedure TNFSeEnviarSincrono.DefinirURL;
 begin
-  Result := False;
-
-  AInfProt := FNFSeRetorno.ProtNFSe;
-
-  if (AInfProt.Count > 0) then
-  begin
-    FPMsg := FNFSeRetorno.ProtNFSe.Items[0].xMotivo;
-    FxMotivo := FNFSeRetorno.ProtNFSe.Items[0].xMotivo;
-  end;
-
-  //Setando os retornos das notas fiscais;
-  for I := 0 to AInfProt.Count - 1 do
-  begin
-    for J := 0 to FNotasFiscais.Count - 1 do
-    begin
-      if OnlyNumber(AInfProt.Items[I].chNFSe) = FNotasFiscais.Items[J].NumID then
-      begin
-        if (TACBrNFSe(FPDFeOwner).Configuracoes.Geral.ValidarDigest) and
-          (FNotasFiscais.Items[J].NFSe.signature.DigestValue <>
-          AInfProt.Items[I].digVal) and (AInfProt.Items[I].digVal <> '') then
-        begin
-          raise EACBrNFSeException.Create('DigestValue do documento ' +
-            FNotasFiscais.Items[J].NumID + ' não coNFSere.');
-        end;
-
-        FNotasFiscais.Items[J].NFSe.procNFSe.tpAmb := AInfProt.Items[I].tpAmb;
-        FNotasFiscais.Items[J].NFSe.procNFSe.verAplic := AInfProt.Items[I].verAplic;
-        FNotasFiscais.Items[J].NFSe.procNFSe.chNFSe := AInfProt.Items[I].chNFSe;
-        FNotasFiscais.Items[J].NFSe.procNFSe.dhRecbto := AInfProt.Items[I].dhRecbto;
-        FNotasFiscais.Items[J].NFSe.procNFSe.nProt := AInfProt.Items[I].nProt;
-        FNotasFiscais.Items[J].NFSe.procNFSe.digVal := AInfProt.Items[I].digVal;
-        FNotasFiscais.Items[J].NFSe.procNFSe.cStat := AInfProt.Items[I].cStat;
-        FNotasFiscais.Items[J].NFSe.procNFSe.xMotivo := AInfProt.Items[I].xMotivo;
-
-        if FPConfiguracoesNFSe.Arquivos.Salvar or NaoEstaVazio(
-          FNotasFiscais.Items[J].NomeArq) then
-        begin
-          if FileExists(PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) +
-                        AInfProt.Items[I].chNFSe + '-NFSe.xml') and
-             FileExists(PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) +
-                        FNFSeRetorno.nRec + '-pro-rec.xml') then
-          begin
-            AProcNFSe := TProcNFSe.Create;
-            try
-              AProcNFSe.PathNFSe :=
-                PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) +
-                AInfProt.Items[I].chNFSe + '-NFSe.xml';
-              AProcNFSe.PathRetConsReciNFSe :=
-                PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) +
-                FNFSeRetorno.nRec + '-pro-rec.xml';
-
-              AProcNFSe.Versao := FPVersaoServico;
-              AProcNFSe.GerarXML;
-
-              if NaoEstaVazio(AProcNFSe.Gerador.ArquivoFormatoXML) then
-              begin
-                if NaoEstaVazio(FNotasFiscais.Items[J].NomeArq) then
-                  AProcNFSe.Gerador.SalvarArquivo(FNotasFiscais.Items[J].NomeArq)
-                else
-                  AProcNFSe.Gerador.SalvarArquivo(
-                    PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) +
-                    AInfProt.Items[I].chNFSe + '-NFSe.xml');
-              end;
-            finally
-              AProcNFSe.Free;
-            end;
-          end;
-        end;
-
-        if FPConfiguracoesNFSe.Arquivos.Salvar then
-        begin
-          if FPConfiguracoesNFSe.Arquivos.SalvarApenasNFSeProcessadas then
-          begin
-            if FNotasFiscais.Items[J].Processada then
-              FNotasFiscais.Items[J].GravarXML;
-          end
-          else
-            FNotasFiscais.Items[J].GravarXML;
-        end;
-
-        break;
-      end;
-    end;
-  end;
-
-  //Verificando se existe alguma nota confirmada
-  for I := 0 to FNotasFiscais.Count - 1 do
-  begin
-    if FNotasFiscais.Items[I].Confirmada then
-    begin
-      Result := True;
-      break;
-    end;
-  end;
-
-  //Verificando se existe alguma nota nao confirmada
-  for I := 0 to FNotasFiscais.Count - 1 do
-  begin
-    if not FNotasFiscais.Items[I].Confirmada then
-    begin
-      FPMsg := ACBrStr('Nota(s) não confirmadas:') + LineBreak;
-      break;
-    end;
-  end;
-
-  //Montando a mensagem de retorno para as notas nao confirmadas
-  for I := 0 to FNotasFiscais.Count - 1 do
-  begin
-    if not FNotasFiscais.Items[I].Confirmada then
-      FPMsg := FPMsg + IntToStr(FNotasFiscais.Items[I].NFSe.Ide.nNF) +
-        '->' + FNotasFiscais.Items[I].Msg + LineBreak;
-  end;
-
-  if AInfProt.Count > 0 then
-  begin
-    FChaveNFSe := AInfProt.Items[0].chNFSe;
-    FProtocolo := AInfProt.Items[0].nProt;
-    FcStat := AInfProt.Items[0].cStat;
-  end;
+  inherited;
+{a}
 end;
 
-function TNFSeRetRecepcao.Executar: Boolean;
-var
-  IntervaloTentativas, Tentativas: Integer;
+destructor TNFSeEnviarSincrono.Destroy;
 begin
-  Result := False;
-
-  TACBrNFSe(FPDFeOwner).SetStatus(stNFSeRetRecepcao);
-  try
-    Sleep(FPConfiguracoesNFSe.WebServices.AguardarConsultaRet);
-
-    Tentativas := 0;
-    IntervaloTentativas := max(FPConfiguracoesNFSe.WebServices.IntervaloTentativas, 1000);
-
-    while (inherited Executar) and
-      (Tentativas < FPConfiguracoesNFSe.WebServices.Tentativas) do
-    begin
-      Inc(Tentativas);
-      sleep(IntervaloTentativas);
-    end;
-  finally
-    TACBrNFSe(FPDFeOwner).SetStatus(stIdle);
-  end;
-
-  if FNFSeRetorno.CStat = 104 then  // Lote processado ?
-    Result := TratarRespostaFinal;
+{a}
+  inherited;
 end;
 
-procedure TNFSeRetRecepcao.DefinirURL;
+procedure TNFSeEnviarSincrono.FinalizarServico;
 begin
-  if TACBrNFSe(FPDFeOwner).EhAutorizacao then
-    FPLayout := LayNFSeRetAutorizacao
-  else
-    FPLayout := LayNFSeRetRecepcao;
-
-  inherited DefinirURL;
+  inherited;
+{a}
 end;
 
-procedure TNFSeRetRecepcao.DefinirServicoEAction;
+function TNFSeEnviarSincrono.GerarMsgLog: String;
 begin
-  if FPLayout = LayNFSeRetAutorizacao then
-    FPServico := GetUrlWsd + 'NFSeRetAutorizacao'
-  else
-    FPServico := GetUrlWsd + 'NFSeRetRecepcao2';
-
-  FPSoapAction := FPServico;
+{a}
 end;
 
-procedure TNFSeRetRecepcao.DefinirDadosMsg;
-var
-  ConsReciNFSe: TConsReciNFSe;
+function TNFSeEnviarSincrono.GerarPrefixoArquivo: String;
 begin
-  ConsReciNFSe := TConsReciNFSe.Create;
-  try
-    ConsReciNFSe.tpAmb := FPConfiguracoesNFSe.WebServices.Ambiente;
-    ConsReciNFSe.nRec := FRecibo;
-    ConsReciNFSe.Versao := FPVersaoServico;
-    ConsReciNFSe.GerarXML;
-
-    FPDadosMsg := ConsReciNFSe.Gerador.ArquivoFormatoXML;
-  finally
-    ConsReciNFSe.Free;
-  end;
+{a}
 end;
 
-function TNFSeRetRecepcao.TratarResposta: Boolean;
+function TNFSeEnviarSincrono.TratarResposta: Boolean;
 begin
-  if FPLayout = LayNFSeRetAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeRetAutorizacaoResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'NFSeRetAutorizacaoLoteResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeRetRecepcao2Result');
-
-  // Limpando variaveis internas
-  FNFSeRetorno.Free;
-  FNFSeRetorno := TRetConsReciNFSe.Create;
-
-  FNFSeRetorno.Leitor.Arquivo := FPRetWS;
-  FNFSeRetorno.LerXML;
-
-  Fversao := FNFSeRetorno.versao;
-  FTpAmb := FNFSeRetorno.TpAmb;
-  FverAplic := FNFSeRetorno.verAplic;
-  FcStat := FNFSeRetorno.cStat;
-  FcUF := FNFSeRetorno.cUF;
-  FPMsg := FNFSeRetorno.xMotivo;
-  FxMotivo := FNFSeRetorno.xMotivo;
-  FcMsg := FNFSeRetorno.cMsg;
-  FxMsg := FNFSeRetorno.xMsg;
-
-  Result := (FNFSeRetorno.CStat = 105); // Lote em Processamento
+{a}
 end;
 
-procedure TNFSeRetRecepcao.FinalizarServico;
+{ TNFSeGerarNFSe }
+
+constructor TNFSeGerarNFSe.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
 begin
-  // Sobrescrito, para não liberar para stIdle... não ainda...;
+{a}
 end;
 
-function TNFSeRetRecepcao.GerarMsgLog: String;
+procedure TNFSeGerarNFSe.DefinirDadosMsg;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'cMsg: %s ' + LineBreak +
-                           'xMsg: %s ' + LineBreak),
-                   [FNFSeRetorno.versao, TpAmbToStr(FNFSeRetorno.tpAmb),
-                    FNFSeRetorno.verAplic, FNFSeRetorno.nRec,
-                    IntToStr(FNFSeRetorno.cStat), FNFSeRetorno.xMotivo,
-                    CodigoParaUF(FNFSeRetorno.cUF), IntToStr(FNFSeRetorno.cMsg),
-                    FNFSeRetorno.xMsg]);
+  inherited;
+{a}
 end;
 
-function TNFSeRetRecepcao.GerarPrefixoArquivo: String;
+procedure TNFSeGerarNFSe.DefinirServicoEAction;
 begin
-  Result := Recibo;
+  inherited;
+{a}
 end;
 
-{ TNFSeRecibo }
-
-constructor TNFSeRecibo.Create(AOwner: TACBrDFe);
+procedure TNFSeGerarNFSe.DefinirURL;
 begin
-  inherited Create(AOwner);
-
-  FNFSeRetorno := TRetConsReciNFSe.Create;
-
-  FPStatus := stNFSeRecibo;
-  FPLayout := LayNFSeRetRecepcao;
-  FPArqEnv := 'ped-rec';
-  FPArqResp := 'pro-rec';
+  inherited;
+{a}
 end;
 
-destructor TNFSeRecibo.Destroy;
+destructor TNFSeGerarNFSe.Destroy;
 begin
-  FNFSeRetorno.Free;
-
-  inherited Destroy;
+{a}
+  inherited;
 end;
 
-procedure TNFSeRecibo.DefinirServicoEAction;
+procedure TNFSeGerarNFSe.FinalizarServico;
 begin
-  if FPLayout = LayNFSeRetAutorizacao then
-    FPServico := GetUrlWsd + 'NFSeRetAutorizacao'
-  else
-    FPServico := GetUrlWsd + 'NFSeRetRecepcao2';
-
-  FPSoapAction := FPServico;
+  inherited;
+{a}
 end;
 
-procedure TNFSeRecibo.DefinirURL;
+function TNFSeGerarNFSe.GerarMsgLog: String;
 begin
-  if TACBrNFSe(FPDFeOwner).EhAutorizacao then
-    FPLayout := LayNFSeRetAutorizacao
-  else
-    FPLayout := LayNFSeRetRecepcao;
-
-  inherited DefinirURL;
+{a}
 end;
 
-procedure TNFSeRecibo.DefinirDadosMsg;
-var
-  ConsReciNFSe: TConsReciNFSe;
+function TNFSeGerarNFSe.GerarPrefixoArquivo: String;
 begin
-  ConsReciNFSe := TConsReciNFSe.Create;
-  try
-    ConsReciNFSe.tpAmb := FPConfiguracoesNFSe.WebServices.Ambiente;
-    ConsReciNFSe.nRec := FRecibo;
-    ConsReciNFSe.Versao := FPVersaoServico;
-    ConsReciNFSe.GerarXML;
-
-    FPDadosMsg := ConsReciNFSe.Gerador.ArquivoFormatoXML;
-  finally
-    ConsReciNFSe.Free;
-  end;
+{a}
 end;
 
-function TNFSeRecibo.TratarResposta: Boolean;
+function TNFSeGerarNFSe.TratarResposta: Boolean;
 begin
-  if FPLayout = LayNFSeRetAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeRetAutorizacaoResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'NFSeRetAutorizacaoLoteResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeRetRecepcao2Result');
-
-  // Limpando variaveis internas
-  FNFSeRetorno.Free;
-  FNFSeRetorno := TRetConsReciNFSe.Create;
-
-  FNFSeRetorno.Leitor.Arquivo := FPRetWS;
-  FNFSeRetorno.LerXML;
-
-  Fversao := FNFSeRetorno.versao;
-  FTpAmb := FNFSeRetorno.TpAmb;
-  FverAplic := FNFSeRetorno.verAplic;
-  FcStat := FNFSeRetorno.cStat;
-  FxMotivo := FNFSeRetorno.xMotivo;
-  FcUF := FNFSeRetorno.cUF;
-  FxMsg := FNFSeRetorno.xMsg;
-  FcMsg := FNFSeRetorno.cMsg;
-  FPMsg := FxMotivo;
-
-  Result := (FNFSeRetorno.CStat = 104);
+{a}
 end;
 
-function TNFSeRecibo.GerarMsgLog: String;
+// =============================================================================
+
+{ TNFSeConsultarSituacaoLoteRPS }
+
+constructor TNFSeConsultarSituacaoLoteRPS.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak),
-                   [FNFSeRetorno.versao, TpAmbToStr(FNFSeRetorno.TpAmb),
-                   FNFSeRetorno.verAplic, FNFSeRetorno.nRec,
-                   IntToStr(FNFSeRetorno.cStat),
-                   FNFSeRetorno.ProtNFSe.Items[0].xMotivo,
-                   CodigoParaUF(FNFSeRetorno.cUF)]);
+{a}
 end;
 
-{ TNFSeConsulta }
-
-constructor TNFSeConsulta.Create(AOwner: TACBrDFe);
+procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
 begin
-  inherited Create(AOwner);
-
-  FprotNFSe := TProcNFSe.Create;
-  FretCancNFSe := TRetCancNFSe.Create;
-  FprocEventoNFSe := TRetEventoNFSeCollection.Create(AOwner);
-
-  FPStatus := stNFSeConsulta;
-  FPLayout := LayNFSeConsulta;
-  FPArqEnv := 'ped-sit';
-  FPArqResp := 'sit';
+  inherited;
+{a}
 end;
 
-destructor TNFSeConsulta.Destroy;
+procedure TNFSeConsultarSituacaoLoteRPS.DefinirServicoEAction;
 begin
-  FprotNFSe.Free;
-  FretCancNFSe.Free;
-  if Assigned(FprocEventoNFSe) then
-    FprocEventoNFSe.Free;
-
-  inherited Destroy;
+  inherited;
+{a}
 end;
 
-procedure TNFSeConsulta.DefinirServicoEAction;
+procedure TNFSeConsultarSituacaoLoteRPS.DefinirURL;
 begin
-  if (FPConfiguracoesNFSe.Geral.ModeloDF = moNFSe) and
-     (FPConfiguracoesNFSe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFSe.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
-    FPServico := GetUrlWsd + 'NFSeConsulta'
-  else
-    FPServico := GetUrlWsd + 'NFSeConsulta2';
-
-  FPSoapAction := FPServico;
+  inherited;
+{a}
 end;
 
-procedure TNFSeConsulta.DefinirDadosMsg;
-var
-  ConsSitNFSe: TConsSitNFSe;
-  OK: Boolean;
+destructor TNFSeConsultarSituacaoLoteRPS.Destroy;
 begin
-  OK := False;
-  ConsSitNFSe := TConsSitNFSe.Create;
-  try
-    ConsSitNFSe.TpAmb := FPConfiguracoesNFSe.WebServices.Ambiente;
-    ConsSitNFSe.chNFSe := FNFSeChave;
-
-    FPConfiguracoesNFSe.Geral.ModeloDF :=
-      StrToModeloDF(OK, ExtrairModeloChaveAcesso(ConsSitNFSe.chNFSe));
-
-    ConsSitNFSe.Versao := FPVersaoServico;
-    ConsSitNFSe.GerarXML;
-
-    FPDadosMsg := ConsSitNFSe.Gerador.ArquivoFormatoXML;
-  finally
-    ConsSitNFSe.Free;
-  end;
+{a}
+  inherited;
 end;
 
-function TNFSeConsulta.TratarResposta: Boolean;
-var
-  NFSeRetorno: TRetConsSitNFSe;
-  NFCancelada, Atualiza: Boolean;
-  aEventos, aMsg, NomeArquivo: String;
-  AProcNFSe: TProcNFSe;
-  I, J: Integer;
+procedure TNFSeConsultarSituacaoLoteRPS.FinalizarServico;
 begin
-  NFSeRetorno := TRetConsSitNFSe.Create;
-
-  try
-    FPRetWS := SeparaDados(FPRetornoWS, 'NFSeConsultaNF2Result');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'NFSeConsultaNFResult');
-
-    NFSeRetorno.Leitor.Arquivo := FPRetWS;
-    NFSeRetorno.LerXML;
-
-    NFCancelada := False;
-    aEventos := '';
-
-    // <retConsSitNFSe> - Retorno da consulta da situação da NF-e
-    // Este é o status oficial da NF-e
-    Fversao := NFSeRetorno.versao;
-    FTpAmb := NFSeRetorno.tpAmb;
-    FverAplic := NFSeRetorno.verAplic;
-    FcStat := NFSeRetorno.cStat;
-    FXMotivo := NFSeRetorno.xMotivo;
-    FcUF := NFSeRetorno.cUF;
-    FNFSeChave := NFSeRetorno.chNFSe;
-    FPMsg := FXMotivo;
-
-
-
-    // Verifica se a nota fiscal está cancelada pelo método antigo. Se estiver,
-    // então NFCancelada será True e já atribui Protocolo, Data e Mensagem
-    if NFSeRetorno.retCancNFSe.cStat > 0 then
-    begin
-      FRetCancNFSe.versao := NFSeRetorno.retCancNFSe.versao;
-      FretCancNFSe.tpAmb := NFSeRetorno.retCancNFSe.tpAmb;
-      FretCancNFSe.verAplic := NFSeRetorno.retCancNFSe.verAplic;
-      FretCancNFSe.cStat := NFSeRetorno.retCancNFSe.cStat;
-      FretCancNFSe.xMotivo := NFSeRetorno.retCancNFSe.xMotivo;
-      FretCancNFSe.cUF := NFSeRetorno.retCancNFSe.cUF;
-      FretCancNFSe.chNFSe := NFSeRetorno.retCancNFSe.chNFSe;
-      FretCancNFSe.dhRecbto := NFSeRetorno.retCancNFSe.dhRecbto;
-      FretCancNFSe.nProt := NFSeRetorno.retCancNFSe.nProt;
-
-      NFCancelada := True;
-      FProtocolo := NFSeRetorno.retCancNFSe.nProt;
-      FDhRecbto := NFSeRetorno.retCancNFSe.dhRecbto;
-      FPMsg := NFSeRetorno.xMotivo;
-    end;
-
-    // <protNFSe> - Retorno dos dados do ENVIO da NF-e
-    // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotNFSe.PathNFSe := NFSeRetorno.protNFSe.PathNFSe;
-    FprotNFSe.PathRetConsReciNFSe := NFSeRetorno.protNFSe.PathRetConsReciNFSe;
-    FprotNFSe.PathRetConsSitNFSe := NFSeRetorno.protNFSe.PathRetConsSitNFSe;
-    FprotNFSe.PathRetConsSitNFSe := NFSeRetorno.protNFSe.PathRetConsSitNFSe;
-    FprotNFSe.tpAmb := NFSeRetorno.protNFSe.tpAmb;
-    FprotNFSe.verAplic := NFSeRetorno.protNFSe.verAplic;
-    FprotNFSe.chNFSe := NFSeRetorno.protNFSe.chNFSe;
-    FprotNFSe.dhRecbto := NFSeRetorno.protNFSe.dhRecbto;
-    FprotNFSe.nProt := NFSeRetorno.protNFSe.nProt;
-    FprotNFSe.digVal := NFSeRetorno.protNFSe.digVal;
-    FprotNFSe.cStat := NFSeRetorno.protNFSe.cStat;
-    FprotNFSe.xMotivo := NFSeRetorno.protNFSe.xMotivo;
-
-    if Assigned(NFSeRetorno.procEventoNFSe) and (NFSeRetorno.procEventoNFSe.Count > 0) then
-    begin
-      aEventos := '=====================================================' +
-        LineBreak + '================== Eventos da NF-e ==================' +
-        LineBreak + '=====================================================' +
-        LineBreak + '' + LineBreak + 'Quantidade total de eventos: ' +
-        IntToStr(NFSeRetorno.procEventoNFSe.Count);
-
-      FprocEventoNFSe.Clear;
-      for I := 0 to NFSeRetorno.procEventoNFSe.Count - 1 do
-      begin
-        with FprocEventoNFSe.Add.RetEventoNFSe do
-        begin
-          idLote := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.idLote;
-          tpAmb := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.tpAmb;
-          verAplic := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.verAplic;
-          cOrgao := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.cOrgao;
-          cStat := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.cStat;
-          xMotivo := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.xMotivo;
-          XML := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.XML;
-
-          INFSevento.ID := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.ID;
-          INFSevento.tpAmb := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.tpAmb;
-          INFSevento.CNPJ := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.CNPJ;
-          INFSevento.chNFSe := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.chNFSe;
-          INFSevento.dhEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.dhEvento;
-          INFSevento.TpEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.TpEvento;
-          INFSevento.nSeqEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.nSeqEvento;
-          INFSevento.VersaoEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.VersaoEvento;
-          INFSevento.DetEvento.xCorrecao := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.DetEvento.xCorrecao;
-          INFSevento.DetEvento.xCondUso := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.DetEvento.xCondUso;
-          INFSevento.DetEvento.nProt := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.DetEvento.nProt;
-          INFSevento.DetEvento.xJust := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.INFSevento.DetEvento.xJust;
-
-          retEvento.Clear;
-          for J := 0 to NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Count-1 do
-          begin
-            with retEvento.Add.RetINFSevento do
-            begin
-              Id := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.Id;
-              tpAmb := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.tpAmb;
-              verAplic := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.verAplic;
-              cOrgao := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.cOrgao;
-              cStat := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.cStat;
-              xMotivo := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.xMotivo;
-              chNFSe := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.chNFSe;
-              tpEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.tpEvento;
-              xEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.xEvento;
-              nSeqEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.nSeqEvento;
-              CNPJDest := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.CNPJDest;
-              emailDest := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.emailDest;
-              dhRegEvento := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.dhRegEvento;
-              nProt := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.nProt;
-              XML := NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe.retEvento.Items[J].RetINFSevento.XML;
-            end;
-          end;
-        end;
-
-        with NFSeRetorno.procEventoNFSe.Items[I].RetEventoNFSe do
-        begin
-          aEventos := aEventos + LineBreak + LineBreak +
-            Format(ACBrStr('Número de sequência: %s ' + LineBreak +
-                           'Código do evento: %s ' + LineBreak +
-                           'Descrição do evento: %s ' + LineBreak +
-                           'Status do evento: %s ' + LineBreak +
-                           'Descrição do status: %s ' + LineBreak +
-                           'Protocolo: %s ' + LineBreak +
-                           'Data/Hora do registro: %s '),
-                   [IntToStr(INFSevento.nSeqEvento),
-                    TpEventoToStr(INFSevento.TpEvento),
-                    INFSevento.DescEvento,
-                    IntToStr(retEvento.Items[J].RetINFSevento.cStat),
-                    retEvento.Items[J].RetINFSevento.xMotivo,
-                    retEvento.Items[J].RetINFSevento.nProt,
-                    FormatDateTimeBr(retEvento.Items[J].RetINFSevento.dhRegEvento)]);
-
-          if retEvento.Items[J].RetINFSevento.tpEvento = teCancelamento then
-          begin
-            NFCancelada := True;
-            FProtocolo := retEvento.Items[J].RetINFSevento.nProt;
-            FDhRecbto := retEvento.Items[J].RetINFSevento.dhRegEvento;
-            FPMsg := retEvento.Items[J].RetINFSevento.xMotivo;
-          end;
-        end;
-      end;
-    end;
-
-    if not NFCancelada and (NaoEstaVazio(NFSeRetorno.protNFSe.nProt))  then
-    begin
-      FProtocolo := NFSeRetorno.protNFSe.nProt;
-      FDhRecbto := NFSeRetorno.protNFSe.dhRecbto;
-      FPMsg := NFSeRetorno.protNFSe.xMotivo;
-    end;
-
-    //TODO: Verificar porque monta "aMsg", pois ela não está sendo usada em lugar nenhum
-    aMsg := GerarMsgLog;
-    if aEventos <> '' then
-      aMsg := aMsg + sLineBreak + aEventos;
-
-    Result := (NFSeRetorno.CStat in [100, 101, 110, 150, 151, 155]);
-
-    NomeArquivo := PathWithDelim(FPConfiguracoesNFSe.Arquivos.PathSalvar) + FNFSeChave;
-
-    for i := 0 to TACBrNFSe(FPDFeOwner).NotasFiscais.Count - 1 do
-    begin
-      with TACBrNFSe(FPDFeOwner).NotasFiscais.Items[i] do
-      begin
-        if (OnlyNumber(FNFSeChave) = NumID) then
-        begin
-          Atualiza := True;
-          if (NFSeRetorno.CStat in [101, 151, 155]) then
-            Atualiza := False;
-
-          // Atualiza o Status da NFSe interna //
-          NFSe.procNFSe.cStat := NFSeRetorno.cStat;
-
-          if Atualiza then
-          begin
-            if (FPConfiguracoesNFSe.Geral.ValidarDigest) and
-              (NFSeRetorno.protNFSe.digVal <> '') and
-              (NFSe.signature.DigestValue <> NFSeRetorno.protNFSe.digVal) then
-            begin
-              raise EACBrNFSeException.Create('DigestValue do documento ' +
-                NumID + ' não coNFSere.');
-            end;
-
-            NFSe.procNFSe.tpAmb := NFSeRetorno.tpAmb;
-            NFSe.procNFSe.verAplic := NFSeRetorno.verAplic;
-            NFSe.procNFSe.chNFSe := NFSeRetorno.chNFSe;
-            NFSe.procNFSe.dhRecbto := FDhRecbto;
-            NFSe.procNFSe.nProt := FProtocolo;
-            NFSe.procNFSe.digVal := NFSeRetorno.protNFSe.digVal;
-            NFSe.procNFSe.cStat := NFSeRetorno.cStat;
-            NFSe.procNFSe.xMotivo := NFSeRetorno.xMotivo;
-
-            if FileExists(NomeArquivo + '-NFSe.xml') or NaoEstaVazio(NomeArq) then
-            begin
-              AProcNFSe := TProcNFSe.Create;
-              try
-                if NaoEstaVazio(NomeArq) then
-                  AProcNFSe.PathNFSe := NomeArq
-                else
-                  AProcNFSe.PathNFSe := NomeArquivo + '-NFSe.xml';
-
-                AProcNFSe.PathRetConsSitNFSe := NomeArquivo + '-sit.xml';
-
-                if FPConfiguracoesNFSe.Geral.VersaoDF >= ve310 then
-                  AProcNFSe.Versao :=
-                    TACBrNFSe(FPDFeOwner).LerVersaoDeParams(LayNFSeAutorizacao)
-                else
-                  AProcNFSe.Versao :=
-                    TACBrNFSe(FPDFeOwner).LerVersaoDeParams(LayNFSeEnviarLoteRPS);
-
-                AProcNFSe.GerarXML;
-
-                if NaoEstaVazio(AProcNFSe.Gerador.ArquivoFormatoXML) then
-                  AProcNFSe.Gerador.SalvarArquivo(AProcNFSe.PathNFSe);
-              finally
-                AProcNFSe.Free;
-              end;
-            end;
-
-            if FPConfiguracoesNFSe.Arquivos.Salvar then
-            begin
-              if FPConfiguracoesNFSe.Arquivos.SalvarApenasNFSeProcessadas then
-              begin
-                if Processada then
-                  GravarXML();
-              end
-              else
-                GravarXML();
-            end;
-          end;
-
-          break;
-        end;
-      end;
-    end;
-
-    if (TACBrNFSe(FPDFeOwner).NotasFiscais.Count <= 0) then
-    begin
-      if FPConfiguracoesNFSe.Arquivos.Salvar then
-      begin
-        if FileExists(NomeArquivo + '-NFSe.xml') then
-        begin
-          AProcNFSe := TProcNFSe.Create;
-          try
-            AProcNFSe.PathNFSe := NomeArquivo + '-NFSe.xml';
-            AProcNFSe.PathRetConsSitNFSe := NomeArquivo + '-sit.xml';
-
-            if FPConfiguracoesNFSe.Geral.VersaoDF >= ve310 then
-              AProcNFSe.Versao :=
-                TACBrNFSe(FPDFeOwner).LerVersaoDeParams(LayNFSeAutorizacao)
-            else
-              AProcNFSe.Versao := TACBrNFSe(FPDFeOwner).LerVersaoDeParams(LayNFSeEnviarLoteRPS);
-
-            AProcNFSe.GerarXML;
-
-            if NaoEstaVazio(AProcNFSe.Gerador.ArquivoFormatoXML) then
-              AProcNFSe.Gerador.SalvarArquivo(AProcNFSe.PathNFSe);
-          finally
-            AProcNFSe.Free;
-          end;
-        end;
-      end;
-    end;
-  finally
-    NFSeRetorno.Free;
-  end;
+  inherited;
+{a}
 end;
 
-function TNFSeConsulta.GerarMsgLog: String;
+function TNFSeConsultarSituacaoLoteRPS.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Identificador: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'Chave Acesso: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Protocolo: %s ' + LineBreak +
-                           'Digest Value: %s ' + LineBreak),
-                   [Fversao, FNFSeChave, TpAmbToStr(FTpAmb), FverAplic,
-                    IntToStr(FcStat), FXMotivo, CodigoParaUF(FcUF), FNFSeChave,
-                    FormatDateTimeBr(FDhRecbto), FProtocolo, FprotNFSe.digVal]);
+{a}
 end;
 
-function TNFSeConsulta.GerarPrefixoArquivo: String;
+function TNFSeConsultarSituacaoLoteRPS.GerarPrefixoArquivo: String;
 begin
-  Result := Trim(FNFSeChave);
+{a}
 end;
-*)
+
+function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
+begin
+{a}
+end;
+
+// =============================================================================
+
+{ TNFSeConsultarLoteRPS }
+
+constructor TNFSeConsultarLoteRPS.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+{a}
+end;
+
+procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
+begin
+  inherited;
+{a}
+end;
+
+procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
+begin
+  inherited;
+{a}
+end;
+
+procedure TNFSeConsultarLoteRPS.DefinirURL;
+begin
+  inherited;
+{a}
+end;
+
+destructor TNFSeConsultarLoteRPS.Destroy;
+begin
+{a}
+  inherited;
+end;
+
+procedure TNFSeConsultarLoteRPS.FinalizarServico;
+begin
+  inherited;
+{a}
+end;
+
+function TNFSeConsultarLoteRPS.GerarMsgLog: String;
+begin
+{a}
+end;
+
+function TNFSeConsultarLoteRPS.GerarPrefixoArquivo: String;
+begin
+{a}
+end;
+
+function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
+begin
+{a}
+end;
+
+// =============================================================================
+
+{ TNFSeConsultarNfseRPS }
+
+constructor TNFSeConsultarNfseRPS.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+ {a}
+end;
+
+procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeConsultarNfseRPS.DefinirServicoEAction;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeConsultarNfseRPS.DefinirURL;
+begin
+  inherited;
+ {a}
+end;
+
+destructor TNFSeConsultarNfseRPS.Destroy;
+begin
+ {a}
+  inherited;
+end;
+
+procedure TNFSeConsultarNfseRPS.FinalizarServico;
+begin
+  inherited;
+ {a}
+end;
+
+function TNFSeConsultarNfseRPS.GerarMsgLog: String;
+begin
+ {a}
+end;
+
+function TNFSeConsultarNfseRPS.GerarPrefixoArquivo: String;
+begin
+ {a}
+end;
+
+function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
+{ TNFSeConsultarNfse }
+
+constructor TNFSeConsultarNfse.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+ {a}
+end;
+
+procedure TNFSeConsultarNfse.DefinirDadosMsg;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeConsultarNfse.DefinirServicoEAction;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeConsultarNfse.DefinirURL;
+begin
+  inherited;
+ {a}
+end;
+
+destructor TNFSeConsultarNfse.Destroy;
+begin
+ {a}
+  inherited;
+end;
+
+procedure TNFSeConsultarNfse.FinalizarServico;
+begin
+  inherited;
+ {a}
+end;
+
+function TNFSeConsultarNfse.GerarMsgLog: String;
+begin
+ {a}
+end;
+
+function TNFSeConsultarNfse.GerarPrefixoArquivo: String;
+begin
+ {a}
+end;
+
+function TNFSeConsultarNfse.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
+{ TNFSeCancelarNfse }
+
+constructor TNFSeCancelarNfse.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+ {a}
+end;
+
+procedure TNFSeCancelarNfse.DefinirDadosMsg;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeCancelarNfse.DefinirServicoEAction;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeCancelarNfse.DefinirURL;
+begin
+  inherited;
+ {a}
+end;
+
+destructor TNFSeCancelarNfse.Destroy;
+begin
+ {a}
+  inherited;
+end;
+
+procedure TNFSeCancelarNfse.FinalizarServico;
+begin
+  inherited;
+ {a}
+end;
+
+function TNFSeCancelarNfse.GerarMsgLog: String;
+begin
+ {a}
+end;
+
+function TNFSeCancelarNfse.GerarPrefixoArquivo: String;
+begin
+ {a}
+end;
+
+function TNFSeCancelarNfse.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
+{ TNFSeSubstituirNFSe }
+
+constructor TNFSeSubstituirNFSe.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+ {a}
+end;
+
+procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeSubstituirNFSe.DefinirServicoEAction;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeSubstituirNFSe.DefinirURL;
+begin
+  inherited;
+ {a}
+end;
+
+destructor TNFSeSubstituirNFSe.Destroy;
+begin
+ {a}
+  inherited;
+end;
+
+procedure TNFSeSubstituirNFSe.FinalizarServico;
+begin
+  inherited;
+ {a}
+end;
+
+function TNFSeSubstituirNFSe.GerarMsgLog: String;
+begin
+ {a}
+end;
+
+function TNFSeSubstituirNFSe.GerarPrefixoArquivo: String;
+begin
+ {a}
+end;
+
+function TNFSeSubstituirNFSe.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
+{ TNFSeLinkNFSe }
+
+constructor TNFSeLinkNFSe.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+ {a}
+end;
+
+procedure TNFSeLinkNFSe.DefinirDadosMsg;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeLinkNFSe.DefinirServicoEAction;
+begin
+  inherited;
+ {a}
+end;
+
+procedure TNFSeLinkNFSe.DefinirURL;
+begin
+  inherited;
+ {a}
+end;
+
+destructor TNFSeLinkNFSe.Destroy;
+begin
+ {a}
+  inherited;
+end;
+
+procedure TNFSeLinkNFSe.FinalizarServico;
+begin
+  inherited;
+ {a}
+end;
+
+function TNFSeLinkNFSe.GerarMsgLog: String;
+begin
+ {a}
+end;
+
+function TNFSeLinkNFSe.GerarPrefixoArquivo: String;
+begin
+ {a}
+end;
+
+function TNFSeLinkNFSe.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
+// =============================================================================
 
 { TNFSeEnvioWebService }
 
@@ -1731,19 +1734,26 @@ begin
   Result := '<versaoDados>' + FVersao + '</versaoDados>';
 end;
 
+// =============================================================================
+
 { TWebServices }
 
 constructor TWebServices.Create(AOwner: TACBrDFe);
 begin
   FACBrNFSe := TACBrNFSe(AOwner);
 
-  FGerarLoteRPS := TNFSeGerarLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
-  FEnviarLoteRPS := TNFSeEnviarLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
-(*
-  FRetorno := TNFSeRetRecepcao.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
-  FRecibo := TNFSeRecibo.Create(FACBrNFSe);
-  FConsulta := TNFSeConsulta.Create(FACBrNFSe);
-*)
+  FGerarLoteRPS   := TNFSeGerarLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FEnviarLoteRPS  := TNFSeEnviarLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FEnviarSincrono := TNFSeEnviarSincrono.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FGerarNfse      := TNFSeGerarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FConsSitLoteRPS := TNFSeConsultarSituacaoLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FConsLote       := TNFSeConsultarLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FConsNfseRps    := TNFSeConsultarNfseRps.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FConsNfse       := TNFSeConsultarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FCancNfse       := TNFSeCancelarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FSubNfse        := TNFSeSubstituirNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FLinkNfse       := TNFSeLinkNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  
   FEnvioWebService := TNFSeEnvioWebService.Create(FACBrNFSe);
 end;
 
@@ -1751,11 +1761,15 @@ destructor TWebServices.Destroy;
 begin
   FGerarLoteRPS.Free;
   FEnviarLoteRPS.Free;
-(*
-  FRetorno.Free;
-  FRecibo.Free;
-  FConsulta.Free;
-*)
+  FEnviarSincrono.Free;
+  FGerarNfse.Free;
+  FConsSitLoteRPS.Free;
+  FConsLote.Free;
+  FConsNfseRps.Free;
+  FConsNfse.Free;
+  FCancNfse.Free;
+  FSubNfse.Free;
+  FLinkNfse.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;
@@ -1855,4 +1869,83 @@ begin
 *)
 end;
 
+function TWebServices.EnviaSincrono(ALote: Integer): Boolean;
+begin
+  Result := EnviaSincrono(IntToStr(ALote));
+end;
+
+function TWebServices.EnviaSincrono(ALote: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.Gera(ARps: Integer): Boolean;
+begin
+  Result := Gera(IntToStr(ARps));
+end;
+
+function TWebServices.Gera(ARps: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal,
+  AProtocolo: String; const ANumLote: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.ConsultaLoteRps(AProtocolo: String;
+  const CarregaProps: boolean): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
+  AInscricaoMunicipal: String; const ASenha, AFraseSecreta,
+  ARazaoSocial: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
+  AInscricaoMunicipal: String; const ASenha, AFraseSecreta,
+  ARazaoSocial: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
+  ADataInicial, ADataFinal: TDateTime; NumeroNFSe: String;
+  APagina: Integer; const ASenha, AFraseSecreta: String; ACNPJTomador,
+  AIMTomador, ANomeInter, ACNPJInter, AIMInter, ASerie: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
+  const CarregaProps: boolean): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe, ACNPJ,
+  AInscricaoMunicipal, ACodigoMunicipio: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.SubstitiNFSe(ACodigoCancelamento,
+  ANumeroNFSe: String): Boolean;
+begin
+{a}
+end;
+
+function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao,
+  AInscricaoM: String): String;
+begin
+{a}
+end;
+
 end.
+

@@ -984,6 +984,9 @@ begin
 
   FXML := string(AXML);
   FXMLOriginal := FXML;
+  if XmlEstaAssinado(FXML) then
+    FXMLAssinado := FXML;
+
   Result := True;
 end;
 

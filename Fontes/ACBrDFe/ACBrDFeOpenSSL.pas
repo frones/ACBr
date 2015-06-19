@@ -235,9 +235,11 @@ var
   schemError: xmlErrorPtr;
 begin
   Result := False;
-  doc := nil;
-  schema_doc := nil;
-  parser_ctxt := nil;
+  doc := Nil;
+  schema_doc := Nil;
+  parser_ctxt := Nil;
+  schema := Nil;
+  valid_ctxt := Nil;
 
   try
     doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
@@ -322,20 +324,37 @@ begin
                   pos('</X509Certificate>', ConteudoXML) -
                   (pos('<X509Certificate>', ConteudoXML) + 17));
 
+  doc := nil;
+  node := nil;
+  dsigCtx := nil;
+  mngr := nil;
+
   MS := TMemoryStream.Create;
   try
     WriteStrToStream(MS, Publico);
 
+{    mngr := xmlSecKeysMngrCreate();
+    if (mngr = nil) then
+    begin
+      MsgErro := 'Error: failed to create keys manager';
+      exit;
+    end;
+
+    if xmlSecCryptoAppDefaultKeysMngrInit(mngr) < 0 then
+    begin
+      MsgErro := 'Error: failed to initialize keys manager';
+      exit;
+    end;
+
     //xmlSecCryptoAppKeyCertLoadMemory;
     MS.Position := 0;
-    mngr := Nil;
     if (xmlSecCryptoAppKeysMngrCertLoadMemory(mngr, MS.Memory, MS.Size,
-      xmlSecKeyDataFormatUnknown, 1) < 0) then
+      xmlSecKeyDataFormatCertPem, 1) < 0) then
     begin
       MsgErro := 'Error: failed to load certificate';
       exit;
     end;
-
+ }
     //xmlSecOpenSSLAppKeyCertLoadMemory;
     doc := xmlParseDoc(PAnsiChar(ConteudoXML));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
@@ -360,7 +379,7 @@ begin
 
     MS.Position := 0;
     dsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(MS.Memory, MS.Size,
-      xmlSecKeyDataFormatPem, '', nil, nil);
+      xmlSecKeyDataFormatPem, nil, nil, nil);
     if (dsigCtx^.signKey = nil) then
     begin
       MsgErro := 'Error: failed to load public pem key from XML';
@@ -382,9 +401,6 @@ begin
     if (doc <> nil) then
       xmlFreeDoc(doc);
 
-    if (node <> nil) then
-      xmlFreeNode(node);
-
     if (dsigCtx <> nil) then
       xmlSecDSigCtxDestroy(dsigCtx);
   end;
@@ -397,7 +413,7 @@ var
   buffer: PAnsiChar;
   bufSize: integer;
 begin
-  doc := nil;
+  doc := Nil;
   Result := '';
 
   if (Axml = nil) then

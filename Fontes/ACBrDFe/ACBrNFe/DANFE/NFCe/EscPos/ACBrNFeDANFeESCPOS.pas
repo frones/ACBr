@@ -214,8 +214,8 @@ begin
   LinhaCmd := 'CNPJ: ' + FormatarCNPJ(FpNFe.Emit.CNPJCPF);
   if Trim(FpNFe.Emit.IE) <> '' then
   begin
-    LinhaCMd := PadRight(LinhaCmd, Trunc(FPosPrinter.ColunasFonteCondensada / 2)) +
-                'IE: ' + FormatarIE(FpNFe.Emit.IE, FpNFe.Emit.EnderEmit.UF);
+    LinhaCMd := PadSpace(LinhaCmd + '|' + 'IE: ' + FormatarIE(FpNFe.Emit.IE, FpNFe.Emit.EnderEmit.UF),
+                        FPosPrinter.ColunasFonteCondensada, '|') ;
   end;
 
   FPosPrinter.Buffer.Add('</ae><c><n>' + LinhaCmd + '</n>');
@@ -245,8 +245,8 @@ var
 begin
   if ImprimirItens then
   begin
-    FPosPrinter.Buffer.Add('</linha_simples>');
-    FPosPrinter.Buffer.Add(ACBrStr('</fn>#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
+    FPosPrinter.Buffer.Add('</ae></fn></linha_simples>');
+    FPosPrinter.Buffer.Add(ACBrStr('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
     FPosPrinter.Buffer.Add('</linha_simples>');
 
     for i := 0 to FpNFe.Det.Count - 1 do

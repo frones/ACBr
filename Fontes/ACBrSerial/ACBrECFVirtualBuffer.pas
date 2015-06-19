@@ -277,7 +277,7 @@ begin
   fsCabecalhoItem := TStringList.create ;
   fsCabecalhoItem.Add('ITEM   CODIGO             DESCRICAO') ;
   fsCabecalhoItem.Add('.             QTDxUNITARIO   Aliq    VALOR (R$)') ;
-  fsCabecalhoItem.Add( StringOfChar('-',Colunas) ) ;
+  fsCabecalhoItem.Add( '</linha_simples>' ) ;
 
   fsMascaraItem := 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD '+
                    'QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT' ;
@@ -462,7 +462,7 @@ begin
 
   with fsBuffer do
   begin
-    Add( StringOfChar('-',Colunas) ) ;
+    Add( '</linha_simples>' ) ;
     Add( PadCenter(' Contadores ',Colunas,'-') ) ;
     Add( PadSpace('Reducoes Z:|'+IntToStrZero(fpReducoesZ,4),Colunas,'|') ) ;
     Add( PadSpace('Leitura  X:|'+IntToStrZero(fpLeiturasX,6),Colunas,'|') ) ;
@@ -535,7 +535,7 @@ begin
   begin
     Linha := PadCenter(fsCabecalho[A], Colunas) ;
     if A = 0 then
-      Linha := '</zera></logo>'+ Linha ;
+      Linha := '</zera></ce></logo>'+ Linha ;
 
     fsBuffer.Insert( A, Linha ) ;
   end ;
@@ -585,13 +585,13 @@ begin
 //** N A O   E   C U P O M   F I S C A L **
   with fsBuffer do
   begin
-    Add( StringOfChar('-',Colunas) ) ;
+    Add( '</linha_simples>' ) ;
     Add( PadSpace('N.Serie '+PadRight(fpNumSerie,21)+'|Maq '+GetNumECF+'|'+
               'v'+NumVersao,Colunas,'|') );
     Add( PadSpace('Oper. '+PadRight(Operador,15)  +'|'+
               FormatDateTime('dd/mm/yy hh:nn:ss',now)+V,  Colunas,'|') );
     Add( PadCenter('** N A O   E   C U P O M   F I S C A L **',Colunas) );
-    Add( StringOfChar('=',Colunas) ) ;
+    Add( '</linha_dupla>' ) ;
 
     Add('</corte_total>'); // Corte total já pula linhas
   end ;
@@ -636,7 +636,7 @@ procedure TACBrECFVirtualBufferClass.EnviaConsumidorVirtual;
 begin
   if Consumidor.Documento <> '' then
   begin
-    fsBuffer.Add( StringofChar('-',Colunas) ) ;
+    fsBuffer.Add( '</linha_simples>' ) ;
     fsBuffer.Add(PadRight('CPF/CNPJ consumidor: '+Consumidor.Documento,Colunas)) ;
 
     if Consumidor.Nome <> '' then
@@ -645,7 +645,7 @@ begin
     if Consumidor.Endereco <> '' then
       fsBuffer.Add(PadRight('Endereco: '+Consumidor.Endereco,Colunas)) ;
 
-    fsBuffer.Add( StringofChar('-',Colunas) ) ;
+    fsBuffer.Add( '</linha_simples>' ) ;
 
     Consumidor.Enviado := True ;
   end ;
@@ -970,13 +970,13 @@ begin
   CPF_CNPJ := trim(CPF_CNPJ) ;
   if CPF_CNPJ <> '' then
   begin
-     fsBuffer.Add( StringofChar('-',Colunas) ) ;
+     fsBuffer.Add( '</linha_simples>' ) ;
      fsBuffer.Add(PadRight('CPF/CNPJ Consumidor: '+CPF_CNPJ,Colunas)) ;
      if Nome <> '' then
         fsBuffer.Add(PadRight('Nome: '+Nome,Colunas)) ;
      if Endereco <> '' then
         fsBuffer.Add(PadRight('Endereco: '+Endereco,Colunas)) ;
-     fsBuffer.Add( StringofChar('-',Colunas) ) ;
+     fsBuffer.Add( '</linha_simples>' ) ;
   end ;
 end;
 
@@ -995,9 +995,9 @@ end;
 procedure TACBrECFVirtualBufferClass.AbreRelatorioGerencialVirtual(Indice: Integer);
 begin
   ZeraBuffer ;
-  fsBuffer.Add( PadCenter('GNF:'+IntToStrZero(fpNumGNF,6) +'         '+
-                'GRG:'+IntToStrZero(fpNumGRG,6),Colunas) ) ;
-  fsBuffer.Add( StringOfChar('-',Colunas) ) ;
+  fsBuffer.Add( PadSpace('GNF:'+IntToStrZero(fpNumGNF,6) +'|'+
+                'GRG:'+IntToStrZero(fpNumGRG,6), Colunas, '|') ) ;
+  fsBuffer.Add( '</linha_simples>' ) ;
   fsBuffer.Add( PadCenter('NAO E DOCUMENTO FISCAL',Colunas) ) ;
 
   fsBuffer.Add( '<e>' +

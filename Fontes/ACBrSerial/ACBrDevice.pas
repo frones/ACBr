@@ -699,13 +699,24 @@ begin
 
         Serial.Purge ;  { Limpa Buffer de envio e recepção }
      except
-        try
-           Serial.RaiseExcept := false ;
-           Serial.CloseSocket ;
-        finally
-           Serial.RaiseExcept := true ;
-        end ;
-        raise ;
+        on E: ESynaSerError do
+        begin
+          try
+             Serial.RaiseExcept := false ;
+             Serial.CloseSocket ;
+          finally
+             Serial.RaiseExcept := true ;
+          end ;
+
+          {$IFDEF MSWINDOWS}
+           // SysErrorMessage() em Windows retorna String em ANSI, convertendo para UTF8 se necessário
+           E.Message := ACBrStr(E.Message);
+          {$ENDIF}
+
+          raise;
+        end
+        else
+          raise;
      end ;
    end
   else if not IsDLLPort then

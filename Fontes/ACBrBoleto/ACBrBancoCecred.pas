@@ -314,15 +314,17 @@ begin
         aTipoCobranca:='     ';
       end;
 
-
-
-      Instrucao1:='09'; //Protestar de 05 - 15 Dias
-      AInstrucao := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
-
-      if ((DaysBetween(DataProtesto,Vencimento)) >= 5) and ((DaysBetween(DataProtesto,Vencimento)) <= 15 ) then
-        DiasProtesto:= IntToStr(DaysBetween(DataProtesto,Vencimento))
-      else
-        DiasProtesto:= '05';
+      {Intruções - Protesto}
+      if (aTipoOcorrencia = '01') or (aTipoOcorrencia = '09') then
+      begin
+        if (DataProtesto > 0) and (DataProtesto > Vencimento) then
+        begin
+          AInstrucao   := '06'; // Protestar em xx dias corridos
+          DiasProtesto := IntToStr(DaysBetween(DataProtesto, Vencimento))  
+        end;        
+      end
+      else if ATipoOcorrencia = '02' then // 02-Pedido de Baixa      
+        AInstrucao := '44';
 
 
       {Pegando Tipo de Sacado}

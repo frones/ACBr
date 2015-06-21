@@ -291,7 +291,7 @@ type
     property IM: String read FIM write FIM;
     property Senha: String read FSenha write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
-    property ArquivoRetorno: WideString read FArquivoRetorno write FArquivoRetorno;
+    property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
     //usado pelo provedor Tecnos
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
   end;
@@ -872,21 +872,22 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-    if FConfiguracoes.Certificados.AssinaLote then
-      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FPDadosMSg);
+//    if FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote then
+//      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FPDadosMSg);
 
-    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-    begin
-      if not(NotaUtil.Valida(FDadosMsg, FMsg, FConfiguracoes.Geral.PathSchemas,
-                             FConfiguracoes.WebServices.URL,
-                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
-                             Prefixo4)) then
-        GerarException(ACBrStr('Falha na validação do Lote ' +
-                               TNFSeGerarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
-    end;
+//    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+//    begin
+//      if not(NotaUtil.Valida(FDadosMsg, FMsg, FPConfiguracoes.Geral.PathSchemas,
+//                             FPConfiguracoes.WebServices.URL,
+//                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
+//                             Prefixo4)) then
+//        GerarException(ACBrStr('Falha na validação do Lote ' +
+//                               TNFSeGerarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
+//    end;
   end
   else
-    GerarException(ACBrStr('A funcionalidade [Gerar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor));
+    GerarException(ACBrStr('A funcionalidade [Gerar Lote] não foi disponibilizada pelo provedor: ' +
+     FPConfiguracoesNFSe.Geral.xProvedor));
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
@@ -1089,21 +1090,22 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-    if FConfiguracoes.Certificados.AssinaLote then
-      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FPDadosMSg);
+//    if FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote then
+//      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FPDadosMSg);
 
-    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-    begin
-      if not(NotaUtil.Valida(FDadosMsg, FMsg, FConfiguracoes.Geral.PathSchemas,
-                             FConfiguracoes.WebServices.URL,
-                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
-                             Prefixo4)) then
-        GerarException(ACBrStr('Falha na validação do Lote ' +
-                               TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
-    end;
+//    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+//    begin
+//      if not(NotaUtil.Valida(FDadosMsg, FMsg, FConfiguracoes.Geral.PathSchemas,
+//                             FConfiguracoes.WebServices.URL,
+//                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
+//                             Prefixo4)) then
+//        GerarException(ACBrStr('Falha na validação do Lote ' +
+//                               TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
+//    end;
   end
   else
-    GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' + FxProvedor));
+    GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' +
+      FPConfiguracoesNFSe.Geral.xProvedor));
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
@@ -1124,9 +1126,9 @@ begin
   if FPRetWS = '' then
     FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body')
   else
-    `FPRetWS := FPRetWS + '</EnviarLoteRpsResposta>';
+    FPRetWS := FPRetWS + '</EnviarLoteRpsResposta>';
 
-  FNFSeRetorno := TretEnvNFSe.Create;
+  FNFSeRetorno := TretEnvLote.Create;
 
   FNFSeRetorno.Leitor.Arquivo := FPRetWS;
   FNFSeRetorno.LerXml;
@@ -1136,18 +1138,18 @@ begin
   FNumeroLote      := NFSeRetorno.InfRec.NumeroLote;
 
   // Lista de Mensagem de Retorno
-  FMsg := '';
+  FPMsg := '';
   if NFSeRetorno.InfRec.MsgRetorno.Count > 0 then
   begin
     FaMsg:='';
     for i := 0 to NFSeRetorno.InfRec.MsgRetorno.Count - 1 do
     begin
-      FMsg := FMsg + NFSeRetorno.infRec.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
+      FPMsg := FPMsg + NFSeRetorno.infRec.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
 
       FaMsg := FaMsg + 'Código Erro : ' + NFSeRetorno.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
                        'Mensagem... : ' + NFSeRetorno.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
                        'Correção... : ' + NFSeRetorno.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
-                       'Provedor... : ' + FxProvedor + LineBreak;
+                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
     end;
   end
   else begin
@@ -1159,7 +1161,7 @@ begin
     FaMsg := 'Numero do Lote : ' + NFSeRetorno.InfRec.NumeroLote + LineBreak +
              'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
              'Protocolo..... : ' + FProtocolo + LineBreak +
-             'Provedor...... : ' + FxProvedor + LineBreak;
+             'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
 
   Result := (NFSeRetorno.InfRec.Protocolo <> '');
@@ -1176,7 +1178,7 @@ end;
 function TNFSeEnviarLoteRPS.GerarMsgLog: String;
 begin
   if Assigned(FNFSeRetorno) then
-    Result := Format(ACBrStr(FaMsg))
+    Result := ACBrStr(FaMsg)
   else
     Result := '';
 end;

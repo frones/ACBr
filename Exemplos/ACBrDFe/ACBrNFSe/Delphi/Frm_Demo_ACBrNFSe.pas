@@ -719,9 +719,9 @@ begin
 
  ACBrNFSe1.ConsultarLoteRps(Lote, Protocolo);
 
-// MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
-// memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
-// LoadXML(MemoResp, WBResposta);
+ MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsLote.RetWS);
+ LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnCancNFSeClick(Sender: TObject);
@@ -758,13 +758,12 @@ begin
    MemoDados.Lines.Add('Arquivo Carregado de: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
    MemoDados.Lines.Add('Retorno do Cancelamento:');
-(*
+
    MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.CancNfse.CodigoCancelamento);
-   MemoDados.Lines.Add('Data / Hora      : ' +
-    IfThen(ACBrNFSe1.WebServices.CancNfse.DataHora = 0, '',
-                      DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora)));
+   if ACBrNFSe1.WebServices.CancNfse.DataHora <> 0 then
+     MemoDados.Lines.Add('Data / Hora      : ' + DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora));
    LoadXML(MemoResp, WBResposta);
-*)
+
    PageControl2.ActivePageIndex := 1;
   end;
 
@@ -779,9 +778,9 @@ begin
 
  ACBrNFSe1.ConsultarSituacao(edtEmitCNPJ.Text, edtEmitIM.Text, Protocolo);
 
-// MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLote.RetWS);
-// memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLote.RetWS);
-// LoadXML(MemoResp, WBResposta);
+ MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
+ LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnGerarRPSClick(Sender: TObject);
@@ -794,12 +793,12 @@ begin
  ACBrNFSe1.NotasFiscais.Clear;
  AlimentaComponente(vAux);
 // ACBrNFSe1.NotasFiscais.Items[0].SaveToFile;
-(*
+
  ShowMessage('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
  MemoDados.Lines.Add('Arquivo gerado em: '+ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
  MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
  LoadXML(MemoResp, WBResposta);
-*)
+
  PageControl2.ActivePageIndex := 1;
 end;
 
@@ -914,9 +913,9 @@ begin
                                 ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.Cnpj,
                                 ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal);
 
-//   MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
-//   memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
-//   LoadXML(MemoResp, WBResposta);
+   MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
+   memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
+   LoadXML(MemoResp, WBResposta);
   end;
 end;
 
@@ -931,9 +930,9 @@ begin
 
  ACBrNFSe1.ConsultarNFSe(edtEmitCNPJ.Text, edtEmitIM.Text, StrToDate(DataInicial), StrToDate(DataFinal));
 
-// MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
-// memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
-// LoadXML(MemoResp, WBResposta);
+ MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
+ memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
+ LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrNFSe.cbCidadesChange(Sender: TObject);
@@ -1144,8 +1143,8 @@ begin
   ACBrNFSe1.SubstituirNFSe(Codigo, sNumNFSe);
 
   MemoDados.Lines.Add('Retorno da Substituição:');
-//  MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
-//  LoadXML(MemoResp, WBResposta);
+  MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
+  LoadXML(MemoResp, WBResposta);
   PageControl2.ActivePageIndex := 1;
 end;
 

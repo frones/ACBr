@@ -446,7 +446,7 @@ begin
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
-//  Result := WebServices.EnviarSincrono(ALote);
+  Result := WebServices.EnviaSincrono(ALote);
 end;
 
 function TACBrNFSe.Gerar(ARps: Integer): Boolean;
@@ -465,14 +465,14 @@ begin
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Gerar);
 
-//  Result := WebServices.Gera(ARps);
+  Result := WebServices.Gera(ARps);
 end;
 
 function TACBrNFSe.ConsultarSituacao(ACnpj, AInscricaoMunicipal,
   AProtocolo: String; const ANumLote: String): Boolean;
 begin
-// Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal,
-//                                        AProtocolo, ANumLote);
+  Result := WebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal,
+                                         AProtocolo, ANumLote);
 end;
 
 function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo, ACNPJ,
@@ -519,15 +519,15 @@ begin
      GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
   end;
 
-//  if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then
-//    Self.WebServices.ConsLote.NumeroLote:= ANumLote;
+  if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then
+    Self.WebServices.ConsLote.NumeroLote:= ANumLote;
 
   //obrigatorio passar a razao social para o provedor Tecnos
   if (Configuracoes.Geral.Provedor in [proTecnos]) and (ARazaoSocial = '') then
     ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
 
-//  Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal,
-//                                        ASenha, AFraseSecreta, ARazaoSocial);
+  Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal,
+                                        ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
@@ -537,8 +537,8 @@ begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
-//  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-//                AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
+  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
+                AInscricaoMunicipal, ASenha, AFraseSecreta, ARazaoSocial);
 end;
 
 function TACBrNFSe.ConsultarNFSe(ACnpj, AInscricaoMunicipal: String;
@@ -546,9 +546,9 @@ function TACBrNFSe.ConsultarNFSe(ACnpj, AInscricaoMunicipal: String;
   APagina: Integer; ASenha, AFraseSecreta, ACNPJTomador, AIMTomador,
   ANomeInter, ACNPJInter, AIMInter, ASerie: String): Boolean;
 begin
-//  Result := WebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal, ADataInicial,
-//            ADataFinal, ANumeroNFSe, APagina, ASenha, AFraseSecreta,
-//            ACNPJTomador, AIMTomador, ANomeInter, ACNPJInter, AIMInter, ASerie);
+  Result := WebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal, ADataInicial,
+            ADataFinal, ANumeroNFSe, APagina, ASenha, AFraseSecreta,
+            ACNPJTomador, AIMTomador, ANomeInter, ACNPJInter, AIMInter, ASerie);
 end;
 
 function TACBrNFSe.CancelarNFSe(ACodigoCancelamento: String): Boolean;
@@ -556,7 +556,7 @@ begin
   if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e adicionada ao Lote'));
 
-// Result := WebServices.CancelaNFSe(ACodigoCancelamento, True);
+  Result := WebServices.CancelaNFSe(ACodigoCancelamento, True);
 end;
 
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,
@@ -565,15 +565,15 @@ begin
   if Self.NotasFiscais.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
- NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
 
-// Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
+  Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao,
   AInscricaoM: String): String;
 begin
-// Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao, AInscricaoM);
+  Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao, AInscricaoM);
 end;
 
 end.

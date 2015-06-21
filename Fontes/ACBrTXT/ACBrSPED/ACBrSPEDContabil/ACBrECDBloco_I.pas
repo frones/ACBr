@@ -775,12 +775,14 @@ constructor TRegistroI050.Create;
 begin
    FRegistroI051 := TRegistroI051List.Create;
    FRegistroI052 := TRegistroI052List.Create;
+   FRegistroI053 := TRegistroI053List.Create;
 end;
 
 destructor TRegistroI050.Destroy;
 begin
   FRegistroI051.Free;
   FRegistroI052.Free;
+  FRegistroI053.Free;
   inherited;
 end;
 

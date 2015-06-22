@@ -1186,6 +1186,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 17
         Caption = 'Instalar Capicom'
         TabOrder = 5
+				Visible = False
       end
       object ckbInstalarOpenSSL: TCheckBox
         Left = 17
@@ -1194,6 +1195,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 17
         Caption = 'Instalar OpenSSL'
         TabOrder = 6
+				Visible = False
       end
       object ckbUtilizarOpenSSL: TCheckBox
         Left = 17
@@ -1203,6 +1205,7 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'Utilizar o OpenSSL ao inv'#233's da Capicom na NF-e e similares'
         TabOrder = 4
         OnClick = ckbUtilizarOpenSSLClick
+				Visible = False
       end
       object rdgDLL: TRadioGroup
         Left = 41
@@ -1271,19 +1274,16 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitHeight = 499
         DesignSize = (
           537
           499)
         inherited btnPacotesDesmarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
-          ExplicitTop = 465
         end
         inherited btnPacotesMarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
-          ExplicitTop = 465
         end
       end
     end

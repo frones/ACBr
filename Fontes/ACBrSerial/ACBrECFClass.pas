@@ -341,11 +341,16 @@ TACBrECFUnidadesMedida = class(TObjectList)
   end;
 
 { Definindo novo tipo para armazenar os Reletórios Gerenciais (RG) }
+
+{ TACBrECFRelatorioGerencial }
+
 TACBrECFRelatorioGerencial = class
  private
     fsIndice: String;
     fsDescricao: String;
     fsContador: Integer;
+    function GetAsString: String;
+    procedure SetAsString(AValue: String);
  public
     constructor create ;
     procedure Assign( ARelatorioGerencial : TACBrECFRelatorioGerencial ) ;
@@ -353,6 +358,8 @@ TACBrECFRelatorioGerencial = class
     property Indice    : String read fsIndice    write fsIndice ;
     property Descricao : String read fsDescricao write fsDescricao ;
     property Contador : Integer read fsContador write fsContador;
+
+    property AsString : String read GetAsString write SetAsString;
  end;
 
 { Lista de Objetos do tipo TACBrECFRelatoriosGerencial }
@@ -1612,7 +1619,6 @@ end;
 
 
 {------------------------- TACBrECFRelatoriosGerenciais -----------------------}
-{ TACBrECFRelatorioGerencial }
 
 constructor TACBrECFRelatorioGerencial.create;
 begin
@@ -1628,6 +1634,33 @@ begin
   fsDescricao := ARelatorioGerencial.Descricao ;
   fsContador  := ARelatorioGerencial.Contador ;
 end;
+
+function TACBrECFRelatorioGerencial.GetAsString: String;
+begin
+  Result := Indice               + '|' +
+            Descricao            + '|' +
+            IntToStr( Contador ) ;
+end;
+
+procedure TACBrECFRelatorioGerencial.SetAsString(AValue: String);
+var
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Text := StringReplace(AValue,'|',sLineBreak,[rfReplaceAll]);
+
+    if SL.Count < 3 then exit ;
+
+    Indice           := SL[0];
+    Descricao        := SL[1];
+    Contador         := StrToInt( SL[2] );
+  finally
+    SL.Free;
+  end;
+end;
+
+
 
 function TACBrECFRelatoriosGerenciais.Add(
   Obj: TACBrECFRelatorioGerencial): Integer;

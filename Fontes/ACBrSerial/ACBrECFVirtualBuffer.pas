@@ -469,6 +469,7 @@ begin
     Add( PadSpace('Cancelamentos de Cupom:|'+IntToStrZero(fpCuponsCancelados,6), Colunas,'|') ) ;
     Add( PadSpace('COO do Primeiro Cupom:|'+IntToStrZero(fpCOOInicial,6), Colunas,'|') ) ;
     Add( PadSpace('COO do Ultimo Cupom:|'+IntToStrZero(fpCOOFinal,6),Colunas,'|'));
+    Add( PadSpace('Relatorios Gerenciais:|'+IntToStrZero(fpNumCER,6),Colunas,'|') ) ;
     Add( PadCenter(' Totalizadores ',Colunas,'-') ) ;
     Add( PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|') ) ;
 
@@ -494,8 +495,19 @@ begin
 
     Add( PadSpace('Total Cancelado R$|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosTotal), Colunas,'|') ) ;
     Add( PadSpace('T O T A L   R$|'+FormatFloat('###,###,##0.00',TotalAliq), Colunas,'|') ) ;
+
+
     Add( PadCenter(' Relatorio Gerencial ',Colunas,'-') ) ;
-    Add( PadSpace(' Relatorio Geral:|'+IntToStrZero(fpNumCER,6),Colunas,'|') ) ;
+
+    For A := 0 to fpRelatoriosGerenciais.Count - 1 do
+    begin
+      with fpRelatoriosGerenciais[A] do
+      begin
+        Add( PadSpace(Indice+'  '+PadRight(Descricao,20)+'|'+
+             IntToStrZero(Contador, 5), Colunas,'|') ) ;
+      end ;
+    end;
+
     Add( PadCenter('Formas de Pagamento',Colunas,'-') ) ;
 
     For A := 0 to fpFormasPagamentos.Count - 1 do

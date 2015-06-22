@@ -410,6 +410,11 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure ProgramaFormaPagamento( var Descricao: String;
        PermiteVinculado : Boolean = true; Posicao : String = '' ) ; override ;
 
+    procedure CarregaRelatoriosGerenciais ; override ;
+    procedure LerTotaisRelatoriosGerenciais ; override ;
+    Procedure ProgramaRelatorioGerencial( var Descricao: String;
+       Posicao : String = '') ; override ;
+
     procedure CarregaComprovantesNaoFiscais ; override ;
     procedure LerTotaisComprovanteNaoFiscal ; override ;
     Procedure ProgramaComprovanteNaoFiscal( var Descricao: String;
@@ -1499,14 +1504,23 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.AbreRelatorioGerencial(Indice : Integer) ;
+var
+  IndiceStr: String;
+  RG: TACBrECFRelatorioGerencial;
 begin
   if not (Estado in [estLivre,estRequerZ,estRequerX])  then
     raise EACBrECFERRO.Create(ACBrStr('O Estado não é "LIVRE"'));
+
+  IndiceStr := IntToStrZero( Indice, 2 );
+  RG := AchaRGIndice(IndiceStr);
+  if RG = Nil then
+    raise EACBrECFERRO.create(ACBrStr('Relatório Gerencial '+IndiceStr+' Inválido')) ;
 
   try
     fpNumGNF := fpNumGNF + 1 ;
     fpNumGRG := fpNumGRG + 1 ;
     fpNumCER := fpNumCER + 1 ;
+    RG.Contador := RG.Contador + 1;
 
     ZeraCupom;
     fpEstado := estRelatorio ;
@@ -1731,6 +1745,7 @@ Var
   AliqICMS           : TACBrECFAliquota;
   FormaPagamento     : TACBrECFFormaPagamento;
   ComprovanteVirtual : TACBrECFComprovanteNaoFiscal;
+  RelatGerencial     : TACBrECFRelatorioGerencial;
 begin
   Ini := TMemIniFile.Create( '' ) ;
   try
@@ -1835,6 +1850,21 @@ begin
       FormaPagamento.AsString := T ;
 
       fpFormasPagamentos.Add( FormaPagamento ) ;
+      A := A + 1 ;
+    end ;
+
+    inherited CarregaRelatoriosGerenciais ;   { Cria fpRelatoriosGerenciais }
+    A := 0 ;
+    S := 'Relatorios_Gerenciais';
+    while true do
+    begin
+      T := Ini.ReadString( S, IntToStrZero(A,2), '*FIM*') ;
+      if T = '*FIM*' then break ;
+
+      RelatGerencial := TACBrECFRelatorioGerencial.Create ;
+      RelatGerencial.AsString := T ;
+
+      fpRelatoriosGerenciais.Add( RelatGerencial ) ;
       A := A + 1 ;
     end ;
 
@@ -2001,6 +2031,13 @@ begin
         Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
     end ;
 
+    S := 'Relatorios_Gerenciais';
+    for A := 0 to fpRelatoriosGerenciais.Count - 1 do
+    begin
+      with fpRelatoriosGerenciais[A] do
+        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+    end ;
+
     S := 'Comprovantes_nao_Fiscais';
     for A := 0 to fpComprovantesNaoFiscais.Count - 1 do
     begin
@@ -2132,6 +2169,45 @@ begin
     FPagto.Descricao        := Descricao ;
     FPagto.PermiteVinculado := PermiteVinculado ;
     fpFormasPagamentos.Add( FPagto ) ;
+
+    GravaArqINI ;
+  except
+    LeArqINI ;
+    raise;
+  end ;
+end;
+
+procedure TACBrECFVirtualClass.CarregaRelatoriosGerenciais;
+begin
+  LeArqINI;
+end;
+
+procedure TACBrECFVirtualClass.LerTotaisRelatoriosGerenciais;
+begin
+  CarregaRelatoriosGerenciais;
+end;
+
+procedure TACBrECFVirtualClass.ProgramaRelatorioGerencial(
+  var Descricao: String; Posicao: String);
+Var
+  RelGer : TACBrECFRelatorioGerencial ;
+  A : Integer ;
+begin
+  Descricao := LeftStr(Trim(Descricao),20) ;         { Ajustando tamanho final }
+
+  if not Assigned(fpRelatoriosGerenciais) then
+    CarregaRelatoriosGerenciais;
+
+  { Verificando se a Descriçao já foi programada antes (ja existe ?) }
+  For A := 0 to fpRelatoriosGerenciais.Count -1 do
+    if trim(UpperCase( fpRelatoriosGerenciais[A].Descricao )) = UpperCase(Descricao) then
+      exit ;
+
+  try
+    RelGer := TACBrECFRelatorioGerencial.create ;
+    RelGer.Indice           := IntToStrZero( fpRelatoriosGerenciais.Count+1, 2 );
+    RelGer.Descricao        := Descricao ;
+    fpRelatoriosGerenciais.Add( RelGer ) ;
 
     GravaArqINI ;
   except

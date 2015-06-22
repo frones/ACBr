@@ -151,6 +151,8 @@ type
     property Protocolo: String read FProtocolo;
   end;
 
+{ TNFSeEnviarSincrono }
+
   TNFSeEnviarSincrono = Class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
@@ -183,6 +185,8 @@ type
     property Situacao: String read FSituacao;
   end;
 
+{ TNFSeGerarNFSe }
+
   TNFSeGerarNFSe = Class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
@@ -214,6 +218,8 @@ type
     property DataRecebimento: TDateTime read FDataRecebimento;
     property Situacao: String read FSituacao;
   end;
+
+{ TNFSeConsultarSituacaoLoteRPS }
 
   TNFSeConsultarSituacaoLoteRPS = Class(TNFSeWebService)
   private
@@ -252,6 +258,8 @@ type
     property Senha: String read FSenha write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
   end;
+
+{ TNFSeConsultarLoteRPS }
 
   TNFSeConsultarLoteRPS = Class(TNFSeWebService)
   private
@@ -296,6 +304,8 @@ type
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
   end;
 
+{ TNFSeConsultarNfseRPS }
+
   TNFSeConsultarNfseRPS = Class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
@@ -335,6 +345,8 @@ type
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
   end;
+
+{ TNFSeConsultarNfse }
 
   TNFSeConsultarNfse = Class(TNFSeWebService)
   private
@@ -389,6 +401,8 @@ type
 
   end;
 
+{ TNFSeCancelarNfse }
+
   TNFSeCancelarNfse = Class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
@@ -428,6 +442,8 @@ type
     property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
     property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
   end;
+
+{ TNFSeSubstituirNFSe }
 
  TNFSeSubstituirNFSe = Class(TNFSeWebService)
   private
@@ -481,6 +497,8 @@ type
     property ArquivoRetorno: String read FArquivoRetorno write FArquivoRetorno;
   end;
 
+{ TNFSeLinkNFSe }
+
   TNFSeLinkNFSe = Class(TNFSeWebService)
   private
     FNotasFiscais: TNotasFiscais;
@@ -509,8 +527,6 @@ type
     property Link: String read FLink;
     property IM: String read FIM;
   end;
-
-// =============================================================================
 
   { TNFSeEnvioWebService }
 
@@ -631,8 +647,6 @@ uses
   ACBrUtil, ACBrNFSe, pnfsNFSeG,
   pcnGerador, pcnLeitor;
 
-// =============================================================================
-
 { TNFSeWebService }
 
 constructor TNFSeWebService.Create(AOwner: TACBrDFe);
@@ -709,8 +723,6 @@ function TNFSeWebService.GerarCabecalhoSoap: String;
 begin
  Result := FPCabMsg;
 end;
-
-// =============================================================================
 
 { TNFSeGerarLoteRPS }
 
@@ -911,15 +923,13 @@ end;
 
 function TNFSeGerarLoteRPS.GerarMsgLog: String;
 begin
-{a}
+  Result := '';
 end;
 
 function TNFSeGerarLoteRPS.GerarPrefixoArquivo: String;
 begin
   Result := NumeroLote;
 end;
-
-// =============================================================================
 
 { TNFSeEnviarLoteRPS }
 
@@ -957,7 +967,7 @@ end;
 
 procedure TNFSeEnviarLoteRPS.DefinirURL;
 begin
-
+  FPLayout := LayNfseRecepcaoLote;
   inherited DefinirURL;
 end;
 
@@ -1193,7 +1203,16 @@ end;
 constructor TNFSeEnviarSincrono.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
-{a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNfseRecepcaoLoteSincrono;
+  FPArqEnv := 'env-lotS';
+  FPArqResp := 'lista-nfse';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeEnviarSincrono.DefinirDadosMsg;
@@ -1202,43 +1221,50 @@ begin
 {a}
 end;
 
+function TNFSeEnviarSincrono.TratarResposta: Boolean;
+begin
+{a}
+end;
+
 procedure TNFSeEnviarSincrono.DefinirServicoEAction;
 begin
-  inherited;
-{a}
+  FPServico := GetUrlWsd + 'NFSeEnviarSincrono';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFSeEnviarSincrono.DefinirURL;
 begin
-  inherited;
-{a}
+  FPLayout := LayNfseRecepcaoLoteSincrono;
+  inherited DefinirURL;
 end;
 
 destructor TNFSeEnviarSincrono.Destroy;
 begin
-{a}
-  inherited;
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
 end;
 
 procedure TNFSeEnviarSincrono.FinalizarServico;
 begin
-  inherited;
-{a}
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
 end;
 
 function TNFSeEnviarSincrono.GerarMsgLog: String;
 begin
-{a}
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
 end;
 
 function TNFSeEnviarSincrono.GerarPrefixoArquivo: String;
 begin
-{a}
-end;
-
-function TNFSeEnviarSincrono.TratarResposta: Boolean;
-begin
-{a}
+  Result := NumeroLote;
 end;
 
 { TNFSeGerarNFSe }
@@ -1246,7 +1272,16 @@ end;
 constructor TNFSeGerarNFSe.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
-{a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNfseGerar;
+  FPArqEnv := 'ger-nfse';
+  FPArqResp := 'lista-nfse';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
@@ -1255,53 +1290,67 @@ begin
 {a}
 end;
 
-procedure TNFSeGerarNFSe.DefinirServicoEAction;
-begin
-  inherited;
-{a}
-end;
-
-procedure TNFSeGerarNFSe.DefinirURL;
-begin
-  inherited;
-{a}
-end;
-
-destructor TNFSeGerarNFSe.Destroy;
-begin
-{a}
-  inherited;
-end;
-
-procedure TNFSeGerarNFSe.FinalizarServico;
-begin
-  inherited;
-{a}
-end;
-
-function TNFSeGerarNFSe.GerarMsgLog: String;
-begin
-{a}
-end;
-
-function TNFSeGerarNFSe.GerarPrefixoArquivo: String;
-begin
-{a}
-end;
-
 function TNFSeGerarNFSe.TratarResposta: Boolean;
 begin
 {a}
 end;
 
-// =============================================================================
+procedure TNFSeGerarNFSe.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'NFSeGerarNFSe';
+  FPSoapAction := FPServico;
+end;
+
+procedure TNFSeGerarNFSe.DefinirURL;
+begin
+  FPLayout := LayNfseGerar;
+  inherited DefinirURL;
+end;
+
+destructor TNFSeGerarNFSe.Destroy;
+begin
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
+end;
+
+procedure TNFSeGerarNFSe.FinalizarServico;
+begin
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
+end;
+
+function TNFSeGerarNFSe.GerarMsgLog: String;
+begin
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
+end;
+
+function TNFSeGerarNFSe.GerarPrefixoArquivo: String;
+begin
+  Result := NumeroRPS;
+end;
 
 { TNFSeConsultarSituacaoLoteRPS }
 
 constructor TNFSeConsultarSituacaoLoteRPS.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
-{a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaSitLoteRps;
+  FPArqEnv := 'con-sit';
+  FPArqResp := 'sit';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
@@ -1310,53 +1359,67 @@ begin
 {a}
 end;
 
-procedure TNFSeConsultarSituacaoLoteRPS.DefinirServicoEAction;
-begin
-  inherited;
-{a}
-end;
-
-procedure TNFSeConsultarSituacaoLoteRPS.DefinirURL;
-begin
-  inherited;
-{a}
-end;
-
-destructor TNFSeConsultarSituacaoLoteRPS.Destroy;
-begin
-{a}
-  inherited;
-end;
-
-procedure TNFSeConsultarSituacaoLoteRPS.FinalizarServico;
-begin
-  inherited;
-{a}
-end;
-
-function TNFSeConsultarSituacaoLoteRPS.GerarMsgLog: String;
-begin
-{a}
-end;
-
-function TNFSeConsultarSituacaoLoteRPS.GerarPrefixoArquivo: String;
-begin
-{a}
-end;
-
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
 begin
 {a}
 end;
 
-// =============================================================================
+procedure TNFSeConsultarSituacaoLoteRPS.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'NFSeConsSitLoteRPS';
+  FPSoapAction := FPServico;
+end;
+
+procedure TNFSeConsultarSituacaoLoteRPS.DefinirURL;
+begin
+  FPLayout := LayNfseConsultaSitLoteRps;
+  inherited DefinirURL;
+end;
+
+destructor TNFSeConsultarSituacaoLoteRPS.Destroy;
+begin
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
+end;
+
+procedure TNFSeConsultarSituacaoLoteRPS.FinalizarServico;
+begin
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
+end;
+
+function TNFSeConsultarSituacaoLoteRPS.GerarMsgLog: String;
+begin
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
+end;
+
+function TNFSeConsultarSituacaoLoteRPS.GerarPrefixoArquivo: String;
+begin
+  Result := Protocolo;
+end;
 
 { TNFSeConsultarLoteRPS }
 
 constructor TNFSeConsultarLoteRPS.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
-{a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaLote;
+  FPArqEnv := 'con-lot';
+  FPArqResp := 'lista-nfse';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
@@ -1365,53 +1428,67 @@ begin
 {a}
 end;
 
-procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
-begin
-  inherited;
-{a}
-end;
-
-procedure TNFSeConsultarLoteRPS.DefinirURL;
-begin
-  inherited;
-{a}
-end;
-
-destructor TNFSeConsultarLoteRPS.Destroy;
-begin
-{a}
-  inherited;
-end;
-
-procedure TNFSeConsultarLoteRPS.FinalizarServico;
-begin
-  inherited;
-{a}
-end;
-
-function TNFSeConsultarLoteRPS.GerarMsgLog: String;
-begin
-{a}
-end;
-
-function TNFSeConsultarLoteRPS.GerarPrefixoArquivo: String;
-begin
-{a}
-end;
-
 function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
 begin
 {a}
 end;
 
-// =============================================================================
+procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'NFSeConsLote';
+  FPSoapAction := FPServico;
+end;
+
+procedure TNFSeConsultarLoteRPS.DefinirURL;
+begin
+  FPLayout := LayNfseConsultaLote;
+  inherited DefinirURL;
+end;
+
+destructor TNFSeConsultarLoteRPS.Destroy;
+begin
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
+end;
+
+procedure TNFSeConsultarLoteRPS.FinalizarServico;
+begin
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
+end;
+
+function TNFSeConsultarLoteRPS.GerarMsgLog: String;
+begin
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
+end;
+
+function TNFSeConsultarLoteRPS.GerarPrefixoArquivo: String;
+begin
+  Result := Protocolo;
+end;
 
 { TNFSeConsultarNfseRPS }
 
 constructor TNFSeConsultarNfseRPS.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
- {a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaNfseRps;
+  FPArqEnv := 'con-nfse-rps';
+  FPArqResp := 'comp-nfse';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
@@ -1420,43 +1497,50 @@ begin
  {a}
 end;
 
+function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
 procedure TNFSeConsultarNfseRPS.DefinirServicoEAction;
 begin
-  inherited;
- {a}
+  FPServico := GetUrlWsd + 'NFSeConsNfseRPS';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirURL;
 begin
-  inherited;
- {a}
+  FPLayout := LayNfseConsultaNfseRps;
+  inherited DefinirURL;
 end;
 
 destructor TNFSeConsultarNfseRPS.Destroy;
 begin
- {a}
-  inherited;
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
 end;
 
 procedure TNFSeConsultarNfseRPS.FinalizarServico;
 begin
-  inherited;
- {a}
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
 end;
 
 function TNFSeConsultarNfseRPS.GerarMsgLog: String;
 begin
- {a}
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
 end;
 
 function TNFSeConsultarNfseRPS.GerarPrefixoArquivo: String;
 begin
- {a}
-end;
-
-function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
-begin
- {a}
+  Result := Numero + Serie;
 end;
 
 { TNFSeConsultarNfse }
@@ -1464,7 +1548,16 @@ end;
 constructor TNFSeConsultarNfse.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
- {a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaNfse;
+  FPArqEnv := 'con-nfse';
+  FPArqResp := 'lista-nfse';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeConsultarNfse.DefinirDadosMsg;
@@ -1473,43 +1566,51 @@ begin
  {a}
 end;
 
+function TNFSeConsultarNfse.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
 procedure TNFSeConsultarNfse.DefinirServicoEAction;
 begin
-  inherited;
- {a}
+  FPServico := GetUrlWsd + 'NFSeConsNfse';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFSeConsultarNfse.DefinirURL;
 begin
-  inherited;
- {a}
+  FPLayout := LayNfseConsultaNfse;
+  inherited DefinirURL;
 end;
 
 destructor TNFSeConsultarNfse.Destroy;
 begin
- {a}
-  inherited;
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
 end;
 
 procedure TNFSeConsultarNfse.FinalizarServico;
 begin
-  inherited;
- {a}
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
 end;
 
 function TNFSeConsultarNfse.GerarMsgLog: String;
 begin
- {a}
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
 end;
 
 function TNFSeConsultarNfse.GerarPrefixoArquivo: String;
 begin
- {a}
-end;
-
-function TNFSeConsultarNfse.TratarResposta: Boolean;
-begin
- {a}
+  Result := FormatDateTime('yyyymmdd', DataInicial) +
+            FormatDateTime('yyyymmdd', DataFinal);
 end;
 
 { TNFSeCancelarNfse }
@@ -1517,7 +1618,16 @@ end;
 constructor TNFSeCancelarNfse.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
- {a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeCancelamento;
+  FPLayout := LayNfseCancelaNfse;
+  FPArqEnv := 'ped-can';
+  FPArqResp := 'can';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeCancelarNfse.DefinirDadosMsg;
@@ -1526,43 +1636,50 @@ begin
  {a}
 end;
 
+function TNFSeCancelarNfse.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
 procedure TNFSeCancelarNfse.DefinirServicoEAction;
 begin
-  inherited;
- {a}
+  FPServico := GetUrlWsd + 'NFSeCancNfse';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFSeCancelarNfse.DefinirURL;
 begin
-  inherited;
- {a}
+  FPLayout := LayNfseCancelaNfse;
+  inherited DefinirURL;
 end;
 
 destructor TNFSeCancelarNfse.Destroy;
 begin
- {a}
-  inherited;
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
 end;
 
 procedure TNFSeCancelarNfse.FinalizarServico;
 begin
-  inherited;
- {a}
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
 end;
 
 function TNFSeCancelarNfse.GerarMsgLog: String;
 begin
- {a}
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
 end;
 
 function TNFSeCancelarNfse.GerarPrefixoArquivo: String;
 begin
- {a}
-end;
-
-function TNFSeCancelarNfse.TratarResposta: Boolean;
-begin
- {a}
+  Result := Numero;
 end;
 
 { TNFSeSubstituirNFSe }
@@ -1570,7 +1687,16 @@ end;
 constructor TNFSeSubstituirNFSe.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
- {a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeSubstituicao;
+  FPLayout := LayNfseSubstituiNfse;
+  FPArqEnv := 'ped-sub';
+  FPArqResp := 'sub';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
@@ -1579,43 +1705,50 @@ begin
  {a}
 end;
 
+function TNFSeSubstituirNFSe.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
 procedure TNFSeSubstituirNFSe.DefinirServicoEAction;
 begin
-  inherited;
- {a}
+  FPServico := GetUrlWsd + 'NFSeSubNfse';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirURL;
 begin
-  inherited;
- {a}
+  FPLayout := LayNfseSubstituiNfse;
+  inherited DefinirURL;
 end;
 
 destructor TNFSeSubstituirNFSe.Destroy;
 begin
- {a}
-  inherited;
+  if Assigned(FNFSeRetorno) then
+    FNFSeRetorno.Free;
+
+  inherited Destroy;
 end;
 
 procedure TNFSeSubstituirNFSe.FinalizarServico;
 begin
-  inherited;
- {a}
+  inherited FinalizarServico;
+
+  if Assigned(FNFSeRetorno) then
+    FreeAndNil(FNFSeRetorno);
 end;
 
 function TNFSeSubstituirNFSe.GerarMsgLog: String;
 begin
- {a}
+  if Assigned(FNFSeRetorno) then
+    Result := ACBrStr(FaMsg)
+  else
+    Result := '';
 end;
 
 function TNFSeSubstituirNFSe.GerarPrefixoArquivo: String;
 begin
- {a}
-end;
-
-function TNFSeSubstituirNFSe.TratarResposta: Boolean;
-begin
- {a}
+  Result := Numero;
 end;
 
 { TNFSeLinkNFSe }
@@ -1623,7 +1756,16 @@ end;
 constructor TNFSeLinkNFSe.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
- {a}
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNfseRecepcaoLote;
+  FPArqEnv := '';
+  FPArqResp := '';
+
+  FNFSeRetorno := nil;
 end;
 
 procedure TNFSeLinkNFSe.DefinirDadosMsg;
@@ -1632,43 +1774,41 @@ begin
  {a}
 end;
 
+function TNFSeLinkNFSe.TratarResposta: Boolean;
+begin
+ {a}
+end;
+
 procedure TNFSeLinkNFSe.DefinirServicoEAction;
 begin
-  inherited;
- {a}
+  FPServico := GetUrlWsd + 'NFSeLinkNfse';
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFSeLinkNFSe.DefinirURL;
 begin
-  inherited;
- {a}
+  FPLayout := LayNfseRecepcaoLote;
+  inherited DefinirURL;
 end;
 
 destructor TNFSeLinkNFSe.Destroy;
 begin
- {a}
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TNFSeLinkNFSe.FinalizarServico;
 begin
-  inherited;
- {a}
+  inherited FinalizarServico;
 end;
 
 function TNFSeLinkNFSe.GerarMsgLog: String;
 begin
- {a}
+  Result := '';
 end;
 
 function TNFSeLinkNFSe.GerarPrefixoArquivo: String;
 begin
- {a}
-end;
-
-function TNFSeLinkNFSe.TratarResposta: Boolean;
-begin
- {a}
+  Result := '';
 end;
 
 // =============================================================================
@@ -1736,8 +1876,6 @@ begin
   Result := '<versaoDados>' + FVersao + '</versaoDados>';
 end;
 
-// =============================================================================
-
 { TWebServices }
 
 constructor TWebServices.Create(AOwner: TACBrDFe);
@@ -1801,74 +1939,50 @@ function TWebServices.Envia(ALote: String): Boolean;
 begin
   FEnviarLoteRPS.FNumeroLote := ALote;
 
-  Result := EnviarLoteRPS.Executar;
+  Result := FEnviarLoteRPS.Executar;
 
   if not (Result) then
-    EnviarLoteRPS.GerarException( EnviarLoteRPS.Msg );
+    FEnviarLoteRPS.GerarException( FEnviarLoteRPS.Msg );
 
-  (*
+  FConsSitLoteRPS.FCnpj               := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+  FConsSitLoteRPS.FInscricaoMunicipal := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+  FConsSitLoteRPS.FProtocolo          := FEnviarLoteRPS.Protocolo;
+  FConsSitLoteRPS.FNumeroLote         := FEnviarLoteRPS.NumeroLote;
 
-  if not ASincrono then
+  if FPConfiguracoesNFSe.Geral.Provedor in [proISSDigital] ) then
   begin
-    FRetorno.Recibo := FEnviarLoteRPS.Recibo;
-    if not FRetorno.Executar then
-      FRetorno.GerarException( FRetorno.Msg );
+    FConsSitLoteRPS.FSenha        := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.Senha;
+    FConsSitLoteRPS.FFraseSecreta := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
   end;
 
-************************************************************
+  FConsLote.FProtocolo := FEnviarLoteRPS.Protocolo;
 
- Self.ConsSitLote.Cnpj               := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
- Self.ConsSitLote.InscricaoMunicipal := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
- Self.ConsSitLote.Protocolo          := Self.Enviar.Protocolo;
- Self.ConsSitLote.NumeroLote         := Self.Enviar.NumeroLote;
+  if FPConfiguracoesNFSe.Geral.Provedor in [proISSDigital, proTecnos] ) then
+  begin
+    FConsLote.FSenha        := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.Senha;
+    FConsLote.FFraseSecreta := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
+  end;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital] ) then
- begin
-   Self.ConsSitLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
-   Self.ConsSitLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
- end;
+  if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
+  begin
+    if not FPConfiguracoesNFSe.Geral.Provedor in [proDigifred, proProdata,
+           proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan,
+           proISSDigital, proISSDSF, proFiorilli, proFreire, proTecnos, proDBSeller]) then
+     begin
+       Result := FConsSitLoteRPS.Executar;
 
- Self.ConsLote.Protocolo := Self.Enviar.Protocolo;
+       if not (Result) then
+         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+     end;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proISSDigital, proTecnos] ) then
- begin
-   Self.ConsLote.Senha        := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.Senha;
-   Self.ConsLote.FraseSecreta := TACBrNFSe( FACBrNFSe ).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
- end;
+     if FPConfiguracoesNFSe.Geral.Provedor = proInfisc then
+       Result := True
+     else
+       Result := FConsLote.Executar;
 
- if (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.ConsultaLoteAposEnvio) and (Result) then
- begin
-   if not (TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor in [proDigifred, proProdata,
-          proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan, proISSDigital,
-          proISSDSF, proFiorilli, proFreire, proTecnos, proDBSeller]) then //adicionei o provedor DBSeller - Rodrigo Custódio
-    begin
-     Result := Self.ConsSitLote.Executar;
-
-     if not (Result)
-      then begin
-       if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
-        then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsSitLote.Msg);
-       if Self.ConsSitLote.Msg <> ''
-        then raise Exception.Create(Self.ConsSitLote.Msg)
-        else raise Exception.Create('Erro Desconhecido ao Consultar a Situação do Lote!')
-      end;
-    end;
-
-   if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Provedor = proInfisc then
-     Result := True // Para Provedor Infisc já retorna a NFS-e ao Consultar Situação Lote
-   else
-     Result := Self.ConsLote.Executar;
-
-   if not (Result)
-    then begin
-     if Assigned(TACBrNFSe( FACBrNFSe ).OnGerarLog)
-      then TACBrNFSe( FACBrNFSe ).OnGerarLog(Self.ConsLote.Msg);
-     if Self.ConsLote.Msg <> ''
-      then raise Exception.Create(Self.ConsLote.Msg)
-      else raise Exception.Create('Erro Desconhecido ao Consultar o Lote!')
-    end;
- end;
-*)
+     if not (Result) then
+       FConsLote.GerarException( FConsLote.Msg );
+  end;
 end;
 
 function TWebServices.EnviaSincrono(ALote: Integer): Boolean;
@@ -1878,7 +1992,12 @@ end;
 
 function TWebServices.EnviaSincrono(ALote: String): Boolean;
 begin
-{a}
+  FEnviarSincrono.FNumeroLote := ALote;
+
+  Result := FEnviarSincrono.Executar;
+
+  if not (Result) then
+    FEnviarSincrono.GerarException( FEnviarSincrono.Msg );
 end;
 
 function TWebServices.Gera(ARps: Integer): Boolean;
@@ -1888,33 +2007,87 @@ end;
 
 function TWebServices.Gera(ARps: String): Boolean;
 begin
-{a}
+ FGerarNfse.FNumeroRps := ARps;
+
+ Result := FGerarNfse.Executar;
+
+ if not (Result) then
+   FGerarNfse.GerarException( FGerarNfse.Msg );
 end;
 
 function TWebServices.ConsultaSituacao(ACnpj, AInscricaoMunicipal,
   AProtocolo: String; const ANumLote: String): Boolean;
 begin
-{a}
+  ACnpj := OnlyNumber(ACnpj);
+  if not ValidarCNPJ(ACnpj) then
+    FConsSitLoteRPS.GerarException( 'CNPJ ' + ACnpj + ' inválido.' );
+
+  FConsSitLoteRPS.FCnpj               := ACnpj;
+  FConsSitLoteRPS.FInscricaoMunicipal := AInscricaoMunicipal;
+  FConsSitLoteRPS.FProtocolo          := AProtocolo;
+  FConsSitLoteRPS.FNumeroLote         := ANumLote;
+
+  Result := FConsSitLoteRPS.Executar;
+
+  if not (Result) then
+   FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
 end;
 
 function TWebServices.ConsultaLoteRps(AProtocolo: String;
   const CarregaProps: boolean): Boolean;
 begin
-{a}
+  if CarregaProps then
+  begin
+     FConsLote.FCNPJ := '';
+     FConsLote.FIM   := '';
+  end;
+
+  FConsLote.FProtocolo := AProtocolo;
+
+  Result := FConsLote.Executar;
+
+  if not (Result) then
+    FConsLote.GerarException( FConsLote.Msg );
 end;
 
 function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
   AInscricaoMunicipal: String; const ASenha, AFraseSecreta,
   ARazaoSocial: String): Boolean;
 begin
-{a}
+  FConsLote.FCNPJ         := ACNPJ;
+  FConsLote.FIM           := AInscricaoMunicipal;
+  FConsLote.FSenha        := ASenha;
+  FConsLote.FFraseSecreta := AFraseSecreta;
+  FConsLote.FRazaoSocial  := ARazaoSocial;
+
+  Result := ConsultaLoteRPS(AProtocolo, False);
 end;
 
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
   AInscricaoMunicipal: String; const ASenha, AFraseSecreta,
   ARazaoSocial: String): Boolean;
 begin
-{a}
+  ACnpj := OnlyNumber(ACnpj);
+
+  if not ValidarCNPJ(ACnpj) and (Length(ACnpj) = 14) then
+    FConsNfseRps.GerarException( 'CNPJ ' + ACnpj + ' inválido.' );
+
+  if not ValidarCPF(ACnpj) and (Length(ACnpj) = 11) then
+    FConsNfseRps.GerarException( 'CPF ' + ACnpj + ' inválido.' );
+
+  FConsNfseRps.FNumero             := ANumero;
+  FConsNfseRps.FSerie              := ASerie;
+  FConsNfseRps.FTipo               := ATipo;
+  FConsNfseRps.FCnpj               := ACnpj;
+  FConsNfseRps.FInscricaoMunicipal := AInscricaoMunicipal;
+  FConsNfseRps.FSenha              := ASenha;
+  FConsNfseRps.FFraseSecreta       := AFraseSecreta;
+  FConsNfseRps.FRazaoSocial        := ARazaoSocial;
+
+  Result := FConsNfseRps.Executar;
+
+  if not (Result) then
+    FConsNfseRps.GerarException( FConsNfseRps.Msg );
 end;
 
 function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
@@ -1922,31 +2095,136 @@ function TWebServices.ConsultaNFSe(ACnpj, AInscricaoMunicipal: String;
   APagina: Integer; const ASenha, AFraseSecreta: String; ACNPJTomador,
   AIMTomador, ANomeInter, ACNPJInter, AIMInter, ASerie: String): Boolean;
 begin
-{a}
+  ACnpj := OnlyNumber(ACnpj);
+  if not ValidarCNPJ(ACnpj) then
+    FConsNfse.GerarException( 'CNPJ ' + ACnpj + ' inválido.' );
+
+  FConsNfse.FCnpj               := ACnpj;
+  FConsNfse.FInscricaoMunicipal := AInscricaoMunicipal;
+  FConsNfse.FDataInicial        := ADataInicial;
+  FConsNfse.FDataFinal          := ADataFinal;
+  FConsNfse.FNumeroNFSe         := NumeroNFSe;
+  FConsNfse.FPagina             := APagina;
+  FConsNfse.FSenha              := ASenha;
+  FConsNfse.FFraseSecreta       := AFraseSecreta;
+  FConsNfse.FCNPJTomador        := ACNPJTomador;
+  FConsNfse.FIMTomador          := AIMTomador;
+  FConsNfse.FNomeInter          := ANomeInter;
+  FConsNfse.FCNPJInter          := ACNPJInter;
+  FConsNfse.FIMInter            := AIMInter;
+  FConsNfse.FSerie              := ASerie;
+
+  Result := FConsNfse.Executar;
+
+  if not (Result) then
+    FConsNfse.GerarException( FConsNfse.Msg );
 end;
 
 function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
   const CarregaProps: boolean): Boolean;
 begin
-{a}
+  if CarregaProps then
+  begin
+    FCancNfse.FNumeroNFSe := '';
+    FCancNfse.FCNPJ := '';
+    FCancNfse.FIM := '';
+    FCancNfse.FCodigoMunicipio := '';
+  end;
+
+  if FPConfiguracoesNFSe.Geral.Provedor = proEL) then
+  begin
+    FSelf.CancNfse.FNumeroNFSe      := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Numero;
+    FSelf.CancNfse.FCNPJ            := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+    FSelf.CancNfse.FIM              := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+    FSelf.CancNfse.FCodigoMunicipio := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+  end;
+
+  FCancNfse.FCodigoCancelamento := ACodigoCancelamento;
+
+  Result := FCancNfse.Executar;
+
+  if not (Result) then
+    FCancNfse.GerarException( FCancNfse.Msg );
+
+  if not (TFPConfiguracoesNFSe.Geral.Provedor in [proISSNet, proEL]) then
+  begin
+    if FPConfiguracoesNFSe.Geral.Provedor in [proSystemPro] then
+    begin
+      FConsNfse.FNumeroNFSe         := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Numero;
+      FConsNfse.FCnpj               := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+      FConsNfse.FInscricaoMunicipal := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+
+      Result := FConsNfse.Executar;
+    end
+    else begin
+      FConsNfseRps.FNumero := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+      FConsNfseRps.FSerie  := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+      FConsNfseRps.FTipo   := TipoRPSToStr(TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
+      FConsNfseRps.FCnpj   := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+
+      if FConsNfseRps.Cnpj = '' then
+        FConsNfseRps.FCnpj := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+
+      FConsNfseRps.FInscricaoMunicipal := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+
+      if FConsNfseRps.InscricaoMunicipal = '' then
+        FConsNfseRps.FInscricaoMunicipal := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+
+      FConsNfseRps.RazaoSocial := '';
+
+      if not (FPConfiguracoesNFSe.Geral.Provedor in [proDigifred]) then
+        FConsNfseRps.FRazaoSocial := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+
+      Result := FConsNfseRps.Executar;
+    end;
+
+    if not(Result) then
+      FConsNfseRps.GerarException( FConsNfseRps.Msg );
+  end;
 end;
 
 function TWebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe, ACNPJ,
   AInscricaoMunicipal, ACodigoMunicipio: String): Boolean;
 begin
-{a}
+  FCancNfse.FNumeroNFSe      := ANumeroNFSe;
+  FCancNfse.FCNPJ            := ACNPJ;
+  FCancNfse.FIM              := AInscricaoMunicipal;
+  FCancNfse.FCodigoMunicipio := ACodigoMunicipio;
+
+  Result := CancelaNFSe(ACodigoCancelamento, False);
 end;
 
 function TWebServices.SubstitiNFSe(ACodigoCancelamento,
   ANumeroNFSe: String): Boolean;
 begin
-{a}
+  FSubNfse.FCodigoCancelamento := ACodigoCancelamento;
+  FSubNfse.FMotivoCancelamento := '';
+
+  FSubNfse.FNumeroNFSe      := ANumeroNFSe;
+  FSubNfse.FCnpj            := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+  FSubNfse.FIM              := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+  FSubNfse.FCodigoMunicipio := TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio;
+  FSubNfse.FNumeroRps       := StrToInt(TACBrNFSe(FPDFeOwner).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero);
+
+  Result := FSubNfse.Executar;
+
+  if not (Result) then
+    FSubNfse.GerarException( FSubNfse.Msg );
 end;
 
 function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao,
   AInscricaoM: String): String;
 begin
-{a}
+  FLinkNfse.FNumeroNFSe := ANumeroNFSe;
+  FLinkNFSe.FCodVerif   := ACodVerificacao;
+  FLinkNfse.FIM         := AInscricaoM;
+
+  Result := '';
+
+  if not (FLinkNfse.Executar) then
+    FLinkNfse.GerarException( FLinkNfse.Msg );
+
+  Result := FLinkNFSe.FLink;
 end;
 
 end.

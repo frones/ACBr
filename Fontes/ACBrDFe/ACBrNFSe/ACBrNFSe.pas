@@ -93,8 +93,7 @@ type
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
-    function Gerar(ARps: Integer): Boolean; overload;
-    function Gerar(ARps: String): Boolean; overload;
+    function Gerar(ARps: Integer): Boolean;
 
     function ConsultarSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
@@ -450,11 +449,6 @@ begin
 end;
 
 function TACBrNFSe.Gerar(ARps: Integer): Boolean;
-begin
-  Result := Gerar(IntToStr(ARps));
-end;
-
-function TACBrNFSe.Gerar(ARps: String): Boolean;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));

@@ -3448,8 +3448,8 @@ begin
       Format('%6.6d', [StrToInt(NumCOO)]) + // numero do coo do cupom
       Format('%3.3d', [StrToInt(NumECF)]);  // numero do ecf
 
-    Rodape := Rodape + #10 + 'PROCON – R da Ajuda 5 – RJ – (21) 151';
-    Rodape := Rodape + #10 + 'ALERJ – R 1º de Março s/n – RJ – (21) 25881418';
+    Rodape := Rodape + #10 + 'PROCON: Av. Rio Branco, 25 - Centro–RJ. Tel: 151';
+    Rodape := Rodape + #10 + 'ALERJ - Rua da Alfandega, 8 - Tel. 0800 2827060';
   end
   else if InfoRodapeCupom.MinasLegal then
   begin

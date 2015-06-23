@@ -1925,6 +1925,9 @@ begin
   FormaPagamento.Descricao := 'DINHEIRO' ;
   fpFormasPagamentos.Add( FormaPagamento ) ;
 
+  FreeAndNil( fpRelatoriosGerenciais ) ;
+  inherited CarregaRelatoriosGerenciais;
+
   FreeAndNil( fpComprovantesNaoFiscais ) ;
   inherited CarregaComprovantesNaoFiscais;
 

@@ -914,7 +914,6 @@ begin
   5102686, // Campos de Júlio/MT
   5103379, // Cotriguacu/MT
   5103502, // Diamantino/MT
-  4216602,  // São José/SC
   4200051 // Abdon Batista/SC
 
          : Provedor := 'Betha';
@@ -938,6 +937,7 @@ begin
   5106224, // Nova Mutum/MT
   5106307, // Paranatinga/MT
   5106455, // Planalto da Serra/MT
+  5100250, // Alta Floresta/MT
   5108006  // Tapurah/MT
          : Provedor := 'Coplan';
 
@@ -1151,6 +1151,7 @@ begin
   4122404, // Rolandia/PR
   4201307, // Araquari/SC
   4210506, // Maravilha/SC
+  4216602, // São José/SC
   4303509, // Camaqua/RS
   4308102, // Feliz/RS
   4309407, // Guapore/RS
@@ -1261,7 +1262,6 @@ begin
   5006002, // Nova Alvorada do Sul/MS
   5007208, // Rio Brilhante/MS
   5007901, // Sidrolândia/MS
-  5100250, // Alta Floresta/MT
   5103403, // Cuiaba/MT
   5105101, // Juara/MT
 //  5105903, // Nobres/MT

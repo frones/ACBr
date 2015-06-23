@@ -59,6 +59,11 @@ Data: 23/06/2015
     (por: André Angelucci) http://www.projetoacbr.com.br/forum/index.php?showtopic=22194
 [-] Correção de List Index Out of bounds em:  TACBrSATResposta.SetRetornoStr (por: DSA)
 
+-- ACBrSATExtratoESCPOS --
+[+] Adicionada as propriedades:
+    property ImprimeEmUmaLinha: Boolean default True
+    property ImprimeDescAcrescItem: Boolean default True
+    property UsaCodigoEanImpressao: Boolean default False
 
 Data: 16/06/2015    (por: DSA)
 -- pcnCFeR --

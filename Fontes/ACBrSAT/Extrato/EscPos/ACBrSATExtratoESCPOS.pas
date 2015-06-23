@@ -57,7 +57,10 @@ type
   { TACBrSATExtratoESCPOS }
   TACBrSATExtratoESCPOS = class( TACBrSATExtratoClass )
   private
+    FImprimeDescAcrescItem: Boolean;
+    FImprimeEmUmaLinha: Boolean;
     FPosPrinter : TACBrPosPrinter ;
+    FUsaCodigoEanImpressao: Boolean;
 
     procedure ImprimirCopias ;
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
@@ -82,6 +85,13 @@ type
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   published
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
+
+    property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha
+      write FImprimeEmUmaLinha default True;
+    property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem
+      write FImprimeDescAcrescItem default True;
+    property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao
+      write FUsaCodigoEanImpressao default False;
   end ;
 
 procedure Register;
@@ -103,9 +113,13 @@ end;
 
 constructor TACBrSATExtratoESCPOS.Create(AOwner: TComponent);
 begin
+  inherited create( AOwner );
+
   FPosPrinter := Nil;
 
-  inherited create( AOwner );
+  FImprimeEmUmaLinha := True;
+  FImprimeDescAcrescItem := True;
+  FUsaCodigoEanImpressao := False;
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho;
@@ -161,63 +175,93 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarItens;
 var
-  i : integer;
-  LinhaCmd: String;
+  i: Integer;
+  nTamDescricao: Integer;
+  fQuant, VlrLiquido: Double;
+  sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
+    LinhaCmd: String;
 begin
-  FPosPrinter.Buffer.Add('</fn></linha_simples>');
-  FPosPrinter.Buffer.Add('#|COD|DESC|QTD|UN|VL UN R$|(VLTR R$)*|VL ITEM R$');
+  FPosPrinter.Buffer.Add('</ae></fn></linha_simples>');
+  FPosPrinter.Buffer.Add(ACBrStr('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
   FPosPrinter.Buffer.Add('</linha_simples>');
 
-  for i:=0 to CFe.Det.Count - 1 do
+  for i := 0 to CFe.Det.Count - 1 do
   begin
-    LinhaCmd := IntToStrZero(CFe.Det.Items[i].nItem,3)+' '+
-                Trim(CFe.Det.Items[i].Prod.cProd)+' '+
-                Trim(CFe.Det.Items[i].Prod.xProd)+' '+
-                FormatFloatBr(CFe.Det.Items[i].Prod.qCom, Mask_qCom)+' '+
-                Trim(CFe.Det.Items[i].Prod.uCom)+' X '+
-                FormatFloatBr(CFe.Det.Items[i].Prod.vUnCom, Mask_vUnCom)+' ';
+    sItem        := IntToStrZero(CFe.Det.Items[i].nItem, 3);
+    sDescricao   := Trim(CFe.Det.Items[i].Prod.xProd);
+    sUnidade     := Trim(CFe.Det.Items[i].Prod.uCom);
+    sVlrProduto  := FormatFloat('#,###,##0.00', CFe.Det.Items[i].Prod.vProd);
 
-    if CFe.Det.Items[i].Imposto.vItem12741 > 0 then
-      LinhaCmd := LinhaCmd + '('+FormatFloatBr(CFe.Det.Items[i].Imposto.vItem12741, '0.00')+') ';
+    if (Length( Trim( CFe.Det.Items[i].Prod.cEAN ) ) > 0) and (UsaCodigoEanImpressao) then
+      sCodigo := Trim(CFe.Det.Items[i].Prod.cEAN)
+    else
+      sCodigo := Trim(CFe.Det.Items[i].Prod.cProd);
 
-    LinhaCmd := LinhaCmd + '|' + FormatFloatBr(CFe.Det.Items[i].Prod.vProd, '#,###,##0.00')+' ';
+    // formatar conforme configurado
+    sVlrUnitario := FormatFloatBr(CFe.Det.Items[i].Prod.VUnCom, Mask_vUnCom );
 
-    LinhaCmd := PadSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
+    // formatar conforme configurado somente quando houver decimais
+    // caso contrário mostrar somente o número inteiro
+    fQuant := CFe.Det.Items[i].Prod.QCom;
+    if Frac(fQuant) > 0 then
+      sQuantidade := FormatFloatBr(fQuant, Mask_qCom )
+    else
+      sQuantidade := FloatToStr(fQuant);
 
-    FPosPrinter.Buffer.Add('</ae><c>'+LinhaCmd);
-
-    if CFe.Det.Items[i].Prod.vDesc > 0 then
+    if ImprimeEmUmaLinha then
     begin
-      FPosPrinter.Buffer.Add(PadSpace('Desconto|'+
-         FormatFloatBr(CFe.Det.Items[i].Prod.vDesc, '-#,###,##0.00'),
-         FPosPrinter.ColunasFonteCondensada, '|'));
-      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Valor líquido|'+
-         FormatFloatBr(CFe.Det.Items[i].Prod.vProd - CFe.Det.Items[i].Prod.vDesc,
-         '#,###,##0.00'),FPosPrinter.ColunasFonteCondensada, '|')));
+      LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
+        sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
+
+      // acerta tamanho da descrição
+      nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
+      sDescricao := PadRight(Copy(sDescricao, 1, nTamDescricao), nTamDescricao);
+
+      LinhaCmd := StringReplace(LinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
+      FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+    end
+    else
+    begin
+      LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
+      FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+
+      LinhaCmd :=
+        PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
+        PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
+      LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
+      FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
     end;
 
-    if CFe.Det.Items[i].Prod.vOutro > 0 then
+    if ImprimeDescAcrescItem then
     begin
-      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Acréscimo|'+
-         FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+#,###,##0.00'),
-         FPosPrinter.ColunasFonteCondensada, '|')));
-      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Valor líquido|'+
-         FormatFloatBr(CFe.Det.Items[i].Prod.vProd + CFe.Det.Items[i].Prod.vOutro,
-         '#,###,##0.00'),FPosPrinter.ColunasFonteCondensada, '|')));
-    end;
+      // desconto
+      if CFe.Det.Items[i].Prod.vDesc > 0 then
+      begin
+        VlrLiquido :=
+          (CFe.Det.Items[i].Prod.qCom * CFe.Det.Items[i].Prod.vUnCom) - CFe.Det.Items[i].Prod.vDesc;
 
-    if CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN > 0 then
-    begin
-      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Dedução para ISSQN|'+
-         FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN, '-#,###,##0.00'),
-         FPosPrinter.ColunasFonteCondensada, '|')));
-      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Base de cálculo ISSQN|'+
-         FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vBC, '#,###,##0.00'),
-         FPosPrinter.ColunasFonteCondensada, '|')));
+        LinhaCmd := '</ae><c>' + padSpace(
+            'desconto ' + padLeft(FormatFloatBr(CFe.Det.Items[i].Prod.vDesc, '-0.00'), 15, ' ')
+            + '|' + FormatFloatBr(VlrLiquido, '0.00'),
+            FPosPrinter.ColunasFonteCondensada, '|');
+        FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+      end;
+
+      // ascrescimo
+      if CFe.Det.Items[i].Prod.vOutro > 0 then
+      begin
+        VlrLiquido :=
+          (CFe.Det.Items[i].Prod.qCom * CFe.Det.Items[i].Prod.vUnCom) +
+          CFe.Det.Items[i].Prod.vOutro;
+
+        LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
+            'acréscimo ' + padLeft(FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+0.00'), 15, ' ')
+            + '|' + FormatFloatBr(VlrLiquido, '0.00'),
+            FPosPrinter.ColunasFonteCondensada, '|'));
+        FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+      end;
     end;
   end;
-
-  FPosPrinter.Buffer.Add('</ae></fn>');
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarTotais(Resumido: Boolean);

@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/06/2015
+-- pcnCFe --
+[-] Correção de Memory Leak
+    (por: Mauricio) http://www.projetoacbr.com.br/forum/index.php?showtopic=22355
+
+-- ACBrSAT --
+[+] Adição das funções de Unit
+    function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
+    function MotivocStat(cStat: Integer): String;
+    (por: André Angelucci) http://www.projetoacbr.com.br/forum/index.php?showtopic=22194
+[-] Correção de List Index Out of bounds em:  TACBrSATResposta.SetRetornoStr (por: DSA)
+
+
 Data: 16/06/2015    (por: DSA)
 -- pcnCFeR --
 [*] Modificação para ligar o Flag "EhCombustivel" quando produto tiver

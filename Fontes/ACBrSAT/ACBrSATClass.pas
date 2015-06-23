@@ -259,7 +259,6 @@ type
      function TesteFimAFim( dadosVenda : AnsiString) : String ; virtual;
      function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao : Integer; novoCodigo: AnsiString ) : String ; virtual;
-
    end;
 
 implementation
@@ -361,15 +360,21 @@ begin
   begin
     fnumeroSessao    := StrToIntDef( fRetornoLst[0], 0);
     fcodigoDeRetorno := StrToIntDef( fRetornoLst[1], 0);
+  end;
 
+  if fRetornoLst.Count > 2 then
+  begin
     if Length(Trim(fRetornoLst[2])) = 4 then //Enviar e Cancelar venda tem um campo a mais no inicio da resposta(CCCC)
       index := 3
     else
       index := 2;
+  end;
 
+  if fRetornoLst.Count > index+2 then
+  begin
     fmensagemRetorno := fRetornoLst[index];
     fcodigoSEFAZ     := StrToIntDef( fRetornoLst[index+1], 0);
-    fmensagemSEFAZ := fRetornoLst[index+2];
+    fmensagemSEFAZ   := fRetornoLst[index+2];
   end
   else
     fmensagemRetorno := AValue;

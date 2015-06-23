@@ -1164,6 +1164,9 @@ end;
 
 destructor TDetCollectionItem.Destroy;
 begin
+  FProd.Free;
+  FImposto.Free;
+
   inherited;
 end;
 

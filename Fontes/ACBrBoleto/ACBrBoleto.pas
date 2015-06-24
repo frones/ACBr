@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.134a' ;
+  CACBrBoleto_Versao = '0.0.135a' ;
 
   cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
   'Remessa Registrar',

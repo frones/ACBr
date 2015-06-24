@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/06/2015 ver. 0.0.135a
+-- ACBrBancoSicredi --
+[*]Ajuste remessa CNAB400 para tratar corretamente os descontos por dia. (CertaSolucoes)
+
 Data: 19/06/2015 ver. 0.0.134a
 -- ACBrBancoCecredi --
 [*]Ajuste remessa CNAB400 para tratar as instruções de protesto. (Roberto Schuster)

@@ -1499,8 +1499,12 @@ begin
     begin
       RetornaInfoECF( '99|5' ) ;
       fsNumLoja := EscECFResposta.Params[1] ;
-    end ;
-  end ;
+    end
+    else if IsEpson then
+    begin
+      fsNumLoja := RetornaInfoECF('15|5');
+    end;
+  end;
 
   Result := fsNumLoja ;
 end ;

@@ -48,6 +48,7 @@ uses
 type
   TACBrMDFeDAMDFEQR = class(TACBrMDFeDAMDFEClass)
    private
+    FNomeArq: String;
    public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -55,6 +56,7 @@ type
     procedure ImprimirDAMDFEPDF(MDFe: TMDFe = nil); override;
     procedure ImprimirEVENTO(MDFe: TMDFe = nil); override;
     procedure ImprimirEVENTOPDF(MDFe: TMDFe = nil); override;
+    property NomeArq: String read FNomeArq write FNomeArq;
   end;
 
 implementation
@@ -113,7 +115,7 @@ end;
 
 procedure TACBrMDFeDAMDFEQR.ImprimirDAMDFEPDF(MDFe: TMDFe = nil);
 var
-  NomeArq, sProt: String;
+  sProt: String;
   i: Integer;
   fqrDAMDFEQRRetrato: TfqrDAMDFEQRRetrato;
 begin
@@ -212,7 +214,6 @@ end;
 procedure TACBrMDFeDAMDFEQR.ImprimirEVENTOPDF(MDFe: TMDFe);
 var
   i, j: Integer;
-  NomeArq: String;
   Impresso: Boolean;
 begin
   frmMDFeDAEventoQR := TfrmMDFeDAEventoQRRetrato.Create(Self);

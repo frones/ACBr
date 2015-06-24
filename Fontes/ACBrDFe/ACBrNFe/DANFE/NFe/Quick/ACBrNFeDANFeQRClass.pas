@@ -63,6 +63,7 @@ uses
 type
   TACBrNFeDANFEQR = class( TACBrNFeDANFEClass )
    private
+    FNomeArq: String;
 //    FLocalImpCanhoto: TPosRecibo;
    public
     constructor Create(AOwner: TComponent); override;
@@ -73,6 +74,7 @@ type
     procedure ImprimirEVENTOPDF(NFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(NFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFe: TNFe = nil); override;
+    property NomeArq: String read FNomeArq write FNomeArq;
   published
 //    property LocalImpCanhoto: TPosRecibo read FLocalImpCanhoto write FLocalImpCanhoto  default prCabecalho;
   end;
@@ -158,7 +160,6 @@ end;
 
 procedure TACBrNFeDANFEQR.ImprimirDANFEPDF(NFE : TNFe = nil);
 var
-  NomeArq : String;
   i : Integer;
   fqrDANFeQRRetrato : TfqrDANFeQR; //TfqrDANFeQRRetrato;
   sProt : String;
@@ -275,7 +276,6 @@ end;
 procedure TACBrNFeDANFEQR.ImprimirEVENTOPDF(NFe: TNFe);
 var
  i, j: Integer;
- NomeArq: String;
  Impresso: Boolean;
 begin
   frmNFeDAEventoQR := TfrmNFeDAEventoQRRetrato.Create(Self);
@@ -354,8 +354,6 @@ begin
 end;
 
 procedure TACBrNFeDANFEQR.ImprimirINUTILIZACAOPDF(NFe: TNFe);
-var
- NomeArq: String;
 begin
   frmNFeDAInutQR := TfrmNFeDAInutQRRetrato.Create(Self);
 

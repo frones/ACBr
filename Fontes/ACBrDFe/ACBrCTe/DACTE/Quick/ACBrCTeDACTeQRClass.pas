@@ -61,6 +61,7 @@ uses
 type
   TACBrCTeDACTeQR = class(TACBrCTeDACTeClass)
   private
+    FNomeArq: String;
 //    FPosRecibo: TPosRecibo;
   public
     constructor Create(AOwner: TComponent); override;
@@ -71,6 +72,7 @@ type
     procedure ImprimirEVENTOPDF(CTe: TCTe = nil); override;
     procedure ImprimirINUTILIZACAO(CTe: TCTe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(CTe: TCTe = nil); override;
+    property NomeArq: String read FNomeArq write FNomeArq;
   published
 //    property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
   end;
@@ -154,7 +156,6 @@ procedure TACBrCTeDACTeQR.ImprimirDACTePDF(CTe: TCTe = nil);
 var
   i: Integer;
   sProt: String;
-  NomeArq: String;
   frmDACTeQRRetrato: TfrmDACTeQR; //TfrmDACTeQRRetrato;
 begin
   case TamanhoPapel of
@@ -276,7 +277,6 @@ end;
 procedure TACBrCTeDACTeQR.ImprimirEVENTOPDF(CTe: TCTe);
 var
   i, j: Integer;
-  NomeArq: String;
   Impresso: Boolean;
 begin
   frmCTeDAEventoQR := TfrmCTeDAEventoQRRetrato.Create(Self);
@@ -355,7 +355,6 @@ end;
 procedure TACBrCTeDACTeQR.ImprimirINUTILIZACAOPDF(CTe: TCTe);
 var
   i, j: Integer;
-  NomeArq: String;
   Impresso: Boolean;
 begin
   frmCTeDAInutQR := TfrmCTeDAInutQRRetrato.Create(Self);

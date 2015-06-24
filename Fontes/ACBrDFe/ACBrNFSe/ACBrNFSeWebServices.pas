@@ -1767,9 +1767,32 @@ begin
 end;
 
 procedure TNFSeLinkNFSe.DefinirDadosMsg;
+var
+  Texto, xNumeroNFSe, xNomeMunic: String;
 begin
-  inherited;
- {a}
+ if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.ProLinkNFSe
+ else
+   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.HomLinkNFSe;
+
+  // %CodVerif%      : Representa o Código de Verificação da NFS-e
+  // %NumeroNFSe%    : Representa o Numero da NFS-e
+  // %NomeMunicipio% : Representa o Nome do Municipio
+  // %InscMunic%     : Representa a Inscrição Municipal do Emitente
+
+  xNumeroNFSe := inttostr(FNumeroNFSe);
+  xNomeMunic := FPConfiguracoesNFSe.Geral.xMunicipio;
+  // Remove os acentos, espaços em branco e converte tudo para minusculo
+  xNomeMunic := TiraAcentos(xNomeMunic);
+  xNomeMunic := StringReplace(xNomeMunic, ' ', '', [rfReplaceAll]);
+  xNomeMunic := LowerCase(xNumMunic);
+
+  Texto := stringReplace(Texto, '%CodVerif%', FCodVerif, [rfReplaceAll]);
+  Texto := stringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);
+  Texto := stringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
+  Texto := stringReplace(Texto, '%InscMunic%', FInscMunic, [rfReplaceAll]);
+
+  FLink := Texto;
 end;
 
 function TNFSeLinkNFSe.TratarResposta: Boolean;

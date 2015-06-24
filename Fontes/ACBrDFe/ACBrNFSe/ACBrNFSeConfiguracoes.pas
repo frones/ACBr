@@ -53,6 +53,9 @@ type
     Prefixo4: String;
     Identificador: String;
     QuebradeLinha: String;
+    RetornoNFSe: String;
+    ProLinkNFSe: String;
+    HomLinkNFSe: String;
  end;
 
  TConfigNameSpace = record
@@ -167,6 +170,8 @@ type
     FCodigoMunicipio: Integer;
     FProvedor: TnfseProvedor;
     FxProvedor: String;
+    FxMunicipio: String;
+    FxUF: String;
     FSenhaWeb: AnsiString;
     FUserWeb: String;
     FConsultaLoteAposEnvio: Boolean;
@@ -189,6 +194,8 @@ type
     property CodigoMunicipio: Integer read FCodigoMunicipio write FCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
     property xProvedor: String read FxProvedor;
+    property xMunicipio: String read FxMunicipio;
+    property xUF: String read FxUF;
     property SenhaWeb: AnsiString read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
@@ -327,6 +334,8 @@ begin
 
   FxProvedor := FPIniParams.ReadString(IntToStr(FCodigoMunicipio), 'Provedor', '');
   FProvedor  := StrToProvedor(Ok, FxProvedor);
+  FxMunicipio := FPIniParams.ReadString(IntToStr(FCodigoMunicipio), 'Nome', '');
+  FxUF := FPIniParams.ReadString(IntToStr(FCodigoMunicipio), 'UF', '');
 
   FPIniParams.Free;
 
@@ -546,6 +555,22 @@ begin
     Inc(I);
   end;
   FConfigEnvelope.Substituir := Texto;
+
+  Texto := '';
+  I := 1;
+  while true do
+  begin
+    sCampo := 'Texto' + IntToStr(I);
+    sFim   := FPIniParams.ReadString('RetornoNFSe', sCampo, 'FIM');
+    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+      break;
+    Texto := Texto + sFim;
+    Inc(I);
+  end;
+  FConfigGeral.RetornoNFSe := Texto;
+
+  FConfigGeral.ProLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Producao', '');
+  FConfigGeral.HomLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Homologacao', '');
 
   FPIniParams.Free;
 end;

@@ -23,16 +23,13 @@ package ACBr_Boleto;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Boleto - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
   designide,
-  ACBr_synapse,
-  ACBr_Diversos,
-  ACBr_TCP,
-  ACBr_Comum;
+  ACBr_TCP;
 
 contains
   ACBrBancoBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBradesco.pas',

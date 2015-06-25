@@ -23,15 +23,14 @@ package ACBr_Serial;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - ECF, Balanças, Cheques, Displays, Etiquetas, Gavetas, Terminais, SMS, RFD, Leitores (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
   designide,
   ACBr_Diversos,
-  ACBr_OpenSSL,
-  ACBr_synapse;
+  ACBr_OpenSSL;
 
 contains
   ACBrBAL in '..\..\..\Fontes\ACBrSerial\ACBrBAL.pas',

@@ -46,7 +46,6 @@
 package ACBr_NFe;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -68,10 +67,9 @@ package ACBr_NFe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
+{$DEFINE DEBUG}
 
 requires
   vcl,
@@ -81,12 +79,7 @@ requires
   dbrtl,
   inet,
   soaprtl,
-  ACBr_synapse,
-  ACBr_Comum,
-  ACBr_PCNComum,
-  ACBr_DFeComum,
-  ACBr_OpenSSL,
-  ACBr_Capicom;
+  ACBr_DFeComum;
 
 contains
   ACBrNFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeConfiguracoes.pas',

@@ -134,6 +134,8 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[Excluded Packages]
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_SPED.bpl=ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)
 [HistoryLists\hlConditionals]
 Count=1
 Item0=DEBUG
@@ -141,6 +143,7 @@ Item0=DEBUG
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=2
-Item0=..\..\Fontes\ACBrSPED;..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins;..\..\Fontes\ACBrSPED\ACBrSPEDFCont;..\..\Fontes\ACBrComum
-Item1=..\..\Fontes\ACBrSPED;..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\Fontes\ACBrComum
+Count=3
+Item0=..\..\..\..\Fontes\ACBrTXT\ACBrSPED;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont;..\..\..\..\Fontes\ACBrComum
+Item1=..\..\Fontes\ACBrSPED;..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\Fontes\ACBrSPED\ACBrSPEDPisCofins;..\..\Fontes\ACBrSPED\ACBrSPEDFCont;..\..\Fontes\ACBrComum
+Item2=..\..\Fontes\ACBrSPED;..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\Fontes\ACBrComum

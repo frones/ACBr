@@ -24,7 +24,7 @@ package ACBr_NFSe;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Nota Fiscal de Serviço Eletrônica - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 {$DEFINE DEBUG}
 
 requires
@@ -35,14 +35,7 @@ requires
   dbrtl,
   inet,
   soaprtl,
-  ACBr_Comum,
-  ACBr_synapse,
-  ACBr_OpenSSL,
-  ACBr_Capicom,
-  ACBr_DFeComum,
-  ACBr_PCNComum,
-  ACBr_Diversos,
-  ACBr_TCP;
+  ACBr_DFeComum;
 
 contains
   ACBrNFSe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas',

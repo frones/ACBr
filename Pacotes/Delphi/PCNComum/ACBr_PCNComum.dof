@@ -110,7 +110,7 @@ ActiveLang=
 ProjectLang=
 RootDir=C:\Arquivos de programas\Borland\Delphi7\Bin\
 [Version Info]
-IncludeVerInfo=0
+IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=1
 MinorVer=0
@@ -134,9 +134,15 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[Excluded Packages]
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_OpenSSL.bpl=ACBr - OpenSSL através do LibXMLSec - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_Serial.bpl=ACBr - ECF, Balanças, Cheques, Displays, Etiquetas, Gavetas, Terminais, SMS, RFD, Leitores (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_Convenio115.bpl=ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_LFD.bpl=ACBr - Livro Fiscal Digital - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_PAF.bpl=ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_SEF2.bpl=ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_Sintegra.bpl=ACBr - Sintegra (http://www.projectoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_SPED.bpl=ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlSearchPath]
-Count=1
-Item0=..\..\Fontes\ACBrSintegra;..\..\Fontes\ACBrComum

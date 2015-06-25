@@ -28,7 +28,6 @@ package ACBr_PCNComum;
 
 requires
   rtl,
-  ACBr_Comum,
   ACBr_Diversos;
 
 contains

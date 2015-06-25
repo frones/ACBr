@@ -134,9 +134,13 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[Excluded Packages]
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_Sintegra.bpl=ACBr - Sintegra (http://www.projectoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_SPED.bpl=ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=1
-Item0=..\..\Fontes\ACBrSintegra;..\..\Fontes\ACBrComum
+Count=2
+Item0=..\..\..\..\Fontes\ACBrTXT\ACBrSintegra;..\..\..\..\Fontes\ACBrComum
+Item1=..\..\Fontes\ACBrSintegra;..\..\Fontes\ACBrComum

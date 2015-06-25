@@ -121,7 +121,7 @@ PreRelease=0
 Special=0
 Private=0
 DLL=0
-Locale=1046
+Locale=1033
 CodePage=1252
 [Version Info Keys]
 CompanyName=
@@ -133,13 +133,6 @@ LegalTrademarks=
 OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
-Comments=
-[Excluded Packages]
-C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\synapse.bpl=Synapse TCP/IP / Serial library (http://www.synapse.ararat.cz)
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlSearchPath]
-Count=2
-Item0=..\..\Fontes\ACBrTEFD;..\..\Fontes\ACBrComum
-Item1=..\..\Fontes\ACBrTEFD

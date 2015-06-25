@@ -2,7 +2,6 @@
 package ACBr_MDFe;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -24,10 +23,9 @@ package ACBr_MDFe;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
+{$DEFINE DEBUG}
 
 requires
   vcl,
@@ -35,14 +33,7 @@ requires
   designide,
   vclactnband,
   vclx,
-  ACBr_Comum,
-  ACBr_synapse,
   ACBr_DFeComum,
-  ACBr_PCNComum,
-  ACBr_Diversos,
-  ACBr_TCP,
-  ACBr_Capicom,
-  ACBr_OpenSSL,
   soaprtl,
   xmlrtl,
   inet,

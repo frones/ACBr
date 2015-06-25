@@ -23,15 +23,13 @@ package ACBr_TEFD;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
   designide,
-  ACBr_synapse,
-  ACBr_TCP,
-  ACBr_Diversos;
+  ACBr_Comum;
 
 contains
   ACBrTEFD in '..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas',

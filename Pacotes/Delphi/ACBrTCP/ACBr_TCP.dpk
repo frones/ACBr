@@ -23,14 +23,12 @@ package ACBr_TCP;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  ACBr_Comum,
-  ACBr_Diversos,
-  ACBr_synapse;
+  ACBr_Diversos;
 
 contains
   ACBrSocket in '..\..\..\Fontes\ACBrTCP\ACBrSocket.pas',

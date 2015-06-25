@@ -23,14 +23,13 @@ package ACBr_SPED;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)'}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
   designide,
   vcl,
-  ACBr_TXTComum,
-  ACBr_Diversos;
+  ACBr_TXTComum;
 
 contains
   ACBrSped in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSped.pas',

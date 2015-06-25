@@ -135,10 +135,14 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 [Excluded Packages]
-C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\synapse.bpl=Synapse TCP/IP / Serial library (http://www.synapse.ararat.cz)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_PAF.bpl=ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_SEF2.bpl=ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_Sintegra.bpl=ACBr - Sintegra (http://www.projectoacbr.com.br/)
+c:\arquivos de programas\borland\delphi7\Projects\Bpl\ACBr_SPED.bpl=ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=1
-Item0=..\..\Fontes\ACBrSPED;..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\Fontes\ACBrComum
+Count=2
+Item0=;..\..\..\..\Fontes\ACBrTXT\ACBrPAF;..\..\..\..\Fontes\ACBrComum
+Item1=..\..\Fontes\ACBrSPED;..\..\Fontes\ACBrSPED\ACBrSPEDFiscal;..\..\Fontes\ACBrSPED\ACBrSPEDContabil;..\..\Fontes\ACBrComum

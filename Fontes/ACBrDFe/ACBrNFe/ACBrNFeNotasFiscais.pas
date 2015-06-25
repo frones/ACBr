@@ -842,7 +842,7 @@ begin
 
       if (NFe.Det[I].Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
          (NFe.Ide.finNFe = fnNormal) and
-         (NFe.Det[I].Imposto.ICMS.vICMS <> (RoundABNT(NFe.Det[I].Imposto.ICMS.vBC * (NFe.Det[I].Imposto.ICMS.pICMS/100),-2)))then
+         (RoundABNT(NFe.Det[I].Imposto.ICMS.vICMS, -2) <> (RoundABNT(NFe.Det[I].Imposto.ICMS.vBC * (NFe.Det[I].Imposto.ICMS.pICMS/100),-2)))then
         AdicionaErro('528-Rejeição: Valor do ICMS difere do produto BC e Alíquota');
 
       if (NFe.Det[I].Imposto.ICMS.motDesICMS = mdiSuframa) and

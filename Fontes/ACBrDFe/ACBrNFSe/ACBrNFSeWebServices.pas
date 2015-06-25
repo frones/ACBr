@@ -85,7 +85,7 @@ type
     function GerarCabecalhoSoap: String; override;
     procedure FinalizarServico; override;
     procedure DefinirEnvelopeSoap; override;
-    procedure InicializarDadosMsg; override;
+    procedure InicializarDadosMsg; 
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -743,8 +743,6 @@ end;
 
 procedure TNFSeWebService.InicializarDadosMsg;
 begin
-  { Sobrescrever apenas se necessário }
-
   FvNotas    := '';
   FNameSpace := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
   FDefTipos  := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
@@ -3008,12 +3006,12 @@ begin
   // Remove os acentos, espaços em branco e converte tudo para minusculo
   xNomeMunic := TiraAcentos(xNomeMunic);
   xNomeMunic := StringReplace(xNomeMunic, ' ', '', [rfReplaceAll]);
-  xNomeMunic := LowerCase(xNumMunic);
+  xNomeMunic := LowerCase(xNomeMunic);
 
   Texto := StringReplace(Texto, '%CodVerif%', FCodVerif, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%InscMunic%', FInscMunic, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%InscMunic%', FIM, [rfReplaceAll]);
 
   FLink := Texto;
 end;

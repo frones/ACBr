@@ -76,7 +76,7 @@
 //------------------------------------------------------------------------------
 {$I ACBr_jedi.inc}
 
-{$IFDEF DELPHI17_UP}
+{$IFDEF DELPHI15_UP}
   {$DEFINE HAS_FORMATSETTINGS}
 {$ENDIF}
 

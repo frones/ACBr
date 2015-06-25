@@ -613,7 +613,7 @@ begin
 
   PrintBand := (FNFE.InfAdic.infCpl <> '');
   qrmInfComp.Lines.Clear;
-  qrmInfComp.Lines.Add(FNFE.InfAdic.infCpl);
+  qrmInfComp.Lines.Add(StringReplace( FNFE.InfAdic.infCpl, ';', #13, [rfReplaceAll] ));
 end;
 
 procedure TfqrDANFeQRNFCe.qrb06_ChaveBeforePrint(Sender: TQRCustomBand;

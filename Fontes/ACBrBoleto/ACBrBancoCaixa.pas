@@ -587,6 +587,7 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, I, CodMotivo: Integer;
+  wSeuNumero: String;
 begin
    ContLinha := 0;
 
@@ -666,7 +667,7 @@ begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := copy(Linha,59,11);
+            SeuNumero                   := Trim(copy(Linha,59,11));
             NumeroDocumento             := copy(Linha,59,11);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 
@@ -683,7 +684,8 @@ begin
             CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
             
             // prevenir quando o seunumero não vem informado no arquivo
-            if AnsiSameText(Trim(SeuNumero), EmptyStr) then
+            wSeuNumero := StringReplace(SeuNumero, '0','',[rfReplaceAll]);
+            if (AnsiSameText(wSeuNumero, EmptyStr)) then
             begin
               SeuNumero := NossoNumero;
               NumeroDocumento := NossoNumero

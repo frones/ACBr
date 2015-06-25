@@ -56,6 +56,7 @@ type
     RetornoNFSe: String;
     ProLinkNFSe: String;
     HomLinkNFSe: String;
+    DadosSenha: String;
  end;
 
  TConfigNameSpace = record
@@ -172,7 +173,7 @@ type
     FxProvedor: String;
     FxMunicipio: String;
     FxUF: String;
-    FSenhaWeb: AnsiString;
+    FSenhaWeb: String;
     FUserWeb: String;
     FConsultaLoteAposEnvio: Boolean;
 
@@ -196,7 +197,7 @@ type
     property xProvedor: String read FxProvedor;
     property xMunicipio: String read FxMunicipio;
     property xUF: String read FxUF;
-    property SenhaWeb: AnsiString read FSenhaWeb write FSenhaWeb;
+    property SenhaWeb: String read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
   end;
@@ -571,6 +572,19 @@ begin
 
   FConfigGeral.ProLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Producao', '');
   FConfigGeral.HomLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Homologacao', '');
+
+  Texto := '';
+  I := 1;
+  while true do
+  begin
+    sCampo := 'Texto' + IntToStr(I);
+    sFim   := FPIniParams.ReadString('DadosSenha', sCampo, 'FIM');
+    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+      break;
+    Texto := Texto + sFim;
+    Inc(I);
+  end;
+  FConfigGeral.DadosSenha := Texto;
 
   FPIniParams.Free;
 end;

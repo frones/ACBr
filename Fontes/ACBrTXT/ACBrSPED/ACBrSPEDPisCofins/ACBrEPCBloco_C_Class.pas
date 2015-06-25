@@ -2392,9 +2392,10 @@ begin
       with RegC860.RegistroC870.Items[intFor] do
       begin
         Add( LFill('C870')        +
+             LFill(COD_ITEM)      +
              LFill(CFOP, 4)       +
              LFill(VL_ITEM,0,2)   +
-             LFill(COD_ITEM)      +
+             LFill(VL_DESC,0,2)   +
              LFill(CstPisToStr(CST_PIS))       +
              LFill(VL_BC_PIS,0,2)              +
              DFill(ALIQ_PIS, 4)                +

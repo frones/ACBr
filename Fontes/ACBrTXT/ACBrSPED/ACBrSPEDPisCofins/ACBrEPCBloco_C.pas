@@ -1710,9 +1710,10 @@ type
 
   TRegistroC870 = class
   private
+    fCOD_ITEM: string;
     fCFOP: string;
     fVL_ITEM: Variant;
-    fCOD_ITEM: string;
+    fVL_DESC: Variant;
     fALIQ_COFINS: Variant;
     fALIQ_PIS: Variant;
     fCOD_CTA: string;
@@ -1723,9 +1724,10 @@ type
     fVL_COFINS: Variant;
     fVL_PIS: Variant;
   public
+    property COD_ITEM : String read fCOD_ITEM write fCOD_ITEM;
     property CFOP : String read fCFOP write fCFOP;
     property VL_ITEM : Variant read fVL_ITEM write fVL_ITEM;
-    property COD_ITEM : String read fCOD_ITEM write fCOD_ITEM;
+    property VL_DESC : Variant read fVL_DESC write fVL_DESC;
     property CST_PIS : TACBrCstPis read fCST_PIS write fCST_PIS;
     property VL_BC_PIS : Variant read fVL_BC_PIS write fVL_BC_PIS;
     property ALIQ_PIS : Variant read fALIQ_PIS write fALIQ_PIS;

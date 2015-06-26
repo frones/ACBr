@@ -93,6 +93,7 @@ type
     FResumoCanhoto: Boolean; //Rodrigo DSP 22/01/2014 10:43:44:
     FEPECEnviado: Boolean;
     FPosCanhoto: TPosRecibo;
+    FImprimirDescPorc: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -131,9 +132,10 @@ type
     property MargemDireita: Double          read FMargemDireita          write FMargemDireita;
     property ExpandirLogoMarca: Boolean     read FExpandirLogoMarca      write FExpandirLogoMarca default false;
     property CTeCancelada: Boolean          read FCTeCancelada           write FCTeCancelada;
-    property ExibirResumoCanhoto: Boolean   read FResumoCanhoto          write FResumoCanhoto; //Rodrigo DSP 22/01/2014 10:43:51:
+    property ExibirResumoCanhoto: Boolean   read FResumoCanhoto          write FResumoCanhoto;
     property EPECEnviado: Boolean           read FEPECEnviado            write FEPECEnviado;
     property PosCanhoto: TPosRecibo         read FPosCanhoto             write FPosCanhoto;
+    property ImprimirDescPorc: Boolean      read FImprimirDescPorc       write FImprimirDescPorc;
   end;
 
 implementation

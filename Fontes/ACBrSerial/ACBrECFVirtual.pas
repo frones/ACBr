@@ -284,6 +284,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
        MensagemRodape : AnsiString  = '' ) ; virtual ;
     Procedure EfetuaPagamentoVirtual( Pagto  : TACBrECFVirtualClassPagamentoCupom ) ; virtual ;
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; virtual ;
+    procedure VerificaPodeCancelarCupom; virtual;
     Procedure CancelaCupomVirtual ; virtual ;
 
     Procedure LeituraXVirtual ; virtual ;
@@ -1075,6 +1076,13 @@ begin
   Consumidor.Enviado := True ;
 end;
 
+procedure TACBrECFVirtualClass.VerificaPodeCancelarCupom;
+begin
+  if ((fpItensCupom.Count = 0) and (Estado <> estVenda) ) and
+     ((fpCNFCupom.Count   = 0) and (Estado <> estNaoFiscal) ) then
+    raise EACBrECFERRO.Create(ACBrStr('Último Documento não é Cupom')) ;
+end;
+
 procedure TACBrECFVirtualClass.AbreCupom ;
 begin
   TestaPodeAbrirCupom ;
@@ -1376,10 +1384,7 @@ procedure TACBrECFVirtualClass.CancelaCupom;
 Var
   A : Integer ;
 begin
-  if ((fpItensCupom.Count = 0) and (Estado <> estVenda) ) and
-     ((fpCNFCupom.Count   = 0) and (Estado <> estNaoFiscal) ) then
-    raise EACBrECFERRO.Create(ACBrStr('Último Documento não é Cupom')) ;
-
+  VerificaPodeCancelarCupom;
   try
     if not (Estado in [estVenda, estPagamento, estNaoFiscal] ) then
       fpNumCupom := fpNumCupom + 1 ;

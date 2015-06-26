@@ -110,6 +110,7 @@ type
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
+    procedure VerificaPodeCancelarCupom; override;
     Procedure CancelaCupomVirtual ; override ;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -474,6 +475,11 @@ begin
     inherited FechaCupomVirtual( Observacao, IndiceBMP);
 
   fsEhVenda := False;
+end;
+
+procedure TACBrECFVirtualSATClass.VerificaPodeCancelarCupom;
+begin
+ { nada aqui }
 end;
 
 procedure TACBrECFVirtualSATClass.CancelaCupomVirtual;

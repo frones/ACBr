@@ -255,7 +255,7 @@ end;
 procedure Manifesto.Validar;
 var
   Erro, AXML, AXMLModal: String;
-  MDFeEhValida: Boolean;
+  MDFeEhValida, ModalEhValido: Boolean;
   ALayout: TLayOutMDFe;
 begin
   AXML := FXMLAssinado;
@@ -294,8 +294,20 @@ begin
   begin
     ALayout := LayMDFeRetRecepcao;
 
-    MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro) and
-                    SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
+    ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
+
+    if not ModalEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação do Modal do Manifesto: ') +
+        IntToStr(MDFe.Ide.nMDF) + sLineBreak + FAlertas ;
+      FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+
+      raise EACBrMDFeException.CreateDef(
+        IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
+        ErroValidacao));
+    end;
+
+    MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro);
 
     if not MDFeEhValida then
     begin

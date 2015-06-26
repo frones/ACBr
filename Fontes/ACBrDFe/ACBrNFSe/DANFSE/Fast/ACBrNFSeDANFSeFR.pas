@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeFRDM,
-  pnfsNFSe, {pcnConversao,} pnfsConversao, frxClass;
+  pnfsNFSe, pnfsConversao, frxClass;
 
 type
   EACBrNFSeDANFSeFR = class(Exception);

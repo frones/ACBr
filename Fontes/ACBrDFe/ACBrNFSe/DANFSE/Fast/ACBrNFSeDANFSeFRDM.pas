@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, frxClass, frxExportPDF, DB, DBClient, frxDBSet,
-  ACBrNFSeDANFSeClass, pnfsNFSe, {pcnConversao,} pnfsConversao, frxBarcode,
+  ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, frxBarcode,
   ACBrUtil, ACBrValidador;
 
 type

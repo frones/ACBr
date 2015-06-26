@@ -26,8 +26,6 @@ package ACBr_NFSeDanfseFR;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
-  designide,
 {$IFDEF VER140} fs6, frx6, frxe6, frxDB6, {$ENDIF} // D6
 {$IFDEF VER150} fs7, frx7, frxe7, frxDB7, {$ENDIF} // D7
 {$IFDEF VER170} fs9, frx9, frxe9, frxDB9, {$ENDIF} // D2005
@@ -46,11 +44,12 @@ requires
 {$IFDEF VER270} fs20, frx20, frxe20, frxDB20, dsnap, {$ENDIF} // XE6
 {$IFDEF VER280} fs21, frx21, frxe21, frxDB21, dsnap, {$ENDIF} // XE7
 {$IFDEF VER290} fs22, frx22, frxe22, frxDB22, dsnap, {$ENDIF} // XE8
-   ACBr_NFSe;
+  rtl,
+  designide;
 
 contains
-  ACBrNFSeDANFSeFRReg in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeFRReg.pas',
-  ACBrNFSeDANFSeFR in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeFR.pas',
-  ACBrNFSeDANFSeFRDM in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeFRDM.pas';
+  ACBrNFSeDANFSeFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFRReg.pas',
+  ACBrNFSeDANFSeFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFR.pas',
+  ACBrNFSeDANFSeFRDM in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFRDM.pas';
 
 end.

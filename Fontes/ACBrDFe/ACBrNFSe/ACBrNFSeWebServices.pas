@@ -874,7 +874,7 @@ begin
 
         profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, proSystemPro,
         pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proFreire, proLink3, proGovDigital,
+        proVirtual, proFreire, proLink3, proGovDigital, proMitra,
         proGoiania: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -882,14 +882,6 @@ begin
                                     '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
-
-        proMitra: FvNotas := FvNotas +
-                             '<' + FPrefixo4 + 'Rps>' +
-                              '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                  '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                              '</Signature>'+
-                             '</' + FPrefixo4 + 'Rps>';
 
         proDigifred: FvNotas := FvNotas +
                                 '<' + FPrefixo4 + 'Rps ' +
@@ -968,18 +960,14 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-//    if FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote then
-//      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeGerarLoteRps(Self).NumeroLote, FPDadosMSg);
+    FPDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                  'EnviarLoteRpsEnvio', 'LoteRps',
+                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote);
 
-//    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-//    begin
-//      if not(NotaUtil.Valida(FPDadosMsg, FMsg, FPConfiguracoes.Geral.PathSchemas,
-//                             FPConfiguracoes.WebServices.URL,
-//                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
-//                             FPrefixo4)) then
-//        GerarException(ACBrStr('Falha na validação do Lote ' +
-//                               TNFSeGerarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
-//    end;
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+      TNFSeGerarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
+                         FPConfiguracoes.Geral.PathSchemas +
+                         FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
   end
   else
     GerarException(ACBrStr('A funcionalidade [Gerar Lote] não foi disponibilizada pelo provedor: ' +
@@ -1078,7 +1066,7 @@ begin
 
         pro4R, proAgili, profintelISS, proFiorilli, proGoiania, proISSDigital,
         proISSe, proSystemPro, proCoplan, proProdata, proVitoria, proPVH,
-        proSaatri, proSisPMJP, proFreire, proLink3, proGovDigital,
+        proSaatri, proSisPMJP, proFreire, proLink3, proGovDigital, proMitra,
         proVirtual: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1086,14 +1074,6 @@ begin
                                     '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
-
-        proMitra: FvNotas := FvNotas +
-                             '<' + FPrefixo4 + 'Rps>' +
-                              '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                  '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                              '</Signature>'+
-                             '</' + FPrefixo4 + 'Rps>';
 
         proDigifred: FvNotas := FvNotas +
                                 '<' + FPrefixo4 + 'Rps ' +
@@ -1180,18 +1160,14 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-//    if FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote then
-//      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarLoteRps(Self).NumeroLote, FPDadosMSg);
+    FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                  'EnviarLoteRpsEnvio', 'LoteRps',
+                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote);
 
-//    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-//    begin
-//      if not(NotaUtil.Valida(FPDadosMsg, FMsg, FConfiguracoes.Geral.PathSchemas,
-//                             FConfiguracoes.WebServices.URL,
-//                             FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar,
-//                             FPrefixo4)) then
-//        GerarException(ACBrStr('Falha na validação do Lote ' +
-//                               TNFSeEnviarLoteRps(Self).NumeroLote + sLineBreak + FMsg));
-//    end;
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+      TNFSeEnviarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
+                         FPConfiguracoes.Geral.PathSchemas +
+                         FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
   end
   else
     GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' +
@@ -1311,7 +1287,7 @@ begin
 
         profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, proSystemPro,
         pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proFreire, proLink3, proGovDigital,
+        proVirtual, proFreire, proLink3, proGovDigital, proMitra,
         proGoiania: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1319,14 +1295,6 @@ begin
                                     '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
-
-        proMitra: FvNotas := FvNotas +
-                             '<' + FPrefixo4 + 'Rps>' +
-                              '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                  '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                              '</Signature>'+
-                             '</' + FPrefixo4 + 'Rps>';
 
         proDigifred: FvNotas := FvNotas +
                                 '<' + FPrefixo4 + 'Rps ' +
@@ -1391,42 +1359,33 @@ begin
   FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
 
-(*
- FPDadosMsg := TNFSeG.Gera_DadosMsgEnviarSincrono(FPrefixo3, FPrefixo4,
-                                                 FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
-                                                 NameSpaceDad, VersaoDados, FVersaoXML,
-                                                 TNFSeEnviarSincrono(Self).NumeroLote,
-                                                 OnlyNumber(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
-                                                 TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
-                                                 IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
-                                                 FvNotas,
-                                                 FTagI, FTagF, FProvedor);
+  FPDadosMsg := TNFSeG.Gera_DadosMsgEnviarSincrono(FPrefixo3, FPrefixo4,
+                                                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
+                                                   FNameSpace,
+                                                   FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
+                                                   FPConfiguracoesNFSe.Geral.ConfigXML.FVersaoXML,
+                                                   TNFSeEnviarSincrono(Self).NumeroLote,
+                                                   OnlyNumber(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                                   TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                                   IntToStr(TNFSeEnviarSincrono(Self).FNotasFiscais.Count),
+                                                   FvNotas,
+                                                   FTagI, FTagF,
+                                                   FPConfiguracoesNFSe.Geral.Provedor);
 
- if FPDadosMsg <> ''
-  then begin
-   if FConfiguracoes.WebServices.Salvar
-    then FConfiguracoes.Geral.Save('-xxx1.xml', FPDadosMsg);
+  if FPDadosMsg <> '' then
+  begin
+    FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                  'EnviarLoteRpsSincronoEnvio', 'LoteRps',
+                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote);
 
-   FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLoteRps(TNFSeEnviarSincrono(Self).NumeroLote, FPDadosMsg, True);
-
-   if FConfiguracoes.WebServices.Salvar
-    then FConfiguracoes.Geral.Save('-xxx2.xml', FPDadosMsg);
-
-   if FProvedorClass.GetValidarLote
-    then begin
-     if not(NotaUtil.Valida(FPDadosMsg, FMsg,
-                            FConfiguracoes.Geral.PathSchemas,
-                            FConfiguracoes.WebServices.URL,
-                            FConfiguracoes.WebServices.ServicoEnviar,
-                            FConfiguracoes.WebServices.Prefixo4))
-      then raise Exception.Create('Falha na validação do Lote ' +
-                     TNFSeEnviarSincrono(Self).NumeroLote + sLineBreak + FMsg);
-    end;
-  end
-  else
-    GerarException(ACBrStr('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' +
-     FPConfiguracoesNFSe.Geral.xProvedor));
-*)
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+      TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
+                 FPConfiguracoes.Geral.PathSchemas +
+                 FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono);
+   end
+   else
+     GerarException(ACBrStr('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' +
+      FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
 function TNFSeEnviarSincrono.TratarResposta: Boolean;
@@ -1508,7 +1467,7 @@ begin
 
         profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, pro4R,
         proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proLink3, proGovDigital,
+        proVirtual, proLink3, proGovDigital, proMitra,
         proGoiania: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -1524,14 +1483,6 @@ begin
                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + FPrefixo4 + 'Rps>';
-
-        proMitra: FvNotas := FvNotas +
-                             '<' + FPrefixo4 + 'Rps>' +
-                              '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                  '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                              '</Signature>'+
-                             '</' + FPrefixo4 + 'Rps>';
 
         proDigifred: FvNotas := FvNotas +
                                 '<' + FPrefixo4 + 'Rps ' +
@@ -1612,40 +1563,33 @@ begin
   FTagI := '<' + FPrefixo3 + 'GerarNfseEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'GerarNfseEnvio>';
 
-(*
- FPDadosMsg := TNFSeG.Gera_DadosMsgGerarNFSe(FPrefixo3, FPrefixo4,
-                                            FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
-                                            NameSpaceDad, VersaoDados, FVersaoXML,
-                                            IntToStr(TNFSeGerarNFSe(Self).NumeroRps),
-                                            OnlyNumber(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
-                                            TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
-                                            IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
-                                            FvNotas,
-                                            FTagI, FTagF, FProvedor);
+  FPDadosMsg := TNFSeG.Gera_DadosMsgGerarNFSe(FPrefixo3, FPrefixo4,
+                                              FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
+                                              FNameSpace,
+                                              FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
+                                              FPConfiguracoesNFSe.Geral.ConfigXML.FVersaoXML,
+                                              FNumeroRps,
+                                              OnlyNumber(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
+                                              TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
+                                              IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
+                                              FvNotas,
+                                              FTagI, FTagF,
+                                              FPConfiguracoesNFSe.Geral.Provedor);
 
- if FPDadosMsg <> ''
-  then begin
-   if FConfiguracoes.WebServices.Salvar
-    then FConfiguracoes.Geral.Save('-xxx1.xml', FPDadosMsg);
+  if FPDadosMsg <> '' then
+  begin
+    FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                  'GerarNfseEnvio', 'Rps',
+                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar);
 
-   if FConfiguracoes.WebServices.Salvar
-    then FConfiguracoes.Geral.Save('-xxx2.xml', FPDadosMsg);
-
-   if FProvedorClass.GetValidarLote
-    then begin
-     if not(NotaUtil.Valida(FPDadosMsg, FMsg,
-                            FConfiguracoes.Geral.PathSchemas,
-                            FConfiguracoes.WebServices.URL,
-                            FConfiguracoes.WebServices.ServicoGerar,
-                            FConfiguracoes.WebServices.Prefixo4))
-      then raise Exception.Create('Falha na validação do Lote ' +
-                     IntToStr(TNFSeGerarNFSe(Self).NumeroRps) + sLineBreak + FMsg);
-    end;
-  end
-  else
-    GerarException(ACBrStr('A funcionalidade [Gerar NFSe] não foi disponibilizada pelo provedor: ' +
-     FPConfiguracoesNFSe.Geral.xProvedor));
-*)
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+      TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
+                          FPConfiguracoes.Geral.PathSchemas +
+                          FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar);
+   end
+   else
+     GerarException(ACBrStr('A funcionalidade [Gerar NFSe] não foi disponibilizada pelo provedor: ' +
+      FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
 function TNFSeGerarNFSe.TratarResposta: Boolean;

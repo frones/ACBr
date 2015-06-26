@@ -69,7 +69,6 @@ type
 
     function GetMsg: String;
     function GetNumID: String;
-    function GetXMLAssinado: String;
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -77,7 +76,6 @@ type
       PathArquivo: String = ''): String;
 
     procedure Assinar(Assina: Boolean);
-    procedure Validar;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -103,7 +101,7 @@ type
 
     property XML: String read FXML;
     property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
-    property XMLAssinado: String read GetXMLAssinado;
+    property XMLAssinado: String read FXMLAssinado write FXMLAssinado;
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;
@@ -124,12 +122,13 @@ type
     FNumeroLote: String;
     FACBrNFSe: TComponent;
     FConfiguracoes: TConfiguracoesNFSe;
+    FXMLLoteOriginal: String;
+    FXMLLoteAssinado: String;
 
     function GetItem(Index: integer): NotaFiscal;
     procedure SetItem(Index: integer; const Value: NotaFiscal);
 
     procedure VerificarDANFSE;
-    procedure Validar;
   public
     constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
 
@@ -138,6 +137,8 @@ type
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
 
     procedure Assinar(Assina: Boolean);
+    procedure AssinarLote(const XMLLote, docElemento, infElemento: String; Assina: Boolean);
+    procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
     procedure ImprimirPDF;
 
@@ -154,6 +155,8 @@ type
     function LoadFromString(AXMLString: String; AGerarNFSe: Boolean = True): Boolean;
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
+    property XMLLoteOriginal: String read FXMLLoteOriginal write FXMLLoteOriginal;
+    property XMLLoteAssinado: String read FXMLLoteAssinado write FXMLLoteAssinado;
     property NumeroLote: String read FNumeroLote write FNumeroLote;
     property Transacao: Boolean read FTransacao write FTransacao;
     property ACBrNFSe: TComponent read FACBrNFSe;
@@ -238,7 +241,7 @@ begin
   begin
     if Assina then
     begin
-      XMLAss := SSL.Assinar(ArqXML, 'NFSe', 'infNFSe');
+      XMLAss := SSL.Assinar(ArqXML, 'Rps', 'InfRps');
       FXMLAssinado := XMLAss;
 
       // Remove header, pois podem existir várias Notas no XML //
@@ -262,43 +265,6 @@ begin
 
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, XMLAss);
-    end;
-  end;
-end;
-
-procedure NotaFiscal.Validar;
-var
-  Erro, AXML: String;
-  NotaEhValida: Boolean;
-  ALayout: TLayOutNFSe;
-begin
-  AXML := FXMLAssinado;
-
-  if EstaVazio(AXML) then
-  begin
-//    Assinar;
-    AXML := FXMLAssinado;
-  end;
-
-  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
-  begin
-  (*
-    if EhAutorizacao then
-      ALayout := LayNFSeRetAutorizacao
-    else
-      ALayout := LayNFSeRetRecepcao;
-  *)
-    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, 1.00 {FNFSe.infNFSe.Versao}), Erro);
-
-    if not NotaEhValida then
-    begin
-      FErroValidacao := ACBrStr('Falha na validação dos dados da nota: ') +
-        NFSe.IdentificacaoRps.Numero + sLineBreak + FAlertas ;
-      FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
-
-      raise EACBrNFSeException.CreateDef(
-        IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
-        ErroValidacao));
     end;
   end;
 end;
@@ -545,14 +511,6 @@ begin
   Result := Trim(OnlyNumber(NFSe.InfID.ID));
 end;
 
-function NotaFiscal.GetXMLAssinado: String;
-begin
-//  if EstaVazio(FXMLAssinado) then
-//    Assinar;
-
-  Result := FXMLAssinado;
-end;
-
 { TNotasFiscais }
 
 constructor TNotasFiscais.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -578,6 +536,74 @@ var
 begin
   for i := 0 to Self.Count - 1 do
     Self.Items[i].Assinar(Assina);
+end;
+
+procedure TNotasFiscais.AssinarLote(const XMLLote, docElemento,
+  infElemento: String; Assina: Boolean);
+var
+  XMLAss: String;
+  ArqXML: String;
+  Leitor: TLeitor;
+begin
+  // XMLLote já deve estar em UTF8, para poder ser assinado //
+  ArqXML := ConverteXMLtoUTF8(XMLLote);
+  FXMLLoteOriginal := ArqXML;
+
+  with TACBrNFSe(FACBrNFSe).ACBrNFSe) do
+  begin
+    if Assina then
+    begin
+      XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento);
+      FXMLLoteAssinado := XMLAss;
+
+      // Remove header, pois podem existir várias Notas no XML //
+      //TODO: Verificar se precisa
+      //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
+      //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
+
+      Leitor := TLeitor.Create;
+      try
+        leitor.Grupo := XMLAss;
+        NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
+        NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+        NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+        NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      finally
+        Leitor.Free;
+      end;
+
+//      if Configuracoes.Geral.Salvar then
+//        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
+
+//      if NaoEstaVazio(NomeArq) then
+//        Gravar(NomeArq, XMLAss);
+    end;
+  end;
+end;
+
+procedure TNotasFiscais.ValidarLote(const XMLLote, NomeArqSchema: String);
+var
+  Erro, AXML: String;
+  NotaEhValida: Boolean;
+  ALayout: TLayOutNFSe;
+begin
+  AXML := XMLLote;
+
+  with TACBrNFSe(FACBrNFSe).ACBrNFSe) do
+  begin
+    NotaEhValida := SSL.Validar(AXML, NomeArqSchema, Erro);
+
+    if not NotaEhValida then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação dos dados do lote: ') +
+        NumeroLote + sLineBreak + FAlertas ;
+      FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+
+      raise EACBrNFSeException.CreateDef(
+        IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
+        ErroValidacao));
+    end;
+  end;
 end;
 
 procedure TNotasFiscais.GerarNFSe;
@@ -624,14 +650,6 @@ end;
 procedure TNotasFiscais.SetItem(Index: integer; const Value: NotaFiscal);
 begin
   Items[Index].Assign(Value);
-end;
-
-procedure TNotasFiscais.Validar;
-var
-  i: integer;
-begin
-  for i := 0 to Self.Count - 1 do
-    Self.Items[i].Validar;   // Dispara exception em caso de erro
 end;
 
 function TNotasFiscais.VerificarAssinatura(out Erros: String): Boolean;

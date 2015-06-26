@@ -4,7 +4,8 @@ interface
 
 uses
   SysUtils, Classes, frxClass, frxExportPDF, DB, DBClient, frxDBSet,
-  ACBrNFSeDANFSeClass, pnfsNFSe, {pcnConversao,} pnfsConversao, frxBarcode, dialogs;
+  ACBrNFSeDANFSeClass, pnfsNFSe, {pcnConversao,} pnfsConversao, frxBarcode,
+  ACBrUtil, ACBrValidador;
 
 type
   TdmACBrNFSeFR = class(TDataModule)
@@ -169,7 +170,7 @@ begin
       FieldByName('Competencia').AsString       := Competencia;
       FieldByName('NFSeSubstituida').AsString   := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida);
       FieldByName('NumeroNFSe').AsString        := FormatarNumeroDocumentoFiscalNFSe(Numero);
-      FieldByName('DataEmissao').AsString       := FormatDateTime(DateTimeToStr(DataEmissao));
+      FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
     end;
 
@@ -192,7 +193,7 @@ begin
       begin
         Append;
         cdsItensServicoDiscriminacaoServico.AsString := Descricao;
-        cdsItensServicoQuantidade.AsInteger          := Quantidade;
+        cdsItensServicoQuantidade.AsFloat            := Quantidade;
         cdsItensServicoValorUnitario.AsFloat         := ValorUnitario;
         cdsItensServicoValorTotal.AsFloat            := ValorTotal;
         cdsItensServicoTributavel.AsString           := SimNaoToStr(Tributavel);
@@ -347,7 +348,7 @@ begin
         FieldByName('CodigoMunicipio').AsString         := CodigoMunicipio;
         FieldByName('UF').AsString                      := UF;
         FieldByName('CEP').AsString                     := FormatarCEP(CEP);
-        FieldByName('xMunicipio').AsString              := CollateBr(xMunicipio);
+        FieldByName('xMunicipio').AsString              := xMunicipio;
         FieldByName('CodigoPais').AsString              := IntToStr(CodigoPais);
       end;
       with Contato do
@@ -378,8 +379,8 @@ begin
       FieldByName('CodigoCnae').AsString                := CodigoCnae;
       FieldByName('CodigoTributacaoMunicipio').AsString := CodigoTributacaoMunicipio;
       //FieldByName('Discriminacao').AsString             := StringReplace(Discriminacao, ';', #13, [rfReplaceAll]);
-	  FieldByName('Discriminacao').AsString := StringReplace(Discriminacao, TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13, [rfReplaceAll, rfIgnoreCase]);
-	  
+	    FieldByName('Discriminacao').AsString             := StringReplace(Discriminacao, TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13, [rfReplaceAll, rfIgnoreCase]);
+
       FieldByName('CodigoPais').AsString                := IntToStr(CodigoPais);
       FieldByName('NumeroProcesso').AsString            := NumeroProcesso;
 //      FieldByName('ResponsavelRetencao').AsString       := IfThen(ResponsavelRetencao = rtPrestador,'0','1');
@@ -445,7 +446,7 @@ begin
         FieldByName('CodigoMunicipio').AsString         := CodigoMunicipio;
         FieldByName('UF').AsString                      := UF;
         FieldByName('CEP').AsString                     := FormatarCEP(CEP);
-        FieldByName('xMunicipio').AsString              := CollateBr(xMunicipio);
+        FieldByName('xMunicipio').AsString              := xMunicipio;
         FieldByName('CodigoPais').AsString              := IntToStr(CodigoPais);
       end;
 

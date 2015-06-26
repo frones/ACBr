@@ -34,7 +34,7 @@ unit pnfsConversao;
 interface
 
 uses
-  Forms, SysUtils,
+  SysUtils,
   {$IFNDEF VER130}
     Variants,
   {$ENDIF}
@@ -18705,7 +18705,7 @@ var
  List: TstringList;
 begin
  result := '';
- PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'TabServicos.txt';
+ PathArquivo :=  PathWithDelim(ExtractFilePath(ParamStr(0)))+ 'TabServicos.txt';
  if (FileExists(PathArquivo)) and (cCodigo <> '')
   then begin
    List := TstringList.Create;

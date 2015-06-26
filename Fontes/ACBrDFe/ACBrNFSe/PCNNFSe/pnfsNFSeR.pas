@@ -34,7 +34,7 @@ unit pnfsNFSeR;
 interface
 
 uses
-  SysUtils, Classes, Forms, DateUtils,
+  SysUtils, Classes, Forms, DateUtils, Variants,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
   ACBrUtil, ACBrDFeUtil{, ACBrNFSe};
 
@@ -687,8 +687,8 @@ begin
 
   if (Leitor.rExtrai(2, 'listaServicos') <> '') then
     begin
-      NFSe.Servico.ItemListaServico            := Poem_Zeros( Leitor.rCampo(tcStr, 'nrServicoItem'), 2) +
-                                                  Poem_Zeros( Leitor.rCampo(tcStr, 'nrServicoSubItem'), 2);
+      NFSe.Servico.ItemListaServico            := Poem_Zeros( VarToStr( Leitor.rCampo(tcStr, 'nrServicoItem') ), 2) +
+                                                  Poem_Zeros( VarToStr( Leitor.rCampo(tcStr, 'nrServicoSubItem') ), 2);
 
       Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
       if Item<100 then Item:=Item*100+1;

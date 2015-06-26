@@ -81,7 +81,7 @@ type
 
 implementation
 
-uses ACBrCTe, ACBrUtil, StrUtils, Dialogs;
+uses ACBrCTe, ACBrUtil, StrUtils;
 
 constructor TACBrCTeDACTEFR.Create(AOwner: TComponent);
 begin

@@ -101,7 +101,6 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
-    { Private declarations }
     FDACTEClassOwner: TACBrCTeDACTEClass;
     FCTe: TCTe;
     FEvento: TEventoCTe;
@@ -123,7 +122,6 @@ type
     procedure CarregaDocumentoAnterior; // Adicionado por NCC - 04/04/2014
     procedure CarregaCTeAnuladoComplementado; // Adicionado por NCC - 24/04/2014
   public
-    { Public declarations }
     property CTe: TCTe read FCTe write FCTe;
     property Evento          : TEventoCTe read FEvento write FEvento;
     property DACTEClassOwner: TACBrCTeDACTEClass read FDACTEClassOwner;
@@ -412,7 +410,6 @@ begin
 end;
 
 procedure TdmACBrCTeFR.CarregaCTeAnuladoComplementado;
-var i:integer;
 begin
   with cdsAnuladoComple do
   begin
@@ -1546,14 +1543,14 @@ begin
     end
     else
     begin
-      vChave_Contingencia := GerarChaveContingencia(FCTe);
+      vChave_Contingencia := TACBrCTe(DACTEClassOwner.ACBrCTE).GerarChaveContingencia(FCTe);
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString := vChave_Contingencia;
 
       if ((FCTe.Ide.tpEmis = teContingencia) or (FCTe.Ide.tpEmis = teFSDA)) then
       begin
         FieldByName('Contingencia_Descricao').AsString := 'DADOS DA CT-E';
-        FieldByName('Contingencia_Valor').AsString := FormatarChaveContingencia(vChave_Contingencia);
+        FieldByName('Contingencia_Valor').AsString := FormatarChaveAcesso(vChave_Contingencia);
       end
       else
         if (FCTe.Ide.tpEmis = teDPEC) then

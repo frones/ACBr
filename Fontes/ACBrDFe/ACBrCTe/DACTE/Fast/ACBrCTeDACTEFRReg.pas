@@ -47,9 +47,9 @@ unit ACBrCTeDACTEFRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrCTeDACTEFR, ACBrReg,
+  SysUtils, Classes, ACBrCTeDACTEFR, ACBrReg, DesignIntf
   {$IFDEF FPC}
-     LResources
+     , LResources
   {$ENDIF} ;
 
 Type

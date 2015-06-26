@@ -101,6 +101,7 @@ type
     FAjustaAguardaConsultaRet: Boolean;
     FSalvar: Boolean;
     FParams: TStrings;
+    FQuebradeLinha: String;
 
     procedure SetProxyHost(AValue: String);
     procedure SetProxyPass(AValue: String);
@@ -145,6 +146,7 @@ type
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property Params: TStrings read FParams write SetParams;
     property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
+    property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
   end;
 
   { TGeralConf }
@@ -459,6 +461,7 @@ begin
   FSalvar := False;
   FTimeOut := 5000;
   FResourceName := 'ACBrServicos';
+  FQuebradeLinha := '|';
 end;
 
 destructor TWebServicesConf.Destroy;

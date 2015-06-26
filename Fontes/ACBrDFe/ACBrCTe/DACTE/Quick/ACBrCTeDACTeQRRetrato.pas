@@ -2250,24 +2250,24 @@ PrintBand := QRCTe.PageNumber = 1;
 {$IFDEF PL_200}
   for i := 0 to (FCTe.infCTeNorm.Rodo.valePed.Count -1) do
   begin
-   qrmCNPJForn2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.infCTeNorm.Rodo.valePed.Items[i].CNPJForn));
+   qrmCNPJForn2.Lines.Add(FormatarCNPJouCPF(FCTe.infCTeNorm.Rodo.valePed.Items[i].CNPJForn));
    qrmNumCompra2.Lines.Add(FCTe.infCTeNorm.Rodo.valePed.Items[i].nCompra);
-   qrmCNPJPg2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.infCTeNorm.Rodo.valePed.Items[i].CNPJPg));
+   qrmCNPJPg2.Lines.Add(FormatarCNPJouCPF(FCTe.infCTeNorm.Rodo.valePed.Items[i].CNPJPg));
   end;
 {$ELSE}
 {$IFDEF PL_104}
   for i := 0 to (FCTe.Rodo.valePed.Count -1) do
   begin
-   qrmCNPJForn2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.Rodo.valePed.Items[i].CNPJForn));
+   qrmCNPJForn2.Lines.Add(FormatarCNPJouCPF(FCTe.Rodo.valePed.Items[i].CNPJForn));
    qrmNumCompra2.Lines.Add(FCTe.Rodo.valePed.Items[i].nCompra);
-   qrmCNPJPg2.Lines.Add(DFeUtil.FormatarCNPJ(FCTe.Rodo.valePed.Items[i].CNPJPg));
+   qrmCNPJPg2.Lines.Add(FormatarCNPJouCPF(FCTe.Rodo.valePed.Items[i].CNPJPg));
   end;
 {$ENDIF}
 
   if FCTe.Rodo.moto.Count > 0
    then begin
     qrlNomeMotorista3.Caption := FCTe.Rodo.moto.Items[0].xNome;
-    qrlCPFMotorista3.Caption  := DFeUtil.FormatarCPF(FCTe.Rodo.moto.Items[0].CPF);
+    qrlCPFMotorista3.Caption  := FormatarCPF(FCTe.Rodo.moto.Items[0].CPF);
    end;
 
   for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do

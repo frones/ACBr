@@ -59,8 +59,6 @@ type
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
-    FErroValidacao: String;
-    FErroValidacaoCompleto: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
 
@@ -108,8 +106,6 @@ type
     property NumID: String read GetNumID;
 
     property Alertas: String read FAlertas;
-    property ErroValidacao: String read FErroValidacao;
-    property ErroValidacaoCompleto: String read FErroValidacaoCompleto;
     property ErroRegrasdeNegocios: String read FErroRegrasdeNegocios;
 
   end;
@@ -124,6 +120,9 @@ type
     FConfiguracoes: TConfiguracoesNFSe;
     FXMLLoteOriginal: String;
     FXMLLoteAssinado: String;
+    FErroValidacao: String;
+    FErroValidacaoCompleto: String;
+    FAlertas: String;
 
     function GetItem(Index: integer): NotaFiscal;
     procedure SetItem(Index: integer; const Value: NotaFiscal);
@@ -137,7 +136,7 @@ type
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
 
     procedure Assinar(Assina: Boolean);
-    procedure AssinarLote(const XMLLote, docElemento, infElemento: String; Assina: Boolean);
+    function AssinarLote(XMLLote, docElemento, infElemento: String; Assina: Boolean): String;
     procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
     procedure ImprimirPDF;
@@ -157,6 +156,9 @@ type
 
     property XMLLoteOriginal: String read FXMLLoteOriginal write FXMLLoteOriginal;
     property XMLLoteAssinado: String read FXMLLoteAssinado write FXMLLoteAssinado;
+    property ErroValidacao: String read FErroValidacao;
+    property ErroValidacaoCompleto: String read FErroValidacaoCompleto;
+    property Alertas: String read FAlertas;
     property NumeroLote: String read FNumeroLote write FNumeroLote;
     property Transacao: Boolean read FTransacao write FTransacao;
     property ACBrNFSe: TComponent read FACBrNFSe;
@@ -274,12 +276,11 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
+(*
   AXML := FXMLOriginal;
 
   if EstaVazio(AXML) then
   begin
-//    if EstaVazio(FXMLAssinado) then
-//      Assinar;
 
     AXML := FXMLAssinado;
   end;
@@ -296,6 +297,8 @@ begin
   end;
 
   Result := AssEhValida;
+*)
+  Result := True;  
 end;
 
 function NotaFiscal.ValidarRegrasdeNegocios: Boolean;
@@ -538,29 +541,31 @@ begin
     Self.Items[i].Assinar(Assina);
 end;
 
-procedure TNotasFiscais.AssinarLote(const XMLLote, docElemento,
-  infElemento: String; Assina: Boolean);
+function TNotasFiscais.AssinarLote(XMLLote, docElemento,
+  infElemento: String; Assina: Boolean): String;
 var
   XMLAss: String;
   ArqXML: String;
-  Leitor: TLeitor;
+//  Leitor: TLeitor;
 begin
   // XMLLote já deve estar em UTF8, para poder ser assinado //
   ArqXML := ConverteXMLtoUTF8(XMLLote);
   FXMLLoteOriginal := ArqXML;
+  Result := FXMLLoteOriginal;
 
-  with TACBrNFSe(FACBrNFSe).ACBrNFSe) do
+  with TACBrNFSe(FACBrNFSe) do
   begin
     if Assina then
     begin
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento);
       FXMLLoteAssinado := XMLAss;
+      Result := FXMLLoteAssinado;
 
       // Remove header, pois podem existir várias Notas no XML //
       //TODO: Verificar se precisa
       //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
       //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
-
+(*
       Leitor := TLeitor.Create;
       try
         leitor.Grupo := XMLAss;
@@ -571,7 +576,7 @@ begin
       finally
         Leitor.Free;
       end;
-
+*)
 //      if Configuracoes.Geral.Salvar then
 //        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
 
@@ -589,7 +594,7 @@ var
 begin
   AXML := XMLLote;
 
-  with TACBrNFSe(FACBrNFSe).ACBrNFSe) do
+  with TACBrNFSe(FACBrNFSe) do
   begin
     NotaEhValida := SSL.Validar(AXML, NomeArqSchema, Erro);
 
@@ -658,7 +663,7 @@ var
 begin
   Result := True;
   Erros := '';
-
+(*
   for i := 0 to Self.Count - 1 do
   begin
     if not Self.Items[i].VerificarAssinatura then
@@ -667,6 +672,7 @@ begin
       Erros := Erros + Self.Items[i].ErroValidacao + sLineBreak;
     end;
   end;
+*)  
 end;
 
 function TNotasFiscais.ValidarRegrasdeNegocios(out Erros: String): Boolean;

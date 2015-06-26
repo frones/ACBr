@@ -966,7 +966,7 @@ begin
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
-                         FPConfiguracoes.Geral.PathSchemas +
+                         FPConfiguracoes.Arquivos.PathSchemas +
                          FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
   end
   else
@@ -1166,7 +1166,7 @@ begin
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
-                         FPConfiguracoes.Geral.PathSchemas +
+                         FPConfiguracoes.Arquivos.PathSchemas +
                          FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
   end
   else
@@ -1363,7 +1363,7 @@ begin
                                                    FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
                                                    FNameSpace,
                                                    FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
-                                                   FPConfiguracoesNFSe.Geral.ConfigXML.FVersaoXML,
+                                                   FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
                                                    TNFSeEnviarSincrono(Self).NumeroLote,
                                                    OnlyNumber(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                                    TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
@@ -1380,7 +1380,7 @@ begin
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
-                 FPConfiguracoes.Geral.PathSchemas +
+                 FPConfiguracoes.Arquivos.PathSchemas +
                  FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono);
    end
    else
@@ -1567,8 +1567,8 @@ begin
                                               FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador,
                                               FNameSpace,
                                               FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados,
-                                              FPConfiguracoesNFSe.Geral.ConfigXML.FVersaoXML,
-                                              FNumeroRps,
+                                              FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
+                                              IntToStr(FNumeroRps),
                                               OnlyNumber(TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj),
                                               TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal,
                                               IntToStr(TNFSeGerarNFSe(Self).FNotasFiscais.Count),
@@ -1584,7 +1584,7 @@ begin
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
-                          FPConfiguracoes.Geral.PathSchemas +
+                          FPConfiguracoes.Arquivos.PathSchemas +
                           FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar);
    end
    else

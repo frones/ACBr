@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.136a';
+  CACBrBoleto_Versao = '0.0.137a';
 
   cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
   'Remessa Registrar',
@@ -1988,7 +1988,11 @@ begin
 
   {** Padrão com suporte a datas superiores a 21/02/2025
       http://www.abbc.org.br/images/content/manual%20operacional.pdf **}
-   Result := IntToStrZero(Max((Trunc(DataVencimento) - Trunc(EncodeDate(2000,07,03))) mod 9000 + 1000, 0), 4);
+   if DataVencimento = 0 then
+      Result := '0000'
+   else
+      Result := IntToStrZero(Max((Trunc(DataVencimento) -
+                                  Trunc(EncodeDate(2000,07,03))) mod 9000 + 1000, 0), 4);
 end;
 
 function TACBrBancoClass.CalcularDigitoCodigoBarras (

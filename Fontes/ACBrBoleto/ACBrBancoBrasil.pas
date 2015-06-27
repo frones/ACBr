@@ -897,6 +897,7 @@ var
   TempData, Linha, rCedente, rCNPJCPF: String;
   ContLinha : Integer;
   idxMotivo: Integer;
+  rConvenioCedente: String;
 begin
    // informação do Header
    // Verifica se o arquivo pertence ao banco
@@ -910,16 +911,21 @@ begin
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],158,6),0);
 
-   rCedente := trim(copy(ARetorno[0], 73, 30));
-   rCNPJCPF := OnlyNumber( copy(ARetorno[0], 19, 14) );
+   rCedente        := trim(copy(ARetorno[0], 73, 30));
+   rCNPJCPF        := OnlyNumber( copy(ARetorno[0], 19, 14) );
+   rConvenioCedente:= Trim(Copy(ARetorno[0], 33, 9));
 
    with ACBrBanco.ACBrBoleto do
    begin
       if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
          raise Exception.create(ACBrStr('CNPJ\CPF do arquivo inválido'));
 
-      Cedente.Nome := rCedente;
-      Cedente.CNPJCPF := rCNPJCPF;
+      if LeCedenteRetorno then
+      begin
+        Cedente.Nome := rCedente;
+        Cedente.CNPJCPF := rCNPJCPF;
+        Cedente.Convenio:= rConvenioCedente;
+      end;
 
       case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
         01:
@@ -1319,6 +1325,7 @@ var
   rAgencia, rDigitoAgencia, rConta :String;
   rDigitoConta, rCodigoCedente     :String;
   Linha, rCedente                  :String;
+  rConvenioCedente: String;
 begin
    fpTamanhoMaximoNossoNum := 11;
    ContLinha := 0;
@@ -1333,7 +1340,8 @@ begin
    rConta        := trim(Copy(ARetorno[0],32,8));
    rDigitoConta  := Copy(ARetorno[0],40,1);
 
-   rCodigoCedente:= Copy(ARetorno[0],41,6);
+   rCodigoCedente  := Copy(ARetorno[0],41,6);
+   rConvenioCedente:= Copy(ARetorno[0],41,6);
 
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],41,6),0);
@@ -1349,12 +1357,16 @@ begin
          (StrToIntDef(rConta,0) <> StrToIntDef(OnlyNumber(Cedente.Conta),0))) then
        raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-     Cedente.Nome         := rCedente;
-     Cedente.Agencia      := rAgencia;
-     Cedente.AgenciaDigito:= rDigitoAgencia;
-     Cedente.Conta        := rConta;
-     Cedente.ContaDigito  := rDigitoConta;
-     Cedente.CodigoCedente:= rCodigoCedente;
+     if LeCedenteRetorno then
+     begin
+       Cedente.Nome         := rCedente;
+       Cedente.Agencia      := rAgencia;
+       Cedente.AgenciaDigito:= rDigitoAgencia;
+       Cedente.Conta        := rConta;
+       Cedente.ContaDigito  := rDigitoConta;
+       Cedente.CodigoCedente:= rCodigoCedente;
+       Cedente.Convenio     := rConvenioCedente;
+     end;
 
      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
@@ -1430,6 +1442,7 @@ var
   rAgencia, rDigitoAgencia, rConta :String;
   rDigitoConta, rCodigoCedente     :String;
   Linha, rCedente                  :String;
+  rConvenioCedente: String;
 begin
   fpTamanhoMaximoNossoNum := 20;
   ContLinha := 0;
@@ -1444,7 +1457,8 @@ begin
   rConta        := trim(Copy(ARetorno[0],32,8));
   rDigitoConta  := Copy(ARetorno[0],40,1);
 
-  rCodigoCedente:= Copy(ARetorno[0],150,7);
+  rCodigoCedente  := Copy(ARetorno[0],150,7);
+  rConvenioCedente:= Copy(ARetorno[0],150,7);
 
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],101,7),0);
@@ -1460,12 +1474,16 @@ begin
         (StrToIntDef(rConta,0) <> StrToIntDef(OnlyNumber(Cedente.Conta),0))) then
       raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-    Cedente.Nome         := rCedente;
-    Cedente.Agencia      := rAgencia;
-    Cedente.AgenciaDigito:= rDigitoAgencia;
-    Cedente.Conta        := rConta;
-    Cedente.ContaDigito  := rDigitoConta;
-    Cedente.CodigoCedente:= rCodigoCedente;
+    if LeCedenteRetorno then
+    begin
+      Cedente.Nome         := rCedente;
+      Cedente.Agencia      := rAgencia;
+      Cedente.AgenciaDigito:= rDigitoAgencia;
+      Cedente.Conta        := rConta;
+      Cedente.ContaDigito  := rDigitoConta;
+      Cedente.CodigoCedente:= rCodigoCedente;
+      Cedente.Convenio     := rConvenioCedente;
+    end;
 
     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
   end;

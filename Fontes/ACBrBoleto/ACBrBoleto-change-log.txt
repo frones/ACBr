@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/06/2015 ver. 0.0.137a
+-- ACBrBoleto --
+[*]Ajuste calculo fator de vencimento para continuar suportando boletos sem vencimento.
+   (Big Wings)
+http://www.projetoacbr.com.br/forum/topic/21867-fator-de-vencimento-ap%C3%B3s-9999/
+
+-- ACBrBancoBrasil --
+[-]Ajuste arquivo retorno CNAB240 e CNAB400 para ler também o número do Convenio.
+   (Juliana Tamizou)
+
 Data: 25/06/2015 ver. 0.0.136a
 -- ACBrBancoCaixa --
 [-]Ajuste retorno CNAB240 para tratar corretamente SeuNumero com zeros. (Juliana Tamizou)

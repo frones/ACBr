@@ -701,6 +701,7 @@ begin
                     'ECF. Envie o comando de programação do relógio para verificação.';
     217 : Result := 'Preparando a impressão da fita-detalhe...';
     220 : Result := 'Mensagem de progressão durante a emissão da Redução Z!';
+    228 : Result := 'Iniciando transmissão da leitura.';
     24,38,39,45..47,65,66,69..73,75..79,81..86,88..91,97,100..102,106,118,119,
     129,137,138,145..147,150,152..155,158,173..183,185,186,188..191,199,210,
     219,221,225,230,235..237,241,242,244..248
@@ -778,7 +779,8 @@ begin
                              200, // Leitura Mirc
                              207, // Autenticando
                              217, // Preparando Imp.Fita Det
-                             220 // Emitindo Red.Z
+                             220, // Emitindo Red.Z
+                             228  // Iniciando transmissão da leitura.
                              ]);
      if Erro = 217 then
        fsPoucoPapel := True;
@@ -985,7 +987,7 @@ begin
         if Erro <> 110 then  // 110 = Leitura de CMC7 completada, mantenha o bloco
         begin
            Delete(Result, PosSTX, PosETX-PosSTX + 2 ) ;
-           PosETX := max(PosSTX - 2,0) ;
+           PosETX := max(PosSTX - 2,1) ;
         end;
      end ;
 

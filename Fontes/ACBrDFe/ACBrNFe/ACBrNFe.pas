@@ -532,7 +532,11 @@ begin
   cHashQRCode := AsciiToHex(SHA1(sEntrada + sCSC));
 
   // Passo 6
-  Result := urlUF + '?' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
+  if Pos('?', urlUF) > 0 then
+    Result := urlUF + '&' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode
+  else
+    Result := urlUF + '?' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
+//  Result := urlUF + '?' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
 
 end;
 

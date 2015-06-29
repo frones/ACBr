@@ -46,13 +46,15 @@ interface
 
 uses SysUtils,
      Classes
-    {$IF DEFINED(VisualCLX)}
-       ,QGraphics
-    {$ELSEIF DEFINED(FMX)}
-       ,FMX.Graphics
-    {$ELSE}
-       ,Graphics
-    {$IFEND}
+     {$IFNDEF NOGUI}
+      {$IF DEFINED(VisualCLX)}
+         ,QGraphics
+      {$ELSEIF DEFINED(FMX)}
+         ,FMX.Graphics
+      {$ELSE}
+         ,Graphics
+      {$IFEND}
+     {$ENDIF}
      ,ACBrBase, ACBrConsts, pcnCFe, pcnCFeCanc;
 
 type
@@ -95,7 +97,9 @@ type
     fNomeArquivo: String;
     fNumCopias: Integer;
     fPrinterName : String;
-    fPictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF};
+    {$IFNDEF NOGUI}
+     fPictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF};
+    {$ENDIF}
     fSoftwareHouse: String;
 
     procedure ErroAbstract(NomeProcedure : String) ;
@@ -103,7 +107,9 @@ type
     function GetNomeArquivo: String;
     procedure SetAbout(AValue: String);
     procedure SetNumCopias(AValue: Integer);
-    procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
+    {$IFNDEF NOGUI}
+     procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
+    {$ENDIF}
     procedure SetSAT(const Value: TComponent);
 
     procedure SetInternalCFe(ACFe: TCFe);
@@ -137,7 +143,9 @@ type
     property Mask_qCom      : String   read fMask_qCom      write fMask_qCom;
     property Mask_vUnCom    : String   read fMask_vUnCom    write fMask_vUnCom;
     property ImprimeQRCode  : Boolean  read fImprimeQRCode  write fImprimeQRCode  default True ;
-    property PictureLogo    : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF} read fPictureLogo    write SetPictureLogo ;
+    {$IFNDEF NOGUI}
+     property PictureLogo    : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF} read fPictureLogo    write SetPictureLogo ;
+    {$ENDIF}
     property MostrarPreview : Boolean  read fMostrarPreview write fMostrarPreview default False ;
     property MostrarSetup   : Boolean  read fMostrarSetup   write fMostrarSetup   default False ;
     property NumCopias      : Integer  read fNumCopias      write SetNumCopias    default 1;
@@ -175,7 +183,9 @@ begin
   fCFe     := nil;
   fCFeCanc := nil;
 
-  fPictureLogo := {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}.Create;
+  {$IFNDEF NOGUI}
+   fPictureLogo := {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}.Create;
+  {$ENDIF}
 
   fNumCopias      := 1;
   fMostrarPreview := False;
@@ -190,7 +200,9 @@ end;
 
 destructor TACBrSATExtratoClass.Destroy;
 begin
-  fPictureLogo.Free;
+  {$IFNDEF NOGUI}
+   fPictureLogo.Free;
+  {$ENDIF}
 
   inherited Destroy ;
 end;
@@ -272,10 +284,12 @@ begin
   fNumCopias := AValue;
 end;
 
+{$IFNDEF NOGUI}
 procedure TACBrSATExtratoClass.SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
 begin
   fPictureLogo.Assign( AValue );
 end;
+{$ENDIF}
 
 procedure TACBrSATExtratoClass.SetSAT(const Value: TComponent);
 var

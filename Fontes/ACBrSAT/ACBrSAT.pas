@@ -39,10 +39,7 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
-  ACBrSATExtratoClass, synacode, StrUtils
-  {$IFNDEF NOGUI}
-    {$IFDEF FPC} ,LResources {$ENDIF}
-  {$ENDIF};
+  ACBrSATExtratoClass, synacode, StrUtils;
 
 const CPREFIXO_CFe = 'CFe';
 
@@ -784,8 +781,7 @@ function TACBrSAT.CancelarUltimaVenda: String ;
 var
   dadosCancelamento : string;
 begin
-  if CFeCanc.infCFe.chCanc = '' then
-     CFe2CFeCanc;
+  CFe2CFeCanc; // Atualiza para chave carregada para o cancelamento
 
   dadosCancelamento := CFeCanc.GerarXML( true ); // True = Gera apenas as TAGs da aplicação
 

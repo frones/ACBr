@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/09/2015
+-- ACBrSAT --
+[-] Ajuste para computar novo CFeCanc baseado no CFe em memória, quando chamar
+    CancelarUltimaVenda (sem parâmetros)
+    http://www.projetoacbr.com.br/forum/topic/22495-correção-cancelamento-acbrsat/
+[*] Revisão de Suporte a NOGUI (para compilação em modo CONSOLE)
+
 Data: 23/06/2015
 -- pcnCFe --
 [-] Correção de Memory Leak

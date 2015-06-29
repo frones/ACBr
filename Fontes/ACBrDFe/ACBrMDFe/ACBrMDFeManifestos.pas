@@ -270,22 +270,22 @@ begin
   case TACBrMDFe(TManifestos(Collection).ACBrMDFe).IdentificaSchemaModal(AXML) of
    schmdfeModalAereo: begin
                         AXMLModal := '<aereo xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                       AXMLModal +
+                                       Trim(RetornarConteudoEntre(AXML, '<aereo>', '</aereo>')) +
                                      '</aereo>';
                       end;
    schmdfeModalAquaviario: begin
                              AXMLModal := '<aquav xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                            AXMLModal +
+                                            Trim(RetornarConteudoEntre(AXML, '<aquav>', '</aquav>')) +
                                           '</aquav>';
                            end;
    schmdfeModalFerroviario: begin
                               AXMLModal := '<ferrov xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                             AXMLModal +
+                                             Trim(RetornarConteudoEntre(AXML, '<ferrov>', '</ferrov>')) +
                                            '</ferrov>';
                             end;
    schmdfeModalRodoviario: begin
                              AXMLModal := '<rodo xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                            AXMLModal +
+                                            Trim(RetornarConteudoEntre(AXML, '<rodo>', '</rodo>')) +
                                           '</rodo>';
                            end;
   end;

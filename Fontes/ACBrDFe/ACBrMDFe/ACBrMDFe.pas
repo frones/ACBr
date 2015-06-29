@@ -341,7 +341,8 @@ begin
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
               SchemaMDFeToStr(IdentificaSchemaModal(AXML)) + '_v' +
-              FormatFloat('0.00', VersaoServico) + '.xsd';
+//              FormatFloat('0.00', VersaoServico) + '.xsd';
+              FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
 function TACBrMDFe.GerarNomeArqSchemaEvento(const AXML: String;

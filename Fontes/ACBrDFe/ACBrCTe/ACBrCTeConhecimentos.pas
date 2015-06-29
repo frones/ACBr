@@ -256,7 +256,7 @@ end;
 procedure Conhecimento.Validar;
 var
   Erro, AXML, AXMLModal: String;
-  CTeEhValido: Boolean;
+  CTeEhValido, ModalEhValido: Boolean;
   ALayout: TLayOutCTe;
 begin
   AXML := FXMLAssinado;
@@ -271,32 +271,32 @@ begin
   case TACBrCTe(TConhecimentos(Collection).ACBrCTe).IdentificaSchemaModal(AXML) of
    schcteModalAereo: begin
                        AXMLModal := '<aereo xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                      AXMLModal +
+                                      Trim(RetornarConteudoEntre(AXML, '<aereo>', '</aereo>')) +
                                     '</aereo>';
                      end;
    schcteModalAquaviario: begin
                             AXMLModal := '<aquav xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                           AXMLModal +
+                                           Trim(RetornarConteudoEntre(AXML, '<aquav>', '</aquav>')) +
                                          '</aquav>';
                           end;
    schcteModalDutoviario: begin
                             AXMLModal := '<duto xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                           AXMLModal +
+                                           Trim(RetornarConteudoEntre(AXML, '<duto>', '</duto>')) +
                                          '</duto>';
                           end;
    schcteModalFerroviario: begin
                              AXMLModal := '<ferrov xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                            AXMLModal +
+                                            Trim(RetornarConteudoEntre(AXML, '<ferrov>', '</ferrov>')) +
                                           '</ferrov>';
                            end;
    schcteModalRodoviario: begin
                             AXMLModal := '<rodo xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                           AXMLModal +
+                                           Trim(RetornarConteudoEntre(AXML, '<rodo>', '</rodo>')) +
                                          '</rodo>';
                           end;
    schcteMultiModal: begin
                        AXMLModal := '<multimodal xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                      AXMLModal +
+                                      Trim(RetornarConteudoEntre(AXML, '<multimodal>', '</multimodal>')) +
                                     '</multimodal>';
                      end;
   end;
@@ -306,8 +306,22 @@ begin
     ALayout := LayCTeRetRecepcao;
 
     if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
-      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro) and
-                     SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro)
+    begin
+      ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
+
+    if not ModalEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação do Modal do Conhecimento: ') +
+        IntToStr(CTe.Ide.nCT) + sLineBreak + FAlertas ;
+      FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+
+      raise EACBrCTeException.CreateDef(
+        IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
+        ErroValidacao));
+    end;
+
+      CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
+    end
     else
       CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
 

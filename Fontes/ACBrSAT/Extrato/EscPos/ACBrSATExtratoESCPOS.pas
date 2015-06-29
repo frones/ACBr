@@ -179,10 +179,10 @@ var
   nTamDescricao: Integer;
   fQuant, VlrLiquido: Double;
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
-    LinhaCmd: String;
+    sVlrImpostos, LinhaCmd: String;
 begin
   FPosPrinter.Buffer.Add('</ae></fn></linha_simples>');
-  FPosPrinter.Buffer.Add(ACBrStr('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
+  FPosPrinter.Buffer.Add('#|COD|DESC|QTD|UN|VL UN R$|(VLTR R$)*|VL ITEM R$');
   FPosPrinter.Buffer.Add('</linha_simples>');
 
   for i := 0 to CFe.Det.Count - 1 do
@@ -199,6 +199,10 @@ begin
 
     // formatar conforme configurado
     sVlrUnitario := FormatFloatBr(CFe.Det.Items[i].Prod.VUnCom, Mask_vUnCom );
+    if CFe.Det.Items[i].Imposto.vItem12741 > 0 then
+      sVlrImpostos := ' ('+FormatFloatBr(CFe.Det.Items[i].Imposto.vItem12741, '0.00')+') '
+    else
+      sVlrImpostos := ' ';
 
     // formatar conforme configurado somente quando houver decimais
     // caso contrário mostrar somente o número inteiro
@@ -211,7 +215,7 @@ begin
     if ImprimeEmUmaLinha then
     begin
       LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
-        sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
+        sUnidade + ' X ' + sVlrUnitario + sVlrImpostos + sVlrProduto;
 
       // acerta tamanho da descrição
       nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
@@ -227,7 +231,8 @@ begin
 
       LinhaCmd :=
         PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
-        PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
+        PadRight(sVlrUnitario, 13) + '|' + sVlrImpostos + sVlrProduto;
+
       LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
       FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
     end;
@@ -237,8 +242,7 @@ begin
       // desconto
       if CFe.Det.Items[i].Prod.vDesc > 0 then
       begin
-        VlrLiquido :=
-          (CFe.Det.Items[i].Prod.qCom * CFe.Det.Items[i].Prod.vUnCom) - CFe.Det.Items[i].Prod.vDesc;
+        VlrLiquido := CFe.Det.Items[i].Prod.vProd - CFe.Det.Items[i].Prod.vDesc;
 
         LinhaCmd := '</ae><c>' + padSpace(
             'desconto ' + padLeft(FormatFloatBr(CFe.Det.Items[i].Prod.vDesc, '-0.00'), 15, ' ')
@@ -250,9 +254,7 @@ begin
       // ascrescimo
       if CFe.Det.Items[i].Prod.vOutro > 0 then
       begin
-        VlrLiquido :=
-          (CFe.Det.Items[i].Prod.qCom * CFe.Det.Items[i].Prod.vUnCom) +
-          CFe.Det.Items[i].Prod.vOutro;
+        VlrLiquido := CFe.Det.Items[i].Prod.vProd + CFe.Det.Items[i].Prod.vOutro;
 
         LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
             'acréscimo ' + padLeft(FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+0.00'), 15, ' ')
@@ -261,6 +263,17 @@ begin
         FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
       end;
     end;
+
+    if CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN > 0 then
+    begin
+      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Dedução para ISSQN|'+
+         FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN, '-#,###,##0.00'),
+         FPosPrinter.ColunasFonteCondensada, '|')));
+      FPosPrinter.Buffer.Add(ACBrStr(PadSpace('Base de cálculo ISSQN|'+
+         FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vBC, '#,###,##0.00'),
+         FPosPrinter.ColunasFonteCondensada, '|')));
+    end;
+
   end;
 end;
 

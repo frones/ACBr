@@ -301,6 +301,8 @@ begin
                      end;
   end;
 
+  AXMLModal := '<?xml version="1.0" encoding="UTF-8" ?>' + AXMLModal;
+
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     ALayout := LayCTeRetRecepcao;

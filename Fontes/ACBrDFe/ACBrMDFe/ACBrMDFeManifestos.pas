@@ -290,6 +290,8 @@ begin
                            end;
   end;
 
+  AXMLModal := '<?xml version="1.0" encoding="UTF-8" ?>' + AXMLModal;
+
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     ALayout := LayMDFeRetRecepcao;

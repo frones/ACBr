@@ -2283,24 +2283,23 @@ begin
   Result := (copy(RetCmd, 13, 1) = 'S') ;
 end ;
 
-procedure TACBrECFSwedaSTX.AbreRelatorioGerencial(Indice: Integer = 2 );
+procedure TACBrECFSwedaSTX.AbreRelatorioGerencial(Indice: Integer );
 var
    sDescricao:String;
    RG:TACBrECFRelatorioGerencial;
 begin
-   { Não existe indice 0 nessa impressora usando esse protocolo}
-   { O indice 1 é reservado }
-   if ( Indice = 0 ) or ( Indice = 1 ) then
-      Indice := 2;
+   { Não existe indice 0 nessa impressora usando esse protocolo, e
+     o indice 1 é reservado e não pode ser utilizado }
+  Indice := max(Indice,2);
 
-
-   RG := AchaRGIndice(FormatFloat('00',Indice));
-   if RG = nil then
-     raise EACBrECFERRO.create( ACBrStr('Relatório Gerencial: '+IntToStr(Indice)+
+  RG := AchaRGIndice(FormatFloat('00',Indice));
+  if RG = nil then
+    raise EACBrECFERRO.create( ACBrStr('Relatório Gerencial: '+IntToStr(Indice)+
                                  ' não foi cadastrado.' ));
-   sDescricao := PadRight(RG.Descricao,15);
-   AguardaImpressao := True;
-   EnviaComando('43|'+sDescricao);
+
+  sDescricao := LeftStr(CodificarPaginaDeCodigoECF(RG.Descricao),15);
+  AguardaImpressao := True;
+  EnviaComando('43|'+sDescricao);
 end;
 
 procedure TACBrECFSwedaSTX.LinhaRelatorioGerencial(Linha: AnsiString; IndiceBMP: Integer);

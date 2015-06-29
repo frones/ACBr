@@ -29,11 +29,11 @@ type
   private
     { private declarations }
     procedure ShowHowToUseAndFinalize;
-    procedure ReadConfigPosPrinter(FileConfig : String);
     procedure ReadConfigNFeNFCe(FileConfig : String);
     procedure ReadConfigSAT(FileConfig : String);
   public
     { public declarations }
+    procedure ReadConfigPosPrinter(FileConfig : String);
   end;
 
 var
@@ -148,11 +148,10 @@ begin
   Ini := TIniFile.Create(FileConfig);
   try
     ACBrPosPrinter1.Desativar;
-    ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','ParamsString','');
     ACBrPosPrinter1.Modelo             := TACBrPosPrinterModelo(INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo)));
     ACBrPosPrinter1.Porta              := INI.ReadString('PosPrinter', 'Porta', ACBrPosPrinter1.Porta);
     ACBrPosPrinter1.LinhasBuffer       := INI.ReadInteger('PosPrinter', 'LinhasBuffer', ACBrPosPrinter1.LinhasBuffer);
-    ACBrPosPrinter1.LinhasEntreCupons  := INI.ReadInteger('PosPrinter', 'LinhasPular', ACBrPosPrinter1.LinhasEntreCupons);
+    ACBrPosPrinter1.LinhasEntreCupons  := INI.ReadInteger('PosPrinter', 'LinhasPular', 7);
     ACBrPosPrinter1.EspacoEntreLinhas  := INI.ReadInteger('PosPrinter', 'EspacoEntreLinhas', ACBrPosPrinter1.EspacoEntreLinhas);
     ACBrPosPrinter1.ColunasFonteNormal := INI.ReadInteger('PosPrinter', 'Colunas', ACBrPosPrinter1.ColunasFonteNormal);
     ACBrPosPrinter1.ControlePorta      := True;

@@ -26,7 +26,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <CommandLineParams Value="NFCe 13140410706327000137650010000000381000000381-NFe.xml ACBrMonitor.ini"/>
+        <CommandLineParams Value="/c"/>
       </local>
     </RunParams>
     <RequiredPackages Count="11">
@@ -64,7 +64,7 @@
         <PackageName Value="LCL"/>
       </Item11>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="ACBrPrinter.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -85,6 +85,14 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="configuracoes"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="ConfiguraSerial.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfiguraSerial"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ConfiguraSerial"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

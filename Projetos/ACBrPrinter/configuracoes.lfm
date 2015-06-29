@@ -1,0 +1,1271 @@
+object frConfiguracoes: TfrConfiguracoes
+  Left = 772
+  Height = 432
+  Top = 247
+  Width = 709
+  Caption = 'ACBrPrinter - Configurações'
+  ClientHeight = 432
+  ClientWidth = 709
+  FormStyle = fsStayOnTop
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 366
+    Top = 66
+    Width = 709
+    ActivePage = tsPosPrinter
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 1
+    object tsPosPrinter: TTabSheet
+      Caption = 'Pos Printer'
+      ClientHeight = 338
+      ClientWidth = 701
+      object gbConfiguracao: TGroupBox
+        Left = 0
+        Height = 338
+        Top = 0
+        Width = 701
+        Align = alClient
+        Caption = 'Configuração'
+        ClientHeight = 320
+        ClientWidth = 697
+        TabOrder = 0
+        object gbCodBarras: TGroupBox
+          Left = 361
+          Height = 81
+          Top = 8
+          Width = 258
+          Caption = 'Código de Barras'
+          ClientHeight = 63
+          ClientWidth = 254
+          TabOrder = 0
+          object seCodBarrasLargura: TSpinEdit
+            Left = 8
+            Height = 23
+            Top = 24
+            Width = 50
+            TabOrder = 0
+            Value = 1
+          end
+          object seCodBarrasAltura: TSpinEdit
+            Left = 77
+            Height = 23
+            Top = 24
+            Width = 50
+            TabOrder = 1
+          end
+          object lbLargura: TLabel
+            Left = 8
+            Height = 15
+            Top = 8
+            Width = 40
+            Caption = 'Largura'
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbAltura: TLabel
+            Left = 77
+            Height = 15
+            Top = 8
+            Width = 32
+            Caption = 'Altura'
+            ParentColor = False
+            ParentFont = False
+          end
+          object cbHRI: TCheckBox
+            Left = 137
+            Height = 19
+            Top = 25
+            Width = 94
+            Caption = 'Exibe Número'
+            TabOrder = 2
+          end
+        end
+        object gbQRCode: TGroupBox
+          Left = 361
+          Height = 81
+          Top = 177
+          Width = 258
+          Caption = 'QRCode'
+          ClientHeight = 63
+          ClientWidth = 254
+          TabOrder = 1
+          object seQRCodeTipo: TSpinEdit
+            Left = 8
+            Height = 23
+            Top = 24
+            Width = 50
+            TabOrder = 0
+            Value = 2
+          end
+          object seQRCodeLargMod: TSpinEdit
+            Left = 104
+            Height = 23
+            Top = 24
+            Width = 50
+            TabOrder = 1
+            Value = 4
+          end
+          object seQRCodeErrorLevel: TSpinEdit
+            Left = 191
+            Height = 23
+            Top = 24
+            Width = 50
+            TabOrder = 2
+          end
+          object lbQRCodeTipo: TLabel
+            Left = 8
+            Height = 15
+            Top = 6
+            Width = 24
+            Caption = 'Tipo'
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbQRCodeLargMod: TLabel
+            Left = 96
+            Height = 15
+            Top = 6
+            Width = 71
+            Caption = 'Largura Mod.'
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbQRCodeErrorLevel: TLabel
+            Left = 191
+            Height = 15
+            Top = 6
+            Width = 55
+            Caption = 'Error Level'
+            ParentColor = False
+            ParentFont = False
+          end
+        end
+        object gbLogotipo: TGroupBox
+          Left = 361
+          Height = 81
+          Top = 95
+          Width = 258
+          Caption = 'Logotipo'
+          ClientHeight = 63
+          ClientWidth = 254
+          TabOrder = 2
+          object seLogoKC1: TSpinEdit
+            Left = 7
+            Height = 23
+            Top = 27
+            Width = 50
+            TabOrder = 0
+            Value = 32
+          end
+          object seLogoKC2: TSpinEdit
+            Left = 70
+            Height = 23
+            Top = 27
+            Width = 50
+            TabOrder = 1
+            Value = 32
+          end
+          object seLogoFatorY: TSpinEdit
+            Left = 199
+            Height = 23
+            Top = 27
+            Width = 50
+            TabOrder = 2
+            Value = 1
+          end
+          object seLogoFatorX: TSpinEdit
+            Left = 136
+            Height = 23
+            Top = 27
+            Width = 50
+            TabOrder = 3
+            Value = 1
+          end
+          object lbLogoKC1: TLabel
+            Left = 7
+            Height = 15
+            Top = 10
+            Width = 21
+            Caption = 'KC1'
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbLogoKC2: TLabel
+            Left = 70
+            Height = 15
+            Top = 10
+            Width = 21
+            Caption = 'KC2'
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbLogoFatorX: TLabel
+            Left = 136
+            Height = 15
+            Top = 10
+            Width = 34
+            Caption = 'FatorX'
+            ParentColor = False
+            ParentFont = False
+          end
+          object lbLogoFatorY: TLabel
+            Left = 199
+            Height = 15
+            Top = 10
+            Width = 34
+            Caption = 'FatorY'
+            ParentColor = False
+            ParentFont = False
+          end
+        end
+        object bbAtivar: TBitBtn
+          Left = 136
+          Height = 33
+          Top = 248
+          Width = 104
+          Caption = 'Ativar'
+          Font.Height = -13
+          Glyph.Data = {
+            36040000424D3604000000000000360000002800000010000000100000000100
+            2000000000000004000064000000640000000000000000000000FFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0808
+            39FF1818A5FF1818A5FF1818A5FF1818A5FF1818A5FF1818A5FF1818A5FF1818
+            A5FF1818A5FF1818A5FF1818A5FF1818A5FF101042FFFFFFFFFFFFFFFFFF1818
+            ADFF0000C6FF0000C6FF0000CEFF0000CEFF0000DEFF1818E7FF1818EFFF0808
+            EFFF0008EFFF1821EFFF2131F7FF3142FFFF2929BDFFFFFFFFFFFFFFFFFF1010
+            ADFF0000B5FF0000BDFF0000C6FF6B6BE7FFDEDEFFFFFFFFFFFFFFFFFFFFE7E7
+            FFFF848CF7FF1821EFFF1829EFFF2939EFFF2129C6FFFFFFFFFFFFFFFFFF1010
+            ADFF0000B5FF0000BDFF8C8CE7FFFFFFFFFFDEDEF7FF9494EFFF8C8CEFFFD6D6
+            F7FFFFFFFFFFADB5FFFF2129EFFF2939EFFF2129C6FFFFFFFFFFFFFFFFFF1010
+            ADFF0000B5FF6B6BD6FFFFFFFFFFADADEFFF0808CEFF0000D6FF0000DEFF0000
+            E7FF9494EFFFFFFFFFFF949CF7FF1829EFFF2129C6FFFFFFFFFFFFFFFFFF1010
+            A5FF1010BDFFD6D6F7FFF7F7FFFF3131CEFF1818D6FF1818DEFF1010DEFF0000
+            E7FF0008E7FFE7E7FFFFEFEFFFFF2931EFFF2129C6FFFFFFFFFFFFFFFFFF1818
+            A5FF3131BDFFEFEFFFFFDEDEF7FF2929CEFF3131D6FF3131DEFF3131DEFF3939
+            E7FF1010E7FFB5B5F7FFFFFFFFFF3139EFFF1821BDFFFFFFFFFFFFFFFFFF1818
+            A5FF3939BDFFE7E7F7FFEFEFFFFF4242CEFF3939D6FF9C9CEFFF9C9CEFFF4A4A
+            E7FF4A4AEFFFDEDEFFFFEFF7FFFF1821EFFF1818BDFFFFFFFFFFFFFFFFFF2121
+            A5FF4242BDFFADADDEFFFFFFFFFF9C9CE7FF4A4AD6FFEFEFFFFFF7F7FFFF5252
+            E7FF9494EFFFFFFFFFFFC6C6F7FF0810E7FF1010BDFFFFFFFFFFFFFFFFFF2929
+            A5FF5A5AC6FF6363C6FFDEDEEFFFFFFFFFFF9494E7FFE7E7F7FFE7E7FFFFA5A5
+            EFFFFFFFFFFFEFEFF7FF8484E7FF6363EFFF1010BDFFFFFFFFFFFFFFFFFF2929
+            A5FF6B6BC6FF6363C6FF7373C6FFADADD6FF8484D6FFE7E7FFFFEFEFFFFFA5A5
+            E7FFD6D6EFFF8484DEFF7B7BE7FF8C8CEFFF3131BDFFFFFFFFFFFFFFFFFF3131
+            A5FF7B7BC6FF7373C6FF7373CEFF7373C6FF7B7BCEFFF7F7FFFFF7F7FFFF8484
+            DEFF8484D6FF8C8CE7FF8C8CE7FF9494E7FF4242BDFFFFFFFFFFFFFFFFFF3131
+            94FFADADDEFFADADDEFFADADDEFFADADE7FFB5B5E7FFB5B5E7FFB5B5E7FFBDBD
+            EFFFBDBDEFFFC6C6EFFFC6C6F7FFD6D6F7FF8C8CB5FFFFFFFFFFFFFFFFFF1818
+            94FF21218CFF313194FF313194FF313194FF313194FF313194FF313194FF3131
+            94FF313194FF313194FF313194FF292994FF181884FFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          }
+          ModalResult = 1
+          ParentFont = False
+          ParentShowHint = False
+          TabOrder = 3
+        end
+        object gbGeral: TGroupBox
+          Left = 8
+          Height = 232
+          Top = 8
+          Width = 344
+          Caption = 'Geral'
+          ClientHeight = 214
+          ClientWidth = 340
+          TabOrder = 4
+          object lbModelo: TLabel
+            Left = 8
+            Height = 15
+            Top = 3
+            Width = 41
+            Caption = 'Modelo'
+            ParentColor = False
+          end
+          object cbxModelo: TComboBox
+            Left = 8
+            Height = 23
+            Top = 21
+            Width = 144
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 0
+          end
+          object lbPorta: TLabel
+            Left = 168
+            Height = 15
+            Top = 3
+            Width = 28
+            Caption = 'Porta'
+            ParentColor = False
+          end
+          object cbxPorta: TComboBox
+            Left = 168
+            Height = 23
+            Top = 21
+            Width = 128
+            ItemHeight = 15
+            ParentShowHint = False
+            TabOrder = 1
+          end
+          object sbSerial: TSpeedButton
+            Left = 304
+            Height = 22
+            Top = 22
+            Width = 23
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000064000000640000000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232
+              32FF323232FF3E3E3EFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFF565656FF565656FFFFFFFFFFFFFFFFFF323232FF262626FF262626FF2626
+              26FF262626FF503200FF503200FF000050FF4873FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6E6E6EFF323232FF3232
+              32FF323232FF323232FF503200FF000050FF25AAFFFFFFFFFFFFFFFFFFFF5656
+              56FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF565656FF323232FF3232
+              32FF6E6E6EFF503200FF503200FF8FFF6BFF8ED4FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFF3E3E3EFFFFFFFFFFFFFFFFFF503200FF503200FF565656FF4A4A4AFF5050
+              00FF323232FF503200FF503200FF8FFF6BFF8ED4FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF565656FF3E3E3EFF262626FF503200FF626262FF565656FF5050
+              00FF323232FF503200FF503200FF8FFF6BFF8ED4FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF505000FF505000FF6E6E6EFF565656FF5050
+              00FF325000FF503200FF503200FF8FFF6BFF8ED4FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868686FF565656FF5656
+              56FF325000FF503200FF503200FF8FFF6BFF48B8FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232FF3E3E3EFFA4A0A0FF8686
+              86FF6E6E6EFF565656FF503200FFC0C0C0FF2557FFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505000FF4A4A4AFF323232FF3232
+              32FF323232FF323232FF503200FFFFFFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            }
+          end
+          object lbPorPrinterLog: TLabel
+            Left = 8
+            Height = 15
+            Top = 56
+            Width = 45
+            Caption = 'Arq. Log'
+            ParentColor = False
+          end
+          object edPosPrinterLog: TEdit
+            Left = 8
+            Height = 23
+            Top = 72
+            Width = 160
+            TabOrder = 2
+          end
+          object sbPosPrinterLog: TSpeedButton
+            Left = 177
+            Height = 22
+            Top = 73
+            Width = 23
+            Caption = '...'
+          end
+          object lbColunas: TLabel
+            Left = 8
+            Height = 15
+            Top = 103
+            Width = 43
+            Caption = 'Colunas'
+            ParentColor = False
+            ParentFont = False
+          end
+          object seColunas: TSpinEdit
+            Left = 8
+            Height = 23
+            Top = 119
+            Width = 50
+            TabOrder = 3
+            Value = 48
+          end
+          object lbEspacosLinhas: TLabel
+            Left = 78
+            Height = 15
+            Top = 103
+            Width = 42
+            Caption = 'Espaços'
+            ParentColor = False
+            ParentFont = False
+          end
+          object seEspacosLinhas: TSpinEdit
+            Left = 78
+            Height = 23
+            Top = 119
+            Width = 50
+            TabOrder = 4
+          end
+          object lbBuffer: TLabel
+            Left = 150
+            Height = 15
+            Top = 103
+            Width = 32
+            Caption = 'Buffer'
+            ParentColor = False
+            ParentFont = False
+          end
+          object seBuffer: TSpinEdit
+            Left = 150
+            Height = 23
+            Top = 119
+            Width = 50
+            TabOrder = 5
+          end
+          object lbLinhasPular: TLabel
+            Left = 222
+            Height = 15
+            Top = 103
+            Width = 64
+            Caption = 'Linhas Pular'
+            ParentColor = False
+            ParentFont = False
+          end
+          object seLinhasPular: TSpinEdit
+            Left = 222
+            Height = 23
+            Top = 119
+            Width = 50
+            TabOrder = 6
+          end
+          object Label136: TLabel
+            Left = 211
+            Height = 16
+            Top = 56
+            Width = 71
+            Caption = 'Pag. Código'
+            Font.Height = -13
+            Font.Name = 'Default'
+            ParentColor = False
+            ParentFont = False
+          end
+          object cbxPagCodigo: TComboBox
+            Left = 211
+            Height = 23
+            Top = 72
+            Width = 108
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 7
+          end
+          object cbControlePorta: TCheckBox
+            Left = 8
+            Height = 19
+            Top = 152
+            Width = 97
+            Caption = 'Controle Porta'
+            TabOrder = 8
+          end
+          object cbTraduzirTags: TCheckBox
+            Left = 133
+            Height = 19
+            Top = 152
+            Width = 91
+            Caption = 'Traduzir Tags'
+            Checked = True
+            State = cbChecked
+            TabOrder = 9
+          end
+          object cbIgnorarTags: TCheckBox
+            Left = 8
+            Height = 19
+            Top = 181
+            Width = 86
+            Caption = 'Ignorar Tags'
+            TabOrder = 10
+          end
+        end
+      end
+    end
+    object tsDANFE: TTabSheet
+      Caption = 'DANFE'
+      ClientHeight = 354
+      ClientWidth = 701
+      object pgNFeNFCe: TPageControl
+        Left = 0
+        Height = 354
+        Top = 0
+        Width = 701
+        ActivePage = tsNFe
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object tsNFe: TTabSheet
+          Caption = 'NFe'
+          ClientHeight = 326
+          ClientWidth = 693
+          object edtLargCodProd: TEdit
+            Left = 6
+            Height = 23
+            Top = 183
+            Width = 106
+            TabOrder = 0
+            Text = '0'
+          end
+          object Label139: TLabel
+            Left = 6
+            Height = 15
+            Top = 46
+            Width = 98
+            Caption = 'Impressora Padrão'
+            ParentColor = False
+          end
+          object Label140: TLabel
+            Left = 231
+            Height = 15
+            Top = 46
+            Width = 69
+            Caption = 'Núm. Cópias'
+            ParentColor = False
+          end
+          object Label141: TLabel
+            Left = 6
+            Height = 13
+            Top = 167
+            Width = 108
+            Caption = 'Largura Cód.Produto'
+            Font.Height = -11
+            ParentColor = False
+            ParentFont = False
+          end
+          object Label142: TLabel
+            Left = 117
+            Height = 13
+            Top = 167
+            Width = 85
+            Caption = 'Espessura Borda'
+            Font.Height = -11
+            ParentColor = False
+            ParentFont = False
+          end
+          object Label143: TLabel
+            Left = 208
+            Height = 13
+            Top = 167
+            Width = 97
+            Caption = 'Fonte Razão Social'
+            Font.Height = -11
+            ParentColor = False
+            ParentFont = False
+          end
+          object Label144: TLabel
+            Left = 311
+            Height = 13
+            Top = 167
+            Width = 114
+            Caption = 'Fonte Demais Campos'
+            Font.Height = -11
+            ParentColor = False
+            ParentFont = False
+          end
+          object Label145: TLabel
+            Left = 168
+            Height = 15
+            Top = 208
+            Width = 123
+            Caption = 'Decimais Valor Unitário'
+            ParentColor = False
+          end
+          object rgTipoDanfe: TRadioGroup
+            Left = 8
+            Height = 44
+            Top = 0
+            Width = 297
+            AutoFill = True
+            Caption = 'DANFe'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 26
+            ClientWidth = 293
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'Retrato'
+              'Paisagem'
+            )
+            TabOrder = 1
+          end
+          object cbxImpressora: TComboBox
+            Left = 6
+            Height = 23
+            Top = 62
+            Width = 219
+            ItemHeight = 15
+            TabOrder = 2
+          end
+          object cbxImpDescPorc: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 0
+            Width = 213
+            Caption = 'Imprimir Desconto em Porcentagem'
+            TabOrder = 3
+          end
+          object cbxMostrarPreview: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 18
+            Width = 209
+            Caption = 'Mostrar Preview antes da impressão'
+            TabOrder = 4
+          end
+          object edtNumCopia: TEdit
+            Left = 231
+            Height = 23
+            Top = 62
+            Width = 74
+            TabOrder = 5
+            Text = '1'
+          end
+          object gbxMargem: TGroupBox
+            Left = 6
+            Height = 64
+            Top = 90
+            Width = 299
+            Caption = 'Margens'
+            ClientHeight = 46
+            ClientWidth = 295
+            TabOrder = 6
+            object Label146: TLabel
+              Left = 6
+              Height = 15
+              Top = 0
+              Width = 38
+              Caption = 'Inferior'
+              ParentColor = False
+            end
+            object Label147: TLabel
+              Left = 77
+              Height = 15
+              Top = 0
+              Width = 44
+              Caption = 'Superior'
+              ParentColor = False
+            end
+            object Label148: TLabel
+              Left = 149
+              Height = 15
+              Top = 0
+              Width = 34
+              Caption = 'Direita'
+              ParentColor = False
+            end
+            object Label149: TLabel
+              Left = 220
+              Height = 15
+              Top = 0
+              Width = 48
+              Caption = 'Esquerda'
+              ParentColor = False
+            end
+            object edtMargemInf: TEdit
+              Left = 5
+              Height = 23
+              Top = 18
+              Width = 64
+              TabOrder = 0
+              Text = '0,8'
+            end
+            object edtMargemSup: TEdit
+              Left = 76
+              Height = 23
+              Top = 18
+              Width = 64
+              TabOrder = 1
+              Text = '0,8'
+            end
+            object edtMargemDir: TEdit
+              Left = 148
+              Height = 23
+              Top = 18
+              Width = 64
+              TabOrder = 2
+              Text = '0,51'
+            end
+            object edtMargemEsq: TEdit
+              Left = 219
+              Height = 23
+              Top = 18
+              Width = 64
+              TabOrder = 3
+              Text = '0,6'
+            end
+          end
+          object cbxExibeResumo: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 36
+            Width = 160
+            Caption = 'Exibir Resumo no Canhoto'
+            TabOrder = 7
+          end
+          object cbxImpValLiq: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 54
+            Width = 202
+            Caption = 'Imprimir Valor Líquido do Produto'
+            TabOrder = 8
+          end
+          object cbxFormCont: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 72
+            Width = 151
+            Caption = 'Formulario Pré-Impresso'
+            TabOrder = 9
+          end
+          object rgTipoFonte: TRadioGroup
+            Left = 316
+            Height = 42
+            Top = 208
+            Width = 285
+            AutoFill = True
+            Caption = 'Tipo de Fonte(Rave CB)'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 3
+            ClientHeight = 24
+            ClientWidth = 281
+            Columns = 3
+            ItemIndex = 0
+            Items.Strings = (
+              'Times'
+              'Courier'
+              'Arial'
+            )
+            TabOrder = 10
+          end
+          object cbxMostraStatus: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 107
+            Width = 96
+            Caption = 'Mostrar Status'
+            TabOrder = 11
+          end
+          object cbxExpandirLogo: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 124
+            Width = 98
+            Caption = 'Expandir Logo '
+            TabOrder = 12
+          end
+          object edtFonteRazao: TEdit
+            Left = 208
+            Height = 23
+            Top = 183
+            Width = 97
+            TabOrder = 13
+            Text = '12'
+          end
+          object edtFonteCampos: TEdit
+            Left = 311
+            Height = 23
+            Top = 183
+            Width = 114
+            TabOrder = 14
+            Text = '10'
+          end
+          object rgCasasDecimaisQtd: TRadioGroup
+            Left = 6
+            Height = 42
+            Top = 208
+            Width = 147
+            AutoFill = True
+            Caption = 'Decimais Quantidade'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 3
+            ClientHeight = 24
+            ClientWidth = 143
+            Columns = 3
+            ItemIndex = 0
+            Items.Strings = (
+              '2'
+              '3'
+              '4'
+            )
+            TabOrder = 15
+          end
+          object spedtDecimaisVUnit: TSpinEdit
+            Left = 168
+            Height = 23
+            Top = 225
+            Width = 121
+            MaxValue = 10
+            TabOrder = 16
+          end
+          object rgLocalCanhoto: TRadioGroup
+            Left = 432
+            Height = 43
+            Hint = 'Funcionalidade disponível somente no Rave'
+            Top = 167
+            Width = 169
+            AutoFill = True
+            Caption = 'Local Canhoto'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 25
+            ClientWidth = 165
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'Cabeçalho'
+              'Rodapé'
+            )
+            TabOrder = 17
+          end
+          object cbxImprimirTributos: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 90
+            Width = 213
+            Caption = 'Imprimir Valor dos Tributos por Item'
+            TabOrder = 18
+          end
+          object edtEspBorda: TEdit
+            Left = 117
+            Height = 23
+            Top = 183
+            Width = 85
+            TabOrder = 19
+            Text = '1'
+          end
+          object cbxExibirEAN: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 142
+            Width = 74
+            Caption = 'Exibir EAN'
+            TabOrder = 20
+          end
+        end
+        object tsNFCe: TTabSheet
+          Caption = 'NFCe'
+          ClientHeight = 326
+          ClientWidth = 693
+          object rgModeloDANFeNFCE: TRadioGroup
+            Left = 6
+            Height = 44
+            Top = 8
+            Width = 203
+            AutoFill = True
+            Caption = 'Modelo'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 26
+            ClientWidth = 199
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'Fortes'
+              'ESC-POS'
+            )
+            TabOrder = 0
+          end
+          object rgModoImpressaoEvento: TRadioGroup
+            Left = 6
+            Height = 44
+            Top = 55
+            Width = 203
+            AutoFill = True
+            Caption = 'Modo de Impressão do Evento'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 26
+            ClientWidth = 199
+            Columns = 2
+            Items.Strings = (
+              'A4'
+              'Bobina'
+            )
+            TabOrder = 1
+          end
+          object gbDANFeESCPOS: TGroupBox
+            Left = 216
+            Height = 77
+            Top = 8
+            Width = 384
+            Caption = 'Configurações ESCPOS'
+            ClientHeight = 59
+            ClientWidth = 380
+            TabOrder = 2
+            object cbxImprimirItem1LinhaESCPOS: TCheckBox
+              Left = 8
+              Height = 19
+              Top = 8
+              Width = 201
+              Caption = 'Imprimir itens somente em 1 linha'
+              TabOrder = 0
+            end
+            object cbxImprimirDescAcresItemESCPOS: TCheckBox
+              Left = 8
+              Height = 19
+              Top = 32
+              Width = 224
+              Caption = 'Imprime desconto/acréscimo por item'
+              TabOrder = 1
+            end
+          end
+          object cbxImpressoraNFCe: TComboBox
+            Left = 6
+            Height = 23
+            Top = 122
+            Width = 203
+            ItemHeight = 15
+            TabOrder = 3
+          end
+          object Label166: TLabel
+            Left = 6
+            Height = 15
+            Top = 104
+            Width = 138
+            Caption = 'Impressora Padrão(Fortes)'
+            ParentColor = False
+          end
+        end
+      end
+    end
+    object tsSAT: TTabSheet
+      Caption = 'Extrato SAT'
+      ClientHeight = 354
+      ClientWidth = 701
+      object GroupBox7: TGroupBox
+        Left = 8
+        Height = 160
+        Top = 8
+        Width = 280
+        Caption = 'Fortes'
+        ClientHeight = 142
+        ClientWidth = 276
+        TabOrder = 0
+        object seLargura: TSpinEdit
+          Left = 8
+          Height = 23
+          Top = 20
+          Width = 64
+          MaxValue = 9999
+          TabOrder = 0
+        end
+        object Label174: TLabel
+          Left = 8
+          Height = 15
+          Top = 0
+          Width = 40
+          Caption = 'Largura'
+          ParentColor = False
+        end
+        object Label175: TLabel
+          Left = 96
+          Height = 15
+          Top = 0
+          Width = 28
+          Caption = 'Topo'
+          ParentColor = False
+        end
+        object seMargemTopo: TSpinEdit
+          Left = 96
+          Height = 23
+          Top = 20
+          Width = 64
+          MaxValue = 9999
+          TabOrder = 1
+        end
+        object Label176: TLabel
+          Left = 8
+          Height = 15
+          Top = 48
+          Width = 34
+          Caption = 'Fundo'
+          ParentColor = False
+        end
+        object seMargemFundo: TSpinEdit
+          Left = 8
+          Height = 23
+          Top = 68
+          Width = 64
+          MaxValue = 9999
+          TabOrder = 2
+        end
+        object Label177: TLabel
+          Left = 96
+          Height = 15
+          Top = 48
+          Width = 48
+          Caption = 'Esquerda'
+          ParentColor = False
+        end
+        object seMargemEsquerda: TSpinEdit
+          Left = 96
+          Height = 23
+          Top = 68
+          Width = 64
+          MaxValue = 9999
+          TabOrder = 3
+        end
+        object Label178: TLabel
+          Left = 184
+          Height = 15
+          Top = 48
+          Width = 34
+          Caption = 'Direita'
+          ParentColor = False
+        end
+        object seMargemDireita: TSpinEdit
+          Left = 184
+          Height = 23
+          Top = 68
+          Width = 64
+          MaxValue = 9999
+          TabOrder = 4
+        end
+        object bImpressora: TButton
+          Left = 8
+          Height = 25
+          Top = 104
+          Width = 122
+          AutoSize = True
+          Caption = 'Definir Impressora'
+          TabOrder = 5
+        end
+        object lImpressora: TLabel
+          Left = 152
+          Height = 15
+          Top = 112
+          Width = 99
+          Caption = 'Impressora Default'
+          ParentColor = False
+        end
+        object cbPreview: TCheckBox
+          Left = 192
+          Height = 19
+          Top = 24
+          Width = 61
+          Caption = 'Preview'
+          TabOrder = 6
+        end
+      end
+    end
+  end
+  object pnImpressora: TPanel
+    Left = 0
+    Height = 66
+    Top = 0
+    Width = 709
+    Align = alTop
+    ClientHeight = 66
+    ClientWidth = 709
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 8
+      Height = 15
+      Top = 8
+      Width = 58
+      Caption = 'Impressora'
+      ParentColor = False
+    end
+    object cbxImpressoraConf: TComboBox
+      Left = 8
+      Height = 23
+      Top = 32
+      Width = 224
+      ItemHeight = 15
+      TabOrder = 0
+    end
+    object btnGravar: TBitBtn
+      Left = 528
+      Height = 30
+      Top = 25
+      Width = 83
+      Caption = 'Gravar'
+      Default = True
+      Kind = bkOK
+      TabOrder = 1
+    end
+    object btnCancelar: TBitBtn
+      Left = 616
+      Height = 30
+      Top = 25
+      Width = 83
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      TabOrder = 2
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 240
+      Height = 47
+      Top = 8
+      Width = 72
+      Caption = 'Adicionar'
+      Glyph.Data = {
+        F6060000424DF606000000000000360000002800000018000000180000000100
+        180000000000C0060000120B0000120B00000000000000000000FF00FFFF00FF
+        FF00FFA97C79B78183B78183B78183B78183B78183B78183B78183B78183B781
+        83B78183B78183B78183B78183B78183B78183B78183B78183B78183FF00FFFF
+        00FFFF00FFFF00FFFF00FFAE7781F3DDC4F8E3C6F6DFBFF5DCB8F4D9B2F3D7AC
+        F3D4A7F2D2A0F0CF9AF0CE98F0CE98F0CE98F0CE98F0CE98F0CE98F1CF98EFCD
+        97B88183FF00FFFF00FFFF00FFFF00FFFF00FFAE7782F2DEC8F7E3CAF5DFC2F4
+        DCBCF3DAB6F2D7B1F1D4ABF1D2A5F0CF9FEFCD9AEECC97EECC97EECC97EECC97
+        EECC97EFCD97EDCB96B88183FF00FFFF00FFFF00FFFF00FFFF00FFAE7782F2E0
+        CEF8E7CFF5E2C8F5DEC2F4DCBCF3DAB7F2D7B1F1D4ABF1D2A5F0CFA0EFCD9AEE
+        CC97EECC97EECC97EECC97EFCD97EDCB96B88183FF00FFFF00FFFF00FFFF00FF
+        FF00FFAE7782F3E3D2F9E9D4F6E4CDF5E1C7F5DEC1F4DCBCF3D9B6F2D7B0F1D4
+        AAF1D2A5F0CFA0EECC99EECC97EECC97EECC97EFCD97EDCB96B88183FF00FFFF
+        00FFFF00FFFF00FFFF00FFAE7783F4E6D8FAECDAF8E7D3F6E4CCF5E1C7F5DFC2
+        F4DCBCF3D9B6F2D7B0F1D4ABF1D2A6F0CFA0EECD9AEECC97EECC97EFCD97EDCB
+        96B88183FF00FFFF00FFFF00FFFF00FFFF00FFAF7883F5E9DDFBEFE0F8EAD9F7
+        E6D2F6E4CDF5E1C8F4DEC2F4DCBCF3D9B6F2D7B1F1D4ACF1D2A6F0CFA0EECC99
+        EECC97EFCD97EDCB96B88183FF00FFFF00FFFF00FFFF00FFFF00FFB27B85F5EC
+        E3FBF2E6F9EDDEF8E9D7F7E7D2F6E4CDF5E1C7F5DFC1F4DCBBF3D9B6F2D7B1F1
+        D4ABF1D2A5F0CFA0EECC99EFCD97EDCB96B88183FF00FFFF00FFFF00FFFF00FF
+        FF00FFB78086F7EFE8FCF5ECFAEFE4F9ECDDF8E9D8F7E7D3F6E4CDF5E1C7F5DF
+        C1F4DCBCF3D9B7F1D7B0F1D4ABF0D2A5F0CF9FEFCD9AEDCA96B88183FF00FFFF
+        00FFFF00FFFF00FFFF00FFBB8388F8F2EEFDF8F1FAF3EAF9EFE3F9ECDDF8E9D8
+        F7E6D2F6E4CCF5E1C6F4DFC1F4DCBCF3D9B6F2D6B0F1D4AAF0D1A4F0D09FEDCB
+        98B88183FF00FFFF00FFFF00FFFF00FFFF00FFBE8689FAF6F4FEFCF8FCF6F0FA
+        F2EAFAF0E4F9EDDDF8E9D8F7E7D2F6E4CCF5E1C7F5DEC2F4DCBBF3D9B6F1D7B0
+        F1D4AAF1D2A5EECD9EB88184FF00FFFF00FFFF00FFFF00FFFF00FFC2898AFBF8
+        F7FFFFFEFEFAF6FCF5EFFAF2EAFAF0E3F9ECDDF9E9D8F8E7D2F6E4CDF5E1C7F5
+        DEC1F4DCBCF3D9B6F2D7B0F2D5ABEFCFA4B98285FF00FFFF00FFFF00FFFF00FF
+        FF00FFC68D8CFBF8F7FFFFFFFFFEFCFEF9F4FCF6EFFBF3EAFAEFE3F9EDDDF8E9
+        D7F8E7D2F6E4CDF5E1C6F5DEC1F4DCBBF3D9B5F2D7B0F0D2A8B98386FF00FFFF
+        00FFFF00FFFF00FFFF00FFCA908DFBF8F7FFFFFFFFFFFFFFFDFCFEF9F5FCF6F0
+        FAF2EAFAF0E4F9ECDDF8EAD8F8E6D2F6E4CCF6E1C6F5DEC0F4DCBBF4DAB6F1D5
+        AEB58286FF00FFFF00FFFF00FFFF00FFFF00FFCD938FFBF8F7FFFFFFFFFFFFFF
+        FFFFFFFEFCFEF9F5FCF6EFFBF2EAFAEFE3F9ECDDF8E9D7F8E6D1F6E3CBF5E1C6
+        F4DEC0F3DBBAD9C4A7A47E83FF00FFFF00FFFF00FFFF00FFFF00FFD19790FCF9
+        F7FFFFFFFFFFFFFFFFFFFFFFFFFFFEFCFEF9F5FCF5EFFBF2E9FAF0E3F9ECDDF8
+        E9D7F8E6D1F6E4CCEBD9C0D1C1ABB5A8979C7C81FF00FFFF00FFFF00FFFF00FF
+        FF00FFD59A91FCF9F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFCFDFAF5FCF6
+        EFFAF2E9FAEFE2FAEDDEFBEEDBE7DBC9C8BDAFBAB0A2B7AC9DA07E83FF00FFFF
+        00FFFF00FFFF00FFFF00FFDA9D93FCF9F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFEFCFDF9F4FCF5EEFCF5EBEEDDD1B28176AD8076AA7F76AB7F76AB7F
+        76AF7F77FF00FFFF00FFFF00FFFF00FFFF00FFDDA194FCF9F8FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFBFDF9F4FFFBF3E3CEC6B38176E3B585
+        E5AD6AE9A654EFA039B88285FF00FFFF00FFFF00FFFF00FFFF00FFE0A395FDFA
+        F8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFCFFFEF9E5
+        D1CBB38176EFC48DF3BB6DF8B450B88285FF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFE0A395FDFAF8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFE5D4D0B38176EFC38CF3BA6CB88285FF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFE0A395FFFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9DBD9B38176F1C58BB88285FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFDEA78CECD0BEEDD3C1EDD3C1EC
+        D1C1EAD0C1E8CEC0E6CCBFE4CBBEE1C9BEDFC7BDDDC5BDCEAEA6B38176B88285
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+      }
+      Layout = blGlyphTop
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 320
+      Height = 47
+      Top = 8
+      Width = 72
+      Caption = 'Excluir'
+      Glyph.Data = {
+        F6060000424DF806000000000000360000002800000018000000180000000100
+        18000000000000000000120B0000120B00000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FF0005B70005B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FF0005B70005B70005B7FF00FFFF00FFFF00FF0005B70005B70005
+        B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FF0005B70005B70005B7FF00FFFF00FFFF00FFFF00FF
+        0005B70005B70005B70005B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FF0005B70005B70005B70005B7FF00FFFF00FFFF
+        00FFFF00FFFF00FF0005B70005B70005B70005B70005B7FF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0005B70005B70005B70005B7FF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0005B70005B70005B70005B700
+        05B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0005B70005B70005B7
+        0005B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0006
+        F60005B70005B70005B70005B7FF00FFFF00FFFF00FFFF00FFFF00FF0005B700
+        05B70005B70005B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF0005B70005B70005B70005B7FF00FFFF00FF0005
+        B70005B70005B70005B70005B7FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0005B70005B70005B7
+        0005B70005B70005B70005B70005B70005B7FF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FF0005B70005B70006F60005B70006F60005B70005B7FF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FF0005B70005B70005B70006F60005B7FF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0005B70005B70006F60005B70005
+        B70006F60006F6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0005B70005B70006F6
+        0005B70006F60006F60006F60005B70006F6FF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0006F600
+        06F60006F60005B70006F6FF00FFFF00FF0006F60006F60006F60006F6FF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FF0006F60006F60005B70006F60006F6FF00FFFF00FFFF00FFFF00FF0006F600
+        06F60006F60006F6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FF0006F60006F60006F60006F60006F6FF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FF0006F60006F60006F6FF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FF0006F60006F60006F60006F60006F6FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0006F60006F60006F6FF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FF0006F60006F60006F60006F60006F6FF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF0006F6FF00FFFF00FFFF00FFFF00FFFF00FF0006F60006F60006F60006
+        F60006F6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0006F6
+        0006F60006F60006F6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FF0006F60006F60006F6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+      }
+      Layout = blGlyphTop
+    end
+  end
+end

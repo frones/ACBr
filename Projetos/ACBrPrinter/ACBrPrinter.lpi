@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="ACBrPrinter"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <CommandLineParams Value="NFCe 13140410706327000137650010000000381000000381-NFe.xml ACBrMonitor.ini"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="11">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="SDFLaz"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="ACBr_NFe"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+      </Item7>
+      <Item8>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="ACBr_SAT"/>
+      </Item9>
+      <Item10>
+        <PackageName Value="ACBrSerial"/>
+      </Item10>
+      <Item11>
+        <PackageName Value="LCL"/>
+      </Item11>
+    </RequiredPackages>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="ACBrPrinter.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrPrinter"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ACBrPrinter1.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DataModule1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <UnitName Value="ACBrPrinter1"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="configuracoes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfiguracoes"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="configuracoes"/>
+      </Unit2>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="ACBrPrinter"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerMessages>
+        <MsgFileName Value=""/>
+      </CompilerMessages>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

@@ -1,0 +1,278 @@
+unit ACBrPrinter1;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil,
+  Dialogs, Forms, IniFiles,
+  ACBrUtil, pcnConversao,
+  ACBrPosPrinter, ACBrSAT, ACBrNFe,
+  ACBrNFeDANFeRLClass, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrSATExtratoFortesFr, ACBrSATExtratoESCPOS;
+
+type
+
+  { TDataModule1 }
+
+  TDataModule1 = class(TDataModule)
+    ACBrNFe1: TACBrNFe;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
+    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrPosPrinter1: TACBrPosPrinter;
+    ACBrSAT1: TACBrSAT;
+    ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
+    ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { private declarations }
+    procedure ShowHowToUseAndFinalize;
+    procedure ReadConfigPosPrinter(FileConfig : String);
+    procedure ReadConfigNFeNFCe(FileConfig : String);
+    procedure ReadConfigSAT(FileConfig : String);
+  public
+    { public declarations }
+  end;
+
+var
+  DataModule1: TDataModule1;
+
+implementation
+
+uses configuracoes;
+
+{$R *.lfm}
+
+{ TDataModule1 }
+
+procedure TDataModule1.DataModuleCreate(Sender: TObject);
+var
+  frConfiguracoes: TfrConfiguracoes;
+  TipoRel, ArquivoImpressao, ArquivoConfiguracao : String;
+  ArqTexto : TStringList;
+begin
+  if Paramcount >= 1 then
+  begin
+     if UpperCase(ParamStr(1)) = '/C' then
+     begin
+       frConfiguracoes := TfrConfiguracoes.Create(Self);
+       frConfiguracoes.ShowModal;
+       frConfiguracoes.Free;
+       Application.Terminate;
+     end
+     else
+     begin
+       if Paramcount >= 1 then
+         TipoRel := UpperCase(ParamStr(1))
+       else
+         TipoRel := '';
+
+       if Paramcount >= 2 then
+         ArquivoImpressao := UpperCase(ParamStr(2))
+       else
+         ArquivoImpressao := '';
+
+       if Paramcount >= 3 then
+         ArquivoConfiguracao := UpperCase(ParamStr(3))
+       else
+         ArquivoConfiguracao := ''; //Pegar valor default
+
+       if EstaVazio(TipoRel) or EstaVazio(ArquivoImpressao) then
+         ShowHowToUseAndFinalize;
+
+       ReadConfigPosPrinter(ArquivoConfiguracao);
+
+       if not FileExistsUTF8(ArquivoImpressao) then
+       begin
+          MessageDlg('Arquivo '+ArquivoImpressao+' não encontrado.', mtError, [mbOK], 0);
+          Application.Terminate;
+       end;
+
+       if TipoRel = 'SAT' then
+       begin
+         ACBrSAT1.CFe.Clear;
+         ACBrSAT1.CFe.LoadFromFile(ArquivoImpressao);
+
+         ReadConfigSAT(ArquivoConfiguracao);
+
+         ACBrSAT1.ImprimirExtrato;
+       end
+       else if (TipoRel = 'NFE') or (TipoRel = 'NFCE') then
+       begin
+         ACBrNFe1.NotasFiscais.Clear;
+         ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoImpressao);
+
+         ReadConfigNFeNFCe(ArquivoConfiguracao);
+
+         ACBrNFe1.NotasFiscais.Imprimir;
+       end
+       else if (TipoRel = 'TEXTO') then
+       begin
+         ArqTexto := TStringList.Create;
+         try
+           ArqTexto.LoadFromFile(ArquivoImpressao);
+           ACBrPosPrinter1.Imprimir(ArqTexto.Text);
+
+         finally
+           ArqTexto.Free;
+         end;
+       end;
+
+       Application.Terminate;
+     end;
+  end
+  else
+  begin
+    ShowHowToUseAndFinalize;
+  end;
+end;
+
+procedure TDataModule1.ShowHowToUseAndFinalize;
+begin
+  MessageDlg('Para utilizar este aplicativo use a seguinte sintaxe:'+sLineBreak+
+             //'ACBrPrinter.exe Impressora TipoRel ArquivoImpressao'+sLineBreak+
+             'ACBrPrinter.exe TipoRel ArquivoImpressao'+sLineBreak+
+             'Onde: '+sLineBreak+
+             //'Impressora - Nome da impressora cadastrada no ACBrPrinter.'+sLineBreak+
+             'TipoRel - NFe, NFCe, SAT ou Texto.'+sLineBreak+
+             'Para configurar, use ACBrPrinter.exe /c', mtInformation, [mbOK], 0);
+  Application.Terminate;
+end;
+
+procedure TDataModule1.ReadConfigPosPrinter(FileConfig: String);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(FileConfig);
+  try
+    ACBrPosPrinter1.Desativar;
+    ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','ParamsString','');
+    ACBrPosPrinter1.Modelo             := TACBrPosPrinterModelo(INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo)));
+    ACBrPosPrinter1.Porta              := INI.ReadString('PosPrinter', 'Porta', ACBrPosPrinter1.Porta);
+    ACBrPosPrinter1.LinhasBuffer       := INI.ReadInteger('PosPrinter', 'LinhasBuffer', ACBrPosPrinter1.LinhasBuffer);
+    ACBrPosPrinter1.LinhasEntreCupons  := INI.ReadInteger('PosPrinter', 'LinhasPular', ACBrPosPrinter1.LinhasEntreCupons);
+    ACBrPosPrinter1.EspacoEntreLinhas  := INI.ReadInteger('PosPrinter', 'EspacoEntreLinhas', ACBrPosPrinter1.EspacoEntreLinhas);
+    ACBrPosPrinter1.ColunasFonteNormal := INI.ReadInteger('PosPrinter', 'Colunas', ACBrPosPrinter1.ColunasFonteNormal);
+    ACBrPosPrinter1.ControlePorta      := True;
+    ACBrPosPrinter1.PaginaDeCodigo     := TACBrPosPaginaCodigo(INI.ReadInteger('PosPrinter', 'PaginaDeCodigo', Integer(ACBrPosPrinter1.PaginaDeCodigo)));
+    ACBrPosPrinter1.IgnorarTags        := INI.ReadBool('PosPrinter', 'IgnorarTags', ACBrPosPrinter1.IgnorarTags);
+    ACBrPosPrinter1.TraduzirTags       := INI.ReadBool('PosPrinter', 'TraduzirTags', ACBrPosPrinter1.TraduzirTags);
+    ACBrPosPrinter1.ArqLOG             := INI.ReadString('PosPrinter', 'ArqLog', ACBrPosPrinter1.ArqLOG);
+
+    ACBrPosPrinter1.ConfigBarras.LarguraLinha  := INI.ReadInteger('Barras', 'Largura', ACBrPosPrinter1.ConfigBarras.LarguraLinha);
+    ACBrPosPrinter1.ConfigBarras.Altura        := INI.ReadInteger('Barras', 'Altura', ACBrPosPrinter1.ConfigBarras.Altura);
+    ACBrPosPrinter1.ConfigBarras.MostrarCodigo := INI.ReadBool('Barras', 'HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
+
+    ACBrPosPrinter1.ConfigQRCode.ErrorLevel    := INI.ReadInteger('QRCode', 'Tipo', ACBrPosPrinter1.ConfigQRCode.Tipo);
+    ACBrPosPrinter1.ConfigQRCode.LarguraModulo := INI.ReadInteger('QRCode', 'LarguraModulo', ACBrPosPrinter1.ConfigQRCode.LarguraModulo);
+    ACBrPosPrinter1.ConfigQRCode.Tipo          := INI.ReadInteger('QRCode', 'Tipo', ACBrPosPrinter1.ConfigQRCode.Tipo);
+
+    ACBrPosPrinter1.ConfigLogo.FatorX   := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
+    ACBrPosPrinter1.ConfigLogo.FatorY   := INI.ReadInteger('Logo', 'FatorY', ACBrPosPrinter1.ConfigLogo.FatorY);
+    ACBrPosPrinter1.ConfigLogo.KeyCode1 := INI.ReadInteger('Logo', 'KC1', ACBrPosPrinter1.ConfigLogo.KeyCode1);
+    ACBrPosPrinter1.ConfigLogo.KeyCode2 := INI.ReadInteger('Logo', 'KC2', ACBrPosPrinter1.ConfigLogo.KeyCode2);
+
+    ACBrNFe1.Configuracoes.Geral.Salvar := False;
+    ACBrNFe1.Configuracoes.Arquivos.Salvar := False;
+  finally
+    Ini.Free;
+  end;
+
+end;
+
+procedure TDataModule1.ReadConfigNFeNFCe(FileConfig: String);
+var
+  Ini: TIniFile;
+  OK: Boolean;
+begin
+  Ini := TIniFile.Create(FileConfig);
+  try
+    if ACBrNFe1.NotasFiscais.Count > 0 then
+    begin
+      if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+      begin
+        if Ini.ReadInteger('NFCe', 'Modelo', 1) = 0 then
+          ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
+        else
+          ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+        ACBrNFe1.DANFE.Impressora := Ini.ReadString('NFCe', 'ImpressoraPadrao', '0');
+      end
+      else
+      begin
+        ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+        ACBrNFe1.DANFE.Impressora := Ini.ReadString('NFe', 'Impressora', '0');
+      end;
+    end;
+
+    if ACBrNFe1.DANFE <> nil then
+    begin
+      ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(Ini.ReadInteger('NFe', 'DANFE', 0) + 1));
+      ACBrNFe1.DANFE.Logo := Ini.ReadString('DANFE', 'LogoMarca', '');
+      ACBrNFe1.DANFE.Sistema := Ini.ReadString('DANFE', 'SoftwareHouse', '');
+      ACBrNFe1.DANFE.Site := Ini.ReadString('DANFE', 'Site', '');
+      ACBrNFe1.DANFE.Email := Ini.ReadString('DANFE', 'Email', '');
+      ACBrNFe1.DANFE.Fax :=  Ini.ReadString('DANFE', 'Fax', '');
+      ACBrNFe1.DANFE.ImprimirDescPorc := Ini.ReadBool('DANFE', 'ImpDescPorc', False);
+      ACBrNFe1.DANFE.MostrarPreview := Ini.ReadBool('DANFE', 'MostrarPreview', False);
+      ACBrNFe1.DANFE.NumCopias := Ini.ReadInteger('DANFE', 'Copias', 1);
+      ACBrNFe1.DANFE.ProdutosPorPagina := Ini.ReadInteger('DANFE', 'ProdutosPorPagina', 0);
+      ACBrNFe1.DANFE.MargemInferior := Ini.ReadFloat('DANFE', 'Margem', 0.8);
+      ACBrNFe1.DANFE.MargemSuperior := Ini.ReadFloat('DANFE', 'MargemSup', 0.8);
+      ACBrNFe1.DANFE.MargemDireita  := Ini.ReadFloat('DANFE', 'MargemDir', 0.51);
+      ACBrNFe1.DANFE.MargemEsquerda := Ini.ReadFloat('DANFE', 'MargemEsq', 0.6);
+      ACBrNFe1.DANFE.PathPDF := Ini.ReadString('DANFE', 'PathPDF', PathWithDelim(ExtractFilePath(Application.ExeName))+'PDF');
+      ACBrNFe1.DANFE.CasasDecimais._qCom := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
+      ACBrNFe1.DANFE.CasasDecimais._vUnCom := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
+      ACBrNFe1.DANFE.ExibirResumoCanhoto := Ini.ReadBool('DANFE', 'ExibeResumo', False);
+      ACBrNFe1.DANFE.ImprimirTotalLiquido := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
+      ACBrNFe1.DANFE.FormularioContinuo := Ini.ReadBool('DANFE', 'PreImpresso', False);
+      ACBrNFe1.DANFE.MostrarStatus := Ini.ReadBool('DANFE', 'MostrarStatus', False);
+      ACBrNFe1.DANFE.ExpandirLogoMarca := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
+      ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := Ini.ReadInteger('DANFE', 'FonteCampos', 10);
+      ACBrNFe1.DANFE.LocalImpCanhoto := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
+
+      if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
+      begin
+        ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(Ini.ReadInteger('DANFE', 'Fonte', 0));
+        ACBrNFeDANFeRL1.LarguraCodProd := Ini.ReadInteger('DANFE', 'LarguraCodigoProduto', 54);
+        ACBrNFeDANFeRL1.ExibirEAN := Ini.ReadBool('DANFE', 'ExibirEAN', False);
+      end
+      else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+      begin
+        ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := Ini.ReadBool('NFCe', 'ImprimirItem1Linha', True);
+        ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
+      end;
+    end;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TDataModule1.ReadConfigSAT(FileConfig: String);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(FileConfig);
+  try
+    if INI.ReadBool('SATFortes','UsarFortes', False) then
+      ACBrSAT1.Extrato := ACBrSATExtratoFortes1
+    else
+      ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+
+    ACBrSATExtratoFortes1.LarguraBobina := INI.ReadInteger('SATFortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
+    ACBrSATExtratoFortes1.Margens.Topo  := INI.ReadInteger('SATFortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
+    ACBrSATExtratoFortes1.Margens.Fundo := INI.ReadInteger('SATFortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
+    ACBrSATExtratoFortes1.Margens.Esquerda := INI.ReadInteger('SATFortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
+    ACBrSATExtratoFortes1.Margens.Direita := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+    ACBrSATExtratoFortes1.MostrarPreview := INI.ReadBool('SATFortes','Preview',False);
+  finally
+    Ini.Free;
+  end;
+
+end;
+
+
+end.
+

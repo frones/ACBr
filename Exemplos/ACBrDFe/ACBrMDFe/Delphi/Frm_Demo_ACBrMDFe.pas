@@ -133,6 +133,9 @@ type
     btnEnviarMDFeEmail: TButton;
     btnGerarPDFEvento: TButton;
     ACBrMail1: TACBrMail;
+    Label29: TLabel;
+    edtPathSchemas: TEdit;
+    sbPathSchemas: TSpeedButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -159,6 +162,7 @@ type
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnEnviarMDFeEmailClick(Sender: TObject);
     procedure btnGerarPDFEventoClick(Sender: TObject);
+    procedure sbPathSchemasClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -252,6 +256,8 @@ begin
   Ini.WriteString( 'Email','Assunto', edtEmailAssunto.Text);
   Ini.WriteBool(   'Email','SSL'    , cbEmailSSL.Checked );
 
+  Ini.WriteString( 'Arquivos','PathSchemas', edtPathSchemas.Text);
+
   StreamMemo := TMemoryStream.Create;
   mmEmailMsg.Lines.SaveToStream(StreamMemo);
   StreamMemo.Seek(0,soFromBeginning);
@@ -330,6 +336,8 @@ begin
   edtEmailAssunto.Text  := Ini.ReadString( 'Email','Assunto', '');
   cbEmailSSL.Checked    := Ini.ReadBool(   'Email','SSL'    , False);
 
+  edtPathSchemas.Text  := Ini.ReadString( 'Arquivos','PathSchemas', '');
+
   StreamMemo := TMemoryStream.Create;
   Ini.ReadBinaryStream( 'Email','Mensagem',StreamMemo);
   mmEmailMsg.Lines.LoadFromStream(StreamMemo);
@@ -362,12 +370,15 @@ begin
    ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
  {$ENDIF}
 
+ ACBrMDFe1.Configuracoes.Certificados.VerificarValidade := False;
+
  // Configurações -> Arquivos
  ACBrMDFe1.Configuracoes.Arquivos.AdicionarLiteral := True;
  ACBrMDFe1.Configuracoes.Arquivos.EmissaoPathMDFe  := True;
  ACBrMDFe1.Configuracoes.Arquivos.SepararPorMes    := True;
  ACBrMDFe1.Configuracoes.Arquivos.PathMDFe         := Trim(edtPathLogs.Text);
  ACBrMDFe1.Configuracoes.Arquivos.Salvar           := True;
+ ACBrMDFe1.Configuracoes.Arquivos.PathSchemas      := Trim(edtPathSchemas.Text);
 
  PathMensal := ACBrMDFe1.Configuracoes.Arquivos.GetPathMDFe(0);
 
@@ -1120,6 +1131,18 @@ begin
     CC.Free;
     Evento.Free;
   end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.sbPathSchemasClick(Sender: TObject);
+var
+ Dir : string;
+begin
+ if Length(edtPathSchemas.Text) <= 0
+  then Dir := ExtractFileDir(application.ExeName)
+  else Dir := edtPathSchemas.Text;
+
+ if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP)
+  then edtPathSchemas.Text := Dir;
 end;
 
 end.

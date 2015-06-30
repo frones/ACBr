@@ -305,7 +305,7 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    ALayout := LayCTeRetRecepcao;
+    ALayout := LayCTeRecepcao;
 
     if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
     begin

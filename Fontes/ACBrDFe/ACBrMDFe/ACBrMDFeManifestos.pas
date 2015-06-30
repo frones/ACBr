@@ -294,7 +294,7 @@ begin
 
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
-    ALayout := LayMDFeRetRecepcao;
+    ALayout := LayMDFeRecepcao;
 
     ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
 
@@ -308,6 +308,8 @@ begin
         IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
         ErroValidacao));
     end;
+
+//    GerarException(ACBrStr(GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao)));
 
     MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro);
 

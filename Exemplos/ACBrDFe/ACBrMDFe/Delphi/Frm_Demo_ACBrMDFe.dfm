@@ -99,6 +99,34 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         TabOrder = 0
         object TabSheet1: TTabSheet
           Caption = 'Certificado'
+          object Label29: TLabel
+            Left = 0
+            Top = 152
+            Width = 108
+            Height = 13
+            Caption = 'Caminho dos Schemas'
+          end
+          object sbPathSchemas: TSpeedButton
+            Left = 227
+            Top = 168
+            Width = 23
+            Height = 24
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+              333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+              0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+              07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+              07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+              0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+              33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+              B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+              3BB33773333773333773B333333B3333333B7333333733333337}
+            NumGlyphs = 2
+            OnClick = sbPathSchemasClick
+          end
           object GroupBox2: TGroupBox
             Left = 0
             Top = 4
@@ -191,6 +219,13 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
               Height = 21
               TabOrder = 2
             end
+          end
+          object edtPathSchemas: TEdit
+            Left = 0
+            Top = 168
+            Width = 225
+            Height = 21
+            TabOrder = 1
           end
         end
         object TabSheet2: TTabSheet

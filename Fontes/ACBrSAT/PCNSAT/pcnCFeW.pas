@@ -409,7 +409,7 @@ begin
     Gerador.wCampo(tcStr, 'Q07', 'CST      ', 02, 02, 1, CSTPISTOStr(CFe.Det[i].Imposto.PIS.CST), DSC_CST);
     Gerador.wGrupo('/PISSN');
   end
-  else if CFe.Det[i].Imposto.PIS.CST in [pis01, pis02] then
+  else if CFe.Det[i].Imposto.PIS.CST in [pis01, pis02, pis05] then
   begin
     Gerador.wGrupo('PISAliq', 'Q02');
     Gerador.wCampo(tcStr, 'Q07', 'CST      ', 02, 02, 1, CSTPISTOStr(CFe.Det[i].Imposto.PIS.CST), DSC_CST);
@@ -507,7 +507,7 @@ begin
     Gerador.wCampo(tcStr, 'S07', 'CST      ', 02, 02, 1, CSTCOFINSToStr(CFe.Det[i].Imposto.COFINS.CST), DSC_CST);
     Gerador.wGrupo('/COFINSSN');
   end
-  else if CFe.Det[i].Imposto.COFINS.CST in [cof01, cof02] then
+  else if CFe.Det[i].Imposto.COFINS.CST in [cof01, cof02, cof05] then
   begin
     Gerador.wGrupo('COFINSAliq', 'S02');
     Gerador.wCampo(tcStr, 'S07', 'CST      ', 02, 02, 1, CSTCOFINSTOStr(CFe.Det[i].Imposto.COFINS.CST), DSC_CST);

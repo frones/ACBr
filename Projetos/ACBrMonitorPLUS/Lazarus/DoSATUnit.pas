@@ -185,7 +185,7 @@ begin
          ACBrSAT1.ImprimirExtrato;
        end
 
-      else if Cmd.Metodo = 'imprimerextratoresumido' then
+      else if Cmd.Metodo = 'imprimirextratoresumido' then
        begin
          PrepararImpressaoSAT;
          CarregarDadosVenda(cmd.Params(0));

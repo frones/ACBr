@@ -2503,6 +2503,7 @@ begin
   ACBrLCB1.Desativar;
   ACBrBAL1.Desativar;
   ACBrETQ1.Desativar;
+  ACBrPosPrinter1.Desativar;
   TCPServer.Desativar;
   TCPServerTC.Desativar;
 end;
@@ -5926,6 +5927,7 @@ procedure TFrmACBrMonitor.PrepararImpressaoSAT;
 begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
+    ConfiguraPosPrinter;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;

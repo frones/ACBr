@@ -59,7 +59,7 @@ type
 
   TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
                 LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
-                LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC);
+                LayCTeCadastro, LayCTeEvento, LayCTeEventoAN);
 
   TSchemaCTe = ( schErro, schCTe, schcancCTe, schInutCTe, schEventoCTe,
                  schconsReciCTe, schconsSitCTe, schconsStatServ, schconsCad,
@@ -210,10 +210,10 @@ begin
   Result := EnumeradoToStr(t,
     ['CTeRecepcao', 'CTeRetRecepcao', 'CTeCancelamento',
      'CTeInutilizacao', 'CTeConsultaProtocolo', 'CTeStatusServico',
-     'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoEPEC'],
+     'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoAN'],
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
-      LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC]);
+      LayCTeCadastro, LayCTeEvento, LayCTeEventoAN]);
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -221,10 +221,10 @@ begin
   Result := StrToEnumerado(ok, s,
     ['CTeRecepcao', 'CTeRetRecepcao', 'CTeCancelamento',
      'CTeInutilizacao', 'CTeConsultaProtocolo', 'CTeStatusServico',
-     'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoEPEC'],
+     'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoAN'],
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
-      LayCTeCadastro, LayCTeEvento, LayCTeEventoEPEC]);
+      LayCTeCadastro, LayCTeEvento, LayCTeEventoAN]);
 end;
 
 function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;

@@ -1976,7 +1976,7 @@ begin
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
   if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, teMultiModal]) then
-    FPLayout := LayCTeEventoEPEC
+    FPLayout := LayCTeEventoAN
   else
     FPLayout := LayCTeEvento;
 

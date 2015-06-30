@@ -309,8 +309,6 @@ begin
         ErroValidacao));
     end;
 
-//    GerarException(ACBrStr(GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao)));
-
     MDFeEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FMDFe.infMDFe.Versao), Erro);
 
     if not MDFeEhValida then

@@ -449,6 +449,7 @@ type
 
     FretConsNFeDest: TretConsNFeDest;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -482,6 +483,7 @@ type
 
     function GerarPathDownload(AItem :TRetNFeCollectionItem): String;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -548,6 +550,7 @@ type
 
     function GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -2613,6 +2616,27 @@ begin
   inherited Destroy;
 end;
 
+procedure TNFeConsNFeDest.DefinirURL;
+var
+  UF : String;
+  Versao: Double;
+begin
+  { Esse método é tratado diretamente pela RFB }
+
+  UF := 'AN';
+
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(TACBrNFe(FPDFeOwner).GetNomeModeloDFe, UF ,
+    FPConfiguracoesNFe.WebServices.Ambiente, LayOutToServico(FPLayout),
+    Versao, FPURL);
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
 procedure TNFeConsNFeDest.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'NfeConsultaDest';
@@ -2701,6 +2725,27 @@ begin
   FRetDownloadNFe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFeDownloadNFe.DefinirURL;
+var
+  UF : String;
+  Versao: Double;
+begin
+  { Esse método é tratado diretamente pela RFB }
+
+  UF := 'AN';
+
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(TACBrNFe(FPDFeOwner).GetNomeModeloDFe, UF ,
+    FPConfiguracoesNFe.WebServices.Ambiente, LayOutToServico(FPLayout),
+    Versao, FPURL);
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
 procedure TNFeDownloadNFe.DefinirServicoEAction;
@@ -2898,6 +2943,27 @@ begin
   FretDistDFeInt.Free;
 
   inherited;
+end;
+
+procedure TDistribuicaoDFe.DefinirURL;
+var
+  UF : String;
+  Versao: Double;
+begin
+  { Esse método é tratado diretamente pela RFB }
+
+  UF := 'AN';
+
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(TACBrNFe(FPDFeOwner).GetNomeModeloDFe, UF ,
+    FPConfiguracoesNFe.WebServices.Ambiente, LayOutToServico(FPLayout),
+    Versao, FPURL);
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
 procedure TDistribuicaoDFe.DefinirServicoEAction;

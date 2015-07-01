@@ -1416,7 +1416,7 @@ begin
               Space(1)                                                      + // 058 a 058 - Dígito verificador da agência
               PadLeft(OnlyNumber(CodigoCedente), 12, '0')                   + // 059 a 070 - Código do cedente
               PadRight(ContaDigito, 1, '0')                                 + // 071 a 071 - DV Conta
-              PadRight(AgenciaDigito, 1)                                    + // 072 a 072 - Dígito verificador da ag
+              Space(1)                                                      + // 072 a 072 - Dígito verificador da ag
               PadRight(Nome, 30)                                            + // 073 a 102 - Nome da empresa
               PadRight('SICREDI', 30)                                       + // 103 a 132 - Nome do banco = "SICREDI"
               Space(10)                                                     + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
@@ -1447,7 +1447,7 @@ begin
               Space(1)                                                      + // 059 a 059 - Dígito verificador da agência
               PadLeft(OnlyNumber(CodigoCedente), 12, '0')                   + // 060 a 071 - Código do cedente
               PadRight(ContaDigito,1)                                       + // 072 a 072 - Zeros
-              AgenciaDigito                                                 + // 073 a 073 - Dígito verificador da coop/ag/conta
+              Space(1)                                                      + // 073 a 073 - Dígito verificador da coop/ag/conta
               PadRight(Nome, 30)                                            + // 074 a 103 - Nome da empresa
               Space(40)                                                     + // 104 a 143 - Mensagem 1
               Space(40)                                                     + // 144 a 183 - Mensagem 2
@@ -1559,9 +1559,9 @@ begin
              'P'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                           + // 016 a 017 - Código de movimento remessa
-             PadRight(OnlyNumber(Agencia), 5,'0')                           + // 018 a 022 - Agência mantenedora da conta
+             PadLeft(OnlyNumber(Agencia), 5,'0')                            + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                       + // 023 a 023 - Dígito verificador da agência
-             PadRight(OnlyNumber(Conta), 12, '0')                           + // 024 a 035 - Número da conta corrente
+             PadLeft(OnlyNumber(Conta), 12, '0')                            + // 024 a 035 - Número da conta corrente
              PadLeft(OnlyNumber(ContaDigito), 1)                            + // 036 a 036 - Dígito verificador da conta
              Space(1)                                                       + // 037 a 037 - Dígito verificador da coop/ag/conta
              PadRight(NossoNumero + DigitoNossoNumero, 20, '0')             + // 038 a 057 - Identificação do título no banco
@@ -1578,11 +1578,11 @@ begin
              PadLeft(Especie, 2, '0')                                       + // 107 a 108 - Espécie do título
              AceiteStr                                                      + // 109 a 109 - Identificação de título aceito/não aceito
              FormatDateTime('ddmmyyyy', DataDocumento)                      + // 110 a 117 - Data da emissão do título
-             '1'                                                            + // 118 a 118 - Código do juro de mora
+             IfThen(ValorMoraJuros = 0, '3', '1')                           + // 118 a 118 - Código do juro de mora
              '00000000'                                                     + // 119 a 126 - Data do juro de mora
              IntToStrZero(Round(ValorMoraJuros * 100), 15)                  + // 127 a 141 - Juros de mora por dia/taxa
              '1'                                                            + // 142 a 142 - Código do desconto 1
-             FormatDateTime('ddmmyyyy', Vencimento)                         + // 143 a 150 - Data do desconto 1
+             IfThen(ValorDesconto = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento))                         + // 143 a 150 - Data do desconto 1
              IntToStrZero(Round(ValorDesconto * 100), 15)                   + // 151 a 165 - Valor percentual a ser concedido
              IntToStrZero(Round(ValorIOF * 100), 15)                        + // 166 a 180 - Valor do IOF a ser recolhido
              IntToStrZero(Round(ValorAbatimento * 100), 15)                 + // 181 a 195 - Valor do abatimento

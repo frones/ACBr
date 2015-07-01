@@ -2974,7 +2974,7 @@ begin
     edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', PathApplication+'Arqs');
 
     ACBrNFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
-    ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxPastaMensal.Checked;
+    ACBrNFe1.Configuracoes.Arquivos.SepararPorMes := cbxPastaMensal.Checked;
     ACBrNFe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
     ACBrNFe1.Configuracoes.Arquivos.EmissaoPathNFe := cbxEmissaoPathNFe.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SalvarCCeCanEvento :=

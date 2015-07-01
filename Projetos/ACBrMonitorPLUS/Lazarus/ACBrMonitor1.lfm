@@ -7175,9 +7175,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsDadosEmpresa
+                ActivePage = TabSheet1
                 Align = alClient
-                TabIndex = 1
+                TabIndex = 2
                 TabOrder = 0
                 object tsDanfe: TTabSheet
                   Caption = 'Danfe'
@@ -8732,9 +8732,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsDadosSAT
+            ActivePage = Impressao
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               Caption = 'Dados do SAT CFe'
@@ -9488,11 +9488,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 0
                 Height = 281
                 Top = 0
-                Width = 359
+                Width = 312
                 Align = alClient
                 Caption = 'Fortes'
                 ClientHeight = 259
-                ClientWidth = 355
+                ClientWidth = 308
                 TabOrder = 0
                 object seLargura: TSpinEdit
                   Left = 8
@@ -9611,14 +9611,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
               end
               object GroupBox8: TGroupBox
-                Left = 359
+                Left = 312
                 Height = 281
                 Top = 0
-                Width = 256
+                Width = 303
                 Align = alRight
                 Caption = 'EscPOS'
                 ClientHeight = 259
-                ClientWidth = 252
+                ClientWidth = 299
                 TabOrder = 1
                 object cbUsarEscPos: TRadioButton
                   Left = 8
@@ -9630,15 +9630,41 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 0
                 end
                 object Label137: TLabel
-                  Left = 32
+                  Left = 8
                   Height = 17
-                  Top = 64
+                  Top = 32
                   Width = 185
                   Caption = 'Configuração na aba PosPrinter'
                   Font.Color = 4067613
                   Font.Height = -13
                   ParentColor = False
                   ParentFont = False
+                end
+                object gbExtratoSAT: TGroupBox
+                  Left = 8
+                  Height = 77
+                  Top = 96
+                  Width = 280
+                  Caption = 'Impressão Extrato'
+                  ClientHeight = 55
+                  ClientWidth = 276
+                  TabOrder = 1
+                  object cbxImprimirItem1LinhaSAT: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 8
+                    Width = 218
+                    Caption = 'Imprimir itens somente em 1 linha'
+                    TabOrder = 0
+                  end
+                  object cbxImprimirDescAcresItemSAT: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 32
+                    Width = 244
+                    Caption = 'Imprime desconto/acréscimo por item'
+                    TabOrder = 1
+                  end
                 end
               end
             end
@@ -10174,6 +10200,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
+    ConfigBarras.Margem = 0
     InfoRodapeCupom.Imposto.ModoCompacto = False
     left = 432
     top = 592
@@ -10459,6 +10486,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -10542,6 +10570,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True
+    Configuracoes.WebServices.QuebradeLinha = '|'
     DANFE = ACBrNFeDANFeRL1
     left = 552
     top = 448
@@ -11600,6 +11629,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
     ConfigQRCode.Tipo = 2
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0

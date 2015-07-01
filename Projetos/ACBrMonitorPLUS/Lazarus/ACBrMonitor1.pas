@@ -188,7 +188,9 @@ type
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
     cbxImprimirDescAcresItemESCPOS: TCheckBox;
+    cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirItem1LinhaESCPOS: TCheckBox;
+    cbxImprimirItem1LinhaSAT: TCheckBox;
     cbxImprimirTributos: TCheckBox;
     cbxImpValLiq: TCheckBox;
     cbxIndRatISSQN: TComboBox;
@@ -383,6 +385,7 @@ type
     gbCEPTestar: TGroupBox;
     gbCHQDados: TGroupBox;
     gbDANFeESCPOS: TGroupBox;
+    gbExtratoSAT: TGroupBox;
     gbEmailDados: TGroupBox;
     gbIPFix: TGroupBox;
     gbLog: TGroupBox;
@@ -3012,6 +3015,8 @@ begin
     ACBrSAT1.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
+    ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
+    ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
 
     edtEmitCNPJ.Text := INI.ReadString('SATEmit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('SATEmit','IE','');
@@ -3683,6 +3688,8 @@ begin
     INI.WriteString('SAT','PathCFe',edSATPathArqs.Text);
 
     INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString);
+    INI.WriteBool('SATExtrato', 'ImprimeDescAcrescItem', cbxImprimirDescAcresItemSAT.Checked);
+    INI.WriteBool('SATExtrato', 'ImprimeEmUmaLinha', cbxImprimirItem1LinhaSAT.Checked);
 
     INI.WriteString('SATEmit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('SATEmit','IE',edtEmitIE.Text);
@@ -5928,6 +5935,8 @@ begin
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
     ConfiguraPosPrinter;
+    ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemSAT.Checked;
+    ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
@@ -6182,7 +6191,7 @@ begin
     ACBrNFe1.DANFE.MargemSuperior := StrToFloatDef(edtMargemSup.Text, 0.8);
     ACBrNFe1.DANFE.MargemDireita := StrToFloatDef(edtMargemDir.Text, 0.51);
     ACBrNFe1.DANFE.MargemEsquerda := StrToFloatDef(edtMargemEsq.Text, 0.6);
-    ACBrNFe1.DANFE.PathPDF := PathWithDelim( edtPathPDF.Text );
+    ACBrNFe1.DANFE.PathPDF := edtPathPDF.Text;
     ACBrNFe1.DANFE.CasasDecimais._qCom := rgCasasDecimaisQtd.ItemIndex + 2;
     ACBrNFe1.DANFE.CasasDecimais._vUnCom := spedtDecimaisVUnit.Value;
     ACBrNFe1.DANFE.ExibirResumoCanhoto := cbxExibeResumo.Checked;

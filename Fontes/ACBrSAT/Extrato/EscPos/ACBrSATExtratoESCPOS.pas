@@ -291,12 +291,12 @@ begin
            FormatFloatBr(CFe.Total.ICMSTot.vProd, '#,###,##0.00'),
            FPosPrinter.ColunasFonteCondensada, '|'));
 
-     if CFe.Total.ICMSTot.vDesc > 0 then
+     if Descontos > 0 then
         FPosPrinter.Buffer.Add('<c>'+PadSpace('Descontos|'+
            FormatFloatBr(Descontos, '-#,###,##0.00'),
            FPosPrinter.ColunasFonteCondensada, '|'));
 
-     if CFe.Total.ICMSTot.vOutro > 0 then
+     if Acrescimos > 0 then
         FPosPrinter.Buffer.Add('<c>'+ACBrStr(PadSpace('Acréscimos|'+
            FormatFloatBr(Acrescimos, '+#,###,##0.00'),
            FPosPrinter.ColunasFonteCondensada, '|')));

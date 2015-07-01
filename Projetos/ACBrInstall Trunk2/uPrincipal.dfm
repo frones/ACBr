@@ -1179,34 +1179,6 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 0
         Text = 'C:\ACBr'
       end
-      object ckbInstalarCapicom: TCheckBox
-        Left = 17
-        Top = 198
-        Width = 97
-        Height = 17
-        Caption = 'Instalar Capicom'
-        TabOrder = 5
-				Visible = False
-      end
-      object ckbInstalarOpenSSL: TCheckBox
-        Left = 17
-        Top = 221
-        Width = 97
-        Height = 17
-        Caption = 'Instalar OpenSSL'
-        TabOrder = 6
-				Visible = False
-      end
-      object ckbUtilizarOpenSSL: TCheckBox
-        Left = 17
-        Top = 175
-        Width = 304
-        Height = 17
-        Caption = 'Utilizar o OpenSSL ao inv'#233's da Capicom na NF-e e similares'
-        TabOrder = 4
-        OnClick = ckbUtilizarOpenSSLClick
-				Visible = False
-      end
       object rdgDLL: TRadioGroup
         Left = 41
         Top = 284

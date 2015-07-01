@@ -99,11 +99,8 @@ type
     ckbFecharTortoise: TCheckBox;
     btnVisualizarLogCompilacao: TSpeedButton;
     pnlInfoCompilador: TPanel;
-    ckbInstalarCapicom: TCheckBox;
-    ckbInstalarOpenSSL: TCheckBox;
     wizPgPacotes: TJvWizardInteriorPage;
     frameDpk: TframePacotes;
-    ckbUtilizarOpenSSL: TCheckBox;
     rdgDLL: TRadioGroup;
     ckbCopiarTodasDll: TCheckBox;
     ckbBCB: TCheckBox;
@@ -133,7 +130,6 @@ type
     procedure wizPgInstalacaoEnterPage(Sender: TObject;
       const FromPage: TJvWizardCustomPage);
     procedure rdgDLLClick(Sender: TObject);
-    procedure ckbUtilizarOpenSSLClick(Sender: TObject);
     procedure btnWCInfoClick(Sender: TObject);
   private
     FCountErros: Integer;
@@ -166,7 +162,6 @@ type
     function RegistrarActiveXServer(const AServerLocation: string;
       const ARegister: Boolean): Boolean;
     procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);//    procedure CopiarArquivoToSystem(const ANomeArquivo: String);
-    procedure ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
     procedure ExtrairDiretorioPacote(NomePacote: string);
     procedure WriteToTXT( const ArqTXT, AString : AnsiString;
       const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
@@ -207,62 +202,6 @@ begin
      end ;
   finally
      FS.Free ;
-  end;
-end;
-
-
-// configuraração para utilizar ou não o openssl ao compilar
-procedure TfrmPrincipal.ConfigurarParaUtilizarOpenSSL(const AUtilizar: Boolean);
-var
-  F: TStringList;
-  PathArquivo: String;
-
-  function BuscarTexto(const ATextoBusca: String; var ALinha: Integer): Boolean;
-  var
-    I: Integer;
-  begin
-    Result := False;
-    for I := 0 to F.Count - 1 do
-    begin
-      if Pos(UpperCase(ATextoBusca), UpperCase(F.Strings[I])) > 0 then
-      begin
-        ALinha := I;
-        Result := True;
-        Exit;
-      end;
-    end;
-  end;
-
-  procedure ComentarLinha(const ATextoBusca: String; const AComentar: Boolean);
-  var
-    Linha: Integer;
-  begin
-    if BuscarTexto(ATextoBusca, Linha) then
-    begin
-      if AComentar then
-        F.Strings[Linha] := '//' + StringReplace(F.Strings[Linha], '/', '', [rfReplaceAll])
-      else
-        F.Strings[Linha] := StringReplace(F.Strings[Linha], '/', '', [rfReplaceAll]);
-    end;
-  end;
-
-begin
-  PathArquivo :=
-    IncludeTrailingPathDelimiter(edtDirDestino.Text) +
-    'Fontes\ACBrComum\ACBr.inc';
-
-  F := TStringList.Create;
-  try
-    F.LoadFromFile(PathArquivo);
-    ComentarLinha('{$DEFINE ACBrNFeOpenSSL}',  not(AUtilizar));
-    ComentarLinha('{$DEFINE ACBrCTeOpenSSL}',  not(AUtilizar));
-    ComentarLinha('{$DEFINE ACBrNFSeOpenSSL}', not(AUtilizar));
-    ComentarLinha('{$DEFINE ACBrMDFeOpenSSL}', not(AUtilizar));
-    ComentarLinha('{$DEFINE ACBrGNREOpenSSL}', not(AUtilizar));
-
-    WriteToTXT(PathArquivo, F.Text, False, False);
-  finally
-    F.Free;
   end;
 end;
 
@@ -538,9 +477,6 @@ begin
     edtPlatform.ItemIndex      := edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
     edtDelphiVersion.ItemIndex := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
     ckbFecharTortoise.Checked  := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
-//    ckbInstalarCapicom.Checked := ArqIni.ReadBool('CONFIG', 'InstalarCapicom', True);
-//    ckbInstalarOpenSSL.Checked := ArqIni.ReadBool('CONFIG', 'InstalarOpenSSL', True);
-//    ckbUtilizarOpenSSL.Checked := ArqIni.ReadBool('CONFIG', 'UtilizarOpenSSL', False);
     rdgDLL.ItemIndex           := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
     ckbCopiarTodasDll.Checked  := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
     ckbBCB.Checked             := ArqIni.ReadBool('CONFIG','C++Builder',False);
@@ -569,9 +505,6 @@ begin
     ArqIni.WriteString('CONFIG', 'DelphiVersao', edtDelphiVersion.Text);
     ArqIni.WriteString('CONFIG', 'Plataforma', edtPlatform.Text);
     ArqIni.WriteBool('CONFIG', 'FecharTortoise', ckbFecharTortoise.Checked);
-//    ArqIni.WriteBool('CONFIG', 'InstalarCapicom', ckbInstalarCapicom.Checked);
-//    ArqIni.WriteBool('CONFIG', 'InstalarOpenSSL', ckbInstalarOpenSSL.Checked);
-//    ArqIni.WriteBool('CONFIG', 'UtilizarOpenSSL', ckbUtilizarOpenSSL.Checked);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
     ArqIni.WriteBool('CONFIG','CopiarTodasDLLs',ckbCopiarTodasDll.Checked);
     ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
@@ -967,13 +900,6 @@ begin
     Application.ProcessMessages;
     WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
 
-    // configurar o ACBr para utilizar o OpenSSL
-//    ConfigurarParaUtilizarOpenSSL(ckbUtilizarOpenSSL.Checked);
-//    pgbInstalacao.Position := pgbInstalacao.Position + 1;
-//    lstMsgInstalacao.Items.Add('Configurando a utilização do OpenSSL...');
-//    Application.ProcessMessages;
-//    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
-
     // Cria diretório de biblioteca da versão do delphi selecionada,
     // só será criado se não existir
     CreateDirectoryLibrarysNotExist;
@@ -1096,32 +1022,26 @@ begin
     lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
 
     // instalar capicom
-//    if ckbInstalarCapicom.Checked And (sDestino <> tdNone) then
-//    begin
-      try
-        InstalarCapicom;
-        MostrarMensagemInstalado('CAPICOM instalado com sucesso');
-      except
-        on E: Exception do
-        begin
-          MostrarMensagemInstalado('Ocorreu erro ao instalar a CAPICOM', E.Message);
-        end;
-      end;
-//    end;
+		try
+			InstalarCapicom;
+			MostrarMensagemInstalado('CAPICOM instalado com sucesso');
+		except
+			on E: Exception do
+			begin
+				MostrarMensagemInstalado('Ocorreu erro ao instalar a CAPICOM', E.Message);
+			end;
+		end;
 
     // instalar OpenSSL
-//    if ckbInstalarOpenSSL.Checked And (sDestino <> tdNone) then
-//    begin
-      try
-        InstalarOpenSSL;
-        MostrarMensagemInstalado('OPENSSL instalado com sucesso');
-      except
-        on E: Exception do
-        begin
-          MostrarMensagemInstalado('Ocorreu erro ao instalar a OPENSSL', E.Message);
-        end;
-      end;
-//    end;
+		try
+			InstalarOpenSSL;
+			MostrarMensagemInstalado('OPENSSL instalado com sucesso');
+		except
+			on E: Exception do
+			begin
+				MostrarMensagemInstalado('Ocorreu erro ao instalar a OPENSSL', E.Message);
+			end;
+		end;
 
     //instalar todas as "OUTRAS" DLLs
     if ckbCopiarTodasDll.Checked then
@@ -1414,13 +1334,6 @@ begin
     Add('Autor            : ' + TSVN_Class.WCInfo.Author);
     Add('Data:            : ' + TSVN_Class.WCInfo.Date);
   end;
-end;
-
-procedure TfrmPrincipal.ckbUtilizarOpenSSLClick(Sender: TObject);
-begin
-//  ckbInstalarOpenSSL.Enabled := not(ckbUtilizarOpenSSL.Checked);
-//  if ckbUtilizarOpenSSL.Checked then
-//    ckbInstalarOpenSSL.Checked := True;
 end;
 
 procedure TfrmPrincipal.wizPgObterFontesNextButtonClick(Sender: TObject;

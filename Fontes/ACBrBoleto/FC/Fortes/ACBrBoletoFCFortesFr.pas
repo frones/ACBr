@@ -468,7 +468,7 @@ begin
    LoadPortugueseStrings;
   {$ELSE}
    // Evitando mensagem de versão do fortes //
-   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
+//   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrBoletoFortes := TACBrBoletoFCFortesFr.Create(Self);

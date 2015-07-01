@@ -41,6 +41,8 @@
 |* 04/04/2013:  André Ferreira de Moraes
 |*   Inicio do desenvolvimento
 ******************************************************************************}
+{$I ACBr.inc}
+
 unit ACBrSATExtratoFortesFr;
 
 interface
@@ -108,8 +110,8 @@ type
     lDescValLiq: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
     lEmitCNPJ_IE_IMCan: TRLLabel;
-    lEndereco: TRLLabel;
-    lEnderecoCan: TRLLabel;
+    lEndereco: TRLMemo;
+    lEnderecoCan: TRLMemo;
     lFiller1: TRLLabel;
     lFiller2: TRLLabel;
     lFiller3: TRLLabel;
@@ -492,8 +494,10 @@ begin
       Endereco := Endereco + ', '+Emit.EnderEmit.nro;
     if (Emit.EnderEmit.xCpl <> '') then
       Endereco := Endereco + ' - '+Emit.EnderEmit.xCpl;
+
+    Endereco := Endereco + sLineBreak;
     if (Emit.EnderEmit.xBairro <> '') then
-      Endereco := Endereco + ' - '+Emit.EnderEmit.xBairro;
+      Endereco := Endereco + Emit.EnderEmit.xBairro;
     if (Emit.EnderEmit.xMun <> '') then
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
     if (Emit.EnderEmit.CEP <> 0) then
@@ -545,7 +549,7 @@ begin
 
     lNomeFantasia.Caption   := Emit.xFant ;
     lRazaoSocial.Caption    := Emit.xNome ;
-    lEndereco.Caption       := CompoemEnderecoCFe;
+    lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
     imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
 
@@ -794,7 +798,7 @@ begin
   begin
     lNomeFantasiaCan.Caption   := Emit.xFant ;
     lRazaoSocialCan.Caption    := Emit.xNome ;
-    lEnderecoCan.Caption       := CompoemEnderecoCFe;
+    lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;
     imgLogoCan.Picture.Assign( ACBrSATExtrato.PictureLogo );
 

@@ -6191,7 +6191,7 @@ begin
     ACBrNFe1.DANFE.MargemSuperior := StrToFloatDef(edtMargemSup.Text, 0.8);
     ACBrNFe1.DANFE.MargemDireita := StrToFloatDef(edtMargemDir.Text, 0.51);
     ACBrNFe1.DANFE.MargemEsquerda := StrToFloatDef(edtMargemEsq.Text, 0.6);
-    ACBrNFe1.DANFE.PathPDF := edtPathPDF.Text;
+    ACBrNFe1.DANFE.PathPDF := PathWithDelim(edtPathPDF.Text);
     ACBrNFe1.DANFE.CasasDecimais._qCom := rgCasasDecimaisQtd.ItemIndex + 2;
     ACBrNFe1.DANFE.CasasDecimais._vUnCom := spedtDecimaisVUnit.Value;
     ACBrNFe1.DANFE.ExibirResumoCanhoto := cbxExibeResumo.Checked;

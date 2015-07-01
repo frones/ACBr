@@ -6211,6 +6211,7 @@ begin
     begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
+	  ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaESCPOS.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem :=
         cbxImprimirDescAcresItemESCPOS.Checked;

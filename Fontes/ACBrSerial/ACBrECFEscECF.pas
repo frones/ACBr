@@ -48,7 +48,7 @@ uses Classes,
     ACBrECFClass, ACBrDevice;
 
 const
-    cEscECFMaxBuffer = 4096 ;
+    cEscECFMaxBuffer = 1024 ;
     cNumFalhasMax = 5;
 
 type

@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_SAT_Extrato_Fortes"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -15,13 +16,12 @@
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Extrato Cupom Fiscal Eletrônico SAT para Fortes Report - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="1"/>
-    <Files Count="2">
+    <Files Count="3">
       <Item1>
         <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas"/>
         <HasRegisterProc Value="True"/>
@@ -31,8 +31,11 @@
         <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.lfm"/>
         <Type Value="LFM"/>
       </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortes.pas"/>
+        <UnitName Value="ACBrSATExtratoFortes"/>
+      </Item3>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="3">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

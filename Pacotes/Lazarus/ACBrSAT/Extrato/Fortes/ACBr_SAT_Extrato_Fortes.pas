@@ -2,20 +2,20 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBr_SAT_Extrato_Fortes; 
+unit ACBr_SAT_Extrato_Fortes;
 
 interface
 
 uses
-   ACBrSATExtratoFortesFr, LazarusPackageIntf;
+  ACBrSATExtratoFortesFr, ACBrSATExtratoFortes, LazarusPackageIntf;
 
 implementation
 
-procedure Register; 
+procedure Register;
 begin
-  RegisterUnit('ACBrSATExtratoFortesFr', @ACBrSATExtratoFortesFr.Register); 
-end; 
+  RegisterUnit('ACBrSATExtratoFortesFr', @ACBrSATExtratoFortesFr.Register);
+end;
 
 initialization
-  RegisterPackage('ACBr_SAT_Extrato_Fortes', @Register); 
+  RegisterPackage('ACBr_SAT_Extrato_Fortes', @Register);
 end.

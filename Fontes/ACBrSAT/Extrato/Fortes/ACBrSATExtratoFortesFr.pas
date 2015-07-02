@@ -52,35 +52,23 @@ uses Classes, SysUtils,
        LResources,
      {$ENDIF}
      Forms, Graphics,
-     ACBrSATExtratoClass,
+     ACBrSATExtratoClass, ACBrSATExtratoFortes,
      pcnCFe, pcnCFeCanc, pcnConversao,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
      RLFilters, RLPrinters, Controls;
-
-const
-  CACBrSATExtratoFortes_Versao = '0.1.0' ;
 
 type
 
   { TACBrSATExtratoFortes }
 
-  TACBrSATExtratoFortes = class( TACBrSATExtratoClass )
+  TACBrSATExtratoFortes = class( TACBrSATExtratoFortesClass )
   private
-    fLarguraBobina: Integer;
-    fMargens: TACBrSATExtratoMargem;
   protected
     procedure Imprimir;
   public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
-
     procedure ImprimirExtrato(ACFe: TCFe); override;
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
-  published
-    property LarguraBobina : Integer read fLarguraBobina  write fLarguraBobina default 302;
-    property Margens       : TACBrSATExtratoMargem read fMargens write fMargens;
-    property PrinterName;
   end ;
 
   { TACBrSATExtratoFortesFr }
@@ -866,22 +854,6 @@ begin
 end;
 
 { TACBrSATExtratoFortes }
-
-constructor TACBrSATExtratoFortes.Create(AOwner: TComponent);
-begin
-  inherited create( AOwner );
-
-  fMargens := TACBrSATExtratoMargem.create;
-  fLarguraBobina := 302;
-  fpAbout := 'ACBrSATExtratoFortes ver: ' + CACBrSATExtratoFortes_Versao  ;
-end;
-
-destructor TACBrSATExtratoFortes.Destroy;
-begin
-  fMargens.Free;
-
-  inherited Destroy ;
-end;
 
 procedure TACBrSATExtratoFortes.Imprimir;
 var

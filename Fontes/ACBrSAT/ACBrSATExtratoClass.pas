@@ -76,7 +76,7 @@ type
    published
      property Topo     : Integer read fTopo     write fTopo     default 2;
      property Esquerda : Integer read fEsquerda write fEsquerda default 2;
-     property Fundo    : Integer read fFundo    write fFundo    default 20;
+     property Fundo    : Integer read fFundo    write fFundo    default 4;
      property Direita  : Integer read fDireita  write fDireita  default 2;
    end;
 
@@ -167,7 +167,7 @@ begin
   fDireita  := 2;
   fEsquerda := 2;
   fTopo     := 2;
-  fFundo    := 20;
+  fFundo    := 4;
 end;
 
 { TACBrSATExtratoClass }

@@ -44,6 +44,7 @@ requires
   ACBr_SAT;
 
 contains
-  ACBrSATExtratoFortesFr in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas';
+  ACBrSATExtratoFortesFr in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas',
+  ACBrSATExtratoFortes in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortes.pas';
 
 end.

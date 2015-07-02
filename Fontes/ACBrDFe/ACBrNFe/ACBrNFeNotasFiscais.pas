@@ -1360,7 +1360,6 @@ var
   end;
 
 begin
-  Result := False;
   N := PosNFe;
   while N > 0 do
   begin
@@ -1386,6 +1385,8 @@ begin
 
     N := PosNFe;
   end;
+
+  Result := Self.Count > 0;
 end;
 
 function TNotasFiscais.GravarXML(PathNomeArquivo: String): Boolean;

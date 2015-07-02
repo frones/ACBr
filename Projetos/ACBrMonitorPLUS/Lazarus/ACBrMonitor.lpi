@@ -148,7 +148,6 @@
       <Unit3>
         <Filename Value="CmdUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="CmdUnit"/>
       </Unit3>
       <Unit4>
         <Filename Value="ConfiguraSerial.pas"/>
@@ -160,7 +159,6 @@
       <Unit5>
         <Filename Value="DoACBrUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoACBrUnit"/>
       </Unit5>
       <Unit6>
         <Filename Value="DoBALUnit.pas"/>

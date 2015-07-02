@@ -3018,6 +3018,9 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
 
+    cbxImprimirDescAcresItemSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
+    cbxImprimirItem1LinhaSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;;
+
     edtEmitCNPJ.Text := INI.ReadString('SATEmit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('SATEmit','IE','');
     edtEmitIM.Text   := INI.ReadString('SATEmit','IM','');

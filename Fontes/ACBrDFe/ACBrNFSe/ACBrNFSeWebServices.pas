@@ -88,7 +88,7 @@ type
     procedure DefinirEnvelopeSoap; override;
     procedure InicializarDadosMsg;
     function ExtraiRetorno(TAGResposta: String): String;
-    function ExtraiNotasRetorno: String; 
+    function ExtraiNotasRetorno: Boolean; 
   public
     constructor Create(AOwner: TACBrDFe); override;
 
@@ -826,7 +826,7 @@ begin
     Result := Result + '</' + TAGResposta + '>';
 end;
 
-function TNFSeWebService.ExtraiNotasRetorno: String;
+function TNFSeWebService.ExtraiNotasRetorno: Boolean;
 var
   FRetListaNfse, FRetNfse, PathSalvar, NomeArq: String;
   i, j, k, p, ii: Integer;

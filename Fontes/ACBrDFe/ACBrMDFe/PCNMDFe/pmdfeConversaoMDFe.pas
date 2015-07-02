@@ -64,7 +64,7 @@ type
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
                      stMDFeDistDFeInt, stMDFeEnvioWebService);
 
-  TSituacaoMDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
+//  TSituacaoMDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
 const
 

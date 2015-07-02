@@ -140,7 +140,7 @@ type
     FdigVal: String;
     FdhRecbto: TDateTime;
     FnProt: String;
-    FcSitMDFe: TSituacaoMDFe;
+    FcSitMDFe: TSituacaoDFe;
   public
     property chMDFe: String           read FchMDFe   write FchMDFe;
     property CNPJCPF: String          read FCNPJCPF  write FCNPJCPF;
@@ -152,7 +152,7 @@ type
     property digVal: String           read FdigVal   write FdigVal;
     property dhRecbto: TDateTime      read FdhRecbto write FdhRecbto;
     property nProt: String            read FnProt    write FnProt;
-    property cSitMDFe: TSituacaoMDFe  read FcSitMDFe  write FcSitMDFe;
+    property cSitMDFe: TSituacaoDFe  read FcSitMDFe  write FcSitMDFe;
   end;
   (*
   TresEvento = class
@@ -506,7 +506,7 @@ begin
           FdocZip.Items[i].FresMDFe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
           FdocZip.Items[i].FresMDFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
           FdocZip.Items[i].FresMDFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-          FdocZip.Items[i].FresMDFe.FcSitMDFe  := StrToSituacaoNFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitMDFe'));
+          FdocZip.Items[i].FresMDFe.FcSitMDFe  := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitMDFe'));
         end;
 
         if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then

@@ -149,6 +149,8 @@ type
   TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
   TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
 
+  TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
+
 const
   TpcnTpEventoString : array[0..26] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
@@ -313,6 +315,9 @@ function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
 
 function UnidMedToStr(const t: TUnidMed): string;
 function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
+
+function SituacaoDFeToStr(const t: TSituacaoDFe): String;
+function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
 
 implementation
 
@@ -1211,6 +1216,18 @@ function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
 begin
   result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '05'],
    [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
+end;
+
+function SituacaoDFeToStr(const t: TSituacaoDFe): String;
+begin
+  Result := EnumeradoToStr(t, ['1', '2', '3', '3'], [snAutorizado,
+    snDenegado, snCancelado, snEncerrado]);
+end;
+
+function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '3'], [snAutorizado,
+    snDenegado, snCancelado, snEncerrado]);
 end;
 
 end.

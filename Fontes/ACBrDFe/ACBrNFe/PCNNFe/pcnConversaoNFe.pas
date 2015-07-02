@@ -79,7 +79,7 @@ type
   TpcnModeloDF = (moNFe, moNFCe);
   TpcnVersaoDF = (ve200, ve300, ve310);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
-  TpcnSituacaoNFe = (snAutorizado, snDenegado, snCancelada);
+//  TpcnSituacaoNFe = (snAutorizado, snDenegado, snCancelada);
 
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
@@ -102,8 +102,8 @@ function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
 function IndicadorNFeToStr(const t: TpcnIndicadorNFe): String;
 function StrToIndicadorNFe(out ok: Boolean; const s: String): TpcnIndicadorNFe;
 
-function SituacaoNFeToStr(const t: TpcnSituacaoNFe): String;
-function StrToSituacaoNFe(out ok: Boolean; const s: String): TpcnSituacaoNFe;
+//function SituacaoNFeToStr(const t: TpcnSituacaoNFe): String;
+//function StrToSituacaoNFe(out ok: Boolean; const s: String): TpcnSituacaoNFe;
 
 function ModeloDFToStr(const t: TpcnModeloDF): String;
 function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
@@ -238,7 +238,7 @@ begin
   Result := StrToEnumerado(ok, s, ['0', '1', '2'],
     [inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia]);
 end;
-
+(*
 function SituacaoNFeToStr(const t: TpcnSituacaoNFe): String;
 begin
   Result := EnumeradoToStr(t, ['1', '2', '3'], [snAutorizado,
@@ -250,7 +250,7 @@ begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3'], [snAutorizado,
     snDenegado, snCancelada]);
 end;
-
+*)
 function ModeloDFToStr(const t: TpcnModeloDF): String;
 begin
   Result := EnumeradoToStr(t, ['55', '65'], [moNFe, moNFCe]);

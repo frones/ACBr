@@ -152,7 +152,7 @@ uses
 {$IFDEF FPC}
  {$R ACBrNFSeServicos.rc}
 {$ELSE}
- {$R ACBrNFSeServicos.res ACBrNFSeServicos.rc}
+ {$R ACBrNFSeServicos.res}
 {$ENDIF}
 
 { TACBrNFSe }

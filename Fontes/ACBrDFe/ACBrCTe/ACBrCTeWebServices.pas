@@ -2368,11 +2368,11 @@ begin
 
   FretDistDFeInt := TretDistDFeInt.Create;
 
-  FPStatus := stMDFeDistDFeInt;
-  FPLayout := LayMDFeDistDFeInt;
-  FPArqEnv := 'con-dist-dfe';
-  FPArqResp := 'dist-dfe';
-  FPBodyElement := 'cteDistDFeInteresse';
+  FPStatus        := stCTeDistDFeInt;
+  FPLayout        := LayCTeDistDFeInt;
+  FPArqEnv        := 'con-dist-dfe';
+  FPArqResp       := 'dist-dfe';
+  FPBodyElement   := 'cteDistDFeInteresse';
   FPHeaderElement := '';
 end;
 

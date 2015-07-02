@@ -184,7 +184,7 @@ uses
 {$IFDEF FPC}
  {$R ACBrNFeServicos.rc}
 {$ELSE}
- {$R ACBrNFeServicos.res ACBrNFeServicos.rc}
+ {$R ACBrNFeServicos.res}
 {$ENDIF}
 
 { TACBrNFe }

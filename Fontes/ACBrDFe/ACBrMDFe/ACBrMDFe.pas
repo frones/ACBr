@@ -139,7 +139,7 @@ uses
 {$IFDEF FPC}
  {$R ACBrMDFeServicos.rc}
 {$ELSE}
- {$R ACBrMDFeServicos.res ACBrMDFeServicos.rc}
+ {$R ACBrMDFeServicos.res}
 {$ENDIF}
 
 { TACBrMDFe }

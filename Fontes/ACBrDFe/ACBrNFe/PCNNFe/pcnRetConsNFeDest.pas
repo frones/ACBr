@@ -74,7 +74,7 @@ type
     FIE: String;
     FcSitConf: TpcnSituacaoManifDest;
     FNSU: String;
-    FcSitNFe: TpcnSituacaoNFe;
+    FcSitNFe: TSituacaoDFe;
   public
     property NSU: String                     read FNSU      write FNSU;
     property chNFe: String                   read FchNFe    write FchNFe;
@@ -86,7 +86,7 @@ type
     property vNF: Double                     read FvNF      write FvNF;
     property digVal: String                  read FdigVal   write FdigVal;
     property dhRecbto: TDateTime             read FdhRecbto write FdhRecbto;
-    property cSitNFe: TpcnSituacaoNFe        read FcSitNFe  write FcSitNFe;
+    property cSitNFe: TSituacaoDFe           read FcSitNFe  write FcSitNFe;
     property cSitConf: TpcnSituacaoManifDest read FcSitConf write FcSitConf;
   end;
 
@@ -103,7 +103,7 @@ type
     FIE: String;
     FcSitConf: TpcnSituacaoManifDest;
     FNSU: String;
-    FcSitNFe: TpcnSituacaoNFe;
+    FcSitNFe: TSituacaoDFe;
   public
     property NSU: String                     read FNSU      write FNSU;
     property chNFe: String                   read FchNFe    write FchNFe;
@@ -115,7 +115,7 @@ type
     property vNF: Double                     read FvNF      write FvNF;
     property digVal: String                  read FdigVal   write FdigVal;
     property dhRecbto: TDateTime             read FdhRecbto write FdhRecbto;
-    property cSitNFe: TpcnSituacaoNFe        read FcSitNFe  write FcSitNFe;
+    property cSitNFe: TSituacaoDFe           read FcSitNFe  write FcSitNFe;
     property cSitConf: TpcnSituacaoManifDest read FcSitConf write FcSitConf;
   end;
 
@@ -304,7 +304,7 @@ begin
           (*IR20 *)Fret.Items[i].FresNFe.FvNF      := Leitor.rCampo(tcDe2, 'vNF');
           (*IR21 *)Fret.Items[i].FresNFe.FdigVal   := Leitor.rCampo(tcStr, 'digVal');
           (*IR22 *)Fret.Items[i].FresNFe.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-          (*IR23 *)Fret.Items[i].FresNFe.FcSitNFe  := StrToSituacaoNFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
+          (*IR23 *)Fret.Items[i].FresNFe.FcSitNFe  := StrToSituacaoDFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
           (*IR24 *)Fret.Items[i].FresNFe.FcSitConf := StrToSituacaoManifDest(ok, Leitor.rCampo(tcStr, 'cSitConf'));
         end;
 
@@ -324,7 +324,7 @@ begin
           (*IR34 *)Fret.Items[i].FresCanc.FvNF      := Leitor.rCampo(tcDe2, 'vNF');
           (*IR35 *)Fret.Items[i].FresCanc.FdigVal   := Leitor.rCampo(tcStr, 'digVal');
           (*IR36 *)Fret.Items[i].FresCanc.FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-          (*IR37 *)Fret.Items[i].FresCanc.FcSitNFe  := StrToSituacaoNFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
+          (*IR37 *)Fret.Items[i].FresCanc.FcSitNFe  := StrToSituacaoDFe(ok, Leitor.rCampo(tcStr, 'cSitNFe'));
           (*IR38 *)Fret.Items[i].FresCanc.FcSitConf := StrToSituacaoManifDest(ok, Leitor.rCampo(tcStr, 'cSitConf'));
         end;
 

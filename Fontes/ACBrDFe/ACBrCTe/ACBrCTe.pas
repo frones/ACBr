@@ -153,7 +153,7 @@ uses
 {$IFDEF FPC}
  {$R ACBrCTeServicos.rc}
 {$ELSE}
- {$R ACBrCTeServicos.res ACBrCTeServicos.rc}
+ {$R ACBrCTeServicos.res}
 {$ENDIF}
 
 { TACBrCTe }
@@ -744,6 +744,7 @@ begin
     DACTE.ImprimirINUTILIZACAOPDF(nil);
 end;
 
+{
 function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
   ANSU: String): Boolean;
 begin
@@ -757,5 +758,5 @@ begin
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
-
+}
 end.

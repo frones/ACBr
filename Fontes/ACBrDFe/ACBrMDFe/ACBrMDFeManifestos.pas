@@ -728,7 +728,6 @@ var
   end;
 
 begin
-  Result := False;
   N := PosMDFe;
   while N > 0 do
   begin
@@ -754,6 +753,8 @@ begin
 
     N := PosMDFe;
   end;
+
+  Result := Self.Count > 0;
 end;
 
 function TManifestos.GravarXML(PathNomeArquivo: String): Boolean;

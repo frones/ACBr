@@ -754,7 +754,6 @@ var
   end;
 
 begin
-  Result := False;
   N := PosCTe;
   while N > 0 do
   begin
@@ -780,6 +779,8 @@ begin
 
     N := PosCTe;
   end;
+
+  Result := Self.Count > 0;
 end;
 
 function TConhecimentos.GravarXML(PathNomeArquivo: String): Boolean;

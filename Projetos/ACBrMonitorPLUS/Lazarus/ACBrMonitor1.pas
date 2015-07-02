@@ -3651,8 +3651,7 @@ begin
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
     Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaESCPOS.Checked);
-    Ini.WriteBool('NFCe', 'ImprimirDescAcresItem',
-      cbxImprimirDescAcresItemESCPOS.Checked);
+    Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemESCPOS.Checked);
     Ini.WriteString('NFCe', 'ImpressoraPadrao', cbxImpressoraNFCe.Text);
 
     Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
@@ -6211,7 +6210,7 @@ begin
     begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
-	  ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
+      ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaESCPOS.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem :=
         cbxImprimirDescAcresItemESCPOS.Checked;

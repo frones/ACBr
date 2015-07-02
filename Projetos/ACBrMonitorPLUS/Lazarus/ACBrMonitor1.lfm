@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 277
+  Left = 419
   Height = 689
-  Top = 0
+  Top = 184
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsSat
+        ActivePage = tsNFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 17
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6428,9 +6428,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = DANFE
+            ActivePage = Diretorios
             Align = alClient
-            TabIndex = 4
+            TabIndex = 5
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -9643,7 +9643,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object gbExtratoSAT: TGroupBox
                   Left = 8
                   Height = 77
-                  Top = 96
+                  Top = 88
                   Width = 280
                   Caption = 'Impressão Extrato'
                   ClientHeight = 55
@@ -10486,7 +10486,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

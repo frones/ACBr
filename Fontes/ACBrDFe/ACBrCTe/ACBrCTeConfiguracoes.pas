@@ -61,6 +61,20 @@ type
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
   end;
 
+  { TDownloadConfCTe }
+
+  TDownloadConfCTe = class(TPersistent)
+  private
+    FPathDownload: String;
+    FSepararPorNome: Boolean;
+  public
+    Constructor Create;
+    procedure Assign(Source: TPersistent); override;
+  published
+    property PathDownload: String read FPathDownload write FPathDownload;
+    property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
+  end;
+
   { TArquivosConfCTe }
 
   TArquivosConfCTe = class(TArquivosConf)
@@ -71,13 +85,16 @@ type
     FPathCTe: String;
     FPathInu: String;
     FPathEvento: String;
+    FDownloadCTe: TDownloadConfCTe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); overload;
+    destructor Destroy; override;
 
     function GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
     function GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; Data: TDateTime = 0; CNPJ : String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
     property SalvarEvento: Boolean       read FSalvarEvento   write FSalvarEvento   default False;
@@ -85,6 +102,7 @@ type
     property PathCTe: String             read FPathCTe        write FPathCTe;
     property PathInu: String             read FPathInu        write FPathInu;
     property PathEvento: String          read FPathEvento     write FPathEvento;
+    property DownloadCTe: TDownloadConfCTe read FDownloadCTe write FDownloadCTe;
   end;
 
   { TConfiguracoesCTe }
@@ -183,18 +201,28 @@ begin
   FPathCTe                    := DeArquivosConfCTe.PathCTe;
   FPathInu                    := DeArquivosConfCTe.PathInu;
   FPathEvento                 := DeArquivosConfCTe.PathEvento;
+
+  FDownloadCTe.Assign(DeArquivosConfCTe.DownloadCTe);
 end;
 
 constructor TArquivosConfCTe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
+  FDownloadCTe := TDownloadConfCTe.Create;
   FEmissaoPathCTe := False;
   FSalvarEvento := False;
   FSalvarApenasCTeProcessados := False;
   FPathCTe := '';
   FPathInu := '';
   FPathEvento := '';
+end;
+
+destructor TArquivosConfCTe.Destroy;
+begin
+  FDownloadCTe.Free;
+
+  inherited;
 end;
 
 function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
@@ -229,6 +257,37 @@ begin
      ForceDirectories(Dir);
 
   Result := Dir;
+end;
+
+function TArquivosConfCTe.GetPathDownload(xNome, CNPJ: String): String;
+begin
+  if EstaVazio(FDownloadCTe.PathDownload) then
+     FDownloadCTe.PathDownload := PathSalvar;
+
+  if FDownloadCTe.SepararPorNome then
+     if NaoEstaVazio(xNome) then
+        FDownloadCTe.PathDownload := PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome);
+
+  Result := GetPath(FDownloadCTe.PathDownload, 'Down', CNPJ);
+end;
+
+{ TDownloadConfCTe }
+
+procedure TDownloadConfCTe.Assign(Source: TPersistent);
+begin
+  if Source is TDownloadConfCTe then
+  begin
+    FPathDownload := TDownloadConfCTe(Source).PathDownload;
+    FSepararPorNome := TDownloadConfCTe(Source).SepararPorNome;
+  end
+  else
+    inherited Assign(Source);
+end;
+
+constructor TDownloadConfCTe.Create;
+begin
+  FPathDownload := '';
+  FSepararPorNome := False;
 end;
 
 end.

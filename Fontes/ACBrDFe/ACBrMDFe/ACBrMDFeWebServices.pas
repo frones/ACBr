@@ -2135,6 +2135,7 @@ begin
   FConsulta := TMDFeConsulta.Create(FACBrMDFe);
   FEnvEvento := TMDFeEnvEvento.Create(FACBrMDFe, TACBrMDFe(FACBrMDFe).EventoMDFe);
   FConsMDFeNaoEnc := TMDFeConsultaMDFeNaoEnc.Create(FACBrMDFe);
+  FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrMDFe);
   FEnvioWebService := TMDFeEnvioWebService.Create(FACBrMDFe);
 end;
 
@@ -2147,6 +2148,7 @@ begin
   FConsulta.Free;
   FEnvEvento.Free;
   FConsMDFeNaoEnc.Free;
+  FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;

@@ -48,7 +48,7 @@ uses
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTeClass,ACBrDFeException,
   pcteCTe, pcnConversao, pcteConversaoCTe,
-  pcteEnvEventoCTe, pcteInutCTe,
+  pcteEnvEventoCTe, pcteInutCTe, pcteRetDistDFeInt,
   ACBrDFeUtil, ACBrUtil;
 
 //  Forms,
@@ -72,6 +72,7 @@ type
     FConhecimentos: TConhecimentos;
     FEventoCTe: TEventoCTe;
     FInutCTe: TInutCTe;
+    FRetDistDFeInt: TRetDistDFeInt;
     FStatus: TStatusACBrCTe;
     FWebServices: TWebServices;
 
@@ -125,6 +126,7 @@ type
     property Conhecimentos: TConhecimentos read FConhecimentos write FConhecimentos;
     property EventoCTe: TEventoCTe         read FEventoCTe     write FEventoCTe;
     property InutCTe: TInutCTe             read FInutCTe       write FInutCTe;
+    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrCTe        read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrCTe);
@@ -133,6 +135,9 @@ type
     procedure ImprimirEventoPDF;
     procedure ImprimirInutilizacao;
     procedure ImprimirInutilizacaoPDF;
+    // Método implementando acreditando que futuramente a SEFAZ vai disponibilizar
+    // conforme fez para a NF-e e MDF-e
+//    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesCTe read GetConfiguracoes write SetConfiguracoes;
@@ -160,6 +165,7 @@ begin
   FConhecimentos := TConhecimentos.Create(Self, Conhecimento);
   FEventoCTe := TEventoCTe.Create;
   FInutCTe := TInutCTe.Create;
+  FRetDistDFeInt := TRetDistDFeInt.Create;
   FWebServices := TWebServices.Create(Self);
 end;
 
@@ -168,6 +174,7 @@ begin
   FConhecimentos.Free;
   FEventoCTe.Free;
   FInutCTe.Free;
+  FRetDistDFeInt.Free;
   FWebServices.Free;
 
   inherited;
@@ -735,6 +742,20 @@ begin
     raise EACBrCTeException.Create('Componente DACTE não associado.')
   else
     DACTE.ImprimirINUTILIZACAOPDF(nil);
+end;
+
+function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
+  ANSU: String): Boolean;
+begin
+  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+  WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
+  WebServices.DistribuicaoDFe.ultNSU := AultNSU;
+  WebServices.DistribuicaoDFe.NSU := ANSU;
+
+  Result := WebServices.DistribuicaoDFe.Executar;
+
+  if not Result then
+    GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
 
 end.

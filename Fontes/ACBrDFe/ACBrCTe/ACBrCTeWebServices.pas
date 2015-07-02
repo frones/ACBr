@@ -49,7 +49,7 @@ uses
   pcteCTe,
   pcteRetConsReciCTe, pcteRetConsCad, pcnAuxiliar, pcnConversao, pcteConversaoCTe,
   pcteProcCte, pcteRetCancCTe, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
-  pcteRetConsSitCTe, pcteRetEnvCTe,
+  pcteRetConsSitCTe, pcteRetEnvCTe, pcteDistDFeInt, pcteRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes;
 
 const
@@ -441,6 +441,41 @@ type
     property EventoRetorno: TRetEventoCTe read FEventoRetorno;
   end;
 
+  { TDistribuicaoDFe }
+
+  TDistribuicaoDFe = class(TCTeWebService)
+  private
+    Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
+    FcUFAutor: integer;
+    FCNPJCPF: String;
+    FultNSU: String;
+    FNSU: String;
+
+    FretDistDFeInt: TretDistDFeInt;
+
+    function GerarPathDistribuicao(AItem: TdocZipCollectionItem): String;
+  protected
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgLog: String; override;
+    function GerarMsgErro(E: Exception): String; override;
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+    destructor Destroy; override;
+
+    property versao: String read Fversao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb;
+    property cUFAutor: integer read FcUFAutor write FcUFAutor;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property ultNSU: String read FultNSU write FultNSU;
+    property NSU: String read FNSU write FNSU;
+
+    property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
+  end;
+
   { TCTeEnvioWebService }
 
   TCTeEnvioWebService = class(TCTeWebService)
@@ -480,6 +515,7 @@ type
     FInutilizacao: TCTeInutilizacao;
     FConsultaCadastro: TCTeConsultaCadastro;
     FEnvEvento: TCTeEnvEvento;
+    FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TCTeEnvioWebService;
   public
     constructor Create(AOwner: TACBrDFe); overload;
@@ -499,6 +535,7 @@ type
     property Inutilizacao: TCTeInutilizacao read FInutilizacao write FInutilizacao;
     property ConsultaCadastro: TCTeConsultaCadastro read FConsultaCadastro write FConsultaCadastro;
     property EnvEvento: TCTeEnvEvento read FEnvEvento write FEnvEvento;
+    property DistribuicaoDFe: TDistribuicaoDFe read FDistribuicaoDFe write FDistribuicaoDFe;
     property EnvioWebService: TCTeEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -2323,6 +2360,132 @@ begin
   Result := IntToStr(FEvento.idLote);
 end;
 
+{ TDistribuicaoDFe }
+
+constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
+begin
+  inherited Create(AOwner);
+
+  FretDistDFeInt := TretDistDFeInt.Create;
+
+  FPStatus := stMDFeDistDFeInt;
+  FPLayout := LayMDFeDistDFeInt;
+  FPArqEnv := 'con-dist-dfe';
+  FPArqResp := 'dist-dfe';
+  FPBodyElement := 'cteDistDFeInteresse';
+  FPHeaderElement := '';
+end;
+
+destructor TDistribuicaoDFe.Destroy;
+begin
+  FretDistDFeInt.Free;
+
+  inherited;
+end;
+
+procedure TDistribuicaoDFe.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'CTeDistribuicaoDFe';
+  FPSoapAction := FPServico + '/cteDistDFeInteresse';
+end;
+
+procedure TDistribuicaoDFe.DefinirDadosMsg;
+var
+  DistDFeInt: TDistDFeInt;
+begin
+  DistDFeInt := TDistDFeInt.Create;
+  try
+    DistDFeInt.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    DistDFeInt.cUFAutor := FcUFAutor;
+    DistDFeInt.CNPJCPF := FCNPJCPF;
+    DistDFeInt.ultNSU := FultNSU;
+    DistDFeInt.NSU := FNSU;
+    DistDFeInt.Versao := FPVersaoServico;
+    DistDFeInt.GerarXML;
+
+    FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
+  finally
+    DistDFeInt.Free;
+  end;
+end;
+
+function TDistribuicaoDFe.TratarResposta: Boolean;
+var
+  I: integer;
+  AXML, NomeArq: String;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
+
+  // Limpando variaveis internas
+  FretDistDFeInt.Free;
+  FretDistDFeInt := TRetDistDFeInt.Create;
+
+  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
+  FretDistDFeInt.LerXml;
+
+  FPMsg := FretDistDFeInt.xMotivo;
+  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
+
+  for I := 0 to FretDistDFeInt.docZip.Count - 1 do
+  begin
+    AXML := FretDistDFeInt.docZip.Items[I].XML;
+    NomeArq := '';
+    if (AXML <> '') then
+    begin
+      case FretDistDFeInt.docZip.Items[I].schema of
+        (*
+        schresCTe:
+          NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-resCTe.xml';
+        schresEvento:
+          NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
+             FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
+             Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+             '-resEventoCTe.xml';
+        *)
+        schprocCTe:
+          NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
+        schprocEventoCTe:
+          NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
+            '-procEventoCTe.xml';
+      end;
+
+      if (FPConfiguracoesCTe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+        FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+    end;
+  end;
+end;
+
+function TDistribuicaoDFe.GerarMsgLog: String;
+begin
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'Resposta: %s ' + LineBreak +
+                           'Último NSU: %s ' + LineBreak +
+                           'Máximo NSU: %s ' + LineBreak),
+                   [FretDistDFeInt.versao, TpAmbToStr(FretDistDFeInt.tpAmb),
+                    FretDistDFeInt.verAplic, IntToStr(FretDistDFeInt.cStat),
+                    FretDistDFeInt.xMotivo,
+                    IfThen(FretDistDFeInt.dhResp = 0, '',
+                           FormatDateTimeBr(RetDistDFeInt.dhResp)),
+                    FretDistDFeInt.ultNSU, FretDistDFeInt.maxNSU]);
+end;
+
+function TDistribuicaoDFe.GerarMsgErro(E: Exception): String;
+begin
+  Result := ACBrStr('WebService Distribuição de DFe:' + LineBreak +
+                    '- Inativo ou Inoperante tente novamente.');
+end;
+
+function TDistribuicaoDFe.GerarPathDistribuicao(
+  AItem: TdocZipCollectionItem): String;
+begin
+  Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
+                                                        AItem.resCTe.CNPJCPF);
+end;
+
 { TCTeEnvioWebService }
 
 constructor TCTeEnvioWebService.Create(AOwner: TACBrDFe);
@@ -2400,6 +2563,7 @@ begin
   FInutilizacao := TCTeInutilizacao.Create(FACBrCTe);
   FConsultaCadastro := TCTeConsultaCadastro.Create(FACBrCTe);
   FEnvEvento := TCTeEnvEvento.Create(FACBrCTe, TACBrCTe(FACBrCTe).EventoCTe);
+  FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrCTe);
   FEnvioWebService := TCTeEnvioWebService.Create(FACBrCTe);
 end;
 
@@ -2413,6 +2577,7 @@ begin
   FInutilizacao.Free;
   FConsultaCadastro.Free;
   FEnvEvento.Free;
+  FDistribuicaoDFe.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;

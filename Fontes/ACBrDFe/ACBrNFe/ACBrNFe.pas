@@ -536,8 +536,6 @@ begin
     Result := urlUF + '&' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode
   else
     Result := urlUF + '?' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
-//  Result := urlUF + '?' + sEntrada + cIdCSC + '&cHashQRCode=' + cHashQRCode;
-
 end;
 
 procedure TACBrNFe.SetStatus(const stNewStatus: TStatusACBrNFe);

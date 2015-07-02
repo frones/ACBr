@@ -109,16 +109,10 @@ type
     FImprimirDetalhamentoEspecifico: Boolean;
     FNFeCancelada: Boolean;
     FLocalImpCanhoto: Integer;
-    // Incluido por Italo em 27/03/2014
-    // Destinado exclusivamente ao DANFE da NFC-e
-    FImprimeItens: Boolean;
-
-    // Incluido por Edilson Alves de Oliveira em 10/10/2014
-    // Destinado exclusivamente ao DANFE da NFC-e
-    FViaConsumidor : Boolean;
+    FImprimeItens: Boolean;    // Destinado exclusivamente ao DANFE da NFC-e
+    FViaConsumidor : Boolean;  // Destinado exclusivamente ao DANFE da NFC-e
     FvTroco: Currency;
 
-    // Incluido por Leandro da Silva Alves em 17/04/2015
     FTributosSeparadamente : Boolean; //informação dos tributos separadamente
     FvTribFed: Currency; //total tributos federais
     FvTribEst: Currency; //total tributos estaduais

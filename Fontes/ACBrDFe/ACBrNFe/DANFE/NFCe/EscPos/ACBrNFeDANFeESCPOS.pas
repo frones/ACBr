@@ -135,6 +135,10 @@ begin
   inherited Create(AOwner);
 
   FPosPrinter := Nil;
+
+  FImprimeEmUmaLinha := True;
+  FImprimeDescAcrescItem := True;
+  FUsaCodigoEanImpressao := False;
 end;
 
 destructor TACBrNFeDANFeESCPOS.Destroy;

@@ -510,7 +510,7 @@ begin
 
             case oLeitorInfZip.rCampo(tcInt, 'cStat') of
               100: FdocZip.Items[i].FresNFe.FcSitNFe := snAutorizado;
-              101: FdocZip.Items[i].FresNFe.FcSitNFe := snCancelada;
+              101: FdocZip.Items[i].FresNFe.FcSitNFe := snCancelado;
               110: FdocZip.Items[i].FresNFe.FcSitNFe := snDenegado;
             end;
           end;

@@ -36,7 +36,7 @@ interface
 uses
   SysUtils, Classes, Forms,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSeR, ACBrUtil, ACBrDFeUtil;
+  pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil, ACBrDFeUtil;
 
 type
 
@@ -258,7 +258,7 @@ end;
 constructor TRetornoNFSe.Create;
 begin
   FLeitor                 := TLeitor.Create;
-  FListaNfse              := TGerarListaNfse.Create;
+  FListaNfse              := TListaNfse.Create;
   FPathArquivoMunicipios  := '';
   FPathArquivoTabServicos := '';
 end;
@@ -273,10 +273,12 @@ end;
 
 function TRetornoNFSe.LerXml: boolean;
 var
+  NFSe: TNFSe;
   NFSeLida: TNFSeR;
   VersaodoXML: String;
   ProtocoloTemp, NumeroLoteTemp: String;
   DataRecebimentoTemp:Tdatetime;
+  k, i: Integer;
 begin
   Result := True;
 
@@ -325,7 +327,8 @@ begin
               ((Provedor in [proActcon]) and (Leitor.rExtrai(4, 'Nfse', '', i + 1) <> '')) do
         begin
           // Ler o Grupo da TAG <Nfse> *****************************************
-          NFSeLida := TNFSeR.Create;
+          NFSe := TNFSe.Create;
+          NFSeLida := TNFSeR.Create(NFSe);
           try
             NFSeLida.VersaoXML := VersaodoXML;
             NFSeLida.Provedor := Provedor;
@@ -340,26 +343,16 @@ begin
             ListaNFSe.FCompNFSe[i].FNFSe.dhRecebimento := DataRecebimentoTemp;
             ListaNFSe.FCompNFSe[i].FNFSe.Protocolo     := ProtocoloTemp;
 
-            ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID := ''; //NFSeLida. . trim(Leitor.rAtributo('InfNFSe Id='));
+            ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID := NFSeLida.NFSe.InfID.ID;
+            ListaNFSe.FCompNFSe[i].FNFSe.Numero   := NFSeLida.NFSe.Numero;
+            ListaNFSe.FCompNFSe[i].FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;
+            ListaNFSe.FCompNFSe[i].FNFSe.DataEmissao := NFSeLida.NFSe.DataEmissao;
+            ListaNFSe.FCompNFSe[i].FNFSe.dhRecebimento := NFSeLida.NFSe.dhRecebimento;
+
 (*
             // Grupo da TAG <InfNFSe> *****************************************************
             if Leitor.rExtrai(5, 'InfNFSe') <> ''
              then begin
-              ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID := trim(Leitor.rAtributo('InfNFSe Id='));
-              if ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID = ''
-               then begin
-                ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID := trim(Leitor.rAtributo('InfNFSe id='));
-                if ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID = ''
-                 then ListaNFSe.FCompNFSe[i].FNFSe.InfID.ID := Leitor.rCampo(tcStr, 'Numero');
-               end;
-              ListaNFSe.FCompNFSe[i].FNFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
-              ListaNFSe.FCompNFSe[i].FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-              if FProvedor in [proFreire, proVitoria]
-                then ListaNFSe.FCompNFSe[i].FNFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
-                else ListaNFSe.FCompNFSe[i].FNFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
-
-              if ListaNFSe.FCompNFSe[i].FNFSe.dhRecebimento = 0 then
-                ListaNFSe.FCompNFSe[i].FNFSe.dhRecebimento := ListaNFSe.FCompNFSe[i].FNFSe.DataEmissao;
 
               ListaNFSe.FCompNFSe[i].FNFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
               ListaNFSe.FCompNFSe[i].FNFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
@@ -718,9 +711,9 @@ begin
             ListaNFSe.FCompNFSe[i].FNFSe.NFSeSubstituidora := Leitor.rCampo(tcStr, 'NFSeSubstituidora');
            end;
 *)
-            end;
           finally
              NFSeLida.Free;
+             NFSe.Free;
           end;
         end;
       end;

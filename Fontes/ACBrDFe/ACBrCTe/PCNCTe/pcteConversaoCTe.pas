@@ -129,9 +129,6 @@ function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoCTe;
 function FinCTeToStr(const t: TpcnFinalidadeCTe): String;
 function StrToFinCTe(out ok: Boolean; const s: String): TpcnFinalidadeCTe;
 
-function SituacaoCTeToStr(const t: TSituacaoDFe): String;
-function StrToSituacaoCTe(out ok: Boolean; const s: String): TSituacaoDFe;
-
 function StrToVersaoCTe(out ok: Boolean; const s: String): TVersaoCTe;
 function VersaoCTeToStr(const t: TVersaoCTe): String;
 
@@ -294,18 +291,6 @@ function StrToFinCTe(out ok: Boolean; const s: String): TpcnFinalidadeCTe;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
     [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
-end;
-
-function SituacaoCTeToStr(const t: TSituacaoDFe): String;
-begin
-  Result := EnumeradoToStr(t, ['1', '2', '3'], [snAutorizado,
-    snDenegado, snCancelado]);
-end;
-
-function StrToSituacaoCTe(out ok: Boolean; const s: String): TSituacaoDFe;
-begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3'], [snAutorizado,
-    snDenegado, snCancelado]);
 end;
 
 function StrToVersaoCTe(out ok: Boolean; const s: String): TVersaoCTe;

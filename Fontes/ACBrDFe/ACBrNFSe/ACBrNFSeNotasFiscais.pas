@@ -56,13 +56,14 @@ type
     FNFSeR: TNFSeR;
 
     FXML: String;
+    FXMLNFSe: String;
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
 
-    function GetConfirmada: Boolean;
+    FConfirmada: Boolean;
     function GetProcessada: Boolean;
 
     function GetMsg: String;
@@ -98,9 +99,10 @@ type
     property NFSe: TNFSe read FNFSe;
 
     property XML: String read FXML;
+    property XMLNFSe: String read FXMLNFSe write FXMLNFSe;
     property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
     property XMLAssinado: String read FXMLAssinado write FXMLAssinado;
-    property Confirmada: Boolean read GetConfirmada;
+    property Confirmada: Boolean read FConfirmada write FConfirmada;
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
@@ -490,12 +492,6 @@ begin
     (Copy(NFSe.infNFSe.ID, 39, 8) <> IntToStrZero(NFSe.Ide.cNF, 8)));
 *)
  Result := True;
-end;
-
-function NotaFiscal.GetConfirmada: Boolean;
-begin
-//  Result := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).CstatConfirmada(
-//    FNFSe.procNFSe.cStat);
 end;
 
 function NotaFiscal.GetProcessada: Boolean;

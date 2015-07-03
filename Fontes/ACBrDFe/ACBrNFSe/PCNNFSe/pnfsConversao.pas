@@ -1373,6 +1373,7 @@ begin
   4310801, // Ivoti/RS
   4313300, // Nova Prata/RS
   4314803, // Portao/RS
+  4319505, // Sao Sebastiao Do Cai/RS
   4320404, // Serafina Correa/RS
   4322806  // Veranopolis/RS
          : Provedor := 'Tecnos';

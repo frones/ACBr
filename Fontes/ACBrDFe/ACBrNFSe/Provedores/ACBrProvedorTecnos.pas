@@ -190,6 +190,11 @@ begin
             ConfigURL.ProNomeCidade := 'portao.nfse-tecnos.com.br';
             sHTTPPro := 'http://';
            end;
+  4319505: begin // São Sebastião do Caí/RS
+            ConfigURL.HomNomeCidade := 'homologacai.nfse-tecnos.com.br';
+            ConfigURL.ProNomeCidade := 'saosebastiaodocai.nfse-tecnos.com.br';
+            sHTTPPro := 'http://';
+           end;
   4320404: begin // Serafina Correa/RS
             ConfigURL.HomNomeCidade := 'homologasera.nfse-tecnos.com.br';
             ConfigURL.ProNomeCidade := 'serafina.nfse-tecnos.com.br';

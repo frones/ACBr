@@ -444,10 +444,22 @@ begin
 
           if FieldByName('vTotTrib').AsFloat <> 0 then
           begin
-            wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
-            wInfAdProd := wInfAdProd+' ('+FloatToStrF(((StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(StringToFloatDef(FieldByName('VProd').AsString,0) +
-            StringToFloatDef(FieldByName('VOutro').AsString,0) -
-            StringToFloatDef(FieldByName('VDesc').AsString,0)) ),ffNumber,15,2)+'%)';
+            with FNFe.Det.Items[i].Imposto do
+            begin
+              wInfAdProd := wInfAdProd+#13+'Val Aprox Tributos: '+ FloatToStrF(FieldByName('vTotTrib').AsFloat,ffCurrency,15,2);
+              if TributosPercentual = ptValorNF then
+                wInfAdProd := wInfAdProd+' ('+FloatToStrF(((StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(StringToFloatDef(FieldByName('VProd').AsString,0) +
+                  StringToFloatDef(FloatToStr(vFrete),0)         +
+                  StringToFloatDef(FloatToStr(vOutro),0)         +
+                  StringToFloatDef(FloatToStr(vSeg),0)           +
+                  StringToFloatDef(FloatToStr(IPI.vIPI), 0)      +
+                  StringToFloatDef(FloatToStr(ICMS.vICMSST), 0)  -
+                  StringToFloatDef(FloatToStr(vDesc), 0)) ),ffNumber,15,2)+'%)'
+              else
+                wInfAdProd := wInfAdProd+' ('+FloatToStrF(((StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(StringToFloatDef(FieldByName('VProd').AsString,0){ +
+                  StringToFloatDef(FieldByName('VOutro').AsString,0)} -
+                  StringToFloatDef(FloatToStr(vDesc),0)) ),ffNumber,15,2)+'%)';
+            end;
           end;
 
           vTemp2 := TStringList.Create;

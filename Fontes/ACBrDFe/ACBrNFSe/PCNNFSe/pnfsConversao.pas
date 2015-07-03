@@ -790,7 +790,8 @@ begin
   3201209, // Cachoeiro do Itapemirim/ES
   4304606, // Canoas/RS
   5107040, // Primavera do Leste/MT
-  5107602  // Rondonopolis/MT
+  5107602, // Rondonopolis/MT
+  1200401  // Rio Branco/AC
          : Provedor := 'Abaco';
 
   3127701, // Governador Valadares/MG
@@ -940,6 +941,9 @@ begin
   5100250, // Alta Floresta/MT
   5108006  // Tapurah/MT
          : Provedor := 'Coplan';
+
+  2111300 // Sao Luis/MA
+         : Provedor := 'CTA';
 
   4300406, // Alegrete/RS
   4304705  // Carazinho/RS
@@ -1138,7 +1142,7 @@ begin
   3138203, // Lavras/MG
   3147006, // Paracatu/MG
   3151800, // Poços de Caldas/MG
-  3162955  // Sao Jose Da Lapa/MG
+  3162955, // Sao Jose Da Lapa/MG
   3149309  // Pedro Leopoldo/MG
 //  3522307  // Itapetininga/SP
          : Provedor := 'GovDigital';
@@ -1347,6 +1351,7 @@ begin
   3521408, // Iracemapolis/SP;
   3511508, // Cerquilho/SP
   3514106, // Dois Corregos/SP
+  3519006, // Herculandia/SP
   3520608, // Indiana/SP
   3524808, // Jales/SP
   3530201, // Mirante Do Paranapanema/SP
@@ -1356,7 +1361,8 @@ begin
   3549102, // São João da Boa Vista/SP
   3549706, // São José do Rio Pardo/SP
   3556404, // Vargem Grande do Sul/SP
-  4202008  // Balneario Camboriu/SC
+  4202008, // Balneario Camboriu/SC
+  4126504  // Sertanopolis/PR
          : Provedor := 'SimplISS';
 
   4125506  // Sao Jose dos Pinhais/PR

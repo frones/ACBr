@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/07/2015
+-- ACBrECFSwedaStx -- (por: DSA)
+[-] Correção para VerificaFimLeitura, em mudança de estado com Erro =  0
+
 Data: 02/07/2015
 -- ACBrECFEscECF --  (por: DSA)
 [-] Ajuste do tamanho máximo de Buffer a ser enviado pro ECF em Relatórios

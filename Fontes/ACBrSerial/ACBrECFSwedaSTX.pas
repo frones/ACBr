@@ -767,7 +767,8 @@ begin
   if Result and (Tipo = '!') then  // Bloco de Satus não solicitado, Verificando
   begin
      // TODO: Mapear mudanças de estado, que não são erros
-     Result := not (Erro in [40,  // Abertura de Movimento
+     Result := not (Erro in [0,
+                             40,  // Abertura de Movimento
                              74,  // Ejetando a Folha
                              98,  // Processando
                              99,  // Confirme
@@ -825,6 +826,7 @@ begin
   begin
     if (Tipo in ['-','+']) then
        MsgLog := MsgLog + ' - Bloco removido:' ;
+
     Retorno := copy(Retorno, PosETX+2, Length(Retorno) ) ;
   end ;
 

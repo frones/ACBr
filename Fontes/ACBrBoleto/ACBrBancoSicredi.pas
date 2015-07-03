@@ -288,8 +288,8 @@ begin
       else
          wModalidade := 'C'; 
 
-     if trim(CodigoMora) = '' then
-	   CodigoMora := 'A';
+     if (CodigoMora <> 'A') and (CodigoMora <> 'B') then
+       CodigoMora := 'A';
      
       with ACBrBoleto do
       begin

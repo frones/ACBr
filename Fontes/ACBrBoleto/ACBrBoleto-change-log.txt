@@ -47,8 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 30/06/2015 ver. 0.0.138a
+Data: 02/07/2015 ver. 0.0.139a
+-- ACBrBancoSicredi --
+[-]Ajuste arquivo remessa CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/22305-acbr-boleto-cobran%C3%A7a-sicredi/
 
+Data: 30/06/2015 ver. 0.0.138a
 -- ACBrBancoSicredi --
 [-]Ajuste arquivo remessa CNAB240. (marcianobandeira)
 http://www.projetoacbr.com.br/forum/topic/22437-remessa-sicredi-cnab240/

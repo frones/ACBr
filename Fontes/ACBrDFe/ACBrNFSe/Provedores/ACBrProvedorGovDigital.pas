@@ -216,6 +216,11 @@ begin
               ConfigURL.ProNomeCidade := 'sjl';
 //              Porta := ':443';
             end;
+   3149309: begin // Pedro Lepoldo/MG
+              ConfigURL.HomNomeCidade := 'pl';
+              ConfigURL.ProNomeCidade := 'pl';
+//              Porta := ':443';
+            end;
 
 
 //   3522307: begin // Itapetininga/SP

@@ -1133,6 +1133,37 @@ begin
   4321709  // Tres Coroas/RS
          : Provedor := 'GovBR';
 
+  3122306, // Divinopolis/MG
+  3132404, // Itajubá/MG
+  3138203, // Lavras/MG
+  3147006, // Paracatu/MG
+  3151800, // Poços de Caldas/MG
+  3162955  // Sao Jose Da Lapa/MG
+  3149309  // Pedro Leopoldo/MG
+//  3522307  // Itapetininga/SP
+         : Provedor := 'GovDigital';
+
+  4106902  // Curitiba/PR
+         : Provedor := 'IssCuritiba';
+
+  3144805, // Nova Lima
+  3157807, // Santa Luzia/MG
+  3300704  // Cabo Frio/RJ
+         : Provedor := 'ISSDigital';
+
+  1501402, // Belem/PA
+  2111300, // Sao Luis/MA
+  2211001, // Teresina/PI
+  3170206, // Uberlandia/MG
+  3303500, // Nova Iguacu/RJ
+  3509502, // Campinas/SP
+  3552205, // Sorocaba/SP
+  5002704  // Campo Grande/MS
+         : Provedor := 'IssDSF';
+
+  4115200  // Maringa/PR
+         : Provedor := 'ISSe';
+
   4101804, // Araucaria/PR
   4108304  // Foz Do Iguacu/PR
          : Provedor := 'Lexsom';
@@ -1159,36 +1190,6 @@ begin
   4320800, // Soledade/RS
   4322400  // Uruguaiana/RS
          : Provedor := 'Pronim';
-
-  3122306, // Divinopolis/MG
-  3132404, // Itajubá/MG
-  3138203, // Lavras/MG
-  3147006, // Paracatu/MG
-  3151800, // Poços de Caldas/MG
-  3162955  // Sao Jose Da Lapa/MG
-//  3522307  // Itapetininga/SP
-         : Provedor := 'GovDigital';
-
-  4106902  // Curitiba/PR
-         : Provedor := 'IssCuritiba';
-
-  3144805, // Nova Lima
-  3157807, // Santa Luzia/MG
-  3300704  // Cabo Frio/RJ
-         : Provedor := 'ISSDigital';
-
-  1501402, // Belem/PA
-  2111300, // Sao Luis/MA
-  2211001, // Teresina/PI
-  3170206, // Uberlandia/MG
-  3303500, // Nova Iguacu/RJ
-  3509502, // Campinas/SP
-  3552205, // Sorocaba/SP
-  5002704  // Campo Grande/MS
-         : Provedor := 'IssDSF';
-
-  4115200  // Maringa/PR
-         : Provedor := 'ISSe';
 
   4307005, // Erechim/RS
   4304408  // Canela/RS

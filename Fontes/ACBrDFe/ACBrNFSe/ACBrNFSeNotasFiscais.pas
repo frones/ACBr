@@ -395,13 +395,13 @@ begin
         if Assigned(DANFSE) then
         begin
           DANFSE.ImprimirDANFSEPDF(FNFSe);
-          NomeArq := PathWithDelim(DANFSE.PathPDF) + NumID + '-NFSe.pdf';
+          NomeArq := PathWithDelim(DANFSE.PathPDF) + NumID + '-nfse.pdf';
           AnexosEmail.Add(NomeArq);
         end;
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFSe,
-                   NumID +'-NFSe.xml');
+                   NumID +'-nfse.xml');
     end;
   finally
     AnexosEmail.Free;
@@ -442,7 +442,7 @@ begin
   if EstaVazio(xID) then
     raise EACBrNFSeException.Create('ID Inválido. Impossível Salvar XML');
 
-  Result := xID + '-NFSe.xml';
+  Result := xID + '-nfse.xml';
 end;
 
 function NotaFiscal.CalcularPathArquivo: String;
@@ -507,7 +507,13 @@ end;
 
 function NotaFiscal.GetNumID: String;
 begin
-  Result := Trim(OnlyNumber(NFSe.InfID.ID));
+  if Configuracoes.Arquivos.NomeLongoNFSe then
+    Result := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
+                            NFSe.DataEmissao,
+                            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                            StrToIntDef(NFSe.Numero, 0))
+  else
+    Result := NFSe.Numero;
 end;
 
 { TNotasFiscais }

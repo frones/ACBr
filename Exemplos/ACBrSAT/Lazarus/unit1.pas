@@ -43,10 +43,15 @@ type
     cbxIndRatISSQN : TComboBox ;
     cbxRegTribISSQN : TComboBox ;
     cbxRegTributario : TComboBox ;
+    cbxSalvarEnvio: TCheckBox;
+    cbxSalvarCFeCanc: TCheckBox;
+    cbxSepararPorCNPJ: TCheckBox;
+    cbxSepararPorMES: TCheckBox;
     cbxUTF8: TCheckBox;
     cbxFormatXML: TCheckBox;
     cbPreview: TCheckBox;
     cbxRedeSeg: TComboBox;
+    cbImprimir1Linha: TCheckBox;
     edChaveCancelamento: TEdit;
     edLog : TEdit ;
     edRedeIP: TEdit;
@@ -209,7 +214,11 @@ type
     procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
     procedure cbxRedeProxyChange(Sender: TObject);
+    procedure cbxSalvarCFeCancChange(Sender: TObject);
     procedure cbxSalvarCFeChange(Sender: TObject);
+    procedure cbxSalvarEnvioChange(Sender: TObject);
+    procedure cbxSepararPorCNPJChange(Sender: TObject);
+    procedure cbxSepararPorMESChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem13Click(Sender: TObject);
@@ -360,7 +369,12 @@ begin
     Config.PaginaDeCodigo     := sePagCod.Value;
     Config.EhUTF8             := cbxUTF8.Checked;
     Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
-    SalvarCFes := cbxSalvarCFe.Checked;
+
+    ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+    ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
+    ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
+    ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+    ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
   end
 end ;
 
@@ -420,7 +434,11 @@ begin
     sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
-    cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
+    cbxSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
+    cbxSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
+    cbxSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
+    cbxSepararPorCNPJ.Checked:= INI.ReadBool('SAT','SepararPorCNPJ', True);
+    cbxSepararPorMES.Checked := INI.ReadBool('SAT','SepararPorMES', True);
     sePagCodChange(Sender);
 
     cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
@@ -451,6 +469,7 @@ begin
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
     lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
+    cbImprimir1Linha.Checked := INI.ReadBool('EscPos','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
 
     rgRedeTipoInter.ItemIndex := INI.ReadInteger('Rede','tipoInter',0);
     rgRedeTipoLan.ItemIndex   := INI.ReadInteger('Rede','tipoLan',0);
@@ -494,7 +513,11 @@ begin
     INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
     INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
-    INI.ReadBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
+    INI.WriteBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
+    INI.WriteBool('SAT','SalvarCFeCanc', cbxSalvarCFeCanc.Checked);
+    INI.WriteBool('SAT','SalvarEnvio', cbxSalvarEnvio.Checked);
+    INI.WriteBool('SAT','SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
+    INI.WriteBool('SAT','SepararPorMES', cbxSepararPorMES.Checked);
 
     INI.WriteInteger('PosPrinter','Modelo',cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
@@ -523,6 +546,7 @@ begin
     INI.WriteBool('Fortes','Preview',cbPreview.Checked);
 
     INI.WriteString('Printer','Name',Printer.PrinterName);
+    INI.WriteBool('EscPos','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
 
     INI.WriteInteger('Rede','tipoInter',rgRedeTipoInter.ItemIndex);
     INI.WriteInteger('Rede','tipoLan',rgRedeTipoLan.ItemIndex);
@@ -595,9 +619,29 @@ begin
   edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
 end;
 
+procedure TForm1.cbxSalvarCFeCancChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
+end;
+
 procedure TForm1.cbxSalvarCFeChange(Sender: TObject);
 begin
-  ACBrSAT1.SalvarCFes := cbxSalvarCFe.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+end;
+
+procedure TForm1.cbxSalvarEnvioChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
+end;
+
+procedure TForm1.cbxSepararPorCNPJChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+end;
+
+procedure TForm1.cbxSepararPorMESChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
 end;
 
 procedure TForm1.cbxUTF8Change(Sender: TObject);
@@ -690,10 +734,13 @@ begin
 end;
 
 procedure TForm1.mTesteFimAFimClick(Sender: TObject);
+var
+  Numero: Integer;
 begin
   if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
+  Numero := ACBrSAT1.CFe.ide.nCFe ;
   PageControl1.ActivePage := tsLog;
 
   ACBrSAT1.TesteFimAFim( mVendaEnviar.Text );
@@ -1161,6 +1208,7 @@ begin
     ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
     ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+    ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.Checked;
   end
   else
   begin

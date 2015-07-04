@@ -1,21 +1,21 @@
 object Form1: TForm1
-  Left = 514
+  Left = 389
   Height = 501
-  Top = 169
-  Width = 793
+  Top = 152
+  Width = 799
   Caption = 'SAT Teste - Projeto ACBr'
   ClientHeight = 481
-  ClientWidth = 793
+  ClientWidth = 799
   Menu = MainMenu1
   OnCreate = FormCreate
-  Position = poMainFormCenter
+  Position = poScreenCenter
   LCLVersion = '1.4.0.4'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 6
     Top = 202
-    Width = 793
+    Width = 799
     Align = alTop
     ResizeAnchor = akTop
   end
@@ -23,7 +23,7 @@ object Form1: TForm1
     Left = 0
     Height = 250
     Top = 208
-    Width = 793
+    Width = 799
     ActivePage = tsRecebido
     Align = alClient
     TabIndex = 2
@@ -537,13 +537,13 @@ object Form1: TForm1
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
       ClientHeight = 222
-      ClientWidth = 785
+      ClientWidth = 791
       inline mRecebido: TSynMemo
         Cursor = crIBeam
         Left = 0
         Height = 222
         Top = 0
-        Width = 785
+        Width = 791
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -2033,10 +2033,10 @@ object Form1: TForm1
     Left = 0
     Height = 202
     Top = 0
-    Width = 793
+    Width = 799
     Align = alTop
     ClientHeight = 202
-    ClientWidth = 793
+    ClientWidth = 799
     TabOrder = 2
     object gpOperacao: TGroupBox
       Left = 1
@@ -2068,18 +2068,7 @@ object Form1: TForm1
         Width = 133
         ItemHeight = 15
         Items.Strings = (
-          'Procurar'
-          'ecfNaoFiscal'
-          'ecfBematech'
-          'ecfSweda'
-          'ecfDaruma'
-          'ecfSchalter'
-          'ecfMecaf'
-          'ecfYanco'
-          'ecfDataRegis'
-          'ecfUrano'
-          'ecfICash'
-          'ecfQuattro'
+          ''
         )
         OnChange = cbxModeloChange
         Style = csDropDownList
@@ -2124,25 +2113,25 @@ object Form1: TForm1
       Left = 170
       Height = 200
       Top = 1
-      Width = 622
+      Width = 628
       Align = alClient
       Caption = 'Configuração'
       ClientHeight = 180
-      ClientWidth = 618
+      ClientWidth = 624
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 0
         Height = 180
         Top = 0
-        Width = 618
-        ActivePage = Impressao
+        Width = 624
+        ActivePage = tsDadosSAT
         Align = alClient
-        TabIndex = 4
+        TabIndex = 0
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
-          ClientHeight = 154
-          ClientWidth = 610
+          ClientHeight = 152
+          ClientWidth = 616
           object Label9: TLabel
             Left = 16
             Height = 15
@@ -2182,7 +2171,7 @@ object Form1: TForm1
             Left = 217
             Height = 23
             Top = 24
-            Width = 371
+            Width = 377
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
@@ -2297,7 +2286,7 @@ object Form1: TForm1
             Left = 385
             Height = 23
             Top = 72
-            Width = 203
+            Width = 121
             Anchors = [akTop, akLeft, akRight]
             ItemHeight = 15
             Style = csDropDownList
@@ -2312,20 +2301,64 @@ object Form1: TForm1
             ParentColor = False
           end
           object cbxSalvarCFe: TCheckBox
-            Left = 424
+            Left = 512
             Height = 19
-            Top = 120
-            Width = 79
-            Caption = 'Salvar CFes'
+            Top = 76
+            Width = 74
+            Caption = 'Salvar CFe'
             Checked = True
             OnChange = cbxSalvarCFeChange
             State = cbChecked
             TabOrder = 10
           end
+          object cbxSalvarCFeCanc: TCheckBox
+            Left = 512
+            Height = 19
+            Top = 103
+            Width = 101
+            Caption = 'Salvar CFeCanc'
+            Checked = True
+            OnChange = cbxSalvarCFeCancChange
+            State = cbChecked
+            TabOrder = 11
+          end
+          object cbxSalvarEnvio: TCheckBox
+            Left = 512
+            Height = 19
+            Top = 127
+            Width = 83
+            Caption = 'Salvar Envio'
+            Checked = True
+            OnChange = cbxSalvarEnvioChange
+            State = cbChecked
+            TabOrder = 12
+          end
+          object cbxSepararPorCNPJ: TCheckBox
+            Left = 385
+            Height = 19
+            Top = 103
+            Width = 111
+            Caption = 'Separar por CNPJ'
+            Checked = True
+            OnChange = cbxSepararPorCNPJChange
+            State = cbChecked
+            TabOrder = 13
+          end
+          object cbxSepararPorMES: TCheckBox
+            Left = 385
+            Height = 19
+            Top = 127
+            Width = 106
+            Caption = 'Separar por MES'
+            Checked = True
+            OnChange = cbxSepararPorMESChange
+            State = cbChecked
+            TabOrder = 14
+          end
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
-          ClientHeight = 154
+          ClientHeight = 152
           ClientWidth = 610
           object Label11: TLabel
             Left = 12
@@ -3091,6 +3124,14 @@ object Form1: TForm1
               }
               OnClick = btSerialClick
             end
+            object cbImprimir1Linha: TCheckBox
+              Left = 160
+              Height = 19
+              Top = -4
+              Width = 148
+              Caption = 'Imprmir Item em 1 linha'
+              TabOrder = 7
+            end
           end
         end
       end
@@ -3100,7 +3141,7 @@ object Form1: TForm1
     Left = 0
     Height = 23
     Top = 458
-    Width = 793
+    Width = 799
     Panels = <    
       item
         Width = 200
@@ -3278,6 +3319,7 @@ object Form1: TForm1
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
     PosPrinter = ACBrPosPrinter1
+    ImprimeDescAcrescItem = False
     left = 64
     top = 280
   end
@@ -3291,7 +3333,7 @@ object Form1: TForm1
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
     ACBrSAT = ACBrSAT1
     Mask_qCom = '0.000'
-    Mask_vUnCom = '0.00'
+    Mask_vUnCom = '0.000'
     PictureLogo.Data = {
       1754506F727461626C654E6574776F726B47726170686963E00C000089504E47
       0D0A1A0A0000000D494844520000003300000018080600000057CAC5DF000000
@@ -3421,6 +3463,7 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
     ConfigQRCode.Tipo = 2
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0

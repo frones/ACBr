@@ -47,6 +47,47 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/07/2015
+-- ACBrSAT --  (por: DSA)
+[*] Propriedades removidas: ACBrSAT.SalvarCFes; ACBrSAT.PastaCFeVenda;
+                            ACBrSAT.PastaCFeCancelamento
+[+] Adicionada Propriedade ConfigArquivos: TACBrSATConfigArquivos
+[*] Rotina CancelarUltimaVenda modificada para usar novas propriedades de
+    ConfigArquivos
+[*] Rotina EnviarDadosVenda modificada para usar novas propriedades de
+    ConfigArquivos
+[*] Rotina TesteFimAFim modificada para usar novas propriedades de
+    ConfigArquivos
+[+] Adiconado os métodos:
+    function CalcCFeNomeArq( NomeArquivo: String = ''; Sufixo: String = ''): String;
+    function CalcCFeCancNomeArq( Sufixo: String = ''): String;
+[*] Nome de Arquivo CFe modificado para ficar de acordo com a Especificação
+    Tecnica do SAT: 'AD'+chave
+[*] Nome de Arquivo CFeCanc modificado para ficar de acordo com a Especificação
+    Tecnica do SAT: 'ADC'+chave
+
+-- ACBrSATClass --
+[+] Adicionado o Tipo: "TACBrSATConfigArquivos" contendo:
+    property SalvarCFe: Boolean default false;
+    property SalvarCFeCanc: Boolean default false;
+    property SalvarEnvio: Boolean default false;
+    property SepararPorCNPJ: Boolean default False;
+    property SepararPorMes: Boolean default False;
+    property PastaCFeVenda: String default '';
+    property PastaCFeCancelamento: String default '';
+    property PrefixoArqCFe: String default 'AD'
+    property PrefixoArqCFeCanc: String default 'ADC';
+
+-- pcnCFe --
+[*] CFe.Emit.CNPJCPF modificado para: CFe.Emit.CNPJ (de acordo com a Especificação)
+[+] Adicionada a propriedade: "NomeArquivo: String", que conterá o nome do
+    Arquivo CFe Salvo ou Lido
+
+-- pcnCFeCanc --
+[*] CFeCanc.Emit.CNPJCPF modificado para: CFeCanc.Emit.CNPJ (de acordo com a Especificação)
+[+] Adicionada a propriedade: "NomeArquivo: String", que conterá o nome do
+    Arquivo CFeCanc Salvo ou Lido
+
 Data: 03/07/2015
 -- ACBrSATExtratoFortes -- (por: DSA)
 [*] Modificação nas Linhas do Endereço para exibição em 2 linhas

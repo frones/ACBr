@@ -499,7 +499,7 @@ begin
       CancelarUltimaVenda
     else
     begin
-      NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + ChaveCupom + '.xml';
+      NomeCFe := CFe.NomeArquivo;
 
       if FileExists( NomeCFe ) then
       begin

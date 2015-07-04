@@ -48,9 +48,11 @@ uses
   Classes, SysUtils, pcnConversao ;
 
 const
-  cACBrSAT_Versao      = '0.1.1' ;
+  cACBrSAT_Versao      = '0.2.0' ;
   cLIBSAT              = 'SAT.DLL';
-  cversaoDadosEnt      = 0.05;
+  cversaoDadosEnt      = 0.06;
+  CPREFIXO_ArqCFe = 'AD';
+  CPREFIXO_ArqCFeCanc = 'ADC';
 
   cACBrSATClassCreateException = 'Essa Classe deve ser instanciada por TACBrSAT' ;
   cACBrSATSetModeloException   = 'Não é possível mudar o Modelo com o SAT Inicializado' ;
@@ -78,8 +80,9 @@ type
 
   { TACBrSATConfig }
 
-  TACBrSATConfig = Class(TPersistent)
+  TACBrSATConfig = Class(TComponent)
   private
+    fsOwner: TComponent;
     fsemit_CNPJ : String ;
     fsemit_cRegTrib : TpcnRegTrib ;
     fsemit_cRegTribISSQN : TpcnRegTribISSQN ;
@@ -94,8 +97,9 @@ type
     function GetEhUTF8: Boolean;
     procedure SetEhUTF8(AValue: Boolean);
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
     procedure Clear;
   published
     property infCFe_versaoDadosEnt : Real read fsinfCFe_versaoDadosEnt
@@ -116,6 +120,47 @@ type
        write fsemit_indRatISSQN;
     property EhUTF8: Boolean read GetEhUTF8 write SetEhUTF8;
     property PaginaDeCodigo : Word read fsPaginaDeCodigo write fsPaginaDeCodigo;
+  end;
+
+  { TACBrSATConfigArquivos }
+
+  TACBrSATConfigArquivos = class(TComponent)
+  private
+    fsOwner: TComponent;
+    fsPrefixoArqCFe: String;
+    fsPrefixoArqCFeCanc: String;
+    fsSalvarCFe: Boolean;
+    fsPastaCFeCancelamento: String;
+    fsPastaCFeVenda: String;
+    fsSalvarCFeCanc: Boolean;
+    fsSalvarEnvio: Boolean;
+    fsSepararPorCNPJ: Boolean;
+    fsSepararPorMes: Boolean;
+    function GetPastaCFeCancelamento: String;
+    function GetPastaCFeVenda: String;
+    procedure SetPastaCFeCancelamento(AValue: String);
+    procedure SetPastaCFeVenda(AValue: String);
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
+    procedure Clear;
+    function CalcPath(APath: String; CNPJ: String; Data: TDateTime): String;
+  published
+    property SalvarCFe: Boolean read fsSalvarCFe write fsSalvarCFe default false;
+    property SalvarCFeCanc: Boolean read fsSalvarCFeCanc write fsSalvarCFeCanc default false;
+    property SalvarEnvio: Boolean read fsSalvarEnvio write fsSalvarEnvio default false;
+
+    property SepararPorCNPJ: Boolean read fsSepararPorCNPJ write fsSepararPorCNPJ default False;
+    property SepararPorMes: Boolean read fsSepararPorMes write fsSepararPorMes default False;
+
+    property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
+    property PastaCFeCancelamento: String read GetPastaCFeCancelamento
+       write SetPastaCFeCancelamento;
+
+    property PrefixoArqCFe: String read fsPrefixoArqCFe write fsPrefixoArqCFe;
+    property PrefixoArqCFeCanc: String read fsPrefixoArqCFeCanc
+       write fsPrefixoArqCFeCanc;
   end;
 
   { TACBrSATRespostaClass }
@@ -264,6 +309,104 @@ type
 implementation
 
 Uses ACBrSAT, ACBrUtil, ACBrConsts ;
+
+{ TACBrSATConfigArquivos }
+
+constructor TACBrSATConfigArquivos.Create(AOwner: TComponent);
+begin
+  if not (AOwner is TACBrSAT) then
+    raise EACBrSATErro.Create('Dono de TACBrSATConfig deve ser TACBrSAT');
+
+  inherited Create(AOwner);
+  fsOwner := AOwner;
+
+  Clear;
+end;
+
+destructor TACBrSATConfigArquivos.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TACBrSATConfigArquivos.Clear;
+begin
+  fsPastaCFeCancelamento := '';
+  fsPastaCFeVenda := '';
+
+  fsSalvarCFe := False;
+  fsSalvarCFeCanc := False;
+  fsSalvarEnvio := False;
+
+  fsSepararPorCNPJ := False;
+  fsSepararPorMes := False;
+
+  fsPrefixoArqCFe := CPREFIXO_ArqCFe;
+  fsPrefixoArqCFeCanc := CPREFIXO_ArqCFeCanc;
+end;
+
+function TACBrSATConfigArquivos.GetPastaCFeCancelamento: String;
+begin
+  if fsPastaCFeCancelamento = '' then
+     if not (csDesigning in fsOwner.ComponentState) then
+        fsPastaCFeCancelamento := ExtractFilePath( ParamStr(0) ) + 'CFesCancelados' ;
+
+  Result := fsPastaCFeCancelamento ;
+end;
+
+function TACBrSATConfigArquivos.GetPastaCFeVenda: String;
+begin
+  if fsPastaCFeVenda = '' then
+     if not (csDesigning in fsOwner.ComponentState) then
+        fsPastaCFeVenda := ExtractFilePath( ParamStr(0) ) + 'CFesEnviados' ;
+
+  Result := fsPastaCFeVenda ;
+end;
+
+procedure TACBrSATConfigArquivos.SetPastaCFeCancelamento(AValue: String);
+begin
+  fsPastaCFeCancelamento := PathWithoutDelim( AValue );
+end;
+
+procedure TACBrSATConfigArquivos.SetPastaCFeVenda(AValue: String);
+begin
+  fsPastaCFeVenda := PathWithoutDelim( AValue );
+end;
+
+function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;
+  Data: TDateTime): String;
+var
+  wDia, wMes, wAno: word;
+  Dir, Modelo, AnoMes: String;
+  LenLiteral: integer;
+begin
+  if EstaVazio(APath) then
+    Dir := PastaCFeVenda
+  else
+    Dir := APath;
+
+  if SepararPorCNPJ then
+  begin
+    if EstaVazio(CNPJ) then
+      CNPJ := TACBrSAT(fsOwner).Config.emit_CNPJ;
+
+    if NaoEstaVazio(CNPJ) then
+      Dir := PathWithDelim(Dir) + CNPJ;
+  end;
+
+  if SepararPorMes then
+  begin
+    if Data = 0 then
+      Data := Now;
+
+    DecodeDate(Data, wAno, wMes, wDia);
+    AnoMes := IntToStr(wAno) + IntToStrZero(wMes, 2);
+
+    if Pos(AnoMes, Dir) <= 0 then
+      Dir := PathWithDelim(Dir) + AnoMes;
+  end;
+
+  Result := PathWithDelim(Dir);
+end;
 
 { TACBrSATStatus }
 
@@ -423,9 +566,14 @@ begin
 
 end;
 
-constructor TACBrSATConfig.Create ;
+constructor TACBrSATConfig.Create(AOwner: TComponent);
 begin
-  inherited Create;
+  if not (AOwner is TACBrSAT) then
+    raise EACBrSATErro.Create('Dono de TACBrSATConfig deve ser TACBrSAT');
+
+  inherited Create(AOwner);
+  fsOwner := AOwner;
+
   Clear;
 end ;
 

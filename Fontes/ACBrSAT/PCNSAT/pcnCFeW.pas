@@ -193,7 +193,7 @@ begin
   TemISS := (trim(CFe.Emit.IM) <> '') and (CFe.Emit.cRegTribISSQN <> RTISSNenhum);
 
   Gerador.wGrupo('emit', 'C01');
-  Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJCPF, 1058);
+  Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJ, 1058);
   if not FApenasTagsAplicacao then
   begin
      Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 0, ACBrStrToAnsi(CFe.Emit.xNome), DSC_XNOME);
@@ -304,7 +304,7 @@ begin
   Gerador.wCampo(tcEsp, 'I06 ', 'CFOP    ', 04, 04, 1, somenteNumeros(CFe.Det[i].Prod.CFOP), DSC_CFOP);
   Gerador.wCampo(tcStr, 'I07 ', 'uCom    ', 01, 06, 1, CFe.Det[i].Prod.uCom, DSC_UCOM);
   Gerador.wCampo(tcDe4, 'I08 ', 'qCom    ', 05, 15, 1, CFe.Det[i].Prod.qCom, DSC_QCOM);
-  Gerador.wCampo(DecQtd, 'I09 ', 'vUnCom  ', 03, 15, 1, CFe.Det[i].Prod.vUnCom, DSC_VUNCOM);
+  Gerador.wCampo(DecQtd,'I09 ', 'vUnCom  ', 03, 15, 1, CFe.Det[i].Prod.vUnCom, DSC_VUNCOM);
   if not FApenasTagsAplicacao then
      Gerador.wCampo(tcDe2, 'I10 ', 'vProd   ', 03, 15, 1, CFe.Det[i].Prod.vProd, DSC_VPROD);
   Gerador.wCampo(tcStr, 'I11 ', 'indRegra', 01, 01, 1, indRegraToStr(CFe.Det[i].Prod.indRegra), DSC_NITEMPED);

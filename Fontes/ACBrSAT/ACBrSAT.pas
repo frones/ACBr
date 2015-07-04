@@ -41,7 +41,8 @@ uses
   Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
   ACBrSATExtratoClass, synacode, StrUtils;
 
-const CPREFIXO_CFe = 'CFe';
+const
+  CPREFIXO_CFe = 'CFe';
 
 type
    { TACBrSAT }
@@ -67,12 +68,9 @@ type
      fsInicializado : Boolean ;
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
+     fsConfigArquivos : TACBrSATConfigArquivos ;
      fsRede   : TRede ;
      fsStatus : TACBrSATStatus;
-
-     fsSalvarCFes: Boolean;
-     fsPastaCFeCancelamento: String;
-     fsPastaCFeVenda: String;
 
      function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
@@ -85,11 +83,6 @@ type
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
      procedure SetNomeDLL(AValue : string) ;
-
-     function GetPastaCFeCancelamento: String;
-     function GetPastaCFeVenda: String;
-     procedure SetPastaCFeCancelamento(AValue: String);
-     procedure SetPastaCFeVenda(AValue: String);
 
      procedure VerificaInicializado ;
      procedure IniciaComando ;
@@ -161,6 +154,9 @@ type
     procedure ImprimirExtratoResumido;
     procedure ImprimirExtratoCancelamento;
 
+    function CalcCFeNomeArq( NomeArquivo: String = ''; Sufixo: String = ''): String;
+    function CalcCFeCancNomeArq( Sufixo: String = ''): String;
+
    published
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
@@ -174,6 +170,8 @@ type
      property OnGravarLog : TACBrGravarLog read fsOnGravarLog write fsOnGravarLog;
 
      property Config : TACBrSATConfig read fsConfig write fsConfig;
+     property ConfigArquivos : TACBrSATConfigArquivos read fsConfigArquivos
+        write fsConfigArquivos;
      property Rede : TRede read fsRede write fsRede;
 
      property OnGetcodigoDeAtivacao : TACBrSATGetChave read fsOnGetcodigoDeAtivacao
@@ -181,11 +179,6 @@ type
      property OnGetsignAC : TACBrSATGetChave read fsOnGetsignAC write fsOnGetsignAC;
      property OnGetNumeroSessao : TACBrSATGetNumeroSessao read fsOnGetNumeroSessao
         write fsOnGetNumeroSessao;
-
-     property SalvarCFes: Boolean read fsSalvarCFes write fsSalvarCFes default false;
-     property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
-     property PastaCFeCancelamento: String read GetPastaCFeCancelamento
-        write SetPastaCFeCancelamento;
    end;
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
@@ -677,7 +670,9 @@ begin
   fsOnGravarLog           := nil;
   fsOnGetNumeroSessao     := nil;
 
-  fsConfig  := TACBrSATConfig.Create;
+  fsConfig := TACBrSATConfig.Create(Self);
+  fsConfigArquivos := TACBrSATConfigArquivos.Create(Self);
+
   fsRede    := TRede.Create;
   fsCFe     := TCFe.Create;
   fsCFeCanc := TCFeCanc.Create;
@@ -685,15 +680,13 @@ begin
   fsStatus  := TACBrSATStatus.Create;
   fsSATClass:= TACBrSATClass.Create( Self ) ;
 
-  fsSalvarCFes           := False;
-  fsPastaCFeCancelamento := '';
-  fsPastaCFeVenda        := '';
-  fsPrefixoCFe           := CPREFIXO_CFe;
+  fsPrefixoCFe := CPREFIXO_CFe;
 end ;
 
 destructor TACBrSAT.Destroy ;
 begin
   fsConfig.Free;
+  fsConfigArquivos.Free;
   fsRede.Free;
   fsCFe.Free;
   fsCFeCanc.Free;
@@ -834,7 +827,7 @@ begin
     ide.numeroCaixa       := fsConfig.ide_numeroCaixa;
     ide.signAC            := signAC;
     ide.modelo            := 59;
-    Emit.CNPJCPF          := fsConfig.emit_CNPJ;
+    Emit.CNPJ             := fsConfig.emit_CNPJ;
     Emit.IE               := fsConfig.emit_IE;
     Emit.IM               := fsConfig.emit_IM;
     Emit.cRegTrib         := fsConfig.emit_cRegTrib;
@@ -899,40 +892,24 @@ begin
   if Trim(dadosCancelamento) = '' then
      raise EACBrSATErro.Create('Parâmetro: "dadosCancelamento" não informado');
 
-  if SalvarCFes then
+  if fsConfigArquivos.SalvarEnvio then
   begin
-    ForceDirectories( PastaCFeCancelamento );
-    NomeCFe := PastaCFeCancelamento + PathDelim + chave + '-can-env.xml';
-    ForceDirectories(ExtractFilePath(NomeCFe));
+    NomeCFe := CalcCFeCancNomeArq('-env');
     WriteToTXT(NomeCFe, dadosCancelamento, False, False);
   end;
 
   IniciaComando;
   Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
 
-(*
-  // Workaround para SAT Kryptus, que usa o prefixo como: "Cfe" ao inves de "CFe"
-  if (fsResposta.codigoDeRetorno = 7007) and (LeftStr(chave,3) = CPREFIXO_CFe) then
-  begin
-    fsPrefixoCFe      := 'Cfe';                      // Ajusta o Prefixo
-    ChaveAntiga       := chave;
-    chave             := fsPrefixoCFe + copy(chave,4,Length(chave));
-    dadosCancelamento := StringReplace( dadosCancelamento, ChaveAntiga, chave, [rfReplaceAll] );
-    CancelarUltimaVenda( chave, dadosCancelamento);  // Tenta novamente
-    exit;                                            // cai fora por já tratou na chamada acima
-  end;
-*)
-
   if fsResposta.codigoDeRetorno = 7000 then
   begin
      XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
      CFeCanc.AsXMLString := XMLRecebido;
 
-     if SalvarCFes then
+     if fsConfigArquivos.SalvarCFeCanc then
      begin
-       NomeCFe := PastaCFeCancelamento + PathDelim + chave + '-can.xml';
-       ForceDirectories(ExtractFilePath(NomeCFe));
-       WriteToTXT(NomeCFe, XMLRecebido, False, False);
+       NomeCFe := CalcCFeCancNomeArq();
+       CFeCanc.SaveToFile(NomeCFe);
      end;
   end;
 end ;
@@ -1058,13 +1035,12 @@ begin
 
   IniciaComando;
 
-  if SalvarCFes then
+  if fsConfigArquivos.SalvarEnvio then
   begin
-    ForceDirectories( PastaCFeVenda );
-    NomeCFe := PastaCFeVenda + PathDelim +
-               FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
-               IntToStrZero(numeroSessao, 6) + '-cfe-env.xml';
-    ForceDirectories(ExtractFilePath(NomeCFe));
+    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PrefixoArqCFe +
+                               FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
+                               IntToStrZero(numeroSessao, 6),
+                               '-env');
     WriteToTXT(NomeCFe, dadosVenda, False, False);
   end;
 
@@ -1075,11 +1051,10 @@ begin
      XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
      CFe.AsXMLString := XMLRecebido;
 
-     if SalvarCFes then
+     if fsConfigArquivos.SalvarCFe then
      begin
-       NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + CFe.infCFe.ID + '.xml';
-       ForceDirectories(ExtractFilePath(NomeCFe));
-       WriteToTXT(NomeCFe, XMLRecebido, False, False);
+       NomeCFe := CalcCFeNomeArq();
+       CFe.SaveToFile(NomeCFe);
      end;
   end;
 end ;
@@ -1143,6 +1118,16 @@ var
 begin
   fsComandoLog := 'TesteFimAFim(' +dadosVenda+' )';
   IniciaComando;
+
+  if fsConfigArquivos.SalvarEnvio then
+  begin
+    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PrefixoArqCFe +
+                               FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
+                               IntToStrZero(numeroSessao, 6),
+                               '-teste-env');
+    WriteToTXT(NomeCFe, dadosVenda, False, False);
+  end;
+
   Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
 
   if fsResposta.codigoDeRetorno = 9000 then
@@ -1150,11 +1135,10 @@ begin
      XMLRecebido := DecodeBase64(fsResposta.RetornoLst[5]);
      CFe.AsXMLString := XMLRecebido;
 
-     if SalvarCFes then
+     if fsConfigArquivos.SalvarCFe then
      begin
-       NomeCFe := PastaCFeVenda + PathDelim + CPREFIXO_CFe + CFe.infCFe.ID + '-teste.xml';
-       ForceDirectories(ExtractFilePath(NomeCFe));
-       WriteToTXT(NomeCFe, XMLRecebido, False, False);
+       NomeCFe := CalcCFeNomeArq('','-teste');
+       CFe.SaveToFile(NomeCFe);
      end;
   end;
 end ;
@@ -1255,34 +1239,6 @@ begin
     fsNomeDLL := PathWithDelim( fsNomeDLL ) + cLIBSAT;
 end ;
 
-function TACBrSAT.GetPastaCFeCancelamento: String;
-begin
-  if fsPastaCFeCancelamento = '' then
-     if not (csDesigning in Self.ComponentState) then
-        fsPastaCFeCancelamento := ExtractFilePath( ParamStr(0) ) + 'CFesCancelados' ;
-
-  Result := fsPastaCFeCancelamento ;
-end;
-
-function TACBrSAT.GetPastaCFeVenda: String;
-begin
-  if fsPastaCFeVenda = '' then
-     if not (csDesigning in Self.ComponentState) then
-        fsPastaCFeVenda := ExtractFilePath( ParamStr(0) ) + 'CFesEnviados' ;
-
-  Result := fsPastaCFeVenda ;
-end;
-
-procedure TACBrSAT.SetPastaCFeCancelamento(AValue: String);
-begin
-  fsPastaCFeCancelamento := PathWithoutDelim( AValue );
-end;
-
-procedure TACBrSAT.SetPastaCFeVenda(AValue: String);
-begin
-  fsPastaCFeVenda := PathWithoutDelim( AValue );
-end;
-
 procedure TACBrSAT.SetExtrato(const Value: TACBrSATExtratoClass);
 Var
   OldValue: TACBrSATExtratoClass ;
@@ -1344,6 +1300,35 @@ procedure TACBrSAT.ImprimirExtratoCancelamento;
 begin
   VerificaCondicoesImpressao( True );
   Extrato.ImprimirExtratoCancelamento;
+end;
+
+function TACBrSAT.CalcCFeNomeArq(NomeArquivo: String; Sufixo: String): String;
+var
+  Dir: String;
+begin
+  Dir := fsConfigArquivos.CalcPath( fsConfigArquivos.PastaCFeVenda,
+                                    CFe.Emit.CNPJ, CFe.ide.dEmi );
+
+  if not DirectoryExists(Dir) then
+    ForceDirectories(Dir);
+
+  if NomeArquivo = '' then
+    NomeArquivo := fsConfigArquivos.PrefixoArqCFe + CFe.infCFe.ID;
+
+  Result := Dir + NomeArquivo + Sufixo + '.xml';
+end;
+
+function TACBrSAT.CalcCFeCancNomeArq(Sufixo: String): String;
+var
+  Dir: String;
+begin
+  Dir := fsConfigArquivos.CalcPath( fsConfigArquivos.PastaCFeCancelamento,
+                                    CFeCanc.Emit.CNPJ, CFeCanc.ide.dEmi );
+
+  if not DirectoryExists(Dir) then
+    ForceDirectories(Dir);
+
+  Result := Dir + fsConfigArquivos.PrefixoArqCFeCanc + CFeCanc.infCFe.ID + Sufixo + '.xml';
 end;
 
 function TACBrSAT.CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;

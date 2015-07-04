@@ -116,7 +116,7 @@ begin
   (* Grupo da TAG <emit> ******************************************************)
   if Leitor.rExtrai(1, 'emit') <> '' then
   begin
-    (*C02/C02a*)CFeCanc.Emit.CNPJCPF := Leitor.rCampoCNPJCPF;
+    (*C02/C02a*)CFeCanc.Emit.CNPJ := Leitor.rCampoCNPJCPF;
     (*C03*)CFeCanc.Emit.xNome := Leitor.rCampo(tcStr, 'xNome');
     (*C04*)CFeCanc.Emit.xFant := Leitor.rCampo(tcStr, 'xFant');
     (*C12*)CFeCanc.Emit.IE := Leitor.rCampo(tcStr, 'IE');

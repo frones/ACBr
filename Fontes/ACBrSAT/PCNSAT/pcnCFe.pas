@@ -86,6 +86,7 @@ type
     FDest: TDest;
     FEntrega: TEntrega;
     FDet: TDetCollection;
+    FNomeArquivo: String;
     FTamanhoIdentacao: integer;
     FTotal: TTotal;
     fPagto: TMPCollection;
@@ -107,6 +108,7 @@ type
     function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
     procedure SetXMLString(AValue : AnsiString) ;
 
+    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
     property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
     property XMLOriginal: AnsiString read FXMLOriginal;
   published
@@ -187,7 +189,7 @@ type
 
   TEmit = class
   private
-    FCNPJCPF: string;
+    FCNPJ: string;
     FxNome: string;
     FxFant: string;
     FEnderEmit: TenderEmit;
@@ -201,7 +203,7 @@ type
     destructor Destroy; override;
     procedure Clear;
   published
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
+    property CNPJ: string read FCNPJ write FCNPJ;
     property xNome: string read FxNome write FxNome;
     property xFant: string read FxFant write FxFant;
     property EnderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
@@ -1195,7 +1197,7 @@ end;
 
 procedure TEmit.Clear ;
 begin
-  FCNPJCPF  := '';
+  FCNPJ  := '';
   FxNome    := '';
   FxFant    := '';
   FIE       := '' ;
@@ -1283,6 +1285,7 @@ end ;
 procedure TCFe.ClearSessao ;
 begin
   FXMLOriginal := '';
+  FNomeArquivo := '';
 
   Fide.ClearSessao;
   FDest.Clear;
@@ -1303,7 +1306,8 @@ begin
   try
     SL.LoadFromFile( AFileName );
     AsXMLString := SL.Text;
-    Result      := True;
+    FNomeArquivo := AFileName;
+    Result := True;
   finally
     SL.Free;
   end;
@@ -1318,6 +1322,7 @@ begin
   try
     SL.Text := AsXMLString;
     SL.SaveToFile( AFileName );
+    FNomeArquivo := AFileName;
     Result := True;
   finally
     SL.Free;

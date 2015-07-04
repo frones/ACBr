@@ -145,7 +145,7 @@ begin
                          FormatarCEP(IntToStr(CFe.Emit.EnderEmit.CEP)));
 
   FPosPrinter.Buffer.Add( '</ae><c>'+
-                          'CNPJ:'+FormatarCNPJ(CFe.Emit.CNPJCPF)+
+                          'CNPJ:'+FormatarCNPJ(CFe.Emit.CNPJ)+
                            ' IE:'+Trim(CFe.Emit.IE)+
                            ' IM:'+Trim(CFe.Emit.IM));
   FPosPrinter.Buffer.Add('</linha_simples>');

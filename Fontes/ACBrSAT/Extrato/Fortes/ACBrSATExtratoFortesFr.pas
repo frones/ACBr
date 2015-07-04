@@ -504,7 +504,7 @@ var
 begin
   with ACBrSATExtrato.CFe do
   begin
-    CNPJ_IE_IM := 'CNPJ:'+Emit.CNPJCPF ;
+    CNPJ_IE_IM := 'CNPJ:'+Emit.CNPJ ;
     if (Emit.IE <> '') then
       CNPJ_IE_IM := CNPJ_IE_IM + ' IE:'+Emit.IE;
     if (Emit.IM <> '') then

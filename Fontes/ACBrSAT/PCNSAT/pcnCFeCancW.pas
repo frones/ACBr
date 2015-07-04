@@ -166,7 +166,7 @@ begin
   Gerador.wGrupo('emit', 'C01');
   if not FApenasTagsAplicacao then
   begin
-    Gerador.wCampoCNPJCPF('C02', 'C02', CFeCanc.Emit.CNPJCPF, 1058);
+    Gerador.wCampoCNPJCPF('C02', 'C02', CFeCanc.Emit.CNPJ, 1058);
     Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 1, CFeCanc.Emit.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, CFeCanc.Emit.xFant, DSC_XNOME);
     (**)GerarEmitEnderEmit;

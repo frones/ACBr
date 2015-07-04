@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 03/07/2015
+-- ACBrSATExtratoFortes -- (por: DSA)
+[*] Modificação nas Linhas do Endereço para exibição em 2 linhas
+
 -- ACBrSAT --
 [+] Adicionada as funções:
     function MotivoInvalidoVenda(cod: integer): String;

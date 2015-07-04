@@ -98,8 +98,8 @@ type
     lDescValLiq: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
     lEmitCNPJ_IE_IMCan: TRLLabel;
-    lEndereco: TRLLabel;
-    lEnderecoCan: TRLLabel;
+    lEndereco: TRLMemo;
+    lEnderecoCan: TRLMemo;
     lFiller1: TRLLabel;
     lFiller2: TRLLabel;
     lFiller3: TRLLabel;
@@ -537,7 +537,7 @@ begin
 
     lNomeFantasia.Caption   := Emit.xFant ;
     lRazaoSocial.Caption    := Emit.xNome ;
-    lEndereco.Caption       := CompoemEnderecoCFe;
+    lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
     imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
 
@@ -786,7 +786,7 @@ begin
   begin
     lNomeFantasiaCan.Caption   := Emit.xFant ;
     lRazaoSocialCan.Caption    := Emit.xNome ;
-    lEnderecoCan.Caption       := CompoemEnderecoCFe;
+    lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;
     imgLogoCan.Picture.Assign( ACBrSATExtrato.PictureLogo );
 

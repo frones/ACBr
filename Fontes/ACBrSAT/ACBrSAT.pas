@@ -190,6 +190,8 @@ type
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
 function MotivocStat(cStat: Integer): String;
+function MotivoInvalidoVenda(cod: integer): String;
+function MotivoInvalidoCancelamento(cod: integer): String;
 
 implementation
 
@@ -561,7 +563,102 @@ begin
   Result := ACBrStr(xMotivo);
 end;
 
+function MotivoInvalidoVenda(cod: integer): String;
+begin
+  case cod of
+    1002 : Result := 'Código da UF não confere com a Tabela do IBGE'; // | Válido até 31/12/2015
+    1003 : Result := 'Código da UF diferente da UF registrada no SAT';// | Válido até 31/12/2015
+    1004 : Result := 'Versão do leiaute do arquivo de entrada do SAT não é válida';
+    1005 : Result := 'Alerta Versão do leiaute do arquivo de entrada do SAT não é a mais atual';
+    1226 : Result := 'Código da UF do Emitente diverge da UF receptora';
+    1450 : Result := 'Código de modelo de documento fiscal diferente de 59';
+    1258 : Result := 'Data/hora inválida. Problemas com o relógio interno do SAT-CF-e';
+    1224 : Result := 'CNPJ da Software House inválido';
+    1222 : Result := 'Assinatura do Aplicativo Comercial não é válida';// | Válido até 31/12/2015
+    1207 : Result := 'CNPJ do emitente inválido';
+    1203 : Result := 'Emitente não autorizado para uso do SAT';
+    1229 : Result := 'IE do emitente não informada C12 IE não corresponde ao Contribuinte de uso do SAT';
+    1230 : Result := 'IE do emitente diferente da IE do contribuinte autorizado para uso do SAT';// | Checar com dado recebido na parametrização do SAT
+    1457 : Result := 'Código de Natureza da Operação para ISSQN inválido';
+    1507 : Result := 'Indicador de rateio para ISSQN inválido';
+    1235 : Result := 'CNPJ do destinatário inválido';
+    1237 : Result := 'CPF do destinatário inválido';
+    1234 : Result := 'Alerta Razão Social/Nome do destinatário em branco';//| Válido até 31/12/2015
+    1019 : Result := 'Numeração dos itens não é sequencial crescente';
+    1459 : Result := 'Código do produto ou serviço em branco';
+    1460 : Result := 'GTIN do item (N) inválido | Validação do dígito verificador';
+    1461 : Result := 'Descrição do produto ou serviço em branco';
+    1464 : Result := 'Quantidade Comercial do item (N) inválido';
+    1465 : Result := 'Valor Unitário do item (N) inválido';
+    1468 : Result := 'Valor do Desconto do item (N) inválido';
+    1469 : Result := 'Valor de outras despesas acessórias do item (N) inválido';
+    1535 : Result := 'código da credenciadora de cartão de débito ou crédito inválido';
+    1220 : Result := 'Valor do rateio do desconto sobre subtotal do item (N) inválido';
+    1228 : Result := 'Valor do rateio do acréscimo sobre subtotal do item (N) inválido';
+    1751 : Result := 'não informado código do produto'; //| Nova redação, efeitos a partir de 01.01.17.
+    1752 : Result := 'código de produto informado fora do padrão ANP'; //| Nova redação, efeitos a partir de 01.01.17.
+    1534 : Result := 'Valor aproximado dos tributos do produto negativo';
+    1533 : Result := 'Valor aproximado dos tributos do CF-e_SAT negativo';
+    1471 : Result := 'Origem da mercadoria do Item (N) inválido (diferente de 0, 1, 2, 3, 4, 5, 6, 7, 8)';
+    1472 : Result := 'CST do Item (N) inválido (diferente de 00, 20, 90)';
+    1473 : Result := 'Alíquota efetiva do ICMS do item (N) não é maior ou igual a zero';
+    1475 : Result := 'CST do Item (N) inválido (diferente de 40 e 41 e 50 e 60)';
+    1476 : Result := 'Código de situação da operação - Simples Nacional - do Item (N) inválido (diferente de 102, 300 e 500)';
+    1477 : Result := 'Código de situação da operação - Simples Nacional - do Item (N) inválido (diferente de 900)';
+    1478 : Result := 'Código de Situação Tributária do PIS Inválido (diferente de 01, 02 e 05)';
+    1479 : Result := 'Base de cálculo do PIS do item (N) inválido';
+    1480 : Result := 'Alíquota do PIS do item (N) não é maior ou igual a zero';
+    1482 : Result := 'Código de Situação Tributária do PIS Inválido (diferente de 03)';
+    1483 : Result := 'Qtde Vendida do item (N) não é maior ou igual a zero';
+    1484 : Result := 'Alíquota do PIS em R$ do item (N) não é maior ou igual a zero';
+    1486 : Result := 'Código de Situação Tributária do PIS Inválido (diferente de 04, 06, 07, 08 e 09)';
+    1487 : Result := 'Código de Situação Tributária do PIS inválido (diferente de 49)';
+    1488 : Result := 'Código de Situação Tributária do PIS Inválido (diferente de 99)';
+    1490 : Result := 'Código de Situação Tributária da COFINS Inválido (diferente de 01, 02 e 05)';
+    1491 : Result := 'Base de cálculo do COFINS do item (N) inválido';
+    1492 : Result := 'Alíquota da COFINS do item (N) não é maior ou igual a zero';
+    1494 : Result := 'Código de Situação Tributária da COFINS Inválido (diferente de 03)';
+    1496 : Result := 'Alíquota da COFINS em R$ do item (N) não é maior ou igual a zero';
+    1498 : Result := 'Código de Situação Tributária da COFINS Inválido (diferente de 04, 06, 07, 08 e 09)';
+    1499 : Result := 'Código de Situação Tributária da COFINS Inválido (diferente de 49)';
+    1500 : Result := 'Código de Situação Tributária da COFINS Inválido (diferente de 99)';
+    1501 : Result := 'Operação com tributação de ISSQN sem informar a Inscrição Municipal';
+    1503 : Result := 'Valor das deduções para o ISSQN do item (N) não é maior ou igual a zero';
+    1505 : Result := 'Alíquota efetiva do ISSQN do item (N) não é maior ou igual a 2,00 (2%) e menor ou igual a 5,00 (5%)';
+    1287 : Result := 'Código Município do FG - ISSQN: dígito inválido. Exceto os códigos descritos no Anexo 2 que apresentam dígito inválido';
+    1509 : Result := 'Código municipal de Tributação do ISSQN do Item (N) em branco';
+    1510 : Result := 'Código de Natureza da Operação para ISSQN inválido';
+    1511 : Result := 'Indicador de Incentivo Fiscal do ISSQN do item (N) inválido (diferente de 1 e 2)';
+    1527 : Result := 'Código do Meio de Pagamento inválido';
+    1528 : Result := 'Valor do Meio de Pagamento inválido';
+    1408 : Result := 'Valor total do CF-e-SAT maior que o somatório dos valores de Meio de Pagamento empregados em seu pagamento';
+    1409 : Result := 'Valor total do CF-e-SAT supera o máximo permitido no arquivo de Parametrização de Uso';
+    1073 : Result := 'Valor de Desconto sobre total não é maior ou igual a zero';
+    1074 : Result := 'Valor de Acréscimo sobre total não é maior ou igual a zero';
+    1084 : Result := 'Erro Formatação do Certificado não é válido';
+    1085 : Result := 'Erro Assinatura do Aplicativo Comercial não confere com o registro do SAT'; //| Válido até 31/12/2015
+    1998 : Result := 'Não é possível gerar o cupom com os dados de entrada informados, pois resultam valores negativos';
+  else
+    Result := 'Erro não identificado';
+  end;
+end;
 
+function MotivoInvalidoCancelamento(cod: integer): String;
+begin
+  case cod of
+    1270 : Result := 'Chave de acesso do CFe a ser cancelado inválido';
+    1412 : Result := 'CFe de cancelamento não corresponde a um CFe emitido nos 30 minutos anteriores ao pedido de cancelamento';
+    1258 : Result := 'Data/hora inválida. Problemas com o relógio interno do SAT-CF-e';
+    1210 : Result := 'Intervalo de tempo entre a emissão do CF-e a ser cancelado e a emissão do respectivo CF-e de cancelamento é maior que 30 (trinta) minutos';
+    1454 : Result := 'CNPJ da Software House inválido';
+    1232 : Result := 'CNPJ do destinatário do CF-e de cancelamento diferente daquele do CF-e a ser cancelado';
+    1233 : Result := 'CPF do destinatário do CF-e de cancelamento diferente daquele do CF-e a ser cancelado';
+    1218 : Result := 'Erro Chave de acesso do CF-e-SAT já consta como cancelado'; //Nova redação a partir de 01.01.16
+    1999 : Result := 'Erro não identificado'; //Implementação facultativa até 31.12.15 e obrigatória a partir de 01.01.16.
+  else
+    Result := 'Erro não identificado';
+  end;
+end;
 
 { TACBrSAT }
 

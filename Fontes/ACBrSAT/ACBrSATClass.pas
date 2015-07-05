@@ -53,6 +53,9 @@ const
   cversaoDadosEnt      = 0.06;
   CPREFIXO_ArqCFe = 'AD';
   CPREFIXO_ArqCFeCanc = 'ADC';
+  CPastaVendas = 'Vendas';
+  CPastaCancelamentos = 'Cancelamentos';
+  CPastaEnviados = 'Enviado';
 
   cACBrSATClassCreateException = 'Essa Classe deve ser instanciada por TACBrSAT' ;
   cACBrSATSetModeloException   = 'Não é possível mudar o Modelo com o SAT Inicializado' ;
@@ -133,13 +136,16 @@ type
     fsPastaCFeCancelamento: String;
     fsPastaCFeVenda: String;
     fsSalvarCFeCanc: Boolean;
+    fsPastaEnvio: String;
     fsSalvarEnvio: Boolean;
     fsSepararPorCNPJ: Boolean;
     fsSepararPorMes: Boolean;
     function GetPastaCFeCancelamento: String;
     function GetPastaCFeVenda: String;
+    function GetPastaEnvio: String;
     procedure SetPastaCFeCancelamento(AValue: String);
     procedure SetPastaCFeVenda(AValue: String);
+    procedure SetPastaEnvio(AValue: String);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -157,6 +163,7 @@ type
     property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
     property PastaCFeCancelamento: String read GetPastaCFeCancelamento
        write SetPastaCFeCancelamento;
+    property PastaEnvio: String read GetPastaEnvio write SetPastaEnvio;
 
     property PrefixoArqCFe: String read fsPrefixoArqCFe write fsPrefixoArqCFe;
     property PrefixoArqCFeCanc: String read fsPrefixoArqCFeCanc
@@ -348,7 +355,7 @@ function TACBrSATConfigArquivos.GetPastaCFeCancelamento: String;
 begin
   if fsPastaCFeCancelamento = '' then
      if not (csDesigning in fsOwner.ComponentState) then
-        fsPastaCFeCancelamento := ExtractFilePath( ParamStr(0) ) + 'CFesCancelados' ;
+        fsPastaCFeCancelamento := ExtractFilePath( ParamStr(0) ) + CPastaCancelamentos ;
 
   Result := fsPastaCFeCancelamento ;
 end;
@@ -357,9 +364,18 @@ function TACBrSATConfigArquivos.GetPastaCFeVenda: String;
 begin
   if fsPastaCFeVenda = '' then
      if not (csDesigning in fsOwner.ComponentState) then
-        fsPastaCFeVenda := ExtractFilePath( ParamStr(0) ) + 'CFesEnviados' ;
+        fsPastaCFeVenda := ExtractFilePath( ParamStr(0) ) + CPastaVendas ;
 
   Result := fsPastaCFeVenda ;
+end;
+
+function TACBrSATConfigArquivos.GetPastaEnvio: String;
+begin
+  if fsPastaEnvio = '' then
+     if not (csDesigning in fsOwner.ComponentState) then
+        fsPastaEnvio := ExtractFilePath( ParamStr(0) ) + CPastaEnviados ;
+
+  Result := fsPastaEnvio ;
 end;
 
 procedure TACBrSATConfigArquivos.SetPastaCFeCancelamento(AValue: String);
@@ -370,6 +386,11 @@ end;
 procedure TACBrSATConfigArquivos.SetPastaCFeVenda(AValue: String);
 begin
   fsPastaCFeVenda := PathWithoutDelim( AValue );
+end;
+
+procedure TACBrSATConfigArquivos.SetPastaEnvio(AValue: String);
+begin
+  fsPastaEnvio := PathWithoutDelim( AValue );
 end;
 
 function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;

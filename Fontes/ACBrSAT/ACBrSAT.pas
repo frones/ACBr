@@ -154,8 +154,9 @@ type
     procedure ImprimirExtratoResumido;
     procedure ImprimirExtratoCancelamento;
 
-    function CalcCFeNomeArq( NomeArquivo: String = ''; Sufixo: String = ''): String;
-    function CalcCFeCancNomeArq( Sufixo: String = ''): String;
+    function CalcCFeNomeArq( Pasta: String; NomeArquivo: String = '';
+      Sufixo: String = ''): String;
+    function CalcCFeCancNomeArq( Pasta: String; Sufixo: String = ''): String;
 
    published
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
@@ -894,7 +895,7 @@ begin
 
   if fsConfigArquivos.SalvarEnvio then
   begin
-    NomeCFe := CalcCFeCancNomeArq('-env');
+    NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaEnvio, '-env');
     WriteToTXT(NomeCFe, dadosCancelamento, False, False);
   end;
 
@@ -908,7 +909,7 @@ begin
 
      if fsConfigArquivos.SalvarCFeCanc then
      begin
-       NomeCFe := CalcCFeCancNomeArq();
+       NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaCFeCancelamento);
        CFeCanc.SaveToFile(NomeCFe);
      end;
   end;
@@ -1037,7 +1038,8 @@ begin
 
   if fsConfigArquivos.SalvarEnvio then
   begin
-    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PrefixoArqCFe +
+    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PastaEnvio,
+                               fsConfigArquivos.PrefixoArqCFe +
                                FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
                                IntToStrZero(numeroSessao, 6),
                                '-env');
@@ -1053,7 +1055,7 @@ begin
 
      if fsConfigArquivos.SalvarCFe then
      begin
-       NomeCFe := CalcCFeNomeArq();
+       NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda);
        CFe.SaveToFile(NomeCFe);
      end;
   end;
@@ -1121,7 +1123,8 @@ begin
 
   if fsConfigArquivos.SalvarEnvio then
   begin
-    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PrefixoArqCFe +
+    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PastaEnvio,
+                               fsConfigArquivos.PrefixoArqCFe +
                                FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
                                IntToStrZero(numeroSessao, 6),
                                '-teste-env');
@@ -1137,7 +1140,7 @@ begin
 
      if fsConfigArquivos.SalvarCFe then
      begin
-       NomeCFe := CalcCFeNomeArq('','-teste');
+       NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda,'','-teste');
        CFe.SaveToFile(NomeCFe);
      end;
   end;
@@ -1302,12 +1305,12 @@ begin
   Extrato.ImprimirExtratoCancelamento;
 end;
 
-function TACBrSAT.CalcCFeNomeArq(NomeArquivo: String; Sufixo: String): String;
+function TACBrSAT.CalcCFeNomeArq(Pasta: String; NomeArquivo: String;
+  Sufixo: String): String;
 var
   Dir: String;
 begin
-  Dir := fsConfigArquivos.CalcPath( fsConfigArquivos.PastaCFeVenda,
-                                    CFe.Emit.CNPJ, CFe.ide.dEmi );
+  Dir := fsConfigArquivos.CalcPath( Pasta, CFe.Emit.CNPJ, CFe.ide.dEmi );
 
   if not DirectoryExists(Dir) then
     ForceDirectories(Dir);
@@ -1318,12 +1321,11 @@ begin
   Result := Dir + NomeArquivo + Sufixo + '.xml';
 end;
 
-function TACBrSAT.CalcCFeCancNomeArq(Sufixo: String): String;
+function TACBrSAT.CalcCFeCancNomeArq(Pasta: String; Sufixo: String): String;
 var
   Dir: String;
 begin
-  Dir := fsConfigArquivos.CalcPath( fsConfigArquivos.PastaCFeCancelamento,
-                                    CFeCanc.Emit.CNPJ, CFeCanc.ide.dEmi );
+  Dir := fsConfigArquivos.CalcPath( Pasta, CFeCanc.Emit.CNPJ, CFeCanc.ide.dEmi );
 
   if not DirectoryExists(Dir) then
     ForceDirectories(Dir);

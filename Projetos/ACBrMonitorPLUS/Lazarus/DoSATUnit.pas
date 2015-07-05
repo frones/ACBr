@@ -164,8 +164,8 @@ begin
                        'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
                        'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
 
-      ArqCFe := ACBrSAT1.PastaCFeCancelamento + PathDelim + ACBrSAT1.CFeCanc.infCFe.chCanc + '-can.xml';
-      if FileExists(ArqCFe) then
+      ArqCFe := ACBrSAT1.CFeCanc.NomeArquivo;
+      if (ArqCFe <> '') and FileExists(ArqCFe) then
         Cmd.Resposta := Cmd.Resposta + 'Arquivo='+ArqCFe+sLineBreak ;
 
       Cmd.Resposta := Cmd.Resposta + 'XML='+ACBrSAT1.CFeCanc.AsXMLString;
@@ -277,8 +277,8 @@ begin
               'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
               'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
 
-    ArqCFe := ACBrSAT1.PastaCFeVenda + PathDelim + CPREFIXO_CFe + ACBrSAT1.CFe.infCFe.ID + '.xml';
-    if FileExists(ArqCFe) then
+    ArqCFe := ACBrSAT1.CFe.NomeArquivo;
+    if (ArqCFe <> '') and FileExists(ArqCFe) then
       Result := Result + 'Arquivo='+ArqCFe+sLineBreak;
 
     Result := Result + 'XML='+ACBrSAT1.CFe.AsXMLString;
@@ -330,7 +330,7 @@ begin
           Ide.assinaturaQRCODE := INIRec.ReadString(  'Identificacao','assinaturaQRCODE' ,'' );
           Ide.numeroCaixa := INIRec.ReadInteger( 'Identificacao','numeroCaixa' , 0);
 
-          Emit.CNPJCPF           := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF'    ,''));
+          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF'    ,''));
           Emit.xNome             := INIRec.ReadString(  'Emitente','Razao'   ,INIRec.ReadString(  'Emitente','xNome'   ,''));
           Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant',''));
           Emit.IE                := INIRec.ReadString(  'Emitente','IE'      ,'');

@@ -208,12 +208,16 @@ type
     cbxSalvaCCeCancelamentoPathEvento: TCheckBox;
     cbxSalvarArqs: TCheckBox;
     cbxSalvarCFe: TCheckBox;
+    cbxSalvarCFeCanc: TCheckBox;
+    cbxSalvarEnvio: TCheckBox;
     cbxSalvarNFesProcessadas: TCheckBox;
     cbxSedexAvisoReceb: TComboBox;
     cbxSedexFormato: TComboBox;
     cbxSedexMaoPropria: TComboBox;
     cbxSedexServico: TComboBox;
     cbxSepararPorCNPJ: TCheckBox;
+    cbxSepararPorCNPJ1: TCheckBox;
+    cbxSepararPorMES: TCheckBox;
     cbxSepararporModelo: TCheckBox;
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
@@ -905,11 +909,15 @@ type
     procedure cbxPortaChange(Sender: TObject);
     procedure cbxRedeProxyChange(Sender: TObject);
     procedure cbxSalvarArqsClick(Sender: TObject);
+    procedure cbxSalvarCFeCancChange(Sender: TObject);
     procedure cbxSalvarCFeChange(Sender: TObject);
+    procedure cbxSalvarEnvioChange(Sender: TObject);
     procedure cbxSedexAvisoRecebChange(Sender: TObject);
     procedure cbxSedexFormatoChange(Sender: TObject);
     procedure cbxSedexMaoPropriaChange(Sender: TObject);
     procedure cbxSedexServicoChange(Sender: TObject);
+    procedure cbxSepararPorCNPJ1Change(Sender: TObject);
+    procedure cbxSepararPorMESChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
     procedure chECFArredondaMFDClick(Sender: TObject);
     procedure chECFControlePortaClick(Sender: TObject);
@@ -2150,9 +2158,19 @@ begin
   VerificaDiretorios;
 end;
 
+procedure TFrmACBrMonitor.cbxSalvarCFeCancChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
+end;
+
 procedure TFrmACBrMonitor.cbxSalvarCFeChange(Sender: TObject);
 begin
-  ACBrSAT1.SalvarCFes := cbxSalvarCFe.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbxSalvarEnvioChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbxSedexAvisoRecebChange(Sender: TObject);
@@ -2173,6 +2191,16 @@ end;
 procedure TFrmACBrMonitor.cbxSedexServicoChange(Sender: TObject);
 begin
   ACBrSedex1.Servico := TACBrTpServico(cbxSedexServico.ItemIndex);
+end;
+
+procedure TFrmACBrMonitor.cbxSepararPorCNPJ1Change(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbxSepararPorMESChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbxUTF8Change(Sender: TObject);
@@ -3009,10 +3037,12 @@ begin
     sePagCodChange(self);
     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
-    cbxSalvarCFe.Checked   := INI.ReadBool('SAT','SalvarCFe', True);
     edSATPathArqs.Text     := INI.ReadString('SAT','PathCFe',PathApplication+'Arqs'+PathDelim+'SAT');
-    ACBrSAT1.PastaCFeVenda := PathWithDelim(edSATPathArqs.Text)+'Vendas';
-    ACBrSAT1.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
+    cbxSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
+    cbxSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
+    cbxSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
+    cbxSepararPorCNPJ.Checked:= INI.ReadBool('SAT','SepararPorCNPJ', True);
+    cbxSepararPorMES.Checked := INI.ReadBool('SAT','SepararPorMES', True);
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
     ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
@@ -3686,8 +3716,12 @@ begin
     INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
     INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
-    INI.WriteBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
     INI.WriteString('SAT','PathCFe',edSATPathArqs.Text);
+    INI.WriteBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
+    INI.WriteBool('SAT','SalvarCFeCanc', cbxSalvarCFeCanc.Checked);
+    INI.WriteBool('SAT','SalvarEnvio', cbxSalvarEnvio.Checked);
+    INI.WriteBool('SAT','SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
+    INI.WriteBool('SAT','SepararPorMES', cbxSepararPorMES.Checked);
 
     INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString);
     INI.WriteBool('SATExtrato', 'ImprimeDescAcrescItem', cbxImprimirDescAcresItemSAT.Checked);
@@ -5918,7 +5952,14 @@ begin
     Config.PaginaDeCodigo     := sePagCod.Value;
     Config.EhUTF8             := cbxUTF8.Checked;
     Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
-    SalvarCFes := cbxSalvarCFe.Checked;
+
+    ConfigArquivos.PastaCFeVenda := PathWithDelim(edSATPathArqs.Text)+'Vendas';
+    ConfigArquivos.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
+    ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+    ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
+    ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
+    ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+    ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
   end;
 
   ConfiguraRedeSAT;

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 419
+  Left = 405
   Height = 689
-  Top = 184
+  Top = 144
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -8908,17 +8908,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Ambiente'
                 ParentColor = False
               end
-              object cbxSalvarCFe: TCheckBox
-                Left = 385
-                Height = 21
-                Top = 103
-                Width = 86
-                Caption = 'Salvar CFes'
-                Checked = True
-                OnChange = cbxSalvarCFeChange
-                State = cbChecked
-                TabOrder = 10
-              end
               object cbxModeloSAT: TComboBox
                 AnchorSideLeft.Side = asrCenter
                 Left = 16
@@ -8936,13 +8925,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 11
               end
               object btAtivarsat: TButton
-                Left = 376
+                Left = 128
                 Height = 25
-                Top = 168
+                Top = 232
                 Width = 104
                 Caption = 'Ativar SAT'
                 OnClick = btAtivarsatClick
-                TabOrder = 12
+                TabOrder = 19
               end
               object edSATPathArqs: TEdit
                 Cursor = crIBeam
@@ -8950,7 +8939,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 123
                 Width = 163
-                TabOrder = 13
+                TabOrder = 10
               end
               object SbArqLog2: TSpeedButton
                 Left = 561
@@ -8961,22 +8950,77 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnClick = SbArqLog2Click
               end
               object btConsultarStatusOPSAT: TButton
-                Left = 267
+                Left = 17
                 Height = 25
-                Top = 168
+                Top = 232
                 Width = 104
                 Caption = 'Consultar Status'
                 OnClick = btConsultarStatusOPSATClick
-                TabOrder = 14
+                TabOrder = 18
               end
               object bInicializar: TButton
                 AnchorSideLeft.Side = asrCenter
-                Left = 160
+                Left = 16
                 Height = 25
-                Top = 168
+                Top = 200
                 Width = 104
                 Caption = 'Inicializar'
                 OnClick = bInicializarClick
+                TabOrder = 17
+              end
+              object cbxSalvarCFe: TCheckBox
+                Left = 487
+                Height = 21
+                Top = 168
+                Width = 80
+                Caption = 'Salvar CFe'
+                Checked = True
+                OnChange = cbxSalvarCFeChange
+                State = cbChecked
+                TabOrder = 12
+              end
+              object cbxSalvarCFeCanc: TCheckBox
+                Left = 487
+                Height = 21
+                Top = 193
+                Width = 108
+                Caption = 'Salvar CFeCanc'
+                Checked = True
+                OnChange = cbxSalvarCFeCancChange
+                State = cbChecked
+                TabOrder = 13
+              end
+              object cbxSalvarEnvio: TCheckBox
+                Left = 487
+                Height = 21
+                Top = 218
+                Width = 90
+                Caption = 'Salvar Envio'
+                Checked = True
+                OnChange = cbxSalvarEnvioChange
+                State = cbChecked
+                TabOrder = 14
+              end
+              object cbxSepararPorMES: TCheckBox
+                Left = 344
+                Height = 21
+                Top = 216
+                Width = 121
+                Caption = 'Separar por MES'
+                Checked = True
+                OnChange = cbxSepararPorMESChange
+                State = cbChecked
+                TabOrder = 16
+              end
+              object cbxSepararPorCNPJ1: TCheckBox
+                Left = 344
+                Height = 21
+                Top = 193
+                Width = 125
+                Caption = 'Separar por CNPJ'
+                Checked = True
+                OnChange = cbxSepararPorCNPJ1Change
+                State = cbChecked
                 TabOrder = 15
               end
             end
@@ -10486,6 +10530,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11587,14 +11632,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
     OnGravarLog = ACBrSAT1GravarLog
-    Config.infCFe_versaoDadosEnt = 0.05
-    Config.ide_numeroCaixa = 0
-    Config.ide_tpAmb = taHomologacao
-    Config.emit_cRegTrib = RTSimplesNacional
-    Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
-    Config.emit_indRatISSQN = irSim
-    Config.EhUTF8 = False
-    Config.PaginaDeCodigo = 0
     Rede.tipoInter = infETHE
     Rede.seg = segNONE
     Rede.tipoLan = lanDHCP

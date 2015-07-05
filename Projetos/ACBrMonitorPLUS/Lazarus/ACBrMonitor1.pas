@@ -3118,6 +3118,7 @@ begin
     seLogoFatorX.Value := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
     seLogoFatorY.Value := INI.ReadInteger('Logo', 'FatorY', ACBrPosPrinter1.ConfigLogo.FatorY);
 
+    ConfiguraPosPrinter;
   finally
     Ini.Free;
   end;
@@ -6533,10 +6534,12 @@ begin
 end;
 
 procedure TFrmACBrMonitor.ConfiguraPosPrinter;
+var
+  OldAtivo: Boolean;
 begin
+  OldAtivo := ACBrPosPrinter1.Ativo;
   try
-    Self.Enabled := False;
-
+    ACBrPosPrinter1.Ativo              := False;  //Deliga para poder configurar
     ACBrPosPrinter1.Modelo             := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
     ACBrPosPrinter1.Porta              := cbxPorta.Text;
     ACBrPosPrinter1.LinhasBuffer       := seBuffer.Value;
@@ -6562,7 +6565,7 @@ begin
     ACBrPosPrinter1.ConfigLogo.KeyCode1 := seLogoKC1.Value;
     ACBrPosPrinter1.ConfigLogo.KeyCode2 := seLogoKC2.Value;
   finally
-    Self.Enabled := True;
+    ACBrPosPrinter1.Ativo := OldAtivo;
 
     cbxModelo.ItemIndex := Integer(ACBrPosPrinter1.Modelo);
     cbxPorta.Text       := ACBrPosPrinter1.Porta;

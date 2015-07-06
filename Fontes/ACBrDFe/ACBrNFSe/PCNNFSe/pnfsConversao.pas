@@ -1100,6 +1100,7 @@ begin
   3550704, // Sao Sebastiao
   3552502, // Suzano/SP
   3553708, // Taquaritinga/SP
+  3555406, // Ubatuba/SP
   3557105, // Votuporanga/SP
   3704708, // Marechal Deodoro/AL
   4118204, // Paranagua/PR

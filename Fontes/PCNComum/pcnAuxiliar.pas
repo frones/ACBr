@@ -71,6 +71,7 @@ function RetornarCodigoNumerico(Chave: string; Versao : real): integer;
 function RetornarCodigoNumericoCTe(Chave: string): integer;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
 function RetornarDigito(const chave: string): integer;
+function RetornarModelo(const chave: string): String;
 function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;
 function UFparaCodigo(const UF: string): integer;
 function ValidarAAMM(const AAMM: string): boolean;
@@ -339,6 +340,11 @@ begin
     if i mod 2 <> 0 then
        result := result + chr(HexToInt(copy(texto,i,2)));
   end;
+end;
+
+function RetornarModelo(const chave: string): String;
+begin
+  Result := copy(chave, 24, 2);
 end;
 
 function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;

@@ -157,6 +157,10 @@ begin
               ConfigURL.HomNomeCidade := 'homologacao.rioverdegoias.com.br';
               ConfigURL.ProNomeCidade := 'online.rioverdegoias.com.br';
             end;
+   5211503: begin // Itumbiara/GO
+            ConfigURL.HomNomeCidade := '187.72.239.186:8083';
+            ConfigURL.ProNomeCidade := '187.72.239.186:8083';
+           end;
   end;
 
   ConfigURL.HomRecepcaoLoteRPS    := 'http://' + ConfigURL.HomNomeCidade + '/prodataws/services/NfseWSService?wsdl/';

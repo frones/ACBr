@@ -1625,7 +1625,8 @@ end;
 
 procedure TForm1.cbxSalvarCFeChange(Sender: TObject);
 begin
-  ACBrSAT1.SalvarCFes := cbxSalvarCFe.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarCFeCanc := cbxSalvarCFe.Checked;
 end;
 
 procedure TForm1.cbxUTF8Change(Sender: TObject);
@@ -1726,7 +1727,7 @@ end;
 
 procedure TForm1.ACBrECF1GravarLog(const ALogLine: String; var Tratado: Boolean);
 begin
-  mResp.Lines.Add( ALogLine );
+  //mResp.Lines.Add( ALogLine );
 end;
 
 procedure TForm1.ACBrECFVirtualNaoFiscal1QuandoGravarArqINI(
@@ -5278,7 +5279,8 @@ begin
     Config.PaginaDeCodigo     := sePagCod.Value;
     Config.EhUTF8             := cbxUTF8.Checked;
     Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
-    SalvarCFes := cbxSalvarCFe.Checked;
+    ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+    ConfigArquivos.SalvarCFeCanc := cbxSalvarCFe.Checked;
   end ;
 
   PrepararImpressaoSAT;

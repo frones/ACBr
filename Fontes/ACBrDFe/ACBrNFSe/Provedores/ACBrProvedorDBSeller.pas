@@ -151,6 +151,10 @@ begin
               ConfigURL.HomNomeCidade := 'alegrete.rs';
               ConfigURL.ProNomeCidade := 'alegrete.rs';
             end;
+   4310603: begin // Itaqui/RS
+              ConfigURL.HomNomeCidade := 'itaqui.rs';
+              ConfigURL.ProNomeCidade := 'itaqui.rs';
+            end;
    4304705: begin
               ConfigURL.HomNomeCidade := 'carazinho.rs';
               ConfigURL.ProNomeCidade := 'carazinho.rs';

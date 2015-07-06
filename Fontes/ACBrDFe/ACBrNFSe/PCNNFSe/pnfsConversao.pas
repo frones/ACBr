@@ -946,6 +946,7 @@ begin
          : Provedor := 'CTA';
 
   4300406, // Alegrete/RS
+  4310603, // Itaqui/RS
   4304705  // Carazinho/RS
          : Provedor := 'DBSeller';
 

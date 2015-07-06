@@ -2356,6 +2356,7 @@ procedure TACBrECFEscECF.EfetuaPagamento(CodFormaPagto : String ;
 Var
   NumPagtos : Integer;
   TotPag : Double;
+  TotalAPagar: String;
 begin
   if (CodMeioPagamento <= 0) or (CodMeioPagamento > 7) then
     CodMeioPagamento := 7;
@@ -2387,11 +2388,17 @@ begin
     TotPag := 0;
   end ;
 
+  try
+    TotalAPagar := EscECFResposta.Params[0]
+  except
+    TotalAPagar := '000';
+  end;
+
   Inc( NumPagtos ) ;
   RespostasComando.AddField( 'NumPagtos', IntToStr(NumPagtos) );
   RespostasComando.AddField( 'Pagto'+IntToStr(NumPagtos),
      CodFormaPagto+'|'+FloatToStr(Valor)+'|'+IntToStr(CodMeioPagamento) );
-  RespostasComando.AddField( 'TotalAPagar', EscECFResposta.Params[0] );
+  RespostasComando.AddField( 'TotalAPagar',  TotalAPagar );
   RespostasComando.AddField( 'TotalPago',  FloatToIntStr(Valor + TotPag) );
 
   SalvaRespostasMemoria(False);

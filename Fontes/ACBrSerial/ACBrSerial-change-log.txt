@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/07/2015
+-- ACBrECFEscECF -- (por: DSA)
+[*] Workaround para falta de resposta do ECF Daruma FS800i em EfetuaPagamento
+
 Data: 03/07/2015
 -- ACBrECFSwedaStx -- (por: DSA)
 [-] Correção para VerificaFimLeitura, em mudança de estado com Erro =  0

@@ -106,7 +106,8 @@ type
     destructor Destroy; override;
 
     procedure AtualizarTabela(const AData: TDateTime);
-    function Procurar(const ASimbolo: String): TACBrCotacaoItem;
+    function Procurar(const ASimbolo: String): TACBrCotacaoItem; overload;
+    function Procurar(const ACodigoMoeda: Double): TACBrCotacaoItem; overload;
   published
     property Tabela: TACBrCotacaoItens read FTabela write FTabela;
   end;
@@ -152,11 +153,7 @@ var
   StrTmp: String;
   PosCp: Integer;
 begin
-  // alterado pois o endereço antigo começou a utilizar frame
-  // então agora abrimos direto o frame
-  //Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/tabmoedas.asp');
-
-  Self.HTTPGet('https://www3.bcb.gov.br/ptax_internet/consultarTabelaMoedas.do?method=consultaTabelaMoedas');
+  Self.HTTPGet('https://ptax.bcb.gov.br/ptax_internet/consultarTabelaMoedas.do?method=consultaTabelaMoedas');
   StrTmp := Self.RespHTTP.Text;
 
   PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
@@ -182,7 +179,7 @@ begin
   end
   else
   begin
-    Self.HTTPGet('https://www3.bcb.gov.br/ptax_internet/consultarTodasAsMoedas.do?method=consultaTodasMoedas');
+    Self.HTTPGet('https://ptax.bcb.gov.br/ptax_internet/consultarTodasAsMoedas.do?method=consultaTodasMoedas');
     StrTmp := Self.RespHTTP.Text;
 
     PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
@@ -195,11 +192,24 @@ begin
   end;
 end;
 
+function TACBrCotacao.Procurar(const ACodigoMoeda: Double): TACBrCotacaoItem;
+var
+  I: Integer;
+begin
+  for I := 0 to Tabela.Count - 1 do
+  begin
+    if Tabela[I].CodigoMoeda = ACodigoMoeda then
+    begin
+      Result := Tabela[I];
+      Exit;
+    end;
+  end;
+end;
+
 function TACBrCotacao.Procurar(const ASimbolo: String): TACBrCotacaoItem;
 var
   I: Integer;
 begin
-  Result := nil;
   for I := 0 to Tabela.Count - 1 do
   begin
     if Tabela[I].Moeda = ASimbolo then
@@ -300,6 +310,7 @@ begin
     ItemCotacao.Free;
     ItemMoeda.Free;
   end;
+
 end;
 
 end.

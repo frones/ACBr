@@ -1265,6 +1265,7 @@ begin
   5003702, // Dourados/MT
   5005707, // Naviraí/MS
   5006002, // Nova Alvorada do Sul/MS
+  5006309, // Paranaiba/MS
   5007208, // Rio Brilhante/MS
   5007901, // Sidrolândia/MS
   5103403, // Cuiaba/MT

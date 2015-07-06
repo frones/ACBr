@@ -163,6 +163,7 @@ begin
    4316907: ConfigURL.ProNomeCidade := 'santamaria';         // Santa Maria/RS
    5002209: ConfigURL.ProNomeCidade := 'bonito';             // Bonito/MS
    5003702: ConfigURL.ProNomeCidade := 'dourados';           // Dourados/MS
+   5006309: ConfigURL.ProNomeCidade := 'paranaiba';          // Paranaiba/MS
    5100250: ConfigURL.ProNomeCidade := 'altafloresta';       // Alta Floresta/MT
    5103403: ConfigURL.ProNomeCidade := 'cuiaba';             // Cuiaba/MT
    5105101: ConfigURL.ProNomeCidade := 'juara';              // Juara/MT

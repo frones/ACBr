@@ -2117,6 +2117,7 @@ begin
     if FormMsgExibe then
      begin
        {$IFDEF MSWINDOWS}
+        LoadBlockInput;
         if (not ExibeMensagem) and Assigned( xBlockInput ) then
          begin
            BlockInput(True, False);
@@ -4451,6 +4452,7 @@ end;
     var
        Msg: TMsg;
     begin
+      LoadBlockInput;
       if not Assigned( xBlockInput ) then
          exit ;
          

@@ -285,6 +285,12 @@ function UnZip(S: AnsiString): AnsiString; overload;
 var xInp32 : function (wAddr: word): byte; stdcall;
 var xOut32 : function (wAddr: word; bOut: byte): byte; stdcall;
 var xBlockInput : function (Block: BOOL): BOOL; stdcall;
+
+var InpOutLoaded: Boolean;
+var BlockInputLoaded: Boolean;
+
+procedure LoadInpOut;
+procedure LoadBlockInput;
 {$ENDIF}
 
 implementation
@@ -1980,6 +1986,7 @@ var Buffer : Pointer ;
 {$ENDIF}
 begin
 {$IFDEF MSWINDOWS}
+  LoadInpOut;
   if Assigned( xInp32 ) then
      Result := xInp32(PortAddr)
 {$ELSE}
@@ -2023,6 +2030,7 @@ var Buffer : Pointer ;
 {$ENDIF}
 begin
 {$IFDEF MSWINDOWS}
+  LoadInpOut;
   if Assigned( xOut32 ) then
      xOut32(PortAddr, Databyte)
 {$ELSE}
@@ -2958,6 +2966,7 @@ begin
   end;
 end;
 
+
 {$ELSE}
 
 function UnZip(S: TStream): AnsiString;
@@ -3214,19 +3223,39 @@ end;
 
 //*****************************************************************************************
 
-
-initialization
 {$IFDEF MSWINDOWS}
+procedure LoadInpOut;
+begin
+  if InpOutLoaded then exit;
+
   if not FunctionDetect(CINPOUTDLL,'Inp32',@xInp32) then
     xInp32 := NIL ;
 
   if not FunctionDetect(CINPOUTDLL,'Out32',@xOut32) then
     xOut32 := NIL ;
 
+  InpOutLoaded := True;
+end;
+
+procedure LoadBlockInput;
+begin
+  if BlockInputLoaded then exit;
+
   if not FunctionDetect('USER32.DLL', 'BlockInput', @xBlockInput) then
-  	 xBlockInput := NIL ;
+     xBlockInput := NIL ;
+
+  BlockInputLoaded := True;
+end;
 {$ENDIF}
 
+initialization
+{$IFDEF MSWINDOWS}
+  InpOutLoaded := False;
+  BlockInputLoaded := False;
+  xInp32 := Nil;
+  xOut32 := Nil;
+  xBlockInput := Nil;
+{$ENDIF}
   Randomized := False ;
 end.
 

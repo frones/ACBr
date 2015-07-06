@@ -1854,6 +1854,7 @@ begin
   begin
    {$IFNDEF Framework}
    {$IFDEF MSWINDOWS}
+     LoadBlockInput;
      if Assigned( xBlockInput ) then
         xBlockInput( Bloqueia ) ;
    {$ENDIF}

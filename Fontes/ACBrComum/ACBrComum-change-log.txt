@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/07/2015       (por: DSA)
+-- ACBrUtil --
+[*] Ajuste para não carregar inpout32 e BlockInput na inicialização do sistema
+    sem necessidade
+
 Data: 04/05/2015       (por: DSA)
 -- ACBrUtil --
 [+] Adicionado o método: OnlyCharsInSet

@@ -490,8 +490,8 @@ begin
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
     if (Emit.EnderEmit.CEP <> 0) then
     begin
-      CEP := IntToStr(Emit.EnderEmit.CEP);
-      Endereco := Endereco + ' - '+copy(CEP,1,5)+'-'+copy(CEP,6,3);
+      CEP := FormatarCEP( IntToStr(Emit.EnderEmit.CEP) );
+      Endereco := Endereco + ' - '+CEP;
     end;
   end;
 

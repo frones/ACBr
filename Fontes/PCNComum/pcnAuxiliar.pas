@@ -344,7 +344,7 @@ end;
 
 function RetornarModelo(const chave: string): String;
 begin
-  Result := copy(chave, 24, 2);
+  Result := copy(OnlyNumber(chave), 21, 2);
 end;
 
 function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;

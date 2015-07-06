@@ -672,7 +672,16 @@ begin
   fsOnGetNumeroSessao     := nil;
 
   fsConfig := TACBrSATConfig.Create(Self);
+  fsConfig.Name := 'ACBrSATConfig' ;
+  {$IFDEF COMPILER6_UP}
+  fsConfig.SetSubComponent( true );{ para gravar no DFM/XFM }
+  {$ENDIF}
+
   fsConfigArquivos := TACBrSATConfigArquivos.Create(Self);
+  fsConfigArquivos.Name := 'ACBrSATConfigArquivos' ;
+  {$IFDEF COMPILER6_UP}
+  fsConfigArquivos.SetSubComponent( true );{ para gravar no DFM/XFM }
+  {$ENDIF}
 
   fsRede    := TRede.Create;
   fsCFe     := TCFe.Create;

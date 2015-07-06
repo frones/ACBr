@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/07/2015
+-- ACBrSAT -- (por: DSA)
+[*] Correção para que Config e ConfigArquivos gravem seus dados no DFM/LFM
+
 Data: 04/07/2015
 -- ACBrSAT --  (por: DSA)
 [*] Propriedades removidas: ACBrSAT.SalvarCFes; ACBrSAT.PastaCFeVenda;

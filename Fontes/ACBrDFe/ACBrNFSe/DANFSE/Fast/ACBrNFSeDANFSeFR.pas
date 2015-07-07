@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeFRDM,
-  pnfsNFSe, pnfsConversao, frxClass;
+  pnfsNFSe, pnfsConversao, ACBrNFSeUtil, pcnauxiliar,frxClass;
 
 type
   EACBrNFSeDANFSeFR = class(Exception);
@@ -76,6 +76,7 @@ const
   TITULO_PDF = 'Nota Fiscal de Serviço Eletrônica';
 var
   I: Integer;
+  NomeArqXML : string;
 begin
   if PrepareReport(NFSe) then
   begin
@@ -90,8 +91,20 @@ begin
     for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count -1 do
     begin
 //      dmDanfse.frxPDFExport.FileName := PathPDF+ dmDanfse.NFSe.Numero+dmDanfse.NFSe.CodigoVerificacao+'.pdf';
-      dmDanfse.frxPDFExport.FileName := PathPDF+ dmDanfse.NFSe.Numero+'.pdf';
-      dmDanfse.frxReport.Export(dmDanfse.frxPDFExport);
+
+          with TACBrNFSe( ACBrNFSe ).NotasFiscais.Items[i] do
+          begin
+               if TACBrNFSe( ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe then
+                  NomeArqXML := NotaUtil.GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
+                                                Nfse.DataEmissao,
+                                                Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                                StrToIntDef(Nfse.Numero, 0))
+               else
+                  NomeArqXML := NFSe.Numero;
+          end;
+
+       dmDanfse.frxPDFExport.FileName := PathPDF+ NomeArqXML+'.pdf';
+       dmDanfse.frxReport.Export(dmDanfse.frxPDFExport);
     end;
   end;
 end;

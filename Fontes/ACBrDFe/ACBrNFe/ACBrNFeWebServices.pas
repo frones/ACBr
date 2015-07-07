@@ -2290,8 +2290,8 @@ begin
    end;
 
   if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEPECNFe) and
-     (FPConfiguracoes.WebServices.UFCodigo = 35) and
-     (FPConfiguracoes.Geral.ModeloDF = moNFCe) then
+     (FPConfiguracoesNFe.WebServices.UFCodigo = 35) and
+     (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) then
   begin
     FPLayout := LayNFCeEPEC;
     UF := FPConfiguracoesNFe.WebServices.UF;

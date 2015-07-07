@@ -873,10 +873,14 @@ begin
     with frACBrSATExtratoFortesFr do
     begin
       if LayOut = lCancelamento then
-         RLLayout := rlCancelamento
+      begin
+         RLLayout := rlCancelamento;
+         RLLayout.Title := 'CFeCan: '+FormatarChaveAcesso(CFeCanc.infCFe.ID);
+      end
       else
       begin
         RLLayout := rlVenda;
+        RLLayout.Title := 'CFe: '+FormatarChaveAcesso(CFe.infCFe.ID);
         Resumido := (LayOut = lResumido);
       end;
 

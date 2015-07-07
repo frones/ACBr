@@ -1,7 +1,9 @@
 program PosPrinterTeste;
 
 uses
-  Forms, Unit1;
+  Forms,
+  unit1 in 'unit1.pas', {FrPosPrinterTeste}
+  configuraserial in 'configuraserial.pas' {frConfiguraSerial};
 
 {$R *.res}
 

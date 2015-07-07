@@ -62,7 +62,7 @@ type
     LayNfeInutilizacao, LayNfeConsulta, LayNfeStatusServico,
     LayNfeCadastro, LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
     LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
-    LayAdministrarCSCNFCe, LayDistDFeInt);
+    LayAdministrarCSCNFCe, LayDistDFeInt, LayNFCeEPEC);
 
   TSchemaNFe = (schErro, schNfe, schcancNFe, schInutNFe, schEnvCCe,
                 schEnvEventoCancNFe, schEnvConfRecebto, schEnvEPEC,
@@ -136,12 +136,12 @@ begin
      'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
      'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
      'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', '',
-     'NFeDistribuicaoDFe'],
+     'NFeDistribuicaoDFe', 'RecepcaoEvento'],
     [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
       LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
       LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
       LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
-      LayAdministrarCSCNFCe, LayDistDFeInt ] );
+      LayAdministrarCSCNFCe, LayDistDFeInt, LayNFCeEPEC ] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -151,12 +151,12 @@ begin
    'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
    'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
    'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', '',
-   'NFeDistribuicaoDFe'],
+   'NFeDistribuicaoDFe', 'RecepcaoEvento'],
   [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
     LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
     LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
     LayNFeDownloadNFe, LayNfeAutorizacao, LayNfeRetAutorizacao,
-    LayAdministrarCSCNFCe, LayDistDFeInt ] );
+    LayAdministrarCSCNFCe, LayDistDFeInt, LayNFCeEPEC ] );
 end;
 
 function LayOutToSchema(const t: TLayOut): TSchemaNFe;
@@ -169,10 +169,12 @@ begin
     LayNfeConsulta:       Result := schconsSitNFe;
     LayNfeStatusServico:  Result := schconsStatServ;
     LayNfeCadastro:       Result := schconsCad;
-    LayNFeEvento, LayNFeEventoAN: Result := schenvEvento;
-    LayNFeConsNFeDest   : Result := schconsNFeDest;
-    LayNFeDownloadNFe   : Result := schdownloadNFe;
-    LayNfeAutorizacao   : Result := schNfe;
+    LayNFeEvento,
+    LayNFeEventoAN,
+    LayNFCeEPEC:          Result := schenvEvento;
+    LayNFeConsNFeDest:    Result := schconsNFeDest;
+    LayNFeDownloadNFe:    Result := schdownloadNFe;
+    LayNfeAutorizacao:    Result := schNfe;
     LayNfeRetAutorizacao: Result := schretEnviNFe;
     LayDistDFeInt:        Result := schdistDFeInt;
   else

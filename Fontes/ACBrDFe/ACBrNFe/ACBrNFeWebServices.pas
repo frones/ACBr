@@ -1974,8 +1974,6 @@ begin
     FPServico := GetUrlWsd + 'NfeInutilizacao2';
     FPSoapAction := FPServico;
   end;
-//  FPServico := GetUrlWsd + 'NfeInutilizacao2';
-//  FPSoapAction := FPServico;
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;
@@ -2290,6 +2288,14 @@ begin
     FPLayout := LayNFeEvento;
     UF := FPConfiguracoesNFe.WebServices.UF;
    end;
+
+  if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEPECNFe) and
+     (FPConfiguracoes.WebServices.UFCodigo = 35) and
+     (FPConfiguracoes.Geral.ModeloDF = moNFCe) then
+  begin
+    FPLayout := LayNFCeEPEC;
+    UF := FPConfiguracoesNFe.WebServices.UF;
+  end;
 
   Versao := 0;
   FPVersaoServico := '';

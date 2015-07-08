@@ -189,7 +189,7 @@ begin
     CampoLivre := PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente,6,'0') +
                   CalcularDVCedente(ACBrTitulo) + Copy(ANossoNumero,3,3)  +
                   Copy(ANossoNumero,1,1) + Copy(ANossoNumero,6,3)         +
-                  '4' + Copy(ANossoNumero,9,9);
+                  Copy(ANossoNumero,2,1) + Copy(ANossoNumero,9,9);
 
     Modulo.CalculoPadrao;
     Modulo.MultiplicadorFinal   := 2;

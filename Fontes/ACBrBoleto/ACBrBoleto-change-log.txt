@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/07/2015 ver. 0.0.139a
+-- ACBrBancoCaixa --
+[*] Melhoria montagem campo livre. (Filipe Martins)
+http://www.projetoacbr.com.br/forum/topic/22479-c%C3%A1lculo-do-c%C3%B3digo-de-barras-caixa-sigcb/
+
 Data: 02/07/2015 ver. 0.0.139a
 -- ACBrBancoSicredi --
 [-]Ajuste arquivo remessa CNAB400. (Juliana Tamizou)

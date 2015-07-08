@@ -109,7 +109,6 @@ type
     function GetOnError: TErrorEvent; /// Método do evento OnError
     procedure SetOnError(const Value: TErrorEvent); /// Método SetError
 
-    procedure LimpaRegistros;
     procedure IniciaDados;
   protected
     /// BLOCO 0
@@ -153,6 +152,8 @@ type
     procedure SaveFileTXT;
 
     procedure IniciaGeracao;
+    procedure LimpaRegistros;
+
     procedure WriteBloco_0;
     procedure WriteBloco_1;
     procedure WriteBloco_9;

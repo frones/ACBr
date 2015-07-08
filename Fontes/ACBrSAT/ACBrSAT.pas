@@ -94,6 +94,7 @@ type
    protected
      procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
+     procedure DecodificaRetorno6000;
      property SAT : TACBrSATClass read fsSATClass ;
 
      constructor Create( AOwner : TComponent ) ; override;
@@ -951,6 +952,7 @@ begin
   fsComandoLog := 'ConsultarNumeroSessao( '+IntToStr(cNumeroDeSessao)+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao ) );
+  DecodificaRetorno6000;
 end ;
 
 function TACBrSAT.ConsultarSAT : String ;
@@ -1037,7 +1039,7 @@ end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
-  XMLRecebido, NomeCFe : String;
+  NomeCFe : String;
 begin
   fsComandoLog := 'EnviarDadosVenda( '+dadosVenda+' )';
   if Trim(dadosVenda) = '' then
@@ -1057,17 +1059,7 @@ begin
 
   Result := FinalizaComando( fsSATClass.EnviarDadosVenda( Trim(dadosVenda) ) );
 
-  if fsResposta.codigoDeRetorno = 6000 then
-  begin
-     XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
-     CFe.AsXMLString := XMLRecebido;
-
-     if fsConfigArquivos.SalvarCFe then
-     begin
-       NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda);
-       CFe.SaveToFile(NomeCFe);
-     end;
-  end;
+  DecodificaRetorno6000;
 end ;
 
 procedure TACBrSAT.ExtrairLogs(NomeArquivo: String);
@@ -1283,6 +1275,23 @@ begin
   if (Operation = opRemove) and (fsExtrato <> nil) and (AComponent is TACBrSATExtratoClass) then
      fsExtrato := nil ;
 end ;
+
+procedure TACBrSAT.DecodificaRetorno6000;
+var
+  XMLRecebido: String;
+  NomeCFe: String;
+begin
+  if fsResposta.codigoDeRetorno <> 6000 then exit;
+
+  XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
+  CFe.AsXMLString := XMLRecebido;
+
+  if fsConfigArquivos.SalvarCFe then
+  begin
+    NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda);
+    CFe.SaveToFile(NomeCFe);
+  end;
+end;
 
 procedure TACBrSAT.CFe2CFeCanc;
 begin

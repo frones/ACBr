@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/07/2015
+-- ACBrSAT --  (por: DSA)
+[*] Modificação para que a chamada ao método ConsultarNumeroSessao carregue
+    dados do XML da Venda em CFe caso a resposta seja 06000
+
 Data: 06/07/2015
 -- ACBrSAT -- (por: DSA)
 [*] Correção para que Config e ConfigArquivos gravem seus dados no DFM/LFM

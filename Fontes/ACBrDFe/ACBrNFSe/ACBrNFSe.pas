@@ -556,7 +556,7 @@ end;
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,
   ANumeroNFSe: String): Boolean;
 begin
-  if Self.NotasFiscais.Count = 0 then
+  if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);

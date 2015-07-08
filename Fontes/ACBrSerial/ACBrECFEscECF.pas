@@ -124,7 +124,7 @@ TACBrECFEscECFResposta = class
     fsBRS      : AnsiString ;
     fsCHK      : Byte ;
 
-    procedure SetResposta(const Value: AnsiString);
+    procedure SetResposta(const AValue: AnsiString);
  public
     constructor Create ;
     destructor Destroy ; override ;
@@ -589,22 +589,22 @@ begin
   fsCHK := 0 ;
 end;
 
-procedure TACBrECFEscECFResposta.SetResposta(const Value: AnsiString);
+procedure TACBrECFEscECFResposta.SetResposta(const AValue: AnsiString);
 Var
   Soma, I, F, LenCmd : Integer ;
   CHK  : Byte ;
 begin
   Clear( False ) ;    // Não Zera Params, pois pode acumular 2 retornos
 
-  if Value = '' then exit ;
+  if AValue = '' then exit ;
 
-  LenCmd := Length( Value ) ;
+  LenCmd := Length( AValue ) ;
 
-  if (LenCmd = 6) then  // Retorno de NAK ou WAK
+  if (LenCmd = 6) or (AValue[1] in [WAK,NAK]) then  // Retorno de NAK ou WAK
   begin
-    fsResposta := Value ;
-    fsCAT      := ord( Value[2] ) ;
-    fsRET.RET  := Copy( Value, 3, 4 );
+    fsResposta := AValue ;
+    fsCAT      := ord( AValue[2] ) ;
+    fsRET.RET  := Copy( AValue, 3, 4 );
     exit ;
   end;
 
@@ -612,20 +612,20 @@ begin
      raise EACBrECFSemResposta.Create('Tamanho de Resposta muito curto: '+
                                       IntToStr(LenCmd)+' bytes');
 
-  fsResposta := Value ;
-  fsSEQ      := ord( Value[2] ) ;
-  fsCMD      := ord( Value[3] ) ;
-  fsEXT      := ord( Value[4] ) ;
-  fsCAT      := ord( Value[5] ) ;
-  fsRET.RET  := Copy( Value, 6, 4 );
-  fsTBR      := LEStrToInt( copy(Value,10,2) );
-  fsBRS      := copy( Value, 12, fsTBR ) ;
-  fsCHK      := ord( Value[ 12 + fsTBR ] ) ;
+  fsResposta := AValue ;
+  fsSEQ      := ord( AValue[2] ) ;
+  fsCMD      := ord( AValue[3] ) ;
+  fsEXT      := ord( AValue[4] ) ;
+  fsCAT      := ord( AValue[5] ) ;
+  fsRET.RET  := Copy( AValue, 6, 4 );
+  fsTBR      := LEStrToInt( copy(AValue,10,2) );
+  fsBRS      := copy( AValue, 12, fsTBR ) ;
+  fsCHK      := ord( AValue[ 12 + fsTBR ] ) ;
 
   Soma := 0 ;
   LenCmd := fsTBR+11;
   For I := 2 to LenCmd do  
-     Soma := Soma + ord( Value[I] ) ;
+     Soma := Soma + ord( AValue[I] ) ;
   CHK := Soma mod 256  ;
 
   if CHK <> fsCHK then
@@ -1361,8 +1361,11 @@ begin
 
   if AtualizaVB then
   begin
-    ValVB := GetVendaBruta;
-    RespostasComando.AddField( 'VendaBruta', FloatToIntStr(ValVB) );
+    try
+      ValVB := GetVendaBruta;
+      RespostasComando.AddField( 'VendaBruta', FloatToIntStr(ValVB) );
+    except
+    end;
     RespostasComando.AddField( 'EmPagamento', ifthen( fsEmPagamento,'1','0') );
   end ;
 
@@ -1705,6 +1708,8 @@ begin
 
   try
      EnviaComando ;
+     Sleep(800);  // intervalo para ECF ficar operacional...
+
      RespostasComando.Clear;
      SalvaRespostasMemoria(True);
   except

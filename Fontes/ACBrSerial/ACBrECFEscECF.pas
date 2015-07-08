@@ -2323,6 +2323,8 @@ begin
   EscECFComando.AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
   EscECFComando.AddParamString(LeftStr(Consumidor.Nome,30)) ;
   EscECFComando.AddParamString(LeftStr(Consumidor.Endereco,79)) ;
+  Consumidor.Zera;
+
   EnviaComando;
 
   RespostasComando.Clear;
@@ -2331,7 +2333,6 @@ begin
   RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
   RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
 
-  Consumidor.Enviado := True ;
   fsEmPagamento := false ;
   SalvaRespostasMemoria(False);
 end;

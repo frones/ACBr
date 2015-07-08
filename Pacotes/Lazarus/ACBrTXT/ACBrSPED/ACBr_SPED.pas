@@ -20,7 +20,7 @@ uses
   ACBrEPCBloco_A_Class, ACBrEPCBloco_C, ACBrEPCBloco_C_Class, ACBrEPCBloco_D, 
   ACBrEPCBloco_D_Class, ACBrEPCBloco_F, ACBrEPCBloco_F_Class, ACBrEPCBloco_I, 
   ACBrEPCBloco_I_Class, ACBrEPCBloco_M, ACBrEPCBloco_M_Class, ACBrEPCBloco_P, 
-  ACBrEPCBloco_P_Class, LazarusPackageIntf;
+  ACBrEPCBloco_P_Class, ACBrEPCImportar, LazarusPackageIntf;
 
 implementation
 
@@ -29,6 +29,7 @@ begin
   RegisterUnit('ACBrSpedFiscal', @ACBrSpedFiscal.Register);
   RegisterUnit('ACBrSpedContabil', @ACBrSpedContabil.Register);
   RegisterUnit('ACBrSpedPisCofins', @ACBrSpedPisCofins.Register);
+  RegisterUnit('ACBrEPCImportar', @ACBrEPCImportar.Register);
 end;
 
 initialization

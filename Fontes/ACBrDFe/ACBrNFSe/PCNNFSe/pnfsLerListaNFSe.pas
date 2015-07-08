@@ -322,7 +322,7 @@ begin
 
             Result := NFSeLida.LerXml;
 
-            if Result then begin
+            if Result then 
             begin
               with ListaNFSe.FCompNFSe.Add do
               begin

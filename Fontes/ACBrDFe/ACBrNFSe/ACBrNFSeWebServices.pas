@@ -66,6 +66,8 @@ type
     FNameSpaceDad: String;
     FNameSpaceCab: String;
     FURI: String;
+    FURISig: String;
+    FURIRef: String;
     FTagI: String;
     FTagF: String;
     FDadosSenha: String;
@@ -80,6 +82,7 @@ type
     FCabecalho: String;
     FxsdServico: String;
     FvNotas: String;
+    FXML_NFSe: String;
 
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -99,6 +102,8 @@ type
     property NameSpaceCab: String read FNameSpaceCab;
     property NameSpaceDad: String read FNameSpaceDad;
     property URI: String read FURI;
+    property URISig: String read FURISig;
+    property URIRef: String read FURIRef;
     property TagI: String read FTagI;
     property TagF: String read FTagF;
     property DadosSenha: String read FDadosSenha;
@@ -113,6 +118,7 @@ type
     property Cabecalho: String read FCabecalho;
     property xsdServico: String read FxsdServico;
     property vNotas: String read FvNotas;
+    property XML_NFSe: String read FXML_NFSe;
   end;
 
   { TNFSeGerarLoteRPS }
@@ -1886,17 +1892,19 @@ begin
           FRetNfse := Copy(FRetListaNfse, 1, j - 1);
           k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNfse);
           FRetNfse := Copy(FRetNfse, k, length(FRetNfse));
-          (*
-          FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
 
-          if FConfiguracoes.Geral.Salvar then
+          FXML_NFSe := FPConfiguracoesNFSe.Geral.ConfigGeral.RetornoNFSe;
+          // %DadosNFSe% : Representa o XML da NFSe
+          FXML_NFSe := StringReplace(FXML_NFSe, '%DadosNFSe%', FRetNFSe, [rfReplaceAll]);
+
+          if FPConfiguracoesNFSe.Arquivos.Salvar then
           begin
-            if FConfiguracoes.Arquivos.EmissaoPathNFSe then
-              PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(FNFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.DataEmissao)
+            if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then
+              PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(FNFSeRetorno.ListaNfse.CompNfse.Items[i].NFSe.DataEmissao)
             else
-              PathSalvar := FConfiguracoes.Arquivos.GetPathNFSe(0);
+              PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(0);
 
-            if FConfiguracoes.Arquivos.NomeLongoNFSe then
+            if FPConfiguracoesNFSe.Arquivos.NomeLongoNFSe then
               NomeArq := GerarNomeNFSe(UFparaCodigo(FNFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.Endereco.UF),
                                        FNFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.DataEmissao,
                                        FNFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
@@ -1904,12 +1912,12 @@ begin
             else
               NomeArq := FNFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.Numero + '-nfse.xml';
 
-            FConfiguracoes.Geral.Save(NomeArq, FRetNfse, PathSalvar);
-//                                      NotaUtil.RetirarPrefixos(FRetNfse), PathSalvar);
+            FPDFeOwner.Gravar(NomeArq, FXML_NFSe, PathSalvar);
+
             if FNotasFiscais.Count > 0 then
               FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NomeArq;
           end;
-          *)
+
           FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
 
           FNotasFiscais.Items[ii].XMLNFSe := FRetNfse;
@@ -2029,84 +2037,92 @@ begin
 
   InicializarDadosMsg;
 
-(*
- URISig := '';
- URIRef := '';
-
- URISig := FProvedorClass.GetURI(URISig);
- URIRef := URISig;
+  FURISig := '';
+  FURIRef := '';
 
   FTagI := '<' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
 
+  if FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit then
+  begin
+    case FProvedor of
+      proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
+                                                                 OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
+                                                                 '', '');
 
- if FProvedorClass.GetAssinarXML(acConsSit)
-  then begin
-   case FProvedor of
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                               OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
-                                                               '', '');
-    proInfisc: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteInfisc(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                               OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
-                                                               '', '');
+      proInfisc: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteInfisc(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
+                                                                 OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
+                                                                 '', '');
+
     else FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLote(FPrefixo3, FPrefixo4,
-                                                      NameSpaceDad, FVersaoXML,
-                                                      TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                      OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
-                                                      TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                      '', '', FProvedor);
-   end;
-
-   if FPDadosMsg <> ''
-    then begin
-    {$IFDEF ACBrNFSeOpenSSL}
-     NotaUtil.InitXmlSec;
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FConfiguracoes.Certificados.Certificado,
-                     FConfiguracoes.Certificados.Senha,
-                     FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ELSE}
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ENDIF}
+                                                       FNameSpace,
+                                                       FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
+                                                       TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                       OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
+                                                       TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                       '', '',
+                                                       FProvedor);
     end;
+
+    if FPDadosMsg <> '' then
+    begin
+    (*
+      FPDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                  'EnviarLoteRpsEnvio', 'LoteRps',
+                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote);
+
+
+      {$IFDEF ACBrNFSeOpenSSL}
+       NotaUtil.InitXmlSec;
+       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
+                       FConfiguracoes.Certificados.Certificado,
+                       FConfiguracoes.Certificados.Senha,
+                       FvAssinada, FMsg, FProvedor))
+       then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+       else FPDadosMsg := FvAssinada;
+      {$ELSE}
+       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
+                       FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
+        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+        else FPDadosMsg := FvAssinada;
+      {$ENDIF}
+    *)
+    end;
+
   end
   else begin
-   case FProvedor of
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                               OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                               TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
-                                                               FTagI, FTagF);
+    case FProvedor of
+      proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
+                                                                 OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
+                                                                 FTagI, FTagF);
 
-    proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteEL(FConfiguracoes.WebServices.CodigoMunicipio,
-                                                          OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
-                                                          TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                          TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                          TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
-                                                          FTagI, FTagF);
+      proInfisc: FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLoteInfisc(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
+                                                                 OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).FCNPJ),
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                                 TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote,
+                                                                 FTagI, FTagF);
 
     else FPDadosMsg := TNFSeG.Gera_DadosMsgConsSitLote(FPrefixo3, FPrefixo4,
-                                                      NameSpaceDad, FVersaoXML,
-                                                      TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
-                                                      OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
-                                                      TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
-                                                      FTagI, FTagF, FProvedor);
-   end;
+                                                       FNameSpace,
+                                                       FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
+                                                       TNFSeConsultarSituacaoLoteRPS(Self).Protocolo,
+                                                       OnlyNumber(TNFSeConsultarSituacaoLoteRPS(Self).Cnpj),
+                                                       TNFSeConsultarSituacaoLoteRPS(Self).InscricaoMunicipal,
+                                                       FTagI, FTagF,
+                                                       FProvedor);
+    end;
   end;
 
-*)
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Consultar Situação do Lote] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));

@@ -507,13 +507,16 @@ end;
 
 function NotaFiscal.GetNumID: String;
 begin
-  if Configuracoes.Arquivos.NomeLongoNFSe then
-    Result := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
-                            NFSe.DataEmissao,
-                            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-                            StrToIntDef(NFSe.Numero, 0))
-  else
-    Result := NFSe.Numero;
+  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
+  begin
+    if Configuracoes.Arquivos.NomeLongoNFSe then
+      Result := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
+                              NFSe.DataEmissao,
+                              NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                              StrToIntDef(NFSe.Numero, 0))
+    else
+      Result := NFSe.Numero;
+  end;
 end;
 
 { TNotasFiscais }

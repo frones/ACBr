@@ -1158,7 +1158,7 @@ begin
          : Provedor := 'ISSDigital';
 
   1501402, // Belem/PA
-  2111300, // Sao Luis/MA
+//  2111300, // Sao Luis/MA
   2211001, // Teresina/PI
   3170206, // Uberlandia/MG
   3303500, // Nova Iguacu/RJ

@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeFRDM,
-  pnfsNFSe, pnfsConversao, ACBrNFSeUtil, pcnauxiliar,frxClass;
+  pnfsNFSe, pnfsConversao, pcnauxiliar,frxClass;
 
 type
   EACBrNFSeDANFSeFR = class(Exception);
@@ -95,7 +95,7 @@ begin
           with TACBrNFSe( ACBrNFSe ).NotasFiscais.Items[i] do
           begin
                if TACBrNFSe( ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe then
-                  NomeArqXML := NotaUtil.GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
+                  NomeArqXML := GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
                                                 Nfse.DataEmissao,
                                                 Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
                                                 StrToIntDef(Nfse.Numero, 0))

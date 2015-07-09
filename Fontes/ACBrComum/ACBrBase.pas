@@ -294,7 +294,7 @@ function TACBrInformacao.GetAsDate : TDateTime;
 var
    DataStr : String;
 begin
-  DataStr := String( OnlyNumber( Trim(String(fInfo)) ) );
+  DataStr := OnlyNumber( Trim(fInfo) );
 
   try
      Result := EncodeDate( StrToInt(copy(DataStr,5,4)),
@@ -309,15 +309,15 @@ function TACBrInformacao.GetAsFloat : Double;
 Var
   Info : String ;
 begin
-  Info := StringReplace( Trim(String(fInfo)), ',','',[rfReplaceAll] );
-  Info := StringReplace( Info             , '.','',[rfReplaceAll] );
+  Info := StringReplace( Trim(fInfo), ',','',[rfReplaceAll] );
+  Info := StringReplace( Info       , '.','',[rfReplaceAll] );
 
   Result := StrToIntDef( Info ,0) / 100 ;
 end;
 
 function TACBrInformacao.GetAsInteger : Integer;
 begin
-  Result := StrToIntDef(Trim(String(fInfo)),0);
+  Result := StrToIntDef(Trim(fInfo),0);
 end;
 
 function TACBrInformacao.GetAsString: String;
@@ -329,7 +329,7 @@ function TACBrInformacao.GetAsTime : TDateTime;
 var
    TimeStr : String;
 begin
-  TimeStr := OnlyNumber( Trim(String(fInfo)) );
+  TimeStr := OnlyNumber( Trim(fInfo) );
 
   try
      Result := EncodeTime( StrToInt(copy(TimeStr,1,2)),
@@ -344,7 +344,7 @@ function TACBrInformacao.GetAsTimeStamp : TDateTime;
 var
    DateTimeStr : String;
 begin
-  DateTimeStr := OnlyNumber( Trim(String(fInfo)) );
+  DateTimeStr := OnlyNumber( Trim(fInfo) );
 
   try
      Result := EncodeDateTime( YearOf(now),
@@ -362,7 +362,7 @@ function TACBrInformacao.GetAsTimeStampSQL : TDateTime;
 var
    DateTimeStr : String;
 begin
-  DateTimeStr := OnlyNumber( Trim(String(fInfo)) );
+  DateTimeStr := OnlyNumber( Trim(fInfo) );
 
   try
      Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),

@@ -40,17 +40,12 @@ requires
   {$IFDEF VER270} RLibWinDXE6, vclimg, dsnap, {$ENDIF} //XE6
   {$IFDEF VER280} RLibWinDXE7, vclimg, dsnap, {$ENDIF} //XE7  
   {$IFDEF VER290} RLibWinDXE8, vclimg, dsnap, {$ENDIF} //XE8
-  ACBr_NFSe,
-  ACBr_PCNComum,
-  ACBr_Comum,
-  ACBr_synapse,
-  ACBr_Capicom,
-  ACBr_Diversos;
+  ACBr_NFSe;
 
 contains
-  ACBrNFSeDANFSeRL in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},
-  ACBrNFSeDANFSeRLClass in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLClass.pas',
-  ACBrNFSeDANFSeRLReg in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLReg.pas',
-  ACBrNFSeDANFSeRLRetrato in '..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLRetrato.pas' {frlDANFSeRLRetrato};
+  ACBrNFSeDANFSeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},
+  ACBrNFSeDANFSeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLClass.pas',
+  ACBrNFSeDANFSeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLReg.pas',
+  ACBrNFSeDANFSeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLRetrato.pas' {frlDANFSeRLRetrato};
 
 end.

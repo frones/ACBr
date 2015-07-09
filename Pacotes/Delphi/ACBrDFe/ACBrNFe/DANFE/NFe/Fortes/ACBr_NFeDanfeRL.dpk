@@ -85,12 +85,7 @@ requires
   {$IFDEF VER270} RLibWinDXE6, vclimg,{$ENDIF} //XE6
   {$IFDEF VER280} RLibWinDXE7, vclimg,{$ENDIF} //XE7
   {$IFDEF VER290} RLibWinDXE8, vclimg,{$ENDIF} //XE8
-  ACBr_Comum,
-  ACBr_NFe,
-  ACBr_PCNComum,
-  ACBr_synapse,
-  ACBr_Capicom,
-  ACBr_Diversos;
+  ACBr_NFe;
 
 contains
   ACBrNFeDANFeRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas' {frlDANFeRL},

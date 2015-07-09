@@ -83,11 +83,11 @@ requires
 
 
 contains
-  ACBrCTeDACTeRL in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRL.pas' {frmDACTeRL},
-  ACBrCTeDACTeRLClass in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLClass.pas',
-  ACBrCTeDACTeRLReg in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLReg.pas',
-  ACBrCTeDACTeRLRetrato in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLRetrato.pas' {frmDACTeRLRetrato},
-  ACBrCTeDACTeRLRetratoA5 in '..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLRetratoA5.pas' {frmDACTeRLRetratoA5},
-  ACBrCTeDAEventoRL in '..\..\..\Fontes\ACBrCTe\ACBrCTeDAEventoRL.pas' {frmCTeDAEventoRL},
-  ACBrCTeDAEventoRLRetrato in '..\..\..\Fontes\ACBrCTe\ACBrCTeDAEventoRLRetrato.pas' {frmCTeDAEventoRLRetrato};
+  ACBrCTeDACTeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRL.pas' {frmDACTeRL},
+  ACBrCTeDACTeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLClass.pas',
+  ACBrCTeDACTeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLReg.pas',
+  ACBrCTeDACTeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetrato.pas' {frmDACTeRLRetrato},
+  ACBrCTeDACTeRLRetratoA5 in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetratoA5.pas' {frmDACTeRLRetratoA5},
+  ACBrCTeDAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRL.pas' {frmCTeDAEventoRL},
+  ACBrCTeDAEventoRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRLRetrato.pas' {frmCTeDAEventoRLRetrato};
 end.

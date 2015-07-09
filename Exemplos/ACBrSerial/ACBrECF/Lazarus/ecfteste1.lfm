@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 501
+  Left = 704
   Height = 418
-  Top = 191
+  Top = 269
   Width = 641
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -4987,6 +4987,18 @@ object Form1: TForm1
     Modelo = satDinamico_cdecl
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'C:\SAT\SAT.DLL'
+    Config.infCFe_versaoDadosEnt = 0.06
+    Config.ide_numeroCaixa = 0
+    Config.ide_tpAmb = taHomologacao
+    Config.emit_cRegTrib = RTSimplesNacional
+    Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
+    Config.emit_indRatISSQN = irSim
+    Config.EhUTF8 = False
+    Config.PaginaDeCodigo = 0
+    ConfigArquivos.SalvarCFe = True
+    ConfigArquivos.SalvarCFeCanc = True
+    ConfigArquivos.PrefixoArqCFe = 'AD'
+    ConfigArquivos.PrefixoArqCFeCanc = 'ADC'
     Rede.tipoInter = infETHE
     Rede.seg = segNONE
     Rede.tipoLan = lanDHCP

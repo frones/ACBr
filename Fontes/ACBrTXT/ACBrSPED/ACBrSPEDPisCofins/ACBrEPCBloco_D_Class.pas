@@ -528,7 +528,7 @@ begin
             sdfExtCancelado    : strCOD_SIT := '03';
             sdfComplementar    : strCOD_SIT := '06';
             sdfExtComplementar : strCOD_SIT := '07';
-            sdfInutilizado     : strCOD_SIT := '08';
+            sdfEspecial        : strCOD_SIT := '08';
           end;
 
           if Bloco_0.DT_INI < StrToDate('01/07/2012') then

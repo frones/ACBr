@@ -42,6 +42,11 @@ Símbolo : Significado
 Data: 09/07/2015
 -- ACBrECFEscECF -- (por: DSA)
 [*] Ajustes de Tamanho de colunas e Pag.Codigo para a Daruma FS800i
+[-] Correção de GetNumLoja para Epson TM-T800
+[+] Implementação de GetNumLoja para Daruma FS800i
+[+] Implementação de TraduzirTag e TraduzirTagBloco em Epson e Daruma (a testar)
+[+] Implementação de chamada a Metodos de uso da DLL (Ex: EspelhoMFD_DLL) em Daruma
+    (a testar)
 
 Data: 08/07/2015
 -- ACBrECFEscECF -- (por: DSA)

@@ -658,7 +658,7 @@ begin
   fsEscECFResposta := TACBrECFEscECFResposta.create ;
 
   fpDevice.HandShake := hsDTR_DSR ;
-  fpPaginaDeCodigo   := 850;
+  fpPaginaDeCodigo   := 1252;
   fsArqMemoria       := '';
 
   fpModeloStr := 'EscECF' ;
@@ -760,12 +760,14 @@ begin
 
      if IsBematech then
       begin
-        fpPaginaDeCodigo := 1252;
         if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
            MaxLinhasBuffer := 5;
       end
      else if IsEpson then
+      begin
+        fpPaginaDeCodigo := 850;
         fpColunas := 57;
+      end;
 
      LeRespostasMemoria;
   except
@@ -1392,6 +1394,8 @@ begin
 
   if IsBematech then
     Result := TACBrECFBematech.create(fpOwner)
+  else if IsDaruma then
+    Result := TACBrECFDaruma.create(fpOwner)
   else if IsEpson then
   begin
     Result := TACBrECFEpson.create(fpOwner);
@@ -1498,7 +1502,12 @@ begin
     end
     else if IsEpson then
     begin
-      fsNumLoja := RetornaInfoECF('15|5');
+      RetornaInfoECF('99|15');
+      fsNumLoja := EscECFResposta.Params[9] ;
+    end
+    else if IsDaruma then
+    begin
+      fsNumLoja := RetornaInfoECF('200|129');
     end;
   end;
 
@@ -2123,10 +2132,12 @@ end;
 
 function TACBrECFEscECF.TraduzirTag(const ATag : AnsiString) : AnsiString ;
 begin
-  // TODO: Usar Tradução de classe original  ??
-
   if IsBematech then
     Result := BematechTraduzirTag( ATag )
+  else if IsEpson then
+    Result := EpsonTraduzirTag( ATag, Self )
+  else if IsDaruma then
+    Result := DarumaTraduzirTag( ATag )
   else
     Result := inherited TraduzirTag( ATag );
 end ;
@@ -2136,6 +2147,10 @@ function TACBrECFEscECF.TraduzirTagBloco(const ATag, Conteudo : AnsiString
 begin
   if IsBematech then
     Result := BematechTraduzirTagBloco( ATag, Conteudo, Self)
+  else if IsEpson then
+    Result := EpsonTraduzirTagBloco( ATag, Conteudo, Self)
+  else if IsDaruma then
+    Result := DarumaTraduzirTagBloco( ATag, Conteudo, Self)
   else
     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
 end ;

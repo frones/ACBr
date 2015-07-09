@@ -124,9 +124,6 @@ TACBrECFEpson = class( TACBrECFClass )
     fsTentaDetectarVelocidade: Boolean;
     fsNumVersao : String ;
     fsIsFBIII   : Boolean;
-    fsALNegrito : Boolean;
-    fsALExpandido : Boolean;
-    fsALSublinhado : Boolean;
     fsNumECF    : String ;
     fsNumLoja   : String ;
     fsCNPJ      : String ;
@@ -388,10 +385,20 @@ TACBrECFEpson = class( TACBrECFClass )
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
  end ;
 
+TACBrECFClassHack = class ( TACBrECFClass );
+
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 function EpsonCheckSum(Dados: AnsiString): AnsiString;
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
-Function InsertEsc(const Campo: AnsiString): AnsiString ;
+function InsertEsc(const Campo: AnsiString): AnsiString ;
+function EpsonTraduzirTag(const ATag: AnsiString; AECFClass: TACBrECFClass): AnsiString;
+function EpsonTraduzirTagBloco(const ATag, Conteudo: AnsiString;
+  AECFClass: TACBrECFClass): AnsiString;
+
+var
+  epsonALNegrito : Boolean;
+  epsonALExpandido : Boolean;
+  epsonALSublinhado : Boolean;
 
 implementation
 Uses
@@ -701,6 +708,117 @@ begin
 
     Result := Result + Campo[I];
   end ;
+end;
+
+function EpsonTraduzirTag(const ATag: AnsiString; AECFClass: TACBrECFClass
+  ): AnsiString;
+const
+  C_OFF = 0;
+  // <e>
+  cExpandidoOn = 4;
+  // <n>
+  cNegritoOn = 1;
+  // <s></s>
+  cSublinhadoOn = 2;
+
+var
+  Cmd : Integer ;
+begin
+  Result := '' ;
+
+  if ATag = cTagLigaExpandido then
+    epsonALExpandido := True
+  else if ATag = cTagDesligaExpandido then
+    epsonALExpandido := False
+  else if ATag = cTagLigaNegrito then
+    epsonALNegrito := True
+  else if ATag = cTagDesligaNegrito then
+    epsonALNegrito := False
+  else if ATag = cTagLigaSublinhado then
+    epsonALSublinhado:= True
+  else if ATag = cTagDesligaSublinhado then
+    epsonALSublinhado:= False
+  else
+    exit;
+
+  Cmd := C_OFF ;
+
+  if epsonALNegrito then
+    Cmd := Cmd + cNegritoOn;
+
+  if epsonALExpandido then
+    Cmd := Cmd + cExpandidoOn;
+
+  if epsonALSublinhado then
+    Cmd := Cmd + cSublinhadoOn;
+
+  if TACBrECFClassHack(AECFClass).fpDevice.IsDLLPort and (Cmd = C_OFF) then
+    Cmd := 32 ;
+
+  Result := ESC + chr( Cmd );
+end;
+
+function EpsonTraduzirTagBloco(const ATag, Conteudo: AnsiString;
+  AECFClass: TACBrECFClass): AnsiString;
+const
+  cBarras = ESC + #128 ;
+  // ESC + #128 + T + H + W + HRIp + HRIl + EEEEEEEEEEEEE..EE
+  // --------
+  // ESC + #128 = Comando para impressão das barras
+  // T = 1 byte Tipo de codigo conforme tabela abaixo
+  // H = 1 byte. Altura do código de 0 a 255. 0 = Default
+  // W = 1 byte. Largura do código de 2 a 6. 0 = Default
+  // HRIp = 1 byte. Posiçao de Impressao do Texto. 0-Nao imprime, 1-Acima, 2-Abaixo, 3-Ambos
+  // HRIl = 1 byte. Letra da Impressao do Texto. 0-Letra A, 1-Letra B
+  // E = Codigo de barra
+
+  cEAN8     = 68 ; // <ean8></ean8>
+  cEAN13    = 67 ; // <ean13></ean13>
+  cINTER    = 70 ; // <inter></inter>
+  cCODE39   = 69; // <code39></code39>
+  cCODE93   = 72; // <code93></code93>
+  cCODE128  = 73; // <code128></code128>
+  cUPCA     = 65; // <upca></upca>
+  cCODABAR  = 71; // <codabar></codabar>
+  cBarraFim = '';
+
+  function MontaCodBarras(const ATipo: Integer; ACodigo: AnsiString): AnsiString;
+  Var
+    Altura, Largura, Mostrar : Integer ;
+  begin
+    with AECFClass do
+    begin
+      Altura  := IfThen( ConfigBarras.Altura = 0, 32, max(min(ConfigBarras.Altura,255),1) );
+      Largura := max(min(ConfigBarras.LarguraLinha,6),2);
+      Mostrar := IfThen(TACBrECFClassHack(AECFClass).fpDevice.IsDLLPort,2,0);
+      if ConfigBarras.MostrarCodigo then
+         Mostrar := 2;
+    end;
+
+    Result := cBarras + chr(ATipo) + chr( Altura ) + chr( Largura ) +
+              chr( Mostrar ) + #48 + ACodigo + cBarraFim;
+  end;
+
+begin
+
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := MontaCodBarras(cCODE39, Conteudo)
+  else if ATag = cTagBarraCode93 then
+    Result := MontaCodBarras(cCODE93, Conteudo)
+  else if ATag = cTagBarraCode128 then
+    Result := MontaCodBarras(cCODE128, Conteudo)
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo)
+  else if ATag = cTagBarraCodaBar then
+    Result := MontaCodBarras(cCODABAR, Conteudo)
+  else
+     Result := Conteudo;
 end;
 
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
@@ -1152,10 +1270,6 @@ begin
   fsUsuarioAtual := '' ;
   fsDataHoraSB   := now ;
   fsSubModeloECF := '' ;
-
-  fsALNegrito    := False;
-  fsALExpandido  := False;
-  fsALSublinhado := False;
 
   ZeraCache;
 
@@ -3934,111 +4048,20 @@ begin
 end;
 
 function TACBrECFEpson.TraduzirTag(const ATag : AnsiString) : AnsiString ;
-const
-  C_OFF = 0;
-  // <e>
-  cExpandidoOn = 4;
-  // <n>
-  cNegritoOn = 1;
-  // <s></s>
-  cSublinhadoOn = 2;
-
-var
-  Cmd : Integer ;
 begin
-  Result := '' ;
-
-  if ATag = cTagLigaExpandido then
-    fsALExpandido := True
-  else if ATag = cTagDesligaExpandido then
-    fsALExpandido := False
-  else if ATag = cTagLigaNegrito then
-    fsALNegrito := True
-  else if ATag = cTagDesligaNegrito then
-    fsALNegrito := False
-  else if ATag = cTagLigaSublinhado then
-    fsALSublinhado:= True
-  else if ATag = cTagDesligaSublinhado then
-    fsALSublinhado:= False
-  else
-    exit;
-
-  Cmd := C_OFF ;
-
-  if fsALNegrito then
-    Cmd := Cmd + cNegritoOn;
-
-  if fsALExpandido then
-    Cmd := Cmd + cExpandidoOn;
-
-  if fsALSublinhado then
-    Cmd := Cmd + cSublinhadoOn;
-
-  if fpDevice.IsDLLPort and (Cmd = C_OFF) then
-    Cmd := 32 ;
-
-  Result := ESC + chr( Cmd );
+  Result := EpsonTraduzirTag( ATag, Self );
 end ;
 
 function TACBrECFEpson.TraduzirTagBloco(const ATag, Conteudo: AnsiString
   ): AnsiString;
-const
-  cBarras = ESC + #128 ;
-  // ESC + #128 + T + H + W + HRIp + HRIl + EEEEEEEEEEEEE..EE
-  // --------
-  // ESC + #128 = Comando para impressão das barras
-  // T = 1 byte Tipo de codigo conforme tabela abaixo
-  // H = 1 byte. Altura do código de 0 a 255. 0 = Default
-  // W = 1 byte. Largura do código de 2 a 6. 0 = Default
-  // HRIp = 1 byte. Posiçao de Impressao do Texto. 0-Nao imprime, 1-Acima, 2-Abaixo, 3-Ambos
-  // HRIl = 1 byte. Letra da Impressao do Texto. 0-Letra A, 1-Letra B
-  // E = Codigo de barra
-
-  cEAN8     = 68 ; // <ean8></ean8>
-  cEAN13    = 67 ; // <ean13></ean13>
-  cINTER    = 70 ; // <inter></inter>
-  cCODE39   = 69; // <code39></code39>
-  cCODE93   = 72; // <code93></code93>
-  cCODE128  = 73; // <code128></code128>
-  cUPCA     = 65; // <upca></upca>
-  cCODABAR  = 71; // <codabar></codabar>
-  cBarraFim = '';
-
-  function MontaCodBarras(const ATipo: Integer; ACodigo: AnsiString): AnsiString;
-  Var
-    Altura, Largura, Mostrar : Integer ;
-  begin
-    Altura  := IfThen( ConfigBarras.Altura = 0, 32, max(min(ConfigBarras.Altura,255),1) );
-    Largura := max(min(ConfigBarras.LarguraLinha,6),2);
-    Mostrar := IfThen(fpDevice.IsDLLPort,2,0);
-    if ConfigBarras.MostrarCodigo then
-       Mostrar := 2;
-
-    Result := cBarras + chr(ATipo) + chr( Altura ) + chr( Largura ) +
-              chr( Mostrar ) + #48 + ACodigo + cBarraFim;
-  end;
-
 begin
-
-  if ATag = cTagBarraEAN8 then
-    Result := MontaCodBarras(cEAN8, Conteudo)
-  else if ATag = cTagBarraEAN13 then
-    Result := MontaCodBarras(cEAN13, Conteudo)
-  else if ATag = cTagBarraInter then
-    Result := MontaCodBarras(cINTER, Conteudo)
-  else if ATag = cTagBarraCode39 then
-    Result := MontaCodBarras(cCODE39, Conteudo)
-  else if ATag = cTagBarraCode93 then
-    Result := MontaCodBarras(cCODE93, Conteudo)
-  else if ATag = cTagBarraCode128 then
-    Result := MontaCodBarras(cCODE128, Conteudo)
-  else if ATag = cTagBarraUPCA then
-    Result := MontaCodBarras(cUPCA, Conteudo)
-  else if ATag = cTagBarraCodaBar then
-    Result := MontaCodBarras(cCODABAR, Conteudo)
-  else
-     Result := Conteudo;
+  Result := EpsonTraduzirTagBloco( ATag, Conteudo, Self );
 end;
+
+initialization
+  epsonALNegrito    := False;
+  epsonALExpandido  := False;
+  epsonALSublinhado := False;
 
 end.
 

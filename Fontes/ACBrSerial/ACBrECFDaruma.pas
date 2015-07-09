@@ -344,6 +344,11 @@ TACBrECFDaruma = class( TACBrECFClass )
 end ;
 
 function DescricaoRetornoDaruma( Byte1, Byte2 : Byte ): String;
+function DarumaTraduzirTag(const ATag: AnsiString): AnsiString;
+function DarumaTraduzirTagBloco(const ATag, Conteudo: AnsiString;
+  AECFClass: TACBrECFClass): AnsiString;
+
+
 
 implementation
 Uses SysUtils, Math,
@@ -878,6 +883,126 @@ begin
   else
     Result := 'Erro não catalogado!';
   end;
+end;
+
+function DarumaTraduzirTag(const ATag: AnsiString): AnsiString;
+const
+  C_ON  = #1;
+  C_OFF = #0;
+
+  // <e></e>
+  cExpandidoOn   = ESC + 'W' + C_ON;
+  cExpandidoOff  = ESC + 'W' + C_OFF;
+
+  // <n></n>
+  cNegritoOn     = ESC + 'G' + C_ON;
+  cNegritoOff    = ESC + 'G' + C_OFF;
+
+  // <s></s>
+  cSublinhadoOn  = ESC + '-' + C_ON;
+  cSublinhadoOff = ESC + '-' + C_OFF;
+
+  // <c></c>
+  cCondensadoOn  = ESC + SI;
+  cCondensadoOff = DC2;
+
+  //<i></i>
+  cItalicoOn  = '';
+  cITalicoOff = '';
+begin
+
+  if ATag = cTagLigaExpandido then
+    Result := cExpandidoOn
+  else if ATag = cTagDesligaExpandido then
+    Result := cExpandidoOff
+  else if ATag = cTagLigaNegrito then
+    Result := cNegritoOn
+  else if ATag = cTagDesligaNegrito then
+    Result := cNegritoOff
+  else if ATag = cTagLigaSublinhado then
+    Result := cSublinhadoOn
+  else if ATag = cTagDesligaSublinhado then
+    Result := cSublinhadoOff
+  else if ATag = cTagLigaCondensado then
+    Result := cCondensadoOn
+  else if ATag = cTagDesligaCondensado then
+    Result := cCondensadoOff
+  else if ATag = cTagLigaItalico then
+    Result := cItalicoOn
+  else if ATag = cTagDesligaItalico then
+    Result := cITalicoOff
+  else
+     Result := '' ;
+end;
+
+function DarumaTraduzirTagBloco(const ATag, Conteudo: AnsiString;
+  AECFClass: TACBrECFClass): AnsiString;
+const
+  // bAABCCDDEEEEEEEEEEEEE..EE
+  // --------
+  // b = Comando para impressão das barras
+  // A = Tipo de codigo FIXO
+  // B = Largura 1..5
+  // C = Altura 50..200
+  // D = imprimir ou não codigo abaixo da barra
+  //     00 - Não imprime
+  //     01 - Imprime
+  // E = Codigo de barra
+  // termina o comando com null
+  cEAN8     = ESC + 'b02'; // <ean8></ean8>
+  cEAN13    = ESC + 'b01'; // <ean13></ean13>
+  cSTD25    = ESC + 'b03'; // <std></std>
+  cINTER25  = ESC + 'b04'; // <inter></inter>
+  cCODE11   = ESC + 'b11'; // <code11></code11>
+  cCODE39   = ESC + 'b06'; // <code39></code39>
+  cCODE93   = ESC + 'b07'; // <code93></code93>
+  cCODE128  = ESC + 'b05'; // <code128></code128>
+  cUPCA     = ESC + 'b08'; // <upca></upca>
+  cCODABAR  = ESC + 'b09'; // <codabar></codabar>
+  cMSI      = ESC + 'b10'; // <msi></msi>
+  cBarraFim = NUL;
+
+  function MontaCodBarras(const ATipo, ACodigo: AnsiString): AnsiString;
+  var
+    Largura: AnsiString;
+    Altura: AnsiString;
+    Mostrar: AnsiString;
+  begin
+    with AECFClass do
+    begin
+      Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
+      Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 99), 5), 2);
+      Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
+    end;
+
+    Result := ATipo + Largura + Altura + Mostrar + ACodigo + cBarraFim;
+  end;
+
+begin
+  if ATag = cTagBarraEAN8 then
+    Result := MontaCodBarras(cEAN8, Conteudo)
+  else if ATag = cTagBarraEAN13 then
+    Result := MontaCodBarras(cEAN13, Conteudo)
+  else if ATag = cTagBarraStd then
+    Result := MontaCodBarras(cSTD25, Conteudo)
+  else if ATag = cTagBarraInter then
+    Result := MontaCodBarras(cINTER25, Conteudo)
+  else if ATag = cTagBarraCode11 then
+    Result := MontaCodBarras(cCODE11, Conteudo)
+  else if ATag = cTagBarraCode39 then
+    Result := MontaCodBarras(cCODE39, Conteudo)
+  else if ATag = cTagBarraCode93 then
+    Result := MontaCodBarras(cCODE93, Conteudo)
+  else if ATag = cTagBarraCode128 then
+    Result := MontaCodBarras(cCODE128, Conteudo)
+  else if ATag = cTagBarraUPCA then
+    Result := MontaCodBarras(cUPCA, Conteudo)
+  else if ATag = cTagBarraCodaBar then
+    Result := MontaCodBarras(cCODABAR, Conteudo)
+  else if ATag = cTagBarraMSI then
+    Result := MontaCodBarras(cMSI, Conteudo)
+  else
+     Result := Conteudo;
 end;
 
 
@@ -5549,120 +5674,14 @@ begin
 end;
 
 function TACBrECFDaruma.TraduzirTag(const ATag: AnsiString): AnsiString;
-const
-  C_ON  = #1;
-  C_OFF = #0;
-
-  // <e></e>
-  cExpandidoOn   = ESC + 'W' + C_ON;
-  cExpandidoOff  = ESC + 'W' + C_OFF;
-
-  // <n></n>
-  cNegritoOn     = ESC + 'G' + C_ON;
-  cNegritoOff    = ESC + 'G' + C_OFF;
-
-  // <s></s>
-  cSublinhadoOn  = ESC + '-' + C_ON;
-  cSublinhadoOff = ESC + '-' + C_OFF;
-
-  // <c></c>
-  cCondensadoOn  = ESC + SI;
-  cCondensadoOff = DC2;
-
-  //<i></i>
-  cItalicoOn  = '';
-  cITalicoOff = '';
 begin
-
-  if ATag = cTagLigaExpandido then
-    Result := cExpandidoOn
-  else if ATag = cTagDesligaExpandido then
-    Result := cExpandidoOff
-  else if ATag = cTagLigaNegrito then
-    Result := cNegritoOn
-  else if ATag = cTagDesligaNegrito then
-    Result := cNegritoOff
-  else if ATag = cTagLigaSublinhado then
-    Result := cSublinhadoOn
-  else if ATag = cTagDesligaSublinhado then
-    Result := cSublinhadoOff
-  else if ATag = cTagLigaCondensado then
-    Result := cCondensadoOn
-  else if ATag = cTagDesligaCondensado then
-    Result := cCondensadoOff
-  else if ATag = cTagLigaItalico then
-    Result := cItalicoOn
-  else if ATag = cTagDesligaItalico then
-    Result := cITalicoOff
-  else
-     Result := '' ;
+  Result := DarumaTraduzirTag(ATag);
 end;
 
 function TACBrECFDaruma.TraduzirTagBloco(const ATag, Conteudo: AnsiString
   ): AnsiString;
-const
-  // bAABCCDDEEEEEEEEEEEEE..EE
-  // --------
-  // b = Comando para impressão das barras
-  // A = Tipo de codigo FIXO
-  // B = Largura 1..5
-  // C = Altura 50..200
-  // D = imprimir ou não codigo abaixo da barra
-  //     00 - Não imprime
-  //     01 - Imprime
-  // E = Codigo de barra
-  // termina o comando com null
-  cEAN8     = ESC + 'b02'; // <ean8></ean8>
-  cEAN13    = ESC + 'b01'; // <ean13></ean13>
-  cSTD25    = ESC + 'b03'; // <std></std>
-  cINTER25  = ESC + 'b04'; // <inter></inter>
-  cCODE11   = ESC + 'b11'; // <code11></code11>
-  cCODE39   = ESC + 'b06'; // <code39></code39>
-  cCODE93   = ESC + 'b07'; // <code93></code93>
-  cCODE128  = ESC + 'b05'; // <code128></code128>
-  cUPCA     = ESC + 'b08'; // <upca></upca>
-  cCODABAR  = ESC + 'b09'; // <codabar></codabar>
-  cMSI      = ESC + 'b10'; // <msi></msi>
-  cBarraFim = NUL;
-
-  function MontaCodBarras(const ATipo, ACodigo: AnsiString): AnsiString;
-  var
-    Largura: AnsiString;
-    Altura: AnsiString;
-    Mostrar: AnsiString;
-  begin
-    Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
-    Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 99), 5), 2);
-    Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
-
-    Result := ATipo + Largura + Altura + Mostrar + ACodigo + cBarraFim;
-  end;
-
 begin
-  if ATag = cTagBarraEAN8 then
-    Result := MontaCodBarras(cEAN8, Conteudo)
-  else if ATag = cTagBarraEAN13 then
-    Result := MontaCodBarras(cEAN13, Conteudo)
-  else if ATag = cTagBarraStd then
-    Result := MontaCodBarras(cSTD25, Conteudo)
-  else if ATag = cTagBarraInter then
-    Result := MontaCodBarras(cINTER25, Conteudo)
-  else if ATag = cTagBarraCode11 then
-    Result := MontaCodBarras(cCODE11, Conteudo)
-  else if ATag = cTagBarraCode39 then
-    Result := MontaCodBarras(cCODE39, Conteudo)
-  else if ATag = cTagBarraCode93 then
-    Result := MontaCodBarras(cCODE93, Conteudo)
-  else if ATag = cTagBarraCode128 then
-    Result := MontaCodBarras(cCODE128, Conteudo)
-  else if ATag = cTagBarraUPCA then
-    Result := MontaCodBarras(cUPCA, Conteudo)
-  else if ATag = cTagBarraCodaBar then
-    Result := MontaCodBarras(cCODABAR, Conteudo)
-  else if ATag = cTagBarraMSI then
-    Result := MontaCodBarras(cMSI, Conteudo)
-  else
-     Result := Conteudo;
+  Result := DarumaTraduzirTagBloco( ATag, Conteudo, Self);
 end;
 
 end.

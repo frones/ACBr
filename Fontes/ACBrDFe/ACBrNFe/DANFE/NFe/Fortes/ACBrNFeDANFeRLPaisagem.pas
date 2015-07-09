@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
 { eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
@@ -44,7 +44,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    Controls, Forms, Dialogs, ExtCtrls, FileUtil,
+    Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, RLPrinters,
     {$IFDEF BORLAND}
@@ -55,7 +55,7 @@ uses
       jpeg,
     {$IFEND}
   {$ENDIF}
-  ACBrNFeDANFeRL, pcnConversao, RLBarcode;
+  ACBrNFeDANFeRL, pcnConversao, RLBarcode, Data.DB;
 
 type
   TfrlDANFeRLPaisagem = class(TfrlDANFeRL)
@@ -552,10 +552,10 @@ procedure TfrlDANFeRLPaisagem.InitDados;
 var i, j, b, h, iAlturaCanhoto: Integer;
 begin
   // Carrega logomarca
-  if (FLogo <> '') and FileExistsUTF8(FLogo) { *Converted from FileExists* } then
+  if (FLogo <> '') and FileExists(FLogo) { *Converted from FileExists* } then
      rliLogo.Picture.LoadFromFile(FLogo);
 
-  if (FMarcaDagua <> '') and FileExistsUTF8(FMarcaDagua) { *Converted from FileExists* } then
+  if (FMarcaDagua <> '') and FileExists(FMarcaDagua) { *Converted from FileExists* } then
     begin
       rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
     end;

@@ -1,20 +1,22 @@
 inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Left = 200
   Top = 114
-  Width = 827
-  Height = 623
   Caption = 'frlDANFeEventoRLRetrato'
+  ClientHeight = 584
+  ClientWidth = 811
   OldCreateOrder = True
+  ExplicitWidth = 827
+  ExplicitHeight = 623
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport
-    Background.Arrange = baDistributed
-    Background.Height = 96
-    Background.Width = 175
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Background.Arrange = baDistributed
+    Background.Height = 96
+    Background.Width = 175
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Retrato'
@@ -187,10 +189,10 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 29
         Width = 132
         Height = 44
-        Alignment = taCenter
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
+        BarcodeType = bcCode128C
       end
       object rllChaveNFe: TRLLabel
         Tag = 70
@@ -1524,6 +1526,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Width = 721
         Height = 139
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -1640,6 +1643,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Width = 721
         Height = 254
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12

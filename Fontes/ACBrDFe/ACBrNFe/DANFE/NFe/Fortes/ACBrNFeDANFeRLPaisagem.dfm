@@ -1,29 +1,33 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 199
   Top = 209
-  Width = 1149
-  Height = 732
   VertScrollBar.Position = 107
   Caption = 'frlDANFeRLPaisagem'
-  OldCreateOrder = True
+  ClientHeight = 693
+  ClientWidth = 1133
+  ExplicitWidth = 1149
+  ExplicitHeight = 732
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
     Top = -107
     Width = 1123
     Height = 794
-    Background.Arrange = baDistributed
-    Background.Height = 96
-    Background.Width = 175
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Background.Arrange = baDistributed
+    Background.Height = 96
+    Background.Width = 175
     PageSetup.Orientation = poLandscape
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
+    ExplicitTop = -107
+    ExplicitWidth = 1123
+    ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage
       Left = 361
       Top = 430
@@ -46,6 +50,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 24
         Width = 1018
         Height = 8
+        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -163,6 +168,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 14
           Alignment = taCenter
           AutoSize = False
+          Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -189,6 +195,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 7
           Alignment = taCenter
           AutoSize = False
+          Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -793,6 +800,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 342
         Height = 22
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -972,10 +980,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 132
         Height = 35
-        Alignment = taCenter
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
+        BarcodeType = bcCode128C
       end
       object rllChaveAcesso: TRLLabel
         Tag = 10
@@ -1107,6 +1115,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 342
         Height = 26
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -1121,6 +1130,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 342
         Height = 24
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1267,10 +1277,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 70
         Width = 144
         Height = 33
-        Alignment = taCenter
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
+        BarcodeType = bcCode128C
       end
       object rllPageNumber: TRLSystemInfo
         Left = 572
@@ -1362,6 +1372,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 706
         Height = 92
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -4087,6 +4098,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object LinhaProd2: TRLDraw
@@ -4116,6 +4128,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Top = 1
           Width = 241
           Height = 10
+          Behavior = [beSiteExpander]
           DataField = 'DESCRICAO'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4138,6 +4151,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object LinhaProdEAN: TRLDraw
@@ -4171,6 +4185,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtCST: TRLDBText
@@ -4187,6 +4202,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtCFOP: TRLDBText
@@ -4202,6 +4218,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtUnidade: TRLDBText
@@ -4217,6 +4234,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtQuantidade: TRLDBText
@@ -4233,6 +4251,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtValorUnitario: TRLDBText
@@ -4249,6 +4268,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtValorTotal: TRLDBText
@@ -4265,6 +4285,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtValorDesconto: TRLDBText
@@ -4281,6 +4302,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtBaseICMS: TRLDBText
@@ -4297,6 +4319,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtValorICMS: TRLDBText
@@ -4313,6 +4336,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtValorIPI: TRLDBText
@@ -4329,6 +4353,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtAliqICMS: TRLDBText
@@ -4345,6 +4370,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object txtAliqIPI: TRLDBText
@@ -4361,6 +4387,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object LinhaProd4: TRLDraw
@@ -4542,6 +4569,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
         object LinhaProd18: TRLDraw
@@ -4569,6 +4597,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          Text = ''
           Transparent = False
         end
       end
@@ -4810,6 +4839,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Top = 704
       Width = 681
       Height = 12
+      Behavior = [beSiteExpander]
       Color = clSkyBlue
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -5040,6 +5070,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 1
         Width = 952
         Height = 8
+        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

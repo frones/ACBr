@@ -52,7 +52,7 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
   {$ELSE}
-    Controls, Forms, Dialogs, ExtCtrls, FileUtil,
+    Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
   pcnConversao, RLBarcode, ACBrNFeDANFeEventoRL;
@@ -214,11 +214,11 @@ uses
 procedure TfrlDANFeEventoRLRetrato.InitDados;
 begin
   // Carrega logomarca
-  if (FLogo <> '') and FileExistsUTF8(FLogo) { *Converted from FileExists* } then
+  if (FLogo <> '') and FileExists(FLogo) { *Converted from FileExists* } then
      rliLogo.Picture.LoadFromFile(FLogo);
 
   // Carrega marca d'água
-  if (FMarcaDagua <> '') and FileExistsUTF8(FMarcaDagua) { *Converted from FileExists* } then
+  if (FMarcaDagua <> '') and FileExists(FMarcaDagua) { *Converted from FileExists* } then
     begin
       rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
     end;
@@ -402,7 +402,7 @@ begin
     end;
 
   // Centraliza as linhas do cabeçalho caso o logo não seja informado
-  if (FLogo <> '') and FileExistsUTF8(FLogo) { *Converted from FileExists* } then
+  if (FLogo <> '') and FileExists(FLogo) { *Converted from FileExists* } then
     begin
       rllTitulo.Left := 88;
       rllCabecalhoLinha1.Left := 88;

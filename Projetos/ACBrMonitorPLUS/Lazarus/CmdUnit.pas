@@ -37,7 +37,7 @@ interface
 Uses SysUtils, Classes, Math ;
 
 Const
-   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","SAT"' ;
+   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","SAT","ESCPOS"' ;
 
 type
 TACBrCmd = class

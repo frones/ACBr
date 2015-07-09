@@ -658,11 +658,11 @@ begin
   fsEscECFResposta := TACBrECFEscECFResposta.create ;
 
   fpDevice.HandShake := hsDTR_DSR ;
-  fpPaginaDeCodigo   := 1252;
+  fpPaginaDeCodigo   := 850;
   fsArqMemoria       := '';
 
   fpModeloStr := 'EscECF' ;
-  fpColunas   := 57 ;
+  fpColunas   := 48 ;
   fpMFD       := True ;
   fpTermica   := True ;
   fpIdentificaConsumidorRodape := True ;
@@ -760,19 +760,12 @@ begin
 
      if IsBematech then
       begin
-        fpColunas := 48;
-
+        fpPaginaDeCodigo := 1252;
         if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
            MaxLinhasBuffer := 5;
       end
      else if IsEpson then
-      begin
-        fpPaginaDeCodigo := 850;
-      end;
-
-
-
-
+        fpColunas := 57;
 
      LeRespostasMemoria;
   except

@@ -39,12 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/07/2015
+-- ACBrECFEscECF -- (por: DSA)
+[*] Ajustes de Tamanho de colunas e Pag.Codigo para a Daruma FS800i
+
 Data: 08/07/2015
 -- ACBrECFEscECF -- (por: DSA)
 [*] Ajuste para AbreNaoFiscal quando o CNPJ/CPF é recusado pelo ECF
     http://www.projetoacbr.com.br/forum/index.php?showtopic=22762
 [*] Ajustes para correta interpretação após Redução Z em Daruma FS800i
 [*] Ajustes para falta de valor zerado, nas respostas da Daruma FS800i
+    http://www.projetoacbr.com.br/forum/topic/22659-daruma-fs800i/
 
 Data: 06/07/2015
 -- ACBrECFEscECF -- (por: DSA)

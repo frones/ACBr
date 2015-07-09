@@ -2546,7 +2546,11 @@ begin
 
   EscECFComando.CMD := 81;
 
-  PosAliq := Aliquotas.Count + 1;
+  if Aliquotas.Count < 1 then
+    PosAliq := 1
+  else
+    PosAliq := StrToIntDef( Aliquotas[ Aliquotas.Count-1 ].Indice, Aliquotas.Count)+1;
+
   if Posicao <> '' then
      PosAliq := StrToIntDef( Posicao, PosAliq );
 
@@ -2646,7 +2650,11 @@ begin
 
   EscECFComando.CMD := 84;
 
-  PosFPG := FormasPagamento.Count + 1;
+  if FormasPagamento.Count < 1 then
+    PosFPG := 1
+  else
+    PosFPG := StrToIntDef( FormasPagamento[ FormasPagamento.Count-1 ].Indice, FormasPagamento.Count)+1;
+
   if Posicao <> '' then
      PosFPG := StrToIntDef( Posicao, PosFPG );
 
@@ -2723,7 +2731,11 @@ begin
 
   EscECFComando.CMD := 86;
 
-  PosRel := RelatoriosGerenciais.Count + 1;
+  if RelatoriosGerenciais.Count < 1 then
+    PosRel := 1
+  else
+    PosRel := StrToIntDef( RelatoriosGerenciais[ RelatoriosGerenciais.Count-1 ].Indice, RelatoriosGerenciais.Count)+1;
+
   if Posicao <> '' then
      PosRel := StrToIntDef( Posicao, PosRel );
 
@@ -2806,7 +2818,11 @@ begin
 
   EscECFComando.CMD := 85;
 
-  PosCNF := ComprovantesNaoFiscais.Count + 1;
+  if ComprovantesNaoFiscais.Count < 1 then
+    PosCNF := 1
+  else
+    PosCNF := StrToIntDef( ComprovantesNaoFiscais[ ComprovantesNaoFiscais.Count-1 ].Indice, ComprovantesNaoFiscais.Count)+1;
+
   if Posicao <> '' then
      PosCNF := StrToIntDef( Posicao, PosCNF );
 

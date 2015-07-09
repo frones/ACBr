@@ -47,6 +47,8 @@ Data: 09/07/2015
 [+] Implementação de TraduzirTag e TraduzirTagBloco em Epson e Daruma (a testar)
 [+] Implementação de chamada a Metodos de uso da DLL (Ex: EspelhoMFD_DLL) em Daruma
     (a testar)
+[-] Correção para numeração automática de Posição em ProgramaAliquota,
+    ProgramaFormaPagamento, ProgramaRelatorioGerencial, ProgramaComprovanteNaoFiscal
 
 Data: 08/07/2015
 -- ACBrECFEscECF -- (por: DSA)

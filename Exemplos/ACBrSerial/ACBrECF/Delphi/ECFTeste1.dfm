@@ -889,7 +889,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 782
-        Height = 233
+        Height = 253
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -1018,7 +1018,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 233
+        Top = 253
         Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
@@ -2335,7 +2335,13 @@ object Form1: TForm1
     MsgTrabalhando = 'Impressora est'#225' trabalhando'
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
-    PaginaDeCodigo = 0    
+    PaginaDeCodigo = 0
+    FormMsgColor = clHighlight
+    FormMsgFonte.Charset = DEFAULT_CHARSET
+    FormMsgFonte.Color = clWindowText
+    FormMsgFonte.Height = -11
+    FormMsgFonte.Name = 'Tahoma'
+    FormMsgFonte.Style = []
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
@@ -2384,6 +2390,8 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
+    ConfigBarras.Margem = 0
+    InfoRodapeCupom.Imposto.ModoCompacto = False
     Left = 128
     Top = 317
   end
@@ -2410,13 +2418,6 @@ object Form1: TForm1
     CNPJ = '01.234.567/0001-22'
     IE = '012.345.678.90'
     IM = '1234-0'
-    CmdImpCondensado = '#15'
-    CmdImpExpandidoUmaLinha = '#14'
-    CmdImpFimExpandido = '#35,#50,#48'
-    CmdImpZera = '#27,#64'
-    CmdGaveta = '#27,#118,#150'
-    CmdCortaPapelCompleto = '#27,#119'
-    CmdCortaPapelParcial = '#27,#109'
     Cabecalho.Strings = (
       'Nome da Empresa'
       'Nome da Rua , 1234  -  Bairro'

@@ -10,7 +10,7 @@ uses ACBrECF, ACBrRFD, ACBrBase, ACBrDevice, ACBrECFClass, ACBrConsts,
   Controls, Forms, Dialogs, StdCtrls,  ComCtrls, Buttons, ExtCtrls,
   Menus, Spin, jpeg, OleCtrls, SHDocVw
   {$IFDEF Delphi7},XPMan{$ENDIF}, ACBrAAC, ACBrECFVirtual,
-  ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal;
+  ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, ACBrECFVirtualBuffer;
 
 type
   TForm1 = class(TForm)

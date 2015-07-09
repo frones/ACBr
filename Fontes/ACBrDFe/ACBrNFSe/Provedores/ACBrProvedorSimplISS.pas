@@ -223,6 +223,10 @@ begin
             ConfigURL.ProNomeCidade      := 'balneario_camboriu';
             ConfigURL.ProRecepcaoLoteRPS := 'http://187.45.245.217/ws_' + ConfigURL.ProNomeCidade + '/nfseservice.svc';
            end;
+  4126504: begin //Sertanópolis/PR
+            ConfigURL.ProNomeCidade      := 'sertanopolis';
+            ConfigURL.ProRecepcaoLoteRPS := 'http://wssertanopolis.simplissweb.com.br/nfseservice.svc';
+           end;
  end;
 
   ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;

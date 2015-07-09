@@ -44,6 +44,7 @@ Data: 08/07/2015
 [*] Ajuste para AbreNaoFiscal quando o CNPJ/CPF é recusado pelo ECF
     http://www.projetoacbr.com.br/forum/index.php?showtopic=22762
 [*] Ajustes para correta interpretação após Redução Z em Daruma FS800i
+[*] Ajustes para falta de valor zerado, nas respostas da Daruma FS800i
 
 Data: 06/07/2015
 -- ACBrECFEscECF -- (por: DSA)

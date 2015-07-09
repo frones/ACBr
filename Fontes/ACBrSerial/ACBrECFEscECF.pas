@@ -634,7 +634,7 @@ begin
 
   { Quebrando Parametros Separados por '|' e inserindo-os em fsParams }
   I := 1;
-  while I < fsTBR do
+  while I <= fsTBR do
   begin
      F := PosEx('|',fsBRS,I) ;
      if F < I then
@@ -1591,7 +1591,7 @@ begin
     begin
       fpEstado := estDesconhecido ;
 
-      FlagEst := StrToInt( RetornaInfoECF( '16|5' ) );
+      FlagEst := StrToIntDef( RetornaInfoECF( '16|5' ), -1 );
       Case FlagEst of
         0  :             fpEstado := estLivre;
         10 :             fpEstado := estVenda;
@@ -1602,7 +1602,7 @@ begin
 
       if (fpEstado in [estLivre,estDesconhecido]) then
       begin
-        FlagEst := StrToInt( RetornaInfoECF( '16|4' ) );
+        FlagEst := StrToIntDef( RetornaInfoECF( '16|4' ), 0 );
         if FlagEst = 3 then
           fpEstado := estBloqueada ;
       end;
@@ -1610,7 +1610,7 @@ begin
       if fpEstado in [estLivre, estBloqueada] then
       begin
         RetornaInfoECF( '8' ) ;
-        FlagEst := StrToInt( EscECFResposta.Params[1] );
+        FlagEst := StrToIntDef( EscECFResposta.Params[1], 0 );
 
         if FlagEst = 2 then
         begin
@@ -1619,7 +1619,7 @@ begin
           if IsBematech then  // Workaround para Bematech, que não responde corretamente após Z emitida
           begin
             RetornaInfoECF( '99|10' ) ;
-            if TestBit(StrToInt(EscECFResposta.Params[0]),3) then
+            if TestBit(StrToIntDef(EscECFResposta.Params[0], 0),3) then
               fpEstado := estBloqueada;
           end;
         end
@@ -2515,6 +2515,8 @@ begin
        { Adiciona o tipo no Indice, pois no comando de Venda de Item ele será necessario }
        Aliquota.Indice    := Aliquota.Tipo + EscECFResposta.Params[ 4*I ] ;
        Aliquota.Aliquota  := StrToIntDef( OnlyNumber(EscECFResposta.Params[ 4*I + 2 ]), 0 ) / 100 ;
+
+       { IMPORTANTE: MP4200TH-FI retorna o Valor do Imposto e não a BASE DE CALCULO, como esperado }
        Aliquota.Total     := StrToIntDef( EscECFResposta.Params[ 4*I + 3 ], 0 ) / 100 ;
 
        fpAliquotas.Add(Aliquota);
@@ -2535,10 +2537,11 @@ begin
      CarregaAliquotas ;
 
   EscECFComando.CMD := 81;
-  if Posicao = '' then
-     PosAliq := Aliquotas.Count + 1
-  else
-     PosAliq := StrToInt( Posicao );
+
+  PosAliq := Aliquotas.Count + 1;
+  if Posicao <> '' then
+     PosAliq := StrToIntDef( Posicao, PosAliq );
+
   EscECFComando.AddParamInteger( PosAliq ) ;
   EscECFComando.AddParamString( Tipo ) ;
   EscECFComando.AddParamString( IntToStrZero( Trunc(Aliquota*100), 4 ) ) ;
@@ -2617,9 +2620,9 @@ begin
   N := Trunc(EscECFResposta.Params.Count / 2) - 1;
   For I := 0 to N do
   begin
-    FPG := AchaFPGIndice( IntToStr(StrToInt(EscECFResposta.Params[ 2*I ])) ) ;
+    FPG := AchaFPGIndice( IntToStr(StrToIntDef(EscECFResposta.Params[ 2*I ], 0)) ) ;
     if Assigned( FPG ) then
-       FPG.Total := StrToInt( EscECFResposta.Params[ 2*I + 1 ] ) / 100;
+       FPG.Total := StrToIntDef( EscECFResposta.Params[ 2*I + 1 ], 0 ) / 100;
   end;
 end;
 
@@ -2634,10 +2637,11 @@ begin
   Descricao := AjustaDescricao( Descricao );
 
   EscECFComando.CMD := 84;
-  if Posicao = '' then
-     PosFPG := FormasPagamento.Count + 1
-  else
-     PosFPG := StrToInt( Posicao );
+
+  PosFPG := FormasPagamento.Count + 1;
+  if Posicao <> '' then
+     PosFPG := StrToIntDef( Posicao, PosFPG );
+
   EscECFComando.AddParamInteger( PosFPG ) ;
   EscECFComando.AddParamString( Descricao ) ;
   EscECFComando.AddParamInteger( ifthen(PermiteVinculado,1,0) ) ;
@@ -2695,7 +2699,7 @@ begin
   begin
     RelGer := AchaRGIndice( EscECFResposta.Params[ 2*I ] ) ;
     if Assigned( RelGer ) then
-       RelGer.Contador := StrToInt( EscECFResposta.Params[ 2*I + 1 ] ) ;
+       RelGer.Contador := StrToIntDef( EscECFResposta.Params[ 2*I + 1 ], 0 ) ;
   end;
 end;
 
@@ -2710,10 +2714,11 @@ begin
   Descricao := AjustaDescricao( Descricao );
 
   EscECFComando.CMD := 86;
-  if Posicao = '' then
-     PosRel := RelatoriosGerenciais.Count + 1
-  else
-     PosRel := StrToInt( Posicao );
+
+  PosRel := RelatoriosGerenciais.Count + 1;
+  if Posicao <> '' then
+     PosRel := StrToIntDef( Posicao, PosRel );
+
   EscECFComando.AddParamInteger( PosRel ) ;
   EscECFComando.AddParamString( Descricao ) ;
   EnviaComando;
@@ -2770,8 +2775,8 @@ begin
     CNF := AchaCNFIndice( EscECFResposta.Params[ 3*I ] ) ;
     if Assigned( CNF ) then
     begin
-       CNF.Contador := StrToInt( EscECFResposta.Params[ 3*I + 1 ] ) ;
-       CNF.Total    := StrToInt( EscECFResposta.Params[ 3*I + 2 ] ) / 100 ;
+       CNF.Contador := StrToIntDef( EscECFResposta.Params[ 3*I + 1 ], 0 ) ;
+       CNF.Total    := StrToIntDef( EscECFResposta.Params[ 3*I + 2 ], 0 ) / 100 ;
     end;
   end;
 end;
@@ -2792,10 +2797,11 @@ begin
      Tipo := 'E' ;
 
   EscECFComando.CMD := 85;
-  if Posicao = '' then
-     PosCNF := ComprovantesNaoFiscais.Count + 1
-  else
-     PosCNF := StrToInt( Posicao );
+
+  PosCNF := ComprovantesNaoFiscais.Count + 1;
+  if Posicao <> '' then
+     PosCNF := StrToIntDef( Posicao, PosCNF );
+
   EscECFComando.AddParamInteger( PosCNF ) ;
   EscECFComando.AddParamString( Descricao ) ;
   EscECFComando.AddParamString( Tipo ) ;
@@ -2873,7 +2879,7 @@ var
 begin
   RetornaInfoECF( '4|1' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetNumCCF: String;
@@ -3037,7 +3043,7 @@ var
 begin
   RetornaInfoECF( '4|2' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end;
 
 procedure TACBrECFEscECF.FechaNaoFiscal(Observacao: AnsiString;
@@ -3151,7 +3157,7 @@ var
 begin
   RetornaInfoECF( '4|8' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalCancelamentos: Double;
@@ -3160,7 +3166,7 @@ var
 begin
   RetornaInfoECF( '4|3' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalDescontos: Double;
@@ -3169,7 +3175,7 @@ var
 begin
   RetornaInfoECF( '4|4' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalTroco: Double;
@@ -3178,7 +3184,7 @@ var
 begin
   RetornaInfoECF( '7|21' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalIsencao: Double;
@@ -3193,7 +3199,7 @@ var
 begin
   RetornaInfoECF( '4|9' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end ;
 
 function TACBrECFEscECF.GetTotalCancelamentosISSQN : Double ;
@@ -3202,7 +3208,7 @@ var
 begin
   RetornaInfoECF( '4|5' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end ;
 
 function TACBrECFEscECF.GetTotalDescontosISSQN : Double ;
@@ -3211,7 +3217,7 @@ var
 begin
   RetornaInfoECF( '4|6' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToInt( StrValue ) / 100;
+  Result   := StrToIntDef( StrValue, 0 ) / 100;
 end ;
 
 function TACBrECFEscECF.GetTotalIsencaoISSQN : Double ;

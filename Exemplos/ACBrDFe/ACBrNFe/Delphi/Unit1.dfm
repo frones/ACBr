@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 269
   Top = 149
-  Width = 894
-  Height = 632
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
+  ClientHeight = 593
+  ClientWidth = 878
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -96,8 +96,6 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -112,6 +110,8 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 8
@@ -354,7 +354,6 @@ object Form1: TForm1
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -385,7 +384,6 @@ object Form1: TForm1
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -401,7 +399,6 @@ object Form1: TForm1
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -475,7 +472,6 @@ object Form1: TForm1
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -1401,31 +1397,13 @@ object Form1: TForm1
             TabOrder = 11
             OnClick = btnConsultarReciboClick
           end
-          object btnEnvDPEC: TButton
-            Left = 376
-            Top = 6
-            Width = 177
-            Height = 25
-            Caption = 'Enviar DPEC'
-            TabOrder = 12
-            OnClick = btnEnvDPECClick
-          end
-          object btnConsultarDPEC: TButton
-            Left = 376
-            Top = 36
-            Width = 177
-            Height = 25
-            Caption = 'Consultar DPEC'
-            TabOrder = 13
-            OnClick = btnConsultarDPECClick
-          end
           object btnImportarXML: TButton
             Left = 375
             Top = 95
             Width = 177
             Height = 25
             Caption = 'Importar TXT/XML'
-            TabOrder = 14
+            TabOrder = 12
             OnClick = btnImportarXMLClick
           end
           object btnConsultarChave: TButton
@@ -1434,7 +1412,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Consultar pela Chave'
-            TabOrder = 15
+            TabOrder = 13
             OnClick = btnConsultarChaveClick
           end
           object btnCancelarChave: TButton
@@ -1443,7 +1421,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Cancelamento NFe pela Chave'
-            TabOrder = 16
+            TabOrder = 14
             OnClick = btnCancelarChaveClick
           end
           object btnGerarTXT: TButton
@@ -1452,7 +1430,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Gerar TXT'
-            TabOrder = 17
+            TabOrder = 15
             OnClick = btnGerarTXTClick
           end
           object btnAdicionarProtNFe: TButton
@@ -1461,7 +1439,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Adicionar nfeProc ao XML'
-            TabOrder = 18
+            TabOrder = 16
             OnClick = btnAdicionarProtNFeClick
           end
           object btnCarregarXMLEnviar: TButton
@@ -1470,7 +1448,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Carregar XML e Enviar'
-            TabOrder = 19
+            TabOrder = 17
             OnClick = btnCarregarXMLEnviarClick
           end
           object btnCartadeCorrecao: TButton
@@ -1479,7 +1457,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Carta de Corre'#231#227'o'
-            TabOrder = 20
+            TabOrder = 18
             OnClick = btnCartadeCorrecaoClick
           end
           object btnValidarAssinatura: TButton
@@ -1488,7 +1466,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Validar Assinatura'
-            TabOrder = 21
+            TabOrder = 19
             OnClick = btnValidarAssinaturaClick
           end
           object btnManifDestConfirmacao: TButton
@@ -1497,7 +1475,7 @@ object Form1: TForm1
             Width = 178
             Height = 25
             Caption = 'Manif. Dest. - Conf. Opera'#231#227'o'
-            TabOrder = 22
+            TabOrder = 20
             OnClick = btnManifDestConfirmacaoClick
           end
           object btnNfeDestinadas: TButton
@@ -1506,7 +1484,7 @@ object Form1: TForm1
             Width = 178
             Height = 25
             Caption = 'Consulta NFe Destinadas'
-            TabOrder = 23
+            TabOrder = 21
             OnClick = btnNfeDestinadasClick
           end
           object btnImprimirCCe: TButton
@@ -1515,7 +1493,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Imprimir Evento'
-            TabOrder = 24
+            TabOrder = 22
             OnClick = btnImprimirCCeClick
           end
           object btnEnviarEvento: TButton
@@ -1524,7 +1502,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Enviar Evento Email'
-            TabOrder = 25
+            TabOrder = 23
             OnClick = btnEnviarEventoClick
           end
           object btnDistribuicaoDFe: TButton
@@ -1533,7 +1511,7 @@ object Form1: TForm1
             Width = 178
             Height = 25
             Caption = 'Distribui'#231#227'o Documentos Fiscais'
-            TabOrder = 26
+            TabOrder = 24
             OnClick = btnDistribuicaoDFeClick
           end
         end
@@ -1667,109 +1645,22 @@ object Form1: TForm1
     Top = 376
   end
   object ACBrNFe1: TACBrNFe
+    MAIL = ACBrMail1
+    OnStatusChange = ACBrNFe1StatusChange
+    Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormaEmissao = teContingencia
-    Configuracoes.Geral.PathSalvar = 'C:\Program Files\Borland\Delphi7\Bin\'
-    Configuracoes.Geral.ExibirErroSchema = True
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.RetirarAcentos = True
+    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
-    Configuracoes.WebServices.IntervaloTentativas = 1000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
-    OnStatusChange = ACBrNFe1StatusChange
-    DANFE = ACBrNFeDANFERaveCB1
-    OnGerarLog = ACBrNFe1GerarLog
-    Left = 723
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    DANFE = ACBrNFeDANFeESCPOS1
+    Left = 453
     Top = 377
   end
-  object ACBrNFeDANFERave1: TACBrNFeDANFERave
-    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    LocalImpCanhoto = 0
-    ImprimeItens = True
-    EspessuraBorda = 1
-    TamanhoFonte_RazaoSocial = 12
-    TamanhoFonte_ANTT = 10
-    TributosPercentual = ptValorProdutos
-    Left = 790
-    Top = 381
-  end
-  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    LocalImpCanhoto = 0
-    ImprimeItens = True
-    Left = 702
-    Top = 437
-  end
-  object ACBrNFeDANFERaveCB1: TACBrNFeDANFERaveCB
-    ACBrNFe = ACBrNFe1
-    PathPDF = 'C:\Program Files\Borland\Delphi7\Bin\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    LocalImpCanhoto = 0
-    ImprimeItens = True
-    TamanhoCampoCodigo = 0
-    TamanhoCampoVlUnit = 0
-    TamanhoFonte_ANTT = 10
-    Fonte = ftTimes
-    EspessuraBorda = 2
-    MostrarSetup = False
-    TributosPercentual = ptValorProdutos
-    Left = 766
-    Top = 429
-  end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    ACBrNFe = ACBrNFe1
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
@@ -1789,8 +1680,59 @@ object Form1: TForm1
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
+    ViaConsumidor = True
+    TributosSeparadamente = False
+    PosCanhoto = prCabecalho
     Left = 526
     Top = 421
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = CP1252
+    Left = 525
+    Top = 375
+  end
+  object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = True
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimirItens = True
+    vTroco = 0.000000000000000000
+    ViaConsumidor = True
+    TributosSeparadamente = False
+    PosCanhoto = prCabecalho
+    EspessuraBorda = 1
+    ExibirTotalTributosItem = False
+    ExibeCampoFatura = True
+    TributosPercentual = ptValorProdutos
+    ImprimirUnQtVlComercial = False
+    Detalhado = False
+    DescricaoViaEstabelec = 'Via do Consumidor'
+    ExpandirDadosAdicionaisAuto = False
+    ImprimirDadosArma = True
+    Left = 420
+    Top = 435
   end
 end

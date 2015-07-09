@@ -8,23 +8,15 @@ interface
 uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ACBrNFe, pcnConversao, ACBrUtil,
-  pcnNFeW, pcnNFeRTXT, pcnAuxiliar, ACBrDFeUtil,
-  XMLIntf, XMLDoc, ACBrNFeDANFEClass, ACBrNFeDANFERave, ACBrDANFCeFortesFr, zlib,
-  ACBrNFeDANFERaveCB, ACBrNFeDANFeESCPOS;
+  ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
+  ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib, ACBrNFeDANFEFRDM, ACBrNFeDANFEFR,
+  ACBrMail;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    ACBrMail1: TACBrMail;
-    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
     Panel1: TPanel;
     OpenDialog1: TOpenDialog;
     btnSalvarConfig: TBitBtn;
@@ -65,8 +57,6 @@ type
     btnGerarPDF: TButton;
     btnEnviarEmail: TButton;
     btnConsultarRecibo: TButton;
-    btnEnvDPEC: TButton;
-    btnConsultarDPEC: TButton;
     btnImportarXML: TButton;
     btnConsultarChave: TButton;
     btnCancelarChave: TButton;
@@ -80,10 +70,7 @@ type
     btnImprimirCCe: TButton;
     btnEnviarEvento: TButton;
     btnCriarEnviarNFCe: TButton;
-    ACBrNFeDANFERave1: TACBrNFeDANFERave;
-    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     btnDistribuicaoDFe: TButton;
-    ACBrNFeDANFERaveCB1: TACBrNFeDANFERaveCB;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
@@ -217,11 +204,8 @@ type
     Label42: TLabel;
     edtPathSchemas: TEdit;
     spPathSchemas: TSpeedButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
+    ACBrMail1: TACBrMail;
+    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -241,8 +225,6 @@ type
     procedure btnGerarPDFClick(Sender: TObject);
     procedure btnEnviarEmailClick(Sender: TObject);
     procedure btnConsultarReciboClick(Sender: TObject);
-    procedure btnEnvDPECClick(Sender: TObject);
-    procedure btnConsultarDPECClick(Sender: TObject);
     procedure ACBrNFe1GerarLog(const Mensagem: String);
     procedure btnImportarXMLClick(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
@@ -290,10 +272,10 @@ var
 
 implementation
 
-uses strutils, math, TypInfo, DateUtils,
-  ufrmStatus, synacode,
-  pcnNFe, pcnConversaoNFe, pcnConversao,
-  ACBrUtil, ACBrDFeConfiguracoes;
+uses
+  strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, pcnNFe,
+  pcnConversaoNFe, ACBrDFeConfiguracoes, pcnAuxiliar, ACBrDFeSSL, pcnNFeRTXT,
+  FileCtrl;
 
 const
   SELDIRHELP = 1000;
@@ -444,15 +426,14 @@ begin
 
       with ACBrNFe1.Configuracoes.Geral do
        begin
-         AtualizarXMLCancelado := cbxAtualizarXML.Checked;
-         ExibirErroSchema      := cbxExibirErroSchema.Checked;
-         FormatoAlerta         := edtFormatoAlerta.Text;
-         FormaEmissao          := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); 
-         ModeloDF              := TpcnModeloDF(cbModeloDF.ItemIndex);
-         VersaoDF              := TpcnVersaoDF(cbVersaoDF.ItemIndex);
-         IdToken      := edtIdToken.Text;
-         Token        := edtToken.Text;
-         Salvar       := ckSalvar.Checked;
+         ExibirErroSchema := cbxExibirErroSchema.Checked;
+         FormatoAlerta    := edtFormatoAlerta.Text;
+         FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
+         ModeloDF         := TpcnModeloDF(cbModeloDF.ItemIndex);
+         VersaoDF         := TpcnVersaoDF(cbVersaoDF.ItemIndex);
+         IdCSC            := edtIdToken.Text;
+         CSC              := edtToken.Text;
+         Salvar           := ckSalvar.Checked;
        end;
 
       cbUF.ItemIndex        := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP')) ;
@@ -512,21 +493,20 @@ begin
 
       with ACBrNFe1.Configuracoes.Arquivos do
        begin
-         Salvar           := cbxSalvarArqs.Checked;
-         SepararPorMes    := cbxPastaMensal.Checked;
-         AdicionarLiteral := cbxAdicionaLiteral.Checked;
-         EmissaoPathNFe   := cbxEmissaoPathNFe.Checked;
+         Salvar             := cbxSalvarArqs.Checked;
+         SepararPorMes      := cbxPastaMensal.Checked;
+         AdicionarLiteral   := cbxAdicionaLiteral.Checked;
+         EmissaoPathNFe     := cbxEmissaoPathNFe.Checked;
          SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
-         SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
-         SepararPorModelo := cbxSepararPorModelo.Checked;
-         PathSalvar := edtPathLogs.Text;
-         PathSchemas  := edtPathSchemas.Text;
-         PathNFe  := edtPathNFe.Text;
-         PathCan  := edtPathCan.Text;
-         PathCCe  := edtPathCCe.Text;
-         PathInu  := edtPathInu.Text;
-         PathDPEC := edtPathDPEC.Text;
-         PathEvento := edtPathEvento.Text;
+         SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
+         SepararPorModelo   := cbxSepararPorModelo.Checked;
+         PathSalvar         := edtPathLogs.Text;
+         PathSchemas        := edtPathSchemas.Text;
+         PathNFe            := edtPathNFe.Text;
+         PathCan            := edtPathCan.Text;
+         PathCCe            := edtPathCCe.Text;
+         PathInu            := edtPathInu.Text;
+         PathEvento         := edtPathEvento.Text;
        end;
 
       edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'') ;
@@ -679,16 +659,16 @@ begin
   cbVersaoDF.Items[0] := 've200' ;
   cbVersaoDF.ItemIndex := 0 ;
 
- LerConfiguracao;
- PageControl3.ActivePage := tsNFe;
- pgRespostas.ActivePageIndex := 2;
+  LerConfiguracao;
+  PageControl3.ActivePage := tsNFe;
+  pgRespostas.ActivePageIndex := 2;
 
- ACBrNFe1.Configuracoes.WebServices.Salvar := true;
- {$IFDEF ACBrNFeOpenSSL}
- ACBrNFe1.Configuracoes.Geral.SSLLib := libOpenSSL;
- {$else}
+  ACBrNFe1.Configuracoes.WebServices.Salvar := true;
+  {$IFDEF ACBrNFeOpenSSL}
+  ACBrNFe1.Configuracoes.Geral.SSLLib := libOpenSSL;
+  {$else}
   ACBrNFe1.Configuracoes.Geral.SSLLib := libCapicom;
-{$endif}
+  {$endif}
 
 end;
 
@@ -767,7 +747,7 @@ begin
      infEvento.tpEvento := teCancelamento;
      infEvento.detEvento.xJust := vAux;
     end;
-    ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+    ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
     MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
@@ -834,7 +814,7 @@ begin
      infEvento.dhEvento := now;
      infEvento.tpEvento := teManifDestConfirmacao;
    end;
-  ACBrNFe1.EnviarEventoNFe(StrToInt(IDLote));
+  ACBrNFe1.EnviarEvento(StrToInt(IDLote));
 
   with AcbrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
   begin
@@ -1297,83 +1277,6 @@ begin
   MemoDados.Lines.Add('xMsg: ' +ACBrNFe1.WebServices.Recibo.xMsg);
   MemoDados.Lines.Add('cMsg: '    +IntToStr(ACBrNFe1.WebServices.Recibo.cMsg));
   MemoDados.Lines.Add('Recibo: ' +ACBrNFe1.WebServices.Recibo.Recibo);
-end;
-
-procedure TForm1.btnEnvDPECClick(Sender: TObject);
-var
- vAux : String;
-begin
-if not(InputQuery('WebServices DPEC', 'Numero da Nota', vAux)) then
-    exit;
-
-  ACBrNFe1.NotasFiscais.Clear;
-
-  GerarNFe(vAux);
-
-  ACBrNFe1.NotasFiscais.SaveToFile();
-
-  if ACBrNFe1.WebServices.EnviarDPEC.Executar then
-   begin
-     //protocolo de envio ao DPEC e impressão do DANFE
-     ACBrNFe1.DANFE.ProtocoloNFe:=ACBrNFe1.WebServices.EnviarDPEC.nRegDPEC+' '+
-                                  DateTimeToStr(ACBrNFe1.WebServices.EnviarDPEC.DhRegDPEC);
-     ACBrNFe1.NotasFiscais.Imprimir;
-
-     ShowMessage(DateTimeToStr(ACBrNFe1.WebServices.EnviarDPEC.DhRegDPEC));
-     ShowMessage(ACBrNFe1.WebServices.EnviarDPEC.nRegDPEC);
-   end;
-
-  MemoResp.Lines.Text := UTF8Encode(ACBrNFe1.WebServices.EnviarDPEC.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrNFe1.WebServices.EnviarDPEC.RetornoWS);
-  LoadXML(MemoResp, WBResposta);
-
-  ACBrNFe1.NotasFiscais.Clear;
-
-  pgRespostas.ActivePageIndex := 1;
-
-  MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('DPEC');
-  MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrNFe1.WebServices.EnviarDPEC.tpAmb));
-  MemoDados.Lines.Add('versao: ' +ACBrNFe1.WebServices.EnviarDPEC.versao);  
-  MemoDados.Lines.Add('verAplic: ' +ACBrNFe1.WebServices.EnviarDPEC.verAplic);
-  MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrNFe1.WebServices.EnviarDPEC.cStat));
-  MemoDados.Lines.Add('xMotivo: '  +ACBrNFe1.WebServices.EnviarDPEC.xMotivo);
-  MemoDados.Lines.Add('ID: '  +ACBrNFe1.WebServices.EnviarDPEC.ID);
-  MemoDados.Lines.Add('NFeChave: '  +ACBrNFe1.WebServices.EnviarDPEC.NFeChave);
-  MemoDados.Lines.Add('DhRegDPEC: ' +DateTimeToStr(ACBrNFe1.WebServices.EnviarDPEC.DhRegDPEC));
-  MemoDados.Lines.Add('nRegDPEC: '      +ACBrNFe1.WebServices.EnviarDPEC.nRegDPEC);
-end;
-
-procedure TForm1.btnConsultarDPECClick(Sender: TObject);
-var
- vAux : String;
-begin
-  if not(InputQuery('WebServices DPEC', 'Informe o Numero do Registro do DPEC ou a Chave da NFe', vAux)) then
-    exit;
-
-  if Length(Trim(vAux)) < 44 then
-     ACBrNFe1.WebServices.ConsultaDPEC.nRegDPEC := vAux
-  else
-     ACBrNFe1.WebServices.ConsultaDPEC.NFeChave := vAux;
-  ACBrNFe1.WebServices.ConsultaDPEC.Executar;
-
-  MemoResp.Lines.Text :=  UTF8Encode(ACBrNFe1.WebServices.ConsultaDPEC.RetWS);
-  memoRespWS.Lines.Text :=  UTF8Encode(ACBrNFe1.WebServices.ConsultaDPEC.RetornoWS);
-  LoadXML(MemoResp, WBResposta);
-
-  pgRespostas.ActivePageIndex := 1;
-
-  MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('Consulta DPEC');
-  MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrNFe1.WebServices.ConsultaDPEC.tpAmb));
-  MemoDados.Lines.Add('versao: ' +ACBrNFe1.WebServices.ConsultaDPEC.versao);
-  MemoDados.Lines.Add('verAplic: ' +ACBrNFe1.WebServices.ConsultaDPEC.verAplic);
-  MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrNFe1.WebServices.ConsultaDPEC.cStat));
-  MemoDados.Lines.Add('xMotivo: '  +ACBrNFe1.WebServices.ConsultaDPEC.xMotivo);
-  MemoDados.Lines.Add('NFeChave: '  +ACBrNFe1.WebServices.ConsultaDPEC.NFeChave);
-  MemoDados.Lines.Add('DhRegDPEC: ' +DateTimeToStr(ACBrNFe1.WebServices.ConsultaDPEC.DhRegDPEC));
-  MemoDados.Lines.Add('nRegDPEC: '      +ACBrNFe1.WebServices.ConsultaDPEC.nRegDPEC);
-
 end;
 
 procedure TForm1.ACBrNFe1GerarLog(const Mensagem: String);
@@ -2084,7 +1987,7 @@ begin
      Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); ;
      Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
      Ide.verProc   := '1.0.0.0'; //Versão do seu sistema
-     Ide.cUF       := NotaUtil.UFtoCUF(edtEmitUF.Text);
+     Ide.cUF       := UFtoCUF(edtEmitUF.Text);
      Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
      Ide.finNFe    := fnNormal;
      if  Assigned( ACBrNFe1.DANFE ) then
@@ -2916,7 +2819,7 @@ begin
      infEvento.detEvento.xJust := Justificativa;
      infEvento.detEvento.nProt := Protocolo;
    end;
-  ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
@@ -3044,7 +2947,7 @@ begin
      infEvento.nSeqEvento := StrToInt(nSeqEvento);
      infEvento.detEvento.xCorrecao := Correcao;
    end;
-  ACBrNFe1.EnviarEventoNFe(StrToInt(idLote));
+  ACBrNFe1.EnviarEvento(StrToInt(idLote));
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   //memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.EventoRetorno;

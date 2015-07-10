@@ -690,7 +690,8 @@ begin
          (NFe.Dest.idEstrangeiro = '') then
         AdicionaErro('719-Rejeição: NF-e sem a identificação do destinatário');
 
-      if (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) <= 11) and
+      if (Trim(OnlyNumber(NFe.Dest.CNPJCPF)) <> EmptyStr) and
+        (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) <= 11) and
         not ValidarCPF(NFe.Dest.CNPJCPF) then
         AdicionaErro('237-Rejeição: CPF do destinatário inválido');
 

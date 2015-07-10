@@ -217,6 +217,7 @@ TACBrHTTP = class( TACBrComponent )
 end ;
 
 function GetURLBasePath(URL: String): String;
+function IsAbsoluteURL(URL: String): Boolean;
 
 implementation
 
@@ -225,6 +226,49 @@ Uses ACBrUtil, synacode, synautil {$IFNDEF NOGUI},Controls, Forms {$ENDIF} ;
 function GetURLBasePath(URL: String): String;
 begin
   Result := Copy(URL, 1, PosLast('/',URL) );
+end;
+
+function IsAbsoluteURL(URL: String): Boolean;
+const
+  protocolos: array[0..2] of string = ('http','https', 'ftp');
+var
+ i: Integer;
+begin
+  Result := False;
+
+  //Testa se é um tipo absoluto relativo ao protocolo
+  if Pos('//', URL) = 1 then
+  begin
+    Result := True;
+    Exit;
+  end;
+
+  //Testa se é um tipo relativo
+  if Pos('/', URL) = 1 then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  //Testa se inicia por protocolos...
+  for I := 0 to High(protocolos) do
+  begin
+    if Pos(UpperCase(protocolos[i])+'://', UpperCase(URL)) = 1 then
+    begin
+      Result := True;
+      Break;
+    end;
+  end;
+
+  if Result then Exit;
+
+  //Começa com "www."
+  if Pos('www.', URL) = 1 then
+  begin
+    Result := True;
+    Exit;
+  end;
+
 end;
 
 { TACBrTCPServerDaemon }
@@ -649,11 +693,13 @@ var
   {$ENDIF}
    CT, Location : String ;
    IsUTF8: Boolean;
+   ContaRedirecionamentos: Integer;
 begin
   {$IFNDEF NOGUI}
    OldCursor := Screen.Cursor ;
    Screen.Cursor := crHourGlass;
   {$ENDIF}
+  ContaRedirecionamentos := 0;
   try
     RespHTTP.Clear;
     fURL := AURL;
@@ -670,14 +716,42 @@ begin
 
     HTTPSend.HTTPMethod(Method, AURL);
 
-    while HTTPSend.ResultCode = 302 do
+    while ContaRedirecionamentos <= 10 do
     begin
-      Location := Trim(SeparateLeft( GetHeaderValue('Location:'), ';' ));
+      Inc(ContaRedirecionamentos);
+      case  HTTPSend.ResultCode of
+        301, 302, 303, 307:
+        begin
+          Location := Trim(SeparateLeft( GetHeaderValue('Location:'), ';' ));
 
-      AURL := GetURLBasePath( AURL ) + Location;
-      HTTPSend.Clear;
-      HTTPSend.HTTPMethod('GET', AURL ) ;
-    end ;
+          //Location pode ser relativa ou absoluta http://stackoverflow.com/a/25643550/460775
+          if IsAbsoluteURL(Location) then
+          begin
+            AURL := Location;
+          end
+          else
+            AURL := GetURLBasePath( AURL ) + Location;
+
+          HTTPSend.Clear;
+
+          // Tipo de método usado não deveria ser trocado...
+          // https://tools.ietf.org/html/rfc2616#page-62
+          // ... mas talvez seja necessário, pois a maioria dos browsers o fazem
+          // http://blogs.msdn.com/b/ieinternals/archive/2011/08/19/understanding-the-impact-of-redirect-response-status-codes-on-http-methods-like-head-get-post-and-delete.aspx
+          if (HttpSend.ResultCode = 303) or
+             (((HttpSend.ResultCode = 301) or (HttpSend.ResultCode = 302)) and (Method = 'POST')) then
+          begin
+            HTTPSend.HTTPMethod('GET', AURL ) ;
+          end
+          else
+          begin
+            HTTPSend.HTTPMethod(Method, AURL ) ;
+          end;
+        end;
+      else
+        Break;
+      end;
+    end;
 
     OK := HTTPSend.ResultCode = 200;
     RespHTTP.LoadFromStream( HTTPSend.Document ) ;

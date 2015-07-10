@@ -453,12 +453,9 @@ begin
                   StringToFloatDef(FloatToStr(vOutro),0)         +
                   StringToFloatDef(FloatToStr(vSeg),0)           +
                   StringToFloatDef(FloatToStr(IPI.vIPI), 0)      +
-                  StringToFloatDef(FloatToStr(ICMS.vICMSST), 0)  -
-                  StringToFloatDef(FloatToStr(vDesc), 0)) ),ffNumber,15,2)+'%)'
+                  StringToFloatDef(FloatToStr(ICMS.vICMSST), 0))),ffNumber,15,2)+'%)'
               else
-                wInfAdProd := wInfAdProd+' ('+FloatToStrF(((StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(StringToFloatDef(FieldByName('VProd').AsString,0){ +
-                  StringToFloatDef(FieldByName('VOutro').AsString,0)} -
-                  StringToFloatDef(FloatToStr(vDesc),0)) ),ffNumber,15,2)+'%)';
+                wInfAdProd := wInfAdProd+' ('+FloatToStrF(((StringToFloatDef(FieldByName('vTotTrib').AsString,0)*100)/(StringToFloatDef(FieldByName('VProd').AsString,0))),ffNumber,15,2)+'%)';
             end;
           end;
 

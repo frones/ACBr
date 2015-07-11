@@ -2064,7 +2064,10 @@ begin
 
     if FPDadosMsg <> '' then
     begin
-//      AssinarXML(FPDadosMsg, 'docElement', 'infElement', 'Falha ao Assinar Consultar Situação do Lote: ');
+      // O procedimento recebe como parametro o XML a ser assinado e retorna o
+      // mesmo assinado da propriedade FPDadosMsg
+      AssinarXML(FPDadosMsg, 'docElement', 'infElement',
+                 'Falha ao Assinar Consultar Situação do Lote: ');
 
     (*
       {$IFDEF ACBrNFSeOpenSSL}
@@ -2321,30 +2324,16 @@ begin
   FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
 
-(*
- if FProvedor = proEL then
- begin
-   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
-     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
- end
- else begin
-   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
-     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
- end;
- if (TNFSeConsultarLoteRPS(Self).FIM = '') then
-    TNFSeConsultarLoteRPS(Self).FIM := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
- if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') and (FProvedor = proTecnos) then
-    TNFSeConsultarLoteRPS(Self).FRazaoSocial := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-
- if FProvedorClass.GetAssinarXML(acConsLote)
-  then begin
-   case FProvedor of
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
+  if FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsLote then
+  begin
+    case FProvedor of
+      proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                             OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                             TNFSeConsultarLoteRPS(Self).IM,
                                                             TNFSeConsultarLoteRPS(Self).Protocolo,
                                                             TNFSeConsultarLoteRPS(Self).NumeroLote,
                                                             '', '');
+                                                            
     else FPDadosMsg := TNFSeG.Gera_DadosMsgConsLote(FPrefixo3, FPrefixo4,
                                                    FNameSpace,
                                                    FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
@@ -2355,41 +2344,48 @@ begin
                                                    TNFSeConsultarLoteRPS(Self).FFraseSecreta,
                                                    '', '', FProvedor,
                                                    TNFSeConsultarLoteRPS(Self).FRazaoSocial);
-   end;
-   if FPDadosMsg <> ''
-    then begin
-    {$IFDEF ACBrNFSeOpenSSL}
-     NotaUtil.InitXmlSec;
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FConfiguracoes.Certificados.Certificado,
-                     FConfiguracoes.Certificados.Senha,
-                     FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ELSE}
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ENDIF}
+    end;
+    if FPDadosMsg <> '' then
+    begin
+      // O procedimento recebe como parametro o XML a ser assinado e retorna o
+      // mesmo assinado da propriedade FPDadosMsg
+      AssinarXML(FPDadosMsg, 'docElement', 'infElement',
+                 'Falha ao Assinar Consultar Lote de RPS: ');
+
+    (*
+      {$IFDEF ACBrNFSeOpenSSL}
+       NotaUtil.InitXmlSec;
+       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
+                       FConfiguracoes.Certificados.Certificado,
+                       FConfiguracoes.Certificados.Senha,
+                       FvAssinada, FMsg, FProvedor))
+        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+        else FPDadosMsg := FvAssinada;
+      {$ELSE}
+       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
+                       FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
+        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+        else FPDadosMsg := FvAssinada;
+      {$ENDIF}
+    *)
     end;
   end
   else begin
-   case FProvedor of
-    proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteDSF(FPrefixo3, FPrefixo4,
+    case FProvedor of
+      proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteDSF(FPrefixo3, FPrefixo4,
                                                       FNameSpace,
                                                       FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
-                                                      CodCidadeToCodSiafi(FConfiguracoes.WebServices.CodigoMunicipio),
+                                                      CodCidadeToCodSiafi(FPConfiguracoesNFSe.Geral.CodigoMunicipio),
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).Protocolo,
                                                       FTagI, FTagF);
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
+      proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                             OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                             TNFSeConsultarLoteRPS(Self).IM,
                                                             TNFSeConsultarLoteRPS(Self).Protocolo,
                                                             TNFSeConsultarLoteRPS(Self).NumeroLote,
                                                             FTagI, FTagF);
-    proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEL(FConfiguracoes.WebServices.CodigoMunicipio,
+      proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEL(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                        OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                        TNFSeConsultarLoteRPS(Self).IM,
                                                        TNFSeConsultarLoteRPS(Self).Protocolo,
@@ -2405,10 +2401,9 @@ begin
                                                    TNFSeConsultarLoteRPS(Self).FFraseSecreta,
                                                    FTagI, FTagF, FProvedor,
                                                    TNFSeConsultarLoteRPS(Self).FRazaoSocial);
-   end;
+    end;
   end;
-
-*)
+  
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Consultar Lote] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
@@ -2746,13 +2741,13 @@ begin
     proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(FPrefixo3, FPrefixo4,
                                                          FNameSpace,
                                                          FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
-                                                         CodCidadeToCodSiafi(FConfiguracoes.WebServices.CodigoMunicipio),
+                                                         CodCidadeToCodSiafi(FPConfiguracoesNFSe.Geral.CodigoMunicipio),
                                                          OnlyNumber(TNFSeConsultarNfseRPS(Self).Cnpj),
                                                          LowerCase(booltostr(TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao, True)),
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          FvNotas,
                                                          '', '');
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
+    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
                                                                OnlyNumber(TNFSeConsultarNfseRPS(Self).FCnpj),
                                                                TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
@@ -2799,12 +2794,12 @@ begin
                                                          TNFSeConsultarNfseRPS(Self).FNotasFiscais.NumeroLote,
                                                          FvNotas,
                                                          FTagI, FTagF);
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FConfiguracoes.WebServices.CodigoMunicipio,
+    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                                TNFSeConsultarNfseRPS(Self).Numero,
                                                                OnlyNumber(TNFSeConsultarNfseRPS(Self).FCnpj),
                                                                TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
                                                                FTagI, FTagF);
-    proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEL(FConfiguracoes.WebServices.CodigoMunicipio,
+    proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgConsNFSeRPSEL(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                           TNFSeConsultarNfseRPS(Self).Numero,
                                                           OnlyNumber(TNFSeConsultarNfseRPS(Self).FCnpj),
                                                           TNFSeConsultarNfseRPS(Self).InscricaoMunicipal,
@@ -3125,7 +3120,7 @@ begin
                                                       FNameSpace,
                                                       FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
                                                       // Alterado Por Moro em 18/02/2015
-                                                      CodCidadeToCodSiafi(strtointDef(IntToStr(TNFSeConsultarNfse(Self).FConfiguracoes.WebServices.CodigoMunicipio), 0)),
+                                                      CodCidadeToCodSiafi(strtointDef(IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), 0)),
                                                       //CodCidadeToCodSiafi(strtointDef(TNFSeConsultarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0)),
                                                       OnlyNumber(TNFSeConsultarNfse(Self).Cnpj),
                                                       TNFSeConsultarNfse(Self).InscricaoMunicipal,
@@ -3414,60 +3409,27 @@ begin
 
   InicializarDadosMsg;
 
-(*
- if (TNFSeCancelarNfse(Self).FNumeroNFSe = '') then
-   TNFSeCancelarNfse(Self).FNumeroNFSe := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
+  case FProvedor of
+    proEquiplano,
+    proPublica: FURISig:= '';
 
- if (TNFSeCancelarNfse(Self).FCNPJ = '') then
- begin
-   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeCancelarNfse(Self).FCNPJ := OnlyNumber(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
-   else
-    TNFSeCancelarNfse(Self).FCNPJ := OnlyNumber(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
- end;
+    proDigifred: FURISig := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
- if (TNFSeCancelarNfse(Self).FIM = '') then
- begin
-  if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeCancelarNfse(Self).FIM := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
-  else
-    TNFSeCancelarNfse(Self).FIM := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
- end;
+    proSaatri: FURISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
 
- if (TNFSeCancelarNfse(Self).MotivoCancelamento = '') then
-   TNFSeCancelarNfse(Self).MotivoCancelamento:= TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
+    proIssIntel,
+    proISSNet: begin
+                 FURISig := '';
+                 FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
+               end;
 
- if (TNFSeCancelarNfse(Self).FCodigoMunicipio = '') then
- begin
-  if (FProvedor = proISSNet) and (FConfiguracoes.WebServices.AmbienteCodigo = 2) then
-   TNFSeCancelarNfse(Self).FCodigoMunicipio := '999'
-  else
-  begin
-    if FProvedor = proFiorilli then
-      TNFSeCancelarNfse(Self).FCodigoMunicipio := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio
-    else
-      TNFSeCancelarNfse(Self).FCodigoMunicipio := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-  end;
- end;
+    proTecnos: FURISig := '2' + TNFSeCancelarNfse(Self).FCnpj +
+                IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
 
- case FProvedor of
-  proEquiplano, proPublica: FURISig:= '';
-  proDigifred:  FURISig := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
-  proSaatri: FURISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
-  proIssIntel,
-  proISSNet: begin
-              FURISig := '';
-              FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
-             end;
-  proTecnos: FURISig := '2' + TNFSeCancelarNfse(Self).FCnpj + IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
-  proGovDigital: FURISig := TNFSeCancelarNfse(Self).FNumeroNFSe;
- else            FURISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj + TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
- end;
+    proGovDigital: FURISig := TNFSeCancelarNfse(Self).FNumeroNFSe;
 
- if FProvedor <> proISSNet
-  then begin
-   FURISig := FProvedorClass.GetURI(URISig);
-   FURIRef := URISig;
+  else FURISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj +
+              TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
   end;
 
   FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad +
@@ -3479,6 +3441,7 @@ begin
   FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
            '</' + FPrefixo3 + 'CancelarNfseEnvio>';
 
+(*
  if (FProvedor = proIssDSF ) then
  begin
    Gerador := TGerador.Create;
@@ -3520,11 +3483,12 @@ begin
      Gerador.Free;
    end;
  end;
+*)
 
- if FProvedorClass.GetAssinarXML(acCancelar)
-  then begin
-   case FProvedor of
-    proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(FPrefixo3, FPrefixo4,
+  if FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar then
+  begin
+    case FProvedor of
+      proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(FPrefixo3, FPrefixo4,
                                                           FNameSpace,
                                                           FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
                                                           TNFSeCancelarNfse(Self).FCnpj,
@@ -3533,7 +3497,7 @@ begin
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           FvNotas,
                                                           '', '');
-    proInfisc: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeInfisc(FPrefixo3, FPrefixo4,
+      proInfisc: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeInfisc(FPrefixo3, FPrefixo4,
                                                           FNameSpace,
                                                           FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
                                                           TNFSeCancelarNfse(Self).FCnpj,
@@ -3542,7 +3506,7 @@ begin
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           FvNotas,
                                                           '', '');
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
+      proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
                                                                 OnlyNumber(TNFSeCancelarNfse(Self).FCnpj),
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
@@ -3558,29 +3522,37 @@ begin
                                                        '', '',
                                                        FProvedor,
                                                        TNFSeCancelarNfse(Self).FMotivoCancelamento);
-   end;
-   if FPDadosMsg <> ''
-    then begin
-    {$IFDEF ACBrNFSeOpenSSL}
-     URIRef := '';
-     NotaUtil.InitXmlSec;
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FConfiguracoes.Certificados.Certificado,
-                     FConfiguracoes.Certificados.Senha,
-                     FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ELSE}
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ENDIF}
+    end;
+
+    if FPDadosMsg <> '' then
+    begin
+      // O procedimento recebe como parametro o XML a ser assinado e retorna o
+      // mesmo assinado da propriedade FPDadosMsg
+      AssinarXML(FPDadosMsg, 'docElement', 'infElement',
+                 'Falha ao Assinar Cancelar NFS-e: ');
+
+   (*
+     {$IFDEF ACBrNFSeOpenSSL}
+      URIRef := '';
+      NotaUtil.InitXmlSec;
+      if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
+                      FConfiguracoes.Certificados.Certificado,
+                      FConfiguracoes.Certificados.Senha,
+                      FvAssinada, FMsg, FProvedor))
+       then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+       else FPDadosMsg := FvAssinada;
+     {$ELSE}
+      if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
+                      FConfiguracoes.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
+       then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
+       else FPDadosMsg := FvAssinada;
+     {$ENDIF}
+    *)
     end;
   end
   else begin
-   case FProvedor of
-    proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(FPrefixo3, FPrefixo4,
+    case FProvedor of
+      proIssDSF: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeDSF(FPrefixo3, FPrefixo4,
                                                           FNameSpace,
                                                           FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML,
                                                           TNFSeCancelarNfse(Self).FCnpj,
@@ -3589,19 +3561,19 @@ begin
                                                           TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote,
                                                           FvNotas,
                                                           FTagI, FTagF);
-    proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
+      proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
                                                                 OnlyNumber(TNFSeCancelarNfse(Self).FCnpj),
                                                                 TNFSeCancelarNfse(Self).FIM,
                                                                 TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                                 TNFSeCancelarNfse(Self).FMotivoCancelamento,
                                                                 FTagI, FTagF);
-    proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEL(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
+      proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeEL(StrToInt(TNFSeCancelarNfse(Self).FCodigoMunicipio),
                                                            OnlyNumber(TNFSeCancelarNfse(Self).FCnpj),
                                                            TNFSeCancelarNfse(Self).FIM,
                                                            TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                            TNFSeCancelarNfse(Self).FMotivoCancelamento,
                                                            FTagI, FTagF);
-    proFreire: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeFreire(FPrefixo4,
+      proFreire: FPDadosMsg := TNFSeG.Gera_DadosMsgCancelarNFSeFreire(FPrefixo4,
                                                              FNameSpace,
                                                              TNFSeCancelarNfse(Self).FNumeroNFSe,
                                                              TNFSeCancelarNfse(Self).FCnpj,
@@ -3620,10 +3592,9 @@ begin
                                                        FTagI, FTagF,
                                                        FProvedor,
                                                        TNFSeCancelarNfse(Self).FMotivoCancelamento);
-   end;
+    end;
   end;
 
-*)
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
@@ -3633,7 +3604,6 @@ function TNFSeCancelarNfse.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-(*
   FPRetWS := ExtraiRetorno('CancelarNfseResposta');
 
   FNFSeRetorno := TretCancNfse.Create;
@@ -3669,7 +3639,6 @@ begin
                 'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
   Result := (NFSeRetorno.InfCanc.Sucesso <> '');
-*)
 end;
 
 procedure TNFSeCancelarNfse.DefinirServicoEAction;
@@ -3826,36 +3795,6 @@ begin
   end;
 
 (*
- if (TNFSeSubstituirNfse(Self).FNumeroNFSe = '') then
-   TNFSeSubstituirNfse(Self).FNumeroNFSe := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
-
- if (TNFSeSubstituirNfse(Self).FCNPJ = '') then
- begin
-   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeSubstituirNfse(Self).FCNPJ := OnlyNumber(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
-   else
-    TNFSeSubstituirNfse(Self).FCNPJ := OnlyNumber(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
- end;
-
- if (TNFSeSubstituirNfse(Self).FIM = '') then
- begin
-  if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeSubstituirNfse(Self).FIM := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
-  else
-    TNFSeSubstituirNfse(Self).FIM := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
- end;
-
- if (TNFSeSubstituirNfse(Self).MotivoCancelamento = '') then
-   TNFSeSubstituirNfse(Self).MotivoCancelamento:= TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
-
- if (TNFSeSubstituirNfse(Self).FCodigoMunicipio = '') then
- begin
-  if (FProvedor = proISSNet) and (FConfiguracoes.WebServices.AmbienteCodigo = 2) then
-   TNFSeSubstituirNfse(Self).FCodigoMunicipio := '999'
-  else
-   TNFSeSubstituirNfse(Self).FCodigoMunicipio := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
- end;
-
  case FProvedor of
   proEquiplano, proPublica: FURISig:= '';
   proDigifred:  FURISig := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
@@ -4407,6 +4346,21 @@ begin
 
   FConsLote.FProtocolo := AProtocolo;
 
+(*
+ if FProvedor = proEL then
+ begin
+   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
+     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+ end
+ else begin
+   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
+     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
+ end;
+ if (TNFSeConsultarLoteRPS(Self).FIM = '') then
+    TNFSeConsultarLoteRPS(Self).FIM := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+ if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') and (FProvedor = proTecnos) then
+    TNFSeConsultarLoteRPS(Self).FRazaoSocial := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+*)
   Result := FConsLote.Executar;
 
   if not (Result) then
@@ -4423,6 +4377,21 @@ begin
   FConsLote.FFraseSecreta := AFraseSecreta;
   FConsLote.FRazaoSocial  := ARazaoSocial;
 
+(*
+ if FProvedor = proEL then
+ begin
+   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
+     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+ end
+ else begin
+   if (TNFSeConsultarLoteRPS(Self).FCNPJ = '') then
+     TNFSeConsultarLoteRPS(Self).FCNPJ := OnlyNumber(TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj);
+ end;
+ if (TNFSeConsultarLoteRPS(Self).FIM = '') then
+    TNFSeConsultarLoteRPS(Self).FIM := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+ if (TNFSeConsultarLoteRPS(Self).FRazaoSocial = '') and (FProvedor = proTecnos) then
+    TNFSeConsultarLoteRPS(Self).FRazaoSocial := TNFSeConsultarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+*)
   Result := ConsultaLoteRPS(AProtocolo, False);
 end;
 
@@ -4554,55 +4523,96 @@ begin
   FCancNfse.FIM              := AInscricaoMunicipal;
   FCancNfse.FCodigoMunicipio := ACodigoMunicipio;
 
+(*
+ if (TNFSeCancelarNfse(Self).FNumeroNFSe = '') then
+   TNFSeCancelarNfse(Self).FNumeroNFSe := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
+
+ if (TNFSeCancelarNfse(Self).FCNPJ = '') then
+ begin
+   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
+    TNFSeCancelarNfse(Self).FCNPJ := OnlyNumber(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
+   else
+    TNFSeCancelarNfse(Self).FCNPJ := OnlyNumber(TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+ end;
+
+ if (TNFSeCancelarNfse(Self).FIM = '') then
+ begin
+  if (FProvedor = proDigifred) or (FProvedor = pro4R) then
+    TNFSeCancelarNfse(Self).FIM := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
+  else
+    TNFSeCancelarNfse(Self).FIM := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+ end;
+
+ if (TNFSeCancelarNfse(Self).MotivoCancelamento = '') then
+   TNFSeCancelarNfse(Self).MotivoCancelamento:= TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
+
+ if (TNFSeCancelarNfse(Self).FCodigoMunicipio = '') then
+ begin
+  if (FProvedor = proISSNet) and (FConfiguracoes.WebServices.AmbienteCodigo = 2) then
+   TNFSeCancelarNfse(Self).FCodigoMunicipio := '999'
+  else
+  begin
+    if FProvedor = proFiorilli then
+      TNFSeCancelarNfse(Self).FCodigoMunicipio := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio
+    else
+      TNFSeCancelarNfse(Self).FCodigoMunicipio := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+  end;
+ end;
+*)
   Result := CancelaNFSe(ACodigoCancelamento, False);
 end;
 
-function TWebServices.SubstitiNFSe(ACodigoCancelamento,
-  ANumeroNFSe: String): Boolean;
+function TWebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 begin
+  FSubNfse.FNumeroNFSe         := ANumeroNFSe;
   FSubNfse.FCodigoCancelamento := ACodigoCancelamento;
   FSubNfse.FMotivoCancelamento := '';
 
-  FSubNfse.FNumeroNFSe      := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero; // ANumeroNFSe;
-  FSubNfse.FCnpj            := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
-  FSubNfse.FIM              := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
-  FSubNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio;
-  FSubNfse.FNumeroRps       := StrToInt(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero);
+  if TACBrNFSe(FACBrNFSe).NotasFiscais.Count <=0 then
+    FConsNfseRps.GerarException( 'ERRO: Nenhum RPS adicionado ao Lote' )
+  else begin
+    FSubNfse.FCnpj            := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+    FSubNfse.FIM              := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+    FSubNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio;
+    FSubNfse.FNumeroRps       := StrToInt(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero);
+
 (*
- if (TNFSeSubstituirNfse(Self).FNumeroNFSe = '') then
-   TNFSeSubstituirNfse(Self).FNumeroNFSe := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
-
- if (TNFSeSubstituirNfse(Self).FCNPJ = '') then
+ if (FSubNfse.FCNPJ = '') then
  begin
-   if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeSubstituirNfse(Self).FCNPJ := OnlyNumber(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
+   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proDigifred) or
+      (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = pro4R) then
+    FSubNfse.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).FNotasFiscais.Items[0].NFSe.Prestador.Cnpj)
    else
-    TNFSeSubstituirNfse(Self).FCNPJ := OnlyNumber(TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
+    FSubNfse.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
  end;
 
- if (TNFSeSubstituirNfse(Self).FIM = '') then
+ if (FSubNfse.FIM = '') then
  begin
-  if (FProvedor = proDigifred) or (FProvedor = pro4R) then
-    TNFSeSubstituirNfse(Self).FIM := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
+  if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proDigifred) or
+     (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = pro4R) then
+    FSubNfse.FIM := TACBrNFSe(FACBrNFSe).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
   else
-    TNFSeSubstituirNfse(Self).FIM := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+    FSubNfse.FIM := TACBrNFSe(FACBrNFSe).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
  end;
 
- if (TNFSeSubstituirNfse(Self).MotivoCancelamento = '') then
-   TNFSeSubstituirNfse(Self).MotivoCancelamento:= TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
+ if (FSubNfse.MotivoCancelamento = '') then
+   FSubNfse.MotivoCancelamento := TACBrNFSe(FACBrNFSe).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
 
- if (TNFSeSubstituirNfse(Self).FCodigoMunicipio = '') then
+ if (FSubNfse.FCodigoMunicipio = '') then
  begin
-  if (FProvedor = proISSNet) and (FConfiguracoes.WebServices.AmbienteCodigo = 2) then
-   TNFSeSubstituirNfse(Self).FCodigoMunicipio := '999'
+  if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proISSNet) and
+     (TACBrNFSe(FACBrNFSe).Configuracoes.WebServices.AmbienteCodigo = 2) then
+   FSubNfse.FCodigoMunicipio := '999'
   else
-   TNFSeSubstituirNfse(Self).FCodigoMunicipio := TNFSeSubstituirNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+   FSubNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
  end;
 *)
-  Result := FSubNfse.Executar;
 
-  if not (Result) then
-    FSubNfse.GerarException( FSubNfse.Msg );
+    Result := FSubNfse.Executar;
+
+    if not (Result) then
+      FSubNfse.GerarException( FSubNfse.Msg );
+  end;
 end;
 
 function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao,

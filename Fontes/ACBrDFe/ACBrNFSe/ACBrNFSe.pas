@@ -561,6 +561,12 @@ begin
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
 
+  if ACodigoCancelamento = '' then
+    GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
+
+  if ANumeroNFSe = '' then
+    GerarException(ACBrStr('ERRO: Numero da NFS-e não informado'));
+
   Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;
 

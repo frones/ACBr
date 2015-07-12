@@ -796,8 +796,6 @@ begin
     else
       NumExtrato := Trim( IntToStr( ide.nCFe ) );
 
-    lNumeroExtratoCan.Caption := StringReplace(lNumeroExtrato.Caption,'<NUMERO>',NumExtrato,[]);
-
     // CPF_CNPJ do Consumidor //
     lCPF_CNPJCan.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
                                        FormatarCNPJouCPF(Dest.CNPJCPF),[]);
@@ -825,6 +823,7 @@ begin
 
   with ACBrSATExtrato.CFeCanc do
   begin
+    lNumeroExtratoCan.Caption := StringReplace(lNumeroExtratoCan.Caption,'<NUMERO>',NumExtrato,[]);
     // Informações do Rodapé do Extrato //
     lNumSATCanl.Caption   := Trim(IntToStr( ide.nserieSAT ));
     lDataHoraCanl.Caption := FormatDateTimeBr(ide.dEmi + ide.hEmi);

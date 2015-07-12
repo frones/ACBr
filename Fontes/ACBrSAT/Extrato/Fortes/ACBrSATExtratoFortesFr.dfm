@@ -1202,7 +1202,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Height = 10
         Align = faTop
         Alignment = taCenter
-        Caption = 'DADOS DO CUMPOM FISCAL ELETR'#212'NICO DE CANCELAMENTO'
+        Caption = 'DADOS DO CUPOM FISCAL ELETR'#212'NICO DE CANCELAMENTO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1492,10 +1492,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 10
         Width = 286
-        Height = 11
+        Height = 12
         Align = faTop
         Alignment = taCenter
-        Caption = 'DADOS DO CUMPOM FISCAL ELETR'#212'NICO CANCELADO'
+        Caption = 'DADOS DO CUPOM FISCAL ELETR'#212'NICO CANCELADO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -1506,7 +1506,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lCPF_CNPJCan: TRLLabel
         Left = 0
-        Top = 21
+        Top = 22
         Width = 286
         Height = 15
         Align = faTop

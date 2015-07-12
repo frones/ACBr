@@ -1,47 +1,44 @@
 object frlDANFeRL: TfrlDANFeRL
   Left = 944
-  Height = 634
   Top = 336
-  Width = 810
   Caption = 'frlDANFeLR'
   ClientHeight = 634
   ClientWidth = 810
   Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  Position = poMainFormCenter
-  LCLVersion = '1.2.6.0'
+  PixelsPerInch = 96
+  TextHeight = 13
   object RLNFe: TRLReport
     Left = 0
-    Height = 1123
     Top = 0
     Width = 794
+    Height = 1123
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
+    Font.Style = []
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DANFe'
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Author = 'FortesReport 3.23 - Copyright © 1999-2009 Fortes Informática'
+    DocumentInfo.Author = 'FortesReport 3.23 - Copyright '#194#169' 1999-2009 Fortes Inform'#195#161'tica'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
-    DocumentInfo.ModDate = 0
-    ViewerOptions = []
-    FontEncoding = feNoEncoding
     DisplayName = 'Documento PDF'
-    left = 368
-    top = 152
+    Left = 368
+    Top = 152
   end
   object DataSource1: TDataSource
-    left = 400
-    top = 152
+    Left = 400
+    Top = 152
   end
 end

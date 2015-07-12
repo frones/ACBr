@@ -42,6 +42,7 @@
 package ACBr_CTeDacteRL;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -52,35 +53,28 @@ package ACBr_CTeDacteRL;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires
   ACBr_CTe,
   ACBr_Comum,
-  {$IFDEF VER150} FortesReportCE_Win32_D7_vcl, vcljpg; {$ENDIF} // D7
-  {$IFDEF VER200} RLibWinD2009, vclimg; {$ENDIF} // D2009
-  {$IFDEF VER210} RLibWinD2010, vclimg; {$ENDIF} // D2010
-  {$IFDEF VER220} FortesReportCE_Win32_DXE_vcl, vclimg; {$ENDIF} // XE
-  {$IFDEF VER230} FortesReportCE_Win32_DXE2_vcl, vclimg; {$ENDIF} //XE2
-  {$IFDEF VER240} FortesReportCE_Win32_DXE3_vcl, vclimg; {$ENDIF} //XE3
-  {$IFDEF VER250} FortesReportCE_Win32_DXE4_vcl, vclimg; {$ENDIF} //XE4
-  {$IFDEF VER260} FortesReportCE_Win32_DXE5_vcl, vclimg; {$ENDIF} //XE5
-  {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg,  dsnap; {$ENDIF} //XE6
-  {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg,  dsnap; {$ENDIF} //XE7
-  {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg,  dsnap; {$ENDIF} //XE8
-
+  FortesReportCE_Win32_DXE8_vcl,
+  vclimg,
+  dsnap;
 
 contains
   ACBrCTeDACTeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRL.pas' {frmDACTeRL},
@@ -90,4 +84,5 @@ contains
   ACBrCTeDACTeRLRetratoA5 in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetratoA5.pas' {frmDACTeRLRetratoA5},
   ACBrCTeDAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRL.pas' {frmCTeDAEventoRL},
   ACBrCTeDAEventoRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRLRetrato.pas' {frmCTeDAEventoRLRetrato};
+
 end.

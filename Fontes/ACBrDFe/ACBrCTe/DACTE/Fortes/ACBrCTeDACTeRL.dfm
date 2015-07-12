@@ -1,9 +1,9 @@
 object frmDACTeRL: TfrmDACTeRL
   Left = 239
   Top = 218
-  Width = 906
-  Height = 343
   Caption = 'frmDACTeRL'
+  ClientHeight = 304
+  ClientWidth = 890
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,15 +20,15 @@ object frmDACTeRL: TfrmDACTeRL
     Top = 2
     Width = 794
     Height = 1123
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter

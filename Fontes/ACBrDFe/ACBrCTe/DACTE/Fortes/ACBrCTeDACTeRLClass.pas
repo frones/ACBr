@@ -72,7 +72,7 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrCTe, ACBrCteUtil;
+  StrUtils, Dialogs, ACBrUtil, ACBrCTe;
 
 var
   frmCTeDAEventoRL: TfrmCTeDAEventoRL;

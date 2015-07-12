@@ -1,7 +1,6 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Left = 476
   Top = 119
-  VertScrollBar.Position = 523
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 616
   ClientWidth = 804
@@ -10,7 +9,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -523
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -22,7 +20,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     PrintDialog = False
     Title = 'Danfe Retrato'
     BeforePrint = RLNFeBeforePrint
-    ExplicitTop = -523
     object rliMarcaDagua1: TRLImage
       Left = 241
       Top = 670

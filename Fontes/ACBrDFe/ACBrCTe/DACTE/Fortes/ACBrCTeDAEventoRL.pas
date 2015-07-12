@@ -56,7 +56,7 @@ uses
   {$ENDIF}
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
-  RLBarcode, pcteCTe, ACBrCTe, ACBrCTeUtil, pcnConversao,
+  RLBarcode, pcteCTe, ACBrCTe, pcnConversao,
   pcteEnvEventoCTe;
 
 type

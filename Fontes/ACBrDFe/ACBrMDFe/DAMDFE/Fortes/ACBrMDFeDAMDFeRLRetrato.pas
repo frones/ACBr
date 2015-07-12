@@ -176,12 +176,12 @@ type
     rlmCodDescarreg: TRLMemo;
     rlmNomeCarreg: TRLMemo;
     rlmNomeDescarreg: TRLMemo;
-    procedure rlb_1_DadosManifestoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_2_RodoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_3_AereoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_4_AquavBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_5_FerrovBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_6_ObservacaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+    procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_4_AquavBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_5_FerrovBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_6_ObservacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLMDFeBeforePrint(Sender: TObject; var PrintIt: boolean);
   private
     { Private declarations }
@@ -213,7 +213,7 @@ begin
   FProtocoloMDFe := sProtocolo;
 end;
 
-procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   vStringStream: TStringStream;
 begin
@@ -353,7 +353,7 @@ begin
     rllPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga * 1000);
 end;
 
-procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
@@ -401,7 +401,7 @@ begin
   end;
 end;
 
-procedure TfrlDAMDFeRLRetrato.rlb_3_AereoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrlDAMDFeRLRetrato.rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -409,7 +409,7 @@ begin
   rlb_3_Aereo.Enabled := (FMDFe.Ide.modal = moAereo);
 end;
 
-procedure TfrlDAMDFeRLRetrato.rlb_4_AquavBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrlDAMDFeRLRetrato.rlb_4_AquavBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
@@ -439,7 +439,7 @@ begin
   end;
 end;
 
-procedure TfrlDAMDFeRLRetrato.rlb_5_FerrovBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrlDAMDFeRLRetrato.rlb_5_FerrovBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -447,7 +447,7 @@ begin
   rlb_5_Ferrov.Enabled := (FMDFe.Ide.modal = moFerroviario);
 end;
 
-procedure TfrlDAMDFeRLRetrato.rlb_6_ObservacaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrlDAMDFeRLRetrato.rlb_6_ObservacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 

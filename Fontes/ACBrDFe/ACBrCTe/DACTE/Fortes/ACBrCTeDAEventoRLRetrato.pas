@@ -199,16 +199,16 @@ type
     rllMsgTeste: TRLLabel;
     rlLabel15: TRLLabel;
     rllblSistema: TRLLabel;
-    procedure rlb_01_TituloBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_02_DocumentoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_05_EventoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_03_EmitenteBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_04_TomadorBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_06_CondicoesBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_07_CorrecaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_08_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_09_ItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_10_SistemaBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+    procedure rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_06_CondicoesBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLCTeEventoBeforePrint(Sender: TObject; var PrintIt: boolean);
   private
     procedure Itens;
@@ -219,7 +219,7 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil, ACBrCTeUtil;
+  DateUtils, ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -236,7 +236,7 @@ begin
   FProtocoloCTe := sProtocolo;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -267,7 +267,7 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -282,11 +282,11 @@ begin
     rllNumCTe.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
     rllEmissao.Caption := FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
     SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), rliBarCode);
-    rllChave.Caption := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+    rllChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -314,7 +314,7 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -335,7 +335,7 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -408,7 +408,7 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_06_CondicoesBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_06_CondicoesBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -473,7 +473,7 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
@@ -495,13 +495,13 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 //var
 // i : integer;
 begin
@@ -517,7 +517,7 @@ begin
   *)
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 

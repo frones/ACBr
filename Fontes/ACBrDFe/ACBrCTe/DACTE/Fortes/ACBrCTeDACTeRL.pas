@@ -58,7 +58,7 @@ uses
   {$ENDIF}
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
-  RLBarcode, pcteCTe, ACBrCTe, ACBrCTeUtil, pcnConversao;
+  RLBarcode, pcteCTe, ACBrCTe, pcnConversao;
 
 type
 
@@ -125,7 +125,7 @@ type
 
 implementation
 
-uses MaskUtils, ACBrDFeUtil;
+uses MaskUtils, ACBrDFeUtil, pcteConversaoCTe, ACBrUtil;
 
 {$R *.dfm}
 
@@ -333,7 +333,7 @@ begin
   end
   else
     Result := Result + FCTe.Ide.Toma4.xNome;
-  Result := Result + ' - VALOR A RECEBER: R$ ' + FormatFloat(FCTe.vPrest.vRec, '###,###,###,##0.00');
+  Result := Result + ' - VALOR A RECEBER: R$ ' + FormatFloatBr(FCTe.vPrest.vRec, '###,###,###,##0.00');
 end;
 
 end.

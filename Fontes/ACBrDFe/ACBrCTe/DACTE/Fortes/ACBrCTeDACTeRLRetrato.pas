@@ -83,7 +83,6 @@ type
     rlLabel33: TRLLabel;
     rlLabel74: TRLLabel;
     rllChave: TRLLabel;
-    rllPageNumber: TRLLabel;
     rllSerie: TRLLabel;
     rllModelo: TRLLabel;
     rllEmissao: TRLLabel;
@@ -589,26 +588,26 @@ type
     RLLabel200: TRLLabel;
     RLSystemInfo1: TRLSystemInfo;
     RLSystemInfo2: TRLSystemInfo;
-    procedure rlb_01_ReciboBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_02_CabecalhoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_03_DadosDACTeBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_04_DadosNotaFiscalBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_05_ComplementoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_06_ValorPrestacaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_07_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_09_ObsBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_10_ModRodFracionadoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_11_ModRodLot103BeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_17_SistemaBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_16_DadosExcEmitenteBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_12_ModAereoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_13_ModAquaviarioBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_14_ModFerroviarioBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_15_ModDutoviarioBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_01_Recibo_AereoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_11_ModRodLot104BeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_18_ReciboBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_06_ProdutosPerigososBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+    procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_04_DadosNotaFiscalBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_05_ComplementoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_06_ValorPrestacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_07_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_09_ObsBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_10_ModRodFracionadoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_11_ModRodLot103BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_17_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_16_DadosExcEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_12_ModAereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_13_ModAquaviarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_14_ModFerroviarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_15_ModDutoviarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_01_Recibo_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_11_ModRodLot104BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_18_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_06_ProdutosPerigososBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
   private
     procedure Itens;
@@ -619,7 +618,7 @@ type
 implementation
 
 uses
-  DateUtils, ACBrUtil, ACBrDFeUtil, ACBrCTeUtil;
+  DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe;
 
 {$R *.dfm}
 
@@ -646,13 +645,13 @@ begin
         cdsDocumentos.Append;
 
         cdsDocumentos.FieldByname('TIPO_1').AsString := 'NF';
-        cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+        cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := serie + '-' + nDoc;
       end
       else
       begin
         cdsDocumentos.FieldByname('TIPO_2').AsString := 'NF';
-        cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+        cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
         cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := serie + '-' + nDoc;
 
         cdsDocumentos.Post;
@@ -669,12 +668,12 @@ begin
       begin
         cdsDocumentos.Append;
         cdsDocumentos.FieldByname('TIPO_1').AsString := 'NF-E ' + copy(chave, 26, 9);
-        cdsDocumentos.FieldByname('CNPJCPF_1').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+        cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
       end
       else
       begin
         cdsDocumentos.FieldByname('TIPO_2').AsString := 'NF-E ' + copy(chave, 26, 9);
-        cdsDocumentos.FieldByname('CNPJCPF_2').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+        cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
         cdsDocumentos.Post;
       end;
       inc(Item);
@@ -692,17 +691,17 @@ begin
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'DECLAR';
-                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := 'Declaração Doc.: ' + nDoc;
                        end;
          tdDutoviario: begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'DUTO';
-                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := 'Dutoviário Doc.: ' + nDoc;
                        end;
          tdOutros:     begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'Outros';
-                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := copy( trim(descOutros), 1, 20 ) + ' Doc.: '+ nDoc;
                        end;
         end;
@@ -715,17 +714,17 @@ begin
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'DECLAR';
-                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := 'Declaração Doc.: ' + nDoc;
                        end;
          tdDutoviario: begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'DUTO';
-                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := 'Dutoviário Doc.: ' + nDoc;
                        end;
          tdOutros:     begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'Outros';
-                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := copy( trim(descOutros), 1, 20 ) + ' Doc.: '+ nDoc;
                        end;
         end;
@@ -766,7 +765,7 @@ begin
              daTIF:  cdsDocumentos.FieldByname('TIPO_1').AsString := 'TIF';
              daOutros: cdsDocumentos.FieldByname('TIPO_1').AsString := 'Outros';
             end;
-            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarCNPJCPF(FCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].CNPJCPF);
+            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarCNPJouCPF(FCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].CNPJCPF);
             cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := serie + '-' + IntToStr(nDoc);
           end
           else
@@ -787,7 +786,7 @@ begin
              daTIF:  cdsDocumentos.FieldByname('TIPO_2').AsString := 'TIF';
              daOutros: cdsDocumentos.FieldByname('TIPO_2').AsString := 'Outros';
             end;
-            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarCNPJCPF(FCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].CNPJCPF);
+            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarCNPJouCPF(FCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].CNPJCPF);
             cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := serie + '-' + IntToStr(nDoc);
 
             cdsDocumentos.Post;
@@ -809,12 +808,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByname('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
           end
           else
           begin
             cdsDocumentos.FieldByname('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
 
             cdsDocumentos.Post;
           end;
@@ -858,12 +857,12 @@ begin
       begin
         cdsDocumentos.Append;
         cdsDocumentos.FieldByName('TIPO_1').AsString := 'NF-E ' + copy(chave, 26, 9);
-        cdsDocumentos.FieldByName('CNPJCPF_1').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+        cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarChaveAcesso(chave, True);
       end
       else
       begin
         cdsDocumentos.FieldByName('TIPO_2').AsString := 'NF-E ' + copy(chave, 26, 9);
-        cdsDocumentos.FieldByName('CNPJCPF_2').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+        cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarChaveAcesso(chave, True);
         cdsDocumentos.Post;
       end;
       Inc(Item);
@@ -1008,12 +1007,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByName('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByName('CNPJCPF_1').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+            cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarChaveAcesso(chave, True);
           end
           else
           begin
             cdsDocumentos.FieldByName('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByName('CNPJCPF_2').AsString := CTeUtil.FormatarChaveAcesso(chave, True);
+            cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarChaveAcesso(chave, True);
 
             cdsDocumentos.Post;
           end;
@@ -1033,10 +1032,10 @@ begin
   FProtocoloCTe := sProtocolo;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_01_ReciboBeforePrint(Sender: TRLCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-  PrintBand := (RLCTe.PageNumber = 1) and (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prCabecalho);
+  PrintIt := (RLCTe.PageNumber = 1) and (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prCabecalho);
   if (FResumoCanhoto) then
     rllResumoCanhotoCTe.Caption := getTextoResumoCanhoto
   else
@@ -1048,15 +1047,15 @@ begin
   rlb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_01_Recibo_AereoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_01_Recibo_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-  PrintBand := (RLCTe.PageNumber = 1) and (FCTe.Ide.modal = mdAereo);
+  PrintIt := (RLCTe.PageNumber = 1) and (FCTe.Ide.modal = mdAereo);
 
   rlb_01_Recibo_Aereo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_02_CabecalhoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   strChaveContingencia: string;
   vStringStream: TStringStream;
@@ -1104,9 +1103,9 @@ begin
   rllNumCte.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [RLCTe.rlPrinter.PageCount]);
-  rllEmissao.Caption      := FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
+  rllEmissao.Caption      := FormatDateTimeBr(FCTe.Ide.dhEmi);
   rlbCodigoBarras.Caption := Copy(FCTe.InfCTe.Id, 4, 44);
-  rllChave.Caption        := CTeUtil.FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  rllChave.Caption        := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
 
   if not FExpandirLogoMarca then
   begin
@@ -1204,10 +1203,10 @@ begin
       rllVariavel1.Enabled := False;
       RLBarcode1.Enabled := True;
 
-      strChaveContingencia := CTeUtil.GerarChaveContingencia(FCTe);
+      strChaveContingencia := FACBrCTe.GerarChaveContingencia(FCTe);
       RLBarcode1.Caption := strChaveContingencia;
       rllDescricao.Caption := 'DADOS DO CT-E';
-      rllProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
+      rllProtocolo.Caption := FormatarChaveAcesso(strChaveContingencia);
     end;
   end;
 
@@ -1217,21 +1216,21 @@ begin
     rllVariavel1.Enabled := False;
     RLBarcode1.Enabled := True;
 
-    strChaveContingencia := CTeUtil.GerarChaveContingencia(FCTe);
+    strChaveContingencia := FACBrCTe.GerarChaveContingencia(FCTe);
     RLBarcode1.Caption := strChaveContingencia;
     rllDescricao.Caption := 'DADOS DO CT-E';
-    rllProtocolo.Caption := CTeUtil.FormatarChaveContingencia(strChaveContingencia);
+    rllProtocolo.Caption := FormatarChaveAcesso(strChaveContingencia);
   end;
 
   rllInscSuframa.Caption := FCTe.Dest.ISUF;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_03_DadosDACTeBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
   inherited;
-  PrintBand := RLCTe.PageNumber = 1;
+  PrintIt := RLCTe.PageNumber = 1;
 
   rllNatOperacao.Caption := FormatFloat('0000', FCTe.Ide.CFOP) + ' - ' + FCTe.Ide.natOp;
   rllOrigPrestacao.Caption := FCTe.Ide.xMunIni + ' - ' + FCTe.Ide.UFIni + ' - ' + FormatFloat('000', FCTe.Ide.cMunIni);
@@ -1243,7 +1242,7 @@ begin
   rllEnderecoRemet2.Caption := FCTe.Rem.EnderReme.xCpl + ' - ' + FCTe.Rem.EnderReme.xBairro;
   rllCEPRemet.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
   rllMunRemet.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
-  rllCnpjRemet.Caption := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+  rllCnpjRemet.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
   rllPaisRemet.Caption := FCTe.Rem.EnderReme.xPais;
   rllInscEstRemet.Caption := FCTe.Rem.IE;
   rllFoneRemet.Caption := FormatarFone(FCTe.Rem.fone);
@@ -1254,7 +1253,7 @@ begin
   rllEnderecoDest2.Caption := FCTe.Dest.EnderDest.xCpl + ' - ' + FCTe.Dest.EnderDest.xBairro;
   rllCEPDest.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
   rllMunDest.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
-  rllCnpjDest.Caption := FormatarCNPJCPF(FCTe.Dest.CNPJCPF);
+  rllCnpjDest.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
   rllPaisDest.Caption := FCTe.Dest.EnderDest.xPais;
   rllInscEstDest.Caption := FCTe.Dest.IE;
   rllFoneDest.Caption := FormatarFone(FCTe.Dest.fone);
@@ -1267,7 +1266,7 @@ begin
     rllEnderecoExped2.Caption := FCTe.Exped.EnderExped.xCpl + ' - ' + FCTe.Exped.EnderExped.xBairro;
     rllCEPExped.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
     rllMunExped.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
-    rllCnpjExped.Caption := FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
+    rllCnpjExped.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
     rllPaisExped.Caption := FCTe.Exped.EnderExped.xPais;
     rllInscEstExped.Caption := FCTe.Exped.IE;
     rllFoneExped.Caption := FormatarFone(FCTe.Exped.fone);
@@ -1281,7 +1280,7 @@ begin
     rllEnderecoReceb2.Caption := FCTe.Receb.EnderReceb.xCpl + ' - ' + FCTe.Receb.EnderReceb.xBairro;
     rllCEPReceb.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
     rllMunReceb.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
-    rllCnpjReceb.Caption := FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
+    rllCnpjReceb.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
     rllPaisReceb.Caption := FCTe.Receb.EnderReceb.xPais;
     rllInscEstReceb.Caption := FCTe.Receb.IE;
     rllFoneReceb.Caption := FormatarFone(FCTe.Receb.fone);
@@ -1297,7 +1296,7 @@ begin
           ' - ' + FCTe.Rem.EnderReme.xCpl + ' - ' + FCTe.Rem.EnderReme.xBairro;
         rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
         rllMunToma.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
-        rllCnpjToma.Caption := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+        rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
         rllPaisToma.Caption := FCTe.Rem.EnderReme.xPais;
         rllInscEstToma.Caption := FCTe.Rem.IE;
         rllFoneToma.Caption := FormatarFone(FCTe.Rem.fone);
@@ -1309,7 +1308,7 @@ begin
           ' - ' + FCTe.Exped.EnderExped.xCpl + ' - ' + FCTe.Exped.EnderExped.xBairro;
         rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
         rllMunToma.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
-        rllCnpjToma.Caption := FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
+        rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
         rllPaisToma.Caption := FCTe.Exped.EnderExped.xPais;
         rllInscEstToma.Caption := FCTe.Exped.IE;
         rllFoneToma.Caption := FormatarFone(FCTe.Exped.fone);
@@ -1321,7 +1320,7 @@ begin
           ' - ' + FCTe.Receb.EnderReceb.xCpl + ' - ' + FCTe.Receb.EnderReceb.xBairro;
         rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
         rllMunToma.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
-        rllCnpjToma.Caption := FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
+        rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
         rllPaisToma.Caption := FCTe.Receb.EnderReceb.xPais;
         rllInscEstToma.Caption := FCTe.Receb.IE;
         rllFoneToma.Caption := FormatarFone(FCTe.Receb.fone);
@@ -1333,7 +1332,7 @@ begin
           ' - ' + FCTe.Dest.EnderDest.xCpl + ' - ' + FCTe.Dest.EnderDest.xBairro;
         rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
         rllMunToma.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
-        rllCnpjToma.Caption := FormatarCNPJCPF(FCTe.Dest.CNPJCPF);
+        rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
         rllPaisToma.Caption := FCTe.Dest.EnderDest.xPais;
         rllInscEstToma.Caption := FCTe.Dest.IE;
         rllFoneToma.Caption := FormatarFone(FCTe.Dest.fone);
@@ -1349,7 +1348,7 @@ begin
         ' - ' + FCTe.Ide.Toma4.EnderToma.xCpl + ' - ' + FCTe.Ide.Toma4.EnderToma.xBairro;
       rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
       rllMunToma.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
-      rllCnpjToma.Caption := FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
+      rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
       rllPaisToma.Caption := FCTe.Ide.Toma4.EnderToma.xPais;
       rllInscEstToma.Caption := FCTe.Ide.Toma4.IE;
       rllFoneToma.Caption := FormatarFone(FCTe.Ide.Toma4.fone);
@@ -1364,13 +1363,13 @@ begin
   rllOutrasCaracCarga.Caption := FCTe.InfCarga.xOutCat;
 {$ENDIF}
 {$IFDEF PL_103}
-  rllVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vMerc);
+  rllVlrTotalMerc.Caption := FormatarValor(msk15x2, FCTe.InfCarga.vMerc);
 {$ENDIF}
 {$IFDEF PL_104}
-  rllVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.InfCarga.vCarga);
+  rllVlrTotalMerc.Caption := FormatarValor(msk15x2, FCTe.InfCarga.vCarga);
 {$ENDIF}
 {$IFDEF PL_200}
-  rllVlrTotalMerc.Caption := CTeUtil.FormatarValor(msk15x2, FCTe.infCTeNorm.infCarga.vCarga);
+  rllVlrTotalMerc.Caption := FormatarValor(msk15x2, FCTe.infCTeNorm.infCarga.vCarga);
 {$ENDIF}
 
   rlmQtdUnidMedida1.Lines.Clear;
@@ -1401,43 +1400,43 @@ begin
    begin
     //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid of
-          uM3: rlmQtdUnidMedida4.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          uM3: rlmQtdUnidMedida4.Lines.Add(FormatarValor(msk6x3,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga));
           uKg: begin
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BRUTO'
-                then rlmQtdUnidMedida1.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                then rlmQtdUnidMedida1.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
-                then rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga))
-                else rlmQtdUnidMedida3.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                else rlmQtdUnidMedida3.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga));
                end;
          uTON: begin
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BRUTO'
-                then rlmQtdUnidMedida1.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                then rlmQtdUnidMedida1.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
-                then rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000))
-                else rlmQtdUnidMedida3.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+                else rlmQtdUnidMedida3.Lines.Add(FormatarValor(msk6x3,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000));
                end;
-     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatarValor(msk6x3,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uLITROS:  rlmQtdUnidMedida5.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+     uLITROS:  rlmQtdUnidMedida5.Lines.Add(FormatarValor(msk6x3,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(FormatarValor(msk6x3,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
     end;
    end;
@@ -1463,23 +1462,23 @@ begin
       0,3,6,9:
         begin
           rlmCompNome1.Lines.Add(FCTe.vPrest.comp[i].xNome);
-          rlmCompValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+          rlmCompValor1.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
         end;
       1,4,7,10:
         begin
           rlmCompNome2.Lines.Add(FCTe.vPrest.comp[i].xNome);
-          rlmCompValor2.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+          rlmCompValor2.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
         end;
       2,5,8,11:
         begin
           rlmCompNome3.Lines.Add(FCTe.vPrest.comp[i].xNome);
-          rlmCompValor3.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+          rlmCompValor3.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
         end;
     end;
   end;
 
-  rllVlrTotServico.Caption := CTeUtil.FormatarValor(msk13x2, FCTe.vPrest.vTPrest);
-  rllVlrTotReceber.Caption := CTeUtil.FormatarValor(msk13x2, FCTe.vPrest.vRec);
+  rllVlrTotServico.Caption := FormatarValor(msk13x2, FCTe.vPrest.vTPrest);
+  rllVlrTotReceber.Caption := FormatarValor(msk13x2, FCTe.vPrest.vRec);
 
   rllSitTrib.Caption := CSTICMSToStr(FCTe.Imp.ICMS.SituTrib)+'-'+
                         CSTICMSToStrTagPosText(FCTe.Imp.ICMS.SituTrib);
@@ -1488,47 +1487,47 @@ begin
   begin
     //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.InfCarga.InfQ.Items[i].cUnid of
-      uM3: rlmQtdUnidMedida4.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+      uM3: rlmQtdUnidMedida4.Lines.Add(FormatarValor(msk6x3,
           FCTe.InfCarga.InfQ.Items[i].qCarga));
       uKg:
       begin
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BRUTO' then
-          rlmQtdUnidMedida1.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida1.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BASE DE CALCULO' then
-          rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BC' then
-          rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga))
         else
-          rlmQtdUnidMedida3.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida3.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga));
       end;
       uTON:
       begin
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BRUTO' then
-          rlmQtdUnidMedida1.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida1.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BASE DE CALCULO' then
-          rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BC' then
-          rlmQtdUnidMedida2.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000))
         else
-          rlmQtdUnidMedida3.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+          rlmQtdUnidMedida3.Lines.Add(FormatarValor(msk6x3,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000));
       end;
-      uUNIDADE: rlmQtdUnidMedida5.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+      uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatarValor(msk6x3,
           FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-      uLITROS: rlmQtdUnidMedida5.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+      uLITROS: rlmQtdUnidMedida5.Lines.Add(FormatarValor(msk6x3,
           FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-      uMMBTU: rlmQtdUnidMedida5.Lines.Add(CTeUtil.FormatarValor(msk6x3,
+      uMMBTU: rlmQtdUnidMedida5.Lines.Add(FormatarValor(msk6x3,
           FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
     end;
   end;
@@ -1554,23 +1553,23 @@ begin
       0, 3, 6, 9:
       begin
         rlmCompNome1.Lines.Add(FCTe.vPrest.comp[i].xNome);
-        rlmCompValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+        rlmCompValor1.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
       end;
       1, 4, 7, 10:
       begin
         rlmCompNome2.Lines.Add(FCTe.vPrest.comp[i].xNome);
-        rlmCompValor2.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+        rlmCompValor2.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
       end;
       2, 5, 8, 11:
       begin
         rlmCompNome3.Lines.Add(FCTe.vPrest.comp[i].xNome);
-        rlmCompValor3.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
+        rlmCompValor3.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.comp[i].vComp));
       end;
     end;
   end;
 
-  rllVlrTotServico.Caption := CTeUtil.FormatarValor(msk13x2, FCTe.vPrest.vTPrest);
-  rllVlrTotReceber.Caption := CTeUtil.FormatarValor(msk13x2, FCTe.vPrest.vRec);
+  rllVlrTotServico.Caption := FormatarValor(msk13x2, FCTe.vPrest.vTPrest);
+  rllVlrTotReceber.Caption := FormatarValor(msk13x2, FCTe.vPrest.vRec);
 
   rllSitTrib.Caption := CSTICMSToStr(FCTe.Imp.ICMS.SituTrib) + '-' +
     CSTICMSToStrTagPosText(FCTe.Imp.ICMS.SituTrib);
@@ -1581,22 +1580,22 @@ begin
     cst00:
       begin
         rllRedBaseCalc.Caption := '';
-        rllBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST00.vBC);
-//        rllAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST00.pICMS);
-        rllAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST00.pICMS);
-        rllVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST00.vICMS);
+        rllBaseCalc.Caption    := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST00.vBC);
+//        rllAliqICMS.Caption    := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST00.pICMS);
+        rllAliqICMS.Caption    := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST00.pICMS);
+        rllVlrICMS.Caption     := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST00.vICMS);
         rllICMS_ST.Caption     := '';
       end;
     cst20:
       begin
-//        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pRedBC);
-        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.pRedBC);
-        rllBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST20.vBC);
-//        rllAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pICMS);
-        rllAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.pICMS);
-        rllVlrICMS.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.vICMS);
+//        rllRedBaseCalc.Caption := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pRedBC);
+        rllRedBaseCalc.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.pRedBC);
+        rllBaseCalc.Caption    := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST20.vBC);
+//        rllAliqICMS.Caption    := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST20.pICMS);
+        rllAliqICMS.Caption    := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.pICMS);
+        rllVlrICMS.Caption     := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.vICMS);
         rllICMS_ST.Caption     := '';
-        // CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.vICMS);
+        // FormatarValor(msk4x2, FCTe.Imp.ICMS.CST20.vICMS);
       end;
     cst40:
       begin
@@ -1633,32 +1632,32 @@ begin
     cst80:
       begin
         rllRedBaseCalc.Caption := '';
-        rllBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST80.vBC);
-//        rllAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST80.pICMS);
-        rllAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST80.pICMS);
-        rllVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST80.vICMS);
-        rllICMS_ST.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST80.vCred);
+        rllBaseCalc.Caption    := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST80.vBC);
+//        rllAliqICMS.Caption    := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST80.pICMS);
+        rllAliqICMS.Caption    := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST80.pICMS);
+        rllVlrICMS.Caption     := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST80.vICMS);
+        rllICMS_ST.Caption     := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST80.vCred);
       end;
     cst81:
       begin
-//        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pRedBC);
-        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST81.pRedBC);
-        rllBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vBC);
-//        rllAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pICMS);
-        rllAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST81.pICMS);
-        rllVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vICMS);
+//        rllRedBaseCalc.Caption := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pRedBC);
+        rllRedBaseCalc.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST81.pRedBC);
+        rllBaseCalc.Caption    := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vBC);
+//        rllAliqICMS.Caption    := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST81.pICMS);
+        rllAliqICMS.Caption    := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST81.pICMS);
+        rllVlrICMS.Caption     := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vICMS);
         rllICMS_ST.Caption     := '';
-        // CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vICMS);
+        // FormatarValor(msk9x2, FCTe.Imp.ICMS.CST81.vICMS);
       end;
     cst90:
       begin
-//        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pRedBC);
-        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.pRedBC);
-        rllBaseCalc.Caption    := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST90.vBC);
-//        rllAliqICMS.Caption    := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pICMS);
-        rllAliqICMS.Caption    := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.pICMS);
-        rllVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.CST90.vICMS);
-        rllICMS_ST.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.vCred);
+//        rllRedBaseCalc.Caption := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pRedBC);
+        rllRedBaseCalc.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.pRedBC);
+        rllBaseCalc.Caption    := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST90.vBC);
+//        rllAliqICMS.Caption    := FormatarValor(mskAliq, FCTe.Imp.ICMS.CST90.pICMS);
+        rllAliqICMS.Caption    := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.pICMS);
+        rllVlrICMS.Caption     := FormatarValor(msk9x2, FCTe.Imp.ICMS.CST90.vICMS);
+        rllICMS_ST.Caption     := FormatarValor(msk4x2, FCTe.Imp.ICMS.CST90.vCred);
       end;
   end;
 {$ELSE}
@@ -1668,18 +1667,18 @@ begin
     cst00:
     begin
       rllRedBaseCalc.Caption := '';
-      rllBaseCalc.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS00.vBC);
-      rllAliqICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.pICMS);
-      rllVlrICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.vICMS);
+      rllBaseCalc.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS00.vBC);
+      rllAliqICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.pICMS);
+      rllVlrICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS00.vICMS);
       rllICMS_ST.Caption := '';
     end;
     cst20:
     begin
-      //        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS20.pRedBC);
-      rllRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pRedBC);
-      rllBaseCalc.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS20.vBC);
-      rllAliqICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pICMS);
-      rllVlrICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.vICMS);
+      //        rllRedBaseCalc.Caption := FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS20.pRedBC);
+      rllRedBaseCalc.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pRedBC);
+      rllBaseCalc.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS20.vBC);
+      rllAliqICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.pICMS);
+      rllVlrICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS20.vICMS);
       rllICMS_ST.Caption := '';
     end;
     cst40:
@@ -1717,30 +1716,30 @@ begin
     cst60:
     begin
       rllRedBaseCalc.Caption := '';
-      rllBaseCalc.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
-      rllAliqICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
-      //        rllVlrICMS.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
+      rllBaseCalc.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vBCSTRet);
+      rllAliqICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS60.pICMSSTRet);
+      //        rllVlrICMS.Caption     := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
       rllVlrICMS.Caption := '';
-      //        rllICMS_ST.Caption     := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vCred);
-      rllICMS_ST.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
+      //        rllICMS_ST.Caption     := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vCred);
+      rllICMS_ST.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS60.vICMSSTRet);
     end;
     cst90:
     begin
-      //        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS90.pRedBC);
-      rllRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pRedBC);
-      rllBaseCalc.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
-      rllAliqICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
-      rllVlrICMS.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
-      //        rllICMS_ST.Caption     := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.vCred);
+      //        rllRedBaseCalc.Caption := FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMS90.pRedBC);
+      rllRedBaseCalc.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pRedBC);
+      rllBaseCalc.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vBC);
+      rllAliqICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.pICMS);
+      rllVlrICMS.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
+      //        rllICMS_ST.Caption     := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.vCred);
       rllICMS_ST.Caption := '';
     end;
     cstICMSOutraUF:
     begin
-      //        rllRedBaseCalc.Caption := CTeUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
-      rllRedBaseCalc.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
-      rllBaseCalc.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
-      rllAliqICMS.Caption := CTeUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
-      rllVlrICMS.Caption := CTeUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
+      //        rllRedBaseCalc.Caption := FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
+      rllRedBaseCalc.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
+      rllBaseCalc.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
+      rllAliqICMS.Caption := FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
+      rllVlrICMS.Caption := FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
       rllICMS_ST.Caption := '';
     end;
     cstICMSSN:
@@ -1755,7 +1754,7 @@ begin
 {$ENDIF}
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_04_DadosNotaFiscalBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_04_DadosNotaFiscalBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -1764,7 +1763,7 @@ begin
   rlb_04_DadosNotaFiscal.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcSubstituto);
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_05_ComplementoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_05_ComplementoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 {$IFNDEF PL_200}
 var
   i: integer;
@@ -1789,7 +1788,7 @@ begin
 
 {$IFDEF PL_200}
   rlmComplChave1.Lines.Add(FCTe.InfCTeComp.Chave);
-  rlmComplValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.vPrest.vTPrest));
+  rlmComplValor1.Lines.Add(FormatarValor(msk10x2, FCTe.vPrest.vTPrest));
 {$ELSE}
   for i := 0 to (FCTe.InfCTeComp.Count - 1) do
   begin
@@ -1797,25 +1796,25 @@ begin
       0..4:
       begin
         rlmComplChave1.Lines.Add(FCTe.InfCTeComp[i].Chave);
-        rlmComplValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.InfCTeComp[i].vPresComp.vTPrest));
+        rlmComplValor1.Lines.Add(FormatarValor(msk10x2, FCTe.InfCTeComp[i].vPresComp.vTPrest));
       end;
       5..9:
       begin
         rlmComplChave2.Lines.Add(FCTe.InfCTeComp[i].Chave);
-        rlmComplValor2.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.InfCTeComp[i].vPresComp.vTPrest));
+        rlmComplValor2.Lines.Add(FormatarValor(msk10x2, FCTe.InfCTeComp[i].vPresComp.vTPrest));
       end;
     end;
   end;
 {$ENDIF}
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_06_ValorPrestacaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_06_ValorPrestacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i : Integer;
 begin
@@ -1851,7 +1850,7 @@ begin
   end;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_09_ObsBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_09_ObsBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -1941,7 +1940,7 @@ begin
     rlsQuadro08.Height := rlmObs.Lines.Count * 11 + 20;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_10_ModRodFracionadoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_10_ModRodFracionadoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -1991,7 +1990,7 @@ begin
   end;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot103BeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot103BeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
@@ -2008,7 +2007,7 @@ begin
    rpDestinatario:   rllResponsavel.Caption := 'DESTINATÁRIO';
    rpTomadorServico: rllResponsavel.Caption := 'TOMADOR DO SERVIÇO';
   end;
-  rllValorTotal.Caption := CTeUtil.FormatarValor(msk13x2, FCTe.Rodo.valePed.vTValePed);
+  rllValorTotal.Caption := FormatarValor(msk13x2, FCTe.Rodo.valePed.vTValePed);
 {$ENDIF}
 
   rlmTipo.Lines.Clear;
@@ -2083,7 +2082,7 @@ begin
 {$ENDIF}
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104BeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104BeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
@@ -2168,7 +2167,7 @@ begin
 {$ENDIF}
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_12_ModAereoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_12_ModAereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -2206,7 +2205,7 @@ begin
   rllDadosRetira.Caption := FCte.Ide.xdetretira;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_13_ModAquaviarioBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_13_ModAquaviarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i, j: integer;
 begin
@@ -2271,7 +2270,7 @@ begin
 
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_14_ModFerroviarioBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_14_ModFerroviarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -2279,7 +2278,7 @@ begin
 
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_15_ModDutoviarioBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_15_ModDutoviarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -2287,7 +2286,7 @@ begin
 
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_16_DadosExcEmitenteBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_16_DadosExcEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin
@@ -2333,7 +2332,7 @@ begin
   rlmObsFisco.Lines.EndUpdate;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_17_SistemaBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_17_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := RLCTe.PageNumber = 1;
@@ -2347,7 +2346,7 @@ begin
     rllblSistema.Caption := '';
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_18_ReciboBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_18_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintBand := (RLCTe.PageNumber = 1);
@@ -2372,7 +2371,7 @@ begin
   end;
 end;
 
-procedure TfrmDACTeRLRetrato.rlb_06_ProdutosPerigososBeforePrint(Sender: TRLCustomBand; var PrintBand: boolean);
+procedure TfrmDACTeRLRetrato.rlb_06_ProdutosPerigososBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i: integer;
 begin

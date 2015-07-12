@@ -188,16 +188,16 @@ type
     rlSysData1: TRLSysteminfo;
     rllblSistema: TRLLabel;
     procedure rlEventoBeforePrint(Sender: TObject; var PrintReport: boolean);
-    procedure rlb_01_TituloBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_02_DocumentoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_05_EventoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_03_EmitenteBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_04_TomadorBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_06_DescricaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_07_CorrecaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_08_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_09_ItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
-    procedure rlb_10_SistemaBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+    procedure rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_06_DescricaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     procedure Itens;
   public
@@ -241,7 +241,7 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -274,7 +274,7 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -293,7 +293,7 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -321,7 +321,7 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -342,7 +342,7 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -415,7 +415,7 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_06_DescricaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_06_DescricaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
@@ -467,26 +467,26 @@ begin
   end;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
   PrintBand := False;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   // Imprime os Documentos Originários se o Tipo de MDFe for Normal
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   rlb_09_Itens.Enabled := True;
 end;
 
-procedure TfrmMDFeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TrlCustomBand; var PrintBand: boolean);
+procedure TfrmMDFeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 

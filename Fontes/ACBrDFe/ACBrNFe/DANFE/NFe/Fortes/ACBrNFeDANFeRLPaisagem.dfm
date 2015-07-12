@@ -1,7 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 199
   Top = 209
-  VertScrollBar.Position = 107
   Caption = 'frlDANFeRLPaisagem'
   ClientHeight = 693
   ClientWidth = 1133
@@ -10,7 +9,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -107
     Width = 1123
     Height = 794
     Margins.LeftMargin = 7.000000000000000000
@@ -25,7 +23,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     PrintDialog = False
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
-    ExplicitTop = -107
     ExplicitWidth = 1123
     ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage

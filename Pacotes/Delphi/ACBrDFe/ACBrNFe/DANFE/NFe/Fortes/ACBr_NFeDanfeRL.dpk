@@ -84,7 +84,9 @@ requires
   {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg,{$ENDIF} //XE6
   {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg,{$ENDIF} //XE7
   {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg,{$ENDIF} //XE8
-  ACBr_NFe;
+  vclimg,
+  ACBr_NFe,
+  dsnap;
 
 contains
   ACBrNFeDANFeRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas' {frlDANFeRL},

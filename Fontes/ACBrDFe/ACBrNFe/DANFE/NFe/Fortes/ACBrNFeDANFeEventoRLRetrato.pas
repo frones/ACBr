@@ -54,7 +54,7 @@ uses
   {$ELSE}
     Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, jpeg, {$ENDIF}
+  RLReport, RLFilters, RLPDFFilter, {$IFDEF BORLAND} XMLIntf, XMLDoc, {$ENDIF}
   pcnConversao, RLBarcode, ACBrNFeDANFeEventoRL;
 
 type

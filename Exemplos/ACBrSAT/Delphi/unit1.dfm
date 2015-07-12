@@ -12,7 +12,7 @@ object Form1: TForm1
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = True
-  Position = poMainFormCenter
+  Position = poDesktopCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -224,7 +224,7 @@ object Form1: TForm1
         Top = 15
         Width = 619
         Height = 183
-        ActivePage = tsRede
+        ActivePage = Impressao
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
@@ -306,7 +306,7 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label6: TLabel
-            Left = 385
+            Left = 377
             Top = 55
             Width = 44
             Height = 13
@@ -395,9 +395,9 @@ object Form1: TForm1
             OnClick = cbxUTF8Change
           end
           object cbxAmbiente: TComboBox
-            Left = 385
+            Left = 377
             Top = 72
-            Width = 220
+            Width = 120
             Height = 21
             Style = csDropDownList
             Anchors = [akLeft, akTop, akRight]
@@ -405,8 +405,8 @@ object Form1: TForm1
             TabOrder = 9
           end
           object cbxSalvarCFe: TCheckBox
-            Left = 424
-            Top = 120
+            Left = 504
+            Top = 72
             Width = 79
             Height = 19
             Caption = 'Salvar CFes'
@@ -414,6 +414,50 @@ object Form1: TForm1
             State = cbChecked
             TabOrder = 10
             OnClick = cbxSalvarCFeChange
+          end
+          object cbxSalvarCFeCanc: TCheckBox
+            Left = 504
+            Top = 99
+            Width = 100
+            Height = 19
+            Caption = 'Salvar CFeCanc'
+            Checked = True
+            State = cbChecked
+            TabOrder = 11
+            OnClick = cbxSalvarCFeCancChange
+          end
+          object cbxSalvarEnvio: TCheckBox
+            Left = 504
+            Top = 126
+            Width = 82
+            Height = 19
+            Caption = 'Salvar Envio'
+            Checked = True
+            State = cbChecked
+            TabOrder = 12
+            OnClick = cbxSalvarEnvioChange
+          end
+          object cbxSepararPorCNPJ: TCheckBox
+            Left = 377
+            Top = 99
+            Width = 112
+            Height = 19
+            Caption = 'Separar por CNPJ'
+            Checked = True
+            State = cbChecked
+            TabOrder = 13
+            OnClick = cbxSepararPorCNPJChange
+          end
+          object cbxSepararPorMES: TCheckBox
+            Left = 377
+            Top = 126
+            Width = 112
+            Height = 19
+            Caption = 'Separar por MES'
+            Checked = True
+            State = cbChecked
+            TabOrder = 14
+            OnClick = cbxSepararPorMESChange
           end
         end
         object tsDadosEmit: TTabSheet
@@ -893,7 +937,7 @@ object Form1: TForm1
           object GroupBox3: TGroupBox
             Left = 0
             Top = 0
-            Width = 355
+            Width = 284
             Height = 155
             Align = alClient
             Caption = 'Fortes'
@@ -1030,44 +1074,78 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 355
+            Left = 284
             Top = 0
-            Width = 256
+            Width = 327
             Height = 155
             Align = alRight
             Caption = 'EscPOS'
             TabOrder = 1
             DesignSize = (
-              256
+              327
               155)
-            object Label7: TLabel
-              Left = 16
-              Top = 88
-              Width = 79
+            object Label25: TLabel
+              Left = 8
+              Top = 39
+              Width = 35
               Height = 13
-              Anchors = [akTop, akRight]
-              Caption = 'Porta Impressora'
+              Caption = 'Modelo'
               Color = clBtnFace
               ParentColor = False
             end
-            object edtPorta: TEdit
-              Left = 16
-              Top = 105
-              Width = 215
-              Height = 21
-              Anchors = [akTop, akRight]
-              TabOrder = 0
-              Text = '\\127.0.0.1\EPSON'
+            object Label26: TLabel
+              Left = 160
+              Top = 39
+              Width = 25
+              Height = 13
+              Caption = 'Porta'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object Label7: TLabel
+              Left = 221
+              Top = 108
+              Width = 55
+              Height = 13
+              Caption = 'Pag.Codigo'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object Label27: TLabel
+              Left = 8
+              Top = 108
+              Width = 38
+              Height = 13
+              Caption = 'Colunas'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object Label28: TLabel
+              Left = 80
+              Top = 95
+              Width = 41
+              Height = 26
+              Caption = 'Espa'#231'os'#13#10'Linhas'
+              Color = clBtnFace
+              ParentColor = False
+            end
+            object Label29: TLabel
+              Left = 144
+              Top = 95
+              Width = 31
+              Height = 26
+              Caption = 'Linhas'#13#10'Pular'
+              Color = clBtnFace
+              ParentColor = False
             end
             object btSerial: TBitBtn
-              Left = 177
-              Top = 40
-              Width = 54
-              Height = 45
+              Left = 297
+              Top = 53
+              Width = 22
+              Height = 22
               Anchors = [akTop, akRight]
-              Caption = 'Serial'
               ModalResult = 1
-              TabOrder = 1
+              TabOrder = 0
               OnClick = btSerialClick
               Glyph.Data = {
                 36030000424D3603000000000000360000002800000010000000100000000100
@@ -1104,8 +1182,75 @@ object Form1: TForm1
               Width = 85
               Height = 19
               Caption = 'Usar EscPOS'
-              TabOrder = 2
+              TabOrder = 1
               OnClick = cbUsarEscPosClick
+            end
+            object cbxModeloPosPrinter: TComboBox
+              Left = 7
+              Top = 55
+              Width = 146
+              Height = 21
+              Style = csDropDownList
+              Anchors = [akLeft, akTop, akRight]
+              ItemHeight = 13
+              TabOrder = 2
+            end
+            object cbxPorta: TComboBox
+              Left = 159
+              Top = 55
+              Width = 138
+              Height = 21
+              Anchors = [akLeft, akTop, akRight]
+              ItemHeight = 13
+              TabOrder = 3
+            end
+            object cbxPagCodigo: TComboBox
+              Left = 220
+              Top = 124
+              Width = 100
+              Height = 21
+              Style = csDropDownList
+              Anchors = [akLeft, akTop, akRight]
+              ItemHeight = 13
+              TabOrder = 4
+            end
+            object seColunas: TSpinEdit
+              Left = 8
+              Top = 124
+              Width = 49
+              Height = 22
+              MaxValue = 9999
+              MinValue = 0
+              TabOrder = 5
+              Value = 0
+            end
+            object seEspLinhas: TSpinEdit
+              Left = 80
+              Top = 124
+              Width = 49
+              Height = 22
+              MaxValue = 9999
+              MinValue = 0
+              TabOrder = 6
+              Value = 0
+            end
+            object seLinhasPular: TSpinEdit
+              Left = 144
+              Top = 124
+              Width = 49
+              Height = 22
+              MaxValue = 9999
+              MinValue = 0
+              TabOrder = 7
+              Value = 0
+            end
+            object cbImprimir1Linha: TCheckBox
+              Left = 160
+              Top = 16
+              Width = 145
+              Height = 19
+              Caption = 'Imprimir Item em 1 Linha'
+              TabOrder = 8
             end
           end
         end
@@ -1267,6 +1412,8 @@ object Form1: TForm1
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = True
     Config.PaginaDeCodigo = 65001
+    ConfigArquivos.PrefixoArqCFe = 'AD'
+    ConfigArquivos.PrefixoArqCFeCanc = 'ADC'
     Rede.tipoInter = infETHE
     Rede.seg = segNONE
     Rede.tipoLan = lanDHCP
@@ -1280,6 +1427,7 @@ object Form1: TForm1
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    PosPrinter = ACBrPosPrinter1
     Left = 64
     Top = 280
   end
@@ -1301,6 +1449,19 @@ object Form1: TForm1
   end
   object SaveDialog1: TSaveDialog
     Left = 260
+    Top = 280
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    CortaPapel = False
+    Left = 97
     Top = 280
   end
 end

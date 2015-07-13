@@ -45,7 +45,7 @@ Name: brazilianportuguese; MessagesFile: compiler:Languages\BrazilianPortuguese.
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
-Name: firewallopen; Description: "Liberar {#MyAppName} no Firewall do Windows"; GroupDescription: "Firewall:"
+Name: firewallopen; Description: "Liberar {#MyAppName}, porta 3434, no Firewall do Windows"; GroupDescription: "Firewall:"
 
 [Files]
 ; Aplicação

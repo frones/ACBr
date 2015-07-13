@@ -137,6 +137,7 @@ type
     cbCHQPorta: TComboBox;
     cbComandos: TCheckBox;
     cbControlePorta: TCheckBox;
+    cbCortarPapel: TCheckBox;
     cbDISModelo: TComboBox;
     cbDISPorta: TComboBox;
     cbECFModelo: TComboBox;
@@ -894,6 +895,7 @@ type
     procedure btSATAssociaClick(Sender: TObject);
     procedure btSATConfigRedeClick(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
+    procedure cbCortarPapelChange(Sender: TObject);
     procedure cbIgnorarTagsChange(Sender: TObject);
     procedure cbLogCompClick(Sender: TObject);
     procedure cbMonitorarPastaClick(Sender: TObject);
@@ -3101,6 +3103,7 @@ begin
     seLinhasPular.Value     := INI.ReadInteger('PosPrinter', 'LinhasPular', ACBrPosPrinter1.LinhasEntreCupons);
     cbxPagCodigo.ItemIndex  := INI.ReadInteger('PosPrinter', 'PaginaDeCodigo', Integer(ACBrPosPrinter1.PaginaDeCodigo));
     cbControlePorta.Checked := INI.ReadBool('PosPrinter', 'ControlePorta', ACBrPosPrinter1.ControlePorta);
+    cbCortarPapel.Checked   := INI.ReadBool('PosPrinter', 'CortarPapel', ACBrPosPrinter1.CortaPapel);
     cbTraduzirTags.Checked  := INI.ReadBool('PosPrinter', 'TraduzirTags', ACBrPosPrinter1.TraduzirTags);
     cbIgnorarTags.Checked   := INI.ReadBool('PosPrinter', 'IgnorarTags', ACBrPosPrinter1.IgnorarTags);
     edPosPrinterLog.Text    := INI.ReadString('PosPrinter', 'ArqLog', ACBrPosPrinter1.ArqLOG);
@@ -3775,6 +3778,7 @@ begin
     INI.WriteInteger('PosPrinter', 'LinhasPular', seLinhasPular.Value);
     INI.WriteInteger('PosPrinter', 'PaginaDeCodigo', cbxPagCodigo.ItemIndex);
     INI.WriteBool('PosPrinter', 'ControlePorta', cbControlePorta.Checked);
+    INI.WriteBool('PosPrinter', 'CortarPapel', cbCortarPapel.Checked);
     INI.WriteBool('PosPrinter', 'TraduzirTags', cbTraduzirTags.Checked);
     INI.WriteBool('PosPrinter', 'IgnorarTags', cbIgnorarTags.Checked);
     INI.WriteString('PosPrinter', 'ArqLog', edPosPrinterLog.Text);
@@ -6547,6 +6551,7 @@ begin
     ACBrPosPrinter1.EspacoEntreLinhas  := seEspacosLinhas.Value;
     ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
     ACBrPosPrinter1.ControlePorta      := cbControlePorta.Checked;
+    ACBrPosPrinter1.CortaPapel         := cbCortarPapel.Checked;
     ACBrPosPrinter1.PaginaDeCodigo     := TACBrPosPaginaCodigo(cbxPagCodigo.ItemIndex);
     ACBrPosPrinter1.IgnorarTags        := cbIgnorarTags.Checked;
     ACBrPosPrinter1.TraduzirTags       := cbTraduzirTags.Checked;
@@ -6596,6 +6601,11 @@ end;
 procedure TFrmACBrMonitor.cbControlePortaChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbCortarPapelChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbTraduzirTagsChange(Sender: TObject);

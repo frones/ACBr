@@ -674,10 +674,10 @@ var
   i, b, h, iAlturaCanhoto: integer;
 begin
   // Carrega logomarca
-  if (FLogo <> '') and FileExists(FLogo) { *Converted from FileExists* } then
+  if (FLogo <> '') and FileExists(FLogo) then
     rliLogo.Picture.LoadFromFile(FLogo);
 
-  if (FMarcaDagua <> '') and FileExists(FMarcaDagua) { *Converted from FileExists* } then
+  if (FMarcaDagua <> '') and FileExists(FMarcaDagua) then
   begin
     rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
   end;

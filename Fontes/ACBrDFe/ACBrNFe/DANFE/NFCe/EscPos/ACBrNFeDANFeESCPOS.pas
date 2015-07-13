@@ -563,7 +563,9 @@ begin
 
   // pular linhas e cortar o papel
   if FPosPrinter.CortaPapel then
-    FPosPrinter.Buffer.Add('</corte_total>');
+    FPosPrinter.Buffer.Add('</corte_total>')
+  else
+    FPosPrinter.Buffer.Add('</pular_linhas>')
 end;
 
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;

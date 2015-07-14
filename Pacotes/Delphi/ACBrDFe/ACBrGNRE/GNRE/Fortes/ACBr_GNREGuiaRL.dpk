@@ -34,6 +34,7 @@ requires
   ACBr_Capicom,
   ACBr_GNRE,
   designide,
+  dsnap, 
   {$IFDEF VER150} FortesReportCE_Win32_D7_vcl, vcljpg;{$ENDIF} // D7
   {$IFDEF VER200} RLibWinD2009, vclimg;{$ENDIF} // D2009
   {$IFDEF VER210} RLibWinD2010, vclimg;{$ENDIF} // D2010
@@ -42,9 +43,9 @@ requires
   {$IFDEF VER240} FortesReportCE_Win32_DXE3_vcl, vclimg;{$ENDIF} //XE3
   {$IFDEF VER250} FortesReportCE_Win32_DXE4_vcl, vclimg;{$ENDIF} //XE4
   {$IFDEF VER260} FortesReportCE_Win32_DXE5_vcl, vclimg;{$ENDIF} //XE5
-  {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, dsnap, vclimg,{$ENDIF} //XE6
-  {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, dsnap, vclimg;{$ENDIF} //XE7
-  {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, dsnap, vclimg;{$ENDIF} //XE8
+  {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg;{$ENDIF} //XE6
+  {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg;{$ENDIF} //XE7
+  {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg;{$ENDIF} //XE8
 contains
   ACBrGNREGuiaFRFortes in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFRFortes.pas' {ACBrGNREGuiaFR_Fortes};
 

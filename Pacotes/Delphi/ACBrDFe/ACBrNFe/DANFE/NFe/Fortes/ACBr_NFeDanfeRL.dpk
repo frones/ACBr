@@ -84,7 +84,6 @@ requires
   {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg,{$ENDIF} //XE6
   {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg,{$ENDIF} //XE7
   {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg,{$ENDIF} //XE8
-  vclimg,
   ACBr_NFe,
   dsnap;
 

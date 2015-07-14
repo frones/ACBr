@@ -92,19 +92,23 @@ begin
     begin
 //      dmDanfse.frxPDFExport.FileName := PathPDF+ dmDanfse.NFSe.Numero+dmDanfse.NFSe.CodigoVerificacao+'.pdf';
 
-          with TACBrNFSe( ACBrNFSe ).NotasFiscais.Items[i] do
-          begin
-               if TACBrNFSe( ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe then
-                  NomeArqXML := GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
-                                                Nfse.DataEmissao,
-                                                Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
-                                                StrToIntDef(Nfse.Numero, 0))
-               else
-                  NomeArqXML := NFSe.Numero;
-          end;
+      with TACBrNFSe( ACBrNFSe ).NotasFiscais.Items[i] do
+      begin
+         if TACBrNFSe( ACBrNFSe ).Configuracoes.Arquivos.NomeLongoNFSe then
+            NomeArqXML := GerarNomeNFSe(UFparaCodigo(Nfse.PrestadorServico.Endereco.UF),
+                                          Nfse.DataEmissao,
+                                          Nfse.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                          StrToIntDef(Nfse.Numero, 0))
+         else
+            NomeArqXML := NFSe.Numero;
+      end;
 
-       dmDanfse.frxPDFExport.FileName := PathPDF+ NomeArqXML+'.pdf';
-       dmDanfse.frxReport.Export(dmDanfse.frxPDFExport);
+      dmDanfse.frxPDFExport.FileName := PathPDF+ NomeArqXML+'.pdf';
+
+      if not DirectoryExists(ExtractFileDir(dmDanfse.frxPDFExport.FileName)) then
+        ForceDirectories(ExtractFileDir(dmDanfse.frxPDFExport.FileName));
+
+      dmDanfse.frxReport.Export(dmDanfse.frxPDFExport);
     end;
   end;
 end;

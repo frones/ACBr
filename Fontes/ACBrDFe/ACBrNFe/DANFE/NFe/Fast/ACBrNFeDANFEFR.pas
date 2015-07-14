@@ -415,6 +415,10 @@ begin
     NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 
     FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procEventoNFe.pdf';
+
+    if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
+      ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));
+
     FdmDanfe.frxReport.Export(FdmDanfe.frxPDFExport);
   end;
 end;

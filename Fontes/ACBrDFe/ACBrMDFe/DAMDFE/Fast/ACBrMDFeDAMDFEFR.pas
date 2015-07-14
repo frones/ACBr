@@ -158,9 +158,13 @@ begin
       dmDAMDFe.frxPDFExport.Subject    := TITULO_PDF;
       dmDAMDFe.frxPDFExport.Keywords   := TITULO_PDF;
       OldShowDialog := dmDAMDFe.frxPDFExport.ShowDialog;
-	  try
+	    try
         dmDAMDFe.frxPDFExport.ShowDialog := False;
         dmDAMDFe.frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '.pdf';
+
+        if not DirectoryExists(ExtractFileDir(dmDAMDFe.frxPDFExport.FileName)) then
+          ForceDirectories(ExtractFileDir(dmDAMDFe.frxPDFExport.FileName));
+
         dmDAMDFe.frxReport.Export(dmDAMDFe.frxPDFExport);
       finally
         dmDAMDFe.frxPDFExport.ShowDialog := OldShowDialog;
@@ -196,10 +200,12 @@ begin
     dmDAMDFe.frxPDFExport.Subject    := TITULO_PDF;
     dmDAMDFe.frxPDFExport.Keywords   := TITULO_PDF;
     OldShowDialog := dmDAMDFe.frxPDFExport.ShowDialog;
-	try
+   	try
       dmDAMDFe.frxPDFExport.ShowDialog := False;
 
       dmDAMDFe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + TITULO_PDF + '.pdf';
+      if not DirectoryExists(ExtractFileDir(dmDAMDFe.frxPDFExport.FileName)) then
+        ForceDirectories(ExtractFileDir(dmDAMDFe.frxPDFExport.FileName));
       dmDAMDFe.frxReport.Export(dmDAMDFe.frxPDFExport);
     finally
       dmDAMDFe.frxPDFExport.ShowDialog := OldShowDialog;

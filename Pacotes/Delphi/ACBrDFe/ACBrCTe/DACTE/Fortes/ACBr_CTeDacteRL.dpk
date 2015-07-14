@@ -72,7 +72,18 @@ package ACBr_CTeDacteRL;
 requires
   ACBr_CTe,
   ACBr_Comum,
-  FortesReportCE_Win32_DXE8_vcl,
+  {$IFDEF VER150} FortesReportCE_Win32_D7_vcl, vcljpg,{$ENDIF} // D7
+  {$IFDEF VER180} RLibWinD2007vcl, vcljpg,{$ENDIF} // D2007  
+  {$IFDEF VER200} RLibWinD2009, vclimg,{$ENDIF} // D2009
+  {$IFDEF VER210} RLibWinD2010, vclimg,{$ENDIF} // D2010
+  {$IFDEF VER220} FortesReportCE_Win32_DXE_vcl, vclimg,{$ENDIF} // XE
+  {$IFDEF VER230} FortesReportCE_Win32_DXE2_vcl, vclimg,{$ENDIF} //XE2
+  {$IFDEF VER240} FortesReportCE_Win32_DXE3_vcl, vclimg,{$ENDIF} //XE3
+  {$IFDEF VER250} FortesReportCE_Win32_DXE4_vcl, vclimg,{$ENDIF} //XE4
+  {$IFDEF VER260} FortesReportCE_Win32_DXE5_vcl, vclimg,{$ENDIF} //XE5
+  {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg,{$ENDIF} //XE6
+  {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg,{$ENDIF} //XE7
+  {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg,{$ENDIF} //XE8  
   vclimg,
   dsnap;
 

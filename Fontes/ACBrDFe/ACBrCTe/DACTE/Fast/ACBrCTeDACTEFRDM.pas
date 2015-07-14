@@ -973,7 +973,7 @@ begin
     FieldDefs.Add('forPag', ftString, 50);
     FieldDefs.Add('Mod_', ftString, 2);
     FieldDefs.Add('Serie', ftString, 3);
-    FieldDefs.Add('NCT', ftString, 9);
+    FieldDefs.Add('NCT', ftString, 11);
     FieldDefs.Add('dhEmi', ftDateTime);
     FieldDefs.Add('TpImp', ftString, 1);
     FieldDefs.Add('TpEmis', ftString, 50);

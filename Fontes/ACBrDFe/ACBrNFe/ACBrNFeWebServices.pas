@@ -553,6 +553,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -2940,8 +2941,8 @@ begin
   FPLayout := LayDistDFeInt;
   FPArqEnv := 'con-dist-dfe';
   FPArqResp := 'dist-dfe';
-  FPBodyElement := 'nfeDistDFeInteresse';
-  FPHeaderElement := '';
+//  FPBodyElement := 'nfeDistDFeInteresse';
+//  FPHeaderElement := '';
 end;
 
 destructor TDistribuicaoDFe.Destroy;
@@ -2996,6 +2997,32 @@ begin
   finally
     DistDFeInt.Free;
   end;
+end;
+
+procedure TDistribuicaoDFe.DefinirEnvelopeSoap;
+var
+  Texto: String;
+begin
+  { sobrescrito, pois não utiliza o grupo Header }
+
+  {$IFDEF UNICODE}
+   Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
+  {$ELSE}
+   Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
+  {$ENDIF}
+
+  Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
+
+  Texto := Texto +   '<' + FPSoapVersion + ':Body>';
+  Texto := Texto +     '<nfeDistDFeInteresse xmlns="' + FPServico + '">';
+  Texto := Texto +       '<nfeDadosMsg>';
+  Texto := Texto +         FPDadosMsg;
+  Texto := Texto +       '</nfeDadosMsg>';
+  Texto := Texto +     '</nfeDistDFeInteresse>';
+  Texto := Texto +   '</' + FPSoapVersion + ':Body>';
+  Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
+
+  FPEnvelopeSoap := Texto;
 end;
 
 function TDistribuicaoDFe.TratarResposta: Boolean;

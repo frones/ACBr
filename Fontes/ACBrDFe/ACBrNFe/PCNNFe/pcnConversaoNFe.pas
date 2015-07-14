@@ -69,7 +69,7 @@ type
                 schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
                 schconsReciNFe, schconsSitNFe, schconsStatServ, schconsCad,
                 schenvEvento, schconsNFeDest, schdownloadNFe, schretEnviNFe,
-                schdistDFeInt);
+                schdistDFeInt, scheventoEPEC);
 
   TStatusACBrNFe = (stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
@@ -136,7 +136,7 @@ begin
      'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
      'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
      'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', '',
-     'NFeDistribuicaoDFe', 'RecepcaoEvento'],
+     'NFeDistribuicaoDFe', 'EventoEPEC'],
     [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
       LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
       LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
@@ -151,7 +151,7 @@ begin
    'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
    'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
    'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', '',
-   'NFeDistribuicaoDFe', 'RecepcaoEvento'],
+   'NFeDistribuicaoDFe', 'EventoEPEC'],
   [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
     LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
     LayNFeCCe, LayNFeEvento, LayNFeEventoAN, LayNFeConsNFeDest,
@@ -170,13 +170,13 @@ begin
     LayNfeStatusServico:  Result := schconsStatServ;
     LayNfeCadastro:       Result := schconsCad;
     LayNFeEvento,
-    LayNFeEventoAN,
-    LayNFCeEPEC:          Result := schenvEvento;
+    LayNFeEventoAN:       Result := schenvEvento;
     LayNFeConsNFeDest:    Result := schconsNFeDest;
     LayNFeDownloadNFe:    Result := schdownloadNFe;
     LayNfeAutorizacao:    Result := schNfe;
     LayNfeRetAutorizacao: Result := schretEnviNFe;
     LayDistDFeInt:        Result := schdistDFeInt;
+    LayNFCeEPEC:          Result := scheventoEPEC;
   else
     Result := schErro;
   end;

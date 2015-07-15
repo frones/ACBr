@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2015
+[*] Ajustes no MDFe para Fortes Report, compilando normalmente agora.
+    por: Regys Silveira
+
 25/05/2015
 [*] Melhorias no DAMDFE em Fortes Report.
     por: André J. da Silva

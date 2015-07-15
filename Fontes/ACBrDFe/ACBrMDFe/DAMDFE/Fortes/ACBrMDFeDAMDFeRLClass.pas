@@ -56,7 +56,7 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrMDFe, ACBrMDFeUtil,
+  StrUtils, Dialogs, ACBrUtil, ACBrMDFe,
   ACBrMDFeDAMDFeRLRetrato, ACBrMDFeDAEventoRL, ACBrMDFeDAEventoRLRetrato;
 
 var

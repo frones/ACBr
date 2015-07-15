@@ -122,7 +122,7 @@ begin
         , ImprimirHoraSaida
         , ExpandirLogoMarca
         , ImprimirHoraSaida_Hora
-        , ResumoCanhoto
+        , FResumoCanhoto
         , Fax
         , NumCopias
         , Sistema
@@ -145,7 +145,7 @@ begin
       , ImprimirHoraSaida
       , ExpandirLogoMarca
       , ImprimirHoraSaida_Hora
-      , ResumoCanhoto
+      , FResumoCanhoto
       , Fax
       , NumCopias
       , Sistema
@@ -206,7 +206,7 @@ begin
         , ImprimirHoraSaida
         , ExpandirLogoMarca
         , ImprimirHoraSaida_Hora
-        , ResumoCanhoto
+        , FResumoCanhoto
         , Fax
         , NumCopias
         , Sistema
@@ -232,7 +232,7 @@ begin
       , ImprimirHoraSaida
       , ExpandirLogoMarca
       , ImprimirHoraSaida_Hora
-      , ResumoCanhoto
+      , FResumoCanhoto
       , Fax
       , NumCopias
       , Sistema

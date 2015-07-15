@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2015
+[*] Ajustes no CT-e para Fortes Report, compilando normalmente agora.
+    por: Regys Silveira
+
 06/05/2015
 [*] Criado uma nova definição do Envelope Soap para a consulta ao cadastro de
     contribuinte.

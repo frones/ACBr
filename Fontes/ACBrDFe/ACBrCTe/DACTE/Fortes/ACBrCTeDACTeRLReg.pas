@@ -49,9 +49,9 @@ interface
 {$H+}
 
 uses
-  SysUtils, Classes, ACBrCTeDACTeRLClass,
+  SysUtils, Classes, ACBrCTeDACTeRLClass
   {$IFDEF FPC}
-   LResources
+  , LResources
   {$ENDIF} ;
 
 procedure Register;

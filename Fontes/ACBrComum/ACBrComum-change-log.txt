@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/07/2015       (por: Regys Silveira)
+-- ACBrUtil --
+[*] Adicionado overload de FormatFloatBr com parametro de mascara pre-definida.
+
 Data: 06/07/2015       (por: DSA)
 -- ACBrUtil --
 [*] Ajuste para não carregar inpout32 e BlockInput na inicialização do sistema

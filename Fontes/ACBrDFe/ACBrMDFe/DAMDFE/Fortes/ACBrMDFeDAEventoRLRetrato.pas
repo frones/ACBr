@@ -41,7 +41,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLPDFFilter, RLBarcode, pcnConversao,
-  ACBrMDFeDAEventoRL;
+  ACBrMDFeDAEventoRL, RLFilters;
 
 type
 
@@ -207,7 +207,7 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrDFeUtil, ACBrMDFeUtil;
+  StrUtils, DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador;
 
 {$R *.dfm}
 
@@ -278,19 +278,19 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject;
 begin
   inherited;
 
-  PrintBand := False;
-
   if FMDFe <> nil then
   begin
-    PrintBand := True;
+    PrintIt := True;
 
     rllModelo.Caption := FMDFe.ide.modelo;
     rllSerie.Caption := IntToStr(FMDFe.ide.serie);
     rllNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-    rllEmissao.Caption := FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
+    rllEmissao.Caption := FormatDateTimeBr(FMDFe.Ide.dhEmi);
     //SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), rliBarCode);
-    rllChave.Caption := MFormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
-  end;
+    rllChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  end
+  else
+    PrintIt := False;
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -310,14 +310,14 @@ begin
       taProducao: rllTipoAmbiente.Caption := 'PRODUÇÃO';
       taHomologacao: rllTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
     end;
-    rllEmissaoEvento.Caption := FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
+    rllEmissaoEvento.Caption := FormatDateTimeBr(InfEvento.dhEvento);
     rllTipoEvento.Caption := InfEvento.TipoEvento;
     rllDescricaoEvento.Caption := InfEvento.DescEvento;
     rllSeqEvento.Caption := IntToStr(InfEvento.nSeqEvento);
     rllStatus.Caption := IntToStr(RetInfEvento.cStat) + ' - ' +
       RetInfEvento.xMotivo;
     rllProtocolo.Caption := RetInfEvento.nProt + ' ' +
-      FormatDateTime(DateTimeToStr(RetInfEvento.dhRegEvento));
+      FormatDateTimeBr(RetInfEvento.dhRegEvento);
   end;
 end;
 
@@ -325,14 +325,14 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TObject; 
 begin
   inherited;
 
-  PrintBand := False;
+  printIt := False;
 
   if FMDFe <> nil then
   begin
-    PrintBand := True;
+    printIt := True;
 
     rllRazaoEmitente.Caption := FMDFe.emit.xNome;
-    rllCNPJEmitente.Caption := FormatarCNPJCPF(FMDFe.emit.CNPJ);
+    rllCNPJEmitente.Caption := FormatarCNPJouCPF(FMDFe.emit.CNPJ);
     rllEnderecoEmitente.Caption := FMDFe.emit.EnderEmit.xLgr + ', ' + FMDFe.emit.EnderEmit.nro;
     rllBairroEmitente.Caption := FMDFe.emit.EnderEmit.xBairro;
     rllCEPEmitente.Caption := FormatarCEP(FormatFloat('00000000', FMDFe.emit.EnderEmit.CEP));
@@ -346,12 +346,12 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject; v
 begin
   inherited;
 
-  PrintBand := False;
+  printIt := False;
 
   if FMDFe <> nil then
   begin
     (*
-    PrintBand := True;
+    printIt := True;
     if FMDFe.Ide.Toma4.xNome = ''
      then begin
       case FMDFe.Ide.Toma03.Toma of
@@ -419,7 +419,7 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_06_DescricaoBeforePrint(Sender: TObject;
 begin
   inherited;
 
-  PrintBand := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+  printIt := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
     (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
     (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor) or
     (FEventoMDFe.InfEvento.tpAmb = taHomologacao);
@@ -471,7 +471,7 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TObject; 
 begin
   inherited;
 
-  PrintBand := False;
+  printIt := False;
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);

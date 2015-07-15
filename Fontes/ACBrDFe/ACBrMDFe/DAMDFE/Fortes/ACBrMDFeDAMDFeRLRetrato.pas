@@ -41,7 +41,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter, pcnConversao,
-  pmdfeConversao, ACBrMDFeDAMDFeRL, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFeRLClass;
+  pmdfeConversaoMDFe, ACBrMDFeDAMDFeRL, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFeRLClass,
+  RLFilters;
 
 type
 
@@ -196,7 +197,7 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, pmdfeMDFe, ACBrUtil, ACBrDFeUtil, ACBrMDFeUtil;
+  StrUtils, DateUtils, pmdfeMDFe, ACBrUtil, ACBrDFeUtil, ACBrValidador;
 
 {$R *.dfm}
 
@@ -287,7 +288,7 @@ begin
 
   RLBarcode1.Caption := Copy ( FMDFe.InfMDFe.Id, 5, 44 );
   //SetBarCodeImage( Copy ( FMDFe.InfMDFe.Id, 5, 44 ), rliBarCode );
-  rllChave.Caption := MFormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  rllChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
 
   if FMDFe.ide.tpEmis = teNormal then
   begin
@@ -305,14 +306,14 @@ begin
     rllProtocolo.Font.Size := 5;
     rllProtocolo.Font.Style := [];
     rllProtocolo.Caption := 'Impressão em contingência. Obrigatória a autorização em 24 horas' +
-      ' após esta impressão (' + FormatDateTime(DateTimeToStr(Now)) + ')';
+      ' após esta impressão (' + FormatDateTimeBr(Now) + ')';
   end;
 
   rllModelo.Caption := FMDFe.Ide.modelo;
   rllSerie.Caption := FormatFloat('000', FMDFe.Ide.serie);
   rllNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
   rllPageNumber.Caption := format('%2.2d', [RLMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
-  rllEmissao.Caption := FormatDateTime(DateTimeToStr(FMDFe.Ide.dhEmi));
+  rllEmissao.Caption := FormatDateTimeBr(FMDFe.Ide.dhEmi);
   rllUFCarrega.Caption := FMDFe.Ide.UFIni;
 
   rllCIOT.Caption := '';
@@ -560,12 +561,12 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('CHAVE1').AsString := 'CT-e          ' +
-            MFormatarChaveAcesso(chCTe, True);
+            FormatarChaveAcesso(chCTe);
         end
         else
         begin
           cdsItens.FieldByName('CHAVE2').AsString := 'CT-e          ' +
-            MFormatarChaveAcesso(chCTe, True);
+            FormatarChaveAcesso(chCTe);
           cdsItens.Post;
         end;
         Inc(nItem);
@@ -581,13 +582,13 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('CHAVE1').AsString := 'CT            ' +
-            FormatarCNPJCPF(FMDFe.emit.CNPJ) + ' - ' +
+            FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - ' +
             IntToStr(serie) + '-' + nCT;
         end
         else
         begin
           cdsItens.FieldByName('CHAVE2').AsString := 'CT            ' +
-            FormatarCNPJCPF(FMDFe.emit.CNPJ) + ' - ' +
+            FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - ' +
             IntToStr(serie) + '-' + nCT;
           cdsItens.Post;
         end;
@@ -604,12 +605,12 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('CHAVE1').AsString := 'NF-e          ' +
-            MFormatarChaveAcesso(chNFe, True);
+            FormatarChaveAcesso(chNFe);
         end
         else
         begin
           cdsItens.FieldByName('CHAVE2').AsString := 'NF-e          ' +
-            MFormatarChaveAcesso(chNFe, True);
+            FormatarChaveAcesso(chNFe);
           cdsItens.Post;
         end;
         Inc(nItem);
@@ -625,13 +626,13 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('CHAVE1').AsString := 'NF            ' +
-            FormatarCNPJCPF(CNPJ) + ' - ' +
+            FormatarCNPJouCPF(CNPJ) + ' - ' +
             IntToStr(serie) + '-' + IntToStr(nNF);
         end
         else
         begin
           cdsItens.FieldByName('CHAVE2').AsString := 'NF            ' +
-            FormatarCNPJCPF(CNPJ) + ' - ' +
+            FormatarCNPJouCPF(CNPJ) + ' - ' +
             IntToStr(serie) + '-' + IntToStr(nNF);
           cdsItens.Post;
         end;
@@ -648,12 +649,12 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('CHAVE1').AsString := 'MDF-e         ' +
-            MFormatarChaveAcesso(chMDFe, True);
+            FormatarChaveAcesso(chMDFe);
         end
         else
         begin
           cdsItens.FieldByName('CHAVE1').AsString := 'MDF-e         ' +
-            MFormatarChaveAcesso(chMDFe, True);
+            FormatarChaveAcesso(chMDFe);
           cdsItens.Post;
         end;
         Inc(nItem);

@@ -78,6 +78,7 @@ const
 
 type
   TSetOfChars = set of AnsiChar;
+  TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
 
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
@@ -169,7 +170,8 @@ Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String;
 function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
 function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
   AFormat: String = ''): String;
-function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String;
+function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
+function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
 function FloatMask(const DecimalDigits: SmallInt = 2): String;
 Function StringToFloat( NumString : String ) : Double ;
 Function StringToFloatDef( const NumString : String ;
@@ -3219,6 +3221,24 @@ begin
   finally
     ALista.EndUpdate;
   end;
+end;
+
+function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
+var
+  Mask: String;
+begin
+  case AFormat of
+    msk4x2  : Mask := '#,##0.00';
+    msk7x2  : Mask := '#,###,##0.00';
+    msk9x2  : Mask := '###,###,##0.00';
+    msk10x2 : Mask := '#,###,###,##0.00';
+    msk13x2 : Mask := '#,###,###,###,##0.00';
+    msk15x2 : Mask := '###,###,###,###,##0.00';
+    msk6x3  : Mask := '###,##0.000';
+    mskAliq : Mask := '#00%';
+  end;
+
+  Result := FormatFloatBr(AValue, Mask);
 end;
 
 //*****************************************************************************************

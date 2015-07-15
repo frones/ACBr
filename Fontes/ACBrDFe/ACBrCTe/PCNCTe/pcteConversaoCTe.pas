@@ -84,7 +84,6 @@ type
   TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
   TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
   TpcteLotacao = (ltNao, ltSim);
-  TpcteMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
   TpcteDirecao = (drNorte, drLeste, drSul, drOeste);
   TpcteTipoNavegacao = (tnInterior, tnCabotagem);
   TpcteTipoTrafego = (ttProprio, ttMutuo, ttRodoferroviario, ttRodoviario);
@@ -163,9 +162,6 @@ function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 function TpLotacaoToStr(const t: TpcteLotacao): string;
 function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
 
-function TpMaskToStrText(const t: TpcteMask): string;
-function StrToTpMask(out ok: boolean; const s: string): TpcteMask;
-
 function TpDirecaoToStr(const t: TpcteDirecao): string;
 function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
 
@@ -202,7 +198,7 @@ function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
 implementation
 
 uses
-  typinfo;
+  typinfo, ACBrUtil;
 
 function LayOutToServico(const t: TLayOutCTe): String;
 begin
@@ -333,18 +329,6 @@ end;
 function tpCTToStrText(const t: TpcteTipoCTe): string;
 begin
   result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
-end;
-
-function TpMaskToStrText(const t: TpcteMask): string;
-begin
-  result := EnumeradoToStr(t, ['#,##0.00', '#,###,##0.00', '###,###,##0.00', '#,###,###,##0.00', '#,###,###,###,##0.00', '###,###,###,###,##0.00', '###,##0.000', '#00%'],
-    [msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq]);
-end;
-
-function StrToTpMask(out ok: boolean; const s: string): TpcteMask;
-begin
-  result := StrToEnumerado(ok, s, ['#,##0.00', '#,###,##0.00', '#,###,###,##0.00', '#,###,###,###,##0.00', '###,###,###,###,##0.00', '###,##0.000', '#00%'],
-    [msk4x2, msk7x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq]);
 end;
 
 function tpforPagToStr(const t: TpcteFormaPagamento): string;

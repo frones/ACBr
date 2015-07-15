@@ -40,7 +40,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, pmdfeMDFe, ACBrMDFe, ACBrMDFeUtil,
+  Dialogs, ExtCtrls, pmdfeMDFe, ACBrMDFe,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 

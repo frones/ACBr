@@ -219,7 +219,7 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil;
+  DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe;
 
 {$R *.dfm}
 
@@ -271,16 +271,16 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject; 
 begin
   inherited;
 
-  PrintBand := False;
+  PrintIt := False;
 
   if FCTe <> nil then
   begin
-    PrintBand := True;
+    PrintIt := True;
 
     rllModelo.Caption := FCTe.ide.modelo;
     rllSerie.Caption := IntToStr(FCTe.ide.serie);
     rllNumCTe.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
-    rllEmissao.Caption := FormatDateTime(DateTimeToStr(FCTe.Ide.dhEmi));
+    rllEmissao.Caption := FormatDateTimeBr(FCTe.Ide.dhEmi);
     SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), rliBarCode);
     rllChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
   end;
@@ -303,14 +303,14 @@ begin
       taProducao: rllTipoAmbiente.Caption := 'PRODUÇÃO';
       taHomologacao: rllTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
     end;
-    rllEmissaoEvento.Caption := FormatDateTime(DateTimeToStr(InfEvento.dhEvento));
+    rllEmissaoEvento.Caption := FormatDateTimeBr(InfEvento.dhEvento);
     rllTipoEvento.Caption := InfEvento.TipoEvento;
     rllDescricaoEvento.Caption := InfEvento.DescEvento;
     rllSeqEvento.Caption := IntToStr(InfEvento.nSeqEvento);
     rllStatus.Caption := IntToStr(RetInfEvento.cStat) + ' - ' +
       RetInfEvento.xMotivo;
     rllProtocolo.Caption := RetInfEvento.nProt + ' ' +
-      FormatDateTime(DateTimeToStr(RetInfEvento.dhRegEvento));
+      FormatDateTimeBr(RetInfEvento.dhRegEvento);
   end;
 end;
 
@@ -318,14 +318,14 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TObject; v
 begin
   inherited;
 
-  PrintBand := False;
+  PrintIt := False;
 
   if FCTe <> nil then
   begin
-    PrintBand := True;
+    PrintIt := True;
 
     rllRazaoEmitente.Caption := FCTe.emit.xNome;
-    rllCNPJEmitente.Caption := FormatarCNPJCPF(FCTe.emit.CNPJ);
+    rllCNPJEmitente.Caption := FormatarCNPJouCPF(FCTe.emit.CNPJ);
     rllEnderecoEmitente.Caption := FCTe.emit.EnderEmit.xLgr + ', ' + FCTe.emit.EnderEmit.nro;
     rllBairroEmitente.Caption := FCTe.emit.EnderEmit.xBairro;
     rllCEPEmitente.Caption := FormatarCEP(FormatFloat('00000000', FCTe.emit.EnderEmit.CEP));
@@ -339,11 +339,11 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject; va
 begin
   inherited;
 
-  PrintBand := False;
+  PrintIt := False;
 
   if FCTe <> nil then
   begin
-    PrintBand := True;
+    PrintIt := True;
 
     if FCTe.Ide.Toma4.xNome = '' then
     begin
@@ -351,7 +351,7 @@ begin
         tmRemetente:
         begin
           rllRazaoTomador.Caption := FCTe.Rem.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
+          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
           rllBairroTomador.Caption := FCTe.Rem.EnderReme.xBairro;
           rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
@@ -362,7 +362,7 @@ begin
         tmExpedidor:
         begin
           rllRazaoTomador.Caption := FCTe.Exped.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJCPF(FCTe.Exped.CNPJCPF);
+          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
           rllBairroTomador.Caption := FCTe.Exped.EnderExped.xBairro;
           rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
@@ -373,7 +373,7 @@ begin
         tmRecebedor:
         begin
           rllRazaoTomador.Caption := FCTe.Receb.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJCPF(FCTe.Receb.CNPJCPF);
+          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
           rllBairroTomador.Caption := FCTe.Receb.EnderReceb.xBairro;
           rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
@@ -384,7 +384,7 @@ begin
         tmDestinatario:
         begin
           rllRazaoTomador.Caption := FCTe.Dest.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJCPF(FCTe.Dest.CNPJCPF);
+          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
           rllBairroTomador.Caption := FCTe.Dest.EnderDest.xBairro;
           rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
@@ -397,7 +397,7 @@ begin
     else
     begin
       rllRazaoTomador.Caption := FCTe.Ide.Toma4.xNome;
-      rllCNPJTomador.Caption := FormatarCNPJCPF(FCTe.Ide.Toma4.CNPJCPF);
+      rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
       rllEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
       rllBairroTomador.Caption := FCTe.Ide.Toma4.EnderToma.xBairro;
       rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
@@ -412,7 +412,7 @@ procedure TfrmCTeDAEventoRLRetrato.rlb_06_CondicoesBeforePrint(Sender: TObject; 
 begin
   inherited;
 
-  PrintBand := (FEventoCTe.InfEvento.tpEvento = teCCe) or
+  PrintIt := (FEventoCTe.InfEvento.tpEvento = teCCe) or
     (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
     (FEventoCTe.InfEvento.tpEvento = teEPEC) or
     (FEventoCTe.InfEvento.tpAmb = taHomologacao);
@@ -479,7 +479,7 @@ var
 begin
   inherited;
 
-  PrintBand := FEventoCTe.InfEvento.tpEvento = teCCe;
+  PrintIt := FEventoCTe.InfEvento.tpEvento = teCCe;
 
   rlmNumItemAlterado.Lines.Clear;
   rlmGrupoAlterado.Lines.Clear;

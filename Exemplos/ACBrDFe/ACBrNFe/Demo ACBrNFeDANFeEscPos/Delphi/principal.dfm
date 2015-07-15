@@ -270,15 +270,13 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 16
   end
   object ACBrNFe: TACBrNFe
-    Configuracoes.Geral.PathSalvar = 'C:\Program Files (x86)\Embarcadero\RAD Studio\7.0\bin\'
-    Configuracoes.Geral.ExibirErroSchema = True
+    Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.RetirarAcentos = True
     Configuracoes.Geral.ValidarDigest = False
+    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.IntervaloTentativas = 0
-    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
+    Configuracoes.WebServices.QuebradeLinha = '|'
     DANFE = ACBrNFeDANFeESCPOS
     Left = 140
     Top = 405
@@ -307,14 +305,11 @@ object frmPrincipal: TfrmPrincipal
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     ViaConsumidor = True
-    Device.Baud = 115200
-    ConfigBarras.MostrarCodigo = True
-    ConfigBarras.LarguraLinha = 2
-    ConfigBarras.Altura = 100
-    MarcaImpressora = iDaruma
-    LinhasEntreCupons = 5
+    TributosSeparadamente = False
+    PosCanhoto = prCabecalho
+    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
     Left = 235
@@ -327,5 +322,19 @@ object frmPrincipal: TfrmPrincipal
     Title = 'Abrir XML'
     Left = 335
     Top = 405
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    CortaPapel = False
+    ControlePorta = True
+    Left = 235
+    Top = 455
   end
 end

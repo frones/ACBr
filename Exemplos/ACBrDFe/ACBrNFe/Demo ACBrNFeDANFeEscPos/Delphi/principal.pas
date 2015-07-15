@@ -8,7 +8,7 @@ uses
   ACBrNFe, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Spin, Buttons;
+  Dialogs, StdCtrls, Spin, Buttons, ACBrPosPrinter, ACBrBase, ACBrDFe;
 
 type
   TfrmPrincipal = class(TForm)
@@ -40,6 +40,7 @@ type
     edtCSCNumero: TEdit;
     Label7: TLabel;
     chkAbrirGaveta: TCheckBox;
+    ACBrPosPrinter1: TACBrPosPrinter;
     procedure FormCreate(Sender: TObject);
     procedure btnNFCeImprimirDANFEClick(Sender: TObject);
     procedure btnProcurarLogomarcaClick(Sender: TObject);
@@ -116,20 +117,20 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
-  ModeloImpressora: TACBrNFeMarcaImpressora;
+  ModeloImpressora: TACBrPosPrinterModelo;
 begin
   edtLogomarca.Clear;
 
   // lista de impressoras suportadas
   cbxModelo.Items.Clear ;
-  For ModeloImpressora := Low(TACBrNFeMarcaImpressora) to High(TACBrNFeMarcaImpressora) do
-    cbxModelo.Items.Add(GetEnumName(TypeInfo(TACBrNFeMarcaImpressora), Integer(ModeloImpressora)));
+  For ModeloImpressora := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+    cbxModelo.Items.Add(GetEnumName(TypeInfo(TACBrPosPrinterModelo), Integer(ModeloImpressora)));
 
   // portas COM disponíveis
   cbxPorta.Items.BeginUpdate;
   try
     cbxPorta.Items.Clear;
-    ACBrNFeDANFeESCPOS.Device.AcharPortasSeriais(cbxPorta.Items);
+    ACBrPosPrinter1.Device.AcharPortasSeriais(cbxPorta.Items);
   finally
     cbxPorta.Items.EndUpdate;
   end;
@@ -139,26 +140,24 @@ end;
 
 procedure TfrmPrincipal.ConfigurarComponente;
 begin
-  ACBrNFe.Configuracoes.Geral.IdToken := edtCSCId.Text;
-  ACBrNFe.Configuracoes.Geral.Token   := edtCSCNumero.Text;
+  ACBrNFe.Configuracoes.Geral.IdCSC := edtCSCId.Text;
+  ACBrNFe.Configuracoes.Geral.CSC   := edtCSCNumero.Text;
 
-  ACBrNFeDANFeESCPOS.MarcaImpressora       := TACBrNFeMarcaImpressora(cbxModelo.ItemIndex);
-  ACBrNFeDANFeESCPOS.Device.Porta          := cbxPorta.Text;
-  ACBrNFeDANFeESCPOS.Device.Baud           := StrToInt(cbxVelocidade.Text);
+  ACBrPosPrinter1.Modelo        := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+  ACBrPosPrinter1.Device.Porta  := cbxPorta.Text;
+  ACBrPosPrinter1.Device.Baud   := StrToInt(cbxVelocidade.Text);
+  ACBrPosPrinter1.IgnorarTags   := chkIgnorarTagsFormatacao.Checked;
+  ACBrPosPrinter1.ControlePorta := True; // True faz com que o componente abra e feche a porta conforme a necessidade automaticamente
+
   ACBrNFeDANFeESCPOS.ImprimeEmUmaLinha     := chkImprimirItem1Linha.Checked;
   ACBrNFeDANFeESCPOS.ImprimeDescAcrescItem := chkImprimirDescAcresItem.Checked;
-  ACBrNFeDANFeESCPOS.IgnorarTagsFormatacao := chkIgnorarTagsFormatacao.Checked;
+
 end;
 
 procedure TfrmPrincipal.btnImprimirRelatorioClick(Sender: TObject);
 begin
   ConfigurarComponente;
-  ACBrNFeDANFeESCPOS.Device.Ativar;
-  try
-    ACBrNFeDANFeESCPOS.ImprimirRelatorio(txtMemo.Lines);
-  finally
-    ACBrNFeDANFeESCPOS.Device.Desativar;
-  end;
+  ACBrNFeDANFeESCPOS.ImprimirRelatorio(txtMemo.Lines);
 end;
 
 procedure TfrmPrincipal.btnProcurarLogomarcaClick(Sender: TObject);
@@ -191,18 +190,10 @@ begin
 
     // impressão da NFC-e
     ConfigurarComponente;
-    ACBrNFeDANFeESCPOS.Device.Ativar;
-    try
-      ACBrNFe.DANFE.ViaConsumidor := chkViaConsumidor.Checked;
-      ACBrNFe.DANFE.ImprimeItens  := not chkDanfeResumido.Checked;
+    ACBrNFe.DANFE.ViaConsumidor := chkViaConsumidor.Checked;
+    ACBrNFe.DANFE.ImprimirItens := not chkDanfeResumido.Checked;
 
-      ACBrNFe.NotasFiscais[0].Imprimir;
-
-      if chkAbrirGaveta.Checked then
-        ACBrNFeDANFeESCPOS.AbrirGaveta;
-    finally
-      ACBrNFeDANFeESCPOS.Device.Desativar;
-    end;
+    ACBrNFe.NotasFiscais[0].Imprimir;
   end;
 end;
 
@@ -238,12 +229,7 @@ begin
 
   // impressão do evento
   ConfigurarComponente;
-  ACBrNFeDANFeESCPOS.Device.Ativar;
-  try
-    ACBrNFeDANFeESCPOS.ImprimirEVENTO;
-  finally
-    ACBrNFeDANFeESCPOS.Device.Desativar;
-  end;
+  ACBrNFeDANFeESCPOS.ImprimirEVENTO;
 end;
 
 end.

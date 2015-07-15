@@ -175,9 +175,8 @@ var
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrValidador,
-  ACBrUtil, ACBrDFeUtil,
-  ACBrNFSeNotasFiscais;
+  StrUtils, DateUtils,
+  ACBrUtil, ACBrValidador, ACBrDFeUtil, ACBrNFSeNotasFiscais;
 
 {$R *.dfm}
 
@@ -287,28 +286,28 @@ begin
   inherited;
 
   qrlAliquotaPIS.Caption    := StringReplace(qrlAliquotaPIS.Caption,    'qrlAliquotaPIS',
-        ((FormatFloat('#,##0.00', FNFSe.Servico.Valores.AliquotaPis)) + '%'), [rfReplaceAll,rfIgnoreCase]);
+        ((FormatFloatBr(msk4x2, FNFSe.Servico.Valores.AliquotaPis)) + '%'), [rfReplaceAll,rfIgnoreCase]);
   qrlAliquotaCOFINS.Caption := StringReplace(qrlAliquotaCOFINS.Caption, 'qrlAliquotaCOFINS',
-        ((FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCofins)) + '%'), [rfReplaceAll,rfIgnoreCase]);
+        ((FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorCofins)) + '%'), [rfReplaceAll,rfIgnoreCase]);
   qrlAliquotaIR.Caption     := StringReplace(qrlAliquotaIR.Caption,     'qrlAliquotaIR',
-        ((FormatFloat('#,##0.00', FNFSe.Servico.Valores.AliquotaIr)) + '%'), [rfReplaceAll,rfIgnoreCase]);
+        ((FormatFloatBr(msk4x2, FNFSe.Servico.Valores.AliquotaIr)) + '%'), [rfReplaceAll,rfIgnoreCase]);
   qrlAliquotaINSS.Caption   := StringReplace(qrlAliquotaINSS.Caption,   'qrlAliquotaINSS',
-        ((FormatFloat('#,##0.00', FNFSe.Servico.Valores.AliquotaInss)) + '%'), [rfReplaceAll,rfIgnoreCase]);
+        ((FormatFloatBr(msk4x2, FNFSe.Servico.Valores.AliquotaInss)) + '%'), [rfReplaceAll,rfIgnoreCase]);
   qrlAliquotaCSLL.Caption   := StringReplace(qrlAliquotaCSLL.Caption,   'qrlAliquotaCSLL',
-        ((FormatFloat('#,##0.00', FNFSe.Servico.Valores.AliquotaCsll)) + '%'), [rfReplaceAll,rfIgnoreCase]);
+        ((FormatFloatBr(msk4x2, FNFSe.Servico.Valores.AliquotaCsll)) + '%'), [rfReplaceAll,rfIgnoreCase]);
 
-  qrlValorPIS.Caption    := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorPis);
-  qrlValorCOFINS.Caption := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCofins);
-  qrlValorIR.Caption     := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorIr);
-  qrlValorINSS.Caption   := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorInss);
-  qrlValorCSLL.Caption   := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCsll);
+  qrlValorPIS.Caption    := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorPis);
+  qrlValorCOFINS.Caption := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorCofins);
+  qrlValorIR.Caption     := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorIr);
+  qrlValorINSS.Caption   := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorInss);
+  qrlValorCSLL.Caption   := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorCsll);
 
-  qrlVlrTotalRPS.Caption := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorServicos);
+  qrlVlrTotalRPS.Caption := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorServicos);
 
-  qrlValorDeducoes.Caption := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorDeducoes);
-  qrlBaseCalculo.Caption   := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.BaseCalculo);
-  qrlAliquota.Caption      := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.Aliquota);
-  qrlVlrISS.Caption        := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorIss);
+  qrlValorDeducoes.Caption := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorDeducoes);
+  qrlBaseCalculo.Caption   := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.BaseCalculo);
+  qrlAliquota.Caption      := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.Aliquota);
+  qrlVlrISS.Caption        := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.Valores.ValorIss);
 
   msg := '';
 
@@ -361,8 +360,8 @@ begin
   qrlItem.Caption := FNFSe.Servico.ItemServico[qntdItensImpressos].Descricao;
 
   qrlQntde.Caption    := FormatFloat('#,##0.00', FNFSe.Servico.ItemServico[qntdItensImpressos].Quantidade);
-  qrlVlrUnit.Caption  := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.ItemServico[qntdItensImpressos].ValorUnitario);
-  qrlVlrTotal.Caption := 'R$ ' + FormatFloat('#,##0.00', FNFSe.Servico.ItemServico[qntdItensImpressos].ValorServicos);
+  qrlVlrUnit.Caption  := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.ItemServico[qntdItensImpressos].ValorUnitario);
+  qrlVlrTotal.Caption := 'R$ ' + FormatFloatBr(msk13x2, FNFSe.Servico.ItemServico[qntdItensImpressos].ValorServicos);
 
   qntdItensImpressos := qntdItensImpressos + 1;
 end;

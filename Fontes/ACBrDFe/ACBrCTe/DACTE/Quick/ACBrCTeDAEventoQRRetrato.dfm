@@ -115,7 +115,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          42.333333333333330000
+          42.333333333333340000
           476.250000000000000000
           63.500000000000000000
           1005.416666666667000000)
@@ -193,7 +193,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
       ForceNewPage = False
       LinkBand = qrb_05_Evento
       Size.Values = (
-        84.666666666666670000
+        84.666666666666680000
         1960.562500000000000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -326,7 +326,7 @@ inherited frmCTeDAEventoQRRetrato: TfrmCTeDAEventoQRRetrato
         Frame.DrawLeft = False
         Frame.DrawRight = False
         Size.Values = (
-          34.395833333333330000
+          34.395833333333340000
           912.812500000000000000
           15.875000000000000000
           132.291666666666700000)

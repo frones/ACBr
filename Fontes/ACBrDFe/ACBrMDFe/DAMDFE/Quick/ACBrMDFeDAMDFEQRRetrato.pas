@@ -208,8 +208,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrValidador,
-  pmdfeMDFe, ACBrUtil, ACBrDFeUtil;
+  StrUtils, DateUtils,
+  ACBrValidador, ACBrUtil, ACBrDFeUtil, pmdfeMDFe;
 
 {$R *.dfm}
 

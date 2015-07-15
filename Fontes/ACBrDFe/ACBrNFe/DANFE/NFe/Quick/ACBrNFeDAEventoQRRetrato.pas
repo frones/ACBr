@@ -216,7 +216,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrDFeUtil, ACBrValidador;
+  ACBrUtil, ACBrDFeUtil, ACBrValidador;
 
 {$R *.dfm}
 
@@ -424,9 +424,9 @@ begin
            if FEventoNFe.RetInfEvento.cStat = 136 then
            begin
              qrmCondicoes.Lines.Add('Destinatário    : ' + FEventoNFe.InfEvento.detEvento.dest.CNPJCPF);
-             qrmCondicoes.Lines.Add('Valor da Nota   : ' + FormatFloat('#0.00', FEventoNFe.InfEvento.detEvento.vNF));
-             qrmCondicoes.Lines.Add('Valor do ICMS   : ' + FormatFloat('#0.00', FEventoNFe.InfEvento.detEvento.vICMS));
-             qrmCondicoes.Lines.Add('Valor do ICMS ST: ' + FormatFloat('#0.00', FEventoNFe.InfEvento.detEvento.vST));
+             qrmCondicoes.Lines.Add('Valor da Nota   : ' + FormatFloatBr(msk13x2, FEventoNFe.InfEvento.detEvento.vNF));
+             qrmCondicoes.Lines.Add('Valor do ICMS   : ' + FormatFloatBr(msk13x2, FEventoNFe.InfEvento.detEvento.vICMS));
+             qrmCondicoes.Lines.Add('Valor do ICMS ST: ' + FormatFloatBr(msk13x2, FEventoNFe.InfEvento.detEvento.vST));
            end
            else
            begin

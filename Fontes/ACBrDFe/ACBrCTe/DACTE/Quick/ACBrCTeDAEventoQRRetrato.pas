@@ -224,8 +224,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrValidador, pcteConversaoCTe,
-  ACBrDFeUtil;
+  StrUtils, DateUtils,
+  ACBrValidador, ACBrUtil, ACBrDFeUtil, pcteConversaoCTe;
 
 {$R *.dfm}
 
@@ -515,9 +515,9 @@ begin
            lblTitulo_06.Caption := 'DESCRIÇÃO';
            qrmCondicoes.Lines.Clear;
            qrmCondicoes.Lines.Add('Motivo do EPEC     : ' + FEventoCTe.InfEvento.detEvento.xJust);
-           qrmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vICMS));
-           qrmCondicoes.Lines.Add('Valor da Prestação : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vTPrest));
-           qrmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloat('#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
+           qrmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloatBr(msk13x2, FEventoCTe.InfEvento.detEvento.vICMS));
+           qrmCondicoes.Lines.Add('Valor da Prestação : ' + FormatFloatBr(msk13x2, FEventoCTe.InfEvento.detEvento.vTPrest));
+           qrmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloatBr(msk13x2, FEventoCTe.InfEvento.detEvento.vCarga));
            qrmCondicoes.Lines.Add('UF de inicio/fim da prestação: ' + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
                                                                       FEventoCTe.InfEvento.detEvento.UFFim);
           end;

@@ -167,8 +167,8 @@ type
 implementation
 
 uses
- StrUtils, DateUtils, ACBrNFe, ACBrValidador,
- ACBrUtil, ACBrDFeUtil, pcnNFe;
+ StrUtils, DateUtils,
+ ACBrUtil, ACBrValidador, ACBrDFeUtil, ACBrNFe, pcnNFe;
 
 {$R *.dfm}
 
@@ -313,7 +313,7 @@ begin
 
                   cdsItens.FieldByName('UNIDADE').AsString := UCom;
                   cdsItens.FieldByName('TOTAL').AsString :=
-                                      FormatFloat('###,###,###,##0.00', vProd);
+                                      FormatFloatBr(msk13x2, vProd);
                   //==============================================================================
                   // Em contato com o pessoal da Receita Estadual, foi informado que Ambos os regimes
                   // trabalham de mesma forma, deferenciando-se apensa em seus códigos
@@ -330,27 +330,27 @@ begin
 
                       if (CST = cst00) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                         end
                       else if (CST = cst10) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                         end
                       else if (CST = cst20) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                         end
                       else if (CST = cst30) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMSST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBCST);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMSST);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMSST);
                         end
                       else if (CST = cst40) or (CST = cst41) or (CST = cst50) then
                         begin
@@ -358,26 +358,26 @@ begin
                         end
                       else if (CST = cst51) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                         end
                       else if (CST = cst60) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBCST);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMSST);
                         end
                       else if (CST = cst70) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                         end
                       else if (CST = cst90) then
                         begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                        end;
 
                       cdsItens.FieldByName('CST').AsString := sCST;
@@ -406,9 +406,9 @@ begin
                         case CSOSN of
                            csosn900:
                            begin
-                              sBCICMS    := FormatFloat('#,##0.00', VBC);
-                              sALIQICMS  := FormatFloat('#,##0.00', PICMS);
-                              sVALORICMS := FormatFloat('#,##0.00', VICMS);
+                              sBCICMS    := FormatFloatBr(msk13x2, VBC);
+                              sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
+                              sVALORICMS := FormatFloatBr(msk13x2, VICMS);
                            end;
                         end;
 
@@ -423,8 +423,8 @@ begin
                   if (CST = ipi00) or (CST = ipi49) or
                      (CST = ipi50) or (CST = ipi99) then
                     begin
-                      sALIQIPI  := FormatFloat('##0.00', PIPI);
-                      sVALORIPI := FormatFloat('##0.00', VIPI);
+                      sALIQIPI  := FormatFloatBr(msk4x2, PIPI);
+                      sVALORIPI := FormatFloatBr(msk13x2, VIPI);
                     end
                 end;
 
@@ -550,20 +550,20 @@ begin
 
   qrmPagDesc.Lines.Add('VALOR TOTAL');
 //  qrmPagValor.Lines.Add(FormatFloat(FNFE.Total.ICMSTot.vNF));
-  qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vProd));
+  qrmPagValor.Lines.Add(FormatFloatBr(msk13x2, FNFE.Total.ICMSTot.vProd));
 
   if FNFE.Total.ICMSTot.vDesc > 0.0
    then begin
      qrmPagDesc.Lines.Add('TOTAL DESCONTOS');
-     qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vDesc));
+     qrmPagValor.Lines.Add(FormatFloatBr(msk13x2, FNFE.Total.ICMSTot.vDesc));
      qrmPagDesc.Lines.Add('TOTAL LIQUIDO');
-     qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vNF));
+     qrmPagValor.Lines.Add(FormatFloatBr(msk13x2, FNFE.Total.ICMSTot.vNF));
    end;
 
   if FvTroco > 0.0
    then begin
      qrmPagDesc.Lines.Add('TROCO');
-     qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FvTroco));
+     qrmPagValor.Lines.Add(FormatFloatBr(msk13x2, FvTroco));
    end;
 
   qrmPagDesc.Lines.Add('FORMA DE PAGAMENTO');
@@ -587,7 +587,7 @@ begin
      fpOutro:           qrmPagDesc.Lines.Add('Outro');
     end;
 
-    qrmPagValor.Lines.Add(FormatFloat('#,##0.00', FNFE.pag.Items[i].vPag));
+    qrmPagValor.Lines.Add(FormatFloatBr(msk13x2, FNFE.pag.Items[i].vPag));
    end;
 end;
 
@@ -601,8 +601,8 @@ begin
   PrintBand := (FNFE.Total.ICMSTot.vTotTrib <> 0);
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   qrlTributos.Caption := 'Val Aprox. dos Tributos: ' +
-                         FormatFloat('#,##0.00', FNFE.Total.ICMSTot.vTotTrib) +
-                         '(' + FormatFloat('#,##0.00', Perc) + '%)(Fonte: IBPT)';
+                         FormatFloatBr(msk13x2, FNFE.Total.ICMSTot.vTotTrib) +
+                         '(' + FormatFloatBr(msk4x2, Perc) + '%)(Fonte: IBPT)';
 end;
 
 procedure TfqrDANFeQRNFCeA4.qrb05a_InfComplementarBeforePrint(

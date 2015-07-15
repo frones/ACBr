@@ -218,8 +218,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrValidador,
-  ACBrDFeUtil;
+  StrUtils, DateUtils,
+  ACBrValidador, ACBrDFeUtil;
 
 {$R *.dfm}
 

@@ -194,6 +194,9 @@ begin
     ACBrNFe.DANFE.ImprimirItens := not chkDanfeResumido.Checked;
 
     ACBrNFe.NotasFiscais[0].Imprimir;
+
+    if chkAbrirGaveta.Checked then
+      ACBrPosPrinter1.AbrirGaveta;
   end;
 end;
 

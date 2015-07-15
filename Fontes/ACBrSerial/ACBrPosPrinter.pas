@@ -297,6 +297,7 @@ type
 
     procedure PularLinhas(NumLinhas: Integer = 0);
     procedure CortarPapel(Parcial: Boolean = False);
+    procedure AbrirGaveta;
 
     function LerStatusImpressora: TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
@@ -533,6 +534,13 @@ begin
   FDevice.Free;
 
   inherited Destroy;
+end;
+
+procedure TACBrPosPrinter.AbrirGaveta;
+begin
+  GravarLog('AbrirGaveta');
+  ImprimirCmd(FPosPrinterClass.Cmd.AbreGaveta);
+  Sleep(500);
 end;
 
 procedure TACBrPosPrinter.Ativar;

@@ -85,10 +85,6 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Alignment = iaCenter
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label6: TLabel
         Left = 25
         Top = 34
@@ -1645,6 +1641,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

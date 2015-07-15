@@ -601,6 +601,7 @@ procedure TfrmPrincipal.AddLibrarySearchPath;
                   NOT(SameText(oDirList.Name, 'quick')) and
                   NOT(SameText(oDirList.Name, 'rave'))  and
                   NOT(SameText(oDirList.Name, 'laz'))   and
+                  NOT(SameText(oDirList.Name, 'VerificarNecessidade')) and
                   (oDirList.Name <> '__history')        then
               begin
                  with oACBr.Installations[iVersion] do

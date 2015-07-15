@@ -81,85 +81,84 @@ type
   { TACBrNFeDANFCeFortesFr }
 
   TACBrNFeDANFCeFortesFr = class(TForm)
-    lChaveDeAcesso: TRLLabel;
-    lCPF_CNPJ_ID: TRLMemo;
-    lEnderecoConsumidor: TRLMemo;
-    lMensagemFiscal: TRLLabel;
-    lNumSerieEmissao: TRLLabel;
-    lTitChaveAcesso: TRLLabel;
-    lTitConsulteChave: TRLMemo;
-    lTitConsumidor: TRLLabel;
+    rlVenda: TRLReport;
+    rlbRodape: TRLBand;
+    RLDraw2: TRLDraw;
+    lConsultaQRCode: TRLLabel;
+    imgQRCode: TRLImage;
+    pGap05: TRLPanel;
+    RLLabel1: TRLLabel;
+    lProtocolo: TRLLabel;
+    pGap8: TRLPanel;
+    rlsbDetItem: TRLSubDetail;
+    rlbDetItem: TRLBand;
+    mLinhaItem: TRLMemo;
+    rlbDescItem: TRLBand;
+    lTitDesconto: TRLLabel;
+    lTitDescValLiq: TRLLabel;
+    lDesconto: TRLLabel;
+    lDescValLiq: TRLLabel;
+    rlbOutroItem: TRLBand;
+    lTitAcrescimo: TRLLabel;
+    lTitOutroValLiq: TRLLabel;
+    lOutro: TRLLabel;
+    lOutroValLiq: TRLLabel;
+    rlbGap: TRLBand;
+    rlsbPagamentos: TRLSubDetail;
+    rlbPagamento: TRLBand;
+    lPagamento: TRLLabel;
+    lMeioPagamento: TRLLabel;
+    rlbTroco: TRLBand;
+    lTitTroco: TRLLabel;
+    lTroco: TRLLabel;
+    rlbTotal: TRLBand;
+    lTitTotal: TRLLabel;
+    lTotal: TRLLabel;
     lQtdItens: TRLLabel;
     lQtdTotalItensVal: TRLLabel;
-    lProtocolo: TRLLabel;
-    lCPF_CNPJ1: TRLLabel;
+    lTitFormaPagto: TRLLabel;
+    lTitValorPago: TRLLabel;
+    RLDraw7: TRLDraw;
+    rlbLei12741: TRLBand;
+    RLDraw6: TRLDraw;
+    lTitLei12741: TRLLabel;
+    lTitLei12742: TRLLabel;
+    lValLei12741: TRLLabel;
+    rlbsCabecalho: TRLSubDetail;
+    rlbMsgDANFe: TRLBand;
     lMsgDANFCe: TRLLabel;
     lMsgDANFCe1: TRLLabel;
     lMsgDANFCe2: TRLLabel;
-    lTitLei12741: TRLLabel;
-    lTitLei12742: TRLLabel;
-    lTitFormaPagto: TRLLabel;
-    lTitValorPago: TRLLabel;
-    lPagamento: TRLLabel;
-    lMeioPagamento: TRLLabel;
-    lTitTotal: TRLLabel;
-    lTitTroco: TRLLabel;
-    lConsultaQRCode: TRLLabel;
-    lDesconto: TRLLabel;
-    lOutro: TRLLabel;
-    lDescValLiq: TRLLabel;
-    lOutroValLiq: TRLLabel;
-    lSequencia: TRLLabel;
-    lTitDesconto: TRLLabel;
-    lTitAcrescimo: TRLLabel;
-    lTitDescValLiq: TRLLabel;
-    lTitOutroValLiq: TRLLabel;
-    lTotal: TRLLabel;
-    lTroco: TRLLabel;
-    lTotalItem: TRLLabel;
-    lValLei12741: TRLLabel;
-    mLinhaItem: TRLMemo;
-    pGap8: TRLPanel;
     rlbDadosCliche: TRLBand;
-    rlbLegenda: TRLBand;
-    rlbConsumidor: TRLBand;
-    rlbMensagemFiscal: TRLBand;
-    rlbMsgDANFe: TRLBand;
-    rlbLei12741: TRLBand;
-    rlbPagamento: TRLBand;
-    rlbGap: TRLBand;
-    rlbTotal: TRLBand;
-    rlbDescItem: TRLBand;
-    rlbOutroItem: TRLBand;
-    rlbDetItem: TRLBand;
-    rlbRodape: TRLBand;
-    rlbTroco: TRLBand;
-    RLDraw10: TRLDraw;
-    RLDraw12: TRLDraw;
-    rlbsCabecalho: TRLSubDetail;
-    RLDraw4: TRLDraw;
-    RLDraw5: TRLDraw;
     pLogoeCliche: TRLPanel;
-    RLDraw7: TRLDraw;
-    rlVenda: TRLReport;
-    RLDraw2: TRLDraw;
-    RLDraw6: TRLDraw;
-    RLHTMLFilter1: TRLHTMLFilter;
-    imgQRCode: TRLImage;
-    pGap05: TRLPanel;
-    RLPDFFilter1: TRLPDFFilter;
-    rlsbDetItem: TRLSubDetail;
-    rlsbPagamentos: TRLSubDetail;
-    rlbMensagemContribuinte: TRLBand;
-    lMensagemContribuinte: TRLLabel;
-    RLDraw3: TRLDraw;
-    lObservacoes: TRLMemo;
     lRazaoSocial: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
     lEndereco: TRLMemo;
     RLDraw1: TRLDraw;
     lNomeFantasia: TRLLabel;
     imgLogo: TRLImage;
+    rlbLegenda: TRLBand;
+    RLDraw4: TRLDraw;
+    lCPF_CNPJ1: TRLLabel;
+    RLDraw5: TRLDraw;
+    rlbConsumidor: TRLBand;
+    RLDraw10: TRLDraw;
+    lTitConsumidor: TRLLabel;
+    lEnderecoConsumidor: TRLMemo;
+    lCPF_CNPJ_ID: TRLMemo;
+    rlbMensagemFiscal: TRLBand;
+    RLDraw12: TRLDraw;
+    lMensagemFiscal: TRLLabel;
+    lChaveDeAcesso: TRLLabel;
+    lTitChaveAcesso: TRLLabel;
+    lNumSerieEmissao: TRLLabel;
+    lTitConsulteChave: TRLMemo;
+    rlbMensagemContribuinte: TRLBand;
+    lMensagemContribuinte: TRLLabel;
+    RLDraw3: TRLDraw;
+    lObservacoes: TRLMemo;
+    RLHTMLFilter1: TRLHTMLFilter;
+    RLPDFFilter1: TRLPDFFilter;
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -168,9 +167,6 @@ type
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlbLegendaBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure rlbDescItemBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure rlbDetItemBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure rlbOutroItemBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbPagamentoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbGapBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbTotalBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -186,6 +182,11 @@ type
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlbMensagemContribuinteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
+    procedure lSistemaBeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure rlbDetItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbDescItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbOutroItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     fACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes;
     fNumItem : Integer;
@@ -236,7 +237,13 @@ begin
   fObsFisco := TStringList.Create ;
   fHeightDetItem := rlbDetItem.Height;
 
-  fACBrNFeDANFCeFortes := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
+  fACBrNFeDANFCeFortes          := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
+
+  //Pega as marges que for defina na classe pai.
+  rlVenda.Margins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
+  rlVenda.Margins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
+  rlVenda.Margins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
+  rlVenda.Margins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlVendaDataRecord(Sender: TObject;
@@ -275,6 +282,21 @@ begin
        TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
 
     lChaveDeAcesso.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
+  begin
+    PrintIt := (not Resumido) and (Prod.vOutro > 0) and (ACBrNFeDANFCeFortes.ImprimirDetalhamentoEspecifico);
+
+    if PrintIt then
+    begin
+      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+#,###,##0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro,'#,###,##0.00');
+    end;
   end;
 end;
 
@@ -430,40 +452,12 @@ begin
   rlVenda.PageSetup.PaperHeight := max( 100, 10+Trunc( TotalPaginaPixel / 3.7 ));
 end;
 
-procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
-  var PrintIt: boolean);
-var
-  LinhaItem, Descricao: String;
-begin
-  PrintIt := not Resumido;
-  if not PrintIt then exit;
-
-  with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
-  begin
-    lSequencia.Caption := IntToStrZero(Prod.nItem,3);
-
-    Descricao := ACBrStrToAnsi( Trim(Prod.xProd) );
-    LinhaItem := Trim(Prod.cProd)+' '+
-                 Descricao+' '+
-                 FormatFloatBr(Prod.qCom, ACBrNFeDANFCeFortes.CasasDecimais._Mask_qCom)+' '+
-                 Trim(Prod.uCom)+' X '+
-                 FormatFloatBr(Prod.vUnCom, ACBrNFeDANFCeFortes.CasasDecimais._Mask_vUnCom)+' ';
-
-
-    if Imposto.vTotTrib > 0 then
-      LinhaItem := LinhaItem + '('+FormatFloatBr(Imposto.vTotTrib,'0.00')+')* ';
-
-    mLinhaItem.Lines.Text := LinhaItem;
-    lTotalItem.Caption    := FormatFloatBr(Prod.vProd,'#,###,##0.00');
-  end;
-end;
-
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
-  var PrintIt: boolean);
+  var PrintIt: Boolean);
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vDesc > 0) ;
+    PrintIt := (not Resumido) and (Prod.vDesc > 0) and (ACBrNFeDANFCeFortes.ImprimirTotalLiquido) ;
 
     if PrintIt then
     begin
@@ -473,20 +467,29 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
-  var PrintIt: boolean);
+procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  LinhaTotal : string;
 begin
+  PrintIt := not Resumido;
+  if not PrintIt then exit;
+
+  mLinhaItem.Lines.Clear ;
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vOutro > 0);
+    mLinhaItem.Lines.Add(IntToStrZero(Prod.nItem,3) + ' ' +
+                             Trim(Prod.cProd) + ' ' +
+                             Trim(Prod.xProd));
 
-    if PrintIt then
-    begin
-      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+#,###,##0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro,'#,###,##0.00');
-    end;
+    //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
+    LinhaTotal  := PadLeft(FormatFloat('#,###,##0.00', Prod.qCom), 12) +
+                   PadCenter(Trim(Prod.uCom), 5) + ' X ' +
+                   PadLeft(FormatFloat('#,###,##0.00', Prod.vUnCom), 12) +
+                   PadLeft(FormatFloat('#,###,##0.00', Prod.vProd), 12);
+
+    mLinhaItem.Lines.Add(LinhaTotal);
   end;
-
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbPagamentoBeforePrint(Sender: TObject;
@@ -494,9 +497,9 @@ procedure TACBrNFeDANFCeFortesFr.rlbPagamentoBeforePrint(Sender: TObject;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto] do
   begin
-    lMeioPagamento.Caption := ACBrStr(FormaPagamentoToDescricao(tPag));
-    lPagamento.Caption     := FormatFloatBr(vPag,'#,###,##0.00');
-    fTotalPagto := fTotalPagto + vPag;
+    lMeioPagamento.Caption  := ACBrStr(FormaPagamentoToDescricao(tPag));
+    lPagamento.Caption      := FormatFloatBr(vPag,'#,###,##0.00');
+    fTotalPagto             := fTotalPagto + vPag;
   end;
 end;
 
@@ -515,6 +518,13 @@ end;
 procedure TACBrNFeDANFCeFortesFr.FormDestroy(Sender: TObject);
 begin
   fObsFisco.Free;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.lSistemaBeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  PrintIt := trim(fACBrNFeDANFCeFortes.Sistema) <> '';
+  Text    := fACBrNFeDANFCeFortes.Sistema ;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.pAsteriscoBeforePrint(Sender: TObject;
@@ -601,17 +611,13 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  Troco : Currency;
+  Troco : Currency ;
 begin
-  with ACBrNFeDANFCeFortes.FpNFe do
-  begin
-    Troco := fTotalPagto - Total.ICMSTot.vNF;
+  Troco   := fACBrNFeDANFCeFortes.vTroco;
+  PrintIt := (Troco> 0);
 
-    PrintIt := (Troco > 0);
-
-    if PrintIt then
-      lTroco.Caption := FormatFloatBr(Troco,'#,###,##0.00');;
-  end;
+  if PrintIt then
+    lTroco.Caption := FormatFloatBr(fACBrNFeDANFCeFortes.vTroco,'#,###,##0.00');;
 end;
 
 { TACBrNFeDANFCeFortes }
@@ -694,7 +700,6 @@ procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean;
 var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
-  RLFiltro: TRLCustomSaveFilter;
 begin
   {$IFDEF FPC}
    LoadPortugueseStrings;
@@ -725,36 +730,6 @@ begin
           RLLayout.PreviewModal
         else
           RLLayout.Print;
-      end
-      else
-      begin
-        if RLLayout.Prepare then
-        begin
-          case Filtro of
-            fiPDF  : RLFiltro := RLPDFFilter1;
-            fiHTML : RLFiltro := RLHTMLFilter1;
-          else
-            exit ;
-          end ;
-
-          {$IFDEF FPC}
-            RLFiltro.Copies := NumCopias ;
-          {$ENDIF}
-          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-          //RLFiltro.FileName := NomeArquivo ;
-          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF +
-                               OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
-          {$IFDEF FPC}
-            RLFiltro.Pages := RLLayout.Pages ;
-            RLFiltro.FirstPage := 1;
-            RLFiltro.LastPage := RLLayout.Pages.PageCount;
-            RLFiltro.Run;
-            //RLLayout.SaveToFile(PathPDF +
-                               //Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe.infNFe.ID, 4, 44) + '.pdf');
-          {$ELSE}
-            RLFiltro.FilterPages( RLLayout.Pages );
-          {$ENDIF}
-        end;
       end;
     end;
   finally

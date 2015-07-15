@@ -102,7 +102,7 @@ type
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
     function GetPathCCe(CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
-    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -280,7 +280,7 @@ begin
   Result := GetPath(FPathCCe, 'CCe', CNPJ);
 end;
 
-function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
+function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
 begin
   if EstaVazio(FDownloadNFe.PathDownload) then
      FDownloadNFe.PathDownload := PathSalvar;
@@ -289,7 +289,7 @@ begin
      if NaoEstaVazio(xNome) then
         FDownloadNFe.PathDownload := PathWithDelim(FDownloadNFe.PathDownload) + TiraAcentos(xNome);
 
-  Result := GetPath(FDownloadNFe.PathDownload, 'Down', CNPJ);
+  Result := GetPath(FDownloadNFe.PathDownload, 'Down', CNPJ, Data);
 end;
 
 function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento;

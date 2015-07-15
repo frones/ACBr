@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2015
+[*] Alterado a forma de gerar o Envelope Soap do DistribuicaoDFe e acrescentado
+    o parametro Data ao gerar o PathDownload, permitindo desta forma salvar o 
+    XML da NF-e retornado pelo metodo Download ou DistrubuicaoDFe na pasta 
+    conforme a data de emissão ou data atual.
+    por: Italo Jurisato Junior
+
 02/07/2015
 [-] Acerto no método loadfromstring, não estava retornando o result corretamente
 

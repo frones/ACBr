@@ -74,6 +74,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FprocNFe: AnsiString;
+    FdhEmi: TDateTime;
 
     FNFeZip: String;
     FProtNFeZip: String;
@@ -85,6 +86,7 @@ type
     property cStat: Integer      read FcStat   write FcStat;
     property xMotivo: String     read FxMotivo write FxMotivo;
     property procNFe: AnsiString read FprocNFe write FprocNFe;
+    property dhEmi: TDateTime read FdhEmi write FdhEmi;
 
     property NFeZip: String      read FNFeZip     write FNFeZip;
     property ProtNFeZip: String  read FProtNFeZip write FProtNFeZip;
@@ -216,13 +218,14 @@ begin
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<procNFeZip>', '</procNFeZip');
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
-
+          FretNFe.Items[i].FdhEmi := StringToDateTime(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
           FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                                 FretNFe.Items[i].FNFeZip;
         end;
 
         if pos('procNFe', Leitor.Grupo) > 0 then
         begin
+          FretNFe.Items[i].FdhEmi := StringToDateTime(RetornarConteudoEntre(Leitor.Grupo, '<dhEmi>', '</dhEmi'));
           FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                            SeparaDados(Leitor.Grupo, 'procNFe');
         end;
@@ -233,6 +236,7 @@ begin
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<NFeZip>', '</NFeZip');
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
+          FretNFe.Items[i].FdhEmi := StringToDateTime(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
 
           // XML do Protocolo da NF-e
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<protNFeZip>', '</protNFeZip');

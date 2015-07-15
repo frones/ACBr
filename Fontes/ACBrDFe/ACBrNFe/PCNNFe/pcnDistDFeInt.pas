@@ -118,6 +118,7 @@ begin
   Result := False;
 
   Gerador.ArquivoFormatoXML := '';
+  Gerador.wGrupo('nfeDadosMsg');
   Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
@@ -139,6 +140,7 @@ begin
   end;
 
   Gerador.wGrupo('/distDFeInt');
+  Gerador.wGrupo('/nfeDadosMsg');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

@@ -557,6 +557,9 @@ begin
   FPConfiguracoesCTe := TConfiguracoesCTe(FPConfiguracoes);
   FPLayout := LayCTeStatusServico;
   FPStatus := stCTeIdle;
+
+  FPHeaderElement := 'cteCabecMsg';
+  FPBodyElement := 'cteDadosMsg';
 end;
 
 function TCTeWebService.ExtrairModeloChaveAcesso(AChaveCTe: String): String;

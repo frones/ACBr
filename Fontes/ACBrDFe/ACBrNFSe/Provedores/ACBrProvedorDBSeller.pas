@@ -148,20 +148,20 @@ var
 begin
   case ACodCidade of
    4300406: begin
-              ConfigURL.HomNomeCidade := 'alegrete.rs';
-              ConfigURL.ProNomeCidade := 'alegrete.rs';
+              ConfigURL.HomNomeCidade := '.alegrete.rs';
+              ConfigURL.ProNomeCidade := '.alegrete.rs';
             end;
    4310603: begin // Itaqui/RS
-              ConfigURL.HomNomeCidade := 'itaqui.rs';
-              ConfigURL.ProNomeCidade := 'itaqui.rs';
+              ConfigURL.HomNomeCidade := '-homologacao.itaqui.rs';
+              ConfigURL.ProNomeCidade := '.itaqui.rs';
             end;
    4304705: begin
-              ConfigURL.HomNomeCidade := 'carazinho.rs';
-              ConfigURL.ProNomeCidade := 'carazinho.rs';
+              ConfigURL.HomNomeCidade := '.carazinho.rs';
+              ConfigURL.ProNomeCidade := '.carazinho.rs';
             end;
   end;
 
-  ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.HomNomeCidade + '.gov.br:82/webservice/index/homologacao';
+  ConfigURL.HomRecepcaoLoteRPS    := 'http://nfse' + ConfigURL.HomNomeCidade + '.gov.br/webservice/index/homologacao';
   ConfigURL.HomConsultaLoteRPS    := ConfigURL.HomRecepcaoLoteRPS;
   ConfigURL.HomConsultaNFSeRPS    := ConfigURL.HomRecepcaoLoteRPS;
   ConfigURL.HomConsultaSitLoteRPS := ConfigURL.HomRecepcaoLoteRPS;
@@ -171,7 +171,7 @@ begin
   ConfigURL.HomRecepcaoSincrono   := ConfigURL.HomRecepcaoLoteRPS;
   ConfigURL.HomSubstituiNFSe      := ConfigURL.HomRecepcaoLoteRPS;
 
-  ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse.' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
+  ConfigURL.ProRecepcaoLoteRPS    := 'http://nfse' + ConfigURL.ProNomeCidade + '.gov.br/webservice/index/producao';
   ConfigURL.ProConsultaLoteRPS    := ConfigURL.ProRecepcaoLoteRPS;
   ConfigURL.ProConsultaNFSeRPS    := ConfigURL.ProRecepcaoLoteRPS;
   ConfigURL.ProConsultaSitLoteRPS := ConfigURL.ProRecepcaoLoteRPS;

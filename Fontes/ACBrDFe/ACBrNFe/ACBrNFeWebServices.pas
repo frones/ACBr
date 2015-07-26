@@ -1802,8 +1802,8 @@ begin
           if Atualiza then
           begin
             if (FPConfiguracoesNFe.Geral.ValidarDigest) and
-              (NFeRetorno.protNFe.digVal <> '') and
-              (NFe.signature.DigestValue <> NFeRetorno.protNFe.digVal) then
+              (NFeRetorno.protNFe.digVal <> '') and (NFe.signature.DigestValue <> '') and
+              (UpperCase(NFe.signature.DigestValue) <> UpperCase(NFeRetorno.protNFe.digVal)) then
             begin
               raise EACBrNFeException.Create('DigestValue do documento ' +
                 NumID + ' não confere.');
@@ -2848,7 +2848,9 @@ begin
   else
     Data := Now;
 
-  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload('', Copy(AItem.chNFe,7,14), Data);
+  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload('',
+                                                        Copy(AItem.chNFe,7,14),
+                                                        Data);
 end;
 
 { TAdministrarCSCNFCe }
@@ -3085,7 +3087,8 @@ begin
     Data := Now;
 
   Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
-                                                        AItem.resNFe.CNPJCPF);
+                                                        AItem.resNFe.CNPJCPF,
+                                                        Data);
 end;
 
 { TNFeEnvioWebService }

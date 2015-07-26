@@ -486,6 +486,9 @@ begin
   FPConfiguracoesMDFe := TConfiguracoesMDFe(FPConfiguracoes);
   FPLayout := LayMDFeStatusServico;
   FPStatus := stMDFeIdle;
+
+  FPHeaderElement := 'mdfeCabecMsg';
+  FPBodyElement := 'mdfeDadosMsg';
 end;
 
 function TMDFeWebService.ExtrairModeloChaveAcesso(AChaveMDFe: String): String;

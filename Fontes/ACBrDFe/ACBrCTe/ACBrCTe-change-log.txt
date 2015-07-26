@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2015
+[-] Esta faltando a definição das TAGs de do cabeçalho e de dados.
+    por: Emerson Teixeira
+
 14/05/2015
 [*] Ajustes no CT-e para Fortes Report, compilando normalmente agora.
     por: Regys Silveira

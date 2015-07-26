@@ -33,25 +33,26 @@ type
     btSerial: TSpeedButton;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
+    cbxRemoverAcentos: TCheckBox;
     cbxModeloPosPrinter: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
     cbxRedeProxy: TComboBox;
-    cbxSalvarCFe: TCheckBox;
     cbxModelo : TComboBox ;
     cbxAmbiente : TComboBox ;
     cbxIndRatISSQN : TComboBox ;
     cbxRegTribISSQN : TComboBox ;
     cbxRegTributario : TComboBox ;
-    cbxSalvarEnvio: TCheckBox;
+    cbxSalvarCFe: TCheckBox;
     cbxSalvarCFeCanc: TCheckBox;
+    cbxSalvarEnvio: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
     cbxSepararPorMES: TCheckBox;
-    cbxUTF8: TCheckBox;
     cbxFormatXML: TCheckBox;
     cbPreview: TCheckBox;
     cbxRedeSeg: TComboBox;
     cbImprimir1Linha: TCheckBox;
+    cbxUTF8: TCheckBox;
     edChaveCancelamento: TEdit;
     edLog : TEdit ;
     edRedeIP: TEdit;
@@ -74,6 +75,8 @@ type
     gbIPFix: TGroupBox;
     gbPPPoE: TGroupBox;
     gbProxy: TGroupBox;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
@@ -119,6 +122,7 @@ type
     rgRedeTipoInter: TRadioGroup;
     rgRedeTipoLan: TRadioGroup;
     SaveDialog1: TSaveDialog;
+    sbNomeDLL: TSpeedButton;
     seColunas: TSpinEdit;
     seEspLinhas: TSpinEdit;
     seLargura: TSpinEdit;
@@ -127,10 +131,10 @@ type
     seMargemEsquerda: TSpinEdit;
     seMargemFundo: TSpinEdit;
     seMargemTopo: TSpinEdit;
+    sePagCod: TSpinEdit;
     sfeVersaoEnt: TFloatSpinEdit;
     Label13: TLabel;
     Label17 : TLabel ;
-    Label8: TLabel;
     mLimpar : TMenuItem ;
     mImprimirExtratoVendaResumido : TMenuItem ;
     mImprimirExtratoVenda : TMenuItem ;
@@ -186,7 +190,6 @@ type
     PageControl2 : TPageControl ;
     Panel1 : TPanel ;
     SbArqLog : TSpeedButton ;
-    sePagCod: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
     mVendaEnviar: TSynMemo;
@@ -212,8 +215,10 @@ type
     procedure btSerialClick(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
+    procedure cbxFormatXMLChange(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
     procedure cbxRedeProxyChange(Sender: TObject);
+    procedure cbxRemoverAcentosChange(Sender: TObject);
     procedure cbxSalvarCFeCancChange(Sender: TObject);
     procedure cbxSalvarCFeChange(Sender: TObject);
     procedure cbxSalvarEnvioChange(Sender: TObject);
@@ -229,6 +234,7 @@ type
     procedure mTesteFimAFimClick(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
+    procedure sbNomeDLLClick(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure mAssociarAssinaturaClick(Sender : TObject) ;
@@ -434,6 +440,7 @@ begin
     sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
+    cbxRemoverAcentos.Checked:= INI.ReadBool('SAT','RetirarAcentos', True);
     cbxSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
     cbxSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
     cbxSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
@@ -513,6 +520,7 @@ begin
     INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
     INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
+    INI.WriteBool('SAT','RetirarAcentos', cbxRemoverAcentos.Checked);
     INI.WriteBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
     INI.WriteBool('SAT','SalvarCFeCanc', cbxSalvarCFeCanc.Checked);
     INI.WriteBool('SAT','SalvarEnvio', cbxSalvarEnvio.Checked);
@@ -601,6 +609,12 @@ begin
   ACBrSAT1.Extrato := ACBrSATExtratoFortes1
 end;
 
+procedure TForm1.cbxFormatXMLChange(Sender: TObject);
+begin
+  ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
+  ACBrSAT1.CFeCanc.IdentarXML := cbxFormatXML.Checked;
+end;
+
 procedure TForm1.cbxModeloChange(Sender : TObject) ;
 begin
   try
@@ -617,6 +631,12 @@ begin
   edRedeProxyPorta.Enabled := edRedeProxyIP.Enabled;
   edRedeProxyUser.Enabled  := edRedeProxyIP.Enabled;
   edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
+end;
+
+procedure TForm1.cbxRemoverAcentosChange(Sender: TObject);
+begin
+  ACBrSAT1.CFe.RetirarAcentos := cbxRemoverAcentos.Checked;
+  ACBrSAT1.CFeCanc.RetirarAcentos := cbxRemoverAcentos.Checked;
 end;
 
 procedure TForm1.cbxSalvarCFeCancChange(Sender: TObject);
@@ -761,6 +781,15 @@ procedure TForm1.rgRedeTipoLanClick(Sender: TObject);
 begin
   gbPPPoE.Visible := (rgRedeTipoLan.ItemIndex = 1);
   gbIPFix.Visible := (rgRedeTipoLan.ItemIndex = 2);
+end;
+
+procedure TForm1.sbNomeDLLClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo DLL|*.dll';
+  OpenDialog1.InitialDir := ExtractFilePath(edNomeDLL.Text);
+  OpenDialog1.FileName := edNomeDLL.Text;
+  if OpenDialog1.Execute then
+    edNomeDLL.Text := OpenDialog1.FileName ;
 end;
 
 procedure TForm1.sfeVersaoEntChange(Sender: TObject);
@@ -934,6 +963,7 @@ begin
 
   ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
   ACBrSAT1.CFe.TamanhoIdentacao := 3;
+  ACBrSAT1.CFe.RetirarAcentos := cbxRemoverAcentos.Checked;
 
   mVendaEnviar.Clear;
 
@@ -947,7 +977,7 @@ begin
     ide.numeroCaixa := 1;
 
     Dest.CNPJCPF := '05481336000137';
-    Dest.xNome := 'D.J. SYSTEM';
+    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç';
 
     Entrega.xLgr := 'logradouro';
     Entrega.nro := '112233';
@@ -1005,7 +1035,7 @@ begin
       nItem := 2 + (A * 3);
       Prod.cProd := '6291041500213';
       Prod.cEAN := '6291041500213';
-      Prod.xProd := ACBrStr('Outro produto Qualquer, com a Descrição Grande');
+      Prod.xProd := 'Outro produto Qualquer, com a Descrição Grande';
       Prod.CFOP := '5529';
       Prod.uCom := 'un';
       Prod.qCom := 1.1205;
@@ -1108,8 +1138,8 @@ begin
       vMP := TotalGeral/2 + 10;
     end;
 
-    InfAdic.infCpl := ACBrStr('Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
-                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br');
+    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
+                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br';
   end;
 
   mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação

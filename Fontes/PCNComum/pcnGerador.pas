@@ -941,7 +941,7 @@ begin
     exit;
 
   // Grava no Formato Texto
-  if not EstaVazio            then
+  if not EstaVazio then
     gtCampo(tag, ConteudoProcessado)
   else
     gtCampo(tag, '');

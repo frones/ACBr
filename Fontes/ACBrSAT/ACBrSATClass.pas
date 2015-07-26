@@ -174,6 +174,7 @@ type
 
   TACBrSATResposta = class
   private
+    fcodigoDeErro: Integer;
     fnumeroSessao : Integer ;
     fcodigoDeRetorno : Integer ;
     fmensagemRetorno : String;
@@ -189,6 +190,7 @@ type
 
     property numeroSessao : Integer read fnumeroSessao ;
     property codigoDeRetorno : Integer read  fcodigoDeRetorno;
+    property codigoDeErro : Integer read  fcodigoDeErro;
     property mensagemRetorno : String read fmensagemRetorno;
     property codigoSEFAZ : Integer read  fcodigoSEFAZ;
     property mensagemSEFAZ : String read fmensagemSEFAZ;
@@ -500,14 +502,34 @@ end;
 procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
 var
   index : integer;
+  AStr: String;
 begin
+{  ***** RETORNOS DO SAT POR COMANDO *****
+AtivarSAT....................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ, CSR
+ComunicarCertificadoICPBRASIL: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+EnviarDadosVenda.............: numeroSessao, EEEEE, CCCC, mensagem, cod, mensagemSEFAZ, base64, timeStamp, chaveConsulta, valorTotalCFe, CPFCNPJValue, assinaturaQRCOD
+CancelarUltimaVenda..........: numeroSessao, EEEEE, CCCC, mensagem, cod, mensagemSEFAZ, base64, timeStamp, chaveConsulta, valorTotalCFe, CPFCNPJValue, assinaturaQRCOD
+ConsultarSAT.................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+TesteFimAFim.................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ, base64, timeStamp, numDocFiscal, chaveConsulta
+ConsultarStatusOperacional...: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ, ConteudoRetorno
+ConsultarNumeroSessao........: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ   (ou retorno da Sessão consultada)
+ConfigurarInterfaceDeRede....: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+AssociarAssinatura...........: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+AtualizarSoftwareSAT.........: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+ExtrairLogs..................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ, base64
+BloquearSAT..................: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+DesbloquearSAT...............: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
+
+}
   fRetornoStr := AValue;
 
   fnumeroSessao    := 0;
   fcodigoDeRetorno := 0;
+  fcodigoDeErro    := 0;
   fmensagemRetorno := '';
-  fcodigoSEFAZ := 0;
-  fmensagemSEFAZ := '';
+  fcodigoSEFAZ     := 0;
+  fmensagemSEFAZ   := '';
 
   Clear;
   fRetornoLst.Delimiter := '|';
@@ -520,18 +542,23 @@ begin
   {$ENDIF}
   fRetornoLst.DelimitedText := AValue;
 
+
   if fRetornoLst.Count > 1 then
   begin
     fnumeroSessao    := StrToIntDef( fRetornoLst[0], 0);
     fcodigoDeRetorno := StrToIntDef( fRetornoLst[1], 0);
   end;
 
-  if fRetornoLst.Count > 2 then
+  index := 2;
+  if fRetornoLst.Count > index then
   begin
-    if Length(Trim(fRetornoLst[2])) = 4 then //Enviar e Cancelar venda tem um campo a mais no inicio da resposta(CCCC)
+    AStr := Trim(fRetornoLst[index]);
+
+    if (Length(AStr) = 4) and StrIsNumber(AStr) then //Enviar e Cancelar venda tem um campo a mais no inicio da resposta(CCCC)
+    begin
+      fcodigoDeErro := StrToIntDef(AStr, 0);
       index := 3
-    else
-      index := 2;
+    end;
   end;
 
   if fRetornoLst.Count > index+2 then

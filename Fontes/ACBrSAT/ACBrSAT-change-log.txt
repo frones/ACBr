@@ -47,6 +47,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/07/2015
+-- ACBrSAT --  (por: DSA)
+[*] Ajuste para permitir acentuação nos XMLs 
+[-] Correção no Log de TrocarCodigoDeAtivacao
+[+] Adicionada a propriedade TACBrSATResposta.codigoDeErro
+[*] Rotina de tratamento de resposta modificada para tratar 
+   "codigoDeErro" em Vendas e Cancelamentos
+   
+-- pcnCFe --
+[+] Adicionada a propriedade "RetirarAcentos", default True
+
+-- pcnCFeCanc --
+[+] Adicionada as propriedades: RetirarAcentos, IdentarXML, TamanhoIdentacao
+
+
+Data: 16/07/2015
+-- ACBrSATExtratoFortes --
+[*] Ajuste para Razão Social ser distribuida em várias linhas (memo)
+    (por: DSA)
+
+-- ACBrECFVirtualSAT --
+[-] Correção para atribuição do Valor de Desconto sem valor negativo
+    (por: Amarildo Lacerda)
+
 Data: 12/07/2015
 -- ACBrSATExtratoFortes --  
 [-] Correção de grafia (CUMPOM)

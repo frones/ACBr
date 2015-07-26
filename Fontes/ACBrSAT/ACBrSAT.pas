@@ -897,11 +897,16 @@ var
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
 
-  if Trim(chave) = '' then
+  chave := Trim(chave);
+  if chave = '' then
      raise EACBrSATErro.Create('Parâmetro: "chave" não informado');
 
-  if Trim(dadosCancelamento) = '' then
+  dadosCancelamento := Trim(dadosCancelamento);
+  if dadosCancelamento = '' then
      raise EACBrSATErro.Create('Parâmetro: "dadosCancelamento" não informado');
+
+  // Dados deve sempre ser enviados em UTF8
+  dadosCancelamento := ConverteXMLtoUTF8(dadosCancelamento);
 
   if fsConfigArquivos.SalvarEnvio then
   begin
@@ -1041,9 +1046,14 @@ function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
   NomeCFe : String;
 begin
+  dadosVenda := Trim(dadosVenda);
+
   fsComandoLog := 'EnviarDadosVenda( '+dadosVenda+' )';
-  if Trim(dadosVenda) = '' then
+  if dadosVenda = '' then
      raise EACBrSATErro.Create('Parâmetro: "dadosVenda" não informado');
+
+  // Dados deve sempre ser enviados em UTF8
+  dadosVenda := ConverteXMLtoUTF8(dadosVenda);
 
   IniciaComando;
 
@@ -1057,7 +1067,7 @@ begin
     WriteToTXT(NomeCFe, dadosVenda, False, False);
   end;
 
-  Result := FinalizaComando( fsSATClass.EnviarDadosVenda( Trim(dadosVenda) ) );
+  Result := FinalizaComando( fsSATClass.EnviarDadosVenda( dadosVenda ) );
 
   DecodificaRetorno6000;
 end ;
@@ -1150,8 +1160,8 @@ end ;
 function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
   opcao: Integer; novoCodigo: AnsiString): String;
 begin
-  fsComandoLog := 'TrocarCodigoDeAtivacao('+ codigoDeAtivacao+', '+IntToStr(opcao)+
-                  ', '+novoCodigo+' )';
+  fsComandoLog := 'TrocarCodigoDeAtivacao('+ codigoDeAtivacaoOuEmergencia+', '+
+                  IntToStr(opcao)+ ', '+novoCodigo+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.TrocarCodigoDeAtivacao(
                                 codigoDeAtivacaoOuEmergencia, opcao, novoCodigo ));

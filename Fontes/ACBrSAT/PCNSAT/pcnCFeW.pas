@@ -192,8 +192,8 @@ begin
   Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJ, 1058);
   if not FApenasTagsAplicacao then
   begin
-     Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 0, ACBrStrToAnsi(CFe.Emit.xNome), DSC_XNOME);
-     Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, ACBrStrToAnsi(CFe.Emit.xFant), DSC_XNOME);
+     Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 0, CFe.Emit.xNome, DSC_XNOME);
+     Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, CFe.Emit.xFant, DSC_XNOME);
   end;
 
   (**)GerarEmitEnderEmit;
@@ -218,11 +218,11 @@ begin
   if not FApenasTagsAplicacao then
   begin
      Gerador.wGrupo('enderEmit', 'C05');
-     Gerador.wCampo(tcStr, 'C06', 'xLgr    ', 02, 60, 0, ACBrStrToAnsi(CFe.Emit.EnderEmit.xLgr), DSC_XLGR);
+     Gerador.wCampo(tcStr, 'C06', 'xLgr    ', 02, 60, 0, CFe.Emit.EnderEmit.xLgr, DSC_XLGR);
      Gerador.wCampo(tcStr, 'C07', 'nro     ', 01, 60, 0, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CFe.Emit.enderEmit.nro), DSC_NRO);
-     Gerador.wCampo(tcStr, 'C08', 'xCpl    ', 01, 60, 0, ACBrStrToAnsi(CFe.Emit.enderEmit.xCpl), DSC_XCPL);
-     Gerador.wCampo(tcStr, 'C09', 'xBairro ', 02, 60, 0, ACBrStrToAnsi(CFe.Emit.enderEmit.xBairro), DSC_XBAIRRO);
-     Gerador.wCampo(tcStr, 'C10', 'xMun    ', 02, 60, 0, ACBrStrToAnsi(CFe.Emit.enderEmit.xMun), DSC_XMUN);
+     Gerador.wCampo(tcStr, 'C08', 'xCpl    ', 01, 60, 0, CFe.Emit.enderEmit.xCpl, DSC_XCPL);
+     Gerador.wCampo(tcStr, 'C09', 'xBairro ', 02, 60, 0, CFe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
+     Gerador.wCampo(tcStr, 'C10', 'xMun    ', 02, 60, 0, CFe.Emit.enderEmit.xMun, DSC_XMUN);
      Gerador.wCampo(tcInt, 'C11', 'CEP     ', 08, 08, 0, CFe.Emit.enderEmit.CEP, DSC_CEP);
      Gerador.wGrupo('/enderEmit');
   end;
@@ -232,7 +232,7 @@ procedure TCFeW.GerarDest;
 begin
   Gerador.wGrupo('dest', 'E01');
   Gerador.wCampoCNPJCPF('E02', 'E03', CFe.Dest.CNPJCPF, 1058);
-  Gerador.wCampo(tcStr, 'E04', 'xNome  ', 01, 60, 0, ACBrStrToAnsi(CFe.Dest.xNome), DSC_XNOME);
+  Gerador.wCampo(tcStr, 'E04', 'xNome  ', 01, 60, 0, CFe.Dest.xNome, DSC_XNOME);
   Gerador.wGrupo('/dest');
 end;
 
@@ -246,11 +246,11 @@ begin
     (CFe.Entrega.UF <> '') then
  begin
     Gerador.wGrupo('entrega', 'G01');
-    Gerador.wCampo(tcStr, 'G02', 'xLgr   ', 02, 60, 1, ACBrStrToAnsi(CFe.Entrega.xLgr), DSC_XLGR);
+    Gerador.wCampo(tcStr, 'G02', 'xLgr   ', 02, 60, 1, CFe.Entrega.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'G03', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CFe.Entrega.nro), DSC_NRO);
-    Gerador.wCampo(tcStr, 'G04', 'xCpl   ', 01, 60, 0, ACBrStrToAnsi(CFe.Entrega.xCpl), DSC_XCPL);
-    Gerador.wCampo(tcStr, 'G05', 'xBairro', 01, 60, 1, ACBrStrToAnsi(CFe.Entrega.xBairro), DSC_XBAIRRO);
-    Gerador.wCampo(tcStr, 'G06', 'xMun   ', 02, 60, 1, ACBrStrToAnsi(CFe.Entrega.xMun), DSC_XMUN);
+    Gerador.wCampo(tcStr, 'G04', 'xCpl   ', 01, 60, 0, CFe.Entrega.xCpl, DSC_XCPL);
+    Gerador.wCampo(tcStr, 'G05', 'xBairro', 01, 60, 1, CFe.Entrega.xBairro, DSC_XBAIRRO);
+    Gerador.wCampo(tcStr, 'G06', 'xMun   ', 02, 60, 1, CFe.Entrega.xMun, DSC_XMUN);
     Gerador.wCampo(tcStr, 'G07', 'UF     ', 02, 02, 1, CFe.Entrega.UF, DSC_UF);
     if not ValidarUF(CFe.Entrega.UF) then
        Gerador.wAlerta('G07', 'UF', DSC_UF, ERR_MSG_INVALIDO);
@@ -270,7 +270,7 @@ begin
     (**)GerarDetProd(i);
     (**)GerarDetImposto(i);
     Gerador.IDNivel := 'H01';
-    Gerador.wCampo(tcStr, 'V01', 'infAdProd', 01, 500, 0, ACBrStrToAnsi(CFe.Det[i].infAdProd), DSC_INFADPROD);
+    Gerador.wCampo(tcStr, 'V01', 'infAdProd', 01, 500, 0, CFe.Det[i].infAdProd, DSC_INFADPROD);
     Gerador.wGrupo('/det');
   end;
   if CFe.Det.Count > 500 then
@@ -295,7 +295,7 @@ begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, CFe.Det[i].Prod.cProd, DSC_CPROD);
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 08, 14, 0, CFe.Det[i].Prod.cEAN, DSC_CEAN);
-  Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, ACBrStrToAnsi(CFe.Det[i].Prod.xProd), DSC_XPROD);
+  Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, CFe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08, 0, CFe.Det[i].Prod.NCM, DSC_NCM);
   Gerador.wCampo(tcEsp, 'I06 ', 'CFOP    ', 04, 04, 1, somenteNumeros(CFe.Det[i].Prod.CFOP), DSC_CFOP);
   Gerador.wCampo(tcStr, 'I07 ', 'uCom    ', 01, 06, 1, CFe.Det[i].Prod.uCom, DSC_UCOM);
@@ -323,8 +323,8 @@ var
 begin
   for j := 0 to CFe.Det[i].Prod.obsFiscoDet.Count - 1 do
   begin
-    Gerador.wGrupo('obsFiscoDet xCampoDet="' + ACBrStrToAnsi(CFe.Det[i].Prod.obsFiscoDet.Items[j].xCampoDet) + '"', 'I18');
-    Gerador.wCampo(tcStr, 'I19', 'xTextoDet', 01, 60, 1, ACBrStrToAnsi(CFe.Det[i].Prod.obsFiscoDet.Items[j].xTextoDet), DSC_XTEXTO);
+    Gerador.wGrupo('obsFiscoDet xCampoDet="' + CFe.Det[i].Prod.obsFiscoDet.Items[j].xCampoDet + '"', 'I18');
+    Gerador.wCampo(tcStr, 'I19', 'xTextoDet', 01, 60, 1, CFe.Det[i].Prod.obsFiscoDet.Items[j].xTextoDet, DSC_XTEXTO);
     Gerador.wGrupo('/obsFiscoDet');
   end;
 end;
@@ -721,7 +721,7 @@ begin
     (CFe.InfAdic.obsFisco.Count > 0) then
   begin
     Gerador.wGrupo('infAdic', 'Z01');
-    Gerador.wCampo(tcStr, 'Z02', 'infCpl    ', 01, 5000, 0, ACBrStrToAnsi(CFe.InfAdic.infCpl), DSC_INFCPL);
+    Gerador.wCampo(tcStr, 'Z02', 'infCpl    ', 01, 5000, 0, CFe.InfAdic.infCpl, DSC_INFCPL);
     (**)GerarInfAdicObsFisco;
     Gerador.wGrupo('/infAdic');
   end;
@@ -737,12 +737,12 @@ begin
       Gerador.wAlerta('Z03', 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
     for i := 0 to CFe.InfAdic.obsFisco.Count - 1 do
     begin
-      Gerador.wGrupo('obsFisco xCampo="' + ACBrStrToAnsi(trim(CFe.InfAdic.obsFisco[i].xCampo)) + '"', 'Z04');
+      Gerador.wGrupo('obsFisco xCampo="' + trim(CFe.InfAdic.obsFisco[i].xCampo) + '"', 'Z04');
       if length(trim(CFe.InfAdic.obsFisco[i].xCampo)) > 20 then
         Gerador.wAlerta('ZO4', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
       if length(trim(CFe.InfAdic.obsFisco[i].xCampo)) = 0 then
         Gerador.wAlerta('ZO4', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
-      Gerador.wCampo(tcStr, 'Z05', 'xTexto', 01, 60, 1, ACBrStrToAnsi(CFe.InfAdic.obsFisco[i].xTexto), DSC_XTEXTO);
+      Gerador.wCampo(tcStr, 'Z05', 'xTexto', 01, 60, 1, CFe.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
       Gerador.wGrupo('/obsFisco');
     end;
   end;
@@ -787,8 +787,10 @@ begin
     Gerar := true;
     if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
       Gerar := ((CFe.signature.DigestValue <> '') and (CFe.signature.SignatureValue <> '') and (CFe.signature.X509Certificate <> ''));
+
     if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
       Gerar := ((CFe.signature.DigestValue = '') and (CFe.signature.SignatureValue = '') and (CFe.signature.X509Certificate = ''));
+
     if Gerar then
     begin
       FCFe.signature.URI := somenteNumeros(CFe.infCFe.ID);

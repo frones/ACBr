@@ -419,7 +419,7 @@ begin
     if DescontoAcrescimo > 0 then
       CFe.Total.DescAcrEntr.vAcresSubtot := DescontoAcrescimo
     else
-      CFe.Total.DescAcrEntr.vDescSubtot  := DescontoAcrescimo;
+      CFe.Total.DescAcrEntr.vDescSubtot  := DescontoAcrescimo*(-1); 
 
     CFe.InfAdic.infCpl := MensagemRodape;
   end;
@@ -458,7 +458,7 @@ begin
       if Resposta.codigoDeRetorno <> 6000 then
       begin
         codigoDeRejeicao := Resposta.RetornoLst[2];
-        mensagem         := ACBrStrToAnsi( Resposta.RetornoLst[3] );
+        mensagem         := Resposta.RetornoLst[3];
 
         raise EACBrSATErro.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
           'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +
@@ -513,7 +513,7 @@ begin
     if Resposta.codigoDeRetorno <> 7000 then
     begin
       codigoDeRejeicao := Resposta.RetornoLst[2];
-      mensagem         := ACBrStrToAnsi( Resposta.RetornoLst[3] );
+      mensagem         := Resposta.RetornoLst[3];
 
       raise EACBrSATErro.Create( 'Erro ao Cancelar Venda: ' + ChaveCupom + sLineBreak +
         'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +

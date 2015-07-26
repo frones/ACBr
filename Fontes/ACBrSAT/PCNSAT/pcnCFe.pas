@@ -87,6 +87,7 @@ type
     FEntrega: TEntrega;
     FDet: TDetCollection;
     FNomeArquivo: String;
+    FRetirarAcentos: boolean;
     FTamanhoIdentacao: integer;
     FTotal: TTotal;
     fPagto: TMPCollection;
@@ -123,6 +124,7 @@ type
     property InfAdic: TInfAdic read FInfAdic write FInfAdic;
     property signature: Tsignature read Fsignature write Fsignature;
 
+    property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
     property IdentarXML: boolean read FIdentarXML write FIdentarXML;
     property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
   end;
@@ -1253,6 +1255,7 @@ begin
   FinfAdic := TinfAdic.Create(self);
   Fsignature := Tsignature.create;
 
+  FRetirarAcentos := True;
   FIdentarXML := False;
   FTamanhoIdentacao := 3;
 
@@ -1348,6 +1351,7 @@ var
 begin
   LocCFeW := TCFeW.Create(Self);
   try
+    LocCFeW.Gerador.Opcoes.RetirarAcentos := FRetirarAcentos;
     LocCFeW.Gerador.Opcoes.IdentarXML := FIdentarXML;
     LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
 

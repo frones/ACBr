@@ -1,14 +1,14 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Left = 629
-  Height = 910
+  Height = 742
   Top = 67
   Width = 738
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 910
+  ClientHeight = 742
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.4.2.0'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
@@ -1066,7 +1066,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbNumExtrato: TRLBand
         Left = 0
         Height = 28
-        Top = 79
+        Top = 88
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -1114,7 +1114,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDadosCliche: TRLBand
         Left = 0
-        Height = 79
+        Height = 88
         Top = 0
         Width = 286
         AutoSize = True
@@ -1125,10 +1125,11 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         object pCNPJ_IE_IM: TRLPanel
           Left = 0
           Height = 22
-          Top = 57
+          Top = 66
           Width = 286
-          Align = faBottom
+          Align = faTop
           AutoSize = True
+          Behavior = [beSiteExpander]
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -1164,19 +1165,20 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object pLogoeCliche: TRLPanel
           Left = 0
-          Height = 57
+          Height = 66
           Top = 0
           Width = 286
           Align = faTop
           AutoExpand = True
           AutoSize = True
+          Behavior = [beSiteExpander]
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
           object imgLogo: TRLImage
             Left = 0
-            Height = 57
+            Height = 66
             Top = 0
             Width = 1
             Align = faLeft
@@ -1190,29 +1192,17 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           end
           object pCliche: TRLPanel
             Left = 1
-            Height = 57
+            Height = 66
             Top = 0
             Width = 285
             Align = faClient
             AutoExpand = True
             AutoSize = True
+            Behavior = [beSiteExpander]
             RealBounds.Left = 0
             RealBounds.Top = 0
             RealBounds.Width = 0
             RealBounds.Height = 0
-            object lRazaoSocial: TRLLabel
-              Left = 0
-              Height = 14
-              Top = 19
-              Width = 285
-              Align = faTop
-              Alignment = taCenter
-              Caption = 'Razão Social'
-              RealBounds.Left = 0
-              RealBounds.Top = 0
-              RealBounds.Width = 0
-              RealBounds.Height = 0
-            end
             object lNomeFantasia: TRLLabel
               Left = 0
               Height = 19
@@ -1234,8 +1224,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             end
             object lEndereco: TRLMemo
               Left = 0
-              Height = 24
-              Top = 33
+              Height = 23
+              Top = 43
               Width = 285
               Align = faClient
               Alignment = taCenter
@@ -1253,13 +1243,33 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
               RealBounds.Width = 0
               RealBounds.Height = 0
             end
+            object lRazaoSocial: TRLMemo
+              Left = 0
+              Height = 24
+              Top = 19
+              Width = 285
+              Align = faTop
+              Alignment = taCenter
+              Font.Color = clBlack
+              Font.Height = -9
+              Font.Name = 'Arial'
+              Lines.Strings = (
+                'Razão Social - Linha 1'
+                'Razão Social - Linha 2'
+              )
+              ParentFont = False
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+            end
           end
         end
       end
       object rlbTeste: TRLBand
         Left = 0
         Height = 84
-        Top = 107
+        Top = 116
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -1331,7 +1341,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbConsumidor: TRLBand
         Left = 0
         Height = 22
-        Top = 191
+        Top = 200
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -1371,7 +1381,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbLegenda: TRLBand
         Left = 0
         Height = 28
-        Top = 213
+        Top = 222
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -1458,7 +1468,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlbCanRodape: TRLBand
       Left = 8
       Height = 523
-      Top = 289
+      Top = 298
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -1782,7 +1792,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlbCabecalhoCan: TRLBand
       Left = 8
-      Height = 121
+      Height = 130
       Top = 8
       Width = 286
       AutoSize = True
@@ -1793,19 +1803,20 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       RealBounds.Height = 0
       object pLogoeClicheCan: TRLPanel
         Left = 0
-        Height = 57
+        Height = 66
         Top = 0
         Width = 286
         Align = faTop
         AutoExpand = True
         AutoSize = True
+        Behavior = [beSiteExpander]
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
         object imgLogoCan: TRLImage
           Left = 0
-          Height = 57
+          Height = 66
           Top = 0
           Width = 1
           Align = faLeft
@@ -1819,29 +1830,17 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object pClicheCan: TRLPanel
           Left = 1
-          Height = 57
+          Height = 66
           Top = 0
           Width = 285
           Align = faClient
           AutoExpand = True
           AutoSize = True
+          Behavior = [beSiteExpander]
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
-          object lRazaoSocialCan: TRLLabel
-            Left = 0
-            Height = 14
-            Top = 19
-            Width = 285
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'Razão Social'
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
           object lNomeFantasiaCan: TRLLabel
             Left = 0
             Height = 19
@@ -1863,8 +1862,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           end
           object lEnderecoCan: TRLMemo
             Left = 0
-            Height = 24
-            Top = 33
+            Height = 23
+            Top = 43
             Width = 285
             Align = faClient
             Alignment = taCenter
@@ -1881,12 +1880,32 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             RealBounds.Width = 0
             RealBounds.Height = 0
           end
+          object lRazaoSocialCan: TRLMemo
+            Left = 0
+            Height = 24
+            Top = 19
+            Width = 285
+            Align = faTop
+            Alignment = taCenter
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Lines.Strings = (
+              'Razão Social Canc - Linha 1'
+              'Razão Social Canc - Linha 2'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
         end
       end
       object lEmitCNPJ_IE_IMCan: TRLLabel
         Left = 0
         Height = 14
-        Top = 57
+        Top = 66
         Width = 286
         Align = faTop
         Alignment = taCenter
@@ -1900,7 +1919,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object RLDraw11: TRLDraw
         Left = 0
         Height = 8
-        Top = 71
+        Top = 80
         Width = 286
         Align = faTop
         Angle = 0
@@ -1914,7 +1933,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object lNumeroExtratoCan: TRLLabel
         Left = 0
         Height = 14
-        Top = 79
+        Top = 88
         Width = 286
         Align = faTop
         Alignment = taCenter
@@ -1933,7 +1952,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object lCupomFiscalEletronicoCan: TRLLabel
         Left = 0
         Height = 14
-        Top = 93
+        Top = 102
         Width = 286
         Align = faTop
         Alignment = taCenter
@@ -1952,7 +1971,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object lTitCancelamento: TRLLabel
         Left = 0
         Height = 14
-        Top = 107
+        Top = 116
         Width = 286
         Align = faTop
         Alignment = taCenter
@@ -1972,7 +1991,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlbDadosCupomCancelado: TRLBand
       Left = 8
       Height = 76
-      Top = 213
+      Top = 222
       Width = 286
       RealBounds.Left = 0
       RealBounds.Top = 0
@@ -1994,7 +2013,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lTitCancelamento1: TRLLabel
         Left = 0
-        Height = 12
+        Height = 11
         Top = 10
         Width = 286
         Align = faTop
@@ -2014,7 +2033,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object lCPF_CNPJCan: TRLLabel
         Left = 0
         Height = 15
-        Top = 22
+        Top = 21
         Width = 286
         Align = faTop
         Alignment = taCenter
@@ -2059,7 +2078,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlbTesteCan: TRLBand
       Left = 8
       Height = 84
-      Top = 129
+      Top = 138
       Width = 286
       AutoSize = True
       BandType = btHeader

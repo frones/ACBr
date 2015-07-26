@@ -114,8 +114,8 @@ type
     lNumSATCanl: TRLLabel;
     lOutro: TRLLabel;
     lOutroValLiq: TRLLabel;
-    lRazaoSocial: TRLLabel;
-    lRazaoSocialCan: TRLLabel;
+    lRazaoSocial: TRLMemo;
+    lRazaoSocialCan: TRLMemo;
     lTesteCan: TRLMemo;
     lTitCancelamento: TRLLabel;
     lTitCancelamento1: TRLLabel;
@@ -536,7 +536,7 @@ begin
        fObsFisco.Add( Msg_ICMS_123_2006 );
 
     lNomeFantasia.Caption   := Emit.xFant ;
-    lRazaoSocial.Caption    := Emit.xNome ;
+    lRazaoSocial.Lines.Text := Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
     imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
@@ -785,7 +785,7 @@ begin
   with ACBrSATExtrato.CFe do
   begin
     lNomeFantasiaCan.Caption   := Emit.xFant ;
-    lRazaoSocialCan.Caption    := Emit.xNome ;
+    lRazaoSocialCan.Lines.Text := Emit.xNome ;
     lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;
     imgLogoCan.Picture.Assign( ACBrSATExtrato.PictureLogo );

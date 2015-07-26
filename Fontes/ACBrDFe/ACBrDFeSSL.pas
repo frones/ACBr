@@ -139,8 +139,8 @@ type
 
     property Inicializado: Boolean read GetInicializado;
 
-    procedure Inicializar;
-    procedure DesInicializar;
+    procedure Inicializar; virtual;
+    procedure DesInicializar; virtual;
 
     // Nota: ConteudoXML, DEVE estar em UTF8 //
     function Assinar(const ConteudoXML, docElement, infElement: String): String;

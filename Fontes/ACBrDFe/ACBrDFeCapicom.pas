@@ -227,7 +227,7 @@ begin
           'Número de Série do Certificado Digital não especificado !');
     end;
 
-    Inicializar;
+    Self.Inicializar;
 
     // Certificado já foi carregado ??
     if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then

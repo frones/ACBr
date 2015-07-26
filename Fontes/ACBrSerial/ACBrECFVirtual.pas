@@ -873,7 +873,8 @@ end ;
 
 procedure TACBrECFVirtualClass.Ativar;
 begin
-  inherited Ativar ;
+  if not Assigned(ECFVirtual) then  
+    inherited Ativar;
 
   try
     LeArqINI ;

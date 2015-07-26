@@ -102,7 +102,10 @@ begin
     raise Exception.Create('Componente PosPrinter não associado');
 
   if FPosPrinter.Porta = '' then
+  begin
     FPosPrinter.Porta := TACBrECF( ECF ).Porta;
+    FPosPrinter.Device.ParamsString := TACBrECF( ECF ).Device.DeviceToString(false); 
+  end;
 
   FPosPrinter.Ativar;
 end;

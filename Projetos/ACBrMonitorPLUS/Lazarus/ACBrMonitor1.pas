@@ -208,17 +208,17 @@ type
     cbxRegTributario: TComboBox;
     cbxSalvaCCeCancelamentoPathEvento: TCheckBox;
     cbxSalvarArqs: TCheckBox;
-    cbxSalvarCFe: TCheckBox;
-    cbxSalvarCFeCanc: TCheckBox;
-    cbxSalvarEnvio: TCheckBox;
+    cbxSATSalvarCFe: TCheckBox;
+    cbxSATSalvarCFeCanc: TCheckBox;
+    cbxSATSalvarEnvio: TCheckBox;
     cbxSalvarNFesProcessadas: TCheckBox;
     cbxSedexAvisoReceb: TComboBox;
     cbxSedexFormato: TComboBox;
     cbxSedexMaoPropria: TComboBox;
     cbxSedexServico: TComboBox;
     cbxSepararPorCNPJ: TCheckBox;
-    cbxSepararPorCNPJ1: TCheckBox;
-    cbxSepararPorMES: TCheckBox;
+    cbxSATSepararPorCNPJ: TCheckBox;
+    cbxSATSepararPorMES: TCheckBox;
     cbxSepararporModelo: TCheckBox;
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
@@ -910,16 +910,17 @@ type
     procedure cbxPastaMensalClick(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
     procedure cbxRedeProxyChange(Sender: TObject);
-    procedure cbxSalvarArqsClick(Sender: TObject);
-    procedure cbxSalvarCFeCancChange(Sender: TObject);
-    procedure cbxSalvarCFeChange(Sender: TObject);
-    procedure cbxSalvarEnvioChange(Sender: TObject);
+    procedure cbxSalvarArqsChange(Sender: TObject);
+    procedure cbxSATSalvarCFeCancChange(Sender: TObject);
+    procedure cbxSATSalvarCFeChange(Sender: TObject);
+    procedure cbxSATSalvarEnvioChange(Sender: TObject);
     procedure cbxSedexAvisoRecebChange(Sender: TObject);
     procedure cbxSedexFormatoChange(Sender: TObject);
     procedure cbxSedexMaoPropriaChange(Sender: TObject);
     procedure cbxSedexServicoChange(Sender: TObject);
-    procedure cbxSepararPorCNPJ1Change(Sender: TObject);
-    procedure cbxSepararPorMESChange(Sender: TObject);
+    procedure cbxSATSepararPorCNPJChange(Sender: TObject);
+    procedure cbxSATSepararPorMESChange(Sender: TObject);
+    procedure cbxSepararPorCNPJChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
     procedure chECFArredondaMFDClick(Sender: TObject);
     procedure chECFControlePortaClick(Sender: TObject);
@@ -2155,24 +2156,24 @@ begin
   edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
 end;
 
-procedure TFrmACBrMonitor.cbxSalvarArqsClick(Sender: TObject);
+procedure TFrmACBrMonitor.cbxSalvarArqsChange(Sender: TObject);
 begin
   VerificaDiretorios;
 end;
 
-procedure TFrmACBrMonitor.cbxSalvarCFeCancChange(Sender: TObject);
+procedure TFrmACBrMonitor.cbxSATSalvarCFeCancChange(Sender: TObject);
 begin
-  ACBrSAT1.ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarCFeCanc := cbxSATSalvarCFeCanc.Checked;
 end;
 
-procedure TFrmACBrMonitor.cbxSalvarCFeChange(Sender: TObject);
+procedure TFrmACBrMonitor.cbxSATSalvarCFeChange(Sender: TObject);
 begin
-  ACBrSAT1.ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarCFe := cbxSATSalvarCFe.Checked;
 end;
 
-procedure TFrmACBrMonitor.cbxSalvarEnvioChange(Sender: TObject);
+procedure TFrmACBrMonitor.cbxSATSalvarEnvioChange(Sender: TObject);
 begin
-  ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
+  ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSATSalvarEnvio.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbxSedexAvisoRecebChange(Sender: TObject);
@@ -2195,14 +2196,19 @@ begin
   ACBrSedex1.Servico := TACBrTpServico(cbxSedexServico.ItemIndex);
 end;
 
-procedure TFrmACBrMonitor.cbxSepararPorCNPJ1Change(Sender: TObject);
+procedure TFrmACBrMonitor.cbxSATSepararPorCNPJChange(Sender: TObject);
 begin
-  ACBrSAT1.ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+  ACBrSAT1.ConfigArquivos.SepararPorCNPJ := cbxSATSepararPorCNPJ.Checked;
 end;
 
-procedure TFrmACBrMonitor.cbxSepararPorMESChange(Sender: TObject);
+procedure TFrmACBrMonitor.cbxSATSepararPorMESChange(Sender: TObject);
 begin
-  ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+  ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSATSepararPorMES.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbxSepararPorCNPJChange(Sender: TObject);
+begin
+  ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbxUTF8Change(Sender: TObject);
@@ -2986,7 +2992,6 @@ begin
     StreamMemo.Free;
 
     cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', True);
-    VerificaDiretorios;
     cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
     cbxAdicionaLiteral.Checked := Ini.ReadBool('Arquivos', 'AddLiteral', True);
     cbxEmissaoPathNFe.Checked := Ini.ReadBool('Arquivos', 'EmissaoPathNFe', True);
@@ -2996,6 +3001,7 @@ begin
     cbxSepararporModelo.Checked := Ini.ReadBool('Arquivos', 'SepararPorModelo', True);
     cbxSalvarNFesProcessadas.Checked :=
       Ini.ReadBool('Arquivos', 'SalvarApenasNFesAutorizadas', False);
+
     edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', PathApplication+'Arqs');
     edtPathCan.Text := Ini.ReadString('Arquivos', 'PathCan', PathApplication+'Arqs');
     edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', PathApplication+'Arqs');
@@ -3020,6 +3026,8 @@ begin
     ACBrNFe1.Configuracoes.Arquivos.PathCCe := edtPathCCe.Text;
     ACBrNFe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
 
+    VerificaDiretorios;
+
     // token da nfce
     ACBrNFe1.Configuracoes.Geral.IdCSC := Ini.ReadString('NFCe', 'IdToken', '');
     ACBrNFe1.Configuracoes.Geral.CSC := Ini.ReadString('NFCe', 'Token', '');
@@ -3040,11 +3048,11 @@ begin
     sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
     edSATPathArqs.Text     := INI.ReadString('SAT','PathCFe',PathApplication+'Arqs'+PathDelim+'SAT');
-    cbxSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
-    cbxSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
-    cbxSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
-    cbxSepararPorCNPJ.Checked:= INI.ReadBool('SAT','SepararPorCNPJ', True);
-    cbxSepararPorMES.Checked := INI.ReadBool('SAT','SepararPorMES', True);
+    cbxSATSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
+    cbxSATSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
+    cbxSATSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
+    cbxSATSepararPorCNPJ.Checked:= INI.ReadBool('SAT','SepararPorCNPJ', True);
+    cbxSATSepararPorMES.Checked := INI.ReadBool('SAT','SepararPorMES', True);
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
     ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
@@ -3721,11 +3729,11 @@ begin
     INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
     INI.WriteString('SAT','PathCFe',edSATPathArqs.Text);
-    INI.WriteBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
-    INI.WriteBool('SAT','SalvarCFeCanc', cbxSalvarCFeCanc.Checked);
-    INI.WriteBool('SAT','SalvarEnvio', cbxSalvarEnvio.Checked);
-    INI.WriteBool('SAT','SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
-    INI.WriteBool('SAT','SepararPorMES', cbxSepararPorMES.Checked);
+    INI.WriteBool('SAT','SalvarCFe', cbxSATSalvarCFe.Checked);
+    INI.WriteBool('SAT','SalvarCFeCanc', cbxSATSalvarCFeCanc.Checked);
+    INI.WriteBool('SAT','SalvarEnvio', cbxSATSalvarEnvio.Checked);
+    INI.WriteBool('SAT','SepararPorCNPJ', cbxSATSepararPorCNPJ.Checked);
+    INI.WriteBool('SAT','SepararPorMES', cbxSATSepararPorMES.Checked);
 
     INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString);
     INI.WriteBool('SATExtrato', 'ImprimeDescAcrescItem', cbxImprimirDescAcresItemSAT.Checked);
@@ -5960,11 +5968,11 @@ begin
 
     ConfigArquivos.PastaCFeVenda := PathWithDelim(edSATPathArqs.Text)+'Vendas';
     ConfigArquivos.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
-    ConfigArquivos.SalvarCFe := cbxSalvarCFe.Checked;
-    ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
-    ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
-    ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
-    ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+    ConfigArquivos.SalvarCFe := cbxSATSalvarCFe.Checked;
+    ConfigArquivos.SalvarCFeCanc := cbxSATSalvarCFeCanc.Checked;
+    ConfigArquivos.SalvarEnvio := cbxSATSalvarEnvio.Checked;
+    ConfigArquivos.SepararPorCNPJ := cbxSATSepararPorCNPJ.Checked;
+    ConfigArquivos.SepararPorMes := cbxSATSepararPorMES.Checked;
   end;
 
   ConfiguraRedeSAT;
@@ -6271,63 +6279,33 @@ begin
 end;
 
 procedure TFrmACBrMonitor.VerificaDiretorios;
+var
+  CanEnabled: Boolean;
 begin
-  if cbxSalvarArqs.Checked then
-  begin
-    cbxPastaMensal.Enabled := True;
-    cbxAdicionaLiteral.Enabled := True;
-    cbxEmissaoPathNFe.Enabled := True;
-    cbxSalvaCCeCancelamentoPathEvento.Enabled := True;
-    cbxSepararPorCNPJ.Enabled := True;
-    cbxSepararporModelo.Enabled := True;
-    cbxSalvarNFesProcessadas.Enabled := True;
-    edtPathNFe.Enabled := True;
-    edtPathCan.Enabled := True;
-    edtPathInu.Enabled := True;
-    edtPathDPEC.Enabled := True;
-    edtPathCCe.Enabled := True;
-    edtPathEvento.Enabled := True;
-    sbPathNFe.Enabled := True;
-    sbPathCan.Enabled := True;
-    sbPathInu.Enabled := True;
-    sbPathDPEC.Enabled := True;
-    sbPathCCe.Enabled := True;
-    sbPathEvento.Enabled := True;
-  end
-  else
-  begin
-    cbxPastaMensal.Enabled := False;
-    cbxAdicionaLiteral.Enabled := False;
-    cbxEmissaoPathNFe.Enabled := False;
-    cbxSalvaCCeCancelamentoPathEvento.Enabled := False;
-    cbxSepararPorCNPJ.Enabled := False;
-    cbxSepararporModelo.Enabled := False;
-    cbxSalvarNFesProcessadas.Enabled := False;
-    edtPathNFe.Enabled := False;
-    edtPathCan.Enabled := False;
-    edtPathInu.Enabled := False;
-    edtPathDPEC.Enabled := False;
-    edtPathCCe.Enabled := False;
-    edtPathEvento.Enabled := False;
-    sbPathNFe.Enabled := False;
-    sbPathCan.Enabled := False;
-    sbPathInu.Enabled := False;
-    sbPathDPEC.Enabled := False;
-    sbPathCCe.Enabled := False;
-    sbPathEvento.Enabled := False;
-  end;
+  CanEnabled := cbxSalvarArqs.Checked;
 
-  if ckSalvar.Checked then
-  begin
-    edtPathLogs.Enabled := True;
-    sbPathSalvar.Enabled := True;
-  end
-  else
-  begin
-    edtPathLogs.Enabled := False;
-    sbPathSalvar.Enabled := False;
-  end;
+  cbxPastaMensal.Enabled := CanEnabled;
+  cbxAdicionaLiteral.Enabled := CanEnabled;
+  cbxEmissaoPathNFe.Enabled := CanEnabled;
+  cbxSalvaCCeCancelamentoPathEvento.Enabled := CanEnabled;
+  cbxSepararPorCNPJ.Enabled := CanEnabled;
+  cbxSepararporModelo.Enabled := CanEnabled;
+  cbxSalvarNFesProcessadas.Enabled := CanEnabled;
+  edtPathNFe.Enabled := CanEnabled;
+  edtPathCan.Enabled := CanEnabled;
+  edtPathInu.Enabled := CanEnabled;
+  edtPathDPEC.Enabled := CanEnabled;
+  edtPathCCe.Enabled := CanEnabled;
+  edtPathEvento.Enabled := CanEnabled;
+  sbPathNFe.Enabled := CanEnabled;
+  sbPathCan.Enabled := CanEnabled;
+  sbPathInu.Enabled := CanEnabled;
+  sbPathDPEC.Enabled := CanEnabled;
+  sbPathCCe.Enabled := CanEnabled;
+  sbPathEvento.Enabled := CanEnabled;
 
+  edtPathLogs.Enabled := ckSalvar.Checked;
+  sbPathSalvar.Enabled := ckSalvar.Checked;
 end;
 
 procedure TFrmACBrMonitor.LimparResp;

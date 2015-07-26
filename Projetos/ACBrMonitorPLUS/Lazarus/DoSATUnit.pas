@@ -121,7 +121,7 @@ begin
       begin
         ArqCFe := '';
 
-        if cbxSalvarCFe.Checked then
+        if cbxSATSalvarCFe.Checked then
         begin
           ArqCFe := PathWithDelim(edSATPathArqs.Text)+
                     IntToStrZero(ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+

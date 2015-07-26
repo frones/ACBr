@@ -143,7 +143,6 @@
         <ComponentName Value="FrmACBrMonitor"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ACBrMonitor1"/>
       </Unit2>
       <Unit3>
         <Filename Value="CmdUnit.pas"/>
@@ -234,7 +233,6 @@
       <Unit23>
         <Filename Value="DoSATUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoSATUnit"/>
       </Unit23>
     </Units>
   </ProjectOptions>

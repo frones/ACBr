@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 704
+  Left = 611
   Height = 418
-  Top = 269
+  Top = 210
   Width = 641
   Caption = 'Teste de Impressora Fiscal'
   ClientHeight = 398
@@ -4128,6 +4128,21 @@ object Form1: TForm1
         object GrandeTotal1: TMenuItem
           Caption = 'Grande Total'
           OnClick = GrandeTotal1Click
+        end
+        object MenuItem52: TMenuItem
+          Caption = '-'
+        end
+        object MenuItem55: TMenuItem
+          Caption = 'Total Cancelamentos'
+          OnClick = MenuItem55Click
+        end
+        object MenuItem53: TMenuItem
+          Caption = 'Total Descontos'
+          OnClick = MenuItem53Click
+        end
+        object MenuItem54: TMenuItem
+          Caption = 'Total Acréscimos'
+          OnClick = MenuItem54Click
         end
         object mTotalTroco: TMenuItem
           Caption = 'TotalTroco'

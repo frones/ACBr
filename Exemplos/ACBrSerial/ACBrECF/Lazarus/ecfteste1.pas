@@ -259,6 +259,10 @@ type
     MenuItem49: TMenuItem;
     MenuItem50: TMenuItem;
     MenuItem51: TMenuItem;
+    MenuItem52: TMenuItem;
+    MenuItem53: TMenuItem;
+    MenuItem54: TMenuItem;
+    MenuItem55: TMenuItem;
     mniRelatorioGerencialComFormatacao: TMenuItem;
     mSAT: TMenuItem;
     mTotalTroco: TMenuItem;
@@ -708,6 +712,9 @@ type
     procedure MenuItem48Click(Sender: TObject);
     procedure MenuItem50Click(Sender: TObject);
     procedure MenuItem51Click(Sender: TObject);
+    procedure MenuItem53Click(Sender: TObject);
+    procedure MenuItem54Click(Sender: TObject);
+    procedure MenuItem55Click(Sender: TObject);
     procedure miTesteArredondamentoClick(Sender: TObject);
     procedure miEstornoCCDClick(Sender : TObject) ;
     procedure miLeituraCMC7Click(Sender: TObject);
@@ -2588,6 +2595,24 @@ begin
   ACBrECF1.LeituraX;
 
   MenuItem48Click(Sender);
+end;
+
+procedure TForm1.MenuItem53Click(Sender: TObject);
+begin
+  mResp.Lines.Add( 'TotalDescontos: ('+ FloatToStr(ACBrECF1.TotalDescontos)+')' );
+  AtualizaMemos ;
+end;
+
+procedure TForm1.MenuItem54Click(Sender: TObject);
+begin
+  mResp.Lines.Add( 'TotalAcrescimos: ('+ FloatToStr(ACBrECF1.TotalAcrescimos)+')' );
+  AtualizaMemos ;
+end;
+
+procedure TForm1.MenuItem55Click(Sender: TObject);
+begin
+  mResp.Lines.Add( 'TotalCancelamentos: ('+ FloatToStr(ACBrECF1.TotalCancelamentos)+')' );
+  AtualizaMemos ;
 end;
 
 procedure TForm1.miTesteArredondamentoClick(Sender: TObject);

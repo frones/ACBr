@@ -83,6 +83,8 @@ type
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String;
+function XmlEhUTF8(const AXML: String): Boolean;
+function ConverteXMLtoUTF8(const AXML: String): String;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 
@@ -1737,42 +1739,52 @@ end;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
 Var
-  PosIni, PosFim, Tamanho : Integer ;
+  PosIni, PosFim, PosLF, Tamanho : Integer ;
   AnsiStr, Resp: AnsiString;
 begin
   Resp := '';
   // Converte para Ansi, para não se perder com caracteres UTF8
   AnsiStr := ACBrStrToAnsi(Texto);
+  if sLineBreak <> LF then
+    AnsiStr := StringReplace(AnsiStr, sLineBreak, LF, [rfReplaceAll]);
+
   Tamanho := Length(AnsiStr) ;
   PosIni  := 1 ;
   if Colunas > 0 then
   begin
     repeat
-       if PosIni > 1 then
-          Resp := Resp + sLineBreak;
+       if (PosIni > 1) and (AnsiStr[PosIni-1] <> LF) then
+          Resp := Resp + LF;
 
        PosFim := PosIni + Colunas - 1 ;
 
-       if Tamanho > PosFim then                  // Ainda tem proxima linha ?
-          if AnsiStr[PosFim+1] <> CaracterQuebrar then   // Proximo já é uma Quebra ?
-             while (AnsiStr[PosFim] <> CaracterQuebrar) and (PosFim > PosIni) do // Ache uma Quebra
+       if Tamanho > PosFim then  // Ainda tem proxima linha ?
+          if not (AnsiStr[PosFim+1] in [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
+             while (not (AnsiStr[PosFim] in [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
                 Dec(PosFim) ;
 
-       if PosFim = PosIni then  // Não foi capaz de encontrar uma quebra
+       if PosFim = PosIni then  // Não foi capaz de encontrar uma quebra, divida a palavra em "Coluna"
           PosFim := PosIni + Colunas - 1 ;
+
+       PosLF := PosEx(LF, AnsiStr, PosIni+1);
+       if (PosLF > 0) and (PosLF < PosFim) then
+         PosFim := PosLF;
 
        Resp := Resp + Copy( AnsiStr, PosIni, (PosFim-PosIni)+1 );
        PosIni := PosFim + 1 ;
 
        // Pula CaracterQuebrar no Inicio da String
        if (PosIni <= Tamanho) then
-          while (AnsiStr[PosIni] = CaracterQuebrar) and (PosIni <= Tamanho) do
+          while (AnsiStr[PosIni] in [CaracterQuebrar, LF]) and (PosIni <= Tamanho) do
              Inc(PosIni) ;
 
     until (PosIni > Tamanho);
   end
   else
     Resp := AnsiStr;
+
+  if sLineBreak <> LF then
+    Resp := StringReplace(Resp, LF, sLineBreak, [rfReplaceAll]);
 
   Result := ACBrStr(Resp);
 end;
@@ -3076,7 +3088,6 @@ end;
    Realiza o tratamento de uma String recebida de um Serviço Web
    Transforma caracteres HTML Entity em ASCII ou vice versa
  ------------------------------------------------------------------------------}
-
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True ) : String;
 var
@@ -3140,6 +3151,9 @@ begin
   Result := AStr;
 end;
 
+{------------------------------------------------------------------------------
+   Retorna o conteudo de uma Tag dentro de um arquivo XML
+ ------------------------------------------------------------------------------}
 function LerTagXML(const AXML, ATag: String; IgnoreCase: Boolean): String;
 Var
   PI, PF : Integer ;
@@ -3167,6 +3181,38 @@ begin
 
   Result := copy(AXML, PI, PF-PI)
 end ;
+
+
+{------------------------------------------------------------------------------
+   Retorna True se o XML contêm a TAG de encoding em UTF8, no seu início.
+ ------------------------------------------------------------------------------}
+function XmlEhUTF8(const AXML: String): Boolean;
+begin
+  Result := (pos('encoding="utf-8"', LowerCase(LeftStr(AXML, 50))) > 0);
+end;
+
+{------------------------------------------------------------------------------
+   Se XML não contiver a TAG de encoding em UTF8, no seu início, adiciona a TAG
+   e converte o conteudo do mesmo para UTF8 (se necessário, dependendo da IDE)
+ ------------------------------------------------------------------------------}
+function ConverteXMLtoUTF8(const AXML: String): String;
+var
+  UTF8Str: String;
+begin
+  if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
+  begin
+    {$IFNDEF UNICODE}
+    UTF8Str := UTF8Encode(AXML);
+    {$ELSE}
+    UTF8Str := AXML;
+    {$ENDIF}
+
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + UTF8Str;
+  end
+  else
+    Result := AXML;
+end;
+
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char; Delimiter: char);

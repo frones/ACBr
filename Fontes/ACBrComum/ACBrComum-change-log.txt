@@ -38,6 +38,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 26/07/2015       (por: DSA)
+-- ACBrUtil --
+[+] Movido os seguintes métodos de ACBrDFeUtil
+function XmlEhUTF8(const AXML: String): Boolean;
+function ConverteXMLtoUTF8(const AXML: String): String;
+
+[*] Método "QuebraLinhas" modificado para respeitar as Quebras de Linha 
+   existentes no texto
+
 Data: 14/07/2015       (por: Regys Silveira)
 -- ACBrUtil --
 [*] Adicionado overload de FormatFloatBr com parametro de mascara pre-definida.

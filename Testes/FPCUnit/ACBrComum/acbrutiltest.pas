@@ -669,6 +669,7 @@ type
     procedure QuebraEmNoventaColunas;
     procedure QuebraEmQuarentaColunas;
     procedure QuebraEmCinquentaComSeparadorE;
+    procedure QuebraStrComLineBreakEm32cols;
   end;
 
   { TraduzComandoTest }
@@ -1130,7 +1131,7 @@ var
   Resp: String;
 begin
   Resp := QuebraLinhas(AStr,40);
-         //   0....+....1....+....2....+....3....+....4
+                 //   0....+....1....+....2....+....3....+....4
   CheckEquals(ACBrStr('Dez Milhões e Duzentos e Cinquenta e ')+sLineBreak+
               ACBrStr('Cinco Mil e Quatrocentos e Trinta e ')+sLineBreak+
               ACBrStr('Cinco Reais') ,Resp );
@@ -1141,9 +1142,35 @@ var
   Resp: String;
 begin
   Resp := QuebraLinhas(AStr,50,'e');
-         //   0....+....1....+....2....+....3....+....4....+....5
+                //   0....+....1....+....2....+....3....+....4....+....5
   CheckEquals(ACBrStr('Dez Milhões e Duzentos e Cinquenta e Cinco Mil e')+sLineBreak+
               ACBrStr(' Quatrocentos e Trinta e Cinco Reais'), Resp );
+end;
+
+procedure QuebraLinhasTest.QuebraStrComLineBreakEm32cols;
+var
+  Resp: String;
+  AMsg1, AMsg2: String;
+begin
+  AMsg1 := 'Erro ao enviar Dados da Venda:'+sLineBreak+
+           '539-Rejeição: Duplicidade de NF-e com diferença na Chave de Acesso'+sLineBreak+
+           '[chNFe:35150705481336000137650220000000031000000626]'+sLineBreak+
+           '[nRec:351000006395525]'+sLineBreak+
+           'Tentar novamente ?';
+
+      //   0....+....1....+....2....+....3....+....4....+....5
+  AMsg2 := 'Erro ao enviar Dados da Venda:'+sLineBreak+
+           '539-Rejeição: Duplicidade de '+sLineBreak+
+           'NF-e com diferença na Chave de '+sLineBreak+
+           'Acesso'+sLineBreak+
+           '[chNFe:3515070548133600013765022'+sLineBreak+
+           '0000000031000000626]'+sLineBreak+
+           '[nRec:351000006395525]'+sLineBreak+
+           'Tentar novamente ?';
+
+  Resp := QuebraLinhas( ACBrStr(AMsg1), 32);
+
+  CheckEquals( ACBrStr(AMsg2), Resp );
 end;
 
 { AjustaLinhasTest }

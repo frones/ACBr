@@ -120,6 +120,7 @@ type
     function GetCertNumeroSerie: String;
     function GetCertSubjectName: String;
     function GetHTTPResultCode: Integer;
+    function GetInicializado: Boolean;
     function GetInternalErrorCode: Integer;
     function GetSenha: AnsiString;
 
@@ -135,6 +136,11 @@ type
     constructor Create;
     procedure Clear;
     destructor Destroy; override;
+
+    property Inicializado: Boolean read GetInicializado;
+
+    procedure Inicializar;
+    procedure DesInicializar;
 
     // Nota: ConteudoXML, DEVE estar em UTF8 //
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -227,6 +233,16 @@ begin
   end;
 
   inherited Destroy;
+end;
+
+procedure TDFeSSL.Inicializar;
+begin
+  InitSSLClass();
+end;
+
+procedure TDFeSSL.DesInicializar;
+begin
+  DeInitSSLClass;
 end;
 
 function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -342,6 +358,11 @@ end;
 function TDFeSSL.GetHTTPResultCode: Integer;
 begin
   Result := FSSLClass.HTTPResultCode;
+end;
+
+function TDFeSSL.GetInicializado: Boolean;
+begin
+  Result := FSSLClass.Inicializado;
 end;
 
 function TDFeSSL.GetInternalErrorCode: Integer;

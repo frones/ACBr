@@ -101,7 +101,7 @@ type
     function GetPathInu(CNPJ: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
     function GetPathCCe(CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
@@ -292,12 +292,12 @@ begin
   Result := GetPath(FDownloadNFe.PathDownload, 'Down', CNPJ, Data);
 end;
 
-function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento;
-  CNPJ: String = ''): String;
+function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String;
+  Data: TDateTime): String;
 var
   Dir, Evento: String;
 begin
-  Dir := GetPath(FPathEvento, 'Evento', CNPJ);
+  Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
 
   if AdicionarLiteral then
   begin

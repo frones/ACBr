@@ -48,14 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/07/2015   (por: DSA)
+-- ACBrNFe --
 [*] Ajustes para evitar nova geração do XML em GravarXML e GravarTXT,
     IMPORTANTE: Após gerado o XML, o mesmo ficará armazenado em "XMLOriginal"
 	Se modificar alguma propriedade do Componente, será necessário chamar novamente
 	"GerarXML" para atualizar "XMLOriginal"
-	
-[*] Melhora na performance de "ValidarRegrasdeNegocios", adicionado Logs para 
+[*] Melhora na performance de "ValidarRegrasdeNegocios", adicionado Logs para
     DEBUG
-
+[*] Adicionado parâmetro Data em: GetPathEvento
 
 14/07/2015
 [*] Alterado a forma de gerar o Envelope Soap do DistribuicaoDFe e acrescentado

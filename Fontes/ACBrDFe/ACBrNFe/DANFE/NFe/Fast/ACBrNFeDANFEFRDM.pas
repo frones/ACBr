@@ -1032,8 +1032,7 @@ begin
             FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
         end;
 
-        {todo: verificar o que fazer, pois o método se encontra na classe TACBrNFe}
-        //FieldByName('URL').AsString := GetURLConsultaNFCe(cUF, tpAmb);
+        FieldByName('URL').AsString := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLConsultaNFCe(cUF, tpAmb);
       end
       else
       begin
@@ -1409,15 +1408,12 @@ begin
     begin
       if ((FNFe.Ide.tpEmis = teContingencia) or (FNFe.Ide.tpEmis = teFSDA)) then
       begin
-        {todo: verificar o que fazer pois o método foi movido para TACBrNFe}
-        //vChave_Contingencia := GerarChaveContingencia(FNFe);
-        FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
-
-        FieldByName('Contingencia_ID').AsString := vChave_Contingencia;
+        vChave_Contingencia := TACBrNFe(DANFEClassOwner.ACBrNFe).GerarChaveContingencia(FNFe);
+        FieldByName('ChaveAcesso_Descricao').AsString  := 'CHAVE DE ACESSO';
+        FieldByName('Contingencia_ID').AsString        := vChave_Contingencia;
         FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
-        {todo: verificar o que fazer pois o método foi movido para TACBrNFe}
-        //FieldByName('Contingencia_Valor').AsString := FormatarChaveContigencia(vChave_Contingencia);
-        FieldByName('ConsultaAutenticidade').AsString := '';
+        FieldByName('Contingencia_Valor').AsString     := FormatarChaveAcesso(vChave_Contingencia);
+        FieldByName('ConsultaAutenticidade').AsString  := '';
       end
       else
       //Modificado em 22/05/2013 - Fábio Gabriel
@@ -2230,48 +2226,45 @@ begin
   qrCode := '';
   if Assigned(NFe) then
   begin
-   if (NFe.Ide.modelo = 55) and (FNFe.Ide.tpImp = tiSimplificado) then
-   begin
-     if cdsParametros.FieldByName('Imagem').AsString = '' then
-     begin
+    if (NFe.Ide.modelo = 55) and (FNFe.Ide.tpImp = tiSimplificado) then
+    begin
+      if cdsParametros.FieldByName('Imagem').AsString = '' then
+      begin
         frxReport.FindObject('PageHeader1').Visible := False;
         frxReport.FindObject('ImgLogo').Visible := False;
-     end
-     else
-     begin
+      end
+      else
+      begin
         frxReport.FindObject('PageHeader1').Visible := True;
         frxReport.FindObject('ImgLogo').Visible := True;
-     end;
-   end;
+      end;
+    end;
 
-   if (NFe.Ide.modelo = 65) then
-   begin
-     if cdsParametros.FieldByName('Imagem').AsString = '' then
-     begin
+    if (NFe.Ide.modelo = 65) then
+    begin
+      if cdsParametros.FieldByName('Imagem').AsString = '' then
+      begin
         frxReport.FindObject('ReportTitle1').Visible := False;
         frxReport.FindObject('ImgLogo').Visible := False;
-     end
-     else
-     begin
+      end
+      else
+      begin
         frxReport.FindObject('ReportTitle1').Visible := True;
         frxReport.FindObject('ImgLogo').Visible := True;
-     end;
+      end;
 
-     {todo: verificar o que fazer pois o método foi movido para TACBrNFe}
-     {
-     qrcode := GetURLQRCode( NFe.ide.cUF,
-                                      NFe.ide.tpAmb,
-                                      OnlyNumber(NFe.InfNFe.ID),
-                                      IfThen(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
-                                      NFe.ide.dEmi,
-                                      NFe.Total.ICMSTot.vNF,
-                                      NFe.Total.ICMSTot.vICMS,
-                                      NFe.signature.DigestValue,
-                                      TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.IdToken,
-                                      TACBrNFe( FDANFEClassOwner.ACBrNFe ).Configuracoes.Geral.Token );
+      qrcode := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLQRCode(
+        NFe.ide.cUF,
+        NFe.ide.tpAmb,
+        OnlyNumber(NFe.InfNFe.ID),
+        IfThen(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
+        NFe.ide.dEmi,
+        NFe.Total.ICMSTot.vNF,
+        NFe.Total.ICMSTot.vICMS,
+        NFe.signature.DigestValue
+      );
 
       PintarQRCode( qrcode, TfrxPictureView(frxReport.FindObject('ImgQrCode')).Picture );
-      }
     end;
   end;
 end;

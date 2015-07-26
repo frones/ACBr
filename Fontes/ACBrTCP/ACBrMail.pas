@@ -291,6 +291,7 @@ begin
   fMIMEMess.Clear;
   fReplyTo.Clear;
   fBCC.Clear;
+  fSubject := '';
   fBody.Clear;
   fAltBody.Clear;
 end;

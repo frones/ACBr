@@ -560,7 +560,13 @@ procedure TACBrTCPServer.SetTerminador( const AValue: String) ;
 begin
   VerificaAtivo ;
   fsTerminador  := AValue;
-  fs_Terminador := TraduzComando( AnsiString( fsTerminador ) ) ;
+  fs_Terminador := TraduzComando( fsTerminador ) ;
+
+  if (fs_Terminador = '') and (AValue <> '') then  // não usou notação '#13,#10'
+  begin
+    fs_Terminador := AValue;
+    fsTerminador := StringToAsc(AValue);
+  end;
 end;
 
 procedure TACBrTCPServer.SetTimeOut(const Value: Integer);

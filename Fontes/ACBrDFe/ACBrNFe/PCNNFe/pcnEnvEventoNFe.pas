@@ -249,17 +249,27 @@ begin
             if (Evento.Items[i].InfEvento.detEvento.dest.IE <> '') and (sModelo = '55') then
               Gerador.wCampo(tcStr, 'P31', 'IE', 02, 14, 1, Evento.Items[i].InfEvento.detEvento.dest.IE);
 
-//            Gerador.wGrupo('/dest');
-
-            Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
-            Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
-
+            // Alterado em 15/07/2015 por Italo
+            // para ficar em conformidade com os Schemas
             if sModelo = '55' then
-              Gerador.wCampo(tcDe2, 'P34', 'vST', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
+            begin
+              // No EPEC da NF-e segundo o schema as TAGs vNF, vICMS e vST estão dentro do grupo dest.
 
-            // Alterado em 22/07/2014 por Italo
-            // para ficar em conformidade com o Schema
-            Gerador.wGrupo('/dest');
+              Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
+              Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
+              Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
+
+              Gerador.wGrupo('/dest');
+            end
+            else begin
+              // No EPEC da NFC-e segundo o schema as TAGs vNF e vICMS estão fora do grupo dest e não
+              // tem a TAG vST.
+
+              Gerador.wGrupo('/dest');
+
+              Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
+              Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
+            end;
 
           end;
         tePedProrrog1,

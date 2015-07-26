@@ -700,12 +700,10 @@ procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean;
 var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
+  RLFiltro: TRLCustomSaveFilter;
 begin
   {$IFDEF FPC}
    LoadPortugueseStrings;
-  {$ELSE}
-   // Evitando mensagem de versão do fortes //
-   //SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
@@ -717,7 +715,7 @@ begin
       Resumido := DanfeResumido;
 
       RLPrinter.Copies     := NumCopias ;
-      
+
       if ACBrNFeDANFCeFortes.Impressora <> '' then
         RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
 
@@ -730,6 +728,34 @@ begin
           RLLayout.PreviewModal
         else
           RLLayout.Print;
+      end
+      else
+      begin
+        if RLLayout.Prepare then
+        begin
+          case Filtro of
+            fiPDF  : RLFiltro := RLPDFFilter1;
+            fiHTML : RLFiltro := RLHTMLFilter1;
+          else
+            exit ;
+          end ;
+
+          {$IFDEF FPC}
+          RLFiltro.Copies := NumCopias ;
+          {$ENDIF}          
+          
+          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;          
+          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
+          
+          {$IFDEF FPC}
+          RLFiltro.Pages := RLLayout.Pages ;
+          RLFiltro.FirstPage := 1;
+          RLFiltro.LastPage := RLLayout.Pages.PageCount;
+          RLFiltro.Run;
+          {$ELSE}
+          RLFiltro.FilterPages( RLLayout.Pages );
+          {$ENDIF}
+        end;
       end;
     end;
   finally

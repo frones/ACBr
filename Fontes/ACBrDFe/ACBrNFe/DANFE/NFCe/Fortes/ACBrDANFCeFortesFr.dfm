@@ -103,7 +103,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Height = 10
           Align = faTop
           Alignment = taRightJustify
-          Caption = 'NOTURNO - Solucoes em Softwares.'
+          Caption = 'Projeto ACBr.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8

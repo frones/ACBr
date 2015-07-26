@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2015   (por: DSA)
+[*] Ajustes para evitar nova geração do XML em GravarXML e GravarTXT,
+    IMPORTANTE: Após gerado o XML, o mesmo ficará armazenado em "XMLOriginal"
+	Se modificar alguma propriedade do Componente, será necessário chamar novamente
+	"GerarXML" para atualizar "XMLOriginal"
+	
+[*] Melhora na performance de "ValidarRegrasdeNegocios", adicionado Logs para 
+    DEBUG
+
+
 14/07/2015
 [*] Alterado a forma de gerar o Envelope Soap do DistribuicaoDFe e acrescentado
     o parametro Data ao gerar o PathDownload, permitindo desta forma salvar o 

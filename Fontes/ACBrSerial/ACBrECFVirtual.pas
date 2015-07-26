@@ -40,9 +40,11 @@ unit ACBrECFVirtual ;
   outras funcionalidades }
 
 interface
-uses ACBrBase, ACBrECFClass, ACBrDevice, ACBrUtil, ACBrConsts,
-     Classes, Contnrs, Math, SysUtils, IniFiles,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
+uses
+  Classes, Contnrs, Math, SysUtils, IniFiles,
+  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+  ACBrBase, ACBrECFClass, ACBrDevice;
+
 type
 
 { TACBrECFVirtualClassItemCupom }
@@ -303,6 +305,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure EnviaConsumidorVirtual ; virtual;
 
   protected
+    function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
     function GetNumGNF: String; override ;
     function GetNumGRG: String; override ;
@@ -430,7 +433,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
 
 implementation
 
-Uses ACBrECF;
+Uses
+  typinfo,
+  ACBrECF, ACBrUtil, ACBrConsts;
 
 { TACBrECFVirtualClassCNFsCupom }
 
@@ -898,12 +903,15 @@ end;
 
 procedure TACBrECFVirtualClass.AbreDia ;
 begin
+  GravaLog('AbreDia');
   fpDia        := now ;
   fpCOOInicial := fpNumCupom ;
 end ;
 
 procedure TACBrECFVirtualClass.AbreDocumento ;
 begin
+  GravaLog('AbreDocumento');
+
   if fpDia > now then
     raise EACBrECFERRO.create(ACBrStr('Erro ! A Data: '+DateToStr(fpDia)+
                                       '‚ maior do que a Data atual: '+DateToStr(now))) ;
@@ -932,130 +940,168 @@ end;
 function TACBrECFVirtualClass.GetNumCupom: String;
 begin
   Result := IntToStrZero( fpNumCupom, 6 ) ;
+  GravaLog('GetNumCupom: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumGNF: String;
 begin
   Result := IntToStrZero( fpNumGNF, 6 ) ;
+  GravaLog('GetNumGNF: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumGRG: String;
 begin
   Result := IntToStrZero( fpNumGRG, 6 ) ;
+  GravaLog('GetNumGRG: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumCDC: String;
 begin
   Result := IntToStrZero( fpNumCDC, 6 ) ;
+  GravaLog('GetNumCDC: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumCCF: String;
 begin
   Result := IntToStrZero( fpNumCCF, 6 ) ;
+  GravaLog('GetNumCCF: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetGrandeTotal: Double;
 begin
   Result := RoundTo( fpGrandeTotal, -2) ;
+  GravaLog('GetGrandeTotal: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetVendaBruta: Double;
 begin
   Result := RoundTo( fpVendaBruta, -2) ;
+  GravaLog('GetVendaBruta: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalSubstituicaoTributaria: Double;
 begin
   Result := RoundTo( fpAliquotas[0].Total, -2 ) ;
+  GravaLog('GetTotalSubstituicaoTributaria: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalNaoTributado: Double;
 begin
   Result := RoundTo( fpAliquotas[1].Total,-2 ) ;
+  GravaLog('GetTotalNaoTributado: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalIsencao: Double;
 begin
   Result := RoundTo( fpAliquotas[2].Total, -2 ) ;
+  GravaLog('GetTotalIsencao: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetNumReducoesZRestantes: String;
 begin
   Result:= '9999';
+  GravaLog('GetNumReducoesZRestantes: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumECF: String;
 begin
   Result := IntToStrZero(fpNumECF,3) ;
+  GravaLog('GetNumECF: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetCNPJ: String;
 begin
   Result := fpCNPJ ;
+  GravaLog('GetCNPJ: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetIE: String;
 begin
   Result := fpIE ;
+  GravaLog('GetIE: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetIM: String;
 begin
   Result := fpIM ;
+  GravaLog('GetIM: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetPAF: String;
 begin
   Result := fpPAF ;
+  GravaLog('GetPAF: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetUsuarioAtual: String;
 begin
   Result := '0001' ;
+  GravaLog('GetUsuarioAtual: '+Result);
+end;
+
+function TACBrECFVirtualClass.GetDataHora: TDateTime;
+begin
+  Result := now;
+  GravaLog('GetDataHora: '+DateTimeToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetDataHoraSB: TDateTime;
 begin
   Result := EncodeDateTime(2013,12,30,11,12,00,00);
+  GravaLog('GetDataHoraSB: '+DateTimeToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetDataMovimento: TDateTime;
+begin
+  Result := fpDia ;
+  GravaLog('GetDataMovimento: '+DateTimeToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetSubModeloECF: String;
 begin
   Result := 'Virtual' ;
+  GravaLog('GetSubModeloECF: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumSerie: String;
 begin
   Result := fpNumSerie ;
+  GravaLog('GetNumSerie: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumCRO: String;
 begin
   Result := IntToStrZero(fpNumCRO, 3) ;
+  GravaLog('GetNumCRO: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumCRZ: String;
 begin
   Result := IntToStrZero(fpReducoesZ, 6);
+  GravaLog('GetNumCRZ: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumVersao: String ;
 begin
   Result := ACBR_VERSAO ;
+  GravaLog('GetNumVersao: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetTotalPago: Double;
 begin
   Result := RoundTo( fpTotalPago, -2) ;
+  GravaLog('GetTotalPago: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetSubTotal: Double;
 begin
   Result := RoundTo( fpSubTotal, -2) ;
+  GravaLog('GetSubTotal: '+FloatToStr(Result));
 end;
 
 procedure TACBrECFVirtualClass.MudaHorarioVerao ;
 begin
+  GravaLog('MudaHorarioVerao');
   fpVerao := not fpVerao ;
 
   try
@@ -1068,6 +1114,7 @@ end;
 
 procedure TACBrECFVirtualClass.MudaHorarioVerao(EHorarioVerao: Boolean);
 begin
+  GravaLog('MudaHorarioVerao('+BoolToStr(EHorarioVerao)+')');
   if EHorarioVerao <> HorarioVerao then
     MudaHorarioVerao ;
 end;
@@ -1079,6 +1126,7 @@ end;
 
 procedure TACBrECFVirtualClass.VerificaPodeCancelarCupom;
 begin
+  GravaLog('VerificaPodeCancelarCupom');
   if ((fpItensCupom.Count = 0) and (Estado <> estVenda) ) and
      ((fpCNFCupom.Count   = 0) and (Estado <> estNaoFiscal) ) then
     raise EACBrECFERRO.Create(ACBrStr('Último Documento não é Cupom')) ;
@@ -1086,6 +1134,7 @@ end;
 
 procedure TACBrECFVirtualClass.AbreCupom ;
 begin
+  GravaLog('AbreCupom');
   TestaPodeAbrirCupom ;
 
   try
@@ -1712,6 +1761,8 @@ Var
   SL      : TStringList ;
   Tratado : Boolean;
 begin
+  GravaLog('LeArqINI');
+
   if fpNomeArqINI = '' then
     fpNomeArqINI := CalculaNomeArqINI;
 
@@ -1753,6 +1804,7 @@ Var
   ComprovanteVirtual : TACBrECFComprovanteNaoFiscal;
   RelatGerencial     : TACBrECFRelatorioGerencial;
 begin
+  GravaLog('INItoClass');
   Ini := TMemIniFile.Create( '' ) ;
   try
     Ini.Clear;
@@ -1899,6 +1951,7 @@ Var
   FormaPagamento      : TACBrECFFormaPagamento ;
   ComprovanteNaoFiscal: TACBrECFComprovanteNaoFiscal;
 begin
+  GravaLog('CriarMemoriaInicial');
   try
      if fpNumSerie = '' then
        fpNumSerie := 'ACBR01NF'+ FormatDateTime( 'ddmmyyhhnnss', now ) +  ' ' ;
@@ -1984,6 +2037,7 @@ Var
   A   : Integer ;
   S   : String ;
 begin
+  GravaLog('ClasstoINI');
   Ini := TMemIniFile.Create( '' ) ;
   try
     Ini.Clear;
@@ -2134,25 +2188,30 @@ begin
     GravaArqINI ;
 
   Result := fpEstado ;
+  GravaLog('GetEstado '+GetEnumName(TypeInfo(TACBrECFEstado), integer( fpEstado ) ));
 end ;
 
 function TACBrECFVirtualClass.GetArredonda: Boolean;
 begin
   Result := true  ;  { Virtual sempre arredonda }
+  GravaLog('GetArredonda: '+BoolToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetHorarioVerao: Boolean;
 begin
   Result := fpVerao ;
+  GravaLog('GetHorarioVerao: '+BoolToStr(Result));
 end;
 
 procedure TACBrECFVirtualClass.CarregaFormasPagamento;
 begin
+  GravaLog('CarregaFormasPagamento');
   LeArqINI;
 end;
 
 procedure TACBrECFVirtualClass.LerTotaisFormaPagamento;
 begin
+  GravaLog('LerTotaisFormaPagamento');
   CarregaFormasPagamento ;
 end;
 
@@ -2162,6 +2221,7 @@ Var
   FPagto : TACBrECFFormaPagamento ;
   A : Integer ;
 begin
+  GravaLog( ComandoLOG );
   Descricao := LeftStr(Trim(Descricao),20) ;         { Ajustando tamanho final }
 
   if not Assigned(fpFormasPagamentos) then
@@ -2188,11 +2248,13 @@ end;
 
 procedure TACBrECFVirtualClass.CarregaRelatoriosGerenciais;
 begin
+  GravaLog('CarregaRelatoriosGerenciais');
   LeArqINI;
 end;
 
 procedure TACBrECFVirtualClass.LerTotaisRelatoriosGerenciais;
 begin
+  GravaLog('LerTotaisRelatoriosGerenciais');
   CarregaRelatoriosGerenciais;
 end;
 
@@ -2202,6 +2264,8 @@ Var
   RelGer : TACBrECFRelatorioGerencial ;
   A : Integer ;
 begin
+  GravaLog( ComandoLOG );
+
   Descricao := LeftStr(Trim(Descricao),20) ;         { Ajustando tamanho final }
 
   if not Assigned(fpRelatoriosGerenciais) then
@@ -2228,11 +2292,13 @@ end;
 
 procedure TACBrECFVirtualClass.CarregaAliquotas;
 begin
+  GravaLog('CarregaAliquotas');
   LeArqINI;
 end;
 
 procedure TACBrECFVirtualClass.LerTotaisAliquota;
 begin
+  GravaLog('LerTotaisAliquota');
   CarregaAliquotas ;
 end;
 
@@ -2242,6 +2308,8 @@ Var
   AliquotaStr : String ;
   I: Integer;
 begin
+  GravaLog( ComandoLOG );
+
   Result      := nil ;
   AliquotaStr := ''  ;
 
@@ -2277,6 +2345,8 @@ Var
   Aliq : TACBrECFAliquota ;
   A    : Integer ;
 begin
+  GravaLog( ComandoLOG );
+
   Tipo := UpCase(Tipo) ;
 
   if not Assigned( fpAliquotas ) then
@@ -2304,12 +2374,14 @@ end;
 
 procedure TACBrECFVirtualClass.CarregaComprovantesNaoFiscais;
 begin
+  GravaLog( 'CarregaComprovantesNaoFiscais' );
   LeArqINI;
 end;
 
 procedure TACBrECFVirtualClass.LerTotaisComprovanteNaoFiscal ;
 begin
-   CarregaComprovantesNaoFiscais ;
+  GravaLog( 'LerTotaisComprovanteNaoFiscal' );
+  CarregaComprovantesNaoFiscais ;
 end;
 
 procedure TACBrECFVirtualClass.ProgramaComprovanteNaoFiscal(var Descricao : String ;
@@ -2318,6 +2390,8 @@ Var
   CNF : TACBrECFComprovanteNaoFiscal ;
   A : Integer ;
 begin
+  GravaLog( ComandoLOG );
+
   if not Assigned( fpComprovantesNaoFiscais ) then
     CarregaComprovantesNaoFiscais;
 
@@ -2347,11 +2421,14 @@ end;
 
 procedure TACBrECFVirtualClass.IdentificaOperador(Nome: String);
 begin
+  GravaLog( ComandoLOG );
   Operador := Nome;
 end;
 
 procedure TACBrECFVirtualClass.IdentificaPAF(NomeVersao, MD5: String);
 begin
+  GravaLog( ComandoLOG );
+
   fpPAF := '';
   if NomeVersao <> '' then
     fpPAF := NomeVersao ;
@@ -2377,11 +2454,6 @@ begin
   // Não Traduz... pois tradução será feita por TACBrPosPrinter
   Result := ATag + Conteudo +
             TraduzirTag( '</'+copy(ATag,2,Length(ATag)) );
-end;
-
-function TACBrECFVirtualClass.GetDataMovimento: TDateTime;
-begin
-  Result := fpDia ;
 end;
 
 end.

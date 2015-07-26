@@ -201,12 +201,14 @@ type
     private
       FFatorX: Byte;
       FFatorY: Byte;
+      FIgnorarLogo: Boolean;
       FKeyCode1: Byte;
       FKeyCode2: Byte;
     public
       constructor Create;
 
     published
+      property IgnorarLogo: Boolean read FIgnorarLogo write FIgnorarLogo default False;
       property KeyCode1: Byte read FKeyCode1 write FKeyCode1 default 32;
       property KeyCode2: Byte read FKeyCode2 write FKeyCode2 default 32;
       property FatorX: Byte read FFatorX write FFatorX default 1;
@@ -359,6 +361,7 @@ begin
   FKeyCode2 := 32;
   FFatorX := 1;
   FFatorY := 1;
+  FIgnorarLogo := False;
 end;
 
 { TACBrConfigQRCode }
@@ -762,7 +765,10 @@ begin
     TagTraduzida := FPosPrinterClass.Cmd.Beep
 
   else if ATag = cTagLogotipo then
-    TagTraduzida := FPosPrinterClass.ComandoLogo
+    if FConfigLogo.IgnorarLogo then
+      TagTraduzida := ''
+    else
+      TagTraduzida := FPosPrinterClass.ComandoLogo
 
   else if ATag = cTagPulodeLinha then
     TagTraduzida := LF

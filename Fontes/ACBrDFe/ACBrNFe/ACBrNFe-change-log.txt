@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/07/2015
+-- ACBrNFeDANFeESCPOS --  (por: DSA)
+[*] Modificado para usar as novas Tags de configuração QRCode procurando manter
+    os valores definidos pelo Usuário em TACBrPosPrinter
+
 26/07/2015   (por: DSA)
 -- ACBrNFe --
 [*] Ajustes para evitar nova geração do XML em GravarXML e GravarTXT,

@@ -185,13 +185,6 @@ procedure TACBrNFeDANFeESCPOS.GerarClicheEmpresa;
 var
   Cmd, LinhaCmd: String;
 begin
-  FPosPrinter.ConfigBarras.Altura := 40;
-  FPosPrinter.ConfigBarras.LarguraLinha := 2;
-  FPosPrinter.ConfigBarras.MostrarCodigo := False;
-
-  //FPosPrinter.ConfigQRCode.LarguraModulo := 4;
-  FPosPrinter.ConfigQRCode.ErrorLevel := 0;
-
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
   if Length ( Trim( FpNFe.Emit.xNome ) ) > FPosPrinter.ColunasFonteNormal then
@@ -525,6 +518,7 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarRodape(Cancelamento: Boolean = False);
 var
   qrcode: AnsiString;
+  ConfigQRCodeErrorLevel: Integer;
 begin
   FPosPrinter.Buffer.Add('</linha_simples>');
   FPosPrinter.Buffer.Add('</ce>Consulta via leitor de QR Code');
@@ -540,8 +534,12 @@ begin
     FpNFe.signature.DigestValue
   );
 
+  ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
+
   // impressão do qrcode
-  FPosPrinter.Buffer.Add('<qrcode>'+qrcode+'</qrcode>');
+  FPosPrinter.Buffer.Add( '<qrcode_error>0</qrcode_error>'+
+                          '<qrcode>'+qrcode+'</qrcode>'+
+                          '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
 
   // protocolo de autorização
   if FpNFe.Ide.tpEmis <> teOffLine then

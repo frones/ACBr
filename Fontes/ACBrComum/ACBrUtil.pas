@@ -315,8 +315,11 @@ begin
     if sLineBreak <> LF then
       Result := StringReplace(Result, sLineBreak, LF, [rfReplaceAll]);
 
-    Result := StringReplace(Result, LF, NewLineBreak, [rfReplaceAll]);
-    Result := StringReplace(Result, CR, NewLineBreak, [rfReplaceAll]);
+    if NewLineBreak <> LF then
+      Result := StringReplace(Result, LF, NewLineBreak, [rfReplaceAll]);
+
+    if NewLineBreak <> CR then
+      Result := StringReplace(Result, CR, NewLineBreak, [rfReplaceAll]);
   end
 end;
 

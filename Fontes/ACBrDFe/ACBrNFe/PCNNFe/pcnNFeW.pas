@@ -2037,8 +2037,8 @@ begin
     (nfe.InfAdic.procRef.Count > 0) then
   begin
     Gerador.wGrupo('infAdic', 'Z01');
-    Gerador.wCampo(tcStr, 'Z02', 'infAdFisco', 01, 2000, 0, nfe.InfAdic.infAdFisco, DSC_INFADFISCO);
-    Gerador.wCampo(tcStr, 'Z03', 'infCpl    ', 01, 5000, 0, nfe.InfAdic.infCpl, DSC_INFCPL);
+    Gerador.wCampo(tcStr, 'Z02', 'infAdFisco', 01, 2000, 0, ChangeLineBreak(nfe.InfAdic.infAdFisco, ';'), DSC_INFADFISCO);
+    Gerador.wCampo(tcStr, 'Z03', 'infCpl    ', 01, 5000, 0, ChangeLineBreak(nfe.InfAdic.infCpl, ';'), DSC_INFCPL);
     (**)GerarInfAdicObsCont;
     (**)GerarInfAdicObsFisco;
     (**)GerarInfAdicProcRef;

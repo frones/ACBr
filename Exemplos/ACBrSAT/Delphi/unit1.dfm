@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 338
   Top = 132
-  Width = 810
-  Height = 501
   Caption = 'SAT Teste - Projeto ACBr'
+  ClientHeight = 530
+  ClientWidth = 794
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -28,7 +28,7 @@ object Form1: TForm1
     Left = 0
     Top = 208
     Width = 794
-    Height = 212
+    Height = 299
     ActivePage = tsLog
     Align = alClient
     TabOrder = 0
@@ -38,7 +38,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 786
-        Height = 184
+        Height = 271
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -56,7 +56,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 786
-        Height = 184
+        Height = 271
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
@@ -68,11 +68,11 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 786
-        Height = 184
+        Height = 271
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C0000003C510000041300000000000000000000000000000000000000000000
+          4C0000003C510000021C00000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -85,14 +85,14 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 786
-        Height = 159
+        Height = 246
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
       end
       object Panel2: TPanel
         Left = 0
-        Top = 159
+        Top = 246
         Width = 786
         Height = 25
         Align = alBottom
@@ -101,7 +101,7 @@ object Form1: TForm1
           Left = 1
           Top = 1
           Width = 105
-          Height = 13
+          Height = 23
           Align = alLeft
           Caption = 'Chave Cancelamento:'
           Color = clBtnFace
@@ -124,11 +124,11 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 786
-        Height = 184
+        Height = 271
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C0000003C510000041300000000000000000000000000000000000000000000
+          4C0000003C510000021C00000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -166,7 +166,6 @@ object Form1: TForm1
         Width = 133
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 1
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -224,14 +223,11 @@ object Form1: TForm1
         Top = 15
         Width = 619
         Height = 183
-        ActivePage = Impressao
+        ActivePage = tsDadosEmit
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
-          DesignSize = (
-            611
-            155)
           object Label9: TLabel
             Left = 21
             Top = 7
@@ -328,7 +324,6 @@ object Form1: TForm1
             Width = 388
             Height = 21
             Cursor = crIBeam
-            Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
           end
           object edtCodigoAtivacao: TEdit
@@ -400,8 +395,6 @@ object Form1: TForm1
             Width = 120
             Height = 21
             Style = csDropDownList
-            Anchors = [akLeft, akTop, akRight]
-            ItemHeight = 13
             TabOrder = 9
           end
           object cbxSalvarCFe: TCheckBox
@@ -546,7 +539,6 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -555,7 +547,6 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -564,7 +555,6 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 3
           end
         end
@@ -604,7 +594,6 @@ object Form1: TForm1
             Top = 89
             Width = 594
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
           end
         end
@@ -803,7 +792,6 @@ object Form1: TForm1
               Width = 82
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               ItemIndex = 1
               TabOrder = 1
               Text = 'WEP'
@@ -885,7 +873,6 @@ object Form1: TForm1
               Width = 129
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 0
               Text = '0= N'#227'o usa proxy'
@@ -1144,9 +1131,6 @@ object Form1: TForm1
               Width = 22
               Height = 22
               Anchors = [akTop, akRight]
-              ModalResult = 1
-              TabOrder = 0
-              OnClick = btSerialClick
               Glyph.Data = {
                 36030000424D3603000000000000360000002800000010000000100000000100
                 1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -1175,6 +1159,9 @@ object Form1: TForm1
                 00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
                 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
               Layout = blGlyphTop
+              ModalResult = 1
+              TabOrder = 0
+              OnClick = btSerialClick
             end
             object cbUsarEscPos: TRadioButton
               Left = 8
@@ -1192,7 +1179,6 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
               TabOrder = 2
             end
             object cbxPorta: TComboBox
@@ -1201,7 +1187,6 @@ object Form1: TForm1
               Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
               TabOrder = 3
             end
             object cbxPagCodigo: TComboBox
@@ -1211,7 +1196,6 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
               TabOrder = 4
             end
             object seColunas: TSpinEdit
@@ -1259,7 +1243,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 420
+    Top = 507
     Width = 794
     Height = 23
     Panels = <

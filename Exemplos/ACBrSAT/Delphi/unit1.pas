@@ -198,13 +198,8 @@ type
     Label28: TLabel;
     Label29: TLabel;
     cbImprimir1Linha: TCheckBox;
-    {$IFDEF DELPHI9_UP}
-     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
-     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
-    {$ELSE}
-     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
-     procedure ACBrSAT1GetsignAC(var Chave: String);
-	{$ENDIF} 
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
     procedure ACBrSAT1Log(const AString: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
@@ -381,27 +376,15 @@ begin
   end
 end ;
 
-{$IFDEF DELPHI9_UP}
- procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
- begin
-   Chave := edtCodigoAtivacao.Text;
- end;
+procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+begin
+  Chave := edtCodigoAtivacao.Text;
+end;
 
- procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
- begin
-   Chave := edtSwHAssinatura.Text;
- end;
-{$ELSE}
- procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
- begin
-   Chave := edtCodigoAtivacao.Text;
- end;
-
- procedure TForm1.ACBrSAT1GetsignAC(var Chave: String);
- begin
-   Chave := edtSwHAssinatura.Text;
- end;
-{$ENDIF}
+procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
+begin
+  Chave := edtSwHAssinatura.Text;
+end;
 
 procedure TForm1.ACBrSAT1Log(const AString: String);
 begin
@@ -854,6 +837,7 @@ procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
   TotalItem: Double;
   A: Integer;
+  TotalProdutos, TotalImpostoAprox: Double;
 begin
   PageControl1.ActivePage := tsGerado;
 
@@ -872,163 +856,85 @@ begin
     ide.numeroCaixa := 1;
 
     Dest.CNPJCPF := '05481336000137';
-    Dest.xNome := 'D.J. SYSTEM';
+    Dest.xNome   := 'D.J. SYSTEM';
 
-    Entrega.xLgr := 'logradouro';
-    Entrega.nro := '112233';
-    Entrega.xCpl := 'complemento';
+    Entrega.xLgr    := 'logradouro';
+    Entrega.nro     := '112233';
+    Entrega.xCpl    := 'complemento';
     Entrega.xBairro := 'bairro';
-    Entrega.xMun := 'municipio';
-    Entrega.UF := 'RJ';
+    Entrega.xMun    := 'municipio';
+    Entrega.UF      := 'RJ';
 
-    For A := 0 to 0 do  // Ajuste aqui para vender mais itens
+    TotalProdutos     := 0;
+    TotalImpostoAprox := 0;
+    for A := 1 to 1 do
     begin
-    with Det.Add do
-    begin
-      nItem := 1 + (A * 3);
-      Prod.cProd := 'ACBR001';
-      Prod.cEAN := '6291041500213';
-      Prod.xProd := 'Assinatura SAC';
-      prod.NCM := '99';
-      Prod.CFOP := '5120';
-      Prod.uCom := 'UN';
-      Prod.qCom := 1;
-      Prod.vUnCom := 120.00;
-      Prod.indRegra := irTruncamento;
-      Prod.vDesc := 1;
-
-      with Prod.obsFiscoDet.Add do
+      with Det.Add do
       begin
-        xCampoDet := 'campo';
-        xTextoDet := 'texto';
+        nItem         := A;
+        Prod.cProd    := 'ACBR' + Format('%3.3d', [A]);
+        Prod.cEAN     := '6291041500213';
+        Prod.xProd    := 'DESCRICAO DO PRODUTO GIGANTE ' + Format('%3.3d', [A]);
+        prod.NCM      := '99';
+        Prod.CFOP     := '5120';
+        Prod.uCom     := 'UN';
+        Prod.indRegra := irTruncamento;
+        Prod.qCom     := 1;
+        Prod.vUnCom   := 10;
+        Prod.vDesc    := 0;
+        Prod.vOutro   := 0;
+
+        //with Prod.obsFiscoDet.Add do
+        //begin
+        //  xCampoDet := 'campo';
+        //  xTextoDet := 'texto';
+        //end;
+
+        Imposto.ICMS.orig  := oeNacional;
+        if ACBrSAT1.Config.emit_cRegTrib = RTRegimeNormal then
+        begin
+          Imposto.ICMS.CST   := cst00;
+          Imposto.ICMS.pICMS := 18;
+        end
+        else
+        begin
+          Imposto.ICMS.CSOSN := csosn102;
+        end;
+
+        Imposto.PIS.CST  := pis49;
+        Imposto.PIS.vBC  := 0;
+        Imposto.PIS.pPIS := 0;
+
+        Imposto.COFINS.CST     := cof49;
+        Imposto.COFINS.vBC     := 0;
+        Imposto.COFINS.pCOFINS := 0;
+
+        infAdProd := 'Informacoes adicionais';
+
+        // imposto aproximado
+        TotalItem := (Prod.qCom * Prod.vUnCom);
+        Imposto.vItem12741 := TotalItem * 0.12;
+
+        TotalProdutos     := TotalProdutos     + TotalItem;
+        TotalImpostoAprox := TotalImpostoAprox + Imposto.vItem12741;
       end;
-
-      TotalItem := (Prod.qCom * Prod.vUnCom);
-      Imposto.vItem12741 := TotalItem * 0.12;
-
-      Imposto.ICMS.orig := oeNacional;
-      Imposto.ICMS.CST := cst00;
-      Imposto.ICMS.pICMS := 18;
-
-      Imposto.PIS.CST := pis01;
-      Imposto.PIS.vBC := TotalItem;
-      Imposto.PIS.pPIS := 0.0065;
-
-      Imposto.COFINS.CST := cof01;
-      Imposto.COFINS.vBC := TotalItem;
-      Imposto.COFINS.pCOFINS := 0.0065;
-      //
-      //Imposto.COFINSST.vBC := 87206.46;
-      //Imposto.COFINSST.pCOFINS := 1.8457;
-
-      infAdProd := 'Informacoes adicionais';
     end;
 
-    with Det.Add do
-    begin
-      nItem := 2 + (A * 3);
-      Prod.cProd := '6291041500213';
-      Prod.cEAN := '6291041500213';
-      Prod.xProd := 'Outro produto Qualquer, com a Descrição Grande';
-      Prod.CFOP := '5529';
-      Prod.uCom := 'un';
-      Prod.qCom := 1.1205;
-      Prod.vUnCom := 1.210;
-      Prod.indRegra := irTruncamento;
-      Prod.vOutro := 2;
-
-      TotalItem := (Prod.qCom * Prod.vUnCom);
-      Imposto.vItem12741 := TotalItem * 0.30;
-
-      Imposto.ICMS.orig := oeNacional;
-      Imposto.ICMS.CST := cst40;
-
-      Imposto.PIS.CST := pis03;
-      Imposto.PIS.qBCProd := TotalItem;
-      Imposto.PIS.vAliqProd := 1.0223;
-
-      Imposto.PISST.qBCProd := TotalItem;
-      Imposto.PISST.vAliqProd := 1.0223;
-
-      Imposto.COFINS.CST := cof03;
-      Imposto.COFINS.qBCProd := TotalItem;
-      Imposto.COFINS.vAliqProd := 1.0223;
-
-      //Imposto.COFINSST.qBCProd := 503.6348;
-      //Imposto.COFINSST.vAliqProd := 779.4577;
-    end;
-
-    with Det.Add do
-    begin
-      nItem := 3 + (A * 3);
-      Prod.cProd := 'abc123';
-      Prod.cEAN := '6291041500213';
-      Prod.xProd := 'ACBrSAT rules';
-      Prod.NCM := '99';
-      Prod.CFOP := '5844';
-      Prod.uCom := 'un';
-      Prod.qCom := 1.1205;
-      Prod.vUnCom := 1.210;
-      Prod.indRegra := irTruncamento;
-
-      TotalItem := (Prod.qCom * Prod.vUnCom);
-
-      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
-      Imposto.ICMS.CSOSN := csosn102;
-
-      Imposto.PIS.CST := pis04;
-
-      Imposto.PISST.qBCProd := TotalItem;
-      Imposto.PISST.vAliqProd := 1.1826;
-
-      Imposto.COFINS.CST := cof06;
-
-      infAdProd := 'Informacoes adicionais';
-    end;
-
-    end;
-    (*
-    with Det.Add do
-    begin
-      nItem := 4;
-      Prod.cProd := 'abc123';
-      Prod.cEAN := '6291041500213';
-      Prod.xProd := 'Nada';
-      Prod.CFOP := '5025';
-      Prod.uCom := 'horas';
-      Prod.qCom := 1.1205;
-      Prod.vUnCom := 1.210;
-      Prod.vProd := 8;
-      Prod.indRegra := irTruncamento;
-      Prod.vOutro := 93.31;
-
-      Imposto.ICMS.orig := oeEstrangeiraAdquiridaBrasil;
-      Imposto.ICMS.CSOSN := csosn900;
-      Imposto.ICMS.pICMS := 1.1234;
-
-      Imposto.PIS.CST := pis49;
-
-      Imposto.PISST.qBCProd := 7528.8947;
-      Imposto.PISST.vAliqProd := 296.2348;
-
-      Imposto.COFINS.CST := cof49;
-    end;
-    *)
-
-    Total.DescAcrEntr.vDescSubtot := 5;
-    Total.vCFeLei12741 := 1.23;
+    Total.DescAcrEntr.vDescSubtot := 0;
+    Total.vCFeLei12741            := TotalImpostoAprox;
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := 50;
-    end;
-
-    with Pagto.Add do
-    begin
-      cMP := mpCartaodeCredito;
       vMP := 100;
     end;
+
+//    with Pagto.Add do
+//    begin
+//      cMP   := mpCartaodeCredito;
+//      vMP   := 50;
+//      cAdmC := 999;
+//    end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'

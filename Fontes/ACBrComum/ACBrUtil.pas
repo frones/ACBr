@@ -285,6 +285,8 @@ function MatchText(const AText: AnsiString; const AValues: array of AnsiString):
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(S: AnsiString): AnsiString; overload;
 
+function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
+
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
 var xOut32 : function (wAddr: word; bOut: byte): byte; stdcall;
@@ -301,6 +303,22 @@ implementation
 
 var
   Randomized : Boolean ;
+
+{-------------------------------------------------------------------------------
+Procedure para trocar a quebra de linha por um caracter separador
+-------------------------------------------------------------------------------}
+function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
+begin
+  Result := Trim(AText);
+  if Result <> '' then
+  begin
+    if sLineBreak <> LF then
+      Result := StringReplace(Result, sLineBreak, LF, [rfReplaceAll]);
+
+    Result := StringReplace(Result, LF, NewLineBreak, [rfReplaceAll]);
+    Result := StringReplace(Result, CR, NewLineBreak, [rfReplaceAll]);
+  end
+end;
 
 {-----------------------------------------------------------------------------
   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com

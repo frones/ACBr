@@ -372,9 +372,10 @@ begin
 
     for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
     begin
-      FdmDanfe.frxPDFExport.FileName := PathPDF +
-                                       StringReplace(UpperCase(FdmDanfe.NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) +
-                                       '-nfe.pdf';
+      FdmDanfe.frxPDFExport.FileName :=
+        PathWithDelim(Self.PathPDF) +
+        StringReplace(UpperCase(FdmDanfe.NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) +
+        '-nfe.pdf';
 
       if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
         ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));

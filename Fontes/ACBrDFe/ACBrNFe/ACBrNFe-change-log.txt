@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 27/07/2015
+-- ACBrNFeNotasFiscais --  (por: DSA)
+[-] Correção para commit efetuado 26/07. XML gravado em:
+    TNFeRecepcao.TratarResposta, TNFeRetRecepcao.TratarRespostaFinal e
+    TNFeConsulta.TratarResposta, não continha as informações de "procNFe"
+
 -- ACBrNFeDANFeESCPOS --  (por: DSA)
 [*] Modificado para usar as novas Tags de configuração QRCode procurando manter
     os valores definidos pelo Usuário em TACBrPosPrinter

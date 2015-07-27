@@ -931,6 +931,7 @@ var
   I: integer;
   chNFe, NomeArquivo: String;
   AProcNFe: TProcNFe;
+  SalvarXML: Boolean;
 begin
   if FPLayout = LayNfeAutorizacao then
   begin
@@ -1050,13 +1051,17 @@ begin
 
           if FPConfiguracoesNFe.Arquivos.Salvar then
           begin
-            if FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas then
+            SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                         TACBrNFe(FPDFeOwner).NotasFiscais.Items[I].Processada;
+
+            if SalvarXML then
             begin
-              if TACBrNFe(FPDFeOwner).NotasFiscais.Items[I].Processada then
-                TACBrNFe(FPDFeOwner).NotasFiscais.Items[I].GravarXML;
-            end
-            else
-              TACBrNFe(FPDFeOwner).NotasFiscais.Items[I].GravarXML;
+              with TACBrNFe(FPDFeOwner).NotasFiscais.Items[I] do
+              begin
+                GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
+                GravarXML;
+              end;
+            end;
           end;
 
           Break;
@@ -1193,6 +1198,7 @@ var
   I, J: integer;
   AProcNFe: TProcNFe;
   AInfProt: TProtNFeCollection;
+  SalvarXML: Boolean;
 begin
   Result := False;
 
@@ -1219,14 +1225,17 @@ begin
             FNotasFiscais.Items[J].NumID + ' não confere.');
         end;
 
-        FNotasFiscais.Items[J].NFe.procNFe.tpAmb := AInfProt.Items[I].tpAmb;
-        FNotasFiscais.Items[J].NFe.procNFe.verAplic := AInfProt.Items[I].verAplic;
-        FNotasFiscais.Items[J].NFe.procNFe.chNFe := AInfProt.Items[I].chNFe;
-        FNotasFiscais.Items[J].NFe.procNFe.dhRecbto := AInfProt.Items[I].dhRecbto;
-        FNotasFiscais.Items[J].NFe.procNFe.nProt := AInfProt.Items[I].nProt;
-        FNotasFiscais.Items[J].NFe.procNFe.digVal := AInfProt.Items[I].digVal;
-        FNotasFiscais.Items[J].NFe.procNFe.cStat := AInfProt.Items[I].cStat;
-        FNotasFiscais.Items[J].NFe.procNFe.xMotivo := AInfProt.Items[I].xMotivo;
+        with FNotasFiscais.Items[J] do
+        begin
+          NFe.procNFe.tpAmb := AInfProt.Items[I].tpAmb;
+          NFe.procNFe.verAplic := AInfProt.Items[I].verAplic;
+          NFe.procNFe.chNFe := AInfProt.Items[I].chNFe;
+          NFe.procNFe.dhRecbto := AInfProt.Items[I].dhRecbto;
+          NFe.procNFe.nProt := AInfProt.Items[I].nProt;
+          NFe.procNFe.digVal := AInfProt.Items[I].digVal;
+          NFe.procNFe.cStat := AInfProt.Items[I].cStat;
+          NFe.procNFe.xMotivo := AInfProt.Items[I].xMotivo;
+        end;
 
         if FPConfiguracoesNFe.Arquivos.Salvar or NaoEstaVazio(
           FNotasFiscais.Items[J].NomeArq) then
@@ -1265,13 +1274,17 @@ begin
 
         if FPConfiguracoesNFe.Arquivos.Salvar then
         begin
-          if FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas then
+          SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                       FNotasFiscais.Items[J].Processada;
+
+          if SalvarXML then
           begin
-            if FNotasFiscais.Items[J].Processada then
-              FNotasFiscais.Items[J].GravarXML;
-          end
-          else
-            FNotasFiscais.Items[J].GravarXML;
+            with FNotasFiscais.Items[J] do
+            begin
+              GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
+              GravarXML;
+            end;
+          end;
         end;
 
         break;
@@ -1616,6 +1629,7 @@ var
   aEventos, aMsg, NomeArquivo: String;
   AProcNFe: TProcNFe;
   I, J: integer;
+  SalvarXML: Boolean;
 begin
   NFeRetorno := TRetConsSitNFe.Create;
 
@@ -1847,13 +1861,14 @@ begin
 
             if FPConfiguracoesNFe.Arquivos.Salvar then
             begin
-              if FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas then
+              SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                           Processada;
+
+              if SalvarXML then
               begin
-                if Processada then
-                  GravarXML();
-              end
-              else
-                GravarXML();
+                GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
+                GravarXML;
+              end;
             end;
           end;
 

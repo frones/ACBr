@@ -1628,25 +1628,26 @@ begin
     EventoMDFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
-    I := Pos('<evento ', EventoMDFe.Gerador.ArquivoFormatoXML);
-    Lote := Copy(EventoMDFe.Gerador.ArquivoFormatoXML, 1, I - 1);
-    Eventos := SeparaDados(EventoMDFe.Gerador.ArquivoFormatoXML, 'envEvento');
-    I := Pos('<evento ', Eventos);
-    Eventos := Copy(Eventos, I, length(Eventos));
+//    I := Pos('<eventoMDFe ', EventoMDFe.Gerador.ArquivoFormatoXML);
+//    Lote := Copy(EventoMDFe.Gerador.ArquivoFormatoXML, 1, I - 1);
+//    Eventos := SeparaDados(EventoMDFe.Gerador.ArquivoFormatoXML, 'envEvento');
+//    I := Pos('<eventoMDFe ', Eventos);
+//    Eventos := Copy(Eventos, I, length(Eventos));
 
+    Eventos := EventoMDFe.Gerador.ArquivoFormatoXML;
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
     while Eventos <> '' do
     begin
-      F := Pos('</evento>', Eventos);
+      F := Pos('</eventoMDFe>', Eventos);
 
       if F > 0 then
       begin
-        Evento := Copy(Eventos, 1, F + 8);
-        Eventos := Copy(Eventos, F + 9, length(Eventos));
+        Evento := Copy(Eventos, 1, F + 12);
+        Eventos := Copy(Eventos, F + 13, length(Eventos));
 
-        AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
+        AssinarXML(Evento, 'eventoMDFe', 'infEvento', 'Falha ao assinar o Envio de Evento ');
 
         EventosAssinados := EventosAssinados + StringReplace(
           FPDadosMsg, '<?xml version="1.0"?>', '', []);
@@ -1655,15 +1656,16 @@ begin
         Break;
     end;
 
-    F := Pos('?>', EventosAssinados);
-    if F <> 0 then
-      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
-        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
-    else
-      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
+//    F := Pos('?>', EventosAssinados);
+//    if F <> 0 then
+//      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
+//        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
+//    else
+//      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
-    // Implementar a validação do evento.
-    AXMLEvento := '';
+    // Separa o XML especifico do Evento para ser Validado.
+    AXMLEvento := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                  SeparaDados(FPDadosMsg, 'detEvento');
 
     with TACBrMDFe(FPDFeOwner) do
     begin

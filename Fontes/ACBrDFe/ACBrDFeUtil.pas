@@ -59,7 +59,9 @@ function ValidaSUFRAMA(AValue: String): Boolean;
 function ValidaRECOPI(AValue: String): Boolean;
 function ValidaNVE(AValue: string): Boolean;
 
+function ConverteXMLtoUTF8(const AXML: String): String;
 function XmlEstaAssinado(const AXML: String): Boolean;
+function XmlEhUTF8(const AXML: String): Boolean;
 function ExtraiURI(const AXML: String): String;
 
 
@@ -260,6 +262,11 @@ begin
   Result := True;
 end;
 
+function XmlEhUTF8(const AXML: String): Boolean;
+begin
+  Result := (pos('encoding="utf-8"', LowerCase(LeftStr(AXML, 50))) > 0);
+end;
+
 function ExtraiURI(const AXML: String): String;
 var
   I, J: integer;
@@ -283,6 +290,25 @@ function XmlEstaAssinado(const AXML: String): Boolean;
 begin
   Result := (pos('<signature', lowercase(AXML)) > 0);
 end;
+
+function ConverteXMLtoUTF8(const AXML: String): String;
+var
+  UTF8Str: String;
+begin
+  if not XmlEhUTF8(AXML) then   // Já foi convertido antes ?
+  begin
+    {$IFNDEF UNICODE}
+    UTF8Str := UTF8Encode(AXML);
+    {$ELSE}
+    UTF8Str := AXML;
+    {$ENDIF}
+
+    Result := '<' + ENCODING_UTF8 + '>' + UTF8Str;
+  end
+  else
+    Result := AXML;
+end;
+
 
 end.
 (*

@@ -406,8 +406,8 @@ end;
 
 procedure TDetEvento.setCondUso(const Value: String);
 begin
-  FCondUso := Value;
-  if FCondUso = '' then
+//  FCondUso := Value;
+//  if FCondUso = '' then
     FCondUso := 'A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/' +
                 'SINIEF 06/89: Fica permitida a utilizacao de carta de correcao,' +
                 ' para regularizacao de erro ocorrido na emissao de documentos ' +

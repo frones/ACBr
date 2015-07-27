@@ -286,7 +286,7 @@ function LayOutToServico(const t: TLayOutMDFe): String;
 begin
   Result := EnumeradoToStr(t,
     ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
-     'MDFeStatusServico', 'LayMDFeEvento', 'MDFeConsNaoEnc',
+     'MDFeStatusServico', 'RecepcaoEvento', 'MDFeConsNaoEnc',
      'MDFeDistribuicaoDFe'],
     [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
       LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
@@ -297,7 +297,7 @@ function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
 begin
   Result := StrToEnumerado(ok, s,
   ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
-   'MDFeStatusServico', 'LayMDFeEvento', 'MDFeConsNaoEnc',
+   'MDFeStatusServico', 'RecepcaoEvento', 'MDFeConsNaoEnc',
    'MDFeDistribuicaoDFe'],
   [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
     LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,

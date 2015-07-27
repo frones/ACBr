@@ -607,10 +607,12 @@ begin
                   csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
                   csosn300, csosn400, csosn500, csosn900:
                     begin
-                      FieldByName('CST').AsString  := CSOSNIcmsToStr(CSOSN);
-                      FieldByName('VBC').AsFloat   := vBC;
-                      FieldByName('PICMS').AsFloat := pICMS;
-                      FieldByName('VICMS').AsFloat := vICMS;
+                      FieldByName('CST').AsString    := CSOSNIcmsToStr(CSOSN);
+                      FieldByName('VBC').AsFloat     := vBC;
+                      FieldByName('PICMS').AsFloat   := pICMS;
+                      FieldByName('VICMS').AsFloat   := vICMS;
+                      FieldByName('VBCST').AsFloat   := vBcST;
+                      FieldByName('VICMSST').AsFloat := vICMSST;
                     end;
                 end;
               end;

@@ -496,6 +496,27 @@ begin
   FTagProcessor.AddTags(cTAGS_FUNCOES, cTAGS_FUNCOES_HELP, False);
   FTagProcessor.AddTags(cTAGS_ALINHAMENTO, cTAGS_ALINHAMENTO_HELP, True);
   FTagProcessor.AddTags(cTAGS_BARRAS, cTAGS_BARRAS_HELP, True);
+  // Tags de Configurações do Cod.Barras //
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagBarraMostrar;
+    Ajuda := 'Configura se deve exibir conteudo abaixo do Cod.Barras: 0-NAO; 1-SIM';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagBarraLargura;
+    Ajuda := 'Configura a Largura das Barras do Cod.Barras: 0 a 5. (0=default)';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagBarraAltura;
+    Ajuda := 'Configura a Altura do Cod.Barras: 0 a 255. (0=default)';
+    EhBloco := True;
+  end;
+
+  // Tags de QRCode e configuração do QRCode //
   with FTagProcessor.Tags.New do
   begin
     Nome := cTagQRCode;
@@ -504,10 +525,62 @@ begin
   end;
   with FTagProcessor.Tags.New do
   begin
+    Nome := cTagQRCodeTipo;
+    Ajuda := 'Configura o Tipo de QRCode: 1,2';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagQRCodeLargura;
+    Ajuda := 'Configura a Largura do QRCode: 1 a 16';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagQRCodeError;
+    Ajuda := 'Configura o Error Level do QRCode: 0 a 3';
+    EhBloco := True;
+  end;
+
+  // Tags de configuração do LogoTipo //
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagLogoImprimir;
+    Ajuda := 'Configura a Impressão ou não do Logo Tipo: 0-NÃO, 1-SIM (default = 1)';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagLogoKC1;
+    Ajuda := 'Configura a posição KC1 do Logo a ser impresso. Ex: 0=48';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagLogoKC2;
+    Ajuda := 'Configura a posição KC2 do Logo a ser impresso. Ex: 1=49';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagLogoFatorX;
+    Ajuda := 'Configura o aumento Horizonal do Logo, de 1 a 4';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagLogoFatorY;
+    Ajuda := 'Configura o aumento Vertical do Logo, de 1 a 4';
+    EhBloco := True;
+  end;
+
+  with FTagProcessor.Tags.New do
+  begin
     Nome := cTagIgnorarTags;
     Ajuda := 'Ignora todas as Tags contidas no Bloco';
     EhBloco := True;
   end;
+
   FTagProcessor.OnTraduzirTag := TraduzirTag;
   FTagProcessor.OnTraduzirTagBloco := TraduzirTagBloco;
 
@@ -816,9 +889,75 @@ begin
     else if ATag = cTagAlinhadoCentro then
       BlocoTraduzido := PadCenter(ConteudoBloco,Colunas)
 
+    else if ATag = cTagQRCodeTipo then
+    begin
+      BlocoTraduzido := '';
+      ConfigQRCode.Tipo := StrToIntDef( ConteudoBloco, ConfigQRCode.Tipo);
+    end
+
+    else if ATag = cTagQRCodeLargura then
+    begin
+      BlocoTraduzido := '';
+      ConfigQRCode.LarguraModulo := StrToIntDef( ConteudoBloco, ConfigQRCode.LarguraModulo);
+    end
+
+    else if ATag = cTagQRCodeError then
+    begin
+      BlocoTraduzido := '';
+      ConfigQRCode.ErrorLevel := StrToIntDef( ConteudoBloco, ConfigQRCode.ErrorLevel);
+    end
+
     else if ATag = cTagQRCode then
     begin
       BlocoTraduzido := FPosPrinterClass.ComandoQrCode(ConteudoBloco);
+    end
+
+    else if ATag = cTagBarraMostrar then
+    begin
+      BlocoTraduzido := '';
+      ConfigBarras.MostrarCodigo := StrToBoolDef( ConteudoBloco, ConfigBarras.MostrarCodigo);
+    end
+
+    else if ATag = cTagBarraLargura then
+    begin
+      BlocoTraduzido := '';
+      ConfigBarras.LarguraLinha := StrToIntDef( ConteudoBloco, ConfigBarras.LarguraLinha);
+    end
+
+    else if ATag = cTagBarraAltura then
+    begin
+      BlocoTraduzido := '';
+      ConfigBarras.Altura := StrToIntDef( ConteudoBloco, ConfigBarras.Altura);
+    end
+
+    else if ATag = cTagLogoImprimir then
+    begin
+      BlocoTraduzido := '';
+      ConfigLogo.IgnorarLogo := not StrToBoolDef( ConteudoBloco, not ConfigLogo.IgnorarLogo);
+    end
+
+    else if ATag = cTagLogoKC1 then
+    begin
+      BlocoTraduzido := '';
+      ConfigLogo.KeyCode1 := StrToIntDef( ConteudoBloco, ConfigLogo.KeyCode1);
+    end
+
+    else if ATag = cTagLogoKC2 then
+    begin
+      BlocoTraduzido := '';
+      ConfigLogo.KeyCode2 := StrToIntDef( ConteudoBloco, ConfigLogo.KeyCode2);
+    end
+
+    else if ATag = cTagLogoFatorX then
+    begin
+      BlocoTraduzido := '';
+      ConfigLogo.FatorX := StrToIntDef( ConteudoBloco, ConfigLogo.FatorX);
+    end
+
+    else if ATag = cTagLogoFatorY then
+    begin
+      BlocoTraduzido := '';
+      ConfigLogo.FatorY := StrToIntDef( ConteudoBloco, ConfigLogo.FatorY);
     end
 
     else if (AnsiIndexText(ATag, cTAGS_BARRAS) >= 0) then

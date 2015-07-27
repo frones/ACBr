@@ -39,6 +39,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/07/2015
+-- ACBrPosPrinter --   (por: DSA)
+[+] Adicionada as tags:
+<barra_mostrar> - Bloco - Configura se deve exibir conteudo abaixo do Cod.Barras: 0-NAO; 1-SIM
+<barra_largura> - Bloco - Configura a Largura das Barras do Cod.Barras: 0 a 5. (0=default)
+<barra_altura> - Bloco - Configura a Altura do Cod.Barras: 0 a 255. (0=default)
+<qrcode_tipo> - Bloco - Configura o Tipo de QRCode: 1,2
+<qrcode_largura> - Bloco - Configura a Largura do QRCode: 1 a 16
+<qrcode_error> - Bloco - Configura o Error Level do QRCode: 0 a 3
+<logo_imprimir> - Bloco - Configura a Impressão ou não do Logo Tipo: 0-NÃO, 1-SIM (default = 1)
+<logo_kc1> - Bloco - Configura a posição KC1 do Logo a ser impresso. Ex: 0=48
+<logo_kc2> - Bloco - Configura a posição KC2 do Logo a ser impresso. Ex: 1=49
+<logo_fatorx> - Bloco - Configura o aumento Horizonal do Logo, de 1 a 4
+<logo_fatory> - Bloco - Configura o aumento Vertical do Logo, de 1 a 4
+
 Data: 15/07/2015
 -- ACBrECFVirtual --
 [-] Estava abrindo a porta serial antes de abrir na virtual (quando usa ESCPOS)...

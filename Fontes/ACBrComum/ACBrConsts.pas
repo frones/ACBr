@@ -148,7 +148,13 @@ const
     'Imprime Linha Simples', 'Imprime Linha Dupla',
     'Pula N Linhas de acordo com propriedade do componente');
 
-  cTagLogotipo     = '</logo>';
+  cTagLogotipo = '</logo>';
+  cTagLogoImprimir = '<logo_imprimir>';
+  cTagLogoKC1 = '<logo_kc1>';
+  cTagLogoKC2 = '<logo_kc2>';
+  cTagLogoFatorX = '<logo_fatorx>';
+  cTagLogoFatorY = '<logo_fatory>';
+
   cTagCorteParcial = '</corte_parcial>';
   cTagCorteTotal = '</corte_total>';
   cTagAbreGaveta = '</abre_gaveta>';
@@ -195,7 +201,14 @@ const
   cTagBarraUPCA = '<upca>';
   cTagBarraCodaBar = '<codabar>';
   cTagBarraMSI = '<msi>';
+  cTagBarraMostrar = '<barra_mostrar>';
+  cTagBarraLargura = '<barra_largura>';
+  cTagBarraAltura = '<barra_altura>';
+
   cTagQRCode = '<qrcode>';
+  cTagQRCodeTipo = '<qrcode_tipo>';
+  cTagQRCodeLargura = '<qrcode_largura>';
+  cTagQRCodeError = '<qrcode_error>';
 
   cTAGS_BARRAS: array[0..13] of String = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraStd, cTagBarraInter, cTagBarraCode11,

@@ -2487,14 +2487,13 @@ function TDistribuicaoDFe.GerarPathDistribuicao(
 var
   Data: TDateTime;
 begin
-  if FPConfiguracoesCTe.Arquivos.EmissaoPathNFe then
+  if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
     Data := AItem.resCTe.dhEmi
   else
     Data := Now;
 
   Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
-                                                        AItem.resCTe.CNPJCPF,
-                                                        Data);
+                                                        AItem.resCTe.CNPJCPF);
 end;
 
 { TCTeEnvioWebService }

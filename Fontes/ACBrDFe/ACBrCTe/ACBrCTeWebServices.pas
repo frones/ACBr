@@ -2493,7 +2493,8 @@ begin
     Data := Now;
 
   Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
-                                                        AItem.resCTe.CNPJCPF);
+                                                        AItem.resCTe.CNPJCPF,
+                                                        Data);
 end;
 
 { TCTeEnvioWebService }

@@ -94,7 +94,7 @@ type
     function GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
     function GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ : String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
     property SalvarEvento: Boolean       read FSalvarEvento   write FSalvarEvento   default False;
@@ -259,7 +259,7 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfCTe.GetPathDownload(xNome, CNPJ: String): String;
+function TArquivosConfCTe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
 begin
   if EstaVazio(FDownloadCTe.PathDownload) then
      FDownloadCTe.PathDownload := PathSalvar;
@@ -268,7 +268,7 @@ begin
      if NaoEstaVazio(xNome) then
         FDownloadCTe.PathDownload := PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome);
 
-  Result := GetPath(FDownloadCTe.PathDownload, 'Down', CNPJ);
+  Result := GetPath(FDownloadCTe.PathDownload, 'Down', CNPJ, Data);
 end;
 
 { TDownloadConfCTe }

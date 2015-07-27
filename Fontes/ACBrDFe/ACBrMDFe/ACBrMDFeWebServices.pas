@@ -2062,7 +2062,7 @@ function TDistribuicaoDFe.GerarPathDistribuicao(
 var
   Data: TDateTime;
 begin
-  if FPConfiguracoesMDFe.Arquivos.EmissaoPathNFe then
+  if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
     Data := AItem.resMDFe.dhEmi
   else
     Data := Now;

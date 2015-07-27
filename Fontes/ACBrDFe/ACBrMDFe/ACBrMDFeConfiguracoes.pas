@@ -91,7 +91,7 @@ type
 
     function GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
+    function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathMDFe: boolean read FEmissaoPathMDFe
       write FEmissaoPathMDFe default False;
@@ -249,7 +249,7 @@ begin
   Result := GetPath(FPathMDFe, 'MDFe', CNPJ, Data);
 end;
 
-function TArquivosConfMDFe.GetPathDownload(xNome, CNPJ: String): String;
+function TArquivosConfMDFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
 begin
   if EstaVazio(FDownloadMDFe.PathDownload) then
      FDownloadMDFe.PathDownload := PathSalvar;
@@ -258,7 +258,7 @@ begin
      if NaoEstaVazio(xNome) then
         FDownloadMDFe.PathDownload := PathWithDelim(FDownloadMDFe.PathDownload) + TiraAcentos(xNome);
 
-  Result := GetPath(FDownloadMDFe.PathDownload, 'Down', CNPJ);
+  Result := GetPath(FDownloadMDFe.PathDownload, 'Down', CNPJ, Data);
 end;
 
 { TDownloadConfMDFe }

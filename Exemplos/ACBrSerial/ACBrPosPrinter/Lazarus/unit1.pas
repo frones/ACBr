@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase;
+  strutils, ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase;
 
 type
 
@@ -221,10 +221,11 @@ procedure TFrPosPrinterTeste.bTagLogoClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</ce>');
-  mImp.Lines.Add('Logo: '+chr(ACBrPosPrinter1.ConfigLogo.KeyCode1)+
-                          chr(ACBrPosPrinter1.ConfigLogo.KeyCode2) +
-                          ' - FatorX: ' + IntToStr(ACBrPosPrinter1.ConfigLogo.FatorX)+
-                          ' - FatorY: ' + IntToStr(ACBrPosPrinter1.ConfigLogo.FatorY));
+  mImp.Lines.Add('<logo_imprimir>'+ifthen(ACBrPosPrinter1.ConfigLogo.IgnorarLogo,'0','1')+'</logo_imprimir>');
+  mImp.Lines.Add('<logo_kc1>'+IntToStr(ACBrPosPrinter1.ConfigLogo.KeyCode1)+'</logo_kc1>');
+  mImp.Lines.Add('<logo_kc2>'+IntToStr(ACBrPosPrinter1.ConfigLogo.KeyCode2)+'</logo_kc2>');
+  mImp.Lines.Add('<logo_fatorx>'+IntToStr(ACBrPosPrinter1.ConfigLogo.FatorX)+'</logo_fatorx>');
+  mImp.Lines.Add('<logo_fatory>'+IntToStr(ACBrPosPrinter1.ConfigLogo.FatorY)+'</logo_fatory>');
   mImp.Lines.Add('</logo>');
   mImp.Lines.Add('</corte_total>');
 end;
@@ -233,6 +234,9 @@ procedure TFrPosPrinterTeste.bTagQRCodeClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('<qrcode_tipo>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.Tipo)+'</qrcode_tipo>');
+  mImp.Lines.Add('<qrcode_largura>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.LarguraModulo)+'</qrcode_largura>');
+  mImp.Lines.Add('<qrcode_error>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.ErrorLevel)+'</qrcode_error>');
   mImp.Lines.Add('<qrcode>http://projetoacbr.com.br</qrcode>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
@@ -289,6 +293,9 @@ end;
 procedure TFrPosPrinterTeste.bTagsCodBarrasClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('<barra_mostrar>'+ifthen(ACBrPosPrinter1.ConfigBarras.MostrarCodigo,'1','0')+'</barra_mostrar>');
+  mImp.Lines.Add('<barra_largura>'+IntToStr(ACBrPosPrinter1.ConfigBarras.LarguraLinha)+'</barra_largura>');
+  mImp.Lines.Add('<barra_altura>'+IntToStr(ACBrPosPrinter1.ConfigBarras.Altura)+'</barra_altura>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('EAN 8: 1234567');

@@ -9,7 +9,6 @@
       <Title Value="PosPrinterTeste"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -47,12 +46,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CompilerMessages>
-              <MsgFileName Value=""/>
-            </CompilerMessages>
-            <CompilerPath Value="$(CompPath)"/>
-          </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
@@ -76,7 +69,6 @@
       <Unit0>
         <Filename Value="PosPrinterTeste.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="PosPrinterTeste"/>
       </Unit0>
       <Unit1>
         <Filename Value="unit1.pas"/>
@@ -130,11 +122,7 @@
       </Options>
     </Linking>
     <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
       <CustomOptions Value="-dDEBUG"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>

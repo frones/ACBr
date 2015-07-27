@@ -1347,8 +1347,8 @@ begin
           if Atualiza then
           begin
             if (FPConfiguracoesMDFe.Geral.ValidarDigest) and
-              (MDFeRetorno.protMDFe.digVal <> '') and
-              (MDFe.signature.DigestValue <> MDFeRetorno.protMDFe.digVal) then
+              (MDFeRetorno.protMDFe.digVal <> '') and (MDFe.signature.DigestValue <> '') and
+              (UpperCase(MDFe.signature.DigestValue) <> UpperCase(MDFeRetorno.protMDFe.digVal)) then
             begin
               raise EACBrMDFeException.Create('DigestValue do documento ' +
                 NumID + ' não confere.');
@@ -2059,9 +2059,17 @@ end;
 
 function TDistribuicaoDFe.GerarPathDistribuicao(
   AItem: TdocZipCollectionItem): String;
+var
+  Data: TDateTime;
 begin
+  if FPConfiguracoesMDFe.Arquivos.EmissaoPathNFe then
+    Data := AItem.resMDFe.dhEmi
+  else
+    Data := Now;
+
   Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resMDFe.xNome,
-                                                        AItem.resMDFe.CNPJCPF);
+                                                         AItem.resMDFe.CNPJCPF,
+                                                         Data);
 end;
 
 { TMDFeEnvioWebService }

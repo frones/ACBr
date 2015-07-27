@@ -218,6 +218,9 @@ var
   ArqXML: String;
   Leitor: TLeitor;
 begin
+  if NaoEstaVazio(FXMLAssinado) then
+    exit;
+
   ArqXML := GerarXML;
 
   // XML já deve estar em UTF8, para poder ser assinado //
@@ -228,6 +231,7 @@ begin
   begin
     XMLAss := SSL.Assinar(ArqXML, 'CTe', 'infCte');
     FXMLAssinado := XMLAss;
+    FXMLOriginal := XMLAss;
 
     // Remove header, pois podem existir vários Conhecimentos no XML //
     //TODO: Verificar se precisa
@@ -345,13 +349,11 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
-  AXML := FXMLOriginal;
+  AXML := FXMLAssinado;
 
   if EstaVazio(AXML) then
   begin
-    if EstaVazio(FXMLAssinado) then
-      Assinar;
-
+    Assinar;
     AXML := FXMLAssinado;
   end;
 
@@ -371,7 +373,14 @@ end;
 
 function Conhecimento.ValidarRegrasdeNegocios: Boolean;
 var
- Erros: String;
+  Erros, Log: String;
+  Agora: TDateTime;
+
+  procedure GravaLog(AString: String);
+  begin
+    //DEBUG
+    //Log := Log + FormatDateTime('hh:nn:ss:zzz',Now) + ' - ' + AString + sLineBreak;
+  end;
 
   procedure AdicionaErro(const Erro: String);
   begin
@@ -379,21 +388,28 @@ var
   end;
 
 begin
+  Agora := Now;
+  GravaLog('Inicio da Validação');
+
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     Erros := '';
 
+    GravaLog('Validar: 502-Chave de acesso');
     if not ValidarConcatChave then
       AdicionaErro(
         '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
 
+    GravaLog('Validar: 252-Ambiente');
     if (CTe.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
       AdicionaErro('252-Rejeição: Ambiente informado diverge do Ambiente de recebimento '
         + '(Tipo do ambiente do CT-e difere do ambiente do Web Service)');
 
+    GravaLog('Validar: 503-Serie');
     if (CTe.Ide.serie > 889) then
-      AdicionaErro('670-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)');
+      AdicionaErro('503-Rejeição: Série utilizada fora da faixa permitida no Web Service (0-889)');
 
+    GravaLog('Validar: 226-UF');
     if copy(IntToStr(CTe.Emit.EnderEmit.cMun), 1, 2) <> IntToStr(Configuracoes.WebServices.UFCodigo) then
       AdicionaErro('226-Rejeição: Código da UF do Emitente diverge da UF autorizadora');
 
@@ -404,9 +420,12 @@ begin
   if not Result then
   begin
     Erros := ACBrStr('Erro(s) nas Regras de negócios do Conhecimento: '+
-                     IntToStr(CTe.Ide.nCT) + sLineBreak +
-                     Erros);
+                     IntToStr(CTe.Ide.nCT) + sLineBreak + Erros);
   end;
+
+  GravaLog('Fim da Validação. Tempo: ' +
+           FormatDateTime('hh:nn:ss:zzz', Now - Agora) + sLineBreak +
+           'Erros:' + Erros);
 
   FErroRegrasdeNegocios := Erros;
 end;
@@ -422,7 +441,9 @@ begin
   FXML := string(AXML);
   FXMLOriginal := FXML;
   if XmlEstaAssinado(FXML) then
-    FXMLAssinado := FXML;
+    FXMLAssinado := FXML
+  else
+    FXMLAssinado := '';
 
   Result := True;
 end;
@@ -430,16 +451,22 @@ end;
 function Conhecimento.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
   FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  GerarXML;
-  Result := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Gravar(FNomeArq, FXML);
+
+  if EstaVazio(FXMLOriginal) then
+    GerarXML;
+
+  Result := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
 function Conhecimento.GravarStream(AStream: TStringStream): Boolean;
 begin
   Result := False;
-  GerarXML;
+
+  if EstaVazio(FXMLOriginal) then
+    GerarXML;
+
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FXML));
+  WriteStrToStream(AStream, AnsiString(FXMLOriginal));
   Result := True;
 end;
 
@@ -493,6 +520,7 @@ begin
   FCTeW.GerarXml;
 
   FXML := FCTeW.Gerador.ArquivoFormatoXML;
+  FXMLOriginal := FXML;
   FXMLAssinado := '';
   FAlertas := FCTeW.Gerador.ListaDeAlertas.Text;
 

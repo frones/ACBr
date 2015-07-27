@@ -90,7 +90,7 @@ type
     procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); overload;
 
     function GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''): String;
   published
     property EmissaoPathMDFe: boolean read FEmissaoPathMDFe
@@ -221,11 +221,11 @@ begin
 end;
 
 function TArquivosConfMDFe.GetPathEvento(tipoEvento: TpcnTpEvento;
-  CNPJ: String = ''): String;
+  CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   Dir, Evento: String;
 begin
-  Dir := GetPath(FPathEvento, 'Evento', CNPJ);
+  Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
 
   if AdicionarLiteral then
   begin

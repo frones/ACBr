@@ -1452,8 +1452,8 @@ begin
           if Atualiza then
           begin
             if (FPConfiguracoesCTe.Geral.ValidarDigest) and
-              (CTeRetorno.protCTe.digVal <> '') and
-              (CTe.signature.DigestValue <> CTeRetorno.protCTe.digVal) then
+              (CTeRetorno.protCTe.digVal <> '') and (CTe.signature.DigestValue <> '') and
+              (UpperCase(CTe.signature.DigestValue) <> UpperCase(CTeRetorno.protCTe.digVal)) then
             begin
               raise EACBrCTeException.Create('DigestValue do documento ' +
                 NumID + ' não confere.');
@@ -2484,9 +2484,17 @@ end;
 
 function TDistribuicaoDFe.GerarPathDistribuicao(
   AItem: TdocZipCollectionItem): String;
+var
+  Data: TDateTime;
 begin
+  if FPConfiguracoesCTe.Arquivos.EmissaoPathNFe then
+    Data := AItem.resCTe.dhEmi
+  else
+    Data := Now;
+
   Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
-                                                        AItem.resCTe.CNPJCPF);
+                                                        AItem.resCTe.CNPJCPF,
+                                                        Data);
 end;
 
 { TCTeEnvioWebService }

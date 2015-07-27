@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/07/2015
+[*] Compatibilizando com o ACBrNFe.
+    por: Italo Jurisato Junior
 [-] Correções no envio de eventos.
     por: Italo Jurisato Junior
 

@@ -217,6 +217,8 @@ var
   ArqXML: String;
   Leitor: TLeitor;
 begin
+  if NaoEstaVazio(FXMLAssinado) then
+    exit;
   ArqXML := GerarXML;
 
   // XML já deve estar em UTF8, para poder ser assinado //
@@ -227,6 +229,7 @@ begin
   begin
     XMLAss := SSL.Assinar(ArqXML, 'MDFe', 'infMDFe');
     FXMLAssinado := XMLAss;
+    FXMLOriginal := XMLAss;
 
     // Remove header, pois podem existir várias Manifestos no XML //
     //TODO: Verificar se precisa
@@ -329,13 +332,11 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
-  AXML := FXMLOriginal;
+  AXML := FXMLAssinado;
 
   if EstaVazio(AXML) then
   begin
-    if EstaVazio(FXMLAssinado) then
-      Assinar;
-
+    Assinar;
     AXML := FXMLAssinado;
   end;
 
@@ -355,7 +356,15 @@ end;
 
 function Manifesto.ValidarRegrasdeNegocios: Boolean;
 var
-  Erros: String;
+  Erros, Log: String;
+  Agora: TDateTime;
+
+  procedure GravaLog(AString: String);
+  begin
+    //DEBUG
+    //Log := Log + FormatDateTime('hh:nn:ss:zzz',Now) + ' - ' + AString + sLineBreak;
+  end;
+
 
   procedure AdicionaErro(const Erro: String);
   begin
@@ -363,10 +372,14 @@ var
   end;
 
 begin
+  Agora := Now;
+  GravaLog('Inicio da Validação');
+
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     Erros := '';
 
+    GravaLog('Validar: 502-Chave de acesso');
     if not ValidarConcatChave then  //A03-10
       AdicionaErro(
         '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
@@ -378,9 +391,12 @@ begin
   if not Result then
   begin
     Erros := ACBrStr('Erro(s) nas Regras de negócios do Manifesto: '+
-                     IntToStr(MDFe.Ide.nMDF) + sLineBreak +
-                     Erros);
+                     IntToStr(MDFe.Ide.nMDF) + sLineBreak + Erros);
   end;
+
+  GravaLog('Fim da Validação. Tempo: ' +
+           FormatDateTime('hh:nn:ss:zzz', Now - Agora) + sLineBreak +
+           'Erros:' + Erros);
 
   FErroRegrasdeNegocios := Erros;
 end;
@@ -396,7 +412,9 @@ begin
   FXML := string(AXML);
   FXMLOriginal := FXML;
   if XmlEstaAssinado(FXML) then
-    FXMLAssinado := FXML;
+    FXMLAssinado := FXML
+  else
+    FXMLAssinado := '';
 
   Result := True;
 end;
@@ -404,17 +422,22 @@ end;
 function Manifesto.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
   FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  GerarXML;
-  Result := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Gravar(FNomeArq, FXML);
+
+  if EstaVazio(FXMLOriginal) then
+    GerarXML;
+
+  Result := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
 function Manifesto.GravarStream(AStream: TStream): Boolean;
 begin
   Result := False;
-  GerarXML;
+
+  if EstaVazio(FXMLOriginal) then
+    GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FXML));
+  WriteStrToStream(AStream, AnsiString(FXMLOriginal));
   Result := True;
 end;
 
@@ -469,6 +492,7 @@ begin
 
   FMDFeW.GerarXml;
   FXML := FMDFeW.Gerador.ArquivoFormatoXML;
+  FXMLOriginal := FXML;
   FXMLAssinado := '';
   FAlertas := FMDFeW.Gerador.ListaDeAlertas.Text;
   Result := FXML;

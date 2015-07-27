@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/07/2015
+-- ACBrSATExtratoESCPOS --  (por: DSA)
+[*] Modificado para usar as novas Tags de configuração de Cod.Barras e QRCode
+    procurando manter os valores definidos pelo Usuário em TACBrPosPrinter
+
 Data: 26/07/2015
 -- ACBrSAT --  (por: DSA)
 [*] Ajuste para permitir acentuação nos XMLs 

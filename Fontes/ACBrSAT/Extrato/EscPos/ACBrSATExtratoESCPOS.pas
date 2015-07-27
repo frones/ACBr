@@ -98,7 +98,9 @@ procedure Register;
 
 implementation
 
-uses ACBrValidador, ACBrUtil, ACBrDFeUtil;
+uses
+  strutils,
+  ACBrValidador, ACBrUtil, ACBrDFeUtil;
 
 {$IFNDEF FPC}
    {$R ACBrSATExtratoESCPOS.dcr}
@@ -124,14 +126,6 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho;
 begin
-  FPosPrinter.ConfigBarras.Altura := 40;
-  FPosPrinter.ConfigBarras.LarguraLinha := 2;
-  FPosPrinter.ConfigBarras.MostrarCodigo := False;
-
-  FPosPrinter.ConfigQRCode.Tipo := 2;
-  //FPosPrinter.ConfigQRCode.LarguraModulo := 4;
-  FPosPrinter.ConfigQRCode.ErrorLevel := 0;
-
   FPosPrinter.Buffer.Clear;
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
   FPosPrinter.Buffer.Add('<n>'+CFe.Emit.xFant+'</n>');
@@ -397,6 +391,8 @@ end;
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
   QRCode: AnsiString;
+  ConfigQRCodeTipo, ConfigQRCodeErrorLevel, ConfigBarrasAltura, ConfigBarrasLarguraLinha: Integer;
+  ConfigBarrasMostrarCodigo: Boolean;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   if Cancelamento then
@@ -408,19 +404,36 @@ begin
   FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso(CFe.infCFe.ID)+'</fn>');
   FPosPrinter.Buffer.Add(' ');
 
-  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
+  ConfigBarrasAltura := FPosPrinter.ConfigBarras.Altura;
+  ConfigBarrasLarguraLinha := FPosPrinter.ConfigBarras.LarguraLinha;
+  ConfigBarrasMostrarCodigo := FPosPrinter.ConfigBarras.MostrarCodigo;
+
+  FPosPrinter.Buffer.Add( '<barra_mostrar>0</barra_mostrar>'+
+                          '<barra_largura>2</barra_largura>'+
+                          '<barra_altura>40</barra_altura>'+
+                          '<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
   FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');
-  FPosPrinter.Buffer.Add(' ');
+
+  FPosPrinter.Buffer.Add( '<barra_mostrar>'+IfThen(ConfigBarrasMostrarCodigo,'1','0')+'</barra_mostrar>'+
+                          '<barra_largura>'+IntToStr(ConfigBarrasLarguraLinha)+'</barra_largura>'+
+                          '<barra_altura>'+IntToStr(ConfigBarrasAltura)+'</barra_altura>');
 
   if ImprimeQRCode then
   begin
+    ConfigQRCodeTipo := FPosPrinter.ConfigQRCode.Tipo;
+    ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
+
     QRCode := CalcularConteudoQRCode( CFe.infCFe.ID,
                                       CFe.ide.dEmi+CFe.ide.hEmi,
                                       CFe.Total.vCFe,
                                       Trim(CFe.Dest.CNPJCPF),
                                       CFe.ide.assinaturaQRCODE );
 
-    FPosPrinter.Buffer.Add('<qrcode>'+QRCode+'</qrcode>');
+    FPosPrinter.Buffer.Add('<qrcode_tipo>2</qrcode_tipo>'+
+                           '<qrcode_error>0</qrcode_error>'+
+                           '<qrcode>'+QRCode+'</qrcode>'+
+                           '<qrcode_tipo>'+IntToStr(ConfigQRCodeTipo)+'</qrcode_tipo>'+
+                           '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
   end;
 
   if CortaPapel then

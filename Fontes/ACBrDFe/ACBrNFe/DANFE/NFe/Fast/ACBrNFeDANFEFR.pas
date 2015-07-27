@@ -259,14 +259,26 @@ begin
 end;
 
 function TACBrNFeDANFEFR.PrepareReportEvento: Boolean;
+var
+ wProjectStream: TStringStream;
 begin
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFileEvento) <> '' then
   begin
-    if FileExists(FastFileEvento) then
-      FdmDanfe.frxReport.LoadFromFile(FastFileEvento)
+    if not (uppercase(copy(FastFile,length(FastFileEvento)-3,4))='.FR3') then
+    begin
+      wProjectStream:=TStringStream.Create(FastFileEvento);
+      FdmDanfe.frxReport.FileName := '';
+      FdmDanfe.frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
     else
-      raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do EVENTO "%s" inválido.', [FastFileEvento]);
+    begin
+      if FileExists(FastFileEvento) then
+        FdmDanfe.frxReport.LoadFromFile(FastFileEvento)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do EVENTO "%s" inválido.', [FastFileEvento]);
+    end
   end
   else
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');

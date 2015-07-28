@@ -1441,8 +1441,6 @@ begin
         if (OnlyNumber(FCTeChave) = NumID) then
         begin
           Atualiza := True;
-//          if ((CTeRetorno.CStat in [101, 151, 155]) and
-//            (not FPConfiguracoesCTe.Geral.AtualizarXMLCancelada)) then
           if (CTeRetorno.CStat in [101, 151, 155]) then
             Atualiza := False;
 
@@ -2035,11 +2033,11 @@ var
   I, J, F: integer;
   Lote, Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
+  SchemaEventoCTe: TSchemaCTe;
 begin
   EventoCTe := TEventoCTe.Create;
   try
     EventoCTe.idLote := FidLote;
-//    FEveEPEC := False;
 
     for I := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count - 1 do
     begin
@@ -2056,6 +2054,7 @@ begin
         case InfEvento.tpEvento of
           teCCe:
           begin
+            SchemaEventoCTe := schevCCeCTe;
             infEvento.detEvento.xCondUso := FEvento.Evento[I].InfEvento.detEvento.xCondUso;
             infEvento.detEvento.xCondUso := FEvento.Evento[i].InfEvento.detEvento.xCondUso;
 
@@ -2073,20 +2072,21 @@ begin
 
           teCancelamento:
           begin
+            SchemaEventoCTe := schevCancCTe;
             infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
             infEvento.detEvento.xJust := FEvento.Evento[I].InfEvento.detEvento.xJust;
           end;
 
           teMultiModal:
           begin
+            SchemaEventoCTe := schevRegMultimodal;
             infEvento.detEvento.xRegistro := FEvento.Evento[i].InfEvento.detEvento.xRegistro;
             infEvento.detEvento.nDoc      := FEvento.Evento[i].InfEvento.detEvento.nDoc;
           end;
 
           teEPEC:
           begin
-//            FEveEPEC := True;
-
+            SchemaEventoCTe := schevEPECCTe;
             infEvento.detEvento.xJust   := FEvento.Evento[i].InfEvento.detEvento.xJust;
             infEvento.detEvento.vICMS   := FEvento.Evento[i].InfEvento.detEvento.vICMS;
             infEvento.detEvento.vTPrest := FEvento.Evento[i].InfEvento.detEvento.vTPrest;
@@ -2107,25 +2107,26 @@ begin
     EventoCTe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
-    I := Pos('<evento ', EventoCTe.Gerador.ArquivoFormatoXML);
-    Lote := Copy(EventoCTe.Gerador.ArquivoFormatoXML, 1, I - 1);
-    Eventos := SeparaDados(EventoCTe.Gerador.ArquivoFormatoXML, 'envEvento');
-    I := Pos('<evento ', Eventos);
-    Eventos := Copy(Eventos, I, length(Eventos));
+//    I := Pos('<evento ', EventoCTe.Gerador.ArquivoFormatoXML);
+//    Lote := Copy(EventoCTe.Gerador.ArquivoFormatoXML, 1, I - 1);
+//    Eventos := SeparaDados(EventoCTe.Gerador.ArquivoFormatoXML, 'envEvento');
+//    I := Pos('<evento ', Eventos);
+//    Eventos := Copy(Eventos, I, length(Eventos));
 
+    Eventos := EventoMDFe.Gerador.ArquivoFormatoXML;
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
     while Eventos <> '' do
     begin
-      F := Pos('</evento>', Eventos);
+      F := Pos('</eventoCTe>', Eventos);
 
       if F > 0 then
       begin
-        Evento := Copy(Eventos, 1, F + 8);
-        Eventos := Copy(Eventos, F + 9, length(Eventos));
+        Evento := Copy(Eventos, 1, F + 11);
+        Eventos := Copy(Eventos, F + 12, length(Eventos));
 
-        AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
+        AssinarXML(Evento, 'eventoCTe', 'infEvento', 'Falha ao assinar o Envio de Evento ');
 
         EventosAssinados := EventosAssinados + StringReplace(
           FPDadosMsg, '<?xml version="1.0"?>', '', []);
@@ -2134,23 +2135,27 @@ begin
         Break;
     end;
 
-    F := Pos('?>', EventosAssinados);
-    if F <> 0 then
-      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
-        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
-    else
-      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
+//    F := Pos('?>', EventosAssinados);
+//    if F <> 0 then
+//      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
+//        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
+//    else
+//      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
-//    AssinarXML(EventoCTe.Gerador.ArquivoFormatoXML,
-//               'Falha ao assinar o Envio de Evento ' + LineBreak + FMsg);
-
-    // Implementar a validação do evento.
-    AXMLEvento := '';
+    // Separa o XML especifico do Evento para ser Validado.
+    AXMLEvento := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                  SeparaDados(FPDadosMsg, 'detEvento');
 
     with TACBrCTe(FPDFeOwner) do
     begin
-      EventoEhValido := SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico,0)), FPMsg) and
-                        SSL.Validar(AXMLEvento, GerarNomeArqSchemaEvento(FPDadosMsg, StringToFloatDef(FPVersaoServico,0)), FPMsg);
+      EventoEhValido := SSL.Validar(FPDadosMsg,
+                                    GerarNomeArqSchema(FPLayout,
+                                                       StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg) and
+                        SSL.Validar(AXMLEvento,
+                                    GerarNomeArqSchemaEvento(SchemaEventoCTe,
+                                                             StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

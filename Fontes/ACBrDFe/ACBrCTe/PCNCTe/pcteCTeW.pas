@@ -162,10 +162,10 @@ type
     procedure GerarCobrDup;
     procedure GerarInfCTeSub;  // Nivel 2
 
-    procedure GerarInfCTeComp;      // Nivel 1
+    procedure GerarInfCTeComp; // Nivel 1
 
-    procedure GerarInfCTeAnu; // Nivel 1
-    procedure GerarautXML;    // Nivel 1
+    procedure GerarInfCTeAnu;  // Nivel 1
+    procedure GerarautXML;     // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
     function ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
@@ -247,20 +247,7 @@ begin
 
   chave := StringReplace(chave,'NFe','CTe',[rfReplaceAll]);
 
-//  if trim(CTe.infCTe.Id) = '' then
-    CTe.infCTe.Id := chave;
-(*
-  if (copy(CTe.infCTe.Id, 1, 4) <> 'CTe') then
-    CTe.infCTe.Id := 'CTe' + CTe.infCTe.Id;
-
-  if (Trim(CTe.infCTe.Id) = '') or (not ValidarChave(CTe.infCTe.Id)) then
-     CTe.infCTe.Id := chave
-  else
-   begin
-     CTe.infCTe.Id := StringReplace( UpperCase(CTe.infCTe.Id), 'CTE', '', [rfReplaceAll] ) ;
-     CTe.infCTe.Id := 'CTe' + CTe.infCTe.Id;
-   end;
-*)
+  CTe.infCTe.Id := chave;
 
   CTe.ide.cDV := RetornarDigito(CTe.infCTe.ID);
   CTe.Ide.cCT := RetornarCodigoNumerico(CTe.infCTe.ID, 2);

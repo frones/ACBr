@@ -144,8 +144,6 @@ begin
         InfMDFe.Items[i].FnProt  := leitor.rCampo(tcStr, 'nProt');
         inc(i);
       end;
-//      if i = 0
-//       then InfMDFe.Add;
 
       Result := True;
     end;

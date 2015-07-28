@@ -474,9 +474,6 @@ uses
   pmdfeConsSitMDFe, pmdfeConsReciMDFe, pmdfeConsMDFeNaoEnc,
   pcnLeitor, pmdfeMDFeW;
 
-//  ACBrDFeUtil, ACBrMDFeUtil, pmdfeMDFeW,
-//  pmdfeCabecalho;
-
 { TMDFeWebService }
 
 constructor TMDFeWebService.Create(AOwner: TACBrDFe);
@@ -1336,8 +1333,6 @@ begin
         if (OnlyNumber(FMDFeChave) = NumID) then
         begin
           Atualiza := True;
-//          if ((MDFeRetorno.CStat in [101, 151, 155]) and
-//            (not FPConfiguracoesMDFe.Geral.AtualizarXMLCancelado)) then
           if (MDFeRetorno.CStat in [101, 151, 155]) then
             Atualiza := False;
 

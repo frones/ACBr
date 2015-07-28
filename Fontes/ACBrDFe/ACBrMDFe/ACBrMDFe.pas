@@ -335,13 +335,11 @@ end;
 function TACBrMDFe.GerarNomeArqSchemaModal(const AXML: String;
   VersaoServico: Double): String;
 begin
-//  if EstaVazio(VersaoServico) then
   if VersaoServico = 0.0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
               SchemaMDFeToStr(IdentificaSchemaModal(AXML)) + '_v' +
-//              FormatFloat('0.00', VersaoServico) + '.xsd';
               FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
@@ -364,7 +362,6 @@ function TACBrMDFe.GerarChaveContingencia(FMDFe: TMDFe): String;
   const
     PESO = '43298765432987654329876543298765432';
   begin
-    // Manual Integracao Contribuinte v2.02a - Página: 70 //
     chave := OnlyNumber(chave);
     j := 0;
     Digito := 0;

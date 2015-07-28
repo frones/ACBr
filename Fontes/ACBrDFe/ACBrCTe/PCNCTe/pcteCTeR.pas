@@ -126,12 +126,6 @@ begin
     raise Exception.Create('Não encontrei o atributo: versao');
 
   (*
-  // Incluido por Thiago Pedro em 02/06/2014
-  if Pos('versao="', Leitor.Arquivo) <> 0 then
-    Aspas := '"'
-   else
-    Aspas := '''';
-
   I := 0;
   I := RetornarPosEx('versao=', Leitor.Arquivo, I + 6);
   if I = 0 then
@@ -402,7 +396,6 @@ begin
       CTe.Rem.locColeta.UF      := Leitor.rCampo(tcStr, 'UF');
     end;
 
-    // Incluído por Thiago Pedro em 02/06/2014 -- Compatibilidade com CTe 1
     i01 := 0;
     if CTe.infCTe.versao < 2 then
     begin
@@ -414,7 +407,6 @@ begin
         inc(i01);
       end;
 
-      // Alterado por Sergio Melchiori 29/12/2014 - dados da NF para xml abaixo da 2.00
       while Leitor.rExtrai(2, 'infNF', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.infNF.Add;
@@ -436,7 +428,6 @@ begin
         inc(i01);
       end;
 
-      // Alterado por Sergio Melchiori 29/12/2014 - dados de outros documentos para xml abaixo da 2.00
       while Leitor.rExtrai(2, 'infOutros', '', i01 + 1) <> '' do
       begin
         CTe.infCTeNorm.infDoc.InfOutros.Add;
@@ -448,7 +439,6 @@ begin
         inc(i01);
       end;
     end;
-    //-- Fim da inclusão por Thiago Pedro em 02/06/2014
   end;
 
   (* Grupo da TAG <exped> *****************************************************)
@@ -958,7 +948,6 @@ begin
       CTe.infCTeNorm.rodo.lota  := StrToTpLotacao(ok, Leitor.rCampo(tcStr,'lota'));
       CTe.infCTeNorm.rodo.CIOT  := Leitor.rCampo(tcStr, 'CIOT');
 
-      // Alterado por Sergio Melchiori 29/12/2014 para gravar a dt. prev. entrega para a versão abaixo 2.00
       if CTe.infCTe.versao < 2 then
       begin
         for i01 := 0 to CTe.infCTeNorm.infDoc.InfNFE.count-1 do

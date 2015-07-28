@@ -51,12 +51,6 @@ uses
   pcteEnvEventoCTe, pcteInutCTe, pcteRetDistDFeInt,
   ACBrDFeUtil, ACBrUtil;
 
-//  Forms,
-//  smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
-//   pcteRetEnvEventoCTe,
-//  ACBrCTeUtil,
-//  pcteRetInutCTe;
-
 const
   ACBRCTE_VERSAO = '2.0.0a';
   ACBRCTE_NAMESPACE = 'http://www.portalfiscal.inf.br/cte';
@@ -118,7 +112,7 @@ type
 
     function GerarNomeArqSchema(const ALayOut: TLayOutCTe; VersaoServico: Double): String;
     function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: Double): String;
-    function GerarNomeArqSchemaEvento(const AXML: String; VersaoServico: Double): String;
+    function GerarNomeArqSchemaEvento(ASchemaEventoCTe: TSchemaCTe; VersaoServico: Double): String;
 
     function GerarChaveContingencia(FCTe: TCTe): String;
 
@@ -370,21 +364,23 @@ end;
 function TACBrCTe.GerarNomeArqSchemaModal(const AXML: String;
   VersaoServico: Double): String;
 begin
-//  if EstaVazio(VersaoServico) then
   if VersaoServico = 0.0 then
     Result := ''
   else
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
               SchemaCTeToStr(IdentificaSchemaModal(AXML)) + '_v' +
-//              FormatFloat('0.00', VersaoServico) + '.xsd';
               FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
-function TACBrCTe.GerarNomeArqSchemaEvento(const AXML: String;
+function TACBrCTe.GerarNomeArqSchemaEvento(ASchemaEventoCTe: TSchemaCTe;
   VersaoServico: Double): String;
 begin
-  // Implementar
-  Result := '';
+  if VersaoServico = 0.0 then
+    Result := ''
+  else
+    Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
+              SchemaCTeToStr(ASchemaEventoCTe) + '_v' +
+              FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
 function TACBrCTe.GerarChaveContingencia(FCTe:TCTe): String;

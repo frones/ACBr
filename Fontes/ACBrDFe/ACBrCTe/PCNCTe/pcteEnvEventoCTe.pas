@@ -239,7 +239,6 @@ begin
             Gerador.wAlerta('EP13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
          end;
 
-//       Gerador.wCampo(tcStr, 'EP13', 'IE  ', 00, 14, 0, OnlyNumber(Evento.Items[0].InfEvento.detEvento.IE), DSC_IE);
        Gerador.wGrupo('/toma04');
 
        Gerador.wCampo(tcStr, 'EP14', 'modal   ', 02, 02, 1, TpModalToStr(Evento.Items[0].InfEvento.detEvento.modal), DSC_MODAL);

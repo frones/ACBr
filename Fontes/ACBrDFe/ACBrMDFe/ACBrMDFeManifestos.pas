@@ -402,8 +402,6 @@ begin
 end;
 
 function Manifesto.LerXML(AXML: AnsiString): Boolean;
-//var
-//  Ok: Boolean;
 begin
   Result := False;
   FMDFeR.Leitor.Arquivo := AXML;
@@ -487,7 +485,6 @@ begin
   begin
     FMDFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-//    FMDFeW.Opcoes.GerarTXTSimultaneamente := False;
   end;
 
   FMDFeW.GerarXml;

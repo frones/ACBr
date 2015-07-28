@@ -160,7 +160,7 @@ begin
       begin
         procEventoMDFe.Add;
         procEventoMDFe.Items[i].RetEventoMDFe.Leitor.Arquivo := Leitor.Grupo;
-        procEventoMDFe.Items[i].RetEventoMDFe.XML := Leitor.Grupo; //Gustavo Kato XML Completo do evento
+        procEventoMDFe.Items[i].RetEventoMDFe.XML := Leitor.Grupo; 
         procEventoMDFe.Items[i].RetEventoMDFe.LerXml;
         inc(i);
       end;

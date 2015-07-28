@@ -154,20 +154,7 @@ begin
 
   chave := StringReplace(chave,'NFe','MDFe',[rfReplaceAll]);
 
-//  if trim(MDFe.infMDFe.Id) = '' then
-    MDFe.infMDFe.Id := chave;
-(*
-  if (copy(MDFe.infMDFe.Id, 1, 4) <> 'MDFe') then
-    MDFe.infMDFe.Id := 'MDFe' + MDFe.infMDFe.Id;
-
-  if (Trim(MDFe.infMDFe.Id) = '') or (not ValidarChave(MDFe.infMDFe.Id)) then
-     MDFe.infMDFe.Id := chave
-  else
-   begin
-     MDFe.infMDFe.Id := StringReplace( UpperCase(MDFe.infMDFe.Id), 'MDFE', '', [rfReplaceAll] ) ;
-     MDFe.infMDFe.Id := 'MDFe' + MDFe.infMDFe.Id;
-   end;
-*)
+  MDFe.infMDFe.Id := chave;
   MDFe.ide.cDV  := RetornarDigito(MDFe.infMDFe.Id);
   MDFe.Ide.cMDF := RetornarCodigoNumerico(MDFe.infMDFe.Id, 2);
 
@@ -431,12 +418,9 @@ begin
   if MDFe.rodo.veicTracao.condutor.Count > 10 then
    Gerador.wAlerta('#18', 'condutor', '', ERR_MSG_MAIOR_MAXIMO + '10');
 
-//   if VersaoDF = ve100a
-//    then begin
-     Gerador.wCampo(tcStr, '#21', 'tpRod', 02, 02, 1, TpRodadoToStr(MDFe.Rodo.veicTracao.tpRod), '');
-     Gerador.wCampo(tcStr, '#22', 'tpCar', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicTracao.tpCar), '');
-     Gerador.wCampo(tcStr, '#23', 'UF   ', 02, 02, 1, MDFe.Rodo.veicTracao.UF, DSC_CUF);
-//    end;
+  Gerador.wCampo(tcStr, '#21', 'tpRod', 02, 02, 1, TpRodadoToStr(MDFe.Rodo.veicTracao.tpRod), '');
+  Gerador.wCampo(tcStr, '#22', 'tpCar', 02, 02, 1, TpCarroceriaToStr(MDFe.Rodo.veicTracao.tpCar), '');
+  Gerador.wCampo(tcStr, '#23', 'UF   ', 02, 02, 1, MDFe.Rodo.veicTracao.UF, DSC_CUF);
 
   Gerador.wGrupo('/veicTracao');
 
@@ -622,8 +606,6 @@ begin
       Gerador.wAlerta('#045', 'cMunDescarga', DSC_CMUN, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, '#046', 'xMunDescarga', 02, 60, 1, MDFe.infDoc.infMunDescarga[i].xMunDescarga, DSC_XMUN);
 
-    // Alterado por Italo em 21/03/2013
-    // Conforme NT 2013/001
     case MDFe.Ide.tpEmit of
      // Se Tipo de Emitente for Prestador de Serviço de Transporte
      // só pode relacionar os grupos de documentos CT-e e CT
@@ -638,7 +620,6 @@ begin
            Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
 
-           // Implementado conforme NT 2013/002
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infCTe[j].infUnidTransp.Count - 1 do
            begin
              Gerador.wGrupo('infUnidTransp', '#051');
@@ -687,7 +668,6 @@ begin
            Gerador.wCampo(tcDat, '#055', 'dEmi  ', 10, 10, 1, MDFe.infDoc.infMunDescarga[i].infCT[j].dEmi, DSC_DEMI);
            Gerador.wCampo(tcDe2, '#056', 'vCarga', 01, 15, 1, MDFe.infDoc.infMunDescarga[i].infCT[j].vCarga, DSC_VDOC);
 
-           // Implementado conforme NT 2013/002
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infCT[j].infUnidTransp.Count - 1 do
            begin
              Gerador.wGrupo('infUnidTransp', '#051');
@@ -743,7 +723,6 @@ begin
              Gerador.wAlerta('#058', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#059', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].SegCodBarra, DSC_SEGCODBARRA);
 
-           // Implementado conforme NT 2013/002
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infNFe[j].infUnidTransp.Count - 1 do
            begin
              Gerador.wGrupo('infUnidTransp', '#051');
@@ -794,7 +773,6 @@ begin
            Gerador.wCampo(tcDe2, '#066', 'vNF  ', 01, 15, 1, MDFe.infDoc.infMunDescarga[i].infNF[j].vNF, DSC_VDOC);
            Gerador.wCampo(tcInt, '#067', 'PIN  ', 02, 09, 0, MDFe.infDoc.infMunDescarga[i].infNF[j].PIN, DSC_PIN);
 
-           // Implementado conforme NT 2013/002
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infNF[j].infUnidTransp.Count - 1 do
            begin
              Gerador.wGrupo('infUnidTransp', '#051');

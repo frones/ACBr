@@ -46,9 +46,6 @@ uses
   ACBrCTeConfiguracoes, ACBrDFeUtil,
   pcteCTe, pcteCTeR, pcteCTeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
-//  ACBrCTeDACTEClass,
-//  smtpsend, ssl_openssl, mimemess, mimepart, // units para enviar email
-
 type
 
   { Conhecimento }
@@ -431,8 +428,6 @@ begin
 end;
 
 function Conhecimento.LerXML(AXML: AnsiString): Boolean;
-//var
-//  Ok: Boolean;
 begin
   Result := False;
   FCTeR.Leitor.Arquivo := AXML;

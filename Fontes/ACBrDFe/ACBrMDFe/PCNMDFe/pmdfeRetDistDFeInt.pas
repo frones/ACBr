@@ -489,7 +489,6 @@ begin
         (*
         if (oLeitorInfZip.rExtrai(1, 'resMDFe') <> '') then
         begin
-          // Incluido Por Italo em 22/01/2015
           FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
 
           FdocZip.Items[i].FresMDFe.chMDFe    := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
@@ -511,7 +510,6 @@ begin
 
         if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
         begin
-          // Incluido Por Italo em 22/01/2015
           FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
 
           FdocZip.Items[i].FresEvento.FcOrgao  := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
@@ -531,7 +529,6 @@ begin
         *)
         if (oLeitorInfZip.rExtrai(1, 'mdfeProc') <> '') then
         begin
-          // Incluido Por Italo em 22/01/2015
           FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
 
           oLeitorInfZip.rExtrai(1, 'infMDFe');

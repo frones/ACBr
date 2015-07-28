@@ -64,17 +64,7 @@ type
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
                      stMDFeDistDFeInt, stMDFeEnvioWebService);
 
-//  TSituacaoMDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
-
 const
-
-//  MDFeCabMsg       = '1.00';
-//  MDFeConsStatServ = '1.00';
-//  MDFeEnviMDFe     = '1.00';
-//  MDFeConsReciMDFe = '1.00';
-//  MDFeConsSitMDFe  = '1.00';
-//  MDFeConsNaoEnc   = '1.00';
-//  MDFeEventoMDFe   = '1.00';
 
   MDFeModalRodo    = '1.00';
   MDFeModalAereo   = '1.00';
@@ -156,7 +146,6 @@ function LayOutToSchema(const t: TLayOutMDFe): TSchemaMDFe;
 function ModalToStr(const t: TModalMDFe): String;
 function StrToModal(var ok: Boolean; const s: String): TModalMDFe;
 
-//function GetVersaoMDFe(AVersaoDF: TVersaoMDFe; ALayOut: TLayOutMDFe): string;
 function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 
 function LayOutToServico(const t: TLayOutMDFe): String;
@@ -245,26 +234,7 @@ begin
                            ['1', '2', '3', '4'],
                            [moRodoviario, moAereo, moAquaviario, moFerroviario]);
 end;
-(*
-function GetVersaoMDFe(AVersaoDF: TVersaoMDFe; ALayOut: TLayOutMDFe): string;
-begin
-  result := '';
 
-  case AVersaoDF of
-    ve100,
-    ve100a: begin
-              case ALayOut of
-                LayMDFeStatusServico: result := '1.00';
-                LayMDFeRecepcao:      result := '1.00';
-                LayMDFeRetRecepcao:   result := '1.00';
-                LayMDFeConsulta:      result := '1.00';
-                LayMDFeEvento:        result := '1.00';
-                LayMDFeConsNaoEnc:    result := '1.00';
-              end;
-            end;
-  end;
-end;
-*)
 function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 begin
   result := '';

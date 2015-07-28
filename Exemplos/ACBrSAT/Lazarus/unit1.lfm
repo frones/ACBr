@@ -2126,9 +2126,9 @@ object Form1: TForm1
         Height = 180
         Top = 0
         Width = 675
-        ActivePage = tsDadosSAT
+        ActivePage = Impressao
         Align = alClient
-        TabIndex = 0
+        TabIndex = 4
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2874,16 +2874,16 @@ object Form1: TForm1
         object Impressao: TTabSheet
           Caption = 'Impressao'
           ClientHeight = 152
-          ClientWidth = 610
+          ClientWidth = 667
           object GroupBox3: TGroupBox
             Left = 0
             Height = 152
             Top = 0
-            Width = 288
+            Width = 345
             Align = alClient
             Caption = 'Fortes'
             ClientHeight = 132
-            ClientWidth = 284
+            ClientWidth = 341
             TabOrder = 0
             object seLargura: TSpinEdit
               Left = 8
@@ -3002,7 +3002,7 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 288
+            Left = 345
             Height = 152
             Top = 0
             Width = 322
@@ -3495,7 +3495,7 @@ object Form1: TForm1
     Modelo = ppEscPosEpson
     PaginaDeCodigo = pcNone
     EspacoEntreLinhas = 40
-    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
     ConfigBarras.Margem = 0

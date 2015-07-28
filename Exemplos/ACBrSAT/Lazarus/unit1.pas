@@ -863,28 +863,34 @@ procedure TForm1.mConsultarStatusOperacionalClick(Sender : TObject) ;
 begin
   ACBrSAT1.ConsultarStatusOperacional;
 
-  with ACBrSAT1.Status do
+  if ACBrSAT1.Resposta.codigoDeRetorno = 10000 then
   begin
-    mLog.Lines.Add('NSERIE.........: '+NSERIE);
-    mLog.Lines.Add('LAN_MAC........: '+LAN_MAC);
-    mLog.Lines.Add('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
-    mLog.Lines.Add('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
-    mLog.Lines.Add('MT_TOTAL.......: '+MT_TOTAL);
-    mLog.Lines.Add('MT_USADA.......: '+MT_USADA);
-    mLog.Lines.Add('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
-    mLog.Lines.Add('VER_SB.........: '+VER_SB);
-    mLog.Lines.Add('VER_LAYOUT.....: '+VER_LAYOUT);
-    mLog.Lines.Add('ULTIMO_CFe.....: '+ULTIMO_CFe);
-    mLog.Lines.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
-    mLog.Lines.Add('LISTA_FINAL....: '+LISTA_FINAL);
-    mLog.Lines.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
-    mLog.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_CFe));
-    mLog.Lines.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
-    mLog.Lines.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
-    mLog.Lines.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
-  end;
+    with ACBrSAT1.Status do
+    begin
+      mLog.Lines.Add('NSERIE.........: '+NSERIE);
+      mLog.Lines.Add('LAN_MAC........: '+LAN_MAC);
+      mLog.Lines.Add('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
+      mLog.Lines.Add('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
+      mLog.Lines.Add('MT_TOTAL.......: '+MT_TOTAL);
+      mLog.Lines.Add('MT_USADA.......: '+MT_USADA);
+      mLog.Lines.Add('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
+      mLog.Lines.Add('VER_SB.........: '+VER_SB);
+      mLog.Lines.Add('VER_LAYOUT.....: '+VER_LAYOUT);
+      mLog.Lines.Add('ULTIMO_CFe.....: '+ULTIMO_CFe);
+      mLog.Lines.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
+      mLog.Lines.Add('LISTA_FINAL....: '+LISTA_FINAL);
+      mLog.Lines.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
+      mLog.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_CFe));
+      mLog.Lines.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
+      mLog.Lines.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
+      mLog.Lines.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
+    end;
 
-  LeDadosRedeSAT;
+    LeDadosRedeSAT;
+  end
+  else
+    mLog.Lines.Add(ACBrSAT1.Resposta.RetornoStr);
+
 end;
 
 procedure TForm1.mDesbloquearSATClick(Sender : TObject) ;

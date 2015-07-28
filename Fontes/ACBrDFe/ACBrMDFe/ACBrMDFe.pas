@@ -108,7 +108,7 @@ type
 
     function GerarNomeArqSchema(const ALayOut: TLayOutMDFe; VersaoServico: Double): String;
     function GerarNomeArqSchemaModal(const AXML: String; VersaoServico: Double): String;
-    function GerarNomeArqSchemaEvento(const AXML: String; VersaoServico: Double): String;
+    function GerarNomeArqSchemaEvento(ASchemaEventoMDFe: TSchemaMDFe; VersaoServico: Double): String;
 
     function GerarChaveContingencia(FMDFe: TMDFe): String;
 
@@ -345,11 +345,15 @@ begin
               FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
-function TACBrMDFe.GerarNomeArqSchemaEvento(const AXML: String;
+function TACBrMDFe.GerarNomeArqSchemaEvento(ASchemaEventoMDFe: TSchemaMDFe;
   VersaoServico: Double): String;
 begin
-  // Implementar
-  Result := '';
+  if VersaoServico = 0.0 then
+    Result := ''
+  else
+    Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
+              SchemaMDFeToStr(ASchemaEventoMDFe) + '_v' +
+              FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
 function TACBrMDFe.GerarChaveContingencia(FMDFe: TMDFe): String;

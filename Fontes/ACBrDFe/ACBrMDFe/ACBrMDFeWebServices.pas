@@ -1586,6 +1586,7 @@ var
   I, F: integer;
   Lote, Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
+  SchemaEventoMDFe: TSchemaMDFe;
 begin
   EventoMDFe := TEventoMDFe.Create;
   try
@@ -1605,11 +1606,13 @@ begin
         case InfEvento.tpEvento of
           teCancelamento:
           begin
+            SchemaEventoMDFe := schevCancMDFe;
             infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
             infEvento.detEvento.xJust := FEvento.Evento[i].InfEvento.detEvento.xJust;
           end;
           teEncerramento:
           begin
+            SchemaEventoMDFe := schevEncMDFe;
             infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
             infEvento.detEvento.dtEnc := FEvento.Evento[i].InfEvento.detEvento.dtEnc;
             infEvento.detEvento.cUF   := FEvento.Evento[i].InfEvento.detEvento.cUF;
@@ -1617,6 +1620,7 @@ begin
           end;
           teInclusaoCondutor:
           begin
+            SchemaEventoMDFe := schevIncCondutorMDFe;
             infEvento.detEvento.xNome := FEvento.Evento[i].InfEvento.detEvento.xNome;
             infEvento.detEvento.CPF   := FEvento.Evento[i].InfEvento.detEvento.CPF;
           end;
@@ -1669,8 +1673,14 @@ begin
 
     with TACBrMDFe(FPDFeOwner) do
     begin
-      EventoEhValido := SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico,0)), FPMsg) and
-                        SSL.Validar(AXMLEvento, GerarNomeArqSchemaEvento(FPDadosMsg, StringToFloatDef(FPVersaoServico,0)), FPMsg);
+      EventoEhValido := SSL.Validar(FPDadosMsg,
+                                    GerarNomeArqSchema(FPLayout,
+                                                       StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg) and
+                        SSL.Validar(AXMLEvento,
+                                    GerarNomeArqSchemaEvento(SchemaEventoMDFe,
+                                                             StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

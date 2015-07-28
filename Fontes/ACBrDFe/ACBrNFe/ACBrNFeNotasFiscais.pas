@@ -965,7 +965,8 @@ begin
         GravaLog('Validar: 528-'+IntToStr(I)+'-ICMS BC e Aliq');
         if (Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
            (NFe.Ide.finNFe = fnNormal) and
-           (RoundABNT(Imposto.ICMS.vICMS, -2) <> (RoundABNT(Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100),-2)))then
+           //(RoundABNT(Imposto.ICMS.vICMS, -2) <> (RoundABNT(Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100),-2)))then
+			not ComparaValor(Imposto.ICMS.vICMS, Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100), 2, 0.01) then
           AdicionaErro('528-Rejeição: Valor do ICMS difere do produto BC e Alíquota');
 
         GravaLog('Validar: 625-'+IntToStr(I)+'-Insc.SUFRAMA');

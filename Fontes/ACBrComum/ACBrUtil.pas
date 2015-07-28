@@ -100,6 +100,7 @@ function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
+function ComparaValor(const AValorUm, AValorDois : Double;const Digits : SmallInt = 2; const Diferenca : Double = 0 ): Boolean;
 
 function TestBit(const Value: Integer; const Bit: Byte): Boolean;
 function IntToBin (value: LongInt; digits: integer ): string;
@@ -390,6 +391,22 @@ function TruncFix( X : Double ) : Integer ;
 begin
   Result := Trunc( SimpleRoundTo( X, -9) ) ;
 end ;
+
+{-----------------------------------------------------------------------------
+Compara valores levando em conta uma diferença que pode ser aplicada
+tanto para positivo quando negativo
+------------------------------------------------------------------------------}
+function ComparaValor(const AValorUm, AValorDois : Double; const Digits : SmallInt = 2;const Diferenca : Double = 0 ): Boolean;
+begin
+  Result := (RoundABNT(AValorUm,Digits) = RoundABNT(AValorDois,Digits));
+  if Diferenca <> 0 then
+    if not Result then
+    begin
+      Result := (RoundABNT(AValorUm,Digits) = RoundABNT(AValorDois + Diferenca,Digits) );
+      if not Result then
+        Result := (RoundABNT(AValorUm,Digits) = RoundABNT(AValorDois - Diferenca,Digits) );
+    end;
+end;
 
 {-----------------------------------------------------------------------------
  Arredondamento segundo as normas da ABNT NBR 5891/77  (por: DSA)

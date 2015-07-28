@@ -190,6 +190,12 @@ var
   ok: boolean;
   i: Integer;
   StrAux, StrDecod, versao: String;
+
+  function LerDataHora(ADataHora: String): TDateTime;
+  begin
+    result := EncodeDate(StrToInt(copy(ADataHora, 01, 4)), StrToInt(copy(ADataHora, 06, 2)), StrToInt(copy(ADataHora, 09, 2))) +
+              EncodeTime(StrToInt(copy(ADataHora, 12, 2)), StrToInt(copy(ADataHora, 15, 2)), StrToInt(copy(ADataHora, 18, 2)), 0);
+  end;
 begin
   Result := False;
   try
@@ -218,14 +224,14 @@ begin
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<procNFeZip>', '</procNFeZip');
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
-          FretNFe.Items[i].FdhEmi := StringToDateTime(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
+          FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
           FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                                 FretNFe.Items[i].FNFeZip;
         end;
 
         if pos('procNFe', Leitor.Grupo) > 0 then
         begin
-          FretNFe.Items[i].FdhEmi := StringToDateTime(RetornarConteudoEntre(Leitor.Grupo, '<dhEmi>', '</dhEmi'));
+          FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(Leitor.Grupo, '<dhEmi>', '</dhEmi'));
           FretNFe.Items[i].FprocNFe := {'<'+ENCODING_UTF8+'>' +}
                                            SeparaDados(Leitor.Grupo, 'procNFe');
         end;
@@ -236,7 +242,7 @@ begin
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<NFeZip>', '</NFeZip');
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
-          FretNFe.Items[i].FdhEmi := StringToDateTime(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
+          FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
 
           // XML do Protocolo da NF-e
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<protNFeZip>', '</protNFeZip');

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2015
+[*] Alterado a forma de converter uma string em data/hora na unit pcnRetDownloadNFe.
+    por: Italo Jurisato Junior
+
 Data: 27/07/2015
 -- ACBrNFeNotasFiscais --  (por: DSA)
 [-] Correção para commit efetuado 26/07. XML gravado em:

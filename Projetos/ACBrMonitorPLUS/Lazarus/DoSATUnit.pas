@@ -239,29 +239,31 @@ end;
 
 function MontaDadosStatusSAT: AnsiString;
 begin
-  FrmACBrMonitor.ACBrSAT1.ConsultarStatusOperacional;
-  with FrmACBrMonitor.ACBrSAT1.Status do
+  Result := FrmACBrMonitor.ACBrSAT1.ConsultarStatusOperacional;
+
+  if FrmACBrMonitor.ACBrSAT1.Resposta.codigoDeRetorno = 10000 then
   begin
-    Result := '[StatusSAT]' + sLineBreak ;
-    Result := Result + 'NSERIE = '+NSERIE + sLineBreak;
-    Result := Result + 'LAN_MAC = '+LAN_MAC+ sLineBreak;
-    Result := Result + 'STATUS_LAN = '+StatusLanToStr(STATUS_LAN)+ sLineBreak;
-    Result := Result + 'NIVEL_BATERIA = '+NivelBateriaToStr(NIVEL_BATERIA)
-                                         + sLineBreak;
-    Result := Result + 'MT_TOTAL = '+MT_TOTAL+ sLineBreak;
-    Result := Result + 'MT_USADA = '+MT_USADA+ sLineBreak;
-    Result := Result + 'DH_ATUAL = '+DateTimeToStr(DH_ATUAL)+ sLineBreak;
-    Result := Result + 'VER_SB = '+VER_SB+ sLineBreak;
-    Result := Result + 'VER_LAYOUT = '+VER_LAYOUT+ sLineBreak;
-    Result := Result + 'ULTIMO_CFe = '+ULTIMO_CFe+ sLineBreak;
-    Result := Result + 'LISTA_INICIAL = '+LISTA_INICIAL+ sLineBreak;
-    Result := Result + 'LISTA_FINAL = '+LISTA_FINAL+ sLineBreak;
-    Result := Result + 'DH_CFe = '+DateTimeToStr(DH_CFe)+ sLineBreak;
-    Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_CFe)+ sLineBreak;
-    Result := Result + 'CERT_EMISSAO = '+DateToStr(CERT_EMISSAO)+ sLineBreak;
-    Result := Result + 'CERT_VENCIMENTO = '+DateToStr(CERT_VENCIMENTO)
-                                           + sLineBreak;
-    Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO)
+    with FrmACBrMonitor.ACBrSAT1.Status do
+    begin
+      Result := '[StatusSAT]' + sLineBreak ;
+      Result := Result + 'NSERIE = '+NSERIE + sLineBreak;
+      Result := Result + 'LAN_MAC = '+LAN_MAC+ sLineBreak;
+      Result := Result + 'STATUS_LAN = '+StatusLanToStr(STATUS_LAN)+ sLineBreak;
+      Result := Result + 'NIVEL_BATERIA = '+NivelBateriaToStr(NIVEL_BATERIA)+ sLineBreak;
+      Result := Result + 'MT_TOTAL = '+MT_TOTAL+ sLineBreak;
+      Result := Result + 'MT_USADA = '+MT_USADA+ sLineBreak;
+      Result := Result + 'DH_ATUAL = '+DateTimeToStr(DH_ATUAL)+ sLineBreak;
+      Result := Result + 'VER_SB = '+VER_SB+ sLineBreak;
+      Result := Result + 'VER_LAYOUT = '+VER_LAYOUT+ sLineBreak;
+      Result := Result + 'ULTIMO_CFe = '+ULTIMO_CFe+ sLineBreak;
+      Result := Result + 'LISTA_INICIAL = '+LISTA_INICIAL+ sLineBreak;
+      Result := Result + 'LISTA_FINAL = '+LISTA_FINAL+ sLineBreak;
+      Result := Result + 'DH_CFe = '+DateTimeToStr(DH_CFe)+ sLineBreak;
+      Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_CFe)+ sLineBreak;
+      Result := Result + 'CERT_EMISSAO = '+DateToStr(CERT_EMISSAO)+ sLineBreak;
+      Result := Result + 'CERT_VENCIMENTO = '+DateToStr(CERT_VENCIMENTO)+ sLineBreak;
+      Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO)
+    end;
   end;
 end;
 

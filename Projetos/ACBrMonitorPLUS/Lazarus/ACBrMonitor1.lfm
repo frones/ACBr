@@ -8733,9 +8733,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsDadosEmit
+            ActivePage = tsDadosSAT
             Align = alClient
-            TabIndex = 1
+            TabIndex = 0
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               Caption = 'Dados do SAT CFe'
@@ -8939,14 +8939,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 385
                 Height = 25
                 Top = 123
-                Width = 163
+                Width = 182
+                Anchors = [akTop, akLeft, akRight]
                 TabOrder = 10
               end
               object SbArqLog2: TSpeedButton
-                Left = 561
+                Left = 569
                 Height = 22
                 Top = 126
                 Width = 24
+                Anchors = [akTop, akRight]
                 Caption = '...'
                 OnClick = SbArqLog2Click
               end
@@ -9023,6 +9025,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnChange = cbxSATSepararPorCNPJChange
                 State = cbChecked
                 TabOrder = 15
+              end
+              object Label154: TLabel
+                Left = 385
+                Height = 17
+                Top = 106
+                Width = 118
+                Caption = 'Path Salvar arquivos'
+                ParentColor = False
               end
             end
             object tsDadosEmit: TTabSheet
@@ -10540,6 +10550,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

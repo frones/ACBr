@@ -246,11 +246,26 @@ procedure TACBrDFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String);
 var
   i : Integer;
+  EMails : TStringList;
+  sDelimiter : Char;
 begin
   if not Assigned(MAIL) then
     raise EACBrDFeException.Create('Componente ACBrMail não associado');
 
-  MAIL.AddAddress( sPara );
+  EMails := TStringList.Create;
+  try
+    if Pos( ';', sPara) > 0 then
+       sDelimiter := ';'
+    else
+       sDelimiter := ',';
+    QuebrarLinha( sPara, EMails, '"', sDelimiter);
+
+    for i := 0 to EMails.Count -1 do
+        MAIL.AddAddress( EMails[i] );
+  finally
+    EMails.Free;
+  end;
+
   MAIL.Subject := sAssunto;
 
   if Assigned(sMensagem) then

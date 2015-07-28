@@ -679,7 +679,7 @@ procedure TfqrDANFSeQRRetratoFiorilli.QRNFSeBeforePrint(Sender: TCustomQuickRep;
 begin
   inherited;
 
-  FQuebradeLinha := TACBrNFSe( FACBrNFSe ).Configuracoes.Geral.QuebradeLinha;
+  FQuebradeLinha := TACBrNFSe( FACBrNFSe ).Configuracoes.Geral.ConfigGeral.QuebradeLinha;
 
   if FImprimeCanhoto
    then begin

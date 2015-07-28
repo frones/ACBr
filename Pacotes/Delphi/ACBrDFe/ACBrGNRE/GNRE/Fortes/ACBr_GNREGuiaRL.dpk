@@ -37,7 +37,7 @@ requires
   dsnap, 
   {$IFDEF VER150} FortesReportCE_Win32_D7_vcl, vcljpg;{$ENDIF} // D7
   {$IFDEF VER200} RLibWinD2009, vclimg;{$ENDIF} // D2009
-  {$IFDEF VER210} RLibWinD2010, vclimg;{$ENDIF} // D2010
+  {$IFDEF VER210} FortesReportCE_Win32_D2010_vcl, vclimg;{$ENDIF} // D2010
   {$IFDEF VER220} FortesReportCE_Win32_DXE_vcl, vclimg;{$ENDIF} // XE
   {$IFDEF VER230} FortesReportCE_Win32_DXE2_vcl, vclimg;{$ENDIF} //XE2
   {$IFDEF VER240} FortesReportCE_Win32_DXE3_vcl, vclimg;{$ENDIF} //XE3

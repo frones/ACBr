@@ -2113,7 +2113,7 @@ begin
 //    I := Pos('<evento ', Eventos);
 //    Eventos := Copy(Eventos, I, length(Eventos));
 
-    Eventos := EventoMDFe.Gerador.ArquivoFormatoXML;
+    Eventos := EventoCTe.Gerador.ArquivoFormatoXML;
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento

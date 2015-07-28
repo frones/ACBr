@@ -522,16 +522,9 @@ DesbloquearSAT...............: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 
 }
+  Clear;
   fRetornoStr := AValue;
 
-  fnumeroSessao    := 0;
-  fcodigoDeRetorno := 0;
-  fcodigoDeErro    := 0;
-  fmensagemRetorno := '';
-  fcodigoSEFAZ     := 0;
-  fmensagemSEFAZ   := '';
-
-  Clear;
   fRetornoLst.Delimiter := '|';
   {$IFDEF FPC}
    fRetornoLst.StrictDelimiter := True;
@@ -590,6 +583,7 @@ begin
   fRetornoStr      := '';
   fnumeroSessao    := 0;
   fcodigoDeRetorno := 0;
+  fcodigoDeErro    := 0;
   fmensagemRetorno := '';
   fcodigoSEFAZ := 0;
   fmensagemSEFAZ := '';

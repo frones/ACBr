@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/07/2015
+-- ACBrSAT --        (por: DSA)
+[-] Atribuição de ACBrSAT1.Resposta não atribuia corretamente o valor de
+    ACBrSAT1.Resposta.RetornoStr (ficava vazio)
+
 Data: 27/07/2015
 -- ACBrSATExtratoESCPOS --  (por: DSA)
 [*] Modificado para usar as novas Tags de configuração de Cod.Barras e QRCode

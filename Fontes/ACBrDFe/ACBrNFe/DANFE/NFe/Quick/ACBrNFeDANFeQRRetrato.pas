@@ -1060,7 +1060,7 @@ begin
         begin
           qrlResumoRodape.Caption := 'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY',
             FNFe.Ide.dEmi) + '  -  ' + 'DEST. / REM.: ' + FNFe.Dest.xNome +
-            '  -  ' + 'VALOR TOTAL: R$ ' + FormatFloatVr(msk13x2, FNFe.Total.ICMSTot.vNF);
+            '  -  ' + 'VALOR TOTAL: R$ ' + FormatFloatBr(msk13x2, FNFe.Total.ICMSTot.vNF);
           qrlRecebemosDe1Rodape.Caption := StringReplace(qrlRecebemosDe1.Caption, '%s', FNFe.Emit.xNome, [rfReplaceAll]);
           qrlNumNF0Rodape.Caption := FormatFloat('000,000,000', FNFe.Ide.nNF);
           qrlSERIE0Rodape.Caption := IntToStr(FNFe.Ide.serie);

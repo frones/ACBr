@@ -1714,7 +1714,7 @@ begin
                 then qrmQtdUnidMedida1.Caption := FormatFloatBr(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then qrmQtdUnidMedida2.Caption := FormatFloatBr(msk6x3', FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
+                then qrmQtdUnidMedida2.Caption := FormatFloatBr(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
                 then qrmQtdUnidMedida2.Caption := FormatFloatBr(msk6x3, FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)

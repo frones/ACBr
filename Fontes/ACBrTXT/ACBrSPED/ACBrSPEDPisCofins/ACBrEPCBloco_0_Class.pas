@@ -147,7 +147,7 @@ type
 
 implementation
 
-uses ACBrTXTUtils;
+uses ACBrTXTUtils, StrUtils;
 
 { TBloco_0 }
 

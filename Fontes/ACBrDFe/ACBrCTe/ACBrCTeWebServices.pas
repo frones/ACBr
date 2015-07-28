@@ -2229,11 +2229,6 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-//  FcStat   := FEventoRetorno.retEvento.Items[0].RetInfEvento.cStat;
-//  FxMotivo := FEventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
-//  FPMsg    := FEventoRetorno.retEvento.Items[0].RetInfEvento.xMotivo;
-//  FTpAmb   := FEventoRetorno.retEvento.Items[0].RetInfEvento.tpAmb;
-
   Result := (FcStat in [128, 135, 136, 155]);
 
   //gerar arquivo proc de evento

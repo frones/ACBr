@@ -230,21 +230,13 @@ begin
        (Leitor.rExtrai(1, 'retEventoCTe') <> '') or
        (Leitor.rExtrai(1, 'retEvento') <> '') then
     begin
-      Fversao   := Leitor.rAtributo('versao');
-      (*
-      FidLote   := Leitor.rCampo(tcInt, 'idLote');
-      FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-      FcOrgao   := Leitor.rCampo(tcInt, 'cOrgao');
-      FcStat    := Leitor.rCampo(tcInt, 'cStat');
-      FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-      *)
       i := 0;
+      Fversao := Leitor.rAtributo('versao');
+
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin
          FretEvento.Add;
 
-         // Incluido por Italo em 07/05/2014
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
          FretEvento.Items[i].FRetInfEvento.Id       := Leitor.rAtributo('Id');
@@ -261,6 +253,11 @@ begin
          FretEvento.Items[i].FRetInfEvento.nSeqEvento  := Leitor.rCampo(tcInt, 'nSeqEvento');
          FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
          FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
+
+         tpAmb   := FretEvento.Items[i].FRetInfEvento.tpAmb;
+         cStat   := FretEvento.Items[i].FRetInfEvento.cStat;
+         xMotivo := FretEvento.Items[i].FRetInfEvento.xMotivo;
+
          inc(i);
        end;
 

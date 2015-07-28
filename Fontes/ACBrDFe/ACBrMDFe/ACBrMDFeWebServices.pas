@@ -1703,8 +1703,7 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-  Result := (EventoRetorno.cStat = 128) or (EventoRetorno.cStat = 135) or
-    (EventoRetorno.cStat = 136) or (EventoRetorno.cStat = 155);
+  Result := (FcStat in [128, 135, 136, 155]);
 
   //gerar arquivo proc de evento
   if Result then

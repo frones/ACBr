@@ -207,7 +207,6 @@ begin
        begin
          FretEvento.Add;
 
-         // Incluido por Italo em 07/05/2014
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
          FretEvento.Items[i].FRetInfEvento.Id       := Leitor.rAtributo('Id');
@@ -224,6 +223,11 @@ begin
          FretEvento.Items[i].FRetInfEvento.nSeqEvento  := Leitor.rCampo(tcInt, 'nSeqEvento');
          FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');
          FretEvento.Items[i].FRetInfEvento.nProt       := Leitor.rCampo(tcStr, 'nProt');
+
+         tpAmb   := FretEvento.Items[i].FRetInfEvento.tpAmb;
+         cStat   := FretEvento.Items[i].FRetInfEvento.cStat;
+         xMotivo := FretEvento.Items[i].FRetInfEvento.xMotivo;
+
          inc(i);
        end;
 

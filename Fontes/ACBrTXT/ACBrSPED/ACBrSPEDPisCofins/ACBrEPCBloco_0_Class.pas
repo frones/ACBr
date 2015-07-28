@@ -686,6 +686,7 @@ end;
 procedure TBloco_0.WriteRegistro0150(Reg0140: TRegistro0140) ;
 var
   intFor: integer;
+  booExterior: Boolean;
 begin
   if Assigned(Reg0140.Registro0150) then
   begin
@@ -693,6 +694,7 @@ begin
      begin
         with Reg0140.Registro0150.Items[intFor] do
         begin
+		  booExterior := ((COD_PAIS <> '01058') and (COD_PAIS <> '1058'));
 //          Check(funChecaPAISIBGE(COD_PAIS), '(0-0150) %s-%s, o código do país "%s" digitado é inválido!', [COD_PART, NOME, COD_PAIS]);
           if Length(CNPJ) > 0 then Check(funChecaCNPJ(CNPJ), '(0-0150) %s-%s, o CNPJ "%s" digitado é inválido!', [COD_PART, NOME, CNPJ]);
           if Length(CPF)  > 0 then Check(funChecaCPF(CPF), '(0-0150) %s-%s, o CPF "%s" digitado é inválido!', [COD_PART, NOME, CPF]);
@@ -707,7 +709,7 @@ begin
                LFill(CNPJ) +
                LFill(CPF) +
                LFill(IE) +
-               LFill(COD_MUN, 7) +
+               IfThen(booExterior, LFill(''), LFill(COD_MUN, 7)) +
                LFill(SUFRAMA) +
                LFill(ENDERECO) +
                LFill(NUM) +

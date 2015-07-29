@@ -100,7 +100,7 @@ function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
-function ComparaValor(const AValorUm, AValorDois : Double;const Digits : SmallInt = 2; const Diferenca : Double = 0 ): Boolean;
+function ComparaValor(const ValorUm, ValorDois : Double; const Tolerancia : Double = 0 ): Integer;
 
 function TestBit(const Value: Integer; const Bit: Byte): Boolean;
 function IntToBin (value: LongInt; digits: integer ): string;
@@ -393,19 +393,24 @@ begin
 end ;
 
 {-----------------------------------------------------------------------------
-Compara valores levando em conta uma diferença que pode ser aplicada
-tanto para positivo quando negativo
+Compara valores levando em conta uma Tolerancia que pode ser aplicada
+tanto para positivo quando negativo.
+Retorna -1 se ValorUm for menor; 1 Se ValorUm for maior; 0 - Se forem iguais
+Inspirada em "CompareValue" do FPC, math
 ------------------------------------------------------------------------------}
-function ComparaValor(const AValorUm, AValorDois : Double; const Digits : SmallInt = 2;const Diferenca : Double = 0 ): Boolean;
+function ComparaValor(const ValorUm, ValorDois: Double;
+  const Tolerancia: Double): Integer;
+var
+  diff: Extended;
 begin
-  Result := (RoundABNT(AValorUm,Digits) = RoundABNT(AValorDois,Digits));
-  if Diferenca <> 0 then
-    if not Result then
-    begin
-      Result := (RoundABNT(AValorUm,Digits) = RoundABNT(AValorDois + Diferenca,Digits) );
-      if not Result then
-        Result := (RoundABNT(AValorUm,Digits) = RoundABNT(AValorDois - Diferenca,Digits) );
-    end;
+ Result := 1;
+
+ diff := SimpleRoundTo( abs(ValorUm - ValorDois), -9);
+ if diff <= Tolerancia then
+   Result := 0
+  else
+    if ValorUm < ValorDois then
+      Result := -1;
 end;
 
 {-----------------------------------------------------------------------------

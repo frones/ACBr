@@ -2627,7 +2627,6 @@ var
   Senha, ECFDeviceParams, CHQDeviceParams, PathApplication: string;
   wNomeArquivo: string;
   OK: boolean;
-  StreamMemo: TMemoryStream;
 begin
   Ini := TIniFile.Create(ACBrMonitorINI);
   PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
@@ -2986,10 +2985,7 @@ begin
     ConfiguraDANFe;
 
     edtEmailAssunto.Text := Ini.ReadString('Email', 'Assunto', '');
-    StreamMemo := TMemoryStream.Create;
-    Ini.ReadBinaryStream('Email', 'Mensagem', StreamMemo);
-    mmEmailMsg.Lines.LoadFromStream(StreamMemo);
-    StreamMemo.Free;
+    mmEmailMsg.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'Mensagem', '') );
 
     cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', True);
     cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
@@ -3461,7 +3457,6 @@ var
   Ini: TIniFile;
   OldMonitoraTXT, OldMonitoraTCP, OldMonitoraPasta: boolean;
   OldVersaoSSL : Integer;
-  StreamMemo: TMemoryStream;
 begin
   if cbSenha.Checked and (edSenha.Text <> 'NADAAQUI') and (edSenha.Text <> '') then
     fsHashSenha := StringCrc16(edSenha.Text);
@@ -3658,11 +3653,7 @@ begin
     Ini.WriteString('NFCe', 'Token', edtToken.Text);
 
     Ini.WriteString('Email', 'Assunto', edtEmailAssunto.Text);
-    StreamMemo := TMemoryStream.Create;
-    mmEmailMsg.Lines.SaveToStream(StreamMemo);
-    StreamMemo.Seek(0, soFromBeginning);
-    Ini.WriteBinaryStream('Email', 'Mensagem', StreamMemo);
-    StreamMemo.Free;
+    Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mmEmailMsg.Lines.Text) );
 
     Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
     Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);

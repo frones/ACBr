@@ -851,6 +851,7 @@ end ;
 function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : AnsiString
   ) : String ;
 begin
+  CNPJvalue := OnlyNumber(CNPJvalue);
   fsComandoLog := 'AssociarAssinatura( '+CNPJvalue+', '+assinaturaCNPJs+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.AssociarAssinatura( CNPJvalue, assinaturaCNPJs ) );
@@ -859,6 +860,7 @@ end ;
 function TACBrSAT.AtivarSAT(subComando : Integer ; CNPJ : AnsiString ;
   cUF : Integer) : String ;
 begin
+  CNPJ := OnlyNumber(CNPJ);
   fsComandoLog := 'AtivarSAT( '+IntToStr(subComando)+', '+CNPJ+', '+IntToStr(cUF)+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.AtivarSAT( subComando, CNPJ, cUF ) );

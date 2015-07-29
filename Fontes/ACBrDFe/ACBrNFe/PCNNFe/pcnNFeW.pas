@@ -321,7 +321,7 @@ begin
   GerarTransp;
   GerarCobr;
 
-  if (nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo = 65) then
+  if (nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo <> 55) then
      Gerarpag;
 
   GerarInfAdic;
@@ -1211,7 +1211,7 @@ begin
                   end;
                cst40,
                cst41,
-	             cst50 :
+	       cst50 :
                   begin
                      //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
                      if (NFe.infNFe.Versao >= 3.10) and (nfe.Det[i].Imposto.ICMS.vICMSDeson > 0) then
@@ -1236,11 +1236,7 @@ begin
                     Gerador.wCampo(tcDe2, 'N16a', 'vICMSOp ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSOp, DSC_VICMS);
                     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N16b', 'pDif    ', 01, IIf(Usar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pDif, DSC_PICMS);
                     Gerador.wCampo(tcDe2, 'N16c', 'vICMSDif', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSDif, DSC_VICMS);
-                    
-                    if (nfe.Det[i].Imposto.ICMS.pICMS = 0) and (nfe.Det[i].Imposto.ICMS.pDif = 0) then
-                      Gerador.wCampo(tcDe2, 'N17', 'vICMS    ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS)
-                    else
-                      Gerador.wCampo(tcDe2, 'N17', 'vICMS    ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);                      
+                    Gerador.wCampo(tcDe2, 'N17', 'vICMS    ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
                   end;
                cst60 :
                   begin
@@ -1497,13 +1493,13 @@ end;
 
 procedure TNFeW.GerarDetImpostoPIS(const i: Integer);
 begin
-  if (nfe.Ide.modelo = 65) and
+  if (nfe.Ide.modelo <> 55) and
    ((nfe.Det[i].Imposto.PIS.vBC = 0) and
     (nfe.Det[i].Imposto.PIS.pPIS = 0) and
     (nfe.Det[i].Imposto.PIS.vPIS = 0) and
     (nfe.Det[i].Imposto.PIS.qBCProd = 0) and
     (nfe.Det[i].Imposto.PIS.vAliqProd = 0) and
-    (not (nfe.Det[i].Imposto.PIS.CST in [pis04, pis05, pis06, pis07, pis08, pis09]))) then      //No caso da NFC-e, o grupo de tributação do PIS e o grupo de tributação da COFINS são opcionais.
+    (not (nfe.Det[i].Imposto.PIS.CST in [pis04, pis05, pis06, pis07, pis08, pis09, pis49]))) then      //No caso da NFC-e, o grupo de tributação do PIS e o grupo de tributação da COFINS são opcionais.
       exit;
       
   Gerador.wGrupo('PIS', 'Q01');
@@ -1592,13 +1588,13 @@ end;
 
 procedure TNFeW.GerarDetImpostoCOFINS(const i: Integer);
 begin
-  if (nfe.Ide.modelo = 65) and
+  if (nfe.Ide.modelo <> 55) and
    ((nfe.Det[i].Imposto.COFINS.vBC = 0) and
     (nfe.Det[i].Imposto.COFINS.pCOFINS = 0) and
     (nfe.Det[i].Imposto.COFINS.vCOFINS = 0) and
     (nfe.Det[i].Imposto.COFINS.qBCProd = 0) and
     (nfe.Det[i].Imposto.COFINS.vAliqProd = 0) and
-    (not (nfe.Det[i].Imposto.COFINS.CST in [cof04, cof05, cof06, cof07, cof08, cof09]))) then      //No caso da NFC-e, o grupo de tributação do PIS e o grupo de tributação da COFINS são opcionais.
+    (not (nfe.Det[i].Imposto.COFINS.CST in [cof04, cof05, cof06, cof07, cof08, cof09, cof49]))) then      //No caso da NFC-e, o grupo de tributação do PIS e o grupo de tributação da COFINS são opcionais.
       exit;
 
   Gerador.wGrupo('COFINS', 'S01');

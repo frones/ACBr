@@ -776,12 +776,57 @@ type
     procedure EAN13_DV_Codigo200010000262_Retorna9;
   end;
 
+  { ComparaValorTest }
+
+  ComparaValorTest = class(TTestCase)
+  published
+    procedure ValorUmMenorTolerancia001Igual;
+    procedure ValorUmMenorTolerancia0001Menor;
+    procedure ValorUmMaiorTolerancia0001Maior;
+    procedure ValorUmMenorTolerancia00001Igual;
+    procedure ValorUmMenorTolerancia000001Menor;
+    procedure ValorUmMaiorTolerancia000001Maior;
+  end;
+
+
 
 implementation
 
 uses
   Math, dateutils,
   ACBrUtil, ACBrConsts;
+
+{ ComparaValorTest }
+
+procedure ComparaValorTest.ValorUmMenorTolerancia001Igual;
+begin
+  CheckEquals( 0, ComparaValor(100, 100.01, 0.01));
+end;
+
+procedure ComparaValorTest.ValorUmMenorTolerancia0001Menor;
+begin
+  CheckEquals( -1, ComparaValor(100, 100.02, 0.01));
+end;
+
+procedure ComparaValorTest.ValorUmMaiorTolerancia0001Maior;
+begin
+  CheckEquals( 1, ComparaValor(100.02, 100, 0.01));
+end;
+
+procedure ComparaValorTest.ValorUmMenorTolerancia00001Igual;
+begin
+  CheckEquals( 0, ComparaValor(100, 100.0001, 0.0001));
+end;
+
+procedure ComparaValorTest.ValorUmMenorTolerancia000001Menor;
+begin
+  CheckEquals( -1, ComparaValor(100, 100.0002, 0.0001));
+end;
+
+procedure ComparaValorTest.ValorUmMaiorTolerancia000001Maior;
+begin
+  CheckEquals( 1, ComparaValor(100.0002, 100, 0.0001));
+end;
 
 { TiraPontosTest }
 
@@ -3031,6 +3076,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', PathWithoutDelimTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', EAN13Test{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest{$ifndef FPC}.suite{$endif});
 
   //TODO: WriteToTXT, WriteLog,
 end.

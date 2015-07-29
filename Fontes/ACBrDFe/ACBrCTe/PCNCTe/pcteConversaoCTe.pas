@@ -227,7 +227,9 @@ begin
     LayCTeConsulta:       Result := schconsSitCTe;
     LayCTeStatusServico:  Result := schconsStatServ;
     LayCTeCadastro:       Result := schconsCad;
-    LayCTeEvento:         Result := schEventoCTe;
+    LayCTeEvento,
+    LayCTeEventoAN:       Result := schEventoCTe;
+    LayCTeDistDFeInt:     Result := schdistDFeInt;
   else
     Result := schErro;
   end;

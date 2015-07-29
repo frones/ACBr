@@ -176,11 +176,11 @@ type
     FSenhaWeb: String;
     FUserWeb: String;
     FConsultaLoteAposEnvio: Boolean;
+    procedure SetCodigoMunicipio(const Value: Integer);
 
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); overload;
-
     procedure SetConfigMunicipio;
   published
     property ConfigGeral: TConfigGeral read FConfigGeral;
@@ -192,7 +192,7 @@ type
     property ConfigURL: TConfigURL read FConfigURL;
     property ConfigEnvelope: TConfigEnvelope read FConfigEnvelope;
 
-    property CodigoMunicipio: Integer read FCodigoMunicipio write FCodigoMunicipio;
+    property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
     property xProvedor: String read FxProvedor;
     property xMunicipio: String read FxMunicipio;
@@ -313,6 +313,13 @@ begin
   inherited Assign(DeGeralConfNFSe);
 
   FProvedor := DeGeralConfNFSe.Provedor;
+end;
+
+procedure TGeralConfNFSe.SetCodigoMunicipio(const Value: Integer);
+begin
+  FCodigoMunicipio := Value;
+  if FCodigoMunicipio <> 0 then
+    SetConfigMunicipio;
 end;
 
 procedure TGeralConfNFSe.SetConfigMunicipio;

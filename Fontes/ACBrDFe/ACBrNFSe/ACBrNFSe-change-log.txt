@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2015
+[*] Incluido a procedure SetCodigoMunicipio a fim de automatizar a configuração
+    do componente para um determinado municipio.
+    Por: Emerson.
+
 19/05/2015
 [+] Incluido o método para ler o RPS do provedor EL na Unit pnfsNFSeR.pas.
     Por: Laurivan Sareta

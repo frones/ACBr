@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2015
+-- ACBrIBGE --   (por: DSA)
+[-] Corrigido Bug na comparação de Cidades com acentos
+[-] Correção de possibilidade de Loop Infinito na comparação de Cidades
+
+-- ACBrCEP --
+[*] Remoção de TypeCasts desnecessários
+
 26/07/2015
 -- ACBrMail --
 [-] Limpando conteúdo de Subject em TACBrMail.Clear

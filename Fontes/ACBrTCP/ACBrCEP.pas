@@ -389,7 +389,7 @@ function TACBrCEP.BuscarPorCEP(ACEP : String) : Integer ;
 begin
   fEnderecos.Clear;
 
-  ACEP := Trim( OnlyNumber( AnsiString( ACEP ) ) ) ;
+  ACEP := Trim( OnlyNumber( ACEP ) ) ;
   if ACEP = '' then
      raise EACBrCEPException.Create('CEP deve ser informado');
 
@@ -593,7 +593,7 @@ begin
   SL1 := TStringList.Create;
   SL2 := TStringList.Create;
   try
-    Buffer := String( fOwner.RespHTTP.Text ) ;
+    Buffer := fOwner.RespHTTP.Text ;
     // CEP livre retorna vários endereços na mesma linha... tratando...
     SL1.Text := StringReplace( Buffer, '""', '"'+sLineBreak+'"', [rfReplaceAll] );
 
@@ -616,7 +616,7 @@ begin
          SL2[J] := Linha;
       end ;
 
-      if (SL2.Count >= 9) and (Length( OnlyNumber( AnsiString(SL2[8]) ) ) = 8) then
+      if (SL2.Count >= 9) and (Length( OnlyNumber( SL2[8] ) ) = 8) then
       begin
         with fOwner.Enderecos.New do
         begin
@@ -650,7 +650,7 @@ end;
 procedure TACBrWSRepublicaVirtual.BuscarPorCEP(ACEP: String);
 begin
   FCepBusca := ACep; // republica virtual nao devolve o cep na resposta
-  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  ACEP := OnlyNumber( ACEP );
 
   fOwner.HTTPGet( fpURL + 'web_cep.php?cep='+ACEP+'&formato=xml' ) ;
   ProcessaResposta ;
@@ -722,7 +722,7 @@ begin
            'xmlns:mns="urn:cepwsdl" '+
            'SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">'+
            '<userkey xsi:type="xsd:string">' + Trim( fOwner.ChaveAcesso ) + '</userkey>'+
-           '<cep xsi:type="xsd:string">' + OnlyNumber( AnsiString( ACEP ) ) + '</cep>'+
+           '<cep xsi:type="xsd:string">' + OnlyNumber( ACEP ) + '</cep>'+
          '</mns:ConsultaCEP>'+
        '</SOAP-ENV:Body>'+
      '</SOAP-ENV:Envelope>';
@@ -780,7 +780,7 @@ begin
                     '&userkey=' + Trim(fOwner.ChaveAcesso) +
                     '&method=RetornaInfoCEP' +
                     '&orig=ACBR' +
-                    '&cep=' + OnlyNumber(AnsiString(ACEP)));
+                    '&cep=' + OnlyNumber(ACEP));
 
     ProcessaResposta;
   except
@@ -807,9 +807,9 @@ begin
                     '&userkey=' + Trim(fOwner.ChaveAcesso) +
                     '&method=RetornaInfoEndereco' +
                     '&orig=ACBR' +
-                    '&uf=' + AnsiString(AUF) +
-                    '&cidade=' + AnsiString(AMunicipio) +
-                    '&endereco=' + AnsiString(ALogradouro));
+                    '&uf=' + AUF +
+                    '&cidade=' + AMunicipio +
+                    '&endereco=' + ALogradouro);
 
     ProcessaResposta;
   except
@@ -833,7 +833,7 @@ begin
   SL1 := TStringList.Create;
 
   try
-    Buffer := String(fOwner.RespHTTP.Text);
+    Buffer := fOwner.RespHTTP.Text;
     Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
     Buffer := StringReplace(Buffer, '<dados>', '', [rfReplaceAll]);
     Buffer := StringReplace(Buffer, '</dados>', '', [rfReplaceAll]);
@@ -880,7 +880,7 @@ end;
 procedure TACBrWSKingHost.BuscarPorCEP(ACEP: String);
 begin
   FCepBusca := ACep;
-  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  ACEP := OnlyNumber( ACEP );
 
   fOwner.HTTPGet( fpURL + 'web_cep.php?'+
                           'auth='+ Trim(fOwner.ChaveAcesso) +
@@ -933,7 +933,7 @@ procedure TACBrWSByJG.BuscarPorCEP(ACEP: String);
 begin
   TestarUsuario;
   FCepBusca := ACEP;
-  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  ACEP := OnlyNumber( ACEP );
   FTipoBusca := 1;
   fOwner.HTTPGet( fpURL + '?httpmethod=obterlogradouroauth&cep='+ACEP+
   '&usuario='+Trim(fOwner.Usuario)+'&senha='+Trim(fOwner.Senha)) ;
@@ -1114,7 +1114,7 @@ procedure TACBrWSCorreios.BuscarPorCEP(ACEP: String);
 var
 	sParams: string;
 begin
-  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  ACEP := OnlyNumber( ACEP );
   sParams := 'relaxation='+ACEP+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
   fOwner.HTTPGet(fpURL + sParams);
   ProcessaResposta;
@@ -1276,7 +1276,7 @@ begin
   TestarChave;
 
   FCepBusca := ACep;
-  ACEP := OnlyNumber( AnsiString( ACEP ) );
+  ACEP := OnlyNumber( ACEP );
 
   fOwner.HTTPGet( fpURL + '?cep=' + ACEP + '&chave=' + Trim(fOwner.ChaveAcesso) + '&formato=xml' ) ;
   ProcessaResposta;

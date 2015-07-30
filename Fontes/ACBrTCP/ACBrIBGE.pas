@@ -192,7 +192,7 @@ function TACBrIBGE.BuscarPorNome(const ACidade : String ; const AUF : String ;
   const Exata : Boolean; const ComparacaoCaseSensitive: Boolean) : Integer ;
 var
   I : Integer ;
-  Param: String ;
+  Param, CidadeAchar, CidadeLista: String ;
 begin
   fCidades.Clear;
 
@@ -207,33 +207,33 @@ begin
   // Aplicando filtros (se informados) //
   if (AUF <> '') or Exata then
   begin
+    CidadeAchar := TiraAcentos(ACidade);
+    if not ComparacaoCaseSensitive then
+      CidadeAchar := UpperCase(CidadeAchar);
+
     I := 0;
     while I < fCidades.Count do
     begin
       if (AUF <> '') and (fCidades[I].UF <> AUF) then
-         fCidades.Delete(I)
-      else
+      begin
+         fCidades.Delete(I);
+         continue;
+      end;
+
       if Exata then
       begin
-        if ComparacaoCaseSensitive then
+        CidadeLista := TiraAcentos(fCidades[I].Municipio);
+        if not ComparacaoCaseSensitive then
+          CidadeLista := UpperCase(CidadeLista);
+
+        if (CidadeLista <> CidadeAchar) then
         begin
-          if (fCidades[I].Municipio <> ACidade) then
-          begin
-            fCidades.Delete(I)
-          end
-        end
-        else
-        begin
-          if (AnsiUpperCase(fCidades[I].Municipio) <> AnsiUpperCase(ACidade)) then
-          begin
-            fCidades.Delete(I)
-          end
-          else
-            Inc(I);
+          fCidades.Delete(I);
+          continue;
         end;
-      end
-      else
-         Inc( I ) ;
+      end;
+
+      Inc( I ) ;
     end ;
   end ;
 

@@ -957,16 +957,19 @@ end;
 
 procedure TACBrECFVirtualBufferClass.LinhaRelatorioGerencial(Linha: AnsiString; IndiceBMP: Integer);
 begin
+  inherited;
   Imprimir( AjustaLinhaColunas(Linha) );
 end;
 
 procedure TACBrECFVirtualBufferClass.LinhaCupomVinculado(Linha: AnsiString);
 begin
-  LinhaRelatorioGerencial( Linha );
+  inherited;
+  LinhaRelatorioGerencial( Linha, 0 );
 end;
 
 procedure TACBrECFVirtualBufferClass.CortaPapel(const CorteParcial : Boolean) ;
 begin
+  inherited;
   if CorteParcial Then
     Imprimir( '</corte_parcial>' )
   else

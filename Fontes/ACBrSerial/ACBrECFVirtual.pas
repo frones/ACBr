@@ -1114,7 +1114,7 @@ end;
 
 procedure TACBrECFVirtualClass.MudaHorarioVerao(EHorarioVerao: Boolean);
 begin
-  GravaLog('MudaHorarioVerao('+BoolToStr(EHorarioVerao)+')');
+  GravaLog( ComandoLOG );
   if EHorarioVerao <> HorarioVerao then
     MudaHorarioVerao ;
 end;
@@ -1163,6 +1163,8 @@ Var
   StrDescAcre : String ;
   PorcDesc, ValDesc, Total : Double ;
 begin
+  GravaLog( ComandoLOG );
+
   if Estado <> estVenda then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "VENDA" Cupom não Aberto')) ;
 
@@ -1243,6 +1245,8 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
 begin
+  GravaLog( ComandoLOG );
+
   if Estado <> estVenda then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "VENDA"')) ;
 
@@ -1288,6 +1292,8 @@ Var
   Taxa, ValTaxa : Double ;
   A, AjusteSinal: Integer ;
 begin
+  GravaLog( ComandoLOG );
+
   if not (Estado in [estVenda, estNaoFiscal]) then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "VENDA" Cupom não Aberto')) ;
 
@@ -1344,6 +1350,8 @@ Var
   Troco : Double ;
   Pagto, PagtoTroco : TACBrECFVirtualClassPagamentoCupom ;
 begin
+  GravaLog( ComandoLOG );
+
   if Estado <> estPagamento then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "PAGAMENTO"')) ;
 
@@ -1402,6 +1410,8 @@ end;
 
 procedure TACBrECFVirtualClass.FechaCupom(Observacao: AnsiString; IndiceBMP : Integer);
 begin
+  GravaLog( ComandoLOG );
+
   if Estado <> estPagamento then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "PAGAMENTO", não houve SubTotal')) ;
 
@@ -1434,6 +1444,8 @@ procedure TACBrECFVirtualClass.CancelaCupom;
 Var
   A : Integer ;
 begin
+  GravaLog( ComandoLOG );
+
   VerificaPodeCancelarCupom;
   try
     if not (Estado in [estVenda, estPagamento, estNaoFiscal] ) then
@@ -1481,6 +1493,8 @@ procedure TACBrECFVirtualClass.LeituraX ;
 var
   AbrirDia : Boolean ;
 begin
+  GravaLog( ComandoLOG );
+
   if Estado <> estRequerX then
     TestaPodeAbrirCupom ;
 
@@ -1511,6 +1525,8 @@ procedure TACBrECFVirtualClass.ReducaoZ(DataHora : TDateTime) ;
 var
   A: Integer ;
 begin
+  GravaLog( ComandoLOG );
+
   if Estado = estBloqueada then
     raise EACBrECFERRO.Create(ACBrStr('Dia já foi fechado. Redução Z já emitida')) ;
 
@@ -1563,6 +1579,8 @@ var
   IndiceStr: String;
   RG: TACBrECFRelatorioGerencial;
 begin
+  GravaLog( ComandoLOG );
+
   if not (Estado in [estLivre,estRequerZ,estRequerX])  then
     raise EACBrECFERRO.Create(ACBrStr('O Estado não é "LIVRE"'));
 
@@ -1597,7 +1615,7 @@ end;
 
 procedure TACBrECFVirtualClass.LinhaRelatorioGerencial(Linha: AnsiString; IndiceBMP: Integer);
 begin
-  {}
+  GravaLog( ComandoLOG );
 end;
 
 procedure TACBrECFVirtualClass.AbreCupomVinculado(COO, CodFormaPagto,
@@ -1608,6 +1626,8 @@ Var
   UsouPagamento : Boolean ;
   SubTotalCupomAnterior: Double;
 begin
+  GravaLog( ComandoLOG );
+
   if COO = '' then
     raise EACBrECFERRO.create(ACBrStr('COO inválido'));
 
@@ -1661,11 +1681,14 @@ end;
 
 procedure TACBrECFVirtualClass.LinhaCupomVinculado(Linha: AnsiString);
 begin
+  GravaLog( ComandoLOG );
   LinhaRelatorioGerencial( Linha );
 end;
 
 procedure TACBrECFVirtualClass.FechaRelatorio;
 begin
+  GravaLog( ComandoLOG );
+
   if Estado <> estRelatorio then exit ;
 
   try
@@ -1686,12 +1709,13 @@ end;
 
 procedure TACBrECFVirtualClass.CortaPapel(const CorteParcial : Boolean) ;
 begin
-  {}
+  GravaLog( ComandoLOG );
 end ;
 
 procedure TACBrECFVirtualClass.AbreNaoFiscal(CPF_CNPJ : String ; Nome : String ;
   Endereco : String) ;
 begin
+  GravaLog( ComandoLOG );
   TestaPodeAbrirCupom ;
 
   try
@@ -1720,6 +1744,7 @@ Var
   CNF      : TACBrECFComprovanteNaoFiscal ;
   PosCNF   : Integer ;
 begin
+  GravaLog( ComandoLOG );
   if Estado <> estNaoFiscal then
     raise EACBrECFERRO.create(ACBrStr('Comprovante Não Fiscal não foi aberto')) ;
 
@@ -2008,6 +2033,8 @@ var
   Tratado: Boolean;
   SL: TStringList;
 begin
+  GravaLog('GravaArqINI');
+
   if fpNomeArqINI = '' then
     fpNomeArqINI := CalculaNomeArqINI;
 

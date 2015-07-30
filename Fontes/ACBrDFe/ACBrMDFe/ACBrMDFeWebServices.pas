@@ -802,6 +802,7 @@ var
   I, J: integer;
   AProcMDFe: TProcMDFe;
   AInfProt: TProtMDFeCollection;
+  SalvarXML: Boolean;
 begin
   Result := False;
 
@@ -872,16 +873,20 @@ begin
           end;
         end;
 
-        if FPConfiguracoesMDFe.Arquivos.Salvar then
-        begin
-          if FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados then
+          if FPConfiguracoesMDFe.Arquivos.Salvar then
           begin
-            if FManifestos.Items[J].Processado then
-              FManifestos.Items[J].GravarXML;
-          end
-          else
-            FManifestos.Items[J].GravarXML;
-        end;
+            SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                         TACBrMDFe(FPDFeOwner).Manifestos.Items[I].Processado;
+
+            if SalvarXML then
+            begin
+              with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
+              begin
+                GerarXML;   // Gera novamente, para incluir informações de "procMDFe" no XML
+                GravarXML;
+              end;
+            end;
+          end;
 
         break;
       end;
@@ -1177,10 +1182,11 @@ end;
 function TMDFeConsulta.TratarResposta: Boolean;
 var
   MDFeRetorno: TRetConsSitMDFe;
-  MDFCancelado, Atualiza: Boolean;
+  SalvarXML, MDFCancelado, Atualiza: Boolean;
   aEventos, aMsg, NomeArquivo, aMDFe, aMDFeDFe: String;
   AProcMDFe: TProcMDFe;
   I, J, K, Inicio, Fim: Integer;
+  Data: TDateTime;
   LocMDFeW: TMDFeW;
 begin
   MDFeRetorno := TRetConsSitMDFe.Create;
@@ -1442,13 +1448,28 @@ begin
 
             if FPConfiguracoesMDFe.Arquivos.Salvar then
             begin
-              if FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados then
+              SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                           TACBrMDFe(FPDFeOwner).Manifestos.Items[I].Processado;
+
+              if SalvarXML then
               begin
-                if Processado then
-                  GravarXML();
-              end
+                with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
+                begin
+                  GerarXML;   // Gera novamente, para incluir informações de "procMDFe" no XML
+                  GravarXML;
+                end;
+              end;
+            end;
+
+            if FPConfiguracoesMDFe.Arquivos.Salvar and (FRetMDFeDFe <> '') then
+            begin
+              if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
+                Data := TACBrMDFe(FPDFeOwner).Manifestos.Items[i].MDFe.Ide.dhEmi
               else
-                GravarXML();
+                Data := Now;
+
+              FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml', aMDFeDFe,
+                                PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
             end;
           end;
 
@@ -1501,6 +1522,17 @@ begin
           finally
             AProcMDFe.Free;
           end;
+        end;
+
+        if FRetMDFeDFe <> '' then
+        begin
+          if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
+            Data := TACBrMDFe(FPDFeOwner).Manifestos.Items[i].MDFe.Ide.dhEmi
+          else
+            Data := Now;
+
+          FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml', aMDFeDFe,
+                                PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
         end;
       end;
     end;

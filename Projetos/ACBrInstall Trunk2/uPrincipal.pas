@@ -1160,17 +1160,10 @@ begin
   end;
   {$ENDIF}
 
-  // Verificar se o tortoise está instalado
-//  if not TSVN_Class.IsTortoiseInstalado then
-  if not TSVN_Class.SVNInstalled then
-  begin
-    Stop := True;
-    Application.MessageBox(
-      'TortoiseSVN não foi instalado, instale o TortoiseSVN antes de continuar.',
-      PWideChar(Application.Title),
-      MB_ICONERROR + MB_OK
-    );
-  end;
+  // Verificar se o tortoise está instalado, se não estiver, não mostrar a aba de atualização
+  // o usuário deve utilizar software proprio e fazer manualmente
+  // pedido do forum
+  wizPgObterFontes.Visible := TSVN_Class.SVNInstalled;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;

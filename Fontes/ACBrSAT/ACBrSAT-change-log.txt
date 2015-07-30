@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/07/2015
+-- ACBrSAT --     (por: DSA)
+[-] Correção na composição do Nome do Arquivo de Envio de Cancelamento
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23218
+
 Data: 28/07/2015
 -- ACBrSAT --        (por: DSA)
 [-] Atribuição de ACBrSAT1.Resposta não atribuia corretamente o valor de

@@ -157,7 +157,8 @@ type
 
     function CalcCFeNomeArq( Pasta: String; NomeArquivo: String = '';
       Sufixo: String = ''): String;
-    function CalcCFeCancNomeArq( Pasta: String; Sufixo: String = ''): String;
+    function CalcCFeCancNomeArq( Pasta: String; NomeArquivo: String = '';
+      Sufixo: String = ''): String;
 
    published
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
@@ -912,7 +913,7 @@ begin
 
   if fsConfigArquivos.SalvarEnvio then
   begin
-    NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaEnvio, '-env');
+    NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaEnvio, '', '-env');
     WriteToTXT(NomeCFe, dadosCancelamento, False, False);
   end;
 
@@ -1351,16 +1352,26 @@ begin
   Result := Dir + NomeArquivo + Sufixo + '.xml';
 end;
 
-function TACBrSAT.CalcCFeCancNomeArq(Pasta: String; Sufixo: String): String;
+function TACBrSAT.CalcCFeCancNomeArq(Pasta: String; NomeArquivo: String;
+  Sufixo: String): String;
 var
-  Dir: String;
+  Dir, Chave: String;
 begin
   Dir := fsConfigArquivos.CalcPath( Pasta, CFeCanc.Emit.CNPJ, CFeCanc.ide.dEmi );
 
   if not DirectoryExists(Dir) then
     ForceDirectories(Dir);
 
-  Result := Dir + fsConfigArquivos.PrefixoArqCFeCanc + CFeCanc.infCFe.ID + Sufixo + '.xml';
+  if NomeArquivo = '' then
+  begin
+    Chave := CFeCanc.infCFe.ID;
+    if Chave = '' then
+      Chave := OnlyNumber( CFeCanc.infCFe.chCanc );
+
+    NomeArquivo := fsConfigArquivos.PrefixoArqCFeCanc + Chave;
+  end;
+
+  Result := Dir + NomeArquivo + Sufixo + '.xml';
 end;
 
 function TACBrSAT.CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;

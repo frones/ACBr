@@ -305,7 +305,7 @@ implementation
 
 uses 
   pcnAuxiliar,
-  ACBrUtil;
+  ACBrUtil, pcnGerador;
 
 { TprocEvento_DetEvento }
 
@@ -478,7 +478,7 @@ begin
 
           if (oLeitorInfZip.rExtrai(1, 'nfeProc') <> '') then
           begin
-            FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
             oLeitorInfZip.rExtrai(1, 'infNFe');
             FdocZip.Items[i].FresNFe.chNFe := copy(oLeitorInfZip.Grupo, pos('Id="NFe', oLeitorInfZip.Grupo)+7, 44);

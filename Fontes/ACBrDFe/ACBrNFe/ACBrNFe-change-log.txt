@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2015
+[*] Adicionado cabeçalho XML quando não houver ao XML baixado pelo webservice
+    de distribuição de DFe
+    por: Regys Silveira
+
 28/07/2015
 [*] Alterado a forma de converter uma string em data/hora na unit pcnRetDownloadNFe.
     por: Italo Jurisato Junior

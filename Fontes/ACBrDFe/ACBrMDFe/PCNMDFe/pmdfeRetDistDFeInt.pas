@@ -34,7 +34,7 @@ unit pmdfeRetDistDFeInt;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, pcnGerador,
   pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe, pcnLeitor, synacode;
 
 type

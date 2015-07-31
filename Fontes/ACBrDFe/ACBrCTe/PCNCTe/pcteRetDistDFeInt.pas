@@ -34,7 +34,7 @@ unit pcteRetDistDFeInt;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, pcnGerador,
   pcnAuxiliar, pcnConversao, pcteConversaoCTe, pcnLeitor, synacode;
 
 type

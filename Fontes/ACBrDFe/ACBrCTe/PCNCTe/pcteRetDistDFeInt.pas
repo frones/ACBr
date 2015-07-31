@@ -1,31 +1,47 @@
-{******************************************************************************}
-{ Projeto: Componente ACBrCTe                                                 }
-{  Biblioteca multiplataforma de componentes Delphi                            }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
-{******************************************************************************}
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//              PCN - Projeto Cooperar CTe                                    //
+//                                                                            //
+//   Descrição: Classes para geração/leitura dos arquivos xml da CTe          //
+//                                                                            //
+//        site: www.projetocooperar.org                                       //
+//       email: projetocooperar@zipmail.com.br                                //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
+//     projeto: http://code.google.com/p/projetocooperar/                     //
+//         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
+//                                                                            //
+// Coordenação: (c) 2009 - Paulo Casagrande                                   //
+//                                                                            //
+//      Equipe: Vide o arquivo leiame.txt na pasta raiz do projeto            //
+//                                                                            //
+//      Versão: Vide o arquivo leiame.txt na pasta raiz do projeto            //
+//                                                                            //
+//     Licença: GNU Lesser General Public License (GNU LGPL)                  //
+//                                                                            //
+//              - Este programa é software livre; você pode redistribuí-lo    //
+//              e/ou modificá-lo sob os termos da Licença Pública Geral GNU,  //
+//              conforme publicada pela Free Software Foundation; tanto a     //
+//              versão 2 da Licença como (a seu critério) qualquer versão     //
+//              mais nova.                                                    //
+//                                                                            //
+//              - Este programa é distribuído na expectativa de ser útil,     //
+//              mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de  //
+//              COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM       //
+//              PARTICULAR. Consulte a Licença Pública Geral GNU para obter   //
+//              mais detalhes. Você deve ter recebido uma cópia da Licença    //
+//              Pública Geral GNU junto com este programa; se não, escreva    //
+//              para a Free Software Foundation, Inc., 59 Temple Place,       //
+//              Suite 330, Boston, MA - 02111-1307, USA ou consulte a         //
+//              licença oficial em http://www.gnu.org/licenses/gpl.txt        //
+//                                                                            //
+//    Nota (1): - Esta  licença  não  concede  o  direito  de  uso  do nome   //
+//              "PCN  -  Projeto  Cooperar  CTe", não  podendo o mesmo ser    //
+//              utilizado sem previa autorização.                             //
+//                                                                            //
+//    Nota (2): - O uso integral (ou parcial) das units do projeto esta       //
+//              condicionado a manutenção deste cabeçalho junto ao código     //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 {$I ACBr.inc}
 
@@ -34,11 +50,11 @@ unit pcteRetDistDFeInt;
 interface
 
 uses
-  SysUtils, Classes, pcnGerador,
-  pcnAuxiliar, pcnConversao, pcteConversaoCTe, pcnLeitor, synacode;
+  SysUtils, Classes,
+  pcnConversao, pcteConversaoCTe, pcnLeitor, synacode;
 
 type
-  TresCTe              = class;
+  TresCTe               = class;
 //  TresEvento            = class;
   TprocEvento           = class;
   TdocZipCollection     = class;
@@ -101,7 +117,7 @@ type
     FcOrgao: Integer;
     FcStat: Integer;
     FxMotivo: String;
-    FchNFe: String;
+    FchCTe: String;
     FtpEvento: TpcnTpEvento;
     FxEvento: String;
     FnSeqEvento: Integer;
@@ -117,7 +133,7 @@ type
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
     property cStat: Integer          read FcStat       write FcStat;
     property xMotivo: String         read FxMotivo     write FxMotivo;
-    property chNFe: String           read FchNFe       write FchNFe;
+    property chCTe: String           read FchCTe       write FchCTe;
     property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
     property xEvento: String         read FxEvento     write FxEvento;
     property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
@@ -135,31 +151,31 @@ type
     FxNome: String;
     FIE: String;
     FdhEmi: TDateTime;
-//    FtpNF: TpcnTipoNFe;
+//    FtpNF: TpcnTipoCTe;
     FvNF: Double;
     FdigVal: String;
     FdhRecbto: TDateTime;
     FnProt: String;
     FcSitCTe: TSituacaoDFe;
   public
-    property chCTe: String          read FchCTe    write FchCTe;
-    property CNPJCPF: String        read FCNPJCPF  write FCNPJCPF;
-    property xNome: String          read FxNome    write FxNome;
-    property IE: String             read FIE       write FIE;
-    property dhEmi: TDateTime       read FdhEmi    write FdhEmi;
-//    property tpNF: TpcnTipoNFe      read FtpNF     write FtpNF;
-    property vNF: Double            read FvNF      write FvNF;
-    property digVal: String         read FdigVal   write FdigVal;
-    property dhRecbto: TDateTime    read FdhRecbto write FdhRecbto;
-    property nProt: String          read FnProt    write FnProt;
-    property cSitCTe: TSituacaoDFe  read FcSitCTe  write FcSitCTe;
+    property chCTe: String            read FchCTe    write FchCTe;
+    property CNPJCPF: String          read FCNPJCPF  write FCNPJCPF;
+    property xNome: String            read FxNome    write FxNome;
+    property IE: String               read FIE       write FIE;
+    property dhEmi: TDateTime         read FdhEmi    write FdhEmi;
+//    property tpNF: TpcnTipoCTe        read FtpNF     write FtpNF;
+    property vNF: Double              read FvNF      write FvNF;
+    property digVal: String           read FdigVal   write FdigVal;
+    property dhRecbto: TDateTime      read FdhRecbto write FdhRecbto;
+    property nProt: String            read FnProt    write FnProt;
+    property cSitCTe: TSituacaoDFe    read FcSitCTe  write FcSitCTe;
   end;
   (*
   TresEvento = class
   private
     FcOrgao: Integer;
     FCNPJCPF: String;
-    FchNFe: String;
+    FchCTe: String;
     FdhEvento: TDateTime;
     FtpEvento: TpcnTpEvento;
     FnSeqEvento: ShortInt;
@@ -169,7 +185,7 @@ type
   public
     property cOrgao: Integer        read FcOrgao     write FcOrgao;
     property CNPJCPF: String        read FCNPJCPF    write FCNPJCPF;
-    property chNFe: String          read FchNFe      write FchNFe;
+    property chCTe: String          read FchCTe      write FchCTe;
     property dhEvento: TDateTime    read FdhEvento   write FdhEvento;
     property tpEvento: TpcnTpEvento read FtpEvento   write FtpEvento;
     property nSeqEvento: ShortInt   read FnSeqEvento write FnSeqEvento;
@@ -184,7 +200,7 @@ type
     FcOrgao: Integer;
     FtpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
-    FchNFe: String;
+    FchCTe: String;
     FdhEvento: TDateTime;
     FtpEvento: TpcnTpEvento;
     FnSeqEvento: Integer;
@@ -200,7 +216,7 @@ type
     property cOrgao: Integer         read FcOrgao         write FcOrgao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb          write FtpAmb;
     property CNPJ: String            read FCNPJ           write FCNPJ;
-    property chNFe: String           read FchNFe          write FchNFe;
+    property chCTe: String           read FchCTe          write FchCTe;
     property dhEvento: TDateTime     read FdhEvento       write FdhEvento;
     property tpEvento: TpcnTpEvento  read FtpEvento       write FtpEvento;
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
@@ -222,7 +238,7 @@ type
 
   TdocZipCollectionItem = class(TCollectionItem)
   private
-    // Atributos do resumo da NFe ou Evento
+    // Atributos do resumo do CTe ou Evento
     FNSU: String;
     Fschema: TSchemaCTe;
 
@@ -287,9 +303,9 @@ type
 
 implementation
 
-uses
-  Math, pcteCTeR
-  {$IFDEF FPC},zstream {$ELSE},ACBrZLibExGZ{$ENDIF};
+uses 
+  pcnAuxiliar,
+  ACBrUtil, pcnGerador;
 
 { TprocEvento_DetEvento }
 
@@ -386,58 +402,8 @@ function TRetDistDFeInt.LerXml: boolean;
 var
   ok: boolean;
   i: Integer;
-  StrStream: TStringStream;
-  StrAux, StrDecod: String;
+  StrAux, StrDecod: AnsiString;
   oLeitorInfZip: TLeitor;
-  XMLNFe: String;
-
-  {$IFDEF FPC}
-  { Descompacta um arquivo padrão GZIP de Stream... Fontes:
-    http://wiki.freepascal.org/paszlib
-    http://www.gocher.me/GZIP
-  }
-  function UnZipMsg(S: TStringStream): String;
-  var
-    DS: TDecompressionStream;
-    MS: TMemoryStream;
-    readCount: integer;
-    Buf: array[0..1023] of byte;
-    hdr: longword;
-  begin
-    S.Position := 0; // goto start of input stream
-    hdr := S.ReadDWord;
-    if (hdr and $00088B1F) = $00088B1F then // gzip header (deflate method)
-      S.Position := 10     // Pula cabeçalho gzip
-    else if (hdr and $00009C78) = $00009C78 then // zlib header
-      S.Position := 2      // Pula cabeçalho zlib
-    else
-      S.Position := 0;
-
-    MS := TMemoryStream.Create;
-    DS := Tdecompressionstream.Create(S, (S.Position > 0) );
-    try
-      repeat
-        readCount := DS.Read(Buf, SizeOf(Buf));
-        if readCount <> 0 then
-          MS.Write(Buf, readCount);
-      until readCount < SizeOf(Buf);
-
-      MS.Position := 0;
-      Result := '';
-      SetLength(Result, MS.Size);
-      MS.ReadBuffer(Result[1], MS.Size);
-    finally
-      DS.Free;
-      MS.Free;
-    end;
-  end;
-  {$ELSE}
-  function UnZipMsg(S: TStringStream): String;
-  begin
-    Result := GZDecompressStr(S.DataString);
-  end;
-  {$ENDIF}
-
 begin
   Result := False;
 
@@ -462,164 +428,148 @@ begin
         FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU');
         FdocZip.Items[i].schema := StrToSchemaCTe(ok, Leitor.rAtributo('schema'));
 
-        StrStream := TStringStream.Create('');
+        StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
+        StrDecod := DecodeBase64(StrAux);
+        FdocZip.Items[i].FInfZip := UnZip(StrDecod);
 
+        oLeitorInfZip := TLeitor.Create;
         try
-          try
-            StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
+          oLeitorInfZip.Arquivo := FdocZip.Items[i].FInfZip;
+          (*
+          if (oLeitorInfZip.rExtrai(1, 'resCTe') <> '') then
+          begin
+            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
-            StrDecod := DecodeBase64(StrAux);
+            FdocZip.Items[i].FresCTe.chCTe    := oLeitorInfZip.rCampo(tcStr, 'chCTe');
+            FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
 
-            StrStream.WriteString(StrDecod);
+            if FdocZip.Items[i].FresCTe.FCNPJCPF = '' then
+              FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
 
-            FdocZip.Items[i].FInfZip := UnZipMsg(StrStream);
-          except
-            on e : Exception do
+            FdocZip.Items[i].FresCTe.FxNome    := oLeitorInfZip.rCampo(tcStr, 'xNome');
+            FdocZip.Items[i].FresCTe.FIE       := oLeitorInfZip.rCampo(tcStr, 'IE');
+            FdocZip.Items[i].FresCTe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
+            FdocZip.Items[i].FresCTe.FtpNF     := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
+            FdocZip.Items[i].FresCTe.FvNF      := oLeitorInfZip.rCampo(tcDe2, 'vNF');
+            FdocZip.Items[i].FresCTe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
+            FdocZip.Items[i].FresCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
+            FdocZip.Items[i].FresCTe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
+            FdocZip.Items[i].FresCTe.FcSitCTe  := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitCTe'));
+          end;
+
+          if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
+          begin
+            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+
+            FdocZip.Items[i].FresEvento.FcOrgao  := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
+            FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
+
+            if FdocZip.Items[i].FresEvento.FCNPJCPF = '' then
+              FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
+
+            FdocZip.Items[i].FresEvento.chCTe       := oLeitorInfZip.rCampo(tcStr, 'chCTe');
+            FdocZip.Items[i].FresEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
+            FdocZip.Items[i].FresEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
+            FdocZip.Items[i].FresEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
+            FdocZip.Items[i].FresEvento.FxEvento    := oLeitorInfZip.rCampo(tcStr, 'xEvento');
+            FdocZip.Items[i].FresEvento.FdhRecbto   := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
+            FdocZip.Items[i].FresEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
+          end;
+          *)
+          if (oLeitorInfZip.rExtrai(1, 'cteProc') <> '') then
+          begin
+            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+
+            oLeitorInfZip.rExtrai(1, 'infCTe');
+            FdocZip.Items[i].FresCTe.chCTe := copy(oLeitorInfZip.Grupo, pos('Id="CTe', oLeitorInfZip.Grupo)+7, 44);
+
+            oLeitorInfZip.rExtrai(1, 'emit');
+            FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
+            if FdocZip.Items[i].FresCTe.FCNPJCPF = '' then
+              FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
+
+            FdocZip.Items[i].FresCTe.FxNome := oLeitorInfZip.rCampo(tcStr, 'xNome');
+            FdocZip.Items[i].FresCTe.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
+
+            oLeitorInfZip.rExtrai(1, 'ide');
+            FdocZip.Items[i].FresCTe.FdhEmi := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
+            (*
+            FdocZip.Items[i].FresCTe.FtpNF := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
+
+            oLeitorInfZip.rExtrai(1, 'total');
+            FdocZip.Items[i].FresCTe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vNF');
+            *)
+            oLeitorInfZip.rExtrai(1, 'infProt');
+            FdocZip.Items[i].FresCTe.digVal    := oLeitorInfZip.rCampo(tcStr, 'digVal');
+            FdocZip.Items[i].FresCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
+            FdocZip.Items[i].FresCTe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
+
+            case oLeitorInfZip.rCampo(tcInt, 'cStat') of
+              100: FdocZip.Items[i].FresCTe.FcSitCTe := snAutorizado;
+              101: FdocZip.Items[i].FresCTe.FcSitCTe := snCancelado;
+              110: FdocZip.Items[i].FresCTe.FcSitCTe := snDenegado;
+            end;
+          end;
+
+          if (oLeitorInfZip.rExtrai(1, 'procEventoCTe') <> '') then
+          begin
+            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+
+            FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id');
+            FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
+            FdocZip.Items[i].FprocEvento.FtpAmb      := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
+            FdocZip.Items[i].FprocEvento.FCNPJ       := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
+            FdocZip.Items[i].FprocEvento.FchCTe      := oLeitorInfZip.rCampo(tcStr, 'chCTe');
+            FdocZip.Items[i].FprocEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
+            FdocZip.Items[i].FprocEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
+            FdocZip.Items[i].FprocEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
+            FdocZip.Items[i].FprocEvento.FverEvento  := oLeitorInfZip.rCampo(tcStr, 'verEvento');
+
+            if (oLeitorInfZip.rExtrai(2, 'detEvento') <> '') then
             begin
-              Raise Exception.Create(e.message);
+              FdocZip.Items[i].FprocEvento.detEvento.FVersao     := oLeitorInfZip.rAtributo('versao');
+              FdocZip.Items[i].FprocEvento.detEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
+              FdocZip.Items[i].FprocEvento.detEvento.FxJust      := oLeitorInfZip.rCampo(tcStr, 'xJust');
+              FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := oLeitorInfZip.rCampo(tcStr, 'descEvento');
+
+              if (oLeitorInfZip.rExtrai(3, 'CTe') <> '') then
+              begin
+                FdocZip.Items[i].FprocEvento.detEvento.FCTe.FchCTe    := oLeitorInfZip.rCampo(tcStr, 'chCTe');
+                FdocZip.Items[i].FprocEvento.detEvento.FCTe.Fmodal    := StrToTpModal(ok, oLeitorInfZip.rCampo(tcStr, 'modal'));
+                FdocZip.Items[i].FprocEvento.detEvento.FCTe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
+                FdocZip.Items[i].FprocEvento.detEvento.FCTe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
+                FdocZip.Items[i].FprocEvento.detEvento.FCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
+              end;
+
+              if (oLeitorInfZip.rExtrai(3, 'emit') <> '') then
+              begin
+                FdocZip.Items[i].FprocEvento.detEvento.Femit.FCNPJ  := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
+                FdocZip.Items[i].FprocEvento.detEvento.Femit.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
+                FdocZip.Items[i].FprocEvento.detEvento.Femit.FxNome := oLeitorInfZip.rCampo(tcStr, 'xNome');
+              end;
+            end;
+
+            if (oLeitorInfZip.rExtrai(2, 'retEvento') <> '') then
+            begin
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FtpAmb       := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FverAplic    := oLeitorInfZip.rCampo(tcStr, 'verAplic');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FcOrgao      := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FcStat       := oLeitorInfZip.rCampo(tcInt, 'cStat');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FxMotivo     := oLeitorInfZip.rCampo(tcStr, 'xMotivo');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FchCTe       := oLeitorInfZip.rCampo(tcStr, 'chCTe');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FtpEvento    := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FxEvento     := oLeitorInfZip.rCampo(tcStr, 'xEvento');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FnSeqEvento  := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FCNPJDest    := oLeitorInfZip.rCampo(tcStr, 'CNPJDest');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FdhRegEvento := oLeitorInfZip.rCampo(tcDatHor, 'dhRegEvento');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FnProt       := oLeitorInfZip.rCampo(tcStr, 'nProt');
             end;
           end;
         finally
-          FreeAndNil(StrStream);
+          FreeAndNil(oLeitorInfZip);
         end;
 
-        oLeitorInfZip := TLeitor.Create;
-
-        oLeitorInfZip.Arquivo := FdocZip.Items[i].FInfZip;
-        (*
-        if (oLeitorInfZip.rExtrai(1, 'resCTe') <> '') then
-        begin
-          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
-
-          FdocZip.Items[i].FresCTe.chCTe    := oLeitorInfZip.rCampo(tcStr, 'chCTe');
-          FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-
-          if FdocZip.Items[i].FresCTe.FCNPJCPF = '' then
-            FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
-
-          FdocZip.Items[i].FresCTe.FxNome    := oLeitorInfZip.rCampo(tcStr, 'xNome');
-          FdocZip.Items[i].FresCTe.FIE       := oLeitorInfZip.rCampo(tcStr, 'IE');
-          FdocZip.Items[i].FresCTe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
-          FdocZip.Items[i].FresCTe.FtpNF     := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
-          FdocZip.Items[i].FresCTe.FvNF      := oLeitorInfZip.rCampo(tcDe2, 'vNF');
-          FdocZip.Items[i].FresCTe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
-          FdocZip.Items[i].FresCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-          FdocZip.Items[i].FresCTe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-          FdocZip.Items[i].FresCTe.FcSitCTe  := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitCTe'));
-        end;
-
-        if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
-        begin
-          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
-
-          FdocZip.Items[i].FresEvento.FcOrgao  := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
-          FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-
-          if FdocZip.Items[i].FresEvento.FCNPJCPF = '' then
-            FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
-
-          FdocZip.Items[i].FresEvento.chNFe       := oLeitorInfZip.rCampo(tcStr, 'chNFe');
-          FdocZip.Items[i].FresEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
-          FdocZip.Items[i].FresEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
-          FdocZip.Items[i].FresEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
-          FdocZip.Items[i].FresEvento.FxEvento    := oLeitorInfZip.rCampo(tcStr, 'xEvento');
-          FdocZip.Items[i].FresEvento.FdhRecbto   := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-          FdocZip.Items[i].FresEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
-        end;
-        *)
-        if (oLeitorInfZip.rExtrai(1, 'cteProc') <> '') then
-        begin
-          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
-
-          oLeitorInfZip.rExtrai(1, 'infCTe');
-          FdocZip.Items[i].FresCTe.chCTe := copy(oLeitorInfZip.Grupo, pos('Id="CTe', oLeitorInfZip.Grupo)+8, 44);
-
-          oLeitorInfZip.rExtrai(1, 'emit');
-          FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-          if FdocZip.Items[i].FresCTe.FCNPJCPF = '' then
-            FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
-
-          FdocZip.Items[i].FresCTe.FxNome := oLeitorInfZip.rCampo(tcStr, 'xNome');
-          FdocZip.Items[i].FresCTe.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
-
-          oLeitorInfZip.rExtrai(1, 'ide');
-          FdocZip.Items[i].FresCTe.FdhEmi := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
-          (*
-          FdocZip.Items[i].FresCTe.FtpNF := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
-
-          oLeitorInfZip.rExtrai(1, 'total');
-          FdocZip.Items[i].FresCTe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vNF');
-          *)
-          oLeitorInfZip.rExtrai(1, 'infProt');
-          FdocZip.Items[i].FresCTe.digVal    := oLeitorInfZip.rCampo(tcStr, 'digVal');
-          FdocZip.Items[i].FresCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-          FdocZip.Items[i].FresCTe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-
-          case oLeitorInfZip.rCampo(tcInt, 'cStat') of
-            100: FdocZip.Items[i].FresCTe.FcSitCTe := snAutorizado;
-            101: FdocZip.Items[i].FresCTe.FcSitCTe := snCancelado;
-            110: FdocZip.Items[i].FresCTe.FcSitCTe := snDenegado;
-            132: FdocZip.Items[i].FresCTe.FcSitCTe := snEncerrado;
-          end;
-        end;
-
-        if (oLeitorInfZip.rExtrai(1, 'procEventoCTe') <> '') then
-        begin
-          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
-
-          FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id');
-          FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
-          FdocZip.Items[i].FprocEvento.FtpAmb      := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
-          FdocZip.Items[i].FprocEvento.FCNPJ       := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-          FdocZip.Items[i].FprocEvento.FchNFe      := oLeitorInfZip.rCampo(tcStr, 'chNFe');
-          FdocZip.Items[i].FprocEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
-          FdocZip.Items[i].FprocEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
-          FdocZip.Items[i].FprocEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
-          FdocZip.Items[i].FprocEvento.FverEvento  := oLeitorInfZip.rCampo(tcStr, 'verEvento');
-
-          if (oLeitorInfZip.rExtrai(2, 'detEvento') <> '') then
-          begin
-            FdocZip.Items[i].FprocEvento.detEvento.FVersao     := oLeitorInfZip.rAtributo('versao');
-            FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := oLeitorInfZip.rCampo(tcStr, 'descEvento');
-            FdocZip.Items[i].FprocEvento.detEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
-            FdocZip.Items[i].FprocEvento.detEvento.FxJust      := oLeitorInfZip.rCampo(tcStr, 'xJust');
-
-            if (oLeitorInfZip.rExtrai(3, 'CTe') <> '') then
-            begin
-              FdocZip.Items[i].FprocEvento.detEvento.FCTe.FchCTe    := oLeitorInfZip.rCampo(tcStr, 'chCTe');
-              FdocZip.Items[i].FprocEvento.detEvento.FCTe.Fmodal    := StrToTpModal(ok, oLeitorInfZip.rCampo(tcStr, 'modal'));
-              FdocZip.Items[i].FprocEvento.detEvento.FCTe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
-              FdocZip.Items[i].FprocEvento.detEvento.FCTe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-              FdocZip.Items[i].FprocEvento.detEvento.FCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-            end;
-
-            if (oLeitorInfZip.rExtrai(3, 'emit') <> '') then
-            begin
-              FdocZip.Items[i].FprocEvento.detEvento.Femit.FCNPJ  := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-              FdocZip.Items[i].FprocEvento.detEvento.Femit.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
-              FdocZip.Items[i].FprocEvento.detEvento.Femit.FxNome := oLeitorInfZip.rCampo(tcStr, 'xNome');
-            end;
-          end;
-
-          if (oLeitorInfZip.rExtrai(2, 'retEvento') <> '') then
-          begin
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FtpAmb       := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FverAplic    := oLeitorInfZip.rCampo(tcStr, 'verAplic');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FcOrgao      := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FcStat       := oLeitorInfZip.rCampo(tcInt, 'cStat');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FxMotivo     := oLeitorInfZip.rCampo(tcStr, 'xMotivo');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FchNFe       := oLeitorInfZip.rCampo(tcStr, 'chNFe');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FtpEvento    := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FxEvento     := oLeitorInfZip.rCampo(tcStr, 'xEvento');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FnSeqEvento  := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FCNPJDest    := oLeitorInfZip.rCampo(tcStr, 'CNPJDest');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FdhRegEvento := oLeitorInfZip.rCampo(tcDatHor, 'dhRegEvento');
-            FdocZip.Items[i].FprocEvento.RetinfEvento.FnProt       := oLeitorInfZip.rCampo(tcStr, 'nProt');
-          end;
-        end;
-
-        FreeAndNil(oLeitorInfZip);
         inc(i);
       end;
 

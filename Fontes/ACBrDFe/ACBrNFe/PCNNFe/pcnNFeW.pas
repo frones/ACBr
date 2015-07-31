@@ -1211,7 +1211,7 @@ begin
                   end;
                cst40,
                cst41,
-	       cst50 :
+	           cst50 :
                   begin
                      //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
                      if (NFe.infNFe.Versao >= 3.10) and (nfe.Det[i].Imposto.ICMS.vICMSDeson > 0) then

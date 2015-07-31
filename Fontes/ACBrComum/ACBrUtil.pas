@@ -1802,9 +1802,15 @@ begin
        PosFim := PosIni + Colunas - 1 ;
 
        if Tamanho > PosFim then  // Ainda tem proxima linha ?
-          if not (AnsiStr[PosFim+1] in [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
-             while (not (AnsiStr[PosFim] in [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
-                Dec(PosFim) ;
+       begin
+          if (AnsiStr[PosFim+1] in [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
+             Inc(PosFim)
+          else
+          begin
+            while (not (AnsiStr[PosFim] in [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
+              Dec(PosFim) ;
+          end;
+       end;
 
        if PosFim = PosIni then  // Não foi capaz de encontrar uma quebra, divida a palavra em "Coluna"
           PosFim := PosIni + Colunas - 1 ;

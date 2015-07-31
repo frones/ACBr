@@ -1226,7 +1226,7 @@ begin
   FXML := FNFeW.Gerador.ArquivoFormatoXML;
   FXMLOriginal := FXML;
   FXMLAssinado := '';
-  FAlertas := FNFeW.Gerador.ListaDeAlertas.Text;
+  FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
   Result := FXML;
 end;
 

@@ -6551,7 +6551,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 17
                 Top = 208
-                Width = 243
+                Width = 242
                 Caption = 'Arquivo com Endereços dos WebServices'
                 ParentColor = False
               end
@@ -10550,7 +10550,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11669,6 +11668,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Rede.proxy_porta = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
+    OnGetNumeroSessao = ACBrSAT1GetNumeroSessao
     left = 552
     top = 496
   end

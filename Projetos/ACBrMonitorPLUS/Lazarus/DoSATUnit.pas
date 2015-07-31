@@ -210,6 +210,9 @@ begin
                       'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak+
                       'XML='+ACBrSAT1.CFe.AsXMLString;
     end
+    else if Cmd.Metodo = 'setnumerosessao' then
+      ACBrSAT1.Tag := StrToIntDef(Trim(cmd.Params(0)), 0)
+
     else
       raise Exception.Create(ACBrStr('Comando invalido ('+Cmd.Comando+')'));
   end;

@@ -865,6 +865,7 @@ type
     procedure ACBrMail1MailProcess(const aStatus: TMailStatus);
     procedure ACBrNFe1GerarLog(const ALogLine: string; var Tratado: boolean);
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetNumeroSessao(var NumeroSessao: Integer);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
     procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
@@ -1522,6 +1523,14 @@ end;
 procedure TFrmACBrMonitor.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtCodigoAtivacao.Text );
+end;
+
+procedure TFrmACBrMonitor.ACBrSAT1GetNumeroSessao(var NumeroSessao: Integer);
+begin
+  if ACBrSAT1.Tag <> 0 then
+    NumeroSessao := ACBrSAT1.Tag;
+
+  ACBrSAT1.Tag := 0;
 end;
 
 procedure TFrmACBrMonitor.ACBrSAT1GetsignAC(var Chave: AnsiString);

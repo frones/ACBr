@@ -489,7 +489,7 @@ begin
         (*
         if (oLeitorInfZip.rExtrai(1, 'resCTe') <> '') then
         begin
-          FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
+          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
           FdocZip.Items[i].FresCTe.chCTe    := oLeitorInfZip.rCampo(tcStr, 'chCTe');
           FdocZip.Items[i].FresCTe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
@@ -510,7 +510,7 @@ begin
 
         if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
         begin
-          FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
+          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
           FdocZip.Items[i].FresEvento.FcOrgao  := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
           FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
@@ -529,7 +529,7 @@ begin
         *)
         if (oLeitorInfZip.rExtrai(1, 'cteProc') <> '') then
         begin
-          FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
+          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
           oLeitorInfZip.rExtrai(1, 'infCTe');
           FdocZip.Items[i].FresCTe.chCTe := copy(oLeitorInfZip.Grupo, pos('Id="CTe', oLeitorInfZip.Grupo)+8, 44);
@@ -565,7 +565,7 @@ begin
 
         if (oLeitorInfZip.rExtrai(1, 'procEventoCTe') <> '') then
         begin
-          FdocZip.Items[i].XML := oLeitorInfZip.Grupo;
+          FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
           FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id');
           FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');

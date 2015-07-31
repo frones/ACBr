@@ -877,6 +877,7 @@ var
   AProcCTe: TProcCTe;
   AInfProt: TProtCTeCollection;
   NomeXML: String;
+  SalvarXML: Boolean;
 begin
   Result := False;
 
@@ -953,13 +954,17 @@ begin
 
         if FPConfiguracoesCTe.Arquivos.Salvar then
         begin
-          if FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados then
+          SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
+                       TACBrCTe(FPDFeOwner).Conhecimentos.Items[I].Processado;
+
+          if SalvarXML then
           begin
-            if FConhecimentos.Items[J].Processado then
-              FConhecimentos.Items[J].GravarXML;
-          end
-          else
-            FConhecimentos.Items[J].GravarXML;
+            with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
+            begin
+              GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
+              GravarXML;
+            end;
+          end;
         end;
 
         break;
@@ -1256,7 +1261,7 @@ end;
 function TCTeConsulta.TratarResposta: Boolean;
 var
   CTeRetorno: TRetConsSitCTe;
-  CTCancelado, Atualiza: Boolean;
+  SalvarXML, CTCancelado, Atualiza: Boolean;
   aEventos, aMsg, NomeArquivo, aCTe, aCTeDFe, NomeXML: String;
   AProcCTe: TProcCTe;
   I, J, K, Inicio, Fim: Integer;
@@ -1549,15 +1554,18 @@ begin
 
             if FPConfiguracoesCTe.Arquivos.Salvar then
             begin
-              if FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados then
-              begin
-                if Processado then
-                  GravarXML();
-              end
-              else
-                GravarXML();
-            end;
+              SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
+                           TACBrCTe(FPDFeOwner).Conhecimentos.Items[I].Processado;
 
+              if SalvarXML then
+              begin
+                with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
+                begin
+                  GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
+                  GravarXML;
+                end;
+              end;
+            end;
 
             if FPConfiguracoesCTe.Arquivos.Salvar and (FRetCTeDFe <> '') then
             begin
@@ -1568,7 +1576,7 @@ begin
 
               FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml', aCTeDFe,
                                 PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-          end;
+            end;
           end;
 
           break;
@@ -1618,17 +1626,17 @@ begin
           end;
         end;
 
-       if (FPConfiguracoes.Arquivos.Salvar) and (FRetCTeDFe <> '') then
-       begin
-         if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
-           Data := TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe.Ide.dhEmi
-         else
-           Data := Now;
+        if FRetCTeDFe <> '' then
+        begin
+          if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
+            Data := TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe.Ide.dhEmi
+          else
+            Data := Now;
 
-         FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                    aCTeDFe,
-                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-       end;
+          FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
+                                     aCTeDFe,
+                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
+        end;
       end;
     end;
 

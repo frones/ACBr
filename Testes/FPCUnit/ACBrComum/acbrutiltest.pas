@@ -670,6 +670,7 @@ type
     procedure QuebraEmQuarentaColunas;
     procedure QuebraEmCinquentaComSeparadorE;
     procedure QuebraStrComLineBreakEm32cols;
+    procedure QuebraDuasLinhasNoLimiteColuna;
   end;
 
   { TraduzComandoTest }
@@ -1216,6 +1217,21 @@ begin
   Resp := QuebraLinhas( ACBrStr(AMsg1), 32);
 
   CheckEquals( ACBrStr(AMsg2), Resp );
+end;
+
+procedure QuebraLinhasTest.QuebraDuasLinhasNoLimiteColuna;
+var
+  Resp: String;
+  AMsg1: String;
+begin
+  AMsg1 := 'Endereço de Entrega sem Cod.IBGE'+sLineBreak+
+           'Tentar novamente ?';
+
+      //   0....+....1....+....2....+....3....+....4....+....5
+
+  Resp := QuebraLinhas( ACBrStr(AMsg1), 32);
+
+  CheckEquals( ACBrStr(AMsg1), Resp );
 end;
 
 { AjustaLinhasTest }

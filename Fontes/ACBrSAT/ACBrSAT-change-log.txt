@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/08/2015
+-- ACBrSAT --     (por: DSA)
+[-] Correção na exibição de Preview de Extrato de Cancelamento.
+
 Data: 30/07/2015
 -- ACBrSAT --     (por: DSA)
 [-] Correção na composição do Nome do Arquivo de Envio de Cancelamento

@@ -432,7 +432,7 @@ begin
                         rlbCanRodape.Height +
                         ifthen( (ACBrSATExtrato.CFe.ide.tpAmb = taHomologacao), rlbTeste.Height, 0 ) ;
 
-  Result := max( 100, 10 + round(TotalPaginaPixel/MMAsPixels));
+  Result := max( 100, 50 + round(TotalPaginaPixel/MMAsPixels));
 end;
 
 procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);

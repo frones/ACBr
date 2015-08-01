@@ -175,8 +175,9 @@ var
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     sVlrImpostos, LinhaCmd: String;
 begin
-  FPosPrinter.Buffer.Add('</ae></fn></linha_simples>');
-  FPosPrinter.Buffer.Add('#|COD|DESC|QTD|UN|VL UN R$|(VLTR R$)*|VL ITEM R$');
+  FPosPrinter.Buffer.Add('</ae><c></linha_simples>');
+  FPosPrinter.Buffer.Add(PadSpace('#|COD|DESC|QTD|UN|VL UN R$|(VLTR R$)*|VL ITEM R$',
+                                  FPosPrinter.ColunasFonteCondensada, '|'));
   FPosPrinter.Buffer.Add('</linha_simples>');
 
   for i := 0 to CFe.Det.Count - 1 do

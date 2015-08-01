@@ -227,7 +227,7 @@ procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
 begin
   GerarClicheEmpresa;
 
-  FPosPrinter.Buffer.Add(ACBrStr('</fn></ce><n>DANFE NFC-e - Documento Auxiliar'));
+  FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>DANFE NFC-e - Documento Auxiliar'));
   FPosPrinter.Buffer.Add(ACBrStr('da Nota Fiscal Eletrônica para Consumidor Final'));
   FPosPrinter.Buffer.Add(ACBrStr('Não permite aproveitamento de crédito de ICMS</n>'));
 end;
@@ -242,8 +242,9 @@ var
 begin
   if ImprimirItens then
   begin
-    FPosPrinter.Buffer.Add('</ae></fn></linha_simples>');
-    FPosPrinter.Buffer.Add(ACBrStr('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$'));
+    FPosPrinter.Buffer.Add('</ae><c></linha_simples>');
+    FPosPrinter.Buffer.Add(ACBrStr(PadSpace('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$',
+                                            FPosPrinter.ColunasFonteCondensada, '|')));
     FPosPrinter.Buffer.Add('</linha_simples>');
 
     for i := 0 to FpNFe.Det.Count - 1 do

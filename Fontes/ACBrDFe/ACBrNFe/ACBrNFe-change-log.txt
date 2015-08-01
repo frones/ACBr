@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2015
+-- ACBrNFeDANFeESCPOS --    (por: DSA)
+[*] Ajuste para correta exibição do Cabeçalho de Itens em Impressoras
+    com menos de 48 colunas
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23262
+
 31/07/2015
 [*] Adicionado cabeçalho XML quando não houver ao XML baixado pelo webservice
     de DownloadNFe

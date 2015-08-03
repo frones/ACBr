@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2015
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --    (por: DSA)
+[-] Correção para exibição de caracteres acentuados definidos por código
+
 01/08/2015
 -- ACBrNFeDANFeESCPOS --    (por: DSA)
 [*] Ajuste para correta exibição do Cabeçalho de Itens em Impressoras

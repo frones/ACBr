@@ -539,7 +539,7 @@ begin
       if iQuantItens > q then
         begin
           rlbCabecalhoItens.Visible := True;
-          lblDadosDoProduto.Caption := 'CONTINUAÇÃO DOS DADOS DO PRODUTO / SERVIÇOS';
+          lblDadosDoProduto.Caption := ACBrStr('CONTINUAÇÃO DOS DADOS DO PRODUTO / SERVIÇOS');
           rliMarcaDagua1.Top := 300;
         end
       else
@@ -567,7 +567,7 @@ begin
         rllResumo.Caption := FResumoCanhoto_Texto
       else
         begin
-          rllResumo.Caption := 'EMISSÃO: ' +
+          rllResumo.Caption := ACBrStr('EMISSÃO: ') +
                            FormatDateTime('DD/MM/YYYY', FNFe.Ide.dEmi) +
                            '  -  ' +
                            'DEST. / REM.: ' + FNFe.Dest.xNome + '  -  ' +
@@ -602,7 +602,7 @@ begin
   // Exibe o nome do usuário
   if FUsuario <> '' then
     begin
-      rllUsuario.Caption := 'DATA / HORA DA IMPRESSÃO: ' +
+      rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') +
                             DateTimeToStr(Now) + ' - ' + FUsuario;
       rllUsuario.Visible := True;
     end
@@ -612,7 +612,7 @@ begin
   // Exibe a informação de Ambiente de Homologação
   if FNFe.Ide.tpAmb = taHomologacao then
     begin
-      rllHomologacao.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL';
+      rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
       rllHomologacao.Visible := True;
     end
   else
@@ -628,7 +628,7 @@ begin
         begin
           rlbCodigoBarras.Visible := True;
           rllXMotivo.Visible := False;
-          rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
           rllDadosVariaveis3_Descricao.Visible := True;
         end;
       // Adicionados o 151 e 155 ou a propriedade FNFeCancelada=True - Alterado por Jorge Henrique em 22/02/2013
@@ -637,7 +637,7 @@ begin
           rlbCodigoBarras.Visible := False;
           rllXmotivo.Caption := 'NF-e CANCELADA';
           rllXmotivo.Visible := True;
-          rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO';
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
           rllDadosVariaveis3_Descricao.Visible := True;
         end;
       // cStat de denegacao correto eh o 110 e nao 102 - Alterado por Jorge Henrique em 22/02/2013
@@ -646,7 +646,7 @@ begin
           rlbCodigoBarras.Visible := False;
           rllXmotivo.Caption := 'NF-e DENEGADA';
           rllXmotivo.Visible := True;
-          rllDadosVariaveis3_Descricao.Caption := 'PROTOCOLO DE DENEGAÇÃO DE USO';
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
           rllDadosVariaveis3_Descricao.Visible := True;
         end;
 
@@ -663,7 +663,7 @@ begin
       if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
         begin
           rlbCodigoBarras.Visible := False;
-          rllXmotivo.Caption := 'NF-E NÃO ENVIADA PARA SEFAZ';
+          rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
           rllXMotivo.Visible := True;
           rllDadosVariaveis3_Descricao.Visible := False;
           rllDadosVariaveis3.Visible := False;
@@ -949,10 +949,10 @@ begin
   begin
      rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
      rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
-     rllNumNF0.Caption := 'Nº ' + FormatFloat ('000,000,000', nNF);
-     rllNumNF1.Caption := 'Nº ' + FormatFloat ('000,000,000', nNF);
-     rllSERIE0.Caption := 'SÉRIE ' + IntToStr(Serie);
-     rllSERIE1.Caption := 'SÉRIE ' + IntToStr(Serie);
+     rllNumNF0.Caption := ACBrStr('Nº ') + FormatFloat ('000,000,000', nNF);
+     rllNumNF1.Caption := ACBrStr('Nº ') + FormatFloat ('000,000,000', nNF);
+     rllSERIE0.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
+     rllSERIE1.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
      rllNatOperacao.Caption :=  NatOp;
      if tpNF = tnEntrada then // = entrada
         rllEntradaSaida.Caption := '0'
@@ -1003,11 +1003,11 @@ begin
         rllDadosVariaveis3_Descricao.Caption := 'DADOS DA NF-E';
         rllDadosVariaveis3.Caption :=
                           FormatarChaveAcesso(sChaveContingencia);
-        rllAvisoContingencia.Caption := 'DANFE em Contingência - ' +
-                                'Impresso em decorrência de problemas técnicos';
+        rllAvisoContingencia.Caption := ACBrStr('DANFE em Contingência - ' +
+                                'Impresso em decorrência de problemas técnicos');
         if (dhCont > 0) and (xJust > '') then
-          rllContingencia.Caption :=
-                    'Data / Hora da entrada em contingência: ' +
+          rllContingencia.Caption := ACBrStr(
+                    'Data / Hora da entrada em contingência: ') +
                     FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
                     '   Motivo: ' + xJust;
         rllAvisoContingencia.Visible := True;

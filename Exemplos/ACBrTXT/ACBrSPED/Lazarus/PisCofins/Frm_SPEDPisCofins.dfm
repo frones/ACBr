@@ -136,7 +136,6 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 341
     end
     object Label6: TLabel
       Left = 526
@@ -216,7 +215,6 @@ object FrmSPEDPisCofins: TFrmSPEDPisCofins
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 450
     end
     object btnB_0: TButton
       Left = 23

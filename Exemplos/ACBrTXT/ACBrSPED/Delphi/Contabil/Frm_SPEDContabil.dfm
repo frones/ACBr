@@ -116,7 +116,6 @@ object FrmSPEDContabil: TFrmSPEDContabil
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 341
     end
     object edtFile: TEdit
       Left = 22
@@ -155,8 +154,7 @@ object FrmSPEDContabil: TFrmSPEDContabil
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentColor = False
-      ParentFont = False
-      ExplicitWidth = 450
+      ParentFont = False      
     end
     object btnB_0: TButton
       Left = 15

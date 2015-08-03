@@ -7,8 +7,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  ExplicitWidth = 851
-  ExplicitHeight = 515
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLMDFeEvento: TRLReport
@@ -22,8 +20,6 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
     Font.Height = -8
     Font.Name = 'Courier New'
     BeforePrint = rlEventoBeforePrint
-    ExplicitLeft = 32
-    ExplicitTop = 0
     object rlb_09_Itens: TRLBand
       Left = 26
       Top = 1021

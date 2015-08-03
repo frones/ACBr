@@ -6,8 +6,6 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  ExplicitWidth = 836
-  ExplicitHeight = 823
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTeEvento: TRLReport
@@ -21,8 +19,6 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
     Font.Name = 'Courier New'
     Title = 'DACTe CC'
     BeforePrint = RLCTeEventoBeforePrint
-    ExplicitLeft = 18
-    ExplicitTop = 20
     object RLb_09_Itens: TRLBand
       Left = 26
       Top = 1061

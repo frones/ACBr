@@ -7,8 +7,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  ExplicitWidth = 854
-  ExplicitHeight = 676
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLMDFe: TRLReport
@@ -22,8 +20,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     Font.Height = -8
     Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
-    ExplicitLeft = 24
-    ExplicitTop = -312
     object rlb_1_DadosManifesto: TRLBand
       Left = 26
       Top = 26

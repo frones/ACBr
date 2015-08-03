@@ -5,8 +5,6 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   ClientHeight = 584
   ClientWidth = 811
   OldCreateOrder = True
-  ExplicitWidth = 827
-  ExplicitHeight = 623
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport

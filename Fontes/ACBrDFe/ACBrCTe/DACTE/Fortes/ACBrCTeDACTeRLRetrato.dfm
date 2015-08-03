@@ -7,8 +7,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  ExplicitWidth = 843
-  ExplicitHeight = 947
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTe: TRLReport
@@ -29,8 +27,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     PreviewOptions.Caption = 'DACT-e'
     Title = 'DACT-e Retrato'
     BeforePrint = RLCTeBeforePrint
-    ExplicitLeft = 16
-    ExplicitTop = 15
     object rlb_01_Recibo: TRLBand
       Left = 26
       Top = 26

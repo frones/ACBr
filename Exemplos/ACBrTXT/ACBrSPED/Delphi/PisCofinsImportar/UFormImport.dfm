@@ -71,9 +71,6 @@ object FormImport: TFormImport
     Align = alBottom
     Caption = 'Bloco C - Registro C100'
     TabOrder = 2
-    ExplicitLeft = 8
-    ExplicitTop = 37
-    ExplicitWidth = 595
     object Grid_C100: TDBGrid
       AlignWithMargins = True
       Left = 5

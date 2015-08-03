@@ -4,8 +4,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Caption = 'frlDANFeRLPaisagem'
   ClientHeight = 693
   ClientWidth = 1133
-  ExplicitWidth = 1149
-  ExplicitHeight = 732
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
@@ -23,8 +21,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     PrintDialog = False
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
-    ExplicitWidth = 1123
-    ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage
       Left = 361
       Top = 430

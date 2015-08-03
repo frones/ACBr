@@ -23,8 +23,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
-    ExplicitWidth = 585
-    ExplicitHeight = 463
     object Panel3: TPanel
       Left = 1
       Top = 353
@@ -32,8 +30,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Height = 144
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 318
-      ExplicitWidth = 583
       object bTagFormtacaoCaracter: TButton
         Left = 8
         Top = 40
@@ -133,7 +129,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         BevelInner = bvRaised
         BevelOuter = bvLowered
         TabOrder = 11
-        ExplicitWidth = 581
         DesignSize = (
           627
           39)
@@ -181,7 +176,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
           TabOrder = 0
           OnClick = bLimparClick
-          ExplicitLeft = 392
         end
         object bImprimir: TBitBtn
           Left = 529
@@ -227,7 +221,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             0000000000000000000000000000000000000000000000000000}
           TabOrder = 1
           OnClick = bImprimirClick
-          ExplicitLeft = 483
         end
       end
       object bTagLogo: TButton
@@ -248,8 +241,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       ActivePage = tsImprimir
       Align = alClient
       TabOrder = 1
-      ExplicitWidth = 583
-      ExplicitHeight = 317
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
         object mImp: TMemo
@@ -263,8 +254,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object tsLog: TTabSheet
         Caption = 'Eventos Log'
-        ExplicitWidth = 575
-        ExplicitHeight = 289
         object mLog: TMemo
           Left = 0
           Top = 0
@@ -272,8 +261,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           Height = 324
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 575
-          ExplicitHeight = 289
         end
       end
     end
@@ -285,7 +272,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Height = 498
     Align = alLeft
     TabOrder = 1
-    ExplicitHeight = 463
     object gbConfiguracao: TGroupBox
       Left = 1
       Top = 1
@@ -640,8 +626,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Align = alTop
       Caption = 'QRCode'
       TabOrder = 2
-      ExplicitLeft = -2
-      ExplicitTop = 318
       object Label11: TLabel
         Left = 12
         Top = 20

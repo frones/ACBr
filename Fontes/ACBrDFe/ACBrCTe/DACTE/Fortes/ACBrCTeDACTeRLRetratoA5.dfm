@@ -7,8 +7,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  ExplicitWidth = 851
-  ExplicitHeight = 802
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTe: TRLReport
@@ -22,8 +20,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     Font.Name = 'Courier New'
     Title = 'DACTe Retrato A5'
     BeforePrint = RLCTeBeforePrint
-    ExplicitLeft = 24
-    ExplicitTop = 8
     object rlb_08_Itens: TRLBand
       Left = 26
       Top = 679

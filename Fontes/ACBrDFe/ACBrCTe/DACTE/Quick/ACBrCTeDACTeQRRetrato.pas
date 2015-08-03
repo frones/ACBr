@@ -1100,7 +1100,7 @@ begin
                    if FCTe.Rodo.Lota = ltSim
                  {$ENDIF}
                     then begin
-                      qrb_10_ModRodFracionado.Height  := 0;
+                      // qrb_10_ModRodFracionado.Height  := 0;
                       qrb_11_ModRodValePedagio.Height := 0;
                       if Versao = 103 then
                         qrb_11_ModRodLot103.Height := 108

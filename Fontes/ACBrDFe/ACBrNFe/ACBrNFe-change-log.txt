@@ -48,8 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/08/2015
+-- ACBrDFeCapicom --     (por: DSA)
+[-] Correção para exibição de erro de TDFeCapicom.Executar com acentos
+
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --    (por: DSA)
-[-] Correção para exibição de caracteres acentuados definidos por código
+[-] Correção para correta exibição de caracteres acentuados
+
 
 01/08/2015
 -- ACBrNFeDANFeESCPOS --    (por: DSA)

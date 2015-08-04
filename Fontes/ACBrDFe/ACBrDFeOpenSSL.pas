@@ -605,7 +605,11 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
   begin
     Result := '';
     I := 0;
+   {$IFDEF USE_libeay32}
+    ext := X509_get_ext( cert, I);
+   {$ELSE}
     ext := X509GetExt( cert, I);
+   {$ENDIF}
     while (ext <> nil) do
     begin
       prop := ext.value;

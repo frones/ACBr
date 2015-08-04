@@ -83,6 +83,7 @@ type
     procedure CreateVirtualClass; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   published
+    property NomeArqINI ;
     property ACBrNFCe: TACBrNFe read GetACBrNFCe write SetACBrNFCe;
 
     property QuandoAbrirDocumento : TACBrECFVirtualNFCeQuandoAbrirDocumento

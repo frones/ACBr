@@ -147,6 +147,8 @@ type
   TautXMLCollection     = class;
   TautXMLCollectionItem = class;
 
+  TinfNFeSupl = class;
+
   TNFe = class(TPersistent)
   private
     FinfNFe: TinfNFe;
@@ -168,6 +170,7 @@ type
     FSignature: TSignature;
     FProcNFe: TProcNFe;
     FautXML: TautXMLCollection;
+    FinfNFeSupl: TinfNFeSupl;
 
     procedure SetDet(Value: TDetCollection);
     procedure Setpag(Value: TpagCollection);
@@ -195,8 +198,18 @@ type
     property exporta: Texporta read Fexporta write Fexporta;
     property compra: Tcompra read Fcompra write Fcompra;
     property cana: Tcana read Fcana write Fcana;
+    property infNFeSupl: TinfNFeSupl read FinfNFeSupl write FinfNFeSupl;
     property signature: Tsignature read Fsignature write Fsignature;
-    property procNFe: TProcNFe read FProcNFe write FProcNFe;    
+    property procNFe: TProcNFe read FProcNFe write FProcNFe;
+  end;
+
+  TinfNFeSupl = class(TPersistent)
+  private
+    FqrCode: String;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property qrCode: String read FqrCode write FqrCode;
   end;
 
   TinfNFe = class(TPersistent)
@@ -773,6 +786,23 @@ type
     property descr: String read Fdescr write Fdescr;
   end;
 
+  Tencerrante = class(TPersistent)
+  private
+    FnBico: Integer;
+    FnBomba: Integer;
+    FnTanque: Integer;
+    FvEncIni: String;
+    FvEncFin: String;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property nBico: Integer read FnBico write FnBico;
+    property nBomba: Integer read FnBomba write FnBomba;
+    property nTanque: Integer read FnTanque write FnTanque;
+    property vEncIni: String read FvEncIni write FvEncIni;
+    property vEncFin: String read FvEncFin write FvEncFin;
+  end;
+
   Tcomb = class(TPersistent)
   private
     FcProdANP: Integer;
@@ -784,6 +814,7 @@ type
     FICMS: TICMSComb;
     FICMSInter: TICMSInter;
     FICMSCons: TICMSCons;
+    Fencerrante: Tencerrante;
   public
     constructor Create(AOwner: TProd);
     destructor Destroy; override;
@@ -799,6 +830,7 @@ type
     property ICMS: TICMSComb read FICMS write FICMS;
     property ICMSInter: TICMSInter read FICMSInter write FICMSInter;
     property ICMSCons: TICMSCons read FICMSCons write FICMSCons;
+    property encerrante: Tencerrante read Fencerrante write Fencerrante;
   end;
 
   TCIDE = class(TPersistent)
@@ -1576,6 +1608,7 @@ type
   private
     FtPag: TpcnFormaPagamento;
     FvPag: Currency;
+    FtpIntegra: TtpIntegra;
     FCNPJ: String;
     FtBand: TpcnBandeiraCartao;
     FcAut: String;
@@ -1584,6 +1617,7 @@ type
   published
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
     property vPag: Currency read FvPag write FvPag;
+    property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
     property CNPJ: String read FCNPJ write FCNPJ;
     property tBand: TpcnBandeiraCartao read FtBand write FtBand;
     property cAut: String read FcAut write FcAut;
@@ -1836,6 +1870,7 @@ begin
     exporta.Assign(TNFe(Source).exporta);
     compra.Assign(TNFe(Source).compra);
     cana.Assign(TNFe(Source).cana);
+    infNFeSupl.Assign(TNFe(Source).infNFeSupl);
     signature.Assign(TNFe(Source).signature);
     procNFe.Assign(TNFe(Source).procNFe);
   end
@@ -1862,6 +1897,7 @@ begin
   FExporta := TExporta.Create;
   FCompra  := TCompra.Create;
   FCana    := TCana.Create(Self);
+  FinfNFeSupl := TinfNFeSupl.Create;
   Fsignature := Tsignature.create;
   FProcNFe := TProcNFe.create;
 
@@ -1895,6 +1931,7 @@ begin
   FExporta.Free;
   FCompra.Free;
   FCana.Free;
+  FinfNFeSupl.Free;
   Fsignature.Free;
   FProcNFe.Free;
   inherited Destroy;
@@ -2260,6 +2297,7 @@ begin
     ICMS.Assign(Tcomb(Source).ICMS);
     ICMSInter.Assign(Tcomb(Source).ICMSInter);
     ICMSCons.Assign(Tcomb(Source).ICMSCons);
+    encerrante.Assign(Tcomb(Source).encerrante);
   end
   else
     inherited;
@@ -2272,6 +2310,7 @@ begin
   FICMS := TICMSComb.Create;
   FICMSInter := TICMSInter.Create;
   FICMScons := TICMScons.Create;
+  Fencerrante := Tencerrante.Create;
 end;
 
 destructor Tcomb.Destroy;
@@ -2280,6 +2319,7 @@ begin
   FICMS.Free;
   FICMSInter.Free;
   FICMScons.Free;
+  Fencerrante.Free;
   inherited;
 end;
 
@@ -3768,6 +3808,7 @@ begin
   begin
     tPag := TpagCollectionItem(Source).tPag;
     vPag := TpagCollectionItem(Source).vPag;
+    tpIntegra := TpagCollectionItem(Source).tpIntegra;
     CNPJ := TpagCollectionItem(Source).CNPJ;
     tBand := TpagCollectionItem(Source).tBand;
     cAut := TpagCollectionItem(Source).cAut;
@@ -3867,6 +3908,34 @@ begin
   begin
     xDed := TDeducCollectionItem(Source).xDed;
     vDed := TDeducCollectionItem(Source).vDed;
+  end
+  else
+    inherited;
+end;
+
+{ Tencerrante }
+
+procedure Tencerrante.Assign(Source: TPersistent);
+begin
+  if Source is Tencerrante then
+  begin
+    nBico := Tencerrante(Source).nBico;
+    nBomba := Tencerrante(Source).nBomba;
+    nTanque := Tencerrante(Source).nTanque;
+    vEncIni := Tencerrante(Source).vEncIni;
+    vEncFin := Tencerrante(Source).vEncFin;
+  end
+  else
+    inherited;
+end;
+
+{ TinfNFeSupl }
+
+procedure TinfNFeSupl.Assign(Source: TPersistent);
+begin
+  if Source is TinfNFeSupl then
+  begin
+    qrCode := TinfNFeSupl(Source).qrCode;
   end
   else
     inherited;

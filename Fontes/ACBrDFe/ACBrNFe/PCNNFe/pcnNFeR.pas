@@ -567,6 +567,16 @@ begin
         (*L107*)NFe.Det[i].Prod.comb.CIDE.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
         (*L108*)NFe.Det[i].Prod.comb.CIDE.vCIDE     := Leitor.rCampo(tcDe2, 'vCIDE');
       end;
+
+      if Leitor.rExtrai(4, 'encerrante') <> '' then
+      begin
+        (*LA12*)NFe.Det[i].Prod.comb.encerrante.nBico   := Leitor.rCampo(tcInt, 'nBico');
+        (*LA13*)NFe.Det[i].Prod.comb.encerrante.nBomba  := Leitor.rCampo(tcInt, 'nBomba');
+        (*LA14*)NFe.Det[i].Prod.comb.encerrante.nTanque := Leitor.rCampo(tcInt, 'nTanque');
+        (*LA15*)NFe.Det[i].Prod.comb.encerrante.vEncIni := Leitor.rCampo(tcStr, 'vEncIni');
+        (*LA16*)NFe.Det[i].Prod.comb.encerrante.vEncFin := Leitor.rCampo(tcStr, 'vEncFin');
+      end;
+
       if Leitor.rExtrai(4, 'ICMSComb') <> '' then
       begin
         (*L110*)NFe.Det[i].Prod.comb.ICMS.vBCICMS   := Leitor.rCampo(tcDe2, 'vBCICMS');
@@ -900,6 +910,7 @@ begin
       (*YA03*)NFe.pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
       if Leitor.rExtrai(2, 'card') <> '' then
        begin
+        (*YA04a*)NFe.pag[i].tpIntegra := StrTotpIntegra(ok, Leitor.rCampo(tcStr, 'tpIntegra'));
         (*YA05*)NFe.pag[i].CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
         (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
         (*YA07*)NFe.pag[i].cAut  := Leitor.rCampo(tcStr, 'cAut');
@@ -1006,17 +1017,25 @@ begin
   NFE.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
   NFE.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
 
-  (* Grupo da TAG <protNFe> ****************************************************)
+  (* Grupo da TAG <infNFeSupl> ************************************************)
+  if Leitor.rExtrai(1, 'infNFeSupl') <> '' then
+  begin
+    NFe.infNFeSupl.qrCode := Leitor.rCampo(tcStr, 'qrCode');
+    NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, '<![CDATA[', '', []);
+    NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, ']]>', '', []);
+  end;
+
+  (* Grupo da TAG <protNFe> ***************************************************)
   if Leitor.rExtrai(1, 'protNFe') <> '' then
   begin
-     NFe.procNFe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-     NFe.procNFe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
-     NFe.procNFe.chNFe    := Leitor.rCampo(tcStr, 'chNFe');
-     NFe.procNFe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-     NFe.procNFe.nProt    := Leitor.rCampo(tcStr, 'nProt');
-     NFe.procNFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
-     NFe.procNFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
-     NFe.procNFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+    NFe.procNFe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+    NFe.procNFe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
+    NFe.procNFe.chNFe    := Leitor.rCampo(tcStr, 'chNFe');
+    NFe.procNFe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+    NFe.procNFe.nProt    := Leitor.rCampo(tcStr, 'nProt');
+    NFe.procNFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
+    NFe.procNFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
+    NFe.procNFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
   end;
 
   Result := true;

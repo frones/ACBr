@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/08/2015
+[*] Implementado as alterações e adição das novas TAGs conforme NT 2015/002.
+    Algumas linhas de código estão comentadas para não gerar rejeição.
+    Essas linhas devem ser descomentas somente em Outubro para testes e 
+    Novembro para o envio em ambiente de produção. 
+    por: Italo Jurisato Junior
 -- ACBrDFeCapicom --     (por: DSA)
 [-] Correção para exibição de erro de TDFeCapicom.Executar com acentos
 

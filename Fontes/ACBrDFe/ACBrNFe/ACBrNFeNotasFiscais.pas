@@ -238,6 +238,7 @@ var
   XMLAss: String;
   ArqXML: String;
   Leitor: TLeitor;
+  i: Integer;
 begin
   if NaoEstaVazio(FXMLAssinado) then
     exit;
@@ -270,6 +271,29 @@ begin
       Leitor.Free;
     end;
 
+    // Gera o QR-Code para adicionar no XML antes de ser validado e salvo
+    // somente para a NFC-e.
+(*
+    if Configuracoes.Geral.ModeloDF = moNFCe then
+    begin
+      with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
+      begin
+        NFe.infNFeSupl.qrCode := GetURLQRCode(NFe.Ide.cUF, NFe.Ide.tpAmb,
+                                  onlyNumber(NFe.infNFe.ID), NFe.Dest.CNPJCPF,
+                                  NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
+                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
+      end;
+
+      i := pos('<Signature ', XMLAss);
+      XMLAss := Copy(XMLAss, 1, i -1) +
+                '<infNFeSupl>' +
+                 '<qrCode>' +
+                  '<![CDATA[' + NFe.infNFeSupl.qrCode + ']]>' +
+                 '</qrCode>' +
+                '</infNFeSupl>' +
+                Copy(XMLAss, i, length(XMLAss));
+    end;
+*)
     if Configuracoes.Geral.Salvar then
       Gravar(CalcularNomeArquivoCompleto(), XMLAss);
 

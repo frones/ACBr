@@ -104,6 +104,7 @@ type
     procedure GerarDetProdArma(const i: Integer);
     procedure GerarDetProdComb(const i: Integer);
     procedure GerarDetProdCombCIDE(const i: Integer);
+    procedure GerarDetProdCombencerrante(const i: Integer);
     procedure GerarDetProdCombICMS(const i: Integer);
     procedure GerarDetProdCombICMSInter(const i: Integer);
     procedure GerarDetProdCombICMSCons(const i: Integer);
@@ -259,6 +260,15 @@ begin
   Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + nfe.infNFe.ID + '"');
   (**)GerarInfNFe;
   Gerador.wGrupo('/infNFe');
+  (*
+  if nfe.infNFeSupl.qrCode <> '' then
+  begin
+    Gerador.wGrupo('infNFeSupl');
+    Gerador.wCampo(tcStr, 'ZX02', 'qrCode', 100, 600, 1,
+                     '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', '***');
+    Gerador.wGrupo('/infNFeSupl');
+  end;
+  *)
   //
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
@@ -574,7 +584,8 @@ begin
     if (nfe.Dest.enderDest.cPais = 1058) and (nfe.Dest.CNPJCPF <> '') then
       Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais)
     else
-      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
+      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 05, 20, 0, nfe.Dest.idEstrangeiro, DSC_IDESTR);
+//      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
    end
   else
      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
@@ -1011,6 +1022,9 @@ begin
         Gerador.wCampo(tcStr, 'L120', 'UFCons       ', 02, 02, 1, nfe.Det[i].Prod.comb.UFcons, DSC_UFCONS);
         if not ValidarUF(nfe.Det[i].Prod.comb.UFcons) then Gerador.wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
         (**)GerarDetProdCombCIDE(i);
+
+        if nfe.Det[i].Prod.comb.encerrante.nBico > 0 then
+          GerarDetProdCombencerrante(i);
       end;
 
     Gerador.wGrupo('/comb');
@@ -1029,6 +1043,17 @@ begin
     Gerador.wCampo(tcDe2, 'L108', 'vCIDE    ', 01, 15, 1, nfe.Det[i].Prod.comb.CIDE.vCIDE, DSC_VCIDE);
     Gerador.wGrupo('/CIDE');
   end;
+end;
+
+procedure TNFeW.GerarDetProdCombencerrante(const i: Integer);
+begin
+  Gerador.wGrupo('encerrante', 'LA11');
+  Gerador.wCampo(tcInt, 'LA12', 'nBico  ', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nBico, '***');
+  Gerador.wCampo(tcInt, 'LA13', 'nBomba ', 01, 03, 0, nfe.Det[i].Prod.comb.encerrante.nBomba, '***');
+  Gerador.wCampo(tcInt, 'LA14', 'nTanque', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nTanque, '***');
+  Gerador.wCampo(tcStr, 'LA15', 'vEncIni', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncIni, '***');
+  Gerador.wCampo(tcStr, 'LA16', 'vEncFin', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncFin, '***');
+  Gerador.wGrupo('/encerrante');
 end;
 
 procedure TNFeW.GerarDetProdCombICMS(const i: Integer);
@@ -2237,8 +2262,12 @@ begin
     Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, DSC_VPAG);
     if nfe.pag[i].CNPJ <> '' then
+//    if nfe.pag[i].tpIntegra <> tiNaoInformado then
      begin
        Gerador.wGrupo('card', 'YA04');
+//       if nfe.pag[i].tpIntegra <> tiNaoInformado then
+//         Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(nfe.pag[i].tpIntegra), '***');
+
        Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 1, nfe.pag[i].CNPJ, DSC_CNPJ);
        Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 1, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
        Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 1, nfe.pag[i].cAut, DSC_CAUT);

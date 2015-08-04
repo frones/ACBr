@@ -7,12 +7,12 @@ unit ACBr_CTe;
 interface
 
 uses
-  ACBrCTeConhecimentos, pcteRetInutCTe, ACBrCTe, ACBrCTeConfiguracoes, 
-  ACBrCTeReg, ACBrCTeUtil, ACBrCTeWebServices, pcteCancCTe, pcteConsCad, 
-  pcteConsSitCTe, pcteConsStatServ, pcteCTe, pcteCTeR, pcteCTeW, pcteInutCTe, 
-  pcteRetCancCTe, pcteRetConsCad, pcteRetConsSitCTe, pcteRetConsStatServ, 
-  pcteRetEnvCTe, pcteRetConsReciCTe, pcteProcCTe, pcteConsReciCTe, 
-  ACBrCTeDACTEClass, LazarusPackageIntf;
+  ACBrCTeConhecimentos, ACBrCTe, pcteConversaoCTe, ACBrCTeConfiguracoes, 
+  ACBrCTeReg, ACBrCTeWebServices, pcteCabecalho, pcteCancCTe, pcteConsCad, 
+  pcteConsReciCTe, pcteConsSitCTe, pcteConsStatServ, pcteCTe, pcteCTeR, 
+  pcteCTeW, pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, pcteLayoutTXT, 
+  pcteModeloCTe, pcteProcCTe, pcteRetCancCTe, pcteRetConsCad, 
+  LazarusPackageIntf;
 
 implementation
 

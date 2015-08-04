@@ -168,6 +168,12 @@ type
       AIdCSC: integer; ACodigoCSC: String): Boolean;
     function DistribuicaoDFe(AcUFAutor: integer;
       ACNPJCPF, AultNSU, ANSU: String): Boolean;
+    function Inutilizar(ACNPJ, AJustificativa: String;
+      AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
+
+    procedure EnviarEmailEvento(sPara, sAssunto: String;
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil);
+
   published
     property Configuracoes: TConfiguracoesNFe
       read GetConfiguracoes write SetConfiguracoes;
@@ -819,6 +825,41 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
+end;
+
+function TACBrNFe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,
+  ANumInicial, ANumFinal: Integer): Boolean;
+begin
+  Result := True;
+  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno,
+                        Configuracoes.Geral.ModeloDFCodigo,
+                        ASerie, ANumInicial, ANumFinal);
+end;
+
+procedure TACBrNFe.EnviarEmailEvento(sPara, sAssunto: String; sMensagem,
+  sCC, Anexos: TStrings);
+var
+  NomeArq: String;
+  AnexosEmail: TStrings;
+begin
+(*
+  AnexosEmail := TStringList.Create;
+  try
+    AnexosEmail.Clear;
+
+    if Anexos <> nil then
+      AnexosEmail.Text := Anexos.Text;
+
+    ImprimirEventoPDF;
+    NomeArq := OnlyNumber(EventoNFe.Evento[0].InfEvento.Id);
+    NomeArq := PathWithDelim(DANFE.PathPDF) + NomeArq + '-procEventoNFe.pdf';
+    AnexosEmail.Add(NomeArq);
+
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '');
+  finally
+    AnexosEmail.Free;
+  end;
+*)
 end;
 
 { TCartaCorrecao }

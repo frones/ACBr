@@ -84,22 +84,11 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure EnviarEmail(sPara, sAssunto: String;
-      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamCTe: TStream = nil; NomeArq: String = ''); override;
-
-    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
-    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
-
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
 
     function cStatConfirmado(AValue: Integer): Boolean;
     function cStatProcessado(AValue: Integer): Boolean;
-
-    function Cancelamento(AJustificativa: WideString; ALote: Integer = 0): Boolean;
-    function Consultar: Boolean;
-    function EnviarEvento(idLote: Integer): Boolean;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOutCTe; var Versao: Double;
@@ -116,22 +105,38 @@ type
 
     function GerarChaveContingencia(FCTe: TCTe): String;
 
+    procedure SetStatus(const stNewStatus: TStatusACBrCTe);
+
+    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
+    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
+
+    function Consultar: Boolean;
+    function Cancelamento(AJustificativa: WideString; ALote: Integer = 0): Boolean;
+    function EnviarEvento(idLote: Integer): Boolean;
+    function Inutilizar(ACNPJ, AJustificativa: String;
+      AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
+    // Método implementando acreditando que futuramente a SEFAZ vai disponibilizar
+    // conforme fez para a NF-e e MDF-e
+//    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
+
+    procedure EnviarEmail(sPara, sAssunto: String;
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+      StreamCTe: TStream = nil; NomeArq: String = ''); override;
+
+    procedure EnviarEmailEvento(sPara, sAssunto: String;
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil);
+
+    procedure ImprimirEvento;
+    procedure ImprimirEventoPDF;
+    procedure ImprimirInutilizacao;
+    procedure ImprimirInutilizacaoPDF;
+
     property WebServices: TWebServices     read FWebServices   write FWebServices;
     property Conhecimentos: TConhecimentos read FConhecimentos write FConhecimentos;
     property EventoCTe: TEventoCTe         read FEventoCTe     write FEventoCTe;
     property InutCTe: TInutCTe             read FInutCTe       write FInutCTe;
     property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrCTe        read FStatus;
-
-    procedure SetStatus(const stNewStatus: TStatusACBrCTe);
-
-    procedure ImprimirEvento;
-    procedure ImprimirEventoPDF;
-    procedure ImprimirInutilizacao;
-    procedure ImprimirInutilizacaoPDF;
-    // Método implementando acreditando que futuramente a SEFAZ vai disponibilizar
-    // conforme fez para a NF-e e MDF-e
-//    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesCTe read GetConfiguracoes write SetConfiguracoes;
@@ -174,40 +179,14 @@ begin
   inherited;
 end;
 
-procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String);
+function TACBrCTe.GetConfiguracoes: TConfiguracoesCTe;
 begin
-  SetStatus( stCTeEmail );
-
-  try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq);
-  finally
-    SetStatus( stCTeIdle );
-  end;
+  Result := TConfiguracoesCTe(FPConfiguracoes);
 end;
 
-procedure TACBrCTe.Notification(AComponent: TComponent; Operation: TOperation);
+procedure TACBrCTe.SetConfiguracoes(AValue: TConfiguracoesCTe);
 begin
-  inherited Notification(AComponent, Operation);
-
-  if (Operation = opRemove) and (FDACTE <> nil) and
-     (AComponent is TACBrCTeDACTEClass) then
-    FDACTE := nil;
-end;
-
-function TACBrCTe.GetAbout: String;
-begin
-  Result := 'ACBrCTe Ver: ' + ACBRCTE_VERSAO;
-end;
-
-function TACBrCTe.GetNomeArquivoServicos: String;
-begin
-  Result := 'ACBrCTeServicos.ini';
-end;
-
-function TACBrCTe.CreateConfiguracoes: TConfiguracoes;
-begin
-  Result := TConfiguracoesCTe.Create(Self);
+  FPConfiguracoes := AValue;
 end;
 
 procedure TACBrCTe.SetDACTE(const Value: TACBrCTeDACTEClass);
@@ -232,6 +211,30 @@ begin
         Value.ACBrCTe := self;
      end;
   end;
+end;
+
+function TACBrCTe.CreateConfiguracoes: TConfiguracoes;
+begin
+  Result := TConfiguracoesCTe.Create(Self);
+end;
+
+procedure TACBrCTe.Notification(AComponent: TComponent; Operation: TOperation);
+begin
+  inherited Notification(AComponent, Operation);
+
+  if (Operation = opRemove) and (FDACTE <> nil) and
+     (AComponent is TACBrCTeDACTEClass) then
+    FDACTE := nil;
+end;
+
+function TACBrCTe.GetAbout: String;
+begin
+  Result := 'ACBrCTe Ver: ' + ACBRCTE_VERSAO;
+end;
+
+function TACBrCTe.GetNomeArquivoServicos: String;
+begin
+  Result := 'ACBrCTeServicos.ini';
 end;
 
 function TACBrCTe.GetNomeModeloDFe: String;
@@ -260,6 +263,39 @@ begin
     else
       Result := False;
   end;
+end;
+
+function TACBrCTe.NomeServicoToNomeSchema(const NomeServico: String): String;
+Var
+  ok: Boolean;
+  ALayout: TLayOutCTe;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaCTeToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
+end;
+
+procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOutCTe;
+  var Versao: Double; var URL: String);
+begin
+  Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
+  URL := '';
+  LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
+    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
+    Versao, URL);
+end;
+
+function TACBrCTe.LerVersaoDeParams(LayOutServico: TLayOutCTe): String;
+var
+  Versao: Double;
+begin
+  Versao := LerVersaoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
+    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
+    VersaoCTeToDbl(Configuracoes.Geral.VersaoDF));
+
+  Result := FloatToString(Versao, '.', '0.00');
 end;
 
 function TACBrCTe.IdentificaSchema(const AXML: String): TSchemaCTe;
@@ -517,49 +553,6 @@ begin
   result := wchave;
 end;
 
-function TACBrCTe.GetConfiguracoes: TConfiguracoesCTe;
-begin
-  Result := TConfiguracoesCTe(FPConfiguracoes);
-end;
-
-procedure TACBrCTe.SetConfiguracoes(AValue: TConfiguracoesCTe);
-begin
-  FPConfiguracoes := AValue;
-end;
-
-function TACBrCTe.LerVersaoDeParams(LayOutServico: TLayOutCTe): String;
-var
-  Versao: Double;
-begin
-  Versao := LerVersaoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
-    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
-    VersaoCTeToDbl(Configuracoes.Geral.VersaoDF));
-
-  Result := FloatToString(Versao, '.', '0.00');
-end;
-
-function TACBrCTe.NomeServicoToNomeSchema(const NomeServico: String): String;
-Var
-  ok: Boolean;
-  ALayout: TLayOutCTe;
-begin
-  ALayout := ServicoToLayOut(ok, NomeServico);
-  if ok then
-    Result := SchemaCTeToStr( LayOutToSchema( ALayout ) )
-  else
-    Result := '';
-end;
-
-procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOutCTe;
-  var Versao: Double; var URL: String);
-begin
-  Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
-  URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
-    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
-    Versao, URL);
-end;
-
 procedure TACBrCTe.SetStatus(const stNewStatus: TStatusACBrCTe);
 begin
   if (stNewStatus <> FStatus) then
@@ -568,6 +561,56 @@ begin
     if Assigned(OnStatusChange) then
       OnStatusChange(Self);
   end;
+end;
+
+function TACBrCTe.Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;
+begin
+  Result := Enviar(IntToStr(ALote), Imprimir);
+end;
+
+function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
+var
+  i: Integer;
+begin
+  if Conhecimentos.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum CT-e adicionad ao Lote'));
+
+  if Conhecimentos.Count > 50 then
+    GerarException(ACBrStr('ERRO: Conjunto de CT-e transmitidos (máximo de 50 CT-e)' +
+      ' excedido. Quantidade atual: ' + IntToStr(Conhecimentos.Count)));
+
+  Conhecimentos.Assinar;
+  Conhecimentos.Validar;
+
+  Result := WebServices.Envia(ALote);
+
+  if DACTE <> nil then
+  begin
+     for i := 0 to Conhecimentos.Count-1 do
+     begin
+       if Conhecimentos.Items[i].Confirmado and Imprimir then
+       begin
+         Conhecimentos.Items[i].Imprimir;
+       end;
+     end;
+  end;
+end;
+
+function TACBrCTe.Consultar: Boolean;
+var
+  i: Integer;
+begin
+  if Self.Conhecimentos.Count = 0 then
+    GerarException(ACBrStr('ERRO: Nenhum Conhecimento Eletrônico Informado!'));
+
+  for i := 0 to Self.Conhecimentos.Count - 1 do
+  begin
+    WebServices.Consulta.CTeChave :=
+      OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.ID);
+    WebServices.Consulta.Executar;
+  end;
+
+  Result := True;
 end;
 
 function TACBrCTe.Cancelamento(AJustificativa: WideString; ALote: Integer): Boolean;
@@ -606,56 +649,6 @@ begin
   end;
 
   Result := True;
-end;
-
-function TACBrCTe.Consultar: Boolean;
-var
-  i: Integer;
-begin
-  if Self.Conhecimentos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum Conhecimento Eletrônico Informado!'));
-
-  for i := 0 to Self.Conhecimentos.Count - 1 do
-  begin
-    WebServices.Consulta.CTeChave :=
-      OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.ID);
-    WebServices.Consulta.Executar;
-  end;
-
-  Result := True;
-end;
-
-function TACBrCTe.Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;
-begin
-  Result := Enviar(IntToStr(ALote), Imprimir);
-end;
-
-function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
-var
-  i: Integer;
-begin
-  if Conhecimentos.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum CT-e adicionad ao Lote'));
-
-  if Conhecimentos.Count > 50 then
-    GerarException(ACBrStr('ERRO: Conjunto de CT-e transmitidos (máximo de 50 CT-e)' +
-      ' excedido. Quantidade atual: ' + IntToStr(Conhecimentos.Count)));
-
-  Conhecimentos.Assinar;
-  Conhecimentos.Validar;
-
-  Result := WebServices.Envia(ALote);
-
-  if DACTE <> nil then
-  begin
-     for i := 0 to Conhecimentos.Count-1 do
-     begin
-       if Conhecimentos.Items[i].Confirmado and Imprimir then
-       begin
-         Conhecimentos.Items[i].Imprimir;
-       end;
-     end;
-  end;
 end;
 
 function TACBrCTe.EnviarEvento(idLote: Integer): Boolean;
@@ -708,6 +701,67 @@ begin
     GerarException( WebServices.EnvEvento.Msg );
 end;
 
+function TACBrCTe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,
+  ANumInicial, ANumFinal: integer): Boolean;
+begin
+  Result := True;
+  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, 57,
+                        ASerie, ANumInicial, ANumFinal);
+end;
+{
+function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
+  ANSU: String): Boolean;
+begin
+  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+  WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
+  WebServices.DistribuicaoDFe.ultNSU := AultNSU;
+  WebServices.DistribuicaoDFe.NSU := ANSU;
+
+  Result := WebServices.DistribuicaoDFe.Executar;
+
+  if not Result then
+    GerarException( WebServices.DistribuicaoDFe.Msg );
+end;
+}
+
+procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String);
+begin
+  SetStatus( stCTeEmail );
+
+  try
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq);
+  finally
+    SetStatus( stCTeIdle );
+  end;
+end;
+
+procedure TACBrCTe.EnviarEmailEvento(sPara, sAssunto: String; sMensagem,
+  sCC, Anexos: TStrings);
+var
+  NomeArq: String;
+  AnexosEmail: TStrings;
+begin
+(*
+  AnexosEmail := TStringList.Create;
+  try
+    AnexosEmail.Clear;
+
+    if Anexos <> nil then
+      AnexosEmail.Text := Anexos.Text;
+
+    ImprimirEventoPDF;
+    NomeArq := OnlyNumber(EventoCTe.Evento[0].InfEvento.Id);
+    NomeArq := PathWithDelim(DACTE.PathPDF) + NomeArq + '-procEventoCTe.pdf';
+    AnexosEmail.Add(NomeArq);
+
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '');
+  finally
+    AnexosEmail.Free;
+  end;
+*)
+end;
+
 procedure TACBrCTe.ImprimirEvento;
 begin
   if not Assigned(DACTE) then
@@ -740,19 +794,4 @@ begin
     DACTE.ImprimirINUTILIZACAOPDF(nil);
 end;
 
-{
-function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
-  ANSU: String): Boolean;
-begin
-  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
-  WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
-  WebServices.DistribuicaoDFe.ultNSU := AultNSU;
-  WebServices.DistribuicaoDFe.NSU := ANSU;
-
-  Result := WebServices.DistribuicaoDFe.Executar;
-
-  if not Result then
-    GerarException( WebServices.DistribuicaoDFe.Msg );
-end;
-}
 end.

@@ -5724,11 +5724,11 @@ end;
 
    {$IFNDEF FRAMEWORK}
    if Assigned( fsMemoBobina ) then
-      fsMemoBobina.Lines.Add( ACBrStr(NewLinhas) ) ;
+      fsMemoBobina.Lines.Add( NewLinhas ) ;
    {$ENDIF}
 
    if Assigned( fsOnBobinaAdicionaLinhas ) then
-      fsOnBobinaAdicionaLinhas( ACBrStr(NewLinhas), fsMemoOperacao ) ;
+      fsOnBobinaAdicionaLinhas( NewLinhas, fsMemoOperacao ) ;
  end;
 
 function TACBrECF.MemoTraduzCode(Linha: String): String;

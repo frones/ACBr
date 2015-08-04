@@ -40,6 +40,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 04/08/2015
+-- ACBrECF --     (por: DSA)
+[*] Ajuste para correta exibição de caracteres acentuados em MemoBobina
+
 -- ACBrEscBematech --
 [-] Correção para impressão de QRCode na MP2500
     http://www.projetoacbr.com.br/forum/index.php?showtopic=23313

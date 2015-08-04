@@ -2583,9 +2583,9 @@ procedure TNFeEnvEvento.SalvarResposta;
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesNFe.Arquivos.Salvar then;
-  FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-    FPDadosMsg, GerarPathEvento);
+  if FPConfiguracoesNFe.Arquivos.Salvar then
+		FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
+			FPDadosMsg, GerarPathEvento);
 end;
 
 function TNFeEnvEvento.GerarMsgLog: String;

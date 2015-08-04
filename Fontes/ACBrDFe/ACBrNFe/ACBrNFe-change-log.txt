@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2015
+-- ACBrDFeOpenSSL --     (por: DSA)
+[-] Correção para detectação de CNPJ, para Certificados que não tem o CNPJ no
+    Subjectname. Implementado método para detectar o CNPJ através das Extensões
+    do Certificado
+
+-- OpenSSLExt --
+[*] Efetuado merge com Openssl.pas de FPC
+
 03/08/2015
 [*] Implementado as alterações e adição das novas TAGs conforme NT 2015/002.
     Algumas linhas de código estão comentadas para não gerar rejeição.

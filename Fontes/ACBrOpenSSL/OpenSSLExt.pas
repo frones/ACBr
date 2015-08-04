@@ -93,7 +93,8 @@ var
   { ADD NEW ONES WHEN THEY APPEAR!
     Always make .so/dylib first, then versions, in descending order!
     Add "." .before the version, first is always just "" }
-  DLLVersions: array[1..10] of string = ('', '.1.0.0', '.0.9.8',
+  DLLVersions: array[1..16] of string = ('', '.1.0.6', '.1.0.5', '.1.0.4', '.1.0.3',
+                                        '.1.0.2', '.1.0.1','.1.0.0','.0.9.8',
                                         '.0.9.7', '.0.9.6', '.0.9.5', '.0.9.4',
                                         '.0.9.3', '.0.9.2', '.0.9.1');
   {$ENDIF}
@@ -192,6 +193,16 @@ type
     aux: pointer;  // ^X509_CERT_AUX
   end;
   pX509 = ^X509;
+
+  pX509_EXTENSION = ^X509_EXTENSION;
+  X509_EXTENSION = record
+    obj: pointer;
+    critical: Smallint;
+    netscape_hack: Smallint;
+    value: pASN1_STRING;
+    method: pointer;	// struct v3_ext_method *: V3 method to use
+    ext_val: pointer;	// extension value
+  end;
 
   DSA = record
 	pad: integer;
@@ -296,6 +307,7 @@ type
   PBN_MONT_CTX = Pointer;
   PBN_BLINDING = Pointer;
   PBN_CTX = Pointer;
+  PPByte = ^PByte;
 
   Trsa_pub_enc = function(flen: cint;
                  const from_, to_: PByte; arsa: PRSA; padding: cint): cint;
@@ -644,6 +656,55 @@ const
   BIO_C_SET_EX_ARG		= 153;
   BIO_C_GET_EX_ARG		= 154;
 
+  BIO_CTRL_RESET  =    1  ; { opt - rewind/zero etc }
+  BIO_CTRL_EOF    =    2  ; { opt - are we at the eof }
+  BIO_CTRL_INFO   =     3  ; { opt - extra tit-bits }
+  BIO_CTRL_SET    =     4  ; { man - set the 'IO' type }
+  BIO_CTRL_GET    =     5  ; { man - get the 'IO' type }
+  BIO_CTRL_PUSH   =     6  ; { opt - internal, used to signify change }
+  BIO_CTRL_POP    =     7  ; { opt - internal, used to signify change }
+  BIO_CTRL_GET_CLOSE =  8  ; { man - set the 'close' on free }
+  BIO_CTRL_SET_CLOSE =  9  ; { man - set the 'close' on free }
+  BIO_CTRL_PENDING   =  10  ; { opt - is their more data buffered }
+  BIO_CTRL_FLUSH     =  11  ; { opt - 'flush' buffered output }
+  BIO_CTRL_DUP       =  12  ; { man - extra stuff for 'duped' BIO }
+  BIO_CTRL_WPENDING  =  13  ; { opt - number of bytes still to write }
+  BIO_CTRL_SET_CALLBACK   = 14  ; { opt - set callback function }
+  BIO_CTRL_GET_CALLBACK   = 15  ; { opt - set callback function }
+  BIO_CTRL_SET_FILENAME   = 30  ; { BIO_s_file special }
+  BIO_CTRL_DGRAM_CONNECT  = 31  ; { BIO dgram special }
+  BIO_CTRL_DGRAM_SET_CONNECTED      = 32  ; { allow for an externally }
+  BIO_CTRL_DGRAM_SET_RECV_TIMEOUT   = 33 ; { setsockopt, essentially }
+  BIO_CTRL_DGRAM_GET_RECV_TIMEOUT   = 34 ; { getsockopt, essentially }
+  BIO_CTRL_DGRAM_SET_SEND_TIMEOUT   = 35 ; { setsockopt, essentially }
+  BIO_CTRL_DGRAM_GET_SEND_TIMEOUT   = 36 ; { getsockopt, essentially }
+  BIO_CTRL_DGRAM_GET_RECV_TIMER_EXP = 37 ; { flag whether the last }
+  BIO_CTRL_DGRAM_GET_SEND_TIMER_EXP = 38 ; { I/O operation tiemd out }
+  BIO_CTRL_DGRAM_MTU_DISCOVER       = 39 ; { set DF bit on egress packets }
+  BIO_CTRL_DGRAM_QUERY_MTU          = 40 ; { as kernel for current MTU }
+  BIO_CTRL_DGRAM_GET_FALLBACK_MTU   = 47 ;
+  BIO_CTRL_DGRAM_GET_MTU            = 41 ; { get cached value for MTU }
+  BIO_CTRL_DGRAM_SET_MTU            = 42 ; { set cached value for }
+  BIO_CTRL_DGRAM_MTU_EXCEEDED       = 43 ; { check whether the MTU }
+  BIO_CTRL_DGRAM_GET_PEER           = 46 ;
+  BIO_CTRL_DGRAM_SET_PEER           = 44 ; { Destination for the data }
+  BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT   = 45 ; { Next DTLS handshake timeout to }
+  BIO_CTRL_DGRAM_SCTP_SET_IN_HANDSHAKE = 50;
+  BIO_CTRL_DGRAM_SCTP_ADD_AUTH_KEY     = 51;
+  BIO_CTRL_DGRAM_SCTP_NEXT_AUTH_KEY    = 52;
+  BIO_CTRL_DGRAM_SCTP_AUTH_CCS_RCVD    = 53;
+  BIO_CTRL_DGRAM_SCTP_GET_SNDINFO      = 60;
+  BIO_CTRL_DGRAM_SCTP_SET_SNDINFO      = 61;
+  BIO_CTRL_DGRAM_SCTP_GET_RCVINFO      = 62;
+  BIO_CTRL_DGRAM_SCTP_SET_RCVINFO      = 63;
+  BIO_CTRL_DGRAM_SCTP_GET_PRINFO       = 64;
+  BIO_CTRL_DGRAM_SCTP_SET_PRINFO       = 65;
+  BIO_CTRL_DGRAM_SCTP_SAVE_SHUTDOWN    = 70;
+
+//DES modes
+  DES_ENCRYPT = 1;
+  DES_DECRYPT = 0;
+  
 var
   SSLLibHandle: TLibHandle = 0;
   SSLUtilHandle: TLibHandle = 0;
@@ -724,6 +785,7 @@ var
   function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509GetSerialNumber(x: PX509): PASN1_cInt;
+  function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
   function EvpPkeyNew: PEVP_PKEY;
   procedure EvpPkeyFree(pk: PEVP_PKEY);
   function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
@@ -746,6 +808,7 @@ var
 
   // 3DES functions
   procedure DESsetoddparity(Key: des_cblock);
+  function DESsetkey(key: des_cblock; schedule: des_key_schedule): cInt;
   function DESsetkeychecked(key: des_cblock; schedule: des_key_schedule): cInt;
   procedure DESecbencrypt(Input: des_cblock; output: des_cblock; ks: des_key_schedule; enc: cInt);
 
@@ -814,6 +877,23 @@ var
   function SSLeay_version(t: cint): PChar;
 
   // EVP Functions - evp.h
+  function EVP_des_ede3_cbc : PEVP_CIPHER;
+  Function EVP_enc_null : PEVP_CIPHER;
+  Function EVP_rc2_cbc : PEVP_CIPHER;
+  Function EVP_rc2_40_cbc : PEVP_CIPHER;
+  Function EVP_rc2_64_cbc : PEVP_CIPHER;
+  Function EVP_rc4 : PEVP_CIPHER;
+  Function EVP_rc4_40 : PEVP_CIPHER;
+  Function EVP_des_cbc : PEVP_CIPHER;
+  Function EVP_aes_128_cbc : PEVP_CIPHER;
+  Function EVP_aes_192_cbc : PEVP_CIPHER;
+  Function EVP_aes_256_cbc : PEVP_CIPHER;
+  Function EVP_aes_128_cfb8 : PEVP_CIPHER;
+  Function EVP_aes_192_cfb8 : PEVP_CIPHER;
+  Function EVP_aes_256_cfb8 : PEVP_CIPHER;
+  Function EVP_camellia_128_cbc : PEVP_CIPHER;
+  Function EVP_camellia_192_cbc : PEVP_CIPHER;
+  Function EVP_camellia_256_cbc : PEVP_CIPHER;
 
   procedure OpenSSL_add_all_algorithms;
   procedure OpenSSL_add_all_ciphers;
@@ -967,6 +1047,7 @@ type
   TX509SetNotBefore = function(x: PX509; tm: PASN1_UTCTIME): cInt; cdecl;
   TX509SetNotAfter = function(x: PX509; tm: PASN1_UTCTIME): cInt; cdecl;
   TX509GetSerialNumber = function(x: PX509): PASN1_cInt; cdecl;
+  TX509GetExt = function(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
   TEvpPkeyNew = function: PEVP_PKEY; cdecl;
   TEvpPkeyFree = procedure(pk: PEVP_PKEY); cdecl;
   TEvpPkeyAssign = function(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt; cdecl;
@@ -998,6 +1079,7 @@ type
   // 3DES functions
   TDESsetoddparity = procedure(Key: des_cblock); cdecl;
   TDESsetkeychecked = function(key: des_cblock; schedule: des_key_schedule): cInt; cdecl;
+  TDESsetkey = TDESsetkeychecked;
   TDESecbencrypt = procedure(Input: des_cblock; output: des_cblock; ks: des_key_schedule; enc: cInt); cdecl;
   //thread lock functions
   TCRYPTOnumlocks = function: cInt; cdecl;
@@ -1072,6 +1154,7 @@ type
   TEVP_VerifyFinal = function(ctx: pEVP_MD_CTX; sigbuf: pointer;
     siglen: cardinal; pkey: pEVP_PKEY): integer;  cdecl;
   //
+  TEVP_CIPHERFunction = function() : PEVP_CIPHER; cdecl;
   TEVP_get_cipherbyname = function(const name: PChar): PEVP_CIPHER; cdecl;
   TEVP_get_digestbyname = function(const name: PChar): PEVP_MD; cdecl;
   //
@@ -1190,6 +1273,8 @@ var
   _X509SetNotBefore: TX509SetNotBefore = nil;
   _X509SetNotAfter: TX509SetNotAfter = nil;
   _X509GetSerialNumber: TX509GetSerialNumber = nil;
+  _X509GetExt: TX509GetExt = nil;
+
   _EvpPkeyNew: TEvpPkeyNew = nil;
   _EvpPkeyFree: TEvpPkeyFree = nil;
   _EvpPkeyAssign: TEvpPkeyAssign = nil;
@@ -1216,9 +1301,27 @@ var
   _Asn1UtctimeFree: TAsn1UtctimeFree = nil;
   _i2dX509bio: Ti2dX509bio = nil;
   _i2dPrivateKeyBio: Ti2dPrivateKeyBio = nil;
+  _EVP_enc_null : TEVP_CIPHERFunction = nil;
+  _EVP_rc2_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_rc2_40_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_rc2_64_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_rc4 : TEVP_CIPHERFunction = nil;
+  _EVP_rc4_40 : TEVP_CIPHERFunction = nil;
+  _EVP_des_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_des_ede3_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_aes_128_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_aes_192_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_aes_256_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_aes_128_cfb8 : TEVP_CIPHERFunction = nil;
+  _EVP_aes_192_cfb8 : TEVP_CIPHERFunction = nil;
+  _EVP_aes_256_cfb8 : TEVP_CIPHERFunction = nil;
+  _EVP_camellia_128_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_camellia_192_cbc : TEVP_CIPHERFunction = nil;
+  _EVP_camellia_256_cbc : TEVP_CIPHERFunction = nil;
 
   // 3DES functions
   _DESsetoddparity: TDESsetoddparity = nil;
+  _DESsetkey	   : TDESsetkey = nil;
   _DESsetkeychecked: TDESsetkeychecked = nil;
   _DESecbencrypt: TDESecbencrypt = nil;
   //thread lock functions
@@ -2009,11 +2112,27 @@ begin
     Result := nil;
 end;
 
+function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
+begin
+  if InitlibeaInterface and Assigned(_X509GetExt) then
+    Result := _X509GetExt(x, loc)
+  else
+    Result := nil;
+end;
+
 // 3DES functions
 procedure DESsetoddparity(Key: des_cblock);
 begin
   if InitlibeaInterface and Assigned(_DESsetoddparity) then
     _DESsetoddparity(Key);
+end;
+
+function DESsetkey(key: des_cblock; schedule: des_key_schedule): cInt;
+begin
+  if InitSSLInterface and Assigned(_DESsetkey) then
+    Result := _DESsetkey(key, schedule)
+  else
+    Result := -1;
 end;
 
 function DESsetkeychecked(key: des_cblock; schedule: des_key_schedule): cInt;
@@ -2338,6 +2457,142 @@ begin
 end;
 
 // EVP Functions
+
+function EVP_des_ede3_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_des_ede3_cbc) then
+    Result := _EVP_des_ede3_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_enc_null: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_enc_null) then
+    Result := _EVP_enc_null()
+  else
+    Result := Nil;
+end;
+
+function EVP_rc2_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_rc2_cbc) then
+    Result := _EVP_rc2_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_rc2_40_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_rc2_40_cbc) then
+    Result := _EVP_rc2_40_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_rc2_64_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_rc2_64_cbc) then
+    Result := _EVP_rc2_64_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_rc4: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_rc4) then
+    Result := _EVP_rc4()
+  else
+    Result := Nil;
+end;
+
+function EVP_rc4_40: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_rc4_40) then
+    Result := _EVP_rc4_40()
+  else
+    Result := Nil;
+end;
+
+function EVP_des_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_des_cbc) then
+    Result := _EVP_des_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_aes_128_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_aes_128_cbc) then
+    Result := _EVP_aes_128_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_aes_192_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_aes_192_cbc) then
+    Result := _EVP_aes_192_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_aes_256_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_aes_256_cbc) then
+    Result := _EVP_aes_256_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_aes_128_cfb8: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_aes_128_cfb8) then
+    Result := _EVP_aes_128_cfb8()
+  else
+    Result := Nil;
+end;
+
+function EVP_aes_192_cfb8: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_aes_192_cfb8) then
+    Result := _EVP_aes_192_cfb8()
+  else
+    Result := Nil;
+end;
+
+function EVP_aes_256_cfb8: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_aes_256_cfb8) then
+    Result := _EVP_aes_256_cfb8()
+  else
+    Result := Nil;
+end;
+
+function EVP_camellia_128_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_camellia_128_cbc) then
+    Result := _EVP_camellia_128_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_camellia_192_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_camellia_192_cbc) then
+    Result := _EVP_camellia_192_cbc()
+  else
+    Result := Nil;
+end;
+
+function EVP_camellia_256_cbc: PEVP_CIPHER;
+begin
+  if InitlibeaInterface and Assigned(_EVP_camellia_256_cbc) then
+    Result := _EVP_camellia_256_cbc()
+  else
+    Result := Nil;
+end;
 
 procedure OpenSSL_add_all_algorithms;
 begin
@@ -2707,11 +2962,11 @@ end;
 function InitSSLInterface(AVerboseLoading: Boolean = False): Boolean;
 Begin
  try
-   if InitSSLEAInterface(AVerboseLoading) then
-	if InitLIBEAInterface(AVerboseLoading) then
-	  result:=true
-	else
-	  result:=false
+   if InitLIBEAInterface(AVerboseLoading) then
+     if InitSSLEAInterface(AVerboseLoading) then
+       result:=true
+     else
+       result:=false
    else
     result:=false;
  except
@@ -2808,7 +3063,7 @@ begin
    begin
    SSLUtilHandle := LoadLib(DLLUtilName);
 
-     if (SSLUtilHandle <> 0) then
+   if (SSLUtilHandle <> 0) then
    begin
         _ERR_load_crypto_strings := GetProcAddr(SSLUtilHandle, 'ERR_load_crypto_strings', AVerboseLoading);
         _X509New := GetProcAddr(SSLUtilHandle, 'X509_new', AVerboseLoading);
@@ -2828,6 +3083,7 @@ begin
         _X509SetNotBefore := GetProcAddr(SSLUtilHandle, 'X509_set_notBefore', AVerboseLoading);
         _X509SetNotAfter := GetProcAddr(SSLUtilHandle, 'X509_set_notAfter', AVerboseLoading);
         _X509GetSerialNumber := GetProcAddr(SSLUtilHandle, 'X509_get_serialNumber', AVerboseLoading);
+        _X509GetExt := GetProcAddr(SSLUtilHandle, 'X509_get_ext', AVerboseLoading);
         _EvpPkeyNew := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_new', AVerboseLoading);
         _EvpPkeyFree := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_free', AVerboseLoading);
         _EvpPkeyAssign := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_assign', AVerboseLoading);
@@ -2854,10 +3110,28 @@ begin
         _Asn1UtctimeFree := GetProcAddr(SSLUtilHandle, 'ASN1_UTCTIME_free', AVerboseLoading);
         _i2dX509bio := GetProcAddr(SSLUtilHandle, 'i2d_X509_bio', AVerboseLoading);
         _i2dPrivateKeyBio := GetProcAddr(SSLUtilHandle, 'i2d_PrivateKey_bio', AVerboseLoading);
+        _EVP_enc_null := GetProcAddr(SSLUtilHandle, 'EVP_enc_null', AVerboseLoading);;
+        _EVP_rc2_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_cbc', AVerboseLoading);;
+        _EVP_rc2_40_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_40_cbc', AVerboseLoading);;
+        _EVP_rc2_64_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_64_cbc', AVerboseLoading);;
+        _EVP_rc4 := GetProcAddr(SSLUtilHandle, 'EVP_rc4', AVerboseLoading);;
+        _EVP_rc4_40 := GetProcAddr(SSLUtilHandle, 'EVP_rc4_40', AVerboseLoading);;
+        _EVP_des_cbc := GetProcAddr(SSLUtilHandle, 'EVP_des_cbc', AVerboseLoading);;
+        _EVP_des_ede3_cbc := GetProcAddr(SSLUtilHandle, 'EVP_des_ede3_cbc', AVerboseLoading);;
+        _EVP_aes_128_cbc := GetProcAddr(SSLUtilHandle, 'EVP_aes_128_cbc', AVerboseLoading);;
+        _EVP_aes_192_cbc := GetProcAddr(SSLUtilHandle, 'EVP_aes_192_cbc', AVerboseLoading);;
+        _EVP_aes_256_cbc := GetProcAddr(SSLUtilHandle, 'EVP_aes_256_cbc', AVerboseLoading);;
+        _EVP_aes_128_cfb8 := GetProcAddr(SSLUtilHandle, 'EVP_aes_128_cfb8', AVerboseLoading);;
+        _EVP_aes_192_cfb8 := GetProcAddr(SSLUtilHandle, 'EVP_aes_192_cfb8', AVerboseLoading);;
+        _EVP_aes_256_cfb8 := GetProcAddr(SSLUtilHandle, 'EVP_aes_256_cfb8', AVerboseLoading);;
+        _EVP_camellia_128_cbc := GetProcAddr(SSLUtilHandle, 'EVP_camellia_128_cbc', AVerboseLoading);;
+        _EVP_camellia_192_cbc := GetProcAddr(SSLUtilHandle, 'EVP_camellia_192_cbc', AVerboseLoading);;
+        _EVP_camellia_256_cbc := GetProcAddr(SSLUtilHandle, 'EVP_camellia_256_cbc', AVerboseLoading);;
 
         // 3DES functions
         _DESsetoddparity := GetProcAddr(SSLUtilHandle, 'des_set_odd_parity', AVerboseLoading);
         _DESsetkeychecked := GetProcAddr(SSLUtilHandle, 'des_set_key_checked', AVerboseLoading);
+        _DESsetkey := GetProcAddr(SSLUtilHandle, 'des_set_key', AVerboseLoading);
         _DESecbencrypt := GetProcAddr(SSLUtilHandle, 'des_ecb_encrypt', AVerboseLoading);
         //
         _CRYPTOnumlocks := GetProcAddr(SSLUtilHandle, 'CRYPTO_num_locks', AVerboseLoading);
@@ -3093,6 +3367,7 @@ begin
     _X509SetNotBefore := nil;
     _X509SetNotAfter := nil;
     _X509GetSerialNumber := nil;
+    _X509GetExt := nil;
     _EvpPkeyNew := nil;
     _EvpPkeyFree := nil;
     _EvpPkeyAssign := nil;

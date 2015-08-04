@@ -596,6 +596,33 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
     end;
   end;
 
+  function GetCNPJExt( cert: pX509): String;
+  var
+    ext: pX509_EXTENSION;
+    I, P: Integer;
+    prop: PASN1_STRING;
+    propStr: AnsiString;
+  begin
+    Result := '';
+    I := 0;
+    ext := X509GetExt( cert, I);
+    while (ext <> nil) do
+    begin
+      prop := ext.value;
+      propStr := PAnsiChar(prop^.data);
+      SetLength(propStr, prop^.length);
+      P := pos(#1#3#3#160#16#4#14, propStr);
+      if P > 0 then
+      begin
+        Result := copy(propStr,P+7,14);
+        exit;
+      end;
+
+      inc( I );
+      ext := X509GetExt( cert, I);
+    end;
+  end;
+
   function GetSerialNumber( cert: pX509): String;
   var
     SN: PASN1_STRING;
@@ -648,6 +675,9 @@ begin
           FValidade := GetNotAfter( cert );
           FSubjectName := GetSubjectName( cert );
           FCNPJ := GetCNPJ( FSubjectName );
+          if FCNPJ = '' then  // Não tem CNPJ no SubjectName, lendo das Extensões
+            FCNPJ := GetCNPJExt( cert );
+
           FNumSerie := GetSerialNumber( cert );
         end;
       finally

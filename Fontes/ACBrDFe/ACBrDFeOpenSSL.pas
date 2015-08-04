@@ -623,7 +623,11 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
       end;
 
       inc( I );
-      ext := X509GetExt( cert, I);
+      {$IFDEF USE_libeay32}
+       ext := X509_get_ext( cert, I);
+      {$ELSE}
+       ext := X509GetExt( cert, I);
+      {$ENDIF}
     end;
   end;
 

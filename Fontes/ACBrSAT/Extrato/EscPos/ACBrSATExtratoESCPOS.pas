@@ -376,7 +376,7 @@ begin
     else
       FPosPrinter.Buffer.Add(' ');
 
-    FPosPrinter.Buffer.Add('<c>'+PadSpace('Valor aproximado dos tributos do deste cupom R$ |<n>'+
+    FPosPrinter.Buffer.Add('<c>'+PadSpace('Valor aproximado dos tributos deste cupom R$ |<n>'+
                 FormatFloatBr(CFe.Total.vCFeLei12741, '#,###,##0.00'),
                 FPosPrinter.ColunasFonteCondensada, '|'));
     FPosPrinter.Buffer.Add('</n>(conforme Lei Fed. 12.741/2012)');

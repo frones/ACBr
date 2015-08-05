@@ -1836,9 +1836,9 @@ procedure TMDFeEnvEvento.SalvarResposta;
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesMDFe.Arquivos.Salvar then;
-  FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-    FPDadosMsg, GerarPathEvento);
+  if FPConfiguracoesMDFe.Arquivos.Salvar then
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
+      FPDadosMsg, GerarPathEvento);
 end;
 
 function TMDFeEnvEvento.GerarMsgLog: String;

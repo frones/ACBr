@@ -2340,9 +2340,9 @@ procedure TCTeEnvEvento.SalvarResposta;
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesCTe.Arquivos.Salvar then;
-  FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-    FPDadosMsg, GerarPathEvento);
+  if FPConfiguracoesCTe.Arquivos.Salvar then
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
+      FPDadosMsg, GerarPathEvento);
 end;
 
 function TCTeEnvEvento.GerarMsgLog: String;

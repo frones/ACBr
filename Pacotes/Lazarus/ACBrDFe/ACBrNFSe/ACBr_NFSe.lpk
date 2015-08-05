@@ -9,13 +9,13 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="45">
+    <Files Count="20">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas"/>
         <UnitName Value="ACBrNFSe"/>
@@ -25,195 +25,83 @@
         <UnitName Value="ACBrNFSeConfiguracoes"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\ACBrNFSeDANFSeClass.pas"/>
-        <UnitName Value="ACBrNFSeDANFSeClass"/>
-      </Item3>
-      <Item4>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeNotasFiscais.pas"/>
         <UnitName Value="ACBrNFSeNotasFiscais"/>
-      </Item4>
-      <Item5>
+      </Item3>
+      <Item4>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrNFSeReg"/>
-      </Item5>
-      <Item6>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeWebServices.pas"/>
-        <UnitName Value="ACBrNFSeWebServices"/>
-      </Item6>
-      <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConversao.pas"/>
-        <UnitName Value="pnfsConversao"/>
-      </Item7>
-      <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSe.pas"/>
-        <UnitName Value="pnfsNFSe"/>
-      </Item8>
-      <Item9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW.pas"/>
-        <UnitName Value="pnfsNFSeW"/>
-      </Item9>
-      <Item10>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsEnvLoteRpsResposta.pas"/>
-        <UnitName Value="pnfsEnvLoteRpsResposta"/>
-      </Item10>
-      <Item11>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeR.pas"/>
-        <UnitName Value="pnfsNFSeR"/>
-      </Item11>
-      <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsSitLoteRpsResposta.pas"/>
-        <UnitName Value="pnfsConsSitLoteRpsResposta"/>
-      </Item12>
-      <Item13>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsLoteRpsResposta.pas"/>
-        <UnitName Value="pnfsConsLoteRpsResposta"/>
-      </Item13>
-      <Item14>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsNfseporRpsResposta.pas"/>
-        <UnitName Value="pnfsConsNfseporRpsResposta"/>
-      </Item14>
-      <Item15>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsNfseResposta.pas"/>
-        <UnitName Value="pnfsConsNfseResposta"/>
-      </Item15>
-      <Item16>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSignature.pas"/>
-        <UnitName Value="pnfsSignature"/>
-      </Item16>
-      <Item17>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsCancNfseResposta.pas"/>
-        <UnitName Value="pnfsCancNfseResposta"/>
-      </Item17>
-      <Item18>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorBetha.pas"/>
-        <UnitName Value="ACBrProvedorBetha"/>
-      </Item18>
-      <Item19>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorDigifred.pas"/>
-        <UnitName Value="ACBrProvedorDigifred"/>
-      </Item19>
-      <Item20>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorEquiplano.pas"/>
-        <UnitName Value="ACBrProvedorEquiplano"/>
-      </Item20>
-      <Item21>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorfintelISS.pas"/>
-        <UnitName Value="ACBrProvedorfintelISS"/>
-      </Item21>
-      <Item22>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorGinfesV3.pas"/>
-        <UnitName Value="ACBrProvedorGinfesV3"/>
-      </Item22>
-      <Item23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorGovBR.pas"/>
-        <UnitName Value="ACBrProvedorGovBR"/>
-      </Item23>
-      <Item24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSIntel.pas"/>
-        <UnitName Value="ACBrProvedorISSIntel"/>
-      </Item24>
-      <Item25>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSNet.pas"/>
-        <UnitName Value="ACBrProvedorISSNet"/>
-      </Item25>
-      <Item26>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorProdemge.pas"/>
-        <UnitName Value="ACBrProvedorProdemge"/>
-      </Item26>
-      <Item27>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorPublica.pas"/>
-        <UnitName Value="ACBrProvedorPublica"/>
-      </Item27>
-      <Item28>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorRecife.pas"/>
-        <UnitName Value="ACBrProvedorRecife"/>
-      </Item28>
-      <Item29>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorRJ.pas"/>
-        <UnitName Value="ACBrProvedorRJ"/>
-      </Item29>
-      <Item30>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorSimplISS.pas"/>
-        <UnitName Value="ACBrProvedorSimplISS"/>
-      </Item30>
-      <Item31>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorThema.pas"/>
-        <UnitName Value="ACBrProvedorThema"/>
-      </Item31>
-      <Item32>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorTiplan.pas"/>
-        <UnitName Value="ACBrProvedorTiplan"/>
-      </Item32>
-      <Item33>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorWebISS.pas"/>
-        <UnitName Value="ACBrProvedorWebISS"/>
-      </Item33>
-      <Item34>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorBetim.pas"/>
-        <UnitName Value="ACBrProvedorBetim"/>
-      </Item34>
-      <Item35>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorfISSLex.pas"/>
-        <UnitName Value="ACBrProvedorFISSLEX"/>
-      </Item35>
-      <Item36>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorSaatri.pas"/>
-        <UnitName Value="ACBrProvedorSaatri"/>
-      </Item36>
-      <Item37>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsGerarNfseResposta.pas"/>
-        <UnitName Value="pnfsGerarNfseResposta"/>
-      </Item37>
-      <Item38>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorAbaco.pas"/>
-        <UnitName Value="ACBrProvedorAbaco"/>
-      </Item38>
-      <Item39>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorGoiania.pas"/>
-        <UnitName Value="ACBrProvedorGoiania"/>
-      </Item39>
-      <Item40>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSCuritiba.pas"/>
-        <UnitName Value="ACBrProvedorIssCuritiba"/>
-      </Item40>
-      <Item41>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorBHISS.pas"/>
-        <UnitName Value="ACBrProvedorBHISS"/>
-      </Item41>
-      <Item42>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorNatal.pas"/>
-        <UnitName Value="ACBrProvedorNatal"/>
-      </Item42>
-      <Item43>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSe.pas"/>
-        <UnitName Value="ACBrProvedorISSe"/>
-      </Item43>
-      <Item44>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorISSDigital.pas"/>
-        <UnitName Value="ACBrProvedorISSDigital"/>
-      </Item44>
-      <Item45>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores\ACBrProvedorSalvador.pas"/>
-        <UnitName Value="ACBrProvedorSalvador"/>
-      </Item45>
-    </Files>
-    <RequiredPkgs Count="5">
-      <Item1>
-        <PackageName Value="ACBrOpenSSL"/>
-      </Item1>
-      <Item2>
-        <PackageName Value="PCNComum"/>
-      </Item2>
-      <Item3>
-        <PackageName Value="laz_synapse"/>
-      </Item3>
-      <Item4>
-        <PackageName Value="ACBrComum"/>
       </Item4>
       <Item5>
-        <PackageName Value="FCL"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeWebServices.pas"/>
+        <UnitName Value="ACBrNFSeWebServices"/>
       </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsCancNfseResposta.pas"/>
+        <UnitName Value="pnfsCancNfseResposta"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsLoteRpsResposta.pas"/>
+        <UnitName Value="pnfsConsLoteRpsResposta"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsNfseporRpsResposta.pas"/>
+        <UnitName Value="pnfsConsNfseporRpsResposta"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsNfseResposta.pas"/>
+        <UnitName Value="pnfsConsNfseResposta"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsSitLoteRpsResposta.pas"/>
+        <UnitName Value="pnfsConsSitLoteRpsResposta"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConversao.pas"/>
+        <UnitName Value="pnfsConversao"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsEnvLoteRpsResposta.pas"/>
+        <UnitName Value="pnfsEnvLoteRpsResposta"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsGerarNfseResposta.pas"/>
+        <UnitName Value="pnfsGerarNfseResposta"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSe.pas"/>
+        <UnitName Value="pnfsNFSe"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeG.pas"/>
+        <UnitName Value="pnfsNFSeG"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeR.pas"/>
+        <UnitName Value="pnfsNFSeR"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW.pas"/>
+        <UnitName Value="pnfsNFSeW"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSignature.pas"/>
+        <UnitName Value="pnfsSignature"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSubsNfseResposta.pas"/>
+        <UnitName Value="pnfsSubsNfseResposta"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\ACBrNFSeDANFSeClass.pas"/>
+        <UnitName Value="ACBrNFSeDANFSeClass"/>
+      </Item20>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

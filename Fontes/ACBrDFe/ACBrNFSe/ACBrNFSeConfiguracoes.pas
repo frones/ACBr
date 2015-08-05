@@ -182,7 +182,7 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); overload;
     procedure SetConfigMunicipio;
-  published
+
     property ConfigGeral: TConfigGeral read FConfigGeral;
     property ConfigNameSpace: TConfigNameSpace read FConfigNameSpace;
     property ConfigAssinar: TConfigAssinar read FConfigAssinar;
@@ -191,7 +191,7 @@ type
     property ConfigSoapAction: TConfigSoapAction read FConfigSoapAction;
     property ConfigURL: TConfigURL read FConfigURL;
     property ConfigEnvelope: TConfigEnvelope read FConfigEnvelope;
-
+  published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
     property xProvedor: String read FxProvedor;

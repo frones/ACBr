@@ -7,20 +7,12 @@ unit ACBr_NFSe;
 interface
 
 uses
-  ACBrNFSe, ACBrNFSeConfiguracoes, ACBrNFSeDANFSeClass, ACBrNFSeNotasFiscais, 
-  ACBrNFSeReg, ACBrNFSeWebServices, pnfsConversao, pnfsNFSe, pnfsNFSeW, 
-  pnfsEnvLoteRpsResposta, pnfsNFSeR, pnfsConsSitLoteRpsResposta, 
-  pnfsConsLoteRpsResposta, pnfsConsNfseporRpsResposta, pnfsConsNfseResposta, 
-  pnfsSignature, pnfsCancNfseResposta, ACBrProvedorBetha, 
-  ACBrProvedorDigifred, ACBrProvedorEquiplano, ACBrProvedorfintelISS, 
-  ACBrProvedorGinfesV3, ACBrProvedorGovBR, ACBrProvedorISSIntel, 
-  ACBrProvedorISSNet, ACBrProvedorProdemge, ACBrProvedorPublica, 
-  ACBrProvedorRecife, ACBrProvedorRJ, ACBrProvedorSimplISS, ACBrProvedorThema, 
-  ACBrProvedorTiplan, ACBrProvedorWebISS, ACBrProvedorBetim, 
-  ACBrProvedorfISSLex, ACBrProvedorSaatri, pnfsGerarNfseResposta, 
-  ACBrProvedorAbaco, ACBrProvedorGoiania, ACBrProvedorISSCuritiba, 
-  ACBrProvedorBHISS, ACBrProvedorNatal, ACBrProvedorISSe, 
-  ACBrProvedorISSDigital, ACBrProvedorSalvador, LazarusPackageIntf;
+  ACBrNFSe, ACBrNFSeConfiguracoes, ACBrNFSeNotasFiscais, ACBrNFSeReg, 
+  ACBrNFSeWebServices, pnfsCancNfseResposta, pnfsConsLoteRpsResposta, 
+  pnfsConsNfseporRpsResposta, pnfsConsNfseResposta, 
+  pnfsConsSitLoteRpsResposta, pnfsConversao, pnfsEnvLoteRpsResposta, 
+  pnfsGerarNfseResposta, pnfsNFSe, pnfsNFSeG, pnfsNFSeR, pnfsNFSeW, 
+  pnfsSignature, pnfsSubsNfseResposta, ACBrNFSeDANFSeClass, LazarusPackageIntf;
 
 implementation
 

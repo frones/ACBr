@@ -842,7 +842,6 @@ var
   NomeArq: String;
   AnexosEmail: TStrings;
 begin
-(*
   AnexosEmail := TStringList.Create;
   try
     AnexosEmail.Clear;
@@ -859,7 +858,6 @@ begin
   finally
     AnexosEmail.Free;
   end;
-*)
 end;
 
 { TCartaCorrecao }

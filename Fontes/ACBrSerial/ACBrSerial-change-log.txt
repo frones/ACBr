@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/08/2015
+-- ACBrEscBematech --    (Por:  Ronaldo Negreiros Daniel)
+[*] Ajuste para leitura correta do QRCode gerado pelas Impressoras Bematech
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23313
+
 -- ACBrECFBematech --   (por: DSA)
 [-] Correção para GetDadosUltimaReducaoZ. Leitura errada de comprovantentes
     Não Fiscais programados com Indice inferior a 03

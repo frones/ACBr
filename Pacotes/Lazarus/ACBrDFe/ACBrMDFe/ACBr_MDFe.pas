@@ -7,12 +7,13 @@ unit ACBr_MDFe;
 interface
 
 uses
-  ACBrMDFe, ACBrMDFeConfiguracoes, ACBrMDFeManifestos, ACBrMDFeUtil, 
-  ACBrMDFeWebServices, ACBrMDFeDAMDFEClass, ACBrMDFeReg, pmdfeSignature, 
-  pmdfeConsReciMDFe, pmdfeConsSitMDFe, pmdfeConsStatServ, pmdfeConversao, 
-  pmdfeEnvEventoMDFe, pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, 
-  pmdfeRetConsReciMDFe, pmdfeRetConsSitMDFe, pmdfeRetConsStatServ, 
-  pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, pmdfeEventoMDFe, LazarusPackageIntf;
+  ACBrMDFe, ACBrMDFeConfiguracoes, ACBrMDFeManifestos, ACBrMDFeReg, 
+  ACBrMDFeWebServices, pmdfeCabecalho, pmdfeConsMDFeNaoEnc, pmdfeConsReciMDFe, 
+  pmdfeConsSitMDFe, pmdfeConsStatServ, pmdfeConversaoMDFe, pmdfeEnvEventoMDFe, 
+  pmdfeEventoMDFe, pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, 
+  pmdfeRetConsMDFeNaoEnc, pmdfeRetConsReciMDFe, pmdfeRetConsSitMDFe, 
+  pmdfeRetConsStatServ, pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
+  pmdfeSignature, LazarusPackageIntf;
 
 implementation
 

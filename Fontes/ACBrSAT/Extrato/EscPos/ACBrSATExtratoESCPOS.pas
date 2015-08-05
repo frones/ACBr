@@ -358,34 +358,39 @@ begin
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarObsContribuinte(Resumido : Boolean = False );
-begin
-  if Trim(CFe.InfAdic.infCpl) <> '' then
+var
+  CabecalhoGerado: Boolean;
+
+  procedure GerarCabecalhoObsContribuinte;
   begin
     FPosPrinter.Buffer.Add('</fn></linha_simples>');
     FPosPrinter.Buffer.Add(ACBrStr('OBSERVAÇÕES DO CONTRIBUINTE'));
+    CabecalhoGerado := True;
+  end;
+
+begin
+  CabecalhoGerado := False;
+
+  if Trim(CFe.InfAdic.infCpl) <> '' then
+  begin
+    GerarCabecalhoObsContribuinte;
     FPosPrinter.Buffer.Add('<c>'+StringReplace(Trim(CFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
   end;
 
   if CFe.Total.vCFeLei12741 > 0 then
   begin
-    if Trim(CFe.InfAdic.infCpl) = '' then
-    begin
-      FPosPrinter.Buffer.Add('</fn></linha_simples>');
-      FPosPrinter.Buffer.Add(ACBrStr('OBSERVAÇÕES DO CONTRIBUINTE'));
-    end
+    if not CabecalhoGerado then
+      GerarCabecalhoObsContribuinte
     else
       FPosPrinter.Buffer.Add(' ');
+
+    if not Resumido then
+      FPosPrinter.Buffer.Add('<c>*Valor aproximado dos tributos do item');
 
     FPosPrinter.Buffer.Add('<c>'+PadSpace('Valor aproximado dos tributos deste cupom R$ |<n>'+
                 FormatFloatBr(CFe.Total.vCFeLei12741, '#,###,##0.00'),
                 FPosPrinter.ColunasFonteCondensada, '|'));
     FPosPrinter.Buffer.Add('</n>(conforme Lei Fed. 12.741/2012)');
-
-    if not Resumido then
-    begin
-      FPosPrinter.Buffer.Add(' ');
-      FPosPrinter.Buffer.Add('*Valor aproximado dos tributos do item');
-    end;
   end;
 end;
 

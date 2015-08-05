@@ -3197,15 +3197,20 @@ begin
 
       // Dados dos Comprovantes não Fiscais //
       S :=  copy(RetCmd,1103,28) +  // Sangria(14) + Suprimento(14)
-            copy(RetCmd,739,364) ;  // Não ICMS  (392)  28 * 14 (2 primeiros vem vazios ??)
+            copy(RetCmd,711,392) ;  // Não ICMS  (392)  28 * 14
       SS := copy(RetCmd,161,8)   +  // Contadores: Sangria(4) + Suprimento(4)
-            copy(RetCmd,57,104);    // Não ICMS(112) 28 * 4  (2 primeiros vem vazios ??)
+            copy(RetCmd,49,112);    // Não ICMS(112) 28 * 4
 
       for I := 0 to fpComprovantesNaoFiscais.Count - 1 do
       begin
         CNFZ := TACBrECFComprovanteNaoFiscal.Create ;
         CNFZ.Assign( fpComprovantesNaoFiscais[I] );
-        P := StrToIntDef(CNFZ.Indice,I+1)-1;
+        P := StrToIntDef(CNFZ.Indice,0);
+        if P = 0 then
+          P := I
+        else
+          P := P + 1;
+
         CNFZ.Total    := RoundTo( StrToFloatDef( copy(S,(P*14)+1,14),0) / 100, -2) ;
         CNFZ.Contador := StrToIntDef( copy(SS,(P*4)+1,4), 0);
 

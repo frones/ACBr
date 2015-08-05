@@ -224,6 +224,7 @@ begin
     if linha = NomeCampo then
     begin
       Result := StringReplace(Trim(Texto[i+1]),'&nbsp;',' ',[rfReplaceAll]);
+      Texto.Delete(I);
       break;
     end;
   end

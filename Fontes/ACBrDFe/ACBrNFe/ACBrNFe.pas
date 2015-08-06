@@ -482,10 +482,20 @@ end;
 
 procedure TACBrNFe.LerServicoDeParams(LayOutServico: TLayOut;
   var Versao: Double; var URL: String);
+var
+  AUF: String;
 begin
+  case Configuracoes.Geral.FormaEmissao of
+    teNormal: AUF := Configuracoes.WebServices.UF;
+    teSVCAN: AUF := 'SVC-AN';
+    teSVCRS: AUF := 'SVC-RS';
+  else
+    AUF := Configuracoes.WebServices.UF;
+  end;
+
   Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
+  LerServicoDeParams(GetNomeModeloDFe, AUF, {Configuracoes.WebServices.UF,}
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
     Versao, URL);
 end;

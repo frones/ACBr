@@ -279,10 +279,54 @@ end;
 
 procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOutCTe;
   var Versao: Double; var URL: String);
+var
+  AUF: String;
 begin
+  case Configuracoes.Geral.FormaEmissao of
+    teNormal: AUF := Configuracoes.WebServices.UF;
+    teDPEC: begin
+              case Configuracoes.WebServices.UFCodigo of
+                11, // Rondônia
+                12, // Acre
+                13, // Amazonas
+                14, // Roraima
+                15, // Pará
+                16, // Amapá
+                17, // Tocantins
+                21, // Maranhão
+                22, // Piauí
+                23, // Ceará
+                24, // Rio Grande do Norte
+                25, // Paraibá
+                27, // Alagoas
+                28, // Sergipe
+                29, // Bahia
+                31, // Minas Gerais
+                32, // Espirito Santo
+                33, // Rio de Janeiro
+                41, // Paraná
+                42, // Santa Catarina
+                43, // Rio Grande do Sul
+                52, // Goiás
+                53: // Distrito Federal
+                    AUF := 'SVC-SP';
+                26, // Pernanbuco
+                35, // São Paulo
+                50, // Mato Grosso do Sul
+                51: // Mato Grosso
+                    AUF := 'SVC-RS';
+              end;
+            end;
+    teSVCAN: AUF := 'SVC-AN';
+    teSVCRS: AUF := 'SVC-RS';
+    teSVCSP: AUF := 'SVC-SP';
+  else
+    AUF := Configuracoes.WebServices.UF;
+  end;
+
   Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
+  LerServicoDeParams(GetNomeModeloDFe, AUF, {Configuracoes.WebServices.UF,}
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
     Versao, URL);
 end;

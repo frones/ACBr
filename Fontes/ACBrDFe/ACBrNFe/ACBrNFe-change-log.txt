@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2015
+[*] Ao Ler as URLs não estava levando em consideração a SVC.
+    por: Italo Jurisato Junior
+
 04/08/2015
 -- ACBrDFeOpenSSL --     (por: DSA)
 [-] Correção para detectação de CNPJ, para Certificados que não tem o CNPJ no

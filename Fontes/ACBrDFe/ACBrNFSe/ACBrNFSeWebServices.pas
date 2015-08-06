@@ -290,6 +290,7 @@ type
     FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TRetLote;
 
+    FDataRecebimento: TDateTime;
     FProtocolo: String;
     FNumeroLote: String;
     FCNPJ: String;
@@ -313,6 +314,7 @@ type
 
     property NFSeRetorno: TRetLote read FNFSeRetorno write FNFSeRetorno;
 
+    property DataRecebimento: TDateTime read FDataRecebimento write FDataRecebimento;
     property Protocolo: String read FProtocolo write FProtocolo;
       //usado pelo provedor IssDsf
     property NumeroLote: String read FNumeroLote write FNumeroLote;
@@ -490,7 +492,7 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
-    property NFSeRetorno: TretSubsNFSe  read FNFSeRetorno    write FNFSeRetorno;
+    property NFSeRetorno: TretSubsNFSe  read FNFSeRetorno        write FNFSeRetorno;
 
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
@@ -2124,12 +2126,6 @@ function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
 (*
 function Processando: Boolean;
 begin
-  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-sit-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
-
-  if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(Protocolo + '-sit.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
-
   NFSeRetorno := TretSitLote.Create;
 
   NFSeRetorno.Leitor.Arquivo := FRetWS;
@@ -2410,13 +2406,16 @@ begin
 end;
 
 function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
+var
+  FRetListaNFSe, FRetNFSe, FRetNFSe2, PathSalvar, NomeArq: String;
+  i, j, k, l, m, p, ii: Integer;
 begin
   FPRetWS := ExtraiRetorno('ConsultarLoteRpsResposta');
   Result := ExtraiNotasRetorno;
 
-(*
 
-  FNFSeRetorno := TRetornoNFSe.Create;
+
+  FNFSeRetorno := TRetLote.Create;
 
   FNFSeRetorno.Leitor.Arquivo := FPRetWS;
   FNFSeRetorno.Provedor       := FProvedor;
@@ -2508,9 +2507,9 @@ begin
   end
   else begin
     if FProvedor = proSisPMJP then
-      Prefixo3 := 'nfse:';
+      FPrefixo3 := 'nfse:';
 
-    FRetListaNfse := SeparaDados(FRetWS, Prefixo3 + 'ListaNfse');
+    FRetListaNfse := SeparaDados(FPRetWS, FPrefixo3 + 'ListaNfse');
   end;
 
   while FRetListaNFSe <> '' do
@@ -2525,116 +2524,117 @@ begin
     begin
       for i := 0 to NFSeRetorno.ListaNfse.CompNfse.Count - 1 do
       begin
-      for ii := 0 to FNotasFiscais.Count -1 do
-      begin
-        if FNotasFiscais.Items[ii].NFSe.IdentificacaoRps.Numero = FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero then
+        for ii := 0 to FNotasFiscais.Count -1 do
         begin
-          FNotasFiscais.Items[ii].Confirmada             := True;
-          FNotasFiscais.Items[ii].NFSe.CodigoVerificacao := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.CodigoVerificacao;
-          FNotasFiscais.Items[ii].NFSe.Numero            := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero;
-          FNotasFiscais.Items[ii].NFSe.Competencia       := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Competencia;
-          FNotasFiscais.Items[ii].NFSe.NFSeSubstituida   := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.NFSeSubstituida;
-          FNotasFiscais.Items[ii].NFSe.OutrasInformacoes := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.OutrasInformacoes;
-          FNotasFiscais.Items[ii].NFSe.DataEmissao       := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao;
-
-          FNotasFiscais.Items[ii].NFSe.Servico.xItemListaServico := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.xItemListaServico;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.RazaoSocial  := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.RazaoSocial;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.NomeFantasia := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.NomeFantasia;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj               := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Endereco        := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Endereco;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Numero          := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Numero;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Complemento     := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Complemento;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Bairro          := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Bairro;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.CodigoMunicipio := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.UF              := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.CEP             := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.CEP;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.xMunicipio      := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.xMunicipio;
-
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Telefone := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Contato.Telefone;
-          FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Email    := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Contato.Email;
-
-          FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.xMunicipio := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.xMunicipio;
-
-          if FProvedor = proISSNet then
-            FRetNfse := AnsiString(StringReplace(String(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.XML), '<br>', '', [rfReplaceAll]))
-          else
-            FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.XML;
-
-//          FRetNFSe := Copy(FRetListaNFSe, 1, j - 1);
-
-          k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNFSe);
-          FRetNFSe := Copy(FRetNFSe, k, length(FRetNFSe));
-
-          // Recoloca o prefixo4 quando o provedor for ISSNet
-          if FProvedor = proISSNet then
+          if FNotasFiscais.Items[ii].NFSe.IdentificacaoRps.Numero = FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero then
           begin
-            m := length(FRetNFSe);
-            FRetNfse2 := '';
-            l := 1;
-            while l <= m do
+            FNotasFiscais.Items[ii].Confirmada             := True;
+            FNotasFiscais.Items[ii].NFSe.CodigoVerificacao := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.CodigoVerificacao;
+            FNotasFiscais.Items[ii].NFSe.Numero            := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero;
+            FNotasFiscais.Items[ii].NFSe.Competencia       := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Competencia;
+            FNotasFiscais.Items[ii].NFSe.NFSeSubstituida   := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.NFSeSubstituida;
+            FNotasFiscais.Items[ii].NFSe.OutrasInformacoes := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.OutrasInformacoes;
+            FNotasFiscais.Items[ii].NFSe.DataEmissao       := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao;
+
+            FNotasFiscais.Items[ii].NFSe.Servico.xItemListaServico := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.xItemListaServico;
+
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.RazaoSocial  := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.RazaoSocial;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.NomeFantasia := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.NomeFantasia;
+
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj               := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Endereco        := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Endereco;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Numero          := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Numero;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Complemento     := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Complemento;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.Bairro          := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.Bairro;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.CodigoMunicipio := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.UF              := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.CEP             := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.CEP;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Endereco.xMunicipio      := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.xMunicipio;
+
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Telefone := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Contato.Telefone;
+            FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Email    := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Contato.Email;
+
+            FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.xMunicipio := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.xMunicipio;
+
+            if FProvedor = proISSNet then
+              FRetNfse := AnsiString(StringReplace(String(NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.XML), '<br>', '', [rfReplaceAll]))
+            else
+              FRetNfse := NFSeRetorno.ListaNfse.CompNfse.Items[i].Nfse.XML;
+
+//            FRetNFSe := Copy(FRetListaNFSe, 1, j - 1);
+
+            k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNFSe);
+            FRetNFSe := Copy(FRetNFSe, k, length(FRetNFSe));
+
+            // Recoloca o prefixo4 quando o provedor for ISSNet
+            if FProvedor = proISSNet then
             begin
-              if FRetNFSe[l] = '<' then
+              m := length(FRetNFSe);
+              FRetNfse2 := '';
+              l := 1;
+              while l <= m do
               begin
-                if FRetNFSe[l+1] = '?' then
-                  FRetNfse2 := FRetNfse2 + FRetNFSe[l]
-                else begin
-                  if FRetNFSe[l+1] = '/' then
-                  begin
-                    FRetNfse2 := FRetNfse2 + '</' + Prefixo4;
-                    inc(l);
-                  end
-                  else
-                    FRetNfse2 := FRetNfse2 + '<' + Prefixo4;
-                end;
-              end
-              else
-                FRetNfse2 := FRetNfse2 + FRetNFSe[l];
-              inc(l);
+                if FRetNFSe[l] = '<' then
+                begin
+                  if FRetNFSe[l+1] = '?' then
+                    FRetNfse2 := FRetNfse2 + FRetNFSe[l]
+                  else begin
+                    if FRetNFSe[l+1] = '/' then
+                    begin
+                      FRetNfse2 := FRetNfse2 + '</' + Prefixo4;
+                      inc(l);
+                    end
+                    else
+                      FRetNfse2 := FRetNfse2 + '<' + Prefixo4;
+                  end;
+                end
+                else
+                  FRetNfse2 := FRetNfse2 + FRetNFSe[l];
+                inc(l);
+              end;
+              FRetNFSe := FRetNfse2;
             end;
-            FRetNFSe := FRetNfse2;
+
+            if FProvedor = proSisPMJP then
+              FPrefixo3 := 'nfse:';
+
+            FXML_NFSe := FPConfiguracoesNFSe.Geral.ConfigGeral.RetornoNFSe;
+            // %DadosNFSe% : Representa o XML da NFSe
+            FXML_NFSe := StringReplace(FXML_NFSe, '%DadosNFSe%', FRetNFSe, [rfReplaceAll]);
+
+            if FPConfiguracoesNFSe.Arquivos.Salvar then
+            begin
+              if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then
+                PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao)
+              else
+                PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(0);
+
+              if FPConfiguracoesNFSe.Arquivos.NomeLongoNFSe then
+                NomeArq := GerarNomeNFSe(UFparaCodigo(FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF),
+                                         FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao,
+                                         FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                                         StrToIntDef(FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero, 0)) + '-nfse.xml'
+              else
+                NomeArq := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero + '-nfse.xml';
+
+              FPDFeOwner.Gravar(NomeArq, FXML_NFSe, PathSalvar);
+
+              if FNotasFiscais.Count > 0 then
+                FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NomeArq;
+            end;
+
+            FRetListaNFSe := Copy(FRetListaNFSe, j + 11 + p, length(FRetListaNFSe));
+
+            FNotasFiscais.Items[ii].XMLNFSe := FRetNFSe;
+
+            break;
           end;
-
-          if FProvedor = proSisPMJP then
-            Prefixo3 := 'nfse:';
-
-          FXML_NFSe := FPConfiguracoesNFSe.Geral.ConfigGeral.RetornoNFSe;
-          // %DadosNFSe% : Representa o XML da NFSe
-          FXML_NFSe := StringReplace(FXML_NFSe, '%DadosNFSe%', FRetNFSe, [rfReplaceAll]);
-
-          if FPConfiguracoesNFSe.Arquivos.Salvar then
-          begin
-            if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then
-              PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao)
-            else
-              PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(0);
-
-            if FPConfiguracoesNFSe.Arquivos.NomeLongoNFSe then
-              NomeArq := GerarNomeNFSe(UFparaCodigo(FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF),
-                                       FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao,
-                                       FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-                                       StrToIntDef(FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero, 0)) + '-nfse.xml'
-            else
-              NomeArq := FNFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero + '-nfse.xml';
-
-            FPDFeOwner.Gravar(NomeArq, FXML_NFSe, PathSalvar);
-
-            if FNotasFiscais.Count > 0 then
-              FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NomeArq;
-          end;
-
-          FRetListaNFSe := Copy(FRetListaNFSe, j + 11 + p, length(FRetListaNFSe));
-
-          FNotasFiscais.Items[ii].XMLNFSe := FRetNFSe;
-
-          break;
         end;
-      end;
 
-      FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
+        FRetListaNfse := Copy(FRetListaNfse, j + 11 + p, length(FRetListaNfse));
+      end;
     end
     else
       FRetListaNFSe:='';
@@ -2676,8 +2676,6 @@ begin
              'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
 
   Result := (FProtocolo <> '');
-
-*)
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
@@ -2885,12 +2883,6 @@ end;
 function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
 begin
 (*
-  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(Numero + Serie + '-comp-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
-
-  if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(Numero + Serie + '-comp-nfse.xml', FRetWS, FConfiguracoes.Arquivos.GetPathGer);
-
   NFSeRetorno := TretNfseRps.Create;
 
   Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
@@ -3292,14 +3284,6 @@ end;
 function TNFSeConsultarNfse.TratarResposta: Boolean;
 begin
 (*
-  if FConfiguracoes.WebServices.Salvar
-   then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
-                                  FormatDateTime('yyyymmdd', DataFinal) + '-lista-nfse-soap.xml', FRetornoWS, FConfiguracoes.Arquivos.GetPathGer);
-
-  if FConfiguracoes.Geral.Salvar
-   then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmdd', DataInicial) +
-                                  FormatDateTime('yyyymmdd', DataFinal) + '-lista-nfse.xml', NotaUtil.RetirarPrefixos(FRetWS), FConfiguracoes.Arquivos.GetPathGer);
-
   NFSeRetorno := TretNfse.Create;
 
   Prefixo3 := FConfiguracoes.WebServices.Prefixo3;
@@ -4179,8 +4163,6 @@ function TNFSeLinkNFSe.GerarPrefixoArquivo: String;
 begin
   Result := '';
 end;
-
-// =============================================================================
 
 { TNFSeEnvioWebService }
 

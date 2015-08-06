@@ -163,20 +163,17 @@ type
     FRetirarAcentos: Boolean;
     FIdCSC: String;
     FCSC: String;
-    FUnloadSSLLib: Boolean;
     FValidarDigest: Boolean;
 
     procedure SetSSLLib(AValue: TSSLLib);
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetFormatoAlerta: String;
-    procedure SetUnloadSSLLib(AValue: Boolean);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
-    property UnloadSSLLib: Boolean read FUnloadSSLLib write SetUnloadSSLLib default True;
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
       write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: integer read FFormaEmissaoCodigo;
@@ -365,7 +362,6 @@ begin
   {$ELSE}
   FSSLLib := libCapicom;
   {$ENDIF}
-  FUnloadSSLLib := True;
   FFormaEmissao := teNormal;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
   FSalvar := False;
@@ -393,7 +389,6 @@ begin
   RetirarAcentos   := DeGeralConf.RetirarAcentos;
   IdCSC            := DeGeralConf.IdCSC;
   CSC              := DeGeralConf.CSC;
-  UnloadSSLLib     := DeGeralConf.UnloadSSLLib;
   ValidarDigest    := DeGeralConf.ValidarDigest;
 end;
 
@@ -406,13 +401,6 @@ begin
     Result := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
   else
     Result := FFormatoAlerta;
-end;
-
-procedure TGeralConf.SetUnloadSSLLib(AValue: Boolean);
-begin
-  if FUnloadSSLLib = AValue then Exit;
-  FUnloadSSLLib := AValue;
-  TACBrDFe(FConfiguracoes.Owner).SSL.UnloadSSLLib := AValue;
 end;
 
 procedure TGeralConf.SetFormaEmissao(AValue: TpcnTipoEmissao);

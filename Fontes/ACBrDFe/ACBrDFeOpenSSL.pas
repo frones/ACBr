@@ -64,8 +64,6 @@ type
     procedure ConfiguraHTTP(const URL, SoapAction: String);
     function LerPFXInfo(pfxdata: Ansistring): Boolean;
 
-    procedure InitXmlSec;
-    procedure ShutDownXmlSec;
     function XmlSecSign(const Axml: PAnsiChar): AnsiString;
     procedure CreateCtx;
     procedure DestroyCtx;
@@ -82,9 +80,6 @@ type
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    procedure Inicializar; override;
-    procedure DesInicializar; override;
-
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
       override;
     function Enviar(const ConteudoXML: String; const URL: String;
@@ -98,12 +93,70 @@ type
     procedure DescarregarCertificado; override;
   end;
 
+procedure InitXmlSec;
+procedure ShutDownXmlSec;
+
 implementation
 
 uses Math, strutils, dateutils,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   synautil,
   {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
+
+procedure InitXmlSec;
+begin
+  { Init libxml and libxslt libraries }
+  xmlInitThreads();
+  xmlInitParser();
+  __xmlLoadExtDtdDefaultValue^ := XML_DETECT_IDS or XML_COMPLETE_ATTRS;
+  xmlSubstituteEntitiesDefault(1);
+  __xmlIndentTreeOutput^ := 1;
+
+  { Init xmlsec library }
+  if (xmlSecInit() < 0) then
+    raise EACBrDFeException.Create('Error: xmlsec initialization failed.');
+
+  { Check loaded library version }
+  if (xmlSecCheckVersionExt(1, 2, 18, xmlSecCheckVersionABICompatible) <> 1) then
+    raise EACBrDFeException.Create(
+      'Error: loaded xmlsec library version is not compatible.');
+
+  (* Load default crypto engine if we are supporting dynamic
+   * loading for xmlsec-crypto libraries. Use the crypto library
+   * name ("openssl", "nss", etc.) to load corresponding
+   * xmlsec-crypto library.
+   *)
+  if (xmlSecCryptoDLLoadLibrary('openssl') < 0) then
+    raise EACBrDFeException.Create(
+      'Error: unable to load default xmlsec-crypto library. Make sure'#10 +
+      'that you have it installed and check shared libraries path'#10 +
+      '(LD_LIBRARY_PATH) environment variable.');
+
+  { Init crypto library }
+  if (xmlSecCryptoAppInit(nil) < 0) then
+    raise EACBrDFeException.Create('Error: crypto initialization failed.');
+
+  { Init xmlsec-crypto library }
+  if (xmlSecCryptoInit() < 0) then
+    raise EACBrDFeException.Create('Error: xmlsec-crypto initialization failed.');
+end;
+
+procedure ShutDownXmlSec;
+begin
+  { Shutdown xmlsec-crypto library }
+  xmlSecCryptoShutdown();
+
+  { Shutdown crypto library }
+  xmlSecCryptoAppShutdown();
+
+  { Shutdown xmlsec library }
+  xmlSecShutdown();
+
+  { Shutdown libxslt/libxml }
+  xsltCleanupGlobals();
+  xmlCleanupParser();
+end;
+
 
 { TDFeOpenSSL }
 
@@ -118,31 +171,10 @@ end;
 
 destructor TDFeOpenSSL.Destroy;
 begin
-  DesInicializar;
+  DescarregarCertificado;
   FHTTP.Free;
 
   inherited Destroy;
-end;
-
-procedure TDFeOpenSSL.Inicializar;
-begin
-  if FpInicializado then exit;
-
-  InitXmlSec;
-  Clear;
-  FpInicializado := True;
-end;
-
-procedure TDFeOpenSSL.DesInicializar;
-begin
-  if not FpInicializado then exit;
-
-  DescarregarCertificado;
-
-  if FpInicializado and FpDFeSSL.UnloadSSLLib then
-    ShutDownXmlSec;
-
-  FpInicializado := False;
 end;
 
 function TDFeOpenSSL.Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -206,7 +238,8 @@ begin
   WriteStrToStream(FHTTP.Document, AnsiString(ConteudoXML)) ;
 
   // DEBUG //
-  //FHTTP.Document.SaveToFile( 'c:\temp\HttpSend.xml' );
+  //FHTTP.Document.SaveToFile( 'c:\temp\HttpSendDocument.xml' );
+  //FHTTP.Headers.SaveToFile( 'c:\temp\HttpSendHeader.xml' );
 
   // Transmitindo //
   OK := FHTTP.HTTPMethod('POST', URL);
@@ -463,7 +496,7 @@ begin
   with FpDFeSSL do
   begin
     if EstaVazio(DadosPFX) then
-      CarregarCertificado;
+      Self.CarregarCertificado;
 
     { create signature context }
     FdsigCtx := xmlSecDSigCtxCreate(nil);
@@ -538,12 +571,15 @@ begin
 
     LerPFXInfo(DadosPFX);
   end;
+
+  FpCertificadoLido := True;
 end;
 
 procedure TDFeOpenSSL.DescarregarCertificado;
 begin
   DestroyCtx;
   Clear;
+  FpCertificadoLido := False;
 end;
 
 function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
@@ -766,60 +802,6 @@ begin
   FHTTP.Sock.SSL.KeyPassword := '';
 end;
 
-procedure TDFeOpenSSL.InitXmlSec;
-begin
-  { Init libxml and libxslt libraries }
-  xmlInitThreads();
-  xmlInitParser();
-  __xmlLoadExtDtdDefaultValue^ := XML_DETECT_IDS or XML_COMPLETE_ATTRS;
-  xmlSubstituteEntitiesDefault(1);
-  __xmlIndentTreeOutput^ := 1;
-
-  { Init xmlsec library }
-  if (xmlSecInit() < 0) then
-    raise EACBrDFeException.Create('Error: xmlsec initialization failed.');
-
-  { Check loaded library version }
-  if (xmlSecCheckVersionExt(1, 2, 18, xmlSecCheckVersionABICompatible) <> 1) then
-    raise EACBrDFeException.Create(
-      'Error: loaded xmlsec library version is not compatible.');
-
-  (* Load default crypto engine if we are supporting dynamic
-   * loading for xmlsec-crypto libraries. Use the crypto library
-   * name ("openssl", "nss", etc.) to load corresponding
-   * xmlsec-crypto library.
-   *)
-  if (xmlSecCryptoDLLoadLibrary('openssl') < 0) then
-    raise EACBrDFeException.Create(
-      'Error: unable to load default xmlsec-crypto library. Make sure'#10 +
-      'that you have it installed and check shared libraries path'#10 +
-      '(LD_LIBRARY_PATH) environment variable.');
-
-  { Init crypto library }
-  if (xmlSecCryptoAppInit(nil) < 0) then
-    raise EACBrDFeException.Create('Error: crypto initialization failed.');
-
-  { Init xmlsec-crypto library }
-  if (xmlSecCryptoInit() < 0) then
-    raise EACBrDFeException.Create('Error: xmlsec-crypto initialization failed.');
-end;
-
-procedure TDFeOpenSSL.ShutDownXmlSec;
-begin
-  { Shutdown xmlsec-crypto library }
-  xmlSecCryptoShutdown();
-
-  { Shutdown crypto library }
-  xmlSecCryptoAppShutdown();
-
-  { Shutdown xmlsec library }
-  xmlSecShutdown();
-
-  { Shutdown libxslt/libxml }
-  xsltCleanupGlobals();
-  xmlCleanupParser();
-end;
-
 procedure TDFeOpenSSL.ConfiguraHTTP(const URL, SoapAction: String);
 begin
   FHTTP.Clear;
@@ -844,5 +826,11 @@ begin
   FHTTP.AddPortNumberToHost := False;
   FHTTP.Headers.Add(SoapAction);
 end;
+
+initialization
+  InitXmlSec;
+
+finalization;
+  ShutDownXmlSec;
 
 end.

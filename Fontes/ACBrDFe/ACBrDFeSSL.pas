@@ -51,7 +51,7 @@ type
   private
   protected
     FpDFeSSL: TDFeSSL;
-    FpInicializado: Boolean;
+    FpCertificadoLido: Boolean;
 
     function GetCertDataVenc: TDateTime; virtual;
     function GetCertNumeroSerie: String; virtual;
@@ -65,11 +65,6 @@ type
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
 
-    property Inicializado: Boolean read FpInicializado;
-
-    procedure Inicializar; virtual;
-    procedure DesInicializar; virtual;
-
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
       virtual;
     function Enviar(const ConteudoXML: String; const URL: String;
@@ -82,6 +77,8 @@ type
     procedure CarregarCertificado; virtual;
     procedure DescarregarCertificado; virtual;
     function SelecionarCertificado: String; virtual;
+
+    property CertificadoLido: Boolean read FpCertificadoLido;
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
     property CertDataVenc: TDateTime read GetCertDataVenc;
@@ -112,35 +109,27 @@ type
     FSSLClass: TDFeSSLClass;
     FSSLLib: TSSLLib;
     FTimeOut: Integer;
-    FUnloadSSLLib: Boolean;
-    FCertificadoLido: Boolean;
 
     function GetCertCNPJ: String;
     function GetCertDataVenc: TDateTime;
+    function GetCertificadoLido: Boolean;
     function GetCertNumeroSerie: String;
     function GetCertSubjectName: String;
     function GetHTTPResultCode: Integer;
-    function GetInicializado: Boolean;
     function GetInternalErrorCode: Integer;
     function GetSenha: AnsiString;
 
-    procedure InitSSLClass(LerCertificado: Boolean = True);
-    procedure DeInitSSLClass;
     procedure SetArquivoPFX(AValue: String);
     procedure SetDadosPFX(AValue: AnsiString);
     procedure SetNumeroSerie(AValue: String);
     procedure SetSenha(AValue: AnsiString);
 
     procedure SetSSLLib(ASSLLib: TSSLLib);
+
   public
     constructor Create;
     procedure Clear;
     destructor Destroy; override;
-
-    property Inicializado: Boolean read GetInicializado;
-
-    procedure Inicializar; virtual;
-    procedure DesInicializar; virtual;
 
     // Nota: ConteudoXML, DEVE estar em UTF8 //
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -158,6 +147,8 @@ type
     procedure DescarregarCertificado;
     function SelecionarCertificado: String;
 
+    property CertificadoLido: Boolean read GetCertificadoLido;
+
     property CertNumeroSerie: String read GetCertNumeroSerie;
     property CertDataVenc: TDateTime read GetCertDataVenc;
     property CertSubjectName: String read GetCertSubjectName;
@@ -170,7 +161,6 @@ type
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
     property SSLClass: TDFeSSLClass read FSSLClass;
 
-    property UnloadSSLLib: Boolean read FUnloadSSLLib write FUnloadSSLLib default True;
     property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
     property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
     property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
@@ -215,8 +205,6 @@ begin
   FSSLLib      := libNone;
   FTimeOut     := 5000;
   FNameSpaceURI:= '';
-  FUnloadSSLLib:= True;
-  FCertificadoLido := False;
 
   if Assigned(FSSLClass) then
     FSSLClass.Free;
@@ -228,21 +216,11 @@ destructor TDFeSSL.Destroy;
 begin
   if Assigned(FSSLClass) then
   begin
-    DeInitSSLClass;
+    DescarregarCertificado;
     FreeAndNil(FSSLClass);
   end;
 
   inherited Destroy;
-end;
-
-procedure TDFeSSL.Inicializar;
-begin
-  InitSSLClass();
-end;
-
-procedure TDFeSSL.DesInicializar;
-begin
-  DeInitSSLClass;
 end;
 
 function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -251,8 +229,6 @@ Var
   I: integer;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
-  InitSSLClass;
-
   // Lendo Header antes de assinar //
   xmlHeaderAntes := '';
   I := pos('?>', ConteudoXML);
@@ -285,15 +261,12 @@ function TDFeSSL.Enviar(var ConteudoXML: String; const URL: String;
   const SoapAction: String): String;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
-  InitSSLClass;
   Result := FSSLClass.Enviar(ConteudoXML, URL, SoapAction);
 end;
 
 function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
   out MsgErro: String): Boolean;
 begin
-  InitSSLClass;
-
   // ArqSchema deve vir com o Path Completo
   if not FileExists(ArqSchema) then
     raise EACBrDFeException.Create('Arquivo ' + sLineBreak + ArqSchema +
@@ -305,26 +278,21 @@ end;
 function TDFeSSL.VerificarAssinatura(const ConteudoXML: String;
   out MsgErro: String): Boolean;
 begin
-  InitSSLClass;
   Result := FSSLClass.VerificarAssinatura(ConteudoXML, MsgErro);
 end;
 
 procedure TDFeSSL.CarregarCertificado;
 begin
-  InitSSLClass( True );
+  FSSLClass.CarregarCertificado;
 end;
 
 procedure TDFeSSL.DescarregarCertificado;
 begin
-  if FSSLClass.Inicializado then
-    FSSLClass.DescarregarCertificado;
-
-  FCertificadoLido := False;
+  FSSLClass.DescarregarCertificado;
 end;
 
 function TDFeSSL.SelecionarCertificado: String;
 begin
-  InitSSLClass(False);
   Result := FSSLClass.SelecionarCertificado;
 
   if NaoEstaVazio(Result) then
@@ -333,36 +301,32 @@ end;
 
 function TDFeSSL.GetCertDataVenc: TDateTime;
 begin
-  InitSSLClass;
   Result := FSSLClass.CertDataVenc;
+end;
+
+function TDFeSSL.GetCertificadoLido: Boolean;
+begin
+  Result := FSSLClass.CertificadoLido;
 end;
 
 function TDFeSSL.GetCertCNPJ: String;
 begin
-  InitSSLClass;
   Result := FSSLClass.CertCNPJ;
 end;
 
 function TDFeSSL.GetCertNumeroSerie: String;
 begin
-  InitSSLClass;
   Result := FSSLClass.CertNumeroSerie;
 end;
 
 function TDFeSSL.GetCertSubjectName: String;
 begin
-  InitSSLClass;
   Result := FSSLClass.CertSubjectName;
 end;
 
 function TDFeSSL.GetHTTPResultCode: Integer;
 begin
   Result := FSSLClass.HTTPResultCode;
-end;
-
-function TDFeSSL.GetInicializado: Boolean;
-begin
-  Result := FSSLClass.Inicializado;
 end;
 
 function TDFeSSL.GetInternalErrorCode: Integer;
@@ -373,24 +337,6 @@ end;
 function TDFeSSL.GetSenha: AnsiString;
 begin
   Result := StrCrypt(FSenha, FK)  // Descritografa a Senha
-end;
-
-procedure TDFeSSL.InitSSLClass(LerCertificado: Boolean);
-begin
-  if not FSSLClass.Inicializado then
-    FSSLClass.Inicializar;
-
-  if LerCertificado and (not FCertificadoLido) then
-  begin
-    FSSLClass.CarregarCertificado;
-    FCertificadoLido := True;
-  end;
-end;
-
-procedure TDFeSSL.DeInitSSLClass;
-begin
-  DescarregarCertificado;
-  FSSLClass.DesInicializar;
 end;
 
 procedure TDFeSSL.SetArquivoPFX(AValue: String);
@@ -462,23 +408,7 @@ end;
 constructor TDFeSSLClass.Create(ADFeSSL: TDFeSSL);
 begin
   FpDFeSSL := ADFeSSL;
-  FpInicializado := False;
-end;
-
-procedure TDFeSSLClass.Inicializar;
-begin
-  if FpInicializado then exit ;
-
-  CarregarCertificado;
-  FpInicializado := True;
-end;
-
-procedure TDFeSSLClass.DesInicializar;
-begin
-  if not FpInicializado then exit;
-
-  DescarregarCertificado;
-  FpInicializado := False;
+  FpCertificadoLido := False;
 end;
 
 function TDFeSSLClass.Assinar(const ConteudoXML, docElement, infElement: String): String;
@@ -585,3 +515,4 @@ begin
 end;
 
 end.
+

@@ -147,121 +147,124 @@ begin
   XMLNFe      := TStringList.Create;
   XMLinfProt  := TStringList.Create;
   XMLinfProt2 := TStringList.Create;
-  xProtNFe    := '';
+  try
+    xProtNFe    := '';
 
-  // Arquivo NFe
-  if not FileExists(FPathNFe) then
-    Gerador.wAlerta('XR04', 'NFE', 'NFE', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-  else
-    XMLNFE.LoadFromFile(FPathNFe);
-
-  FchNFe := RetornarConteudoEntre(XMLNFE.Text, 'Id="NFe', '"');
-
-  if trim(FchNFe) = '' then
-    Gerador.wAlerta('XR01', 'ID/NFE', 'Numero da chave da NFe', ERR_MSG_VAZIO);
-
-  if (FPathRetConsReciNFe = '') and (FPathRetConsSitNFe = '') then
-   begin
-    if (FchNFe = '') and (FnProt = '') then
-       Gerador.wAlerta('XR06', 'RECIBO/SITUAÇÃO', 'RECIBO/SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+    // Arquivo NFe
+    if not FileExists(FPathNFe) then
+      Gerador.wAlerta('XR04', 'NFE', 'NFE', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
     else
-       ProtLido := True;
-   end;
+      XMLNFE.LoadFromFile(FPathNFe);
 
-  // Gerar arquivo pelo Recibo da NFe                                       //
-  if (FPathRetConsReciNFe <> '') and (FPathRetConsSitNFe = '') and (not ProtLido) then
-  begin
-    if not FileExists(FPathRetConsReciNFe) then
-      Gerador.wAlerta('XR06', 'PROTOCOLO', 'PROTOCOLO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-    else
-    begin
-      I := 0;
-      LocLeitor := TLeitor.Create;
-      LocLeitor.CarregarArquivo(FPathRetConsReciNFe);
-      while LocLeitor.rExtrai(1, 'protNFe', '', i + 1) <> '' do
-       begin
-         if LocLeitor.rCampo(tcStr, 'chNFe') = FchNFe then
-           FnProt := LocLeitor.rCampo(tcStr, 'nProt');
-         if trim(FnProt) = '' then
-           Gerador.wAlerta('XR01', 'PROTOCOLO/NFe', 'Numero do protocolo', ERR_MSG_VAZIO)
-         else
-          begin
-           xProtNFe := LocLeitor.rExtrai(1, 'protNFe', '', i + 1); // +'</protNFe>';
-           Gerador.ListaDeAlertas.Clear;
-           break;
-          end;
-          I := I + 1;
-       end;
-       LocLeitor.Free;
-    end;
-  end;
+    FchNFe := RetornarConteudoEntre(XMLNFE.Text, 'Id="NFe', '"');
 
-  // Gerar arquivo pelo arquivo de consulta da situação da NFe              //
-  if (FPathRetConsReciNFe = '') and (FPathRetConsSitNFe <> '') and (not ProtLido) then
-  begin
-    if not FileExists(FPathRetConsSitNFe) then
-      Gerador.wAlerta('XR06', 'SITUAÇÃO', 'SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-    else
-    begin
-      XMLinfProt.LoadFromFile(FPathRetConsSitNFe);
+    if trim(FchNFe) = '' then
+      Gerador.wAlerta('XR01', 'ID/NFE', 'Numero da chave da NFe', ERR_MSG_VAZIO);
 
-      wCstat := RetornarConteudoEntre(XMLinfProt.text, '<cStat>', '</cStat>');
-      
-      if ((trim(wCstat) = '101') or
-          (trim(wCstat) = '151') or
-          (trim(wCstat) = '155')) then //esta cancelada
-         XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>')
+    if (FPathRetConsReciNFe = '') and (FPathRetConsSitNFe = '') then
+     begin
+      if (FchNFe = '') and (FnProt = '') then
+         Gerador.wAlerta('XR06', 'RECIBO/SITUAÇÃO', 'RECIBO/SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
       else
-         XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
+         ProtLido := True;
+     end;
 
-      nProtLoc := RetornarConteudoEntre(XMLinfProt2.text, '<nProt>', '</nProt>');
-
-      xProtNFe := '<protNFe versao="' + Versao + '">' +
-                   '<infProt Id="ID'+ nProtLoc +'">'+
-                    PreencherTAG('tpAmb', XMLinfProt.text) +
-                    PreencherTAG('verAplic', XMLinfProt.text) +
-                    PreencherTAG('chNFe', XMLinfProt.text) +
-                    PreencherTAG('dhRecbto', XMLinfProt2.text) +
-                    PreencherTAG('nProt', XMLinfProt2.text) +
-                    PreencherTAG('digVal', XMLinfProt.text) +
-                    PreencherTAG('cStat', XMLinfProt.text) +
-                    PreencherTAG('xMotivo', XMLinfProt.text) +
-                   '</infProt>' +
-                  '</protNFe>';
+    // Gerar arquivo pelo Recibo da NFe                                       //
+    if (FPathRetConsReciNFe <> '') and (FPathRetConsSitNFe = '') and (not ProtLido) then
+    begin
+      if not FileExists(FPathRetConsReciNFe) then
+        Gerador.wAlerta('XR06', 'PROTOCOLO', 'PROTOCOLO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+      else
+      begin
+        I := 0;
+        LocLeitor := TLeitor.Create;
+        LocLeitor.CarregarArquivo(FPathRetConsReciNFe);
+        while LocLeitor.rExtrai(1, 'protNFe', '', i + 1) <> '' do
+         begin
+           if LocLeitor.rCampo(tcStr, 'chNFe') = FchNFe then
+             FnProt := LocLeitor.rCampo(tcStr, 'nProt');
+           if trim(FnProt) = '' then
+             Gerador.wAlerta('XR01', 'PROTOCOLO/NFe', 'Numero do protocolo', ERR_MSG_VAZIO)
+           else
+            begin
+             xProtNFe := LocLeitor.rExtrai(1, 'protNFe', '', i + 1); // +'</protNFe>';
+             Gerador.ListaDeAlertas.Clear;
+             break;
+            end;
+            I := I + 1;
+         end;
+         LocLeitor.Free;
       end;
     end;
 
-  if ProtLido then
-   begin
-      xProtNFe := '<protNFe versao="' + Versao + '">' +
-                   '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
-                    '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
-                    '<verAplic>' + FverAplic + '</verAplic>' +
-                    '<chNFe>' + FchNFe + '</chNFe>' +
-                    //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
-					'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(copy(FverAplic,1,2),FdhRecbto),'')+'</dhRecbto>'+
-                    '<nProt>' + FnProt + '</nProt>' +
-                    '<digVal>' + FdigVal + '</digVal>' +
-                    '<cStat>' + IntToStr(FcStat) + '</cStat>' +
-                    '<xMotivo>' + FxMotivo + '</xMotivo>' +
-                   '</infProt>' +
-                  '</protNFe>';
-   end;
+    // Gerar arquivo pelo arquivo de consulta da situação da NFe              //
+    if (FPathRetConsReciNFe = '') and (FPathRetConsSitNFe <> '') and (not ProtLido) then
+    begin
+      if not FileExists(FPathRetConsSitNFe) then
+        Gerador.wAlerta('XR06', 'SITUAÇÃO', 'SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+      else
+      begin
+        XMLinfProt.LoadFromFile(FPathRetConsSitNFe);
 
-  // Gerar arquivo
-  if Gerador.ListaDeAlertas.Count = 0 then
-  begin
-    Gerador.ArquivoFormatoXML := '';
-    Gerador.wGrupo(ENCODING_UTF8, '', False);
-    Gerador.wGrupo('nfeProc versao="' + Versao + '" ' + NAME_SPACE, '');
-    Gerador.wTexto('<NFe xmlns' + RetornarConteudoEntre(XMLNFE.Text, '<NFe xmlns', '</NFe>') + '</NFe>');
-    Gerador.wTexto(xProtNFe);
-    Gerador.wGrupo('/nfeProc');
+        wCstat := RetornarConteudoEntre(XMLinfProt.text, '<cStat>', '</cStat>');
+
+        if ((trim(wCstat) = '101') or
+            (trim(wCstat) = '151') or
+            (trim(wCstat) = '155')) then //esta cancelada
+           XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>')
+        else
+           XMLinfProt2.Text := RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
+
+        nProtLoc := RetornarConteudoEntre(XMLinfProt2.text, '<nProt>', '</nProt>');
+
+        xProtNFe := '<protNFe versao="' + Versao + '">' +
+                     '<infProt Id="ID'+ nProtLoc +'">'+
+                      PreencherTAG('tpAmb', XMLinfProt.text) +
+                      PreencherTAG('verAplic', XMLinfProt.text) +
+                      PreencherTAG('chNFe', XMLinfProt.text) +
+                      PreencherTAG('dhRecbto', XMLinfProt2.text) +
+                      PreencherTAG('nProt', XMLinfProt2.text) +
+                      PreencherTAG('digVal', XMLinfProt.text) +
+                      PreencherTAG('cStat', XMLinfProt.text) +
+                      PreencherTAG('xMotivo', XMLinfProt.text) +
+                     '</infProt>' +
+                    '</protNFe>';
+        end;
+      end;
+
+    if ProtLido then
+     begin
+        xProtNFe := '<protNFe versao="' + Versao + '">' +
+                     '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
+                      '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
+                      '<verAplic>' + FverAplic + '</verAplic>' +
+                      '<chNFe>' + FchNFe + '</chNFe>' +
+                      //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
+					  '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(copy(FverAplic,1,2),FdhRecbto),'')+'</dhRecbto>'+
+                      '<nProt>' + FnProt + '</nProt>' +
+                      '<digVal>' + FdigVal + '</digVal>' +
+                      '<cStat>' + IntToStr(FcStat) + '</cStat>' +
+                      '<xMotivo>' + FxMotivo + '</xMotivo>' +
+                     '</infProt>' +
+                    '</protNFe>';
+     end;
+
+    // Gerar arquivo
+    if Gerador.ListaDeAlertas.Count = 0 then
+    begin
+      Gerador.ArquivoFormatoXML := '';
+      Gerador.wGrupo(ENCODING_UTF8, '', False);
+      Gerador.wGrupo('nfeProc versao="' + Versao + '" ' + NAME_SPACE, '');
+      Gerador.wTexto('<NFe xmlns' + RetornarConteudoEntre(XMLNFE.Text, '<NFe xmlns', '</NFe>') + '</NFe>');
+      Gerador.wTexto(xProtNFe);
+      Gerador.wGrupo('/nfeProc');
+    end;
+
+  finally
+    XMLNFE.Free;
+    XMLinfProt.Free;
+    XMLinfProt2.Free;
   end;
-
-  XMLNFE.Free;
-  XMLinfProt.Free;
-  XMLinfProt2.Free;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

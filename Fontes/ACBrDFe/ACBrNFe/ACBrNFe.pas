@@ -495,7 +495,7 @@ begin
 
   Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, AUF, {Configuracoes.WebServices.UF,}
+  LerServicoDeParams(GetNomeModeloDFe, AUF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
     Versao, URL);
 end;

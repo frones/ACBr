@@ -80,9 +80,6 @@ type
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    procedure Inicializar; override;
-    procedure DesInicializar; override;
-
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
       override;
     function Enviar(const ConteudoXML: String; const URL: String;
@@ -123,29 +120,9 @@ end;
 destructor TDFeCapicom.Destroy;
 begin
   FReqResp.Free;
-  DesInicializar;
+  DescarregarCertificado;
 
   inherited Destroy;
-end;
-
-procedure TDFeCapicom.Inicializar;
-begin
-  if FpInicializado then
-    exit;
-
-  CoInitialize(nil); // PERMITE O USO DE THREAD
-  FpInicializado := True;
-  Clear;
-end;
-
-procedure TDFeCapicom.DesInicializar;
-begin
-  if FpInicializado {and Configuracoes.Geral.UnloadSSLLib} then
-  begin
-    DescarregarCertificado;
-    CoUninitialize;
-    FpInicializado := False;
-  end;
 end;
 
 function TDFeCapicom.SelecionarCertificado: String;
@@ -176,6 +153,7 @@ end;
 procedure TDFeCapicom.DescarregarCertificado;
 begin
   Clear;
+  FpCertificadoLido := False;
 end;
 
 procedure TDFeCapicom.CarregarCertificadoSeNecessario;
@@ -227,11 +205,12 @@ begin
           'Número de Série do Certificado Digital não especificado !');
     end;
 
-    Self.Inicializar;
-
     // Certificado já foi carregado ??
     if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then
+    begin
+      FpCertificadoLido := True;
       exit;
+    end;
 
     // Lendo lista de Certificados //
     Store := CoStore.Create;
@@ -328,6 +307,8 @@ begin
     end;
     Extension := nil;
   end;
+
+  FpCertificadoLido := True;
 end;
 
 function TDFeCapicom.GetCertDataVenc: TDateTime;
@@ -602,5 +583,11 @@ begin
   else
     FReqResp.MimeType := 'text/xml';
 end;
+
+initialization
+  CoInitialize(nil); // PERMITE O USO DE THREAD
+
+finalization
+ CoUninitialize;
 
 end.

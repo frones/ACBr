@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+06/08/2015   (por: DSA)
+-- ACBrDFe, ACBrDFeConfiguracoes --
+[*] Remoção da propriedade "UnloadSSLLib"
+
+-- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL --
+[*] Remoção da propriedade "Inicializado, UnloadSSLLib"
+[*] Remoção dos métodos: "Inicializar, DesInicializar".
+    A Inicialização agora é feita em initialization e finalization da Unit,
+    para evitar problemas relacionados a Init e Shutdown das DLLs de SSL a cada
+    Create e Destroy de TACBrDFeSSL, além de obter melhor desempenho.
+
 05/08/2015
 [*] Ao Ler as URLs não estava levando em consideração a SVC.
     por: Italo Jurisato Junior

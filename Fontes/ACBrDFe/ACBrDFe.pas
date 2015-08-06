@@ -158,7 +158,6 @@ begin
     ProxyUser := Configuracoes.WebServices.ProxyUser;
     TimeOut := Configuracoes.WebServices.TimeOut;
     SSLLib := Configuracoes.Geral.SSLLib;
-    UnloadSSLLib := Configuracoes.Geral.UnloadSSLLib;
   end;
 
   FOnGerarLog := nil;

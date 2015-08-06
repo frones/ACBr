@@ -48,29 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
-06/08/2015   (por: DSA)
--- ACBrDFe, ACBrDFeConfiguracoes --
-[*] Remoção da propriedade "UnloadSSLLib"
-
--- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL --
-[*] Remoção da propriedade "Inicializado, UnloadSSLLib"
-[*] Remoção dos métodos: "Inicializar, DesInicializar".
-    A Inicialização agora é feita em initialization e finalization da Unit,
-    para evitar problemas relacionados a Init e Shutdown das DLLs de SSL a cada
-    Create e Destroy de TACBrDFeSSL, além de obter melhor desempenho.
-
 05/08/2015
 [*] Ao Ler as URLs não estava levando em consideração a SVC.
     por: Italo Jurisato Junior
-
-04/08/2015
--- ACBrDFeOpenSSL --     (por: DSA)
-[-] Correção para detectação de CNPJ, para Certificados que não tem o CNPJ no
-    Subjectname. Implementado método para detectar o CNPJ através das Extensões
-    do Certificado
-
--- OpenSSLExt --
-[*] Efetuado merge com Openssl.pas de FPC
 
 03/08/2015
 [*] Implementado as alterações e adição das novas TAGs conforme NT 2015/002.
@@ -78,8 +58,6 @@ Símbolo : Significado
     Essas linhas devem ser descomentas somente em Outubro para testes e 
     Novembro para o envio em ambiente de produção. 
     por: Italo Jurisato Junior
--- ACBrDFeCapicom --     (por: DSA)
-[-] Correção para exibição de erro de TDFeCapicom.Executar com acentos
 
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --    (por: DSA)
 [-] Correção para correta exibição de caracteres acentuados

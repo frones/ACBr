@@ -96,6 +96,9 @@ type
 procedure InitXmlSec;
 procedure ShutDownXmlSec;
 
+var
+  XMLSecLoaded: boolean;
+
 implementation
 
 uses Math, strutils, dateutils,
@@ -105,6 +108,8 @@ uses Math, strutils, dateutils,
 
 procedure InitXmlSec;
 begin
+  if XMLSecLoaded then exit;
+
   { Init libxml and libxslt libraries }
   xmlInitThreads();
   xmlInitParser();
@@ -139,6 +144,8 @@ begin
   { Init xmlsec-crypto library }
   if (xmlSecCryptoInit() < 0) then
     raise EACBrDFeException.Create('Error: xmlsec-crypto initialization failed.');
+
+  XMLSecLoaded := True;
 end;
 
 procedure ShutDownXmlSec;
@@ -155,6 +162,8 @@ begin
   { Shutdown libxslt/libxml }
   xsltCleanupGlobals();
   xmlCleanupParser();
+
+  XMLSecLoaded := False;
 end;
 
 
@@ -267,6 +276,8 @@ var
   valid_ctxt: xmlSchemaValidCtxtPtr;
   schemError: xmlErrorPtr;
 begin
+  InitXmlSec;
+
   Result := False;
   doc := Nil;
   schema_doc := Nil;
@@ -352,6 +363,8 @@ var
   Publico: String;
   MS: TMemoryStream;
 begin
+  InitXmlSec;
+
   Result := False;
   Publico := copy(ConteudoXML, pos('<X509Certificate>', ConteudoXML) + 17,
                   pos('</X509Certificate>', ConteudoXML) -
@@ -446,6 +459,8 @@ var
   buffer: PAnsiChar;
   bufSize: integer;
 begin
+  InitXmlSec;
+
   doc := Nil;
   Result := '';
 
@@ -490,6 +505,7 @@ procedure TDFeOpenSSL.CreateCtx;
 var
   MS: TMemoryStream;
 begin
+  InitXmlSec;
   // Se FdsigCtx já existia, destrua e crie um novo //
   DestroyCtx;
 
@@ -523,6 +539,7 @@ procedure TDFeOpenSSL.DestroyCtx;
 begin
   if (FdsigCtx <> nil) then
   begin
+    InitXmlSec;
     xmlSecDSigCtxDestroy(FdsigCtx);
     FdsigCtx := nil;
   end;
@@ -828,7 +845,7 @@ begin
 end;
 
 initialization
-  InitXmlSec;
+  XMLSecLoaded := False;
 
 finalization;
   ShutDownXmlSec;

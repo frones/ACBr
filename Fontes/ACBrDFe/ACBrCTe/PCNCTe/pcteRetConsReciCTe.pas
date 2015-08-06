@@ -112,16 +112,18 @@ type
     FdigVal: String;
     FcStat: Integer;
     FxMotivo: String;
+    FXMLprotCTe: String;
   published
-    property Id: String              read FId       write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property chCTe: String           read FchCTe    write FchCTe;
-    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: String           read FnProt    write FnProt;
-    property digVal: String          read FdigVal   write FdigVal;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property Id: String              read FId         write FId;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property verAplic: String        read FverAplic   write FverAplic;
+    property chCTe: String           read FchCTe      write FchCTe;
+    property dhRecbto: TDateTime     read FdhRecbto   write FdhRecbto;
+    property nProt: String           read FnProt      write FnProt;
+    property digVal: String          read FdigVal     write FdigVal;
+    property cStat: Integer          read FcStat      write FcStat;
+    property xMotivo: String         read FxMotivo    write FxMotivo;
+    property XMLprotCTe: String      read FXMLprotCTe write FXMLprotCTe;
   end;
 
 implementation
@@ -194,6 +196,8 @@ begin
       begin
         ProtCTe.Add;
 
+                ProtCTe[i].XMLprotCTe := Leitor.Grupo;
+
         (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id='); 
         (*PR05*)ProtCTe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         (*PR06*)ProtCTe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
@@ -203,7 +207,7 @@ begin
         (*PR10*)ProtCTe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
         (*PR11*)ProtCTe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
         (*PR12*)ProtCTe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-        
+
         inc(i);
       end;
       

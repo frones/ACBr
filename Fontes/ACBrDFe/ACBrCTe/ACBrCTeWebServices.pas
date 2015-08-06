@@ -876,7 +876,7 @@ var
   I, J: integer;
   AProcCTe: TProcCTe;
   AInfProt: TProtCTeCollection;
-  NomeXML: String;
+  XML_procCTe, NomeXML: String;
   SalvarXML: Boolean;
 begin
   Result := False;
@@ -914,9 +914,30 @@ begin
         FConhecimentos.Items[J].CTe.procCTe.xMotivo := AInfProt.Items[I].xMotivo;
 
         NomeXML := '-cte.xml';
+        XML_procCTe := '';
+
         if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
           NomeXML := '-den.xml';
 
+        // Incluido por Italo em 06/08/2015
+        // Monta o XML do CT-e assinado e com o protocolo de Autorização ou Denegação
+        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
+        begin
+          XML_procCTe := '<' + ENCODING_UTF8 + '>';
+          XML_procCTe := XML_procCTe + '<cteProc versao="' + FPVersaoServico +
+                                  '" xmlns="http://www.portalfiscal.inf.br/cte">';
+          XML_procCTe := XML_procCTe + FConhecimentos.Items[J].XMLAssinado;
+          XML_procCTe := XML_procCTe + '<protCTe versao="' + FPVersaoServico + '">';
+          XML_procCTe := XML_procCTe + AInfProt.Items[I].XMLprotCTe;
+          XML_procCTe := XML_procCTe + '</protCTe>';
+          XML_procCTe := XML_procCTe + '</cteProc>';
+        end;
+
+        // Se XMLprocCTe for uma string vazia significa que o CTe foi rejeitado,
+        // caso contrario o seu conteudo sera o CT-e assinado e protocolado
+        FConhecimentos.Items[J].XMLprocCTe := XML_procCTe;
+
+        (*
         if FPConfiguracoesCTe.Arquivos.Salvar or NaoEstaVazio(
           FConhecimentos.Items[J].NomeArq) then
         begin
@@ -951,6 +972,7 @@ begin
             end;
           end;
         end;
+        *)
 
         if FPConfiguracoesCTe.Arquivos.Salvar then
         begin
@@ -959,11 +981,16 @@ begin
 
           if SalvarXML then
           begin
+            // Incluido por Italo em 06/08/2015
+            // Salva o XML do CT-e assinado e protocolado
+            FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML, XML_procCTe);
+            (*
             with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
             begin
-              GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
+              GerarXML;   // Gera novamente, para incluir informações de "procCTe" no XML
               GravarXML;
             end;
+            *)
           end;
         end;
 

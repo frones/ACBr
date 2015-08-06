@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/08/2015
+[*] Criado a propriedade XMLprocCTe que será carregada após o envio de um lote
+    caso ela esteja vazia significa que o CT-e foi rejeitado, se não conterá
+    o XML do CT-e assinado e protocolado.
+    por: Italo Jurisato Junior
+
 05/08/2015
 [*] Ao Ler as URLs não estava levando em consideração a SVC.
     por: Italo Jurisato Junior

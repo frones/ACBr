@@ -59,6 +59,8 @@ type
     FXML: String;
     FXMLAssinado: String;
     FXMLOriginal: String;
+    FXMLprocCTe: String;
+
     FAlertas: String;
     FErroValidacao: String;
     FErroValidacaoCompleto: String;
@@ -100,6 +102,8 @@ type
     property XML: String                   read FXML;
     property XMLAssinado: String           read FXMLAssinado;
     property XMLOriginal: String           read FXMLOriginal write FXMLOriginal;
+    property XMLprocCTe: String            read FXMLprocCTe  write FXMLprocCTe;
+
     property Confirmado: Boolean           read GetConfirmado;
     property Processado: Boolean           read GetProcessado;
     property Msg: String                   read GetMsg;

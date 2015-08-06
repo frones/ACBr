@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/08/2015
+-- ACBrDevice --  (por: DSA e Amarildo Lacerda)
+[+] Adicionado suporte a Impressoras TCP através da notação "TCP:ip_maquina:porta"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23211
+
 Data: 05/08/2015
 -- ACBrEscBematech --    (Por:  Ronaldo Negreiros Daniel)
 [*] Ajuste para leitura correta do QRCode gerado pelas Impressoras Bematech

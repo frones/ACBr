@@ -2127,22 +2127,25 @@ begin
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
-(*
+
 function Processando: Boolean;
+var
+  xSituacao: String;
+  i: Integer;
+  Ok: Boolean;
 begin
   NFSeRetorno := TretSitLote.Create;
 
-  NFSeRetorno.Leitor.Arquivo := FRetWS;
-  if (FProvedor = proEquiplano) then
-    NFSeRetorno.LerXML_provedorEquiplano
-  else if (FProvedor = proInfisc) then
-    NFSeRetorno.LerXML_provedorInfisc
-  else if (FProvedor = proEL) then
-    NFSeRetorno.LerXML_provedorEL
-  else if (FProvedor = proFissLex) Then
-    NFSeRetorno.LerXml_provedorFissLex
+  NFSeRetorno.Leitor.Arquivo := FPRetWS;
+
+  case FProvedor of
+    proEquiplano: NFSeRetorno.LerXML_provedorEquiplano;
+    proInfisc: NFSeRetorno.LerXML_provedorInfisc;
+    proEL: NFSeRetorno.LerXML_provedorEL;
+    proFissLex: NFSeRetorno.LerXml_provedorFissLex;
   else
     NFSeRetorno.LerXml;
+  end;
 
   FSituacao := NFSeRetorno.InfSit.Situacao;
   // FSituacao: 1 = Não Recebido
@@ -2157,48 +2160,51 @@ begin
     FaMsg:='';
     for i := 0 to NFSeRetorno.InfSit.MsgRetorno.Count - 1 do
     begin
-      FPMsg := FPMsg + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FMsg = '', '', ' / ');
+      FPMsg := FPMsg + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
 
       FaMsg := FaMsg + 'Código Erro : ' + NFSeRetorno.infSit.MsgRetorno.Items[i].Codigo + LineBreak +
                        'Mensagem... : ' + NFSeRetorno.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
                        'Correção... : ' + NFSeRetorno.infSit.MsgRetorno.Items[i].Correcao + LineBreak+
-                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.FxProvedor + LineBreak;
+                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
     end;
   end
   else begin
     for i:=0 to FNotasFiscais.Count -1 do
       FNotasFiscais.Items[i].NFSe.Situacao := FSituacao;
 
-    if (FProvedor = proEquiplano) then
-      begin
-        case FSituacao[1] of
-          '1' : xSituacao := 'Aguardando processamento';
-          '2' : xSituacao := 'Não Processado, lote com erro';
-          '3' : xSituacao := 'Processado com sucesso';
-          '4' : xSituacao := 'Processado com avisos';
-        end;
-      end
-    else if (FProvedor = proEL) then
-      begin
-        case FSituacao[1] of
-          '1' : xSituacao := 'Aguardando processamento';
-          '2' : xSituacao := 'Não Processado, lote com erro';
-          '3' : xSituacao := 'Processado com avisos';
-          '4' : xSituacao := 'Processado com sucesso';
-        end;
-      end
-    else
-      begin
-        case StrToSituacaoLoteRPS(Ok, FSituacao) of
-         slrNaoRecibo        : xSituacao := 'Não Recebido.';
-         slrNaoProcessado    : xSituacao := 'Não Processado.';
-         slrProcessadoErro   : xSituacao := 'Processado com Erro.';
-         slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
-        end;
-      end;
+    case FProvedor of
+      proEquiplano: begin
+                      case FSituacao[1] of
+                        '1' : xSituacao := 'Aguardando processamento';
+                        '2' : xSituacao := 'Não Processado, lote com erro';
+                        '3' : xSituacao := 'Processado com sucesso';
+                        '4' : xSituacao := 'Processado com avisos';
+                      end;
+                    end;
 
-    FaMsg := 'Numero do Lote : ' + FNFSeRetorno.ListaNFSe.NumeroLote + LineBreak +
-              'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
+      proEL: begin
+               case FSituacao[1] of
+                 '1' : xSituacao := 'Aguardando processamento';
+                 '2' : xSituacao := 'Não Processado, lote com erro';
+                 '3' : xSituacao := 'Processado com avisos';
+                 '4' : xSituacao := 'Processado com sucesso';
+               end;
+             end;
+
+//      proInfisc: 
+
+    else begin
+           case StrToSituacaoLoteRPS(Ok, FSituacao) of
+            slrNaoRecibo        : xSituacao := 'Não Recebido.';
+            slrNaoProcessado    : xSituacao := 'Não Processado.';
+            slrProcessadoErro   : xSituacao := 'Processado com Erro.';
+            slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
+           end;
+         end;
+    end;
+
+    FaMsg := 'Numero do Lote : ' + FNFSeRetorno.InfSit.NumeroLote + LineBreak +
+             'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
   end;
 
   if (FProvedor in [proEquiplano, proEL]) then
@@ -2207,53 +2213,51 @@ begin
     Result := (FSituacao = '2'); // Não Processado
 
 end;
-*)
+
+var
+  vCont, qTent: Integer;
 begin
-(*
-  TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeConsulta );
-  Sleep(TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.AguardarConsultaRet);
+  Sleep(FPConfiguracoesNFSe.WebServices.AguardarConsultaRet);
   vCont := 10000;
   qTent := 1;
 
   while Processando do  // Enquanto FSituacao = 2 (Não Processado) tenta mais uma vez
   begin
-    TACBrNFSe( FACBrNFSe ).SetStatus( stNFSeAguardaProcesso );
-    if TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.IntervaloTentativas > 0 then
-       sleep(TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.IntervaloTentativas)
+    if FPConfiguracoesNFSe.WebServices.IntervaloTentativas > 0 then
+       sleep(FPConfiguracoesNFSe.WebServices.IntervaloTentativas)
     else
        sleep(vCont);
 
-    if qTent > TACBrNFSe( FACBrNFSe ).Configuracoes.WebServices.Tentativas then
+    if qTent > FPConfiguracoesNFSe.WebServices.Tentativas then
       break;
 
     qTent := qTent + 1;
   end;
 
-  if (FProvedor = proEquiplano) then
-    Result := (FSituacao = '2') or (FSituacao = '3') or (FSituacao = '4')
+  case FProvedor of
 		//1 - Aguardando processamento
 		//2 - Não Processado, lote com erro
 		//3 - Processado com sucesso
 		//4 - Processado com avisos
-  //Alterado por Anderson Grampinha
-  //Provedor EL
-  else if (FProvedor = proEL) then
-    Result := (FSituacao = '1') or (FSituacao = '3') or (FSituacao = '4')
+    proEquiplano: Result := (FSituacao = '2') or (FSituacao = '3') or (FSituacao = '4');
+
 		//1 - Aguardando processamento
 		//2 - Não Processado, lote com erro
 		//3 - Processado com avisos
 		//4 - Processado com sucesso
-  else if (FProvedor = proInfisc) then
-    Result := (FSituacao = '4')
+    proEL: Result := (FSituacao = '1') or (FSituacao = '3') or (FSituacao = '4');
+
 		//3 - Processado com sucesso
 		//4 - Processado com avisos
-  else
-    Result := (FSituacao = '3') or (FSituacao = '4');
+    proInfisc: Result := (FSituacao = '4');
+
   // FSituacao: 1 = Não Recebido
   //            2 = Não Processado
   //            3 = Processado com Erro
   //            4 = Processado com Sucesso
-*)
+  else
+    Result := (FSituacao = '3') or (FSituacao = '4');
+  end;
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirServicoEAction;
@@ -4400,7 +4404,6 @@ begin
 
   FConsLote.FProtocolo := AProtocolo;
 
-(*
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
   begin
     if (FConsLote.FCNPJ = '') then
@@ -4415,7 +4418,7 @@ begin
 
   if (FConsLote.FRazaoSocial = '') and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proTecnos) then
      FConsLote.FRazaoSocial := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-*)
+
   Result := FConsLote.Executar;
 
   if not (Result) then
@@ -4432,7 +4435,6 @@ begin
   FConsLote.FFraseSecreta := AFraseSecreta;
   FConsLote.FRazaoSocial  := ARazaoSocial;
 
-(*
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
   begin
     if (FConsLote.FCNPJ = '') then
@@ -4447,7 +4449,7 @@ begin
 
   if (FConsLote.FRazaoSocial = '') and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proTecnos) then
      FConsLote.FRazaoSocial := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-*)
+
   Result := ConsultaLoteRPS(AProtocolo, False);
 end;
 
@@ -4579,7 +4581,6 @@ begin
   FCancNfse.FIM              := AInscricaoMunicipal;
   FCancNfse.FCodigoMunicipio := ACodigoMunicipio;
 
-(*
   if (FCancNfse.FNumeroNFSe = '') then
     FCancNfse.FNumeroNFSe := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero;
 
@@ -4605,7 +4606,7 @@ begin
   if (FCancNfse.FCodigoMunicipio = '') then
   begin
    if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proISSNet) and
-      (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Configuracoes.WebServices.AmbienteCodigo = 2) then
+      (TACBrNFSe(FACBrNFSe).Configuracoes.WebServices.AmbienteCodigo = 2) then
     FCancNfse.FCodigoMunicipio := '999'
    else
    begin
@@ -4615,7 +4616,7 @@ begin
        FCancNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
    end;
   end;
-*)
+
   Result := CancelaNFSe(ACodigoCancelamento, False);
 end;
 
@@ -4633,7 +4634,6 @@ begin
     FSubNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio;
     FSubNfse.FNumeroRps       := StrToInt(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero);
 
-(*
     if (FSubNfse.FCNPJ = '') then
     begin
       if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proDigifred, pro4R] then
@@ -4661,7 +4661,6 @@ begin
      else
       FSubNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
     end;
-*)
 
     Result := FSubNfse.Executar;
 

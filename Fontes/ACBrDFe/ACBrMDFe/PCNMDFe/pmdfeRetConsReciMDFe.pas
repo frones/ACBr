@@ -103,15 +103,17 @@ type
     FdigVal: String;
     FcStat: Integer;
     FxMotivo: String;
+    FXMLprotMDFe: String;
   published
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property chMDFe: String          read FchMDFe   write FchMDFe;
-    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: String           read FnProt    write FnProt;
-    property digVal: String          read FdigVal   write FdigVal;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
+    property verAplic: String        read FverAplic    write FverAplic;
+    property chMDFe: String          read FchMDFe      write FchMDFe;
+    property dhRecbto: TDateTime     read FdhRecbto    write FdhRecbto;
+    property nProt: String           read FnProt       write FnProt;
+    property digVal: String          read FdigVal      write FdigVal;
+    property cStat: Integer          read FcStat       write FcStat;
+    property xMotivo: String         read FxMotivo     write FxMotivo;
+    property XMLprotMDFe: String     read FXMLprotMDFe write FXMLprotMDFe;
   end;
 
 implementation
@@ -162,6 +164,8 @@ begin
       while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do
       begin
         ProtMDFe.Add;
+
+        ProtMDFe[i].XMLprotMDFe := Leitor.Grupo;
 
         ProtMDFe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
         ProtMDFe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');

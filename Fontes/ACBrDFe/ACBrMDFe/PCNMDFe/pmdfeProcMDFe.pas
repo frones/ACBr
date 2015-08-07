@@ -63,6 +63,9 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FVersao: String;
+    // Usando na Montagem do mdfeProc
+    FXML_MDFe: String;
+    FXML_Proc: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -82,6 +85,9 @@ type
     property cStat: Integer              read FcStat               write FcStat;
     property xMotivo: String             read FxMotivo             write FxMotivo;
     property Versao: String              read FVersao              write FVersao;
+    // Usando na Montagem do mdfeProc
+    property XML_MDFe: String            read FXML_MDFe            write FXML_MDFe;
+    property XML_Proc: String            read FXML_Proc            write FXML_Proc;
   end;
 
 implementation
@@ -128,111 +134,120 @@ var
   i: Integer;
   ProtLido: Boolean; // Protocolo lido do Arquivo
 begin
-  ProtLido := False;
-  xProtMDFe := '';
-  FnProt := '';
-
   XMLMDFe := TStringList.Create;
   XMLinfProt := TStringList.Create;
   XMLinfProt2 := TStringList.Create;
+  Gerador.ListaDeAlertas.Clear;
+
   try
-    // Arquivo MDFe
-    if not FileExists(FPathMDFe)
-     then Gerador.wAlerta('XR04', 'MDFe', 'MDFe', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-     else XMLMDFe.LoadFromFile(FPathMDFe);
+    if (FXML_MDFe = '') and (FXML_Proc = '') then
+    begin
+      ProtLido := False;
+      xProtMDFe := '';
+      FnProt := '';
 
-    FchMDFe := RetornarConteudoEntre(XMLMDFe.Text, 'Id="MDFe', '"');
-    if trim(FchMDFe) = ''
-     then Gerador.wAlerta('XR01', 'ID/MDFe', 'Numero da chave do MDFe', ERR_MSG_VAZIO);
+      // Arquivo MDFe
+      if not FileExists(FPathMDFe)
+       then Gerador.wAlerta('XR04', 'MDFe', 'MDFe', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+       else XMLMDFe.LoadFromFile(FPathMDFe);
 
-    if (FPathRetConsReciMDFe = '') and (FPathRetConsSitMDFe = '')
-     then begin
-      if (FchMDFe = '') and (FnProt = '')
-       then Gerador.wAlerta('XR06', 'RECIBO/SITUAÇÃO', 'RECIBO/SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-       else ProtLido := True;
-     end;
+      FchMDFe := RetornarConteudoEntre(XMLMDFe.Text, 'Id="MDFe', '"');
+      if trim(FchMDFe) = ''
+       then Gerador.wAlerta('XR01', 'ID/MDFe', 'Numero da chave do MDFe', ERR_MSG_VAZIO);
 
-    // Gerar arquivo pelo Recibo do MDFe
-    if (FPathRetConsReciMDFe <> '') and (FPathRetConsSitMDFe = '') and (not ProtLido)
-     then begin
-      if not FileExists(FPathRetConsReciMDFe)
-       then Gerador.wAlerta('XR06', 'PROTOCOLO', 'PROTOCOLO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-       else begin
-        I := 0;
-        LocLeitor := TLeitor.Create;
-        try
-          LocLeitor.CarregarArquivo(FPathRetConsReciMDFe);
-          while LocLeitor.rExtrai(1, 'protMDFe', '', i + 1) <> '' do
-           begin
-             if LocLeitor.rCampo(tcStr, 'chMDFe') = FchMDFe
-              then FnProt := LocLeitor.rCampo(tcStr, 'nProt');
-             if trim(FnProt) = ''
-              then Gerador.wAlerta('XR01', 'PROTOCOLO/MDFe', 'Numero do protocolo', ERR_MSG_VAZIO)
-              else begin
-               xProtMDFe := LocLeitor.rExtrai(1, 'protMDFe', '', i + 1);
-               Gerador.ListaDeAlertas.Clear;
-               break;
-              end;
-              I := I + 1;
+      if (FPathRetConsReciMDFe = '') and (FPathRetConsSitMDFe = '')
+       then begin
+        if (FchMDFe = '') and (FnProt = '')
+         then Gerador.wAlerta('XR06', 'RECIBO/SITUAÇÃO', 'RECIBO/SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+         else ProtLido := True;
+       end;
+
+      // Gerar arquivo pelo Recibo do MDFe
+      if (FPathRetConsReciMDFe <> '') and (FPathRetConsSitMDFe = '') and (not ProtLido)
+       then begin
+        if not FileExists(FPathRetConsReciMDFe)
+         then Gerador.wAlerta('XR06', 'PROTOCOLO', 'PROTOCOLO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+         else begin
+          I := 0;
+          LocLeitor := TLeitor.Create;
+          try
+            LocLeitor.CarregarArquivo(FPathRetConsReciMDFe);
+            while LocLeitor.rExtrai(1, 'protMDFe', '', i + 1) <> '' do
+             begin
+               if LocLeitor.rCampo(tcStr, 'chMDFe') = FchMDFe
+                then FnProt := LocLeitor.rCampo(tcStr, 'nProt');
+               if trim(FnProt) = ''
+                then Gerador.wAlerta('XR01', 'PROTOCOLO/MDFe', 'Numero do protocolo', ERR_MSG_VAZIO)
+                else begin
+                 xProtMDFe := LocLeitor.rExtrai(1, 'protMDFe', '', i + 1);
+                 Gerador.ListaDeAlertas.Clear;
+                 break;
+                end;
+                I := I + 1;
+             end;
+           finally
+             LocLeitor.Free;
            end;
-         finally
-           LocLeitor.Free;
          end;
        end;
-     end;
 
-    // Gerar arquivo pelo arquivo de consulta da situação do MDFe
-    if (FPathRetConsReciMDFe = '') and (FPathRetConsSitMDFe <> '') and (not ProtLido)
-     then begin
-      if not FileExists(FPathRetConsSitMDFe)
-       then Gerador.wAlerta('XR06', 'SITUAÇÃO', 'SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
-       else begin
-        XMLinfProt.LoadFromFile(FPathRetConsSitMDFe);
+      // Gerar arquivo pelo arquivo de consulta da situação do MDFe
+      if (FPathRetConsReciMDFe = '') and (FPathRetConsSitMDFe <> '') and (not ProtLido)
+       then begin
+        if not FileExists(FPathRetConsSitMDFe)
+         then Gerador.wAlerta('XR06', 'SITUAÇÃO', 'SITUAÇÃO', ERR_MSG_ARQUIVO_NAO_ENCONTRADO)
+         else begin
+          XMLinfProt.LoadFromFile(FPathRetConsSitMDFe);
 
-        wCstat:=RetornarConteudoEntre(XMLinfProt.text, '<cStat>', '</cStat>');
-        if trim(wCstat) = '101'
-         then XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>')
-         else XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
+          wCstat:=RetornarConteudoEntre(XMLinfProt.text, '<cStat>', '</cStat>');
+          if trim(wCstat) = '101'
+           then XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infCanc', '</infCanc>')
+           else XMLinfProt2.Text:=RetornarConteudoEntre(XMLinfProt.text, '<infProt', '</infProt>');
 
+          xProtMDFe := '<protMDFe versao="' + Versao + '">' +
+                        '<infProt>' +
+                          PreencherTAG('tpAmb', XMLinfProt.text) +
+                          PreencherTAG('verAplic', XMLinfProt.text) +
+                          PreencherTAG('chMDFe', XMLinfProt.text) +
+                          PreencherTAG('dhRecbto', XMLinfProt2.text) +
+                          PreencherTAG('nProt', XMLinfProt2.text) +
+                          PreencherTAG('digVal', XMLinfProt.text) +
+                          PreencherTAG('cStat', XMLinfProt.text) +
+                          PreencherTAG('xMotivo', XMLinfProt.text) +
+                        '</infProt>' +
+                       '</protMDFe>';
+         end;
+       end;
+
+      if ProtLido
+       then begin
         xProtMDFe := '<protMDFe versao="' + Versao + '">' +
                       '<infProt>' +
-                        PreencherTAG('tpAmb', XMLinfProt.text) +
-                        PreencherTAG('verAplic', XMLinfProt.text) +
-                        PreencherTAG('chMDFe', XMLinfProt.text) +
-                        PreencherTAG('dhRecbto', XMLinfProt2.text) +
-                        PreencherTAG('nProt', XMLinfProt2.text) +
-                        PreencherTAG('digVal', XMLinfProt.text) +
-                        PreencherTAG('cStat', XMLinfProt.text) +
-                        PreencherTAG('xMotivo', XMLinfProt.text) +
-                      '</infProt>' +
+                       '<tpAmb>'+TpAmbToStr(FtpAmb)+'</tpAmb>'+
+                       '<verAplic>'+FverAplic+'</verAplic>'+
+                       '<chMDFe>'+FchMDFe+'</chMDFe>'+
+                       '<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',FdhRecbto)+'</dhRecbto>'+
+                       '<nProt>'+FnProt+'</nProt>'+
+                       '<digVal>'+FdigVal+'</digVal>'+
+                       '<cStat>'+IntToStr(FcStat)+'</cStat>'+
+                       '<xMotivo>'+FxMotivo+'</xMotivo>'+
+                      '</infProt>'+
                      '</protMDFe>';
        end;
-     end;
 
-    if ProtLido
-     then begin
-      xProtMDFe := '<protMDFe versao="' + Versao + '">' +
-                    '<infProt>' +
-                     '<tpAmb>'+TpAmbToStr(FtpAmb)+'</tpAmb>'+
-                     '<verAplic>'+FverAplic+'</verAplic>'+
-                     '<chMDFe>'+FchMDFe+'</chMDFe>'+
-                     '<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',FdhRecbto)+'</dhRecbto>'+
-                     '<nProt>'+FnProt+'</nProt>'+
-                     '<digVal>'+FdigVal+'</digVal>'+
-                     '<cStat>'+IntToStr(FcStat)+'</cStat>'+
-                     '<xMotivo>'+FxMotivo+'</xMotivo>'+
-                    '</infProt>'+
-                   '</protMDFe>';
-     end;
+      FXML_MDFe := XMLMDFe.Text;
+      FXML_Proc := xProtMDFe;
+    end;
 
     // Gerar arquivo
-    if Gerador.ListaDeAlertas.Count = 0
+    if (Gerador.ListaDeAlertas.Count = 0) and
+       (FXML_MDFe <> '') and (FXML_Proc <> '') then
      then begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
       Gerador.wGrupo('mdfeProc versao="' + Versao + '" ' + NAME_SPACE_MDFE, '');
-      Gerador.wTexto('<MDFe xmlns' + RetornarConteudoEntre(XMLMDFe.Text, '<MDFe xmlns', '</MDFe>') + '</MDFe>');
-      Gerador.wTexto(xProtMDFe);
+      Gerador.wTexto('<MDFe xmlns' + RetornarConteudoEntre(FXML_MDFe, '<MDFe xmlns', '</MDFe>') + '</MDFe>');
+      Gerador.wTexto(FXML_Proc);
       Gerador.wGrupo('/mdfeProc');
      end;
 

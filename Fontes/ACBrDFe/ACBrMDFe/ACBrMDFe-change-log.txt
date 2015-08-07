@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2015
+[*] Criado duas propriedades em pmdfeProcMDFe visando uma outra forma de montar
+    o XML assinado e protocolado, criado também uma propriedade em 
+    pmdfeRetConsReciMDFe para armazenar o protocolo de autorizacao ealterado o 
+    TratarRespostaFinal do TMDFeRetRecpcao para utilizar as alterações acima.
+    por: Italo Jurisato Junior
+
 31/07/2015
 [*] Adicionado cabeçalho XML quando não houver ao XML baixado pelo webservice
     de distribuição de DFe

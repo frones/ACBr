@@ -779,10 +779,10 @@ begin
 end;
 
 function TCTeRecepcao.TratarResposta: Boolean;
-var
-  I: integer;
-  chCTe, NomeArquivo: String;
-  AProcCTe: TProcCTe;
+//var
+//  I: integer;
+//  chCTe, NomeArquivo: String;
+//  AProcCTe: TProcCTe;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoLoteResult');
 
@@ -921,7 +921,8 @@ begin
 
         // Incluido por Italo em 06/08/2015
         // Monta o XML do CT-e assinado e com o protocolo de Autorização ou Denegação
-        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
+        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
+           (AInfProt.Items[I].cStat = 301) then
         begin
           XML_procCTe := '<' + ENCODING_UTF8 + '>';
           XML_procCTe := XML_procCTe + '<cteProc versao="' + FPVersaoServico +

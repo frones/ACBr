@@ -705,10 +705,10 @@ begin
 end;
 
 function TMDFeRecepcao.TratarResposta: Boolean;
-var
-  I: integer;
-  chMDFe, NomeArquivo: String;
-  AProcMDFe: TProcMDFe;
+//var
+//  I: integer;
+//  chMDFe, NomeArquivo: String;
+//  AProcMDFe: TProcMDFe;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoLoteResult');
 
@@ -838,6 +838,36 @@ begin
         FManifestos.Items[J].MDFe.procMDFe.cStat := AInfProt.Items[I].cStat;
         FManifestos.Items[J].MDFe.procMDFe.xMotivo := AInfProt.Items[I].xMotivo;
 
+        // Incluido por Italo em 07/08/2015
+        // Monta o XML do MDF-e assinado e com o protocolo de Autorização
+        if (AInfProt.Items[I].cStat = 100) then
+        begin
+          AProcMDFe := TProcMDFe.Create;
+          try
+            AProcMDFe.XML_MDFe := FManifestos.Items[J].XMLAssinado;
+            AProcMDFe.XML_Proc := AInfProt.Items[I].XMLprotMDFe;
+            AProcMDFe.Versao := FPVersaoServico;
+            AProcMDFe.GerarXML;
+
+            FManifestos.Items[J].XML := AProcMDFe.Gerador.ArquivoFormatoXML;
+
+            if FPConfiguracoesMDFe.Arquivos.Salvar then
+            begin
+              SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                           FManifestos.Items[J].Processado;
+
+              if SalvarXML then
+                AProcMDFe.Gerador.SalvarArquivo(
+                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
+                    AInfProt.Items[I].chMDFe + '-mdfe.xml');
+            end;
+
+          finally
+            AProcMDFe.Free;
+          end;
+        end;
+
+        (*
         if FPConfiguracoesMDFe.Arquivos.Salvar or NaoEstaVazio(
           FManifestos.Items[J].NomeArq) then
         begin
@@ -873,20 +903,21 @@ begin
           end;
         end;
 
-          if FPConfiguracoesMDFe.Arquivos.Salvar then
-          begin
-            SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
-                         TACBrMDFe(FPDFeOwner).Manifestos.Items[I].Processado;
+        if FPConfiguracoesMDFe.Arquivos.Salvar then
+        begin
+          SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                       TACBrMDFe(FPDFeOwner).Manifestos.Items[I].Processado;
 
-            if SalvarXML then
+          if SalvarXML then
+          begin
+            with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
             begin
-              with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
-              begin
-                GerarXML;   // Gera novamente, para incluir informações de "procMDFe" no XML
-                GravarXML;
-              end;
+              GerarXML;   // Gera novamente, para incluir informações de "procMDFe" no XML
+              GravarXML;
             end;
           end;
+        end;
+        *)
 
         break;
       end;

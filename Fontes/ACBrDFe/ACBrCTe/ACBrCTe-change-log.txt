@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2015
+[*] Criado o evento Clear em diversas chamadas ao Web Services, se executado 
+    antes da chamada garante que dados do retorno anterior será limpo.
+    por: Italo Jurisato Junior
+
 06/08/2015
 [*] Criado a propriedade XMLprocCTe que será carregada após o envio de um lote
     caso ela esteja vazia significa que o CT-e foi rejeitado, se não conterá

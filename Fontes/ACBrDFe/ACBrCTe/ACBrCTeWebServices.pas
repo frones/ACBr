@@ -198,6 +198,7 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
+    procedure Clear;
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
@@ -241,6 +242,8 @@ type
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
 
+    procedure Clear;
+
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
@@ -282,6 +285,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property CTeChave: String read FCTeChave write FCTeChave;
     property Protocolo: String read FProtocolo write FProtocolo;
@@ -336,6 +341,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
 
+    procedure Clear;
+
     property ID: String read FID write FID;
     property Protocolo: String read FProtocolo write FProtocolo;
     property Modelo: integer read FModelo write FModelo;
@@ -389,6 +396,8 @@ type
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
 
+    procedure Clear;
+
     property versao: String read Fversao;
     property verAplic: String read FverAplic;
     property cStat: integer read FcStat;
@@ -431,6 +440,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe; AEvento: TEventoCTe); reintroduce; overload;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property idLote: integer read FidLote write FidLote;
     property versao: String read Fversao write Fversao;
@@ -866,6 +877,39 @@ begin
   inherited Destroy;
 end;
 
+procedure TCTeRetRecepcao.Clear;
+var
+  i, j: Integer;
+begin
+(*
+  // Limpa Dados do retorno;
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+
+  // Limpa Dados dos retornos dos conhecimentos;
+  for i := 0 to FCTeRetorno.ProtCTe.Count - 1 do
+  begin
+    for j := 0 to FConhecimentos.Count - 1 do
+    begin
+      if OnlyNumber(FCTeRetorno.ProtCTe.Items[i].chCTe) = FConhecimentos.Items[J].NumID then
+      begin
+        FConhecimentos.Items[j].Confirmada           := False;
+        FConhecimentos.Items[j].Msg                  := '';
+        FConhecimentos.Items[j].CTe.procCTe.verAplic := '';
+        FConhecimentos.Items[j].CTe.procCTe.chCTe    := '';
+        FConhecimentos.Items[j].CTe.procCTe.dhRecbto := 0;
+        FConhecimentos.Items[j].CTe.procCTe.nProt    := '';
+        FConhecimentos.Items[j].CTe.procCTe.digVal   := '';
+        FConhecimentos.Items[j].CTe.procCTe.cStat    := 0;
+        FConhecimentos.Items[j].CTe.procCTe.xMotivo  := '';
+      end;
+    end;
+  end;
+*)  
+end;
+
 function TCTeRetRecepcao.GetRecibo: String;
 begin
   Result := Trim(FRecibo);
@@ -1166,6 +1210,17 @@ begin
   inherited Destroy;
 end;
 
+procedure TCTeRecibo.Clear;
+begin
+(*
+  // Limpa Dados do retorno;
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+*)  
+end;
+
 procedure TCTeRecibo.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteRetRecepcao';
@@ -1260,6 +1315,17 @@ begin
     FprocEventoCTe.Free;
 
   inherited Destroy;
+end;
+
+procedure TCTeConsulta.Clear;
+begin
+(*
+  // Limpa Dados do retorno;
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+*)  
 end;
 
 procedure TCTeConsulta.DefinirServicoEAction;
@@ -1708,6 +1774,17 @@ begin
   FPArqResp := 'inu';
 end;
 
+procedure TCTeInutilizacao.Clear;
+begin
+(*
+  // Limpa Dados do retorno;
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+*)  
+end;
+
 procedure TCTeInutilizacao.SetJustificativa(AValue: String);
 var
   TrimValue: String;
@@ -1891,6 +1968,17 @@ begin
   inherited Destroy;
 end;
 
+procedure TCTeConsultaCadastro.Clear;
+begin
+(*
+  // Limpa Dados do retorno;
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+*)  
+end;
+
 procedure TCTeConsultaCadastro.SetCNPJ(const Value: String);
 begin
   if NaoEstaVazio(Value) then
@@ -2034,6 +2122,16 @@ begin
   FEventoRetorno.Free;
 
   inherited;
+end;
+
+procedure TCTeEnvEvento.Clear;
+begin
+(*
+  // Limpa Dados do retorno;
+  FPMsg     := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+*)  
 end;
 
 function TCTeEnvEvento.GerarPathEvento: String;

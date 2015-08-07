@@ -1439,13 +1439,16 @@ var
   CST00495099: Boolean;
 begin
 
+  if NFe.Ide.modelo <> 55 then   //não deve gerar grupo IPI para NFCe
+    Exit;
+
   // variavel CST00495099 usada para Ignorar Tag <IPI>
   // se GerarTagIPIparaNaoTributado = False e CST00495099 = False
 
   CST00495099 := (nfe.Det[i].Imposto.IPI.CST in [ipi00, ipi49, ipi50, ipi99]);
 
   if (not FOpcoes.FGerarTagIPIparaNaoTributado) and (not CST00495099) then
-    exit;
+    Exit;
 
   //se valores padrão de quando não foi preenchido a TAG IPI
   if ((nfe.Det[i].Imposto.IPI.cEnq  = '') and
@@ -1455,7 +1458,7 @@ begin
       (nfe.Det[i].Imposto.IPI.vUnid = 0) and
       (nfe.Det[i].Imposto.IPI.pIPI  = 0) and
       (nfe.Det[i].Imposto.IPI.vIPI  = 0)) then
-    EXIT; //não deve preencher a TAG
+    Exit; //não deve preencher a TAG
 
   Gerador.wGrupo('IPI', 'O01');
   Gerador.wCampo(tcStr, 'O02', 'clEnq   ', 01, 05, 0, nfe.Det[i].Imposto.IPI.clEnq, DSC_CLENQ);

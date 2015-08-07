@@ -242,14 +242,14 @@ begin
     // Gerar arquivo
     if (Gerador.ListaDeAlertas.Count = 0) and
        (FXML_MDFe <> '') and (FXML_Proc <> '') then
-     then begin
+    begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
       Gerador.wGrupo('mdfeProc versao="' + Versao + '" ' + NAME_SPACE_MDFE, '');
       Gerador.wTexto('<MDFe xmlns' + RetornarConteudoEntre(FXML_MDFe, '<MDFe xmlns', '</MDFe>') + '</MDFe>');
       Gerador.wTexto(FXML_Proc);
       Gerador.wGrupo('/mdfeProc');
-     end;
+    end;
 
     Result := (Gerador.ListaDeAlertas.Count = 0);
 

@@ -100,7 +100,7 @@ type
 
     property MDFe: TMDFe read FMDFe;
 
-    property XML: String read FXML;
+    property XML: String read FXML write FXML;
     property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
     property XMLAssinado: String read FXMLAssinado;
     property Confirmado: Boolean read GetConfirmado;

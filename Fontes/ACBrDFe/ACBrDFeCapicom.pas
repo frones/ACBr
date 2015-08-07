@@ -355,6 +355,8 @@ var
   signedKey: IXMLDSigKey;
   PrivateKey: IPrivateKey;
 begin
+  CarregarCertificadoSeNecessario;
+
   AXml := ConteudoXML;
   XmlAss := '';
 
@@ -471,6 +473,8 @@ var
   ParseError: IXMLDOMParseError;
   Schema: XMLSchemaCache;
 begin
+  CarregarCertificadoSeNecessario;
+
   DOMDocument := CoDOMDocument50.Create;
   Schema := CoXMLSchemaCache50.Create;
   try
@@ -505,6 +509,8 @@ var
   pKeyInfo: IXMLDOMNode;
   pKey, pKeyOut: IXMLDSigKey;
 begin
+  CarregarCertificadoSeNecessario;
+
   xmldoc := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
   try

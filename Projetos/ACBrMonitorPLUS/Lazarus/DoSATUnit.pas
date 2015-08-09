@@ -115,7 +115,7 @@ begin
     begin
       AjustaACBrSAT;
       ACBrSAT1.InicializaCFe;
-      GerarIniCFe( Cmd.Params(0), False );
+      GerarIniCFe( Cmd.Params(0), (Cmd.Metodo = 'criarenviarcfe') );
 
       if (Cmd.Metodo = 'criarcfe') then
       begin
@@ -123,9 +123,7 @@ begin
 
         if cbxSATSalvarCFe.Checked then
         begin
-          ArqCFe := PathWithDelim(edSATPathArqs.Text)+
-                    IntToStrZero(ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
-                    IntToStrZero(ACBrSAT1.CFe.ide.cNF,6)+'-satcfe.xml';
+          ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda);
           ACBrSAT1.CFe.SaveToFile(ArqCFe);
         end;
 
@@ -321,35 +319,35 @@ begin
 
           infCFe.versaoDadosEnt := ACBrSAT1.Config.infCFe_versaoDadosEnt;
 
-          Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigo(INIRec.ReadString(  'Emitente','UF','')));
-          Ide.cNF        := INIRec.ReadInteger( 'Identificacao','Codigo' ,INIRec.ReadInteger( 'Identificacao','cNF' ,0));
-          Ide.modelo     := INIRec.ReadInteger( 'Identificacao','Modelo' ,INIRec.ReadInteger( 'Identificacao','mod' ,59));
-          Ide.nserieSAT  := INIRec.ReadInteger( 'Identificacao','nserieSAT'  ,0);
-          Ide.nCFe       := INIRec.ReadInteger( 'Identificacao','nCFe' ,INIRec.ReadInteger( 'Identificacao','nNF' ,0));
-          Ide.dEmi       := StrToDateDef(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi','0'))),0);
-          Ide.hEmi       := StrToTimeDef(INIRec.ReadString( 'Identificacao','hEmi','0'),0);
-          Ide.cDV        := INIRec.ReadInteger( 'Identificacao','cDV' , 0);
-          Ide.tpAmb      := StrToTpAmb(OK,INIRec.ReadString( 'Identificacao','tpAmb','1'));
+          Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigo(INIRec.ReadString(  'Emitente','UF', CodigoParaUF(Ide.cUF))));
+          Ide.cNF        := INIRec.ReadInteger( 'Identificacao','Codigo' ,INIRec.ReadInteger( 'Identificacao','cNF' ,Ide.cNF));
+          Ide.modelo     := INIRec.ReadInteger( 'Identificacao','Modelo' ,INIRec.ReadInteger( 'Identificacao','mod' ,Ide.modelo));
+          Ide.nserieSAT  := INIRec.ReadInteger( 'Identificacao','nserieSAT'  ,Ide.nserieSAT);
+          Ide.nCFe       := INIRec.ReadInteger( 'Identificacao','nCFe' ,INIRec.ReadInteger( 'Identificacao','nNF' ,Ide.nCFe));
+          Ide.dEmi       := StrToDateDef(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi',''))),Ide.dEmi);
+          Ide.hEmi       := StrToTimeDef(INIRec.ReadString( 'Identificacao','hEmi',''),Ide.hEmi);
+          Ide.cDV        := INIRec.ReadInteger( 'Identificacao','cDV' , Ide.cDV);
+          Ide.tpAmb      := StrToTpAmb(OK,INIRec.ReadString( 'Identificacao','tpAmb',TpAmbToStr(Ide.tpAmb)));
           Ide.CNPJ       := INIRec.ReadString(  'Identificacao','CNPJ' ,edtSwHCNPJ.Text );
           Ide.signAC     := INIRec.ReadString(  'Identificacao','signAC' ,edtSwHAssinatura.Text );
-          Ide.assinaturaQRCODE := INIRec.ReadString(  'Identificacao','assinaturaQRCODE' ,'' );
-          Ide.numeroCaixa := INIRec.ReadInteger( 'Identificacao','numeroCaixa' , 0);
+          Ide.assinaturaQRCODE := INIRec.ReadString(  'Identificacao','assinaturaQRCODE' ,Ide.assinaturaQRCODE );
+          Ide.numeroCaixa := INIRec.ReadInteger( 'Identificacao','numeroCaixa' , Ide.numeroCaixa);
 
-          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF'    ,''));
-          Emit.xNome             := INIRec.ReadString(  'Emitente','Razao'   ,INIRec.ReadString(  'Emitente','xNome'   ,''));
-          Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant',''));
-          Emit.IE                := INIRec.ReadString(  'Emitente','IE'      ,'');
-          Emit.IM                := INIRec.ReadString(  'Emitente','IM'  ,'');
-          Emit.cRegTrib          := StrToRegTrib(ok, INIRec.ReadString(  'Emitente','cRegTrib','0'));
-          Emit.cRegTribISSQN     := StrToRegTribISSQN(ok, INIRec.ReadString(  'Emitente','cRegTribISSQN','0'));
-          Emit.indRatISSQN       := StrToindRatISSQN(ok, INIRec.ReadString(  'Emitente','indRatISSQN','0'));
+          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF', Emit.CNPJ));
+          Emit.xNome             := INIRec.ReadString(  'Emitente','Razao'   ,INIRec.ReadString(  'Emitente','xNome', Emit.xNome));
+          Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant', Emit.xFant));
+          Emit.IE                := INIRec.ReadString(  'Emitente','IE', Emit.IE);
+          Emit.IM                := INIRec.ReadString(  'Emitente','IM', Emit.IM);
+          Emit.cRegTrib          := StrToRegTrib(ok, INIRec.ReadString(  'Emitente','cRegTrib',RegTribToStr(Emit.cRegTrib)));
+          Emit.cRegTribISSQN     := StrToRegTribISSQN(ok, INIRec.ReadString(  'Emitente','cRegTribISSQN', RegTribISSQNToStr(Emit.cRegTribISSQN)));
+          Emit.indRatISSQN       := StrToindRatISSQN(ok, INIRec.ReadString(  'Emitente','indRatISSQN', indRatISSQNToStr(Emit.indRatISSQN)));
 
-          Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr' ,''));
-          Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro'     ,''));
-          Emit.EnderEmit.xCpl    := INIRec.ReadString(  'Emitente','Complemento',INIRec.ReadString(  'Emitente','xCpl'     ,''));
-          Emit.EnderEmit.xBairro := INIRec.ReadString(  'Emitente','Bairro'     ,INIRec.ReadString(  'Emitente','xBairro',''));
-          Emit.EnderEmit.xMun    := INIRec.ReadString(  'Emitente','Cidade'     ,INIRec.ReadString(  'Emitente','xMun'   ,''));
-          Emit.EnderEmit.CEP     := INIRec.ReadInteger( 'Emitente','CEP'  ,0);
+          Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr', Emit.EnderEmit.xLgr));
+          Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro', Emit.EnderEmit.nro));
+          Emit.EnderEmit.xCpl    := INIRec.ReadString(  'Emitente','Complemento',INIRec.ReadString(  'Emitente','xCpl', Emit.EnderEmit.xCpl));
+          Emit.EnderEmit.xBairro := INIRec.ReadString(  'Emitente','Bairro'     ,INIRec.ReadString(  'Emitente','xBairro', Emit.EnderEmit.xBairro));
+          Emit.EnderEmit.xMun    := INIRec.ReadString(  'Emitente','Cidade'     ,INIRec.ReadString(  'Emitente','xMun', Emit.EnderEmit.xMun));
+          Emit.EnderEmit.CEP     := INIRec.ReadInteger( 'Emitente','CEP', Emit.EnderEmit.CEP);
 
           Dest.CNPJCPF           := INIRec.ReadString(  'Destinatario','CNPJ'       ,INIRec.ReadString(  'Destinatario','CNPJCPF',INIRec.ReadString(  'Destinatario','CPF','')));
           Dest.xNome             := INIRec.ReadString(  'Destinatario','NomeRazao'  ,INIRec.ReadString(  'Destinatario','xNome'  ,''));

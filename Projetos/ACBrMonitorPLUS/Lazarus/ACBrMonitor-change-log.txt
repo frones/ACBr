@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2015     (por: DSA)
+[-]   Corrigida a rotina "DoSATUnit.GerarIniCFe" para respeitar os parâmetros
+      de Configuração definidos na Interface do ACBrMonitor
+[*]   Modificada a maneira de Salvar o arquivo em "SAT.criarcfe", para respeitar os
+      parâmetros de ACBrSAT e usar a nomenclatura definida na Especificação
+      Técnica
+[*]   Modificado método SAT.criarenviarcfe para NÃO gerar as Tags de
+      responsabilidade do SAT
+
 28/09/2014
 [+]   Adicionada configuração para Impressora padrão na Aba Boleto
 [+]   Adicionado suporte ao componente ACBrSedex

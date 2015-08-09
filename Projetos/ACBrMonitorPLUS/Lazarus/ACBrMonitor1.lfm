@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 405
+  Left = 438
   Height = 689
-  Top = 144
+  Top = 0
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsNFe
+        ActivePage = tsSat
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 17
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -8865,7 +8865,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 257
                 Height = 17
                 Top = 106
-                Width = 41
+                Width = 40
                 Caption = 'Versão'
                 ParentColor = False
               end

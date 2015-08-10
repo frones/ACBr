@@ -580,6 +580,12 @@ type
     procedure ISSQN;
     procedure AddFatura;
     procedure ConfigureDataSource;
+    function ManterVeiculos(inItem: integer): String;
+    function ManterMedicamentos(inItem: integer): String;
+    Function ManterArma( inItem:  integer  ) : String;
+    Function ManterCombustivel( inItem:  integer  ) : String;
+    function ManterDesPro(dvDesc, dvProd: Double): Double;
+    function ManterXpod(sXProd: String; inItem: Integer): String;
   public
 
   end;
@@ -757,6 +763,15 @@ begin
   end
   else
   begin
+    if FNFeCancelada then
+    begin
+      rllXmotivo.Caption := 'NF-e CANCELADA';
+      rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+      rlbCodigoBarras.Visible := False;
+      rllXmotivo.Visible := True;
+      rllDadosVariaveis3_Descricao.Visible := True;
+    end;
+
     if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
     begin
       rlbCodigoBarras.Visible := False;
@@ -921,18 +936,20 @@ begin
       for b := 0 to (RLNFe.ControlCount - 1) do
         for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
         begin
-          TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-            'Courier New';
-          if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 0) or
-            (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 703) or
-            (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 704) or
-            (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 705) then
-            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-              (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
+          TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name := 'Courier New';
+          case TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag of
+             0 ,
+           703 ,
+           704 ,
+           705 : begin
+                  TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
+                    (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
 
-          if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 705 then
-            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
-              (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top) - 1;
+                  if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 705 then
+                    TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
+                        (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top) - 1;
+           end;
+           end;
         end;
 
       rllNumNF1.Font.Size := rllNumNF1.Font.Size - 2;
@@ -1003,18 +1020,14 @@ begin
   begin
     rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
-    rllNumNF0.Caption := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
-    rllNumNF1.Caption := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
-    rllSERIE0.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
-    rllSERIE1.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
-    rllNatOperacao.Caption := NatOp;
-    if tpNF = tnEntrada then // = entrada
-      rllEntradaSaida.Caption := '0'
-    else
-      rllEntradaSaida.Caption := '1';
-
-    rllEmissao.Caption := FormatDateBr(dEmi);
-    rllSaida.Caption := IfThen(DSaiEnt <> 0,FormatDateBr(dSaiEnt));
+    rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
+    rllNumNF1.Caption       := rllNumNF0.Caption;
+    rllSERIE0.Caption       := ACBrStr('SÉRIE ') + IntToStr(Serie);
+    rllSERIE1.Caption       := rllSERIE0.Caption;
+    rllNatOperacao.Caption  := NatOp;
+    rllEntradaSaida.Caption := tpNFToStr( tpNF );
+    rllEmissao.Caption      := FormatDateBr(dEmi);
+    rllSaida.Caption        := IfThen(DSaiEnt <> 0,FormatDateBr(dSaiEnt));
     //    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));
     //    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
     if versao = 2.00 then
@@ -1037,9 +1050,7 @@ begin
         rllDadosVariaveis1c.Visible := False;
       end;
       rlbCodigoBarrasFS.Visible := False;
-      // Alteracao aplicada para corrigir a impressao do protocolo da NFe
-      // quando emitindo DANFE candelado.
-      // Alterado por Jorge Henrique em 22/02/2013
+
       if FProtocoloNFe <> '' then
         rllDadosVariaveis3.Caption := FProtocoloNFe
       else
@@ -1054,12 +1065,12 @@ begin
       rllDadosVariaveis1a.Visible := False;
       rllDadosVariaveis1b.Visible := False;
       rllDadosVariaveis1c.Visible := False;
-      rlbCodigoBarras.Visible := True;
-      rlbCodigoBarrasFS.Caption := sChaveContingencia;
-      rlbCodigoBarrasFS.Visible := True;
+      rlbCodigoBarras.Visible     := True;
+      rlbCodigoBarrasFS.Caption   := sChaveContingencia;
+      rlbCodigoBarrasFS.Visible   := True;
       rllDadosVariaveis3_Descricao.Caption := 'DADOS DA NF-E';
-      rllDadosVariaveis3.Caption := FormatarChaveAcesso(sChaveContingencia);
-      rllAvisoContingencia.Caption := ACBrStr(
+      rllDadosVariaveis3.Caption    := FormatarChaveAcesso(sChaveContingencia);
+      rllAvisoContingencia.Caption  := ACBrStr(
         'DANFE em Contingência - ' +
         'Impresso em decorrência de problemas técnicos');
       if (dhCont > 0) and (xJust > '') then
@@ -1277,13 +1288,7 @@ procedure TfrlDANFeRLRetrato.Transporte;
 begin
   with FNFe.Transp do
   begin
-    case modFrete of
-      mfContaEmitente: rllTransModFrete.Caption := '0 - EMITENTE';
-      mfContaDestinatario: rllTransModFrete.Caption := '1 - DEST/REM';
-      mfContaTerceiros: rllTransModFrete.Caption := '2 - TERCEIROS';
-      mfSemFrete: rllTransModFrete.Caption := '9 - SEM FRETE';
-    end;
-
+    rllTransModFrete.Caption := modFreteToDesStr( modFrete );
     with Transporta do
     begin
       if Trim(CNPJCPF) <> '' then
@@ -1436,13 +1441,7 @@ begin
 
     for i := 0 to (FNFe.InfAdic.procRef.Count - 1) do
     begin
-      case FNFe.InfAdic.procRef.Items[i].indProc of
-        ipSEFAZ: sIndProc := 'SEFAZ';
-        ipJusticaFederal: sIndProc := ACBrStr('JUSTIÇA FEDERAL');
-        ipJusticaEstadual: sIndProc := ACBrStr('JUSTIÇA ESTADUAL');
-        ipSecexRFB: sIndProc := 'SECEX / RFB';
-        ipOutros: sIndProc := 'OUTROS';
-      end;
+      sIndProc := ACBrStr( indProcToDescrStr(FNFe.InfAdic.procRef.Items[i].indProc ) );
 
       if FNFe.InfAdic.procRef.Items[i].Index =
         (FNFe.InfAdic.procRef.Count - 1) then
@@ -1508,478 +1507,35 @@ end;
 
 procedure TfrlDANFeRLRetrato.Itens;
 var
-  nItem, i: integer;
-  vAux: String;
-  sDetalhamentoEspecifico: WideString;
-  dPercDesc: Double;
+  nItem : integer;
 begin
   for nItem := 0 to (FNFe.Det.Count - 1) do
   begin
     with FNFe.Det.Items[nItem] do
     begin
-      with Prod do
-      begin
-        with Imposto.ICMS do
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('CODIGO').AsString := CProd;
-          cdsItens.FieldByName('EAN').AsString := cEAN;
-          if FImprimirDetalhamentoEspecifico = True then
-          begin
-            sDetalhamentoEspecifico := #13#10;
-            if Prod.veicProd.chassi > '' then // XML de veículo novo
-            begin
-              if dv_tpOp in FDetVeiculos then
-              begin
-                case Prod.veicProd.tpOP of
-                  toVendaConcessionaria: vAux := '1-VENDA CONCESSIONÁRIA';
-                  toFaturamentoDireto: vAux := '2-FAT. DIRETO CONS. FINAL';
-                  toVendaDireta: vAux := '3-VENDA DIRETA';
-                  toOutros: vAux := '0-OUTROS';
-                end;
-
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('TIPO DA OPERAÇÃO: ') + ACBrStr(vAux) + #13#10;
-              end;
-
-              if dv_Chassi in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'CHASSI: ' + Prod.veicProd.chassi + #13#10;
-
-              if dv_cCor in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('CÓDIGO DA COR: ') + Prod.veicProd.cCor + #13#10;
-
-              if dv_xCor in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'NOME DA COR: ' + Prod.veicProd.xCor + #13#10;
-
-              if dv_pot in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('POTÊNCIA DO MOTOR: ') + Prod.veicProd.pot + #13#10;
-
-              if dv_cilin in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'CILINDRADAS: ' + Prod.veicProd.Cilin + #13#10;
-
-              if dv_pesoL in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('PESO LÍQUIDO: ') + Prod.veicProd.pesoL + #13#10;
-
-              if dv_pesoB in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'PESO BRUTO: ' + Prod.veicProd.pesoB + #13#10;
-
-              if dv_nSerie in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('NÚMERO DE SÉRIE: ') + Prod.veicProd.nSerie + #13#10;
-
-              if dv_tpComb in FDetVeiculos then
-              begin
-                case StrToInt(Prod.veicProd.tpComb) of
-                  1: vAux := '01-ÁLCOOL';
-                  2: vAux := '02-GASOLINA';
-                  3: vAux := '03-DIESEL';
-                  4: vAux := '04-GASOGÊNIO';
-                  5: vAux := '05-GÁS METANO';
-                  6: vAux := '06-ELETRICO/F INTERNA';
-                  7: vAux := '07-ELETRICO/F EXTERNA';
-                  8: vAux := '08-GASOLINA/GNC';
-                  9: vAux := '09-ÁLCOOL/GNC';
-                  10: vAux := '10-DIESEL / GNC';
-                  11: vAux := '11-VIDE CAMPO OBSERVAÇÃO';
-                  12: vAux := '12-ÁLCOOL/GNV';
-                  13: vAux := '13-GASOLINA/GNV';
-                  14: vAux := '14-DIESEL/GNV';
-                  15: vAux := '15-GÁS NATURAL VEICULAR';
-                  16: vAux := '16-ÁLCOOL/GASOLINA';
-                  17: vAux := '17-GASOLINA/ÁLCOOL/GNV';
-                  18: vAux := '18-GASOLINA/ELÉTRICO'
-                  else
-                    vAux := Prod.veicProd.tpComb;
-                end;
-
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr( 'COMBUSTÍVEL: ' + vAux ) + #13#10;
-              end;
-
-              if dv_nMotor in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('NÚMERO DO MOTOR: ') + Prod.veicProd.nMotor + #13#10;
-
-              if dv_CMT in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('CAP. MÁX. TRAÇÃO: ') + Prod.veicProd.CMT + #13#10;
-
-              if dv_dist in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('DISTÂNCIA ENTRE EIXOS: ') + Prod.veicProd.dist + #13#10;
-
-              if dv_anoMod in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'ANO DO MODELO: ' + IntToStr(Prod.veicProd.anoMod) + #13#10;
-
-              if dv_anoFab in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('ANO DE FABRICAÇÃO: ') +
-                  IntToStr(Prod.veicProd.anoFab) + #13#10;
-
-              if dv_tpPint in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'TIPO DE PINTURA: ' + Prod.veicProd.tpPint + #13#10;
-
-              if dv_tpVeic in FDetVeiculos then
-              begin
-                case Prod.veicProd.tpVeic of
-                  1: vAux := '01-BICICLETA';
-                  2: vAux := '02-CICLOMOTOR';
-                  3: vAux := '03-MOTONETA';
-                  4: vAux := '04-MOTOCICLETA';
-                  5: vAux := '05-TRICICLO';
-                  6: vAux := '06-AUTOMÓVEL';
-                  7: vAux := '07-MICROONIBUS';
-                  8: vAux := '08-ONIBUS';
-                  9: vAux := '09-BONDE';
-                  10: vAux := '10-REBOQUE';
-                  11: vAux := '11-SEMI-REBOQUE';
-                  12: vAux := '12-CHARRETE';
-                  13: vAux := '13-CAMIONETA';
-                  14: vAux := '14-CAMINHÃO';
-                  15: vAux := '15-CARROÇA';
-                  16: vAux := '16-CARRO DE MÃO';
-                  17: vAux := '17-CAMINHÃO TRATOR';
-                  18: vAux := '18-TRATOR DE RODAS';
-                  19: vAux := '19-TRATOR DE ESTEIRAS';
-                  20: vAux := '20-TRATOR MISTO';
-                  21: vAux := '21-QUADRICICLO';
-                  22: vAux := '22-CHASSI/PLATAFORMA';
-                  23: vAux := '23-CAMINHONETE';
-                  24: vAux := '24-SIDE-CAR';
-                  25: vAux := '25-UTILITÁRIO';
-                  26: vAux := '26-MOTOR-CASA'
-                  else
-                    vAux := IntToStr(Prod.veicProd.tpVeic);
-                end;
-
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('TIPO DE VEÍCULO: ' + vAux) + #13#10;
-              end;
-
-              if dv_espVeic in FDetVeiculos then
-              begin
-                case Prod.veicProd.espVeic of
-                  1: vAux := '01-PASSAGEIRO';
-                  2: vAux := '02-CARGA';
-                  3: vAux := '03-MISTO';
-                  4: vAux := '04-CORRIDA';
-                  5: vAux := '05-TRAÇÃO';
-                  6: vAux := '06-ESPECIAL';
-                  7: vAux := '07-COLEÇÃO'
-                  else
-                    vAux := IntToStr(Prod.veicProd.espVeic);
-                end;
-
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('ESPÉCIE DO VEÍCULO: ' + vAux) + #13#10;
-              end;
-
-              if dv_VIN in FDetVeiculos then
-              begin
-                if Prod.veicProd.VIN = 'R' then
-                  vAux := 'R-REMARCADO'
-                else
-                if Prod.veicProd.VIN = 'N' then
-                  vAux := 'N-NORMAL'
-                else
-                  vAux := Prod.veicProd.VIN;
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + 'VIN (CHASSI): ' + vAux + #13#10;
-              end;
-
-              if dv_condVeic in FDetVeiculos then
-              begin
-                case Prod.veicProd.condVeic of
-                  cvAcabado: vAux := '1-ACABADO';
-                  cvInacabado: vAux := '2-INACABADO';
-                  cvSemiAcabado: vAux := '3-SEMI-ACABADO';
-                end;
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('CONDIÇÃO DO VEÍCULO: ' + vAux) + #13#10;
-              end;
-
-              if dv_cMod in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('CÓDIGO MARCA MODELO: ') + Prod.veicProd.cMod + #13#10;
-
-              if dv_cCorDENATRAN in FDetVeiculos then
-              begin
-                case StrToInt(Prod.veicProd.cCorDENATRAN) of
-                  1: vAux := '01-AMARELO';
-                  2: vAux := '02-AZUL';
-                  3: vAux := '03-BEGE';
-                  4: vAux := '04-BRANCA';
-                  5: vAux := '05-CINZA';
-                  6: vAux := '06-DOURADA';
-                  7: vAux := '07-GRENÁ';
-                  8: vAux := '08-LARANJA';
-                  9: vAux := '09-MARROM';
-                  10: vAux := '10-PRATA';
-                  11: vAux := '11-PRETA';
-                  12: vAux := '12-ROSA';
-                  13: vAux := '13-ROXA';
-                  14: vAux := '14-VERDE';
-                  15: vAux := '15-VERMELHA';
-                  16: vAux := '16-FANTASIA'
-                  else
-                    vAux := Prod.veicProd.cCorDENATRAN;
-                end;
-
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('CÓDIGO COR DENATRAN: ' + vAux) + #13#10;
-              end;
-
-              if dv_lota in FDetVeiculos then
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('CAPACIDADE MÁXIMA DE LOTAÇÃO: ') +
-                  IntToStr(Prod.veicProd.lota) + #13#10;
-
-              if dv_tpRest in FDetVeiculos then
-              begin
-                case Prod.veicProd.tpRest of
-                  0: vAux := '0-NÃO HÁ';
-                  1: vAux := '1-ALIENAÇÃO FIDUCIÁRIA';
-                  2: vAux := '2-RESERVA DE DOMICÍLIO';
-                  3: vAux := '3-RESERVA DE DOMÍNIO';
-                  4: vAux := '4-PENHOR DE VEÍCULOS';
-                  9: vAux := '9-OUTRAS'
-                  else
-                    vAux := IntToStr(Prod.veicProd.tpRest);
-                end;
-
-                sDetalhamentoEspecifico :=
-                  sDetalhamentoEspecifico + ACBrStr('RESTRIÇÃO: ' + vAux);
-              end;
-
-              cdsItens.FieldByName('DESCRICAO').AsString :=
-                xProd + sDetalhamentoEspecifico;
-            end // // if Prod.veicProd.chassi > ''
-            else
-            begin
-              if Prod.med.Count > 0 then
-              begin
-                for i := 0 to Prod.med.Count - 1 do
-                begin
-                  if dm_nLote in FDetMedicamentos then
-                    sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + ACBrStr('NÚMERO DO LOTE: ') +
-                      Prod.med.Items[i].nLote + #13#10;
-
-                  if dm_qLote in FDetMedicamentos then
-                    sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + 'QUANTIDADE DO LOTE: ' +
-                      FormatFloat('###,##0.000', Prod.med.Items[i].qLote) + #13#10;
-
-                  if dm_dFab in FDetMedicamentos then
-                    sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + ACBrStr('DATA DE FABRICAÇÃO: ') +
-                      DateToStr(Prod.med.Items[i].dFab) + #13#10;
-
-                  if dm_dVal in FDetMedicamentos then
-                    sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + 'DATA DE VALIDADE: ' +
-                      DateToStr(Prod.med.Items[i].dVal) + #13#10;
-
-                  if dm_vPMC in FDetMedicamentos then
-                    sDetalhamentoEspecifico :=
-                      sDetalhamentoEspecifico + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') +
-                      FormatFloat('###,##0.00', Prod.med.Items[i].vPMC) + #13#10;
-
-                  if (sDetalhamentoEspecifico > '') and
-                    (sDetalhamentoEspecifico <> #13#10) then
-                  begin
-                    if i = Prod.med.Count - 1 then
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico
-                    else
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + #13#10;
-                  end;
-
-                end;  // for i := 0 to Prod.med.Count - 1
-
-                cdsItens.FieldByName('DESCRICAO').AsString :=
-                  xProd + sDetalhamentoEspecifico;
-              end // if Prod.med.Count > 0
-              else
-              begin
-                if Prod.arma.Count > 0 then
-                begin
-                  for i := 0 to Prod.arma.Count - 1 do
-                  begin
-                    if da_tpArma in FDetArmamentos then
-                    begin
-                      case Prod.arma.Items[i].tpArma of
-                        taUsoPermitido: vAux := '0-USO PERMITIDO';
-                        taUsoRestrito: vAux := '1-USO RESTRITO';
-                      end;
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + 'TIPO DE ARMA: ' + vAux + #13#10;
-                    end;
-
-                    if da_nSerie in FDetArmamentos then
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + ACBrStr('No. SÉRIE: ARMA') + Prod.arma.Items[i].nSerie + #13#10;
-
-                    if da_nCano in FDetArmamentos then
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + ACBrStr('No. SÉRIE CANO: ') + Prod.arma.Items[i].nCano + #13#10;
-
-                    if da_descr in FDetArmamentos then
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + ACBrStr('DESCRIÇÃO ARMA: ') + Prod.arma.Items[i].descr + #13#10;
-
-                    if (sDetalhamentoEspecifico > '') and
-                      (sDetalhamentoEspecifico <> #13#10) then
-                    begin
-                      if i = Prod.arma.Count - 1 then
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico
-                      else
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + #13#10;
-                    end;
-
-                  end;  // for i := 0 to Prod.arma.Count - 1
-
-                  cdsItens.FieldByName('DESCRICAO').AsString :=
-                    xProd + sDetalhamentoEspecifico;
-                end  // if Prod.arma.Count > 0
-                else
-                begin
-                  if Prod.comb.cProdANP > 0 then
-                  begin
-                    if dc_cProdANP in FDetCombustiveis then
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + ACBrStr('CÓD. PRODUTO ANP: ') + IntToStr(Prod.comb.cProdANP) + #13#10;
-
-                    if dc_CODIF in FDetCombustiveis then
-                      if Prod.comb.CODIF > '' then
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + ACBrStr('AUTORIZAÇÃO/CODIF: ') + Prod.comb.CODIF + #13#10;
-
-                    if dc_qTemp in FDetCombustiveis then
-                      if Prod.comb.qTemp > 0 then
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + 'QTD. FATURADA TEMP. AMBIENTE: ' +
-                          FormatFloat('###,##0.0000', Prod.comb.qTemp) + #13#10;
-
-                    if dc_UFCons in FDetCombustiveis then
-                      sDetalhamentoEspecifico :=
-                        sDetalhamentoEspecifico + 'UF DE CONSUMO: ' + Prod.comb.UFcons + #13#10;
-
-                    if Prod.comb.CIDE.qBCProd > 0 then
-                    begin
-                      if dc_qBCProd in FDetCombustiveis then
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + ACBrStr('BASE DE CÁLCULO CIDE: ') +
-                          FormatFloat('###,##0.0000', Prod.comb.CIDE.qBCProd) + #13#10;
-
-                      if dc_vAliqProd in FDetCombustiveis then
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + ACBrStr('ALÍQUOTA CIDE: ') +
-                          FormatFloat('###,##0.0000', Prod.comb.CIDE.vAliqProd) + #13#10;
-
-                      if dc_vCIDE in FDetCombustiveis then
-                        sDetalhamentoEspecifico :=
-                          sDetalhamentoEspecifico + 'VALOR CIDE: ' +
-                          FormatFloat('###,##0.00', Prod.comb.CIDE.vCIDE);
-                    end;  // if Prod.comb.CIDE.qBCProd > 0
-
-                    cdsItens.FieldByName('DESCRICAO').AsString :=
-                      xProd + sDetalhamentoEspecifico;
-                  end  // if Prod.comb.cProdANP > 0
-                  else
-                    cdsItens.FieldByName('DESCRICAO').AsString := XProd;
-                end; // else if Prod.arma.Count > 0
-              end; // else if Prod.med.Count > 0
-            end; // else if Prod.veicProd.chassi > ''
-          end // if FImprimirDetalhamentoEspecifico = True
-          else
-            cdsItens.FieldByName('DESCRICAO').AsString := XProd;
-
-          cdsItens.FieldByName('NCM').AsString    := NCM;
-          cdsItens.FieldByName('CFOP').AsString   := CFOP;
-          cdsItens.FieldByName('QTDE').AsString   := FormatFloat(format(sDisplayFormat, [FCasasDecimaisqCom, 0]), qCom);
-          cdsItens.FieldByName('VALOR').AsString  := FormatFloat(format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]), vUnCom);
-          cdsItens.FieldByName('UNIDADE').AsString:= UCom;
-          cdsItens.FieldByName('TOTAL').AsString  := FormatFloat('###,###,###,##0.00', vProd);
-
-          if FImprimirDescPorc = True then
-          begin
-            dPercDesc := (vDesc * 100) / vProd;
-            cdsItens.FieldByName('VALORDESC').AsString := FormatFloat('###,###,###,##0.00', dPercDesc);
-          end
-          else
-            cdsItens.FieldByName('VALORDESC').AsString := FormatFloat('###,###,###,##0.00', vDesc);
-
-          case FNFe.Emit.CRT of
-            crtRegimeNormal, crtSimplesExcessoReceita :
-              begin
-                cdsItens.FieldByName('CST').AsString          := OrigToStr(orig) + CSTICMSToStr(CST);
-                cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', VBC);
-                cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', PICMS);
-                cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', VICMS);
-                cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', vBCST);
-                cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', vICMSST);
-
-                lblCST.Caption    := 'CST';
-                lblCST.Font.Size  := 5;
-                lblCST.Top        := 18;
-                txtCST.DataField  := 'CST';
-              end;
-
-            crtSimplesNacional :
-              begin
-                cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
-                cdsItens.FieldByName('CST').AsString          := cdsItens.FieldByName('CSOSN').AsString;
-                cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', VBC);
-                cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', PICMS);
-                cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', VICMS);
-                cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', vBCST);
-                cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', vICMSST);
-
-                lblCST.Caption    := 'CSOSN';
-                lblCST.Font.Size  := 4;
-                lblCST.Top        := 19;
-                txtCST.DataField  := 'CSOSN';
-              end;
-
-          end;
-
-        end; // with Imposto.ICMS do
-
-        with Imposto.IPI do
-        begin
-          case CST of
-            ipi00,
-            ipi49,
-            ipi50,
-            ipi99 : begin
-                      cdsItens.FieldByName('ALIQIPI').AsString := FormatFloat('##0.00', Imposto.IPI.PIPI);
-                      cdsItens.FieldByName('ALIQIPI').AsString := FormatFloat('##0.00', Imposto.IPI.VIPI);
-                    end;
-            else
-                    begin
-                      cdsItens.FieldByName('ALIQIPI').AsString  := '0,00';
-                      cdsItens.FieldByName('VALORIPI').AsString := '0,00';
-                    end;
-            end;
-        end;
-        cdsItens.Post;
-      end; // with Prod do
-    end; //  with FNFe.Det.Items[nItem] do
-  end; //  for nItem := 0 to ( FNFe.Det.Count - 1 ) do
-
+      cdsItens.Append;
+      cdsItens.FieldByName('CODIGO').AsString       := Prod.CProd;
+      cdsItens.FieldByName('EAN').AsString          := Prod.cEAN;
+      cdsItens.FieldByName('DESCRICAO').AsString    := ManterXpod( Prod.XProd , nItem );
+      cdsItens.FieldByName('NCM').AsString          := Prod.NCM;
+      cdsItens.FieldByName('CST').AsString          := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
+      cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
+      cdsItens.FieldByName('CFOP').AsString         := Prod.CFOP;
+      cdsItens.FieldByName('UNIDADE').AsString      := Prod.UCom;
+      cdsItens.FieldByName('QTDE').AsString         := FormatFloat(format(sDisplayFormat, [FCasasDecimaisqCom, 0]), Prod.qCom);
+      cdsItens.FieldByName('VALOR').AsString        := FormatFloat(format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]), Prod.vUnCom);
+      cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', Prod.vProd);
+      cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
+      cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);
+      cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', Imposto.ICMS.PICMS);
+      cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VICMS);
+      cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vBCST);
+      cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vICMSST);
+      cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.PIPI);
+      cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.VIPI);
+      cdsItens.Post;
+    end;
+  end;
   cdsItens.First;
 end;
 
@@ -2055,12 +1611,9 @@ begin
         for x := 0 to (iQuantDup - 1) do
           with FNFe.Cobr.Dup[x] do
           begin
-            TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption :=
-              NDup;
-            TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption :=
-              FormatDateBr(DVenc);
-            TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption :=
-              FormatFloatBr(VDup);
+            TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption   := NDup;
+            TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption  := FormatDateBr(DVenc);
+            TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup);
           end;
       end; // if FNFe.Cobr.Dup.Count = 0
     end;  // ipPrazo
@@ -2134,24 +1687,10 @@ end;
 procedure TfrlDANFeRLRetrato.rlbDadosAdicionaisBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-{  if FPosCanhoto = pcCabecalho then
-    begin
-      rlbReciboHeader.Visible := False;
-      rlbDivisaoRecibo.Visible := False;
-    end;
-
-  // Posiciona a Marca D'água
-  rliMarcaDagua1.Top := rlbCabecalhoItens.Top +
-                     ((rlbDadosAdicionais.Top - rlbCabecalhoItens.Top) div 2) -
-                     (rliMarcaDagua1.Height div 2);}
-
   if FPosCanhoto = pcCabecalho then
   begin
     rlbReciboHeader.Visible := False;
-    // --> Silvio (Retirado por causa do controle de formulário da EIBrasil - 30-08-2012
-    //      rlPainelRecibo.Visible:= False;   // não existe no dfm revisão 6628- --> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
     rlbReciboHeader.Height := 66;
-    //--> Silvio (O painel foi criado para poder controlar o Saldo do Recibo) - 30-08-2012
     rlbDivisaoRecibo.Visible := False;
   end;
 
@@ -2165,20 +1704,6 @@ end;
 procedure TfrlDANFeRLRetrato.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   // Controla os itens por página
-{  iItemAtual := iItemAtual + 1;
-
-  if FProdutosPorPagina = 0 then
-    rlbItens.PageBreaking := pbNone
-  else
-    begin
-      if iItemAtual = FProdutosPorPagina then
-        rlbItens.PageBreaking := pbBeforePrint
-      else
-        rlbItens.PageBreaking := pbNone;
-    end; // if FProdutosPorPagina = 0
-}
-
-  //..silvio
   if RLNFe.PageNumber >= 2 then
     FProdutosPorPagina := 60
   else
@@ -2213,27 +1738,46 @@ end;
 
 procedure TfrlDANFeRLRetrato.ConfigureDataSource;
 begin
-  self.rlmDescricao.DataSource := DataSource1;
-  self.RLNFe.DataSource := DataSource1;
-  self.txtCodigo.DataSource := DataSource1;
-  self.txtNCM.DataSource := DataSource1;
-  self.txtCST.DataSource := DataSource1;
-  self.txtCFOP.DataSource := DataSource1;
-  self.txtUnidade.DataSource := DataSource1;
-  self.txtQuantidade.DataSource := DataSource1;
-  self.txtValorUnitario.DataSource := DataSource1;
-  self.txtValorTotal.DataSource := DataSource1;
-  self.txtBaseICMS.DataSource := DataSource1;
-  self.txtValorICMS.DataSource := DataSource1;
-  self.txtValorIPI.DataSource := DataSource1;
-  self.txtAliqICMS.DataSource := DataSource1;
-  self.txtAliqIPI.DataSource := DataSource1;
-  self.txtValorDesconto.DataSource := DataSource1;
+  rlmDescricao.DataSource := DataSource1;
+  RLNFe.DataSource := DataSource1;
+  txtCodigo.DataSource := DataSource1;
+  txtNCM.DataSource := DataSource1;
+  txtCST.DataSource := DataSource1;
+  txtCFOP.DataSource := DataSource1;
+  txtUnidade.DataSource := DataSource1;
+  txtQuantidade.DataSource := DataSource1;
+  txtValorUnitario.DataSource := DataSource1;
+  txtValorTotal.DataSource := DataSource1;
+  txtBaseICMS.DataSource := DataSource1;
+  txtValorICMS.DataSource := DataSource1;
+  txtValorIPI.DataSource := DataSource1;
+  txtAliqICMS.DataSource := DataSource1;
+  txtAliqIPI.DataSource := DataSource1;
+  txtValorDesconto.DataSource := DataSource1;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbCabecalhoItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
+  case FNFe.Emit.CRT of
+    crtRegimeNormal,
+    crtSimplesExcessoReceita :
+      begin
+        lblCST.Caption    := 'CST';
+        lblCST.Font.Size  := 5;
+        lblCST.Top        := 18;
+        txtCST.DataField  := 'CST';
+      end;
+
+    crtSimplesNacional :
+      begin
+        lblCST.Caption    := 'CSOSN';
+        lblCST.Font.Size  := 4;
+        lblCST.Top        := 19;
+        txtCST.DataField  := 'CSOSN';
+      end;
+  end;
+
   if FImprimirDescPorc = True then
     lblPercValorDesc.Caption := 'PERC.(%)'
   else
@@ -2250,4 +1794,125 @@ begin
   iLimiteCaracteresContinuacao := 129;
 end;
 
+Function TfrlDANFeRLRetrato.ManterVeiculos( inItem:  integer  ) : String;
+begin
+  Result := '';
+  with FNFe.Det.Items[inItem].Prod do
+  begin
+    if veicProd.chassi > '' then
+    begin
+      if dv_tpOp in FDetVeiculos          then Result := Result + ACBrStr('TIPO DA OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + #13#10;
+      if dv_Chassi in FDetVeiculos        then Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + #13#10;
+      if dv_cCor in FDetVeiculos          then Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + #13#10;
+      if dv_xCor in FDetVeiculos          then Result := Result + ACBrStr('NOME DA COR: ') + veicProd.xCor + #13#10;
+      if dv_pot in FDetVeiculos           then Result := Result + ACBrStr('POTÊNCIA DO MOTOR: ') + veicProd.pot + #13#10;
+      if dv_cilin in FDetVeiculos         then Result := Result + ACBrStr('CILINDRADAS: ') + veicProd.Cilin + #13#10;
+      if dv_pesoL in FDetVeiculos         then Result := Result + ACBrStr('PESO LÍQUIDO: ') + veicProd.pesoL + #13#10;
+      if dv_pesoB in FDetVeiculos         then Result := Result + ACBrStr('PESO BRUTO: ' )+ veicProd.pesoB + #13#10;
+      if dv_nSerie in FDetVeiculos        then Result := Result + ACBrStr('NÚMERO DE SÉRIE: ') + veicProd.nSerie + #13#10;
+      if dv_tpComb in FDetVeiculos        then Result := Result + ACBrStr('COMBUSTÍVEL: ' + VeiculosCombustivelStr( veicProd.tpComb ) ) + #13#10;
+      if dv_nMotor in FDetVeiculos        then Result := Result + ACBrStr('NÚMERO DO MOTOR: ') + veicProd.nMotor + #13#10;
+      if dv_CMT in FDetVeiculos           then Result := Result + ACBrStr('CAP. MÁX. TRAÇÃO: ') + veicProd.CMT + #13#10;
+      if dv_dist in FDetVeiculos          then Result := Result + ACBrStr('DISTÂNCIA ENTRE EIXOS: ') + veicProd.dist + #13#10;
+      if dv_anoMod in FDetVeiculos        then Result := Result + ACBrStr('ANO DO MODELO: ' )+ IntToStr(veicProd.anoMod) + #13#10;
+      if dv_anoFab in FDetVeiculos        then Result := Result + ACBrStr('ANO DE FABRICAÇÃO: ') + IntToStr(veicProd.anoFab) + #13#10;
+      if dv_tpPint in FDetVeiculos        then Result := Result + ACBrStr('TIPO DE PINTURA: ') + veicProd.tpPint + #13#10;
+      if dv_tpVeic in FDetVeiculos        then Result := Result + ACBrStr('TIPO DE VEÍCULO: ' +VeiculosTipoStr( veicProd.tpVeic ) )+ #13#10;
+      if dv_espVeic in FDetVeiculos       then Result := Result + ACBrStr('ESPÉCIE DO VEÍCULO: ' +VeiculosEspecieStr( veicProd.espVeic )) + #13#10;
+      if dv_VIN in FDetVeiculos           then Result := Result + ACBrStr('VIN (CHASSI): ' + VeiculosVinStr( veicProd.VIN ) )+ #13#10;
+      if dv_condVeic in FDetVeiculos      then Result := Result + ACBrStr('CONDIÇÃO DO VEÍCULO: ' +VeiculosCondicaoStr( veicProd.condVeic)) + #13#10;
+      if dv_cMod in FDetVeiculos          then Result := Result + ACBrStr('CÓDIGO MARCA MODELO: ') + veicProd.cMod + #13#10;
+      if dv_cCorDENATRAN in FDetVeiculos  then Result := Result + ACBrStr('CÓDIGO COR DENATRAN: ' +VeiculosCorDENATRANSTr( veicProd.cCorDENATRAN )) + #13#10;
+      if dv_lota in FDetVeiculos          then Result := Result + ACBrStr('CAPACIDADE MÁXIMA DE LOTAÇÃO: ') +IntToStr(veicProd.lota) + #13#10;
+      if dv_tpRest in FDetVeiculos        then Result := Result + ACBrStr('RESTRIÇÃO: ' +VeiculosRestricaoStr( veicProd.tpRest ) )+ #13#10;
+    end;
+  end;
+end;
+
+
+Function TfrlDANFeRLRetrato.ManterMedicamentos( inItem:  integer  ) : String;
+Var
+  i : Integer;
+begin
+  Result := '';
+  with FNFe.Det.Items[inItem].Prod do
+  begin
+    if med.Count > 0 then
+    begin
+      for i := 0 to med.Count - 1 do
+      begin
+        if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + #13#10;
+        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + #13#10;
+        if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + #13#10;
+        if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE VALIDADE: ')   + DateToStr(med.Items[i].dVal) + #13#10;
+        if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
+      end;
+    end;
+  end;
+end;
+
+Function TfrlDANFeRLRetrato.ManterArma( inItem:  integer  ) : String;
+Var
+  i : Integer;
+begin
+  Result := '';
+  with FNFe.Det.Items[inItem].Prod do
+  begin
+    if arma.Count > 0 then
+    begin
+      for i := 0 to arma.Count - 1 do
+      begin
+        if da_tpArma in FDetArmamentos then Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + #13#10;
+        if da_nSerie in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + #13#10;
+        if da_nCano  in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + #13#10;
+        if da_descr  in FDetArmamentos then Result := Result + ACBrStr('DESCRIÇÃO ARMA: ') + arma.Items[i].descr + #13#10;
+       end;
+    end;
+  end;
+end;
+
+
+Function TfrlDANFeRLRetrato.ManterCombustivel( inItem:  integer  ) : String;
+begin
+  Result := '';
+  with FNFe.Det.Items[inItem].Prod do
+  begin
+    if comb.cProdANP > 0 then
+    begin
+      if dc_cProdANP    in FDetCombustiveis then Result := Result + ACBrStr('CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + #13#10;
+      if dc_CODIF       in FDetCombustiveis then
+                        if comb.CODIF > ''  then Result := Result + ACBrStr('AUTORIZAÇÃO/CODIF: ') + comb.CODIF + #13#10;
+      if dc_qTemp       in FDetCombustiveis then
+                          if comb.qTemp > 0 then Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloat('###,##0.0000', comb.qTemp) + #13#10;
+      if dc_UFCons      in FDetCombustiveis then Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + #13#10;
+      if comb.CIDE.qBCProd > 0 then
+      begin
+        if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + #13#10;
+        if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + #13#10;
+        if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat('###,##0.00', comb.CIDE.vCIDE);
+      end;
+    end;
+  end;
+end;
+
+Function TfrlDANFeRLRetrato.ManterDesPro( dvDesc ,dvProd : Double) : Double;
+begin
+  if FImprimirDescPorc = True then
+    Result := (dvDesc * 100) / dvProd
+  else
+    Result:= dvDesc;
+end;
+
+Function TfrlDANFeRLRetrato.ManterXpod( sXProd : String;  inItem : Integer ) : String;
+begin
+  Result := sXProd;
+  if FImprimirDetalhamentoEspecifico = true then
+  begin
+    Result := Result + #13#10;
+    Result := Result + ManterVeiculos( inItem );
+    Result := Result + ManterMedicamentos( inItem );
+    Result := Result + ManterArma( inItem );
+    Result := Result + ManterCombustivel( inItem );
+  end;
+end;
 end.

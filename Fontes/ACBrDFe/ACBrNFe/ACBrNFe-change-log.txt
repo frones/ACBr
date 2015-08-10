@@ -49,16 +49,21 @@ Símbolo : Significado
 
 
 09/08/2015
+-- ACBrNFeDANFeRLRetrato --    (por: hleorj)
+[*]  Diversos ajustes no código fonte. (refactoring)
+[+]  Implantação de Encerrante no grupo combustível.
+
 -- pcnConversaoNFe --   (por: hleorj)
-function VeiculosRestricaoStr( const iRestricao :Integer ): String;
-function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
-function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
-function VeiculosVinStr( const sVin: String ): String;
-function VeiculosEspecieStr( const iEspecie : Integer ): String;
-function VeiculosTipoStr( const iTipoVeic : Integer ): String;
-function VeiculosCombustivelStr( const sTpComb : String ): String;
-function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
-function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+[+]  function VeiculosRestricaoStr( const iRestricao :Integer ): String;
+[+]  function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
+[+]  function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
+[+]  function VeiculosVinStr( const sVin: String ): String;
+[+]  function VeiculosEspecieStr( const iEspecie : Integer ): String;
+[+]  function VeiculosTipoStr( const iTipoVeic : Integer ): String;
+[+]  function VeiculosCombustivelStr( const sTpComb : String ): String;
+[+]  function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
+[+]  function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+     http://www.projetoacbr.com.br/forum/index.php?showtopic=23439
 
 
 06/08/2015

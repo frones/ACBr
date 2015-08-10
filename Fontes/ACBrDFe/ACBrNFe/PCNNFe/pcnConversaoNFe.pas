@@ -127,6 +127,17 @@ function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 function tpIntegraToStr(const t: TtpIntegra): string;
 function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 
+function VeiculosRestricaoStr( const iRestricao :Integer ): String;
+function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
+function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
+function VeiculosVinStr( const sVin: String ): String;
+function VeiculosEspecieStr( const iEspecie : Integer ): String;
+function VeiculosTipoStr( const iTipoVeic : Integer ): String;
+function VeiculosCombustivelStr( const sTpComb : String ): String;
+function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
+
+function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+
 implementation
 
 uses
@@ -345,6 +356,160 @@ end;
 function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
+end;
+
+function VeiculosRestricaoStr( const iRestricao : Integer ): String;
+begin
+  case iRestricao of
+    0: result := '0-NÃO HÁ';
+    1: result := '1-ALIENAÇÃO FIDUCIÁRIA';
+    2: result := '2-RESERVA DE DOMICÍLIO';
+    3: result := '3-RESERVA DE DOMÍNIO';
+    4: result := '4-PENHOR DE VEÍCULOS';
+    9: result := '9-OUTRAS'
+    else
+      result := IntToStr(iRestricao)+ 'NÃO DEFINIDO' ;
+  end;
+end;
+
+
+function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
+begin
+  case StrToInt( sCorDENATRAN ) of
+     1: result := '01-AMARELO';
+     2: result := '02-AZUL';
+     3: result := '03-BEGE';
+     4: result := '04-BRANCA';
+     5: result := '05-CINZA';
+     6: result := '06-DOURADA';
+     7: result := '07-GRENÁ';
+     8: result := '08-LARANJA';
+     9: result := '09-MARROM';
+    10: result := '10-PRATA';
+    11: result := '11-PRETA';
+    12: result := '12-ROSA';
+    13: result := '13-ROXA';
+    14: result := '14-VERDE';
+    15: result := '15-VERMELHA';
+    16: result := '16-FANTASIA'
+    else
+      result := sCorDENATRAN + 'NÃO DEFINIDA' ;
+  end;
+end;
+
+function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
+begin
+  case condVeic of
+    cvAcabado     : result := '1-ACABADO';
+    cvInacabado   : result := '2-INACABADO';
+    cvSemiAcabado : result := '3-SEMI-ACABADO';
+  end;
+end;
+
+
+function VeiculosVinStr( const sVin: String ): String;
+begin
+  // Enumerar Vim no futuro ?
+  if sVIN = 'R' then
+      result := 'R-REMARCADO'
+  else
+    if sVIN = 'N' then
+      result:= 'N-NORMAL'
+    else
+      result := 'NÃO DEFINIDA' ;
+end;
+
+function VeiculosEspecieStr( const iEspecie : Integer ): String;
+begin
+  case iEspecie of
+    1: result := '01-PASSAGEIRO';
+    2: result := '02-CARGA';
+    3: result := '03-MISTO';
+    4: result := '04-CORRIDA';
+    5: result := '05-TRAÇÃO';
+    6: result := '06-ESPECIAL';
+    7: result := '07-COLEÇÃO'
+    else
+      result := IntToStr(iEspecie ) + 'NÃO DEFINIDA' ;
+    end;
+end;
+
+function VeiculosTipoStr( const iTipoVeic : Integer ): String;
+begin
+  case iTipoVeic of
+     1: result := '01-BICICLETA';
+     2: result := '02-CICLOMOTOR';
+     3: result := '03-MOTONETA';
+     4: result := '04-MOTOCICLETA';
+     5: result := '05-TRICICLO';
+     6: result := '06-AUTOMÓVEL';
+     7: result := '07-MICROONIBUS';
+     8: result := '08-ONIBUS';
+     9: result := '09-BONDE';
+    10: result := '10-REBOQUE';
+    11: result := '11-SEMI-REBOQUE';
+    12: result := '12-CHARRETE';
+    13: result := '13-CAMIONETA';
+    14: result := '14-CAMINHÃO';
+    15: result := '15-CARROÇA';
+    16: result := '16-CARRO DE MÃO';
+    17: result := '17-CAMINHÃO TRATOR';
+    18: result := '18-TRATOR DE RODAS';
+    19: result := '19-TRATOR DE ESTEIRAS';
+    20: result := '20-TRATOR MISTO';
+    21: result := '21-QUADRICICLO';
+    22: result := '22-CHASSI/PLATAFORMA';
+    23: result := '23-CAMINHONETE';
+    24: result := '24-SIDE-CAR';
+    25: result := '25-UTILITÁRIO';
+    26: result := '26-MOTOR-CASA'
+    else
+      result := IntToStr(iTipoVeic)+'NÃO DEFINIDO' ;
+    end;
+end;
+
+function VeiculosCombustivelStr( const sTpComb : String ): String;
+begin
+  case StrToInt( stpComb) of
+     1: result := '01-ÁLCOOL';
+     2: result := '02-GASOLINA';
+     3: result := '03-DIESEL';
+     4: result := '04-GASOGÊNIO';
+     5: result := '05-GÁS METANO';
+     6: result := '06-ELETRICO/F INTERNA';
+     7: result := '07-ELETRICO/F EXTERNA';
+     8: result := '08-GASOLINA/GNC';
+     9: result := '09-ÁLCOOL/GNC';
+    10: result := '10-DIESEL / GNC';
+    11: result := '11-VIDE CAMPO OBSERVAÇÃO';
+    12: result := '12-ÁLCOOL/GNV';
+    13: result := '13-GASOLINA/GNV';
+    14: result := '14-DIESEL/GNV';
+    15: result := '15-GÁS NATURAL VEICULAR';
+    16: result := '16-ÁLCOOL/GASOLINA';
+    17: result := '17-GASOLINA/ÁLCOOL/GNV';
+    18: result := '18-GASOLINA/ELÉTRICO'
+    else
+      result := stpComb +'NÃO DEFINIDO' ;
+    end;
+end;
+
+function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
+begin
+  case TtpOP of
+    toVendaConcessionaria : result := '1-VENDA CONCESSIONÁRIA';
+    toFaturamentoDireto   : result := '2-FAT. DIRETO CONS. FINAL';
+    toVendaDireta         : result := '3-VENDA DIRETA';
+    toOutros              : result := '0-OUTROS';
+  end;
+
+end;
+function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+begin
+  case TtpArma of
+    taUsoPermitido: result := '0-USO PERMITIDO';
+    taUsoRestrito : result := '1-USO RESTRITO';
+  end;
 end;
 
 end.

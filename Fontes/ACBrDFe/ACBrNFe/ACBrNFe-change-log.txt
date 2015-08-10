@@ -48,6 +48,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/08/2015
+-- pcnConversaoNFe --   (por: hleorj)
+function VeiculosRestricaoStr( const iRestricao :Integer ): String;
+function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
+function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
+function VeiculosVinStr( const sVin: String ): String;
+function VeiculosEspecieStr( const iEspecie : Integer ): String;
+function VeiculosTipoStr( const iTipoVeic : Integer ): String;
+function VeiculosCombustivelStr( const sTpComb : String ): String;
+function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
+function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+
+
 06/08/2015
 -- ACBrNFeDANFeRLRetrato --
 [*]  Ajustes na danfe para aceita Nfe denegadas corretamente (  205 , 301 e 302 )

@@ -87,9 +87,7 @@ type
     FSalvarEvento: boolean;
     FSalvarApenasNFeProcessadas: boolean;
     FPathNFe: String;
-    FPathCan: String;
     FPathInu: String;
-    FPathCCe: String;
     FPathEvento: String;
     FDownloadNFe: TDownloadConfNFe;
   public
@@ -97,23 +95,19 @@ type
     destructor Destroy; override;
     procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); overload;
 
-    function GetPathCan(CNPJ: String = ''): String;
     function GetPathInu(CNPJ: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
-    function GetPathCCe(CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
-    property SalvarCCeCanEvento: boolean read FSalvarEvento
+    property SalvarEvento: boolean read FSalvarEvento
       write FSalvarEvento default False;
     property SalvarApenasNFeProcessadas: boolean
       read FSalvarApenasNFeProcessadas write FSalvarApenasNFeProcessadas default False;
     property PathNFe: String read FPathNFe write FPathNFe;
-    property PathCan: String read FPathCan write FPathCan;
     property PathInu: String read FPathInu write FPathInu;
-    property PathCCe: String read FPathCCe write FPathCCe;
     property PathEvento: String read FPathEvento write FPathEvento;
     property DownloadNFe: TDownloadConfNFe read FDownloadNFe write FDownloadNFe;
   end;
@@ -243,9 +237,7 @@ begin
   FSalvarEvento := False;
   FSalvarApenasNFeProcessadas := False;
   FPathNFe := '';
-  FPathCan := '';
   FPathInu := '';
-  FPathCCe := '';
   FPathEvento := '';
 end;
 
@@ -260,24 +252,12 @@ begin
   inherited Assign(DeArquivosConfNFe);
 
   EmissaoPathNFe             := DeArquivosConfNFe.EmissaoPathNFe;
-  SalvarCCeCanEvento         := DeArquivosConfNFe.SalvarCCeCanEvento;
+  SalvarEvento               := DeArquivosConfNFe.SalvarEvento;
   SalvarApenasNFeProcessadas := DeArquivosConfNFe.SalvarApenasNFeProcessadas;
   PathNFe                    := DeArquivosConfNFe.PathNFe;
-  PathCan                    := DeArquivosConfNFe.PathCan;
   PathInu                    := DeArquivosConfNFe.PathInu;
-  PathCCe                    := DeArquivosConfNFe.PathCCe;
   PathEvento                 := DeArquivosConfNFe.PathEvento;
   FDownloadNFe.Assign(DeArquivosConfNFe.DownloadNFe);
-end;
-
-function TArquivosConfNFe.GetPathCan(CNPJ: String = ''): String;
-begin
-  Result := GetPath(FPathCan, 'Can', CNPJ);
-end;
-
-function TArquivosConfNFe.GetPathCCe(CNPJ: String = ''): String;
-begin
-  Result := GetPath(FPathCCe, 'CCe', CNPJ);
 end;
 
 function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;

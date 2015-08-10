@@ -2274,14 +2274,7 @@ function TNFeEnvEvento.GerarPathEvento: String;
 begin
   with FEvento.Evento.Items[0].InfEvento do
   begin
-    if (tpEvento = teCCe) and
-      (not FPConfiguracoesNFe.Arquivos.SalvarCCeCanEvento) then
-      Result := FPConfiguracoesNFe.Arquivos.GetPathCCe
-    else if (tpEvento = teCancelamento) and
-      (not FPConfiguracoesNFe.Arquivos.SalvarCCeCanEvento) then
-      Result := FPConfiguracoesNFe.Arquivos.GetPathCan
-    else
-      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(tpEvento);
+    Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(tpEvento);
   end;
 end;
 

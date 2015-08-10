@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/08/2015
+[*] Removido as propriedades PathCCe e PathCan e alterado o nome da propriedade
+    SalvarCCeCanEvento para SalvarEvento.
+    por: Italo Jurisato Junior
+
 09/08/2015
 -- ACBrNFeDANFeRLRetrato --    (por: hleorj)
 [*]  Diversos ajustes no código fonte. (refactoring)
@@ -77,7 +82,6 @@ Símbolo : Significado
 [*]  Revisão de Strings com acentos convertendo-as com ACBrStr()
 [*]  Remoção de comentários desnecessários, indentação
      (por: DSA)
-
 
 
 05/08/2015

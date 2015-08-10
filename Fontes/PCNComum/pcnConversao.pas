@@ -222,8 +222,10 @@ function StrToCSTPIS(out ok: boolean; const s: string): TpcnCstPIS;
 function CSTCOFINSToStr(const t: TpcnCstCOFINS): string;
 function StrToCSTCOFINS(out ok: boolean; const s: string): TpcnCstCOFINS;
 function modFreteToStr(const t: TpcnModalidadeFrete): string;
+function modFreteToDesStr(const t: TpcnModalidadeFrete): string;
 function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 function indProcToStr(const t: TpcnIndicadorProcesso): string;
+function indProcToDescrStr(const t: TpcnIndicadorProcesso): string;
 function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
 function CRTToStr(const t: TpcnCRT): string;
 function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
@@ -712,10 +714,31 @@ begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '9'], [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfSemFrete]);
 end;
 
+function modFreteToDesStr(const t: TpcnModalidadeFrete): string;
+begin
+  case t  of
+    mfContaEmitente     : result := '0 - EMITENTE';
+    mfContaDestinatario : result := '1 - DEST/REM';
+    mfContaTerceiros    : result := '2 - TERCEIROS';
+    mfSemFrete          : result := '9 - SEM FRETE';
+  end;
+end;
+
 // 401i - Indicador da origem do processo **************************************
 function indProcToStr(const t: TpcnIndicadorProcesso): string;
 begin
   result := EnumeradoToStr(t, ['0', '1', '2', '3', '9'], [ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros]);
+end;
+
+function indProcToDescrStr(const t: TpcnIndicadorProcesso): string;
+begin
+  case t of
+    ipSEFAZ           : result  := 'SEFAZ';
+    ipJusticaFederal  : result  := 'JUSTIÇA FEDERAL';
+    ipJusticaEstadual : result  := 'JUSTIÇA ESTADUAL';
+    ipSecexRFB        : result  := 'SECEX / RFB';
+    ipOutros          : result  := 'OUTROS';
+  end;
 end;
 
 function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;

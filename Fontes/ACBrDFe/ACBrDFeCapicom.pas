@@ -566,6 +566,8 @@ end;
 
 procedure TDFeCapicom.ConfiguraReqResp(const URL, SoapAction: String);
 begin
+  CarregarCertificadoSeNecessario;
+
   with FpDFeSSL do
   begin
     if ProxyHost <> '' then

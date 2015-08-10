@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/08/2015   (por: DSA)
+-- ACBrDFeCapicom --
+[-] Tentativa de correção de falha de atribuição de Senha em Certificado A3
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23508
+
 07/08/2015   (por: DSA)
 -- ACBrDFeCapicom --
 [-] Tentativa de correção de A.V.

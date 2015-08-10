@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2015
+[*] O componente estava criando uma sub-pasta chamada evento em vez de 
+    criar as sub-pastas: Cancelamento, CCe, etc.
+    por: Italo Jurisato Junior
+
 07/08/2015
 [*] Criado o evento Clear em diversas chamadas ao Web Services, se executado 
     antes da chamada garante que dados do retorno anterior será limpo.

@@ -251,7 +251,7 @@ begin
     end;
   end;
 
-  Dir := PathWithDelim(Dir) + 'Evento';
+  Dir := PathWithDelim(Dir) + Evento;
 
   if not DirectoryExists(Dir) then
      ForceDirectories(Dir);

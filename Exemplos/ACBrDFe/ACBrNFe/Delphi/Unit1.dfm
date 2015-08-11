@@ -127,7 +127,7 @@ object Form1: TForm1
           Top = 0
           Width = 275
           Height = 437
-          ActivePage = TabSheet4
+          ActivePage = TabSheet13
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -1046,12 +1046,12 @@ object Form1: TForm1
               Caption = 'Salvar NFe pelo campo Data de Emiss'#227'o'
               TabOrder = 3
             end
-            object cbxSalvaCCeCancelamentoPathEvento: TCheckBox
+            object cbxSalvaPathEvento: TCheckBox
               Left = 6
               Top = 64
               Width = 233
               Height = 17
-              Caption = 'Salvar Arqs Canc./CCe na pasta Eventos'
+              Caption = 'Salvar Arqs de Eventos'
               TabOrder = 4
             end
             object cbxSepararPorCNPJ: TCheckBox

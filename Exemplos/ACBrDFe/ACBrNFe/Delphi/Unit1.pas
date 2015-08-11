@@ -180,7 +180,7 @@ type
     cbxPastaMensal: TCheckBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxEmissaoPathNFe: TCheckBox;
-    cbxSalvaCCeCancelamentoPathEvento: TCheckBox;
+    cbxSalvaPathEvento: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
     sbPathNFe: TSpeedButton;
     Label35: TLabel;
@@ -326,7 +326,7 @@ begin
       Ini.WriteBool(   'Arquivos','PastaMensal'     ,cbxPastaMensal.Checked) ;
       Ini.WriteBool(   'Arquivos','AddLiteral'      ,cbxAdicionaLiteral.Checked) ;
       Ini.WriteBool(   'Arquivos','EmissaoPathNFe'  ,cbxEmissaoPathNFe.Checked) ;
-      Ini.WriteBool(   'Arquivos','SalvarCCeCanPathEvento',cbxSalvaCCeCancelamentoPathEvento.Checked) ;
+      Ini.WriteBool(   'Arquivos','SalvarPathEvento',cbxSalvaPathEvento.Checked) ;
       Ini.WriteBool(   'Arquivos','SepararPorCNPJ'  ,cbxSepararPorCNPJ.Checked) ;
       Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararPorModelo.Checked) ;
       Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
@@ -477,19 +477,19 @@ begin
          ProxyPass := edtProxySenha.Text;
        end;
 
-      cbxSalvarArqs.Checked      := Ini.ReadBool(   'Arquivos','Salvar'     ,false);
-      cbxPastaMensal.Checked     := Ini.ReadBool(   'Arquivos','PastaMensal',false);
-      cbxAdicionaLiteral.Checked := Ini.ReadBool(   'Arquivos','AddLiteral' ,false);
-      cbxEmissaoPathNFe.Checked  := Ini.ReadBool(   'Arquivos','EmissaoPathNFe',false);
-      cbxSalvaCCeCancelamentoPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarCCeCanPathEvento',false);
-      cbxSepararPorCNPJ.Checked  := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
-      cbxSepararPorModelo.Checked  := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
-      edtPathNFe.Text            := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
-      edtPathCan.Text            := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
-      edtPathInu.Text            := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
-      edtPathDPEC.Text           := Ini.ReadString( 'Arquivos','PathDPEC'   ,'') ;
-      edtPathCCe.Text            := Ini.ReadString( 'Arquivos','PathCCe'   ,'') ;
-      edtPathEvento.Text         := Ini.ReadString( 'Arquivos','PathEvento','') ;
+      cbxSalvarArqs.Checked       := Ini.ReadBool(   'Arquivos','Salvar'     ,false);
+      cbxPastaMensal.Checked      := Ini.ReadBool(   'Arquivos','PastaMensal',false);
+      cbxAdicionaLiteral.Checked  := Ini.ReadBool(   'Arquivos','AddLiteral' ,false);
+      cbxEmissaoPathNFe.Checked   := Ini.ReadBool(   'Arquivos','EmissaoPathNFe',false);
+      cbxSalvaPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarPathEvento',false);
+      cbxSepararPorCNPJ.Checked   := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
+      cbxSepararPorModelo.Checked := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
+      edtPathNFe.Text             := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
+      edtPathCan.Text             := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
+      edtPathInu.Text             := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
+      edtPathDPEC.Text            := Ini.ReadString( 'Arquivos','PathDPEC'   ,'') ;
+      edtPathCCe.Text             := Ini.ReadString( 'Arquivos','PathCCe'   ,'') ;
+      edtPathEvento.Text          := Ini.ReadString( 'Arquivos','PathEvento','') ;
 
       with ACBrNFe1.Configuracoes.Arquivos do
        begin
@@ -497,14 +497,12 @@ begin
          SepararPorMes      := cbxPastaMensal.Checked;
          AdicionarLiteral   := cbxAdicionaLiteral.Checked;
          EmissaoPathNFe     := cbxEmissaoPathNFe.Checked;
-         SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
+         SalvarEvento       := cbxSalvaPathEvento.Checked;
          SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
          SepararPorModelo   := cbxSepararPorModelo.Checked;
          PathSalvar         := edtPathLogs.Text;
          PathSchemas        := edtPathSchemas.Text;
          PathNFe            := edtPathNFe.Text;
-         PathCan            := edtPathCan.Text;
-         PathCCe            := edtPathCCe.Text;
          PathInu            := edtPathInu.Text;
          PathEvento         := edtPathEvento.Text;
        end;

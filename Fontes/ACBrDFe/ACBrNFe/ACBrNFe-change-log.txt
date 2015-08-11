@@ -58,6 +58,12 @@ Símbolo : Significado
 [+]  Implementado o Grupo de Encerrantes
 [-]  Correção de exibição de VALORIPI
 
+-- ACBrNFeDANFeRLPaisagem --    (por: hleorj)
+[*]  Refactoring da Danfe Paisagem.
+[+]  Ajuste para aceitar denegada
+[+]  Implantacao de Encerrante no grupo combustivel;
+     http://www.projetoacbr.com.br/forum/index.php?showtopic=23505
+
 09/08/2015
 -- ACBrNFeDANFeRLRetrato --    (por: hleorj)
 [*]  Diversos ajustes no código fonte. (refactoring)

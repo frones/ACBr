@@ -717,6 +717,7 @@ type
     SbArqLog: TSpeedButton;
     SbArqLog2: TSpeedButton;
     sbArquivoWebServices: TSpeedButton;
+    sbBALSerial: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     sbArquivoCert: TSpeedButton;
     sbBALLog: TSpeedButton;
@@ -956,6 +957,7 @@ type
     procedure SbArqLogClick(Sender: TObject);
     procedure sbArquivoCertClick(Sender: TObject);
     procedure sbArquivoWebServicesClick(Sender: TObject);
+    procedure sbBALSerialClick(Sender: TObject);
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
@@ -2769,6 +2771,7 @@ begin
     cbBALPorta.Text := Ini.ReadString('BAL', 'Porta', '');
     sedBALIntervalo.Value := Ini.ReadInteger('BAL', 'Intervalo', 200);
     edBALLog.Text := Ini.ReadString('BAL', 'ArqLog', '');
+    ACBrBAL1.Device.ParamsString := Ini.ReadString('BAL', 'Device', '');
 
     { Parametros do ETQ }
     cbETQModelo.ItemIndex := Ini.ReadInteger('ETQ', 'Modelo', 0);
@@ -3587,6 +3590,7 @@ begin
     Ini.WriteString('BAL', 'Porta', cbBALPorta.Text);
     Ini.WriteInteger('BAL', 'Intervalo', sedBALIntervalo.Value);
     Ini.WriteString('BAL', 'ArqLog', edBALLog.Text);
+    Ini.WriteString('BAL', 'Device', ACBrBAL1.Device.ParamsString);
 
     { Parametros do ETQ }
     Ini.WriteInteger('ETQ', 'Modelo', cbETQModelo.ItemIndex);
@@ -4723,6 +4727,30 @@ begin
   begin
     edtArquivoWebServices.Text := OpenDialog1.FileName;
   end;
+end;
+
+procedure TFrmACBrMonitor.sbBALSerialClick(Sender: TObject);
+begin
+  frConfiguraSerial := TfrConfiguraSerial.Create(self);
+
+  try
+    if ACBrBAL1.Ativo then
+      bBALAtivar.Click;
+
+    frConfiguraSerial.Device.Porta := ACBrBAL1.Device.Porta;
+    frConfiguraSerial.cmbPortaSerial.Text := cbBALPorta.Text;
+    frConfiguraSerial.Device.ParamsString := ACBrBAL1.Device.ParamsString;
+
+    if frConfiguraSerial.ShowModal = mrOk then
+    begin
+      cbBALPorta.Text := frConfiguraSerial.Device.Porta;
+      ACBrBAL1.Device.ParamsString := frConfiguraSerial.Device.ParamsString;
+    end;
+  finally
+    FreeAndNil(frConfiguraSerial);
+    AvaliaEstadoTsBAL;
+  end;
+
 end;
 
 procedure TFrmACBrMonitor.sbNumeroSerieCertClick(Sender: TObject);

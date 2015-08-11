@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsSat
+        ActivePage = tsBAL
         Align = alClient
         Images = ImageList1
-        TabIndex = 17
+        TabIndex = 8
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -1587,7 +1587,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 48
               Height = 25
-              Top = 8
+              Top = 6
               Width = 136
               EchoMode = emPassword
               PasswordChar = '*'
@@ -1599,7 +1599,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = edSenha
               Left = 5
               Height = 17
-              Top = 12
+              Top = 10
               Width = 38
               Anchors = [akTop, akRight]
               BorderSpacing.Right = 5
@@ -1790,7 +1790,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideBottom.Control = sedIntervalo
               Left = 302
               Height = 17
-              Top = 4
+              Top = 2
               Width = 50
               Alignment = taRightJustify
               Anchors = [akRight, akBottom]
@@ -1804,7 +1804,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 303
               Height = 25
               Hint = 'Intervalo de Tempo em Milissegundos que o ACBrMonitor'#10'verifica a presenÃ§a do arquivo de Entrada'
-              Top = 21
+              Top = 19
               Width = 49
               Anchors = [akTop, akRight]
               MaxValue = 1000
@@ -2019,7 +2019,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 12
                     Height = 17
                     Top = 44
-                    Width = 30
+                    Width = 29
                     BorderSpacing.Top = 1
                     Caption = 'CNPJ'
                     ParentColor = False
@@ -2078,7 +2078,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 477
                     Height = 17
                     Top = 87
-                    Width = 41
+                    Width = 40
                     Caption = 'Versão'
                     ParentColor = False
                   end
@@ -4244,7 +4244,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 278
             Height = 25
             Top = 33
-            Width = 180
+            Width = 154
             ItemHeight = 17
             ItemIndex = 0
             Items.Strings = (
@@ -4359,6 +4359,49 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Anchors = [akTop, akRight]
             Caption = '...'
             OnClick = sbBALLogClick
+          end
+          object sbBALSerial: TSpeedButton
+            AnchorSideLeft.Control = cbBALPorta
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = cbBALPorta
+            AnchorSideBottom.Control = cbBALPorta
+            AnchorSideBottom.Side = asrBottom
+            Left = 433
+            Height = 25
+            Hint = 'Configurar Porta Serial'
+            Top = 33
+            Width = 23
+            Anchors = [akTop, akLeft, akBottom]
+            BorderSpacing.Left = 1
+            Glyph.Data = {
+              36030000424D3603000000000000360000002800000010000000100000000100
+              18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+              3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+              000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+              6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+              008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+              56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+              FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+              008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+              6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+              008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+              3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+              00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            }
+            OnClick = sbBALSerialClick
           end
         end
         object tsETQ: TTabSheet
@@ -10550,6 +10593,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

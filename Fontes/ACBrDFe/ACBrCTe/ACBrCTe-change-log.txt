@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2015
+[*] Alteração na montagem do XML assinado e protocolado.
+    por: Italo Jurisato Junior
+
 10/08/2015
 [*] O componente estava criando uma sub-pasta chamada evento em vez de 
     criar as sub-pastas: Cancelamento, CCe, etc.

@@ -971,7 +971,12 @@ begin
           XML_procCTe := '<' + ENCODING_UTF8 + '>';
           XML_procCTe := XML_procCTe + '<cteProc versao="' + FPVersaoServico +
                                   '" xmlns="http://www.portalfiscal.inf.br/cte">';
-          XML_procCTe := XML_procCTe + FConhecimentos.Items[J].XMLAssinado;
+
+          XML_procCTe := XML_procCTe +
+                         StringReplace(FConhecimentos.Items[J].XMLAssinado,
+                                       '<' + ENCODING_UTF8 + '>', '',
+                                       [rfReplaceAll]);
+          ;
           XML_procCTe := XML_procCTe + '<protCTe versao="' + FPVersaoServico + '">';
           XML_procCTe := XML_procCTe + AInfProt.Items[I].XMLprotCTe;
           XML_procCTe := XML_procCTe + '</protCTe>';

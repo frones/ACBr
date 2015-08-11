@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2015
+[*] Alteração na montagem do XML assinado e protocolado.
+    por: Italo Jurisato Junior
+
 07/08/2015
 [*] Criado duas propriedades em pmdfeProcMDFe visando uma outra forma de montar
     o XML assinado e protocolado, criado também uma propriedade em 

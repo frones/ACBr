@@ -844,22 +844,28 @@ begin
         begin
           AProcMDFe := TProcMDFe.Create;
           try
-            AProcMDFe.XML_MDFe := FManifestos.Items[J].XMLAssinado;
+            AProcMDFe.XML_MDFe := StringReplace(FManifestos.Items[J].XMLAssinado,
+                                       '<' + ENCODING_UTF8 + '>', '',
+                                       [rfReplaceAll]);
             AProcMDFe.XML_Proc := AInfProt.Items[I].XMLprotMDFe;
             AProcMDFe.Versao := FPVersaoServico;
             AProcMDFe.GerarXML;
 
             FManifestos.Items[J].XML := AProcMDFe.Gerador.ArquivoFormatoXML;
+            FManifestos.Items[J].XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
 
             if FPConfiguracoesMDFe.Arquivos.Salvar then
             begin
               SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
                            FManifestos.Items[J].Processado;
 
+              // o Método GravarXML salva o conteudo da propriedade XMLOriginal
               if SalvarXML then
-                AProcMDFe.Gerador.SalvarArquivo(
-                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-                    AInfProt.Items[I].chMDFe + '-mdfe.xml');
+                TACBrMDFe(FPDFeOwner).Manifestos.Items[J].GravarXML;
+
+//                AProcMDFe.Gerador.SalvarArquivo(
+//                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
+//                    AInfProt.Items[I].chMDFe + '-mdfe.xml');
             end;
 
           finally

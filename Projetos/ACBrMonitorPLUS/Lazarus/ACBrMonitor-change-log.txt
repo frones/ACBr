@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2015     (por: regys silveira)
+[+]   Adicionado a substituição de variáveis no assunto e corpo do email antes de enviar.
+
 10/08/2015     (por: DSA)
 [*]   Adicionada configuração para ACBrBAL.Device.ParamsString
 [-]   Correção no nome para gravação do Arquivo em SAT.CriarCFe

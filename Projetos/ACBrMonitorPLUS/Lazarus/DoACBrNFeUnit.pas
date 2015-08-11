@@ -44,6 +44,7 @@ function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 procedure GerarIniNFe( AStr: WideString ) ;
 function GerarNFeIni( XML : WideString ) : WideString;
 procedure GerarIniEvento( AStr: WideString; CCe : Boolean = False ) ;
+function SubstituirVariaveis(const ATexto: String): String;
 
 implementation
 
@@ -65,6 +66,7 @@ var
   wDiretorioAtual : String;
 
   Lines   : TStringList ;
+  sMensagemEmail: TStringList;
   MemoTXT : TMemo;
   Files  : String ;
   dtFim  : TDateTime ;
@@ -1195,6 +1197,9 @@ begin
             end;
 
            try
+             sMensagemEmail := TStringList.Create;
+             sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsg.Lines.Text );
+
              CC:=TstringList.Create;
              CC.DelimitedText := sLineBreak;
              CC.Text := StringReplace(Cmd.Params(4),';',sLineBreak,[rfReplaceAll]);
@@ -1203,8 +1208,9 @@ begin
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
              try
-               ACBrNFe1.NotasFiscais.Items[0].EnviarEmail( Cmd.Params(0), IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssunto.Text),
-                                                           mmEmailMsg.Lines
+               ACBrNFe1.NotasFiscais.Items[0].EnviarEmail( Cmd.Params(0),
+                                                           SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssunto.Text) ),
+                                                           sMensagemEmail
                                                            , (Cmd.Params(2) = '1')   // Enviar PDF junto
                                                            , CC    // Lista com emails que serão enviado cópias - TStrings
                                                            , Anexos); // Lista de anexos - TStrings
@@ -1220,6 +1226,7 @@ begin
            finally
              CC.Free;
              Anexos.Free;
+             sMensagemEmail.Free;
            end;
         end
 

@@ -1532,7 +1532,7 @@ begin
       cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vBCST);
       cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vICMSST);
       cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.PIPI);
-      cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.VIPI);
+      cdsItens.FieldByName('VALORIPI').AsString     := FormatFloat('##0.00', Imposto.IPI.VIPI);
       cdsItens.Post;
     end;
   end;
@@ -1890,6 +1890,17 @@ begin
         if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + #13#10;
         if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + #13#10;
         if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat('###,##0.00', comb.CIDE.vCIDE);
+      end;
+
+      if comb.encerrante.nBico > 0  then
+      begin
+        Result := Result + 'ENCERRANTE' + #13#10;
+        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + #13#10;
+        if comb.encerrante.nBomba > 0 then
+          Result := Result + 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + #13#10;
+        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + #13#10;
+        Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + #13#10;
+        Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + #13#10;
       end;
     end;
   end;

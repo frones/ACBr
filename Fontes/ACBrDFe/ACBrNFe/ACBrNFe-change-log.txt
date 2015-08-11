@@ -49,9 +49,14 @@ Símbolo : Significado
 
 
 10/08/2015
+-- ACBrNFe --
 [*] Removido as propriedades PathCCe e PathCan e alterado o nome da propriedade
     SalvarCCeCanEvento para SalvarEvento.
     por: Italo Jurisato Junior
+
+-- ACBrNFeDANFeRLRetrato --    (por: hleorj)
+[+]  Implementado o Grupo de Encerrantes
+[-]  Correção de exibição de VALORIPI
 
 09/08/2015
 -- ACBrNFeDANFeRLRetrato --    (por: hleorj)

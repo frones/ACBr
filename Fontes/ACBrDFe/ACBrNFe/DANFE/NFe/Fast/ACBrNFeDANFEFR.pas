@@ -265,7 +265,7 @@ begin
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFileEvento) <> '' then
   begin
-    if not (uppercase(copy(FastFile,length(FastFileEvento)-3,4))='.FR3') then
+    if not (uppercase(copy(FastFileEvento,length(FastFileEvento)-3,4))='.FR3') then
     begin
       wProjectStream:=TStringStream.Create(FastFileEvento);
       FdmDanfe.frxReport.FileName := '';

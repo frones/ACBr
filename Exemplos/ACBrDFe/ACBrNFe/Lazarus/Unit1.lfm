@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 464
+  Left = 378
   Height = 632
-  Top = 144
+  Top = 48
   Width = 894
   Caption = 'ACBrNFe - Demonstração'
   ClientHeight = 632
@@ -12,7 +12,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.4.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 632
@@ -131,10 +131,10 @@ object Form1: TForm1
           Height = 439
           Top = 0
           Width = 275
-          ActivePage = TabSheet3
+          ActivePage = TabSheet13
           Align = alClient
           MultiLine = True
-          TabIndex = 0
+          TabIndex = 4
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -284,7 +284,6 @@ object Form1: TForm1
               Top = 267
               Width = 99
               Caption = 'Hash SHA1'
-              OnClick = Button5Click
               TabOrder = 5
             end
           end
@@ -980,100 +979,10 @@ object Form1: TForm1
               Caption = 'Pasta Arquivos NFe'
               ParentColor = False
             end
-            object Label39: TLabel
-              Left = 6
-              Height = 13
-              Top = 198
-              Width = 142
-              Caption = 'Pasta Arquivos Cancelamento'
-              ParentColor = False
-            end
-            object sbPathCan: TSpeedButton
-              Left = 240
-              Height = 24
-              Top = 212
-              Width = 23
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337
-              }
-              NumGlyphs = 2
-              OnClick = sbPathCanClick
-            end
-            object Label46: TLabel
-              Left = 6
-              Height = 13
-              Top = 236
-              Width = 192
-              Caption = 'Pasta Arquivos CC-e - Carta de Correção'
-              ParentColor = False
-            end
-            object sbPathCCe: TSpeedButton
-              Left = 240
-              Height = 24
-              Top = 250
-              Width = 23
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337
-              }
-              NumGlyphs = 2
-              OnClick = sbPathCCeClick
-            end
-            object Label40: TLabel
-              Left = 6
-              Height = 13
-              Top = 274
-              Width = 127
-              Caption = 'Pasta Arquivos Inutilização'
-              ParentColor = False
-            end
-            object sbPathInu: TSpeedButton
-              Left = 240
-              Height = 24
-              Top = 288
-              Width = 23
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337
-              }
-              NumGlyphs = 2
-              OnClick = sbPathInuClick
-            end
             object Label47: TLabel
               Left = 6
               Height = 13
-              Top = 320
+              Top = 216
               Width = 108
               Caption = 'Pasta Arquivos Evento'
               ParentColor = False
@@ -1081,7 +990,7 @@ object Form1: TForm1
             object sbPathEvento: TSpeedButton
               Left = 240
               Height = 24
-              Top = 334
+              Top = 230
               Width = 23
               Glyph.Data = {
                 76010000424D7601000000000000760000002800000020000000100000000100
@@ -1132,7 +1041,7 @@ object Form1: TForm1
               Caption = 'Salvar NFe pelo campo Data de Emissão'
               TabOrder = 3
             end
-            object cbxSalvaCCeCancelamentoPathEvento: TCheckBox
+            object cbxSalvaPathEvento: TCheckBox
               Left = 6
               Height = 19
               Top = 74
@@ -1148,40 +1057,19 @@ object Form1: TForm1
               Caption = 'Separar Arqs pelo CNPJ do Certificado'
               TabOrder = 5
             end
-            object edtPathCCe: TEdit
-              Left = 6
-              Height = 21
-              Top = 252
-              Width = 235
-              TabOrder = 6
-            end
             object edtPathNFe: TEdit
               Left = 6
               Height = 21
               Top = 176
               Width = 235
-              TabOrder = 7
-            end
-            object edtPathCan: TEdit
-              Left = 6
-              Height = 21
-              Top = 214
-              Width = 235
-              TabOrder = 8
-            end
-            object edtPathInu: TEdit
-              Left = 6
-              Height = 21
-              Top = 290
-              Width = 235
-              TabOrder = 9
+              TabOrder = 6
             end
             object edtPathEvento: TEdit
               Left = 6
               Height = 21
-              Top = 336
+              Top = 232
               Width = 235
-              TabOrder = 10
+              TabOrder = 7
             end
             object cbxSepararPorModelo: TCheckBox
               Left = 6
@@ -1189,7 +1077,7 @@ object Form1: TForm1
               Top = 106
               Width = 215
               Caption = 'Separar Arqs pelo Modelo do Documento'
-              TabOrder = 11
+              TabOrder = 8
             end
           end
         end
@@ -1390,9 +1278,9 @@ object Form1: TForm1
         Height = 298
         Top = 1
         Width = 593
-        ActivePage = tsNFCe
+        ActivePage = tsNFe
         Align = alClient
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 0
         object tsNFe: TTabSheet
           Caption = 'NF-e'
@@ -1572,7 +1460,7 @@ object Form1: TForm1
           object btnValidarAssinatura: TButton
             Left = 9
             Height = 25
-            Top = 212
+            Top = 211
             Width = 177
             Caption = 'Validar Assinatura'
             OnClick = btnValidarAssinaturaClick
@@ -1622,6 +1510,15 @@ object Form1: TForm1
             Caption = 'Distribuição Documentos Fiscais'
             OnClick = btnDistribuicaoDFeClick
             TabOrder = 24
+          end
+          object btnValidarRegrasNegocio: TButton
+            Left = 376
+            Height = 25
+            Top = 36
+            Width = 177
+            Caption = 'Validar Regras de Negócio'
+            OnClick = btnValidarRegrasNegocioClick
+            TabOrder = 25
           end
         end
         object tsNFCe: TTabSheet
@@ -2109,7 +2006,6 @@ object Form1: TForm1
             end>
           MouseActions = <>
           MouseSelActions = <>
-          SelectedColor.FrameEdges = sfeAround
           SelectedColor.BackPriority = 50
           SelectedColor.ForePriority = 50
           SelectedColor.FramePriority = 50
@@ -2127,7 +2023,6 @@ object Form1: TForm1
               MouseActions = <>
               MarkupInfo.Background = clBtnFace
               MarkupInfo.Foreground = clNone
-              MarkupInfo.FrameEdges = sfeAround
               DigitCount = 2
               ShowOnlyLineNumbersMultiplesOf = 1
               ZeroStart = False
@@ -2144,13 +2039,11 @@ object Form1: TForm1
               MouseActions = <>
               MarkupInfo.Background = clWhite
               MarkupInfo.Foreground = clGray
-              MarkupInfo.FrameEdges = sfeAround
             end
             object SynGutterCodeFolding1: TSynGutterCodeFolding
               MouseActions = <>
               MarkupInfo.Background = clNone
               MarkupInfo.Foreground = clGray
-              MarkupInfo.FrameEdges = sfeAround
               MouseActionsExpanded = <>
               MouseActionsCollapsed = <>
             end
@@ -2243,13 +2136,16 @@ object Form1: TForm1
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
+    OnTransmitError = ACBrNFe1TransmitError
     OnStatusChange = ACBrNFe1StatusChange
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
+    Configuracoes.WebServices.QuebradeLinha = '|'
     DANFE = ACBrNFeDANFeRL1
     left = 688
     top = 376
@@ -2274,13 +2170,14 @@ object Form1: TForm1
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
+    PosCanhoto = prCabecalho
     PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
@@ -2290,19 +2187,6 @@ object Form1: TForm1
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
-    ElementAttri.FrameEdges = sfeAround
-    AttributeAttri.FrameEdges = sfeAround
-    NamespaceAttributeAttri.FrameEdges = sfeAround
-    AttributeValueAttri.FrameEdges = sfeAround
-    NamespaceAttributeValueAttri.FrameEdges = sfeAround
-    TextAttri.FrameEdges = sfeAround
-    CDATAAttri.FrameEdges = sfeAround
-    EntityRefAttri.FrameEdges = sfeAround
-    ProcessingInstructionAttri.FrameEdges = sfeAround
-    CommentAttri.FrameEdges = sfeAround
-    DocTypeAttri.FrameEdges = sfeAround
-    SpaceAttri.FrameEdges = sfeAround
-    SymbolAttri.FrameEdges = sfeAround
     WantBracesParsed = False
     left = 392
     top = 368
@@ -2328,7 +2212,7 @@ object Form1: TForm1
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
     LocalImpCanhoto = 0
-    ImprimeItens = True
+    ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
     TributosSeparadamente = False
@@ -2352,16 +2236,52 @@ object Form1: TForm1
     top = 376
   end
   object ACBrPosPrinter1: TACBrPosPrinter
-    Porta = '\\localhost\Epson'
+    Modelo = ppEscPosEpson
+    Porta = 'c:\temp\printer.txt'
+    EspacoEntreLinhas = 40
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
     ConfigQRCode.Tipo = 2
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 7
-    CortaPapel = False
+    CortaPapel = True
+    ControlePorta = True
+    ArqLOG = 'c:\temp\posprinter.log'
     left = 816
+    top = 496
+  end
+  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = True
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 10
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    LocalImpCanhoto = 0
+    ImprimirItens = True
+    vTroco = 0
+    ViaConsumidor = True
+    TributosSeparadamente = False
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
+    PosCanhoto = prCabecalho
+    left = 656
     top = 496
   end
 end

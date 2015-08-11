@@ -1,5 +1,5 @@
 {$I ACBr.inc}
-{$DEFINE ACBrNFeOpenSSL}
+//{$DEFINE ACBrNFeOpenSSL}
 
 unit Unit1;
 
@@ -9,7 +9,7 @@ uses IniFiles,
   SynMemo, SynHighlighterXML, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
   ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass, pcnNFeRTXT,
-  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS;
+  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS, ACBrDFe;
 
 type
 
@@ -17,8 +17,10 @@ type
 
   TForm1 = class(TForm)
     ACBrMail1: TACBrMail;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
+    btnValidarRegrasNegocio: TButton;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
@@ -187,32 +189,25 @@ type
     cbxPastaMensal: TCheckBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxEmissaoPathNFe: TCheckBox;
-    cbxSalvaCCeCancelamentoPathEvento: TCheckBox;
+    cbxSalvaPathEvento: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
     sbPathNFe: TSpeedButton;
     Label35: TLabel;
-    Label39: TLabel;
-    sbPathCan: TSpeedButton;
-    Label46: TLabel;
-    sbPathCCe: TSpeedButton;
-    edtPathCCe: TEdit;
     edtPathNFe: TEdit;
-    edtPathCan: TEdit;
-    Label40: TLabel;
-    sbPathInu: TSpeedButton;
     Label47: TLabel;
     sbPathEvento: TSpeedButton;
-    edtPathInu: TEdit;
     edtPathEvento: TEdit;
     cbxSepararPorModelo: TCheckBox;
     Label42: TLabel;
     edtPathSchemas: TEdit;
     spPathSchemas: TSpeedButton;
+    procedure ACBrNFe1TransmitError(const HttpError, InternalError: Integer;
+      const URL, DataSent, SoapAction: String; var TryAgain: Boolean);
+    procedure btnValidarRegrasNegocioClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -254,9 +249,6 @@ type
     procedure btnDistribuicaoDFeClick(Sender: TObject);
     procedure PathClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
-    procedure sbPathCanClick(Sender: TObject);
-    procedure sbPathCCeClick(Sender: TObject);
-    procedure sbPathInuClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
     
@@ -281,7 +273,7 @@ implementation
 uses strutils, math, TypInfo, DateUtils,
   ufrmStatus, synacode,
   pcnNFe, pcnConversaoNFe, pcnConversao,
-  ACBrUtil, ACBrDFeConfiguracoes;
+  ACBrUtil, ACBrDFeSSL, ACBrDFeConfiguracoes, ACBrDFeCapicom, ACBrCAPICOM_TLB;
 
 const
   SELDIRHELP = 1000;
@@ -332,13 +324,10 @@ begin
       Ini.WriteBool(   'Arquivos','PastaMensal'     ,cbxPastaMensal.Checked) ;
       Ini.WriteBool(   'Arquivos','AddLiteral'      ,cbxAdicionaLiteral.Checked) ;
       Ini.WriteBool(   'Arquivos','EmissaoPathNFe'  ,cbxEmissaoPathNFe.Checked) ;
-      Ini.WriteBool(   'Arquivos','SalvarCCeCanPathEvento',cbxSalvaCCeCancelamentoPathEvento.Checked) ;
+      Ini.WriteBool(   'Arquivos','SalvarPathEvento',cbxSalvaPathEvento.Checked) ;
       Ini.WriteBool(   'Arquivos','SepararPorCNPJ'  ,cbxSepararPorCNPJ.Checked) ;
       Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararPorModelo.Checked) ;
       Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
-      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text) ;
-      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text) ;
-      Ini.WriteString( 'Arquivos','PathCCe'    ,edtPathCCe.Text) ;
       Ini.WriteString( 'Arquivos','PathEvento' ,edtPathEvento.Text) ;
 
       Ini.WriteString( 'Emitente','CNPJ'       ,edtEmitCNPJ.Text) ;
@@ -485,13 +474,10 @@ begin
       cbxPastaMensal.Checked     := Ini.ReadBool(   'Arquivos','PastaMensal',false);
       cbxAdicionaLiteral.Checked := Ini.ReadBool(   'Arquivos','AddLiteral' ,false);
       cbxEmissaoPathNFe.Checked  := Ini.ReadBool(   'Arquivos','EmissaoPathNFe',false);
-      cbxSalvaCCeCancelamentoPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarCCeCanPathEvento',false);
+      cbxSalvaPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarPathEvento',false);
       cbxSepararPorCNPJ.Checked  := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
       cbxSepararPorModelo.Checked  := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
       edtPathNFe.Text            := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
-      edtPathCan.Text            := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
-      edtPathInu.Text            := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
-      edtPathCCe.Text            := Ini.ReadString( 'Arquivos','PathCCe'   ,'') ;
       edtPathEvento.Text         := Ini.ReadString( 'Arquivos','PathEvento','') ;
 
       with ACBrNFe1.Configuracoes.Arquivos do
@@ -500,15 +486,12 @@ begin
          SepararPorMes    := cbxPastaMensal.Checked;
          AdicionarLiteral := cbxAdicionaLiteral.Checked;
          EmissaoPathNFe   := cbxEmissaoPathNFe.Checked;
-         SalvarCCeCanEvento := cbxSalvaCCeCancelamentoPathEvento.Checked;
+         SalvarEvento := cbxSalvaPathEvento.Checked;
          SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
          SepararPorModelo := cbxSepararPorModelo.Checked;
          PathSalvar := edtPathLogs.Text;
          PathSchemas  := edtPathSchemas.Text;
          PathNFe  := edtPathNFe.Text;
-         PathCan  := edtPathCan.Text;
-         PathCCe  := edtPathCCe.Text;
-         PathInu  := edtPathInu.Text;
          PathEvento := edtPathEvento.Text;
        end;
 
@@ -638,6 +621,44 @@ begin
   ShowMessage( FormatDateBr(ACBrNFe1.SSL.CertDataVenc) );
 end;
 
+procedure TForm1.ACBrNFe1TransmitError(const HttpError, InternalError: Integer;
+  const URL, DataSent, SoapAction: String; var TryAgain: Boolean);
+begin
+ ShowMessage('HTTPError: '+IntToStr(HttpError) + sLineBreak +
+             'InternalError: '+IntToStr(InternalError)  );
+
+ TryAgain := False;
+end;
+
+procedure TForm1.btnValidarRegrasNegocioClick(Sender: TObject);
+var
+  Msg : String;
+  Inicio: TDateTime;
+  Ok: Boolean;
+  Tempo: String;
+begin
+  OpenDialog1.Title := 'Selecione a NFE';
+  OpenDialog1.DefaultExt := '*-nfe.XML';
+  OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.NotasFiscais.Clear;
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    Inicio := Now;
+    Ok := ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(Msg);
+    Tempo := FormatDateTime('hh:nn:ss:zzz', Now - Inicio);
+
+    if not Ok then
+    begin
+      MemoDados.Lines.Add('Erro: '+Msg);
+      ShowMessage('Erros encontrados'+ sLineBreak + 'Tempo: '+Tempo);
+    end
+    else
+      ShowMessage('Tudo OK'+sLineBreak + 'Tempo: '+Tempo);
+  end;
+end;
+
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   ShowMessage( ACBrNFe1.SSL.CertNumeroSerie );
@@ -651,14 +672,6 @@ end;
 procedure TForm1.Button4Click(Sender: TObject);
 begin
   ShowMessage( ACBrNFe1.SSL.CertCNPJ );
-end;
-
-procedure TForm1.Button5Click(Sender: TObject);
-Var
-  aStr: String;
-begin
-  aStr := 'PROJETO ACBR';
-  ShowMessage( 'Hash de: '+aStr+ sLineBreak + AsciiToHex(SHA1(aStr)) );
 end;
 
 procedure TForm1.sbtnLogoMarcaClick(Sender: TObject);
@@ -818,7 +831,7 @@ begin
   if OpenDialog1.Execute then
    begin
      ACBrNFe1.NotasFiscais.Clear;
-     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
      try
         ACBrNFe1.NotasFiscais.Validar;
         if ACBrNFe1.NotasFiscais.Items[0].Alertas <> '' then
@@ -3216,21 +3229,6 @@ end;
 procedure TForm1.sbPathNFeClick(Sender: TObject);
 begin
  PathClick(edtPathNFe);
-end;
-
-procedure TForm1.sbPathCanClick(Sender: TObject);
-begin
- PathClick(edtPathCan);
-end;
-
-procedure TForm1.sbPathCCeClick(Sender: TObject);
-begin
- PathClick(edtPathCCe);
-end;
-
-procedure TForm1.sbPathInuClick(Sender: TObject);
-begin
- PathClick(edtPathInu);
 end;
 
 procedure TForm1.sbPathEventoClick(Sender: TObject);

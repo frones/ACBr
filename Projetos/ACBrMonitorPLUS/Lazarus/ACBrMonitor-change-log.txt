@@ -45,6 +45,7 @@ Símbolo : Significado
 
 10/08/2015     (por: DSA)
 [*]   Adicionada configuração para ACBrBAL.Device.ParamsString
+[-]   Correção no nome para gravação do Arquivo em SAT.CriarCFe
 
 09/08/2015     (por: DSA)
 [-]   Corrigida a rotina "DoSATUnit.GerarIniCFe" para respeitar os parâmetros

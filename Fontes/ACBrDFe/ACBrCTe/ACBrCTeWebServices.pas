@@ -1547,6 +1547,8 @@ begin
           Atualiza := True;
           if (CTeRetorno.CStat in [101, 151, 155]) then
             Atualiza := False;
+          if CTeRetorno.cUF = 51 then
+            Atualiza := (CTeRetorno.CStat = 101);
 
           // Atualiza o Status da CTe interna //
           CTe.procCTe.cStat := CTeRetorno.cStat;

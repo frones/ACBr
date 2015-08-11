@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/08/2015
+[*] Alteração para incluir o protocolo de cancelamento no XML quando a UF for 51.
+    por: Italo Jurisato Junior
 [*] Alteração na montagem do XML assinado e protocolado.
     por: Italo Jurisato Junior
 

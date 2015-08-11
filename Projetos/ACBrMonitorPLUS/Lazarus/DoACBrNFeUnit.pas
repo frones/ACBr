@@ -1497,10 +1497,10 @@ begin
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathNFe
 
         else if Cmd.Metodo = 'getpathcce' then //NFe.GetPathCCE Retorna Path onde está sendo salvo o xml das CCEs
-           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathCCe
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(teCCe)
 
         else if Cmd.Metodo = 'getpathcan' then //NFe.GetPathCan Path Eventos de cancelamento
-           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathCan
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(teCancelamento)
 
         else if Cmd.Metodo = 'getpathevento' then //NFe.GetPathEvento
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento( TpcnTpEvento(StrToInt(Cmd.Params(0))) )

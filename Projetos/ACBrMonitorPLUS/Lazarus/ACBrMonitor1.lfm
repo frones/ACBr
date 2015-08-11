@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsBAL
+        ActivePage = tsNFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 8
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4565,7 +4565,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 175
             Height = 17
             Top = 21
-            Width = 95
+            Width = 94
             Alignment = taRightJustify
             Caption = '&Num. Porta TCP:'
             FocusControl = edTCPort
@@ -5627,7 +5627,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 6
               Height = 17
               Top = 0
-              Width = 68
+              Width = 67
               Caption = 'WebService'
               ParentColor = False
             end
@@ -6471,9 +6471,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = ConfiguracaoNFE
+            ActivePage = Diretorios
             Align = alClient
-            TabIndex = 0
+            TabIndex = 5
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -6824,7 +6824,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 216
                       Height = 17
                       Top = 40
-                      Width = 41
+                      Width = 40
                       Caption = 'Versão'
                       ParentColor = False
                     end
@@ -7049,7 +7049,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 100
                       Height = 17
                       Top = 30
-                      Width = 58
+                      Width = 57
                       Caption = 'Tentativas'
                       ParentColor = False
                     end
@@ -7119,7 +7119,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 0
                     Height = 17
                     Top = 0
-                    Width = 63
+                    Width = 62
                     Caption = 'CSC/Token'
                     ParentColor = False
                   end
@@ -7127,7 +7127,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 0
                     Height = 17
                     Top = 40
-                    Width = 85
+                    Width = 84
                     Caption = 'IdCSC/IdToken'
                     ParentColor = False
                   end
@@ -7836,37 +7836,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Pasta Arquivos NFe'
                 ParentColor = False
               end
-              object Label159: TLabel
-                Left = 6
-                Height = 17
-                Top = 120
-                Width = 172
-                Caption = 'Pasta Arquivos Cancelamento'
-                ParentColor = False
-              end
-              object sbPathCan: TSpeedButton
-                Left = 258
-                Height = 25
-                Top = 136
-                Width = 23
-                Enabled = False
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                  3BB33773333773333773B333333B3333333B7333333733333337
-                }
-                NumGlyphs = 2
-                OnClick = sbPathCanClick
-              end
               object Label160: TLabel
                 Left = 288
                 Height = 17
@@ -7901,7 +7870,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label161: TLabel
                 Left = 288
                 Height = 17
-                Top = 120
+                Top = 123
                 Width = 119
                 Caption = 'Pasta Arquivos EPEC'
                 ParentColor = False
@@ -7909,7 +7878,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathDPEC: TSpeedButton
                 Left = 532
                 Height = 25
-                Top = 136
+                Top = 139
                 Width = 23
                 Enabled = False
                 Glyph.Data = {
@@ -7932,7 +7901,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label162: TLabel
                 Left = 6
                 Height = 17
-                Top = 200
+                Top = 168
                 Width = 140
                 Caption = 'Salvar arquivos PDF em:'
                 ParentColor = False
@@ -7940,7 +7909,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathPDF: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 216
+                Top = 184
                 Width = 23
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
@@ -7959,49 +7928,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 NumGlyphs = 2
                 OnClick = sbPathPDFClick
               end
-              object Label163: TLabel
+              object Label164: TLabel
                 Left = 6
                 Height = 17
-                Top = 160
-                Width = 239
-                Caption = 'Pasta Arquivos CC-e - Carta de Correção'
-                ParentColor = False
-              end
-              object sbPathCCe: TSpeedButton
-                Left = 258
-                Height = 25
-                Top = 176
-                Width = 23
-                Enabled = False
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                  3BB33773333773333773B333333B3333333B7333333733333337
-                }
-                NumGlyphs = 2
-                OnClick = sbPathCCeClick
-              end
-              object Label164: TLabel
-                Left = 288
-                Height = 17
-                Top = 160
+                Top = 123
                 Width = 129
                 Caption = 'Pasta Arquivos Evento'
                 ParentColor = False
               end
               object sbPathEvento: TSpeedButton
-                Left = 531
+                Left = 258
                 Height = 25
-                Top = 176
+                Top = 139
                 Width = 23
                 Enabled = False
                 Glyph.Data = {
@@ -8021,14 +7959,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 NumGlyphs = 2
                 OnClick = sbPathEventoClick
               end
-              object edtPathCCe: TEdit
-                Left = 6
-                Height = 25
-                Top = 176
-                Width = 252
-                Enabled = False
-                TabOrder = 11
-              end
               object edtPathNFe: TEdit
                 Left = 6
                 Height = 25
@@ -8036,14 +7966,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 252
                 Enabled = False
                 TabOrder = 7
-              end
-              object edtPathCan: TEdit
-                Left = 6
-                Height = 25
-                Top = 136
-                Width = 252
-                Enabled = False
-                TabOrder = 9
               end
               object edtPathInu: TEdit
                 Left = 288
@@ -8056,7 +7978,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathDPEC: TEdit
                 Left = 288
                 Height = 25
-                Top = 136
+                Top = 139
                 Width = 244
                 Enabled = False
                 TabOrder = 10
@@ -8064,17 +7986,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathPDF: TEdit
                 Left = 6
                 Height = 25
-                Top = 216
+                Top = 184
                 Width = 252
-                TabOrder = 13
+                TabOrder = 11
               end
               object edtPathEvento: TEdit
-                Left = 288
+                Left = 6
                 Height = 25
-                Top = 176
-                Width = 244
+                Top = 139
+                Width = 252
                 Enabled = False
-                TabOrder = 12
+                TabOrder = 9
               end
               object cbxSalvarArqs: TCheckBox
                 Left = 6
@@ -8113,12 +8035,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Enabled = False
                 TabOrder = 4
               end
-              object cbxSalvaCCeCancelamentoPathEvento: TCheckBox
+              object cbxSalvaPathEvento: TCheckBox
                 Left = 288
                 Height = 21
                 Top = 18
-                Width = 252
-                Caption = 'Salvar Arqs Canc./CCe na pasta Eventos'
+                Width = 178
+                Caption = 'Salvar Arquivos de Eventos'
                 Enabled = False
                 TabOrder = 5
               end
@@ -8148,7 +8070,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 312
                 Caption = 'Salvar apenas NFes processadas na pasta da NFe'
                 Enabled = False
-                TabOrder = 14
+                TabOrder = 12
               end
             end
             object Testes: TTabSheet
@@ -10593,7 +10515,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

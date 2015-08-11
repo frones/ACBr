@@ -206,7 +206,7 @@ type
     cbxRedeSeg: TComboBox;
     cbxRegTribISSQN: TComboBox;
     cbxRegTributario: TComboBox;
-    cbxSalvaCCeCancelamentoPathEvento: TCheckBox;
+    cbxSalvaPathEvento: TCheckBox;
     cbxSalvarArqs: TCheckBox;
     cbxSATSalvarCFe: TCheckBox;
     cbxSATSalvarCFeCanc: TCheckBox;
@@ -350,8 +350,6 @@ type
     edtModalidade: TEdit;
     edtNcmNumero: TEdit;
     edtNumCopia: TEdit;
-    edtPathCan: TEdit;
-    edtPathCCe: TEdit;
     edtPathDPEC: TEdit;
     edtPathEvento: TEdit;
     edtPathInu: TEdit;
@@ -501,12 +499,10 @@ type
     Label152: TLabel;
     Label153: TLabel;
     Label158: TLabel;
-    Label159: TLabel;
     Label16: TLabel;
     Label160: TLabel;
     Label161: TLabel;
     Label162: TLabel;
-    Label163: TLabel;
     Label164: TLabel;
     Label165: TLabel;
     Label166: TLabel;
@@ -728,8 +724,6 @@ type
     sbECFSerial: TSpeedButton;
     sbLog: TSpeedButton;
     sbLogoMarca: TSpeedButton;
-    sbPathCan: TSpeedButton;
-    sbPathCCe: TSpeedButton;
     sbPathDPEC: TSpeedButton;
     sbPathEvento: TSpeedButton;
     sbPathInu: TSpeedButton;
@@ -961,8 +955,6 @@ type
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
-    procedure sbPathCanClick(Sender: TObject);
-    procedure sbPathCCeClick(Sender: TObject);
     procedure sbPathDPECClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure sbPathInuClick(Sender: TObject);
@@ -3003,7 +2995,7 @@ begin
     cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
     cbxAdicionaLiteral.Checked := Ini.ReadBool('Arquivos', 'AddLiteral', True);
     cbxEmissaoPathNFe.Checked := Ini.ReadBool('Arquivos', 'EmissaoPathNFe', True);
-    cbxSalvaCCeCancelamentoPathEvento.Checked :=
+    cbxSalvaPathEvento.Checked :=
       Ini.ReadBool('Arquivos', 'SalvarCCeCanPathEvento', True);
     cbxSepararPorCNPJ.Checked := Ini.ReadBool('Arquivos', 'SepararPorCNPJ', True);
     cbxSepararporModelo.Checked := Ini.ReadBool('Arquivos', 'SepararPorModelo', True);
@@ -3011,27 +3003,22 @@ begin
       Ini.ReadBool('Arquivos', 'SalvarApenasNFesAutorizadas', False);
 
     edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', PathApplication+'Arqs');
-    edtPathCan.Text := Ini.ReadString('Arquivos', 'PathCan', PathApplication+'Arqs');
     edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', PathApplication+'Arqs');
     edtPathDPEC.Text := Ini.ReadString('Arquivos', 'PathDPEC', PathApplication+'Arqs');
-    edtPathCCe.Text := Ini.ReadString('Arquivos', 'PathCCe', PathApplication+'Arqs');
     edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', PathApplication+'Arqs');
 
     ACBrNFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SepararPorMes := cbxPastaMensal.Checked;
     ACBrNFe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
     ACBrNFe1.Configuracoes.Arquivos.EmissaoPathNFe := cbxEmissaoPathNFe.Checked;
-    ACBrNFe1.Configuracoes.Arquivos.SalvarCCeCanEvento :=
-      cbxSalvaCCeCancelamentoPathEvento.Checked;
+    ACBrNFe1.Configuracoes.Arquivos.SalvarEvento :=
+      cbxSalvaPathEvento.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SepararPorModelo := cbxSepararporModelo.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SalvarApenasNFeProcessadas :=
       cbxSalvarNFesProcessadas.Checked;
     ACBrNFe1.Configuracoes.Arquivos.PathNFe := edtPathNFe.Text;
-    ACBrNFe1.Configuracoes.Arquivos.PathCan := edtPathCan.Text;
     ACBrNFe1.Configuracoes.Arquivos.PathInu := edtPathInu.Text;
-    //    ACBrNFe1.Configuracoes.Arquivos.PathDPEC := edtPathDPEC.Text;
-    ACBrNFe1.Configuracoes.Arquivos.PathCCe := edtPathCCe.Text;
     ACBrNFe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
 
     VerificaDiretorios;
@@ -3708,16 +3695,14 @@ begin
     Ini.WriteBool('Arquivos', 'AddLiteral', cbxAdicionaLiteral.Checked);
     Ini.WriteBool('Arquivos', 'EmissaoPathNFe', cbxEmissaoPathNFe.Checked);
     Ini.WriteBool('Arquivos', 'SalvarCCeCanPathEvento',
-      cbxSalvaCCeCancelamentoPathEvento.Checked);
+      cbxSalvaPathEvento.Checked);
     Ini.WriteBool('Arquivos', 'SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
     Ini.WriteBool('Arquivos', 'SepararPorModelo', cbxSepararporModelo.Checked);
     Ini.WriteBool('Arquivos', 'SalvarApenasNFesAutorizadas',
       cbxSalvarNFesProcessadas.Checked);
     Ini.WriteString('Arquivos', 'PathNFe', edtPathNFe.Text);
-    Ini.WriteString('Arquivos', 'PathCan', edtPathCan.Text);
     Ini.WriteString('Arquivos', 'PathInu', edtPathInu.Text);
     Ini.WriteString('Arquivos', 'PathDPEC', edtPathDPEC.Text);
-    Ini.WriteString('Arquivos', 'PathCCe', edtPathCCe.Text);
     Ini.WriteString('Arquivos', 'PathEvento', edtPathEvento.Text);
 
     {Parametros SAT}
@@ -4781,16 +4766,6 @@ begin
   begin
     edtLogoMarca.Text := OpenDialog1.FileName;
   end;
-end;
-
-procedure TFrmACBrMonitor.sbPathCanClick(Sender: TObject);
-begin
-  PathClick(edtPathCan);
-end;
-
-procedure TFrmACBrMonitor.sbPathCCeClick(Sender: TObject);
-begin
-  PathClick(edtPathCCe);
 end;
 
 procedure TFrmACBrMonitor.sbPathDPECClick(Sender: TObject);
@@ -6315,21 +6290,17 @@ begin
   cbxPastaMensal.Enabled := CanEnabled;
   cbxAdicionaLiteral.Enabled := CanEnabled;
   cbxEmissaoPathNFe.Enabled := CanEnabled;
-  cbxSalvaCCeCancelamentoPathEvento.Enabled := CanEnabled;
+  cbxSalvaPathEvento.Enabled := CanEnabled;
   cbxSepararPorCNPJ.Enabled := CanEnabled;
   cbxSepararporModelo.Enabled := CanEnabled;
   cbxSalvarNFesProcessadas.Enabled := CanEnabled;
   edtPathNFe.Enabled := CanEnabled;
-  edtPathCan.Enabled := CanEnabled;
   edtPathInu.Enabled := CanEnabled;
   edtPathDPEC.Enabled := CanEnabled;
-  edtPathCCe.Enabled := CanEnabled;
   edtPathEvento.Enabled := CanEnabled;
   sbPathNFe.Enabled := CanEnabled;
-  sbPathCan.Enabled := CanEnabled;
   sbPathInu.Enabled := CanEnabled;
   sbPathDPEC.Enabled := CanEnabled;
-  sbPathCCe.Enabled := CanEnabled;
   sbPathEvento.Enabled := CanEnabled;
 
   edtPathLogs.Enabled := ckSalvar.Checked;

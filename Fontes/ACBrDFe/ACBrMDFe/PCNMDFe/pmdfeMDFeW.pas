@@ -614,7 +614,7 @@ begin
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infCTe.Count - 1 do
          begin
            Gerador.wGrupo('infCTe', '#048');
-           Gerador.wCampo(tcEsp, '#049', 'chCTe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe), DSC_REFNFE);
+           Gerador.wCampo(tcEsp, '#049', 'chCTe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe), DSC_REFCTE);
            if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) <> '' then
             if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe)) then
            Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);

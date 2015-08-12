@@ -1,0 +1,172 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2014   Juliomar Marchetti                   }
+{					  Isaque Pinheiro		       }
+{ 					  Daniel Simões de Almeida	       }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{******************************************************************************
+|* Historico
+|*
+*******************************************************************************}
+
+{$I ACBr.inc}
+
+unit ACBrECFBloco_0_Class;
+
+interface
+
+uses
+  SysUtils, Classes, DateUtils, ACBrSped, ACBrECFBloco_0, ACBrECFBlocos,
+  ACBrTXTClass;
+
+type
+	{ TBloco_0 }
+
+  TBloco_0 = class(TACBrSPED)
+  private
+    FRegistro0000: TRegistro0000;
+    fRegistro0001: TRegistro0001;
+    FRegistro0990: TRegistro0990;
+    procedure CriaRegistros;overload;
+    procedure LiberaRegistros;overload;
+  public
+    constructor Create;
+    destructor Destroy;
+
+    function Registro0000New : TRegistro0000;
+    function Registro0001New : TRegistro0001;
+    function Registro0010New : TRegistro0010;
+    function Registro0020New : TRegistro0020;
+    function Registro0030New : TRegistro0030;
+    function Registro0035New : TRegistro0035;
+    function Registro0930New : TRegistro0930;
+
+
+    procedure WriteRegistro0000;
+    procedure WriteRegistro0001;
+    procedure WriteRegistro0990;
+
+    property Registro0000 : TRegistro0000 read FRegistro0000 write FRegistro0000;
+    property Registro0001 : TRegistro0001 read fRegistro0001 write fRegistro0001;
+    property Registro0990 : TRegistro0990 read FRegistro0990 write FRegistro0990;
+  published
+  end;
+
+implementation
+
+uses
+  ACBrTXTUtils, StrUtils;
+
+{ TBloco_0 }
+
+procedure TBloco_0.CriaRegistros;
+begin
+  inherited ;
+  FRegistro0000 := TRegistro0000.Create;
+  fRegistro0001 := TRegistro0001.Create;
+  FRegistro0990 := TRegistro0990.Create;
+
+
+  FRegistro0990.QTD_LIN := 0;
+end;
+
+procedure TBloco_0.LiberaRegistros;
+begin
+  inherited ;
+  FRegistro0000.Free;
+  fRegistro0001.Free;
+  FRegistro0990.Free;
+end;
+
+constructor TBloco_0.Create;
+begin
+  inherited;
+
+end;
+
+destructor TBloco_0.Destroy;
+begin
+
+  inherited;
+end;
+
+function TBloco_0.Registro0000New: TRegistro0000;
+begin
+
+end;
+
+function TBloco_0.Registro0001New: TRegistro0001;
+begin
+
+end;
+
+function TBloco_0.Registro0010New: TRegistro0010;
+begin
+
+end;
+
+function TBloco_0.Registro0020New: TRegistro0020;
+begin
+
+end;
+
+function TBloco_0.Registro0030New: TRegistro0030;
+begin
+
+end;
+
+function TBloco_0.Registro0035New: TRegistro0035;
+begin
+
+end;
+
+function TBloco_0.Registro0930New: TRegistro0930;
+begin
+
+end;
+
+procedure TBloco_0.WriteRegistro0000;
+begin
+
+end;
+
+procedure TBloco_0.WriteRegistro0001;
+begin
+
+end;
+
+procedure TBloco_0.WriteRegistro0990;
+begin
+
+end;
+
+end.

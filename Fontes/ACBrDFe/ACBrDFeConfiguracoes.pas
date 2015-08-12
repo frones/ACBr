@@ -610,6 +610,7 @@ begin
 
   FConfiguracoes := AConfiguracoes;
   FSenha := '';
+  FK := '';
   FArquivoPFX := '';
   FDadosPFX := '';
   FNumeroSerie := '';
@@ -633,7 +634,9 @@ end;
 
 procedure TCertificadosConf.SetSenha(AValue: AnsiString);
 begin
-  if FSenha = AValue then Exit;
+  if (FK <> '') and (FSenha = StrCrypt(AValue, FK)) then
+    Exit;
+
   FK := FormatDateTime('hhnnsszzz',Now);
   FSenha := StrCrypt(AValue, FK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
 

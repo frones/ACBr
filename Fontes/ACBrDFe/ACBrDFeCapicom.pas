@@ -158,7 +158,7 @@ end;
 
 procedure TDFeCapicom.CarregarCertificadoSeNecessario;
 begin
-  if FCertificado = nil then
+  if FNumCertCarregado = '' then
     CarregarCertificado;
 end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 12/08/2015
+[+] Subindo 1a versão do Sped ECF que estava na pasta Branches para Trunk2, para está havendo
+    bastante solicitação, subindo para Trunk2 e disponibilizando no ACBrInstall, ajustes serão
+    feitos a partir de agora para que fique funcional.
+
 Data 19/12/2014
 [*] Alteração da unit ACBrEFDBlocos.pas para informar a versão do arquivo e os procedimentos de conversão
 		por: Juliomar Marchetti

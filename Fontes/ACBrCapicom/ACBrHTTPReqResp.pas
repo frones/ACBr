@@ -315,10 +315,20 @@ begin
 
   if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
     raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
-
+  
+  if not InternetSetOption(pSession, INTERNET_OPTION_CONNECT_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');    
+    
+  if not InternetSetOption(pSession, INTERNET_OPTION_DATA_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');    
+    
   if not InternetSetOption(pSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');
+    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');    
 
+  if not InternetSetOption(pSession, INTERNET_OPTION_DATA_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');        
+
+    
   try
     if (FUseSSL) then
       Port := INTERNET_DEFAULT_HTTPS_PORT

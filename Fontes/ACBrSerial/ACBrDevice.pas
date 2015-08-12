@@ -709,7 +709,7 @@ begin
      ip := copy(Porta,5 , 255);  //     "TCP:ip_maquina:porta"
      p := pos(':', ip);
      if p = 0 then
-        p := Length(ip);
+        p := Length(ip)+1;
 
      fTCPPort := copy(ip, p + 1, 5);
      if fTCPPort = '' then

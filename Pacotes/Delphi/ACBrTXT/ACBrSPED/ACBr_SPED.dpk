@@ -1,6 +1,7 @@
 package ACBr_SPED;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,6 +23,8 @@ package ACBr_SPED;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 
@@ -96,6 +99,36 @@ contains
   ACBrFContBloco_M in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_M.pas',
   ACBrFContBloco_M_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_M_Class.pas',
   ACBrFContBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBlocos.pas',
-  ACBrSpedFCont in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrSpedFCont.pas';
+  ACBrSpedFCont in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrSpedFCont.pas',
+  ACBrECFBloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_0.pas',
+  ACBrECFBloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_0_Class.pas',
+  ACBrECFBloco_9 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_9.pas',
+  ACBrECFBloco_9_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_9_Class.pas',
+  ACBrECFBloco_C in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_C.pas',
+  ACBrECFBloco_C_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_C_Class.pas',
+  ACBrECFBloco_E in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_E.pas',
+  ACBrECFBloco_E_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_E_Class.pas',
+  ACBrECFBloco_J in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_J.pas',
+  ACBrECFBloco_J_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_J_Class.pas',
+  ACBrECFBloco_K in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_K.pas',
+  ACBrECFBloco_K_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_K_Class.pas',
+  ACBrECFBloco_L in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_L.pas',
+  ACBrECFBloco_L_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_L_Class.pas',
+  ACBrECFBloco_M in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_M.pas',
+  ACBrECFBloco_M_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_M_Class.pas',
+  ACBrECFBloco_N in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_N.pas',
+  ACBrECFBloco_N_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_N_Class.pas',
+  ACBrECFBloco_P in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_P.pas',
+  ACBrECFBloco_P_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_P_Class.pas',
+  ACBrECFBloco_T in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_T.pas',
+  ACBrECFBloco_T_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_T_Class.pas',
+  ACBrECFBloco_U in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_U.pas',
+  ACBrECFBloco_U_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_U_Class.pas',
+  ACBrECFBloco_X in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_X.pas',
+  ACBrECFBloco_X_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_X_Class.pas',
+  ACBrECFBloco_Y in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_Y.pas',
+  ACBrECFBloco_Y_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_Y_Class.pas',
+  ACBrECFBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBlocos.pas',
+  ACBrSpedECF in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrSpedECF.pas';
 
 end.

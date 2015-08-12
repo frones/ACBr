@@ -4,8 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2014   Juliomar Marchetti                   }
-{					  Isaque Pinheiro		       }
-{ 					  Daniel Simões de Almeida	       }
+{					                    2015   Isaque Pinheiro	    	             }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -59,11 +58,13 @@ type
     FRegistroJ001: TRegistroJ001;
     FRegistroJ990: TRegistroJ990;
   public
-    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
-
     constructor Create;
     destructor Destroy;
 
+    procedure CriaRegistros;
+    procedure LimpaRegistros;
+
+    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property RegistroJ001: TRegistroJ001 read FRegistroJ001 write FRegistroJ001;
     property RegistroJ990: TRegistroJ990 read FRegistroJ990 write FRegistroJ990;
   published
@@ -82,10 +83,20 @@ begin
   FRegistroJ990 := TRegistroJ990.Create;
 end;
 
+procedure TBloco_J.CriaRegistros;
+begin
+
+end;
+
 destructor TBloco_J.Destroy;
 begin
   FRegistroJ001.Free;
   FRegistroJ990.Free;
+end;
+
+procedure TBloco_J.LimpaRegistros;
+begin
+
 end;
 
 end.

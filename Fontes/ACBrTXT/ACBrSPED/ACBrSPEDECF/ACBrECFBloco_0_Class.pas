@@ -4,8 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2014   Juliomar Marchetti                   }
-{					  Isaque Pinheiro		       }
-{ 					  Daniel Simões de Almeida	       }
+{					                    2015   Isaque Pinheiro	    	             }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -56,11 +55,12 @@ type
     FRegistro0000: TRegistro0000;
     fRegistro0001: TRegistro0001;
     FRegistro0990: TRegistro0990;
-    procedure CriaRegistros;overload;
-    procedure LiberaRegistros;overload;
   public
     constructor Create;
     destructor Destroy;
+
+    procedure CriaRegistros;
+    procedure LimpaRegistros;
 
     function Registro0000New : TRegistro0000;
     function Registro0001New : TRegistro0001;
@@ -99,7 +99,7 @@ begin
   FRegistro0990.QTD_LIN := 0;
 end;
 
-procedure TBloco_0.LiberaRegistros;
+procedure TBloco_0.LimpaRegistros;
 begin
   inherited ;
   FRegistro0000.Free;

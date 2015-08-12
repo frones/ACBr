@@ -4,8 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2014   Juliomar Marchetti                   }
-{					  Isaque Pinheiro		       }
-{ 					  Daniel Simões de Almeida	       }
+{					                    2015   Isaque Pinheiro	    	             }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -59,7 +58,7 @@ uses
   ACBrECFBloco_Y_Class, ACBrECFBloco_9_Class ;
 
 const
-  CACBrSpedECF_Versao = '0.01a';
+  CACBrSpedECF_Versao = '0.01';
 
 type
   /// ACBrSpedECF - Sitema Publico de Escrituração Contábil Fiscal

@@ -94,8 +94,8 @@ type
     fVL_SALDO_FIN: variant;
     fIND_VL_SALDO_FIN: string;
     fDESC_CTA_LAL: string;
-    fDT_LIM_LAL: tdate;
-    fDT_AP_LAL: tdate;
+    fDT_LIM_LAL: TDateTime;
+    fDT_AP_LAL: TDateTime;
     fDESC_LAN_ORIG: string;
     fCOD_LAN_ORIG: integer;
     fTRIBUTO:   string;
@@ -103,10 +103,10 @@ type
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
     property DESC_CTA_LAL: string read fDESC_CTA_LAL write fDESC_CTA_LAL;
-    property DT_AP_LAL: tdate read fDT_AP_LAL write fDT_AP_LAL;
+    property DT_AP_LAL: TDateTime read fDT_AP_LAL write fDT_AP_LAL;
     property COD_LAN_ORIG: integer read fCOD_LAN_ORIG write fCOD_LAN_ORIG;
     property DESC_LAN_ORIG: string read fDESC_LAN_ORIG write fDESC_LAN_ORIG;
-    property DT_LIM_LAL: tdate read fDT_LIM_LAL write fDT_LIM_LAL;
+    property DT_LIM_LAL: TDateTime read fDT_LIM_LAL write fDT_LIM_LAL;
     property TRIBUTO: string read fTRIBUTO write fTRIBUTO;
     property VL_SALDO_FIN: variant read fVL_SALDO_FIN write fVL_SALDO_FIN;
     property IND_VL_SALDO_FIN: string read fIND_VL_SALDO_FIN write fIND_VL_SALDO_FIN;
@@ -117,11 +117,11 @@ type
   TRegistroE030 = class(TBlocos)
   private
     fPER_APUR: string;
-    fDT_FIN:   tdate;
-    fDT_INI:   tdate;
+    fDT_FIN:   TDateTime;
+    fDT_INI:   TDateTime;
   public
-    property DT_INI: tdate read fDT_INI write fDT_INI;
-    property DT_FIN: tdate read fDT_FIN write fDT_FIN;
+    property DT_INI: TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
     property PER_APUR: string read fPER_APUR write fPER_APUR;
   end;
 

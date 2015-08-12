@@ -85,9 +85,9 @@ type
     //9 – Inclusão no Simples Naciona
     fPAT_REMAN_CIS: string;// Patrimônio Remanescente Em Caso De Cisão (%)
     // Patrimônio remanescente em caso de Cisão (%).
-    fDT_SIT_ESP: TDate;// Data da situação especial ou evento.
-    fDT_INI:   TDate;//Data inicial das informações contidas no arquivo.
-    fDT_FIN:   TDate; //Data Final Data final das informações contidas no arquivo.
+    fDT_SIT_ESP: TDateTime;// Data da situação especial ou evento.
+    fDT_INI:   TDateTime;//Data inicial das informações contidas no arquivo.
+    fDT_FIN:   TDateTime; //Data Final Data final das informações contidas no arquivo.
     fRETIFICADORA: string;// Escrituração retificadora? Escrituração retificadora?
     ///“S” – ECF retificadora
     //“N” – ECF original
@@ -109,9 +109,9 @@ type
     property IND_SIT_INI_PER: string read FIND_SIT_INI_PER write FIND_SIT_INI_PER;
     property SIT_ESPECIAL: string read FSIT_ESPECIAL write FSIT_ESPECIAL;
     property PAT_REMAN_CIS: string read FPAT_REMAN_CIS write FPAT_REMAN_CIS;
-    property DT_SIT_ESP: TDate read FDT_SIT_ESP write FDT_SIT_ESP;
-    property DT_INI: TDate read FDT_INI write FDT_INI;
-    property DT_FIN: TDate read FDT_FIN write FDT_FIN;
+    property DT_SIT_ESP: TDateTime read FDT_SIT_ESP write FDT_SIT_ESP;
+    property DT_INI: TDateTime read FDT_INI write FDT_INI;
+    property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
     property RETIFICADORA: string read FRETIFICADORA write FRETIFICADORA;
     property NUM_REC: string read FNUM_REC write FNUM_REC;
     property TIP_ECF: string read FTIP_ECF write FTIP_ECF;

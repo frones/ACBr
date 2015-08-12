@@ -58,10 +58,10 @@ type
 
   TRegistroC040 = class(TBlocos)
   private
-    fDT_INI:   TDate;
+    fDT_INI:   TDateTime;
     fHASH_ECD: string;
     fCNPJ:     string;
-    fDT_FIN:   TDate;
+    fDT_FIN:   TDateTime;
     fIND_ESC:  string;
     fIND_SIT_ESP: integer;
     fNIRE:     integer;
@@ -70,8 +70,8 @@ type
     fCOD_VER_LC: string;
   public
     property HASH_ECD: string read fHASH_ECD write fHASH_ECD;
-    property DT_INI: TDate read fDT_INI write fDT_INI;
-    property DT_FIN: TDate read fDT_FIN write fDT_FIN;
+    property DT_INI: TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
     property IND_SIT_ESP: integer read fIND_SIT_ESP write fIND_SIT_ESP;
     property CNPJ: string read fCNPJ write fCNPJ;
     property NUM_ORD: integer read fNUM_ORD write fNUM_ORD;
@@ -85,14 +85,14 @@ type
   TRegistroC050 = class(TBlocos)
   private
     fCOD_CONTA: string;
-    fDT_ALT:  TDate;
+    fDT_ALT:  TDateTime;
     fCTA:     string;
     fCOD_CTA_SUP: string;
     fIND_CTA: string;
     fNIVEL:   integer;
     fCOD_NAT: string;
   public
-    property DT_ALT: TDate read fDT_ALT write fDT_ALT;
+    property DT_ALT: TDateTime read fDT_ALT write fDT_ALT;
     property COD_NAT: string read fCOD_NAT write fCOD_NAT;
     property IND_CTA: string read fIND_CTA write fIND_CTA;
     property NIVEL: integer read fNIVEL write fNIVEL;
@@ -128,11 +128,11 @@ type
   /// Centro de Custos
   TRegistroC100 = class(TBlocos)
   private
-    fDT_ALT:   TDate;
+    fDT_ALT:   TDateTime;
     fCOD_CCUS: string;
     fCCUS:     string;
   public
-    property DT_ALT: TDate read fDT_ALT write fDT_ALT;
+    property DT_ALT: TDateTime read fDT_ALT write fDT_ALT;
     property COD_CCUS: string read fCOD_CCUS write fCOD_CCUS;
     property CCUS: string read fCCUS write fCCUS;
 
@@ -141,11 +141,11 @@ type
   /// Identificação do Período dos Saldos Periódicos das Contas Patrimoniais
   TRegistroC150 = class(TBlocos)
   private
-    fDT_FIN: TDate;
-    fDT_INI: TDate;
+    fDT_FIN: TDateTime;
+    fDT_INI: TDateTime;
   public
-    property DT_INI: TDate read fDT_INI write fDT_INI;
-    property DT_FIN: TDate read fDT_FIN write fDT_FIN;
+    property DT_INI: TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
   end;
 
   /// Detalhes dos Saldos Contábeis das Contas Patrimoniais
@@ -191,9 +191,9 @@ type
   /// Identificação da Data dos Saldos das Contas de Resultado Antes do Encerramento
   TRegistroC350 = class(TBlocos)
   private
-    fDT_RES: TDate;
+    fDT_RES: TDateTime;
   public
-    property DT_RES: TDate read fDT_RES write fDT_RES;
+    property DT_RES: TDateTime read fDT_RES write fDT_RES;
   end;
 
   /// Detalhes dos Saldos das Contas de Resultado Antes do Encerramento

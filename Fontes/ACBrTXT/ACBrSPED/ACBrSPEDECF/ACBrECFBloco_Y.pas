@@ -189,8 +189,8 @@ type
   private
     fCPF_CNPJ: string;
     fCPF_REP_LEG: string;
-    fDT_ALT_SOC: TDate;
-    fDT_FIM_SOC: TDate;
+    fDT_ALT_SOC: TDateTime;
+    fDT_FIM_SOC: TDateTime;
     fIND_QUALIF_SOCIO: string;
     fNOM_EMP: string;
     fPAIS:   integer;
@@ -199,8 +199,8 @@ type
     fQUALIF: string;
     fQUALIF_REP_LEG: integer;
   public
-    property DT_ALT_SOC: TDate read fDT_ALT_SOC write fDT_ALT_SOC;
-    property DT_FIM_SOC: TDate read fDT_FIM_SOC write fDT_FIM_SOC;
+    property DT_ALT_SOC: TDateTime read fDT_ALT_SOC write fDT_ALT_SOC;
+    property DT_FIM_SOC: TDateTime read fDT_FIM_SOC write fDT_FIM_SOC;
     property PAIS: integer read fPAIS write fPAIS;
     property IND_QUALIF_SOCIO: string read fIND_QUALIF_SOCIO write fIND_QUALIF_SOCIO;
     property CPF_CNPJ: string read fCPF_CNPJ write fCPF_CNPJ;
@@ -269,8 +269,8 @@ type
   TRegistroY620 = class(TBlocos)
   private
     fCNPJ:      string;
-    fDATA_AQUIS: TDate;
-    fDT_EVENTO: TDate;
+    fDATA_AQUIS: TDateTime;
+    fDT_EVENTO: TDateTime;
     fIND_PROC_CART: string;
     fIND_PROC_RFB: string;
     fIND_RELAC: integer;
@@ -285,7 +285,7 @@ type
     fVALOR_ESTR: variant;
     fVALOR_REAIS: variant;
   public
-    property DT_EVENTO: TDate read fDT_EVENTO write fDT_EVENTO;
+    property DT_EVENTO: TDateTime read fDT_EVENTO write fDT_EVENTO;
     property IND_RELAC: integer read fIND_RELAC write fIND_RELAC;
     property PAIS: integer read fPAIS write fPAIS;
     property CNPJ: string read fCNPJ write fCNPJ;
@@ -295,7 +295,7 @@ type
     property PERC_CAP_TOT: variant read fPERC_CAP_TOT write fPERC_CAP_TOT;
     property PERC_CAP_VOT: variant read fPERC_CAP_VOT write fPERC_CAP_VOT;
     property RES_EQ_PAT: variant read fRES_EQ_PAT write fRES_EQ_PAT;
-    property DATA_AQUIS: TDate read fDATA_AQUIS write fDATA_AQUIS;
+    property DATA_AQUIS: TDateTime read fDATA_AQUIS write fDATA_AQUIS;
     property IND_PROC_CART: string read fIND_PROC_CART write fIND_PROC_CART;
     property NUM_PROC_CART: string read fNUM_PROC_CART write fNUM_PROC_CART;
     property NOME_CART: string read fNOME_CART write fNOME_CART;
@@ -310,8 +310,8 @@ type
   TRegistroY630 = class(TBlocos)
   private
     fCNPJ:      string;
-    fDAT_ABERT: TDate;
-    fDAT_ENCER: TDate;
+    fDAT_ABERT: TDateTime;
+    fDAT_ENCER: TDateTime;
     fPATR_FIN_PER: variant;
     fQTE_QUOT:  integer;
     fQTE_QUOTA: integer;
@@ -320,8 +320,8 @@ type
     property QTE_QUOT: integer read fQTE_QUOT write fQTE_QUOT;
     property QTE_QUOTA: integer read fQTE_QUOTA write fQTE_QUOTA;
     property PATR_FIN_PER: variant read fPATR_FIN_PER write fPATR_FIN_PER;
-    property DAT_ABERT: TDate read fDAT_ABERT write fDAT_ABERT;
-    property DAT_ENCER: TDate read fDAT_ENCER write fDAT_ENCER;
+    property DAT_ABERT: TDateTime read fDAT_ABERT write fDAT_ABERT;
+    property DAT_ENCER: TDateTime read fDAT_ENCER write fDAT_ENCER;
   end;
 
   /// Registro Y640 - Participações em Consórcios de Empresas

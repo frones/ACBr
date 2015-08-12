@@ -63,14 +63,14 @@ type
     fATO_CONC: string;
     fIND_ATIV: string;
     fIND_PROJ: string;
-    fVIG_FIM:  TDate;
-    fVIG_INI:  TDate;
+    fVIG_FIM:  TDateTime;
+    fVIG_INI:  TDateTime;
   public
     property IND_ATIV: string read fIND_ATIV write fIND_ATIV;
     property IND_PROJ: string read fIND_PROJ write fIND_PROJ;
     property ATO_CONC: string read fATO_CONC write fATO_CONC;
-    property VIG_INI: TDate read fVIG_INI write fVIG_INI;
-    property VIG_FIM: TDate read fVIG_FIM write fVIG_FIM;
+    property VIG_INI: TDateTime read fVIG_INI write fVIG_INI;
+    property VIG_FIM: TDateTime read fVIG_FIM write fVIG_FIM;
   end;
 
   /// Registro X291 - Operações com o Exterior - Pessoa

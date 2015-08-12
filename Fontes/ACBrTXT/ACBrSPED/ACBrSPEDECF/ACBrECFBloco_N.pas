@@ -62,12 +62,12 @@ type
 
   TRegistroN030 = class
   private
-    fDT_FIN:   TDate;
-    fDT_INI:   TDate;
+    fDT_FIN:   TDateTime;
+    fDT_INI:   TDateTime;
     fPER_APUR: string;
   public
-    property DT_INI: TDate read fDT_INI write fDT_INI;
-    property DT_FIN: TDate read fDT_FIN write fDT_FIN;
+    property DT_INI: TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
     property PER_APUR: string read fPER_APUR write fPER_APUR;
   end;
 

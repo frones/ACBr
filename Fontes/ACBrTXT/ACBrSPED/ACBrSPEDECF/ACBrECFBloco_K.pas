@@ -56,11 +56,11 @@ type
   TRegistroK030 = class(TBlocos)
   private
     fPER_APUR: string;
-    fDT_FIN:   Tdate;
-    fDT_INI:   tdate;
+    fDT_FIN:   TDateTime;
+    fDT_INI:   TDateTime;
   public
-    property DT_INI: tdate read fDT_INI write fDT_INI;
-    property DT_FIN: tdate read fDT_FIN write fDT_FIN;
+    property DT_INI: TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
     property PER_APUR: string read fPER_APUR write fPER_APUR;
   end;
 

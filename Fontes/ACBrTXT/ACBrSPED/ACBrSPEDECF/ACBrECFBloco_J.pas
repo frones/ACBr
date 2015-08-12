@@ -63,10 +63,10 @@ type
     fNIVEL:   integer;
     fIND_CTA: string;
     fCOD_NAT: string;
-    fDT_ALT:  TDate;
+    fDT_ALT:  TDateTime;
     fCOD_CTA: string;
   public
-    property DT_ALT: TDate read fDT_ALT write fDT_ALT;
+    property DT_ALT: TDateTime read fDT_ALT write fDT_ALT;
     property COD_NAT: string read fCOD_NAT write fCOD_NAT;
     property IND_CTA: string read fIND_CTA write fIND_CTA;
     property NIVEL: integer read fNIVEL write fNIVEL;
@@ -100,11 +100,11 @@ type
   /// Registro J100 - Centro de Custos
   TRegistroJ100 = class(TBlocos)
   private
-    fDT_ALT:   TDate;
+    fDT_ALT:   TDateTime;
     fCOD_CCUS: string;
     fCCUS:     string;
   public
-    property DT_ALT: TDate read fDT_ALT write fDT_ALT;
+    property DT_ALT: TDateTime read fDT_ALT write fDT_ALT;
     property COD_CCUS: string read fCOD_CCUS write fCOD_CCUS;
     property CCUS: string read fCCUS write fCCUS;
   end;

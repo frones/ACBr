@@ -210,6 +210,9 @@ begin
               Conexao.CloseSocket ;
          end
 
+         else if Cmd.Metodo = 'lerini' then //ACBR.LerIni  Recarrega configurações do arquivo INI
+           LerIni
+
         ELSE
            raise Exception.Create('Comando inválido ('+ copy(Cmd.Comando,6,length(Cmd.Comando))+')') ;
 

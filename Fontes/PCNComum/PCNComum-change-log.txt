@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/08/2015   (por: hleorj)
+-- pcnConversao --
+[+] function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23505
+
 09/08/2015   (por: hleorj)
 -- pcnConversao --
 [+] function modFreteToDesStr(const t: TpcnModalidadeFrete): string;

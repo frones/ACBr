@@ -269,6 +269,7 @@ function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
 function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
+function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
 function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;
@@ -977,6 +978,18 @@ begin
                                    fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
                                    fpOutro]);
 end;
+
+function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
+begin
+  case t of
+    bcVisa:            Result := 'Visa';
+    bcMasterCard:      Result := 'MasterCard';
+    bcAmericanExpress: Result := 'AmericanExpress';
+    bcSorocred:        Result := 'Sorocred';
+    bcOutros:          Result := 'Outros'
+  end;
+end;
+
 
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
 begin

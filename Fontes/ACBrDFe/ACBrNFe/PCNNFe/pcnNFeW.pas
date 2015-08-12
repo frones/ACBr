@@ -584,7 +584,8 @@ begin
     if (nfe.Dest.enderDest.cPais = 1058) and (nfe.Dest.CNPJCPF <> '') then
       Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais)
     else
-      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 05, 20, 0, nfe.Dest.idEstrangeiro, DSC_IDESTR);
+      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 00, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
+//      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 05, 20, 0, nfe.Dest.idEstrangeiro, DSC_IDESTR);
 //      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
    end
   else

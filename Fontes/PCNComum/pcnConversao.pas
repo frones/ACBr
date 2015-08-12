@@ -251,6 +251,7 @@ function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
 
 function StrToTpEvento(out ok: boolean; const s: string): TpcnTpEvento;
 function TpEventoToStr(const t: TpcnTpEvento): string;
+function TpEventoToDesc(const t: TpcnTpEvento): string;
 
 function IndicadorEmissorToStr(const t: TpcnIndicadorEmissor): string;
 function StrToIndicadorEmissor(out ok: boolean; const s: string): TpcnIndicadorEmissor;
@@ -853,6 +854,30 @@ function TpEventoToStr(const t: TpcnTpEvento): String;
 begin
   result := EnumeradoToStr2( t , TpcnTpEventoString );
 end;
+
+function TpEventoToDescStr(const t: TpcnTpEvento): string;
+begin
+  result := EnumeradoToStr(t,
+             ['CCe', 'Cancelamento', 'Confirmacao', 'Ciencia',
+              'Desconhecimento', 'NaoRealizada',
+              'Encerramento', 'EPEC', 'IncCondutor', 'Multimodal',
+              'RegPassagem', 'RegPassagemBRId', 'EPEC',
+              'RegCTe', 'RegPassagemNFeCancelado',
+              'RegPassagemNFeRFID', 'CTeCancelado', 'MDFeCancelado',
+              'VistoriaSuframa', 'PedProrrog1', 'PedProrrog2',
+              'CanPedProrrog1', 'CanPedProrrog2', 'EventoFiscoPP1',
+              'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2'],
+             [teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+              teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+              teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
+              teRegistroPassagem, teRegistroPassagemBRId, teEPECNFe,
+              teRegistroCTe, teRegistroPassagemNFeCancelado,
+              teRegistroPassagemNFeRFID, teCTeCancelado, teMDFeCancelado,
+              teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
+              teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
+              teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2]);
+end;
+
 
 function StrToEnumerado2(out ok: boolean;  const s: string; Const AString: array of string ): variant;
 // Atencao  não Funciona em Alguns Enumerados ja existentes

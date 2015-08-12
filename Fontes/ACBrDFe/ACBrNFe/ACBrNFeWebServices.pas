@@ -2885,8 +2885,8 @@ end;
 procedure TAdministrarCSCNFCe.DefinirServicoEAction;
 begin
   // O Método ainda não esta definido.
-  FPServico := GetUrlWsd + 'MetodoNaoDefinido';
-  FPSoapAction := FPServico;
+  FPServico := GetUrlWsd + 'CscNFCe';
+  FPSoapAction := FPServico + '/admCscNFCe';
 end;
 
 procedure TAdministrarCSCNFCe.DefinirDadosMsg;
@@ -2913,7 +2913,7 @@ end;
 function TAdministrarCSCNFCe.TratarResposta: Boolean;
 begin
   // O Método ainda não esta definido.
-  FPRetWS := SeparaDados(FPRetornoWS, 'MetodoNaoDefinidoResult');
+  FPRetWS := SeparaDados(FPRetornoWS, 'admCscNFCeResult');
 
   // Limpando variaveis internas
   FretAdmCSCNFCe.Free;

@@ -275,12 +275,13 @@ end;
 function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String;
   Data: TDateTime): String;
 var
-  Dir, Evento: String;
+  Dir{, Evento}: String;
 begin
   Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
 
   if AdicionarLiteral then
   begin
+  (*
     case tipoEvento of
       teCCe: Evento := 'CCe';
       teCancelamento: Evento := 'Cancelamento';
@@ -290,8 +291,8 @@ begin
       teManifDestDesconhecimento: Evento := 'Desconhecimento';
       teManifDestOperNaoRealizada: Evento := 'NaoRealizada';
     end;
-
-    Dir := PathWithDelim(Dir) + Evento;
+  *)
+    Dir := PathWithDelim(Dir) + TpEventoToDescStr(tipoEvento);
   end;
 
   if not DirectoryExists(Dir) then

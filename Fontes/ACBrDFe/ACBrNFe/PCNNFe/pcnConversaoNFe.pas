@@ -69,7 +69,7 @@ type
                 schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
                 schconsReciNFe, schconsSitNFe, schconsStatServ, schconsCad,
                 schenvEvento, schconsNFeDest, schdownloadNFe, schretEnviNFe,
-                schdistDFeInt, scheventoEPEC);
+                schadmCscNFCe, schdistDFeInt, scheventoEPEC);
 
   TStatusACBrNFe = (stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
@@ -149,7 +149,7 @@ begin
     ['NfeRecepcao', 'NfeRetRecepcao', 'NfeCancelamento', 'NfeInutilizacao',
      'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
      'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
-     'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', '',
+     'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', 'AdministrarCSCNFCe',
      'NFeDistribuicaoDFe', 'EventoEPEC'],
     [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
       LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
@@ -164,7 +164,7 @@ begin
   ['NfeRecepcao', 'NfeRetRecepcao', 'NfeCancelamento', 'NfeInutilizacao',
    'NfeConsultaProtocolo', 'NfeStatusServico', 'NfeConsultaCadastro',
    'RecepcaoEvento', 'RecepcaoEvento', 'RecepcaoEvento', 'NfeConsultaDest',
-   'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', '',
+   'NfeDownloadNF', 'NfeAutorizacao', 'NfeRetAutorizacao', 'AdministrarCSCNFCe',
    'NFeDistribuicaoDFe', 'EventoEPEC'],
   [ LayNfeRecepcao, LayNfeRetRecepcao, LayNfeCancelamento, LayNfeInutilizacao,
     LayNfeConsulta, LayNfeStatusServico, LayNfeCadastro,
@@ -189,6 +189,7 @@ begin
     LayNFeDownloadNFe:    Result := schdownloadNFe;
     LayNfeAutorizacao:    Result := schNfe;
     LayNfeRetAutorizacao: Result := schretEnviNFe;
+    LayAdministrarCSCNFCe: Result := schadmCscNFCe;
     LayDistDFeInt:        Result := schdistDFeInt;
     LayNFCeEPEC:          Result := scheventoEPEC;
   else

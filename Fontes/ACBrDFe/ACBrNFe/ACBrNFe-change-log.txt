@@ -48,8 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/08/2015
+[*] Uso da function TpEventoToDescStr em GetPathEvento;
+    Por: Italo Jurisato Junior
+
 10/08/2015
--- ACBrNFe --
 [*] Removido as propriedades PathCCe e PathCan e alterado o nome da propriedade
     SalvarCCeCanEvento para SalvarEvento.
     por: Italo Jurisato Junior

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2015
+[*] Uso da function TpEventoToDescStr em GetPathEvento;
+    Por: Italo Jurisato Junior
+
 11/08/2015
 [*] Alteração para incluir o protocolo de cancelamento no XML quando a UF for 51.
     por: Italo Jurisato Junior

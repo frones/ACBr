@@ -1386,7 +1386,7 @@ begin
     FcStat := CTeRetorno.cStat;
     FXMotivo := CTeRetorno.xMotivo;
     FcUF := CTeRetorno.cUF;
-    FCTeChave := CTeRetorno.chCTe;
+//    FCTeChave := CTeRetorno.chCTe;
     FPMsg := FXMotivo;
 
     // Verifica se o Conhecimento está cancelado pelo método antigo. Se estiver,

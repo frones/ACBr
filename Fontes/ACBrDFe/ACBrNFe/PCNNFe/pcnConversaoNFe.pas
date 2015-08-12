@@ -375,7 +375,7 @@ end;
 
 function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
 begin
-  case StrToInt( sCorDENATRAN ) of
+  case StrToIntDef( sCorDENATRAN, 0 ) of
      1: result := '01-AMARELO';
      2: result := '02-AZUL';
      3: result := '03-BEGE';
@@ -470,7 +470,7 @@ end;
 
 function VeiculosCombustivelStr( const sTpComb : String ): String;
 begin
-  case StrToInt( stpComb) of
+  case StrToIntDef( stpComb, 0) of
      1: result := '01-ÁLCOOL';
      2: result := '02-GASOLINA';
      3: result := '03-DIESEL';

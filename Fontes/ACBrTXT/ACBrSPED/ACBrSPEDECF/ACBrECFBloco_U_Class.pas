@@ -63,9 +63,6 @@ type
     constructor Create;
     destructor Destroy;
 
-    procedure CriaRegistros;
-    procedure LimpaRegistros;
-
     property RegistroU001: TRegistroU001 read FRegistroU001 write FRegistroU001;
     property RegistroU990: TRegistroU990 read FRegistroU990 write FRegistroU990;
   published
@@ -85,20 +82,10 @@ begin
   FRegistroU990 := TRegistroU990.Create;
 end;
 
-procedure TBloco_U.CriaRegistros;
-begin
-
-end;
-
 destructor TBloco_U.Destroy;
 begin
   FRegistroU001.Free;
   FRegistroU990.Free;
-end;
-
-procedure TBloco_U.LimpaRegistros;
-begin
-
 end;
 
 end.

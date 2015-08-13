@@ -58,13 +58,10 @@ type
     FRegistroE001: TRegistroE001;
     FRegistroE990: TRegistroE990;
   public
+    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     constructor Create;
     destructor Destroy;
 
-    procedure CriaRegistros;
-    procedure LimpaRegistros;
-
-    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property RegistroE001: TRegistroE001 read FRegistroE001 write FRegistroE001;
     property RegistroE990: TRegistroE990 read FRegistroE990 write FRegistroE990;
   published
@@ -84,20 +81,10 @@ begin
   FRegistroE990 := TRegistroE990.Create;
 end;
 
-procedure TBloco_E.CriaRegistros;
-begin
-
-end;
-
 destructor TBloco_E.Destroy;
 begin
   FRegistroE001.Free;
   FRegistroE990.Free;
-end;
-
-procedure TBloco_E.LimpaRegistros;
-begin
-
 end;
 
 end.

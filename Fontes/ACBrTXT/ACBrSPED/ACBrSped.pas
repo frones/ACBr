@@ -56,12 +56,37 @@ type
     FDT_INI: TDateTime;  /// Data inicial das informações contidas no arquivo
     FDT_FIN: TDateTime;  /// Data final das informações contidas no arquivo
     FGravado: Boolean;
+    procedure CriaRegistros;virtual;
+    procedure LiberaRegistros;virtual;
   public
+    procedure LimpaRegistros;virtual;
     property DT_INI : TDateTime read FDT_INI  write FDT_INI;
     property DT_FIN : TDateTime read FDT_FIN  write FDT_FIN;
     property Gravado: Boolean   read FGravado write FGravado ;
   end;
 
 implementation
+
+{ TACBrSPED }
+
+procedure TACBrSPED.CriaRegistros;
+begin
+
+end;
+
+procedure TACBrSPED.LiberaRegistros;
+begin
+
+end;
+
+procedure TACBrSPED.LimpaRegistros;
+begin
+  /// Limpa os Registros
+  LiberaRegistros;
+  Conteudo.Clear;
+
+  /// Recriar os Registros Limpos
+  CriaRegistros;
+end;
 
 end.

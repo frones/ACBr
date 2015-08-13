@@ -76,6 +76,7 @@ type
     fIND_VL_SLD_FIN: string;
     fVL_SLD_FIN: variant;
     fVL_SLD_INI: variant;
+    fIND_VL_SLD_FIN: string;
     fIND_VL_SLD_INI: string;
     fVL_CRED:    variant;
     fVL_DEB:     variant;

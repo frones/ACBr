@@ -55,12 +55,11 @@ type
     FRegistro0000: TRegistro0000;
     fRegistro0001: TRegistro0001;
     FRegistro0990: TRegistro0990;
+    procedure CriaRegistros;overload;
+    procedure LiberaRegistros;overload;
   public
     constructor Create;
     destructor Destroy;
-
-    procedure CriaRegistros;
-    procedure LimpaRegistros;
 
     function Registro0000New : TRegistro0000;
     function Registro0001New : TRegistro0001;
@@ -99,7 +98,7 @@ begin
   FRegistro0990.QTD_LIN := 0;
 end;
 
-procedure TBloco_0.LimpaRegistros;
+procedure TBloco_0.LiberaRegistros;
 begin
   inherited ;
   FRegistro0000.Free;

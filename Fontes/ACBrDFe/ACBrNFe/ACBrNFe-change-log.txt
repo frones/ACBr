@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/08/2015
+[*] A versão do ConsNFeDest e DonwloadNFe tem que ser 1.01 e 1.00 respectivamente
+    caso contrario ocorrera erro de versão do arquivo XML não suportado (cabeçalho)
+    Por: Italo Jurisato Junior
+
 12/08/2015
 [*] Uso da function TpEventoToDescStr em GetPathEvento;
     Por: Italo Jurisato Junior

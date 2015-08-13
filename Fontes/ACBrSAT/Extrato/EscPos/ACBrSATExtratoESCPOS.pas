@@ -443,7 +443,12 @@ begin
   end;
 
   if CortaPapel then
-    FPosPrinter.Buffer.Add('</corte_total>');
+  begin
+    if FPosPrinter.CortaPapel then
+      FPosPrinter.Buffer.Add('</corte_total>')
+    else
+      FPosPrinter.Buffer.Add('</pular_linhas>');
+  end;
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
@@ -473,7 +478,10 @@ begin
     FPosPrinter.Buffer.Add('<qrcode>'+QRCode+'</qrcode>');
   end;
 
-  FPosPrinter.Buffer.Add('</corte_total>');
+  if FPosPrinter.CortaPapel then
+    FPosPrinter.Buffer.Add('</corte_total>')
+  else
+    FPosPrinter.Buffer.Add('</pular_linhas>');
 end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirCopias;

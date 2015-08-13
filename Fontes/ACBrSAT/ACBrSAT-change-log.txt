@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/08/2015
+-- ACBrSATExtratoESCPOS --     (por: DSA)
+[-] Correção para respeitar PosPrinter.CortaPapel desabilitado
+
 Data: 04/08/2015
 -- ACBrSATExtratoESCPOS --     (por: DSA)
 [*] Ajuste em "GerarObsContribuinte" de acordo com layout do manual de orientação

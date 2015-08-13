@@ -8,9 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="..\..\..\Fontes\ACBrNFSe"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrNFSe"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerPath Value="$(CompPath)"/>
@@ -20,37 +19,31 @@
     <License Value="LGPL"/>
     <Files Count="4">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRL.pas"/>
         <UnitName Value="ACBrNFSeDANFSeRL"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLClass.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLClass.pas"/>
         <UnitName Value="ACBrNFSeDANFSeRLClass"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLReg.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrNFSeDANFSeRLReg"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrNFSe\ACBrNFSeDANFSeRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRLRetrato.pas"/>
         <UnitName Value="ACBrNFSeDANFSeRLRetrato"/>
       </Item4>
     </Files>
     <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="4">
+    <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBr_NFSe"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFSe"/>
-      </Item2>
-      <Item3>
         <PackageName Value="fortes324forlaz"/>
-      </Item3>
-      <Item4>
-        <PackageName Value="FCL"/>
-      </Item4>
+      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

@@ -22,7 +22,7 @@ end;
 
 {$IFDEF FPC}
 initialization
-   {$i ACBrNFSe.lrs}
+//   {$i ACBrNFSe.lrs}
 {$ENDIF}
 
 end.

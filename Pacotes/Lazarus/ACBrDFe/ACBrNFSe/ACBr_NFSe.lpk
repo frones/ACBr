@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE;..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\Provedores"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>

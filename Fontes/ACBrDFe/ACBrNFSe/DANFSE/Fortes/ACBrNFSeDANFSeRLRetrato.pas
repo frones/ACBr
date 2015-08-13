@@ -192,7 +192,7 @@ var
 implementation
 
 uses
- StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrDFeUtil; //Astrogildo em 13/12/12
+ StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrDFeUtil, ACBrValidador; //Astrogildo em 13/12/12
 
 {$R *.dfm}
 
@@ -240,7 +240,7 @@ begin
   if pos('http://', LowerCase( FNFSe.OutrasInformacoes) ) > 0 then
   begin
     rlmDadosAdicionais.Width := 643;
-    
+
     rlImgQrCode          := TRLImage.Create(rbOutrasInformacoes);
     rlImgQrCode.Parent   := rbOutrasInformacoes;
     rlImgQrCode.Stretch  := True;
@@ -340,7 +340,8 @@ begin
 
  rllNumNF0.Caption  := {FormatDateTime('yyyy', FNFSe.DataEmissao)+}
                        FormatFloat('00000000000', StrToFloat(FNFSe.Numero));
- rllEmissao.Caption := FormatDateTime(DateTimeToStr(FNFSe.DataEmissao));  //Astrogildo em 13/12/12
+ rllEmissao.Caption :=FormatDateTime('dd/mm/yyyy hh:nn',FNFSe.DataEmissao);
+                      {FormatDateTime(DateTimeToStr(FNFSe.DataEmissao));  //Astrogildo em 13/12/12}
  rllCodVerificacao.Caption := FNFSe.CodigoVerificacao;
  t:=length(FNFSe.Competencia);
  if t=6
@@ -361,7 +362,7 @@ begin
 //    NotaUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
 
  rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
-    FormatFloat( FNFSe.Servico.Valores.ValorServicos ); //Astrogildo em 13/12/12
+    FormatFloat('#,##0.00',FNFSe.Servico.Valores.ValorServicos ); //Astrogildo em 13/12/12
 
  rlmCodServico.Lines.Clear;
 
@@ -396,24 +397,24 @@ begin
  rllCodigoArt.Visible:=MostrarObra;
  rllCodART.Visible:=MostrarObra;
 
- rllValorPIS.Caption    := FormatFloat( FNFSe.Servico.Valores.ValorPis );//Astrogildo em 13/12/12
- rllValorCOFINS.Caption := FormatFloat( FNFSe.Servico.Valores.ValorCofins );//Astrogildo em 13/12/12
- rllValorIR.Caption     := FormatFloat( FNFSe.Servico.Valores.ValorIr );//Astrogildo em 13/12/12
- rllValorINSS.Caption   := FormatFloat( FNFSe.Servico.Valores.ValorInss );//Astrogildo em 13/12/12
- rllValorCSLL.Caption   := FormatFloat( FNFSe.Servico.Valores.ValorCsll );//Astrogildo em 13/12/12
+ rllValorPIS.Caption    := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorPis );//Astrogildo em 13/12/12
+ rllValorCOFINS.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCofins );//Astrogildo em 13/12/12
+ rllValorIR.Caption     := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorIr );//Astrogildo em 13/12/12
+ rllValorINSS.Caption   := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorInss );//Astrogildo em 13/12/12
+ rllValorCSLL.Caption   := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCsll );//Astrogildo em 13/12/12
 
- rllValorServicos1.Caption      := FormatFloat( FNFSe.Servico.Valores.ValorServicos );//Astrogildo em 13/12/12
- rllDescIncondicionado1.Caption := FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );//Astrogildo em 13/12/12
- rllDescCondicionado.Caption    := FormatFloat( FNFSe.Servico.Valores.DescontoCondicionado );//Astrogildo em 13/12/12
- rllRetencoesFederais.Caption   := FormatFloat( FNFSe.Servico.Valores.ValorPis +//Astrogildo em 13/12/12
+ rllValorServicos1.Caption      := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorServicos );//Astrogildo em 13/12/12
+ rllDescIncondicionado1.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.DescontoIncondicionado );//Astrogildo em 13/12/12
+ rllDescCondicionado.Caption    := FormatFloat('#,##0.00', FNFSe.Servico.Valores.DescontoCondicionado );//Astrogildo em 13/12/12
+ rllRetencoesFederais.Caption   := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorPis +//Astrogildo em 13/12/12
                                      FNFSe.Servico.Valores.ValorCofins + FNFSe.Servico.Valores.ValorInss +
                                      FNFSe.Servico.Valores.ValorIr + FNFSe.Servico.Valores.ValorCsll );
- rllOutrasRetencoes.Caption     := FormatFloat( FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
- 
- rllValorIssRetido.Caption      := FormatFloat( FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
+ rllOutrasRetencoes.Caption     := FormatFloat('#,##0.00', FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
 
- rllValorLiquido.Caption := FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
- 
+ rllValorIssRetido.Caption      := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
+
+ rllValorLiquido.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
+
  {
  If FNFSe.Servico.Valores.ValorIssRetido > 0 Then Begin
 
@@ -485,16 +486,16 @@ begin
   snNao : rllIncentivador.Caption := 'Não';
  end;
 
- rllValorServicos2.Caption      := FormatFloat( FNFSe.Servico.Valores.ValorServicos );//Astrogildo em 13/12/12
- rllValorDeducoes.Caption       := FormatFloat( FNFSe.Servico.Valores.ValorDeducoes );//Astrogildo em 13/12/12
- rllDescIncondicionado2.Caption := FormatFloat( FNFSe.Servico.Valores.DescontoIncondicionado );//Astrogildo em 13/12/12
- rllBaseCalc.Caption            := FormatFloat( FNFSe.Servico.Valores.BaseCalculo );//Astrogildo em 13/12/12
- 
+ rllValorServicos2.Caption      := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorServicos );//Astrogildo em 13/12/12
+ rllValorDeducoes.Caption       := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorDeducoes );//Astrogildo em 13/12/12
+ rllDescIncondicionado2.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.DescontoIncondicionado );//Astrogildo em 13/12/12
+ rllBaseCalc.Caption            := FormatFloat('#,##0.00', FNFSe.Servico.Valores.BaseCalculo );//Astrogildo em 13/12/12
+
  // thema precisa ser desta forma pois usa aliquota 2,5 => 0,025
  if (FNFSe.Servico.Valores.Aliquota > 0) and (FNFSe.Servico.Valores.Aliquota < 1) then
-   rllAliquota.Caption := FormatFloat( FNFSe.Servico.Valores.Aliquota * 100 )
+   rllAliquota.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.Aliquota * 100 )
  else
-   rllAliquota.Caption := FormatFloat( FNFSe.Servico.Valores.Aliquota );
+   rllAliquota.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.Aliquota );
 
  // rllAliquota.Caption            := FormatFloat( FNFSe.Servico.Valores.Aliquota );//Astrogildo em 13/12/12
 
@@ -506,8 +507,8 @@ begin
  end;
 
  case FNFSe.OptanteSimplesNacional of
- snSim : rllValorISS.Caption := FormatFloat(0);
- snNao : rllValorISS.Caption := FormatFloat(FNFSe.Servico.Valores.ValorIss);
+ snSim : rllValorISS.Caption := FormatFloat('#,##0.00',0);
+ snNao : rllValorISS.Caption := FormatFloat('#,##0.00',FNFSe.Servico.Valores.ValorIss);
  end;
 // rllValorCredito.Caption := NotaUtil.FormatFloat( FNFSe.ValorCredito );
 

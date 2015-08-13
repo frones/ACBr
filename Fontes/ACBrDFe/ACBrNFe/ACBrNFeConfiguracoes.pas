@@ -203,7 +203,7 @@ begin
 
   FModeloDF := moNFe;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
-  FVersaoDF := ve200;
+  FVersaoDF := ve310;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);

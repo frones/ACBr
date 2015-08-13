@@ -48,7 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+
 13/08/2015
+-- ACBrNFeConfiguracoes --
+[-] Correção para gravação Configuracoes.Geral.VersaoDF no LFM/DFM  (por: DSA)
+
+-- ACBrNFeWebServices --
 [*] A versão do ConsNFeDest e DonwloadNFe tem que ser 1.01 e 1.00 respectivamente
     caso contrario ocorrera erro de versão do arquivo XML não suportado (cabeçalho)
     Por: Italo Jurisato Junior
@@ -58,6 +63,7 @@ Símbolo : Significado
     Por: Italo Jurisato Junior
 
 10/08/2015
+-- ACBrNFe --
 [*] Removido as propriedades PathCCe e PathCan e alterado o nome da propriedade
     SalvarCCeCanEvento para SalvarEvento.
     por: Italo Jurisato Junior

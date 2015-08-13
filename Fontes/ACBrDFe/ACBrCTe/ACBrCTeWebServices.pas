@@ -790,10 +790,6 @@ begin
 end;
 
 function TCTeRecepcao.TratarResposta: Boolean;
-//var
-//  I: integer;
-//  chCTe, NomeArquivo: String;
-//  AProcCTe: TProcCTe;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoLoteResult');
 

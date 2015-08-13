@@ -705,10 +705,6 @@ begin
 end;
 
 function TMDFeRecepcao.TratarResposta: Boolean;
-//var
-//  I: integer;
-//  chMDFe, NomeArquivo: String;
-//  AProcMDFe: TProcMDFe;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoLoteResult');
 
@@ -862,10 +858,6 @@ begin
               // o Método GravarXML salva o conteudo da propriedade XMLOriginal
               if SalvarXML then
                 TACBrMDFe(FPDFeOwner).Manifestos.Items[J].GravarXML;
-
-//                AProcMDFe.Gerador.SalvarArquivo(
-//                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-//                    AInfProt.Items[I].chMDFe + '-mdfe.xml');
             end;
 
           finally

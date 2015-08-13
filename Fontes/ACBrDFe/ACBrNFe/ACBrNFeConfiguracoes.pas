@@ -160,7 +160,6 @@ end;
 
 { TConfiguracoesNFe }
 
-
 constructor TConfiguracoesNFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -275,32 +274,18 @@ end;
 function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String;
   Data: TDateTime): String;
 var
-  Dir{, Evento}: String;
+  Dir: String;
 begin
   Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
 
   if AdicionarLiteral then
-  begin
-  (*
-    case tipoEvento of
-      teCCe: Evento := 'CCe';
-      teCancelamento: Evento := 'Cancelamento';
-      teEPECNFe: Evento := 'EPEC';
-      teManifDestConfirmacao: Evento := 'Confirmacao';
-      teManifDestCiencia: Evento := 'Ciencia';
-      teManifDestDesconhecimento: Evento := 'Desconhecimento';
-      teManifDestOperNaoRealizada: Evento := 'NaoRealizada';
-    end;
-  *)
     Dir := PathWithDelim(Dir) + TpEventoToDescStr(tipoEvento);
-  end;
 
   if not DirectoryExists(Dir) then
     ForceDirectories(Dir);
 
   Result := Dir;
 end;
-
 
 function TArquivosConfNFe.GetPathInu(CNPJ: String = ''): String;
 begin
@@ -317,6 +302,5 @@ begin
   end;
   Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data);
 end;
-
 
 end.

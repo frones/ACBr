@@ -175,9 +175,6 @@ begin
     FMDFe.Ide.verProc := 'ACBrMDFe';
     FMDFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FMDFe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
-
-//    if Assigned(DAMDFE) then
-//      FMDFe.Ide.tpImp := DAMDFE.TipoDAMDFE;
   end;
 end;
 

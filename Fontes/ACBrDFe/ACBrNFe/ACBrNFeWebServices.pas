@@ -1591,7 +1591,6 @@ begin
   if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA
-//     (FPConfiguracoesNFe.WebServices.UFCodigo in [29, 41]) then // 29 = BA, 41 = PR
     FPServico := GetUrlWsd + 'NfeConsulta'
   else
     FPServico := GetUrlWsd + 'NfeConsulta2';
@@ -2884,7 +2883,6 @@ end;
 
 procedure TAdministrarCSCNFCe.DefinirServicoEAction;
 begin
-  // O Método ainda não esta definido.
   FPServico := GetUrlWsd + 'CscNFCe';
   FPSoapAction := FPServico + '/admCscNFCe';
 end;
@@ -2912,7 +2910,6 @@ end;
 
 function TAdministrarCSCNFCe.TratarResposta: Boolean;
 begin
-  // O Método ainda não esta definido.
   FPRetWS := SeparaDados(FPRetornoWS, 'admCscNFCeResult');
 
   // Limpando variaveis internas

@@ -58,6 +58,7 @@ type
   EACBrNFeException = class(EACBrDFeException);
 
   {Carta de Correção}
+
   TCartaCorrecao = class(TComponent)
   private
     FCCe: TCCeNFe;
@@ -69,6 +70,7 @@ type
   end;
 
   {Download}
+
   TDownload = class(TComponent)
   private
     FDownload: TDownloadNFe;

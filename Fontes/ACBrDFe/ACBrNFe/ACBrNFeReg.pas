@@ -101,7 +101,7 @@ begin
   RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFe, 'PathNFe',
      TACBrDirProperty);
 
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFe, 'PathCan',
+  RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFe, 'PathEvento',
      TACBrDirProperty);
 
   RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFe, 'PathInu',

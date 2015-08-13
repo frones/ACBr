@@ -717,7 +717,7 @@ function TArquivosConf.GetIniServicos: String;
 begin
   if FIniServicos = '' then
     if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
-      FIniServicos := ApplicationPath + 'ACBrServicos.ini';
+      FIniServicos := ApplicationPath + FConfiguracoes.WebServices.ResourceName+'.ini';
 
   Result := FIniServicos;
 end;

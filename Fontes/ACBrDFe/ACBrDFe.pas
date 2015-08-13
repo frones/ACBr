@@ -75,7 +75,6 @@ type
     function GetAbout: String; virtual;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    function GetNomeArquivoServicos: String; virtual;
     function CreateConfiguracoes: TConfiguracoes; virtual;
 
     procedure LerParamsIni( ApenasSeNaoLido: Boolean = False); virtual;
@@ -363,13 +362,6 @@ begin
   Versao := VersaoMaisProxima;
   if NaoEstaVazio(ArqSchema) then
     ArqSchema := Configuracoes.Arquivos.PathSchemas + ArqSchema;
-end;
-
-function TACBrDFe.GetNomeArquivoServicos: String;
-begin
-  Result := 'ACBrServicosDFe.ini';
-  raise EACBrDFeException.Create(
-    'GetNomeArquivoServicos não implementado para: ' + ClassName);
 end;
 
 procedure TACBrDFe.LerParamsIni(ApenasSeNaoLido: Boolean);

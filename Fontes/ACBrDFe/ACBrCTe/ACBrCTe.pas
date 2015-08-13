@@ -78,8 +78,6 @@ type
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetAbout: String; override;
-    function GetNomeArquivoServicos: String; override;
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -230,11 +228,6 @@ end;
 function TACBrCTe.GetAbout: String;
 begin
   Result := 'ACBrCTe Ver: ' + ACBRCTE_VERSAO;
-end;
-
-function TACBrCTe.GetNomeArquivoServicos: String;
-begin
-  Result := 'ACBrCTeServicos.ini';
 end;
 
 function TACBrCTe.GetNomeModeloDFe: String;

@@ -104,8 +104,6 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     function GetAbout: String; override;
-    function GetNomeArquivoServicos: String; override;
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -249,12 +247,6 @@ end;
 function TACBrNFe.GetAbout: String;
 begin
   Result := 'ACBrNFe Ver: ' + ACBRNFE_VERSAO;
-end;
-
-function TACBrNFe.GetNomeArquivoServicos: String;
-begin
-  Result := 'ACBr' + IfThen(Configuracoes.Geral.ModeloDF =
-    moNFe, 'NFe', 'NFCe') + 'Servicos.ini';
 end;
 
 function TACBrNFe.CreateConfiguracoes: TConfiguracoes;

@@ -45,6 +45,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/08/2015   (por: DSA)
+-- ACBrDFe --
+[*]  Remoção de método não utilizado "GetNomeArquivoServicos"
+[*]  Ajuste para TWebServicesConf.LerParamsIniServicos procurar por
+     "ACBrXXXServicos.ini" na mesma pasta do .EXE, se o mesmo não estiver
+     definido em Configuracoes.Arquivos.IniServicos
+
 10/08/2015   (por: DSA)
 -- ACBrDFeCapicom --
 [-] Tentativa de correção de falha de atribuição de Senha em Certificado A3

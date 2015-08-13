@@ -73,8 +73,6 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     function GetAbout: String; override;
-    function GetNomeArquivoServicos: String; override;
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -188,11 +186,6 @@ end;
 function TACBrMDFe.GetAbout: String;
 begin
   Result := 'ACBrMDFe Ver: ' + ACBRMDFE_VERSAO;
-end;
-
-function TACBrMDFe.GetNomeArquivoServicos: String;
-begin
-  Result := 'ACBrMDFeServicos.ini';
 end;
 
 function TACBrMDFe.CreateConfiguracoes: TConfiguracoes;

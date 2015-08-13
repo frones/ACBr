@@ -251,7 +251,7 @@ function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
 
 function StrToTpEvento(out ok: boolean; const s: string): TpcnTpEvento;
 function TpEventoToStr(const t: TpcnTpEvento): string;
-function TpEventoToDesc(const t: TpcnTpEvento): string;
+function TpEventoToDescStr(const t: TpcnTpEvento): string;
 
 function IndicadorEmissorToStr(const t: TpcnIndicadorEmissor): string;
 function StrToIndicadorEmissor(out ok: boolean; const s: string): TpcnIndicadorEmissor;

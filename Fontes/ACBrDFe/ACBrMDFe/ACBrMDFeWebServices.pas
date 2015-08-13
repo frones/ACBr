@@ -1838,13 +1838,7 @@ begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
                 '-procEventoMDFe.xml';
 
-              if FPConfiguracoesMDFe.Geral.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text);
-
               if FPConfiguracoesMDFe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
-
-              if FPConfiguracoesMDFe.Arquivos.SalvarEvento then
                 FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
             finally
               wProc.Free;

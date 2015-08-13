@@ -881,7 +881,6 @@ procedure TCTeRetRecepcao.Clear;
 var
   i, j: Integer;
 begin
-(*
   // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
@@ -895,8 +894,6 @@ begin
     begin
       if OnlyNumber(FCTeRetorno.ProtCTe.Items[i].chCTe) = FConhecimentos.Items[J].NumID then
       begin
-        FConhecimentos.Items[j].Confirmada           := False;
-        FConhecimentos.Items[j].Msg                  := '';
         FConhecimentos.Items[j].CTe.procCTe.verAplic := '';
         FConhecimentos.Items[j].CTe.procCTe.chCTe    := '';
         FConhecimentos.Items[j].CTe.procCTe.dhRecbto := 0;
@@ -907,7 +904,6 @@ begin
       end;
     end;
   end;
-*)  
 end;
 
 function TCTeRetRecepcao.GetRecibo: String;
@@ -976,7 +972,7 @@ begin
                          StringReplace(FConhecimentos.Items[J].XMLAssinado,
                                        '<' + ENCODING_UTF8 + '>', '',
                                        [rfReplaceAll]);
-          ;
+          
           XML_procCTe := XML_procCTe + '<protCTe versao="' + FPVersaoServico + '">';
           XML_procCTe := XML_procCTe + AInfProt.Items[I].XMLprotCTe;
           XML_procCTe := XML_procCTe + '</protCTe>';
@@ -1217,13 +1213,11 @@ end;
 
 procedure TCTeRecibo.Clear;
 begin
-(*
   // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
-*)  
 end;
 
 procedure TCTeRecibo.DefinirServicoEAction;
@@ -1324,13 +1318,11 @@ end;
 
 procedure TCTeConsulta.Clear;
 begin
-(*
   // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
-*)  
 end;
 
 procedure TCTeConsulta.DefinirServicoEAction;
@@ -1783,13 +1775,11 @@ end;
 
 procedure TCTeInutilizacao.Clear;
 begin
-(*
   // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
-*)  
 end;
 
 procedure TCTeInutilizacao.SetJustificativa(AValue: String);
@@ -1977,13 +1967,11 @@ end;
 
 procedure TCTeConsultaCadastro.Clear;
 begin
-(*
   // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
-*)  
 end;
 
 procedure TCTeConsultaCadastro.SetCNPJ(const Value: String);
@@ -2133,12 +2121,10 @@ end;
 
 procedure TCTeEnvEvento.Clear;
 begin
-(*
   // Limpa Dados do retorno;
   FPMsg     := '';
   FcStat    := 0;
   FxMotivo  := '';
-*)  
 end;
 
 function TCTeEnvEvento.GerarPathEvento: String;
@@ -2438,13 +2424,7 @@ begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
                 '-procEventoCTe.xml';
 
-              if FPConfiguracoesCTe.Geral.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text);
-
               if FPConfiguracoesCTe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
-
-              if FPConfiguracoesCTe.Arquivos.SalvarEvento then
                 FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
             finally
               wProc.Free;

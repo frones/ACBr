@@ -79,7 +79,6 @@ type
   TArquivosConfMDFe = class(TArquivosConf)
   private
     FEmissaoPathMDFe: boolean;
-    FSalvarEvento: boolean;
     FSalvarApenasMDFeProcessados: boolean;
     FPathMDFe: String;
     FPathEvento: String;
@@ -95,7 +94,6 @@ type
   published
     property EmissaoPathMDFe: boolean read FEmissaoPathMDFe
       write FEmissaoPathMDFe default False;
-    property SalvarEvento: boolean read FSalvarEvento write FSalvarEvento default False;
     property SalvarApenasMDFeProcessados: boolean
       read FSalvarApenasMDFeProcessados write FSalvarApenasMDFeProcessados default False;
     property PathMDFe: String read FPathMDFe write FPathMDFe;
@@ -195,7 +193,6 @@ begin
   inherited Assign(DeArquivosConfMDFe);
 
   FEmissaoPathMDFe             := DeArquivosConfMDFe.EmissaoPathMDFe;
-  FSalvarEvento                := DeArquivosConfMDFe.SalvarEvento;
   FSalvarApenasMDFeProcessados := DeArquivosConfMDFe.SalvarApenasMDFeProcessados;
   FPathMDFe                    := DeArquivosConfMDFe.PathMDFe;
   FPathEvento                  := DeArquivosConfMDFe.PathEvento;
@@ -208,7 +205,6 @@ begin
 
   FDownloadMDFe := TDownloadConfMDFe.Create;
   FEmissaoPathMDFe := False;
-  FSalvarEvento := False;
   FSalvarApenasMDFeProcessados := False;
   FPathMDFe := '';
   FPathEvento := '';

@@ -80,7 +80,6 @@ type
   TArquivosConfCTe = class(TArquivosConf)
   private
     FEmissaoPathCTe: Boolean;
-    FSalvarEvento: Boolean;
     FSalvarApenasCTeProcessados: Boolean;
     FPathCTe: String;
     FPathInu: String;
@@ -97,7 +96,6 @@ type
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
-    property SalvarEvento: Boolean       read FSalvarEvento   write FSalvarEvento   default False;
     property SalvarApenasCTeProcessados: Boolean read FSalvarApenasCTeProcessados write FSalvarApenasCTeProcessados default False;
     property PathCTe: String             read FPathCTe        write FPathCTe;
     property PathInu: String             read FPathInu        write FPathInu;
@@ -196,7 +194,6 @@ begin
   inherited Assign(DeArquivosConfCTe);
 
   FEmissaoPathCTe             := DeArquivosConfCTe.EmissaoPathCTe;
-  FSalvarEvento               := DeArquivosConfCTe.SalvarEvento;
   FSalvarApenasCTeProcessados := DeArquivosConfCTe.SalvarApenasCTeProcessados;
   FPathCTe                    := DeArquivosConfCTe.PathCTe;
   FPathInu                    := DeArquivosConfCTe.PathInu;
@@ -211,7 +208,6 @@ begin
 
   FDownloadCTe := TDownloadConfCTe.Create;
   FEmissaoPathCTe := False;
-  FSalvarEvento := False;
   FSalvarApenasCTeProcessados := False;
   FPathCTe := '';
   FPathInu := '';

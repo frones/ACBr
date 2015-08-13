@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrCTe"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
@@ -17,51 +17,48 @@
         </CompilerMessages>
         <CompilerPath Value="$(CompPath)"/>
       </Other>
-    </CompilerOptions>
+    </CompilerOptions>	
     <Description Value="ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Files Count="7">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLReg.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrCTeDACTeRLReg"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLClass.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLClass.pas"/>
         <UnitName Value="ACBrCTeDACTeRLClass"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRL.pas"/>
         <UnitName Value="ACBrCTeDACTeRL"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetrato.pas"/>
         <UnitName Value="ACBrCTeDACTeRLRetrato"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDACTeRLRetratoA5.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLRetratoA5.pas"/>
         <UnitName Value="ACBrCTeDACTeRLRetratoA5"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDAEventoRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRL.pas"/>
         <UnitName Value="ACBrCTeDAEventoRL"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrCTe\ACBrCTeDAEventoRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRLRetrato.pas"/>
         <UnitName Value="ACBrCTeDAEventoRLRetrato"/>
       </Item7>
     </Files>
     <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="fortes324forlaz"/>
       </Item1>
       <Item2>
         <PackageName Value="ACBr_CTe"/>
       </Item2>
-      <Item3>
-        <PackageName Value="FCL"/>
-      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

@@ -172,6 +172,9 @@ echo.
 %1\tools\lazres.exe ACBrMDFe.lrs TACBrMDFe.bmp
 move ACBrMDFe.lrs ..\ACBrDFe\ACBrMDFe
 
+%1\tools\lazres.exe ACBrMDFeDAMDFeRL.lrs TACBrMDFeDAMDFeRL.png
+move ACBrMDFeDAMDFeRL.lrs ..\ACBrDFe\ACBrMDFe\DAMDFE\Fortes
+
 echo.
 echo "****************************************"
 echo "* Arquivo    ACBrMDFe.lrs     gerado    *"

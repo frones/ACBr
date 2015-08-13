@@ -59,7 +59,7 @@ end;
 
 initialization
 {$IFDEF FPC}
-   {$I ACBrMDFe.lrs}
+   {$I ACBrMDFeDAMDFeRL.lrs}
 {$ENDIF}
 
 end.

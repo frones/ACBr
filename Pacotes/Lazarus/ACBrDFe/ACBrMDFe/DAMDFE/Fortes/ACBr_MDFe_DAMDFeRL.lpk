@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrMDFe"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
@@ -22,42 +22,39 @@
     <License Value="LGPL"/>
     <Files Count="6">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
         <UnitName Value="ACBrMDFeDAMDFeRLRetrato"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRL.pas"/>
         <UnitName Value="ACBrMDFeDAMDFeRL"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAEventoRLRetrato.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAEventoRLRetrato.pas"/>
         <UnitName Value="ACBrMDFeDAEventoRLRetrato"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAEventoRL.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAEventoRL.pas"/>
         <UnitName Value="ACBrMDFeDAEventoRL"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLClass.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLClass.pas"/>
         <UnitName Value="ACBrMDFeDAMDFeRLClass"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrMDFe\ACBrMDFeDAMDFeRLReg.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrMDFeDAMDFeRLReg"/>
       </Item6>
     </Files>
     <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBr_MDFe"/>
       </Item1>
       <Item2>
         <PackageName Value="fortes324forlaz"/>
       </Item2>
-      <Item3>
-        <PackageName Value="FCL"/>
-      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

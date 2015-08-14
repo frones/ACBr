@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/08/2015
+-- ACBrECF --
+[*] Correção para respeitar propriedade "IgnorarTagsFormatacao"  (por:DSA)
+
 Data: 06/08/2015
 -- ACBrDevice --  (por: DSA e Amarildo Lacerda)
 [+] Adicionado suporte a Impressoras TCP através da notação "TCP:ip_maquina:porta"

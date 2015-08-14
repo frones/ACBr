@@ -4982,23 +4982,29 @@ begin
 
   *************************************************}
 
-   TagTraduzida := fsECF.TraduzirTag( ATag );
+  if not IgnorarTagsFormatacao then
+    TagTraduzida := fsECF.TraduzirTag( ATag )
+  else
+    TagTraduzida := '';
 
-   if TagTraduzida = '' then
-   begin
-     if ATag = cTagLinhaSimples then
-       TagTraduzida := StringOfChar('-', Colunas)
-     else if ATag = cTagLinhaDupla then
-       TagTraduzida := StringOfChar('=', Colunas)
-     else if ATag = cTagPuloDeLinhas then
-       TagTraduzida := StringOfChar(#10, LinhasEntreCupons);
-   end ;
+  if TagTraduzida = '' then
+  begin
+    if ATag = cTagLinhaSimples then
+      TagTraduzida := StringOfChar('-', Colunas)
+    else if ATag = cTagLinhaDupla then
+      TagTraduzida := StringOfChar('=', Colunas)
+    else if ATag = cTagPuloDeLinhas then
+      TagTraduzida := StringOfChar(#10, LinhasEntreCupons);
+  end ;
 end ;
 
 procedure TACBrECF.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
   var BlocoTraduzido: AnsiString);
 begin
-  BlocoTraduzido := fsECF.TraduzirTagBloco( ATag, ConteudoBloco );
+  if not IgnorarTagsFormatacao then
+    BlocoTraduzido := fsECF.TraduzirTagBloco( ATag, ConteudoBloco )
+  else
+    BlocoTraduzido := ConteudoBloco;
 
   if ConteudoBloco = BlocoTraduzido then  // Não traduziu...
   begin

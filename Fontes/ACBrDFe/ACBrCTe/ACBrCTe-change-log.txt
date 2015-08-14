@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2015
+[*] Não estava atualizando o XML através de uma consulta quando a UF é 51.
+    Por: Italo Jurisato Junior
+
 12/08/2015
 [*] Removido a propriedade SalvarEvento, pois a propriedade Salvar é que determina
     se o arquivo *-procEventoCTe.xml será salvo ou não em disco.

@@ -47,7 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+14/08/2015
+-- ACBrNFeDANFeRLRetrato --    (por: hleorj)
+[-]  Mudança da posição da checagem da propriedade FNFeCancelada
+[*]  Adicionado o Status 135 para o evento de cancelada;
+     http://www.projetoacbr.com.br/forum/index.php?showtopic=23505
 
 13/08/2015
 -- ACBrNFeConfiguracoes --

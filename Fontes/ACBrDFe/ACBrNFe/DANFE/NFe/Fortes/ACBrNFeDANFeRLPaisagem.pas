@@ -619,58 +619,60 @@ begin
       rllHomologacao.Caption := '';
       rllHomologacao.Visible := False;
     end;
-
   // Exibe a informação correta no label da chave de acesso
-  if FNFe.procNFe.cStat > 0 then
+  if FNFeCancelada then
   begin
-    rlbCodigoBarras.Visible := False;
-    rllXmotivo.Visible := True;
-    rllDadosVariaveis3_Descricao.Visible := True;
-    case FNFe.procNFe.cStat of
-      100 : begin
-              rlbCodigoBarras.Visible := True;
-              rllXMotivo.Visible := False;
-              rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
-            end;
-      101,
-      151,
-      155: begin
-            rllXmotivo.Caption := 'NF-e CANCELADA';
-            rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-          end;
-      110,
-      205,
-      301,
-      302: begin
-            rllXmotivo.Caption := 'NF-e DENEGADA';
-            rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
-          end;
-      else
-          begin
-            rllXmotivo.Caption := FNFe.procNFe.xMotivo;
-            rllDadosVariaveis3_Descricao.Visible := False;
-            rllDadosVariaveis3.Visible := False;
-          end;
-    end;
-  end
-  else
-  begin
-    if FNFeCancelada then
-    begin
       rllXmotivo.Caption := 'NF-e CANCELADA';
       rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
       rlbCodigoBarras.Visible := False;
       rllXmotivo.Visible := True;
       rllDadosVariaveis3_Descricao.Visible := True;
-    end;
-
-    if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
+  end
+  else
+  begin
+    if FNFe.procNFe.cStat > 0 then
     begin
       rlbCodigoBarras.Visible := False;
-      rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
-      rllXMotivo.Visible := True;
-      rllDadosVariaveis3_Descricao.Visible := False;
-      rllDadosVariaveis3.Visible := False;
+      rllXmotivo.Visible := True;
+      rllDadosVariaveis3_Descricao.Visible := True;
+      case FNFe.procNFe.cStat of
+        100 : begin
+                rlbCodigoBarras.Visible := True;
+                rllXMotivo.Visible := False;
+                rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
+              end;
+        101,
+        135,
+        151,
+        155:  begin
+                rllXmotivo.Caption := 'NF-e CANCELADA';
+                rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+              end;
+        110,
+        205,
+        301,
+        302: begin
+              rllXmotivo.Caption := 'NF-e DENEGADA';
+              rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
+            end;
+        else
+            begin
+              rllXmotivo.Caption := FNFe.procNFe.xMotivo;
+              rllDadosVariaveis3_Descricao.Visible := False;
+              rllDadosVariaveis3.Visible := False;
+            end;
+      end;
+    end
+    else
+    begin
+      if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
+      begin
+        rlbCodigoBarras.Visible := False;
+        rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
+        rllXMotivo.Visible := True;
+        rllDadosVariaveis3_Descricao.Visible := False;
+        rllDadosVariaveis3.Visible := False;
+      end;
     end;
   end;
 

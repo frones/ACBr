@@ -83,7 +83,7 @@ type
     //7 – Transformação
     //8 – Desenquadramento de Imune/Isenta;
     //9 – Inclusão no Simples Naciona
-    fPAT_REMAN_CIS: string;// Patrimônio Remanescente Em Caso De Cisão (%)
+    fPAT_REMAN_CIS: Extended;// Patrimônio Remanescente Em Caso De Cisão (%)
     // Patrimônio remanescente em caso de Cisão (%).
     fDT_SIT_ESP: TDateTime;// Data da situação especial ou evento.
     fDT_INI:   TDateTime;//Data inicial das informações contidas no arquivo.
@@ -108,7 +108,7 @@ type
     property NOME: string read FNOME write FNOME;
     property IND_SIT_INI_PER: string read FIND_SIT_INI_PER write FIND_SIT_INI_PER;
     property SIT_ESPECIAL: string read FSIT_ESPECIAL write FSIT_ESPECIAL;
-    property PAT_REMAN_CIS: string read FPAT_REMAN_CIS write FPAT_REMAN_CIS;
+    property PAT_REMAN_CIS: extended read FPAT_REMAN_CIS write FPAT_REMAN_CIS;
     property DT_SIT_ESP: TDateTime read FDT_SIT_ESP write FDT_SIT_ESP;
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
@@ -144,7 +144,7 @@ type
   TRegistro0010 = class(TBlocos)
   private
     fAPUR_CSLL:   string;
-    fCOD_QUALIF_PJ: integer;
+    fCOD_QUALIF_PJ: String;
     fDIF_FCONT:   string;
     fFORMA_APUR:  string;
     fFORMA_APUR_I: string;
@@ -155,7 +155,7 @@ type
     fOPT_EXT_RTT: string;
     fOPT_PAES:    TACBrIndicador;
     fOPT_REFIS:   TACBrIndicador;
-    fTIP_ENT:     integer;
+    fTIP_ENT:     String;
     fTIP_ESC_PRE: string;
   public
     property HASH_ECF_ANTERIOR: string read fHASH_ECF_ANTERIOR write fHASH_ECF_ANTERIOR;
@@ -163,11 +163,11 @@ type
     property OPT_PAES: TACBrIndicador read fOPT_PAES write fOPT_PAES;
     property FORMA_TRIB: TACBrFormaTributacaoLucro read fFORMA_TRIB write fFORMA_TRIB;
     property FORMA_APUR: string read fFORMA_APUR write fFORMA_APUR;
-    property COD_QUALIF_PJ: integer read fCOD_QUALIF_PJ write fCOD_QUALIF_PJ;
+    property COD_QUALIF_PJ: String read fCOD_QUALIF_PJ write fCOD_QUALIF_PJ;
     property FORMA_TRIB_PER: string read fFORMA_TRIB_PER write fFORMA_TRIB_PER;
     property MES_BAL_RED: string read fMES_BAL_RED write fMES_BAL_RED;
     property TIP_ESC_PRE: string read fTIP_ESC_PRE write fTIP_ESC_PRE;
-    property TIP_ENT: integer read fTIP_ENT write fTIP_ENT;
+    property TIP_ENT: String read fTIP_ENT write fTIP_ENT;
     property FORMA_APUR_I: string read fFORMA_APUR_I write fFORMA_APUR_I;
     property APUR_CSLL: string read fAPUR_CSLL write fAPUR_CSLL;
     property OPT_EXT_RTT: string read fOPT_EXT_RTT write fOPT_EXT_RTT;
@@ -197,7 +197,7 @@ type
     fIND_PART_EXT: string;
     fIND_PGTO_EXT: string;
     fIND_PGTO_REM: string;
-    fIND_PJ_ENQUAD: integer;
+    fIND_PJ_ENQUAD: String;
     fIND_PJ_HAB:   string;
     fIND_POLO_AM:  string;
     fIND_QTE_SCP:  integer;
@@ -215,7 +215,7 @@ type
     property IND_PART_CONS: string read fIND_PART_CONS write fIND_PART_CONS;
     property IND_OP_EXT: string read fIND_OP_EXT write fIND_OP_EXT;
     property IND_OP_VINC: string read fIND_OP_VINC write fIND_OP_VINC;
-    property IND_PJ_ENQUAD: integer read fIND_PJ_ENQUAD write fIND_PJ_ENQUAD;
+    property IND_PJ_ENQUAD: String read fIND_PJ_ENQUAD write fIND_PJ_ENQUAD;
     property IND_PART_EXT: string read fIND_PART_EXT write fIND_PART_EXT;
     property IND_ATIV_RURAL: string read fIND_ATIV_RURAL write fIND_ATIV_RURAL;
     property IND_LUC_EXP: string read fIND_LUC_EXP write fIND_LUC_EXP;
@@ -247,7 +247,7 @@ type
   private
     fBAIRRO: string;
     fCEP: integer;
-    fCNAE_FISCAL: integer;
+    fCNAE_FISCAL: String;
     fCOD_MUN: string;
     fCOD_NAT: integer;
     fCOMPL: string;
@@ -258,7 +258,7 @@ type
     fUF: string;
   public
     property COD_NAT: integer read fCOD_NAT write fCOD_NAT;
-    property CNAE_FISCAL: integer read fCNAE_FISCAL write fCNAE_FISCAL;
+    property CNAE_FISCAL: String read fCNAE_FISCAL write fCNAE_FISCAL;
     property ENDERECO: string read fENDERECO write fENDERECO;
     property NUM: string read fNUM write fNUM;
     property COMPL: string read fCOMPL write fCOMPL;
@@ -323,6 +323,10 @@ type
 
   /// Registro 0990 - ENCERRAMENTO DO BLOCO 0
   TRegistro0990 = class(TCloseBlocos)
+  private
+    FQTD_LIN_0: integer; //Quantidade total de linhas do Bloco 0
+  public
+    property QTD_LIN_0: integer read FQTD_LIN_0 write FQTD_LIN_0;
   end;
 
 implementation

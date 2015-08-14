@@ -236,6 +236,7 @@ type
     cbUmaInstancia: TCheckBox;
     cbValidarDigest: TCheckBox;
     cbHRI: TCheckBox;
+    chkLerCedenteRetorno: TCheckBox;
     chLCBExcluirSufixo: TCheckBox;
     chRFD: TCheckBox;
     chRFDIgnoraMFD: TCheckBox;
@@ -2825,6 +2826,7 @@ begin
     deBolDirRemessa.Text := Ini.ReadString('BOLETO', 'DirArquivoRemessa', '');
     deBolDirRetorno.Text := Ini.ReadString('BOLETO', 'DirArquivoRetorno', '');
     cbxCNAB.ItemIndex := Ini.ReadInteger('BOLETO', 'CNAB', 0);
+    chkLerCedenteRetorno.Checked := Ini.ReadBool('BOLETO','LerCedenteRetorno',False);
     {Parametro do Boleto Impressora}
     cbxBOLImpressora.ItemIndex :=
       cbxBOLImpressora.Items.IndexOf(Ini.ReadString('BOLETO', 'Impressora', ''));
@@ -3341,8 +3343,9 @@ begin
     else
       LayoutRemessa := c400;
 
-    DirArqRemessa := deBolDirRemessa.Text;
-    DirArqRetorno := deBolDirRetorno.Text;
+    DirArqRemessa   := deBolDirRemessa.Text;
+    DirArqRetorno   := deBolDirRetorno.Text;
+    LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
   end;
 
   with ACBrBoletoFCFortes1 do
@@ -3922,6 +3925,7 @@ begin
     ini.WriteString('BOLETO', 'DirArquivoRetorno', PathWithoutDelim(
       deBolDirRetorno.Text));
     ini.WriteInteger('BOLETO', 'CNAB', cbxCNAB.ItemIndex);
+    Ini.WriteBool('BOLETO','LerCedenteRetorno', chkLerCedenteRetorno.Checked);
 
     {Parametros do Boleto - E-mail}
     ini.WriteString('BOLETO', 'EmailAssuntoBoleto', edtBOLEmailAssunto.Text);

@@ -246,10 +246,10 @@ type
   TRegistro0030 = class(TBlocos)
   private
     fBAIRRO: string;
-    fCEP: integer;
+    fCEP: string;
     fCNAE_FISCAL: String;
     fCOD_MUN: string;
-    fCOD_NAT: integer;
+    fCOD_NAT: string;
     fCOMPL: string;
     fEMAIL: string;
     fENDERECO: string;
@@ -257,7 +257,7 @@ type
     fNUM_TEL: string;
     fUF: string;
   public
-    property COD_NAT: integer read fCOD_NAT write fCOD_NAT;
+    property COD_NAT: String read fCOD_NAT write fCOD_NAT;
     property CNAE_FISCAL: String read fCNAE_FISCAL write fCNAE_FISCAL;
     property ENDERECO: string read fENDERECO write fENDERECO;
     property NUM: string read fNUM write fNUM;
@@ -265,7 +265,7 @@ type
     property BAIRRO: string read fBAIRRO write fBAIRRO;
     property UF: string read fUF write fUF;
     property COD_MUN: string read fCOD_MUN write fCOD_MUN;
-    property CEP: integer read fCEP write fCEP;
+    property CEP: string read fCEP write fCEP;
     property NUM_TEL: string read fNUM_TEL write fNUM_TEL;
     property EMAIL: string read fEMAIL write fEMAIL;
   end;
@@ -317,7 +317,7 @@ type
     function GetItem(Index: Integer): TRegistro0930;
     procedure SetItem(Index: Integer; const Value: TRegistro0930);
   public
-    function New: TRegistro0930;
+    function New(AOwner: TRegistro0001): TRegistro0930;
     property Items[Index: Integer]: TRegistro0930 read GetItem write SetItem;
   end;
 
@@ -343,7 +343,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistro0930List.New: TRegistro0930;
+function TRegistro0930List.New(AOwner: TRegistro0001): TRegistro0930;
 begin
   Result := TRegistro0930.Create;
   Add(Result);

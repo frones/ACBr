@@ -446,6 +446,8 @@ begin
   Bloco.NomeArquivo  := FACBrTXT.NomeArquivo;
   Bloco.LinhasBuffer := FACBrTXT.LinhasBuffer;
   Bloco.Gravado      := False ;
+  if not assigned(Bloco.Conteudo) then
+    Bloco.Conteudo := TStringList.Create;
   Bloco.Conteudo.Clear;
 end;
 
@@ -866,180 +868,62 @@ end;
 procedure TACBrSPEDECF.WriteRegistro0001;
 begin
    // Preenche as classes com os dados
-   //Bloco_0.WriteRegistro0001;
-   ////
-   //with Bloco_9.Registro9900 do
-   //begin
-   //   with New do
-   //   begin
-   //      REG_BLC := '0001';
-   //      QTD_REG_BLC := 1;
-   //   end;
-   //end;
-   //if Bloco_0.Registro0001.IND_MOV = imComDados then
-   //begin
-   //   with Bloco_9.Registro9900 do
-   //   begin
-   //      if Bloco_0.Registro0005Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0005';
-   //            QTD_REG_BLC := Bloco_0.Registro0005Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0015Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0015';
-   //            QTD_REG_BLC := Bloco_0.Registro0015Count;
-   //         end;
-   //      end;
-   //      with New do
-   //      begin
-   //         REG_BLC := '0100';
-   //         QTD_REG_BLC := 1;
-   //      end;
-   //      if Bloco_0.Registro0150Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0150';
-   //            QTD_REG_BLC := Bloco_0.Registro0150Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0175Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0175';
-   //            QTD_REG_BLC := Bloco_0.Registro0175Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0190Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0190';
-   //            QTD_REG_BLC := Bloco_0.Registro0190Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0200Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0200';
-   //            QTD_REG_BLC := Bloco_0.Registro0200Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0205Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0205';
-   //            QTD_REG_BLC := Bloco_0.Registro0205Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0206Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0206';
-   //            QTD_REG_BLC := Bloco_0.Registro0206Count;
-   //         end;
-   //      end;
-   //
-   //      // Jorge 20/08/14
-   //      if Bloco_0.Registro0210Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0210';
-   //            QTD_REG_BLC := Bloco_0.Registro0210Count;
-   //         end;
-   //      end;
-   //
-   //      if Bloco_0.Registro0220Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0220';
-   //            QTD_REG_BLC := Bloco_0.Registro0220Count;
-   //         end;
-   //      end;
-   //      /// Exigência do Art. 3º do AC 09/08
-   //      ///
-   //      /// Prorrogado para 01/01/2011 conforme Guia Prático da EFD 2.01
-   //      /// *Bloco G incluído para vigorar a partir do período de apuração de janeiro de 2011.
-   //      if DT_INI >= EncodeDate(2011,01,01) then
-   //      begin
-   //         if Bloco_0.Registro0300Count > 0 then
-   //         begin
-   //            with New do
-   //            begin
-   //               REG_BLC := '0300';
-   //               QTD_REG_BLC := Bloco_0.Registro0300Count;
-   //            end;
-   //         end;
-   //         if Bloco_0.Registro0305Count > 0 then
-   //         begin
-   //            with New do
-   //            begin
-   //               REG_BLC := '0305';
-   //               QTD_REG_BLC := Bloco_0.Registro0305Count;
-   //            end;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0400Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0400';
-   //            QTD_REG_BLC := Bloco_0.Registro0400Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0450Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0450';
-   //            QTD_REG_BLC := Bloco_0.Registro0450Count;
-   //         end;
-   //      end;
-   //      if Bloco_0.Registro0460Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := '0460';
-   //            QTD_REG_BLC := Bloco_0.Registro0460Count;
-   //         end;
-   //      end;
-   //      /// Exigência do Art. 3º do AC 09/08
-   //      ///
-   //      /// Prorrogado para 01/01/2011 conforme Guia Prático da EFD 2.01
-   //      /// *Bloco G incluído para vigorar a partir do período de apuração de janeiro de 2011.
-   //      if DT_INI >= EncodeDate(2011,01,01) then
-   //      begin
-   //         if Bloco_0.Registro0500Count > 0 then
-   //         begin
-   //            with New do
-   //            begin
-   //               REG_BLC := '0500';
-   //               QTD_REG_BLC := Bloco_0.Registro0500Count;
-   //            end;
-   //         end;
-   //         if Bloco_0.Registro0600Count > 0 then
-   //         begin
-   //            with New do
-   //            begin
-   //               REG_BLC := '0600';
-   //               QTD_REG_BLC := Bloco_0.Registro0600Count;
-   //            end;
-   //         end;
-   //      end;
-   //   end;
-   //end;
+   Bloco_0.WriteRegistro0001;
+
+   with Bloco_9.Registro9900 do
+   begin
+      with New do
+      begin
+         REG_BLC := '0001';
+         QTD_REG_BLC := 1;
+      end;
+   end;
+   if Bloco_0.Registro0001.IND_DAD = idComDados then
+   begin
+      with Bloco_9.Registro9900 do
+      begin
+         if Bloco_0.Registro0010Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '0010';
+               QTD_REG_BLC := Bloco_0.Registro0010Count;
+            end;
+         end;
+         if Bloco_0.Registro0020Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '0020';
+               QTD_REG_BLC := Bloco_0.Registro0020Count;
+            end;
+         end;
+         if Bloco_0.Registro0030Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '0030';
+               QTD_REG_BLC := Bloco_0.Registro0030Count;
+            end;
+         end;
+         if Bloco_0.Registro0035Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '0035';
+               QTD_REG_BLC := Bloco_0.Registro0035Count;
+            end;
+         end;
+         if Bloco_0.Registro0930Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '0930';
+               QTD_REG_BLC := Bloco_0.Registro0930Count;
+            end;
+         end;
+      end;
+   end;
 end;
 
 procedure TACBrSPEDECF.WriteRegistro0990;

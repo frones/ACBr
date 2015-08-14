@@ -88,7 +88,7 @@ type
     procedure WriteRegistro0020;
     procedure WriteRegistro0030;
     procedure WriteRegistro0035;
-    procedure WriteRegistro0930;
+    procedure WriteRegistro0930(Reg0001: TRegistro0001);
     procedure WriteRegistro0990;
 
     property Registro0000 : TRegistro0000 read FRegistro0000 write FRegistro0000;
@@ -189,7 +189,7 @@ end;
 
 function TBloco_0.Registro0930New: TRegistro0930;
 begin
-   Result := Registro0001.Registro0930.New;
+   Result := Registro0001.Registro0930.New(FRegistro0001);
 end;
 
 procedure TBloco_0.WriteRegistro0000;
@@ -216,10 +216,7 @@ begin
                  LFill(RETIFICADORA) +
                  LFill(NUM_REC) +
                  LFill(TIP_ECF) +
-                 LFill(COD_SCP) +
-                 Delimitador +
-                 #13#10
-                 );
+                 LFill(COD_SCP) );
        FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
      end;
   end;
@@ -240,7 +237,7 @@ begin
           WriteRegistro0020;
           WriteRegistro0030;          
           WriteRegistro0035;
-          WriteRegistro0930;
+          WriteRegistro0930(FRegistro0001);
         end;
      end;
      Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
@@ -290,10 +287,7 @@ begin
                  LFill(FORMA_APUR_I) +
                  LFill(APUR_CSLL) +
                  LFill(OPT_EXT_RTT) +
-                 LFill(DIF_FCONT) +
-                 Delimitador +
-                 #13#10
-                 );
+                 LFill(DIF_FCONT) );
        FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
      end;
   end;
@@ -335,10 +329,7 @@ begin
                  LFill(IND_PJ_HAB) +
                  LFill(IND_POLO_AM) +
                  LFill(IND_ZON_EXP) +
-                 LFill(IND_AREA_COM) +
-                 Delimitador +
-                 #13#10
-                 );
+                 LFill(IND_AREA_COM)  );
        FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
      end;
   end;
@@ -351,7 +342,7 @@ begin
      with FRegistro0030 do
      begin
             Add( LFill('0030') +
-                 LFill(COD_NAT,0,4) +
+                 LFill(COD_NAT) +
                  LFill(CNAE_FISCAL) +
                  LFill(ENDERECO) +
                  LFill(NUM) +
@@ -359,12 +350,9 @@ begin
                  LFill(BAIRRO) +
                  LFill(UF) +
                  LFill(COD_MUN) +
-                 LFill(CEP,0,8) +
+                 LFill(CEP) +
                  LFill(NUM_TEL) +
-                 LFill(EMAIL) +
-                 Delimitador +
-                 #13#10
-                 );
+                 LFill(EMAIL) );
        FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
      end;
   end;
@@ -381,10 +369,7 @@ begin
          begin
                 Add( LFill('0035') +
                      LFill(COD_SCP) +
-                     LFill(NOME_SCP) +
-                     Delimitador +
-                     #13#10
-                     );
+                     LFill(NOME_SCP) );
            FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
          end;
       end;
@@ -392,15 +377,15 @@ begin
   end;
 end;
 
-procedure  TBloco_0.WriteRegistro0930;
+procedure  TBloco_0.WriteRegistro0930(Reg0001: TRegistro0001) ;
 var strIDENT_QUALIF : string;
     intfor : integer;
 begin
-  if Assigned(FRegistro0930) then
+  if Assigned(Reg0001.Registro0930) then
   begin
-    for intfor := 0 to FRegistro0930.Count - 1 do
+    for intfor := 0 to Reg0001.Registro0930.Count - 1 do
       begin
-         with FRegistro0930.items[intfor] do
+         with Reg0001.Registro0930.items[intfor] do
          begin
            case IDENT_QUALIF of
              qaDiretor: strIDENT_QUALIF := '203';
@@ -428,20 +413,26 @@ begin
                 LFill(strIDENT_QUALIF) +
                 LFill(IND_CRC) +
                 LFill(EMAIL) +
-                LFill(FONE) +
-                Delimitador +
-                #13#10
-                );
-           FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
+                LFill(FONE) );
+           Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
          end;
       end;
-     FRegistro0930Count := FRegistro0930Count + Registro0930.Count;
+     FRegistro0930Count := FRegistro0930Count + Reg0001.Registro0930.Count;
   end;
 end;
 
 procedure  TBloco_0.WriteRegistro0990;
 begin
-
+  if Assigned(Registro0990) then
+  begin
+     with Registro0990 do
+     begin
+       QTD_LIN_0 := QTD_LIN_0 + 1;
+       ///
+       Add( LFill('0990') +
+            LFill(QTD_LIN_0,0) );
+     end;
+  end;
 end;
 
 end.

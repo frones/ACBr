@@ -40,6 +40,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 14/08/2015
+-- ACBrEscBematech --
+[-] Correção para impressão correta de QRCode na Bematech.
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23313
+
 -- ACBrECF --
 [*] Correção para respeitar propriedade "IgnorarTagsFormatacao"  (por:DSA)
 

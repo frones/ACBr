@@ -118,20 +118,7 @@ begin
 end;
 
 function TACBrEscBematech.ComandoQrCode(ACodigo: AnsiString): AnsiString;
-var
-  cTam1, cTam2: Integer;
 begin
-  if (Length(ACodigo) > 255) then
-  begin
-    cTam1 := Length(ACodigo) mod 255;
-    cTam2 := Length(ACodigo) div 255;
-  end
-  else
-  begin
-    cTam1 := Length(ACodigo);
-    cTam2 := 0;
-  end;
-
   with fpPosPrinter.ConfigQRCode do
   begin
     Result := GS  + 'kQ' + // Codigo QRCode
@@ -139,7 +126,7 @@ begin
               AnsiChr(10) +               // N2 - MSB; 0 = default = 4
               AnsiChr(LarguraModulo) +    // N3 - Version QRCode ???
               AnsiChr(1) +                // N4, Encoding modes: 0 – Numeric only, 1 – Alphanumeric, 2 – Binary (8 bits), 3 – Kanji,
-              AnsiChr(cTam1) + AnsiChr(cTam2) +  // N5 e N6
+              IntToLEStr( Length(ACodigo) ) +  // N5 e N6
               ACodigo;
   end;
 end;

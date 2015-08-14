@@ -444,8 +444,6 @@ end;
 
 procedure TACBrECFVirtualSATClass.FechaCupomVirtual(Observacao: AnsiString;
   IndiceBMP: Integer);
-var
-  codigoDeRejeicao, mensagem: String;
 begin
   if fsEhVenda then
   begin
@@ -457,13 +455,10 @@ begin
 
       if Resposta.codigoDeRetorno <> 6000 then
       begin
-        codigoDeRejeicao := Resposta.RetornoLst[2];
-        mensagem         := Resposta.RetornoLst[3];
-
         raise EACBrSATErro.Create( 'Erro ao enviar Dados da Venda:' + sLineBreak +
           'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +
-          ', Cod.Rejeição: '+codigoDeRejeicao + sLineBreak +
-          mensagem );
+          ', Cod.Rejeição: '+IntToStr(Resposta.codigoDeErro) + sLineBreak +
+          Resposta.mensagemRetorno );
       end;
 
       ChaveCupom := CFe.infCFe.ID;
@@ -484,7 +479,7 @@ end;
 
 procedure TACBrECFVirtualSATClass.CancelaCupomVirtual;
 var
-  NomeCFe, codigoDeRejeicao, mensagem: String;
+  NomeCFe: String;
 begin
   with fsACBrSAT do
   begin
@@ -512,13 +507,10 @@ begin
 
     if Resposta.codigoDeRetorno <> 7000 then
     begin
-      codigoDeRejeicao := Resposta.RetornoLst[2];
-      mensagem         := Resposta.RetornoLst[3];
-
       raise EACBrSATErro.Create( 'Erro ao Cancelar Venda: ' + ChaveCupom + sLineBreak +
         'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +
-        ', Cod.Rejeição: '+codigoDeRejeicao + sLineBreak +
-        mensagem );
+        ', Cod.Rejeição: '+IntToStr(Resposta.codigoDeErro) + sLineBreak +
+        Resposta.mensagemRetorno );
     end;
 
     ImprimirExtratoCancelamento;

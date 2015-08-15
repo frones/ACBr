@@ -1196,15 +1196,15 @@ begin
               ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
             end;
 
+           sMensagemEmail := TStringList.Create;
+           CC := TstringList.Create;
+           Anexos := TstringList.Create;
            try
-             sMensagemEmail := TStringList.Create;
              sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsg.Lines.Text );
 
-             CC:=TstringList.Create;
              CC.DelimitedText := sLineBreak;
              CC.Text := StringReplace(Cmd.Params(4),';',sLineBreak,[rfReplaceAll]);
 
-             Anexos:=TstringList.Create;
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
              try

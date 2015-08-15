@@ -895,8 +895,8 @@ type
     procedure cbCortarPapelChange(Sender: TObject);
     procedure cbIgnorarTagsChange(Sender: TObject);
     procedure cbLogCompClick(Sender: TObject);
-    procedure cbMonitorarPastaClick(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
+    procedure cbMonitorarPastaChange(Sender: TObject);
     procedure cbTraduzirTagsChange(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
@@ -2074,21 +2074,6 @@ begin
     edLogComp.Text := 'LOG_NFE.TXT';
 end;
 
-procedure TFrmACBrMonitor.cbMonitorarPastaClick(Sender: TObject);
-begin
-  if cbMonitorarPasta.Checked then
-  begin
-    if MessageDlg(
-      'Ao ativar esta opção, TODOS os arquivos do diretório serão lidos e apagados.' +
-      sLineBreak +
-      'Deseja realmente continuar?', mtConfirmation, [mbYes, mbNo],
-      0) = mrYes then
-      cbMonitorarPasta.Checked := True
-    else
-      cbMonitorarPasta.Checked := False;
-  end;
-end;
-
 procedure TFrmACBrMonitor.cbUsarEscPosClick(Sender: TObject);
 begin
  cbUsarFortes.Checked := False;
@@ -2679,7 +2664,10 @@ begin
     sedLogLinhas.Value := Ini.ReadInteger('ACBrMonitor', 'Linhas_Log', 0);
     cbComandos.Checked := Ini.ReadBool('ACBrMonitor', 'Comandos_Remotos', False);
     cbUmaInstancia.Checked := Ini.ReadBool('ACBrMonitor', 'Uma_Instancia', True);
+    cbMonitorarPasta.OnChange := Nil;
     cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
+    cbMonitorarPasta.OnChange := @cbMonitorarPastaChange;
+
     MonitorarPasta := cbMonitorarPasta.Checked;
 
     ArqEntTXT := AcertaPath(edEntTXT.Text);
@@ -6602,6 +6590,17 @@ end;
 procedure TFrmACBrMonitor.cbHRIChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ConfigBarras.MostrarCodigo := cbHRI.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbMonitorarPastaChange(Sender: TObject);
+begin
+  if cbMonitorarPasta.Checked then
+  begin
+    if MessageDlg(
+      'Ao ativar esta opção, TODOS os arquivos do diretório serão lidos e apagados.' + sLineBreak +
+      'Deseja realmente continuar?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+      cbMonitorarPasta.Checked := False;
+  end;
 end;
 
 

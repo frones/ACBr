@@ -131,7 +131,7 @@
         <PackageName Value="LCL"/>
       </Item20>
     </RequiredPackages>
-    <Units Count="25">
+    <Units Count="24">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -240,10 +240,6 @@
         <Filename Value="DoSATUnit.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit23>
-      <Unit24>
-        <Filename Value=".INI"/>
-        <IsPartOfProject Value="True"/>
-      </Unit24>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

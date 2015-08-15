@@ -1661,7 +1661,7 @@ begin
     fpNumCDC := fpNumCDC + 1 ;
     SubTotalCupomAnterior := Subtotal;
 
-    ZeraCupom;
+    //ZeraCupom;  // Não Zera Dados, para permitir chamar "CancelaCupom" após Vinculado
     fpEstado := estRelatorio ;
 
     AbreCupomVinculadoVirtual(COO, FPG, CodComprovanteNaoFiscal, SubTotalCupomAnterior, Valor);
@@ -1687,7 +1687,7 @@ end;
 
 procedure TACBrECFVirtualClass.FechaRelatorio;
 begin
-  GravaLog( ComandoLOG );
+  GravaLog( 'FechaRelatorio' );
 
   if Estado <> estRelatorio then exit ;
 

@@ -55,7 +55,7 @@ Source: banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components
 Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Arquivos de configuração
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
-Source: ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Exemplos
 Source: Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: Exemplos\Clipper_TXT_xHarbour_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos

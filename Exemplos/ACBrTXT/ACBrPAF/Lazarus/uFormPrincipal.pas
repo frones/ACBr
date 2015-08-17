@@ -53,7 +53,11 @@ uses
   ComCtrls, FileUtil;
 
 type
+
+  { TForm6 }
+
   TForm6 = class(TForm)
+    btnZ: TButton;
     GroupBox1: TGroupBox;
     ACBrPAF: TACBrPAF;
     Label1: TLabel;
@@ -84,6 +88,7 @@ type
     ts2: TTabSheet;
     mmArquivoGerado: TMemo;
     procedure btnDClick(Sender: TObject);
+    procedure btnZClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
     function GerarDados(Tipo: Char; Tam: integer): Variant;
@@ -263,6 +268,39 @@ begin
 
      end;
      ACBrPAF.SaveFileTXT_D('PAF_D.txt');
+end;
+
+procedure TForm6.btnZClick(Sender: TObject);
+var
+  Z4: TRegistroZ4;
+  i: integer;
+begin
+  // registro Z1
+  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ1); // preencher header do arquivo
+  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ2); // preencher header do arquivo
+  with ACBrPAF.PAF_Z do
+  begin
+    with RegistroZ3 do
+      begin
+        LAUDO  := '11111';
+        NOME   := 'NOME';
+        VERSAO := '1.00';
+      end;
+    // registro Z4
+    RegistroZ4.Clear;
+    for I := 1 to 15 do
+    begin
+      with RegistroZ4.New do
+        begin
+          CNPJ := '99.999.999/9999-11';
+          VL_TOTAL := 10 * I;
+          DATA_INI := Now;
+          DATA_FIM := Now;
+        end;
+    end;
+  end;
+
+  ACBrPAF.SaveFileTXT_Z('PAF_Z.txt');
 end;
 
 

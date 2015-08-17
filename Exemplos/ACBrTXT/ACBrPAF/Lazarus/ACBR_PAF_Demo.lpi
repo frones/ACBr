@@ -32,16 +32,19 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="ACBr_PAF"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBr_PAF"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrComum"/>
       </Item3>
+      <Item4>
+        <PackageName Value="LCL"/>
+      </Item4>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
@@ -51,8 +54,9 @@
       <Unit1>
         <Filename Value="uFormPrincipal.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form6"/>
         <HasResources Value="True"/>
-        <UnitName Value="uFormPrincipal"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit1>
     </Units>
   </ProjectOptions>
@@ -71,12 +75,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

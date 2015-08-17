@@ -3,8 +3,8 @@ object Form6: TForm6
   Top = 265
   BorderStyle = bsDialog
   Caption = 'Demo do ACBrPAF'
-  ClientHeight = 386
-  ClientWidth = 578
+  ClientHeight = 391
+  ClientWidth = 690
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object Form6: TForm6
   TextHeight = 13
   object Image1: TImage
     Left = 0
-    Top = 346
-    Width = 578
+    Top = 351
+    Width = 690
     Height = 40
     Align = alBottom
     AutoSize = True
@@ -227,7 +227,7 @@ object Form6: TForm6
   object GroupBox1: TGroupBox
     Left = 0
     Top = 0
-    Width = 578
+    Width = 690
     Height = 110
     Align = alTop
     Caption = 'Identifica'#231#227'o do Estabelecimento Usu'#225'rio do PAF-ECF'
@@ -381,7 +381,7 @@ object Form6: TForm6
     OnClick = btnHClick
   end
   object btnTITP: TButton
-    Left = 332
+    Left = 415
     Top = 115
     Width = 204
     Height = 25
@@ -390,7 +390,7 @@ object Form6: TForm6
     OnClick = btnTITPClick
   end
   object btnRegistrosPAF: TButton
-    Left = 332
+    Left = 415
     Top = 146
     Width = 204
     Height = 25
@@ -400,8 +400,8 @@ object Form6: TForm6
   end
   object pc1: TPageControl
     Left = 0
-    Top = 175
-    Width = 578
+    Top = 180
+    Width = 690
     Height = 171
     ActivePage = ts1
     Align = alBottom
@@ -411,7 +411,7 @@ object Form6: TForm6
       object logErros: TMemo
         Left = 0
         Top = 0
-        Width = 570
+        Width = 682
         Height = 143
         Align = alClient
         ScrollBars = ssVertical
@@ -424,13 +424,22 @@ object Form6: TForm6
       object mmArquivoGerado: TMemo
         Left = 0
         Top = 0
-        Width = 570
+        Width = 682
         Height = 143
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
       end
     end
+  end
+  object btnZ: TButton
+    Left = 332
+    Top = 116
+    Width = 75
+    Height = 25
+    Caption = 'Tipo Z'
+    TabOrder = 12
+    OnClick = btnZClick
   end
   object ACBrPAF: TACBrPAF
     Path = '.\'

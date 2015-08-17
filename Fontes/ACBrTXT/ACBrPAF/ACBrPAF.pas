@@ -76,7 +76,8 @@ uses
    ACBrPAF_S_Class,
    ACBrPAF_T_Class,
    ACBrPAF_TITP_Class,
-   ACBrPAF_U_Class;
+   ACBrPAF_U_Class,
+   ACBrPAF_Z_Class;
 
 const
    CACBrPAF_Versao = '0.09' ;
@@ -118,6 +119,7 @@ type
     FPAF_T: TPAF_T;
     FPAF_TITP: TPAF_TITP;
     FPAF_U: TPAF_U;
+    FPAF_Z: TPAF_Z;
     fsOnPAFCalcEAD: TACBrEADCalc;
     fsOnPAFGetKeyRSA : TACBrEADGetChave ;
 
@@ -149,6 +151,7 @@ type
     function SaveFileTXT_P(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
     function SaveFileTXT_R(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
     function SaveFileTXT_T(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
+    function SaveFileTXT_Z(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
     function SaveFileTXT_TITP(Arquivo: String): Boolean;
     function SaveFileTXT_RegistrosPAF(Arquivo: String): Boolean;
 
@@ -169,6 +172,7 @@ type
     property PAF_T: TPAF_T read FPAF_T write FPAF_T;
     property PAF_TITP: TPAF_TITP read FPAF_TITP write FPAF_TITP;
     property PAF_U: TPAF_U read FPAF_U write FPAF_U;
+    property PAF_Z: TPAF_Z read FPAF_Z write FPAF_Z;
 
     Function GetACBrEAD : TACBrEAD ;
     function AssinaArquivoComEAD(Arquivo: String): Boolean;
@@ -229,6 +233,7 @@ begin
   FPAF_S := TPAF_S.Create;
   FPAF_TITP := TPAF_TITP.Create;
   FPAF_U := TPAF_U.Create;
+  FPAF_Z := TPAF_Z.Create;
   // Define o delimitador com o padrão PAF
   SetDelimitador('');
   // Define a mascara dos campos numéricos com o padrão PAF
@@ -265,6 +270,7 @@ begin
   FPAF_T.Free;
   FPAF_TITP.Free;
   FPAF_U.Free;
+  FPAF_Z.Free;
 
   if Assigned( fsEADInterno ) then
      FreeAndNil( fsEADInterno );
@@ -303,6 +309,7 @@ begin
   FPAF_T.Delimitador := Value;
   FPAF_TITP.Delimitador := Value;
   FPAF_U.Delimitador := Value;
+  FPAF_Z.Delimitador := Value;
 end;
 
 function TACBrPAF.GetCurMascara: String;
@@ -331,6 +338,7 @@ begin
   FPAF_T.CurMascara := Value;
   FPAF_TITP.CurMascara := Value;
   FPAF_U.CurMascara := Value;
+  FPAF_Z.CurMascara := Value;
 end;
 
 function TACBrPAF.GetTrimString: boolean;
@@ -359,6 +367,7 @@ begin
   FPAF_T.TrimString := Value;
   FPAF_TITP.TrimString := Value;
   FPAF_U.TrimString := Value;
+  FPAF_Z.TrimString := Value;
 end;
 
 function TACBrPAF.GetOnError: TErrorEvent;
@@ -387,6 +396,7 @@ begin
   FPAF_T.OnError := Value;
   FPAF_TITP.OnError := Value;
   FPAF_U.OnError := Value;
+  FPAF_Z.OnError := Value;
 end;
 
 procedure TACBrPAF.SetEAD(const AValue : TACBrEAD) ;
@@ -644,6 +654,38 @@ begin
 
     // Limpa de todos os Blocos as listas de todos os registros.
     FPAF_T.LimpaRegistros;
+  except
+    on E: Exception do
+    begin
+      raise Exception.Create(E.Message);
+    end;
+  end;
+end;
+
+function TACBrPAF.SaveFileTXT_Z(Arquivo: String): Boolean;
+var
+  txtFile: TextFile;
+begin
+  Result := True;
+
+  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
+    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+
+  try
+    AssignFile(txtFile, fPath + Arquivo);
+    try
+      Rewrite(txtFile);
+      Write(txtFile, FPAF_Z.WriteRegistroZ1);
+    finally
+      CloseFile(txtFile);
+    end;
+
+    // Assinatura EAD
+    if FAssinar then
+      AssinaArquivoComEAD(fPath + Arquivo);
+
+    // Limpa de todos os Blocos as listas de todos os registros.
+    FPAF_Z.LimpaRegistros;
   except
     on E: Exception do
     begin
@@ -967,7 +1009,7 @@ begin
 
       if FPAF_G.RegistroG2.Count > 0 then
         Write(txtFile, FPAF_G.WriteRegistroG2);
-        
+
       if FPAF_H.RegistroH2.Count > 0 then
         Write(txtFile, FPAF_H.WriteRegistroH2);
 
@@ -986,6 +1028,8 @@ begin
 
       if (FPAF_R.RegistroR04.Count + FPAF_R.RegistroR06.Count) > 0 then
         Write(txtFile, FPAF_R.WriteRegistroR07); }
+
+      Write(txtFile, FPAF_Z.WriteRegistroZ1);
 
     finally
       CloseFile(txtFile);
@@ -1011,6 +1055,7 @@ begin
     FPAF_H.LimpaRegistros;
     FPAF_S.LimpaRegistros;
     FPAF_R.LimpaRegistros;
+    FPAF_Z.LimpaRegistros;
   except
     on E: Exception do
       begin

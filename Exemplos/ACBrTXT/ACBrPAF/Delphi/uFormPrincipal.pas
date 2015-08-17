@@ -47,7 +47,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P,
-  ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPAFRegistros, Math, ACBrEAD, jpeg, ExtCtrls,
+  ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPaf_Z, ACBrPAFRegistros, Math, ACBrEAD, jpeg, ExtCtrls,
   ComCtrls;
 
 type
@@ -81,6 +81,7 @@ type
     logErros: TMemo;
     ts2: TTabSheet;
     mmArquivoGerado: TMemo;
+    btnZ: TButton;
     procedure btnDClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
@@ -96,6 +97,7 @@ type
     procedure btnHClick(Sender: TObject);
     procedure btnTITPClick(Sender: TObject);
     procedure btnRegistrosPAFClick(Sender: TObject);
+    procedure btnZClick(Sender: TObject);
   private
     { Private declarations }
     function QualquerNumero: Integer;
@@ -571,6 +573,39 @@ begin
   end;
 
   ACBrPAF.SaveFileTXT_TITP('PAF_TITP.TXT');
+end;
+
+procedure TForm6.btnZClick(Sender: TObject);
+var
+  Z4: TRegistroZ4;
+  i: integer;
+begin
+  // registro Z1
+  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ1); // preencher header do arquivo
+  PreencherHeader(ACBrPAF.PAF_Z.RegistroZ2); // preencher header do arquivo
+  with ACBrPAF.PAF_Z do
+  begin
+    with RegistroZ3 do
+      begin
+        LAUDO  := '11111';
+        NOME   := 'NOME';
+        VERSAO := '1.00';
+      end;
+    // registro Z4
+    RegistroZ4.Clear;
+    for I := 1 to 15 do
+    begin
+      with RegistroZ4.New do
+        begin
+          CNPJ := '99.999.999/9999-11';
+          VL_TOTAL := 10 * I;
+          DATA_INI := Now;
+          DATA_FIM := Now;
+        end;
+    end;
+  end;
+
+  ACBrPAF.SaveFileTXT_Z('PAF_Z.txt');
 end;
 
 procedure TForm6.ACBrPAFMsnError(const MsnError: String);

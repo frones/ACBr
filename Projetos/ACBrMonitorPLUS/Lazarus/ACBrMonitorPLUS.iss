@@ -56,6 +56,18 @@ Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {a
 ;Arquivos de configuração
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+;Arquivos de Change-log.TXT
+Source: ACBrMonitor-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrDFe\ACBrDFe-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrSAT\ACBrSAT-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrSerial\ACBrSerial-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\PCNComum\PCNComum-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrComum\ACBrComum-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrTCP\ACBrTCP-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrBoleto\ACBrBoleto-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: ..\..\..\Fontes\ACBrDiversos\ACBrDiversos-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+
 ;Exemplos
 Source: Exemplos\TesteTXT.BAT; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 Source: Exemplos\Clipper_TXT_xHarbour_Socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos

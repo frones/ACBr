@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsMonitor
+        ActivePage = tsACBrBoleto
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 11
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4681,9 +4681,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsCedente
+            ActivePage = tsRemessaRetorno
             Align = alClient
-            TabIndex = 0
+            TabIndex = 3
             TabOrder = 0
             object tsCedente: TTabSheet
               Caption = 'Cedente'
@@ -5469,14 +5469,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Control = edtCodTransmissao
                 AnchorSideTop.Side = asrCenter
                 AnchorSideRight.Control = edtCodTransmissao
-                Left = 314
+                Left = 315
                 Height = 17
                 Top = 135
-                Width = 107
+                Width = 106
                 Anchors = [akTop, akRight]
                 BorderSpacing.Right = 3
                 Caption = 'Cod. Transmissão:'
                 ParentColor = False
+              end
+              object chkLerCedenteRetorno: TCheckBox
+                Left = 55
+                Height = 21
+                Top = 168
+                Width = 183
+                Caption = 'Ler Dados Cedente Retorno'
+                TabOrder = 4
               end
             end
             object tsBoletoEmail: TTabSheet
@@ -10515,7 +10523,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

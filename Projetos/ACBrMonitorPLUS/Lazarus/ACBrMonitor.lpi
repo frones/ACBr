@@ -50,9 +50,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CompilerPath Value="$(CompPath)"/>
-          </Other>
         </CompilerOptions>
       </Item2>
     </BuildModes>
@@ -146,7 +143,6 @@
         <ComponentName Value="FrmACBrMonitor"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ACBrMonitor1"/>
       </Unit2>
       <Unit3>
         <Filename Value="CmdUnit.pas"/>
@@ -186,7 +182,6 @@
       <Unit11>
         <Filename Value="DoECFUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFUnit"/>
       </Unit11>
       <Unit12>
         <Filename Value="DoETQUnit.pas"/>
@@ -210,7 +205,6 @@
       <Unit16>
         <Filename Value="DoBoletoUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoBoletoUnit"/>
       </Unit16>
       <Unit17>
         <Filename Value="DoCEPUnit.pas"/>
@@ -259,9 +253,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="19">

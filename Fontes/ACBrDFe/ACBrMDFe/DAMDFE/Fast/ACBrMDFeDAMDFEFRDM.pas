@@ -394,6 +394,8 @@ procedure TDMACBrMDFeDAMDFEFR.frxReportGetValue(const VarName: string; var Value
 begin
   if VarName = 'CANCELADO' then
     Value := DAMDFEClassOwner.MDFeCancelada;
+  if VarName = 'ENCERRADO' then
+    Value := DAMDFEClassOwner.MDFeEncerrado;
 end;
 
 procedure TDMACBrMDFeDAMDFEFR.CarregaDadosEventos;

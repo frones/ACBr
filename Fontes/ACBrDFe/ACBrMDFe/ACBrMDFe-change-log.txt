@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2015
+[*] Melhorias no DAMDFE em Fast Report.
+    por: NCC
+
 12/08/2015
 [*] Removido a propriedade SalvarEvento, pois a propriedade Salvar é que determina
     se o arquivo *-procEventoMDFe.xml será salvo ou não em disco.

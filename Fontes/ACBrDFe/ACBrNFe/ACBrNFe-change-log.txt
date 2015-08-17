@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2015
+[*] Correções no DANFE em Quick Report, estava ignorando os 3 primeiros digitos
+    da chave.
+    Por: Italo Jurisato Junior
+
 14/08/2015
 -- ACBrNFeDANFeRLRetrato --    (por: hleorj)
 [-]  Mudança da posição da checagem da propriedade FNFeCancelada

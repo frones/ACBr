@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2015
+[*] Incluido a cidade de Rio Branco/AC no provedor Abaco.
+    Por: Italo Jurisato Junior
+
 29/07/2015
 [*] Incluido a procedure SetCodigoMunicipio a fim de automatizar a configuração
     do componente para um determinado municipio.

@@ -787,11 +787,11 @@ begin
   3555109  // Tupi Paulista/SP
          : Provedor := '4R';
 
+  1200401, // Rio Branco/AC
   3201209, // Cachoeiro do Itapemirim/ES
   4304606, // Canoas/RS
   5107040, // Primavera do Leste/MT
-  5107602, // Rondonopolis/MT
-  1200401  // Rio Branco/AC
+  5107602  // Rondonopolis/MT
          : Provedor := 'Abaco';
 
   3127701, // Governador Valadares/MG
@@ -1098,7 +1098,7 @@ begin
   3549805, // Sao Jose do Rio Preto/SP
   3549904, // Sao Jose dos Campos/SP
   3550605, // Sao Roque/SP
-  3550704, // Sao Sebastiao
+  3550704, // Sao Sebastiao/SP
   3552502, // Suzano/SP
   3553708, // Taquaritinga/SP
   3555406, // Ubatuba/SP
@@ -1152,7 +1152,7 @@ begin
   4106902  // Curitiba/PR
          : Provedor := 'IssCuritiba';
 
-  3144805, // Nova Lima
+  3144805, // Nova Lima/MG
   3157807, // Santa Luzia/MG
   3300704  // Cabo Frio/RJ
          : Provedor := 'ISSDigital';
@@ -1504,12 +1504,12 @@ begin
   5204508  // Caldas Novas/GO
          : Provedor := 'WebISS';
 
-  3118304, // Conselheiro Lafaiete,
-  3120904, // Curvelo
-  3169356, // Três Marias
-  3171204  // Vespasiano
+  3118304, // Conselheiro Lafaiete/MG
+  3120904, // Curvelo/MG
+  3169356, // Três Marias/MG
+  3171204  // Vespasiano/MG
          : Provedor := 'NFSEBrasil';
-  3539301  // Pirassununga
+  3539301  // Pirassununga/SP
          : Provedor := 'CONAM';
  end;
  Result := Provedor;

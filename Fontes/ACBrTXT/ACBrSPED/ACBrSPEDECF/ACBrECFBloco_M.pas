@@ -52,6 +52,17 @@ type
   /// Apuração do Lucro Real (e-Lalur) e Licro Eletrônico
   /// de Apuração da Base de Cálculo da CSLL (e-Lacs)
   TRegistroM001 = class(TOpenBlocos)
+  private
+  public
+  end;
+
+  TRegistroM001List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM001;
+    procedure SetItem(Index: Integer; const Value: TRegistroM001);
+  public
+    function New: TRegistroM001;
+    property Items[Index: Integer]: TRegistroM001 read GetItem write SetItem;
   end;
 
   /// Registro M010 - Identificação da Conta na Parte B e-Lalur e do e-Lacs
@@ -62,7 +73,7 @@ type
   private
     fCNPJ_SIT_ESP: string;
     fIND_Vl_SALDO_INI: string;
-    fVl_SALDO_INI: variant;
+    fVl_SALDO_INI: currency;
     fDESC_LAN_ORIG: string;
     fDESC_CTA_LAL: string;
     fDT_LIM_LAL:   TDateTime;
@@ -78,10 +89,24 @@ type
     property DESC_LAN_ORIG: string read fDESC_LAN_ORIG write fDESC_LAN_ORIG;
     property DT_LIM_LAL: TDateTime read fDT_LIM_LAL write fDT_LIM_LAL;
     property COD_TRIBUTO: integer read fCOD_TRIBUTO write fCOD_TRIBUTO;
-    property Vl_SALDO_INI: variant read fVl_SALDO_INI write fVl_SALDO_INI;
+    property Vl_SALDO_INI: currency read fVl_SALDO_INI write fVl_SALDO_INI;
     property IND_Vl_SALDO_INI: string read fIND_Vl_SALDO_INI write fIND_Vl_SALDO_INI;
     property CNPJ_SIT_ESP: string read fCNPJ_SIT_ESP write fCNPJ_SIT_ESP;
   end;
+
+  TRegistroM010List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM010;
+    procedure SetItem(Index: Integer; const Value: TRegistroM010);
+  public
+    function New: TRegistroM010;
+    property Items[Index: Integer]: TRegistroM010 read GetItem write SetItem;
+  end;
+
+  TRegistroM300List = class;
+  TRegistroM350List = class;
+  TRegistroM410List = class;
+  TRegistroM500List = class;
 
   /// Registro M030 - Identificação do Período e Forma de Apuração do
   /// IRPJ e da CSLL das Empresas Tributadas pelo Lucro Real
@@ -90,11 +115,37 @@ type
     fDT_FIN:   TDateTime;
     fPER_APUR: string;
     fDT_INI:   TDateTime;
+
+    FRegistroM300: TRegistroM300List;
+    FRegistroM350: TRegistroM350List;
+    FRegistroM410: TRegistroM410List;
+    FRegistroM500: TRegistroM500List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+    ///
     property DT_INI: TDateTime read fDT_INI write fDT_INI;
     property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
     property PER_APUR: string read fPER_APUR write fPER_APUR;
+
+    property RegistroM300: TRegistroM300List read FRegistroM300 write FRegistroM300;
+    property RegistroM350: TRegistroM350List read FRegistroM350 write FRegistroM350;
+    property RegistroM410: TRegistroM410List read FRegistroM410 write FRegistroM410;
+    property RegistroM500: TRegistroM500List read FRegistroM500 write FRegistroM500;
   end;
+
+  TRegistroM030List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM030;
+    procedure SetItem(Index: Integer; const Value: TRegistroM030);
+  public
+    function New: TRegistroM030;
+    property Items[Index: Integer]: TRegistroM030 read GetItem write SetItem;
+  end;
+
+  TRegistroM305List = class;
+  TRegistroM310List = class;
+  TRegistroM315List = class;
 
   /// Registro M300 - Lançamentos da Parte A do e-Lalur
 
@@ -107,40 +158,87 @@ type
     fCODIGO:    string;
     fTIPO_LANCAMENTO: string;
     fDESCRICAO: string;
-    fVALOR:     variant;
+    fVALOR:     currency;
+
+    FRegistroM305: TRegistroM305List;
+    FRegistroM310: TRegistroM310List;
+    FRegistroM315: TRegistroM315List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
     property TIPO_LANCAMENTO: string read fTIPO_LANCAMENTO write fTIPO_LANCAMENTO;
     property IND_RELACAO: integer read fIND_RELACAO write fIND_RELACAO;
-    property VALOR: variant read fVALOR write fVALOR;
+    property VALOR: currency read fVALOR write fVALOR;
     property HIST_LAN_LAL: string read fHIST_LAN_LAL write fHIST_LAN_LAL;
+
+    property RegistroM305: TRegistroM305List read FRegistroM305 write FRegistroM305;
+    property RegistroM310: TRegistroM310List read FRegistroM310 write FRegistroM310;
+    property RegistroM315: TRegistroM315List read FRegistroM315 write FRegistroM315;
+  end;
+
+  TRegistroM300List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM300;
+    procedure SetItem(Index: Integer; const Value: TRegistroM300);
+  public
+    function New: TRegistroM300;
+    property Items[Index: Integer]: TRegistroM300 read GetItem write SetItem;
   end;
 
   /// Registro M305 - Conta da Parte B do e-Lalur
   TRegistroM305 = class(TBlocos)
   private
-    fVL_CTA:     variant;
+    fVL_CTA:     currency;
     fIND_VL_CTA: string;
     fCOD_CTA_B:  string;
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
-    property VL_CTA: variant read fVL_CTA write fVL_CTA;
+    property VL_CTA: currency read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
   end;
+
+  TRegistroM305List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM305;
+    procedure SetItem(Index: Integer; const Value: TRegistroM305);
+  public
+    function New: TRegistroM305;
+    property Items[Index: Integer]: TRegistroM305 read GetItem write SetItem;
+  end;
+
+  TRegistroM312List = class;
 
   /// Registro M310 - Contas Contábeis Relacionadas ao Lançamento da Parte A do e-Lalur.
   TRegistroM310 = class(TBlocos)
   private
     fCOD_CTA:    string;
     fCOD_CCUS:   string;
-    fVL_CTA:     variant;
+    fVL_CTA:     currency;
     fIND_VL_CTA: string;
+
+    FRegistroM312: TRegistroM312List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
     property COD_CTA: string read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: string read fCOD_CCUS write fCOD_CCUS;
-    property VL_CTA: variant read fVL_CTA write fVL_CTA;
+    property VL_CTA: currency read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
+
+    property RegistroM312: TRegistroM312List read FRegistroM312 write FRegistroM312;
+  end;
+
+  TRegistroM310List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM310;
+    procedure SetItem(Index: Integer; const Value: TRegistroM310);
+  public
+    function New: TRegistroM310;
+    property Items[Index: Integer]: TRegistroM310 read GetItem write SetItem;
   end;
 
   /// Registro M312 - Números dos Lançamentos Relacionados à Conta Contábil
@@ -149,6 +247,15 @@ type
     fNUM_LCTO: string;
   public
     property NUM_LCTO: string read fNUM_LCTO write fNUM_LCTO;
+  end;
+
+  TRegistroM312List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM312;
+    procedure SetItem(Index: Integer; const Value: TRegistroM312);
+  public
+    function New: TRegistroM312;
+    property Items[Index: Integer]: TRegistroM312 read GetItem write SetItem;
   end;
 
   /// Registro M315 - Identificação de Processos Judiciais e
@@ -162,6 +269,19 @@ type
     property NUM_PROC: string read fNUM_PROC write fNUM_PROC;
   end;
 
+  TRegistroM315List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM315;
+    procedure SetItem(Index: Integer; const Value: TRegistroM315);
+  public
+    function New: TRegistroM315;
+    property Items[Index: Integer]: TRegistroM315 read GetItem write SetItem;
+  end;
+
+   TRegistroM355List = class;
+   TRegistroM360List = class;
+   TRegistroM365List = class;
+
   /// Registro M350 - Lançamentos da Parte A do e-Lacs
 
   { TRegistroM350 }
@@ -169,18 +289,38 @@ type
   TRegistroM350 = class(TBlocos)
   private
     fHIST_LAN_LAL: string;
-    fVALOR:     variant;
+    fVALOR:     currency;
     fCODIGO:    string;
     fDESCRICAO: string;
     fTIPO_LANCAMENTO: string;
     fIND_RELACAO: integer;
+
+    FRegistroM355: TRegistroM355List;
+    FRegistroM360: TRegistroM360List;
+    FRegistroM365: TRegistroM365List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
     property TIPO_LANCAMENTO: string read fTIPO_LANCAMENTO write fTIPO_LANCAMENTO;
     property IND_RELACAO: integer read fIND_RELACAO write fIND_RELACAO;
-    property VALOR: variant read fVALOR write fVALOR;
+    property VALOR: currency read fVALOR write fVALOR;
     property HIST_LAN_LAL: string read fHIST_LAN_LAL write fHIST_LAN_LAL;
+
+    property RegistroM355: TRegistroM355List read FRegistroM355 write FRegistroM355;
+    property RegistroM360: TRegistroM360List read FRegistroM360 write FRegistroM360;
+    property RegistroM365: TRegistroM365List read FRegistroM365 write FRegistroM365;
+  end;
+
+  TRegistroM350List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM350;
+    procedure SetItem(Index: Integer; const Value: TRegistroM350);
+  public
+    function New: TRegistroM350;
+    property Items[Index: Integer]: TRegistroM350 read GetItem write SetItem;
   end;
 
   /// Registro M355 - Conta da Parte B do e-Lacs
@@ -189,15 +329,25 @@ type
 
   TRegistroM355 = class(TBlocos)
   private
-    fVL_CTA:     variant;
+    fVL_CTA:     currency;
     fIND_VL_CTA: string;
     fCOD_CTA_B:  string;
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
-    property VL_CTA: variant read fVL_CTA write fVL_CTA;
+    property VL_CTA: currency read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
   end;
 
+  TRegistroM355List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM355;
+    procedure SetItem(Index: Integer; const Value: TRegistroM355);
+  public
+    function New: TRegistroM355;
+    property Items[Index: Integer]: TRegistroM355 read GetItem write SetItem;
+  end;
+
+  TRegistroM362List = class;
   /// Registro M360 - Contas Contábeis Relacionadas ao Lançamento da
   /// Parte A do e-Lacs.
 
@@ -210,13 +360,29 @@ type
     fCOD_CENTRO_CUSTOS: string;
     fCOD_CTA:    string;
     fIND_VL_CTA: string;
-    fVL_CTA:     variant;
+    fVL_CTA:     currency;
     fIND_VALOR_CONTA: string;
+
+    FRegistroM362: TRegistroM362List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
     property COD_CTA: string read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: string read fCOD_CCUS write fCOD_CCUS;
-    property VL_CTA: variant read fVL_CTA write fVL_CTA;
+    property VL_CTA: currency read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
+
+    property RegistroM362: TRegistroM362List read FRegistroM362 write FRegistroM362;
+  end;
+
+  TRegistroM360List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM360;
+    procedure SetItem(Index: Integer; const Value: TRegistroM360);
+  public
+    function New: TRegistroM360;
+    property Items[Index: Integer]: TRegistroM360 read GetItem write SetItem;
   end;
 
   /// Registro M362 - Números dos Lançamentos Relacionados à Conta
@@ -229,6 +395,15 @@ type
     fNUM_LCTO: string;
   public
     property NUM_LCTO: string read fNUM_LCTO write fNUM_LCTO;
+  end;
+
+  TRegistroM362List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM362;
+    procedure SetItem(Index: Integer; const Value: TRegistroM362);
+  public
+    function New: TRegistroM362;
+    property Items[Index: Integer]: TRegistroM362 read GetItem write SetItem;
   end;
 
   /// Registro M365 - Identificação de Processos Judiciais e
@@ -245,6 +420,17 @@ type
     property NUM_PROC: string read fNUM_PROC write fNUM_PROC;
   end;
 
+  TRegistroM365List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM365;
+    procedure SetItem(Index: Integer; const Value: TRegistroM365);
+  public
+    function New: TRegistroM365;
+    property Items[Index: Integer]: TRegistroM365 read GetItem write SetItem;
+  end;
+
+  TRegistroM415List = class;
+
   /// Registro M410 - Lançamentos na Conta da Parte B do e-Lalur e do e-
   /// Lacs Sem Reflexo na Parte A
 
@@ -258,15 +444,31 @@ type
     fHIST_LAN_LALB: string;
     fIND_LAN_ANT:   string;
     fIND_VAL_LAN_LALB_PB: string;
-    fVAL_LAN_LALB_PB: variant;
+    fVAL_LAN_LALB_PB: currency;
+
+    FRegistroM415: TRegistroM415List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
     property COD_TRIBUTO: string read fCOD_TRIBUTO write fCOD_TRIBUTO;
-    property VAL_LAN_LALB_PB: variant read fVAL_LAN_LALB_PB write fVAL_LAN_LALB_PB;
+    property VAL_LAN_LALB_PB: currency read fVAL_LAN_LALB_PB write fVAL_LAN_LALB_PB;
     property IND_VAL_LAN_LALB_PB: string read fIND_VAL_LAN_LALB_PB write fIND_VAL_LAN_LALB_PB;
     property COD_CTA_B_CTP: string read fCOD_CTA_B_CTP write fCOD_CTA_B_CTP;
     property HIST_LAN_LALB: string read fHIST_LAN_LALB write fHIST_LAN_LALB;
     property IND_LAN_ANT: string read fIND_LAN_ANT write fIND_LAN_ANT;
+
+    property RegistroM415: TRegistroM415List read FRegistroM415 write FRegistroM415;
+  end;
+
+  TRegistroM410List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM410;
+    procedure SetItem(Index: Integer; const Value: TRegistroM410);
+  public
+    function New: TRegistroM410;
+    property Items[Index: Integer]: TRegistroM410 read GetItem write SetItem;
   end;
 
   /// Registro M415 - Identificação de Processos Judiciais e
@@ -283,6 +485,15 @@ type
     property NUM_PROC: string read fNUM_PROC write fNUM_PROC;
   end;
 
+  TRegistroM415List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM415;
+    procedure SetItem(Index: Integer; const Value: TRegistroM415);
+  public
+    function New: TRegistroM415;
+    property Items[Index: Integer]: TRegistroM415 read GetItem write SetItem;
+  end;
+
   /// Registro M500 - Controle de Saldos das Contas da Parte B do e-Lalur
   /// e do e-Lacs
 
@@ -294,30 +505,423 @@ type
     fCOD_TRIBUTO:    string;
     fIND_SD_FIM_LAL: string;
     fIND_SD_INI_LAL: string;
-    fIND_VL_LCTO_PARTE_A: variant;
+    fIND_VL_LCTO_PARTE_A: currency;
     fIND_VL_LCTO_PARTE_B: string;
-    fSD_FIM_LAL:     variant;
-    fSD_INI_LAL:     variant;
-    fVL_LCTO_PARTE_A: variant;
-    fVL_LCTO_PARTE_B: variant;
+    fSD_FIM_LAL:     currency;
+    fSD_INI_LAL:     currency;
+    fVL_LCTO_PARTE_A: currency;
+    fVL_LCTO_PARTE_B: currency;
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
     property COD_TRIBUTO: string read fCOD_TRIBUTO write fCOD_TRIBUTO;
-    property SD_INI_LAL: variant read fSD_INI_LAL write fSD_INI_LAL;
+    property SD_INI_LAL: currency read fSD_INI_LAL write fSD_INI_LAL;
     property IND_SD_INI_LAL: string read fIND_SD_INI_LAL write fIND_SD_INI_LAL;
-    property VL_LCTO_PARTE_A: variant read fVL_LCTO_PARTE_A write fVL_LCTO_PARTE_A;
-    property IND_VL_LCTO_PARTE_A: variant read fIND_VL_LCTO_PARTE_A write fIND_VL_LCTO_PARTE_A;
-    property VL_LCTO_PARTE_B: variant read fVL_LCTO_PARTE_B write fVL_LCTO_PARTE_B;
+    property VL_LCTO_PARTE_A: currency read fVL_LCTO_PARTE_A write fVL_LCTO_PARTE_A;
+    property IND_VL_LCTO_PARTE_A: currency read fIND_VL_LCTO_PARTE_A write fIND_VL_LCTO_PARTE_A;
+    property VL_LCTO_PARTE_B: currency read fVL_LCTO_PARTE_B write fVL_LCTO_PARTE_B;
     property IND_VL_LCTO_PARTE_B: string read fIND_VL_LCTO_PARTE_B write fIND_VL_LCTO_PARTE_B;
-    property SD_FIM_LAL: variant read fSD_FIM_LAL write fSD_FIM_LAL;
+    property SD_FIM_LAL: currency read fSD_FIM_LAL write fSD_FIM_LAL;
     property IND_SD_FIM_LAL: string read fIND_SD_FIM_LAL write fIND_SD_FIM_LAL;
+  end;
+
+  TRegistroM500List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroM500;
+    procedure SetItem(Index: Integer; const Value: TRegistroM500);
+  public
+    function New: TRegistroM500;
+    property Items[Index: Integer]: TRegistroM500 read GetItem write SetItem;
   end;
 
   /// Registro M990 - ENCERRAMENTO DO BLOCO M
   TRegistroM990 = class(TCloseBlocos)
+  private
+    fQTD_LIN: Integer;    /// Quantidade total de linhas do Bloco I
+  public
+    property QTD_LIN: Integer read FQTD_LIN write FQTD_LIN;
   end;
 
 
 implementation
+
+{ TRegistroM010List }
+
+function TRegistroM010List.GetItem(Index: Integer): TRegistroM010;
+begin
+  Result := TRegistroM010(Inherited Items[Index]);
+end;
+
+function TRegistroM010List.New: TRegistroM010;
+begin
+  Result := TRegistroM010.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM010List.SetItem(Index: Integer; const Value: TRegistroM010);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM001List }
+
+function TRegistroM001List.GetItem(Index: Integer): TRegistroM001;
+begin
+  Result := TRegistroM001(Inherited Items[Index]);
+end;
+
+function TRegistroM001List.New: TRegistroM001;
+begin
+  Result := TRegistroM001.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM001List.SetItem(Index: Integer; const Value: TRegistroM001);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM030List }
+
+function TRegistroM030List.GetItem(Index: Integer): TRegistroM030;
+begin
+  Result := TRegistroM030(Inherited Items[Index]);
+end;
+
+function TRegistroM030List.New: TRegistroM030;
+begin
+  Result := TRegistroM030.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM030List.SetItem(Index: Integer; const Value: TRegistroM030);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM300List }
+
+function TRegistroM300List.GetItem(Index: Integer): TRegistroM300;
+begin
+  Result := TRegistroM300(Inherited Items[Index]);
+end;
+
+function TRegistroM300List.New: TRegistroM300;
+begin
+  Result := TRegistroM300.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM300List.SetItem(Index: Integer; const Value: TRegistroM300);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM305List }
+
+function TRegistroM305List.GetItem(Index: Integer): TRegistroM305;
+begin
+  Result := TRegistroM305(Inherited Items[Index]);
+end;
+
+function TRegistroM305List.New: TRegistroM305;
+begin
+  Result := TRegistroM305.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM305List.SetItem(Index: Integer; const Value: TRegistroM305);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM310List }
+
+function TRegistroM310List.GetItem(Index: Integer): TRegistroM310;
+begin
+  Result := TRegistroM310(Inherited Items[Index]);
+end;
+
+function TRegistroM310List.New: TRegistroM310;
+begin
+  Result := TRegistroM310.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM310List.SetItem(Index: Integer; const Value: TRegistroM310);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM312List }
+
+function TRegistroM312List.GetItem(Index: Integer): TRegistroM312;
+begin
+  Result := TRegistroM312(Inherited Items[Index]);
+end;
+
+function TRegistroM312List.New: TRegistroM312;
+begin
+  Result := TRegistroM312.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM312List.SetItem(Index: Integer; const Value: TRegistroM312);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM315List }
+
+function TRegistroM315List.GetItem(Index: Integer): TRegistroM315;
+begin
+  Result := TRegistroM315(Inherited Items[Index]);
+end;
+
+function TRegistroM315List.New: TRegistroM315;
+begin
+  Result := TRegistroM315.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM315List.SetItem(Index: Integer; const Value: TRegistroM315);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM350List }
+
+function TRegistroM350List.GetItem(Index: Integer): TRegistroM350;
+begin
+  Result := TRegistroM350(Inherited Items[Index]);
+end;
+
+function TRegistroM350List.New: TRegistroM350;
+begin
+  Result := TRegistroM350.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM350List.SetItem(Index: Integer; const Value: TRegistroM350);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM355List }
+
+function TRegistroM355List.GetItem(Index: Integer): TRegistroM355;
+begin
+  Result := TRegistroM355(Inherited Items[Index]);
+end;
+
+function TRegistroM355List.New: TRegistroM355;
+begin
+  Result := TRegistroM355.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM355List.SetItem(Index: Integer; const Value: TRegistroM355);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM360List }
+
+function TRegistroM360List.GetItem(Index: Integer): TRegistroM360;
+begin
+  Result := TRegistroM360(Inherited Items[Index]);
+end;
+
+function TRegistroM360List.New: TRegistroM360;
+begin
+  Result := TRegistroM360.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM360List.SetItem(Index: Integer; const Value: TRegistroM360);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM362List }
+
+function TRegistroM362List.GetItem(Index: Integer): TRegistroM362;
+begin
+  Result := TRegistroM362(Inherited Items[Index]);
+end;
+
+function TRegistroM362List.New: TRegistroM362;
+begin
+  Result := TRegistroM362.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM362List.SetItem(Index: Integer; const Value: TRegistroM362);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM365List }
+
+function TRegistroM365List.GetItem(Index: Integer): TRegistroM365;
+begin
+  Result := TRegistroM365(Inherited Items[Index]);
+end;
+
+function TRegistroM365List.New: TRegistroM365;
+begin
+  Result := TRegistroM365.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM365List.SetItem(Index: Integer; const Value: TRegistroM365);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM410List }
+
+function TRegistroM410List.GetItem(Index: Integer): TRegistroM410;
+begin
+  Result := TRegistroM410(Inherited Items[Index]);
+end;
+
+function TRegistroM410List.New: TRegistroM410;
+begin
+  Result := TRegistroM410.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM410List.SetItem(Index: Integer; const Value: TRegistroM410);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM415List }
+
+function TRegistroM415List.GetItem(Index: Integer): TRegistroM415;
+begin
+  Result := TRegistroM415(Inherited Items[Index]);
+end;
+
+function TRegistroM415List.New: TRegistroM415;
+begin
+  Result := TRegistroM415.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM415List.SetItem(Index: Integer; const Value: TRegistroM415);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM500List }
+
+function TRegistroM500List.GetItem(Index: Integer): TRegistroM500;
+begin
+  Result := TRegistroM500(Inherited Items[Index]);
+end;
+
+function TRegistroM500List.New: TRegistroM500;
+begin
+  Result := TRegistroM500.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM500List.SetItem(Index: Integer; const Value: TRegistroM500);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroM030 }
+
+constructor TRegistroM030.Create;
+begin
+  FRegistroM300 := TRegistroM300List.Create;
+  FRegistroM350 := TRegistroM350List.Create;
+  FRegistroM410 := TRegistroM410List.Create;
+  FRegistroM500 := TRegistroM500List.Create;
+end;
+
+destructor TRegistroM030.Destroy;
+begin
+  FRegistroM300.Free;
+  FRegistroM350.Free;
+  FRegistroM410.Free;
+  FRegistroM500.Free;
+  inherited;
+end;
+
+{ TRegistroM300 }
+
+constructor TRegistroM300.Create;
+begin
+  FRegistroM305 := TRegistroM305List.Create;
+  FRegistroM310 := TRegistroM310List.Create;
+  FRegistroM315 := TRegistroM315List.Create;
+end;
+
+destructor TRegistroM300.Destroy;
+begin
+  FRegistroM305.Free;
+  FRegistroM310.Free;
+  FRegistroM315.Free;
+  inherited;
+end;
+
+{ TRegistroM310 }
+
+constructor TRegistroM310.Create;
+begin
+  FRegistroM312 := TRegistroM312List.Create;
+end;
+
+destructor TRegistroM310.Destroy;
+begin
+  FRegistroM312.Free;
+  inherited;
+end;
+
+{ TRegistroM350 }
+
+constructor TRegistroM350.Create;
+begin
+  RegistroM355 := TRegistroM355List.Create;
+  RegistroM360 := TRegistroM360List.Create;
+  RegistroM365 := TRegistroM365List.Create;
+end;
+
+destructor TRegistroM350.Destroy;
+begin
+  RegistroM355.Free;
+  RegistroM360.Free;
+  RegistroM365.Free;
+  inherited;
+end;
+
+{ TRegistroM360 }
+
+constructor TRegistroM360.Create;
+begin
+  FRegistroM362 := TRegistroM362List.Create;
+end;
+
+destructor TRegistroM360.Destroy;
+begin
+  FRegistroM362.Free;
+  inherited;
+end;
+
+{ TRegistroM410 }
+
+constructor TRegistroM410.Create;
+begin
+  FRegistroM415 := TRegistroM415List.Create;
+end;
+
+destructor TRegistroM410.Destroy;
+begin
+  FRegistroM415.Free;
+  inherited;
+end;
 
 end.

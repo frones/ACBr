@@ -103,15 +103,16 @@ type
   TPosRecibo = (prCabecalho, prRodape);
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
-  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
-                  teRegistroPassagem, teRegistroPassagemBRId, teEPECNFe,
-                  teRegistroCTe, teRegistroPassagemNFeCancelado,
+  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao,
+                  teManifDestCiencia, teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+                  teEncerramento, teEPEC, teInclusaoCondutor,
+                  teMultiModal, teRegistroPassagem, teRegistroPassagemBRId,
+                  teEPECNFe, teRegistroCTe, teRegistroPassagemNFeCancelado,
                   teRegistroPassagemNFeRFID, teCTeCancelado, teMDFeCancelado,
                   teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
                   teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
-                  teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2);
+                  teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
+                  teRegistroPassagemNFe);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -160,7 +161,8 @@ const
                                                 '610550', '610601', '610611',
                                                 '990900', '111500', '111501',
                                                 '111502', '111503', '411500',
-                                                '411501', '411502', '411503');
+                                                '411501', '411502', '411503',
+                                                '610500');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -866,7 +868,8 @@ begin
               'RegPassagemNFeRFID', 'CTeCancelado', 'MDFeCancelado',
               'VistoriaSuframa', 'PedProrrog1', 'PedProrrog2',
               'CanPedProrrog1', 'CanPedProrrog2', 'EventoFiscoPP1',
-              'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2'],
+              'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2',
+              'RegPassagemNFe'],
              [teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -875,7 +878,8 @@ begin
               teRegistroPassagemNFeRFID, teCTeCancelado, teMDFeCancelado,
               teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
               teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
-              teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2]);
+              teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
+              teRegistroPassagemNFe]);
 end;
 
 

@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2015
+[*] Incluido o tipo de evento: 610500 - teRegistroPassagemNFe.
+    Por: Italo Jurisato Junior
+
 12/08/2015
 [+] function TpEventoToDescStr(const t: TpcnTpEvento): string;
     Retorna a descrição do tipo de evento

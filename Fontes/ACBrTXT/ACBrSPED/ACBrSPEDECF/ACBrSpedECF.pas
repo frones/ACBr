@@ -128,8 +128,6 @@ type
     procedure WriteRegistroE990;
     /// BLOCO J
     procedure WriteRegistroJ001;
-    procedure WriteRegistroJ050;
-    procedure WriteRegistroJ100;
     procedure WriteRegistroJ990;
     /// BLOCO K
     procedure WriteRegistroK001;
@@ -455,8 +453,8 @@ begin
   Bloco.LinhasBuffer := FACBrTXT.LinhasBuffer;
   Bloco.Gravado      := False ;
 
-//  if not assigned(Bloco.Conteudo) then
-//     Bloco.Conteudo := TStringList.Create;
+  if not assigned(Bloco.Conteudo) then
+     Bloco.Conteudo := TStringList.Create;
 
   Bloco.Conteudo.Clear;
 end;
@@ -639,7 +637,8 @@ end;
 
 procedure TACBrSPEDECF.WriteBloco_0;
 begin
-  if Bloco_0.Gravado then exit ;
+  if Bloco_0.Gravado then
+    exit;
 
   if not FInicializado then
      raise Exception.Create( 'Métodos "IniciaGeracao" não foi executado' );
@@ -654,6 +653,8 @@ begin
 end;
 
 procedure TACBrSPEDECF.WriteBloco_C;
+var
+  FechaBloco: Boolean;
 begin
    if Bloco_C.Gravado then exit ;
 
@@ -663,16 +664,15 @@ begin
    /// BLOCO C
    WriteRegistroC001;
 
-   //if Bloco_C.RegistroC001.IND_MOV = imSemDados then
-      //FechaBloco := True ;
+   FechaBloco := (Bloco_C.RegistroC001.IND_DAD = idSemDados);
 
-   //if FechaBloco then
-      //WriteRegistroC990;
+   if FechaBloco then
+    WriteRegistroC990;
 
    Bloco_C.WriteBuffer;
    Bloco_C.Conteudo.Clear;
 
-   //Bloco_C.Gravado := FechaBloco;
+   Bloco_C.Gravado := FechaBloco;
 end;
 
 procedure TACBrSPEDECF.WriteBloco_E;
@@ -698,8 +698,6 @@ begin
       WriteBloco_E;
 
    WriteRegistroJ001;
-   WriteRegistroJ050;
-   WriteRegistroJ100;
    WriteRegistroJ990;
 
    Bloco_J.WriteBuffer;
@@ -955,792 +953,78 @@ end;
 
 procedure TACBrSPEDECF.WriteRegistroC001;
 begin
-  //Bloco_C.WriteRegistroC001;
+  Bloco_C.WriteRegistroC001;
 end;
 
 procedure TACBrSPEDECF.WriteRegistroC990;
 begin
-  with Bloco_9.Registro9900 do
-  begin
-     with New do
-     begin
-        REG_BLC := 'C001';
-        QTD_REG_BLC := 1;
-     end;
+  with Bloco_9.Registro9900.New do begin
+    REG_BLC := 'C001';
+    QTD_REG_BLC := 1;
   end;
-
-  //if Bloco_C.RegistroC001.IND_MOV = imComDados then
-  //begin
-  //  with Bloco_9.Registro9900 do
-  //  begin
-  //     if Bloco_C.RegistroC100Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C100';
-  //         QTD_REG_BLC := Bloco_C.RegistroC100Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC105Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C105';
-  //         QTD_REG_BLC := Bloco_C.RegistroC105Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC110Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C110';
-  //         QTD_REG_BLC := Bloco_C.RegistroC110Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC111Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C111';
-  //         QTD_REG_BLC := Bloco_C.RegistroC111Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC112Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C112';
-  //         QTD_REG_BLC := Bloco_C.RegistroC112Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC113Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C113';
-  //         QTD_REG_BLC := Bloco_C.RegistroC113Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC114Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C114';
-  //         QTD_REG_BLC := Bloco_C.RegistroC114Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC115Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C115';
-  //         QTD_REG_BLC := Bloco_C.RegistroC115Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC116Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C116';
-  //         QTD_REG_BLC := Bloco_C.RegistroC116Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC120Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C120';
-  //         QTD_REG_BLC := Bloco_C.RegistroC120Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC130Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C130';
-  //         QTD_REG_BLC := Bloco_C.RegistroC130Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC140Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C140';
-  //         QTD_REG_BLC := Bloco_C.RegistroC140Count;   {Márcio Lopes 30Nov2009}
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC141Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C141';
-  //         QTD_REG_BLC := Bloco_C.RegistroC141Count;  {Márcio Lopes 30Nov2009}
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC160Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C160';
-  //         QTD_REG_BLC := Bloco_C.RegistroC160Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC165Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C165';
-  //         QTD_REG_BLC := Bloco_C.RegistroC165Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC170Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C170';
-  //         QTD_REG_BLC := Bloco_C.RegistroC170Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC171Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C171';
-  //         QTD_REG_BLC := Bloco_C.RegistroC171Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC172Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C172';
-  //         QTD_REG_BLC := Bloco_C.RegistroC172Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC173Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C173';
-  //         QTD_REG_BLC := Bloco_C.RegistroC173Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC174Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C174';
-  //         QTD_REG_BLC := Bloco_C.RegistroC174Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC175Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C175';
-  //         QTD_REG_BLC := Bloco_C.RegistroC175Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC176Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C176';
-  //         QTD_REG_BLC := Bloco_C.RegistroC176Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC177Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C177';
-  //         QTD_REG_BLC := Bloco_C.RegistroC177Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC178Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C178';
-  //         QTD_REG_BLC := Bloco_C.RegistroC178Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC179Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C179';
-  //         QTD_REG_BLC := Bloco_C.RegistroC179Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC190Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C190';
-  //         QTD_REG_BLC := Bloco_C.RegistroC190Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC195Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C195';
-  //         QTD_REG_BLC := Bloco_C.RegistroC195Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC197Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C197';
-  //         QTD_REG_BLC := Bloco_C.RegistroC197Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC300Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C300';
-  //         QTD_REG_BLC := Bloco_C.RegistroC300Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC310Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C310';
-  //         QTD_REG_BLC := Bloco_C.RegistroC310Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC320Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C320';
-  //         QTD_REG_BLC := Bloco_C.RegistroC320Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC321Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C321';
-  //         QTD_REG_BLC := Bloco_C.RegistroC321Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC350Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C350';
-  //         QTD_REG_BLC := Bloco_C.RegistroC350Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC370Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C370';
-  //         QTD_REG_BLC := Bloco_C.RegistroC370Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC390Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C390';
-  //         QTD_REG_BLC := Bloco_C.RegistroC390Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC400Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C400';
-  //         QTD_REG_BLC := Bloco_C.RegistroC400Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC405Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C405';
-  //         QTD_REG_BLC := Bloco_C.RegistroC405Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC410Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C410';
-  //         QTD_REG_BLC := Bloco_C.RegistroC410Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC420Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C420';
-  //         QTD_REG_BLC := Bloco_C.RegistroC420Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC425Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C425';
-  //         QTD_REG_BLC := Bloco_C.RegistroC425Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC460Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C460';
-  //         QTD_REG_BLC := Bloco_C.RegistroC460Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC470Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C470';
-  //         QTD_REG_BLC := Bloco_C.RegistroC470Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC490Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C490';
-  //         QTD_REG_BLC := Bloco_C.RegistroC490Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC495Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C495';
-  //         QTD_REG_BLC := Bloco_C.RegistroC495Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC500Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C500';
-  //         QTD_REG_BLC := Bloco_C.RegistroC500Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC510Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C510';
-  //         QTD_REG_BLC := Bloco_C.RegistroC510Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC590Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C590';
-  //         QTD_REG_BLC := Bloco_C.RegistroC590Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC600Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C600';
-  //         QTD_REG_BLC := Bloco_C.RegistroC600Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC601Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C601';
-  //         QTD_REG_BLC := Bloco_C.RegistroC601Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC610Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C610';
-  //         QTD_REG_BLC := Bloco_C.RegistroC610Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC690Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C690';
-  //         QTD_REG_BLC := Bloco_C.RegistroC690Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC700Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C700';
-  //         QTD_REG_BLC := Bloco_C.RegistroC700Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC790Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C790';
-  //         QTD_REG_BLC := Bloco_C.RegistroC790Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC791Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C791';
-  //         QTD_REG_BLC := Bloco_C.RegistroC791Count;
-  //       end;
-  //     end;
-  //
-  //     if Bloco_C.RegistroC800Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C800';
-  //         QTD_REG_BLC := Bloco_C.RegistroC800Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC850Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C850';
-  //         QTD_REG_BLC := Bloco_C.RegistroC850Count;
-  //       end;
-  //     end;
-  //
-  //     if Bloco_C.RegistroC860Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C860';
-  //         QTD_REG_BLC := Bloco_C.RegistroC860Count;
-  //       end;
-  //     end;
-  //     if Bloco_C.RegistroC890Count > 0 then
-  //     begin
-  //       with New do
-  //       begin
-  //         REG_BLC := 'C890';
-  //         QTD_REG_BLC := Bloco_C.RegistroC890Count;
-  //       end;
-  //     end;
-  //
-  //  end;
-  //end;
-
-  with Bloco_9.Registro9900 do
-  begin
-     with New do
-     begin
-       REG_BLC := 'C990';
-       QTD_REG_BLC := 1;
-     end;
+  with Bloco_9.Registro9900.New do begin
+    REG_BLC := 'C990';
+    QTD_REG_BLC := 1;
   end;
-
-  //Bloco_C.WriteRegistroC990;
+  Bloco_C.WriteRegistroC990;
 end;
 
 
 procedure TACBrSPEDECF.WriteRegistroE001;
 begin
-   //Bloco_E.WriteRegistroE001;
-   //
-   with Bloco_9.Registro9900 do
-   begin
-      with New do
-      begin
-         REG_BLC := 'E001';
-         QTD_REG_BLC := 1;
-      end;
-   end;
-   //if Bloco_E.RegistroE001.IND_MOV = imComDados then
-   //begin
-   //   with Bloco_9.Registro9900 do
-   //   begin
-   //      with New do
-   //      begin
-   //         REG_BLC := 'E100';
-   //         QTD_REG_BLC := Bloco_E.RegistroE100Count;
-   //      end;
-   //      with New do
-   //      begin
-   //         REG_BLC := 'E110';
-   //         QTD_REG_BLC := Bloco_E.RegistroE110Count;
-   //      end;
-   //      if Bloco_E.RegistroE111Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E111';
-   //            QTD_REG_BLC := Bloco_E.RegistroE111Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE112Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E112';
-   //            QTD_REG_BLC := Bloco_E.RegistroE112Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE113Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E113';
-   //            QTD_REG_BLC := Bloco_E.RegistroE113Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE115Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E115';
-   //            QTD_REG_BLC := Bloco_E.RegistroE115Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE116Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E116';
-   //            QTD_REG_BLC := Bloco_E.RegistroE116Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE200Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E200';
-   //            QTD_REG_BLC := Bloco_E.RegistroE200Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE210Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E210';
-   //            QTD_REG_BLC := Bloco_E.RegistroE210Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE220Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E220';
-   //            QTD_REG_BLC := Bloco_E.RegistroE220Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE230Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E230';
-   //            QTD_REG_BLC := Bloco_E.RegistroE230Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE240Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E240';
-   //            QTD_REG_BLC := Bloco_E.RegistroE240Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE250Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E250';
-   //            QTD_REG_BLC := Bloco_E.RegistroE250Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE500Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E500';
-   //            QTD_REG_BLC := Bloco_E.RegistroE500Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE510Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E510';
-   //            QTD_REG_BLC := Bloco_E.RegistroE510Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE520Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E520';
-   //            QTD_REG_BLC := Bloco_E.RegistroE520Count;
-   //         end;
-   //      end;
-   //      if Bloco_E.RegistroE530Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'E530';
-   //            QTD_REG_BLC := Bloco_E.RegistroE530Count;
-   //         end;
-   //      end;
-   //   end;
-   //end;
+   Bloco_E.WriteRegistroE001;
 end;
 
 
 procedure TACBrSPEDECF.WriteRegistroE990;
 begin
-  with Bloco_9.Registro9900.New do
-  begin
+  with Bloco_9.Registro9900.New do begin
+    REG_BLC := 'E001';
+    QTD_REG_BLC := 1;
+  end;
+  with Bloco_9.Registro9900.New do begin
     REG_BLC := 'E990';
     QTD_REG_BLC := 1;
   end;
-  //Bloco_E.WriteRegistroE990;
+  Bloco_E.WriteRegistroE990;
 end;
 
 procedure TACBrSPEDECF.WriteRegistroJ001;
 begin
    Bloco_J.WriteRegistroJ001;
-   //
-   with Bloco_9.Registro9900 do
-   begin
-      with New do
-      begin
-         REG_BLC := 'J001';
-         QTD_REG_BLC := 1;
-      end;
-   end;
-   //if Bloco_J.RegistroJ001.IND_MOV = imComDados then
-   //begin
-   //   with Bloco_9.Registro9900 do
-   //   begin
-   //      if Bloco_K.RegistroK100Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K100';
-   //            QTD_REG_BLC := Bloco_K.RegistroK100Count;
-   //         end;
-   //      end;
-   //      if Bloco_K.RegistroK200Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K200';
-   //            QTD_REG_BLC := Bloco_K.RegistroK200Count;
-   //         end;
-   //      end;
-   //      if Bloco_K.RegistroK220Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K220';
-   //            QTD_REG_BLC := Bloco_K.RegistroK220Count;
-   //         end;
-   //      end;
-   //      if Bloco_K.RegistroK230Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K230';
-   //            QTD_REG_BLC := Bloco_K.RegistroK230Count;
-   //         end;
-   //      end;
-   //      if Bloco_K.RegistroK235Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K235';
-   //            QTD_REG_BLC := Bloco_K.RegistroK235Count;
-   //         end;
-   //      end;
-   //      if Bloco_K.RegistroK250Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K250';
-   //            QTD_REG_BLC := Bloco_K.RegistroK250Count;
-   //         end;
-   //      end;
-   //      if Bloco_K.RegistroK255Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'K255';
-   //            QTD_REG_BLC := Bloco_K.RegistroK255Count;
-   //         end;
-   //      end;
-   //   end;
-   //end;
-end;
-
-procedure TACBrSPEDECF.WriteRegistroJ050;
-begin
-   Bloco_J.WriteREgistroJ050;
-
-   if Bloco_J.REgistroJ050.Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'J050';
-         QTD_REG_BLC := Bloco_J.REgistroJ050.Count;
-      end;
-   end;
-   if Bloco_J.REgistroJ051Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'J051';
-         QTD_REG_BLC := Bloco_J.REgistroJ051Count;
-      end;
-   end;
-   if Bloco_J.REgistroJ053Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'J053';
-         QTD_REG_BLC := Bloco_J.REgistroJ053Count;
-      end;
-   end;
-end;
-
-procedure TACBrSPEDECF.WriteRegistroJ100;
-begin
-   Bloco_J.WriteRegistroJ100;
-
-   if Bloco_J.RegistroJ100.Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'J100';
-         QTD_REG_BLC := Bloco_J.RegistroJ100.Count;
-      end;
-   end;
 end;
 
 procedure TACBrSPEDECF.WriteRegistroJ990;
 begin
-  with Bloco_9.Registro9900.New do
-  begin
+  with Bloco_9.Registro9900.New do begin
+    REG_BLC := 'J001';
+    QTD_REG_BLC := 1;
+  end;
+  if Bloco_J.REgistroJ050.Count > 0 then begin
+    with Bloco_9.Registro9900.New do begin
+      REG_BLC := 'J050';
+      QTD_REG_BLC := Bloco_J.REgistroJ050.Count;
+    end;
+  end;
+  if Bloco_J.REgistroJ051Count > 0 then begin
+    with Bloco_9.Registro9900.New do begin
+      REG_BLC := 'J051';
+      QTD_REG_BLC := Bloco_J.REgistroJ051Count;
+    end;
+  end;
+  if Bloco_J.REgistroJ053Count > 0 then begin
+    with Bloco_9.Registro9900.New do begin
+      REG_BLC := 'J053';
+      QTD_REG_BLC := Bloco_J.REgistroJ053Count;
+    end;
+  end;
+  if Bloco_J.RegistroJ100.Count > 0 then begin
+    with Bloco_9.Registro9900.New do begin
+      REG_BLC := 'J100';
+      QTD_REG_BLC := Bloco_J.RegistroJ100.Count;
+    end;
+  end;
+  with Bloco_9.Registro9900.New do begin
     REG_BLC := 'J990';
     QTD_REG_BLC := 1;
   end;

@@ -64,8 +64,7 @@ type
     FRegistroJ051Count: Integer;
     FRegistroJ053Count: Integer;
 
-    function WriteRegistroJ051(RegJ050: TRegistroJ050): String;
-    function WriteRegistroJ053(RegJ050: TRegistroJ050): String;
+
   public
     constructor Create; /// Create
     destructor Destroy; override; /// Destroy
@@ -73,13 +72,14 @@ type
 
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
 
-    function WriteRegistroJ001: String;
-    function WriteRegistroJ050: String;
-    function WriteRegistroJ100: String;
-    function WriteRegistroJ990: String;
+    procedure WriteRegistroJ001;
+    procedure WriteRegistroJ050;
+    procedure WriteRegistroJ051(RegJ050: TRegistroJ050);
+    procedure WriteRegistroJ053(RegJ050: TRegistroJ050);
+    procedure WriteRegistroJ100;
+    procedure WriteRegistroJ990;
 
     property RegistroJ001: TRegistroJ001     read FRegistroJ001 write FRegistroJ001;
-    //property RegistroJ015: TRegistroJ015List read fRegistroJ015 write fRegistroJ015;
     property RegistroJ050: TRegistroJ050List read fRegistroJ050 write fRegistroJ050;
     property RegistroJ100: TRegistroJ100List read fRegistroJ100 write fRegistroJ100;
     property RegistroJ990: TRegistroJ990     read FRegistroJ990 write FRegistroJ990;
@@ -126,161 +126,106 @@ begin
   FRegistroJ990.QTD_LIN:= 0;
 end;
 
-function TBloco_J.WriteRegistroJ001: String;
+procedure TBloco_J.WriteRegistroJ001;
 begin
-  Result := '';
-
-  if Assigned(FRegistroJ001) then
-  begin
-     with FRegistroJ001 do
-     begin
-       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(J-J001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
-       ///
-       Result := LFill('J001') +
-                 LFill( Integer(IND_DAD), 1) +
-                 Delimitador +
-                 #13#10;
-       ///
-       FRegistroJ990.QTD_LIN:= FRegistroJ990.QTD_LIN + 1;
-     end;
+  if Assigned(FRegistroJ001) then begin
+    with FRegistroJ001 do begin
+      Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(J-J001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+      Add(LFill('J001') +
+          LFill( Integer(IND_DAD), 1));
+      FRegistroJ990.QTD_LIN:= FRegistroJ990.QTD_LIN + 1;
+    end;
+    WriteRegistroJ050;
+    WriteRegistroJ100;
   end;
 end;
 
 
-function TBloco_J.WriteRegistroJ050: String;
+procedure TBloco_J.WriteRegistroJ050;
+var
+  intFor: integer;
+begin
+  if Assigned(FRegistroJ050) then begin
+    for intFor := 0 to FRegistroJ050.Count - 1 do begin
+      with FRegistroJ050.Items[intFor] do begin
+        Add(LFill('J050') +
+            LFill(DT_ALT) +
+            LFill(COD_NAT, 2) +
+            LFill(IND_CTA, 1) +
+            LFill(NIVEL) +
+            LFill(COD_CTA) +
+            LFill(COD_CTA_SUP) +
+            LFill(CTA));
+      end;
+      // Registros Filhos
+      WriteRegistroJ051(FRegistroJ050.Items[intFor] );
+      WriteRegistroJ053(FRegistroJ050.Items[intFor] );
+      FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
+    end;
+  end;
+end;
+
+procedure TBloco_J.WriteRegistroJ051(RegJ050: TRegistroJ050);
 var
 intFor: integer;
-strRegistroJ050: String;
 begin
-  strRegistroJ050 := '';
-
-  if Assigned(FRegistroJ050) then
-  begin
-     for intFor := 0 to FRegistroJ050.Count - 1 do
-     begin
-        with FRegistroJ050.Items[intFor] do
-        begin
-           ///
-           strRegistroJ050 :=  strRegistroJ050 + LFill('J050') +
-                                                 LFill(DT_ALT) +
-                                                 LFill(COD_NAT, 2) +
-                                                 LFill(IND_CTA, 1) +
-                                                 LFill(NIVEL) +
-                                                 LFill(COD_CTA) +
-                                                 LFill(COD_CTA_SUP) +
-                                                 LFill(CTA) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-        // Registros Filhos
-        strRegistroJ050 := strRegistroJ050 +
-                           WriteRegistroJ051(FRegistroJ050.Items[intFor] ) +
-                           WriteRegistroJ053(FRegistroJ050.Items[intFor] );
-
-       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
-     end;
+  if Assigned(RegJ050.RegistroJ051) then begin
+    for intFor := 0 to RegJ050.RegistroJ051.Count - 1 do begin
+      with RegJ050.RegistroJ051.Items[intFor] do begin
+        Add(LFill('J051') +
+            LFill(COD_CCUS) +
+            LFill(COD_CTA_REF));
+      end;
+      FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
+    end;
+    FRegistroJ051Count := FRegistroJ051Count + RegJ050.RegistroJ051.Count;
   end;
-  Result := strRegistroJ050;
 end;
 
-function TBloco_J.WriteRegistroJ051(RegJ050: TRegistroJ050): String;
+procedure TBloco_J.WriteRegistroJ053(RegJ050: TRegistroJ050);
 var
 intFor: integer;
-strRegistroJ051: String;
 begin
-  strRegistroJ051 := '';
-
-  if Assigned(RegJ050.RegistroJ051) then
-  begin
-     for intFor := 0 to RegJ050.RegistroJ051.Count - 1 do
-     begin
-        with RegJ050.RegistroJ051.Items[intFor] do
-        begin
-           ///
-           strRegistroJ051 :=  strRegistroJ051 + LFill('J051') +
-//                                                 LFill(COD_ENT_REF, 2) +
-                                                 LFill(COD_CCUS) +
-                                                 LFill(COD_CTA_REF) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
-     end;
-     FRegistroJ051Count := FRegistroJ051Count + RegJ050.RegistroJ051.Count;
+  if Assigned(RegJ050.RegistroJ053) then begin
+    for intFor := 0 to RegJ050.RegistroJ053.Count - 1 do begin
+      with RegJ050.RegistroJ053.Items[intFor] do begin
+        Add(LFill('J053') +
+            LFill(COD_IDT) +
+            LFill(COD_CNT_CORR) +
+            LFill(NAT_SUB_CNT));
+      end;
+      FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
+    end;
+    FRegistroJ053Count := FRegistroJ053Count + RegJ050.RegistroJ053.Count;
   end;
-  Result := strRegistroJ051;
 end;
 
-function TBloco_J.WriteRegistroJ053(RegJ050: TRegistroJ050): String;
+procedure TBloco_J.WriteRegistroJ100;
 var
 intFor: integer;
-strRegistroJ053: String;
 begin
-  strRegistroJ053 := '';
-
-  if Assigned(RegJ050.RegistroJ053) then
-  begin
-     for intFor := 0 to RegJ050.RegistroJ053.Count - 1 do
-     begin
-        with RegJ050.RegistroJ053.Items[intFor] do
-        begin
-           ///
-           strRegistroJ053 :=  strRegistroJ053 + LFill('J053') +
-                                                 LFill(COD_IDT) +
-                                                 LFill(COD_CNT_CORR) +
-                                                 LFill(NAT_SUB_CNT) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
-     end;
-     FRegistroJ053Count := FRegistroJ053Count + RegJ050.RegistroJ053.Count;
+  if Assigned(RegistroJ100) then begin
+    for intFor := 0 to RegistroJ100.Count - 1 do begin
+      with RegistroJ100.Items[intFor] do begin
+        Add(LFill('J100') +
+           LFill(DT_ALT) +
+           LFill(COD_CCUS) +
+           LFill(CCUS));
+      end;
+      FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
+    end;
   end;
-  Result := strRegistroJ053;
-end;
-function TBloco_J.WriteRegistroJ100: String;
-var
-intFor: integer;
-strRegistroJ100: String;
-begin
-  strRegistroJ100 := '';
-
-  if Assigned(RegistroJ100) then
-  begin
-     for intFor := 0 to RegistroJ100.Count - 1 do
-     begin
-        with RegistroJ100.Items[intFor] do
-        begin
-           ///
-           strRegistroJ100 :=  strRegistroJ100 + LFill('J100') +
-                                                 LFill(DT_ALT) +
-                                                 LFill(COD_CCUS) +
-                                                 LFill(CCUS) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
-     end;
-  end;
-  Result := strRegistroJ100;
 end;
 
 
-function TBloco_J.WriteRegistroJ990: String;
+procedure TBloco_J.WriteRegistroJ990;
 begin
-  Result := '';
-
-  if Assigned(FRegistroJ990) then
-  begin
-     with FRegistroJ990 do
-     begin
-       QTD_LIN := QTD_LIN + 1;
-       ///
-       Result := LFill('J990') +
-                 LFill(QTD_LIN, 0) +
-                 Delimitador +
-                 #13#10;
-     end;
+  if Assigned(FRegistroJ990) then begin
+    with FRegistroJ990 do begin
+      QTD_LIN := QTD_LIN + 1;
+      Add(LFill('J990') +
+          LFill(QTD_LIN, 0));
+    end;
   end;
 end;
 

@@ -90,7 +90,7 @@ type
                    Nulo: Boolean = false;
                    Caracter: Char = '0';
                    Mascara: String = ''): String; overload;
-    function LFill(Value: Integer; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String; overload;
+    function LFill(Value: Int64; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String; overload;
     function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
     function RFill(Value: String;
                    Size: Integer = 0;
@@ -129,7 +129,7 @@ begin
    FLinhasBuffer := 0 ; // 0 = Sem tratamento de buffer
 end;
 
-destructor TACBrTXTClass.destroy;
+destructor TACBrTXTClass.Destroy;
 begin
   FConteudo.Free;
 
@@ -266,9 +266,8 @@ function TACBrTXTClass.LFill(Value: Extended;
                         Caracter: Char = '0';
                         Mascara: String = ''): String;
 var
-intFor, intP: Integer;
 strCurMascara: string;
-AInt: Int64;
+AStr: String;
 begin
   strCurMascara := FCurMascara;
   // Se recebeu uma mascara como parametro substitue a principal
@@ -281,18 +280,19 @@ begin
      Result := FDelimitador;
      Exit;
   end;
-  intP := 1;
-  for intFor := 1 to Decimal do
-  begin
-     intP := intP * 10;
-  end;
 
   if (strCurMascara <> '#') and (strCurMascara <> '') then
      Result := FDelimitador + FormatCurr(strCurMascara, Value)
   else
   begin
-     AInt := TruncFix(Value * intP);
-     Result := LFill(AInt, Size, Nulo, Caracter);
+     AStr := FormatFloat(FloatMask(Decimal), Value);
+     if Decimal > 0 then
+       Delete( AStr, Length(AStr)-Decimal, 1) ;
+
+     if Nulo then
+       Result := LFill(StrToInt64(AStr), Size, Nulo, Caracter)
+     else
+       Result := LFill(AStr, Size, Nulo, Caracter);
   end;
 end;
 
@@ -321,7 +321,8 @@ begin
   Result := FDelimitador + FormatFloat('#0.' + StringOfChar('0', Decimal), Value); //FormatCurr não permite precisão acima de 4 casas decimais
 end;
 
-function TACBrTXTClass.LFill(Value: Integer; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String;
+function TACBrTXTClass.LFill(Value: Int64; Size: Integer; Nulo: Boolean;
+  Caracter: Char): String;
 begin
   /// Se o parametro Nulo = true e Value = 0, será retornado '|'
   if (Nulo) and (Value = 0) then
@@ -366,34 +367,22 @@ function TACBrTXTClass.VLFill(Value: Variant;
                              Caracter: Char;
                              Mascara: String): String;
 var
-intFor, intP: Integer;
-strCurMascara: string;
+AExt: Extended;
 begin
-  strCurMascara := FCurMascara;
-  // Se recebeu uma mascara como parametro substitue a principal
-  if Mascara <> '' then
-     strCurMascara := Mascara;
-
   // Se o parametro Value = Null ou não foi preenchido será retornado '|'
   if VarIsNull(Value) or VarIsEmpty(Value) then
   begin
      Result := FDelimitador;
      Exit;
   end;
+
   // Checa se é um valor numérico
   if not VarIsNumeric(Value) then
      raise EACBrTXTClassErro.Create( ACBrStr('Parâmetro "Value" não possui um valor numérico.'));
 
-  intP := 1;
-  for intFor := 1 to Decimal do
-  begin
-     intP := intP * 10;
-  end;
+  AExt := Value;
 
-  if (strCurMascara <> '#') and (strCurMascara <> '') then
-     Result := FDelimitador + FormatCurr(strCurMascara, Value)
-  else
-     Result := LFill(Trunc(Value * intP), Size, False, Caracter);
+  Result := LFill(AExt, Size, Decimal, False, Caracter, Mascara);
 end;
 
 end.

@@ -95,7 +95,31 @@ begin
       Cmd.Resposta := MontaDadosStatusSAT
 
     else if (Cmd.Metodo = 'consultarsessao') or (Cmd.Metodo = 'consultarnumerosessao')  then
-      Cmd.Resposta := ACBrSAT1.ConsultarNumeroSessao(StrToInt(cmd.Params(0)))
+       begin
+          ACBrSAT1.CFe.Clear;
+          ACBrSAT1.CFeCanc.Clear;
+
+          Cmd.Resposta := ACBrSAT1.ConsultarNumeroSessao(StrToInt(cmd.Params(0)));
+
+          if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+          begin
+             ArqCFe:=ACBrSAT1.CFe.NomeArquivo;
+             Cmd.Resposta := '[CFE]'+sLineBreak+
+                             'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
+                             IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
+                             'XML='+ACBrSAT1.CFe.AsXMLString;
+          end;
+
+          if ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
+          begin
+             ArqCFe:=ACBrSAT1.CFeCanc.NomeArquivo;
+             Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
+                             'nCFeCanc='+IntToStr(ACBrSAT1.CFeCanc.ide.nCFe)+sLineBreak+
+                             IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
+                             'XML='+ACBrSAT1.CFeCanc.AsXMLString;
+          end;
+        end
+
 
     else if Cmd.Metodo = 'atualizasoftware' then
       Cmd.Resposta := ACBrSAT1.AtualizarSoftwareSAT

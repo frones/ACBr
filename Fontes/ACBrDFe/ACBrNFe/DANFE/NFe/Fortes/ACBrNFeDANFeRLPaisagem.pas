@@ -49,7 +49,7 @@ uses
   RLReport, RLFilters, RLPDFFilter, RLPrinters,
     {$IFDEF BORLAND}
   XMLIntf, XMLDoc,
-    {$IF CompilerVersion >= 22}
+    {$IF CompilerVersion > 22}
       Vcl.Imaging.jpeg,
     {$ELSE}
       jpeg,

@@ -153,7 +153,7 @@ type
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
 const
-  TpcnTpEventoString : array[0..26] of String =('110110', '110111', '210200',
+  TpcnTpEventoString : array[0..27] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
                                                 '110112', '110113', '110114',
                                                 '110160', '310620', '510620',

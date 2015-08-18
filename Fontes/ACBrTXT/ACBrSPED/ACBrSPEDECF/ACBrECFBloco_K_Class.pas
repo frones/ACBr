@@ -35,6 +35,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 18/08/2015 - Ariel Guareschi - Alterado a geração do arquivo.
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -64,20 +65,20 @@ type
     FRegistroK355Count: Integer;
     FRegistroK356Count: Integer;
 
-    function WriteRegistroK155(RegK030: TRegistroK030): String;
-    function WriteRegistroK156(RegK155: TRegistroK155): String;
+    procedure WriteRegistroK155(RegK030: TRegistroK030);
+    procedure WriteRegistroK156(RegK155: TRegistroK155);
 
-    function WriteRegistroK355(RegK030: TRegistroK030): String;
-    function WriteRegistroK356(RegK355: TRegistroK355): String;
+    procedure WriteRegistroK355(RegK030: TRegistroK030);
+    procedure WriteRegistroK356(RegK355: TRegistroK355);
 
     procedure CriaRegistros;overload;
     procedure LiberaRegistros;overload;
   public
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
 
-    function WriteRegistroK001: String;
-    function WriteRegistroK030: String;
-    function WriteRegistrok990: String;
+    procedure WriteRegistroK001;
+    procedure WriteRegistroK030;
+    procedure WriteRegistrok990;
 
     constructor Create;
     destructor Destroy;
@@ -141,7 +142,6 @@ end;
 procedure TBloco_K.LiberaRegistros;
 begin
    inherited;
-
    FRegistroK001.Free;
    FRegistroK030.Free;
    FRegistroK990.Free;
@@ -152,219 +152,134 @@ begin
   /// Limpa os Registros
   LiberaRegistros;
   Conteudo.Clear;
-
   /// Recriar os Registros Limpos
   CriaRegistros;
 end;
 
-function TBloco_K.WriteRegistroK001: String;
+procedure TBloco_K.WriteRegistroK001;
 begin
-  Result := '';
-
-  if Assigned(FRegistroK001) then
-  begin
-     with FRegistroK001 do
-     begin
+  if Assigned(FRegistroK001) then begin
+    with FRegistroK001 do begin
        Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(K-K001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
-       ///
-       Result := LFill('K001') +
-                 LFill( Integer(IND_DAD), 1) +
-                 Delimitador +
-                 #13#10;
-       ///
+       Add(LFill('K001') +
+           LFill( Integer(IND_DAD), 1));
        FRegistroK990.QTD_LIN:= FRegistroK990.QTD_LIN + 1;
-     end;
+       WriteRegistroK030;
+    end;
   end;
-
 end;
 
-function TBloco_K.WriteRegistroK030: String;
+procedure TBloco_K.WriteRegistroK030;
 var
 intFor: integer;
-strRegistroK030: String;
 begin
-  strRegistroK030 := '';
+  if Assigned(FRegistroK030) then begin
+    for intFor := 0 to FRegistroK030.Count - 1 do begin
+      with FRegistroK030.Items[intFor] do begin
+        Add(LFill('K030') +
+            LFill(DT_INI) +
+            LFill(DT_FIN) +
+            LFill(PER_APUR));
+      end;
+      // Registros Filhos
+      WriteRegistroK155(FRegistroK030.Items[intFor]);
+      WriteRegistroK355(FRegistroK030.Items[intFor]);
 
-  if Assigned(FRegistroK030) then
-  begin
-     for intFor := 0 to FRegistroK030.Count - 1 do
-     begin
-        with FRegistroK030.Items[intFor] do
-        begin
-           ///
-           strRegistroK030 :=  strRegistroK030 + LFill('K030') +
-                                                 LFill(DT_INI) +
-                                                 LFill(DT_FIN) +
-                                                 LFill(PER_APUR) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-        // Registros Filhos
-        strRegistroK030 := strRegistroK030 +
-                           WriteRegistroK155(FRegistroK030.Items[intFor]) +
-                           WriteRegistroK355(FRegistroK030.Items[intFor]);
-
-       FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
-     end;
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
   end;
-
-  Result := strRegistroK030;
 end;
 
-function TBloco_K.WriteRegistroK155(RegK030: TRegistroK030): String;
+procedure TBloco_K.WriteRegistroK155(RegK030: TRegistroK030);
 var
 intFor: integer;
-strRegistroK155: String;
 begin
-  strRegistroK155 := '';
-
-  if Assigned(RegK030.RegistroK155) then
-  begin
-     for intFor := 0 to RegK030.RegistroK155.Count - 1 do
-     begin
-        with RegK030.RegistroK155.Items[intFor] do
-        begin
-           ///
-           strRegistroK155 :=  strRegistroK155 + LFill('K155') +
-                                                 LFill(COD_CTA) +
-                                                 LFill(COD_CCUS) +
-                                                 LFill(VL_SLD_INI, 19, 2) +
-                                                 LFill(IND_VL_SLD_INI,0) +
-                                                 LFill(VL_DEB, 19, 2) +
-                                                 LFill(VL_CRED, 19, 2) +
-                                                 LFill(VL_SLD_FIN, 19, 2) +
-                                                 LFill(IND_VL_SLD_FIN,0) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-
-        // Registros Filhos
-        strRegistroK155 := strRegistroK155 +
-                           WriteRegistroK156(RegK030.RegistroK155.Items[intFor]);
-
-        FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
-     end;
-
-     FRegistroK155Count := FRegistroK155Count + RegK030.RegistroK155.Count;
+  if Assigned(RegK030.RegistroK155) then begin
+    for intFor := 0 to RegK030.RegistroK155.Count - 1 do begin
+      with RegK030.RegistroK155.Items[intFor] do begin
+        Add(LFill('K155') +
+            LFill(COD_CTA) +
+            LFill(COD_CCUS) +
+            LFill(VL_SLD_INI, 19, 2) +
+            LFill(IND_VL_SLD_INI,0) +
+            LFill(VL_DEB, 19, 2) +
+            LFill(VL_CRED, 19, 2) +
+            LFill(VL_SLD_FIN, 19, 2) +
+            LFill(IND_VL_SLD_FIN,0));
+      end;
+      // Registros Filhos
+      WriteRegistroK156(RegK030.RegistroK155.Items[intFor]);
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
+    FRegistroK155Count := FRegistroK155Count + RegK030.RegistroK155.Count;
   end;
-
-  Result := strRegistroK155;
 end;
 
-function TBloco_K.WriteRegistroK156(RegK155: TRegistroK155): String;
+procedure TBloco_K.WriteRegistroK156(RegK155: TRegistroK155);
 var
 intFor: integer;
-strRegistroK156: String;
 begin
-  strRegistroK156 := '';
-
-  if Assigned(RegK155.RegistroK156) then
-  begin
-     for intFor := 0 to RegK155.RegistroK156.Count - 1 do
-     begin
-        with RegK155.RegistroK156.Items[intFor] do
-        begin
-           ///
-           strRegistroK156 :=  strRegistroK156 + LFill('K156') +
-                                                 LFill(COD_CTA_REF) +
-                                                 LFill(VL_SLD_FIN, 19, 2) +
-                                                 LFill(IND_VL_SLD_FIN,0) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-
-        FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
-     end;
-
-     FRegistroK156Count := FRegistroK156Count + RegK155.RegistroK156.Count;
+  if Assigned(RegK155.RegistroK156) then begin
+    for intFor := 0 to RegK155.RegistroK156.Count - 1 do begin
+      with RegK155.RegistroK156.Items[intFor] do begin
+        Add(LFill('K156') +
+            LFill(COD_CTA_REF) +
+            LFill(VL_SLD_FIN, 19, 2) +
+            LFill(IND_VL_SLD_FIN,0));
+      end;
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
+    FRegistroK156Count := FRegistroK156Count + RegK155.RegistroK156.Count;
   end;
-
-  Result := strRegistroK156;
 end;
 
-function TBloco_K.WriteRegistroK355(RegK030: TRegistroK030): String;
+procedure TBloco_K.WriteRegistroK355(RegK030: TRegistroK030);
 var
-intFor: integer;
-strRegistrok355: String;
+  intFor: integer;
 begin
-  strRegistrok355 := '';
-
-  if Assigned(RegK030.Registrok355) then
-  begin
-     for intFor := 0 to RegK030.Registrok355.Count - 1 do
-     begin
-        with RegK030.Registrok355.Items[intFor] do
-        begin
-           ///
-           strRegistrok355 :=  strRegistrok355 + LFill('k355') +
-                                                 LFill(COD_CTA) +
-                                                 LFill(COD_CCUS) +
-                                                 LFill(VL_SLD_FIN, 19, 2) +
-                                                 LFill(IND_VL_SLD_FIN,0) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-
-        // Registros Filhos
-        strRegistrok355 := strRegistrok355 +
-                           WriteRegistroK356(RegK030.Registrok355.Items[intFor]);
-
-        FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
-     end;
-
-     FRegistrok355Count := FRegistrok355Count + RegK030.Registrok355.Count;
+  if Assigned(RegK030.Registrok355) then begin
+    for intFor := 0 to RegK030.Registrok355.Count - 1 do begin
+      with RegK030.Registrok355.Items[intFor] do begin
+        Add(LFill('k355') +
+            LFill(COD_CTA) +
+            LFill(COD_CCUS) +
+            LFill(VL_SLD_FIN, 19, 2) +
+            LFill(IND_VL_SLD_FIN,0));
+      end;
+      // Registros Filhos
+      WriteRegistroK356(RegK030.Registrok355.Items[intFor]);
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
+    FRegistrok355Count := FRegistrok355Count + RegK030.Registrok355.Count;
   end;
-
-  Result := strRegistrok355;
 end;
 
-function TBloco_K.WriteRegistroK356(RegK355: TRegistroK355): String;
+procedure TBloco_K.WriteRegistroK356(RegK355: TRegistroK355);
 var
-intFor: integer;
-strRegistroK356: String;
+  intFor: integer;
 begin
-  strRegistroK356 := '';
-
-  if Assigned(RegK355.RegistroK356) then
-  begin
-     for intFor := 0 to RegK355.RegistroK356.Count - 1 do
-     begin
-        with RegK355.RegistroK356.Items[intFor] do
-        begin
-           ///
-           strRegistroK356 :=  strRegistroK356 + LFill('K356') +
-                                                 LFill(COD_CTA_REF) +
-                                                 LFill(VL_SLD_FIN, 19, 2) +
-                                                 LFill(IND_VL_SLD_FIN,0) +
-                                                 Delimitador +
-                                                 #13#10;
-        end;
-
-        FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
-     end;
-
-     FRegistroK356Count := FRegistroK356Count + RegK355.RegistroK356.Count;
+  if Assigned(RegK355.RegistroK356) then begin
+    for intFor := 0 to RegK355.RegistroK356.Count - 1 do begin
+      with RegK355.RegistroK356.Items[intFor] do begin
+        Add(LFill('K356') +
+            LFill(COD_CTA_REF) +
+            LFill(VL_SLD_FIN, 19, 2) +
+            LFill(IND_VL_SLD_FIN,0));
+      end;
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
+    FRegistroK356Count := FRegistroK356Count + RegK355.RegistroK356.Count;
   end;
-
-  Result := strRegistroK356;
-
 end;
 
-function TBloco_K.WriteRegistrok990: String;
+procedure TBloco_K.WriteRegistrok990;
 begin
-  Result := '';
-
-  if Assigned(FRegistroK990) then
-  begin
-     with FRegistroK990 do
-     begin
-       QTD_LIN := QTD_LIN + 1;
-       ///
-       Result := LFill('K990') +
-                 LFill(QTD_LIN, 0) +
-                 Delimitador +
-                 #13#10;
-     end;
+  if Assigned(FRegistroK990) then begin
+    with FRegistroK990 do begin
+      QTD_LIN := QTD_LIN + 1;
+      Add(LFill('K990') +
+          LFill(QTD_LIN, 0));
+    end;
   end;
 end;
 

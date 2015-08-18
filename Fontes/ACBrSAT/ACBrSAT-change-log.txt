@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/08/2015
+-- ACBrSAT --
+[*] Refatoração para ler Retorno de cupom Cancelado em ConsultarNumeroSessao, e
+    atribui-lo a ACBrSAT.CFeCanc
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23737
+
 Data: 13/08/2015
 -- ACBrSATExtratoESCPOS --     (por: DSA)
 [-] Correção para respeitar PosPrinter.CortaPapel desabilitado

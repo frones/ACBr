@@ -95,6 +95,7 @@ type
      procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
      procedure DecodificaRetorno6000;
+     procedure DecodificaRetorno7000;
      property SAT : TACBrSATClass read fsSATClass ;
 
      constructor Create( AOwner : TComponent ) ; override;
@@ -920,17 +921,7 @@ begin
   IniciaComando;
   Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
 
-  if fsResposta.codigoDeRetorno = 7000 then
-  begin
-     XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
-     CFeCanc.AsXMLString := XMLRecebido;
-
-     if fsConfigArquivos.SalvarCFeCanc then
-     begin
-       NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaCFeCancelamento);
-       CFeCanc.SaveToFile(NomeCFe);
-     end;
-  end;
+  DecodificaRetorno7000;
 end ;
 
 function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString
@@ -961,6 +952,7 @@ begin
   IniciaComando;
   Result := FinalizaComando( fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao ) );
   DecodificaRetorno6000;
+  DecodificaRetorno7000;
 end ;
 
 function TACBrSAT.ConsultarSAT : String ;
@@ -1305,6 +1297,24 @@ begin
     CFe.SaveToFile(NomeCFe);
   end;
 end;
+
+procedure TACBrSAT.DecodificaRetorno7000;
+var
+  XMLRecebido: String;
+  NomeCFe: String;
+begin
+  if fsResposta.codigoDeRetorno <> 7000 then exit;
+
+  XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
+  CFeCanc.AsXMLString := XMLRecebido;
+
+  if fsConfigArquivos.SalvarCFeCanc then
+  begin
+    NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaCFeCancelamento);
+    CFeCanc.SaveToFile(NomeCFe);
+  end;
+end;
+
 
 procedure TACBrSAT.CFe2CFeCanc;
 begin

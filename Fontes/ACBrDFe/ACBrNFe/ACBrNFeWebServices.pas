@@ -680,7 +680,7 @@ end;
 function TNFeWebService.ExtrairModeloChaveAcesso(AChaveNFE: String): String;
 begin
   AChaveNFE := OnlyNumber(AChaveNFE);
-  if ValidarChave('NFe' + AChaveNFe) then
+  if ValidarChave(AChaveNFe) then
     Result := copy(AChaveNFE, 21, 2)
   else
     Result := '';

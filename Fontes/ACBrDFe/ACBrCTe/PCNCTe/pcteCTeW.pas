@@ -355,7 +355,7 @@ begin
   Gerador.wCampo(tcStr, '#020', 'verProc', 01, 20, 1, CTe.Ide.verProc, DSC_VERPROC);
   Gerador.wCampo(tcStr, '#021', 'refCTE ', 44, 44, 0, OnlyNumber(CTe.Ide.refCTE), DSC_REFCTE);
   if OnlyNumber(CTe.Ide.refCTe) <> '' then
-    if not ValidarChave('NFe' + OnlyNumber(CTe.Ide.refCTe)) then
+    if not ValidarChave(CTe.Ide.refCTe) then
       Gerador.wAlerta('#021', 'refCTE', DSC_REFCTE, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcInt, '#022', 'cMunEnv ', 07, 07, 1, CTe.ide.cMunEnv, DSC_CMUNEMI);
   if not ValidarMunicipio(CTe.ide.cMunEnv) then
@@ -1257,7 +1257,7 @@ begin
     Gerador.wGrupo('infNFe', '#297');
     Gerador.wCampo(tcEsp, '#298', 'chave', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infDoc.InfNFe[i].chave), DSC_REFNFE);
     if OnlyNumber(CTe.infCTeNorm.infDoc.InfNFe[i].chave) <> '' then
-     if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.infDoc.InfNFe[i].chave)) then
+     if not ValidarChave(CTe.infCTeNorm.infDoc.InfNFe[i].chave) then
       Gerador.wAlerta('#298', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, '#299', 'PIN   ', 02, 09, 0, CTe.infCTeNorm.infDoc.InfNFe[i].PIN, DSC_ISUF);
     if (FOpcoes.ValidarInscricoes) and (trim(CTe.infCTeNorm.infDoc.InfNFe[i].PIN) <> '') then
@@ -1439,7 +1439,7 @@ begin
         Gerador.wGrupo('idDocAntEle', '#358');
         Gerador.wCampo(tcStr, '#359', 'chave ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave), DSC_CHCTE);
         if OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) <> '' then
-         if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave)) then
+         if not ValidarChave(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) then
           Gerador.wAlerta('#359', 'chave', DSC_REFCTE, ERR_MSG_INVALIDO);
         Gerador.wGrupo('/idDocAntEle');
       end;
@@ -1725,7 +1725,7 @@ begin
         Gerador.wGrupo('infNFe', '#25');
         Gerador.wCampo(tcStr, '#26', 'chave  ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave), DSC_REFNFE);
         if OnlyNumber(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave) <> '' then
-        if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave)) then
+        if not ValidarChave(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave) then
          Gerador.wAlerta('#26', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
         Gerador.wCampo(tcDe2, '#27', 'unidRat', 01, 05, 0, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].unidRat, DSC_QTDRAT);
        end;
@@ -1933,7 +1933,7 @@ begin
    Gerador.wGrupo('infCteSub', '#394');
    Gerador.wCampo(tcEsp, '#395', 'chCte ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.chCte), DSC_CHCTE);
    if OnlyNumber(CTe.infCTeNorm.infCTeSub.chCte) <> '' then
-    if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.infCTeSub.chCte)) then
+    if not ValidarChave(CTe.infCTeNorm.infCTeSub.chCTe) then
      Gerador.wAlerta('#395', 'chCte', DSC_REFNFE, ERR_MSG_INVALIDO);
 
    if (trim(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) = '')
@@ -1943,7 +1943,7 @@ begin
       then begin
        Gerador.wCampo(tcEsp, '#397', 'refNFe ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe), DSC_CHAVE);
        if OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe) <> '' then
-        if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe)) then
+        if not ValidarChave(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe) then
          Gerador.wAlerta('#397', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
       end
       else begin
@@ -1962,7 +1962,7 @@ begin
         else begin
          Gerador.wCampo(tcEsp, '#407', 'refCte   ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refCte), DSC_CHCTE);
          if OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refCte) <> '' then
-          if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaICMS.refCte)) then
+          if not ValidarChave(CTe.infCTeNorm.infCTeSub.tomaICMS.refCTe) then
            Gerador.wAlerta('#407', 'refCte', DSC_REFNFE, ERR_MSG_INVALIDO);
         end;
       end;
@@ -1972,7 +1972,7 @@ begin
      Gerador.wGrupo('tomaNaoICMS', '#408');
      Gerador.wCampo(tcEsp, '#409', 'refCteAnu ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu), DSC_CHCTE);
      if OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) <> '' then
-      if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu)) then
+      if not ValidarChave(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) then
        Gerador.wAlerta('#409', 'refCteAnu', DSC_REFNFE, ERR_MSG_INVALIDO);
      Gerador.wGrupo('/tomaNaoICMS');
     end;
@@ -1987,7 +1987,7 @@ begin
     Gerador.wGrupo('infCteComp', '#410');
     Gerador.wCampo(tcEsp, '#411', 'chave   ', 44, 44, 1, OnlyNumber(CTe.infCTeComp.Chave), DSC_CHCTE);
     if OnlyNumber(CTe.infCTeComp.Chave) <> '' then
-     if not ValidarChave('NFe' + OnlyNumber(CTe.infCTeComp.Chave)) then
+     if not ValidarChave(CTe.infCTeComp.Chave) then
       Gerador.wAlerta('#411', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
     Gerador.wGrupo('/infCteComp');
   end;
@@ -2000,7 +2000,7 @@ begin
     Gerador.wGrupo('infCteAnu', '#412');
     Gerador.wCampo(tcEsp, '#413', 'chCte ', 44, 44, 1, OnlyNumber(CTe.InfCTeAnu.chCTe), DSC_CHCTE);
     if OnlyNumber(CTe.InfCTeAnu.chCTe) <> '' then
-     if not ValidarChave('NFe' + OnlyNumber(CTe.InfCTeAnu.chCTe)) then
+     if not ValidarChave(CTe.InfCTeAnu.chCTe) then
       Gerador.wAlerta('#413', 'chCte', DSC_REFNFE, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcDat, '#414', 'dEmi  ', 10, 10, 1, CTe.InfCTeAnu.dEmi, DSC_DEMI);
     Gerador.wGrupo('/infCteAnu');

@@ -491,7 +491,7 @@ end;
 function TMDFeWebService.ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
 begin
   AChaveMDFe := OnlyNumber(AChaveMDFe);
-  if ValidarChave('MDFe' + AChaveMDFe) then
+  if ValidarChave(AChaveMDFe) then
     Result := copy(AChaveMDFe, 21, 2)
   else
     Result := '';

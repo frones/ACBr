@@ -172,7 +172,7 @@ begin
 
   Gerador.wCampo(tcStr, 'EP08', 'chCTe', 44, 44, 1, Evento.Items[0].InfEvento.chCTe, DSC_CHAVE);
 
-  if not ValidarChave('NFe' + OnlyNumber(Evento.Items[0].InfEvento.chCTe))
+  if not ValidarChave(Evento.Items[0].InfEvento.chCTe)
    then Gerador.wAlerta('EP08', 'chCTe', '', 'Chave de CTe inválida');
   {
   Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 27,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[0].InfEvento.dhEvento)

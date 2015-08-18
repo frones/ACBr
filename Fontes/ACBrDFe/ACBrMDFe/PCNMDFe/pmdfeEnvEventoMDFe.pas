@@ -162,7 +162,7 @@ begin
 
   Gerador.wCampo(tcStr, 'EP08', 'chMDFe', 44, 44, 1, Evento.Items[0].InfEvento.chMDFe, DSC_CHAVE);
 
-  if not ValidarChave('NFe' + OnlyNumber(Evento.Items[0].InfEvento.chMDFe))
+  if not ValidarChave(Evento.Items[0].InfEvento.chMDFe)
    then Gerador.wAlerta('EP08', 'chMDFe', '', 'Chave de MDFe inválida');
 
   // Segundo o manual a data deve conter o UTC mas no schema não contem

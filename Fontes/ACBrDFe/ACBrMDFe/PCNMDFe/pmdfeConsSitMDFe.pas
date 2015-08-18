@@ -92,7 +92,7 @@ begin
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
  Gerador.wCampo(tcStr, 'CP04', 'xServ ', 09, 09, 1, 'CONSULTAR', DSC_XSERV);
  Gerador.wCampo(tcEsp, 'CP05', 'chMDFe', 44, 44, 1, OnlyNumber(FchMDFe), DSC_CHCTe);
- if not ValidarChave('NFe' + OnlyNumber(FchMDFe))
+ if not ValidarChave(FchMDFe)
   then Gerador.wAlerta('CP05', 'chMDFe', '', 'Chave do MDFe inválida');
  Gerador.wGrupo('/consSitMDFe');
 

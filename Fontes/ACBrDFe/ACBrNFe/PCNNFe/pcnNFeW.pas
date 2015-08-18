@@ -438,7 +438,7 @@ end;
 procedure TNFeW.GerarIdeNFrerefNFe(const i: Integer);
 begin
   Gerador.wCampo(tcEsp, 'B13', 'refNFe', 44, 44, 1, OnlyNumber(nfe.ide.NFref[i].refNFe), DSC_REFNFE);
-  if not ValidarChave('NFe' + OnlyNumber(nfe.ide.NFref[i].refNFe)) then Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
+  if not ValidarChave(nfe.ide.NFref[i].refNFe) then Gerador.wAlerta('B13', 'refNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 end;
 
 procedure TNFeW.GerarIdeNFrefRefNF(const i: Integer);
@@ -474,7 +474,7 @@ end;
 procedure TNFeW.GerarIdeNFrerefCTe(const i: Integer);
 begin
   Gerador.wCampo(tcEsp, 'B20i', 'refCTe', 44, 44, 1, OnlyNumber(nfe.ide.NFref[i].refCTe), DSC_REFCTE);
-  if not ValidarChave('NFe'+ OnlyNumber(nfe.ide.NFref[i].refCTe)) then Gerador.wAlerta('B20i', 'refCTe',DSC_REFCTE, ERR_MSG_INVALIDO);
+  if not ValidarChave(nfe.ide.NFref[i].refCTe) then Gerador.wAlerta('B20i', 'refCTe',DSC_REFCTE, ERR_MSG_INVALIDO);
 end;
 
 
@@ -885,7 +885,7 @@ begin
       if not ValidaRE(nfe.Det[i].Prod.detExport[j].nRE) then
         Gerador.wAlerta('I53', 'nRE', DSC_NRE, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcEsp, 'I54', 'chNFe  ', 44, 44, 1, OnlyNumber(nfe.Det[i].Prod.detExport[j].chNFe), DSC_REFNFE);
-      if not ValidarChave('NFe' + OnlyNumber(nfe.Det[i].Prod.detExport[j].chNFe)) then
+      if not ValidarChave(nfe.Det[i].Prod.detExport[j].chNFe) then
         Gerador.wAlerta('I54', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcDe4, 'I55', 'qExport', 00, 15, 1, nfe.Det[i].Prod.detExport[j].qExport, DSC_QEXPORT);
       Gerador.wGrupo('/exportInd');

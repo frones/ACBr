@@ -106,7 +106,7 @@ begin
   Gerador.wCampo(tcStr, 'CP05', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, 'CP06', 'xServ', 008, 008, 1, 'CANCELAR', DSC_XSERV);
   Gerador.wCampo(tcEsp, 'CP07', 'chCTe', 044, 044, 1, OnlyNumber(FchCTe), DSC_CHCTe);
-  if not ValidarChave('CTe' + OnlyNumber(FchCTe)) then
+  if not ValidarChave(FchCTe) then
       Gerador.wAlerta('CP07', 'chCTe', '', 'Chave do CTe inválida');
   Gerador.wCampo(tcEsp, 'CP08', 'nProt', 015, 015, 1, OnlyNumber(FnProt), DSC_NPROT);
   Gerador.wCampo(tcStr, 'CP09', 'xJust', 015, 255, 1, FiltrarTextoXML(true, FxJust), DSC_XJUST);

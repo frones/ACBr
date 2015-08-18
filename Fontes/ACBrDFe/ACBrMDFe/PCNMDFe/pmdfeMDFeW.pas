@@ -616,7 +616,7 @@ begin
            Gerador.wGrupo('infCTe', '#048');
            Gerador.wCampo(tcEsp, '#049', 'chCTe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe), DSC_REFCTE);
            if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) <> '' then
-            if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe)) then
+            if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infCTe[j].chCTe) then
            Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
 
@@ -719,7 +719,7 @@ begin
            Gerador.wGrupo('infNFe', '#057');
            Gerador.wCampo(tcEsp, '#058', 'chNFe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe), DSC_REFNFE);
            if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe) <> '' then
-            if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe)) then
+            if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infNFe[j].chNFe) then
              Gerador.wAlerta('#058', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#059', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].SegCodBarra, DSC_SEGCODBARRA);
 
@@ -821,7 +821,7 @@ begin
          Gerador.wGrupo('infMDFeTransp', '#057');
          Gerador.wCampo(tcEsp, '#058', 'chMDFe      ', 44, 44, 1, OnlyNumber(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe), DSC_REFNFE);
          if OnlyNumber(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe) <> '' then
-          if not ValidarChave('NFe' + OnlyNumber(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe)) then
+          if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe) then
            Gerador.wAlerta('#058', 'chMDFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 
          for k := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp.Count - 1 do

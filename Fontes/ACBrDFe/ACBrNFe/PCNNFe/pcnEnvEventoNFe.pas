@@ -186,7 +186,7 @@ begin
     end;
     Gerador.wCampo(tcStr,    'HP12', 'chNFe', 044, 044,      1, Evento.Items[i].InfEvento.chNFe, DSC_CHAVE);
 
-    if not ValidarChave('NFe' + OnlyNumber(Evento.Items[i].InfEvento.chNFe)) then
+    if not ValidarChave(Evento.Items[i].InfEvento.chNFe) then
       Gerador.wAlerta('HP12', 'chNFe', '', 'Chave de NFe inválida');
 
     Gerador.wCampo(tcStr,    'HP13', 'dhEvento', 001, 050,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+

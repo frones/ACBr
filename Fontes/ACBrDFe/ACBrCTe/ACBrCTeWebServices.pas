@@ -576,7 +576,7 @@ end;
 function TCTeWebService.ExtrairModeloChaveAcesso(AChaveCTe: String): String;
 begin
   AChaveCTe := OnlyNumber(AChaveCTe);
-  if ValidarChave('CTe' + AChaveCTe) then
+  if ValidarChave(AChaveCTe) then
     Result := copy(AChaveCTe, 21, 2)
   else
     Result := '';

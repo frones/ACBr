@@ -58,7 +58,7 @@ type
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe,
-                     schdistDFeInt);
+                     schdistDFeInt, schconsMDFeNaoEnc);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
@@ -214,6 +214,8 @@ begin
     LayMDFeConsulta:       Result := schconsSitMDFe;
     LayMDFeStatusServico:  Result := schconsStatServ;
     LayMDFeEvento:         Result := schEventoMDFe;
+    LayMDFeConsNaoEnc:     Result := schconsMDFeNaoEnc;
+    LayMDFeDistDFeInt:     Result := schdistDFeInt;
   else
     Result := schErro;
   end;
@@ -257,7 +259,7 @@ begin
   Result := EnumeradoToStr(t,
     ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
      'MDFeStatusServico', 'RecepcaoEvento', 'MDFeConsNaoEnc',
-     'MDFeDistribuicaoDFe'],
+     'MDFeDistDFeInt'],
     [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
       LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
       LayMDFeDistDFeInt ] );
@@ -268,7 +270,7 @@ begin
   Result := StrToEnumerado(ok, s,
   ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
    'MDFeStatusServico', 'RecepcaoEvento', 'MDFeConsNaoEnc',
-   'MDFeDistribuicaoDFe'],
+   'MDFeDistDFeInt'],
   [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
     LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
     LayMDFeDistDFeInt ] );

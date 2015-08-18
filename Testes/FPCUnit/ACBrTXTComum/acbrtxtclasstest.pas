@@ -1,4 +1,4 @@
-Ôªøunit ACBrTXTClassTest;
+unit ACBrTXTClassTest;
 
 {$IFDEF FPC}
 {$mode objfpc}{$H+}
@@ -49,7 +49,7 @@ var
   vValue: Variant;
 begin
   vValue := Null;
-  CheckEquals('|', fACBrTXTClass.VDFill(vValue), 'N√£o tratou Variant Nula corretamente.');
+  CheckEquals('|', fACBrTXTClass.VDFill(vValue), 'N„o tratou Variant Nula corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.VLFill_VariantNula;
@@ -57,7 +57,7 @@ var
   vValue: Variant;
 begin
   vValue := Null;
-  CheckEquals('|', fACBrTXTClass.VLFill(vValue, 4), 'N√£o tratou Variant Nula corretamente.');
+  CheckEquals('|', fACBrTXTClass.VLFill(vValue, 4), 'N„o tratou Variant Nula corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.VDFill_VariantUndefined;
@@ -65,7 +65,7 @@ var
   vValue: Variant;
 begin
   //vValue := Undefined;
-  CheckEquals('|', fACBrTXTClass.VDFill(vValue), 'N√£o tratou Variant "n√£o definida" corretamente.');
+  CheckEquals('|', fACBrTXTClass.VDFill(vValue), 'N„o tratou Variant "n„o definida" corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.VLFill_VariantUndefined;
@@ -73,7 +73,7 @@ var
   vValue: Variant;
 begin
   //vValue := Undefined;
-  CheckEquals('|', fACBrTXTClass.VLFill(vValue, 4), 'N√£o tratou Variant "n√£o definida" corretamente.');
+  CheckEquals('|', fACBrTXTClass.VLFill(vValue, 4), 'N„o tratou Variant "n„o definida" corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.DFill_ExtendedZero_ResultadoVazio;
@@ -81,7 +81,7 @@ var
   vValue: Extended;
 begin
   vValue := 0.00;
-  CheckEquals('|', fACBrTXTClass.DFill(vValue, 4, True), 'N√£o tratou Double como Nulo corretamente.');
+  CheckEquals('|', fACBrTXTClass.DFill(vValue, 4, True), 'N„o tratou Double como Nulo corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.DFill_InteiroZero_ResultadoNaoVazio;
@@ -89,7 +89,7 @@ var
   vValue: Integer;
 begin
   vValue := 0;
-  CheckEquals('|0,0000', fACBrTXTClass.DFill(vValue, 4, False), 'Tratou o Inteiro como Nula!!');
+  CheckEquals('|'+FormatFloat('0.0000',0), fACBrTXTClass.DFill(vValue, 4, False), 'Tratou o Inteiro como Nula!!');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.DFill_InteiroZero_ResultadoVazio;
@@ -97,7 +97,7 @@ var
   vValue: Integer;
 begin
   vValue := 0;
-  CheckEquals('|', fACBrTXTClass.DFill(vValue, 4, True), 'N√£o tratou Inteiro como Nulo corretamente.');
+  CheckEquals('|', fACBrTXTClass.DFill(vValue, 4, True), 'N„o tratou Inteiro como Nulo corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.DFill_ExtendedZero_ResultadoNaoVazio;
@@ -105,23 +105,23 @@ var
   vValue: Extended;
 begin
   vValue := 0.00;
-  CheckEquals('|0,0000', fACBrTXTClass.DFill(vValue, 4, False), 'Tratou o Double como Nula!!');
+  CheckEquals('|'+FormatFloat('0.0000',0), fACBrTXTClass.DFill(vValue, 4, False), 'Tratou o Double como Nula!!');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.LFill_TDateTimeZero_ResultadoVazio;
 var
-  vValue: TDate;
+  vValue: {$IFDEF FPC}TDate{$ELSE}TDateTime{$ENDIF};
   vValue2: TDateTime;
 begin
   vValue  := 0;
   vValue2 := 0;
-  CheckEquals('|', fACBrTXTClass.LFill(vValue,  'ddmmyyyy', True), 'N√£o tratou Date como Nulo corretamente.');
-  CheckEquals('|', fACBrTXTClass.LFill(vValue2, 'ddmmyyyy', True), 'N√£o tratou DateTime como Nulo corretamente.');
+  CheckEquals('|', fACBrTXTClass.LFill(vValue,  'ddmmyyyy', True), 'N„o tratou Date como Nulo corretamente.');
+  CheckEquals('|', fACBrTXTClass.LFill(vValue2, 'ddmmyyyy', True), 'N„o tratou DateTime como Nulo corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.LFill_TDateTimeZero_ResultadoNaoVazio;
 var
-  vValue:  TDate;
+  vValue: {$IFDEF FPC}TDate{$ELSE}TDateTime{$ENDIF};
   vValue2: TDateTime;
 begin
   vValue  := 0;
@@ -135,7 +135,7 @@ var
   vValue: string;
 begin
   vValue  := '';
-  CheckEquals('|', fACBrTXTClass.LFill(vValue,  0, True), 'N√£o tratou string vazio como Nulo corretamente.');
+  CheckEquals('|', fACBrTXTClass.LFill(vValue,  0, True), 'N„o tratou string vazio como Nulo corretamente.');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.LFill_StringZero_ResultadoNaoVazio;
@@ -146,7 +146,7 @@ begin
   vValue  := '';
   vValue2 := ' ';
   CheckEquals('|', fACBrTXTClass.LFill(vValue,  0, False), 'Tratou string vazio como nulo!!!');
-  CheckEquals('| ', fACBrTXTClass.LFill(vValue2, 0, False), 'Tratou string com espa√ßos como nulo!!!');
+  CheckEquals('| ', fACBrTXTClass.LFill(vValue2, 0, False), 'Tratou string com espaÁos como nulo!!!');
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.SetUp;

@@ -19,8 +19,8 @@ uses
   TestFramework,
   GUITestRunner,
   TextTestRunner,
-  acbrtxtclasstest in '..\..\FPCUnit\ACBrComum\acbrtxtclasstest.pas',
-  acbrtxtclasstest2 in '..\..\FPCUnit\ACBrComum\acbrtxtclasstest2.pas';
+  acbrtxtclasstest in '..\..\FPCUnit\ACBrTXTComum\acbrtxtclasstest.pas',
+  acbrtxtclasstest2 in '..\..\FPCUnit\ACBrTXTComum\acbrtxtclasstest2.pas';
 
 {$R *.RES}
 

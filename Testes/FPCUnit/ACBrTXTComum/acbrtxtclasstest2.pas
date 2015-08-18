@@ -1,4 +1,4 @@
-﻿unit acbrtxtclasstest2;
+unit acbrtxtclasstest2;
 
 {$IFDEF FPC}
 {$mode objfpc}{$H+}
@@ -57,7 +57,26 @@ type
     procedure LFillExtendedDuasCasas_4Ponto20Extended_Retorno;
     procedure LFillExtendedDuasCasas_4Ponto20Double_Retorno;
     procedure LFillExtendedDuasCasas_4Ponto20Currency_Retorno;
+
   end;
+
+    { TTACBrTXTClass_MetodosFill_ValoresAltos }
+
+    TTACBrTXTClass_MetodosFill_ValoresAltos = class(TTestCase)
+    private
+      fACBrTXTClass: TACBrTXTClass;
+    protected
+      procedure SetUp; override;
+      procedure TearDown; override;
+    published
+      procedure LFillExtendedValorAltoSeisCasas_DozeCasas_2PontoDouble_Retorno;
+      procedure LFillExtendedValorAltoSeteCasas_DozeCasas_2PontoDouble_Retorno;
+      procedure LFillExtendedValorAltoOitoCasas_DozeCasas_2PontoDouble_Retorno;
+      procedure LFillExtendedValorAltoNoveCasas_DozeCasas_2PontoDouble_Retorno;
+      procedure LFillExtendedValorAltoDezCasas_DozeCasas_2PontoDouble_Retorno;
+      procedure LFillExtendedValorAltoOnzeCasas_TrezeCasas_2PontoDouble_Retorno;
+      procedure LFillExtendedValorAltoDozeCasas_QuatorzeCasas_2PontoDouble_Retorno;
+    end;
 
 implementation
 
@@ -213,7 +232,7 @@ var
 begin
   vValue  := 0.123456;
   CheckEquals('|0000123456', fACBrTXTClass.LFill(vValue, 10, 6, True), 'Erro no Double');
-  //vValue3 := 0.123456; //NÃ£o Ã© possÃ­vel pois Currency sÃ³ tem precisÃ£o de 4 casas decimais
+  //vValue3 := 0.123456; //Não é possível pois Currency só tem precisão de 4 casas decimais
   //CheckEquals('|0000123456', fACBrTXTClass.LFill(vValue3, 10, 6, True), 'Erro no Currency');
 end;
 
@@ -285,8 +304,81 @@ begin
   FreeAndNil(fACBrTXTClass);
 end;
 
+
+{ TTACBrTXTClass_MetodosFill_ValoresAltos }
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.SetUp;
+begin
+  fACBrTXTClass := TACBrTXTClass.Create;
+  fACBrTXTClass.Delimitador := '|';
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.TearDown;
+begin
+  FreeAndNil(fACBrTXTClass);
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoSeisCasas_DozeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 999999.99;
+  CheckEquals('|000099999999', fACBrTXTClass.LFill(vValue, 12, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoSeteCasas_DozeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 9999999.99;
+  CheckEquals('|000999999999', fACBrTXTClass.LFill(vValue, 12, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoOitoCasas_DozeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 99999999.99;
+  CheckEquals('|009999999999', fACBrTXTClass.LFill(vValue, 12, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoNoveCasas_DozeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 999999999.99;
+  CheckEquals('|099999999999', fACBrTXTClass.LFill(vValue, 12, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoDezCasas_DozeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 9999999999.99;
+  CheckEquals('|999999999999', fACBrTXTClass.LFill(vValue, 12, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoOnzeCasas_TrezeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 99999999999.99;
+  CheckEquals('|9999999999999', fACBrTXTClass.LFill(vValue, 13, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+procedure TTACBrTXTClass_MetodosFill_ValoresAltos.LFillExtendedValorAltoDozeCasas_QuatorzeCasas_2PontoDouble_Retorno;
+var
+  vValue: Double;
+begin
+  vValue := 999999999999.99;
+  CheckEquals('|99999999999999', fACBrTXTClass.LFill(vValue, 14, 2, True), 'Erro com: '+FormatFloat('0.00',vValue));
+end;
+
+
+
 initialization
 
   RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_Arredondamentos{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_ValoresAltos{$ifndef FPC}.Suite{$endif});
 end.
 

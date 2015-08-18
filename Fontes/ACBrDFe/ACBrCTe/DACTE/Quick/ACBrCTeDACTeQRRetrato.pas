@@ -1211,8 +1211,8 @@ begin
   qrlPageNumber.Caption := format('%2.2d', [QRCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   qrlEmissao.Caption    := FormatDateTime('dd/mm/yyyy hh:nn', FCTe.Ide.dhEmi);
 
-  SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
-  qrlChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  SetBarCodeImage(OnlyNumber(FCTe.InfCTe.Id), qriBarCode);
+  qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
   if not FExpandirLogoMarca then
    begin

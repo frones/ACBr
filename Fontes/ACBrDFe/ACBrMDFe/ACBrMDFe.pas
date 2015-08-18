@@ -553,8 +553,7 @@ begin
 
         if trim(EventoMDFe.Evento.Items[i].InfEvento.chMDFe) = '' then
           EventoMDFe.Evento.Items[i].InfEvento.chMDFe :=
-            copy(self.Manifestos.Items[i].MDFe.infMDFe.ID,
-            (length(self.Manifestos.Items[i].MDFe.infMDFe.ID) - 44) + 1, 44);
+            OnlyNumber(self.Manifestos.Items[i].MDFe.infMDFe.ID);
 
         if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
         begin

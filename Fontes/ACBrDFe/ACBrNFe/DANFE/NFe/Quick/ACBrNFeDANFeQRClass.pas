@@ -181,7 +181,7 @@ begin
    begin
      for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count-1 do
       begin
-        NomeArq := StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
+        NomeArq := OnlyNumber(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.Id);
         NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
         fqrDANFeQRRetrato.SavePDF(NomeArq, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
@@ -200,7 +200,7 @@ begin
    end
    else
    begin
-     NomeArq := StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]);
+     NomeArq := OnlyNumber(NFe.infNFe.Id);
      NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'-nfe.pdf';
 
      fqrDANFeQRRetrato.SavePDF(NomeArq, NFe, TACBrNFe(ACBrNFe), PosCanhoto, Logo, Email,
@@ -233,8 +233,7 @@ begin
           Impresso := False;
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
             begin
-//              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
-              if StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+              if OnlyNumber(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.Id) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frmNFeDAEventoQR.Imprimir(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                                             FLogo, FNumCopias, FSistema,
@@ -284,20 +283,15 @@ begin
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-//          NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
           NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-                     StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                     OnlyNumber(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id) +
                      '-procEventoNFe.pdf';
 
           Impresso := False;
 
           for j := 0 to (TACBrNFe(ACBrNFe).NotasFiscais.Count - 1) do
             begin
-//              if Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID, 4, 44) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
-              if StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
+              if OnlyNumber(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.Id) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
                                            FLogo, NomeArq, FSistema, FUsuario,
@@ -322,12 +316,8 @@ begin
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-//          NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 09, 44) +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 03, 06) +
-//                   Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
           NomeArq := TACBrNFe(ACBrNFe).DANFe.PathPDF +
-                     StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                     OnlyNumber(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id) +
                      '-procEventoNFe.pdf';
 
           frmNFeDAEventoQR.SavePDF(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
@@ -357,9 +347,10 @@ procedure TACBrNFeDANFEQR.ImprimirINUTILIZACAOPDF(NFe: TNFe);
 begin
   frmNFeDAInutQR := TfrmNFeDAInutQRRetrato.Create(Self);
 
-  NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  NomeArq := OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.Id);
   if NomeArq = '' then
-    NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.RetInutNFe.Id, 'ID', '', [rfIgnoreCase]);
+    NomeArq := OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.RetInutNFe.Id);
+
   NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
 
   frmNFeDAInutQR.SavePDF(TACBrNFe(ACBrNFe),

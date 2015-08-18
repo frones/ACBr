@@ -712,7 +712,7 @@ begin
          if trim(EventoCTe.Evento.Items[i].InfEvento.CNPJ) = '' then
            EventoCTe.Evento.Items[i].InfEvento.CNPJ := self.Conhecimentos.Items[i].CTe.Emit.CNPJ;
          if trim(EventoCTe.Evento.Items[i].InfEvento.chCTe) = '' then
-           EventoCTe.Evento.Items[i].InfEvento.chCTe := copy(self.Conhecimentos.Items[i].CTe.infCTe.ID, (length(self.Conhecimentos.Items[i].CTe.infCTe.ID)-44)+1, 44);
+           EventoCTe.Evento.Items[i].InfEvento.chCTe := OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.ID);
          if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
          begin
            if EventoCTe.Evento.Items[i].infEvento.tpEvento = teCancelamento then

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2015
+[*] Troca do StringReplace/Copy por OnlyNumber para obter somentes os digitos
+    da propriedade ID.
+    por: Italo Jurisato Junior
+
 17/08/2015
 [*] Correções no DANFE em Quick Report, estava ignorando os 3 primeiros digitos
     da chave.

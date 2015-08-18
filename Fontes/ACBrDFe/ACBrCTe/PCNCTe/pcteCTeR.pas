@@ -118,6 +118,7 @@ begin
     Aspas := '''';
 
   CTe.infCTe.Id := Leitor.rAtributo('Id=');
+
   if OnlyNumber(CTe.infCTe.Id) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
@@ -125,45 +126,6 @@ begin
   if CTe.infCTe.versao = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');
 
-  (*
-  I := 0;
-  I := RetornarPosEx('versao=', Leitor.Arquivo, I + 6);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: versao=');
-
-  I := RetornarPosEx(Aspas, Leitor.Arquivo, I + 2);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-
-  J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 1);
-  if J = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas final');
-
-  CTe.infCTe.versao := StringToFloat(copy(Leitor.Arquivo, I + 1, J - I -1));
-  //-- Fim inclusão por Thiago Pedro em 02/06/2014
-
-  if Pos('Id="', Leitor.Arquivo) <> 0 then
-    Aspas := '"'
-   else
-    Aspas := '''';
-
-  I := 0;
-  I := RetornarPosEx('Id=', Leitor.Arquivo, I + 6);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: Id=');
-
-  I := RetornarPosEx(Aspas, Leitor.Arquivo, I + 2);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-
-  J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 1);
-  if J = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas final');
-
-  // CTe.infCTe.ID := copy(Leitor.Arquivo, I + 4, J - I - 4);
-  CTe.infCTe.ID := copy(Leitor.Arquivo, I + 1, J - I -1);
-  *)
-  
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin

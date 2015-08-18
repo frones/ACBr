@@ -82,34 +82,19 @@ end;
 function TMDFeR.LerXml: Boolean;
 var
   ok: Boolean;
-  {i, j,} i01, i02, i03, i04, i05: Integer;
+  i01, i02, i03, i04, i05: Integer;
 begin
-  (*
-  I := 0;
-  I := RetornarPosEx('Id=', Leitor.Arquivo, I + 6);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: Id=');
-
-  I := RetornarPosEx('"', Leitor.Arquivo, I + 2);
-  if I = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas inicial');
-
-  J := RetornarPosEx('"', Leitor.Arquivo, I + 1);
-  if J = 0 then
-    raise Exception.Create('Não encontrei inicio do URI: aspas final');
-
-  // MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 4, J - I - 4);
-  MDFe.infMDFe.ID := copy(Leitor.Arquivo, I + 1, J - I -1);
-  *)
   Leitor.Grupo := Leitor.Arquivo;
 
-//  MDFe.infMDFe.ID := OnlyNumber(Leitor.rAtributo('Id='));
-//  if MDFe.infMDFe.ID = '' then
-//    raise Exception.Create('Não encontrei o atributo: Id');
-
   MDFe.infMDFe.ID := Leitor.rAtributo('Id=');
+
   if OnlyNumber(MDFe.infMDFe.ID) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
+
+  MDFe.infMDFe.versao := StringToFloatDef(Leitor.rAtributo('versao='), -1);
+
+  if MDFe.infMDFe.versao = -1 then
+    raise Exception.Create('Não encontrei o atributo: versao');
 
   (* Grupo da TAG <ide> *******************************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then

@@ -293,8 +293,8 @@ begin
     qrlSerie.Caption   := IntToStr(FNFe.ide.serie);
     qrlNumNFe.Caption  := FormatFloat( '000,000,000', FNFe.Ide.nNF );
     qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', FNFe.Ide.dEmi);
-    SetBarCodeImage(Copy(FNFe.InfNFe.Id, 4, 44), qriBarCode);
-    qrlChave.Caption := FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+    SetBarCodeImage(OnlyNumber(FNFe.InfNFe.Id), qriBarCode);
+    qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
    end;
 end;
 

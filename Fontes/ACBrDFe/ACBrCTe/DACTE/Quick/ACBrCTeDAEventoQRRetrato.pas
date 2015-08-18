@@ -334,8 +334,8 @@ begin
     qrlNumCTe.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
     qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', FCTe.Ide.dhEmi);
 
-    SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
-    qrlChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+    SetBarCodeImage(OnlyNumber(FCTe.InfCTe.Id), qriBarCode);
+    qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
    end;
 end;
 

@@ -706,8 +706,7 @@ begin
 
       if trim(EventoNFe.Evento.Items[i].InfEvento.chNfe) = '' then
         EventoNFe.Evento.Items[i].InfEvento.chNfe :=
-          copy(self.NotasFiscais.Items[i].NFe.infNFe.ID,
-          (length(self.NotasFiscais.Items[i].NFe.infNFe.ID) - 44) + 1, 44);
+          OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.Id);
 
       if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
       begin

@@ -129,8 +129,7 @@ begin
     begin
       for i:= 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count-1 do
       begin
-        NomeArq := StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]);
-//        NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '.pdf';
+        NomeArq := OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.Id);
         NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-mdfe.pdf';
 
         fqrDAMDFEQRRetrato.SavePDF(NomeArq, TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe,
@@ -142,8 +141,7 @@ begin
     end
     else
     begin
-      NomeArq := StringReplace(MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]);
-//      NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '.pdf';
+      NomeArq := OnlyNumber(MDFe.infMDFe.Id);
       NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-mdfe.pdf';
 
       fqrDAMDFEQRRetrato.SavePDF(NomeArq, MDFe, Logo, Email, ExpandirLogoMarca, Fax,
@@ -171,8 +169,7 @@ begin
         Impresso := False;
         for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
         begin
-//          if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
-          if StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+          if OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.Id) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
           begin
             frmMDFeDAEventoQR.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
                                        FLogo, FNumCopias, FSistema, FUsuario,
@@ -223,17 +220,14 @@ begin
     begin
       for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
       begin
-//            NomeArq := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-//                     Copy(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
         NomeArq := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-                   StringReplace(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                   OnlyNumber(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.Id) +
                    '-procEventoMDFe.pdf';
         Impresso := False;
 
         for j := 0 to (TACBrMDFe(ACBrMDFe).Manifestos.Count - 1) do
         begin
-//          if Copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 5, 44) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
-          if StringReplace(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase]) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
+          if OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.Id) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
           begin
             frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
                                       FLogo, NomeArq, FSistema, FUsuario,
@@ -258,10 +252,8 @@ begin
     begin
       for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
       begin
-//            NomeArq := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-//                     Copy(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
         NomeArq := TACBrMDFe(ACBrMDFe).DAMDFe.PathPDF +
-                   StringReplace(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                   OnlyNumber(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.Id) +
                    '-procEventoMDFe.pdf';
 
         frmMDFeDAEventoQR.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],

@@ -498,7 +498,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, ACBrCTe, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe;
+  StrUtils, DateUtils,
+  ACBrUtil, ACBrCTe, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe;
 
 {$R *.dfm}
 
@@ -1006,8 +1007,8 @@ begin
   qrlNumCte.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
   qrlPageNumber.Caption := format('%2.2d', [QRCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', FCTe.Ide.dhEmi);
-  SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
-  qrlChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  SetBarCodeImage(OnlyNumber(FCTe.InfCTe.Id), qriBarCode);
+  qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
   // Incluido por Italo em 17/05/2012
   if not FExpandirLogoMarca then

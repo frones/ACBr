@@ -1652,9 +1652,9 @@ begin
       qrlEntradaSaida.Caption := tpNFToStr( FNFe.Ide.tpNF );
       qrlNumNF1.Caption       := FormatFloat( '000,000,000', FNFe.Ide.nNF );
       qrlSERIE1.Caption       := IntToStr( FNFe.Ide.serie );
-      qrlChave.Caption        := FormatarChaveAcesso( StringReplace( FNFe.InfNFe.Id, 'NFe', '', [rfIgnoreCase]) );
+      qrlChave.Caption        := FormatarChaveAcesso( OnlyNumber( FNFe.InfNFe.Id ) );
       qrlNatOperacao.Caption  := FNFe.Ide.natOp;
-      SetBarCodeImage( StringReplace( FNFe.InfNFe.Id, 'NFe', '', [rfIgnoreCase]), qriBarCode );
+      SetBarCodeImage( OnlyNumber( FNFe.InfNFe.Id ), qriBarCode );
 
         // Normal **************************************************************
         if FNFe.Ide.tpEmis in [teNormal, teSCAN] then

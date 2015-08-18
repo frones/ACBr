@@ -912,8 +912,8 @@ begin
 
   qrlPageNumber_Compl.Caption := format('%2.2d', [2]) + '/' + format('%2.2d', [FTotalPages]); //QRCTe.PageNumber+1
   qrlEmissao_Compl.Caption := FormatDateTime('DD/MM/YYYY HH:NN', FCTe.Ide.dhEmi);
-  SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode_Compl);
-  qrlChave_Compl.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  SetBarCodeImage(OnlyNumber(FCTe.InfCTe.Id), qriBarCode_Compl);
+  qrlChave_Compl.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
   if FProtocoloCTE <> ''
    then qrlProtocolo_Compl.Caption := FProtocoloCTE
@@ -1397,9 +1397,9 @@ begin
   //1234567890123456789012345
   qrlPageNumber.Caption := format('%2.2d', [1]) + '/' + format('%2.2d', [FTotalPages]);
   qrlEmissao.Caption := FormatDateTime('DD/MM/YYYY HH:NN', FCTe.Ide.dhEmi);
-  SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), qriBarCode);
+  SetBarCodeImage(OnlyNumber(FCTe.InfCTe.Id), qriBarCode);
 //  SetBarCodeImage('318' + FormatFloat('0000000', FCTe.Ide.nCT), qriBarControle);
-  qrlChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
   // Incluido por Italo em 17/05/2012
   if not FExpandirLogoMarca then

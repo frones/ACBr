@@ -307,9 +307,9 @@ begin
     end;
    end;
 
-  SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), qriBarCode);
+  SetBarCodeImage(OnlyNumber(FMDFe.InfMDFe.Id), qriBarCode);
 
-  qrlChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FMDFe.InfMDFe.Id));
 
   if (FMDFe.ide.tpEmis = teNormal) or (FProtocoloMDFE <> '') or
      (FMDFe.procMDFe.nProt <> '')

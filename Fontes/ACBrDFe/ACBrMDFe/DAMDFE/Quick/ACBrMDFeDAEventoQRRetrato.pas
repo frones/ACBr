@@ -219,7 +219,7 @@ implementation
 
 uses
   StrUtils, DateUtils,
-  ACBrValidador, ACBrDFeUtil;
+  ACBrUtil, ACBrValidador, ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -292,9 +292,9 @@ begin
     qrlNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
     qrlEmissao.Caption := FormatDateTime('dd/mm/yyyy hh:nn', FMDFe.Ide.dhEmi);
 
-    SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), qriBarCode);
+    SetBarCodeImage(OnlyNumber(FMDFe.InfMDFe.Id), qriBarCode);
 
-    qrlChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+    qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FMDFe.InfMDFe.Id));
    end;
 end;
 

@@ -488,9 +488,9 @@ begin
 
   PrintBand := QRNFe.PageNumber = 1;
 
-  SetBarCodeImage( Copy ( FNFe.InfNFe.Id, 4, 44 ), qriBarCode );
+  SetBarCodeImage( OnlyNumber( FNFe.InfNFe.Id ), qriBarCode );
 
-  qrlChave.Caption := FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+  qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
 
   // Normal **************************************************************
   if FNFe.Ide.tpEmis in [teNormal, teSCAN]

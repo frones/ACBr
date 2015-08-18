@@ -826,7 +826,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
         Frame.DrawRight = False
         Size.Values = (
           39.687500000000000000
-          89.958333333333320000
+          89.958333333333340000
           2.645833333333333000
           100.541666666666700000)
         XLColumn = 0
@@ -1617,7 +1617,7 @@ inherited fqrDANFeQRNFCe: TfqrDANFeQRNFCe
           39.687500000000000000
           298.979166666666700000
           230.187500000000000000
-          89.958333333333320000)
+          89.958333333333340000)
         XLColumn = 0
         Alignment = taCenter
         AlignToBand = True

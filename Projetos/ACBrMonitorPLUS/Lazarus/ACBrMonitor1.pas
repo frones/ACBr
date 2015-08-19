@@ -1503,7 +1503,7 @@ begin
       if aStatus = pmsError then
         mResp.Lines.Add(ACBrMail1.GetLastSmtpError)
       else
-        mResp.Lines.Add('Email: E-mail de teste enviado.');
+        mResp.Lines.Add('Email: Enviado com sucesso');
     end;
   end;
 end;

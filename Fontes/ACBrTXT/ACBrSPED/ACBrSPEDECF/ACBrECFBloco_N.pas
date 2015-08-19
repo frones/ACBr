@@ -124,11 +124,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N500 - Lista
@@ -150,11 +150,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N600 - Lista
@@ -176,11 +176,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N610 - Lista
@@ -200,29 +200,29 @@ type
 
   TRegistroN615 = class
   private
-    fBASE_CALC:    Currency;
-    fPER_INCEN_FINAM: Currency;
-    fPER_INCEN_FINOR: Currency;
-    fPER_INCEN_FUNRES: Currency;
-    fPER_VL_SUBTOTAL: Currency;
-    fPER_VL_TOTAL: Currency;
-    fVL_LIQ_INCEN_FINAM: Currency;
-    fVL_LIQ_INCEN_FINOR: Currency;
-    fVL_LIQ_INCEN_FUNRES: Currency;
-    fVL_SUBTOTAL:  Currency;
-    fVL_TOTAL:     Currency;
+    fBASE_CALC:    variant;
+    fPER_INCEN_FINAM: variant;
+    fPER_INCEN_FINOR: variant;
+    fPER_INCEN_FUNRES: variant;
+    fPER_VL_SUBTOTAL: variant;
+    fPER_VL_TOTAL: variant;
+    fVL_LIQ_INCEN_FINAM: variant;
+    fVL_LIQ_INCEN_FINOR: variant;
+    fVL_LIQ_INCEN_FUNRES: variant;
+    fVL_SUBTOTAL:  variant;
+    fVL_TOTAL:     variant;
   public
-    property BASE_CALC: Currency read fBASE_CALC write fBASE_CALC;
-    property PER_INCEN_FINOR: Currency read fPER_INCEN_FINOR write fPER_INCEN_FINOR;
-    property VL_LIQ_INCEN_FINOR: Currency read fVL_LIQ_INCEN_FINOR write fVL_LIQ_INCEN_FINOR;
-    property PER_INCEN_FINAM: Currency read fPER_INCEN_FINAM write fPER_INCEN_FINAM;
-    property VL_LIQ_INCEN_FINAM: Currency read fVL_LIQ_INCEN_FINAM write fVL_LIQ_INCEN_FINAM;
-    property VL_SUBTOTAL: Currency read fVL_SUBTOTAL write fVL_SUBTOTAL;
-    property PER_VL_SUBTOTAL: Currency read fPER_VL_SUBTOTAL write fPER_VL_SUBTOTAL;
-    property PER_INCEN_FUNRES: Currency read fPER_INCEN_FUNRES write fPER_INCEN_FUNRES;
-    property VL_LIQ_INCEN_FUNRES: Currency read fVL_LIQ_INCEN_FUNRES write fVL_LIQ_INCEN_FUNRES;
-    property VL_TOTAL: Currency read fVL_TOTAL write fVL_TOTAL;
-    property PER_VL_TOTAL: Currency read fPER_VL_TOTAL write fPER_VL_TOTAL;
+    property BASE_CALC: variant read fBASE_CALC write fBASE_CALC;
+    property PER_INCEN_FINOR: variant read fPER_INCEN_FINOR write fPER_INCEN_FINOR;
+    property VL_LIQ_INCEN_FINOR: variant read fVL_LIQ_INCEN_FINOR write fVL_LIQ_INCEN_FINOR;
+    property PER_INCEN_FINAM: variant read fPER_INCEN_FINAM write fPER_INCEN_FINAM;
+    property VL_LIQ_INCEN_FINAM: variant read fVL_LIQ_INCEN_FINAM write fVL_LIQ_INCEN_FINAM;
+    property VL_SUBTOTAL: variant read fVL_SUBTOTAL write fVL_SUBTOTAL;
+    property PER_VL_SUBTOTAL: variant read fPER_VL_SUBTOTAL write fPER_VL_SUBTOTAL;
+    property PER_INCEN_FUNRES: variant read fPER_INCEN_FUNRES write fPER_INCEN_FUNRES;
+    property VL_LIQ_INCEN_FUNRES: variant read fVL_LIQ_INCEN_FUNRES write fVL_LIQ_INCEN_FUNRES;
+    property VL_TOTAL: variant read fVL_TOTAL write fVL_TOTAL;
+    property PER_VL_TOTAL: variant read fPER_VL_TOTAL write fPER_VL_TOTAL;
   end;
 
   /// Registro N615 - Lista
@@ -245,11 +245,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N620 - Lista
@@ -271,11 +271,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N630 - Lista
@@ -298,11 +298,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N650 - Lista
@@ -324,11 +324,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N660 - Lista
@@ -350,11 +350,11 @@ type
   private
     fCODIGO:    string;
     fDESCRICAO: string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   /// Registro N670 - Lista

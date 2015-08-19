@@ -58,48 +58,42 @@ type
 
   TRegistro0000 = class(TBlocos)
   private
-    fNOME_ESC: string;// Identificação do Tipo de Sped. Texto fixo contendo “LECF”.
-    fCOD_VER:  TACBrECFCodVer;
-//Código da Versão do Leiaute Código da versão do leiaute conforme ato da RFB.
-    fCNPJ:     string;// CNPJ Número de inscrição da pessoa jurídica no CNPJ.
-    fNOME:     string;// Nome empresarial Nome empresarial da jurídica ou da SCP.
-    fIND_SIT_INI_PER: string;
-    //Indicador do início do período Indicador do início do período:
-    //0 – Regular (início no primeiro dia do ano)
-    //1 – Abertura (início de atividades no ano calendário)
-    //2 – Resultante de cisão/fusão ou remanescente de cisão, ou realizou    incorporação
-    //3 – Resultante de Transformação
-    //4 – Início de obrigatoriedade da entrega no curso do ano calendário.
-    //(Ex. Exclusão do Simples Nacional ou desenquadramento como imune ou isenta do IRPJ)
-    fSIT_ESPECIAL: string;//Indicador de situação especial e  outros eventos
-    //Indicador de situação especial:
-    //0 – Normal (Sem ocorrência de situação especial ou evento)
-    //1 – Extinção
-    //2 – Fusão
-    //3 – Incorporação \ Incorporada
-    //4 – Incorporação \ Incorporadora
-    //5 – Cisão Total
-    //6 – Cisão Parcial
-    //7 – Transformação
-    //8 – Desenquadramento de Imune/Isenta;
-    //9 – Inclusão no Simples Naciona
-    fPAT_REMAN_CIS: Extended;// Patrimônio Remanescente Em Caso De Cisão (%)
-    // Patrimônio remanescente em caso de Cisão (%).
-    fDT_SIT_ESP: TDateTime;// Data da situação especial ou evento.
-    fDT_INI:   TDateTime;//Data inicial das informações contidas no arquivo.
-    fDT_FIN:   TDateTime; //Data Final Data final das informações contidas no arquivo.
-    fRETIFICADORA: string;// Escrituração retificadora? Escrituração retificadora?
-    ///“S” – ECF retificadora
-    //“N” – ECF original
-    fNUM_REC:  string;//Número do Recibo Anterior
-    //Número do Recibo da ECF a ser retificada. (hashcode).
-    fTIP_ECF:  string; //Tipo da ECF Indicador do tipo da ECF:
-    //0 – ECF de empresa não participante de SCP como sócio ostensivo
-    //1 – ECF de empresa participante de SCP como sócio ostensivo
-    //2 – ECF da SCP
-    fCOD_SCP:  string; //Identificação da SCP Identificação da SCP.
-    //Obs.: Só deve ser preenchido pela própria SCP (não é preenchido
-    //pelo sócio ostensivo).
+    fNOME_ESC: string;          // Identificação do Tipo de Sped. Texto fixo contendo “LECF”.
+    fCOD_VER:  TACBrECFCodVer;  // Código da Versão do Leiaute Código da versão do leiaute conforme ato da RFB.
+    fCNPJ:     string;          // CNPJ Número de inscrição da pessoa jurídica no CNPJ.
+    fNOME:     string;          // Nome empresarial Nome empresarial da jurídica ou da SCP.
+    fIND_SIT_INI_PER: string;   // Indicador do início do período Indicador do início do período:
+                                // 0 – Regular (início no primeiro dia do ano)
+                                // 1 – Abertura (início de atividades no ano calendário)
+                                // 2 – Resultante de cisão/fusão ou remanescente de cisão, ou realizou    incorporação
+                                // 3 – Resultante de Transformação
+                                // 4 – Início de obrigatoriedade da entrega no curso do ano calendário.
+                                // (Ex. Exclusão do Simples Nacional ou desenquadramento como imune ou isenta do IRPJ)
+    fSIT_ESPECIAL: string;      // Indicador de situação especial e  outros eventos
+                                // 0 – Normal (Sem ocorrência de situação especial ou evento)
+                                // 1 – Extinção
+                                // 2 – Fusão
+                                // 3 – Incorporação \ Incorporada
+                                // 4 – Incorporação \ Incorporadora
+                                // 5 – Cisão Total
+                                // 6 – Cisão Parcial
+                                // 7 – Transformação
+                                // 8 – Desenquadramento de Imune/Isenta;
+                                // 9 – Inclusão no Simples Naciona
+    fPAT_REMAN_CIS: Double;     // Patrimônio Remanescente Em Caso De Cisão (%)
+    fDT_SIT_ESP: TDateTime;     // Data da situação especial ou evento.
+    fDT_INI:   TDateTime;       // Data inicial das informações contidas no arquivo.
+    fDT_FIN:   TDateTime;       // Data Final Data final das informações contidas no arquivo.
+    fRETIFICADORA: string;      // Escrituração retificadora? Escrituração retificadora?
+                                // “S” – ECF retificadora
+                                // “N” – ECF original
+    fNUM_REC:  string;          // Número do Recibo Anterior
+    fTIP_ECF:  string;          // Tipo da ECF Indicador do tipo da ECF:
+                                // 0 – ECF de empresa não participante de SCP como sócio ostensivo
+                                // 1 – ECF de empresa participante de SCP como sócio ostensivo
+                                // 2 – ECF da SCP
+    fCOD_SCP:  string;          // Identificação da SCP Identificação da SCP.
+                                // Obs.: Só deve ser preenchido pela própria SCP (não é preenchido pelo sócio ostensivo).
   public
     constructor Create;
     property NOME_ESC: string read FNOME_ESC;
@@ -108,7 +102,7 @@ type
     property NOME: string read FNOME write FNOME;
     property IND_SIT_INI_PER: string read FIND_SIT_INI_PER write FIND_SIT_INI_PER;
     property SIT_ESPECIAL: string read FSIT_ESPECIAL write FSIT_ESPECIAL;
-    property PAT_REMAN_CIS: extended read FPAT_REMAN_CIS write FPAT_REMAN_CIS;
+    property PAT_REMAN_CIS: Double read FPAT_REMAN_CIS write FPAT_REMAN_CIS;
     property DT_SIT_ESP: TDateTime read FDT_SIT_ESP write FDT_SIT_ESP;
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;

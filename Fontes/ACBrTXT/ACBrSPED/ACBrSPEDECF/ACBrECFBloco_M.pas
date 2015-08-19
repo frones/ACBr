@@ -73,7 +73,7 @@ type
   private
     fCNPJ_SIT_ESP: string;
     fIND_Vl_SALDO_INI: string;
-    fVl_SALDO_INI: currency;
+    fVL_SALDO_INI: variant;
     fDESC_LAN_ORIG: string;
     fDESC_CTA_LAL: string;
     fDT_LIM_LAL:   TDateTime;
@@ -89,7 +89,7 @@ type
     property DESC_LAN_ORIG: string read fDESC_LAN_ORIG write fDESC_LAN_ORIG;
     property DT_LIM_LAL: TDateTime read fDT_LIM_LAL write fDT_LIM_LAL;
     property COD_TRIBUTO: integer read fCOD_TRIBUTO write fCOD_TRIBUTO;
-    property Vl_SALDO_INI: currency read fVl_SALDO_INI write fVl_SALDO_INI;
+    property VL_SALDO_INI: variant read fVl_SALDO_INI write fVl_SALDO_INI;
     property IND_Vl_SALDO_INI: string read fIND_Vl_SALDO_INI write fIND_Vl_SALDO_INI;
     property CNPJ_SIT_ESP: string read fCNPJ_SIT_ESP write fCNPJ_SIT_ESP;
   end;
@@ -158,7 +158,7 @@ type
     fCODIGO:    string;
     fTIPO_LANCAMENTO: string;
     fDESCRICAO: string;
-    fVALOR:     currency;
+    fVALOR:     variant;
 
     FRegistroM305: TRegistroM305List;
     FRegistroM310: TRegistroM310List;
@@ -171,7 +171,7 @@ type
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
     property TIPO_LANCAMENTO: string read fTIPO_LANCAMENTO write fTIPO_LANCAMENTO;
     property IND_RELACAO: integer read fIND_RELACAO write fIND_RELACAO;
-    property VALOR: currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
     property HIST_LAN_LAL: string read fHIST_LAN_LAL write fHIST_LAN_LAL;
 
     property RegistroM305: TRegistroM305List read FRegistroM305 write FRegistroM305;
@@ -191,12 +191,12 @@ type
   /// Registro M305 - Conta da Parte B do e-Lalur
   TRegistroM305 = class(TBlocos)
   private
-    fVL_CTA:     currency;
+    fVL_CTA:     variant;
     fIND_VL_CTA: string;
     fCOD_CTA_B:  string;
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
-    property VL_CTA: currency read fVL_CTA write fVL_CTA;
+    property VL_CTA: variant read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
   end;
 
@@ -216,7 +216,7 @@ type
   private
     fCOD_CTA:    string;
     fCOD_CCUS:   string;
-    fVL_CTA:     currency;
+    fVL_CTA:     variant;
     fIND_VL_CTA: string;
 
     FRegistroM312: TRegistroM312List;
@@ -226,7 +226,7 @@ type
 
     property COD_CTA: string read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: string read fCOD_CCUS write fCOD_CCUS;
-    property VL_CTA: currency read fVL_CTA write fVL_CTA;
+    property VL_CTA: variant read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
 
     property RegistroM312: TRegistroM312List read FRegistroM312 write FRegistroM312;
@@ -289,7 +289,7 @@ type
   TRegistroM350 = class(TBlocos)
   private
     fHIST_LAN_LAL: string;
-    fVALOR:     currency;
+    fVALOR:     variant;
     fCODIGO:    string;
     fDESCRICAO: string;
     fTIPO_LANCAMENTO: string;
@@ -306,7 +306,7 @@ type
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
     property TIPO_LANCAMENTO: string read fTIPO_LANCAMENTO write fTIPO_LANCAMENTO;
     property IND_RELACAO: integer read fIND_RELACAO write fIND_RELACAO;
-    property VALOR: currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
     property HIST_LAN_LAL: string read fHIST_LAN_LAL write fHIST_LAN_LAL;
 
     property RegistroM355: TRegistroM355List read FRegistroM355 write FRegistroM355;
@@ -329,12 +329,12 @@ type
 
   TRegistroM355 = class(TBlocos)
   private
-    fVL_CTA:     currency;
+    fVL_CTA:     variant;
     fIND_VL_CTA: string;
     fCOD_CTA_B:  string;
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
-    property VL_CTA: currency read fVL_CTA write fVL_CTA;
+    property VL_CTA: variant read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
   end;
 
@@ -360,7 +360,7 @@ type
     fCOD_CENTRO_CUSTOS: string;
     fCOD_CTA:    string;
     fIND_VL_CTA: string;
-    fVL_CTA:     currency;
+    fVL_CTA:     variant;
     fIND_VALOR_CONTA: string;
 
     FRegistroM362: TRegistroM362List;
@@ -370,7 +370,7 @@ type
 
     property COD_CTA: string read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: string read fCOD_CCUS write fCOD_CCUS;
-    property VL_CTA: currency read fVL_CTA write fVL_CTA;
+    property VL_CTA: variant read fVL_CTA write fVL_CTA;
     property IND_VL_CTA: string read fIND_VL_CTA write fIND_VL_CTA;
 
     property RegistroM362: TRegistroM362List read FRegistroM362 write FRegistroM362;
@@ -444,7 +444,7 @@ type
     fHIST_LAN_LALB: string;
     fIND_LAN_ANT:   string;
     fIND_VAL_LAN_LALB_PB: string;
-    fVAL_LAN_LALB_PB: currency;
+    fVAL_LAN_LALB_PB: variant;
 
     FRegistroM415: TRegistroM415List;
   public
@@ -453,7 +453,7 @@ type
 
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
     property COD_TRIBUTO: string read fCOD_TRIBUTO write fCOD_TRIBUTO;
-    property VAL_LAN_LALB_PB: currency read fVAL_LAN_LALB_PB write fVAL_LAN_LALB_PB;
+    property VAL_LAN_LALB_PB: variant read fVAL_LAN_LALB_PB write fVAL_LAN_LALB_PB;
     property IND_VAL_LAN_LALB_PB: string read fIND_VAL_LAN_LALB_PB write fIND_VAL_LAN_LALB_PB;
     property COD_CTA_B_CTP: string read fCOD_CTA_B_CTP write fCOD_CTA_B_CTP;
     property HIST_LAN_LALB: string read fHIST_LAN_LALB write fHIST_LAN_LALB;
@@ -505,22 +505,22 @@ type
     fCOD_TRIBUTO:    string;
     fIND_SD_FIM_LAL: string;
     fIND_SD_INI_LAL: string;
-    fIND_VL_LCTO_PARTE_A: currency;
+    fIND_VL_LCTO_PARTE_A: string;
     fIND_VL_LCTO_PARTE_B: string;
-    fSD_FIM_LAL:     currency;
-    fSD_INI_LAL:     currency;
-    fVL_LCTO_PARTE_A: currency;
-    fVL_LCTO_PARTE_B: currency;
+    fSD_FIM_LAL:     variant;
+    fSD_INI_LAL:     variant;
+    fVL_LCTO_PARTE_A: variant;
+    fVL_LCTO_PARTE_B: variant;
   public
     property COD_CTA_B: string read fCOD_CTA_B write fCOD_CTA_B;
     property COD_TRIBUTO: string read fCOD_TRIBUTO write fCOD_TRIBUTO;
-    property SD_INI_LAL: currency read fSD_INI_LAL write fSD_INI_LAL;
+    property SD_INI_LAL: variant read fSD_INI_LAL write fSD_INI_LAL;
     property IND_SD_INI_LAL: string read fIND_SD_INI_LAL write fIND_SD_INI_LAL;
-    property VL_LCTO_PARTE_A: currency read fVL_LCTO_PARTE_A write fVL_LCTO_PARTE_A;
-    property IND_VL_LCTO_PARTE_A: currency read fIND_VL_LCTO_PARTE_A write fIND_VL_LCTO_PARTE_A;
-    property VL_LCTO_PARTE_B: currency read fVL_LCTO_PARTE_B write fVL_LCTO_PARTE_B;
+    property VL_LCTO_PARTE_A: variant read fVL_LCTO_PARTE_A write fVL_LCTO_PARTE_A;
+    property IND_VL_LCTO_PARTE_A: string read fIND_VL_LCTO_PARTE_A write fIND_VL_LCTO_PARTE_A;
+    property VL_LCTO_PARTE_B: variant read fVL_LCTO_PARTE_B write fVL_LCTO_PARTE_B;
     property IND_VL_LCTO_PARTE_B: string read fIND_VL_LCTO_PARTE_B write fIND_VL_LCTO_PARTE_B;
-    property SD_FIM_LAL: currency read fSD_FIM_LAL write fSD_FIM_LAL;
+    property SD_FIM_LAL: variant read fSD_FIM_LAL write fSD_FIM_LAL;
     property IND_SD_FIM_LAL: string read fIND_SD_FIM_LAL write fIND_SD_FIM_LAL;
   end;
 

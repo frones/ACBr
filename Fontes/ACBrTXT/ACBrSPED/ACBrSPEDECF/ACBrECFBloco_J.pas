@@ -48,32 +48,42 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECFBlocos;
 
 type
-  /// Registro I001 - ABERTURA DO BLOCO I
+  TRegistroJ050List = class;
+  TRegistroJ051List = class;
+  TRegistroJ053List = class;
+  TRegistroJ100List = class;
+
+  /// Registro J001 - ABERTURA DO BLOCO J
 
   TRegistroJ001 = class(TOpenBlocos)
   private
+    FRegistroJ050 :TRegistroJ050List;
+    FRegistroJ100 :TRegistroJ100List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property RegistroJ050: TRegistroJ050List read FRegistroJ050 write FRegistroJ050;
+    property RegistroJ100: TRegistroJ100List read FRegistroJ100 write FRegistroJ100;
   end;
 
-  TRegistroJ051List = class;
-  TRegistroJ053List = class;
 
-  /// Registro I050 - PLANO DE CONTAS
+  /// Registro J050 - PLANO DE CONTAS DO CONTRIBUINTE
 
   TRegistroJ050 = class
   private
-    fDT_ALT: TDateTime;       /// Data da inclusão/alteração.
+    fDT_ALT: TDateTime;   /// Data da inclusão/alteração.
     fCOD_NAT: String;     /// Código da natureza da conta/grupo de contas, conforme tabela publicada pelo Sped.
     fIND_CTA: String;     /// Indicador do tipo de conta: S - Sintética (grupo de contas);A - Analítica (conta).
-    fNIVEL: String;       /// Nível da conta analítica/grupo de contas.
-    fCOD_CTA: String;     /// Código da conta analítica/grupo de contas.
-    fCOD_CTA_SUP: String; /// Código da conta sintética /grupo de contas de nível imediatamente superior.
-    fCTA: String;         /// Nome da conta analítica/grupo de contas.
+    fNIVEL: String;       /// Nível da conta analítica/sintética.
+    fCOD_CTA: String;     /// Código da conta analítica/sintética.
+    fCOD_CTA_SUP: String; /// Código da conta sintética de nível imediatamente superior.
+    fCTA: String;         /// Nome da conta analítica/sintética.
 
-    FRegistroJ051: TRegistroJ051List;  /// BLOCO I - Lista de RegistroJ051 (FILHO)
-    FRegistroJ053: TRegistroJ053List;  /// BLOCO I - Lista de RegistroJ053 (FILHO)    ///
+    FRegistroJ051: TRegistroJ051List;
+    FRegistroJ053: TRegistroJ053List;
   public
-    constructor Create; virtual; /// Create
+    constructor Create(AOwner :TRegistroJ001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_ALT: TDateTime read fDT_ALT write fDT_ALT;
@@ -83,8 +93,7 @@ type
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
     property COD_CTA_SUP: String read fCOD_CTA_SUP write fCOD_CTA_SUP;
     property CTA: String read fCTA write fCTA;
-
-    /// Registros FILHOS
+    //
     property RegistroJ051: TRegistroJ051List read FRegistroJ051 write FRegistroJ051;
     property RegistroJ053: TRegistroJ053List read FRegistroJ053 write FRegistroJ053;
   end;
@@ -96,33 +105,35 @@ type
     function GetItem(Index: Integer): TRegistroJ050;
     procedure SetItem(Index: Integer; const Value: TRegistroJ050);
   public
-    function New: TRegistroJ050;
+    function New(AOwner :TRegistroJ001): TRegistroJ050;
     property Items[Index: Integer]: TRegistroJ050 read GetItem write SetItem;
   end;
 
-  /// Registro I051 - PLANO DE CONTAS REFERENCIAL
+  /// Registro J051 - PLANO DE CONTAS REFERENCIAL
 
   TRegistroJ051 = class
   private
     fCOD_CCUS: String;       /// Código do centro de custo.
     fCOD_CTA_REF: String;    /// Código da conta de acordo com o plano de contas referencial, conforme tabela publicada pelos órgãos indicados no campo 02- COD_ENT_REF.
   public
+    constructor Create(AOwner: TRegistroJ050); virtual; /// Create
+
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
     property COD_CTA_REF: String read fCOD_CTA_REF write fCOD_CTA_REF;
   end;
 
-  /// Registro I051 - Lista
+  /// Registro J051 - Lista
 
   TRegistroJ051List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroJ051;
     procedure SetItem(Index: Integer; const Value: TRegistroJ051);
   public
-    function New: TRegistroJ051;
+    function New(AOwner :TRegistroJ050): TRegistroJ051;
     property Items[Index: Integer]: TRegistroJ051 read GetItem write SetItem;
   end;
 
-  /// Registro I053 - SUBCONTAS CORRELATAS
+  /// Registro J053 - SUBCONTAS CORRELATAS
 
   TRegistroJ053 = class
   private
@@ -130,58 +141,62 @@ type
     fNAT_SUB_CNT: String;  /// Código da subconta correlata (deve estar no plano de contas e só pode estar relacionada a um único grupo)
     fCOD_IDT: String;      /// Natureza da subconta correlata (conforme tabela de natureza da subconta publicada no Sped )
   public
+    constructor Create(AOwner: TRegistroJ050); virtual;
+
     property COD_IDT: String read fCOD_IDT write fCOD_CNT_CORR;
     property COD_CNT_CORR: String read fCOD_CNT_CORR write fCOD_CNT_CORR;
     property NAT_SUB_CNT : String read fNAT_SUB_CNT write fNAT_SUB_CNT;
   end;
 
-  /// Registro I053 - Lista
+  /// Registro J053 - Lista
 
   TRegistroJ053List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroJ053;
     procedure SetItem(Index: Integer; const Value: TRegistroJ053);
   public
-    function New: TRegistroJ053;
+    function New(AOwner: TRegistroJ050): TRegistroJ053;
     property Items[Index: Integer]: TRegistroJ053 read GetItem write SetItem;
   end;
 
-  /// Registro I100 - CENTRO DE CUSTOS
+  /// Registro J100 - CENTRO DE CUSTOS
 
   TRegistroJ100 = class
   private
-    fDT_ALT: TdateTime;       /// Data da inclusão/alteração.
+    fDT_ALT: TdateTime;   /// Data da inclusão/alteração.
     fCOD_CCUS: String;    /// Código do centro de custos.
     fCCUS: String;        /// Nome do centro de custos.
   public
+    constructor Create(AOwner: TRegistroJ001); virtual; /// Create
+
     property DT_ALT: TdateTime read fDT_ALT write fDT_ALT;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
     property CCUS: String read fCCUS write fCCUS;
   end;
 
-  /// Registro I100 - Lista
+  /// Registro J100 - Lista
 
   TRegistroJ100List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroJ100;
     procedure SetItem(Index: Integer; const Value: TRegistroJ100);
   public
-    function New: TRegistroJ100;
+    function New(AOwner: TRegistroJ001): TRegistroJ100;
     property Items[Index: Integer]: TRegistroJ100 read GetItem write SetItem;
   end;
 
-  /// Registro I990 - ENCERRAMENTO DO BLOCO I
+  /// Registro J990 - ENCERRAMENTO DO BLOCO J
 
   TRegistroJ990 = class
   private
-    fQTD_LIN: Integer;    /// Quantidade total de linhas do Bloco I
+    fQTD_LIN: Integer;    /// Quantidade total de linhas do Bloco J
   public
     property QTD_LIN: Integer read FQTD_LIN write FQTD_LIN;
   end;
 
 implementation
 
-constructor TRegistroJ050.Create;
+constructor TRegistroJ050.Create(AOwner :TRegistroJ001);
 begin
    FRegistroJ051 := TRegistroJ051List.Create;
    FRegistroJ053 := TRegistroJ053List.Create;
@@ -201,9 +216,9 @@ begin
   Result := TRegistroJ050(Inherited Items[Index]);
 end;
 
-function TRegistroJ050List.New: TRegistroJ050;
+function TRegistroJ050List.New(AOwner :TRegistroJ001): TRegistroJ050;
 begin
-  Result := TRegistroJ050.Create;
+  Result := TRegistroJ050.Create(AOwner);
   Add(Result);
 end;
 
@@ -219,9 +234,9 @@ begin
   Result := TRegistroJ051(Inherited Items[Index]);
 end;
 
-function TRegistroJ051List.New: TRegistroJ051;
+function TRegistroJ051List.New(AOwner :TRegistroJ050): TRegistroJ051;
 begin
-  Result := TRegistroJ051.Create;
+  Result := TRegistroJ051.Create(AOwner);
   Add(Result);
 end;
 
@@ -238,9 +253,9 @@ begin
   Result := TRegistroJ100(Inherited Items[Index]);
 end;
 
-function TRegistroJ100List.New: TRegistroJ100;
+function TRegistroJ100List.New(AOwner: TRegistroJ001): TRegistroJ100;
 begin
-  Result := TRegistroJ100.Create;
+  Result := TRegistroJ100.Create(AOwner);
   Add(Result);
 end;
 
@@ -257,15 +272,51 @@ begin
   Result := TRegistroJ053(Inherited Items[Index]);
 end;
 
-function TRegistroJ053List.New: TRegistroJ053;
+function TRegistroJ053List.New(AOwner: TRegistroJ050): TRegistroJ053;
 begin
-  Result := TRegistroJ053.Create;
+  Result := TRegistroJ053.Create(AOwner);
   Add(Result);
 end;
 
 procedure TRegistroJ053List.SetItem(Index: Integer; const Value: TRegistroJ053);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistroJ001 }
+
+constructor TRegistroJ001.Create;
+begin
+   FRegistroJ050 := TRegistroJ050List.Create;
+   FRegistroJ100 := TRegistroJ100List.Create;
+   //
+   IND_DAD := idComDados;;
+end;
+
+destructor TRegistroJ001.Destroy;
+begin
+   FRegistroJ050.Free;
+   FRegistroJ100.Free;
+
+  inherited;
+end;
+
+{ TRegistroJ051 }
+
+constructor TRegistroJ051.Create(AOwner: TRegistroJ050);
+begin
+end;
+
+{ TRegistroJ053 }
+
+constructor TRegistroJ053.Create(AOwner: TRegistroJ050);
+begin
+end;
+
+{ TRegistroJ100 }
+
+constructor TRegistroJ100.Create(AOwner: TRegistroJ001);
+begin
 end;
 
 end.

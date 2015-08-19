@@ -54,6 +54,15 @@ type
   public
   end;
 
+  TRegistroL001List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroL001;
+    procedure SetItem(Index: Integer; const Value: TRegistroL001);
+  public
+    function New: TRegistroL001;
+    property Items[Index: Integer]: TRegistroL001 read GetItem write SetItem;
+  end;
+
   TRegistroL100List = class;
   TRegistroL200List = class;
   TRegistroL210List = class;
@@ -103,15 +112,15 @@ type
   private
     fIND_VAL_CTA_REF_FIN: string;
     fIND_VAL_CTA_REF_INI: string;
-    fVALOR_SALDO_INICIAL: Currency;
+//    fVALOR_SALDO_INICIAL: variant;
     fDESCRICAO: string;
     fCOD_CTA_SUP: string;
     fCOD_NAT: string;
     fNIVEL:  integer;
     fCODIGO: string;
     fTIPO:   string;
-    fVAL_CTA_REF_FIN: Currency;
-    fVAL_CTA_REF_INI: Currency;
+    fVAL_CTA_REF_FIN: variant;
+    fVAL_CTA_REF_INI: variant;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
@@ -119,9 +128,9 @@ type
     property NIVEL: integer read fNIVEL write fNIVEL;
     property COD_NAT: string read fCOD_NAT write fCOD_NAT;
     property COD_CTA_SUP: string read fCOD_CTA_SUP write fCOD_CTA_SUP;
-    property VAL_CTA_REF_INI: Currency read fVAL_CTA_REF_INI write fVAL_CTA_REF_INI;
+    property VAL_CTA_REF_INI: variant read fVAL_CTA_REF_INI write fVAL_CTA_REF_INI;
     property IND_VAL_CTA_REF_INI: string read fIND_VAL_CTA_REF_INI write fIND_VAL_CTA_REF_INI;
-    property VAL_CTA_REF_FIN: Currency read fVAL_CTA_REF_FIN write fVAL_CTA_REF_FIN;
+    property VAL_CTA_REF_FIN: variant read fVAL_CTA_REF_FIN write fVAL_CTA_REF_FIN;
     property IND_VAL_CTA_REF_FIN: string read fIND_VAL_CTA_REF_FIN write fIND_VAL_CTA_REF_FIN;
   end;
 
@@ -155,12 +164,12 @@ type
   TRegistroL210 = class(TBlocos)
   private
     fCODIGO:    string;
-    fVALOR:     Currency;
+    fVALOR:     variant;
     fDESCRICAO: string;
   public
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
   end;
 
   TRegistroL210List = class(TObjectList)
@@ -178,7 +187,7 @@ type
     fIND_VALOR: string;
     fDESCRICAO: string;
     fCOD_CTA_SUP: string;
-    fVALOR:   Currency;
+    fVALOR:   variant;
     fCOD_NAT: string;
     fNIVEL:   integer;
     fCODIGO:  string;
@@ -190,7 +199,7 @@ type
     property NIVEL: integer read fNIVEL write fNIVEL;
     property COD_NAT: string read fCOD_NAT write fCOD_NAT;
     property COD_CTA_SUP: string read fCOD_CTA_SUP write fCOD_CTA_SUP;
-    property VALOR: Currency read fVALOR write fVALOR;
+    property VALOR: variant read fVALOR write fVALOR;
     property IND_VALOR: string read fIND_VALOR write fIND_VALOR;
   end;
 
@@ -323,6 +332,24 @@ begin
    FRegistroL100.Free;
 
    inherited;
+end;
+
+{ TRegistroL001List }
+
+function TRegistroL001List.GetItem(Index: Integer): TRegistroL001;
+begin
+  Result := TRegistroL001(Inherited Items[Index]);
+end;
+
+function TRegistroL001List.New: TRegistroL001;
+begin
+  Result := TRegistroL001.Create;
+  Add(Result);
+end;
+
+procedure TRegistroL001List.SetItem(Index: Integer; const Value: TRegistroL001);
+begin
+  Put(Index, Value);
 end;
 
 end.

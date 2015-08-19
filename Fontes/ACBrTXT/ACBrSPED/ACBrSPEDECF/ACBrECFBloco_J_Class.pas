@@ -45,47 +45,51 @@ interface
 
 uses
   SysUtils, Classes, DateUtils, ACBrSped, ACBrECFBloco_J, ACBrECFBlocos,
-  ACBrTXTClass, ACBrECFBloco_0_Class;
+  ACBrECFBloco_0_Class;
 
 type
   /// TBloco_J -
-
-  { TBloco_J }
-
-  TBLOCO_J = class(TACBrSPED)
+  TBloco_J = class(TACBrSPED)
   private
     FBloco_0: TBloco_0;
-    FRegistroJ001: TRegistroJ001;      /// BLOCO I - RegistroJ001
-    //FRegistroJ015: TRegistroJ015List;  /// BLOCO I - Lista de RegistroJ015
-    FRegistroJ050: TRegistroJ050List;  /// BLOCO I - Lista de RegistroJ050
-    FRegistroJ100: TRegistroJ100List;  /// BLOCO I - Lista de RegistroJ100
-    FRegistroJ990: TRegistroJ990;      /// BLOCO I - FRegistroJ990
 
+    FRegistroJ001: TRegistroJ001; /// BLOCO J - RegistroJ001
+    FRegistroJ990: TRegistroJ990; /// BLOCO J - RegistroJ990
+
+    FRegistroJ050Count: Integer;
     FRegistroJ051Count: Integer;
     FRegistroJ053Count: Integer;
+    FRegistroJ100Count: Integer;
 
+    procedure WriteRegistroJ050(RegJ001: TRegistroJ001);
+    procedure WriteRegistroJ051(RegJ050: TRegistroJ050);
+    procedure WriteRegistroJ053(RegJ050: TRegistroJ050);
+    procedure WriteRegistroJ100(RegJ001: TRegistroJ001);
 
+    procedure CriaRegistros;
+    procedure LiberaRegistros;
   public
-    constructor Create; /// Create
+    constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
+    function RegistroJ001New: TRegistroJ001;
+    function RegistroJ050New: TRegistroJ050;
+    function RegistroJ051New: TRegistroJ051;
+    function RegistroJ053New: TRegistroJ053;
+    function RegistroJ100New: TRegistroJ100;
 
     procedure WriteRegistroJ001;
-    procedure WriteRegistroJ050;
-    procedure WriteRegistroJ051(RegJ050: TRegistroJ050);
-    procedure WriteRegistroJ053(RegJ050: TRegistroJ050);
-    procedure WriteRegistroJ100;
     procedure WriteRegistroJ990;
 
-    property RegistroJ001: TRegistroJ001     read FRegistroJ001 write FRegistroJ001;
-    property RegistroJ050: TRegistroJ050List read fRegistroJ050 write fRegistroJ050;
-    property RegistroJ100: TRegistroJ100List read fRegistroJ100 write fRegistroJ100;
-    property RegistroJ990: TRegistroJ990     read FRegistroJ990 write FRegistroJ990;
+    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
+    property RegistroJ001: TRegistroJ001 read FRegistroJ001 write FRegistroJ001;
+    property RegistroJ990: TRegistroJ990 read FRegistroJ990 write FRegistroJ990;
 
+    property RegistroJ050Count: Integer read FRegistroJ050Count write FRegistroJ050Count;
     property RegistroJ051Count: Integer read FRegistroJ051Count write FRegistroJ051Count;
     property RegistroJ053Count: Integer read FRegistroJ053Count write FRegistroJ053Count;
+    property RegistroJ100Count: Integer read FRegistroJ100Count write FRegistroJ100Count;
   end;
 
 implementation
@@ -94,60 +98,121 @@ implementation
 
 constructor TBloco_J.Create;
 begin
-  FRegistroJ001 := TRegistroJ001.Create;
-  FRegistroJ050 := TRegistroJ050List.Create;
-  FRegistroJ100 := TRegistroJ100List.Create;
-  FRegistroJ990 := TRegistroJ990.Create;
-
-  FRegistroJ051Count := 0;
-  FRegistroJ053Count := 0;
-
-  FRegistroJ990.QTD_LIN := 0;
+  inherited;
+  CriaRegistros;
 end;
 
 destructor TBloco_J.Destroy;
 begin
-  FRegistroJ001.Free;
-  FRegistroJ050.Free;
-  FRegistroJ100.Free;
-
-  FRegistroJ990.Free;
+  LiberaRegistros;
   inherited;
+end;
+
+procedure TBloco_J.CriaRegistros;
+begin
+  FRegistroJ001 := TRegistroJ001.Create;
+  FRegistroJ990 := TRegistroJ990.Create;
+
+  FRegistroJ050Count := 0;
+  FRegistroJ051Count := 0;
+  FRegistroJ053Count := 0;
+  FRegistroJ100Count := 0;
+
+  FRegistroJ990.QTD_LIN := 0;
+end;
+
+
+procedure TBloco_J.LiberaRegistros;
+begin
+  FRegistroJ001.Free;
+  FRegistroJ990.Free;
 end;
 
 procedure TBloco_J.LimpaRegistros;
 begin
-  FRegistroJ050.Clear;
-  FRegistroJ100.Clear;
+  /// Limpa os Registros
+  LiberaRegistros;
+  Conteudo.Clear;
 
-  FRegistroJ051Count := 0;
-  FRegistroJ053Count := 0;
+  /// Recriar os Registros Limpos
+  CriaRegistros;
+end;
 
-  FRegistroJ990.QTD_LIN:= 0;
+function TBloco_J.RegistroJ001New: TRegistroJ001;
+begin
+  Result := FRegistroJ001;
+end;
+
+function TBloco_J.RegistroJ050New: TRegistroJ050;
+begin
+   Result := FRegistroJ001.RegistroJ050.New(FRegistroJ001);
+end;
+
+function TBloco_J.RegistroJ051New: TRegistroJ051;
+var
+  UJ050: TRegistroJ050;
+  UJ050Count: Integer;
+begin
+   UJ050Count := FRegistroJ001.RegistroJ050.Count -1;
+   if UJ050Count = -1 then
+      raise Exception.Create('O registro 1105 deve ser filho do registro 1100, e não existe nenhum 1100 pai!');
+
+   UJ050  := FRegistroJ001.RegistroJ050.Items[UJ050Count];
+   Result := UJ050.RegistroJ051.New(UJ050);
+end;
+
+function TBloco_J.RegistroJ053New: TRegistroJ053;
+var
+  UJ050: TRegistroJ050;
+  UJ050Count: Integer;
+begin
+   UJ050Count := FRegistroJ001.RegistroJ050.Count -1;
+   if UJ050Count = -1 then
+      raise Exception.Create('O registro 1105 deve ser filho do registro 1100, e não existe nenhum 1100 pai!');
+
+   UJ050  := FRegistroJ001.RegistroJ050.Items[UJ050Count];
+   Result := UJ050.RegistroJ053.New(UJ050);
+end;
+
+function TBloco_J.RegistroJ100New: TRegistroJ100;
+begin
+   Result := FRegistroJ001.RegistroJ100.New(FRegistroJ001);
 end;
 
 procedure TBloco_J.WriteRegistroJ001;
 begin
-  if Assigned(FRegistroJ001) then begin
-    with FRegistroJ001 do begin
+  if Assigned(RegistroJ001) then
+  begin
+    with RegistroJ001 do
+    begin
       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(J-J001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+
       Add(LFill('J001') +
           LFill( Integer(IND_DAD), 1));
+
+      if IND_DAD = idComDados then
+      begin
+        WriteRegistroJ050(RegistroJ001);
+        WriteRegistroJ100(RegistroJ001);
+      end;
+
       FRegistroJ990.QTD_LIN:= FRegistroJ990.QTD_LIN + 1;
     end;
-    WriteRegistroJ050;
-    WriteRegistroJ100;
   end;
 end;
 
 
-procedure TBloco_J.WriteRegistroJ050;
+procedure TBloco_J.WriteRegistroJ050(RegJ001: TRegistroJ001);
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroJ050) then begin
-    for intFor := 0 to FRegistroJ050.Count - 1 do begin
-      with FRegistroJ050.Items[intFor] do begin
+
+  if Assigned(RegJ001.RegistroJ050) then
+  begin
+    for intFor := 0 to RegJ001.RegistroJ050.Count - 1 do
+    begin
+      with RegJ001.RegistroJ050.Items[intFor] do
+      begin
         Add(LFill('J050') +
             LFill(DT_ALT) +
             LFill(COD_NAT, 2) +
@@ -156,28 +221,38 @@ begin
             LFill(COD_CTA) +
             LFill(COD_CTA_SUP) +
             LFill(CTA));
+
       end;
-      // Registros Filhos
-      WriteRegistroJ051(FRegistroJ050.Items[intFor] );
-      WriteRegistroJ053(FRegistroJ050.Items[intFor] );
-      FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
+
+      WriteRegistroJ051(RegJ001.RegistroJ050.Items[intFor] );
+      WriteRegistroJ053(RegJ001.RegistroJ050.Items[intFor] );
+
+      RegistroJ990.QTD_LIN := RegistroJ990.QTD_LIN + 1;
     end;
+
+    FRegistroJ050Count := FRegistroJ050Count + RegJ001.RegistroJ050.Count;
   end;
+
 end;
 
 procedure TBloco_J.WriteRegistroJ051(RegJ050: TRegistroJ050);
 var
 intFor: integer;
 begin
-  if Assigned(RegJ050.RegistroJ051) then begin
-    for intFor := 0 to RegJ050.RegistroJ051.Count - 1 do begin
-      with RegJ050.RegistroJ051.Items[intFor] do begin
-        Add(LFill('J051') +
-            LFill(COD_CCUS) +
-            LFill(COD_CTA_REF));
+  if Assigned(RegJ050.RegistroJ051) then
+  begin
+    for intFor := 0 to RegJ050.RegistroJ051.Count - 1 do
+    begin
+      with RegJ050.RegistroJ051.Items[intFor] do
+      begin
+        Add( LFill('J051') +
+             LFill(COD_CCUS) +
+             LFill(COD_CTA_REF) );
       end;
+
       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
     end;
+
     FRegistroJ051Count := FRegistroJ051Count + RegJ050.RegistroJ051.Count;
   end;
 end;
@@ -186,45 +261,59 @@ procedure TBloco_J.WriteRegistroJ053(RegJ050: TRegistroJ050);
 var
 intFor: integer;
 begin
-  if Assigned(RegJ050.RegistroJ053) then begin
-    for intFor := 0 to RegJ050.RegistroJ053.Count - 1 do begin
-      with RegJ050.RegistroJ053.Items[intFor] do begin
-        Add(LFill('J053') +
-            LFill(COD_IDT) +
-            LFill(COD_CNT_CORR) +
-            LFill(NAT_SUB_CNT));
+  if Assigned(RegJ050.RegistroJ053) then
+  begin
+    for intFor := 0 to RegJ050.RegistroJ053.Count - 1 do
+    begin
+      with RegJ050.RegistroJ053.Items[intFor] do
+      begin
+        Add( LFill('J053') +
+             LFill(COD_IDT) +
+             LFill(COD_CNT_CORR) +
+             LFill(NAT_SUB_CNT) );
       end;
+
       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
     end;
+
     FRegistroJ053Count := FRegistroJ053Count + RegJ050.RegistroJ053.Count;
   end;
 end;
 
-procedure TBloco_J.WriteRegistroJ100;
+procedure TBloco_J.WriteRegistroJ100(RegJ001: TRegistroJ001);
 var
 intFor: integer;
 begin
-  if Assigned(RegistroJ100) then begin
-    for intFor := 0 to RegistroJ100.Count - 1 do begin
-      with RegistroJ100.Items[intFor] do begin
-        Add(LFill('J100') +
-           LFill(DT_ALT) +
-           LFill(COD_CCUS) +
-           LFill(CCUS));
+  if Assigned(RegJ001.RegistroJ100) then
+  begin
+    for intFor := 0 to RegJ001.RegistroJ100.Count - 1 do
+    begin
+      with RegJ001.RegistroJ100.Items[intFor] do
+      begin
+        Add( LFill('J100') +
+             LFill(DT_ALT) +
+             LFill(COD_CCUS) +
+             LFill(CCUS) );
       end;
+
       FRegistroJ990.QTD_LIN := FRegistroJ990.QTD_LIN + 1;
     end;
+
+    FRegistroJ100Count := FRegistroJ100Count + RegJ001.RegistroJ100.Count;
   end;
 end;
 
 
 procedure TBloco_J.WriteRegistroJ990;
 begin
-  if Assigned(FRegistroJ990) then begin
-    with FRegistroJ990 do begin
+  if Assigned(FRegistroJ990) then
+  begin
+    with FRegistroJ990 do
+    begin
       QTD_LIN := QTD_LIN + 1;
-      Add(LFill('J990') +
-          LFill(QTD_LIN, 0));
+      ///
+      Add( LFill('J990') +
+           LFill(QTD_LIN, 0) );
     end;
   end;
 end;

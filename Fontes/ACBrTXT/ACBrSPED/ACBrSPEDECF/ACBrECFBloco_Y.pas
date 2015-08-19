@@ -73,6 +73,17 @@ type
     property VL_PERIODO: variant read fVL_PERIODO write fVL_PERIODO;
   end;
 
+  /// Registro Y250 - Lista
+
+  TRegistroY520List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY520;
+    procedure SetItem(Index: Integer; const Value: TRegistroY520);
+  public
+    function New: TRegistroY520;
+    property Items[Index: Integer]: TRegistroY520 read GetItem write SetItem;
+  end;
+
   /// Registro Y540 - Discriminação da Receita de Vendas dos
   /// Estabelecimentos por Atividade Econômica
 
@@ -87,6 +98,17 @@ type
     property CNPJ_ESTAB: string read fCNPJ_ESTAB write fCNPJ_ESTAB;
     property VL_REC_ESTAB: variant read fVL_REC_ESTAB write fVL_REC_ESTAB;
     property CNAE: integer read fCNAE write fCNAE;
+  end;
+
+  /// Registro Y540 - Lista
+
+  TRegistroY540List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY540;
+    procedure SetItem(Index: Integer; const Value: TRegistroY540);
+  public
+    function New: TRegistroY540;
+    property Items[Index: Integer]: TRegistroY540 read GetItem write SetItem;
   end;
 
   /// Registro Y550 - Vendas a Comercial Exportadora com Fim
@@ -105,6 +127,17 @@ type
     property VL_VENDA: variant read fVL_VENDA write fVL_VENDA;
   end;
 
+  /// Registro Y550 - Lista
+
+  TRegistroY550List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY550;
+    procedure SetItem(Index: Integer; const Value: TRegistroY550);
+  public
+    function New: TRegistroY550;
+    property Items[Index: Integer]: TRegistroY550 read GetItem write SetItem;
+  end;
+
   /// Registro Y560 - Detalhamento das Exportações da Comercial Exportadora
 
   { TRegistroY560 }
@@ -120,6 +153,18 @@ type
     property COD_NCM: integer read fCOD_NCM write fCOD_NCM;
     property VL_COMPRA: variant read fVL_COMPRA write fVL_COMPRA;
     property VL_EXP: variant read fVL_EXP write fVL_EXP;
+  end;
+
+
+  /// Registro Y560 - Lista
+
+  TRegistroY560List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY560;
+    procedure SetItem(Index: Integer; const Value: TRegistroY560);
+  public
+    function New: TRegistroY560;
+    property Items[Index: Integer]: TRegistroY560 read GetItem write SetItem;
   end;
 
   /// Registro Y570 - Demonstrativo do Imposto de Renda e CSLL Retidos na Fonte
@@ -145,6 +190,17 @@ type
     property CSLL_RET: variant read fCSLL_RET write fCSLL_RET;
   end;
 
+  /// Registro Y570 - Lista
+
+  TRegistroY570List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY570;
+    procedure SetItem(Index: Integer; const Value: TRegistroY570);
+  public
+    function New: TRegistroY570;
+    property Items[Index: Integer]: TRegistroY570 read GetItem write SetItem;
+  end;
+
   /// Registro Y580 - Doações a Campanhas Eleitorais
 
   { TRegistroY580 }
@@ -160,6 +216,18 @@ type
     property TIP_BENEF: integer read fTIP_BENEF write fTIP_BENEF;
     property FORM_DOA: integer read fFORM_DOA write fFORM_DOA;
     property VL_DOA: variant read fVL_DOA write fVL_DOA;
+  end;
+
+
+  /// Registro Y580 - Lista
+
+  TRegistroY580List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY580;
+    procedure SetItem(Index: Integer; const Value: TRegistroY580);
+  public
+    function New: TRegistroY580;
+    property Items[Index: Integer]: TRegistroY580 read GetItem write SetItem;
   end;
 
   /// Registro Y590 - Ativos no Exterior
@@ -180,6 +248,18 @@ type
     property VL_ANT: variant read fVL_ANT write fVL_ANT;
     property VL_ATUAL: variant read fVL_ATUAL write fVL_ATUAL;
   end;
+
+  /// Registro Y550 - Lista
+
+  TRegistroY590List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY590;
+    procedure SetItem(Index: Integer; const Value: TRegistroY590);
+  public
+    function New: TRegistroY590;
+    property Items[Index: Integer]: TRegistroY590 read GetItem write SetItem;
+  end;
+
 
   /// Registro Y600 - Identificação de Sócios ou Titular
 
@@ -212,6 +292,17 @@ type
     property QUALIF_REP_LEG: integer read fQUALIF_REP_LEG write fQUALIF_REP_LEG;
   end;
 
+  /// Registro Y600 - Lista
+
+  TRegistroY600List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY600;
+    procedure SetItem(Index: Integer; const Value: TRegistroY600);
+  public
+    function New: TRegistroY600;
+    property Items[Index: Integer]: TRegistroY600 read GetItem write SetItem;
+  end;
+
   /// Registro Y611 - Rendimentos de Dirigentes, Conselheiros, Sócios ou Titular
 
   { TRegistroY611 }
@@ -241,6 +332,18 @@ type
     property VL_IR_RET: variant read fVL_IR_RET write fVL_IR_RET;
   end;
 
+
+  /// Registro Y611 - Lista
+
+  TRegistroY611List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY611;
+    procedure SetItem(Index: Integer; const Value: TRegistroY611);
+  public
+    function New: TRegistroY611;
+    property Items[Index: Integer]: TRegistroY611 read GetItem write SetItem;
+  end;
+
   /// Registro Y612 - Rendimentos de Dirigentes e Conselheiros - Imunes ou Isentas
 
   { TRegistroY612 }
@@ -260,6 +363,18 @@ type
     property VL_REM_TRAB: variant read fVL_REM_TRAB write fVL_REM_TRAB;
     property VL_DEM_REND: variant read fVL_DEM_REND write fVL_DEM_REND;
     property VL_IR_RET: variant read fVL_IR_RET write fVL_IR_RET;
+  end;
+
+
+  /// Registro Y612 - Lista
+
+  TRegistroY612List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY612;
+    procedure SetItem(Index: Integer; const Value: TRegistroY612);
+  public
+    function New: TRegistroY612;
+    property Items[Index: Integer]: TRegistroY612 read GetItem write SetItem;
   end;
 
   /// Registro Y620 - Participação Permanente em Coligadas ou Controladas
@@ -303,6 +418,18 @@ type
     property NUM_PROC_RFB: string read fNUM_PROC_RFB write fNUM_PROC_RFB;
   end;
 
+
+  /// Registro Y620 - Lista
+
+  TRegistroY620List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY620;
+    procedure SetItem(Index: Integer; const Value: TRegistroY620);
+  public
+    function New: TRegistroY620;
+    property Items[Index: Integer]: TRegistroY620 read GetItem write SetItem;
+  end;
+
   /// Registro Y630 - Fundos/Clubes de Investimento
 
   { TRegistroY630 }
@@ -324,7 +451,20 @@ type
     property DAT_ENCER: TDateTime read fDAT_ENCER write fDAT_ENCER;
   end;
 
+  /// Registro Y630 - Lista
+
+  TRegistroY630List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY630;
+    procedure SetItem(Index: Integer; const Value: TRegistroY630);
+  public
+    function New: TRegistroY630;
+    property Items[Index: Integer]: TRegistroY630 read GetItem write SetItem;
+  end;
+
   /// Registro Y640 - Participações em Consórcios de Empresas
+
+  TRegistroY650List = class;
 
   { TRegistroY640 }
 
@@ -335,12 +475,32 @@ type
     fCOND_DECL: integer;
     fVL_CONS:   variant;
     fVL_DECL:   variant;
+
+    FRegistroY650: TRegistroY650List;
   public
+    constructor Create; /// Create
+    destructor Destroy; /// Destroy
+
     property CNPJ: string read fCNPJ write fCNPJ;
     property COND_DECL: integer read fCOND_DECL write fCOND_DECL;
     property VL_CONS: variant read fVL_CONS write fVL_CONS;
     property CNPJ_LID: string read fCNPJ_LID write fCNPJ_LID;
     property VL_DECL: variant read fVL_DECL write fVL_DECL;
+
+    // registros filhos
+    property RegistroY650: TRegistroY650List read FRegistroY650 write FRegistroY650;
+  end;
+
+
+  /// Registro Y640 - Lista
+
+  TRegistroY640List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY640;
+    procedure SetItem(Index: Integer; const Value: TRegistroY640);
+  public
+    function New: TRegistroY640;
+    property Items[Index: Integer]: TRegistroY640 read GetItem write SetItem;
   end;
 
   /// Registro Y650 - Participantes do Consórcio
@@ -356,6 +516,18 @@ type
     property VL_PART: variant read fVL_PART write fVL_PART;
   end;
 
+
+  /// Registro Y650 - Lista
+
+  TRegistroY650List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY650;
+    procedure SetItem(Index: Integer; const Value: TRegistroY650);
+  public
+    function New: TRegistroY650;
+    property Items[Index: Integer]: TRegistroY650 read GetItem write SetItem;
+  end;
+
   /// Registro Y660 - Dados de Sucessoras
 
   { TRegistroY660 }
@@ -369,6 +541,18 @@ type
     property CNPJ: string read fCNPJ write fCNPJ;
     property NOM_EMP: string read fNOM_EMP write fNOM_EMP;
     property PERC_PAT_LIQ: variant read fPERC_PAT_LIQ write fPERC_PAT_LIQ;
+  end;
+
+
+  /// Registro Y660 - Lista
+
+  TRegistroY660List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY660;
+    procedure SetItem(Index: Integer; const Value: TRegistroY660);
+  public
+    function New: TRegistroY660;
+    property Items[Index: Integer]: TRegistroY660 read GetItem write SetItem;
   end;
 
   /// Registro Y665 - Demonstrativo das Diferenças na Adoção Inicial
@@ -406,6 +590,17 @@ type
     property DESC_SUB: string read fDESC_SUB write fDESC_SUB;
   end;
 
+  /// Registro Y665 - Lista
+
+  TRegistroY665List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY665;
+    procedure SetItem(Index: Integer; const Value: TRegistroY665);
+  public
+    function New: TRegistroY665;
+    property Items[Index: Integer]: TRegistroY665 read GetItem write SetItem;
+  end;
+
   /// Registro Y671 - Outras Informações
 
   { TRegistroY671 }
@@ -439,6 +634,17 @@ type
     property VL_ALIQ_RED: variant read fVL_ALIQ_RED write fVL_ALIQ_RED;
     property IND_ALTER_CAPITAL: integer read fIND_ALTER_CAPITAL write fIND_ALTER_CAPITAL;
     property IND_BCN_CSLL: integer read fIND_BCN_CSLL write fIND_BCN_CSLL;
+  end;
+
+  /// Registro Y671 - Lista
+
+  TRegistroY671List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY671;
+    procedure SetItem(Index: Integer; const Value: TRegistroY671);
+  public
+    function New: TRegistroY671;
+    property Items[Index: Integer]: TRegistroY671 read GetItem write SetItem;
   end;
 
   /// Registro Y672 - Outras Informações (Lucro Presumido ou Lucro Arbitrado)
@@ -490,16 +696,47 @@ type
     property IND_AVAL_ESTOQ: string read fIND_AVAL_ESTOQ write fIND_AVAL_ESTOQ;
   end;
 
+  /// Registro Y672 - Lista
+
+  TRegistroY672List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY672;
+    procedure SetItem(Index: Integer; const Value: TRegistroY672);
+  public
+    function New: TRegistroY672;
+    property Items[Index: Integer]: TRegistroY672 read GetItem write SetItem;
+  end;
+
   /// Registro Y680 - Mês das Informações de Optantes pelo Refis (Lucro
   /// Real, Presumido e Arbitrado)
+
+  TRegistroY681List = class;
 
   { TRegistroY680 }
 
   TRegistroY680 = class(TBlocos)
   private
     fMES: string;
+    FRegistroY681: TRegistroY681List;
   public
+    constructor Create; /// Create
+    destructor Destroy; /// Destroy
+
     property MES: string read fMES write fMES;
+
+    // registros filhos
+    property RegistroY681: TRegistroY681List read FRegistroY681 write FRegistroY681;
+  end;
+
+  /// Registro Y680 - Lista
+
+  TRegistroY680List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY680;
+    procedure SetItem(Index: Integer; const Value: TRegistroY680);
+  public
+    function New: TRegistroY680;
+    property Items[Index: Integer]: TRegistroY680 read GetItem write SetItem;
   end;
 
   /// Registro Y681 - Informações de Optantes pelo Refis (Lucro Real,
@@ -518,6 +755,17 @@ type
     property VALOR: variant read fVALOR write fVALOR;
   end;
 
+  /// Registro Y681 - Lista
+
+  TRegistroY681List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY681;
+    procedure SetItem(Index: Integer; const Value: TRegistroY681);
+  public
+    function New: TRegistroY681;
+    property Items[Index: Integer]: TRegistroY681 read GetItem write SetItem;
+  end;
+
   /// Registro Y682 - Informações de Optantes pelo Refis - Imunes ou Isentas
 
   { TRegistroY682 }
@@ -531,6 +779,18 @@ type
     property ACRES_PATR: variant read fACRES_PATR write fACRES_PATR;
   end;
 
+
+  /// Registro Y682 - Lista
+
+  TRegistroY682List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY682;
+    procedure SetItem(Index: Integer; const Value: TRegistroY682);
+  public
+    function New: TRegistroY682;
+    property Items[Index: Integer]: TRegistroY682 read GetItem write SetItem;
+  end;
+
   /// Registro Y690 - Informações de Optantes pelo Paes
 
   { TRegistroY690 }
@@ -542,6 +802,17 @@ type
   public
     property MES: integer read fMES write fMES;
     property VL_REC_BRU: variant read fVL_REC_BRU write fVL_REC_BRU;
+  end;
+
+  /// Registro Y690 - Lista
+
+  TRegistroY690List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY690;
+    procedure SetItem(Index: Integer; const Value: TRegistroY690);
+  public
+    function New: TRegistroY690;
+    property Items[Index: Integer]: TRegistroY690 read GetItem write SetItem;
   end;
 
   /// Registro Y800 - Outras Informações
@@ -568,6 +839,9 @@ type
 
   /// Registro Y990 - ENCERRAMENTO DO BLOCO Y
   TRegistroY990 = class(TCloseBlocos)
+    fQTD_LIN: Integer;    /// Quantidade total de linhas do Bloco I
+  public
+    property QTD_LIN: Integer read FQTD_LIN write FQTD_LIN;
   end;
 
 implementation
@@ -595,6 +869,448 @@ end;
 function TRegistroY800.GetIND_FIM_RTF: string;
 begin
   Result := 'Y800FIM';
+end;
+
+{ TRegistroY520List }
+
+function TRegistroY520List.GetItem(Index: Integer): TRegistroY520;
+begin
+   Result := TRegistroY520(Inherited Items[Index]);
+end;
+
+function TRegistroY520List.New: TRegistroY520;
+begin
+  Result := TRegistroY520.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY520List.SetItem(Index: Integer; const Value: TRegistroY520);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY540List }
+
+function TRegistroY540List.GetItem(Index: Integer): TRegistroY540;
+begin
+   Result := TRegistroY540(Inherited Items[Index]);
+end;
+
+function TRegistroY540List.New: TRegistroY540;
+begin
+  Result := TRegistroY540.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY540List.SetItem(Index: Integer; const Value: TRegistroY540);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY550List }
+
+function TRegistroY550List.GetItem(Index: Integer): TRegistroY550;
+begin
+   Result := TRegistroY550(Inherited Items[Index]);
+end;
+
+function TRegistroY550List.New: TRegistroY550;
+begin
+  Result := TRegistroY550.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY550List.SetItem(Index: Integer; const Value: TRegistroY550);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY560List }
+
+function TRegistroY560List.GetItem(Index: Integer): TRegistroY560;
+begin
+   Result := TRegistroY560(Inherited Items[Index]);
+end;
+
+function TRegistroY560List.New: TRegistroY560;
+begin
+  Result := TRegistroY560.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY560List.SetItem(Index: Integer; const Value: TRegistroY560);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY570List }
+
+function TRegistroY570List.GetItem(Index: Integer): TRegistroY570;
+begin
+   Result := TRegistroY570(Inherited Items[Index]);
+end;
+
+function TRegistroY570List.New: TRegistroY570;
+begin
+  Result := TRegistroY570.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY570List.SetItem(Index: Integer; const Value: TRegistroY570);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY580List }
+
+function TRegistroY580List.GetItem(Index: Integer): TRegistroY580;
+begin
+   Result := TRegistroY580(Inherited Items[Index]);
+end;
+
+function TRegistroY580List.New: TRegistroY580;
+begin
+  Result := TRegistroY580.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY580List.SetItem(Index: Integer; const Value: TRegistroY580);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY590List }
+
+function TRegistroY590List.GetItem(Index: Integer): TRegistroY590;
+begin
+   Result := TRegistroY590(Inherited Items[Index]);
+end;
+
+function TRegistroY590List.New: TRegistroY590;
+begin
+  Result := TRegistroY590.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY590List.SetItem(Index: Integer; const Value: TRegistroY590);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY600List }
+
+function TRegistroY600List.GetItem(Index: Integer): TRegistroY600;
+begin
+   Result := TRegistroY600(Inherited Items[Index]);
+end;
+
+function TRegistroY600List.New: TRegistroY600;
+begin
+  Result := TRegistroY600.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY600List.SetItem(Index: Integer; const Value: TRegistroY600);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY611List }
+
+function TRegistroY611List.GetItem(Index: Integer): TRegistroY611;
+begin
+   Result := TRegistroY611(Inherited Items[Index]);
+end;
+
+function TRegistroY611List.New: TRegistroY611;
+begin
+  Result := TRegistroY611.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY611List.SetItem(Index: Integer; const Value: TRegistroY611);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY612List }
+
+function TRegistroY612List.GetItem(Index: Integer): TRegistroY612;
+begin
+   Result := TRegistroY612(Inherited Items[Index]);
+end;
+
+function TRegistroY612List.New: TRegistroY612;
+begin
+  Result := TRegistroY612.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY612List.SetItem(Index: Integer; const Value: TRegistroY612);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY620List }
+
+function TRegistroY620List.GetItem(Index: Integer): TRegistroY620;
+begin
+   Result := TRegistroY620(Inherited Items[Index]);
+end;
+
+function TRegistroY620List.New: TRegistroY620;
+begin
+  Result := TRegistroY620.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY620List.SetItem(Index: Integer; const Value: TRegistroY620);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY630List }
+
+function TRegistroY630List.GetItem(Index: Integer): TRegistroY630;
+begin
+   Result := TRegistroY630(Inherited Items[Index]);
+end;
+
+function TRegistroY630List.New: TRegistroY630;
+begin
+  Result := TRegistroY630.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY630List.SetItem(Index: Integer; const Value: TRegistroY630);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY640List }
+
+function TRegistroY640List.GetItem(Index: Integer): TRegistroY640;
+begin
+   Result := TRegistroY640(Inherited Items[Index]);
+end;
+
+function TRegistroY640List.New: TRegistroY640;
+begin
+  Result := TRegistroY640.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY640List.SetItem(Index: Integer; const Value: TRegistroY640);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY650List }
+
+function TRegistroY650List.GetItem(Index: Integer): TRegistroY650;
+begin
+   Result := TRegistroY650(Inherited Items[Index]);
+end;
+
+function TRegistroY650List.New: TRegistroY650;
+begin
+  Result := TRegistroY650.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY650List.SetItem(Index: Integer; const Value: TRegistroY650);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY660List }
+
+function TRegistroY660List.GetItem(Index: Integer): TRegistroY660;
+begin
+   Result := TRegistroY660(Inherited Items[Index]);
+end;
+
+function TRegistroY660List.New: TRegistroY660;
+begin
+  Result := TRegistroY660.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY660List.SetItem(Index: Integer; const Value: TRegistroY660);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY665List }
+
+function TRegistroY665List.GetItem(Index: Integer): TRegistroY665;
+begin
+   Result := TRegistroY665(Inherited Items[Index]);
+end;
+
+function TRegistroY665List.New: TRegistroY665;
+begin
+  Result := TRegistroY665.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY665List.SetItem(Index: Integer; const Value: TRegistroY665);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY671List }
+
+function TRegistroY671List.GetItem(Index: Integer): TRegistroY671;
+begin
+   Result := TRegistroY671(Inherited Items[Index]);
+end;
+
+function TRegistroY671List.New: TRegistroY671;
+begin
+  Result := TRegistroY671.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY671List.SetItem(Index: Integer; const Value: TRegistroY671);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY672List }
+
+function TRegistroY672List.GetItem(Index: Integer): TRegistroY672;
+begin
+   Result := TRegistroY672(Inherited Items[Index]);
+end;
+
+function TRegistroY672List.New: TRegistroY672;
+begin
+  Result := TRegistroY672.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY672List.SetItem(Index: Integer; const Value: TRegistroY672);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY680List }
+
+function TRegistroY680List.GetItem(Index: Integer): TRegistroY680;
+begin
+   Result := TRegistroY680(Inherited Items[Index]);
+end;
+
+function TRegistroY680List.New: TRegistroY680;
+begin
+  Result := TRegistroY680.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY680List.SetItem(Index: Integer; const Value: TRegistroY680);
+begin
+  Put(Index, Value);
+end;
+
+
+{ TRegistroY681List }
+
+function TRegistroY681List.GetItem(Index: Integer): TRegistroY681;
+begin
+   Result := TRegistroY681(Inherited Items[Index]);
+end;
+
+function TRegistroY681List.New: TRegistroY681;
+begin
+  Result := TRegistroY681.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY681List.SetItem(Index: Integer; const Value: TRegistroY681);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY682List }
+
+function TRegistroY682List.GetItem(Index: Integer): TRegistroY682;
+begin
+   Result := TRegistroY682(Inherited Items[Index]);
+end;
+
+function TRegistroY682List.New: TRegistroY682;
+begin
+  Result := TRegistroY682.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY682List.SetItem(Index: Integer; const Value: TRegistroY682);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY690List }
+
+function TRegistroY690List.GetItem(Index: Integer): TRegistroY690;
+begin
+   Result := TRegistroY690(Inherited Items[Index]);
+end;
+
+function TRegistroY690List.New: TRegistroY690;
+begin
+  Result := TRegistroY690.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY690List.SetItem(Index: Integer; const Value: TRegistroY690);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY640 }
+
+constructor TRegistroY640.Create;
+begin
+   inherited;
+
+   FRegistroY650 := TRegistroY650List.Create;
+end;
+
+destructor TRegistroY640.Destroy;
+begin
+   FRegistroY650.Free;
+
+   inherited;
+end;
+
+{ TRegistroY680 }
+
+constructor TRegistroY680.Create;
+begin
+   inherited;
+
+   FRegistroY681 := TRegistroY681List.Create;
+end;
+
+destructor TRegistroY680.Destroy;
+begin
+   FRegistroY681.Free;
+
+   inherited;
 end;
 
 end.

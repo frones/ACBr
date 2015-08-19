@@ -993,43 +993,64 @@ end;
 procedure TACBrSPEDECF.WriteRegistroJ001;
 begin
    Bloco_J.WriteRegistroJ001;
+
+   with Bloco_9.Registro9900.New do
+   begin
+     REG_BLC := 'J001';
+     QTD_REG_BLC := 1;
+   end;
+
+   if (Bloco_J.RegistroJ001.IND_DAD = idComDados) then
+   begin
+     with Bloco_9.Registro9900 do
+     begin
+       if Bloco_J.RegistroJ050Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'J050';
+           QTD_REG_BLC := Bloco_J.RegistroJ050Count;
+         end;
+       end;
+
+       if Bloco_J.RegistroJ051Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'J051';
+           QTD_REG_BLC := Bloco_J.RegistroJ051Count;
+         end;
+       end;
+
+       if Bloco_J.RegistroJ053Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'J053';
+           QTD_REG_BLC := Bloco_J.RegistroJ053Count;
+         end;
+       end;
+
+       if Bloco_J.RegistroJ100Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'J100';
+           QTD_REG_BLC := Bloco_J.RegistroJ100Count;
+         end;
+       end;
+     end;
+   end;
+
 end;
 
 procedure TACBrSPEDECF.WriteRegistroJ990;
 begin
-  with Bloco_9.Registro9900.New do begin
-    REG_BLC := 'J001';
-    QTD_REG_BLC := 1;
-  end;
-  if Bloco_J.REgistroJ050.Count > 0 then begin
-    with Bloco_9.Registro9900.New do begin
-      REG_BLC := 'J050';
-      QTD_REG_BLC := Bloco_J.REgistroJ050.Count;
-    end;
-  end;
-  if Bloco_J.REgistroJ051Count > 0 then begin
-    with Bloco_9.Registro9900.New do begin
-      REG_BLC := 'J051';
-      QTD_REG_BLC := Bloco_J.REgistroJ051Count;
-    end;
-  end;
-  if Bloco_J.REgistroJ053Count > 0 then begin
-    with Bloco_9.Registro9900.New do begin
-      REG_BLC := 'J053';
-      QTD_REG_BLC := Bloco_J.REgistroJ053Count;
-    end;
-  end;
-  if Bloco_J.RegistroJ100.Count > 0 then begin
-    with Bloco_9.Registro9900.New do begin
-      REG_BLC := 'J100';
-      QTD_REG_BLC := Bloco_J.RegistroJ100.Count;
-    end;
-  end;
-  with Bloco_9.Registro9900.New do begin
+  with Bloco_9.Registro9900.New do
+  begin
     REG_BLC := 'J990';
     QTD_REG_BLC := 1;
   end;
-
   Bloco_J.WriteRegistroJ990;
 end;
 

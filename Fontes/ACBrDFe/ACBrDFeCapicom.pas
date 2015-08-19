@@ -43,7 +43,7 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL, ACBrHTTPReqResp,
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
-  JwaWinCrypt, Windows, ActiveX, ComObj;
+  JwaWindows, Windows, ActiveX, ComObj;
 
 const
   DSIGNS = 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';
@@ -62,6 +62,7 @@ type
 
     FReqResp: TACBrHTTPReqResp;
 
+    procedure AtribuirSenhaA3;
     procedure CarregarCertificadoSeNecessario;
     procedure Clear;
 
@@ -97,10 +98,11 @@ type
     property StoreLocation: CAPICOM_STORE_LOCATION read FStoreLocation write FStoreLocation;
   end;
 
+Var CertificadosA3ComPin: String;
+
 implementation
 
 uses
-  strutils,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts, synautil;
 
 { TDFeCapicom }
@@ -162,9 +164,85 @@ begin
     CarregarCertificado;
 end;
 
+procedure TDFeCapicom.AtribuirSenhaA3;
+var
+  PrivKey: IPrivateKey;
+  XML: String;
+  xmldoc: IXMLDOMDocument3;
+  xmldsig: IXMLDigitalSignature;
+  dsigKey: IXMLDSigKey;
+  SigKey: IXMLDSigKeyEx;
+  hCryptProvider: Cardinal;
+begin
+  if (FpDFeSSL.Senha = '') or
+     (not Assigned(FCertificado)) or
+     (not Assigned(FCertStoreMem)) then
+    exit ;
+
+  // Se Atribuir novamente em outra instância causa conflito... //
+  if (pos(FNumCertCarregado, CertificadosA3ComPin) > 0) then
+    exit ;
+
+  PrivKey := FCertificado.PrivateKey;
+
+  // Atribuindo Senha para memória, apenas se o Certificado for A3 //
+  if not PrivKey.IsHardwareDevice then
+    exit;
+
+  //CriarMutexParaCertificado
+
+  // Criando objeto IXMLDSigKeyEx, para obter contexto do Certificado //
+  try
+    XML := SignatureElement('', False);
+
+    xmldoc := CoDOMDocument50.Create;
+    xmldoc.async := False;
+    xmldoc.validateOnParse := False;
+    xmldoc.preserveWhiteSpace := True;
+    xmldoc.loadXML(XML);
+    xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+
+    xmldsig := CoMXDigitalSignature50.Create;
+    xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+    xmldsig.store := FCertStoreMem;
+
+    try
+      dsigKey := xmldsig.createKeyFromCSP(PrivKey.ProviderType,
+        PrivKey.ProviderName, PrivKey.ContainerName, 0);
+
+      if (dsigKey = nil) then
+        raise Exception.Create('');
+    except
+      On E: Exception do
+      begin
+        raise EACBrDFeException.Create('Erro ao ler Chave do certificado: '+
+                                       FNumCertCarregado+sLineBreak+ E.Message)
+      end;
+    end;
+
+    SigKey := dsigKey as IXMLDSigKeyEx;
+    SigKey.getCSPHandle(hCryptProvider);
+    try
+      CryptSetProvParam(hCryptProvider, PP_SIGNATURE_PIN, Windows.PBYTE(FpDFeSSL.Senha), 0);
+    finally
+      CryptReleaseContext(hCryptProvider, 0);
+    end;
+
+    CertificadosA3ComPin := CertificadosA3ComPin + FNumCertCarregado + ',';
+  finally
+    SigKey := nil;
+    dsigKey := nil;
+    xmldsig := nil;
+    xmldoc := nil;
+  end;
+end;
+
 procedure TDFeCapicom.Clear;
 begin
   FCertificado := nil;
+  if Assigned(FCertStoreMem) then
+    FCertStoreMem.Close;
+
   FCertStoreMem := nil;
   FNumCertCarregado := '';
   FCNPJ := '';
@@ -177,106 +255,82 @@ var
   Cert: ICertificate2;
   Extension: IExtension;
   i, j, p: integer;
-
-  xmldoc: IXMLDOMDocument3;
-  xmldsig: IXMLDigitalSignature;
-  dsigKey: IXMLDSigKey;
-  SigKey: IXMLDSigKeyEx;
-  PrivateKey: IPrivateKey;
-  hCryptProvider: Cardinal;
-  XML, Propriedades, Propriedade: String;
+  Propriedades, Propriedade: String;
   Lista: TStringList;
+  KeyLocation: Integer;
+
 begin
-  // Verificando se possui parâmetros necessários //
-  with FpDFeSSL do
+  // Certificado já foi carregado ??
+  if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then
   begin
-    if EstaVazio(FpDFeSSL.NumeroSerie) then
-    begin
-      if not EstaVazio(ArquivoPFX) then
-        raise EACBrDFeException.Create(ClassName +
-          ' não suporta carga de Certificado pelo ArquivoPFX.' +
-          sLineBreak + 'Utilize o "NumeroSerie"')
-      else if not EstaVazio(DadosPFX) then
-        raise EACBrDFeException.Create(ClassName +
-          ' não suporta carga de Certificado por DadosPFX.' +
-          sLineBreak + 'Utilize o "NumeroSerie"')
-      else
-        raise EACBrDFeException.Create(
-          'Número de Série do Certificado Digital não especificado !');
-    end;
+    FpCertificadoLido := True;
+    exit;
+  end;
 
-    // Certificado já foi carregado ??
-    if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then
-    begin
-      FpCertificadoLido := True;
-      exit;
-    end;
-
+  if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
+  begin
     // Lendo lista de Certificados //
     Store := CoStore.Create;
-    Store.Open(FStoreLocation, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
-    FCertificado := nil;
-    Certs := Store.Certificates as ICertificates2;
+    try
+      Store.Open(FStoreLocation, CAPICOM_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
+      FCertificado := nil;
+      Certs := Store.Certificates as ICertificates2;
 
-    // Verificando se "FpDFeSSL.NumeroSerie" está na lista de certificados encontrados //;
-    for i := 1 to Certs.Count do
-    begin
-      Cert := IInterface(Certs.Item[i]) as ICertificate2;
-      if Cert.SerialNumber = FpDFeSSL.NumeroSerie then
+      // Verificando se "FpDFeSSL.NumeroSerie" está na lista de certificados encontrados //;
+      for i := 1 to Certs.Count do
       begin
-        FCertificado := Cert;
-        Break;
+        Cert := IInterface(Certs.Item[i]) as ICertificate2;
+        if Cert.SerialNumber = FpDFeSSL.NumeroSerie then
+        begin
+          FCertificado := Cert;
+          Break;
+        end;
       end;
+    finally
+      Store.Close;
     end;
+  end
 
-    // Não Achou ? //
-    if FCertificado = nil then
-      raise EACBrDFeException.Create('Certificado Digital não encontrado!');
+  else if not EstaVazio(FpDFeSSL.ArquivoPFX) then
+  begin
+    FCertificado := CoCertificate.Create;
 
-    // Salvando propriedades do Certificado //
-    FNumCertCarregado := FCertificado.SerialNumber;
-    PrivateKey := FCertificado.PrivateKey;
+    KeyLocation := CAPICOM_CURRENT_USER_KEY;
+    if FStoreLocation = CAPICOM_LOCAL_MACHINE_STORE then
+      KeyLocation := CAPICOM_LOCAL_MACHINE_KEY;
 
-    // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //[
-    FCertStoreMem := CoStore.Create;
-    FCertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
-    FCertStoreMem.Add(FCertificado);
+    FCertificado.Load( FpDFeSSL.ArquivoPFX, FpDFeSSL.Senha,
+                       CAPICOM_KEY_STORAGE_DEFAULT, KeyLocation);
+  end
 
-    // Atribuindo Senha para memória, se o Certificado for A3 //
-    if (Senha <> '') and PrivateKey.IsHardwareDevice then
-    begin
-      XML := SignatureElement('', False);
+  else if not EstaVazio(FpDFeSSL.DadosPFX) then
+  begin
+    raise EACBrDFeException.Create(ClassName +
+      ' não suporta carga de Certificado por DadosPFX.' +
+      sLineBreak + 'Utilize "NumeroSerie" ou "ArquivoPFX"')
+  end
 
-      xmldoc := CoDOMDocument50.Create;
-      xmldoc.async := False;
-      xmldoc.validateOnParse := False;
-      xmldoc.preserveWhiteSpace := True;
-      xmldoc.loadXML(XML);
-      xmldoc.setProperty('SelectionNamespaces', DSIGNS);
-
-      xmldsig := CoMXDigitalSignature50.Create;
-      xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
-      xmldsig.store := FCertStoreMem;
-
-      dsigKey := xmldsig.createKeyFromCSP(PrivateKey.ProviderType,
-        PrivateKey.ProviderName, PrivateKey.ContainerName, 0);
-      if (dsigKey = nil) then
-        raise EACBrDFeException.Create('Erro ao criar a chave do CSP.');
-
-      SigKey := dsigKey as IXMLDSigKeyEx;
-      SigKey.getCSPHandle(hCryptProvider);
-      try
-        CryptSetProvParam(hCryptProvider, PP_SIGNATURE_PIN, Windows.PBYTE(Senha), 0);
-      finally
-        CryptReleaseContext(hCryptProvider, 0);
-      end;
-
-      SigKey := nil;
-      dsigKey := nil;
-      xmldsig := nil;
-      xmldoc := nil;
-    end;
+  else
+  begin
+    raise EACBrDFeException.Create(
+    'Número de Série do Certificado Digital não especificado !');
   end;
+
+
+  // Não Achou ? //
+  if FCertificado = nil then
+    raise EACBrDFeException.Create('Certificado Digital não encontrado!');
+
+  // Salvando propriedades do Certificado //
+  FNumCertCarregado := FCertificado.SerialNumber;
+
+  // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //
+  FCertStoreMem := CoStore.Create;
+  FCertStoreMem.Open(CAPICOM_MEMORY_STORE, 'MemoriaACBr', CAPICOM_STORE_OPEN_READ_ONLY);
+  FCertStoreMem.Add(FCertificado);
+
+  // Se necessário atribui a Senha para o FCertStoreMem //
+  AtribuirSenhaA3;
 
   // Procurando pelo CNPJ nas propriedades do Certificado //
   for i := 1 to FCertificado.Extensions.Count do
@@ -594,8 +648,10 @@ end;
 
 initialization
   CoInitialize(nil); // PERMITE O USO DE THREAD
+  CertificadosA3ComPin := '';
 
 finalization
  CoUninitialize;
 
 end.
+

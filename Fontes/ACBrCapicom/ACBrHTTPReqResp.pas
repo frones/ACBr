@@ -283,13 +283,11 @@ begin
       end;
 
       CertContext := Cert as ICertContext;
-      CertContext.Get_CertContext(integer(PCertContext));
     end;
   end
   else
   begin
     CertContext := FCertificate as ICertContext;
-    CertContext.Get_CertContext(integer(PCertContext));
   end;
 
   if FProxyHost <> '' then
@@ -306,30 +304,31 @@ begin
   //DEBUG
   //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
 
+  CertContext.Get_CertContext(integer(PCertContext));
   pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
-  if not Assigned(pSession) then
-    raise EACBrHTTPReqResp.Create('Erro: Internet Open or Proxy');
 
-  //DEBUG
-  //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
-
-  if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
-  
-  if not InternetSetOption(pSession, INTERNET_OPTION_CONNECT_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');    
-    
-  if not InternetSetOption(pSession, INTERNET_OPTION_DATA_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');    
-    
-  if not InternetSetOption(pSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');    
-
-  if not InternetSetOption(pSession, INTERNET_OPTION_DATA_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-    raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');        
-
-    
   try
+    if not Assigned(pSession) then
+      raise EACBrHTTPReqResp.Create('Erro: Internet Open or Proxy');
+
+    //DEBUG
+    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
+
+    if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
+
+    if not InternetSetOption(pSession, INTERNET_OPTION_CONNECT_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
+
+    if not InternetSetOption(pSession, INTERNET_OPTION_DATA_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
+
+    if not InternetSetOption(pSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');
+
+    if not InternetSetOption(pSession, INTERNET_OPTION_DATA_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');
+
     if (FUseSSL) then
       Port := INTERNET_DEFAULT_HTTPS_PORT
     else
@@ -466,6 +465,7 @@ begin
     end;
   finally
     InternetCloseHandle(pSession);
+    CertContext.FreeContext(integer(PCertContext));
   end;
 end;
 

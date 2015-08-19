@@ -44,6 +44,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2015   (por: DSA)
+-- ACBrDFeCapicom --
+[+]  Implementado o uso de Certificados A1 por Arquivo PFX,
+    Sem necessitar da instalação do Certificado.  Exemplo:
+    ACBrNFe1.Configuracoes.Certificados.ArquivoPFX := 'c:\temp\CertificadoA1.pfx';
+    ACBrNFe1.Configuracoes.Certificados.Senha := '1234';
+[*] Refatoração de código na atribuição de Senha de Certificados A3
+[*] Revisão de rotinas para liberação de Recursos alocados
+[-] Correção de "Erro no suporte a canais seguros" a partir da segunda requisicao.
+    o que ocorre quando o mesmo Certificado A3 é atribuido a várias instâncias do
+    componente, e com a atribuição automática de Senha  (por:  Marciano Bandeira)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23668
+
+-- ACBrHTTPReqResp --
+[*] Revisão de rotinas para liberação de Recursos alocados
 
 13/08/2015   (por: DSA)
 -- ACBrDFe --

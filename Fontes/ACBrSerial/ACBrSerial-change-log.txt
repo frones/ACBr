@@ -39,8 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 19/08/2015
--- ACBrECFEscECF --     (por: DSA)
+Data: 19/08/2015        (por: DSA)
+-- ACBrECFVirtualBuffer --
+[-] Correção para alinhar fonte a Esquerda, no final da impressão do Cabeçalho
+
+-- ACBrECFEscECF --
 [+] Método "DadosUltimaReducaoZ, adicionado workaround para Falta de Informação
     de Grande Total em retorno do ECF.
 

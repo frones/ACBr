@@ -553,7 +553,7 @@ begin
   end ;
 
   fsBuffer.Insert( fsCabecalho.Count,
-                   PadSpace('CNPJ: '+CNPJ+'|IE: '+IE, Colunas, '|') );
+                   '</ae>'+PadSpace('CNPJ: '+CNPJ+'|IE: '+IE, Colunas, '|') );
 
   fsBuffer.Insert( fsCabecalho.Count+1,
                    PadSpace( DateToStr(now)+' '+TimeToStr(now)+V+'|COO:'+

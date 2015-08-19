@@ -3056,6 +3056,12 @@ begin
                                   AchaValorRegistrador('IS2') +
                                   AchaValorRegistrador('IS3') ;
 
+    { EscESC não retorna o GT em leitura de Dados da Ultima Reducao Z,
+      Usando o GTInicial deste movimento }
+
+    RetornaInfoECF( '8' ) ;
+    ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[3],0)/100, -2);
+
     CalculaValoresVirtuais;
     Result := MontaDadosReducaoZ;
   end;

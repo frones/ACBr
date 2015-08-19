@@ -44,6 +44,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/18/2015
+-- NFE --
+[-] Correção para método "nfetotxt"   (por: DSA)
+
 -- SAT --      (por: jrs.santos)
 [*] Ajuste para Retornar dados de Cupom ou Cupom Cancelado em
     ConsultarNumeroSessao, e atribui-lo a ACBrSAT.CFe, ACBrSAT.CFeCanc

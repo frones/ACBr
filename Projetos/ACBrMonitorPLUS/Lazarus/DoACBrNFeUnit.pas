@@ -1421,7 +1421,7 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           ACBrNFe1.NotasFiscais.Items[0].GravarXML(ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt'),Cmd.Params(1));
+           ACBrNFe1.NotasFiscais.Items[0].GravarTXT(ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt'),Cmd.Params(1));
            Cmd.Resposta := ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt');
          end
 

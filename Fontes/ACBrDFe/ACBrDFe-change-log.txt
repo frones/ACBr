@@ -56,6 +56,7 @@ Símbolo : Significado
     o que ocorre quando o mesmo Certificado A3 é atribuido a várias instâncias do
     componente, e com a atribuição automática de Senha  (por:  Marciano Bandeira)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=23668
+[*] Método "Validar", mais informações sobre o Erro quando falhar ao Ler um XML.
 
 -- ACBrHTTPReqResp --
 [*] Revisão de rotinas para liberação de Recursos alocados

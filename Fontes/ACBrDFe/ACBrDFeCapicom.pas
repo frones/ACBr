@@ -537,7 +537,12 @@ begin
     DOMDocument.validateOnParse := True;
     if (not DOMDocument.loadXML(ConteudoXML)) then
     begin
-      MsgErro := ACBrStr('Não foi possível carregar o arquivo.');
+      ParseError := DOMDocument.parseError;
+      MsgErro := ACBrStr('Não foi possível carregar o arquivo.')+sLineBreak+
+                 'Err: '+IntToStr(ParseError.errorCode) + ', ' +
+                 'Lin: '+IntToStr(ParseError.line) + ', ' +
+                 'Pos: '+IntToStr(ParseError.linepos) + ' - ' +
+                 ParseError.reason;
       exit;
     end;
 

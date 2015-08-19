@@ -285,6 +285,7 @@ begin
     teEPEC                     : Result := 'EPEC';
     teMultiModal               : Result := 'Registro Multimodal';
     teRegistroPassagem         : Result := 'Registro de Passagem';
+    teRegistroPassagemNFe      : Result := 'Registro de Passagem NF-e';
     teRegistroPassagemBRId     : Result := 'Registro de Passagem BRId';
     teEncerramento             : Result := 'Encerramento';
     teInclusaoCondutor         : Result := 'Inclusao Condutor';
@@ -334,6 +335,7 @@ begin
     teEPEC                     : Result := 'EPEC';
     teMultiModal               : Result := 'REGISTRO MULTIMODAL';
     teRegistroPassagem         : Result := 'REGISTRO DE PASSAGEM';
+    teRegistroPassagemNFe      : Result := 'REGISTRO DE PASSAGEM NF-e';
     teRegistroPassagemBRId     : Result := 'REGISTRO DE PASSAGEM BRId';
     teEncerramento             : Result := 'ENCERRAMENTO';
     teInclusaoCondutor         : Result := 'INCLUSAO CONDUTOR';

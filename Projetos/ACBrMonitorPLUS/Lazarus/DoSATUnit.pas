@@ -146,7 +146,7 @@ begin
 
         if cbxSATSalvarCFe.Checked then
         begin
-          ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda,
+          ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaEnvio,
                         IntToStrZero(ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
                         IntToStrZero(ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
           ACBrSAT1.CFe.SaveToFile(ArqCFe);

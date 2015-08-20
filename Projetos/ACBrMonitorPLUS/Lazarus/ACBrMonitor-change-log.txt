@@ -45,6 +45,8 @@ Símbolo : Significado
 
 20/08/2015
 -- SAT --  (por: DSA)
+[-] Método "criarcfe" ou "criarenviarcfe". Correção na pasta para Salvar os XMLs
+    de envio.
 [-] Correção para que a montagem do CFe respeite os valores Default informados
     na configuração da aba SAT (ACBrSAT1.InicializaCFe)
 

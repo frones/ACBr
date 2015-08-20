@@ -791,11 +791,6 @@ begin
         //B25-70
         AdicionaErro('321-Rejeição: NF-e devolução não possui NF referenciada');
 
-      GravaLog('Validar: 322-NFe devolução muitas referenciadas');
-      if (NFe.Ide.finNFe = fnDevolucao) and (NFe.Ide.NFref.Count > 1) then
-        //B25-80
-        AdicionaErro('322-Rejeição: NF-e devolução possui mais de uma NF referenciada');
-
       GravaLog('Validar: 794-NFe e domicício NFCe');
       if (NFe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');

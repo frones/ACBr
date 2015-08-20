@@ -210,6 +210,8 @@ function CSTICMSToStrTagPos(const t: TpcnCSTIcms): string;
 function CSTICMSToStrTagPosText(const t: TpcnCSTIcms): string;
 function CSOSNToStrTagPos(const t: TpcnCSOSNIcms): string;
 function CSOSNToStrID(const t: TpcnCSOSNIcms): string;
+function CSOSNToStrTagPosText(const t: TpcnCSOSNIcms): string;
+function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;
 
 function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
 function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
@@ -324,6 +326,9 @@ function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
 
 function SituacaoDFeToStr(const t: TSituacaoDFe): String;
 function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
+
+function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
+function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 
 implementation
 
@@ -501,6 +506,25 @@ begin
       oeNacionalConteudoImportacaoSuperior70]);
 end;
 
+function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;
+begin
+  result := EnumeradoToStr(t,
+   ['0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8. ',
+    '1 - Estrangeira - Importação direta, exceto a indicada no código 6.',
+    '2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7.',
+    '3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% e inferior ou igual a 70%.',
+    '4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes.',
+    '5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%. ',
+    '6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural. ',
+    '7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista da CAMEX e gás natural.',
+    '8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%.'],
+    [oeNacional, oeEstrangeiraImportacaoDireta, oeEstrangeiraAdquiridaBrasil,
+      oeNacionalConteudoImportacaoSuperior40, oeNacionalProcessosBasicos,
+      oeNacionalConteudoImportacaoInferiorIgual40,
+      oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
+      oeNacionalConteudoImportacaoSuperior70]);
+end;
+
 //CST CSON ICMS ***********************************************************
 function CSOSNIcmsToStr(const t: TpcnCSOSNIcms): string;
 begin
@@ -536,6 +560,23 @@ begin
     csosn500                               : result := '10g';
     csosn900                               : result := '10h';
   end;
+end;
+
+function CSOSNToStrTagPosText(const t: TpcnCSOSNIcms): string;
+begin
+  result := EnumeradoToStr(t,
+   ['VAZIO',
+    '101 - Tributada pelo Simples Nacional com permissão de crédito',
+    '102 - Tributada pelo Simples Nacional sem permissão de crédito ',
+    '103 - Isenção do ICMS no Simples Nacional para faixa de receita bruta',
+    '201 - Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por substituição tributária',
+    '202 - Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS por substituição tributária',
+    '203 - Isenção do ICMS no Simples Nacional para faixa de receita bruta e com cobrança do ICMS por substituição tributária',
+    '300 - Imune',
+    '400 - Não tributada pelo Simples Nacional',
+    '500 - ICMS cobrado anteriormente por substituição tributária (substituído) ou por antecipação',
+    '900 - Outros'],
+    [csosnVazio, csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900]);
 end;
 
 //***************************************************************************
@@ -577,26 +618,32 @@ end;
 function CSTICMSToStrTagPosText(const t: TpcnCSTIcms): string;
 begin
   result := EnumeradoToStr(t,
-   ['TRIBUTAÇÃO NORMAL DO ICMS',
-    'TRIBUTAÇÃO COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
-    'TRIBUTAÇÃO COM REDUÇÃO DE BC DO ICMS',
-    'TRIBUTAÇÃO ISENTA E COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
-    'ICMS ISENÇÃO',
-    'ICMS NÃO TRIBUTADO',
-    'ICMS ISENTO, NÃO TRIBUTADO OU DIFERIDO',
-    'ICMS SUSPENSÃO',
-    'ICMS DIFERIDO',
-    'ICMS COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA',
-    'TRIBUTAÇÃO COM REDUÇÃO DE BC E COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
-    'RESPONSABILIDADE DO RECOLHIMENTO DO ICMS ATRIBUÍDO AO TOMADOR OU 3° POR ST',
-    'ICMS DEVICO À OUTRA UF',
-    'ICMS OUTROS',
+   ['00 - TRIBUTAÇÃO NORMAL DO ICMS',
+    '10 - TRIBUTAÇÃO COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
+    '20 - TRIBUTAÇÃO COM REDUÇÃO DE BC DO ICMS',
+    '30 - TRIBUTAÇÃO ISENTA E COM COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
+    '40 - ICMS ISENÇÃO',
+    '41 - ICMS NÃO TRIBUTADO',
+    '45 - ICMS ISENTO, NÃO TRIBUTADO OU DIFERIDO',
+    '50 - ICMS SUSPENSÃO',
+    '51 - ICMS DIFERIDO',
+    '60 - ICMS COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA',
+    '70 - TRIBUTAÇÃO COM REDUÇÃO DE BC E COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
+    '80 - RESPONSABILIDADE DO RECOLHIMENTO DO ICMS ATRIBUÍDO AO TOMADOR OU 3° POR ST',
+    '81 - ICMS DEVICO À OUTRA UF',
+    '90 - ICMS OUTROS',
     'ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
-    'SIMPLES NACIONAL'],
+    'SN - SIMPLES NACIONAL'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
 end;
 
 // N13 - Modalidade de determinação da BC do ICMS ******************************
+function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
+begin
+  result := EnumeradoToStr(t, ['0 - Margem Valor Agregado (%)', '1 - Pauta (Valor)', '2 - Preço Tabelado Máx. (valor)', '3 - valor da operação'],
+    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao]);
+end;
+
 function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
 begin
   // 0 - Margem Valor Agregado (%);
@@ -614,6 +661,13 @@ begin
 end;
 
 // N18 - Modalidade de determinação da BC do ICMS ST ***************************
+function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
+begin
+  result := EnumeradoToStr(t, ['0 – Preço tabelado ou máximo sugerido', '1 - Lista Negativa (valor)',
+   '2 - Lista Positiva (valor)', '3 - Lista Neutra (valor)', '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)'],
+    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta]);
+end;
+
 function modBCSTToStr(const t: TpcnDeterminacaoBaseIcmsST): string;
 begin
   // 0 – Preço tabelado ou máximo sugerido;

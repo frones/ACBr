@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/08/2015
+-- pcnConversao --    (por: gabriellc)
+[+] function CSOSNToStrTagPosText(const t: TpcnCSOSNIcms): string;
+[+] function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;
+[+] function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
+[+] function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
+[*] CSTICMSToStrTagPosText, adicionado Indice no inicio da descrição
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23771
+
 18/08/2015
 [*] Incluido o tipo de evento: 610500 - teRegistroPassagemNFe.
     Por: Italo Jurisato Junior

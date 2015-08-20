@@ -48,6 +48,9 @@ uses
   Classes, SysUtils,
   ACBrPosPrinter, ACBrEscPosEpson, ACBrConsts;
 
+const
+  ModoEscBema = GS + #249 + #32 + #0;
+
 type
 
   { TACBrEscBematech }
@@ -63,6 +66,8 @@ type
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
     function ComandoLogo: AnsiString; override;
+    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
+    function ComandoInicializa: AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -72,25 +77,20 @@ type
 implementation
 
 Uses
-  strutils,
+  strutils, math,
   ACBrUtil;
 
 { TACBrEscBematech }
 
 constructor TACBrEscBematech.Create(AOwner: TACBrPosPrinter);
-Var
-  ModoEscBema: AnsiString;
 begin
   inherited Create(AOwner);
 
   fpModeloStr := 'EscBematech';
 
-  ModoEscBema := GS + #249 + #32 + #0;
-
 {(*}
   with Cmd  do
   begin
-    Zera                    := ESC + '@' + ModoEscBema ;
     LigaNegrito             := ESC + 'E';
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
@@ -106,7 +106,6 @@ begin
     FonteB                  := LigaCondensado;
     CorteTotal              := ESC + 'w';
     CorteParcial            := ESC + 'm';
-    AbreGaveta              := ESC + 'v' + #200;
   end;
   {*)}
 end;
@@ -122,10 +121,10 @@ begin
   with fpPosPrinter.ConfigQRCode do
   begin
     Result := GS  + 'kQ' + // Codigo QRCode
-              AnsiChr(ErrorLevel) +       // N1 Error correction level 0 - L, 1 - M, 2 - Q, 3 - H
-              AnsiChr(10) +               // N2 - MSB; 0 = default = 4
-              AnsiChr(LarguraModulo) +    // N3 - Version QRCode ???
-              AnsiChr(1) +                // N4, Encoding modes: 0 – Numeric only, 1 – Alphanumeric, 2 – Binary (8 bits), 3 – Kanji,
+              AnsiChr(ErrorLevel) +         // N1 Error correction level 0 - L, 1 - M, 2 - Q, 3 - H
+              AnsiChr(LarguraModulo * 2) +  // N2 - MSB; 0 = default = 4
+              AnsiChr(0) +                  // N3 - Precisa computar Version QRCode ???
+              AnsiChr(1) +                  // N4, Encoding modes: 0 – Numeric only, 1 – Alphanumeric, 2 – Binary (8 bits), 3 – Kanji,
               IntToLEStr( Length(ACodigo) ) +  // N5 e N6
               ACodigo;
   end;
@@ -165,6 +164,27 @@ begin
 
     Result := FS + 'p' + AnsiChr( StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 1)) + AnsiChr(m);
   end;
+end;
+
+function TACBrEscBematech.ComandoGaveta(NumGaveta: Integer): AnsiString;
+var
+  Tempo: Integer;
+begin
+  with fpPosPrinter.ConfigGaveta do
+  begin
+    Tempo := max(TempoON, TempoOFF);
+
+    if NumGaveta > 1 then
+      Result := ESC + #128 + AnsiChr( Tempo )
+    else
+      Result := ESC + 'v' + AnsiChr( Tempo )
+  end;
+end;
+
+function TACBrEscBematech.ComandoInicializa: AnsiString;
+begin
+  Result := inherited ComandoInicializa ;
+  Result := ModoEscBema + Result;
 end;
 
 procedure TACBrEscBematech.LerStatus(var AStatus: TACBrPosPrinterStatus);

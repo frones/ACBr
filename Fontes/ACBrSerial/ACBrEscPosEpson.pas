@@ -63,6 +63,7 @@ type
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
     function ComandoLogo: AnsiString; override;
+    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -109,7 +110,6 @@ begin
     AlinhadoDireita         := ESC + 'a' + #2;
     CorteTotal              := GS  + 'V' + #0;
     CorteParcial            := GS  + 'V' + #1;
-    AbreGaveta              := ESC + 'p' + #0 + #10 + #100;
     Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
   end;
   {*)}
@@ -228,6 +228,21 @@ begin
     Result := GS + '(L' + #6 + #0 + #48 + #69 +
               AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
               AnsiChr(FatorX)   + AnsiChr(FatorY);
+  end;
+end;
+
+function TACBrEscPosEpson.ComandoGaveta(NumGaveta: Integer): AnsiString;
+var
+  CharGav: AnsiChar;
+begin
+  if NumGaveta > 1 then
+    CharGav := #1
+  else
+    CharGav := #0;
+
+  with fpPosPrinter.ConfigGaveta do
+  begin
+    Result := ESC + 'p' + CharGav + AnsiChar(TempoON) + AnsiChar(TempoOFF);
   end;
 end;
 

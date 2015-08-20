@@ -56,7 +56,6 @@ type
 
   TACBrPosComandos = class
   private
-    FAbreGaveta: AnsiString;
     FBeep: AnsiString;
     FAlinhadoCentro: AnsiString;
     FAlinhadoDireita: AnsiString;
@@ -112,7 +111,6 @@ type
     property AlinhadoCentro: AnsiString read FAlinhadoCentro write FAlinhadoCentro;
 
     property Beep: AnsiString read FBeep write FBeep;
-    property AbreGaveta: AnsiString read FAbreGaveta write FAbreGaveta;
     property CorteTotal: AnsiString read FCorteTotal write FCorteTotal;
     property CorteParcial: AnsiString read FCorteParcial write FCorteParcial;
   end;
@@ -164,6 +162,8 @@ type
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
     function ComandoLogo: AnsiString; virtual;
+    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; virtual;
+    function ComandoInicializa: AnsiString; virtual;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
     function LerInfo: String; virtual;
@@ -215,6 +215,24 @@ type
       property FatorY: Byte read FFatorY write FFatorY default 1;
   end;
 
+  { TACBrConfigGaveta }
+
+  TACBrConfigGaveta = class(TPersistent)
+    private
+      FSinalInvertido: Boolean;
+      FTempoOFF: Byte;
+      FTempoON: Byte;
+
+    public
+      constructor Create;
+
+    published
+      property SinalInvertido: Boolean read FSinalInvertido
+        write FSinalInvertido default False;
+      property TempoON: Byte read FTempoON write FTempoON default 50;
+      property TempoOFF: Byte read FTempoOFF write FTempoOFF default 200;
+  end;
+
   { TACBrPosPrinter }
 
   TACBrPosPrinter = class(TACBrComponent)
@@ -226,8 +244,7 @@ type
     FControlePorta: Boolean;
     FDevice: TACBrDevice;
     FEspacoEntreLinhas: byte;
-    FEspacoEntreLinhasAtual: byte;
-    FGavetaSinalInvertido: Boolean;
+    FConfigGaveta: TACBrConfigGaveta;
     FModelo: TACBrPosPrinterModelo;
     FOnGravarLog: TACBrGravarLog;
     FTagProcessor: TACBrTagProcessor;
@@ -236,13 +253,13 @@ type
     FLinhasBuffer: Integer;
     FLinhasEntreCupons: Integer;
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
-    FPaginaDeCodigoAtual: TACBrPosPaginaCodigo;
     FArqLog: String;
 
     FPosPrinterClass: TACBrPosPrinterClass;
     FBuffer: TStringList;
     FTipoAlinhamento: TACBrPosTipoAlinhamento;
     FFonteStatus: TACBrPosFonte;
+    FInicializada: Boolean;
 
     function GetAtivo: Boolean;
     function GetColunasFonteCondensada: Integer;
@@ -261,11 +278,8 @@ type
     procedure SetTraduzirTags(AValue: Boolean);
     procedure SetModelo(AValue: TACBrPosPrinterModelo);
 
-    procedure ConfigurarEspacoEntreLinhas;
-    procedure ConfigurarPaginaDeCodigo;
-
   protected
-    procedure EnviarStringDevice(const AString: AnsiString);
+    procedure EnviarStringDevice(AString: AnsiString);
     procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
     procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
       var BlocoTraduzido: AnsiString);
@@ -296,6 +310,7 @@ type
     procedure ImprimirTags;
 
     procedure Zerar;
+    procedure Inicializar;
 
     procedure PularLinhas(NumLinhas: Integer = 0);
     procedure CortarPapel(Parcial: Boolean = False);
@@ -313,6 +328,7 @@ type
 
     property FonteStatus: TACBrPosFonte read FFonteStatus;
     property Alinhamento: TACBrPosTipoAlinhamento read FTipoAlinhamento;
+    property Inicializada: Boolean read FInicializada;
 
   published
     property Modelo: TACBrPosPrinterModelo read FModelo write SetModelo default ppTexto;
@@ -328,8 +344,7 @@ type
     property ConfigBarras: TACBrECFConfigBarras read FConfigBarras write FConfigBarras;
     property ConfigQRCode: TACBrConfigQRCode read FConfigQRCode write FConfigQRCode;
     property ConfigLogo: TACBrConfigLogo read FConfigLogo write FConfigLogo;
-    property GavetaSinalInvertido: Boolean read FGavetaSinalInvertido
-      write FGavetaSinalInvertido default False;
+    property ConfigGaveta: TACBrConfigGaveta read FConfigGaveta write FConfigGaveta;
 
     property LinhasEntreCupons: Integer read FLinhasEntreCupons
       write FLinhasEntreCupons default 21;
@@ -352,6 +367,15 @@ uses
   strutils, Math, typinfo,
   ACBrUtil, ACBrConsts,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma;
+
+{ TACBrConfigGaveta }
+
+constructor TACBrConfigGaveta.Create;
+begin
+  FTempoON := 50;
+  FTempoOFF := 200;
+  FSinalInvertido := False;
+end;
 
 { TACBrConfigLogo }
 
@@ -452,6 +476,17 @@ begin
   Result := '';
 end;
 
+function TACBrPosPrinterClass.ComandoGaveta(NumGaveta: Integer): AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoInicializa: AnsiString;
+begin
+  Result := ComandoEspacoEntreLinhas(fpPosPrinter.EspacoEntreLinhas) +
+            ComandoPaginaCodigo(fpPosPrinter.PaginaDeCodigo);
+end;
+
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
 begin
   {nada aqui, método virtual}
@@ -484,10 +519,12 @@ begin
   FModelo := ppTexto;
   FTipoAlinhamento := alEsquerda;
   FFonteStatus := [ftNormal];
+  FInicializada := False;
 
   FConfigBarras := TACBrECFConfigBarras.Create;
   FConfigQRCode := TACBrConfigQRCode.Create;
   FConfigLogo   := TACBrConfigLogo.Create;
+  FConfigGaveta := TACBrConfigGaveta.Create;
 
   FTagProcessor := TACBrTagProcessor.Create;
   FTagProcessor.AddTags(cTAGS_CARACTER, cTAGS_CARACTER_HELP, False);
@@ -496,6 +533,15 @@ begin
   FTagProcessor.AddTags(cTAGS_FUNCOES, cTAGS_FUNCOES_HELP, False);
   FTagProcessor.AddTags(cTAGS_ALINHAMENTO, cTAGS_ALINHAMENTO_HELP, True);
   FTagProcessor.AddTags(cTAGS_BARRAS, cTAGS_BARRAS_HELP, True);
+
+  // Abertura de Gaveta específica //
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagAbreGavetaEsp;
+    Ajuda := 'Abertura de Gaveta Específica (1 ou 2)';
+    EhBloco := True;
+  end;
+
   // Tags de Configurações do Cod.Barras //
   with FTagProcessor.Tags.New do
   begin
@@ -589,11 +635,8 @@ begin
 
   FColunasFonteNormal := 48;
   FPaginaDeCodigo := pc850;
-  FPaginaDeCodigoAtual := pcNone;
   FEspacoEntreLinhas := 0;
-  FEspacoEntreLinhasAtual := 0;
   FControlePorta := False;
-  FGavetaSinalInvertido := False;
 
   FArqLog := '';
   FOnGravarLog := nil;
@@ -607,6 +650,7 @@ begin
   FConfigBarras.Free;
   FConfigQRCode.Free;
   FConfigLogo.Free;
+  FConfigGaveta.Free;
   FDevice.Free;
 
   inherited Destroy;
@@ -615,7 +659,7 @@ end;
 procedure TACBrPosPrinter.AbrirGaveta;
 begin
   GravarLog('AbrirGaveta');
-  ImprimirCmd(FPosPrinterClass.Cmd.AbreGaveta);
+  ImprimirCmd(FPosPrinterClass.ComandoGaveta());
   Sleep(500);
 end;
 
@@ -646,6 +690,7 @@ begin
   {*)}
 
   FDevice.Ativar;
+  FInicializada := False;
 end;
 
 procedure TACBrPosPrinter.Desativar;
@@ -656,12 +701,16 @@ begin
     False, False);
 
   FDevice.Desativar;
+  FInicializada := False;
 end;
 
 procedure TACBrPosPrinter.SetModelo(AValue: TACBrPosPrinterModelo);
 begin
   if FModelo = AValue then
     Exit;
+
+  if Ativo then
+    Desativar;
 
   GravarLog('SetModelo(' + GetEnumName(TypeInfo(TACBrPosPrinterModelo),
     integer(AValue)) + ')');
@@ -784,10 +833,9 @@ begin
 
   else if ATag = cTagZera then
   begin
-    TagTraduzida := FPosPrinterClass.Cmd.Zera +
-                    FPosPrinterClass.ComandoEspacoEntreLinhas(FEspacoEntreLinhas) +
-                    FPosPrinterClass.ComandoPaginaCodigo(FPaginaDeCodigo);
+    TagTraduzida := FPosPrinterClass.Cmd.Zera + FPosPrinterClass.ComandoInicializa;
 
+    FInicializada := True;
     FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
       ftSublinhado, ftItalico, ftInvertido];
   end
@@ -832,7 +880,7 @@ begin
     TagTraduzida := StringOfChar(LF,LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteTotal
 
   else if ATag = cTagAbreGaveta then
-    TagTraduzida := FPosPrinterClass.Cmd.AbreGaveta
+    TagTraduzida := FPosPrinterClass.ComandoGaveta()
 
   else if ATag = cTagBeep then
     TagTraduzida := FPosPrinterClass.Cmd.Beep
@@ -888,6 +936,9 @@ begin
 
     else if ATag = cTagAlinhadoCentro then
       BlocoTraduzido := PadCenter(ConteudoBloco,Colunas)
+
+    else if ATag = cTagAbreGavetaEsp then
+      BlocoTraduzido := FPosPrinterClass.ComandoGaveta( StrToIntDef( ConteudoBloco, 1) )
 
     else if ATag = cTagQRCodeTipo then
     begin
@@ -1042,34 +1093,27 @@ begin
   end;
 end;
 
-procedure TACBrPosPrinter.ConfigurarEspacoEntreLinhas;
-begin
-  if FEspacoEntreLinhas <> FEspacoEntreLinhasAtual then
-  begin
-    GravarLog('ConfigurarEspacoEntreLinhas: ' + IntToStr(FEspacoEntreLinhas));
-    ImprimirCmd(FPosPrinterClass.ComandoEspacoEntreLinhas(FEspacoEntreLinhas));
-    FEspacoEntreLinhasAtual := FEspacoEntreLinhas;
-  end;
-end;
-
-procedure TACBrPosPrinter.ConfigurarPaginaDeCodigo;
-begin
-  if FPaginaDeCodigo <> FPaginaDeCodigoAtual then
-  begin
-    GravarLog('ConfigurarPaginaDeCodigo: ' + GetEnumName(
-      TypeInfo(TACBrPosPaginaCodigo), integer(FPaginaDeCodigo)));
-
-    ImprimirCmd(FPosPrinterClass.ComandoPaginaCodigo(FPaginaDeCodigo));
-    FPaginaDeCodigoAtual := FPaginaDeCodigo;
-  end;
-end;
-
-procedure TACBrPosPrinter.EnviarStringDevice(const AString: AnsiString);
+procedure TACBrPosPrinter.EnviarStringDevice(AString: AnsiString);
+var
+  CmdInit: AnsiString;
 begin
   if AString = '' then
     exit;
 
   AtivarPorta;
+
+  if not FInicializada then
+  begin
+    CmdInit := FPosPrinterClass.ComandoInicializa;
+    FInicializada := (pos( CmdInit, AString ) > 0);
+
+    if (not FInicializada) and (AString <> FPosPrinterClass.Cmd.Zera) then
+    begin
+      GravarLog('EnviarStringDevice - Inicializando: '+CmdInit, True);
+      AString := CmdInit + AString;
+      FInicializada := True;
+    end;
+  end;
 
   GravarLog('EnviarStringDevice( ' + AString + ')', True);
   FDevice.EnviaString(AString);
@@ -1156,7 +1200,7 @@ begin
   begin
     FPosPrinterClass.LerStatus( Result );
 
-    if (stGavetaAberta in Result) and GavetaSinalInvertido then
+    if (stGavetaAberta in Result) and ConfigGaveta.SinalInvertido then
       Result := Result - [stGavetaAberta];
   end;
 end;
@@ -1222,9 +1266,6 @@ begin
             ', TraduzirTags:'+IfThen(TraduzirTags,'SIM','NAO') );
   GravarLog( StrToPrint );
 
-  ConfigurarEspacoEntreLinhas;
-  ConfigurarPaginaDeCodigo;
-
   if CodificarPagina then
     StrToPrint := CodificarPaginaDeCodigo(StrToPrint);
 
@@ -1265,11 +1306,19 @@ begin
   GravarLog('Zerar');
   ImprimirCmd(FPosPrinterClass.Cmd.Zera);
 
-  FEspacoEntreLinhasAtual := 0;
-  ConfigurarEspacoEntreLinhas;
+  FInicializada := False;
+  FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
+      ftSublinhado, ftItalico, ftInvertido];
 
-  FPaginaDeCodigoAtual := pcNone;
-  ConfigurarPaginaDeCodigo;
+  Inicializar;
+end;
+
+procedure TACBrPosPrinter.Inicializar;
+begin
+  GravarLog('Inicializar');
+  ImprimirCmd(FPosPrinterClass.ComandoInicializa);
+
+  FInicializada := True;
 end;
 
 function TACBrPosPrinter.GetNumeroPaginaDeCodigo(APagCod: TACBrPosPaginaCodigo): word;
@@ -1328,3 +1377,4 @@ begin
 end;
 
 end.
+

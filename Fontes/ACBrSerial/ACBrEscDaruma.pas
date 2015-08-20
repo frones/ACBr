@@ -62,6 +62,7 @@ type
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
     function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
     function ComandoLogo: AnsiString; override;
+    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -110,7 +111,6 @@ begin
     AlinhadoDireita         := ESC + 'j' + #2;
     CorteTotal              := ESC + 'm';
     CorteParcial            := ESC + 'm';
-    AbreGaveta              := ESC + 'p';
     Beep                    := BELL;
   end;
   {*)}
@@ -205,6 +205,12 @@ end;
 function TACBrEscDaruma.ComandoLogo: AnsiString;
 begin
   Result := SYN + BS + SYN + TAB;  //TODO: Testar
+end;
+
+function TACBrEscDaruma.ComandoGaveta(NumGaveta: Integer): AnsiString;
+begin
+  // EscDaruma não tem comando para abertura de Gaveta 1 e 2 ou Tempos de abertura
+  Result := ESC + 'p';
 end;
 
 procedure TACBrEscDaruma.LerStatus(var AStatus: TACBrPosPrinterStatus);

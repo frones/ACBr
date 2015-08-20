@@ -40,6 +40,28 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 20/08/2015        (por: DSA)
+-- ACBrPosPrinter --
+[+] Adicionada a propriedade ACBrPosPrinter.Inicializada: Boolean (read only)
+    Sinalizando se a Impressora já recebeu os comandos de programação para: Modo
+    Esc, Espaçamento entre linhas e Página de Código
+[+] Adicionado o metodo "ACBrPosPrinter.Inicializar"
+    (Nota: método "Zerar", já chama "Inicializar")
+[*] Melhorada a rotina de Impressão, para detectar a necessidade de enviar
+    comando de Inicialização para a Impressora, caso o mesmo ainda não tenha sido
+    enviado
+[+] Adicionada a propriedade ACBrPosPrinter.ConfigGaveta
+        property SinalInvertido: Boolean default False;
+        property TempoON: Byte default 50;
+        property TempoOFF: Byte default 200
+[*] Removida a propriedade GavetaSinalInvertido
+[*] Tag </abre_gaveta> modificada para usar parâmetros de "ConfigGaveta"
+[+] Adicionada a Tag de Bloco: <abre_gaveta>N</abre_gaveta>,
+    "Abertura de Gaveta Específica (1 ou 2)"
+
+-- ACBrEscBematech --
+[*] Rotina de Impressão de QRCode revisada para respeitar o tamanho do módulo
+
+
 -- ACBrECFVirtualBuffer --
 [*] Ajuste para abertura de gaveta em Impressoras que necessitam do envio de
     comando de Inicialização (Bematech)

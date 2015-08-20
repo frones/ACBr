@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/08/2015        (por: DSA)
+-- ACBrECFVirtualBuffer --
+[*] Ajuste para abertura de gaveta em Impressoras que necessitam do envio de
+    comando de Inicialização (Bematech)
+
 Data: 19/08/2015        (por: DSA)
 -- ACBrECFVirtualBuffer --
 [-] Correção para alinhar fonte a Esquerda, no final da impressão do Cabeçalho

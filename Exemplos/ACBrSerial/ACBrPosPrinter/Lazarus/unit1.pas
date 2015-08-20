@@ -20,6 +20,7 @@ type
     bLerInfo: TButton;
     bLimpar: TBitBtn;
     bTagFormtacaoCaracter: TButton;
+    bTagGaveta: TButton;
     bTagQRCode: TButton;
     bLerStatus: TButton;
     bTagLogo: TButton;
@@ -29,6 +30,7 @@ type
     bTagsTestePagCodigo: TButton;
     bImpLinhaALinha: TButton;
     cbHRI: TCheckBox;
+    cbGavetaSinalInvertido: TCheckBox;
     cbxModelo: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
@@ -38,6 +40,7 @@ type
     edLog: TEdit;
     gbCodBarrasConfig1: TGroupBox;
     gbCodBarrasConfig2: TGroupBox;
+    gbGavetaConfig: TGroupBox;
     gbConfiguracao: TGroupBox;
     gbCodBarrasConfig: TGroupBox;
     Label1: TLabel;
@@ -49,7 +52,10 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
     Label2: TLabel;
+    Label20: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -66,6 +72,8 @@ type
     Panel4: TPanel;
     SbArqLog: TSpeedButton;
     btSerial: TSpeedButton;
+    seGavetaTempoON: TSpinEdit;
+    seGavetaTempoOFF: TSpinEdit;
     seLogoFatorX: TSpinEdit;
     seLogoFatorY: TSpinEdit;
     seQRCodeLarguraModulo: TSpinEdit;
@@ -79,6 +87,7 @@ type
     seLinhasBuffer: TSpinEdit;
     seLinhasPular: TSpinEdit;
     seLogoKC1: TSpinEdit;
+    seGavetaNum: TSpinEdit;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
@@ -90,6 +99,7 @@ type
     procedure bLerStatusClick(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
     procedure bTagFormtacaoCaracterClick(Sender: TObject);
+    procedure bTagGavetaClick(Sender: TObject);
     procedure bTagLogoClick(Sender: TObject);
     procedure bTagQRCodeClick(Sender: TObject);
     procedure bTagsAlinhamentoClick(Sender: TObject);
@@ -98,6 +108,7 @@ type
     procedure bTagsTestePagCodigoClick(Sender: TObject);
     procedure bImpLinhaALinhaClick(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
+    procedure cbGavetaSinalInvertidoChange(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
     procedure cbIgnorarTagsChange(Sender: TObject);
     procedure cbTraduzirTagsChange(Sender: TObject);
@@ -106,6 +117,8 @@ type
     procedure cbxPortaChange(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure seBarrasAlturaChange(Sender: TObject);
+    procedure seGavetaTempoOFFChange(Sender: TObject);
+    procedure seGavetaTempoONChange(Sender: TObject);
     procedure seBarrasLarguraChange(Sender: TObject);
     procedure seEspLinhasChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -217,6 +230,17 @@ begin
   mImp.Lines.Add('</corte_total>');
 end;
 
+procedure TFrPosPrinterTeste.bTagGavetaClick(Sender: TObject);
+begin
+  mImp.Lines.Add('Abertura da Gaveta padrão');
+  mImp.Lines.Add('</abre_gaveta>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('Abertura da Gaveta específica');
+  mImp.Lines.Add('<abre_gaveta>'+IntToStr(seGavetaNum.Value)+'</abre_gaveta>');
+  mImp.Lines.Add('</corte_total>');
+end;
+
 procedure TFrPosPrinterTeste.bTagLogoClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
@@ -242,6 +266,11 @@ begin
   mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
   mImp.Lines.Add('</ad>');
   mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/questoes_importantes.html</qrcode>');
+  mImp.Lines.Add('</ce>');
+  mImp.Lines.Add('Exemplo de QRCode para NFCe');
+  mImp.Lines.Add('<qrcode_error>0</qrcode_error><qrcode>https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?chNFe=35150805481336000137650220000000711000001960&nVersao=100&tpAmb=2&dhEmi=323031352D30382D31395432323A33333A32352D30333A3030&vNF=3.00&vICMS=0.12&digVal=776967396F2B665861706673396878776E64594C396F61654C35493D&cIdToken=000001&cHashQRCode=9BD312D558823E1EC68CEDB338A39B6150B0480E</qrcode>');
+  mImp.Lines.Add('Exemplo de QRCode para SAT');
+  mImp.Lines.Add('<qrcode_error>0</qrcode_error><qrcode>35150811111111111111591234567890001672668828|20150820201736|118.72|05481336000137|TCbeD81ePUpMvso4VjFqRTvs4ovqmR1ZG3bwSCumzHtW8bbMedVJjVnww103v3LxKfgckAyuizcR/9pXaKay6M4Gu8kyDef+6VH5qONIZV1cB+mFfXiaCgeZALuRDCH1PRyb6hoBeRUkUk6lOdXSczRW9Y83GJMXdOFroEbzFmpf4+WOhe2BZ3mEdXKKGMfl1EB0JWnAThkGT+1Er9Jh/3En5YI4hgQP3NC2BiJVJ6oCEbKb85s5915DSZAw4qB/MlESWViDsDVYEnS/FQgA2kP2A9pR4+agdHmgWiz30MJYqX5Ng9XEYvvOMzl1Y6+7/frzsocOxfuQyFsnfJzogw==hygljwuohmmoewarfnmighlxzke7k2bjlto4sb2vltorgm26khhangknnfvpzydt5terudyw5vuvtzlhlqs3qrzvplfnlvw==</qrcode>');
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -385,6 +414,11 @@ begin
   ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
 end;
 
+procedure TFrPosPrinterTeste.cbGavetaSinalInvertidoChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigGaveta.SinalInvertido := cbGavetaSinalInvertido.Checked;
+end;
+
 procedure TFrPosPrinterTeste.cbHRIChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ConfigBarras.MostrarCodigo := cbHRI.Checked;
@@ -439,6 +473,16 @@ end;
 procedure TFrPosPrinterTeste.seBarrasAlturaChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ConfigBarras.Altura := seBarrasAltura.Value;
+end;
+
+procedure TFrPosPrinterTeste.seGavetaTempoOFFChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigGaveta.TempoOFF := seGavetaTempoOFF.Value ;
+end;
+
+procedure TFrPosPrinterTeste.seGavetaTempoONChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigGaveta.TempoON := seGavetaTempoON.Value ;
 end;
 
 procedure TFrPosPrinterTeste.seBarrasLarguraChange(Sender: TObject);
@@ -552,6 +596,10 @@ begin
      INI.WriteInteger('Logo','KC2',seLogoKC2.Value);
      INI.WriteInteger('Logo','FatorX',seLogoFatorX.Value);
      INI.WriteInteger('Logo','FatorY',seLogoFatorY.Value);
+     INI.WriteInteger('Gaveta','Numero',seGavetaNum.Value);
+     INI.WriteInteger('Gaveta','TempoOn',seGavetaTempoON.Value);
+     INI.WriteInteger('Gaveta','TempoOff',seGavetaTempoOFF.Value);
+     INI.WriteBool('Gaveta','SinalInvertido',cbGavetaSinalInvertido.Checked);
   finally
      INI.Free ;
   end ;
@@ -587,6 +635,10 @@ begin
      seLogoKC2.Value := INI.ReadInteger('Logo','KC2',ACBrPosPrinter1.ConfigLogo.KeyCode2);
      seLogoFatorX.Value := INI.ReadInteger('Logo','FatorX',ACBrPosPrinter1.ConfigLogo.FatorX);
      seLogoFatorY.Value := INI.ReadInteger('Logo','FatorY',ACBrPosPrinter1.ConfigLogo.FatorY);
+     seGavetaNum.Value := INI.ReadInteger('Gaveta','Numero',1);
+     seGavetaTempoON.Value := INI.ReadInteger('Gaveta','TempoOn',ACBrPosPrinter1.ConfigGaveta.TempoON);
+     seGavetaTempoOFF.Value := INI.ReadInteger('Gaveta','TempoOff',ACBrPosPrinter1.ConfigGaveta.TempoOFF);
+     cbGavetaSinalInvertido.Checked := INI.ReadBool('Gaveta','SinalInvertido',ACBrPosPrinter1.ConfigGaveta.SinalInvertido);
   finally
      INI.Free ;
   end ;

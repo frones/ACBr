@@ -138,7 +138,6 @@ begin
             (Cmd.Metodo = 'criarenviarcfe')  then
     begin
       AjustaACBrSAT;
-      ACBrSAT1.InicializaCFe;
       GerarIniCFe( Cmd.Params(0), (Cmd.Metodo = 'criarenviarcfe') );
 
       if (Cmd.Metodo = 'criarcfe') then
@@ -160,7 +159,7 @@ begin
       end
       else
       begin
-        Resultado := ACBrSAT1.EnviarDadosVenda;
+        Resultado := ACBrSAT1.EnviarDadosVenda( ACBrSAT1.CFe.AsXMLString );
         Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
       end;
     end
@@ -338,9 +337,11 @@ begin
 
     with FrmACBrMonitor do
      begin
-       ACBrSAT1.CFe.Clear;
+       ACBrSAT1.InicializaCFe;
+
        with ACBrSAT1.CFe do
         begin
+
           ACBrSAT1.Config.infCFe_versaoDadosEnt := StringToFloatDef( INIRec.ReadString('infCFe','versao',''),ACBrSAT1.Config.infCFe_versaoDadosEnt) ;
 
           infCFe.versaoDadosEnt := ACBrSAT1.Config.infCFe_versaoDadosEnt;

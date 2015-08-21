@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/08/2015
+-- ACBrNFeDANFCeFortesFr --    (por: DSA)
+[-] Ajuste para que a propriedade "Sistema" seja exibida na última Linha
+[-] Correção de erro em caractere acentuado
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23714
+
 19/08/2015
 [*] Adicionado a descrição do tipo de evento Registro de Passagem NF-e em 
     getDescEvento e DescricaoTipoEvento (pcnEventoNFe.pas).

@@ -87,7 +87,7 @@ type
     lConsultaQRCode: TRLLabel;
     imgQRCode: TRLImage;
     pGap05: TRLPanel;
-    RLLabel1: TRLLabel;
+    lSistema: TRLLabel;
     lProtocolo: TRLLabel;
     pGap8: TRLPanel;
     rlsbDetItem: TRLSubDetail;
@@ -523,8 +523,9 @@ end;
 procedure TACBrNFeDANFCeFortesFr.lSistemaBeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  PrintIt := trim(fACBrNFeDANFCeFortes.Sistema) <> '';
-  Text    := fACBrNFeDANFCeFortes.Sistema ;
+  PrintIt := True;
+  if trim(fACBrNFeDANFCeFortes.Sistema) <> '' then
+    Text := fACBrNFeDANFCeFortes.Sistema ;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.pAsteriscoBeforePrint(Sender: TObject;

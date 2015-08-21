@@ -96,14 +96,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-        object RLLabel1: TRLLabel
+        object lSistema: TRLLabel
           Left = 0
           Top = 0
           Width = 276
           Height = 10
           Align = faTop
           Alignment = taRightJustify
-          Caption = 'Projeto ACBr.'
+          Caption = 'Projeto ACBr'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -111,6 +111,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Style = [fsBold, fsItalic]
           Layout = tlBottom
           ParentFont = False
+          BeforePrint = lSistemaBeforePrint
         end
       end
       object lProtocolo: TRLLabel
@@ -944,7 +945,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Height = 10
         Align = faTop
         Alignment = taCenter
-        Caption = #195#129'REA DE MENSAGEM DE INTERESSE DO CONTRIBUINTE'
+        Caption = 'AREA DE MENSAGEM DE INTERESSE DO CONTRIBUINTE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8

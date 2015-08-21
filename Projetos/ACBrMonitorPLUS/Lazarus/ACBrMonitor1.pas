@@ -6217,6 +6217,7 @@ begin
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+
       ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
     end
     else

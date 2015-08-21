@@ -254,9 +254,7 @@ begin
            ConfiguraDANFe;
 
            if NaoEstaVazio(Cmd.Params(1)) then
-              ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
-           else
-              ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+              ACBrNFe1.DANFE.Impressora := Cmd.Params(1);
 
            if NaoEstaVazio(Cmd.Params(2)) then
               ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1)
@@ -426,7 +424,12 @@ begin
            if NaoEstaVazio(Cmd.Params(2)) then
               ACBrNFe1.DANFE.Impressora := Cmd.Params(2)
            else
-              ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+           begin
+              if rgModoImpressaoEvento.ItemIndex = 0 then
+                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
+              else
+                 ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
+           end;
 
            if NaoEstaVazio(Cmd.Params(3)) then
               ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1)
@@ -580,9 +583,7 @@ begin
                 ConfiguraDANFe;
 
                 if NaoEstaVazio(Cmd.Params(4)) then
-                   ACBrNFe1.DANFE.Impressora := Cmd.Params(4)
-                else
-                   ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+                   ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
 
                 if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                  begin
@@ -595,9 +596,7 @@ begin
               ConfiguraDANFe;
 
               if NaoEstaVazio(Cmd.Params(4)) then
-                 ACBrNFe1.DANFE.Impressora := Cmd.Params(4)
-              else
-                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+                 ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
 
               if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                begin
@@ -944,9 +943,7 @@ begin
                         ACBrNFe1.DANFE.NumCopias := nNumCopias;
 
                         if NaoEstaVazio(cImpressora) then
-                           ACBrNFe1.DANFE.Impressora := cImpressora
-                        else
-                           ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+                           ACBrNFe1.DANFE.Impressora := cImpressora;
 
                         if ACBrNFe1.NotasFiscais.Items[i].Confirmada and bImprimir then
                          begin

@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsSat
+        ActivePage = tsNFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 17
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6479,9 +6479,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = ConfiguracaoNFE
+            ActivePage = DANFE
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -7226,9 +7226,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = TabSheet1
+                ActivePage = tsDanfe
                 Align = alClient
-                TabIndex = 2
+                TabIndex = 0
                 TabOrder = 0
                 object tsDanfe: TTabSheet
                   Caption = 'Danfe'
@@ -7294,7 +7294,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 168
                     Height = 17
                     Top = 208
-                    Width = 137
+                    Width = 136
                     Caption = 'Decimais Valor Unitário'
                     ParentColor = False
                   end
@@ -7790,9 +7790,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     end
                   end
                   object cbxImpressoraNFCe: TComboBox
-                    Left = 6
+                    Left = 8
                     Height = 25
-                    Top = 114
+                    Top = 120
                     Width = 203
                     ItemHeight = 17
                     TabOrder = 3
@@ -9870,7 +9870,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 7
                 Height = 15
                 Top = 10
-                Width = 21
+                Width = 20
                 Caption = 'KC1'
                 ParentColor = False
                 ParentFont = False
@@ -9879,7 +9879,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 70
                 Height = 15
                 Top = 10
-                Width = 21
+                Width = 20
                 Caption = 'KC2'
                 ParentColor = False
                 ParentFont = False
@@ -10523,6 +10523,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

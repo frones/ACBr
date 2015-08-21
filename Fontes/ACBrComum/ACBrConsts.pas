@@ -158,6 +158,7 @@ const
   cTagCorteParcial = '</corte_parcial>';
   cTagCorteTotal = '</corte_total>';
   cTagAbreGaveta = '</abre_gaveta>';
+  cTagAbreGavetaEsp = '<abre_gaveta>';
   cTagBeep = '</beep>';
   cTagZera = '</zera>';
   cTagPulodeLinha = '</lf>';

@@ -1090,6 +1090,9 @@ begin
   begin
     GravarLog('Desativando a porta: ' + FDevice.Porta);
     FDevice.Desativar;
+
+    if not FDevice.IsSerialPort then
+      FInicializada := False;
   end;
 end;
 
@@ -1248,7 +1251,7 @@ var
   i: Integer;
   StrToPrint: AnsiString;
 begin
-  if not (FDevice.Ativo or ControlePorta) then
+  if not (ControlePorta or FDevice.Ativo) then
     raise EPosPrinterException.Create('Não está Ativo');
 
   StrToPrint := '';

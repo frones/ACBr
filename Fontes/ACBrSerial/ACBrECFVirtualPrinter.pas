@@ -193,7 +193,7 @@ end;
 
 procedure TACBrECFVirtualPrinterClass.AbreDocumento ;
 begin
-  if not Device.EmLinha() then
+  if not (fsECFVirtualPrinter.PosPrinter.ControlePorta or Device.EmLinha()) then
     raise EACBrECFERRO.Create(ACBrStr('Impressora: '+fpModeloStr+' não está pronta.')) ;
 
   inherited ;
@@ -208,9 +208,12 @@ begin
   try
     fsECFVirtualPrinter.PosPrinter.Imprimir(AString);
 
-    repeat
-      Sleep(IntervaloAposComando);
-    until Device.EmLinha() ;
+    if not fsECFVirtualPrinter.PosPrinter.ControlePorta then
+    begin
+      repeat
+        Sleep(IntervaloAposComando);
+      until Device.EmLinha() ;
+    end;
   finally
     AguardandoResposta := OldAguardandoResposta ;
   end ;

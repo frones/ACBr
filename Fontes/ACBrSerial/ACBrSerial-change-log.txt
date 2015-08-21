@@ -39,6 +39,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/08/2015        (por: DSA)
+-- ACBrPosPrinter --
+[*] Se a porta não é Serial, força o comando de Inicialização a cada Desativação
+    da Porta. (corrige problema de Impressão em Bematech com Porta por
+    compartilhamento ex: "\\localhost\mp4200" )
+
+-- ACBrECFVirtualPrinter --
+[-] Correção de congelamento, quando TACBrPosPrinter.ControlePorta estava
+    habilitado
+
+-- ACBrECFVirtualBuffer --
+[*] Remoção de </zera> do comando da Abertura de gaveta (desnecessário, pois
+    agora TACBrPosPrinter tem um melhor controle sobre o estado de Inicialização
+    da Impressora)
+
+-- ACBrECFVirtual --
+[+] Programando um Relatório Gerencial padrão '01-DIVERSOS' durante a criação da
+    Memória Inicial
+[-] Correção de Bug em AbreRelatorioGerencial, para usar como Indice padrão o
+    Indice "01"
+
 Data: 20/08/2015        (por: DSA)
 -- ACBrPosPrinter --
 [+] Adicionada a propriedade ACBrPosPrinter.Inicializada: Boolean (read only)

@@ -1584,6 +1584,7 @@ begin
   if not (Estado in [estLivre,estRequerZ,estRequerX])  then
     raise EACBrECFERRO.Create(ACBrStr('O Estado não é "LIVRE"'));
 
+  Indice := max(Indice,1);
   IndiceStr := IntToStrZero( Indice, 2 );
   RG := AchaRGIndice(IndiceStr);
   if RG = Nil then
@@ -1975,6 +1976,7 @@ Var
   AliqICMS            : TACBrECFAliquota ;
   FormaPagamento      : TACBrECFFormaPagamento ;
   ComprovanteNaoFiscal: TACBrECFComprovanteNaoFiscal;
+  RG: TACBrECFRelatorioGerencial;
 begin
   GravaLog('CriarMemoriaInicial');
   try
@@ -2024,6 +2026,11 @@ begin
   ComprovanteNaoFiscal.Indice    := '02' ;
   ComprovanteNaoFiscal.Descricao := 'SUPRIMENTO' ;
   fpComprovantesNaoFiscais.Add( ComprovanteNaoFiscal ) ;
+
+  RG := TACBrECFRelatorioGerencial.create;
+  RG.Indice := '01';
+  RG.Descricao := 'DIVERSOS';
+  fpRelatoriosGerenciais.Add( RG );
 
   GravaArqINI ;
 end ;

@@ -81,6 +81,7 @@ type
   { TACBrNFeDANFCeFortesFr }
 
   TACBrNFeDANFCeFortesFr = class(TForm)
+    lFonteTributos: TRLLabel;
     rlVenda: TRLReport;
     rlbRodape: TRLBand;
     RLDraw2: TRLDraw;
@@ -575,6 +576,9 @@ begin
     if PrintIt then
       lValLei12741.Caption := FormatFloatBr(Total.ICMSTot.vTotTrib, '#,###,##0.00');
   end;
+
+  if PrintIt then
+    lFonteTributos.Caption := ACBrNFeDANFCeFortes.FonteTributos;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbMensagemContribuinteBeforePrint(

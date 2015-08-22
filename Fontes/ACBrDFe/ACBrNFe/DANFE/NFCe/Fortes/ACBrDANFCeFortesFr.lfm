@@ -675,6 +675,22 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object lFonteTributos: TRLLabel
+        Left = 136
+        Height = 12
+        Top = 16
+        Width = 126
+        Alignment = taRightJustify
+        Caption = 'Fonte IBPT'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
     object rlbsCabecalho: TRLSubDetail
       Left = 2

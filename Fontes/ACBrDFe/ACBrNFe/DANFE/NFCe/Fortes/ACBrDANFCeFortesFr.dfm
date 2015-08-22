@@ -558,6 +558,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object lFonteTributos: TRLLabel
+        Left = 136
+        Height = 12
+        Top = 16
+        Width = 126
+        Alignment = taRightJustify
+        Caption = 'Fonte IBPT'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+      end  
     end
     object rlbsCabecalho: TRLSubDetail
       Left = 2

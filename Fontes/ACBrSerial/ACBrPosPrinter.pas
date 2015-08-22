@@ -898,7 +898,7 @@ begin
       TagTraduzida := FPosPrinterClass.ComandoLogo
 
   else if ATag = cTagPulodeLinha then
-    TagTraduzida := LF
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(1)
 
   else if ATag = cTagRetornoDeCarro then
     TagTraduzida := CR
@@ -1285,7 +1285,7 @@ begin
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
 
   if PulaLinha then
-    StrToPrint := StrToPrint + LF;
+    StrToPrint := StrToPrint + CRLF;
 
   //DEBUG
   //WriteLog('c:\temp\teste3.txt', StrToPrint, True);

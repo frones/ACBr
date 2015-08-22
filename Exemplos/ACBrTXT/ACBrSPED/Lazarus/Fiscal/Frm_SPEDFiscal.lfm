@@ -1,7 +1,7 @@
 object FrmSPEDFiscal: TFrmSPEDFiscal
-  Left = 391
+  Left = 365
   Height = 508
-  Top = 181
+  Top = 129
   Width = 771
   Caption = 'ACBrSpedFiscal - Demo'
   ClientHeight = 508
@@ -9,7 +9,7 @@ object FrmSPEDFiscal: TFrmSPEDFiscal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Position = poScreenCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.4.2.0'
   object Label2: TLabel
     Left = 8
     Height = 13

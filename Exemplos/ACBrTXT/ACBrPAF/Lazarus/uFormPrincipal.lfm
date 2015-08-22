@@ -1,7 +1,7 @@
 object Form6: TForm6
-  Left = 347
+  Left = 380
   Height = 399
-  Top = 265
+  Top = 185
   Width = 578
   BorderStyle = bsDialog
   Caption = 'Demo do ACBrPAF'
@@ -236,7 +236,7 @@ object Form6: TForm6
     object Label1: TLabel
       Left = 16
       Height = 13
-      Top = 24
+      Top = 11
       Width = 13
       Caption = 'UF'
       ParentColor = False
@@ -244,7 +244,7 @@ object Form6: TForm6
     object Label2: TLabel
       Left = 47
       Height = 13
-      Top = 24
+      Top = 11
       Width = 25
       Caption = 'CNPJ'
       ParentColor = False
@@ -252,7 +252,7 @@ object Form6: TForm6
     object Label3: TLabel
       Left = 167
       Height = 13
-      Top = 24
+      Top = 11
       Width = 87
       Caption = 'Inscrição Estadual'
       ParentColor = False
@@ -260,7 +260,7 @@ object Form6: TForm6
     object Label4: TLabel
       Left = 287
       Height = 13
-      Top = 24
+      Top = 11
       Width = 89
       Caption = 'Inscrição Municipal'
       ParentColor = False
@@ -268,7 +268,7 @@ object Form6: TForm6
     object Label5: TLabel
       Left = 16
       Height = 13
-      Top = 64
+      Top = 54
       Width = 60
       Caption = 'Razão Social'
       ParentColor = False
@@ -276,7 +276,7 @@ object Form6: TForm6
     object edtUF: TEdit
       Left = 16
       Height = 21
-      Top = 39
+      Top = 26
       Width = 25
       CharCase = ecUppercase
       TabOrder = 0
@@ -284,7 +284,7 @@ object Form6: TForm6
     object edtCNPJ: TEdit
       Left = 47
       Height = 21
-      Top = 39
+      Top = 26
       Width = 114
       CharCase = ecUppercase
       TabOrder = 1
@@ -292,7 +292,7 @@ object Form6: TForm6
     object edtIE: TEdit
       Left = 167
       Height = 21
-      Top = 39
+      Top = 26
       Width = 114
       CharCase = ecUppercase
       TabOrder = 2
@@ -300,7 +300,7 @@ object Form6: TForm6
     object edtIM: TEdit
       Left = 287
       Height = 21
-      Top = 39
+      Top = 26
       Width = 114
       CharCase = ecUppercase
       TabOrder = 3
@@ -308,101 +308,47 @@ object Form6: TForm6
     object edtRAZAO: TEdit
       Left = 16
       Height = 21
-      Top = 79
+      Top = 69
       Width = 385
       CharCase = ecUppercase
       TabOrder = 4
     end
-  end
-  object btnD: TButton
-    Left = 8
-    Height = 25
-    Top = 128
-    Width = 75
-    Caption = 'Tipo D'
-    OnClick = btnDClick
-    TabOrder = 1
-  end
-  object btnE: TButton
-    Left = 89
-    Height = 25
-    Top = 128
-    Width = 75
-    Caption = 'Tipo E'
-    OnClick = btnEClick
-    TabOrder = 2
-  end
-  object btnP: TButton
-    Left = 170
-    Height = 25
-    Top = 128
-    Width = 75
-    Caption = 'Tipo P'
-    OnClick = btnPClick
-    TabOrder = 3
-  end
-  object btnR: TButton
-    Left = 8
-    Height = 25
-    Top = 159
-    Width = 75
-    Caption = 'Tipo R'
-    OnClick = btnRClick
-    TabOrder = 6
-  end
-  object btnT: TButton
-    Left = 89
-    Height = 25
-    Top = 159
-    Width = 75
-    Caption = 'Tipo T'
-    OnClick = btnTClick
-    TabOrder = 7
-  end
-  object btnC: TButton
-    Left = 170
-    Height = 25
-    Top = 159
-    Width = 75
-    Caption = 'Tipo C'
-    OnClick = btnCClick
-    TabOrder = 8
+    object cbEAD: TCheckBox
+      Left = 416
+      Height = 19
+      Top = 64
+      Width = 145
+      Caption = 'Assinar Arquivos com EAD'
+      OnChange = cbEADChange
+      TabOrder = 5
+    end
   end
   object btnN: TButton
-    Left = 251
+    Left = 16
     Height = 25
     Top = 128
     Width = 75
     Caption = 'Tipo N'
     OnClick = btnNClick
-    TabOrder = 4
-  end
-  object btnH: TButton
-    Left = 251
-    Height = 25
-    Top = 159
-    Width = 75
-    Caption = 'Tipo H'
-    OnClick = btnHClick
-    TabOrder = 9
+    TabOrder = 1
   end
   object btnTITP: TButton
-    Left = 332
+    Left = 96
     Height = 25
     Top = 128
     Width = 204
     Caption = 'Tabela de Indice Técnico de Produção'
     OnClick = btnTITPClick
-    TabOrder = 5
+    TabOrder = 2
   end
   object btnRegistrosPAF: TButton
-    Left = 416
+    Left = 96
     Height = 25
     Top = 159
-    Width = 120
+    Width = 204
     Caption = 'Registros PAF'
     OnClick = btnRegistrosPAFClick
-    TabOrder = 10
+    TabOrder = 3
   end
   object pc1: TPageControl
     Left = 0
@@ -412,7 +358,7 @@ object Form6: TForm6
     ActivePage = ts1
     Align = alBottom
     TabIndex = 0
-    TabOrder = 11
+    TabOrder = 4
     object ts1: TTabSheet
       Caption = 'Log de erros'
       ClientHeight = 145
@@ -429,12 +375,12 @@ object Form6: TForm6
     end
     object ts2: TTabSheet
       Caption = 'Arquivo gerado'
-      ClientHeight = 0
-      ClientWidth = 0
+      ClientHeight = 145
+      ClientWidth = 570
       ImageIndex = 1
       object mmArquivoGerado: TMemo
         Left = 0
-        Height = 143
+        Height = 145
         Top = 0
         Width = 570
         Align = alClient
@@ -444,22 +390,22 @@ object Form6: TForm6
     end
   end
   object btnZ: TButton
-    Left = 332
+    Left = 16
     Height = 25
     Top = 159
     Width = 75
     Caption = 'Tipo Z'
     OnClick = btnZClick
-    TabOrder = 12
-  end
-  object ACBrPAF: TACBrPAF
-    Path = '.\'
-    OnPAFCalcEAD = ACBrPAFPAFCalcEAD
-    left = 503
-    top = 13
+    TabOrder = 5
   end
   object ACBrEAD: TACBrEAD
     left = 504
-    top = 60
+    top = 32
+  end
+  object ACBrPAF: TACBrPAF
+    LinesBuffer = 1000
+    AssinarArquivo = False
+    left = 440
+    top = 32
   end
 end

@@ -48,7 +48,9 @@ uses SysUtils, Classes, ACBrTXTClass,
      ACBrPAF_Z;
 
 type
-  /// TPAF_Z -
+
+  { TPAF_Z }
+
   TPAF_Z = class(TACBrTXTClass)
   private
     FRegistroZ1: TRegistroZ1;       // FRegistroZ1
@@ -60,16 +62,16 @@ type
     procedure CriaRegistros;
     procedure LiberaRegistros;
     function limpaCampo(pValor: String):String;
+    procedure WriteRegistroZ2;
+    procedure WriteRegistroZ3;
+    procedure WriteRegistroZ4;
+    procedure WriteRegistroZ9;
   public
     constructor Create;/// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistroZ1: string;
-    function WriteRegistroZ2: string;
-    function WriteRegistroZ3: string;
-    function WriteRegistroZ4: string;
-    function WriteRegistroZ9: string;
+    procedure WriteRegistroZ1;
 
     property RegistroZ1: TRegistroZ1 read FRegistroZ1 write FRegistroZ1;
     property RegistroZ2: TRegistroZ2 read FRegistroZ2 write FRegistroZ2;
@@ -86,7 +88,8 @@ uses ACBrTXTUtils;
 
 constructor TPAF_Z.Create;
 begin
-CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TPAF_Z.CriaRegistros;
@@ -133,129 +136,110 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_Z.WriteRegistroZ1: string;
-var
-  strRegistroZ01:string;
-  strRegistroZ02:string;
-  strRegistroZ03:string;
-  strRegistroZ04:string;
-  strRegistroZ09:string;
+procedure TPAF_Z.WriteRegistroZ1;
 begin
-  strRegistroZ01 := '';
-  strRegistroZ02 := '';
-  strRegistroZ03 := '';
-  strRegistroZ04 := '';
-  strRegistroZ09 := '';
   if Assigned(FRegistroZ1) then
   begin
-      with FRegistroZ1 do
-      begin
-        Check(funChecaCNPJ(CNPJ), '(Z1) IDENTIFICAÇÃO DO USUÁRIO DO PAF-ECF: O CNPJ "%s" digitado é inválido!', [CNPJ]);
-        Check(funChecaIE(IE, UF), '(Z1) IDENTIFICAÇÃO DO USUÁRIO DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
-        ///
-        strRegistroZ01 := LFill('Z1') +
-                          LFill(limpaCampo(CNPJ)       , 14) +
-                          RFill(limpaCampo(IE)         , 14) +
-                          RFill(limpaCampo(IM)         , 14) +
-                          RFill(RAZAOSOCIAL, 50) +
-                          sLineBreak;
-      end;
-      strRegistroZ02 := WriteRegistroZ2;
-      strRegistroZ03 := WriteRegistroZ3;
-      strRegistroZ04 := WriteRegistroZ4;
-      strRegistroZ09 := WriteRegistroZ9;
+    with FRegistroZ1 do
+    begin
+      Check(funChecaCNPJ(CNPJ), '(Z1) IDENTIFICAÇÃO DO USUÁRIO DO PAF-ECF: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+      Check(funChecaIE(IE, UF), '(Z1) IDENTIFICAÇÃO DO USUÁRIO DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
+      ///
+      Add(LFill('Z1') +
+          LFill(limpaCampo(CNPJ)       , 14) +
+          RFill(limpaCampo(IE)         , 14) +
+          RFill(limpaCampo(IM)         , 14) +
+          RFill(RAZAOSOCIAL, 50));
+    end;
+    WriteRegistroZ2;
+    WriteRegistroZ3;
+    WriteRegistroZ4;
+    WriteRegistroZ9;
   end;
-  Result := strRegistroZ01 +
-            strRegistroZ02 +
-            strRegistroZ03 +
-            strRegistroZ04 +
-            strRegistroZ09;
 end;
 
-function TPAF_Z.WriteRegistroZ2: string;
+procedure TPAF_Z.WriteRegistroZ2;
 begin
   if Assigned(FRegistroZ2) then
   begin
-      with FRegistroZ2 do
-      begin
-        Check(funChecaCNPJ(CNPJ), '(Z2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: O CNPJ "%s" digitado é inválido!', [CNPJ]);
-        Check(funChecaIE(IE, UF), '(Z2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
-        ///
-        Result := LFill('Z2') +
-                  LFill(limpaCampo(CNPJ)       , 14) +
-                  RFill(limpaCampo(IE)         , 14) +
-                  RFill(limpaCampo(IM)         , 14) +
-                  RFill(RAZAOSOCIAL, 50) +
-                  sLineBreak;
-      end;
+    with FRegistroZ2 do
+    begin
+      Check(funChecaCNPJ(CNPJ), '(Z2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+      Check(funChecaIE(IE, UF), '(Z2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
+      ///
+      Add(LFill('Z2') +
+          LFill(limpaCampo(CNPJ)       , 14) +
+          RFill(limpaCampo(IE)         , 14) +
+          RFill(limpaCampo(IM)         , 14) +
+          RFill(RAZAOSOCIAL, 50));
+    end;
   end;
 end;
 
-function TPAF_Z.WriteRegistroZ3: string;
+procedure TPAF_Z.WriteRegistroZ3;
 begin
   if Assigned(FRegistroZ3) then
   begin
-      with FRegistroZ3 do
-      begin
-        Result := LFill('Z3') +
-                  LFill(LAUDO , 10) +
-                  LFill(NOME  , 50) +
-                  LFill(VERSAO, 10) +
-                  sLineBreak;
-      end;
+    with FRegistroZ3 do
+    begin
+      Add(LFill('Z3') +
+          LFill(LAUDO , 10) +
+          LFill(NOME  , 50) +
+          LFill(VERSAO, 10));
+    end;
   end;
 end;
 
-function TPAF_Z.WriteRegistroZ4: string;
+procedure TPAF_Z.WriteRegistroZ4;
 var
   intFor: integer;
-  strRegistroZ4: string;
   dataAtual: TDateTime;
 begin
-  strRegistroZ4 := '';
-
   if Assigned(FRegistroZ4) then
   begin
-     dataAtual:= Now();
+    dataAtual:= Now();
 
-     for intFor := 0 to FRegistroZ4.Count - 1 do
-     begin
-        with FRegistroZ4.Items[intFor] do
-        begin
-          Check(funChecaCNPJ(CNPJ), '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CNPJ]);
-          ///
-          strRegistroZ4 := strRegistroZ4 + LFill('Z4') +
-                                           LFill(limpaCampo(CNPJ)      , 14) +
-                                           LFill(VL_TOTAL  , 12, 2) +
-                                           LFill(DATA_INI  , 'yyyymmdd') +
-                                           LFill(DATA_FIM  , 'yyyymmdd') +
-                                           LFill(dataAtual , 'yyyymmdd') +
-                                           LFill(dataAtual , 'hhmmss') +
-                                           sLineBreak;
-        end;
-        ///
-        FRegistroZ9.TOT_REG := FRegistroZ9.TOT_REG + 1;
-     end;
-     Result := strRegistroZ4;
+    if FRegistroZ4.Count > 0 then
+    begin
+      with FRegistroZ4.Items[0] do
+      begin
+        Check(funChecaCNPJ(CNPJ), '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+      end;
+    end;
+
+    for intFor := 0 to FRegistroZ4.Count - 1 do
+    begin
+      with FRegistroZ4.Items[intFor] do
+      begin
+        Add( LFill('Z4') +
+             LFill(limpaCampo(CNPJ)      , 14) +
+             LFill(VL_TOTAL  , 12, 2) +
+             LFill(DATA_INI  , 'yyyymmdd') +
+             LFill(DATA_FIM  , 'yyyymmdd') +
+             LFill(dataAtual , 'yyyymmdd') +
+             LFill(dataAtual , 'hhmmss'));
+      end;
+
+      FRegistroZ9.TOT_REG := FRegistroZ9.TOT_REG + 1;
+    end;
   end;
 end;
 
-function TPAF_Z.WriteRegistroZ9: string;
+procedure TPAF_Z.WriteRegistroZ9;
 begin
-   if Assigned(FRegistroZ9) then
-   begin
-      with FRegistroZ9 do
-      begin
-        Check(funChecaCNPJ(FRegistroZ2.CNPJ),             '(Z9) TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroZ2.CNPJ]);
-        Check(funChecaIE(FRegistroZ2.IE, FRegistroZ2.UF), '(Z9) TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroZ2.IE]);
-        ///
-        Result := LFill('Z9') +
-                  LFill(limpaCampo(FRegistroZ2.CNPJ), 14  ) +
-                  RFill(limpaCampo(FRegistroZ2.IE)  , 14  ) +
-                  LFill(TOT_REG         , 6, 0) +
-                  sLineBreak;
-      end;
-   end;
+  if Assigned(FRegistroZ9) then
+  begin
+    with FRegistroZ9 do
+    begin
+      Check(funChecaCNPJ(FRegistroZ2.CNPJ),             '(Z9) TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroZ2.CNPJ]);
+      Check(funChecaIE(FRegistroZ2.IE, FRegistroZ2.UF), '(Z9) TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroZ2.IE]);
+      ///
+      Add(LFill('Z9') +
+          LFill(limpaCampo(FRegistroZ2.CNPJ), 14  ) +
+          RFill(limpaCampo(FRegistroZ2.IE)  , 14  ) +
+          LFill(TOT_REG         , 6, 0));
+    end;
+  end;
 end;
 
 end.

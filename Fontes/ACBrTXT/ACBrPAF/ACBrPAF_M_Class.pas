@@ -41,6 +41,9 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
      ACBrPAF_M;
 
 type
+
+  { TPAF_M }
+
   TPAF_M = class(TACBrTXTClass)
   private
     FRegistroM2: TRegistroM2List;
@@ -52,7 +55,7 @@ type
     destructor Destroy; override;
     procedure LimpaRegistros;
 
-    function WriteRegistroM2: string;
+    procedure WriteRegistroM2;
 
     property RegistroM2: TRegistroM2List read FRegistroM2 write FRegistroM2;
   end;
@@ -62,6 +65,7 @@ implementation
 { TPAF_M }
 constructor TPAF_M.Create;
 begin
+  inherited;
   CriaRegistros;
 end;
 
@@ -112,13 +116,10 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_M.WriteRegistroM2: string;
+procedure TPAF_M.WriteRegistroM2;
 var
   intFor: integer;
-  strRegistroM2: string;
 begin
-  strRegistroM2:= '';
-  
   if Assigned(FRegistroM2) then
   begin
     FRegistroM2.Sort(@OrdenarM2);
@@ -127,46 +128,43 @@ begin
     begin
       with FRegistroM2.Items[intFor] do
       begin
-        strRegistroM2 := strRegistroM2 + LFill('M2') +
-                                         LFill(CNPJ, 14) +
-                                         RFill(IE, 14) +
-                                         RFill(IM, 14) +
-                                         RFill(NUM_FAB, 20) +
-                                         RFill(MF_ADICIONAL, 1) +
-                                         RFill(TIPO_ECF, 7) +
-                                         RFill(MARCA_ECF, 20) +
-                                         RFill(MODELO_ECF, 20) +
-                                         LFill(NUM_USU, 2) +
-                                         LFill(CCF, 6) +
-                                         LFill(COO, 6) +
-                                         LFill(DT_EMI, 'yyyymmddhhmmss') +
-                                         LFill(COD_MOD, 2) +
-                                         LFill(COD_CAT, 2) +
-                                         RFill(ID_LINHA, 8) +
-                                         RFill(COD_ORIG, 20) +
-                                         RFill(COD_DEST, 20) +
-                                         LFill(COD_TSER, 2) +
-                                         LFill(DT_VIA, 'yyyymmddhhmmss') +
-                                         LFill(TIP_VIA, 2) +
-                                         LFill(POLTRONA, 7) +
-                                         RFill(PLATAFORMA,15) +
-                                         LFill(COD_DESC, 2) +
-                                         LFill(VL_TARIFA, 8, 2) +
-                                         LFill(ALIQ, 4, 2) +
-                                         LFill(VL_PEDAGIO, 8, 2) +
-                                         LFill(VL_TAXA, 8, 2) +
-                                         LFill(VL_TOTAL, 8, 2) +
-                                         LFill(FORM_PAG, 2) +
-                                         LFill(VL_PAGO, 8, 2) +
-                                         RFill(NOME_PAS, 50) +
-                                         RFill(NDOC_PAS, 20) +
-                                         RFill(SAC, 10) +
-                                         RFill(AGENCIA, 30) +
-                                         sLineBreak;
+        Add( LFill('M2') +
+             LFill(CNPJ, 14) +
+             RFill(IE, 14) +
+             RFill(IM, 14) +
+             RFill(NUM_FAB, 20) +
+             RFill(MF_ADICIONAL, 1) +
+             RFill(TIPO_ECF, 7) +
+             RFill(MARCA_ECF, 20) +
+             RFill(MODELO_ECF, 20) +
+             LFill(NUM_USU, 2) +
+             LFill(CCF, 6) +
+             LFill(COO, 6) +
+             LFill(DT_EMI, 'yyyymmddhhmmss') +
+             LFill(COD_MOD, 2) +
+             LFill(COD_CAT, 2) +
+             RFill(ID_LINHA, 8) +
+             RFill(COD_ORIG, 20) +
+             RFill(COD_DEST, 20) +
+             LFill(COD_TSER, 2) +
+             LFill(DT_VIA, 'yyyymmddhhmmss') +
+             LFill(TIP_VIA, 2) +
+             LFill(POLTRONA, 7) +
+             RFill(PLATAFORMA,15) +
+             LFill(COD_DESC, 2) +
+             LFill(VL_TARIFA, 8, 2) +
+             LFill(ALIQ, 4, 2) +
+             LFill(VL_PEDAGIO, 8, 2) +
+             LFill(VL_TAXA, 8, 2) +
+             LFill(VL_TOTAL, 8, 2) +
+             LFill(FORM_PAG, 2) +
+             LFill(VL_PAGO, 8, 2) +
+             RFill(NOME_PAS, 50) +
+             RFill(NDOC_PAS, 20) +
+             RFill(SAC, 10) +
+             RFill(AGENCIA, 30));
       end;
     end;
-    Result := strRegistroM2;
-
   end;
 
 end;

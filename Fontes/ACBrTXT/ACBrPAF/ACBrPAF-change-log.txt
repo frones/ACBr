@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/08/2015
+-- ACBrPAF --
+[*] Aplicado um amplo refactoring em todas as Units de geração do arquivo...
+    Visando Performance e compatibilidade com as classes de SPED, que utilizam
+    um Buffer interno, para a geração do arquivo.
+    (por: Jean Patrick e DSA)
+
 07/11/2014 - ACBrPAF - 
 [*] acerto na geração do COO do registro C2
     http://www.projetoacbr.com.br/forum/index.php?/topic/18508-registro-c2-do-acbrpaf-com-erro/#entry116945

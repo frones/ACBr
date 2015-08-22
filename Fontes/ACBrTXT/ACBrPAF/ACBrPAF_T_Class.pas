@@ -49,6 +49,9 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
 
 type
   /// TPAF_T -
+
+  { TPAF_T }
+
   TPAF_T = class(TACBrTXTClass)
   private
     FRegistroT1: TRegistroT1;       /// FRegistroT1
@@ -62,9 +65,9 @@ type
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistroT1: string;
-    function WriteRegistroT2: string;
-    function WriteRegistroT9: string;
+    procedure WriteRegistroT1;
+    procedure WriteRegistroT2;
+    procedure WriteRegistroT9;
 
     property RegistroT1: TRegistroT1 read FRegistroT1 write FRegistroT1;
     property RegistroT2: TRegistroT2List read FRegistroT2 write FRegistroT2;
@@ -79,7 +82,8 @@ uses ACBrTXTUtils;
 
 constructor TPAF_T.Create;
 begin
-   CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TPAF_T.CriaRegistros;
@@ -112,7 +116,7 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_T.WriteRegistroT1: string;
+procedure TPAF_T.WriteRegistroT1;
 begin
    if Assigned(FRegistroT1) then
    begin
@@ -121,12 +125,11 @@ begin
         Check(funChecaCNPJ(CNPJ), '(T1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
         Check(funChecaIE(IE, UF), '(T1) ESTABELECIMENTO: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
         ///
-        Result := LFill('T1') +
-                  LFill(CNPJ, 14) +
-                  RFill(IE, 14) +
-                  RFill(IM, 14) +
-                  RFill(RAZAOSOCIAL, 50) +
-                  #13#10;
+        Add(LFill('T1') +
+            LFill(CNPJ, 14) +
+            RFill(IE, 14) +
+            RFill(IM, 14) +
+            RFill(RAZAOSOCIAL, 50));
       end;
    end;
 end;
@@ -147,58 +150,52 @@ begin
   Result := AnsiCompareText(Campo1, Campo2);
 end;
 
-function TPAF_T.WriteRegistroT2: string;
+procedure TPAF_T.WriteRegistroT2;
 var
 intFor: integer;
-strRegistroT2: string;
 begin
-  strRegistroT2 := '';
-
   if Assigned(FRegistroT2) then
   begin
-     FRegistroT2.Sort(@OrdenarT2);
+    FRegistroT2.Sort(@OrdenarT2);
 
-     for intFor := 0 to FRegistroT2.Count - 1 do
-     begin
-        with FRegistroT2.Items[intFor] do
-        begin
-          strRegistroT2 := strRegistroT2 + LFill('T2') +
-                                           LFill(FRegistroT1.CNPJ, 14) +
-                                           LFill(DT_MOV, 'yyyymmdd') +
-                                           RFill(TP_DOCTO, 10, ifThen(RegistroValido, ' ', '?')) +
-                                           RFill(SERIE, 2) +
-                                           LFill(NUM_BILH_I, 6) +
-                                           LFill(NUM_BILH_F, 6) +
-                                           RFill(NUM_ECF, 20) +
-                                           LFill(CRZ, 6) +
-                                           RFill(CFOP, 4) +
-                                           LFill(VL_CONT, 13, 2) +
-                                           LFill(VL_BASECALC, 13, 2) +
-                                           LFill(ALIQ, 4) +
-                                           LFill(VL_IMPOSTO, 13, 2) +
-                                           LFill(VL_ISENTAS, 13, 2) +
-                                           LFill(VL_OUTRAS, 13, 2) +
-                                           #13#10;
-        end;
-        ///
-        FRegistroT9.TOT_REG := FRegistroT9.TOT_REG + 1;
-     end;
-     Result := strRegistroT2;
+    for intFor := 0 to FRegistroT2.Count - 1 do
+    begin
+      with FRegistroT2.Items[intFor] do
+      begin
+        Add(LFill('T2') +
+            LFill(FRegistroT1.CNPJ, 14) +
+            LFill(DT_MOV, 'yyyymmdd') +
+            RFill(TP_DOCTO, 10, ifThen(RegistroValido, ' ', '?')) +
+            RFill(SERIE, 2) +
+            LFill(NUM_BILH_I, 6) +
+            LFill(NUM_BILH_F, 6) +
+            RFill(NUM_ECF, 20) +
+            LFill(CRZ, 6) +
+            RFill(CFOP, 4) +
+            LFill(VL_CONT, 13, 2) +
+            LFill(VL_BASECALC, 13, 2) +
+            LFill(ALIQ, 4) +
+            LFill(VL_IMPOSTO, 13, 2) +
+            LFill(VL_ISENTAS, 13, 2) +
+            LFill(VL_OUTRAS, 13, 2));
+      end;
+      ///
+      FRegistroT9.TOT_REG := FRegistroT9.TOT_REG + 1;
+    end;
   end;
 end;
 
-function TPAF_T.WriteRegistroT9: string;
+procedure TPAF_T.WriteRegistroT9;
 begin
    if Assigned(FRegistroT9) then
    begin
-      with FRegistroT9 do
-      begin
-        Result := LFill('T9') +
-                  LFill(FRegistroT1.CNPJ, 14) +
-                  RFill(FRegistroT1.IE, 14) +
-                  LFill(TOT_REG, 6, 0) +
-                  #13#10;
-      end;
+     with FRegistroT9 do
+     begin
+       Add(LFill('T9') +
+           LFill(FRegistroT1.CNPJ, 14) +
+           RFill(FRegistroT1.IE, 14) +
+           LFill(TOT_REG, 6, 0));
+     end;
    end;
 end;
 

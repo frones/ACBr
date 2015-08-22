@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/08/2015
+-- ACBrTXTClass --   (por: DSA)
+[*] Ajuste na criação da Classe, para inicializar os campos com valores default
+[*] Método Add, modificado para respeitar a propriedade "TrimString"
+
 Data: 18/08/2015
 -- ACBrTXTClass --    (por: DSA)
 [-]   Correção para LFill suportar grandes valores com Extended e Int64

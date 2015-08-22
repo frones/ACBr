@@ -41,6 +41,9 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
      ACBrPAF_G;
 
 type
+
+  { TPAF_G }
+
   TPAF_G = class(TACBrTXTClass)
   private
     FRegistroG2: TRegistroG2List;
@@ -52,7 +55,7 @@ type
     destructor Destroy; override;
     procedure LimpaRegistros;
 
-    function WriteRegistroG2: string;
+    procedure WriteRegistroG2;
 
     property RegistroG2: TRegistroG2List read FRegistroG2 write FRegistroG2;
   end;
@@ -62,6 +65,7 @@ implementation
 { TPAF_G }
 constructor TPAF_G.Create;
 begin
+  inherited;
   CriaRegistros;
 end;
 
@@ -100,13 +104,10 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_G.WriteRegistroG2: string;
+procedure TPAF_G.WriteRegistroG2;
 var
   intFor: integer;
-  strRegistroG2: string;
 begin
-  strRegistroG2 := '';
-  
   if Assigned(FRegistroG2) then
   begin
     FRegistroG2.Sort(@OrdenarG2);
@@ -115,37 +116,34 @@ begin
     begin
       with FRegistroG2.Items[intFor] do
       begin
-        strRegistroG2 := strRegistroG2 + LFill('G2') +
-                                         LFill(CNPJ, 14) +
-                                         RFill(NUM_FAB, 20) +
-                                         RFill(MF_ADICIONAL, 1) +
-                                         RFill(TIPO_ECF, 7) +
-                                         RFill(MARCA_ECF, 20) +
-                                         RFill(MODELO_ECF, 20) +
-                                         LFill(NUM_CAB, 2) +
-                                         LFill(DT, 'yyyymmdd') +
-                                         LFill(COO_INI, 6) +
-                                         LFill(COO_FIN, 6) +
-                                         LFill(CCF_INI, 6) +
-                                         LFill(CCF_FIN, 6) +
-                                         LFill(VL_2EIX_SIMPLES, 9, 2) +
-                                         LFill(VL_2EIX_SIMPLES_MOTO, 9, 2) +
-                                         LFill(VL_2EIX_DUPLA, 9, 2) +
-                                         LFill(VL_3EIX_SIMPLES, 9, 2) +
-                                         LFill(VL_3EIX_DUPLA, 9, 2) +
-                                         LFill(VL_4EIX_SIMPLES, 9, 2) +
-                                         LFill(VL_4EIX_DUPLA, 9, 2) +
-                                         LFill(VL_5EIX_DUPLA, 9, 2) +
-                                         LFill(VL_6EIX_DUPLA, 9, 2) +
-                                         LFill(VL_OUTROS, 9, 2) +
-                                         LFill(VL_TOTAL_DIA, 10, 2) +
-                                         LFill(QTDE_VEIC_ISENTO, 6) +
-                                         RFill(LOCALIZACAO, 250) +
-                                         sLineBreak;
+        Add( LFill('G2') +
+             LFill(CNPJ, 14) +
+             RFill(NUM_FAB, 20) +
+             RFill(MF_ADICIONAL, 1) +
+             RFill(TIPO_ECF, 7) +
+             RFill(MARCA_ECF, 20) +
+             RFill(MODELO_ECF, 20) +
+             LFill(NUM_CAB, 2) +
+             LFill(DT, 'yyyymmdd') +
+             LFill(COO_INI, 6) +
+             LFill(COO_FIN, 6) +
+             LFill(CCF_INI, 6) +
+             LFill(CCF_FIN, 6) +
+             LFill(VL_2EIX_SIMPLES, 9, 2) +
+             LFill(VL_2EIX_SIMPLES_MOTO, 9, 2) +
+             LFill(VL_2EIX_DUPLA, 9, 2) +
+             LFill(VL_3EIX_SIMPLES, 9, 2) +
+             LFill(VL_3EIX_DUPLA, 9, 2) +
+             LFill(VL_4EIX_SIMPLES, 9, 2) +
+             LFill(VL_4EIX_DUPLA, 9, 2) +
+             LFill(VL_5EIX_DUPLA, 9, 2) +
+             LFill(VL_6EIX_DUPLA, 9, 2) +
+             LFill(VL_OUTROS, 9, 2) +
+             LFill(VL_TOTAL_DIA, 10, 2) +
+             LFill(QTDE_VEIC_ISENTO, 6) +
+             RFill(LOCALIZACAO, 250));
       end;
     end;
-    Result := strRegistroG2;
-
   end;
 
 end;

@@ -126,6 +126,11 @@ Uses ACBrUtil ;
 constructor TACBrTXTClass.create;
 begin
    FConteudo     := TStringList.Create ;
+   FOnError      := Nil;
+   FNomeArquivo  := '';
+   FDelimitador  := '';
+   FTrimString   := False;
+   FCurMascara   := '';
    FLinhasBuffer := 0 ; // 0 = Sem tratamento de buffer
 end;
 
@@ -191,12 +196,17 @@ function TACBrTXTClass.Add(const AString: AnsiString; AddDelimiter: Boolean
 Var
   S : AnsiString ;
 begin
-   S      := Trim( AString ) ;
+   if TrimString then
+     S := Trim( AString )
+   else
+     S := AString;
+
    Result := -1 ;
-   if S = '' then exit ;
+   if S = '' then
+     exit ;
 
    if AddDelimiter then
-      S := S + Delimitador;
+     S := S + Delimitador;
 
    Result := FConteudo.Add( S );
 

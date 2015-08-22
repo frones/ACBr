@@ -46,18 +46,21 @@ uses
   ACBrPAF_TITP;
 
 type
+
+  { TPAF_TITP }
+
   TPAF_TITP = class(TACBrTXTClass)
   private
     FTitulo: String;
     FDataHora: TDateTime;
     FMercadorias: TTITP_Mercadorias;
-    function WriteInsumos(Insumos: TTITP_Insumos): String;
+    procedure WriteInsumos(Insumos: TTITP_Insumos);
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure LimpaRegistros;
-    function WriteMercadorias: String;
+    procedure WriteMercadorias;
 
     property Titulo: String read FTitulo write FTitulo;
     property DataHora: TDateTime read FDataHora write FDataHora;
@@ -76,6 +79,7 @@ const
 
 constructor TPAF_TITP.Create;
 begin
+  inherited;
   FMercadorias := TTITP_Mercadorias.Create;
 end;
 
@@ -92,16 +96,13 @@ begin
   Mercadorias.Clear;
 end;
 
-function TPAF_TITP.WriteInsumos(Insumos: TTITP_Insumos): String;
+procedure TPAF_TITP.WriteInsumos(Insumos: TTITP_Insumos);
 var
   I: Integer;
 begin
-
-  Result := EmptyStr;
-
   for I := 0 to Insumos.Count - 1 do
   begin
-    Result := Result +
+    Add(
       Format(MASCARA_ITEM, [
         'I',
         Insumos[I].Quantidade,
@@ -112,23 +113,19 @@ begin
         Insumos[I].CST,
         Insumos[I].Aliquota,
         Insumos[I].VlrUnitario
-      ]) +
-      sLineBreak;
+      ]) );
   end;
-
+  Conteudo.Add('');
 end;
 
-function TPAF_TITP.WriteMercadorias: String;
+procedure TPAF_TITP.WriteMercadorias;
 var
   I: Integer;
 begin
-
-  Result := EmptyStr;
-
   if Mercadorias.Count > 0 then
   begin
     // titulo
-    Result := Result +
+    Add(
       Format('%s %-10s %-10s %-14s %-50s %-4s %-3s %-5s %-9s', [
         'T',
         'Quantidade',
@@ -139,9 +136,9 @@ begin
         'CST',
         'Aliq.',
         'Vl.Unitario'
-      ]) + sLineBreak;
+      ]) );
 
-    Result := Result +
+    Add(
       Format('= %s %s %s %s %s %s %s %s', [
         LinhaDupla(10),
         LinhaDupla(10),
@@ -151,12 +148,12 @@ begin
         LinhaDupla(3),
         LinhaDupla(5),
         LinhaDupla(11)
-      ]) + sLineBreak;
+      ]) );
 
     // mercadorias
     for I := 0 to Mercadorias.Count - 1 do
     begin
-      Result := Result +
+      Add(
         Format(MASCARA_ITEM, [
           'P',
           Mercadorias[I].Quantidade,
@@ -167,14 +164,14 @@ begin
           Mercadorias[I].CST,
           Mercadorias[I].Aliquota,
           Mercadorias[I].VlrUnitario
-        ]) +
-        sLineBreak;
-
+        ]) );
       // insumos
-      Result := Result +
-        WriteInsumos(Mercadorias[I].Insumos) +
-        sLineBreak;
+      //for I := 0 to Mercadorias.Count - 1 do
+        WriteInsumos(Mercadorias[I].Insumos);
     end;
+    // Cria uma linha em branco para ficar igual ao exemplo antigo
+    // Não dá para usar só Add por causa do Trim neste método
+    Conteudo.Add('');
   end;
 end;
 

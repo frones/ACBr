@@ -49,14 +49,17 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
 
 type
   /// TACBrPAF_D -
+
+  { TPAF_D }
+
   TPAF_D = class(TACBrTXTClass)
   private
     FRegistroD1: TRegistroD1;       /// FRegistroD1
     FRegistroD2: TRegistroD2List;   /// Lista de FRegistroD2
     FRegistroD9: TRegistroD9;       /// FRegistroD9
 
-    function WriteRegistroD3(RegD2: TRegistroD2): String;
-    function WriteRegistroD4(RegD2: TRegistroD2): String;
+    procedure WriteRegistroD3(RegD2: TRegistroD2);
+    procedure WriteRegistroD4(RegD2: TRegistroD2);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -65,9 +68,9 @@ type
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistroD1: String;
-    function WriteRegistroD2: String;
-    function WriteRegistroD9: String;
+    procedure WriteRegistroD1;
+    procedure WriteRegistroD2;
+    procedure WriteRegistroD9;
 
     property RegistroD1: TRegistroD1     read FRegistroD1 write FRegistroD1;
     property RegistroD2: TRegistroD2List read FRegistroD2 write FRegistroD2;
@@ -82,7 +85,8 @@ uses ACBrTXTUtils;
 
 constructor TPAF_D.Create;
 begin
-   CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TPAF_D.CriaRegistros;
@@ -117,7 +121,7 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_D.WriteRegistroD1: String;
+procedure TPAF_D.WriteRegistroD1;
 begin
    if Assigned(FRegistroD1) then
    begin
@@ -126,12 +130,11 @@ begin
         Check(funChecaCNPJ(CNPJ), '(D1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
         Check(funChecaIE(IE, UF), '(D1) ESTABELECIMENTO: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
         ///
-        Result := LFill('D1') +
-                  LFill(CNPJ, 14) +
-                  RFill(IE, 14) +
-                  RFill(IM, 14) +
-                  RFill(RAZAOSOCIAL, 50, ifThen(not InclusaoExclusao, ' ', '?')) +
-                  sLineBreak;
+        Add( LFill('D1') +
+             LFill(CNPJ, 14) +
+             RFill(IE, 14) +
+             RFill(IM, 14) +
+             RFill(RAZAOSOCIAL, 50, ifThen(not InclusaoExclusao, ' ', '?')) );
       end;
    end;
 end;
@@ -152,58 +155,47 @@ begin
     Result := 0;
 end;
 
-function TPAF_D.WriteRegistroD2: String;
+procedure TPAF_D.WriteRegistroD2;
 var
   intFor: integer;
-  strRegistroD2: String;
-  strRegistroD3: String;
-  strRegistroD4: String;
 begin
-  strRegistroD2 := '';
-  strRegistroD3 := '';
-  strRegistroD4 := '';
-
   if Assigned(FRegistroD2) then
   begin
     FRegistroD2.Sort(@OrdenarD2);
 
-     for intFor := 0 to FRegistroD2.Count - 1 do
-     begin
-        with FRegistroD2.Items[intFor] do
-        begin
-          Check(funChecaCNPJ(FRegistroD1.CNPJ), '(D2) DAV EMITIDOS: O CNPJ "%s" digitado é inválido!', [FRegistroD1.CNPJ]);
+    Check(funChecaCNPJ(FRegistroD1.CNPJ), '(D2) DAV EMITIDOS: O CNPJ "%s" digitado é inválido!', [FRegistroD1.CNPJ]);
+    for intFor := 0 to FRegistroD2.Count - 1 do
+    begin
+      with FRegistroD2.Items[intFor] do
+      begin
+        Add( LFill('D2') +
+             LFill(FRegistroD1.CNPJ, 14) +
+             RFill(NUM_FAB, 20) +
+             RFill(MF_ADICIONAL, 1) +
+             RFill(TIPO_ECF, 7) +
+             RFill(MARCA_ECF, 20) +
+             RFill(MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
+             LFill(COO, 9) +
+             RFill(NUM_DAV, 13) +
+             LFill(DT_DAV, 'yyyymmdd') +
+             RFill(TIT_DAV, 30) +
+             LFill(VLT_DAV, 8, 2) +
+             LFill(COO_DFV, 9) +
+             LFill(NUMERO_ECF, 3) +
+             RFill(NOME_CLIENTE, 40) +
+             LFill(CPF_CNPJ, 14) );
+      end;
+      FRegistroD9.TOT_REG_D2 := FRegistroD9.TOT_REG_D2 + 1;
+      FRegistroD9.TOT_REG    := FRegistroD9.TOT_REG + 1;
+    end;
 
-          strRegistroD2 := strRegistroD2 + LFill('D2') +
-                                           LFill(FRegistroD1.CNPJ, 14) +
-                                           RFill(NUM_FAB, 20) +
-                                           RFill(MF_ADICIONAL, 1) +
-                                           RFill(TIPO_ECF, 7) +
-                                           RFill(MARCA_ECF, 20) +
-                                           RFill(MODELO_ECF, 20, ifThen(RegistroValido, ' ', '?')) +
-                                           LFill(COO, 9) +
-                                           RFill(NUM_DAV, 13) +
-                                           LFill(DT_DAV, 'yyyymmdd') +
-                                           RFill(TIT_DAV, 30) +
-                                           LFill(VLT_DAV, 8, 2) +
-                                           LFill(COO_DFV, 9) +
-                                           LFill(NUMERO_ECF, 3) +
-                                           RFill(NOME_CLIENTE, 40) +
-                                           LFill(CPF_CNPJ, 14) +
-                                           sLineBreak;
-        end;
+    // Registro FILHOS
+    for intFor := 0 to FRegistroD2.Count - 1 do
+      WriteRegistroD3( FRegistroD2.Items[intFor] );
 
-        // Registro FILHOS
-        strRegistroD3 := strRegistroD3 +
-                         WriteRegistroD3( FRegistroD2.Items[intFor] );
+    for intFor := 0 to FRegistroD2.Count - 1 do
+      WriteRegistroD4( FRegistroD2.Items[intFor] );
 
-        strRegistroD4 := strRegistroD4 +
-                         WriteRegistroD4( FRegistroD2.Items[intFor] );
-
-        FRegistroD9.TOT_REG_D2 := FRegistroD9.TOT_REG_D2 + 1;
-        FRegistroD9.TOT_REG    := FRegistroD9.TOT_REG + 1;
-     end;
-
-     Result := strRegistroD2 + strRegistroD3 + strRegistroD4;
   end;
 end;
 
@@ -223,13 +215,10 @@ begin
     Result := 0;
 end;
 
-function TPAF_D.WriteRegistroD3(RegD2: TRegistroD2): String;
+procedure TPAF_D.WriteRegistroD3(RegD2: TRegistroD2);
 var
 intFor: integer;
-strRegistroD3: String;
 begin
-  strRegistroD3 := '';
-
   if Assigned(RegD2.RegistroD3) then
   begin
     RegD2.RegistroD3.Sort(@OrdenarD3);
@@ -238,30 +227,28 @@ begin
         with RegD2.RegistroD3.Items[intFor] do
         begin
           ///
-          strRegistroD3 := strRegistroD3 + LFill('D3') +
-                                           RFill(RegD2.NUM_DAV, 13) +
-                                           LFill(DT_INCLUSAO, 'yyyymmdd') +
-                                           LFill(NUM_ITEM, 3, 0) +
-                                           RFill(COD_ITEM, 14) +
-                                           RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
-                                           LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
-                                           RFill(UNI_ITEM, 3) +
-                                           LFill(VL_UNIT, 8, DEC_VL_UNIT) +
-                                           LFill(VL_DESCTO, 8, 2) +
-                                           LFill(VL_ACRES, 8, 2) +
-                                           LFill(VL_TOTAL, 14, 2) +
-                                           RFill(SIT_TRIB, 1) +
-                                           LFill(ALIQ, 4, 2) +
-                                           LFill(IND_CANC) +
-                                           LFill(DEC_QTDE_ITEM, 1) +
-                                           LFill(DEC_VL_UNIT, 1) +
-                                           sLineBreak;
+          Add( LFill('D3') +
+               RFill(RegD2.NUM_DAV, 13) +
+               LFill(DT_INCLUSAO, 'yyyymmdd') +
+               LFill(NUM_ITEM, 3, 0) +
+               RFill(COD_ITEM, 14) +
+               RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
+               LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
+               RFill(UNI_ITEM, 3) +
+               LFill(VL_UNIT, 8, DEC_VL_UNIT) +
+               LFill(VL_DESCTO, 8, 2) +
+               LFill(VL_ACRES, 8, 2) +
+               LFill(VL_TOTAL, 14, 2) +
+               RFill(SIT_TRIB, 1) +
+               LFill(ALIQ, 4, 2) +
+               LFill(IND_CANC) +
+               LFill(DEC_QTDE_ITEM, 1) +
+               LFill(DEC_VL_UNIT, 1) );
         end;
         ///
         FRegistroD9.TOT_REG_D3 := FRegistroD9.TOT_REG_D3 + 1;
         FRegistroD9.TOT_REG    := FRegistroD9.TOT_REG + 1;
      end;
-     Result := strRegistroD3;
   end;
 end;
 
@@ -280,13 +267,10 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_D.WriteRegistroD4(RegD2: TRegistroD2): String;
+procedure TPAF_D.WriteRegistroD4(RegD2: TRegistroD2);
 var
   intFor: integer;
-  strRegistroD4: String;
 begin
-  strRegistroD4:= '';
-
   if Assigned(RegD2.RegistroD4) then
   begin
     RegD2.RegistroD4.Sort(@OrdenarD4);
@@ -295,32 +279,29 @@ begin
     begin
       with RegD2.RegistroD4.Items[intFor] do
       begin
-        strRegistroD4 := strRegistroD4 + LFill('D4') +
-                                         RFill(NUM_DAV, 13) +
-                                         LFill(DT_ALT, 'yyyymmddhhmmss') +
-                                         RFill(COD_ITEM, 14) +
-                                         RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
-                                         LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
-                                         RFill(UNI_ITEM, 3) +
-                                         LFill(VL_UNIT, 8, DEC_VL_UNIT) +
-                                         LFill(VL_DESCTO, 8, 2) +
-                                         LFill(VL_ACRES, 8, 2) +
-                                         LFill(VL_TOTAL, 14, 2) +
-                                         RFill(SIT_TRIB, 1) +
-                                         LFill(ALIQ, 4, 2) +
-                                         LFill(IND_CANC) +
-                                         LFill(DEC_QTDE_ITEM, 1) +
-                                         LFill(DEC_VL_UNIT, 1) +
-                                         RFill(TIP_ALT, 1) +
-                                         sLineBreak;
+        Add( LFill('D4') +
+             RFill(NUM_DAV, 13) +
+             LFill(DT_ALT, 'yyyymmddhhmmss') +
+             RFill(COD_ITEM, 14) +
+             RFill(DESC_ITEM, 100, ifThen(RegistroValido, ' ', '?')) +
+             LFill(QTDE_ITEM, 7, DEC_QTDE_ITEM) +
+             RFill(UNI_ITEM, 3) +
+             LFill(VL_UNIT, 8, DEC_VL_UNIT) +
+             LFill(VL_DESCTO, 8, 2) +
+             LFill(VL_ACRES, 8, 2) +
+             LFill(VL_TOTAL, 14, 2) +
+             RFill(SIT_TRIB, 1) +
+             LFill(ALIQ, 4, 2) +
+             LFill(IND_CANC) +
+             LFill(DEC_QTDE_ITEM, 1) +
+             LFill(DEC_VL_UNIT, 1) +
+             RFill(TIP_ALT, 1) );
       end;
     end;
-    Result := strRegistroD4;
   end;
-
 end;
 
-function TPAF_D.WriteRegistroD9: String;
+procedure TPAF_D.WriteRegistroD9;
 begin
    if Assigned(FRegistroD9) then
    begin
@@ -329,12 +310,11 @@ begin
         Check(funChecaCNPJ(FRegistroD1.CNPJ),             '(D9) TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroD1.CNPJ]);
         Check(funChecaIE(FRegistroD1.IE, FRegistroD1.UF), '(D9) TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroD1.IE]);
         ///
-        Result := LFill('D9') +
-                  LFill(FRegistroD1.CNPJ, 14) +
-                  RFill(FRegistroD1.IE, 14) +
-                  LFill(TOT_REG_D2, 6, 0) +
-                  LFill(TOT_REG_D3, 6, 0) +
-                  sLineBreak;
+        Add(LFill('D9') +
+            LFill(FRegistroD1.CNPJ, 14) +
+            RFill(FRegistroD1.IE, 14) +
+            LFill(TOT_REG_D2, 6, 0) +
+            LFill(TOT_REG_D3, 6, 0));
       end;
    end;
 end;

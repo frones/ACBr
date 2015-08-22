@@ -47,7 +47,7 @@ unit ACBrPAF;
 interface
 
 uses
-   SysUtils, Classes, DateUtils,
+   SysUtils, Classes, DateUtils, math,
    {$IFNDEF NOGUI}
     {$IFDEF FPC}LResources,{$ENDIF}
     {$IF DEFINED(CLX)}
@@ -80,7 +80,7 @@ uses
    ACBrPAF_Z_Class;
 
 const
-   CACBrPAF_Versao = '0.09' ;
+   CACBrPAF_Versao = '1.0' ;
 
 type
 
@@ -97,10 +97,9 @@ type
     fsAAC : TACBrAAC ;       /// Componente usado para manter o Arq.Auxiliar Criptografado
 
     FPath: String;            // Path do arquivo a ser gerado
-    FDelimitador: String;     // Caracter delimitador de campos
     FTrimString: boolean;     // Retorna a string sem espaços em branco iniciais e finais
-    FCurMascara: String;      // Mascara para valores tipo currency
     FAssinar : Boolean;       // Define se o arquivo gerado deve ser assinado
+    FLinesBuffer: Integer;
 
     FPAF_A: TPAF_A;
     FPAF_B: TPAF_B;
@@ -124,12 +123,13 @@ type
     fsOnPAFGetKeyRSA : TACBrEADGetChave ;
 
     function GetAbout: String;
-    function GetDelimitador: String;
+    function GetPath: String;
     function GetTrimString: boolean;
-    function GetCurMascara: String;
-    procedure SetDelimitador(const Value: String);
+    procedure SetLinesBuffer(AValue: Integer);
+    procedure SetPath(AValue: String);
     procedure SetTrimString(const Value: boolean);
-    procedure SetCurMascara(const Value: String);
+
+    function AjustaNomeArquivo(Arquivo: String): String;
 
     function GetOnError: TErrorEvent; // Método do evento OnError
     procedure SetOnError(const Value: TErrorEvent); // Método SetError
@@ -142,18 +142,11 @@ type
     constructor Create(AOwner: TComponent); override; // Create
     destructor Destroy; override; // Destroy
 
-    function SaveFileTXT_B(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_C(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_D(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_E(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_H(Arquivo: String): Boolean;
-    function SaveFileTXT_N(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_P(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_R(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_T(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_Z(Arquivo: String): Boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_TITP(Arquivo: String): Boolean;
-    function SaveFileTXT_RegistrosPAF(Arquivo: String): Boolean;
+    // Métodos que escrevem o arquivo texto no caminho passado como parâmetro
+    function SaveToFile_N(Arquivo: String): Boolean;
+    function SaveToFile_TITP(Arquivo: String): Boolean;
+    function SaveToFile_Z(Arquivo: String): Boolean;
+    function SaveToFile_RegistrosPAF(Arquivo: String): Boolean;
 
     property PAF_A: TPAF_A read FPAF_A write FPAF_A;
     property PAF_B: TPAF_B read FPAF_B write FPAF_B;
@@ -177,15 +170,14 @@ type
     Function GetACBrEAD : TACBrEAD ;
     function AssinaArquivoComEAD(Arquivo: String): Boolean;
   published
-    property About : String   read GetAbout stored False ;
-    property Path  : String   read FPath write FPath ;
-    property EAD   : TACBrEAD read fsEAD write SetEAD ;
-    property AAC   : TACBrAAC read fsAAC write SetAAC ;
+    property About        : String   read GetAbout stored False ;
+    property LinesBuffer  : Integer  read FLinesBuffer write SetLinesBuffer ;
+    property Path         : String   read GetPath write SetPath ;
+    property EAD          : TACBrEAD read fsEAD write SetEAD ;
+    property AAC          : TACBrAAC read fsAAC write SetAAC ;
 
-    property Delimitador: String read GetDelimitador write SetDelimitador;
     property TrimString: Boolean read GetTrimString write SetTrimString
        default True ;
-    property CurMascara: String read GetCurMascara write SetCurMascara;
     property AssinarArquivo : Boolean read FAssinar write FAssinar
       default True ;
 
@@ -226,7 +218,7 @@ begin
   FPAF_H := TPAF_H.Create;
   FPAF_L := TPAF_L.Create;
   FPAF_M := TPAF_M.Create;
-  FPAF_N := TPAF_N.Create( Self );
+  FPAF_N := TPAF_N.Create;
   FPAF_P := TPAF_P.Create;
   FPAF_R := TPAF_R.Create;
   FPAF_T := TPAF_T.Create;
@@ -234,21 +226,16 @@ begin
   FPAF_TITP := TPAF_TITP.Create;
   FPAF_U := TPAF_U.Create;
   FPAF_Z := TPAF_Z.Create;
-  // Define o delimitador com o padrão PAF
-  SetDelimitador('');
-  // Define a mascara dos campos numéricos com o padrão PAF
-  SetCurMascara('');
 
   fsEADInterno     := nil;
   fsEAD            := nil;
   fsOnPAFGetKeyRSA := nil;
   fsOnPAFCalcEAD   := nil;
 
-  FPath := ExtractFilePath( ParamStr(0) );
-  FDelimitador := '';
-  FCurMascara  := '';
+  FPath        := '';
   FTrimString  := True;
   FAssinar     := True;
+  FLinesBuffer := 1000;
 end;
 
 destructor TACBrPAF.Destroy;
@@ -283,67 +270,48 @@ begin
   Result := 'ACBrPAF Ver: ' + CACBrPAF_Versao;
 end;
 
-function TACBrPAF.GetDelimitador: String;
+function TACBrPAF.GetPath: String;
 begin
-  Result := FDelimitador;
-end;
+  if FPath = '' then
+    if not (csDesigning in ComponentState) then
+      FPath := ExtractFilePath( ParamStr(0) );
 
-procedure TACBrPAF.SetDelimitador(const Value: String);
-begin
-  FDelimitador := Value;
-
-  FPAF_A.Delimitador := Value;
-  FPAF_B.Delimitador := Value;
-  FPAF_C.Delimitador := Value;
-  FPAF_D.Delimitador := Value;
-  FPAF_E.Delimitador := Value;
-  FPAF_F.Delimitador := Value;
-  FPAF_G.Delimitador := Value;
-  FPAF_H.Delimitador := Value;
-  FPAF_L.Delimitador := Value;
-  FPAF_M.Delimitador := Value;
-  FPAF_N.Delimitador := Value;
-  FPAF_P.Delimitador := Value;
-  FPAF_R.Delimitador := Value;
-  FPAF_S.Delimitador := Value;
-  FPAF_T.Delimitador := Value;
-  FPAF_TITP.Delimitador := Value;
-  FPAF_U.Delimitador := Value;
-  FPAF_Z.Delimitador := Value;
-end;
-
-function TACBrPAF.GetCurMascara: String;
-begin
-  Result := FCurMascara;
-end;
-
-procedure TACBrPAF.SetCurMascara(const Value: String);
-begin
-  FCurMascara := Value;
-
-  FPAF_A.CurMascara := Value;
-  FPAF_B.CurMascara := Value;
-  FPAF_C.CurMascara := Value;
-  FPAF_D.CurMascara := Value;
-  FPAF_E.CurMascara := Value;
-  FPAF_F.CurMascara := Value;
-  FPAF_G.CurMascara := Value;
-  FPAF_H.CurMascara := Value;
-  FPAF_L.CurMascara := Value;
-  FPAF_M.CurMascara := Value;
-  FPAF_N.CurMascara := Value;
-  FPAF_P.CurMascara := Value;
-  FPAF_R.CurMascara := Value;
-  FPAF_S.CurMascara := Value;
-  FPAF_T.CurMascara := Value;
-  FPAF_TITP.CurMascara := Value;
-  FPAF_U.CurMascara := Value;
-  FPAF_Z.CurMascara := Value;
+  Result := FPath;
 end;
 
 function TACBrPAF.GetTrimString: boolean;
 begin
   Result := FTrimString;
+end;
+
+procedure TACBrPAF.SetLinesBuffer(AValue: Integer);
+begin
+  if FLinesBuffer = AValue then Exit;
+  FLinesBuffer := max(AValue,0);
+
+  FPAF_A.LinhasBuffer    := AValue;
+  FPAF_B.LinhasBuffer    := AValue;
+  FPAF_C.LinhasBuffer    := AValue;
+  FPAF_D.LinhasBuffer    := AValue;
+  FPAF_E.LinhasBuffer    := AValue;
+  FPAF_F.LinhasBuffer    := AValue;
+  FPAF_G.LinhasBuffer    := AValue;
+  FPAF_H.LinhasBuffer    := AValue;
+  FPAF_L.LinhasBuffer    := AValue;
+  FPAF_M.LinhasBuffer    := AValue;
+  FPAF_N.LinhasBuffer    := AValue;
+  FPAF_P.LinhasBuffer    := AValue;
+  FPAF_R.LinhasBuffer    := AValue;
+  FPAF_S.LinhasBuffer    := AValue;
+  FPAF_T.LinhasBuffer    := AValue;
+  FPAF_TITP.LinhasBuffer := AValue;
+  FPAF_U.LinhasBuffer    := AValue;
+  FPAF_Z.LinhasBuffer    := AValue;
+end;
+
+procedure TACBrPAF.SetPath(AValue: String);
+begin
+  FPath := PathWithDelim(Trim(AValue));
 end;
 
 procedure TACBrPAF.SetTrimString(const Value: boolean);
@@ -368,6 +336,32 @@ begin
   FPAF_TITP.TrimString := Value;
   FPAF_U.TrimString := Value;
   FPAF_Z.TrimString := Value;
+end;
+
+function TACBrPAF.AjustaNomeArquivo(Arquivo: String): String;
+var
+  APath: String;
+begin
+  Arquivo := Trim(Arquivo);
+  if EstaVazio(Arquivo) then
+    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+
+  APath := ExtractFilePath(Arquivo);
+  if EstaVazio(APath) then
+  begin
+    APath := Path;
+    Arquivo := APath + Arquivo;
+  end;
+
+  if not DirectoryExists(APath) then
+  begin
+    ForceDirectories(APath);
+
+    if not DirectoryExists(APath) then
+      raise Exception.Create('Caminho do arquivo não existe!');
+  end;
+
+  Result := Arquivo;
 end;
 
 function TACBrPAF.GetOnError: TErrorEvent;
@@ -432,403 +426,81 @@ begin
   end ;
 end ;
 
-function TACBrPAF.SaveFileTXT_D(Arquivo: String): Boolean;
-var
-  txtFile: TextFile;
+function TACBrPAF.SaveToFile_TITP(Arquivo: String): Boolean;
 begin
-  Result := True;
+  Result := False;
+  Arquivo := AjustaNomeArquivo(Arquivo);
 
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+  DeleteFile(Arquivo);
 
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-      Write(txtFile, FPAF_D.WriteRegistroD1);
+  with FPAF_TITP do
+  begin
+    Conteudo.Clear;
+    NomeArquivo := Arquivo;
 
-      if FPAF_D.RegistroD2.Count > 0 then
-         Write(txtFile, FPAF_D.WriteRegistroD2);
-
-      Write(txtFile, FPAF_D.WriteRegistroD9);
-    finally
-      CloseFile(txtFile);
+    if Trim(Titulo) <> '' then
+    begin
+      Add(Titulo);
+      Add(LinhaSimples(116));
     end;
+
+    WriteMercadorias;
+
+    Add(LinhaSimples(116));
+
+    if DataHora < 0 then
+      DataHora := NOW;
+
+    Add(Format('Arquivo gerado em: %s %52d mercadoria(s) listada(s)', [
+      FormatDateTime('dd/mm/yyyy "as" hh:mm', DataHora),
+      Mercadorias.Count]));
+
+    WriteBuffer;
 
     // Assinatura EAD
     if FAssinar then
-       AssinaArquivoComEAD(fPath + Arquivo);
+      AssinaArquivoComEAD(Arquivo);
 
     // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_D.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
+    LimpaRegistros;
   end;
+
+  Result := True;
 end;
 
-function TACBrPAF.SaveFileTXT_E(Arquivo: String): Boolean;
-var
-  txtFile: TextFile;
+function TACBrPAF.SaveToFile_Z(Arquivo: String): Boolean;
 begin
-  Result := True;
+  Result := False;
+  Arquivo := AjustaNomeArquivo(Arquivo);
 
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+  DeleteFile(Arquivo);
 
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-      Write(txtFile, FPAF_E.WriteRegistroE1);
+  with PAF_Z do
+  begin
+    Conteudo.Clear;
+    NomeArquivo := Arquivo;
 
-      if FPAF_E.RegistroE2.Count > 0 then
-        Write(txtFile, FPAF_E.WriteRegistroE2);
-
-      Write(txtFile, FPAF_E.WriteRegistroE9);
-    finally
-      CloseFile(txtFile);
-    end;
+    WriteRegistroZ1;
+    WriteBuffer;
 
     // Assinatura EAD
     if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
+      AssinaArquivoComEAD(Arquivo);
 
     // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_E.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
+    LimpaRegistros;
   end;
+
+  Result:= True;
 end;
 
-
-function TACBrPAF.SaveFileTXT_H(Arquivo: String): Boolean;
+function TACBrPAF.SaveToFile_N(Arquivo: String): Boolean;
 var
-  txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-      Write(txtFile, FPAF_H.WriteRegistroH1);
-
-      if FPAF_H.RegistroH2.Count > 0 then
-        Write(txtFile, FPAF_H.WriteRegistroH2);
-
-      Write(txtFile, FPAF_H.WriteRegistroH9);
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_H.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_P(Arquivo: String): Boolean;
-var
-txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-
-      Write(txtFile, FPAF_P.WriteRegistroP1);
-      if FPAF_P.RegistroP2.Count > 0 then
-        Write(txtFile, FPAF_P.WriteRegistroP2);
-
-      Write(txtFile, FPAF_P.WriteRegistroP9);
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_P.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_R(Arquivo: String): Boolean;
-var
-txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-
-      Write(txtFile, FPAF_R.WriteRegistroR01);
-     { if FPAF_R.RegistroR02.Count > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR02);
-
-      if FPAF_R.RegistroR04.Count > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR04);
-
-      if FPAF_R.RegistroR06.Count > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR06);
-
-      if (FPAF_R.RegistroR04.Count + FPAF_R.RegistroR06.Count) > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR07);   }
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_R.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_T(Arquivo: String): Boolean;
-var
-txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-      Write(txtFile, FPAF_T.WriteRegistroT1);
-
-      if FPAF_T.RegistroT2.Count > 0 then
-        Write(txtFile, FPAF_T.WriteRegistroT2);
-
-      Write(txtFile, FPAF_T.WriteRegistroT9);
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_T.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_Z(Arquivo: String): Boolean;
-var
-  txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-      Write(txtFile, FPAF_Z.WriteRegistroZ1);
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_Z.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_TITP(Arquivo: String): Boolean;
-var
-  txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-
-      if Trim(FPAF_TITP.Titulo) <> '' then
-      begin
-        WriteLn(txtFile, FPAF_TITP.Titulo);
-        WriteLn(txtFile, LinhaSimples(116));
-      end;
-
-      WriteLn(txtFile, FPAF_TITP.WriteMercadorias);
-
-      WriteLn(txtFile, LinhaSimples(116));
-
-      if FPAF_TITP.DataHora < 0 then
-        FPAF_TITP.DataHora := NOW;
-
-      WriteLn(txtFile, Format('Arquivo gerado em: %s %52d mercadoria(s) listada(s)', [
-        FormatDateTime('dd/mm/yyyy "às" hh:mm', FPAF_TITP.DataHora),
-        FPAF_TITP.Mercadorias.Count])
-      );
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_B.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_B(Arquivo: string): Boolean;
-var
-txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-
-      Write(txtFile, FPAF_B.WriteRegistroB1);
-
-      if FPAF_B.RegistroB2.Count > 0 then
-        Write(txtFile, FPAF_B.WriteRegistroB2);
-
-      Write(txtFile, FPAF_B.WriteRegistroB9);
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_B.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_C(Arquivo: String): Boolean;
-var
-txtFile: TextFile;
-begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
-
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
-
-      Write(txtFile, FPAF_C.WriteRegistroC1);
-
-      if FPAF_C.RegistroC2.Count > 0 then
-        Write(txtFile, FPAF_C.WriteRegistroC2);
-
-      Write(txtFile, FPAF_C.WriteRegistroC9);
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    // Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_C.LimpaRegistros;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create(E.Message);
-    end;
-  end;
-end;
-
-function TACBrPAF.SaveFileTXT_N(Arquivo: String): Boolean;
-var
-  txtFile: TextFile;
   PAF_MD5 : String ;
   iFor: Integer;
 begin
-  Result := True;
-
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+  Result := False;
+  Arquivo := AjustaNomeArquivo(Arquivo);
 
   if Assigned( fsAAC ) then
   begin
@@ -859,58 +531,63 @@ begin
         with FPAF_N.RegistroN3.New do
         begin
           NOME_ARQUIVO := fsAAC.IdentPAF.OutrosArquivos[iFor].Nome;
-	      MD5 := '' ; // MD5 será calculado em WriteRegistroN3
+	  MD5 := '' ; // MD5 será calculado em WriteRegistroN3
         end ;
       end;
     end;
   end ;
 
-  // Gravando arquivo N //
-  AssignFile(txtFile, fPath + Arquivo);
-  try
-    Rewrite(txtFile);
-    Write(txtFile, FPAF_N.WriteRegistroN1);
-    Write(txtFile, FPAF_N.WriteRegistroN2);
+  DeleteFile(Arquivo);
 
-    if FPAF_N.RegistroN3.Count > 0 then
-      Write(txtFile, FPAF_N.WriteRegistroN3);
+  with FPAF_N do
+  begin
+    Conteudo.Clear;
+    NomeArquivo := Arquivo;
 
-    Write(txtFile, FPAF_N.WriteRegistroN9);
-  finally
-    CloseFile(txtFile);
+    // Gravando arquivo N //
+    WriteRegistroN1;
+    WriteRegistroN2;
+
+    if RegistroN3.Count > 0 then
+      WriteRegistroN3;
+
+    WriteRegistroN9;
+    WriteBuffer;
+
+    // Assinatura EAD
+    if FAssinar then
+      AssinaArquivoComEAD(Arquivo);
+
+    // Sincronizando arquivos e MD5 do ACBrPAF com ACBrAAC //
+    if Assigned( fsAAC ) then
+    begin
+      AAC.IdentPAF.OutrosArquivos.Clear ;
+
+      // Alimenta a lista de arquivos autenticados no AAC, para que essa lista
+      // possa ser usada na impressão do relatório "Identificação do PAF-ECF"
+      for iFor := 0 to RegistroN3.Count - 1 do
+      begin
+        with AAC.IdentPAF.OutrosArquivos.New do
+        begin
+          Nome := RegistroN3.Items[iFor].NOME_ARQUIVO;
+          MD5  := RegistroN3.Items[iFor].MD5;
+        end;
+      end;
+
+      // Gera o MD5 do arquivo
+      PAF_MD5 := GetACBrEAD.MD5FromFile( Arquivo );
+
+      // Informações do arquivo com a lista de arquivos autenticados
+      AAC.IdentPAF.ArquivoListaAutenticados.Nome := ExtractFileName(Arquivo);
+      // Atualiza AAC.IdentPAF.ArquivoListaAutenticados.MD5
+      AAC.AtualizarMD5( PAF_MD5 );
+    end ;
+
+    // Limpa de todos os Blocos as listas de todos os registros.
+    LimpaRegistros;
   end;
 
-  // Assinatura EAD
-  if FAssinar then
-    AssinaArquivoComEAD(fPath + Arquivo);
-
-  // Sincronizando arquivos e MD5 do ACBrPAF com ACBrAAC //
-  if Assigned( fsAAC ) then
-  begin
-    AAC.IdentPAF.OutrosArquivos.Clear ;
-
-    // Alimenta a lista de arquivos autenticados no AAC, para que essa lista
-    // possa ser usada na impressão do relatório "Identificação do PAF-ECF"
-    for iFor := 0 to FPAF_N.RegistroN3.Count - 1 do
-    begin
-      with AAC.IdentPAF.OutrosArquivos.New do
-      begin
-        Nome := FPAF_N.RegistroN3.Items[iFor].NOME_ARQUIVO;
-        MD5  := FPAF_N.RegistroN3.Items[iFor].MD5;
-      end;
-    end;
-
-    // Gera o MD5 do arquivo
-    PAF_MD5 := GetACBrEAD.MD5FromFile( fPath + Arquivo );
-
-    // Informações do arquivo com a lista de arquivos autenticados
-    AAC.IdentPAF.ArquivoListaAutenticados.Nome := Arquivo;
-    // Atualiza AAC.IdentPAF.ArquivoListaAutenticados.MD5
-    AAC.AtualizarMD5( PAF_MD5 );
-  end ;
-
-  // Limpa de todos os Blocos as listas de todos os registros.
-  FPAF_N.LimpaRegistros;
+  Result:= True;
 end;
 
 procedure TACBrPAF.Notification(AComponent : TComponent ; Operation : TOperation
@@ -950,119 +627,160 @@ begin
   Result := True;
 end;
 
-function TACBrPAF.SaveFileTXT_RegistrosPAF(Arquivo: String): Boolean;
-var
-  txtFile: TextFile;
+function TACBrPAF.SaveToFile_RegistrosPAF(Arquivo: String): Boolean;
 begin
-  Result := True;
+  Result := False;
+  Arquivo := AjustaNomeArquivo(Arquivo);
 
-  if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
-    raise Exception.Create('Caminho ou nome do arquivo não informado!');
+  DeleteFile(Arquivo);
 
-  try
-    AssignFile(txtFile, fPath + Arquivo);
-    try
-      Rewrite(txtFile);
+  FPAF_U.Conteudo.Clear;
+  FPAF_A.Conteudo.Clear;
+  FPAF_P.Conteudo.Clear;
+  FPAF_E.Conteudo.Clear;
+  FPAF_D.Conteudo.Clear;
+  FPAF_B.Conteudo.Clear;
+  FPAF_C.Conteudo.Clear;
+  FPAF_F.Conteudo.Clear;
+  FPAF_T.Conteudo.Clear;
+  FPAF_M.Conteudo.Clear;
+  FPAF_L.Conteudo.Clear;
+  FPAF_G.Conteudo.Clear;
+  FPAF_H.Conteudo.Clear;
+  FPAF_S.Conteudo.Clear;
+  FPAF_R.Conteudo.Clear;
+  FPAF_Z.Conteudo.Clear;
 
-      Write(txtFile, PAF_U.WriteRegistroU1);
-      if FPAF_A.RegistroA2.Count > 0 then
-        Write(txtFile, FPAF_A.WriteRegistroA2);
+  FPAF_U.NomeArquivo := Arquivo;
+  FPAF_A.NomeArquivo := Arquivo;
+  FPAF_P.NomeArquivo := Arquivo;
+  FPAF_E.NomeArquivo := Arquivo;
+  FPAF_D.NomeArquivo := Arquivo;
+  FPAF_B.NomeArquivo := Arquivo;
+  FPAF_C.NomeArquivo := Arquivo;
+  FPAF_F.NomeArquivo := Arquivo;
+  FPAF_T.NomeArquivo := Arquivo;
+  FPAF_M.NomeArquivo := Arquivo;
+  FPAF_L.NomeArquivo := Arquivo;
+  FPAF_G.NomeArquivo := Arquivo;
+  FPAF_H.NomeArquivo := Arquivo;
+  FPAF_S.NomeArquivo := Arquivo;
+  FPAF_R.NomeArquivo := Arquivo;
+  FPAF_Z.NomeArquivo := Arquivo;
 
-      if FPAF_P.RegistroP2.Count > 0 then
-        Write(txtFile, FPAF_P.WriteRegistroP2);
+  PAF_U.WriteRegistroU1;
+  PAF_U.WriteBuffer;
 
-      if FPAF_E.RegistroE2.Count > 0 then
-        begin
-          Write(txtFile, FPAF_E.WriteRegistroE2);
-          Write(txtFile, FPAF_E.WriteRegistroE3);
-        end;
-
-      if FPAF_D.RegistroD2.Count > 0 then
-        Write(txtFile, FPAF_D.WriteRegistroD2);  //D2 e D3
-
-      //if FPAF_D.RegistroD4.Count > 0 then
-      //  Write(txtFile, FPAF_D.WriteRegistroD4);
-
-      if FPAF_B.RegistroB2.Count > 0 then
-        Write(txtFile, FPAF_B.WriteRegistroB2);
-
-      if FPAF_C.RegistroC2.Count > 0 then
-        Write(txtFile, FPAF_C.WriteRegistroC2);
-
-      if FPAF_F.RegistroF2.Count > 0 then
-        Write(txtFile, FPAF_F.WriteRegistroF2);
-
-      if FPAF_F.RegistroF3.Count > 0 then
-        Write(txtFile, FPAF_F.WriteRegistroF3);
-
-      if FPAF_F.RegistroF4.Count > 0 then
-        Write(txtFile, FPAF_F.WriteRegistroF4);
-
-      if FPAF_T.RegistroT2.Count > 0 then
-        Write(txtFile, FPAF_T.WriteRegistroT2);
-
-      if FPAF_M.RegistroM2.Count > 0 then
-        Write(txtFile, FPAF_M.WriteRegistroM2);
-
-      if FPAF_L.RegistroL2.Count > 0 then
-        Write(txtFile, FPAF_L.WriteRegistroL2);
-
-      if FPAF_G.RegistroG2.Count > 0 then
-        Write(txtFile, FPAF_G.WriteRegistroG2);
-
-      if FPAF_H.RegistroH2.Count > 0 then
-        Write(txtFile, FPAF_H.WriteRegistroH2);
-
-      if FPAF_S.RegistroS2.Count > 0 then        //S2 e S3
-        Write(txtFile, FPAF_S.WriteRegistroS2);
-
-      Write(txtFile, FPAF_R.WriteRegistroR01);
-     { if FPAF_R.RegistroR02.Count > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR02);
-
-      if FPAF_R.RegistroR04.Count > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR04); //R04 e R05
-
-      if FPAF_R.RegistroR06.Count > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR06);
-
-      if (FPAF_R.RegistroR04.Count + FPAF_R.RegistroR06.Count) > 0 then
-        Write(txtFile, FPAF_R.WriteRegistroR07); }
-
-      Write(txtFile, FPAF_Z.WriteRegistroZ1);
-
-    finally
-      CloseFile(txtFile);
-    end;
-
-    // Assinatura EAD
-    if FAssinar then
-      AssinaArquivoComEAD(fPath + Arquivo);
-
-    //Limpa de todos os Blocos as listas de todos os registros.
-    FPAF_U.LimpaRegistros;
-    FPAF_A.LimpaRegistros;
-    FPAF_P.LimpaRegistros;
-    FPAF_E.LimpaRegistros;
-    FPAF_D.LimpaRegistros;
-    FPAF_B.LimpaRegistros;
-    FPAF_C.LimpaRegistros;
-    FPAF_F.LimpaRegistros;
-    FPAF_T.LimpaRegistros;
-    FPAF_M.LimpaRegistros;
-    FPAF_L.LimpaRegistros;
-    FPAF_G.LimpaRegistros;
-    FPAF_H.LimpaRegistros;
-    FPAF_S.LimpaRegistros;
-    FPAF_R.LimpaRegistros;
-    FPAF_Z.LimpaRegistros;
-  except
-    on E: Exception do
-      begin
-        Result:= False;
-        raise Exception.Create(E.Message);
-      end;
+  if FPAF_A.RegistroA2.Count > 0 then
+  begin
+    FPAF_A.WriteRegistroA2;
+    FPAF_A.WriteBuffer;
   end;
+
+  if FPAF_P.RegistroP2.Count > 0 then
+  begin
+    FPAF_P.WriteRegistroP2;
+    FPAF_P.WriteBuffer;
+  end;
+
+  if FPAF_E.RegistroE2.Count > 0 then
+   begin
+     FPAF_E.WriteRegistroE2;
+     FPAF_E.WriteRegistroE3;
+     FPAF_E.WriteBuffer;
+   end;
+
+  if FPAF_D.RegistroD2.Count > 0 then
+  begin
+    FPAF_D.WriteRegistroD2;  //D2 e D3 e D4
+    FPAF_D.WriteBuffer;
+  end;
+
+  if FPAF_B.RegistroB2.Count > 0 then
+  begin
+    FPAF_B.WriteRegistroB2;
+    FPAF_B.WriteBuffer;
+  end;
+
+  if FPAF_C.RegistroC2.Count > 0 then
+  begin
+    FPAF_C.WriteRegistroC2;
+    FPAF_C.WriteBuffer;
+  end;
+
+  if FPAF_F.RegistroF2.Count > 0 then
+    FPAF_F.WriteRegistroF2;
+
+  if FPAF_F.RegistroF3.Count > 0 then
+    FPAF_F.WriteRegistroF3;
+
+  if FPAF_F.RegistroF4.Count > 0 then
+    FPAF_F.WriteRegistroF4;
+
+  FPAF_F.WriteBuffer;
+
+  if FPAF_T.RegistroT2.Count > 0 then
+  begin
+    FPAF_T.WriteRegistroT2;
+    FPAF_T.WriteBuffer;
+  end;
+
+  if FPAF_M.RegistroM2.Count > 0 then
+  begin
+    FPAF_M.WriteRegistroM2;
+    FPAF_M.WriteBuffer;
+  end;
+
+  if FPAF_L.RegistroL2.Count > 0 then
+  begin
+    FPAF_L.WriteRegistroL2;
+    FPAF_L.WriteBuffer;
+  end;
+
+  if FPAF_G.RegistroG2.Count > 0 then
+  begin
+    FPAF_G.WriteRegistroG2;
+    FPAF_G.WriteBuffer;
+  end;
+
+  if FPAF_H.RegistroH2.Count > 0 then
+  begin
+    FPAF_H.WriteRegistroH2;
+    FPAF_H.WriteBuffer;
+  end;
+
+  if FPAF_S.RegistroS2.Count > 0 then        //S2 e S3
+  begin
+    FPAF_S.WriteRegistroS2;
+    FPAF_S.WriteBuffer;
+  end;
+
+  FPAF_R.WriteRegistroR01;
+  FPAF_R.WriteBuffer;
+
+  // Assinatura EAD
+  if FAssinar then
+    AssinaArquivoComEAD(Arquivo);
+
+  //Limpa de todos os Blocos as listas de todos os registros.
+  FPAF_U.LimpaRegistros;
+  FPAF_A.LimpaRegistros;
+  FPAF_P.LimpaRegistros;
+  FPAF_E.LimpaRegistros;
+  FPAF_D.LimpaRegistros;
+  FPAF_B.LimpaRegistros;
+  FPAF_C.LimpaRegistros;
+  FPAF_F.LimpaRegistros;
+  FPAF_T.LimpaRegistros;
+  FPAF_M.LimpaRegistros;
+  FPAF_L.LimpaRegistros;
+  FPAF_G.LimpaRegistros;
+  FPAF_H.LimpaRegistros;
+  FPAF_S.LimpaRegistros;
+  FPAF_R.LimpaRegistros;
+  FPAF_Z.LimpaRegistros;
+
+  Result := True;
 end;
 
 {$IFNDEF NOGUI}

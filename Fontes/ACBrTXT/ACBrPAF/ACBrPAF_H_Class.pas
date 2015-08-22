@@ -48,7 +48,9 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
      ACBrPAF_H;
 
 type
-  /// TPAF_H -
+
+  { TPAF_H }
+
   TPAF_H = class(TACBrTXTClass)
   private
     FRegistroH1: TRegistroH1;       /// FRegistroE1
@@ -62,9 +64,9 @@ type
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistroH1: string;
-    function WriteRegistroH2: string;
-    function WriteRegistroH9: string;
+    procedure WriteRegistroH1;
+    procedure WriteRegistroH2;
+    procedure WriteRegistroH9;
 
     property RegistroH1: TRegistroH1 read FRegistroH1 write FRegistroH1;
     property RegistroH2: TRegistroH2List read FRegistroH2 write FRegistroH2;
@@ -79,7 +81,8 @@ uses ACBrTXTUtils, ACBrUtil;
 
 constructor TPAF_H.Create;
 begin
-   CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TPAF_H.CriaRegistros;
@@ -112,7 +115,7 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_H.WriteRegistroH1: string;
+procedure TPAF_H.WriteRegistroH1;
 begin
    if Assigned(FRegistroH1) then
    begin
@@ -121,17 +124,16 @@ begin
         Check(funChecaCNPJ(CNPJ), '(H1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
         Check(funChecaIE(IE, UF), '(H1) ESTABELECIMENTO: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
 
-        Result := LFill('H1') +
-                  LFill(OnlyNumber(CNPJ), 14) +
-                  RFill(IE, 14) +
-                  RFill(IM, 14) +
-                  RFill(RAZAOSOCIAL, 50, ifThen(not InclusaoExclusao, ' ', '?')) +
-                  RFill(NUM_FAB, 20) +
-                  RFill(MF_ADICIONAL, 1) +
-                  RFill(TIPO_ECF, 7) +
-                  RFill(MARCA_ECF, 20) +
-                  RFill(MODELO_ECF, 20,  ifThen(RegistroValido, ' ', '?')) +
-                  sLineBreak;
+        Add(LFill('H1') +
+            LFill(OnlyNumber(CNPJ), 14) +
+            RFill(IE, 14) +
+            RFill(IM, 14) +
+            RFill(RAZAOSOCIAL, 50, ifThen(not InclusaoExclusao, ' ', '?')) +
+            RFill(NUM_FAB, 20) +
+            RFill(MF_ADICIONAL, 1) +
+            RFill(TIPO_ECF, 7) +
+            RFill(MARCA_ECF, 20) +
+            RFill(MODELO_ECF, 20,  ifThen(RegistroValido, ' ', '?')));
       end;
    end;
 end;
@@ -152,49 +154,49 @@ begin
     Result := 0;
 end;
 
-function TPAF_H.WriteRegistroH2: string;
+procedure TPAF_H.WriteRegistroH2;
 var
 intFor: integer;
-strRegistroH2: string;
 begin
-  strRegistroH2 := '';
-
   if Assigned(FRegistroH2) then
   begin
-     FRegistroH2.Sort(@OrdenarH2);
+    FRegistroH2.Sort(@OrdenarH2);
 
-     for intFor := 0 to FRegistroH2.Count - 1 do
-     begin
-        with FRegistroH2.Items[intFor] do
-        begin
-          Check(funChecaCNPJ(FRegistroH1.CNPJ), '(H2) ESTOQUE: O CNPJ "%s" digitado é inválido!', [FRegistroH1.CNPJ]);
-          Check(funChecaCNPJ(CNPJ), '(H2) RECEBEDORA DA DOAÇÃO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
-          ///
-          strRegistroH2 := strRegistroH2 + LFill('H2') +
-                                           LFill(OnlyNumber(CNPJ_CRED_CARTAO), 14) +
-                                           RFill(NUM_FAB, 20) +
-                                           RFill(MF_ADICIONAL, 1) +
-                                           RFill(TIPO_ECF, 7) +
-                                           RFill(MARCA_ECF, 20) +
-                                           //RFill(MODELO_ECF, 20) +
-										   RFill(MODELO_ECF, 20,  ifThen(RegistroValido, ' ', '?')) +
-                                           LFill(COO, 9) +
-                                           LFill(CCF, 9) +
-                                           LFill(VLR_TROCO, 13) +
-                                           LFill(DT_TROCO, 'yyyymmdd') +
-                                           LFill(OnlyNumber(CPF), 14) +
-                                           RFill(Titulo, 7) +
-                                           LFill(OnlyNumber(CNPJ), 14) +
-                                           sLineBreak;
-        end;
-        ///
-        FRegistroH9.TOT_REG := FRegistroH9.TOT_REG + 1;
-     end;
-     Result := strRegistroH2;
+    if FRegistroH2.Count > 0 then
+    begin
+      with FRegistroH2.Items[0] do
+      begin
+        Check(funChecaCNPJ(FRegistroH1.CNPJ), '(H2) ESTOQUE: O CNPJ "%s" digitado é inválido!', [FRegistroH1.CNPJ]);
+        Check(funChecaCNPJ(CNPJ), '(H2) RECEBEDORA DA DOAÇÃO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+      end;
+    end;
+
+    for intFor := 0 to FRegistroH2.Count - 1 do
+    begin
+      with FRegistroH2.Items[intFor] do
+      begin
+        Add( LFill('H2') +
+             LFill(OnlyNumber(CNPJ_CRED_CARTAO), 14) +
+             RFill(NUM_FAB, 20) +
+             RFill(MF_ADICIONAL, 1) +
+             RFill(TIPO_ECF, 7) +
+             RFill(MARCA_ECF, 20) +
+             //RFill(MODELO_ECF, 20) +
+             RFill(MODELO_ECF, 20,  ifThen(RegistroValido, ' ', '?')) +
+             LFill(COO, 9) +
+             LFill(CCF, 9) +
+             LFill(VLR_TROCO, 13) +
+             LFill(DT_TROCO, 'yyyymmdd') +
+             LFill(OnlyNumber(CPF), 14) +
+             RFill(Titulo, 7) +
+             LFill(OnlyNumber(CNPJ), 14) );
+      end;
+      FRegistroH9.TOT_REG := FRegistroH9.TOT_REG + 1;
+    end;
   end;
 end;
 
-function TPAF_H.WriteRegistroH9: string;
+procedure TPAF_H.WriteRegistroH9;
 begin
    if Assigned(FRegistroH9) then
    begin
@@ -203,12 +205,11 @@ begin
         Check(funChecaCNPJ(FRegistroH1.CNPJ),             '(H9) TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroH1.CNPJ]);
         Check(funChecaIE(FRegistroH1.IE, FRegistroH1.UF), '(H9) TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroH1.IE]);
         ///
-        Result := LFill('H9') +
-                  LFill(OnlyNumber(FRegistroH1.CNPJ), 14) +
-                  RFill(FRegistroH1.IE, 14) +
-                  RFill(FRegistroH1.IM, 14) +
-                  LFill(TOT_REG, 6, 0) +
-                  #13#10;
+        Add(LFill('H9') +
+            LFill(OnlyNumber(FRegistroH1.CNPJ), 14) +
+            RFill(FRegistroH1.IE, 14) +
+            RFill(FRegistroH1.IM, 14) +
+            LFill(TOT_REG, 6, 0));
       end;
    end;
 end;

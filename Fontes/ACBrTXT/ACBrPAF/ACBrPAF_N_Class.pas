@@ -48,7 +48,6 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
   ACBrPAF_N;
 
 type
-  /// TPAF_N -
 
   { TPAF_N }
 
@@ -63,16 +62,16 @@ type
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
-    constructor Create( AOwner : TObject); /// Create
+    constructor Create; /// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
     procedure LerDadosArquivo(const APathArquivo: String);
 
-    function WriteRegistroN1: string;
-    function WriteRegistroN2: string;
-    function WriteRegistroN3: string;
-    function WriteRegistroN9: string;
+    procedure WriteRegistroN1;
+    procedure WriteRegistroN2;
+    procedure WriteRegistroN3;
+    procedure WriteRegistroN9;
 
     property RegistroN1: TRegistroN1 read FRegistroN1 write FRegistroN1;
     property RegistroN2: TRegistroN2 read FRegistroN2 write FRegistroN2;
@@ -86,13 +85,9 @@ uses ACBrTXTUtils, ACBrUtil, ACBrPAF;
 
 { TPAF_N }
 
-constructor TPAF_N.Create( AOwner : TObject);
+constructor TPAF_N.Create;
 begin
-  if not (AOwner is TACBrPAF) then
-     raise Exception.Create( 'Dono de TPAF_N deve ser do tipo TACBrPAF' );
-
-  FOwner      := AOwner;
-
+  inherited;
   CriaRegistros;
 end;
 
@@ -180,7 +175,7 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_N.WriteRegistroN1: string;
+procedure TPAF_N.WriteRegistroN1;
 begin
   if Assigned(FRegistroN1) then
     begin
@@ -191,29 +186,25 @@ begin
       Check(funChecaIE(IE, UF),
         '(N1) ESTABELECIMENTO: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
       ///
-      Result :=
-             LFill('N1') +
-             LFill(CNPJ, 14) +
-             RFill(UpperCase(IE), 14) +
-             RFill(UpperCase(IM), 14) +
-             RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50) +
-             #13#10;
+      Add(LFill('N1') +
+           LFill(CNPJ, 14) +
+           RFill(UpperCase(IE), 14) +
+           RFill(UpperCase(IM), 14) +
+           RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50));
       end;
     end;
 end;
 
-function TPAF_N.WriteRegistroN2: string;
+procedure TPAF_N.WriteRegistroN2;
 begin
   if Assigned(FRegistroN2) then
       begin
       with FRegistroN2 do
         begin
-        Result :=
-               LFill('N2') +
-               RFill(UpperCase(LAUDO), 10) +
-               RFill(UpperCase(TiraAcentos(NOME)), 50) +
-               RFill(UpperCase(VERSAO), 10) +
-               #13#10;
+        Add( LFill('N2') +
+             RFill(UpperCase(LAUDO), 10) +
+             RFill(UpperCase(TiraAcentos(NOME)), 50) +
+             RFill(UpperCase(VERSAO), 10));
         end;
       end;
 end;
@@ -228,12 +219,11 @@ begin
   );
 end;
 
-function TPAF_N.WriteRegistroN3: string;
+procedure TPAF_N.WriteRegistroN3;
 var
   intFor: integer;
-  strRegistroN3, NomeArquivoCompleto, ApplicationDir : String ;
+  NomeArquivoCompleto, ApplicationDir : String ;
 begin
-  strRegistroN3 := '';
   ApplicationDir := ExtractFilePath( ParamStr(0) );
 
   if Assigned(FRegistroN3) then
@@ -258,33 +248,27 @@ begin
           end ;
         end ;
 
-        strRegistroN3 := strRegistroN3 +
-          LFill('N3') +
-          RFill( UpperCase( ExtractFileName( NOME_ARQUIVO ) ), 50) +
-          LFill( UpperCase( MD5 ), 32) +
-          sLineBreak;
+        Add(LFill('N3') +
+            RFill( UpperCase( ExtractFileName( NOME_ARQUIVO ) ), 50) +
+            LFill( UpperCase( MD5 ), 32));
       end;
 
       FRegistroN9.TOT_REG := FRegistroN9.TOT_REG +  1;
     end;
-
-    Result := strRegistroN3;
   end;
 end;
 
 
-function TPAF_N.WriteRegistroN9: string;
+procedure TPAF_N.WriteRegistroN9;
 begin
   if Assigned(FRegistroN9) then
     begin
     with FRegistroN9 do
       begin
-           Result :=
-           LFill('N9') +
-           LFill(FRegistroN1.CNPJ, 14) +
-           RFill(UpperCase(FRegistroN1.IE), 14) +
-           LFill(TOT_REG, 6, 0) +
-           #13#10;
+        Add(LFill('N9') +
+            LFill(FRegistroN1.CNPJ, 14) +
+            RFill(UpperCase(FRegistroN1.IE), 14) +
+            LFill(TOT_REG, 6, 0));
       end;
     end;
 end;

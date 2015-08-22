@@ -43,6 +43,9 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrTXTUtils,
      ACBrPAF_U;
 
 type
+
+  { TPAF_U }
+
   TPAF_U = class(TACBrTXTClass)
   private
     FRegistroU1: TRegistroU1;
@@ -54,7 +57,7 @@ type
     destructor Destroy; override; 
     procedure LimpaRegistros;
     
-    function WriteRegistroU1: String;
+    procedure WriteRegistroU1;
 
     property RegistroU1: TRegistroU1 read FRegistroU1 write FRegistroU1;
   end;
@@ -64,6 +67,7 @@ implementation
 { TPAF_U }
 constructor TPAF_U.Create;
 begin
+  inherited;
   CriaRegistros;
 end;
 
@@ -91,7 +95,7 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_U.WriteRegistroU1: String;
+procedure TPAF_U.WriteRegistroU1;
 begin
   if Assigned(FRegistroU1) then
   begin
@@ -99,12 +103,11 @@ begin
     begin
       Check(funChecaCNPJ(CNPJ), '(U1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
 
-      Result := LFill('U1') +
-                LFill(CNPJ, 14) +
-                RFill(IE, 14) +
-                RFill(IM, 14) +
-                RFill(RAZAOSOCIAL, 50, ifThen(not InclusaoExclusao, ' ', '?')) +
-                sLineBreak;
+      Add(LFill('U1') +
+          LFill(CNPJ, 14) +
+          RFill(IE, 14) +
+          RFill(IM, 14) +
+          RFill(RAZAOSOCIAL, 50, ifThen(not InclusaoExclusao, ' ', '?')));
     end;
   end;
 end;

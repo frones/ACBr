@@ -52,16 +52,18 @@ type
     destructor Destroy; override;
     procedure LimpaRegistros;
 
-    function WriteRegistroA2: string;
+    procedure WriteRegistroA2;
 
     property RegistroA2: TRegistroA2List read FRegistroA2 write FRegistroA2;
   end;
 
 implementation
 
-{ TPAF_A }  
+{ TPAF_A }
+
 constructor TPAF_A.Create;
 begin
+  inherited;
   CriaRegistros;
 end;
 
@@ -106,13 +108,10 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_A.WriteRegistroA2: string;
+procedure TPAF_A.WriteRegistroA2;
 var
   intFor: integer;
-  strRegistroA2: string;
 begin
-  strRegistroA2 := '';
-  
   if Assigned(FRegistroA2) then
   begin
     FRegistroA2.Sort(@OrdenarA2);
@@ -121,18 +120,14 @@ begin
     begin
       with FRegistroA2.Items[intFor] do
       begin
-        strRegistroA2 := strRegistroA2 + LFill('A2') +
-                                         LFill(DT, 'yyyymmdd') +
-                                         RFill(MEIO_PGTO, 25, IfThen(RegistroValido, ' ', '?')) +
-                                         RFill(TIPO_DOC, 1) +
-                                         LFill(VL, 12, 2) +
-                                         sLineBreak;
+        Add(LFill('A2') +
+            LFill(DT, 'yyyymmdd') +
+            RFill(MEIO_PGTO, 25, IfThen(RegistroValido, ' ', '?')) +
+            RFill(TIPO_DOC, 1) +
+            LFill(VL, 12, 2));
       end;
     end;
-    Result := strRegistroA2;
-
   end;
-
 end;
 
 end.

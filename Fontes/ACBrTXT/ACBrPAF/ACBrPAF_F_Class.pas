@@ -39,7 +39,9 @@ interface
 uses SysUtils, Classes, DateUtils, ACBrTXTClass, ACBrPAF_F;
 
 type
-  /// TACBrPAF_F -
+
+  { TPAF_F }
+
   TPAF_F = class(TACBrTXTClass)
   private
     FRegistroF2: TRegistroF2List;   // Lista de FRegistroF2
@@ -54,9 +56,9 @@ type
     destructor Destroy; override;   // Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistroF2: String;
-    function WriteRegistroF3: String;
-    function WriteRegistroF4: String;
+    procedure WriteRegistroF2;
+    procedure WriteRegistroF3;
+    procedure WriteRegistroF4;
 
     property RegistroF2: TRegistroF2List read FRegistroF2 write FRegistroF2;
     property RegistroF3: TRegistroF3List read FRegistroF3 write FRegistroF3;
@@ -70,7 +72,8 @@ uses ACBrTXTUtils;
 { TPAF_F }
 constructor TPAF_F.Create;
 begin
-   CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TPAF_F.CriaRegistros;
@@ -120,37 +123,37 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_F.WriteRegistroF2: String;
+procedure TPAF_F.WriteRegistroF2;
 var
   intFor: integer;
-  strRegistroF2: String;
 begin
-  strRegistroF2 := '';
-
   if Assigned(FRegistroF2) then
   begin
     FRegistroF2.Sort(@OrdenarF2);
 
-     for intFor := 0 to FRegistroF2.Count - 1 do
-     begin
-        with FRegistroF2.Items[intFor] do
-        begin
-          Check(funChecaCNPJ(CNPJ_EMP), '(F2) MANIFESTO VIAGEM (CPNJ Empresa): O CNPJ "%s" digitado é inválido!', [CNPJ_EMP]);
-          Check(funChecaCNPJ(CNPJ_ORG), '(F2) MANIFESTO VIAGEM (CPNJ Órgão): O CNPJ "%s" digitado é inválido!', [CNPJ_ORG]);
+    if FRegistroF2.Count > 0 then
+    begin
+      with FRegistroF2.Items[0] do
+      begin
+        Check(funChecaCNPJ(CNPJ_EMP), '(F2) MANIFESTO VIAGEM (CPNJ Empresa): O CNPJ "%s" digitado é inválido!', [CNPJ_EMP]);
+        Check(funChecaCNPJ(CNPJ_ORG), '(F2) MANIFESTO VIAGEM (CPNJ Órgão): O CNPJ "%s" digitado é inválido!', [CNPJ_ORG]);
+      end;
+    end;
 
-          strRegistroF2 := strRegistroF2 + LFill('F2') +
-                                           LFill(CNPJ_ORG, 14) +
-                                           LFill(CNPJ_EMP, 14) +
-                                           LFill(COD_LOCAL, 20) +
-                                           LFill(ID_LINHA, 8) +
-                                           RFill(DESC_LINHA, 80, ifThen(RegistroValido, ' ', '?')) +
-                                           LFill(DT_PART, 'yyyymmddhhmmss') +
-                                           LFill(COD_VIAGEM, 2) +
-                                           sLineBreak;
-        end;
-     end;
-
-     Result := strRegistroF2;
+    for intFor := 0 to FRegistroF2.Count - 1 do
+    begin
+      with FRegistroF2.Items[intFor] do
+      begin
+      Add( LFill('F2') +
+           LFill(CNPJ_ORG, 14) +
+           LFill(CNPJ_EMP, 14) +
+           LFill(COD_LOCAL, 20) +
+           LFill(ID_LINHA, 8) +
+           RFill(DESC_LINHA, 80, ifThen(RegistroValido, ' ', '?')) +
+           LFill(DT_PART, 'yyyymmddhhmmss') +
+           LFill(COD_VIAGEM, 2));
+      end;
+    end;
   end;
 end;
 
@@ -171,13 +174,10 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_F.WriteRegistroF3: String;
+procedure TPAF_F.WriteRegistroF3;
 var
   intFor: integer;
-  strRegistroF3: String;
 begin
-  strRegistroF3 := '';
-
   if Assigned(RegistroF3) then
   begin
     RegistroF3.Sort(@OrdenarF3);
@@ -185,23 +185,21 @@ begin
     begin
       with RegistroF3.Items[intFor] do
       begin
-        strRegistroF3 := strRegistroF3 + LFill('F3') +
-                                         RFill(NUM_FAB, 20) +
-                                         RFill(MF_ADICIONAL, 1) +
-                                         RFill(MODELO_ECF, 20) +
-                                         LFill(NUM_USU, 2, False, IfThen(RegistroValido, ' ', '?') )+
-                                         LFill(CCF, 6) +
-                                         LFill(COO, 6) +
-                                         LFill(COD_ORIG, 20) +
-                                         LFill(COD_DEST, 20) +
-                                         LFill(VL_DOC, 14, 2) +
-                                         RFill(ST, 1) +
-                                         LFill(COD_TSER, 2) +
-                                         LFill(POLTRONA, 2) +
-                                         sLineBreak;
+        Add( LFill('F3') +
+             RFill(NUM_FAB, 20) +
+             RFill(MF_ADICIONAL, 1) +
+             RFill(MODELO_ECF, 20) +
+             LFill(NUM_USU, 2, False, IfThen(RegistroValido, ' ', '?') )+
+             LFill(CCF, 6) +
+             LFill(COO, 6) +
+             LFill(COD_ORIG, 20) +
+             LFill(COD_DEST, 20) +
+             LFill(VL_DOC, 14, 2) +
+             RFill(ST, 1) +
+             LFill(COD_TSER, 2) +
+             LFill(POLTRONA, 2));
       end;
     end;
-    Result := strRegistroF3;
   end;
 end;
 
@@ -215,13 +213,10 @@ begin
   Result := AnsiCompareText(Reg1, Reg2);
 end;
 
-function TPAF_F.WriteRegistroF4: String;
+procedure TPAF_F.WriteRegistroF4;
 var
   intFor: integer;
-  strRegistroF4: String;
 begin
-  strRegistroF4:= '';
-
   if Assigned(RegistroF4) then
   begin
     RegistroF4.Sort(@OrdenarF4);
@@ -230,13 +225,11 @@ begin
     begin
       with RegistroF4.Items[intFor] do
       begin
-        strRegistroF4 := strRegistroF4 + LFill('F4') +
-                                         LFill(COD_TSER, 2, False, IfThen(RegistroValido, ' ', '?')) +
-                                         LFill(QTDE_TOTAL, 4) +
-                                         sLineBreak;
+        Add( LFill('F4') +
+             LFill(COD_TSER, 2, False, IfThen(RegistroValido, ' ', '?')) +
+             LFill(QTDE_TOTAL, 4));
       end;
     end;
-    Result := strRegistroF4;
   end;
 
 end;

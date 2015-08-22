@@ -49,6 +49,9 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass,
 
 type
   /// TPAF_P -
+
+  { TPAF_P }
+
   TPAF_P = class(TACBrTXTClass)
   private
     FRegistroP1: TRegistroP1;       /// FRegistroP1
@@ -62,9 +65,9 @@ type
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
-    function WriteRegistroP1: string;
-    function WriteRegistroP2: string;
-    function WriteRegistroP9: string;
+    procedure WriteRegistroP1;
+    procedure WriteRegistroP2;
+    procedure WriteRegistroP9;
 
     property RegistroP1: TRegistroP1 read FRegistroP1 write FRegistroP1;
     property RegistroP2: TRegistroP2List read FRegistroP2 write FRegistroP2;
@@ -79,7 +82,8 @@ uses ACBrTXTUtils;
 
 constructor TPAF_P.Create;
 begin
-   CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TPAF_P.CriaRegistros;
@@ -112,7 +116,7 @@ begin
   CriaRegistros;
 end;
 
-function TPAF_P.WriteRegistroP1: string;
+procedure TPAF_P.WriteRegistroP1;
 begin
    if Assigned(FRegistroP1) then
    begin
@@ -121,12 +125,11 @@ begin
         Check(funChecaCNPJ(CNPJ), '(P1) ESTABELECIMENTO: O CNPJ "%s" digitado é inválido!', [CNPJ]);
         Check(funChecaIE(IE, UF), '(P1) ESTABELECIMENTO: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
         ///
-        Result := LFill('P1') +
-                  LFill(CNPJ, 14) +
-                  RFill(IE, 14) +
-                  RFill(IM, 14) +
-                  RFill(RAZAOSOCIAL, 50 ,ifThen(not InclusaoExclusao, ' ', '?')) +
-                  sLineBreak;
+        Add( LFill('P1') +
+             LFill(CNPJ, 14) +
+             RFill(IE, 14) +
+             RFill(IM, 14) +
+             RFill(RAZAOSOCIAL, 50 ,ifThen(not InclusaoExclusao, ' ', '?')) );
       end;
    end;
 end;
@@ -139,43 +142,39 @@ begin
   );
 end;
 
-function TPAF_P.WriteRegistroP2: string;
+procedure TPAF_P.WriteRegistroP2;
 var
 intFor: integer;
-strRegistroP2: string;
 begin
-  strRegistroP2 := '';
-
   if Assigned(FRegistroP2) then
   begin
      FRegistroP2.Sort(@OrdenarP2);
+
+     Check(funChecaCNPJ(FRegistroP1.CNPJ), '(P2) ESTOQUE: O CNPJ "%s" digitado é inválido!', [FRegistroP1.CNPJ]);
 
      for intFor := 0 to FRegistroP2.Count - 1 do
      begin
         with FRegistroP2.Items[intFor] do
         begin
-          Check(funChecaCNPJ(FRegistroP1.CNPJ), '(P2) ESTOQUE: O CNPJ "%s" digitado é inválido!', [FRegistroP1.CNPJ]);
           ///
-          strRegistroP2 := strRegistroP2 + LFill('P2') +
-                                           LFill(FRegistroP1.CNPJ, 14) +
-                                           RFill(COD_MERC_SERV, 14) +
-                                           RFill(DESC_MERC_SERV, 50) +
-                                           RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
-                                           RFill(IAT, 1) +
-                                           RFill(IPPT, 1) +
-                                           RFill(ST, 1) +
-                                           LFill(ALIQ, 4) +
-                                           LFill(VL_UNIT, 12, 2) +
-                                           sLineBreak;
+          Add( LFill('P2') +
+               LFill(FRegistroP1.CNPJ, 14) +
+               RFill(COD_MERC_SERV, 14) +
+               RFill(DESC_MERC_SERV, 50) +
+               RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
+               RFill(IAT, 1) +
+               RFill(IPPT, 1) +
+               RFill(ST, 1) +
+               LFill(ALIQ, 4) +
+               LFill(VL_UNIT, 12, 2) );
         end;
         ///
         FRegistroP9.TOT_REG := FRegistroP9.TOT_REG + 1;
      end;
-     Result := strRegistroP2;
   end;
 end;
 
-function TPAF_P.WriteRegistroP9: string;
+procedure TPAF_P.WriteRegistroP9;
 begin
    if Assigned(FRegistroP9) then
    begin
@@ -184,11 +183,10 @@ begin
         Check(funChecaCNPJ(FRegistroP1.CNPJ),            '(P9) TOTALIZAÇÃO: O CNPJ "%s" digitado é inválido!', [FRegistroP1.CNPJ]);
         Check(funChecaIE(FRegistroP1.IE, FRegistroP1.UF), '(P9) TOTALIZAÇÃO: A Inscrição Estadual "%s" digitada é inválida!', [FRegistroP1.IE]);
         ///
-        Result := LFill('P9') +
-                  LFill(FRegistroP1.CNPJ, 14) +
-                  RFill(FRegistroP1.IE, 14) +
-                  LFill(TOT_REG, 6, 0) +
-                  sLineBreak;
+        Add( LFill('P9') +
+             LFill(FRegistroP1.CNPJ, 14) +
+             RFill(FRegistroP1.IE, 14) +
+             LFill(TOT_REG, 6, 0) ) ;
       end;
    end;
 end;

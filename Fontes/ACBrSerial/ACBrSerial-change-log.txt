@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/08/2015        (por: DSA)
+-- ACBrEscBematech --
+[-] Correção para impressão de CODE128 em Bematech
+
 Data: 21/08/2015        (por: DSA)
 -- ACBrECFEscECF --
 [-] Ajuste para correta programação da Identificação do Aplicativo (PAF-ECF),

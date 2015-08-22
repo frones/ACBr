@@ -112,8 +112,21 @@ end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
   ACodigo: AnsiString): AnsiString;
+var
+  P: Integer;
 begin
   Result := inherited ComandoCodBarras(ATag, ACodigo);
+
+  // Bematech não suporta notação para COD128 A, B e C
+  if (ATag = cTagBarraCode128)  or
+     (ATag = cTagBarraCode128a) or
+     (ATag = cTagBarraCode128b) or
+     (ATag = cTagBarraCode128c) then
+  begin
+    P := pos('{',Result);
+    if P > 0 then
+      Delete(Result,P,2);
+  end;
 end;
 
 function TACBrEscBematech.ComandoQrCode(ACodigo: AnsiString): AnsiString;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/08/2015
+-- ACBrSATExtratoESCPOS --       (por: DSA)
+[*] Ajustes para remoção de espaços desnecessários no rodapé do cupom de
+    Venda e Cancelamento
+
 Data: 18/08/2015
 -- ACBrSAT --
 [*] Refatoração para ler Retorno de cupom Cancelado em ConsultarNumeroSessao, e

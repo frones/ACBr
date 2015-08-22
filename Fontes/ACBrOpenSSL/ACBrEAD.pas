@@ -90,15 +90,11 @@ type
     fsOnGetChavePublica : TACBrEADGetChave ;
     fsOnProgress: TACBrEADOnProgress;
 
-    fsInicializado : Boolean ;
-
     fsKey : pEVP_PKEY ;
     fsIsXMLeECFc : Boolean ;
     fsBufferSize: Integer;
 
     function GetOpenSSL_Version: String;
-    procedure InitOpenSSL ;
-    procedure FreeOpenSSL ;
 
     Function GetChavePrivada : AnsiString;
     procedure LerChavePrivada ;
@@ -196,9 +192,43 @@ type
     property OnProgress: TACBrEADOnProgress read fsOnProgress write fsOnProgress;
   end;
 
+procedure InitOpenSSL ;
+procedure FreeOpenSSL ;
+
+Var
+ OpenSSLLoaded : Boolean ;
+
+
 implementation
 
 uses synacode;
+
+procedure InitOpenSSL;
+begin
+  if OpenSSLLoaded then
+    exit ;
+
+  OpenSSL_add_all_algorithms;
+  OpenSSL_add_all_ciphers;
+  OpenSSL_add_all_digests;
+  ERR_load_crypto_strings;
+
+  OpenSSLLoaded := True;
+end;
+
+procedure FreeOpenSSL;
+begin
+  if not OpenSSLLoaded then
+    exit;
+
+  {$IFDEF USE_libeay32}
+   EVP_cleanup();
+  {$ELSE}
+   EVPcleanup();
+  {$ENDIF}
+
+  OpenSSLLoaded := False;
+end;
 
 function TACBrEAD.MD5FromFile(const APathArquivo: String): String;
 begin
@@ -231,48 +261,26 @@ constructor TACBrEAD.Create(AOwner : TComponent) ;
 begin
    inherited Create(AOwner) ;
 
-   fsInicializado := False ;
-   fsIsXMLeECFc   := False ;
-   fsBufferSize   := CBufferSize ;
+   fsIsXMLeECFc := False ;
+   fsBufferSize := CBufferSize ;
 
    fsOnGetChavePrivada := Nil;
    fsOnGetChavePublica := Nil;
    fsOnProgress        := Nil ;
+
+   InitOpenSSL;
 end ;
 
 destructor TACBrEAD.Destroy ;
 begin
-   FreeOpenSSL;
+  LiberarChave;
 
-   inherited Destroy ;
+  inherited Destroy ;
 end ;
-
-procedure TACBrEAD.InitOpenSSL;
-begin
-  if fsInicializado then
-     exit ;
-
-  OpenSSL_add_all_algorithms;
-  OpenSSL_add_all_ciphers;
-  OpenSSL_add_all_digests;
-  ERR_load_crypto_strings;
-
-  fsInicializado := True;
-end;
 
 function TACBrEAD.GetOpenSSL_Version: String;
 begin
    Result := String(SSLeay_version( 0 ));
-end;
-
-procedure TACBrEAD.FreeOpenSSL;
-begin
-  LiberarChave;
-  {$IFDEF USE_libeay32}
-   EVP_cleanup();
-  {$ELSE}
-   EVPcleanup();
-  {$ENDIF}
 end;
 
 function TACBrEAD.BioToStr(ABio : pBIO) : String ;
@@ -1159,7 +1167,11 @@ begin
   end ;
 end ;
 
+initialization
+  OpenSSLLoaded := False;
+
+finalization
+  FreeOpenSSL;
+
 end.
-
-
 

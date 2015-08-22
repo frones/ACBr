@@ -2122,9 +2122,15 @@ begin
 end;
 
 procedure TACBrECFEscECF.IdentificaPAF(NomeVersao, MD5: String);
+var
+  AGap: String;
 begin
-  // 48 e 36 para garantir que NomeVersao inicie na linha 2
-  fsPAF := PadRight(MD5,48) + PadRight(NomeVersao,36) ;
+  AGap := '';
+  if IsBematech then
+    AGap := ' ';
+
+  // para garantir que NomeVersao inicie na linha 2... o Máximo suportado é 84 chars
+  fsPAF := LeftStr( PadRight(MD5,fpColunas)+ AGap + NomeVersao, 84) ;
   EscECFComando.CMD := 24;
   EscECFComando.AddParamString( fsPAF ) ;
   EnviaComando;

@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 21/08/2015        (por: DSA)
+-- ACBrECFEscECF --
+[-] Ajuste para correta programação da Identificação do Aplicativo (PAF-ECF),
+    respeitando o numero de Colunas do Equipamento
+    http://www.projetoacbr.com.br/forum/topic/23828-identificapaf/
+
 -- ACBrPosPrinter --
 [-] Ajuste para comando de Pulo de Linhas funcionar em Impressoras configuradas
     com o EspacoEntreLinhas muito baixo

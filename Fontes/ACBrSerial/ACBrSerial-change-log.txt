@@ -41,6 +41,8 @@ Símbolo : Significado
 
 Data: 21/08/2015        (por: DSA)
 -- ACBrPosPrinter --
+[-] Ajuste para comando de Pulo de Linhas funcionar em Impressoras configuradas
+    com o EspacoEntreLinhas muito baixo
 [*] Se a porta não é Serial, força o comando de Inicialização a cada Desativação
     da Porta. (corrige problema de Impressão em Bematech com Porta por
     compartilhamento ex: "\\localhost\mp4200" )

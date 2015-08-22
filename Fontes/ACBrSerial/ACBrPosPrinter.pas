@@ -164,6 +164,7 @@ type
     function ComandoLogo: AnsiString; virtual;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; virtual;
     function ComandoInicializa: AnsiString; virtual;
+    function ComandoPuloLinhas(NLinhas: Integer): AnsiString; virtual;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
     function LerInfo: String; virtual;
@@ -485,6 +486,11 @@ function TACBrPosPrinterClass.ComandoInicializa: AnsiString;
 begin
   Result := ComandoEspacoEntreLinhas(fpPosPrinter.EspacoEntreLinhas) +
             ComandoPaginaCodigo(fpPosPrinter.PaginaDeCodigo);
+end;
+
+function TACBrPosPrinterClass.ComandoPuloLinhas(NLinhas: Integer): AnsiString;
+begin
+  Result := DupeString(' '+LF,NLinhas);
 end;
 
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
@@ -871,13 +877,13 @@ begin
     TagTraduzida := StringOfChar('=', Colunas)
 
   else if ATag = cTagPuloDeLinhas then
-    TagTraduzida := StringOfChar(LF,LinhasEntreCupons)
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
 
   else if ATag = cTagCorteParcial then
-    TagTraduzida := StringOfChar(LF,LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteParcial
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteParcial
 
   else if ATag = cTagCorteTotal then
-    TagTraduzida := StringOfChar(LF,LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteTotal
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteTotal
 
   else if ATag = cTagAbreGaveta then
     TagTraduzida := FPosPrinterClass.ComandoGaveta()
@@ -1364,7 +1370,7 @@ begin
   if NumLinhas = 0 then
     NumLinhas := LinhasEntreCupons;
 
-  ImprimirCmd( StringOfChar(LF, NumLinhas) );
+  ImprimirCmd( FPosPrinterClass.ComandoPuloLinhas(NumLinhas) );
 end;
 
 procedure TACBrPosPrinter.CortarPapel(Parcial: Boolean);

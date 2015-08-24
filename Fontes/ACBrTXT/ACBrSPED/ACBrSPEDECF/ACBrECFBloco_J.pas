@@ -36,6 +36,12 @@
 {******************************************************************************
 |* Historico
 |*
+|* --/--/2015: Juliomar Marchetti
+|*  - Criação.
+|* 12/08/2015: Isaque Pinheiro
+|*  - Distribuição da primeira versão.
+|* 19/08/2015: Lutzem Massao Aihara
+|*  - Classe reestruturada.
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -54,31 +60,28 @@ type
   TRegistroJ100List = class;
 
   /// Registro J001 - ABERTURA DO BLOCO J
-
   TRegistroJ001 = class(TOpenBlocos)
   private
     FRegistroJ050 :TRegistroJ050List;
     FRegistroJ100 :TRegistroJ100List;
   public
-    constructor Create; virtual; /// Create
+    constructor Create; virtual;  /// Create
     destructor Destroy; override; /// Destroy
 
     property RegistroJ050: TRegistroJ050List read FRegistroJ050 write FRegistroJ050;
     property RegistroJ100: TRegistroJ100List read FRegistroJ100 write FRegistroJ100;
   end;
 
-
   /// Registro J050 - PLANO DE CONTAS DO CONTRIBUINTE
-
   TRegistroJ050 = class
   private
-    fDT_ALT: TDateTime;   /// Data da inclusão/alteração.
-    fCOD_NAT: String;     /// Código da natureza da conta/grupo de contas, conforme tabela publicada pelo Sped.
-    fIND_CTA: String;     /// Indicador do tipo de conta: S - Sintética (grupo de contas);A - Analítica (conta).
-    fNIVEL: String;       /// Nível da conta analítica/sintética.
-    fCOD_CTA: String;     /// Código da conta analítica/sintética.
-    fCOD_CTA_SUP: String; /// Código da conta sintética de nível imediatamente superior.
-    fCTA: String;         /// Nome da conta analítica/sintética.
+    fDT_ALT:      TDateTime; /// Data da inclusão/alteração.
+    fCOD_NAT:     String;    /// Código da natureza da conta/grupo de contas, conforme tabela publicada pelo Sped.
+    fIND_CTA:     String;    /// Indicador do tipo de conta: S - Sintética (grupo de contas);A - Analítica (conta).
+    fNIVEL:       String;    /// Nível da conta analítica/sintética.
+    fCOD_CTA:     String;    /// Código da conta analítica/sintética.
+    fCOD_CTA_SUP: String;    /// Código da conta sintética de nível imediatamente superior.
+    fCTA:         String;    /// Nome da conta analítica/sintética.
 
     FRegistroJ051: TRegistroJ051List;
     FRegistroJ053: TRegistroJ053List;
@@ -86,20 +89,19 @@ type
     constructor Create(AOwner :TRegistroJ001); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property DT_ALT: TDateTime read fDT_ALT write fDT_ALT;
-    property COD_NAT: String read fCOD_NAT write fCOD_NAT;
-    property IND_CTA: String read fIND_CTA write fIND_CTA;
-    property NIVEL: String read fNIVEL write fNIVEL;
-    property COD_CTA: String read fCOD_CTA write fCOD_CTA;
+    property DT_ALT:      TDateTime read fDT_ALT write fDT_ALT;
+    property COD_NAT:     String read fCOD_NAT write fCOD_NAT;
+    property IND_CTA:     String read fIND_CTA write fIND_CTA;
+    property NIVEL:       String read fNIVEL write fNIVEL;
+    property COD_CTA:     String read fCOD_CTA write fCOD_CTA;
     property COD_CTA_SUP: String read fCOD_CTA_SUP write fCOD_CTA_SUP;
-    property CTA: String read fCTA write fCTA;
+    property CTA:         String read fCTA write fCTA;
     //
     property RegistroJ051: TRegistroJ051List read FRegistroJ051 write FRegistroJ051;
     property RegistroJ053: TRegistroJ053List read FRegistroJ053 write FRegistroJ053;
   end;
 
   /// Registro I050 - Lista
-
   TRegistroJ050List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroJ050;
@@ -110,15 +112,14 @@ type
   end;
 
   /// Registro J051 - PLANO DE CONTAS REFERENCIAL
-
   TRegistroJ051 = class
   private
-    fCOD_CCUS: String;       /// Código do centro de custo.
-    fCOD_CTA_REF: String;    /// Código da conta de acordo com o plano de contas referencial, conforme tabela publicada pelos órgãos indicados no campo 02- COD_ENT_REF.
+    fCOD_CCUS:    String; /// Código do centro de custo.
+    fCOD_CTA_REF: String; /// Código da conta de acordo com o plano de contas referencial, conforme tabela publicada pelos órgãos indicados no campo 02- COD_ENT_REF.
   public
     constructor Create(AOwner: TRegistroJ050); virtual; /// Create
 
-    property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
+    property COD_CCUS:    String read fCOD_CCUS write fCOD_CCUS;
     property COD_CTA_REF: String read fCOD_CTA_REF write fCOD_CTA_REF;
   end;
 
@@ -138,12 +139,12 @@ type
   TRegistroJ053 = class
   private
     fCOD_CNT_CORR: String; /// Código de identificação do grupo de conta-subconta(a)
-    fNAT_SUB_CNT: String;  /// Código da subconta correlata (deve estar no plano de contas e só pode estar relacionada a um único grupo)
-    fCOD_IDT: String;      /// Natureza da subconta correlata (conforme tabela de natureza da subconta publicada no Sped )
+    fNAT_SUB_CNT:  String; /// Código da subconta correlata (deve estar no plano de contas e só pode estar relacionada a um único grupo)
+    fCOD_IDT:      String; /// Natureza da subconta correlata (conforme tabela de natureza da subconta publicada no Sped )
   public
     constructor Create(AOwner: TRegistroJ050); virtual;
 
-    property COD_IDT: String read fCOD_IDT write fCOD_CNT_CORR;
+    property COD_IDT:       String read fCOD_IDT write fCOD_CNT_CORR;
     property COD_CNT_CORR: String read fCOD_CNT_CORR write fCOD_CNT_CORR;
     property NAT_SUB_CNT : String read fNAT_SUB_CNT write fNAT_SUB_CNT;
   end;
@@ -163,15 +164,15 @@ type
 
   TRegistroJ100 = class
   private
-    fDT_ALT: TdateTime;   /// Data da inclusão/alteração.
+    fDT_ALT:   TdateTime; /// Data da inclusão/alteração.
     fCOD_CCUS: String;    /// Código do centro de custos.
-    fCCUS: String;        /// Nome do centro de custos.
+    fCCUS:     String;    /// Nome do centro de custos.
   public
     constructor Create(AOwner: TRegistroJ001); virtual; /// Create
 
-    property DT_ALT: TdateTime read fDT_ALT write fDT_ALT;
+    property DT_ALT:   TdateTime read fDT_ALT write fDT_ALT;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
-    property CCUS: String read fCCUS write fCCUS;
+    property CCUS:     String read fCCUS write fCCUS;
   end;
 
   /// Registro J100 - Lista
@@ -189,7 +190,7 @@ type
 
   TRegistroJ990 = class
   private
-    fQTD_LIN: Integer;    /// Quantidade total de linhas do Bloco J
+    fQTD_LIN: Integer; /// Quantidade total de linhas do Bloco J
   public
     property QTD_LIN: Integer read FQTD_LIN write FQTD_LIN;
   end;

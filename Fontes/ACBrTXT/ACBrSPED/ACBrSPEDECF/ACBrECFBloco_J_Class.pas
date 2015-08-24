@@ -35,6 +35,14 @@
 {******************************************************************************
 |* Historico
 |*
+|* --/--/2015: Juliomar Marchetti
+|*  - Criação.
+|* 12/08/2015: Isaque Pinheiro
+|*  - Distribuição da primeira versão.
+|* 18/08/2015: Ariel Guareschi
+|*  - Alterado a geração do arquivo.
+|* 19/08/2015: Lutzem Massao Aihara
+|*  - Reestrurada a geração do arquivo e implementado funções "RegistroJXXXNew".
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -145,7 +153,7 @@ end;
 
 function TBloco_J.RegistroJ050New: TRegistroJ050;
 begin
-   Result := FRegistroJ001.RegistroJ050.New(FRegistroJ001);
+  Result := FRegistroJ001.RegistroJ050.New(FRegistroJ001);
 end;
 
 function TBloco_J.RegistroJ051New: TRegistroJ051;
@@ -153,12 +161,12 @@ var
   UJ050: TRegistroJ050;
   UJ050Count: Integer;
 begin
-   UJ050Count := FRegistroJ001.RegistroJ050.Count -1;
-   if UJ050Count = -1 then
-      raise Exception.Create('O registro 1105 deve ser filho do registro 1100, e não existe nenhum 1100 pai!');
+  UJ050Count := FRegistroJ001.RegistroJ050.Count -1;
+  if UJ050Count = -1 then
+    raise Exception.Create('O registro J051 deve ser filho do registro J050, e não existe nenhum J050 pai!');
 
-   UJ050  := FRegistroJ001.RegistroJ050.Items[UJ050Count];
-   Result := UJ050.RegistroJ051.New(UJ050);
+  UJ050  := FRegistroJ001.RegistroJ050.Items[UJ050Count];
+  Result := UJ050.RegistroJ051.New(UJ050);
 end;
 
 function TBloco_J.RegistroJ053New: TRegistroJ053;
@@ -168,7 +176,7 @@ var
 begin
    UJ050Count := FRegistroJ001.RegistroJ050.Count -1;
    if UJ050Count = -1 then
-      raise Exception.Create('O registro 1105 deve ser filho do registro 1100, e não existe nenhum 1100 pai!');
+      raise Exception.Create('O registro J053 deve ser filho do registro J050, e não existe nenhum J050 pai!');
 
    UJ050  := FRegistroJ001.RegistroJ050.Items[UJ050Count];
    Result := UJ050.RegistroJ053.New(UJ050);
@@ -190,7 +198,7 @@ begin
       Add(LFill('J001') +
           LFill( Integer(IND_DAD), 1));
 
-      if IND_DAD = idComDados then
+      if (IND_DAD = idComDados) then
       begin
         WriteRegistroJ050(RegistroJ001);
         WriteRegistroJ100(RegistroJ001);
@@ -213,14 +221,14 @@ begin
     begin
       with RegJ001.RegistroJ050.Items[intFor] do
       begin
-        Add(LFill('J050') +
-            LFill(DT_ALT) +
-            LFill(COD_NAT, 2) +
-            LFill(IND_CTA, 1) +
-            LFill(NIVEL) +
-            LFill(COD_CTA) +
-            LFill(COD_CTA_SUP) +
-            LFill(CTA));
+        Add( LFill('J050') +
+             LFill(DT_ALT) +
+             LFill(COD_NAT, 2) +
+             LFill(IND_CTA, 1) +
+             LFill(NIVEL) +
+             LFill(COD_CTA) +
+             LFill(COD_CTA_SUP) +
+             LFill(CTA) );
 
       end;
 

@@ -36,6 +36,12 @@
 {******************************************************************************
 |* Historico
 |*
+|* --/--/2015: Juliomar Marchetti
+|*  - Criação.
+|* 12/08/2015: Isaque Pinheiro
+|*  - Distribuição da primeira versão.
+|* 20/08/2015: Lutzem Massao Aihara
+|*  - Classe reestruturada.
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -48,45 +54,42 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECFBlocos;
 
 type
-  /// Registro L001 - Abertura do Bloco L – Lucro Real
-  TRegistroL001 = class(TOpenBlocos)
-  private
-  public
-  end;
-
-  TRegistroL001List = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TRegistroL001;
-    procedure SetItem(Index: Integer; const Value: TRegistroL001);
-  public
-    function New: TRegistroL001;
-    property Items[Index: Integer]: TRegistroL001 read GetItem write SetItem;
-  end;
-
+  TRegistroL030List = class;
   TRegistroL100List = class;
   TRegistroL200List = class;
   TRegistroL210List = class;
   TRegistroL300List = class;
 
+  /// Registro L001 - Abertura do Bloco L - Lucro Liquido - Lucro Real
+  TRegistroL001 = class(TOpenBlocos)
+  private
+    FRegistroL030 :TRegistroL030List;
+  public
+    constructor Create; virtual;  /// Create
+    destructor Destroy; override; /// Destroy
+
+    property RegistroL030: TRegistroL030List read FRegistroL030 write FRegistroL030;
+  end;
+
   /// Registro L030 - Identificação dos Períodos e Formas de Apuração do
   /// IRPJ e da CSLL no Ano-Calendário
   TRegistroL030 = class(TBlocos)
   private
-    fDT_FIN:   TDateTime;
-    fPER_APUR: string;
     fDT_INI:   TDateTime;
+    fDT_FIN:   TDateTime;
+    fPER_APUR: String;
 
-    FRegistroL200: TRegistroL200List;
-    FRegistroL300: TRegistroL300List;
-    FRegistroL210: TRegistroL210List;
     FRegistroL100: TRegistroL100List;
+    FRegistroL200: TRegistroL200List;
+    FRegistroL210: TRegistroL210List;
+    FRegistroL300: TRegistroL300List;
   public
-    constructor Create; /// Create
+    constructor Create(AOwner: TRegistroL001); /// Create
     destructor Destroy; /// Destroy
 
-    property DT_INI: TDateTime read fDT_INI write fDT_INI;
-    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
-    property PER_APUR: string read fPER_APUR write fPER_APUR;
+    property DT_INI:   TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN:   TDateTime read fDT_FIN write fDT_FIN;
+    property PER_APUR: String read fPER_APUR write fPER_APUR;
 
     /// Registros FILHOS
     property RegistroL100: TRegistroL100List read FRegistroL100 write FRegistroL100;
@@ -100,38 +103,36 @@ type
     function GetItem(Index: Integer): TRegistroL030;
     procedure SetItem(Index: Integer; const Value: TRegistroL030);
   public
-    function New: TRegistroL030;
+    function New(AOwner: TRegistroL001): TRegistroL030;
     property Items[Index: Integer]: TRegistroL030 read GetItem write SetItem;
   end;
 
   /// Registro L100 - Balanço Patrimonial
-
-  { TRegistroL100 }
-
   TRegistroL100 = class(TBlocos)
   private
-    fIND_VAL_CTA_REF_FIN: string;
-    fIND_VAL_CTA_REF_INI: string;
-//    fVALOR_SALDO_INICIAL: variant;
-    fDESCRICAO: string;
-    fCOD_CTA_SUP: string;
-    fCOD_NAT: string;
-    fNIVEL:  integer;
-    fCODIGO: string;
-    fTIPO:   string;
-    fVAL_CTA_REF_FIN: variant;
-    fVAL_CTA_REF_INI: variant;
+    fCODIGO:              String;
+    fDESCRICAO:           String;
+    fTIPO:                String;
+    fNIVEL:               Integer;
+    fCOD_NAT:             String;
+    fCOD_CTA_SUP:         String;
+    fVAL_CTA_REF_FIN:     Variant;
+    fIND_VAL_CTA_REF_INI: String;
+    fVAL_CTA_REF_INI:     Variant;
+    fIND_VAL_CTA_REF_FIN: String;
   public
-    property CODIGO: string read fCODIGO write fCODIGO;
-    property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property TIPO: string read fTIPO write fTIPO;
-    property NIVEL: integer read fNIVEL write fNIVEL;
-    property COD_NAT: string read fCOD_NAT write fCOD_NAT;
-    property COD_CTA_SUP: string read fCOD_CTA_SUP write fCOD_CTA_SUP;
-    property VAL_CTA_REF_INI: variant read fVAL_CTA_REF_INI write fVAL_CTA_REF_INI;
-    property IND_VAL_CTA_REF_INI: string read fIND_VAL_CTA_REF_INI write fIND_VAL_CTA_REF_INI;
-    property VAL_CTA_REF_FIN: variant read fVAL_CTA_REF_FIN write fVAL_CTA_REF_FIN;
-    property IND_VAL_CTA_REF_FIN: string read fIND_VAL_CTA_REF_FIN write fIND_VAL_CTA_REF_FIN;
+    constructor Create(AOwner: TRegistroL030); virtual; /// Create
+
+    property CODIGO:              String read fCODIGO write fCODIGO;
+    property DESCRICAO:           String read fDESCRICAO write fDESCRICAO;
+    property TIPO:                String read fTIPO write fTIPO;
+    property NIVEL:               Integer read fNIVEL write fNIVEL;
+    property COD_NAT:             String read fCOD_NAT write fCOD_NAT;
+    property COD_CTA_SUP:         String read fCOD_CTA_SUP write fCOD_CTA_SUP;
+    property VAL_CTA_REF_INI:     Variant read fVAL_CTA_REF_INI write fVAL_CTA_REF_INI;
+    property IND_VAL_CTA_REF_INI: String read fIND_VAL_CTA_REF_INI write fIND_VAL_CTA_REF_INI;
+    property VAL_CTA_REF_FIN:     Variant read fVAL_CTA_REF_FIN write fVAL_CTA_REF_FIN;
+    property IND_VAL_CTA_REF_FIN: String read fIND_VAL_CTA_REF_FIN write fIND_VAL_CTA_REF_FIN;
   end;
 
   TRegistroL100List = class(TObjectList)
@@ -139,16 +140,18 @@ type
     function GetItem(Index: Integer): TRegistroL100;
     procedure SetItem(Index: Integer; const Value: TRegistroL100);
   public
-    function New: TRegistroL100;
+    function New(AOwner: TRegistroL030): TRegistroL100;
     property Items[Index: Integer]: TRegistroL100 read GetItem write SetItem;
   end;
 
   /// Registro L200 - Método de Avaliação do Estoque Final
   TRegistroL200 = class(TBlocos)
   private
-    fIND_AVAL_ESTOQ: string;
+    fIND_AVAL_ESTOQ: String;
   public
-    property IND_AVAL_ESTOQ: string read fIND_AVAL_ESTOQ write fIND_AVAL_ESTOQ;
+    constructor Create(AOwner: TRegistroL030); virtual; /// Create
+
+    property IND_AVAL_ESTOQ: String read fIND_AVAL_ESTOQ write fIND_AVAL_ESTOQ;
   end;
 
   TRegistroL200List = class(TObjectList)
@@ -156,20 +159,22 @@ type
     function GetItem(Index: Integer): TRegistroL200;
     procedure SetItem(Index: Integer; const Value: TRegistroL200);
   public
-    function New: TRegistroL200;
+    function New(AOwner: TRegistroL030): TRegistroL200;
     property Items[Index: Integer]: TRegistroL200 read GetItem write SetItem;
   end;
 
   /// Registro L210 - Informativo da Composição de Custos
   TRegistroL210 = class(TBlocos)
   private
-    fCODIGO:    string;
-    fVALOR:     variant;
-    fDESCRICAO: string;
+    fCODIGO:    String;
+    fDESCRICAO: String;
+    fVALOR:     Variant;
   public
-    property CODIGO: string read fCODIGO write fCODIGO;
-    property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property VALOR: variant read fVALOR write fVALOR;
+    constructor Create(AOwner: TRegistroL030); virtual; /// Create
+
+    property CODIGO:    String read fCODIGO write fCODIGO;
+    property DESCRICAO: String read fDESCRICAO write fDESCRICAO;
+    property VALOR:     Variant read fVALOR write fVALOR;
   end;
 
   TRegistroL210List = class(TObjectList)
@@ -177,30 +182,32 @@ type
     function GetItem(Index: Integer): TRegistroL210;
     procedure SetItem(Index: Integer; const Value: TRegistroL210);
   public
-    function New: TRegistroL210;
+    function New(AOwner: TRegistroL030): TRegistroL210;
     property Items[Index: Integer]: TRegistroL210 read GetItem write SetItem;
   end;
 
   /// Registro L300 - Demonstração do Resultado do Exercício
   TRegistroL300 = class(TBlocos)
   private
-    fIND_VALOR: string;
-    fDESCRICAO: string;
-    fCOD_CTA_SUP: string;
-    fVALOR:   variant;
-    fCOD_NAT: string;
-    fNIVEL:   integer;
-    fCODIGO:  string;
-    fTIPO:    string;
+    fCODIGO:      String;
+    fDESCRICAO:   String;
+    fTIPO:        String;
+    fNIVEL:       Integer;
+    fCOD_NAT:     String;
+    fCOD_CTA_SUP: String;
+    fVALOR:       Variant;
+    fIND_VALOR:   String;
   public
-    property CODIGO: string read fCODIGO write fCODIGO;
-    property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
-    property TIPO: string read fTIPO write fTIPO;
-    property NIVEL: integer read fNIVEL write fNIVEL;
-    property COD_NAT: string read fCOD_NAT write fCOD_NAT;
-    property COD_CTA_SUP: string read fCOD_CTA_SUP write fCOD_CTA_SUP;
-    property VALOR: variant read fVALOR write fVALOR;
-    property IND_VALOR: string read fIND_VALOR write fIND_VALOR;
+    constructor Create(AOwner: TRegistroL030); virtual; /// Create
+
+    property CODIGO:      String read fCODIGO write fCODIGO;
+    property DESCRICAO:   String read fDESCRICAO write fDESCRICAO;
+    property TIPO:        String read fTIPO write fTIPO;
+    property NIVEL:       Integer read fNIVEL write fNIVEL;
+    property COD_NAT:     String read fCOD_NAT write fCOD_NAT;
+    property COD_CTA_SUP: String read fCOD_CTA_SUP write fCOD_CTA_SUP;
+    property VALOR:       Variant read fVALOR write fVALOR;
+    property IND_VALOR:   String read fIND_VALOR write fIND_VALOR;
   end;
 
   TRegistroL300List = class(TObjectList)
@@ -208,7 +215,7 @@ type
     function GetItem(Index: Integer): TRegistroL300;
     procedure SetItem(Index: Integer; const Value: TRegistroL300);
   public
-    function New: TRegistroL300;
+    function New(AOwner: TRegistroL030): TRegistroL300;
     property Items[Index: Integer]: TRegistroL300 read GetItem write SetItem;
   end;
 
@@ -229,9 +236,9 @@ begin
   Result := TRegistroL030(Inherited Items[Index]);
 end;
 
-function TRegistroL030List.New: TRegistroL030;
+function TRegistroL030List.New(AOwner: TRegistroL001): TRegistroL030;
 begin
-  Result := TRegistroL030.Create;
+  Result := TRegistroL030.Create(AOwner);
   Add(Result);
 end;
 
@@ -247,9 +254,9 @@ begin
   Result := TRegistroL210(Inherited Items[Index]);
 end;
 
-function TRegistroL210List.New: TRegistroL210;
+function TRegistroL210List.New(AOwner: TRegistroL030): TRegistroL210;
 begin
-  Result := TRegistroL210.Create;
+  Result := TRegistroL210.Create(AOwner);
   Add(Result);
 end;
 
@@ -265,9 +272,9 @@ begin
   Result := TRegistroL300(Inherited Items[Index]);
 end;
 
-function TRegistroL300List.New: TRegistroL300;
+function TRegistroL300List.New(AOwner: TRegistroL030): TRegistroL300;
 begin
-  Result := TRegistroL300.Create;
+  Result := TRegistroL300.Create(AOwner);
   Add(Result);
 end;
 
@@ -283,9 +290,9 @@ begin
   Result := TRegistroL200(Inherited Items[Index]);
 end;
 
-function TRegistroL200List.New: TRegistroL200;
+function TRegistroL200List.New(AOwner: TRegistroL030): TRegistroL200;
 begin
-  Result := TRegistroL200.Create;
+  Result := TRegistroL200.Create(AOwner);
   Add(Result);
 end;
 
@@ -301,9 +308,9 @@ begin
   Result := TRegistroL100(Inherited Items[Index]);
 end;
 
-function TRegistroL100List.New: TRegistroL100;
+function TRegistroL100List.New(AOwner: TRegistroL030): TRegistroL100;
 begin
-  Result := TRegistroL100.Create;
+  Result := TRegistroL100.Create(AOwner);
   Add(Result);
 end;
 
@@ -314,10 +321,8 @@ end;
 
 { TRegistroL030 }
 
-constructor TRegistroL030.Create;
+constructor TRegistroL030.Create(AOwner: TRegistroL001);
 begin
-   inherited;
-
    FRegistroL100 := TRegistroL100List.Create;
    FRegistroL200 := TRegistroL200List.Create;
    FRegistroL210 := TRegistroL210List.Create;
@@ -330,26 +335,46 @@ begin
    FRegistroL210.Free;
    FRegistroL200.Free;
    FRegistroL100.Free;
-
    inherited;
 end;
 
-{ TRegistroL001List }
+{ TRegistroL001 }
 
-function TRegistroL001List.GetItem(Index: Integer): TRegistroL001;
+constructor TRegistroL001.Create;
 begin
-  Result := TRegistroL001(Inherited Items[Index]);
+  FRegistroL030 := TRegistroL030List.Create;
+  //
+  IND_DAD := idComDados;;
 end;
 
-function TRegistroL001List.New: TRegistroL001;
+destructor TRegistroL001.Destroy;
 begin
-  Result := TRegistroL001.Create;
-  Add(Result);
+  FRegistroL030.Free;
+  inherited;
 end;
 
-procedure TRegistroL001List.SetItem(Index: Integer; const Value: TRegistroL001);
+{ TRegistroL100 }
+
+constructor TRegistroL100.Create(AOwner: TRegistroL030);
 begin
-  Put(Index, Value);
+end;
+
+{ TRegistroL300 }
+
+constructor TRegistroL300.Create(AOwner: TRegistroL030);
+begin
+end;
+
+{ TRegistroL200 }
+
+constructor TRegistroL200.Create(AOwner: TRegistroL030);
+begin
+end;
+
+{ TRegistroL210 }
+
+constructor TRegistroL210.Create(AOwner: TRegistroL030);
+begin
 end;
 
 end.

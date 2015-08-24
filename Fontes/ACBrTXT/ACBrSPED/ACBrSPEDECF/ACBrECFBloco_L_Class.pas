@@ -35,6 +35,14 @@
 {******************************************************************************
 |* Historico
 |*
+|* --/--/2015: Juliomar Marchetti
+|*  - Criação.
+|* 12/08/2015: Isaque Pinheiro
+|*  - Distribuição da primeira versão.
+|* 18/08/2015: Ariel Guareschi
+|*  - Alterado a geração do arquivo.
+|* 20/08/2015: Lutzem Massao Aihara
+|*  - Reestrurada a geração do arquivo e implementado funções "RegistroJXXXNew".
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -49,43 +57,47 @@ uses
 
 type
   /// TBloco_L -
-
-  { TBloco_L }
-
   TBloco_L = class(TACBrSPED)
   private
     FBloco_0: TBloco_0;
+
     FRegistroL001: TRegistroL001;
-    FRegistroL030: TRegistroL030List;
     FRegistroL990: TRegistroL990;
 
+    FRegistroL030Count: Integer;
     FRegistroL100Count: Integer;
     FRegistroL200Count: Integer;
     FRegistroL210Count: Integer;
     FRegistroL300Count: Integer;
 
+    procedure WriteRegistroL030(RegL001: TRegistroL001);
     procedure WriteRegistroL100(RegL030: TRegistroL030);
     procedure WriteRegistroL200(RegL030: TRegistroL030);
     procedure WriteRegistroL210(RegL030: TRegistroL030);
     procedure WriteRegistroL300(RegL030: TRegistroL030);
 
-    procedure CriaRegistros;overload;
-    procedure LiberaRegistros;overload;
+    procedure CriaRegistros;
+    procedure LiberaRegistros;
   public
-    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
-
     constructor Create;
     destructor Destroy;
     procedure LimpaRegistros;
 
+    function RegistroL001New: TRegistroL001;
+    function RegistroL030New: TRegistroL030;
+    function RegistroL100New: TRegistroL100;
+    function RegistroL200New: TRegistroL200;
+    function RegistroL210New: TRegistroL210;
+    function RegistroL300New: TRegistroL300;
+
     procedure WriteRegistroL001;
-    procedure WriteRegistroL030;
     procedure WriteRegistroL990;
 
+    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property RegistroL001: TRegistroL001 read FRegistroL001 write FRegistroL001;
-    property RegistroL030: TRegistroL030List read FRegistroL030 write FRegistroL030;
     property RegistroL990: TRegistroL990 read FRegistroL990 write FRegistroL990;
 
+    property RegistroL030Count: Integer read FRegistroL030Count write FRegistroL030Count;
     property RegistroL100Count: Integer read FRegistroL100Count write FRegistroL100Count;
     property RegistroL200Count: Integer read FRegistroL200Count write FRegistroL200Count;
     property RegistroL210Count: Integer read FRegistroL210Count write FRegistroL210Count;
@@ -103,10 +115,15 @@ uses
 
 constructor TBloco_L.Create;
 begin
+  CriaRegistros;
+end;
+
+procedure TBloco_L.CriaRegistros;
+begin
   FRegistroL001 := TRegistroL001.Create;
-  FRegistroL030 := TRegistroL030List.Create;
   FRegistroL990 := TRegistroL990.Create;
 
+  FRegistroL030Count := 0;
   FRegistroL100Count := 0;
   FRegistroL200Count := 0;
   FRegistroL210Count := 0;
@@ -115,30 +132,15 @@ begin
   FRegistroL990.QTD_LIN := 0;
 end;
 
-procedure TBloco_L.CriaRegistros;
-begin
-  inherited;
-
-  FRegistroL001 := TRegistroL001.Create;
-  FRegistroL030 := TRegistroL030List.Create;
-  FRegistroL990 := TRegistroL990.Create;
-
-  FRegistroL990.QTD_LIN := 0;
-end;
-
 destructor TBloco_L.Destroy;
 begin
-  FRegistroL001.Free;
-  FRegistroL030.Free;
-  FRegistroL990.Free;
-
+  LiberaRegistros;
   inherited;
 end;
 
 procedure TBloco_L.LiberaRegistros;
 begin
   FRegistroL001.Free;
-  FRegistroL030.Free;
   FRegistroL990.Free;
 
   inherited;
@@ -154,33 +156,95 @@ begin
   CriaRegistros;
 end;
 
+function TBloco_L.RegistroL001New: TRegistroL001;
+begin
+  Result := FRegistroL001;
+end;
+
+function TBloco_L.RegistroL030New: TRegistroL030;
+begin
+  Result := FRegistroL001.RegistroL030.New(FRegistroL001);
+end;
+
+function TBloco_L.RegistroL100New: TRegistroL100;
+var
+  UL030: TRegistroL030;
+  UL030Count: Integer;
+begin
+  UL030Count := FRegistroL001.RegistroL030.Count -1;
+  if UL030Count = -1 then
+    raise Exception.Create('O registro L100 deve ser filho do registro L030, e não existe nenhum L030 pai!');
+
+  UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
+  Result := UL030.RegistroL100.New(UL030);
+end;
+
+function TBloco_L.RegistroL200New: TRegistroL200;
+var
+  UL030: TRegistroL030;
+  UL030Count: Integer;
+begin
+  UL030Count := FRegistroL001.RegistroL030.Count -1;
+  if UL030Count = -1 then
+    raise Exception.Create('O registro L200 deve ser filho do registro L030, e não existe nenhum L030 pai!');
+
+  UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
+  Result := UL030.RegistroL200.New(UL030);
+end;
+
+function TBloco_L.RegistroL210New: TRegistroL210;
+var
+  UL030: TRegistroL030;
+  UL030Count: Integer;
+begin
+  UL030Count := FRegistroL001.RegistroL030.Count -1;
+  if UL030Count = -1 then
+    raise Exception.Create('O registro L210 deve ser filho do registro L030, e não existe nenhum L030 pai!');
+
+  UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
+  Result := UL030.RegistroL210.New(UL030);
+end;
+
+function TBloco_L.RegistroL300New: TRegistroL300;
+var
+  UL030: TRegistroL030;
+  UL030Count: Integer;
+begin
+  UL030Count := FRegistroL001.RegistroL030.Count -1;
+  if UL030Count = -1 then
+    raise Exception.Create('O registro L300 deve ser filho do registro L030, e não existe nenhum L030 pai!');
+
+  UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
+  Result := UL030.RegistroL300.New(UL030);
+end;
+
 procedure TBloco_L.WriteRegistroL100(RegL030: TRegistroL030);
 var
   intFor: integer;
-
 begin
   if Assigned(RegL030.RegistroL100) then
   begin
-     for intFor := 0 to RegL030.RegistroL100.Count - 1 do
-     begin
-        with RegL030.RegistroL100.Items[intFor] do
-        begin
-           Add(LFill('L100')              +
-               LFill(CODIGO)              +
-               LFill(DESCRICAO)           +
-               LFill(TIPO)                +
-               LFill(NIVEL)               +
-               LFill(COD_NAT,2)           +
-               LFill(COD_CTA_SUP)         +
-              VLFill(VAL_CTA_REF_INI,2)   +
-               LFill(IND_VAL_CTA_REF_INI) +
-              VLFill(VAL_CTA_REF_FIN,2)   +
-               LFill(IND_VAL_CTA_REF_FIN));
-        end;
+    for intFor := 0 to RegL030.RegistroL100.Count - 1 do
+    begin
+      with RegL030.RegistroL100.Items[intFor] do
+      begin
+        Add( LFill('L100')              +
+             LFill(CODIGO)              +
+             LFill(DESCRICAO)           +
+             LFill(TIPO)                +
+             LFill(NIVEL)               +
+             LFill(COD_NAT,2)           +
+             LFill(COD_CTA_SUP)         +
+             VLFill(VAL_CTA_REF_INI,2)  +
+             LFill(IND_VAL_CTA_REF_INI) +
+             VLFill(VAL_CTA_REF_FIN,2)  +
+             LFill(IND_VAL_CTA_REF_FIN) );
+      end;
 
-        FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
-     end;
-     RegistroL100Count := RegistroL100Count + RegL030.RegistroL100.Count;
+      FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
+    end;
+
+    RegistroL100Count := RegistroL100Count + RegL030.RegistroL100.Count;
   end;
 end;
 
@@ -190,17 +254,19 @@ var
 begin
   if Assigned(RegL030.RegistroL200) then
   begin
-     for intFor := 0 to RegL030.RegistroL200.Count - 1 do
-     begin
-        with RegL030.RegistroL200.Items[intFor] do
-        begin
-           Add(LFill('L200') +
-               LFill(IND_AVAL_ESTOQ));
-        end;
-       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
-     end;
-     RegistroL200Count := RegistroL200Count + RegL030.RegistroL200.Count;
-   end;
+    for intFor := 0 to RegL030.RegistroL200.Count - 1 do
+    begin
+      with RegL030.RegistroL200.Items[intFor] do
+      begin
+        Add( LFill('L200') +
+             LFill(IND_AVAL_ESTOQ) );
+      end;
+
+      FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
+    end;
+
+    RegistroL200Count := RegistroL200Count + RegL030.RegistroL200.Count;
+  end;
 end;
 
 procedure TBloco_L.WriteRegistroL210(RegL030: TRegistroL030);
@@ -209,19 +275,20 @@ var
 begin
   if Assigned(RegL030.RegistroL210) then
   begin
-     for intFor := 0 to RegL030.RegistroL210.Count - 1 do
-     begin
-        with RegL030.RegistroL210.Items[intFor] do
-        begin
-           Add(LFill('L210') +
-               LFill(CODIGO) +
-               LFill(DESCRICAO) +
-              VLFill(VALOR,2));
-        end;
+    for intFor := 0 to RegL030.RegistroL210.Count - 1 do
+    begin
+      with RegL030.RegistroL210.Items[intFor] do
+      begin
+        Add( LFill('L210') +
+             LFill(CODIGO) +
+             LFill(DESCRICAO) +
+             VLFill(VALOR,2) );
+      end;
 
-        FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
-     end;
-     RegistroL210Count := RegistroL210Count + RegL030.RegistroL210.Count;
+      FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
+    end;
+
+    RegistroL210Count := RegistroL210Count + RegL030.RegistroL210.Count;
   end;
 end;
 
@@ -231,24 +298,26 @@ var
 begin
   if Assigned(RegL030.RegistroL300) then
   begin
-     for intFor := 0 to RegL030.RegistroL300.Count - 1 do
-     begin
-        with RegL030.RegistroL300.Items[intFor] do
-        begin
-           ///
-           Add(LFill('L300')      +
-               LFill(CODIGO)      +
-               LFill(DESCRICAO)   +
-               LFill(TIPO)        +
-               LFill(NIVEL)       +
-               LFill(COD_NAT)     +
-               LFill(COD_CTA_SUP) +
-              VLFill(VALOR,2)     +
-               LFill(IND_VALOR));
-        end;
-       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
-     end;
-     RegistroL300Count := RegistroL300Count + RegL030.RegistroL300.Count;
+    for intFor := 0 to RegL030.RegistroL300.Count - 1 do
+    begin
+      with RegL030.RegistroL300.Items[intFor] do
+      begin
+        ///
+        Add( LFill('L300')      +
+             LFill(CODIGO)      +
+             LFill(DESCRICAO)   +
+             LFill(TIPO)        +
+             LFill(NIVEL)       +
+             LFill(COD_NAT)     +
+             LFill(COD_CTA_SUP) +
+             VLFill(VALOR,2)    +
+             LFill(IND_VALOR) );
+      end;
+
+      FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
+    end;
+
+    RegistroL300Count := RegistroL300Count + RegL030.RegistroL300.Count;
   end;
 end;
 
@@ -262,37 +331,43 @@ begin
        ///
        Add(LFill('L001') +
            LFill( Integer(IND_DAD), 1));
-       ///
+
+       if (IND_DAD = idComDados) then
+       begin
+         WriteRegistroL030(FRegistroL001);
+       end;
+
        FRegistroL990.QTD_LIN:= FRegistroL990.QTD_LIN + 1;
-       WriteRegistroL030;
      end;
   end;
 end;
 
-procedure TBloco_L.WriteRegistroL030;
+procedure TBloco_L.WriteRegistroL030(RegL001: TRegistroL001);
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroL030) then
+  if Assigned(RegL001.RegistroL030) then
   begin
-     for intFor := 0 to FRegistroL030.Count - 1 do
-     begin
-        with FRegistroL030.Items[intFor] do
-        begin
-           ///
-           Add(LFill('L030') +
-               LFill(DT_INI) +
-               LFill(DT_FIN) +
-               LFill(PER_APUR));
-        end;
+    for intFor := 0 to RegL001.RegistroL030.Count - 1 do
+    begin
+      with RegL001.RegistroL030.Items[intFor] do
+      begin
+        ///
+        Add( LFill('L030') +
+             LFill(DT_INI) +
+             LFill(DT_FIN) +
+             LFill(PER_APUR) );
+      end;
 
-        WriteRegistroL100(FRegistroL030.Items[intFor]);
-        WriteRegistroL200(FRegistroL030.Items[intFor]);
-        WriteRegistroL210(FRegistroL030.Items[intFor]);
-        WriteRegistroL300(FRegistroL030.Items[intFor]);
+      WriteRegistroL100(RegL001.RegistroL030.Items[intFor]);
+      WriteRegistroL200(RegL001.RegistroL030.Items[intFor]);
+      WriteRegistroL210(RegL001.RegistroL030.Items[intFor]);
+      WriteRegistroL300(RegL001.RegistroL030.Items[intFor]);
 
-        FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
+      FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
      end;
+
+    FRegistroL030Count := FRegistroL030Count + RegL001.RegistroL030.Count;
   end;
 end;
 

@@ -48,18 +48,7 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECFBlocos;
 
 type
-  /// Registro N001 - Abertura do bloco N – Cálculo do IRPJ e da CSLL
-  TRegistroN001 = class(TOpenBlocos)
-  private
-  public
-  end;
-
-  /// Registro N030 - Identificação do Período e Forma de Apuração do
-  /// IRPJ e da CSLL das Empresas Tributadas pelo
-  /// Lucro Real
-
-  { TRegistroN030 }
-
+  TRegistroN030List = class;
   TRegistroN500List = class;
   TRegistroN600List = class;
   TRegistroN610List = class;
@@ -70,11 +59,26 @@ type
   TRegistroN660List = class;
   TRegistroN670List = class;
 
+  /// Registro N001 - Abertura do bloco N – Cálculo do IRPJ e da CSLL
+  TRegistroN001 = class(TOpenBlocos)
+  private
+    FRegistroN030: TRegistroN030List;
+
+  public
+    constructor Create; virtual;
+    destructor Destroy; override;
+
+    property RegistroN030: TRegistroN030List read FRegistroN030 write FRegistroN030;
+  end;
+
+  /// Registro N030 - Identificação do Período e Forma de Apuração do
+  /// IRPJ e da CSLL das Empresas Tributadas pelo Lucro Real
   TRegistroN030 = class
   private
     fDT_FIN:   TDateTime;
     fDT_INI:   TDateTime;
     fPER_APUR: string;
+
     FRegistroN500: TRegistroN500List;
     FRegistroN600: TRegistroN600List;
     FRegistroN610: TRegistroN610List;
@@ -105,7 +109,6 @@ type
   end;
 
   /// Registro N030 - Lista
-
   TRegistroN030List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN030;
@@ -117,9 +120,6 @@ type
 
   /// Registro N500 - Base de Cálculo do IRPJ Sobre o Lucro Real Após
   /// as Compensações de Prejuízos
-
-  { TRegistroN500 }
-
   TRegistroN500 = class
   private
     fCODIGO:    string;
@@ -132,7 +132,6 @@ type
   end;
 
   /// Registro N500 - Lista
-
   TRegistroN500List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN500;
@@ -143,9 +142,6 @@ type
   end;
 
   /// Registro N600 - Demonstração do Lucro da Exploração
-
-  { TRegistroN600 }
-
   TRegistroN600 = class
   private
     fCODIGO:    string;
@@ -158,7 +154,6 @@ type
   end;
 
   /// Registro N600 - Lista
-
   TRegistroN600List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN600;
@@ -169,9 +164,6 @@ type
   end;
 
   /// Registro N610 - Cálculo da Isenção e Redução do Imposto sobre Lucro Real
-
-  { TRegistroN610 }
-
   TRegistroN610 = class
   private
     fCODIGO:    string;
@@ -184,7 +176,6 @@ type
   end;
 
   /// Registro N610 - Lista
-
   TRegistroN610List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN610;
@@ -195,9 +186,6 @@ type
   end;
 
   /// Registro N615 - Informações da Base de Cálculo de Incentivos Fiscais
-
-  { TRegistroN615 }
-
   TRegistroN615 = class
   private
     fBASE_CALC:    variant;
@@ -226,7 +214,6 @@ type
   end;
 
   /// Registro N615 - Lista
-
   TRegistroN615List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN615;
@@ -238,9 +225,6 @@ type
 
 
   /// Registro N620 - Cálculo do IRPJ Mensal por Estimativa
-
-  { TRegistroN620 }
-
   TRegistroN620 = class
   private
     fCODIGO:    string;
@@ -253,7 +237,6 @@ type
   end;
 
   /// Registro N620 - Lista
-
   TRegistroN620List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN620;
@@ -264,9 +247,6 @@ type
   end;
 
   /// Registro N630 - Cálculo do IRPJ Com Base no Lucro Real
-
-  { TRegistroN630 }
-
   TRegistroN630 = class
   private
     fCODIGO:    string;
@@ -279,7 +259,6 @@ type
   end;
 
   /// Registro N630 - Lista
-
   TRegistroN630List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN630;
@@ -291,9 +270,6 @@ type
 
   /// Registro N650 - Base de Cálculo da CSLL Após Compensações das
   /// Bases de Cálculo Negativa
-
-  { TRegistroN650 }
-
   TRegistroN650 = class
   private
     fCODIGO:    string;
@@ -306,7 +282,6 @@ type
   end;
 
   /// Registro N650 - Lista
-
   TRegistroN650List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN650;
@@ -317,9 +292,6 @@ type
   end;
 
   /// Registro N660 - Cálculo da CSLL Mensal por Estimativa
-
-  { TRegistroN660 }
-
   TRegistroN660 = class
   private
     fCODIGO:    string;
@@ -332,7 +304,6 @@ type
   end;
 
   /// Registro N660 - Lista
-
   TRegistroN660List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN660;
@@ -343,9 +314,6 @@ type
   end;
 
   /// Registro N670 -Cálculo da CSLL Com Base no Lucro Real
-
-  { TRegistroN670 }
-
   TRegistroN670 = class
   private
     fCODIGO:    string;
@@ -358,7 +326,6 @@ type
   end;
 
   /// Registro N670 - Lista
-
   TRegistroN670List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroN670;
@@ -594,6 +561,22 @@ begin
    FRegistroN500.Free;
 
    inherited;
+end;
+
+{ TRegistroN001 }
+
+constructor TRegistroN001.Create;
+begin
+  FRegistroN030 := TRegistroN030List.Create;
+
+  IND_DAD := idSemDados;
+end;
+
+destructor TRegistroN001.Destroy;
+begin
+  FRegistroN030.Free;
+
+  inherited;
 end;
 
 end.

@@ -141,7 +141,6 @@ type
     procedure WriteRegistroM990;
 		/// BLOCO N
     procedure WriteRegistroN001;
-    procedure WriteRegistroN030;
     procedure WriteRegistroN990;
 		/// BLOCO P
     procedure WriteRegistroP001;
@@ -728,7 +727,6 @@ begin
    /// BLOCO N
    ///
    WriteRegistroN001;
-   WriteRegistroN030;
    WriteRegistroN990;
    Bloco_N.WriteBuffer;
 
@@ -1346,394 +1344,89 @@ begin
          QTD_REG_BLC := 1;
       end;
    end;
-   //if Bloco_N.RegistroD001.IND_MOV = imComDados then
-   //begin
-   //   with Bloco_9.Registro9900 do
-   //   begin
-   //      if Bloco_D.RegistroD100Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D100';
-   //            QTD_REG_BLC := Bloco_D.RegistroD100Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD110Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D110';
-   //            QTD_REG_BLC := Bloco_D.RegistroD110Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD120Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D120';
-   //            QTD_REG_BLC := Bloco_D.RegistroD120Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD130Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D130';
-   //            QTD_REG_BLC := Bloco_D.RegistroD130Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD140Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D140';
-   //            QTD_REG_BLC := Bloco_D.RegistroD140Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD150Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D150';
-   //            QTD_REG_BLC := Bloco_D.RegistroD150Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD160Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D160';
-   //            QTD_REG_BLC := Bloco_D.RegistroD160Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD161Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D161';
-   //            QTD_REG_BLC := Bloco_D.RegistroD161Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD162Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D162';
-   //            QTD_REG_BLC := Bloco_D.RegistroD162Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD170Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D170';
-   //            QTD_REG_BLC := Bloco_D.RegistroD170Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD180Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D180';
-   //            QTD_REG_BLC := Bloco_D.RegistroD180Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD190Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D190';
-   //            QTD_REG_BLC := Bloco_D.RegistroD190Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD195Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D195';
-   //            QTD_REG_BLC := Bloco_D.RegistroD195Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD197Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D197';
-   //            QTD_REG_BLC := Bloco_D.RegistroD197Count;
-   //         end;
-   //      end;
-		 //
-   //      if Bloco_D.RegistroD300Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D300';
-   //            QTD_REG_BLC := Bloco_D.RegistroD300Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD301Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D301';
-   //            QTD_REG_BLC := Bloco_D.RegistroD301Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD310Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D310';
-   //            QTD_REG_BLC := Bloco_D.RegistroD310Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD350Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D350';
-   //            QTD_REG_BLC := Bloco_D.RegistroD350Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD355Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D355';
-   //            QTD_REG_BLC := Bloco_D.RegistroD355Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD360Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D360';
-   //            QTD_REG_BLC := Bloco_D.RegistroD360Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD365Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D365';
-   //            QTD_REG_BLC := Bloco_D.RegistroD365Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD370Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D370';
-   //            QTD_REG_BLC := Bloco_D.RegistroD370Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD390Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D390';
-   //            QTD_REG_BLC := Bloco_D.RegistroD390Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD400Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D400';
-   //            QTD_REG_BLC := Bloco_D.RegistroD400Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD410Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D410';
-   //            QTD_REG_BLC := Bloco_D.RegistroD410Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD411Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D411';
-   //            QTD_REG_BLC := Bloco_D.RegistroD411Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD420Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D420';
-   //            QTD_REG_BLC := Bloco_D.RegistroD420Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD500Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D500';
-   //            QTD_REG_BLC := Bloco_D.RegistroD500Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD510Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D510';
-   //            QTD_REG_BLC := Bloco_D.RegistroD510Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD530Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //            REG_BLC := 'D530';
-   //            QTD_REG_BLC := Bloco_D.RegistroD530Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD590Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D590';
-   //           QTD_REG_BLC := Bloco_D.RegistroD590Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD600Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D600';
-   //           QTD_REG_BLC := Bloco_D.RegistroD600Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD610Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D610';
-   //           QTD_REG_BLC := Bloco_D.RegistroD610Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD690Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D690';
-   //           QTD_REG_BLC := Bloco_D.RegistroD690Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD695Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D695';
-   //           QTD_REG_BLC := Bloco_D.RegistroD695Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD696Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D696';
-   //           QTD_REG_BLC := Bloco_D.RegistroD696Count;
-   //         end;
-   //      end;
-   //      if Bloco_D.RegistroD697Count > 0 then
-   //      begin
-   //         with New do
-   //         begin
-   //           REG_BLC := 'D697';
-   //           QTD_REG_BLC := Bloco_D.RegistroD697Count;
-   //         end;
-   //      end;
-   //   end;
-   //end;
-end;
 
-procedure TACBrSPEDECF.WriteRegistroN030;
-begin
-   Bloco_N.WriteRegistroN030;
-
-   if Bloco_N.RegistroN030.Count > 0 then
+   if (Bloco_N.RegistroN001.IND_DAD = idComDados) then
    begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N030';
-         QTD_REG_BLC := Bloco_N.RegistroN030.Count;
-      end;
-   end;
-   if Bloco_N.RegistroN500Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N500';
-         QTD_REG_BLC := Bloco_N.RegistroN500Count;
-      end;
-   end;
-   if Bloco_N.RegistroN600Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N600';
-         QTD_REG_BLC := Bloco_N.RegistroN600Count;
-      end;
-   end;
-   if Bloco_N.RegistroN610Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N610';
-         QTD_REG_BLC := Bloco_N.RegistroN610Count;
-      end;
-   end;
-   if Bloco_N.RegistroN615Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N615';
-         QTD_REG_BLC := Bloco_N.RegistroN615Count;
-      end;
-   end;
-   if Bloco_N.RegistroN620Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N620';
-         QTD_REG_BLC := Bloco_N.RegistroN620Count;
-      end;
-   end;
-   if Bloco_N.RegistroN630Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N630';
-         QTD_REG_BLC := Bloco_N.RegistroN630Count;
-      end;
-   end;
-   if Bloco_N.RegistroN650Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N650';
-         QTD_REG_BLC := Bloco_N.RegistroN650Count;
-      end;
-   end;
-   if Bloco_N.RegistroN660Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N660';
-         QTD_REG_BLC := Bloco_N.RegistroN660Count;
-      end;
-   end;
-   if Bloco_N.RegistroN670Count > 0 then
-   begin
-      with Bloco_9.Registro9900.New do
-      begin
-         REG_BLC := 'N670';
-         QTD_REG_BLC := Bloco_N.RegistroN670Count;
-      end;
+     if Bloco_N.RegistroN030Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N030';
+           QTD_REG_BLC := Bloco_N.RegistroN030Count;
+        end;
+     end;
+     if Bloco_N.RegistroN500Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N500';
+           QTD_REG_BLC := Bloco_N.RegistroN500Count;
+        end;
+     end;
+     if Bloco_N.RegistroN600Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N600';
+           QTD_REG_BLC := Bloco_N.RegistroN600Count;
+        end;
+     end;
+     if Bloco_N.RegistroN610Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N610';
+           QTD_REG_BLC := Bloco_N.RegistroN610Count;
+        end;
+     end;
+     if Bloco_N.RegistroN615Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N615';
+           QTD_REG_BLC := Bloco_N.RegistroN615Count;
+        end;
+     end;
+     if Bloco_N.RegistroN620Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N620';
+           QTD_REG_BLC := Bloco_N.RegistroN620Count;
+        end;
+     end;
+     if Bloco_N.RegistroN630Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N630';
+           QTD_REG_BLC := Bloco_N.RegistroN630Count;
+        end;
+     end;
+     if Bloco_N.RegistroN650Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N650';
+           QTD_REG_BLC := Bloco_N.RegistroN650Count;
+        end;
+     end;
+     if Bloco_N.RegistroN660Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N660';
+           QTD_REG_BLC := Bloco_N.RegistroN660Count;
+        end;
+     end;
+     if Bloco_N.RegistroN670Count > 0 then
+     begin
+        with Bloco_9.Registro9900.New do
+        begin
+           REG_BLC := 'N670';
+           QTD_REG_BLC := Bloco_N.RegistroN670Count;
+        end;
+     end;
    end;
 
 end;

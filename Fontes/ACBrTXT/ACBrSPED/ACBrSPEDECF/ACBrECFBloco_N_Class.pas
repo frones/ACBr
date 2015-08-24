@@ -57,18 +57,19 @@ type
     FBloco_0: TBloco_0;
     FRegistroN001: TRegistroN001;
     FRegistroN990: TRegistroN990;
-    FRegistroN030: TRegistroN030List;
 
-    FRegistroN670Count: Integer;
+    FRegistroN030Count: Integer;
     FRegistroN500Count: Integer;
-    FRegistroN650Count: Integer;
+    FRegistroN600Count: Integer;
+    FRegistroN610Count: Integer;
     FRegistroN615Count: Integer;
     FRegistroN620Count: Integer;
     FRegistroN630Count: Integer;
-    FRegistroN600Count: Integer;
-    FRegistroN610Count: Integer;
+    FRegistroN650Count: Integer;
     FRegistroN660Count: Integer;
+    FRegistroN670Count: Integer;
 
+    procedure WriteRegistroN030(RegN001: TRegistroN001);
     procedure WriteRegistroN500(RegN030: TRegistroN030);
     procedure WriteRegistroN600(RegN030: TRegistroN030);
     procedure WriteRegistroN610(RegN030: TRegistroN030);
@@ -82,20 +83,30 @@ type
     procedure CriaRegistros;overload;
     procedure LiberaRegistros;overload;
   public
-    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
-
-    procedure WriteRegistroN001;
-    procedure WriteRegistroN030;
-    procedure WriteRegistroN990;
-
     constructor Create;
     destructor Destroy;
     procedure LimpaRegistros;
 
-    property RegistroN001: TRegistroN001     read FRegistroN001 write FRegistroN001;
-    property RegistroN030: TRegistroN030List read FRegistroN030 write FregistroN030;
-    property RegistroN990: TRegistroN990     read FRegistroN990 write FRegistroN990;
+    function RegistroN001New :TRegistroN001;
+    function RegistroN030New :TRegistroN030;
+    function RegistroN500New :TRegistroN500;
+    function RegistroN600New :TRegistroN600;
+    function RegistroN610New :TRegistroN610;
+    function RegistroN615New :TRegistroN615;
+    function RegistroN620New :TRegistroN620;
+    function RegistroN630New :TRegistroN630;
+    function RegistroN650New :TRegistroN650;
+    function RegistroN660New :TRegistroN660;
+    function RegistroN670New :TRegistroN670;
 
+    procedure WriteRegistroN001;
+    procedure WriteRegistroN990;
+
+    property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
+    property RegistroN001: TRegistroN001 read FRegistroN001 write FRegistroN001;
+    property RegistroN990: TRegistroN990 read FRegistroN990 write FRegistroN990;
+
+    property RegistroN030Count: Integer read FRegistroN030Count write FRegistroN030Count;
     property RegistroN500Count: Integer read FRegistroN500Count write FRegistroN500Count;
     property RegistroN600Count: Integer read FRegistroN600Count write FRegistroN600Count;
     property RegistroN610Count: Integer read FRegistroN610Count write FRegistroN610Count;
@@ -119,67 +130,175 @@ uses
 constructor TBloco_N.Create;
 begin
    inherited;
-
-   FRegistroN001 := TRegistroN001.Create;
-   FRegistroN030 := TRegistroN030List.Create;
-   FRegistroN990 := TRegistroN990.Create;
-
-   FRegistroN670Count := 0;
-   FRegistroN500Count := 0;
-   FRegistroN650Count := 0;
-   FRegistroN615Count := 0;
-   FRegistroN620Count := 0;
-   FRegistroN630Count := 0;
-   FRegistroN600Count := 0;
-   FRegistroN610Count := 0;
-   FRegistroN660Count := 0;
+   CriaRegistros;
 end;
 
 procedure TBloco_N.CriaRegistros;
 begin
-   inherited;
+  inherited;
+  FRegistroN001 := TRegistroN001.Create;
+  FRegistroN990 := TRegistroN990.Create;
 
-   FRegistroN001 := TRegistroN001.Create;
-   FRegistroN030 := TRegistroN030List.Create;
-   FRegistroN990 := TRegistroN990.Create;
+  FRegistroN030Count := 0;
+  FRegistroN500Count := 0;
+  FRegistroN600Count := 0;
+  FRegistroN610Count := 0;
+  FRegistroN615Count := 0;
+  FRegistroN620Count := 0;
+  FRegistroN630Count := 0;
+  FRegistroN650Count := 0;
+  FRegistroN660Count := 0;
+  FRegistroN670Count := 0;
 
-   FRegistroN990.QTD_LIN := 0;
-   FRegistroN670Count := 0;
-   FRegistroN500Count := 0;
-   FRegistroN650Count := 0;
-   FRegistroN615Count := 0;
-   FRegistroN620Count := 0;
-   FRegistroN630Count := 0;
-   FRegistroN600Count := 0;
-   FRegistroN610Count := 0;
-   FRegistroN660Count := 0;
+  FRegistroN990.QTD_LIN := 0;
 end;
 
 destructor TBloco_N.Destroy;
 begin
-  FRegistroN001.Free;
-  FRegistroN030.Free;
-  FRegistroN990.Free;
-
+  LiberaRegistros;
   inherited;
 end;
 
 procedure TBloco_N.LiberaRegistros;
 begin
-   inherited;
-
+  inherited;
   FRegistroN001.Free;
   FRegistroN990.Free;
 end;
 
 procedure TBloco_N.LimpaRegistros;
 begin
-  /// Limpa os Registros
   LiberaRegistros;
   Conteudo.Clear;
 
-  /// Recriar os Registros Limpos
   CriaRegistros;
+end;
+
+function TBloco_N.RegistroN001New: TRegistroN001;
+begin
+  Result := FRegistroN001;
+end;
+
+function TBloco_N.RegistroN030New: TRegistroN030;
+begin
+  Result := FRegistroN001.RegistroN030.New;
+end;
+
+function TBloco_N.RegistroN500New: TRegistroN500;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N500 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN500.New;
+end;
+
+function TBloco_N.RegistroN600New: TRegistroN600;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N600 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN600.New;
+end;
+
+function TBloco_N.RegistroN610New: TRegistroN610;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N610 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN610.New;
+end;
+
+function TBloco_N.RegistroN615New: TRegistroN615;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N615 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN615.New;
+end;
+
+function TBloco_N.RegistroN620New: TRegistroN620;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N620 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN620.New;
+end;
+
+function TBloco_N.RegistroN630New: TRegistroN630;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N630 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN630.New;
+end;
+
+function TBloco_N.RegistroN650New: TRegistroN650;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N650 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN650.New;
+end;
+
+function TBloco_N.RegistroN660New: TRegistroN660;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N660 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN660.New;
+end;
+
+function TBloco_N.RegistroN670New: TRegistroN670;
+var
+  UN030: TRegistroN030;
+  UN030Count: Integer;
+begin
+  UN030Count := FRegistroN001.RegistroN030.Count -1;
+  if UN030Count = -1 then
+    raise Exception.Create('O registro N670 deve ser filho do registro N030, e não existe nenhum N030 pai!');
+
+  UN030  := FRegistroN001.RegistroN030.Items[UN030Count];
+  Result := UN030.RegistroN670.New;
 end;
 
 procedure TBloco_N.WriteRegistroN001;
@@ -189,47 +308,53 @@ begin
      with FRegistroN001 do
      begin
        Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(N-N001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
-       ///
-       Add(LFill('N001') +
-           LFill( Integer(IND_DAD), 1));
-       ///
+
+       Add( LFill('N001') +
+            LFill( Integer(IND_DAD), 1) );
+
+       if (IND_DAD = idComDados) then
+       begin
+         WriteRegistroN030(FRegistroN001);
+       end;
+
        FRegistroN990.QTD_LIN:= FRegistroN990.QTD_LIN + 1;
-       WriteRegistroN030;
      end;
   end;
 
 end;
 
-procedure TBloco_N.WriteRegistroN030;
+procedure TBloco_N.WriteRegistroN030(RegN001: TRegistroN001);
 var
-intFor: integer;
+  intFor: integer;
 begin
-  if Assigned(FRegistroN030) then
+  if Assigned(RegN001.RegistroN030) then
   begin
-     for intFor := 0 to FRegistroN030.Count - 1 do
+     for intFor := 0 to RegN001.RegistroN030.Count - 1 do
      begin
-        with FRegistroN030.Items[intFor] do
+        with RegN001.RegistroN030.Items[intFor] do
         begin
            ///
-           Add(LFill('N030') +
-               LFill(DT_INI) +
-               LFill(DT_FIN) +
-               LFill(PER_APUR));
+           Add( LFill('N030') +
+                LFill(DT_INI) +
+                LFill(DT_FIN) +
+                LFill(PER_APUR));
         end;
 
         // Registros Filhos
-        WriteRegistroN500(FRegistroN030.Items[intFor]);
-        WriteRegistroN600(FRegistroN030.Items[intFor]);
-        WriteRegistroN610(FRegistroN030.Items[intFor]);
-        WriteRegistroN615(FRegistroN030.Items[intFor]);
-        WriteRegistroN620(FRegistroN030.Items[intFor]);
-        WriteRegistroN630(FRegistroN030.Items[intFor]);
-        WriteRegistroN650(FRegistroN030.Items[intFor]);
-        WriteRegistroN660(FRegistroN030.Items[intFor]);
-        WriteRegistroN670(FRegistroN030.Items[intFor]);
+        WriteRegistroN500(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN600(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN610(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN615(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN620(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN630(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN650(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN660(RegN001.RegistroN030.Items[intFor]);
+        WriteRegistroN670(RegN001.RegistroN030.Items[intFor]);
 
        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
      end;
+
+     FRegistroN030Count := FRegistroN030Count + RegN001.RegistroN030.Count;
   end;
 end;
 
@@ -247,7 +372,7 @@ begin
            Add(LFill('N500')    +
                LFill(CODIGO)    +
                LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
+               VLFill(VALOR, 19, 2));
         end;
 
         FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
@@ -463,8 +588,8 @@ begin
      begin
        QTD_LIN := QTD_LIN + 1;
        ///
-       Add(LFill('N990') +
-           LFill(QTD_LIN, 0));
+       Add( LFill('N990') +
+            LFill(QTD_LIN, 0) );
      end;
   end;
 end;

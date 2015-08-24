@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2015
+-- ACBRNFeNotasFiscais -- (por: regys silveira)
+[-] Acerto no LoadFromString, estava cortando o XML ao ler a string para o 
+    componente.
+
 22/08/2015
 -- ACBrNFeDANFCeFortesFr --    (por: DSA)
 [-] Ajuste para que a propriedade "FonteTributos" seja exibida na linha de

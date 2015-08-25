@@ -48,6 +48,10 @@ Data: 25/08/2015        (por Macgayver Armini/Isaque Pinheiro)
 [+] Criado dois eventos para Firemonkey:
     fsOnCriarFormMsg: TACBrFMXCustomForm; //Variavel do Evento de Formulário Personalizado
     fsOnDrawFormMsg: TACBrECFMsgAguarde; //Variavel para o usuário desenhar ou enviar para qualquer componente
+[*] Rerirecionado as propriedades de Published para Public
+       property FormMsgColor
+       property FormMsgColorFont
+       property FormMsgFonte
 
 Data: 22/08/2015        (por: DSA)
 -- ACBrEscBematech --

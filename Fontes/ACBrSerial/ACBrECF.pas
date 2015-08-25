@@ -828,10 +828,6 @@ TACBrECF = class( TACBrComponent )
      Property MemoItens : Integer read fsMemoItens write fsMemoItens ;
     {$ENDIF}
 
-    {$IFDEF FMX}
-     property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
-    {$ENDIF}
-
     procedure PafMF_LX_Impressao;
 
     procedure PafMF_LMFC_Impressao(const CRZInicial, CRZFinal: Integer); overload;
@@ -919,6 +915,18 @@ TACBrECF = class( TACBrComponent )
 
     function GetRodapePaf: String;
 
+    {$IFNDEF NOGUI}
+    {$IFNDEF FRAMEWORK}
+       {$IFDEF FMX}
+       property FormMsgColor : TAlphaColor read  fsFormMsgColor write fsFormMsgColor ;
+       property FormMsgColorFont : TAlphaColor read  fsFormMsgColorFont write fsFormMsgColorFont ;
+       {$ELSE}
+       property FormMsgColor : TColor read  fsFormMsgColor write fsFormMsgColor ;
+       {$ENDIF}
+       property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
+    {$ENDIF}
+    {$ENDIF}
+
   published
      property QuebraLinhaRodape : Boolean read FQuebraLinhaRodape write FQuebraLinhaRodape;
      property About : String read GetAbout write SetAbout stored False ;
@@ -967,18 +975,6 @@ TACBrECF = class( TACBrComponent )
                  write SetMaxLinhasBuffer default cACBrMaxLinhasBuffer ;
      property PaginaDeCodigo : Word read GetPaginaDeCodigoClass
                  write SetPaginaDeCodigoClass;
-
-    {$IFNDEF NOGUI}
-    {$IFNDEF FRAMEWORK}
-       {$IFDEF FMX}
-        property FormMsgColor : TAlphaColor read  fsFormMsgColor write fsFormMsgColor ;
-        property FormMsgColorFont : TAlphaColor read  fsFormMsgColorFont write fsFormMsgColorFont ;
-       {$ELSE}
-        property FormMsgColor : TColor read  fsFormMsgColor write fsFormMsgColor ;
-        property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
-       {$ENDIF}
-    {$ENDIF}
-    {$ENDIF}
 
      property OnMsgAguarde : TACBrECFMsgAguarde   read  GetOnMsgAguarde
                                                   write SetOnMsgAguarde ;

@@ -752,13 +752,13 @@ begin
     P := pos('</mdfeProc>', AXMLString);
     if P > 0 then
     begin
-      AXML := copy(AXMLString, 1, P + 5);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+      AXML := copy(AXMLString, 1, P + 11);
+      AXMLString := Trim(copy(AXMLString, P + 11, length(AXMLString)));
     end
     else
     begin
-      AXML := copy(AXMLString, 1, N + 5);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+      AXML := copy(AXMLString, 1, N + 7);
+      AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
     end;
 
     with Self.Add do

@@ -787,12 +787,12 @@ begin
     P := pos('</cteProc>', AString);
     if P > 0 then
     begin
-      AXML := copy(AString, 1, P + 5);
+      AXML := copy(AString, 1, P + 10);
       AString := Trim(copy(AString, P + 10, length(AString)));
     end
     else
     begin
-      AXML := copy(AString, 1, N + 5);
+      AXML := copy(AString, 1, N + 6);
       AString := Trim(copy(AString, N + 6, length(AString)));
     end;
 

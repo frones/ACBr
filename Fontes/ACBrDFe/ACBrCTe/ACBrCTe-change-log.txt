@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2015
+[-] Acerto no LoadFromString, estava cortando o XML ao ler a string para o 
+    componente.
+    por: Italo Jurisato Junior
+
 18/08/2015
 [*] O ValidarChave não necessita mais do prefixo da chave e internamente remove
     todos os caracteres que não sejam digitos, desta forma na chamada da função

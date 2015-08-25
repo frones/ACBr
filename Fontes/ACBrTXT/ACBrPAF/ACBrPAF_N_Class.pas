@@ -62,7 +62,7 @@ type
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
-    constructor Create; /// Create
+    constructor Create( AOwner: TComponent); /// Create
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
@@ -85,9 +85,14 @@ uses ACBrTXTUtils, ACBrUtil, ACBrPAF;
 
 { TPAF_N }
 
-constructor TPAF_N.Create;
+constructor TPAF_N.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited create;
+
+  if not (AOwner is TACBrPAF) then
+    raise Exception.Create('Dono de TPAF_N deve ser do tipo TACBrPAF');
+
+  FOwner := AOwner;
   CriaRegistros;
 end;
 

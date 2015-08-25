@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2015
+-- ACBrPAF_N_Class --    (por:DSA)
+[-] Correção de Bug (A.V.) no calculo do MD5, ao acessar objeto pai
+
 22/08/2015
 -- ACBrPAF --
 [*] Aplicado um amplo refactoring em todas as Units de geração do arquivo...

@@ -218,7 +218,7 @@ begin
   FPAF_H := TPAF_H.Create;
   FPAF_L := TPAF_L.Create;
   FPAF_M := TPAF_M.Create;
-  FPAF_N := TPAF_N.Create;
+  FPAF_N := TPAF_N.Create(Self);
   FPAF_P := TPAF_P.Create;
   FPAF_R := TPAF_R.Create;
   FPAF_T := TPAF_T.Create;

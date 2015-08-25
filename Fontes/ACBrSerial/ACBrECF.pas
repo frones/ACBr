@@ -125,7 +125,8 @@ TACBrECF = class( TACBrComponent )
     {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
       {$IFDEF FMX}
-       fsFormMsgColor : TAlphaColor ;
+      fsFormMsgColor : TAlphaColor ;
+      fsFormMsgColorFont: TAlphaColor;
       {$ELSE}
       fsFormMsgColor : TColor ;
       {$ENDIF}
@@ -321,6 +322,14 @@ TACBrECF = class( TACBrComponent )
       procedure MemoSubtotaliza(DescontoAcrescimo: Double);
       procedure MemoEfetuaPagamento(Descricao: String; Valor: Double;
           Observacao: String) ;
+
+      {$IFDEF FMX}
+        function GetOnCriarFormMsg: TACBrFMXCustomForm;
+        function GetOnDrawFormMsg: TACBrECFMsgAguarde;
+        procedure SetOnCriarFormMsg(const Value: TACBrFMXCustomForm);
+        procedure SetOnDrawFormMsg(const Value: TACBrECFMsgAguarde);
+      {$ENDIF}
+
     {$ENDIF}
     function GetOperador: String;
     procedure SetOperador(const AValue: String);
@@ -819,10 +828,6 @@ TACBrECF = class( TACBrComponent )
      Property MemoItens : Integer read fsMemoItens write fsMemoItens ;
     {$ENDIF}
 
-    {$IFDEF FMX}
-     property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
-    {$ENDIF}
-
     procedure PafMF_LX_Impressao;
 
     procedure PafMF_LMFC_Impressao(const CRZInicial, CRZFinal: Integer); overload;
@@ -910,6 +915,18 @@ TACBrECF = class( TACBrComponent )
 
     function GetRodapePaf: String;
 
+    {$IFNDEF NOGUI}
+    {$IFNDEF FRAMEWORK}
+       {$IFDEF FMX}
+       property FormMsgColor : TAlphaColor read  fsFormMsgColor write fsFormMsgColor ;
+       property FormMsgColorFont : TAlphaColor read  fsFormMsgColorFont write fsFormMsgColorFont ;
+       {$ELSE}
+       property FormMsgColor : TColor read  fsFormMsgColor write fsFormMsgColor ;
+       {$ENDIF}
+       property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
+    {$ENDIF}
+    {$ENDIF}
+
   published
      property QuebraLinhaRodape : Boolean read FQuebraLinhaRodape write FQuebraLinhaRodape;
      property About : String read GetAbout write SetAbout stored False ;
@@ -958,17 +975,6 @@ TACBrECF = class( TACBrComponent )
                  write SetMaxLinhasBuffer default cACBrMaxLinhasBuffer ;
      property PaginaDeCodigo : Word read GetPaginaDeCodigoClass
                  write SetPaginaDeCodigoClass;
-
-    {$IFNDEF NOGUI}
-    {$IFNDEF FRAMEWORK}
-       {$IFDEF FMX}
-        property FormMsgColor : TAlphaColor read  fsFormMsgColor write fsFormMsgColor ;
-       {$ELSE}
-        property FormMsgColor : TColor read  fsFormMsgColor write fsFormMsgColor ;
-        property FormMsgFonte : TFont read  fsFormMsgFont  write SetFormMsgFonte ;
-       {$ENDIF}
-    {$ENDIF}
-    {$ENDIF}
 
      property OnMsgAguarde : TACBrECFMsgAguarde   read  GetOnMsgAguarde
                                                   write SetOnMsgAguarde ;
@@ -1124,6 +1130,12 @@ TACBrECF = class( TACBrComponent )
        property MemoParams : TStrings read fsMemoParams write SetMemoParams ;
        property OnBobinaAdicionaLinhas : TACBrECFBobinaAdicionaLinhas
           read  fsOnBobinaAdicionaLinhas write fsOnBobinaAdicionaLinhas ;
+      {$IFDEF FMX}
+         property OnCriarFormMsg: TACBrFMXCustomForm read GetOnCriarFormMsg
+                     write SetOnCriarFormMsg;
+         property OnDrawFormMsg: TACBrECFMsgAguarde read GetOnDrawFormMsg
+                     write SetOnDrawFormMsg;
+      {$ENDIF}
     {$ENDIF}
      { Instancia do Componente ACBrDevice, será passada para fsECF.create }
      property Device     : TACBrDevice     read fsDevice ;
@@ -1950,6 +1962,30 @@ procedure TACBrECF.SetOnChequeEstado(const Value: TACBrECFOnChequeEstado);
 begin
   fsECF.OnChequeEstado := Value
 end;
+
+{$IFNDEF NOGUI}
+  {$IFDEF FMX}
+  function TACBrECF.GetOnCriarFormMsg: TACBrFMXCustomForm;
+  begin
+    Result := fsECF.OnCriarFormMsg
+  end;
+
+  function TACBrECF.GetOnDrawFormMsg: TACBrECFMsgAguarde;
+  begin
+    Result := fsECF.OnDrawFormMsg
+  end;
+
+  procedure TACBrECF.SetOnCriarFormMsg(const Value: TACBrFMXCustomForm);
+  begin
+    fsECF.OnCriarFormMsg := Value;
+  end;
+
+  procedure TACBrECF.SetOnDrawFormMsg(const Value: TACBrECFMsgAguarde);
+  begin
+    fsECF.OnDrawFormMsg := Value;
+  end;
+  {$ENDIF}
+{$ENDIF}
 
 function TACBrECF.GetOnAguardandoRespostaChange: TNotifyEvent;
 begin

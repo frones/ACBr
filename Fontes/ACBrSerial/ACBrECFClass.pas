@@ -30,7 +30,15 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-
+{******************************************************************************
+|* Historico
+|*
+|* 21/08/2015: Macgayver Armini
+|*  - Adicionado canvas com suporte idêntico ao da VCL para o Firemonkey;
+|*  - Correção das teclas de interceptação para o Firemonkey;
+|*  - Adição de suporte a formulário de mensagem personalizado para o FireMonkey;
+|*  - Correção da chamada Application.MainForm do firemonkey;
+******************************************************************************}
 {$I ACBr.inc}
 
 Unit ACBrECFClass ;
@@ -49,7 +57,7 @@ uses ACBrDevice,
        {$ENDIF}
        {$IF DEFINED(FMX)}
           , FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.ExtCtrls
-          , System.UITypes, FMX.Types, FMX.TextLayout, FMX.Objects
+          , System.UITypes, System.Character, System.Types, FMX.Types, FMX.TextLayout, FMX.Objects, System.UIConsts
        {$ELSEIF DEFINED(VCL)}
           , Controls, Forms, Graphics, Dialogs, ExtCtrls
        {$IFEND}
@@ -586,6 +594,10 @@ TACBrFormMsgProcedure = procedure of object ;
 
 TACBrFormMsgEstado = (fmsNenhum, fmsProcessando, fmsConcluido, fmsAbortado) ;
 
+{$IFDEF FMX}
+  TACBrFMXCustomForm = procedure(var CustomForm: TForm) of Object;
+{$ENDIF}
+
 { Classe generica de ECF, nao implementa nenhum modelo especifico, apenas
   declara a Classe. NAO DEVE SER INSTANCIADA. Usada apenas como base para
   as demais Classes de ECF como por exemplo a classe TACBrECFBematech  }
@@ -634,6 +646,10 @@ TACBrECFClass = class
       fsFormMsgControla : Boolean ;
       fsFormMsgException: String  ;
       fsUsandoBlockInput : Boolean ;
+      {$IFDEF FMX}
+        fsOnCriarFormMsg: TACBrFMXCustomForm; //Variavel do Evento de Formulário Personalizado.
+        fsOnDrawFormMsg: TACBrECFMsgAguarde; //Variavel para o usuário desenhar ou enviar para qualquer componente.
+      {$ENDIF}
     {$ENDIF}
 
     fsRelatorio : TStrings ;
@@ -872,6 +888,10 @@ TACBrECFClass = class
       procedure FormMsgPinta( Texto : String ) ;
       property FormMsgEstado   : TACBrFormMsgEstado read fsFormMsgEstado ;
       property FormMsgControla : Boolean read fsFormMsgControla write fsFormMsgControla ;
+        {$IFDEF FMX}
+          property OnCriarFormMsg: TACBrFMXCustomForm read fsOnCriarFormMsg write fsOnCriarFormMsg;
+          property OnDrawFormMsg: TACBrECFMsgAguarde read fsOnDrawFormMsg write fsOnDrawFormMsg;
+        {$ENDIF}
     {$ENDIF}
     
     { Proriedades de uso interno, configurando o funcionamento da classe,
@@ -2175,7 +2195,7 @@ begin
           if ProcessaFormMsg and (now >= TempoInicio) then
           begin
              TempoRestante := SecondsBetween( now, TempoLimite) ;
-             
+
              if (TimeOut - TempoRestante) > 1 then
               begin
                 try
@@ -4488,7 +4508,14 @@ end;
     if Assigned(fsFormMsg) then
        Raise EACBrECFErro.Create( ACBrStr(cACBrECFFormMsgDoProcedureException)) ;
 
+    {$IFDEF FMX}
+    if Assigned(fsOnCriarFormMsg) then
+      fsOnCriarFormMsg(fsFormMsg)
+    else
+      fsFormMsg := TForm.CreateNew( Application );
+    {$ELSE}
     fsFormMsg := TForm.create( Application ) ;
+    {$ENDIF}
     ECF := GetECFComponente(Self);
 
     try
@@ -4500,12 +4527,17 @@ end;
        fsFormMsgEstado             := fmsProcessando ;
 
        {$IFDEF FMX}
-//       fsFormMsg.KeyPreview   := true ;
-       fsFormMsg.OnKeyDown    := FormMsgKeyPress ;
-       fsFormMsg.Fill.Color   := ECF.FormMsgColor ;
-//       fsFormMsg.Font         := ECF.FormMsgFonte ;
-       fsFormMsg.Position     := TFormPosition.MainFormCenter ;
-       fsFormMsg.FormStyle    := TFormStyle.StayOnTop ;
+       fsFormMsg.OnKeyDown          := FormMsgKeyPress ;
+       fsFormMsg.Position           := TFormPosition.MainFormCenter ;
+       fsFormMsg.FormStyle          := TFormStyle.StayOnTop ;
+       if not Assigned(fsOnCriarFormMsg) then
+       begin
+         fsFormMsg.Fill.Kind          := TBrushKind.Solid;
+         fsFormMsg.Fill.Color         := ECF.FormMsgColor ;
+         fsFormMsg.TagString          := ECF.FormMsgFonte.Size.ToString + ';'
+                                       + ECF.FormMsgFonte.Family + ';'
+                                       + AlphaColorToString(ECF.FormMsgColorFont);
+       end;
        {$ELSE}
        fsFormMsg.KeyPreview   := true ;
        fsFormMsg.OnKeyPress   := FormMsgKeyPress ;
@@ -4517,9 +4549,19 @@ end;
        fsFormMsg.OnCloseQuery := FormMsgCloseQuery ;
        fsFormMsg.BorderIcons  := [] ;
        fsFormMsg.BorderStyle  := {$IFDEF VisualCLX} fbsNone {$ELSE} {$IFDEF FMX}TFmxFormBorderStyle.{$ENDIF} bsNone {$ENDIF};
-
+       {$IFDEF FMX}
+        if Assigned(fsOnCriarFormMsg) then
+          fsFormMsg.Visible := False
+        else
+        begin
+         fsFormMsg.Width        := 0 ;   { Cria o form escondido }
+         fsFormMsg.Height       := 0 ;
+        end;
+       {$ELSE}
        fsFormMsg.Width        := 0 ;   { Cria o form escondido }
        fsFormMsg.Height       := 0 ;
+       {$ENDIF}
+
        fsFormMsgException     := '' ;
        {$IFDEF LINUX}
         {$IFNDEF FPC}
@@ -4582,7 +4624,8 @@ end;
           fsFormMsg.Close ;
           //{$IFNDEF COMPLIB_CLX}
           {$IFDEF FMX}
-          Application.MainForm.BringToFront ;
+          if Assigned(Application.MainForm) then
+            Application.MainForm.BringToFront ;
           {$ELSE}
           Application.BringToFront ;
           {$ENDIF}
@@ -4601,12 +4644,18 @@ end;
   procedure TACBrECFClass.FormMsgKeyPress(Sender: TObject; var Key: Word; var KeyChar: Char;
     Shift: TShiftState);
   begin
-    if (fsFormMsgTeclaParaFechar <> 0)  and
-       (Key = fsFormMsgTeclaParaFechar) and
-       (fsFormMsgEstado <> fmsAbortado) then
-       fsFormMsgEstado := fmsAbortado
-    else
-       Key := 0 ;
+    if (fsFormMsgTeclaParaFechar <> 0)  and (fsFormMsgEstado <> fmsAbortado) then
+    begin
+      if (KeyChar <> #0) and (Integer(KeyChar.ToUpper) = fsFormMsgTeclaParaFechar) then
+        fsFormMsgEstado := fmsAbortado
+      else if (Key > 0) and (Key = fsFormMsgTeclaParaFechar) then
+        fsFormMsgEstado := fmsAbortado
+      else
+      begin
+        Key := 0;
+        KeyChar := #0;
+      end;
+    end;
   end;
   {$ELSE}
   procedure TACBrECFClass.FormMsgKeyPress(Sender: TObject; var Key: Char);
@@ -4708,10 +4757,41 @@ end;
     begin
        fsFormMsg.BringToFront ;
        {$IFDEF FMX}
-       fsFormMsg.Active := True;
+       fsFormMsg.Activate;
        {$ELSE}
        fsFormMsg.SetFocus ;
        {$ENDIF}
+
+       {$IFDEF FMX}
+       if Assigned(fsOnDrawFormMsg) then
+          fsOnDrawFormMsg(Texto)
+       else
+       begin
+         with TStringList.Create do
+         try
+           StrictDelimiter := True;
+           Delimiter := ';';
+           DelimitedText := fsFormMsg.TagString;
+           fsFormMsg.Canvas.Font.Size := Strings[0].ToSingle;
+           fsFormMsg.Canvas.Font.Family := Strings[1];
+           fsFormMsg.Canvas.Fill.Kind := TBrushKind.None;
+           fsFormMsg.Canvas.Fill.Color := StringToAlphaColor(Strings[2]);
+         finally
+           Free;
+         end;
+
+         fsFormMsg.Width := Round(fsFormMsg.Canvas.TextWidth(Texto)) + 25;
+         fsFormMsg.Height := Round(fsFormMsg.Canvas.TextHeight(Texto))+ 15;
+         Application.ProcessMessages; //Se não adicionar essa linha, o firemonkey não faz a pintura o texto.
+         fsFormMsg.Canvas.BeginScene; //Todo canvas no firemonkey é necessário este bloco de proteção.
+         try
+            fsFormMsg.Canvas.StrokeThickness := 1; //Espessura do pincel.
+            fsFormMsg.Canvas.FillText(TRectF.Create(0, 0, fsFormMsg.Width, fsFormMsg.Height), Texto, True, 100, [], TTextAlign.Center, TTextAlign.Center);
+         finally
+           fsFormMsg.Canvas.EndScene;
+         end;
+       end;
+      {$ELSE}
 
        with fsFormMsg.Canvas do      { Pintando <Texto> no Canvas do fpFormMsg }
        begin
@@ -4727,22 +4807,14 @@ end;
              {$IFDEF FPC}
              fsFormMsg.Position := poDesktopCenter ;
              {$ELSE}
-             fsFormMsg.Position := {$IFDEF FMX}TFormPosition.{$ENDIF}poMainFormCenter ;
+             fsFormMsg.Position := poMainFormCenter ;
              {$ENDIF}
           end ;
 
-          {$IFDEF FMX}
-          Fill.Color := fsFormMsg.Fill.Color ;
-//          Font.Color  := fsFormMsg.Font.Color ;
-//          Pen.Color   := fsFormMsg.Font.Color ;
-          { TODO : Estudar qual comando subistituirá esse. }
-//          Rectangle(fsFormMsg.ClientRect);
-          {$ELSE}
           Brush.Color := fsFormMsg.Color ;
           Font.Color  := fsFormMsg.Font.Color ;
           Pen.Color   := fsFormMsg.Font.Color ;
           Rectangle(fsFormMsg.ClientRect);
-          {$ENDIF}
          {$IFDEF VisualCLX}
           X := 0 ;
           Y := 0 ;
@@ -4752,14 +4824,10 @@ end;
           Texto := StringReplace( Texto, #10, ' ', [rfReplaceAll,rfIgnoreCase] ) ;
           X := 10 ;
           Y := 5 ;
-          {$IFDEF FMX}
-          { TODO : Estudar qual comando subistituirá esse. }
-//          TextRect(fsFormMsg.ClientRect,X,Y, Texto ) ;
-          {$ELSE}
           TextRect(fsFormMsg.ClientRect,X,Y, Texto ) ;
-          {$ENDIF}
          {$ENDIF}
        end ;
+      {$ENDIF}
 
        if Assigned( fpDevice ) then
           if fpDevice.ProcessMessages then

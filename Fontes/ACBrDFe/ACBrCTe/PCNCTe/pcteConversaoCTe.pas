@@ -54,9 +54,6 @@ uses
 
 type
 
-  TpcnTipoCTe = (tnEntrada, tnSaida);
-  TpcnFinalidadeCTe = (fnNormal, fnComplementar, fnAjuste, fnDevolucao);
-
   TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
                 LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
                 LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
@@ -112,12 +109,6 @@ function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;
 
 function SchemaCTeToStr(const t: TSchemaCTe): String;
 function StrToSchemaCTe(out ok: Boolean; const s: String): TSchemaCTe;
-
-function tpNFToStr(const t: TpcnTipoCTe): String;
-function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoCTe;
-
-function FinCTeToStr(const t: TpcnFinalidadeCTe): String;
-function StrToFinCTe(out ok: Boolean; const s: String): TpcnFinalidadeCTe;
 
 function StrToVersaoCTe(out ok: Boolean; const s: String): TVersaoCTe;
 function VersaoCTeToStr(const t: TVersaoCTe): String;
@@ -256,30 +247,6 @@ begin
     SchemaStr := 'sch' + SchemaStr;
 
   Result := TSchemaCTe( GetEnumValue(TypeInfo(TSchemaCTe), SchemaStr ) );
-end;
-
-// B11 - Tipo do Documento Fiscal **********************************************
-function tpNFToStr(const t: TpcnTipoCTe): String;
-begin
-  Result := EnumeradoToStr(t, ['0', '1'], [tnEntrada, tnSaida]);
-end;
-
-function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoCTe;
-begin
-  Result := StrToEnumerado(ok, s, ['0', '1'], [tnEntrada, tnSaida]);
-end;
-
-// B25 - Finalidade de emissão da NF-e *****************************************
-function FinCTeToStr(const t: TpcnFinalidadeCTe): String;
-begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
-    [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
-end;
-
-function StrToFinCTe(out ok: Boolean; const s: String): TpcnFinalidadeCTe;
-begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
-    [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
 end;
 
 function StrToVersaoCTe(out ok: Boolean; const s: String): TVersaoCTe;

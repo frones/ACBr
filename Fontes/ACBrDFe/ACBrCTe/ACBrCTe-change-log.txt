@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/08/2015
+[*] Removido tipos e funções que não tem nada haver com o componente.
+    por: Italo Jurisato Junior
 [-] Acerto no LoadFromString, estava cortando o XML ao ler a string para o 
     componente.
     por: Italo Jurisato Junior

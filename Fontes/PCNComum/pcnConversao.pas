@@ -212,6 +212,9 @@ function CSOSNToStrTagPos(const t: TpcnCSOSNIcms): string;
 function CSOSNToStrID(const t: TpcnCSOSNIcms): string;
 function CSOSNToStrTagPosText(const t: TpcnCSOSNIcms): string;
 function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;
+function CSTPISToStrTagPosText(const t: TpcnCstPis): string;
+function CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
+function CSTCOFINSToStrTagPosText(const t: TpcnCstCofins): string;
 
 function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
 function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
@@ -504,6 +507,104 @@ begin
       oeNacionalConteudoImportacaoInferiorIgual40,
       oeEstrangeiraImportacaoDiretaSemSimilar, oeEstrangeiraAdquiridaBrasilSemSimilar,
       oeNacionalConteudoImportacaoSuperior70]);
+end;
+
+function CSTPISToStrTagPosText(const t: TpcnCstPis): string;
+begin
+     result := EnumeradoToStr(t,
+          ['01 - Operação Tributável com Alíquota Básica',
+          '02 - Operação Tributável com Alíquota Diferenciada',
+          '03 - Operação Tributável com Alíquota por Unidade de Medida de Produto',
+          '04 - Operação Tributável Monofásica - Revenda a Alíquota Zero',
+          '05 - Operação Tributável por Substituição Tributária',
+          '06 - Operação Tributável a Alíquota Zero',
+          '07 - Operação Isenta da Contribuição',
+          '08 - Operação sem Incidência da Contribuição',
+          '09 - Operação com Suspensão da Contribuição',
+          '49 - Outras Operações de Saída',
+          '50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno',
+          '52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação',
+          '53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno',
+          '62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação',
+          '63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '67 - Crédito Presumido - Outras Operações',
+          '70 - Operação de Aquisição sem Direito a Crédito',
+          '71 - Operação de Aquisição com Isenção',
+          '72 - Operação de Aquisição com Suspensão',
+          '73 - Operação de Aquisição a Alíquota Zero',
+          '74 - Operação de Aquisição sem Incidência da Contribuição',
+          '75 - Operação de Aquisição por Substituição Tributária',
+          '98 - Outras Operações de Entrada',
+          '99 - Outras Operações'],
+          [pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99]);
+end;
+
+function CSTCOFINSToStrTagPosText(const t: TpcnCstCofins): string;
+begin
+     result := EnumeradoToStr(t,
+          ['01 - Operação Tributável com Alíquota Básica',
+          '02 - Operação Tributável com Alíquota Diferenciada',
+          '03 - Operação Tributável com Alíquota por Unidade de Medida de Produto',
+          '04 - Operação Tributável Monofásica - Revenda a Alíquota Zero',
+          '05 - Operação Tributável por Substituição Tributária',
+          '06 - Operação Tributável a Alíquota Zero',
+          '07 - Operação Isenta da Contribuição',
+          '08 - Operação sem Incidência da Contribuição',
+          '09 - Operação com Suspensão da Contribuição',
+          '49 - Outras Operações de Saída',
+          '50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno',
+          '52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação',
+          '53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno',
+          '61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno',
+          '62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação',
+          '63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno',
+          '64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação',
+          '65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação',
+          '66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação',
+          '67 - Crédito Presumido - Outras Operações',
+          '70 - Operação de Aquisição sem Direito a Crédito',
+          '71 - Operação de Aquisição com Isenção',
+          '72 - Operação de Aquisição com Suspensão',
+          '73 - Operação de Aquisição a Alíquota Zero',
+          '74 - Operação de Aquisição sem Incidência da Contribuição',
+          '75 - Operação de Aquisição por Substituição Tributária',
+          '98 - Outras Operações de Entrada',
+          '99 - Outras Operações'],
+          [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
+end;
+
+function CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
+begin
+     result := EnumeradoToStr(t,
+          ['00 - Entrada com Recuperação de Crédito',
+          '01 - Entrada Tributável com Alíquota Zero',
+          '02 - Entrada Isenta',
+          '03 - Entrada Não-Tributada',
+          '04 - Entrada Imune',
+          '05 - Entrada com Suspensão',
+          '49 - Outras Entradas',
+          '50 - Saída Tributada',
+          '51 - Saída Tributável com Alíquota Zero',
+          '52 - Saída Isenta',
+          '53 - Saída Não-Tributada',
+          '54 - Saída Imune',
+          '55 - Saída com Suspensão',
+          '99 - Outras Saídas'],
+          [ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55]);
 end;
 
 function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;

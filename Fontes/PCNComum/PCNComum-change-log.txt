@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2015
+-- pcnConversao --    (por: gabriellc)
+[+] function CSTPISToStrTagPosText(const t: TpcnCstPis): string;
+[+] function CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
+[+] function CSTCOFINSToStrTagPosText(const t: TpcnCstCofins): string;
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23771
+
 20/08/2015
 -- pcnConversao --    (por: gabriellc)
 [+] function CSOSNToStrTagPosText(const t: TpcnCSOSNIcms): string;

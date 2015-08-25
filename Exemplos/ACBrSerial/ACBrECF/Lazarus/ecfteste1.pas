@@ -1576,7 +1576,7 @@ end;
 
 procedure TForm1.Button1Click(Sender : TObject) ;
 begin
-    ACBrECF1.RetornaInfoECF( edInfo.Text );
+  mResp.Lines.Add( ACBrECF1.RetornaInfoECF( edInfo.Text ) );
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -4159,7 +4159,8 @@ begin
 end;
 
 procedure TForm1.ProgramaComprovanteNAOFiscal1Click(Sender: TObject);
-Var cDescricao, cTipo : String ;
+Var
+    cDescricao, cTipo, Posicao : String ;
 begin
   cDescricao := 'CARTAO' ;
   cTipo      := '' ;
@@ -4218,6 +4219,10 @@ begin
 
   end;
 
+  if not InputQuery('Programaçao de Comprovantes NAO Fiscal',
+                    'Entre com a Posição do Comprovantes NAO Fiscal:', Posicao ) then
+     exit ;
+
   if MessageDlg('O Comprovante Nao Fiscal: ['+cDescricao+'] '+
                 IfThen(ACBrECF1.Modelo in
                        [ecfDaruma,ecfSchalter,ecfSweda,ecfQuattro,ecfFiscNET],
@@ -4227,7 +4232,7 @@ begin
                 'Confirma a operação ?',mtConfirmation,mbYesNoCancel,0) <> mrYes then
      exit ;
 
-  ACBrECF1.ProgramaComprovanteNaoFiscal(cDescricao,cTipo);
+  ACBrECF1.ProgramaComprovanteNaoFiscal(cDescricao,cTipo,Posicao);
   CarregaComprovantesNAOFiscais1Click(Sender);
 end;
 

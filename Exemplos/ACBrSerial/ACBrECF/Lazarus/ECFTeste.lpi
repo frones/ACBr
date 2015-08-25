@@ -189,6 +189,7 @@
         <ComponentName Value="frRelatorio"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Relatorio"/>
       </Unit4>
       <Unit5>
         <Filename Value="sobre.pas"/>

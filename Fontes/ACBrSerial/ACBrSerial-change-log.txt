@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/08/2015        (por Macgayver Armini/Isaque Pinheiro)
+-- ACBrECF --
+[*] Adicionado canvas com suporte idêntico ao da VCL para o Firemonkey
+    Correção das teclas de interceptação para o Firemonkey
+    Adição de suporte a formulário de mensagem personalizado para o FireMonkey
+    Correção da chamada Application.MainForm do Firemonkey
+[+] Criado dois eventos para Firemonkey:
+    fsOnCriarFormMsg: TACBrFMXCustomForm; //Variavel do Evento de Formulário Personalizado
+    fsOnDrawFormMsg: TACBrECFMsgAguarde; //Variavel para o usuário desenhar ou enviar para qualquer componente
+
 Data: 22/08/2015        (por: DSA)
 -- ACBrEscBematech --
 [-] Correção para impressão de CODE128 em Bematech

@@ -47,7 +47,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
   JvExControls, JvAnimatedImage, JvGIFCtrl, JvWizard, JvWizardRouteMapNodes,
-  JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista;
+  JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista, System.IOUtils,
+  System.Types;
 
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
@@ -107,6 +108,7 @@ type
     lbInfo: TListBox;
     Label8: TLabel;
     btnWCInfo: TButton;
+    chkDeixarSomenteLIB: TCheckBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -166,6 +168,8 @@ type
     procedure WriteToTXT( const ArqTXT, AString : AnsiString;
       const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
     procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
+    procedure FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
+    procedure DeixarSomenteLib;
   public
 
   end;
@@ -473,13 +477,14 @@ var
 begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
-    edtDirDestino.Text         := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
-    edtPlatform.ItemIndex      := edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
-    edtDelphiVersion.ItemIndex := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
-    ckbFecharTortoise.Checked  := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
-    rdgDLL.ItemIndex           := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
-    ckbCopiarTodasDll.Checked  := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
-    ckbBCB.Checked             := ArqIni.ReadBool('CONFIG','C++Builder',False);
+    edtDirDestino.Text          := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
+    edtPlatform.ItemIndex       := edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
+    edtDelphiVersion.ItemIndex  := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
+    ckbFecharTortoise.Checked   := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
+    rdgDLL.ItemIndex            := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
+    ckbCopiarTodasDll.Checked   := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
+    ckbBCB.Checked              := ArqIni.ReadBool('CONFIG','C++Builder',False);
+    chkDeixarSomenteLIB.Checked := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
 
     if Trim(edtDelphiVersion.Text) = '' then
       edtDelphiVersion.ItemIndex := 0;
@@ -508,6 +513,7 @@ begin
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
     ArqIni.WriteBool('CONFIG','CopiarTodasDLLs',ckbCopiarTodasDll.Checked);
     ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
+    ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
 
     for I := 0 to frameDpk.Pacotes.Count - 1 do
       ArqIni.WriteBool('PACOTES', frameDpk.Pacotes[I].Caption, frameDpk.Pacotes[I].Checked);
@@ -522,6 +528,26 @@ begin
   // Checa se existe diretório da plataforma
   if not DirectoryExists(sDirLibrary) then
     ForceDirectories(sDirLibrary);
+end;
+
+procedure TfrmPrincipal.DeixarSomenteLib;
+  procedure Copiar(const Extensao : string);
+  var
+    ListArquivos: TStringDynArray;
+    i: integer;
+  begin
+    ListArquivos := TDirectory.GetFiles(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes', Extensao ,TSearchOption.soAllDirectories ) ;
+    for i := Low(ListArquivos) to High(ListArquivos) do
+      TDirectory.Copy(ListArquivos[i], sDirLibrary);
+  end;
+begin
+  // remover os path com o segundo parametro
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes', False);
+
+  Copiar('*.dcr');
+  Copiar('*.res');
+  Copiar('*.dfm');
+  Copiar('*.ini');
 end;
 
 procedure TfrmPrincipal.AddLibraryPathToDelphiPath(const APath: String; const AProcurarRemover: String);
@@ -580,47 +606,50 @@ begin
 
 end;
 
+procedure TfrmPrincipal.FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
+var
+  oDirList: TSearchRec;
+  iRet: Integer;
+begin
+  ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
+
+  iRet := FindFirst(ADirRoot + '*.*', faDirectory, oDirList);
+  if iRet = 0 then
+  begin
+     try
+       repeat
+          if ((oDirList.Attr and faDirectory) <> 0) and
+              (oDirList.Name <> '.')                and
+              (oDirList.Name <> '..')               and
+              NOT(SameText(oDirList.Name, 'quick')) and
+              NOT(SameText(oDirList.Name, 'rave'))  and
+              NOT(SameText(oDirList.Name, 'laz'))   and
+              NOT(SameText(oDirList.Name, 'VerificarNecessidade')) and
+              (oDirList.Name <> '__history')        then
+          begin
+             with oACBr.Installations[iVersion] do
+             begin
+               if bAdicionar then
+               begin
+                  AddToLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
+                  AddToLibraryBrowsingPath(ADirRoot + oDirList.Name, tPlatform);
+               end
+               else
+                  RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
+             end;
+             //-- Procura subpastas
+             FindDirs(ADirRoot + oDirList.Name, bAdicionar);
+          end;
+          iRet := FindNext(oDirList);
+       until iRet <> 0;
+     finally
+       SysUtils.FindClose(oDirList)
+     end;
+  end;
+end;
+
 // adicionar o paths ao library path do delphi
 procedure TfrmPrincipal.AddLibrarySearchPath;
-
-   procedure FindDirs(ADirRoot: String);
-   var
-    oDirList: TSearchRec;
-    iRet: Integer;
-   begin
-      ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
-
-      iRet := FindFirst(ADirRoot + '*.*', faDirectory, oDirList);
-      if iRet = 0 then
-      begin
-         try
-           repeat
-              if ((oDirList.Attr and faDirectory) <> 0) and
-                  (oDirList.Name <> '.')                and
-                  (oDirList.Name <> '..')               and
-                  NOT(SameText(oDirList.Name, 'quick')) and
-                  NOT(SameText(oDirList.Name, 'rave'))  and
-                  NOT(SameText(oDirList.Name, 'laz'))   and
-                  NOT(SameText(oDirList.Name, 'VerificarNecessidade')) and
-                  (oDirList.Name <> '__history')        then
-              begin
-                 with oACBr.Installations[iVersion] do
-                 begin
-                   AddToLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
-                   AddToLibraryBrowsingPath(ADirRoot + oDirList.Name, tPlatform);
-                   //RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
-                 end;
-                 //-- Procura subpastas
-                 FindDirs(ADirRoot + oDirList.Name);
-              end;
-              iRet := FindNext(oDirList);
-           until iRet <> 0;
-         finally
-           SysUtils.FindClose(oDirList)
-         end;
-      end;
-   end;
-
 begin
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes');
 
@@ -1061,6 +1090,21 @@ begin
         on E: Exception do
         begin
           MostrarMensagemInstalado('Ocorreu erro ao instalar Outras DLL´s', E.Message)
+        end;
+      end;
+    end;
+
+    if chkDeixarSomenteLIB.Checked then
+    begin
+      try
+        DeixarSomenteLib;
+
+        MostrarMensagemInstalado('Limpeza library path com sucesso');
+        MostrarMensagemInstalado('Copia dos arquivos necessário.');
+      except
+        on E: Exception do
+        begin
+          MostrarMensagemInstalado('Ocorreu erro ao limpas os path e copiar arquivos' + sLineBreak +E.Message )
         end;
       end;
     end;

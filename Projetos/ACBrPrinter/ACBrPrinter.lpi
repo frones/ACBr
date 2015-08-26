@@ -9,13 +9,15 @@
       <Title Value="ACBrPrinter"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
     <VersionInfo>
-      <StringTable ProductVersion=""/>
+      <UseVersionInfo Value="True"/>
+      <MajorVersionNr Value="1"/>
+      <BuildNr Value="1"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="Arquivo executável" InternalName="ACBrPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" OriginalFilename="ACBrPrinter.exe" ProductName="ACBrPrinter"/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
@@ -68,7 +70,6 @@
       <Unit0>
         <Filename Value="ACBrPrinter.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrPrinter"/>
       </Unit0>
       <Unit1>
         <Filename Value="ACBrPrinter1.pas"/>
@@ -76,14 +77,12 @@
         <ComponentName Value="DataModule1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <UnitName Value="ACBrPrinter1"/>
       </Unit1>
       <Unit2>
         <Filename Value="configuracoes.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frConfiguracoes"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="configuracoes"/>
       </Unit2>
       <Unit3>
         <Filename Value="ConfiguraSerial.pas"/>
@@ -91,7 +90,6 @@
         <ComponentName Value="frConfiguraSerial"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ConfiguraSerial"/>
       </Unit3>
     </Units>
   </ProjectOptions>
@@ -106,18 +104,15 @@
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

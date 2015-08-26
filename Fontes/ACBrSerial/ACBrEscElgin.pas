@@ -64,7 +64,6 @@ type
 implementation
 
 Uses
-  strutils, math,
   ACBrUtil;
 
 { TACBrEscElgin }

@@ -2688,8 +2688,11 @@ begin
             INIRec.WriteString(  'Avulsa','dPag'   ,DateToStr(Avulsa.dPag));
           end;
 
+         if (Dest.idEstrangeiro <> EmptyStr) then
+            INIRec.WriteString(  'Destinatario','idEstrangeiro', Dest.idEstrangeiro);
          INIRec.WriteString(  'Destinatario','CNPJ'       ,Dest.CNPJCPF);
          INIRec.WriteString(  'Destinatario','NomeRazao'  ,Dest.xNome);
+         INIRec.WriteString(  'Destinatario','indIEDest'  ,indIEDestToStr(Dest.indIEDest));
          INIRec.WriteString(  'Destinatario','IE'         ,Dest.IE);
          INIRec.WriteString(  'Destinatario','ISUF'       ,Dest.ISUF);
          INIRec.WriteString(  'Destinatario','Email'      ,Dest.Email);

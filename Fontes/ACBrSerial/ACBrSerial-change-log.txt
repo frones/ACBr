@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/08/2015        (por: DSA)
+-- ACBrEscElgin --
+[+] Adicionado suporte a Impressora Elgin VOX e demais que usam EscElgin
+
+
 Data: 25/08/2015        (por Macgayver Armini/Isaque Pinheiro)
 -- ACBrECF --
 [*] Adicionado canvas com suporte idêntico ao da VCL para o Firemonkey

@@ -105,6 +105,11 @@ contains
   ACBrECFVirtualBuffer in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtualBuffer.pas',
   ACBrECFVirtualPrinter in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtualPrinter.pas',
   ACBrECFVirtualNaoFiscal in '..\..\..\Fontes\ACBrSerial\ACBrECFVirtualNaoFiscal.pas',
+  ACBrPosPrinter in '..\..\..\Fontes\ACBrSerial\ACBrPosPrinter.pas',
+  ACBrEscPosEpson in '..\..\..\Fontes\ACBrSerial\ACBrEscPosEpson.pas',
+  ACBrEscBematech in '..\..\..\Fontes\ACBrSerial\ACBrEscBematech.pas',
+  ACBrEscDaruma in '..\..\..\Fontes\ACBrSerial\ACBrEscDaruma.pas',
+  ACBrEscElgin in '..\..\..\Fontes\ACBrSerial\ACBrEscElgin.pas',
   ACBrBALLider in '..\..\..\Fontes\ACBrSerial\ACBrBALLider.pas';
 
 end.

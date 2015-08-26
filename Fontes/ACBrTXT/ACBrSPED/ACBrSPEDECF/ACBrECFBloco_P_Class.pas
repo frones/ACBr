@@ -245,7 +245,7 @@ begin
                LFill(CODIGO)                 +
                LFill(DESCRICAO)              +
                LFill(TIPO)                   +
-               LFill(NIVEL)                  +
+               LFill(NIVEL, 1)               +
                LFill(COD_NAT)                +
                LFill(COD_CTA_SUP)            +
               VLFill(VAL_CTA_REF_INI, 19, 2) +
@@ -300,7 +300,7 @@ begin
                LFill(CODIGO)       +
                LFill(DESCRICAO)    +
                LFill(TIPO)         +
-               LFill(NIVEL)        +
+               LFill(NIVEL, 1)     +
                LFill(COD_NAT)      +
                LFill(COD_CTA_SUP)  +
               VLFill(VALOR, 19, 2) +

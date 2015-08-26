@@ -82,7 +82,7 @@ var
 begin
   with fpPosPrinter.ConfigQRCode do
   begin
-    Result := GS + #111 + AnsiChr(0) +        // Set parameters of QRCODE barcode
+    Result := GS + 'o' + #0 +                 // Set parameters of QRCODE barcode
               AnsiChr(LarguraModulo * 2) +    // Basic element width
               #0 +                            // Language mode: 0:Chinese 1:Japanese
               AnsiChr(Tipo) ;                 // Symbol type: 1:Original type 2:Enhanced type(Recommended)

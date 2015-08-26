@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 26/08/2015
+[-] Registros 1101 e 1501 campo de chave da NF-e estava como integer e mudado para string para comportar os 44 digitos
+		por: Juliomar Marchetti
+		
 Data 12/08/2015
 [+] Subindo 1a versão do Sped ECF que estava na pasta Branches para Trunk2, para está havendo
     bastante solicitação, subindo para Trunk2 e disponibilizando no ACBrInstall, ajustes serão

@@ -212,7 +212,7 @@ type
     fSUB_SER: string;	              //06	SUB_SER	Subsérie do documento fiscal	C	003	-
     fNUM_DOC: Integer;	            //07	NUM_DOC	Número do documento fiscal	N	009	-
     fDT_OPER: TDateTime;	          //08	DT_OPER	Data da Operação (ddmmaaaa)	N	008*	-
-    fCHV_NFE: Integer;	            //09	CHV_NFE	Chave da Nota Fiscal Eletrônica	N	044*	-
+    fCHV_NFE: String;	            //09	CHV_NFE	Chave da Nota Fiscal Eletrônica	N	044*	-
     fVL_OPER: Currency;	            //10	VL_OPER	Valor da Operação	N	-	02
     fCFOP: Integer;	                //11	CFOP	Código fiscal de operação e prestação	N	004*	-
     fNAT_BC_CRED: string;	          //12	NAT_BC_CRED	Código da Base de Cálculo do Crédito, conforme a Tabela indicada no item 4.3.7.	C	002*	-
@@ -239,7 +239,7 @@ type
     property SUB_SER: string read FSUB_SER write FSUB_SER;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
     property DT_OPER: TDateTime read FDT_OPER write FDT_OPER;
-    property CHV_NFE: Integer read FCHV_NFE write FCHV_NFE;
+    property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
     property VL_OPER: Currency read FVL_OPER write FVL_OPER;
     property CFOP: Integer read FCFOP write FCFOP;
     property NAT_BC_CRED: string read FNAT_BC_CRED write FNAT_BC_CRED;
@@ -481,7 +481,7 @@ type
     fSUB_SER: string;	              //06	SUB_SER	Subsérie do documento fiscal	C	003	-
     fNUM_DOC: Integer;	            //07	NUM_DOC	Número do documento fiscal	N	009	-
     fDT_OPER: TDateTime;	          //08	DT_OPER	Data da Operação (ddmmaaaa)	N	008*	-
-    fCHV_NFE: Integer;	            //09	CHV_NFE	Chave da Nota Fiscal Eletrônica	N	044*	-
+    fCHV_NFE: String;	            //09	CHV_NFE	Chave da Nota Fiscal Eletrônica	N	044*	-
     fVL_OPER: Currency;	            //10	VL_OPER	Valor da Operação	N	-	02
     fCFOP: Integer;	                //11	CFOP	Código fiscal de operação e prestação	N	004*	-
     fNAT_BC_CRED: string;	          //12	NAT_BC_CRED	Código da Base de Cálculo do Crédito, conforme a Tabela indicada no item 4.3.7.	C	002*	-
@@ -508,7 +508,7 @@ type
     property SUB_SER: string read FSUB_SER write FSUB_SER;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
     property DT_OPER: TDateTime read FDT_OPER write FDT_OPER;
-    property CHV_NFE: Integer read FCHV_NFE write FCHV_NFE;
+    property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
     property VL_OPER: Currency read FVL_OPER write FVL_OPER;
     property CFOP: Integer read FCFOP write FCFOP;
     property NAT_BC_CRED: string read FNAT_BC_CRED write FNAT_BC_CRED;

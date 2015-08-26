@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_PAF"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Isaque Pinheiro - Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -11,15 +12,9 @@
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrPAF\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerMessages>
-          <UseMsgFile Value="True"/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="20">
+    <Files Count="38">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFRegistros.pas"/>
         <UnitName Value="ACBrPAFRegistros"/>
@@ -101,8 +96,79 @@
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_T_Class.pas"/>
         <UnitName Value="ACBrPAF_T_Class"/>
       </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_F.pas"/>
+        <UnitName Value="ACBrPAF_F"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_F_Class.pas"/>
+        <UnitName Value="ACBrPAF_F_Class"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_G.pas"/>
+        <UnitName Value="ACBrPAF_G"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_G_Class.pas"/>
+        <UnitName Value="ACBrPAF_G_Class"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_H.pas"/>
+        <UnitName Value="ACBrPAF_H"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_H_Class.pas"/>
+        <UnitName Value="ACBrPAF_H_Class"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_L.pas"/>
+        <UnitName Value="ACBrPAF_L"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_L_Class.pas"/>
+        <UnitName Value="ACBrPAF_L_Class"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_M.pas"/>
+        <UnitName Value="ACBrPAF_M"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_M_Class.pas"/>
+        <UnitName Value="ACBrPAF_M_Class"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_S.pas"/>
+        <UnitName Value="ACBrPAF_S"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_S_Class.pas"/>
+        <UnitName Value="ACBrPAF_S_Class"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP.pas"/>
+        <UnitName Value="ACBrPAF_TITP"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP_Class.pas"/>
+        <UnitName Value="ACBrPAF_TITP_Class"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_U.pas"/>
+        <UnitName Value="ACBrPAF_U"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_U_Class.pas"/>
+        <UnitName Value="ACBrPAF_U_Class"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z.pas"/>
+        <UnitName Value="ACBrPAF_Z"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
+        <UnitName Value="ACBrPAF_Z_Class"/>
+      </Item38>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBrTXTComum"/>

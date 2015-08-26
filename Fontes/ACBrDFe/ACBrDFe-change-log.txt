@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2015   (por: DSA)
+-- ACBrDFeConfiguracoes, ACBrDFeSSL --
+[-]  Correção para que número do Certificado seja igual em TDFeSSL e
+     TCertificadosConf
+     http://www.projetoacbr.com.br/forum/index.php?showtopic=23128
+
 18/08/2015   (por: DSA)
 -- ACBrDFeCapicom --
 [+]  Implementado o uso de Certificados A1 por Arquivo PFX,

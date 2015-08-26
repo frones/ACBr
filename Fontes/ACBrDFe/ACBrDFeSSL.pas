@@ -358,7 +358,7 @@ end;
 procedure TDFeSSL.SetNumeroSerie(AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
-  FNumeroSerie := AValue;
+  FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
   DescarregarCertificado;
 end;
 

@@ -629,7 +629,7 @@ procedure TCertificadosConf.SetNumeroSerie(const AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
-  TACBrDFe(FConfiguracoes.Owner).SSL.NumeroSerie := AValue;
+  TACBrDFe(FConfiguracoes.Owner).SSL.NumeroSerie := FNumeroSerie;
 end;
 
 procedure TCertificadosConf.SetSenha(AValue: AnsiString);

@@ -90,7 +90,7 @@ uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
           ,FMX.Dialogs, System.UITypes
         {$ELSE}
           ,Dialogs
-       {$ENDIF}
+       {$IFEND}
      {$ENDIF};
 type
 

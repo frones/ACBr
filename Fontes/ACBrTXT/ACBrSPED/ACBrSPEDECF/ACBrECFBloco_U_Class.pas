@@ -57,11 +57,20 @@ type
     FBloco_0: TBloco_0;
     FRegistroU001: TRegistroU001;
     FRegistroU990: TRegistroU990;
+
+    procedure CriaRegistros;
+    procedure LiberaRegistros;
   public
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
 
     constructor Create;
     destructor Destroy;
+
+    procedure LimpaRegistros;    
+
+    procedure WriteRegistroU001;
+    procedure WriteRegistroU030;
+    procedure WriteRegistroU990;
 
     property RegistroU001: TRegistroU001 read FRegistroU001 write FRegistroU001;
     property RegistroU990: TRegistroU990 read FRegistroU990 write FRegistroU990;
@@ -82,10 +91,63 @@ begin
   FRegistroU990 := TRegistroU990.Create;
 end;
 
+procedure TBloco_U.CriaRegistros;
+begin
+  FRegistroU001 := TRegistroU001.Create;
+  FRegistroU990 := TRegistroU990.Create;
+end;
+
 destructor TBloco_U.Destroy;
 begin
   FRegistroU001.Free;
   FRegistroU990.Free;
+end;
+
+procedure TBloco_U.LiberaRegistros;
+begin
+  FRegistroU001.Free;
+  FRegistroU990.Free;
+end;
+
+procedure TBloco_U.LimpaRegistros;
+begin
+  /// Limpa os Registros
+  LiberaRegistros;
+  Conteudo.Clear;
+
+  /// Recriar os Registros Limpos
+  CriaRegistros;
+end;
+
+procedure TBloco_U.WriteRegistroU001;
+begin
+  if Assigned(FRegistroU001) then begin
+     with FRegistroU001 do begin
+       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(U-U001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+       Add(LFill('U001') +
+           LFill( Integer(IND_DAD), 1));
+           
+       FRegistroU990.QTD_LIN:= FRegistroU990.QTD_LIN + 1;
+       WriteRegistroU030;
+     end;
+  end;
+end;
+
+procedure TBloco_U.WriteRegistroU030;
+begin
+//
+end;
+
+procedure TBloco_U.WriteRegistroU990;
+begin
+  if Assigned(FRegistroU990) then begin
+     with FRegistroU990 do begin
+       QTD_LIN := QTD_LIN + 1;
+       ///
+       Add(LFill('U990') +
+           LFill(QTD_LIN, 0));
+     end;
+  end;
 end;
 
 end.

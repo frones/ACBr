@@ -36,6 +36,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco Y
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -48,10 +49,80 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECFBlocos;
 
 type
+  TRegistroY520List = class;
+  TRegistroY540List = class;
+  TRegistroY550List = class;
+  TRegistroY560List = class;
+  TRegistroY570List = class;
+  TRegistroY580List = class;
+  TRegistroY590List = class;
+  TRegistroY600List = class;
+  TRegistroY611List = class;
+  TRegistroY612List = class;
+  TRegistroY620List = class;
+  TRegistroY630List = class;
+  TRegistroY640List = class;
+  TRegistroY650List = class;
+  TRegistroY660List = class;
+  TRegistroY665List = class;
+  TRegistroY671List = class;
+  TRegistroY672List = class;
+  TRegistroY680List = class;
+  TRegistroY681List = class;
+  TRegistroY682List = class;
+  TRegistroY690List = class;
+  TRegistroY800 = class;
+
+
   /// Registro Y001 - Abertura do Bloco Y – Informações Gerais
   TRegistroY001 = class(TOpenBlocos)
   private
+    FRegistroY520 : TRegistroY520List;
+    FRegistroY540 : TRegistroY540List;
+    FRegistroY550 : TRegistroY550List;
+    FRegistroY560 : TRegistroY560List;
+    FRegistroY570 : TRegistroY570List;
+    FRegistroY580 : TRegistroY580List;
+    FRegistroY590 : TRegistroY590List;
+    FRegistroY600 : TRegistroY600List;
+    FRegistroY611 : TRegistroY611List;
+    FRegistroY612 : TRegistroY612List;
+    FRegistroY620 : TRegistroY620List;
+    FRegistroY630 : TRegistroY630List;
+    FRegistroY640 : TRegistroY640List;
+    FRegistroY660 : TRegistroY660List;
+    FRegistroY665 : TRegistroY665List;
+    FRegistroY671 : TRegistroY671List;
+    FRegistroY672 : TRegistroY672List;
+    FRegistroY680 : TRegistroY680List;
+    FRegistroY682 : TRegistroY682List;
+    FRegistroY690 : TRegistroY690List;
+    FRegistroY800 : TRegistroY800;
   public
+    constructor Create; virtual;  /// Create
+    destructor Destroy; override; /// Destroy
+      
+    property RegistroY520 : TRegistroY520List read FRegistroY520 write FRegistroY520;
+    property RegistroY540 : TRegistroY540List read FRegistroY540 write FRegistroY540;
+    property RegistroY550 : TRegistroY550List read FRegistroY550 write FRegistroY550;
+    property RegistroY560 : TRegistroY560List read FRegistroY560 write FRegistroY560;
+    property RegistroY570 : TRegistroY570List read FRegistroY570 write FRegistroY570;
+    property RegistroY580 : TRegistroY580List read FRegistroY580 write FRegistroY580;
+    property RegistroY590 : TRegistroY590List read FRegistroY590 write FRegistroY590;
+    property RegistroY600 : TRegistroY600List read FRegistroY600 write FRegistroY600;
+    property RegistroY611 : TRegistroY611List read FRegistroY611 write FRegistroY611;
+    property RegistroY612 : TRegistroY612List read FRegistroY612 write FRegistroY612;
+    property RegistroY620 : TRegistroY620List read FRegistroY620 write FRegistroY620;
+    property RegistroY630 : TRegistroY630List read FRegistroY630 write FRegistroY630;
+    property RegistroY640 : TRegistroY640List read FRegistroY640 write FRegistroY640;
+    property RegistroY660 : TRegistroY660List read FRegistroY660 write FRegistroY660;
+    property RegistroY665 : TRegistroY665List read FRegistroY665 write FRegistroY665;
+    property RegistroY671 : TRegistroY671List read FRegistroY671 write FRegistroY671;
+    property RegistroY672 : TRegistroY672List read FRegistroY672 write FRegistroY672;
+    property RegistroY680 : TRegistroY680List read FRegistroY680 write FRegistroY680;
+    property RegistroY682 : TRegistroY682List read FRegistroY682 write FRegistroY682;
+    property RegistroY690 : TRegistroY690List read FRegistroY690 write FRegistroY690;
+    property RegistroY800 : TRegistroY800     read FRegistroY800 write FRegistroY800;  
   end;
 
   /// Registro Y520 - Pagamentos/Recebimentos do Exterior ou de Não Residentes
@@ -101,7 +172,6 @@ type
   end;
 
   /// Registro Y540 - Lista
-
   TRegistroY540List = class(TObjectList)
   private
     function GetItem(Index: Integer): TRegistroY540;
@@ -464,8 +534,6 @@ type
 
   /// Registro Y640 - Participações em Consórcios de Empresas
 
-  TRegistroY650List = class;
-
   { TRegistroY640 }
 
   TRegistroY640 = class(TBlocos)
@@ -710,7 +778,6 @@ type
   /// Registro Y680 - Mês das Informações de Optantes pelo Refis (Lucro
   /// Real, Presumido e Arbitrado)
 
-  TRegistroY681List = class;
 
   { TRegistroY680 }
 
@@ -1302,7 +1369,6 @@ end;
 constructor TRegistroY680.Create;
 begin
    inherited;
-
    FRegistroY681 := TRegistroY681List.Create;
 end;
 
@@ -1311,6 +1377,60 @@ begin
    FRegistroY681.Free;
 
    inherited;
+end;
+
+{ TRegistroY001 }
+
+constructor TRegistroY001.Create;
+begin
+  FRegistroY520 := TRegistroY520List.Create;
+  FRegistroY540 := TRegistroY540List.Create;
+  FRegistroY550 := TRegistroY550List.Create;
+  FRegistroY560 := TRegistroY560List.Create;
+  FRegistroY570 := TRegistroY570List.Create;
+  FRegistroY580 := TRegistroY580List.Create;
+  FRegistroY590 := TRegistroY590List.Create;
+  FRegistroY600 := TRegistroY600List.Create;
+  FRegistroY611 := TRegistroY611List.Create;
+  FRegistroY612 := TRegistroY612List.Create;
+  FRegistroY620 := TRegistroY620List.Create;
+  FRegistroY630 := TRegistroY630List.Create;
+  FRegistroY640 := TRegistroY640List.Create;
+  FRegistroY660 := TRegistroY660List.Create;
+  FRegistroY665 := TRegistroY665List.Create;
+  FRegistroY671 := TRegistroY671List.Create;
+  FRegistroY672 := TRegistroY672List.Create;
+  FRegistroY680 := TRegistroY680List.Create;
+  FRegistroY682 := TRegistroY682List.Create;
+  FRegistroY690 := TRegistroY690List.Create;
+  FRegistroY800 := TRegistroY800.Create;
+  IND_DAD := idComDados;
+end;
+
+destructor TRegistroY001.Destroy;
+begin
+  FRegistroY520.Free;
+  FRegistroY540.Free;
+  FRegistroY550.Free;
+  FRegistroY560.Free;
+  FRegistroY570.Free;
+  FRegistroY580.Free;
+  FRegistroY590.Free;
+  FRegistroY600.Free;
+  FRegistroY611.Free;
+  FRegistroY612.Free;
+  FRegistroY620.Free;
+  FRegistroY630.Free;
+  FRegistroY640.Free;
+  FRegistroY660.Free;
+  FRegistroY665.Free;
+  FRegistroY671.Free;
+  FRegistroY672.Free;
+  FRegistroY680.Free;
+  FRegistroY682.Free;
+  FRegistroY690.Free;
+  FRegistroY800.Free;
+  inherited;
 end;
 
 end.

@@ -36,6 +36,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco X        
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -48,10 +49,77 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECFBlocos;
 
 type
+  TRegistroX280List = class;
+  TRegistroX291List = class;
+  TRegistroX292List = class;
+  TRegistroX300List = class;
+  TRegistroX310List = class;
+  TRegistroX320List = class;
+  TRegistroX330List = class;
+  TRegistroX340List = class;
+  TRegistroX350List = class;
+  TRegistroX351List = class;
+  TRegistroX352List = class;
+  TRegistroX353List = class;
+  TRegistroX354List = class;
+  TRegistroX355List = class;
+  TRegistroX356List = class;
+  TRegistroX390List = class;
+  TRegistroX400List = class;
+  TRegistroX410List = class;
+  TRegistroX420List = class;
+  TRegistroX430List = class;
+  TRegistroX450List = class;
+  TRegistroX460List = class;
+  TRegistroX470List = class;
+  TRegistroX480List = class;
+  TRegistroX490List = class;
+  TRegistroX500List = class;
+  TRegistroX510List = class;
+
   /// Registro X001 - Abertura do Bloco X – Informações Econômicas
   TRegistroX001 = class(TOpenBlocos)
   private
+    FRegistroX280 : TRegistroX280List;
+    FRegistroX291 : TRegistroX291List;
+    FRegistroX292 : TRegistroX292List;
+    FRegistroX300 : TRegistroX300List;
+    FRegistroX320 : TRegistroX320List;
+    FRegistroX340 : TRegistroX340List;
+    FRegistroX390 : TRegistroX390List;
+    FRegistroX400 : TRegistroX400List;
+    FRegistroX410 : TRegistroX410List;
+    FRegistroX420 : TRegistroX420List;
+    FRegistroX430 : TRegistroX430List;
+    FRegistroX450 : TRegistroX450List;
+    FRegistroX460 : TRegistroX460List;
+    FRegistroX470 : TRegistroX470List;
+    FRegistroX480 : TRegistroX480List;
+    FRegistroX490 : TRegistroX490List;
+    FRegistroX500 : TRegistroX500List;
+    FRegistroX510 : TRegistroX510List;
   public
+    constructor Create; virtual;  /// Create
+    destructor Destroy; override; /// Destroy
+      
+    property RegistroX280 : TRegistroX280List read FRegistroX280 write FRegistroX280;
+    property RegistroX291 : TRegistroX291List read FRegistroX291 write FRegistroX291;
+    property RegistroX292 : TRegistroX292List read FRegistroX292 write FRegistroX292;
+    property RegistroX300 : TRegistroX300List read FRegistroX300 write FRegistroX300;
+    property RegistroX320 : TRegistroX320List read FRegistroX320 write FRegistroX320;
+    property RegistroX340 : TRegistroX340List read FRegistroX340 write FRegistroX340;
+    property RegistroX390 : TRegistroX390List read FRegistroX390 write FRegistroX390;
+    property RegistroX400 : TRegistroX400List read FRegistroX400 write FRegistroX400;
+    property RegistroX410 : TRegistroX410List read FRegistroX410 write FRegistroX410;
+    property RegistroX420 : TRegistroX420List read FRegistroX420 write FRegistroX420;
+    property RegistroX430 : TRegistroX430List read FRegistroX430 write FRegistroX430;
+    property RegistroX450 : TRegistroX450List read FRegistroX450 write FRegistroX450;
+    property RegistroX460 : TRegistroX460List read FRegistroX460 write FRegistroX460;
+    property RegistroX470 : TRegistroX470List read FRegistroX470 write FRegistroX470;
+    property RegistroX480 : TRegistroX480List read FRegistroX480 write FRegistroX480;
+    property RegistroX490 : TRegistroX490List read FRegistroX490 write FRegistroX490;
+    property RegistroX500 : TRegistroX500List read FRegistroX500 write FRegistroX500;
+    property RegistroX510 : TRegistroX510List read FRegistroX510 write FRegistroX510;
   end;
 
   TRegistroX001List = class(TObjectList)
@@ -141,9 +209,7 @@ type
     property Items[Index: Integer]: TRegistroX292 read GetItem write SetItem;
   end;
 
-  TRegistroX310List = class;
   /// Registro X300 - Operações com o Exterior - Exportações (Entradas de Divisas)
-
   { TRegistroX300 }
 
   TRegistroX300 = class
@@ -227,8 +293,6 @@ type
     property Items[Index: Integer]: TRegistroX310 read GetItem write SetItem;
   end;
 
-
-  TRegistroX330List = class;
   /// Registro X320 - Operações com o Exterior - Importações (Saídas de Divisas)
 
   { TRegistroX320 }
@@ -311,14 +375,6 @@ type
     function New: TRegistroX330;
     property Items[Index: Integer]: TRegistroX330 read GetItem write SetItem;
   end;
-
-  TRegistroX350List = class;
-  TRegistroX351List = class;
-  TRegistroX352List = class;
-  TRegistroX353List = class;
-  TRegistroX354List = class;
-  TRegistroX355List = class;
-  TRegistroX356List = class;
 
   /// Registro X340 - Identificação da Participação no Exterior
 
@@ -1496,6 +1552,54 @@ begin
   FRegistroX354.Free;
   FRegistroX355.Free;
   FRegistroX356.Free;
+  inherited;
+end;
+
+{ TRegistroX001 }
+
+constructor TRegistroX001.Create;
+begin
+  FRegistroX280 := TRegistroX280List.Create;
+  FRegistroX291 := TRegistroX291List.Create;
+  FRegistroX292 := TRegistroX292List.Create;
+  FRegistroX300 := TRegistroX300List.Create;
+  FRegistroX320 := TRegistroX320List.Create;
+  FRegistroX340 := TRegistroX340List.Create;
+  FRegistroX390 := TRegistroX390List.Create;
+  FRegistroX400 := TRegistroX400List.Create;
+  FRegistroX410 := TRegistroX410List.Create;
+  FRegistroX420 := TRegistroX420List.Create;
+  FRegistroX430 := TRegistroX430List.Create;
+  FRegistroX450 := TRegistroX450List.Create;
+  FRegistroX460 := TRegistroX460List.Create;
+  FRegistroX470 := TRegistroX470List.Create;
+  FRegistroX480 := TRegistroX480List.Create;
+  FRegistroX490 := TRegistroX490List.Create;
+  FRegistroX500 := TRegistroX500List.Create;
+  FRegistroX510 := TRegistroX510List.Create;
+  IND_DAD := idComDados;
+end;
+
+destructor TRegistroX001.Destroy;
+begin
+  FRegistroX280.Free;
+  FRegistroX291.Free;
+  FRegistroX292.Free;
+  FRegistroX300.Free;
+  FRegistroX320.Free;
+  FRegistroX340.Free;
+  FRegistroX390.Free;
+  FRegistroX400.Free;
+  FRegistroX410.Free;
+  FRegistroX420.Free;
+  FRegistroX430.Free;
+  FRegistroX450.Free;
+  FRegistroX460.Free;
+  FRegistroX470.Free;
+  FRegistroX480.Free;
+  FRegistroX490.Free;
+  FRegistroX500.Free;
+  FRegistroX510.Free;
   inherited;
 end;
 

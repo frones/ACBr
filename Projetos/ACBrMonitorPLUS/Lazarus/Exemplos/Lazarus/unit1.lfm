@@ -1,0 +1,87 @@
+object Form1: TForm1
+  Left = 423
+  Height = 261
+  Top = 233
+  Width = 393
+  Caption = 'Form1'
+  ClientHeight = 261
+  ClientWidth = 393
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.4.2.0'
+  object mEnviar: TMemo
+    Left = 0
+    Height = 90
+    Top = 0
+    Width = 393
+    Align = alTop
+    Lines.Strings = (
+      'SAT.Inicializar'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 38
+    Top = 90
+    Width = 393
+    Align = alTop
+    ClientHeight = 38
+    ClientWidth = 393
+    TabOrder = 1
+    object bEnviar: TButton
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = Panel1
+      AnchorSideTop.Side = asrCenter
+      Left = 297
+      Height = 25
+      Top = 7
+      Width = 75
+      Anchors = [akTop, akRight]
+      Caption = 'Enviar'
+      OnClick = bEnviarClick
+      TabOrder = 0
+    end
+    object bConectar: TButton
+      AnchorSideTop.Control = Panel1
+      AnchorSideTop.Side = asrCenter
+      Left = 209
+      Height = 25
+      Top = 7
+      Width = 75
+      Anchors = [akTop, akRight]
+      Caption = 'Conectar'
+      OnClick = bConectarClick
+      TabOrder = 1
+    end
+    object edIP: TEdit
+      Left = 56
+      Height = 23
+      Top = 7
+      Width = 144
+      TabOrder = 2
+      Text = 'localhost'
+    end
+    object Label1: TLabel
+      Left = 13
+      Height = 15
+      Top = 10
+      Width = 38
+      Caption = 'IP Serv:'
+      ParentColor = False
+    end
+  end
+  object mResposta: TMemo
+    Left = 0
+    Height = 133
+    Top = 128
+    Width = 393
+    Align = alClient
+    Lines.Strings = (
+      'mResposta'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 2
+  end
+end

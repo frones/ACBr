@@ -84,13 +84,10 @@ uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
         Windows, ACBrD5
      {$ENDIF}
      {$IFNDEF NOGUI}
-        {$IFDEF FMX}
-        ,System.UITypes
-        {$ENDIF}
         {$IF DEFINED(VisualCLX)}
           ,QDialogs
         {$ELSEIF DEFINED(FMX)}
-          ,FMX.Dialogs
+          ,FMX.Dialogs, System.UITypes
         {$ELSE}
           ,Dialogs
        {$ENDIF}

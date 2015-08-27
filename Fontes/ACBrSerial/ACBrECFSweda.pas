@@ -152,6 +152,7 @@ uses Classes,
      {$IFNDEF NOGUI}
        {$IFDEF VCL} Dialogs , Controls , Forms, {$ENDIF}
        {$IFDEF VisualCLX} QDialogs, QControls, QForms, {$ENDIF}
+       {$IFDEF FMX} System.UITypes, {$ENDIF}
      {$ENDIF}
      ACBrECFClass, ACBrDevice;
 
@@ -2697,7 +2698,7 @@ begin
         if ComPapel then
            {$IFNDEF NOGUI}
               if (MessageDlg( ACBrStr('Favor remover o cheque e pressionar OK'),
-                             mtConfirmation,[mbOk,mbCancel],0) = mrCancel) then
+                             {$IFDEF FMX}TMsgDlgType.{$ENDIF}mtConfirmation,[{$IFDEF FMX}TMsgDlgBtn.{$ENDIF}mbOk,{$IFDEF FMX}TMsgDlgBtn.{$ENDIF}mbCancel],0) = mrCancel) then
                  break ;
            {$ELSE}
               writeln('Favor remover o cheque') ;

@@ -91,6 +91,7 @@ uses Classes, Contnrs, Math, SysUtils, IniFiles,
      {$IFNDEF NOGUI}
        {$IFDEF VisualCLX}, QControls, QForms, QDialogs {$ENDIF}
        {$IFDEF VCL}, Controls, Forms, Dialogs {$ENDIF}
+       {$IFDEF FMX}, System.UITypes {$ENDIF}
      {$ENDIF},
      ACBrECFClass, ACBrDevice, ACBrConsts;
 
@@ -2205,7 +2206,7 @@ begin
                   'do Cupom Fiscal ou Nota Fiscal pode caracterizar crime de '+
                   'Sonegação Fiscal.' + sLineBreak + sLineBreak +
                   'Continua com o uso do Emulador ?' )
-                  ,mtWarning,mbYesNoCancel,0) <> mrYes then
+                  ,{$IFDEF FMX}TMsgDlgType.{$ENDIF} mtWarning,mbYesNoCancel,0) <> mrYes then
        raise EACBrECFERRO.Create( ACBrStr('Uso indevido do emulador'));
   {$ENDIF}
 end;

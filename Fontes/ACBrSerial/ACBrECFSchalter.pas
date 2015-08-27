@@ -76,6 +76,7 @@ uses Classes,
      {$IFNDEF NOGUI}
        {$IFDEF VisualCLX} QDialogs, QControls, {$ENDIF}
        {$IFDEF VCL} Dialogs, Controls, {$ENDIF}
+       {$IFDEF FMX} System.UITypes, {$ENDIF}
      {$ENDIF}
      ACBrECFClass, ACBrDevice;
 
@@ -1355,7 +1356,7 @@ begin
                      'Não Fiscal Vinculado. (Consulte o manual da '+fpModeloStr+
                      ')'+sLineBreak+sLineBreak+
                      'Continua com a operação ?' ) ,
-                     mtConfirmation,mbYesNoCancel,0) <> mrYes then
+                     {$IFDEF FMX}TMsgDlgType.{$ENDIF}mtConfirmation,mbYesNoCancel,0) <> mrYes then
           raise EACBrECFERRO.create(ACBrStr('Programaçao de Comprovante não Fiscal cancelada'));
     end ;
   {$ENDIF}

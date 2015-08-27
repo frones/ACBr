@@ -84,6 +84,9 @@ uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
         Windows, ACBrD5
      {$ENDIF}
      {$IFNDEF NOGUI}
+        {$IFDEF FMX}
+        ,System.UITypes
+        {$ENDIF}
        {$IFDEF VisualCLX}       
           ,QDialogs
        {$ELSE}

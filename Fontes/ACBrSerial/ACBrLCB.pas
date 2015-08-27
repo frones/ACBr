@@ -56,7 +56,13 @@ unit ACBrLCB;
 interface
 uses ACBrBase, ACBrDevice  {Units da ACBr}
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}, QExtCtrls {$ELSE}, ExtCtrls {$ENDIF}
+       {$IF DEFINED(VisualCLX)}
+          ,QExtCtrls
+       {$ELSEIF DEFINED(FMX)}
+          ,FMX.ExtCtrls, FMX.Types
+       {$ELSE}
+          ,ExtCtrls
+       {$IFEND}
      {$ENDIF}
      ,SysUtils, Classes ;
 

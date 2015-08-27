@@ -39,11 +39,13 @@ interface
 uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrConsts,
      Classes, SysUtils
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}
-         ,QControls, QDialogs, QForms
+       {$IF DEFINED(VisualCLX)}
+          ,QControls, QForms, QDialogs
+       {$ELSEIF DEFINED(FMX)}
+          ,FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
        {$ELSE}
-         ,Controls, Dialogs, Forms
-       {$ENDIF}
+          ,Controls, Forms, Dialogs
+       {$IFEND}
      {$ENDIF} ;
 
 const
@@ -150,7 +152,7 @@ begin
                  'do Cupom Fiscal ou Nota Fiscal pode caracterizar crime de '+
                  'Sonegação Fiscal.' + sLineBreak + sLineBreak +
                  'Continua com o uso do Emulador ?' )
-                 ,mtWarning,mbYesNoCancel,0) <> mrYes then
+                  ,{$IFDEF FMX}TMsgDlgType.{$ENDIF} mtWarning,mbYesNoCancel,0) <> mrYes then
      raise EACBrECFERRO.Create( ACBrStr('Uso indevido do emulador'));
   {$ENDIF}
 end ;

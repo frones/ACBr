@@ -150,9 +150,13 @@ unit ACBrECFSweda ;
 interface
 uses Classes,
      {$IFNDEF NOGUI}
-       {$IFDEF VCL} Dialogs , Controls , Forms, {$ENDIF}
-       {$IFDEF VisualCLX} QDialogs, QControls, QForms, {$ENDIF}
-       {$IFDEF FMX} System.UITypes, {$ENDIF}
+        {$IF DEFINED(VisualCLX)}
+           QControls, QForms, QDialogs,
+        {$ELSEIF DEFINED(FMX)}
+           FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes,
+        {$ELSE}
+           Controls, Forms, Dialogs,
+        {$IFEND}
      {$ENDIF}
      ACBrECFClass, ACBrDevice;
 

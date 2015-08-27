@@ -89,9 +89,13 @@ interface
 uses Classes, Contnrs, Math, SysUtils, IniFiles,
      {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF}
      {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}, QControls, QForms, QDialogs {$ENDIF}
-       {$IFDEF VCL}, Controls, Forms, Dialogs {$ENDIF}
-       {$IFDEF FMX}, System.UITypes {$ENDIF}
+        {$IF DEFINED(VisualCLX)}
+           ,QControls, QForms, QDialogs
+        {$ELSEIF DEFINED(FMX)}
+           ,FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
+        {$ELSE}
+           ,Controls, Forms, Dialogs
+        {$IFEND}
      {$ENDIF},
      ACBrECFClass, ACBrDevice, ACBrConsts;
 

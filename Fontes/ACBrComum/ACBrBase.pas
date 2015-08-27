@@ -87,9 +87,11 @@ uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
         {$IFDEF FMX}
         ,System.UITypes
         {$ENDIF}
-       {$IFDEF VisualCLX}       
+        {$IF DEFINED(VisualCLX)}
           ,QDialogs
-       {$ELSE}
+        {$ELSEIF DEFINED(FMX)}
+          ,FMX.Dialogs
+        {$ELSE}
           ,Dialogs
        {$ENDIF}
      {$ENDIF};

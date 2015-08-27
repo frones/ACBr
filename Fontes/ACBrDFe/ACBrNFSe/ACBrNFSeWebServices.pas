@@ -60,6 +60,8 @@ type
   protected
     FPConfiguracoesNFSe: TConfiguracoesNFSe;
 
+    FNotasFiscais: TNotasFiscais;
+
     FProvedor: TNFSeProvedor;
     FPStatus: TStatusACBrNFSe;
     FPLayout: TLayOutNFSe;
@@ -92,9 +94,10 @@ type
     procedure DefinirEnvelopeSoap; override;
     procedure InicializarDadosMsg;
     function ExtraiRetorno(TAGResposta: String): String;
-    function ExtraiNotasRetorno: Boolean; 
+    function ExtraiNotasRetorno: Boolean;
   public
-    constructor Create(AOwner: TACBrDFe); override;
+//    constructor Create(AOwner: TACBrDFe); override;
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais); override;
 
     property Provedor: TNFSeProvedor read FProvedor;
     property Status: TStatusACBrNFSe read FPStatus;
@@ -125,7 +128,7 @@ type
 
   TNFSeGerarLoteRPS = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
 
     FNumeroLote: String;
   protected
@@ -149,7 +152,7 @@ type
 
   TNFSeEnviarLoteRPS = class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TretEnvLote;
 
     FNumeroLote: String;
@@ -182,7 +185,7 @@ type
 
   TNFSeEnviarSincrono = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TGerarretNFSe;
 
     FNumeroLote: String;
@@ -215,7 +218,7 @@ type
 
   TNFSeGerarNFSe = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TRetornoNFSe;
 
     FNumeroRps: Integer;
@@ -248,7 +251,7 @@ type
 
   TNFSeConsultarSituacaoLoteRPS = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TRetSitLote;
 
     FCnpj: String;
@@ -287,7 +290,7 @@ type
 
   TNFSeConsultarLoteRPS = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TRetLote;
 
     FDataRecebimento: TDateTime;
@@ -330,7 +333,7 @@ type
 
   TNFSeConsultarNFSeRPS = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TRetNFSeRps;
 
     FNumero: String;
@@ -371,7 +374,7 @@ type
 
   TNFSeConsultarNFSe = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TRetNFSe;
 
     FCnpj: String;
@@ -424,7 +427,7 @@ type
 
   TNFSeCancelarNFSe = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TretCancNFSe;
 
     FCodigoCancelamento: String;
@@ -463,7 +466,7 @@ type
 
  TNFSeSubstituirNFSe = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
     FNFSeRetorno: TretSubsNFSe;
 
     FCodigoCancelamento: String;
@@ -512,7 +515,7 @@ type
 
   TNFSeLinkNFSe = Class(TNFSeWebService)
   private
-    FNotasFiscais: TNotasFiscais;
+//    FNotasFiscais: TNotasFiscais;
 
     FNumeroNFSe: Integer;
     FCodVerif: String;
@@ -835,7 +838,6 @@ var
   FRetListaNFSe, FRetNFSe, PathSalvar, NomeArq: String;
   i, j, k, p, ii: Integer;
 begin
-(*
   FNFSeRetorno := TRetornoNFSe.Create;
 
   FNFSeRetorno.Leitor.Arquivo := FPRetWS;
@@ -1011,7 +1013,6 @@ begin
              'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
 
   Result := (FProtocolo <> '');
-*)
 end;
 
 { TNFSeGerarLoteRPS }
@@ -1581,7 +1582,7 @@ end;
 function TNFSeEnviarSincrono.TratarResposta: Boolean;
 begin
   FPRetWS := ExtraiRetorno('EnviarLoteRpsSincronoResposta');
-//  Result := ExtraiNotasRetorno;
+  Result := ExtraiNotasRetorno;
 end;
 
 procedure TNFSeEnviarSincrono.DefinirServicoEAction;
@@ -1789,8 +1790,8 @@ var
   i, j, k, p, ii: Integer;
 begin
   FPRetWS := ExtraiRetorno('GerarNfseResposta');
-//  Result := ExtraiNotasRetorno;
-
+  Result := ExtraiNotasRetorno;
+  (*
   FNFSeRetorno := TRetornoNFSe.Create;
   try
     FNFSeRetorno.Leitor.Arquivo := FPRetWS;
@@ -1970,6 +1971,7 @@ begin
   finally
     FNFSeRetorno.Free;
   end;
+*)
 end;
 
 procedure TNFSeGerarNFSe.DefinirServicoEAction;
@@ -2421,9 +2423,7 @@ var
 begin
   FPRetWS := ExtraiRetorno('ConsultarLoteRpsResposta');
   Result := ExtraiNotasRetorno;
-
-
-
+  (*
   FNFSeRetorno := TRetLote.Create;
   try
     FNFSeRetorno.Leitor.Arquivo := FPRetWS;
@@ -2687,6 +2687,7 @@ begin
   finally
     FNFSeRetorno.Free;
   end;
+  *)
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
@@ -4117,21 +4118,20 @@ var
   Texto, xNumeroNFSe, xNomeMunic: String;
 begin
  if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
-   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.ProLinkNFSe
- else
+ begin
+   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.ProLinkNFSe;
+   xNomeMunic := FPConfiguracoesNFSe.Geral.xNomeURL_P;
+ end
+ else begin
    Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.HomLinkNFSe;
-
+   xNomeMunic := FPConfiguracoesNFSe.Geral.xNomeURL_H;
+ end;
   // %CodVerif%      : Representa o Código de Verificação da NFS-e
   // %NumeroNFSe%    : Representa o Numero da NFS-e
   // %NomeMunicipio% : Representa o Nome do Municipio
   // %InscMunic%     : Representa a Inscrição Municipal do Emitente
 
-  xNumeroNFSe := inttostr(FNumeroNFSe);
-  xNomeMunic := FPConfiguracoesNFSe.Geral.xMunicipio;
-  // Remove os acentos, espaços em branco e converte tudo para minusculo
-  xNomeMunic := TiraAcentos(xNomeMunic);
-  xNomeMunic := StringReplace(xNomeMunic, ' ', '', [rfReplaceAll]);
-  xNomeMunic := LowerCase(xNomeMunic);
+  xNumeroNFSe := IntToStr(FNumeroNFSe);
 
   Texto := StringReplace(Texto, '%CodVerif%', FCodVerif, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);

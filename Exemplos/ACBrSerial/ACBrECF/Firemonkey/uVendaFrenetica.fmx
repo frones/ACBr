@@ -1,0 +1,145 @@
+object FrVendaFrenetica: TFrVendaFrenetica
+  Left = 0
+  Top = 0
+  Caption = 'Venda Fren'#233'tica'
+  ClientHeight = 216
+  ClientWidth = 589
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object lblInfo: TLabel
+    StyledSettings = [Family, Style]
+    Position.X = 8.000000000000000000
+    Size.Width = 537.000000000000000000
+    Size.Height = 89.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.FontColor = claRed
+    Text = 
+      'ATEN'#199#195'O: Esse '#233' apenas um exemplo de venda de itens em fila. Est' +
+      'a implementa'#231#227'o faz pouco ou nada na quest'#227'o de tratar erros que' +
+      ' podem surgir. Ao implementar no seu software, voc'#234' '#233' respons'#225've' +
+      'l por fazer isso.'
+  end
+  object Label2: TLabel
+    AutoSize = True
+    Position.X = 16.000000000000000000
+    Position.Y = 96.000000000000000000
+    Size.Width = 555.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 
+      '<Digite o c'#243'digo do produto abaixo e aperte Enter para vender. N' +
+      #227'o '#233' necess'#225'rio abrir o cupom antes.>'
+  end
+  object Label1: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Size, FontColor]
+    Position.X = 8.000000000000000000
+    Position.Y = 128.000000000000000000
+    Size.Width = 94.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Style = [fsBold]
+    TextSettings.WordWrap = False
+    Text = 'C'#243'digo produto'
+  end
+  object edCodProduto: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    Position.X = 8.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 409.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    OnKeyDown = edCodProdutoKeyPress
+    Left = 8
+    Top = 136
+  end
+  object chkProcessMessages: TCheckBox
+    IsChecked = True
+    Position.X = 8.000000000000000000
+    Position.Y = 176.000000000000000000
+    Size.Width = 113.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    TabStop = False
+    Text = 'ProcessMessages'
+    Left = 8
+    Top = 168
+  end
+  object chkNaoExibirMsgs: TCheckBox
+    IsChecked = True
+    Position.X = 8.000000000000000000
+    Position.Y = 192.000000000000000000
+    Size.Width = 209.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    TabStop = False
+    Text = 'N'#227'o Exibir Mensagem ao Abrir o Cupom'
+    Left = 8
+    Top = 191
+  end
+  object btnCancelarCupom: TButton
+    Position.X = 272.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 95.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    TabStop = False
+    Text = 'Cancelar Cupom'
+    OnClick = btnCancelarCupomClick
+    Left = 242
+    Top = 175
+  end
+  object btnFechaCupom: TButton
+    Cancel = True
+    Position.X = 376.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 95.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    TabStop = False
+    Text = 'Fecha Cupom'
+    OnClick = btnFechaCupomClick
+    Left = 346
+    Top = 175
+  end
+  object btnSair: TButton
+    Cancel = True
+    Position.X = 480.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    TabStop = False
+    Text = 'Sair'
+    OnClick = btnSairClick
+    Left = 450
+    Top = 175
+  end
+  object TimerVendeItem: TTimer
+    Enabled = False
+    Interval = 25
+    OnTimer = TimerVendeItemTimer
+    Left = 448
+    Top = 128
+  end
+  object ACBrLCB1: TACBrLCB
+    Porta = 'TECLADO'
+    Sufixo = '#13'
+    UsarFila = True
+    FilaMaxItens = 100
+    Intervalo = 300
+    OnLeCodigo = ACBrLCB1LeCodigo
+    Left = 520
+    Top = 128
+  end
+end

@@ -1,0 +1,219 @@
+object frRelatorio: TfrRelatorio
+  Left = 0
+  Top = 0
+  ActiveControl = mRelat
+  BorderIcons = [biSystemMenu]
+  BorderStyle = Single
+  Caption = 'Relat'#243'rio Gerencial'
+  ClientHeight = 358
+  ClientWidth = 304
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Button1: TButton
+    Position.X = 160.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 11
+    Text = '&Ler TXT'
+    OnClick = Button1Click
+    Left = 173
+    Top = 301
+  end
+  object Button2: TButton
+    Position.X = 48.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 10
+    Text = '&Imprimir'
+    OnClick = Button2Click
+    Left = 53
+    Top = 301
+  end
+  object mRelat: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      '1...+....2....+....3....+....4....+...'
+      '      TESTE DE RELATORIO'
+      ''
+      'O relatorio deve respeitar a '
+      'propriedade COLUNAS do componente '
+      'ACBrECF.'
+      ''
+      'A maioria dos ECF'#39's trabalham com 40 '
+      'colunas, alguns com 48 colunas.'
+      ''
+      'O Relatorio Gerencial e usado pelas '
+      'rotinas de TEF para imprirmir '
+      'comprovantes, quando a impressao do '
+      'Cupom NAO Fiscal vinculado falhar.')
+    Position.X = 8.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 281.000000000000000000
+    Size.Height = 241.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Left = 1
+    Top = 56
+    Viewport.Width = 277.000000000000000000
+    Viewport.Height = 237.000000000000000000
+  end
+  object edVias: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    Text = '3'
+    Position.X = 8.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 25.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    Left = 8
+    Top = 26
+  end
+  object edCupom: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 1
+    Position.X = 40.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 49.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    Left = 40
+    Top = 26
+  end
+  object edFPG: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 2
+    Text = '01'
+    Position.X = 96.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    Left = 96
+    Top = 26
+  end
+  object edCNF: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 8
+    Position.X = 160.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    Left = 160
+    Top = 26
+  end
+  object edValor: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Text = '1'
+    Position.X = 224.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    OnKeyDown = edValorKeyPress
+    Left = 224
+    Top = 26
+  end
+  object lValor: TLabel
+    AutoSize = True
+    Position.X = 224.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Valor:'
+    Left = 224
+    Top = 5
+  end
+  object lCodCNF: TLabel
+    AutoSize = True
+    Position.X = 160.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 26.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = 'C&NF'
+    Left = 160
+    Top = 5
+  end
+  object lCodFPG: TLabel
+    AutoSize = True
+    Position.X = 96.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Form.Pagto'
+    Left = 96
+    Top = 5
+  end
+  object lCupom: TLabel
+    AutoSize = True
+    Position.X = 40.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 42.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Cupom'
+    Left = 40
+    Top = 5
+  end
+  object Label1: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 28.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Vias:'
+    Left = 8
+    Top = 5
+  end
+  object sbFPG: TButton
+    Images = Form1.ImageList1
+    ImageIndex = 2
+    Position.X = 129.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 21.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    OnClick = sbFPGClick
+    Left = 32
+    Top = 219
+  end
+  object sbCNF: TButton
+    Images = Form1.ImageList1
+    ImageIndex = 2
+    Position.X = 193.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 21.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    OnClick = sbCNFClick
+    Left = 32
+    Top = 219
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Arquivos Texto|*.TXT'
+    FilterIndex = 0
+    Left = 232
+    Top = 136
+  end
+end

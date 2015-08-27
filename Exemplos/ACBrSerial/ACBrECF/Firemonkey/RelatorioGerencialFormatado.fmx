@@ -1,0 +1,95 @@
+object frmGerencialFormatado: TfrmGerencialFormatado
+  Left = 0
+  Top = 0
+  BorderStyle = Single
+  Caption = 'frmGerencialFormatado'
+  ClientHeight = 470
+  ClientWidth = 414
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object memRelatorio: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      '<e>TEXTO EXPANDIDO</e>'
+      '<n>TEXTO NEGRITO</n>'
+      '<s>TEXTO SUBLINHADO</s>'
+      '<c>TEXTO CONDENSADO</c>'
+      '<i>TEXTO ITALICO</i>'
+      '<ad>Alinhado a direita</ad>'
+      '<ce>Centralizado</ce>'
+      '</linha_dupla>'
+      ''
+      'CODIGOS DE BARRA'
+      '</linha_simples>'
+      'EAN 8'
+      '<ean8>1234567</ean8>'
+      ''
+      'EAN 13'
+      '<ean13>123456789012</ean13>'
+      ''
+      'STANDART 2 0F 5'
+      '<std>12345678</std>'
+      ''
+      'INTERLEAVE 2 OF 5'
+      '<inter>12345678</inter>'
+      ''
+      'CODE 11'
+      '<code11>123456789</code11>'
+      ''
+      'CODE 39'
+      '<code39>123456789ABCD</code39>'
+      ''
+      'CODE 93'
+      '<code93>123456789ABCD</code93>'
+      ''
+      'CODE 128'
+      '<code128>123456789ABCD</code128>'
+      ''
+      'UPCA'
+      '<upca>12345678901</upca>'
+      ''
+      'CODABAR'
+      '<codabar>A123456789A</codabar>'
+      ''
+      'MSI'
+      '<msi>1234567890</msi>')
+    Align = Top
+    Margins.Left = 8.000000000000000000
+    Margins.Top = 8.000000000000000000
+    Margins.Right = 8.000000000000000000
+    Margins.Bottom = 8.000000000000000000
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 398.000000000000000000
+    Size.Height = 417.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Viewport.Width = 378.000000000000000000
+    Viewport.Height = 413.000000000000000000
+  end
+  object btnImprimir: TButton
+    ModalResult = 1
+    Position.X = 98.000000000000000000
+    Position.Y = 440.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'Imprimir'
+    OnClick = btnImprimirClick
+  end
+  object btnCancelar: TButton
+    ModalResult = 2
+    Position.X = 229.000000000000000000
+    Position.Y = 440.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    Text = 'Cancelar'
+    OnClick = btnCancelarClick
+  end
+end

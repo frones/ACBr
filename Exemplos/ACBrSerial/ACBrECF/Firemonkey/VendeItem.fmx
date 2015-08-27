@@ -1,0 +1,310 @@
+object frVendeItem: TfrVendeItem
+  Left = 0
+  Top = 0
+  BorderStyle = Single
+  Caption = 'Vende Item'
+  ClientHeight = 397
+  ClientWidth = 466
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Label8: TLabel
+    AutoSize = True
+    Position.X = 51.000000000000000000
+    Position.Y = 12.000000000000000000
+    Size.Width = 42.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&C'#243'digo'
+    Left = 20
+    Top = 8
+  end
+  object edCodigo: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 23
+    Text = '111222333'
+    Position.X = 104.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 101.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+  end
+  object Label1: TLabel
+    AutoSize = True
+    Position.X = 38.000000000000000000
+    Position.Y = 44.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Descri'#231#227'o'
+    Left = 20
+    Top = 8
+  end
+  object edDescricao: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 27
+    Text = 'TESTE DE PRODUTO'
+    Position.X = 104.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 353.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+  end
+  object Label2: TLabel
+    AutoSize = True
+    Position.X = 69.000000000000000000
+    Position.Y = 76.000000000000000000
+    Size.Width = 24.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Qtd'
+    Left = 20
+    Top = 8
+  end
+  object edQtd: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 26
+    Text = '1'
+    Position.X = 104.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 101.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+    OnKeyDown = edQtdKeyPress
+  end
+  object Label3: TLabel
+    AutoSize = True
+    Position.X = 14.000000000000000000
+    Position.Y = 108.000000000000000000
+    Size.Width = 79.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Pre'#231'o Unit'#225'rio'
+    Left = 20
+    Top = 8
+  end
+  object edPrecoUnita: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 25
+    Text = '1'
+    Position.X = 104.000000000000000000
+    Position.Y = 104.000000000000000000
+    Size.Width = 101.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+  end
+  object Label4: TLabel
+    AutoSize = True
+    Position.X = 45.000000000000000000
+    Position.Y = 140.000000000000000000
+    Size.Width = 48.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Unidade'
+    Left = 20
+    Top = 8
+  end
+  object edUN: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 24
+    Text = 'UN'
+    Position.X = 104.000000000000000000
+    Position.Y = 136.000000000000000000
+    Size.Width = 101.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+  end
+  object Panel1: TPanel
+    Position.X = 48.000000000000000000
+    Position.Y = 168.000000000000000000
+    Size.Width = 169.000000000000000000
+    Size.Height = 76.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 33
+    object Label5: TLabel
+      AutoSize = True
+      Position.X = 3.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 54.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = '&Desconto'
+      Left = 20
+      Top = 8
+    end
+    object edDesconto: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 24
+      Text = '0'
+      Position.X = 60.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 81.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      KillFocusByReturn = True
+    end
+    object rbPercentagem: TRadioButton
+      GroupName = 'AA'
+      IsChecked = True
+      Position.X = 40.000000000000000000
+      Position.Y = 32.000000000000000000
+      TabOrder = 26
+      Text = 'Percentagem'
+    end
+    object rbValor: TRadioButton
+      GroupName = 'AA'
+      Position.X = 40.000000000000000000
+      Position.Y = 54.000000000000000000
+      TabOrder = 25
+      Text = 'Valor'
+    end
+  end
+  object Panel2: TPanel
+    Position.X = 224.000000000000000000
+    Position.Y = 168.000000000000000000
+    Size.Width = 217.000000000000000000
+    Size.Height = 169.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 32
+    object Label6: TLabel
+      AutoSize = True
+      Position.X = 3.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 88.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = '&Valor Aliq. ICMS'
+      Left = 20
+      Top = 8
+    end
+    object edICMS: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 24
+      Text = 'NN'
+      Position.X = 96.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 109.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      KillFocusByReturn = True
+    end
+    object Label7: TLabel
+      AutoSize = True
+      Position.X = 8.000000000000000000
+      Position.Y = 35.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'II = Isento'
+      Left = 273
+      Top = 182
+    end
+    object Label9: TLabel
+      AutoSize = True
+      Position.X = 8.000000000000000000
+      Position.Y = 56.000000000000000000
+      Size.Width = 115.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'NN = Nao Incidencia'
+      Left = 273
+      Top = 198
+    end
+    object Label10: TLabel
+      AutoSize = True
+      Position.X = 8.000000000000000000
+      Position.Y = 77.000000000000000000
+      Size.Width = 148.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'FF = Substitui'#231'ao Tribut'#225'ria'
+      Left = 273
+      Top = 214
+    end
+    object Label11: TLabel
+      AutoSize = True
+      Position.X = 8.000000000000000000
+      Position.Y = 98.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'SI = Isento ISSQN'
+      Left = 275
+      Top = 233
+    end
+    object Label12: TLabel
+      AutoSize = True
+      Position.X = 8.000000000000000000
+      Position.Y = 123.000000000000000000
+      Size.Width = 149.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'SN = Nao Incidencia ISSQN'
+      Left = 273
+      Top = 256
+    end
+    object Label13: TLabel
+      AutoSize = True
+      Position.X = 8.000000000000000000
+      Position.Y = 144.000000000000000000
+      Size.Width = 149.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'SF = Subst.Tribut'#225'ria ISSQN'
+      Left = 273
+      Top = 275
+    end
+  end
+  object ckInmetro: TCheckBox
+    Position.X = 208.000000000000000000
+    Position.Y = 140.000000000000000000
+    Size.Width = 187.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'utilizar legenda inmetro'
+    Left = 195
+    Top = 90
+  end
+  object Button1: TButton
+    Position.X = 162.000000000000000000
+    Position.Y = 360.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    Text = 'Imprimir'
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    ModalResult = 2
+    Position.X = 245.000000000000000000
+    Position.Y = 360.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Text = 'Fechar'
+    OnClick = Button2Click
+  end
+end

@@ -1,0 +1,511 @@
+object frmDAV: TfrmDAV
+  Left = 0
+  Top = 0
+  BorderStyle = Single
+  Caption = 'Emiss'#227'o de DAV'
+  ClientHeight = 480
+  ClientWidth = 640
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Bottom
+    Position.Y = 445.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object btnCancelar: TButton
+      Align = Right
+      Position.X = 519.000000000000000000
+      Size.Width = 121.000000000000000000
+      Size.Height = 35.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 9
+      Text = 'Fechar'
+      OnClick = btnCancelarClick
+      Left = 460
+      Top = 300
+    end
+  end
+  object TabControl1: TTabControl
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 445.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 1
+    TabPosition = PlatformDefault
+    object TabItem1: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 78.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = '1. Abertura'
+      object Label1: TLabel
+        AutoSize = True
+        Position.X = 32.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 108.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'T'#237'po de documento'
+        Left = 15
+        Top = 24
+      end
+      object Label2: TLabel
+        AutoSize = True
+        Position.X = 216.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 48.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'N'#250'mero'
+        Left = 195
+        Top = 24
+      end
+      object edtTipoDocumento: TComboEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        ItemHeight = 19.000000000000000000
+        Items.Strings = (
+          'PEDIDO'
+          'OR'#199'AMENTO')
+        ItemIndex = -1
+        Text = 'PEDIDO'
+        Position.X = 32.000000000000000000
+        Position.Y = 41.000000000000000000
+        Size.Width = 174.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 40
+      end
+      object edtNumero: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        MaxLength = 13
+        Text = '1'
+        Position.X = 216.000000000000000000
+        Position.Y = 41.000000000000000000
+        Size.Width = 111.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 195
+        Top = 40
+      end
+      object Label4: TLabel
+        AutoSize = True
+        Position.X = 32.000000000000000000
+        Position.Y = 71.000000000000000000
+        Size.Width = 49.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Situa'#231#227'o'
+        Left = 15
+        Top = 67
+      end
+      object edtSituacao: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        MaxLength = 30
+        Text = 'Aberto'
+        Position.X = 32.000000000000000000
+        Position.Y = 96.000000000000000000
+        Size.Width = 174.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 83
+      end
+      object Label3: TLabel
+        AutoSize = True
+        Position.X = 216.000000000000000000
+        Position.Y = 71.000000000000000000
+        Size.Width = 47.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Emissao'
+        Left = 195
+        Top = 67
+      end
+      object Label5: TLabel
+        AutoSize = True
+        Position.X = 336.000000000000000000
+        Position.Y = 71.000000000000000000
+        Size.Width = 56.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Vendedor'
+        Left = 312
+        Top = 67
+      end
+      object edtVendedor: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        MaxLength = 30
+        Text = 'Nome do Vendedor'
+        Position.X = 336.000000000000000000
+        Position.Y = 96.000000000000000000
+        Size.Width = 269.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 312
+        Top = 83
+      end
+      object Label11: TLabel
+        AutoSize = True
+        Position.X = 32.000000000000000000
+        Position.Y = 126.000000000000000000
+        Size.Width = 62.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'CNPJ / CPF'
+        Left = 15
+        Top = 144
+      end
+      object edtCNPJCPF: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 6
+        MaxLength = 14
+        Text = '11122233399'
+        Position.X = 32.000000000000000000
+        Position.Y = 151.000000000000000000
+        Size.Width = 156.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 160
+      end
+      object Label6: TLabel
+        AutoSize = True
+        Position.X = 32.000000000000000000
+        Position.Y = 181.000000000000000000
+        Size.Width = 92.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Nome do cliente'
+        Left = 15
+        Top = 187
+      end
+      object edtNomeCliente: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 7
+        MaxLength = 50
+        Text = 'Nome completo do cliente'
+        Position.X = 32.000000000000000000
+        Position.Y = 206.000000000000000000
+        Size.Width = 566.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 203
+      end
+      object Label7: TLabel
+        AutoSize = True
+        Position.X = 32.000000000000000000
+        Position.Y = 236.000000000000000000
+        Size.Width = 53.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Endere'#231'o'
+        Left = 15
+        Top = 230
+      end
+      object edtEndereco: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 8
+        Text = 
+          'Rua Teodoro Ter'#234'ncio Pereira, 111 - Sala 999 - Salgados - S'#227'o Pa' +
+          'ulo - SP'
+        Position.X = 32.000000000000000000
+        Position.Y = 261.000000000000000000
+        Size.Width = 566.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 246
+      end
+      object btnAbrirDAV: TButton
+        Position.X = 460.000000000000000000
+        Position.Y = 368.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 9
+        Text = 'Abrir DAV'
+        OnClick = btnAbrirDAVClick
+        Left = 460
+        Top = 300
+      end
+      object edtData: TDateEdit
+        Date = 42242.000000000000000000
+        Position.X = 216.000000000000000000
+        Position.Y = 95.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+      end
+    end
+    object TabItem2: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 119.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = '2. Registro de item'
+      object Label14: TLabel
+        AutoSize = True
+        Position.X = 24.000000000000000000
+        Position.Y = 32.000000000000000000
+        Size.Width = 42.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'C'#243'digo'
+        Left = 15
+        Top = 24
+      end
+      object edtProdCodigo: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        MaxLength = 13
+        Text = '7891113339871'
+        Position.X = 24.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 156.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 40
+      end
+      object Label19: TLabel
+        AutoSize = True
+        Position.X = 24.000000000000000000
+        Position.Y = 80.000000000000000000
+        Size.Width = 55.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Descri'#231#227'o'
+        Left = 15
+        Top = 67
+      end
+      object edtProdDescricao: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Text = 'Descri'#231#227'o completa da mercadoria '
+        Position.X = 24.000000000000000000
+        Position.Y = 96.000000000000000000
+        Size.Width = 566.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 15
+        Top = 83
+      end
+      object Label15: TLabel
+        AutoSize = True
+        Position.X = 24.000000000000000000
+        Position.Y = 128.000000000000000000
+        Size.Width = 66.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Quantidade'
+        Left = 15
+        Top = 110
+      end
+      object edtProdQuantidade: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Text = '1'
+        Position.X = 24.000000000000000000
+        Position.Y = 144.000000000000000000
+        Size.Width = 127.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyDown = edtProdQuantidadeKeyPress
+        Left = 15
+        Top = 126
+      end
+      object ckbProdCancelado: TCheckBox
+        Position.X = 24.000000000000000000
+        Position.Y = 184.000000000000000000
+        Size.Width = 81.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 12
+        Text = 'Cancelado'
+        Left = 25
+        Top = 168
+      end
+      object edtProdUnidade: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        MaxLength = 3
+        Text = 'UND'
+        Position.X = 160.000000000000000000
+        Position.Y = 144.000000000000000000
+        Size.Width = 34.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 148
+        Top = 126
+      end
+      object Label18: TLabel
+        AutoSize = True
+        Position.X = 160.000000000000000000
+        Position.Y = 128.000000000000000000
+        Size.Width = 31.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Unid.'
+        Left = 148
+        Top = 110
+      end
+      object Label22: TLabel
+        AutoSize = True
+        Position.X = 202.000000000000000000
+        Position.Y = 128.000000000000000000
+        Size.Width = 75.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Valor unit'#225'rio'
+        Left = 188
+        Top = 110
+      end
+      object edtProdVlUnitario: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 4
+        Text = '1,23'
+        Position.X = 202.000000000000000000
+        Position.Y = 144.000000000000000000
+        Size.Width = 127.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyDown = edtProdQuantidadeKeyPress
+        Left = 188
+        Top = 126
+      end
+      object edtProdVlDesconto: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        Text = '0,00'
+        Position.X = 337.000000000000000000
+        Position.Y = 144.000000000000000000
+        Size.Width = 127.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyDown = edtProdQuantidadeKeyPress
+        Left = 321
+        Top = 126
+      end
+      object Label23: TLabel
+        AutoSize = True
+        Position.X = 337.000000000000000000
+        Position.Y = 128.000000000000000000
+        Size.Width = 83.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Valor desconto'
+        Left = 321
+        Top = 110
+      end
+      object Label24: TLabel
+        AutoSize = True
+        Position.X = 472.000000000000000000
+        Position.Y = 128.000000000000000000
+        Size.Width = 87.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Valor acr'#233'scimo'
+        Left = 454
+        Top = 110
+      end
+      object edtProdVlAcrescimo: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 6
+        Text = '0,00'
+        Position.X = 472.000000000000000000
+        Position.Y = 144.000000000000000000
+        Size.Width = 127.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyDown = edtProdQuantidadeKeyPress
+        Left = 454
+        Top = 126
+      end
+      object btnRegistrarItem: TButton
+        Position.X = 460.000000000000000000
+        Position.Y = 368.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 8
+        Text = 'Registrar Item'
+        OnClick = btnRegistrarItemClick
+        Left = 460
+        Top = 300
+      end
+    end
+    object TabItem3: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 97.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = '3. Fechamento'
+      object memObervacao: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Position.X = 24.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 566.000000000000000000
+        Size.Height = 89.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Left = 15
+        Top = 30
+        Viewport.Width = 562.000000000000000000
+        Viewport.Height = 85.000000000000000000
+      end
+      object btnFecharRelatorio: TButton
+        Position.X = 460.000000000000000000
+        Position.Y = 368.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Fechar relat'#243'rio'
+        OnClick = btnFecharRelatorioClick
+        Left = 460
+        Top = 300
+      end
+    end
+  end
+end

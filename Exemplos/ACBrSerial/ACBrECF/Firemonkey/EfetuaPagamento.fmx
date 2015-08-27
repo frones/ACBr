@@ -1,0 +1,419 @@
+object frPagamento: TfrPagamento
+  Left = 0
+  Top = 0
+  BorderStyle = Single
+  Caption = 'Efetuar Pagamento'
+  ClientHeight = 309
+  ClientWidth = 380
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object PgPagamento: TTabControl
+    Align = Client
+    Size.Width = 380.000000000000000000
+    Size.Height = 309.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    object TabSheetPagamento: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 80.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Pagamento'
+      object Label6: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 314.000000000000000000
+        Size.Height = 13.000000000000000000
+        Size.PlatformDefault = False
+        Text = '- Entre com um ou v'#225'rios pagamentos at'#233' atingir o Total do Cupom'
+        Left = 8
+        Top = 7
+      end
+      object Label7: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 353.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        Text = 
+          '- Se o valor pago for superior ao Total do Cupom ser'#225' calculado ' +
+          'o    TROCO'
+        Left = 8
+        Top = 28
+      end
+      object Label3: TLabel
+        AutoSize = True
+        Position.X = 200.000000000000000000
+        Position.Y = 56.000000000000000000
+        Size.Width = 123.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Formas de Pagamento'
+        Left = 160
+        Top = 54
+      end
+      object Label1: TLabel
+        AutoSize = True
+        Position.X = 16.000000000000000000
+        Position.Y = 88.000000000000000000
+        Size.Width = 28.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = '&Cod.'
+        Left = 8
+        Top = 83
+      end
+      object edCod: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 48.000000000000000000
+        Position.Y = 83.000000000000000000
+        Size.Width = 33.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 40
+        Top = 75
+      end
+      object Label2: TLabel
+        AutoSize = True
+        Position.X = 13.000000000000000000
+        Position.Y = 120.000000000000000000
+        Size.Width = 31.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = '&Valor'
+        Left = 8
+        Top = 115
+      end
+      object edValor: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        Position.X = 48.000000000000000000
+        Position.Y = 115.000000000000000000
+        Size.Width = 101.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyDown = edValorKeyPress
+        Left = 40
+        Top = 107
+      end
+      object Label8: TLabel
+        AutoSize = True
+        Position.X = 16.000000000000000000
+        Position.Y = 152.000000000000000000
+        Size.Width = 28.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = '&Obs:'
+        Left = 8
+        Top = 147
+      end
+      object edObs: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 9
+        Position.X = 48.000000000000000000
+        Position.Y = 147.000000000000000000
+        Size.Width = 101.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 40
+        Top = 139
+      end
+      object cbVinc: TCheckBox
+        Position.X = 24.000000000000000000
+        Position.Y = 176.000000000000000000
+        Size.Width = 129.000000000000000000
+        Size.Height = 31.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        Text = 'Cupom &Vinculado'
+        Left = 16
+        Top = 163
+      end
+      object Label4: TLabel
+        AutoSize = True
+        Position.X = 184.000000000000000000
+        Position.Y = 208.000000000000000000
+        Size.Width = 106.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'TOTAL DO CUPOM:'
+        Left = 136
+        Top = 211
+      end
+      object btImprimir: TButton
+        Position.X = 48.000000000000000000
+        Position.Y = 224.000000000000000000
+        Size.Width = 75.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        Text = '&Imprimir'
+        OnClick = btImprimirClick
+        Left = 32
+        Top = 219
+      end
+      object Label5: TLabel
+        AutoSize = True
+        Position.X = 219.000000000000000000
+        Position.Y = 232.000000000000000000
+        Size.Width = 71.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'TOTAL PAGO'
+        Left = 160
+        Top = 235
+      end
+      object lTotalPago: TLabel
+        Position.X = 304.000000000000000000
+        Position.Y = 232.000000000000000000
+        Size.Width = 47.000000000000000000
+        Size.Height = 13.000000000000000000
+        Size.PlatformDefault = False
+        Text = '1000.00'
+        Left = 272
+        Top = 235
+      end
+      object lTotalAPAGAR: TLabel
+        Position.X = 304.000000000000000000
+        Position.Y = 208.000000000000000000
+        Size.Width = 47.000000000000000000
+        Size.Height = 13.000000000000000000
+        Size.PlatformDefault = False
+        Text = '1000.00'
+        Left = 272
+        Top = 211
+      end
+      object mFormas: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        ReadOnly = True
+        Position.X = 200.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 167.000000000000000000
+        Size.Height = 128.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnEnter = mFormasEnter
+        Left = 160
+        Top = 69
+        Viewport.Width = 163.000000000000000000
+        Viewport.Height = 124.000000000000000000
+      end
+      object SpeedButton1: TButton
+        Images = Form1.ImageList1
+        ImageIndex = 2
+        Position.X = 88.000000000000000000
+        Position.Y = 81.000000000000000000
+        Size.Width = 25.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        OnClick = SpeedButton1Click
+        Left = 32
+        Top = 219
+      end
+    end
+    object TabSheetEstorno: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 60.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Estorno'
+      object btnEstornar: TButton
+        Position.X = 64.000000000000000000
+        Position.Y = 248.000000000000000000
+        Size.Width = 75.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        Text = 'Estornar'
+        OnClick = btnEstornarClick
+        Left = 48
+        Top = 228
+      end
+      object EdtMsgPromocional: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        Position.X = 48.000000000000000000
+        Position.Y = 216.000000000000000000
+        Size.Width = 281.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 40
+        Top = 197
+      end
+      object Label12: TLabel
+        AutoSize = True
+        Position.X = 48.000000000000000000
+        Position.Y = 200.000000000000000000
+        Size.Width = 87.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Texto Adicional:'
+        Left = 43
+        Top = 183
+      end
+      object EdtValor: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 4
+        Position.X = 48.000000000000000000
+        Position.Y = 167.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 41
+        Top = 149
+      end
+      object Label11: TLabel
+        AutoSize = True
+        Position.X = 8.000000000000000000
+        Position.Y = 172.000000000000000000
+        Size.Width = 31.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Valor'
+        Left = 11
+        Top = 153
+      end
+      object CBVincNovo: TCheckBox
+        Position.X = 48.000000000000000000
+        Position.Y = 142.000000000000000000
+        Size.Width = 145.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Cupom Vinculado'
+        Left = 42
+        Top = 127
+      end
+      object EdtTipoNovo: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 48.000000000000000000
+        Position.Y = 113.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 41
+        Top = 102
+      end
+      object Label10: TLabel
+        AutoSize = True
+        Position.X = 6.000000000000000000
+        Position.Y = 118.000000000000000000
+        Size.Width = 33.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Novo'
+        Left = 9
+        Top = 106
+      end
+      object CbVincCancelado: TCheckBox
+        Position.X = 48.000000000000000000
+        Position.Y = 88.000000000000000000
+        Size.Width = 129.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Cupom Vinculado'
+        Left = 44
+        Top = 78
+      end
+      object Label9: TLabel
+        AutoSize = True
+        Position.X = 7.000000000000000000
+        Position.Y = 64.000000000000000000
+        Size.Width = 32.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Canc.'
+        Left = 8
+        Top = 57
+      end
+      object EdtTipoCanc: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        Position.X = 48.000000000000000000
+        Position.Y = 59.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        Left = 41
+        Top = 53
+      end
+      object MemoInformacaoEstorno: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Lines.Strings = (
+          'Somente podem ser estornados pagamentos efetivados '
+          'no '#250'ltimo CF ou CNF')
+        StyledSettings = [Family, Size, Style]
+        TextSettings.FontColor = claRed
+        CanFocus = False
+        HitTest = False
+        Position.X = 12.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 323.000000000000000000
+        Size.Height = 41.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 8
+        Left = 16
+        Top = 7
+        Viewport.Width = 319.000000000000000000
+        Viewport.Height = 37.000000000000000000
+      end
+      object Label13: TLabel
+        AutoSize = True
+        Position.X = 176.000000000000000000
+        Position.Y = 56.000000000000000000
+        Size.Width = 123.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Formas de Pagamento'
+        Left = 169
+        Top = 44
+      end
+      object MFormasEst: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        ReadOnly = True
+        Position.X = 176.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 167.000000000000000000
+        Size.Height = 128.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        OnEnter = MFormasEstEnter
+        Left = 169
+        Top = 59
+        Viewport.Width = 163.000000000000000000
+        Viewport.Height = 124.000000000000000000
+      end
+    end
+  end
+end

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/08/2015 ver. 0.0.141a
+-- ACBrBancoCecred --
+[*] Adicionado leitura do arquivo retorno CNAB240.(Michel Ouriques)
+
+
 Data: 21/08/2015 ver. 0.0.140a
 -- ACBrBancoItau --
 [*] Inclusão do registro 2(Multa) no arquivo remessa CNAB400.(farnetani)

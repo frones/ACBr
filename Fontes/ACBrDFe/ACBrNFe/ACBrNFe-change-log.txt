@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/08/2015
+-- pcnEventoNFe -- (por: regys silveira)
+[-] remoção de acentuação na descrição do evento, isto estava causando erros 
+    no XML de manifestação
+    http://www.projetoacbr.com.br/forum/topic/23921-erro-na-manifestação-de-operação-não-realizada
+
 24/08/2015
 -- ACBRNFeNotasFiscais -- (por: regys silveira)
 [-] Acerto no LoadFromString, estava cortando o XML ao ler a string para o 

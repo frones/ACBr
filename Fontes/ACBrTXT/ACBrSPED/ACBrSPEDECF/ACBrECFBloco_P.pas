@@ -48,10 +48,14 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECFBlocos;
 
 type
+  TRegistroP030List = class;
+
   /// Registro P001 - Abertura do Bloco P – Lucro Presumido
   TRegistroP001 = class(TOpenBlocos)
   private
+    FRegistroP030         : TRegistroP030List; // NIVEL 2
   public
+    property RegistroP030: TRegistroP030List read FRegistroP030 write FRegistroP030;
   end;
 
   /// Registro P030 - Identificação dos Período e Forma de Apuração do
@@ -63,9 +67,9 @@ type
   TRegistroP150List = class;
   TRegistroP200List = class;
   TRegistroP230List = class;
-  TRegistroP300List = class;
-  TRegistroP400List = class;
-  TRegistroP500List = class;
+  TRegistroP300     = class;
+  TRegistroP400     = class;
+  TRegistroP500     = class;
 
   { TRegistroP030 }
 
@@ -75,14 +79,14 @@ type
     fDT_INI:   TDateTime;
     fPER_APUR: string;
     
-    FRegistroP230: TRegistroP230List;
-    FRegistroP200: TRegistroP200List;
-    FRegistroP300: TRegistroP300List;
-    FRegistroP130: TRegistroP130List;
     FRegistroP100: TRegistroP100List;
-    FRegistroP400: TRegistroP400List;
-    FRegistroP500: TRegistroP500List;
+    FRegistroP130: TRegistroP130List;
     FRegistroP150: TRegistroP150List;
+    FRegistroP200: TRegistroP200List;
+    FRegistroP230: TRegistroP230List;
+    FRegistroP300: TRegistroP300;
+    FRegistroP400: TRegistroP400;
+    FRegistroP500: TRegistroP500;
   public
     constructor Create; /// Create
     destructor Destroy; /// Destroy
@@ -97,9 +101,9 @@ type
     property RegistroP150: TRegistroP150List read FRegistroP150 write FRegistroP150;
     property RegistroP200: TRegistroP200List read FRegistroP200 write FRegistroP200;
     property RegistroP230: TRegistroP230List read FRegistroP230 write FRegistroP230;
-    property RegistroP300: TRegistroP300List read FRegistroP300 write FRegistroP300;
-    property RegistroP400: TRegistroP400List read FRegistroP400 write FRegistroP400;
-    property RegistroP500: TRegistroP500List read FRegistroP500 write FRegistroP500;
+    property RegistroP300: TRegistroP300     read FRegistroP300 write FRegistroP300;
+    property RegistroP400: TRegistroP400     read FRegistroP400 write FRegistroP400;
+    property RegistroP500: TRegistroP500     read FRegistroP500 write FRegistroP500;
   end;
 
   /// Registro P030 - Lista
@@ -530,9 +534,9 @@ begin
    FRegistroP150 := TRegistroP150List.Create;
    FRegistroP200 := TRegistroP200List.Create;
    FRegistroP230 := TRegistroP230List.Create;
-   FRegistroP300 := TRegistroP300List.Create;
-   FRegistroP400 := TRegistroP400List.Create;
-   FRegistroP500 := TRegistroP500List.Create;
+   FRegistroP300 := TRegistroP300.Create;
+   FRegistroP400 := TRegistroP400.Create;
+   FRegistroP500 := TRegistroP500.Create;
 end;
 
 destructor TRegistroP030.Destroy;

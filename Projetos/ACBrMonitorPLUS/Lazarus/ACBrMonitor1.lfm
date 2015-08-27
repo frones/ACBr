@@ -1,5 +1,5 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 438
+  Left = 433
   Height = 689
   Top = 0
   Width = 835
@@ -10215,8 +10215,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MsgRelatorio = 'Imprimindo %s  %dÂª Via '
     MsgPausaRelatorio = 'Destaque a %dÂª via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
-    FormMsgColor = clHighlight
-    FormMsgFonte.Color = clWhite
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel

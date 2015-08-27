@@ -55,6 +55,7 @@ const
     'Não Fiscal');
   CBufferMemoResposta = 10000;              { Maximo de Linhas no MemoResposta }
   _C = 'tYk*5W@';
+  UTF8BOM : AnsiString = #$EF#$BB#$BF;
 
 type
 
@@ -4053,7 +4054,7 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.Processar;
 var
-  Linha, Objeto: ansistring;
+  Linha, Objeto: String;
 begin
   if NewLines <> '' then
     fsProcessar.Add(NewLines);
@@ -4081,11 +4082,17 @@ begin
     { Objeto BOLETO/NFE pode receber comandos com várias Linhas,
       portanto deve processar todas linhas de uma só vez... }
     Objeto := TrimLeft(fsProcessar[0]);
+    if Copy(Objeto, 1, 3) = UTF8BOM then
+      Objeto := copy(Objeto, 4, Length(Objeto) );
+
     if (UpperCase(Copy(Objeto, 1, 6)) = 'BOLETO') or
       (UpperCase(Copy(Objeto, 1, 3)) = 'NFE')  or
       (UpperCase(Copy(Objeto, 1, 3)) = 'SAT') then
     begin
       Linha := Trim(fsProcessar.Text);
+      if Copy(Linha, 1, 3) = UTF8BOM then
+        Linha := copy(Linha, 4, Length(Linha) );
+
       fsProcessar.Clear;
     end
     else

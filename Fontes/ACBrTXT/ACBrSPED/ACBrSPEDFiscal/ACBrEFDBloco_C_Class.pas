@@ -1088,10 +1088,10 @@ begin
                   LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
                   LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
                   LFill( VL_IPI,0,2, booNFCancelada ) +
-                  LFill( VL_PIS,0,2, booNFCancelada ) +
-                  LFill( VL_COFINS,0,2, booNFCancelada ) +
-                  LFill( VL_PIS_ST,0,2, booNFCancelada ) +
-                  LFill( VL_COFINS_ST,0,2, booNFCancelada ) ) ;
+                  LFill( VL_PIS,0,2,True ) +
+                  LFill( VL_COFINS,0,2,True) +
+                  LFill( VL_PIS_ST,0,2,True ) +
+                  LFill( VL_COFINS_ST,0,2, True) ) ;
           end;
         end;
         /// Registros FILHOS
@@ -1640,17 +1640,17 @@ begin
                        LFill( ALIQ_IPI,  0, 2 ) +
                        LFill( VL_IPI, 0, 2 ) +
                        LFill( CST_PIS, 2, True ) +
-                       LFill( VL_BC_PIS, 0, 2 ) +
-                       LFill( ALIQ_PIS_PERC, 0, intDecimaisPercent, False, '0', strMascaraParcent ) +
-                       LFill( QUANT_BC_PIS,  0, 3, False, '0', '#0.000' ) +
-                       LFill( ALIQ_PIS_R, 0, 4, False, '0', '#0.0000' ) +
-                       LFill( VL_PIS, 0, 2 ) +
+                       LFill( VL_BC_PIS, 0, 2,True ) +
+                       LFill( ALIQ_PIS_PERC, 0, intDecimaisPercent, True, '0', strMascaraParcent ) +
+                       LFill( QUANT_BC_PIS,  0, 3, True, '0', '#0.000' ) +
+                       LFill( ALIQ_PIS_R, 0, 4, True, '0', '#0.0000' ) +
+                       LFill( VL_PIS, 0, 2,True ) +
                        LFill( CST_COFINS, 2, True ) +
-                       LFill( VL_BC_COFINS, 0, 2 ) +
-                       LFill( ALIQ_COFINS_PERC, 0, intDecimaisPercent, False, '0', strMascaraParcent ) +
-                       LFill( QUANT_BC_COFINS,  0, 3, False, '0', '#0.000' ) +
-                       LFill( ALIQ_COFINS_R, 0, 4, False, '0', '#0.0000' ) +
-                       LFill( VL_COFINS, 0, 2 ) +
+                       LFill( VL_BC_COFINS, 0, 2,True ) +
+                       LFill( ALIQ_COFINS_PERC, 0, intDecimaisPercent, True, '0', strMascaraParcent ) +
+                       LFill( QUANT_BC_COFINS,  0, 3, True, '0', '#0.000' ) +
+                       LFill( ALIQ_COFINS_R, 0, 4, True, '0', '#0.0000' ) +
+                       LFill( VL_COFINS, 0, 2,True ) +
                        LFill( COD_CTA );
           //-- Write
           if Assigned(FOnWriteRegistroC170) then
@@ -2991,7 +2991,7 @@ begin
                LFill( VL_CFE,0,2, booNFCancelada ) +
                LFill( VL_PIS,0,2, booNFCancelada ) +
                LFill( VL_COFINS,0,2, booNFCancelada ) +
-               LFill( CNPJ_CPF, 0, True ) +
+               LFill( CNPJ_CPF, 14, True ) +
                LFill( NR_SAT,9 ) +
                LFill( CHV_CFE ) +
                LFill( VL_DESC,0,2, booNFCancelada ) +

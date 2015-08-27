@@ -195,7 +195,7 @@ begin
     SUB_SER := Valor;
     NUM_DOC := ValorI;
     DT_OPER := ValorD;
-    CHV_NFE := ValorI;
+    CHV_NFE := Valor;
     VL_OPER := ValorF;
     CFOP := ValorI;
     NAT_BC_CRED := Valor;
@@ -316,7 +316,7 @@ begin
     SUB_SER := Valor;
     NUM_DOC := ValorI;
     DT_OPER := ValorD;
-    CHV_NFE := ValorI;
+    CHV_NFE := Valor;
     VL_OPER := ValorF;
     CFOP := ValorI;
     NAT_BC_CRED := Valor;

@@ -415,8 +415,7 @@ begin
   RecordAction := raUseIt ;
 end;
 
-function TACBrSATExtratoFortesFr.CalcularTamanhoDaPagina(AReport: TRLReport
-  ): Integer;
+function TACBrSATExtratoFortesFr.CalcularTamanhoDaPagina(AReport: TRLReport): Integer;
 var
   TotalPaginaPixel: Integer;
 begin
@@ -424,7 +423,7 @@ begin
     // Calculando o tamanho da Página em Pixels //
     TotalPaginaPixel := rlbsCabecalho.Height +
                         rlbRodape.Height +
-                        round( rlsbDetItem.Height * ACBrSATExtrato.CFe.Det.Count ) +
+                        round(rlsbDetItem.Height * (ACBrSATExtrato.CFe.Det.Count * 2)) + //MULTIPLICAR P/2 AS LINHAS
                         rlObsContrib.Height
   else
     TotalPaginaPixel := rlbCabecalhoCan.Height +

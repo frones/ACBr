@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/08/2015
+-- ACBrSATExtratoFortesFr --       (por: Paulo Eliana)
+[-] Correção no calculo do tamanho total da Página do Relatório
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23519
+
 Data: 22/08/2015
 -- ACBrSATExtratoESCPOS --       (por: DSA)
 [*] Ajustes para remoção de espaços desnecessários no rodapé do cupom de

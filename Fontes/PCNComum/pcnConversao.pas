@@ -96,7 +96,6 @@ type
   TpcnECFModRef = (ECFModRefVazio, ECFModRef2B,ECFModRef2C,ECFModRef2D);
   TpcnISSQNcSitTrib  = ( ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA);
 
-  TpcteTipoVeiculo = (tvTracao, tvReboque);
   TpcteTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros);
   TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
 
@@ -134,7 +133,6 @@ type
   TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja, mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel, mpOutros);
   TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
   TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
-  TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
   TpcnindIEDest = (inContribuinte, inIsento, inNaoContribuinte);
   TpcnTipoViaTransp = (tvMaritima, tvFluvial, tvLacustre, tvAerea, tvPostal,
                        tvFerroviaria, tvRodoviaria, tvConduto, tvMeiosProprios,
@@ -185,6 +183,10 @@ function EnumeradoToStr2(const t: variant; const AString: array of string ): var
 
 function UFtoCUF(UF: String): Integer;
 function CUFtoUF(CUF: Integer): String;
+
+function TpModalToStr(const t: TpcteModal): string;
+function TpModalToStrText(const t: TpcteModal): string;
+function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 
 function IndpagToStr(const t: TpcnIndicadorPagamento): string;
 function StrToIndpag(out ok: boolean; const s: string): TpcnIndicadorPagamento;
@@ -246,8 +248,6 @@ function StrToECFModRef(out ok: boolean; const s: string): TpcnECFModRef;
 function ISSQNcSitTribToStr(const t: TpcnISSQNcSitTrib ): string;
 function StrToISSQNcSitTrib(out ok: boolean; const s: string) : TpcnISSQNcSitTrib;
 
-function TpVeiculoToStr(const t: TpcteTipoVeiculo): string;
-function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
 function TpRodadoToStr(const t: TpcteTipoRodado): string;
 function StrToTpRodado(out ok: boolean; const s: string): TpcteTipoRodado;
 function TpCarroceriaToStr(const t: TpcteTipoCarroceria): string;
@@ -296,8 +296,6 @@ function UnidTranspToStr(const t: TpcnUnidTransp):string;
 function StrToUnidTransp(out ok: boolean; const s: string): TpcnUnidTransp;
 function UnidCargaToStr(const t: TpcnUnidCarga):string;
 function StrToUnidCarga(out ok: boolean; const s: string):TpcnUnidCarga;
-function indNegociavelToStr(const t: TpcnindNegociavel ): string;
-function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel;
 function indIEDestToStr(const t: TpcnindIEDest ): string;
 function StrToindIEDest(out ok: boolean; const s: string): TpcnindIEDest;
 function TipoViaTranspToStr(const t: TpcnTipoViaTransp ): string;
@@ -316,10 +314,6 @@ function StrToTipoAutor(out ok: boolean; const s: string): TpcnTipoAutor;
 
 function IndOperacaoToStr(const t: TpcnIndOperacao ): string;
 function StrToIndOperacao(out ok: boolean; const s: string): TpcnIndOperacao;
-
-function TpModalToStr(const t: TpcteModal): string;
-function TpModalToStrText(const t: TpcteModal): string;
-function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 
 function TpPropToStr(const t: TpcteProp): String;
 function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
@@ -956,16 +950,6 @@ begin
   result := StrToEnumerado(ok, s, ['','N','R','S','I'],[ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
 end;
 
-function TpVeiculoToStr(const t: TpcteTipoVeiculo): string;
-begin
-  result := EnumeradoToStr(t, ['0','1'], [tvTracao, tvReboque]);
-end;
-
-function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
-begin
-  result := StrToEnumerado(ok, s, ['0','1'], [tvTracao, tvReboque]);
-end;
-
 function TpRodadoToStr(const t: TpcteTipoRodado): string;
 begin
   result := EnumeradoToStr(t, ['00','01','02','03','04','05','06'],
@@ -1287,16 +1271,6 @@ begin
                            [ucContainer, ucULD, ucPallet, ucOutros]);
 end;
 
-function indNegociavelToStr(const t: TpcnindNegociavel ): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1'], [inNaoNegociavel, inNegociavel]);
-end;
-
-function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1'], [inNaoNegociavel, inNegociavel]);
-end;
-
 function indIEDestToStr(const t: TpcnindIEDest ): string;
 begin
   result := EnumeradoToStr(t, ['1', '2', '9'], [inContribuinte, inIsento, inNaoContribuinte]);
@@ -1401,24 +1375,6 @@ begin
                                   [ioConsultaCSC, ioNovoCSC, ioRevogaCSC]);
 end;
 
-function TpModalToStr(const t: TpcteModal): string;
-begin
-  result := EnumeradoToStr(t, ['01','02', '03', '04', '05', '06'],
-                              [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
-end;
-
-function TpModalToStrText(const t: TpcteModal): string;
-begin
-  result := EnumeradoToStr(t, ['RODOVIÁRIO','AÉREO', 'AQUAVIÁRIO', 'FERROVIÁRIO', 'DUTOVIÁRIO', 'MULTIMODAL'],
-                              [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
-end;
-
-function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
-begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
-                                  [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
-end;
-
 function TpPropToStr(const t: TpcteProp): String;
 begin
   result := EnumeradoToStr(t, ['0', '1', '2'], [tpTACAgregado, tpTACIndependente, tpOutros]);
@@ -1451,6 +1407,24 @@ function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3', '3'], [snAutorizado,
     snDenegado, snCancelado, snEncerrado]);
+end;
+
+function TpModalToStr(const t: TpcteModal): string;
+begin
+  result := EnumeradoToStr(t, ['01','02', '03', '04', '05', '06'],
+                              [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
+end;
+
+function TpModalToStrText(const t: TpcteModal): string;
+begin
+  result := EnumeradoToStr(t, ['RODOVIÁRIO','AÉREO', 'AQUAVIÁRIO', 'FERROVIÁRIO', 'DUTOVIÁRIO', 'MULTIMODAL'],
+                              [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
+end;
+
+function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
+begin
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
+                                  [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
 end;
 
 end.

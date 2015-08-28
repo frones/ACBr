@@ -92,6 +92,8 @@ type
   TpcteTipoDispositivo = (tdCartaoMagnetico, tdTAG, tdTicket);
   TpcteTipoPropriedade = (tpProprio, tpTerceiro);
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
+  TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
+  TpcteTipoVeiculo = (tvTracao, tvReboque);
 
 const
 
@@ -176,6 +178,12 @@ function StrToTpPropriedade(out ok: boolean; const s: string): TpcteTipoPropried
 
 function TrafegoMutuoToStr(const t: TpcteTrafegoMutuo): string;
 function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
+
+function indNegociavelToStr(const t: TpcnindNegociavel ): string;
+function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel;
+
+function TpVeiculoToStr(const t: TpcteTipoVeiculo): string;
+function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
 
 implementation
 
@@ -507,6 +515,26 @@ function StrToTrafegoMutuo(out ok: boolean; const s: string): TpcteTrafegoMutuo;
 begin
   result := StrToEnumerado(ok, s, ['1','2'],
    [tmOrigem, tmDestino]);
+end;
+
+function indNegociavelToStr(const t: TpcnindNegociavel ): string;
+begin
+  result := EnumeradoToStr(t, ['0', '1'], [inNaoNegociavel, inNegociavel]);
+end;
+
+function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1'], [inNaoNegociavel, inNegociavel]);
+end;
+
+function TpVeiculoToStr(const t: TpcteTipoVeiculo): string;
+begin
+  result := EnumeradoToStr(t, ['0','1'], [tvTracao, tvReboque]);
+end;
+
+function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
+begin
+  result := StrToEnumerado(ok, s, ['0','1'], [tvTracao, tvReboque]);
 end;
 
 end.

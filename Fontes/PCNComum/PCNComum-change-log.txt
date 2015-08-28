@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2015
+[*] Removido alguns Tipos e Funções, pois são exclusivas do CT-e.
+    Por: Italo Jurisato Junior
+
 25/08/2015
 -- pcnConversao --    (por: gabriellc)
 [+] function CSTPISToStrTagPosText(const t: TpcnCstPis): string;

@@ -52,7 +52,7 @@ uses
 
 const
   ACBRNFSE_VERSAO = '2.0.0a';
-  ACBRNFSE_NAMESPACE = 'http://www.portalfiscal.inf.br/nfe';
+  ACBRNFSE_NAMESPACE = 'http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd';
 
 type
   EACBrNFSeException = class(EACBrDFeException);
@@ -233,7 +233,8 @@ end;
 
 function TACBrNFSe.GetNameSpaceURI: String;
 begin
-  Result := ACBRNFSE_NAMESPACE;
+//  raise Exception.Create(Configuracoes.Geral.ConfigXML.NameSpace);
+  Result := ACBRNFSE_NAMESPACE; //Configuracoes.Geral.ConfigXML.NameSpace;
 end;
 
 function TACBrNFSe.cStatConfirmada(AValue: integer): Boolean;

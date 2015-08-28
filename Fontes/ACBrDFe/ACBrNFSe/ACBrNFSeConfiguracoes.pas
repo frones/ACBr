@@ -396,7 +396,7 @@ begin
   FConfigXML.VersaoCabecalho := FPIniParams.ReadString('XML', 'VersaoCabecalho', '');
   FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
-  FConfigXML.NameSpace := FPIniParams.ReadString('XML', 'NameSpace', '');
+  FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
 
   FConfigSchemas.Validar := FPIniParams.ReadBool('Schemas', 'Validar', True);
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');

@@ -317,18 +317,15 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           //ConfiguraDANFe; ver abaixo
+           ConfiguraDANFe;
            MudouDANFe := False;
            if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
             begin
               MudouDANFe := True;
               OldDANFe := ACBrNFe1.DANFE;
               ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+              ACBrNFeDANFCeFortes1.PathPDF := PathWithDelim(FrmACBrMonitor.edtPathPDF.Text);
             end;
-
-           // configurar após setar, pois pode estar configurado como escpos e
-           // estar gerando pdf, como trocou perde a configuração do path onde salva o PDF
-           ConfiguraDANFe;
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);

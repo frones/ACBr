@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/08/2015
+-- ACBrSATExtratoESCPOS --       (por: DSA)
+[*] Remoção de código para fixar propriedades do Cod.Barras CODE128
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=21849
+
+-- ACBrSAT --
+[*] Ajustes de Hints de compilação
+
 Data: 27/08/2015
 -- ACBrSATExtratoFortesFr --       (por: Paulo Eliana)
 [-] Correção no calculo do tamanho total da Página do Relatório

@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
-  ACBrSATExtratoClass, synacode, StrUtils;
+  ACBrSATExtratoClass, synacode;
 
 const
   CPREFIXO_CFe = 'CFe';

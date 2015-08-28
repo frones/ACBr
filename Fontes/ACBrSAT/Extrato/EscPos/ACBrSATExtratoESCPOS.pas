@@ -99,7 +99,6 @@ procedure Register;
 implementation
 
 uses
-  strutils,
   ACBrValidador, ACBrUtil, ACBrDFeUtil;
 
 {$IFNDEF FPC}
@@ -397,8 +396,7 @@ end;
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
   QRCode: AnsiString;
-  ConfigQRCodeTipo, ConfigQRCodeErrorLevel, ConfigBarrasAltura, ConfigBarrasLarguraLinha: Integer;
-  ConfigBarrasMostrarCodigo: Boolean;
+  ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   if Cancelamento then
@@ -408,18 +406,8 @@ begin
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFe.ide.dEmi + CFe.ide.hEmi));
   FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso(CFe.infCFe.ID)+'</fn>');
 
-  ConfigBarrasAltura := FPosPrinter.ConfigBarras.Altura;
-  ConfigBarrasLarguraLinha := FPosPrinter.ConfigBarras.LarguraLinha;
-  ConfigBarrasMostrarCodigo := FPosPrinter.ConfigBarras.MostrarCodigo;
-
-  FPosPrinter.Buffer.Add( '<barra_mostrar>0</barra_mostrar>'+
-                          '<barra_largura>2</barra_largura>'+
-                          '<barra_altura>40</barra_altura>'+
-                          '<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
-  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>'+
-                         '<barra_mostrar>'+IfThen(ConfigBarrasMostrarCodigo,'1','0')+'</barra_mostrar>'+
-                         '<barra_largura>'+IntToStr(ConfigBarrasLarguraLinha)+'</barra_largura>'+
-                         '<barra_altura>'+IntToStr(ConfigBarrasAltura)+'</barra_altura>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');
 
   if ImprimeQRCode then
   begin
@@ -450,8 +438,7 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
 Var
-  ConfigQRCodeTipo, ConfigQRCodeErrorLevel, ConfigBarrasAltura, ConfigBarrasLarguraLinha: Integer;
-  ConfigBarrasMostrarCodigo: Boolean;
+  ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
 var
   QRCode: AnsiString;
 begin
@@ -461,17 +448,8 @@ begin
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFeCanc.ide.dEmi + CFeCanc.ide.hEmi));
   FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso((CFeCanc.infCFe.ID))+'</fn>');
 
-  ConfigBarrasAltura := FPosPrinter.ConfigBarras.Altura;
-  ConfigBarrasLarguraLinha := FPosPrinter.ConfigBarras.LarguraLinha;
-  ConfigBarrasMostrarCodigo := FPosPrinter.ConfigBarras.MostrarCodigo;
-  FPosPrinter.Buffer.Add('<barra_mostrar>0</barra_mostrar>'+
-                         '<barra_largura>2</barra_largura>'+
-                         '<barra_altura>40</barra_altura>'+
-                         '<code128>'+copy(CFeCanc.infCFe.ID,1,22)+'</code128>');
-  FPosPrinter.Buffer.Add('<code128>'+copy(CFeCanc.infCFe.ID,23,22)+'</code128>'+
-                         '<barra_mostrar>'+IfThen(ConfigBarrasMostrarCodigo,'1','0')+'</barra_mostrar>'+
-                         '<barra_largura>'+IntToStr(ConfigBarrasLarguraLinha)+'</barra_largura>'+
-                         '<barra_altura>'+IntToStr(ConfigBarrasAltura)+'</barra_altura>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFeCanc.infCFe.ID,1,22)+'</code128>');
+  FPosPrinter.Buffer.Add('<code128>'+copy(CFeCanc.infCFe.ID,23,22)+'</code128>');
 
   if ImprimeQRCode then
   begin

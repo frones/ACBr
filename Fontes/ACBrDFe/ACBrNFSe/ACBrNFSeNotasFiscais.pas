@@ -180,9 +180,9 @@ begin
   FNFSeW := TNFSeW.Create(FNFSe);
   FNFSeR := TNFSeR.Create(FNFSe);
 
+  (*
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
-  (*
     FNFSe.Ide.tpNF := tnSaida;
     FNFSe.Ide.indPag := ipVista;
     FNFSe.Ide.verProc := 'ACBrNFSe';
@@ -195,8 +195,8 @@ begin
     FNFSe.Emit.EnderEmit.xPais := 'BRASIL';
     FNFSe.Emit.EnderEmit.cPais := 1058;
     FNFSe.Emit.EnderEmit.nro := 'SEM NUMERO';
-   *)
   end;
+  *)
 end;
 
 destructor NotaFiscal.Destroy;
@@ -245,7 +245,8 @@ begin
   begin
     if Assina then
     begin
-      XMLAss := SSL.Assinar(ArqXML, 'Rps', 'InfRps');
+      XMLAss := SSL.Assinar(ArqXML, 'Rps',
+                           Configuracoes.Geral.ConfigGeral.Prefixo3 + 'InfRps');
       FXMLAssinado := XMLAss;
 
       // Remove header, pois podem existir várias Notas no XML //
@@ -457,7 +458,7 @@ begin
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathNFSe(Data, FNFSe.Prestador.Cnpj));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathRPS(Data, FNFSe.Prestador.Cnpj));
   end;
 end;
 
@@ -499,24 +500,33 @@ function NotaFiscal.GetProcessada: Boolean;
 begin
 //  Result := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).CstatProcessado(
 //    FNFSe.procNFSe.cStat);
+  Result := True;
 end;
 
 function NotaFiscal.GetMsg: String;
 begin
 //  Result := FNFSe.procNFSe.xMotivo;
+  Result := '';
 end;
 
 function NotaFiscal.GetNumID: String;
+var
+  NumDoc: String;
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
+    if NFSe.Numero = '' then
+      NumDoc := NFSe.IdentificacaoRps.Numero
+    else
+      NumDoc := NFSe.Numero;
+
     if Configuracoes.Arquivos.NomeLongoNFSe then
       Result := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
                               NFSe.DataEmissao,
                               NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-                              StrToIntDef(NFSe.Numero, 0))
+                              StrToIntDef(NumDoc, 0))
     else
-      Result := NFSe.IdentificacaoRps.Numero;
+      Result := NumDoc + NFSe.IdentificacaoRps.Serie;
   end;
 end;
 

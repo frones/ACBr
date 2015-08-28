@@ -52,7 +52,7 @@ uses
 
 const
   ACBRNFSE_VERSAO = '2.0.0a';
-  ACBRNFSE_NAMESPACE = 'http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd';
+  ACBRNFSE_NAMESPACE = 'NameSpace.varia.conforme.provedor';
 
 type
   EACBrNFSeException = class(EACBrDFeException);
@@ -352,13 +352,6 @@ begin
      LayNfseSubstituiNfse: URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
    end;
  end;
-(*
-  Versao := VersaoNFSeToDbl( ve100 {Configuracoes.Geral.VersaoDF});
-  URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
-    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
-    Versao, URL);
-*)
 end;
 
 procedure TACBrNFSe.SetStatus(const stNewStatus: TStatusACBrNFSe);

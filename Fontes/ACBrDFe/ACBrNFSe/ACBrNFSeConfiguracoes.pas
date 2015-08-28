@@ -115,7 +115,6 @@ type
  end;
 
  TConfigURL = record
-    HomNomeCidade:String;
     HomRecepcaoLoteRPS: String;
     HomConsultaLoteRPS: String;
     HomConsultaNFSeRPS: String;
@@ -127,7 +126,6 @@ type
     HomRecepcaoSincrono: String;
     HomSubstituiNFSe: String;
 
-    ProNomeCidade:String;
     ProRecepcaoLoteRPS: String;
     ProConsultaLoteRPS: String;
     ProConsultaSeqRPS: String;
@@ -421,7 +419,6 @@ begin
   FConfigSoapAction.RecSincrono := FPIniParams.ReadString('SoapAction', 'RecSincrono', '');
   FConfigSoapAction.Substituir := FPIniParams.ReadString('SoapAction', 'Substituir', '');
 
-  FConfigURL.HomNomeCidade := FPIniParams.ReadString('URL_H', 'NomeCidade', '');
   FConfigURL.HomRecepcaoLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   FConfigURL.HomConsultaLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaLoteRPS', FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   FConfigURL.HomConsultaSitLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaSitLoteRPS', FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
@@ -432,7 +429,6 @@ begin
   FConfigURL.HomRecepcaoSincrono := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoSincrono', FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   FConfigURL.HomSubstituiNFSe := StringReplace(FPIniParams.ReadString('URL_H', 'SubstituiNFSe', FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
 
-  FConfigURL.ProNomeCidade := FPIniParams.ReadString('URL_P', 'NomeCidade', '');
   FConfigURL.ProRecepcaoLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigURL.ProConsultaLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaLoteRPS', FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigURL.ProConsultaSitLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaSitLoteRPS', FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);

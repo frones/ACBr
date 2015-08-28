@@ -39,10 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/08/2015        (por: Amarildo Lacerda)
+-- ACBrECFVirtualBuffer --
+[*] Correção para método LinhaCupomVinculado que estava imprimindo conteudo duas
+    vezes
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23999
+
 Data: 26/08/2015        (por: DSA)
 -- ACBrEscElgin --
 [+] Adicionado suporte a Impressora Elgin VOX e demais que usam EscElgin
-
 
 Data: 25/08/2015        (por Macgayver Armini/Isaque Pinheiro)
 -- ACBrECF --

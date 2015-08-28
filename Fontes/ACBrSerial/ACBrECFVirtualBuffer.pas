@@ -153,7 +153,6 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
 
     Procedure ReducaoZ(DataHora : TDateTime = 0 ) ; override ;
     Procedure LinhaRelatorioGerencial( Linha : AnsiString; IndiceBMP: Integer = 0 ) ; override ;
-    Procedure LinhaCupomVinculado( Linha : AnsiString ) ; override ;
     Procedure CortaPapel( const CorteParcial : Boolean = false) ; override ;
 
     Procedure AbreGaveta ; override ;
@@ -959,12 +958,6 @@ procedure TACBrECFVirtualBufferClass.LinhaRelatorioGerencial(Linha: AnsiString; 
 begin
   inherited;
   Imprimir( AjustaLinhaColunas(Linha) );
-end;
-
-procedure TACBrECFVirtualBufferClass.LinhaCupomVinculado(Linha: AnsiString);
-begin
-  inherited;
-  LinhaRelatorioGerencial( Linha, 0 );
 end;
 
 procedure TACBrECFVirtualBufferClass.CortaPapel(const CorteParcial : Boolean) ;

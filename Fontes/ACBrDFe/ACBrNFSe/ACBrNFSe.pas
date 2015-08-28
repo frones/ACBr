@@ -233,8 +233,7 @@ end;
 
 function TACBrNFSe.GetNameSpaceURI: String;
 begin
-//  raise Exception.Create(Configuracoes.Geral.ConfigXML.NameSpace);
-  Result := ACBRNFSE_NAMESPACE; //Configuracoes.Geral.ConfigXML.NameSpace;
+  Result := ''; // ACBRNFSE_NAMESPACE; 
 end;
 
 function TACBrNFSe.cStatConfirmada(AValue: integer): Boolean;

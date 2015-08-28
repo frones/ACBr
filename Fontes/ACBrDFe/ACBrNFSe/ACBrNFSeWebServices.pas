@@ -701,7 +701,7 @@ begin
   { Sobrescrever apenas se necessário }
   inherited InicializarServico;
 
-  FProvedor := FPConfiguracoesNFSe.Geral.Provedor;  
+  FProvedor := FPConfiguracoesNFSe.Geral.Provedor;
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
 end;
 
@@ -788,12 +788,16 @@ begin
             FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + FSeparador + FxsdServico + '"'
           else
             FNameSpaceDad := 'xmlns="' + FNameSpace + FSeparador + FxsdServico + '"';
+
+          FPDFeOwner.SSL.NameSpaceURI := FNameSpace + FSeparador + FxsdServico;
         end
         else begin
           if FPrefixo3 <> '' then
             FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"'
           else
             FNameSpaceDad := 'xmlns="' + FNameSpace + '"';
+
+          FPDFeOwner.SSL.NameSpaceURI := FNameSpace;
         end;
       end;
     end;

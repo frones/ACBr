@@ -263,13 +263,13 @@ begin
       finally
         Leitor.Free;
       end;
-
-      if Configuracoes.Geral.Salvar then
-        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
-
-      if NaoEstaVazio(NomeArq) then
-        Gravar(NomeArq, XMLAss);
     end;
+
+    if Configuracoes.Arquivos.Salvar then
+      Gravar(CalcularNomeArquivoCompleto(), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+
+//    if NaoEstaVazio(NomeArq) then
+//      Gravar(NomeArq, XMLAss);
   end;
 end;
 
@@ -442,7 +442,8 @@ begin
   if EstaVazio(xID) then
     raise EACBrNFSeException.Create('ID Inválido. Impossível Salvar XML');
 
-  Result := xID + '-nfse.xml';
+  Result := xID + '-rps.xml';
+//  Result := xID + '-nfse.xml';
 end;
 
 function NotaFiscal.CalcularPathArquivo: String;
@@ -515,7 +516,7 @@ begin
                               NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
                               StrToIntDef(NFSe.Numero, 0))
     else
-      Result := NFSe.Numero;
+      Result := NFSe.IdentificacaoRps.Numero;
   end;
 end;
 

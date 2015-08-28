@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+
+28/08/2015
+-- ACBrPAF_Z_Class --
+[-] Correção de alinhamento do Registro Z3
+http://www.projetoacbr.com.br/forum/topic/23991-homologa%C3%A7%C3%A3o-realizada-pafecf-com-trunk-2/
+
 25/08/2015
 -- ACBrPAF_N_Class --    (por:DSA)
 [-] Correção de Bug (A.V.) no calculo do MD5, ao acessar objeto pai

@@ -183,9 +183,9 @@ begin
     with FRegistroZ3 do
     begin
       Add(LFill('Z3') +
-          LFill(LAUDO , 10) +
-          LFill(NOME  , 50) +
-          LFill(VERSAO, 10));
+          RFill(LAUDO , 10) +
+          RFill(NOME  , 50) +
+          RFill(VERSAO, 10));
     end;
   end;
 end;

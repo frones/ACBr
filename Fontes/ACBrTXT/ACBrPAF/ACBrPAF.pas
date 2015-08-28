@@ -531,7 +531,7 @@ begin
         with FPAF_N.RegistroN3.New do
         begin
           NOME_ARQUIVO := fsAAC.IdentPAF.OutrosArquivos[iFor].Nome;
-	        MD5 := '' ; // MD5 será calculado em WriteRegistroN3
+	      MD5 := '' ; // MD5 será calculado em WriteRegistroN3
         end ;
       end;
     end;

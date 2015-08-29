@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2015
+-- ACBrIBPTax -- (pro: regys silveira)
+[-] Adicionado o codigo LST que voltou na nova versão da tabela.
+
 30/07/2015
 -- ACBrIBGE --   (por: DSA)
 [-] Corrigido Bug na comparação de Cidades com acentos

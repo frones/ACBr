@@ -22,11 +22,9 @@ type
     btProxy: TBitBtn;
     GroupBox1: TGroupBox;
     Label1: TLabel;
-    sbArquivo: TSpeedButton;
     lVersao: TLabel;
     edArquivo: TEdit;
     btAbrir: TBitBtn;
-    btDownload: TBitBtn;
     OpenDialog1: TOpenDialog;
     tmpCadastro: TClientDataSet;
     dtsCadastro: TDataSource;
@@ -35,8 +33,6 @@ type
     tmpCadastroEx: TIntegerField;
     tmpCadastroTabela: TIntegerField;
     ACBrIBPTax1: TACBrIBPTax;
-    Label2: TLabel;
-    edURL: TEdit;
     ckbBuscaNCMParcial: TCheckBox;
     tmpCadastroDescricao: TStringField;
     Label4: TLabel;
@@ -55,9 +51,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btExportarClick(Sender: TObject);
     procedure btSairClick(Sender: TObject);
-    procedure btDownloadClick(Sender: TObject);
     procedure btAbrirClick(Sender: TObject);
-    procedure sbArquivoClick(Sender: TObject);
     procedure btProxyClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure ACBrIBPTax1ErroImportacao(const ALinha, AErro: string);
@@ -90,64 +84,49 @@ var
 begin
   Memo1.Clear;
 
-  // configurar a URL do arquivo para ser baixado
-  if Trim(edURL.Text) <> '' then
-    ACBrIBPTax1.URLDownload := Trim(edURL.Text);
-
-  // se o path do arquivo não for passado, então o componente vai tentar baixar
-  // a tabela no URL informado
-  Memo1.Lines.BeginUpdate;
-  try
-    if ACBrIBPTax1.AbrirTabela(edArquivo.Text) then
-    begin
-      lVersao.Caption := 'Versão: ' + ACBrIBPTax1.VersaoArquivo;
-      lbVigencia.Caption := 'Vigência: ' + Format('%s a %s', [DateToStr(ACBrIBPTax1.VigenciaInicio), DateToStr(ACBrIBPTax1.VigenciaFim)]);
-      lblChave.Caption := 'Chave: ' + ACBrIBPTax1.ChaveArquivo;
-      lblFonte.Caption := 'Fonte: ' + ACBrIBPTax1.Fonte;
-
-      tmpCadastro.Close;
-      tmpCadastro.CreateDataSet;
-      tmpCadastro.DisableControls;
-      try
-        for I := 0 to ACBrIBPTax1.Itens.Count - 1 do
-        begin
-          tmpCadastro.Append;
-          tmpCadastroNCM.AsString             := ACBrIBPTax1.Itens[I].NCM;
-          tmpCadastroDescricao.AsString       := ACBrIBPTax1.Itens[I].Descricao;
-          tmpCadastroEx.AsString              := ACBrIBPTax1.Itens[I].Excecao;
-          tmpCadastroTabela.AsInteger         := Integer(ACBrIBPTax1.Itens[I].Tabela);
-          tmpCadastroAliqFedNacional.AsFloat  := ACBrIBPTax1.Itens[I].FederalNacional;
-          tmpCadastroAliqFedImportado.AsFloat := ACBrIBPTax1.Itens[I].FederalImportado;
-          tmpCadastroAliqEstadual.AsFloat     := ACBrIBPTax1.Itens[I].Estadual;
-          tmpCadastroAliqMunicipal.AsFloat    := ACBrIBPTax1.Itens[I].Municipal;
-          tmpCadastro.Post;
-        end;
-      finally
-        tmpCadastro.First;
-        tmpCadastro.EnableControls;
-
-        Label4.Caption := 'Quantidade de itens: ' + IntToStr(tmpCadastro.RecordCount);
-      end;
-    end;
-  finally
-    Memo1.Lines.EndUpdate;
-  end;
-end;
-
-procedure TForm1.btDownloadClick(Sender: TObject);
-begin
-  tmpCadastro.Close;
-  ACBrIBPTax1.URLDownload := Trim(edURL.Text);
-
-  if ACBrIBPTax1.DownloadTabela then
+  if OpenDialog1.Execute then
   begin
-    MessageDlg('Download da tabela efetuado com sucesso.', mtInformation, [mbOK], 0);
+    edArquivo.Text := OpenDialog1.FileName;
 
-    if MessageDlg('Deseja abrir a tabela e mostrar os dados?', mtInformation, [mbYes,mbNo], 0) = mrYes then
-      btAbrir.Click;
-  end
-  else
-    MessageDlg('Não foi possível efetuar o download da tabela.', mtError, [mbOK], 0);
+    // se o path do arquivo não for passado, então o componente vai tentar baixar
+    // a tabela no URL informado
+    Memo1.Lines.BeginUpdate;
+    try
+      if ACBrIBPTax1.AbrirTabela(edArquivo.Text) then
+      begin
+        lVersao.Caption := 'Versão: ' + ACBrIBPTax1.VersaoArquivo;
+        lbVigencia.Caption := 'Vigência: ' + Format('%s a %s', [DateToStr(ACBrIBPTax1.VigenciaInicio), DateToStr(ACBrIBPTax1.VigenciaFim)]);
+        lblChave.Caption := 'Chave: ' + ACBrIBPTax1.ChaveArquivo;
+        lblFonte.Caption := 'Fonte: ' + ACBrIBPTax1.Fonte;
+
+        tmpCadastro.Close;
+        tmpCadastro.CreateDataSet;
+        tmpCadastro.DisableControls;
+        try
+          for I := 0 to ACBrIBPTax1.Itens.Count - 1 do
+          begin
+            tmpCadastro.Append;
+            tmpCadastroNCM.AsString             := ACBrIBPTax1.Itens[I].NCM;
+            tmpCadastroDescricao.AsString       := ACBrIBPTax1.Itens[I].Descricao;
+            tmpCadastroEx.AsString              := ACBrIBPTax1.Itens[I].Excecao;
+            tmpCadastroTabela.AsInteger         := Integer(ACBrIBPTax1.Itens[I].Tabela);
+            tmpCadastroAliqFedNacional.AsFloat  := ACBrIBPTax1.Itens[I].FederalNacional;
+            tmpCadastroAliqFedImportado.AsFloat := ACBrIBPTax1.Itens[I].FederalImportado;
+            tmpCadastroAliqEstadual.AsFloat     := ACBrIBPTax1.Itens[I].Estadual;
+            tmpCadastroAliqMunicipal.AsFloat    := ACBrIBPTax1.Itens[I].Municipal;
+            tmpCadastro.Post;
+          end;
+        finally
+          tmpCadastro.First;
+          tmpCadastro.EnableControls;
+
+          Label4.Caption := 'Quantidade de itens: ' + IntToStr(tmpCadastro.RecordCount);
+        end;
+      end;
+    finally
+      Memo1.Lines.EndUpdate;
+    end;
+  end;
 end;
 
 procedure TForm1.btExportarClick(Sender: TObject);
@@ -282,15 +261,6 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   PageControl1.ActivePageIndex := 0;
-end;
-
-procedure TForm1.sbArquivoClick(Sender: TObject);
-begin
-  if OpenDialog1.Execute then
-  begin
-    edArquivo.Text := OpenDialog1.FileName;
-    btAbrir.Click;
-  end;
 end;
 
 end.

@@ -57,7 +57,7 @@ type
 
   TACBrIBPTaxExporta = (exTXT, exCSV, exDSV, exXML, exHTML);
 
-  TACBrIBPTaxTabela = (tabNCM, tabNBS);
+  TACBrIBPTaxTabela = (tabNCM, tabNBS, tabLST);
 
   TACBrIBPTaxErroImportacao = procedure(const ALinha: String; const AErro: String) of object;
 
@@ -149,18 +149,20 @@ uses
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin
   case ATabela of
-    tabNCM:   Result := '0';
-    tabNBS:   Result := '1';
+    tabNCM: Result := '0';
+    tabNBS: Result := '1';
+    tabLST: Result := '2';
   end;
 end;
 
 function StringToTabela(const ATabela: String): TACBrIBPTaxTabela;
+var
+  TabelaTmp: Integer;
 begin
-  if ATabela = '0' then
-    Result := tabNCM
-  else
-  if ATabela = '1' then
-    Result := tabNBS
+  TabelaTmp := StrToIntDef(ATabela, -1);
+
+  if TabelaTmp >= 0 then
+    Result := TACBrIBPTaxTabela(TabelaTmp)
   else
     raise EACBrIBPTax.CreateFmt('Tipo de tabela desconhecido "%s".', [ATabela]);
 end;

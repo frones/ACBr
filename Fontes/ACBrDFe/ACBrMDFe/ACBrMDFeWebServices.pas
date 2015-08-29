@@ -847,19 +847,24 @@ begin
             AProcMDFe.Versao := FPVersaoServico;
             AProcMDFe.GerarXML;
 
-            FManifestos.Items[J].XML := AProcMDFe.Gerador.ArquivoFormatoXML;
-            FManifestos.Items[J].XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
-
-            if FPConfiguracoesMDFe.Arquivos.Salvar then
+            with FManifestos.Items[J] do
             begin
-              SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
-                           FManifestos.Items[J].Processado;
+              XML := AProcMDFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := XML;
+              XMLAssinado := XML;
 
-              // o Método GravarXML salva o conteudo da propriedade XMLOriginal
-              if SalvarXML then
-                TACBrMDFe(FPDFeOwner).Manifestos.Items[J].GravarXML;
+              if FPConfiguracoesMDFe.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                             Processado;
+
+                // Salva o XML do MDF-e assinado e protocolado
+                if SalvarXML then
+                  FPDFeOwner.Gravar(AInfProt.Items[I].chMDFe + '-mdfe.xml',
+                                    XML,
+                                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(0)));
+              end;
             end;
-
           finally
             AProcMDFe.Free;
           end;

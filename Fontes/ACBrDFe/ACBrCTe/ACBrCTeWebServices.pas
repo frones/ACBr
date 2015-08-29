@@ -960,6 +960,38 @@ begin
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
            (AInfProt.Items[I].cStat = 301) then
         begin
+          AProcCTe := TProcCTe.Create;
+          try
+            AProcCTe.XML_CTe := StringReplace(FConhecimentos.Items[J].XMLAssinado,
+                                       '<' + ENCODING_UTF8 + '>', '',
+                                       [rfReplaceAll]);
+            AProcCTe.XML_Proc := AInfProt.Items[I].XMLprotCTe;
+            AProcCTe.Versao := FPVersaoServico;
+            AProcCTe.GerarXML;
+
+            with FConhecimentos.Items[J] do
+            begin
+              XML := AProcCTe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := XML;
+              XMLAssinado := XML;
+
+              if FPConfiguracoesCTe.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
+                             Processado;
+
+                // Salva o XML do CT-e assinado e protocolado
+                if SalvarXML then
+                  FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML,
+                                    XML,
+                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(0)));
+              end;
+            end;
+          finally
+            AProcCTe.Free;
+          end;
+        end;
+          (*
           XML_procCTe := '<' + ENCODING_UTF8 + '>';
           XML_procCTe := XML_procCTe + '<cteProc versao="' + FPVersaoServico +
                                   '" xmlns="http://www.portalfiscal.inf.br/cte">';
@@ -968,7 +1000,7 @@ begin
                          StringReplace(FConhecimentos.Items[J].XMLAssinado,
                                        '<' + ENCODING_UTF8 + '>', '',
                                        [rfReplaceAll]);
-          
+
           XML_procCTe := XML_procCTe + '<protCTe versao="' + FPVersaoServico + '">';
           XML_procCTe := XML_procCTe + AInfProt.Items[I].XMLprotCTe;
           XML_procCTe := XML_procCTe + '</protCTe>';
@@ -978,7 +1010,7 @@ begin
         // Se XMLprocCTe for uma string vazia significa que o CTe foi rejeitado,
         // caso contrario o seu conteudo sera o CT-e assinado e protocolado
         FConhecimentos.Items[J].XMLprocCTe := XML_procCTe;
-
+        *)
         (*
         if FPConfiguracoesCTe.Arquivos.Salvar or NaoEstaVazio(
           FConhecimentos.Items[J].NomeArq) then
@@ -1014,7 +1046,6 @@ begin
             end;
           end;
         end;
-        *)
 
         if FPConfiguracoesCTe.Arquivos.Salvar then
         begin
@@ -1023,18 +1054,14 @@ begin
 
           if SalvarXML then
           begin
-            // Incluido por Italo em 06/08/2015
-            // Salva o XML do CT-e assinado e protocolado
-            FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML, XML_procCTe);
-            (*
             with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
             begin
               GerarXML;   // Gera novamente, para incluir informações de "procCTe" no XML
               GravarXML;
             end;
-            *)
           end;
         end;
+       *)
 
         break;
       end;

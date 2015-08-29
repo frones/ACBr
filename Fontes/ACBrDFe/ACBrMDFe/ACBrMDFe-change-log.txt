@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2015
+[*] Alterado a forma de acrescentar o protocolo de autorização ao XML assinado.
+    O XML assinado e protocolado fica disponivel nas propriedades XML e XMLAssinado
+    Por: Italo Jurisato Junior
+
 25/08/2015
 [-] Acerto no LoadFromString, estava cortando o XML ao ler a string para o 
     componente.

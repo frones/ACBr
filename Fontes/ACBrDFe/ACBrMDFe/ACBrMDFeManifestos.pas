@@ -102,7 +102,8 @@ type
 
     property XML: String read FXML write FXML;
     property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
-    property XMLAssinado: String read FXMLAssinado;
+    property XMLAssinado: String read FXMLAssinado write FXMLAssinado;
+    
     property Confirmado: Boolean read GetConfirmado;
     property Processado: Boolean read GetProcessado;
     property Msg: String read GetMsg;

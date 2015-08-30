@@ -358,7 +358,7 @@ begin
       Det.Prod.vUnCom := Det.Prod.vUnCom + Acres;
     end
     else
-      Det.Prod.vDesc := ItemCupom.DescAcres;
+      Det.Prod.vDesc := (ItemCupom.DescAcres * -1); 
 
     if ECF.Arredonda then
       Det.Prod.indRegra := irArredondamento

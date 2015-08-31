@@ -2255,7 +2255,17 @@ begin
     estVenda, estPagamento, estNaoFiscal :
       begin
         EscECFComando.CMD := 31;
-        EnviaComando;
+        try
+          EnviaComando;
+        except
+          if fsEmPagamento and (EscECFResposta.CAT = 11) then
+          begin
+            fsEmPagamento := False;
+            CancelaCupom;
+          end
+          else
+            raise;
+        end;
       end;
   else
     begin

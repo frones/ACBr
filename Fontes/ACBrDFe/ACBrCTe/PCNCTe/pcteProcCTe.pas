@@ -147,6 +147,8 @@ begin
   XMLinfProt  := TStringList.Create;
   XMLinfProt2 := TStringList.Create;
   try
+    Gerador.ListaDeAlertas.Clear;
+
     if (FXML_CTe = '') and (FXML_Proc = '') then
     begin
       ProtLido := False;

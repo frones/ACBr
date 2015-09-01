@@ -161,26 +161,29 @@ begin
       FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
 
       i := 0;
-      while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do
+      while (FcStat = 104) and (Leitor.rExtrai(1, 'protMDFe', '', i + 1) <> '') do
       begin
         ProtMDFe.Add;
 
+        // A propriedade XMLprotMDFe contem o XML que traz o resultado do
+        // processamento do MDF-e.
         ProtMDFe[i].XMLprotMDFe := Leitor.Grupo;
 
-        ProtMDFe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-        ProtMDFe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-        ProtMDFe[i].FchMDFe   := Leitor.rCampo(tcStr, 'chMDFe');
-        ProtMDFe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-        ProtMDFe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
-        ProtMDFe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
-        ProtMDFe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
-        ProtMDFe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-
+        if Leitor.rExtrai(2, 'infProt') <> '' then
+        begin
+          ProtMDFe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+          ProtMDFe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
+          ProtMDFe[i].FchMDFe   := Leitor.rCampo(tcStr, 'chMDFe');
+          ProtMDFe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+          ProtMDFe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
+          ProtMDFe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
+          ProtMDFe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
+          ProtMDFe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+        end;
         inc(i);
       end;
 
-      if i = 0 then
-        ProtMDFe.Add;
+//      if i = 0 then ProtMDFe.Add;
 
       Result := True;
     end;

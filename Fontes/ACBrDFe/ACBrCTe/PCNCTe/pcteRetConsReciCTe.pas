@@ -192,26 +192,30 @@ begin
                FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
 
       i := 0;
-      while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do
+      while (FcStat = 104) and (Leitor.rExtrai(1, 'protCTe', '', i + 1) <> '') do
       begin
         ProtCTe.Add;
 
-                ProtCTe[i].XMLprotCTe := Leitor.Grupo;
+        // A propriedade XMLprotCTe contem o XML que traz o resultado do
+        // processamento do CT-e.
+        ProtCTe[i].XMLprotCTe := Leitor.Grupo;
 
-        (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id='); 
-        (*PR05*)ProtCTe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-        (*PR06*)ProtCTe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-        (*PR07*)ProtCTe[i].FchCTe    := Leitor.rCampo(tcStr, 'chCTe');
-        (*PR08*)ProtCTe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-        (*PR09*)ProtCTe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
-        (*PR10*)ProtCTe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
-        (*PR11*)ProtCTe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
-        (*PR12*)ProtCTe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-
+        if Leitor.rExtrai(2, 'infProt') <> '' then
+        begin
+          (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id=');
+          (*PR05*)ProtCTe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+          (*PR06*)ProtCTe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
+          (*PR07*)ProtCTe[i].FchCTe    := Leitor.rCampo(tcStr, 'chCTe');
+          (*PR08*)ProtCTe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+          (*PR09*)ProtCTe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
+          (*PR10*)ProtCTe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
+          (*PR11*)ProtCTe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
+          (*PR12*)ProtCTe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+        end;
         inc(i);
       end;
-      
-      if i = 0 then ProtCTe.Add;
+
+//      if i = 0 then ProtCTe.Add;
 
       Result := True;
     end;

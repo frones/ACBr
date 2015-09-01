@@ -213,7 +213,7 @@ var
   UK355Count: integer;
 begin
   UK030Count := FRegistroK001.RegistroK030.Count -1;
-  UK355Count := FRegistroK001.RegistroK030.Items[UK030Count].RegistroK155.Count -1;
+  UK355Count := FRegistroK001.RegistroK030.Items[UK030Count].RegistroK355.Count -1;
   if UK355Count = -1 then
     raise Exception.Create('O registro 1110 deve ser filho do registro 1105, e não existe nenhum 1105 pai!');
 

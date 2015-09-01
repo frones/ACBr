@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/08/2015
+-- ACBrECFVirtualSAT --  (por: Amarildo Lacerda)
+[-] Correção de Bug no Cancelamento de Itens e numeração da Sequencia dos Itens
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23812
+
 Data: 30/08/2015
 -- ACBrECFVirtualSAT --  (por: Amarildo Lacerda)
 [-] O valor do desconto chega negativo, passar para o XML positivo

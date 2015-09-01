@@ -407,7 +407,16 @@ begin
     if (NumItem > CFe.Det.Count) or (NumItem < 1) then
       exit;
 
-    CFe.Det.Delete(NumItem-1);
+    with CFe.Det.Items[NumItem-1] do
+    begin
+      Prod.qCom := 0;    // marca item cancelado
+      Prod.vUnCom  := 0;
+      Prod.vProd := 0;
+      Prod.vDesc := 0;
+      Prod.vOutro := 0;
+      Prod.vItem := 0;
+      Prod.vUnCom  := 0;
+    end;
   end;
 end;
 
@@ -444,12 +453,23 @@ end;
 
 procedure TACBrECFVirtualSATClass.FechaCupomVirtual(Observacao: AnsiString;
   IndiceBMP: Integer);
+var 
+  i:integer;
 begin
   if fsEhVenda then
   begin
     with fsACBrSAT do
     begin
       CFe.InfAdic.infCpl := Observacao;
+
+      // apaga os itens cancelados
+      for I := CFe.Det.Count-1 downto 0 do
+       if CFe.Det.Items[i].Prod.qCom=0 then
+          CFe.Det.Delete(I);
+
+      // refaz a sequencia
+      for I := 0 to CFe.Det.Count -1 do
+          CFe.Det.Items[i].nItem := I+1;
 
       EnviarDadosVenda;
 
@@ -459,6 +479,9 @@ begin
           'Cod.Retorno: '+IntToStr( Resposta.codigoDeRetorno ) +
           ', Cod.Rejeição: '+IntToStr(Resposta.codigoDeErro) + sLineBreak +
           Resposta.mensagemRetorno );
+        // AL quando ocorre erro e não consegue transmitir, os itens cancelados ficam
+        // descolados da sequencia do cupom...
+        // Talvez precisaria fazer um backup e depois restaurar.
       end;
 
       ChaveCupom := CFe.infCFe.ID;

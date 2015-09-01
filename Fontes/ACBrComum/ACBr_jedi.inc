@@ -154,8 +154,10 @@
   DELPHIXE6           Alias for DELPHI20
   DELPHI21            Defined when compiling with Delphi XE7 for Win32 (Codename CARPATHIA)
   DELPHIXE7           Alias for DELPHI21
-  DELPHI22            Defined when compiling with Delphi XE8 for Win32 (Codename ???)
+  DELPHI22            Defined when compiling with Delphi XE8 for Win32 (Codename ELBRUS)
   DELPHIXE8           Alias for DELPHI22
+  DELPHI23            Defined when compiling with Delphi 10 for Win32 (Codename SEATTLE)
+  DELPHI10          Alias for DELPHI23
   DELPHI1_UP          Defined when compiling with Delphi 1 or higher
   DELPHI2_UP          Defined when compiling with Delphi 2 or higher
   DELPHI3_UP          Defined when compiling with Delphi 3 or higher
@@ -190,8 +192,8 @@
   DELPHIXE7_UP        Alias for DELPHI21_UP
   DELPHI22_UP         Defined when compiling with Delphi XE8 for Win32 or higher
   DELPHIXE8_UP        Alias for DELPHI22_UP
-  DELPHI23_UP         Defined when compiling with Delphi XE9 for Win32 or higher
-  DELPHIXE9_UP        Alias for DELPHI23_UP
+  DELPHI23_UP         Defined when compiling with Delphi 10 for Win32 or higher
+  DELPHI10_UP       Alias for DELPHI23_UP
 
 
 - Kylix Versions
@@ -253,7 +255,7 @@
   DELPHICOMPILER20_UP  Defined when compiling with Delphi XE6 for Win32 or higher
   DELPHICOMPILER21_UP  Defined when compiling with Delphi XE7 for Win32 or higher
   DELPHICOMPILER22_UP  Defined when compiling with Delphi XE8 for Win32 or higher
-  DELPHICOMPILER23_UP  Defined when compiling with Delphi XE9 for Win32 or higher
+  DELPHICOMPILER23_UP  Defined when compiling with Delphi 10 for Win32 or higher
 
 
 - C++Builder Versions
@@ -297,7 +299,7 @@
   BCB20_UP     Defined when compiling with C++Builder Personality of RAD Studio XE6 or higher
   BCB21_UP     Defined when compiling with C++Builder Personality of RAD Studio XE7 or higher
   BCB22_UP     Defined when compiling with C++Builder Personality of RAD Studio XE8 or higher
-  BCB23_UP     Defined when compiling with C++Builder Personality of RAD Studio XE9 or higher
+  BCB23_UP     Defined when compiling with C++Builder Personality of RAD Studio 10 or higher
 
 
 - RAD Studio / Borland Developer Studio Versions
@@ -324,9 +326,9 @@
   BDS11        Defined when compiling with BDS 11.0 (Embarcadero RAD Studio XE4) (Codename QUINTESSENCE)
   BDS12        Defined when compiling with BDS 12.0 (Embarcadero RAD Studio XE5) (Codename ZEPHYR)
   BDS14        Defined when compiling with BDS 14.0 (Embarcadero RAD Studio XE6) (Codename PROTEUS)
-  BDS15        Defined when compiling with BDS 15.0 (Embarcadero RAD Studio XE7) (Codename ???)
+  BDS15        Defined when compiling with BDS 15.0 (Embarcadero RAD Studio XE7) (Codename CARPATHIA)
   BDS16        Defined when compiling with BDS 16.0 (Embarcadero RAD Studio XE8) (Codename ELBRUS)
-  BDS17        Defined when compiling with BDS 17.0 (Embarcadero RAD Studio XE9) (Codename ???)
+  BDS17        Defined when compiling with BDS 17.0 (Embarcadero RAD Studio 10) (Codename SEATTLE)
   BDS2_UP      Defined when compiling with BDS 2.0 or higher
   BDS3_UP      Defined when compiling with BDS 3.0 or higher
   BDS4_UP      Defined when compiling with BDS 4.0 or higher
@@ -944,7 +946,7 @@
       {$UNDEF UNKNOWN_COMPILER_VERSION}
     {$ENDIF VER290}
 
-    {$IFDEF VER300} // RAD Studio XE9
+    {$IFDEF VER300} // RAD Studio 10
       {$DEFINE BDS}
       {$DEFINE BDS17}
       {$DEFINE COMPILER23}
@@ -952,7 +954,7 @@
         {$DEFINE BCB23}
       {$ELSE}
         {$DEFINE DELPHI23}
-        {$DEFINE DELPHIXE9} // synonym to DELPHI23
+        {$DEFINE DELPHI10} // synonym to DELPHI23
         {$DEFINE DELPHICOMPILER23}
       {$ENDIF BCB}
       {$DEFINE RTL300_UP}
@@ -967,7 +969,7 @@
         {$DEFINE BCB23}
       {$ELSE}
         {$DEFINE DELPHI23}
-        {$DEFINE DELPHIXE9} // synonym to DELPHI23
+        {$DEFINE DELPHI10} // synonym to DELPHI23
         {$DEFINE DELPHICOMPILER23}
       {$ENDIF BCB}
       {$DEFINE RTL300_UP}
@@ -1018,7 +1020,7 @@
 {------------------------------------------------------------------------------}
 
 {$IFDEF DELPHI23_UP}
-  {$DEFINE DELPHIXE9_UP} // synonym to DELPHI23_UP
+  {$DEFINE DELPHI10_UP} // synonym to DELPHI23_UP
   {$DEFINE DELPHI22_UP}
 {$ENDIF}
 

@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/09/2015
+[*] Alterado a URL do QR-Code da UF = AC.
+    por: Italo Jurisato Junior
 [*] Removido do ACBrNFeServicos.ini os campos NfeConsultaCadastro_3.10 da UF = BA.
     por: Italo Jurisato Junior
 

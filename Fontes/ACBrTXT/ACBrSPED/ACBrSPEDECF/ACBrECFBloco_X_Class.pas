@@ -98,7 +98,7 @@ type
     procedure WriteRegistroX510;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LimpaRegistros;
         
     function RegistroX001New :TRegistroX001;
@@ -157,6 +157,7 @@ uses
 
 constructor TBloco_X.Create;
 begin
+  inherited;
   CriaRegistros;
 end;
 
@@ -179,8 +180,7 @@ end;
 
 destructor TBloco_X.Destroy;
 begin
-  FRegistroX001.Free;
-  FRegistroX990.Free;
+  LiberaRegistros;
   inherited;
 end;
 

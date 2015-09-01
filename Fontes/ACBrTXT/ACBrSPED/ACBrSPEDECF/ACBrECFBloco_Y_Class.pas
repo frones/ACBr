@@ -121,7 +121,7 @@ type
     procedure WriteRegistroY990;
 
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LimpaRegistros;
 
     property RegistroY001: TRegistroY001     read FRegistroY001 write FRegistroY001;
@@ -149,27 +149,6 @@ procedure TBloco_Y.CriaRegistros;
 begin
   inherited;
   FRegistroY001 := TRegistroY001.Create;
-{  FRegistroY520 := TRegistroY520List.Create;
-  FRegistroY540 := TRegistroY540List.Create;
-  FRegistroY550 := TRegistroY550List.Create;
-  FRegistroY560 := TRegistroY560List.Create;
-  FRegistroY570 := TRegistroY570List.Create;
-  FRegistroY580 := TRegistroY580List.Create;
-  FRegistroY590 := TRegistroY590List.Create;
-  FRegistroY600 := TRegistroY600List.Create;
-  FRegistroY611 := TRegistroY611List.Create;
-  FRegistroY612 := TRegistroY612List.Create;
-  FRegistroY620 := TRegistroY620List.Create;
-  FRegistroY630 := TRegistroY630List.Create;
-  FRegistroY640 := TRegistroY640List.Create;
-  FRegistroY660 := TRegistroY660List.Create;
-  FRegistroY665 := TRegistroY665List.Create;
-  FRegistroY671 := TRegistroY671List.Create;
-  FRegistroY672 := TRegistroY672List.Create;
-  FRegistroY680 := TRegistroY680List.Create;
-  FRegistroY682 := TRegistroY682List.Create;
-  FRegistroY690 := TRegistroY690List.Create;
-  FRegistroY800 := TRegistroY800List.Create;    }
   FRegistroY990 := TRegistroY990.Create;
 
   FRegistroY650Count := 0;
@@ -180,16 +159,13 @@ end;
 
 destructor TBloco_Y.Destroy;
 begin
-   FRegistroY001.Free;
-   FRegistroY990.Free;
-
+  LiberaRegistros;
   inherited;
 end;
 
 procedure TBloco_Y.LiberaRegistros;
 begin
    inherited;
-
    FRegistroY001.Free;
    FRegistroY990.Free;
 end;

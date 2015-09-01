@@ -67,9 +67,9 @@ type
   TRegistroP150List = class;
   TRegistroP200List = class;
   TRegistroP230List = class;
-  TRegistroP300     = class;
-  TRegistroP400     = class;
-  TRegistroP500     = class;
+  TRegistroP300List = class;
+  TRegistroP400List = class;
+  TRegistroP500List = class;
 
   { TRegistroP030 }
 
@@ -84,9 +84,9 @@ type
     FRegistroP150: TRegistroP150List;
     FRegistroP200: TRegistroP200List;
     FRegistroP230: TRegistroP230List;
-    FRegistroP300: TRegistroP300;
-    FRegistroP400: TRegistroP400;
-    FRegistroP500: TRegistroP500;
+    FRegistroP300: TRegistroP300List;
+    FRegistroP400: TRegistroP400List;
+    FRegistroP500: TRegistroP500List;
   public
     constructor Create; /// Create
     destructor Destroy; /// Destroy
@@ -101,9 +101,9 @@ type
     property RegistroP150: TRegistroP150List read FRegistroP150 write FRegistroP150;
     property RegistroP200: TRegistroP200List read FRegistroP200 write FRegistroP200;
     property RegistroP230: TRegistroP230List read FRegistroP230 write FRegistroP230;
-    property RegistroP300: TRegistroP300     read FRegistroP300 write FRegistroP300;
-    property RegistroP400: TRegistroP400     read FRegistroP400 write FRegistroP400;
-    property RegistroP500: TRegistroP500     read FRegistroP500 write FRegistroP500;
+    property RegistroP300: TRegistroP300List read FRegistroP300 write FRegistroP300;
+    property RegistroP400: TRegistroP400List read FRegistroP400 write FRegistroP400;
+    property RegistroP500: TRegistroP500List read FRegistroP500 write FRegistroP500;
   end;
 
   /// Registro P030 - Lista
@@ -534,9 +534,9 @@ begin
    FRegistroP150 := TRegistroP150List.Create;
    FRegistroP200 := TRegistroP200List.Create;
    FRegistroP230 := TRegistroP230List.Create;
-   FRegistroP300 := TRegistroP300.Create;
-   FRegistroP400 := TRegistroP400.Create;
-   FRegistroP500 := TRegistroP500.Create;
+   FRegistroP300 := TRegistroP300List.Create;
+   FRegistroP400 := TRegistroP400List.Create;
+   FRegistroP500 := TRegistroP500List.Create;
 end;
 
 destructor TRegistroP030.Destroy;

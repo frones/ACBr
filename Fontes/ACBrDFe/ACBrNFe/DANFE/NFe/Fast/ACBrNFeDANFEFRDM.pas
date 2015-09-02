@@ -1386,7 +1386,7 @@ begin
         FieldDefs.Add('XNome', ftString, 60);
         FieldDefs.Add('XFant', ftString, 60);
         FieldDefs.Add('XLgr', ftString, 60);
-        FieldDefs.Add('Nro', ftString, 6);
+        FieldDefs.Add('Nro', ftString, 60);
         FieldDefs.Add('XCpl', ftString, 60);
         FieldDefs.Add('XBairro', ftString, 60);
         FieldDefs.Add('CMun', ftString, 7);
@@ -1422,7 +1422,7 @@ begin
         FieldDefs.Add('CNPJCPF', ftString, 18);
         FieldDefs.Add('XNome', ftString, 60);
         FieldDefs.Add('XLgr', ftString, 60);
-        FieldDefs.Add('Nro', ftString, 6);
+        FieldDefs.Add('Nro', ftString, 60);
         FieldDefs.Add('XCpl', ftString, 60);
         FieldDefs.Add('XBairro', ftString, 60);
         FieldDefs.Add('CMun', ftString, 7);
@@ -1760,7 +1760,7 @@ begin
       begin
          FieldDefs.Add('CNPJ', ftString, 18);
          FieldDefs.Add('XLgr', ftString, 60);
-         FieldDefs.Add('Nro', ftString, 6);
+         FieldDefs.Add('Nro', ftString, 60);
          FieldDefs.Add('XCpl', ftString, 60);
          FieldDefs.Add('XBairro', ftString, 60);
          FieldDefs.Add('CMun', ftString, 7);

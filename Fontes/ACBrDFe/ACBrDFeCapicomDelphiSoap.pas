@@ -143,6 +143,8 @@ begin
 
   FIndyReqResp.OnBeforePost := OnBeforePost;
   FIndyReqResp.UseUTF8InHeader := True;
+  FIndyReqResp.SoapAction := SoapAction;
+  FIndyReqResp.URL := URL;
   FURL := URL;
 end;
 

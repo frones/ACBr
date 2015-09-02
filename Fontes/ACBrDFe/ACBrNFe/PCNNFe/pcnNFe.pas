@@ -109,6 +109,7 @@ type
   TCOFINS = class;
   TCOFINSST = class;
   TISSQN = class;
+  TICMSUFDest = class;
   TTotal = class;
   TICMSTot = class;
   TISSQNtot = class;
@@ -626,6 +627,7 @@ type
     FnRECOPI: String;
     FnFCI: String;
     FNVE: TNVECollection;
+    FCEST: Integer;
 
     procedure SetDI(Value: TDICollection);
     procedure SetMed(Value: TmedCollection);
@@ -670,6 +672,7 @@ type
     property comb: Tcomb read Fcomb write Fcomb;
     property nRECOPI: String read FnRECOPI write FnRECOPI;
     property nFCI: String read FnFCI write FnFCI;
+    property CEST: Integer read FCEST write FCEST;
   end;
 
   TveicProd = class(TPersistent)
@@ -1013,6 +1016,7 @@ type
     FCOFINS: TCOFINS;
     FCOFINSST: TCOFINSST;
     FISSQN: TISSQN;
+    FICMSUFDest: TICMSUFDest;
   public
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
@@ -1027,6 +1031,7 @@ type
     property COFINS: TCOFINS read FCOFINS write FCOFINS;
     property COFINSST: TCOFINSST read FCOFINSST write FCOFINSST;
     property ISSQN: TISSQN read FISSQN write FISSQN;
+    property ICMSUFDest: TICMSUFDest read FICMSUFDest write FICMSUFDest;
   end;
 
   TICMS = class(TPersistent)
@@ -1212,6 +1217,8 @@ type
     FvBC: Currency;
     FvICMS: Currency;
     FvICMSDeson: Currency;
+    FvICMSUFDest: Currency;
+    FvICMSUFRemet: Currency;
     FvBCST: Currency;
     FvST: Currency;
     FvProd: Currency;
@@ -1231,6 +1238,8 @@ type
     property vBC: Currency read FvBC write FvBC;
     property vICMS: Currency read FvICMS write FvICMS;
     property vICMSDeson: Currency read FvICMSDeson write FvICMSDeson;
+    property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
+    property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
     property vBCST: Currency read FvBCST write FvBCST;
     property vST: Currency read FvST write FvST;
     property vProd: Currency read FvProd write FvProd;
@@ -1376,6 +1385,25 @@ type
     property cPais: Integer read FcPais write FcPais;
     property nProcesso: String read FnProcesso write FnProcesso;
     property indIncentivo: TpcnindIncentivo read FindIncentivo write FindIncentivo;
+  end;
+
+  TICMSUFDest = class(TPersistent)
+  private
+    FvBCUFDest: Currency;
+    FpICMSUFDest: Currency;
+    FpICMSInter: Currency;
+    FpICMSInterPart: Currency;
+    FvICMSUFDest: Currency;
+    FvICMSUFRemet: Currency;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property vBCUFDest: Currency read FvBCUFDest write FvBCUFDest;
+    property pICMSUFDest: Currency read FpICMSUFDest write FpICMSUFDest;
+    property pICMSInter: Currency read FpICMSInter write FpICMSInter;
+    property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
+    property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
+    property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
   end;
 
   TTransp = class(TPersistent)
@@ -2423,6 +2451,7 @@ begin
     COFINS.Assign(TImposto(Source).COFINS);
     COFINSST.Assign(TImposto(Source).COFINSST);
     ISSQN.Assign(TImposto(Source).ISSQN);
+    ICMSUFDest.Assign(TImposto(Source).ICMSUFDest);
   end
   else
     inherited;
@@ -2438,7 +2467,8 @@ begin
   FPISST := TPISST.Create;
   FCOFINS := TCOFINS.Create;
   FCOFINSST := TCOFINSST.Create;
-  FISSQN := TISSQN.create;
+  FISSQN := TISSQN.Create;
+  FICMSUFDest := TICMSUFDest.Create;
 end;
 
 destructor TImposto.Destroy;
@@ -2451,6 +2481,7 @@ begin
   FCOFINS.Free;
   FCOFINSST.Free;
   FISSQN.Free;
+  FICMSUFDest.Free;
   inherited;
 end;
 
@@ -3313,6 +3344,7 @@ begin
     comb.Assign(TProd(Source).comb);
     nRECOPI := TProd(Source).nRECOPI;
     nFCI := TProd(Source).nFCI;
+    CEST := TProd(Source).CEST;
   end
   else
     inherited;
@@ -3583,6 +3615,8 @@ begin
     vBC := TICMSTot(Source).vBC;
     vICMS := TICMSTot(Source).vICMS;
     vICMSDeson := TICMSTot(Source).vICMSDeson;
+    vICMSUFDest := TICMSTot(Source).vICMSUFDest;
+    vICMSUFRemet := TICMSTot(Source).vICMSUFRemet;
     vBCST := TICMSTot(Source).vBCST;
     vST := TICMSTot(Source).vST;
     vProd := TICMSTot(Source).vProd;
@@ -3936,6 +3970,23 @@ begin
   if Source is TinfNFeSupl then
   begin
     qrCode := TinfNFeSupl(Source).qrCode;
+  end
+  else
+    inherited;
+end;
+
+{ TICMSUFDest }
+
+procedure TICMSUFDest.Assign(Source: TPersistent);
+begin
+  if Source is TICMSUFDest then
+  begin
+    vBCUFDest := TICMSUFDest(Source).vBCUFDest;
+    pICMSUFDest := TICMSUFDest(Source).pICMSUFDest;
+    pICMSInter := TICMSUFDest(Source).pICMSInter;
+    pICMSInterPart := TICMSUFDest(Source).pICMSInterPart;
+    vICMSUFDest := TICMSUFDest(Source).vICMSUFDest;
+    vICMSUFRemet := TICMSUFDest(Source).vICMSUFRemet;
   end
   else
     inherited;

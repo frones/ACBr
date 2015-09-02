@@ -3738,7 +3738,7 @@ begin
     INI.WriteInteger('SATFortes','MargemDireita',seMargemDireita.Value);
     INI.WriteBool('SATFortes','Preview',cbPreview.Checked);
 
-    INI.WriteString('SATPrinter','Name',Printer.PrinterName);
+    INI.WriteString('SATPrinter','Name',lImpressora.Caption);
 
     INI.WriteInteger('SATRede','tipoInter',rgRedeTipoInter.ItemIndex);
     INI.WriteInteger('SATRede','tipoLan',rgRedeTipoLan.ItemIndex);

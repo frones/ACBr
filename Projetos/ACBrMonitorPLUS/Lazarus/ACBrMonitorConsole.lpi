@@ -10,7 +10,6 @@
       <MainUnit Value="0"/>
       <Title Value="ACBrMonitorConsole"/>
       <UseAppBundle Value="False"/>
-      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -29,7 +28,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\..\Fontes\ACBrComum"/>
-            <OtherUnitFiles Value="..\..\..\Fontes\ACBrSerial;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrComum;..\..\..\Fontes\ACBrDiversos;..\..\..\Fontes\synalist"/>
+            <OtherUnitFiles Value="..\..\..\Fontes\ACBrSerial;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrComum;..\..\..\Fontes\ACBrDiversos;..\..\..\Fontes\ACBrOpenSSL;..\..\..\Fontes\Terceiros\synalist"/>
             <UnitOutputDirectory Value="ACBrMonitorConsoleLib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Linking>
@@ -41,12 +40,8 @@
             <LinkSmart Value="True"/>
           </Linking>
           <Other>
-            <CompilerMessages>
-              <UseMsgFile Value="True"/>
-            </CompilerMessages>
             <CustomOptions Value="-dNOGUI
 -dUseCThreads"/>
-            <CompilerPath Value="$(CompPath)"/>
           </Other>
         </CompilerOptions>
       </Item2>
@@ -70,16 +65,12 @@
         <PackageName Value="FCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="53">
+    <Units Count="54">
       <Unit0>
         <Filename Value="ACBrMonitorConsole.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrMonitorConsole"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="31"/>
-        <CursorPos X="1" Y="35"/>
+        <CursorPos Y="35"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -89,9 +80,7 @@
         <ComponentName Value="dm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <UnitName Value="ACBrMonitorConsoleDM"/>
-        <EditorIndex Value="1"/>
-        <WindowIndex Value="0"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="25"/>
         <CursorPos X="28" Y="31"/>
         <UsageCount Value="41"/>
@@ -101,7 +90,6 @@
       <Unit2>
         <Filename Value="C:\lazarus\fpc\2.4.3\source\packages\fcl-base\src\custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="278"/>
         <CursorPos X="3" Y="281"/>
         <UsageCount Value="9"/>
@@ -111,16 +99,10 @@
         <ComponentName Value="FrmACBrMonitor"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ACBrMonitor1"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit3>
       <Unit4>
         <Filename Value="CmdUnit.pas"/>
-        <UnitName Value="CmdUnit"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="49"/>
         <CursorPos X="14" Y="56"/>
         <UsageCount Value="10"/>
@@ -128,8 +110,6 @@
       <Unit5>
         <Filename Value="DoETQUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoETQUnit"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="31"/>
         <CursorPos X="22" Y="45"/>
         <UsageCount Value="40"/>
@@ -137,8 +117,6 @@
       <Unit6>
         <Filename Value="DoACBrUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoACBrUnit"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="38"/>
         <CursorPos X="27" Y="43"/>
         <UsageCount Value="40"/>
@@ -146,23 +124,18 @@
       <Unit7>
         <Filename Value="DoECFBemafi32.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFBemafi32"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="32"/>
         <CursorPos X="23" Y="48"/>
         <UsageCount Value="40"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
-        <UnitName Value="ACBrDevice"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="16"/>
         <CursorPos X="35" Y="23"/>
         <UsageCount Value="10"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="538"/>
         <CursorPos X="23" Y="552"/>
         <UsageCount Value="10"/>
@@ -170,44 +143,36 @@
       <Unit10>
         <Filename Value="DoLCBUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoLCBUnit"/>
         <UsageCount Value="40"/>
       </Unit10>
       <Unit11>
         <Filename Value="DoBALUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoBALUnit"/>
         <UsageCount Value="40"/>
       </Unit11>
       <Unit12>
         <Filename Value="DoCEPUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoCEPUnit"/>
         <UsageCount Value="40"/>
       </Unit12>
       <Unit13>
         <Filename Value="DoCHQUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoCHQUnit"/>
         <UsageCount Value="40"/>
       </Unit13>
       <Unit14>
         <Filename Value="DoDISUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoDISUnit"/>
         <UsageCount Value="40"/>
       </Unit14>
       <Unit15>
         <Filename Value="DoECFObserver.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFObserver"/>
         <UsageCount Value="40"/>
       </Unit15>
       <Unit16>
         <Filename Value="DoECFUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoECFUnit"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="862"/>
         <CursorPos X="37" Y="887"/>
         <UsageCount Value="40"/>
@@ -215,192 +180,145 @@
       <Unit17>
         <Filename Value="DoGAVUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoGAVUnit"/>
         <UsageCount Value="40"/>
       </Unit17>
       <Unit18>
         <Filename Value="DoIBGEUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoIBGEUnit"/>
         <UsageCount Value="40"/>
       </Unit18>
       <Unit19>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
-        <UnitName Value="ACBrSocket"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="271"/>
         <CursorPos X="51" Y="271"/>
         <UsageCount Value="10"/>
       </Unit19>
       <Unit20>
         <Filename Value="..\..\..\Pacotes\Lazarus\ACBrSerial.pas"/>
-        <UnitName Value="ACBrSerial"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="6"/>
         <CursorPos X="33" Y="33"/>
         <UsageCount Value="9"/>
       </Unit20>
       <Unit21>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
-        <UnitName Value="ACBrBase"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="57"/>
         <CursorPos X="42" Y="80"/>
         <UsageCount Value="9"/>
       </Unit21>
       <Unit22>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <UnitName Value="ACBrUtil"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="77"/>
         <CursorPos X="23" Y="89"/>
         <UsageCount Value="9"/>
       </Unit22>
       <Unit23>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECF.pas"/>
-        <UnitName Value="ACBrECF"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="3137"/>
         <CursorPos X="37" Y="3176"/>
         <UsageCount Value="9"/>
       </Unit23>
       <Unit24>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrEAD.pas"/>
-        <UnitName Value="ACBrEAD"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="111"/>
         <CursorPos X="14" Y="125"/>
         <UsageCount Value="9"/>
       </Unit24>
       <Unit25>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrCHQImpressoraComum.pas"/>
-        <UnitName Value="ACBrCHQImpressoraComum"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="9"/>
       </Unit25>
       <Unit26>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQClass.pas"/>
-        <UnitName Value="ACBrETQClass"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="48"/>
         <CursorPos X="61" Y="56"/>
         <UsageCount Value="9"/>
       </Unit26>
       <Unit27>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQ.pas"/>
-        <UnitName Value="ACBrETQ"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="129"/>
         <CursorPos X="29" Y="137"/>
         <UsageCount Value="9"/>
       </Unit27>
       <Unit28>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQPpla.pas"/>
-        <UnitName Value="ACBrETQPpla"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="314"/>
         <CursorPos X="20" Y="329"/>
         <UsageCount Value="9"/>
       </Unit28>
       <Unit29>
         <Filename Value="C:\lazarus\fpc\2.4.3\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="53"/>
         <CursorPos X="5" Y="67"/>
         <UsageCount Value="9"/>
       </Unit29>
       <Unit30>
         <Filename Value="..\..\..\Fontes\synalist\blcksock.pas"/>
-        <UnitName Value="blcksock"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="583"/>
         <CursorPos X="15" Y="597"/>
         <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
         <Filename Value="C:\lazarus\fpc\2.4.3\source\rtl\objpas\classes\classesh.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="608"/>
         <CursorPos X="15" Y="616"/>
         <UsageCount Value="9"/>
       </Unit31>
       <Unit32>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrExtenso.pas"/>
-        <UnitName Value="ACBrExtenso"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="90"/>
         <CursorPos X="32" Y="92"/>
         <UsageCount Value="9"/>
       </Unit32>
       <Unit33>
         <Filename Value="UtilUnit.pas"/>
-        <UnitName Value="UtilUnit"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="28"/>
         <CursorPos X="10" Y="42"/>
         <UsageCount Value="9"/>
       </Unit33>
       <Unit34>
         <Filename Value="sndkey32.pas"/>
-        <UnitName Value="sndkey32"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="476"/>
         <CursorPos X="37" Y="494"/>
         <UsageCount Value="9"/>
       </Unit34>
       <Unit35>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrCEP.pas"/>
-        <UnitName Value="ACBrCEP"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="182"/>
         <CursorPos X="10" Y="190"/>
         <UsageCount Value="9"/>
       </Unit35>
       <Unit36>
         <Filename Value="..\..\..\Fontes\synalist\httpsend.pas"/>
-        <UnitName Value="httpsend"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="370"/>
         <CursorPos X="28" Y="399"/>
         <UsageCount Value="9"/>
       </Unit36>
       <Unit37>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFDaruma.pas"/>
-        <UnitName Value="ACBrECFDaruma"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="410"/>
         <CursorPos X="36" Y="437"/>
         <UsageCount Value="9"/>
       </Unit37>
       <Unit38>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrECFFiscNET.pas"/>
-        <UnitName Value="ACBrECFFiscNET"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="1930"/>
         <CursorPos X="43" Y="1943"/>
         <UsageCount Value="9"/>
       </Unit38>
       <Unit39>
         <Filename Value="ACBrMonitor1.lfm"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit39>
       <Unit40>
         <Filename Value="C:\usr\lib\lazarus\debugger\gdbmidebugger.pp"/>
         <UnitName Value="GDBMIDebugger"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="3266"/>
         <CursorPos X="24" Y="3283"/>
         <UsageCount Value="9"/>
       </Unit40>
       <Unit41>
         <Filename Value="C:\usr\share\fpcsrc\rtl\linux\signal.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="53"/>
         <CursorPos X="3" Y="90"/>
         <UsageCount Value="9"/>
@@ -408,28 +326,24 @@
       <Unit42>
         <Filename Value="C:\usr\lib\lazarus\lcl\lconvencoding.pas"/>
         <UnitName Value="LConvEncoding"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="4691"/>
         <CursorPos X="10" Y="4698"/>
         <UsageCount Value="9"/>
       </Unit42>
       <Unit43>
         <Filename Value="C:\usr\share\fpcsrc\rtl\inc\ustringh.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="81"/>
         <CursorPos X="10" Y="98"/>
         <UsageCount Value="9"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\usr\share\fpcsrc\rtl\inc\ustrings.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="177"/>
         <CursorPos X="71" Y="137"/>
         <UsageCount Value="9"/>
       </Unit44>
       <Unit45>
         <Filename Value="ACBrMonitor.iss"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="28"/>
         <CursorPos X="81" Y="47"/>
         <UsageCount Value="9"/>
@@ -437,24 +351,16 @@
       </Unit45>
       <Unit46>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrGAVImpressoraComum.pas"/>
-        <UnitName Value="ACBrGAVImpressoraComum"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="10"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="9"/>
       </Unit46>
       <Unit47>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrETQPplb.pas"/>
-        <UnitName Value="ACBrETQPplb"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="9"/>
       </Unit47>
       <Unit48>
         <Filename Value="C:\usr\local\share\lazarus\lcl\lclrescache.pas"/>
         <UnitName Value="LCLResCache"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="394"/>
         <CursorPos X="12" Y="405"/>
         <UsageCount Value="9"/>
@@ -462,22 +368,18 @@
       <Unit49>
         <Filename Value="C:\dev\lazarus\components\lazutils\avglvltree.pas"/>
         <UnitName Value="AvgLvlTree"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="131"/>
         <CursorPos X="15" Y="148"/>
         <UsageCount Value="9"/>
       </Unit49>
       <Unit50>
         <Filename Value="versao.txt"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
         <CursorPos X="79" Y="2"/>
         <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit50>
       <Unit51>
         <Filename Value="C:\dev\fpc\rtl\objpas\classes\classesh.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="1976"/>
         <CursorPos X="17" Y="1984"/>
         <UsageCount Value="9"/>
@@ -485,14 +387,21 @@
       <Unit52>
         <Filename Value="DoEmailUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoEmailUnit"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="45"/>
         <CursorPos X="55" Y="55"/>
         <UsageCount Value="31"/>
       </Unit52>
+      <Unit53>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="44"/>
+        <CursorPos X="35" Y="52"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit53>
     </Units>
-    <JumpHistory Count="24" HistoryIndex="23">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
         <Filename Value="ACBrMonitorConsoleDM.pas"/>
         <Caret Line="386" Column="68" TopLine="61"/>
@@ -589,6 +498,9 @@
         <Filename Value="ACBrMonitorConsoleDM.pas"/>
         <Caret Line="672" Column="44" TopLine="592"/>
       </Position24>
+      <Position25>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
+      </Position25>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -603,12 +515,8 @@
       <UnitOutputDirectory Value="ACBrMonitorConsoleLib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Other>
-      <CompilerMessages>
-        <UseMsgFile Value="True"/>
-      </CompilerMessages>
       <CustomOptions Value="-dCONSOLE
 -dUseCThreads"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>
@@ -624,5 +532,4 @@
       </Item3>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>

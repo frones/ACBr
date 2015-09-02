@@ -48,8 +48,7 @@ function SubstituirVariaveis(const ATexto: String): String;
 
 implementation
 
-Uses IniFiles, StrUtils, DateUtils,
-  Windows, Forms,
+Uses IniFiles, StrUtils, DateUtils, Forms,
   ACBrUtil, ACBrMonitor1 ,
   ACBrNFeDANFEClass,
   pcnNFe, pcnConversao, pcnConversaoNFe,

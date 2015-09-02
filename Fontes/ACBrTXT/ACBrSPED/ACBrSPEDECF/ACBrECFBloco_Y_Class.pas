@@ -432,6 +432,7 @@ begin
         Add(LFill('Y570') +
             LFill(CNPJ_FON, 14) +
             LFill(NOM_EMP) +
+            LFill(IND_ORG_PUB) +
             LFill(COD_REC, 4) +
             VLFill(VL_REND, 19, 2) +
             VLFill(IR_RET, 19, 2) +

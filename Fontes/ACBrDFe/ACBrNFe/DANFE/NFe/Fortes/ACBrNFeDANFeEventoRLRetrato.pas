@@ -239,12 +239,12 @@ begin
       // Preenche os campos - Quadro Evento
       rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
       case InfEvento.tpAmb of
-        taProducao:    rllAmbiente.Caption := 'PRODUÇÃO';
-        taHomologacao: rllAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+        taProducao:    rllAmbiente.Caption := ACBrStr('PRODUÇÃO');
+        taHomologacao: rllAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
       end;
       rllDataHoraEvento.Caption := DateTimeToStr(InfEvento.dhEvento);
       rllEvento.Caption := InfEvento.TipoEvento;
-      rllDescrEvento.Caption := InfEvento.DescEvento;
+      rllDescrEvento.Caption := ACBrStr(InfEvento.DescEvento);
       rllSeqEvento.Caption := IntToStr(InfEvento.nSeqEvento);
       rllVersaoEvento.Caption := InfEvento.versaoEvento;
       rllStatusEvento.Caption := IntToStr(RetInfEvento.cStat) + ' - ' +
@@ -292,7 +292,7 @@ begin
       case InfEvento.tpEvento of
         teCCe:
           begin
-            rllTitulo.Caption := 'CARTA DE CORREÇÃO ELETRÔNICA';
+            rllTitulo.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
 
             // Prrenche os campos - "Condições de uso"
             rlmCondUso.Lines.Add(StringReplace(InfEvento.detEvento.xCondUso,
@@ -328,7 +328,7 @@ begin
   // Exibe o nome do usuário
   if FUsuario <> '' then
     begin
-      rllUsuario.Caption := 'DATA / HORA DA IMPRESSÃO: ' +
+      rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') +
                             DateTimeToStr(Now) + ' - ' + FUsuario;
       rllUsuario.Visible := True;
     end

@@ -84,6 +84,7 @@ requires
   {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg,{$ENDIF} //XE6
   {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg,{$ENDIF} //XE7
   {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg,{$ENDIF} //XE8  
+  {$IFDEF VER300} FortesReportCE_Win32_DXE9_vcl, vclimg,{$ENDIF} //10 Seattle
   dsnap;
 
 contains

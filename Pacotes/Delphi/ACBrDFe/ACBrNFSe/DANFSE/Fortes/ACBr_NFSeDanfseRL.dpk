@@ -40,6 +40,7 @@ requires
   {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg, dsnap, {$ENDIF} //XE6
   {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg, dsnap, {$ENDIF} //XE7  
   {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg, dsnap, {$ENDIF} //XE8
+  {$IFDEF VER300} FortesReportCE_Win32_DXE9_vcl, vclimg,{$ENDIF} //10 Seattle
   ACBr_NFSe;
 
 contains

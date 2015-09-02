@@ -100,8 +100,6 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    function GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
-
     procedure ImprimirDACTE(CTE: TCTE = nil); virtual;
     procedure ImprimirDACTEPDF(CTE: TCTE = nil); virtual;
     procedure ImprimirEVENTO(CTE: TCTe = nil); virtual;
@@ -233,22 +231,6 @@ end;
 procedure TACBrCTeDACTEClass.ErroAbstract(NomeProcedure: String);
 begin
   raise Exception.Create(NomeProcedure);
-end;
-
-function TACBrCTeDACTEClass.GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
-begin
-  Result := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(FPathPDF, 'CTe', CNPJ, Data);
-(*
-  if EstaVazio(FPathPDF) then
-     if Assigned(FACBrCTe) then
-        FPathPDF := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.PathSalvar;
-
-  if NaoEstaVazio(FPathPDF) then
-     if not DirectoryExists(FPathPDF) then
-        ForceDirectories(FPathPDF);
-
-  Result := PathWithDelim(FPathPDF);
-*)
 end;
 
 procedure TACBrCTeDACTEClass.ImprimirEVENTO(CTE: TCTe);

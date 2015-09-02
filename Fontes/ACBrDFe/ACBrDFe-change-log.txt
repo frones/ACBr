@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/09/2015
+[-] remoção de metodo não usado
+[-] alteração para adicionar o path delimiter ao PathPDF
+    por: regys.silveira / Daniel Simões
+
+02/09/2015
 -- ACBrDFeCapicomDelphiSoap --  (por: Augusto Fontana)
 [-] Correção para difinição de URL e SoapAction
      http://www.projetoacbr.com.br/forum/index.php?showtopic=24107

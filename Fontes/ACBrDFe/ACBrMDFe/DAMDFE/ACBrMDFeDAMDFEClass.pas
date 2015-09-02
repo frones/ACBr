@@ -87,8 +87,6 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    function GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
-
     procedure ImprimirDAMDFe(MDFe: TMDFe = nil); virtual;
     procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); virtual;
     procedure ImprimirEVENTO(MDFe: TMDFe = nil); virtual;
@@ -213,22 +211,6 @@ end;
 procedure TACBrMDFeDAMDFeClass.ErroAbstract(NomeProcedure: String);
 begin
   raise Exception.Create(NomeProcedure);
-end;
-
-function TACBrMDFeDAMDFeClass.GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
-begin
-  Result := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(FPathPDF, 'MDFe', CNPJ, Data);
-(*
-  if EstaVazio(FPathPDF) then
-     if Assigned(FACBrMDFe) then
-        FPathPDF := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.PathSalvar;
-
-  if NaoEstaVazio(FPathPDF) then
-     if not DirectoryExists(FPathPDF) then
-        ForceDirectories(FPathPDF);
-
-  Result := PathWithDelim(FPathPDF);
-*)
 end;
 
 procedure TACBrMDFeDAMDFeClass.ImprimirEVENTO(MDFe: TMDFe);

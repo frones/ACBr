@@ -78,6 +78,8 @@ type
    private
     procedure SetNFE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
+    procedure SetPathPDF(const Value: String);
+    function GetPathPDF: String;
   protected
     FACBrNFe: TComponent;
     FLogo: String;
@@ -127,8 +129,6 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    function GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
-
     procedure ImprimirDANFE(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); virtual;
@@ -142,7 +142,7 @@ type
     property Logo: String                            read FLogo                           write FLogo;
     property Sistema: String                         read FSistema                        write FSistema;
     property Usuario: String                         read FUsuario                        write FUsuario;
-    property PathPDF: String                         read FPathPDF                        write FPathPDF;
+    property PathPDF: String                         read GetPathPDF                      write SetPathPDF;
     property Impressora: String                      read FImpressora                     write FImpressora;
     property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
     property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
@@ -337,25 +337,23 @@ begin
   end;
 end;
 
+procedure TACBrNFeDANFEClass.SetPathPDF(const Value: String);
+begin
+  if Trim(Value) <> '' then
+    FPathPDF := IncludeTrailingPathDelimiter(Value);
+end;
+
 procedure TACBrNFeDANFEClass.ErroAbstract(NomeProcedure: String);
 begin
   raise EACBrNFeException.Create( NomeProcedure );
 end;
 
-function TACBrNFeDANFEClass.GetPathPDF(Data: TDateTime = 0; CNPJ : String = ''): String;
+function TACBrNFeDANFEClass.GetPathPDF: String;
 begin
-  Result := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(FPathPDF, 'NFe', CNPJ, Data);
-(*
-  if EstaVazio(FPathPDF) then
-     if Assigned(FACBrNFe) then
-        FPathPDF := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.PathSalvar;
-
-  if NaoEstaVazio(FPathPDF) then
-     if not DirectoryExists(FPathPDF) then
-        ForceDirectories(FPathPDF);
-
-  Result := PathWithDelim(FPathPDF);
-*)
+  if Trim(FPathPDF) <> '' then
+    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  else
+    Result := Trim(FPathPDF)
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTO(NFE: TNFe);

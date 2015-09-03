@@ -1088,13 +1088,13 @@ begin
 
   if FExpandirLogoMarca then
   begin
-    rliLogo.top     := 3;
-    rliLogo.Left    := 3;
-    rliLogo.Height  := 91;
-    rliLogo.Width   := 321;
+    rlmEmitente.visible      := False;
+    rlmDadosEmitente.visible := False;
     rliLogo.Stretch := True;
-    rlmEmitente.Enabled      := False;
-    rlmDadosEmitente.Enabled := False;
+    rliLogo.top     := 5;
+    rliLogo.Left    := 3;
+    rliLogo.Height  := 115;//91;
+    rliLogo.Width   := 324;//321
   end;
 
   rllModal.Caption   := TpModalToStrText(FCTe.Ide.modal);

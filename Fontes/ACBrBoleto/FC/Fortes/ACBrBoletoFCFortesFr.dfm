@@ -3986,7 +3986,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
-    DisplayName = 'ACBrBoleto - http://acbr.sf.net'
+    DisplayName = 'Filtro HTML'
     Left = 158
     Top = 8
   end
@@ -3994,7 +3994,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     DocumentInfo.Creator = 
       'FortesReport (Open Source) v3.24(B14)  \251 Copyright '#169' 1999-200' +
       '8 Fortes Inform'#225'tica'
-    DisplayName = 'ACBrBoleto - http://acbr.sf.net'
+    DisplayName = 'Filtro PDF'
     Left = 128
     Top = 8
   end

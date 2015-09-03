@@ -493,15 +493,15 @@ begin
         Add(LFill('Y600') +
             LFill(DT_ALT_SOC) +
             LFill(DT_FIM_SOC) +
-            LFill(PAIS) +
+            LFill(PAIS,3) +
             LFill(IND_QUALIF_SOCIO) +
-            LFill(CPF_CNPJ, 14) +
+            LFill(CPF_CNPJ) +
             LFill(NOM_EMP) +
             LFill(QUALIF) +
             VLFill(PERC_CAP_TOT, 4, 2) +
             VLFill(PERC_CAP_VOT, 4, 2) +
-            LFill(CPF_REP_LEG, 11) +
-            LFill(QUALIF_REP_LEG, 2));
+            LFill(CPF_REP_LEG) +
+            LFill(QUALIF_REP_LEG));
       end;
 
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
@@ -517,9 +517,9 @@ begin
     for intFor := 0 to FRegistroY001.RegistroY611.Count - 1 do begin
       with FRegistroY001.RegistroY611.Items[intFor] do begin
         Add(LFill('Y611') +
-            LFill(PAIS) +
+            LFill(PAIS,3) +
             LFill(IND_PF_PJ) +
-            LFill(CPF_CNPJ, 14) +
+            LFill(CPF_CNPJ) +
             LFill(NOM_EMP) +
             LFill(QUALIF) +
             VLFill(VL_REM_TRAB, 19, 2) +
@@ -542,9 +542,9 @@ begin
     for intFor := 0 to FRegistroY001.RegistroY612.Count - 1 do begin
       with FRegistroY001.RegistroY612.Items[intFor] do begin
         Add(LFill('Y612') +
-            LFill(CPF, 11) +
+            LFill(CPF) +
             LFill(NOME) +
-            LFIll(QUALIF, 2) +
+            LFIll(QUALIF,2) +
             VLFill(VL_REM_TRAB, 19, 2) +
             VLFill(VL_DEM_REND, 19, 2) +
             VLFill(VL_IR_RET, 19, 2));

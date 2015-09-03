@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/09/2015 ver. 0.0.142a
+-- ACBrBancoCaixa --
+[*] Inclusão da leitura do arquivo retorno CNAB400.(easysoft)
+http://www.projetoacbr.com.br/forum/topic/22348-caixa-economica-cnab-400/
+
+-- ACBrBancoSicredi --
+[*] Inclusão da leitura do arquivo retorno CNAB400.(andersonh)
+http://www.projetoacbr.com.br/forum/topic/23143-ajuste-lerretorno-sicredi-e-impressao-boleto-fortes/
+
+-- ACBrBancoBancoob --
+[*] Ajuste remessa CNAB400 para informar o desconto no arquivo.(João Paulo F. belluci)
+http://www.projetoacbr.com.br/forum/topic/23173-registro-400-sicoob-bancoob/
+
+
 Data: 26/08/2015 ver. 0.0.141a
 -- ACBrBancoCecred --
 [*] Adicionado leitura do arquivo retorno CNAB240.(Michel Ouriques)

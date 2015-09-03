@@ -62,6 +62,7 @@ type
     function GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String; override;
     function GerarRegistroTrailler240(ARemessa : TStringList): String;  override;
     procedure LerRetorno240(ARetorno: TStringList); override;
+    procedure LerRetorno400(ARetorno: TStringList); override; 
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string; override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
@@ -735,6 +736,7 @@ begin
             ValorDesconto        := StrToFloatDef(Copy(Linha,33,15),0)/100;
             ValorAbatimento      := StrToFloatDef(Copy(Linha,48,15),0)/100;
             ValorIOF             := StrToFloatDef(Copy(Linha,63,15),0)/100;
+            ValorPago            := StrToFloatDef(Copy(Linha,78,15),0)/100;
             ValorRecebido        := StrToFloatDef(Copy(Linha,93,15),0)/100;
             ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,108,15),0)/100;
             ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,123,15),0)/100;
@@ -993,6 +995,98 @@ begin
     07 : result := 'Correspondente Bancário';
     08 : result := 'Em Cartório'
   end;
+end;
+
+procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);
+var
+  Titulo : TACBrTitulo;
+  ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
+  rAgencia, rConta, Linha, rCedente :String;
+begin
+   fpTamanhoMaximoNossoNum := 15;
+   ContLinha := 0;
+
+   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
+      raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                             'não é um arquivo de retorno do '+ Nome));
+
+   rCedente := trim(Copy(ARetorno[0],47,30));
+   rAgencia := Copy(ARetorno[0],27,4);
+   rConta   := Copy(ARetorno[0],34,8);
+
+
+   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],390,5),0);
+
+   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
+                                                             Copy(ARetorno[0],97,2)+'/'+
+                                                             Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
+
+   with ACBrBanco.ACBrBoleto do
+   begin
+      if (not LeCedenteRetorno) and
+         ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
+          (rConta <> OnlyNumber(Cedente.Conta))) then
+         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
+
+      if LeCedenteRetorno then
+      begin
+        Cedente.Nome         := rCedente;
+        Cedente.Agencia      := rAgencia;
+        Cedente.Conta        := rConta;
+      end;
+
+      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+   end;
+
+   ACBrBanco.TamanhoMaximoNossoNum := 15;
+
+   for ContLinha := 1 to ARetorno.Count - 2 do
+   begin
+     Linha := ARetorno[ContLinha] ;
+
+     if (Copy(Linha,1,1) <> '7') and (Copy(Linha,1,1) <> '1') then
+       Continue;
+
+     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+     with Titulo do
+     begin
+       SeuNumero                   := copy(Linha,59,15);
+       NumeroDocumento             := copy(Linha,117,10);
+       OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
+                                        copy(Linha,109,2),0));
+       DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                              Copy(Linha,113,2)+'/'+
+                                              Copy(Linha,115,2),0, 'DD/MM/YY' );
+
+       Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                          Copy(Linha,149,2)+'/'+
+                                          Copy(Linha,151,2),0, 'DD/MM/YY' );
+
+       ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+       ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
+       ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+       ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+       ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+       ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+       ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+       Carteira             := Copy(Linha,57,2);
+       NossoNumero          := Copy(Linha,59,15);
+       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100; //--Anderson: Valor tarifa
+
+       DataCredito:= StringToDateTimeDef( Copy(Linha,294,2)+'/'+
+                                          Copy(Linha,296,2)+'/'+
+                                          Copy(Linha,298,2),0, 'DD/MM/YY' );
+
+       if StrToIntDef(SeuNumero,0) = 0 then
+       begin
+         SeuNumero := NossoNumero;
+         NumeroDocumento := NossoNumero
+       end;
+     end;
+   end;
+
+   fpTamanhoMaximoNossoNum := 15;
 end;
 
 end.

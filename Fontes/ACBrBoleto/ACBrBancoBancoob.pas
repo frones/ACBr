@@ -243,6 +243,7 @@ var
   TipoCedente, wLinha :String;
   I: Integer;
   wRespEntrega: Char;
+  strDataDesconto, strValorDesconto:String;
 begin
 
     if (Length(ACBrTitulo.Carteira) < 1 )then
@@ -316,6 +317,18 @@ begin
          DiasProtesto := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
       else
          DiasProtesto := '00';
+         
+      { Data do Primeiro Desconto}
+      if ( DataDesconto <> 0 ) then
+        strDataDesconto := FormatDateTime('ddmmyy', DataDesconto)
+      else
+        strDataDesconto := IntToStrZero(0, 6);
+
+      { Valor do Primeiro Desconto}
+      if ( ValorDesconto <> 0 ) then
+        strValorDesconto := IntToStrZero( Round( ValorDesconto * 100 ), 13)
+      else
+        strValorDesconto := IntToStrZero(0, 13);
 
       with ACBrBoleto do
       begin
@@ -364,8 +377,8 @@ begin
                   IntToStrZero( Round( (ValorMoraJuros * 30) *10000 ), 6) +  // Taxa de mora mês
                   IntToStrZero( Round( PercentualMulta * 10000 ), 6)      +  // Taxa de multa
                   wRespEntrega                                            +  // Responsabilidade Distribuição
-                  IntToStrZero( 0, 6)                                     +  // Preencher com zeros quando não for concedido nenhum desconto.
-                  IntToStrZero( 0, 13)                                    +  // Preencher com zeros quando não for concedido nenhum desconto.
+                  strDataDesconto                                         +  // Data do Primeiro Desconto, Preencher com zeros quando não for concedido nenhum desconto.
+                  strValorDesconto                                        +  // Valor do Primeiro Desconto, Preencher com zeros quando não for concedido nenhum desconto.
                   IntToStrZero( 9 , 1)                                    +  // MOEDA 9 BRASIL
                   IntToStrZero( 0, 12)                                    +  // Valor IOF / Quantidade Monetária: "0000000000000"
                   IntToStrZero( 0, 13)                                    +  // Valor Abatimento

@@ -592,10 +592,7 @@ begin
   GerarDadosConsumidor;
   GerarRodape;
 
-  for I:=0 to Max(NumCopias,1) do
-  begin
-    FPosPrinter.Imprimir;
-  end;
+  FPosPrinter.Imprimir('',False,True,True,NumCopias);
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe);

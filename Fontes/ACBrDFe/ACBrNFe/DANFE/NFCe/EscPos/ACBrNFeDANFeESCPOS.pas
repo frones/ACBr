@@ -569,6 +569,8 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
   const AResumido: Boolean);
+var
+  I: Integer;
 begin
   if NFE = nil then
   begin
@@ -590,7 +592,10 @@ begin
   GerarDadosConsumidor;
   GerarRodape;
 
-  FPosPrinter.Imprimir;
+  for I:=0 to Max(NumCopias,1) do
+  begin
+    FPosPrinter.Imprimir;
+  end;
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe);

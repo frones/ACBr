@@ -41,16 +41,16 @@ type
 
  TACBrNFSeDANFSeClass = class( TComponent )
   private
+    function GetPathPDF: String;
+    procedure SetPathPDF(const Value: String);
     procedure SetNFSe(const Value: TComponent);
     procedure ErroAbstract( NomeProcedure: String );
-    function GetPathArquivos: String;
-    procedure SetPathArquivos(const Value: String);
   protected
     FACBrNFSe: TComponent;
     FLogo: String;
     FSistema: String;
     FUsuario: String;
-    FPathArquivos: String;
+    FPathPDF: String;
     FImpressora: String;
     FMostrarPreview: Boolean;
     FMostrarStatus: Boolean;
@@ -98,7 +98,7 @@ type
     property Logo: String read FLogo write FLogo;
     property Sistema: String read FSistema write FSistema;
     property Usuario: String read FUsuario write FUsuario;
-    property PathPDF: String read GetPathArquivos write FPathArquivos;
+    property PathPDF: String read GetPathPDF write SetPathPDF;
     property Impressora: String read FImpressora write FImpressora;
     property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
     property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
@@ -154,7 +154,7 @@ begin
  FLogo           := '';
  FSistema        := '';
  FUsuario        := '';
- FPathArquivos   := '';
+ FPathPDF        := '';
  FImpressora     := '';
  FMostrarPreview := True;
  FMostrarStatus  := True;
@@ -197,19 +197,6 @@ end;
 procedure TACBrNFSeDANFSeClass.ErroAbstract(NomeProcedure: String);
 begin
  raise Exception.Create( NomeProcedure );
-end;
-
-function TACBrNFSeDANFSeClass.GetPathArquivos: String;
-begin
- if EstaVazio(FPathArquivos)
-  then if Assigned(FACBrNFSe)
-        then FPathArquivos := TACBrNFSe(FACBrNFSe).Configuracoes.Arquivos.PathSalvar;
-
- if NaoEstaVazio(FPathArquivos)
-  then if not DirectoryExists(FPathArquivos)
-        then ForceDirectories(FPathArquivos);
-
- Result := PathWithDelim(FPathArquivos);
 end;
 
 procedure TACBrNFSeDANFSeClass.VisualizarDANFSe(NFSe: TNFSe);
@@ -270,9 +257,18 @@ begin
   end;
 end;
 
-procedure TACBrNFSeDANFSeClass.SetPathArquivos(const Value: String);
+function TACBrNFSeDANFSeClass.GetPathPDF: String;
 begin
-  FPathArquivos := Value;
+  if Trim(FPathPDF) <> '' then
+    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  else
+    Result := Trim(FPathPDF)
+end;
+
+procedure TACBrNFSeDANFSeClass.SetPathPDF(const Value: String);
+begin
+  if Trim(Value) <> '' then
+    FPathPDF := IncludeTrailingPathDelimiter(Value);
 end;
 
 end.

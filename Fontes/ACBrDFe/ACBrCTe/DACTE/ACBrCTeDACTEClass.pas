@@ -52,18 +52,13 @@ interface
 
 uses
   SysUtils, Classes,
-  {$IF DEFINED(VisualCLX)}
-     QForms,
-  {$ELSEIF DEFINED(FMX)}
-     FMX.Forms,
-  {$ELSE}
-     Forms,
-  {$IFEND}
   pcteCTE, pcnConversao;
 
 type
   TACBrCTeDACTEClass = class(TComponent)
   private
+    function GetPathPDF: String;
+    procedure SetPathPDF(const Value: String);
     procedure SetCTE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
   protected
@@ -111,7 +106,7 @@ type
     property Logo: String                   read FLogo                   write FLogo;
     property Sistema: String                read FSistema                write FSistema;
     property Usuario: String                read FUsuario                write FUsuario;
-    property PathPDF: String                read FPathPDF                write FPathPDF;
+    property PathPDF: String                read GetPathPDF              write SetPathPDF;
     property Impressora: String             read FImpressora             write FImpressora;
     property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
@@ -251,6 +246,20 @@ end;
 procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAOPDF(CTE: TCTe);
 begin
   ErroAbstract('ImprimirPDF');
+end;
+
+function TACBrCTeDACTEClass.GetPathPDF: String;
+begin
+  if Trim(FPathPDF) <> '' then
+    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  else
+    Result := Trim(FPathPDF)
+end;
+
+procedure TACBrCTeDACTEClass.SetPathPDF(const Value: String);
+begin
+  if Trim(Value) <> '' then
+    FPathPDF := IncludeTrailingPathDelimiter(Value);
 end;
 
 end.

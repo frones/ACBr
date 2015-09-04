@@ -2043,7 +2043,7 @@ begin
   Result := '';
   with FNFe.Det.Items[inItem] do
   begin
-    if Imposto.vTotTrib <> 0 then
+    if (Imposto.vTotTrib <> 0)  and (ExibirTotalTributosItem) then
     begin
       Result := ';';
       with Imposto do

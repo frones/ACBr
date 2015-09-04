@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsNFe
+        ActivePage = tsACBrBoleto
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 11
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4681,9 +4681,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsRemessaRetorno
+            ActivePage = tsLayoutBoleto
             Align = alClient
-            TabIndex = 3
+            TabIndex = 2
             TabOrder = 0
             object tsCedente: TTabSheet
               Caption = 'Cedente'
@@ -5250,7 +5250,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object ckgBOLMostrar: TCheckGroup
                 Left = 7
-                Height = 83
+                Height = 131
                 Top = 54
                 Width = 224
                 AutoFill = True
@@ -5263,16 +5263,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ChildSizing.ShrinkHorizontal = crsScaleChilds
                 ChildSizing.ShrinkVertical = crsScaleChilds
                 ChildSizing.Layout = cclTopToBottomThenLeftToRight
-                ChildSizing.ControlsPerLine = 2
-                ClientHeight = 61
+                ChildSizing.ControlsPerLine = 3
+                ClientHeight = 109
                 ClientWidth = 220
                 Items.Strings = (
                   'Previsualização'
+                  'Mostrar Progresso'
                   'Configuração Impressora'
                 )
                 TabOrder = 3
                 Data = {
-                  020000000202
+                  03000000020202
                 }
               end
               object cbxBOLLayout: TComboBox
@@ -6479,9 +6480,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = DANFE
+            ActivePage = ConfiguracaoNFE
             Align = alClient
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             object ConfiguracaoNFE: TTabSheet
               Caption = 'Geral'
@@ -10521,7 +10522,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

@@ -2808,7 +2808,8 @@ begin
     edtBOLSH.Text := Ini.ReadString('BOLETO', 'SoftwareHouse', '');
     spBOLCopias.Value := Ini.ReadInteger('BOLETO', 'Copias', 1);
     ckgBOLMostrar.Checked[0] := Ini.ReadBool('BOLETO', 'Preview', True);
-    ckgBOLMostrar.Checked[1] := Ini.ReadBool('BOLETO', 'Setup', True);
+    ckgBOLMostrar.Checked[1] := Ini.ReadBool('BOLETO', 'Progresso', True);
+    ckgBOLMostrar.Checked[2] := Ini.ReadBool('BOLETO', 'Setup', True);
     cbxBOLLayout.ItemIndex := Ini.ReadInteger('BOLETO', 'Layout', 0);
     cbxBOLFiltro.ItemIndex := Ini.ReadInteger('BOLETO', 'Filtro', 0);
     deBOLDirArquivo.Text := Ini.ReadString('BOLETO', 'DirArquivoBoleto', '');
@@ -3346,7 +3347,8 @@ begin
     SoftwareHouse := edtBOLSH.Text;
     DirLogo := deBOLDirLogo.Text;
     MostrarPreview := ckgBOLMostrar.Checked[0];
-    MostrarSetup := ckgBOLMostrar.Checked[1];
+    MostrarProgresso := ckgBOLMostrar.Checked[1];
+    MostrarSetup := ckgBOLMostrar.Checked[2];
     PrinterName := cbxBOLImpressora.Text;
 
     wNomeArquivo := Trim(deBOLDirArquivo.Text);
@@ -3904,7 +3906,8 @@ begin
     ini.WriteString('BOLETO', 'SoftwareHouse', edtBOLSH.Text);
     ini.WriteInteger('BOLETO', 'Copias', spBOLCopias.Value);
     Ini.WriteBool('BOLETO', 'Preview', ckgBOLMostrar.Checked[0]);
-    ini.WriteBool('BOLETO', 'Setup', ckgBOLMostrar.Checked[1]);
+    ini.WriteBool('BOLETO', 'Progresso', ckgBOLMostrar.Checked[1]);
+    ini.WriteBool('BOLETO', 'Setup', ckgBOLMostrar.Checked[2]);
     ini.WriteInteger('BOLETO', 'Layout', cbxBOLLayout.ItemIndex);
     ini.WriteInteger('BOLETO', 'Filtro', cbxBOLFiltro.ItemIndex);
     ini.WriteString('BOLETO', 'DirArquivoBoleto', PathWithoutDelim(

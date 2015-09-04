@@ -1893,21 +1893,34 @@ end;
 procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
+  CpTituloReport, CpLogomarca, CpQrCode: TfrxComponent;
 begin
   qrCode := '';
   if Assigned(NFe) then
   begin
     case NFe.Ide.modelo of
       55 :  case FNFe.Ide.tpImp of
-              tiSimplificado :  begin
-                                  frxReport.FindObject('PageHeader1').Visible := ( cdsParametros.FieldByName('Imagem').AsString = '');
-                                  frxReport.FindObject('ImgLogo').Visible     := frxReport.FindObject('PageHeader1').Visible
-                                end;
+              tiSimplificado :
+                begin
+                  CpTituloReport := frxReport.FindObject('PageHeader1');
+                  if Assigned(CpTituloReport) then
+                    CpTituloReport.Visible  := ( cdsParametros.FieldByName('Imagem').AsString = '' );
+
+                  CpLogomarca := frxReport.FindObject('ImgLogo');
+                  if Assigned(CpLogomarca) and Assigned(CpTituloReport) then
+                    CpLogomarca.Visible := CpTituloReport.Visible;
+                end;
             end;
 
       65 :  begin
-              frxReport.FindObject('ReportTitle1').Visible  := ( cdsParametros.FieldByName('Imagem').AsString = '' );
-              frxReport.FindObject('ImgLogo').Visible       := frxReport.FindObject('ReportTitle1').Visible;
+              CpTituloReport := frxReport.FindObject('ReportTitle1');
+              if Assigned(CpTituloReport) then
+                CpTituloReport.Visible  := ( cdsParametros.FieldByName('Imagem').AsString = '' );
+
+              CpLogomarca := frxReport.FindObject('ImgLogo');
+              if Assigned(CpLogomarca) and Assigned(CpTituloReport) then
+                CpLogomarca.Visible := CpTituloReport.Visible;
+
               qrcode := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLQRCode(
                 NFe.ide.cUF,
                 NFe.ide.tpAmb,
@@ -1918,7 +1931,9 @@ begin
                 NFe.Total.ICMSTot.vICMS,
                 NFe.signature.DigestValue );
 
-              PintarQRCode( qrcode, TfrxPictureView(frxReport.FindObject('ImgQrCode')).Picture );
+              CpQrCode := frxReport.FindObject('ImgQrCode');
+              if Assigned(CpQrCode) then
+                PintarQRCode( qrcode, TfrxPictureView(CpQrCode).Picture );
             end;
     end;
   end;

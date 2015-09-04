@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2015
+[-] Acerto na impressão do DANFE e eventos da NFC-e, gerava um erro de violação 
+    de acesso pois alguns componentes não existem na impressão de eventos.
+    por: regys.silveira
+
 01/09/2015
 [*] Alterado a URL do QR-Code da UF = AC.
     por: Italo Jurisato Junior

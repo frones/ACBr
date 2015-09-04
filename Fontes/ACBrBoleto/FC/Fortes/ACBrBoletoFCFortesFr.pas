@@ -466,9 +466,6 @@ begin
 
   {$IFDEF FPC}
    LoadPortugueseStrings;
-  {$ELSE}
-   // Evitando mensagem de versão do fortes //
-//   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
   {$ENDIF}
 
   frACBrBoletoFortes := TACBrBoletoFCFortesFr.Create(Self);
@@ -481,8 +478,10 @@ begin
            RLLayout:= LayoutBoleto;
         end;
 
-        RLPrinter.Copies     := NumCopias ;  // Aparentemente isso está errado... :(
-        RLLayout.PrintDialog := MostrarSetup;
+        RLPrinter.Copies      := NumCopias ;  // Aparentemente isso está errado... :(
+        RLLayout.PrintDialog  := MostrarSetup;
+        RLLayout.ShowProgress := MostrarProgresso;
+
         if PrinterName <> '' then
            RLPrinter.PrinterName := PrinterName;
 

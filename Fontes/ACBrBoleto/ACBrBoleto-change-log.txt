@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 01/09/2015 ver. 0.0.142a
+-- ACBrBoletoFCClass, ACBrBoletoFCFortesFr --   (por: DSA)
+[+] Adicionada a propriedade "MostrarProgresso: Boolean default True"
+    (Quando desabilitada não mostra o progresso de impressão)
+
+Data: 01/09/2015 ver. 0.0.142a
 -- ACBrBancoCaixa --
 [*] Inclusão da leitura do arquivo retorno CNAB400.(easysoft)
 http://www.projetoacbr.com.br/forum/topic/22348-caixa-economica-cnab-400/

@@ -1012,6 +1012,7 @@ type
     fFiltro: TACBrBoletoFCFiltro;
     fLayOut         : TACBrBolLayOut;
     fMostrarPreview : Boolean;
+    fMostrarProgresso: Boolean;
     fMostrarSetup: Boolean;
     fNomeArquivo: String;
     fNumCopias      : Integer;
@@ -1044,17 +1045,18 @@ type
   published
     property About : String read GetAbout write SetAbout stored False ;
 
-    property OnObterLogo    : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
-    property ACBrBoleto     : TACBrBoleto     read fACBrBoleto     write SetACBrBoleto ;
-    property LayOut         : TACBrBolLayOut  read fLayOut         write fLayOut         default lPadrao;
-    property DirLogo        : String          read GetDirLogo      write SetDirLogo;
-    property MostrarPreview : Boolean         read fMostrarPreview write fMostrarPreview default True ;
-    property MostrarSetup   : Boolean         read fMostrarSetup   write fMostrarSetup   default True ;
-    property NumCopias      : Integer         read fNumCopias      write SetNumCopias    default 1;
-    property Filtro         : TACBrBoletoFCFiltro read fFiltro     write fFiltro         default fiNenhum ;
-    property NomeArquivo    : String          read GetNomeArquivo  write fNomeArquivo ;
-    property SoftwareHouse  : String          read fSoftwareHouse  write fSoftwareHouse;
-    property PrinterName    : String          read fPrinterName    write fPrinterName;
+    property OnObterLogo     : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
+    property ACBrBoleto      : TACBrBoleto     read fACBrBoleto       write SetACBrBoleto ;
+    property LayOut          : TACBrBolLayOut  read fLayOut           write fLayOut           default lPadrao;
+    property DirLogo         : String          read GetDirLogo        write SetDirLogo;
+    property MostrarPreview  : Boolean         read fMostrarPreview   write fMostrarPreview   default True ;
+    property MostrarSetup    : Boolean         read fMostrarSetup     write fMostrarSetup     default True ;
+    property MostrarProgresso: Boolean         read fMostrarProgresso write fMostrarProgresso default True ;
+    property NumCopias       : Integer         read fNumCopias        write SetNumCopias      default 1;
+    property Filtro          : TACBrBoletoFCFiltro read fFiltro       write fFiltro           default fiNenhum ;
+    property NomeArquivo     : String          read GetNomeArquivo    write fNomeArquivo ;
+    property SoftwareHouse   : String          read fSoftwareHouse    write fSoftwareHouse;
+    property PrinterName     : String          read fPrinterName      write fPrinterName;
   end;
 
 procedure Register;
@@ -2218,15 +2220,16 @@ constructor TACBrBoletoFCClass.Create ( AOwner: TComponent ) ;
 begin
    inherited Create ( AOwner ) ;
 
-   fpAbout         := 'ACBrBoletoFCClass' ;
-   fACBrBoleto     := nil;
-   fLayOut         := lPadrao;
-   fNumCopias      := 1;
-   fMostrarPreview := True;
-   fMostrarSetup   := True;
-   fFiltro         := fiNenhum;
-   fNomeArquivo    := '' ;
-   fPrinterName    := '' ;
+   fpAbout           := 'ACBrBoletoFCClass' ;
+   fACBrBoleto       := nil;
+   fLayOut           := lPadrao;
+   fNumCopias        := 1;
+   fMostrarPreview   := True;
+   fMostrarSetup     := True;
+   fMostrarProgresso := True;
+   fFiltro           := fiNenhum;
+   fNomeArquivo      := '' ;
+   fPrinterName      := '' ;
 end;
 
 procedure TACBrBoletoFCClass.Notification ( AComponent: TComponent;

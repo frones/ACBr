@@ -157,7 +157,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Width = 290
         Height = 19
         Alignment = taCenter
-        Caption = 'CARTA DE CORRE'#195#8225#195#402'O ELETR'#195#8221'NICA'
+        Caption = 'CARTA DE CORREÇÃO ELETRÔNICA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -175,7 +175,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Height = 15
         Alignment = taCenter
         Caption = 
-          'N'#195#163'o possui valor fiscal, simples representa'#195#167#195#163'o da CC-e indica' +
+          'Não possui valor fiscal, simples representação da CC-e indica' +
           'da abaixo.'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -194,7 +194,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Height = 15
         Alignment = taCenter
         Caption = 
-          'CONSULTE A AUTENTICIDADE DA CARTA DE CORRE'#195#8225#195#402'O ELETR'#195#8221'NICA NO S' +
+          'CONSULTE A AUTENTICIDADE DA CARTA DE CORREÇÃO ELETRÔNICA NO S' +
           'ITE DA SEFAZ AUTORIZADORA.'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -232,7 +232,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 0
         Width = 140
         Height = 12
-        Caption = 'DATA E HORA DA IMPRESS'#195#402'O: '
+        Caption = 'DATA E HORA DA IMPRESSÃO: '
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -357,7 +357,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 51
         Width = 83
         Height = 8
-        Caption = 'DESCRI'#195#8225#195#402'O DO EVENTO'
+        Caption = 'DESCRIÇÃO DO EVENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -387,7 +387,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 83
         Width = 54
         Height = 8
-        Caption = 'N'#194#176' PROTOCOLO'
+        Caption = 'Nº PROTOCOLO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -426,7 +426,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 2
         Width = 203
         Height = 13
-        Caption = 'CARTA DE CORRE'#195#8225#195#402'O ELETR'#195#8221'NICA'
+        Caption = 'CARTA DE CORREÇÃO ELETRÔNICA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -480,7 +480,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 18
         Width = 133
         Height = 8
-        Caption = 'DATA E HORA DE EMISS'#195#402'O DO EVENTO'
+        Caption = 'DATA E HORA DE EMISSÃO DO EVENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -543,7 +543,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 50
         Width = 82
         Height = 8
-        Caption = 'SEQU'#195#352'NCIA DO EVENTO'
+        Caption = 'SEQUÊNCIA DO EVENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -750,7 +750,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 84
         Width = 78
         Height = 8
-        Caption = 'INSCRI'#195#8225#195#402'O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -782,7 +782,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 84
         Width = 38
         Height = 8
-        Caption = 'MUNIC'#195#141'PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -798,7 +798,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 52
         Width = 39
         Height = 8
-        Caption = 'ENDERE'#195#8225'O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -814,7 +814,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 19
         Width = 79
         Height = 8
-        Caption = 'NOME / RAZ'#195#402'O SOCIAL'
+        Caption = 'NOME / RAZÃO SOCIAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -966,7 +966,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 2
         Width = 138
         Height = 13
-        Caption = 'TOMADOR DO SERVI'#195#8225'O'
+        Caption = 'TOMADOR DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -990,7 +990,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 19
         Width = 79
         Height = 8
-        Caption = 'NOME / RAZ'#195#402'O SOCIAL'
+        Caption = 'NOME / RAZÃO SOCIAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1020,7 +1020,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 52
         Width = 39
         Height = 8
-        Caption = 'ENDERE'#195#8225'O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1050,7 +1050,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 84
         Width = 38
         Height = 8
-        Caption = 'MUNIC'#195#141'PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1201,7 +1201,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 84
         Width = 78
         Height = 8
-        Caption = 'INSCRI'#195#8225#195#402'O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1315,7 +1315,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 2
         Width = 71
         Height = 13
-        Caption = 'DESCRI'#195#8225#195#402'O'
+        Caption = 'DESCRIÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1332,7 +1332,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Width = 718
         Height = 31
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGA'#195#8225#195#402'O - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
@@ -1542,7 +1542,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 2
         Width = 70
         Height = 13
-        Caption = 'CORRE'#195#8225#195#402'O'
+        Caption = 'CORREÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1583,7 +1583,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Top = 2
         Width = 335
         Height = 13
-        Caption = 'MANIFESTO ELETR'#195#8221'NICO DE DOCUMENTOS FISCAIS- MDF-e'
+        Caption = 'MANIFESTO ELETRÔNICO DE DOCUMENTOS FISCAIS- MDF-e'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1642,7 +1642,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Width = 22
         Height = 8
         Alignment = taCenter
-        Caption = 'S'#195#8240'RIE'
+        Caption = 'SÉRIE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1677,7 +1677,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'N'#195#353'MERO'
+        Caption = 'NÚMERO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1732,7 +1732,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Width = 95
         Height = 9
         AutoSize = False
-        Caption = 'DATA E HORA DE EMISS'#195#402'O'
+        Caption = 'DATA E HORA DE EMISSÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

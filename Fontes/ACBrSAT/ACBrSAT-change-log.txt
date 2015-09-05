@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/09/2015
+-- ACBrSAT --  (por: Amarildo Lacerda e DSA)
+[+] Adicionado o evento: OnEnviarDadosVenda: TACBrSATEventoDados
+[+] Adicionado o evento: OnCancelarUltimaVenda: TACBrSATEventoDados
+[+] Adicionado o evento: OnConsultaStatusOperacional: TACBrSATEvento
+[+] Adicionado o evento: OnExtrairLogs: TACBrSATEvento
+[+] Adicionado o evento: OnConsultarSAT: TACBrSATEvento
+[+] Adicionado o evento: OnConsultarNumeroSessao: TACBrSATEventoDados
+[+] Adicionado o tipo: TACBrSATEvento = procedure(var ARetorno: String) of object;
+[+] Adicionado o tipo: TACBrSATEventoDados = procedure (ADados: String;
+                       var ARetorno: String) of object;
+(Se a "ARetorno" for preenchido, as funções internas de ACBrSAT não serão chamadas)
+
 Data: 31/08/2015
 -- ACBrECFVirtualSAT --  (por: Amarildo Lacerda)
 [-] Correção de Bug no Cancelamento de Itens e numeração da Sequencia dos Itens

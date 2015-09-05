@@ -45,6 +45,10 @@ const
   CPREFIXO_CFe = 'CFe';
 
 type
+
+   TACBrSATEvento = procedure(var ARetorno: String) of object;
+   TACBrSATEventoDados = procedure (ADados: String; var ARetorno: String) of object;
+
    { TACBrSAT }
 
    TACBrSAT = class( TACBrComponent )
@@ -71,6 +75,12 @@ type
      fsConfigArquivos : TACBrSATConfigArquivos ;
      fsRede   : TRede ;
      fsStatus : TACBrSATStatus;
+     FOnEnviarDadosVenda: TACBrSATEventoDados;
+     FOnCancelarUltimaVenda: TACBrSATEventoDados;
+     FOnConsultaStatusOperacional: TACBrSATEvento;
+     FOnExtrairLogs: TACBrSATEvento;
+     FOnConsultarSAT: TACBrSATEvento;
+     FOnConsultarNumeroSessao: TACBrSATEventoDados;
 
      function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
@@ -183,6 +193,18 @@ type
      property OnGetsignAC : TACBrSATGetChave read fsOnGetsignAC write fsOnGetsignAC;
      property OnGetNumeroSessao : TACBrSATGetNumeroSessao read fsOnGetNumeroSessao
         write fsOnGetNumeroSessao;
+
+     property OnEnviarDadosVenda: TACBrSATEventoDados read FOnEnviarDadosVenda
+        write FOnEnviarDadosVenda;
+     property OnCancelarUltimaVenda :TACBrSATEventoDados read FOnCancelarUltimaVenda
+        write FOnCancelarUltimaVenda;
+     property OnConsultaStatusOperacional: TACBrSATEvento
+        read FOnConsultaStatusOperacional write FOnConsultaStatusOperacional;
+     property OnExtrairLogs: TACBrSATEvento read FOnExtrairLogs write FonExtrairLogs;
+     property OnConsultarSAT: TACBrSATEvento read FOnConsultarSAT write FOnConsultarSAT;
+     property OnConsultarNumeroSessao:TACBrSATEventoDados read FOnConsultarNumeroSessao
+        write FOnConsultarNumeroSessao;
+
    end;
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
@@ -898,6 +920,7 @@ function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
 var
   XMLRecebido, NomeCFe: String;
+  Retorno: String;
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
 
@@ -919,21 +942,27 @@ begin
   end;
 
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento) ) ;
+
+  Retorno := '';
+  if Assigned(FOnCancelarUltimaVenda) then
+    FOnCancelarUltimaVenda(dadosCancelamento, Retorno);
+
+  if EstaVazio(Retorno) then
+    Retorno := fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento);
+
+  Result := FinalizaComando( Retorno ) ;
 
   DecodificaRetorno7000;
 end ;
 
-function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString
-  ) : String ;
+function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString) : String ;
 begin
   fsComandoLog := 'ComunicarCertificadoICPBRASIL( '+certificado+' )';
   IniciaComando;
   Result := FinalizaComando( fsSATClass.ComunicarCertificadoICPBRASIL( certificado ) );
 end ;
 
-function TACBrSAT.ConfigurarInterfaceDeRede(dadosConfiguracao : AnsiString
-  ) : String ;
+function TACBrSAT.ConfigurarInterfaceDeRede(dadosConfiguracao : AnsiString ) : String ;
 begin
   if dadosConfiguracao = '' then
     dadosConfiguracao := Rede.AsXMLString
@@ -945,32 +974,61 @@ begin
   Result := FinalizaComando( fsSATClass.ConfigurarInterfaceDeRede( dadosConfiguracao ) );
 end ;
 
-function TACBrSAT.ConsultarNumeroSessao(cNumeroDeSessao : Integer
-  ) : String ;
+function TACBrSAT.ConsultarNumeroSessao(cNumeroDeSessao : Integer ) : String ;
+var
+  Retorno:string;
 begin
   fsComandoLog := 'ConsultarNumeroSessao( '+IntToStr(cNumeroDeSessao)+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao ) );
+
+  Retorno := '';
+  if Assigned(FOnConsultarNumeroSessao) then
+    FOnConsultarNumeroSessao(IntToStr(cNumeroDeSessao), Retorno);
+
+  if EstaVazio(Retorno) then
+    Retorno := fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao );
+
+  Result := FinalizaComando( Retorno );
+
   DecodificaRetorno6000;
   DecodificaRetorno7000;
 end ;
 
 function TACBrSAT.ConsultarSAT : String ;
+var
+  Retorno:string;
 begin
   fsComandoLog := 'ConsultarSAT';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.ConsultarSAT );
+
+  Retorno := '';
+  if Assigned(FOnConsultarSAT) then
+    FOnConsultarSAT(Retorno);
+
+  if EstaVazio(Retorno) then
+    Retorno := fsSATClass.ConsultarSAT;
+
+  Result := FinalizaComando( Retorno );
 end ;
 
 function TACBrSAT.ConsultarStatusOperacional : String ;
 Var
   ok: Boolean;
   I: Integer;
-  AStr: String;
+  AStr, Retorno:String;
 begin
   fsComandoLog := 'ConsultarStatusOperacional';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.ConsultarStatusOperacional ) ;
+
+  Retorno := '';
+  if Assigned(FOnConsultaStatusOperacional) then
+    FOnConsultaStatusOperacional(Retorno);
+
+  if EstaVazio(Retorno) then
+    Retorno := fsSATClass.ConsultarStatusOperacional;
+
+  Result := FinalizaComando( Retorno ) ;
+
   ok := True;
 
   if fsResposta.codigoDeRetorno = 10000 then
@@ -1005,7 +1063,7 @@ begin
       I := 22;
       if fsResposta.RetornoLst.Count > 27 then
       begin
-        LISTA_FINAL    := fsResposta.RetornoLst[22];
+        LISTA_FINAL  := fsResposta.RetornoLst[22];
         Inc(I);
       end;
       DH_CFe         := StoD( fsResposta.RetornoLst[I] );
@@ -1039,7 +1097,7 @@ end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
-  NomeCFe : String;
+  NomeCFe, Retorno: String;
 begin
   dadosVenda := Trim(dadosVenda);
 
@@ -1062,7 +1120,14 @@ begin
     WriteToTXT(NomeCFe, dadosVenda, False, False);
   end;
 
-  Result := FinalizaComando( fsSATClass.EnviarDadosVenda( dadosVenda ) );
+  Retorno := '';
+  if assigned(FOnEnviarDadosVenda) then
+    FOnEnviarDadosVenda(dadosVenda, Retorno);
+
+  if EstaVazio(Retorno) then
+    Retorno := fsSATClass.EnviarDadosVenda( dadosVenda );
+
+  Result := FinalizaComando( Retorno );
 
   DecodificaRetorno6000;
 end ;
@@ -1102,10 +1167,19 @@ end;
 procedure TACBrSAT.ExtrairLogs(AStream: TStream);
 var
   LogBin : AnsiString;
+  Retorno: String;
 begin
   fsComandoLog := 'ExtrairLogs';
   IniciaComando;
-  FinalizaComando( fsSATClass.ExtrairLogs );
+
+  Retorno := '';
+  if Assigned(FOnExtrairLogs) then
+    FOnExtrairLogs(Retorno);
+
+  if EstaVazio(Retorno) then
+    Retorno := fsSATClass.ExtrairLogs;
+
+  FinalizaComando( Retorno );
 
   // TODO: Criar verificação para os retornos: 15002, e 11098 - SAT em processamento
 

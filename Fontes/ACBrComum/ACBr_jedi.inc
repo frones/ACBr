@@ -157,7 +157,7 @@
   DELPHI22            Defined when compiling with Delphi XE8 for Win32 (Codename ELBRUS)
   DELPHIXE8           Alias for DELPHI22
   DELPHI23            Defined when compiling with Delphi 10 for Win32 (Codename SEATTLE)
-  DELPHI10          Alias for DELPHI23
+  DELPHIX_SEATTLE     Alias for DELPHI23
   DELPHI1_UP          Defined when compiling with Delphi 1 or higher
   DELPHI2_UP          Defined when compiling with Delphi 2 or higher
   DELPHI3_UP          Defined when compiling with Delphi 3 or higher
@@ -193,7 +193,7 @@
   DELPHI22_UP         Defined when compiling with Delphi XE8 for Win32 or higher
   DELPHIXE8_UP        Alias for DELPHI22_UP
   DELPHI23_UP         Defined when compiling with Delphi 10 for Win32 or higher
-  DELPHI10_UP       Alias for DELPHI23_UP
+  DELPHIX_SEATTLE_UP  Alias for DELPHI23_UP
 
 
 - Kylix Versions
@@ -234,6 +234,10 @@
   DELPHICOMPILER17     Defined when compiling with Delphi Personality of BDS 10.0
   DELPHICOMPILER18     Defined when compiling with Delphi Personality of BDS 11.0
   DELPHICOMPILER19     Defined when compiling with Delphi Personality of BDS 12.0
+  DELPHICOMPILER20     Defined when compiling with Delphi Personality of BDS 14.0
+  DELPHICOMPILER21     Defined when compiling with Delphi Personality of BDS 15.0
+  DELPHICOMPILER22     Defined when compiling with Delphi Personality of BDS 16.0
+  DELPHICOMPILER23     Defined when compiling with Delphi Personality of BDS 17.0
   DELPHICOMPILER1_UP   Defined when compiling with Delphi 1 or higher
   DELPHICOMPILER2_UP   Defined when compiling with Delphi 2 or higher
   DELPHICOMPILER3_UP   Defined when compiling with Delphi 3 or higher
@@ -281,7 +285,9 @@
   BCB18        Defined when compiling with C++Builder Personality of RAD Studio XE4 (also known as C++Builder XE4) (Codename QUINTESSENCE)
   BCB19        Defined when compiling with C++Builder Personality of RAD Studio XE5 (also known as C++Builder XE5) (Codename ZEPHYR)
   BCB20        Defined when compiling with C++Builder Personality of RAD Studio XE6 (also known as C++Builder XE6) (Codename PROTEUS)
-  BCB21        Defined when compiling with C++Builder Personality of RAD Studio XE7 (also known as C++Builder XE7) (Codename ???)
+  BCB21        Defined when compiling with C++Builder Personality of RAD Studio XE7 (also known as C++Builder XE7) (Codename CARPATHIA)
+  BCB22        Defined when compiling with C++Builder Personality of RAD Studio XE8 (also known as C++Builder XE8) (Codename ELBRUS)
+  BCB23        Defined when compiling with C++Builder Personality of RAD Studio 10 Seattle (also known as C++Builder 10 Seattle) (Codename SEATTLE)
   BCB1_UP      Defined when compiling with C++Builder 1 or higher
   BCB3_UP      Defined when compiling with C++Builder 3 or higher
   BCB4_UP      Defined when compiling with C++Builder 4 or higher
@@ -954,7 +960,7 @@
         {$DEFINE BCB23}
       {$ELSE}
         {$DEFINE DELPHI23}
-        {$DEFINE DELPHI10} // synonym to DELPHI23
+        {$DEFINE DELPHIX_SEATTLE} // synonym to DELPHI23
         {$DEFINE DELPHICOMPILER23}
       {$ENDIF BCB}
       {$DEFINE RTL300_UP}
@@ -969,7 +975,7 @@
         {$DEFINE BCB23}
       {$ELSE}
         {$DEFINE DELPHI23}
-        {$DEFINE DELPHI10} // synonym to DELPHI23
+        {$DEFINE DELPHIX_SEATTLE} // synonym to DELPHI23
         {$DEFINE DELPHICOMPILER23}
       {$ENDIF BCB}
       {$DEFINE RTL300_UP}
@@ -1020,7 +1026,7 @@
 {------------------------------------------------------------------------------}
 
 {$IFDEF DELPHI23_UP}
-  {$DEFINE DELPHI10_UP} // synonym to DELPHI23_UP
+  {$DEFINE DELPHIX_SEATTLE_UP} // synonym to DELPHI23_UP
   {$DEFINE DELPHI22_UP}
 {$ENDIF}
 

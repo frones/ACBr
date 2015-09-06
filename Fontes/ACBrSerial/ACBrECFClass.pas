@@ -4840,7 +4840,7 @@ end;
     Result := (ExibeMensagem or BloqueiaMouseTeclado) and
               (AguardaImpressao or ((TimeOut - TempoInicioMsg) > 1) ) and
               FormMsgControla and
-              {$IFDEF FMX}Application.MainForm.Visible{$ELSE} Application.ShowMainForm{$ENDIF} ;
+              {$IFDEF FMX} Assigned(Application.MainForm) and Application.MainForm.Visible{$ELSE} Application.ShowMainForm{$ENDIF} ;
   end;
 
   {$IFDEF LINUX}

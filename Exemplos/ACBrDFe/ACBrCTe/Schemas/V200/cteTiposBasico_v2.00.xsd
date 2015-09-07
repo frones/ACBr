@@ -1233,6 +1233,54 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
+									<xs:element name="ICMSUFFim" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informações do ICMS de partilha com a UF de término do serviço de transporte na operação interestadual</xs:documentation>
+											<xs:documentation>Grupo a ser informado nas prestações interestaduais para consumidor final, não contribuinte do ICMS</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="vBCUFFim" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor da BC do ICMS na UF de término da prestação do serviço de transporte</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="pICMSUFFim" type="TDec_0302">
+													<xs:annotation>
+														<xs:documentation>Alíquota interna da UF de término da prestação do serviço de transporte</xs:documentation>
+														<xs:documentation>Alíquota adotada nas operações internas na UF do destinatário</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="pICMSInter" type="TDec_0302">
+													<xs:annotation>
+														<xs:documentation>Alíquota interestadual das UF envolvidas</xs:documentation>
+														<xs:documentation>Alíquota interestadual das UF envolvidas
+</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="pICMSInterPart" type="TDec_0302">
+													<xs:annotation>
+														<xs:documentation>Percentual provisório de partilha entre os estados</xs:documentation>
+														<xs:documentation>Percentual de partilha para a UF do destinatário:
+- 40% em 2016;
+- 60% em 2017;
+- 80% em 2018;
+- 100% a partir de 2019.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSUFFim" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor do ICMS de partilha para a UF de término da prestação do serviço de transporte</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSUFIni" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor do ICMS de partilha para a UF de início da prestação do serviço de transporte</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>

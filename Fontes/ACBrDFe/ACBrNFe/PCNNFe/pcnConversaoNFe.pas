@@ -179,6 +179,7 @@ begin
     LayNfeConsulta:       Result := schconsSitNFe;
     LayNfeStatusServico:  Result := schconsStatServ;
     LayNfeCadastro:       Result := schconsCad;
+    LayNFeCCe,
     LayNFeEvento,
     LayNFeEventoAN:       Result := schenvEvento;
     LayNFeConsNFeDest:    Result := schconsNFeDest;

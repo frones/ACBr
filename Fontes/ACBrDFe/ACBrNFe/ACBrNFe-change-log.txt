@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/09/2015
+[*] Incluido o valor LayNFeCCe na function que converte Layout em Schema.
+    Em ACBrNFeServicos.INI todos os campos: RecepcaoEvento_2.00 e RecepcaoEvento_3.10
+    foram renomeados para: RecepcaoEvento_1.00
+    por: Italo Jurisato Junior
+
 04/09/2015
 [-] Acerto na impressão do DANFE e eventos da NFC-e, gerava um erro de violação 
     de acesso pois alguns componentes não existem na impressão de eventos.

@@ -694,13 +694,13 @@ begin
                LFill( COD_MOD ) +   //Verificar criação da tabela no ACBrEPCBlocos
                LFill( SER ) +       //Verificar criação da tabela no ACBrEPCBlocos
                LFill( SUB_SER ) +
-               LFill( NUM_DOC ) +
+               LFill( NUM_DOC, 0 ) +
                LFill( DT_OPER ) +
                LFill( CHV_NFE ) +
                LFill( VL_OPER,0,2 ) +
-               LFill( CFOP ) +
+               LFill( CFOP, 4 ) +
                LFill( NAT_BC_CRED ) + //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_ORIG_CRED ) +  //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( IND_ORIG_CRED, 0 ) +  //Verificar criação da tabela no ACBrEPCBlocos
                LFill( CST_COFINS ) +
                DFill( VL_BC_COFINS, 3 ) +
                DFill( ALIQ_COFINS, 4 ) +

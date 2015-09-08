@@ -1256,7 +1256,7 @@ function PKCS7_dataInit(p7: pPKCS7; bio: pBIO): pBIO; cdecl;
     d2i_PKCS7_ENCRYPT                       @738
     d2i_PKCS7_ENC_CONTENT                   @739
     d2i_PKCS7_ENVELOPE                      @740
-    d2i_PKCS7_ISSUER_AND_SERIAL             @741
+	 d2i_PKCS7_ISSUER_AND_SERIAL             @741
     d2i_PKCS7_RECIP_INFO                    @742
     d2i_PKCS7_SIGNED                        @743
     d2i_PKCS7_SIGNER_INFO                   @744
@@ -1290,20 +1290,21 @@ uses
 
 const
   {$IFDEF MSWINDOWS}
-   LIBEAY_DLL_NAME = 'libeay32.dll';
+	LIBEAY_DLL_NAME = 'libeay32.dll';
+  {$IFNDEF FPC}{$IF CompilerVersion >= 21}{$DEFINE USE_DELAYED}{$ENDIF}{$ENDIF}
   {$ELSE}
-   LIBEAY_DLL_NAME = 'libcrypto';
+	LIBEAY_DLL_NAME = 'libcrypto';
   {$ENDIF}
 
 type
   TOpenSSL_InitFunction = procedure; cdecl;
 
-function SSLeay: cardinal; external LIBEAY_DLL_NAME;
-function SSLeay_version; external LIBEAY_DLL_NAME;
+function SSLeay: cardinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function SSLeay_version; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 // OpenSSL_add_all_algorithms prototype changed between OpenSSL version 0.9.6 and 0.9.7
 // See: http://www.openssl.org/news/changelog.html
-procedure OpenSSL_add_all_algorithms_old; external LIBEAY_DLL_NAME name 'OpenSSL_add_all_algorithms';
-procedure OpenSSL_add_all_algorithms_noconf; external LIBEAY_DLL_NAME;
+procedure OpenSSL_add_all_algorithms_old; external LIBEAY_DLL_NAME name 'OpenSSL_add_all_algorithms' {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure OpenSSL_add_all_algorithms_noconf; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 procedure OpenSSL_add_all_algorithms;
 var
@@ -1332,22 +1333,22 @@ else
   raise Exception.Create('OpenSSL_add_all_algorithms procedure not defined in libeay32.dll');
 end;
 
-procedure OpenSSL_add_all_ciphers; external LIBEAY_DLL_NAME;
-procedure OpenSSL_add_all_digests; external LIBEAY_DLL_NAME;
-procedure EVP_cleanup; external LIBEAY_DLL_NAME;
+procedure OpenSSL_add_all_ciphers; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure OpenSSL_add_all_digests; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure EVP_cleanup; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function ERR_get_error: cardinal; external LIBEAY_DLL_NAME;
-function ERR_peek_error: cardinal; external LIBEAY_DLL_NAME;
-function ERR_peek_last_error: cardinal; external LIBEAY_DLL_NAME;
-function ERR_error_string; external LIBEAY_DLL_NAME;
-procedure ERR_clear_error; external LIBEAY_DLL_NAME;
-procedure ERR_load_crypto_strings; external LIBEAY_DLL_NAME;
-procedure ERR_free_strings; external LIBEAY_DLL_NAME;
+function ERR_get_error: cardinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function ERR_peek_error: cardinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function ERR_peek_last_error: cardinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function ERR_error_string; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure ERR_clear_error; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure ERR_load_crypto_strings; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure ERR_free_strings; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function CRYPTO_malloc; external LIBEAY_DLL_NAME;
-function CRYPTO_realloc; external LIBEAY_DLL_NAME;
-function CRYPTO_remalloc; external LIBEAY_DLL_NAME;
-procedure CRYPTO_free; external LIBEAY_DLL_NAME;
+function CRYPTO_malloc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function CRYPTO_realloc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function CRYPTO_remalloc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure CRYPTO_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 // Not in DLL
 function OPENSSL_malloc(length: longint): pointer;
@@ -1367,51 +1368,51 @@ begin
 CRYPTO_free(address);
 end;
 
-function BN_new; external LIBEAY_DLL_NAME;
-procedure BN_init; external LIBEAY_DLL_NAME;
-procedure BN_clear; external LIBEAY_DLL_NAME;
-procedure BN_free; external LIBEAY_DLL_NAME;
-procedure BN_clear_free; external LIBEAY_DLL_NAME;
+function BN_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_init; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_clear; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_clear_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-procedure BN_set_params; external LIBEAY_DLL_NAME;
-function BN_get_params; external LIBEAY_DLL_NAME;
+procedure BN_set_params; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_get_params; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_options; external LIBEAY_DLL_NAME;
+function BN_options; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_CTX_new; external LIBEAY_DLL_NAME;
-procedure BN_CTX_init; external LIBEAY_DLL_NAME;
-procedure BN_CTX_start; external LIBEAY_DLL_NAME;
-function BN_CTX_get; external LIBEAY_DLL_NAME;
-procedure BN_CTX_end; external LIBEAY_DLL_NAME;
-procedure BN_CTX_free; external LIBEAY_DLL_NAME;
+function BN_CTX_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_CTX_init; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_CTX_start; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_CTX_get; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_CTX_end; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_CTX_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_MONT_CTX_new; external LIBEAY_DLL_NAME;
-procedure BN_MONT_CTX_init; external LIBEAY_DLL_NAME;
-function BN_MONT_CTX_set; external LIBEAY_DLL_NAME;
-function BN_MONT_CTX_copy; external LIBEAY_DLL_NAME;
-procedure BN_MONT_CTX_free; external LIBEAY_DLL_NAME;
-function BN_mod_mul_montgomery; external LIBEAY_DLL_NAME;
-function BN_from_montgomery; external LIBEAY_DLL_NAME;
+function BN_MONT_CTX_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_MONT_CTX_init; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_MONT_CTX_set; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_MONT_CTX_copy; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_MONT_CTX_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_mul_montgomery; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_from_montgomery; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 function BN_to_montgomery(r, a: pBIGNUM; m_ctx: pBN_MONT_CTX; ctx: pBN_CTX): integer;
 begin
 result := BN_mod_mul_montgomery(r, a, @(m_ctx^.RR), m_ctx, ctx);
 end;
 
-procedure BN_RECP_CTX_init; external LIBEAY_DLL_NAME;
-function BN_RECP_CTX_set; external LIBEAY_DLL_NAME;
-function BN_RECP_CTX_new; external LIBEAY_DLL_NAME;
-procedure BN_RECP_CTX_free; external LIBEAY_DLL_NAME;
-function BN_div_recp; external LIBEAY_DLL_NAME;
-function BN_mod_mul_reciprocal; external LIBEAY_DLL_NAME;
+procedure BN_RECP_CTX_init; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_RECP_CTX_set; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_RECP_CTX_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_RECP_CTX_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_div_recp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_mul_reciprocal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_BLINDING_new; external LIBEAY_DLL_NAME;
-function BN_BLINDING_update; external LIBEAY_DLL_NAME;
-procedure BN_BLINDING_free; external LIBEAY_DLL_NAME;
-function BN_BLINDING_convert; external LIBEAY_DLL_NAME;
-function BN_BLINDING_invert; external LIBEAY_DLL_NAME;
+function BN_BLINDING_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_BLINDING_update; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BN_BLINDING_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_BLINDING_convert; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_BLINDING_invert; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_copy; external LIBEAY_DLL_NAME;
-function BN_dup; external LIBEAY_DLL_NAME;
+function BN_copy; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_dup; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function int2bin(n: integer): integer;
 begin
@@ -1421,16 +1422,16 @@ begin
         ((cardinal(n) shl 24) and $FF000000);
 end;
 
-function BN_bn2bin; external LIBEAY_DLL_NAME;
-function BN_bin2bn; external LIBEAY_DLL_NAME;
+function BN_bn2bin; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_bin2bn; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_bn2hex; external LIBEAY_DLL_NAME;
-function BN_bn2dec; external LIBEAY_DLL_NAME;
-function BN_hex2bn; external LIBEAY_DLL_NAME;
-function BN_dec2bn; external LIBEAY_DLL_NAME;
-function BN_bn2mpi; external LIBEAY_DLL_NAME;
-function BN_mpi2bn; external LIBEAY_DLL_NAME;
-function BN_print; external LIBEAY_DLL_NAME;
+function BN_bn2hex; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_bn2dec; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_hex2bn; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_dec2bn; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_bn2mpi; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mpi2bn; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_print; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function BN_zero(n: pBIGNUM): integer;
 begin
@@ -1442,12 +1443,12 @@ begin
 result := BN_set_word(n, 1)
 end;
 
-function BN_value_one; external LIBEAY_DLL_NAME;
-function BN_set_word; external LIBEAY_DLL_NAME;
-function BN_get_word; external LIBEAY_DLL_NAME;
+function BN_value_one; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_set_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_get_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_cmp; external LIBEAY_DLL_NAME;
-function BN_ucmp; external LIBEAY_DLL_NAME;
+function BN_cmp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_ucmp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 //function BN_is_zero(a: pBIGNUM): boolean;
 //begin
@@ -1476,124 +1477,124 @@ begin
 result := (BN_num_bits(a) + 7) div 8;
 end;
 
-function BN_num_bits; external LIBEAY_DLL_NAME;
-function BN_num_bits_word; external LIBEAY_DLL_NAME;
+function BN_num_bits; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_num_bits_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_add; external LIBEAY_DLL_NAME;
-function BN_sub; external LIBEAY_DLL_NAME;
-function BN_uadd; external LIBEAY_DLL_NAME;
-function BN_usub; external LIBEAY_DLL_NAME;
-function BN_mul; external LIBEAY_DLL_NAME;
-function BN_sqr; external LIBEAY_DLL_NAME;
-function BN_div; external LIBEAY_DLL_NAME;
+function BN_add; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_sub; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_uadd; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_usub; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mul; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_sqr; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_div; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function BN_mod(rem: pBIGNUM; const a, m: pBIGNUM; ctx: pBN_CTX): integer;
 begin
 result := BN_div(nil, rem, a, m, ctx);
 end;
 
-function BN_exp; external LIBEAY_DLL_NAME;
-function BN_mod_exp; external LIBEAY_DLL_NAME;
-function BN_gcd; external LIBEAY_DLL_NAME;
-function BN_nnmod; external LIBEAY_DLL_NAME;
-function BN_mod_add; external LIBEAY_DLL_NAME;
-function BN_mod_sub; external LIBEAY_DLL_NAME;
-function BN_mod_mul; external LIBEAY_DLL_NAME;
-function BN_mod_sqr; external LIBEAY_DLL_NAME;
-function BN_reciprocal; external LIBEAY_DLL_NAME;
+function BN_exp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_exp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_gcd; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_nnmod; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_add; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_sub; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_mul; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_sqr; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_reciprocal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_mod_exp2_mont; external LIBEAY_DLL_NAME;
-function BN_mod_exp_mont; external LIBEAY_DLL_NAME;
-function BN_mod_exp_mont_word; external LIBEAY_DLL_NAME;
-function BN_mod_exp_simple; external LIBEAY_DLL_NAME;
-function BN_mod_exp_recp; external LIBEAY_DLL_NAME;
-function BN_mod_inverse; external LIBEAY_DLL_NAME;
+function BN_mod_exp2_mont; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_exp_mont; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_exp_mont_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_exp_simple; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_exp_recp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_inverse; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_add_word; external LIBEAY_DLL_NAME;
-function BN_sub_word; external LIBEAY_DLL_NAME;
-function BN_mul_word; external LIBEAY_DLL_NAME;
-function BN_div_word; external LIBEAY_DLL_NAME;
-function BN_mod_word; external LIBEAY_DLL_NAME;
-function bn_mul_words; external LIBEAY_DLL_NAME;
-function bn_mul_add_words; external LIBEAY_DLL_NAME;
-procedure bn_sqr_words; external LIBEAY_DLL_NAME;
-function bn_div_words; external LIBEAY_DLL_NAME;
-function bn_add_words; external LIBEAY_DLL_NAME;
-function bn_sub_words; external LIBEAY_DLL_NAME;
-function bn_expand2; external LIBEAY_DLL_NAME;
+function BN_add_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_sub_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mul_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_div_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mod_word; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function bn_mul_words; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function bn_mul_add_words; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure bn_sqr_words; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function bn_div_words; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function bn_add_words; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function bn_sub_words; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function bn_expand2; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_set_bit; external LIBEAY_DLL_NAME;
-function BN_clear_bit; external LIBEAY_DLL_NAME;
-function BN_is_bit_set; external LIBEAY_DLL_NAME;
-function BN_mask_bits; external LIBEAY_DLL_NAME;
-function BN_lshift; external LIBEAY_DLL_NAME;
-function BN_lshift1; external LIBEAY_DLL_NAME;
-function BN_rshift; external LIBEAY_DLL_NAME;
-function BN_rshift1; external LIBEAY_DLL_NAME;
+function BN_set_bit; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_clear_bit; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_is_bit_set; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_mask_bits; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_lshift; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_lshift1; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_rshift; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_rshift1; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_generate_prime; external LIBEAY_DLL_NAME;
-function BN_is_prime; external LIBEAY_DLL_NAME;
-function BN_is_prime_fasttest; external LIBEAY_DLL_NAME;
+function BN_generate_prime; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_is_prime; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_is_prime_fasttest; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_rand; external LIBEAY_DLL_NAME;
-function BN_pseudo_rand; external LIBEAY_DLL_NAME;
-function BN_rand_range; external LIBEAY_DLL_NAME;
-function BN_pseudo_rand_range; external LIBEAY_DLL_NAME;
-function BN_bntest_rand; external LIBEAY_DLL_NAME;
+function BN_rand; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_pseudo_rand; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_rand_range; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_pseudo_rand_range; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_bntest_rand; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BN_to_ASN1_INTEGER; external LIBEAY_DLL_NAME;
-function BN_to_ASN1_ENUMERATED; external LIBEAY_DLL_NAME;
+function BN_to_ASN1_INTEGER; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BN_to_ASN1_ENUMERATED; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function ASN1_IA5STRING_new; external LIBEAY_DLL_NAME;
-procedure ASN1_INTEGER_free; external LIBEAY_DLL_NAME;
-function ASN1_INTEGER_get; external LIBEAY_DLL_NAME;
-procedure ASN1_STRING_set_default_mask; external LIBEAY_DLL_NAME;
-function ASN1_STRING_get_default_mask; external LIBEAY_DLL_NAME;
-function ASN1_TIME_print; external LIBEAY_DLL_NAME;
+function ASN1_IA5STRING_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure ASN1_INTEGER_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function ASN1_INTEGER_get; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure ASN1_STRING_set_default_mask; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function ASN1_STRING_get_default_mask; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function ASN1_TIME_print; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function OBJ_obj2nid; external LIBEAY_DLL_NAME;
-function OBJ_txt2nid; external LIBEAY_DLL_NAME;
-function OBJ_txt2obj; external LIBEAY_DLL_NAME;
+function OBJ_obj2nid; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function OBJ_txt2nid; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function OBJ_txt2obj; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function sk_new_null; external LIBEAY_DLL_NAME;
-procedure sk_free; external LIBEAY_DLL_NAME;
-function sk_push; external LIBEAY_DLL_NAME;
-function sk_num; external LIBEAY_DLL_NAME;
-function sk_value; external LIBEAY_DLL_NAME;
+function sk_new_null; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure sk_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function sk_push; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function sk_num; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function sk_value; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BIO_new; external LIBEAY_DLL_NAME;
-function BIO_new_file; external LIBEAY_DLL_NAME;
-function BIO_set; external LIBEAY_DLL_NAME;
-function BIO_free; external LIBEAY_DLL_NAME;
-procedure BIO_vfree; external LIBEAY_DLL_NAME;
-procedure BIO_free_all; external LIBEAY_DLL_NAME;
-function BIO_push; external LIBEAY_DLL_NAME;
-function BIO_pop; external LIBEAY_DLL_NAME;
-function BIO_ctrl; external LIBEAY_DLL_NAME;
+function BIO_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_new_file; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_set; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BIO_vfree; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BIO_free_all; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_push; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_pop; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_ctrl; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function BIO_read; external LIBEAY_DLL_NAME;
-function BIO_gets; external LIBEAY_DLL_NAME;
-function BIO_write; external LIBEAY_DLL_NAME;
-function BIO_puts; external LIBEAY_DLL_NAME;
+function BIO_read; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_gets; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_write; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_puts; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function BIO_flush(b: pBIO): integer;
 begin
 result := BIO_ctrl(b, BIO_CTRL_FLUSH, 0, nil);
 end;
 
-function BIO_s_mem; external LIBEAY_DLL_NAME;
-function BIO_f_base64; external LIBEAY_DLL_NAME;
-procedure BIO_set_mem_eof_return; external LIBEAY_DLL_NAME;
+function BIO_s_mem; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_f_base64; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BIO_set_mem_eof_return; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function BIO_get_mem_data(b: pBIO; var pp: PCharacter): integer; cdecl;
 begin
 result := BIO_ctrl(b, BIO_CTRL_INFO, 0, @pp);
 end;
 
-procedure BIO_set_mem_buf; external LIBEAY_DLL_NAME;
-procedure BIO_get_mem_ptr; external LIBEAY_DLL_NAME;
-function BIO_new_mem_buf; external LIBEAY_DLL_NAME;
-function BIO_s_file; external LIBEAY_DLL_NAME;
+procedure BIO_set_mem_buf; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure BIO_get_mem_ptr; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_new_mem_buf; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function BIO_s_file; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 // Not in DLL
 function BIO_get_md_ctx(bp: pBIO; mdcp: Pointer): Longint;
@@ -1651,62 +1652,62 @@ begin
 result := BIO_ctrl(bp, BIO_C_SET_FILENAME, BIO_CLOSE or BIO_FP_READ or BIO_FP_WRITE, filename);
 end;
 
-function i2d_ASN1_TIME; external LIBEAY_DLL_NAME;
-function d2i_ASN1_TIME; external LIBEAY_DLL_NAME;
-function d2i_X509_REQ_bio; external LIBEAY_DLL_NAME;
-function i2d_X509_REQ_bio; external LIBEAY_DLL_NAME;
-function d2i_X509_bio; external LIBEAY_DLL_NAME;
-function i2d_X509_bio; external LIBEAY_DLL_NAME;
-function d2i_PrivateKey_bio; external LIBEAY_DLL_NAME;
-function i2d_PrivateKey_bio; external LIBEAY_DLL_NAME;
-function d2i_PUBKEY_bio; external LIBEAY_DLL_NAME;
-function i2d_PUBKEY_bio; external LIBEAY_DLL_NAME;
-function d2i_PKCS12_bio; external LIBEAY_DLL_NAME;
-function i2d_PKCS12_bio; external LIBEAY_DLL_NAME;
-function d2i_PKCS7; external LIBEAY_DLL_NAME;
-function d2i_PKCS7_bio; external LIBEAY_DLL_NAME;
-function i2d_PKCS7_bio; external LIBEAY_DLL_NAME;
-function d2i_PKCS8_bio; external LIBEAY_DLL_NAME;
-function d2i_PKCS8_PRIV_KEY_INFO; external LIBEAY_DLL_NAME;
-function d2i_DSAPrivateKey_bio; external LIBEAY_DLL_NAME;
-function i2d_DSAPrivateKey_bio; external LIBEAY_DLL_NAME;
-function d2i_RSAPrivateKey_bio; external LIBEAY_DLL_NAME;
-function i2d_RSAPrivateKey_bio; external LIBEAY_DLL_NAME;
+function i2d_ASN1_TIME; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_ASN1_TIME; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_X509_REQ_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_X509_REQ_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_X509_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_X509_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PrivateKey_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_PrivateKey_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PUBKEY_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_PUBKEY_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PKCS12_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_PKCS12_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PKCS7; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PKCS7_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_PKCS7_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PKCS8_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_PKCS8_PRIV_KEY_INFO; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_DSAPrivateKey_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_DSAPrivateKey_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function d2i_RSAPrivateKey_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function i2d_RSAPrivateKey_bio; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function i2a_ASN1_INTEGER; external LIBEAY_DLL_NAME;
-function a2i_ASN1_INTEGER; external LIBEAY_DLL_NAME;
+function i2a_ASN1_INTEGER; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function a2i_ASN1_INTEGER; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function  EVP_md_null; external LIBEAY_DLL_NAME;
-function  EVP_md2; external LIBEAY_DLL_NAME;
-function  EVP_md5; external LIBEAY_DLL_NAME;
-function  EVP_sha; external LIBEAY_DLL_NAME;
-function  EVP_sha1; external LIBEAY_DLL_NAME;
-function  EVP_dss; external LIBEAY_DLL_NAME;
-function  EVP_dss1; external LIBEAY_DLL_NAME;
-function  EVP_mdc2; external LIBEAY_DLL_NAME;
-function  EVP_ripemd160; external LIBEAY_DLL_NAME;
-function  EVP_get_digestbyname; external LIBEAY_DLL_NAME;
+function  EVP_md_null; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_md2; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_md5; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_sha; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_sha1; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_dss; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_dss1; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_mdc2; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_ripemd160; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  EVP_get_digestbyname; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function EVP_PKEY_new; external LIBEAY_DLL_NAME;
-procedure EVP_PKEY_free; external LIBEAY_DLL_NAME;
-function EVP_PKEY_type; external LIBEAY_DLL_NAME;
-function EVP_PKEY_assign_RSA; external LIBEAY_DLL_NAME;
-function EVP_PKEY_assign_DSA; external LIBEAY_DLL_NAME;
-function EVP_PKEY_assign_DH; external LIBEAY_DLL_NAME;
-function EVP_PKEY_assign_EC_KEY; external LIBEAY_DLL_NAME;
-function EVP_PKEY_set1_RSA; external LIBEAY_DLL_NAME;
-function EVP_PKEY_set1_DSA; external LIBEAY_DLL_NAME;
-function EVP_PKEY_set1_DH; external LIBEAY_DLL_NAME;
-function EVP_PKEY_set1_EC_KEY; external LIBEAY_DLL_NAME;
-function EVP_PKEY_size; external LIBEAY_DLL_NAME;
-function EVP_PKEY_get1_RSA; external LIBEAY_DLL_NAME;
-function EVP_PKEY_get1_DSA; external LIBEAY_DLL_NAME;
-function EVP_PKEY_get1_DH; external LIBEAY_DLL_NAME;
-function EVP_PKEY_get1_EC_KEY; external LIBEAY_DLL_NAME;
+function EVP_PKEY_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure EVP_PKEY_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_type; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_assign_RSA; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_assign_DSA; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_assign_DH; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_assign_EC_KEY; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_set1_RSA; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_set1_DSA; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_set1_DH; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_set1_EC_KEY; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_size; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_get1_RSA; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_get1_DSA; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_get1_DH; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_get1_EC_KEY; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-procedure EVP_DigestInit; external LIBEAY_DLL_NAME;
-procedure EVP_DigestUpdate; external LIBEAY_DLL_NAME;
-procedure EVP_DigestFinal; external LIBEAY_DLL_NAME;
+procedure EVP_DigestInit; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure EVP_DigestUpdate; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure EVP_DigestFinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 procedure EVP_SignInit(ctx: pEVP_MD_CTX; const _type: pEVP_MD);
   begin
@@ -1718,7 +1719,7 @@ procedure EVP_SignUpdate(ctx: pEVP_MD_CTX; const d: Pointer; cnt: cardinal);
   EVP_DigestUpdate(ctx, d, cnt);
   end;
 
-function EVP_SignFinal; external LIBEAY_DLL_NAME;
+function EVP_SignFinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 procedure EVP_VerifyInit(ctx: pEVP_MD_CTX; const _type: pEVP_MD);
   begin
@@ -1730,8 +1731,8 @@ procedure EVP_VerifyUpdate(ctx: pEVP_MD_CTX; const d: Pointer; cnt: cardinal);
   EVP_DigestUpdate(ctx, d, cnt);
   end;
 
-function EVP_VerifyFinal; external LIBEAY_DLL_NAME;
-function EVP_PKEY_assign; external LIBEAY_DLL_NAME;
+function EVP_VerifyFinal; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_PKEY_assign; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 // Not in DLL
 function EVP_MD_size(e: pEVP_MD): integer;
@@ -1745,86 +1746,86 @@ function EVP_MD_CTX_size(e: pEVP_MD_CTX): integer;
   result := EVP_MD_size(e^.digest);
   end;
 
-function EVP_MD_CTX_copy; external LIBEAY_DLL_NAME;
+function EVP_MD_CTX_copy; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function EVP_enc_null; external LIBEAY_DLL_NAME;
-function EVP_des_ecb; external LIBEAY_DLL_NAME;
-function EVP_des_ede; external LIBEAY_DLL_NAME;
-function EVP_des_ede3; external LIBEAY_DLL_NAME;
-function EVP_des_cfb; external LIBEAY_DLL_NAME;
-function EVP_des_ede_cfb; external LIBEAY_DLL_NAME;
-function EVP_des_ede3_cfb; external LIBEAY_DLL_NAME;
-function EVP_des_ofb; external LIBEAY_DLL_NAME;
-function EVP_des_ede_ofb; external LIBEAY_DLL_NAME;
-function EVP_des_ede3_ofb; external LIBEAY_DLL_NAME;
-function EVP_des_cbc; external LIBEAY_DLL_NAME;
-function EVP_des_ede_cbc; external LIBEAY_DLL_NAME;
-function EVP_des_ede3_cbc; external LIBEAY_DLL_NAME;
-function EVP_desx_cbc; external LIBEAY_DLL_NAME;
-function EVP_idea_cbc; external LIBEAY_DLL_NAME;
-function EVP_idea_cfb; external LIBEAY_DLL_NAME;
-function EVP_idea_ecb; external LIBEAY_DLL_NAME;
-function EVP_idea_ofb; external LIBEAY_DLL_NAME;
-function EVP_get_cipherbyname; external LIBEAY_DLL_NAME;
+function EVP_enc_null; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ecb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede3; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_cfb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede_cfb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede3_cfb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ofb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede_ofb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede3_ofb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_cbc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede_cbc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_des_ede3_cbc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_desx_cbc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_idea_cbc; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_idea_cfb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_idea_ecb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_idea_ofb; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_get_cipherbyname; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-procedure EVP_set_pw_prompt; external LIBEAY_DLL_NAME;
-function EVP_get_pw_prompt; external LIBEAY_DLL_NAME;
-function EVP_read_pw_string; external LIBEAY_DLL_NAME;
+procedure EVP_set_pw_prompt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_get_pw_prompt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function EVP_read_pw_string; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-procedure RAND_seed; external LIBEAY_DLL_NAME;
-procedure RAND_add; external LIBEAY_DLL_NAME;
-function RAND_status; external LIBEAY_DLL_NAME;
-//function RAND_event(UINT iMsg, WPARAM wParam, LPARAM lParam): integer; cdecl; external LIBEAY_DLL_NAME;
-procedure RAND_screen; external LIBEAY_DLL_NAME;
-function RAND_file_name; external LIBEAY_DLL_NAME;
-function RAND_load_file; external LIBEAY_DLL_NAME;
-function RAND_write_file; external LIBEAY_DLL_NAME;
+procedure RAND_seed; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure RAND_add; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function RAND_status; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+//function RAND_event(UINT iMsg, WPARAM wParam, LPARAM lParam): integer; cdecl; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure RAND_screen; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function RAND_file_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function RAND_load_file; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function RAND_write_file; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function  RSA_new; external LIBEAY_DLL_NAME;
-procedure RSA_free; external LIBEAY_DLL_NAME;
-function  RSA_new_method; external LIBEAY_DLL_NAME;
-function  RSA_size; external LIBEAY_DLL_NAME;
-function  RSA_generate_key; external LIBEAY_DLL_NAME;
-function  RSA_check_key; external LIBEAY_DLL_NAME;
-function  RSA_public_encrypt; external LIBEAY_DLL_NAME;
-function  RSA_private_encrypt; external LIBEAY_DLL_NAME;
-function  RSA_public_decrypt; external LIBEAY_DLL_NAME;
-function  RSA_private_decrypt; external LIBEAY_DLL_NAME;
-function  RSA_flags; external LIBEAY_DLL_NAME;
-procedure RSA_set_default_method; external LIBEAY_DLL_NAME;
-function  RSA_get_default_method; external LIBEAY_DLL_NAME;
-function  RSA_get_method; external LIBEAY_DLL_NAME;
-function  RSA_set_method; external LIBEAY_DLL_NAME;
-function  RSA_memory_lock; external LIBEAY_DLL_NAME;
-function  RSA_PKCS1_SSLeay; external LIBEAY_DLL_NAME;
-procedure ERR_load_RSA_strings; external LIBEAY_DLL_NAME;
+function  RSA_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure RSA_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_new_method; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_size; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_generate_key; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_check_key; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_public_encrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_private_encrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_public_decrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_private_decrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_flags; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure RSA_set_default_method; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_get_default_method; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_get_method; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_set_method; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_memory_lock; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function  RSA_PKCS1_SSLeay; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure ERR_load_RSA_strings; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function DSA_new; external LIBEAY_DLL_NAME;
-procedure DSA_free; external LIBEAY_DLL_NAME;
-function DSA_generate_parameters; external LIBEAY_DLL_NAME;
-function DSA_generate_key; external LIBEAY_DLL_NAME;
+function DSA_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure DSA_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function DSA_generate_parameters; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function DSA_generate_key; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_NAME_oneline; external LIBEAY_DLL_NAME;
-function X509_NAME_new; external LIBEAY_DLL_NAME;
-procedure X509_NAME_free; external LIBEAY_DLL_NAME;
-function X509_NAME_add_entry_by_txt; external LIBEAY_DLL_NAME;
-function X509_NAME_get_entry; external LIBEAY_DLL_NAME;
-function X509_NAME_get_text_by_NID; external LIBEAY_DLL_NAME;
+function X509_NAME_oneline; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_NAME_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_NAME_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_NAME_add_entry_by_txt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_NAME_get_entry; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_NAME_get_text_by_NID; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_new; external LIBEAY_DLL_NAME;
-procedure X509_free; external LIBEAY_DLL_NAME;
-function X509_print; external LIBEAY_DLL_NAME;
-function X509_set_version; external LIBEAY_DLL_NAME;
+function X509_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_print; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_set_version; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function X509_get_version(x: pX509): integer;
 begin
 result := ASN1_INTEGER_get(x.cert_info.version);
 end;
 
-function X509_get_serialNumber; external LIBEAY_DLL_NAME;
-function X509_load_cert_file; external LIBEAY_DLL_NAME;
-function X509_get_issuer_name; external LIBEAY_DLL_NAME;
-function X509_get_subject_name; external LIBEAY_DLL_NAME;
+function X509_get_serialNumber; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_load_cert_file; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_get_issuer_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_get_subject_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function X509_get_notBefore(a: pX509): pASN1_TIME;
   begin
@@ -1835,128 +1836,128 @@ function X509_get_notAfter(a: pX509): pASN1_TIME;
   result := a.cert_info.validity.notAfter;
   end;
 
-function X509_get1_email; external LIBEAY_DLL_NAME;
-function X509_get_pubkey; external LIBEAY_DLL_NAME;
-function X509_check_private_key; external LIBEAY_DLL_NAME;
-function X509_check_purpose; external LIBEAY_DLL_NAME;
-function X509_issuer_and_serial_cmp; external LIBEAY_DLL_NAME;
-function X509_issuer_and_serial_hash; external LIBEAY_DLL_NAME;
-function X509_gmtime_adj; external LIBEAY_DLL_NAME;
-function X509_verify_cert; external LIBEAY_DLL_NAME;
-function X509_verify_cert_error_string; external LIBEAY_DLL_NAME;
-procedure X509_email_free; external LIBEAY_DLL_NAME;
-function X509_get_ext; external LIBEAY_DLL_NAME;
-function X509_get_ext_by_NID; external LIBEAY_DLL_NAME;
-function X509_get_ext_d2i; external LIBEAY_DLL_NAME;
-function X509V3_EXT_d2i; external LIBEAY_DLL_NAME;
-function X509V3_EXT_i2d; external LIBEAY_DLL_NAME;
-function X509V3_EXT_conf_nid; external LIBEAY_DLL_NAME;
+function X509_get1_email; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_get_pubkey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_check_private_key; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_check_purpose; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_issuer_and_serial_cmp; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_issuer_and_serial_hash; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_gmtime_adj; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_verify_cert; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_verify_cert_error_string; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_email_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_get_ext; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_get_ext_by_NID; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_get_ext_d2i; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509V3_EXT_d2i; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509V3_EXT_i2d; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509V3_EXT_conf_nid; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_sign; external LIBEAY_DLL_NAME;
-function X509_set_issuer_name; external LIBEAY_DLL_NAME;
-function X509_set_subject_name; external LIBEAY_DLL_NAME;
-procedure X509V3_set_ctx; external LIBEAY_DLL_NAME;
-procedure X509_SIG_free; external LIBEAY_DLL_NAME;
+function X509_sign; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_set_issuer_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_set_subject_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509V3_set_ctx; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_SIG_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_PUBKEY_get; external LIBEAY_DLL_NAME;
+function X509_PUBKEY_get; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_REQ_new; external LIBEAY_DLL_NAME;
-procedure X509_REQ_free; external LIBEAY_DLL_NAME;
-function X509_REQ_set_version; external LIBEAY_DLL_NAME;
+function X509_REQ_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_REQ_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_REQ_set_version; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function X509_REQ_get_version(req: pX509_REQ): integer;
 begin
 result := ASN1_INTEGER_get(req.req_info.version);
 end;
 
-function X509_REQ_set_subject_name; external LIBEAY_DLL_NAME;
+function X509_REQ_set_subject_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function X509_REQ_get_subject_name(req: pX509_REQ): pX509_NAME;
 begin
 result := req.req_info.subject;
 end;
 
-function X509_REQ_add1_attr_by_txt; external LIBEAY_DLL_NAME;
-function X509_REQ_add_extensions; external LIBEAY_DLL_NAME;
-function X509_REQ_set_pubkey; external LIBEAY_DLL_NAME;
-function X509_REQ_get_pubkey; external LIBEAY_DLL_NAME;
-function X509_REQ_sign; external LIBEAY_DLL_NAME;
+function X509_REQ_add1_attr_by_txt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_REQ_add_extensions; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_REQ_set_pubkey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_REQ_get_pubkey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_REQ_sign; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_STORE_new; external LIBEAY_DLL_NAME;
-procedure X509_STORE_free; external LIBEAY_DLL_NAME;
-function X509_STORE_add_cert; external LIBEAY_DLL_NAME;
-function X509_STORE_add_lookup; external LIBEAY_DLL_NAME;
-function X509_STORE_CTX_new; external LIBEAY_DLL_NAME;
-procedure X509_STORE_CTX_free; external LIBEAY_DLL_NAME;
-procedure X509_STORE_CTX_init; external LIBEAY_DLL_NAME;
+function X509_STORE_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_STORE_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_STORE_add_cert; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_STORE_add_lookup; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_STORE_CTX_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_STORE_CTX_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_STORE_CTX_init; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_STORE_CTX_get_current_cert; external LIBEAY_DLL_NAME;
-function X509_STORE_CTX_get_error; external LIBEAY_DLL_NAME;
-function X509_STORE_CTX_get_error_depth; external LIBEAY_DLL_NAME;
+function X509_STORE_CTX_get_current_cert; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_STORE_CTX_get_error; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_STORE_CTX_get_error_depth; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_LOOKUP_new; external LIBEAY_DLL_NAME;
-function X509_LOOKUP_init; external LIBEAY_DLL_NAME;
-procedure X509_LOOKUP_free; external LIBEAY_DLL_NAME;
+function X509_LOOKUP_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_LOOKUP_init; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure X509_LOOKUP_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function X509_LOOKUP_ctrl; external LIBEAY_DLL_NAME;
-function X509_LOOKUP_file; external LIBEAY_DLL_NAME;
+function X509_LOOKUP_ctrl; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_LOOKUP_file; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function PEM_read_bio_RSAPrivateKey; external LIBEAY_DLL_NAME;
-function PEM_write_bio_RSAPrivateKey; external LIBEAY_DLL_NAME;
-function PEM_read_bio_RSAPublicKey; external LIBEAY_DLL_NAME;
-function PEM_write_bio_RSAPublicKey; external LIBEAY_DLL_NAME;
+function PEM_read_bio_RSAPrivateKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_RSAPrivateKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_read_bio_RSAPublicKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_RSAPublicKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function PEM_read_bio_DSAPrivateKey; external LIBEAY_DLL_NAME;
-function PEM_write_bio_DSAPrivateKey; external LIBEAY_DLL_NAME;
+function PEM_read_bio_DSAPrivateKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_DSAPrivateKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function PEM_read_bio_PUBKEY; external LIBEAY_DLL_NAME;
-function PEM_write_bio_PUBKEY; external LIBEAY_DLL_NAME;
+function PEM_read_bio_PUBKEY; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_PUBKEY; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function PEM_read_bio_X509; external LIBEAY_DLL_NAME;
-function PEM_write_bio_X509; external LIBEAY_DLL_NAME;
-function PEM_read_bio_X509_AUX; external LIBEAY_DLL_NAME;
-function PEM_write_bio_X509_AUX; external LIBEAY_DLL_NAME;
-function PEM_read_bio_X509_REQ; external LIBEAY_DLL_NAME;
-function PEM_write_bio_X509_REQ; external LIBEAY_DLL_NAME;
-function PEM_read_bio_X509_CRL; external LIBEAY_DLL_NAME;
-function PEM_write_bio_X509_CRL; external LIBEAY_DLL_NAME;
-function PEM_read_bio_PrivateKey; external LIBEAY_DLL_NAME;
-function PEM_write_bio_PrivateKey; external LIBEAY_DLL_NAME;
-function PEM_read_bio_PKCS7; external LIBEAY_DLL_NAME;
-function PEM_write_bio_PKCS7; external LIBEAY_DLL_NAME;
+function PEM_read_bio_X509; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_X509; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_read_bio_X509_AUX; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_X509_AUX; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_read_bio_X509_REQ; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_X509_REQ; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_read_bio_X509_CRL; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_X509_CRL; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_read_bio_PrivateKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_PrivateKey; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_read_bio_PKCS7; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PEM_write_bio_PKCS7; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function PKCS5_PBKDF2_HMAC_SHA1; external LIBEAY_DLL_NAME;
+function PKCS5_PBKDF2_HMAC_SHA1; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
     
-function PKCS7_sign; external LIBEAY_DLL_NAME;
-function PKCS7_get_signer_info; external LIBEAY_DLL_NAME;  // STACK_OF(PKCS7_SIGNER_INFO)
-function PKCS7_verify; external LIBEAY_DLL_NAME;
-function PKCS7_get0_signers; external LIBEAY_DLL_NAME;
-function PKCS7_signatureVerify; external LIBEAY_DLL_NAME;
-function PKCS7_encrypt; external LIBEAY_DLL_NAME;
-function PKCS7_decrypt; external LIBEAY_DLL_NAME;
-procedure PKCS7_free; external LIBEAY_DLL_NAME;
-function PKCS7_ctrl; external LIBEAY_DLL_NAME;
+function PKCS7_sign; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS7_get_signer_info; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};  // STACK_OF(PKCS7_SIGNER_INFO)
+function PKCS7_verify; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS7_get0_signers; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS7_signatureVerify; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS7_encrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS7_decrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure PKCS7_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS7_ctrl; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function PKCS7_get_detached(p7: pPKCS7): pointer;
 begin
 result := pointer(PKCS7_ctrl(p7, 2, 0, nil));
 end;
 
-function PKCS7_dataInit; external LIBEAY_DLL_NAME;
+function PKCS7_dataInit; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function EVP_PKCS82PKEY; external LIBEAY_DLL_NAME;
-procedure PKCS8_PRIV_KEY_INFO_free; external LIBEAY_DLL_NAME;
-function PKCS8_decrypt; external LIBEAY_DLL_NAME;
+function EVP_PKCS82PKEY; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure PKCS8_PRIV_KEY_INFO_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS8_decrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function PKCS12_new; external LIBEAY_DLL_NAME;
-procedure PKCS12_free; external LIBEAY_DLL_NAME;
-function PKCS12_parse;  external LIBEAY_DLL_NAME;
+function PKCS12_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure PKCS12_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function PKCS12_parse;  external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function AES_set_decrypt_key; external LIBEAY_DLL_NAME;
-procedure AES_cbc_encrypt; external LIBEAY_DLL_NAME;
+function AES_set_decrypt_key; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+procedure AES_cbc_encrypt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
-function SMIME_write_PKCS7; external LIBEAY_DLL_NAME;
-function SMIME_read_PKCS7; external LIBEAY_DLL_NAME;
+function SMIME_write_PKCS7; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function SMIME_read_PKCS7; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 end.
 

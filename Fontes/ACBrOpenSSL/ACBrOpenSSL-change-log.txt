@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/09/2015
+[*] Carregamento atrasado da dll, funciona somente do Delphi 2010 em diante, por isso existe uma diretiva de compilação.
+    http://www.projetoacbr.com.br/forum/topic/24183-sugestão-de-alteração-de-carregamento-openssl/#comment-156102
+
 Data: 22/08/2015
 -- ACBrEAD --     (por: DSA)
 [*] Métodos para Inicialização e Liberação do OpenSSL movidos para

@@ -375,6 +375,7 @@ type
     procedure SetCPF(const Value: String);
     procedure SetIE(const Value: String);
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -2185,6 +2186,26 @@ begin
   FPSoapAction := FPServico;
 end;
 
+procedure TNFeConsultaCadastro.DefinirURL;
+var
+  Versao: Double;
+begin
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(
+    TACBrNFe(FPDFeOwner).GetNomeModeloDFe,
+    Self.FUF,
+    FPConfiguracoesNFe.WebServices.Ambiente,
+    LayOutToServico(FPLayout),
+    Versao,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
 procedure TNFeConsultaCadastro.DefinirDadosMsg;
 var
   ConCadNFe: TConsCad;
@@ -2291,10 +2312,10 @@ begin
     UF := 'AN';
   end
   else
-   begin
+  begin
     FPLayout := LayNFeEvento;
     UF := FPConfiguracoesNFe.WebServices.UF;
-   end;
+  end;
 
   if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEPECNFe) and
      (FPConfiguracoesNFe.WebServices.UFCodigo = 35) and

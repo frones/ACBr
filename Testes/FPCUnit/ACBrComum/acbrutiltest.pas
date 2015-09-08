@@ -180,6 +180,8 @@ type
   published
    procedure TesteSimples;
    procedure TesteCompleto;
+   procedure TesteTagsInvalidas;
+   procedure TesteTagsInvertidas;
   end;
 
   { RemoveEmptyLinesTest }
@@ -2749,6 +2751,42 @@ begin
                                    +'ACBrUtil, Testes Unitários'
                                +'</body>'
                            +'</html>'));
+end;
+
+procedure StripHTMLTest.TesteTagsInvalidas;
+var
+  SL: TStringList;
+  Striped: String;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Add('</zera>');
+    SL.Add('<CE>*** TESTE DE TAGS INVÁLIDAS ***</CE>');
+    SL.Add('<ce> <>tags inválidas no texto">">><<</CE>');
+    SL.Add('<AD><da><ec></</A Direita</ad>');
+    SL.Add('</corte_total>');
+
+    Striped := StripHTML(SL.Text);
+
+    SL.Clear;
+    SL.Add('');
+    SL.Add('*** TESTE DE TAGS INVÁLIDAS ***');
+    SL.Add(' tags inválidas no texto">">><<');
+    SL.Add('</</A Direita');
+    SL.Add('');
+
+    CheckEquals(SL.Text, Striped);
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure StripHTMLTest.TesteTagsInvertidas;
+var
+  AStr: String;
+begin
+  AStr := '>>> 1234 <<<';
+  CheckEquals(AStr, StripHTML(AStr));
 end;
 
 { RemoveStringsTest }

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/09/2015
+-- ACBrDevice --    (por: DSA)
+[*] Refatoração em TagProcessor.AcharProximaTag, movendo-a para ACBrUtil, para
+    permitir o uso da mesma no método ACBrUtil.StripHTML
+
 Data: 31/08/2015
 -- ACBrECFEscECF --
 [-] Ajuste em CancelaCupom para situação de falha na detectação do Estado de

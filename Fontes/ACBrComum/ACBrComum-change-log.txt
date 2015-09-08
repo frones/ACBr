@@ -38,6 +38,14 @@ Sнmbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correзгo de Bug (assim esperamos)
 
+Data: 08/09/2015       (por: DSA)
+-- ACBrUtil --
+[-] Correзгo em "StripHTML", problema de Loop Infinito, quando usando Tags sem
+    fechamento Ex: "><".
+[+] Adicionado o mйtodo: AcharProximaTag(const AString: AnsiString;
+     const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+     usado por StripHTML e TagProcessor
+
 Data: 31/07/2015       (por: DSA)
 -- ACBrUtil --
 [-] Correзгo em "QuebraLinhas", quando o LineBreak era no mesmo ponto da Quebra

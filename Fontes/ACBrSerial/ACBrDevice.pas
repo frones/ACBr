@@ -214,8 +214,6 @@ TACBrTagProcessor = class
     FTags: TACBrTags;
     FTraduzirTags: Boolean;
 
-    procedure AcharProximaTag(const AString: AnsiString; const PosIni: Integer;
-      var ATag: AnsiString; var PosTag: Integer);
   public
     constructor Create;
     destructor Destroy; override;
@@ -474,34 +472,6 @@ begin
 
   inherited Destroy;
 end;
-
-procedure TACBrTagProcessor.AcharProximaTag(const AString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
-var
-   PosTagAux, FimTag, LenTag : Integer ;
-begin
-  ATag   := '';
-  PosTag := PosEx( '<', AString, PosIni);
-  if PosTag > 0 then
-  begin
-    PosTagAux := PosEx( '<', AString, PosTag + 1);  // Verificando se Tag é inválida
-    FimTag    := PosEx( '>', AString, PosTag + 1);
-    if FimTag = 0 then                             // Tag não fechada ?
-    begin
-      PosTag := 0;
-      exit ;
-    end ;
-
-    while (PosTagAux > 0) and (PosTagAux < FimTag) do  // Achou duas aberturas Ex: <<e>
-    begin
-      PosTag    := PosTagAux;
-      PosTagAux := PosEx( '<', AString, PosTag + 1);
-    end ;
-
-    LenTag := FimTag - PosTag + 1 ;
-    ATag   := LowerCase( copy( AString, PosTag, LenTag ) );
-  end ;
-end ;
 
 function TACBrTagProcessor.DecodificarTagsFormatacao(AString: AnsiString
   ): AnsiString;

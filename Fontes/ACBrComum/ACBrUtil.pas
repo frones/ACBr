@@ -132,6 +132,8 @@ function RemoveString(const sSubStr, sString: String): String;
 function RemoveStrings(const AText: String; StringsToRemove: array of AnsiString): AnsiString;
 function RemoverEspacosDuplos(const AString: String): String;
 function StripHTML(const AHTMLString : AnsiString) : AnsiString;
+procedure AcharProximaTag(const AString: AnsiString;
+  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 procedure RemoveEmptyLines( AStringList: TStringList) ;
 function RandomName(const LenName : Integer = 8) : String ;
 
@@ -880,26 +882,56 @@ end ;
  ---------------------------------------------------------------------------- }
 function StripHTML(const AHTMLString : AnsiString) : AnsiString;
 var
-   PosIniTag, PosFimTag ,HTMLSize : Integer;
+  ATag: String;
+  PosTag, LenTag: Integer;
 begin
-   Result   := '' ;
-   HTMLSize := Length( AHTMLString ) ;
+  ATag   := '';
+  PosTag := 0;
+  Result := AHTMLString;
 
-   PosFimTag := 0 ;
-   PosIniTag := Pos('<', String(AHTMLString)) ;
-   while PosIniTag > 0 do
-   begin
-      Result := Result + copy(AHTMLString, PosFimTag+1, (PosIniTag - PosFimTag-1 ) ) ;
+  AcharProximaTag( Result, 1, ATag, PosTag);
+  while ATag <> '' do
+  begin
+    LenTag := Length( ATag );
+    Delete(Result, PosTag, LenTag);
 
-      PosFimTag := PosEx( '>', String(AHTMLString), PosIniTag ) ;
-      if PosFimTag = 0 then
-         PosFimTag := PosIniTag-1
-      else
-         PosIniTag := PosEx( '<', String(AHTMLString), PosFimTag )
-   end ;
-   Result := Result + copy(AHTMLString, PosFimTag+1, HTMLSize ) ;
-
+    ATag := '';
+    AcharProximaTag( Result, PosTag, ATag, PosTag );
+  end ;
 end;
+
+{-----------------------------------------------------------------------------
+   Localiza uma Tag dentro de uma String, iniciando a busca em PosIni.
+   Se encontrar uma Tag, Retorna a mesma em ATag, e a posição inicial dela em PosTag
+ ---------------------------------------------------------------------------- }
+procedure AcharProximaTag(const AString: AnsiString;
+  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+var
+   PosTagAux, FimTag, LenTag : Integer ;
+begin
+  ATag   := '';
+  PosTag := PosEx( '<', AString, PosIni);
+  if PosTag > 0 then
+  begin
+    PosTagAux := PosEx( '<', AString, PosTag + 1);  // Verificando se Tag é inválida
+    FimTag    := PosEx( '>', AString, PosTag + 1);
+    if FimTag = 0 then                             // Tag não fechada ?
+    begin
+      PosTag := 0;
+      exit ;
+    end ;
+
+    while (PosTagAux > 0) and (PosTagAux < FimTag) do  // Achou duas aberturas Ex: <<e>
+    begin
+      PosTag    := PosTagAux;
+      PosTagAux := PosEx( '<', AString, PosTag + 1);
+    end ;
+
+    LenTag := FimTag - PosTag + 1 ;
+    ATag   := LowerCase( copy( AString, PosTag, LenTag ) );
+  end ;
+end ;
+
 {-----------------------------------------------------------------------------
    Remove todas ocorrencias <sSubStr> de <sString>, retornando a String alterada
  ---------------------------------------------------------------------------- }

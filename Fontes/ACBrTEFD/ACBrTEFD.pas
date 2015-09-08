@@ -1372,7 +1372,7 @@ begin
                                  begin
                                    Inc( Ordem ) ;
 
-                                   if InfoECFAsDouble(ineSubTotal) > 0 then
+                                   if (InfoECFAsDouble(ineSubTotal) > 0) and (GrupoFPG[I].Total > 0)  then
                                       ECFPagamento( GrupoFPG[I].IndiceFPG_ECF, GrupoFPG[I].Total );
 
                                    For J := 0 to RespostasPendentes.Count-1 do

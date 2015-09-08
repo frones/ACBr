@@ -738,7 +738,8 @@ var
   Sts : Integer;
   Restr : AnsiString ;
 begin
-  VerificarTransacaoPagamento( Valor );
+  if (Valor <> 0) then
+    VerificarTransacaoPagamento( Valor );
 
   Restr := fRestricoes;
   if Restr = '' then
@@ -775,7 +776,7 @@ var
   end ;
 
 begin
-  if DocumentoVinculado <> '' then
+  if (DocumentoVinculado <> '') and (Valor <> 0) then
      VerificarTransacaoPagamento( Valor );
 
   Respostas.Values['501'] := ifthen(TipoPessoa = 'J','1','0');

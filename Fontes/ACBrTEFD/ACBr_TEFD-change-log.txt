@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/09/2015
+-- ACBrTEFDClass, ACBrTEFDCliSiTEF -
+[*] Ajustes para permitir chamadas a CRT e CHQ com Transações que não tem Valor
+    inicial, como por exemplo "Recarga de Celular"   (Por: Elias - DJSystem)
+
 Data: 06/03/2014
 -- ACBrTEFDCliSiTEF --
 [*] Ajuste para não verificar se estado é pagamento nas consultas de CHQ, quando

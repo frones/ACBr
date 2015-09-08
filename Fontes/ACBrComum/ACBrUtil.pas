@@ -882,7 +882,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function StripHTML(const AHTMLString : AnsiString) : AnsiString;
 var
-  ATag: String;
+  ATag: AnsiString;
   PosTag, LenTag: Integer;
 begin
   ATag   := '';

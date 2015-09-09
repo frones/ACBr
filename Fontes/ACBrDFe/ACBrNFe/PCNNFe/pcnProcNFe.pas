@@ -78,7 +78,7 @@ type
     function GerarXML: Boolean;
     function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcNFe = tpnPrivado): String;
   published
-    property Gerador: TGerador          read FGerador            write FGerador;
+    property Gerador: TGerador          read FGerador;
     property PathNFe: String            read FPathNFe            write FPathNFe;
     property PathRetConsReciNFe: String read FPathRetConsReciNFe write FPathRetConsReciNFe;
     property PathRetConsSitNFe: String  read FPathRetConsSitNFe  write FPathRetConsSitNFe;
@@ -91,6 +91,7 @@ type
     property cStat: Integer             read FcStat              write FcStat;
     property xMotivo: String            read FxMotivo            write FxMotivo;
     property Versao: String             read FVersao             write FVersao;
+
   end;
 
 implementation
@@ -178,22 +179,27 @@ begin
       begin
         I := 0;
         LocLeitor := TLeitor.Create;
-        LocLeitor.CarregarArquivo(FPathRetConsReciNFe);
-        while LocLeitor.rExtrai(1, 'protNFe', '', i + 1) <> '' do
-         begin
-           if LocLeitor.rCampo(tcStr, 'chNFe') = FchNFe then
-             FnProt := LocLeitor.rCampo(tcStr, 'nProt');
-           if trim(FnProt) = '' then
-             Gerador.wAlerta('XR01', 'PROTOCOLO/NFe', 'Numero do protocolo', ERR_MSG_VAZIO)
-           else
+        try
+          LocLeitor.CarregarArquivo(FPathRetConsReciNFe);
+          while LocLeitor.rExtrai(1, 'protNFe', '', i + 1) <> '' do
+          begin
+            if LocLeitor.rCampo(tcStr, 'chNFe') = FchNFe then
+              FnProt := LocLeitor.rCampo(tcStr, 'nProt');
+
+            if trim(FnProt) = '' then
+              Gerador.wAlerta('XR01', 'PROTOCOLO/NFe', 'Numero do protocolo', ERR_MSG_VAZIO)
+            else
             begin
-             xProtNFe := LocLeitor.rExtrai(1, 'protNFe', '', i + 1); // +'</protNFe>';
-             Gerador.ListaDeAlertas.Clear;
-             break;
+              xProtNFe := LocLeitor.rExtrai(1, 'protNFe', '', i + 1); // +'</protNFe>';
+              Gerador.ListaDeAlertas.Clear;
+              break;
             end;
+
             I := I + 1;
-         end;
-         LocLeitor.Free;
+          end;
+        finally
+          LocLeitor.Free;
+        end;
       end;
     end;
 

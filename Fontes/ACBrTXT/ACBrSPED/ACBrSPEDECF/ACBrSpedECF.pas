@@ -4,7 +4,7 @@
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2014   Juliomar Marchetti                   }
-{					                    2015   Isaque Pinheiro	    	             }
+{					                    2015   Isaque Pinheiro	               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -927,13 +927,77 @@ end;
 
 procedure TACBrSPEDECF.WriteRegistroC990;
 begin
-  with Bloco_9.Registro9900.New do begin
-    REG_BLC := 'C001';
-    QTD_REG_BLC := 1;
-  end;
-  with Bloco_9.Registro9900.New do begin
-    REG_BLC := 'C990';
-    QTD_REG_BLC := 1;
+  if (Bloco_C.RegistroC001.IND_DAD = idComDados) then begin
+    with Bloco_9.Registro9900 do begin
+      with New do begin
+        REG_BLC := 'C001';
+        QTD_REG_BLC := 1;
+      end;
+      if Bloco_C.RegistroC040Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C040';
+          QTD_REG_BLC := Bloco_C.RegistroC040Count;
+        end;
+      end;
+      if Bloco_C.RegistroC050Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C050';
+          QTD_REG_BLC := Bloco_C.RegistroC050Count;
+        end;
+      end;
+      if Bloco_C.RegistroC051Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C051';
+          QTD_REG_BLC := Bloco_C.RegistroC051Count;
+        end;
+      end;
+      if Bloco_C.RegistroC053Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C053';
+          QTD_REG_BLC := Bloco_C.RegistroC053Count;
+        end;
+      end;
+      if Bloco_C.RegistroC100Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C100';
+          QTD_REG_BLC := Bloco_C.RegistroC100Count;
+        end;
+      end;
+      if Bloco_C.RegistroC150Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C150';
+          QTD_REG_BLC := Bloco_C.RegistroC150Count;
+        end;
+      end;
+      if Bloco_C.RegistroC155Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C155';
+          QTD_REG_BLC := Bloco_C.RegistroC155Count;
+        end;
+      end;
+      if Bloco_C.RegistroC157Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C157';
+          QTD_REG_BLC := Bloco_C.RegistroC157Count;
+        end;
+      end;
+      if Bloco_C.RegistroC350Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C350';
+          QTD_REG_BLC := Bloco_C.RegistroC350Count;
+        end;
+      end;
+      if Bloco_C.RegistroC355Count > 0 then begin
+        with New do begin
+          REG_BLC := 'C355';
+          QTD_REG_BLC := Bloco_C.RegistroC355Count;
+        end;
+      end;
+      with New do begin
+        REG_BLC := 'C990';
+        QTD_REG_BLC := 1;
+      end;
+    end;
   end;
   Bloco_C.WriteRegistroC990;
 end;
@@ -1757,8 +1821,7 @@ end;
 
 procedure TACBrSPEDECF.WriteRegistro9001;
 begin
-  with Bloco_9.Registro9900.New do
-  begin
+  with Bloco_9.Registro9900.New do begin
     REG_BLC := '9001';
     QTD_REG_BLC := 1;
   end;
@@ -1767,20 +1830,16 @@ end;
 
 procedure TACBrSPEDECF.WriteRegistro9900;
 begin
-  with Bloco_9.Registro9900 do
-  begin
-    with New do
-    begin
+  with Bloco_9.Registro9900 do begin
+    with New do begin
       REG_BLC := '9900';
       QTD_REG_BLC := Bloco_9.Registro9900.Count + 2;
     end;
-    with New do
-    begin
+    with New do begin
       REG_BLC := '9990';
       QTD_REG_BLC := 1;
     end;
-    with New do
-    begin
+    with New do begin
       REG_BLC := '9999';
       QTD_REG_BLC := 1;
     end;

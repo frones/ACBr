@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/09/2015
+-- ACBrNFeDANFeRL --
+[*] Ajuste para considerar valor da propriedade "MostrarStatus"  (por: DSA)
+
 -- ACBrNFeWebServices --
 [-] Acerto para configuração correta do endereço do webservice quando utilizado o
     método de consulta, o webservice deve ser o mesmo do método.

@@ -142,6 +142,7 @@ type
     FFormularioContinuo: Boolean;
     FExpandirLogoMarca: Boolean;
     FMostrarPreview: Boolean;
+    FMostrarStatus: Boolean;
     FNomeFonte: TNomeFonte;
     FNegrito: Boolean;
     FMargemSuperior: Double;
@@ -188,6 +189,7 @@ type
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
                     AMostrarPreview: Boolean = True;
+                    AMostrarStatus: Boolean = True;
                     ANomeFonte: TNomeFonte = nfTimesNewRoman;
                     ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
@@ -348,6 +350,7 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 AFormularioContinuo: Boolean = False;
                 AExpandirLogoMarca: Boolean = False;
                 AMostrarPreview: Boolean = True;
+                AMostrarStatus: Boolean = True;
                 ANomeFonte: TNomeFonte = nfTimesNewRoman;
                 ANegrito: Boolean = True;
                 AMargemSuperior: Double = 0.7;
@@ -388,6 +391,7 @@ begin
       FFormularioContinuo := AFormularioContinuo;
       FExpandirLogoMarca := AExpandirLogoMarca;
       FMostrarPreview := AMostrarPreview;
+      FMostrarStatus := AMostrarStatus;
       FNomeFonte := ANomeFonte;
       FNegrito := ANegrito;
       FMargemSuperior := AMargemSuperior;
@@ -418,11 +422,12 @@ begin
       else
         RLPrinter.Copies := 1;
 
-      if FMostrarPreview = True then
+      RLNFe.ShowProgress := FMostrarStatus;
+
+      if FMostrarPreview then
         RLNFe.PreviewModal
       else
         RLNFe.Print;
-
     finally
       Destroy;
     end ;
@@ -617,3 +622,22 @@ begin
 end;
 
 end.
+
+(* TODO: Talvez seja necessário o código abaixo para FPC
+{$IFDEF FPC}
+ if FNumCopias > 1 then
+ begin
+    RLNFe.Prepare;
+
+    // Nota: Esse código só funciona em Fortes4Lazarus
+    SpoolFilter.Pages := RLNFe.Pages;
+    SpoolFilter.FirstPage := 1;
+    SpoolFilter.LastPage := SpoolFilter.Pages.PageCount;
+    SpoolFilter.Copies := FNumCopias;
+    SpoolFilter.FilterStyle := SpoolFilter.FilterStyle + [fsEmulateCopies];
+
+    SpoolFilter.Run;
+ end
+ else
+{$ENDIF}
+*)

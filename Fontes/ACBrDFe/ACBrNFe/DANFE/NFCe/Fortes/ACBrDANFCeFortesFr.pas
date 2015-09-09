@@ -719,13 +719,13 @@ begin
       RLLayout := rlVenda;
       Resumido := DanfeResumido;
 
-      RLPrinter.Copies     := NumCopias ;
+      RLPrinter.Copies := NumCopias ;
 
       if ACBrNFeDANFCeFortes.Impressora <> '' then
         RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
 
       RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
-      RLLayout.ShowProgress:= False ;
+      RLLayout.ShowProgress:= ACBrNFeDANFCeFortes.MostrarStatus;
 
       if Filtro = fiNenhum then
       begin

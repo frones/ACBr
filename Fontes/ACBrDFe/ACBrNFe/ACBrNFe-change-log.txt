@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/09/2015
+-- ACBrNFeWebServices --
+[-] Acerto para configuração correta do endereço do webservice quando utilizado o
+    método de consulta, o webservice deve ser o mesmo do método.
+    http://www.projetoacbr.com.br/forum/topic/9564-consulta-nfe-e-cte-outra-uf/#comment-156061
+    por: regys.silveira
+
 [*] Incluido o valor LayNFeCCe na function que converte Layout em Schema.
     Em ACBrNFeServicos.INI todos os campos: RecepcaoEvento_2.00 e RecepcaoEvento_3.10
     foram renomeados para: RecepcaoEvento_1.00

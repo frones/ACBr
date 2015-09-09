@@ -358,9 +358,13 @@ begin
 
   FConfiguracoes := AConfiguracoes;
   {$IFNDEF MSWINDOWS}
-  FSSLLib := libOpenSSL;
+   FSSLLib := libOpenSSL;
   {$ELSE}
-  FSSLLib := libCapicom;
+   {$IFDEF FPC}
+    FSSLLib := libCapicom;
+   {$ELSE}
+    FSSLLib := libCapicomDelphiSoap;
+   {$ENDIF}
   {$ENDIF}
   FFormaEmissao := teNormal;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));

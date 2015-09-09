@@ -481,6 +481,7 @@ begin
         RLPrinter.Copies      := NumCopias ;  // Aparentemente isso está errado... :(
         RLLayout.PrintDialog  := MostrarSetup;
         RLLayout.ShowProgress := MostrarProgresso;
+        RLLayout.Title        := TituloRelatorio;
 
         if PrinterName <> '' then
            RLPrinter.PrinterName := PrinterName;

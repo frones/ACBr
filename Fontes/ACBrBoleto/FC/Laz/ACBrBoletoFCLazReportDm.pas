@@ -120,7 +120,7 @@ procedure TACBrBoletoFCLazReport.Imprimir;
 var
   frACBrBoletoLazReport : TdmACbrBoletoFCLazReport;
   RelBoleto, Dir : string;
-  PageIni, PageFim, PInd : Integer;
+  PageIni, PageFim, POldInd, PNewInd : Integer;
   Res : TLResource ;
   MS  : TMemoryStream ;
 begin
@@ -159,8 +159,17 @@ begin
            end;
          end ;
 
-        PInd := Printer.PrinterIndex;
-        frReport1.ChangePrinter( PInd, 0 );
+        POldInd := Printer.PrinterIndex;
+        PNewInd := 0;
+        if PrinterName <> '' then
+        begin
+           PNewInd := Printer.Printers.IndexOf(PrinterName);
+           if PNewInd < 0 then
+              PNewInd := 0;
+        end;
+
+        if POldInd <> PNewInd then
+           frReport1.ChangePrinter( POldInd, PNewInd );
 
         if not frReport1.PrepareReport then
            Exit;
@@ -169,13 +178,12 @@ begin
         begin
            Options  := [poPageNums];
            Collate  := true;
-           //FromPage := 0;
-           //ToPage   := fBoletoFC.ACBrBoleto.ListadeBoletos.Count;
-           //MaxPage  := ToPage;
            Copies   := NumCopias;
-           //PageIni  := FromPage;
-           //PageFim  := ToPage;
         end;
+
+        frReport1.Title := TituloRelatorio;
+        PageIni := 1;
+        PageFim := 0;
 
         Case Filtro of
           fiNenhum :
@@ -188,9 +196,9 @@ begin
                  begin
                     if PrintDialog1.Execute then
                     begin
-                       if (Printer.PrinterIndex <> PInd ) or
-                          frReport1.CanRebuild            or
-                          frReport1.ChangePrinter( PInd, Printer.PrinterIndex ) then
+                       if (Printer.PrinterIndex <> PNewInd ) or
+                          frReport1.CanRebuild               or
+                          frReport1.ChangePrinter( PNewInd, Printer.PrinterIndex ) then
                        begin
                           frReport1.PrepareReport
                        end ;
@@ -205,8 +213,8 @@ begin
                  else
                    frReport1.PrepareReport;
 
-                frReport1.PrintPreparedReport( IntToStr(PageIni) + '-' +
-                IntToStr(PageFim), NumCopias );
+                frReport1.PrintPreparedReport( IntToStr(PageIni) + '-' + IntToStr(PageFim),
+                                               NumCopias );
               end;
             end ;
 

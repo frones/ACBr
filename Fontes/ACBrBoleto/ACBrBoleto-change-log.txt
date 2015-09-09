@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 00/09/2015
+-- ACBrBoletoFCFortesFr --  (por: DSA)
+[*] Ajuste para nomear o Título de Relatório
+
+-- ACBrBoletoFCLazReport --  (por: DSA)
+[*] Ajuste para nomear o Título de Relatório
+[-] Correção para impressão sem Preview e Setup
+[-] Correção para configurar a Impressora especificada
+
 Data: 01/09/2015 ver. 0.0.142a
 -- ACBrBoletoFCClass, ACBrBoletoFCFortesFr --   (por: DSA)
 [+] Adicionada a propriedade "MostrarProgresso: Boolean default True"

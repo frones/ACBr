@@ -1031,6 +1031,7 @@ type
     fACBrBoleto : TACBrBoleto;
     procedure SetNumCopias(AValue: Integer);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    function TituloRelatorio: String;
   public
 
     Constructor Create(AOwner: TComponent); override;
@@ -2239,6 +2240,13 @@ begin
 
    if (Operation = opRemove) and (fACBrBoleto <> nil) and (AComponent is TACBrBoleto) then
       fACBrBoleto := nil ;
+end;
+
+function TACBrBoletoFCClass.TituloRelatorio: String;
+begin
+  Result := 'Boleto - '+ACBrBoleto.Banco.Nome+
+            ' Ag:'+ACBrBoleto.Cedente.Agencia+'-'+ACBrBoleto.Cedente.AgenciaDigito+
+            ' Conta:'+ACBrBoleto.Cedente.Conta+'-'+ACBrBoleto.Cedente.ContaDigito;
 end;
 
 procedure TACBrBoletoFCClass.CarregaLogo(const PictureLogo : TPicture; const NumeroBanco: Integer ) ;

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2015
+[*] (ACBrNFSeConfiguracoes)
+    Alterado a rotina de leitura de provedo, para suportar provedores que possuem
+    uma URL de produção para cada cidade.
+[+] Disponibilizado o arquivo INI de configuração do provedor Fiorilli.
+    Por: Italo Jurisato Junior
+
 17/08/2015
 [*] Incluido a cidade de Rio Branco/AC no provedor Abaco.
     Por: Italo Jurisato Junior

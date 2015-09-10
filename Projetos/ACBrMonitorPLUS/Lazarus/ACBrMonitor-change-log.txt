@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2015
+-- ACBrMonitorPLUS --     (por: DSA)
+[-] Correção na gravação do valor configurado em: ACBrPosPrinter1.ConfigBarras.Altura
+
 21/08/2015
 -- NFE --
 [-] Ajustes para que a Impressão de NFCe, respeite a impressora definida na aba

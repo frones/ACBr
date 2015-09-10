@@ -3775,7 +3775,7 @@ begin
     INI.WriteString('PosPrinter', 'ArqLog', edPosPrinterLog.Text);
 
     INI.WriteInteger('Barras', 'Largura', seCodBarrasLargura.Value);
-    INI.WriteInteger('Barras', 'Altura', seCodBarrasLargura.Value);
+    INI.WriteInteger('Barras', 'Altura', seCodBarrasAltura.Value);
     INI.WriteBool('Barras', 'HRI',cbHRI.Checked);
 
     INI.WriteInteger('QRCode', 'Tipo', seQRCodeTipo.Value);

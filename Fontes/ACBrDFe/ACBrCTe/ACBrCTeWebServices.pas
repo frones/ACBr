@@ -877,7 +877,6 @@ procedure TCTeRetRecepcao.Clear;
 var
   i, j: Integer;
 begin
-  // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
@@ -957,7 +956,6 @@ begin
         if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
           NomeXML := '-den.xml';
 
-        // Incluido por Italo em 06/08/2015
         // Monta o XML do CT-e assinado e com o protocolo de Autorização ou Denegação
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
            (AInfProt.Items[I].cStat = 301) then
@@ -993,77 +991,6 @@ begin
             AProcCTe.Free;
           end;
         end;
-          (*
-          XML_procCTe := '<' + ENCODING_UTF8 + '>';
-          XML_procCTe := XML_procCTe + '<cteProc versao="' + FPVersaoServico +
-                                  '" xmlns="http://www.portalfiscal.inf.br/cte">';
-
-          XML_procCTe := XML_procCTe +
-                         StringReplace(FConhecimentos.Items[J].XMLAssinado,
-                                       '<' + ENCODING_UTF8 + '>', '',
-                                       [rfReplaceAll]);
-
-          XML_procCTe := XML_procCTe + '<protCTe versao="' + FPVersaoServico + '">';
-          XML_procCTe := XML_procCTe + AInfProt.Items[I].XMLprotCTe;
-          XML_procCTe := XML_procCTe + '</protCTe>';
-          XML_procCTe := XML_procCTe + '</cteProc>';
-        end;
-
-        // Se XMLprocCTe for uma string vazia significa que o CTe foi rejeitado,
-        // caso contrario o seu conteudo sera o CT-e assinado e protocolado
-        FConhecimentos.Items[J].XMLprocCTe := XML_procCTe;
-        *)
-        (*
-        if FPConfiguracoesCTe.Arquivos.Salvar or NaoEstaVazio(
-          FConhecimentos.Items[J].NomeArq) then
-        begin
-          if FileExists(PathWithDelim(FPConfiguracoesCTe.Arquivos.PathSalvar) +
-                        AInfProt.Items[I].chCTe + '-cte.xml') and
-             FileExists(PathWithDelim(FPConfiguracoesCTe.Arquivos.PathSalvar) +
-                        FCTeRetorno.nRec + '-pro-rec.xml') then
-          begin
-            AProcCTe := TProcCTe.Create;
-            try
-              AProcCTe.PathCTe :=
-                PathWithDelim(FPConfiguracoesCTe.Arquivos.PathSalvar) +
-                AInfProt.Items[I].chCTe + '-cte.xml';
-              AProcCTe.PathRetConsReciCTe :=
-                PathWithDelim(FPConfiguracoesCTe.Arquivos.PathSalvar) +
-                FCTeRetorno.nRec + '-pro-rec.xml';
-
-              AProcCTe.Versao := FPVersaoServico;
-              AProcCTe.GerarXML;
-
-              if NaoEstaVazio(AProcCTe.Gerador.ArquivoFormatoXML) then
-              begin
-                if NaoEstaVazio(FConhecimentos.Items[J].NomeArq) then
-                  AProcCTe.Gerador.SalvarArquivo(FConhecimentos.Items[J].NomeArq)
-                else
-                  AProcCTe.Gerador.SalvarArquivo(
-                    PathWithDelim(FPConfiguracoesCTe.Arquivos.PathSalvar) +
-                    AInfProt.Items[I].chCTe + NomeXML);
-              end;
-            finally
-              AProcCTe.Free;
-            end;
-          end;
-        end;
-
-        if FPConfiguracoesCTe.Arquivos.Salvar then
-        begin
-          SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
-                       TACBrCTe(FPDFeOwner).Conhecimentos.Items[I].Processado;
-
-          if SalvarXML then
-          begin
-            with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
-            begin
-              GerarXML;   // Gera novamente, para incluir informações de "procCTe" no XML
-              GravarXML;
-            end;
-          end;
-        end;
-       *)
 
         break;
       end;
@@ -1238,7 +1165,6 @@ end;
 
 procedure TCTeRecibo.Clear;
 begin
-  // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
@@ -1343,7 +1269,6 @@ end;
 
 procedure TCTeConsulta.Clear;
 begin
-  // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
@@ -1402,7 +1327,6 @@ begin
     FcStat := CTeRetorno.cStat;
     FXMotivo := CTeRetorno.xMotivo;
     FcUF := CTeRetorno.cUF;
-//    FCTeChave := CTeRetorno.chCTe;
     FPMsg := FXMotivo;
 
     // Verifica se o Conhecimento está cancelado pelo método antigo. Se estiver,
@@ -1659,109 +1583,6 @@ begin
           end;
 
           break;
-            (*
-            if FileExists(NomeArquivo + NomeXML) or NaoEstaVazio(NomeArq) then
-            begin
-              AProcCTe := TProcCTe.Create;
-              try
-                if NaoEstaVazio(NomeArq) then
-                  AProcCTe.PathCTe := NomeArq
-                else
-                  AProcCTe.PathCTe := NomeArquivo + '-cte.xml';
-
-                AProcCTe.PathRetConsSitCTe := NomeArquivo + '-sit.xml';
-
-                AProcCTe.GerarXML;
-
-                aCTe := AProcCTe.Gerador.ArquivoFormatoXML;
-
-                if NaoEstaVazio(AProcCTe.Gerador.ArquivoFormatoXML) then
-                  AProcCTe.Gerador.SalvarArquivo(AProcCTe.PathCTe);
-
-                FRetCTeDFe := '';
-
-                if (NaoEstaVazio(aCTe)) and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
-                begin
-                  Inicio := Pos('<procEventoCTe', FPRetWS);
-                  Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
-
-                  aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-                  aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                             '<CTeDFe>' +
-                              '<procCTe versao="' + FVersao + '">' +
-                                SeparaDados(aCTe, 'cteProc') +
-                              '</procCTe>' +
-                              '<procEventoCTe versao="' + FVersao + '">' +
-                                aEventos +
-                              '</procEventoCTe>' +
-                             '</CTeDFe>';
-
-                  FRetCTeDFe := aCTeDFe;
-                end;
-              finally
-                AProcCTe.Free;
-              end;
-            end
-            else begin
-             LocCTeW := TCTeW.Create(TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe);
-             try
-               LocCTeW.GerarXML;
-
-               aCTe := LocCTeW.Gerador.ArquivoFormatoXML;
-
-               FRetCTeDFe := '';
-
-               if (NaoEstaVazio(aCTe)) and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
-                begin
-                  Inicio := Pos('<procEventoCTe', FPRetWS);
-                  Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
-
-                  aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-                  aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                             '<CTeDFe>' +
-                              '<procCTe versao="' + FVersao + '">' +
-                                SeparaDados(aCTe, 'cteProc') +
-                              '</procCTe>' +
-                              '<procEventoCTe versao="' + FVersao + '">' +
-                                aEventos +
-                              '</procEventoCTe>' +
-                             '</CTeDFe>';
-
-                  FRetCTeDFe := aCTeDFe;
-                end;
-             finally
-               LocCTeW.Free;
-             end;
-            end;
-
-            if FPConfiguracoesCTe.Arquivos.Salvar then
-            begin
-              SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
-                           TACBrCTe(FPDFeOwner).Conhecimentos.Items[I].Processado;
-
-              if SalvarXML then
-              begin
-                with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
-                begin
-                  GerarXML;   // Gera novamente, para incluir informações de "procNFe" no XML
-                  GravarXML;
-                end;
-              end;
-            end;
-
-            if FPConfiguracoesCTe.Arquivos.Salvar and (FRetCTeDFe <> '') then
-            begin
-              if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
-                Data := TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe.Ide.dhEmi
-              else
-                Data := Now;
-
-              FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml', aCTeDFe,
-                                PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-            end;
-            *)
         end;
       end;
     end;
@@ -1864,7 +1685,6 @@ end;
 
 procedure TCTeInutilizacao.Clear;
 begin
-  // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
@@ -1926,7 +1746,7 @@ begin
     InutCTe.GerarXML;
 
     AssinarXML(InutCTe.Gerador.ArquivoFormatoXML, 'inutCTe', 'infInut',
-      'Falha ao assinar Inutilização Conhecimento Eletrônico ');
+      'Falha ao assinar Inutilização de numeração.');
 
     FID := InutCTe.ID;
   finally
@@ -2056,7 +1876,6 @@ end;
 
 procedure TCTeConsultaCadastro.Clear;
 begin
-  // Limpa Dados do retorno;
   FPMsg     := '';
   FverAplic := '';
   FcStat    := 0;
@@ -2230,7 +2049,6 @@ end;
 
 procedure TCTeEnvEvento.Clear;
 begin
-  // Limpa Dados do retorno;
   FPMsg     := '';
   FcStat    := 0;
   FxMotivo  := '';
@@ -2342,13 +2160,6 @@ begin
     EventoCTe.Versao := FPVersaoServico;
     EventoCTe.GerarXML;
 
-    // Separa os grupos <evento> e coloca na variável Eventos
-//    I := Pos('<evento ', EventoCTe.Gerador.ArquivoFormatoXML);
-//    Lote := Copy(EventoCTe.Gerador.ArquivoFormatoXML, 1, I - 1);
-//    Eventos := SeparaDados(EventoCTe.Gerador.ArquivoFormatoXML, 'envEvento');
-//    I := Pos('<evento ', Eventos);
-//    Eventos := Copy(Eventos, I, length(Eventos));
-
     Eventos := EventoCTe.Gerador.ArquivoFormatoXML;
     EventosAssinados := '';
 
@@ -2370,13 +2181,6 @@ begin
       else
         Break;
     end;
-
-//    F := Pos('?>', EventosAssinados);
-//    if F <> 0 then
-//      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
-//        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
-//    else
-//      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
     // Separa o XML especifico do Evento para ser Validado.
     AXMLEvento := '<?xml version="1.0" encoding="UTF-8" ?>' +

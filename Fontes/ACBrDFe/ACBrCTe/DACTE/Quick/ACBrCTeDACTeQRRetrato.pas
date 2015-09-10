@@ -47,13 +47,6 @@ unit ACBrCTeDACTeQRRetrato;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 27/09/2013 por Italo Jurisato Junior
-// 16/09/2013 por Italo Jurisato Junior
-// 06/09/2013 por Italo Jurisato Junior
-// 21/08/2013 por Italo Jurisato Junior
-// 20/08/2013 por André F. Moraes
-// 06/08/2013 por Italo Jurisato Junior
-// 28/01/2014 por Italo Jurisato Junior
 
 interface
 
@@ -855,7 +848,6 @@ begin
 
   end;
 
-  // Incluido por Italo em 27/05/2014
   // Varrendo NFe Anulada
   if FCTe.infCteAnu.chCTe <> '' then
   begin
@@ -1134,13 +1126,12 @@ procedure TfrmDACTeQRRetrato.qrb_01_ReciboBeforePrint(Sender: TQRCustomBand; var
 begin
   inherited;
   PrintBand := (QRCTe.PageNumber = 1) and (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prCabecalho);
-  //Rodrigo DSP 22/01/2014 11:22:47: impressao do canhoto - Cabecalho.
   if (FResumoCanhoto) then
     qrlResumoCanhotoCTe.Caption := getTextoResumoCanhoto
   else
     qrlResumoCanhotoCTe.Caption := '';
 
-  qrlSerie2.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
+  qrlSerie2.Caption  := IntToStr(FCTe.Ide.serie);
   qrlNumCte2.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
 
   qrb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
@@ -1173,7 +1164,6 @@ var
 begin
   inherited;
 
-  // Alterado por Italo em 15/01/2014
   if (FLogo <> '') then
     begin
       if FilesExists(FLogo) then
@@ -1206,7 +1196,7 @@ begin
 
   qrlModal.Caption      := TpModalToStrText(FCTe.Ide.modal);
   qrlModelo.Caption     := FCTe.Ide.modelo;
-  qrlSerie.Caption      := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
+  qrlSerie.Caption      := IntToStr(FCTe.Ide.serie);
   qrlNumCte.Caption     := FormatFloat('000,000,000', FCTe.Ide.nCT);
   qrlPageNumber.Caption := format('%2.2d', [QRCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   qrlEmissao.Caption    := FormatDateTime('dd/mm/yyyy hh:nn', FCTe.Ide.dhEmi);
@@ -2296,13 +2286,13 @@ begin
     qrlAWB.Caption           := nOCA;
   {$IFDEF PL_103}
     qrlTrecho.Caption        := tarifa.trecho;
-    qrlContaCorrente.Caption := cIATA; // ??? Conta Corrente ???
+    qrlContaCorrente.Caption := cIATA;
   {$ENDIF}
     qrlTarifaCL.Caption      := tarifa.CL;
     qrlTarifaCodigo.Caption  := tarifa.cTar;
     qrlTarifaValor.Caption   := FormatFloatBr(msk9x2, tarifa.vTar);
   {$IFNDEF PL_103}
-    qrlContaCorrente.Caption := IdT; // ??? Conta Corrente ???
+    qrlContaCorrente.Caption := IdT;
   {$ENDIF}
     qrlMinuta.Caption        := FormatFloat('0000000000', nMinu);
 
@@ -2451,22 +2441,18 @@ begin
   inherited;
   PrintBand := (QRCTe.PageNumber = 1);
 
-  //Rodrigo DSP 22/01/2014 11:22:47: impressao do canhoto - Rodape.
   if (FResumoCanhoto) then
     qrlResumoCanhotoCTe2.Caption := getTextoResumoCanhoto
   else
     qrlResumoCanhotoCTe2.Caption := '';
-    
-  qrlSerie3.Caption  := IntToStr(FCTe.Ide.serie); // FormatFloat( '000', FCTe.Ide.serie);
+
+  qrlSerie3.Caption  := IntToStr(FCTe.Ide.serie);
   qrlNumCte3.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
 
   if PrintBand then
   begin
     qrb_18_Recibo.Enabled := ((FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento)) and
                              (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prRodape);
-//    if qrb_18_Recibo.Enabled
-//     then qrb_18_Recibo.Height  := 68
-//     else qrb_18_Recibo.Height  := 0;
     if qrb_18_Recibo.Enabled then
     begin
       qrb_01_Recibo.Height := 0;

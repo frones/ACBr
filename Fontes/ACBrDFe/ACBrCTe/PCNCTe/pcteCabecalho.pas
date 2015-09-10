@@ -87,7 +87,7 @@ function TCabecalho.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
-  Gerador.wGrupo('cabecMsg ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wGrupo('cabecMsg ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'FP03', 'versaoDados', 001, 001, 1, VersaoDados, DSC_VERPROC);
   Gerador.wGrupo('/cabecMsg');
   

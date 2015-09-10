@@ -73,7 +73,6 @@ type
     FxMotivo: String;
     FId: String;
     FVersao: String;
-    // Usando na Montagem do cteProc
     FXML_CTe: String;
     FXML_prot: String;
   public

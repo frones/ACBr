@@ -85,7 +85,7 @@ type
     FMargemEsquerda: Double;
     FMargemDireita: Double;
     FCTeCancelada: Boolean;
-    FResumoCanhoto: Boolean; //Rodrigo DSP 22/01/2014 10:43:44:
+    FResumoCanhoto: Boolean;
     FEPECEnviado: Boolean;
     FPosCanhoto: TPosRecibo;
     FImprimirDescPorc: Boolean;
@@ -166,7 +166,7 @@ begin
   FMargemDireita  := 0.51;
   FCTeCancelada   := False;
 
-  FResumoCanhoto := False; // Rodrigo DSP 22/01/2014 10:43:37:
+  FResumoCanhoto := False; 
   FEPECEnviado   := False;
 end;
 

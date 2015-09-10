@@ -162,26 +162,6 @@ var
   i: Integer;
 begin
  // Itens
- (*
-  if ( cdsCorrecao.Active ) then
-  begin
-    cdsCorrecao.CancelUpdates;
-  end
-  else
-  begin
-    cdsCorrecao.CreateDataSet;
-  end;
-
-  for i := 0 to (FEventoCTe.InfEvento.detEvento.infCorrecao.Count -1) do
-  begin
-    cdsCorrecao.Append;
-    cdsCorrecaoItem.AsInteger := FEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
-    cdsCorrecaoGrupo.AsString := FEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
-    cdsCorrecaoCampo.AsString := FEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
-    cdsCorrecaoValor.AsString := FEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
-    cdsCorrecao.Post;
-  end;
-  *)
 end;
 
 procedure TfrmCTeDAInutQRRetrato.ProtocoloCTe(const sProtocolo: String);

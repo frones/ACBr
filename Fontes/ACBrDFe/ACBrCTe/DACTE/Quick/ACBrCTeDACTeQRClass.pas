@@ -62,7 +62,6 @@ type
   TACBrCTeDACTeQR = class(TACBrCTeDACTeClass)
   private
     FNomeArq: String;
-//    FPosRecibo: TPosRecibo;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -74,7 +73,7 @@ type
     procedure ImprimirINUTILIZACAOPDF(CTe: TCTe = nil); override;
     property NomeArq: String read FNomeArq write FNomeArq;
   published
-//    property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
+
   end;
 
 implementation
@@ -100,7 +99,7 @@ procedure TACBrCTeDACTeQR.ImprimirDACTe(CTe: TCTe = nil);
 var
   i: Integer;
   sProt: String;
-  frmDACTeQRRetrato: TfrmDACTeQR; //TfrmDACTeQRRetrato;
+  frmDACTeQRRetrato: TfrmDACTeQR;
 begin
   case TamanhoPapel of
     tpA5: begin
@@ -127,9 +126,7 @@ begin
           end;
   end;
 
-//  frmDACTeQRRetrato := TfrmDACTeQRRetrato.Create(Self);
   sProt := TACBrCTe(ACBrCTe).DACTe.ProtocoloCTe;
-//  frmDACTeQRRetrato.ProtocoloCTe(sProt);
 
   if CTe = nil then
   begin
@@ -156,7 +153,7 @@ procedure TACBrCTeDACTeQR.ImprimirDACTePDF(CTe: TCTe = nil);
 var
   i: Integer;
   sProt: String;
-  frmDACTeQRRetrato: TfrmDACTeQR; //TfrmDACTeQRRetrato;
+  frmDACTeQRRetrato: TfrmDACTeQR;
 begin
   case TamanhoPapel of
     tpA5: begin
@@ -183,9 +180,7 @@ begin
           end;
   end;
 
-//  frmDACTeQRRetrato := TfrmDACTeQRRetrato.Create(Self);
   sProt := TACBrCTe(ACBrCTe).DACTe.ProtocoloCTe;
-//  frmDACTeQRRetrato.ProtocoloCTe( sProt );
 
   if CTe = nil then
   begin

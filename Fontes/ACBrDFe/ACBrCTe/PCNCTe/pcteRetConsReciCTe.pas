@@ -180,8 +180,6 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if Leitor.rExtrai(1, 'retConsReciCTe') <> '' then
     begin
-//      Leitor.Grupo := Leitor.Arquivo;
-
                Fversao   := Leitor.rAtributo('versao');
       (*BR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*BR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
@@ -215,8 +213,6 @@ begin
         end;
         inc(i);
       end;
-
-//      if i = 0 then ProtCTe.Add;
 
       Result := True;
     end;

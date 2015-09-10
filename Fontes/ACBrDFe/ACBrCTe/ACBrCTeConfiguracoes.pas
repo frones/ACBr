@@ -90,9 +90,9 @@ type
     procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); overload;
     destructor Destroy; override;
 
-    function GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
-    function GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ : String = ''; Data: TDateTime = 0): String;
+    function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
@@ -118,8 +118,8 @@ type
     procedure Assign(DeConfiguracoesCTe: TConfiguracoesCTe); overload;
 
   published
-    property Geral: TGeralConfCTe            read GetGeral;
-    property Arquivos: TArquivosConfCTe      read GetArquivos;
+    property Geral: TGeralConfCTe       read GetGeral;
+    property Arquivos: TArquivosConfCTe read GetArquivos;
     property WebServices;
     property Certificados;
   end;
@@ -193,11 +193,11 @@ procedure TArquivosConfCTe.Assign(DeArquivosConfCTe: TArquivosConfCTe);
 begin
   inherited Assign(DeArquivosConfCTe);
 
-  FEmissaoPathCTe             := DeArquivosConfCTe.EmissaoPathCTe;
+  FEmissaoPathCTe := DeArquivosConfCTe.EmissaoPathCTe;
   FSalvarApenasCTeProcessados := DeArquivosConfCTe.SalvarApenasCTeProcessados;
-  FPathCTe                    := DeArquivosConfCTe.PathCTe;
-  FPathInu                    := DeArquivosConfCTe.PathInu;
-  FPathEvento                 := DeArquivosConfCTe.PathEvento;
+  FPathCTe := DeArquivosConfCTe.PathCTe;
+  FPathInu := DeArquivosConfCTe.PathInu;
+  FPathEvento := DeArquivosConfCTe.PathEvento;
 
   FDownloadCTe.Assign(DeArquivosConfCTe.DownloadCTe);
 end;
@@ -221,18 +221,18 @@ begin
   inherited;
 end;
 
-function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ : String = ''): String;
+function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathCTe, 'CTe', CNPJ, Data);
 end;
 
-function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; CNPJ : String = ''): String;
+function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
 function TArquivosConfCTe.GetPathEvento(tipoEvento: TpcnTpEvento;
-  CNPJ : String = ''; Data: TDateTime = 0): String;
+  CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   Dir: String;
 begin

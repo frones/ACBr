@@ -319,7 +319,7 @@ begin
 
   Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, AUF, {Configuracoes.WebServices.UF,}
+  LerServicoDeParams(GetNomeModeloDFe, AUF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
     Versao, URL);
 end;
@@ -487,9 +487,6 @@ var
   wd,wm,wa: word;
   Digito: Integer;
 begin
-  // Alterado Conforme NT 2012/007
-  // UF
-  // TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
   if FCTe.Ide.toma4.CNPJCPF <> '' then
   begin
     if FCTe.Ide.toma4.enderToma.UF = 'EX' then
@@ -518,15 +515,13 @@ begin
     end;
   end;
 
-  //TIPO DE EMISSAO
   case FCTe.Ide.tpEmis of
    teDPEC,
    teContingencia: wchave := wchave + '2';
    teFSDA:         wchave := wchave + '5';
-   else            wchave := wchave + '0'; //esta valor caracteriza ERRO, valor tem q ser  2 ou 5
+   else            wchave := wchave + '0'; //este valor caracteriza ERRO, valor tem q ser  2 ou 5
   end;
 
-  //CNPJ OU CPF
   if FCTe.Ide.toma4.CNPJCPF <> '' then
   begin
     if FCTe.Ide.toma4.enderToma.UF = 'EX' then
@@ -610,7 +605,7 @@ var
   i: Integer;
 begin
   if Conhecimentos.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum CT-e adicionad ao Lote'));
+    GerarException(ACBrStr('ERRO: Nenhum CT-e adicionado ao Lote'));
 
   if Conhecimentos.Count > 50 then
     GerarException(ACBrStr('ERRO: Conjunto de CT-e transmitidos (máximo de 50 CT-e)' +
@@ -638,7 +633,7 @@ var
   i: Integer;
 begin
   if Self.Conhecimentos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum Conhecimento Eletrônico Informado!'));
+    GerarException(ACBrStr('ERRO: Nenhum CT-e Informado!'));
 
   for i := 0 to Self.Conhecimentos.Count - 1 do
   begin
@@ -655,7 +650,7 @@ var
   i: Integer;
 begin
   if Self.Conhecimentos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum Conhecimento Eletrônico Informado!'));
+    GerarException(ACBrStr('ERRO: Nenhum CT-e Informado!'));
 
   for i := 0 to self.Conhecimentos.Count - 1 do
   begin

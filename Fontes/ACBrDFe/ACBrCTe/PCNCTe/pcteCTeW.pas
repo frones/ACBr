@@ -674,7 +674,6 @@ begin
       GerarEnderReme;
       Gerador.wCampo(tcStr, '#130', 'email  ', 01, 60, 0, CTe.Rem.email, DSC_EMAIL);
 
-//      GerarLocColeta;
       Gerador.wGrupo('/rem');
     end;
 end;
@@ -895,7 +894,7 @@ begin
 
       GerarEnderDest;
       Gerador.wCampo(tcStr, '#196', 'email  ', 01, 60, 0, CTe.Dest.email, DSC_EMAIL);
-//      GerarLocEnt;
+
       Gerador.wGrupo('/dest');
     end;
 end;

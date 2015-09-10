@@ -58,10 +58,6 @@ unit ACBrCTeDACTeQR;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 27/08/2013 por Italo Jurisato Junior
-// 21/08/2013 por Italo Jurisato Junior
-// 06/08/2013 por Italo Jurisato Junior
-// 28/01/2014 por Italo Jurisato Junior
 
 interface
 
@@ -320,10 +316,9 @@ begin
           qf.Free;
         end;
      finally
-        // Incluido por Italo em 13/05/2014
         QRCTe.Free;
         QRCTe := nil;
-        Free;    // removido o comentado por Italo em 07/03/2014
+        Free;    
      end;
 {$ENDIF}
 end;

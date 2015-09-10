@@ -1252,7 +1252,6 @@ begin
   end;
 
   (* Grupo da TAG <signature> *************************************************)
-
   Leitor.Grupo := Leitor.Arquivo;
 
   CTe.signature.URI             := Leitor.rAtributo('Reference URI=');

@@ -47,7 +47,6 @@ unit ACBrCTeDAEventoQR;
 // Quando enviar os fontes referentes ao DAEvento favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 26/11/2013 por Italo Jurisato Junior
 
 interface
 

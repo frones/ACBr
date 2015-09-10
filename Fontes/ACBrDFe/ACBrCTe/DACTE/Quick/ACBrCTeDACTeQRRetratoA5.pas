@@ -47,8 +47,6 @@ unit ACBrCTeDACTeQRRetratoA5;
 // Quando enviar os fontes referentes ao DACTE favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 20/08/2013 por André F. Moraes
-// 06/08/2013 por Italo Jurisato Junior
 
 interface
 
@@ -550,13 +548,11 @@ begin
       if (Item mod 2) = 0 then
       begin
         cdsDocumentos.Append;
-        // Alterado por Italo em 13/07/2012
         cdsDocumentosTIPO_1.AsString := 'NF-E ' + copy(chave, 26, 9);
         cdsDocumentosCNPJCPF_1.AsString := FormatarChaveAcesso(chave);
       end
       else
       begin
-        // Alterado por Italo em 13/07/2012
         cdsDocumentosTIPO_2.AsString := 'NF-E ' + copy(chave, 26, 9);
         cdsDocumentosCNPJCPF_2.AsString := FormatarChaveAcesso(chave);
         cdsDocumentos.Post;
@@ -572,8 +568,6 @@ begin
       if (Item mod 2) = 0 then
       begin
         cdsDocumentos.Append;
-        // Alterado por Italo em 18/04/2012
-        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentosTIPO_1.AsString      := 'DECLAR';
@@ -596,8 +590,6 @@ begin
       end
       else
       begin
-        // Alterado por Italo em 18/04/2012
-        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentosTIPO_2.AsString      := 'DECLAR';
@@ -763,8 +755,6 @@ begin
       if (Item mod 2) = 0 then
       begin
         cdsDocumentos.Append;
-        // Alterado por Italo em 18/04/2012
-        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentosTIPO_1.AsString      := 'DECLAR';
@@ -787,8 +777,6 @@ begin
       end
       else
       begin
-        // Alterado por Italo em 18/04/2012
-        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentosTIPO_2.AsString      := 'DECLAR';
@@ -966,7 +954,6 @@ begin
 
   qrlSerie2.Caption  := FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte2.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
-  // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   qrb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal);
 end;
 
@@ -989,7 +976,6 @@ begin
    begin
    qriLogo.Picture.LoadFromFile(FLogo);
    end;
-  // Alterado por Italo em 17/05/2012
   if FExpandirLogoMarca then
    begin
     qriLogo.top:=2;
@@ -1010,7 +996,6 @@ begin
   SetBarCodeImage(OnlyNumber(FCTe.InfCTe.Id), qriBarCode);
   qrlChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
-  // Incluido por Italo em 17/05/2012
   if not FExpandirLogoMarca then
    begin
     qrmEmitente.Enabled:=True;
@@ -1047,7 +1032,6 @@ begin
   // Normal **************************************************************
   if FCTe.Ide.tpEmis in [teNormal, teSCAN] then
    begin
-    // Incluidas por Italo em 01/01/2012
     qrlVariavel1.Enabled := True;
     qriBarCode2.Enabled  := False;
     if FCTe.procCTe.cStat = 100
@@ -1056,7 +1040,6 @@ begin
     if FCTe.procCTe.cStat = 101
      then qrlDescricao.Caption := 'PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO';
 
-    // Alterado de 102 para 110 por Italo em 27/01/2012
     if FCTe.procCTe.cStat = 110
      then qrlDescricao.Caption := 'PROTOCOLO DE DENEGAÇÃO DE USO';
 
@@ -1070,7 +1053,6 @@ begin
   // Contingencia ********************************************************
   if FCTe.Ide.tpEmis in [teContingencia, teFSDA] then
    begin
-    // Incluido por Italo em 20/04/2012
     if FCTe.procCTe.cStat in [100, 101, 110] 
      then begin
       qrlVariavel1.Enabled := True;
@@ -1091,7 +1073,6 @@ begin
                                         DateTimeToStr(FCTe.procCTe.dhRecbto), '');
      end
      else begin
-      // Incluidas por Italo em 01/01/2012
       qrlVariavel1.Enabled := False;
       qriBarCode2.Enabled  := True;
 
@@ -1263,7 +1244,6 @@ begin
 {$IFDEF PL_200}
   for i := 0 to (FCTe.infCTeNorm.InfCarga.InfQ.Count - 1) do
    begin
-    //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid of
           uM3: qrmQtdUnidMedida4.Lines.Add(FormatFloat('###,##0.000',
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga));
@@ -1343,7 +1323,6 @@ begin
 {$ELSE}
   for i := 0 to FCTe.InfCarga.InfQ.Count - 1 do
    begin
-    //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.InfCarga.InfQ.Items[i].cUnid of
           uM3: qrmQtdUnidMedida4.Lines.Add(CteUtil.FormatarValor(msk6x3,
                  FCTe.InfCarga.InfQ.Items[i].qCarga));
@@ -1571,7 +1550,6 @@ begin
         qrlVlrICMS.Caption     := CteUtil.FormatarValor(msk9x2, FCTe.Imp.ICMS.ICMS90.vICMS);
         qrlICMS_ST.Caption     := CteUtil.FormatarValor(msk4x2, FCTe.Imp.ICMS.ICMS90.vCred);
       end;
-    // Incluido por Italo em 05/12/2011 (contribuição de Doni Dephi)  
     cstICMSOutraUF:
       begin
         qrlRedBaseCalc.Caption := CteUtil.FormatarValor(mskAliq, FCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
@@ -1598,7 +1576,6 @@ begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;
 
-  // Imprime os dados da da Nota Fiscal se o Tipo de CTe for Normal
   qrb_04_DadosNotaFiscal.Enabled:=(FCTe.Ide.tpCTe = tcNormal);
 end;
 
@@ -1610,7 +1587,6 @@ begin
   inherited;
   PrintBand := QRCTe.PageNumber = 1;
 
-  // Imprime a lista dos CT-e Complementados se o Tipo de CTe for Complemento
   qrmComplChave1.Lines.Clear;
   qrmComplValor1.Lines.Clear;
   qrmComplChave2.Lines.Clear;
@@ -1620,7 +1596,6 @@ begin
 {$IFDEF PL_200}
   qrmComplChave1.Lines.Add(FCTe.InfCTeComp.Chave);
   qrmComplValor1.Lines.Add(FormatFloat('###,###,###,##0.00', FCTe.vPrest.vTPrest));
-//  qrmComplValor1.Lines.Add(CTeUtil.FormatarValor(msk10x2, FCTe.InfCTeComp.vPresComp.vTPrest));
 {$ELSE}
   for i := 0 to FCTe.InfCTeComp.Count - 1 do
   begin
@@ -1818,7 +1793,6 @@ begin
 {$IFDEF PL_200}
   for i:= 0 to (FCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
-   // TpcteTipoVeiculo = (tvTracao, tvReboque);
    if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao
     then qrmTipo2.Lines.Add('Tração')
     else qrmTipo2.Lines.Add('Reboque');
@@ -1896,13 +1870,13 @@ begin
     qrlAWB.Caption           := nOCA;
   {$IFDEF PL_103}
     qrlTrecho.Caption        := tarifa.trecho;
-    qrlContaCorrente.Caption := cIATA; // ??? Conta Corrente ???
+    qrlContaCorrente.Caption := cIATA;
   {$ENDIF}
     qrlTarifaCL.Caption      := tarifa.CL;
     qrlTarifaCodigo.Caption  := tarifa.cTar;
     qrlTarifaValor.Caption   := FormatCurr('###,###,##0.00', tarifa.vTar);
   {$IFDEF PL_104}
-    qrlContaCorrente.Caption := IdT; // ??? Conta Corrente ???
+    qrlContaCorrente.Caption := IdT; 
   {$ENDIF}
     qrlMinuta.Caption        := FormatFloat('0000000000', nMinu);
 
@@ -2015,7 +1989,6 @@ begin
   qrlSerie3.Caption  := FormatFloat( '000', FCTe.Ide.serie);
   qrlNumCte3.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
 
-  // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   if PrintBand
    then begin
     qrb_18_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal <> mdAereo) and (FPosRecibo = prRodape);

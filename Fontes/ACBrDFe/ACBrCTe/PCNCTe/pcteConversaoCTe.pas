@@ -219,16 +219,16 @@ end;
 function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;
 begin
   case t of
-    LayCTeRecepcao:       Result := schCTe;
-    LayCTeRetRecepcao:    Result := schconsReciCTe;
-    LayCTeCancelamento:   Result := schcancCTe;
-    LayCTeInutilizacao:   Result := schInutCTe;
-    LayCTeConsulta:       Result := schconsSitCTe;
-    LayCTeStatusServico:  Result := schconsStatServ;
-    LayCTeCadastro:       Result := schconsCad;
+    LayCTeRecepcao:      Result := schCTe;
+    LayCTeRetRecepcao:   Result := schconsReciCTe;
+    LayCTeCancelamento:  Result := schcancCTe;
+    LayCTeInutilizacao:  Result := schInutCTe;
+    LayCTeConsulta:      Result := schconsSitCTe;
+    LayCTeStatusServico: Result := schconsStatServ;
+    LayCTeCadastro:      Result := schconsCad;
     LayCTeEvento,
-    LayCTeEventoAN:       Result := schEventoCTe;
-    LayCTeDistDFeInt:     Result := schdistDFeInt;
+    LayCTeEventoAN:      Result := schEventoCTe;
+    LayCTeDistDFeInt:    Result := schdistDFeInt;
   else
     Result := schErro;
   end;
@@ -291,55 +291,66 @@ end;
 
 function tpCTToStr(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3'],
+                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
 
 function tpCTToStrText(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := EnumeradoToStr(t, ['NORMAL', 'COMPLEMENTO', 'ANULAÇÃO', 'SUBSTITUTO'],
+                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
 
 function tpforPagToStr(const t: TpcteFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['0','1', '2'], [fpPago, fpAPagar, fpOutros]);
+  result := EnumeradoToStr(t, ['0','1', '2'],
+                              [fpPago, fpAPagar, fpOutros]);
 end;
 
 function tpforPagToStrText(const t: TpcteFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['PAGO','A PAGAR', 'OUTROS'], [fpPago, fpAPagar, fpOutros]);
+  result := EnumeradoToStr(t, ['PAGO','A PAGAR', 'OUTROS'],
+                              [fpPago, fpAPagar, fpOutros]);
 end;
 
 function StrTotpforPag(out ok: boolean; const s: string): TpcteFormaPagamento;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2'], [fpPago, fpAPagar, fpOutros]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2'],
+                                  [fpPago, fpAPagar, fpOutros]);
 end;
 
 function tpCTePagToStr(const t: TpcteTipoCTe): string;
 begin
-  result := EnumeradoToStr(t, ['0','1', '2', '3'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := EnumeradoToStr(t, ['0','1', '2', '3'],
+                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
 
 function StrTotpCTe(out ok: boolean; const s: string): TpcteTipoCTe;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'], [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
+                           [tcNormal, tcComplemento, tcAnulacao, tcSubstituto]);
 end;
 
 function TpServPagToStr(const t: TpcteTipoServico): string;
 begin
   result := EnumeradoToStr(t, ['0','1', '2', '3', '4'],
-                              [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
+                              [tsNormal, tsSubcontratacao, tsRedespacho,
+                               tsIntermediario, tsMultimodal]);
 end;
 
 function TpServToStrText(const t: TpcteTipoServico): string;
 begin
-  result := EnumeradoToStr(t, ['NORMAL','SUBCONTRATAÇÃO', 'REDESPACHO', 'REDESP. INTERMEDIÁRIO', 'VINC. A MULTIMODAL'],
-                              [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
+  result := EnumeradoToStr(t, ['NORMAL','SUBCONTRATAÇÃO', 'REDESPACHO',
+                               'REDESP. INTERMEDIÁRIO', 'VINC. A MULTIMODAL'],
+                              [tsNormal, tsSubcontratacao, tsRedespacho,
+                               tsIntermediario, tsMultimodal]);
 end;
 
 function StrToTpServ(out ok: boolean; const s: string): TpcteTipoServico;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
-                                  [tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal]);
+                                  [tsNormal, tsSubcontratacao, tsRedespacho,
+                                   tsIntermediario, tsMultimodal]);
 end;
 
 function TpRetiraPagToStr(const t: TpcteRetira): string;
@@ -354,29 +365,36 @@ end;
 
 function TpTomadorPagToStr(const t: TpcteTomador): string;
 begin
-  result := EnumeradoToStr(t, ['0','1', '2', '3', '4'], [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
+  result := EnumeradoToStr(t, ['0','1', '2', '3', '4'],
+             [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
 end;
 
 function TpTomadorToStr(const t: TpcteTomador): String;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4'], [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4'],
+             [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
 end;
 
 function TpTomadorToStrText(const t: TpcteTomador): String;
 begin
-  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR', 'DESTINATARIO', 'OUTROS'],
-    [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
+  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR',
+                               'DESTINATARIO', 'OUTROS'],
+             [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
 end;
 
 function TpRspSeguroToStr(const t: TpcteRspSeg): String;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'], [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
 end;
 
 function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
 begin
-  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR', 'DESTINATARIO', 'EMITENTE', 'TOMADOR SERVICO'],
-    [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico]);
+  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR',
+                               'DESTINATARIO', 'EMITENTE', 'TOMADOR SERVICO'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
 end;
 
 function TpLotacaoToStr(const t: TpcteLotacao): string;
@@ -386,12 +404,15 @@ end;
 
 function StrToTpTomador(out ok: boolean; const s: String ): TpcteTomador;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'], [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
+             [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
 end;
 
 function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'], [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
 end;
 
 function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
@@ -401,12 +422,14 @@ end;
 
 function TpDirecaoToStr(const t: TpcteDirecao): string;
 begin
-  result := EnumeradoToStr(t, ['N','L','S','O'], [drNorte , drLeste, drSul, drOeste]);
+  result := EnumeradoToStr(t, ['N','L','S','O'],
+                              [drNorte , drLeste, drSul, drOeste]);
 end;
 
 function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
 begin
-  result := StrToEnumerado(ok, s, ['N','L','S','O'], [drNorte , drLeste, drSul, drOeste]);
+  result := StrToEnumerado(ok, s, ['N','L','S','O'],
+                                  [drNorte , drLeste, drSul, drOeste]);
 end;
 
 function TpNavegacaoToStr(const t: TpcteTipoNavegacao): string;
@@ -421,68 +444,84 @@ end;
 
 function TpTrafegoToStr(const t: TpcteTipoTrafego): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2','3'], [ttProprio , ttMutuo, ttRodoferroviario, ttRodoviario]);
+  result := EnumeradoToStr(t, ['0','1','2','3'],
+                        [ttProprio , ttMutuo, ttRodoferroviario, ttRodoviario]);
 end;
 
 function StrToTpTrafego(out ok: boolean; const s: string): TpcteTipoTrafego;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3'], [ttProprio , ttMutuo, ttRodoferroviario, ttRodoviario]);
+  result := StrToEnumerado(ok, s, ['0','1','2','3'],
+                        [ttProprio , ttMutuo, ttRodoferroviario, ttRodoviario]);
 end;
 
 function TpDataPeriodoToStr(const t: TpcteTipoDataPeriodo): string;
 begin
   result := EnumeradoToStr(t, ['0','1','2','3','4','N'],
-                              [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado]);
+                              [tdSemData, tdNaData, tdAteData, tdApartirData,
+                               tdNoPeriodo, tdNaoInformado]);
 end;
 
 function StrToTpDataPeriodo(out ok: boolean; const s: string): TpcteTipoDataPeriodo;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
-                                  [tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado]);
+                                  [tdSemData, tdNaData, tdAteData, tdApartirData,
+                                   tdNoPeriodo, tdNaoInformado]);
 end;
 
 function TpHorarioIntervaloToStr(const t: TpcteTipoHorarioIntervalo): string;
 begin
   result := EnumeradoToStr(t, ['0','1','2','3','4','N'],
-                              [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado]);
+                              [thSemHorario, thNoHorario, thAteHorario,
+                               thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;
 
 function StrToTpHorarioIntervalo(out ok: boolean; const s: string): TpcteTipoHorarioIntervalo;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','3','4','N'],
-                                  [thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado]);
+                                  [thSemHorario, thNoHorario, thAteHorario,
+                                   thApartirHorario, thNoIntervalo, thNaoInformado]);
 end;
 
 function TpDocumentoToStr(const t: TpcteTipoDocumento): string;
 begin
-  result := EnumeradoToStr(t, ['00','10','99'], [tdDeclaracao, tdDutoviario, tdOutros]);
+  result := EnumeradoToStr(t, ['00','10','99'],
+                              [tdDeclaracao, tdDutoviario, tdOutros]);
 end;
 
 function StrToTpDocumento(out ok: boolean; const s: string): TpcteTipoDocumento;
 begin
-  result := StrToEnumerado(ok, s, ['00','10','99'], [tdDeclaracao, tdDutoviario, tdOutros]);
+  result := StrToEnumerado(ok, s, ['00','10','99'],
+                                  [tdDeclaracao, tdDutoviario, tdOutros]);
 end;
 
 function TpDocumentoAnteriorToStr(const t: TpcteTipoDocumentoAnterior): string;
 begin
-  result := EnumeradoToStr(t, ['00','01','02','03','04','05','06','07','08','09','10','11','12','99'],
-   [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
+  result := EnumeradoToStr(t, ['00','01','02','03','04','05','06','07',
+                               '08','09','10','11','12','99'],
+                         [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC,
+                          daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
 end;
 
 function StrToTpDocumentoAnterior(out ok: boolean; const s: string): TpcteTipoDocumentoAnterior;
 begin
-  result := StrToEnumerado(ok, s, ['00','01','02','03','04','05','06','07','08','09','10','11','12','99'],
-   [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
+  result := StrToEnumerado(ok, s, ['00','01','02','03','04','05','06','07',
+                                   '08','09','10','11','12','99'],
+                         [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC,
+                          daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
 end;
 
 function RspPagPedagioToStr(const t: TpcteRspPagPedagio): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2','3','4','5'], [rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico]);
+  result := EnumeradoToStr(t, ['0','1','2','3','4','5'],
+                             [rpEmitente, rpRemetente, rpExpedidor, rpRecebedor,
+                              rpDestinatario, rpTomadorServico]);
 end;
 
 function StrToRspPagPedagio(out ok: boolean; const s: string): TpcteRspPagPedagio;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2','3','4','5'], [rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico]);
+  result := StrToEnumerado(ok, s, ['0','1','2','3','4','5'],
+                             [rpEmitente, rpRemetente, rpExpedidor, rpRecebedor,
+                              rpDestinatario, rpTomadorServico]);
 end;
 
 function TpDispositivoToStr(const t: TpcteTipoDispositivo): string;

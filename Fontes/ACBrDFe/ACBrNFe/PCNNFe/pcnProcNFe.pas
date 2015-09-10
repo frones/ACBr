@@ -144,6 +144,7 @@ var
   wCstat: String;
   xProtNFe: String;
   nProtLoc: String;
+  xUF: string;    (*By Edilson Alves de Oliveira*)
   LocLeitor: TLeitor;
   i: Integer;
   ProtLido: Boolean; //Protocolo lido do arquivo
@@ -248,13 +249,22 @@ begin
 
       if ProtLido then
       begin
+        (*By Edilson Alves de Oliveira  - 30/07/2015
+          Resolver situação quando a UF utiliza servidor virtual *)
+        if Copy(FverAplic,1,2) = 'SV' then
+          xUF := CodigoParaUF(StrToIntDef(Copy(FchNFe, 1, 2), 0))
+        else
+          xUF := Copy(FverAplic,1,2);
+        (**)
         xProtNFe := '<protNFe versao="' + Versao + '">' +
                      '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
                       '<tpAmb>' + TpAmbToStr(FtpAmb) + '</tpAmb>' +
                       '<verAplic>' + FverAplic + '</verAplic>' +
                       '<chNFe>' + FchNFe + '</chNFe>' +
                       //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
-					  '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(copy(FverAplic,1,2),FdhRecbto),'')+'</dhRecbto>'+
+                      //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(copy(FverAplic,1,2),FdhRecbto),'')+'</dhRecbto>'+
+                      (*By Edilson Alves de Oliveira  - 30/07/2015 *)
+                      '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'')+'</dhRecbto>'+
                       '<nProt>' + FnProt + '</nProt>' +
                       '<digVal>' + FdigVal + '</digVal>' +
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +
@@ -292,7 +302,6 @@ begin
   if Source is TProcNFe then
   begin
 //    Gerador.Assign(TprocNFe(Source).Gerador);
-//    Schema := TprocNFe(Source).Schema;
     PathNFe := TprocNFe(Source).PathNFe;
     PathRetConsReciNFe := TprocNFe(Source).PathRetConsReciNFe;
     PathRetConsSitNFe := TprocNFe(Source).PathRetConsSitNFe;

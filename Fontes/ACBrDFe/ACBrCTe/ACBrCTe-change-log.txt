@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2015
+[*] Incluido a procedure DefinirURL para o ConsultarCadastro (ACBrCTeWebServices).
+    Incluido a propriedade XMLprotCTe para conter o grupo <protCTe> ao ler o XML 
+    de retorno do Consultar (pcteRetConsSitCTe).
+    Incluido as propriedades XML_CTe e XML_prot para montagem do XML assinado e 
+    protocolado (pcteProcCTe).
+    Incluido a propriedade XMLprotCTe para conter o grupo <protCTe> ao ler o XML
+    de retorno do RetRecepcao (pcteConsReciCTe).
+[+] Incluido a classe TICMSUFFim (pcteCTe), incluido a procedure para escrever o grupo   
+    <ICMSUFFim> (pcteCTeW) e incluido a leitura do mesmo grupo em pcteCTeR. 
+    Por: Italo Jurisato Junior
+
 01/09/2015
 [*] Corrigido a extração do XML de retorno, não estava pegando o grupo protCTe.
     Por: Italo Jurisato Junior

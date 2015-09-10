@@ -1,9 +1,9 @@
 object frmDemo: TfrmDemo
   Left = 288
   Top = 133
-  Width = 827
-  Height = 577
   Caption = 'Demo ACBrBoleto '
+  ClientHeight = 538
+  ClientWidth = 811
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -93,7 +93,6 @@ object frmDemo: TfrmDemo
       Top = 32
       Width = 73
       Height = 21
-      ItemHeight = 13
       TabOrder = 3
       Text = 'Sim'
       Items.Strings = (
@@ -555,14 +554,13 @@ object frmDemo: TfrmDemo
       Width = 138
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
       TabOrder = 10
       OnChange = cbxLayOutChange
     end
   end
   object Panel1: TPanel
     Left = 0
-    Top = 489
+    Top = 488
     Width = 811
     Height = 50
     Align = alBottom
@@ -657,10 +655,5 @@ object frmDemo: TfrmDemo
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
     Left = 160
     Top = 231
-  end
-  object ACBrBoletoFCQuick1: TACBrBoletoFCQuick
-    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
-    Left = 160
-    Top = 279
   end
 end

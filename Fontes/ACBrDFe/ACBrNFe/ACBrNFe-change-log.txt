@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2015
+[*] Acerto nos endereços de webservices da NF-e PR e SP
+    http://www.projetoacbr.com.br/forum/topic/24250-correção-no-arquivo-da-nfe-nfeservicosini/#comment-156552
+
 09/09/2015
 [*] Incluido a propriedade XMLprotNFe para conter o grupo <protNFe> ao ler o XML 
     de retorno do Consultar (pcnRetConsSitNFe).

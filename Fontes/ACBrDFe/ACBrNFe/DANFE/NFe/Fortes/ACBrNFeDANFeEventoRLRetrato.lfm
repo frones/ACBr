@@ -15,7 +15,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     Margins.BottomMargin = 7.000000000000000000
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
-    Title = 'Danfe Retrato'
+    Title = 'Danfe Retrato '
     BeforePrint = RLEventoBeforePrint
     object rliMarcaDagua1: TRLImage
       Left = 224
@@ -46,7 +46,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 1
         Width = 177
         Height = 16
-        Caption = 'NOTA FISCAL ELETR√îNICA'
+        Caption = 'NOTA FISCAL ELETR‘NICA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -91,7 +91,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 23
         Width = 25
         Height = 10
-        Caption = 'S√âRIE'
+        Caption = 'S…RIE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -121,7 +121,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 23
         Width = 92
         Height = 10
-        Caption = 'M√äS / ANO DA EMISS√ÉO'
+        Caption = 'M S / ANO DA EMISS√O'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -226,7 +226,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 23
         Width = 38
         Height = 10
-        Caption = 'N√öMERO'
+        Caption = 'N⁄MERO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -409,7 +409,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 53
         Width = 97
         Height = 10
-        Caption = 'DESCRI√á√ÉO DO EVENTO'
+        Caption = 'DESCRI«√O DO EVENTO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -467,7 +467,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 53
         Width = 96
         Height = 10
-        Caption = 'SEQU√äNCIA DO EVENTO'
+        Caption = 'SEQU NCIA DO EVENTO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -525,7 +525,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 53
         Width = 82
         Height = 10
-        Caption = 'VERS√ÉO DO EVENTO'
+        Caption = 'VERS√O DO EVENTO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -738,7 +738,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 17
         Width = 189
         Height = 16
-        Caption = 'DESTINAT√ÅRIO / REMETENTE'
+        Caption = 'DESTINAT¡RIO / REMETENTE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -753,7 +753,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 39
         Width = 89
         Height = 10
-        Caption = 'NOME / RAZ√ÉO SOCIAL'
+        Caption = 'NOME / RAZ√O SOCIAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -783,7 +783,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 69
         Width = 47
         Height = 10
-        Caption = 'ENDERE√áO'
+        Caption = 'ENDERE«O'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -813,7 +813,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 99
         Width = 44
         Height = 10
-        Caption = 'MUNIC√çPIO'
+        Caption = 'MUNICÕPIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -988,7 +988,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 99
         Width = 89
         Height = 10
-        Caption = 'INSCRI√á√ÉO ESTADUAL'
+        Caption = 'INSCRI«√O ESTADUAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1190,7 +1190,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 39
         Width = 89
         Height = 10
-        Caption = 'NOME / RAZ√ÉO SOCIAL'
+        Caption = 'NOME / RAZ√O SOCIAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1249,7 +1249,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 69
         Width = 47
         Height = 10
-        Caption = 'ENDERE√áO'
+        Caption = 'ENDERE«O'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1337,7 +1337,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 99
         Width = 44
         Height = 10
-        Caption = 'MUNIC√çPIO'
+        Caption = 'MUNICÕPIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1425,7 +1425,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 99
         Width = 89
         Height = 10
-        Caption = 'INSCRI√á√ÉO ESTADUAL'
+        Caption = 'INSCRI«√O ESTADUAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1463,7 +1463,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 1
         Width = 212
         Height = 7
-        Caption = 'DATA / HORA DA IMPRESS√ÉO: 00/00/0000 00:00:00 - USUARIO'
+        Caption = 'DATA / HORA DA IMPRESS√O: 00/00/0000 00:00:00 - USUARIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1499,7 +1499,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 16
         Width = 134
         Height = 16
-        Caption = 'CONDI√á√ïES DE USO'
+        Caption = 'CONDI«’ES DE USO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -1577,7 +1577,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Alignment = taCenter
         AutoSize = False
         Caption = 
-          'N√£o possui valor fiscal. Simples representa√ß√£o do evento indicad' +
+          'N„o possui valor fiscal. Simples representaÁ„o do evento indicad' +
           'o abaixo.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1615,7 +1615,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         Top = 1
         Width = 77
         Height = 16
-        Caption = 'CORRE√á√ÉO'
+        Caption = 'CORRE«√O'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -1652,4 +1652,4 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     Left = 720
     Top = 55
   end
-end
+end

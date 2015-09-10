@@ -3,7 +3,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Top = 64
   Width = 771
   Height = 780
-  Caption = 'ACBrSATExtratoFortes'
+  Caption = 'ACBrSATExtratoFortes '
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -1404,8 +1404,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             Font.Height = -9
             Font.Name = 'Arial'
             Lines.Strings = (
-              'Raz√£o Social Canc - Linha 1'
-              'Raz√£o Social Canc - Linha 2'
+              'Raz„o Social Canc - Linha 1'
+              'Raz„o Social Canc - Linha 2'
             )
             ParentFont = False
             RealBounds.Left = 0

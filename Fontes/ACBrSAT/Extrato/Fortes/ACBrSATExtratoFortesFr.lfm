@@ -88,7 +88,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = -1
           Width = 41
           Alignment = taRightJustify
-          Caption = 'SAT NÂ°:'
+          Caption = 'SAT N°: '
           Layout = tlCenter
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -283,7 +283,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 13
           Width = 57
-          Caption = 'Valor LÃ­quido'
+          Caption = 'Valor Líquido'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -340,7 +340,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 1
           Width = 47
-          Caption = 'AcrÃ©scimo'
+          Caption = 'Acréscimo'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -351,7 +351,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 13
           Width = 57
-          Caption = 'Valor LÃ­quido'
+          Caption = 'Valor Líquido'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -408,7 +408,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 1
           Width = 93
-          Caption = 'DeduÃ§Ã£o para ISSQN'
+          Caption = 'Dedução para ISSQN'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -419,7 +419,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 13
           Width = 101
-          Caption = 'Base de cÃ¡lculo ISSQN'
+          Caption = 'Base de cálculo ISSQN'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -564,7 +564,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 14
           Top = 0
           Width = 61
-          Caption = 'AcrÃ©scimos'
+          Caption = 'Acréscimos'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -680,7 +680,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 14
           Top = 0
           Width = 87
-          Caption = 'CartÃ£o de CrÃ©dito'
+          Caption = 'Cartão de Crédito'
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -764,7 +764,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Font.Height = -9
           Font.Name = 'Arial'
           Lines.Strings = (
-            'ObservaÃ§Ãµes do Fisco'
+            'Observações do Fisco'
             'Linha 2'
           )
           ParentFont = False
@@ -848,7 +848,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = 0
           Width = 45
           Alignment = taRightJustify
-          Caption = 'EndereÃ§o:'
+          Caption = 'Endereço:'
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
@@ -878,7 +878,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = 0
           Width = 56
           Alignment = taRightJustify
-          Caption = 'DestinatÃ¡rio:'
+          Caption = 'Destinatário:'
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
@@ -898,7 +898,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Font.Height = -9
           Font.Name = 'Arial'
           Lines.Strings = (
-            '<Nome do DestinatÃ¡rio>'
+            '<Nome do Destinatário>'
           )
           ParentFont = False
           RealBounds.Left = 0
@@ -939,7 +939,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 8
         Width = 286
         Align = faTop
-        Caption = 'OBSERVAÃ‡Ã•ES DO CONTRIBUINTE'
+        Caption = 'OBSERVAÇÕES DO CONTRIBUINTE'
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -955,7 +955,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Font.Height = -9
         Font.Name = 'Arial'
         Lines.Strings = (
-          '<observaÃ§Ãµes do contribuinte>'
+          '<observações do contribuinte>'
         )
         ParentFont = False
         RealBounds.Left = 0
@@ -1080,7 +1080,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Width = 286
           Align = faTop
           Alignment = taCenter
-          Caption = 'Extrato NÂ°: <NUMERO>'
+          Caption = 'Extrato N°: <NUMERO>'
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
@@ -1099,7 +1099,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Width = 286
           Align = faTop
           Alignment = taCenter
-          Caption = 'CUPOM FISCAL ELETRÃ”NICO - SAT'
+          Caption = 'CUPOM FISCAL ELETRÔNICO - SAT'
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
@@ -1233,8 +1233,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
               Font.Height = -9
               Font.Name = 'Arial'
               Lines.Strings = (
-                'EndereÃ§o LINHA 1'
-                'EndereÃ§o LINHA 2'
+                'Endereço LINHA 1'
+                'Endereço LINHA 2'
                 ''
               )
               ParentFont = False
@@ -1254,8 +1254,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
               Font.Height = -9
               Font.Name = 'Arial'
               Lines.Strings = (
-                'RazÃ£o Social - Linha 1'
-                'RazÃ£o Social - Linha 2'
+                'Razão Social - Linha 1'
+                'Razão Social - Linha 2'
               )
               ParentFont = False
               RealBounds.Left = 0
@@ -1520,7 +1520,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = -1
           Width = 41
           Alignment = taRightJustify
-          Caption = 'SAT NÂ°:'
+          Caption = 'SAT N°:'
           Layout = tlCenter
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -1626,7 +1626,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Align = faTop
         Alignment = taCenter
-        Caption = 'DADOS DO CUPOM FISCAL ELETRÃ”NICO DE CANCELAMENTO'
+        Caption = 'DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1654,7 +1654,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = -1
           Width = 41
           Alignment = taRightJustify
-          Caption = 'SAT NÂ°:'
+          Caption = 'SAT N°:'
           Layout = tlCenter
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -1871,8 +1871,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             Font.Height = -9
             Font.Name = 'Arial'
             Lines.Strings = (
-              'EndereÃ§o LINHA 1'
-              'EndereÃ§o LINHA 2'
+              'Endereço LINHA 1'
+              'Endereço LINHA 2'
             )
             ParentFont = False
             RealBounds.Left = 0
@@ -1891,8 +1891,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             Font.Height = -9
             Font.Name = 'Arial'
             Lines.Strings = (
-              'RazÃ£o Social Canc - Linha 1'
-              'RazÃ£o Social Canc - Linha 2'
+              'Razão Social Canc - Linha 1'
+              'Razão Social Canc - Linha 2'
             )
             ParentFont = False
             RealBounds.Left = 0
@@ -1937,7 +1937,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Align = faTop
         Alignment = taCenter
-        Caption = 'Extrato NÂ°: <NUMERO>'
+        Caption = 'Extrato N°: <NUMERO>'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1956,7 +1956,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Align = faTop
         Alignment = taCenter
-        Caption = 'CUPOM FISCAL ELETRÃ”NICO - SAT'
+        Caption = 'CUPOM FISCAL ELETRÔNICO - SAT'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -2018,7 +2018,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Align = faTop
         Alignment = taCenter
-        Caption = 'DADOS DO CUPOM FISCAL ELETRÃ”NICO CANCELADO'
+        Caption = 'DADOS DO CUPOM FISCAL ELETRÔNICO CANCELADO'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -2156,7 +2156,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     top = 56
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright Â© 1999-2008 Fortes InformÃ¡tica'
+    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
     DocumentInfo.ModDate = 0
     ViewerOptions = []
     FontEncoding = feNoEncoding

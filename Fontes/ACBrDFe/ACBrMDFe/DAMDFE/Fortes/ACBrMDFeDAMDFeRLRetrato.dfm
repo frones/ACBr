@@ -70,7 +70,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 29
         AutoSize = False
         Caption = 
-          'Documento Auxiliar de Manifesto Eletr√¥nico de Documentos Fiscai' +
+          'Documento Auxiliar de Manifesto EletrÙnico de Documentos Fiscai' +
           's'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -245,7 +245,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 22
         Height = 8
         Alignment = taCenter
-        Caption = 'S√âRIE'
+        Caption = 'S…RIE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -280,7 +280,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'N√öMERO'
+        Caption = 'N⁄MERO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -351,7 +351,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DATA E HORA DE EMISS√ÉO'
+        Caption = 'DATA E HORA DE EMISS√O'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -458,7 +458,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 171
         Width = 141
         Height = 8
-        Caption = 'PROTOCOLO DE AUTORIZA√á√ÉO DE USO'
+        Caption = 'PROTOCOLO DE AUTORIZA«√O DE USO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -492,7 +492,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 15
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Modal Rodovi√°rio de Carga'
+        Caption = 'Modal Rodovi·rio de Carga'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -798,7 +798,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 4
         Width = 37
         Height = 14
-        Caption = 'Ve√≠culo'
+        Caption = 'VeÌculo'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1012,7 +1012,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 104
         Width = 62
         Height = 14
-        Caption = 'Vale Ped√°gio'
+        Caption = 'Vale Ped·gio'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1033,7 +1033,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 122
         Width = 89
         Height = 14
-        Caption = 'Respons√°vel CNPJ'
+        Caption = 'Respons·vel CNPJ'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1183,7 +1183,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 4
         Width = 107
         Height = 14
-        Caption = 'C√≥digo da Embarca√ß√£o'
+        Caption = 'CÛdigo da EmbarcaÁ„o'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1198,7 +1198,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 4
         Width = 103
         Height = 14
-        Caption = 'Nome da Embarca√ß√£o'
+        Caption = 'Nome da EmbarcaÁ„o'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1279,7 +1279,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 24
         Width = 35
         Height = 14
-        Caption = 'C√≥digo'
+        Caption = 'CÛdigo'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1309,7 +1309,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 24
         Width = 35
         Height = 14
-        Caption = 'C√≥digo'
+        Caption = 'CÛdigo'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1455,7 +1455,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 4
         Width = 56
         Height = 14
-        Caption = 'Observa√ß√£o'
+        Caption = 'ObservaÁ„o'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1492,7 +1492,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 724
         Height = 31
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
@@ -1619,7 +1619,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 244
         Height = 12
         Alignment = taCenter
-        Caption = 'RELA√á√ÉO DOS DOCUMENTOS FISCAIS ELETR√îNICOS'
+        Caption = 'RELA«√O DOS DOCUMENTOS FISCAIS ELETR‘NICOS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1667,7 +1667,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 22
         Width = 86
         Height = 8
-        Caption = 'S√âRIE/NRO. DOCUMENTO'
+        Caption = 'S…RIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1715,7 +1715,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 22
         Width = 86
         Height = 8
-        Caption = 'S√âRIE/NRO. DOCUMENTO'
+        Caption = 'S…RIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

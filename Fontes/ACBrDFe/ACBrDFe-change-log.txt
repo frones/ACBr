@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/09/2015
+[-] ACBrMDFeDAEventoRLRetrato.dfm e ACBrMDFeDAMDFeRLRetrato.dfm
+    Conversão para ANSI, não estava imprimindo corretamente no Delphi 7
+    http://www.projetoacbr.com.br/forum/topic/24136-impressão-do-damdfe-e-eventos/
+
+09/09/2015
 [*] Alterado a condição que defini se vai salvar o não os XMLs de envio/retorno,
     agora esses arquivos só serão gravado caso a propriedade Salvar de Geral for
     True.

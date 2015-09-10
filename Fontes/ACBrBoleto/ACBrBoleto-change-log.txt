@@ -56,6 +56,12 @@ Data: 00/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 01/09/2015 ver. 0.0.143a
+-- ACBrBancoCaixaSicob --
+[*] Ajuste geração arquivo remessa CNAB240.(Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/23970-remessa-240-cef/
+
+
 Data: 01/09/2015 ver. 0.0.142a
 -- ACBrBoletoFCClass, ACBrBoletoFCFortesFr --   (por: DSA)
 [+] Adicionada a propriedade "MostrarProgresso: Boolean default True"

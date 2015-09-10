@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.142a';
+  CACBrBoleto_Versao = '0.0.143a';
 
   cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
   'Remessa Registrar',
@@ -1326,6 +1326,7 @@ begin
    fValorOutrosCreditos  := 0;
    fValorRecebido        := 0;
    fValorDescontoAntDia  := 0;
+   fPercentualMulta      := 0;
    fReferencia           := '';
    fVersao               := '';
 

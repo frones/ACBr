@@ -40,7 +40,6 @@ unit ACBrMDFeDAEventoQRRetrato;
 // Quando enviar os fontes referentes ao DAEvento favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 25/11/2013 por Italo Jurisato Junior
 
 interface
 
@@ -254,9 +253,6 @@ procedure TfrmMDFeDAEventoQRRetrato.qrb_01_TituloBeforePrint(Sender: TQRCustomBa
 begin
   inherited;
 
-//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-//                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
   case FEventoMDFe.InfEvento.tpEvento of
    teCancelamento: begin
                     qrlLinha1.Caption := 'CANCELAMENTO';

@@ -40,7 +40,6 @@ unit ACBrMDFeDAEventoQR;
 // Quando enviar os fontes referentes ao DAEvento favor alterar
 // a data e o nome da linha abaixo.
 // Última liberação:
-// 26/11/2013 por Italo Jurisato Junior
 
 interface
 
@@ -159,38 +158,23 @@ begin
            QRMDFeEvento.PreviewInitialState := wsMaximized;
            QRMDFeEvento.PrevInitialZoom     := qrZoomToWidth;
 
-           // Incluido por Italo em 14/02/2012
-           // QRMDFeEvento.PreviewDefaultSaveType := stPDF;
-           // Incluido por Italo em 16/02/2012
            QRExportFilterLibrary.AddFilter(TQRPDFDocumentFilter);
          {$ENDIF}
 
            QRMDFeEvento.Prepare;
-//           FTotalPages := QREvento.QRPrinter.PageCount;
            QRMDFeEvento.Preview;
-           // Incluido por Italo em 11/04/2013
-           // Segundo o Rodrigo Chiva resolveu o problema de travamento
-           // após o fechamento do Preview
            Application.ProcessMessages;
          end else
          begin
            FMostrarPreview := True;
            QRMDFeEvento.PrinterSettings.Copies := FNumCopias;
            QRMDFeEvento.Prepare;
-//           FTotalPages := QREvento.QRPrinter.PageCount;
            QRMDFeEvento.Print;
          end;
      finally
-        // Incluido por Rodrigo Fernandes em 17/06/2013
-        // QRMDFeEvento.QRPrinter.Free;
-        // QRMDFeEvento.QRPrinter:=nil;
-
-        // Incluido por Italo em 21/08/2013
         QRMDFeEvento.Free;
         QRMDFeEvento := nil;
 
-        // Incluido por Rodrigo Fernandes em 11/03/2013
-        // Liberando o objeto Printer da memoria
         Printer.Free;
         Free;
      end;
@@ -238,8 +222,6 @@ begin
 
         FMostrarPreview := True;
         QRMDFeEvento.Prepare;
-        // Incluido por Italo em 27/08/2013
-//        FTotalPages := QREvento.QRPrinter.PageCount;
 
         qf := TQRPDFDocumentFilter.Create(AFile);
         try
@@ -268,7 +250,6 @@ begin
   end;
 end;
 
-// Incluido por Rodrigo Fernandes em 11/03/2013
 procedure TfrmMDFeDAEventoQR.FormDestroy(Sender: TObject);
 begin
   QRMDFeEvento.QRPrinter.Free;

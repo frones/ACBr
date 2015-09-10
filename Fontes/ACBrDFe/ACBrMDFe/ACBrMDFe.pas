@@ -439,7 +439,7 @@ var
   i: integer;
 begin
   if Self.Manifestos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum Manifesto Eletrônico Informado!'));
+    GerarException(ACBrStr('ERRO: Nenhum MDF-e Informado!'));
 
   for i := 0 to self.Manifestos.Count - 1 do
   begin
@@ -476,7 +476,7 @@ var
  i: Integer;
 begin
   if Self.Manifestos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum Manifesto Eletrônico Informado!'));
+    GerarException(ACBrStr('ERRO: Nenhum MDF-e Informado!'));
 
   for i := 0 to Self.Manifestos.Count - 1 do
   begin

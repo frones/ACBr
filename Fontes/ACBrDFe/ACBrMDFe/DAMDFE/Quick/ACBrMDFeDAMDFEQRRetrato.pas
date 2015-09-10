@@ -197,7 +197,6 @@ type
       var PrintBand: Boolean);
   private
     { Private declarations }
-//    FTotalPages : Integer;
     procedure Itens;
   public
     { Public declarations }
@@ -232,7 +231,6 @@ begin
   inherited;
    Itens;
    nItemControle := 0;
-//   FTotalPages   := 1;
 
    QRMDFe.ReportTitle := 'Manifesto Eletrônico de Documentos Fiscais - MDF-e';
 
@@ -249,7 +247,6 @@ var
 begin
   inherited;
 
-  // Alterado por Italo em 15/01/2014
   if (FLogo <> '') then
     begin
       if FilesExists(FLogo) then
@@ -338,7 +335,6 @@ begin
   qrlUFDescarrega.Caption := FMDFe.Ide.UFFim;
 
   qrlCIOT.Caption := '';
-  // TMDFeModal = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
   case FMDFe.Ide.modal of
    moRodoviario:  begin
                    qrlModal.Caption := 'MODAL RODOVIÁRIO DE CARGA';
@@ -361,7 +357,6 @@ begin
   qrlqNF.Caption   := FormatFloat('##0', FMDFe.tot.qNF);
   qrlqMDFe.Caption := FormatFloat('##0', FMDFe.tot.qMDFe);
 
-  // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
   if FMDFe.tot.cUnid = uKG
    then qrlPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga)
    else qrlPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga * 1000);
@@ -374,7 +369,6 @@ var
 begin
   inherited;
 
-//  PrintBand := QRMDFe.PageNumber = 1;
   qrb_2_Rodo.Enabled := (FMDFe.Ide.modal = moRodoviario);
 
   qrmPlaca.Lines.Clear;
@@ -419,7 +413,6 @@ procedure TfqrDAMDFEQRRetrato.qrb_3_AereoBeforePrint(Sender: TQRCustomBand;
 begin
   inherited;
 
-//  PrintBand := QRMDFe.PageNumber = 1;
   qrb_3_Aereo.Enabled := (FMDFe.Ide.modal = moAereo);
 end;
 
@@ -430,7 +423,6 @@ var
 begin
   inherited;
 
-//  PrintBand := QRMDFe.PageNumber = 1;
   qrb_4_Aquav.Enabled := (FMDFe.Ide.modal = moAquaviario);
 
   qrlCodEmbar.Caption  := FMDFe.aquav.cEmbar;
@@ -459,7 +451,6 @@ procedure TfqrDAMDFEQRRetrato.qrb_5_FerrovBeforePrint(
 begin
   inherited;
 
-//  PrintBand := QRMDFe.PageNumber = 1;
   qrb_5_Ferrov.Enabled := (FMDFe.Ide.modal = moFerroviario);
 end;
 
@@ -475,7 +466,6 @@ begin
   qrmObservacao.Lines.EndUpdate;
 
   // Mensagem para modo Homologacao.
-
   if FMDFe.Ide.tpAmb = taHomologacao then
    begin
     qrlMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';

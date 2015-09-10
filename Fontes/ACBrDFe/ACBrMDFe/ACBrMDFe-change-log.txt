@@ -47,13 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2015
+[*] (Units: Diversas) 
+    Remoção de código comentados e de alguns comentários desnecessários.
+    Por: Italo Jurisato Junior
+
 09/09/2015
-[*] Incluido a propriedade XMLprotMDFe para conter o grupo <protMDFe> ao ler o XML 
-    de retorno do Consultar (pmdfeRetConsSitMDFe).
+[+] (pmdfeRetConsSitMDFe) 
+    Incluido a propriedade XMLprotMDFe para conter o grupo <protMDFe> ao ler o XML 
+    de retorno do Consultar.
+[+] (pmdfeProcMDFe)
     Incluido as propriedades XML_MDFe e XML_prot para montagem do XML assinado e 
-    protocolado (pmdfeProcMDFe).
+    protocolado.
+[+] (pmdfeConsReciMDFe)
     Incluido a propriedade XMLprotMDFe para conter o grupo <protMDFe> ao ler o XML
-    de retorno do RetRecepcao (pmdfeConsReciMDFe).
+    de retorno do RetRecepcao.
     Por: Italo Jurisato Junior
 
 01/09/2015

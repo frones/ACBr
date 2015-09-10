@@ -149,8 +149,6 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if Leitor.rExtrai(1, 'retConsReciMDFe') <> '' then
     begin
-//      Leitor.Grupo := Leitor.Arquivo;
-
       Fversao   := Leitor.rAtributo('versao');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');
@@ -183,8 +181,6 @@ begin
         end;
         inc(i);
       end;
-
-//      if i = 0 then ProtMDFe.Add;
 
       Result := True;
     end;

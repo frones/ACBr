@@ -837,7 +837,6 @@ begin
           MDFe.procMDFe.xMotivo := AInfProt.Items[I].xMotivo;
         end;
 
-        // Incluido por Italo em 07/08/2015
         // Monta o XML do MDF-e assinado e com o protocolo de Autorização
         if (AInfProt.Items[I].cStat = 100) then
         begin
@@ -872,58 +871,6 @@ begin
             AProcMDFe.Free;
           end;
         end;
-
-        (*
-        if FPConfiguracoesMDFe.Arquivos.Salvar or NaoEstaVazio(
-          FManifestos.Items[J].NomeArq) then
-        begin
-          if FileExists(PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-                        AInfProt.Items[I].chMDFe + '-mdfe.xml') and
-             FileExists(PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-                        FMDFeRetorno.nRec + '-pro-rec.xml') then
-          begin
-            AProcMDFe := TProcMDFe.Create;
-            try
-              AProcMDFe.PathMDFe :=
-                PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-                AInfProt.Items[I].chMDFe + '-mdfe.xml';
-              AProcMDFe.PathRetConsReciMDFe :=
-                PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-                FMDFeRetorno.nRec + '-pro-rec.xml';
-
-              AProcMDFe.Versao := FPVersaoServico;
-              AProcMDFe.GerarXML;
-
-              if NaoEstaVazio(AProcMDFe.Gerador.ArquivoFormatoXML) then
-              begin
-                if NaoEstaVazio(FManifestos.Items[J].NomeArq) then
-                  AProcMDFe.Gerador.SalvarArquivo(FManifestos.Items[J].NomeArq)
-                else
-                  AProcMDFe.Gerador.SalvarArquivo(
-                    PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) +
-                    AInfProt.Items[I].chMDFe + '-mdfe.xml');
-              end;
-            finally
-              AProcMDFe.Free;
-            end;
-          end;
-        end;
-
-        if FPConfiguracoesMDFe.Arquivos.Salvar then
-        begin
-          SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
-                       TACBrMDFe(FPDFeOwner).Manifestos.Items[I].Processado;
-
-          if SalvarXML then
-          begin
-            with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
-            begin
-              GerarXML;   // Gera novamente, para incluir informações de "procMDFe" no XML
-              GravarXML;
-            end;
-          end;
-        end;
-        *)
 
         break;
       end;
@@ -1465,116 +1412,6 @@ begin
           end;
 
           break;
-            (*
-            if FileExists(NomeArquivo + '-mdfe.xml') or NaoEstaVazio(NomeArq) then
-            begin
-              AProcMDFe := TProcMDFe.Create;
-              try
-                if NaoEstaVazio(NomeArq) then
-                  AProcMDFe.PathMDFe := NomeArq
-                else
-                  AProcMDFe.PathMDFe := NomeArquivo + '-mdfe.xml';
-
-                AProcMDFe.PathRetConsSitMDFe := NomeArquivo + '-sit.xml';
-
-                AProcMDFe.Versao :=
-                    TACBrMDFe(FPDFeOwner).LerVersaoDeParams(LayMDFeRecepcao);
-
-                AProcMDFe.GerarXML;
-
-                aMDFe := AProcMDFe.Gerador.ArquivoFormatoXML;
-
-                if NaoEstaVazio(AProcMDFe.Gerador.ArquivoFormatoXML) then
-                  AProcMDFe.Gerador.SalvarArquivo(AProcMDFe.PathMDFe);
-
-                FRetMDFeDFe := '';
-
-                if (NaoEstaVazio(aMDFe)) and
-                   (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
-                begin
-                  Inicio := Pos('<procEventoMDFe', FPRetWS);
-                  Fim    := Pos('</retConsSitMDFe', FPRetWS) - 1;
-
-                  aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-                  aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                              '<MDFeDFe>' +
-                               '<procMDFe versao="' + FVersao + '">' +
-                                 SeparaDados(aMDFe, 'MDFeProc') +
-                               '</procMDFe>' +
-                               '<procEventoMDFe versao="' + FVersao + '">' +
-                                 aEventos +
-                               '</procEventoMDFe>' +
-                              '</MDFeDFe>';
-
-                  FRetMDFeDFe := aMDFeDFe;
-                end;
-
-              finally
-                AProcMDFe.Free;
-              end;
-            end
-            else begin
-             LocMDFeW := TMDFeW.Create(TACBrMDFe(FPDFeOwner).Manifestos.Items[i].MDFe);
-             try
-               LocMDFeW.GerarXML;
-
-               aMDFe := LocMDFeW.Gerador.ArquivoFormatoXML;
-
-               FRetMDFeDFe := '';
-
-               if (NaoEstaVazio(aMDFe)) and
-                  (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
-                begin
-                  Inicio := Pos('<procEventoMDFe', FPRetWS);
-                  Fim    := Pos('</retConsSitMDFe', FPRetWS) -1;
-
-                  aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-                  aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                              '<MDFeDFe>' +
-                               '<procMDFe versao="' + FVersao + '">' +
-                                 SeparaDados(aMDFe, 'MDFeProc') +
-                               '</procMDFe>' +
-                               '<procEventoMDFe versao="' + FVersao + '">' +
-                                 aEventos +
-                               '</procEventoMDFe>' +
-                              '</MDFeDFe>';
-
-                  FRetMDFeDFe := aMDFeDFe;
-                end;
-             finally
-               LocMDFeW.Free;
-             end;
-            end;
-
-            if FPConfiguracoesMDFe.Arquivos.Salvar then
-            begin
-              SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
-                           TACBrMDFe(FPDFeOwner).Manifestos.Items[I].Processado;
-
-              if SalvarXML then
-              begin
-                with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
-                begin
-                  GerarXML;   // Gera novamente, para incluir informações de "procMDFe" no XML
-                  GravarXML;
-                end;
-              end;
-            end;
-
-            if FPConfiguracoesMDFe.Arquivos.Salvar and (FRetMDFeDFe <> '') then
-            begin
-              if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
-                Data := TACBrMDFe(FPDFeOwner).Manifestos.Items[i].MDFe.Ide.dhEmi
-              else
-                Data := Now;
-
-              FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml', aMDFeDFe,
-                                PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
-            end;
-          end;
-          *)
         end;
       end;
     end;
@@ -1759,13 +1596,6 @@ begin
     EventoMDFe.Versao := FPVersaoServico;
     EventoMDFe.GerarXML;
 
-    // Separa os grupos <evento> e coloca na variável Eventos
-//    I := Pos('<eventoMDFe ', EventoMDFe.Gerador.ArquivoFormatoXML);
-//    Lote := Copy(EventoMDFe.Gerador.ArquivoFormatoXML, 1, I - 1);
-//    Eventos := SeparaDados(EventoMDFe.Gerador.ArquivoFormatoXML, 'envEvento');
-//    I := Pos('<eventoMDFe ', Eventos);
-//    Eventos := Copy(Eventos, I, length(Eventos));
-
     Eventos := EventoMDFe.Gerador.ArquivoFormatoXML;
     EventosAssinados := '';
 
@@ -1787,13 +1617,6 @@ begin
       else
         Break;
     end;
-
-//    F := Pos('?>', EventosAssinados);
-//    if F <> 0 then
-//      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
-//        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
-//    else
-//      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
     // Separa o XML especifico do Evento para ser Validado.
     AXMLEvento := '<?xml version="1.0" encoding="UTF-8" ?>' +
@@ -2019,7 +1842,6 @@ function TMDFeConsultaMDFeNaoEnc.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-//  FRetWS := SeparaDados(FRetornoWS, 'mdfeConsNaoEncMDFResult');
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeConsNaoEncResult');
 
   // Limpando variaveis internas

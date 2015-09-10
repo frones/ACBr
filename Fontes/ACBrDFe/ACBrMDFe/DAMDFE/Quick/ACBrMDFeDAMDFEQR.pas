@@ -186,9 +186,6 @@ begin
            QRMDFe.Prepare;
            FTotalPages := QRMDFe.QRPrinter.PageCount;
            QRMDFe.Preview;
-           // Incluido por Italo em 11/04/2013
-           // Segundo o Rodrigo Chiva resolveu o problema de travamento
-           // após o fechamento do Preview
            Application.ProcessMessages;
          end
          else begin

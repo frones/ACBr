@@ -47,8 +47,6 @@ type
     FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
-    // Usado no Grupo de informações para consultar um DF-e a partir de um
-    // NSU específico.
     FNSU: String;
   public
     constructor Create;
@@ -62,6 +60,8 @@ type
     property cUFAutor: Integer       read FcUFAutor write FcUFAutor;
     property CNPJCPF: String         read FCNPJCPF  write FCNPJCPF;
     property ultNSU: String          read FultNSU   write FultNSU;
+    // Usado no Grupo de informações para consultar um DF-e a partir de um
+    // NSU específico.
     property NSU: String             read FNSU      write FNSU;
   end;
 

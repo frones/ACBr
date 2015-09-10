@@ -63,7 +63,6 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FVersao: String;
-    // Usando na Montagem do mdfeProc
     FXML_MDFe: String;
     FXML_Prot: String;
   public

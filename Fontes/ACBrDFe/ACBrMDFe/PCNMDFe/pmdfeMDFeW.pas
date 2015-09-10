@@ -343,14 +343,6 @@ begin
    3: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#041');
    4: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#041');
   end;
-  (*
-  case StrToInt(ModalToStr(MDFe.Ide.modal)) of
-   1: Gerador.wGrupo('infModal versaoModal="' + MDFeModalRodo  + '"', '#041');
-   2: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAereo + '"', '#041');
-   3: Gerador.wGrupo('infModal versaoModal="' + MDFeModalAqua  + '"', '#041');
-   4: Gerador.wGrupo('infModal versaoModal="' + MDFeModalFerro + '"', '#041');
-  end;
-  *)
   case StrToInt(ModalToStr(MDFe.Ide.modal)) of
    1: GerarRodo;   // Informações do Modal Rodoviário
    2: GerarAereo;  // Informações do Modal Aéreo

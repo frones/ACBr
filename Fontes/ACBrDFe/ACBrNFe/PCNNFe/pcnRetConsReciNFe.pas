@@ -111,15 +111,17 @@ type
     FdigVal: String;
     FcStat: Integer;
     FxMotivo: String;
+    FXMLprotNFe: String;
   published
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property verAplic: String        read FverAplic write FverAplic;
-    property chNFe: String           read FchNFe    write FchNFe;
-    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
-    property nProt: String           read FnProt    write FnProt;
-    property digVal: String          read FdigVal   write FdigVal;
-    property cStat: Integer          read FcStat    write FcStat;
-    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property verAplic: String        read FverAplic   write FverAplic;
+    property chNFe: String           read FchNFe      write FchNFe;
+    property dhRecbto: TDateTime     read FdhRecbto   write FdhRecbto;
+    property nProt: String           read FnProt      write FnProt;
+    property digVal: String          read FdigVal     write FdigVal;
+    property cStat: Integer          read FcStat      write FcStat;
+    property xMotivo: String         read FxMotivo    write FxMotivo;
+    property XMLprotNFe: String      read FXMLprotNFe write FXMLprotNFe;
   end;
 
 implementation
@@ -190,21 +192,30 @@ begin
       (*BR06c*)FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
 
       i := 0;
-      while (FcStat = 104) and (Leitor.rExtrai(1, 'infProt', '', i + 1) <> '') do
+      while (FcStat = 104) and (Leitor.rExtrai(1, 'protNFe', '', i + 1) <> '') do
       begin
         ProtNFe.Add;
-        (*PR05*)ProtNFe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-        (*PR06*)ProtNFe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
-        (*PR07*)ProtNFe[i].FchNFe    := Leitor.rCampo(tcStr, 'chNFe');
-        (*PR08*)ProtNFe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-        (*PR09*)ProtNFe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
-        (*PR10*)ProtNFe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
-        (*PR11*)ProtNFe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
-        (*PR12*)ProtNFe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+
+        // A propriedade XMLprotNFe contem o XML que traz o resultado do
+        // processamento da NF-e.
+        ProtNFe[i].XMLprotNFe := Leitor.Grupo;
+
+        if Leitor.rExtrai(2, 'infProt') <> '' then
+        begin
+          (*PR05*)ProtNFe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+          (*PR06*)ProtNFe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
+          (*PR07*)ProtNFe[i].FchNFe    := Leitor.rCampo(tcStr, 'chNFe');
+          (*PR08*)ProtNFe[i].FdhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+          (*PR09*)ProtNFe[i].FnProt    := Leitor.rCampo(tcStr, 'nProt');
+          (*PR10*)ProtNFe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
+          (*PR11*)ProtNFe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
+          (*PR12*)ProtNFe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+        end;
         inc(i);
       end;
-      if i = 0 then
-        ProtNFe.Add;
+
+//      if i = 0 then ProtNFe.Add;
+
       Result := True;
     end;
   except

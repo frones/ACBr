@@ -379,16 +379,20 @@ begin
    ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
  {$ENDIF}
 
+ ACBrNFSe1.Configuracoes.Certificados.VerificarValidade :=False;
+
  ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
  ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe  := True;
  ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes    := True;
- ACBrNFSe1.Configuracoes.Arquivos.PathCan          := edtPathLogs.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.SepararPorCNPJ   := True;
  ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
- ACBrNFSe1.Configuracoes.Arquivos.Salvar           := True;
  ACBrNFSe1.Configuracoes.Arquivos.PathSchemas      := edtSchemas.Text;
- ACBrNFSe1.Configuracoes.Arquivos.PathSalvar       := edtPathLogs.Text;
 
  PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathNFSe(0);
+
+ ACBrNFSe1.Configuracoes.Arquivos.PathCan          := PathMensal;
+ ACBrNFSe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;
+ ACBrNFSe1.Configuracoes.Arquivos.Salvar           := True;
 
  ACBrNFSe1.Configuracoes.Geral.Salvar          := ckSalvar.Checked;
  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);

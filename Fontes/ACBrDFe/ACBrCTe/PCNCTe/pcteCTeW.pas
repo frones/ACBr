@@ -124,6 +124,7 @@ type
     procedure GerarCST90;      // Nivel 3
     procedure GerarICMSOutraUF;// Nivel 3
     procedure GerarICMSSN;     // Nivel 3
+    procedure GerarICMSUFFim;  // Nivel 2
 
     procedure GerarInfCTeNorm; // Nivel 1
     procedure GerarinfCarga;   // Nivel 2
@@ -984,6 +985,10 @@ begin
   GerarICMS;
   Gerador.wCampo(tcDe2, '#250', 'vTotTrib   ', 01, 15, 0, CTe.Imp.vTotTrib, DSC_VCOMP);
   Gerador.wCampo(tcStr, '#251', 'infAdFisco ', 01, 2000, 0, CTe.Imp.InfAdFisco, DSC_INFADFISCO);
+  // Grupo a ser informado nas prestações de serviços de transporte interestaduais
+  // para consumidor final, não contribuinte do ICMS.
+  if CTe.Imp.ICMSUFFim.vBCUFFim <> 0 then
+    GerarICMSUFFim;
   Gerador.wGrupo('/imp');
 end;
 
@@ -1082,6 +1087,18 @@ begin
   Gerador.wGrupo('ICMSSN', '#248');
   Gerador.wCampo(tcInt, '#249', 'indSN ', 01, 01, 1, CTe.Imp.ICMS.ICMSSN.indSN, DSC_INDSN);
   Gerador.wGrupo('/ICMSSN');
+end;
+
+procedure TCTeW.GerarICMSUFFim;
+begin
+  Gerador.wGrupo('ICMSUFFim', '#248a');
+  Gerador.wCampo(tcDe2, '#', 'vBCUFFim      ', 01, 15, 1, CTe.Imp.ICMSUFFim.vBCUFFim, DSC_VBC);
+  Gerador.wCampo(tcDe2, '#', 'pICMSUFFim    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSUFFim, DSC_PICMS);
+  Gerador.wCampo(tcDe2, '#', 'pICMSInter    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInter, DSC_PICMS);
+  Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
+  Gerador.wCampo(tcDe2, '#', 'vICMSUFFim    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFFim, DSC_VICMS);
+  Gerador.wCampo(tcDe2, '#', 'vICMSUFIni    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFIni, DSC_VICMS);
+  Gerador.wGrupo('/ICMSUFFim');
 end;
 
 procedure TCTeW.GerarInfCTeNorm;

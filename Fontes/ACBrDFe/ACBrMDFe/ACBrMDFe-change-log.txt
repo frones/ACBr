@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2015
+[*] Incluido a propriedade XMLprotMDFe para conter o grupo <protMDFe> ao ler o XML 
+    de retorno do Consultar (pmdfeRetConsSitMDFe).
+    Incluido as propriedades XML_MDFe e XML_prot para montagem do XML assinado e 
+    protocolado (pmdfeProcMDFe).
+    Incluido a propriedade XMLprotMDFe para conter o grupo <protMDFe> ao ler o XML
+    de retorno do RetRecepcao (pmdfeConsReciMDFe).
+    Por: Italo Jurisato Junior
+
 01/09/2015
 [*] Corrigido a extração do XML de retorno, não estava pegando o grupo protMDFe.
     Por: Italo Jurisato Junior

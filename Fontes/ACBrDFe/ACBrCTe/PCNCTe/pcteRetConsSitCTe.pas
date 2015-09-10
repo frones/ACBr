@@ -93,6 +93,7 @@ type
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
     FprocEventoCTe: TRetEventoCTeCollection;
+    FXMLprotCTe: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -109,6 +110,7 @@ type
     property protCTe: TProcCTe                      read FprotCTe       write FprotCTe;
     property retCancCTe: TRetCancCTe                read FretCancCTe    write FretCancCTe;
     property procEventoCTe: TRetEventoCTeCollection read FprocEventoCTe write FprocEventoCTe;
+    property XMLprotCTe: String                     read FXMLprotCTe    write FXMLprotCTe;
   end;
 
 implementation
@@ -153,9 +155,16 @@ begin
       (*ER06 *)FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
       (*ER07 *)FcUF      := leitor.rCampo(tcInt, 'cUF');
 
-      if FcStat in  [100, 101] then
-       begin
-         if (Leitor.rExtrai(1, 'protCTe') <> '') or (Leitor.rExtrai(1, 'infProt') <> '') then
+      // status 100 = Autorizado, 101 = Cancelado, 110 = Denegado
+      if FcStat in  [100, 101, 110] then
+      begin
+        if (Leitor.rExtrai(1, 'protCTe') <> '') then
+        begin
+          // A propriedade XMLprotCTe contem o XML que traz o resultado do
+          // processamento do CT-e.
+          XMLprotCTe := Leitor.Grupo;
+
+          if Leitor.rExtrai(2, 'infProt') <> '' then
           begin
             protCTe.Id       := Leitor.rAtributo('Id=');
             protCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
@@ -167,25 +176,26 @@ begin
             protCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');
             protCTe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
             FchCTe           := protCTe.chCTe;
-         end;
-       end;
+          end;
+        end;
+      end;
 
       if FcStat = 101 then
-       begin
-         if Leitor.rExtrai(1, 'infCanc') <> '' then
-          begin
-            retCancCTe.Id       := Leitor.rAtributo('Id=');
-            retCancCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-            retCancCTe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
-            retCancCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');
-            retCancCTe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-            retCancCTe.cUF      := Leitor.rCampo(tcInt, 'cUF');
-            retCancCTe.chCTe    := Leitor.rCampo(tcStr, 'chCTe');
-            retCancCTe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-            retCancCTe.nProt    := Leitor.rCampo(tcStr, 'nProt');
-            FchCTe              := retCancCTe.chCTe;
-         end;
-       end;
+      begin
+        if Leitor.rExtrai(1, 'infCanc') <> '' then
+        begin
+          retCancCTe.Id       := Leitor.rAtributo('Id=');
+          retCancCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+          retCancCTe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
+          retCancCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');
+          retCancCTe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+          retCancCTe.cUF      := Leitor.rCampo(tcInt, 'cUF');
+          retCancCTe.chCTe    := Leitor.rCampo(tcStr, 'chCTe');
+          retCancCTe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+          retCancCTe.nProt    := Leitor.rCampo(tcStr, 'nProt');
+          FchCTe              := retCancCTe.chCTe;
+        end;
+      end;
 
       if Assigned(procEventoCTe) then
         procEventoCTe.Free;

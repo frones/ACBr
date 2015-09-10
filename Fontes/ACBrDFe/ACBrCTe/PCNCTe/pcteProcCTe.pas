@@ -73,9 +73,9 @@ type
     FxMotivo: String;
     FId: String;
     FVersao: String;
-    // Usando na Montagem do mdfeProc
+    // Usando na Montagem do cteProc
     FXML_CTe: String;
-    FXML_Proc: String;
+    FXML_prot: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -96,9 +96,9 @@ type
     property xMotivo: String            read FxMotivo            write FxMotivo;
     property Id: String                 read FId                 write FId;
     property Versao: String             read FVersao             write FVersao;
-    // Usando na Montagem do mdfeProc
+    // Usando na Montagem do cteProc
     property XML_CTe: String            read FXML_CTe            write FXML_CTe;
-    property XML_Proc: String           read FXML_Proc           write FXML_Proc;
+    property XML_prot: String           read FXML_prot           write FXML_prot;
   end;
 
 implementation
@@ -146,10 +146,10 @@ begin
   XMLCTe      := TStringList.Create;
   XMLinfProt  := TStringList.Create;
   XMLinfProt2 := TStringList.Create;
-  try
-    Gerador.ListaDeAlertas.Clear;
+  Gerador.ListaDeAlertas.Clear;
 
-    if (FXML_CTe = '') and (FXML_Proc = '') then
+  try
+    if (FXML_CTe = '') and (FXML_prot = '') then
     begin
       ProtLido := False;
       xProtCTe := '';
@@ -259,18 +259,18 @@ begin
       end;
 
       FXML_CTe := XMLCTe.Text;
-      FXML_Proc := xProtCTe;
+      FXML_prot := xProtCTe;
     end;
 
     // Gerar arquivo
     if (Gerador.ListaDeAlertas.Count = 0) and
-       (FXML_CTe <> '') and (FXML_Proc <> '') then
+       (FXML_CTe <> '') and (FXML_prot <> '') then
     begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
       Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
       Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>') + '</CTe>');
-      Gerador.wTexto(FXML_Proc);
+      Gerador.wTexto(FXML_prot);
       Gerador.wGrupo('/cteProc');
     end;
 

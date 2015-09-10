@@ -1323,6 +1323,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True
+    Configuracoes.WebServices.QuebradeLinha = '|'
     DANFSE = ACBrNFSeDANFSeQR1
     Left = 360
     Top = 248

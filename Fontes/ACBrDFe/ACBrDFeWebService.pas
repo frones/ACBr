@@ -338,7 +338,7 @@ begin
 
   Prefixo := GerarPrefixoArquivo;
 
-  if FPConfiguracoes.Arquivos.Salvar then
+  if FPConfiguracoes.Geral.Salvar then
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
     FPDFeOwner.Gravar(ArqEnv, FPDadosMsg);
@@ -362,7 +362,7 @@ begin
 
   Prefixo := GerarPrefixoArquivo;
 
-  if FPConfiguracoes.Arquivos.Salvar then
+  if FPConfiguracoes.Geral.Salvar then
   begin
     ArqResp := Prefixo + '-' + FPArqResp + '.xml';
     FPDFeOwner.Gravar(ArqResp, FPRetWS);

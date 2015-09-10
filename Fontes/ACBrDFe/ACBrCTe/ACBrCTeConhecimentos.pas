@@ -96,11 +96,11 @@ type
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
 
-    property NomeArq: String               read FNomeArq     write FNomeArq;
+    property NomeArq: String               read FNomeArq       write FNomeArq;
     property CTe: TCTe                     read FCTe;
-    property XML: String                   read FXML         write FXML;
-    property XMLAssinado: String           read FXMLAssinado write FXMLAssinado;
-    property XMLOriginal: String           read FXMLOriginal write FXMLOriginal;
+    property XML: String                   read FXML           write FXML;
+    property XMLAssinado: String           read GetXMLAssinado write FXMLAssinado;
+    property XMLOriginal: String           read FXMLOriginal   write FXMLOriginal;
 
     property Confirmado: Boolean           read GetConfirmado;
     property Processado: Boolean           read GetProcessado;

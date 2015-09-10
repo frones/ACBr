@@ -146,9 +146,10 @@ begin
   Result := False;
   
   try
+    Leitor.Grupo := Leitor.Arquivo;
     if Leitor.rExtrai(1, 'retConsReciMDFe') <> '' then
     begin
-      Leitor.Grupo := Leitor.Arquivo;
+//      Leitor.Grupo := Leitor.Arquivo;
 
       Fversao   := Leitor.rAtributo('versao');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2015
+[*] Incluido a propriedade XMLprotNFe para conter o grupo <protNFe> ao ler o XML 
+    de retorno do Consultar (pcnRetConsSitNFe).
+    Incluido as propriedades XML_NFe e XML_prot para montagem do XML assinado e 
+    protocolado (pcnProcNFe).
+    Incluido a propriedade XMLprotNFe para conter o grupo <protNFe> ao ler o XML
+    de retorno do RetRecepcao (pcnConsReciNFe).
+    Alterado o TNFeConsulta.TratarResposta e TNFeRetRecepcao.TratarRespostaFinal
+    visando usar as propriedades acimas para a montagem do XML assinado e 
+    protocolado.
+    Por: Italo Jurisato Junior
+
 08/09/2015
 -- ACBrNFeDANFeRL --
 [*] Ajuste para considerar valor da propriedade "MostrarStatus"  (por: DSA)

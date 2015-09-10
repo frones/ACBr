@@ -130,6 +130,7 @@ type
   TCST90       = class;
   TICMSOutraUF = class;
   TICMSSN      = class;
+  TICMSUFFim   = class;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Informações de um CT-e Normal
@@ -882,13 +883,15 @@ type
     FICMS       : TICMS;
     FvTotTrib   : Currency;
     FInfAdFisco : String;
+    FICMSUFFim: TICMSUFFim;
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
   published
-    property ICMS: TICMS        read FICMS       write FICMS;
-    property vTotTrib: Currency read FvTotTrib   write FvTotTrib;
-    property infAdFisco: String read FInfAdFisco write FInfAdFisco;
+    property ICMS: TICMS           read FICMS       write FICMS;
+    property vTotTrib: Currency    read FvTotTrib   write FvTotTrib;
+    property infAdFisco: String    read FInfAdFisco write FInfAdFisco;
+    property ICMSUFFim: TICMSUFFim read FICMSUFFim  write FICMSUFFim;
   end;
 
   TICMS = class(TPersistent)
@@ -1002,6 +1005,23 @@ type
     FindSN : Integer;
   published
     property indSN: Integer read FindSN write FindSN default 1;
+  end;
+
+  TICMSUFFim = class(TPersistent)
+  private
+    FvBCUFFim: Currency;
+    FpICMSUFFim: Currency;
+    FpICMSInter: Currency;
+    FpICMSInterPart: Currency;
+    FvICMSUFFim: Currency;
+    FvICMSUFIni: Currency;
+  published
+    property vBCUFFim: Currency       read FvBCUFFim       write FvBCUFFim;
+    property pICMSUFFim: Currency     read FpICMSUFFim     write FpICMSUFFim;
+    property pICMSInter: Currency     read FpICMSInter     write FpICMSInter;
+    property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
+    property vICMSUFFim: Currency     read FvICMSUFFim     write FvICMSUFFim;
+    property vICMSUFIni: Currency     read FvICMSUFIni     write FvICMSUFIni;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2814,11 +2834,13 @@ end;
 constructor TImp.Create(AOwner: TCTe);
 begin
   FICMS := TICMS.Create(Self);
+  FICMSUFFim := TICMSUFFim.Create;
 end;
 
 destructor TImp.Destroy;
 begin
   FICMS.free;
+  FICMSUFFim.free;
   inherited;
 end;
 

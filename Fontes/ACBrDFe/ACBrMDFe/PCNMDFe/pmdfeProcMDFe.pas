@@ -65,7 +65,7 @@ type
     FVersao: String;
     // Usando na Montagem do mdfeProc
     FXML_MDFe: String;
-    FXML_Proc: String;
+    FXML_Prot: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -87,7 +87,7 @@ type
     property Versao: String              read FVersao              write FVersao;
     // Usando na Montagem do mdfeProc
     property XML_MDFe: String            read FXML_MDFe            write FXML_MDFe;
-    property XML_Proc: String            read FXML_Proc            write FXML_Proc;
+    property XML_Prot: String            read FXML_Prot            write FXML_Prot;
   end;
 
 implementation
@@ -140,7 +140,7 @@ begin
   Gerador.ListaDeAlertas.Clear;
 
   try
-    if (FXML_MDFe = '') and (FXML_Proc = '') then
+    if (FXML_MDFe = '') and (FXML_Prot = '') then
     begin
       ProtLido := False;
       xProtMDFe := '';
@@ -236,18 +236,18 @@ begin
        end;
 
       FXML_MDFe := XMLMDFe.Text;
-      FXML_Proc := xProtMDFe;
+      FXML_Prot := xProtMDFe;
     end;
 
     // Gerar arquivo
     if (Gerador.ListaDeAlertas.Count = 0) and
-       (FXML_MDFe <> '') and (FXML_Proc <> '') then
+       (FXML_MDFe <> '') and (FXML_Prot <> '') then
     begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
       Gerador.wGrupo('mdfeProc versao="' + Versao + '" ' + NAME_SPACE_MDFE, '');
       Gerador.wTexto('<MDFe xmlns' + RetornarConteudoEntre(FXML_MDFe, '<MDFe xmlns', '</MDFe>') + '</MDFe>');
-      Gerador.wTexto(FXML_Proc);
+      Gerador.wTexto(FXML_Prot);
       Gerador.wGrupo('/mdfeProc');
     end;
 

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/09/2015
+[*] Alterado a condição que defini se vai salvar o não os XMLs de envio/retorno,
+    agora esses arquivos só serão gravado caso a propriedade Salvar de Geral for
+    True.
+    por: Italo Jurisato Junior
+
 08/09/2015
 -- ACBrDFeConfiguracoes --
 [*] Ajuste para que TDFeSSL.SSLLib default seja por padrão, libCapicomDelphiSoap,

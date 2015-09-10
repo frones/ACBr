@@ -825,14 +825,17 @@ begin
             FManifestos.Items[J].NumID + ' não confere.');
         end;
 
-        FManifestos.Items[J].MDFe.procMDFe.tpAmb := AInfProt.Items[I].tpAmb;
-        FManifestos.Items[J].MDFe.procMDFe.verAplic := AInfProt.Items[I].verAplic;
-        FManifestos.Items[J].MDFe.procMDFe.chMDFe := AInfProt.Items[I].chMDFe;
-        FManifestos.Items[J].MDFe.procMDFe.dhRecbto := AInfProt.Items[I].dhRecbto;
-        FManifestos.Items[J].MDFe.procMDFe.nProt := AInfProt.Items[I].nProt;
-        FManifestos.Items[J].MDFe.procMDFe.digVal := AInfProt.Items[I].digVal;
-        FManifestos.Items[J].MDFe.procMDFe.cStat := AInfProt.Items[I].cStat;
-        FManifestos.Items[J].MDFe.procMDFe.xMotivo := AInfProt.Items[I].xMotivo;
+        with FManifestos.Items[J] do
+        begin
+          MDFe.procMDFe.tpAmb := AInfProt.Items[I].tpAmb;
+          MDFe.procMDFe.verAplic := AInfProt.Items[I].verAplic;
+          MDFe.procMDFe.chMDFe := AInfProt.Items[I].chMDFe;
+          MDFe.procMDFe.dhRecbto := AInfProt.Items[I].dhRecbto;
+          MDFe.procMDFe.nProt := AInfProt.Items[I].nProt;
+          MDFe.procMDFe.digVal := AInfProt.Items[I].digVal;
+          MDFe.procMDFe.cStat := AInfProt.Items[I].cStat;
+          MDFe.procMDFe.xMotivo := AInfProt.Items[I].xMotivo;
+        end;
 
         // Incluido por Italo em 07/08/2015
         // Monta o XML do MDF-e assinado e com o protocolo de Autorização
@@ -843,7 +846,7 @@ begin
             AProcMDFe.XML_MDFe := StringReplace(FManifestos.Items[J].XMLAssinado,
                                        '<' + ENCODING_UTF8 + '>', '',
                                        [rfReplaceAll]);
-            AProcMDFe.XML_Proc := AInfProt.Items[I].XMLprotMDFe;
+            AProcMDFe.XML_Prot := AInfProt.Items[I].XMLprotMDFe;
             AProcMDFe.Versao := FPVersaoServico;
             AProcMDFe.GerarXML;
 
@@ -1398,6 +1401,71 @@ begin
             MDFe.procMDFe.cStat := MDFeRetorno.cStat;
             MDFe.procMDFe.xMotivo := MDFeRetorno.xMotivo;
 
+            AProcMDFe := TProcMDFe.Create;
+            try
+              AProcMDFe.XML_MDFe := StringReplace(XMLAssinado,
+                                         '<' + ENCODING_UTF8 + '>', '',
+                                         [rfReplaceAll]);
+              AProcMDFe.XML_Prot := MDFeRetorno.XMLprotMDFe;
+              AProcMDFe.Versao := FPVersaoServico;
+              AProcMDFe.GerarXML;
+
+              XML := AProcMDFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := XML;
+              XMLAssinado := XML;
+
+              FRetMDFeDFe := '';
+
+              if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
+              begin
+                Inicio := Pos('<procEventoMDFe', FPRetWS);
+                Fim    := Pos('</retConsSitMDFe', FPRetWS) -1;
+
+                aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+                aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                           '<MDFeDFe>' +
+                            '<procMDFe versao="' + FVersao + '">' +
+                              SeparaDados(XML, 'mdfeProc') +
+                            '</procMDFe>' +
+                            '<procEventoMDFe versao="' + FVersao + '">' +
+                              aEventos +
+                            '</procEventoMDFe>' +
+                           '</MDFeDFe>';
+
+                FRetMDFeDFe := aMDFeDFe;
+              end;
+            finally
+              AProcMDFe.Free;
+            end;
+
+            if FPConfiguracoesMDFe.Arquivos.Salvar then
+            begin
+              if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
+                Data := MDFe.Ide.dhEmi
+              else
+                Data := Now;
+
+              SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                           Processado;
+
+              // Salva o XML do MDF-e assinado e protocolado
+              if SalvarXML then
+                FPDFeOwner.Gravar(FMDFeChave + 'mdfe-xml',
+                                  XML,
+                                  PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
+
+              // Salva o XML do MDF-e assinado, protocolado e com os eventos
+              if SalvarXML  and (FRetMDFeDFe <> '') then
+                FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml',
+                                  aMDFeDFe,
+                                  PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
+
+            end;
+          end;
+
+          break;
+            (*
             if FileExists(NomeArquivo + '-mdfe.xml') or NaoEstaVazio(NomeArq) then
             begin
               AProcMDFe := TProcMDFe.Create;
@@ -1506,8 +1574,7 @@ begin
                                 PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
             end;
           end;
-
-          break;
+          *)
         end;
       end;
     end;

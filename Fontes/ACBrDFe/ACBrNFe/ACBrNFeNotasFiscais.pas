@@ -114,9 +114,9 @@ type
 
     property NFe: TNFe read FNFe;
 
-    property XML: String read FXML;
-    property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
-    property XMLAssinado: String read GetXMLAssinado;
+    property XML: String         read FXML           write FXML;
+    property XMLOriginal: String read FXMLOriginal   write FXMLOriginal;
+    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;

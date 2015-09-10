@@ -94,7 +94,8 @@ type
     FprotNFe: TProcNFe;
     FretCancNFe: TRetCancNFe;
     FprocEventoNFe: TRetEventoNFeCollection;
-    FnRec: String; // Consta no Retorno da NFC-e
+    FnRec: String;  // Consta no Retorno da NFC-e
+    FXMLprotNFe: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -113,6 +114,7 @@ type
     property retCancNFe: TRetCancNFe                read FretCancNFe    write FretCancNFe;
     property procEventoNFe: TRetEventoNFeCollection read FprocEventoNFe write FprocEventoNFe;
     property nRec: String                           read FnRec          write FnRec;
+    property XMLprotNFe: String                     read FXMLprotNFe    write FXMLprotNFe;
   end;
 
 implementation
@@ -158,20 +160,28 @@ begin
       (*ER07a*)FdhRecbto := leitor.rCampo(tcDatHor, 'dhRecbto');
       (*ER07b*)FchNFe    := leitor.rCampo(tcStr, 'chNFe');
 
-      case FcStat of 100,101,104,110,150,151,155,301,302:
-        begin
-          if ((Leitor.rExtrai(1, 'protNFe') <> '') or (Leitor.rExtrai(1, 'infProt') <> '')) then
-          begin
-            protNFe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-            protNFe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
-            protNFe.chNFe    := Leitor.rCampo(tcStr, 'chNFe');
-            protNFe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
-            protNFe.nProt    := Leitor.rCampo(tcStr, 'nProt');
-            protNFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
-            protNFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
-            protNFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
-          end;
-        end;
+      case FcStat of
+        100,101,104,110,150,151,155,301,302:
+           begin
+             if (Leitor.rExtrai(1, 'protNFe') <> '') then
+             begin
+               // A propriedade XMLprotNFe contem o XML que traz o resultado do
+               // processamento da NF-e.
+               XMLprotNFe := Leitor.Grupo;
+
+               if Leitor.rExtrai(2, 'infProt') <> '' then
+               begin
+                 protNFe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+                 protNFe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
+                 protNFe.chNFe    := Leitor.rCampo(tcStr, 'chNFe');
+                 protNFe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+                 protNFe.nProt    := Leitor.rCampo(tcStr, 'nProt');
+                 protNFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
+                 protNFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
+                 protNFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+               end;
+             end;
+           end;
       end;
 
       retCancNFe.cStat := 0;
@@ -203,6 +213,7 @@ begin
         procEventoNFe.Items[i].RetEventoNFe.LerXml;
         inc(i);
       end;
+
       Result := True;
     end;
   except

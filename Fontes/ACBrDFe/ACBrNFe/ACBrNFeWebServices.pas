@@ -267,6 +267,7 @@ type
     FverAplic: String;
     FcStat: integer;
     FcUF: integer;
+    FRetNFeDFe: String;
 
     FprotNFe: TProcNFe;
     FretCancNFe: TRetCancNFe;
@@ -291,6 +292,7 @@ type
     property verAplic: String read FverAplic;
     property cStat: integer read FcStat;
     property cUF: integer read FcUF;
+    property RetNFeDFe: String read FRetNFeDFe;
 
     property protNFe: TProcNFe read FprotNFe;
     property retCancNFe: TRetCancNFe read FretCancNFe;
@@ -1200,6 +1202,7 @@ var
   AProcNFe: TProcNFe;
   AInfProt: TProtNFeCollection;
   SalvarXML: Boolean;
+  NomeXML: String;
 begin
   Result := False;
 
@@ -1238,6 +1241,47 @@ begin
           NFe.procNFe.xMotivo := AInfProt.Items[I].xMotivo;
         end;
 
+        NomeXML := '-nfe.xml';
+
+        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
+          NomeXML := '-den.xml';
+
+        // Monta o XML da NF-e assinado e com o protocolo de Autorização ou Denegação
+        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
+           (AInfProt.Items[I].cStat = 301) then
+        begin
+          AProcNFe := TProcNFe.Create;
+          try
+            AProcNFe.XML_NFe := StringReplace(FNotasFiscais.Items[J].XMLAssinado,
+                                       '<' + ENCODING_UTF8 + '>', '',
+                                       [rfReplaceAll]);
+            AProcNFe.XML_Prot := AInfProt.Items[I].XMLprotNFe;
+            AProcNFe.Versao := FPVersaoServico;
+            AProcNFe.GerarXML;
+
+            with FNotasFiscais.Items[J] do
+            begin
+              XML := AProcNFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := XML;
+              XMLAssinado := XML;
+
+              if FPConfiguracoesNFe.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                             Processada;
+
+                // Salva o XML da NF-e assinado e protocolado
+                if SalvarXML then
+                  FPDFeOwner.Gravar(AInfProt.Items[I].chNFe + NomeXML,
+                                    XML,
+                                    PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(0)));
+              end;
+            end;
+          finally
+            AProcNFe.Free;
+          end;
+        end;
+        (*
         if FPConfiguracoesNFe.Arquivos.Salvar or NaoEstaVazio(
           FNotasFiscais.Items[J].NomeArq) then
         begin
@@ -1287,7 +1331,7 @@ begin
             end;
           end;
         end;
-
+        *)
         break;
       end;
     end;
@@ -1625,11 +1669,11 @@ end;
 function TNFeConsulta.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsSitNFe;
-  NFCancelada, Atualiza: Boolean;
-  aEventos, aMsg, NomeArquivo: String;
+  SalvarXML, NFCancelada, Atualiza: Boolean;
+  aEventos, aMsg, NomeArquivo, aNFe, aNFeDFe, NomeXML: String;
   AProcNFe: TProcNFe;
-  I, J: integer;
-  SalvarXML: Boolean;
+  I, J, Inicio, Fim: integer;
+  Data: TDateTime;
 begin
   NFeRetorno := TRetConsSitNFe.Create;
 
@@ -1654,8 +1698,6 @@ begin
     FcUF := NFeRetorno.cUF;
     FNFeChave := NFeRetorno.chNfe;
     FPMsg := FXMotivo;
-
-
 
     // Verifica se a nota fiscal está cancelada pelo método antigo. Se estiver,
     // então NFCancelada será True e já atribui Protocolo, Data e Mensagem
@@ -1832,6 +1874,75 @@ begin
             NFe.procNFe.cStat := NFeRetorno.cStat;
             NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
 
+            NomeXML := '-nfe.xml';
+            if (NFeRetorno.protNFe.cStat = 110) or (NFeRetorno.protNFe.cStat = 301) then
+              NomeXML := '-den.xml';
+
+            AProcNFe := TProcNFe.Create;
+            try
+              AProcNFe.XML_NFe := StringReplace(XMLAssinado,
+                                         '<' + ENCODING_UTF8 + '>', '',
+                                         [rfReplaceAll]);
+              AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
+              AProcNFe.Versao := FPVersaoServico;
+              AProcNFe.GerarXML;
+
+              XML := AProcNFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := XML;
+              XMLAssinado := XML;
+
+              FRetNFeDFe := '';
+
+              if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
+              begin
+                Inicio := Pos('<procEventoNFe', FPRetWS);
+                Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
+
+                aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+                aNFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                           '<NFeDFe>' +
+                            '<procNFe versao="' + FVersao + '">' +
+                              SeparaDados(XML, 'nfeProc') +
+                            '</procNFe>' +
+                            '<procEventoNFe versao="' + FVersao + '">' +
+                              aEventos +
+                            '</procEventoNFe>' +
+                           '</NFeDFe>';
+
+                FRetNFeDFe := aNFeDFe;
+              end;
+            finally
+              AProcNFe.Free;
+            end;
+
+            if FPConfiguracoesNFe.Arquivos.Salvar then
+            begin
+              if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
+                Data := NFe.Ide.dEmi
+              else
+                Data := Now;
+
+              SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                           Processada;
+
+              // Salva o XML do NF-e assinado e protocolado
+              if SalvarXML then
+                FPDFeOwner.Gravar(FNFeChave + NomeXML,
+                                  XML,
+                                  PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(Data)));
+
+              // Salva o XML do NF-e assinado, protocolado e com os eventos
+              if SalvarXML  and (FRetNFeDFe <> '') then
+                FPDFeOwner.Gravar(FNFeChave + '-NFeDFe.xml',
+                                  aNFeDFe,
+                                  PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(Data)));
+
+            end;
+          end;
+
+          break;
+            (*
             if FileExists(NomeArquivo + '-nfe.xml') or NaoEstaVazio(NomeArq) then
             begin
               AProcNFe := TProcNFe.Create;
@@ -1870,9 +1981,7 @@ begin
                 GravarXML;
               end;
             end;
-          end;
-
-          break;
+          *)
         end;
       end;
     end;
@@ -1896,11 +2005,45 @@ begin
 
             AProcNFe.GerarXML;
 
+            aNFe := AProcNFe.Gerador.ArquivoFormatoXML;
+
             if NaoEstaVazio(AProcNFe.Gerador.ArquivoFormatoXML) then
               AProcNFe.Gerador.SalvarArquivo(AProcNFe.PathNFe);
+
+            if (NaoEstaVazio(aNFe)) and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
+            begin
+              Inicio := Pos('<procEventoNFe', FPRetWS);
+              Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
+
+              aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+              aNFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+                         '<NFeDFe>' +
+                          '<procNFe versao="' + FVersao + '">' +
+                            SeparaDados(aNFe, 'nfeProc') +
+                          '</procNFe>' +
+                          '<procEventoNFe versao="' + FVersao + '">' +
+                            aEventos +
+                          '</procEventoNFe>' +
+                         '</NFeDFe>';
+
+              FRetNFeDFe := aNFeDFe;
+            end;
           finally
             AProcNFe.Free;
           end;
+        end;
+
+        if FRetNFeDFe <> '' then
+        begin
+          if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
+            Data := TACBrNFe(FPDFeOwner).NotasFiscais.Items[i].NFe.Ide.dEmi
+          else
+            Data := Now;
+
+          FPDFeOwner.Gravar(FNFeChave + '-NFeDFe.xml',
+                                     aNFeDFe,
+                                     PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(Data)));
         end;
       end;
     end;

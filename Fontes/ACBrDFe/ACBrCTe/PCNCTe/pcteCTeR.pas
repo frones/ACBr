@@ -599,6 +599,16 @@ begin
       end;
 
     end;
+
+    if Leitor.rExtrai(2, 'ICMSUFFim') <> '' then
+    begin
+      CTe.Imp.ICMSUFFim.vBCUFFim   := Leitor.rCampo(tcDe2,'vBCUFFim');
+      CTe.Imp.ICMSUFFim.pICMSUFFim := Leitor.rCampo(tcDe2,'pICMSUFFim');
+      CTe.Imp.ICMSUFFim.pICMSInter := Leitor.rCampo(tcDe2,'pICMSInter');
+      CTe.Imp.ICMSUFFim.pICMSInterPart := Leitor.rCampo(tcDe2,'pICMSInterPart');
+      CTe.Imp.ICMSUFFim.vICMSUFFim := Leitor.rCampo(tcDe2,'vICMSUFFim');
+      CTe.Imp.ICMSUFFim.vICMSUFIni := Leitor.rCampo(tcDe2,'vICMSUFIni');
+    end;
   end;
 
   (* Grupo da TAG <infCTeNorm> ************************************************)

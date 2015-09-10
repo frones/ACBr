@@ -83,6 +83,7 @@ type
     FchMDFe: String;
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
+    FXMLprotMDFe: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -98,6 +99,7 @@ type
     property chMDFe: String                           read FchMDFe         write FchMDFe;
     property protMDFe: TProcMDFe                      read FprotMDFe       write FprotMDFe;
     property procEventoMDFe: TRetEventoMDFeCollection read FprocEventoMDFe write FprocEventoMDFe;
+    property XMLprotMDFe: String                      read FXMLprotMDFe    write FXMLprotMDFe;
   end;
 
 implementation
@@ -137,8 +139,14 @@ begin
       FcUF      := leitor.rCampo(tcInt, 'cUF');
 
       if FcStat in [100, 132] then
-       begin
-         if (Leitor.rExtrai(1, 'protMDFe') <> '') or (Leitor.rExtrai(1, 'infProt') <> '') then
+      begin
+        if (Leitor.rExtrai(1, 'protMDFe') <> '') then
+        begin
+          // A propriedade XMLprotMDFe contem o XML que traz o resultado do
+          // processamento do MDF-e.
+          XMLprotMDFe := Leitor.Grupo;
+
+          if Leitor.rExtrai(2, 'infProt') <> '' then
           begin
             protMDFe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
             protMDFe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
@@ -149,8 +157,9 @@ begin
             protMDFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
             protMDFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
             FchMDFe           := protMDFe.chMDFe;
-         end;
-       end;
+          end;
+        end;
+      end;
 
       if Assigned(procEventoMDFe) then
         procEventoMDFe.Free;
@@ -160,12 +169,10 @@ begin
       begin
         procEventoMDFe.Add;
         procEventoMDFe.Items[i].RetEventoMDFe.Leitor.Arquivo := Leitor.Grupo;
-        procEventoMDFe.Items[i].RetEventoMDFe.XML := Leitor.Grupo; 
+        procEventoMDFe.Items[i].RetEventoMDFe.XML := Leitor.Grupo;
         procEventoMDFe.Items[i].RetEventoMDFe.LerXml;
         inc(i);
       end;
-      if i = 0
-       then procEventoMDFe.Add;
 
       Result := True;
     end;

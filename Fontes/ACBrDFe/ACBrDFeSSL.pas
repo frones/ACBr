@@ -43,7 +43,11 @@ uses
   Classes, SysUtils;
 
 type
+
+
   { TDFeSSLClass }
+
+  TSSLTipoCertificado = (tpcA1, tpcA3);
 
   TDFeSSL = class;
 
@@ -59,6 +63,7 @@ type
     function GetCertCNPJ: String; virtual;
     function GetHTTPResultCode: Integer; virtual;
     function GetInternalErrorCode: Integer; virtual;
+    function GetCertTipo: TSSLTipoCertificado; virtual;
 
     function SignatureElement(const URI: String; AddX509Data: Boolean): String;
       virtual;
@@ -84,6 +89,7 @@ type
     property CertDataVenc: TDateTime read GetCertDataVenc;
     property CertSubjectName: String read GetCertSubjectName;
     property CertCNPJ: String read GetCertCNPJ;
+    property CertTipo: TSSLTipoCertificado read GetCertTipo;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
@@ -125,6 +131,7 @@ type
     procedure SetSenha(AValue: AnsiString);
 
     procedure SetSSLLib(ASSLLib: TSSLLib);
+    function GetCertTipo: TSSLTipoCertificado;
 
   public
     constructor Create;
@@ -153,6 +160,7 @@ type
     property CertDataVenc: TDateTime read GetCertDataVenc;
     property CertSubjectName: String read GetCertSubjectName;
     property CertCNPJ: String read GetCertCNPJ;
+    property CertTipo: TSSLTipoCertificado read GetCertTipo;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
@@ -325,6 +333,11 @@ begin
   Result := FSSLClass.CertSubjectName;
 end;
 
+function TDFeSSL.GetCertTipo: TSSLTipoCertificado;
+begin
+  Result := FSSLClass.GetCertTipo;
+end;
+
 function TDFeSSL.GetHTTPResultCode: Integer;
 begin
   Result := FSSLClass.HTTPResultCode;
@@ -481,6 +494,11 @@ end;
 function TDFeSSLClass.GetCertSubjectName: String;
 begin
   Result := '';
+end;
+
+function TDFeSSLClass.GetCertTipo: TSSLTipoCertificado;
+begin
+  Result := tpcA1;
 end;
 
 function TDFeSSLClass.GetCertCNPJ: String;

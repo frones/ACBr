@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2015
+[+] Adicionada a propriedade CertTipo para retornar se o certificado é A1 ou A3
+    por: regys.silveira /Daniel
+
 09/09/2015
 [-] ACBrMDFeDAEventoRLRetrato.dfm e ACBrMDFeDAMDFeRLRetrato.dfm
     Conversão para ANSI, não estava imprimindo corretamente no Delphi 7

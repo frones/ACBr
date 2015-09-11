@@ -76,6 +76,7 @@ type
     function GetCertCNPJ: String; override;
     function GetHTTPResultCode: Integer; override;
     function GetInternalErrorCode: Integer; override;
+    function GetCertTipo: TSSLTipoCertificado; override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
@@ -381,6 +382,14 @@ function TDFeCapicom.GetCertSubjectName: String;
 begin
   CarregarCertificadoSeNecessario;
   Result := FCertificado.SubjectName;
+end;
+
+function TDFeCapicom.GetCertTipo: TSSLTipoCertificado;
+begin
+  if Self.Certificado.PrivateKey.IsHardwareDevice then
+    Result := tpcA3
+  else
+    Result := tpcA1;
 end;
 
 function TDFeCapicom.GetCertCNPJ: String;

@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/09/2015
+[-] Alterado o tipo da TAG <CEST> estava como String sendo que o correto é Integer. 
+    Por: Italo Jurisato Junior
 [*] (pcnNFeR)
     Incluido a leitura das novas TAGs e grupo conforme a NT2015/003 que trata sobre
     a cobrança do ICMS na Operação Interestadual.

@@ -158,8 +158,6 @@ type
     procedure InstalarOpenSSL;
     procedure InstalarXMLSec;
     procedure InstalarDiversos;
-    procedure InstalarMSVCR;
-    procedure InstalarCLX;
     function PathSystem: String;
     function RegistrarActiveXServer(const AServerLocation: string;
       const ARegister: Boolean): Boolean;
@@ -421,13 +419,6 @@ begin
   end;
 end;
 
-//copia as dlls da pasta CLX para a pasta escolhida pelo usuario
-procedure TfrmPrincipal.InstalarCLX;
-begin
-  if sDestino <> tdNone then
-    CopiarArquivoTo(sDestino,'CLX\qtintf70.dll');
-end;
-
 //copia as dlls da pasta Diversoso para a pasta escolhida pelo usuario
 procedure TfrmPrincipal.InstalarDiversos;
 begin
@@ -435,14 +426,8 @@ begin
   begin
     CopiarArquivoTo(sDestino,'Diversos\iconv.dll');
     CopiarArquivoTo(sDestino,'Diversos\inpout32.dll');
+    CopiarArquivoTo(sDestino,'Diversos\msvcr71.dll');
   end;
-end;
-
-//copia as dlls da pasta MSVCR para a pasta escolhida pelo usuario
-procedure TfrmPrincipal.InstalarMSVCR;
-begin
-  if sDestino <> tdNone then
-    CopiarArquivoTo(sDestino,'MSVCR\msvcr71.dll');
 end;
 
 // copia as dlls da pasta openssl, estas dlls são utilizadas para assinar
@@ -451,8 +436,8 @@ procedure TfrmPrincipal.InstalarOpenSSL;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'OpenSSL\libeay32.dll');
-    CopiarArquivoTo(sDestino,'OpenSSL\ssleay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\0.9.8.14\libeay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\0.9.8.14\ssleay32.dll');
   end;
 end;
 
@@ -461,6 +446,7 @@ procedure TfrmPrincipal.InstalarXMLSec;
 begin
   if sDestino <> tdNone then
   begin
+    CopiarArquivoTo(sDestino, 'XMLSec\iconv.dll');
     CopiarArquivoTo(sDestino, 'XMLSec\libxml2.dll');
     CopiarArquivoTo(sDestino, 'XMLSec\libxmlsec.dll');
     CopiarArquivoTo(sDestino, 'XMLSec\libxmlsec-openssl.dll');
@@ -1082,9 +1068,6 @@ begin
       try
         InstalarXMLSec;
         InstalarDiversos;
-        InstalarMSVCR;
-        InstalarCLX;
-
         MostrarMensagemInstalado('Outras DLL´s instaladas com sucesso');
       except
         on E: Exception do

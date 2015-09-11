@@ -180,13 +180,13 @@ type
 
   ////////////////////////////////////////////////////////////////////////////////
 
+const
+  DSC_CEST = 'Código Identificador da Substitução Tributária';
+
 implementation
 
 Uses pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
   ACBrDFeUtil, ACBrUtil;
-
-cost
-  DSC_CEST = 'Código Identificador da Substitução Tributária';
 
 { TNFeW }
 

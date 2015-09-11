@@ -1113,7 +1113,7 @@ begin
                           'xMotivo=' +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo+sLineBreak+
                           'dhResp='  +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.dhResp)+sLineBreak+
                           'indCont=' +sTemMais+sLineBreak+
-                          'ultNSU'   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU+sLineBreak;
+                          'ultNSU='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU+sLineBreak;
            J := 1;
            for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
            begin

@@ -335,7 +335,7 @@ end;
 function TACBrCaixaEconomica.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String;
 var
   ATipoOcorrencia, ATipoBoleto, ADataMoraJuros         : String;
-  ADataDesconto, ANossoNumero, ATipoAceite, AEspecieDoc: String;
+  ADataDesconto, ADataMulta, ANossoNumero, ATipoAceite, AEspecieDoc: String; 
 begin
    with ACBrTitulo do
    begin
@@ -449,6 +449,14 @@ begin
       else
          ADataDesconto := PadRight('', 8, '0');
 
+      {Multa}
+      if (PercentualMulta > 0) then
+        ADataMulta := IfThen(DataMoraJuros > 0,
+                             FormatDateTime('ddmmyyyy', DataMoraJuros),
+                             FormatDateTime('ddmmyyyy', Vencimento + 1))
+      else
+        ADataMulta := PadLeft('', 8, '0');
+
       fValorTotalDocs:= fValorTotalDocs  + ValorDocumento;
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
@@ -538,7 +546,7 @@ begin
                PadLeft('', 8,  '0')                                                           + //  43 a 50  - Data do Desconto 3
                PadLeft('', 15, '0')                                                           + //  51 a 65  - Valor/Percentual a ser concedido
                IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0')       + //  66 a 66  - Código da Multa
-               FormatDateTime('ddmmyyyy',Vencimento)                                       + //  67 a 74  - Data da Multa
+               ADataMulta                                                                  + //  67 a 74  - Data da Multa
                IfThen(PercentualMulta > 0, IntToStrZero(round(PercentualMulta * 100), 15),
                       PadRight('', 15, '0'))                                                   + //  75 a 89  - Valor/Percentual a ser aplicado
                PadRight('', 10, ' ')                                                           + //  90 a 99  - Informação ao Sacado

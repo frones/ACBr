@@ -50,6 +50,8 @@ Símbolo : Significado
 10/09/2015
 -- ACBrBoletoFR --
 [+] Adicionadas as orientações do Banco.
+[*] Acerto na data de vencimento da remessa Caixa.
+    http://www.projetoacbr.com.br/forum/topic/24039-remessa-240-cef/#comment-156598
 
 Data: 00/09/2015
 -- ACBrBoletoFCFortesFr --  (por: DSA)

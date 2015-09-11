@@ -1828,7 +1828,7 @@ begin
     ConsMDFeNaoEnc.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsMDFeNaoEnc.CNPJ  := FCNPJ; // TMDFeConsultaMDFeNaoEnc(Self).CNPJ;
 
-//    ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := FConfiguracoes.Geral.RetirarAcentos;
+    ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesMDFe.Geral.RetirarAcentos;
 
     ConsMDFeNaoEnc.GerarXML;
 

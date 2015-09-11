@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2015
+[*] (ACBrMDFeWebServices) 
+    Incluida a linha para configurar a propriedade: RetirarAcentos ao gerar o XML
+    da Consulta a MDF-e não encerrados.
+    Por: Italo Jurisato Junior
+
 10/09/2015
 [*] (Units: Diversas) 
     Remoção de código comentados e de alguns comentários desnecessários.

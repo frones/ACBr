@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2015
+[*] (pcnNFeR)
+    Incluido a leitura das novas TAGs e grupo conforme a NT2015/003 que trata sobre
+    a cobrança do ICMS na Operação Interestadual.
+[*] (pcnNFeW)
+    Incluido a escrita das novas TAGs e grupo conforme a NT2015/003 que trata sobre
+    a cobrança do ICMS na Operação Interestadual.
+    Por: Italo Jurisato Junior
+
 10/09/2015
 [*] Acerto nos endereços de webservices da NF-e PR e SP
     http://www.projetoacbr.com.br/forum/topic/24250-correção-no-arquivo-da-nfe-nfeservicosini/#comment-156552

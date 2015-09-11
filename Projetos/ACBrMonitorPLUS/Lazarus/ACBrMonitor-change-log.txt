@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2015
+[+] Implementação do comando: NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU)
+    http://www.projetoacbr.com.br/forum/topic/24242-consultanfedest-x-distribuicaodfe/#comment-156693
+
 10/09/2015
 -- ACBrMonitorPLUS --     (por: DSA)
 [-] Correção na gravação do valor configurado em: ACBrPosPrinter1.ConfigBarras.Altura

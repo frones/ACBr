@@ -79,6 +79,7 @@ var
   OldDANFe  : TACBrNFeDANFEClass;
 
   CC, Anexos: Tstrings;
+  sTemMais: String;
 begin
  with FrmACBrMonitor do
   begin
@@ -1091,6 +1092,135 @@ begin
               end;
            end;
          end
+
+
+        else if Cmd.Metodo = 'distribuicaodfe' then //NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU)
+         begin
+           if not ValidarCNPJ(Cmd.Params(1)) then
+              raise Exception.Create('CNPJ '+Cmd.Params(1)+' inválido.');
+           try
+           ACBrNFe1.DistribuicaoDFe(StrToInt(Cmd.Params(0)),Cmd.Params(1),Cmd.Params(2),'');
+           if ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 137 then
+              sTemMais := '1'
+           else
+              sTemMais := '0'; //pog para facilitar a indicacao de continuidade
+
+           Cmd.Resposta:= Cmd.Resposta+sLineBreak+
+                          'versao='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.versao+sLineBreak+
+                          'tpAmb='   +TpAmbToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.tpAmb)+sLineBreak+
+                          'verAplic='+ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.verAplic+sLineBreak+
+                          'cStat='   +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat)+sLineBreak+
+                          'xMotivo=' +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo+sLineBreak+
+                          'dhResp='  +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.dhResp)+sLineBreak+
+                          'indCont=' +sTemMais+sLineBreak+
+                          'ultNSU'   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU+sLineBreak;
+           J := 1;
+           for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+           begin
+            if Trim(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.chNFe) <> '' then
+               begin
+                    Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                     '[RESNFE'+Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                     'NSU='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
+                     'chNFe='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.chNFe+sLineBreak+
+                     'CNPJ='    +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.CNPJCPF+sLineBreak+
+                     'xNome='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.xNome+sLineBreak+
+                     'IE='      +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.IE+sLineBreak+
+                     'dEmi='    +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.dhEmi)+sLineBreak+
+                     'tpNF='    +tpNFToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.tpNF)+sLineBreak+
+                     'vNF='     +FloatToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.vNF)+sLineBreak+
+                     'digVal='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.digVal+sLineBreak+
+                     'dhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.dhRecbto)+sLineBreak+
+                     'cSitNFe=' +SituacaoDFeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.cSitNFe)+sLineBreak+
+                     'nProt='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.nProt+sLineBreak;
+                     J := J + 1;
+                  end;
+               end;
+           J := 1;
+           for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+            begin
+              if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.chNFe) <> '' then
+                 begin
+                  Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                   '[RESEVE'+Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                   'NSU='       +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
+                   'chNFe='     +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.chNFe+sLineBreak+
+                   'dhEvento='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhEvento)+sLineBreak+
+                   'tpEvento='  +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.tpEvento)+sLineBreak+
+                   'nSeqEvento='+IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nSeqEvento)+sLineBreak+
+                   'cOrgao='    +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.cOrgao)+sLineBreak+
+                   'CNPJ='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.CNPJCPF+sLineBreak+
+                   'dhRecbto='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhRecbto)+sLineBreak+
+                   'nProt='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nProt+sLineBreak;
+                   J := J + 1;
+                 end;
+             end;
+            J := 1;
+            for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+             begin
+               if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.versao) <> '' then
+                  begin
+                   Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                    '[ProEve'     +Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                    'NSU='        +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
+                    'chNFe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.chNFe+sLineBreak+
+                    'cOrgao='     +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.cOrgao)+sLineBreak+
+                    'CNPJ='       +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.CNPJ+sLineBreak+
+                    'id='         +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.Id+sLineBreak+
+                    'dhEvento='   +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.dhEvento)+sLineBreak+
+                    'nSeqEvento=' +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.nSeqEvento)+sLineBreak+
+                    'tpAmb='      +TpAmbToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.tpAmb)+sLineBreak+
+                    'tpEvento='   +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.tpEvento)+sLineBreak+
+                    'verEvento='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.verEvento+sLineBreak+
+                    'desEvento='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.descEvento+sLineBreak+
+                    //descricao
+                    'xJust='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.xJust+sLineBreak+
+                    //emit
+                    'EmiCnpj='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.CNPJ+sLineBreak+
+                    'EmiIe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.IE+sLineBreak+
+                    'EmixNome='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.xNome+sLineBreak+
+                    //cte
+                    'cteNProt='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.nProt+sLineBreak+
+                    'cteChvCte='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.chCTe+sLineBreak+
+                    'cteDhemi='   +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhEmi)+sLineBreak+
+                    'cteModal='   +TpModalToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.modal)+sLineBreak+
+                    'cteDhRebcto='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhRecbto)+sLineBreak;
+                   J := J + 1;
+                  end;
+              end;
+            J := 1;
+            for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+             begin
+               if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.Id) <> '' then
+                  begin
+                   Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                   '[InfEve'     +Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                   'id='         +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.Id+sLineBreak+
+                   'verAplic='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.verAplic+sLineBreak+
+                   'tpAmb='      +TpAmbToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.tpAmb)+sLineBreak+
+                   'cOrgao='     +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cOrgao)+sLineBreak+
+                   'chNfe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.chNFe+sLineBreak+
+                   'cStat='      +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cStat)+sLineBreak+
+                   'CnpjDest='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.CNPJDest+sLineBreak+
+                   'cOrgaoAutor='+IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cOrgaoAutor)+sLineBreak+
+                   'tpEvento='   +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.tpEvento)+sLineBreak+
+                   'nSeqEvento=' +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nSeqEvento)+sLineBreak+
+                   'xEvento='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.xEvento+sLineBreak+
+                   'xMotivo='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.xMotivo+sLineBreak+
+                   'dhRegEvento='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.dhRegEvento)+sLineBreak+
+                   'emailDest='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.emailDest+sLineBreak+
+                   'nProt='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nProt+sLineBreak;
+                   J := J + 1;
+                  end;
+              end;
+           except
+             on E: Exception do
+              begin
+                raise Exception.Create(AcbrNFe1.WebServices.DistribuicaoDFe.Msg+sLineBreak+E.Message);
+              end;
+           end;
+         end
+
 
         else if Cmd.Metodo = 'downloadnfe' then //NFe.DownloadNFe(cCNPJ,cChaves)
          begin

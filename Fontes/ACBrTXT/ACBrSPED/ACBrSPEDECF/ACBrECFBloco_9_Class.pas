@@ -35,6 +35,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -43,7 +44,8 @@ unit ACBrECFBloco_9_Class;
 
 interface
 
-uses ACBrECFBloco_9, ACBrECFBlocos, ACBrSped, Classes, DateUtils, SysUtils,
+uses
+  ACBrECFBloco_9, ACBrECFBlocos, ACBrSped, Classes, DateUtils, SysUtils,
   ACBrTXTClass;
 
 type
@@ -93,7 +95,7 @@ begin
   FRegistro9900 := TRegistro9900List.Create;
   FRegistro9990 := TRegistro9990.Create;
   FRegistro9999 := TRegistro9999.Create;
-  ///
+
   FRegistro9990.QTD_LIN := 0;
   FRegistro9999.QTD_LIN := 0;
 end;
@@ -119,12 +121,14 @@ end;
 procedure TBloco_9.WriteRegistro9001;
 begin
   if Assigned(Registro9001) then
+  begin
     with Registro9001 do
     begin
       Add(LFill(REG) +
           LFill(integer(IND_DAD), 0));
       Registro9990.QTD_LIN := Registro9990.QTD_LIN + 1;
     end;
+  end;
 end;
 
 procedure TBloco_9.WriteRegistro9900;
@@ -134,6 +138,7 @@ begin
   if Assigned(Registro9900) then
   begin
     for intFor := 0 to Registro9900.Count - 1 do
+    begin
       with Registro9900.Items[intFor] do
       begin
         Add(LFill(REG) +
@@ -142,6 +147,7 @@ begin
             LFill(VERSAO) +
             LFill(ID_TAB_DIN));
       end;
+    end;
     Registro9990.QTD_LIN := Registro9990.QTD_LIN + Registro9900.Count + 2;
   end;
 end;
@@ -149,15 +155,25 @@ end;
 procedure TBloco_9.WriteRegistro9990;
 begin
   if Assigned(Registro9990) then
+  begin
     with Registro9990 do
-      Add(LFill(REG) + LFill(QTD_LIN, 0));
+    begin
+      Add(LFill(REG) +
+          LFill(QTD_LIN, 0));
+    end;
+  end;
 end;
 
 procedure TBloco_9.WriteRegistro9999;
 begin
   if Assigned(Registro9999) then
+  begin
     with Registro9999 do
-      Add(LFill(REG) + LFill(QTD_LIN, 0));
+    begin
+      Add(LFill(REG) +
+          LFill(QTD_LIN, 0));
+    end;
+  end;
 end;
 
 end.

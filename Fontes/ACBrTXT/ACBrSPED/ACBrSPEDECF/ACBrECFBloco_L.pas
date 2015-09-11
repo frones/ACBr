@@ -85,7 +85,7 @@ type
     FRegistroL300: TRegistroL300List;
   public
     constructor Create(AOwner: TRegistroL001); /// Create
-    destructor Destroy; /// Destroy
+    destructor Destroy; override; /// Destroy
 
     property DT_INI:   TDateTime read fDT_INI write fDT_INI;
     property DT_FIN:   TDateTime read fDT_FIN write fDT_FIN;

@@ -35,7 +35,8 @@
 {******************************************************************************
 |* Historico
 |*
-|* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco Y        
+|* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco Y
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr    
 *******************************************************************************}
 
 
@@ -165,9 +166,9 @@ end;
 
 procedure TBloco_Y.LiberaRegistros;
 begin
-   inherited;
-   FRegistroY001.Free;
-   FRegistroY990.Free;
+  inherited;
+  FRegistroY001.Free;
+  FRegistroY990.Free;
 end;
 
 procedure TBloco_Y.LimpaRegistros;
@@ -319,8 +320,10 @@ end;
 
 procedure TBloco_Y.WriteRegistroY001;
 begin
-  if Assigned(FRegistroY001) then begin
-    with FRegistroY001 do begin
+  if Assigned(FRegistroY001) then
+  begin
+    with FRegistroY001 do
+    begin
       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(Y-Y001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
       Add(LFill('Y001') +
           LFill( Integer(IND_DAD), 1));
@@ -355,9 +358,12 @@ procedure TBloco_Y.WriteRegistroY520;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY520) then begin
-    for intFor := 0 to FRegistroY001.RegistroY520.Count - 1 do begin
-      with FRegistroY001.RegistroY520.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY520) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY520.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY520.Items[intFor] do
+      begin
         Add(LFill('Y520') +
             LFill(TIP_EXT) +
             LFill(PAIS) +
@@ -375,9 +381,12 @@ procedure TBloco_Y.WriteRegistroY540;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY540) then begin
-    for intFor := 0 to FRegistroY001.RegistroY540.Count - 1 do begin
-      with FRegistroY001.RegistroY540.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY540) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY540.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY540.Items[intFor] do
+      begin
         Add(LFill('Y540') +
             LFill(CNPJ_ESTAB, 14) +
             VLFill(VL_REC_ESTAB, 19, 2) +
@@ -392,9 +401,12 @@ procedure TBloco_Y.WriteRegistroY550;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY550) then begin
-    for intFor := 0 to FRegistroY001.RegistroY550.Count - 1 do begin
-      with FRegistroY001.RegistroY550.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY550) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY550.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY550.Items[intFor] do
+      begin
         Add(LFill('Y550') +
             LFill(CNPJ_EXP, 14) +
             LFill(COD_NCM) +
@@ -409,9 +421,12 @@ procedure TBloco_Y.WriteRegistroY560;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY560) then begin
-    for intFor := 0 to FRegistroY001.RegistroY560.Count - 1 do begin
-      with FRegistroY001.RegistroY560.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY560) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY560.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY560.Items[intFor] do
+      begin
         Add(LFill('Y560') +
             LFill(CNPJ, 14) +
             LFill(COD_NCM) +
@@ -426,9 +441,12 @@ procedure TBloco_Y.WriteRegistroY570;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY570) then begin
-    for intFor := 0 to FRegistroY001.RegistroY570.Count - 1 do begin
-      with FRegistroY001.RegistroY570.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY570) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY570.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY570.Items[intFor] do
+      begin
         Add(LFill('Y570') +
             LFill(CNPJ_FON, 14) +
             LFill(NOM_EMP) +
@@ -448,9 +466,12 @@ procedure TBloco_Y.WriteRegistroY580;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY580) then begin
-    for intFor := 0 to FRegistroY001.RegistroY580.Count - 1 do begin
-      with FRegistroY001.RegistroY580.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY580) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY580.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY580.Items[intFor] do
+      begin
         Add(LFill('Y580') +
             LFill(CNPJ, 14) +
             LFill(TIP_BENEF, 1) +
@@ -467,9 +488,12 @@ procedure TBloco_Y.WriteRegistroY590;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY590) then begin
-    for intFor := 0 to FRegistroY001.RegistroY590.Count - 1 do begin
-      with FRegistroY001.RegistroY590.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY590) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY590.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY590.Items[intFor] do
+      begin
         Add(LFill('Y590') +
             LFill(TIP_ATIVO) +
             LFill(PAIS) +
@@ -477,7 +501,6 @@ begin
             VLFill(VL_ANT, 19, 2) +
             VLFill(VL_ATUAL, 19, 2));
       end;
-
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
     end;
   end;
@@ -487,9 +510,12 @@ procedure TBloco_Y.WriteRegistroY600;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY600) then begin
-    for intFor := 0 to FRegistroY001.RegistroY600.Count - 1 do begin
-      with FRegistroY001.RegistroY600.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY600) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY600.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY600.Items[intFor] do
+      begin
         Add(LFill('Y600') +
             LFill(DT_ALT_SOC) +
             LFill(DT_FIM_SOC) +
@@ -503,7 +529,6 @@ begin
             LFill(CPF_REP_LEG) +
             LFill(QUALIF_REP_LEG));
       end;
-
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
     end;
   end;
@@ -513,9 +538,12 @@ procedure TBloco_Y.WriteRegistroY611;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY611) then begin
-    for intFor := 0 to FRegistroY001.RegistroY611.Count - 1 do begin
-      with FRegistroY001.RegistroY611.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY611) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY611.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY611.Items[intFor] do
+      begin
         Add(LFill('Y611') +
             LFill(PAIS,3) +
             LFill(IND_PF_PJ) +
@@ -538,9 +566,12 @@ procedure TBloco_Y.WriteRegistroY612;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY612) then begin
-    for intFor := 0 to FRegistroY001.RegistroY612.Count - 1 do begin
-      with FRegistroY001.RegistroY612.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY612) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY612.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY612.Items[intFor] do
+      begin
         Add(LFill('Y612') +
             LFill(CPF) +
             LFill(NOME) +
@@ -558,9 +589,12 @@ procedure TBloco_Y.WriteRegistroY620;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY620) then begin
-    for intFor := 0 to FRegistroY001.RegistroY620.Count - 1 do begin
-      with FRegistroY001.RegistroY620.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY620) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY620.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY620.Items[intFor] do
+      begin
         Add(LFill('Y620') +
             LFill(DT_EVENTO) +
             LFill(IND_RELAC) +
@@ -589,9 +623,12 @@ procedure TBloco_Y.WriteRegistroY630;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY630) then begin
-    for intFor := 0 to FRegistroY001.RegistroY630.Count - 1 do begin
-      with FRegistroY001.RegistroY630.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY630) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY630.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY630.Items[intFor] do
+      begin
         Add(LFill('Y630') +
             LFill(CNPJ, 14) +
             LFill(QTE_QUOT) +
@@ -609,9 +646,12 @@ procedure TBloco_Y.WriteRegistroY640;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY640) then begin
-    for intFor := 0 to FRegistroY001.RegistroY640.Count - 1 do begin
-      with FRegistroY001.RegistroY640.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY640) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY640.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY640.Items[intFor] do
+      begin
         Add(LFill('Y640') +
             LFill(CNPJ, 14) +
             LFill(COND_DECL) +
@@ -632,9 +672,12 @@ procedure TBloco_Y.WriteRegistroY650(RegY640: TRegistroY640);
 var
   intFor: integer;
 begin
-  if Assigned(RegY640.RegistroY650) then begin
-    for intFor := 0 to RegY640.RegistroY650.Count - 1 do begin
-      with RegY640.RegistroY650.Items[intFor] do begin
+  if Assigned(RegY640.RegistroY650) then
+  begin
+    for intFor := 0 to RegY640.RegistroY650.Count - 1 do
+    begin
+      with RegY640.RegistroY650.Items[intFor] do
+      begin
         Add(LFill('Y650') +
             LFill(CNPJ, 14) +
             VLFill(VL_PART, 19, 2));
@@ -651,9 +694,12 @@ procedure TBloco_Y.WriteRegistroY660;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY660) then begin
-    for intFor := 0 to FRegistroY001.RegistroY660.Count - 1 do begin
-      with FRegistroY001.RegistroY660.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY660) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY660.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY660.Items[intFor] do
+      begin
         Add(LFill('Y660') +
             LFill(CNPJ, 14) +
             LFill(NOM_EMP) +
@@ -668,9 +714,12 @@ procedure TBloco_Y.WriteRegistroY665;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY665) then begin
-    for intFor := 0 to FRegistroY001.RegistroY665.Count - 1 do begin
-      with FRegistroY001.RegistroY665.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY665) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY665.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY665.Items[intFor] do
+      begin
         Add(LFill('Y665') +
             LFill(COD_CTA) +
             LFill(COD_CCUS) +
@@ -694,9 +743,12 @@ procedure TBloco_Y.WriteRegistroY671;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY671) then begin
-    for intFor := 0 to FRegistroY001.RegistroY671.Count - 1 do begin
-      with FRegistroY001.RegistroY671.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY671) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY671.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY671.Items[intFor] do
+      begin
         Add(LFill('Y671') +
             VLFill(VL_AQ_MAQ, 19, 2) +
             VLFill(VL_DOA_CRIANCA, 19, 2) +
@@ -721,9 +773,12 @@ procedure TBloco_Y.WriteRegistroY672;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY672) then begin
-    for intFor := 0 to FRegistroY001.RegistroY672.Count - 1 do begin
-      with FRegistroY001.RegistroY672.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY672) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY672.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY672.Items[intFor] do
+      begin
         Add(LFill('Y672') +
             VLFill(VL_CAPITAL_ANT, 19, 2) +
             VLFill(VL_CAPITAL, 19, 2) +
@@ -756,9 +811,12 @@ procedure TBloco_Y.WriteRegistroY680;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY680) then begin
-    for intFor := 0 to FRegistroY001.RegistroY680.Count - 1 do begin
-      with FRegistroY001.RegistroY680.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY680) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY680.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY680.Items[intFor] do
+      begin
         Add(LFill('Y680') +
             LFill(MES, 2));
       end;
@@ -775,9 +833,12 @@ procedure TBloco_Y.WriteRegistroY681(RegY680: TRegistroY680);
 var
   intFor: integer;
 begin
-  if Assigned(RegY680.RegistroY681) then begin
-    for intFor := 0 to RegY680.RegistroY681.Count - 1 do begin
-      with RegY680.RegistroY681.Items[intFor] do begin
+  if Assigned(RegY680.RegistroY681) then
+  begin
+    for intFor := 0 to RegY680.RegistroY681.Count - 1 do
+    begin
+      with RegY680.RegistroY681.Items[intFor] do
+      begin
         Add(LFill('Y681') +
             LFill(CODIGO) +
             LFill(DESCRICAO) +
@@ -794,9 +855,12 @@ procedure TBloco_Y.WriteRegistroY682;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY682) then begin
-    for intFor := 0 to FRegistroY001.RegistroY682.Count - 1 do begin
-      with FRegistroY001.RegistroY682.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY682) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY682.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY682.Items[intFor] do
+      begin
         Add(LFill('Y682') +
             LFill(MES, 2) +
             VLFill(ACRES_PATR, 19, 2));
@@ -811,9 +875,12 @@ procedure TBloco_Y.WriteRegistroY690;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY690) then begin
-    for intFor := 0 to FRegistroY001.RegistroY690.Count - 1 do begin
-      with FRegistroY001.RegistroY690.Items[intFor] do begin
+  if Assigned(FRegistroY001.RegistroY690) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY690.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY690.Items[intFor] do
+      begin
         Add(LFill('Y690') +
             LFill(MES, 2) +
             VLFill(VL_REC_BRU, 19, 2));
@@ -825,11 +892,11 @@ begin
 end;
 
 procedure TBloco_Y.WriteRegistroY800;
-var
-  intFor: integer;
 begin
-  if Assigned(FRegistroY001.RegistroY800) then begin
-    with FRegistroY001.RegistroY800 do begin
+  if Assigned(FRegistroY001.RegistroY800) then
+  begin
+    with FRegistroY001.RegistroY800 do
+    begin
       Add(LFill('Y800') +
           LFill(ARQ_RTF) +
           LFill(IND_FIM_RTF));
@@ -841,8 +908,10 @@ end;
 
 procedure TBloco_Y.WriteRegistroY990;
 begin
-  if Assigned(FRegistroY990) then begin
-    with FRegistroY990 do begin
+  if Assigned(FRegistroY990) then
+  begin
+    with FRegistroY990 do
+    begin
       QTD_LIN := QTD_LIN + 1;
       Add(LFill('Y990') +
           LFill(QTD_LIN, 0));

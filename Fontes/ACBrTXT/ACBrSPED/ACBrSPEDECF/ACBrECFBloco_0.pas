@@ -123,8 +123,8 @@ type
     fRegistro0035: TRegistro0035List;
     fRegistro0930: TRegistro0930List;
   public
-    constructor Create;
-    destructor Destroy ;
+    constructor Create; virtual;
+    destructor Destroy; override;
 
     property Registro0010 : TRegistro0010 read fRegistro0010 write fRegistro0010;
     property Registro0020 : TRegistro0020 read fRegistro0020 write fRegistro0020;
@@ -371,7 +371,6 @@ begin
   fRegistro0030 := TRegistro0030.Create;
   fRegistro0035 := TRegistro0035List.Create;
   fRegistro0930 := TRegistro0930List.create;
-
 end;
 
 destructor TRegistro0001.Destroy;

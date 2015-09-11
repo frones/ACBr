@@ -547,7 +547,7 @@ type
     FRegistroY650: TRegistroY650List;
   public
     constructor Create; /// Create
-    destructor Destroy; /// Destroy
+    destructor Destroy; override; /// Destroy
 
     property CNPJ: string read fCNPJ write fCNPJ;
     property COND_DECL: integer read fCOND_DECL write fCOND_DECL;
@@ -787,7 +787,7 @@ type
     FRegistroY681: TRegistroY681List;
   public
     constructor Create; /// Create
-    destructor Destroy; /// Destroy
+    destructor Destroy; override; /// Destroy
 
     property MES: string read fMES write fMES;
 

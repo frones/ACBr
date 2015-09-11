@@ -81,8 +81,8 @@ type
     FRegistroK155: TRegistroK155List;
     FRegistroK355: TRegistroK355List;
   public
-    constructor Create(AOwner: TRegistroK001); /// Create
-    destructor Destroy; /// Destroy
+    constructor Create(AOwner: TRegistroK001); Virtual;/// Create
+    destructor Destroy;  override;
 
     property DT_INI:   TDateTime read fDT_INI write fDT_INI;
     property DT_FIN:   TDateTime read fDT_FIN write fDT_FIN;
@@ -119,7 +119,7 @@ type
     FRegistroK156: TRegistroK156List;
   public
     constructor Create(AOwner: TRegistroK030); /// Create
-    destructor Destroy; /// Destroy
+    destructor Destroy; override; /// Destroy
 
     property COD_CTA:        String read fCOD_CTA write fCOD_CTA;
     property COD_CCUS:       String read fCOD_CCUS write fCOD_CCUS;
@@ -178,7 +178,7 @@ type
     FRegistroK356:   TRegistroK356List;
   public
     constructor Create(AOwner: TRegistroK030); /// Create
-    destructor Destroy; /// Destroy
+    destructor Destroy; override; /// Destroy
 
     property COD_CTA:        String read fCOD_CTA write fCOD_CTA;
     property COD_CCUS:       String read fCOD_CCUS write fCOD_CCUS;

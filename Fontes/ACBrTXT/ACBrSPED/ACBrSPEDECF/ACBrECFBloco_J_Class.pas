@@ -43,6 +43,7 @@
 |*  - Alterado a geração do arquivo.
 |* 19/08/2015: Lutzem Massao Aihara
 |*  - Reestrurada a geração do arquivo e implementado funções "RegistroJXXXNew".
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -214,7 +215,6 @@ procedure TBloco_J.WriteRegistroJ050(RegJ001: TRegistroJ001);
 var
   intFor: integer;
 begin
-
   if Assigned(RegJ001.RegistroJ050) then
   begin
     for intFor := 0 to RegJ001.RegistroJ050.Count - 1 do
@@ -245,7 +245,7 @@ end;
 
 procedure TBloco_J.WriteRegistroJ051(RegJ050: TRegistroJ050);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegJ050.RegistroJ051) then
   begin
@@ -267,7 +267,7 @@ end;
 
 procedure TBloco_J.WriteRegistroJ053(RegJ050: TRegistroJ050);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegJ050.RegistroJ053) then
   begin
@@ -290,7 +290,7 @@ end;
 
 procedure TBloco_J.WriteRegistroJ100(RegJ001: TRegistroJ001);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegJ001.RegistroJ100) then
   begin

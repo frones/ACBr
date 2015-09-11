@@ -35,6 +35,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -84,7 +85,7 @@ type
     procedure LiberaRegistros;overload;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LimpaRegistros;
 
     function RegistroN001New :TRegistroN001;
@@ -129,8 +130,8 @@ uses
 
 constructor TBloco_N.Create;
 begin
-   inherited;
-   CriaRegistros;
+  inherited;
+  CriaRegistros;
 end;
 
 procedure TBloco_N.CriaRegistros;
@@ -305,22 +306,21 @@ procedure TBloco_N.WriteRegistroN001;
 begin
   if Assigned(FRegistroN001) then
   begin
-     with FRegistroN001 do
-     begin
-       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(N-N001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+    with FRegistroN001 do
+    begin
+      Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(N-N001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
 
-       Add( LFill('N001') +
-            LFill( Integer(IND_DAD), 1) );
+      Add( LFill('N001') +
+           LFill( Integer(IND_DAD), 1) );
 
-       if (IND_DAD = idComDados) then
-       begin
-         WriteRegistroN030(FRegistroN001);
-       end;
+      if (IND_DAD = idComDados) then
+      begin
+        WriteRegistroN030(FRegistroN001);
+      end;
 
-       FRegistroN990.QTD_LIN:= FRegistroN990.QTD_LIN + 1;
-     end;
+      FRegistroN990.QTD_LIN:= FRegistroN990.QTD_LIN + 1;
+    end;
   end;
-
 end;
 
 procedure TBloco_N.WriteRegistroN030(RegN001: TRegistroN001);
@@ -329,254 +329,253 @@ var
 begin
   if Assigned(RegN001.RegistroN030) then
   begin
-     for intFor := 0 to RegN001.RegistroN030.Count - 1 do
-     begin
-        with RegN001.RegistroN030.Items[intFor] do
-        begin
-           ///
-           Add( LFill('N030') +
-                LFill(DT_INI) +
-                LFill(DT_FIN) +
-                LFill(PER_APUR));
-        end;
+    for intFor := 0 to RegN001.RegistroN030.Count - 1 do
+    begin
+      with RegN001.RegistroN030.Items[intFor] do
+      begin
+        Add( LFill('N030') +
+             LFill(DT_INI) +
+             LFill(DT_FIN) +
+             LFill(PER_APUR));
+      end;
 
-        // Registros Filhos
-        WriteRegistroN500(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN600(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN610(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN615(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN620(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN630(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN650(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN660(RegN001.RegistroN030.Items[intFor]);
-        WriteRegistroN670(RegN001.RegistroN030.Items[intFor]);
+      // Registros Filhos
+      WriteRegistroN500(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN600(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN610(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN615(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN620(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN630(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN650(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN660(RegN001.RegistroN030.Items[intFor]);
+      WriteRegistroN670(RegN001.RegistroN030.Items[intFor]);
 
-       FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
 
-     FRegistroN030Count := FRegistroN030Count + RegN001.RegistroN030.Count;
+    FRegistroN030Count := FRegistroN030Count + RegN001.RegistroN030.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN500(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN500) then
   begin
-     for intFor := 0 to RegN030.RegistroN500.Count - 1 do
-     begin
-        with RegN030.RegistroN500.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N500')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-               VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN500.Count - 1 do
+    begin
+      with RegN030.RegistroN500.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N500')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN500Count := FRegistroN500Count + RegN030.RegistroN500.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN500Count := FRegistroN500Count + RegN030.RegistroN500.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN600(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN600) then
   begin
-     for intFor := 0 to RegN030.RegistroN600.Count - 1 do
-     begin
-        with RegN030.RegistroN600.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N600')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN600.Count - 1 do
+    begin
+      with RegN030.RegistroN600.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N600')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN600Count := FRegistroN600Count + RegN030.RegistroN600.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN600Count := FRegistroN600Count + RegN030.RegistroN600.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN610(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN610) then
   begin
-     for intFor := 0 to RegN030.RegistroN610.Count - 1 do
-     begin
-        with RegN030.RegistroN610.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N610')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN610.Count - 1 do
+    begin
+      with RegN030.RegistroN610.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N610')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN610Count := FRegistroN610Count + RegN030.RegistroN610.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN610Count := FRegistroN610Count + RegN030.RegistroN610.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN615(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN615) then
   begin
-     for intFor := 0 to RegN030.RegistroN615.Count - 1 do
-     begin
-        with RegN030.RegistroN615.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N615')                     +
-              VLFill(BASE_CALC, 19, 2)           +
-              VLFill(PER_INCEN_FINOR, 5, 2)      +
-              VLFill(VL_LIQ_INCEN_FINOR, 19, 2)  +
-              VLFill(PER_INCEN_FINAM, 5, 2)      +
-              VLFill(VL_LIQ_INCEN_FINAM, 19, 2)  +
-              VLFill(VL_SUBTOTAL, 19, 2)         +
-              VLFill(PER_INCEN_FUNRES, 5, 2)     +
-              VLFill(VL_LIQ_INCEN_FUNRES, 19, 2) +
-              VLFill(VL_TOTAL, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN615.Count - 1 do
+    begin
+      with RegN030.RegistroN615.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N615')                     +
+            VLFill(BASE_CALC, 19, 2)           +
+            VLFill(PER_INCEN_FINOR, 5, 2)      +
+            VLFill(VL_LIQ_INCEN_FINOR, 19, 2)  +
+            VLFill(PER_INCEN_FINAM, 5, 2)      +
+            VLFill(VL_LIQ_INCEN_FINAM, 19, 2)  +
+            VLFill(VL_SUBTOTAL, 19, 2)         +
+            VLFill(PER_INCEN_FUNRES, 5, 2)     +
+            VLFill(VL_LIQ_INCEN_FUNRES, 19, 2) +
+            VLFill(VL_TOTAL, 19, 2));
+      end;
 
-     FRegistroN615Count := FRegistroN615Count + RegN030.RegistroN615.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN615Count := FRegistroN615Count + RegN030.RegistroN615.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN620(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN620) then
   begin
-     for intFor := 0 to RegN030.RegistroN620.Count - 1 do
-     begin
-        with RegN030.RegistroN620.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N620')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN620.Count - 1 do
+    begin
+      with RegN030.RegistroN620.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N620')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN620Count := FRegistroN620Count + RegN030.RegistroN620.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN620Count := FRegistroN620Count + RegN030.RegistroN620.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN630(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN630) then
   begin
-     for intFor := 0 to RegN030.RegistroN630.Count - 1 do
-     begin
-        with RegN030.RegistroN630.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N630')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN630.Count - 1 do
+    begin
+      with RegN030.RegistroN630.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N630')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN630Count := FRegistroN630Count + RegN030.RegistroN630.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN630Count := FRegistroN630Count + RegN030.RegistroN630.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN650(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN650) then
   begin
-     for intFor := 0 to RegN030.RegistroN650.Count - 1 do
-     begin
-        with RegN030.RegistroN650.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N650')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN650.Count - 1 do
+    begin
+      with RegN030.RegistroN650.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N650')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN650Count := FRegistroN650Count + RegN030.RegistroN650.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN650Count := FRegistroN650Count + RegN030.RegistroN650.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN660(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN660) then
   begin
-     for intFor := 0 to RegN030.RegistroN660.Count - 1 do
-     begin
-        with RegN030.RegistroN660.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N660')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN660.Count - 1 do
+    begin
+      with RegN030.RegistroN660.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N660')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN660Count := FRegistroN660Count + RegN030.RegistroN660.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN660Count := FRegistroN660Count + RegN030.RegistroN660.Count;
   end;
 end;
 
 procedure TBloco_N.WriteRegistroN670(RegN030: TRegistroN030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegN030.RegistroN670) then
   begin
-     for intFor := 0 to RegN030.RegistroN670.Count - 1 do
-     begin
-        with RegN030.RegistroN670.Items[intFor] do
-        begin
-           ///
-           Add(LFill('N670')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegN030.RegistroN670.Count - 1 do
+    begin
+      with RegN030.RegistroN670.Items[intFor] do
+      begin
 
-        FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
-     end;
+        Add(LFill('N670')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroN670Count := FRegistroN670Count + RegN030.RegistroN670.Count;
+      FRegistroN990.QTD_LIN := FRegistroN990.QTD_LIN + 1;
+    end;
+
+    FRegistroN670Count := FRegistroN670Count + RegN030.RegistroN670.Count;
   end;
 end;
 
@@ -584,13 +583,13 @@ procedure TBloco_N.WriteRegistroN990;
 begin
   if Assigned(FRegistroN990) then
   begin
-     with FRegistroN990 do
-     begin
-       QTD_LIN := QTD_LIN + 1;
-       ///
-       Add( LFill('N990') +
-            LFill(QTD_LIN, 0) );
-     end;
+    with FRegistroN990 do
+    begin
+      QTD_LIN := QTD_LIN + 1;
+
+      Add( LFill('N990') +
+           LFill(QTD_LIN, 0) );
+    end;
   end;
 end;
 

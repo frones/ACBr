@@ -43,6 +43,7 @@
 |*  - Alterado a geração do arquivo.
 |* 20/08/2015: Lutzem Massao Aihara
 |*  - Reestrurada a geração do arquivo e implementado funções "RegistroJXXXNew".
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -80,7 +81,7 @@ type
     procedure LiberaRegistros;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LimpaRegistros;
 
     function RegistroK001New: TRegistroK001;
@@ -227,17 +228,17 @@ begin
   begin
     with RegistroK001 do
     begin
-       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(K-K001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+      Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(K-K001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
 
-       Add( LFill('K001') +
-            LFill( Integer(IND_DAD), 1) );
+      Add( LFill('K001') +
+           LFill( Integer(IND_DAD), 1) );
 
-       if (IND_DAD = idComDados) then
-       begin
-         WriteRegistroK030(RegistroK001);
-       end;
+      if (IND_DAD = idComDados) then
+      begin
+        WriteRegistroK030(RegistroK001);
+      end;
 
-       FRegistroK990.QTD_LIN:= FRegistroK990.QTD_LIN + 1;
+      FRegistroK990.QTD_LIN:= FRegistroK990.QTD_LIN + 1;
     end;
   end;
 end;
@@ -270,7 +271,7 @@ end;
 
 procedure TBloco_K.WriteRegistroK155(RegK030: TRegistroK030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegK030.RegistroK155) then
   begin

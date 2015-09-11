@@ -94,7 +94,7 @@ type
     fCOD_LAN_ORIG:     Integer;
     fDESC_LAN_ORIG:    String;
     fDT_LIM_LAL:       TDateTime;
-    fCOD_TRIBUTO:      Integer;
+    fCOD_TRIBUTO:      String;
     fVL_SALDO_INI:     Variant;
     fIND_Vl_SALDO_INI: String;
     fCNPJ_SIT_ESP:     String;
@@ -105,7 +105,7 @@ type
     property COD_LAN_ORIG:     Integer read fCOD_LAN_ORIG write fCOD_LAN_ORIG;
     property DESC_LAN_ORIG:    String read fDESC_LAN_ORIG write fDESC_LAN_ORIG;
     property DT_LIM_LAL:       TDateTime read fDT_LIM_LAL write fDT_LIM_LAL;
-    property COD_TRIBUTO:      Integer read fCOD_TRIBUTO write fCOD_TRIBUTO;
+    property COD_TRIBUTO:      String read fCOD_TRIBUTO write fCOD_TRIBUTO;
     property VL_SALDO_INI:     Variant read fVl_SALDO_INI write fVl_SALDO_INI;
     property IND_Vl_SALDO_INI: String read fIND_Vl_SALDO_INI write fIND_Vl_SALDO_INI;
     property CNPJ_SIT_ESP:     String read fCNPJ_SIT_ESP write fCNPJ_SIT_ESP;
@@ -344,13 +344,10 @@ type
   /// Parte A do e-Lacs.
   TRegistroM360 = class(TBlocos)
   private
-    fCOD_CCUS:   string;
-    fCOD_CONTA:  string;
-    fCOD_CENTRO_CUSTOS: string;
     fCOD_CTA:    string;
-    fIND_VL_CTA: string;
+    fCOD_CCUS:   string;
     fVL_CTA:     variant;
-    fIND_VALOR_CONTA: string;
+    fIND_VL_CTA: string;
 
     FRegistroM362: TRegistroM362List;
   public
@@ -883,7 +880,6 @@ constructor TRegistroM001.Create;
 begin
   FRegistroM010 := TRegistroM010List.Create;
   FRegistroM030 := TRegistroM030List.Create;
-  //
   IND_DAD := idComDados;;
 end;
 

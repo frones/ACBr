@@ -36,6 +36,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -88,7 +89,7 @@ type
     procedure WriteRegistroP990;
 
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LimpaRegistros;
 
     function RegistroP001New : TRegistroP001;
@@ -128,40 +129,40 @@ uses
 
 constructor TBloco_P.Create;
 begin
-   inherited;
-   
-   FRegistroP001 := TRegistroP001.Create;
-   FRegistroP030 := TRegistroP030List.Create;
-   FRegistroP990 := TRegistroP990.Create;
+  inherited;
 
-   FRegistroP230Count := 0;
-   FRegistroP200Count := 0;
-   FRegistroP300Count := 0;
-   FRegistroP130Count := 0;
-   FRegistroP100Count := 0;
-   FRegistroP400Count := 0;
-   FRegistroP500Count := 0;
-   FRegistroP150Count := 0;
+  FRegistroP001 := TRegistroP001.Create;
+  FRegistroP030 := TRegistroP030List.Create;
+  FRegistroP990 := TRegistroP990.Create;
+
+  FRegistroP230Count := 0;
+  FRegistroP200Count := 0;
+  FRegistroP300Count := 0;
+  FRegistroP130Count := 0;
+  FRegistroP100Count := 0;
+  FRegistroP400Count := 0;
+  FRegistroP500Count := 0;
+  FRegistroP150Count := 0;
 end;
 
 procedure TBloco_P.CriaRegistros;
 begin
-   inherited;
+  inherited;
 
-   FRegistroP001 := TRegistroP001.Create;
-   FRegistroP030 := TRegistroP030List.Create;
-   FRegistroP990 := TRegistroP990.Create;
+  FRegistroP001 := TRegistroP001.Create;
+  FRegistroP030 := TRegistroP030List.Create;
+  FRegistroP990 := TRegistroP990.Create;
 
-   FRegistroP230Count := 0;
-   FRegistroP200Count := 0;
-   FRegistroP300Count := 0;
-   FRegistroP130Count := 0;
-   FRegistroP100Count := 0;
-   FRegistroP400Count := 0;
-   FRegistroP500Count := 0;
-   FRegistroP150Count := 0;
+  FRegistroP230Count := 0;
+  FRegistroP200Count := 0;
+  FRegistroP300Count := 0;
+  FRegistroP130Count := 0;
+  FRegistroP100Count := 0;
+  FRegistroP400Count := 0;
+  FRegistroP500Count := 0;
+  FRegistroP150Count := 0;
 
-   FRegistroP990.QTD_LIN := 0;
+  FRegistroP990.QTD_LIN := 0;
 end;
 
 destructor TBloco_P.Destroy;
@@ -175,11 +176,11 @@ end;
 
 procedure TBloco_P.LiberaRegistros;
 begin
-   inherited;
+  inherited;
 
-   FRegistroP001.Free;
-   FRegistroP030.Free;
-   FRegistroP990.Free;
+  FRegistroP001.Free;
+  FRegistroP030.Free;
+  FRegistroP990.Free;
 end;
 
 procedure TBloco_P.LimpaRegistros;
@@ -194,16 +195,15 @@ end;
 
 function TBloco_P.RegistroP001New: TRegistroP001;
 begin
-   Result := FRegistroP001;
+  Result := FRegistroP001;
 end;
 
 function TBloco_P.RegistroP030New: TRegistroP030;
 begin
-//   Result := FRegistroP001.RegistroP030.New;
-   Result := RegistroP030.New;
-   if FRegistroP001.RegistroP030=nil then
-     FRegistroP001.RegistroP030:=TRegistroP030List.Create;
-   FRegistroP001.RegistroP030.Add(Result);
+  Result := RegistroP030.New;
+  if FRegistroP001.RegistroP030=nil then
+    FRegistroP001.RegistroP030:=TRegistroP030List.Create;
+  FRegistroP001.RegistroP030.Add(Result);
 end;
 
 function TBloco_P.RegistroP100New: TRegistroP100;
@@ -274,187 +274,185 @@ procedure TBloco_P.WriteRegistroP001;
 begin
   if Assigned(FRegistroP001) then
   begin
-     with FRegistroP001 do
-     begin
-       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(P-P001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
-       ///
-       Add(LFill('P001') +
-           LFill( Integer(IND_DAD), 1));
-       ///
-       FRegistroP990.QTD_LIN:= FRegistroP990.QTD_LIN + 1;
-       WriteRegistroP030;
-     end;
-  end;
+    with FRegistroP001 do
+    begin
+      Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(P-P001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
 
+      Add(LFill('P001') +
+          LFill( Integer(IND_DAD), 1));
+      FRegistroP990.QTD_LIN:= FRegistroP990.QTD_LIN + 1;
+      WriteRegistroP030;
+    end;
+  end;
 end;
 
 procedure TBloco_P.WriteRegistroP030;
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(FRegistroP030) then
   begin
-     for intFor := 0 to FRegistroP030.Count - 1 do
-     begin
-        with FRegistroP030.Items[intFor] do
-        begin
-           ///
-           Add(LFill('P030') +
-               LFill(DT_INI) +
-               LFill(DT_FIN) +
-               LFill(PER_APUR));
-        end;
+    for intFor := 0 to FRegistroP030.Count - 1 do
+    begin
+      with FRegistroP030.Items[intFor] do
+      begin
 
-        // Registros Filhos
-        WriteRegistroP100(FRegistroP030.Items[intFor]);
-        WriteRegistroP130(FRegistroP030.Items[intFor]);
-        WriteRegistroP150(FRegistroP030.Items[intFor]);
-        WriteRegistroP200(FRegistroP030.Items[intFor]);
-        WriteRegistroP230(FRegistroP030.Items[intFor]);
-        WriteRegistroP300(FRegistroP030.Items[intFor]);
-        WriteRegistroP400(FRegistroP030.Items[intFor]);
-        WriteRegistroP500(FRegistroP030.Items[intFor]);
+        Add(LFill('P030') +
+            LFill(DT_INI) +
+            LFill(DT_FIN) +
+            LFill(PER_APUR));
+      end;
 
-       FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
-     end;
+      // Registros Filhos
+      WriteRegistroP100(FRegistroP030.Items[intFor]);
+      WriteRegistroP130(FRegistroP030.Items[intFor]);
+      WriteRegistroP150(FRegistroP030.Items[intFor]);
+      WriteRegistroP200(FRegistroP030.Items[intFor]);
+      WriteRegistroP230(FRegistroP030.Items[intFor]);
+      WriteRegistroP300(FRegistroP030.Items[intFor]);
+      WriteRegistroP400(FRegistroP030.Items[intFor]);
+      WriteRegistroP500(FRegistroP030.Items[intFor]);
+
+      FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
+    end;
   end;
 end;
 
 procedure TBloco_P.WriteRegistroP100(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP100) then
   begin
-     for intFor := 0 to RegP030.RegistroP100.Count - 1 do
-     begin
-        with RegP030.RegistroP100.Items[intFor] do
-        begin
-           ///
-           Add(LFill('P100')                 +
-               LFill(CODIGO)                 +
-               LFill(DESCRICAO)              +
-               LFill(TIPO)                   +
-               LFill(NIVEL, 1)               +
-               LFill(COD_NAT)                +
-               LFill(COD_CTA_SUP)            +
-              VLFill(VAL_CTA_REF_INI, 19, 2) +
-               LFill(IND_VAL_CTA_REF_INI, 1) +
-              VLFill(VAL_CTA_REF_FIN, 19, 2) +
-               LFill(IND_VAL_CTA_REF_FIN, 1));
-        end;
+    for intFor := 0 to RegP030.RegistroP100.Count - 1 do
+    begin
+      with RegP030.RegistroP100.Items[intFor] do
+      begin
 
-        FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
-     end;
+        Add(LFill('P100')                 +
+            LFill(CODIGO)                 +
+            LFill(DESCRICAO)              +
+            LFill(TIPO)                   +
+            LFill(NIVEL, 1)               +
+            LFill(COD_NAT)                +
+            LFill(COD_CTA_SUP)            +
+            VLFill(VAL_CTA_REF_INI, 19, 2) +
+            LFill(IND_VAL_CTA_REF_INI, 1) +
+            VLFill(VAL_CTA_REF_FIN, 19, 2) +
+            LFill(IND_VAL_CTA_REF_FIN, 1));
+      end;
 
-     FRegistroP100Count := FRegistroP100Count + RegP030.RegistroP100.Count;
+      FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
+    end;
+
+    FRegistroP100Count := FRegistroP100Count + RegP030.RegistroP100.Count;
   end;
 end;
 
 procedure TBloco_P.WriteRegistroP130(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP130) then
   begin
-     for intFor := 0 to RegP030.RegistroP130.Count - 1 do
-     begin
-        with RegP030.RegistroP130.Items[intFor] do
-        begin
-           ///
-           Add(LFill('P130')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegP030.RegistroP130.Count - 1 do
+    begin
+      with RegP030.RegistroP130.Items[intFor] do
+      begin
 
-        FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
-     end;
+        Add(LFill('P130')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroP130Count := FRegistroP130Count + RegP030.RegistroP130.Count;
+      FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
+    end;
+
+    FRegistroP130Count := FRegistroP130Count + RegP030.RegistroP130.Count;
   end;
 end;
 
 procedure TBloco_P.WriteRegistroP150(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP150) then
   begin
-     for intFor := 0 to RegP030.RegistroP150.Count - 1 do
-     begin
-        with RegP030.RegistroP150.Items[intFor] do
-        begin
-           ///
-           Add(LFill('P150')       +
-               LFill(CODIGO)       +
-               LFill(DESCRICAO)    +
-               LFill(TIPO)         +
-               LFill(NIVEL, 1)     +
-               LFill(COD_NAT)      +
-               LFill(COD_CTA_SUP)  +
-              VLFill(VALOR, 19, 2) +
-               LFill(IND_VALOR, 1));
-        end;
+    for intFor := 0 to RegP030.RegistroP150.Count - 1 do
+    begin
+      with RegP030.RegistroP150.Items[intFor] do
+      begin
 
-        FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
-     end;
+        Add(LFill('P150')       +
+            LFill(CODIGO)       +
+            LFill(DESCRICAO)    +
+            LFill(TIPO)         +
+            LFill(NIVEL, 1)     +
+            LFill(COD_NAT)      +
+            LFill(COD_CTA_SUP)  +
+            VLFill(VALOR, 19, 2) +
+            LFill(IND_VALOR, 1));
+      end;
 
-     FRegistroP150Count := FRegistroP150Count + RegP030.RegistroP150.Count;
+      FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
+    end;
+
+    FRegistroP150Count := FRegistroP150Count + RegP030.RegistroP150.Count;
   end;
 end;
 
 procedure TBloco_P.WriteRegistroP200(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP200) then
   begin
-     for intFor := 0 to RegP030.RegistroP200.Count - 1 do
-     begin
-        with RegP030.RegistroP200.Items[intFor] do
-        begin
-           ///
-           Add(LFill('P200')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegP030.RegistroP200.Count - 1 do
+    begin
+      with RegP030.RegistroP200.Items[intFor] do
+      begin
 
-        FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
-     end;
+        Add(LFill('P200')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroP200Count := FRegistroP200Count + RegP030.RegistroP200.Count;
+      FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
+    end;
+
+    FRegistroP200Count := FRegistroP200Count + RegP030.RegistroP200.Count;
   end;
 end;
 
 procedure TBloco_P.WriteRegistroP230(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP230) then
   begin
-     for intFor := 0 to RegP030.RegistroP230.Count - 1 do
-     begin
-        with RegP030.RegistroP230.Items[intFor] do
-        begin
-           ///
-           Add(LFill('P230')    +
-               LFill(CODIGO)    +
-               LFill(DESCRICAO) +
-              VLFill(VALOR, 19, 2));
-        end;
+    for intFor := 0 to RegP030.RegistroP230.Count - 1 do
+    begin
+      with RegP030.RegistroP230.Items[intFor] do
+      begin
 
-        FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
-     end;
+        Add(LFill('P230')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
 
-     FRegistroP230Count := FRegistroP230Count + RegP030.RegistroP230.Count;
+      FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
+    end;
+
+    FRegistroP230Count := FRegistroP230Count + RegP030.RegistroP230.Count;
   end;
 end;
 
 procedure TBloco_P.WriteRegistroP300(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP300) then
   begin
@@ -462,10 +460,9 @@ begin
     begin
       with RegP030.RegistroP300.Items[intFor] do
       begin
-         ///
-         Add(LFill('P300')    +
-             LFill(CODIGO)    +
-             LFill(DESCRICAO) +
+        Add(LFill('P300')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
             VLFill(VALOR, 19, 2));
       end;
 
@@ -477,7 +474,7 @@ end;
 
 procedure TBloco_P.WriteRegistroP400(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP400) then
   begin
@@ -485,10 +482,9 @@ begin
     begin
       with RegP030.RegistroP400.Items[intFor] do
       begin
-         ///
-         Add(LFill('P400')    +
-             LFill(CODIGO)    +
-             LFill(DESCRICAO) +
+        Add(LFill('P400')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
             VLFill(VALOR, 19, 2));
       end;
 
@@ -500,7 +496,7 @@ end;
 
 procedure TBloco_P.WriteRegistroP500(RegP030: TRegistroP030);
 var
-intFor: integer;
+  intFor: integer;
 begin
   if Assigned(RegP030.RegistroP500) then
   begin
@@ -508,10 +504,9 @@ begin
     begin
       with RegP030.RegistroP500.Items[intFor] do
       begin
-         ///
-         Add(LFill('P500')    +
-             LFill(CODIGO)    +
-             LFill(DESCRICAO) +
+        Add(LFill('P500')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
             VLFill(VALOR, 19, 2));
       end;
 
@@ -525,15 +520,13 @@ procedure TBloco_P.WriteRegistroP990;
 begin
   if Assigned(FRegistroP990) then
   begin
-     with FRegistroP990 do
-     begin
-       QTD_LIN := QTD_LIN + 1;
-       ///
-       Add(LFill('P990') +
-           LFill(QTD_LIN, 0));
-     end;
+    with FRegistroP990 do
+    begin
+      QTD_LIN := QTD_LIN + 1;
+      Add(LFill('P990') +
+          LFill(QTD_LIN, 0));
+    end;
   end;
-
 end;
 
 end.

@@ -35,6 +35,7 @@
 {******************************************************************************
 |* Historico
 |*
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -64,7 +65,7 @@ type
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
 
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure LimpaRegistros;
 
@@ -121,16 +122,16 @@ end;
 
 procedure TBloco_T.WriteRegistroT001;
 begin
-  if Assigned(FRegistroT001) then begin
-     with FRegistroT001 do begin
-       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(T-T001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
-       ///
-       Add(LFill('T001') +
-           LFill( Integer(IND_DAD), 1));
-       ///
-       FRegistroT990.QTD_LIN:= FRegistroT990.QTD_LIN + 1;
-       WriteRegistroT030;
-     end;
+  if Assigned(FRegistroT001) then
+  begin
+    with FRegistroT001 do
+    begin
+      Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(T-T001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+      Add(LFill('T001') +
+          LFill( Integer(IND_DAD), 1));
+      FRegistroT990.QTD_LIN:= FRegistroT990.QTD_LIN + 1;
+      WriteRegistroT030;
+    end;
   end;
 end;
 
@@ -141,13 +142,15 @@ end;
 
 procedure TBloco_T.WriteRegistroT990;
 begin
-  if Assigned(FRegistroT990) then begin
-     with FRegistroT990 do begin
-       QTD_LIN := QTD_LIN + 1;
-       ///
-       Add(LFill('T990') +
-           LFill(QTD_LIN, 0));
-     end;
+  if Assigned(FRegistroT990) then
+  begin
+    with FRegistroT990 do
+    begin
+      QTD_LIN := QTD_LIN + 1;
+
+      Add(LFill('T990') +
+          LFill(QTD_LIN, 0));
+    end;
   end;
 end;
 

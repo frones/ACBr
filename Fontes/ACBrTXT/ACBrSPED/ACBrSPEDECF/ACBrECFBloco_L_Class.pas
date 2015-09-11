@@ -43,6 +43,7 @@
 |*  - Alterado a geração do arquivo.
 |* 20/08/2015: Lutzem Massao Aihara
 |*  - Reestrurada a geração do arquivo e implementado funções "RegistroJXXXNew".
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -80,7 +81,7 @@ type
     procedure LiberaRegistros;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LimpaRegistros;
 
     function RegistroL001New: TRegistroL001;
@@ -240,10 +241,8 @@ begin
              VLFill(VAL_CTA_REF_FIN,2)  +
              LFill(IND_VAL_CTA_REF_FIN) );
       end;
-
       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
     end;
-
     RegistroL100Count := RegistroL100Count + RegL030.RegistroL100.Count;
   end;
 end;
@@ -261,10 +260,8 @@ begin
         Add( LFill('L200') +
              LFill(IND_AVAL_ESTOQ) );
       end;
-
       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
     end;
-
     RegistroL200Count := RegistroL200Count + RegL030.RegistroL200.Count;
   end;
 end;
@@ -284,10 +281,8 @@ begin
              LFill(DESCRICAO) +
              VLFill(VALOR,2) );
       end;
-
       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
     end;
-
     RegistroL210Count := RegistroL210Count + RegL030.RegistroL210.Count;
   end;
 end;
@@ -302,7 +297,6 @@ begin
     begin
       with RegL030.RegistroL300.Items[intFor] do
       begin
-        ///
         Add( LFill('L300')      +
              LFill(CODIGO)      +
              LFill(DESCRICAO)   +
@@ -313,10 +307,8 @@ begin
              VLFill(VALOR,2)    +
              LFill(IND_VALOR) );
       end;
-
       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
     end;
-
     RegistroL300Count := RegistroL300Count + RegL030.RegistroL300.Count;
   end;
 end;
@@ -325,20 +317,17 @@ procedure TBloco_L.WriteRegistroL001;
 begin
   if Assigned(FRegistroL001) then
   begin
-     with FRegistroL001 do
-     begin
-       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(L-L001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
-       ///
-       Add(LFill('L001') +
-           LFill( Integer(IND_DAD), 1));
-
-       if (IND_DAD = idComDados) then
-       begin
-         WriteRegistroL030(FRegistroL001);
-       end;
-
-       FRegistroL990.QTD_LIN:= FRegistroL990.QTD_LIN + 1;
-     end;
+    with FRegistroL001 do
+    begin
+      Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(L-L001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
+      Add(LFill('L001') +
+          LFill( Integer(IND_DAD), 1));
+      if (IND_DAD = idComDados) then
+      begin
+        WriteRegistroL030(FRegistroL001);
+      end;
+      FRegistroL990.QTD_LIN:= FRegistroL990.QTD_LIN + 1;
+    end;
   end;
 end;
 
@@ -352,21 +341,17 @@ begin
     begin
       with RegL001.RegistroL030.Items[intFor] do
       begin
-        ///
         Add( LFill('L030') +
              LFill(DT_INI) +
              LFill(DT_FIN) +
              LFill(PER_APUR) );
       end;
-
       WriteRegistroL100(RegL001.RegistroL030.Items[intFor]);
       WriteRegistroL200(RegL001.RegistroL030.Items[intFor]);
       WriteRegistroL210(RegL001.RegistroL030.Items[intFor]);
       WriteRegistroL300(RegL001.RegistroL030.Items[intFor]);
-
       FRegistroL990.QTD_LIN := FRegistroL990.QTD_LIN + 1;
      end;
-
     FRegistroL030Count := FRegistroL030Count + RegL001.RegistroL030.Count;
   end;
 end;
@@ -375,13 +360,12 @@ procedure TBloco_L.WriteRegistroL990;
 begin
   if Assigned(FRegistroL990) then
   begin
-     with FRegistroL990 do
-     begin
-       QTD_LIN := QTD_LIN + 1;
-       ///
-       Add(LFill('L990') +
-           LFill(QTD_LIN, 0));
-     end;
+    with FRegistroL990 do
+    begin
+      QTD_LIN := QTD_LIN + 1;
+      Add(LFill('L990') +
+          LFill(QTD_LIN, 0));
+    end;
   end;
 end;
 

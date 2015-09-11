@@ -35,7 +35,8 @@
 {******************************************************************************
 |* Historico
 |*
-|* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco X        
+|* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco X
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -100,7 +101,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure LimpaRegistros;
-        
+
     function RegistroX001New :TRegistroX001;
     function RegistroX280New :TRegistroX280;
     function RegistroX291New :TRegistroX291;
@@ -132,7 +133,7 @@ type
 
     procedure WriteRegistroX001;
     procedure WriteRegistroX990;
-    
+
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property RegistroX001: TRegistroX001 read FRegistroX001 write FRegistroX001;
     property RegistroX990: TRegistroX990 read FRegistroX990 write FRegistroX990;
@@ -414,8 +415,10 @@ end;
 
 procedure TBloco_X.WriteRegistroX001;
 begin
-  if Assigned(FRegistroX001) then begin
-    with FRegistroX001 do begin
+  if Assigned(FRegistroX001) then
+  begin
+    with FRegistroX001 do
+    begin
       Check(((IND_DAD = idComDados) or (IND_DAD = idSemDados)), '(X-X001) Na abertura do bloco, deve ser informado o número 0 ou 1!');
       Add(LFill('X001') +
           LFill( Integer(IND_DAD), 1));
@@ -447,9 +450,12 @@ procedure TBloco_X.WriteRegistroX280;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX280) then begin
-    for intFor := 0 to FRegistroX001.RegistroX280.Count - 1 do begin
-      with FRegistroX001.RegistroX280.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX280) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX280.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX280.Items[intFor] do
+      begin
         Add(LFill('X280')     +
             LFill(IND_ATIV,2) +
             LFill(IND_PROJ,2) +
@@ -466,9 +472,12 @@ procedure TBloco_X.WriteRegistroX291;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX291) then begin
-    for intFor := 0 to FRegistroX001.RegistroX291.Count - 1 do begin
-      with FRegistroX001.RegistroX291.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX291) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX291.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX291.Items[intFor] do
+      begin
         Add(LFill('X291')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -483,9 +492,12 @@ procedure TBloco_X.WriteRegistroX292;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX292) then begin
-    for intFor := 0 to FRegistroX001.RegistroX292.Count - 1 do begin
-      with FRegistroX001.RegistroX292.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX292) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX292.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX292.Items[intFor] do
+      begin
         Add(LFill('X292')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -500,9 +512,12 @@ procedure TBloco_X.WriteRegistroX300;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX300) then begin
-    for intFor := 0 to FRegistroX001.RegistroX300.Count - 1 do begin
-      with FRegistroX001.RegistroX300.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX300) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX300.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX300.Items[intFor] do
+      begin
         Add(LFill('X300')          +
             LFill(NUM_ORDEM)       +
             LFill(TIP_EXP, 2)      +
@@ -533,9 +548,12 @@ procedure TBloco_X.WriteRegistroX310(RegX300: TRegistroX300);
 var
   intFor: integer;
 begin
-  if Assigned(RegX300.RegistroX310) then begin
-    for intFor := 0 to RegX300.RegistroX310.Count - 1 do begin
-      with RegX300.RegistroX310.Items[intFor] do begin
+  if Assigned(RegX300.RegistroX310) then
+  begin
+    for intFor := 0 to RegX300.RegistroX310.Count - 1 do
+    begin
+      with RegX300.RegistroX310.Items[intFor] do
+      begin
         Add(LFill('X310')      +
             LFill(NOME)        +
             LFill(PAIS)        +
@@ -552,9 +570,12 @@ procedure TBloco_X.WriteRegistroX320;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX320) then begin
-    for intFor := 0 to FRegistroX001.RegistroX320.Count - 1 do begin
-      with FRegistroX001.RegistroX320.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX320) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX320.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX320.Items[intFor] do
+      begin
         Add(LFill('X320')          +
             LFill(NUM_ORD)         +
             LFill(TIP_IMP,2)       +
@@ -584,9 +605,12 @@ procedure TBloco_X.WriteRegistroX330(RegX320: TRegistroX320);
 var
   intFor: integer;
 begin
-  if Assigned(RegX320.RegistroX330) then begin
-    for intFor := 0 to RegX320.RegistroX330.Count - 1 do begin
-      with RegX320.RegistroX330.Items[intFor] do begin
+  if Assigned(RegX320.RegistroX330) then
+  begin
+    for intFor := 0 to RegX320.RegistroX330.Count - 1 do
+    begin
+      with RegX320.RegistroX330.Items[intFor] do
+      begin
         Add(LFill('X330')      +
             LFill(NOME)        +
             LFill(PAIS)        +
@@ -603,9 +627,12 @@ procedure TBloco_X.WriteRegistroX340;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX340) then begin
-    for intFor := 0 to FRegistroX001.RegistroX340.Count - 1 do begin
-      with FRegistroX001.RegistroX340.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX340) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX340.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX340.Items[intFor] do
+      begin
         Add(LFill('X340')         +
            LFill(RAZ_SOCIAL)      +
            LFill(NIF)             +
@@ -633,9 +660,12 @@ procedure TBloco_X.WriteRegistroX350(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX350) then begin
-    for intFor := 0 to RegX340.RegistroX350.Count - 1 do begin
-      with RegX340.RegistroX350.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX350) then
+  begin
+    for intFor := 0 to RegX340.RegistroX350.Count - 1 do
+    begin
+      with RegX340.RegistroX350.Items[intFor] do
+      begin
         Add(LFill('X350')              +
             VLFill(REC_LIQ,19)         +
             VLFill(CUSTOS,19)          +
@@ -665,9 +695,12 @@ procedure TBloco_X.WriteRegistroX351(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX351) then begin
-    for intFor := 0 to RegX340.RegistroX351.Count - 1 do begin
-      with RegX340.RegistroX351.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX351) then
+  begin
+    for intFor := 0 to RegX340.RegistroX351.Count - 1 do
+    begin
+      with RegX340.RegistroX351.Items[intFor] do
+      begin
         Add(LFill('X351')                     +
             VLFill(RES_INV_PER,19)            +
             VLFill(RES_INV_PER_REAL,19)       +
@@ -694,9 +727,12 @@ procedure TBloco_X.WriteRegistroX352(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX352) then begin
-    for intFor := 0 to RegX340.RegistroX352.Count - 1 do begin
-      with RegX340.RegistroX352.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX352) then
+  begin
+    for intFor := 0 to RegX340.RegistroX352.Count - 1 do
+    begin
+      with RegX340.RegistroX352.Items[intFor] do
+      begin
         Add(LFill('X352')           +
             VLFill(RES_PER,19)      +
             VLFill(RES_PER_REAL,19) +
@@ -714,9 +750,12 @@ procedure TBloco_X.WriteRegistroX353(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX353) then begin
-    for intFor := 0 to RegX340.RegistroX353.Count - 1 do begin
-      with RegX340.RegistroX353.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX353) then
+  begin
+    for intFor := 0 to RegX340.RegistroX353.Count - 1 do
+    begin
+      with RegX340.RegistroX353.Items[intFor] do
+      begin
         Add(LFill('X353')                     +
             VLFill(RES_NEG_UTIL,19)           +
             VLFill(RES_NEG_UTIL_REAL,19)      +
@@ -734,9 +773,12 @@ procedure TBloco_X.WriteRegistroX354(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX354) then begin
-    for intFor := 0 to RegX340.RegistroX354.Count - 1 do begin
-      with RegX340.RegistroX354.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX354) then
+  begin
+    for intFor := 0 to RegX340.RegistroX354.Count - 1 do
+    begin
+      with RegX340.RegistroX354.Items[intFor] do
+      begin
         Add(LFill('X354')           +
             VLFill(RES_NEG,19)      +
             VLFill(RES_NEG_REAL,19) +
@@ -753,9 +795,12 @@ procedure TBloco_X.WriteRegistroX355(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX355) then begin
-    for intFor := 0 to RegX340.RegistroX355.Count - 1 do begin
-      with RegX340.RegistroX355.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX355) then
+  begin
+    for intFor := 0 to RegX340.RegistroX355.Count - 1 do
+    begin
+      with RegX340.RegistroX355.Items[intFor] do
+      begin
         Add(LFill('X355')                  +
             VLFill(REND_PASS_PROP,19)      +
             VLFill(REND_PASS_PROP_REAL,19) +
@@ -776,9 +821,12 @@ procedure TBloco_X.WriteRegistroX356(RegX340: TRegistroX340);
 var
   intFor: integer;
 begin
-  if Assigned(RegX340.RegistroX356) then begin
-    for intFor := 0 to RegX340.RegistroX356.Count - 1 do begin
-      with RegX340.RegistroX356.Items[intFor] do begin
+  if Assigned(RegX340.RegistroX356) then
+  begin
+    for intFor := 0 to RegX340.RegistroX356.Count - 1 do
+    begin
+      with RegX340.RegistroX356.Items[intFor] do
+      begin
         Add(LFill('X356')          +
             VLFill(PERC_PART,4)    +
             VLFill(ATIVO_TOTAL,19) +
@@ -794,9 +842,12 @@ procedure TBloco_X.WriteRegistroX390;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX390) then begin
-    for intFor := 0 to FRegistroX001.RegistroX390.Count - 1 do begin
-      with FRegistroX001.RegistroX390.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX390) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX390.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX390.Items[intFor] do
+      begin
         Add(LFill('X390')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -811,15 +862,17 @@ procedure TBloco_X.WriteRegistroX400;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX400) then begin
-    for intFor := 0 to FRegistroX001.RegistroX400.Count - 1 do begin
-      with FRegistroX001.RegistroX400.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX400) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX400.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX400.Items[intFor] do
+      begin
         Add(LFill('X400')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
             VLFill(VALOR,19));
       end;
-
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;
   end;
@@ -829,9 +882,12 @@ procedure TBloco_X.WriteRegistroX410;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX410) then begin
-    for intFor := 0 to FRegistroX001.RegistroX410.Count - 1 do begin
-      with FRegistroX001.RegistroX410.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX410) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX410.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX410.Items[intFor] do
+      begin
         Add(LFill('X410')        +
             LFill(PAIS)          +
             LFill(IND_HOME_DISP) +
@@ -846,9 +902,12 @@ procedure TBloco_X.WriteRegistroX420;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX420) then begin
-    for intFor := 0 to FRegistroX001.RegistroX420.Count - 1 do begin
-      with FRegistroX001.RegistroX420.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX420) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX420.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX420.Items[intFor] do
+      begin
         Add(LFill('X420')              +
             LFill(TIP_ROY)             +
             LFill(PAIS)                +
@@ -860,7 +919,6 @@ begin
             VLFill(VL_EXPL_FRANQ,19)   +
             VLFill(VL_EXPL_INT,19));
       end;
-
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;
   end;
@@ -870,9 +928,12 @@ procedure TBloco_X.WriteRegistroX430;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX430) then begin
-    for intFor := 0 to FRegistroX001.RegistroX430.Count - 1 do begin
-      with FRegistroX001.RegistroX430.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX430) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX430.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX430.Items[intFor] do
+      begin
         Add(LFill('X430')                     +
             LFill(PAIS)                       +
             VLFill(VL_SERV_ASSIST,19)         +
@@ -892,9 +953,12 @@ procedure TBloco_X.WriteRegistroX450;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX450) then begin
-    for intFor := 0 to FRegistroX001.RegistroX450.Count - 1 do begin
-      with FRegistroX001.RegistroX450.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX450) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX450.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX450.Items[intFor] do
+      begin
         Add(LFill('X450')                     +
             LFill(PAIS)                       +
             VLFill(VL_SERV_ASSIST,19)         +
@@ -916,9 +980,12 @@ procedure TBloco_X.WriteRegistroX460;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX460) then begin
-    for intFor := 0 to FRegistroX001.RegistroX460.Count - 1 do begin
-      with FRegistroX001.RegistroX460.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX460) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX460.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX460.Items[intFor] do
+      begin
         Add(LFill('X460')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -934,9 +1001,12 @@ procedure TBloco_X.WriteRegistroX470;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX470) then begin
-    for intFor := 0 to FRegistroX001.RegistroX470.Count - 1 do begin
-      with FRegistroX001.RegistroX470.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX470) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX470.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX470.Items[intFor] do
+      begin
         Add(LFill('X470')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -951,9 +1021,12 @@ procedure TBloco_X.WriteRegistroX480;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX480) then begin
-    for intFor := 0 to FRegistroX001.RegistroX480.Count - 1 do begin
-      with FRegistroX001.RegistroX480.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX480) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX480.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX480.Items[intFor] do
+      begin
         Add(LFill('X480')   +
            LFill(CODIGO)    +
            LFill(DESCRICAO) +
@@ -968,9 +1041,12 @@ procedure TBloco_X.WriteRegistroX490;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX490) then begin
-    for intFor := 0 to FRegistroX001.RegistroX490.Count - 1 do begin
-      with FRegistroX001.RegistroX490.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX490) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX490.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX490.Items[intFor] do
+      begin
         Add(LFill('X490')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -985,9 +1061,12 @@ procedure TBloco_X.WriteRegistroX500;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX500) then begin
-    for intFor := 0 to FRegistroX001.RegistroX500.Count - 1 do begin
-      with FRegistroX001.RegistroX500.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX500) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX500.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX500.Items[intFor] do
+      begin
         Add(LFill('X500')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -1002,9 +1081,12 @@ procedure TBloco_X.WriteRegistroX510;
 var
   intFor: integer;
 begin
-  if Assigned(FRegistroX001.RegistroX510) then begin
-    for intFor := 0 to FRegistroX001.RegistroX510.Count - 1 do begin
-      with FRegistroX001.RegistroX510.Items[intFor] do begin
+  if Assigned(FRegistroX001.RegistroX510) then
+  begin
+    for intFor := 0 to FRegistroX001.RegistroX510.Count - 1 do
+    begin
+      with FRegistroX001.RegistroX510.Items[intFor] do
+      begin
         Add(LFill('X510')    +
             LFill(CODIGO)    +
             LFill(DESCRICAO) +
@@ -1017,8 +1099,10 @@ end;
 
 procedure TBloco_X.WriteRegistroX990;
 begin
-  if Assigned(FRegistroX990) then begin
-    with FRegistroX990 do begin
+  if Assigned(FRegistroX990) then
+  begin
+    with FRegistroX990 do
+    begin
       QTD_LIN := QTD_LIN + 1;
       Add(LFill('X990') +
           LFill(QTD_LIN, 0));

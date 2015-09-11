@@ -90,7 +90,7 @@ type
     FRegistroN670: TRegistroN670List;
   public
     constructor Create; /// Create
-    destructor Destroy; /// Destroy
+    destructor Destroy; override; /// Destroy
 
     property DT_INI: TDateTime read fDT_INI write fDT_INI;
     property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;

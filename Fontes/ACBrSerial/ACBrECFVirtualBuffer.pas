@@ -34,7 +34,7 @@
 {$I ACBr.inc}
 
 {.$IFDEF FPC}
- {$DEFINE Use_Stream}
+ {$DEFINE Buffer_Stream}
 {.$ENDIF}
 
 unit ACBrECFVirtualBuffer ;
@@ -71,7 +71,7 @@ TACBrECFVirtualBuffer = class( TACBrECFVirtual )
 
 TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
   private
-    {$IFDEF Use_Stream}
+    {$IFDEF Buffer_Stream}
       fsFSBuffer : TFileStream ;
     {$ELSE}
       fsArqBuf : TextFile;
@@ -304,7 +304,7 @@ end;
 
 procedure TACBrECFVirtualBufferClass.Desativar;
 begin
-  {$IFDEF Use_Stream}
+  {$IFDEF Buffer_Stream}
     if Assigned( fsFSBuffer ) then
       FreeAndNil( fsFSBuffer );
   {$ELSE}
@@ -355,7 +355,7 @@ Var
 begin
   NomeArqBuffer := ChangeFileExt( NomeArqINI, '.buf') ;
 
-  {$IFDEF Use_Stream}
+  {$IFDEF Buffer_Stream}
     if FileExists( NomeArqBuffer ) then
     begin
       fsBuffer.LoadFromFile( NomeArqBuffer );
@@ -400,7 +400,7 @@ var
   A : Integer ;
   Buffer: String;
 begin
-  {$IFDEF Use_Stream}
+  {$IFDEF Buffer_Stream}
     if not Assigned( fsFSBuffer ) then
       exit;
   {$ENDIF}
@@ -409,7 +409,7 @@ begin
   begin
     Buffer := fsBuffer[A];
 
-    {$IFDEF Use_Stream}
+    {$IFDEF Buffer_Stream}
       Buffer := Buffer + sLineBreak;
       fsFSBuffer.Write(Pointer(Buffer)^,Length(Buffer));
     {$ELSE}
@@ -430,7 +430,7 @@ end;
 
 procedure TACBrECFVirtualBufferClass.ZeraBuffer ;
 begin
-  {$IFDEF Use_Stream}
+  {$IFDEF Buffer_Stream}
     if Assigned( fsFSBuffer ) then
       fsFSBuffer.Size := 0;
   {$ELSE}

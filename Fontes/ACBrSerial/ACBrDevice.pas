@@ -53,7 +53,7 @@
 {$ENDIF}
 
 {$IFDEF FPC}
- {$DEFINE Use_Stream}
+ {$DEFINE Device_Stream}
 {$ENDIF}
 
 unit ACBrDevice ;
@@ -1303,7 +1303,7 @@ end;
 procedure TACBrDevice.EnviaStringArquivo( const AString: AnsiString);
 Var
   I, Max, NBytes : Integer ;
-  {$IFDEF Use_Stream}
+  {$IFDEF Device_Stream}
     FS     : TFileStream ;
     Buffer : AnsiString ;
   {$ELSE}
@@ -1318,7 +1318,7 @@ begin
   if NBytes = 0 then
      NBytes := Max ;
 
-  {$IFDEF Use_Stream}
+  {$IFDEF Device_Stream}
     FS := TFileStream.Create( Porta, IfThen( IsTXTFilePort and FileExists(Porta),
        fmOpenReadWrite, fmCreate) or fmShareDenyWrite );
     try

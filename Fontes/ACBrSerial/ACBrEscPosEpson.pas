@@ -124,6 +124,8 @@ var
 begin
   if ATag = cTagBarraUPCA then
     CmdBarCode := 'A'
+  else if ATag = cTagBarraUPCE then
+    CmdBarCode := 'B'
   else if ATag = cTagBarraEAN13 then
     CmdBarCode := 'C'
   else if ATag = cTagBarraEAN8 then

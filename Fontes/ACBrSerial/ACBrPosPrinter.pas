@@ -142,7 +142,7 @@ type
   TACBrPosPrinter = class;
 
   TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
-                           ppEscElgin);
+                           ppEscElgin, ppEscDiebold);
 
   { TACBrPosPrinterClass }
 
@@ -368,7 +368,7 @@ implementation
 uses
   strutils, Math, typinfo,
   ACBrUtil, ACBrConsts,
-  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin;
+  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold;
 
 { TACBrConfigGaveta }
 
@@ -729,6 +729,7 @@ begin
     ppEscBematech: FPosPrinterClass := TACBrEscBematech.Create(Self);
     ppEscDaruma : FPosPrinterClass := TACBrEscDaruma.Create(Self);
     ppEscElgin : FPosPrinterClass := TACBrEscElgin.Create(Self);
+    ppEscDiebold : FPosPrinterClass := TACBrEscDiebold.Create(Self);
   else
     FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   end;
@@ -1026,6 +1027,10 @@ begin
       if (ATag = cTagBarraUPCA) then
         // Apenas números, sempre 11 digitos, e 1 digito verificador
         ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 11, '0')
+
+      else if (ATag = cTagBarraUPCE) then
+        // EPC-A compactado, Apenas números, 6 ou 11 dígitos
+        ACodBar := OnlyNumber(ConteudoBloco)
 
       else if ATag = cTagBarraEAN13 then
         // Apenas números, sempre 12 digitos, e 1 digito verificador

@@ -200,6 +200,7 @@ const
   cTagBarraCode128b = '<code128b>';
   cTagBarraCode128c = '<code128c>';
   cTagBarraUPCA = '<upca>';
+  cTagBarraUPCE = '<upce>';
   cTagBarraCodaBar = '<codabar>';
   cTagBarraMSI = '<msi>';
   cTagBarraMostrar = '<barra_mostrar>';
@@ -211,9 +212,10 @@ const
   cTagQRCodeLargura = '<qrcode_largura>';
   cTagQRCodeError = '<qrcode_error>';
 
-  cTAGS_BARRAS: array[0..13] of String = (
+  cTAGS_BARRAS: array[0..14] of String = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraStd, cTagBarraInter, cTagBarraCode11,
-    cTagBarraCode39, cTagBarraCode93, cTagBarraCode128, cTagBarraUPCA,
+    cTagBarraCode39, cTagBarraCode93, cTagBarraCode128, 
+	cTagBarraUPCA, cTagBarraUPCE,
     cTagBarraCodaBar, cTagBarraMSI,
     cTagBarraCode128a, cTagBarraCode128b, cTagBarraCode128c);
   cTAGS_BARRAS_HELP: array[0..13] of String = (

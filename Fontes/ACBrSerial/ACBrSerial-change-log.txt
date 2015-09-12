@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/09/2015
+-- ACBrPosPrinter -- (Por: Fabio Souza e DSA)
+[+] Adicionado suporte ao modelo Diebold, através do modo Esc/Pos
+    Usado modelo TSP143M para testes
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23975
+[+] Adicionado suporte ao código de Barras UPCE
+
 Data: 08/09/2015
 -- ACBrDevice --    (por: DSA)
 [*] Refatoração em TagProcessor.AcharProximaTag, movendo-a para ACBrUtil, para

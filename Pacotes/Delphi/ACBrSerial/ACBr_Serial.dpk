@@ -110,6 +110,7 @@ contains
   ACBrEscBematech in '..\..\..\Fontes\ACBrSerial\ACBrEscBematech.pas',
   ACBrEscDaruma in '..\..\..\Fontes\ACBrSerial\ACBrEscDaruma.pas',
   ACBrEscElgin in '..\..\..\Fontes\ACBrSerial\ACBrEscElgin.pas',
+  ACBrEscDiebold in '..\..\..\Fontes\ACBrSerial\ACBrEscDiebold.pas',
   ACBrBALLider in '..\..\..\Fontes\ACBrSerial\ACBrBALLider.pas';
 
 end.

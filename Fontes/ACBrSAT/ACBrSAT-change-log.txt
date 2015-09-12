@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/09/2015
+-- ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
+[-] Correção para impressão do Numero do Cupom de Cancelamento no cabeçalho,
+    ao invez do Número do cupom Cancelado
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=24294
+
 Data: 05/09/2015
 -- ACBrSAT --  (por: Amarildo Lacerda e DSA)
 [+] Adicionado o evento: OnEnviarDadosVenda: TACBrSATEventoDados

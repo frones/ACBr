@@ -793,7 +793,7 @@ begin
     if (ide.tpAmb = taHomologacao) then
       NumExtrato := '000000'
     else
-      NumExtrato := Trim( IntToStr( ide.nCFe ) );
+      NumExtrato := Trim( IntToStr( ACBrSATExtrato.CFeCanc.ide.nCFe ) );
 
     // CPF_CNPJ do Consumidor //
     lCPF_CNPJCan.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',

@@ -68,7 +68,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure AtivarPosPrinter;
 
-    procedure GerarCabecalho;
+    procedure GerarCabecalho(Cancelamento: Boolean = False);
     procedure GerarItens;
     procedure GerarTotais(Resumido : Boolean = False);
     procedure GerarPagamentos(Resumido : Boolean = False );
@@ -99,6 +99,7 @@ procedure Register;
 implementation
 
 uses
+  strutils, math,
   ACBrValidador, ACBrUtil, ACBrDFeUtil;
 
 {$IFNDEF FPC}
@@ -123,7 +124,7 @@ begin
   FUsaCodigoEanImpressao := False;
 end;
 
-procedure TACBrSATExtratoESCPOS.GerarCabecalho;
+procedure TACBrSATExtratoESCPOS.GerarCabecalho(Cancelamento: Boolean);
 begin
   FPosPrinter.Buffer.Clear;
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
@@ -157,7 +158,8 @@ begin
   end
   else
   begin
-    FPosPrinter.Buffer.Add('</fn></ce><n>Extrato No. '+IntToStrZero(CFe.ide.nCFe,6));
+    FPosPrinter.Buffer.Add('</fn></ce><n>Extrato No. '+
+       IntToStrZero(IfThen(Cancelamento, CFeCanc.ide.nCFe, CFe.ide.nCFe), 6));
     FPosPrinter.Buffer.Add( ACBrStr('CUPOM FISCAL ELETRÔNICO - SAT</n>'));
   end;
 
@@ -539,7 +541,7 @@ begin
 
   AtivarPosPrinter;
 
-  GerarCabecalho;
+  GerarCabecalho(True);
   GerarTotais(True);
   GerarRodape(False, True);
   GerarDadosCancelamento;

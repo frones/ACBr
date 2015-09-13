@@ -185,7 +185,7 @@ type
     procedure WriteBloco_Y;
     procedure WriteBloco_9;
 
-    property Conteudo: TStringList read GetConteudo write SetConteudo;
+    property Conteudo: TStringList read GetConteudo;
 
     property DT_INI: TDateTime read GetDT_INI write SetDT_INI;
     property DT_FIN: TDateTime read GetDT_FIN write SetDT_FIN;

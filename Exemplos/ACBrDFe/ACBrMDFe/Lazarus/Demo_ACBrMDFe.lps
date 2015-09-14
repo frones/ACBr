@@ -8,10 +8,6 @@
       <Unit0>
         <Filename Value="Demo_ACBrMDFe.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -22,12 +18,10 @@
         <ComponentName Value="frmDemo_ACBrMDFe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_Demo_ACBrMDFe"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="417"/>
-        <CursorPos X="18" Y="430"/>
+        <TopLine Value="947"/>
+        <CursorPos X="60" Y="964"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -39,114 +33,84 @@
         <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ufrmStatus"/>
         <EditorIndex Value="2"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="0"/>
-    </General>
-    <JumpHistory Count="23" HistoryIndex="22">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="128" Column="13" TopLine="128"/>
+        <Caret Line="421" Column="23" TopLine="417"/>
       </Position1>
       <Position2>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="127" Column="26" TopLine="127"/>
+        <Caret Line="9" Column="33"/>
       </Position2>
       <Position3>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="120" Column="26" TopLine="120"/>
+        <Caret Line="379" Column="45" TopLine="210"/>
       </Position3>
       <Position4>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="171" Column="63" TopLine="158"/>
+        <Caret Line="189" Column="26" TopLine="163"/>
       </Position4>
       <Position5>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="172" Column="64" TopLine="159"/>
+        <Caret Line="183" Column="20" TopLine="171"/>
       </Position5>
       <Position6>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="402" Column="29" TopLine="400"/>
+        <Caret Line="184" Column="35" TopLine="171"/>
       </Position6>
       <Position7>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="405" Column="17" TopLine="391"/>
+        <Caret Line="403" TopLine="385"/>
       </Position7>
       <Position8>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="423" Column="34" TopLine="410"/>
+        <Caret Line="669" Column="58" TopLine="652"/>
       </Position8>
       <Position9>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="428" Column="18" TopLine="414"/>
+        <Caret Line="668" Column="6" TopLine="652"/>
       </Position9>
       <Position10>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="437" Column="1" TopLine="414"/>
       </Position10>
       <Position11>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="11" Column="68" TopLine="1"/>
+        <Caret Line="286" Column="27" TopLine="264"/>
       </Position11>
       <Position12>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="10" Column="14" TopLine="1"/>
+        <Caret Line="2" Column="3"/>
       </Position12>
       <Position13>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="11" Column="54" TopLine="1"/>
+        <Caret Line="812" Column="42" TopLine="794"/>
       </Position13>
       <Position14>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="10" Column="33" TopLine="1"/>
+        <Caret Line="845" Column="53" TopLine="829"/>
       </Position14>
       <Position15>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="11" Column="11" TopLine="1"/>
+        <Caret Line="882" Column="58" TopLine="873"/>
       </Position15>
       <Position16>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="10" Column="33" TopLine="1"/>
+        <Caret Line="890" Column="71" TopLine="873"/>
       </Position16>
       <Position17>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="427" Column="26" TopLine="414"/>
+        <Caret Line="925" Column="60" TopLine="907"/>
       </Position17>
       <Position18>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="1" Column="19" TopLine="1"/>
+        <Caret Line="949" Column="26" TopLine="932"/>
       </Position18>
-      <Position19>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="427" Column="43" TopLine="414"/>
-      </Position19>
-      <Position20>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
-      </Position20>
-      <Position21>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="176" Column="28" TopLine="154"/>
-      </Position21>
-      <Position22>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="212" Column="3" TopLine="208"/>
-      </Position22>
-      <Position23>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="427" Column="43" TopLine="404"/>
-      </Position23>
     </JumpHistory>
   </ProjectSession>
-  <EditorMacros Count="0"/>
 </CONFIG>

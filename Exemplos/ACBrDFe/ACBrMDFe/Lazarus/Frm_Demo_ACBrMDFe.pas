@@ -1,4 +1,5 @@
 {$I ACBr.inc}{$H+}
+{$DEFINE ACBrMDFeOpenSSL}
 
 unit Frm_Demo_ACBrMDFe;
 
@@ -6,7 +7,7 @@ interface
 
 uses IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants,
   Classes, Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Buttons,
-  ExtCtrls, IpHtml, pcnConversao, pmdfeConversao, ACBrMDFe, ACBrMDFeDAMDFeClass,
+  ExtCtrls, IpHtml, pcnConversao, ACBrMDFe, ACBrMDFeDAMDFeClass,
   ACBrMDFeDAMDFeRLClass, Menus, Spin, EditBtn, DBGrids, DbCtrls;
 
 type
@@ -186,8 +187,7 @@ implementation
 
 uses
  FileCtrl, DateUtils,
- ufrmStatus{,
- ACBrMDFeManifestos, ACBrMDFeUtil};
+ ufrmStatus, pmdfeConversaoMDFe;
 
 const
   SELDIRHELP = 1000;
@@ -359,8 +359,8 @@ var
 begin
  // Configurações -> Certificados
  {$IFDEF ACBrMDFeOpenSSL}
-   ACBrMDFe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
-   ACBrMDFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+   ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX := edtCaminho.Text;
+   ACBrMDFe1.Configuracoes.Certificados.Senha      := edtSenha.Text;
  {$ELSE}
    ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
  {$ENDIF}
@@ -368,7 +368,7 @@ begin
  // Configurações -> Arquivos
  ACBrMDFe1.Configuracoes.Arquivos.AdicionarLiteral := True;
  ACBrMDFe1.Configuracoes.Arquivos.EmissaoPathMDFe  := True;
- ACBrMDFe1.Configuracoes.Arquivos.PastaMensal      := True;
+ ACBrMDFe1.Configuracoes.Arquivos.SepararPorMes    := True;
  ACBrMDFe1.Configuracoes.Arquivos.PathMDFe         := Trim(edtPathLogs.Text);
  ACBrMDFe1.Configuracoes.Arquivos.Salvar           := True;
 
@@ -376,7 +376,7 @@ begin
 
  // Configurações -> Geral
  ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
- ACBrMDFe1.Configuracoes.Geral.PathSalvar   := PathMensal;
+ ACBrMDFe1.Configuracoes.Arquivos.PathSalvar:= PathMensal;
  ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
  case rgVersaoDF.ItemIndex of
   0: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100;
@@ -401,7 +401,6 @@ begin
   begin
    ACBrMDFe1.DAMDFe.PathPDF           := PathMensal;
    ACBrMDFe1.DAMDFe.ExpandirLogoMarca := False;
-   ACBrMDFe1.DAMDFe.ImprimirDescPorc  := False;
    ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
    ACBrMDFe1.DAMDFe.MostrarPreview    := True;
    ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex+1));
@@ -668,7 +667,7 @@ end;
 procedure TfrmDemo_ACBrMDFe.sbtnGetCertClick(Sender: TObject);
 begin
  {$IFNDEF ACBrMDFeOpenSSL}
-  edtNumSerie.Text := ACBrMDFe1.Configuracoes.Certificados.SelecionarCertificado;
+  edtNumSerie.Text := ACBrMDFe1.SSL.SelecionarCertificado;
  {$ENDIF}
 end;
 
@@ -810,7 +809,7 @@ begin
 
  ACBrMDFe1.Manifestos.Clear;
  GerarMDFe(vAux);
- ACBrMDFe1.Manifestos.Items[0].SaveToFile('');
+ ACBrMDFe1.Manifestos.Items[0].GravarXML();
 
  ShowMessage('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
  MemoDados.Lines.Add('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
@@ -824,13 +823,13 @@ begin
  OpenDialog1.Title := 'Selecione o MDFe';
  OpenDialog1.DefaultExt := '*-MDFe.xml';
  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
    ACBrMDFe1.Manifestos.Clear;
    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Manifestos.Valida;
+   ACBrMDFe1.Manifestos.Validar;
    showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
   end;
 end;
@@ -888,7 +887,7 @@ begin
  OpenDialog1.Title := 'Selecione o MDFe';
  OpenDialog1.DefaultExt := '*-MDFe.xml';
  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -923,7 +922,7 @@ begin
  OpenDialog1.Title := 'Selecione o MDFe';
  OpenDialog1.DefaultExt := '*-MDFe.xml';
  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -947,7 +946,7 @@ begin
      infEvento.detEvento.cMun  := ACBrMDFe1.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
     end;
 
-   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+   ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
 
    MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
    memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
@@ -962,7 +961,7 @@ begin
  OpenDialog1.Title := 'Selecione o MDFe';
  OpenDialog1.DefaultExt := '*-MDFe.xml';
  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -986,7 +985,7 @@ begin
      infEvento.detEvento.xJust := trim(vAux);
     end;
 
-   ACBrMDFe1.EnviarEventoMDFe( 1 ); // 1 = Numero do Lote
+   ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
 
    MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
    memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
@@ -999,7 +998,7 @@ begin
  OpenDialog1.Title := 'Selecione o MDFe';
  OpenDialog1.DefaultExt := '*-MDFe.xml';
  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute then
   begin
@@ -1014,7 +1013,7 @@ begin
  OpenDialog1.Title := 'Selecione o MDFe';
  OpenDialog1.DefaultExt := '*-MDFe.xml';
  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+ OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
  if OpenDialog1.Execute
   then begin
@@ -1035,7 +1034,7 @@ begin
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-mdfe.xml';
   OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -1044,19 +1043,12 @@ begin
    CC:=TstringList.Create;
    CC.Add('email_1@provedor.com'); //especifique um email válido
    CC.Add('email_2@provedor.com.br'); //especifique um email válido
-   ACBrMDFe1.Manifestos.Items[0].EnviarEmail(edtSmtpHost.Text
-                                             , edtSmtpPort.Text
-                                             , edtSmtpUser.Text
-                                             , edtSmtpPass.Text
-                                             , edtSmtpUser.Text
-                                             , Para
+   ACBrMDFe1.Manifestos.Items[0].EnviarEmail( Para
                                              , edtEmailAssunto.Text
                                              , mmEmailMsg.Lines
-                                             , cbEmailSSL.Checked
                                              , False //Enviar PDF junto
                                              , nil //Lista com emails que serão enviado cópias - TStrings
-                                             , nil // Lista de anexos - TStrings
-                                             , False ); //Pede confirmação de leitura do email
+                                             , nil ); // Lista de anexos - TStrings
    CC.Free;
   end;
 end;
@@ -1066,7 +1058,7 @@ begin
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-mdfe.xml';
   OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   ACBrMDFe1.Manifestos.Clear;
   if OpenDialog1.Execute then
@@ -1077,7 +1069,7 @@ begin
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*-procEventoMDFe.xml';
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoMDFe.xml)|*-procEventoMDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -1092,7 +1084,7 @@ begin
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-mdfe.xml';
   OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   ACBrMDFe1.Manifestos.Clear;
   if OpenDialog1.Execute then
@@ -1103,7 +1095,7 @@ begin
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*-procEventoMDFe.xml';
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoMDFe.xml)|*-procEventoMDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -1124,7 +1116,7 @@ begin
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-mdfe.xml';
   OpenDialog1.Filter := 'Arquivos MDFe (*-mdfe.xml)|*-mdfe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   ACBrMDFe1.Manifestos.Clear;
   if OpenDialog1.Execute then
@@ -1135,7 +1127,7 @@ begin
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*-procEventoMDFe.xml';
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoMDFe.xml)|*-procEventoMDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
@@ -1147,22 +1139,22 @@ begin
     CC:=TstringList.Create;
     CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
     CC.Add('anfm@zipmail.com.br');    //especifique um email válido
-    ACBrMDFe1.EnviarEmailEvento(edtSmtpHost.Text
-                             , edtSmtpPort.Text
-                             , edtSmtpUser.Text
-                             , edtSmtpPass.Text
-                             , edtSmtpUser.Text
-                             , Para
-                             , edtEmailAssunto.Text
-                             , mmEmailMsg.Lines
-                             , cbEmailSSL.Checked // SSL - Conexão Segura
-                             , True //Enviar PDF junto
-                             , CC //Lista com emails que serão enviado cópias - TStrings
-                             , Evento // Lista de anexos - TStrings
-                             , False  //Pede confirmação de leitura do email
-                             , False  //Aguarda Envio do Email(não usa thread)
-                             , 'ACBrMDFe' // Nome do Rementente
-                             , cbEmailSSL.Checked ); // Auto TLS
+    //ACBrMDFe1.EnviarEmailEvento(edtSmtpHost.Text
+    //                         , edtSmtpPort.Text
+    //                         , edtSmtpUser.Text
+    //                         , edtSmtpPass.Text
+    //                         , edtSmtpUser.Text
+    //                         , Para
+    //                         , edtEmailAssunto.Text
+    //                         , mmEmailMsg.Lines
+    //                         , cbEmailSSL.Checked // SSL - Conexão Segura
+    //                         , True //Enviar PDF junto
+    //                         , CC //Lista com emails que serão enviado cópias - TStrings
+    //                         , Evento // Lista de anexos - TStrings
+    //                         , False  //Pede confirmação de leitura do email
+    //                         , False  //Aguarda Envio do Email(não usa thread)
+    //                         , 'ACBrMDFe' // Nome do Rementente
+    //                         , cbEmailSSL.Checked ); // Auto TLS
     CC.Free;
     Evento.Free;
   end;

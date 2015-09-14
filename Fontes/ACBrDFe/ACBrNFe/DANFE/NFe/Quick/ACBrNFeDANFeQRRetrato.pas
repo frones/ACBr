@@ -517,7 +517,7 @@ var
    nItemControle : Integer;
 
 procedure TfqrDANFeQRRetrato.Itens;
-var
+var                                      
   nItem, I, X: Integer;
   sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI, vAux: String;
   sDetalhamentoEspecifico: WideString;
@@ -965,10 +965,27 @@ begin
             sVALORICMS := '0,00';
 
             case CSOSN of
+              csosn101,
+              csosn102,
+              csosn103,
+              csosn300,
+              csosn400,
+              csosn500: begin
+                          sBCICMS    := FormatFloatBr(msk13x2, 0.0);
+                          sALIQICMS  := FormatFloatBr(msk4x2, 0.0);
+                          sVALORICMS := FormatFloatBr(msk13x2, 0.0);
+                        end;
+              csosn201,
+              csosn202,
+              csosn203: begin
+                          sBCICMS    := FormatFloatBr(msk13x2, vBCST);
+                          sALIQICMS  := FormatFloatBr(msk4x2, pICMSST);
+                          sVALORICMS := FormatFloatBr(msk13x2, vICMSST);
+                        end;
               csosn900: begin
-                          sBCICMS    := FormatFloatBr(msk13x2, VBC);
-                          sALIQICMS  := FormatFloatBr(msk4x2, PICMS);
-                          sVALORICMS := FormatFloatBr(msk13x2, VICMS);
+                          sBCICMS    := FormatFloatBr(msk13x2, vBC);
+                          sALIQICMS  := FormatFloatBr(msk4x2, pICMS);
+                          sVALORICMS := FormatFloatBr(msk13x2, vICMS);
                         end;
             end;
 

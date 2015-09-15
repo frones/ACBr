@@ -588,107 +588,17 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 5
         Height = 50
         Top = 27
-        Width = 76
+        Width = 363
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
-        )
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlDocOrig_cpf1: TRLMemo
-        Left = 88
-        Height = 48
-        Top = 27
-        Width = 83
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
-        )
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlDocOrig_serie1: TRLMemo
-        Left = 176
-        Height = 50
-        Top = 27
-        Width = 193
-        AutoSize = False
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
-        )
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlDocOrig_serie2: TRLMemo
-        Left = 544
-        Height = 50
-        Top = 27
-        Width = 193
-        AutoSize = False
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
-        )
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlDocOrig_cpf2: TRLMemo
-        Left = 456
-        Height = 48
-        Top = 27
-        Width = 83
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
+          'COMP 1                        COMP 1                          COMP 1'
+          'COMP 2                        COMP 2                          COMP 2'
+          'COMP 3                        COMP 3                          COMP 3'
+          'COMP 4                        COMP 4                          COMP 4'
         )
         ParentColor = False
         ParentFont = False
@@ -701,17 +611,17 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 373
         Height = 50
         Top = 27
-        Width = 76
+        Width = 363
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
-          'COMP 1'
-          'COMP 2'
-          'COMP 3'
-          'COMP 4'
+          'COMP 1                        COMP 1                          COMP 1'
+          'COMP 2                        COMP 2                          COMP 2'
+          'COMP 3                        COMP 3                          COMP 3'
+          'COMP 4                        COMP 4                          COMP 4'
         )
         ParentColor = False
         ParentFont = False

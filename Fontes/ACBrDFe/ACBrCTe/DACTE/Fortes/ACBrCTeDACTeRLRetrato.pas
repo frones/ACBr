@@ -579,10 +579,6 @@ type
     rlmComplChave2: TRLMemo;
     rlmComplValor2: TRLMemo;
     rlDocOrig_tpDoc1: TRLMemo;
-    rlDocOrig_cpf1: TRLMemo;
-    rlDocOrig_serie1: TRLMemo;
-    rlDocOrig_serie2: TRLMemo;
-    rlDocOrig_cpf2: TRLMemo;
     rlDocOrig_tpDoc2: TRLMemo;
     RLLabel199: TRLLabel;
     RLLabel200: TRLLabel;
@@ -1826,25 +1822,25 @@ begin
 
   rlDocOrig_tpDoc1.Lines.Clear;
   rlDocOrig_tpDoc2.Lines.Clear;
-  rlDocOrig_cpf1.Lines.Clear;
-  rlDocOrig_cpf2.Lines.Clear;
-  rlDocOrig_serie1.Lines.Clear;
-  rlDocOrig_serie2.Lines.Clear;
+  //rlDocOrig_cpf1.Lines.Clear;
+  //rlDocOrig_cpf2.Lines.Clear;
+  //rlDocOrig_serie1.Lines.Clear;
+  //rlDocOrig_serie2.Lines.Clear;
 
   cdsDocumentos.First;
   while not cdsDocumentos.Eof do
   begin
     if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
     begin
-      rlDocOrig_tpDoc1.Lines.Add(cdsDocumentos.FieldByName('TIPO_1').AsString);
-      rlDocOrig_cpf1.Lines.Add(cdsDocumentos.FieldByName('CNPJCPF_1').AsString);
-      rlDocOrig_serie1.Lines.Add(cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
+      rlDocOrig_tpDoc1.Lines.Add(cdsDocumentos.FieldByName('TIPO_1').AsString + '   '+
+      cdsDocumentos.FieldByName('CNPJCPF_1').AsString + '   '+
+      cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
     end;
     if cdsDocumentos.FieldByName('TIPO_2').AsString <> '' then
     begin
-      rlDocOrig_tpDoc2.Lines.Add(cdsDocumentos.FieldByName('TIPO_2').AsString);
-      rlDocOrig_cpf2.Lines.Add(cdsDocumentos.FieldByName('CNPJCPF_2').AsString);
-      rlDocOrig_serie2.Lines.Add(cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
+      rlDocOrig_tpDoc2.Lines.Add(cdsDocumentos.FieldByName('TIPO_2').AsString+ '   '+
+      cdsDocumentos.FieldByName('CNPJCPF_2').AsString+ '   '+
+      cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
     end;
     cdsDocumentos.Next;
   end;

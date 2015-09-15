@@ -54,7 +54,7 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
-  ACBrNFeRLCodeBar, Printers,
+  Printers,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 
@@ -83,7 +83,6 @@ type
     FMargemDireita  : Double;
     FImpressora     : String;
 
-    procedure SetBarCodeImage(ACode: String; RLImage: TRLImage);
   public
     class procedure Imprimir(AACBrNFe: TACBrNFe;
                              ALogo: String = '';
@@ -228,19 +227,6 @@ begin
      finally
         Free;
      end;
-end;
-
-procedure TfrmNFeDAInutRL.SetBarCodeImage(ACode: String; RLImage: TRLImage);
-var
-  b: TBarCode128c;
-begin
-  b := TBarCode128c.Create;
-  try
-    b.Code := ACode;
-    b.PaintCodeToCanvas(ACode, RLImage.Canvas, RLImage.ClientRect);
-  finally
-    b.free;
-  end;
 end;
 
 procedure TfrmNFeDAInutRL.FormDestroy(Sender: TObject);

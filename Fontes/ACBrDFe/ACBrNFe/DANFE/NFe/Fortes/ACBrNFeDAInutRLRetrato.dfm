@@ -1,10 +1,10 @@
 inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
-  Left = 447
-  Height = 834
-  Top = 240
+  Left = 375
+  Height = 485
+  Top = 175
   Width = 844
   Caption = 'Inutilização - Retrato'
-  ClientHeight = 834
+  ClientHeight = 485
   ClientWidth = 844
   Font.Height = -8
   Font.Name = 'Arial'

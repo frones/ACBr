@@ -54,7 +54,6 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDAInutRL, ACBrUtil,
-  ACBrNFeRLCodeBar,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 

@@ -1893,7 +1893,7 @@ end;
 procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
-  CpTituloReport, CpLogomarca, CpQrCode: TfrxComponent;
+  CpTituloReport, CpLogomarca, CpQrCode, CpDescrProtocolo: TfrxComponent;
 begin
   qrCode := '';
   if Assigned(NFe) then
@@ -1915,7 +1915,7 @@ begin
       65 :  begin
               CpTituloReport := frxReport.FindObject('ReportTitle1');
               if Assigned(CpTituloReport) then
-                CpTituloReport.Visible  := ( cdsParametros.FieldByName('Imagem').AsString = '' );
+                CpTituloReport.Visible := cdsParametros.FieldByName('Imagem').AsString <> '';
 
               CpLogomarca := frxReport.FindObject('ImgLogo');
               if Assigned(CpLogomarca) and Assigned(CpTituloReport) then
@@ -1934,6 +1934,11 @@ begin
               CpQrCode := frxReport.FindObject('ImgQrCode');
               if Assigned(CpQrCode) then
                 PintarQRCode( qrcode, TfrxPictureView(CpQrCode).Picture );
+
+
+              CpDescrProtocolo := frxReport.FindObject('Memo5');
+              if Assigned(CpDescrProtocolo) then
+                CpDescrProtocolo.Visible := cdsParametros.FieldByName('Contingencia_Valor').AsString <> ''
             end;
     end;
   end;

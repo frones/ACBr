@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/09/2015
+[*] acerto para que o DANFeNFCe não precise de scripts para rodar, 
+    assim vai funcionar nas versões Fast Embarcadero e Normal
+    por: regys.silveira
+
 11/09/2015
 [-] Alterado o tipo da TAG <CEST> estava como String sendo que o correto é Integer. 
     Por: Italo Jurisato Junior

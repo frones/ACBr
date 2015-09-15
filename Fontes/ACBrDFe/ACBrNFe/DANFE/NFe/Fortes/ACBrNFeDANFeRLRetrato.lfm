@@ -66,7 +66,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 13
         Width = 195
-        Caption = 'CONTINUA«√O DAS INFORMA«’ES COMPLEMENTARES'
+        Caption = 'CONTINUA√á√ÉO DAS INFORMA√á√ïES COMPLEMENTARES'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -178,7 +178,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 0
         Width = 132
-        Caption = 'DADOS DO PRODUTO / SERVI«OS'
+        Caption = 'DADOS DO PRODUTO / SERVI√áOS'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -495,7 +495,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 50
         Alignment = taCenter
         AutoSize = False
-        Caption = 'UNIT¡RIO'
+        Caption = 'UNIT√ÅRIO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -552,7 +552,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 52
         Alignment = taCenter
         AutoSize = False
-        Caption = 'C¡LC. ICMS'
+        Caption = 'C√ÅLC. ICMS'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -647,7 +647,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 46
         Alignment = taCenter
         AutoSize = False
-        Caption = 'ALÕQUOTAS'
+        Caption = 'AL√çQUOTAS'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -706,7 +706,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Lines.Strings = (
-          'DESCRI«√O DO PRODUTO / SERVI«O'
+          'DESCRI√á√ÉO DO PRODUTO / SERVI√áO'
         )
         ParentFont = False
         RealBounds.Left = 0
@@ -726,7 +726,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Lines.Strings = (
-          'C”DIGO DO PROD. / SERV.'
+          'C√ìDIGO DO PROD. / SERV.'
         )
         ParentFont = False
         RealBounds.Left = 0
@@ -943,7 +943,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 150
         Alignment = taCenter
         AutoSize = False
-        Caption = 'NOTA FISCAL ELETR‘NICA'
+        Caption = 'NOTA FISCAL ELETR√îNICA'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -974,7 +974,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 14
         Top = 67
         Width = 51
-        Caption = '1 - SAÕDA'
+        Caption = '1 - SA√çDA'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1017,7 +1017,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 16
         Top = 82
         Width = 93
-        Caption = 'N∫ 000.000.000'
+        Caption = 'N¬∫ 000.000.000'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -1034,7 +1034,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 98
         Width = 68
         Alignment = taCenter
-        Caption = 'S…RIE 000'
+        Caption = 'S√âRIE 000'
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -1141,7 +1141,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 119
         Width = 140
-        Caption = 'PROTOCOLO DE AUTORIZA«√O DE USO'
+        Caption = 'PROTOCOLO DE AUTORIZA√á√ÉO DE USO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1158,7 +1158,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 119
         Width = 95
-        Caption = 'NATUREZA DE OPERA«√O'
+        Caption = 'NATUREZA DE OPERA√á√ÉO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1176,7 +1176,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 149
         Width = 82
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1194,7 +1194,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 149
         Width = 144
-        Caption = 'INSCRI«√O ESTADUAL DO SUBST. TRIB.'
+        Caption = 'INSCRI√á√ÉO ESTADUAL DO SUBST. TRIB.'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1398,7 +1398,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 3
         Width = 108
-        Caption = 'IDENTIFICA«AO DO EMITENTE'
+        Caption = 'IDENTIFICA√áAO DO EMITENTE'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1561,7 +1561,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 23
         Width = 124
-        Caption = 'INFORMA«’ES COMPLEMENTARES'
+        Caption = 'INFORMA√á√ïES COMPLEMENTARES'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1630,7 +1630,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 158
         Width = 212
-        Caption = 'DATA / HORA DA IMPRESS√O: 00/00/0000 00:00:00 - USUARIO'
+        Caption = 'DATA / HORA DA IMPRESS√ÉO: 00/00/0000 00:00:00 - USUARIO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1685,7 +1685,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 1
         Width = 116
-        Caption = 'DESTINAT¡RIO / REMETENTE'
+        Caption = 'DESTINAT√ÅRIO / REMETENTE'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1704,7 +1704,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 80
-        Caption = 'NOME / RAZ√O SOCIAL'
+        Caption = 'NOME / RAZ√ÉO SOCIAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1739,7 +1739,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 45
         Width = 42
-        Caption = 'ENDERE«O'
+        Caption = 'ENDERE√áO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1774,7 +1774,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 75
         Width = 38
-        Caption = 'MUNICÕPIO'
+        Caption = 'MUNIC√çPIO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -1979,7 +1979,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 75
         Width = 82
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -2013,7 +2013,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 68
-        Caption = 'DATA DA EMISS√O'
+        Caption = 'DATA DA EMISS√ÉO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -2047,7 +2047,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 45
         Width = 87
-        Caption = 'DATA SAÕDA / ENTRADA'
+        Caption = 'DATA SA√çDA / ENTRADA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -2081,7 +2081,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 75
         Width = 58
-        Caption = 'HORA DA SAÕDA'
+        Caption = 'HORA DA SA√çDA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5290,7 +5290,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N∫ DUPLICATA'
+        Caption = 'N¬∫ DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5341,7 +5341,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N∫ DUPLICATA'
+        Caption = 'N¬∫ DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5392,7 +5392,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N∫ DUPLICATA'
+        Caption = 'N¬∫ DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5443,7 +5443,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N∫ DUPLICATA'
+        Caption = 'N¬∫ DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5582,7 +5582,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 1
         Width = 94
-        Caption = 'C¡LCULO DO IMPOSTO'
+        Caption = 'C√ÅLCULO DO IMPOSTO'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -5601,7 +5601,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 100
-        Caption = 'BASE DE C¡LCULO DO ICMS'
+        Caption = 'BASE DE C√ÅLCULO DO ICMS'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5778,7 +5778,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 93
-        Caption = 'BASE C¡LC. ICMS SUBST.'
+        Caption = 'BASE C√ÅLC. ICMS SUBST.'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6209,7 +6209,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 54
-        Caption = 'RAZ√O SOCIAL'
+        Caption = 'RAZ√ÉO SOCIAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6244,7 +6244,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 45
         Width = 42
-        Caption = 'ENDERE«O'
+        Caption = 'ENDERE√áO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6315,7 +6315,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 75
         Width = 34
-        Caption = 'ESP…CIE'
+        Caption = 'ESP√âCIE'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6401,7 +6401,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 45
         Width = 38
-        Caption = 'MUNICÕPIO'
+        Caption = 'MUNIC√çPIO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6435,7 +6435,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 75
         Width = 47
-        Caption = 'NUMERA«√O'
+        Caption = 'NUMERA√á√ÉO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6469,7 +6469,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 51
-        Caption = 'C”DIGO ANTT'
+        Caption = 'C√ìDIGO ANTT'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6503,7 +6503,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 15
         Width = 71
-        Caption = 'PLACA DO VEÕCULO'
+        Caption = 'PLACA DO VE√çCULO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6674,7 +6674,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 45
         Width = 82
-        Caption = 'INSCRI«√O ESTADUAL'
+        Caption = 'INSCRI√á√ÉO ESTADUAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6858,7 +6858,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 75
         Width = 52
-        Caption = 'PESO LÕQUIDO'
+        Caption = 'PESO L√çQUIDO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7458,7 +7458,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 8
         Width = 82
-        Caption = 'C¡LCULO DO ISSQN'
+        Caption = 'C√ÅLCULO DO ISSQN'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -7477,7 +7477,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 23
         Width = 81
-        Caption = 'INSCRI«√O MUNICIPAL'
+        Caption = 'INSCRI√á√ÉO MUNICIPAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7495,7 +7495,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 23
         Width = 108
-        Caption = 'VALOR TOTAL DOS SERVI«OS'
+        Caption = 'VALOR TOTAL DOS SERVI√áOS'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7512,7 +7512,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 23
         Width = 105
-        Caption = 'BASE DE C¡LCULO DO ISSQN'
+        Caption = 'BASE DE C√ÅLCULO DO ISSQN'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7668,7 +7668,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 738
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Data / Hora da entrada em contingÍncia: 00/00/0000 00:00:00  Motivo: '
+        Caption = 'Data / Hora da entrada em conting√™ncia: 00/00/0000 00:00:00  Motivo: '
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -7831,7 +7831,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 4
         Width = 350
-        Caption = 'RECEBEMOS DE %s OS PRODUTOS / SERVI«OS CONSTANTES DA NOTA FISCAL INDICADO AO LADO'
+        Caption = 'RECEBEMOS DE %s OS PRODUTOS / SERVI√áOS CONSTANTES DA NOTA FISCAL INDICADO AO LADO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7863,7 +7863,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 7
         Top = 28
         Width = 172
-        Caption = 'IDENTIFICA«√O E ASSINATURA DO RECEBEDOR'
+        Caption = 'IDENTIFICA√á√ÉO E ASSINATURA DO RECEBEDOR'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -7905,7 +7905,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 20
         Width = 94
         Alignment = taCenter
-        Caption = 'N∫ 000.000.000'
+        Caption = 'N¬∫ 000.000.000'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -7922,7 +7922,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 37
         Width = 68
         Alignment = taCenter
-        Caption = 'S…RIE 000'
+        Caption = 'S√âRIE 000'
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -7934,7 +7934,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 486
         Alignment = taCenter
-        Caption = 'DATA DE EMISS√O: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
+        Caption = 'DATA DE EMISS√ÉO: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'

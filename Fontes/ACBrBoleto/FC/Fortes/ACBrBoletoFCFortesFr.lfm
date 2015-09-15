@@ -312,7 +312,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 100
         Width = 79
-        Caption = 'Número do Documento'
+        Caption = 'NÃºmero do Documento'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -328,7 +328,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 113
         Width = 145
         AutoSize = False
-        Caption = 'Número do Documento'
+        Caption = 'NÃºmero do Documento'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -344,7 +344,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 100
         Width = 29
-        Caption = 'Espécie'
+        Caption = 'EspÃ©cie'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -360,7 +360,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 113
         Width = 53
         AutoSize = False
-        Caption = 'Espécie'
+        Caption = 'EspÃ©cie'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -376,7 +376,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 73
         Width = 53
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -393,7 +393,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 168
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -580,7 +580,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 11
         Top = 143
         Width = 132
-        Caption = 'com as caracteristícas acima'
+        Caption = 'com as caracteristÃ­cas acima'
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -733,7 +733,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 88
         Width = 64
-        Caption = '[   ] Não procurado'
+        Caption = '[   ] NÃ£o procurado'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -763,7 +763,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 64
         Width = 90
-        Caption = '[   ] Não existe nº. indicado'
+        Caption = '[   ] NÃ£o existe nÂº. indicado'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -778,7 +778,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 88
         Width = 86
-        Caption = '[   ] Endereço insuficiente'
+        Caption = '[   ] EndereÃ§o insuficiente'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1169,7 +1169,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 70
         Width = 42
-        Caption = 'Beneficiário'
+        Caption = 'BeneficiÃ¡rio'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1575,7 +1575,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 69
         Width = 103
-        Caption = 'Agência / Código Beneficiário'
+        Caption = 'AgÃªncia / CÃ³digo BeneficiÃ¡rio'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1592,7 +1592,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 172
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Agência / Código Cedente'
+        Caption = 'AgÃªncia / CÃ³digo Cedente'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -1607,7 +1607,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 101
         Width = 53
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1624,7 +1624,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 172
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -1863,7 +1863,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 318
         Width = 57
-        Caption = 'Código de Baixa'
+        Caption = 'CÃ³digo de Baixa'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -1898,9 +1898,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -9
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Recebimento através do cheque número'
+          'Recebimento atravÃ©s do cheque nÃºmero'
           '                                           do banco.'
-          'Esta quitação só terá validade após o '
+          'Esta quitaÃ§Ã£o sÃ³ terÃ¡ validade apÃ³s o '
           'pagamento do cheque pelo banco sacado.'
         )
         ParentFont = False
@@ -1914,7 +1914,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 346
         Width = 80
-        Caption = 'Autenticação Mecânica'
+        Caption = 'AutenticaÃ§Ã£o MecÃ¢nica'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2131,7 +2131,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -8
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário. Qualquer dúvida sobre este boleto, contate o beneficiário)'
+          'InstruÃ§Ãµes (Todas as informaÃ§Ãµes deste bloqueto sÃ£o de exclusiva responsabilidade do beneficiÃ¡rio. Qualquer dÃºvida sobre este boleto, contate o beneficiÃ¡rio)'
         )
         ParentFont = False
         RealBounds.Left = 0
@@ -2453,7 +2453,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 85
         Width = 42
-        Caption = 'Beneficiário'
+        Caption = 'BeneficiÃ¡rio'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2484,7 +2484,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 84
         Width = 103
-        Caption = 'Agência / Código Beneficiário'
+        Caption = 'AgÃªncia / CÃ³digo BeneficiÃ¡rio'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2501,7 +2501,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 172
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Agência / Código Cedente'
+        Caption = 'AgÃªncia / CÃ³digo Cedente'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -2548,7 +2548,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 117
         Width = 79
-        Caption = 'Número do Documento'
+        Caption = 'NÃºmero do Documento'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2565,7 +2565,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 122
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Número do Documento'
+        Caption = 'NÃºmero do Documento'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -2580,7 +2580,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 117
         Width = 47
-        Caption = 'Espécie Doc.'
+        Caption = 'EspÃ©cie Doc.'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2597,7 +2597,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 68
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Espécie Doc.'
+        Caption = 'EspÃ©cie Doc.'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -2676,7 +2676,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 117
         Width = 53
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2693,7 +2693,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 172
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -2773,7 +2773,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 142
         Width = 29
-        Caption = 'Espécie'
+        Caption = 'EspÃ©cie'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -2790,7 +2790,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 58
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Espécie'
+        Caption = 'EspÃ©cie'
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -3094,7 +3094,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 319
         Width = 57
-        Caption = 'Código de Baixa'
+        Caption = 'CÃ³digo de Baixa'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3140,7 +3140,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 348
         Width = 168
-        Caption = 'Autenticação  Mecânica - Ficha de Compensação'
+        Caption = 'AutenticaÃ§Ã£o  MecÃ¢nica - Ficha de CompensaÃ§Ã£o'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3209,7 +3209,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 525
         Width = 76
-        Caption = '( - ) Outras Deduções'
+        Caption = '( - ) Outras DeduÃ§Ãµes'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3391,7 +3391,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -8
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário. Qualquer dúvida sobre este boleto, contate o beneficiário)'
+          'InstruÃ§Ãµes (Todas as informaÃ§Ãµes deste bloqueto sÃ£o de exclusiva responsabilidade do beneficiÃ¡rio. Qualquer dÃºvida sobre este boleto, contate o beneficiÃ¡rio)'
         )
         ParentFont = False
         RealBounds.Left = 0
@@ -3695,7 +3695,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 71
         Width = 42
-        Caption = 'Beneficiário'
+        Caption = 'BeneficiÃ¡rio'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3710,7 +3710,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 71
         Width = 103
-        Caption = 'Agência / Código Beneficiário'
+        Caption = 'AgÃªncia / CÃ³digo BeneficiÃ¡rio'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3740,7 +3740,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 96
         Width = 79
-        Caption = 'Número do Documento'
+        Caption = 'NÃºmero do Documento'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3755,7 +3755,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 96
         Width = 47
-        Caption = 'Espécie Doc.'
+        Caption = 'EspÃ©cie Doc.'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3800,7 +3800,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 96
         Width = 53
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3845,7 +3845,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 121
         Width = 29
-        Caption = 'Espécie'
+        Caption = 'EspÃ©cie'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -3997,7 +3997,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 255
         Width = 57
-        Caption = 'Código de Baixa'
+        Caption = 'CÃ³digo de Baixa'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4012,7 +4012,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 284
         Width = 80
-        Caption = 'Autenticação Mecânica'
+        Caption = 'AutenticaÃ§Ã£o MecÃ¢nica'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4107,7 +4107,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 310
         Width = 81
-        Caption = 'Ficha de Compensação'
+        Caption = 'Ficha de CompensaÃ§Ã£o'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4164,7 +4164,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 71
         Width = 103
-        Caption = 'Agência / Código Beneficiario'
+        Caption = 'AgÃªncia / CÃ³digo Beneficiario'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4179,7 +4179,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 95
         Width = 29
-        Caption = 'Espécie'
+        Caption = 'EspÃ©cie'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4322,7 +4322,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 10
         Top = 229
         Width = 53
-        Caption = 'Nosso Número'
+        Caption = 'Nosso NÃºmero'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -4870,7 +4870,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Height = -8
         Font.Name = 'Arial'
         Lines.Strings = (
-          'Instruções (Todas as informações deste bloqueto são de exclusiva responsabilidade do beneficiário. Qualquer dúvida sobre este boleto contate o beneficiário)'''
+          'InstruÃ§Ãµes (Todas as informaÃ§Ãµes deste bloqueto sÃ£o de exclusiva responsabilidade do beneficiÃ¡rio. Qualquer dÃºvida sobre este boleto contate o beneficiÃ¡rio)'''
         )
         ParentFont = False
         RealBounds.Left = 0
@@ -4887,7 +4887,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     top = 8
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
+    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright Â© 1999-2008 Fortes InformÃ¡tica'
     DocumentInfo.ModDate = 0
     ViewerOptions = []
     FontEncoding = feNoEncoding

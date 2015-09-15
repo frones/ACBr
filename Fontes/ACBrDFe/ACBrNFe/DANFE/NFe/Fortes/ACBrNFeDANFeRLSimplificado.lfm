@@ -101,7 +101,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Width = 256
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Protocolo de AutorizaÁ„o:'
+        Caption = 'Protocolo de Autoriza√ß√£o:'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -13
@@ -582,7 +582,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Height = 14
         Top = 2
         Width = 140
-        Caption = 'DESCRI«√O DO PRODUTO'
+        Caption = 'DESCRI√á√ÉO DO PRODUTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -676,7 +676,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Height = 14
         Top = 2
         Width = 45
-        Caption = 'C”DIGO'
+        Caption = 'C√ìDIGO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -965,7 +965,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Top = 3
         Width = 146
         Alignment = taCenter
-        Caption = 'EMISS√O NORMAL'
+        Caption = 'EMISS√ÉO NORMAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -16
@@ -1018,7 +1018,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Height = 12
         Top = 34
         Width = 107
-        Caption = '0 - ENTRADA / 1 - SAÕDA'
+        Caption = '0 - ENTRADA / 1 - SA√çDA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -1083,7 +1083,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Top = 3
         Width = 98
         Alignment = taCenter
-        Caption = 'DESTINAT¡RIO'
+        Caption = 'DESTINAT√ÅRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -13

@@ -618,7 +618,7 @@ type
     FIndTot: TpcnIndicadorTotal;
     FDI: TDICollection;
     FxPed: String;
-    FnItemPed: Integer;
+    FnItemPed: String;
     FdetExport: TdetExportCollection;
     FveicProd: TveicProd;
     Fmed: TMedCollection;
@@ -664,7 +664,7 @@ type
     property IndTot: TpcnIndicadorTotal read FIndTot write FIndTot default itSomaTotalNFe;
     property DI: TDICollection read FDI write SetDI;
     property xPed: String read FxPed write FxPed;
-    property nItemPed : Integer read FnItemPed write FnItemPed;
+    property nItemPed : String read FnItemPed write FnItemPed;
     property detExport: TdetExportCollection read FdetExport write SetdetExport;
     property veicProd: TveicProd read FveicProd write FveicProd;
     property med: TMedCollection read Fmed write SetMed;

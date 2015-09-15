@@ -425,7 +425,7 @@ begin
     (*I17a*)NFe.Det[i].Prod.vOutro  := Leitor.rCampo(tcDe2, 'vOutro');
     (*I17b*)NFe.Det[i].Prod.IndTot  := StrToindTot(ok,Leitor.rCampo(tcDe2, 'indTot'));
     (*I30*)NFe.Det[i].Prod.xPed     := Leitor.rCampo(tcStr, 'xPed');
-    (*I31*)NFe.Det[i].Prod.nItemPed := Leitor.rCampo(tcInt, 'nItemPed');
+    (*I31*)NFe.Det[i].Prod.nItemPed := Leitor.rCampo(tcStr, 'nItemPed');
     (*I31*)NFe.Det[i].Prod.nRECOPI  := Leitor.rCampo(tcStr, 'nRECOPI');
     (*I70*)NFe.Det[i].Prod.nFCI     := Leitor.rCampo(tcStr, 'nFCI');
 

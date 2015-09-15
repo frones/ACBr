@@ -49,6 +49,10 @@ Símbolo : Significado
 
 15/09/2015
 [*] (pcnNFe, pcnNFeR e pcnNFeW)
+    Alterado o tipo de Integer para String do campo: nItemPed.
+    Apesar de ser um campo numérico ele tem tamanho fixo = 6 e pode iniciar com
+    zero.
+[*] (pcnNFe, pcnNFeR e pcnNFeW)
     Alterado o tipo de Integer para String do campo: CEST.
     Apesar de ser um campo numérico ele tem tamanho fixo = 7 e pode iniciar com
     zero.

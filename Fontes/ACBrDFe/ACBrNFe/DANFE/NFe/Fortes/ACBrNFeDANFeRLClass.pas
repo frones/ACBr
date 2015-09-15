@@ -100,6 +100,8 @@ type
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override ;
     procedure ImprimirEVENTO(NFE : TNFe = nil); override ;
     procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
+    procedure ImprimirINUTILIZACAO(NFe: TNFe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(NFe: TNFe = nil); override;
     procedure SetExibirEAN(Value: Boolean); virtual;
     procedure SetTipoDANFE(Value: TpcnTipoImpressao); virtual;
   published
@@ -124,11 +126,13 @@ implementation
 uses ACBrNFe, ACBrUtil,
      ACBrNFeDANFeRL, ACBrNFeDANFeEventoRL,
      ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem,
-     ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado;
+     ACBrNFeDANFeEventoRLRetrato, ACBrNFeDANFeRLSimplificado,
+     ACBrNFeDAInutRL, ACBrNFeDAInutRLRetrato;
 
 var
   frlDANFeRL: TfrlDANFeRL;
   frlDANFeEventoRL: TfrlDANFeEventoRL;
+  frmNFeDAInutRL : TfrmNFeDAInutRL;
 
 constructor TFonte.Create(AOwner: TComponent);
 begin
@@ -420,6 +424,38 @@ try
  finally
   FreeAndNil(frlDANFeEventoRL);
  end; 
+end;
+
+procedure TACBrNFeDANFErl.ImprimirINUTILIZACAO(NFe: TNFe);
+begin
+  frmNFeDAInutRL := TfrmNFeDAInutRLRetrato.Create(Self);
+
+  frmNFeDAInutRL.Imprimir(TACBrNFe(ACBrNFe),
+                          FLogo, FNumCopias, FSistema, FUsuario,
+                          FMostrarPreview, FMargemSuperior,
+                          FMargemInferior, FMargemEsquerda,
+                          FMargemDireita, FImpressora);
+
+  FreeAndNil(frmNFeDAInutRL);
+end;
+
+procedure TACBrNFeDANFErl.ImprimirINUTILIZACAOPDF(NFe: TNFe);
+var
+ NomeArq: String;
+begin
+  frmNFeDAInutRL := TfrmNFeDAInutRLRetrato.Create(Self);
+
+  NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  if NomeArq = '' then
+    NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
+
+  frmNFeDAInutRL.SavePDF(TACBrNFe(ACBrNFe),
+                         FLogo, NomeArq, FSistema, FUsuario,
+                         FMargemSuperior, FMargemInferior,
+                         FMargemEsquerda, FMargemDireita);
+
+  FreeAndNil(frmNFeDAInutRL);
 end;
 
 end.

@@ -2021,8 +2021,8 @@ begin
                Prod.vOutro    := StringToFloatDef( INIRec.ReadString(sSecao,'vOutro','') ,0) ; //NFe2
                Prod.IndTot    := StrToindTot(OK,INIRec.ReadString(sSecao,'indTot','1'));       //NFe2
 
-               Prod.xPed      := INIRec.ReadString( sSecao,'xPed'    ,'');  //NFe2
-               Prod.nItemPed  := INIRec.ReadInteger( sSecao,'nItemPed',0);  //NFe2
+               Prod.xPed      := INIRec.ReadString( sSecao,'xPed'    , '');  //NFe2
+               Prod.nItemPed  := INIRec.ReadString( sSecao,'nItemPed', '');  //NFe2
 
                Prod.nFCI      := INIRec.ReadString( sSecao,'nFCI','');  //NFe3
                Prod.nRECOPI   := INIRec.ReadString( sSecao,'nRECOPI','');  //NFe3
@@ -2892,8 +2892,8 @@ begin
                INIRec.WriteFloat(sSecao,'vOutro',Prod.vOutro) ;
                INIRec.WriteString(sSecao,'IndTot',indTotToStr(Prod.IndTot));
 
-               INIRec.WriteString(  sSecao,'xPed'     , Prod.xPed);
-               INIRec.WriteInteger( sSecao,'nItemPed' , Prod.nItemPed);
+               INIRec.WriteString( sSecao,'xPed'     , Prod.xPed);
+               INIRec.WriteString( sSecao,'nItemPed' , Prod.nItemPed );
 
                INIRec.WriteFloat(sSecao,'vTotTrib',Imposto.vTotTrib) ;
 

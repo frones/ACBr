@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = edtDirDestino
+  ActiveControl = lstMsgInstalacao
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgConfiguracao
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1386,7 +1386,7 @@ object frmPrincipal: TfrmPrincipal
       object btnVisualizarLogCompilacao: TSpeedButton
         Left = 20
         Top = 463
-        Width = 106
+        Width = 140
         Height = 25
         Caption = 'Visualizar log'
         OnClick = btnVisualizarLogCompilacaoClick
@@ -1438,16 +1438,16 @@ object frmPrincipal: TfrmPrincipal
           ParentFont = False
           TabOrder = 0
         end
-        object btnWCInfo: TButton
-          Left = 450
-          Top = 40
-          Width = 65
-          Height = 49
-          Caption = 'Mostrar '#250'ltima revis'#227'o'
-          TabOrder = 1
-          WordWrap = True
-          OnClick = btnWCInfoClick
-        end
+      end
+      object btnWCInfo: TButton
+        Left = 166
+        Top = 463
+        Width = 140
+        Height = 25
+        Caption = 'Mostrar '#250'ltima revis'#227'o'
+        TabOrder = 3
+        WordWrap = True
+        OnClick = btnWCInfoClick
       end
     end
     object wizPgFinalizar: TJvWizardInteriorPage

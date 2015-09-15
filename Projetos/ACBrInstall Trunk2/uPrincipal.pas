@@ -107,8 +107,8 @@ type
     ckbBCB: TCheckBox;
     lbInfo: TListBox;
     Label8: TLabel;
-    btnWCInfo: TButton;
     chkDeixarSomenteLIB: TCheckBox;
+    btnWCInfo: TButton;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -215,34 +215,30 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
     iRet: Integer;
     sDirDpk: string;
   begin
-     sDir := IncludeTrailingPathDelimiter(sDir);
-     if not DirectoryExists(sDir) then
-        Exit;
+    sDir := IncludeTrailingPathDelimiter(sDir);
+    if not DirectoryExists(sDir) then
+       Exit;
 
-     iRet := FindFirst(sDir + '*.*', faAnyFile, oDirList);
-     try
-       while (iRet = 0) do
-       begin
-          iRet := FindNext(oDirList);
-          if (oDirList.Name = '.')  or
-             (oDirList.Name = '..') or
-             (oDirList.Name = '__history') then
-          begin
-             Continue;
-          end;
-          if oDirList.Attr = faDirectory then
-             FindDirPackage(sDir + oDirList.Name, sPacote)
-          else
-          begin
-             if oDirList.Name = sPacote then
-             begin
-                sDirPackage := IncludeTrailingPathDelimiter(sDir);
-             end;
-          end;
-       end;
-     finally
-       SysUtils.FindClose(oDirList);
-     end;
+    iRet := FindFirst(sDir + '*.*', faAnyFile, oDirList);
+    try
+      while (iRet = 0) do
+      begin
+        iRet := FindNext(oDirList);
+        if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') then
+          Continue;
+
+        //if oDirList.Attr = faDirectory then
+        if DirectoryExists(sDir + oDirList.Name) then
+          FindDirPackage(sDir + oDirList.Name, sPacote)
+        else
+        begin
+          if oDirList.Name = sPacote then
+            sDirPackage := IncludeTrailingPathDelimiter(sDir);
+        end;
+      end;
+    finally
+      SysUtils.FindClose(oDirList);
+    end;
   end;
 
 begin
@@ -642,7 +638,6 @@ begin
   // --
   with oACBr.Installations[iVersion] do
   begin
-
     AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
     AddToLibrarySearchPath(sDirLibrary, tPlatform);
     AddToDebugDCUPath(sDirLibrary, tPlatform);
@@ -899,9 +894,6 @@ begin
     Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak +
                  'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
                  'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
-//                 'Última Revisão: ' + TSVN_Class.WCInfo.Revision  + sLineBreak +
-//                 'Autor: ' + TSVN_Class.WCInfo.Author  + sLineBreak +
-//                 'Data: ' + TSVN_Class.WCInfo.Date  + sLineBreak +
                  StringOfChar('=', 80);
 
     // limpar o log
@@ -1196,9 +1188,6 @@ end;
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;
   const FromPage: TJvWizardCustomPage);
 begin
-  // capturar informações da última revisão
-  TSVN_Class.GetRevision(edtDirDestino.Text);
-
   SetPlatformSelected;
   lstMsgInstalacao.Clear;
   pgbInstalacao.Position := 0;
@@ -1216,9 +1205,6 @@ begin
     Add(edtDelphiVersion.Text + ' ' + edtPlatform.Text);
     Add('Dir. Instalação  : ' + edtDirDestino.Text);
     Add('Dir. Bibliotecas : ' + sDirLibrary);
-//    Add('Última Revisão   : ' + TSVN_Class.WCInfo.Revision);
-//    Add('Autor            : ' + TSVN_Class.WCInfo.Author);
-//    Add('Data:            : ' + TSVN_Class.WCInfo.Date);
   end;
 end;
 
@@ -1351,12 +1337,19 @@ begin
 end;
 
 procedure TfrmPrincipal.btnWCInfoClick(Sender: TObject);
+var
+  Msg: String;
 begin
+  // capturar informações da última revisão
+  TSVN_Class.GetRevision(edtDirDestino.Text);
   with lbInfo.Items do
   begin
-    Add('Última Revisão   : ' + TSVN_Class.WCInfo.Revision);
-    Add('Autor            : ' + TSVN_Class.WCInfo.Author);
-    Add('Data:            : ' + TSVN_Class.WCInfo.Date);
+    Msg :=
+      'Última Revisão: ' + TSVN_Class.WCInfo.Revision + sLineBreak +
+      'Autor: ' + TSVN_Class.WCInfo.Author + sLineBreak +
+      'Data: ' + TSVN_Class.WCInfo.Date;
+
+    ShowMessage(Msg);
   end;
 end;
 

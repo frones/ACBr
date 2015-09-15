@@ -156,8 +156,9 @@ begin
    wCarteira:= Trim(Carteira);
    wTamConvenio:= Length(Trim(ACBrBanco.ACBrBoleto.Cedente.Convenio));
 
-   if (Length(trim(NossoNumero)) > 10) and (wTamConvenio = 6) and
-      ((wCarteira = '16') or (wCarteira = '18')) then
+   if (Length(trim(NossoNumero)) > 10) and
+      ((wTamConvenio = 6) and ((wCarteira = '16') or (wCarteira = '18'))) or
+      ((wTamConvenio = 7) and (wCarteira = '18')) then
       Result:= 17
    else if (wTamConvenio <= 4) then
       Result := 7
@@ -1536,8 +1537,8 @@ begin
       ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
       ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
       ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-      NossoNumero          := Copy(Linha,64,17);
       Carteira             := Copy(Linha,107,2);
+      NossoNumero          := Copy(Linha,64,17);
       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,182,07),0)/100;
       ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 

@@ -2483,6 +2483,16 @@ begin
   FautXML := Value;
 end;
 
+{ TInfCTe }
+
+function TInfCTe.GetVersaoStr: String;
+begin
+  if FVersao <= 0 then
+     Result := V2_00
+  else
+     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
+end;
+
 { TIde }
 
 constructor TIde.Create(AOwner: TCTe);
@@ -4604,16 +4614,6 @@ begin
 end;
 
 {$ENDIF}
-
-{ TInfCTe }
-
-function TInfCTe.GetVersaoStr: String;
-begin
-  if FVersao <= 0 then
-     Result := V2_00
-  else
-     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
-end;
 
 end.
 

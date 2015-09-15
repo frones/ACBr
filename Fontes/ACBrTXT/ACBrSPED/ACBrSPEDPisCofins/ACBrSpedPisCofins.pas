@@ -715,8 +715,8 @@ procedure TACBrSPEDPisCofins.WriteBloco_1;
 begin
    if Bloco_1.Gravado then exit ;
 
-   if not Bloco_M.Gravado then
-      WriteBloco_M;
+   if not Bloco_P.Gravado then
+      WriteBloco_P ;           
 
    /// BLOCO 1
    WriteRegistro1001;

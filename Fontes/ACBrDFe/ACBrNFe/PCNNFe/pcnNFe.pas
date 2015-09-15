@@ -627,7 +627,7 @@ type
     FnRECOPI: String;
     FnFCI: String;
     FNVE: TNVECollection;
-    FCEST: Integer;
+    FCEST: String;
 
     procedure SetDI(Value: TDICollection);
     procedure SetMed(Value: TmedCollection);
@@ -672,7 +672,7 @@ type
     property comb: Tcomb read Fcomb write Fcomb;
     property nRECOPI: String read FnRECOPI write FnRECOPI;
     property nFCI: String read FnFCI write FnFCI;
-    property CEST: Integer read FCEST write FCEST;
+    property CEST: String read FCEST write FCEST;
   end;
 
   TveicProd = class(TPersistent)

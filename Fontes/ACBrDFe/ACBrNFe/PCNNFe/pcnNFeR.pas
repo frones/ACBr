@@ -407,7 +407,7 @@ begin
     (*I03*)NFe.Det[i].Prod.cEAN  := Leitor.rCampo(tcStr, 'cEAN');
     (*I04*)NFe.Det[i].Prod.xProd := Leitor.rCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM   := Leitor.rCampo(tcStr, 'NCM');
-    (*I05w*)NFe.Det[i].Prod.CEST := Leitor.rCampo(tcInt, 'CEST');
+    (*I05w*)NFe.Det[i].Prod.CEST := Leitor.rCampo(tcStr, 'CEST');
     (*I06*)NFe.Det[i].Prod.EXTIPI   := Leitor.rCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := Leitor.rCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP     := Leitor.rCampo(tcEsp, 'CFOP');

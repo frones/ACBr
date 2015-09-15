@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/09/2015
+[*] (pcnNFe, pcnNFeR e pcnNFeW)
+    Alterado o tipo de Integer para String do campo: CEST.
+    Apesar de ser um campo numérico ele tem tamanho fixo = 7 e pode iniciar com
+    zero.
+    por: Italo Jurisato Junior
+
 14/09/2015
 [*] acerto para que o DANFeNFCe não precise de scripts para rodar, 
     assim vai funcionar nas versões Fast Embarcadero e Normal

@@ -1,11 +1,11 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 497
-  Height = 818
-  Top = 149
+  Left = 333
+  Height = 733
+  Top = 141
   Width = 1282
   VertScrollBar.Position = 107
   Caption = 'frlDANFeRLPaisagem'
-  ClientHeight = 818
+  ClientHeight = 733
   ClientWidth = 1282
   inherited RLNFe: TRLReport
     Left = 8
@@ -54,6 +54,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 8
         Top = 24
         Width = 1018
+        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Color = clBlack
         Font.Height = -8
@@ -213,6 +214,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Width = 52
           Alignment = taCenter
           AutoSize = False
+          Behavior = [beSiteExpander]
           Font.Color = clBlack
           Font.Height = -7
           Font.Name = 'Arial'
@@ -246,6 +248,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Width = 240
           Alignment = taCenter
           AutoSize = False
+          Behavior = [beSiteExpander]
           Font.Color = clBlack
           Font.Height = -7
           Font.Name = 'Arial'
@@ -988,6 +991,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 78
         Width = 342
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1385,6 +1389,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 12
         Width = 342
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -1402,6 +1407,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 38
         Width = 342
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1710,6 +1716,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 18
         Width = 706
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Courier New'
@@ -5057,6 +5064,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 10
           Top = 1
           Width = 241
+          Behavior = [beSiteExpander]
           DataField = 'DESCRICAO'
           Font.Color = clBlack
           Font.Height = -8
@@ -5917,6 +5925,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Height = 12
       Top = 704
       Width = 681
+      Behavior = [beSiteExpander]
       Color = clSkyBlue
       Font.Color = clBlack
       Font.Height = -9
@@ -6213,6 +6222,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 8
         Top = 1
         Width = 952
+        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Color = clBlack
         Font.Height = -8

@@ -1,11 +1,11 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 476
-  Height = 891
-  Top = 119
+  Left = 463
+  Height = 733
+  Top = 118
   Width = 952
   VertScrollBar.Position = 523
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 891
+  ClientHeight = 733
   ClientWidth = 952
   inherited RLNFe: TRLReport
     Top = 520
@@ -50,6 +50,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 12
         Top = 24
         Width = 673
+        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Color = clBlack
         Font.Height = -9
@@ -702,6 +703,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 166
         Alignment = taCenter
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -722,6 +724,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 52
         Alignment = taCenter
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -817,6 +820,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 96
         Width = 185
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1230,6 +1234,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 258
         Alignment = taCenter
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1247,6 +1252,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 48
         Width = 185
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1597,6 +1603,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 34
         Width = 417
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Courier New'
@@ -7338,6 +7345,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 10
         Top = 1
         Width = 185
+        Behavior = [beSiteExpander]
         DataField = 'DESCRICAO'
         Font.Color = clBlack
         Font.Height = -8
@@ -7740,6 +7748,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 8
         Top = 1
         Width = 664
+        Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Color = clBlack
         Font.Height = -8
@@ -7975,6 +7984,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Height = 12
       Top = 64
       Width = 457
+      Behavior = [beSiteExpander]
       Font.Color = clBlack
       Font.Height = -9
       Font.Name = 'Courier New'

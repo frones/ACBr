@@ -1495,7 +1495,7 @@ begin
                trvwNFe.Items.AddChild(NodeItem,'vOutro='      +FloatToStr(Prod.vOutro)) ;
                trvwNFe.Items.AddChild(NodeItem,'indTot='      +indTotToStr(Prod.IndTot)) ;
                trvwNFe.Items.AddChild(NodeItem,'xPed='        +Prod.xPed) ;
-               trvwNFe.Items.AddChild(NodeItem,'nItemPedido=' +IntToStr(Prod.nItemPed)) ;
+               trvwNFe.Items.AddChild(NodeItem,'nItemPedido=' +Prod.nItemPed) ;
 
                trvwNFe.Items.AddChild(NodeItem,'infAdProd=' +infAdProd);
 

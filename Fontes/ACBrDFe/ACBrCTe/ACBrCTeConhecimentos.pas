@@ -515,12 +515,14 @@ begin
   end;
 
   FCTeW.GerarXml;
-
   FXML := FCTeW.Gerador.ArquivoFormatoXML;
   FXMLOriginal := FXML;
-  FXMLAssinado := '';
-  FAlertas := FCTeW.Gerador.ListaDeAlertas.Text;
+  if XmlEstaAssinado(FXML) then
+    FXMLAssinado := FXML
+  else
+    FXMLAssinado := '';
 
+  FAlertas := FCTeW.Gerador.ListaDeAlertas.Text;
   Result := FXML;
 end;
 

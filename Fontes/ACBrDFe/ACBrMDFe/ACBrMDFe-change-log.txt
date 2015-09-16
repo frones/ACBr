@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2015
+[-] (ACBrMDFeManifestos)
+    Ajuste para ACBrMDFe1.Manifestos.LoadFromFile para quando o XML lido com
+    assinatura, seja corretamente atribuido a propriedade "XMLAssinado" caso o
+    parâmetro AGerarMDFe = True
+    Por: Italo Jurisato Junior
+
 11/09/2015
 [*] (ACBrMDFeWebServices) 
     Incluida a linha para configurar a propriedade: RetirarAcentos ao gerar o XML

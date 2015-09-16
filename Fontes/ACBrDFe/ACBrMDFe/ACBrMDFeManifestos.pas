@@ -488,7 +488,11 @@ begin
   FMDFeW.GerarXml;
   FXML := FMDFeW.Gerador.ArquivoFormatoXML;
   FXMLOriginal := FXML;
-  FXMLAssinado := '';
+  if XmlEstaAssinado(FXML) then
+    FXMLAssinado := FXML
+  else
+    FXMLAssinado := '';
+
   FAlertas := FMDFeW.Gerador.ListaDeAlertas.Text;
   Result := FXML;
 end;

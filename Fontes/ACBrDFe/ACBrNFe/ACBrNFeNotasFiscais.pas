@@ -1242,7 +1242,11 @@ begin
   FNFeW.GerarXml;
   FXML := FNFeW.Gerador.ArquivoFormatoXML;
   FXMLOriginal := FXML;
-  FXMLAssinado := '';
+  if XmlEstaAssinado(FXML) then
+    FXMLAssinado := FXML
+  else
+    FXMLAssinado := '';
+
   FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
   Result := FXML;
 end;

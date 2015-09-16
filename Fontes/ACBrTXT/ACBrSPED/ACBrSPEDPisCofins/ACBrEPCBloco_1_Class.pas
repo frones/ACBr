@@ -509,20 +509,20 @@ end;
 procedure TBloco_1.WriteRegistro1102(Reg1101: TRegistro1101) ;
 begin
   if Assigned(Reg1101.Registro1102) then
-  begin
-     with Reg1101.Registro1102 do
-     begin
-
-       Add( LFill('1102') +
+  	if (Reg1101.CST_PIS in [53,54,55,56,63,64,65,66]) then
+  	begin
+      with Reg1101.Registro1102 do
+      begin
+      	Add( LFill('1102') +
             VDFill( VL_CRED_PIS_TRIB_MI,2 ) +
             VDFill( VL_CRED_PIS_NT_MI,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
             VDFill( VL_CRED_PIS_EXP,2 ) ) ;
-     end;
+      end;
      ///
-     Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
+      Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
      /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistro1102Count := FRegistro1102Count + 1;
-  end;
+      FRegistro1102Count := FRegistro1102Count + 1;
+  	end;
 end;
 
 procedure TBloco_1.WriteRegistro1200(Reg1001: TRegistro1001) ;
@@ -724,19 +724,20 @@ end;
 procedure TBloco_1.WriteRegistro1502(Reg1501: TRegistro1501) ;
 begin
   if Assigned(Reg1501.Registro1502) then
-  begin
-     with Reg1501.Registro1502 do
-     begin
-       Add( LFill('1502') +
-            VDFill( VL_CRED_COFINS_TRIB_MI,2 ) +
-            VDFill( VL_CRED_COFINS_NT_MI,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
-            VDFill( VL_CRED_COFINS_EXP,2 ) ) ;
-     end;
-     ///
-     Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
-     /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistro1502Count := FRegistro1502Count + 1;
-  end;
+	if (Reg1501.CST_COFINS in [53,54,55,56,63,64,65,66]) then
+	begin
+	 with Reg1501.Registro1502 do
+	 begin
+	   Add( LFill('1502') +
+	        VDFill( VL_CRED_COFINS_TRIB_MI,2 ) +
+	        VDFill( VL_CRED_COFINS_NT_MI,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
+	        VDFill( VL_CRED_COFINS_EXP,2 ) ) ;
+	 end;
+	 ///
+	 Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
+	 /// Variavél para armazenar a quantidade de registro do tipo.
+	 FRegistro1502Count := FRegistro1502Count + 1;
+	end;
 end;
 
 procedure TBloco_1.WriteRegistro1600(Reg1001: TRegistro1001) ;

@@ -270,13 +270,13 @@ type
   //REGISTRO 1102: DETALHAMENTO DO CRÉDITO EXTEMPORANEO VINCULADO A MAIS DE UM TIPO DE RECEITA – PIS/PASEP
   TRegistro1102 = class
   private
-    fVL_CRED_PIS_TRIB_MI: Currency;         //02	VL_CRED_PIS_TRIB_MI	Parcela do Crédito de PIS/PASEP, vinculada a Receita Tributada no Mercado Interno
-    fVL_CRED_PIS_NT_MI: Currency;	          //03	VL_CRED_PIS_NT_MI	Parcela do Crédito de PIS/PASEP, vinculada a Receita Não Tributada no Mercado Interno
-    fVL_CRED_PIS_EXP: Currency;	           //04	VL_CRED_PIS_ EXP	Parcela do Crédito de PIS/PASEP, vinculada a Receita de Exportação
+    fVL_CRED_PIS_TRIB_MI: Variant;         //02	VL_CRED_PIS_TRIB_MI	Parcela do Crédito de PIS/PASEP, vinculada a Receita Tributada no Mercado Interno
+    fVL_CRED_PIS_NT_MI: Variant;	          //03	VL_CRED_PIS_NT_MI	Parcela do Crédito de PIS/PASEP, vinculada a Receita Não Tributada no Mercado Interno
+    fVL_CRED_PIS_EXP: Variant;	           //04	VL_CRED_PIS_ EXP	Parcela do Crédito de PIS/PASEP, vinculada a Receita de Exportação
   public
-    property VL_CRED_PIS_TRIB_MI: Currency read FVL_CRED_PIS_TRIB_MI write FVL_CRED_PIS_TRIB_MI;
-    property VL_CRED_PIS_NT_MI: Currency read FVL_CRED_PIS_NT_MI write FVL_CRED_PIS_NT_MI;
-    property VL_CRED_PIS_EXP: Currency read FVL_CRED_PIS_EXP write FVL_CRED_PIS_EXP;
+    property VL_CRED_PIS_TRIB_MI: Variant read FVL_CRED_PIS_TRIB_MI write FVL_CRED_PIS_TRIB_MI;
+    property VL_CRED_PIS_NT_MI: Variant read FVL_CRED_PIS_NT_MI write FVL_CRED_PIS_NT_MI;
+    property VL_CRED_PIS_EXP: Variant read FVL_CRED_PIS_EXP write FVL_CRED_PIS_EXP;
   end;
 
   //REGISTRO 1200: CONTRIBUIÇÃO SOCIAL EXTEMPORÂNEA – PIS/PASEP
@@ -539,13 +539,13 @@ type
   //REGISTRO 1502: DETALHAMENTO DO CRÉDITO EXTEMPORÂNEO VINCULADO A MAIS DE UM TIPO DE RECEITA – COFINS
   TRegistro1502 = class
   private
-    fVL_CRED_COFINS_TRIB_MI: Currency;      //02	VL_CRED_COFINS_TRIB_MI	Parcela do Crédito de COFINS, vinculada a Receita Tributada no Mercado Interno	N	-	02
-    fVL_CRED_COFINS_NT_MI: Currency;	      //03	VL_CRED_COFINS_NT_MI	Parcela do Crédito de COFINS, vinculada a Receita Não Tributada no Mercado Interno	N	-	02
-    fVL_CRED_COFINS_EXP: Currency;	        //03? repetiu o numero do campo no manual	VL_CRED_COFINS_ EXP	Parcela do Crédito de COFINS, vinculada a Receita de Exportação	N	-	02
+    fVL_CRED_COFINS_TRIB_MI: Variant;      //02	VL_CRED_COFINS_TRIB_MI	Parcela do Crédito de COFINS, vinculada a Receita Tributada no Mercado Interno	N	-	02
+    fVL_CRED_COFINS_NT_MI: Variant;	      //03	VL_CRED_COFINS_NT_MI	Parcela do Crédito de COFINS, vinculada a Receita Não Tributada no Mercado Interno	N	-	02
+    fVL_CRED_COFINS_EXP: Variant;	        //03? repetiu o numero do campo no manual	VL_CRED_COFINS_ EXP	Parcela do Crédito de COFINS, vinculada a Receita de Exportação	N	-	02
   public
-    property VL_CRED_COFINS_TRIB_MI: Currency read FVL_CRED_COFINS_TRIB_MI write FVL_CRED_COFINS_TRIB_MI;
-    property VL_CRED_COFINS_NT_MI: Currency read FVL_CRED_COFINS_NT_MI write FVL_CRED_COFINS_NT_MI;
-    property VL_CRED_COFINS_EXP: Currency read FVL_CRED_COFINS_EXP write FVL_CRED_COFINS_EXP;
+    property VL_CRED_COFINS_TRIB_MI: Variant read FVL_CRED_COFINS_TRIB_MI write FVL_CRED_COFINS_TRIB_MI;
+    property VL_CRED_COFINS_NT_MI: Variant read FVL_CRED_COFINS_NT_MI write FVL_CRED_COFINS_NT_MI;
+    property VL_CRED_COFINS_EXP: Variant read FVL_CRED_COFINS_EXP write FVL_CRED_COFINS_EXP;
   end;
 
   //REGISTRO 1600: CONTRIBUIÇÃO SOCIAL EXTEMPORÂNEA – COFINS

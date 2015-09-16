@@ -479,16 +479,16 @@ begin
                LFill( COD_MOD ) +   //Verificar criação da tabela no ACBrEPCBlocos
                LFill( SER ) +       //Verificar criação da tabela no ACBrEPCBlocos
                LFill( SUB_SER ) +
-               LFill( NUM_DOC , 0) +
+               LFill( NUM_DOC, 0 ) +
                LFill( DT_OPER ) +
                LFill( CHV_NFE ) +
                LFill( VL_OPER,0,2 ) +
-               LFill( CFOP , 4) +
+               LFill( CFOP,4 ) +
                LFill( NAT_BC_CRED ) + //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_ORIG_CRED , 0) +  //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( CST_PIS ) +
-               DFill( VL_BC_PIS, 3 ) +
-               DFill( ALIQ_PIS, 4 ) +
+               LFill( IND_ORIG_CRED,0 ) +  //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( CST_PIS, 2 ) +
+               DFill( VL_BC_PIS,3 ) +
+               DFill( ALIQ_PIS,4 ) +
                LFill( VL_PIS,0,2 ) +
                LFill( COD_CTA ) +
                LFill( COD_CCUS ) +
@@ -514,9 +514,9 @@ begin
      begin
 
        Add( LFill('1102') +
-            LFill( VL_CRED_PIS_TRIB_MI,0,2 ) +
-            LFill( VL_CRED_PIS_NT_MI,0,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
-            LFill( VL_CRED_PIS_EXP,0,2 ) ) ;
+            VDFill( VL_CRED_PIS_TRIB_MI,2 ) +
+            VDFill( VL_CRED_PIS_NT_MI,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
+            VDFill( VL_CRED_PIS_EXP,2 ) ) ;
      end;
      ///
      Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
@@ -694,21 +694,21 @@ begin
                LFill( COD_MOD ) +   //Verificar criação da tabela no ACBrEPCBlocos
                LFill( SER ) +       //Verificar criação da tabela no ACBrEPCBlocos
                LFill( SUB_SER ) +
-               LFill( NUM_DOC, 0 ) +
+               LFill( NUM_DOC,0 ) +
                LFill( DT_OPER ) +
                LFill( CHV_NFE ) +
                LFill( VL_OPER,0,2 ) +
-               LFill( CFOP, 4 ) +
+               LFill( CFOP,4 ) +
                LFill( NAT_BC_CRED ) + //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( IND_ORIG_CRED, 0 ) +  //Verificar criação da tabela no ACBrEPCBlocos
-               LFill( CST_COFINS ) +
-               DFill( VL_BC_COFINS, 3 ) +
-               DFill( ALIQ_COFINS, 4 ) +
+               LFill( IND_ORIG_CRED,0 ) +  //Verificar criação da tabela no ACBrEPCBlocos
+               LFill( CST_COFINS,2 ) +
+               DFill( VL_BC_COFINS,3 ) +
+               DFill( ALIQ_COFINS,4 ) +
                LFill( VL_COFINS,0,2 ) +
                LFill( COD_CTA ) +
                LFill( COD_CCUS ) +
                LFill( DESC_COMPL ) +
-               LFill( PER_ESCRIT, 6 ) +
+               LFill( PER_ESCRIT,6 ) +
                LFill( CNPJ ) ) ;
         end;
         // Registros FILHOS
@@ -728,9 +728,9 @@ begin
      with Reg1501.Registro1502 do
      begin
        Add( LFill('1502') +
-            LFill( VL_CRED_COFINS_TRIB_MI,0,2 ) +
-            LFill( VL_CRED_COFINS_NT_MI,0,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
-            LFill( VL_CRED_COFINS_EXP,0,2 ) ) ;
+            VDFill( VL_CRED_COFINS_TRIB_MI,2 ) +
+            VDFill( VL_CRED_COFINS_NT_MI,2 ) + //Verificar criação da tabela no ACBrEPCBlocos
+            VDFill( VL_CRED_COFINS_EXP,2 ) ) ;
      end;
      ///
      Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;

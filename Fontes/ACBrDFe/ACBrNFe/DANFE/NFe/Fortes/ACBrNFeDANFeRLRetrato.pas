@@ -58,6 +58,9 @@ uses
   ACBrNFeDANFeRL, pcnConversao, RLBarcode, StrUtils;
 
 type
+
+  { TfrlDANFeRLRetrato }
+
   TfrlDANFeRLRetrato = class(TfrlDANFeRL)
     rlbEmitente: TRLBand;
     rliEmitente: TRLDraw;
@@ -812,9 +815,9 @@ begin
   // Se a largura da coluna 'Código do produto' for suficiente,
   // exibe o título da coluna sem abreviações
   if rlmCodProd.Width > 113 then
-    rlmCodProd.Lines.Add('CÓDIGO DO PRODUTO / SERVIÇO')
+    rlmCodProd.Lines.Add(ACBrStr('CÓDIGO DO PRODUTO / SERVIÇO'))
   else
-    rlmCodProd.Lines.Add('CÓDIGO DO PROD. / SERV.');
+    rlmCodProd.Lines.Add(ACBrStr('CÓDIGO DO PROD. / SERV.'));
 
   // Ajusta a posição da coluna 'Descrição do produto'
   if rlmDescricaoProduto.Width > 128 then
@@ -831,7 +834,7 @@ begin
   // Se a largura da coluna 'Descrição do produto' for suficiente,
   // exibe o título da coluna sem abreviações
   if rlmDescricaoProduto.Width > 72 then
-    rlmDescricaoProduto.Lines.Add('DESCRIÇÃO DO PRODUTO / SERVIÇO')
+    rlmDescricaoProduto.Lines.Add(ACBrStr('DESCRIÇÃO DO PRODUTO / SERVIÇO'))
   else
     rlmDescricaoProduto.Lines.Add('DESCR. PROD. / SERV.');
 

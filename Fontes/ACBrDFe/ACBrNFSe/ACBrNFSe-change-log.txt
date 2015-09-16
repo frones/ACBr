@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2015
+[*] (ACBrNFSeWebServices)
+    Alterado algumas rotinas para dar continuidade a migração para o Trunk2.
+    Por: Italo Jurisato Junior
+
 10/09/2015
 [*] (ACBrNFSeConfiguracoes)
     Alterado a rotina de leitura de provedo, para suportar provedores que possuem

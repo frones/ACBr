@@ -62,6 +62,15 @@ Data: 00/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 14/09/2015 ver. 0.0.145a
+-- ACBrBancoBrasil --
+[-]Ajuste remessa CNAB240. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/24285-arq-remessa-seguimento-p/
+
+-- ACBrBancoBRB --
+[-]Ajuste remessa CNAB400. (Ferdinan Marco)
+http://www.projetoacbr.com.br/forum/topic/23606-altera%C3%A7%C3%B5es-acbrbancobrb/
+
 Data: 14/09/2015 ver. 0.0.144a
 -- ACBrBancoBrasil --
 [*] Ajuste calculo tamanho máximo nosso número.(BrSam)

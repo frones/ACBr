@@ -301,7 +301,7 @@ begin
         wLinha:= '01'                                                             + // Identificação do registro
                  PadLeft(Cedente.Agencia, 3, '0')                                    + // Agência
                  PadLeft(Cedente.Conta, 6, '0') + PadLeft(Cedente.ContaDigito, 1, '0')  + // Conta
-                 PadRight(OnlyNumber(Sacado.CNPJCPF), 14, '0')                        + // Código do Sacado
+                 PadRight(OnlyNumber(Sacado.CNPJCPF), 14, ' ')                        + // Código do Sacado
                  PadRight(Sacado.NomeSacado, 35)                                      + // Nome do Sacado
                  PadRight(Sacado.Logradouro + ', '                                    +
                       Sacado.Numero+' '                                           +
@@ -318,7 +318,7 @@ begin
                  '0'                                                              + // Código da Condição Pagto 0- No vencimento; 1- À Vista ou 2- Contra Apresentação
                  '02'                                                             + // Código da Moeda 02- Real; 51- UFIR ou 91- UPDF
                  '070'                                                            + // Número do Banco
-                 '0000'                                                           + // Número da Agência Cobradora - Confirmar no suporte
+                 '0050'                                                           + // Número da Agência Cobradora - Confirmar no suporte
                  Space(30)                                                        + // Praça de Cobrança - Confirmar no suporte
                  FormatDateTime('ddmmyyyy', Vencimento)                           + // Data de vencimento
                  IntToStrZero(Round(ValorDocumento*100), 14)                      + // Valor do título

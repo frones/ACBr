@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/09/2015
+-- ACBrSATExtratoESCPOS --
+[-] Ajuste para evitar A.V. em alguns Compiladores que não tratam corretamente
+    ifThen.. (por: jrs.santos)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=24416
+
 Data: 12/09/2015
 -- ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
 [-] Correção para impressão do Numero do Cupom de Cancelamento no cabeçalho,

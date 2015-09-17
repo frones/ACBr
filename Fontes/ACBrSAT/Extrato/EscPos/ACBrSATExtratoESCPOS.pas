@@ -125,6 +125,8 @@ begin
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho(Cancelamento: Boolean);
+var        
+  nCFe: String;
 begin
   FPosPrinter.Buffer.Clear;
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
@@ -158,8 +160,12 @@ begin
   end
   else
   begin
-    FPosPrinter.Buffer.Add('</fn></ce><n>Extrato No. '+
-       IntToStrZero(IfThen(Cancelamento, CFeCanc.ide.nCFe, CFe.ide.nCFe), 6));
+    if (Cancelamento) then
+      nCFe := IntToStrZero( CFeCanc.ide.nCFe, 6)
+    else
+      nCFe := IntToStrZero( CFE.ide.nCFe, 6);
+                                      
+    FPosPrinter.Buffer.Add('</fn></ce><n>Extrato No. '+ nCFe );
     FPosPrinter.Buffer.Add( ACBrStr('CUPOM FISCAL ELETRÔNICO - SAT</n>'));
   end;
 

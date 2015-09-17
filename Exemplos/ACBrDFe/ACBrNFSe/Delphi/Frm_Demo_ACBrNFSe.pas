@@ -379,7 +379,7 @@ begin
    ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
  {$ENDIF}
 
- ACBrNFSe1.Configuracoes.Certificados.VerificarValidade :=False;
+ ACBrNFSe1.Configuracoes.Certificados.VerificarValidade :=True;
 
  ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
  ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe  := True;

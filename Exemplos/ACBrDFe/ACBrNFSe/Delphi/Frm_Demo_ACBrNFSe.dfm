@@ -1316,7 +1316,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object ACBrNFSe1: TACBrNFSe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFSe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = False

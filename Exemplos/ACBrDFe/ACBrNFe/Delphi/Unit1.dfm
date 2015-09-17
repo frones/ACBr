@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 255
-  Top = 120
+  Left = 247
+  Top = 104
   Width = 878
   Height = 616
   Caption = 'ACBrNFe - Demonstra'#231#227'o'

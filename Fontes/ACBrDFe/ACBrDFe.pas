@@ -315,10 +315,8 @@ begin
     FindFiles(Configuracoes.Arquivos.PathSchemas +'*.xsd', FListaDeSchemas, False );
 
     if FListaDeSchemas.Count = 0 then
-    begin
-      Versao := 0;
-      exit;
-    end;
+      raise EACBrDFeException.Create('Nenhum arquivo de Schema encontrado na pasta: '+sLineBreak+
+                                     Configuracoes.Arquivos.PathSchemas );
 
     FListaDeSchemas.Sort;
   end;

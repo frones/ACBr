@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2015
+-- ACBrDFe --    (por: DSA)
+[*] Disparo de Exception com msg clara quando diretório configurado para os
+    Schemas não contiver nenhum Schema
+[*] Disparo de Exception quando calculo do Arquivo de Schema retornar String vazia
+[-] Correção na gravação dos XMLs de Pedido, Retorno e Envelopes para sempre
+    usarem UTF8 como Encoding. Este problema somente afetava Delphi com suporte
+    a Unicode (XE)      (Por: DSA e Carlos CANTU)
+
 11/09/2015
 [+] Adicionada a propriedade CertTipo para retornar se o certificado é A1 ou A3
     por: regys.silveira /Daniel

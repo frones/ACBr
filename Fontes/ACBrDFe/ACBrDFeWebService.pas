@@ -371,7 +371,10 @@ begin
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqResp := Prefixo + '-' + FPArqResp + '-soap.xml';
-    FPDFeOwner.Gravar(ArqResp, FPRetornoWS);
+    { FPRetornoWS, foi convertido de UTF8 para a String nativa da IDE no final
+      de "EnviarDados", após o tratamento de ParseText..
+      Convertendo para UTF8 novamente, para poder salvar o XML de forma correta } 
+    FPDFeOwner.Gravar(ArqResp, ACBrStrToUTF8(FPRetornoWS) );
   end;
 end;
 

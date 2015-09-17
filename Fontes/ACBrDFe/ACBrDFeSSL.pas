@@ -276,6 +276,9 @@ end;
 function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
   out MsgErro: String): Boolean;
 begin
+  if EstaVazio(ArqSchema) then
+    raise EACBrDFeException.Create('Arquivo de Schema não especificado');
+
   // ArqSchema deve vir com o Path Completo
   if not FileExists(ArqSchema) then
     raise EACBrDFeException.Create('Arquivo ' + sLineBreak + ArqSchema +

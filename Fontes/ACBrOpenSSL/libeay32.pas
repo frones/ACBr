@@ -111,9 +111,10 @@
 
  ******************************************************************************)
 {$IFDEF FPC}
- {$H+}
- {$mode delphi}
+{$H+}
+{$mode delphi}
 {$ENDIF}
+//{$DEFINE USE_DELAYED}
 
 unit libeay32;
 
@@ -1290,8 +1291,7 @@ uses
 
 const
   {$IFDEF MSWINDOWS}
-	LIBEAY_DLL_NAME = 'libeay32.dll';
-  {$IFNDEF FPC}{$IF CompilerVersion >= 21}{$DEFINE USE_DELAYED}{$IFEND}{$ENDIF}
+	LIBEAY_DLL_NAME = 'libeay32.dll';  
   {$ELSE}
 	LIBEAY_DLL_NAME = 'libcrypto';
   {$ENDIF}

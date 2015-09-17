@@ -51,7 +51,7 @@ type
 
   TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe);
 
-  TVersaoNFSe = (ve100, ve200);
+  TVersaoNFSe = (ve100, ve110, ve200, ve201);
 
   TnfseTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
                         taSomenteParaNaoAssinada);
@@ -18860,24 +18860,28 @@ end;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: String): TVersaoNFSe;
 begin
-  Result := StrToEnumerado(ok, s, ['1.00', '2.00'], [ve100, ve200]);
+  Result := StrToEnumerado(ok, s, ['1.00', '1.10', '2.00', '2.01'],
+                                  [ve100, ve110, ve200, ve201]);
 end;
 
 function VersaoNFSeToStr(const t: TVersaoNFSe): String;
 begin
-  Result := EnumeradoToStr(t, ['1.00', '2.00'], [ve100, ve200]);
+  Result := EnumeradoToStr(t, ['1.00', '1.10', '2.00', '2.01'],
+                              [ve100, ve110, ve200, ve201]);
 end;
 
 function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
 begin
   ok := True;
 
-  if (d = 1.0) or (d < 2.0)  then
+  if (d = 1.0) then
     Result := ve100
-  else if (d >= 2.0) and (d < 2.02) then
+  else if (d = 1.1) then
+    Result := ve110
+  else if (d = 2.0) then
     Result := ve200
-  else if (d >= 2.02) then
-    Result := ve200
+  else if (d = 2.01) then
+    Result := ve201
   else
   begin
     Result := ve100;
@@ -18889,7 +18893,9 @@ function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 begin
   case t of
     ve100: Result := 1.00;
+    ve110: Result := 1.10;
     ve200: Result := 2.00;
+    ve201: Result := 2.01;
   else
     Result := 0;
   end;

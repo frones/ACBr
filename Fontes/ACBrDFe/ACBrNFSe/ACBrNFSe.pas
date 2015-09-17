@@ -553,7 +553,7 @@ begin
   if ANumeroNFSe = '' then
     GerarException(ACBrStr('ERRO: Numero da NFS-e não informado'));
 
-  Result := WebServices.SubstitiNFSe(ACodigoCancelamento, ANumeroNFSe);
+  Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao,

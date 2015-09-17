@@ -58,7 +58,7 @@ type
     FPrefixo4: String;
     FIdentificador: String;
     FURL: String;
-    FVersaoXML: String;
+    FVersaoNFSe: TVersaoNFSe;
     FDefTipos: String;
     FServicoEnviar: String;
     FQuebradeLinha: String;
@@ -103,7 +103,7 @@ type
     property Prefixo4: String read FPrefixo4 write FPrefixo4;
     property Identificador: String read FIdentificador write FIdentificador;
     property URL: String read FURL write FURL;
-    property VersaoXML: String read FVersaoXML write FVersaoXML;
+    property VersaoNFSe: TVersaoNFSe read FVersaoNFSe write FVersaoNFSe;
     property DefTipos: String read FDefTipos write FDefTipos;
     property ServicoEnviar: String read FServicoEnviar write FServicoEnviar;
     property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
@@ -880,7 +880,7 @@ begin
   else begin
     Gerador.wGrupoNFSe('Prestador');
 
-    if ((VersaoXML = '1') and not (FProvedor in [proISSNet, proActcon])) or
+    if ((VersaoNFSe = ve100) and not (FProvedor in [proISSNet, proActcon])) or
        (FProvedor = proNFSeBrasil) then
       Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), '')
     else begin
@@ -962,7 +962,7 @@ begin
 
     end
     else begin
-    if (VersaoXML = '1') or
+    if (VersaoNFSe = ve100) or
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe, proSystemPro,
                       proProdata, proPVH, proSaatri, proVirtual, proFreire,
@@ -1020,7 +1020,7 @@ begin
       Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, '');
     end;
 
-    if (VersaoXML = '2') and (FProvedor <> proNFSeBrasil) then
+    if (VersaoNFSe = ve200) and (FProvedor <> proNFSeBrasil) then
       Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, '');
 
     Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
@@ -1050,7 +1050,7 @@ begin
           end;
     end;
 
-    if (VersaoXML = '1') or
+    if (VersaoNFSe = ve100) or
        (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe, proSystemPro,
                       proProdata, proPVH, proSaatri, proVirtual, proFreire,
@@ -1063,7 +1063,7 @@ begin
    end
    else begin
      // Gera a TAG vazia quando nenhum dado do tomador for informado.
-     if (VersaoXML = '1') or
+     if (VersaoNFSe = ve100) or
         (FProvedor in [pro4R, proAgili, proCoplan, proDigifred, proFiorilli,
                       proGoiania, proGovDigital, proISSDigital, proISSe,
                       proProdata, proPVH, proSaatri, proVirtual, proFreire,
@@ -1079,7 +1079,7 @@ begin
  if (NFSe.IntermediarioServico.RazaoSocial<>'') or
      (NFSe.IntermediarioServico.CpfCnpj <> '') then
  begin
-   if VersaoXML = '1' then
+   if VersaoNFSe = ve100 then
    begin
      Gerador.wGrupoNFSe('IntermediarioServico');
      if FProvedor = proEL then
@@ -1623,7 +1623,7 @@ begin
    dTotISS   := 0;
 
    // Alterado Por Moro em 18/02/2015
-   if versaoXML = '1.1' then begin // para Caxias do Sul Versão XML = 1.1
+   if versaoNFSe = ve110 then begin // para Caxias do Sul Versão XML = 1.1
 
       // Cab
       Gerador.Prefixo := '';
@@ -1634,7 +1634,7 @@ begin
 
       // NFS-e
       Gerador.wGrupoNFSe('NFS-e');
-        Gerador.wGrupoNFSe('infNFSe versao='''+ VersaoXML +'''');
+        Gerador.wGrupoNFSe('infNFSe versao="1.1"');
 
       // ID
       Gerador.wGrupoNFSe('Id');
@@ -1862,7 +1862,7 @@ begin
 
    end; // fim do if Caxias do Sul
 
-   if versaoXML = '1' then begin //demais cidades
+   if versaoNFSe = ve100 then begin //demais cidades
       // Cab
       Gerador.Prefixo := '';
       Gerador.wGrupoNFSe('?xml version=''1.0'' encoding=''utf-8''?');

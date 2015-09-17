@@ -84,7 +84,7 @@ type
     FCabecalho: String;
     FxsdServico: String;
     FVersaoXML: String;
-    FVersaoXMLInt: Integer;
+    FVersaoNFSe: TVersaoNFSe;
 
     FvNotas: String;
     FXML_NFSe: String;
@@ -129,7 +129,7 @@ type
     property Cabecalho: String read FCabecalho;
     property xsdServico: String read FxsdServico;
     property VersaoXML: String read FVersaoXML;
-    property VersaoXMLInt: Integer read FVersaoXMLInt;
+    property VersaoNFSe: TVersaoNFSe read FVersaoNFSe;
     property vNotas: String read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
 
@@ -694,6 +694,7 @@ end;
 procedure TNFSeWebService.InicializarDadosMsg;
 var
   Texto: String;
+  Ok: Boolean;
 begin
   FvNotas    := '';
   FURI       := '';
@@ -702,7 +703,7 @@ begin
 
   FNameSpace := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
   FVersaoXML := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML;
-  FVersaoXMLInt := StrToIntDef(FloatToStr(StrToFloatDef(FVersaoXML, 1.0) * 100), 100);
+  FVersaoNFSe := StrToVersaoNFSe(Ok, FVersaoXML);
   FDefTipos  := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
   FCabecalho := FPConfiguracoesNFSe.Geral.ConfigSchemas.Cabecalho;
   FPrefixo2  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo2;
@@ -1043,9 +1044,9 @@ begin
   begin
     for I := 0 to FNotasFiscais.Count - 1 do
     begin
-      case FVersaoXMLInt of
+      case FVersaoNFSe of
         // RPS versão 2.00
-        200: FvNotas := FvNotas +
+        ve200: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                   RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
@@ -2331,7 +2332,7 @@ begin
   FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'ConsultarNfseRpsEnvio>';
 
-  if FProvedor in [proCTA, proIssDSF] then
+  if FProvedor in [proIssDSF] then
   begin
     Gerador := TGerador.Create;
     try
@@ -2787,7 +2788,7 @@ begin
   FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
            '</' + FPrefixo3 + 'CancelarNfseEnvio>';
 
-  if FProvedor in [proCTA, proIssDSF] then
+  if FProvedor in [proIssDSF] then
   begin
     Gerador := TGerador.Create;
     try
@@ -3165,11 +3166,11 @@ begin
                     TNFSeSubstituirNfse(Self).FIM + TNFSeSubstituirNfse(Self).FNumeroNFSe;
   end;
 
-  if FProvedor <> proISSNet then
-  begin
-    FURISig := FProvedorClass.GetURI(URISig);
-    FURIRef := URISig;
-  end;
+//  if FProvedor <> proISSNet then
+//  begin
+//    FURISig := '';
+//    FURIRef := '';
+//  end;
 
   FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad +
             '<' + FPrefixo3 + 'SubstituicaoNfse>' +
@@ -3181,7 +3182,7 @@ begin
   FTagF :=  '</' + FPrefixo3 + 'SubstituicaoNfse>' +
            '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
 
-  if FProvedor in [proCTA, proIssDSF] then
+  if FProvedor in [proIssDSF] then
   begin
     Gerador := TGerador.Create;
     try
@@ -3331,12 +3332,12 @@ begin
     case FProvedor of
       proEquiplano: FNFSeRetorno.LerXML_provedorEquiplano;
       proIssDSF: FNFSeRetorno.LerXml_provedorIssDsf;
-      proInfisc: FNFSeRetorno.LerXml_provedorInfisc(FVersaoXML);
+//      proInfisc: FNFSeRetorno.LerXml_provedorInfisc(FVersaoXML);
     else
       FNFSeRetorno.LerXml;
     end;
 
-    FDataHora := FNFSeRetorno.InfCanc.DataHora;
+//      FDataHora := FNFSeRetorno.InfCanc.DataHora;
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
@@ -3352,9 +3353,9 @@ begin
                          'Correção... : ' + FNFSeRetorno.MsgRetorno.Items[i].Correcao + LineBreak +
                          'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
       end;
-    end
-    else FaMsg := 'Numero da NFSe : ' + FNFSeRetorno.Pedido.IdentificacaoNfse.Numero + LineBreak +
-                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
+    end;
+//    else FaMsg := 'Numero da NFSe : ' + FNFSeRetorno.Pedido.IdentificacaoNfse.Numero + LineBreak +
+//                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
     Result := (FPMsg <> '');
   finally

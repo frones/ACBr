@@ -411,6 +411,8 @@ begin
 end;
 
 function NotaFiscal.GerarXML: String;
+var
+  Ok: Boolean;
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
@@ -419,7 +421,7 @@ begin
     FNFSeW.Identificador := Configuracoes.Geral.ConfigGeral.Identificador;
     FNFSeW.QuebradeLinha := Configuracoes.Geral.ConfigGeral.QuebradeLinha;
     FNFSeW.URL           := Configuracoes.Geral.ConfigXML.NameSpace;
-    FNFSeW.VersaoXML     := Configuracoes.Geral.ConfigXML.VersaoXML;
+    FNFSeW.VersaoNFSe    := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
     FNFSeW.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
     FNFSeW.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;
 

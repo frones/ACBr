@@ -9,8 +9,8 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
-  ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib, ACBrNFeDANFEFRDM, ACBrNFeDANFEFR,
-  ACBrMail;
+  ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib,
+  ACBrMail, ACBrNFeDANFeRLClass;
 
 type
 
@@ -205,7 +205,7 @@ type
     edtPathSchemas: TEdit;
     spPathSchemas: TSpeedButton;
     ACBrMail1: TACBrMail;
-    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
+    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);

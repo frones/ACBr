@@ -79,7 +79,7 @@ var
   OldDANFe  : TACBrNFeDANFEClass;
 
   CC, Anexos: Tstrings;
-  sTemMais: String;
+  sTemMais,ErrosRegraNegocio: String;
 begin
  with FrmACBrMonitor do
   begin
@@ -112,6 +112,19 @@ begin
 
            ACBrNFe1.NotasFiscais.Validar;
          end
+
+       else if Cmd.Metodo = 'validarnferegranegocios' then //NFe.ValidarNfeRegraNegocios(cArqXML)
+        begin
+          ACBrNFe1.NotasFiscais.Clear;
+          if FileExists(Cmd.Params(0)) then
+            ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
+          else
+            raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+          ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(ErrosRegraNegocio);
+          if NaoEstaVazio(ErrosRegraNegocio) then
+            raise Exception.Create(ErrosRegraNegocio);
+        end
 
         else if Cmd.Metodo = 'assinarnfe' then //NFe.AssinarNFe(cArqXML)
          begin

@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2015
+-- NFE --
+[+] Implementado: NFe.ValidarNfeRegraNegocios(cArqXML), que efetua a validação
+    de todas as regras de negócio nas informações do XML, e retorna com
+    possíveis erros. (Por: Alberto Leal)
+
 11/09/2015
 [+] Implementação do comando: NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU)
     http://www.projetoacbr.com.br/forum/topic/24242-consultanfedest-x-distribuicaodfe/#comment-156693

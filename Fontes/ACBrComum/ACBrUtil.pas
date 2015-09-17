@@ -93,6 +93,7 @@ procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
 
 function ACBrStr( AString : AnsiString ) : String ;
 function ACBrStrToAnsi( AString : String ) : AnsiString ;
+function ACBrStrToUTF8( AString : String ) : AnsiString;
 function AnsiChr( b: Byte) : AnsiChar;
 
 function TruncFix( X : Double ) : Integer ;
@@ -373,6 +374,30 @@ begin
 {$ENDIF}
 end;
 
+{-----------------------------------------------------------------------------
+  Converte a AString nativa do Compilador, para UTF8, de acordo o suporte a
+  UNICODE/UTF8 do Compilador
+ -----------------------------------------------------------------------------}
+function ACBrStrToUTF8( AString : String ) : AnsiString;
+{$IFNDEF FPC}
+{$IFDEF UNICODE}
+var
+  RBS: RawByteString;
+{$ENDIF}
+{$ENDIF}
+begin
+  {$IFNDEF FPC}
+   {$IFDEF UNICODE}
+    RBS := UTF8Encode(AString);
+    SetCodePage(RBS, 0, False);
+    Result := AnsiString(RBS);
+   {$ELSE}
+    Result := UTF8Encode(AString);
+   {$ENDIF}
+  {$ELSE}
+   Result := AString;
+  {$ENDIF}
+end;
 {-----------------------------------------------------------------------------
  Faz o mesmo que o comando chr(), porém retorna um AnsiChar ao invés de Char
  Util quando for usada para compor valores em AnsiString,
@@ -3278,17 +3303,12 @@ end;
  ------------------------------------------------------------------------------}
 function ConverteXMLtoUTF8(const AXML: String): String;
 var
-  UTF8Str: String;
+  UTF8Str: AnsiString;
 begin
   if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
   begin
-    {$IFNDEF UNICODE}
-    UTF8Str := UTF8Encode(AXML);
-    {$ELSE}
-    UTF8Str := AXML;
-    {$ENDIF}
-
-    Result := '<?xml version="1.0" encoding="UTF-8"?>' + UTF8Str;
+    UTF8Str := ACBrStrToUTF8(AXML);
+    Result := '<?xml version="1.0" encoding="UTF-8"?>' + String(UTF8Str);
   end
   else
     Result := AXML;

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/09/2015
+-- ACBrUtil --         (por: DSA)
+[+] Adiconado o método:
+    function ACBrStrToUTF8( AString : String ) : AnsiString;
+    que pode ser usado para converter uma String nativa da IDE para UTF8
+
 Data: 08/09/2015       (por: DSA)
 -- ACBrUtil --
 [-] Correção em "StripHTML", problema de Loop Infinito, quando usando Tags sem

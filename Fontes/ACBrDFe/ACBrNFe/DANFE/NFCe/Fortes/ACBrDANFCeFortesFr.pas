@@ -543,7 +543,7 @@ begin
     if (Dest.idEstrangeiro = '') and
        (Dest.CNPJCPF = '') then
      begin
-        lCPF_CNPJ_ID.Lines.Text := 'CONSUMIDOR NÃO IDENTIFICADO';
+        lCPF_CNPJ_ID.Lines.Text := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
      end
     else if Dest.idEstrangeiro <> '' then
      begin

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2015
+[*] (ACBrMDFeManifestos/ACBrMDFeWebServices)
+    Ajustes para que os arquivos de envio/retorno fiquem condicionados a propriedade
+    Configuracoes.Geral.Salvar e os arquivos fiscais a propriedade
+    Configuracoes.Arquivos.Salvar
+    Por: Italo Jurisato Junior
+
 16/09/2015
 [-] (ACBrMDFeManifestos)
     Ajuste para ACBrMDFe1.Manifestos.LoadFromFile para quando o XML lido com

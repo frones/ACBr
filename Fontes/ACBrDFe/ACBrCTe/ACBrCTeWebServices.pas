@@ -1821,9 +1821,9 @@ begin
         wProc.Free;
       end;
 
-      if FPConfiguracoesCTe.Geral.Salvar then
-        FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
-          FXML_ProcInutCTe);
+//      if FPConfiguracoesCTe.Geral.Salvar then
+//        FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
+//          FXML_ProcInutCTe);
 
       if FPConfiguracoesCTe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
@@ -2357,7 +2357,7 @@ procedure TCTeEnvEvento.SalvarEnvio;
 begin
   inherited SalvarEnvio;
 
-  if FPConfiguracoesCTe.Arquivos.Salvar then
+  if FPConfiguracoesCTe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
       FPDadosMsg, GerarPathEvento);
 end;
@@ -2366,7 +2366,7 @@ procedure TCTeEnvEvento.SalvarResposta;
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesCTe.Arquivos.Salvar then
+  if FPConfiguracoesCTe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
       FPDadosMsg, GerarPathEvento);
 end;

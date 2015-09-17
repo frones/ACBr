@@ -1745,7 +1745,7 @@ procedure TMDFeEnvEvento.SalvarEnvio;
 begin
   inherited SalvarEnvio;
 
-  if FPConfiguracoesMDFe.Arquivos.Salvar then
+  if FPConfiguracoesMDFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
       FPDadosMsg, GerarPathEvento);
 end;
@@ -1754,7 +1754,7 @@ procedure TMDFeEnvEvento.SalvarResposta;
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesMDFe.Arquivos.Salvar then
+  if FPConfiguracoesMDFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
       FPDadosMsg, GerarPathEvento);
 end;

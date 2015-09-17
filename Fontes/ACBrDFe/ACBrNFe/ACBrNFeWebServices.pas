@@ -2172,7 +2172,7 @@ var
 begin
   inherited SalvarEnvio;
 
-  if FPConfiguracoesNFe.Arquivos.Salvar then
+  if FPConfiguracoesNFe.Geral.Salvar then
   begin
     aPath := GerarPathPorCNPJ;
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml', FPDadosMsg, aPath);
@@ -2185,7 +2185,7 @@ var
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesNFe.Arquivos.Salvar then
+  if FPConfiguracoesNFe.Geral.Salvar then
   begin
     aPath := GerarPathPorCNPJ;
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml', FPRetWS, aPath);
@@ -2235,9 +2235,9 @@ begin
         wProc.Free;
       end;
 
-      if FPConfiguracoesNFe.Geral.Salvar then
-        FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
-          FXML_ProcInutNFe);
+//      if FPConfiguracoesNFe.Geral.Salvar then
+//        FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
+//          FXML_ProcInutNFe);
 
       if FPConfiguracoesNFe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
@@ -2707,8 +2707,8 @@ begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
                 '-procEventoNFe.xml';
 
-              if FPConfiguracoesNFe.Geral.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text);
+//              if FPConfiguracoesNFe.Geral.Salvar then
+//                FPDFeOwner.Gravar(NomeArq, wProc.Text);
 
               if FPConfiguracoesNFe.Arquivos.Salvar then
                 FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
@@ -2730,7 +2730,7 @@ procedure TNFeEnvEvento.SalvarEnvio;
 begin
   inherited SalvarEnvio;
 
-  if FPConfiguracoesNFe.Arquivos.Salvar then
+  if FPConfiguracoesNFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
       FPDadosMsg, GerarPathEvento);
 end;
@@ -2739,7 +2739,7 @@ procedure TNFeEnvEvento.SalvarResposta;
 begin
   inherited SalvarResposta;
 
-  if FPConfiguracoesNFe.Arquivos.Salvar then
+  if FPConfiguracoesNFe.Geral.Salvar then
 		FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
 			FPDadosMsg, GerarPathEvento);
 end;

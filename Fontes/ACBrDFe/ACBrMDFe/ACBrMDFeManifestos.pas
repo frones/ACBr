@@ -245,7 +245,7 @@ begin
       Leitor.Free;
     end;
 
-    if Configuracoes.Geral.Salvar then
+    if Configuracoes.Arquivos.Salvar then
       Gravar(CalcularNomeArquivoCompleto(), XMLAss);
 
     if NaoEstaVazio(NomeArq) then

@@ -48,11 +48,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/09/2015
-[*] (ACBrNFeNotasFiscais/ACBrNFeWebServices)
-    Ajustes para que os arquivos de envio/retorno fiquem condicionados a propriedade
+-- ACBrNFeNotasFiscais, ACBrNFeWebServices --
+[*] Ajustes para que os arquivos de envio/retorno fiquem condicionados a propriedade
     Configuracoes.Geral.Salvar e os arquivos fiscais a propriedade
     Configuracoes.Arquivos.Salvar
     Por: Italo Jurisato Junior
+
+-- ACBrNFeNotasFiscais --
+[*] Correção em ValidarRegrasdeNegocios para que não efetue validações 505 e 506
+    caso NFe.Ide.dSaiEnt não seja especificada  (por: Alberto Leal)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=24429
 
 16/09/2015
 -- ACBRNFeNotasFiscais --     (por: DSA)

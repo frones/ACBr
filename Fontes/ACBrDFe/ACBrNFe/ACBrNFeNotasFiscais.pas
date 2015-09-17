@@ -741,11 +741,11 @@ begin
         AdicionaErro('504-Rejeição: Data de Entrada/Saída posterior ao permitido');
 
       GravaLog('Validar: 505-Saida < 30');
-      if ((Agora - NFe.Ide.dSaiEnt) > 30) then  //B10-30  - Facultativo
+      if (NFe.Ide.dSaiEnt <> 0) and ((Agora - NFe.Ide.dSaiEnt) > 30) then  //B10-30  - Facultativo
         AdicionaErro('505-Rejeição: Data de Entrada/Saída anterior ao permitido');
 
       GravaLog('Validar: 506-Saida < Emissao');
-      if (NFe.Ide.dSaiEnt < NFe.Ide.dEmi) then
+      if (NFe.Ide.dSaiEnt <> 0) and (NFe.Ide.dSaiEnt < NFe.Ide.dEmi) then
         //B10-40  - Facultativo
         AdicionaErro('506-Rejeição: Data de Saída menor que a Data de Emissão');
 

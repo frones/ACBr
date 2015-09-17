@@ -48,6 +48,8 @@ Símbolo : Significado
 [+] Implementado: NFe.ValidarNfeRegraNegocios(cArqXML), que efetua a validação
     de todas as regras de negócio nas informações do XML, e retorna com
     possíveis erros. (Por: Alberto Leal)
+[*] Ajuste para melhor mensagem em NFe.EnviarEmail, quando não for encontrada
+    nenhuma Nota no XML informado
 
 11/09/2015
 [+] Implementação do comando: NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU)

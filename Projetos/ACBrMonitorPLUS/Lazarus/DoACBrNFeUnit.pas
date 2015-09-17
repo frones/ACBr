@@ -1325,6 +1325,9 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
 
+           if ACBrNFe1.NotasFiscais.Count = 0 then
+             raise Exception.Create('Nenhuma NFe encontrada no arquivo: '+ArqNFe);
+
            ConfiguraDANFe;
            MudouDANFe := False;
 

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2015
+-- pcnRetDownloadNFe --
+[*] Removido o Encoding UTF8 que estava sendo acrescentado ao retorno, pois o mesmo
+    ao ser salvo a rotina acrescenta ou não se necessário.
+    Por: Rômulo da Costa de Souza / Italo Jurisato Junior
+
 17/09/2015
 -- ACBrNFeNotasFiscais, ACBrNFeWebServices --
 [*] Ajustes para que os arquivos de envio/retorno fiquem condicionados a propriedade

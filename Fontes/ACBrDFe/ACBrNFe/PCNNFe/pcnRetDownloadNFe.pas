@@ -225,20 +225,21 @@ begin
           StrDecod := DecodeBase64(StrAux);
           FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
           FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
-          FretNFe.Items[i].FprocNFe := IIF(Pos(ENCODING_UTF8, FretNFe.Items[i].FNFeZip) > 0,
-                                           '',
-                                           '<' + ENCODING_UTF8 + '>') +
-                                       FretNFe.Items[i].FNFeZip;
+          FretNFe.Items[i].FprocNFe := FretNFe.Items[i].FNFeZip;
+//          FretNFe.Items[i].FprocNFe := IIF(Pos(ENCODING_UTF8, FretNFe.Items[i].FNFeZip) > 0,
+//                                           '',
+//                                           '<' + ENCODING_UTF8 + '>') +
+//                                       FretNFe.Items[i].FNFeZip;
         end;
 
         if pos('procNFe', Leitor.Grupo) > 0 then
         begin
           FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(Leitor.Grupo, '<dhEmi>', '</dhEmi'));
           FretNFe.Items[i].FprocNFe := SeparaDados(Leitor.Grupo, 'procNFe');
-          FretNFe.Items[i].FprocNFe := IIF(Pos(ENCODING_UTF8, FretNFe.Items[i].FprocNFe) > 0,
-                                           '',
-                                           '<' + ENCODING_UTF8 + '>') +
-                                       FretNFe.Items[i].FprocNFe;
+//          FretNFe.Items[i].FprocNFe := IIF(Pos(ENCODING_UTF8, FretNFe.Items[i].FprocNFe) > 0,
+//                                           '',
+//                                           '<' + ENCODING_UTF8 + '>') +
+//                                       FretNFe.Items[i].FprocNFe;
         end;
 
         if (Leitor.rExtrai(3, 'procNFeGrupoZip') <> '') then
@@ -256,7 +257,8 @@ begin
 
           versao := RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, 'versao="', '">');
 
-          FretNFe.Items[i].FprocNFe := '<' + ENCODING_UTF8 + '>' +
+//          FretNFe.Items[i].FprocNFe := '<' + ENCODING_UTF8 + '>' +
+          FretNFe.Items[i].FprocNFe := 
                   '<nfeProc versao="' + copy(versao, 1, 4) + '" ' +
                       NAME_SPACE + '>' +
                     FretNFe.Items[i].FNFeZip +

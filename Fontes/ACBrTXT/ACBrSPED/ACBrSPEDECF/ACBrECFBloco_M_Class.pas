@@ -452,11 +452,11 @@ begin
       with RegM030.RegistroM300.Items[intFor] do
       begin
         Add(LFill('M300')          +
-            LFill(DESCRICAO)       +
+            LFill(CODIGO)          +
             LFill(DESCRICAO)       +
             LFill(TIPO_LANCAMENTO) +
-            LFill(IND_RELACAO)     +
-            VLFill(VALOR,19,2)      +
+            LFill(IND_RELACAO,1)   +
+            VLFill(VALOR,19,2)     +
             LFill(HIST_LAN_LAL));
       end;
       //REGISTROS FILHOS
@@ -570,8 +570,8 @@ begin
             LFill(CODIGO)          +
             LFill(DESCRICAO)       +
             LFill(TIPO_LANCAMENTO) +
-            LFill(IND_RELACAO)     +
-            VLFill(VALOR,19,2)      +
+            LFill(IND_RELACAO,1)   +
+            VLFill(VALOR,19,2)     +
             LFill(HIST_LAN_LAL));
       end;
       //REGISTROS FILHOS

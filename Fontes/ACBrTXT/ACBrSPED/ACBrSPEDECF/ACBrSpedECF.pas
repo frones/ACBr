@@ -1667,11 +1667,54 @@ begin
       REG_BLC := 'T001';
       QTD_REG_BLC := 1;
     end;
-  end;
-  with Bloco_9.Registro9900.New do
-  begin
-    REG_BLC := 'T990';
-    QTD_REG_BLC := 1;
+    if (Bloco_T.RegistroT001.IND_DAD = idComDados) then
+    begin
+      if Bloco_T.RegistroT030.Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'T030';
+          QTD_REG_BLC := Bloco_T.RegistroT030.Count;
+        end;
+      end;
+      if Bloco_T.RegistroT120Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'T120';
+          QTD_REG_BLC := Bloco_T.RegistroT120Count;
+        end;
+      end;
+      if Bloco_T.RegistroT150Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'T150';
+          QTD_REG_BLC := Bloco_T.RegistroT150Count;
+        end;
+      end;
+      if Bloco_T.RegistroT170Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'T170';
+          QTD_REG_BLC := Bloco_T.RegistroT170Count;
+        end;
+      end;
+      if Bloco_T.RegistroT181Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'T181';
+          QTD_REG_BLC := Bloco_T.RegistroT181Count;
+        end;
+      end;
+    end;
+    with New do
+    begin
+      REG_BLC := 'T990';
+      QTD_REG_BLC := 1;
+    end;
   end;
   Bloco_T.WriteRegistroT990;
 end;

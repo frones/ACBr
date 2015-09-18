@@ -49,8 +49,6 @@ uses
   ACBrTXTClass, ACBrECFBloco_0_Class;
 
 type
-  /// TBloco_T -
-
   { TBloco_T }
 
   TBloco_T = class(TACBrSPED)
@@ -58,23 +56,39 @@ type
     FBloco_0: TBloco_0;
     FRegistroT001: TRegistroT001;
     FRegistroT990: TRegistroT990;
+    FRegistroT030: TRegistroT030List;
+
+    FRegistroT120Count: Integer;
+    FRegistroT150Count: Integer;
+    FRegistroT170Count: Integer;
+    FRegistroT181Count: Integer;
+
+    procedure WriteRegistroT120(RegT030: TRegistroT030);
+    procedure WriteRegistroT150(RegT030: TRegistroT030);
+    procedure WriteRegistroT170(RegT030: TRegistroT030);
+    procedure WriteRegistroT181(RegT030: TRegistroT030);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
 
-    constructor Create;
-    destructor Destroy; override;
-
-    procedure LimpaRegistros;
-
     procedure WriteRegistroT001;
     procedure WriteRegistroT030;
     procedure WriteRegistroT990;
 
+    constructor Create;
+    destructor Destroy; override;
+    procedure LimpaRegistros;
+
     property RegistroT001: TRegistroT001 read FRegistroT001 write FRegistroT001;
+    property RegistroT030: TRegistroT030List read FRegistroT030 write FregistroT030;
     property RegistroT990: TRegistroT990 read FRegistroT990 write FRegistroT990;
+
+    property RegistroT120Count: Integer read FRegistroT120Count write FRegistroT120Count;
+    property RegistroT150Count: Integer read FRegistroT150Count write FRegistroT150Count;
+    property RegistroT170Count: Integer read FRegistroT170Count write FRegistroT170Count;
+    property RegistroT181Count: Integer read FRegistroT181Count write FRegistroT181Count;
   published
   end;
 
@@ -89,24 +103,40 @@ uses
 constructor TBloco_T.Create;
 begin
   FRegistroT001 := TRegistroT001.Create;
+  FRegistroT030 := TRegistroT030List.Create;
   FRegistroT990 := TRegistroT990.Create;
+
+  FRegistroT120Count := 0;
+  FRegistroT150Count := 0;
+  FRegistroT170Count := 0;
+  FRegistroT181Count := 0;
 end;
 
 procedure TBloco_T.CriaRegistros;
 begin
   FRegistroT001 := TRegistroT001.Create;
+  FRegistroT030 := TRegistroT030List.Create;
   FRegistroT990 := TRegistroT990.Create;
+
+  FRegistroT120Count := 0;
+  FRegistroT150Count := 0;
+  FRegistroT170Count := 0;
+  FRegistroT181Count := 0;
+
+  FRegistroT990.QTD_LIN := 0;
 end;
 
 destructor TBloco_T.Destroy;
 begin
   FRegistroT001.Free;
+  FRegistroT030.Free;
   FRegistroT990.Free;
 end;
 
 procedure TBloco_T.LiberaRegistros;
 begin
   FRegistroT001.Free;
+  FRegistroT030.Free;
   FRegistroT990.Free;
 end;
 
@@ -136,8 +166,114 @@ begin
 end;
 
 procedure TBloco_T.WriteRegistroT030;
+var
+  intFor: integer;
 begin
-  //
+  if Assigned(FRegistroT030) then
+  begin
+    for intFor := 0 to FRegistroT030.Count - 1 do
+    begin
+      with FRegistroT030.Items[intFor] do
+      begin
+        Add(LFill('T030') +
+            LFill(DT_INI) +
+            LFill(DT_FIN) +
+            LFill(PER_APUR));
+      end;
+
+      // Registros Filhos
+      WriteRegistroT120(FRegistroT030.Items[intFor]);
+      WriteRegistroT150(FRegistroT030.Items[intFor]);
+      WriteRegistroT170(FRegistroT030.Items[intFor]);
+      WriteRegistroT181(FRegistroT030.Items[intFor]);
+
+      FRegistroT990.QTD_LIN := FRegistroT990.QTD_LIN + 1;
+    end;
+  end;
+end;
+
+procedure TBloco_T.WriteRegistroT120(RegT030: TRegistroT030);
+var
+  intFor: integer;
+begin
+  if Assigned(RegT030.RegistroT120) then
+  begin
+    for intFor := 0 to RegT030.RegistroT120.Count - 1 do
+    begin
+      with RegT030.RegistroT120.Items[intFor] do
+      begin
+        Add(LFill('T120')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
+      FRegistroT990.QTD_LIN := FRegistroT990.QTD_LIN + 1;
+    end;
+    FRegistroT120Count := FRegistroT120Count + RegT030.RegistroT120.Count;
+  end;
+end;
+
+procedure TBloco_T.WriteRegistroT150(RegT030: TRegistroT030);
+var
+  intFor: integer;
+begin
+  if Assigned(RegT030.RegistroT150) then
+  begin
+    for intFor := 0 to RegT030.RegistroT150.Count - 1 do
+    begin
+      with RegT030.RegistroT150.Items[intFor] do
+      begin
+        Add(LFill('T150')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
+      FRegistroT990.QTD_LIN := FRegistroT990.QTD_LIN + 1;
+    end;
+    FRegistroT150Count := FRegistroT150Count + RegT030.RegistroT150.Count;
+  end;
+end;
+
+procedure TBloco_T.WriteRegistroT170(RegT030: TRegistroT030);
+var
+  intFor: integer;
+begin
+  if Assigned(RegT030.RegistroT170) then
+  begin
+    for intFor := 0 to RegT030.RegistroT170.Count - 1 do
+    begin
+      with RegT030.RegistroT170.Items[intFor] do
+      begin
+        Add(LFill('T170')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
+      FRegistroT990.QTD_LIN := FRegistroT990.QTD_LIN + 1;
+    end;
+    FRegistroT170Count := FRegistroT170Count + RegT030.RegistroT170.Count;
+  end;
+end;
+
+procedure TBloco_T.WriteRegistroT181(RegT030: TRegistroT030);
+var
+  intFor: integer;
+begin
+  if Assigned(RegT030.RegistroT181) then
+  begin
+    for intFor := 0 to RegT030.RegistroT181.Count - 1 do
+    begin
+      with RegT030.RegistroT181.Items[intFor] do
+      begin
+        Add(LFill('T181')    +
+            LFill(CODIGO)    +
+            LFill(DESCRICAO) +
+            VLFill(VALOR, 19, 2));
+      end;
+      FRegistroT990.QTD_LIN := FRegistroT990.QTD_LIN + 1;
+    end;
+    FRegistroT181Count := FRegistroT181Count + RegT030.RegistroT181.Count;
+  end;
 end;
 
 procedure TBloco_T.WriteRegistroT990;
@@ -155,3 +291,4 @@ begin
 end;
 
 end.
+

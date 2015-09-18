@@ -658,9 +658,11 @@ begin
   {$ENDIF}
 
   Texto := FDadosEnvelope;
+  // %SenhaMsg% : Representa a Mensagem que contem o usuário e senha
   // %CabMsg%   : Representa a Mensagem de Cabeçalho
   // %DadosMsg% : Representa a Mensagem de Dados
   DadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%SenhaMsg%', FDadosSenha, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%CabMsg%', FPCabMsg, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%DadosMsg%', DadosMsg, [rfReplaceAll]);
 

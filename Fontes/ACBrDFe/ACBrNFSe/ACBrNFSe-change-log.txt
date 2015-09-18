@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2015
+[*] Acrescentado o INI para o provedor Saatri.
+    Por: Icozeira / Italo Jurisato Junior
+
 16/09/2015
 [*] (ACBrNFSeWebServices)
     Alterado algumas rotinas para dar continuidade a migração para o Trunk2.

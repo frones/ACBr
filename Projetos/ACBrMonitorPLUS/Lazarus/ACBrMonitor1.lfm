@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsNFe
+        ActivePage = tsACBrBoleto
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 11
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -5306,7 +5306,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   'PDF'
                   'HTML'
                 )
-                OnChange = cbxBOLFiltroChange
                 Style = csDropDownList
                 TabOrder = 5
                 Text = 'Impressora'
@@ -5334,12 +5333,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentColor = False
               end
               object deBOLDirArquivo: TDirectoryEdit
-                AnchorSideTop.Control = Label71
                 AnchorSideTop.Side = asrBottom
                 Left = 247
                 Height = 25
-                Top = 112
-                Width = 316
+                Top = 117
+                Width = 337
                 ShowHidden = False
                 ButtonWidth = 23
                 NumGlyphs = 1
@@ -5350,11 +5348,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object Label71: TLabel
                 AnchorSideLeft.Control = deBOLDirArquivo
-                AnchorSideTop.Control = cbxBOLLayout
                 AnchorSideTop.Side = asrBottom
                 Left = 247
                 Height = 17
-                Top = 95
+                Top = 101
                 Width = 101
                 BorderSpacing.Top = 2
                 Caption = 'Diretório Arquivo'
@@ -5364,7 +5361,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 248
                 Height = 25
                 Top = 160
-                Width = 304
+                Width = 333
                 ItemHeight = 17
                 Style = csDropDownList
                 TabOrder = 7
@@ -10522,7 +10519,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

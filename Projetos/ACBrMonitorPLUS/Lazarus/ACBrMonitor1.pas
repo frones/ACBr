@@ -901,7 +901,6 @@ type
     procedure cbTraduzirTagsChange(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
-    procedure cbxBOLFiltroChange(Sender: TObject);
     procedure cbxBOLF_JChange(Sender: TObject);
     procedure cbCEPWebServiceChange(Sender: TObject);
     procedure cbxModeloSATChange(Sender: TObject);
@@ -1400,7 +1399,6 @@ begin
 
   pgBoleto.ActivePageIndex := 0;
   cbxBOLF_JChange(Self);
-  cbxBOLFiltroChange(Self);
 
   pgCadastro.ActivePageIndex := 0;
   pgSwHouse.ActivePageIndex := 0;
@@ -2085,11 +2083,6 @@ procedure TFrmACBrMonitor.cbUsarFortesClick(Sender: TObject);
 begin
   cbUsarEscPos.Checked := False;
   ACBrSAT1.Extrato := ACBrSATExtratoFortes1
-end;
-
-procedure TFrmACBrMonitor.cbxBOLFiltroChange(Sender: TObject);
-begin
-  deBOLDirArquivo.Enabled := (cbxBOLFiltro.ItemIndex > 0);
 end;
 
 procedure TFrmACBrMonitor.cbxBOLF_JChange(Sender: TObject);
@@ -3333,8 +3326,8 @@ begin
     else
       LayoutRemessa := c400;
 
-    DirArqRemessa   := deBolDirRemessa.Text;
-    DirArqRetorno   := deBolDirRetorno.Text;
+    DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
+    DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
     LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
   end;
 
@@ -3353,12 +3346,14 @@ begin
 
     wNomeArquivo := Trim(deBOLDirArquivo.Text);
     if wNomeArquivo = '' then
-      wNomeArquivo := ExtractFileDir(Application.ExeName);
+      wNomeArquivo := ExtractFilePath(Application.ExeName)
+    else
+      wNomeArquivo := PathWithDelim(wNomeArquivo);
 
     if Filtro = fiHTML then
-      NomeArquivo := wNomeArquivo + PathDelim + 'boleto.html'
+      NomeArquivo := wNomeArquivo + 'boleto.html'
     else
-      NomeArquivo := wNomeArquivo + PathDelim + 'boleto.pdf';
+      NomeArquivo := wNomeArquivo + 'boleto.pdf';
   end;
 
   if cbxTCModelo.ItemIndex > 0 then

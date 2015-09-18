@@ -2352,6 +2352,9 @@ begin
    if NomeArquivo = '' then
       raise Exception.Create( ACBrStr('NomeArquivo não especificado')) ;
 
+   if ExtractFileName(NomeArquivo) = '' then
+     NomeArquivo := PathWithDelim(NomeArquivo) + 'boleto.pdf';
+
    FiltroAntigo         := Filtro;
    MostrarPreviewAntigo := MostrarPreview;
    MostrarSetupAntigo   := MostrarSetup;

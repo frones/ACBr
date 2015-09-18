@@ -112,7 +112,7 @@ type
       ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True;
       AMargemSuperior: double = 0.8; AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6;
       AMargemDireita: double = 0.51; AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho;
-      ACTeCancelada: boolean = False; AEPECEnviado: boolean = False);
+      ACTeCancelada: boolean = False; AEPECEnviado: boolean = False; APrintDialog : Boolean = True);
 
     class procedure SavePDF(AFile: string; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
       AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
@@ -135,7 +135,7 @@ class procedure TfrmDACTeRL.Imprimir(ACTe: TCTe; ALogo: string = ''; AEmail: str
   AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMargemSuperior: double = 0.8;
   AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
   AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False;
-  AEPECEnviado: boolean = False);
+  AEPECEnviado: boolean = False; APrintDialog: Boolean = True);
 begin
   with Create(nil) do
     try
@@ -168,6 +168,7 @@ begin
       else
         RLPrinter.Copies := 1;
 
+      RLCTe.PrintDialog := APrintDialog;
       if APreview = True then
         RLCTe.PreviewModal
       else

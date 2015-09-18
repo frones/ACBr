@@ -58,6 +58,8 @@ type
   TACBrCTeDACTeRL = class(TACBrCTeDACTeClass)
   private
     FPosRecibo: TPosRecibo;
+		protected
+     FPrintDialog: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -67,6 +69,7 @@ type
     procedure ImprimirEVENTOPDF(CTe: TCTe = nil); override;
   published
     property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
+    property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
   end;
 
 implementation
@@ -80,6 +83,7 @@ var
 constructor TACBrCTeDACTeRL.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FPrintDialog := True;
 end;
 
 destructor TACBrCTeDACTeRL.Destroy;
@@ -136,7 +140,8 @@ begin
         , Impressora
         , PosRecibo
         , CTeCancelada
-        , EPECEnviado);
+        , EPECEnviado
+		    , PrintDialog);
   end
   else
     frmDACTeRLRetrato.Imprimir(CTe
@@ -159,7 +164,8 @@ begin
       , Impressora
       , PosRecibo
       , CTeCancelada
-      , EPECEnviado);
+      , EPECEnviado
+	    , PrintDialog);
 
   if frmDACTeRLRetrato.RLCTe <> nil then
     frmDACTeRLRetrato.Free;

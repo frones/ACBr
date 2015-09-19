@@ -1055,6 +1055,7 @@ function TACBrECFBematech.VerificaFimLeitura(var Retorno: AnsiString;
    var TempoLimite: TDateTime) : Boolean ;
 Var
   LenRet, LenST : Integer ;
+  Buffer: AnsiString;
 begin
   LenRet := Length(Retorno) ;
 
@@ -1080,7 +1081,18 @@ begin
       begin
         Result := (pos(ETX, RightStr(Retorno,6)) > 0) ;
         if Result then
-           Result := not fpDevice.Serial.CanReadEx(1000);  // Aguarda por 1 seg sem dados
+        begin
+           try
+              Buffer := fpDevice.LeString(1000);  // Aguarda por 1 seg sem dados
+              if Buffer <> '' then
+              begin
+                 Retorno := Retorno + Buffer;
+                 TempoLimite := IncSecond(now, TimeOut);
+                 Result := False;
+              end;
+           except
+           end;
+        end;
       end;
 
   { Nota sobre o VerificaFimLeitura: A Bematech responde muito antes da

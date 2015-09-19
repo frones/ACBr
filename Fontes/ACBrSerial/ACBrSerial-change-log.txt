@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/09/2015
+-- ACBrECFBematech --   (por: DSA)
+[*] Rotina que detecta final de leitura em capturas de leituras pela Serial,
+    modificada, para evitar Falta de resposta (TimeOut) em algumas máquinas
+
 Data: 11/09/2015
 -- ACBrPosPrinter -- (Por: Fabio Souza e DSA)
 [+] Adicionado suporte ao modelo Diebold, através do modo Esc/Pos

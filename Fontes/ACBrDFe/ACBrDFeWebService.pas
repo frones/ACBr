@@ -52,6 +52,8 @@ type
 
   TDFeWebService = class
   private
+    function GetRetornoWS: String;
+    function GetRetWS: String;
   protected
     FPSoapVersion: String;
     FPSoapEnvelopeAtributtes: String;
@@ -72,6 +74,7 @@ type
     FPArqResp: String;
     FPServico: String;
     FPSoapAction: String;
+    FPMimeType: String;
   protected
     procedure FazerLog(Msg: String; Exibir: Boolean = False); virtual;
     procedure GerarException(Msg: String; E: Exception = nil); virtual;
@@ -111,13 +114,14 @@ type
 
     property Servico: String read FPServico;
     property SoapAction: String read FPSoapAction;
+    property MimeType: String read FPMimeType;
     property URL: String read FPURL;
     property VersaoServico: String read FPVersaoServico;
     property CabMsg: String read FPCabMsg;
     property DadosMsg: String read FPDadosMsg;
     property EnvelopeSoap: String read FPEnvelopeSoap;
-    property RetornoWS: String read FPRetornoWS;
-    property RetWS: String read FPRetWS;
+    property RetornoWS: String read GetRetornoWS;
+    property RetWS: String read GetRetWS;
     property Msg: String read FPMsg;
     property ArqEnv: String read FPArqEnv;
     property ArqResp: String read FPArqResp;
@@ -154,6 +158,7 @@ begin
   FPArqResp := '';
   FPServico := '';
   FPSoapAction := '';
+  FPMimeType := '';  // Vazio, usará por default: 'application/soap+xml'
 end;
 
 function TDFeWebService.Executar: Boolean;
@@ -238,7 +243,7 @@ var
 begin
   { Sobrescrever apenas se necessário }
 
-  {$IFDEF UNICODE}
+  {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
   {$ELSE}
    Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
@@ -304,7 +309,7 @@ begin
                                      FormatDateBr(FPDFeOwner.SSL.CertDataVenc));
 
     try
-      FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction);
+      FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);
     except
       if Assigned(FPDFeOwner.OnTransmitError) then
         FPDFeOwner.OnTransmitError( FPDFeOwner.SSL.HTTPResultCode,
@@ -365,16 +370,13 @@ begin
   if FPConfiguracoes.Geral.Salvar then
   begin
     ArqResp := Prefixo + '-' + FPArqResp + '.xml';
-    FPDFeOwner.Gravar(ArqResp, FPRetWS);
+    FPDFeOwner.Gravar(ArqResp, RetWS);  // Converte para UTF8 se necessasário
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqResp := Prefixo + '-' + FPArqResp + '-soap.xml';
-    { FPRetornoWS, foi convertido de UTF8 para a String nativa da IDE no final
-      de "EnviarDados", após o tratamento de ParseText..
-      Convertendo para UTF8 novamente, para poder salvar o XML de forma correta } 
-    FPDFeOwner.Gravar(ArqResp, ACBrStrToUTF8(FPRetornoWS) );
+    FPDFeOwner.Gravar(ArqResp, RetornoWS );    // Converte para UTF8 se necessasário
   end;
 end;
 
@@ -434,6 +436,27 @@ procedure TDFeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
 
+end;
+
+function TDFeWebService.GetRetornoWS: String;
+begin
+  { FPRetornoWS, foi convertido de UTF8 para a String nativa da IDE no final
+    de "EnviarDados", após o tratamento de ParseText..
+    Convertendo para UTF8 novamente, se no inicio do XML contiver tag de UTF8 }
+  if XmlEhUTF8(FPRetornoWS) then
+    Result := ACBrStrToUTF8(FPRetornoWS)
+  else
+    Result := FPRetornoWS;
+end;
+
+function TDFeWebService.GetRetWS: String;
+begin
+  { FPRetornoWS e FPRetWS, foram convertidos de UTF8 para a String nativa da IDE
+    Convertendo para UTF8 novamente, se no inicio do XML contiver tag de UTF8 }
+  if XmlEhUTF8(FPRetWS) then
+    Result := ACBrStrToUTF8(FPRetWS)
+  else
+    Result := FPRetWS;
 end;
 
 function TDFeWebService.GetUrlWsd: String;

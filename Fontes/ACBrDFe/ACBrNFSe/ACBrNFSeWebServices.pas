@@ -651,7 +651,7 @@ procedure TNFSeWebService.DefinirEnvelopeSoap;
 var
   Texto, DadosMsg: String;
 begin
-  {$IFDEF UNICODE}
+  {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
   {$ELSE}
    Texto := '';  // Isso forçará a conversão para UTF8, antes do envio

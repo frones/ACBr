@@ -44,6 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2015
+-- ACBrDFeWebService --      (por: DSA)
+[*] Implementada a propriedade TDFeWebService.Mimetype, para permitir que algum
+    WebService utilize um valor diferente de "application/soap+xml"
+[*] TDFeWebService.RetornoWS e TDFeWebService.RetWS modificados para retornarem
+    o valor em UTF8, assim como recebido pelo WebService.
+    * Nota para desenvolvedores do ACBr. Para acessar os valores de RetornoWS e
+      RetWS com a String nativa da IDE (Ex: Unicode) utilize os campos Protected
+      "FPRetornoWS, FPRetWS"
+[*] TDFeWebService.DefinirEnvelopeSoap, modificado para não inserir o cabeçalho
+    "ENCODING_UTF8", nas IDEs Delphi XE, que usam UNICODE e não UTF8
+     (isso forçará a conversão para UTF8 antes do envio)
+
 18/09/2015
 -- ACBrDFeSSL --      (por: DSA)
 [*] Método "DFeSSL.Enviar" modificado, para permitir informar o "Mimetype".

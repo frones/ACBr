@@ -883,7 +883,7 @@ begin
       if not ValidaDrawback(nfe.Det[i].Prod.detExport[j].nDraw) then
         Gerador.wAlerta('I51', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
 
-    if nfe.Det[i].Prod.detExport[j].nRE <> '' then
+    if (nfe.Det[i].Prod.detExport[j].nRE <> '') or (nfe.Det[i].Prod.detExport[j].chNFe <> '') then
     begin
       Gerador.wGrupo('exportInd', 'I52');
       Gerador.wCampo(tcStr, 'I53', 'nRE    ', 12, 12, 1, nfe.Det[i].Prod.detExport[j].nRE, DSC_NRE);

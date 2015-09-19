@@ -53,6 +53,10 @@ Símbolo : Significado
     ao ser salvo a rotina acrescenta ou não se necessário.
     Por: Rômulo da Costa de Souza / Italo Jurisato Junior
 
+-- pcnNFeW --
+[*] Ajustado para gerar grupo "exportInd" também quando existir NF-e Referênciada
+   (por: Everton)  http://www.projetoacbr.com.br/forum/index.php?showtopic=23811
+
 17/09/2015
 -- ACBrNFeNotasFiscais, ACBrNFeWebServices --
 [*] Ajustes para que os arquivos de envio/retorno fiquem condicionados a propriedade

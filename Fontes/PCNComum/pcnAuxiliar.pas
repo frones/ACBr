@@ -149,7 +149,7 @@ begin
   if RetirarAcentos then
      aTexto := AnsiString(TiraAcentos(String(aTexto)));
 
-  aTexto := ParseText(aTexto, False, {$IFDEF UNICODE}True{$ELSE}False{$ENDIF} );
+  aTexto := ParseText(aTexto, False );
 
   if RetirarEspacos then
   begin

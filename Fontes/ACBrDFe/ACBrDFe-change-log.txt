@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2015
+-- ACBrDFeSSL --      (por: DSA)
+[*] Método "DFeSSL.Enviar" modificado, para permitir informar o "Mimetype".
+    Útil para alguns WebServices que não usam "application/soap+xml"..
+
 16/09/2015
 -- ACBrDFe --    (por: DSA)
 [*] Disparo de Exception com msg clara quando diretório configurado para os

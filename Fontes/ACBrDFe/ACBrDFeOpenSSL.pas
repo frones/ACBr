@@ -61,7 +61,7 @@ type
     FSubjectName: String;
 
     procedure Clear;
-    procedure ConfiguraHTTP(const URL, SoapAction: String);
+    procedure ConfiguraHTTP(const URL, SoapAction: String; MimeType: String);
     function LerPFXInfo(pfxdata: Ansistring): Boolean;
 
     function XmlSecSign(const Axml: PAnsiChar): AnsiString;
@@ -83,7 +83,7 @@ type
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
       override;
     function Enviar(const ConteudoXML: String; const URL: String;
-      const SoapAction: String): String; override;
+      const SoapAction: String; const MimeType: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; override;
     function VerificarAssinatura(const ConteudoXML: String;
@@ -233,7 +233,7 @@ begin
 end;
 
 function TDFeOpenSSL.Enviar(const ConteudoXML: String; const URL: String;
-  const SoapAction: String): String;
+  const SoapAction: String; const MimeType: String): String;
 var
   OK: Boolean;
   RetornoWS: AnsiString;
@@ -241,7 +241,7 @@ begin
   RetornoWS := '';
 
   // Configurando o THTTPSend //
-  ConfiguraHTTP(URL, 'SOAPAction: "' + SoapAction + '"');
+  ConfiguraHTTP(URL, 'SOAPAction: "' + SoapAction + '"', MimeType);
 
   // Gravando no Buffer de Envio //
   WriteStrToStream(FHTTP.Document, AnsiString(ConteudoXML)) ;
@@ -819,7 +819,8 @@ begin
   FHTTP.Sock.SSL.KeyPassword := '';
 end;
 
-procedure TDFeOpenSSL.ConfiguraHTTP(const URL, SoapAction: String);
+procedure TDFeOpenSSL.ConfiguraHTTP(const URL, SoapAction: String;
+  MimeType: String);
 begin
   FHTTP.Clear;
 
@@ -832,11 +833,10 @@ begin
   FHTTP.ProxyUser := FpDFeSSL.ProxyUser;
   FHTTP.ProxyPass := FpDFeSSL.ProxyPass;
 
-  if (pos('SCERECEPCAORFB', UpperCase(URL)) <= 0) and
-    (pos('SCECONSULTARFB', UpperCase(URL)) <= 0) then
-    FHTTP.MimeType := 'application/soap+xml; charset=utf-8'
-  else
-    FHTTP.MimeType := 'text/xml; charset=utf-8';
+  if MimeType = '' then
+    MimeType := 'application/soap+xml';
+
+  FHTTP.MimeType := MimeType + '; charset=utf-8';     // Todos DFes usam UTF8
 
   FHTTP.UserAgent := '';
   FHTTP.Protocol := '1.1';
@@ -851,3 +851,4 @@ finalization;
   ShutDownXmlSec;
 
 end.
+

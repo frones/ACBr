@@ -73,7 +73,7 @@ type
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
       virtual;
     function Enviar(const ConteudoXML: String; const URL: String;
-      const SoapAction: String): String; virtual;
+      const SoapAction: String; const MimeType: String = ''): String; virtual;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; virtual;
     function VerificarAssinatura(const ConteudoXML: String;
@@ -142,7 +142,7 @@ type
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
     // Envia por SoapAction o ConteudoXML para URL. Retorna a resposta do Servico //
     function Enviar(var ConteudoXML: String; const URL: String;
-      const SoapAction: String): String;
+      const SoapAction: String; const MimeType: String = ''): String;
     // Valida um Arquivo contra o seu Schema. Retorna True se OK, preenche MsgErro se False //
     function Validar(const ConteudoXML: String; ArqSchema: String;
       out MsgErro: String): Boolean;
@@ -267,10 +267,10 @@ begin
 end;
 
 function TDFeSSL.Enviar(var ConteudoXML: String; const URL: String;
-  const SoapAction: String): String;
+  const SoapAction: String; const MimeType: String): String;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
-  Result := FSSLClass.Enviar(ConteudoXML, URL, SoapAction);
+  Result := FSSLClass.Enviar(ConteudoXML, URL, SoapAction, MimeType);
 end;
 
 function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
@@ -437,7 +437,7 @@ begin
 end;
 
 function TDFeSSLClass.Enviar(const ConteudoXML: String; const URL: String;
-  const SoapAction: String): String;
+  const SoapAction: String; const MimeType: String): String;
 begin
   Result := '';
   raise EACBrDFeException.Create(ClassName + '.Enviar não implementado');

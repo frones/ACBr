@@ -67,6 +67,8 @@ type
     procedure Clear;
 
   protected
+    FMimeType: String;
+
     procedure ConfiguraReqResp(const URL, SoapAction: String); virtual;
     procedure Executar(const ConteudoXML: String; Resp: TStream); virtual;
 
@@ -85,7 +87,7 @@ type
     function Assinar(const ConteudoXML, docElement, infElement: String): String;
       override;
     function Enviar(const ConteudoXML: String; const URL: String;
-      const SoapAction: String): String; override;
+      const SoapAction: String; const MimeType: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; override;
     function VerificarAssinatura(const ConteudoXML: String;
@@ -118,6 +120,7 @@ begin
   FCertStoreMem := nil;
   FStoreLocation := CAPICOM_CURRENT_USER_STORE;
   FReqResp := TACBrHTTPReqResp.Create;
+  FMimeType := '';
 end;
 
 destructor TDFeCapicom.Destroy;
@@ -493,11 +496,16 @@ begin
 end;
 
 function TDFeCapicom.Enviar(const ConteudoXML: String; const URL: String;
-  const SoapAction: String): String;
+  const SoapAction: String; const MimeType: String): String;
 var
   Resp: TStringStream;
 begin
   Result := '';
+
+  if MimeType = '' then
+    FMimeType := 'application/soap+xml'
+  else
+    FMimeType := MimeType;
 
   ConfiguraReqResp(URL, SoapAction);
 
@@ -652,12 +660,7 @@ begin
   FReqResp.SetCertificate(FCertificado);
   FReqResp.Url := URL;
   FReqResp.SOAPAction := SoapAction;
-
-  if (pos('SCERECEPCAORFB', UpperCase(URL)) <= 0) and
-    (pos('SCECONSULTARFB', UpperCase(URL)) <= 0) then
-    FReqResp.MimeType := 'application/soap+xml'
-  else
-    FReqResp.MimeType := 'text/xml';
+  FReqResp.MimeType := FMimeType;
 end;
 
 initialization

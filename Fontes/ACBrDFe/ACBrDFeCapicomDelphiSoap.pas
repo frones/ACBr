@@ -117,13 +117,9 @@ begin
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_PASSWORD: ' +
                                        IntToStr(GetLastError));
 
-    if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
-      (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
-    begin
-      ContentHeader := Format(ContentTypeTemplate, ['application/soap+xml; charset=utf-8']);
-      HttpAddRequestHeaders(Data, PChar(ContentHeader), Length(ContentHeader),
+    ContentHeader := Format(ContentTypeTemplate, [FMimeType+'; charset=utf-8']);
+    HttpAddRequestHeaders(Data, PChar(ContentHeader), Length(ContentHeader),
                             HTTP_ADDREQ_FLAG_REPLACE);
-    end;
   end;
 
   FIndyReqResp.CheckContentType;

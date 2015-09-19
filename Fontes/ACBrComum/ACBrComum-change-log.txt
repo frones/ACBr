@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/09/2015
+-- ACBrUtil --         (por: DSA)
+[*] ACBrStr modificada para não tentar converter para UTF8, mas sim para UNICODE
+    nas IDEs de Delphi XE
+[*] ParseText modificada para não tentar converter de UTF8 para String nativa
+    quando estiver efetuando um "Encode"
+
 Data: 16/09/2015
 -- ACBrUtil --         (por: DSA)
 [+] Adiconado o método:

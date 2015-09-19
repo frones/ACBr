@@ -329,9 +329,10 @@ end;
 
 {-----------------------------------------------------------------------------
   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
-  D5 a D2007, Porém D2009 e superiores e Lazarus 0.9.27 e acima usam UTF8.
-  A função abaixo converte a "AString" de ANSI, para UTF8, porém apenas se o
-  Compilador usar UNICODE
+  D5 a D2007, Porém D2009 e superiores usam Unicode, 
+   e Lazarus 0.9.27 e acima usam UTF8.
+  A função abaixo converte a "AString" de ANSI, para UNICODE ou UTF8, de acordo
+  com as diretivas do Compilador 
  -----------------------------------------------------------------------------}
 function ACBrStr( AString : AnsiString ) : String ;
 begin
@@ -346,7 +347,7 @@ begin
        Result := AnsiToUtf8( AString ) ;
      {$ENDIF}
    {$ELSE}
-     Result := String(AnsiToUtf8( String(AString) )) ;
+    Result := String(AString) ;
    {$ENDIF}
  {$ENDIF}
 {$ELSE}
@@ -3208,10 +3209,10 @@ var
   end;
 
 begin
-  Astr := DecodeToString( Texto, IsUTF8 ) ;
-
   if Decode then
   begin
+    Astr := DecodeToString( Texto, IsUTF8 ) ;
+
     Astr := InternalStringReplace(AStr, '&amp;'   , '&');
     AStr := InternalStringReplace(AStr, '&lt;'    , '<');
     AStr := InternalStringReplace(AStr, '&gt;'    , '>');
@@ -3247,6 +3248,7 @@ begin
   end
   else
   begin
+    AStr := Texto;
     AStr := StringReplace(AStr, '&', '&amp;' , [rfReplaceAll]);
     AStr := StringReplace(AStr, '<', '&lt;'  , [rfReplaceAll]);
     AStr := StringReplace(AStr, '>', '&gt;'  , [rfReplaceAll]);

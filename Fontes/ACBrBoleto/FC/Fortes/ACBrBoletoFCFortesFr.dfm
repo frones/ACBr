@@ -2796,9 +2796,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Top = 15
+      Top = 8
       Width = 745
-      Height = 362
+      Height = 357
       BeforePrint = RLBand3BeforePrint
       object RLDraw30: TRLDraw
         Left = 150

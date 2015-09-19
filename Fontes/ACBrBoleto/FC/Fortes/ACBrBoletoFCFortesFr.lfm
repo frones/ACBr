@@ -1,5 +1,5 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 229
+  Left = 234
   Height = 741
   Top = 0
   Width = 1033
@@ -3402,9 +3402,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 720
+    Left = 144
     Height = 1123
-    Top = 64
+    Top = 24
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -3423,8 +3423,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = BoletoCarneDataRecord
     object RLBand3: TRLBand
       Left = 30
-      Height = 365
-      Top = 15
+      Height = 357
+      Top = 8
       Width = 745
       RealBounds.Left = 0
       RealBounds.Top = 0

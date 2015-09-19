@@ -1,5 +1,5 @@
 {$I ACBr.inc}
-{$DEFINE ACBrNFeOpenSSL}
+{.$DEFINE ACBrNFeOpenSSL}
 
 unit Unit1;
 
@@ -260,7 +260,7 @@ type
     procedure LerConfiguracao ;
     procedure GerarNFe(NumNFe : String);
     procedure GerarNFCe(NumNFe : String);
-    procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
+    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 
     procedure LoadConsulta201(XML: AnsiString);
   public
@@ -598,9 +598,10 @@ begin
   end;
 end;
 
-procedure TForm1.LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
+procedure TForm1.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
 begin
-  MyMemo.Lines.SaveToFile(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
+  ACBrUtil.WriteToTXT( PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml',
+                        ACBrUtil.ConverteXMLtoUTF8( RetWS ), False, False);
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
 end;
 
@@ -665,7 +666,7 @@ begin
   {$IFDEF ACBrNFeOpenSSL}
   ACBrNFe1.Configuracoes.Geral.SSLLib := libOpenSSL;
   {$else}
-  ACBrNFe1.Configuracoes.Geral.SSLLib := libCapicom;
+  ACBrNFe1.Configuracoes.Geral.SSLLib := libCapicomDelphiSoap;
   {$endif}
 
 end;
@@ -683,7 +684,7 @@ begin
 
  MemoResp.Lines.Text := ACBrNFe1.WebServices.StatusServico.RetWS;
  memoRespWS.Lines.Text := ACBrNFe1.WebServices.StatusServico.RetornoWS;
- LoadXML(MemoResp, WBResposta);
+ LoadXML(ACBrNFe1.WebServices.StatusServico.RetornoWS, WBResposta);
 
  pgRespostas.ActivePageIndex := 1;
 
@@ -714,7 +715,7 @@ begin
     ShowMessage(ACBrNFe1.WebServices.Consulta.Protocolo);
     MemoResp.Lines.Text := ACBrNFe1.WebServices.Consulta.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.Consulta.RetornoWS;
-    LoadXML(MemoResp, WBResposta);
+    LoadXML(ACBrNFe1.WebServices.Consulta.RetornoWS, WBResposta);
     LoadConsulta201(ACBrNFe1.WebServices.Consulta.RetWS);
   end;
 end;
@@ -749,7 +750,7 @@ begin
 
     MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
-    LoadXML(MemoResp, WBResposta);
+    LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
     ShowMessage(IntToStr(ACBrNFe1.WebServices.EnvEvento.cStat));
     ShowMessage(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
   end;
@@ -837,7 +838,7 @@ begin
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
 //  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].XXXX
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
 end;
 
 procedure TForm1.btnNfeDestinadasClick(Sender: TObject);
@@ -889,7 +890,7 @@ begin
   MemoResp.Lines.Text := ACBrNFe1.WebServices.ConsNFeDest.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.ConsNFeDest.RetornoWS;
 //  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].XXXX
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.ConsNFeDest.RetornoWS, WBResposta);
 
 
 end;
@@ -939,7 +940,7 @@ begin
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.Retorno.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.Retorno.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.Retorno.RetornoWS, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
 
@@ -987,7 +988,7 @@ begin
   ACBrNFe1.WebServices.Inutiliza(edtEmitCNPJ.Text, Justificativa, StrToInt(Ano), StrToInt(Modelo), StrToInt(Serie), StrToInt(NumeroInicial), StrToInt(NumeroFinal));
   MemoResp.Lines.Text :=  ACBrNFe1.WebServices.Inutilizacao.RetWS;
   memoRespWS.Lines.Text :=  ACBrNFe1.WebServices.Inutilizacao.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.Inutilizacao.RetornoWS, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
 
@@ -1131,7 +1132,7 @@ if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
   ShowMessage('Arquivo gerado em: '+ACBrNFe1.NotasFiscais.Items[0].NomeArq);
   MemoDados.Lines.Add('Arquivo gerado em: '+ACBrNFe1.NotasFiscais.Items[0].NomeArq);
   MemoResp.Lines.LoadFromFile(ACBrNFe1.NotasFiscais.Items[0].NomeArq);
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(MemoResp.Text, WBResposta);
   pgRespostas.ActivePageIndex := 1;
 end;
 
@@ -1154,7 +1155,7 @@ begin
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.ConsultaCadastro.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.ConsultaCadastro.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.ConsultaCadastro.RetornoWS, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
 
@@ -1260,7 +1261,7 @@ begin
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.Recibo.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.Recibo.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.Recibo.RetornoWS, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
 
@@ -2782,7 +2783,7 @@ begin
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.Consulta.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.Consulta.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.Consulta.RetornoWS, WBResposta);
   LoadConsulta201(ACBrNFe1.WebServices.Consulta.RetWS);
 end;
 
@@ -2821,7 +2822,7 @@ begin
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.EnvEvento.RetornoWS, WBResposta);
 
   {ACBrNFe1.WebServices.EnvEvento.EventoRetorno.TpAmb
   ACBrNFe1.WebServices.EnvEvento.EventoRetorno.verAplic
@@ -2848,7 +2849,7 @@ begin
     ShowMessage(ACBrNFe1.WebServices.Consulta.Protocolo);
     MemoResp.Lines.Text := ACBrNFe1.WebServices.Consulta.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.Consulta.RetornoWS;
-    LoadXML(MemoResp, WBResposta);
+    LoadXML(ACBrNFe1.WebServices.Consulta.RetornoWS, WBResposta);
     NomeArq := OpenDialog1.FileName;
     if pos(UpperCase('-nfe.xml'),UpperCase(NomeArq)) > 0 then
        NomeArq := StringReplace(NomeArq,'-nfe.xml','-procNfe.xml',[rfIgnoreCase]);
@@ -2899,7 +2900,7 @@ begin
 
     MemoResp.Lines.Text := ACBrNFe1.WebServices.Retorno.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.Retorno.RetornoWS;
-    LoadXML(MemoResp, WBResposta);
+    LoadXML(ACBrNFe1.WebServices.Retorno.RetornoWS, WBResposta);
 
    MemoDados.Lines.Add('');
    MemoDados.Lines.Add('Envio NFe');
@@ -2950,7 +2951,7 @@ begin
   MemoResp.Lines.Text := ACBrNFe1.WebServices.EnvEvento.RetWS;
   //memoRespWS.Lines.Text := ACBrNFe1.WebServices.EnvEvento.EventoRetorno;
 //  ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].XXXX
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.EnvEvento.RetWS, WBResposta);
 end;
 
 procedure TForm1.btnValidarAssinaturaClick(Sender: TObject);
@@ -3096,7 +3097,7 @@ begin
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.Retorno.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.Retorno.RetornoWS;
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.Retorno.RetornoWS, WBResposta);
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Envio NFe');
@@ -3146,10 +3147,10 @@ begin
 
    ACBrNFe1.DistribuicaoDFe(StrToInt(cUFAutor),CNPJ,ultNSU,ANSU);
 
-  MemoResp.Lines.Text := UTF8Encode(ACBrNFe1.WebServices.DistribuicaoDFe.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS);
+  MemoResp.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe1.WebServices.DistribuicaoDFe.RetornoWS;
 
-  LoadXML(MemoResp, WBResposta);
+  LoadXML(ACBrNFe1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
 
   ACBrNFe1.Free;
 end;

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 389
+  Left = 425
   Height = 689
-  Top = 93
+  Top = 61
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -6478,9 +6478,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsTestesDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 6
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6866,7 +6866,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
-                  Caption = 'NF-e'
+                  Caption = 'NF-e/CT-e/MDF-e'
                   ClientHeight = 251
                   ClientWidth = 607
                   object gbxWSNFe: TGroupBox
@@ -7238,12 +7238,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 169
                     TabOrder = 1
                   end
-                end
-                object tsWSCTe: TTabSheet
-                  Caption = 'CT-e'
-                end
-                object tsWSMDFe: TTabSheet
-                  Caption = 'MDF-e'
                 end
               end
             end
@@ -8324,81 +8318,81 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 279
                   Top = 1
                   Width = 175
-                  ActivePage = tsTesteNFe
+                  ActivePage = tsTesteCTe
                   Align = alClient
-                  TabIndex = 0
+                  TabIndex = 1
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
                     ClientHeight = 249
                     ClientWidth = 167
                     object btnStatusServ: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 2
+                      Top = 25
                       Width = 140
                       Caption = 'Status Serviço'
                       OnClick = btnStatusServClick
                       TabOrder = 0
                     end
                     object btnValidarXML: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 98
+                      Top = 121
                       Width = 140
                       Caption = 'Validar XML'
                       OnClick = btnValidarXMLClick
                       TabOrder = 4
                     end
                     object btnImprimir: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 122
+                      Top = 145
                       Width = 140
                       Caption = 'Imprimir NFe'
                       OnClick = btnImprimirClick
                       TabOrder = 5
                     end
                     object btnInutilizar: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 146
+                      Top = 169
                       Width = 140
                       Caption = 'Inutilizar NFe'
                       OnClick = btnInutilizarClick
                       TabOrder = 6
                     end
                     object btnConsultar: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 50
+                      Top = 73
                       Width = 140
                       Caption = 'Consultar NFe'
                       OnClick = btnConsultarClick
                       TabOrder = 2
                     end
                     object btnCancNF: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 74
+                      Top = 97
                       Width = 140
                       Caption = 'Cancelamento NFe'
                       OnClick = btnCancNFClick
                       TabOrder = 3
                     end
                     object btnEnviar: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 26
+                      Top = 49
                       Width = 140
                       Caption = 'Enviar XML NFe'
                       OnClick = btnEnviarClick
                       TabOrder = 1
                     end
                     object btnEnviarEmail: TButton
-                      Left = 0
+                      Left = 12
                       Height = 22
-                      Top = 170
+                      Top = 193
                       Width = 140
                       Caption = 'Enviar Email'
                       OnClick = btnEnviarEmailClick
@@ -8407,9 +8401,148 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object tsTesteCTe: TTabSheet
                     Caption = 'CT-e'
+                    ClientHeight = 249
+                    ClientWidth = 167
+                    object btnEnviarEmailCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 193
+                      Width = 140
+                      Caption = 'Enviar Email'
+                      OnClick = btnEnviarEmailCTeClick
+                      TabOrder = 0
+                    end
+                    object btnInutilizarCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 169
+                      Width = 140
+                      Caption = 'Inutilizar CTe'
+                      OnClick = btnInutilizarCTeClick
+                      TabOrder = 1
+                    end
+                    object btnImprimirCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 145
+                      Width = 140
+                      Caption = 'Imprimir CTe'
+                      OnClick = btnImprimirCTeClick
+                      TabOrder = 2
+                    end
+                    object btnValidarXMLCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 121
+                      Width = 140
+                      Caption = 'Validar XML'
+                      OnClick = btnValidarXMLCTeClick
+                      TabOrder = 3
+                    end
+                    object btnCancelarCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 97
+                      Width = 140
+                      Caption = 'Cancelamento CTe'
+                      OnClick = btnCancelarCTeClick
+                      TabOrder = 4
+                    end
+                    object btnConsultarCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 73
+                      Width = 140
+                      Caption = 'Consultar CTe'
+                      OnClick = btnConsultarCTeClick
+                      TabOrder = 5
+                    end
+                    object btnStatusServCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 25
+                      Width = 140
+                      Caption = 'Status Serviço'
+                      OnClick = btnStatusServCTeClick
+                      TabOrder = 6
+                    end
+                    object btnEnviarCTe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 49
+                      Width = 140
+                      Caption = 'Enviar XML CTe'
+                      OnClick = btnEnviarCTeClick
+                      TabOrder = 7
+                    end
                   end
                   object tsTesteMDFe: TTabSheet
                     Caption = 'MDF-e'
+                    ClientHeight = 249
+                    ClientWidth = 167
+                    object btnStatusServMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 25
+                      Width = 140
+                      Caption = 'Status Serviço'
+                      OnClick = btnStatusServMDFeClick
+                      TabOrder = 0
+                    end
+                    object btnEnviarMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 49
+                      Width = 140
+                      Caption = 'Enviar XML MDFe'
+                      OnClick = btnEnviarMDFeClick
+                      TabOrder = 1
+                    end
+                    object btnConsultarMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 73
+                      Width = 140
+                      Caption = 'Consultar MDFe'
+                      OnClick = btnConsultarMDFeClick
+                      TabOrder = 2
+                    end
+                    object btnCancMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 97
+                      Width = 140
+                      Caption = 'Cancelamento MDFe'
+                      OnClick = btnCancMDFeClick
+                      TabOrder = 3
+                    end
+                    object btnValidarXMLMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 121
+                      Width = 140
+                      Caption = 'Validar XML'
+                      OnClick = btnValidarXMLMDFeClick
+                      TabOrder = 4
+                    end
+                    object btnImprimirMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 145
+                      Width = 140
+                      Caption = 'Imprimir MDFe'
+                      OnClick = btnImprimirMDFeClick
+                      TabOrder = 5
+                    end
+                    object btnEnviarEmailMDFe: TButton
+                      Left = 12
+                      Height = 22
+                      Top = 169
+                      Width = 140
+                      Caption = 'Enviar Email'
+                      OnClick = btnEnviarEmailMDFeClick
+                      TabOrder = 6
+                    end
                   end
                 end
               end
@@ -10751,7 +10884,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

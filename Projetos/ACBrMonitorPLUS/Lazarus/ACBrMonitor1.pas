@@ -44,8 +44,9 @@ uses
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
   Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
-  pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, types, ACBrDFeSSL;
+  pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
+  ACBrSATClass, pcnRede, types, ACBrDFeSSL, ACBrMDFe, ACBrMDFeDAMDFeRLClass,
+  ACBrCTe, ACBrCTeDACTeRLClass, ACBrBase;
 
 const
   {$I versao.txt}
@@ -65,11 +66,15 @@ type
     ACBrBoleto1: TACBrBoleto;
     ACBrBoletoFCFortes1: TACBrBoletoFCFortes;
     ACBrCEP1: TACBrCEP;
+    ACBrCTe1: TACBrCTe;
+    ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     ACBrEAD1: TACBrEAD;
     ACBrECF1: TACBrECF;
     ACBrGIF1: TACBrGIF;
     ACBrIBGE1: TACBrIBGE;
     ACBrMail1: TACBrMail;
+    ACBrMDFe1: TACBrMDFe;
+    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     ACBrNCMs1: TACBrNCMs;
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
@@ -223,7 +228,43 @@ type
     cbxSepararporModelo: TCheckBox;
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
-    Certificado: TTabSheet;
+    edtArquivoWebServicesMDFe: TEdit;
+    edtArquivoWebServicesNFe: TEdit;
+    edtArquivoWebServicesCTe: TEdit;
+    edtEmailAssuntoMDFe: TEdit;
+    edtEmailAssuntoNFe: TEdit;
+    edtEmailAssuntoCTe: TEdit;
+    GroupBox4: TGroupBox;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    GroupBox9: TGroupBox;
+    Label133: TLabel;
+    Label138: TLabel;
+    Label155: TLabel;
+    Label156: TLabel;
+    Label157: TLabel;
+    Label159: TLabel;
+    Label163: TLabel;
+    Label165: TLabel;
+    Label180: TLabel;
+    Label181: TLabel;
+    Label182: TLabel;
+    mmEmailMsgMDFe: TMemo;
+    mmEmailMsgNFe: TMemo;
+    mmEmailMsgCTe: TMemo;
+    pgEmailDFe: TPageControl;
+    rgTipoAmb: TRadioGroup;
+    sbArquivoWebServicesMDFe: TSpeedButton;
+    sbArquivoWebServicesNFe: TSpeedButton;
+    sbArquivoWebServicesCTe: TSpeedButton;
+    tsTesteMDFe: TTabSheet;
+    tsWSMDFe: TTabSheet;
+    tsEmailMDFe: TTabSheet;
+    tsTesteCTe: TTabSheet;
+    tsWSCTe: TTabSheet;
+    tsEmailNFe: TTabSheet;
+    tsEmailCTe: TTabSheet;
+    tsCertificadoDFe: TTabSheet;
     chbArqEntANSI: TCheckBox;
     chbArqSaiANSI: TCheckBox;
     chCHQVerForm: TCheckBox;
@@ -243,7 +284,7 @@ type
     chRFDIgnoraMFD: TCheckBox;
     ckgBOLMostrar: TCheckGroup;
     ckSalvar: TCheckBox;
-    DANFE: TTabSheet;
+    tsImpressaoDFe: TTabSheet;
     deBOLDirArquivo: TDirectoryEdit;
     deBOLDirLogo: TDirectoryEdit;
     deBolDirRemessa: TDirectoryEdit;
@@ -251,7 +292,7 @@ type
     deNcmSalvar: TDirectoryEdit;
     deRFDDataSwBasico: TDateEdit;
     deUSUDataCadastro: TDateEdit;
-    Diretorios: TTabSheet;
+    tsDiretoriosDFe: TTabSheet;
     edBALLog: TEdit;
     edCEPChaveBuscarCEP: TEdit;
     edCEPTestar: TEdit;
@@ -290,10 +331,8 @@ type
     edSATPathArqs: TEdit;
     edtArquivoPFX: TEdit;
     edLogComp: TEdit;
-    edtArquivoWebServices: TEdit;
     edtCodigoAtivacao: TEdit;
     edtCodUF: TEdit;
-    edtEmailAssunto: TEdit;
     edLCBPreExcluir: TEdit;
     edLogArq: TEdit;
     edPortaTCP: TEdit;
@@ -384,7 +423,7 @@ type
     edUSUEndereco: TEdit;
     edUSUIE: TEdit;
     edUSURazaoSocial: TEdit;
-    Email: TTabSheet;
+    tsEmailDFe: TTabSheet;
     gbCEP: TGroupBox;
     gbCEPProxy: TGroupBox;
     gbCEPTestar: TGroupBox;
@@ -415,7 +454,6 @@ type
     gbQRCode: TGroupBox;
     gbLogotipo: TGroupBox;
     gbGeral: TGroupBox;
-    GroupBox5: TGroupBox;
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
     Image1: TImage;
@@ -460,7 +498,6 @@ type
     Label130: TLabel;
     Label131: TLabel;
     Label132: TLabel;
-    Label133: TLabel;
     Label134: TLabel;
     Label135: TLabel;
     Label136: TLabel;
@@ -482,7 +519,6 @@ type
     lbLogoFatorY: TLabel;
     lbLargura: TLabel;
     lbAltura: TLabel;
-    Label138: TLabel;
     Label139: TLabel;
     Label14: TLabel;
     Label140: TLabel;
@@ -506,7 +542,6 @@ type
     Label161: TLabel;
     Label162: TLabel;
     Label164: TLabel;
-    Label165: TLabel;
     Label166: TLabel;
     Label167: TLabel;
     Label168: TLabel;
@@ -613,7 +648,6 @@ type
     Label98: TLabel;
     Label99: TLabel;
     lAdSufixo: TLabel;
-    lblArquivoWebServices: TLabel;
     lblBOLAgencia: TLabel;
     lblBOLBairro: TLabel;
     lblBOLBanco: TLabel;
@@ -664,13 +698,12 @@ type
     mCmd: TMemo;
     meRFDHoraSwBasico: TMaskEdit;
     meUSUHoraCadastro: TMaskEdit;
-    mmEmailMsg: TMemo;
     mResp: TMemo;
     mRFDINI: TMemo;
     mRSAKey: TMemo;
     mTCConexoes: TMemo;
     mResposta: TSynMemo;
-    PageControl1: TPageControl;
+    pgDFe: TPageControl;
     PageControl3: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -684,7 +717,7 @@ type
     pgBoleto: TPageControl;
     pgCadastro: TPageControl;
     pgConRFD: TPageControl;
-    pgDANFe: TPageControl;
+    pgImpressaoDFe: TPageControl;
     pgECFParams: TPageControl;
     pgSwHouse: TPageControl;
     pComandos: TPanel;
@@ -709,12 +742,10 @@ type
     rgModeloDanfe: TRadioGroup;
     rgModeloDANFeNFCE: TRadioGroup;
     rgModoImpressaoEvento: TRadioGroup;
-    rgTipoAmb: TRadioGroup;
     rgTipoDanfe: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     SbArqLog: TSpeedButton;
     SbArqLog2: TSpeedButton;
-    sbArquivoWebServices: TSpeedButton;
     sbBALSerial: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     sbArquivoCert: TSpeedButton;
@@ -800,18 +831,18 @@ type
     ACBrLCB1: TACBrLCB;
     SynXMLSyn1: TSynXMLSyn;
     TabControl1: TTabControl;
-    TabSheet1: TTabSheet;
-    ConfiguracaoNFE: TTabSheet;
+    tsImpNFCe: TTabSheet;
+    tsConfiguracaoDFe: TTabSheet;
     tsEscPos: TTabSheet;
     tsDadosEmit: TTabSheet;
     tsDadosSAT: TTabSheet;
     tsDadosSwHouse: TTabSheet;
     tsRede: TTabSheet;
     tsSat: TTabSheet;
-    Testes: TTabSheet;
+    tsTestesDFe: TTabSheet;
     tsDadosEmpresa: TTabSheet;
-    tsDanfe: TTabSheet;
-    tsNFe: TTabSheet;
+    tsImpGeralDFe: TTabSheet;
+    tsDFe: TTabSheet;
     tsTesteNFe: TTabSheet;
     tsWSNFCe: TTabSheet;
     tsWSNFe: TTabSheet;
@@ -855,7 +886,7 @@ type
     tsRFDINI: TTabSheet;
     tsSEDEX: TTabSheet;
     tsTC: TTabSheet;
-    WebService: TTabSheet;
+    tsWebServiceDFe: TTabSheet;
     procedure ACBrEAD1GetChavePrivada(var Chave: ansistring);
     procedure ACBrEAD1GetChavePublica(var Chave: ansistring);
     procedure ACBrGIF1Click(Sender: TObject);
@@ -946,12 +977,15 @@ type
     procedure Label133Click(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
+    procedure pgConfigChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure sbArquivoCertClick(Sender: TObject);
-    procedure sbArquivoWebServicesClick(Sender: TObject);
+    procedure sbArquivoWebServicesCTeClick(Sender: TObject);
+    procedure sbArquivoWebServicesMDFeClick(Sender: TObject);
+    procedure sbArquivoWebServicesNFeClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
@@ -1172,7 +1206,8 @@ uses IniFiles, TypInfo, LCLType, strutils,
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
-  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoSATUnit, DoPosPrinterUnit;
+  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit,
+  DoSATUnit, DoPosPrinterUnit;
 
 {$R *.lfm}
 
@@ -1968,8 +2003,8 @@ begin
       exit;
 
     try
-      ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(vPara, edtEmailAssunto.Text,
-        mmEmailMsg.Lines
+      ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(vPara, edtEmailAssuntoNFe.Text,
+        mmEmailMsgNFe.Lines
         , True  // Enviar PDF junto
         ,
         nil    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
@@ -2819,7 +2854,7 @@ begin
       StringReplace(Ini.ReadString('BOLETO', 'EmailMensagemBoleto', ''),
       '|', LineEnding, [rfReplaceAll]);
 
-    {Parametro da Conta de Email}
+    {Parametro da Conta de tsEmailDFe}
     edEmailNome.Text := Ini.ReadString('EMAIL', 'NomeExibicao', '');
     edEmailEndereco.Text := Ini.ReadString('EMAIL', 'Endereco', '');
     edEmailHost.Text := Ini.ReadString('EMAIL', 'Email', '');
@@ -2847,11 +2882,11 @@ begin
     sedLogLinhasComp.Value := Ini.ReadInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', 0);
     ArqLogCompTXT := AcertaPath(edLogComp.Text);
     rgVersaoSSL.ItemIndex := Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
-    edtArquivoWebServices.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServices',
+    edtArquivoWebServicesNFe.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServices',
       PathApplication + 'ACBrNFeServicos.ini');
     cbValidarDigest.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ValidarDigest', True);
 
-    ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServices.Text;
+    ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesNFe.Text;
     ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
     ACBrNFe1.Configuracoes.Geral.ValidarDigest := cbValidarDigest.Checked;
 
@@ -2973,8 +3008,8 @@ begin
 
     ConfiguraDANFe;
 
-    edtEmailAssunto.Text := Ini.ReadString('Email', 'Assunto', '');
-    mmEmailMsg.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'Mensagem', '') );
+    edtEmailAssuntoNFe.Text := Ini.ReadString('Email', 'Assunto', '');
+    mmEmailMsgNFe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'Mensagem', '') );
 
     cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', True);
     cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
@@ -3586,7 +3621,7 @@ begin
     Ini.WriteString('TC', 'Arq_Precos', edTCArqPrecos.Text);
     Ini.WriteString('TC', 'Nao_Econtrado', edTCNaoEncontrado.Text);
 
-    { Parametros da Conta de Email }
+    { Parametros da Conta de tsEmailDFe }
     Ini.WriteString('EMAIL', 'NomeExibicao', edEmailNome.Text);
     Ini.WriteString('EMAIL', 'Endereco', edEmailEndereco.Text);
     Ini.WriteString('EMAIL', 'Email', edEmailHost.Text);
@@ -3615,7 +3650,7 @@ begin
     Ini.WriteString('ACBrNFeMonitor', 'Arquivo_Log_Comp', edLogComp.Text);
     Ini.WriteInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', sedLogLinhasComp.Value);
     Ini.WriteInteger('ACBrNFeMonitor', 'VersaoSSL', rgVersaoSSL.ItemIndex);
-    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServices', edtArquivoWebServices.Text );
+    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServices', edtArquivoWebServicesNFe.Text );
     Ini.WriteBool('ACBrNFeMonitor', 'ValidarDigest', cbValidarDigest.Checked);
 
     Ini.WriteInteger('Geral', 'DANFE', rgTipoDanfe.ItemIndex);
@@ -3641,8 +3676,8 @@ begin
     Ini.WriteString('NFCe', 'IdToken', edtIdToken.Text);
     Ini.WriteString('NFCe', 'Token', edtToken.Text);
 
-    Ini.WriteString('Email', 'Assunto', edtEmailAssunto.Text);
-    Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mmEmailMsg.Lines.Text) );
+    Ini.WriteString('Email', 'Assunto', edtEmailAssuntoNFe.Text);
+    Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );
 
     Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
     Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);
@@ -4139,6 +4174,10 @@ begin
           DoNcm(fsCmd)
         else if fsCmd.Objeto = 'NFE' then
           DoACBrNFe(fsCmd)
+        else if fsCmd.Objeto = 'CTE' then
+          DoACBrCTe(fsCmd)
+        else if fsCmd.Objeto = 'MDFE' then
+          DoACBrMDFe(fsCmd)
         else if fsCmd.Objeto = 'SAT' then
           DoSAT(fsCmd)
         else if fsCmd.Objeto = 'ESCPOS' then
@@ -4663,6 +4702,11 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.pgConfigChange(Sender: TObject);
+begin
+
+end;
+
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);
 begin
   gbWiFi.Visible := (rgRedeTipoInter.ItemIndex = 1);
@@ -4697,7 +4741,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.sbArquivoWebServicesClick(Sender: TObject);
+procedure TFrmACBrMonitor.sbArquivoWebServicesCTeClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o arquivo';
   OpenDialog1.DefaultExt := '*.ini';
@@ -4706,7 +4750,33 @@ begin
   OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
   if OpenDialog1.Execute then
   begin
-    edtArquivoWebServices.Text := OpenDialog1.FileName;
+    edtArquivoWebServicesCTe.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbArquivoWebServicesMDFeClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoWebServicesMDFe.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbArquivoWebServicesNFeClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoWebServicesNFe.Text := OpenDialog1.FileName;
   end;
 end;
 
@@ -5889,7 +5959,7 @@ begin
     Result := 14
   else if No.Text = 'NCM' then
     Result := 15
-  else if No.Text = 'NF-e/NFC-e' then
+  else if No.Text = 'DFe' then
     Result := 16
   else if No.Text = 'SAT' then
     Result := 17

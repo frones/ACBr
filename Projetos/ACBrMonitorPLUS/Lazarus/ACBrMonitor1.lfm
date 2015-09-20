@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 433
+  Left = 389
   Height = 689
-  Top = 0
+  Top = 93
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -1311,9 +1311,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
       452D4D61696C1800000018000000FFFFFFFFFFFFFFFF00000000000000000005
       00000053656465781900000019000000FFFFFFFFFFFFFFFF0000000000000000
       00030000004E434D1A0000001A000000FFFFFFFFFFFFFFFF0000000000000000
-      000A0000004E462D652F4E46432D651B0000001B000000FFFFFFFFFFFFFFFF00
-      0000000000000000030000005341540100000001000000FFFFFFFFFFFFFFFF00
-      00000000000000000A000000506F735072696E746572
+      00030000004446651B0000001B000000FFFFFFFFFFFFFFFF0000000000000000
+      00030000005341540100000001000000FFFFFFFFFFFFFFFF0000000000000000
+      000A000000506F735072696E746572
     }
   end
   object pCentral: TPanel
@@ -1449,11 +1449,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsACBrBoleto
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 11
+        TabIndex = 16
         TabOrder = 0
+        OnChange = pgConfigChange
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
           ClientHeight = 311
@@ -6467,21 +6468,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
             TabOrder = 3
           end
         end
-        object tsNFe: TTabSheet
-          Caption = 'NFe'
+        object tsDFe: TTabSheet
+          Caption = 'DFe'
           ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 26
-          object PageControl1: TPageControl
+          object pgDFe: TPageControl
             Left = 0
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = DANFE
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
-            object ConfiguracaoNFE: TTabSheet
+            object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
               ClientHeight = 281
               ClientWidth = 615
@@ -6560,8 +6561,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 16
                 Height = 21
                 Top = 32
-                Width = 286
-                Caption = 'Log de Mensagens do Componente ACBrNFe'
+                Width = 263
+                Caption = 'Log de Mensagens do Componentes DFe'
                 OnClick = cbLogCompClick
                 TabOrder = 2
               end
@@ -6589,55 +6590,141 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 )
                 TabOrder = 3
               end
-              object edtArquivoWebServices: TEdit
-                Left = 8
-                Height = 25
-                Top = 224
-                Width = 551
-                TabOrder = 4
-              end
-              object lblArquivoWebServices: TLabel
-                Left = 8
-                Height = 17
-                Top = 208
-                Width = 242
-                Caption = 'Arquivo com Endereços dos WebServices'
-                ParentColor = False
-              end
-              object sbArquivoWebServices: TSpeedButton
-                Left = 560
-                Height = 25
-                Top = 224
-                Width = 23
-                Anchors = [akTop, akRight]
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                  3BB33773333773333773B333333B3333333B7333333733333337
-                }
-                NumGlyphs = 2
-                OnClick = sbArquivoWebServicesClick
-              end
               object cbValidarDigest: TCheckBox
-                Left = 8
+                Left = 368
                 Height = 21
-                Top = 144
+                Top = 115
                 Width = 244
                 Caption = 'Validar Digest Value ao consultar XML'
+                TabOrder = 4
+              end
+              object GroupBox4: TGroupBox
+                Left = 8
+                Height = 130
+                Top = 144
+                Width = 598
+                Caption = 'Arquivo com Endereços dos WebServices'
+                ClientHeight = 108
+                ClientWidth = 594
                 TabOrder = 5
+                object edtArquivoWebServicesNFe: TEdit
+                  Left = 55
+                  Height = 25
+                  Top = 1
+                  Width = 497
+                  TabOrder = 0
+                end
+                object sbArquivoWebServicesNFe: TSpeedButton
+                  Left = 568
+                  Height = 25
+                  Top = 1
+                  Width = 23
+                  Anchors = [akTop, akRight]
+                  Glyph.Data = {
+                    76010000424D7601000000000000760000002800000020000000100000000100
+                    04000000000000010000130B0000130B00001000000000000000000000000000
+                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                    3BB33773333773333773B333333B3333333B7333333733333337
+                  }
+                  NumGlyphs = 2
+                  OnClick = sbArquivoWebServicesNFeClick
+                end
+                object Label157: TLabel
+                  Left = 7
+                  Height = 17
+                  Top = 9
+                  Width = 28
+                  Caption = 'NF-e'
+                  ParentColor = False
+                end
+                object edtArquivoWebServicesCTe: TEdit
+                  Left = 56
+                  Height = 25
+                  Top = 32
+                  Width = 496
+                  TabOrder = 1
+                end
+                object Label159: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 40
+                  Width = 27
+                  Caption = 'CT-e'
+                  ParentColor = False
+                end
+                object sbArquivoWebServicesCTe: TSpeedButton
+                  Left = 568
+                  Height = 25
+                  Top = 32
+                  Width = 23
+                  Anchors = [akTop, akRight]
+                  Glyph.Data = {
+                    76010000424D7601000000000000760000002800000020000000100000000100
+                    04000000000000010000130B0000130B00001000000000000000000000000000
+                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                    3BB33773333773333773B333333B3333333B7333333733333337
+                  }
+                  NumGlyphs = 2
+                  OnClick = sbArquivoWebServicesCTeClick
+                end
+                object edtArquivoWebServicesMDFe: TEdit
+                  Left = 56
+                  Height = 25
+                  Top = 64
+                  Width = 496
+                  TabOrder = 2
+                end
+                object Label182: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 72
+                  Width = 39
+                  Caption = 'MDF-e'
+                  ParentColor = False
+                end
+                object sbArquivoWebServicesMDFe: TSpeedButton
+                  Left = 568
+                  Height = 25
+                  Top = 64
+                  Width = 23
+                  Anchors = [akTop, akRight]
+                  Glyph.Data = {
+                    76010000424D7601000000000000760000002800000020000000100000000100
+                    04000000000000010000130B0000130B00001000000000000000000000000000
+                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                    3BB33773333773333773B333333B3333333B7333333733333337
+                  }
+                  NumGlyphs = 2
+                  OnClick = sbArquivoWebServicesMDFeClick
+                end
               end
             end
-            object Certificado: TTabSheet
-              Caption = 'Certificado'
+            object tsCertificadoDFe: TTabSheet
+              Caption = 'Certificados'
               ClientHeight = 281
               ClientWidth = 615
               ImageIndex = 1
@@ -6764,8 +6851,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 1
               end
             end
-            object WebService: TTabSheet
-              Caption = 'WebService'
+            object tsWebServiceDFe: TTabSheet
+              Caption = 'WebServices'
               ClientHeight = 281
               ClientWidth = 615
               ImageIndex = 2
@@ -7152,84 +7239,223 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 1
                   end
                 end
+                object tsWSCTe: TTabSheet
+                  Caption = 'CT-e'
+                end
+                object tsWSMDFe: TTabSheet
+                  Caption = 'MDF-e'
+                end
               end
             end
-            object Email: TTabSheet
+            object tsEmailDFe: TTabSheet
               Caption = 'Email'
               ClientHeight = 281
               ClientWidth = 615
               ImageIndex = 3
-              object GroupBox5: TGroupBox
-                Left = 8
-                Height = 225
-                Top = 8
-                Width = 596
-                Anchors = [akTop, akLeft, akRight]
-                Caption = 'Email'
-                ClientHeight = 203
-                ClientWidth = 592
-                TabOrder = 0
-                object Label133: TLabel
-                  Left = 6
-                  Height = 17
-                  Top = 2
-                  Width = 314
-                  Caption = 'Configurar dados do servidor de email na aba E-Mail'
-                  Font.Height = -13
-                  Font.Style = [fsUnderline]
-                  ParentColor = False
-                  ParentFont = False
-                  OnClick = Label133Click
-                end
-                object Label138: TLabel
-                  Left = 6
-                  Height = 17
-                  Top = 64
-                  Width = 120
-                  Caption = 'Mensagem do Email'
-                  ParentColor = False
-                end
-                object mmEmailMsg: TMemo
-                  Left = 6
-                  Height = 112
-                  Top = 88
-                  Width = 578
-                  Anchors = [akTop, akLeft, akRight]
-                  TabOrder = 1
-                end
-                object Label165: TLabel
-                  Left = 6
-                  Height = 17
-                  Top = 22
-                  Width = 101
-                  Caption = 'Assunto do Email'
-                  ParentColor = False
-                end
-                object edtEmailAssunto: TEdit
-                  Left = 6
-                  Height = 25
-                  Top = 40
-                  Width = 320
-                  TabOrder = 0
-                end
-              end
-            end
-            object DANFE: TTabSheet
-              Caption = 'DANFe'
-              ClientHeight = 281
-              ClientWidth = 615
-              ImageIndex = 4
-              object pgDANFe: TPageControl
+              object pgEmailDFe: TPageControl
                 Left = 0
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsDanfe
+                ActivePage = tsEmailNFe
+                Anchors = [akTop, akLeft, akRight, akBottom]
+                TabIndex = 0
+                TabOrder = 0
+                object tsEmailNFe: TTabSheet
+                  Caption = 'NF-e'
+                  ClientHeight = 251
+                  ClientWidth = 607
+                  object GroupBox5: TGroupBox
+                    Left = 3
+                    Height = 241
+                    Top = 8
+                    Width = 599
+                    Anchors = [akTop, akLeft, akRight]
+                    Caption = 'Email'
+                    ClientHeight = 219
+                    ClientWidth = 595
+                    TabOrder = 0
+                    object Label133: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 2
+                      Width = 314
+                      Caption = 'Configurar dados do servidor de email na aba E-Mail'
+                      Font.Height = -13
+                      Font.Style = [fsUnderline]
+                      ParentColor = False
+                      ParentFont = False
+                      OnClick = Label133Click
+                    end
+                    object Label138: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 64
+                      Width = 120
+                      Caption = 'Mensagem do Email'
+                      ParentColor = False
+                    end
+                    object mmEmailMsgNFe: TMemo
+                      Left = 6
+                      Height = 128
+                      Top = 88
+                      Width = 582
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 1
+                    end
+                    object Label165: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 22
+                      Width = 101
+                      Caption = 'Assunto do Email'
+                      ParentColor = False
+                    end
+                    object edtEmailAssuntoNFe: TEdit
+                      Left = 6
+                      Height = 25
+                      Top = 40
+                      Width = 320
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsEmailCTe: TTabSheet
+                  Caption = 'CT-e'
+                  ClientHeight = 251
+                  ClientWidth = 607
+                  object GroupBox6: TGroupBox
+                    Left = 3
+                    Height = 241
+                    Top = 8
+                    Width = 599
+                    Anchors = [akTop, akLeft, akRight]
+                    Caption = 'Email'
+                    ClientHeight = 219
+                    ClientWidth = 595
+                    TabOrder = 0
+                    object Label155: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 2
+                      Width = 314
+                      Caption = 'Configurar dados do servidor de email na aba E-Mail'
+                      Font.Height = -13
+                      Font.Style = [fsUnderline]
+                      ParentColor = False
+                      ParentFont = False
+                      OnClick = Label133Click
+                    end
+                    object Label156: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 64
+                      Width = 120
+                      Caption = 'Mensagem do Email'
+                      ParentColor = False
+                    end
+                    object mmEmailMsgCTe: TMemo
+                      Left = 6
+                      Height = 128
+                      Top = 88
+                      Width = 582
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 1
+                    end
+                    object Label179: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 22
+                      Width = 101
+                      Caption = 'Assunto do Email'
+                      ParentColor = False
+                    end
+                    object edtEmailAssuntoCTe: TEdit
+                      Left = 6
+                      Height = 25
+                      Top = 40
+                      Width = 320
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object tsEmailMDFe: TTabSheet
+                  Caption = 'MDF-e'
+                  ClientHeight = 251
+                  ClientWidth = 607
+                  object GroupBox9: TGroupBox
+                    Left = 3
+                    Height = 241
+                    Top = 8
+                    Width = 599
+                    Anchors = [akTop, akLeft, akRight]
+                    Caption = 'Email'
+                    ClientHeight = 219
+                    ClientWidth = 595
+                    TabOrder = 0
+                    object Label163: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 2
+                      Width = 314
+                      Caption = 'Configurar dados do servidor de email na aba E-Mail'
+                      Font.Height = -13
+                      Font.Style = [fsUnderline]
+                      ParentColor = False
+                      ParentFont = False
+                      OnClick = Label133Click
+                    end
+                    object Label180: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 64
+                      Width = 120
+                      Caption = 'Mensagem do Email'
+                      ParentColor = False
+                    end
+                    object mmEmailMsgMDFe: TMemo
+                      Left = 6
+                      Height = 128
+                      Top = 88
+                      Width = 582
+                      Anchors = [akTop, akLeft, akRight]
+                      TabOrder = 1
+                    end
+                    object Label181: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 22
+                      Width = 101
+                      Caption = 'Assunto do Email'
+                      ParentColor = False
+                    end
+                    object edtEmailAssuntoMDFe: TEdit
+                      Left = 6
+                      Height = 25
+                      Top = 40
+                      Width = 320
+                      TabOrder = 0
+                    end
+                  end
+                end
+              end
+            end
+            object tsImpressaoDFe: TTabSheet
+              Caption = 'Impressão'
+              ClientHeight = 281
+              ClientWidth = 615
+              ImageIndex = 4
+              object pgImpressaoDFe: TPageControl
+                Left = 0
+                Height = 281
+                Top = 0
+                Width = 615
+                ActivePage = tsImpGeralDFe
                 Align = alClient
                 TabIndex = 0
                 TabOrder = 0
-                object tsDanfe: TTabSheet
-                  Caption = 'Danfe'
+                object tsImpGeralDFe: TTabSheet
+                  Caption = 'Geral'
                   ClientHeight = 251
                   ClientWidth = 607
                   object Label139: TLabel
@@ -7354,11 +7580,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object gbxMargem: TGroupBox
                     Left = 6
-                    Height = 64
+                    Height = 72
                     Top = 90
                     Width = 299
                     Caption = 'Margens'
-                    ClientHeight = 42
+                    ClientHeight = 50
                     ClientWidth = 295
                     TabOrder = 13
                     object Label146: TLabel
@@ -7475,7 +7701,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object rgTipoFonte: TRadioGroup
                     Left = 316
-                    Height = 42
+                    Height = 44
                     Top = 208
                     Width = 285
                     AutoFill = True
@@ -7487,7 +7713,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ChildSizing.ShrinkVertical = crsScaleChilds
                     ChildSizing.Layout = cclLeftToRightThenTopToBottom
                     ChildSizing.ControlsPerLine = 3
-                    ClientHeight = 20
+                    ClientHeight = 22
                     ClientWidth = 281
                     Columns = 3
                     ItemIndex = 0
@@ -7532,7 +7758,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object rgCasasDecimaisQtd: TRadioGroup
                     Left = 6
-                    Height = 42
+                    Height = 44
                     Top = 208
                     Width = 147
                     AutoFill = True
@@ -7544,7 +7770,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ChildSizing.ShrinkVertical = crsScaleChilds
                     ChildSizing.Layout = cclLeftToRightThenTopToBottom
                     ChildSizing.ControlsPerLine = 3
-                    ClientHeight = 20
+                    ClientHeight = 22
                     ClientWidth = 143
                     Columns = 3
                     ItemIndex = 0
@@ -7709,7 +7935,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 3
                   end
                 end
-                object TabSheet1: TTabSheet
+                object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
                   ClientHeight = 251
                   ClientWidth = 607
@@ -7806,7 +8032,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
               end
             end
-            object Diretorios: TTabSheet
+            object tsDiretoriosDFe: TTabSheet
               Caption = 'Diretórios'
               ClientHeight = 281
               ClientWidth = 615
@@ -8079,8 +8305,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 12
               end
             end
-            object Testes: TTabSheet
-              Caption = 'Testes'
+            object tsTestesDFe: TTabSheet
+              Caption = 'Teste'
               ClientHeight = 281
               ClientWidth = 615
               ImageIndex = 5
@@ -8088,16 +8314,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 0
                 Height = 281
                 Top = 0
-                Width = 161
+                Width = 177
                 Align = alLeft
                 ClientHeight = 281
-                ClientWidth = 161
+                ClientWidth = 177
                 TabOrder = 0
                 object pgTestes: TPageControl
                   Left = 1
                   Height = 279
                   Top = 1
-                  Width = 159
+                  Width = 175
                   ActivePage = tsTesteNFe
                   Align = alClient
                   TabIndex = 0
@@ -8105,7 +8331,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
                     ClientHeight = 249
-                    ClientWidth = 151
+                    ClientWidth = 167
                     object btnStatusServ: TButton
                       Left = 0
                       Height = 22
@@ -8179,23 +8405,29 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 7
                     end
                   end
+                  object tsTesteCTe: TTabSheet
+                    Caption = 'CT-e'
+                  end
+                  object tsTesteMDFe: TTabSheet
+                    Caption = 'MDF-e'
+                  end
                 end
               end
               object Panel2: TPanel
-                Left = 161
+                Left = 177
                 Height = 281
                 Top = 0
-                Width = 454
+                Width = 438
                 Align = alClient
                 ClientHeight = 281
-                ClientWidth = 454
+                ClientWidth = 438
                 TabOrder = 1
                 object Panel3: TPanel
                   Left = 1
                   Height = 17
                   Top = 1
-                  Width = 452
-                  Align = alTop
+                  Width = 436
+                  Align = alBottom
                   Alignment = taLeftJustify
                   Caption = 'Resposta WebService'
                   Font.Color = clNavy
@@ -8210,8 +8442,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 262
                   Top = 18
-                  Width = 452
-                  Align = alClient
+                  Width = 436
+                  Align = alBottom
                   Font.Height = -13
                   Font.Name = 'Courier New'
                   Font.Pitch = fpFixed
@@ -10519,6 +10751,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11670,7 +11903,69 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     CortaPapel = False
-    left = 464
+    left = 688
     top = 448
+  end
+  object ACBrCTe1: TACBrCTe
+    MAIL = ACBrMail1
+    OnGerarLog = ACBrNFe1GerarLog
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    DACTE = ACBrCTeDACTeRL1
+    left = 496
+    top = 448
+  end
+  object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
+    ACBrCTE = ACBrCTe1
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDACTE = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CTeCancelada = False
+    ExibirResumoCanhoto = False
+    EPECEnviado = False
+    PosCanhoto = prCabecalho
+    ImprimirDescPorc = False
+    PrintDialog = True
+    left = 496
+    top = 488
+  end
+  object ACBrMDFe1: TACBrMDFe
+    MAIL = ACBrMail1
+    OnGerarLog = ACBrNFe1GerarLog
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    DAMDFE = ACBrMDFeDAMDFeRL1
+    left = 456
+    top = 453
+  end
+  object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+    ACBrMDFe = ACBrMDFe1
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    MDFeCancelada = False
+    MDFeEncerrado = False
+    left = 456
+    top = 488
   end
 end

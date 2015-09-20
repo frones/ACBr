@@ -187,6 +187,35 @@ begin
            if FilesExists( Files ) then
               raise Exception.Create('Arquivo(s) ['+Files+'] ainda existe(m)') ;
          end
+
+        else if Cmd.Metodo = 'setcertificado' then //NFe.SetCertificado(cCertificado,cSenha)
+         begin
+           if (Cmd.Params(0)<>'') then
+            begin
+              if FileExists(Cmd.Params(0)) then
+               begin
+                 ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                 ACBrCTe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                 ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                 edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
+               end
+              else
+               begin
+                 ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                 ACBrCTe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                 ACBrMDFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                 edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
+               end;
+
+              ACBrNFe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+              ACBrCTe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+              ACBrMDFe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+              edtSenha.Text := ACBrNFe1.Configuracoes.Certificados.Senha;
+              SalvarIni;
+            end
+           else
+              raise Exception.Create('Certificado '+Cmd.Params(0)+' Inválido.');
+         end
 				 
 	else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )

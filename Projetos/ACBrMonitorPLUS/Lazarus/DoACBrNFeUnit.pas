@@ -50,7 +50,7 @@ implementation
 
 Uses IniFiles, StrUtils, DateUtils, Forms,
   ACBrUtil, ACBrMonitor1 ,
-  ACBrNFeDANFEClass,
+  ACBrNFeDANFEClass, DoACBrUnit,
   pcnNFe, pcnConversao, pcnConversaoNFe,
   pcnAuxiliar, pcnNFeRTXT,  pcnNFeR;
 
@@ -1342,7 +1342,7 @@ begin
            CC := TstringList.Create;
            Anexos := TstringList.Create;
            try
-             sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsg.Lines.Text );
+             sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsgNFe.Lines.Text );
 
              CC.DelimitedText := sLineBreak;
              CC.Text := StringReplace(Cmd.Params(4),';',sLineBreak,[rfReplaceAll]);
@@ -1351,7 +1351,7 @@ begin
              Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
              try
                ACBrNFe1.NotasFiscais.Items[0].EnviarEmail( Cmd.Params(0),
-                                                           SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssunto.Text) ),
+                                                           SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
                                                            sMensagemEmail
                                                            , (Cmd.Params(2) = '1')   // Enviar PDF junto
                                                            , CC    // Lista com emails que serão enviado cópias - TStrings
@@ -1439,7 +1439,7 @@ begin
                 Anexos.Add(ArqPDF);
 
              try
-                ACBrNFe1.EnviarEmail(Cmd.Params(0),IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssunto.Text),mmEmailMsg.Lines,CC,Anexos);
+                ACBrNFe1.EnviarEmail(Cmd.Params(0),IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text),mmEmailMsgNFe.Lines,CC,Anexos);
 
                 Cmd.Resposta := 'Email enviado com sucesso';
              except
@@ -1457,25 +1457,7 @@ begin
 
         else if Cmd.Metodo = 'setcertificado' then //NFe.SetCertificado(cCertificado,cSenha)
          begin
-           if (Cmd.Params(0)<>'') then
-            begin
-              if FileExists(Cmd.Params(0)) then
-               begin
-                 ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
-                 edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
-               end
-              else
-               begin
-                 ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
-                 edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
-               end;
-
-              ACBrNFe1.Configuracoes.Certificados.Senha       := Cmd.Params(1);
-              edtSenha.Text   := ACBrNFe1.Configuracoes.Certificados.Senha;
-              SalvarIni;
-            end
-           else
-              raise Exception.Create('Certificado '+Cmd.Params(0)+' Inválido.');
+           DoACBr(Cmd);
          end
 
         else if Cmd.Metodo = 'setambiente' then //NFe.SetAmbiente(nNumAmbiente) 1-Produção 2-Homologação

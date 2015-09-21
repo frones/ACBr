@@ -209,7 +209,11 @@ implementation
 uses
   StrUtils, DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador;
 
-{$R *.dfm}
+{$ifdef FPC}
+ {$R *.lfm}
+{$else}
+ {$R *.dfm}
+{$endif}
 
 var
   FProtocoloMDFe: string;
@@ -252,24 +256,24 @@ begin
     teCancelamento:
     begin
       rllLinha1.Caption := 'CANCELAMENTO';
-      rllLinha2.Caption :=
-        'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.';
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.');
       rllLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
     end;
     teEncerramento:
     begin
       rllLinha1.Caption := 'ENCERRAMENTO';
-      rllLinha2.Caption :=
-        'Não possui valor fiscal, simples representação do Encerramento indicado abaixo.';
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação do Encerramento indicado abaixo.');
       rllLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO ENCERRAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
     end;
     teInclusaoCondutor:
     begin
-      rllLinha1.Caption := 'INCLUSÃO DE CONDUTOR';
-      rllLinha2.Caption :=
-        'Não possui valor fiscal, simples representação da Inclusão de Condutor indicada abaixo.';
-      rllLinha3.Caption :=
-        'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE CONDUTOR NO SITE DA SEFAZ AUTORIZADORA.';
+      rllLinha1.Caption := ACBrStr('INCLUSÃO DE CONDUTOR');
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação da Inclusão de Condutor indicada abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA INCLUSÃO DE CONDUTOR NO SITE DA SEFAZ AUTORIZADORA.');
     end;
   end;
 end;
@@ -302,13 +306,13 @@ begin
     case InfEvento.tpEvento of
       teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
       teEncerramento: rllTituloEvento.Caption := 'ENCERRAMENTO';
-      teInclusaoCondutor: rllTituloEvento.Caption := 'INCLUSÃO DE CONDUTOR';
+      teInclusaoCondutor: rllTituloEvento.Caption := ACBrStr('INCLUSÃO DE CONDUTOR');
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
     case InfEvento.tpAmb of
-      taProducao: rllTipoAmbiente.Caption := 'PRODUÇÃO';
-      taHomologacao: rllTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+      taProducao: rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
+      taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
     rllEmissaoEvento.Caption := FormatDateTimeBr(InfEvento.dhEvento);
     rllTipoEvento.Caption := InfEvento.TipoEvento;
@@ -429,7 +433,7 @@ begin
 
   if FEventoMDFe.InfEvento.tpAmb = taHomologacao then
   begin
-    rllMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
+    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end;
@@ -453,9 +457,9 @@ begin
       rlmDescricao.Lines.Add('Protocolo do MDFe Encerrado: ' + FEventoMDFe.InfEvento.detEvento.nProt);
       rlmDescricao.Lines.Add('Data do Encerramento       : ' +
         DateToStr(FEventoMDFe.InfEvento.detEvento.dtEnc));
-      rlmDescricao.Lines.Add('Código da UF               : ' +
+      rlmDescricao.Lines.Add(ACBrStr('Código da UF               : ') +
         IntToStr(FEventoMDFe.InfEvento.detEvento.cUF));
-      rlmDescricao.Lines.Add('Código do Município        : ' +
+      rlmDescricao.Lines.Add(ACBrStr('Código do Município        : ') +
         IntToStr(FEventoMDFe.InfEvento.detEvento.cMun));
     end;
     teInclusaoCondutor:

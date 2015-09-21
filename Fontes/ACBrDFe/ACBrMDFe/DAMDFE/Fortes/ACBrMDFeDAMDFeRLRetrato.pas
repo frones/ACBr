@@ -199,7 +199,11 @@ implementation
 uses
   StrUtils, DateUtils, pmdfeMDFe, ACBrUtil, ACBrDFeUtil, ACBrValidador;
 
-{$R *.dfm}
+{$ifdef FPC}
+ {$R *.lfm}
+{$else}
+ {$R *.dfm}
+{$endif}
 
 const
   _NUM_ITEMS_PAGE1 = 18;
@@ -276,7 +280,7 @@ begin
           ' - ' + XMun + ' - ' + UF);
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
-      rlmDadosEmitente.Lines.Add('INSCRIÇÃO ESTADUAL: ' + IE);
+      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRIÇÃO ESTADUAL: ') + IE);
       rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
 
       if Trim(FSite) <> '' then
@@ -305,8 +309,8 @@ begin
   begin
     rllProtocolo.Font.Size := 5;
     rllProtocolo.Font.Style := [];
-    rllProtocolo.Caption := 'Impressão em contingência. Obrigatória a autorização em 24 horas' +
-      ' após esta impressão (' + FormatDateTimeBr(Now) + ')';
+    rllProtocolo.Caption := ACBrStr('Impressão em contingência. Obrigatória a autorização em 24 horas' +
+      ' após esta impressão (') + FormatDateTimeBr(Now) + ')';
   end;
 
   rllModelo.Caption := FMDFe.Ide.modelo;
@@ -321,7 +325,7 @@ begin
   case FMDFe.Ide.modal of
     moRodoviario:
     begin
-      rllModal.Caption := 'MODAL RODOVIÁRIO DE CARGA';
+      rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
       rllCIOT.Caption := FMDFe.rodo.CIOT;
       rlb_3_Aereo.Visible := false;
       rlb_4_Aquav.Visible := false;
@@ -329,15 +333,15 @@ begin
     end;
     moAereo:
     begin
-      rllModal.Caption := 'MODAL AÉREO DE CARGA';
+      rllModal.Caption := ACBrStr('MODAL AÉREO DE CARGA');
     end;
     moAquaviario:
     begin
-      rllModal.Caption := 'MODAL AQUAVIÁRIO DE CARGA';
+      rllModal.Caption := ACBrStr('MODAL AQUAVIÁRIO DE CARGA');
     end;
     moFerroviario:
     begin
-      rllModal.Caption := 'MODAL FERROVIÁRIO DE CARGA';
+      rllModal.Caption := ACBrStr('MODAL FERROVIÁRIO DE CARGA');
     end;
   end;
 
@@ -462,7 +466,7 @@ begin
 
   if FMDFe.Ide.tpAmb = taHomologacao then
   begin
-    rllMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
+    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Enabled := True;
     rllMsgTeste.Visible := True;
   end
@@ -500,7 +504,7 @@ begin
     end
     else
     begin
-      rllMsgTeste.Caption := 'MDF-E NÃO ENVIADO PARA SEFAZ';
+      rllMsgTeste.Caption := ACBrStr('MDF-E NÃO ENVIADO PARA SEFAZ');
       rllMsgTeste.Visible := True;
       rllMsgTeste.Enabled := True;
     end;
@@ -509,11 +513,11 @@ begin
   rllMsgTeste.Repaint;
 
   // imprime data e hora da impressao
-  rllDataHoraImpressao.Caption := 'DATA E HORA DA IMPRESSÃO: ' + FormatDateTime('dd/mm/yyyy hh:nn', Now);
+  rllDataHoraImpressao.Caption := ACBrStr('DATA E HORA DA IMPRESSÃO: ') + FormatDateTime('dd/mm/yyyy hh:nn', Now);
 
   // imprime usuario
   if FUsuario <> '' then
-    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + '   USUÁRIO: ' + FUsuario;
+    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + ACBrStr('   USUÁRIO: ') + FUsuario;
 
   // imprime sistema
   if FSistema <> '' then
@@ -529,7 +533,7 @@ begin
   nItemControle := 0;
   FTotalPages := 1;
 
-  RLMDFe.Title := 'Manifesto Eletrônico de Documentos Fiscais - MDF-e';
+  RLMDFe.Title := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
 
   with RLMDFe.Margins do
     begin

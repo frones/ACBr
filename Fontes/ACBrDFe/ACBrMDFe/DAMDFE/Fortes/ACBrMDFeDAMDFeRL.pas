@@ -121,9 +121,13 @@ type
 implementation
 
 uses
-  MaskUtils;
+  MaskUtils, ACBrUtil;
 
-{$R *.dfm}
+{$ifdef FPC}
+ {$R *.lfm}
+{$else}
+ {$R *.dfm}
+{$endif}
 
 class procedure TfrlDAMDFeRL.Imprimir(AMDFe: TMDFe;
   ALogo: string = '';
@@ -220,10 +224,10 @@ begin
 
       with RLPDFFilter1.DocumentInfo do
       begin
-        Title := 'DAMDFe - MDFe nº ' +
+        Title := ACBrStr('DAMDFe - MDFe nº ') +
           FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-        KeyWords := 'Número:' + FormatFloat('000,000,000', FMDFe.Ide.nMDF) +
-          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FMDFe.Ide.dhEmi) +
+        KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FMDFe.Ide.nMDF) +
+          ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FMDFe.Ide.dhEmi) +
           '; CNPJ: ' + FMDFe.emit.CNPJ;
       end;
 

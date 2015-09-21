@@ -215,7 +215,9 @@ begin
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
   mImp.Lines.Add('<e><n>NEGRITO E EXPANDIDA</n></e>');
+  mImp.Lines.Add('<c><n>NEGRITO E CONDENSADA</n></c>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
+  mImp.Lines.Add('<in><e>INVERTIDA E EXPANDIDA</e></in>');
   mImp.Lines.Add('<in><c>INVERTIDA E CONDENSADA</c></in>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');

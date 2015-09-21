@@ -187,15 +187,22 @@ var
 begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
-  if Length ( Trim( FpNFe.Emit.xNome ) ) > FPosPrinter.ColunasFonteNormal then
+  if Length( Trim( FpNFe.Emit.xNome ) ) > FPosPrinter.ColunasFonteNormal then
     Cmd := '</ce><c><n>'
   else
-    Cmd := '</ce><n>';
+    Cmd := '</fn></ce><n>';
 
   FPosPrinter.Buffer.Add(Cmd + FpNFe.Emit.xNome + '</n>');
 
   if Trim(FpNFe.Emit.xFant) <> '' then
+  begin
+    if Length( Trim( FpNFe.Emit.xFant ) ) > FPosPrinter.ColunasFonteNormal then
+      Cmd := '</ce><c><n>'
+    else
+      Cmd := '</fn></ce><n>';
+
     FPosPrinter.Buffer.Add(Cmd + FpNFe.Emit.xFant + '</n>');
+  end;
 
   FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(
     Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
@@ -220,7 +227,7 @@ begin
   if Trim(FpNFe.Emit.IM) <> '' then
     FPosPrinter.Buffer.Add('</ae><c><n>' + 'IM: ' + FpNFe.Emit.IM + '</n>' );
 
-  FPosPrinter.Buffer.Add('</linha_simples>');
+  FPosPrinter.Buffer.Add('</fn></linha_simples>');
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
@@ -501,7 +508,12 @@ begin
 
     LinhaCmd := Trim(FpNFe.Dest.xNome);
     if LinhaCmd <> '' then
+    begin
+      if Length( LinhaCmd ) > FPosPrinter.ColunasFonteNormal then
+        LinhaCmd := '<c>' + LinhaCmd;
+
       FPosPrinter.Buffer.Add(LinhaCmd);
+    end;
 
     LinhaCmd := Trim(
       Trim(FpNFe.Dest.EnderDest.xLgr) + ' ' +
@@ -521,7 +533,7 @@ var
   qrcode: AnsiString;
   ConfigQRCodeErrorLevel: Integer;
 begin
-  FPosPrinter.Buffer.Add('</linha_simples>');
+  FPosPrinter.Buffer.Add('</fn></linha_simples>');
   FPosPrinter.Buffer.Add('</ce>Consulta via leitor de QR Code');
 
   qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(

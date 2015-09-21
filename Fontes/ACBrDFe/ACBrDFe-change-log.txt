@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2015
+-- ACBrDFeSSL --
+[*] Adicionado suporte a diretiva: {$DEFINE DFE_SEM_OPENSSL}
+    Isso irá remover o suporte a OpenSSL / XMLSec de DFeSSL. A vantagem é que a
+    aplicação deixará de ficar dependente das DLLs do XMLSec
+
 19/09/2015
 -- ACBrDFeWebService --      (por: DSA)
 [*] Implementada a propriedade TDFeWebService.Mimetype, para permitir que algum

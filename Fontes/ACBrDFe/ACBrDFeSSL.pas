@@ -186,9 +186,15 @@ type
 
 implementation
 
-uses strutils, ACBrUtil, ACBrDFeException, ACBrDFeOpenSSL
+uses strutils, ACBrUtil, ACBrDFeException
+  {$IFNDEF DFE_SEM_OPENSSL}
+   ,ACBrDFeOpenSSL
+  {$ENDIF}
   {$IFDEF MSWINDOWS}
-  , ACBrDFeCapicom {$IFNDEF FPC}, ACBrDFeCapicomDelphiSoap{$ENDIF}
+   ,ACBrDFeCapicom
+   {$IFNDEF FPC}
+    ,ACBrDFeCapicomDelphiSoap
+   {$ENDIF}
   {$ENDIF};
 
 { TDFeSSL }
@@ -399,18 +405,28 @@ begin
 
   {$IFDEF MSWINDOWS}
   case ASSLLib of
-    libCapicom: FSSLClass := TDFeCapicom.Create(Self);
-    libOpenSSL: FSSLClass := TDFeOpenSSL.Create(Self);
+    libCapicom:
+      FSSLClass := TDFeCapicom.Create(Self);
+
+    libOpenSSL:
+    begin
+      {$IFNDEF DFE_SEM_OPENSSL}
+       FSSLClass := TDFeOpenSSL.Create(Self);
+      {$ELSE}
+       raise EACBrDFeException.Create('Suporte a libOpenSSL foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
+      {$ENDIF}
+    end;
+
     libCapicomDelphiSoap:
     begin
-       {$IFNDEF FPC}
-      FSSLClass := TDFeCapicomDelphiSoap.Create(Self);
-       {$ELSE}
-      FSSLClass := TDFeCapicom.Create(Self);
-       {$ENDIF}
+      {$IFNDEF FPC}
+       FSSLClass := TDFeCapicomDelphiSoap.Create(Self);
+      {$ELSE}
+       FSSLClass := TDFeCapicom.Create(Self);
+      {$ENDIF}
     end
-    else
-      FSSLClass := TDFeSSLClass.Create(Self);
+  else
+    FSSLClass := TDFeSSLClass.Create(Self);
   end;
   {$ELSE}
   case ASSLLib of

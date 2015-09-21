@@ -108,7 +108,7 @@ type
 implementation
 
 uses
-  MaskUtils;
+  MaskUtils, ACBrUtil;
 
 {$R *.dfm}
 
@@ -187,11 +187,11 @@ begin
 
       with RLPDFFilter1.DocumentInfo do
       begin
-        Title := 'DACTE - Conhecimento nº ' +
+        Title := ACBrStr('DACTE - Conhecimento nº ') +
           FormatFloat('000,000,000', FCTe.Ide.nCT);
-        KeyWords := 'Número:' + FormatFloat('000,000,000', FCTe.Ide.nCT) +
-          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
-          '; Destinatário: ' + FCTe.Dest.xNome +
+        KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FCTe.Ide.nCT) +
+          ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
+          ACBrStr('; Destinatário: ') + FCTe.Dest.xNome +
           '; CNPJ: ' + FCTe.Dest.CNPJCPF;
       end;
 

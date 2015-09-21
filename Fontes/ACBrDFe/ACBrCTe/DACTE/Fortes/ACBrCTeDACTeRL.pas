@@ -127,7 +127,11 @@ implementation
 
 uses MaskUtils, ACBrDFeUtil, pcteConversaoCTe, ACBrUtil;
 
-{$R *.dfm}
+{$ifdef FPC}
+ {$R *.lfm}
+{$else}
+ {$R *.dfm}
+{$endif}
 
 class procedure TfrmDACTeRL.Imprimir(ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
   AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';

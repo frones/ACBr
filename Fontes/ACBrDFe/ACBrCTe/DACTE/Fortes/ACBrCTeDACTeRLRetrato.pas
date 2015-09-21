@@ -1124,7 +1124,7 @@ begin
           ' - ' + XMun + ' - ' + UF);
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
-      rlmDadosEmitente.Lines.Add('INSCRIÇÃO ESTADUAL: ' + IE);
+      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRIÇÃO ESTADUAL: ') + IE);
       {rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));}
 
       if Trim(FUrl) <> '' then
@@ -1155,13 +1155,13 @@ begin
     rllVariavel1.Enabled := True;
     RLBarcode1.Enabled := False;
     if FCTe.procCTe.cStat = 100 then
-      rllDescricao.Caption := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
 
     if FCTe.procCTe.cStat = 101 then
-      rllDescricao.Caption := 'PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO';
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
 
     if FCTe.procCTe.cStat = 110 then
-      rllDescricao.Caption := 'PROTOCOLO DE DENEGAÇÃO DE USO';
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
 
     if FProtocoloCTE <> '' then
       rllProtocolo.Caption := FProtocoloCTE
@@ -1179,13 +1179,13 @@ begin
       rllVariavel1.Enabled := True;
       RLBarcode1.Enabled := False;
       if FCTe.procCTe.cStat = 100 then
-        rllDescricao.Caption := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
 
       if FCTe.procCTe.cStat = 101 then
-        rllDescricao.Caption := 'PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO';
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
 
       if FCTe.procCTe.cStat = 110 then
-        rllDescricao.Caption := 'PROTOCOLO DE DENEGAÇÃO DE USO';
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
 
       if FProtocoloCTE <> '' then
         rllProtocolo.Caption := FProtocoloCTE
@@ -1875,7 +1875,7 @@ begin
   if FCTe.Ide.tpEmis in [teContingencia, teFSDA, teDPEC] then
   begin
     if not (FCTe.procCTe.cStat in [100, 101, 110]) then
-      rlmObs.Lines.Add('DACTE em Contingência - Impresso em decorrência de problemas técnicos.');
+      rlmObs.Lines.Add(ACBrStr('DACTE em Contingência - Impresso em decorrência de problemas técnicos.'));
   end;
 
   if (FCTe.Ide.tpEmis = teDPEC) and (FEPECEnviado) then
@@ -1890,7 +1890,7 @@ begin
 
   if FCTe.Ide.tpAmb = taHomologacao then
   begin
-    rllMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
+    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end
@@ -1921,7 +1921,7 @@ begin
     end
     else
     begin
-      rllMsgTeste.Caption := 'CT-E NÃO ENVIADO PARA SEFAZ';
+      rllMsgTeste.Caption := ACBrStr('CT-E NÃO ENVIADO PARA SEFAZ');
       rllMsgTeste.Visible := True;
       rllMsgTeste.Enabled := True;
     end;
@@ -1968,12 +1968,12 @@ begin
     case Lota of
       ltNao:
       begin
-        rllTituloLotacao.Caption := 'DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA';
-        rllLotacao.Caption := 'NÃO';
+        rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA');
+        rllLotacao.Caption := ACBrStr('NÃO');
       end;
       ltsim:
       begin
-        rllTituloLotacao.Caption := 'DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - LOTAÇÃO';
+        rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - LOTAÇÃO');
         rllLotacao.Caption := 'SIM';
         if Versao = 103 then
           rlb_11_ModRodLot103.Enabled := True
@@ -2197,7 +2197,7 @@ begin
   if FCte.Ide.retira = rtSim then
     rllRetira.Caption := 'SIM'
   else
-    rllRetira.Caption := 'NÃO';
+    rllRetira.Caption := ACBrStr('NÃO');
   rllDadosRetira.Caption := FCte.Ide.xdetretira;
 end;
 

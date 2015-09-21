@@ -246,23 +246,24 @@ begin
   case FEventoCTe.InfEvento.tpEvento of
     teCCe:
     begin
-      rllLinha1.Caption := 'CARTA DE CORREÇÃO ELETRÔNICA';
-      rllLinha2.Caption := 'Não possui valor fiscal, simples representação da CC-e indicada abaixo.';
-      rllLinha3.Caption :=
-        'CONSULTE A AUTENTICIDADE DA CARTA DE CORREÇÃO ELETRÔNICA NO SITE DA SEFAZ AUTORIZADORA.';
+      rllLinha1.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
+      rllLinha2.Caption := ACBrStr('Não possui valor fiscal, simples representação da CC-e indicada abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA CARTA DE CORREÇÃO ELETRÔNICA NO SITE DA SEFAZ AUTORIZADORA.');
     end;
     teCancelamento:
     begin
       rllLinha1.Caption := 'CANCELAMENTO';
-      rllLinha2.Caption :=
-        'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.';
-      rllLinha3.Caption := 'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.';
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação do Cancelamento indicado abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DO CANCELAMENTO NO SITE DA SEFAZ AUTORIZADORA.');
     end;
     teEPEC:
     begin
-      rllLinha1.Caption := 'EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC';
-      rllLinha2.Caption := 'Não possui valor fiscal, simples representação da EPEC indicada abaixo.';
-      rllLinha3.Caption := 'CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.';
+      rllLinha1.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
+      rllLinha2.Caption := ACBrStr('Não possui valor fiscal, simples representação da EPEC indicada abaixo.');
+      rllLinha3.Caption := ACBrStr('CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.');
     end;
   end;
 end;
@@ -293,15 +294,15 @@ begin
   with FEventoCTe do
   begin
     case InfEvento.tpEvento of
-      teCCe: rllTituloEvento.Caption := 'CARTA DE CORREÇÃO ELETRÔNICA';
+      teCCe: rllTituloEvento.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
       teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
-      teEPEC: rllTituloEvento.Caption := 'EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA';
+      teEPEC: rllTituloEvento.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
     case InfEvento.tpAmb of
-      taProducao: rllTipoAmbiente.Caption := 'PRODUÇÃO';
-      taHomologacao: rllTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+      taProducao: rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
+      taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
     rllEmissaoEvento.Caption := FormatDateTimeBr(InfEvento.dhEvento);
     rllTipoEvento.Caption := InfEvento.TipoEvento;
@@ -422,7 +423,7 @@ begin
 
   if FEventoCTe.InfEvento.tpAmb = taHomologacao then
   begin
-    rllMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
+    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end;
@@ -437,37 +438,37 @@ begin
   case FEventoCTe.InfEvento.tpEvento of
     teCCe:
     begin
-      lblTitulo_06.Caption := 'CONDIÇÕES DE USO';
+      lblTitulo_06.Caption := ACBrStr('CONDIÇÕES DE USO');
       rlmCondicoes.Lines.Clear;
-      rlmCondicoes.Lines.Add(
-        'A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularizacao');
-      rlmCondicoes.Lines.Add(
-        'de erro ocorrido na emissao de documentos fiscais relativos a prestacao de servico de transporte, desde que o erro nao esteja relacionado com:');
-      rlmCondicoes.Lines.Add(
-        'I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da prestacao;');
-      rlmCondicoes.Lines.Add(
-        'II - a correcao de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatario;');
-      rlmCondicoes.Lines.Add('III - a data de emissao ou de saida.');
+      rlmCondicoes.Lines.Add( ACBrStr(
+        'A Carta de Correção e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularização'));
+      rlmCondicoes.Lines.Add( ACBrStr(
+        'de erro ocorrido na emissão de documentos fiscais relativos a prestação de serviço de transporte, desde que o erro nao esteja relacionado com:'));
+      rlmCondicoes.Lines.Add( ACBrStr(
+        'I - as variaveis que determinam o valor do imposto tais como: base de calculo, alíquota, diferença de preço, quantidade, valor da prestação;'));
+      rlmCondicoes.Lines.Add( ACBrStr(
+        'II - a correção de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatário;'));
+      rlmCondicoes.Lines.Add(ACBrStr('III - a data de emissão ou de saída.'));
     end;
     teCancelamento:
     begin
-      lblTitulo_06.Caption := 'DESCRIÇÃO';
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
       rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add('Protocolo do CTe Cancelado: ' + FEventoCTe.InfEvento.detEvento.nProt);
       rlmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoCTe.InfEvento.detEvento.xJust);
     end;
     teEPEC:
     begin
-      lblTitulo_06.Caption := 'DESCRIÇÃO';
+      lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
       rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add('Motivo do EPEC     : ' + FEventoCTe.InfEvento.detEvento.xJust);
       rlmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloat(
         '#0.00', FEventoCTe.InfEvento.detEvento.vICMS));
-      rlmCondicoes.Lines.Add('Valor da Prestação : ' + FormatFloat(
+      rlmCondicoes.Lines.Add(ACBrStr('Valor da Prestação : ') + FormatFloat(
         '#0.00', FEventoCTe.InfEvento.detEvento.vTPrest));
       rlmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloat(
         '#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
-      rlmCondicoes.Lines.Add('UF de inicio/fim da prestação: ' + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
+      rlmCondicoes.Lines.Add(ACBrStr('UF de inicio/fim da prestação: ') + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
         FEventoCTe.InfEvento.detEvento.UFFim);
     end;
   end;

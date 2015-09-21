@@ -10,7 +10,6 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  LCLVersion = '1.4.2.0'
   object RLNFeInut: TRLReport
     Left = 21
     Height = 1123

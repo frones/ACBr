@@ -143,6 +143,13 @@ begin
       AByte := AByte + 128;
 
     Result := ESC + '!' + AnsiChr(AByte);
+
+    // ESC ! desliga Invertido, enviando o comando novamente
+    if ftInvertido in NovoFonteStatus then
+      Result := Result + Cmd.LigaInvertido;
+
+    if ftItalico in NovoFonteStatus then
+      Result := Result + Cmd.LigaItalico;
   end
   else
     Result := inherited ComandoFonte(TipoFonte, Ligar);

@@ -57,6 +57,7 @@
 //{$DEFINE RaveCollate}
 //{$DEFINE RaveSaveFromPreview}
 
+{.$DEFINE DFE_SEM_OPENSSL}
 
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
@@ -67,6 +68,10 @@
   {$DEFINE COMPILER7}
   {$DEFINE HAS_FORMATSETTINGS}
   {$H+}
+
+  {$IFNDEF MSWINDOWS}
+    {$UNDEF DFE_SEM_OPENSSL}
+  {$ENDIF}
 {$ELSE}
   {$DEFINE BORLAND}
 {$ENDIF}

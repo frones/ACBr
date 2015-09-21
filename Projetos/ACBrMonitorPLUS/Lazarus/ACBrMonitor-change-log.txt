@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2015
+-- CTE --
+[+] Adicionado o suporte a CT-e. (Por: Rafael Dias)
+
+-- MDFE --
+[+] Adicionado o suporte a MDF-e. (Por: Rafael Dias)
+
 17/09/2015
 -- NFE --
 [+] Implementado: NFe.ValidarNfeRegraNegocios(cArqXML), que efetua a validação

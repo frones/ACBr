@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/09/2015       (por: DSA)
+-- ACBrPosPrinter --
+[*] Modificação para melhor flexibilização em comandos de controle de Caracteres
+    impressos em conjunto
+
+-- ACBrEscDiebold --
+[*] Melhoria para a impressão de Expandido (não imprime dupla altura)
+[-] Correção de Impressão de Textos com Formatações de Caracteres sobrepostas
+    Ex: Negrito + Expandido, Negrito + Condensado
+
 Data: 18/09/2015
 -- ACBrECFBematech --   (por: DSA)
 [*] Rotina que detecta final de leitura em capturas de leituras pela Serial,

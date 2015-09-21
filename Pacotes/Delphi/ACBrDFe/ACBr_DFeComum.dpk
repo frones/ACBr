@@ -44,7 +44,6 @@ contains
   ACBrDFeRegUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas',
   ACBrDFeException in '..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas',
   ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas',
-  ACBrDFeOpenSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas',
   ACBrDFeCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas',
   ACBrDFeCapicomDelphiSoap in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicomDelphiSoap.pas';
 

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2015
+-- ACBrNFSeWebServices --
+[*] Acrescentado a checagem da versão do SOAP para determinar o Mimetype a ser
+    utilizado ao enviar o XML ao Web Services.
+    Por: Italo Jurisato Junior
+
 18/09/2015
 [*] Acrescentado o INI para o provedor Saatri.
     Por: Icozeira / Italo Jurisato Junior

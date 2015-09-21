@@ -675,6 +675,12 @@ begin
   inherited InicializarServico;
 
   FProvedor := FPConfiguracoesNFSe.Geral.Provedor;
+
+  if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '1.2' then
+    FPMimeType := 'application/soap+xml'
+  else
+    FPMimeType := 'text/xml';
+
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
 end;
 

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.abrasf.org.br/nfse.xsd">
+  <xsd:element name="CancelarNfseResposta">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="MensagemRetorno">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="MensagemRetorno">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Codigo" type="xsd:string" />
+                    <xsd:element name="Mensagem" type="xsd:string" />
+                    <xsd:element name="Correcao" type="xsd:string" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="RetornoCancelamento">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="NfseCancelamento">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Confirmacao">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="Pedido">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="InfPedidoCancelamento">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="IdentificacaoNfse">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Numero" type="xsd:unsignedByte" />
+                                            <xsd:element name="CpfCnpj">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="Cnpj" type="xsd:unsignedLong" />
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="InscricaoMunicipal" type="xsd:unsignedInt" />
+                                            <xsd:element name="CodigoMunicipio" type="xsd:unsignedInt" />
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="CodigoCancelamento" type="xsd:unsignedByte" />
+                                      <xsd:element name="MotivoCancelamento" type="xsd:string" />
+                                      <xsd:element name="Id" type="xsd:integer" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="DataHora" type="xsd:dateTime" />
+                        </xsd:sequence>
+                        <xsd:attribute name="Id" type="xsd:integer" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                  <xsd:attribute name="versao" type="xsd:decimal" use="required" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

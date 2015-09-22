@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.abrasf.org.br/nfse.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="EnviarLoteRpsSincronoResposta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NumeroLote" type="xs:unsignedByte" />
+        <xs:element name="DataRecebimento" type="xs:dateTime" />
+        <xs:element name="Protocolo" type="xs:unsignedLong" />
+        <xs:element name="ListaMensagemAlertaRetorno">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MensagemRetorno">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Codigo" type="xs:string" />
+                    <xs:element name="Mensagem" type="xs:string" />
+                    <xs:element name="Correcao" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

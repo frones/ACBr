@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.abrasf.org.br/nfse.xsd">
+  <xsd:element name="ConsultarNfseFaixaResposta">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ListaNfse">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="unbounded" name="CompNfse">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="Nfse">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="InfNfse">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="LinkNota" type="xsd:string" />
+                                <xsd:element name="Numero" type="xsd:unsignedByte" />
+                                <xsd:element name="CodigoVerificacao" type="xsd:string" />
+                                <xsd:element name="DataEmissao" type="xsd:dateTime" />
+                                <xsd:element name="NfseSubstituida" type="xsd:unsignedByte" />
+                                <xsd:element name="OutrasInformacoes" />
+                                <xsd:element name="ValoresNfse">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="BaseCalculo" type="xsd:decimal" />
+                                      <xsd:element name="Aliquota" type="xsd:decimal" />
+                                      <xsd:element name="ValorIss" type="xsd:decimal" />
+                                      <xsd:element name="ValorLiquidoNfse" type="xsd:decimal" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="ValorCredito" type="xsd:unsignedByte" />
+                                <xsd:element name="EnderecoPrestadorServico">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="Endereco" type="xsd:string" />
+                                      <xsd:element name="Numero" type="xsd:unsignedShort" />
+                                      <xsd:element name="Complemento" type="xsd:string" />
+                                      <xsd:element name="Bairro" type="xsd:string" />
+                                      <xsd:element name="CodigoMunicipio" type="xsd:unsignedInt" />
+                                      <xsd:element name="Uf" />
+                                      <xsd:element name="CodigoPais" type="xsd:unsignedShort" />
+                                      <xsd:element name="Cep" type="xsd:unsignedInt" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="ContatoPrestadorServico">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="Telefone" type="xsd:unsignedLong" />
+                                      <xsd:element name="Email" type="xsd:string" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="OrgaoGerador">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="CodigoMunicipio" type="xsd:unsignedInt" />
+                                      <xsd:element name="Uf" type="xsd:string" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="DeclaracaoPrestacaoServico">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="InfDeclaracaoPrestacaoServico">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Rps">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="IdentificacaoRps">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Numero" type="xsd:unsignedByte" />
+                                                        <xsd:element name="Serie" type="xsd:string" />
+                                                        <xsd:element name="Tipo" type="xsd:unsignedByte" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="DataEmissao" type="xsd:dateTime" />
+                                                  <xsd:element name="Status" type="xsd:unsignedByte" />
+                                                  <xsd:element name="RpsSubstituido">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Numero" />
+                                                        <xsd:element name="Serie" />
+                                                        <xsd:element name="Tipo" type="xsd:unsignedByte" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="Competencia" type="xsd:dateTime" />
+                                            <xsd:element name="Servico">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="tcDadosServico">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Valores">
+                                                          <xsd:complexType>
+                                                            <xsd:sequence>
+                                                              <xsd:element name="BaseCalculoCRS" type="xsd:unsignedByte" />
+                                                              <xsd:element name="IrrfIndenizacao" type="xsd:unsignedByte" />
+                                                              <xsd:element name="ValorServicos" type="xsd:decimal" />
+                                                              <xsd:element name="ValorDeducoes" type="xsd:decimal" />
+                                                              <xsd:element name="ValorPis" type="xsd:decimal" />
+                                                              <xsd:element name="ValorCofins" type="xsd:decimal" />
+                                                              <xsd:element name="ValorInss" type="xsd:decimal" />
+                                                              <xsd:element name="ValorIr" type="xsd:decimal" />
+                                                              <xsd:element name="ValorCsll" type="xsd:decimal" />
+                                                              <xsd:element name="OutrasRetencoes" type="xsd:decimal" />
+                                                              <xsd:element name="ValorIss" type="xsd:decimal" />
+                                                              <xsd:element name="Aliquota" type="xsd:decimal" />
+                                                              <xsd:element name="DescontoIncondicionado" type="xsd:decimal" />
+                                                              <xsd:element name="DescontoCondicionado" type="xsd:decimal" />
+                                                            </xsd:sequence>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                        <xsd:element name="IssRetido" type="xsd:unsignedByte" />
+                                                        <xsd:element name="ResponsavelRetencao" type="xsd:unsignedByte" />
+                                                        <xsd:element name="ItemListaServico" type="xsd:decimal" />
+                                                        <xsd:element name="CodigoCnae" type="xsd:unsignedByte" />
+                                                        <xsd:element name="CodigoTributacaoMunicipio" type="xsd:unsignedInt" />
+                                                        <xsd:element name="Discriminacao" />
+                                                        <xsd:element name="CodigoMunicipio" type="xsd:unsignedInt" />
+                                                        <xsd:element name="CodigoPais" type="xsd:unsignedShort" />
+                                                        <xsd:element name="ExigibilidadeISS" type="xsd:unsignedByte" />
+                                                        <xsd:element name="MunicipioIncidencia" type="xsd:unsignedInt" />
+                                                        <xsd:element name="NumeroProcesso" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="Prestador">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="CpfCnpj">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Cnpj" type="xsd:unsignedLong" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="RazaoSocial" type="xsd:string" />
+                                                  <xsd:element name="InscricaoMunicipal" type="xsd:unsignedShort" />
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="Tomador">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="IdentificacaoTomador">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="CpfCnpj">
+                                                          <xsd:complexType>
+                                                            <xsd:sequence>
+                                                              <xsd:element name="Cnpj" type="xsd:unsignedLong" />
+                                                            </xsd:sequence>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                        <xsd:element name="InscricaoMunicipal" type="xsd:unsignedByte" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="RazaoSocial" type="xsd:string" />
+                                                  <xsd:element name="Endereco">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Endereco" type="xsd:string" />
+                                                        <xsd:element name="Numero" type="xsd:unsignedByte" />
+                                                        <xsd:element name="Complemento" type="xsd:string" />
+                                                        <xsd:element name="Bairro" type="xsd:string" />
+                                                        <xsd:element name="CodigoMunicipio" type="xsd:unsignedInt" />
+                                                        <xsd:element name="Uf" type="xsd:string" />
+                                                        <xsd:element name="CodigoPais" type="xsd:unsignedShort" />
+                                                        <xsd:element name="Cep" type="xsd:unsignedInt" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="Contato">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Telefone" type="xsd:unsignedLong" />
+                                                        <xsd:element name="Email" type="xsd:string" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="Intermediario">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="IdentificacaoIntermediario">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="CpfCnpj">
+                                                          <xsd:complexType>
+                                                            <xsd:sequence>
+                                                              <xsd:element name="Cpf" type="xsd:unsignedByte" />
+                                                            </xsd:sequence>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                        <xsd:element name="InscricaoMunicipal" />
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="RazaoSocial" />
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="ConstrucaoCivil">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="CodigoObra" />
+                                                  <xsd:element name="Art" />
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="RegimeEspecialTributacao" type="xsd:unsignedByte" />
+                                            <xsd:element name="NaturezaOperacao" type="xsd:unsignedByte" />
+                                            <xsd:element name="OptanteSimplesNacional" type="xsd:unsignedByte" />
+                                            <xsd:element name="IncentivoFiscal" type="xsd:unsignedByte" />
+                                            <xsd:element name="PercentualCargaTributaria" type="xsd:unsignedByte" />
+                                            <xsd:element name="ValorCargaTributaria" type="xsd:unsignedByte" />
+                                            <xsd:element name="OutrasInformacoes" />
+                                            <xsd:element name="TipoNota" type="xsd:unsignedByte" />
+                                            <xsd:element name="SiglaUF" />
+                                            <xsd:element name="IdCidade" type="xsd:unsignedByte" />
+                                            <xsd:element name="EspecieDocumento" type="xsd:unsignedByte" />
+                                            <xsd:element name="SerieTalonario" type="xsd:unsignedByte" />
+                                            <xsd:element name="FormaPagamento" type="xsd:unsignedByte" />
+                                            <xsd:element name="NumeroParcelas" type="xsd:unsignedByte" />
+                                          </xsd:sequence>
+                                          <xsd:attribute name="Id" type="xsd:integer" use="required" />
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                              <xsd:attribute name="Id" type="xsd:unsignedByte" use="required" />
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="versao" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ProximaPagina" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

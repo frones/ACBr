@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsd=" http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.abrasf.org.br/nfse.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ConsultarLoteRpsEnvio">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Prestador">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CpfCnpj">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Cnpj" type="xs:unsignedLong" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="RazaoSocial" type="xs:string" />
+              <xs:element name="InscricaoMunicipal" type="xs:unsignedInt" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Protocolo" type="xs:integer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

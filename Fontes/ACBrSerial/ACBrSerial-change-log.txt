@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/09/2015
+-- ACBrECFEscECF --
+[+] Adicionada leitura de DataHoraEmissao em DadosUltimaReducaoZ
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=24508
+    (por: Felipe Hoffmann)
+
 Data: 21/09/2015       (por: DSA)
 -- ACBrPosPrinter --
 [*] Modificação para melhor flexibilização em comandos de controle de Caracteres

@@ -3025,6 +3025,16 @@ begin
     DataDoMovimento  := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
                                     StrToInt(copy(DataStr,3,2)),   // Mes
                                     StrToInt(copy(DataStr,1,2)) ); // Dia
+
+    DataStr := EscECFResposta.Params[2];
+    DataHoraEmissao := EncodeDateTime(StrToInt(copy(DataStr, 5,4)),   // Ano
+                                      StrToInt(copy(DataStr, 3,2)),   // Mes
+                                      StrToInt(copy(DataStr, 1,2)),   // Dia
+                                      StrToInt(copy(DataStr, 9,2)),   // Hora
+                                      StrToInt(copy(DataStr, 11,2)),   // Min
+                                      StrToInt(copy(DataStr, 13,2)),   // Seg
+                                      0 );
+
     CRO              := StrToIntDef( EscECFResposta.Params[3], 0) ;
     NumeroCOOInicial := EscECFResposta.Params[4];
     COO              := StrToIntDef( EscECFResposta.Params[5], 0) ;

@@ -565,7 +565,6 @@ begin
   try
     ConsStatServ.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
-
     ConsStatServ.Versao := FPVersaoServico;
     ConsStatServ.GerarXML;
 
@@ -1153,7 +1152,6 @@ begin
   try
     ConsSitMDFe.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsSitMDFe.chMDFe := FMDFeChave;
-
     ConsSitMDFe.Versao := FPVersaoServico;
     ConsSitMDFe.GerarXML;
 
@@ -1829,7 +1827,7 @@ begin
     ConsMDFeNaoEnc.CNPJ  := FCNPJ; // TMDFeConsultaMDFeNaoEnc(Self).CNPJ;
 
     ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesMDFe.Geral.RetirarAcentos;
-
+    ConsMDFeNaoEnc.Versao := FPVersaoServico;
     ConsMDFeNaoEnc.GerarXML;
 
     FPDadosMsg := ConsMDFeNaoEnc.Gerador.ArquivoFormatoXML;
@@ -1882,7 +1880,7 @@ begin
                    [FRetConsMDFeNaoEnc.versao, TpAmbToStr(FRetConsMDFeNaoEnc.tpAmb),
                     FRetConsMDFeNaoEnc.verAplic, IntToStr(FRetConsMDFeNaoEnc.cStat),
                     FRetConsMDFeNaoEnc.xMotivo,
-                    FRetConsMDFeNaoEnc.cUF]);
+                    CodigoParaUF(FRetConsMDFeNaoEnc.cUF)]);
 end;
 
 function TMDFeConsultaMDFeNaoEnc.GerarMsgErro(E: Exception): String;

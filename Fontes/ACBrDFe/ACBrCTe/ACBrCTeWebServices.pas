@@ -650,7 +650,6 @@ begin
   try
     ConsStatServ.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesCTe.WebServices.UFCodigo;
-
     ConsStatServ.Versao := FPVersaoServico;
     ConsStatServ.GerarXML;
 
@@ -1289,7 +1288,6 @@ begin
   try
     ConsSitCTe.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsSitCTe.chCTe := FCTeChave;
-
     ConsSitCTe.Versao := FPVersaoServico;
     ConsSitCTe.GerarXML;
 
@@ -1741,7 +1739,6 @@ begin
     InutCTe.nCTIni := FNumeroInicial;
     InutCTe.nCTFin := FNumeroFinal;
     InutCTe.xJust := FJustificativa;
-
     InutCTe.Versao := FPVersaoServico;
     InutCTe.GerarXML;
 

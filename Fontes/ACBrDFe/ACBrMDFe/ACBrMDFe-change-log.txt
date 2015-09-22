@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2015
+[*] (ACBrMDFeWebServices)
+    Incluido a linha que defini a versão do serviço em ConsultaMDFeNaoEnc.
+    Incluido a função para converter o código da UF em Sigla no GerarMsgLog também
+    em ConsultaMDFeNaoEnc.
+    Por: Matheus / Italo Jurisato Junior
+
 17/09/2015
 [*] (ACBrMDFeManifestos/ACBrMDFeWebServices)
     Ajustes para que os arquivos de envio/retorno fiquem condicionados a propriedade

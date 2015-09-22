@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2015
+[-] Acerto para geração de campos string removendo as quebras de linha e 
+    trocando por ;, as quebras de linhas estavam gerando problemas de assinatura
+    inválida, foi feito o acerto anteriormente para somente as observações
+    agora com o novo acerto qualquer campo string recebe a atualização acabando
+    de vez com o problema.
+    por: regys.silveira
+
 26/08/2015
 [*] Removido alguns Tipos e Funções, pois são exclusivas do CT-e.
     Por: Italo Jurisato Junior

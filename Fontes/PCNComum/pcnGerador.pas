@@ -813,7 +813,8 @@ begin
   case Tipo of
     tcStr:
       begin
-        ConteudoProcessado := Trim( VarToStr(valor) );
+        // remover as quebras de linha e trocar por ;, porque a quebra de linha causa erros de assinatura
+        ConteudoProcessado := ChangeLineBreak( Trim( VarToStr(valor) ), ';');
         EstaVazio := ConteudoProcessado = '';
       end;
 

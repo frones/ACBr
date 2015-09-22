@@ -1219,9 +1219,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel80: TRLMemo
         Left = 4
-        Top = 157
-        Width = 488
-        Height = 19
+        Top = 156
+        Width = 461
+        Height = 26
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

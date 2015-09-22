@@ -56,6 +56,8 @@ Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {a
 ;Arquivos de configuração
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: ..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: ..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Arquivos de Change-log.TXT
 Source: ACBrMonitor-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
 Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help

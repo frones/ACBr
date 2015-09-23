@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2015
+-- ACBrDANFCeFortesFr --
+[*] Impressão dos descontos do Item, modificada para ficar condicionada a
+    propriedade "ImprimirDescPorc", e não "ImprimirTotalLiquido"   (por: DSA)
+
 18/09/2015
 -- pcnRetDownloadNFe --
 [*] Removido o Encoding UTF8 que estava sendo acrescentado ao retorno, pois o mesmo

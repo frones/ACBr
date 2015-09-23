@@ -458,7 +458,7 @@ procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vDesc > 0) and (ACBrNFeDANFCeFortes.ImprimirTotalLiquido) ;
+    PrintIt := (not Resumido) and (Prod.vDesc > 0) and (ACBrNFeDANFCeFortes.ImprimirDescPorc) ;
 
     if PrintIt then
     begin
@@ -644,7 +644,7 @@ begin
   if NFe = nil then
    begin
      if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe nÃo atribuí­do');
+        raise Exception.Create('Componente ACBrNFe não atribuído');
 
      FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
    end

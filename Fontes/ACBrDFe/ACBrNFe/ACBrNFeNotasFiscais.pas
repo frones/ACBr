@@ -270,6 +270,37 @@ begin
       Leitor.Free;
     end;
 
+//***********************************************************************************
+// Atenção o código comentado abaixo não pode ser excluido pois será descomentado
+// quando as alterações no XML definidas em NT 2015/002 versão 1.00 entrar em vigor.
+// Homologação: 01/10/2015
+// Produção: 03/11/2015
+//***********************************************************************************
+
+    // Gera o QR-Code para adicionar no XML antes de ser validado e salvo
+    // somente para a NFC-e.
+(*
+    if Configuracoes.Geral.ModeloDF = moNFCe then
+    begin
+      with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
+      begin
+        NFe.infNFeSupl.qrCode := GetURLQRCode(NFe.Ide.cUF, NFe.Ide.tpAmb,
+                                  onlyNumber(NFe.infNFe.ID), NFe.Dest.CNPJCPF,
+                                  NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
+                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
+      end;
+
+      i := pos('<Signature ', XMLAss);
+      XMLAss := Copy(XMLAss, 1, i -1) +
+                '<infNFeSupl>' +
+                 '<qrCode>' +
+                  '<![CDATA[' + NFe.infNFeSupl.qrCode + ']]>' +
+                 '</qrCode>' +
+                '</infNFeSupl>' +
+                Copy(XMLAss, i, length(XMLAss));
+    end;
+*)
+
     if Configuracoes.Arquivos.Salvar then
       Gravar(CalcularNomeArquivoCompleto(), XMLAss);
 

@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2015
+-- ACBrNFeNotasFiscais --
+[*] Na atualização anterior foi removido o código que vai gerar a string do 
+    QR-Code para ser adicionado no XML conforme NT 2015/002 versão 1.00
+    Estou incluindo o código novamente pois em outubro o mesmo deverá ser 
+    descomentado para fins de teste no ambiente de homologação
+    por: Italo Jurisato Junior
+
 22/09/2015
 -- ACBrDANFCeFortesFr --
 [*] Impressão dos descontos do Item, modificada para ficar condicionada a

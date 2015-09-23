@@ -67,6 +67,15 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 23/09/2015 ver. 0.0.146a
+-- ACBrBancoBrasil --
+[-]Ajuste retorno CNAB400. (Fenix)
+http://www.projetoacbr.com.br/forum/topic/23751-corre%C3%A7%C3%A3o-leitura-retorno-cnab400-6-posi%C3%A7%C3%B5es-bb/
+
+-- ACBrBancoSicredi --
+[-]Ajuste montagem código de barras. (Vinicius_Santos)
+http://www.projetoacbr.com.br/forum/topic/23848-funcao-montarcodigobarras/
+
 Data: 14/09/2015 ver. 0.0.145a
 -- ACBrBancoBrasil --
 [-]Ajuste remessa CNAB240. (Juliana Tamizou)

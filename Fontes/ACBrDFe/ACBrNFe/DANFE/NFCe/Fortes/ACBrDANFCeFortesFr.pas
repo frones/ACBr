@@ -414,6 +414,8 @@ begin
   fNumObs   := 0;
   fObsFisco.Clear;
 
+  imgLogo.Height:=100;
+
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     lNomeFantasia.Caption   := Emit.xFant ;

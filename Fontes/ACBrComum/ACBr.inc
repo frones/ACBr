@@ -58,6 +58,7 @@
 //{$DEFINE RaveSaveFromPreview}
 
 {.$DEFINE DFE_SEM_OPENSSL}
+{.$DEFINE DFE_SEM_CAPICOM}
 
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
@@ -68,13 +69,18 @@
   {$DEFINE COMPILER7}
   {$DEFINE HAS_FORMATSETTINGS}
   {$H+}
-
-  {$IFNDEF MSWINDOWS}
-    {$UNDEF DFE_SEM_OPENSSL}
-  {$ENDIF}
 {$ELSE}
   {$DEFINE BORLAND}
 {$ENDIF}
+
+{$IFNDEF MSWINDOWS}   // Linux, apenas OpenSSL, sem Capicom
+  {$DEFINE DFE_SEM_CAPICOM}
+{$ENDIF}
+
+{$IFDEF DFE_SEM_CAPICOM}
+  {$UNDEF DFE_SEM_OPENSSL}
+{$ENDIF}
+
 
 // utilizar para facilitar a manutenção do ACBr.inc, já que ele era uma cópia
 // da jedi, essa mudança permite uma evolução melhor do arquivo.

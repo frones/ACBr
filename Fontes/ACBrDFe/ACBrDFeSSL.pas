@@ -190,7 +190,7 @@ uses strutils, ACBrUtil, ACBrDFeException
   {$IFNDEF DFE_SEM_OPENSSL}
    ,ACBrDFeOpenSSL
   {$ENDIF}
-  {$IFDEF MSWINDOWS}
+  {$IFNDEF DFE_SEM_CAPICOM}
    ,ACBrDFeCapicom
    {$IFNDEF FPC}
     ,ACBrDFeCapicomDelphiSoap
@@ -403,7 +403,7 @@ begin
   if Assigned(FSSLClass) then
     FreeAndNil(FSSLClass);
 
-  {$IFDEF MSWINDOWS}
+  {$IFNDEF DFE_SEM_CAPICOM}
   case ASSLLib of
     libCapicom:
       FSSLClass := TDFeCapicom.Create(Self);
@@ -430,8 +430,10 @@ begin
   end;
   {$ELSE}
   case ASSLLib of
-    libOpenSSL, libCapicom, libCapicomDelphiSoap: FSSLClass :=
-        TDFeOpenSSL.Create(Self);
+    libOpenSSL, libCapicom, libCapicomDelphiSoap:
+      FSSLClass := TDFeOpenSSL.Create(Self);
+  else
+    FSSLClass := TDFeSSLClass.Create(Self);
   end;
   {$ENDIF}
 

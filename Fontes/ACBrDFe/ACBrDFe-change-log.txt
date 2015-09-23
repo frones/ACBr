@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2015
+-- ACBrDFeSSL --
+[*] Adicionado suporte a diretiva: {$DEFINE DFE_SEM_CAPICOM}
+    Isso irá remover o suporte a CAPICOM de DFeSSL, deixando apenas o suporte
+    a OpenSSL.
+
 21/09/2015
 -- ACBrDFeSSL --
 [*] Adicionado suporte a diretiva: {$DEFINE DFE_SEM_OPENSSL}

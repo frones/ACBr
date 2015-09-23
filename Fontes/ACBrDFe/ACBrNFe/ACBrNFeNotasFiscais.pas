@@ -238,7 +238,6 @@ var
   XMLAss: String;
   ArqXML: String;
   Leitor: TLeitor;
-  i: Integer;
 begin
   if NaoEstaVazio(FXMLAssinado) then
     exit;
@@ -271,29 +270,6 @@ begin
       Leitor.Free;
     end;
 
-    // Gera o QR-Code para adicionar no XML antes de ser validado e salvo
-    // somente para a NFC-e.
-(*
-    if Configuracoes.Geral.ModeloDF = moNFCe then
-    begin
-      with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
-      begin
-        NFe.infNFeSupl.qrCode := GetURLQRCode(NFe.Ide.cUF, NFe.Ide.tpAmb,
-                                  onlyNumber(NFe.infNFe.ID), NFe.Dest.CNPJCPF,
-                                  NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
-                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
-      end;
-
-      i := pos('<Signature ', XMLAss);
-      XMLAss := Copy(XMLAss, 1, i -1) +
-                '<infNFeSupl>' +
-                 '<qrCode>' +
-                  '<![CDATA[' + NFe.infNFeSupl.qrCode + ']]>' +
-                 '</qrCode>' +
-                '</infNFeSupl>' +
-                Copy(XMLAss, i, length(XMLAss));
-    end;
-*)
     if Configuracoes.Arquivos.Salvar then
       Gravar(CalcularNomeArquivoCompleto(), XMLAss);
 
@@ -367,7 +343,7 @@ end;
 
 function NotaFiscal.ValidarRegrasdeNegocios: Boolean;
 var
-  Erros, Log: String;
+  Erros: String;
   I: Integer;
   Agora: TDateTime;
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
@@ -1273,13 +1249,19 @@ end;
 function NotaFiscal.CalcularNomeArquivo: String;
 var
   xID: String;
+  NomeXML: String;
 begin
   xID := Self.NumID;
 
   if EstaVazio(xID) then
     raise EACBrNFeException.Create('ID Inválido. Impossível Salvar XML');
 
-  Result := xID + '-nfe.xml';
+  if (Self.NFe.procNFe.cStat = 110) or (Self.NFe.procNFe.cStat = 301) then
+    NomeXML := '-den.xml'
+  else
+    NomeXML := '-nfe.xml';
+
+  Result := xID + NomeXML;
 end;
 
 function NotaFiscal.CalcularPathArquivo: String;

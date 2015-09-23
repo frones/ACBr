@@ -123,8 +123,7 @@ begin
       { Monta o campo livre }
       CampoLivre :=   Modalidade                                      + { 1-Com registro ou 3-Sem registro. Por enquanto vou deixar 1 mais tenho que tratar menhor essa informação }
                       '1'                                             + { 1-Carteira simples }
-                      PadLeft(ACBrTitulo.NossoNumero,8,'0')           + { Nosso número }
-                      CalcularDigitoVerificador(ACBrTitulo)           + { Dígito verificador do nosso número }
+                      OnlyNumber(MontarCampoNossoNumero(ACBrTitulo))  +
                       PadLeft(OnlyNumber(Cedente.Agencia),4,'0')      + { Código agência (cooperativa) }
                       PadLeft(Cedente.AgenciaDigito,2,'0')            + { Dígito da agência (posto da cooperativa) }
                       PadLeft(OnlyNumber(Cedente.CodigoCedente),5,'0')+ { Código cedente }  //  Ver manual página 86 - CNAB240 ou 51 - CNAB400

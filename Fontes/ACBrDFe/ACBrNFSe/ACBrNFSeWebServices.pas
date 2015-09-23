@@ -649,7 +649,7 @@ end;
 
 procedure TNFSeWebService.DefinirEnvelopeSoap;
 var
-  Texto, DadosMsg: String;
+  Texto, DadosMsg, CabMsg: String;
 begin
   {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
@@ -661,9 +661,17 @@ begin
   // %SenhaMsg% : Representa a Mensagem que contem o usuário e senha
   // %CabMsg%   : Representa a Mensagem de Cabeçalho
   // %DadosMsg% : Representa a Mensagem de Dados
+
   DadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
+    DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  CabMsg := FPCabMsg;
+  if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
+    CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
   Texto := StringReplace(Texto, '%SenhaMsg%', FDadosSenha, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%CabMsg%', FPCabMsg, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%CabMsg%', CabMsg, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%DadosMsg%', DadosMsg, [rfReplaceAll]);
 
   FPEnvelopeSoap := Texto;

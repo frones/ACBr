@@ -84,6 +84,8 @@ type
     VersaoDados: String;
     VersaoXML: String;
     NameSpace: String;
+    CabecalhoStr: Boolean;
+    DadosStr: Boolean;
   end;
 
  TConfigSchemas = record
@@ -396,6 +398,8 @@ begin
   FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
   FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
+  FConfigXML.CabecalhoStr := FPIniParams.ReadBool('XML', 'Cabecalho', False);
+  FConfigXML.DadosStr := FPIniParams.ReadBool('XML', 'Dados', False);
 
   FConfigSchemas.Validar := FPIniParams.ReadBool('Schemas', 'Validar', True);
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');

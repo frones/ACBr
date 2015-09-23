@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2015
+-- ACBrNFSeConfiguracoes --
+[*] Incluido as propriedades CabecalhoStr e DadosStr que receberão o valor True
+    ou False para determinar e a mesagem cabeçalho e mensagem de dados devem ou
+    não ser convertidas para string.
+    Por: Italo Jurisato Junior
+-- ACBrNFSeWebServices --
+[*] Em TNFSeWebService.DefinirEnvelopeSoap foi incluida as condições referente
+    a CabecalhoStr e DadosStr.
+-- Arquivos INI dos Provedores --
+[*] Incluido os campos Cabecalho e Dados na seção XML.
+    Por: Italo Jurisato Junior
+
 21/09/2015
 -- ACBrNFSeWebServices --
 [*] Acrescentado a checagem da versão do SOAP para determinar o Mimetype a ser

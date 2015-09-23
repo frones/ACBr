@@ -55,7 +55,7 @@ uses
   jpeg,
     {$IFEND}
   {$ENDIF}
-  ACBrNFeDANFeRL, pcnConversao, RLBarcode, StrUtils;
+  ACBrNFeDANFeRL, pcnConversao, RLBarcode, StrUtils, Data.DB;
 
 type
 

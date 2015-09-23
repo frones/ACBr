@@ -1,42 +1,42 @@
 object frmNFeDAInutRL: TfrmNFeDAInutRL
   Left = 196
-  Height = 404
   Top = 397
-  Width = 880
   Caption = 'frmNFeDAInutRL'
   ClientHeight = 404
   ClientWidth = 880
   Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
+  PixelsPerInch = 96
+  TextHeight = 13
   object RLNFeInut: TRLReport
     Left = 21
-    Height = 1123
     Top = 51
     Width = 794
+    Height = 1123
     DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
-    RealBounds.Left = 0
-    RealBounds.Top = 0
-    RealBounds.Width = 0
-    RealBounds.Height = 0
+    Font.Style = []
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Author = 'FortesReport 3.23 - Copyright Â© 1999-2009 Fortes InformÃ¡tica'
+    DocumentInfo.Author = 
+      'FortesReport 3.23 - Copyright '#195#8218#194#169' 1999-2009 Fortes Inform'#195#402#194#161'ti' +
+      'ca'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
-    DocumentInfo.ModDate = 0
-    ViewerOptions = []
-    FontEncoding = feNoEncoding
     DisplayName = 'Documento PDF'
-    left = 369
-    top = 174
+    Left = 369
+    Top = 174
   end
   object DataSource1: TDataSource
-    left = 428
-    top = 180
+    Left = 428
+    Top = 180
   end
 end

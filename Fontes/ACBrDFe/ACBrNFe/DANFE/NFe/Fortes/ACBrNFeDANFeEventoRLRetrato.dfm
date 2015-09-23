@@ -8,6 +8,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport
+    Top = 3
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000

@@ -18,7 +18,7 @@ object frlDANFeRL: TfrlDANFeRL
   TextHeight = 13
   object RLNFe: TRLReport
     Left = 0
-    Top = 0
+    Top = -2
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET

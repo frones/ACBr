@@ -1,174 +1,156 @@
 inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
   Left = 487
-  Height = 644
   Top = 95
-  Width = 283
   Caption = 'DANFe - Simplificado'
   ClientHeight = 644
   ClientWidth = 283
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
+  PixelsPerInch = 96
+  TextHeight = 10
   inherited RLNFe: TRLReport
     Tag = 1
-    Height = 680
     Top = 3
     Width = 340
+    Height = 680
     Font.Height = -8
     Font.Name = 'Courier New'
     PageSetup.PaperSize = fpCustom
-    PageSetup.PaperWidth = 90
-    PageSetup.PaperHeight = 180
+    PageSetup.PaperWidth = 90.000000000000000000
+    PageSetup.PaperHeight = 180.000000000000000000
     BeforePrint = RLNFeBeforePrint
-    object rlb01_Chave: TRLBand[0]
+    object rlb01_Chave: TRLBand
       Left = 38
-      Height = 128
       Top = 38
       Width = 264
+      Height = 128
       AutoSize = True
       BandType = btTitle
       Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
+      Font.Height = -8
       Font.Name = 'Courier New'
+      Font.Style = []
       ParentColor = False
       ParentFont = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb01_ChaveBeforePrint
       object RLLabel17: TRLLabel
         Left = 55
-        Height = 15
         Top = 3
         Width = 160
+        Height = 15
         Alignment = taCenter
         Caption = 'DANFE Simplificado da NF-e'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel9: TRLLabel
         Left = 75
-        Height = 15
         Top = 58
         Width = 120
+        Height = 15
         Alignment = taCenter
         Caption = 'CHAVE DE ACESSO'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllChave: TRLLabel
         Left = 0
-        Height = 16
         Top = 76
         Width = 258
+        Height = 16
         Alignment = taCenter
         AutoSize = False
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllDescricao: TRLLabel
         Left = 2
-        Height = 16
         Top = 94
         Width = 256
+        Height = 16
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Protocolo de Autorização:'
+        Caption = 'Protocolo de Autoriza'#231#227'o:'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllProtocolo: TRLLabel
         Left = 2
-        Height = 16
         Top = 112
         Width = 256
+        Height = 16
         Alignment = taCenter
         AutoSize = False
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLBarcode1: TRLBarcode
         Left = 0
-        Height = 34
         Top = 23
         Width = 260
+        Height = 34
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         BarcodeType = bcCode128C
-        Margins.LeftMargin = 1
-        Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
-    object rlb02_Emitente: TRLBand[1]
+    object rlb02_Emitente: TRLBand
       Left = 38
-      Height = 145
       Top = 166
       Width = 264
+      Height = 145
       AutoSize = True
       BandType = btTitle
       Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
+      Font.Height = -8
       Font.Name = 'Courier New'
+      Font.Style = []
       ParentColor = False
       ParentFont = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb02_EmitenteBeforePrint
       object rliLogo: TRLImage
         Left = 89
-        Height = 65
         Top = 1
         Width = 88
+        Height = 65
         Center = True
         Picture.Data = {
           07544269746D61708A2B0000424D8A2B00000000000036000000280000003E00
@@ -519,617 +501,533 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000
-        }
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000}
         Stretch = True
       end
       object rlmEmitente: TRLMemo
         Left = 2
-        Height = 76
         Top = 69
         Width = 255
+        Height = 76
         AutoSize = False
+        Behavior = [beSiteExpander]
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
-    object rlb05a_Cab_Itens: TRLBand[2]
+    object rlb05a_Cab_Itens: TRLBand
       Left = 38
-      Height = 33
       Top = 527
       Width = 264
+      Height = 33
       AutoSize = True
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLLabel142: TRLLabel
         Left = 2
-        Height = 14
         Top = 2
         Width = 32
+        Height = 14
         Caption = 'ITEM'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel143: TRLLabel
         Left = 120
-        Height = 14
         Top = 2
         Width = 140
-        Caption = 'DESCRIÇÃO DO PRODUTO'
+        Height = 14
+        Caption = 'DESCRI'#199#195'O DO PRODUTO'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel147: TRLLabel
         Left = 78
-        Height = 14
         Top = 18
         Width = 34
+        Height = 14
         Caption = 'UNID.'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel148: TRLLabel
         Left = 24
-        Height = 15
         Top = 18
         Width = 48
+        Height = 15
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'QTDE'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel149: TRLLabel
         Left = 114
-        Height = 14
         Top = 18
         Width = 71
+        Height = 14
         Alignment = taRightJustify
         Caption = 'V. UNIT. (R$)'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel150: TRLLabel
         Left = 186
-        Height = 14
         Top = 18
         Width = 69
+        Height = 14
         Alignment = taRightJustify
         Caption = 'V. ITEM (R$)'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel3: TRLLabel
         Left = 34
-        Height = 14
         Top = 2
         Width = 45
-        Caption = 'CÓDIGO'
+        Height = 14
+        Caption = 'C'#211'DIGO'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
-    object rlb06a_Totais: TRLBand[3]
+    object rlb06a_Totais: TRLBand
       Left = 38
-      Height = 57
       Top = 560
       Width = 264
+      Height = 57
       AutoSize = True
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb06a_TotaisBeforePrint
       object rlmPagDesc: TRLMemo
         Left = 2
-        Height = 57
         Top = 0
         Width = 139
+        Height = 57
         AutoSize = False
+        Behavior = [beSiteExpander]
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rlmPagValor: TRLMemo
         Left = 150
-        Height = 57
         Top = 0
         Width = 105
+        Height = 57
         Alignment = taRightJustify
         AutoSize = False
+        Behavior = [beSiteExpander]
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
     end
-    object rlb05b_Desc_Itens: TRLBand[4]
+    object rlb05b_Desc_Itens: TRLBand
       Left = 38
-      Height = 33
       Top = 494
       Width = 264
+      Height = 33
       AutoSize = True
       BandType = btColumnHeader
       Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -8
       Font.Name = 'Arial'
+      Font.Style = []
       ParentColor = False
       ParentFont = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object rlmProdutoCodigo: TRLDBText
         Left = 34
-        Height = 16
         Top = 2
         Width = 55
+        Height = 16
         AutoSize = False
         Color = clWhite
         DataField = 'CODIGO'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
       object rlmProdutoDescricao: TRLDBText
         Left = 96
-        Height = 16
         Top = 2
         Width = 160
+        Height = 16
         AutoSize = False
         Color = clWhite
         DataField = 'DESCRICAO'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
       object rlmProdutoUnidade: TRLDBText
         Left = 78
-        Height = 15
         Top = 18
         Width = 32
+        Height = 15
         Alignment = taCenter
         AutoSize = False
         Color = clWhite
         DataField = 'UNIDADE'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
       object rlmProdutoQTDE: TRLDBText
         Left = 24
-        Height = 15
         Top = 18
         Width = 48
+        Height = 15
         Alignment = taRightJustify
         AutoSize = False
         Color = clWhite
         DataField = 'QTDE'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
       object rlmProdutoValor: TRLDBText
         Left = 116
-        Height = 15
         Top = 18
         Width = 69
+        Height = 15
         Alignment = taRightJustify
         AutoSize = False
         Color = clWhite
         DataField = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
       object rlmProdutoTotal: TRLDBText
         Left = 188
-        Height = 15
         Top = 18
         Width = 67
+        Height = 15
         Alignment = taRightJustify
         AutoSize = False
         Color = clWhite
         DataField = 'TOTAL'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
       object rlmProdutoItem: TRLDBText
         Left = 2
-        Height = 16
         Top = 2
         Width = 30
+        Height = 16
         AutoSize = False
         Color = clWhite
         DataField = 'ITEM'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Text = ''
       end
     end
-    object rlb05c_Lin_Itens: TRLBand[5]
+    object rlb05c_Lin_Itens: TRLBand
       Left = 38
-      Height = 1
       Top = 635
       Width = 264
+      Height = 1
       BandType = btFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       object RLShape68: TRLDraw
         Left = 0
-        Height = 1
         Top = 0
         Width = 378
-        Angle = 0
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
+        Height = 1
       end
     end
-    object rlb06b_Tributos: TRLBand[6]
+    object rlb06b_Tributos: TRLBand
       Left = 38
-      Height = 18
       Top = 617
       Width = 264
+      Height = 18
       AutoSize = True
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb06b_TributosBeforePrint
       object rllTributos: TRLLabel
         Left = 2
-        Height = 14
         Top = 4
         Width = 52
+        Height = 14
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
-    object rlb03_DadosGerais: TRLBand[7]
+    object rlb03_DadosGerais: TRLBand
       Left = 38
-      Height = 86
       Top = 311
       Width = 264
+      Height = 86
       AutoSize = True
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb03_DadosGeraisBeforePrint
       object rllTipoEmissao: TRLLabel
         Left = 56
-        Height = 19
         Top = 3
         Width = 146
+        Height = 19
         Alignment = taCenter
-        Caption = 'EMISSÃO NORMAL'
+        Caption = 'EMISS'#195'O NORMAL'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object lblNumero: TRLLabel
         Left = 2
-        Height = 16
         Top = 52
         Width = 256
+        Height = 16
         Alignment = taCenter
         AutoSize = False
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEmissao: TRLLabel
         Left = 2
-        Height = 16
         Top = 70
         Width = 256
+        Height = 16
         Alignment = taCenter
         AutoSize = False
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLLabel27: TRLLabel
         Left = 88
-        Height = 12
         Top = 34
         Width = 107
-        Caption = '0 - ENTRADA / 1 - SAÍDA'
+        Height = 12
+        Caption = '0 - ENTRADA / 1 - SA'#205'DA'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object RLShape102: TRLDraw
         Left = 60
-        Height = 22
         Top = 30
         Width = 22
-        Angle = 0
+        Height = 22
         Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rllEntradaSaida: TRLLabel
         Left = 64
-        Height = 15
         Top = 34
         Width = 14
+        Height = 15
         Alignment = taCenter
         AutoSize = False
         Caption = 'rllTransModFrete'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
-    object rlb04_Destinatario: TRLBand[8]
+    object rlb04_Destinatario: TRLBand
       Left = 38
-      Height = 97
       Top = 397
       Width = 264
+      Height = 97
       AutoSize = True
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
       BeforePrint = rlb04_DestinatarioBeforePrint
       object RLLabel1: TRLLabel
         Left = 79
-        Height = 15
         Top = 3
         Width = 98
+        Height = 15
         Alignment = taCenter
-        Caption = 'DESTINATÁRIO'
+        Caption = 'DESTINAT'#193'RIO'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
       object rlmDestinatario: TRLMemo
         Left = 2
-        Height = 76
         Top = 21
         Width = 255
+        Height = 76
         AutoSize = False
+        Behavior = [beSiteExpander]
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
         Transparent = False
       end
       object rllMsgTipoEmissao: TRLLabel
         Left = 8
-        Height = 15
         Top = 42
         Width = 230
+        Height = 15
         Caption = 'HOMOLOGACAO - SEM VALOR FISCAL'
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
+        Font.Style = []
         ParentColor = False
         ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
   end

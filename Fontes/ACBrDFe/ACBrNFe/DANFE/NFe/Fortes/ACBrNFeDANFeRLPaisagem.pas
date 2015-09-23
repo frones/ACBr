@@ -55,7 +55,7 @@ uses
       jpeg,
     {$IFEND}
   {$ENDIF}
-  ACBrNFeDANFeRL, pcnConversao, RLBarcode;
+  ACBrNFeDANFeRL, pcnConversao, RLBarcode, Data.DB;
 
 type
   TfrlDANFeRLPaisagem = class(TfrlDANFeRL)

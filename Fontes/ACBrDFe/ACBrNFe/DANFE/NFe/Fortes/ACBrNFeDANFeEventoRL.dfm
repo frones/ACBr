@@ -1,9 +1,9 @@
 object frlDANFeEventoRL: TfrlDANFeEventoRL
   Left = 283
   Top = 181
-  Width = 810
-  Height = 634
   Caption = 'frlDANFeEventoLR'
+  ClientHeight = 595
+  ClientWidth = 794
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object frlDANFeEventoRL: TfrlDANFeEventoRL
   TextHeight = 13
   object RLEvento: TRLReport
     Left = 0
-    Top = 0
+    Top = -2
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET

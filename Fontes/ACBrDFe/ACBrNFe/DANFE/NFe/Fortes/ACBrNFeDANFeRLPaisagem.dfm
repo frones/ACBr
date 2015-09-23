@@ -7,6 +7,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
+    Left = 2
     Width = 1123
     Height = 794
     Margins.LeftMargin = 7.000000000000000000

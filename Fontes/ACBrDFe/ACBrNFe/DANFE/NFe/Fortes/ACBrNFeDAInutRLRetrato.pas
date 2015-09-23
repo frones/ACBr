@@ -138,7 +138,6 @@ type
     procedure rlb_06_NaoUsado_SummaryBeforePrint(Sender: TObject; var PrintBand: Boolean);
     procedure rlb_07_RodapeBeforePrint(Sender: TObject; var PrintBand: Boolean);
     procedure rldbtxtValorPrint(sender: TObject; var Value: String);
-    procedure rlsQuadro01AfterPrint(Sender: TObject);
   private
     procedure Itens;
   public
@@ -290,11 +289,6 @@ begin
   rlShape6.Height     := vLength;
   rlShape4.Height     := vLength;
   *)
-end;
-
-procedure TfrmNFeDAInutRLRetrato.rlsQuadro01AfterPrint(Sender: TObject);
-begin
-
 end;
 
 end.

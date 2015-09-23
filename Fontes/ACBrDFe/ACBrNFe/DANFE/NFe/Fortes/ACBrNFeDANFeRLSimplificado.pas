@@ -44,7 +44,7 @@ interface
 uses
   SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLPDFFilter, RLBarcode, ACBrNFeDANFeRL,
-  pcnConversao;
+  pcnConversao, DB, RLFilters;
 
 type
 
@@ -94,7 +94,6 @@ type
     rlb01_Chave: TRLBand;
     RLBarcode1: TRLBarcode;
     RLLabel17: TRLLabel;
-    rliBarCode: TRLImage;
     lblNumero: TRLLabel;
     procedure RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: boolean

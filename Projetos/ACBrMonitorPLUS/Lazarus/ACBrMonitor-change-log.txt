@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2015
+-- ACBrMonitorPLUS --
+[*] Unificada a maneira de configurar a Impressão de Descontos/Acréscimos para
+    DANFCe, em Fortes e EscPos
+
 19/09/2015
 -- CTE --
 [+] Adicionado o suporte a CT-e. (Por: Rafael Dias)

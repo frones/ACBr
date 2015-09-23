@@ -210,9 +210,9 @@ type
     cbxImpDescPorc: TCheckBox;
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
-    cbxImprimirDescAcresItemESCPOS: TCheckBox;
+    cbxImprimirDescAcresItemNFCe: TCheckBox;
     cbxImprimirDescAcresItemSAT: TCheckBox;
-    cbxImprimirItem1LinhaESCPOS: TCheckBox;
+    cbxImprimirItem1LinhaNFCe: TCheckBox;
     cbxImprimirItem1LinhaSAT: TCheckBox;
     cbxImprimirTributos: TCheckBox;
     cbxImpValLiq: TCheckBox;
@@ -944,7 +944,6 @@ type
     procedure btnImprimirMDFeClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarCTeClick(Sender: TObject);
-    procedure btnInutilizarMDFeClick(Sender: TObject);
     procedure btnStatusServClick(Sender: TObject);
     procedure btnStatusServCTeClick(Sender: TObject);
     procedure btnStatusServMDFeClick(Sender: TObject);
@@ -1007,7 +1006,6 @@ type
     procedure Label133Click(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
-    procedure pgConfigChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
@@ -2360,11 +2358,6 @@ begin
   ExibeResp(ACBrCTe1.WebServices.Inutilizacao.RetWS);
 end;
 
-procedure TFrmACBrMonitor.btnInutilizarMDFeClick(Sender: TObject);
-begin
-
-end;
-
 procedure TFrmACBrMonitor.btnStatusServClick(Sender: TObject);
 begin
   LimparResp;
@@ -3382,7 +3375,7 @@ begin
     edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
     edtEmailEmpresa.Text := Ini.ReadString('DANFE', 'Email', '');
     edtFaxEmpresa.Text := Ini.ReadString('DANFE', 'Fax', '');
-    cbxImpDescPorc.Checked := Ini.ReadBool('DANFE', 'ImpDescPorc', False);
+    cbxImpDescPorc.Checked := Ini.ReadBool('DANFE', 'ImpDescPorc', True);
     cbxMostrarPreview.Checked := Ini.ReadBool('DANFE', 'MostrarPreview', False);
     edtNumCopia.Text := Ini.ReadString('DANFE', 'Copias', '1');
     edtLargCodProd.Text := Ini.ReadString('DANFE', 'LarguraCodigoProduto', '54');
@@ -3419,9 +3412,9 @@ begin
     rgModeloDANFeNFCE.ItemIndex := Ini.ReadInteger('NFCe', 'Modelo', 0);
     rgModoImpressaoEvento.ItemIndex :=
       Ini.ReadInteger('NFCe', 'ModoImpressaoEvento', 0);
-    cbxImprimirItem1LinhaESCPOS.Checked :=
+    cbxImprimirItem1LinhaNFCe.Checked :=
       Ini.ReadBool('NFCe', 'ImprimirItem1Linha', True);
-    cbxImprimirDescAcresItemESCPOS.Checked :=
+    cbxImprimirDescAcresItemNFCe.Checked :=
       Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
     cbxImpressoraNFCe.ItemIndex :=
       cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
@@ -4183,8 +4176,8 @@ begin
 
     Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
-    Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaESCPOS.Checked);
-    Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemESCPOS.Checked);
+    Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaNFCe.Checked);
+    Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemNFCe.Checked);
     Ini.WriteString('NFCe', 'ImpressoraPadrao', cbxImpressoraNFCe.Text);
 
     Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
@@ -5174,11 +5167,6 @@ begin
     mResp.Lines.Add('Hora Inválida');
     meRFDHoraSwBasico.SetFocus;
   end;
-end;
-
-procedure TFrmACBrMonitor.pgConfigChange(Sender: TObject);
-begin
-
 end;
 
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);
@@ -6807,14 +6795,18 @@ begin
       ACBrNFeDANFeRL1.LarguraCodProd := StrToIntDef(edtLargCodProd.Text, 54);
       ACBrNFeDANFeRL1.ExibirEAN := cbxExibirEAN.Checked;
     end
+    else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
+    begin
+      ACBrNFeDANFCeFortes1.ImprimirDescPorc := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ImprimirTotalLiquido := cbxImprimirDescAcresItemNFCe.Checked;
+    end
     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
       ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
-      ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaESCPOS.Checked;
-      ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem :=
-        cbxImprimirDescAcresItemESCPOS.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
 
       if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
         ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;

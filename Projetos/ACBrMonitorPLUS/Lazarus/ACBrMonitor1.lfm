@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 425
+  Left = 303
   Height = 689
-  Top = 61
+  Top = 7
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -1454,7 +1454,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Images = ImageList1
         TabIndex = 16
         TabOrder = 0
-        OnChange = pgConfigChange
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
           ClientHeight = 311
@@ -6478,9 +6477,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6861,9 +6860,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsWSNFe
+                ActivePage = tsWSNFCe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
@@ -7444,9 +7443,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsDadosEmpresa
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -7986,19 +7985,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Height = 77
                     Top = 0
                     Width = 384
-                    Caption = 'Configurações ESCPOS'
+                    Caption = 'Impressão dos Itens'
                     ClientHeight = 55
                     ClientWidth = 380
                     TabOrder = 2
-                    object cbxImprimirItem1LinhaESCPOS: TCheckBox
+                    object cbxImprimirItem1LinhaNFCe: TCheckBox
                       Left = 8
                       Height = 21
                       Top = 8
-                      Width = 218
-                      Caption = 'Imprimir itens somente em 1 linha'
+                      Width = 325
+                      Caption = 'Imprimir itens somente em 1 linha (Somente EscPos)'
                       TabOrder = 0
                     end
-                    object cbxImprimirDescAcresItemESCPOS: TCheckBox
+                    object cbxImprimirDescAcresItemNFCe: TCheckBox
                       Left = 8
                       Height = 21
                       Top = 32

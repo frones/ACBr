@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/09/2015
+-- ACBrDFeConfiguracoes --    (por: DSA)
+[*] Adicionado observações no código sobre o uso das diversas propriedades
+    "Salvar"
+
+
 23/09/2015
 -- ACBrDFeSSL --
 [*] Adicionado suporte a diretiva: {$DEFINE DFE_SEM_CAPICOM}

@@ -143,6 +143,8 @@ type
       write SetIntervaloTentativas default 1000;
     property AjustaAguardaConsultaRet: Boolean
       read FAjustaAguardaConsultaRet write FAjustaAguardaConsultaRet default False;
+    // WebService.Salvar - trata-se de arquivos gerais envelopados, ou seja,
+    // arquivos de envio e de retorno sem validade jurídica
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property Params: TStrings read FParams write SetParams;
     property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
@@ -177,6 +179,8 @@ type
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
       write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: integer read FFormaEmissaoCodigo;
+    // Geral.Salvar - trata-se de arquivos gerais, ou seja, arquivos de envio e
+    // de retorno sem validade jurídica.
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property ExibirErroSchema: Boolean read FExibirErroSchema
       write FExibirErroSchema default True;
@@ -219,6 +223,7 @@ type
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read GetPathSchemas write FPathSchemas;
     property IniServicos: String read GetIniServicos write FIniServicos;
+    // Arquivos.Salvar - trata-se de arquivos com validade jurídica.
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property AdicionarLiteral: Boolean read FAdicionarLiteral
       write FAdicionarLiteral default False;

@@ -303,10 +303,12 @@ begin
 *)
 
     if Configuracoes.Arquivos.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(), XMLAss);
-
-    if NaoEstaVazio(NomeArq) then
-      Gravar(NomeArq, XMLAss);
+    begin
+      if NaoEstaVazio(NomeArq) then
+        Gravar(NomeArq, XMLAss)
+      else
+        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
+    end;
   end;
 end;
 
@@ -320,7 +322,11 @@ begin
 
   if EstaVazio(AXML) then
   begin
-    Assinar;
+    if NFe.Emit.CNPJCPF = TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ then
+      Assinar
+    else
+      raise EACBrNFeException.Create('XML informado não possui assinatura, e CNPJ é diferente do Emitente' );
+
     AXML := FXMLAssinado;
   end;
 

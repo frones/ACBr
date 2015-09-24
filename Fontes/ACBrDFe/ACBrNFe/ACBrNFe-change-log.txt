@@ -77,6 +77,12 @@ Símbolo : Significado
 -- ACBrNFeNotasFiscais --
 [*] Aprimorada a atribuição da propriedade "XML", para que a mesma considere
     o conteudo e replique o valor para XMLOriginal e XMLAssinado
+[*] Método NotaFiscal.Validar, modificado para verificar se o XML enviado possui
+    a Tag de assinatura, e no caso de não possuir, assinar o XML apenas se o
+    CNPJ do XML for o mesmo do CNPJ do Certificado
+[*] Método NotaFiscal.Assinar, modificado para respeitar o valor da propriedade
+    "Arquivos.Salvar" e dar prioridade de Gravação no Nome de arquivo
+    previamente informado.
 
 23/09/2015
 -- ACBrNFeNotasFiscais --     (por: DSA)

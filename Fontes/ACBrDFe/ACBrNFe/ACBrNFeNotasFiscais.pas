@@ -81,6 +81,7 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
+    procedure SetXML(AValue: String);
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -114,7 +115,7 @@ type
 
     property NFe: TNFe read FNFe;
 
-    property XML: String         read FXML           write FXML;
+    property XML: String         read FXML           write SetXML;
     property XMLOriginal: String read FXMLOriginal   write FXMLOriginal;
     property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
     property Confirmada: Boolean read GetConfirmada;
@@ -1372,6 +1373,12 @@ begin
     Assinar;
 
   Result := FXMLAssinado;
+end;
+
+procedure NotaFiscal.SetXML(AValue: String);
+begin
+  if FXML = AValue then Exit;
+  LerXML(AValue);
 end;
 
 

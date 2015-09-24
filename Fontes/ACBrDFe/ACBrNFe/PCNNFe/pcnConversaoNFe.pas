@@ -104,6 +104,7 @@ function StrToIndicadorNFe(out ok: Boolean; const s: String): TpcnIndicadorNFe;
 
 function ModeloDFToStr(const t: TpcnModeloDF): String;
 function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
+function ModeloDFToPrefixo(const t: TpcnModeloDF): String;
 
 function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;
 function VersaoDFToStr(const t: TpcnVersaoDF): String;
@@ -261,6 +262,15 @@ end;
 function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
 begin
   Result := StrToEnumerado(ok, s, ['55', '65'], [moNFe, moNFCe]);
+end;
+
+function ModeloDFToPrefixo(const t: TpcnModeloDF): String;
+begin
+  Case t of
+    moNFCe: Result := 'NFCe';
+  else
+    Result := 'NFe';
+  end;
 end;
 
 function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;

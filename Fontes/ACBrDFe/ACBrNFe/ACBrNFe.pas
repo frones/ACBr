@@ -280,7 +280,7 @@ end;
 
 function TACBrNFe.GetNomeModeloDFe: String;
 begin
-  Result := IfThen(Configuracoes.Geral.ModeloDF = moNFe, 'NFe', 'NFCe');
+  Result := ModeloDFToPrefixo( Configuracoes.Geral.ModeloDF );
 end;
 
 function TACBrNFe.GetNameSpaceURI: String;

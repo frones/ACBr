@@ -47,13 +47,47 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-23/09/2015
+24/09/2015
+-- pcnConversaoNFe --     (por: DSA)
+[+] Adicionado o método:
+    function ModeloDFToPrefixo(const t: TpcnModeloDF): String;
+    (Retorna "NFe" ou "NFCe")
+
+-- ACBrNFeWebServices --
+[-] TNFeConsulta, corrigido, para usar as informações de UF e Modelo da chave
+    informada.
+[*] TNFeConsulta, ajuste parta não atualizar o XML se não recebeu "protNFe"
+[*] TNFeConsulta, modificado para priorizar a gravação da Resposta, no arquivo
+    XML previamente informado.
+[*] TNFeConsulta, consulta por XML, modificado para respeitar o valor de
+    "Arquivos.Salvar" e "Geral.Salvar"
+[*] TNFeConsulta, remoção de código comentado
+[*] TNFeConsulta, consulta pela Chave (sem NFe carregada) ajustada para respeitar
+    os valores de "Arquivos.Salvar"  e "Arquivos.SalvarApenasNFeProcessadas" e
+    "Geral.Salvar"
+
+[*] TNFeRecepcao, modificado para priorizar a gravação da Resposta, no arquivo
+    XML previamente informado.
+[*] TNFeRecepcao, modificado para respeitar o valor de "Arquivos.Salvar"
+
+[*] TNFeRetRecepcao, modificado para priorizar a gravação da Resposta, no arquivo
+    XML previamente informado.
+[*] TNFeRetRecepcao, modificado para respeitar o valor de "Arquivos.Salvar"
+
 -- ACBrNFeNotasFiscais --
-[*] Na atualização anterior foi removido o código que vai gerar a string do 
-    QR-Code para ser adicionado no XML conforme NT 2015/002 versão 1.00
-    Estou incluindo o código novamente pois em outubro o mesmo deverá ser 
-    descomentado para fins de teste no ambiente de homologação
-    por: Italo Jurisato Junior
+[*] Aprimorada a atribuição da propriedade "XML", para que a mesma considere
+    o conteudo e replique o valor para XMLOriginal e XMLAssinado
+
+23/09/2015
+-- ACBrNFeNotasFiscais --     (por: DSA)
+[*] NotaFiscal.CalcularNomeArquivo, modificado, para considerar NFe.procNFe.cStat
+    e nomear o arquivo com o sufixo '-nfe.xml' ou '-den.xml'
+
+-- ACBrNFeWebServices --
+[-] Ajuste em TNFeRecepcao.TratarResposta para que ProcNFe conste no XML e nos
+    arquivos salvos
+[-] Ajuste em TNFeRetRecepcao.TratarRespostaFinal para que ProcNFe conste no XML e nos
+    arquivos salvos. Remoção de código comentado.
 
 22/09/2015
 -- ACBrDANFCeFortesFr --

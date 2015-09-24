@@ -1396,7 +1396,7 @@ begin
 
               // Salva o XML do MDF-e assinado e protocolado
               if SalvarXML then
-                FPDFeOwner.Gravar(FMDFeChave + 'mdfe-xml',
+                FPDFeOwner.Gravar(FMDFeChave + '-mdfe.xml',
                                   XML,
                                   PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
 

@@ -3174,7 +3174,7 @@ begin
     deBOLDirLogo.Text :=
       Ini.ReadString('BOLETO', 'DirLogos', ExtractFilePath(Application.ExeName) +
       'Logos' + PathDelim);
-    edtBOLSH.Text := Ini.ReadString('BOLETO', 'SoftwareHouse', '');
+//    edtBOLSH.Text := Ini.ReadString('BOLETO', 'SoftwareHouse', '');
     spBOLCopias.Value := Ini.ReadInteger('BOLETO', 'Copias', 1);
     ckgBOLMostrar.Checked[0] := Ini.ReadBool('BOLETO', 'Preview', True);
     ckgBOLMostrar.Checked[1] := Ini.ReadBool('BOLETO', 'Progresso', True);
@@ -3371,7 +3371,7 @@ begin
     rgTipoDanfe.ItemIndex := Ini.ReadInteger('Geral', 'DANFE', 0);
     edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');
     rgModeloDanfe.ItemIndex := Ini.ReadInteger('DANFE', 'Modelo', 0);
-    edtSoftwareHouse.Text := Ini.ReadString('DANFE', 'SoftwareHouse', '');
+//    edtSoftwareHouse.Text := Ini.ReadString('DANFE', 'SoftwareHouse', '');
     edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
     edtEmailEmpresa.Text := Ini.ReadString('DANFE', 'Email', '');
     edtFaxEmpresa.Text := Ini.ReadString('DANFE', 'Fax', '');
@@ -3423,7 +3423,7 @@ begin
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
-    ACBrCTe1.DACTe.Sistema := edtSoftwareHouse.Text;
+    ACBrCTe1.DACTe.Sistema := edSH_RazaoSocial.Text; //edtSoftwareHouse.Text;
     ACBrCTe1.DACTe.Site    := edtSiteEmpresa.Text;
     ACBrCTe1.DACTe.Email   := edtEmailEmpresa.Text;
     ACBrCTe1.DACTe.Fax     := edtFaxEmpresa.Text;
@@ -3441,7 +3441,7 @@ begin
 
     ACBrMDFe1.DAMDFe.TipoDAMDFe  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
-    ACBrMDFe1.DAMDFe.Sistema := edtSoftwareHouse.Text;
+    ACBrMDFe1.DAMDFe.Sistema := edSH_RazaoSocial.Text; //edtSoftwareHouse.Text;
     ACBrMDFe1.DAMDFe.Site    := edtSiteEmpresa.Text;
     ACBrMDFe1.DAMDFe.Email   := edtEmailEmpresa.Text;
     ACBrMDFe1.DAMDFe.Fax     := edtFaxEmpresa.Text;
@@ -3839,7 +3839,7 @@ begin
     LayOut := TACBrBolLayOut(cbxBOLLayout.ItemIndex);
 
     NumCopias := spBOLCopias.Value;
-    SoftwareHouse := edtBOLSH.Text;
+    SoftwareHouse := edSH_RazaoSocial.Text; //edtBOLSH.Text;
     DirLogo := deBOLDirLogo.Text;
     MostrarPreview := ckgBOLMostrar.Checked[0];
     MostrarProgresso := ckgBOLMostrar.Checked[1];
@@ -4147,7 +4147,7 @@ begin
     Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );
 
     Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
-    Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);
+//    Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);
     Ini.WriteString('DANFE', 'Site', edtSiteEmpresa.Text);
     Ini.WriteString('DANFE', 'Email', edtEmailEmpresa.Text);
     Ini.WriteString('DANFE', 'Fax', edtFaxEmpresa.Text);
@@ -4399,7 +4399,7 @@ begin
 
     {Parametros do Boleto - Boleto}
     ini.WriteString('BOLETO', 'DirLogos', PathWithoutDelim(deBOLDirLogo.Text));
-    ini.WriteString('BOLETO', 'SoftwareHouse', edtBOLSH.Text);
+//    ini.WriteString('BOLETO', 'SoftwareHouse', edtBOLSH.Text);
     ini.WriteInteger('BOLETO', 'Copias', spBOLCopias.Value);
     Ini.WriteBool('BOLETO', 'Preview', ckgBOLMostrar.Checked[0]);
     ini.WriteBool('BOLETO', 'Progresso', ckgBOLMostrar.Checked[1]);
@@ -6767,7 +6767,7 @@ begin
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo := edtLogoMarca.Text;
-    ACBrNFe1.DANFE.Sistema := edtSoftwareHouse.Text;
+    ACBrNFe1.DANFE.Sistema := edSH_RazaoSocial.Text; //edtSoftwareHouse.Text;
     ACBrNFe1.DANFE.Site := edtSiteEmpresa.Text;
     ACBrNFe1.DANFE.Email := edtEmailEmpresa.Text;
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;

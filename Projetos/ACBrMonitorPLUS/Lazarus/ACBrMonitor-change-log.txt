@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/09/2015
+-- ACBrMonitorPLUS --
+[*] Unificado três campos com o nome da Software House para ficar somente um nome para tudo
+    sugestão do link 
+http://www.projetoacbr.com.br/forum/topic/24623-cadastro-software-house/?do=findComment&comment=159165
+
+
 22/09/2015
 -- ACBrMonitorPLUS --
 [*] Unificada a maneira de configurar a Impressão de Descontos/Acréscimos para

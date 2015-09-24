@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 303
+  Left = 517
   Height = 689
-  Top = 7
+  Top = 255
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -18,7 +18,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnShortCut = FormShortCut
   Position = poScreenCenter
   ShowHint = True
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.0.4'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsDFe
+        ActivePage = tsACBrBoleto
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 11
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4681,9 +4681,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsLayoutBoleto
+            ActivePage = tsCedente
             Align = alClient
-            TabIndex = 2
+            TabIndex = 0
             TabOrder = 0
             object tsCedente: TTabSheet
               Caption = 'Cedente'
@@ -5209,11 +5209,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object spBOLCopias: TSpinEdit
                 AnchorSideTop.Control = edtBOLSH
                 AnchorSideTop.Side = asrCenter
-                Left = 537
+                Left = 248
                 Height = 25
-                Top = 24
+                Top = 20
                 Width = 48
-                Anchors = [akTop, akRight]
+                Anchors = []
                 MinValue = 1
                 TabOrder = 2
                 Value = 1
@@ -5222,31 +5222,33 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideLeft.Control = spBOLCopias
                 AnchorSideLeft.Side = asrCenter
                 AnchorSideTop.Control = lblBOLDirLogo
-                Left = 541
+                Left = 252
                 Height = 17
-                Top = 7
+                Top = 4
                 Width = 40
+                Anchors = []
                 Caption = 'Cópias'
                 ParentColor = False
               end
               object edtBOLSH: TEdit
-                AnchorSideTop.Control = deBOLDirLogo
-                Left = 247
+                Left = 8
                 Height = 25
-                Top = 24
+                Top = 249
                 Width = 266
-                Anchors = [akTop, akLeft, akRight]
+                Anchors = [akTop, akRight]
                 TabOrder = 1
+                Visible = False
               end
               object Label68: TLabel
                 AnchorSideLeft.Control = edtBOLSH
-                AnchorSideTop.Control = lblBOLDirLogo
-                Left = 247
+                Left = 8
                 Height = 17
-                Top = 7
+                Top = 232
                 Width = 88
+                Anchors = [akTop]
                 Caption = 'SoftwareHouse'
                 ParentColor = False
+                Visible = False
               end
               object ckgBOLMostrar: TCheckGroup
                 Left = 7
@@ -5281,8 +5283,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Side = asrBottom
                 Left = 247
                 Height = 25
-                Top = 68
+                Top = 67
                 Width = 152
+                Anchors = []
                 ItemHeight = 17
                 Items.Strings = (
                   'Padrão'
@@ -5296,9 +5299,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Control = cbxBOLLayout
                 Left = 423
                 Height = 25
-                Top = 68
+                Top = 67
                 Width = 162
-                Anchors = [akTop, akLeft, akRight]
+                Anchors = []
                 ItemHeight = 17
                 ItemIndex = 0
                 Items.Strings = (
@@ -5316,8 +5319,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Side = asrBottom
                 Left = 247
                 Height = 17
-                Top = 51
+                Top = 50
                 Width = 38
+                Anchors = []
                 BorderSpacing.Top = 2
                 Caption = 'Layout'
                 ParentColor = False
@@ -5327,8 +5331,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Control = Label69
                 Left = 423
                 Height = 17
-                Top = 51
+                Top = 50
                 Width = 91
+                Anchors = []
                 Caption = 'Tipo Impressão'
                 ParentColor = False
               end
@@ -6477,9 +6482,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsCertificadoDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 1
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6734,6 +6739,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 132
                 Caption = 'Nome Software House'
                 ParentColor = False
+                Visible = False
               end
               object gbxCertificado: TGroupBox
                 Left = 6
@@ -6848,6 +6854,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 587
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 1
+                Visible = False
               end
             end
             object tsWebServiceDFe: TTabSheet
@@ -10883,7 +10890,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

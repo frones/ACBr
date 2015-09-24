@@ -106,7 +106,7 @@ begin
          begin
            ACBrNFe1.NotasFiscais.Clear;
            if FileExists(Cmd.Params(0)) then
-              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
+              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0), False)
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 

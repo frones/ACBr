@@ -43,8 +43,6 @@ contains
   ACBrDFe in '..\..\..\Fontes\ACBrDFe\ACBrDFe.pas',
   ACBrDFeRegUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas',
   ACBrDFeException in '..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas',
-  ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas',
-  ACBrDFeCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas',
-  ACBrDFeCapicomDelphiSoap in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicomDelphiSoap.pas';
+  ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas';
 
 end.

@@ -317,15 +317,21 @@ var
   Erro, AXML: String;
   NotaEhValida: Boolean;
   ALayout: TLayOut;
+  CNPJEmitente, CNPJCertificado: String;
 begin
   AXML := FXMLAssinado;
 
   if EstaVazio(AXML) then
   begin
-//    if NFe.Emit.CNPJCPF = TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ then
+    CNPJEmitente    := OnlyNumber(NFe.Emit.CNPJCPF);
+    CNPJCertificado := OnlyNumber(TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ);
+
+    // verificar somente os 8 primeiros digitos, para evitar problemas quando
+    // a filial estiver utilizando o certificado da matriz
+    if Copy(CNPJEmitente, 1, 8) = Copy(CNPJCertificado, 1, 8) then
       Assinar
-//    else
-//      raise EACBrNFeException.Create('XML informado não possui assinatura, e CNPJ é diferente do Emitente' );
+    else
+      raise EACBrNFeException.Create('XML informado não possui assinatura, e CNPJ é diferente do Emitente' );
 
     AXML := FXMLAssinado;
   end;

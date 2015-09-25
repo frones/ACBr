@@ -50,8 +50,13 @@ Símbolo : Significado
 25/09/2015
 [+] Adicionada propriedade ManterVeiculos ao DANFE para quebrar ou não a linha 
     nas informações do veiculo
-    por (Henrique Leonardo)
     http://www.projetoacbr.com.br/forum/topic/24609-danfe-fastreport-com-1-veiculo-novo-imprimindo-em-2-folhas/#comment-159078
+    por (Henrique Leonardo)
+
+[-] Acerto para verificar corretamente o CNPJ ao assinar o XML da NF-e
+    Em diversos casos a filial pode utilizar o certificado da matri, então
+    devemos checar somente a raiz do CNPJ (8 primeiros digitos)
+    por: regys.silveira
 
 24/09/2015
 -- pcnConversaoNFe --     (por: DSA)

@@ -173,6 +173,7 @@ type
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
     FDetCombustiveis: TDetCombustiveis;
+    fQuebraLinhaEmVeiculos : Boolean;
 
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
@@ -210,7 +211,8 @@ type
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
-                    ADetCombustiveis: TDetCombustiveis = []);
+                    ADetCombustiveis: TDetCombustiveis = [];
+                    AdQuebraLinhaEmVeiculos : Boolean = True);
 
     class procedure SavePDF(ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -240,7 +242,8 @@ type
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
-                    ADetCombustiveis: TDetCombustiveis = []);
+                    ADetCombustiveis: TDetCombustiveis = [];
+                    ADQuebraLinhaEmVeiculos : Boolean = True);
 
   end;
 
@@ -371,7 +374,8 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 ADetVeiculos: TDetVeiculos = [];
                 ADetMedicamentos: TDetMedicamentos = [];
                 ADetArmamentos: TDetArmamentos = [];
-                ADetCombustiveis: TDetCombustiveis = []);
+                ADetCombustiveis: TDetCombustiveis = [] ;
+                ADQuebraLinhaEmVeiculos : Boolean = True);
 
 begin
   with Create ( AOwner ) do
@@ -413,6 +417,7 @@ begin
       FDetMedicamentos := ADetMedicamentos;
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
+      FQuebraLinhaEmVeiculos := ADQuebraLinhaEmVeiculos;
 
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
@@ -461,7 +466,8 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
-                    ADetCombustiveis: TDetCombustiveis = []);
+                    ADetCombustiveis: TDetCombustiveis = [];
+                    ADQuebraLinhaEmVeiculos : Boolean = True);
 
 begin
   with Create ( nil ) do
@@ -500,6 +506,7 @@ begin
       FDetMedicamentos := ADetMedicamentos;
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
+      FQuebraLinhaEmVeiculos := ADQuebraLinhaEmVeiculos;
 
       with RLPDFFilter1.DocumentInfo do
         begin

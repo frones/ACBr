@@ -64,6 +64,7 @@ type
   TDetArmamentos = set of TDetArmamento;
   TDetCombustiveis = set of TDetCombustivel;
 
+
   TFonte = class(TComponent)
   protected
     FNome: TNomeFonte;
@@ -93,6 +94,7 @@ type
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
     FDetCombustiveis: TDetCombustiveis;
+    fQuebraLinhaEmVeiculos : Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -119,6 +121,7 @@ type
                             [da_tpArma, da_nSerie, da_nCano, da_descr];
     property DetCombustiveis: TDetCombustiveis read FDetCombustiveis write FDetCombustiveis default
                             [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
+    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos  write fQuebraLinhaEmVeiculos;
   end;
 
 implementation
@@ -167,6 +170,7 @@ begin
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
+  fQuebraLinhaEmVeiculos := True;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -202,7 +206,8 @@ try
           FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
           FExibeResumoCanhoto_Texto, FNFeCancelada,
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
-          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
+          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
+          fQuebraLinhaEmVeiculos );
         end;
     end
   else
@@ -217,7 +222,8 @@ try
       FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
       FExibeResumoCanhoto_Texto, FNFeCancelada,
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
-      FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
+      FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
+          fQuebraLinhaEmVeiculos );
     end;
 
   finally  
@@ -259,7 +265,8 @@ begin
           FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
           FExibeResumoCanhoto_Texto, FNFeCancelada,
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
-          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
+          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
+          fQuebraLinhaEmVeiculos);
         end;
     end
   else
@@ -278,7 +285,8 @@ begin
       FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
       FExibeResumoCanhoto_Texto, FNFeCancelada,
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
-      FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis);
+      FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
+          fQuebraLinhaEmVeiculos );
     end;
  finally 
   FreeAndNil(frlDANFeRL);

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/09/2015
+[+] Adicionada propriedade ManterVeiculos ao DANFE para quebrar ou não a linha 
+    nas informações do veiculo
+    por (Henrique Leonardo)
+    http://www.projetoacbr.com.br/forum/topic/24609-danfe-fastreport-com-1-veiculo-novo-imprimindo-em-2-folhas/#comment-159078
+
 24/09/2015
 -- pcnConversaoNFe --     (por: DSA)
 [+] Adicionado o método:

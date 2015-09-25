@@ -99,6 +99,7 @@ type
     FImprimirUnQtVlComercial: boolean;
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
+    fQuebraLinhaEmVeiculos : Boolean;
 
     FfrxReport: TfrxReport;
     FfrxPDFExport: TfrxPDFExport;
@@ -195,6 +196,7 @@ type
     property frxReport: TfrxReport read FfrxReport write FfrxReport;
     property frxPDFExport: TfrxPDFExport read FfrxPDFExport write FfrxPDFExport;
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
+    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos write fQuebraLinhaEmVeiculos;
 
     procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
@@ -2021,6 +2023,8 @@ begin
 end;
 
 Function TACBrNFeFRClass.ManterVeiculos( inItem:  integer  ) : String;
+Var
+  sQuebraLinha : String;
 begin
   Result := '';
 { detalhamento especifico de veículos }
@@ -2028,31 +2032,36 @@ begin
   begin
     if veicProd.chassi > '' then
     begin
-      Result := ';';
-      Result := Result + ACBrStr('TIPO DE OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + ';';
-      Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + ';';
-      Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + ';';
-      Result := Result + ACBrStr('NOME DA COR: ') + veicProd.xCor + ';';
-      Result := Result + ACBrStr('POTÊNCIA DO MOTOR: ') + veicProd.pot + ';';
-      Result := Result + ACBrStr('CILINDRADAS: ') + veicProd.Cilin + ';';
-      Result := Result + ACBrStr('PESO LÍQUIDO: ') + veicProd.pesoL + ';';
-      Result := Result + ACBrStr('PESO BRUTO: ' )+ veicProd.pesoB + ';';
-      Result := Result + ACBrStr('NÚMERO DE SÉRIE: ') + veicProd.nSerie + ';';
-      Result := Result + ACBrStr('COMBUSTÍVEL: ' + VeiculosCombustivelStr( veicProd.tpComb ) ) + ';';
-      Result := Result + ACBrStr('NÚMERO DO MOTOR: ') + veicProd.nMotor + ';';
-      Result := Result + ACBrStr('CAP. MÁX. TRAÇÃO: ') + veicProd.CMT + ';';
-      Result := Result + ACBrStr('DISTÂNCIA ENTRE EIXOS: ') + veicProd.dist + ';';
-      Result := Result + ACBrStr('ANO DO MODELO: ' )+ IntToStr(veicProd.anoMod) + ';';
-      Result := Result + ACBrStr('ANO DE FABRICAÇÃO: ') + IntToStr(veicProd.anoFab) + ';';
-      Result := Result + ACBrStr('TIPO DE PINTURA: ') + veicProd.tpPint + ';';
-      Result := Result + ACBrStr('TIPO DE VEÍCULO: ' + VeiculosTipoStr( veicProd.tpVeic ) )+ ';';
-      Result := Result + ACBrStr('ESPÉCIE DO VEÍCULO: ' +VeiculosEspecieStr( veicProd.espVeic )) + ';';
-      Result := Result + ACBrStr('VIN (CHASSI): ' + VeiculosVinStr( veicProd.VIN ) )+ ';';
-      Result := Result + ACBrStr('CONDIÇÃO DO VEÍCULO: ' +VeiculosCondicaoStr( veicProd.condVeic)) + ';';
-      Result := Result + ACBrStr('CÓDIGO MARCA MODELO: ') + veicProd.cMod + ';';
-      Result := Result + ACBrStr('CÓDIGO COR DENATRAN: ' +VeiculosCorDENATRANSTr( veicProd.cCorDENATRAN )) + ';';
-      Result := Result + ACBrStr('CAP.MÁXIMA DE LOTAÇÃO: ') +IntToStr(veicProd.lota) + ';';
-      Result := Result + ACBrStr('RESTRIÇÃO: ' +VeiculosRestricaoStr( veicProd.tpRest ) )+ ';';
+      if fQuebraLinhaEmVeiculos then
+        sQuebraLinha := ';'
+      else
+        sQuebraLinha := ' - ';
+
+	    Result := sQuebraLinha;
+	    Result := Result + ACBrStr('TIPO DE OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + sQuebraLinha;
+	    Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + sQuebraLinha;
+	    Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + sQuebraLinha;
+	    Result := Result + ACBrStr('NOME DA COR: ') + veicProd.xCor + sQuebraLinha;
+	    Result := Result + ACBrStr('POTÊNCIA DO MOTOR: ') + veicProd.pot + sQuebraLinha;
+	    Result := Result + ACBrStr('CILINDRADAS: ') + veicProd.Cilin + sQuebraLinha;
+	    Result := Result + ACBrStr('PESO LÍQUIDO: ') + veicProd.pesoL + sQuebraLinha;
+	    Result := Result + ACBrStr('PESO BRUTO: ' )+ veicProd.pesoB + sQuebraLinha;
+	    Result := Result + ACBrStr('NÚMERO DE SÉRIE: ') + veicProd.nSerie + sQuebraLinha;
+	    Result := Result + ACBrStr('COMBUSTÍVEL: ' + VeiculosCombustivelStr( veicProd.tpComb ) ) + sQuebraLinha;
+	    Result := Result + ACBrStr('NÚMERO DO MOTOR: ') + veicProd.nMotor + sQuebraLinha;
+	    Result := Result + ACBrStr('CAP. MÁX. TRAÇÃO: ') + veicProd.CMT + sQuebraLinha;
+	    Result := Result + ACBrStr('DISTÂNCIA ENTRE EIXOS: ') + veicProd.dist + sQuebraLinha;
+	    Result := Result + ACBrStr('ANO DO MODELO: ' )+ IntToStr(veicProd.anoMod) + sQuebraLinha;
+	    Result := Result + ACBrStr('ANO DE FABRICAÇÃO: ') + IntToStr(veicProd.anoFab) + sQuebraLinha;
+	    Result := Result + ACBrStr('TIPO DE PINTURA: ') + veicProd.tpPint + sQuebraLinha;
+	    Result := Result + ACBrStr('TIPO DE VEÍCULO: ' + VeiculosTipoStr( veicProd.tpVeic ) )+ sQuebraLinha;
+	    Result := Result + ACBrStr('ESPÉCIE DO VEÍCULO: ' +VeiculosEspecieStr( veicProd.espVeic )) + sQuebraLinha;
+	    Result := Result + ACBrStr('VIN (CHASSI): ' + VeiculosVinStr( veicProd.VIN ) )+ sQuebraLinha;
+	    Result := Result + ACBrStr('CONDIÇÃO DO VEÍCULO: ' +VeiculosCondicaoStr( veicProd.condVeic)) + sQuebraLinha;
+	    Result := Result + ACBrStr('CÓDIGO MARCA MODELO: ') + veicProd.cMod + sQuebraLinha;
+	    Result := Result + ACBrStr('CÓDIGO COR DENATRAN: ' +VeiculosCorDENATRANSTr( veicProd.cCorDENATRAN )) + sQuebraLinha;
+	    Result := Result + ACBrStr('CAP.MÁXIMA DE LOTAÇÃO: ') +IntToStr(veicProd.lota) + sQuebraLinha;
+	    Result := Result + ACBrStr('RESTRIÇÃO: ' +VeiculosRestricaoStr( veicProd.tpRest ) )+ ';';
     end;
   end;
 end;

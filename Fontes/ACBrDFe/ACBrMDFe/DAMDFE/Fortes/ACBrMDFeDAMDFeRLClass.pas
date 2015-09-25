@@ -44,6 +44,8 @@ uses
 type
   TACBrMDFeDAMDFeRL = class(TACBrMDFeDAMDFeClass)
   private
+  protected
+    FPrintDialog: Boolean;  
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -51,7 +53,9 @@ type
     procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); override;
     procedure ImprimirEVENTO(MDFe: TMDFe = nil); override;
     procedure ImprimirEVENTOPDF(MDFe: TMDFe = nil); override;
-  end;
+  published
+    property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
+end;
 
 implementation
 
@@ -65,6 +69,7 @@ var
 constructor TACBrMDFeDAMDFeRL.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FPrintDialog := True;
 end;
 
 destructor TACBrMDFeDAMDFeRL.Destroy;
@@ -103,7 +108,8 @@ begin
           , MargemDireita
           , Impressora
           , MDFeCancelada
-          , MDFeEncerrado);
+          , MDFeEncerrado
+		  , PrintDialog   );
       end;
     end
     else
@@ -123,7 +129,8 @@ begin
         , MargemDireita
         , Impressora
         , MDFeCancelada
-        , MDFeEncerrado);
+        , MDFeEncerrado
+		, PrintDialog   );
   finally
     frlDAMDFeRLRetrato.Free;
   end;

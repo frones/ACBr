@@ -254,8 +254,8 @@ begin
     rliLogo.Height := 142;
     rliLogo.Width := 330;
     rliLogo.Stretch := True;
-    rlmEmitente.Enabled := False;
-    rlmDadosEmitente.Enabled := False;
+    rlmEmitente.visible := False;
+    rlmDadosEmitente.visible := False;
   end;
 
   if not FExpandirLogoMarca then

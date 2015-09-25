@@ -98,7 +98,8 @@ type
       AMargemDireita: double = 0.51;
       AImpressora: string = '';
       AMDFeCancelada: boolean = False;
-      AMDFeEncerrado: boolean = False);
+      AMDFeEncerrado: boolean = False;
+      APrintDialog  : Boolean = True  );
 
     class procedure SavePDF(AFile: string; AMDFe: TMDFe;
       ALogo: string = '';
@@ -145,7 +146,8 @@ class procedure TfrlDAMDFeRL.Imprimir(AMDFe: TMDFe;
   AMargemDireita: double = 0.51;
   AImpressora: string = '';
   AMDFeCancelada: boolean = False;
-  AMDFeEncerrado: boolean = False);
+  AMDFeEncerrado: boolean = False;
+  APrintDialog: Boolean = True);
 begin
   with Create(nil) do
     //with TfrlDAMDFeRL do
@@ -175,6 +177,7 @@ begin
       else
         RLPrinter.Copies := 1;
 
+      RLMDFe.PrintDialog := APrintDialog;		
       if APreview = True then
         RLMDFe.PreviewModal
       else

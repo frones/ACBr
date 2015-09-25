@@ -322,10 +322,10 @@ begin
 
   if EstaVazio(AXML) then
   begin
-    if NFe.Emit.CNPJCPF = TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ then
+//    if NFe.Emit.CNPJCPF = TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ then
       Assinar
-    else
-      raise EACBrNFeException.Create('XML informado não possui assinatura, e CNPJ é diferente do Emitente' );
+//    else
+//      raise EACBrNFeException.Create('XML informado não possui assinatura, e CNPJ é diferente do Emitente' );
 
     AXML := FXMLAssinado;
   end;

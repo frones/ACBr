@@ -1044,8 +1044,8 @@ end;
 
 procedure TNFSeGerarLoteRPS.DefinirServicoEAction;
 begin
-  FPServico := ''; //GetUrlWsd + 'NFSeGerarLoteRPS';
-  FPSoapAction := ''; //FPServico;
+  FPServico := '';
+  FPSoapAction := ''; 
 end;
 
 procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
@@ -1257,8 +1257,8 @@ end;
 
 procedure TNFSeEnviarLoteRPS.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Recepcionar; // GetUrlWsd + 'NFSeEnviarLoteRPS';
-  FPSoapAction := FPServico;
+  FPServico := 'EnviarLoteRPS';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Recepcionar;
 end;
 
 procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
@@ -1406,7 +1406,7 @@ begin
 
     FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
     FProtocolo       := RetEnvLote.InfRec.Protocolo;
-    FNumeroLote      := RetEnvLote.InfRec.NumeroLote;
+//    FNumeroLote      := RetEnvLote.InfRec.NumeroLote;
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
@@ -1495,8 +1495,8 @@ end;
 
 procedure TNFSeEnviarSincrono.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.RecSincrono; //  GetUrlWsd + 'NFSeEnviarSincrono';
-  FPSoapAction := FPServico;
+  FPServico :=  'NFSeEnviarSincrono';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.RecSincrono; 
 end;
 
 procedure TNFSeEnviarSincrono.DefinirDadosMsg;
@@ -1677,8 +1677,8 @@ end;
 
 procedure TNFSeGerarNFSe.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Gerar; //  GetUrlWsd + 'NFSeGerarNFSe';
-  FPSoapAction := FPServico;
+  FPServico :=  'NFSeGerarNFSe';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Gerar;
 end;
 
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
@@ -1883,8 +1883,8 @@ end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsSit; //  GetUrlWsd + 'NFSeConsSitLoteRPS';
-  FPSoapAction := FPServico;
+  FPServico :=  'NFSeConsSitLoteRPS';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsSit;
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
@@ -2171,8 +2171,8 @@ end;
 
 procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsLote; // GetUrlWsd + 'NFSeConsLote';
-  FPSoapAction := FPServico;
+  FPServico := 'NFSeConsLote';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsLote;
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
@@ -2331,8 +2331,8 @@ end;
 
 procedure TNFSeConsultarNfseRPS.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfseRps; // GetUrlWsd + 'NFSeConsNfseRPS';
-  FPSoapAction := FPServico;
+  FPServico := 'NFSeConsNfseRPS';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfseRps;
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
@@ -2553,8 +2553,8 @@ end;
 
 procedure TNFSeConsultarNfse.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfse; // GetUrlWsd + 'NFSeConsNfse';
-  FPSoapAction := FPServico;
+  FPServico := 'NFSeConsNfse';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfse;
 end;
 
 procedure TNFSeConsultarNfse.DefinirDadosMsg;
@@ -2758,8 +2758,8 @@ end;
 
 procedure TNFSeCancelarNfse.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Cancelar; // GetUrlWsd + 'NFSeCancNfse';
-  FPSoapAction := FPServico;
+  FPServico := 'NFSeCancNfse';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Cancelar;
 end;
 
 procedure TNFSeCancelarNfse.DefinirDadosMsg;
@@ -3062,8 +3062,8 @@ end;
 
 procedure TNFSeSubstituirNFSe.DefinirServicoEAction;
 begin
-  FPServico := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Substituir; // GetUrlWsd + 'NFSeSubNfse';
-  FPSoapAction := FPServico;
+  FPServico := 'NFSeSubNfse';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Substituir;
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
@@ -3428,8 +3428,8 @@ end;
 
 procedure TNFSeLinkNFSe.DefinirServicoEAction;
 begin
-  FPServico := ''; //GetUrlWsd + 'NFSeLinkNfse';
-  FPSoapAction := FPServico;
+  FPServico := ''; 
+  FPSoapAction := '';
 end;
 
 procedure TNFSeLinkNFSe.DefinirDadosMsg;

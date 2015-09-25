@@ -4,11 +4,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 616
   ClientWidth = 804
-  ExplicitWidth = 820
-  ExplicitHeight = 654
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
+    Left = 2
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000

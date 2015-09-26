@@ -649,6 +649,8 @@ begin
    infAdic.infAdFisco := '';
   end;
 
+ ACBrMDFe1.Manifestos.GerarMDFe;
+
 end;
 
 procedure TfrmDemo_ACBrMDFe.sbtnCaminhoCertClick(Sender: TObject);

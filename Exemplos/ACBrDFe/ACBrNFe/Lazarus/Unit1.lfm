@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 378
+  Left = 380
   Height = 632
-  Top = 48
+  Top = 50
   Width = 894
   Caption = 'ACBrNFe - Demonstração'
   ClientHeight = 632
@@ -1543,9 +1543,9 @@ object Form1: TForm1
       Height = 330
       Top = 301
       Width = 595
-      ActivePage = TabSheet8
+      ActivePage = Dados
       Align = alClient
-      TabIndex = 2
+      TabIndex = 5
       TabOrder = 1
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
@@ -2097,14 +2097,14 @@ object Form1: TForm1
       end
       object Dados: TTabSheet
         Caption = 'Dados'
-        ClientHeight = 0
-        ClientWidth = 0
+        ClientHeight = 304
+        ClientWidth = 587
         ImageIndex = 5
         object MemoDados: TMemo
           Left = 0
-          Height = 263
+          Height = 304
           Top = 0
-          Width = 571
+          Width = 587
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2142,6 +2142,13 @@ object Form1: TForm1
     Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
+    Configuracoes.Arquivos.Salvar = True
+    Configuracoes.Arquivos.AdicionarLiteral = True
+    Configuracoes.Arquivos.SepararPorCNPJ = True
+    Configuracoes.Arquivos.SepararPorModelo = True
+    Configuracoes.Arquivos.SepararPorMes = True
+    Configuracoes.Arquivos.EmissaoPathNFe = True
+    Configuracoes.Arquivos.SalvarEvento = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True

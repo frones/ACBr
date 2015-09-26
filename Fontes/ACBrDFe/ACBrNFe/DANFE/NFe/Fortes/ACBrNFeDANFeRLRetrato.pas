@@ -589,6 +589,8 @@ type
     Function ManterCombustivel( inItem:  integer  ) : String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
     function ManterXpod(sXProd: String; inItem: Integer): String;
+    function FormatQuantidade(dValor: Double): String;
+    function FormatValorUnitario(dValor: Double): String;
   public
 
   end;
@@ -621,12 +623,6 @@ begin
 
   ConfigureDataSource;
   InitDados;
-
-  //  Removido para que o quadro Fatura seja mostrado mesmo a vista
-  //  if FNFe.Cobr.Dup.Count > 0 then
-  //    rlbFatura.Visible := True
-  //  else
-  //    rlbFatura.Visible := False;
 
   RLNFe.Title := Copy(FNFe.InfNFe.Id, 4, 44);
   if FNumCopias > 0 then
@@ -1526,8 +1522,8 @@ begin
       cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
       cdsItens.FieldByName('CFOP').AsString         := Prod.CFOP;
       cdsItens.FieldByName('UNIDADE').AsString      := Prod.UCom;
-      cdsItens.FieldByName('QTDE').AsString         := FormatFloat(format(sDisplayFormat, [FCasasDecimaisqCom, 0]), Prod.qCom);
-      cdsItens.FieldByName('VALOR').AsString        := FormatFloat(format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]), Prod.vUnCom);
+      cdsItens.FieldByName('QTDE').AsString         := FormatQuantidade( Prod.qCom);
+      cdsItens.FieldByName('VALOR').AsString        := FormatValorUnitario(  Prod.vUnCom);
       cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', Prod.vProd);
       cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
       cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);
@@ -1940,4 +1936,28 @@ begin
     Result := Result + ManterCombustivel( inItem );
   end;
 end;
+
+
+
+Function TfrlDANFeRLRetrato.FormatQuantidade( dValor : Double ) : String;
+begin
+  case fIFormatacao of
+    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
+    1 : Result := FormatFloatBr( dValor , fMask_qCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
+  end;
+end;
+
+
+Function TfrlDANFeRLRetrato.FormatValorUnitario( dValor : Double ) : String;
+begin
+  case fIFormatacao of
+    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
+    1 : Result := FormatFloatBr( dValor , fMask_vUnCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
+  end;
+end;
+
 end.

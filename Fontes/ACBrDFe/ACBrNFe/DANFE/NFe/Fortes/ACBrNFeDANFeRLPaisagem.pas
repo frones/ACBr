@@ -487,6 +487,8 @@ type
     function ManterMedicamentos(inItem: integer): String;
     function ManterVeiculos(inItem: integer): String;
     function ManterXpod(sXProd: String; inItem: Integer): String;
+    function FormatQuantidade(dValor: Double): String;
+    function FormatValorUnitario(dValor: Double): String;
   public
 
   end;
@@ -1936,6 +1938,28 @@ begin
     Result := Result + ManterMedicamentos( inItem );
     Result := Result + ManterArma( inItem );
     Result := Result + ManterCombustivel( inItem );
+  end;
+end;
+
+Function TfrlDANFeRLPaisagem.FormatQuantidade( dValor : Double ) : String;
+begin
+  case fIFormatacao of
+    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
+    1 : Result := FormatFloatBr( dValor , fMask_qCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
+  end;
+end;
+
+
+Function TfrlDANFeRLPaisagem.FormatValorUnitario( dValor : Double ) : String;
+begin
+  case fIFormatacao of
+    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
+    1 : Result := FormatFloatBr( dValor , fMask_vUnCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
+
   end;
 end;
 

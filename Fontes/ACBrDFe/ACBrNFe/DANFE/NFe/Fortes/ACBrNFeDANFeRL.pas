@@ -174,6 +174,9 @@ type
     FDetArmamentos: TDetArmamentos;
     FDetCombustiveis: TDetCombustiveis;
     fQuebraLinhaEmVeiculos : Boolean;
+    fIFormatacao : Integer;
+    fMask_qCom : String;
+    fMask_vUnCom : String;
 
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
@@ -212,7 +215,10 @@ type
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
                     ADetCombustiveis: TDetCombustiveis = [];
-                    AdQuebraLinhaEmVeiculos : Boolean = True);
+                    AdQuebraLinhaEmVeiculos : Boolean = True;
+                    AdCasasDecimaisTag : Integer = 0;
+                    AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
+                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
 
     class procedure SavePDF(ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -243,7 +249,11 @@ type
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
                     ADetCombustiveis: TDetCombustiveis = [];
-                    ADQuebraLinhaEmVeiculos : Boolean = True);
+                    ADQuebraLinhaEmVeiculos : Boolean = True;
+                    AdCasasDecimaisTag : Integer = 0;
+                    AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
+                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+
 
   end;
 
@@ -375,7 +385,11 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 ADetMedicamentos: TDetMedicamentos = [];
                 ADetArmamentos: TDetArmamentos = [];
                 ADetCombustiveis: TDetCombustiveis = [] ;
-                ADQuebraLinhaEmVeiculos : Boolean = True);
+                ADQuebraLinhaEmVeiculos : Boolean = True;
+                AdCasasDecimaisTag : Integer = 0;
+                AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
+                AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+
 
 begin
   with Create ( AOwner ) do
@@ -418,7 +432,9 @@ begin
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
       FQuebraLinhaEmVeiculos := ADQuebraLinhaEmVeiculos;
-
+      fIFormatacao := AdCasasDecimaisTag;
+      fMask_qCom   := AdCasasDecimais_Mask_qCom;
+      fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
@@ -467,7 +483,11 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
                     ADetCombustiveis: TDetCombustiveis = [];
-                    ADQuebraLinhaEmVeiculos : Boolean = True);
+                    ADQuebraLinhaEmVeiculos : Boolean = True;
+                    AdCasasDecimaisTag : Integer = 0;
+                    AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
+                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+
 
 begin
   with Create ( nil ) do
@@ -507,6 +527,9 @@ begin
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
       FQuebraLinhaEmVeiculos := ADQuebraLinhaEmVeiculos;
+      fIFormatacao := AdCasasDecimaisTag;
+      fMask_qCom   := AdCasasDecimais_Mask_qCom;
+      fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
 
       with RLPDFFilter1.DocumentInfo do
         begin
@@ -630,21 +653,3 @@ end;
 
 end.
 
-(* TODO: Talvez seja necessário o código abaixo para FPC
-{$IFDEF FPC}
- if FNumCopias > 1 then
- begin
-    RLNFe.Prepare;
-
-    // Nota: Esse código só funciona em Fortes4Lazarus
-    SpoolFilter.Pages := RLNFe.Pages;
-    SpoolFilter.FirstPage := 1;
-    SpoolFilter.LastPage := SpoolFilter.Pages.PageCount;
-    SpoolFilter.Copies := FNumCopias;
-    SpoolFilter.FilterStyle := SpoolFilter.FilterStyle + [fsEmulateCopies];
-
-    SpoolFilter.Run;
- end
- else
-{$ENDIF}
-*)

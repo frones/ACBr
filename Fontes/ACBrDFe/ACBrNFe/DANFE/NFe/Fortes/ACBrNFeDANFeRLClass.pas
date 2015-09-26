@@ -160,8 +160,11 @@ begin
   FMargemInferior := 0.70;
   FMargemEsquerda := 0.70;
   FMargemDireita := 0.70;
+  fCasasDecimais.Tag := 0;
   FCasasDecimais._qCom := 4;
   FCasasDecimais._vUnCom := 4;
+  fCasasDecimais._Mask_qCom   := '###,###,###,##0.00';
+  fCasasDecimais._Mask_vUnCom := '###,###,###,##0.00';
   FProdutosPorPagina := 0;
   FExibirEAN := False;
   FTipoDANFE := tiRetrato;
@@ -207,7 +210,10 @@ try
           FExibeResumoCanhoto_Texto, FNFeCancelada,
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
           FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmVeiculos );
+          fQuebraLinhaEmVeiculos,
+          fCasasDecimais.Tag,
+          fCasasDecimais._Mask_qCom,
+          fCasasDecimais._Mask_vUnCom );
         end;
     end
   else
@@ -223,11 +229,14 @@ try
       FExibeResumoCanhoto_Texto, FNFeCancelada,
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmVeiculos );
+      fQuebraLinhaEmVeiculos,
+      fCasasDecimais.Tag,
+      fCasasDecimais._Mask_qCom,
+      fCasasDecimais._Mask_vUnCom );
     end;
 
-  finally  
-  FreeAndNil(frlDANFeRL);
+  finally
+    FreeAndNil(frlDANFeRL);
   end;
 end;
 
@@ -266,7 +275,10 @@ begin
           FExibeResumoCanhoto_Texto, FNFeCancelada,
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
           FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmVeiculos);
+          fQuebraLinhaEmVeiculos,
+          fCasasDecimais.Tag,
+          fCasasDecimais._Mask_qCom,
+          fCasasDecimais._Mask_vUnCom );
         end;
     end
   else
@@ -286,10 +298,13 @@ begin
       FExibeResumoCanhoto_Texto, FNFeCancelada,
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmVeiculos );
+      fQuebraLinhaEmVeiculos,
+      fCasasDecimais.Tag,
+      fCasasDecimais._Mask_qCom,
+      fCasasDecimais._Mask_vUnCom );
     end;
- finally 
-  FreeAndNil(frlDANFeRL);
+ finally
+   FreeAndNil(frlDANFeRL);
  end;
 end;
 

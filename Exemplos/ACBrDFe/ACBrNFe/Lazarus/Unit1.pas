@@ -995,8 +995,6 @@ begin
   ACBrNFe1.Configuracoes.Geral.VersaoDF :=  TpcnVersaoDF(cbVersaoDF.ItemIndex);
   GerarNFe(vAux);
 
-  ACBrNFe1.NotasFiscais.GerarNFe;
-
   ACBrNFe1.Enviar(vNumLote,True);
 
   MemoResp.Lines.Text := ACBrNFe1.WebServices.Retorno.RetWS;
@@ -2528,6 +2526,7 @@ begin
       compra.xCont := '';
    end;
 
+  ACBrNFe1.NotasFiscais.GerarNFe;
 end;
 
 procedure TForm1.GerarNFCe(NumNFe: String);

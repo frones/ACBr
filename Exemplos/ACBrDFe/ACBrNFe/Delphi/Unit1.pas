@@ -2774,6 +2774,7 @@ begin
        end; }
    end;
 
+   ACBrNFe1.NotasFiscais.GerarNFe;
 end;
 
 procedure TForm1.btnConsultarChaveClick(Sender: TObject);

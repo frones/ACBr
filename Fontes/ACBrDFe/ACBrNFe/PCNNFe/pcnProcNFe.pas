@@ -262,9 +262,9 @@ begin
                       '<verAplic>' + FverAplic + '</verAplic>' +
                       '<chNFe>' + FchNFe + '</chNFe>' +
                       //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + '</dhRecbto>' +
-                      //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(copy(FverAplic,1,2),FdhRecbto),'')+'</dhRecbto>'+
+                      //'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC{(copy(FverAplic,1,2),FdhRecbto)},'')+'</dhRecbto>'+
                       (*By Edilson Alves de Oliveira  - 30/07/2015 *)
-                      '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC(xUF,FdhRecbto),'')+'</dhRecbto>'+
+                      '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) + IIf(Versao >= '3.10', GetUTC{(xUF,FdhRecbto)},'')+'</dhRecbto>'+
                       '<nProt>' + FnProt + '</nProt>' +
                       '<digVal>' + FdigVal + '</digVal>' +
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +

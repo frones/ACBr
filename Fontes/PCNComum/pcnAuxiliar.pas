@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao;
+  pcnConversao, synautil;
 
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
@@ -91,7 +91,8 @@ function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
 function xml4line(texto: AnsiString): AnsiString;
 function RetornarPosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 function DateTimeTodhUTC(DataHora: TDateTime; TZD: string): string;
-function GetUTC(UF: string; const dataHora: TDateTime): string;
+function GetUTC(UF: string; const dataHora: TDateTime): string; overload;
+function GetUTC: string; overload;
 function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
 function GetTerceiroDomingoDoMes(const ano, mes: Integer): TDateTime;
 function GetInicioDoHorarioDeVerao(const ano: Integer): TDateTime;
@@ -724,7 +725,13 @@ begin
             TZD;
 end;
 
-function GetUTC(UF: string; const dataHora: TDateTime): string;
+function GetUTC: string; overload;
+begin
+  Result := TimeZone;
+  Insert(':', Result, 4);
+end;
+
+function GetUTC(UF: string; const dataHora: TDateTime): string; overload;
 const
   UTC5 = '.AC.';
   UTC4 = '.AM.RR.RO.MT.MS.';

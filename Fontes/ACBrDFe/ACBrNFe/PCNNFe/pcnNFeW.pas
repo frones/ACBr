@@ -300,7 +300,7 @@ begin
      (*********)'<verAplic>'+nfe.procNFe.verAplic+'</verAplic>'+
      (*********)'<chNFe>'+nfe.procNFe.chNFe+'</chNFe>'+
      (*********)'<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',nfe.procNFe.dhRecbto)+
-                             IIf(FNFe.infNFe.Versao >= 3.10, GetUTC(CodigoParaUF(FNFe.Ide.cUF),nfe.procNFe.dhRecbto),'')+'</dhRecbto>'+
+                             IIf(FNFe.infNFe.Versao >= 3.10, GetUTC{(CodigoParaUF(FNFe.Ide.cUF),nfe.procNFe.dhRecbto)},'')+'</dhRecbto>'+
      (*********)'<nProt>'+nfe.procNFe.nProt+'</nProt>'+
      (*********)'<digVal>'+nfe.procNFe.digVal+'</digVal>'+
      (*********)'<cStat>'+IntToStr(nfe.procNFe.cStat)+'</cStat>'+
@@ -361,10 +361,10 @@ begin
 
   if nfe.infNFe.Versao >= 3 then
    begin
-     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 25, 25, 1, DateTimeTodh(nfe.ide.dEmi) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi), DSC_DEMI);
+     Gerador.wCampo(tcStr, 'B09', 'dhEmi   ', 25, 25, 1, DateTimeTodh(nfe.ide.dEmi) + GetUTC{(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi)}, DSC_DEMI);
 
      if (nfe.ide.modelo = 55) and (nfe.ide.dSaiEnt <> 0) then
-       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 25, 25, 0, DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt), DSC_DSAIENT);
+       Gerador.wCampo(tcStr, 'B10', 'dhSaiEnt', 25, 25, 0, DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC{(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt)}, DSC_DSAIENT);
    end
   else
    begin
@@ -406,7 +406,7 @@ begin
   if (nfe.Ide.dhCont > 0) or (nfe.Ide.xJust <> '') then
    begin
     if nfe.infNFe.Versao >= 3 then
-       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 25, 25, 1, DateTimeTodh(nfe.ide.dhCont) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont), DSC_DHCONT)
+       Gerador.wCampo(tcStr, 'B28', 'dhCont ', 25, 25, 1, DateTimeTodh(nfe.ide.dhCont) + GetUTC{(CodigoParaUF(nfe.ide.cUF), nfe.ide.dhCont)}, DSC_DHCONT)
     else
        Gerador.wCampo(tcStr, 'B28', 'dhCont ', 19, 19, 1, DateTimeTodh(nfe.Ide.dhCont), DSC_DHCONT);
 

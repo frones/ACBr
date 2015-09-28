@@ -416,7 +416,7 @@ type
 
     FEventoRetorno: TRetEventoNFe;
 
-    function GerarPathEvento: String;
+    function GerarPathEvento(const ACNPJ: String = ''): String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -2337,11 +2337,11 @@ begin
   inherited;
 end;
 
-function TNFeEnvEvento.GerarPathEvento: String;
+function TNFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
 begin
   with FEvento.Evento.Items[0].InfEvento do
   begin
-    Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(tpEvento);
+    Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(tpEvento, ACNPJ);
   end;
 end;
 
@@ -2615,7 +2615,7 @@ begin
 //                FPDFeOwner.Gravar(NomeArq, wProc.Text);
 
               if FPConfiguracoesNFe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
             finally
               wProc.Free;
             end;

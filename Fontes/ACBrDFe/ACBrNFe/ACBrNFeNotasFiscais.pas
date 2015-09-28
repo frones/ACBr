@@ -343,6 +343,9 @@ begin
     else
       ALayout := LayNfeRecepcao;
 
+    // Extraindo apenas os dados da NFe (sem nfeProc)
+    AXML := '<NFe xmlns' + RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>') + '</NFe>';
+
     NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FNFe.infNFe.Versao), Erro);
 
     if not NotaEhValida then

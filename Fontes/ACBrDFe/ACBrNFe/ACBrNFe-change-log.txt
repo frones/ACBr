@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2015
+-- ACBrNFeNotasFiscais --    (por: DSA)
+[*] Corrigido o método Validar, para extrair apenas a Tag <NFe> do XML informado
+
 26/09/2015
 -- ACBrNFeDANFeRLR --
 [+] Adicionado suporte as propriedades: CasasDecimais.Tag, CasasDecimais._Mask_qCom e

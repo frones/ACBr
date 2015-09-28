@@ -276,6 +276,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    function GerarUFSoap: String; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -1565,18 +1566,19 @@ end;
 procedure TNFeConsulta.DefinirURL;
 var
   Versao: Double;
-  Modelo, UF: String;
+  Modelo: String;
   ok: Boolean;
 begin
   FPVersaoServico := '';
   FPURL := '';
   Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   Modelo := ModeloDFToPrefixo( StrToModeloDF(ok, ExtrairModeloChaveAcesso(FNFeChave) ));
-  UF     := CUFtoUF(StrToInt(Copy(FNFeChave,1,2)));
+  FcUF   := StrToInt(Copy(FNFeChave,1,2));
+  FTpAmb := StrToTpAmb(ok, copy(FNFeChave,35,1));
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    Modelo, UF,
-    FPConfiguracoesNFe.WebServices.Ambiente,
+    Modelo, CUFtoUF(FcUF),
+    FTpAmb,
     LayOutToServico(FPLayout),
     Versao,
     FPURL
@@ -1605,7 +1607,7 @@ begin
   OK := False;
   ConsSitNFe := TConsSitNFe.Create;
   try
-    ConsSitNFe.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
+    ConsSitNFe.TpAmb := FTpAmb;
     ConsSitNFe.chNFe := FNFeChave;
     ConsSitNFe.Versao := FPVersaoServico;
     ConsSitNFe.GerarXML;
@@ -1614,6 +1616,11 @@ begin
   finally
     ConsSitNFe.Free;
   end;
+end;
+
+function TNFeConsulta.GerarUFSoap: String;
+begin
+  Result := '<cUF>' + IntToStr(FcUF) + '</cUF>';
 end;
 
 function TNFeConsulta.TratarResposta: Boolean;

@@ -90,7 +90,7 @@ type
     procedure WriteRegistro0010;
     procedure WriteRegistro0020;
     procedure WriteRegistro0030;
-    procedure WriteRegistro0035;
+    procedure WriteRegistro0035(Reg0001: TRegistro0001);
     procedure WriteRegistro0930(Reg0001: TRegistro0001);
     procedure WriteRegistro0990;
 
@@ -187,7 +187,7 @@ end;
 
 function TBloco_0.Registro0035New: TRegistro0035;
 begin
-  Result := Registro0001.Registro0035.New;
+  Result := Registro0001.Registro0035.New(FRegistro0001);
 end;
 
 function TBloco_0.Registro0930New: TRegistro0930;
@@ -240,7 +240,7 @@ begin
         WriteRegistro0010;
         WriteRegistro0020;
         WriteRegistro0030;
-        WriteRegistro0035;
+        WriteRegistro0035(FRegistro0001);
         WriteRegistro0930(FRegistro0001);
       end;
     end;
@@ -363,15 +363,15 @@ begin
   end;
 end;
 
-procedure  TBloco_0.WriteRegistro0035;
+procedure  TBloco_0.WriteRegistro0035(Reg0001: TRegistro0001);
 var
   intfor : Integer;
 begin
-  if Assigned(FRegistro0035) then
+  if Assigned(Reg0001.Registro0035) then
   begin
-    for intfor := 0 to  fRegistro0035.Count - 1 do
+    for intfor := 0 to Reg0001.Registro0035.Count - 1 do
     begin
-      with FRegistro0035.Items[intfor] do
+      with Reg0001.Registro0035.Items[intfor] do
       begin
         Add( LFill('0035') +
              LFill(COD_SCP) +
@@ -379,7 +379,7 @@ begin
         FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
       end;
     end;
-    FRegistro0035Count := FRegistro0035Count + Registro0035.Count;
+    FRegistro0035Count := FRegistro0035Count + Reg0001.Registro0035.Count;
   end;
 end;
 

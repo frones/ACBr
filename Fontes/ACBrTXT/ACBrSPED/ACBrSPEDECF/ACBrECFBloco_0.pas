@@ -282,7 +282,7 @@ type
     function GetItem(Index: Integer): TRegistro0035;
     procedure SetItem(Index: Integer; const Value: TRegistro0035);
   public
-    function New: TRegistro0035;
+    function New(AOwner: TRegistro0001): TRegistro0035;
     property Items[Index: Integer]: TRegistro0035 read GetItem write SetItem;
   end;
   { TRegistro0930 }
@@ -355,7 +355,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistro0035List.New: TRegistro0035;
+function TRegistro0035List.New(AOwner: TRegistro0001): TRegistro0035;
 begin
   Result := TRegistro0035.Create;
   Add(Result);

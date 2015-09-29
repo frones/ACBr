@@ -49,6 +49,9 @@ Símbolo : Significado
 
 29/09/2015
 (ACBrCTeWebServices)
+[-] TCTeConsulta, Correção de Bug introduzido. Interpretação errada de
+    tpEmis e tpAmb.
+    por: Italo Jurisato Junior
 [-] TCTeConsulta, correção para consulta de CTEs com UF diferente da UF do
     Emissor.  
     por: Italo Jurisato Junior

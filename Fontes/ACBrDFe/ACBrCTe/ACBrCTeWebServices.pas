@@ -1287,11 +1287,10 @@ begin
   Versao := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   Modelo := 'CTe';
   FcUF   := StrToInt(Copy(FCTeChave, 1, 2));
-  FTpAmb := StrToTpAmb(ok, copy(FCTeChave, 35, 1));
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
     Modelo, CUFtoUF(FcUF),
-    FTpAmb,
+    FPConfiguracoesCTe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
     FPURL

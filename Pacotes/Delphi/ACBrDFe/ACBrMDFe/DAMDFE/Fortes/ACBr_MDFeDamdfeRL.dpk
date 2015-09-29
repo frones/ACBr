@@ -35,6 +35,7 @@
 ******************************************************************************}
 package ACBr_MDFeDamdfeRL;
 
+{$I ACBr.inc}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -63,18 +64,12 @@ requires
   rtl,
   designide,
   soaprtl,
-  {$IFDEF VER150} FortesReportCE_Win32_D7_vcl, vcljpg, {$ENDIF} // D7
-  {$IFDEF VER200} RLibWinD2009, vclimg, {$ENDIF} // D2009
-  {$IFDEF VER210} FortesReportCE_Win32_D2010_vcl, vclimg, {$ENDIF} // D2010
-  {$IFDEF VER220} FortesReportCE_Win32_DXE_vcl, vclimg, {$ENDIF} // XE
-  {$IFDEF VER230} FortesReportCE_Win32_DXE2_vcl, vclimg, {$ENDIF} //XE2
-  {$IFDEF VER240} FortesReportCE_Win32_DXE3_vcl, vclimg, {$ENDIF} //XE3
-  {$IFDEF VER250} FortesReportCE_Win32_DXE4_vcl, vclimg, {$ENDIF} //XE4
-  {$IFDEF VER260} FortesReportCE_Win32_DXE5_vcl, vclimg, {$ENDIF} //XE5
-  {$IFDEF VER270} FortesReportCE_Win32_DXE6_vcl, vclimg, dsnap,{$ENDIF} //XE6
-  {$IFDEF VER280} FortesReportCE_Win32_DXE7_vcl, vclimg, dsnap,{$ENDIF} //XE7
-  {$IFDEF VER290} FortesReportCE_Win32_DXE8_vcl, vclimg, dsnap,{$ENDIF} //XE8
-  {$IFDEF VER300} FortesReportCE_Win32_DXE9_vcl, vclimg,{$ENDIF} //10 Seattle
+  frce,
+  {$ifdef DELPHI2009_UP} 
+    vclimg,
+  {$else} 
+    vcljpg,
+  {$ENDIF}
   ACBr_MDFe;
 
 contains

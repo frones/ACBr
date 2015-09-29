@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2015
+-- pcnEnvEventoNFe --
+[-] Correção ao enviar um Evento de EPEC de uma NFC-e o grupo <dest> deverá ser
+    omitido caso não tenha sido informado os dados do destinatário na nota.
+    por: Italo Jurisato Junior
 -- ACBrNFeWebServices --
 [-] TNFeConsulta, Correção de Bug introduzido em 28/09. Interpretação errada de
     tpEmis e tpAmb (por: DSA)

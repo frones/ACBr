@@ -50,7 +50,7 @@ unit pcnEnvEventoNFe;
 interface
 
 uses
-  SysUtils, Classes, 
+  SysUtils, Classes,
   pcnConversao, pcnGerador, pcnEventoNFe;
 
 type
@@ -89,6 +89,8 @@ type
     FVersao: String;
 
     procedure SetEvento(const Value: TInfEventoCollection);
+    procedure GerarDestNFe;
+    procedure GerarDestNFCe;
   public
     constructor Create;
     destructor Destroy; override;
@@ -223,54 +225,15 @@ begin
             Gerador.wCampo(tcStr, 'P24', 'tpNF',        01, 01, 1, tpNFToStr(Evento.Items[i].InfEvento.detEvento.tpNF));
             Gerador.wCampo(tcStr, 'P25', 'IE',          02, 14, 1, Evento.Items[i].InfEvento.detEvento.IE);
 
-            Gerador.wGrupo('dest');
-            Gerador.wCampo(tcStr, 'P27', 'UF', 02, 02, 1, Evento.Items[i].InfEvento.detEvento.dest.UF);
-
-            if (Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = '') and
-               (Evento.Items[i].InfEvento.detEvento.dest.UF <> 'EX') then
-             begin
-               sDoc := OnlyNumber( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
-               case Length( sDoc ) of
-                14 : begin
-                       Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
-                       if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('P28', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
-                     end;
-                11 : begin
-                       Gerador.wCampo(tcStr, 'P29', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
-                       if not ValidarCPF( sDoc ) then Gerador.wAlerta('P29', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
-                     end;
-               end;
-             end
-            else
-             begin
-                Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
-             end;
-
-            if (Evento.Items[i].InfEvento.detEvento.dest.IE <> '') and (sModelo = '55') then
-              Gerador.wCampo(tcStr, 'P31', 'IE', 02, 14, 1, Evento.Items[i].InfEvento.detEvento.dest.IE);
-
-            // Alterado em 15/07/2015 por Italo
-            // para ficar em conformidade com os Schemas
             if sModelo = '55' then
-            begin
-              // No EPEC da NF-e segundo o schema as TAGs vNF, vICMS e vST estão dentro do grupo dest.
-
-              Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
-              Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
-              Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
-
-              Gerador.wGrupo('/dest');
-            end
+              GerarDestNFe
             else begin
+              GerarDestNFCe;
               // No EPEC da NFC-e segundo o schema as TAGs vNF e vICMS estão fora do grupo dest e não
               // tem a TAG vST.
-
-              Gerador.wGrupo('/dest');
-
               Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
               Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
             end;
-
           end;
         tePedProrrog1,
         tePedProrrog2:
@@ -300,6 +263,74 @@ begin
   Gerador.wGrupo('/envEvento');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+procedure TEventoNFe.GerarDestNFe;
+begin
+  Gerador.wGrupo('dest');
+  Gerador.wCampo(tcStr, 'P27', 'UF', 02, 02, 1, Evento.Items[i].InfEvento.detEvento.dest.UF);
+
+  if (Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = '') and
+     (Evento.Items[i].InfEvento.detEvento.dest.UF <> 'EX') then
+  begin
+    sDoc := OnlyNumber( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
+    case Length( sDoc ) of
+      14 : begin
+             Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+             if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('P28', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+           end;
+      11 : begin
+             Gerador.wCampo(tcStr, 'P29', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
+             if not ValidarCPF( sDoc ) then Gerador.wAlerta('P29', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+           end;
+    end;
+  end
+  else begin
+    Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
+  end;
+
+  if (Evento.Items[i].InfEvento.detEvento.dest.IE <> '') then
+    Gerador.wCampo(tcStr, 'P31', 'IE', 02, 14, 1, Evento.Items[i].InfEvento.detEvento.dest.IE);
+
+  // No EPEC da NF-e segundo o schema as TAGs vNF, vICMS e vST estão dentro do grupo dest.
+
+  Gerador.wCampo(tcDe2, 'P32', 'vNF',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vNF, DSC_VNF);
+  Gerador.wCampo(tcDe2, 'P33', 'vICMS', 01, 15, 1, Evento.Items[i].InfEvento.detEvento.vICMS, DSC_VICMS);
+  Gerador.wCampo(tcDe2, 'P34', 'vST',   01, 15, 1, Evento.Items[i].InfEvento.detEvento.vST, DSC_VST);
+
+  Gerador.wGrupo('/dest');
+end;
+
+procedure TEventoNFe.GerarDestNFCe;
+begin
+  if (Evento.Items[i].InfEvento.detEvento.dest.UF <> '') and
+      ((Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF <> '') or
+       (Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro <> '')) then
+  begin
+    Gerador.wGrupo('dest');
+    Gerador.wCampo(tcStr, 'P27', 'UF', 02, 02, 1, Evento.Items[i].InfEvento.detEvento.dest.UF);
+
+    if (Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro = '') and
+       (Evento.Items[i].InfEvento.detEvento.dest.UF <> 'EX') then
+    begin
+      sDoc := OnlyNumber( Evento.Items[i].InfEvento.detEvento.dest.CNPJCPF );
+      case Length( sDoc ) of
+        14 : begin
+               Gerador.wCampo(tcStr, 'P28', 'CNPJ', 014, 014, 1, sDoc , DSC_CNPJ);
+               if not ValidarCNPJ( sDoc ) then Gerador.wAlerta('P28', 'CNPJ', DSC_CNPJ, ERR_MSG_INVALIDO);
+             end;
+        11 : begin
+               Gerador.wCampo(tcStr, 'P29', 'CPF', 011, 011, 1, sDoc, DSC_CPF);
+               if not ValidarCPF( sDoc ) then Gerador.wAlerta('P29', 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
+             end;
+      end;
+    end
+    else begin
+      Gerador.wCampo(tcStr, 'P30', 'idEstrangeiro', 05, 20, 1, Evento.Items[i].InfEvento.detEvento.dest.idEstrangeiro);
+    end;
+
+    Gerador.wGrupo('/dest');
+  end;
 end;
 
 procedure TEventoNFe.SetEvento(const Value: TInfEventoCollection);

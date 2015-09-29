@@ -48,7 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2015
-(ACBrMDFeWebServices)
+-- ACBrMDFeDAMDFeRLRetrato --
+[-] Ajuste para que mensagem de Homologação não seja exibida em Produção (por: DSA)
+
+-- ACBrMDFeWebServices --
 [-] TMDFeConsulta, correção para consulta de MDFEs com UF diferente da UF do
     Emissor.  
     por: Italo Jurisato Junior
@@ -58,7 +61,7 @@ Símbolo : Significado
     evento da matriz com a filial.
     por: Italo Jurisato Junior
 
-(ACBrMDFeManifestos)
+-- ACBrMDFeManifestos --
 [*] Corrigido o método Validar, para extrair apenas a Tag <MDFe> do XML informado
     por: Italo Jurisato Junior
 

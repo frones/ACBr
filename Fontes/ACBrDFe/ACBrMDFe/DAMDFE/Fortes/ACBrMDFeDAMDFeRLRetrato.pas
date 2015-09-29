@@ -464,6 +464,9 @@ begin
 
   // Mensagem para modo Homologacao.
 
+  rllMsgTeste.Enabled := False;
+  rllMsgTeste.Visible := False;
+
   if FMDFe.Ide.tpAmb = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');

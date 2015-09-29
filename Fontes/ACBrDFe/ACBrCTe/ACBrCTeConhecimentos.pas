@@ -310,20 +310,23 @@ begin
   begin
     ALayout := LayCTeRecepcao;
 
+    // Extraindo apenas os dados do CTe (sem cteProc)
+    AXML := '<CTe xmlns' + RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') + '</CTe>';
+
     if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
     begin
       ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
 
-    if not ModalEhValido then
-    begin
-      FErroValidacao := ACBrStr('Falha na validação do Modal do Conhecimento: ') +
-        IntToStr(CTe.Ide.nCT) + sLineBreak + FAlertas ;
-      FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
+      if not ModalEhValido then
+      begin
+        FErroValidacao := ACBrStr('Falha na validação do Modal do Conhecimento: ') +
+          IntToStr(CTe.Ide.nCT) + sLineBreak + FAlertas ;
+        FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
 
-      raise EACBrCTeException.CreateDef(
-        IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
-        ErroValidacao));
-    end;
+        raise EACBrCTeException.CreateDef(
+          IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
+          ErroValidacao));
+      end;
 
       CTeEhValido := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FCTe.infCTe.Versao), Erro);
     end

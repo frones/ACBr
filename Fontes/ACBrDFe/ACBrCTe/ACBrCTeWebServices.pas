@@ -127,11 +127,11 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FxMotivo: String;
     FdhRecbto: TDateTime;
-    FTMed: integer;
+    FTMed: Integer;
 
     FCTeRetorno: TretEnvCTe;
 
@@ -155,11 +155,11 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
-    property TMed: integer read FTMed;
+    property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
   end;
 
@@ -174,10 +174,10 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FxMotivo: String;
-    FcMsg: integer;
+    FcMsg: Integer;
     FxMsg: String;
 
     FCTeRetorno: TRetConsReciCTe;
@@ -204,10 +204,10 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property xMotivo: String read FxMotivo;
-    property cMsg: integer read FcMsg;
+    property cMsg: Integer read FcMsg;
     property xMsg: String read FxMsg;
     property Recibo: String read GetRecibo write FRecibo;
     property Protocolo: String read FProtocolo write FProtocolo;
@@ -224,11 +224,11 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
-    FcUF: integer;
+    FcUF: Integer;
     FxMsg: String;
-    FcMsg: integer;
+    FcMsg: Integer;
 
     FCTeRetorno: TRetConsReciCTe;
   protected
@@ -247,11 +247,11 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-    property cUF: integer read FcUF;
+    property cUF: Integer read FcUF;
     property xMsg: String read FxMsg;
-    property cMsg: integer read FcMsg;
+    property cMsg: Integer read FcMsg;
     property Recibo: String read FRecibo write FRecibo;
 
     property CTeRetorno: TRetConsReciCTe read FCTeRetorno;
@@ -268,16 +268,18 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FRetCTeDFe: String;
 
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
     FprocEventoCTe: TRetEventoCTeCollection;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    function GerarUFSoap: String; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -295,8 +297,8 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property RetCTeDFe: String read FRetCTeDFe;
 
     property protCTe: TProcCTe read FprotCTe;
@@ -310,19 +312,19 @@ type
   private
     FID: String;
     FProtocolo: String;
-    FModelo: integer;
-    FSerie: integer;
+    FModelo: Integer;
+    FSerie: Integer;
     FCNPJ: String;
-    FAno: integer;
-    FNumeroInicial: integer;
-    FNumeroFinal: integer;
+    FAno: Integer;
+    FNumeroInicial: Integer;
+    FNumeroFinal: Integer;
     FJustificativa: String;
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
-    FcUF: integer;
+    FcUF: Integer;
     FdhRecbto: TDateTime;
 
     FXML_ProcInutCTe: String;
@@ -345,19 +347,19 @@ type
 
     property ID: String read FID write FID;
     property Protocolo: String read FProtocolo write FProtocolo;
-    property Modelo: integer read FModelo write FModelo;
-    property Serie: integer read FSerie write FSerie;
+    property Modelo: Integer read FModelo write FModelo;
+    property Serie: Integer read FSerie write FSerie;
     property CNPJ: String read FCNPJ write FCNPJ;
-    property Ano: integer read FAno write FAno;
-    property NumeroInicial: integer read FNumeroInicial write FNumeroInicial;
-    property NumeroFinal: integer read FNumeroFinal write FNumeroFinal;
+    property Ano: Integer read FAno write FAno;
+    property NumeroInicial: Integer read FNumeroInicial write FNumeroInicial;
+    property NumeroFinal: Integer read FNumeroFinal write FNumeroFinal;
     property Justificativa: String read FJustificativa write SetJustificativa;
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-    property cUF: integer read FcUF;
+    property cUF: Integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
 
     property XML_procInutCTe: String read FXML_ProcInutCTe write FXML_ProcInutCTe;
@@ -369,13 +371,13 @@ type
   private
     Fversao: String;
     FverAplic: String;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
     FUF: String;
     FIE: String;
     FCNPJ: String;
     FCPF: String;
-    FcUF: integer;
+    FcUF: Integer;
     FdhCons: TDateTime;
 
     FRetConsCad: TRetConsCad;
@@ -400,10 +402,10 @@ type
 
     property versao: String read Fversao;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property DhCons: TDateTime read FdhCons;
-    property cUF: integer read FcUF;
+    property cUF: Integer read FcUF;
     property UF: String read FUF write FUF;
     property IE: String read FIE write SetIE;
     property CNPJ: String read FCNPJ write SetCNPJ;
@@ -416,10 +418,10 @@ type
 
   TCTeEnvEvento = class(TCTeWebService)
   private
-    FidLote: integer;
+    FidLote: Integer;
     Fversao: String;
     FEvento: TEventoCTe;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
 
@@ -443,9 +445,9 @@ type
 
     procedure Clear;
 
-    property idLote: integer read FidLote write FidLote;
+    property idLote: Integer read FidLote write FidLote;
     property versao: String read Fversao write Fversao;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
 
@@ -458,7 +460,7 @@ type
   private
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
-    FcUFAutor: integer;
+    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
@@ -479,7 +481,7 @@ type
 
     property versao: String read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property cUFAutor: integer read FcUFAutor write FcUFAutor;
+    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
@@ -532,10 +534,10 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: integer): Boolean; overload;
+    function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
     procedure Inutiliza(CNPJ, AJustificativa: String;
-      Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer);
+      Ano, Modelo, Serie, NumeroInicial, NumeroFinal: Integer);
 
     property ACBrCTe: TACBrDFe read FACBrCTe write FACBrCTe;
     property StatusServico: TCTeStatusServico read FStatusServico write FStatusServico;
@@ -768,7 +770,7 @@ end;
 
 procedure TCTeRecepcao.DefinirDadosMsg;
 var
-  I: integer;
+  I: Integer;
   vCTe: String;
 begin
   vCTe := '';
@@ -907,7 +909,7 @@ end;
 
 function TCTeRetRecepcao.TratarRespostaFinal: Boolean;
 var
-  I, J: integer;
+  I, J: Integer;
   AProcCTe: TProcCTe;
   AInfProt: TProtCTeCollection;
   NomeXML: String;
@@ -1034,7 +1036,7 @@ end;
 
 function TCTeRetRecepcao.Executar: Boolean;
 var
-  IntervaloTentativas, Tentativas: integer;
+  IntervaloTentativas, Tentativas: Integer;
 begin
   Result := False;
 
@@ -1274,6 +1276,30 @@ begin
   FxMotivo  := '';
 end;
 
+procedure TCTeConsulta.DefinirURL;
+var
+  Versao: Double;
+  Modelo: String;
+  ok: Boolean;
+begin
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  Modelo := 'CTe';
+  FcUF   := StrToInt(Copy(FCTeChave, 1, 2));
+  FTpAmb := StrToTpAmb(ok, copy(FCTeChave, 35, 1));
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(
+    Modelo, CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    Versao,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
 procedure TCTeConsulta.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteConsulta';
@@ -1286,7 +1312,7 @@ var
 begin
   ConsSitCTe := TConsSitCTe.Create;
   try
-    ConsSitCTe.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    ConsSitCTe.TpAmb := FTpAmb;
     ConsSitCTe.chCTe := FCTeChave;
     ConsSitCTe.Versao := FPVersaoServico;
     ConsSitCTe.GerarXML;
@@ -1295,6 +1321,11 @@ begin
   finally
     ConsSitCTe.Free;
   end;
+end;
+
+function TCTeConsulta.GerarUFSoap: String;
+begin
+  Result := '<cUF>' + IntToStr(FcUF) + '</cUF>';
 end;
 
 function TCTeConsulta.TratarResposta: Boolean;
@@ -2081,7 +2112,7 @@ end;
 procedure TCTeEnvEvento.DefinirDadosMsg;
 var
   EventoCTe: TEventoCTe;
-  I, J, F: integer;
+  I, J, F: Integer;
   Lote, Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
@@ -2251,7 +2282,7 @@ end;
 function TCTeEnvEvento.TratarResposta: Boolean;
 var
   Leitor: TLeitor;
-  I, J: integer;
+  I, J: Integer;
   wProc: TStringList;
   NomeArq, VersaoEvento: String;
 begin
@@ -2331,11 +2362,14 @@ begin
 
               FEvento.Evento.Items[I].RetInfEvento.XML := wProc.Text;
 
-              NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
+              NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) +
                 '-procEventoCTe.xml';
 
+//              if FPConfiguracoesCTe.Arquivos.Salvar then
+//                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+
               if FPConfiguracoesCTe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
             finally
               wProc.Free;
             end;
@@ -2445,7 +2479,7 @@ end;
 
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
-  I: integer;
+  I: Integer;
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
@@ -2625,7 +2659,7 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: integer): Boolean;
+function TWebServices.Envia(ALote: Integer): Boolean;
 begin
   Result := Envia(IntToStr(ALote));
 end;
@@ -2646,7 +2680,7 @@ begin
 end;
 
 procedure TWebServices.Inutiliza(CNPJ, AJustificativa: String;
-  Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer);
+  Ano, Modelo, Serie, NumeroInicial, NumeroFinal: Integer);
 begin
   CNPJ := OnlyNumber(CNPJ);
 

@@ -248,7 +248,7 @@ begin
                 NumeroLote +
               '</' + Prefixo4 + 'NumeroLote>' +
 
-              ifThen((VersaoXML = '2') or
+              ifThen((VersaoXML = '2.00') or
                               (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
@@ -294,7 +294,7 @@ begin
                         NumeroLote +
                       '</' + Prefixo4 + 'NumeroLote>' +
 
-                      ifThen(VersaoXML = '1',
+                      ifThen(VersaoXML = '1.00',
 
                         '<' + Prefixo4 + 'CpfCnpj>' +
                         '<' + Prefixo4 + 'Cnpj>' +
@@ -333,7 +333,7 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               ifThen((VersaoXML = '2') or
+               ifThen((VersaoXML = '2.00') or
                                (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
@@ -382,7 +382,7 @@ begin
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-               ifThen((VersaoXML = '2') or
+               ifThen((VersaoXML = '2.00') or
                                (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
@@ -446,7 +446,7 @@ begin
              '<' + Prefixo3 + 'Prestador' +
                ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
 
-              ifThen((VersaoXML = '2') or
+              ifThen((VersaoXML = '2.00') or
                               (AProvedor in [proISSNet, proActcon]),
 
                 '<' + Prefixo4 + 'CpfCnpj>' +
@@ -498,7 +498,7 @@ begin
 
  DadosMsg := '<' + Prefixo3 + 'Prestador' +
                ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               ifThen((VersaoXML = '2') or
+               ifThen((VersaoXML = '2.00') or
                                (AProvedor in [proISSNet, proActcon]),
 
                  '<' + Prefixo4 + 'CpfCnpj>' +
@@ -601,7 +601,7 @@ begin
                              NomeInter +
                             '</' + Prefixo4 + 'RazaoSocial>' +
 
-                            ifThen(VersaoXML = '2',
+                            ifThen(VersaoXML = '2.00',
 
                             '<' + Prefixo4 + 'CpfCnpj>' +
                              ifThen(Length(OnlyNumber(CnpjInter)) <= 11,
@@ -749,7 +749,7 @@ begin
                                NumeroLote +
                              '</' + Prefixo4 + 'NumeroLote>' +
 
-                             ifThen((VersaoXML = '2') or (AProvedor = proISSNet),
+                             ifThen((VersaoXML = '2.00') or (AProvedor = proISSNet),
 
                              '<' + Prefixo4 + 'CpfCnpj>' +
                                 ifThen(Length(OnlyNumber(Cnpj)) <= 11,

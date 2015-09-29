@@ -311,7 +311,7 @@ type
 
     FEventoRetorno: TRetEventoMDFe;
 
-    function GerarPathEvento: String;
+    function GerarPathEvento(const ACNPJ: String = ''): String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -1146,7 +1146,7 @@ var
 begin
   FPVersaoServico := '';
   FPURL := '';
-  Versao := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  Versao := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   Modelo := 'MDFe';
   FcUF   := StrToInt(Copy(FMDFeChave, 1, 2));
   FTpAmb := StrToTpAmb(ok, copy(FMDFeChave, 35, 1));
@@ -1553,11 +1553,11 @@ begin
   inherited;
 end;
 
-function TMDFeEnvEvento.GerarPathEvento: String;
+function TMDFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
 begin
   with FEvento.Evento.Items[0].InfEvento do
   begin
-    Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(tpEvento);
+    Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(tpEvento, ACNPJ);
   end;
 end;
 

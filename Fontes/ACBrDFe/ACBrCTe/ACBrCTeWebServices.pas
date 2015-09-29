@@ -427,7 +427,7 @@ type
 
     FEventoRetorno: TRetEventoCTe;
 
-    function GerarPathEvento: String;
+    function GerarPathEvento(const ACNPJ: String = ''): String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -2082,11 +2082,11 @@ begin
   FxMotivo  := '';
 end;
 
-function TCTeEnvEvento.GerarPathEvento: String;
+function TCTeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
 begin
   with FEvento.Evento.Items[0].Infevento do
   begin
-    Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(tpEvento);
+    Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(tpEvento, ACNPJ);
   end;
 end;
 

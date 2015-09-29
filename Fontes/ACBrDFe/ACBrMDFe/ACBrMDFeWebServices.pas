@@ -1151,7 +1151,7 @@ begin
   FcUF   := StrToInt(Copy(FMDFeChave, 1, 2));
   FTpAmb := StrToTpAmb(ok, copy(FMDFeChave, 35, 1));
 
-  TACBrNFe(FPDFeOwner).LerServicoDeParams(
+  TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo, CUFtoUF(FcUF),
     FTpAmb,
     LayOutToServico(FPLayout),

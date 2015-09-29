@@ -224,6 +224,7 @@ var
   chave: AnsiString;
   Gerar: Boolean;
   xProtNFe : String;
+  xCNPJCPF : string;
 begin
 
   Usar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
@@ -232,8 +233,12 @@ begin
   chave := '';
   if NFe.infNFe.Versao >= 2 then
    begin
+     xCNPJCPF := nfe.emit.CNPJCPF;  
+     if not EstaVazio(nfe.Avulsa.CNPJ) then  
+       xCNPJCPF := nfe.Avulsa.CNPJ;    
+   
      if not GerarChave(Chave, nfe.ide.cUF, nfe.ide.cNF, nfe.ide.modelo, nfe.ide.serie,
-       nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)), nfe.ide.dEmi, nfe.emit.CNPJCPF) then
+       nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)), nfe.ide.dEmi, xCNPJCPF) then
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
    end
   else

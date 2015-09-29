@@ -51,6 +51,7 @@ Símbolo : Significado
 -- ACBrNFeWebServices --
 [-] TNFeConsulta, Correção de Bug introduzido em 28/09. Interpretação errada de
     tpEmis e tpAmb (por: DSA)
+[-] http://www.projetoacbr.com.br/forum/topic/24731-chave-incorreta-ao-carregar-nfe-avulsa/
 
 28/09/2015
 -- ACBrNFeWebServices --

@@ -1149,11 +1149,10 @@ begin
   Versao := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   Modelo := 'MDFe';
   FcUF   := StrToInt(Copy(FMDFeChave, 1, 2));
-  FTpAmb := StrToTpAmb(ok, copy(FMDFeChave, 35, 1));
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo, CUFtoUF(FcUF),
-    FTpAmb,
+    FPConfiguracoesMDFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
     FPURL

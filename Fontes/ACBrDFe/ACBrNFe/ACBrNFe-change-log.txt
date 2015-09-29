@@ -60,6 +60,11 @@ Símbolo : Significado
 -- ACBrNFeNotasFiscais --    (por: DSA)
 [*] Corrigido o método Validar, para extrair apenas a Tag <NFe> do XML informado
 
+-- ACBrNFeServicos.ini --
+[-] Correção de endereços
+    http://www.projetoacbr.com.br/forum/topic/24565-erro-2261-falha-ao-acessar-banco-de-dados/#comment-159784
+    por: regys.silveira
+
 26/09/2015
 -- ACBrNFeDANFeRLR --
 [+] Adicionado suporte as propriedades: CasasDecimais.Tag, CasasDecimais._Mask_qCom e

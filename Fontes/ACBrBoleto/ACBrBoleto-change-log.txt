@@ -67,6 +67,11 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 29/09/2015 ver. 0.0.147a
+-- ACBrBancoBrasil --
+[-]Ajuste remessa CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/24635-retorno-arquivo-banco-do-brasil-layout240/
+
 Data: 23/09/2015 ver. 0.0.146a
 -- ACBrBancoBrasil --
 [-]Ajuste retorno CNAB400. (Fenix)

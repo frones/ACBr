@@ -366,15 +366,22 @@ begin
      wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
                                                   ACBrTitulo.NossoNumero);
 
-     if (wTamConvenio = 7) or ((wTamConvenio = 6) and (wTamNossoNum = 17)) then
-       aDV:= ''
-     else
-       aDV:= CalcularDigitoVerificador(ACBrTitulo);
-
-     if ANossoNumero = '0' then
+     wCarteira:= StrToIntDef(Carteira, 0);
+     if ((wCarteira = 11) or (wCarteira= 31) or (wCarteira = 51)) or
+        (((wCarteira = 12) or (wCarteira = 15) or (wCarteira = 17)) and
+         (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite)) then
      begin
-       ANossoNumero := '';
-       aDV          := '';
+       ANossoNumero := StringOfChar('0', 20);
+       aDV          := ' ';
+     end
+     else
+     begin
+       ANossoNumero := FormataNossoNumero(ACBrTitulo);
+
+       if (wTamConvenio = 7) or ((wTamConvenio = 6) and (wTamNossoNum = 17)) then
+         aDV:= ''
+       else
+         aDV:= CalcularDigitoVerificador(ACBrTitulo);
      end;
 
      aAgencia := PadLeft(ACBrBoleto.Cedente.Agencia, 5, '0');

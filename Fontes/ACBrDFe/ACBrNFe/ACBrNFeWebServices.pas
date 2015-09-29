@@ -1574,11 +1574,10 @@ begin
   Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   Modelo := ModeloDFToPrefixo( StrToModeloDF(ok, ExtrairModeloChaveAcesso(FNFeChave) ));
   FcUF   := StrToInt(Copy(FNFeChave,1,2));
-  FTpAmb := StrToTpAmb(ok, copy(FNFeChave,35,1));
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo, CUFtoUF(FcUF),
-    FTpAmb,
+    FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
     FPURL

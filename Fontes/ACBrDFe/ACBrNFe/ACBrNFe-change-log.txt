@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2015
+-- ACBrNFeWebServices --
+[-] TNFeConsulta, Correção de Bug introduzido em 28/09. Interpretação errada de
+    tpEmis e tpAmb (por: DSA)
+
 28/09/2015
 -- ACBrNFeWebServices --
 [-] TNFeConsulta, correção para consulta de NFEs com UF diferente da UF do

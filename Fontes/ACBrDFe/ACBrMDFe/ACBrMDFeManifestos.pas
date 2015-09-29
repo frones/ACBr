@@ -297,6 +297,9 @@ begin
   begin
     ALayout := LayMDFeRecepcao;
 
+    // Extraindo apenas os dados da MDFe (sem mdfeProc)
+    AXML := '<MDFe xmlns' + RetornarConteudoEntre(AXML, '<MDFe xmlns', '</MDFe>') + '</MDFe>';
+
     ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
 
     if not ModalEhValido then

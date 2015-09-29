@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2015
+(ACBrMDFeWebServices)
+[-] TMDFeConsulta, correção para consulta de MDFEs com UF diferente da UF do
+    Emissor.  
+    por: Italo Jurisato Junior
+[-] Acerto para utilizar o CNPJ do evento quando for salvá-lo em disco,
+    em alguns casos o usuário pode utilizar o certificado da Matriz, antes
+    estava salvando utilizando o CNPJ do certificado o que mistura xmls de
+    evento da matriz com a filial.
+    por: Italo Jurisato Junior
+
+(ACBrMDFeManifestos)
+[*] Corrigido o método Validar, para extrair apenas a Tag <MDFe> do XML informado
+    por: Italo Jurisato Junior
+
 22/09/2015
 [*] (ACBrMDFeWebServices)
     Incluido a linha que defini a versão do serviço em ConsultaMDFeNaoEnc.

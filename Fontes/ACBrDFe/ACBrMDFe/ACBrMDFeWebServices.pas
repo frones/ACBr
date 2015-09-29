@@ -87,11 +87,11 @@ type
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
-    FcUF: integer;
+    FcUF: Integer;
     FdhRecbto: TDateTime;
-    FTMed: integer;
+    FTMed: Integer;
     FdhRetorno: TDateTime;
     FxObs: String;
   protected
@@ -107,11 +107,11 @@ type
     property versao: String read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-    property cUF: integer read FcUF;
+    property cUF: Integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
-    property TMed: integer read FTMed;
+    property TMed: Integer read FTMed;
     property dhRetorno: TDateTime read FdhRetorno;
     property xObs: String read FxObs;
   end;
@@ -126,11 +126,11 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FxMotivo: String;
     FdhRecbto: TDateTime;
-    FTMed: integer;
+    FTMed: Integer;
 
     FMDFeRetorno: TretEnvMDFe;
 
@@ -154,11 +154,11 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
-    property TMed: integer read FTMed;
+    property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
   end;
 
@@ -173,10 +173,10 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FxMotivo: String;
-    FcMsg: integer;
+    FcMsg: Integer;
     FxMsg: String;
 
     FMDFeRetorno: TRetConsReciMDFe;
@@ -202,10 +202,10 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property xMotivo: String read FxMotivo;
-    property cMsg: integer read FcMsg;
+    property cMsg: Integer read FcMsg;
     property xMsg: String read FxMsg;
     property Recibo: String read GetRecibo write FRecibo;
     property Protocolo: String read FProtocolo write FProtocolo;
@@ -222,11 +222,11 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
-    FcUF: integer;
+    FcUF: Integer;
     FxMsg: String;
-    FcMsg: integer;
+    FcMsg: Integer;
 
     FMDFeRetorno: TRetConsReciMDFe;
   protected
@@ -243,11 +243,11 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-    property cUF: integer read FcUF;
+    property cUF: Integer read FcUF;
     property xMsg: String read FxMsg;
-    property cMsg: integer read FcMsg;
+    property cMsg: Integer read FcMsg;
     property Recibo: String read FRecibo write FRecibo;
 
     property MDFeRetorno: TRetConsReciMDFe read FMDFeRetorno;
@@ -264,15 +264,17 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FRetMDFeDFe: String;
 
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    function GerarUFSoap: String; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -288,8 +290,8 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property RetMDFeDFe: String read FRetMDFeDFe;
 
     property protMDFe: TProcMDFe read FprotMDFe;
@@ -300,10 +302,10 @@ type
 
   TMDFeEnvEvento = class(TMDFeWebService)
   private
-    FidLote: integer;
+    FidLote: Integer;
     Fversao: String;
     FEvento: TEventoMDFe;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
 
@@ -324,9 +326,9 @@ type
     constructor Create(AOwner: TACBrDFe; AEvento: TEventoMDFe); reintroduce; overload;
     destructor Destroy; override;
 
-    property idLote: integer read FidLote write FidLote;
+    property idLote: Integer read FidLote write FidLote;
     property versao: String read Fversao write Fversao;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
 
@@ -376,7 +378,7 @@ type
   private
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
-    FcUFAutor: integer;
+    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
@@ -397,7 +399,7 @@ type
 
     property versao: String read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property cUFAutor: integer read FcUFAutor write FcUFAutor;
+    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
@@ -449,7 +451,7 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: integer): Boolean; overload;
+    function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
     function ConsultaMDFeNaoEnc(ACNPJ: String): Boolean;
 
@@ -683,7 +685,7 @@ end;
 
 procedure TMDFeRecepcao.DefinirDadosMsg;
 var
-  I: integer;
+  I: Integer;
   vMDFe: String;
 begin
   vMDFe := '';
@@ -794,7 +796,7 @@ end;
 
 function TMDFeRetRecepcao.TratarRespostaFinal: Boolean;
 var
-  I, J: integer;
+  I, J: Integer;
   AProcMDFe: TProcMDFe;
   AInfProt: TProtMDFeCollection;
   SalvarXML: Boolean;
@@ -914,7 +916,7 @@ end;
 
 function TMDFeRetRecepcao.Executar: Boolean;
 var
-  IntervaloTentativas, Tentativas: integer;
+  IntervaloTentativas, Tentativas: Integer;
 begin
   Result := False;
 
@@ -1136,6 +1138,30 @@ begin
   inherited Destroy;
 end;
 
+procedure TMDFeConsulta.DefinirURL;
+var
+  Versao: Double;
+  Modelo: String;
+  ok: Boolean;
+begin
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  Modelo := 'MDFe';
+  FcUF   := StrToInt(Copy(FMDFeChave, 1, 2));
+  FTpAmb := StrToTpAmb(ok, copy(FMDFeChave, 35, 1));
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(
+    Modelo, CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    Versao,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
 procedure TMDFeConsulta.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'MDFeConsulta';
@@ -1150,7 +1176,7 @@ begin
   OK := False;
   ConsSitMDFe := TConsSitMDFe.Create;
   try
-    ConsSitMDFe.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    ConsSitMDFe.TpAmb := FTpAmb;
     ConsSitMDFe.chMDFe := FMDFeChave;
     ConsSitMDFe.Versao := FPVersaoServico;
     ConsSitMDFe.GerarXML;
@@ -1159,6 +1185,11 @@ begin
   finally
     ConsSitMDFe.Free;
   end;
+end;
+
+function TMDFeConsulta.GerarUFSoap: String;
+begin
+  Result := '<cUF>' + IntToStr(FcUF) + '</cUF>';
 end;
 
 function TMDFeConsulta.TratarResposta: Boolean;
@@ -1546,7 +1577,7 @@ end;
 procedure TMDFeEnvEvento.DefinirDadosMsg;
 var
   EventoMDFe: TEventoMDFe;
-  I, F: integer;
+  I, F: Integer;
   Lote, Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
   SchemaEventoMDFe: TSchemaMDFe;
@@ -1642,7 +1673,7 @@ end;
 function TMDFeEnvEvento.TratarResposta: Boolean;
 var
   Leitor: TLeitor;
-  I, J: integer;
+  I, J: Integer;
   wProc: TStringList;
   NomeArq, VersaoEvento: String;
 begin
@@ -1720,11 +1751,14 @@ begin
 
               FEvento.Evento.Items[I].RetInfEvento.XML := wProc.Text;
 
-              NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
+              NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) +
                 '-procEventoMDFe.xml';
 
+//              if FPConfiguracoesMDFe.Arquivos.Salvar then
+//                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+
               if FPConfiguracoesMDFe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
+                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
             finally
               wProc.Free;
             end;
@@ -1940,7 +1974,7 @@ end;
 
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
-  I: integer;
+  I: Integer;
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeDistDFeInteresseResult');
@@ -2118,7 +2152,7 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: integer): Boolean;
+function TWebServices.Envia(ALote: Integer): Boolean;
 begin
   Result := Envia(IntToStr(ALote));
 end;

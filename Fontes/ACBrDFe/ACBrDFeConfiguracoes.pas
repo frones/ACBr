@@ -745,8 +745,10 @@ begin
 
   if SepararPorCNPJ then
   begin
+    CNPJ := OnlyNumber(CNPJ);
+
     if EstaVazio(CNPJ) then
-      CNPJ := TACBrDFe(FConfiguracoes.Owner).SSL.CertCNPJ;
+      CNPJ := OnlyNumber(TACBrDFe(FConfiguracoes.Owner).SSL.CertCNPJ);
 
     if NaoEstaVazio(CNPJ) then
       Dir := PathWithDelim(Dir) + CNPJ;

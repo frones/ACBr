@@ -1,10 +1,10 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 629
-  Height = 742
-  Top = 67
+  Left = 621
+  Height = 741
+  Top = 65
   Width = 738
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 742
+  ClientHeight = 741
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -248,6 +248,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 24
           Top = 0
           Width = 214
+          Behavior = [beSiteExpander]
           Lines.Strings = (
             '9999999999999 DESCRICAO DO PRODUTO 99,999 UN x 999,999 (99,99)'
           )
@@ -760,6 +761,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Top = 0
           Width = 286
           Align = faClient
+          Behavior = [beSiteExpander]
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
@@ -830,6 +832,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 0
           Width = 212
+          Behavior = [beSiteExpander]
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
@@ -894,6 +897,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 12
           Top = 0
           Width = 212
+          Behavior = [beSiteExpander]
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
@@ -951,6 +955,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 22
         Width = 286
         Align = faTop
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1229,6 +1234,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
               Width = 285
               Align = faClient
               Alignment = taCenter
+              Behavior = [beSiteExpander]
               Font.Color = clBlack
               Font.Height = -9
               Font.Name = 'Arial'
@@ -1250,6 +1256,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
               Width = 285
               Align = faTop
               Alignment = taCenter
+              Behavior = [beSiteExpander]
               Font.Color = clBlack
               Font.Height = -9
               Font.Name = 'Arial'
@@ -1326,6 +1333,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Width = 286
           Align = faTop
           Alignment = taCenter
+          Behavior = [beSiteExpander]
           Layout = tlCenter
           Lines.Strings = (
             ''
@@ -1867,6 +1875,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             Width = 285
             Align = faClient
             Alignment = taCenter
+            Behavior = [beSiteExpander]
             Font.Color = clBlack
             Font.Height = -9
             Font.Name = 'Arial'
@@ -1887,6 +1896,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             Width = 285
             Align = faTop
             Alignment = taCenter
+            Behavior = [beSiteExpander]
             Font.Color = clBlack
             Font.Height = -9
             Font.Name = 'Arial'
@@ -2136,6 +2146,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Align = faTop
         Alignment = taCenter
+        Behavior = [beSiteExpander]
         Layout = tlCenter
         Lines.Strings = (
           ''
@@ -2157,9 +2168,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
-    DocumentInfo.ModDate = 0
-    ViewerOptions = []
-    FontEncoding = feNoEncoding
     DisplayName = 'ACBrBoleto - http://acbr.sf.net'
     left = 8
   end

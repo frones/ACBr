@@ -464,10 +464,6 @@ var
 begin
   inherited Imprimir;    // Executa verificações padroes
 
-  {$IFDEF FPC}
-   LoadPortugueseStrings;
-  {$ENDIF}
-
   frACBrBoletoFortes := TACBrBoletoFCFortesFr.Create(Self);
   try
      with frACBrBoletoFortes do
@@ -504,19 +500,8 @@ begin
                  exit ;
                end ;
 
-              {$IFDEF FPC}
-                RLFiltro.Copies := NumCopias ;
-              {$ENDIF}
               RLFiltro.FileName := NomeArquivo ;
-
-              {$IFDEF FPC}
-                RLFiltro.Pages := RLLayout.Pages ;
-                RLFiltro.FirstPage := 1;
-                RLFiltro.LastPage := RLLayout.Pages.PageCount;
-                RLFiltro.Run;
-              {$ELSE}
-                RLFiltro.FilterPages( RLLayout.Pages );
-              {$ENDIF}
+              RLFiltro.FilterPages( RLLayout.Pages );
             end;
          end;
      end;

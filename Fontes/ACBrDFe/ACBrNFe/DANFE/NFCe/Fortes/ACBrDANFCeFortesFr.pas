@@ -709,10 +709,6 @@ var
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
 begin
-  {$IFDEF FPC}
-   LoadPortugueseStrings;
-  {$ENDIF}
-
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
   try
     with frACBrNFeDANFCeFortesFr do
@@ -747,21 +743,9 @@ begin
             exit ;
           end ;
 
-          {$IFDEF FPC}
-          RLFiltro.Copies := NumCopias ;
-          {$ENDIF}          
-          
-          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;          
+          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
           RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
-          
-          {$IFDEF FPC}
-          RLFiltro.Pages := RLLayout.Pages ;
-          RLFiltro.FirstPage := 1;
-          RLFiltro.LastPage := RLLayout.Pages.PageCount;
-          RLFiltro.Run;
-          {$ELSE}
           RLFiltro.FilterPages( RLLayout.Pages );
-          {$ENDIF}
         end;
       end;
     end;

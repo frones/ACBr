@@ -859,13 +859,6 @@ var
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
 begin
-  {$IFDEF FPC}
-   LoadPortugueseStrings;
-  {$ELSE}
-   // Evitando mensagem de versão do fortes //
-//   SetVersion( CommercialVersion, ReleaseVersion, CommentVersion );
-  {$ENDIF}
-
   frACBrSATExtratoFortesFr := TACBrSATExtratoFortesFr.Create(Self);
   try
     with frACBrSATExtratoFortesFr do
@@ -920,19 +913,8 @@ begin
             exit ;
           end ;
 
-          {$IFDEF FPC}
-            RLFiltro.Copies := NumCopias ;
-          {$ENDIF}
           RLFiltro.FileName := NomeArquivo ;
-
-          {$IFDEF FPC}
-            RLFiltro.Pages := RLLayout.Pages ;
-            RLFiltro.FirstPage := 1;
-            RLFiltro.LastPage := RLLayout.Pages.PageCount;
-            RLFiltro.Run;
-          {$ELSE}
-            RLFiltro.FilterPages( RLLayout.Pages );
-          {$ENDIF}
+          RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;
     end;

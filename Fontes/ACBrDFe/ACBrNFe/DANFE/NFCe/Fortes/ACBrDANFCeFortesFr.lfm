@@ -199,6 +199,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Top = 0
           Width = 276
           Align = faTop
+          Behavior = [beSiteExpander]
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -834,6 +835,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             Width = 276
             Align = faTop
             Alignment = taCenter
+            Behavior = [beSiteExpander]
             Font.Color = clBlack
             Font.Height = -9
             Font.Name = 'Arial'
@@ -1005,6 +1007,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Width = 276
         Align = faTop
         Alignment = taCenter
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1024,6 +1027,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Width = 276
         Align = faTop
         Alignment = taCenter
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1139,6 +1143,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Width = 276
         Align = faTop
         Alignment = taCenter
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1203,6 +1208,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Width = 276
         Align = faTop
         Alignment = taCenter
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -1222,9 +1228,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'Projeto ACBr'
-    DocumentInfo.ModDate = 0
-    ViewerOptions = []
-    FontEncoding = feNoEncoding
     DisplayName = 'Documento PDF'
     left = 370
     top = 430

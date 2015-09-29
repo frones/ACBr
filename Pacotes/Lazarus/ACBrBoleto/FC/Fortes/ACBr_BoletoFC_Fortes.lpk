@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_BoletoFC_Fortes"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simões Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -11,9 +12,6 @@
         <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrBoleto\FC\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrBoleto\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Boleto Impressão em FortesReport - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL"/>
@@ -25,10 +23,9 @@
         <UnitName Value="ACBrBoletoFCFortesFr"/>
       </Item1>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="fortes324forlaz"/>
+        <PackageName Value="frce"/>
       </Item1>
       <Item2>
         <PackageName Value="ACBr_Boleto"/>

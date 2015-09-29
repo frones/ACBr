@@ -57,10 +57,10 @@
     </Files>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="frce"/>
       </Item1>
       <Item2>
-        <PackageName Value="fortes324forlaz"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>

@@ -38,10 +38,10 @@
     </Files>
     <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="frce"/>
       </Item1>
       <Item2>
-        <PackageName Value="fortes324forlaz"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item2>
       <Item3>
         <PackageName Value="ACBr_SAT"/>

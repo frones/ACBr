@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_MDFe_DAMDFeRL"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -11,12 +12,6 @@
         <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrMDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerMessages>
-          <MsgFileName Value=""/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
@@ -47,13 +42,12 @@
         <UnitName Value="ACBrMDFeDAMDFeRLReg"/>
       </Item6>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="frce"/>
       </Item1>
       <Item2>
-        <PackageName Value="fortes324forlaz"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>

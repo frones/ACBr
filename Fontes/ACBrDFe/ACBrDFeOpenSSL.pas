@@ -668,7 +668,12 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
       prop := ext.value;
       propStr := PAnsiChar(prop^.data);
       SetLength(propStr, prop^.length);
+
+      // tentar achar nos dois tipos de inicios possíveis
       P := pos(#1#3#3#160#16#4#14, propStr);
+      if P <= 0 then
+        P := pos(#1#3#3, propStr);
+
       if P > 0 then
       begin
         Result := copy(propStr,P+7,14);

@@ -48,6 +48,9 @@ Símbolo : Significado
 -- ACBrDFeConfiguracoes --
 [*] GetPath, ajustado para que Parâmetro CNPJ considere apenas os numéricos
     http://www.projetoacbr.com.br/forum/index.php?showtopic=24676
+[-] Acerto na leitura do CNPJ no certificado, encontramos alguns certificados
+    em que na informação adicional os caracteres de inicio do CNPJ são 
+    diferentes.
 
 24/09/2015
 -- ACBrDFeConfiguracoes --    (por: DSA)

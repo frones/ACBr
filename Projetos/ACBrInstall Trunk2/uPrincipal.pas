@@ -516,11 +516,15 @@ procedure TfrmPrincipal.DeixarSomenteLib;
   procedure Copiar(const Extensao : string);
   var
     ListArquivos: TStringDynArray;
+    Arquivo : string;
     i: integer;
   begin
     ListArquivos := TDirectory.GetFiles(IncludeTrailingPathDelimiter(sDirRoot) + 'Fontes', Extensao ,TSearchOption.soAllDirectories ) ;
     for i := Low(ListArquivos) to High(ListArquivos) do
-      TDirectory.Copy(ListArquivos[i], sDirLibrary);
+    begin
+      Arquivo := ExtractFileName(ListArquivos[i]);
+      CopyFile(PWideChar(ListArquivos[i]), PWideChar(IncludeTrailingPathDelimiter(sDirLibrary)), True);
+    end;
   end;
 begin
   // remover os path com o segundo parametro

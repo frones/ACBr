@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2015
+-- ACBrNFeWebServices.pas --
+[-] Acerto na consulta de NF-e, não estava setando o ambiente antes de consultar
+    isso fazia com que o ambiente ficasse sempre em produção.
+    por: regys.silveira
+
 29/09/2015
 -- pcnEnvEventoNFe --
 [-] Correção ao enviar um Evento de EPEC de uma NFC-e o grupo <dest> deverá ser

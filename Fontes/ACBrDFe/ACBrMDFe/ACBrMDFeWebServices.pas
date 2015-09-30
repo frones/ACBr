@@ -308,6 +308,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
+    FCNPJ: String;
 
     FEventoRetorno: TRetEventoMDFe;
 
@@ -1564,6 +1565,7 @@ end;
 procedure TMDFeEnvEvento.DefinirURL;
 begin
   FPLayout := LayMDFeEvento;
+  FCNPJ := FEvento.Evento.Items[0].InfEvento.CNPJ;
 
   inherited DefinirURL;
 end;
@@ -1779,7 +1781,7 @@ begin
 
   if FPConfiguracoesMDFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento);
+      FPDadosMsg, GerarPathEvento(FCNPJ));
 end;
 
 procedure TMDFeEnvEvento.SalvarResposta;
@@ -1788,7 +1790,7 @@ begin
 
   if FPConfiguracoesMDFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento);
+      FPDadosMsg, GerarPathEvento(FCNPJ));
 end;
 
 function TMDFeEnvEvento.GerarMsgLog: String;

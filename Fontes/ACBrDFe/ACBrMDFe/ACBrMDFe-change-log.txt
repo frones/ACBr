@@ -51,6 +51,8 @@ Símbolo : Significado
 -- ACBrMDFeWebServices --
 [-] Correção para que o tipo de ambiente fique correto na consulta.
     por: regys.silveira
+[-] Acerto para utilizar o CNPJ do evento ao salvar os arquivos de envio/retorno.
+    por: Italo Jurisato Junior
 
 29/09/2015
 -- ACBrMDFeDAMDFeRLRetrato --

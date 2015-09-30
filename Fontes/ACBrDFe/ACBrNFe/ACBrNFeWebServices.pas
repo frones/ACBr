@@ -1580,7 +1580,7 @@ begin
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     CUFtoUF(FcUF),
-    FPConfiguracoesNFe.WebServices.Ambiente,
+    FTpAmb,
     LayOutToServico(FPLayout),
     Versao,
     FPURL

@@ -113,7 +113,7 @@ type
     function LerXml_provedorInfisc: Boolean;
     function LerXML_provedorEquiplano: Boolean;
     function LerXML_provedorEL: Boolean;
-	function LerXml_provedorNFSEBrasil: boolean;
+    function LerXml_provedorNFSEBrasil: boolean;
 	
   published
     property Leitor: TLeitor read FLeitor write FLeitor;

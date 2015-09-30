@@ -814,6 +814,10 @@ end;
 
 function TNFSeWebService.ExtrairRetorno(TAGResposta: String): String;
 begin
+  // A função ExtrairRetorno possui um parâmetro que seria o nome do grupo que
+  // contem o retorno desejado, no momento a função não faz uso dela.
+  // Será avaliado a real necessidade desse parâmetro.
+  
   Result := SeparaDados(FPRetornoWS, 'return');
 
   if Result = '' then
@@ -822,9 +826,14 @@ begin
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'env:Body');
 
-//  Result := SeparaDados(FPRetornoWS, TAGResposta);
+  // Caso não consiga extrai o retorno, retornar a resposta completa.
+  if Result = '' then
+    Result := FPRetornorWS;
 
-//    Result := Result + '</' + TAGResposta + '>';
+(*
+  Result := SeparaDados(FPRetornoWS, TAGResposta);
+  Result := Result + '</' + TAGResposta + '>';
+*)
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;

@@ -351,7 +351,8 @@ begin
      Trim(CFe.Entrega.nro)+
      Trim(CFe.Entrega.xCpl)+
      Trim(CFe.Entrega.xBairro)+
-     Trim(CFe.Entrega.xMun) <> '' then
+     Trim(CFe.Entrega.xMun)+
+     Trim(CFe.Dest.xNome) <> '' then
    begin
      FPosPrinter.Buffer.Add('</fn></linha_simples>');
      FPosPrinter.Buffer.Add('DADOS PARA ENTREGA');

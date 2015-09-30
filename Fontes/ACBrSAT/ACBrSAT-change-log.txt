@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/09/2015
+-- ACBrSATExtratoESCPOS --
+[*] http://www.projetoacbr.com.br/forum/topic/24717-nome-do-destinatario-cupom-sa
+    Adicionado o nome do destinatário no endereço de entrega.
+    por: regys.silveira   
+
 Data: 17/09/2015
 -- ACBrSATExtratoESCPOS --
 [-] Ajuste para evitar A.V. em alguns Compiladores que não tratam corretamente

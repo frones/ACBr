@@ -250,6 +250,7 @@ type
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
     edtEmailAssuntoCTe: TEdit;
+    edtNumCopia: TSpinEdit;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
@@ -404,7 +405,6 @@ type
     edtMargemSup: TEdit;
     edtModalidade: TEdit;
     edtNcmNumero: TEdit;
-    edtNumCopia: TEdit;
     edtPathDPEC: TEdit;
     edtPathEvento: TEdit;
     edtPathInu: TEdit;
@@ -3377,7 +3377,7 @@ begin
     edtFaxEmpresa.Text := Ini.ReadString('DANFE', 'Fax', '');
     cbxImpDescPorc.Checked := Ini.ReadBool('DANFE', 'ImpDescPorc', True);
     cbxMostrarPreview.Checked := Ini.ReadBool('DANFE', 'MostrarPreview', False);
-    edtNumCopia.Text := Ini.ReadString('DANFE', 'Copias', '1');
+    edtNumCopia.Value := Ini.ReadInteger('DANFE', 'Copias', 1);
     edtLargCodProd.Text := Ini.ReadString('DANFE', 'LarguraCodigoProduto', '54');
     edtEspBorda.Text := Ini.ReadString('DANFE', 'EspessuraBorda', '1');
     edtFonteRazao.Text := Ini.ReadString('DANFE', 'FonteRazao', '12');
@@ -3430,7 +3430,7 @@ begin
     ACBrCTe1.DACTe.ImprimirDescPorc  := cbxImpDescPorc.Checked;
     ACBrCTe1.DACTe.MostrarPreview    := cbxMostrarPreview.Checked;
     ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
-    ACBrCTe1.DACTe.NumCopias  := StrToIntDef(edtNumCopia.Text, 1);
+    ACBrCTe1.DACTe.NumCopias  := edtNumCopia.Value;
     ACBrCTe1.DACTe.MargemInferior  := StrToFloatDef(edtMargemInf.Text,0.8);
     ACBrCTe1.DACTe.MargemSuperior  := StrToFloatDef(edtMargemSup.Text,0.8);
     ACBrCTe1.DACTe.MargemDireita   := StrToFloatDef(edtMargemDir.Text,0.51);
@@ -3447,7 +3447,7 @@ begin
     ACBrMDFe1.DAMDFe.Fax     := edtFaxEmpresa.Text;
     ACBrMDFe1.DAMDFe.MostrarPreview    := cbxMostrarPreview.Checked;
     ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
-    ACBrMDFe1.DAMDFe.NumCopias  := StrToIntDef(edtNumCopia.Text, 1);
+    ACBrMDFe1.DAMDFe.NumCopias  := edtNumCopia.Value;
     ACBrMDFe1.DAMDFe.MargemInferior  := StrToFloatDef(edtMargemInf.Text,0.8);
     ACBrMDFe1.DAMDFe.MargemSuperior  := StrToFloatDef(edtMargemSup.Text,0.8);
     ACBrMDFe1.DAMDFe.MargemDireita   := StrToFloatDef(edtMargemDir.Text,0.51);
@@ -4153,7 +4153,7 @@ begin
     Ini.WriteString('DANFE', 'Fax', edtFaxEmpresa.Text);
     Ini.WriteBool('DANFE', 'ImpDescPorc', cbxImpDescPorc.Checked);
     Ini.WriteBool('DANFE', 'MostrarPreview', cbxMostrarPreview.Checked);
-    Ini.WriteString('DANFE', 'Copias', edtNumCopia.Text);
+    Ini.WriteInteger('DANFE', 'Copias', edtNumCopia.Value);
     Ini.WriteString('DANFE', 'LarguraCodigoProduto', edtLargCodProd.Text);
     Ini.WriteString('DANFE', 'EspessuraBorda', edtEspBorda.Text);
     Ini.WriteString('DANFE', 'FonteRazao', edtFonteRazao.Text);
@@ -6773,7 +6773,7 @@ begin
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
     ACBrNFe1.DANFE.MostrarPreview := cbxMostrarPreview.Checked;
-    ACBrNFe1.DANFE.NumCopias := StrToIntDef(edtNumCopia.Text, 1);
+    ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
     ACBrNFe1.DANFE.ProdutosPorPagina := StrToIntDef(edtLargCodProd.Text, 0);
     ACBrNFe1.DANFE.MargemInferior := StrToFloatDef(edtMargemInf.Text, 0.8);
     ACBrNFe1.DANFE.MargemSuperior := StrToFloatDef(edtMargemSup.Text, 0.8);

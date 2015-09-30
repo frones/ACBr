@@ -270,9 +270,7 @@ begin
               ACBrNFe1.DANFE.Impressora := Cmd.Params(1);
 
            if NaoEstaVazio(Cmd.Params(2)) then
-              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1)
-           else
-              ACBrNFe1.DANFE.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
 
            if NaoEstaVazio(Cmd.Params(3)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(3);
@@ -445,9 +443,7 @@ begin
            end;
 
            if NaoEstaVazio(Cmd.Params(3)) then
-              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1)
-           else
-              ACBrNFe1.DANFE.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1);
 
            ACBrNFe1.ImprimirEvento;
            Cmd.Resposta := 'Evento Impresso com sucesso';
@@ -935,14 +931,14 @@ begin
                           bImprimir := (Cmd.Params(1) = '1');
                           cImpressora := Cmd.Params(2);
                           bMostrarPreview := (Cmd.Params(4) = '1');
-                          nNumCopias := StrToIntDef(Cmd.Params(5),1);
+                          nNumCopias := StrToIntDef(Cmd.Params(5), 0);
                          end
                         else
                          begin
                           bImprimir := (Cmd.Params(2) = '1');
                           cImpressora := Cmd.Params(4);
                           bMostrarPreview := (Cmd.Params(5) = '1');
-                          nNumCopias := StrToIntDef(Cmd.Params(6),1);
+                          nNumCopias := StrToIntDef(Cmd.Params(6), 0);
                          end;
 
                         if bMostrarPreview and ACBrNFe1.DANFE.MostrarPreview then
@@ -953,7 +949,8 @@ begin
 
                         ConfiguraDANFe;
 
-                        ACBrNFe1.DANFE.NumCopias := nNumCopias;
+                        if nNumCopias > 0 then
+                          ACBrNFe1.DANFE.NumCopias := nNumCopias;
 
                         if NaoEstaVazio(cImpressora) then
                            ACBrNFe1.DANFE.Impressora := cImpressora;
@@ -1770,6 +1767,7 @@ begin
     SL.LoadFromFile(AStr)
  else
     Sl.Text := ConvertStrRecived( Astr );
+
  INIRec.SetStrings( SL );
  SL.Free ;
  with FrmACBrMonitor do
@@ -1793,8 +1791,8 @@ begin
          ACBrNFe1.Configuracoes.Geral.VersaoDF := StrToVersaoDF(OK,versao);
          Ide.serie      := INIRec.ReadInteger( 'Identificacao','Serie'  ,1);
          Ide.nNF        := INIRec.ReadInteger( 'Identificacao','Numero' ,INIRec.ReadInteger( 'Identificacao','nNF' ,0));
-         Ide.dEmi       := StringToDateTime(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi','0'))));
-         Ide.dSaiEnt    := StringToDateTime(INIRec.ReadString( 'Identificacao','Saida'  ,INIRec.ReadString( 'Identificacao','dSaiEnt'  ,INIRec.ReadString( 'Identificacao','dhSaiEnt'  ,'0'))));
+         Ide.dEmi       := StringToDateTime(INIRec.ReadString( 'Identificacao','Emissao',INIRec.ReadString( 'Identificacao','dEmi',INIRec.ReadString( 'Identificacao','dhEmi',FormatDateTimeBr(Now)))));
+         Ide.dSaiEnt    := StringToDateTime(INIRec.ReadString( 'Identificacao','Saida'  ,INIRec.ReadString( 'Identificacao','dSaiEnt'  ,INIRec.ReadString( 'Identificacao','dhSaiEnt','0'))));
          Ide.hSaiEnt    := StringToDateTime(INIRec.ReadString( 'Identificacao','hSaiEnt','0'));  //NFe2
          Ide.tpNF       := StrToTpNF(OK,INIRec.ReadString( 'Identificacao','Tipo',INIRec.ReadString( 'Identificacao','tpNF','1')));
 

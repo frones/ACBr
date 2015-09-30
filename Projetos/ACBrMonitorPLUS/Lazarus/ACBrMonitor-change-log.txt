@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2015
+-- ACBrMonitorPLUS --
+[*] Melhorias no uso do parâmetro do Número de cópias de Imprimir -> Geral
+[*] Assumindo valor default para "Ide.dEmi" com a Data e Hora atual
+
 24/09/2015
 -- ACBrMonitorPLUS --
 [*] Unificado três campos com o nome da Software House para ficar somente um nome para tudo

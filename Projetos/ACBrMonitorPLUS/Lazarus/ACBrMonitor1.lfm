@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 517
+  Left = 404
   Height = 689
-  Top = 255
+  Top = 185
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -18,7 +18,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnShortCut = FormShortCut
   Position = poScreenCenter
   ShowHint = True
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.4.2.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsACBrBoleto
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 11
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6482,9 +6482,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsCertificadoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 1
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7450,9 +7450,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsDadosEmpresa
+                ActivePage = tsImpGeralDFe
                 Align = alClient
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -7569,14 +7569,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 234
                     Caption = 'Mostrar Preview antes da impressão'
                     TabOrder = 3
-                  end
-                  object edtNumCopia: TEdit
-                    Left = 231
-                    Height = 25
-                    Top = 62
-                    Width = 74
-                    TabOrder = 12
-                    Text = '1'
                   end
                   object gbxMargem: TGroupBox
                     Left = 6
@@ -7845,6 +7837,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 81
                     Caption = 'Exibir EAN'
                     TabOrder = 10
+                  end
+                  object edtNumCopia: TSpinEdit
+                    Left = 231
+                    Height = 25
+                    Top = 62
+                    Width = 74
+                    MinValue = 1
+                    TabOrder = 12
+                    Value = 1
                   end
                 end
                 object tsDadosEmpresa: TTabSheet
@@ -11057,6 +11058,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemDireita = 0.7
     CasasDecimais._qCom = 4
     CasasDecimais._vUnCom = 4
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -11073,6 +11076,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     vTribMun = 0
     LarguraCodProd = 54
     ExibirEAN = False
+    QuebraLinhaEmVeiculos = True
     left = 589
     top = 448
   end
@@ -12103,6 +12107,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemDireita = 0.51
     MDFeCancelada = False
     MDFeEncerrado = False
+    PrintDialog = True
     left = 456
     top = 488
   end

@@ -155,7 +155,6 @@
         <ComponentName Value="FrmACBrMonitor"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ACBrMonitor1"/>
       </Unit2>
       <Unit3>
         <Filename Value="CmdUnit.pas"/>

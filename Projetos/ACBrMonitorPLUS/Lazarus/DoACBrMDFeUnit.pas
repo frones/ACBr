@@ -305,7 +305,7 @@ begin
            if ACBrUtil.NaoEstaVazio(Cmd.Params(2)) then
               ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(2),1)
            else
-              ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+              ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
 
            if ACBrUtil.NaoEstaVazio(Cmd.Params(3)) then
               ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(3);
@@ -375,7 +375,7 @@ begin
            if ACBrUtil.NaoEstaVazio(Cmd.Params(3)) then
               ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(3),1)
            else
-              ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+              ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
 
            ACBrMDFe1.ImprimirEvento;
            Cmd.Resposta := 'Evento Impresso com sucesso';

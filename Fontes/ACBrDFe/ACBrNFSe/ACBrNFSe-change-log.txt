@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2015
+-- ACBrNFSeWebServices --
+[-] Corrigido a estrutura do envelope de envio e a extração do retorno.
+    Por: Italo Jurisato Junior
+
 23/09/2015
 -- ACBrNFSeConfiguracoes --
 [*] Incluido as propriedades CabecalhoStr e DadosStr que receberão o valor True

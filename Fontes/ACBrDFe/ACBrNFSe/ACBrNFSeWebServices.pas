@@ -649,7 +649,7 @@ end;
 
 procedure TNFSeWebService.DefinirEnvelopeSoap;
 var
-  Texto, DadosMsg, CabMsg: String;
+  Texto, DadosMsg, CabMsg, NameSpace: String;
 begin
   {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
@@ -658,9 +658,10 @@ begin
   {$ENDIF}
 
   Texto := FDadosEnvelope;
-  // %SenhaMsg% : Representa a Mensagem que contem o usuário e senha
-  // %CabMsg%   : Representa a Mensagem de Cabeçalho
-  // %DadosMsg% : Representa a Mensagem de Dados
+  // %SenhaMsg%  : Representa a Mensagem que contem o usuário e senha
+  // %NameSpace% : Representa o NameSpace de Homologação/Produção
+  // %CabMsg%    : Representa a Mensagem de Cabeçalho
+  // %DadosMsg%  : Representa a Mensagem de Dados
 
   DadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
@@ -670,7 +671,13 @@ begin
   if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
     CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
+  if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+    NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
+  else
+    NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
+
   Texto := StringReplace(Texto, '%SenhaMsg%', FDadosSenha, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%NameSpace%', NameSpace, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%CabMsg%', CabMsg, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%DadosMsg%', DadosMsg, [rfReplaceAll]);
 
@@ -807,15 +814,17 @@ end;
 
 function TNFSeWebService.ExtrairRetorno(TAGResposta: String): String;
 begin
-  Result := SeparaDados(FPRetornoWS, 'Return');
+  Result := SeparaDados(FPRetornoWS, 'return');
 
   if Result = '' then
-    Result := SeparaDados(FPRetornoWS, TAGResposta);
+    Result := SeparaDados(FPRetornoWS, 'soap:Body');
 
   if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'soap:Body')
-  else
-    Result := Result + '</' + TAGResposta + '>';
+    Result := SeparaDados(FPRetornoWS, 'env:Body');
+
+//  Result := SeparaDados(FPRetornoWS, TAGResposta);
+
+//    Result := Result + '</' + TAGResposta + '>';
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
@@ -1397,7 +1406,7 @@ function TNFSeEnviarLoteRPS.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno('EnviarLoteRpsResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'EnviarLoteRpsResposta');
 
   FRetEnvLote := TRetEnvLote.Create;
   try
@@ -1619,7 +1628,7 @@ end;
 
 function TNFSeEnviarSincrono.TratarResposta: Boolean;
 begin
-  FPRetWS := ExtrairRetorno('EnviarLoteRpsSincronoResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'EnviarLoteRpsSincronoResposta');
   Result := ExtrairNotasRetorno;
 end;
 
@@ -1825,7 +1834,7 @@ end;
 
 function TNFSeGerarNFSe.TratarResposta: Boolean;
 begin
-  FPRetWS := ExtrairRetorno('GerarNfseResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'GerarNfseResposta');
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2273,7 +2282,7 @@ end;
 
 function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
 begin
-  FPRetWS := ExtrairRetorno('ConsultarLoteRpsResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarLoteRpsResposta');
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2495,7 +2504,7 @@ end;
 
 function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
 begin
-  FPRetWS := ExtrairRetorno('ConsultarNfseRpsResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarNfseRpsResposta');
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2699,7 +2708,7 @@ end;
 
 function TNFSeConsultarNfse.TratarResposta: Boolean;
 begin
-  FPRetWS := ExtrairRetorno('ConsultarNfseResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarNfseResposta');
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2968,7 +2977,7 @@ function TNFSeCancelarNfse.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno('CancelarNfseResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'CancelarNfseResposta');
 
   FRetCancNFSe := TRetCancNfse.Create;
   try
@@ -3339,7 +3348,7 @@ function TNFSeSubstituirNFSe.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno('SubstituirNfseResposta');
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'SubstituirNfseResposta');
 
   FNFSeRetorno := TRetSubsNfse.Create;
   try

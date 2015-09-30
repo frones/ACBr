@@ -56,9 +56,9 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.147a';
+  CACBrBoleto_Versao = '0.0.148a';
 
-  cACBrTipoOcorrenciaDecricao: array[1..179] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..178] of String = (
   'Remessa Registrar',
   'Remessa Baixar',
   'Remessa Debitar em Conta',
@@ -2211,8 +2211,8 @@ begin
 
   for I:= 1 to 38 do
   begin
-    Result[I-1].Tipo := TACBrTipoOcorrencia(I);
-    Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I];
+    Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
+    Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];
   end;
 end;
 

@@ -67,6 +67,11 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 30/09/2015 ver. 0.0.148a
+-- ACBrBoleto --
+[-]Ajuste função GetOcorrenciasRemessa. (webjoel)
+
+
 Data: 29/09/2015 ver. 0.0.147a
 -- ACBrBancoBrasil --
 [-]Ajuste remessa CNAB400. (Juliana Tamizou)

@@ -672,7 +672,7 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
       P := pos(#1#3#3#160#16, propStr);;
       if P > 0 then
       begin
-        Result := OnlyNumber(copy(propStr,P+5,14));
+        Result := LeftStr(OnlyNumber(copy(propStr,P+5,16)),14)
         exit;
       end;
 

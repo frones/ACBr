@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2015
+-- ACBrDFeOpenSSL -- 
+[-] Acerto para garantir que a leitura do certifica nas informações extras seja
+    mais correto.
+    por: Daniel Simões
+[-] Acerto para forçar a utilizar o CNPJ do evento ao invés do CNPJ do certificado
+    evitando assim problemas na gravação de arquivos onde a filial utiliza o 
+    certificado da matriz.
+    por: regys.silveira
+
 29/09/2015
 -- ACBrDFeConfiguracoes --
 [*] GetPath, ajustado para que Parâmetro CNPJ considere apenas os numéricos

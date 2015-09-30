@@ -414,6 +414,7 @@ type
     FcStat: integer;
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
+    FCNPJ: String;
 
     FEventoRetorno: TRetEventoNFe;
 
@@ -2384,6 +2385,7 @@ begin
   FPVersaoServico := '';
   FPURL := '';
   Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+  FCNPJ := FEvento.Evento.Items[0].InfEvento.CNPJ;
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(TACBrNFe(FPDFeOwner).GetNomeModeloDFe, UF ,
     FPConfiguracoesNFe.WebServices.Ambiente, LayOutToServico(FPLayout),
@@ -2644,7 +2646,7 @@ begin
 
   if FPConfiguracoesNFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento);
+      FPDadosMsg, GerarPathEvento(FCNPJ));
 end;
 
 procedure TNFeEnvEvento.SalvarResposta;
@@ -2653,7 +2655,7 @@ begin
 
   if FPConfiguracoesNFe.Geral.Salvar then
 		FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-			FPDadosMsg, GerarPathEvento);
+			FPDadosMsg, GerarPathEvento(FCNPJ));
 end;
 
 function TNFeEnvEvento.GerarMsgLog: String;

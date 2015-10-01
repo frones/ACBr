@@ -904,7 +904,8 @@ type
     procedure ACBrEAD1GetChavePrivada(var Chave: ansistring);
     procedure ACBrEAD1GetChavePublica(var Chave: ansistring);
     procedure ACBrGIF1Click(Sender: TObject);
-    procedure ACBrMail1MailProcess(const aStatus: TMailStatus);
+    procedure ACBrMail1MailProcess(const AMail: TACBrMail;
+      const aStatus: TMailStatus);
     procedure ACBrNFe1GerarLog(const ALogLine: string; var Tratado: boolean);
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetNumeroSessao(var NumeroSessao: Integer);
@@ -1536,7 +1537,8 @@ begin
   OpenURL('http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html');
 end;
 
-procedure TFrmACBrMonitor.ACBrMail1MailProcess(const aStatus: TMailStatus);
+procedure TFrmACBrMonitor.ACBrMail1MailProcess(const AMail: TACBrMail;
+  const aStatus: TMailStatus);
 begin
   pbEmailTeste.Position := integer(aStatus);
   case aStatus of

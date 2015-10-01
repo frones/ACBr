@@ -49,6 +49,7 @@ Símbolo : Significado
 [-] Acerto para garantir que a leitura do certifica nas informações extras seja
     mais correto.
     por: Daniel Simões
+
 [-] Acerto para forçar a utilizar o CNPJ do evento ao invés do CNPJ do certificado
     evitando assim problemas na gravação de arquivos onde a filial utiliza o 
     certificado da matriz.
@@ -58,6 +59,8 @@ Símbolo : Significado
 -- ACBrDFeConfiguracoes --
 [*] GetPath, ajustado para que Parâmetro CNPJ considere apenas os numéricos
     http://www.projetoacbr.com.br/forum/index.php?showtopic=24676
+
+-- ACBrDFeOpenSSL --
 [-] Acerto na leitura do CNPJ no certificado, encontramos alguns certificados
     em que na informação adicional os caracteres de inicio do CNPJ são 
     diferentes.

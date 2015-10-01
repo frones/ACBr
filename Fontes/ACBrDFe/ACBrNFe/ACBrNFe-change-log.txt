@@ -94,7 +94,7 @@ Símbolo : Significado
     por (Henrique Leonardo)
 
 [-] Acerto para verificar corretamente o CNPJ ao assinar o XML da NF-e
-    Em diversos casos a filial pode utilizar o certificado da matri, então
+    Em diversos casos a filial pode utilizar o certificado da matriz, então
     devemos checar somente a raiz do CNPJ (8 primeiros digitos)
     por: regys.silveira
 

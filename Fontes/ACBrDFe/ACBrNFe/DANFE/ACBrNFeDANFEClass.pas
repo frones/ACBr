@@ -293,7 +293,7 @@ end;
 
 procedure TACBrNFeDANFEClass.ImprimirDANFEPDF(NFE : TNFe = nil);
 begin
-  ErroAbstract('ImprimirPDF');
+  ErroAbstract('ImprimirDANFEPDF');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirDANFEResumidoPDF(NFE: TNFe);
@@ -345,7 +345,7 @@ end;
 
 procedure TACBrNFeDANFEClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise EACBrNFeException.Create( NomeProcedure );
+  raise EACBrNFeException.Create( NomeProcedure + ' não implementado em: '+ClassName);
 end;
 
 function TACBrNFeDANFEClass.GetPathPDF: String;

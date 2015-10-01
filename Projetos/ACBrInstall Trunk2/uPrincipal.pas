@@ -460,7 +460,7 @@ begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
     edtDirDestino.Text          := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
-    edtPlatform.ItemIndex       := edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
+    edtPlatform.ItemIndex       := edtPlatform.Items.IndexOf('Win32');//edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
     edtDelphiVersion.ItemIndex  := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
     ckbFecharTortoise.Checked   := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
     rdgDLL.ItemIndex            := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
@@ -1144,9 +1144,9 @@ begin
   sPathBin := IncludeTrailingPathDelimiter(oACBr.Installations[iVersion].BinFolderName);
   // -- Plataforma só habilita para Delphi XE2
   // -- Desabilita para versão diferente de Delphi XE2
-  edtPlatform.Enabled := oACBr.Installations[iVersion].VersionNumber >= 9;
-  if oACBr.Installations[iVersion].VersionNumber < 9 then
-    edtPlatform.ItemIndex := 0;
+  //edtPlatform.Enabled := oACBr.Installations[iVersion].VersionNumber >= 9;
+  //if oACBr.Installations[iVersion].VersionNumber < 9 then
+  edtPlatform.ItemIndex := 0;
 
   // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
   ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24']);

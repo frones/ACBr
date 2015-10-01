@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lstMsgInstalacao
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -51,6 +51,7 @@ object frmPrincipal: TfrmPrincipal
     ShowRouteMap = True
     OnFinishButtonClick = wizPrincipalFinishButtonClick
     OnCancelButtonClick = wizPrincipalCancelButtonClick
+    Color = clWhite
     DesignSize = (
       720
       612)
@@ -1063,6 +1064,7 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Height = -11
       Header.Subtitle.Font.Name = 'Arial'
       Header.Subtitle.Font.Style = []
+      Color = clWhite
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
       object Label4: TLabel
@@ -1190,7 +1192,7 @@ object frmPrincipal: TfrmPrincipal
           'Diret'#243'rio system do Windows (Recomendado)'
           'Diret'#243'rio bin'#225'rio do Delphi'
           'N'#227'o copiar (N'#227'o recomendado)')
-        TabOrder = 4
+        TabOrder = 6
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
@@ -1216,7 +1218,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 350
         Height = 17
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
-        TabOrder = 6
+        TabOrder = 4
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1254,16 +1256,19 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
+        ExplicitHeight = 499
         DesignSize = (
           537
           499)
         inherited btnPacotesDesmarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
+          ExplicitTop = 465
         end
         inherited btnPacotesMarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
+          ExplicitTop = 465
         end
       end
     end
@@ -1288,6 +1293,7 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Height = -11
       Header.Subtitle.Font.Name = 'Arial'
       Header.Subtitle.Font.Style = []
+      Color = clWhite
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
@@ -1372,6 +1378,7 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Height = -11
       Header.Subtitle.Font.Name = 'Arial'
       Header.Subtitle.Font.Style = []
+      Color = clWhite
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
@@ -1405,14 +1412,14 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 0
+        TabOrder = 1
       end
       object pgbInstalacao: TProgressBar
         Left = 20
         Top = 440
         Width = 516
         Height = 17
-        TabOrder = 1
+        TabOrder = 2
       end
       object pnlInfoCompilador: TPanel
         Left = 20
@@ -1420,7 +1427,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 516
         Height = 90
         BevelOuter = bvLowered
-        TabOrder = 2
+        TabOrder = 0
         object lbInfo: TListBox
           Left = 1
           Top = 1
@@ -1581,7 +1588,7 @@ object frmPrincipal: TfrmPrincipal
       Height = 499
       ItemHeight = 30
       AllowClickableNodes = False
-      Color = clBlack
+      Color = 5875712
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
       Font.Height = -11
@@ -1590,6 +1597,7 @@ object frmPrincipal: TfrmPrincipal
       Image.Alignment = iaLeft
       Image.Layout = ilTop
       Indent = 15
+      NodeColors.Selected = clYellow
       UsePageTitle = False
     end
     object pnlTopo: TPanel
@@ -1626,7 +1634,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 1
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

@@ -52,6 +52,7 @@ Símbolo : Significado
     "NameRef" informado
 [-] Envio por Thread completamente reescrito para permitir várias Threads em
     execução simultânea, com e-mails de diferente conteudo, e suporte aos Eventos
+[*] Ajustes para metodo Clear ser chamado apenas no final de SendMail ou SmtpError
 
 29/08/2015
 -- ACBrIBPTax -- (pro: regys silveira)

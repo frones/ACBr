@@ -305,10 +305,13 @@ end;
 
 procedure TACBrMail.SmtpError(const pMsgError: string);
 begin
-  Clear;
-  fGetLastSmtpError := pMsgError;
-  MailProcess(pmsError);
-  DoException( Exception.Create(pMsgError) );
+  try
+    fGetLastSmtpError := pMsgError;
+    MailProcess(pmsError);
+    DoException( Exception.Create(pMsgError) );
+  finally
+    Clear;
+  end;
 end;
 
 procedure TACBrMail.DoException(E: Exception);
@@ -739,13 +742,15 @@ begin
       SmtpError('SMTP Error: Unable to Logout.');
   end;
 
-  Clear;
-
   // Done //
-  MailProcess(pmsDone);
+  try
+    MailProcess(pmsDone);
 
-  if Assigned(OnAfterMailProcess) then
-    OnAfterMailProcess( self );
+    if Assigned(OnAfterMailProcess) then
+      OnAfterMailProcess( self );
+  finally
+    Clear;
+  end;
 end;
 
 procedure TACBrMail.ClearAttachments;

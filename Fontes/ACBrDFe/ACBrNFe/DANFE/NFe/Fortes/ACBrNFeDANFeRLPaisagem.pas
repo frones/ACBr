@@ -1451,8 +1451,8 @@ begin
       cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
       cdsItens.FieldByName('CFOP').AsString         := Prod.CFOP;
       cdsItens.FieldByName('UNIDADE').AsString      := Prod.UCom;
-      cdsItens.FieldByName('QTDE').AsString         := FormatFloat(format(sDisplayFormat, [FCasasDecimaisqCom, 0]), Prod.qCom);
-      cdsItens.FieldByName('VALOR').AsString        := FormatFloat(format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]), Prod.vUnCom);
+      cdsItens.FieldByName('QTDE').AsString         := FormatQuantidade( Prod.qCom);
+      cdsItens.FieldByName('VALOR').AsString        := FormatValorUnitario(  Prod.vUnCom);
       cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', Prod.vProd);
       cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
       cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);

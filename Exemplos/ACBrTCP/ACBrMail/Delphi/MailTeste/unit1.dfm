@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 298
-  Top = 191
+  Left = 303
+  Top = 194
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Exemplo ACBrMail'
@@ -184,7 +184,9 @@ object Form1: TForm1
       '<h1>Texto em HTML.</h1><br>'
       '<p>Teste de Envio '#193#201#205#211#218#199#231#225#233#237#250#243' '#221#205#195#227#245#213'</p><br>'
       '<img src='#39'cid:LogoACBr'#39'>'
-      '</body></html>')
+      '</body></html>'
+      ''
+      '')
     TabOrder = 10
     WordWrap = False
   end

@@ -1,4 +1,4 @@
-Ôªøunit Unit1;
+unit Unit1;
 
 interface
 
@@ -138,13 +138,13 @@ begin
     pmsStartProcess:
       mLog.Lines.Add('Iniciando processo de envio.');
     pmsConfigHeaders:
-      mLog.Lines.Add('Configurando o cabe√ßalho do e-mail.');
+      mLog.Lines.Add('Configurando o cabeÁalho do e-mail.');
     pmsLoginSMTP:
       mLog.Lines.Add('Logando no servidor de e-mail.');
     pmsStartSends:
       mLog.Lines.Add('Iniciando os envios.');
     pmsSendTo:
-      mLog.Lines.Add('Processando lista de destinat√°rios.');
+      mLog.Lines.Add('Processando lista de destinat·rios.');
     pmsSendCC:
       mLog.Lines.Add('Processando lista CC.');
     pmsSendBCC:
@@ -204,7 +204,7 @@ begin
   //ACBrMail1.AddReplyTo('um_email'); // opcional
   //ACBrMail1.AddBCC('um_email'); // opcional
   //ACBrMail1.Priority := MP_high;
-  //ACBrMail1.ReadingConfirmation := True; // solicita confirma√ß√£o de leitura
+  //ACBrMail1.ReadingConfirmation := True; // solicita confirmaÁ„o de leitura
 end;
 
 end.

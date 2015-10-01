@@ -37,6 +37,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2015
+-- ACBrMail --   (por: DSA)
+[*] Assinatura do Evento "OnMailProcess" modificada, para informar o ACBrMail em
+    execução como primeiro parâmetro
+[+] Adicionado o Evento "OnMailException"
+    procedure(const AMail: TACBrMail; const E: Exception; var ThrowIt: Boolean) of object;
+[+] Adicionado o método: TACBrMail.Assign, para permitir copiar objetos TACBrMail
+[+] Adicionado o método: TACBrMail.SaveToFile, para permitir salvar o email gerado
+[+] Adicionado o método: TACBrMail.ClearAttachments para remover todos os anexos.
+[*] Método TACBrMail.SendMail completamente reescrito, para corrigir problemas
+    com Anexos e MimeParts
+[-] Nomes dos anexos corrigidos, para usar o nome do Arquivo original ou o
+    "NameRef" informado
+[-] Envio por Thread completamente reescrito para permitir várias Threads em
+    execução simultânea, com e-mails de diferente conteudo, e suporte aos Eventos
+
 29/08/2015
 -- ACBrIBPTax -- (pro: regys silveira)
 [-] Adicionado o codigo LST que voltou na nova versão da tabela.

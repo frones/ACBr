@@ -828,7 +828,7 @@ begin
 
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then
-    Result := FPRetornorWS;
+    Result := FPRetornoWS;
 
 (*
   Result := SeparaDados(FPRetornoWS, TAGResposta);
@@ -992,9 +992,9 @@ begin
 
   // Lista de Mensagem de Retorno
   FPMsg := '';
+  FaMsg:='';
   if FRetornoNFSe.ListaNFSe.MsgRetorno.Count > 0 then
   begin
-    FaMsg:='';
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
     begin
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
@@ -1428,9 +1428,9 @@ begin
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
+    FaMsg:='';
     if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
     begin
-      FaMsg:='';
       for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
       begin
         FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
@@ -1469,10 +1469,7 @@ end;
 
 function TNFSeEnviarLoteRPS.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeEnviarLoteRPS.GerarPrefixoArquivo: String;
@@ -1651,10 +1648,7 @@ end;
 
 function TNFSeEnviarSincrono.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeEnviarSincrono.GerarPrefixoArquivo: String;
@@ -1857,10 +1851,7 @@ end;
 
 function TNFSeGerarNFSe.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeGerarNFSe.GerarPrefixoArquivo: String;
@@ -2030,9 +2021,9 @@ begin
 
   // Lista de Mensagem de Retorno
   FPMsg := '';
+  FaMsg:='';
   if RetSitLote.InfSit.MsgRetorno.Count > 0 then
   begin
-    FaMsg:='';
     for i := 0 to RetSitLote.InfSit.MsgRetorno.Count - 1 do
     begin
       FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
@@ -2145,10 +2136,7 @@ end;
 
 function TNFSeConsultarSituacaoLoteRPS.GerarMsgLog: String;
 begin
-  if Assigned(FRetSitLote) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.GerarPrefixoArquivo: String;
@@ -2305,10 +2293,7 @@ end;
 
 function TNFSeConsultarLoteRPS.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeConsultarLoteRPS.GerarPrefixoArquivo: String;
@@ -2527,10 +2512,7 @@ end;
 
 function TNFSeConsultarNfseRPS.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeConsultarNfseRPS.GerarPrefixoArquivo: String;
@@ -2731,10 +2713,7 @@ end;
 
 function TNFSeConsultarNfse.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeConsultarNfse.GerarPrefixoArquivo: String;
@@ -3004,9 +2983,9 @@ begin
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
+    FaMsg:='';
     if RetCancNFSe.InfCanc.MsgRetorno.Count > 0 then
     begin
-      FaMsg:='';
       for i := 0 to RetCancNFSe.InfCanc.MsgRetorno.Count - 1 do
       begin
         FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
@@ -3036,10 +3015,7 @@ end;
 
 function TNFSeCancelarNfse.GerarMsgLog: String;
 begin
-  if Assigned(FRetCancNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeCancelarNfse.GerarPrefixoArquivo: String;
@@ -3375,9 +3351,9 @@ begin
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
+    FaMsg:='';
     if FNFSeRetorno.MsgRetorno.Count > 0 then
     begin
-      FaMsg:='';
       for i := 0 to FNFSeRetorno.MsgRetorno.Count - 1 do
       begin
         FPMsg := FPMsg + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
@@ -3407,10 +3383,7 @@ end;
 
 function TNFSeSubstituirNFSe.GerarMsgLog: String;
 begin
-  if Assigned(FRetornoNFSe) then
-    Result := ACBrStr(FaMsg)
-  else
-    Result := '';
+  Result := ACBrStr(FaMsg)
 end;
 
 function TNFSeSubstituirNFSe.GerarPrefixoArquivo: String;

@@ -1,0 +1,215 @@
+object Form1: TForm1
+  Left = 298
+  Height = 349
+  Top = 191
+  Width = 751
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Exemplo ACBrMail'
+  ClientHeight = 349
+  ClientWidth = 751
+  LCLVersion = '1.4.2.0'
+  object bEnviar: TButton
+    Left = 8
+    Height = 25
+    Top = 280
+    Width = 194
+    Caption = 'Enviar Email'
+    OnClick = bEnviarClick
+    TabOrder = 6
+  end
+  object mLog: TMemo
+    Left = 520
+    Height = 280
+    Top = 24
+    Width = 219
+    ScrollBars = ssAutoBoth
+    TabOrder = 11
+  end
+  object ProgressBar1: TProgressBar
+    Left = 213
+    Height = 20
+    Top = 317
+    Width = 526
+    Max = 11
+    Step = 1
+    TabOrder = 12
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 30
+    Top = 232
+    Width = 194
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Altere os parâmetros no código'#13#10'antes de fazer os envios.'
+    Font.Color = clRed
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object mAltBody: TMemo
+    Left = 213
+    Height = 80
+    Top = 72
+    Width = 283
+    Lines.Strings = (
+      'Linha 1'
+      'Linha 2'
+      '   Teste de e-mail'
+      'ÁÉÍÓÚçÇãÂ'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 9
+    WordWrap = False
+  end
+  object edSubject: TEdit
+    Left = 213
+    Height = 23
+    Top = 24
+    Width = 283
+    TabOrder = 8
+    Text = 'Teste de Envio ÁÉÍÓÚÇçáéíúó - 0'
+  end
+  object cbUsarThread: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 160
+    Width = 80
+    Caption = 'Usar thread'
+    TabOrder = 5
+  end
+  object bEnviarLote: TButton
+    Left = 8
+    Height = 25
+    Top = 312
+    Width = 194
+    Caption = 'Enviar 5 emails por Thread'
+    OnClick = bEnviarLoteClick
+    TabOrder = 7
+  end
+  object cbUsarTXT: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 16
+    Width = 158
+    Caption = 'Enviar Mensagem em TXT'
+    Checked = True
+    State = cbChecked
+    TabOrder = 0
+  end
+  object cbUsarHTML: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 40
+    Width = 170
+    Caption = 'Enviar Mensagem em HTML'
+    Checked = True
+    State = cbChecked
+    TabOrder = 1
+  end
+  object cbAddImgHTML: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 64
+    Width = 156
+    Caption = 'Incluir Imagem em HTML'
+    Checked = True
+    State = cbChecked
+    TabOrder = 2
+  end
+  object cbAddPDF: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 112
+    Width = 129
+    Caption = 'Incluir Anexo de PDF'
+    Checked = True
+    State = cbChecked
+    TabOrder = 3
+  end
+  object Label2: TLabel
+    Left = 213
+    Height = 15
+    Top = 6
+    Width = 39
+    Caption = 'Subject'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 213
+    Height = 15
+    Top = 56
+    Width = 77
+    Caption = 'Alt Body (TXT)'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 216
+    Height = 15
+    Top = 160
+    Width = 71
+    Caption = 'Body (HTML)'
+    ParentColor = False
+  end
+  object mBody: TMemo
+    Left = 213
+    Height = 128
+    Top = 176
+    Width = 283
+    Lines.Strings = (
+      '<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
+      '<body text="#000000" bgcolor="#FFFFFF">'
+      '<h1>Texto em HTML.</h1><br>'
+      '<p>Teste de Envio ÁÉÍÓÚÇçáéíúó ÝÍÃãõÕ</p><br>'
+      '<img src=''cid:LogoACBr''>'
+      '</body></html>'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 10
+    WordWrap = False
+  end
+  object Label5: TLabel
+    Left = 520
+    Height = 15
+    Top = 6
+    Width = 23
+    Caption = 'LOG'
+    ParentColor = False
+  end
+  object cbAddXML: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 136
+    Width = 141
+    Caption = 'Incluir XML por Stream'
+    Checked = True
+    State = cbChecked
+    TabOrder = 4
+  end
+  object cbAddImgAtt: TCheckBox
+    Left = 16
+    Height = 19
+    Top = 88
+    Width = 156
+    Caption = 'Incluir Imagem em Anexo'
+    Checked = True
+    State = cbChecked
+    TabOrder = 13
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    OnBeforeMailProcess = ACBrMail1BeforeMailProcess
+    OnMailProcess = ACBrMail1MailProcess
+    OnAfterMailProcess = ACBrMail1AfterMailProcess
+    OnMailException = ACBrMail1MailException
+    left = 88
+    top = 192
+  end
+end

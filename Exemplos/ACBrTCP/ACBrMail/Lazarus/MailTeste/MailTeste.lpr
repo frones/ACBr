@@ -1,4 +1,4 @@
-program project1;
+program MailTeste;
 
 {$mode objfpc}{$H+}
 
@@ -7,11 +7,17 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1;
+  Forms, sysutils, Unit1;
 
 {$R *.res}
 
+var
+   HeapTraceFile : String ;
 begin
+  HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
+  DeleteFile( HeapTraceFile );
+  SetHeapTraceOutput( HeapTraceFile );
+
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);

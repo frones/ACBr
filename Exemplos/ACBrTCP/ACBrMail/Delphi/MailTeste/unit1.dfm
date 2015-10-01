@@ -217,7 +217,7 @@ object Form1: TForm1
     SetTLS = False
     Attempts = 3
     DefaultCharset = UTF_8
-    IDECharset = UTF_8
+    IDECharset = CP1252
     OnBeforeMailProcess = ACBrMail1BeforeMailProcess
     OnMailProcess = ACBrMail1MailProcess
     OnAfterMailProcess = ACBrMail1AfterMailProcess

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2015
+-- ACBrNFePCN --
+[-] Correção em pcnNFeW.pas para não incluir a Tag vICMS, caso não informada se CST=51
+    http://www.projetoacbr.com.br/forum/topic/17819-nfe-310-icms-cst-51-diferimento/?page=2#comment-160737
+
 30/09/2015
 -- ACBrNFeWebServices.pas --
 [-] Acerto na consulta de NF-e, não estava setando o ambiente antes de consultar

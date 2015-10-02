@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2015
+-- ACBrSocket --
+[-] Ajuste para detecção de Socket Inválido.   (por: Rodrigo Apoiosis)
+    http://www.projetoacbr.com.br/forum/topic/24817-acbrnfemonitor-utilizando-processador-no-m%C3%A1ximo/
+
 01/10/2015
 -- ACBrMail --   (por: DSA)
 [*] Assinatura do Evento "OnMailProcess" modificada, para informar o ACBrMail em

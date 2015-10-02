@@ -361,6 +361,12 @@ begin
               break;
            end ;
 
+           if fsSock.Socket = INVALID_SOCKET then   // O Socket ainda é válido ?
+           begin
+              fsErro := -1 ;
+              break;
+           end ;
+
            if not Assigned( fsACBrTCPServerDaemon ) then  // O Daemon ainda existe ?
            begin
               fsErro := -1 ;

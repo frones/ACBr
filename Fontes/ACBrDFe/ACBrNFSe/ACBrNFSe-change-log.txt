@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2015
+-- ACBrNFSeWebServices --
+[-] Correção não estava montando os envelopes de consulta.
+-- ACBrNFSeConfiguracoes --
+[-] Correção nos nomes dos campos de serviços.
+    Por: Italo Jurisato Junior
+
 30/09/2015
 -- ACBrNFSeWebServices --
 [-] Corrigido a estrutura do envelope de envio e a extração do retorno.

@@ -146,6 +146,9 @@ type
     ckSalvarSoap: TCheckBox;
     btnSubsNFSe: TButton;
     ACBrMail1: TACBrMail;
+    Label34: TLabel;
+    edtArqINI: TEdit;
+    sbtArqINI: TSpeedButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -176,6 +179,7 @@ type
     procedure btnGerarEnviarSincronoClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure btnSubsNFSeClick(Sender: TObject);
+    procedure sbtArqINIClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -1150,6 +1154,18 @@ begin
   MemoDados.Lines.Add('Cód. Cancelamento: ' + ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
   LoadXML(MemoResp, WBResposta);
   PageControl2.ActivePageIndex := 1;
+end;
+
+procedure TfrmDemo_ACBrNFSe.sbtArqINIClick(Sender: TObject);
+var
+ Dir : string;
+begin
+ if Length(edtArqINI.Text) <= 0
+  then Dir := ExtractFileDir(application.ExeName)
+  else Dir := edtArqINI.Text;
+
+ if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP)
+  then edtArqINI.Text := Dir;
 end;
 
 end.

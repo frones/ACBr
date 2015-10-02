@@ -405,10 +405,10 @@ begin
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');
   FConfigSchemas.Cabecalho := FPIniParams.ReadString('Schemas', 'Cabecalho', '');
   FConfigSchemas.ServicoEnviar := FPIniParams.ReadString('Schemas', 'ServicoEnviar', '');
-  FConfigSchemas.ServicoConSit := FPIniParams.ReadString('Schemas', 'ServicoConsSit', '');
-  FConfigSchemas.ServicoConLot := FPIniParams.ReadString('Schemas', 'ServicoConsLot', '');
-  FConfigSchemas.ServicoConRps := FPIniParams.ReadString('Schemas', 'ServicoConsRps', '');
-  FConfigSchemas.ServicoConNfse := FPIniParams.ReadString('Schemas', 'ServicoConsNfse', '');
+  FConfigSchemas.ServicoConSit := FPIniParams.ReadString('Schemas', 'ServicoConSit', '');
+  FConfigSchemas.ServicoConLot := FPIniParams.ReadString('Schemas', 'ServicoConLot', '');
+  FConfigSchemas.ServicoConRps := FPIniParams.ReadString('Schemas', 'ServicoConRps', '');
+  FConfigSchemas.ServicoConNfse := FPIniParams.ReadString('Schemas', 'ServicoConNfse', '');
   FConfigSchemas.ServicoCancelar := FPIniParams.ReadString('Schemas', 'ServicoCancelar', '');
   FConfigSchemas.ServicoGerar := FPIniParams.ReadString('Schemas', 'ServicoGerar', '');
   FConfigSchemas.ServicoEnviarSincrono := FPIniParams.ReadString('Schemas', 'ServicoEnviarSincrono', '');

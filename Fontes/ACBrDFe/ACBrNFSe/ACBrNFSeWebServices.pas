@@ -1615,6 +1615,8 @@ begin
                                                    FTagI, FTagF,
                                                    FProvedor);
 
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono;
+
   if FPDadosMsg <> '' then
   begin
     FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
@@ -1818,6 +1820,8 @@ begin
                                               FTagI, FTagF,
                                               FProvedor);
 
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar;
+
   if FPDadosMsg <> '' then
   begin
     FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
@@ -1936,9 +1940,10 @@ begin
 
     if FPDadosMsg <> '' then
     begin
+      FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, 'docElement', 'infElement',
+      AssinarXML(FPDadosMsg, FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio', '',
                  'Falha ao Assinar - Consultar Situação do Lote: ');
 
     (*
@@ -1986,6 +1991,8 @@ begin
                                                        FProvedor);
     end;
   end;
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit;
 
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Consultar Situação do Lote] não foi disponibilizada pelo provedor: ' +
@@ -2272,6 +2279,8 @@ begin
     end;
   end;
 
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote;
+
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Consultar Lote] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
@@ -2490,6 +2499,8 @@ begin
                                                       TNFSeConsultarNfseRPS(Self).RazaoSocial);
     end;
   end;
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps;
 
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Consultar NFSe por RPS] não foi disponibilizada pelo provedor: ' +
@@ -2956,6 +2967,8 @@ begin
     end;
   end;
 
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar;
+
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
@@ -3323,6 +3336,8 @@ begin
                                                          FProvedor);
    end;
   end;
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir;
 
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Substituir NFSe] não foi disponibilizada pelo provedor: ' +

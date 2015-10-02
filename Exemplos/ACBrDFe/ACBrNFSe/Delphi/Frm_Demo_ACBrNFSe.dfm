@@ -93,7 +93,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 368
-        ActivePage = TabSheet4
+        ActivePage = TabSheet2
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -589,7 +589,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Left = 0
             Top = 4
             Width = 265
-            Height = 229
+            Height = 269
             Caption = 'Geral'
             TabOrder = 0
             object Label7: TLabel
@@ -717,6 +717,34 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               Height = 13
               Caption = 'Schemas do Provedor:'
             end
+            object Label34: TLabel
+              Left = 8
+              Top = 216
+              Width = 61
+              Height = 13
+              Caption = 'Arquivos INI:'
+            end
+            object sbtArqINI: TSpeedButton
+              Left = 234
+              Top = 228
+              Width = 23
+              Height = 24
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337}
+              NumGlyphs = 2
+              OnClick = sbtArqINIClick
+            end
             object edtLogoMarca: TEdit
               Left = 8
               Top = 72
@@ -765,6 +793,13 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               Width = 249
               Height = 21
               TabOrder = 5
+            end
+            object edtArqINI: TEdit
+              Left = 8
+              Top = 232
+              Width = 228
+              Height = 21
+              TabOrder = 6
             end
           end
         end
@@ -1319,7 +1354,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
-    Configuracoes.Geral.ConsultaLoteAposEnvio = False
+    Configuracoes.Geral.ConsultaLoteAposEnvio = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True

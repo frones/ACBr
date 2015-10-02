@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2015
+-- ACBrDFeOpenSSL --
+[-] Ajuste para detectar a falha na abertura do Certificado, quando a Senha for
+    inválida   (por: DSA)
+
 30/09/2015
 -- ACBrDFeOpenSSL -- 
 [-] Acerto para garantir que a leitura do certifica nas informações extras seja

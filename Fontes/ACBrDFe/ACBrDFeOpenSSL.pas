@@ -586,7 +586,9 @@ begin
     FHTTP.Sock.SSL.PFX := DadosPFX;
     FHTTP.Sock.SSL.KeyPassword := Senha;
 
-    LerPFXInfo(DadosPFX);
+    if not LerPFXInfo(DadosPFX) then
+      raise EACBrDFeException.Create('Erro ao ler informações do Certificado.'+sLineBreak+
+                                     'Provavelmente a senha está errada' );
   end;
 
   FpCertificadoLido := True;
@@ -734,6 +736,7 @@ begin
         if PKCS12parse(p12, FpDFeSSL.Senha, pkey, cert, ca) > 0 then
         {$ENDIF}
         begin
+          Result := True;
           FValidade := GetNotAfter( cert );
           FSubjectName := GetSubjectName( cert );
           FCNPJ := GetCNPJ( FSubjectName );

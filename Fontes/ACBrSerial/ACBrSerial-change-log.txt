@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/10/2015
+-- ACBrECFEscECF --
+[*] Aplicado Workaround para problema de Loop infinito em Bematech MP4200
+    (por: DSA e Rodrigo de Carvalho Ribeiro)
+    http://www.projetoacbr.com.br/forum/topic/22790-bematech-mp-4200-th-fi-entrando-em-loop/?page=1
+
 Data: 22/09/2015
 -- ACBrECFEscECF --
 [+] Adicionada leitura de DataHoraEmissao em DadosUltimaReducaoZ

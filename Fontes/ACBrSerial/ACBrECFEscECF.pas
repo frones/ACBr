@@ -50,6 +50,7 @@ uses Classes,
 const
     cEscECFMaxBuffer = 1024 ;
     cNumFalhasMax = 5;
+    cEsperaWAK = 200;
 
 type
 
@@ -144,11 +145,30 @@ TACBrECFEscECFResposta = class
  end ;
 
 
+{ TACBrECFTraduzDLL }
+
+TACBrECFTraduzDLL = class
+  public
+    function TraduzComando( ACmd: TACBrECFEscECFComando): AnsiString; virtual; abstract;
+     procedure  TraduzResposta( const DLLResp: AnsiString;
+                                 var AResp: TACBrECFEscECFResposta ); virtual; abstract;
+end;
+
+{ TACBrECFTraduzDLLEpson }
+
+TACBrECFTraduzDLLEpson = class( TACBrECFTraduzDLL )
+  public
+    function TraduzComando( ACmd: TACBrECFEscECFComando): AnsiString; override;
+    procedure  TraduzResposta( const DLLResp: AnsiString;
+                                var AResp: TACBrECFEscECFResposta ); override;
+end;
+
  { Classe filha de TACBrECFClass com implementaçao para EscECF }
 TACBrECFEscECF = class( TACBrECFClass )
  private
     fsFalhas : Byte;
     fsACK    : Boolean;
+    fsWAKCounter: Integer;
     fsTimeOutStatus: TDateTime;
     fsSincronizou : Boolean;
     fsTentouSincronizar : Boolean;
@@ -433,6 +453,28 @@ Uses SysUtils, Math,
     ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrConsts, ACBrUtil,
   ACBrECFDaruma;
 
+{ TACBrECFTraduzDLLEpson }
+
+function TACBrECFTraduzDLLEpson.TraduzComando(ACmd: TACBrECFEscECFComando
+  ): AnsiString;
+var
+  I: Integer;
+begin
+  Result := IntToHex(ACmd.CMD, 2) + '|';
+  For I := 0 to ACmd.Params.Count-1 do
+    Result := Result + StringToBinaryString( AnsiString(ACmd.Params[I]) ) + '|';
+end;
+
+procedure TACBrECFTraduzDLLEpson.TraduzResposta(const DLLResp: AnsiString;
+  var AResp: TACBrECFEscECFResposta);
+Var
+  I : Integer ;
+begin
+  AResp.Clear(True);
+  if DLLResp = '' then exit ;
+
+end;
+
 { TACBrECFEscECFRET }
 
 constructor TACBrECFEscECFRET.Create;
@@ -507,7 +549,7 @@ begin
   BCD := LeftStr( BCD, cEscECFMaxBuffer);
   TBC := Length( BCD ) ;
 
-  Buffer := AnsiChar(chr(fsSEQ)) + AnsiChar(chr(fsCMD)) + AnsiChar(chr(fsEXT)) +
+  Buffer := AnsiChr(fsSEQ) + AnsiChr(fsCMD) + AnsiChr(fsEXT) +
             IntToLEStr(TBC) + BCD ;
 
   Soma := 0 ;
@@ -516,7 +558,7 @@ begin
      Soma := Soma + ord( Buffer[I] ) ;
   CHK := Soma mod 256  ;
 
-  Result := SOH + Buffer + AnsiChar(Chr( CHK )) ;
+  Result := SOH + Buffer + AnsiChr( CHK ) ;
 end;
 
 procedure TACBrECFEscECFComando.AddParamString(AString: AnsiString);
@@ -782,6 +824,7 @@ Var
   ErroMsg : String ;
   OldTimeOut : Integer ;
 begin
+  fsWAKCounter := 0;
   fsTimeOutStatus := 0;
   Sincronizar;
 
@@ -975,9 +1018,28 @@ begin
   begin
      if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
       begin
-        GravaLog('                RX <- '+Retorno, True);
-        Sleep( 50 );
-        PedeStatus;
+        if (fsWAKCounter > 0) and          // Já esteve ocupada antes ?
+           (EscECFComando.fsCMD = 26) and  // Foi um comando de "Leitura de Informações" ?
+           IsBematech and
+           (Trunc( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
+        begin
+           // Muitos pedidos de Status... Bematech entrou em Loop... envie o comando novamente...
+          GravaLog('*** Bematech em possível loop: '+IntToStr(fsWAKCounter)+
+                   ' respostas de Ocupada. Reenviando o último comando');
+          GravaLog('        Reenvio TX -> ' + fpComandoEnviado, True);
+          fpDevice.EnviaString(fpComandoEnviado);
+          Retorno := '';
+          fsWAKCounter := 0;
+          TempoLimite := IncSecond(Now, TimeOut);
+        end
+        else
+        begin
+          Inc( fsWAKCounter );
+          GravaLog('                RX <- '+Retorno+ ' ('+IntToStr(fsWAKCounter)+')', True);
+          Sleep( cEsperaWAK );
+          PedeStatus;
+        end;
+
         Result := False;
       end
      else if (Byte1 = SOH) and (EscECFResposta.CAT = 0) then
@@ -997,6 +1059,7 @@ begin
     if (fsTimeOutStatus > 0) and (fsTimeOutStatus < Now) and (fsFalhas < cNumFalhasMax) then
     begin
       Inc( fsFalhas ) ;
+      Sleep( cEsperaWAK );
       GravaLog('         Falha: '+IntToStr(fsFalhas));
       fpDevice.Serial.Purge;
       GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);

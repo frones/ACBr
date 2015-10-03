@@ -54,8 +54,6 @@ const
 
 type
 
-TACBrECFClassHack = class ( TACBrECFClass );
-
 { TACBrECFEscECFRET }
 
 TACBrECFEscECFRET = class
@@ -68,10 +66,10 @@ private
    procedure SetRET(AValue: AnsiString);
  public
     constructor Create;
-    property ECF        : Byte read fsECF ;
-    property Fisco      : Byte read fsFisco ;
-    property SPR        : Byte read fsSPR ;
-    property Fabricante : Byte read fsFabricante ;
+    property ECF        : Byte read fsECF write fsECF;
+    property Fisco      : Byte read fsFisco write fsFisco;
+    property SPR        : Byte read fsSPR write fsSPR;
+    property Fabricante : Byte read fsFabricante write fsFabricante;
 
     property RET : AnsiString read fsRET write SetRET ;
 
@@ -137,44 +135,67 @@ TACBrECFEscECFResposta = class
     property SEQ      : Byte        read fsSEQ ;
     property CMD      : Byte        read fsCMD ;
     property EXT      : Byte        read fsEXT ;
-    property CAT      : Byte        read fsCAT ;
+    property CAT      : Byte        read fsCAT write fsCAT;
     property RET      : TACBrECFEscECFRET read fsRET ;
     property TBR      : Integer     read fsTBR ;
-    property BRS      : AnsiString  read fsBRS ;
+    property BRS      : AnsiString  read fsBRS write fsBRS;
     property CHK      : Byte        read fsCHK ;
  end ;
 
 
-{ TACBrECFTraduzDLL }
+TACBrECFEscECF = class;
 
-TACBrECFTraduzDLL = class
+{ TACBrECFEscECFProtocolo }
+
+TACBrECFEscECFProtocolo = class
+  private
+     fsFalhas: Byte;
+     fsACK: Boolean;
+     fsWAKCounter: Integer;
+     fsTimeOutStatus: TDateTime;
+     fsSincronizou: Boolean;
+     fsTentouSincronizar: Boolean;
+     fsSPR: Byte;
+
+     procedure Sincronizar;
+  protected
+    fpECFEscECF: TACBrECFEscECF;
+
+    function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
   public
-    function TraduzComando( ACmd: TACBrECFEscECFComando): AnsiString; virtual; abstract;
-     procedure  TraduzResposta( const DLLResp: AnsiString;
-                                 var AResp: TACBrECFEscECFResposta ); virtual; abstract;
+    constructor Create(AECFEscECF: TACBrECFEscECF); virtual;
+    procedure Ativar ; virtual;
+    procedure Desativar ; virtual;
+    function EnviaComando_ECF( ACmd : AnsiString = '') : AnsiString ; virtual;
+    function VerificaFimLeitura(var Retorno: AnsiString;
+      var TempoLimite: TDateTime): Boolean; virtual;
 end;
 
-{ TACBrECFTraduzDLLEpson }
+{ TACBrECFEscECFProtocoloEpsonDLL }
 
-TACBrECFTraduzDLLEpson = class( TACBrECFTraduzDLL )
+TACBrECFEscECFProtocoloEpsonDLL = class( TACBrECFEscECFProtocolo )
+  private
+     xEPSON_Serial_Abrir_Porta : function (dwVelocidade:Integer;
+        wPorta:Integer):Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+     xEPSON_Serial_Fechar_Porta : function : Integer;
+        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+     xEPSON_Send_From_FileEX : function (pszLineIn:AnsiString;
+        pszLineOut:PAnsiChar ) : Integer;
+        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
+     procedure LoadDLLFunctions;
   public
-    function TraduzComando( ACmd: TACBrECFEscECFComando): AnsiString; override;
-    procedure  TraduzResposta( const DLLResp: AnsiString;
-                                var AResp: TACBrECFEscECFResposta ); override;
+    constructor Create(AECFEscECF: TACBrECFEscECF); override;
+    procedure Ativar ; override;
+    procedure Desativar ; override;
+    function EnviaComando_ECF( ACmd : AnsiString = '') : AnsiString ; override;
+    function VerificaFimLeitura(var Retorno: AnsiString;
+      var TempoLimite: TDateTime): Boolean; override;
 end;
 
  { Classe filha de TACBrECFClass com implementaçao para EscECF }
 TACBrECFEscECF = class( TACBrECFClass )
  private
-    fsFalhas : Byte;
-    fsACK    : Boolean;
-    fsWAKCounter: Integer;
-    fsTimeOutStatus: TDateTime;
-    fsSincronizou : Boolean;
-    fsTentouSincronizar : Boolean;
-    fsDeviceParams : String;
-
-    fsSPR            : Byte;
     fsPAF            : AnsiString ;
     fsNumVersao      : String ;
     fsVersaoEscECF   : String ;
@@ -184,21 +205,19 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsDataHoraSB     : TDateTime;
     fsEscECFComando  : TACBrECFEscECFComando;
     fsEscECFResposta : TACBrECFEscECFResposta;
+    fsEscECFProtocolo: TACBrECFEscECFProtocolo;
     fsMarcaECF       : String ;
     fsModeloECF      : String ;
     fsEmPagamento    : Boolean ;
     fsNomeArqMemoria : String ;
     fsArqMemoria     : String ;
+    fsDeviceParams   : String;
 
     function IsBematech: Boolean;
     function IsEpson: Boolean;
     function IsDaruma: Boolean;
 
     procedure EnviaConsumidor;
-    function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
-    Function TraduzErroMsg(EscECFResposta: TACBrECFEscECFResposta) : String;
-    procedure Sincronizar;
-
     Function AjustaDescricao( ADescricao: String ): String;
 
     Procedure SalvaRespostasMemoria( AtualizaVB: Boolean = True );
@@ -208,6 +227,9 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure DestruirECFClass( AECFClass: TACBrECFClass );
 
  protected
+    procedure AtivarDevice;
+    Function TraduzErroMsg(EscECFResposta: TACBrECFEscECFResposta) : String;
+
     function VerificaFimLeitura(var Retorno: AnsiString;
       var TempoLimite: TDateTime): Boolean; override;
 
@@ -285,8 +307,9 @@ TACBrECFEscECF = class( TACBrECFClass )
 
     property NomeArqMemoria : String read fsNomeArqMemoria write fsNomeArqMemoria;
 
-    property EscECFComando  : TACBrECFEscECFComando  read fsEscECFComando ;
-    property EscECFResposta : TACBrECFEscECFResposta read fsEscECFResposta ;
+    property EscECFComando   : TACBrECFEscECFComando  read fsEscECFComando ;
+    property EscECFResposta  : TACBrECFEscECFResposta read fsEscECFResposta ;
+    property EscECFProtocolo : TACBrECFEscECFProtocolo read fsEscECFProtocolo;
 
     Function EnviaComando_ECF( cmd : AnsiString = '' ) : AnsiString ; override ;
 
@@ -453,26 +476,546 @@ Uses SysUtils, Math,
     ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrConsts, ACBrUtil,
   ACBrECFDaruma;
 
-{ TACBrECFTraduzDLLEpson }
+{ TACBrECFEscECFProtocoloEpsonDLL }
 
-function TACBrECFTraduzDLLEpson.TraduzComando(ACmd: TACBrECFEscECFComando
+constructor TACBrECFEscECFProtocoloEpsonDLL.Create(AECFEscECF: TACBrECFEscECF);
+begin
+  inherited Create(AECFEscECF);
+
+  xEPSON_Serial_Abrir_Porta := Nil;
+  xEPSON_Serial_Fechar_Porta := Nil;
+  xEPSON_Send_From_FileEX := Nil;
+
+  LoadDLLFunctions ;
+end;
+
+procedure TACBrECFEscECFProtocoloEpsonDLL.Ativar;
+Var
+  Resp : Integer ;
+begin
+  with fpECFEscECF do
+  begin
+    PaginaDeCodigo := 852;
+
+    GravaLog( '   xEPSON_Serial_Abrir_Porta( 115200, 0 )' );
+    Resp := xEPSON_Serial_Abrir_Porta( 115200, 0 ) ;  // 0 = USB
+    if Resp <> 0 then
+       raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao abrir a Porta com:'+sLineBreak+
+          'EPSON_Serial_Abrir_Porta(115200, 0)' );
+
+    AtivarDevice ;  // Apenas para que fpAtivo seja ligado
+  end;
+end;
+
+procedure TACBrECFEscECFProtocoloEpsonDLL.Desativar;
+Var
+  Resp : Integer ;
+begin
+  fpECFEscECF.GravaLog( '   xEPSON_Serial_Fechar_Porta' );
+  Resp := xEPSON_Serial_Fechar_Porta ;
+  if Resp <> 0 then
+     raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao Fechar a Porta com:'+sLineBreak+
+        'EPSON_Serial_Fechar_Porta' );
+
+  inherited Desativar;
+end;
+
+function TACBrECFEscECFProtocoloEpsonDLL.EnviaComando_ECF(ACmd: AnsiString
   ): AnsiString;
 var
   I: Integer;
+  aLineOut : array [0..4096] of AnsiChar;
+  Resp : Integer ;
+  CmdResp: AnsiString;
+  SL: TStringList;
+  ErroMsg: String;
 begin
-  Result := IntToHex(ACmd.CMD, 2) + '|';
-  For I := 0 to ACmd.Params.Count-1 do
-    Result := Result + StringToBinaryString( AnsiString(ACmd.Params[I]) ) + '|';
+  Result := '';
+
+  with fpECFEscECF do
+  begin
+    if ACmd <> '' then
+      ACmd := PreparaCmd(ACmd) ;  // Ajusta e move para EscECFcomando
+
+    EscECFResposta.Clear( True ) ;       // Zera toda a Resposta
+
+    ACmd := IntToHex(EscECFComando.CMD, 2) + '|';
+    For I := 0 to EscECFComando.Params.Count-1 do
+      ACmd := ACmd + StringToBinaryString( AnsiString(EscECFComando.Params[I]) ) + '|';
+
+    aLineOut[0] := #0; // Zera Buffer de Saida
+
+    GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
+    Resp := xEPSON_Send_From_FileEX( ACmd, aLineOut ) ;
+
+    ComandoEnviado  := ACmd ;
+    RespostaComando := TrimRight( aLineOut );
+    CmdResp := RespostaComando;
+    Result  := RespostaComando;
+
+    GravaLog( '      Resp: '+IntToStr(Resp)+'  Retorno:'+CmdResp, True );
+
+    if (Resp <> 0) and (CmdResp = '') then
+      raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao executar EPSON_Send_From_FileEX' );
+
+    SL := TStringList.Create;
+    try
+      SL.Delimiter := '|';
+      {$IFDEF FPC}
+       SL.StrictDelimiter := True;
+      {$ELSE}
+       CmdResp := '"' + StringReplace(CmdResp, SL.Delimiter,
+                                '"' + SL.Delimiter + '"', [rfReplaceAll]) +
+                  '"';
+      {$ENDIF}
+      SL.DelimitedText := CmdResp;
+
+      if SL.Count < 5 then
+        raise EACBrECFCMDInvalido.Create('Resposta Inválida de EPSON_Send_From_FileEX');
+
+      EscECFResposta.CAT            := StrToInt(SL[0]);
+      EscECFResposta.RET.ECF        := StrToInt(SL[1]);
+      EscECFResposta.RET.Fisco      := StrToInt(SL[2]);
+      EscECFResposta.RET.SPR        := StrToInt(SL[3]);
+      EscECFResposta.RET.Fabricante := StrToInt(SL[4]);
+
+      I := PosAt('|',CmdResp,5);
+      if I > 0 then
+        EscECFResposta.BRS := copy(CmdResp, I+1, Length(CmdResp));
+
+      if SL.Count > 5 then
+      begin
+        For I := 5 to SL.Count-1 do
+          EscECFResposta.Params.Add(SL[I]);
+      end;
+
+      ErroMsg := '' ;
+      if EscECFResposta.CAT > 0 then
+        ErroMsg := TraduzErroMsg(EscECFResposta) ;
+
+      if ErroMsg <> '' then
+      begin
+        ErroMsg := ACBrStr('Erro retornado pela Impressora: '+ModeloStr+
+                            sLineBreak+sLineBreak + ErroMsg ) ;
+
+        if (EscECFResposta.CAT = 12) then
+          DoOnErrorSemPapel
+        else
+          raise EACBrECFSemResposta.create(ErroMsg) ;
+      end
+      else
+        Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
+    finally
+      SL.Free;
+    end;
+  end;
 end;
 
-procedure TACBrECFTraduzDLLEpson.TraduzResposta(const DLLResp: AnsiString;
-  var AResp: TACBrECFEscECFResposta);
-Var
-  I : Integer ;
+function TACBrECFEscECFProtocoloEpsonDLL.VerificaFimLeitura(
+  var Retorno: AnsiString; var TempoLimite: TDateTime): Boolean;
 begin
-  AResp.Clear(True);
-  if DLLResp = '' then exit ;
+  Result := True;
+end;
 
+procedure TACBrECFEscECFProtocoloEpsonDLL.LoadDLLFunctions ;
+  procedure EpsonFunctionDetect( FuncName: String; var LibPointer: Pointer ) ;
+  var
+    sLibName: string;
+  begin
+    if not Assigned( LibPointer )  then
+    begin
+      with fpECFEscECF do
+      begin
+        // Verifica se exite o caminho das DLLs
+        if Length(PathDLL) > 0 then
+          sLibName := PathWithDelim(PathDLL);
+
+        // Concatena o caminho se exitir mais o nome da DLL.
+        sLibName := sLibName + cLIB_Epson;
+
+        if not FunctionDetect( sLibName, FuncName, LibPointer) then
+        begin
+          LibPointer := NIL ;
+          raise EACBrECFERRO.Create( ACBrStr( 'Erro ao carregar a função:'+FuncName+' de: '+cLIB_Epson ) ) ;
+        end ;
+      end;
+    end ;
+  end ;
+begin
+   EpsonFunctionDetect('EPSON_Serial_Abrir_Porta', @xEPSON_Serial_Abrir_Porta);
+   EpsonFunctionDetect('EPSON_Serial_Fechar_Porta', @xEPSON_Serial_Fechar_Porta);
+   EpsonFunctionDetect('EPSON_Send_From_FileEX', @xEPSON_Send_From_FileEX);
+end ;
+
+
+{ TACBrECFEscECFProtocolo }
+
+constructor TACBrECFEscECFProtocolo.Create(AECFEscECF: TACBrECFEscECF);
+begin
+  inherited create;
+
+  fpECFEscECF := AECFEscECF;
+
+  fsFalhas            := 0;
+  fsACK               := False;
+  fsWAKCounter        := 0;
+  fsSincronizou       := False;
+  fsTentouSincronizar := False;
+  fsTimeOutStatus     := 0;
+  fsSPR               := 0;
+end;
+
+procedure TACBrECFEscECFProtocolo.Sincronizar;
+var
+  Resp: AnsiString;
+begin
+  with fpECFEscECF do
+  begin
+    fsFalhas := 0;
+    while (not fsSincronizou) and (fsFalhas <= cNumFalhasMax) do
+    begin
+      GravaLog( '    Sincronismo TX -> '+SYN, True);
+      Device.Serial.SendByte( ord(SYN) );
+      Resp := Device.Serial.RecvBufferStr(2,2000);
+      GravaLog( '    Sincronismo RX <- '+Resp, True);
+
+      if Length(Resp) = 2 then
+      begin
+        if Resp[1] = SYN then
+        begin
+          EscECFComando.SEQ := ord(Resp[2])+1;
+          fsSincronizou := True;
+        end;
+      end;
+
+      if not fsSincronizou then
+      begin
+        Inc( fsFalhas ) ;
+        GravaLog('         Falha: '+IntToStr(fsFalhas));
+        Device.Serial.Purge;
+        Sleep(100);
+      end;
+    end;
+  end;
+end;
+
+function TACBrECFEscECFProtocolo.PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
+Var
+  CMD, EXT : Byte ;
+  BCD : AnsiString ;
+begin
+  if Length(CmdExtBcd) < 7 then
+     raise EACBrECFERRO.Create(ACBrStr('Comando EscECF inválido')) ;
+
+  CMD := ord( CmdExtBcd[1] ) ;
+  EXT := ord( CmdExtBcd[2] ) ;
+  BCD := copy( CmdExtBcd, 3, Length(CmdExtBcd) ) ;
+
+  if (CMD = 255) and (EXT = 0) then
+     raise EACBrECFERRO.Create(ACBrStr('Erro ! CMD = 255 e EXT = 0')) ;
+
+  if (CMD <> 255) and (EXT <> 0) then
+     raise EACBrECFERRO.Create(ACBrStr('Erro ! EXT deve ser 0 quando comando <> 255')) ;
+
+  with fpECFEscECF do
+  begin
+    EscECFComando.CMD := CMD ;
+    EscECFComando.EXT := EXT ;
+    EscECFComando.Params.Text := BCD ;
+
+    Result := EscECFComando.Comando ;
+  end;
+end;
+
+function TACBrECFEscECFProtocolo.EnviaComando_ECF(ACmd: AnsiString): AnsiString;
+Var
+  ErroMsg : String ;
+  OldTimeOut : Integer ;
+begin
+  with fpECFEscECF do
+  begin
+    fsWAKCounter := 0;
+    fsTimeOutStatus := 0;
+    Sincronizar;
+
+    if ACmd <> '' then
+       ACmd := PreparaCmd(ACmd) ;  // Ajusta e move para EscECFcomando
+
+    EscECFResposta.Clear( True ) ;       // Zera toda a Resposta
+    ACmd := EscECFComando.Comando ;
+
+    if fsTentouSincronizar then
+      GravaLog( '         Status TX -> '+ACmd, True);
+
+    fsACK           := False;
+    fsFalhas        := 0 ;
+    fsSPR           := 0 ;
+    Result          := '' ;
+    ErroMsg         := '' ;
+    ComandoEnviado  := '' ;
+    RespostaComando := '' ;
+    OldTimeOut      := TimeOut ;
+    TimeOut         := max(EscECFComando.TimeOut, TimeOut) ;
+
+    try
+       Device.Serial.DeadlockTimeout := 2000 ; { Timeout p/ Envio }
+       Device.Serial.Purge ;                   { Limpa a Porta }
+
+       while ComandoEnviado = '' do
+       begin
+          Device.Serial.Purge ;                   { Limpa a Porta }
+
+          if not TransmiteComando( ACmd ) then
+             continue ;
+
+          ComandoEnviado := ACmd ;
+       end ;
+
+       { Chama Rotina da Classe mãe TACBrClass para ler Resposta. Se houver
+         falha na leitura LeResposta dispara Exceçao.
+         Resposta fica gravada na váriavel "fpRespostaComando" }
+       LeResposta ;
+
+       with EscECFResposta do
+       begin
+         GravaLog( '            Resposta: SEQ:'+IntToStr(SEQ)+' CMD:'+IntToStr(CMD)+
+           ' EXT:'+IntToStr(EXT)+ ' CAT:'+IntToStr(CAT)+ ' RET:'+RET.RET+
+           ' TBR:'+IntToStr(TBR)+ ' BRS:"'+BRS+'" CHK:'+IntToStr(CHK), True );
+       end;
+
+       EscECFComando.SEQ := EscECFComando.SEQ + 1;
+
+       Try
+          //EscECFResposta.Resposta := fpRespostaComando ;
+          // Resposta já foi atribuida em VerificaFimLeitura();
+
+          ErroMsg := '' ;
+          if EscECFResposta.CAT > 0 then
+             ErroMsg := TraduzErroMsg(EscECFResposta) ;
+       except
+          On E : Exception do
+          begin
+             ErroMsg := 'Resposta do ECF inválida' + sLineBreak + E.Message ;
+          end ;
+       end ;
+
+       if ErroMsg <> '' then
+        begin
+          if (not fsTentouSincronizar) and
+             (EscECFResposta.CAT = 15) and (EscECFResposta.RET.ECF = 1) then    // Erro de sincronização
+          begin
+            GravaLog( '    Falha SYN - RX <- '+EscECFResposta.Resposta, True);
+            fsSincronizou       := False;  // Força a sincronização
+            fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
+            Self.EnviaComando_ECF();           // Gera chamada recursiva
+            exit;
+          end;
+
+          ErroMsg := ACBrStr('Erro retornado pela Impressora: '+ModeloStr+
+                             sLineBreak+sLineBreak + ErroMsg ) ;
+
+          if (EscECFResposta.CAT = 12) then
+             DoOnErrorSemPapel
+          else
+             raise EACBrECFSemResposta.create(ErroMsg) ;
+        end
+       else
+          Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
+
+    finally
+       TimeOut := OldTimeOut ;
+       fsTentouSincronizar := False;
+    end ;
+  end;
+end;
+
+function TACBrECFEscECFProtocolo.VerificaFimLeitura(var Retorno: AnsiString;
+  var TempoLimite: TDateTime): Boolean;
+var
+  LenRet, TBR : Integer;
+  Byte1  : AnsiChar;
+
+   procedure PedeStatus;
+   begin
+     with fpECFEscECF do
+     begin
+       GravaLog( '         Status TX -> '+ENQ+chr(fsSPR), True);
+       Device.Serial.SendBlock( ENQ + chr(fsSPR) );
+       Retorno := '';
+       fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+       TempoLimite := IncSecond(now, TimeOut);
+     end;
+   end;
+
+begin
+  LenRet := Length( Retorno );
+  Result := False;
+
+  with fpECFEscECF do
+  begin
+    if LenRet > 0 then
+    begin
+      Byte1 := Retorno[1];
+
+      case Byte1 of
+        SOH :
+           begin
+              if LenRet >= 11 then
+              begin
+                 TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
+                 Result := ( LenRet >=  (11 + TBR + 1) ) ;
+              end ;
+           end;
+
+        ACK :
+          begin
+            fsSPR := 0;
+            fsACK := True;
+            GravaLog( '                RX <- '+Retorno, True);
+            PedeStatus ;
+          end;
+
+        WAK :
+          begin
+            Result := (LenRet >= 6) ;
+
+            if Result and (not fsACK) then  // Comando não foi recebido, re-envie
+            begin
+              GravaLog('                RX <- '+Retorno, True);
+              Sleep(100);
+              GravaLog('        Reenvio TX -> '+ComandoEnviado, True);
+              Device.EnviaString( ComandoEnviado ) ;
+              Retorno     := '';
+              Result      := False;
+              TempoLimite := IncSecond(now, TimeOut);
+            end ;
+
+          end ;
+
+        NAK :
+          Result := (LenRet >= 6) ;
+      end;
+
+      if Result then
+      begin
+         try
+            { Esta atribuição, Já verifica o ChkSum, em caso de erro gera exception }
+            EscECFResposta.Resposta := Retorno ;
+
+            if (Byte1 = SOH) and
+               (EscECFResposta.SEQ <> EscECFComando.SEQ) then  // Despreza esse Bloco
+            begin
+               raise EACBrECFCMDInvalido.Create(
+                  'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
+                  'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
+                  '). Bloco Desprezado' ) ;
+            end;
+         except
+            on E : EACBrECFCMDInvalido do
+             begin
+               GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
+               Result  := False ;
+               Retorno := '' ;
+               Inc( fsFalhas ) ;
+               GravaLog('         Falha: '+IntToStr(fsFalhas));
+               if fsFalhas <= cNumFalhasMax then
+               begin
+                 Device.Serial.Purge;
+                 PedeStatus
+               end;
+             end
+            else
+               raise ;
+         end ;
+      end ;
+    end;
+
+    if Result then
+    begin
+       if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
+        begin
+          if (fsWAKCounter > 0) and          // Já esteve ocupada antes ?
+             (EscECFComando.fsCMD = 26) and  // Foi um comando de "Leitura de Informações" ?
+             IsBematech and
+             (( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
+          begin
+             // Muitos pedidos de Status... Bematech entrou em Loop... envie o comando novamente...
+            GravaLog('*** Bematech em possível loop: '+IntToStr(fsWAKCounter)+
+                     ' respostas de Ocupada. Reenviando o último comando');
+            GravaLog('        Reenvio TX -> ' + ComandoEnviado, True);
+            Device.EnviaString(ComandoEnviado);
+            Retorno := '';
+            fsWAKCounter := 0;
+            TempoLimite := IncSecond(Now, TimeOut);
+          end
+          else
+          begin
+            Inc( fsWAKCounter );
+            GravaLog('                RX <- '+Retorno+ ' ('+IntToStr(fsWAKCounter)+')', True);
+            Sleep( cEsperaWAK );
+            PedeStatus;
+          end;
+
+          Result := False;
+        end
+       else if (Byte1 = SOH) and (EscECFResposta.CAT = 0) then
+        begin
+          if not TestBit( EscECFResposta.RET.ECF, 0 ) then // Existem mais dados ?
+          begin
+            GravaLog('     '+IntToStrZero(EscECFResposta.TBR,4)+' bytes RX <- '+Retorno, True);
+            Inc( fsSPR );
+            PedeStatus;
+            Result := False;
+          end;
+        end;
+    end
+    else
+    begin
+      // Se ECF não respondeu a status... Envia comando novamente
+      if (fsTimeOutStatus > 0) and (fsTimeOutStatus < Now) and (fsFalhas < cNumFalhasMax) then
+      begin
+        Inc( fsFalhas ) ;
+        Sleep( cEsperaWAK );
+        GravaLog('         Falha: '+IntToStr(fsFalhas));
+        Device.Serial.Purge;
+        GravaLog('        Reenvio TX -> '+ComandoEnviado, True);
+        Device.EnviaString( ComandoEnviado ) ;
+        fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+      end;
+    end;
+  end;
+end;
+
+procedure TACBrECFEscECFProtocolo.Ativar;
+begin
+  with fpECFEscECF do
+  begin
+    if not Device.IsSerialPort  then
+       raise EACBrECFERRO.Create(ACBrStr('A impressora: '+ModeloStr+' requer'+sLineBreak+
+                              'Porta Serial:  (COM1, COM2, COM3, ...)'));
+
+    AtivarDevice ;
+
+    if not EmLinha( TimeOut ) then
+    begin
+       if Device.HandShake <> hsDTR_DSR then
+          Device.HandShake := hsDTR_DSR
+    end;
+
+    fsSincronizou       := False;
+    fsTentouSincronizar := False;
+    fsTimeOutStatus     := 0;
+
+    RespostasComando.Clear;
+
+    { Ajusta a sequencia }
+    Sincronizar;
+  end;
+end;
+
+procedure TACBrECFEscECFProtocolo.Desativar;
+begin
+  fpECFEscECF.Desativar;
 end;
 
 { TACBrECFEscECFRET }
@@ -698,6 +1241,7 @@ begin
 
   fsEscECFComando  := TACBrECFEscECFComando.create ;
   fsEscECFResposta := TACBrECFEscECFResposta.create ;
+  fsEscECFProtocolo := TACBrECFEscECFProtocolo.Create(Self);
 
   fpDevice.HandShake := hsDTR_DSR ;
   fpPaginaDeCodigo   := 1252;
@@ -708,7 +1252,6 @@ begin
   fpMFD       := True ;
   fpTermica   := True ;
   fpIdentificaConsumidorRodape := True ;
-  fsDeviceParams := '';
 
   { Variaveis internas dessa classe }
   fsNumVersao     := '' ;
@@ -721,13 +1264,7 @@ begin
   fsMarcaECF      := '' ;
   fsModeloECF     := '' ;
   fsEmPagamento   := False ;
-
-  fsFalhas        := 0;
-  fsACK           := False;
-
-  fsSincronizou       := False;
-  fsTentouSincronizar := False;
-  fsTimeOutStatus     := 0;
+  fsDeviceParams  := '';
 
   RespostasComando.Clear;
 end;
@@ -736,26 +1273,15 @@ destructor TACBrECFEscECF.Destroy;
 begin
   fsEscECFComando.Free ;
   fsEscECFResposta.Free ;
+  fsEscECFProtocolo.Free;
 
   inherited Destroy ;
 end;
 
 procedure TACBrECFEscECF.Ativar;
 var
-   Params: String;
+  Params: String;
 begin
-  if not fpDevice.IsSerialPort  then
-     raise EACBrECFERRO.Create(ACBrStr('A impressora: '+ModeloStr+' requer'+sLineBreak+
-                            'Porta Serial:  (COM1, COM2, COM3, ...)'));
-
-  inherited Ativar ; { Abre porta serial }
-
-  if not EmLinha( TimeOut ) then
-  begin
-     if fpDevice.HandShake <> hsDTR_DSR then
-        fpDevice.HandShake := hsDTR_DSR
-  end;
-
   fsNumVersao    := '' ;
   fsVersaoEscECF := '' ;
   fsPAF          := '' ;
@@ -765,20 +1291,32 @@ begin
   fsDataHoraSB   := 0 ;
   fsMarcaECF     := '' ;
   fsModeloECF    := '' ;
-  fsSincronizou       := False;
-  fsTentouSincronizar := False;
-  fsTimeOutStatus     := 0;
+  fsDeviceParams := '';
 
   fpMFD     := True ;
   fpTermica := True ;
-  fsDeviceParams := '';
+  fpColunas := 48 ;
 
-  RespostasComando.Clear;
+  if fpDevice.IsDLLPort then
+  begin
+    if not (fsEscECFProtocolo is TACBrECFEscECFProtocoloEpsonDLL) then
+    begin
+      fsEscECFProtocolo.Free;
+      fsEscECFProtocolo := TACBrECFEscECFProtocoloEpsonDLL.Create(Self);
+    end
+  end
+  else
+  begin
+     if not (fsEscECFProtocolo is TACBrECFEscECFProtocolo) then
+     begin
+       fsEscECFProtocolo.Free;
+       fsEscECFProtocolo := TACBrECFEscECFProtocolo.Create(Self);
+     end
+  end;
+
+  fsEscECFProtocolo.Ativar;
 
   try
-     { Ajusta a sequencia }
-     Sincronizar;
-
      { Testando a comunicaçao com a porta }
      Params := RetornaInfoECF( '15|0' );
 
@@ -801,272 +1339,33 @@ begin
                         Poem_Zeros( fsNumECF, 3 )+'.txt';
 
      if IsBematech then
-      begin
-        if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
-           MaxLinhasBuffer := 5;
-      end
+     begin
+       if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
+          MaxLinhasBuffer := 5;
+     end
      else if IsEpson then
-      begin
-        fpPaginaDeCodigo := 850;
-        fpColunas := 57;
-      end;
+     begin
+       fpPaginaDeCodigo := 850;
+       fpColunas := 57;
+     end;
 
      LeRespostasMemoria;
   except
      Desativar ;
      raise ;
   end ;
+
 end;
 
-
 function TACBrECFEscECF.EnviaComando_ECF(cmd : AnsiString) : AnsiString ;
-Var
-  ErroMsg : String ;
-  OldTimeOut : Integer ;
 begin
-  fsWAKCounter := 0;
-  fsTimeOutStatus := 0;
-  Sincronizar;
-
-  if cmd <> '' then
-     cmd := PreparaCmd(cmd) ;  // Ajusta e move para EscECFcomando
-
-  EscECFResposta.Clear( True ) ;       // Zera toda a Resposta
-  cmd := EscECFComando.Comando ;
-
-  if fsTentouSincronizar then
-    GravaLog( '         Status TX -> '+cmd, True);
-
-  fsACK             := False;
-  fsFalhas          := 0 ;
-  fsSPR             := 0 ;
-  Result            := '' ;
-  ErroMsg           := '' ;
-  fpComandoEnviado  := '' ;
-  fpRespostaComando := '' ;
-  OldTimeOut        := TimeOut ;
-  TimeOut           := max(EscECFComando.TimeOut, TimeOut) ;
-
-  try
-     fpDevice.Serial.DeadlockTimeout := 2000 ; { Timeout p/ Envio }
-     fpDevice.Serial.Purge ;                   { Limpa a Porta }
-
-     while fpComandoEnviado = '' do
-     begin
-        fpDevice.Serial.Purge ;                   { Limpa a Porta }
-
-        if not TransmiteComando( cmd ) then
-           continue ;
-
-        fpComandoEnviado := cmd ;
-     end ;
-
-     { Chama Rotina da Classe mãe TACBrClass para ler Resposta. Se houver
-       falha na leitura LeResposta dispara Exceçao.
-       Resposta fica gravada na váriavel "fpRespostaComando" }
-     LeResposta ;
-
-     with EscECFResposta do
-     begin
-       GravaLog( '            Resposta: SEQ:'+IntToStr(SEQ)+' CMD:'+IntToStr(CMD)+
-         ' EXT:'+IntToStr(EXT)+ ' CAT:'+IntToStr(CAT)+ ' RET:'+RET.RET+
-         ' TBR:'+IntToStr(TBR)+ ' BRS:"'+BRS+'" CHK:'+IntToStr(CHK), True );
-     end;
-
-     EscECFComando.SEQ := EscECFComando.SEQ + 1;
-
-     Try
-        //EscECFResposta.Resposta := fpRespostaComando ;
-        // Resposta já foi atribuida em VerificaFimLeitura();
-
-        ErroMsg := '' ;
-        if EscECFResposta.CAT > 0 then
-           ErroMsg := TraduzErroMsg(EscECFResposta) ;
-     except
-        On E : Exception do
-        begin
-           ErroMsg := 'Resposta do ECF inválida' + sLineBreak + E.Message ;
-        end ;
-     end ;
-
-     if ErroMsg <> '' then
-      begin
-        if (not fsTentouSincronizar) and
-           (EscECFResposta.CAT = 15) and (EscECFResposta.RET.ECF = 1) then    // Erro de sincronização
-        begin
-          GravaLog( '    Falha SYN - RX <- '+EscECFResposta.Resposta, True);
-          fsSincronizou       := False;  // Força a sincronização
-          fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
-          EnviaComando_ECF();            // Gera chamada recursiva
-          exit;
-        end;
-
-        ErroMsg := ACBrStr('Erro retornado pela Impressora: '+ModeloStr+
-                           sLineBreak+sLineBreak + ErroMsg ) ;
-
-        if (EscECFResposta.CAT = 12) then
-           DoOnErrorSemPapel
-        else
-           raise EACBrECFSemResposta.create(ErroMsg) ;
-      end
-     else
-        Sleep( IntervaloAposComando ) ;  { Pequena pausa entre comandos }
-
-  finally
-     TimeOut := OldTimeOut ;
-     fsTentouSincronizar := False;
-  end ;
+  Result := fsEscECFProtocolo.EnviaComando_ECF(cmd);
 end;
 
 function TACBrECFEscECF.VerificaFimLeitura(var Retorno : AnsiString ;
   var TempoLimite : TDateTime) : Boolean ;
-var
-  LenRet, TBR : Integer;
-  Byte1  : AnsiChar;
-
-   procedure PedeStatus;
-   begin
-      GravaLog( '         Status TX -> '+ENQ+chr(fsSPR), True);
-      fpDevice.Serial.SendBlock( ENQ + chr(fsSPR) );
-      Retorno := '';
-      fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
-      TempoLimite := IncSecond(now, TimeOut);
-   end;
-
 begin
-  LenRet := Length( Retorno );
-  Result := False;
-
-  if LenRet > 0 then
-  begin
-    Byte1 := Retorno[1];
-
-    case Byte1 of
-      SOH :
-         begin
-            if LenRet >= 11 then
-            begin
-               TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
-               Result := ( LenRet >=  (11 + TBR + 1) ) ;
-            end ;
-         end;
-
-      ACK :
-        begin
-          fsSPR := 0;
-          fsACK := True;
-          GravaLog( '                RX <- '+Retorno, True);
-          PedeStatus ;
-        end;
-
-      WAK :
-        begin
-          Result := (LenRet >= 6) ;
-
-          if Result and (not fsACK) then  // Comando não foi recebido, re-envie
-          begin
-            GravaLog('                RX <- '+Retorno, True);
-            Sleep(100);
-            GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);
-            fpDevice.EnviaString( fpComandoEnviado ) ;
-            Retorno     := '';
-            Result      := False;
-            TempoLimite := IncSecond(now, TimeOut);
-          end ;
-
-        end ;
-
-      NAK :
-        Result := (LenRet >= 6) ;
-    end;
-
-    if Result then
-    begin
-       try
-          { Esta atribuição, Já verifica o ChkSum, em caso de erro gera exception }
-          EscECFResposta.Resposta := Retorno ;
-
-          if (Byte1 = SOH) and
-             (EscECFResposta.SEQ <> EscECFComando.SEQ) then  // Despreza esse Bloco
-          begin
-             raise EACBrECFCMDInvalido.Create(
-                'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
-                'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
-                '). Bloco Desprezado' ) ;
-          end;
-       except
-          on E : EACBrECFCMDInvalido do
-           begin
-             GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
-             Result  := False ;
-             Retorno := '' ;
-             Inc( fsFalhas ) ;
-             GravaLog('         Falha: '+IntToStr(fsFalhas));
-             if fsFalhas <= cNumFalhasMax then
-             begin
-               fpDevice.Serial.Purge;
-               PedeStatus
-             end;
-           end
-          else
-             raise ;
-       end ;
-    end ;
-  end;
-
-  if Result then
-  begin
-     if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
-      begin
-        if (fsWAKCounter > 0) and          // Já esteve ocupada antes ?
-           (EscECFComando.fsCMD = 26) and  // Foi um comando de "Leitura de Informações" ?
-           IsBematech and
-           (Trunc( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
-        begin
-           // Muitos pedidos de Status... Bematech entrou em Loop... envie o comando novamente...
-          GravaLog('*** Bematech em possível loop: '+IntToStr(fsWAKCounter)+
-                   ' respostas de Ocupada. Reenviando o último comando');
-          GravaLog('        Reenvio TX -> ' + fpComandoEnviado, True);
-          fpDevice.EnviaString(fpComandoEnviado);
-          Retorno := '';
-          fsWAKCounter := 0;
-          TempoLimite := IncSecond(Now, TimeOut);
-        end
-        else
-        begin
-          Inc( fsWAKCounter );
-          GravaLog('                RX <- '+Retorno+ ' ('+IntToStr(fsWAKCounter)+')', True);
-          Sleep( cEsperaWAK );
-          PedeStatus;
-        end;
-
-        Result := False;
-      end
-     else if (Byte1 = SOH) and (EscECFResposta.CAT = 0) then
-      begin
-        if not TestBit( EscECFResposta.RET.ECF, 0 ) then // Existem mais dados ?
-        begin
-          GravaLog('     '+IntToStrZero(EscECFResposta.TBR,4)+' bytes RX <- '+Retorno, True);
-          Inc( fsSPR );
-          PedeStatus;
-          Result := False;
-        end;
-      end;
-  end
-  else
-  begin
-    // Se ECF não respondeu a status... Envia comando novamente
-    if (fsTimeOutStatus > 0) and (fsTimeOutStatus < Now) and (fsFalhas < cNumFalhasMax) then
-    begin
-      Inc( fsFalhas ) ;
-      Sleep( cEsperaWAK );
-      GravaLog('         Falha: '+IntToStr(fsFalhas));
-      fpDevice.Serial.Purge;
-      GravaLog('        Reenvio TX -> '+fpComandoEnviado, True);
-      fpDevice.EnviaString( fpComandoEnviado ) ;
-      fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
-    end;
-  end;
+  Result := fsEscECFProtocolo.VerificaFimLeitura( Retorno, TempoLimite);
 end;
 
 function TACBrECFEscECF.GetModeloStr: String;
@@ -1075,32 +1374,6 @@ begin
     Result := fsMarcaECF
   else
     Result := fpModeloStr;
-end;
-
-
-function TACBrECFEscECF.PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
-Var
-  CMD, EXT : Byte ;
-  BCD : AnsiString ;
-begin
-  if Length(CmdExtBcd) < 7 then
-     raise EACBrECFERRO.Create(ACBrStr('Comando EscECF inválido')) ;
-
-  CMD := ord( CmdExtBcd[1] ) ;
-  EXT := ord( CmdExtBcd[2] ) ;
-  BCD := copy( CmdExtBcd, 3, Length(CmdExtBcd) ) ;
-
-  if (CMD = 255) and (EXT = 0) then
-     raise EACBrECFERRO.Create(ACBrStr('Erro ! CMD = 255 e EXT = 0')) ;
-
-  if (CMD <> 255) and (EXT <> 0) then
-     raise EACBrECFERRO.Create(ACBrStr('Erro ! EXT deve ser 0 quando comando <> 255')) ;
-
-  EscECFComando.CMD := CMD ;
-  EscECFComando.EXT := EXT ;
-  EscECFComando.Params.Text := BCD ;
-
-  Result := EscECFComando.Comando ;
 end;
 
 function TACBrECFEscECF.IsBematech : Boolean ;
@@ -1367,37 +1640,6 @@ begin
       Result := Result + '-'+MsgMotivo;
 end;
 
-procedure TACBrECFEscECF.Sincronizar;
-var
-  Resp: AnsiString;
-begin
-  fsFalhas := 0;
-  while (not fsSincronizou) and (fsFalhas <= cNumFalhasMax) do
-  begin
-    GravaLog( '    Sincronismo TX -> '+SYN, True);
-    fpDevice.Serial.SendByte( ord(SYN) );
-    Resp := fpDevice.Serial.RecvBufferStr(2,2000);
-    GravaLog( '    Sincronismo RX <- '+Resp, True);
-
-    if Length(Resp) = 2 then
-    begin
-      if Resp[1] = SYN then
-      begin
-        EscECFComando.SEQ := ord(Resp[2])+1;
-        fsSincronizou := True;
-      end;
-    end;
-
-    if not fsSincronizou then
-    begin
-      Inc( fsFalhas ) ;
-      GravaLog('         Falha: '+IntToStr(fsFalhas));
-      fpDevice.Serial.Purge;
-      Sleep(100);
-    end;
-  end;
-end;
-
 function TACBrECFEscECF.AjustaDescricao(ADescricao : String) : String ;
 begin
   { Ajusta uma descrição de acordo com as regras do protocolo EscECF
@@ -1462,13 +1704,10 @@ begin
   else if IsEpson then
   begin
     Result := TACBrECFEpson.create(fpOwner);
-    with TACBrECFClassHack( Result ) do
-    begin
-      fpDevice.Desativar;
-      fsDeviceParams := fpDevice.Porta+':'+fpDevice.ParamsString;
-      fpDevice.Porta := 'USB';         // Força DLL em USB
-      fpDevice.Baud  := 115200;
-    end;
+    Result.Device.Desativar;
+    fsDeviceParams := fpDevice.Porta+':'+fpDevice.ParamsString;
+    Result.Device.Porta := 'USB';         // Força DLL em USB
+    Result.Device.Baud  := 115200;
   end;
 
   if Result <> Nil then
@@ -1493,6 +1732,11 @@ begin
   end;
 
   Self.Ativar;
+end;
+
+procedure TACBrECFEscECF.AtivarDevice;
+begin
+  inherited Ativar;
 end;
 
 function TACBrECFEscECF.RetornaInfoECF(Registrador: String): AnsiString;
@@ -3458,4 +3702,5 @@ end.
 -- Total Cancelamentos OPNF
 -- Total Descontos OPNF
 }
+
 

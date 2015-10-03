@@ -150,8 +150,6 @@ TACBrECFEpson = class( TACBrECFClass )
        wPorta:Integer):Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xEPSON_Serial_Fechar_Porta : function : Integer;
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
-    xEPSON_Serial_Obter_Estado_Com : function : Integer;
-       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xEPSON_Obter_Dados_MF_MFD : function (pszInicio:AnsiString;
        pszFinal:AnsiString; dwTipoEntrada:Integer; dwEspelhos:Integer;
        dwAtoCotepe:Integer; dwSintegra:Integer; pszArquivoSaida:AnsiString) :
@@ -384,8 +382,6 @@ TACBrECFEpson = class( TACBrECFClass )
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
  end ;
-
-TACBrECFClassHack = class ( TACBrECFClass );
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 function EpsonCheckSum(Dados: AnsiString): AnsiString;
@@ -752,7 +748,7 @@ begin
   if epsonALSublinhado then
     Cmd := Cmd + cSublinhadoOn;
 
-  if TACBrECFClassHack(AECFClass).fpDevice.IsDLLPort and (Cmd = C_OFF) then
+  if AECFClass.Device.IsDLLPort and (Cmd = C_OFF) then
     Cmd := 32 ;
 
   Result := ESC + chr( Cmd );
@@ -790,7 +786,7 @@ const
     begin
       Altura  := IfThen( ConfigBarras.Altura = 0, 32, max(min(ConfigBarras.Altura,255),1) );
       Largura := max(min(ConfigBarras.LarguraLinha,6),2);
-      Mostrar := IfThen(TACBrECFClassHack(AECFClass).fpDevice.IsDLLPort,2,0);
+      Mostrar := IfThen(AECFClass.Device.IsDLLPort,2,0);
       if ConfigBarras.MostrarCodigo then
          Mostrar := 2;
     end;
@@ -1160,11 +1156,12 @@ begin
   fpRFDID     := 'EP' ;
   fpPaginaDeCodigo := 850 ;
 
-  xEPSON_Obter_Dados_MF_MFD := NIL ;
-  xEPSON_Serial_Abrir_Porta := NIL ;
-  xEPSON_Serial_Fechar_Porta := NIL ;
-  xEPSON_Serial_Obter_Estado_Com := NIL ;
-  xEPSON_Send_From_FileEXX := NIL;
+  xEPSON_Serial_Abrir_Porta := Nil;
+  xEPSON_Serial_Fechar_Porta := Nil;
+  xEPSON_Obter_Dados_MF_MFD := Nil;
+  xEPSON_Send_From_FileEXX := Nil;
+  xEPSON_Obter_Arquivo_Binario_MF := Nil;
+  xEPSON_Obter_Arquivo_Binario_MFD := Nil;
 end;
 
 destructor TACBrECFEpson.Destroy;
@@ -3593,7 +3590,6 @@ begin
    EpsonFunctionDetect('EPSON_Obter_Dados_MF_MFD', @xEPSON_Obter_Dados_MF_MFD);
    EpsonFunctionDetect('EPSON_Serial_Abrir_Porta', @xEPSON_Serial_Abrir_Porta);
    EpsonFunctionDetect('EPSON_Serial_Fechar_Porta', @xEPSON_Serial_Fechar_Porta);
-   EpsonFunctionDetect('EPSON_Serial_Obter_Estado_Com', @xEPSON_Serial_Obter_Estado_Com);
    EpsonFunctionDetect('EPSON_Send_From_FileEXX', @xEPSON_Send_From_FileEXX);
    EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MF', @xEPSON_Obter_Arquivo_Binario_MF);
    EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MFD', @xEPSON_Obter_Arquivo_Binario_MFD);

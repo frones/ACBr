@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/10/2015
+-- ACBrECFEscECF --
+[*] Classe TACBrECFEscECF refatorada para permitir o uso de Protocolos Virtuais
+[+] Adicionado suporte a Epson TMT800/900 por "USB", necessitando porém, da
+    biblioteca: "InterfaceEpson.dll" versão: 4.4.6 ou superior, na mesma pasta
+    do .EXE... Configure ACBrECF.Porta := 'USB';
+
 Data: 02/10/2015
 -- ACBrECFEscECF --
 [*] Aplicado Workaround para problema de Loop infinito em Bematech MP4200

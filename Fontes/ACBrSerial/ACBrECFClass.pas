@@ -857,6 +857,7 @@ TACBrECFClass = class
     Destructor Destroy  ; override ;
 
     property Owner : TComponent read fpOwner ;
+    property Device: TACBrDevice read fpDevice;
     Property Ativo : Boolean read fpAtivo write SetAtivo ;
     procedure Ativar ; virtual ;
     procedure Desativar ; virtual ;
@@ -4804,11 +4805,7 @@ end;
           begin
              fsFormMsg.Width  := W ;
              fsFormMsg.Height := H ;
-             {$IFDEF FPC}
-             fsFormMsg.Position := poDesktopCenter ;
-             {$ELSE}
              fsFormMsg.Position := poMainFormCenter ;
-             {$ENDIF}
           end ;
 
           Brush.Color := fsFormMsg.Color ;

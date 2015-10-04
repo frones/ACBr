@@ -163,8 +163,6 @@ begin
   fCasasDecimais.Tag := 0;
   FCasasDecimais._qCom := 4;
   FCasasDecimais._vUnCom := 4;
-  fCasasDecimais._Mask_qCom   := '###,###,###,##0.00';
-  fCasasDecimais._Mask_vUnCom := '###,###,###,##0.00';
   FProdutosPorPagina := 0;
   FExibirEAN := False;
   FTipoDANFE := tiRetrato;
@@ -211,7 +209,7 @@ try
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
           FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
           fQuebraLinhaEmVeiculos,
-          fCasasDecimais.Tag,
+          Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
           fCasasDecimais._Mask_vUnCom );
         end;
@@ -230,7 +228,7 @@ try
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
       fQuebraLinhaEmVeiculos,
-      fCasasDecimais.Tag,
+      Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
       fCasasDecimais._Mask_vUnCom );
     end;
@@ -276,7 +274,7 @@ begin
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
           FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
           fQuebraLinhaEmVeiculos,
-          fCasasDecimais.Tag,
+          Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
           fCasasDecimais._Mask_vUnCom );
         end;
@@ -299,7 +297,7 @@ begin
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
       fQuebraLinhaEmVeiculos,
-      fCasasDecimais.Tag,
+      Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
       fCasasDecimais._Mask_vUnCom );
     end;

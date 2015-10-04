@@ -45,7 +45,7 @@ object Form1: TForm1
     Height = 329
     ActivePage = TabSheet4
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     object TabSheet4: TTabSheet
       Caption = 'ECF'
       ImageIndex = 3
@@ -140,7 +140,7 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
-        TabOrder = 0
+        TabOrder = 4
         OnChange = cbxModeloChange
         Items.Strings = (
           'Procurar'
@@ -161,7 +161,7 @@ object Form1: TForm1
         Top = 25
         Width = 105
         Height = 21
-        TabOrder = 1
+        TabOrder = 5
         Text = 'Procurar'
         OnChange = cbxPortaChange
       end
@@ -171,7 +171,7 @@ object Form1: TForm1
         Width = 121
         Height = 17
         Caption = 'Tentar Novamente'
-        TabOrder = 5
+        TabOrder = 6
         OnClick = chTentarClick
       end
       object chBloqueia: TCheckBox
@@ -182,7 +182,7 @@ object Form1: TForm1
         Caption = 'Bloqueia Mouse Teclado'
         Checked = True
         State = cbChecked
-        TabOrder = 7
+        TabOrder = 8
         OnClick = chBloqueiaClick
       end
       object chExibeMsg: TCheckBox
@@ -193,7 +193,7 @@ object Form1: TForm1
         Caption = 'Exibe Msg Aguarde...'
         Checked = True
         State = cbChecked
-        TabOrder = 9
+        TabOrder = 11
         OnClick = chExibeMsgClick
       end
       object chArredondaPorQtd: TCheckBox
@@ -202,7 +202,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Arredondamento por Quantidade'
-        TabOrder = 10
+        TabOrder = 7
         OnClick = chArredondaPorQtdClick
       end
       object chGavetaSinalInvertido: TCheckBox
@@ -211,7 +211,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Gaveta Sinal Invertido'
-        TabOrder = 4
+        TabOrder = 9
         OnClick = chGavetaSinalInvertidoClick
       end
       object mMsg: TMemo
@@ -221,7 +221,7 @@ object Form1: TForm1
         Height = 41
         Anchors = [akLeft, akTop, akRight]
         ScrollBars = ssVertical
-        TabOrder = 6
+        TabOrder = 13
         OnChange = mMsgChange
       end
       object edLog: TEdit
@@ -231,7 +231,7 @@ object Form1: TForm1
         Height = 21
         Cursor = crIBeam
         Anchors = [akLeft, akTop, akRight]
-        TabOrder = 8
+        TabOrder = 15
         Text = 'acbrlog.txt'
         OnChange = edLogChange
       end
@@ -243,7 +243,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 100
         MinValue = 1
-        TabOrder = 2
+        TabOrder = 0
         Value = 10
         OnChange = seTimeOutChange
       end
@@ -256,7 +256,7 @@ object Form1: TForm1
         Increment = 10
         MaxValue = 1000
         MinValue = 0
-        TabOrder = 3
+        TabOrder = 1
         Value = 100
         OnChange = seIntervaloAposComandoChange
       end
@@ -297,7 +297,7 @@ object Form1: TForm1
           00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
         ModalResult = 1
-        TabOrder = 11
+        TabOrder = 19
         OnClick = btSerialClick
       end
       object chDescricaoGrande: TCheckBox
@@ -317,7 +317,7 @@ object Form1: TForm1
         Width = 101
         Height = 21
         Cursor = crIBeam
-        TabOrder = 13
+        TabOrder = 18
         OnChange = edOperadorChange
       end
       object edMsgTrabalhando: TEdit
@@ -337,7 +337,7 @@ object Form1: TForm1
         Width = 101
         Height = 25
         Caption = 'Fontes do ECF'
-        TabOrder = 15
+        TabOrder = 16
         OnClick = Button1Click
       end
       object speLinBuf: TSpinEdit
@@ -348,7 +348,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 1000
         MinValue = 0
-        TabOrder = 16
+        TabOrder = 2
         Value = 0
         OnChange = speLinBufChange
       end
@@ -367,7 +367,7 @@ object Form1: TForm1
         Width = 147
         Height = 19
         Caption = 'Arredondamento Item MFD'
-        TabOrder = 18
+        TabOrder = 10
         OnClick = chArredondamentoItemMFDClick
       end
       object cbxUF: TComboBox
@@ -376,7 +376,7 @@ object Form1: TForm1
         Width = 47
         Height = 21
         Style = csDropDownList
-        TabOrder = 19
+        TabOrder = 3
         OnChange = cbxModeloChange
         Items.Strings = (
           'AC'
@@ -557,7 +557,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 782
-        Height = 246
+        Height = 266
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -1023,7 +1023,7 @@ object Form1: TForm1
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
         Align = alBottom
-        TabOrder = 1
+        TabOrder = 3
         object tbsMenuFiscalTipoData: TTabSheet
           Caption = 'Emiss'#227'o por intervalo de data'
           object Label24: TLabel
@@ -1123,7 +1123,7 @@ object Form1: TForm1
         Font.Pitch = fpVariable
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 1
       end
     end
     object tsTagsImpressao: TTabSheet
@@ -1190,7 +1190,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 6
         MinValue = 0
-        TabOrder = 0
+        TabOrder = 1
         Value = 0
         OnChange = speBarrasLarguraChange
       end
@@ -1203,7 +1203,7 @@ object Form1: TForm1
         Caption = 'Enviar Linha Gerencial'
         Default = True
         ModalResult = 1
-        TabOrder = 1
+        TabOrder = 0
         OnClick = BitBtn6Click
       end
       object MemoTesteTags: TMemo
@@ -1257,7 +1257,7 @@ object Form1: TForm1
           ''
           '</linha_dupla>')
         ScrollBars = ssVertical
-        TabOrder = 2
+        TabOrder = 5
       end
       object chBarrasImprimeTexto: TCheckBox
         Left = 164
@@ -1285,7 +1285,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 200
         MinValue = 0
-        TabOrder = 4
+        TabOrder = 2
         Value = 0
         OnChange = speBarrasAlturaChange
       end
@@ -1302,7 +1302,7 @@ object Form1: TForm1
         Font.Pitch = fpVariable
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 4
         OnClick = chIgnorarTagsFormatacaoClick
       end
     end
@@ -1315,7 +1315,7 @@ object Form1: TForm1
     Cursor = crHelp
     Hint = 'Sobre o ACBrMonitor ?'
     Align = alBottom
-    TabOrder = 2
+    TabOrder = 1
     TabStop = True
     DesignSize = (
       790
@@ -2336,12 +2336,6 @@ object Form1: TForm1
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
-    FormMsgColor = clHighlight
-    FormMsgFonte.Charset = DEFAULT_CHARSET
-    FormMsgFonte.Color = clWindowText
-    FormMsgFonte.Height = -11
-    FormMsgFonte.Name = 'Tahoma'
-    FormMsgFonte.Style = []
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel

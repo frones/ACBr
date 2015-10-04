@@ -1943,7 +1943,7 @@ end;
 
 Function TfrlDANFeRLPaisagem.FormatQuantidade( dValor : Double ) : String;
 begin
-  case fIFormatacao of
+  case fFormato of
     0 : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
     1 : Result := FormatFloatBr( dValor , fMask_qCom);
     else
@@ -1954,7 +1954,7 @@ end;
 
 Function TfrlDANFeRLPaisagem.FormatValorUnitario( dValor : Double ) : String;
 begin
-  case fIFormatacao of
+  case fFormato of
     0 : Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
     1 : Result := FormatFloatBr( dValor , fMask_vUnCom);
     else

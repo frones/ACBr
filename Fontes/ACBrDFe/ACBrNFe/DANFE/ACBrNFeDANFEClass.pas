@@ -55,6 +55,7 @@ type
 
   TCasasDecimais = class(TComponent)
   private
+    fFormato : TDetFormato;
     FqCom: Integer;
     FvUnCom: Integer;
     FMask_qCom: String;
@@ -66,10 +67,11 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
-    property _qCom: Integer       read FQCom        write Set_qCom;
-    property _vUnCom: Integer     read FvUnCom      write Set_vUnCom;
-    property _Mask_qCom: String   read FMask_qCom   write FMask_qCom;
-    property _Mask_vUnCom: String read FMask_vUnCom write FMask_vUnCom;
+    property Formato : TDetFormato  read fFormato     write fFormato;
+    property _qCom: Integer         read FQCom        write Set_qCom;
+    property _vUnCom: Integer       read FvUnCom      write Set_vUnCom;
+    property _Mask_qCom: String     read FMask_qCom   write FMask_qCom;
+    property _Mask_vUnCom: String   read FMask_vUnCom write FMask_vUnCom;
   end;
 
   { TACBrNFeDANFEClass }
@@ -194,10 +196,10 @@ uses
 constructor TCasasDecimais.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
-
-  FQCom := 2;
-  FvUnCom := 2;
-
+  FMask_qCom    := '###,###,###,##0.00';
+  FMask_vUnCom  := '###,###,###,##0.00';
+  FQCom         := 2;
+  FvUnCom       := 2;
 end;
 
 destructor TCasasDecimais.Destroy;
@@ -235,7 +237,7 @@ begin
   FUsuario    := '';
   FPathPDF    := '';
   FImpressora := '';
-  
+
   FImprimirTotalLiquido := False;
   FMostrarPreview       := True;
   FMostrarStatus        := True;

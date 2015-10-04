@@ -130,7 +130,7 @@ begin
   FFastFile := '' ;
   FEspessuraBorda := 1;
   FExibirTotalTributosItem := False;
-  FExibeCampoFatura := True;  //Incluido em 22/05/2013 - Fábio Gabriel - Setado por padrão True
+  FExibeCampoFatura := True;
   FTributosFonte := '';
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
@@ -143,7 +143,7 @@ begin
   FDescricaoViaEstabelec := 'Via do Consumidor';// utilizado para NFC-e
   FURLConsultaPublica:= ''; //NFCe
   FImprimirDadosArma := True;
-  fQuebraLinhaEmVeiculos := True;
+  fQuebraLinhaEmVeiculos  := True;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -229,7 +229,6 @@ begin
    if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFCe)then
      FdmDanfe.frxReport.PrintOptions.PrintMode := pmSplit; 
 
-  // Incluído por Luciano Enzweiler em 23/01/2013
   // Define a impressora
   if Length(Impressora) > 0 then
     FdmDanfe.frxReport.PrintOptions.Printer := FImpressora;
@@ -416,18 +415,6 @@ begin
     FdmDanfe.frxPDFExport.Subject    := TITULO_PDF;
     FdmDanfe.frxPDFExport.Keywords   := TITULO_PDF;
     FdmDanfe.frxPDFExport.ShowDialog := False;
-
-    {
-    NomeArq := TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.chNFe;
-    NomeArq := NomeArq + '-' + TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.TipoEvento;
-    NomeArq := NomeArq + '-' + IntToStr(TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.nSeqEvento);
-    }
-    {
-    NomeArq := TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.TipoEvento;
-    NomeArq := NomeArq + TACBrNFe(ACBrNFe).EventoNFe.Evento[0].InfEvento.chNFe;
-    }
-
-//    NomeArq := Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 3, 52);
 
     NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 

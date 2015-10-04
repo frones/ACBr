@@ -57,6 +57,8 @@ uses
   Classes;
 
 type
+
+  TDetFormato   = (tdetInteger,tdetMascara);
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4, tcDe10,
                    tcHor, tcDe6, tcDatCFe, tcHorCFe, tcDatVcto); // tcEsp = String: somente numeros;
   TpcnFormatoGravacao = (fgXML, fgTXT);

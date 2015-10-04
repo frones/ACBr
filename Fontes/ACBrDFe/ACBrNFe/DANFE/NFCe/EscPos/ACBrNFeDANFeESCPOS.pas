@@ -73,6 +73,9 @@ type
 
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
+    function FormatQuantidade(dValor: Double): String;
+    function FormatValorUnitario(dValor: Double): String;
+    function ManterCodigo(scEAN, scProd: String): String;
 
   protected
     FpNFe: TNFe;
@@ -115,6 +118,10 @@ type
   end;
 
 procedure Register;
+
+  const
+    sDisplayFormat = '###,###,###,##0.%.*d';
+
 
 implementation
 
@@ -243,7 +250,7 @@ procedure TACBrNFeDANFeESCPOS.GerarItens;
 var
   i: Integer;
   nTamDescricao: Integer;
-  fQuant, VlrLiquido: Double;
+  VlrLiquido: Double;
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
 begin
@@ -256,90 +263,65 @@ begin
 
     for i := 0 to FpNFe.Det.Count - 1 do
     begin
-      sItem        := IntToStrZero(FpNFe.Det.Items[i].Prod.nItem, 3);
-      sDescricao   := Trim(FpNFe.Det.Items[i].Prod.xProd);
-      sUnidade     := Trim(FpNFe.Det.Items[i].Prod.uCom);
-      sVlrProduto  := FormatFloat('#,###,##0.00', FpNFe.Det.Items[i].Prod.vProd);
-
-      if (Length( Trim( FpNFe.Det.Items[i].Prod.cEAN ) ) > 0) and (UsaCodigoEanImpressao) then
-        sCodigo := Trim(FpNFe.Det.Items[i].Prod.cEAN)
-      else
-        sCodigo := Trim(FpNFe.Det.Items[i].Prod.cProd);
-
-      // formatar conforme configurado
-      sVlrUnitario := FormatFloatBr(FpNFe.Det.Items[i].Prod.VUnCom,
-        IfThen(CasasDecimais._Mask_vUnCom = '',
-                        FloatMask(CasasDecimais._vUnCom),
-                        CasasDecimais._Mask_vUnCom)
-        );
-
-      // formatar conforme configurado somente quando houver decimais
-      // caso contrário mostrar somente o número inteiro
-      fQuant := FpNFe.Det.Items[i].Prod.QCom;
-      if Frac(fQuant) > 0 then
+      with FpNFe.Det.Items[i] do
       begin
-        sQuantidade  := FormatFloatBr(fQuant,
-          IfThen(CasasDecimais._Mask_qCom = '',
-                          FloatMask(CasasDecimais._qCom),
-                          CasasDecimais._Mask_qCom)
-          );
-      end
-      else
-      begin
-        sQuantidade := FloatToStr(fQuant);
-      end;
+        sItem        :=        IntToStrZero( Prod.nItem, 3);
+        sDescricao   :=                Trim( Prod.xProd);
+        sUnidade     :=                Trim( Prod.uCom);
+        sVlrProduto  :=       FormatFloatBr( Prod.vProd, '###,###,##0.00');
+        sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
+        sVlrUnitario := FormatValorUnitario( Prod.VUnCom );
+        sQuantidade  :=    FormatQuantidade( Prod.QCom );
 
-      if ImprimeEmUmaLinha then
-      begin
-        LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
-          sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
-
-        // acerta tamanho da descrição
-        nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
-        sDescricao := PadRight(Copy(sDescricao, 1, nTamDescricao), nTamDescricao);
-
-        LinhaCmd := StringReplace(LinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
-        FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
-      end
-      else
-      begin
-        LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
-        FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
-
-        LinhaCmd :=
-          PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
-          PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
-        LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
-        FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
-      end;
-
-      if ImprimeDescAcrescItem then
-      begin
-        // desconto
-        if FpNFe.Det.Items[i].Prod.vDesc > 0 then
+        if ImprimeEmUmaLinha then
         begin
-          VlrLiquido :=
-            (FpNFe.Det.Items[i].Prod.qCom * FpNFe.Det.Items[i].Prod.vUnCom) - FpNFe.Det.Items[i].Prod.vDesc;
+          LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
+            sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
 
-          LinhaCmd := '</ae><c>' + padSpace(
-              'desconto ' + padLeft(FormatFloatBr(FpNFe.Det.Items[i].Prod.vDesc, '-0.00'), 15, ' ')
-              + '|' + FormatFloatBr(VlrLiquido, '0.00'),
-              FPosPrinter.ColunasFonteCondensada, '|');
+          // acerta tamanho da descrição
+          nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
+          sDescricao := PadRight(Copy(sDescricao, 1, nTamDescricao), nTamDescricao);
+
+          LinhaCmd := StringReplace(LinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
+          FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+        end
+        else
+        begin
+          LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
+          FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+
+          LinhaCmd :=
+            PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
+            PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
+          LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
         end;
 
-        // ascrescimo
-        if FpNFe.Det.Items[i].Prod.vOutro > 0 then
+        if ImprimeDescAcrescItem then
         begin
-          VlrLiquido :=
-            (FpNFe.Det.Items[i].Prod.qCom * FpNFe.Det.Items[i].Prod.vUnCom) +
-            FpNFe.Det.Items[i].Prod.vOutro;
+          // desconto
+          if Prod.vDesc > 0 then
+          begin
+            VlrLiquido := (Prod.qCom * Prod.vUnCom) - Prod.vDesc;
 
-          LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
-              'acréscimo ' + padLeft(FormatFloatBr(FpNFe.Det.Items[i].Prod.vOutro, '+0.00'), 15, ' ')
-              + '|' + FormatFloatBr(VlrLiquido, '0.00'),
-              FPosPrinter.ColunasFonteCondensada, '|'));
-          FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+            LinhaCmd := '</ae><c>' + padSpace(
+                'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-0.00'), 15, ' ')
+                + '|' + FormatFloatBr(VlrLiquido, '0.00'),
+                FPosPrinter.ColunasFonteCondensada, '|');
+            FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+          end;
+
+          // ascrescimo
+          if Prod.vOutro > 0 then
+          begin
+            VlrLiquido := (Prod.qCom * Prod.vUnCom) + Prod.vOutro;
+
+            LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
+                'acréscimo ' + padLeft(FormatFloatBr(Prod.vOutro, '+0.00'), 15, ' ')
+                + '|' + FormatFloatBr(VlrLiquido, '0.00'),
+                FPosPrinter.ColunasFonteCondensada, '|'));
+            FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+          end;
         end;
       end;
     end;
@@ -733,6 +715,44 @@ begin
     FPosPrinter.Buffer.Add('</pular_linhas>');
 
   FPosPrinter.Imprimir('', True, True, True, AVias);
+end;
+
+
+Function TACBrNFeDANFeESCPOS.FormatQuantidade( dValor : Double ) : String;
+begin
+  // formatar conforme configurado somente quando houver decimais
+  if Frac( dValor) > 0 then
+  begin
+    case CasasDecimais.Formato of
+      tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
+      else
+        Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+    end
+  end
+  else
+    // caso contrário mostrar somente o número inteiro
+    Result := FloatToStr( dValor );
+end;
+
+
+Function TACBrNFeDANFeESCPOS.FormatValorUnitario( dValor : Double ) : String;
+begin
+  // formatar conforme configurado
+  case CasasDecimais.Formato of
+    tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+    tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_vUnCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+  end;
+end;
+
+Function TACBrNFeDANFeESCPOS.ManterCodigo( scEAN , scProd : String ) : String;
+begin
+  if (Length( scEAN ) > 0) and (UsaCodigoEanImpressao) then
+    Result := Trim(scEAN)
+  else
+    Result := Trim(scProd);
 end;
 
 {$IFDEF FPC}

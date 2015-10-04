@@ -174,7 +174,7 @@ type
     FDetArmamentos: TDetArmamentos;
     FDetCombustiveis: TDetCombustiveis;
     fQuebraLinhaEmVeiculos : Boolean;
-    fIFormatacao : Integer;
+    fFormato    : integer;
     fMask_qCom : String;
     fMask_vUnCom : String;
 
@@ -216,7 +216,7 @@ type
                     ADetArmamentos: TDetArmamentos = [];
                     ADetCombustiveis: TDetCombustiveis = [];
                     AdQuebraLinhaEmVeiculos : Boolean = True;
-                    AdCasasDecimaisTag : Integer = 0;
+                    AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
 
@@ -250,7 +250,7 @@ type
                     ADetArmamentos: TDetArmamentos = [];
                     ADetCombustiveis: TDetCombustiveis = [];
                     ADQuebraLinhaEmVeiculos : Boolean = True;
-                    AdCasasDecimaisTag : Integer = 0;
+                    AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
 
@@ -386,7 +386,7 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 ADetArmamentos: TDetArmamentos = [];
                 ADetCombustiveis: TDetCombustiveis = [] ;
                 ADQuebraLinhaEmVeiculos : Boolean = True;
-                AdCasasDecimaisTag : Integer = 0;
+                AdCasasDecimaisFormato : Integer = 0;
                 AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                 AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
 
@@ -432,7 +432,7 @@ begin
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
       FQuebraLinhaEmVeiculos := ADQuebraLinhaEmVeiculos;
-      fIFormatacao := AdCasasDecimaisTag;
+      fFormato      := AdCasasDecimaisFormato;
       fMask_qCom   := AdCasasDecimais_Mask_qCom;
       fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
       if FImpressora > '' then
@@ -484,7 +484,7 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     ADetArmamentos: TDetArmamentos = [];
                     ADetCombustiveis: TDetCombustiveis = [];
                     ADQuebraLinhaEmVeiculos : Boolean = True;
-                    AdCasasDecimaisTag : Integer = 0;
+                    AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
 
@@ -527,9 +527,9 @@ begin
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
       FQuebraLinhaEmVeiculos := ADQuebraLinhaEmVeiculos;
-      fIFormatacao := AdCasasDecimaisTag;
-      fMask_qCom   := AdCasasDecimais_Mask_qCom;
-      fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
+      fFormato      := AdCasasDecimaisFormato;
+      fMask_qCom    := AdCasasDecimais_Mask_qCom;
+      fMask_vUnCom  := AdCasasDecimais_Mask_vUnCom;
 
       with RLPDFFilter1.DocumentInfo do
         begin

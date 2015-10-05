@@ -39,8 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/10/2015
+-- ACBrEscElgin --
+[+] Implementado o método LerStatus. (por: tiagoshimizu)
+    http://www.projetoacbr.com.br/forum/topic/24897-lestatus-impressoras-elgin-vox/
+
 Data: 03/10/2015
--- ACBrECFEscECF --
+-- ACBrECFEscECF --    (por: DSA)
 [*] Classe TACBrECFEscECF refatorada para permitir o uso de Protocolos Virtuais
 [+] Adicionado suporte a Epson TMT800/900 por "USB", necessitando porém, da
     biblioteca: "InterfaceEpson.dll" versão: 4.4.6 ou superior, na mesma pasta

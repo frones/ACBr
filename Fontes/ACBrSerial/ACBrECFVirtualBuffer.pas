@@ -600,7 +600,7 @@ begin
     Add( PadSpace('N.Serie '+PadRight(fpNumSerie,21)+'|Maq '+GetNumECF+'|'+
               'v'+NumVersao,Colunas,'|') );
     Add( PadSpace('Oper. '+PadRight(Operador,15)  +'|'+
-              FormatDateTime('dd/mm/yy hh:nn:ss',now)+V,  Colunas,'|') );
+              FormatDateTimeBr(now, 'dd/mm/yy hh:nn:ss')+V,  Colunas,'|') );
     Add( PadCenter('** N A O   E   C U P O M   F I S C A L **',Colunas) );
     Add( '</linha_dupla>' ) ;
 
@@ -950,7 +950,7 @@ begin
   fsBuffer.Add( '<e>' +
                 PadCenter('REDUCAO Z', ColunasExpandido() ) +
                 '</e>' );
-
+  fsBuffer.Add(PadCenter('Data Movimento: '+FormatDateBr(DataMovimento),Colunas) );
   AddBufferRelatorio ;
 end;
 

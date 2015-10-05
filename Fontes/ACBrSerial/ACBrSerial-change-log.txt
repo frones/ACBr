@@ -40,6 +40,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 05/10/2015
+--ACBrECFVirtualBuffer --
+[-] Ajuste para constar a Data do Movimento na Redução Z  (por: Amarildo Lacerda)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=24929
+
 -- ACBrEscElgin --
 [+] Implementado o método LerStatus. (por: tiagoshimizu)
     http://www.projetoacbr.com.br/forum/topic/24897-lestatus-impressoras-elgin-vox/

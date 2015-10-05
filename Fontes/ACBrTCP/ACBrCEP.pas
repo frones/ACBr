@@ -53,7 +53,7 @@ uses
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
                          wsBases4you, wsRNSolucoes, wsKingHost, wsByJG,
-                         wsCorreios, wsDevMedia ) ;
+                         wsCorreios, wsDevMedia, wsViaCep ) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -281,6 +281,18 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
           ALogradouro, AUF, ABairro : String ) ; override ;
   end ;
 
+  { TACBrWSViaCEP }
+  TACBrWSViaCEP = class(TACBrCEPWSClass)
+  private
+    FCepBusca: String;
+    procedure ProcessaResposta;
+  public
+    constructor Create( AOwner : TACBrCEP ); override;
+
+    Procedure BuscarPorCEP( ACEP : String ); override;
+    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
+  end;
+
 
 
 implementation
@@ -373,6 +385,7 @@ begin
     wsByJG             : fACBrCEPWS := TACBrWSByJG.Create(Self);
     wsCorreios         : fACBrCEPWS := TACBrWSCorreios.Create(Self);
     wsDevMedia         : fACBrCEPWS := TACBrWSDevMedia.Create(Self);
+    wsViaCep           : fACBrCEPWS := TACBrWSViaCEP.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1112,7 +1125,7 @@ end ;
 
 procedure TACBrWSCorreios.BuscarPorCEP(ACEP: String);
 var
-	sParams: string;
+  sParams: string;
 begin
   ACEP := OnlyNumber( ACEP );
   sParams := 'relaxation='+ACEP+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
@@ -1308,7 +1321,7 @@ begin
       Bairro          := LerTagXML(Buffer,'bairro') ;
       Municipio       := LerTagXML(Buffer,'cidade') ;
       UF              := LerTagXML(Buffer,'uf') ;
-      IBGE_Municipio  := LerTagXML(Buffer,'codigomunicipio'); 
+      IBGE_Municipio  := LerTagXML(Buffer,'codigomunicipio');
     end ;
   end
   else
@@ -1324,5 +1337,88 @@ begin
     raise EACBrCEPException.Create( ACBrStr('Chave de acesso não informada.') );
 end;
 
+{ TACBrWSViaCEP }
+
+procedure TACBrWSViaCEP.BuscarPorCEP(ACEP: String);
+begin
+  FCepBusca := ACep;
+  ACEP := OnlyNumber( ACEP );
+
+  if ACEP = '' then
+     raise EACBrCEPException.Create('CEP deve ser informado');
+
+  fOwner.HTTPGet( fpURL + ACEP + '/xml' ) ;
+  ProcessaResposta();
+end;
+
+procedure TACBrWSViaCEP.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro: String);
+begin
+  if AMunicipio = '' then
+     raise EACBrCEPException.Create('Munícipio deve ser informado.');
+
+  if ALogradouro = '' then
+     raise EACBrCEPException.Create('Logradouro deve ser informado.');
+
+  if AUF = '' then
+     raise EACBrCEPException.Create('UF deve ser informado.');
+
+  AUF         := TiraAcentos(AUF);
+  AMunicipio  := TiraAcentos(AMunicipio);
+  ALogradouro := TiraAcentos(ALogradouro);
+
+  fOwner.HTTPGet( fpURL + AUF + '/' + AMunicipio + '/' + ALogradouro + '/xml' );
+  ProcessaResposta();
+end;
+
+constructor TACBrWSViaCEP.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fpURL := 'http://viacep.com.br/ws/';
+end;
+
+procedure TACBrWSViaCEP.ProcessaResposta;
+var
+  Buffer: string;
+  s: string;
+  i: Integer;
+  SL1: TStringList;
+begin
+  SL1 := TStringList.Create;
+
+  try
+    Buffer := ParseText(fOwner.RespHTTP.Text);
+    Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
+    Buffer := StringReplace(Buffer, '<enderecos>', '', [rfReplaceAll]);
+    Buffer := StringReplace(Buffer, '</enderecos>', '', [rfReplaceAll]);
+    Buffer := StringReplace(Buffer, '</endereco>', '</endereco>' + sLineBreak, [rfReplaceAll]);
+
+    SL1.Text := Buffer;
+
+    for i := 0 to SL1.Count-1 do
+    begin
+      s := SL1.Strings[i];
+
+      if LerTagXML(s, 'cep') <> '' then
+      begin
+        with fOwner.Enderecos.New do
+        begin
+          CEP             := LerTagXML(Buffer, 'cep');
+          Tipo_Logradouro := '';
+          Logradouro      := LerTagXML(Buffer, 'logradouro');
+          Complemento     := LerTagXML(Buffer, 'complemento');
+          Bairro          := LerTagXML(Buffer, 'bairro');
+          Municipio       := LerTagXML(Buffer, 'localidade');
+          UF              := LerTagXML(Buffer, 'uf');
+          IBGE_Municipio  := LerTagXML(Buffer, 'ibge');
+        end;
+      end;
+    end;
+  finally
+    SL1.Free;
+  end;
+
+  if Assigned(fOwner.OnBuscaEfetuada) then
+    fOwner.OnBuscaEfetuada(Self);
+end;
 
 end.

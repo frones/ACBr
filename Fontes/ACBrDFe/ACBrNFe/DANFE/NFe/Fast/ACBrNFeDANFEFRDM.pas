@@ -2201,7 +2201,7 @@ begin
   begin
      case FieldByName('iFormato').AsInteger of
       0 : Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));
-      1 : Result := FormatFloatBr( dValor , FieldByName('Mask_vUnCom').AsString);
+      1 : Result := FormatFloatBr( dValor , FieldByName('Mask_qCom').AsString);
       else
         Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));
     end;

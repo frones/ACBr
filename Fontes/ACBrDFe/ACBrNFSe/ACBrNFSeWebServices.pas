@@ -2874,9 +2874,11 @@ begin
 
   if FProvedor = proGinfes then
   begin
-    FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad;
+    FTagI := '<CancelarNfseEnvio' +
+               ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
+               ' xmlns:' + stringReplace(FPrefixo4, ':', '', []) + '="http://www.ginfes.com.br/tipos">';
 
-    FTagF := '</' + FPrefixo3 + 'CancelarNfseEnvio>';
+    FTagF := '</CancelarNfseEnvio>';
   end
   else begin
     FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad +
@@ -2978,10 +2980,12 @@ begin
       FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, FPrefixo3 + 'CancelarNfseEnvio', '',
-                 'Falha ao Assinar - Cancelar NFS-e: ');
-//      AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido', 'infPedidoCancelamento',
-//                 'Falha ao Assinar - Cancelar NFS-e: ');
+      if FProvedor = proGinfes then
+        AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
+                                         'Falha ao Assinar - Cancelar NFS-e: ');
+      else
+        AssinarXML(FPDadosMsg, FPrefixo3 + 'CancelarNfseEnvio', '',
+                                         'Falha ao Assinar - Cancelar NFS-e: ');
     end;
   end
   else begin
@@ -3030,6 +3034,10 @@ begin
   end;
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar;
+
+  if FProvedor = proGinfes then
+    FPDadosMsg := '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
+                  StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +

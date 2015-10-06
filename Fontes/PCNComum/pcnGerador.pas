@@ -81,7 +81,7 @@ type
     destructor Destroy; override;
     function SalvarArquivo(const CaminhoArquivo: string; const FormatoGravacao: TpcnFormatoGravacao = fgXML): Boolean;
     procedure wGrupo(const TAG: string; ID: string = ''; const Identar: Boolean = True);
-    procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
+    procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
     procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
     procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
     procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; const cPais: Integer);
@@ -787,7 +787,7 @@ begin
     wAlerta(ID, 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
 end;
 
-procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
+procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
 
   function IsEmptyDate( wAno, wMes, wDia: Word): Boolean;
   begin
@@ -970,9 +970,14 @@ begin
   // Grava a tag no arquivo - Quando existir algum conteúdo
   if ((ocorrencias = 1) or (not EstaVazio)) then
   begin
-    ATag := '<' + tag + '>' +
-         FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) +
-         '</' + tag + '>';
+    if ParseTextoXML then
+       ATag := '<' + tag + '>' +
+               FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) +
+               '</' + tag + '>'
+    else
+       ATag := '<' + tag + '>' +
+               ConteudoProcessado +
+               '</' + tag + '>';
 
     if FOpcoes.FIdentarXML then
       FArquivoFormatoXML := FArquivoFormatoXML +

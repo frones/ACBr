@@ -239,7 +239,6 @@ var
   XMLAss: String;
   ArqXML: String;
   Leitor: TLeitor;
-  i: Integer;
 begin
   if NaoEstaVazio(FXMLAssinado) then
     exit;
@@ -290,16 +289,9 @@ begin
                                   onlyNumber(NFe.infNFe.ID), NFe.Dest.CNPJCPF,
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
                                   NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
+        XMLAss := GerarXML;
+        FXMLAssinado := XMLAss;
       end;
-
-      i := pos('<Signature ', XMLAss);
-      XMLAss := Copy(XMLAss, 1, i -1) +
-                '<infNFeSupl>' +
-                 '<qrCode>' +
-                  '<![CDATA[' + NFe.infNFeSupl.qrCode + ']]>' +
-                 '</qrCode>' +
-                '</infNFeSupl>' +
-                Copy(XMLAss, i, length(XMLAss));
     end;
 
 

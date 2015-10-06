@@ -274,7 +274,7 @@ begin
   begin
     Gerador.wGrupo('infNFeSupl');
     Gerador.wCampo(tcStr, 'ZX02', 'qrCode', 100, 600, 1,
-                     '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', '***');
+                     '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', '***',False);
     Gerador.wGrupo('/infNFeSupl');
   end;
 

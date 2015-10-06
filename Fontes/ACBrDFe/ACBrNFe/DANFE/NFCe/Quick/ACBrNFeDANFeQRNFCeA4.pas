@@ -702,7 +702,7 @@ begin
       else
         cDest := FNFe.Dest.CNPJCPF;
 
-      if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
+      if EstaVazio(Trim(FNFe.infNFeSupl.qrCode)) then
         sURL := TACBrNFe(FACBrNFe).GetURLQRCode(FNFE.Ide.cUF,
                                     FNFe.Ide.tpAmb,
                                     Copy(FNFe.InfNFe.Id, 4, 44),
@@ -712,7 +712,7 @@ begin
                                     FNFe.Total.ICMSTot.vICMS,
                                     FNFe.signature.DigestValue)
       else
-        sURL := FpNFe.infNFeSupl.qrCode;
+        sURL := FNFe.infNFeSupl.qrCode;
 
       QRCode.Data := sURL;
 

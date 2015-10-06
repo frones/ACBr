@@ -6213,7 +6213,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 168
             Height = 17
             Top = 176
-            Width = 95
+            Width = 94
             Caption = 'Valor Declarado'
             ParentColor = False
           end
@@ -7450,9 +7450,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsImpNFCe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 2
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -8029,6 +8029,80 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 156
                     Caption = 'Impressora Padrão(Fortes)'
                     ParentColor = False
+                  end
+                  object gbxMargem1: TGroupBox
+                    Left = 6
+                    Height = 72
+                    Top = 152
+                    Width = 299
+                    Caption = 'Margens'
+                    ClientHeight = 50
+                    ClientWidth = 295
+                    TabOrder = 4
+                    object Label183: TLabel
+                      Left = 6
+                      Height = 17
+                      Top = 0
+                      Width = 42
+                      Caption = 'Inferior'
+                      ParentColor = False
+                    end
+                    object Label184: TLabel
+                      Left = 77
+                      Height = 17
+                      Top = 0
+                      Width = 50
+                      Caption = 'Superior'
+                      ParentColor = False
+                    end
+                    object Label185: TLabel
+                      Left = 149
+                      Height = 17
+                      Top = 0
+                      Width = 38
+                      Caption = 'Direita'
+                      ParentColor = False
+                    end
+                    object Label186: TLabel
+                      Left = 220
+                      Height = 17
+                      Top = 0
+                      Width = 55
+                      Caption = 'Esquerda'
+                      ParentColor = False
+                    end
+                    object edtNFCeMargemInf: TEdit
+                      Left = 5
+                      Height = 25
+                      Top = 18
+                      Width = 64
+                      TabOrder = 0
+                      Text = '0,8'
+                    end
+                    object edtNFCeMargemSup: TEdit
+                      Left = 76
+                      Height = 25
+                      Top = 18
+                      Width = 64
+                      TabOrder = 1
+                      Text = '0,8'
+                    end
+                    object edtNFCeMargemDir: TEdit
+                      Left = 148
+                      Height = 25
+                      Top = 18
+                      Width = 64
+                      TabOrder = 2
+                      Text = '0,51'
+                    end
+                    object edtNFCeMargemEsq: TEdit
+                      Left = 219
+                      Height = 25
+                      Top = 18
+                      Width = 64
+                      TabOrder = 3
+                      Text = '0,6'
+                    end
                   end
                 end
               end
@@ -10891,7 +10965,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -10991,8 +11064,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -11025,8 +11101,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -11057,6 +11136,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
     MargemDireita = 0.7
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 4
     CasasDecimais._vUnCom = 4
     CasasDecimais._Mask_qCom = '###,###,###,##0.00'

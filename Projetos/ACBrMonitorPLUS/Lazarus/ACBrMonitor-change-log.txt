@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/05/2015
+-- ACBrMonitorPLUS --
+[+] Adicionada configuração de margens para o DANFCe, ficando assim separada
+    da configuração do DANFE normal.
+    por: regys.silveira
+
 30/09/2015
 -- ACBrMonitorPLUS --
 [*] Melhorias no uso do parâmetro do Número de cópias de Imprimir -> Geral

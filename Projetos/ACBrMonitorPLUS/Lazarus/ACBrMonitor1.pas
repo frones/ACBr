@@ -250,7 +250,12 @@ type
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
     edtEmailAssuntoCTe: TEdit;
+    edtNFCeMargemDir: TEdit;
+    edtNFCeMargemEsq: TEdit;
+    edtNFCeMargemInf: TEdit;
+    edtNFCeMargemSup: TEdit;
     edtNumCopia: TSpinEdit;
+    gbxMargem1: TGroupBox;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
@@ -266,6 +271,10 @@ type
     Label180: TLabel;
     Label181: TLabel;
     Label182: TLabel;
+    Label183: TLabel;
+    Label184: TLabel;
+    Label185: TLabel;
+    Label186: TLabel;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
@@ -3388,6 +3397,10 @@ begin
     edtMargemSup.Text := Ini.ReadString('DANFE', 'MargemSup', '0,8');
     edtMargemDir.Text := Ini.ReadString('DANFE', 'MargemDir', '0,51');
     edtMargemEsq.Text := Ini.ReadString('DANFE', 'MargemEsq', '0,6');
+    edtNFCeMargemInf.Text := Ini.ReadString('DANFCe', 'MargemInf', '0,8');
+    edtNFCeMargemSup.Text := Ini.ReadString('DANFCe', 'MargemSup', '0,8');
+    edtNFCeMargemDir.Text := Ini.ReadString('DANFCe', 'MargemDir', '0,51');
+    edtNFCeMargemEsq.Text := Ini.ReadString('DANFCe', 'MargemEsq', '0,6');
     edtPathPDF.Text :=
       Ini.ReadString('DANFE', 'PathPDF', PathApplication+'PDF');
     rgCasasDecimaisQtd.ItemIndex := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
@@ -4164,6 +4177,10 @@ begin
     Ini.WriteString('DANFE', 'MargemSup', edtMargemSup.Text);
     Ini.WriteString('DANFE', 'MargemDir', edtMargemDir.Text);
     Ini.WriteString('DANFE', 'MargemEsq', edtMargemEsq.Text);
+    Ini.WriteString('DANFCe', 'MargemInf', edtNFCeMargemInf.Text);
+    Ini.WriteString('DANFCe', 'MargemSup', edtNFCeMargemSup.Text);
+    Ini.WriteString('DANFCe', 'MargemDir', edtNFCeMargemDir.Text);
+    Ini.WriteString('DANFCe', 'MargemEsq', edtNFCeMargemEsq.Text);
     Ini.WriteString('DANFE', 'PathPDF', edtPathPDF.Text);
     Ini.WriteInteger('DANFE', 'DecimaisQTD', rgCasasDecimaisQtd.ItemIndex);
     Ini.WriteInteger('DANFE', 'DecimaisValor', spedtDecimaisVUnit.Value);
@@ -6801,6 +6818,10 @@ begin
     begin
       ACBrNFeDANFCeFortes1.ImprimirDescPorc := cbxImprimirDescAcresItemNFCe.Checked;
       ACBrNFeDANFCeFortes1.ImprimirTotalLiquido := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortes1.MargemInferior  := StrToFloatDef(edtNFCeMargemInf.Text,0.8);
+      ACBrNFeDANFCeFortes1.MargemSuperior  := StrToFloatDef(edtNFCeMargemSup.Text,0.8);
+      ACBrNFeDANFCeFortes1.MargemDireita   := StrToFloatDef(edtNFCeMargemDir.Text,0.51);
+      ACBrNFeDANFCeFortes1.MargemEsquerda  := StrToFloatDef(edtNFCeMargemEsq.Text,0.6);
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     begin

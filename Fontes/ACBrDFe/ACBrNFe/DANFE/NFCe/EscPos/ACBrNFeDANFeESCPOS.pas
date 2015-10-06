@@ -518,16 +518,18 @@ begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   FPosPrinter.Buffer.Add('</ce>Consulta via leitor de QR Code');
 
-  qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(
-    FpNFe.ide.cUF,
-    FpNFe.ide.tpAmb,
-    FpNFe.infNFe.ID,
-    IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
-    FpNFe.ide.dEmi,
-    FpNFe.Total.ICMSTot.vNF,
-    FpNFe.Total.ICMSTot.vICMS,
-    FpNFe.signature.DigestValue
-  );
+  if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
+    qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(
+      FpNFe.ide.cUF,
+      FpNFe.ide.tpAmb,
+      FpNFe.infNFe.ID,
+      IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
+      FpNFe.ide.dEmi,
+      FpNFe.Total.ICMSTot.vNF,
+      FpNFe.Total.ICMSTot.vICMS,
+      FpNFe.signature.DigestValue)
+  else
+    qrcode := FpNFe.infNFeSupl.qrCode;
 
   ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
 

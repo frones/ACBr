@@ -1932,15 +1932,18 @@ begin
               if Assigned(CpLogomarca) and Assigned(CpTituloReport) then
                 CpLogomarca.Visible := CpTituloReport.Visible;
 
-              qrcode := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLQRCode(
-                NFe.ide.cUF,
-                NFe.ide.tpAmb,
-                OnlyNumber(NFe.InfNFe.ID),
-                IfThen(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
-                NFe.ide.dEmi,
-                NFe.Total.ICMSTot.vNF,
-                NFe.Total.ICMSTot.vICMS,
-                NFe.signature.DigestValue );
+              if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
+                qrcode := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLQRCode(
+                       NFe.ide.cUF,
+                       NFe.ide.tpAmb,
+                       OnlyNumber(NFe.InfNFe.ID),
+                       IfThen(NFe.Dest.idEstrangeiro <> '',NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
+                       NFe.ide.dEmi,
+                       NFe.Total.ICMSTot.vNF,
+                       NFe.Total.ICMSTot.vICMS,
+                       NFe.signature.DigestValue )
+              else
+                qrcode := FpNFe.infNFeSupl.qrCode;
 
               CpQrCode := frxReport.FindObject('ImgQrCode');
               if Assigned(CpQrCode) then

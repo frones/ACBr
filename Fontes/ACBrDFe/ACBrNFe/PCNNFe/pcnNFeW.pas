@@ -60,7 +60,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnGerador, pcnNFe, pcnConversao;
+  pcnGerador, pcnNFe, pcnConversao, ACBrCAPICOM_TLB;
 
 type
 
@@ -269,7 +269,7 @@ begin
   Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + nfe.infNFe.ID + '"');
   (**)GerarInfNFe;
   Gerador.wGrupo('/infNFe');
-  (*
+
   if nfe.infNFeSupl.qrCode <> '' then
   begin
     Gerador.wGrupo('infNFeSupl');
@@ -277,8 +277,7 @@ begin
                      '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', '***');
     Gerador.wGrupo('/infNFeSupl');
   end;
-  *)
-  //
+
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -760,11 +759,16 @@ begin
 end;
 
 procedure TNFeW.GerarDetProd(const i: Integer);
+const
+  HOM_XPROD = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, nfe.Det[i].Prod.cProd, DSC_CPROD);
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
-  Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
+  if (NFe.Det[i].Prod.nItem = 1) and (NFe.Ide.tpAmb = taHomologacao) then
+    Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, HOM_XPROD, DSC_XPROD)
+  else
+    Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08,   IIf(NFe.infNFe.Versao >= 2,1,0), nfe.Det[i].Prod.NCM, DSC_NCM);
   {**}GerarDetProdNVE(i);
   Gerador.wCampo(tcStr, 'I05w', 'CEST    ', 07, 07, 0, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);

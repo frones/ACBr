@@ -697,17 +697,23 @@ begin
   try
     QRCode := TDelphiZXingQRCode.Create;
     try
-      if FNFe.Dest.idEstrangeiro <> ''
-       then cDest := FNFe.Dest.idEstrangeiro
-       else cDest := FNFe.Dest.CNPJCPF;
-      sURL := TACBrNFe(FACBrNFe).GetURLQRCode(FNFE.Ide.cUF,
+      if FNFe.Dest.idEstrangeiro <> '' then
+        cDest := FNFe.Dest.idEstrangeiro
+      else
+        cDest := FNFe.Dest.CNPJCPF;
+
+      if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
+        sURL := TACBrNFe(FACBrNFe).GetURLQRCode(FNFE.Ide.cUF,
                                     FNFe.Ide.tpAmb,
                                     Copy(FNFe.InfNFe.Id, 4, 44),
                                     cDest,
                                     FNFe.Ide.dEmi,
                                     FNFe.Total.ICMSTot.vNF,
                                     FNFe.Total.ICMSTot.vICMS,
-                                    FNFe.signature.DigestValue);
+                                    FNFe.signature.DigestValue)
+      else
+        sURL := FpNFe.infNFeSupl.qrCode;
+
       QRCode.Data := sURL;
 
       // TQRCodeEncoding = (qrAuto, qrNumeric, qrAlphanumeric, qrISO88591, qrUTF8NoBOM, qrUTF8BOM);

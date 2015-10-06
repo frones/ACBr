@@ -426,13 +426,16 @@ begin
        imgLogo.Picture.LoadFromFile( ACBrNFeDANFCeFortes.Logo );
 
     // QRCode  //
-
-    qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode( ide.cUF, ide.tpAmb,
+    if EstaVazio(Trim(infNFeSupl.qrCode)) then
+      qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode( ide.cUF, ide.tpAmb,
                                      OnlyNumber(InfNFe.ID),  //correcao para pegar somente numeros, estava indo junto o NFE
                                      ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue);
+                                     signature.DigestValue)
+    else
+      qrcode := infNFeSupl.qrCode;
+
     PintarQRCode( qrcode, imgQRCode.Picture );
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+

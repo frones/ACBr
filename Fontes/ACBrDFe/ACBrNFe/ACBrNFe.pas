@@ -523,7 +523,7 @@ begin
   end;
 
   // Passo 3 e 4
-  cIdCSC := Configuracoes.Geral.IdCSC;
+  cIdCSC := IntToStrZero(StrToIntDef(Configuracoes.Geral.IdCSC,0),6);
   cCSC := Configuracoes.Geral.CSC;
 
   if EstaVazio(cCSC) then

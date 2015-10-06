@@ -239,6 +239,7 @@ var
   XMLAss: String;
   ArqXML: String;
   Leitor: TLeitor;
+  i: Integer;
 begin
   if NaoEstaVazio(FXMLAssinado) then
     exit;
@@ -280,8 +281,8 @@ begin
 
     // Gera o QR-Code para adicionar no XML antes de ser validado e salvo
     // somente para a NFC-e.
-(*
-    if Configuracoes.Geral.ModeloDF = moNFCe then
+
+    if (NFe.Ide.modelo = 65) and  (NFe.Ide.tpAmb = taHomologacao) then
     begin
       with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
       begin
@@ -300,9 +301,9 @@ begin
                 '</infNFeSupl>' +
                 Copy(XMLAss, i, length(XMLAss));
     end;
-*)
 
-    if Configuracoes.Arquivos.Salvar then
+
+    if Configuracoes.Arquivos.Salvar  and not (Configuracoes.Arquivos.SalvarApenasNFeProcessadas) then
     begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, XMLAss)
@@ -1262,6 +1263,7 @@ begin
     FNFeW.Opcoes.GerarTXTSimultaneamente := False;
   end;
 
+  FNomeArq := '';
   FNFeW.GerarXml;
   FXML := FNFeW.Gerador.ArquivoFormatoXML;
   FXMLOriginal := FXML;

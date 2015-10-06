@@ -725,7 +725,7 @@ begin
     XMLOriginal := ArquivoXML.Text;
 
     // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
+    XML := RetirarPrefixos(DecodeToString(XMLOriginal, True));
     LoadFromString(XML, AGerarNFSe);
 
     for i := 0 to Self.Count - 1 do
@@ -757,7 +757,7 @@ var
 
   function PosNFSe: integer;
   begin
-    Result := pos('</NFSe>', AXMLString);
+    Result := pos('</Nfse>', AXMLString);
   end;
 
 begin
@@ -765,17 +765,8 @@ begin
   N := PosNFSe;
   while N > 0 do
   begin
-    P := pos('</NFSeProc>', AXMLString);
-    if P > 0 then
-    begin
-      AXML := copy(AXMLString, 1, P + 5);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
-    end
-    else
-    begin
-      AXML := copy(AXMLString, 1, N + 5);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
-    end;
+    AXML := copy(AXMLString, 1, N + 6);
+    AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
 
     with Self.Add do
     begin

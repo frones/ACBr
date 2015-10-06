@@ -276,6 +276,7 @@ begin
   inherited Create(AOwner);
 
   WebServices.ResourceName := 'ACBrNFSeServicos';
+  Geral.CodModeloDF := 99;
 end;
 
 procedure TConfiguracoesNFSe.Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe);

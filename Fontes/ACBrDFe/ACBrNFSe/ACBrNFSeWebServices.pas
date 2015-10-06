@@ -256,6 +256,7 @@ type
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
+    function TratarRespostaFinal: Boolean;
     procedure FinalizarServico; override;
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -263,6 +264,8 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+
+    function Executar: Boolean; override;
 
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
@@ -728,6 +731,10 @@ begin
   FVersaoXML := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML;
   FVersaoNFSe := StrToVersaoNFSe(Ok, FVersaoXML);
   FDefTipos  := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
+
+  if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
+    FDefTipos  := 'tipos_v02.xsd';
+
   FCabecalho := FPConfiguracoesNFSe.Geral.ConfigSchemas.Cabecalho;
   FPrefixo2  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo2;
   FPrefixo3  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo3;
@@ -870,7 +877,8 @@ begin
   //            3 = Processado com Erro
   //            4 = Processado com Sucesso
 
-  FRetListaNFSe := RetirarPrefixos(SeparaDados(FPRetWS, FPrefixo3 + 'ListaNfse'));
+//  FRetListaNFSe := RetirarPrefixos(SeparaDados(FPRetWS, FPrefixo3 + 'ListaNfse'));
+  FRetListaNFSe := SeparaDados(FPRetWS, FPrefixo3 + 'ListaNfse');
 
   if FProvedor = proSisPMJP then
     FPrefixo3 := '';
@@ -945,7 +953,7 @@ begin
 
           FRetNFSe := GerarRetornoNFSe(FRetNFSe);
 
-          if FPConfiguracoesNFSe.Geral.Salvar then
+          if FPConfiguracoesNFSe.Arquivos.Salvar then
           begin
             if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then
               PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao)
@@ -983,11 +991,13 @@ begin
   if FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0 then
   begin
     FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.dhRecebimento;
-    FProtocolo       := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
+    if FDataRecebimento = 0 then
+      FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.DataEmissao;
+//    FProtocolo       := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else begin
     FDataRecebimento := 0;
-    FProtocolo       := '';
+//    FProtocolo       := '';
   end;
 
   // Lista de Mensagem de Retorno
@@ -1015,7 +1025,7 @@ begin
              'Protocolo..... : ' + FProtocolo + LineBreak +
              'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
 
-  Result := (FProtocolo <> '');
+  Result := (FDataRecebimento <> 0);
 end;
 
 function TNFSeWebService.GerarRetornoNFSe(ARetNFSe: String): String;
@@ -1945,23 +1955,6 @@ begin
       // mesmo assinado da propriedade FPDadosMsg
       AssinarXML(FPDadosMsg, FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio', '',
                  'Falha ao Assinar - Consultar Situação do Lote: ');
-
-    (*
-      {$IFDEF ACBrNFSeOpenSSL}
-       NotaUtil.InitXmlSec;
-       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                       FPConfiguracoesNFSe.Certificados.Certificado,
-                       FPConfiguracoesNFSe.Certificados.Senha,
-                       FvAssinada, FMsg, FProvedor))
-       then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-       else FPDadosMsg := FvAssinada;
-      {$ELSE}
-       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                       FPConfiguracoesNFSe.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-        else FPDadosMsg := FvAssinada;
-      {$ENDIF}
-    *)
     end;
 
   end
@@ -1999,6 +1992,7 @@ begin
      FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
+(*
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
 
 function Processando: Boolean;
@@ -2008,6 +2002,8 @@ var
   Ok: Boolean;
 begin
   FRetSitLote := TretSitLote.Create;
+
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarSituacaoLoteRpsResposta');
 
   FRetSitLote.Leitor.Arquivo := FPRetWS;
 
@@ -2132,13 +2128,13 @@ begin
     Result := (FSituacao = '3') or (FSituacao = '4');
   end;
 end;
-
+*)
 procedure TNFSeConsultarSituacaoLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetSitLote) then
-    FreeAndNil(FRetSitLote);
+//  if Assigned(FRetSitLote) then
+//    FreeAndNil(FRetSitLote);
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.GerarMsgLog: String;
@@ -2149,6 +2145,126 @@ end;
 function TNFSeConsultarSituacaoLoteRPS.GerarPrefixoArquivo: String;
 begin
   Result := Protocolo;
+end;
+
+function TNFSeConsultarSituacaoLoteRPS.Executar: Boolean;
+var
+  IntervaloTentativas, Tentativas: integer;
+begin
+  Result := False;
+
+  TACBrNFSe(FPDFeOwner).SetStatus(stNFSeConsulta);
+  try
+    Sleep(FPConfiguracoesNFSe.WebServices.AguardarConsultaRet);
+
+    Tentativas := 0;
+    IntervaloTentativas := max(FPConfiguracoesNFSe.WebServices.IntervaloTentativas, 1000);
+
+    while (inherited Executar) and
+      (Tentativas < FPConfiguracoesNFSe.WebServices.Tentativas) do
+    begin
+      Inc(Tentativas);
+      sleep(IntervaloTentativas);
+    end;
+  finally
+    TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
+  end;
+
+  if (FSituacao = '3') or (FSituacao = '4') then  // Lote processado ?
+    Result := TratarRespostaFinal;
+end;
+
+function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
+begin
+  FRetSitLote.Free;
+  FRetSitLote := TretSitLote.Create;
+
+  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarSituacaoLoteRpsResposta');
+
+  FRetSitLote.Leitor.Arquivo := FPRetWS;
+
+  case FProvedor of
+    proEquiplano: RetSitLote.LerXML_provedorEquiplano;
+    proInfisc: RetSitLote.LerXML_provedorInfisc;
+    proEL: RetSitLote.LerXML_provedorEL;
+    proFissLex: RetSitLote.LerXml_provedorFissLex;
+  else
+    RetSitLote.LerXml;
+  end;
+
+  FSituacao := RetSitLote.InfSit.Situacao;
+  // FSituacao: 1 = Não Recebido
+  //            2 = Não Processado
+  //            3 = Processado com Erro
+  //            4 = Processado com Sucesso
+
+  if (FProvedor in [proEquiplano, proEL]) then
+    Result := (FSituacao = '1')  // Aguardando processamento
+  else
+    Result := (FSituacao = '2'); // Não Processado
+end;
+
+function TNFSeConsultarSituacaoLoteRPS.TratarRespostaFinal: Boolean;
+var
+  xSituacao: String;
+  i: Integer;
+  Ok: Boolean;
+begin
+  // Lista de Mensagem de Retorno
+  FPMsg := '';
+  FaMsg:='';
+  if RetSitLote.InfSit.MsgRetorno.Count > 0 then
+  begin
+    for i := 0 to RetSitLote.InfSit.MsgRetorno.Count - 1 do
+    begin
+      FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+
+      FaMsg := FaMsg + 'Código Erro : ' + RetSitLote.infSit.MsgRetorno.Items[i].Codigo + LineBreak +
+                       'Mensagem... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
+                       'Correção... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Correcao + LineBreak+
+                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+    end;
+  end
+  else begin
+    for i:=0 to FNotasFiscais.Count -1 do
+      FNotasFiscais.Items[i].NFSe.Situacao := FSituacao;
+
+    case FProvedor of
+      proEquiplano: begin
+                      case FSituacao[1] of
+                        '1' : xSituacao := 'Aguardando processamento';
+                        '2' : xSituacao := 'Não Processado, lote com erro';
+                        '3' : xSituacao := 'Processado com sucesso';
+                        '4' : xSituacao := 'Processado com avisos';
+                      end;
+                    end;
+
+      proEL: begin
+               case FSituacao[1] of
+                 '1' : xSituacao := 'Aguardando processamento';
+                 '2' : xSituacao := 'Não Processado, lote com erro';
+                 '3' : xSituacao := 'Processado com avisos';
+                 '4' : xSituacao := 'Processado com sucesso';
+               end;
+             end;
+
+//      proInfisc:
+
+    else begin
+           case StrToSituacaoLoteRPS(Ok, FSituacao) of
+            slrNaoRecibo        : xSituacao := 'Não Recebido.';
+            slrNaoProcessado    : xSituacao := 'Não Processado.';
+            slrProcessadoErro   : xSituacao := 'Processado com Erro.';
+            slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
+           end;
+         end;
+    end;
+
+    FaMsg := 'Numero do Lote : ' + RetSitLote.InfSit.NumeroLote + LineBreak +
+             'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
+  end;
+
+  Result := (FPMsg ='');
 end;
 
 { TNFSeConsultarLoteRPS }
@@ -2222,27 +2338,11 @@ begin
     end;
     if FPDadosMsg <> '' then
     begin
+      FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, 'ConsultarLoteRpsEnvio', 'ConsultarLoteRpsEnvio',
+      AssinarXML(FPDadosMsg, FPrefixo3 + 'ConsultarLoteRpsEnvio', '',
                  'Falha ao Assinar - Consultar Lote de RPS: ');
-
-    (*
-      {$IFDEF ACBrNFSeOpenSSL}
-       NotaUtil.InitXmlSec;
-       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                       FPConfiguracoesNFSe.Certificados.Certificado,
-                       FPConfiguracoesNFSe.Certificados.Senha,
-                       FvAssinada, FMsg, FProvedor))
-        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-        else FPDadosMsg := FvAssinada;
-      {$ELSE}
-       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                       FPConfiguracoesNFSe.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-        else FPDadosMsg := FvAssinada;
-      {$ENDIF}
-    *)
     end;
   end
   else begin
@@ -2441,27 +2541,11 @@ begin
     end;
     if FPDadosMsg <> '' then
     begin
+      FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, 'ConsultarNfseRpsEnvio', 'ConsultarNfseRpsEnvio',
+      AssinarXML(FPDadosMsg, FPrefixo3 + 'ConsultarNfseRpsEnvio', '',
                  'Falha ao Assinar - Consultar Lote de RPS: ');
-
-    (*
-      {$IFDEF ACBrNFSeOpenSSL}
-       NotaUtil.InitXmlSec;
-       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                       FPConfiguracoesNFSe.Certificados.Certificado,
-                       FPConfiguracoesNFSe.Certificados.Senha,
-                       FvAssinada, FMsg, FProvedor))
-        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-        else FPDadosMsg := FvAssinada;
-      {$ELSE}
-       if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                       FPConfiguracoesNFSe.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-        then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-        else FPDadosMsg := FvAssinada;
-      {$ENDIF}
-    *)
     end;
   end
   else begin
@@ -2626,26 +2710,11 @@ begin
    end;
     if FPDadosMsg <> '' then
     begin
+      FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, 'ConsultarNfseEnvio', 'ConsultarNfseEnvio',
+      AssinarXML(FPDadosMsg, FPrefixo3 + 'ConsultarNfseEnvio', '',
                  'Falha ao Assinar - Consultar NFSe: ');
-    (*
-    {$IFDEF ACBrNFSeOpenSSL}
-     NotaUtil.InitXmlSec;
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FPConfiguracoesNFSe.Certificados.Certificado,
-                     FPConfiguracoesNFSe.Certificados.Senha,
-                     FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ELSE}
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FPConfiguracoesNFSe.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ENDIF}
-    *)
     end;
   end
   else begin
@@ -2782,35 +2851,43 @@ begin
 
   case FProvedor of
     proEquiplano,
-    proPublica: FURISig:= '';
+    proPublica: FURI:= '';
 
-    proDigifred: FURISig := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
+    proDigifred: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
-    proSaatri: FURISig := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
+    proSaatri: FURI := 'Cancelamento_' + TNFSeCancelarNfse(Self).FCnpj;
 
     proIssIntel,
     proISSNet: begin
-                 FURISig := '';
+                 FURI := '';
                  FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                end;
 
-    proTecnos: FURISig := '2' + TNFSeCancelarNfse(Self).FCnpj +
+    proTecnos: FURI := '2' + TNFSeCancelarNfse(Self).FCnpj +
                 IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
 
-    proGovDigital: FURISig := TNFSeCancelarNfse(Self).FNumeroNFSe;
+    proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
 
-  else FURISig := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj +
+  else FURI := 'pedidoCancelamento_' + TNFSeCancelarNfse(Self).FCnpj +
               TNFSeCancelarNfse(Self).FIM + TNFSeCancelarNfse(Self).FNumeroNFSe;
   end;
 
-  FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad +
-            '<' + FPrefixo3 + 'Pedido>' +
-             '<' + FPrefixo4 + 'InfPedidoCancelamento' +
-              ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+  if FProvedor = proGinfes then
+  begin
+    FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad;
 
-  FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
-           '</' + FPrefixo3 + 'CancelarNfseEnvio>';
+    FTagF := '</' + FPrefixo3 + 'CancelarNfseEnvio>';
+  end
+  else begin
+    FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad +
+              '<' + FPrefixo3 + 'Pedido>' +
+               '<' + FPrefixo4 + 'InfPedidoCancelamento' +
+                ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
+                       FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+
+    FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
+             '</' + FPrefixo3 + 'CancelarNfseEnvio>';
+  end;
 
   if FProvedor in [proIssDSF] then
   begin
@@ -2898,28 +2975,13 @@ begin
 
     if FPDadosMsg <> '' then
     begin
+      FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, 'Pedido', 'infPedidoCancelamento',
+      AssinarXML(FPDadosMsg, FPrefixo3 + 'CancelarNfseEnvio', '',
                  'Falha ao Assinar - Cancelar NFS-e: ');
-
-   (*
-     {$IFDEF ACBrNFSeOpenSSL}
-      URIRef := '';
-      NotaUtil.InitXmlSec;
-      if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                      FPConfiguracoesNFSe.Certificados.Certificado,
-                      FPConfiguracoesNFSe.Certificados.Senha,
-                      FvAssinada, FMsg, FProvedor))
-       then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-       else FPDadosMsg := FvAssinada;
-     {$ELSE}
-      if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                      FPConfiguracoesNFSe.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-       then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-       else FPDadosMsg := FvAssinada;
-     {$ENDIF}
-    *)
+//      AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido', 'infPedidoCancelamento',
+//                 'Falha ao Assinar - Cancelar NFS-e: ');
     end;
   end
   else begin
@@ -3268,28 +3330,11 @@ begin
 
     if FPDadosMsg <> '' then
     begin
+      FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      AssinarXML(FPDadosMsg, 'Pedido', 'infPedidoCancelamento',
+      AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido', 'infPedidoCancelamento',
                  'Falha ao Assinar - Cancelar NFS-e: ');
-
-    (*
-    {$IFDEF ACBrNFSeOpenSSL}
-     FURIRef := '';
-     NotaUtil.InitXmlSec;
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FPConfiguracoesNFSe.Certificados.Certificado,
-                     FPConfiguracoesNFSe.Certificados.Senha,
-                     FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ELSE}
-     if not(NotaUtil.AssinarXML(FPDadosMsg, URISig, URIRef, FTagI, FTagF,
-                     FPConfiguracoesNFSe.Certificados.GetCertificado, FvAssinada, FMsg, FProvedor))
-      then raise Exception.Create('Falha ao assinar o XML ' + FMsg)
-      else FPDadosMsg := FvAssinada;
-    {$ENDIF}
-    *)
     end;
   end
   else begin
@@ -3628,6 +3673,8 @@ begin
     FConsSitLoteRPS.FFraseSecreta := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
   end;
 
+  FConsLote.FCNPJ      := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.Cnpj;
+  FConsLote.FIM        := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
   FConsLote.FProtocolo := FEnviarLoteRPS.Protocolo;
 
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proISSDigital, proTecnos] then
@@ -3823,10 +3870,14 @@ function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
 begin
   if CarregaProps then
   begin
-    FCancNfse.FNumeroNFSe := '';
-    FCancNfse.FCNPJ := '';
-    FCancNfse.FIM := '';
-    FCancNfse.FCodigoMunicipio := '';
+    FCancNfse.FNumeroNFSe      := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero;
+    FCancNfse.FCNPJ            := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+    FCancNfse.FIM              := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+    FCancNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+//    FCancNfse.FNumeroNFSe := '';
+//    FCancNfse.FCNPJ := '';
+//    FCancNfse.FIM := '';
+//    FCancNfse.FCodigoMunicipio := '';
   end;
 
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then

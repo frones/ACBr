@@ -290,6 +290,7 @@ begin
 
     if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or
        (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
+       (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
        (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
       // =======================================================================

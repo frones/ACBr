@@ -125,7 +125,7 @@ type
 implementation
 
 uses strutils,
-  ACBrDFeUtil, ACBrDFeException, ACBrUtil ;
+  ACBrDFeException, ACBrUtil ;
 
 { TACBrDFe }
 
@@ -268,7 +268,7 @@ begin
 
   if Assigned(sMensagem) then
   begin
-    MAIL.Body.Assign(sMensagem);
+    MAIL.Body.Text := sMensagem.Text;
     MAIL.AltBody.Text := (StripHTML(sMensagem.Text));
   end;
 

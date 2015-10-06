@@ -213,7 +213,7 @@ begin
       begin
         Add( LFill('Z4') +
              LFill(limpaCampo(CNPJ)      , 14) +
-             LFill(VL_TOTAL  , 12, 2) +
+             LFill(VL_TOTAL  , 14, 2) +
              LFill(DATA_INI  , 'yyyymmdd') +
              LFill(DATA_FIM  , 'yyyymmdd') +
              LFill(dataAtual , 'yyyymmdd') +

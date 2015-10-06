@@ -2982,7 +2982,7 @@ begin
       // mesmo assinado da propriedade FPDadosMsg
       if FProvedor = proGinfes then
         AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
-                                         'Falha ao Assinar - Cancelar NFS-e: ');
+                                         'Falha ao Assinar - Cancelar NFS-e: ')
       else
         AssinarXML(FPDadosMsg, FPrefixo3 + 'CancelarNfseEnvio', '',
                                          'Falha ao Assinar - Cancelar NFS-e: ');

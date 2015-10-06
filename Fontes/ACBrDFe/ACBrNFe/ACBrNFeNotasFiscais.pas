@@ -1176,10 +1176,10 @@ end;
 
 function NotaFiscal.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
+
+  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
 
   Result := TACBrNFe(TNotasFiscais(Collection).ACBrNFe).Gravar(FNomeArq, FXMLOriginal);
 end;
@@ -1562,6 +1562,7 @@ function TNotasFiscais.LoadFromString(AXMLString: String;
 var
   AXML: AnsiString;
   P, N: integer;
+  OK: Boolean;
 
   function PosNFe: integer;
   begin
@@ -1593,6 +1594,14 @@ begin
     end;
 
     N := PosNFe;
+  end;
+
+  if Self.Count > 0 then
+  begin
+    FConfiguracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(
+      Self.Items[0].NFe.Ide.modelo));
+    FConfiguracoes.Geral.VersaoDF := DblToVersaoDF(OK,
+      Self.Items[0].NFe.infNFe.versao);
   end;
 
   Result := Self.Count > 0;

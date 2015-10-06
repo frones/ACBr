@@ -1042,9 +1042,9 @@ begin
                 if SalvarXML then
                 begin
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                    FPDFeOwner.Gravar( NomeArq, XML )
-                  else
-                    GravarXML;
+                    FPDFeOwner.Gravar( NomeArq, XML ); // Atualiza o XML carregado
+
+                    GravarXML; // Salva na pasta baseado nas configurações do PathNFe
                 end;
               end ;
             finally
@@ -1254,9 +1254,9 @@ begin
                 if SalvarXML then
                 begin
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                    FPDFeOwner.Gravar( NomeArq, XML )
-                  else
-                    GravarXML;
+                    FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
+
+                    GravarXML; // Salva na pasta baseado nas configurações do PathNFe
                 end;
               end;
             end;
@@ -1873,9 +1873,9 @@ begin
               if SalvarXML then
               begin
                 if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                  FPDFeOwner.Gravar( NomeArq, XML )
-                else
-                  GravarXML;
+                  FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
+
+                  GravarXML; // Salva na pasta baseado nas configurações do PathNFe
               end;
             end;
 

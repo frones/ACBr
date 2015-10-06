@@ -264,9 +264,10 @@ function ExtraiURI(const AXML: String): String;
 var
   I, J: integer;
 begin
+  Result := '';
   I := PosEx('Id=', AXML, 6);
-  if I = 0 then
-    raise EACBrDFeException.Create('Não encontrei inicio do URI: Id=');
+  if I = 0 then       // XML não tem URI
+    exit ;
 
   I := PosEx('"', AXML, I + 2);
   if I = 0 then

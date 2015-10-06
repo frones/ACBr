@@ -166,6 +166,7 @@ type
     FIdCSC: String;
     FCSC: String;
     FValidarDigest: Boolean;
+    FCodModeloDF: Integer;
 
     procedure SetSSLLib(AValue: TSSLLib);
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
@@ -173,6 +174,8 @@ type
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
+
+    property CodModeloDF: Integer read FCodModeloDF write FCodModeloDF;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
@@ -386,6 +389,7 @@ begin
   FIdCSC := '';
   FCSC := '';
   FValidarDigest := True;
+  FCodModeloDF := 55;
 end;
 
 procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
@@ -399,6 +403,7 @@ begin
   IdCSC            := DeGeralConf.IdCSC;
   CSC              := DeGeralConf.CSC;
   ValidarDigest    := DeGeralConf.ValidarDigest;
+  CodModeloDF      := DeGeralConf.CodModeloDF;
 end;
 
 function TGeralConf.GetFormatoAlerta: String;

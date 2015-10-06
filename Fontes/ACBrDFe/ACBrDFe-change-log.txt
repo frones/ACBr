@@ -47,7 +47,7 @@ Símbolo : Significado
 06/10/2015
 -- ACBrDFeCapicom --
 [-] Ajuste para permitir o uso de TDFeCapicom, em threads diferentes, da mesma
-    aplicação     (por: DSA e  Carlos Marian)
+    aplicação     (por: Carlos Marian)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=24934
 
 02/10/2015

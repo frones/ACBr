@@ -114,6 +114,7 @@ constructor TDFeCapicom.Create(ADFeSSL: TDFeSSL);
 begin
   inherited Create(ADFeSSL);
 
+  CoInitialize(nil); // PERMITE O USO DE THREAD
   FNumCertCarregado := '';
   FCNPJ := '';
   FCertificado := nil;
@@ -125,6 +126,8 @@ end;
 
 destructor TDFeCapicom.Destroy;
 begin
+  CoUninitialize;
+
   FReqResp.Free;
   DescarregarCertificado;
 
@@ -664,11 +667,7 @@ begin
 end;
 
 initialization
-  CoInitialize(nil); // PERMITE O USO DE THREAD
   CertificadosA3ComPin := '';
-
-finalization
- CoUninitialize;
 
 end.
 

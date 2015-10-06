@@ -669,5 +669,8 @@ end;
 initialization
   CertificadosA3ComPin := '';
 
+finalization
+  CertificadosA3ComPin := '';
+
 end.
 

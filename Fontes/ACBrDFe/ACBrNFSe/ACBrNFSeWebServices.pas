@@ -566,9 +566,9 @@ type
 
     function ConsultaSituacao(ACnpj, AInscricaoMunicipal, AProtocolo: String;
                               const ANumLote: String = ''): Boolean;
-    function ConsultaLoteRps(AProtocolo: String;
+    function ConsultaLoteRps(ANumLote, AProtocolo: String;
                              const CarregaProps: boolean = true): Boolean; overload;
-    function ConsultaLoteRps(AProtocolo,
+    function ConsultaLoteRps(ANumLote, AProtocolo,
                              ACNPJ, AInscricaoMunicipal: String;
                              const ASenha: String = '';
                              const AFraseSecreta: String = '';
@@ -2316,6 +2316,12 @@ procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
 var
   URISig, URIRef: String;
 begin
+  if (FProvedor = proEL) and (OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ) = '') then
+    GerarException(ACBrStr('Para o provedor EL há necessidade de informar o CNPJ do Prestador de Serviço'));
+
+  if (FProvedor = proTecnos) and (Trim(TNFSeConsultarLoteRPS(Self).FRazaoSocial) = '') then
+    GerarException(ACBrStr('Para o provedor Tecnos há necessidade de informar a Razão Social do Prestador de Serviço'));
+
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConLot;
 
   InicializarDadosMsg;
@@ -2362,18 +2368,21 @@ begin
                                                       TNFSeConsultarLoteRPS(Self).Cnpj,
                                                       TNFSeConsultarLoteRPS(Self).Protocolo,
                                                       FTagI, FTagF);
+
       proEquiplano: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEquiplano(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                             OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                             TNFSeConsultarLoteRPS(Self).IM,
                                                             TNFSeConsultarLoteRPS(Self).Protocolo,
                                                             TNFSeConsultarLoteRPS(Self).NumeroLote,
                                                             FTagI, FTagF);
+
       proEL: FPDadosMsg := TNFSeG.Gera_DadosMsgConsLoteEL(FPConfiguracoesNFSe.Geral.CodigoMunicipio,
                                                        OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ),
                                                        TNFSeConsultarLoteRPS(Self).IM,
                                                        TNFSeConsultarLoteRPS(Self).Protocolo,
                                                        TNFSeConsultarLoteRPS(Self).NumeroLote,
                                                        FTagI, FTagF);
+
     else FPDadosMsg := TNFSeG.Gera_DadosMsgConsLote(FPrefixo3, FPrefixo4,
                                                    FNameSpace,
                                                    FVersaoXML,
@@ -3764,7 +3773,7 @@ begin
    FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
 end;
 
-function TWebServices.ConsultaLoteRps(AProtocolo: String;
+function TWebServices.ConsultaLoteRps(ANumLote, AProtocolo: String;
   const CarregaProps: boolean): Boolean;
 begin
   if CarregaProps then
@@ -3773,8 +3782,9 @@ begin
      FConsLote.FIM   := '';
   end;
 
+  FConsLote.FNumeroLote := ANumLote;
   FConsLote.FProtocolo := AProtocolo;
-
+  (*
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
   begin
     if (FConsLote.FCNPJ = '') then
@@ -3789,14 +3799,14 @@ begin
 
   if (FConsLote.FRazaoSocial = '') and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proTecnos) then
      FConsLote.FRazaoSocial := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-
+  *)
   Result := FConsLote.Executar;
 
   if not (Result) then
     FConsLote.GerarException( FConsLote.Msg );
 end;
 
-function TWebServices.ConsultaLoteRps(AProtocolo, ACNPJ,
+function TWebServices.ConsultaLoteRps(ANumLote, AProtocolo, ACNPJ,
   AInscricaoMunicipal: String; const ASenha, AFraseSecreta,
   ARazaoSocial: String): Boolean;
 begin
@@ -3805,7 +3815,7 @@ begin
   FConsLote.FSenha        := ASenha;
   FConsLote.FFraseSecreta := AFraseSecreta;
   FConsLote.FRazaoSocial  := ARazaoSocial;
-
+  (*
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
   begin
     if (FConsLote.FCNPJ = '') then
@@ -3820,8 +3830,8 @@ begin
 
   if (FConsLote.FRazaoSocial = '') and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proTecnos) then
      FConsLote.FRazaoSocial := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-
-  Result := ConsultaLoteRPS(AProtocolo, False);
+  *)
+  Result := ConsultaLoteRPS(ANumLote, AProtocolo, False);
 end;
 
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,

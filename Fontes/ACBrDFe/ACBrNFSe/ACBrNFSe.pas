@@ -97,8 +97,7 @@ type
                                const ANumLote: String = ''): Boolean;
     function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = '';
       AInscricaoMunicipal: String = ''; ASenha: string = '';
-      AFraseSecreta: string =''; Mes: Integer = 0; Ano: Integer = 0;
-      ARazaoSocial: string = ''): Boolean;
+      AFraseSecreta: string =''; ARazaoSocial: string = ''): Boolean;
     function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
       AInscricaoMunicipal: String; ASenha: String = '';
       AFraseSecreta: String = ''; ARazaoSocial: String = ''): Boolean;
@@ -456,58 +455,19 @@ begin
 end;
 
 function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo, ACNPJ,
-  AInscricaoMunicipal, ASenha, AFraseSecreta: string; Mes, Ano: Integer;
+  AInscricaoMunicipal, ASenha, AFraseSecreta: string;
   ARazaoSocial: string): Boolean;
-var
- aPath: String;
- wAno, wMes, wDia: Word;
 begin
- aPath := Configuracoes.Arquivos.PathGer;
-
- if (ACNPJ='') and (AInscricaoMunicipal='')
-  then begin
-   if Configuracoes.Arquivos.SepararPorMes
-    then begin
-     DecodeDate(Now, wAno, wMes, wDia);
-     if Mes > 0 then
-       wMes:= Mes;
-     if Ano > 0 then
-       wAno:= Ano;
-     if Pos(IntToStr(wAno)+IntToStrZero(wMes,2),aPath) <= 0
-      then aPath := PathWithDelim(aPath)+IntToStr(wAno)+IntToStrZero(wMes,2) + '\';
-    end;
-
-    //sincrono o arquivo tem outro nome
-    if FilesExists(aPath+'Ger\'+ANumLote+'-env-lotS.xml') then
-    begin
-     if Configuracoes.Arquivos.AdicionarLiteral then
-        NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lotS.xml')
-      else
-       if Configuracoes.Arquivos.Salvar then
-         NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lotS.xml');
-    end
-    else
-    begin
-      if Configuracoes.Arquivos.AdicionarLiteral then
-        NotasFiscais.LoadFromFile(aPath+'Ger\'+ANumLote+'-env-lot.xml')
-      else
-       if Configuracoes.Arquivos.Salvar then
-         NotasFiscais.LoadFromFile(aPath+ANumLote+'-env-lot.xml');
-    end;
-
-   if NotasFiscais.Count <= 0 then
-     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+  if NotasFiscais.Count > 0 then
+  begin
+    ACNPJ := OnlyNumber(NotasFiscais.Items[0].NFSe.Prestador.CNPJ);
+    AInscricaoMunicipal := NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+    ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
   end;
 
-  if (Trim(Self.WebServices.ConsLote.NumeroLote) = '') then
-    Self.WebServices.ConsLote.NumeroLote:= ANumLote;
-
-  //obrigatorio passar a razao social para o provedor Tecnos
-  if (Configuracoes.Geral.Provedor in [proTecnos]) and (ARazaoSocial = '') then
-    ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-
-  Result := WebServices.ConsultaLoteRps(AProtocolo, ACNPJ, AInscricaoMunicipal,
-                                        ASenha, AFraseSecreta, ARazaoSocial);
+  Result := WebServices.ConsultaLoteRps(ANumLote, AProtocolo, ACNPJ,
+                                        AInscricaoMunicipal, ASenha,
+                                        AFraseSecreta, ARazaoSocial);
 end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,

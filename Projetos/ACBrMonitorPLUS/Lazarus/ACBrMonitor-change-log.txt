@@ -47,7 +47,10 @@ Símbolo : Significado
 -- ACBrMonitorPLUS --
 [+] Adicionada configuração de margens para o DANFCe, ficando assim separada
     da configuração do DANFE normal.
+[+] Adicionada configuração de timeout do webservice, existem alguns relatos
+    de timeout no plus, configurei para tentar diminuir isso.
     por: regys.silveira
+
 
 30/09/2015
 -- ACBrMonitorPLUS --

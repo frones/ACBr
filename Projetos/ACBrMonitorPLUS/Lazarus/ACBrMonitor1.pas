@@ -3280,8 +3280,13 @@ begin
     edtTentativas.Text := Ini.ReadString('WebService', 'Tentativas', '5');
     edtIntervalo.Text := Ini.ReadString('WebService', 'Intervalo', '0');
 
+    ACBrNFe1.Configuracoes.WebServices.TimeOut:=15000;
     ACBrNFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
+
+    ACBrCTe1.Configuracoes.WebServices.TimeOut:=15000;
     ACBrCTe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
+
+    ACBrMDFe1.Configuracoes.WebServices.TimeOut:=15000;
     ACBrMDFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
 
     if NaoEstaVazio(edtAguardar.Text) then

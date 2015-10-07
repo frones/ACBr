@@ -244,6 +244,7 @@ type
     cbxSepararporModelo: TCheckBox;
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
+    chbTCPANSI: TCheckBox;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
@@ -3032,12 +3033,11 @@ begin
     rbTXT.Checked := Ini.ReadBool('ACBrMonitor', 'Modo_TXT', True);
     edPortaTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_Porta', 3434));
     edTimeOutTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_TimeOut', 10000));
+    chbTCPANSI.Checked := Ini.ReadBool('ACBrMonitor','Converte_TCP_Ansi', False);
     edEntTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Entrada', 'ENT.TXT');
     edSaiTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Saida', 'SAI.TXT');
-    chbArqEntANSI.Checked := Ini.ReadBool('ACBrMonitor',
-      'Converte_TXT_Entrada_Ansi', False);
-    chbArqSaiANSI.Checked := Ini.ReadBool('ACBrMonitor',
-      'Converte_TXT_Saida_Ansi', False);
+    chbArqEntANSI.Checked := Ini.ReadBool('ACBrMonitor','Converte_TXT_Entrada_Ansi', False);
+    chbArqSaiANSI.Checked := Ini.ReadBool('ACBrMonitor','Converte_TXT_Saida_Ansi', False);
     sedIntervalo.Value := Ini.ReadInteger('ACBrMonitor', 'Intervalo', 50);
     edLogArq.Text := Ini.ReadString('ACBrMonitor', 'Arquivo_Log', 'LOG.TXT');
     cbLog.Checked := Ini.ReadBool('ACBrMonitor', 'Gravar_Log', False) and
@@ -4003,8 +4003,9 @@ begin
     Ini.WriteBool('ACBrMonitor', 'Modo_TXT', rbTXT.Checked);
     Ini.WriteBool('ACBrMonitor', 'MonitorarPasta', cbMonitorarPasta.Checked);
     Ini.WriteInteger('ACBrMonitor', 'TCP_Porta', StrToIntDef(edPortaTCP.Text, 3434));
-    Ini.WriteInteger('ACBrMonitor', 'TCP_TimeOut',
-      StrToIntDef(edTimeOutTCP.Text, 10000));
+    Ini.WriteInteger('ACBrMonitor', 'TCP_TimeOut', StrToIntDef(edTimeOutTCP.Text, 10000));
+    Ini.WriteBool('ACBrMonitor','Converte_TCP_Ansi', chbTCPANSI.Checked);
+
     if cbMonitorarPasta.Checked then
     begin
       Ini.WriteString('ACBrMonitor', 'TXT_Entrada', PathWithDelim(edEntTXT.Text));
@@ -4701,6 +4702,9 @@ begin
   begin
     if Assigned(Conexao) then
     begin
+      if chbTCPANSI.Checked then
+        Resposta := Utf8ToAnsi(Resposta);
+
       Resposta := StringReplace(Resposta, chr(3), '', [rfReplaceAll]);
       Conexao.SendString(Resposta);
       Conexao.SendByte(3);
@@ -5435,18 +5439,17 @@ end;
 procedure TFrmACBrMonitor.TcpServerRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
   const Recebido: ansistring; var Enviar: ansistring);
 var
-  SL: TStringList;
+  S: AnsiString;
 begin
   Conexao := TCPBlockSocket;
   { Le o que foi enviado atravez da conexao TCP }
-  SL := TStringList.Create;
-  try
-    SL.Text := Recebido;
-    NewLines := SL.Text;
-    Processar;
-  finally
-    SL.Free;
-  end;
+  if chbTCPANSI.Checked then
+    S := AnsiToUtf8(Recebido)
+  else
+    S := Recebido;
+
+  fsProcessar.Add(S);
+  Processar;
 end;
 
 procedure TFrmACBrMonitor.TCPServerTCConecta(const TCPBlockSocket: TTCPBlockSocket;

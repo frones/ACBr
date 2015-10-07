@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsDFe
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 0
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -1472,7 +1472,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Control = edPortaTCP
               AnchorSideTop.Side = asrCenter
               AnchorSideRight.Control = edPortaTCP
-              Left = 64
+              Left = 7
               Height = 17
               Top = 9
               Width = 86
@@ -1488,12 +1488,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = gbTCP
               AnchorSideRight.Side = asrBottom
               Cursor = crIBeam
-              Left = 153
+              Left = 96
               Height = 25
               Hint = 'Numero da Porta de ServiÃ§o TCP que serÃ¡ utilizada na comunicaÃ§Ã£o'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 5
               Width = 48
-              Anchors = [akTop, akRight]
               BorderSpacing.Top = 5
               BorderSpacing.Right = 20
               OnKeyPress = edOnlyNumbers
@@ -1505,7 +1504,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Side = asrCenter
               AnchorSideRight.Control = edTimeOutTCP
               AnchorSideBottom.Side = asrBottom
-              Left = 98
+              Left = 41
               Height = 17
               Top = 38
               Width = 52
@@ -1523,7 +1522,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Side = asrBottom
               AnchorSideBottom.Side = asrBottom
               Cursor = crIBeam
-              Left = 153
+              Left = 96
               Height = 25
               Hint = 'Numero da Porta de ServiÃ§o TCP que serÃ¡ utilizada na comunicaÃ§Ã£o'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 34
@@ -1533,6 +1532,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
               OnKeyPress = edOnlyNumbers
               TabOrder = 1
               Text = '10000'
+            end
+            object chbTCPANSI: TCheckBox
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = gbTCP
+              AnchorSideTop.Side = asrCenter
+              Left = 160
+              Height = 21
+              Top = 21
+              Width = 48
+              BorderSpacing.Left = 9
+              Caption = 'ANSI'
+              TabOrder = 2
             end
           end
           object rbTCP: TRadioButton
@@ -6482,9 +6493,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -10965,7 +10976,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11045,7 +11055,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
-    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True

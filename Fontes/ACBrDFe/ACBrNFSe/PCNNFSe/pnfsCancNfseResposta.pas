@@ -121,6 +121,7 @@ type
   private
     FLeitor: TLeitor;
     FInfCanc: TInfCanc;
+    FProvedor: TnfseProvedor;
   public
     constructor Create;
     destructor Destroy; override;
@@ -131,8 +132,9 @@ type
     function LerXml_provedorNFSEBrasil: boolean;
 	
   published
-    property Leitor: TLeitor   read FLeitor   write FLeitor;
-    property InfCanc: TInfCanc read FInfCanc  write FInfCanc;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property InfCanc: TInfCanc       read FInfCanc  write FInfCanc;
+    property Provedor: TnfseProvedor read FProvedor write FProvedor;
   end;
 
 implementation
@@ -263,45 +265,40 @@ begin
   result := True;
 
   try
-    // Incluido por Ricardo Miranda em 14/03/2013
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
-  { Incluído por Márcio Teixeira em 14/02/2013 para tratar os retornos do Ginfes.
-    Fiz seguindo a seguinte idéia: se infCanc.DataHora tiver data, então foi
-    cancelado com sucesso, caso contrário houve algum problema.
-  }
-  if Pos('www.ginfes.com.br', Leitor.Arquivo) <> 0
-   then begin
-    if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '')
-     then begin
-      if AnsiLowerCase(Leitor.rCampo(tcStr, 'Sucesso')) = 'true'
-       then begin
-         infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
-         InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');  //Incluido por jrJunior82 09/05/2013
-         InfCanc.MsgCanc  := Leitor.rCampo(tcStr,    'Mensagem'); //Incluido por jrJunior82 09/05/2013
-       end
-       else infCanc.DataHora := 0;
+    if Provedor = proGinfes then
+    begin
+      if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
+      begin
+        if AnsiLowerCase(Leitor.rCampo(tcStr, 'Sucesso')) = 'true' then
+        begin
+          infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+          InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');  //Incluido por jrJunior82 09/05/2013
+          InfCanc.MsgCanc  := Leitor.rCampo(tcStr,    'Mensagem'); //Incluido por jrJunior82 09/05/2013
+        end
+        else
+          infCanc.DataHora := 0;
 
-      InfCanc.FPedido.InfID.ID           := '';
-      InfCanc.FPedido.CodigoCancelamento := '';
+        InfCanc.FPedido.InfID.ID           := '';
+        InfCanc.FPedido.CodigoCancelamento := '';
 
-      if Leitor.rExtrai(1, 'MensagemRetorno') <> ''
-       then
-       if Pos('cancelada com sucesso', AnsiLowerCase(Leitor.rCampo(tcStr, 'Mensagem'))) = 0
-        then begin
-        InfCanc.FMsgRetorno.Add;
-        InfCanc.FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-        InfCanc.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-        InfCanc.FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+        if Leitor.rExtrai(1, 'MensagemRetorno') <> '' then
+        begin
+          if Pos('cancelada com sucesso', AnsiLowerCase(Leitor.rCampo(tcStr, 'Mensagem'))) = 0 then
+          begin
+            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            InfCanc.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+            InfCanc.FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+          end;
         end;
       end;
 
     end
-  else
+    else
     begin
-
-      // Alterado por Akai - L. Massao Aihara 31/10/2013
       if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or
          (leitor.rExtrai(1, 'Cancelarnfseresposta') <> '') or
          (leitor.rExtrai(1, 'CancelarNfseReposta') <> '') or
@@ -310,8 +307,8 @@ begin
         infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
         if infCanc.DataHora = 0 then
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
-        InfCanc.FConfirmacao := Leitor.rAtributo('Confirmacao Id=');    // Alterado por Nilton Olher - 20/02/2015
-        InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');  // Incluido por Glecio 09/05/2013
+        InfCanc.FConfirmacao := Leitor.rAtributo('Confirmacao Id=');
+        InfCanc.Sucesso := Leitor.rCampo(tcStr,    'Sucesso');
 
         InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento Id=');
         if InfCanc.FPedido.InfID.ID = '' then
@@ -319,14 +316,13 @@ begin
 
         InfCanc.FPedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
 
-
-        if Leitor.rExtrai(2, 'IdentificacaoNfse') <> ''
-         then begin
+        if Leitor.rExtrai(2, 'IdentificacaoNfse') <> '' then
+        begin
           InfCanc.FPedido.IdentificacaoNfse.Numero             := Leitor.rCampo(tcStr, 'Numero');
           InfCanc.FPedido.IdentificacaoNfse.Cnpj               := Leitor.rCampo(tcStr, 'Cnpj');
           InfCanc.FPedido.IdentificacaoNfse.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
           InfCanc.FPedido.IdentificacaoNfse.CodigoMunicipio    := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-         end;
+        end;
 
         Leitor.Grupo := Leitor.Arquivo;
 
@@ -339,17 +335,18 @@ begin
         begin
           i := 0;
           while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
-           begin
-                InfCanc.FMsgRetorno.Add;
-                InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-                InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-                InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+          begin
+            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+            InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
-                inc(i);
-            end;
+            inc(i);
+          end;
         end;
 
-        if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then begin    // Modificado para o Provedor Freire
+        if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then
+        begin
            InfCanc.FMsgRetorno.Add;
            InfCanc.FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
            InfCanc.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
@@ -361,14 +358,14 @@ begin
 
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
-     begin
-       InfCanc.FMsgRetorno.Add;
-       InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
-       InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
-       InfCanc.FMsgRetorno[i].FCorrecao := '';
+    begin
+      InfCanc.FMsgRetorno.Add;
+      InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+      InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+      InfCanc.FMsgRetorno[i].FCorrecao := '';
 
-       inc(i);
-     end;
+      inc(i);
+    end;
 
   except
     result := False;

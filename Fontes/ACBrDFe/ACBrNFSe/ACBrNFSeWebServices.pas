@@ -670,6 +670,12 @@ begin
   if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
+  if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
+  begin
+    DadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+    DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+  end;
+
   CabMsg := FPCabMsg;
   if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
     CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
@@ -877,8 +883,9 @@ begin
   //            3 = Processado com Erro
   //            4 = Processado com Sucesso
 
-//  FRetListaNFSe := RetirarPrefixos(SeparaDados(FPRetWS, FPrefixo3 + 'ListaNfse'));
   FRetListaNFSe := SeparaDados(FPRetWS, FPrefixo3 + 'ListaNfse');
+  if FRetListaNFSe = '' then
+    FRetListaNFSe := FPRetWS;
 
   if FProvedor = proSisPMJP then
     FPrefixo3 := '';
@@ -968,10 +975,11 @@ begin
             else
               NomeArq := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Numero + '-nfse.xml';
 
-            FPDFeOwner.Gravar(NomeArq, FRetNFSe, PathSalvar);
+            FPDFeOwner.Gravar(NomeArq, FRetNFSe,
+              PathWithDelim(FPConfiguracoesNFSe.Arquivos.GetPathNFSe()));
 
             if FNotasFiscais.Count > 0 then
-              FNotasFiscais.Items[ii].NomeArq := PathWithDelim(PathSalvar) + NomeArq;
+              FNotasFiscais.Items[ii].NomeArq := PathWithDelim(FPConfiguracoesNFSe.Arquivos.GetPathNFSe()) + NomeArq;
           end;
 
           FRetListaNFSe := Copy(FRetListaNFSe, j + 11 + p, length(FRetListaNFSe));
@@ -2821,8 +2829,8 @@ end;
 
 destructor TNFSeCancelarNfse.Destroy;
 begin
-  if Assigned(FRetCancNFSe) then
-    FRetCancNFSe.Free;
+//  if Assigned(FRetCancNFSe) then
+//    FRetCancNFSe.Free;
 
   inherited Destroy;
 end;
@@ -3035,10 +3043,6 @@ begin
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar;
 
-  if FProvedor = proGinfes then
-    FPDadosMsg := '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' +
-                  StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
-
   if FPDadosMsg = '' then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
@@ -3050,9 +3054,13 @@ var
 begin
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'CancelarNfseResposta');
 
+  if Assigned(FRetCancNFSe) then
+    FRetCancNFSe.Free;
+
   FRetCancNFSe := TRetCancNfse.Create;
   try
     FRetCancNFSe.Leitor.Arquivo := FPRetWS;
+    FRetCancNFSe.Provedor := FProvedor;
 
     case FProvedor of
       proEquiplano: FRetCancNFSe.LerXML_provedorEquiplano;
@@ -3079,12 +3087,12 @@ begin
                          'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
       end;
     end
-    else FaMsg := 'Numero da NFSe : ' + RetCancNFSe.InfCanc.Pedido.IdentificacaoNfse.Numero + LineBreak +
+    else FaMsg := 'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
                   'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
     Result := (RetCancNFSe.InfCanc.Sucesso <> '');
   finally
-    FRetCancNFSe.Free;
+//    FRetCancNFSe.Free;
   end;
 end;
 
@@ -3092,8 +3100,8 @@ procedure TNFSeCancelarNfse.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetCancNFSe) then
-    FreeAndNil(FRetCancNFSe);
+//  if Assigned(FRetCancNFSe) then
+//    FreeAndNil(FRetCancNFSe);
 end;
 
 function TNFSeCancelarNfse.GerarMsgLog: String;

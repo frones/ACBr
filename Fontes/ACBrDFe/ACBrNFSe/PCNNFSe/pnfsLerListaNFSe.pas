@@ -278,7 +278,7 @@ var
   VersaodoXML: String;
   ProtocoloTemp, NumeroLoteTemp: String;
   DataRecebimentoTemp:Tdatetime;
-  i, j, k: Integer;
+  i, j, k, Nivel: Integer;
 begin
   Result := True;
 
@@ -291,6 +291,7 @@ begin
     if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or
        (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
        (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
        (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
       // =======================================================================
@@ -307,11 +308,14 @@ begin
 
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
-      begin
+        Nivel := 3
+      else
+        Nivel := 2;
+    //  begin
         i := 0;
-        while (Leitor.rExtrai(3, 'CompNfse', '', i + 1) <> '') or
-              (Leitor.rExtrai(3, 'ComplNfse', '', i + 1) <> '') or
-              ((Provedor in [proActcon]) and (Leitor.rExtrai(4, 'Nfse', '', i + 1) <> '')) do
+        while (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
+              (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
+              ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) do
         begin
           NFSe := TNFSe.Create;
           NFSeLida := TNFSeR.Create(NFSe);
@@ -323,7 +327,7 @@ begin
 
             Result := NFSeLida.LerXml;
 
-            if Result then 
+            if Result then
             begin
               with ListaNFSe.FCompNFSe.Add do
               begin
@@ -456,7 +460,7 @@ begin
 
           inc(i); // Incrementa o contador de notas.
         end;
-      end;
+    //  end;
     end
     else begin
       // =======================================================================

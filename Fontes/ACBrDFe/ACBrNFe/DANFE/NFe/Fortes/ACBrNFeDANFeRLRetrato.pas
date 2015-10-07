@@ -655,12 +655,23 @@ begin
 end;
 
 procedure TfrlDANFeRLRetrato.InitDados;
-var
-  i, b, h, iAlturaCanhoto: integer;
+var 
+	i, b, h, iAlturaCanhoto: Integer;
+  LogoStream: TStringStream;
 begin
   // Carrega logomarca
-  if (FLogo <> '') and FileExists(FLogo) then
-    rliLogo.Picture.LoadFromFile(FLogo);
+  if (FLogo <> '') then
+    if FileExists (FLogo) then
+     rliLogo.Picture.LoadFromFile(FLogo)
+    else
+      begin
+			  LogoStream := TStringStream.Create(FLogo);
+		  	try
+	  			rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+  			finally
+				  LogoStream.Free;
+			  end;
+      end;
 
   if (FMarcaDagua <> '') and FileExists(FMarcaDagua) then
   begin

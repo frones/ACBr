@@ -4009,6 +4009,7 @@ procedure TACBrECFDaruma.AbreNaoFiscal(CPF_CNPJ: String; Nome: String;
    Endereco: String);
 begin
   fsNumCupom := '';
+  fsSubTotal := 0;
 
   if fpMFD then
   begin

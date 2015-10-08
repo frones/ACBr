@@ -180,9 +180,6 @@ type
 
   ////////////////////////////////////////////////////////////////////////////////
 
-const
-  DSC_CEST = 'Código Identificador da Substitução Tributária';
-
 implementation
 
 Uses pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
@@ -274,7 +271,7 @@ begin
   begin
     Gerador.wGrupo('infNFeSupl');
     Gerador.wCampo(tcStr, 'ZX02', 'qrCode', 100, 600, 1,
-                     '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', '***',False);
+                     '<![CDATA[' + nfe.infNFeSupl.qrCode + ']]>', DSC_INFQRCODE,False);
     Gerador.wGrupo('/infNFeSupl');
   end;
 
@@ -1063,11 +1060,11 @@ end;
 procedure TNFeW.GerarDetProdCombencerrante(const i: Integer);
 begin
   Gerador.wGrupo('encerrante', 'LA11');
-  Gerador.wCampo(tcInt, 'LA12', 'nBico  ', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nBico, '***');
-  Gerador.wCampo(tcInt, 'LA13', 'nBomba ', 01, 03, 0, nfe.Det[i].Prod.comb.encerrante.nBomba, '***');
-  Gerador.wCampo(tcInt, 'LA14', 'nTanque', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nTanque, '***');
-  Gerador.wCampo(tcStr, 'LA15', 'vEncIni', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncIni, '***');
-  Gerador.wCampo(tcStr, 'LA16', 'vEncFin', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncFin, '***');
+  Gerador.wCampo(tcInt, 'LA12', 'nBico  ', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nBico, DSC_NBICO);
+  Gerador.wCampo(tcInt, 'LA13', 'nBomba ', 01, 03, 0, nfe.Det[i].Prod.comb.encerrante.nBomba, DSC_NBOMBA);
+  Gerador.wCampo(tcInt, 'LA14', 'nTanque', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nTanque, DSC_NTANQUE);
+  Gerador.wCampo(tcStr, 'LA15', 'vEncIni', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncIni, DSC_VENCINI);
+  Gerador.wCampo(tcStr, 'LA16', 'vEncFin', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncFin, DSC_VENCFIN);
   Gerador.wGrupo('/encerrante');
 end;
 
@@ -1799,12 +1796,12 @@ begin
   if nfe.Det[i].Imposto.ICMSUFDest.vBCUFDest > 0 then
   begin
     Gerador.wGrupo('ICMSUFDest', 'NA01');
-    Gerador.wCampo(tcDe2, 'NA03', 'vBCUFDest', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vBCUFDest, DSC_VBC);
-    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA05', 'pICMSUFDest', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSUFDest, DSC_PICMS);
-    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA07', 'pICMSInter ', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInter, DSC_PICMS);
-    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA09', 'pICMSInterPart', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInterPart, DSC_PICMS);
-    Gerador.wCampo(tcDe2, 'NA11', 'vICMSUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFDest, DSC_VICMS);
-    Gerador.wCampo(tcDe2, 'NA13', 'vICMSUFRemet', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFRemet, DSC_VICMS);
+    Gerador.wCampo(tcDe2, 'NA03', 'vBCUFDest', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vBCUFDest, DSC_VBCUFDEST);
+    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA05', 'pICMSUFDest', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSUFDest, DSC_PICMSUFDEST);
+    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA07', 'pICMSInter ', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInter, DSC_PICMSINTER);
+    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA09', 'pICMSInterPart', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInterPart, DSC_PICMSINTERPART);
+    Gerador.wCampo(tcDe2, 'NA11', 'vICMSUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFDest, DSC_VICMSUFDEST);
+    Gerador.wCampo(tcDe2, 'NA13', 'vICMSUFRemet', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFRemet, DSC_VICMSUFREMET);
     Gerador.wGrupo('/ICMSUFDest');
   end;
 end;
@@ -2303,15 +2300,12 @@ begin
     Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, DSC_VPAG);
     if nfe.pag[i].CNPJ <> '' then
-//    if nfe.pag[i].tpIntegra <> tiNaoInformado then
      begin
        Gerador.wGrupo('card', 'YA04');
-//       if nfe.pag[i].tpIntegra <> tiNaoInformado then
-//         Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 1, tpIntegraToStr(nfe.pag[i].tpIntegra), '***');
-
-       Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 1, nfe.pag[i].CNPJ, DSC_CNPJ);
-       Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 1, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
-       Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 1, nfe.pag[i].cAut, DSC_CAUT);
+       Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 0, tpIntegraToStr(nfe.pag[i].tpIntegra), DSC_TPINTEGRA);
+       Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, nfe.pag[i].CNPJ, DSC_CNPJ);
+       Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
+       Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, nfe.pag[i].cAut, DSC_CAUT);
        Gerador.wGrupo('/card');
      end;
     Gerador.wGrupo('/pag');

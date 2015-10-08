@@ -464,6 +464,20 @@ const
   DSC_VPAG = 'Valor do Pagamento';
   DSC_TBAND = 'Bandeira da Operadora de Cartão';
   DSC_CAUT = 'Número da Autorização';
+  DSC_TPINTEGRA = 'Tipo de Integração para pagamento';
+  DSC_CEST = 'Código Identificador da Substitução Tributária';
+  DSC_INFQRCODE = 'Texto com o QR-Code impresso no DANFE NFC-e.';
+  DSC_NBICO = 'Número de identificação do bico';
+  DSC_NBOMBA = 'Número de identificação da bomba';
+  DSC_NTANQUE = 'Número de identificação do tanque';
+  DSC_VENCINI = 'Valor do Encerrante no início do abastecimento';
+  DSC_VENCFIN = 'Valor do Encerrante no final do abastecimento';
+  DSC_VBCUFDEST = 'Valor da BC do ICMS na UF do destinatário';
+  DSC_PICMSUFDEST = 'Alíquota interna da UF do destinatário';
+  DSC_PICMSINTER = 'Alíquota interestadual das UF envolvidas';
+  DSC_PICMSINTERPART = 'Percentual provisório de partilha entre os Estados';
+  DSC_VICMSUFDEST = 'Valor do ICMS de partilha para a UF do destinatário';
+  DSC_VICMSUFREMET = 'Valor do ICMS de partilha para a UF do remetente';
 
   // CTE //
   DSC_CHCTE    = 'Chave do CTe';

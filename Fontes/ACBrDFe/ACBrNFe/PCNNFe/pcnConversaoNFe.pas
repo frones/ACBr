@@ -346,12 +346,12 @@ end;
 
 function tpIntegraToStr(const t: TtpIntegra): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
+  result := EnumeradoToStr(t, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
 end;
 
 function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
+  result := StrToEnumerado(ok, s, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
 end;
 
 function VeiculosRestricaoStr( const iRestricao : Integer ): String;

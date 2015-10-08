@@ -404,16 +404,20 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
-  QRCode: AnsiString;
+  QRCode, Chave: String;
   ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   if Cancelamento then
      FPosPrinter.Buffer.Add(ACBrStr('<n>DADOS DO CUPOM FISCAL ELETRÔNICO CANCELADO</n>'));
 
+  Chave := FormatarChaveAcesso(CFe.infCFe.ID);
+  if Length(Chave) > FPosPrinter.ColunasFonteCondensada then
+    Chave := OnlyNumber(Chave);
+
   FPosPrinter.Buffer.Add('</ce>SAT No. <n>'+IntToStr(CFe.ide.nserieSAT)+'</n>');
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFe.ide.dEmi + CFe.ide.hEmi));
-  FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso(CFe.infCFe.ID)+'</fn>');
+  FPosPrinter.Buffer.Add('<c>'+Chave+'</fn>');
 
   FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
   FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');

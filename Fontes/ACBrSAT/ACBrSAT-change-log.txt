@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/10/2015
+-- ACBrSATExtratoESCPOS --
+[-] Ajuste para impressão completa da chave, em Impressoras que não suportam
+    menos que 56 colunas em modo condensado   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/25041-satcfe-fortes-report-com-a-dr700/
+
 Data: 30/09/2015
 -- ACBrSATExtratoESCPOS --
 [*] http://www.projetoacbr.com.br/forum/topic/24717-nome-do-destinatario-cupom-sa

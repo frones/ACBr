@@ -15,9 +15,9 @@ object frConfiguracoes: TfrConfiguracoes
     Height = 366
     Top = 66
     Width = 709
-    ActivePage = tsDANFE
+    ActivePage = tsPosPrinter
     Align = alClient
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 1
     object tsPosPrinter: TTabSheet
       Caption = 'Pos Printer'

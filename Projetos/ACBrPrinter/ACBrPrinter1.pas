@@ -133,10 +133,12 @@ procedure TDataModule1.ShowHowToUseAndFinalize;
 begin
   MessageDlg('Para utilizar este aplicativo use a seguinte sintaxe:'+sLineBreak+
              //'ACBrPrinter.exe Impressora TipoRel ArquivoImpressao'+sLineBreak+
-             'ACBrPrinter.exe TipoRel ArquivoImpressao'+sLineBreak+
+             'ACBrPrinter.exe TipoRel ArquivoImpressao ArquivoConfiguracao'+sLineBreak+
              'Onde: '+sLineBreak+
              //'Impressora - Nome da impressora cadastrada no ACBrPrinter.'+sLineBreak+
              'TipoRel - NFe, NFCe, SAT ou Texto.'+sLineBreak+
+             'ArquivoImpressao - Arquivo a ser impresso.'+sLineBreak+
+             'ArquivoConfiguracao - Nome do arquivo de configuração criado com o comando ACBrPrinter.exe /c.'+sLineBreak+
              'Para configurar, use ACBrPrinter.exe /c', mtInformation, [mbOK], 0);
   Application.Terminate;
 end;

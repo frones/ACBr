@@ -9,6 +9,7 @@ object DataModule1: TDataModule1
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
     ConfigQRCode.Tipo = 2
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
@@ -53,6 +54,7 @@ object DataModule1: TDataModule1
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
     left = 352
     top = 24
   end

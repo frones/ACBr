@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/10/2015
+-- ACBrECFEscECF --
+[*] Workaround para problema de Loop na Bematech MP4200, modificados para
+    monitorar comandos 22 e 26  (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/22790-bematech-mp-4200-th-fi-entrando-em-loop/?do=findComment&comment=161992
+
 Data: 05/10/2015
 --ACBrECFVirtualBuffer --
 [-] Ajuste para constar a Data do Movimento na Redução Z  (por: Amarildo Lacerda)

@@ -500,8 +500,8 @@ begin
     GravaLog( '   xEPSON_Serial_Abrir_Porta( 115200, 0 )' );
     Resp := xEPSON_Serial_Abrir_Porta( 115200, 0 ) ;  // 0 = USB
     if Resp <> 0 then
-       raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao abrir a Porta com:'+sLineBreak+
-          'EPSON_Serial_Abrir_Porta(115200, 0)' );
+       raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao abrir a Porta: '+
+                                  Device.Porta+', usando: '+cLIB_Epson );
 
     AtivarDevice ;  // Apenas para que fpAtivo seja ligado
   end;
@@ -511,11 +511,14 @@ procedure TACBrECFEscECFProtocoloEpsonDLL.Desativar;
 Var
   Resp : Integer ;
 begin
-  fpECFEscECF.GravaLog( '   xEPSON_Serial_Fechar_Porta' );
-  Resp := xEPSON_Serial_Fechar_Porta ;
-  if Resp <> 0 then
-     raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao Fechar a Porta com:'+sLineBreak+
-        'EPSON_Serial_Fechar_Porta' );
+  with fpECFEscECF do
+  begin
+    GravaLog( '   xEPSON_Serial_Fechar_Porta' );
+    Resp := xEPSON_Serial_Fechar_Porta ;
+    if Resp <> 0 then
+       raise EACBrECFERRO.Create( 'Erro: '+IntToStr(Resp)+' ao Fechar a PortaPorta: '+
+                                    Device.Porta+', usando: '+cLIB_Epson );
+  end;
 
   inherited Desativar;
 end;
@@ -934,8 +937,8 @@ begin
     begin
        if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
         begin
-          if (fsWAKCounter > 0) and          // Já esteve ocupada antes ?
-             (EscECFComando.fsCMD = 26) and  // Foi um comando de "Leitura de Informações" ?
+          if (fsWAKCounter > 0) and                // Já esteve ocupada antes ?
+             (EscECFComando.fsCMD in [22,26]) and  // Foi um comando de "Leitura de Informações" ?
              IsBematech and
              (( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
           begin

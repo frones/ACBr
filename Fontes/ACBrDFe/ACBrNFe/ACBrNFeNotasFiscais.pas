@@ -811,10 +811,10 @@ begin
       if (NFe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
 
-      GravaLog('Validar: 719-NFe sem ident. destinatário');
-      if (NFe.Dest.CNPJCPF = '') and
-         (NFe.Dest.idEstrangeiro = '') then
-        AdicionaErro('719-Rejeição: NF-e sem a identificação do destinatário');
+//      GravaLog('Validar: 719-NFe sem ident. destinatário');
+//      if (NFe.Dest.CNPJCPF = '') and
+//         (NFe.Dest.idEstrangeiro = '') then
+//        AdicionaErro('719-Rejeição: NF-e sem a identificação do destinatário');
 
       GravaLog('Validar: 237-CPF destinatário ');
       if (Trim(OnlyNumber(NFe.Dest.CNPJCPF)) <> EmptyStr) and
@@ -822,10 +822,10 @@ begin
         not ValidarCPF(NFe.Dest.CNPJCPF) then
         AdicionaErro('237-Rejeição: CPF do destinatário inválido');
 
-      GravaLog('Validar: 720-idEstrangeiro');
-      if (nfe.Ide.idDest = doExterior) and
-         (EstaVazio(Trim(NFe.Dest.idEstrangeiro))) then
-        AdicionaErro('720-Rejeição: Na operação com Exterior deve ser informada tag idEstrangeiro');
+//      GravaLog('Validar: 720-idEstrangeiro');
+//      if (nfe.Ide.idDest = doExterior) and
+//         (EstaVazio(Trim(NFe.Dest.idEstrangeiro))) then
+//        AdicionaErro('720-Rejeição: Na operação com Exterior deve ser informada tag idEstrangeiro');
 
       GravaLog('Validar: 721-Op.Interstadual sem CPF/CNPJ');
       if (nfe.Ide.idDest = doInterestadual) and

@@ -163,8 +163,6 @@ type
     FExibirErroSchema: Boolean;
     FFormatoAlerta: String;
     FRetirarAcentos: Boolean;
-    FIdCSC: String;
-    FCSC: String;
     FValidarDigest: Boolean;
     FCodModeloDF: Integer;
 
@@ -190,8 +188,6 @@ type
     property FormatoAlerta: String read GetFormatoAlerta write FFormatoAlerta;
     property RetirarAcentos: Boolean read FRetirarAcentos
       write FRetirarAcentos default True;
-    property IdCSC: String read FIdCSC write FIdCSC;
-    property CSC: String read FCSC write FCSC;
     property ValidarDigest: Boolean
       read FValidarDigest write FValidarDigest default True;
   end;
@@ -386,8 +382,6 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
   FRetirarAcentos := True;
-  FIdCSC := '';
-  FCSC := '';
   FValidarDigest := True;
   FCodModeloDF := 55;
 end;
@@ -400,8 +394,6 @@ begin
   ExibirErroSchema := DeGeralConf.ExibirErroSchema;
   FormatoAlerta    := DeGeralConf.FormatoAlerta;
   RetirarAcentos   := DeGeralConf.RetirarAcentos;
-  IdCSC            := DeGeralConf.IdCSC;
-  CSC              := DeGeralConf.CSC;
   ValidarDigest    := DeGeralConf.ValidarDigest;
   CodModeloDF      := DeGeralConf.CodModeloDF;
 end;

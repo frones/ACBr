@@ -52,6 +52,9 @@ type
     FModeloDF: TpcnModeloDF;
     FVersaoDF: TpcnVersaoDF;
     FModeloDFCodigo: integer;
+    FIdCSC: String;
+    FCSC: String;
+    FIncluirQRCodeXMLNFCe: Boolean;
 
     procedure SetModeloDF(AValue: TpcnModeloDF);
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
@@ -63,6 +66,9 @@ type
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
+    property IdCSC: String read FIdCSC write FIdCSC;
+    property CSC: String read FCSC write FCSC;
+    property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe;
   end;
 
   { TDownloadConfNFe }
@@ -204,6 +210,9 @@ begin
   FModeloDF := moNFe;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
   FVersaoDF := ve310;
+  FIdCSC := '';
+  FCSC := '';
+  FIncluirQRCodeXMLNFCe := False;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
@@ -212,6 +221,9 @@ begin
 
   ModeloDF := DeGeralConfNFe.ModeloDF;
   VersaoDF := DeGeralConfNFe.VersaoDF;
+  IdCSC    := DeGeralConfNFe.IdCSC;
+  CSC      := DeGeralConfNFe.CSC;
+  IncluirQRCodeXMLNFCe := DeGeralConfNFe.IncluirQRCodeXMLNFCe;
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);

@@ -281,7 +281,7 @@ begin
     // Gera o QR-Code para adicionar no XML antes de ser validado e salvo
     // somente para a NFC-e.
 
-    if (NFe.Ide.modelo = 65) and  (NFe.Ide.tpAmb = taHomologacao) then
+    if (NFe.Ide.modelo = 65) and  (Configuracoes.Geral.IncluirQRCodeXMLNFCe) then
     begin
       with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
       begin

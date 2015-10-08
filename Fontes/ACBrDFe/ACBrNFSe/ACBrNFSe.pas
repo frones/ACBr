@@ -474,7 +474,7 @@ function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
   AInscricaoMunicipal, ASenha, AFraseSecreta,
   ARazaoSocial: String): Boolean;
 begin
-  if NotasFiscais.Count <= 0 then
+  if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
   Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
@@ -518,8 +518,32 @@ end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao,
   AInscricaoM: String): String;
+var
+  Texto, xNumeroNFSe, xNomeMunic: String;
 begin
-  Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao, AInscricaoM);
+  if Configuracoes.WebServices.Ambiente = taProducao then
+  begin
+    Texto := Configuracoes.Geral.ConfigGeral.ProLinkNFSe;
+    xNomeMunic := Configuracoes.Geral.xNomeURL_P;
+  end
+  else begin
+    Texto := Configuracoes.Geral.ConfigGeral.HomLinkNFSe;
+    xNomeMunic := Configuracoes.Geral.xNomeURL_H;
+  end;
+  // %CodVerif%      : Representa o Código de Verificação da NFS-e
+  // %NumeroNFSe%    : Representa o Numero da NFS-e
+  // %NomeMunicipio% : Representa o Nome do Municipio
+  // %InscMunic%     : Representa a Inscrição Municipal do Emitente
+
+  xNumeroNFSe := IntToStr(ANumeroNFSe);
+
+  Texto := StringReplace(Texto, '%CodVerif%', ACodVerificacao, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%InscMunic%', AInscricaoM, [rfReplaceAll]);
+
+  Result := Texto;
+//  Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao, AInscricaoM);
 end;
 
 end.

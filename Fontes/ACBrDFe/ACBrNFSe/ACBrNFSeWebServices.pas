@@ -478,7 +478,7 @@ type
   end;
 
 { TNFSeLinkNFSe }
-
+  (*
   TNFSeLinkNFSe = Class(TNFSeWebService)
   private
     FNumeroNFSe: Integer;
@@ -504,7 +504,7 @@ type
     property Link: String read FLink;
     property IM: String read FIM;
   end;
-
+  *)
   { TNFSeEnvioWebService }
 
   TNFSeEnvioWebService = class(TNFSeWebService)
@@ -546,7 +546,7 @@ type
     FConsNFSe: TNFSeConsultarNFSe;
     FCancNFSe: TNFSeCancelarNFSe;
     FSubNFSe: TNFSeSubstituirNFSe;
-    FLinkNFSe: TNFSeLinkNFSe;
+//    FLinkNFSe: TNFSeLinkNFSe;
     FEnvioWebService: TNFSeEnvioWebService;
 
   public
@@ -599,7 +599,7 @@ type
 
     function SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 
-    function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
+//    function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
 
     property ACBrNFSe: TACBrDFe read FACBrNFSe write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
@@ -612,7 +612,7 @@ type
     property ConsNFSe: TNFSeConsultarNFSe read FConsNFSe write FConsNFSe;
     property CancNFSe: TNFSeCancelarNFSe read FCancNFSe write FCancNFSe;
     property SubNFSe: TNFSeSubstituirNFSe read FSubNFSe write FSubNFSe;
-    property LinkNFSe: TNFSeLinkNFSe read FLinkNFSe write FLinkNFSe;
+//    property LinkNFSe: TNFSeLinkNFSe read FLinkNFSe write FLinkNFSe;
     property EnvioWebService: TNFSeEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -2000,143 +2000,6 @@ begin
      FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
-(*
-function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
-
-function Processando: Boolean;
-var
-  xSituacao: String;
-  i: Integer;
-  Ok: Boolean;
-begin
-  FRetSitLote := TretSitLote.Create;
-
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarSituacaoLoteRpsResposta');
-
-  FRetSitLote.Leitor.Arquivo := FPRetWS;
-
-  case FProvedor of
-    proEquiplano: RetSitLote.LerXML_provedorEquiplano;
-    proInfisc: RetSitLote.LerXML_provedorInfisc;
-    proEL: RetSitLote.LerXML_provedorEL;
-    proFissLex: RetSitLote.LerXml_provedorFissLex;
-  else
-    RetSitLote.LerXml;
-  end;
-
-  FSituacao := RetSitLote.InfSit.Situacao;
-  // FSituacao: 1 = Não Recebido
-  //            2 = Não Processado
-  //            3 = Processado com Erro
-  //            4 = Processado com Sucesso
-
-  // Lista de Mensagem de Retorno
-  FPMsg := '';
-  FaMsg:='';
-  if RetSitLote.InfSit.MsgRetorno.Count > 0 then
-  begin
-    for i := 0 to RetSitLote.InfSit.MsgRetorno.Count - 1 do
-    begin
-      FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
-
-      FaMsg := FaMsg + 'Código Erro : ' + RetSitLote.infSit.MsgRetorno.Items[i].Codigo + LineBreak +
-                       'Mensagem... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
-                       'Correção... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Correcao + LineBreak+
-                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
-    end;
-  end
-  else begin
-    for i:=0 to FNotasFiscais.Count -1 do
-      FNotasFiscais.Items[i].NFSe.Situacao := FSituacao;
-
-    case FProvedor of
-      proEquiplano: begin
-                      case FSituacao[1] of
-                        '1' : xSituacao := 'Aguardando processamento';
-                        '2' : xSituacao := 'Não Processado, lote com erro';
-                        '3' : xSituacao := 'Processado com sucesso';
-                        '4' : xSituacao := 'Processado com avisos';
-                      end;
-                    end;
-
-      proEL: begin
-               case FSituacao[1] of
-                 '1' : xSituacao := 'Aguardando processamento';
-                 '2' : xSituacao := 'Não Processado, lote com erro';
-                 '3' : xSituacao := 'Processado com avisos';
-                 '4' : xSituacao := 'Processado com sucesso';
-               end;
-             end;
-
-//      proInfisc:
-
-    else begin
-           case StrToSituacaoLoteRPS(Ok, FSituacao) of
-            slrNaoRecibo        : xSituacao := 'Não Recebido.';
-            slrNaoProcessado    : xSituacao := 'Não Processado.';
-            slrProcessadoErro   : xSituacao := 'Processado com Erro.';
-            slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
-           end;
-         end;
-    end;
-
-    FaMsg := 'Numero do Lote : ' + RetSitLote.InfSit.NumeroLote + LineBreak +
-             'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
-  end;
-
-  if (FProvedor in [proEquiplano, proEL]) then
-    Result := (FSituacao = '1')  // Aguardando processamento
-  else
-    Result := (FSituacao = '2'); // Não Processado
-
-end;
-
-var
-  vCont, qTent: Integer;
-begin
-  Sleep(FPConfiguracoesNFSe.WebServices.AguardarConsultaRet);
-  vCont := 10000;
-  qTent := 1;
-
-  while Processando do  // Enquanto FSituacao = 2 (Não Processado) tenta mais uma vez
-  begin
-    if FPConfiguracoesNFSe.WebServices.IntervaloTentativas > 0 then
-       sleep(FPConfiguracoesNFSe.WebServices.IntervaloTentativas)
-    else
-       sleep(vCont);
-
-    if qTent > FPConfiguracoesNFSe.WebServices.Tentativas then
-      break;
-
-    qTent := qTent + 1;
-  end;
-
-  case FProvedor of
-		//1 - Aguardando processamento
-		//2 - Não Processado, lote com erro
-		//3 - Processado com sucesso
-		//4 - Processado com avisos
-    proEquiplano: Result := (FSituacao = '2') or (FSituacao = '3') or (FSituacao = '4');
-
-		//1 - Aguardando processamento
-		//2 - Não Processado, lote com erro
-		//3 - Processado com avisos
-		//4 - Processado com sucesso
-    proEL: Result := (FSituacao = '1') or (FSituacao = '3') or (FSituacao = '4');
-
-		//3 - Processado com sucesso
-		//4 - Processado com avisos
-    proInfisc: Result := (FSituacao = '4');
-
-  // FSituacao: 1 = Não Recebido
-  //            2 = Não Processado
-  //            3 = Processado com Erro
-  //            4 = Processado com Sucesso
-  else
-    Result := (FSituacao = '3') or (FSituacao = '4');
-  end;
-end;
-*)
 procedure TNFSeConsultarSituacaoLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
@@ -2316,8 +2179,15 @@ procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
 var
   URISig, URIRef: String;
 begin
-  if (FProvedor = proEL) and (OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ) = '') then
-    GerarException(ACBrStr('Para o provedor EL há necessidade de informar o CNPJ do Prestador de Serviço'));
+  if (FProvedor in [proEL, proGinfes]) and
+     (OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ) = '') then
+    GerarException(ACBrStr('Para o provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+             ' há necessidade de informar o CNPJ do Prestador de Serviço'));
+
+  if (FProvedor in [proGinfes]) and
+     (OnlyNumber(TNFSeConsultarLoteRPS(Self).FIM) = '') then
+    GerarException(ACBrStr('Para o provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+             ' há necessidade de informar a IM do Prestador de Serviço'));
 
   if (FProvedor = proTecnos) and (Trim(TNFSeConsultarLoteRPS(Self).FRazaoSocial) = '') then
     GerarException(ACBrStr('Para o provedor Tecnos há necessidade de informar a Razão Social do Prestador de Serviço'));
@@ -3477,7 +3347,7 @@ begin
 end;
 
 { TNFSeLinkNFSe }
-
+(*
 constructor TNFSeLinkNFSe.Create(AOwner: TACBrDFe;
   ANotasFiscais: TNotasFiscais);
 begin
@@ -3504,8 +3374,8 @@ end;
 
 procedure TNFSeLinkNFSe.DefinirServicoEAction;
 begin
-  FPServico := ''; 
-  FPSoapAction := '';
+  FPServico := 'NFSeLinkNfse';
+  FPSoapAction := 'NFSeLinkNfse';
 end;
 
 procedure TNFSeLinkNFSe.DefinirDadosMsg;
@@ -3555,7 +3425,7 @@ function TNFSeLinkNFSe.GerarPrefixoArquivo: String;
 begin
   Result := '';
 end;
-
+*)
 { TNFSeEnvioWebService }
 
 constructor TNFSeEnvioWebService.Create(AOwner: TACBrDFe);
@@ -3635,7 +3505,7 @@ begin
   FConsNfse       := TNFSeConsultarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   FCancNfse       := TNFSeCancelarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   FSubNfse        := TNFSeSubstituirNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
-  FLinkNfse       := TNFSeLinkNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+//  FLinkNfse       := TNFSeLinkNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   
   FEnvioWebService := TNFSeEnvioWebService.Create(FACBrNFSe);
 end;
@@ -3652,7 +3522,7 @@ begin
   FConsNfse.Free;
   FCancNfse.Free;
   FSubNfse.Free;
-  FLinkNfse.Free;
+//  FLinkNfse.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;
@@ -3784,22 +3654,7 @@ begin
 
   FConsLote.FNumeroLote := ANumLote;
   FConsLote.FProtocolo := AProtocolo;
-  (*
-  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
-  begin
-    if (FConsLote.FCNPJ = '') then
-      FConsLote.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
-  end
-  else begin
-    if (FConsLote.FCNPJ = '') then
-      FConsLote.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.Cnpj);
-  end;
-  if (FConsLote.FIM = '') then
-     FConsLote.FIM := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
 
-  if (FConsLote.FRazaoSocial = '') and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proTecnos) then
-     FConsLote.FRazaoSocial := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-  *)
   Result := FConsLote.Executar;
 
   if not (Result) then
@@ -3815,22 +3670,7 @@ begin
   FConsLote.FSenha        := ASenha;
   FConsLote.FFraseSecreta := AFraseSecreta;
   FConsLote.FRazaoSocial  := ARazaoSocial;
-  (*
-  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
-  begin
-    if (FConsLote.FCNPJ = '') then
-      FConsLote.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj);
-  end
-  else begin
-    if (FConsLote.FCNPJ = '') then
-      FConsLote.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.Cnpj);
-  end;
-  if (FConsLote.FIM = '') then
-     FConsLote.FIM := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
 
-  if (FConsLote.FRazaoSocial = '') and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proTecnos) then
-     FConsLote.FRazaoSocial := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-  *)
   Result := ConsultaLoteRPS(ANumLote, AProtocolo, False);
 end;
 
@@ -4053,7 +3893,7 @@ begin
       FSubNfse.GerarException( FSubNfse.Msg );
   end;
 end;
-
+(*
 function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao,
   AInscricaoM: String): String;
 begin
@@ -4068,6 +3908,6 @@ begin
 
   Result := FLinkNFSe.FLink;
 end;
-
+*)
 end.
 

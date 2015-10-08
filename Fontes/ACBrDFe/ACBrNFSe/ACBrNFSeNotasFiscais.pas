@@ -341,8 +341,6 @@ begin
 end;
 
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
-//var
-//  Ok: Boolean;
 begin
   Result := False;
   FNFSeR.Leitor.Arquivo := AXML;
@@ -760,23 +758,51 @@ var
     Result := pos('</Nfse>', AXMLString);
   end;
 
+  function PosRPS: integer;
+  begin
+    Result := pos('</Rps>', AXMLString);
+  end;
+
 begin
   Result := False;
   N := PosNFSe;
-  while N > 0 do
+  if N > 0 then
   begin
-    AXML := copy(AXMLString, 1, N + 6);
-    AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
-
-    with Self.Add do
+    // Ler os XMLs das NFS-e
+    while N > 0 do
     begin
-      LerXML(AXML);
+      AXML := copy(AXMLString, 1, N + 6);
+      AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
 
-      if AGerarNFSe then // Recalcula o XML
-        GerarXML;
+      with Self.Add do
+      begin
+        LerXML(AXML);
+
+        if AGerarNFSe then // Recalcula o XML
+          GerarXML;
+      end;
+
+      N := PosNFSe;
     end;
+  end
+  else begin
+    N := PosRPS;
+    // Ler os XMLs dos RPS
+    while N > 0 do
+    begin
+      AXML := copy(AXMLString, 1, N + 5);
+      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
 
-    N := PosNFSe;
+      with Self.Add do
+      begin
+        LerXML(AXML);
+
+        if AGerarNFSe then // Recalcula o XML
+          GerarXML;
+      end;
+
+      N := PosNFSe;
+    end;
   end;
 end;
 

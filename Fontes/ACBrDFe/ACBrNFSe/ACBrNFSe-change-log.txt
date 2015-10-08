@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2015
+-- ACBrNFSeWebServices / ACBrNFSe / ACBrNFSeNotasFiscais --
+[-] Alterações na chamada dos métodos ConsultarLoteRps e
+    LinkNFSe.
+    Por: Italo Jurisato Junior
+
 07/10/2015
 -- ACBrNFSeWebServices / ACBrNFSe  --
 [-] Alterações na chamada do método ConsultarLoteRps.

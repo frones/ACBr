@@ -49,7 +49,7 @@ Símbolo : Significado
 
 Data: 08/10/2015
 -- ACBrSATExtratoESCPOS --
-[-] Ajuste para impressão completa da chave, em Impressoras que não suportam
+[-] Ajuste para impressão completa da chave, em Impressoras que suportam
     menos que 56 colunas em modo condensado   (por: DSA)
     http://www.projetoacbr.com.br/forum/topic/25041-satcfe-fortes-report-com-a-dr700/
 

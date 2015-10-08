@@ -149,6 +149,7 @@ type
     Label34: TLabel;
     edtArqINI: TEdit;
     sbtArqINI: TSpeedButton;
+    cbEmailTLS: TCheckBox;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -275,6 +276,7 @@ begin
   Ini.WriteString( 'Email', 'Pass'     , edtSmtpPass.Text);
   Ini.WriteString( 'Email', 'Assunto'  , edtEmailAssunto.Text);
   Ini.WriteBool(   'Email', 'SSL'      , cbEmailSSL.Checked );
+  Ini.WriteBool(   'Email', 'TLS'      , cbEmailTLS.Checked );
   Ini.WriteString( 'Email', 'Remetente', edtEmailRemetente.Text);
 
   StreamMemo := TMemoryStream.Create;
@@ -360,6 +362,7 @@ begin
   edtSmtpPass.Text       := Ini.ReadString( 'Email', 'Pass'   , '');
   edtEmailAssunto.Text   := Ini.ReadString( 'Email', 'Assunto', '');
   cbEmailSSL.Checked     := Ini.ReadBool(   'Email', 'SSL'    , False);
+  cbEmailTLS.Checked     := Ini.ReadBool(   'Email', 'TLS'    , False);
   edtEmailRemetente.Text := Ini.ReadString( 'Email', 'Remetente', '');
 
   StreamMemo := TMemoryStream.Create;
@@ -388,7 +391,7 @@ begin
  ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
  ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe  := True;
  ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes    := True;
- ACBrNFSe1.Configuracoes.Arquivos.SepararPorCNPJ   := True;
+ ACBrNFSe1.Configuracoes.Arquivos.SepararPorCNPJ   := False;
  ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
  ACBrNFSe1.Configuracoes.Arquivos.PathSchemas      := edtSchemas.Text;
 
@@ -412,14 +415,13 @@ begin
  ACBrNFSe1.Configuracoes.WebServices.ProxyPass  := edtProxySenha.Text;
 
  ACBrNFSe1.Configuracoes.Geral.SetConfigMunicipio;
-// ACBrNFSe1.Configuracoes.WebServices.SetConfigMunicipio(ACBrNFSe1.Configuracoes.Geral.PathSchemas);
 
  if ACBrNFSe1.DANFSe <> nil then
  begin
    ACBrNFSe1.DANFSe.Logo       := edtLogoMarca.Text;
    ACBrNFSe1.DANFSe.PrestLogo  := edtPrestLogo.Text;
    ACBrNFSe1.DANFSe.Prefeitura := edtPrefeitura.Text;
-   ACBrNFSe1.DANFSe.PathPDF    := edtPathLogs.Text;
+   ACBrNFSe1.DANFSe.PathPDF    := PathMensal;
 
 //  TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
    ACBrNFSe1.DANFSe.TipoDANFSE := tpPadrao;
@@ -429,7 +431,11 @@ begin
  ACBrNFSe1.MAIL.Port     := edtSmtpPort.Text;
  ACBrNFSe1.MAIL.Username := edtSmtpUser.Text;
  ACBrNFSe1.MAIL.Password := edtSmtpPass.Text;
+ ACBrNFSe1.MAIL.From     := edtEmailRemetente.Text;
+ ACBrNFSe1.MAIL.FromName := edtEmitRazao.Text;
+ ACBrNFSe1.MAIL.SetTLS   := cbEmailTLS.Checked;
  ACBrNFSe1.MAIL.SetSSL   := cbEmailSSL.Checked;
+ ACBrNFSe1.MAIL.UseThread   := False;
  ACBrNFSe1.MAIL.ReadingConfirmation := False;
 
  lblSchemas.Caption := ACBrNFSe1.Configuracoes.Geral.xProvedor;
@@ -471,13 +477,13 @@ begin
 
      // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
 //     RegimeEspecialTributacao := retNenhum;
-     RegimeEspecialTributacao := retMicroempresaMunicipal;
+     RegimeEspecialTributacao := retEstimativa;
 
      // TnfseSimNao = ( snSim, snNao );
-     OptanteSimplesNacional := snSim;
+     OptanteSimplesNacional := snNao;
 
      // TnfseSimNao = ( snSim, snNao );
-     IncentivadorCultural := snSim;
+     IncentivadorCultural := snNao;
 
      // TnfseSimNao = ( snSim, snNao );
      // snSim = Ambiente de Produção
@@ -525,10 +531,10 @@ begin
      // No caso do provedor Ginfes devemos informar a aliquota já dividida por 100
      // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
      // do valor do ISS devemos dividir por 100
-     Servico.Valores.Aliquota    := 0.03;
+     Servico.Valores.Aliquota    := 2;
 
      // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
-     ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota;
+     ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
      // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
      // parametro se refere ao numero de casas decimais.
@@ -552,12 +558,12 @@ begin
      // TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
      Servico.ResponsavelRetencao := ptTomador;
 
-     Servico.ItemListaServico    := '01.07';
+     Servico.ItemListaServico    := '14.01';
 
      // Para o provedor ISS.NET em ambiente de Homologação
      // o Codigo CNAE tem que ser '6511102'
      // Servico.CodigoCnae                := '123'; // Informação Opcional
-     Servico.CodigoTributacaoMunicipio := '118879';
+     Servico.CodigoTributacaoMunicipio := '3314799';
      Servico.Discriminacao             := 'discriminacao I;discriminacao II';
 
      // Para o provedor ISS.NET em ambiente de Homologação
@@ -720,6 +726,18 @@ procedure TfrmDemo_ACBrNFSe.btnConsultarLoteClick(Sender: TObject);
 var
  Lote, Protocolo : String;
 begin
+
+ OpenDialog1.Title := 'Selecione o RPS';
+ OpenDialog1.DefaultExt := '*-rps.xml';
+ OpenDialog1.Filter := 'Arquivos RPS (*-rps.xml)|*-rps.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrNFSe1.Configuracoes.Arquivos.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+   ACBrNFSe1.NotasFiscais.Clear;
+   ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
+  end;
+  
  if not(InputQuery('Consultar Lote', 'Número do Lote', Lote))
   then exit;
  if not(InputQuery('Consultar Lote', 'Número do Protocolo', Protocolo))
@@ -745,7 +763,7 @@ begin
  if OpenDialog1.Execute then
   begin
    ACBrNFSe1.NotasFiscais.Clear;
-   ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+   ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
 
    // Codigo de Cancelamento
    // 1 - Erro de emissão

@@ -93,7 +93,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 368
-        ActivePage = TabSheet2
+        ActivePage = TabSheet7
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -997,7 +997,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             end
             object Label28: TLabel
               Left = 8
-              Top = 168
+              Top = 192
               Width = 95
               Height = 13
               Caption = 'Mensagem do Email'
@@ -1047,16 +1047,16 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object cbEmailSSL: TCheckBox
               Left = 10
               Top = 144
-              Width = 167
+              Width = 199
               Height = 17
-              Caption = 'SMTP exige conex'#227'o segura'
+              Caption = 'SMTP exige conex'#227'o segura - SSL'
               TabOrder = 5
             end
             object mmEmailMsg: TMemo
               Left = 8
-              Top = 184
+              Top = 208
               Width = 249
-              Height = 89
+              Height = 65
               TabOrder = 6
             end
             object edtEmailRemetente: TEdit
@@ -1065,6 +1065,14 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               Width = 249
               Height = 21
               TabOrder = 7
+            end
+            object cbEmailTLS: TCheckBox
+              Left = 10
+              Top = 168
+              Width = 199
+              Height = 17
+              Caption = 'SMTP exige conex'#227'o - TLS'
+              TabOrder = 8
             end
           end
         end
@@ -1357,6 +1365,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.Geral.ConsultaLoteAposEnvio = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.Tentativas = 10
+    Configuracoes.WebServices.IntervaloTentativas = 3000
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
     DANFSE = ACBrNFSeDANFSeQR1

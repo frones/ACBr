@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/10/2015
+-- pcnNFeW.pas --
+[-] Acerto para trocar a descriçao do primeiro item da nota somente quando for NFC-e
+    por regys.silveira
+
 02/10/2015
 -- ACBrNFePCN --
 [-] Correção em pcnNFeW.pas para não incluir a Tag vICMS, caso não informada se CST=51

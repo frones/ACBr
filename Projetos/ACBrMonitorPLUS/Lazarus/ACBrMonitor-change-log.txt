@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2015
+-- ACBrMonitorPLUS --
+[+] Adicionada Opção para configurar a geração da Tag de QRCode em NFCe
+    DFe -> WebServices -> NFCe -> "Adicionar Tag de QRCode em Informações Suplementares"
+    (por: DSA)
+
 07/05/2015
 -- ACBrMonitorPLUS --
 [+] Adicionada a opção para converter Entrada e Saida de TCP de e para ANSI

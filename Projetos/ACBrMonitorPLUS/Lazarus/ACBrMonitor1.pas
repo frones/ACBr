@@ -245,6 +245,7 @@ type
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
     chbTCPANSI: TCheckBox;
+    chbTagQrCode: TCheckBox;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
@@ -3349,6 +3350,7 @@ begin
 
     edtIdToken.Text := Ini.ReadString('NFCe', 'IdToken', '');
     edtToken.Text := Ini.ReadString('NFCe', 'Token', '');
+    chbTagQrCode.Checked := Ini.ReadBool('NFCe', 'TagQrCode', True);
 
     edtArquivoPFX.Text := Ini.ReadString('Certificado', 'ArquivoPFX', '');
     ACBrNFe1.Configuracoes.Certificados.ArquivoPFX := edtArquivoPFX.Text;
@@ -3533,6 +3535,7 @@ begin
     // token da nfce
     ACBrNFe1.Configuracoes.Geral.IdCSC := Ini.ReadString('NFCe', 'IdToken', '');
     ACBrNFe1.Configuracoes.Geral.CSC := Ini.ReadString('NFCe', 'Token', '');
+    ACBrNFe1.Configuracoes.Geral.IncluirQRCodeXMLNFCe := Ini.ReadBool('NFCe', 'TagQrCode', True);
 
     ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo := ESCPOSAtivado;
 
@@ -4163,6 +4166,7 @@ begin
 
     Ini.WriteString('NFCe', 'IdToken', edtIdToken.Text);
     Ini.WriteString('NFCe', 'Token', edtToken.Text);
+    Ini.WriteBool('NFCe', 'TagQrCode', chbTagQrCode.Checked);
 
     Ini.WriteString('Email', 'Assunto', edtEmailAssuntoNFe.Text);
     Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 318
+  Left = 411
   Height = 689
-  Top = 21
+  Top = 116
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsMonitor
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6493,9 +6493,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 2
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7254,6 +7254,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Top = 56
                     Width = 169
                     TabOrder = 1
+                  end
+                  object chbTagQrCode: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 96
+                    Width = 361
+                    Caption = 'Adicionar Tag de QRCode em Informações Suplementares'
+                    Checked = True
+                    State = cbChecked
+                    TabOrder = 2
                   end
                 end
               end

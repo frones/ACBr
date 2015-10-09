@@ -292,6 +292,7 @@ begin
        (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
        (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '') or
        (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
     begin
       // =======================================================================

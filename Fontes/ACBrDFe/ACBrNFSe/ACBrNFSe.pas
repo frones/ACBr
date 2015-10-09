@@ -461,7 +461,7 @@ begin
   if NotasFiscais.Count > 0 then
   begin
     ACNPJ := OnlyNumber(NotasFiscais.Items[0].NFSe.Prestador.CNPJ);
-    AInscMun := NotasFiscais.Items[0].NFSe.Prestador.InscMun;
+    AInscMun := NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
     ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
   end;
 
@@ -496,7 +496,7 @@ begin
   if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
-  Result := WebServices.CancelaNFSe(ACodigoCancelamento, True);
+  Result := WebServices.CancelaNFSe(ACodigoCancelamento);
 end;
 
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,

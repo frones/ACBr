@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2015
+-- ACBrNFSeWebServices / ACBrNFSe / ACBrNFSeConfiguracoes --
+[-] Correções e migração dos métodos, ConsultarNFse e
+    GerarLote.
+    Por: Italo Jurisato Junior
+
 08/10/2015
 -- ACBrNFSeWebServices / ACBrNFSe --
 [*] Melhorias nas chamadas de diversos métodos.

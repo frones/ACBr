@@ -655,19 +655,20 @@ end;
 function TArquivosConfNFSe.GetPathGer(Data: TDateTime;
   CNPJ: String): String;
 begin
-  Result := GetPath(FPathGer, 'Ger', CNPJ, Data);
+  Result := GetPath(FPathGer, 'NFSe', CNPJ, Data);
+//  Result := GetPath(FPathGer, 'Ger', CNPJ, Data);
 end;
 
 function TArquivosConfNFSe.GetPathRPS(Data: TDateTime;
   CNPJ: String): String;
 begin
-  Result := GetPath(FPathRPS, 'RPS', CNPJ, Data);
+  Result := GetPath(FPathRPS, 'Recibos', CNPJ, Data);
 end;
 
 function TArquivosConfNFSe.GetPathNFSe(Data: TDateTime = 0;
   CNPJ: String = ''): String;
 begin
-  Result := GetPath(FPathNFSe, 'NFSe', CNPJ, Data);
+  Result := GetPath(FPathNFSe, 'Notas', CNPJ, Data);
 end;
 
 function TArquivosConfNFSe.GetPathCan(Data: TDateTime = 0;

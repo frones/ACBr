@@ -392,10 +392,11 @@ begin
  ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe  := True;
  ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes    := True;
  ACBrNFSe1.Configuracoes.Arquivos.SepararPorCNPJ   := False;
- ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.PathGer          := edtPathLogs.Text;
+// ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
  ACBrNFSe1.Configuracoes.Arquivos.PathSchemas      := edtSchemas.Text;
 
- PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathNFSe(0);
+ PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathGer(0);
 
  ACBrNFSe1.Configuracoes.Arquivos.PathCan          := PathMensal;
  ACBrNFSe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;

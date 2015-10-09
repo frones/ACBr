@@ -1,6 +1,6 @@
 object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
-  Left = 199
-  Top = 124
+  Left = 201
+  Top = 132
   Width = 870
   Height = 568
   Caption = 'Demo ACBrNFSe'

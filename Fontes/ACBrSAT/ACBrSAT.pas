@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
-  ACBrSATExtratoClass, synacode;
+  ACBrSATExtratoClass, synacode, ACBrMail;
 
 const
   CPREFIXO_CFe = 'CFe';
@@ -66,6 +66,7 @@ type
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
      fsExtrato : TACBrSATExtratoClass;
+     FMAIL: TACBrMail;
 
      fsArqLOG: String;
      fsComandoLog: String;
@@ -101,6 +102,8 @@ type
 
      procedure GravaLog(AString : AnsiString ) ;
      procedure SetExtrato(const Value: TACBrSATExtratoClass);
+    procedure SetMAIL(const AValue: TACBrMail);
+    function GravarStream(AStream: TStream): Boolean;
    protected
      procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
@@ -171,7 +174,16 @@ type
     function CalcCFeCancNomeArq( Pasta: String; NomeArquivo: String = '';
       Sufixo: String = ''): String;
 
+    procedure EnviarEmail(sPara, sAssunto: String; NomeArq: String = '';
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+      StreamNFe: TStream = nil); overload;
+
+    procedure EnviarEmail(sPara, sAssunto: String;
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil); overload;
+
    published
+     property MAIL: TACBrMail read FMAIL write SetMAIL;
+
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
 
@@ -1283,6 +1295,20 @@ begin
     DesInicializar ;
 end ;
 
+procedure TACBrSAT.SetMAIL(const AValue: TACBrMail);
+begin
+  if AValue <> FMAIL then
+  begin
+    if Assigned(FMAIL) then
+      FMAIL.RemoveFreeNotification(Self);
+
+    FMAIL := AValue;
+
+    if AValue <> nil then
+      AValue.FreeNotification(self);
+  end;
+end;
+
 procedure TACBrSAT.SetModelo(AValue : TACBrSATModelo) ;
 var
   wArqLOG : String ;
@@ -1474,6 +1500,93 @@ begin
   else
      Result := ACBrStr( ATexto ) ;
 end ;
+
+function TACBrSAT.GravarStream(AStream: TStream): Boolean;
+begin
+  Result := False;
+
+  if EstaVazio(CFe.XMLOriginal) then
+    CFe.GerarXML;
+
+  AStream.Size := 0;
+  WriteStrToStream(AStream, AnsiString(CFe.XMLOriginal));
+  Result := True;
+end;
+
+procedure TACBrSAT.EnviarEmail(sPara, sAssunto, NomeArq: String; sMensagem, sCC,
+  Anexos: TStrings; StreamNFe: TStream);
+var
+  i : Integer;
+  EMails : TStringList;
+  sDelimiter : Char;
+begin
+  if not Assigned(MAIL) then
+    raise EACBrSATErro.Create('Componente ACBrMail não associado');
+
+  EMails := TStringList.Create;
+  try
+    if Pos( ';', sPara) > 0 then
+       sDelimiter := ';'
+    else
+       sDelimiter := ',';
+    QuebrarLinha( sPara, EMails, '"', sDelimiter);
+
+    for i := 0 to EMails.Count -1 do
+        MAIL.AddAddress( EMails[i] );
+  finally
+    EMails.Free;
+  end;
+
+  MAIL.Subject := sAssunto;
+
+  if Assigned(sMensagem) then
+  begin
+    MAIL.Body.Text := sMensagem.Text;
+    MAIL.AltBody.Text := (StripHTML(sMensagem.Text));
+  end;
+
+  if Assigned(StreamNFe) then
+    MAIL.AddAttachment(StreamNFe, NomeArq);
+
+  if Assigned(Anexos) then
+  begin
+    for i := 0 to Anexos.Count - 1 do
+      MAIL.AddAttachment(Anexos[i]);
+  end;
+
+  if Assigned(sCC) then
+  begin
+    for i := 0 to sCC.Count - 1 do
+      MAIL.AddCC(sCC[i]);
+  end;
+
+  MAIL.Send;
+end;
+
+procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String;
+  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
+var
+  NomeArq : String;
+  AnexosEmail:TStrings;
+  StreamCFe : TMemoryStream;
+begin
+  if not Assigned(FMAIL) then
+    raise EACBrSATErro.Create('Componente ACBrMail não associado');
+
+  AnexosEmail := TStringList.Create;
+  StreamCFe   := TMemoryStream.Create;
+  try
+    AnexosEmail.Clear;
+    if Assigned(Anexos) then
+      AnexosEmail.Assign(Anexos);
+
+    GravarStream(StreamCFe);
+    EnviarEmail( sPara, sAssunto, CFe.NomeArquivo, sMensagem, sCC, AnexosEmail, StreamCFe);
+  finally
+    AnexosEmail.Free;
+    StreamCFe.Free;
+  end;
+end;
 
 end.
 

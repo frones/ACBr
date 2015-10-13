@@ -29,6 +29,7 @@ requires
   rtl,
   vcl,
   designide,
+  ACBr_TCP,
   ACBr_PCNComum;
 
 contains

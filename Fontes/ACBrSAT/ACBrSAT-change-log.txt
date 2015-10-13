@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/10/2015
+-- ACBrSAT --
+[+] Adicionado envio de CF-e por email.
+    por: regys.silveira
+
 Data: 08/10/2015
 -- ACBrSATExtratoESCPOS --
 [-] Ajuste para impressão completa da chave, em Impressoras que suportam

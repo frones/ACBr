@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/10/2015
+-- ACBrECFFiscNET --
+[-] VendeItem, aplicado ajuste para Venda sem Departamento e com ArredondaItemMFD,
+    no caso de ECFs que não possuem departamento programado  (por: DSA)
+
 Data: 07/10/2015
 -- ACBrECFEscECF --
 [*] Workaround para problema de Loop na Bematech MP4200, modificados para

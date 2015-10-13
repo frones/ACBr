@@ -1240,6 +1240,7 @@ procedure TACBrECFFiscNET.VendeItem(Codigo, Descricao : String ;
   CodDepartamento : Integer) ;
 var
   CodAliq: Integer;
+  SemDepartamento: Boolean;
 begin
   Unidade := PadRight(Unidade,2) ;
 
@@ -1249,8 +1250,9 @@ begin
      raise EACBrECFCMDInvalido.Create(ACBrStr('Aliquota Inválida: '+AliquotaECF));
   end ;
 
+  SemDepartamento := (CodDepartamento = -1);
   try
-    if (CodDepartamento = -1) and fpArredondaItemMFD and (not Arredonda) then
+    if SemDepartamento and fpArredondaItemMFD and (not Arredonda) then
        CodDepartamento := 1;  // Arredondamento por CodDepartamento
 
     with FiscNETComando do
@@ -1274,13 +1276,22 @@ begin
   except
      on E : Exception do
      begin
-        if (fsComandoVendeItem = '') and
-           (pos('ComandoInexistente',E.Message) > 0) then   // Não reconheceu o comando
+        if (pos('8031', E.Message) > 0) and SemDepartamento then  // 8031-ErroCMDDepartamentoIndefinido
+         begin
+           fpArredondaItemMFD := False;
+           VendeItem( Codigo,Descricao,AliquotaECF,Qtd,ValorUnitario,
+                      ValorDescontoAcrescimo,Unidade,TipoDescontoAcrescimo,
+                      DescontoAcrescimo );
+           exit;
+         end
+        else if (pos('ComandoInexistente',E.Message) > 0) and
+          (fsComandoVendeItem = '') then   // Não reconheceu o comando
          begin
            fsComandoVendeItem := 'VendaDeItem' ;
            VendeItem( Codigo,Descricao,AliquotaECF,Qtd,ValorUnitario,
                       ValorDescontoAcrescimo,Unidade,TipoDescontoAcrescimo,
                       DescontoAcrescimo );
+           exit;
          end
         else
            raise ;

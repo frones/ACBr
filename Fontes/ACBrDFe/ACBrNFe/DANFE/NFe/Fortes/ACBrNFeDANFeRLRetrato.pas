@@ -254,7 +254,7 @@ type
     RLDraw35: TRLDraw;
     rliDivImposto2: TRLDraw;
     RLDraw29: TRLDraw;
-    rlbTransportadora: TRLBand;
+    rlbTransp: TRLBand;
     RLLabel21: TRLLabel;
     RLLabel55: TRLLabel;
     rllTransNome: TRLLabel;
@@ -290,15 +290,15 @@ type
     rllTransPesoLiq: TRLLabel;
     RLDraw38: TRLDraw;
     RLDraw39: TRLDraw;
-    RLDraw46: TRLDraw;
-    RLDraw45: TRLDraw;
+    rliTransp1: TRLDraw;
+    rliTransp2: TRLDraw;
     RLDraw41: TRLDraw;
-    RLDraw44: TRLDraw;
+    rliTransp4: TRLDraw;
     RLDraw47: TRLDraw;
     RLDraw48: TRLDraw;
     RLDraw49: TRLDraw;
-    RLDraw42: TRLDraw;
-    RLDraw40: TRLDraw;
+    rliTransp5: TRLDraw;
+    rliTransp: TRLDraw;
     RLLabel25: TRLLabel;
     RLLabel26: TRLLabel;
     rlbItens: TRLBand;
@@ -371,7 +371,7 @@ type
     LinhaObsItemEsquerda: TRLDraw;
     LinhaObsItemDireita: TRLDraw;
     RLDraw70: TRLDraw;
-    RLDraw71: TRLDraw;
+    rliTransp3: TRLDraw;
     rlmDescricaoProduto: TRLMemo;
     rlmCodProd: TRLMemo;
     rlmSiteEmail: TRLMemo;
@@ -1296,6 +1296,9 @@ begin
 end;
 
 procedure TfrlDANFeRLRetrato.Transporte;
+var
+  i, j, iAltLinha, iAltDiff: Integer;
+  RLLabel, RLLabelModelo: TRLLabel;
 begin
   with FNFe.Transp do
   begin
@@ -1324,17 +1327,102 @@ begin
 
   if FNFe.Transp.Vol.Count > 0 then
   begin
-    with FNFe.Transp.Vol[0] do
+
+    // Ajusta a altura do retangulo
+    iAltLinha := 15;
+
+    if FNFe.Transp.Vol.Count = 1 then
+      iAltDiff := 0
+    else
+      iAltDiff := (FNFe.Transp.Vol.Count - 1) * iAltLinha;
+
+    rlbTransp .Height := rlbTransp .Height + iAltDiff; // Band
+    rliTransp .Height := rliTransp .Height + iAltDiff; // Retangulo
+    rliTransp1.Height := rliTransp1.Height + iAltDiff; // Coluna 1
+    rliTransp2.Height := rliTransp2.Height + iAltDiff; // Coluna 2
+    rliTransp3.Height := rliTransp3.Height + iAltDiff; // Coluna 3
+    rliTransp4.Height := rliTransp4.Height + iAltDiff; // Coluna 4
+    rliTransp5.Height := rliTransp5.Height + iAltDiff; // Coluna 5
+
+    // Preenche os dados
+    for i := 0 to FNFe.Transp.Vol.Count - 1 do
     begin
-      if qVol > 0 then
-        rllTransQTDE.Caption := IntToStr(QVol);
-      rllTransEspecie.Caption := Esp;
-      rllTransMarca.Caption := Marca;
-      rllTransNumeracao.Caption := NVol;
-      if pesoL > 0 then
-        rllTransPesoLiq.Caption := FormatFloatBr(PesoL, '###,###,###,##0.000');
-      if pesoB > 0 then
-        rllTransPesoBruto.Caption := FormatFloatBr(PesoB, '###,###,###,##0.000');
+      with FNFe.Transp.Vol[i] do
+      begin
+
+        if i = 0 then
+        begin
+          // Aproveita os labels criados em tempo de projeto (1ª linha)
+          if qVol > 0 then
+            rllTransQTDE.Caption      := IntToStr(QVol);
+          rllTransEspecie.Caption     := Esp;
+          rllTransMarca.Caption       := Marca;
+          rllTransNumeracao.Caption   := NVol;
+          if pesoL > 0 then
+            rllTransPesoLiq.Caption   := FormatFloatBr(PesoL, '###,###,###,##0.000');
+          if pesoB > 0 then
+            rllTransPesoBruto.Caption := FormatFloatBr(PesoB, '###,###,###,##0.000');
+        end
+        else
+        begin
+
+          // Cria os demais labels dinamicamente
+          for j := 1 to 6 do
+          begin
+
+            RLLabel := TRLLabel.Create(Self);
+
+            case j of
+
+              1: begin // Qtde
+                RLLabelModelo := rllTransQTDE;
+                if qVol > 0 then
+                  RLLabel.Caption := IntToStr(QVol);
+              end;
+
+              2: begin // Especie
+                RLLabelModelo   := rllTransEspecie;
+                RLLabel.Caption := Esp;
+              end;
+
+              3: begin // Marca
+                RLLabelModelo   := rllTransMarca;
+                RLLabel.Caption := Marca;
+              end;
+
+              4: begin // Numeracao
+                 RLLabelModelo   := rllTransNumeracao;
+                 RLLabel.Caption := NVol;
+              end;
+
+              5: begin // Peso liq
+                RLLabelModelo := rllTransPesoLiq;
+                if pesoL > 0 then
+                  RLLabel.Caption := FormatFloatBr(PesoL, '###,###,###,##0.000');
+              end;
+
+              6: begin // Peso bruto
+                RLLabelModelo := rllTransPesoBruto;
+                if pesoB > 0 then
+                  RLLabel.Caption  := FormatFloatBr(PesoB, '###,###,###,##0.000');
+              end;
+
+            end;
+
+            RLLabel.Alignment  := RLLabelModelo.Alignment;
+            RLLabel.AutoSize   := RLLabelModelo.AutoSize;
+            RLLabel.Font       := RLLabelModelo.Font;
+            RLLabel.Name       := RLLabelModelo.Name + IntToStr(i);
+            RLLabel.Parent     := RLLabelModelo.Parent;
+            RLLabel.ParentFont := RLLabelModelo.ParentFont;
+            RLLabel.Tag        := RLLabelModelo.Tag;
+            RLLabel.Height     := RLLabelModelo.Height;
+            RLLabel.Width      := RLLabelModelo.Width;
+            RLLabel.Left       := RLLabelModelo.Left;
+            RLLabel.Top        := RLLabelModelo.Top + i * iAltLinha;
+          end;
+        end;
+      end;
     end;
   end
   else

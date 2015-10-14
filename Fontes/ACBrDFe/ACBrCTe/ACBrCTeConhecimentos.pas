@@ -475,31 +475,32 @@ procedure Conhecimento.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
 var
   NomeArq: String;
   AnexosEmail: TStrings;
-  StreamCTe: TStringStream;
+  StreamCTe: TMemoryStream;
 begin
   if not Assigned(TACBrCTe(TConhecimentos(Collection).ACBrCTe).MAIL) then
     raise EACBrCTeException.Create('Componente ACBrMail não associado');
 
   AnexosEmail := TStringList.Create;
-  StreamCTe  := TStringStream.Create('');
+  StreamCTe := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
-    if Anexos <> nil then
-      AnexosEmail.Text := Anexos.Text;
+    if Assigned(Anexos) then
+      AnexosEmail.Assign(Anexos);
 
     with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
     begin
       GravarStream(StreamCTe);
-      
+
       if (EnviaPDF) then
       begin
-       if Assigned(DACTE) then
-       begin
+        if Assigned(DACTE) then
+        begin
           DACTE.ImprimirDACTEPDF(CTe);
           NomeArq := PathWithDelim(DACTE.PathPDF) + NumID + '-cte.pdf';
           AnexosEmail.Add(NomeArq);
-       end;
+        end;
       end;
+
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe,
                    NumID + '-cte.xml');
     end;

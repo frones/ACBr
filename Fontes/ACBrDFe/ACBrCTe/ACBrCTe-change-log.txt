@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2015
+(ACBrCTeConhecimentos)
+[*] Compatibilização do EnviarEmail com a mesma rotina do ACBrNFe.
+    por: Italo Jurisato Junior
+
 30/09/2015
 (ACBrCTeWebServices)
 [-] Correção para que o tipo de ambiente fique correto na consulta.

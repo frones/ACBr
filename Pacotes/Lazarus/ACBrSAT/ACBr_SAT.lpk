@@ -83,10 +83,13 @@
         <UnitName Value="pcnRedeW"/>
       </Item15>
     </Files>
-    <RequiredPkgs Count="1">
+    <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="PCNComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item1>
+      <Item2>
+        <PackageName Value="PCNComum"/>
+      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

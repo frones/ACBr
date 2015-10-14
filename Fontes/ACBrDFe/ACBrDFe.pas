@@ -272,6 +272,7 @@ begin
     MAIL.AltBody.Text := (StripHTML(sMensagem.Text));
   end;
 
+  MAIL.ClearAttachments;
   if Assigned(StreamNFe) then
     MAIL.AddAttachment(StreamNFe, NomeArq);
 

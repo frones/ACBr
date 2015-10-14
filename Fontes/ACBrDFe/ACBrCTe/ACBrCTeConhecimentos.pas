@@ -91,7 +91,7 @@ type
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
 
-    function GravarStream(AStream: TStringStream): Boolean;
+    function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
@@ -458,7 +458,7 @@ begin
   Result := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
-function Conhecimento.GravarStream(AStream: TStringStream): Boolean;
+function Conhecimento.GravarStream(AStream: TStream): Boolean;
 begin
   Result := False;
 

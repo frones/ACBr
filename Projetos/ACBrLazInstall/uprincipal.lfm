@@ -1,0 +1,9 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 414
+  Height = 542
+  Top = 211
+  Width = 920
+  Caption = 'Instalador ACBr Lazarus'
+  Position = poDesktopCenter
+  LCLVersion = '1.4.2.0'
+end

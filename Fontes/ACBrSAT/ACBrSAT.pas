@@ -1581,7 +1581,7 @@ begin
       AnexosEmail.Assign(Anexos);
 
     GravarStream(StreamCFe);
-    EnviarEmail( sPara, sAssunto, 'CFe' + CFe.infCFe.ID + '.xml', sMensagem, sCC, AnexosEmail, StreamCFe);
+    EnviarEmail( sPara, sAssunto, 'AD' + CFe.infCFe.ID + '.xml', sMensagem, sCC, AnexosEmail, StreamCFe);
   finally
     AnexosEmail.Free;
     StreamCFe.Free;

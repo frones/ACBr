@@ -177,6 +177,7 @@ type
     fFormato    : integer;
     fMask_qCom : String;
     fMask_vUnCom : String;
+    fExibeCampoFatura: Boolean;
 
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
@@ -218,7 +219,8 @@ type
                     AdQuebraLinhaEmVeiculos : Boolean = True;
                     AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
-                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
+                    AdExibeCampoFatura: Boolean = False );
 
     class procedure SavePDF(ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -252,7 +254,8 @@ type
                     ADQuebraLinhaEmVeiculos : Boolean = True;
                     AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
-                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
+                    AdExibeCampoFatura: Boolean = False );
 
 
   end;
@@ -388,7 +391,8 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 ADQuebraLinhaEmVeiculos : Boolean = True;
                 AdCasasDecimaisFormato : Integer = 0;
                 AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
-                AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+                AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
+                AdExibeCampoFatura: Boolean = False );
 
 
 begin
@@ -435,6 +439,7 @@ begin
       fFormato      := AdCasasDecimaisFormato;
       fMask_qCom   := AdCasasDecimais_Mask_qCom;
       fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
+      fExibeCampoFatura := AdExibeCampoFatura;
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
@@ -486,7 +491,8 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     ADQuebraLinhaEmVeiculos : Boolean = True;
                     AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
-                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00' );
+                    AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
+                    AdExibeCampoFatura: Boolean = False );
 
 
 begin
@@ -530,6 +536,7 @@ begin
       fFormato      := AdCasasDecimaisFormato;
       fMask_qCom    := AdCasasDecimais_Mask_qCom;
       fMask_vUnCom  := AdCasasDecimais_Mask_vUnCom;
+      fExibeCampoFatura := AdExibeCampoFatura;
 
       with RLPDFFilter1.DocumentInfo do
         begin

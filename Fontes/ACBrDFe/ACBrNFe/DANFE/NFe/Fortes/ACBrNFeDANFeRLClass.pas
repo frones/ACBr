@@ -88,6 +88,7 @@ type
     FMarcadagua: string;
     FLarguraCodProd: Integer;
     FPosCanhoto: TPosCanhoto;
+    fExibeCampoFatura: Boolean;
     FFonte: TFonte;
     FExibirEAN: Boolean;
     FDetVeiculos: TDetVeiculos;
@@ -121,7 +122,8 @@ type
                             [da_tpArma, da_nSerie, da_nCano, da_descr];
     property DetCombustiveis: TDetCombustiveis read FDetCombustiveis write FDetCombustiveis default
                             [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
-    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos  write fQuebraLinhaEmVeiculos;
+    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos write fQuebraLinhaEmVeiculos;
+    property ExibeCampoFatura: Boolean        read fExibeCampoFatura      write fExibeCampoFatura;
   end;
 
 implementation
@@ -171,7 +173,8 @@ begin
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
-  fQuebraLinhaEmVeiculos := True;
+  fQuebraLinhaEmVeiculos  := True;
+  fExibeCampoFatura       := False;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -211,7 +214,8 @@ try
           fQuebraLinhaEmVeiculos,
           Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
-          fCasasDecimais._Mask_vUnCom );
+          fCasasDecimais._Mask_vUnCom,
+          fExibeCampoFatura );
         end;
     end
   else
@@ -230,7 +234,8 @@ try
       fQuebraLinhaEmVeiculos,
       Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
-      fCasasDecimais._Mask_vUnCom );
+      fCasasDecimais._Mask_vUnCom,
+      fExibeCampoFatura );
     end;
 
   finally
@@ -276,7 +281,8 @@ begin
           fQuebraLinhaEmVeiculos,
           Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
-          fCasasDecimais._Mask_vUnCom );
+          fCasasDecimais._Mask_vUnCom,
+          fExibeCampoFatura );
         end;
     end
   else
@@ -299,7 +305,8 @@ begin
       fQuebraLinhaEmVeiculos,
       Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
-      fCasasDecimais._Mask_vUnCom );
+      fCasasDecimais._Mask_vUnCom,
+      fExibeCampoFatura );
     end;
  finally
    FreeAndNil(frlDANFeRL);

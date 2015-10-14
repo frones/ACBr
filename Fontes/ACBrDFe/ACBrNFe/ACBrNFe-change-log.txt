@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2015
+-- ACBrNFeDANFeRLClass --
+[+] Adicionada a propriedade "ExibeCampoFatura: Boolean", (default False) se
+    ativa, exibe as informações de <fat>    (por: Henrique Leonardo)
+
+-- ACBrNFeDANFeRLRetrato e ACBrNFeDANFeRLPaisagem --
+[+] Adicionada a Banda "FaturaReal", para imprimir as informações específicas
+    da Tag <fat>. Somente é impressa quando ExibeCampoFatura := True
+[+] Adicionado o suporte de Impressão de Logo por Stream
+    http://www.projetoacbr.com.br/forum/topic/25128-implatanção-da-fatura-em-danfe-fortesreport
+    (por: Henrique Leonardo)
+
 07/10/2015
 -- pcnNFeW.pas --
 [-] Acerto para trocar a descriçao do primeiro item da nota somente quando for NFC-e

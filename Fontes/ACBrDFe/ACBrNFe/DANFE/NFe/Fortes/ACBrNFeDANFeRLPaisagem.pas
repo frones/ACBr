@@ -1922,7 +1922,7 @@ end;
 
 Function TfrlDANFeRLPaisagem.ManterDesPro( dvDesc ,dvProd : Double) : Double;
 begin
-  if FImprimirDescPorc = True then
+  if (FImprimirDescPorc = True) and (dvProd > 0) then
     Result := (dvDesc * 100) / dvProd
   else
     Result:= dvDesc;

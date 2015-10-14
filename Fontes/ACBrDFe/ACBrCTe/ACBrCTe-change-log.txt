@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/10/2015
+(ACBrCTeServicos)
+[*] Atualizados as URLs do SVC-RS.
+    por: Italo Jurisato Junior
 (ACBrCTeConhecimentos)
 [*] Compatibilização do EnviarEmail com a mesma rotina do ACBrNFe.
     por: Italo Jurisato Junior

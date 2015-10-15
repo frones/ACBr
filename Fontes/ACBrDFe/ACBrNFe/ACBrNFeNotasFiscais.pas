@@ -917,9 +917,13 @@ begin
     begin
       with NFe.Det[I] do
       begin
-        GravaLog('Validar: 777-'+IntToStr(I)+'-NCM info');
-        if Length(Trim(Prod.NCM)) < 8 then
-          AdicionaErro('777-Rejeição: Obrigatória a informação do NCM completo');
+        if Trim(Prod.NCM) <> '00' then
+        begin
+          // validar NCM completo somente quando não for serviço
+          GravaLog('Validar: 777-'+IntToStr(I)+'-NCM info');
+          if Length(Trim(Prod.NCM)) < 8 then
+            AdicionaErro('777-Rejeição: Obrigatória a informação do NCM completo');
+        end;
 
         if (NFe.Ide.modelo = 65) then
         begin

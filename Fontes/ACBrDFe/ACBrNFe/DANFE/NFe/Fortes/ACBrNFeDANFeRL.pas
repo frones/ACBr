@@ -113,6 +113,9 @@ uses
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 
 type
+
+  { TfrlDANFeRL }
+
   TfrlDANFeRL = class(TForm)
     RLNFe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
@@ -231,6 +234,7 @@ type
                     APosCanhoto: TPosCanhoto = pcCabecalho;
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
+                    AMostrarStatus: Boolean = False;
                     ANomeFonte: TNomeFonte = nfTimesNewRoman;
                     ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
@@ -468,6 +472,7 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     APosCanhoto: TPosCanhoto = pcCabecalho;
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
+                    AMostrarStatus: Boolean = False;
                     ANomeFonte: TNomeFonte = nfTimesNewRoman;
                     ANegrito: Boolean = True;
                     AMargemSuperior: Double = 0.7;
@@ -495,6 +500,8 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     AdExibeCampoFatura: Boolean = False );
 
 
+var
+  ADir: String;
 begin
   with Create ( nil ) do
     try
@@ -512,6 +519,7 @@ begin
       FPosCanhoto := APosCanhoto;
       FFormularioContinuo := AFormularioContinuo;
       FExpandirLogoMarca := AExpandirLogoMarca;
+      FMostrarStatus := AMostrarStatus;
       FNomeFonte := ANomeFonte;
       FNegrito := ANegrito;
       FMargemSuperior := AMargemSuperior;
@@ -538,17 +546,28 @@ begin
       fMask_vUnCom  := AdCasasDecimais_Mask_vUnCom;
       fExibeCampoFatura := AdExibeCampoFatura;
 
-      with RLPDFFilter1.DocumentInfo do
-        begin
-          Title := ACBrStr('DANFE - Nota fiscal nº ' +
-                                      FormatFloat('000,000,000', FNFe.Ide.nNF));
-          KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
-                      '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi) +
-                      '; Destinatário: ' + FNFe.Dest.xNome +
-                      '; CNPJ: ' + FNFe.Dest.CNPJCPF +
-                      '; Valor total: ' + FormatFloat('###,###,###,###,##0.00', FNFe.Total.ICMSTot.vNF));
-        end;
+      if Trim(AFile) = '' then
+        raise EACBrNFeException.Create('Erro ao gerar PDF. Arquivo não informado');
 
+      ADir := ExtractFilePath(AFile);
+      if not DirectoryExists(ADir) then
+        ForceDirectories(ADir);
+
+      if not DirectoryExists(ADir) then
+        raise EACBrNFeException.Create('Erro ao gerar PDF. Diretório: '+ADir+' não pode ser criado');
+
+      with RLPDFFilter1.DocumentInfo do
+      begin
+        Title := ACBrStr('DANFE - Nota fiscal nº ' +
+                                    FormatFloat('000,000,000', FNFe.Ide.nNF));
+        KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
+                    '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi) +
+                    '; Destinatário: ' + FNFe.Dest.xNome +
+                    '; CNPJ: ' + FNFe.Dest.CNPJCPF +
+                    '; Valor total: ' + FormatFloat('###,###,###,###,##0.00', FNFe.Total.ICMSTot.vNF));
+      end;
+
+      RLPDFFilter1.ShowProgress := FMostrarStatus;
       RLNFe.SaveToFile(AFile);
     finally
      Destroy;

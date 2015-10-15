@@ -51,6 +51,11 @@ Símbolo : Significado
 [-] Correção para mostrar a descrição de via consumidor/estabelecimento
     corretamente para DANFC-e em Forte e Fast.
 
+-- ACBrNFeDANFeRLClass --     (por: DSA)
+[*] SavePDF: Modificada para permitir informar "MostrarStatus".
+[*] SavePDF: Modificada para verificar se o arquivo foi informado e adicionada
+    verificação do Diretório
+
 14/10/2015
 -- ACBrNFeDANFeRLClass --
 [+] Adicionada a propriedade "ExibeCampoFatura: Boolean", (default False) se

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2015
+[-] Correção para mostrar a descrição de via consumidor/estabelecimento
+    corretamente para DANFC-e em Forte e Fast.
+
 14/10/2015
 -- ACBrNFeDANFeRLClass --
 [+] Adicionada a propriedade "ExibeCampoFatura: Boolean", (default False) se

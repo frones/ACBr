@@ -185,6 +185,11 @@ var
 begin
   Result := False;
 
+  if ViaConsumidor then
+    FDescricaoViaEstabelec := 'Via Consumidor'
+  else
+    FDescricaoViaEstabelec := 'Via Estabelecimento';
+
   FdmDanfe.ExibirTotalTributosItem := FExibirTotalTributosItem;
   FdmDanfe.ExibeCampoFatura :=  FExibeCampoFatura;
   FdmDanfe.TributosFonte :=  FTributosFonte;

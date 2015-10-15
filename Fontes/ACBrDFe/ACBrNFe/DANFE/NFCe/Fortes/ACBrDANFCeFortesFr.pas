@@ -277,7 +277,10 @@ begin
 
     lNumSerieEmissao.Caption := ACBrStr('Número '+IntToStrZero(Ide.nNF,9)+
                                 ' Série '+IntToStrZero(Ide.serie,3)+
-                                ' Emissão '+DateTimeToStr(Ide.dEmi) );
+                                ' Emissão '+DateTimeToStr(Ide.dEmi) ) +
+                                ' ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Via Consumidor', 'Via Estabelecimento');
+
+
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
        TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));

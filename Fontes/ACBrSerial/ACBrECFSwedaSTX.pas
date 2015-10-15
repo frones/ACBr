@@ -1378,20 +1378,17 @@ begin
 end;
 
 function TACBrECFSwedaSTX.GetDataHora: TDateTime;
-Var RetCmd : AnsiString ;
-    OldShortDateFormat : String ;
+Var
+  RetCmd : AnsiString ;
 begin
   RetCmd := Trim(RetornaInfoECF( 'I8' )) ;
-  OldShortDateFormat := ShortDateFormat ;
-  try
-     ShortDateFormat := 'dd/mm/yyyy' ;
-     result := StrToDate(copy(RetCmd, 1,10)) ;
-  finally
-     ShortDateFormat := OldShortDateFormat ;
-  end ;
-  result := RecodeHour(  result,StrToInt(copy(RetCmd,12,2))) ;
-  result := RecodeMinute(result,StrToInt(copy(RetCmd,15,2))) ;
-  result := RecodeSecond(result,StrToInt(copy(RetCmd,18,2))) ;
+
+  Result := EncodeDateTime( StrToInt(copy(RetCmd,07,4)),
+                            StrToInt(copy(RetCmd,04,2)),
+                            StrToInt(copy(RetCmd,01,2)),
+                            StrToInt(copy(RetCmd,12,2)),
+                            StrToInt(copy(RetCmd,15,2)),
+                            StrToInt(copy(RetCmd,18,2)), 0 );
 end;
 
 function TACBrECFSwedaSTX.GetNumCupom: String;
@@ -2510,38 +2507,29 @@ begin
 end;
 
 function TACBrECFSwedaSTX.GetDataHoraSB : TDateTime ;
-Var RetCmd : AnsiString ;
-    OldShortDateFormat : String ;
+Var
+  RetCmd : AnsiString ;
 begin
   RetCmd := Trim(RetornaInfoECF( 'J1' )) ;
-  OldShortDateFormat := ShortDateFormat ;
-  try
-     ShortDateFormat := 'dd/mm/yyyy' ;
-     Result := StrToDate(copy(RetCmd,10,10)) ;
-  finally
-     ShortDateFormat := OldShortDateFormat ;
-  end ;
-  Result := RecodeHour(  Result,StrToInt(copy(RetCmd,21,2))) ;
-  Result := RecodeMinute(Result,StrToInt(copy(RetCmd,24,2))) ;
-  Result := RecodeSecond(Result,StrToInt(copy(RetCmd,27,2))) ;
+
+  Result := EncodeDateTime( StrToInt(copy(RetCmd,16,4)),
+                            StrToInt(copy(RetCmd,13,2)),
+                            StrToInt(copy(RetCmd,10,2)),
+                            StrToInt(copy(RetCmd,21,2)),
+                            StrToInt(copy(RetCmd,24,2)),
+                            StrToInt(copy(RetCmd,27,2)), 0 );
 end ;
 
-
 function TACBrECFSwedaSTX.GetDataMovimento: TDateTime;
- Var
+Var
   RetCmd : AnsiString ;
-  OldShortDateFormat: AnsiString;
   sData:String;
 begin
    RetCmd := Trim(RetornaInfoECF('A2'));
-   OldShortDateFormat := ShortDateFormat ;
-   try
-      sData := Copy(RetCmd,22,10);
-      ShortDateFormat := 'dd/mm/yyyy' ;
-      Result := StrToDate(sData);
-   finally
-      ShortDateFormat := OldShortDateFormat ;
-   end ;
+
+   Result := EncodeDate( StrToInt(copy(RetCmd,28,4)),
+                         StrToInt(copy(RetCmd,25,2)),
+                         StrToInt(copy(RetCmd,22,2)) );
 end;
 
 function TACBrECFSwedaSTX.GetDataHoraUltimaReducaoZ : TDateTime ;
@@ -2549,13 +2537,12 @@ var
   RetCmd : String ;
 begin
   RetCmd := Trim(RetornaInfoECF('A2'));
-  Result := StringToDateTime( copy(RetCmd, 1,2) + DateSeparator +
-                              copy(RetCmd, 4,2) + DateSeparator +
-                              copy(RetCmd, 7,4) + ' ' +
-                              copy(RetCmd,12,2) + TimeSeparator +
-                              copy(RetCmd,15,2) + TimeSeparator +
-                              copy(RetCmd,18,2),
-                              'dd/mm/yyyy hh:nn:ss' ) ;
+  Result := EncodeDateTime( StrToInt(copy(RetCmd,07,4)),
+                            StrToInt(copy(RetCmd,04,2)),
+                            StrToInt(copy(RetCmd,01,2)),
+                            StrToInt(copy(RetCmd,12,2)),
+                            StrToInt(copy(RetCmd,15,2)),
+                            StrToInt(copy(RetCmd,18,2)), 0 );
 end ;
 
 function TACBrECFSwedaSTX.GetGrandeTotal: Double;

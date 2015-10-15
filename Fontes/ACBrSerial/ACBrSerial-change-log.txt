@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/10/2015
+-- ACBrECFSwedaStx --   (por: DSA)
+[*] Modfificadas as rotinas GetDataHora, GetDataHoraSB, GetDataMovimento,
+    GetDataHoraUltimaReducaoZ para mitigar problemas com FormtatSettings
+
 Data: 13/10/2015
 -- ACBrECFFiscNET --
 [-] VendeItem, aplicado ajuste para Venda sem Departamento e com ArredondaItemMFD,

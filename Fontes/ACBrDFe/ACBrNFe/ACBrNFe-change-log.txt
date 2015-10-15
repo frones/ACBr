@@ -54,6 +54,10 @@ Símbolo : Significado
 [-] Acerto na regra de validação 777, ela deve ser considerada somente quando 
     o NCM for diferente de 00, porque 00 é serviço.
     por: regys.silveira
+[-] Acerto na regra de validação 564, estava considerando todos os produtos 
+    para o calculo, mas devemos excluir os itens que são NCM 00 porque são 
+    serviços
+    por: regys.silveira
 
 -- ACBrNFeDANFeRLClass --     (por: DSA)
 [*] SavePDF: Modificada para permitir informar "MostrarStatus".

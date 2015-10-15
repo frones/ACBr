@@ -1034,7 +1034,6 @@ begin
           fsvICMSDeson := fsvICMSDeson + Imposto.ICMS.vICMSDeson;
           fsvBCST    := fsvBCST + Imposto.ICMS.vBCST;
           fsvST      := fsvST + Imposto.ICMS.vICMSST;
-          fsvProd    := fsvProd + Prod.vProd;
           fsvFrete   := fsvFrete + Prod.vFrete;
           fsvSeg     := fsvSeg + Prod.vSeg;
           fsvDesc    := fsvDesc + Prod.vDesc;
@@ -1044,6 +1043,10 @@ begin
           fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
           fsvOutro   := fsvOutro + Prod.vOutro;
           fsvServ   := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
+
+          // quando for serviço o produto não soma do total de produtos
+          if Prod.NCM <> '00' then
+            fsvProd := fsvProd + Prod.vProd;
         end;
 
         if Prod.veicProd.tpOP = toFaturamentoDireto then

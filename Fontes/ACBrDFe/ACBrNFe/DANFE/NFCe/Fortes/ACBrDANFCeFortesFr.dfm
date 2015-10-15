@@ -39,9 +39,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 2
-      Top = 486
+      Top = 506
       Width = 276
-      Height = 218
+      Height = 222
       AutoSize = True
       BandType = btSummary
       Font.Charset = DEFAULT_CHARSET
@@ -79,14 +79,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 0
         Top = 20
         Width = 276
-        Height = 133
+        Height = 137
         Align = faTop
         Center = True
         Scaled = True
       end
       object pGap05: TRLPanel
         Left = 0
-        Top = 163
+        Top = 167
         Width = 276
         Height = 17
         Align = faTop
@@ -116,7 +116,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object lProtocolo: TRLLabel
         Left = 0
-        Top = 153
+        Top = 157
         Width = 276
         Height = 10
         Align = faTop
@@ -132,7 +132,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object pGap8: TRLPanel
         Left = 0
-        Top = 180
+        Top = 184
         Width = 276
         Height = 38
         Align = faTop
@@ -560,16 +560,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object lFonteTributos: TRLLabel
         Left = 136
-        Height = 12
         Top = 16
         Width = 126
+        Height = 12
         Alignment = taRightJustify
         Caption = 'Fonte IBPT'
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
+        Font.Style = []
         ParentFont = False
-      end  
+      end
     end
     object rlbsCabecalho: TRLSubDetail
       Left = 2
@@ -778,7 +780,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbConsumidor: TRLBand
       Left = 2
-      Top = 431
+      Top = 365
       Width = 276
       Height = 55
       AutoSize = True
@@ -847,9 +849,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbMensagemFiscal: TRLBand
       Left = 2
-      Top = 365
+      Top = 420
       Width = 276
-      Height = 66
+      Height = 86
       AutoSize = True
       BandType = btSummary
       BeforePrint = rlbMensagemFiscalBeforePrint
@@ -879,7 +881,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object lChaveDeAcesso: TRLLabel
         Left = 0
-        Top = 54
+        Top = 74
         Width = 276
         Height = 12
         Align = faTop
@@ -894,7 +896,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object lTitChaveAcesso: TRLLabel
         Left = 0
-        Top = 42
+        Top = 62
         Width = 276
         Height = 12
         Align = faTop
@@ -907,16 +909,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object lNumSerieEmissao: TRLLabel
+      object lNumeroSerie: TRLLabel
         Left = 0
         Top = 18
         Width = 276
         Height = 12
         Align = faTop
         Alignment = taCenter
-        Caption = 
-          'N'#250'mero 999999999 S'#233'rie 999 Emiss'#227'o DD/MM/AAAA HH:MM:SS - Via Est' +
-          'abelecimento'
+        Caption = 'N'#250'mero 999999999 S'#233'rie 999'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -926,7 +926,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object lTitConsulteChave: TRLMemo
         Left = 0
-        Top = 30
+        Top = 50
         Width = 276
         Height = 12
         Align = faTop
@@ -940,6 +940,30 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Lines.Strings = (
           'Consulte pela Chave de Acesso em www.')
         ParentFont = False
+      end
+      object lEmissaoVia: TRLLabel
+        Left = 0
+        Top = 30
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'Emiss'#227'o DD/MM/AAAA HH:MM:SS  - Via Estabelecimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLDraw8: TRLDraw
+        Left = 0
+        Top = 42
+        Width = 276
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 2
       end
     end
     object rlbMensagemContribuinte: TRLBand

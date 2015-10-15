@@ -152,7 +152,7 @@ type
     lMensagemFiscal: TRLLabel;
     lChaveDeAcesso: TRLLabel;
     lTitChaveAcesso: TRLLabel;
-    lNumSerieEmissao: TRLLabel;
+    lNumeroSerie: TRLLabel;
     lTitConsulteChave: TRLMemo;
     rlbMensagemContribuinte: TRLBand;
     lMensagemContribuinte: TRLLabel;
@@ -160,6 +160,8 @@ type
     lObservacoes: TRLMemo;
     RLHTMLFilter1: TRLHTMLFilter;
     RLPDFFilter1: TRLPDFFilter;
+    lEmissaoVia: TRLLabel;
+    RLDraw8: TRLDraw;
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -260,27 +262,29 @@ procedure TACBrNFeDANFCeFortesFr.rlbMensagemFiscalBeforePrint(Sender: TObject;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
-
     PrintIt := True ;
 
     if Ide.tpAmb = taHomologacao then
-     begin
-       lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
-     end
+    begin
+      lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+    end
     else
-     begin
-       if Ide.tpEmis <> teNormal then
-          lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
-       else
-          lMensagemFiscal.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
-     end;
+    begin
+      if Ide.tpEmis <> teNormal then
+        lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
+      else
+        lMensagemFiscal.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+    end;
 
-    lNumSerieEmissao.Caption := ACBrStr('Número '+IntToStrZero(Ide.nNF,9)+
-                                ' Série '+IntToStrZero(Ide.serie,3)+
-                                ' Emissão '+DateTimeToStr(Ide.dEmi) ) +
-                                ' ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Via Consumidor', 'Via Estabelecimento');
+    lNumeroSerie.Caption := ACBrStr(
+      'Número ' + IntToStrZero(Ide.nNF, 9) + ' - ' +
+      'Série ' + IntToStrZero(Ide.serie, 3)
+    );
 
-
+    lEmissaoVia.Caption := ACBrStr(
+      'Emissão ' + DateTimeToStr(Ide.dEmi) + ' - ' +
+      'Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Estabelecimento')
+    );
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
        TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
@@ -447,7 +451,7 @@ begin
   end;
 
 
-  // Calculando o tamanho da PÃ¡gina em Pixels //
+  // Calculando o tamanho da Pagina em Pixels //
   TotalPaginaPixel := rlbsCabecalho.Height +
                       rlbRodape.Height +
                       rlbLegenda.Height +

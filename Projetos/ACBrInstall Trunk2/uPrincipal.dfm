@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = lbInfo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1256,19 +1256,16 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitHeight = 499
         DesignSize = (
           537
           499)
         inherited btnPacotesDesmarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
-          ExplicitTop = 465
         end
         inherited btnPacotesMarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
-          ExplicitTop = 465
         end
       end
     end
@@ -1400,9 +1397,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object lstMsgInstalacao: TListBox
         Left = 20
-        Top = 111
+        Top = 72
         Width = 516
-        Height = 323
+        Height = 362
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -1425,14 +1422,14 @@ object frmPrincipal: TfrmPrincipal
         Left = 20
         Top = 15
         Width = 516
-        Height = 90
+        Height = 51
         BevelOuter = bvLowered
         TabOrder = 0
         object lbInfo: TListBox
           Left = 1
           Top = 1
           Width = 514
-          Height = 88
+          Height = 49
           Align = alClient
           BorderStyle = bsNone
           Font.Charset = DEFAULT_CHARSET
@@ -1441,6 +1438,10 @@ object frmPrincipal: TfrmPrincipal
           Font.Name = 'Courier New'
           Font.Style = []
           ItemHeight = 14
+          Items.Strings = (
+            'A'
+            'A'
+            'A')
           ParentColor = True
           ParentFont = False
           TabOrder = 0
@@ -1634,7 +1635,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 1
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

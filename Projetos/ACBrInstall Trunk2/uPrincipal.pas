@@ -1342,20 +1342,14 @@ begin
 end;
 
 procedure TfrmPrincipal.btnWCInfoClick(Sender: TObject);
-var
-  Msg: String;
 begin
   // capturar informações da última revisão
   TSVN_Class.GetRevision(edtDirDestino.Text);
-  with lbInfo.Items do
-  begin
-    Msg :=
-      'Última Revisão: ' + TSVN_Class.WCInfo.Revision + sLineBreak +
-      'Autor: ' + TSVN_Class.WCInfo.Author + sLineBreak +
-      'Data: ' + TSVN_Class.WCInfo.Date;
-
-    ShowMessage(Msg);
-  end;
+  ShowMessage(
+    'Última Revisão: ' + TSVN_Class.WCInfo.Revision + sLineBreak +
+    'Autor: ' + TSVN_Class.WCInfo.Author + sLineBreak +
+    'Data: ' + TSVN_Class.WCInfo.Date
+  );
 end;
 
 procedure TfrmPrincipal.wizPgObterFontesNextButtonClick(Sender: TObject;

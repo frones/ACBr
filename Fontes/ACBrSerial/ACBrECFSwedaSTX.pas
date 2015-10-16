@@ -772,7 +772,7 @@ begin
                              74,  // Ejetando a Folha
                              98,  // Processando
                              99,  // Confirme
-                             103..105, 109..111,   // Eventos de Cheque
+                             103..105, 109,   // Eventos de Cheque
                              127, // Pouco Papel
                              159, // Preenchendo
                              172, // Preenchimento concluido
@@ -1690,7 +1690,7 @@ begin
       //DEBUG
       //GravaLog( '         Retorno Tratado: '+fpRespostaComando );
 
-      P1 := pos('!0110', fpRespostaComando) ;  // Procura por resposta do CMC7
+      P1 := pos('!0110', fpRespostaComando) ;  // Procura por resposta do MICR-CMC7
       if P1 > 0 then
       begin
          P1 := P1 + 12;

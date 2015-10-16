@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/10/2015
+-- ACBrECFSwedaStx --   (por: DSA)
+[-] Corrigida rotina de leitura de CMC7
+    http://www.projetoacbr.com.br/forum/topic/6891-leitura-de-cmc7-na-swedastx/
+
 Data: 15/10/2015
 -- ACBrECFSwedaStx --   (por: DSA)
 [*] Modfificadas as rotinas GetDataHora, GetDataHoraSB, GetDataMovimento,

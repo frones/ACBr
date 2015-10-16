@@ -8,8 +8,8 @@ uses
   IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFEQRClass, ACBrMail,
-  ACBrBase, ACBrDFe;
+  ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMail, ACBrBase, ACBrDFe,
+  ACBrMDFeDAMDFeRLClass;
 
 type
   TfrmDemo_ACBrMDFe = class(TForm)
@@ -126,7 +126,6 @@ type
     MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     ACBrMDFe1: TACBrMDFe;
-    DAMDFE: TACBrMDFeDAMDFEQR;
     rgVersaoDF: TRadioGroup;
     btnImprimirEvento: TButton;
     btnEnviarEventoEmail: TButton;
@@ -136,6 +135,7 @@ type
     Label29: TLabel;
     edtPathSchemas: TEdit;
     sbPathSchemas: TSpeedButton;
+    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);

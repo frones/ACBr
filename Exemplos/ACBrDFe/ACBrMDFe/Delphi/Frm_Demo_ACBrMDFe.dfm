@@ -1,9 +1,9 @@
 object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   Left = 204
   Top = 131
-  Width = 871
-  Height = 568
   Caption = 'Demo ACBrMDFe'
+  ClientHeight = 529
+  ClientWidth = 855
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Left = 0
     Top = 0
     Width = 297
-    Height = 530
+    Height = 529
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -404,7 +404,6 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
               Font.Height = -13
               Font.Name = 'MS Sans Serif'
               Font.Style = []
-              ItemHeight = 16
               ItemIndex = 24
               ParentFont = False
               TabOrder = 1
@@ -816,8 +815,6 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -832,13 +829,15 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object Panel2: TPanel
     Left = 297
     Top = 0
     Width = 558
-    Height = 530
+    Height = 529
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -988,7 +987,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       Left = 1
       Top = 177
       Width = 556
-      Height = 352
+      Height = 351
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -998,7 +997,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 324
+          Height = 323
           Align = alClient
           TabOrder = 0
         end
@@ -1010,11 +1009,11 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 364
+          Height = 323
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000A33800009F2500000000000000000000000000000000000000000000
+            4C000000A3380000622100000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1028,7 +1027,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 364
+          Height = 323
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1041,7 +1040,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 324
+          Height = 323
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1054,7 +1053,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 364
+          Height = 323
           Align = alClient
           TabOrder = 0
         end
@@ -1066,7 +1065,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 364
+          Height = 323
           Align = alClient
           TabOrder = 0
         end
@@ -1079,8 +1078,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 120
-    Top = 416
+    Left = 385
+    Top = 296
   end
   object ACBrMDFe1: TACBrMDFe
     MAIL = ACBrMail1
@@ -1089,27 +1088,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
-    DAMDFE = DAMDFE
-    Left = 166
-    Top = 417
-  end
-  object DAMDFE: TACBrMDFeDAMDFEQR
-    ACBrMDFe = ACBrMDFe1
-    PathPDF = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
-    ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDAMDFe = tiRetrato
-    TamanhoPapel = tpA4
-    NumCopias = 1
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    MDFeCancelada = False
-    MDFeEncerrado = False
-    Left = 206
-    Top = 417
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    DAMDFE = ACBrMDFeDAMDFeRL1
+    Left = 466
+    Top = 297
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1119,7 +1101,25 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 248
-    Top = 416
+    Left = 383
+    Top = 341
+  end
+  object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+    ACBrMDFe = ACBrMDFe1
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    MDFeCancelada = False
+    MDFeEncerrado = False
+    PrintDialog = True
+    Left = 470
+    Top = 345
   end
 end

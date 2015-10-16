@@ -1,9 +1,9 @@
 object frmMDFeDAEventoRL: TfrmMDFeDAEventoRL
   Left = 338
   Top = 317
-  Width = 497
-  Height = 333
   Caption = 'frmMDFeDAEventoRL'
+  ClientHeight = 294
+  ClientWidth = 481
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,15 @@ object frmMDFeDAEventoRL: TfrmMDFeDAEventoRL
     Top = 2
     Width = 794
     Height = 1123
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     ShowProgress = False
   end
   object Datasource1: TDataSource

@@ -53,8 +53,6 @@ type
     RLMDFeEvento: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
     procedure FormDestroy(Sender: TObject);
-  private
-    cdsDocumentos: {$IFDEF BORLAND}TClientDataSet{$ELSE}TBufDataset{$ENDIF};
   protected
     FACBrMDFe: TACBrMDFe;
     FMDFe: TMDFe;

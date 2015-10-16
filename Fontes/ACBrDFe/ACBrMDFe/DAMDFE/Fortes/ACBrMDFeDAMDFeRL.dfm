@@ -1,9 +1,9 @@
 object frlDAMDFeRL: TfrlDAMDFeRL
   Left = 214
   Top = 269
-  Width = 666
-  Height = 378
   Caption = 'frlDAMDFeRL'
+  ClientHeight = 339
+  ClientWidth = 650
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,16 +19,16 @@ object frlDAMDFeRL: TfrlDAMDFeRL
     Top = 16
     Width = 794
     Height = 1123
+    Margins.LeftMargin = 6.000000000000000000
+    Margins.TopMargin = 6.000000000000000000
+    Margins.RightMargin = 6.000000000000000000
+    Margins.BottomMargin = 6.000000000000000000
     DataSource = dsItens
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 6.000000000000000000
-    Margins.TopMargin = 6.000000000000000000
-    Margins.RightMargin = 6.000000000000000000
-    Margins.BottomMargin = 6.000000000000000000
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter

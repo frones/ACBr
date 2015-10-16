@@ -203,8 +203,6 @@ class procedure TfrlDAMDFeRL.SavePDF(AFile: string;
   AMargemDireita: double = 0.51;
   AMDFeCancelada: boolean = False;
   AMDFeEncerrado: boolean = False);
-var
-  i: integer;
 begin
   with Create(nil) do
     //with TfrlDAMDFeRL do

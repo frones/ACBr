@@ -379,8 +379,8 @@ begin
   FConfigGeral.Identificador := FPIniParams.ReadString('Geral', 'Identificador', '');
   FConfigGeral.QuebradeLinha := FPIniParams.ReadString('Geral', 'QuebradeLinha', '');
 
-  FConfigNameSpace.Producao := FPIniParams.ReadString('NameSpace', 'Producao', '');
-  FConfigNameSpace.Homologacao := FPIniParams.ReadString('NameSpace', 'Homologacao', '');
+  FConfigNameSpace.Producao := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+  FConfigNameSpace.Homologacao :=StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
 
   FConfigAssinar.RPS := FPIniParams.ReadBool('Assinar', 'RPS', False);
   FConfigAssinar.Lote := FPIniParams.ReadBool('Assinar', 'Lote', False);

@@ -551,24 +551,28 @@ procedure TACBrNFeFRClass.CarregaDuplicatas;
 var
   i: Integer;
 begin
-  with cdsDuplicatas do
-  begin
-    Close;
-    CreateDataSet;
+  if Not ( fExibeCampoFatura and (FNFe.Ide.indPag = ipVista) ) then
+  Begin
 
-    for i := 0 to NFe.Cobr.Dup.Count - 1 do
+    with cdsDuplicatas do
     begin
-      Append;
-      with FNFe.Cobr.Dup[i] do
+      Close;
+      CreateDataSet;
+
+      for i := 0 to NFe.Cobr.Dup.Count - 1 do
       begin
-        FieldByName('ChaveNFe').AsString  := FNFe.infNFe.ID;
-        FieldByName('NDup').AsString      := NDup;
-        FieldByName('DVenc').AsString     := FormatDateBr(DVenc);
-        FieldByName('VDup').AsFloat       := VDup;
+        Append;
+        with FNFe.Cobr.Dup[i] do
+        begin
+          FieldByName('ChaveNFe').AsString  := FNFe.infNFe.ID;
+          FieldByName('NDup').AsString      := NDup;
+          FieldByName('DVenc').AsString     := FormatDateBr(DVenc);
+          FieldByName('VDup').AsFloat       := VDup;
+        end;
+        Post;
       end;
-      Post;
     end;
-  end;
+  End;
 end;
 
 procedure TACBrNFeFRClass.CarregaEmitente;
@@ -644,6 +648,8 @@ begin
     if ExibeCampoFatura then
     begin
       Append;
+
+      FieldByName('iForma').asInteger := Integer( FNFe.Ide.indPag);
 
       case FNFe.Ide.indPag of
         ipVista : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À VISTA');
@@ -1712,21 +1718,22 @@ begin
    // cdsFatura
    if not Assigned(cdsFatura) then
    begin
-      cdsFatura := TClientDataSet.Create(nil);
-      FfrxFatura := TfrxDBDataset.Create(nil);
+      cdsFatura   := TClientDataSet.Create(nil);
+      FfrxFatura  := TfrxDBDataset.Create(nil);
       with FfrxFatura do
       begin
-         DataSet := cdsFatura;
+         DataSet        := cdsFatura;
          OpenDataSource := False;
-         UserName := 'Fatura';
+         UserName       := 'Fatura';
       end;
       with cdsFatura do
       begin
+         FieldDefs.Add('iForma'   , ftInteger);
          FieldDefs.Add('Pagamento', ftString, 20);
-         FieldDefs.Add('nFat', ftString, 60);
-         FieldDefs.Add('vOrig', ftFloat);
-         FieldDefs.Add('vDesc', ftFloat);
-         FieldDefs.Add('vLiq', ftFloat);
+         FieldDefs.Add('nFat'     , ftString, 60);
+         FieldDefs.Add('vOrig'    , ftFloat);
+         FieldDefs.Add('vDesc'    , ftFloat);
+         FieldDefs.Add('vLiq'     , ftFloat);
          CreateDataSet;
       end;
    end;

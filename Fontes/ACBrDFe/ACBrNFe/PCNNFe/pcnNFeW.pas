@@ -60,7 +60,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnGerador, pcnNFe, pcnConversao, ACBrCAPICOM_TLB;
+  pcnGerador, pcnNFe, pcnConversao;
 
 type
 

@@ -112,10 +112,9 @@
       <Item24>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\PCNMDFe\pmdfeSignature.pas"/>
         <UnitName Value="pmdfeSignature"/>
-      </Item24>      
+      </Item24>
       <Item25>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFEClass.pas"/>
-        <AddToUsesPkgSection Value="False"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFeClass.pas"/>
         <UnitName Value="ACBrMDFeDAMDFeClass"/>
       </Item25>
     </Files>

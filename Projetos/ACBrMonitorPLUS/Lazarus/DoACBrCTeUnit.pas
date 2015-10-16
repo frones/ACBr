@@ -47,8 +47,8 @@ function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 implementation
 
 Uses IniFiles, DateUtils, strutils,
-  Windows, Forms, ACBrUtil, ACBrMonitor1,
-  ACBrDFeConfiguracoes, pcnConversao, pcteConversaoCTe,
+  Forms, ACBrUtil, ACBrMonitor1,
+  pcnConversao, pcteConversaoCTe,
   pcteCTeR, pcnAuxiliar, DoACBrUnit;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );

@@ -39,7 +39,7 @@ unit ACBrMDFeDAEventoRLRetrato;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
+  Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLPDFFilter, RLBarcode, pcnConversao,
   ACBrMDFeDAEventoRL, RLFilters;
 

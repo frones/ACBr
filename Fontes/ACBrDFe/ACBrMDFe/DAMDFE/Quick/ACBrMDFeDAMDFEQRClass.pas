@@ -42,7 +42,7 @@ interface
 
 uses
   Forms, SysUtils, Classes,
-  ACBrMDFeDAMDFEClass, pmdfeMDFe,
+  ACBrMDFeDAMDFeClass, pmdfeMDFe,
   ACBrMDFeDAEventoQR, ACBrMDFeDAEventoQRRetrato;
 
 type

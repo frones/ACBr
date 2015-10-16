@@ -46,7 +46,7 @@ uses
   Classes, Sysutils,
   ACBrDFe, ACBrDFeConfiguracoes,
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
-  ACBrCTeDACTeClass,ACBrDFeException,
+  ACBrCTeDACTEClass, ACBrDFeException,
   pcteCTe, pcnConversao, pcteConversaoCTe,
   pcteEnvEventoCTe, pcteInutCTe, pcteRetDistDFeInt,
   ACBrDFeUtil, ACBrUtil;

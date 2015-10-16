@@ -43,7 +43,7 @@ function GerarMDFeIni( XML : WideString ) : WideString;
 
 implementation
 
-Uses IniFiles, DateUtils, Windows, Forms, strutils,
+Uses IniFiles, DateUtils, Forms, strutils,
   ACBrMonitor1, ACBrDFeWebService, ACBrDFeConfiguracoes,
   pcnConversao, pmdfeConversaoMDFe, DoACBrNFeUnit,
   pcnAuxiliar, pmdfeMDFeR, pmdfeRetConsReciMDFe,

@@ -50,7 +50,7 @@ interface
 
 uses
   Forms, SysUtils, Classes,
-  pcnConversao, pcteCTe, ACBrCTeDACTeClass,RLTypes ,
+  pcnConversao, pcteCTe, ACBrCTeDACTEClass, RLTypes ,
   ACBrCTeDACTeRL, ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5,
   ACBrCTeDAEventoRL, ACBrCTeDAEventoRLRetrato;
 

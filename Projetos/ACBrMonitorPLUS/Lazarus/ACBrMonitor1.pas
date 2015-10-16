@@ -1246,7 +1246,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
-  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit,
+  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrMDFeUnit, DoACBrCTeUnit,
   DoSATUnit, DoPosPrinterUnit;
 
 {$R *.lfm}

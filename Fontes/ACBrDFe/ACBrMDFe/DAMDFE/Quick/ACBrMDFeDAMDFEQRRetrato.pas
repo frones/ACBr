@@ -44,7 +44,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, QuickRpt, QRCtrls,  XMLIntf, XMLDoc, JPEG,
   pcnConversao, pmdfeConversaoMDFe, DB, DBClient,
-  ACBrMDFeDAMDFEQR, ACBrDFeQRCodeBar, ACBrMDFeDAMDFEClass,
+  ACBrMDFeDAMDFEQR, ACBrDFeQRCodeBar, ACBrMDFeDAMDFeClass,
   ACBrMDFeDAMDFEQRClass;
 
 type

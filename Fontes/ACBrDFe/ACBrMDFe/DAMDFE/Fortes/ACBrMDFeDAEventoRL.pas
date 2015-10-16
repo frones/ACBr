@@ -39,7 +39,7 @@ unit ACBrMDFeDAEventoRL;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLPDFFilter, pmdfeMDFe, ACBrMDFe,
   RLPrinters, pcnConversao, pmdfeEnvEventoMDFe
   {$IFDEF BORLAND} , DB, DBClient {$ELSE}, BufDataset, DB, RLFilters {$ENDIF} ;

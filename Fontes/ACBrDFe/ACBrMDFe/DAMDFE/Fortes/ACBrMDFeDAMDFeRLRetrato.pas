@@ -39,7 +39,7 @@ unit ACBrMDFeDAMDFeRLRetrato;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
+  Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter, pcnConversao,
   pmdfeConversaoMDFe, ACBrMDFeDAMDFeRL, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFeRLClass,
   RLFilters;

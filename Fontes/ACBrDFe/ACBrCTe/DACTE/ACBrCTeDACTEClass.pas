@@ -134,7 +134,7 @@ type
 implementation
 
 uses
-  ACBrCTE, ACBrUtil;
+  ACBrCTe, ACBrUtil;
 
 constructor TACBrCTeDACTEClass.Create(AOwner: TComponent);
 begin

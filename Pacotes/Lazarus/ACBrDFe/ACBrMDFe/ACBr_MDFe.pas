@@ -13,7 +13,7 @@ uses
   pmdfeEventoMDFe, pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, 
   pmdfeRetConsMDFeNaoEnc, pmdfeRetConsReciMDFe, pmdfeRetConsSitMDFe, 
   pmdfeRetConsStatServ, pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
-  pmdfeSignature, LazarusPackageIntf;
+  pmdfeSignature, ACBrMDFeDAMDFeClass, LazarusPackageIntf;
 
 implementation
 

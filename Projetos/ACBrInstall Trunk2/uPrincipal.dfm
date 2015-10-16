@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = wizPgFinalizar
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgFinalizar
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -915,10 +915,10 @@ object frmPrincipal: TfrmPrincipal
       object lblUrlACBrSac1: TLabel
         Left = 93
         Top = 200
-        Width = 268
+        Width = 244
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://www.djsystem.com.br/acbr/sac/index.php/sobre'
+        Caption = 'http://www.projetoacbr.com.br/forum/SAC/sobre/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -930,10 +930,10 @@ object frmPrincipal: TfrmPrincipal
       object lblUrlForum1: TLabel
         Left = 93
         Top = 317
-        Width = 221
+        Width = 189
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://djsystem.com.br/acbr/forum/index.php'
+        Caption = 'http://www.projetoacbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -945,10 +945,10 @@ object frmPrincipal: TfrmPrincipal
       object lblUrlACBr1: TLabel
         Left = 93
         Top = 259
-        Width = 173
+        Width = 157
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://acbr.sourceforge.net/drupal/'
+        Caption = 'http://www.projetoacbr.com.br/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -1497,10 +1497,10 @@ object frmPrincipal: TfrmPrincipal
       object Label13: TLabel
         Left = 113
         Top = 269
-        Width = 268
+        Width = 244
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://www.djsystem.com.br/acbr/sac/index.php/sobre'
+        Caption = 'http://www.projetoacbr.com.br/forum/SAC/sobre/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -1512,10 +1512,10 @@ object frmPrincipal: TfrmPrincipal
       object Label14: TLabel
         Left = 113
         Top = 202
-        Width = 221
+        Width = 189
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://djsystem.com.br/acbr/forum/index.php'
+        Caption = 'http://www.projetoacbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -1527,10 +1527,10 @@ object frmPrincipal: TfrmPrincipal
       object Label15: TLabel
         Left = 113
         Top = 139
-        Width = 173
+        Width = 157
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://acbr.sourceforge.net/drupal/'
+        Caption = 'http://www.projetoacbr.com.br/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
         Font.Height = -11
@@ -1635,6 +1635,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5
@@ -2757,10 +2758,10 @@ object frmPrincipal: TfrmPrincipal
       object Label10: TLabel
         Left = 14
         Top = 41
-        Width = 173
+        Width = 157
         Height = 13
         Cursor = crHandPoint
-        Caption = 'http://acbr.sourceforge.net/drupal/'
+        Caption = 'http://www.projetoacbr.com.br/'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -11

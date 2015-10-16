@@ -183,6 +183,7 @@ uses
   Registry;
 
 {$R *.dfm}
+{$R UAC.res}
 
 procedure TfrmPrincipal.WriteToTXT(const ArqTXT, AString : AnsiString ;
    const AppendIfExists: Boolean; AddLineBreak : Boolean) ;

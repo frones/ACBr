@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2015
+[-] adicionada a diretiva de compilação utilizando o UAC.res para forçar a 
+    abertura em modo administrador
+
 22/12/2014
 [-] Correção de bug adicionando novamente processos removidos pois a compilação dos pacotes não consegue 
 		encontrar sem os mesmos

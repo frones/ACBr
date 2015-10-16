@@ -2002,7 +2002,7 @@ end;
 procedure TACBrECFEscECF.ReducaoZ(DataHora : TDateTime) ;
 begin
   if DataHora = 0 then  { Aparentemente a DataHora é obrigatória na EscECF }
-     DataHora := now ;
+     DataHora := -1;
 
   EscECFComando.CMD := 21;
   if DataHora = -1 then  { Sem Data e Hora }
@@ -2027,8 +2027,8 @@ begin
   except
      on E : Exception do
      begin
-        // Woraround para Epson, para Erro de data na Redução Z
-        if IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 3) then
+       // Categoria: 13-Relógio. Motivo: 3-Relógio com data/hora anterior ao último documento gravado na MFD.
+       if (EscECFResposta.CAT in [13,16]) and (EscECFResposta.RET.ECF = 3) then
          begin
            ReducaoZ(-1);
          end

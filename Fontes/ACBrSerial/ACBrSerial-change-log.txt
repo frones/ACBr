@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 16/10/2015
+-- ACBrECFEscECF --     (por: DSA)
+[-] Ajuste para não enviar a Data e Hora do PC quando parâmetro DataHora
+    informado for 0
+    http://www.projetoacbr.com.br/forum/topic/25264-tm-t800ftm-t900f-redu%C3%A7%C3%A3o-z/
+
 -- ACBrECFSwedaStx --   (por: DSA)
 [-] Corrigida rotina de leitura de CMC7
     http://www.projetoacbr.com.br/forum/topic/6891-leitura-de-cmc7-na-swedastx/

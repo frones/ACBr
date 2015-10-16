@@ -44,6 +44,8 @@ Data: 16/10/2015
 [-] Ajuste para não enviar a Data e Hora do PC quando parâmetro DataHora
     informado for 0
     http://www.projetoacbr.com.br/forum/topic/25264-tm-t800ftm-t900f-redu%C3%A7%C3%A3o-z/
+[-] Correção para correto tratamento da Resposta de Epson TM800F, em Delphi com
+    USB/DLL
 
 -- ACBrECFSwedaStx --   (por: DSA)
 [-] Corrigida rotina de leitura de CMC7

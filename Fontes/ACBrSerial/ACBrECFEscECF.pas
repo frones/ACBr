@@ -566,12 +566,12 @@ begin
       SL.Delimiter := '|';
       {$IFDEF FPC}
        SL.StrictDelimiter := True;
+       SL.DelimitedText := CmdResp;
       {$ELSE}
-       CmdResp := '"' + StringReplace(CmdResp, SL.Delimiter,
+       SL.DelimitedText := '"' + StringReplace(CmdResp, SL.Delimiter,
                                 '"' + SL.Delimiter + '"', [rfReplaceAll]) +
-                  '"';
+                           '"';
       {$ENDIF}
-      SL.DelimitedText := CmdResp;
 
       if SL.Count < 5 then
         raise EACBrECFCMDInvalido.Create('Resposta Inválida de EPSON_Send_From_FileEX');

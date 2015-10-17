@@ -78,6 +78,8 @@ begin
 
   RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFEFR, 'FastFile',
      TACBrNFeDANFEFRFileNameProperty);
+  RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFEFR, 'FastFileEvento',
+     TACBrNFeDANFEFRFileNameProperty);
 end;
 
 { TACBrNFeDANFERaveFileNameProperty }

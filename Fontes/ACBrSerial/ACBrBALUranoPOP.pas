@@ -73,7 +73,7 @@ begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
 
-  fpDevice.Serial.Purge;
+  fpDevice.Limpar;
   fpDevice.EnviaString(#05); { Envia comando solicitando o Peso }
   sleep(600);
 
@@ -90,7 +90,7 @@ begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
   try
-    fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+    fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
     //fpUltimaResposta := 'DATA:  00/00/00 VALID.: 00/00/00      TARA:   0.000kg       PESO L:  1.542kg      R$/kg:      0.00      TOTAL R$:      0.00200000000000';
     Resposta := fpUltimaResposta;
     Resposta := Copy(Resposta, Pos('PESO L:', Resposta), 16);

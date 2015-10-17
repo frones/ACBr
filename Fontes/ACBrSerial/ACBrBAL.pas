@@ -147,7 +147,7 @@ begin
   fsDevice.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
   fsDevice.Porta := 'COM1';
-  fsDevice.Serial.DeadlockTimeout := 1000 ;
+  fsDevice.TimeOut := 1 ;
 
   { Timer para monitorar o envio de dados pela Balança }
   {$IFNDEF NOGUI}
@@ -291,9 +291,9 @@ begin
   fsTimer.Enabled := False ;  { Desliga o Timer para evitar chamadas Recursivas }
 
   { Está ativo ? Tem dados esperando na porta Serial ? }
-  if fsDevice.Serial.InstanceActive then
+  if fsDevice.Ativo then
   begin
-     if (fsDevice.Serial.WaitingDataEx > 0) then
+     if (fsDevice.BytesParaLer > 0) then
      begin
         fsBAL.LeSerial( 500 ) ;
         if Assigned( fsOnLePeso ) then

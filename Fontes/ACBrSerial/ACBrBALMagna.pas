@@ -77,7 +77,7 @@ begin
   fpUltimaResposta := '' ;
 
   GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#80 );
-  fpDevice.Serial.Purge ;
+  fpDevice.Limpar ;
   fpDevice.EnviaString( #80 );      { Envia comando solicitando o Peso }
   sleep(200) ;
 
@@ -95,7 +95,7 @@ begin
   fpUltimaResposta := '' ;
 
   Try
-     fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+     fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
      GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
 
      fpUltimaResposta := Copy(fpUltimaResposta,1,pos(#10,fpUltimaResposta)-1);

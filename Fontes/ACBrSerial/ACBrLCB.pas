@@ -183,7 +183,7 @@ begin
   fsDevice.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
   fsDevice.Porta := 'COM1';
-  fsDevice.Serial.DeadlockTimeout := 1000 ;
+  fsDevice.TimeOut := 1 ;
 
   { Timer para monitorar a Porta Serial }
   {$IFNDEF NOGUI}
@@ -409,7 +409,7 @@ begin
   if not fsAtivo then
      raise Exception.Create(ACBrStr('Componente ACBrLCB não está ATIVO'));
 
-  fsDevice.Serial.Purge ;
+  fsDevice.Limpar ;
   fsDevice.EnviaString( AString );
 end;
 
@@ -418,7 +418,7 @@ begin
   if not fsAtivo then
      raise Exception.Create(ACBrStr('Componente ACBrLCB não está ATIVO'));
 
-  Result := fsDevice.Serial.RecvPacket(200) ;
+  Result := fsDevice.LeString(200) ;
 end;
 
 end.

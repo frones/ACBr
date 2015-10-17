@@ -338,7 +338,7 @@ begin
   fsDevice.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
   fsDevice.Porta := 'COM1';
-  fsDevice.Serial.DeadlockTimeout := 1000 ;
+  fsDevice.TimeOut := 1 ;
 
   { Timer para animações }
   {$IFNDEF NOGUI}

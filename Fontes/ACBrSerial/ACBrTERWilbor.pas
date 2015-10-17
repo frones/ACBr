@@ -86,7 +86,7 @@ Begin
     if TACBrTER( fpOwner ).Comutadora Then
      begin
        fpDevice.EnviaString( 'S'+Format('%2.2d', [Terminal]) + #5  );
-       PesoOk := fpDevice.Serial.RecvPacket( 500 );
+       PesoOk := fpDevice.LeString( 500 );
      end
     else
      begin
@@ -98,7 +98,7 @@ Procedure TACBrTERWilbor.LeSerial( MillisecTimeOut: Integer );
 Var Packet : String;
 Begin
   Try
-     Packet := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+     Packet := fpDevice.LeString( MillisecTimeOut );
      If TACBrTER( fpOwner ).Comutadora Then
       begin   //Possui Comutadora gerenciando vários Terminais?
         While Length( Packet ) >= 3 Do

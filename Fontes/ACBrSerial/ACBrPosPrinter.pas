@@ -1200,14 +1200,9 @@ begin
   FDevice.EnviaString( ACmd );
 
   if WaitForTerminator then
-    Result := FDevice.Serial.RecvTerminated(ATimeOut, chr(BytesToRead))
+    Result := FDevice.LeString(ATimeOut, 0, chr(BytesToRead))
   else
-  begin
-    if BytesToRead < 1 then
-      Result := FDevice.Serial.RecvPacket(ATimeOut)
-    else
-      Result := FDevice.Serial.RecvBufferStr(BytesToRead, ATimeOut);
-  end;
+    Result := FDevice.LeString(ATimeOut, BytesToRead);
 
   GravarLog('RX <- '+Result, True);
 end;
@@ -1226,7 +1221,7 @@ function TACBrPosPrinter.LerStatusImpressora: TACBrPosPrinterStatus;
 begin
   Result := [];
 
-  if not FDevice.IsSerialPort then
+  if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
     Result := Result + [stNaoSerial];
 
   if Result = [] then
@@ -1241,8 +1236,8 @@ end;
 function TACBrPosPrinter.LerInfoImpressora: String;
 begin
   Result := '';
-  if not FDevice.IsSerialPort then
-    raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais');
+  if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
+    raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais ou TCP');
 
   Result := FPosPrinterClass.LerInfo;
 end;

@@ -137,7 +137,7 @@ begin
      exit ;
 
   fpDevice.EnviaString( #0 ) ;   // Pede Status
-  nBit := fpDevice.Serial.RecvByte( 200 ) ;
+  nBit := fpDevice.LeByte( 200 ) ;
 
   Result := not TestBit( nBit , 2 ) ;
 end;

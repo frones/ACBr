@@ -39,6 +39,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/10/2015      (por: DSA)
+-- ACBrDevice --
+[+] Procedure EnviaByte( const AByte : Byte )
+[+] procedure Limpar ;
+[+] Function BytesParaLer: Integer;
+[*] Function "LeString" modificada para permitir a leitura por "Terminador"
+
+-- ACBrSerial --
+[*] Refatoração em várias units para usar métodos de TACBrDevice ao invés de
+    usar métodos diretamente de TBlockSerial. Isso permitirá que dispositivos
+    Seriais usem Portas no formato "TCP:ip_maquina:NumPorta"
+
+-- ACBrECF --
+[*] Método "IdentificaConsumidor" modificado para codificar as informações do
+    Nome e do Endereço do Consumidor na página de código do ECF
+
+-- ACBrPosPrinter --
+[+] Adicionado suporte a "LerInfoImpressora" e "LerStatusImpressora" em Portas TCP
+
 Data: 16/10/2015
 -- ACBrECFEscECF --     (por: DSA)
 [-] Ajuste para não enviar a Data e Hora do PC quando parâmetro DataHora

@@ -309,8 +309,11 @@ TACBrDevice = class( TComponent )
     procedure Ativar ;
     procedure Desativar ;
     Procedure EnviaString( const AString : AnsiString ) ;
-    Function LeString( ATimeOut: Integer=0; NumBytes: Integer=0 ): String;
+    Procedure EnviaByte( const AByte : Byte ) ;
+    Function LeString( ATimeOut: Integer=0; NumBytes: Integer=0; Terminador: AnsiString = '' ): String;
     Function LeByte( ATimeOut: Integer=0 ): Byte;
+    procedure Limpar ;
+    Function BytesParaLer: Integer;
 
     Procedure ImprimePos(const Linha, Coluna : Integer; const AString: AnsiString) ;
     Procedure Eject ;
@@ -1201,7 +1204,13 @@ begin
    end ;
 end;
 
-function TACBrDevice.LeString(ATimeOut: Integer; NumBytes: Integer): String;
+procedure TACBrDevice.EnviaByte(const AByte: Byte);
+begin
+  EnviaString(chr(AByte));
+end;
+
+function TACBrDevice.LeString(ATimeOut: Integer; NumBytes: Integer;
+  Terminador: AnsiString): String;
 var
    Buffer: AnsiString;
    Fim: TDateTime;
@@ -1213,18 +1222,22 @@ begin
 
   if IsTCPPort then
    begin
-     if NumBytes = 0 then
-        Result := Socket.RecvPacket( ATimeOut )
+     if NumBytes > 0 then
+        Result := Socket.RecvBufferStr( NumBytes, ATimeOut)
+     else if Terminador <> '' then
+        Result := Socket.RecvTerminated( ATimeOut, Terminador)
      else
-        Result := Socket.RecvBufferStr( NumBytes, ATimeOut) ;
+        Result := Socket.RecvPacket( ATimeOut );
    end
 
   else if IsSerialPort then
    begin
-     if NumBytes = 0 then
-        Result := Serial.RecvPacket( ATimeOut )
+     if NumBytes > 0 then
+        Result := Serial.RecvBufferStr( NumBytes, ATimeOut)
+     else if Terminador <> '' then
+        Result := Serial.RecvTerminated( ATimeOut, Terminador)
      else
-        Result := Serial.RecvBufferStr( NumBytes, ATimeOut) ;
+        Result := Serial.RecvPacket( ATimeOut );
    end
 
   else if IsDLLPort and Assigned( HookLeString ) then
@@ -1260,6 +1273,24 @@ begin
      if Length(Buffer) > 0 then
         Result := Ord( Buffer[1] );
    end;
+end;
+
+procedure TACBrDevice.Limpar;
+begin
+  if IsSerialPort then
+    Serial.Purge
+  else if IsTCPPort then
+    Socket.Purge;
+end;
+
+function TACBrDevice.BytesParaLer: Integer;
+begin
+  if IsSerialPort then
+     Result := Serial.WaitingDataEx
+  else if IsTCPPort then
+     Result := Socket.WaitingDataEx
+  else
+     Result := 0;
 end;
 
 procedure TACBrDevice.EnviaStringSerial(const AString : AnsiString) ;

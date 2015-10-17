@@ -226,7 +226,7 @@ begin
 
         repeat
            try
-              fpDevice.Serial.Purge;
+              fpDevice.Limpar;
               fpDevice.EnviaString( cmd );   { Eviando o comando }
 
               { põe pra dormir para atualizar o buffer da porta serial... }
@@ -236,7 +236,7 @@ begin
            end ;
 
            try
-              ACK := fpDevice.Serial.RecvByte(SecTimeOut) ;
+              ACK := fpDevice.LeByte(SecTimeOut) ;
            except
               raise Exception.create(ACBrStr('PertoCheck não responde'));
            end ;
@@ -254,7 +254,7 @@ begin
         repeat
            try
               fpRespostaComando := fpRespostaComando + { Le conteudo da porta }
-                                   fpDevice.Serial.RecvPacket(SecTimeOut) ;
+                                   fpDevice.LeString(SecTimeOut) ;
            except
               { Exceçao silenciosa }
            end ;

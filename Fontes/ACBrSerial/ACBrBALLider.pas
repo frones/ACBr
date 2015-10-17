@@ -135,7 +135,7 @@ begin
 
   while (Result <= -1) and (TempoFinal > Now) do
   begin
-    fpDevice.Serial.Purge;
+    fpDevice.Limpar;
 
     // Não precisa enviar comando de leitura de peso
     //fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
@@ -185,7 +185,7 @@ begin
     fpUltimaResposta := StrDebug.Text;
     StrDebug.Free;
 {$ELSE}
-    fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+    fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
     GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
 {$ENDIF}
 

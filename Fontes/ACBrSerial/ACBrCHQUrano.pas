@@ -130,7 +130,7 @@ begin
      exit ;
 
   fpDevice.EnviaString( #170 + #06 + #128 ) ;   // Pede Status
-  nBit := fpDevice.Serial.RecvByte( 200 ) ;
+  nBit := fpDevice.LeByte( 200 ) ;
 
   Result := (nBit <> 2) ;
 end;

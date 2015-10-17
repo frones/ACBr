@@ -2563,7 +2563,9 @@ end;
 procedure TACBrECF.IdentificaConsumidor(CPF_CNPJ : String ; Nome : String ;
   Endereco : String) ;
 begin
-  fsECF.Consumidor.AtribuiConsumidor(CPF_CNPJ, Nome, Endereco);
+  fsECF.Consumidor.AtribuiConsumidor( CPF_CNPJ,
+                                      CodificarPaginaDeCodigoECF( Nome ),
+                                      CodificarPaginaDeCodigoECF( Endereco ));
 end;
 
 function TACBrECF.GetConsumidorClass: TACBrECFConsumidor;
@@ -5433,7 +5435,7 @@ procedure TACBrECF.DoAcharPorta ;
      try
         Desativar ;
         try
-           Device.Serial.Purge ;
+           Device.Limpar ;
         except
         end ;
         Msg := Format( ACBrStr(cACBrECFMsgDoAcharPorta), [ModeloStr, Porta] );

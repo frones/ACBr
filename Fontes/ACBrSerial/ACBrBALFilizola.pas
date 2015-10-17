@@ -89,7 +89,7 @@ begin
   while (Result = -1) and (TempoFinal > now) do
   begin
      GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
-     fpDevice.Serial.Purge ;
+     fpDevice.Limpar ;
      fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
      sleep(200) ;
      MillisecTimeOut := max( MilliSecondsBetween(now,TempoFinal), 1000) ;
@@ -107,7 +107,7 @@ begin
   fpUltimaResposta := '' ;
 
   Try
-     fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+     fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
      GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
 
      { Retira STX, ETX }

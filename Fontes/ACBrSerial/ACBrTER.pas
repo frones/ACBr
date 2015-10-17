@@ -171,7 +171,7 @@ Begin
     fsDevice.SetSubComponent( True );{ para gravar no DFM/XFM }
     {$ENDIF}
     fsDevice.Porta := 'COM1';
-    fsDevice.Serial.DeadlockTimeout := 1000;
+    fsDevice.TimeOut := 1;
 
     { Timer para monitorar a recepção de dados }
     fsTimer := TTimer.Create( Self );
@@ -277,10 +277,11 @@ Begin
 
     Try
         { Está ativo ? Tem dados esperando na porta Serial ? }
-        If fsDevice.Serial.InstanceActive Then Begin
-            If ( fsDevice.Serial.WaitingDataEx > 0 ) Then
+        if fsDevice.Ativo then
+        begin
+            If ( fsDevice.BytesParaLer > 0 ) Then
                 fsTER.LeSerial( 500 );
-        End;
+        end;
     Finally
         fsTimer.Enabled := True;
     End;

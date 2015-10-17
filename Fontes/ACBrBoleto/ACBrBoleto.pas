@@ -56,9 +56,9 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.148a';
+  CACBrBoleto_Versao = '0.0.149a';
 
-  cACBrTipoOcorrenciaDecricao: array[0..178] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
   'Remessa Baixar',
   'Remessa Debitar em Conta',
@@ -67,6 +67,7 @@ const
   'Remessa Conceder Desconto',
   'Remessa Cancelar Desconto',
   'Remessa Alterar Vencimento',
+  'Remessa Alterar Vencimento Sustar Protesto',
   'Remessa Protestar',
   'Remessa Sustar Protesto',
   'Remessa Cancelar Instrucao Protesto Baixa',
@@ -97,6 +98,7 @@ const
   'Remessa Nao Cobrar Juros Mora',
   'Remessa Cobrar Juros Mora',
   'Remessa Alterar Valor Titulo',
+  'Remessa Excluir Sacador Avalista',
   'Retorno Confirmado',
   'Retorno Transferencia Carteira',
   'Retorno Transferencia Carteira Entrada',
@@ -284,6 +286,7 @@ type
     toRemessaConcederDesconto,
     toRemessaCancelarDesconto,
     toRemessaAlterarVencimento,
+    toRemessaAlterarVencimentoSustarProtesto,
     toRemessaProtestar,
     toRemessaSustarProtesto,
     toRemessaCancelarInstrucaoProtestoBaixa,
@@ -314,6 +317,7 @@ type
     toRemessaNaoCobrarJurosMora,
     toRemessaCobrarJurosMora,
     toRemessaAlterarValorTitulo,
+    toRemessaExcluirSacadorAvalista,
 
     {Ocorrências para arquivo retorno}
     toRetornoRegistroConfirmado,
@@ -518,6 +522,8 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; virtual;
 
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
+
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoNossoNumero(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarLinhaDigitavel(const CodigoBarras: String; ACBrTitulo : TACBrTitulo): String; virtual;
@@ -577,6 +583,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String;
 
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer;
 
@@ -1777,6 +1784,11 @@ begin
   Result:= BancoClass.CodMotivoRejeicaoToDescricao(TipoOcorrencia,CodMotivo);
 end;
 
+function TACBrBanco.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia;
+begin
+   Result:= fBancoClass.CodOcorrenciaToTipo(CodOcorrencia);
+end;
+
 function TACBrBanco.CalcularDigitoVerificador ( const ACBrTitulo: TACBrTitulo
    ) : String;
 begin
@@ -1970,6 +1982,12 @@ function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
   const TipoOcorrencia : TACBrTipoOcorrencia ; CodMotivo : Integer) : String ;
 begin
   Result := '';
+end ;
+
+function TACBrBancoClass.CodOcorrenciaToTipoRemessa(const CodOcorrencia : Integer
+  ) : TACBrTipoOcorrencia ;
+begin
+  Result := toRemessaRegistrar;
 end ;
 {
  function TACBrBancoClass.GetNumero: Integer;

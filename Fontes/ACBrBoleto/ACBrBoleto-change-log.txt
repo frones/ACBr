@@ -67,6 +67,17 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 16/10/2015 ver. 0.0.149a
+-- ACBrBoleto --
+[+] Criação de função para converter o Código de Ocorrencia para o Tipo
+    para os bancos Itau e Bradesco. (Carlos Alberto Fitl) 
+
+--ACBrBancoSantander--
+[-] Ajuste remessa CNAB240 (valdirdill e jsantos)
+
+--ACBrBancoBrasil--
+[-]Correção calculo do tamanho do nosso número (Juliana Tamizou)
+
 Data: 30/09/2015 ver. 0.0.148a
 -- ACBrBoleto --
 [-]Ajuste função GetOcorrenciasRemessa. (webjoel)

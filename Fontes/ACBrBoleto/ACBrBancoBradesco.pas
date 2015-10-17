@@ -62,6 +62,8 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
 implementation
@@ -989,6 +991,30 @@ begin
    else
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
    end;
+end;
+
+function TACBrBancoBradesco.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    03 : Result:= toRemessaProtestoFinsFalimentares;        {Pedido de Protesto Falimentar}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    07 : Result:= toRemessaAlterarControleParticipante;     {Alteração do controle do participante}
+    08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    18 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
+    19 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
+    22 : Result:= toRemessaTransfCessaoCreditoIDProd10;     {Transferência Cessão crédito ID. Prod.10}
+    23 : Result:= toRemessaTransferenciaCarteira;           {Transferência entre Carteiras}
+    24 : Result:= toRemessaDevTransferenciaCarteira;        {Dev. Transferência entre Carteiras}
+    31 : Result:= toRemessaOutrasOcorrencias;               {Alteração de Outros Dados}
+    68 : Result:= toRemessaAcertarRateioCredito;            {Acerto nos dados do rateio de Crédito}
+    69 : Result:= toRemessaCancelarRateioCredito;           {Cancelamento do rateio de crédito.}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
+  end;
 end;
 
 

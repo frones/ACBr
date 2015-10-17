@@ -65,6 +65,8 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
    end;
 
 implementation
@@ -1552,6 +1554,31 @@ begin
    else
       Result:= IntToStrZero(CodMotivo,2) +' - Outros Motivos';
    end;
+end;
+
+function TACBrBancoItau.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    07 : Result:= toRemessaAlterarUsoEmpresa;               {Alteração do uso Da Empresa}
+    08 : Result:= toRemessaAlterarSeuNumero;                {Alteração do seu Número}
+    09 : Result:= toRemessaProtestar;                       {Protestar (emite aviso ao sacado após xx dias do vencimento, e envia ao cartório após 5 dias úteis)}
+    10 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar Protesto}
+    11 : Result:= toRemessaProtestoFinsFalimentares;        {Protesto para fins Falimentares}
+    18 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
+    30 : Result:= toRemessaExcluirSacadorAvalista;          {Exclusão de Sacador Avalista}
+    31 : Result:= toRemessaOutrasAlteracoes;                {Alteração de Outros Dados}
+    34 : Result:= toRemessaBaixaporPagtoDiretoCedente;      {Baixa por ter sido pago Diretamente ao Cedente}
+    35 : Result:= toRemessaCancelarInstrucao;               {Cancelamento de Instrução}
+    37 : Result:= toRemessaAlterarVencimentoSustarProtesto; {Alteração do Vencimento e Sustar Protesto}
+    38 : Result:= toRemessaCedenteDiscordaSacado;           {Cedente não Concorda com Alegação do Sacado }
+    47 : Result:= toRemessaCedenteSolicitaDispensaJuros;    {Cedente Solicita Dispensa de Juros}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
+  end;
 end;
 
 end.

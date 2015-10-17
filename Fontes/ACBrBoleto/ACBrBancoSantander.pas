@@ -431,11 +431,15 @@ begin
     end;
 
     {Instruções}
+
+    Instrucao1 := Trim(Instrucao1);
+    Instrucao2 := Trim(Instrucao2);
+
     if (DataProtesto <> 0) and
        (DataProtesto > Vencimento) then
     begin
-      if (Trim(Instrucao2) = '') then
-        Instrucao2 := '1' // Protestar Dias Corridos
+      if (Instrucao1 = '') then
+        Instrucao1 := '1' // Protestar Dias Corridos
       else
       begin
         if not MatchText(Instrucao2, ['0', '1', '2', '3', '9']) then
@@ -451,7 +455,7 @@ begin
     end;
 
     // Baixa/Devolução
-    if Instrucao2 = '' then
+    if (Instrucao2 = '') then
       Instrucao2 := '2' // NAO BAIXAR / NAO DEVOLVER
     else
     begin
@@ -503,10 +507,10 @@ begin
               sTipoDocto                                       + // 060 - 060 / Tipo de documento
               Space(1)                                         + // 061 - 061 / Reservado (uso Banco)
               Space(1)                                         + // 062 - 062 / Reservado (uso Banco)
-              PadRight(Copy(SeuNumero, 1, 15), 15)                 + // 063 - 077 / Nº do documento
+              PadRight(Copy(SeuNumero, 1, 15), 15)             + // 063 - 077 / Nº do documento
               FormatDateTime('ddmmyyyy',Vencimento)            + // 078 - 085 / Data de vencimento do título
               IntToStrZero(round(ValorDocumento * 100), 15)    + // 086 - 100 / Valor nominal do título
-              PadLeft('0', 4, '0')                                + // 101 - 104 / Agência encarregada da cobrança
+              PadLeft('0', 4, '0')                             + // 101 - 104 / Agência encarregada da cobrança
               '0'                                              + // 105 - 105 / Dígito da Agência encarregada da cobrança
               Space(1)                                         + // 106 - 106 / Reservado (uso Banco)
               sEspecie                                         + // 107 – 108 / Espécie do título
@@ -520,7 +524,7 @@ begin
               IntToStrZero(round(ValorDesconto * 100), 15)     + // 151 - 165 / Valor ou Percentual do desconto concedido
               IntToStrZero(round(ValorIOF * 100), 15)          + // 166 - 180 / Valor do IOF a ser recolhido
               IntToStrZero(round(ValorAbatimento * 100), 15)   + // 181 - 195 / Valor do abatimento
-              PadRight(NossoNumero, 25)                            + // 196 - 220 / Identificação do título na empresa
+              PadRight(NossoNumero, 25)                        + // 196 - 220 / Identificação do título na empresa
               Instrucao1                                       + // 221 - 221 / Código para protesto
               sDiasProtesto                                    + // 222 - 223 / Número de dias para protesto
               Instrucao2                                       + // 224 - 224 / Código para Baixa/Devolução

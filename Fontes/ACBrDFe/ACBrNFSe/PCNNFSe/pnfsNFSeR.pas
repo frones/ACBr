@@ -1357,11 +1357,8 @@ begin
 
      if (VersaoXML = '1') or (FProvedor in [proFiorilli, proGoiania, ProTecnos, proVirtual, proDigifred])
       then begin
-       if (FProvedor = proTecnos)  then
-       begin
-         NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'RazaoSocial');
-         NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
-       end;
+       NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
+       if (FProvedor = proTecnos) then NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'RazaoSocial');
        if Leitor.rExtrai(5, 'CpfCnpj') <> ''
         then begin
           NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cpf');

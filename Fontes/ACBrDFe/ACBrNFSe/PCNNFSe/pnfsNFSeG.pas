@@ -623,7 +623,7 @@ begin
                            '</IntermediarioServico>'
   end;
 
- if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro, proSisPMJP]
+ if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro, proSisPMJP, proDigifred]
   then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
                                 IntToStr(APagina) +
                               '</' + Prefixo3 + 'Pagina>';
@@ -799,7 +799,7 @@ begin
                                    QtdeNotas, Notas, TagI, TagF, AProvedor);
 
  if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco,
-                  proBetha, proBetim, proBHISS, proDBSeller, proDigifred,
+                  proBetha, proBetim, proBHISS, proDBSeller, {proDigifred,}
                   proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania,
                   proGovBR, {proGovDigital,} proIssCuritiba, proISSDigital,
                   proISSIntel, proISSNet, proLexsom, proNatal, proTinus, proProdemge,

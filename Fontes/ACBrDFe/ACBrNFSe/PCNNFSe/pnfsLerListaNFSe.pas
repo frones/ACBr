@@ -293,7 +293,8 @@ begin
        (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '') or
-       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') then
+       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') or
+       (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '') then
     begin
       // =======================================================================
       // Extrai a Lista de Notas

@@ -676,6 +676,11 @@ begin
     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
   end;
 
+  if (FProvedor = proPronim) and (FPLayout = LayNfseRecepcaoLote) then begin
+    DadosMsg := '&lt;' + ENCODING_UTF8 + '&gt;' + DadosMsg;
+    DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+  end;
+
   CabMsg := FPCabMsg;
   if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
     CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
@@ -2575,8 +2580,13 @@ begin
 
   InicializarDadosMsg;
 
-  FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio' + FNameSpaceDad;
-  FTagF := '</' + FPrefixo3 + 'ConsultarNfseEnvio>';
+  if (FProvedor = proDigifred) then begin
+    FTagI := '<' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + FNameSpaceDad;
+    FTagF := '</' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
+  end else begin
+    FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio' + FNameSpaceDad;
+    FTagF := '</' + FPrefixo3 + 'ConsultarNfseEnvio>';
+  end;
 
  if FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSe
   then begin
@@ -2911,7 +2921,10 @@ begin
       FPDadosMsg := FTagI + FPDadosMsg + FTagF;
       // O procedimento recebe como parametro o XML a ser assinado e retorna o
       // mesmo assinado da propriedade FPDadosMsg
-      if FProvedor = proGinfes then
+      if FProvedor = proDigifred then
+        AssinarXML(FPDadosMsg, FPrefixo3 + 'InfPedidoCancelamento', '',
+                                         'Falha ao Assinar - Cancelar NFS-e: ')
+      else if FProvedor = proGinfes then
         AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
                                          'Falha ao Assinar - Cancelar NFS-e: ')
       else
@@ -2976,6 +2989,8 @@ var
   i: Integer;
 begin
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'CancelarNfseResposta');
+  i := pos('?>', FPRetWS);
+  if (i > 0) then FPRetWS := copy(FPRetWS, i+2, length(FPRetWS));
 
   if Assigned(FRetCancNFSe) then
     FRetCancNFSe.Free;

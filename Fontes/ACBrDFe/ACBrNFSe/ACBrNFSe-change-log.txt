@@ -47,6 +47,34 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2015
+-- ACBrNFSeNotasFiscais --
+[*] Ajuste para carregar XML de Rps versão 2.00 ou posterior.
+    Por: Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
+[*] Efetuado ajuste para o Provedor Pronim para deixar exatamente como estava 
+    no Trunk, na hora de gerar o arquivo Soap;
+    Ajustado a FTagI e FTagF para o Provedor Digifred, para funcionar o serviço 
+    de ConsultarNfseServicoPrestado;
+    Ajustado a Assinatura do Cancelamento para o Provedor Digifred;
+    Ajustado o TratarResposta do CancelarNfse, para remover UTF8, para poder 
+    converter para UTF8 antes de salvar;
+-- pnfsLerListaNFSe --
+[*] Efetuado ajuste no LerXml para poder ler o retorno do serviço 
+    ConsultarNfseServicoPrestado;
+-- pnfsNFSeG --
+[*] Ajustado a função Gera_DadosMsgConsNFSe para o provedor Digifred;
+    Ajustado a função Gera_DadosMsgGerarNFSe para o provedor Digifred;
+-- pnfsNFSeR --
+[*] Ajustado a função LerNFSe_ABRASF_V2 para setar a propriedade 
+    NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal, 
+    em alguns lugares a mesma é utilizada.
+    Por: Rômulo da Costa de Souza
+
+[+] Criado os arquivos INI para os provedores Betha, Digifred e Pronim
+    Por: Rômulo da Costa de Souza
+
 09/10/2015
 -- ACBrNFSeWebServices / ACBrNFSe / ACBrNFSeConfiguracoes --
 [-] Correções e migração dos métodos, ConsultarNFse e

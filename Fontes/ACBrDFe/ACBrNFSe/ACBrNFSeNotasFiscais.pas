@@ -750,20 +750,31 @@ end;
 function TNotasFiscais.LoadFromString(AXMLString: String;
   AGerarNFSe: Boolean = True): Boolean;
 var
+  VersaoNFSe: TVersaoNFSe;
+  Ok: Boolean;
   AXML: AnsiString;
   P, N: integer;
 
-  function PosNFSe: integer;
+  function PosNFSe: Integer;
   begin
-    Result := pos('</Nfse>', AXMLString);
+    Result := Pos('</Nfse>', AXMLString);
   end;
 
-  function PosRPS: integer;
+  function PosRPS: Integer;
   begin
-    Result := pos('</Rps>', AXMLString);
+    if VersaoNFSe < ve200 then
+      Result := Pos('</Rps>', AXMLString)
+    else
+    begin
+      // Se a versão do XML do RPS for 2.00 ou posterior existem 2 TAGs <Rps>,
+      // neste caso devemos buscar a posição da segunda.
+      Result := Pos('</Rps>', AXMLString);
+      Result := PosEx('</Rps>', AXMLString, Result + 1);
+    end;
   end;
 
 begin
+  VersaoNFSe := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
   Result := False;
   N := PosNFSe;
   if N > 0 then
@@ -792,7 +803,6 @@ begin
     begin
       AXML := copy(AXMLString, 1, N + 5);
       AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
-
       with Self.Add do
       begin
         LerXML(AXML);
@@ -801,7 +811,7 @@ begin
           GerarXML;
       end;
 
-      N := PosNFSe;
+      N := PosRPS;
     end;
   end;
 end;

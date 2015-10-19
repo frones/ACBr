@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2015
+[-] Adicionado o tipo ptPersonalizado que estava faltando.
+    por: Rômulo da Costa de Souza
+
 22/09/2015
 [-] Acerto para geração de campos string removendo as quebras de linha e 
     trocando por ;, as quebras de linhas estavam gerando problemas de assinatura

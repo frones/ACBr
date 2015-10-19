@@ -424,14 +424,14 @@ end;
 
 function PercTribToStr(const t: TpcnPercentualTributos): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1'],
-                              [ptValorProdutos, ptValorNF]);
+  result := EnumeradoToStr(t, ['0', '1', '2'],
+                              [ptValorProdutos, ptValorNF, ptPersonalizado]);
 end;
 
 function StrToPercTrib(out ok: boolean; const s: string): TpcnPercentualTributos;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1'],
-                                  [ptValorProdutos, ptValorNF]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2'],
+                                  [ptValorProdutos, ptValorNF, ptPersonalizado]);
 end;
 
 // B22 - Forma de Emissão da NF-e **********************************************

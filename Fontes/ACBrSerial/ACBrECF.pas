@@ -3275,7 +3275,7 @@ begin
       InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,CR+LF,#10,[rfReplaceAll]) ;
       InfoConsumidorRodapeBobina := StringReplace(InfoConsumidorRodapeBobina,'|',#10,[rfReplaceAll]) ;
 
-      InfoConsumidorRodapeBobina := Trim(InfoConsumidorRodapeBobina);
+      InfoConsumidorRodapeBobina := Trim(DecodificarPaginaDeCodigoECF(InfoConsumidorRodapeBobina));
 
       InfoConsumidorRodapeBobina := AjustaLinhas( InfoConsumidorRodapeBobina, fsMemoColunas, 8 ) ;
       MemoAdicionaLinha( InfoConsumidorRodapeBobina );

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/10/2015
+-- ACBrNFSeWebServices --
+[*] No Tratamento do Retorno do WebService foi acrescentado a TAG <s:Body>.
+    Por: Italo Jurisato Junior
 -- ACBrNFSeNotasFiscais --
 [*] Ajuste para carregar XML de Rps versão 2.00 ou posterior.
     Por: Italo Jurisato Junior

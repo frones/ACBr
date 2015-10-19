@@ -844,6 +844,9 @@ begin
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'env:Body');
 
+  if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 's:Body');
+
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then
     Result := FPRetornoWS;

@@ -2878,17 +2878,23 @@ begin
 end;
 
 function TiraPontos(Str: string): string;
+const
+  InvalidChars : set of char =
+  ['/',',','-','.',')','(',',',' '];
 var
-  i: Integer;
-  xStr : String;
+  i, Count: Integer;
 begin
- xStr := '';
- for i:=1 to Length(Trim(str)) do
-   if (Pos(Copy(str,i,1),'/-.)(,')=0) then xStr := xStr + str[i];
-
- xStr := StringReplace(xStr,' ','',[rfReplaceAll]);
-
- Result:=xStr;
+  SetLength(Result, Length(str));
+  Count := 0;
+  for i := 1 to Length(str) do
+  begin
+    if not (str[i] in InvalidChars) then
+    begin
+      inc(Count);
+      Result[Count] := str[i];
+    end;
+  end;
+  SetLength(Result, Count);
 end;
 
 function Space(Tamanho: Integer): string;

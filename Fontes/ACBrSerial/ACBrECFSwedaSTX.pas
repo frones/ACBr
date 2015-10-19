@@ -1821,13 +1821,14 @@ begin
      fpArredondaItemMFD := False;
 
  {Vai vir o indice, tem que transformar em aliquota no formato Tipo + Aliquota}
-  if (AliquotaECF[1] <> 'I') and
-     (AliquotaECF[1] <> 'F') and
-     (AliquotaECF[1] <> 'N') then
+  if not (AliquotaECF[1] in ['I','F','N']) then
   begin
      {Formato tem que ser T18,00% por exemplo}
      Aliquota := AchaICMSIndice(AliquotaECF);
-     AliquotaECF := FormatFloat(Aliquota.Tipo+'00.00%',Aliquota.Aliquota);
+     if Aliquota = Nil then
+        raise EACBrECFCMDInvalido.Create(ACBrStr(cACBrECFAchaICMSCMDInvalido) + AliquotaECF);
+
+     AliquotaECF := FormatFloatBr(Aliquota.Aliquota, Aliquota.Tipo+'00.00%');
   end;
 
   LimiteDescricao := ifthen(DescricaoGrande, 233, 33);
@@ -1919,7 +1920,7 @@ procedure TACBrECFSwedaSTX.ProgramaAliquota(Aliquota: Double; Tipo: Char;
 var
    sAliquota:String;
 begin
-   sAliquota := FormatFloat(Tipo+'00.00',Aliquota);
+   sAliquota := FormatFloatBr(Aliquota, Tipo+'00.00');
    {Nesse protocolo não é necessário a posição :) }
    EnviaComando('32|'+sAliquota);
 end;
@@ -2256,7 +2257,7 @@ begin
    Cidade     := PadRight(Cidade,30) ;
    Moeda      := PadRight('Real',20) ;
    Moedas     := PadRight('Reais',20) ;
-   sValor     := FormatFloat('#0.00',Valor);
+   sValor     := FormatFloatBr(Valor, '#0.00');
    sData      := FormatDateTime('dd/mm/yyyy',Data);
    // Impreesão da observação na frente do cheque com até 80 caracteres
    EnviaComando('14|'+Banco+'|'+sValor+'|'+Moeda+'|'+Moedas+'|'+Favorecido+
@@ -2353,7 +2354,7 @@ procedure TACBrECFSwedaSTX.AbreCupomVinculado(COO, CodFormaPagto,
 var
    sValor:String;
 begin
-   sValor := FormatFloat('#0.00',Valor);
+   sValor := FormatFloatBr(Valor, '#0.00');
    EnviaComando('50|'+CodFormaPagto+'|'+sValor);
 end;
 
@@ -2801,7 +2802,7 @@ begin
    sDescricao := Trim(CodificarPaginaDeCodigoECF( CNF.Descricao ));
 //   {Remove o sinal da descrição}
 //   sDescricao[1]:= ' ';
-   EnviaComando('21|'+sDescricao+'|'+FormatFloat('#0.00',Valor));
+   EnviaComando('21|'+sDescricao+'|'+FormatFloatBr(Valor, '#0.00'));
 end;
 
 function TACBrECFSwedaSTX.RemoveNulos(Str: AnsiString): AnsiString;

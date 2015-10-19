@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/10/2015
+-- ACBrECFSwedaStx --   (por: DSA)
+[-] Ajuste para envio de comandos com decimais sempre usando ",", independente
+    do S.O. utilizado
+
 Data: 17/10/2015      (por: DSA)
 -- ACBrDevice --
 [+] Procedure EnviaByte( const AByte : Byte )

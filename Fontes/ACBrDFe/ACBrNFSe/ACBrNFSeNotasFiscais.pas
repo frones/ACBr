@@ -774,7 +774,7 @@ var
   end;
 
 begin
-  VersaoNFSe := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
+  VersaoNFSe := StrToVersaoNFSe(Ok, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConfigXML.VersaoXML);
   Result := False;
   N := PosNFSe;
   if N > 0 then

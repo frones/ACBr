@@ -67,6 +67,12 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 19/10/2015 ver. 0.0.150a
+-- ACBrBancoCecredi --
+[-] Correção remessa CNAB400 (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/15964-boleto-e-cobran%C3%A7a-cecredi/
+
+
 Data: 16/10/2015 ver. 0.0.149a
 -- ACBrBoleto --
 [+] Criação de função para converter o Código de Ocorrencia para o Tipo

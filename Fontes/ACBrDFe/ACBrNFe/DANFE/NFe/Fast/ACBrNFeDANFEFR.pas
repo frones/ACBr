@@ -80,7 +80,7 @@ type
     FImprimirUnQtVlComercial: boolean;
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
-    fQuebraLinhaEmVeiculos : Boolean;
+    fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -116,7 +116,7 @@ type
     property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
-    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos Write fQuebraLinhaEmVeiculos;
+    property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico Write fQuebraLinhaEmDetalhamentoEspecifico;
   end;
 
 implementation
@@ -143,7 +143,7 @@ begin
   FDescricaoViaEstabelec := 'Via do Consumidor';// utilizado para NFC-e
   FURLConsultaPublica:= ''; //NFCe
   FImprimirDadosArma := True;
-  fQuebraLinhaEmVeiculos  := True;
+  fQuebraLinhaEmDetalhamentoEspecifico  := True;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -203,7 +203,7 @@ begin
   FdmDanfe.DescricaoViaEstabelec := FDescricaoViaEstabelec;
   FdmDanfe.URLConsultaPublica    := FURLConsultaPublica;
   FdmDanfe.ImprimirDadosArma := FImprimirDadosArma;
-  FdmDanfe.QuebraLinhaEmVeiculos := fQuebraLinhaEmVeiculos;
+  FdmDanfe.QuebraLinhaEmDetalhamentoEspecifico := fQuebraLinhaEmDetalhamentoEspecifico;
 
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFile) <> '' then

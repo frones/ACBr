@@ -99,7 +99,7 @@ type
     FImprimirUnQtVlComercial: boolean;
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
-    fQuebraLinhaEmVeiculos : Boolean;
+    fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
 
     FfrxReport: TfrxReport;
     FfrxPDFExport: TfrxPDFExport;
@@ -198,7 +198,7 @@ type
     property frxReport: TfrxReport read FfrxReport write FfrxReport;
     property frxPDFExport: TfrxPDFExport read FfrxPDFExport write FfrxPDFExport;
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
-    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos write fQuebraLinhaEmVeiculos;
+    property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
 
     procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
@@ -2011,18 +2011,24 @@ end;
 Function TACBrNFeFRClass.ManterArma( inItem:  integer  ) : String;
 Var
   i : Integer;
+  sQuebraLinha : String;  
 begin
   Result := '';
   with FNFe.Det.Items[inItem].Prod do
   begin
     if (FImprimirDadosArma) and ( arma.Count > 0) then
     begin
-      Result := ';';
       for i := 0 to arma.Count - 1 do
       begin
-        Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + ';';
-        Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + ';';
-        Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + ';';
+        if fQuebraLinhaEmDetalhamentoEspecifico then
+          sQuebraLinha := ';'
+        else
+          sQuebraLinha := ' - ';
+
+		Result := sQuebraLinha;		  
+        Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
+        Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
+        Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
         Result := Result + ACBrStr('DESCRIÇÃO ARMA: ') + arma.Items[i].descr + ';';
        end;
     end;
@@ -2032,6 +2038,7 @@ end;
 Function TACBrNFeFRClass.ManterMedicamentos( inItem:  integer  ) : String;
 Var
   i : Integer;
+  sQuebraLinha : String;  
 begin
   Result := '';
   { detalhamento específico de medicamentos }
@@ -2041,12 +2048,17 @@ begin
     begin
       for i := 0 to med.Count - 1 do
       begin
-        Result := ';';
-        Result := Result + '-LOTE: '    + med.Items[i].nLote+ ';';
-        Result := Result + ' QTDADE: '  + FormatFloatBr(med.Items[i].qLote)+ ';';
-        Result := Result + ' FABR.: '   + FormatDateBr(med.Items[i].dFab)+ ';';
-        Result := Result + ' VAL.: '    + FormatDateBr(med.Items[i].dVal)+ ';';
-        Result := Result + IfThen( med.Items[i].vPMC  > 0, ' PMC: ' + FormatFloatBr(med.Items[i].vPMC) + ';' , '');
+		if fQuebraLinhaEmDetalhamentoEspecifico then
+		  sQuebraLinha := ';'
+		else
+		  sQuebraLinha := ' - ';
+			
+		  Result := sQuebraLinha;
+		  Result := Result + 'LOTE: '    + med.Items[i].nLote+ sQuebraLinha;
+		  Result := Result + 'QTDADE: '  + FormatFloatBr(med.Items[i].qLote)+ sQuebraLinha;
+		  Result := Result + 'FABR.: '   + FormatDateBr(med.Items[i].dFab)+ sQuebraLinha;
+		  Result := Result + 'VAL.: '    + FormatDateBr(med.Items[i].dVal)+ sQuebraLinha;
+		  Result := Result + IfThen( med.Items[i].vPMC  > 0, 'PMC: ' + FormatFloatBr(med.Items[i].vPMC) + ';' , '');
       end;
     end;
   end;
@@ -2062,7 +2074,7 @@ begin
   begin
     if veicProd.chassi > '' then
     begin
-      if fQuebraLinhaEmVeiculos then
+      if fQuebraLinhaEmDetalhamentoEspecifico then
         sQuebraLinha := ';'
       else
         sQuebraLinha := ' - ';

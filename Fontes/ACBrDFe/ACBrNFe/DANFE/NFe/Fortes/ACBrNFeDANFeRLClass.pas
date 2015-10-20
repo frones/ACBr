@@ -95,7 +95,7 @@ type
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
     FDetCombustiveis: TDetCombustiveis;
-    fQuebraLinhaEmVeiculos : Boolean;
+    fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -122,7 +122,7 @@ type
                             [da_tpArma, da_nSerie, da_nCano, da_descr];
     property DetCombustiveis: TDetCombustiveis read FDetCombustiveis write FDetCombustiveis default
                             [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
-    property QuebraLinhaEmVeiculos : Boolean  read fQuebraLinhaEmVeiculos write fQuebraLinhaEmVeiculos;
+    property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
     property ExibeCampoFatura: Boolean        read fExibeCampoFatura      write fExibeCampoFatura;
   end;
 
@@ -173,7 +173,7 @@ begin
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
-  fQuebraLinhaEmVeiculos  := True;
+  fQuebraLinhaEmDetalhamentoEspecifico  := True;
   fExibeCampoFatura       := False;
 end;
 
@@ -211,7 +211,7 @@ try
           FExibeResumoCanhoto_Texto, FNFeCancelada,
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
           FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmVeiculos,
+          fQuebraLinhaEmDetalhamentoEspecifico,
           Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
           fCasasDecimais._Mask_vUnCom,
@@ -231,7 +231,7 @@ try
       FExibeResumoCanhoto_Texto, FNFeCancelada,
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-      fQuebraLinhaEmVeiculos,
+      fQuebraLinhaEmDetalhamentoEspecifico,
       Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
       fCasasDecimais._Mask_vUnCom,
@@ -278,7 +278,7 @@ begin
           FExibeResumoCanhoto_Texto, FNFeCancelada,
           FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
           FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmVeiculos,
+          fQuebraLinhaEmDetalhamentoEspecifico,
           Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
           fCasasDecimais._Mask_vUnCom,
@@ -302,7 +302,7 @@ begin
       FExibeResumoCanhoto_Texto, FNFeCancelada,
       FImprimirDetalhamentoEspecifico, FImprimeDescPorc,
       FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-      fQuebraLinhaEmVeiculos,
+      fQuebraLinhaEmDetalhamentoEspecifico,
       Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
       fCasasDecimais._Mask_vUnCom,

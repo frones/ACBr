@@ -1912,7 +1912,7 @@ begin
   begin
     if veicProd.chassi > '' then
     begin
-      if fQuebraLinhaEmVeiculos then
+      if fQuebraLinhaEmDetalhamentoEspecifico then
         sQuebraLinha := #13#10
       else
         sQuebraLinha := ' - ';
@@ -1951,6 +1951,7 @@ end;
 Function TfrlDANFeRLRetrato.ManterMedicamentos( inItem:  integer  ) : String;
 Var
   i : Integer;
+  sQuebraLinha : String;
 begin
   Result := '';
   with FNFe.Det.Items[inItem].Prod do
@@ -1959,10 +1960,15 @@ begin
     begin
       for i := 0 to med.Count - 1 do
       begin
-        if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + #13#10;
-        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + #13#10;
-        if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + #13#10;
-        if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE VALIDADE: ')   + DateToStr(med.Items[i].dVal) + #13#10;
+		if fQuebraLinhaEmDetalhamentoEspecifico then
+		  sQuebraLinha := #13#10
+        else
+          sQuebraLinha := ' - ';
+		  
+        if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + sQuebraLinha;
+        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + sQuebraLinha;
+        if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + sQuebraLinha;
+        if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE VALIDADE: ')   + DateToStr(med.Items[i].dVal) + sQuebraLinha;
         if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
       end;
     end;
@@ -1972,6 +1978,7 @@ end;
 Function TfrlDANFeRLRetrato.ManterArma( inItem:  integer  ) : String;
 Var
   i : Integer;
+  sQuebraLinha : String;
 begin
   Result := '';
   with FNFe.Det.Items[inItem].Prod do
@@ -1980,9 +1987,14 @@ begin
     begin
       for i := 0 to arma.Count - 1 do
       begin
-        if da_tpArma in FDetArmamentos then Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + #13#10;
-        if da_nSerie in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + #13#10;
-        if da_nCano  in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + #13#10;
+		if fQuebraLinhaEmDetalhamentoEspecifico then
+		  sQuebraLinha := #13#10
+        else
+          sQuebraLinha := ' - ';	  
+	  
+        if da_tpArma in FDetArmamentos then Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
+        if da_nSerie in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
+        if da_nCano  in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
         if da_descr  in FDetArmamentos then Result := Result + ACBrStr('DESCRIÇÃO ARMA: ') + arma.Items[i].descr + #13#10;
        end;
     end;

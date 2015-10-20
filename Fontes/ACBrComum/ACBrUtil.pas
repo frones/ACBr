@@ -2879,8 +2879,7 @@ end;
 
 function TiraPontos(Str: string): string;
 const
-  InvalidChars : set of char =
-  ['/',',','-','.',')','(',',',' '];
+  InvalidChars : Set of Char = [ '/',',','-','.',')','(',' ' ];
 var
   i, Count: Integer;
 begin

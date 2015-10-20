@@ -375,7 +375,7 @@ begin
                   PadLeft(ATipoEspecieDoc, 2, '0') +                               // Especie de titulo
                   ATipoAceite +                                                 // Aceite
                   FormatDateTime( 'ddmmyy', DataDocumento ) +                   // Data de Emissão
-                  AInstrucao +                                                  // 1ª e 2ª instrução codificada
+                  PadLeft(AInstrucao, 2, '0') +                                                  // 1ª e 2ª instrução codificada
                   IntToStrZero( round(ValorMoraJuros * 100 ), 13) +             // Juros de mora por dia
                   IntToStrZero(0,6) +                                           // Zeros
                   IntToStrZero( round( ValorDesconto * 100), 13) +              // Valor do desconto

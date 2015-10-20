@@ -201,7 +201,8 @@ begin
               end ;
 
               CaracTitulo := TACBrCaracTitulo(IniBoletos.ReadInteger('CEDENTE','CaracTitulo',0));
-
+              TipoCarteira:= TACBrTipoCarteira(IniBoletos.ReadInteger('CEDENTE','TipoCarteira',0));    
+              TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger('CEDENTE','TipoDocumento',1)); 
 
               with FrmACBrMonitor do
               begin

@@ -54,6 +54,8 @@ uses
 const
   ACBRCTE_VERSAO = '2.0.0a';
   ACBRCTE_NAMESPACE = 'http://www.portalfiscal.inf.br/cte';
+  ACBRCTE_CErroAmbDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
+     'configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
 type
   EACBrCTeException = class(EACBrDFeException);
@@ -108,7 +110,7 @@ type
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
 
-    function Consultar: Boolean;
+    function Consultar( AChave: String = ''): Boolean;
     function Cancelamento(AJustificativa: WideString; ALote: Integer = 0): Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
     function Inutilizar(ACNPJ, AJustificativa: String;
@@ -628,18 +630,26 @@ begin
   end;
 end;
 
-function TACBrCTe.Consultar: Boolean;
+function TACBrCTe.Consultar(AChave: String): Boolean;
 var
   i: Integer;
 begin
-  if Self.Conhecimentos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum CT-e Informado!'));
+  if (Conhecimentos.Count = 0) and EstaVazio(AChave) then
+    GerarException(ACBrStr('ERRO: Nenhum CT-e ou Chave Informada!'));
 
-  for i := 0 to Self.Conhecimentos.Count - 1 do
+  if NaoEstaVazio(AChave) then
   begin
-    WebServices.Consulta.CTeChave :=
-      OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.ID);
+    Conhecimentos.Clear;
+    WebServices.Consulta.CTeChave := AChave;
     WebServices.Consulta.Executar;
+  end
+  else
+  begin
+    for i := 0 to Conhecimentos.Count - 1 do
+    begin
+      WebServices.Consulta.CTeChave := Conhecimentos.Items[i].NumID;
+      WebServices.Consulta.Executar;
+    end;
   end;
 
   Result := True;
@@ -649,34 +659,32 @@ function TACBrCTe.Cancelamento(AJustificativa: WideString; ALote: Integer): Bool
 var
   i: Integer;
 begin
-  if Self.Conhecimentos.Count = 0 then
+  if Conhecimentos.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhum CT-e Informado!'));
 
-  for i := 0 to self.Conhecimentos.Count - 1 do
+  for i := 0 to Conhecimentos.Count - 1 do
   begin
-    Self.WebServices.Consulta.CTeChave :=
-      OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.ID);
+    WebServices.Consulta.CTeChave := Conhecimentos.Items[i].NumID;
 
-    if not Self.WebServices.Consulta.Executar then
-      raise Exception.Create(Self.WebServices.Consulta.Msg);
+    if not WebServices.Consulta.Executar then
+      raise Exception.Create(WebServices.Consulta.Msg);
 
-    Self.EventoCTe.Evento.Clear;
-    with Self.EventoCTe.Evento.Add do
+    EventoCTe.Evento.Clear;
+    with EventoCTe.Evento.Add do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(Self.WebServices.Consulta.CTeChave), 7, 14);
-      infEvento.cOrgao := StrToIntDef(
-        copy(OnlyNumber(Self.WebServices.Consulta.CTeChave), 1, 2), 0);
+      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.CTeChave), 7, 14);
+      infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.CTeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;
-      infEvento.chCTe := Self.WebServices.Consulta.CTeChave;
-      infEvento.detEvento.nProt := Self.WebServices.Consulta.Protocolo;
+      infEvento.chCTe := WebServices.Consulta.CTeChave;
+      infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
       infEvento.detEvento.xJust := AJustificativa;
     end;
 
     try
-      Self.EnviarEvento(ALote);
+      EnviarEvento(ALote);
     except
-      raise Exception.Create(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
+      raise Exception.Create(WebServices.EnvEvento.EventoRetorno.xMotivo);
     end;
   end;
 
@@ -685,7 +693,8 @@ end;
 
 function TACBrCTe.EnviarEvento(idLote: Integer): Boolean;
 var
-  i: Integer;
+  i, j: Integer;
+  chCTe: String;
 begin
   if EventoCTe.Evento.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum Evento adicionado ao Lote'));
@@ -699,31 +708,53 @@ begin
   {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando não especificar}
   for i := 0 to EventoCTe.Evento.Count -1 do
   begin
-    try
-      if EventoCTe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
-        EventoCTe.Evento.Items[i].infEvento.nSeqEvento := 1;
-      if self.Conhecimentos.Count > 0 then
-       begin
-         if trim(EventoCTe.Evento.Items[i].InfEvento.CNPJ) = '' then
-           EventoCTe.Evento.Items[i].InfEvento.CNPJ := self.Conhecimentos.Items[i].CTe.Emit.CNPJ;
-         if trim(EventoCTe.Evento.Items[i].InfEvento.chCTe) = '' then
-           EventoCTe.Evento.Items[i].InfEvento.chCTe := OnlyNumber(self.Conhecimentos.Items[i].CTe.infCTe.ID);
-         if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-         begin
-           if EventoCTe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
-            begin
-              EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := self.Conhecimentos.Items[i].CTe.procCTe.nProt;
-              if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-               begin
-                  WebServices.Consulta.CTeChave := EventoCTe.Evento.Items[i].InfEvento.chCTe;
-                  if not WebServices.Consulta.Executar then
-                    raise Exception.Create(WebServices.Consulta.Msg);
-                  EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
-               end;
-            end;
-         end;
-       end;
-    except
+    if EventoCTe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
+      EventoCTe.Evento.Items[i].infEvento.nSeqEvento := 1;
+
+    FEventoCTe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+
+    if Conhecimentos.Count > 0 then
+    begin
+      chCTe := OnlyNumber(EventoCTe.Evento.Items[i].InfEvento.chCTe);
+
+      // Se tem a chave do CTe no Evento, procure por ela nos conhecimentos carregados //
+      if NaoEstaVazio(chCTe) then
+      begin
+        for j := 0 to Conhecimentos.Count - 1 do
+        begin
+          if chCTe = NotasFiscais.Items[j].NumID then
+            Break;
+        end;
+
+        if j = Conhecimentos.Count then
+          GerarException( ACBrStr('Não existe CTe com a chave ['+chCTe+'] carregado') );
+      end
+      else
+        j := 0;
+
+      if trim(EventoCTe.Evento.Items[i].InfEvento.CNPJ) = '' then
+        EventoCTe.Evento.Items[i].InfEvento.CNPJ := Conhecimentos.Items[j].CTe.Emit.CNPJCPF;
+
+      if chCTe = '' then
+        EventoCTe.Evento.Items[i].InfEvento.chCTe := Conhecimentos.Items[j].NumID;
+
+      if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+      begin
+        if EventoCTe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+        begin
+          EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := Conhecimentos.Items[j].CTe.procCTe.nProt;
+
+          if trim(EventoCTe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+          begin
+            WebServices.Consulta.CTeChave := EventoCTe.Evento.Items[i].InfEvento.chCTe;
+
+            if not WebServices.Consulta.Executar then
+              GerarException(WebServices.Consulta.Msg);
+
+            EventoCTe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
+          end;
+        end;
+      end;
     end;
   end;
 
@@ -768,8 +799,8 @@ begin
   end;
 end;
 
-procedure TACBrCTe.EnviarEmailEvento(sPara, sAssunto: String; sMensagem,
-  sCC, Anexos: TStrings);
+procedure TACBrCTe.EnviarEmailEvento(sPara, sAssunto: String;
+  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
 var
   NomeArq: String;
   AnexosEmail: TStrings;

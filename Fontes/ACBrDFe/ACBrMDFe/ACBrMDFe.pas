@@ -52,6 +52,8 @@ uses
 const
   ACBRMDFe_VERSAO = '2.0.0a';
   ACBRMDFE_NAMESPACE = 'http://www.portalfiscal.inf.br/mdfe';
+  ACBRMDFE_CErroAmbDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
+     'configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
 type
   EACBrMDFeException = class(EACBrDFeException);
@@ -90,9 +92,9 @@ type
     function cStatConfirmado(AValue: integer): Boolean;
     function cStatProcessado(AValue: integer): Boolean;
 
-    function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
-    function Consultar: Boolean;
+    function Consultar( AChave: String = ''): Boolean;
     function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
+    function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
@@ -438,51 +440,57 @@ function TACBrMDFe.Cancelamento(AJustificativa: WideString; ALote: integer = 0):
 var
   i: integer;
 begin
-  if Self.Manifestos.Count = 0 then
+  if Manifestos.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhum MDF-e Informado!'));
 
-  for i := 0 to self.Manifestos.Count - 1 do
+  for i := 0 to Manifestos.Count - 1 do
   begin
-    Self.WebServices.Consulta.MDFeChave :=
-      OnlyNumber(self.Manifestos.Items[i].MDFe.infMDFe.ID);
+    WebServices.Consulta.MDFeChave := Manifestos.Items[i].NumID);
 
-    if not Self.WebServices.Consulta.Executar then
-      raise Exception.Create(Self.WebServices.Consulta.Msg);
+    if not WebServices.Consulta.Executar then
+      raise Exception.Create(WebServices.Consulta.Msg);
 
-    Self.EventoMDFe.Evento.Clear;
-    with Self.EventoMDFe.Evento.Add do
+    EventoMDFe.Evento.Clear;
+    with EventoMDFe.Evento.Add do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(Self.WebServices.Consulta.MDFeChave), 7, 14);
-      infEvento.cOrgao := StrToIntDef(
-        copy(OnlyNumber(Self.WebServices.Consulta.MDFeChave), 1, 2), 0);
+      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.MDFeChave), 7, 14);
+      infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.MDFeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;
-      infEvento.chMDFe := Self.WebServices.Consulta.MDFeChave;
-      infEvento.detEvento.nProt := Self.WebServices.Consulta.Protocolo;
+      infEvento.chMDFe := WebServices.Consulta.MDFeChave;
+      infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
       infEvento.detEvento.xJust := AJustificativa;
     end;
 
     try
-      Self.EnviarEvento(ALote);
+      EnviarEvento(ALote);
     except
-      raise Exception.Create(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
+      raise Exception.Create(WebServices.EnvEvento.EventoRetorno.xMotivo);
     end;
   end;
   Result := True;
 end;
 
-function TACBrMDFe.Consultar: Boolean;
+function TACBrMDFe.Consultar(AChave: String): Boolean;
 var
  i: Integer;
 begin
-  if Self.Manifestos.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhum MDF-e Informado!'));
+  if (Manifestos.Count = 0) and EstaVazio(AChave) then
+    GerarException(ACBrStr('ERRO: Nenhum MDF-e ou Chave Informada!'));
 
-  for i := 0 to Self.Manifestos.Count - 1 do
+  if NaoEstaVazio(AChave) then
   begin
-    WebServices.Consulta.MDFeChave :=
-      OnlyNumber(self.Manifestos.Items[i].MDFe.infMDFe.ID);
+    Manifestos.Clear;
+    WebServices.Consulta.MDFeChave := AChave;
     WebServices.Consulta.Executar;
+  end
+  else
+  begin
+    for i := 0 to Manifestos.Count - 1 do
+    begin
+      WebServices.Consulta.MDFeChave := Manifestos.Items[i].NumID;
+      WebServices.Consulta.Executar;
+    end;
   end;
 
   Result := True;
@@ -528,7 +536,8 @@ end;
 
 function TACBrMDFe.EnviarEvento(idLote: Integer): Boolean;
 var
-  i: integer;
+  i, j: integer;
+  chMDFe: String;
 begin
   if EventoMDFe.Evento.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum Evento adicionado ao Lote'));
@@ -542,40 +551,53 @@ begin
   {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando não especificar}
   for i := 0 to EventoMDFe.Evento.Count - 1 do
   begin
-    try
-      if EventoMDFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
-        EventoMDFe.Evento.Items[i].infEvento.nSeqEvento := 1;
-      if self.Manifestos.Count > 0 then
+    if EventoMDFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
+      EventoMDFe.Evento.Items[i].infEvento.nSeqEvento := 1;
+
+    FEventoMDFe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+
+    if Manifestos.Count > 0 then
+    begin
+      chMDFe := OnlyNumber(EventoMDFe.Evento.Items[i].InfEvento.chMDFe);
+
+      // Se tem a chave do MDFe no Evento, procure por ela nos manifestos carregados //
+      if NaoEstaVazio(chMDFe) then
       begin
-        if trim(EventoMDFe.Evento.Items[i].InfEvento.CNPJ) = '' then
-          EventoMDFe.Evento.Items[i].InfEvento.CNPJ :=
-            self.Manifestos.Items[i].MDFe.Emit.CNPJ;
-
-        if trim(EventoMDFe.Evento.Items[i].InfEvento.chMDFe) = '' then
-          EventoMDFe.Evento.Items[i].InfEvento.chMDFe :=
-            OnlyNumber(self.Manifestos.Items[i].MDFe.infMDFe.ID);
-
-        if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+        for j := 0 to Manifestos.Count - 1 do
         begin
-          if EventoMDFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+          if chMDFe = Manifestos.Items[j].NumID then
+            Break;
+        end;
+
+        if j = Manifestos.Count then
+          GerarException( ACBrStr('Não existe MDFe com a chave ['+chMDFe+'] carregado') );
+      end
+      else
+        j := 0;
+
+      if trim(EventoMDFe.Evento.Items[i].InfEvento.CNPJ) = '' then
+        EventoMDFe.Evento.Items[i].InfEvento.CNPJ := Manifestos.Items[j].MDFe.Emit.CNPJ;
+
+      if chMDFe = '' then
+        EventoMDFe.Evento.Items[i].InfEvento.chMDFe := Manifestos.Items[j].NumID;
+
+      if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+      begin
+        if EventoMDFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+        begin
+          EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt := Manifestos.Items[j].MDFe.procMDFe.nProt;
+
+          if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
           begin
-            EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt :=
-              self.Manifestos.Items[i].MDFe.procMDFe.nProt;
+            WebServices.Consulta.MDFeChave := EventoMDFe.Evento.Items[i].InfEvento.chMDFe;
 
-            if trim(EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
-            begin
-              WebServices.Consulta.MDFeChave := EventoMDFe.Evento.Items[i].InfEvento.chMDFe;
+            if not WebServices.Consulta.Executar then
+              GerarException(WebServices.Consulta.Msg);
 
-              if not WebServices.Consulta.Executar then
-                raise Exception.Create(WebServices.Consulta.Msg);
-
-              EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt :=
-                WebServices.Consulta.Protocolo;
-            end;
+            EventoMDFe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
           end;
         end;
       end;
-    except
     end;
   end;
 

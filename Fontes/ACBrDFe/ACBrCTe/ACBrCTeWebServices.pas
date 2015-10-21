@@ -68,6 +68,7 @@ type
     FPConfiguracoesCTe: TConfiguracoesCTe;
 
     function ExtrairModeloChaveAcesso(AChaveCTE: String): String;
+    function ExtrairUFChaveAcesso(AChaveCTE: String): Integer;
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -220,6 +221,7 @@ type
 
   TCTeRecibo = class(TCTeWebService)
   private
+    FConhecimentos: TConhecimentos;
     FRecibo: String;
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
@@ -239,7 +241,7 @@ type
 
     function GerarMsgLog: String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
+    constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
     destructor Destroy; override;
 
     procedure Clear;
@@ -261,6 +263,7 @@ type
 
   TCTeConsulta = class(TCTeWebService)
   private
+    FConhecimentos: TConhecimentos;
     FCTeChave: String;
     FProtocolo: String;
     FDhRecbto: TDateTime;
@@ -285,7 +288,7 @@ type
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
+    constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
     destructor Destroy; override;
 
     procedure Clear;
@@ -627,6 +630,11 @@ begin
   TACBrCTe(FPDFeOwner).SetStatus(stCTeIdle);
 end;
 
+function TCTeWebService.ExtrairUFChaveAcesso(AChaveCTE: String): Integer;
+begin
+  Result := StrToIntDef(Copy(AChaveCTE, 1, 2), 0);
+end;
+
 { TCTeStatusServico }
 
 constructor TCTeStatusServico.Create(AOwner: TACBrDFe);
@@ -757,10 +765,42 @@ begin
 end;
 
 procedure TCTeRecepcao.DefinirURL;
+var
+  Modelo: String;
+  ok: Boolean;
+  VerServ: Double;
 begin
   FPLayout := LayCTeRecepcao;
 
-  inherited DefinirURL;
+  if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
+  begin
+    FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
+    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+
+    if FPConfiguracoesCTe.WebServices.Ambiente <> FConhecimentos.Items[0].CTe.Ide.tpAmb then
+      raise EACBrCTeException.Create( ACBRCTE_CErroAmbDiferente );
+  end
+  else
+  begin                              // Se não tem CTe, use as configurações do componente
+    FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  end;
+
+  Modelo := 'CTe';
+  FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrCTe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TCTeRecepcao.DefinirServicoEAction;
@@ -908,6 +948,119 @@ begin
   Result := Trim(FRecibo);
 end;
 
+function TCTeRetRecepcao.Executar: Boolean;
+var
+  IntervaloTentativas, Tentativas: Integer;
+begin
+  Result := False;
+
+  TACBrCTe(FPDFeOwner).SetStatus(stCTeRetRecepcao);
+  try
+    Sleep(FPConfiguracoesCTe.WebServices.AguardarConsultaRet);
+
+    Tentativas := 0; // Inicializa o contador de tentativas
+    IntervaloTentativas := max(FPConfiguracoesCTe.WebServices.IntervaloTentativas, 1000);
+
+    while (inherited Executar) and
+      (Tentativas < FPConfiguracoesCTe.WebServices.Tentativas) do
+    begin
+      Inc(Tentativas);
+      sleep(IntervaloTentativas);
+    end;
+  finally
+    TACBrCTe(FPDFeOwner).SetStatus(stCTeIdle);
+  end;
+
+  if FCTeRetorno.CStat = 104 then  // Lote processado ?
+    Result := TratarRespostaFinal;
+end;
+
+procedure TCTeRetRecepcao.DefinirURL;
+var
+  Modelo: String;
+  VerServ: Double;
+  ok: Boolean;
+begin
+  FPLayout := LayCTeRetRecepcao;
+
+  if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
+  begin
+    FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
+    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+
+    if FPConfiguracoesCTe.WebServices.Ambiente <> FConhecimentos.Items[0].CTe.Ide.tpAmb then
+      raise EACBrCTeException.Create( ACBRCTE_CErroAmbDiferente );
+  end
+  else
+  begin                              // Se não tem CTe, use as configurações do componente
+    FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  end;
+
+  FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+  Modelo := 'CTe';
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrCTe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
+procedure TCTeRetRecepcao.DefinirServicoEAction;
+begin
+  FPServico    := GetUrlWsd + 'CteRetRecepcao';
+  FPSoapAction := FPServico + '/cteRetRecepcao';
+end;
+
+procedure TCTeRetRecepcao.DefinirDadosMsg;
+var
+  ConsReciCTe: TConsReciCTe;
+begin
+  ConsReciCTe := TConsReciCTe.Create;
+  try
+    ConsReciCTe.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    ConsReciCTe.nRec := FRecibo;
+    ConsReciCTe.Versao := FPVersaoServico;
+    ConsReciCTe.GerarXML;
+
+    FPDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
+  finally
+    ConsReciCTe.Free;
+  end;
+end;
+
+function TCTeRetRecepcao.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'cteRetRecepcaoResult');
+
+  // Limpando variaveis internas
+  FCTeRetorno.Free;
+  FCTeRetorno := TRetConsReciCTe.Create;
+
+  FCTeRetorno.Leitor.Arquivo := FPRetWS;
+  FCTeRetorno.LerXML;
+
+  Fversao := FCTeRetorno.versao;
+  FTpAmb := FCTeRetorno.TpAmb;
+  FverAplic := FCTeRetorno.verAplic;
+  FcStat := FCTeRetorno.cStat;
+  FcUF := FCTeRetorno.cUF;
+  FPMsg := FCTeRetorno.xMotivo;
+  FxMotivo := FCTeRetorno.xMotivo;
+  FcMsg := FCTeRetorno.cMsg;
+  FxMsg := FCTeRetorno.xMsg;
+
+  Result := (FCTeRetorno.CStat = 105); // Lote em Processamento
+end;
+
 function TCTeRetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: Integer;
@@ -1035,87 +1188,6 @@ begin
   end;
 end;
 
-function TCTeRetRecepcao.Executar: Boolean;
-var
-  IntervaloTentativas, Tentativas: Integer;
-begin
-  Result := False;
-
-  TACBrCTe(FPDFeOwner).SetStatus(stCTeRetRecepcao);
-  try
-    Sleep(FPConfiguracoesCTe.WebServices.AguardarConsultaRet);
-
-    Tentativas := 0; // Inicializa o contador de tentativas
-    IntervaloTentativas := max(FPConfiguracoesCTe.WebServices.IntervaloTentativas, 1000);
-
-    while (inherited Executar) and
-      (Tentativas < FPConfiguracoesCTe.WebServices.Tentativas) do
-    begin
-      Inc(Tentativas);
-      sleep(IntervaloTentativas);
-    end;
-  finally
-    TACBrCTe(FPDFeOwner).SetStatus(stCTeIdle);
-  end;
-
-  if FCTeRetorno.CStat = 104 then  // Lote processado ?
-    Result := TratarRespostaFinal;
-end;
-
-procedure TCTeRetRecepcao.DefinirURL;
-begin
-  FPLayout := LayCTeRetRecepcao;
-
-  inherited DefinirURL;
-end;
-
-procedure TCTeRetRecepcao.DefinirServicoEAction;
-begin
-  FPServico    := GetUrlWsd + 'CteRetRecepcao';
-  FPSoapAction := FPServico + '/cteRetRecepcao';
-end;
-
-procedure TCTeRetRecepcao.DefinirDadosMsg;
-var
-  ConsReciCTe: TConsReciCTe;
-begin
-  ConsReciCTe := TConsReciCTe.Create;
-  try
-    ConsReciCTe.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
-    ConsReciCTe.nRec := FRecibo;
-    ConsReciCTe.Versao := FPVersaoServico;
-    ConsReciCTe.GerarXML;
-
-    FPDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
-  finally
-    ConsReciCTe.Free;
-  end;
-end;
-
-function TCTeRetRecepcao.TratarResposta: Boolean;
-begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'cteRetRecepcaoResult');
-
-  // Limpando variaveis internas
-  FCTeRetorno.Free;
-  FCTeRetorno := TRetConsReciCTe.Create;
-
-  FCTeRetorno.Leitor.Arquivo := FPRetWS;
-  FCTeRetorno.LerXML;
-
-  Fversao := FCTeRetorno.versao;
-  FTpAmb := FCTeRetorno.TpAmb;
-  FverAplic := FCTeRetorno.verAplic;
-  FcStat := FCTeRetorno.cStat;
-  FcUF := FCTeRetorno.cUF;
-  FPMsg := FCTeRetorno.xMotivo;
-  FxMotivo := FCTeRetorno.xMotivo;
-  FcMsg := FCTeRetorno.cMsg;
-  FxMsg := FCTeRetorno.xMsg;
-
-  Result := (FCTeRetorno.CStat = 105); // Lote em Processamento
-end;
-
 procedure TCTeRetRecepcao.FinalizarServico;
 begin
   // Sobrescrito, para não liberar para stIdle... não ainda...;
@@ -1146,10 +1218,11 @@ end;
 
 { TCTeRecibo }
 
-constructor TCTeRecibo.Create(AOwner: TACBrDFe);
+constructor TCTeRecibo.Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
 begin
   inherited Create(AOwner);
 
+  FConhecimentos := AConhecimentos;
   FCTeRetorno := TRetConsReciCTe.Create;
 
   FPStatus := stCTeRecibo;
@@ -1180,10 +1253,42 @@ begin
 end;
 
 procedure TCTeRecibo.DefinirURL;
+var
+  Modelo: String;
+  VerServ: Double;
+  ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
-  inherited DefinirURL;
+  if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
+  begin
+    FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
+    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+
+    if FPConfiguracoesCTe.WebServices.Ambiente <> FConhecimentos.Items[0].CTe.Ide.tpAmb then
+      raise EACBrCTeException.Create( ACBRCTE_CErroAmbDiferente );
+  end
+  else
+  begin                              // Se não tem CTe, use as configurações do componente
+    FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  end;
+
+  FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+  Modelo := 'CTe';
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrCTe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TCTeRecibo.DefinirDadosMsg;
@@ -1192,7 +1297,7 @@ var
 begin
   ConsReciCTe := TConsReciCTe.Create;
   try
-    ConsReciCTe.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    ConsReciCTe.tpAmb := FTpAmb;
     ConsReciCTe.nRec := FRecibo;
     ConsReciCTe.Versao := FPVersaoServico;
     ConsReciCTe.GerarXML;
@@ -1245,10 +1350,11 @@ end;
 
 { TCTeConsulta }
 
-constructor TCTeConsulta.Create(AOwner: TACBrDFe);
+constructor TCTeConsulta.Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
 begin
   inherited Create(AOwner);
 
+  FConhecimentos := AConhecimentos;
   FprotCTe := TProcCTe.Create;
   FretCancCTe := TRetCancCTe.Create;
   FprocEventoCTe := TRetEventoCTeCollection.Create(AOwner);
@@ -1279,26 +1385,36 @@ end;
 
 procedure TCTeConsulta.DefinirURL;
 var
-  Versao: Double;
+  VerServ: Double;
   Modelo: String;
   ok: Boolean;
 begin
   FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  FPURL  := '';
   Modelo := 'CTe';
-  FcUF   := StrToInt(Copy(FCTeChave, 1, 2));
-  FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+  FcUF   := ExtrairUFChaveAcesso(FCTeChave);
+
+  if FConhecimentos.Count > 0 then
+  begin
+    FTpAmb  := FConhecimentos.Items[0].CTe.Ide.tpAmb;
+    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+  end
+  else
+  begin
+    FTpAmb  := FPConfiguracoesCTe.WebServices.Ambiente;
+    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    Modelo, CUFtoUF(FcUF),
+    Modelo,
+    CUFtoUF(FcUF),
     FTpAmb,
     LayOutToServico(FPLayout),
-    Versao,
+    VerServ,
     FPURL
   );
 
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TCTeConsulta.DefinirServicoEAction;
@@ -1958,9 +2074,12 @@ begin
   FPURL := '';
   Versao := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
 
+  if EstaVazio(FUF) then
+    FUF := FPConfiguracoesCTe.WebServices.UF;
+
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
     TACBrCTe(FPDFeOwner).GetNomeModeloDFe,
-    Self.FUF,
+    FUF,
     FPConfiguracoesCTe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
@@ -2092,18 +2211,37 @@ begin
 end;
 
 procedure TCTeEnvEvento.DefinirURL;
+var
+  UF, Modelo : String;
+  VerServ: Double;
+  ok: Boolean;
 begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
+  VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
+  FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
+  Modelo  := 'CTe';
+  UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe));
+
   if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, teMultiModal]) then
-    FPLayout := LayCTeEventoAN
+    FPLayout := LayCTeEventoAN;
   else
     FPLayout := LayCTeEvento;
 
-  FCNPJ := FEvento.Evento.Items[0].InfEvento.CNPJ;
+  FPURL := '';
 
-  inherited DefinirURL;
+  TACBrCTe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    UF,
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TCTeEnvEvento.DefinirServicoEAction;
@@ -2128,7 +2266,7 @@ begin
     begin
       with EventoCTe.Evento.Add do
       begin
-        infEvento.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+        infEvento.tpAmb := FTpAmb;
         infEvento.CNPJ := FEvento.Evento[I].InfEvento.CNPJ;
         infEvento.cOrgao := FEvento.Evento[I].InfEvento.cOrgao;
         infEvento.chCTe := FEvento.Evento[I].InfEvento.chCTe;
@@ -2637,8 +2775,8 @@ begin
   FStatusServico := TCTeStatusServico.Create(FACBrCTe);
   FEnviar := TCTeRecepcao.Create(FACBrCTe, TACBrCTe(FACBrCTe).Conhecimentos);
   FRetorno := TCTeRetRecepcao.Create(FACBrCTe, TACBrCTe(FACBrCTe).Conhecimentos);
-  FRecibo := TCTeRecibo.Create(FACBrCTe);
-  FConsulta := TCTeConsulta.Create(FACBrCTe);
+  FRecibo := TCTeRecibo.Create(FACBrCTe, TACBrCTe(FACBrCTe).Conhecimentos);
+  FConsulta := TCTeConsulta.Create(FACBrCTe, TACBrCTe(FACBrCTe).Conhecimentos);
   FInutilizacao := TCTeInutilizacao.Create(FACBrCTe);
   FConsultaCadastro := TCTeConsultaCadastro.Create(FACBrCTe);
   FEnvEvento := TCTeEnvEvento.Create(FACBrCTe, TACBrCTe(FACBrCTe).EventoCTe);
@@ -2669,13 +2807,13 @@ end;
 
 function TWebServices.Envia(ALote: String): Boolean;
 begin
-  FEnviar.FLote := ALote;
+  FEnviar.Lote := ALote;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );
 
   FRetorno.Recibo := FEnviar.Recibo;
-  
+
   if not FRetorno.Executar then
     FRetorno.GerarException( FRetorno.Msg );
 

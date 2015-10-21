@@ -55,7 +55,6 @@ type
     FMDFeW: TMDFeW;
     FMDFeR: TMDFeR;
 
-    FXML: String;
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
@@ -63,6 +62,7 @@ type
     FErroValidacaoCompleto: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
+    FXML: String;
 
     function GetConfirmado: Boolean;
     function GetProcessado: Boolean;
@@ -70,6 +70,8 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
+    procedure SetXML(AValue: String);
+    procedure SetXMLOriginal(AValue: String);
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -100,10 +102,12 @@ type
 
     property MDFe: TMDFe read FMDFe;
 
-    property XML: String read FXML write FXML;
-    property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
-    property XMLAssinado: String read FXMLAssinado write FXMLAssinado;
-    
+    // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
+    property XML: String         read FXMLOriginal   write SetXML;
+    // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
+    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
+    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
+
     property Confirmado: Boolean read GetConfirmado;
     property Processado: Boolean read GetProcessado;
     property Msg: String read GetMsg;
@@ -211,32 +215,34 @@ end;
 
 procedure Manifesto.Assinar;
 var
-  XMLAss: String;
-  ArqXML: String;
+  XMLStr: String;
+  XMLUTF8: AnsiString;
   Leitor: TLeitor;
+  CNPJEmitente, CNPJCertificado: String;
 begin
-  if NaoEstaVazio(FXMLAssinado) then
-    exit;
-  ArqXML := GerarXML;
+  // Verificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
+  CNPJEmitente    := OnlyNumber(MDFe.Emit.CNPJ);
+  CNPJCertificado := OnlyNumber(TACBrMDFe(TManifestos(Collection).ACBrMDFe).SSL.CertCNPJ);
+
+  // verificar somente os 8 primeiros digitos, para evitar problemas quando
+  // a filial estiver utilizando o certificado da matriz
+  if Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8) then
+    raise EACBrMDFeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+
+  // Gera novamente, para processar propriedades que podem ter sido modificadas
+  XMLStr := GerarXML;
 
   // XML já deve estar em UTF8, para poder ser assinado //
-  ArqXML := ConverteXMLtoUTF8(ArqXML);
-  FXMLOriginal := ArqXML;
+  XMLUTF8 := ConverteXMLtoUTF8(XMLStr);
 
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
-    XMLAss := SSL.Assinar(ArqXML, 'MDFe', 'infMDFe');
-    FXMLAssinado := XMLAss;
-    FXMLOriginal := XMLAss;
-
-    // Remove header, pois podem existir várias Manifestos no XML //
-    //TODO: Verificar se precisa
-    //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
-    //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
+    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'MDFe', 'infMDFe');
+    FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
     try
-      leitor.Grupo := XMLAss;
+      leitor.Grupo := FXMLAssinado;
       MDFe.signature.URI := Leitor.rAtributo('Reference URI=');
       MDFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
       MDFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
@@ -246,10 +252,12 @@ begin
     end;
 
     if Configuracoes.Arquivos.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(), XMLAss);
-
-    if NaoEstaVazio(NomeArq) then
-      Gravar(NomeArq, XMLAss);
+    begin
+      if NaoEstaVazio(NomeArq) then
+        Gravar(NomeArq, FXMLAssinado)
+      else
+        Gravar(CalcularNomeArquivoCompleto(), FXMLAssinado);
+    end;
   end;
 end;
 
@@ -259,13 +267,7 @@ var
   MDFeEhValida, ModalEhValido: Boolean;
   ALayout: TLayOutMDFe;
 begin
-  AXML := FXMLAssinado;
-
-  if EstaVazio(AXML) then
-  begin
-    Assinar;
-    AXML := FXMLAssinado;
-  end;
+  AXML := XMLAssinado;
 
   AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
   case TACBrMDFe(TManifestos(Collection).ACBrMDFe).IdentificaSchemaModal(AXML) of
@@ -333,13 +335,7 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
-  AXML := FXMLAssinado;
-
-  if EstaVazio(AXML) then
-  begin
-    Assinar;
-    AXML := FXMLAssinado;
-  end;
+  AXML := XMLAssinado;
 
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
@@ -408,12 +404,7 @@ begin
   FMDFeR.Leitor.Arquivo := AXML;
   FMDFeR.LerXml;
 
-  FXML := string(AXML);
-  FXMLOriginal := FXML;
-  if XmlEstaAssinado(FXML) then
-    FXMLAssinado := FXML
-  else
-    FXMLAssinado := '';
+  XMLOriginal := string(AXML);
 
   Result := True;
 end;
@@ -489,15 +480,11 @@ begin
   end;
 
   FMDFeW.GerarXml;
-  FXML := FMDFeW.Gerador.ArquivoFormatoXML;
-  FXMLOriginal := FXML;
-  if XmlEstaAssinado(FXML) then
-    FXMLAssinado := FXML
-  else
-    FXMLAssinado := '';
+  XMLOriginal := FMDFeW.Gerador.ArquivoFormatoXML;
+  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
 
   FAlertas := FMDFeW.Gerador.ListaDeAlertas.Text;
-  Result := FXML;
+  Result := FXMLOriginal;
 end;
 
 function Manifesto.CalcularNomeArquivo: String;
@@ -587,6 +574,21 @@ begin
     Assinar;
 
   Result := FXMLAssinado;
+end;
+
+procedure Manifesto.SetXML(AValue: String);
+begin
+  LerXML(AValue);
+end;
+
+procedure Manifesto.SetXMLOriginal(AValue: String);
+begin
+  FXMLOriginal := AValue;
+
+  if XmlEstaAssinado(FXMLOriginal) then
+    FXMLAssinado := FXMLOriginal
+  else
+    FXMLAssinado := '';
 end;
 
 { TManifestos }
@@ -706,40 +708,41 @@ end;
 function TManifestos.LoadFromFile(CaminhoArquivo: String;
   AGerarMDFe: Boolean = True): Boolean;
 var
-  ArquivoXML: TStringList;
-  XML: String;
-  XMLOriginal: AnsiString;
+  XMLStr: String;
+  XMLUTF8: AnsiString;
   i: integer;
+  MS: TMemoryStream;
 begin
   Result := False;
-  ArquivoXML := TStringList.Create;
+
+  MS := TMemoryStream.Create;
   try
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
-    XMLOriginal := ArquivoXML.Text;
-
-    // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
-    LoadFromString(XML, AGerarMDFe);
-
-    for i := 0 to Self.Count - 1 do
-      Self.Items[i].NomeArq := CaminhoArquivo;
-
-    Result := True;
+    MS.LoadFromFile(CaminhoArquivo);
+    XMLUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
-    ArquivoXML.Free;
+    MS.Free;
   end;
+
+  // Converte de UTF8 para a String nativa da IDE //
+  XMLStr := DecodeToString(XMLUTF8, True);
+  LoadFromString(XMLStr, AGerarMDFe);
+
+  for i := 0 to Self.Count - 1 do
+    Self.Items[i].NomeArq := CaminhoArquivo;
+
+  Result := True;
 end;
 
 function TManifestos.LoadFromStream(AStream: TStringStream;
   AGerarMDFe: Boolean = True): Boolean;
 var
-  XMLOriginal: AnsiString;
+  AXML: AnsiString;
 begin
   Result := False;
   AStream.Position := 0;
-  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
+  AXML := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(String(XMLOriginal), AGerarMDFe);
+  Result := Self.LoadFromString(String(AXML), AGerarMDFe);
 end;
 
 function TManifestos.LoadFromString(AXMLString: String;

@@ -66,7 +66,7 @@ type
     FPConfiguracoesMDFe: TConfiguracoesMDFe;
 
     function ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
-
+    function ExtrairUFChaveAcesso(AChaveMDFe: String): Integer;
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -218,6 +218,7 @@ type
 
   TMDFeRecibo = class(TMDFeWebService)
   private
+    FManifestos: TManifestos;
     FRecibo: String;
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
@@ -237,7 +238,7 @@ type
 
     function GerarMsgLog: String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
+    constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
     destructor Destroy; override;
 
     property versao: String read Fversao;
@@ -257,6 +258,7 @@ type
 
   TMDFeConsulta = class(TMDFeWebService)
   private
+    FManifestos: TManifestos;
     FMDFeChave: String;
     FProtocolo: String;
     FDhRecbto: TDateTime;
@@ -280,7 +282,7 @@ type
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
+    constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
     destructor Destroy; override;
 
     property MDFeChave: String read FMDFeChave write FMDFeChave;
@@ -388,6 +390,7 @@ type
 
     function GerarPathDistribuicao(AItem :TdocZipCollectionItem): String;
   protected
+//    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -542,6 +545,11 @@ begin
   TACBrMDFe(FPDFeOwner).SetStatus(stMDFeIdle);
 end;
 
+function TMDFeWebService.ExtrairUFChaveAcesso(AChaveMDFe: String): Integer;
+begin
+  Result := StrToIntDef(Copy(AChaveMDFe, 1, 2), 0);
+end;
+
 { TMDFeStatusServico }
 
 constructor TMDFeStatusServico.Create(AOwner: TACBrDFe);
@@ -672,10 +680,42 @@ begin
 end;
 
 procedure TMDFeRecepcao.DefinirURL;
+var
+  Modelo: String;
+  ok: Boolean;
+  VerServ: Double;
 begin
   FPLayout := LayMDFeRecepcao;
 
-  inherited DefinirURL;
+  if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
+  begin
+    FcUF    := FManifestos.Items[0].MDFe.Ide.cUF;
+    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+
+    if FPConfiguracoesMDFe.WebServices.Ambiente <> FManifestos.Items[0].MDFe.Ide.tpAmb then
+      raise EACBrMDFeException.Create( ACBRMDFE_CErroAmbDiferente );
+  end
+  else
+  begin                              // Se não tem MDFe, use as configurações do componente
+    FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  end;
+
+  Modelo := 'MDFe';
+  FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrMDFe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TMDFeRecepcao.DefinirServicoEAction;
@@ -793,6 +833,119 @@ end;
 function TMDFeRetRecepcao.GetRecibo: String;
 begin
   Result := Trim(FRecibo);
+end;
+
+function TMDFeRetRecepcao.Executar: Boolean;
+var
+  IntervaloTentativas, Tentativas: Integer;
+begin
+  Result := False;
+
+  TACBrMDFe(FPDFeOwner).SetStatus(stMDFeRetRecepcao);
+  try
+    Sleep(FPConfiguracoesMDFe.WebServices.AguardarConsultaRet);
+
+    Tentativas := 0; // Inicializa o contador de tentativas
+    IntervaloTentativas := max(FPConfiguracoesMDFe.WebServices.IntervaloTentativas, 1000);
+
+    while (inherited Executar) and
+      (Tentativas < FPConfiguracoesMDFe.WebServices.Tentativas) do
+    begin
+      Inc(Tentativas);
+      sleep(IntervaloTentativas);
+    end;
+  finally
+    TACBrMDFe(FPDFeOwner).SetStatus(stMDFeIdle);
+  end;
+
+  if FMDFeRetorno.CStat = 104 then  // Lote processado ?
+    Result := TratarRespostaFinal;
+end;
+
+procedure TMDFeRetRecepcao.DefinirURL;
+var
+  Modelo: String;
+  ok: Boolean;
+  VerServ: Double;
+begin
+  FPLayout := LayMDFeRetRecepcao;
+
+  if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
+  begin
+    FcUF    := FManifestos.Items[0].MDFe.Ide.cUF;
+    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+
+    if FPConfiguracoesMDFe.WebServices.Ambiente <> FManifestos.Items[0].MDFe.Ide.tpAmb then
+      raise EACBrMDFeException.Create( ACBRMDFE_CErroAmbDiferente );
+  end
+  else
+  begin                              // Se não tem MDFe, use as configurações do componente
+    FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  end;
+
+  Modelo := 'MDFe';
+  FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrMDFe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
+procedure TMDFeRetRecepcao.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'MDFeRetRecepcao';
+  FPSoapAction := FPServico + '/mdfeRetRecepcao';
+end;
+
+procedure TMDFeRetRecepcao.DefinirDadosMsg;
+var
+  ConsReciMDFe: TConsReciMDFe;
+begin
+  ConsReciMDFe := TConsReciMDFe.Create;
+  try
+    ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    ConsReciMDFe.nRec := FRecibo;
+    ConsReciMDFe.Versao := FPVersaoServico;
+    ConsReciMDFe.GerarXML;
+
+    FPDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
+  finally
+    ConsReciMDFe.Free;
+  end;
+end;
+
+function TMDFeRetRecepcao.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
+
+  // Limpando variaveis internas
+  FMDFeRetorno.Free;
+  FMDFeRetorno := TRetConsReciMDFe.Create;
+
+  FMDFeRetorno.Leitor.Arquivo := FPRetWS;
+  FMDFeRetorno.LerXML;
+
+  Fversao := FMDFeRetorno.versao;
+  FTpAmb := FMDFeRetorno.TpAmb;
+  FverAplic := FMDFeRetorno.verAplic;
+  FcStat := FMDFeRetorno.cStat;
+  FcUF := FMDFeRetorno.cUF;
+  FPMsg := FMDFeRetorno.xMotivo;
+  FxMotivo := FMDFeRetorno.xMotivo;
+  FcMsg := FMDFeRetorno.cMsg;
+  FxMsg := FMDFeRetorno.xMsg;
+
+  Result := (FMDFeRetorno.CStat = 105); // Lote em Processamento
 end;
 
 function TMDFeRetRecepcao.TratarRespostaFinal: Boolean;
@@ -915,87 +1068,6 @@ begin
   end;
 end;
 
-function TMDFeRetRecepcao.Executar: Boolean;
-var
-  IntervaloTentativas, Tentativas: Integer;
-begin
-  Result := False;
-
-  TACBrMDFe(FPDFeOwner).SetStatus(stMDFeRetRecepcao);
-  try
-    Sleep(FPConfiguracoesMDFe.WebServices.AguardarConsultaRet);
-
-    Tentativas := 0; // Inicializa o contador de tentativas
-    IntervaloTentativas := max(FPConfiguracoesMDFe.WebServices.IntervaloTentativas, 1000);
-
-    while (inherited Executar) and
-      (Tentativas < FPConfiguracoesMDFe.WebServices.Tentativas) do
-    begin
-      Inc(Tentativas);
-      sleep(IntervaloTentativas);
-    end;
-  finally
-    TACBrMDFe(FPDFeOwner).SetStatus(stMDFeIdle);
-  end;
-
-  if FMDFeRetorno.CStat = 104 then  // Lote processado ?
-    Result := TratarRespostaFinal;
-end;
-
-procedure TMDFeRetRecepcao.DefinirURL;
-begin
-  FPLayout := LayMDFeRetRecepcao;
-
-  inherited DefinirURL;
-end;
-
-procedure TMDFeRetRecepcao.DefinirServicoEAction;
-begin
-  FPServico := GetUrlWsd + 'MDFeRetRecepcao';
-  FPSoapAction := FPServico + '/mdfeRetRecepcao';
-end;
-
-procedure TMDFeRetRecepcao.DefinirDadosMsg;
-var
-  ConsReciMDFe: TConsReciMDFe;
-begin
-  ConsReciMDFe := TConsReciMDFe.Create;
-  try
-    ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
-    ConsReciMDFe.nRec := FRecibo;
-    ConsReciMDFe.Versao := FPVersaoServico;
-    ConsReciMDFe.GerarXML;
-
-    FPDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
-  finally
-    ConsReciMDFe.Free;
-  end;
-end;
-
-function TMDFeRetRecepcao.TratarResposta: Boolean;
-begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
-
-  // Limpando variaveis internas
-  FMDFeRetorno.Free;
-  FMDFeRetorno := TRetConsReciMDFe.Create;
-
-  FMDFeRetorno.Leitor.Arquivo := FPRetWS;
-  FMDFeRetorno.LerXML;
-
-  Fversao := FMDFeRetorno.versao;
-  FTpAmb := FMDFeRetorno.TpAmb;
-  FverAplic := FMDFeRetorno.verAplic;
-  FcStat := FMDFeRetorno.cStat;
-  FcUF := FMDFeRetorno.cUF;
-  FPMsg := FMDFeRetorno.xMotivo;
-  FxMotivo := FMDFeRetorno.xMotivo;
-  FcMsg := FMDFeRetorno.cMsg;
-  FxMsg := FMDFeRetorno.xMsg;
-
-  Result := (FMDFeRetorno.CStat = 105); // Lote em Processamento
-end;
-
 procedure TMDFeRetRecepcao.FinalizarServico;
 begin
   // Sobrescrito, para não liberar para stIdle... não ainda...;
@@ -1026,10 +1098,11 @@ end;
 
 { TMDFeRecibo }
 
-constructor TMDFeRecibo.Create(AOwner: TACBrDFe);
+constructor TMDFeRecibo.Create(AOwner: TACBrDFe; AManifestos: TManifestos);
 begin
   inherited Create(AOwner);
 
+  FManifestos := AManifestos;
   FMDFeRetorno := TRetConsReciMDFe.Create;
 
   FPStatus := stMDFeRecibo;
@@ -1052,10 +1125,42 @@ begin
 end;
 
 procedure TMDFeRecibo.DefinirURL;
+var
+  Modelo: String;
+  ok: Boolean;
+  VerServ: Double;
 begin
   FPLayout := LayMDFeRetRecepcao;
 
-  inherited DefinirURL;
+  if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
+  begin
+    FcUF    := FManifestos.Items[0].MDFe.Ide.cUF;
+    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+
+    if FPConfiguracoesMDFe.WebServices.Ambiente <> FManifestos.Items[0].MDFe.Ide.tpAmb then
+      raise EACBrMDFeException.Create( ACBRMDFE_CErroAmbDiferente );
+  end
+  else
+  begin                              // Se não tem MDFe, use as configurações do componente
+    FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  end;
+
+  Modelo := 'MDFe';
+  FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrMDFe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    CUFtoUF(FcUF),
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TMDFeRecibo.DefinirDadosMsg;
@@ -1064,7 +1169,7 @@ var
 begin
   ConsReciMDFe := TConsReciMDFe.Create;
   try
-    ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    ConsReciMDFe.tpAmb := FTpAmb;
     ConsReciMDFe.nRec := FRecibo;
     ConsReciMDFe.Versao := FPVersaoServico;
     ConsReciMDFe.GerarXML;
@@ -1117,10 +1222,11 @@ end;
 
 { TMDFeConsulta }
 
-constructor TMDFeConsulta.Create(AOwner: TACBrDFe);
+constructor TMDFeConsulta.Create(AOwner: TACBrDFe; AManifestos: TManifestos);
 begin
   inherited Create(AOwner);
 
+  FManifestos := AManifestos;
   FprotMDFe := TProcMDFe.Create;
   FprocEventoMDFe := TRetEventoMDFeCollection.Create(AOwner);
 
@@ -1141,26 +1247,36 @@ end;
 
 procedure TMDFeConsulta.DefinirURL;
 var
-  Versao: Double;
+  VerServ: Double;
   Modelo: String;
   ok: Boolean;
 begin
   FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  FPURL  := '';
   Modelo := 'MDFe';
-  FcUF   := StrToInt(Copy(FMDFeChave, 1, 2));
-  FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+  FcUF   := ExtrairUFChaveAcesso(FMDFeChave);
+
+  if FManifestos.Count > 0 then
+  begin
+    FTpAmb  := FManifestos.Items[0].MDFe.Ide.tpAmb;
+    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+  end
+  else
+  begin
+    FTpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
+    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  end;
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
-    Modelo, CUFtoUF(FcUF),
+    Modelo,
+    CUFtoUF(FcUF),
     FTpAmb,
     LayOutToServico(FPLayout),
-    Versao,
+    VerServ,
     FPURL
   );
 
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TMDFeConsulta.DefinirServicoEAction;
@@ -1172,9 +1288,7 @@ end;
 procedure TMDFeConsulta.DefinirDadosMsg;
 var
   ConsSitMDFe: TConsSitMDFe;
-  OK: Boolean;
 begin
-  OK := False;
   ConsSitMDFe := TConsSitMDFe.Create;
   try
     ConsSitMDFe.TpAmb := FTpAmb;
@@ -1563,11 +1677,34 @@ begin
 end;
 
 procedure TMDFeEnvEvento.DefinirURL;
+var
+  UF, Modelo : String;
+  VerServ: Double;
+  ok: Boolean;
 begin
-  FPLayout := LayMDFeEvento;
-  FCNPJ := FEvento.Evento.Items[0].InfEvento.CNPJ;
+  { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
+    os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
-  inherited DefinirURL;
+  VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
+  FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
+  Modelo  := 'MDFe';
+  UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chMDFe));
+
+  FPLayout := LayMDFeEvento;
+
+  FPURL := '';
+
+  TACBrMDFe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    UF,
+    FTpAmb,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TMDFeEnvEvento.DefinirServicoEAction;
@@ -1592,7 +1729,7 @@ begin
     begin
       with EventoMDFe.Evento.Add do
       begin
-        infEvento.tpAmb      := FPConfiguracoes.WebServices.Ambiente;
+        infEvento.tpAmb      := FTpAmb;
         infEvento.CNPJ       := FEvento.Evento[i].InfEvento.CNPJ;
         infEvento.chMDFe     := FEvento.Evento[i].InfEvento.chMDFe;
         infEvento.dhEvento   := FEvento.Evento[i].InfEvento.dhEvento;
@@ -2058,7 +2195,32 @@ begin
                                                          AItem.resMDFe.CNPJCPF,
                                                          Data);
 end;
+(*
+procedure TDistribuicaoDFe.DefinirURL;
+var
+  UF : String;
+  Versao: Double;
+begin
+  { Esse método é tratado diretamente pela RFB }
 
+  UF := 'AN';
+
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+
+  TACBrMDFe(FPDFeOwner).LerServicoDeParams(
+    TACBrNFe(FPDFeOwner).GetNomeModeloDFe,
+    UF ,
+    FPConfiguracoesMDFe.WebServices.Ambiente,
+    LayOutToServico(FPLayout),
+    Versao,
+    FPURL);
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+*)
 { TMDFeEnvioWebService }
 
 constructor TMDFeEnvioWebService.Create(AOwner: TACBrDFe);
@@ -2131,8 +2293,8 @@ begin
   FStatusServico := TMDFeStatusServico.Create(FACBrMDFe);
   FEnviar := TMDFeRecepcao.Create(FACBrMDFe, TACBrMDFe(FACBrMDFe).Manifestos);
   FRetorno := TMDFeRetRecepcao.Create(FACBrMDFe, TACBrMDFe(FACBrMDFe).Manifestos);
-  FRecibo := TMDFeRecibo.Create(FACBrMDFe);
-  FConsulta := TMDFeConsulta.Create(FACBrMDFe);
+  FRecibo := TMDFeRecibo.Create(FACBrMDFe, TACBrMDFe(FACBrMDFe).Manifestos);
+  FConsulta := TMDFeConsulta.Create(FACBrMDFe, TACBrMDFe(FACBrMDFe).Manifestos);
   FEnvEvento := TMDFeEnvEvento.Create(FACBrMDFe, TACBrMDFe(FACBrMDFe).EventoMDFe);
   FConsMDFeNaoEnc := TMDFeConsultaMDFeNaoEnc.Create(FACBrMDFe);
   FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrMDFe);
@@ -2161,7 +2323,7 @@ end;
 
 function TWebServices.Envia(ALote: String): Boolean;
 begin
-  FEnviar.FLote := ALote;
+  FEnviar.Lote := ALote;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );

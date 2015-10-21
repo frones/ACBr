@@ -1162,6 +1162,7 @@ Var
   ItemCupom : TACBrECFVirtualClassItemCupom ;
   StrDescAcre : String ;
   PorcDesc, ValDesc, Total : Double ;
+  ValItem:Double;
 begin
   GravaLog( ComandoLOG );
 
@@ -1223,8 +1224,10 @@ begin
     ItemCupom.CodDepartamento := CodDepartamento;
     fpItensCupom.Add( ItemCupom ) ;
 
-    fpGrandeTotal := RoundTo( (Qtd * ValorUnitario) + fpGrandeTotal,-2) ;
-    fpVendaBruta  := fpGrandeTotal ;
+    ValItem := RoundTo( (Qtd * ValorUnitario),-2) ;
+
+    fpGrandeTotal := RoundTo( ValItem + fpGrandeTotal,-2) ;
+    fpVendaBruta  := fpVendaBruta + ValItem ;
     Aliq.Total    := RoundTo( Aliq.Total + Total,-2) ; { Soma na aliquota }
     fpSubTotal    := RoundTo( SubTotal   + Total,-2) ; { Soma no Subtotal }
 

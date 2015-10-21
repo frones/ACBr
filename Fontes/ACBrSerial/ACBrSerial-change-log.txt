@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/10/2015
+-- ACBrECFVirtual --
+[-] Alterado o codigo que estava copiando o GTAtual para a Venda Bruta
+   http://www.projetoacbr.com.br/forum/topic/25377-ecfvirtual-corrigido-valor-venda-bruta-gravado-no-ini/
+   (por: Amarildo Lacerda)
+
 Data: 16/10/2015
 -- ACBrECFSwedaStx --   (por: DSA)
 [-] Ajuste para envio de comandos com decimais sempre usando ",", independente

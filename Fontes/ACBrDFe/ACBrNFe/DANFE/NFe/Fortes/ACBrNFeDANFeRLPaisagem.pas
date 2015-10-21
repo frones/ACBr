@@ -482,7 +482,8 @@ type
       var PrintIt: Boolean);
     procedure FormCreate(Sender: TObject);
   private
-    FRecebemoDe : string;
+    FRecebemoDe   : string;
+    sQuebraLinha  : String;
     procedure InitDados;
     procedure Header;
     procedure Emitente;
@@ -1917,8 +1918,6 @@ begin
 end;
 
 Function TfrlDANFeRLPaisagem.ManterVeiculos( inItem:  integer  ) : String;
-Var
-  sQuebraLinha : String;
 begin
   Result := '';
 { detalhamento especifico de veículos }
@@ -1926,11 +1925,6 @@ begin
   begin
     if veicProd.chassi > '' then
     begin
-      if fQuebraLinhaEmDetalhamentoEspecifico then
-        sQuebraLinha := #13#10
-      else
-        sQuebraLinha := ' - ';
-
       if dv_tpOp in FDetVeiculos          then Result := Result + ACBrStr('TIPO DA OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + sQuebraLinha;
       if dv_Chassi in FDetVeiculos        then Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + sQuebraLinha;
       if dv_cCor in FDetVeiculos          then Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + sQuebraLinha;
@@ -1976,7 +1970,7 @@ begin
 		  sQuebraLinha := #13#10
         else
           sQuebraLinha := ' - ';
-		  
+
         if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + sQuebraLinha;
         if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + sQuebraLinha;
         if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + sQuebraLinha;
@@ -1990,7 +1984,6 @@ end;
 Function TfrlDANFeRLPaisagem.ManterArma( inItem:  integer  ) : String;
 Var
   i : Integer;
-  sQuebraLinha : String;
 begin
   Result := '';
   with FNFe.Det.Items[inItem].Prod do
@@ -1999,11 +1992,6 @@ begin
     begin
       for i := 0 to arma.Count - 1 do
       begin
-		if fQuebraLinhaEmDetalhamentoEspecifico then
-		  sQuebraLinha := #13#10
-        else
-          sQuebraLinha := ' - ';
-		  
         if da_tpArma in FDetArmamentos then Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
         if da_nSerie in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
         if da_nCano  in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
@@ -2060,6 +2048,7 @@ begin
   Result := sXProd;
   if FImprimirDetalhamentoEspecifico = true then
   begin
+    sQuebraLinha := QuebraLinha;
     Result := Result + #13#10;
     Result := Result + ManterVeiculos( inItem );
     Result := Result + ManterMedicamentos( inItem );

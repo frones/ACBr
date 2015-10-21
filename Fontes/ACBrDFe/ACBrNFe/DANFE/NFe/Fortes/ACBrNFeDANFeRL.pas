@@ -124,9 +124,8 @@ type
     procedure FormCreate(Sender: TObject);
     function BuscaDireita(Busca, Text: String): Integer;
     procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
-
+    function QuebraLinha: String;
   private
-
     { Private declarations }
   protected
     FACBrNFe: TACBrNFe;
@@ -675,6 +674,14 @@ begin
         end;
 
     end;
+end;
+
+Function TfrlDANFeRL.QuebraLinha : String;
+begin
+  if fQuebraLinhaEmDetalhamentoEspecifico then
+    Result := #13#10
+  else
+    Result := ' - ';
 end;
 
 end.

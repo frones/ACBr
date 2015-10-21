@@ -100,7 +100,7 @@ type
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
-
+    fsQuebraLinha : String;
     FfrxReport: TfrxReport;
     FfrxPDFExport: TfrxPDFExport;
     FfrxBarCodeObject: TfrxBarCodeObject;
@@ -156,6 +156,7 @@ type
     procedure CarregaFatura;
     procedure CarregaPagamento;
     procedure CarregaInformacoesAdicionais;
+    function QuebraLinha: String;
 
     function SubstrCount(const ASubString, AString: string): Integer;
     function Split(const ADelimiter, AString: string): TSplitResult;
@@ -199,6 +200,7 @@ type
     property frxPDFExport: TfrxPDFExport read FfrxPDFExport write FfrxPDFExport;
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
+    property sQuebraLinha : String read fsQuebraLinha Write    fsQuebraLinha;
 
     procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
@@ -2011,7 +2013,6 @@ end;
 Function TACBrNFeFRClass.ManterArma( inItem:  integer  ) : String;
 Var
   i : Integer;
-  sQuebraLinha : String;  
 begin
   Result := '';
   with FNFe.Det.Items[inItem].Prod do
@@ -2020,12 +2021,7 @@ begin
     begin
       for i := 0 to arma.Count - 1 do
       begin
-        if fQuebraLinhaEmDetalhamentoEspecifico then
-          sQuebraLinha := ';'
-        else
-          sQuebraLinha := ' - ';
-
-		Result := sQuebraLinha;		  
+		    Result := sQuebraLinha;
         Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
         Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
         Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
@@ -2038,7 +2034,6 @@ end;
 Function TACBrNFeFRClass.ManterMedicamentos( inItem:  integer  ) : String;
 Var
   i : Integer;
-  sQuebraLinha : String;  
 begin
   Result := '';
   { detalhamento específico de medicamentos }
@@ -2048,25 +2043,18 @@ begin
     begin
       for i := 0 to med.Count - 1 do
       begin
-		if fQuebraLinhaEmDetalhamentoEspecifico then
-		  sQuebraLinha := ';'
-		else
-		  sQuebraLinha := ' - ';
-			
-		  Result := sQuebraLinha;
-		  Result := Result + 'LOTE: '    + med.Items[i].nLote+ sQuebraLinha;
-		  Result := Result + 'QTDADE: '  + FormatFloatBr(med.Items[i].qLote)+ sQuebraLinha;
-		  Result := Result + 'FABR.: '   + FormatDateBr(med.Items[i].dFab)+ sQuebraLinha;
-		  Result := Result + 'VAL.: '    + FormatDateBr(med.Items[i].dVal)+ sQuebraLinha;
-		  Result := Result + IfThen( med.Items[i].vPMC  > 0, 'PMC: ' + FormatFloatBr(med.Items[i].vPMC) + ';' , '');
+        Result := sQuebraLinha;
+        Result := Result + 'LOTE: '    + med.Items[i].nLote+ sQuebraLinha;
+        Result := Result + 'QTDADE: '  + FormatFloatBr(med.Items[i].qLote)+ sQuebraLinha;
+        Result := Result + 'FABR.: '   + FormatDateBr(med.Items[i].dFab)+ sQuebraLinha;
+        Result := Result + 'VAL.: '    + FormatDateBr(med.Items[i].dVal)+ sQuebraLinha;
+        Result := Result + IfThen( med.Items[i].vPMC  > 0, 'PMC: ' + FormatFloatBr(med.Items[i].vPMC) + ';' , '');
       end;
     end;
   end;
 end;
 
 Function TACBrNFeFRClass.ManterVeiculos( inItem:  integer  ) : String;
-Var
-  sQuebraLinha : String;
 begin
   Result := '';
 { detalhamento especifico de veículos }
@@ -2074,12 +2062,7 @@ begin
   begin
     if veicProd.chassi > '' then
     begin
-      if fQuebraLinhaEmDetalhamentoEspecifico then
-        sQuebraLinha := ';'
-      else
-        sQuebraLinha := ' - ';
-
-	    Result := sQuebraLinha;
+      Result := sQuebraLinha;
 	    Result := Result + ACBrStr('TIPO DE OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + sQuebraLinha;
 	    Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + sQuebraLinha;
 	    Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + sQuebraLinha;
@@ -2142,11 +2125,10 @@ begin
     if comb.cProdANP > 0 then
     begin
       Result := ';';
-      Result := Result + ACBrStr('CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + ';';
+      Result := Result + ACBrStr( 'CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + ';';
       if comb.CODIF > '' then
-      Result := Result + ACBrStr('AUTORIZAÇÃO/CODIF: ') + comb.CODIF + ';';
-      if comb.qTemp > 0  then
-      Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloat('###,##0.0000', comb.qTemp) + ';';
+      Result := Result + ACBrStr( 'AUTORIZAÇÃO/CODIF: ') + comb.CODIF + ';';
+      Result := Result + IfThen( comb.qTemp > 0 , ACBrStr( 'QTD. FATURADA TEMP. AMBIENTE: ' )+ FormatFloat('###,##0.0000', comb.qTemp) + ';' , '');
       Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + ';';
       if comb.CIDE.qBCProd > 0 then
       begin
@@ -2158,8 +2140,7 @@ begin
       begin
         Result := Result + 'ENCERRANTE' + ';';
         Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + ';';
-        if comb.encerrante.nBomba > 0 then
-          Result := Result + 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + ';';
+        Result := Result + IfThen( comb.encerrante.nBomba > 0, 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + ';' , '');
         Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + ';';
         Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + ';';
         Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + ';';
@@ -2180,6 +2161,7 @@ begin
     Result  := Result + ManterValAprox( inItem );
     if FDANFEClassOwner.ImprimirDetalhamentoEspecifico then
     begin
+      sQuebraLinha := QuebraLinha;
       Result := Result + ManterVeiculos( inItem  );
       Result := Result + ManterMedicamentos( inItem  );
       Result := Result + ManterArma( inItem  );
@@ -2244,5 +2226,13 @@ begin
   end;
 end;
 
+
+Function TACBrNFeFRClass.QuebraLinha : String;
+begin
+  if fQuebraLinhaEmDetalhamentoEspecifico then
+    Result := ';'
+  else
+    Result := ' - ';
+end;
 
 end.

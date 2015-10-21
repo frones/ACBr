@@ -53,6 +53,8 @@ uses
 const
   ACBRNFE_VERSAO = '2.0.0a';
   ACBRNFE_NAMESPACE = 'http://www.portalfiscal.inf.br/nfe';
+  CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
+     'configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
 type
   EACBrNFeException = class(EACBrDFeException);
@@ -125,7 +127,7 @@ type
     function Enviar(ALote: String; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
     function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
-    function Consultar: Boolean;
+    function Consultar( AChave: String = ''): Boolean;
     function EnviarCartaCorrecao(idLote: integer): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
     function ConsultaNFeDest(CNPJ: String; IndNFe: TpcnIndicadorNFe;
@@ -562,52 +564,59 @@ function TACBrNFe.Cancelamento(AJustificativa: WideString; ALote: integer = 0): 
 var
   i: integer;
 begin
-  if Self.NotasFiscais.Count = 0 then
+  if NotasFiscais.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhuma Nota Fiscal Eletrônica Informada!'));
 
-  for i := 0 to self.NotasFiscais.Count - 1 do
+  for i := 0 to NotasFiscais.Count - 1 do
   begin
-    Self.WebServices.Consulta.NFeChave :=
-      OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.ID);
+    WebServices.Consulta.NFeChave := NotasFiscais.Items[i].NumID;
 
-    if not Self.WebServices.Consulta.Executar then
-      GerarException(Self.WebServices.Consulta.Msg);
+    if not WebServices.Consulta.Executar then
+      GerarException(WebServices.Consulta.Msg);
 
-    Self.EventoNFe.Evento.Clear;
-    with Self.EventoNFe.Evento.Add do
+    EventoNFe.Evento.Clear;
+    with EventoNFe.Evento.Add do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(Self.WebServices.Consulta.NFeChave), 7, 14);
-      infEvento.cOrgao := StrToIntDef(
-        copy(OnlyNumber(Self.WebServices.Consulta.NFeChave), 1, 2), 0);
+      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.NFeChave), 7, 14);
+      infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.NFeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;
-      infEvento.chNFe := Self.WebServices.Consulta.NFeChave;
-      infEvento.detEvento.nProt := Self.WebServices.Consulta.Protocolo;
+      infEvento.chNFe := WebServices.Consulta.NFeChave;
+      infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
       infEvento.detEvento.xJust := AJustificativa;
     end;
 
     try
-      Self.EnviarEvento(ALote);
+      EnviarEvento(ALote);
     except
-      GerarException(Self.WebServices.EnvEvento.EventoRetorno.xMotivo);
+      GerarException(WebServices.EnvEvento.EventoRetorno.xMotivo);
     end;
   end;
   Result := True;
 end;
 
-function TACBrNFe.Consultar: Boolean;
+function TACBrNFe.Consultar(AChave: String): Boolean;
 var
   i: integer;
 begin
-  if Self.NotasFiscais.Count = 0 then
-    GerarException(ACBrStr('ERRO: Nenhuma Nota Fiscal Eletrônica Informada!'));
+  if (NotasFiscais.Count = 0) and EstaVazio(AChave) then
+    GerarException(ACBrStr('ERRO: Nenhuma Nota Fiscal Eletrônica ou Chave Informada!'));
 
-  for i := 0 to Self.NotasFiscais.Count - 1 do
+  if NaoEstaVazio(AChave) then
   begin
-    WebServices.Consulta.NFeChave :=
-      OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.ID);
+    NotasFiscais.Clear;
+    WebServices.Consulta.NFeChave := AChave;
     WebServices.Consulta.Executar;
+  end
+  else
+  begin
+    for i := 0 to NotasFiscais.Count - 1 do
+    begin
+      WebServices.Consulta.NFeChave := NotasFiscais.Items[i].NumID;
+      WebServices.Consulta.Executar;
+    end;
   end;
+
   Result := True;
 end;
 
@@ -682,7 +691,8 @@ end;
 
 function TACBrNFe.EnviarEvento(idLote: integer): Boolean;
 var
-  i: integer;
+  i, j: integer;
+  chNfe: String;
 begin
   if EventoNFe.Evento.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum Evento adicionado ao Lote'));
@@ -698,22 +708,39 @@ begin
   begin
     if EventoNFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
       EventoNFe.Evento.Items[i].infEvento.nSeqEvento := 1;
-    if self.NotasFiscais.Count > 0 then
-    begin
-      if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
-        EventoNFe.Evento.Items[i].InfEvento.CNPJ :=
-          self.NotasFiscais.Items[i].NFe.Emit.CNPJCPF;
 
-      if trim(EventoNFe.Evento.Items[i].InfEvento.chNfe) = '' then
-        EventoNFe.Evento.Items[i].InfEvento.chNfe :=
-          OnlyNumber(self.NotasFiscais.Items[i].NFe.infNFe.Id);
+    FEventoNFe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+
+    if NotasFiscais.Count > 0 then
+    begin
+      chNfe := OnlyNumber(EventoNFe.Evento.Items[i].InfEvento.chNfe);
+
+      // Se tem a chave da NFe no Evento, procure por ela nas notas carregadas //
+      if NaoEstaVazio(chNfe) then
+      begin
+        For j := 0 to NotasFiscais.Count - 1 do
+        begin
+          if chNfe = NotasFiscais.Items[j].NumID then
+            Break;
+        end ;
+
+        if j = NotasFiscais.Count then
+          GerarException( ACBrStr('Não existe NFe com a chave ['+chNfe+'] carregada') );
+      end
+      else
+        j := 0;
+
+      if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
+        EventoNFe.Evento.Items[i].InfEvento.CNPJ := NotasFiscais.Items[j].NFe.Emit.CNPJCPF;
+
+      if chNfe = '' then
+        EventoNFe.Evento.Items[i].InfEvento.chNfe := NotasFiscais.Items[j].NumID;
 
       if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
       begin
         if EventoNFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
         begin
-          EventoNFe.Evento.Items[i].infEvento.detEvento.nProt :=
-            self.NotasFiscais.Items[i].NFe.procNFe.nProt;
+          EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := NotasFiscais.Items[j].NFe.procNFe.nProt;
 
           if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
           begin
@@ -722,8 +749,7 @@ begin
             if not WebServices.Consulta.Executar then
               GerarException(WebServices.Consulta.Msg);
 
-            EventoNFe.Evento.Items[i].infEvento.detEvento.nProt :=
-              WebServices.Consulta.Protocolo;
+            EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
           end;
         end;
       end;
@@ -839,8 +865,8 @@ begin
                         ASerie, ANumInicial, ANumFinal);
 end;
 
-procedure TACBrNFe.EnviarEmailEvento(sPara, sAssunto: String; sMensagem,
-  sCC, Anexos: TStrings);
+procedure TACBrNFe.EnviarEmailEvento(sPara, sAssunto: String;
+  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
 var
   NomeArq: String;
   AnexosEmail: TStrings;

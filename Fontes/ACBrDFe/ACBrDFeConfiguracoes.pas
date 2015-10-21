@@ -164,7 +164,6 @@ type
     FFormatoAlerta: String;
     FRetirarAcentos: Boolean;
     FValidarDigest: Boolean;
-    FCodModeloDF: Integer;
 
     procedure SetSSLLib(AValue: TSSLLib);
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
@@ -172,8 +171,6 @@ type
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
-
-    property CodModeloDF: Integer read FCodModeloDF write FCodModeloDF;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
@@ -383,7 +380,6 @@ begin
   // %DESCRICAO% : Representa a Descrição da TAG
   FRetirarAcentos := True;
   FValidarDigest := True;
-  FCodModeloDF := 55;
 end;
 
 procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
@@ -395,7 +391,6 @@ begin
   FormatoAlerta    := DeGeralConf.FormatoAlerta;
   RetirarAcentos   := DeGeralConf.RetirarAcentos;
   ValidarDigest    := DeGeralConf.ValidarDigest;
-  CodModeloDF      := DeGeralConf.CodModeloDF;
 end;
 
 function TGeralConf.GetFormatoAlerta: String;

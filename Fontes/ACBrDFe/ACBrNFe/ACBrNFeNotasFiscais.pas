@@ -66,7 +66,6 @@ type
     FNFeW: TNFeW;
     FNFeR: TNFeR;
 
-    FXML: String;
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
@@ -78,10 +77,12 @@ type
     function GetConfirmada: Boolean;
     function GetProcessada: Boolean;
 
+
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
     procedure SetXML(AValue: String);
+    procedure SetXMLOriginal(AValue: String);
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -115,8 +116,10 @@ type
 
     property NFe: TNFe read FNFe;
 
-    property XML: String         read FXML           write SetXML;
-    property XMLOriginal: String read FXMLOriginal   write FXMLOriginal;
+    // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
+    property XML: String         read FXMLOriginal   write SetXML;
+    // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
+    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
     property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
@@ -236,33 +239,34 @@ end;
 
 procedure NotaFiscal.Assinar;
 var
-  XMLAss: String;
-  ArqXML: String;
+  XMLStr: String;
+  XMLUTF8: AnsiString;
   Leitor: TLeitor;
+  CNPJEmitente, CNPJCertificado: String;
 begin
-  if NaoEstaVazio(FXMLAssinado) then
-    exit;
+  // VErificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
+  CNPJEmitente    := OnlyNumber(NFe.Emit.CNPJCPF);
+  CNPJCertificado := OnlyNumber(TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ);
 
-  ArqXML := GerarXML;
+  // verificar somente os 8 primeiros digitos, para evitar problemas quando
+  // a filial estiver utilizando o certificado da matriz
+  if Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8) then
+    raise EACBrNFeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+
+  // Gera novamente, para processar propriedades que podem ter sido modificadas
+  XMLStr := GerarXML;
 
   // XML já deve estar em UTF8, para poder ser assinado //
-  ArqXML := ConverteXMLtoUTF8(ArqXML);
-  FXMLOriginal := ArqXML;
+  XMLUTF8 := ConverteXMLtoUTF8(XMLStr);
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-    XMLAss := SSL.Assinar(ArqXML, 'NFe', 'infNFe');
-    FXMLAssinado := XMLAss;
-    FXMLOriginal := XMLAss;
-
-    // Remove header, pois podem existir várias Notas no XML //
-    //TODO: Verificar se precisa
-    //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
-    //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
+    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'NFe', 'infNFe');
+    FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
     try
-      leitor.Grupo := XMLAss;
+      leitor.Grupo := FXMLAssinado;
       NFe.signature.URI := Leitor.rAtributo('Reference URI=');
       NFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
       NFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
@@ -271,17 +275,12 @@ begin
       Leitor.Free;
     end;
 
-//***********************************************************************************
-// Atenção o código comentado abaixo não pode ser excluido pois será descomentado
-// quando as alterações no XML definidas em NT 2015/002 versão 1.00 entrar em vigor.
-// Homologação: 01/10/2015
-// Produção: 03/11/2015
-//***********************************************************************************
+    // Se for NFCe, deve gera o QR-Code para adicionar no XML após ter a
+    // assinatura, e antes de ser salvo.
+    // Homologação: 01/10/2015
+    // Produção: 03/11/2015
 
-    // Gera o QR-Code para adicionar no XML antes de ser validado e salvo
-    // somente para a NFC-e.
-
-    if (NFe.Ide.modelo = 65) and  (Configuracoes.Geral.IncluirQRCodeXMLNFCe) then
+    if (NFe.Ide.modelo = 65) and (Configuracoes.Geral.IncluirQRCodeXMLNFCe) then
     begin
       with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
       begin
@@ -289,18 +288,17 @@ begin
                                   onlyNumber(NFe.infNFe.ID), NFe.Dest.CNPJCPF,
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
                                   NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
-        XMLAss := GerarXML;
-        FXMLAssinado := XMLAss;
+        GerarXML;
       end;
     end;
 
-
-    if Configuracoes.Arquivos.Salvar  and not (Configuracoes.Arquivos.SalvarApenasNFeProcessadas) then
+    if Configuracoes.Arquivos.Salvar and
+       (not Configuracoes.Arquivos.SalvarApenasNFeProcessadas) then
     begin
       if NaoEstaVazio(NomeArq) then
-        Gravar(NomeArq, XMLAss)
+        Gravar(NomeArq, FXMLAssinado)
       else
-        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
+        Gravar(CalcularNomeArquivoCompleto(), FXMLAssinado);
     end;
   end;
 end;
@@ -312,22 +310,7 @@ var
   ALayout: TLayOut;
   CNPJEmitente, CNPJCertificado: String;
 begin
-  AXML := FXMLAssinado;
-
-  if EstaVazio(AXML) then
-  begin
-    CNPJEmitente    := OnlyNumber(NFe.Emit.CNPJCPF);
-    CNPJCertificado := OnlyNumber(TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ);
-
-    // verificar somente os 8 primeiros digitos, para evitar problemas quando
-    // a filial estiver utilizando o certificado da matriz
-    if Copy(CNPJEmitente, 1, 8) = Copy(CNPJCertificado, 1, 8) then
-      Assinar
-    else
-      raise EACBrNFeException.Create('XML informado não possui assinatura, e CNPJ é diferente do Emitente' );
-
-    AXML := FXMLAssinado;
-  end;
+  AXML := XMLAssinado;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
@@ -359,13 +342,7 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
-  AXML := FXMLAssinado;
-
-  if EstaVazio(AXML) then
-  begin
-    Assinar;
-    AXML := FXMLAssinado;
-  end;
+  AXML := XMLAssinado;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
@@ -1170,13 +1147,7 @@ begin
   FNFeR.Leitor.Arquivo := AXML;
   FNFeR.LerXml;
 
-  FXML := string(AXML);
-  FXMLOriginal := FXML;
-
-  if XmlEstaAssinado(FXML) then
-    FXMLAssinado := FXML
-  else
-    FXMLAssinado := '';
+  XMLOriginal := string(AXML);
 
   Result := True;
 end;
@@ -1259,27 +1230,22 @@ begin
   begin
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-    FNFeW.Opcoes.GerarTXTSimultaneamente := False;
   end;
 
-  FNomeArq := '';
+  FNFeW.Opcoes.GerarTXTSimultaneamente := False;
+
   FNFeW.GerarXml;
-  FXML := FNFeW.Gerador.ArquivoFormatoXML;
-  FXMLOriginal := FXML;
-  if XmlEstaAssinado(FXML) then
-    FXMLAssinado := FXML
-  else
-    FXMLAssinado := '';
+  XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;
+  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
 
   FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
-  Result := FXML;
+  Result := FXMLOriginal;
 end;
 
 function NotaFiscal.GerarTXT: String;
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-//    NFe.infNFe.Versao := StringToFloat(LerVersaoDeParams(LayNfeRecepcao));
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;
@@ -1287,9 +1253,9 @@ begin
   FNFeW.Opcoes.GerarTXTSimultaneamente := True;
 
   FNFeW.GerarXml;
-  FXML := FNFeW.Gerador.ArquivoFormatoXML;
-  FXMLOriginal := FXML;
-  FXMLAssinado := '';
+  XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;
+  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
+
   FAlertas := FNFeW.Gerador.ListaDeAlertas.Text;
   Result := FNFeW.Gerador.ArquivoFormatoTXT;
 end;
@@ -1395,8 +1361,17 @@ end;
 
 procedure NotaFiscal.SetXML(AValue: String);
 begin
-  if FXML = AValue then Exit;
   LerXML(AValue);
+end;
+
+procedure NotaFiscal.SetXMLOriginal(AValue: String);
+begin
+  FXMLOriginal := AValue;
+
+  if XmlEstaAssinado(FXMLOriginal) then
+    FXMLAssinado := FXMLOriginal
+  else
+    FXMLAssinado := '';
 end;
 
 
@@ -1530,40 +1505,41 @@ end;
 function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
   AGerarNFe: Boolean = True): Boolean;
 var
-  ArquivoXML: TStringList;
-  XML: String;
-  XMLOriginal: AnsiString;
+  XMLStr: String;
+  XMLUTF8: AnsiString;
   i: integer;
+  MS: TMemoryStream;
 begin
   Result := False;
-  ArquivoXML := TStringList.Create;
+
+  MS := TMemoryStream.Create;
   try
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
-    XMLOriginal := ArquivoXML.Text;
-
-    // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
-    LoadFromString(XML, AGerarNFe);
-
-    for i := 0 to Self.Count - 1 do
-      Self.Items[i].NomeArq := CaminhoArquivo;
-
-    Result := True;
+    MS.LoadFromFile(CaminhoArquivo);
+    XMLUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
-    ArquivoXML.Free;
+    MS.Free;
   end;
+
+  // Converte de UTF8 para a String nativa da IDE //
+  XMLStr := DecodeToString(XMLUTF8, True);
+  LoadFromString(XMLStr, AGerarNFe);
+
+  for i := 0 to Self.Count - 1 do
+    Self.Items[i].NomeArq := CaminhoArquivo;
+
+  Result := True;
 end;
 
 function TNotasFiscais.LoadFromStream(AStream: TStringStream;
   AGerarNFe: Boolean = True): Boolean;
 var
-  XMLOriginal: AnsiString;
+  AXML: AnsiString;
 begin
   Result := False;
   AStream.Position := 0;
-  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
+  AXML := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(String(XMLOriginal), AGerarNFe);
+  Result := Self.LoadFromString(String(AXML), AGerarNFe);
 end;
 
 function TNotasFiscais.LoadFromString(AXMLString: String;
@@ -1603,14 +1579,6 @@ begin
     end;
 
     N := PosNFe;
-  end;
-
-  if Self.Count > 0 then
-  begin
-    FConfiguracoes.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(
-      Self.Items[0].NFe.Ide.modelo));
-    FConfiguracoes.Geral.VersaoDF := DblToVersaoDF(OK,
-      Self.Items[0].NFe.infNFe.versao);
   end;
 
   Result := Self.Count > 0;

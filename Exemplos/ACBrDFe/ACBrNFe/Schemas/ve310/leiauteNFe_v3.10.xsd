@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by softwares@procergs.rs.gov.br (PROCERGS) -->
 <!-- PL_008g  alterações de esquema decorrentes da - NT2015.002  - 15/07/2015 -->
+<!-- PL_008h  alterações de esquema decorrentes da - NT2015.003 - 17/09/2015 -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/nfe" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v3.10.xsd"/>
@@ -849,6 +850,18 @@ Formato ”CFOP9999”.</xs:documentation>
 														<xs:restriction base="xs:string">
 															<xs:whiteSpace value="preserve"/>
 															<xs:pattern value="[A-Z]{2}[0-9]{4}"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="CEST" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Codigo especificador da Substuicao Tributaria - CEST, que identifica a mercadoria sujeita aos regimes de  substituicao tributária e de antecipação do recolhimento  do imposto
+														</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="preserve"/>
+															<xs:pattern value="[0-9]{7}"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -1707,27 +1720,15 @@ ambiente.</xs:documentation>
 																					</xs:restriction>
 																				</xs:simpleType>
 																			</xs:element>
-																			<xs:element name="vEncIni">
+																			<xs:element name="vEncIni" type="TDec_1203">
 																				<xs:annotation>
 																					<xs:documentation>Valor do Encerrante no ínicio do abastecimento</xs:documentation>
 																				</xs:annotation>
-																				<xs:simpleType>
-																					<xs:restriction base="xs:string">
-																						<xs:whiteSpace value="preserve"/>
-																						<xs:pattern value="[0-9]{1,15}"/>
-																					</xs:restriction>
-																				</xs:simpleType>
 																			</xs:element>
-																			<xs:element name="vEncFin">
+																			<xs:element name="vEncFin" type="TDec_1203">
 																				<xs:annotation>
 																					<xs:documentation>Valor do Encerrante no final do abastecimento</xs:documentation>
 																				</xs:annotation>
-																				<xs:simpleType>
-																					<xs:restriction base="xs:string">
-																						<xs:whiteSpace value="preserve"/>
-																						<xs:pattern value="[0-9]{1,15}"/>
-																					</xs:restriction>
-																				</xs:simpleType>
 																			</xs:element>
 																		</xs:sequence>
 																	</xs:complexType>
@@ -3886,6 +3887,55 @@ Substituição Tributaria;</xs:documentation>
 														</xs:sequence>
 													</xs:complexType>
 												</xs:element>
+												<xs:element name="ICMSUFDest" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="vBCUFDest" type="TDec_1302">
+																<xs:annotation>
+																	<xs:documentation>Valor da Base de Cálculo do ICMS na UF do destinatário. </xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="pFCPUFDest" type="TDec_0302a04">
+																<xs:annotation>
+																	<xs:documentation>Percentual adicional inserido na alíquota interna da UF de destino, relativo ao Fundo de Combate à Pobreza (FCP) naquela UF. </xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="pICMSUFDest" type="TDec_0302a04">
+																<xs:annotation>
+																	<xs:documentation>Alíquota adotada nas operações internas na UF do destinatário para o produto / mercadoria.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="pICMSInter" type="TDec_0302a04">
+																<xs:annotation>
+																	<xs:documentation>Alíquota interestadual das UF envolvidas: - 4% alíquota interestadual para produtos importados; - 7% para os Estados de origem do Sul e Sudeste (exceto ES), destinado para os Estados do Norte e Nordeste  ou ES; - 12% para os demais casos.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="pICMSInterPart" type="TDec_0302a04">
+																<xs:annotation>
+																	<xs:documentation>Percentual de partilha para a UF do destinatário: - 40% em 2016; - 60% em 2017; - 80% em 2018; - 100% a partir de 2019.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="vFCPUFDest" type="TDec_1302">
+																<xs:annotation>
+																	<xs:documentation>Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="vICMSUFDest" type="TDec_1302">
+																<xs:annotation>
+																	<xs:documentation>Valor do ICMS de partilha para a UF do destinatário. </xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="vICMSUFRemet" type="TDec_1302">
+																<xs:annotation>
+																	<xs:documentation>Valor do ICMS de partilha para a UF do remetente. Nota: A partir de 2019, este valor será zero.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -3964,6 +4014,21 @@ Substituição Tributaria;</xs:documentation>
 												<xs:element name="vICMSDeson" type="TDec_1302">
 													<xs:annotation>
 														<xs:documentation>Valor Total do ICMS desonerado</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vFCPUFDest" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total do ICMS relativo ao Fundo de Combate à Pobreza (FCP) para a UF de destino.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSUFDest" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total do ICMS de partilha para a UF do destinatário</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vICMSUFRemet" type="TDec_1302" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Valor total do ICMS de partilha para a UF do remetente</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="vBCST" type="TDec_1302">

@@ -1957,7 +1957,6 @@ end;
 Function TfrlDANFeRLPaisagem.ManterMedicamentos( inItem:  integer  ) : String;
 Var
   i : Integer;
-  sQuebraLinha : String;
 begin
   Result := '';
   with FNFe.Det.Items[inItem].Prod do
@@ -1966,16 +1965,22 @@ begin
     begin
       for i := 0 to med.Count - 1 do
       begin
-		if fQuebraLinhaEmDetalhamentoEspecifico then
-		  sQuebraLinha := #13#10
+    		if fQuebraLinhaEmDetalhamentoEspecifico then
+        begin
+          if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + sQuebraLinha;
+          if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + sQuebraLinha;
+          if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + sQuebraLinha;
+          if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE VALIDADE: ')   + DateToStr(med.Items[i].dVal) + sQuebraLinha;
+          if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
+        end
         else
-          sQuebraLinha := ' - ';
-
-        if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + sQuebraLinha;
-        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + sQuebraLinha;
-        if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + sQuebraLinha;
-        if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE VALIDADE: ')   + DateToStr(med.Items[i].dVal) + sQuebraLinha;
-        if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
+        begin
+          if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE:') + med.Items[i].nLote + ' ';
+          if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD:' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + ' ';
+          if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB:') + DateToStr(med.Items[i].dFab) + ' ';
+          if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL:')   + DateToStr(med.Items[i].dVal) + ' ';
+          if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
+        end;
       end;
     end;
   end;

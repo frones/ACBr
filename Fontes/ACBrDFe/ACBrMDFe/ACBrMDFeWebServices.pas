@@ -698,7 +698,7 @@ begin
   else
   begin                              // Se não tem MDFe, use as configurações do componente
     FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   end;
 
   Modelo := 'MDFe';
@@ -881,7 +881,7 @@ begin
   else
   begin                              // Se não tem MDFe, use as configurações do componente
     FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   end;
 
   Modelo := 'MDFe';
@@ -1143,7 +1143,7 @@ begin
   else
   begin                              // Se não tem MDFe, use as configurações do componente
     FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   end;
 
   Modelo := 'MDFe';
@@ -1264,7 +1264,7 @@ begin
   else
   begin
     FTpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
-    VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   end;
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
@@ -1685,7 +1685,7 @@ begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
-  VerServ := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := 'MDFe';
@@ -2208,7 +2208,7 @@ begin
   Versao := 0;
   FPVersaoServico := '';
   FPURL := '';
-  Versao := VersaoDFToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  Versao := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     TACBrNFe(FPDFeOwner).GetNomeModeloDFe,

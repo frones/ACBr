@@ -445,7 +445,7 @@ begin
 
   for i := 0 to Manifestos.Count - 1 do
   begin
-    WebServices.Consulta.MDFeChave := Manifestos.Items[i].NumID);
+    WebServices.Consulta.MDFeChave := Manifestos.Items[i].NumID;
 
     if not WebServices.Consulta.Executar then
       raise Exception.Create(WebServices.Consulta.Msg);

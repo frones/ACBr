@@ -783,7 +783,7 @@ begin
   else
   begin                              // Se não tem CTe, use as configurações do componente
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   Modelo := 'CTe';
@@ -994,7 +994,7 @@ begin
   else
   begin                              // Se não tem CTe, use as configurações do componente
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
@@ -1271,7 +1271,7 @@ begin
   else
   begin                              // Se não tem CTe, use as configurações do componente
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
@@ -1402,7 +1402,7 @@ begin
   else
   begin
     FTpAmb  := FPConfiguracoesCTe.WebServices.Ambiente;
-    VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
@@ -2219,14 +2219,14 @@ begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
-  VerServ := VersaoDFToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := 'CTe';
   UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe));
 
   if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, teMultiModal]) then
-    FPLayout := LayCTeEventoAN;
+    FPLayout := LayCTeEventoAN
   else
     FPLayout := LayCTeEvento;
 

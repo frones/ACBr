@@ -722,7 +722,7 @@ begin
       begin
         for j := 0 to Conhecimentos.Count - 1 do
         begin
-          if chCTe = NotasFiscais.Items[j].NumID then
+          if chCTe = Conhecimentos.Items[j].NumID then
             Break;
         end;
 
@@ -733,7 +733,7 @@ begin
         j := 0;
 
       if trim(EventoCTe.Evento.Items[i].InfEvento.CNPJ) = '' then
-        EventoCTe.Evento.Items[i].InfEvento.CNPJ := Conhecimentos.Items[j].CTe.Emit.CNPJCPF;
+        EventoCTe.Evento.Items[i].InfEvento.CNPJ := Conhecimentos.Items[j].CTe.Emit.CNPJ;
 
       if chCTe = '' then
         EventoCTe.Evento.Items[i].InfEvento.chCTe := Conhecimentos.Items[j].NumID;

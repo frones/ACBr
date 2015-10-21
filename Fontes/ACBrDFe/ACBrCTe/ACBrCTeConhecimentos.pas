@@ -225,7 +225,7 @@ var
   CNPJEmitente, CNPJCertificado: String;
 begin
   // Verificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
-  CNPJEmitente    := OnlyNumber(CTe.Emit.CNPJCPF);
+  CNPJEmitente    := OnlyNumber(CTe.Emit.CNPJ);
   CNPJCertificado := OnlyNumber(TACBrCTe(TConhecimentos(Collection).ACBrCTe).SSL.CertCNPJ);
 
   // verificar somente os 8 primeiros digitos, para evitar problemas quando

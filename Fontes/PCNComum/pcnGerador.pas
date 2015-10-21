@@ -473,9 +473,11 @@ const
   DSC_VENCINI = 'Valor do Encerrante no início do abastecimento';
   DSC_VENCFIN = 'Valor do Encerrante no final do abastecimento';
   DSC_VBCUFDEST = 'Valor da BC do ICMS na UF do destinatário';
+  DSC_PFCPUFDEST = 'Alíquota do ICMS realtivo ao Fundo de Combate à Pobreza';
   DSC_PICMSUFDEST = 'Alíquota interna da UF do destinatário';
   DSC_PICMSINTER = 'Alíquota interestadual das UF envolvidas';
   DSC_PICMSINTERPART = 'Percentual provisório de partilha entre os Estados';
+  DSC_VFCPUFDEST = 'Valor do ICMS realtivo ao Fundo de Combate à Pobreza';
   DSC_VICMSUFDEST = 'Valor do ICMS de partilha para a UF do destinatário';
   DSC_VICMSUFREMET = 'Valor do ICMS de partilha para a UF do remetente';
 

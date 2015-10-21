@@ -698,10 +698,10 @@ end;
 
 procedure TACBrSPEDPisCofins.WriteBloco_P;
 begin
-   if (Bloco_P.Gravado) or (Bloco_0.Registro0145Count = 0) then exit ;
-
    if not Bloco_M.Gravado then
       WriteBloco_M;
+
+   if (Bloco_P.Gravado) or (Bloco_0.Registro0145Count = 0) then exit ;
 
    /// BLOCO P
    WriteRegistroP001;

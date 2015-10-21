@@ -1498,8 +1498,8 @@ begin
         FieldDefs.Add('pIPI'      , ftString, 18);
         FieldDefs.Add('VTotTrib'  , ftString, 18);
         FieldDefs.Add('ChaveNFe'  , ftString, 50);
-        FieldDefs.Add('vISSQN'    , ftFloat);
-        FieldDefs.Add('vBcISSQN'  , ftFloat);
+        FieldDefs.Add('vISSQN'    , ftString, 18);
+        FieldDefs.Add('vBcISSQN'  , ftString, 18);
         FieldDefs.Add('vBcST'     , ftString, 18);
         FieldDefs.Add('vICMSST'   , ftString, 18);
         FieldDefs.Add('nLote'     , ftString, 20);

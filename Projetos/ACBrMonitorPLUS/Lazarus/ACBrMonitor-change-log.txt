@@ -48,6 +48,8 @@ Símbolo : Significado
 [+] Adicionada Opção para configurar a geração da Tag de QRCode em NFCe
     DFe -> WebServices -> NFCe -> "Adicionar Tag de QRCode em Informações Suplementares"
     (por: DSA)
+[-] acerto para remoção de propriedade que foi renomeada (ImprimirDetalhamentoEspecifico).
+    pro: regys.silveira
 
 07/05/2015
 -- ACBrMonitorPLUS --

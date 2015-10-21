@@ -1217,6 +1217,7 @@ type
     FvBC: Currency;
     FvICMS: Currency;
     FvICMSDeson: Currency;
+    FvFCPUFDest: Currency;
     FvICMSUFDest: Currency;
     FvICMSUFRemet: Currency;
     FvBCST: Currency;
@@ -1238,6 +1239,7 @@ type
     property vBC: Currency read FvBC write FvBC;
     property vICMS: Currency read FvICMS write FvICMS;
     property vICMSDeson: Currency read FvICMSDeson write FvICMSDeson;
+    property vFCPUFDest: Currency read FvFCPUFDest write FvFCPUFDest;
     property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
     property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
     property vBCST: Currency read FvBCST write FvBCST;
@@ -1390,18 +1392,22 @@ type
   TICMSUFDest = class(TPersistent)
   private
     FvBCUFDest: Currency;
+    FpFCPUFDest: Currency;
     FpICMSUFDest: Currency;
     FpICMSInter: Currency;
     FpICMSInterPart: Currency;
+    FvFCPUFDest: Currency;
     FvICMSUFDest: Currency;
     FvICMSUFRemet: Currency;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property vBCUFDest: Currency read FvBCUFDest write FvBCUFDest;
+    property pFCPUFDest: Currency read FpFCPUFDest write FpFCPUFDest;
     property pICMSUFDest: Currency read FpICMSUFDest write FpICMSUFDest;
     property pICMSInter: Currency read FpICMSInter write FpICMSInter;
     property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
+    property vFCPUFDest: Currency read FvFCPUFDest write FvFCPUFDest;
     property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
     property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
   end;
@@ -3615,6 +3621,7 @@ begin
     vBC := TICMSTot(Source).vBC;
     vICMS := TICMSTot(Source).vICMS;
     vICMSDeson := TICMSTot(Source).vICMSDeson;
+    vFCPUFDest := TICMSTot(Source).vFCPUFDest;
     vICMSUFDest := TICMSTot(Source).vICMSUFDest;
     vICMSUFRemet := TICMSTot(Source).vICMSUFRemet;
     vBCST := TICMSTot(Source).vBCST;
@@ -3982,9 +3989,11 @@ begin
   if Source is TICMSUFDest then
   begin
     vBCUFDest := TICMSUFDest(Source).vBCUFDest;
+    pFCPUFDest := TICMSUFDest(Source).pFCPUFDest;
     pICMSUFDest := TICMSUFDest(Source).pICMSUFDest;
     pICMSInter := TICMSUFDest(Source).pICMSInter;
     pICMSInterPart := TICMSUFDest(Source).pICMSInterPart;
+    vFCPUFDest := TICMSUFDest(Source).vFCPUFDest;
     vICMSUFDest := TICMSUFDest(Source).vICMSUFDest;
     vICMSUFRemet := TICMSUFDest(Source).vICMSUFRemet;
   end

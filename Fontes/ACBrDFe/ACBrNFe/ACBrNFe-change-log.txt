@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2015
+-- pcnNFe / pcnNFeW / pcnNFeR --
+[+] Adicionado as novas TAGs conforme NT 2015/003 v 1.10.
+    Por: Italo Jurisato Junior
+
 16/10/2015
 [-] contribuição: http://www.projetoacbr.com.br/forum/topic/25243-danfe-fastreport-fatura-correção/
     Correção na impressão de informações da fatura.

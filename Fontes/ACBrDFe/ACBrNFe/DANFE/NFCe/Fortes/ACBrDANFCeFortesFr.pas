@@ -414,6 +414,7 @@ procedure TACBrNFeDANFCeFortesFr.rlVendaBeforePrint(Sender: TObject;
 var
   qrcode: String;
   TotalPaginaPixel: Integer;
+  LogoStream: TStringStream;
 begin
   fNumItem  := 0;
   fNumPagto := 0;
@@ -429,8 +430,21 @@ begin
     lRazaoSocial.Caption    := Emit.xNome ;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
+
     if ACBrNFeDANFCeFortes.Logo <> '' then
-       imgLogo.Picture.LoadFromFile( ACBrNFeDANFCeFortes.Logo );
+    begin
+      if FileExists (ACBrNFeDANFCeFortes.Logo) then
+        imgLogo.Picture.LoadFromFile(ACBrNFeDANFCeFortes.Logo)
+      else
+      begin
+        LogoStream := TStringStream.Create(ACBrNFeDANFCeFortes.Logo);
+        try
+          imgLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        finally
+          LogoStream.Free;
+        end;
+      end;
+    end;
 
     // QRCode  //
     if EstaVazio(Trim(infNFeSupl.qrCode)) then

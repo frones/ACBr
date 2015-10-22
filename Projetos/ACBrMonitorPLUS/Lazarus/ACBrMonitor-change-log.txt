@@ -43,13 +43,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2015
+[+] Ao selecionar "Adicionar Tag de QRCode em Informações Suplementares" será validado
+    se os campos CSC e IDCSC estão preenchidos.
+[+] Adicionado opção para configurar o timeout dos Webservices - 
+    DFe - Geral - Timeout em segundos
+[*] Alterado para salvar arquivos de NFe em Configuracoes.Arquivos.PathNFe ao invés de 
+    usar o diretório Configuracoes.Arquivos.PathSalvar	
+[-] Corrigido para fazer a consulta de processamento do Lote apenas quando usar 
+    o método assíncrono
+[-] Corrigido para não gerar o arquivo nfe.ini quando usado o MenIniFile.
+    por: André Moraes	
+
 09/05/2015
 -- ACBrMonitorPLUS --
 [+] Adicionada Opção para configurar a geração da Tag de QRCode em NFCe
     DFe -> WebServices -> NFCe -> "Adicionar Tag de QRCode em Informações Suplementares"
     (por: DSA)
 [-] acerto para remoção de propriedade que foi renomeada (ImprimirDetalhamentoEspecifico).
-    pro: regys.silveira
+    por: regys.silveira
 
 07/05/2015
 -- ACBrMonitorPLUS --

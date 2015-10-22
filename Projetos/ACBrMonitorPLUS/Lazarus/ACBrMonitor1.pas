@@ -257,6 +257,7 @@ type
     edtNFCeMargemInf: TEdit;
     edtNFCeMargemSup: TEdit;
     edtNumCopia: TSpinEdit;
+    edtTimeoutWebServices: TSpinEdit;
     gbxMargem1: TGroupBox;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
@@ -277,6 +278,7 @@ type
     Label184: TLabel;
     Label185: TLabel;
     Label186: TLabel;
+    Label187: TLabel;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
@@ -991,6 +993,7 @@ type
     procedure cbxSATSepararPorMESChange(Sender: TObject);
     procedure cbxSepararPorCNPJChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
+    procedure chbTagQrCodeChange(Sender: TObject);
     procedure chECFArredondaMFDClick(Sender: TObject);
     procedure chECFControlePortaClick(Sender: TObject);
     procedure chECFIgnorarTagsFormatacaoClick(Sender: TObject);
@@ -2589,6 +2592,16 @@ begin
   sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
 end;
 
+procedure TFrmACBrMonitor.chbTagQrCodeChange(Sender: TObject);
+begin
+  if chbTagQrCode.Checked and (EstaVazio(Trim(edtToken.Text)) or EstaVazio(Trim(edtIdToken.Text))) then
+  begin
+    MessageDlg('Erro', 'Preencha o campo CSC e IDCSC corretamente', mtError, [mbOK], '');
+    chbTagQrCode.Checked := False;
+    edtToken.SetFocus;
+  end;
+end;
+
 procedure TFrmACBrMonitor.chECFArredondaMFDClick(Sender: TObject);
 begin
   ACBrECF1.ArredondaItemMFD :=
@@ -3242,6 +3255,7 @@ begin
     edtArquivoWebServicesMDFe.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServicesMDFe',
       PathApplication + 'ACBrMDFeServicos.ini');
     cbValidarDigest.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ValidarDigest', True);
+    edtTimeoutWebServices.Value := Ini.ReadInteger('ACBrNFeMonitor', 'TimeoutWebService', 15);
 
     ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesNFe.Text;
     ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
@@ -3264,6 +3278,7 @@ begin
     cbxImpressora.ItemIndex :=
       cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
 
+    ACBrNFe1.Configuracoes.Geral.AtualizarXMLCancelado := True;
     ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
     ACBrNFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
@@ -3281,13 +3296,13 @@ begin
     edtTentativas.Text := Ini.ReadString('WebService', 'Tentativas', '5');
     edtIntervalo.Text := Ini.ReadString('WebService', 'Intervalo', '0');
 
-    ACBrNFe1.Configuracoes.WebServices.TimeOut:=15000;
+    ACBrNFe1.Configuracoes.WebServices.TimeOut := edtTimeoutWebServices.Value * 1000;
     ACBrNFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
 
-    ACBrCTe1.Configuracoes.WebServices.TimeOut:=15000;
+    ACBrCTe1.Configuracoes.WebServices.TimeOut := edtTimeoutWebServices.Value * 1000;;
     ACBrCTe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
 
-    ACBrMDFe1.Configuracoes.WebServices.TimeOut:=15000;
+    ACBrMDFe1.Configuracoes.WebServices.TimeOut := edtTimeoutWebServices.Value * 1000;;
     ACBrMDFe1.Configuracoes.WebServices.AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
 
     if NaoEstaVazio(edtAguardar.Text) then
@@ -4143,6 +4158,7 @@ begin
     Ini.WriteInteger('ACBrNFeMonitor', 'VersaoSSL', rgVersaoSSL.ItemIndex);
     Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServices', edtArquivoWebServicesNFe.Text );
     Ini.WriteBool('ACBrNFeMonitor', 'ValidarDigest', cbValidarDigest.Checked);
+    Ini.WriteInteger('ACBrNFeMonitor', 'TimeoutWebService', edtTimeoutWebServices.Value);
 
     Ini.WriteInteger('Geral', 'DANFE', rgTipoDanfe.ItemIndex);
     Ini.WriteInteger('Geral', 'FormaEmissao', rgFormaEmissao.ItemIndex);

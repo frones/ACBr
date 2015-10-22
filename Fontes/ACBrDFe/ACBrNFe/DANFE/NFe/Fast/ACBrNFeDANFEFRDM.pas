@@ -697,6 +697,14 @@ begin
       end;
       Post;
     end;
+
+    // acrescenta o troco
+    if vTroco > 0 then
+    begin
+      Append;
+      FieldByName('tPag').AsString  := 'Troco R$';
+      FieldByName('vPag').AsFloat   := vTroco;
+    end;
   end;
 end;
 

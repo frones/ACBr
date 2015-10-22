@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2015
+-- ACBrDANFCeFR --
+[-] Corrigida a impressão do troco no DANFC-e para FastReport.
+    por: regys.silveira.
+
 21/10/2015
 -- pcnNFe / pcnNFeW / pcnNFeR --
 [+] Adicionado as novas TAGs conforme NT 2015/003 v 1.10.

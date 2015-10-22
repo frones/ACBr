@@ -1225,9 +1225,12 @@ begin
 end;
 
 function NotaFiscal.GerarXML: String;
+var
+  IdAnterior : String;
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
+    IdAnterior := NFe.infNFe.ID;
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;
@@ -1236,16 +1239,21 @@ begin
 
   FNFeW.GerarXml;
   XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;
-  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
+
+  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+    FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
   FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
   Result := FXMLOriginal;
 end;
 
 function NotaFiscal.GerarTXT: String;
+var
+  IdAnterior : String;
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
+    IdAnterior := NFe.infNFe.ID;
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;
@@ -1254,7 +1262,9 @@ begin
 
   FNFeW.GerarXml;
   XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;
-  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
+
+  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then// XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+    FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
   FAlertas := FNFeW.Gerador.ListaDeAlertas.Text;
   Result := FNFeW.Gerador.ArquivoFormatoTXT;

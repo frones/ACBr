@@ -50,12 +50,15 @@ type
   TGeralConfNFe = class(TGeralConf)
   private
     FModeloDF: TpcnModeloDF;
-    FVersaoDF: TpcnVersaoDF;
     FModeloDFCodigo: integer;
+    FVersaoDF: TpcnVersaoDF;
+    FAtualizarXMLCancelado: Boolean;
     FIdCSC: String;
     FCSC: String;
     FIncluirQRCodeXMLNFCe: Boolean;
 
+    procedure SetCSC(AValue: String);
+    procedure SetIdCSC(AValue: String);
     procedure SetModeloDF(AValue: TpcnModeloDF);
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
@@ -66,8 +69,10 @@ type
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
-    property IdCSC: String read FIdCSC write FIdCSC;
-    property CSC: String read FCSC write FCSC;
+    property AtualizarXMLCancelado: Boolean
+      read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
+    property IdCSC: String read FIdCSC write SetIdCSC;
+    property CSC: String read FCSC write SetCSC;
     property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe;
   end;
 
@@ -210,6 +215,7 @@ begin
   FModeloDF := moNFe;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
   FVersaoDF := ve310;
+  FAtualizarXMLCancelado := True;
   FIdCSC := '';
   FCSC := '';
   FIncluirQRCodeXMLNFCe := False;
@@ -230,6 +236,22 @@ procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);
 begin
   FModeloDF := AValue;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
+end;
+
+procedure TGeralConfNFe.SetCSC(AValue: String);
+begin
+  if FCSC=AValue then
+    Exit;
+
+  FCSC:=Trim(AValue);
+end;
+
+procedure TGeralConfNFe.SetIdCSC(AValue: String);
+begin
+  if FIdCSC=AValue then
+    Exit;
+
+  FIdCSC:=IntToStrZero(StrToIntDef(AValue,0),6);
 end;
 
 procedure TGeralConfNFe.SetVersaoDF(const Value: TpcnVersaoDF);

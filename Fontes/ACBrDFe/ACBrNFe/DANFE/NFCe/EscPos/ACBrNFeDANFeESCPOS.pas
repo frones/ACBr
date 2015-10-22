@@ -299,11 +299,10 @@ begin
 
         if ImprimeDescAcrescItem then
         begin
+          VlrLiquido := (Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc;
           // desconto
           if Prod.vDesc > 0 then
           begin
-            VlrLiquido := (Prod.qCom * Prod.vUnCom) - Prod.vDesc;
-
             LinhaCmd := '</ae><c>' + padSpace(
                 'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-0.00'), 15, ' ')
                 + '|' + FormatFloatBr(VlrLiquido, '0.00'),
@@ -314,8 +313,6 @@ begin
           // ascrescimo
           if Prod.vOutro > 0 then
           begin
-            VlrLiquido := (Prod.qCom * Prod.vUnCom) + Prod.vOutro;
-
             LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
                 'acréscimo ' + padLeft(FormatFloatBr(Prod.vOutro, '+0.00'), 15, ' ')
                 + '|' + FormatFloatBr(VlrLiquido, '0.00'),

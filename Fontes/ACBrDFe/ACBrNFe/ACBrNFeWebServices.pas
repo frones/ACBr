@@ -1745,7 +1745,7 @@ function TNFeConsulta.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsSitNFe;
   SalvarXML, NFCancelada, Atualiza: Boolean;
-  aEventos, NomeArquivo, aNFe, aNFeDFe: String;
+  aEventos, NomeArquivo, aNFe: String;
   AProcNFe: TProcNFe;
   I, J, Inicio, Fim: integer;
   Data: TDateTime;
@@ -1917,31 +1917,19 @@ begin
         if (OnlyNumber(FNFeChave) = NumID) then
         begin
           Atualiza := NaoEstaVazio(NFeRetorno.XMLprotNFe);
-          if (NFeRetorno.CStat in [101, 151, 155]) then
+          if ((NFeRetorno.CStat in [101, 151, 155]) and
+            (not FPConfiguracoesNFe.Geral.AtualizarXMLCancelado)) then
             Atualiza := False;
 
           // Atualiza o Status da NFe interna //
           NFe.procNFe.cStat := NFeRetorno.cStat;
 
-          if Atualiza then
+          SalvarXML := FPConfiguracoesNFe.Arquivos.Salvar and
+                      ((not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                       Processada);
+
+          if SalvarXML then
           begin
-            if (FPConfiguracoesNFe.Geral.ValidarDigest) and
-              (NFeRetorno.protNFe.digVal <> '') and (NFe.signature.DigestValue <> '') and
-              (UpperCase(NFe.signature.DigestValue) <> UpperCase(NFeRetorno.protNFe.digVal)) then
-            begin
-              raise EACBrNFeException.Create('DigestValue do documento ' +
-                NumID + ' não confere.');
-            end;
-
-            NFe.procNFe.tpAmb := NFeRetorno.tpAmb;
-            NFe.procNFe.verAplic := NFeRetorno.verAplic;
-            NFe.procNFe.chNFe := NFeRetorno.chNfe;
-            NFe.procNFe.dhRecbto := FDhRecbto;
-            NFe.procNFe.nProt := FProtocolo;
-            NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
-            NFe.procNFe.cStat := NFeRetorno.cStat;
-            NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
-
             AProcNFe := TProcNFe.Create;
             try
               AProcNFe.XML_NFe := StringReplace(XMLOriginal,
@@ -1962,7 +1950,7 @@ begin
 
                 aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                aNFeDFe := '<' + ENCODING_UTF8 + '>' +
+                FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
                            '<NFeDFe>' +
                             '<procNFe versao="' + FVersao + '">' +
                               SeparaDados(XML, 'nfeProc') +
@@ -1971,35 +1959,48 @@ begin
                               aEventos +
                             '</procEventoNFe>' +
                            '</NFeDFe>';
-
-                FRetNFeDFe := aNFeDFe;
               end;
             finally
               AProcNFe.Free;
             end;
 
-            SalvarXML := False;
+            // Salva o XML do NF-e assinado, protocolado e com os eventos
+            if (FRetNFeDFe <> '') and FPConfiguracoesNFe.Geral.Salvar then
+              FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml',
+                                 FRetNFeDFe,
+                                 ExtractFilePath(NomeArq));
 
-            if FPConfiguracoesNFe.Arquivos.Salvar then
+            if Atualiza then
             begin
-              SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
-                           Processada;
+              if (FPConfiguracoesNFe.Geral.ValidarDigest) and
+                (NFeRetorno.protNFe.digVal <> '') and (NFe.signature.DigestValue <> '') and
+                (UpperCase(NFe.signature.DigestValue) <> UpperCase(NFeRetorno.protNFe.digVal)) then
+              begin
+                raise EACBrNFeException.Create('DigestValue do documento ' +
+                  NumID + ' não confere.');
+              end;
 
               // Salva o XML da NF-e assinado e protocolado
               if SalvarXML then
               begin
+                NFe.procNFe.tpAmb := NFeRetorno.tpAmb;
+                NFe.procNFe.verAplic := NFeRetorno.verAplic;
+                NFe.procNFe.chNFe := NFeRetorno.chNfe;
+                NFe.procNFe.dhRecbto := FDhRecbto;
+                NFe.procNFe.nProt := FProtocolo;
+                NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
+                NFe.procNFe.cStat := NFeRetorno.cStat;
+                NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
+
+                GerarXML;
+
                 if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
                   FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
 
-                  GravarXML; // Salva na pasta baseado nas configurações do PathNFe
+                GravarXML; // Salva na pasta baseado nas configurações do PathNFe
               end;
             end;
 
-            // Salva o XML do NF-e assinado, protocolado e com os eventos
-            if SalvarXML and (FRetNFeDFe <> '') and FPConfiguracoesNFe.Geral.Salvar then
-              FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml',
-                                 FRetNFeDFe,
-                                 ExtractFilePath(NomeArq));
           end;
 
           break;
@@ -2007,7 +2008,7 @@ begin
       end;
     end;
 
-    // Não há NFes carregadas na memória... Vamos tentar achar o arquivo na Pasta
+    {// Não há NFes carregadas na memória... Vamos tentar achar o arquivo na Pasta
     if (TACBrNFe(FPDFeOwner).NotasFiscais.Count <= 0) then
     begin
       SalvarXML := FPConfiguracoesNFe.Arquivos.Salvar;
@@ -2046,7 +2047,7 @@ begin
 
               aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-              aNFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
+              FRetNFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
                          '<NFeDFe>' +
                           '<procNFe versao="' + FVersao + '">' +
                             SeparaDados(aNFe, 'nfeProc') +
@@ -2055,8 +2056,6 @@ begin
                             aEventos +
                           '</procEventoNFe>' +
                          '</NFeDFe>';
-
-              FRetNFeDFe := aNFeDFe;
             end;
           finally
             AProcNFe.Free;
@@ -2075,7 +2074,7 @@ begin
                                      PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(Data)));
         end;
       end;
-    end;
+    end;}//Com a estrutura atual de pastas, onde os arquivos da NFe são gravados apenas no PathNFe esse trecho não será útil(procura apenas no PathSalvar)
   finally
     NFeRetorno.Free;
   end;

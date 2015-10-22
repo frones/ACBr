@@ -51,7 +51,33 @@ Símbolo : Significado
 -- ACBrDANFCeFR --
 [-] Corrigida a impressão do troco no DANFC-e para FastReport.
     por: regys.silveira.
-
+	
+-- ACBrNFeConfiguracoes --
+[*] Retornado propriedade AtualizarXMLCancelado.
+[*] Criado métodos SetCSC e SetIdCSC para atribuir os valores corretamente 
+    FCSC(Sem espaços no final) e FIdCSC(Com 6 dígitos numéricos).
+	por: André Moraes
+	
+-- ACBrNFeNotasFiscais --
+[*] Alterado método GerarXML para recalcular o valor da variável FNomeArq 
+    respeitando o Path do arquivo carregado e apenas quando o ID carregado
+	for diferente do ID calculado pelo componente.
+	por: André Moraes
+	
+-- ACBrNFeServicos.ini --	
+[*] Alterado o valor das chaves URL-QRCode e URL-ConsultaNFCe para usar HTTPS
+    conforme validação do esquema.
+	por: André Moraes
+	
+-- ACBrNFeWebServices --	
+[*] Alterado método TNFeConsulta.TratarResposta para atualizar o XML consultado
+    baseado no valor da propriedade FPConfiguracoesNFe.Geral.AtualizarXMLCancelado
+    por: André Moraes
+	
+-- ACBrNFeDANFeESCPOS -- ACBrDANFCeFortesFr --
+[-] Corrigido impressão do valor líquido do produto para considerar desconto e acréscimos	
+    por: André Moraes
+	
 21/10/2015
 -- pcnNFe / pcnNFeW / pcnNFeR --
 [+] Adicionado as novas TAGs conforme NT 2015/003 v 1.10.

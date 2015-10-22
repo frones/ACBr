@@ -303,7 +303,7 @@ begin
     if PrintIt then
     begin
       lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+#,###,##0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro,'#,###,##0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
     end;
   end;
 end;
@@ -475,7 +475,7 @@ begin
     if PrintIt then
     begin
       lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-#,###,##0.00');
-      lDescValLiq.Caption := FormatFloatBr(Prod.vProd-Prod.vDesc,'#,###,##0.00');
+      lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
     end;
   end;
 end;

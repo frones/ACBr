@@ -71,7 +71,8 @@ requires
   {$else} 
     vcljpg,
   {$ENDIF}
-  ACBr_NFSe;
+  ACBr_NFSe,
+	dsnap;
 
 contains
   ACBrNFSeDANFSeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},

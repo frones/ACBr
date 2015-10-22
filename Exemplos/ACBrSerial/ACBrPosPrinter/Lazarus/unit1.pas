@@ -352,6 +352,8 @@ begin
   mImp.Lines.Add('</Linha_Simples>');
   mImp.Lines.Add('CODE128: $-=+ABC123abc');
   mImp.Lines.Add('<code128>$-=+ABC123abc</code128>');
+  mImp.Lines.Add('CODE128C: 35150711111111111111591234567890001135408700');
+  mImp.Lines.Add('<code128c>35150711111111111111591234567890001135408700</code128c>');
   mImp.Lines.Add('</Linha_Simples>');
   mImp.Lines.Add('UPCA: 12345678901');
   mImp.Lines.Add('<upca>12345678901</upca>');

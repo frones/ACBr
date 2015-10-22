@@ -1,14 +1,14 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 292
+  Left = 326
   Height = 521
-  Top = 91
+  Top = 128
   Width = 841
   Caption = 'ACBrPosPrinter - Teste'
   ClientHeight = 521
   ClientWidth = 841
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.4.0'
   object Panel1: TPanel
     Left = 256
     Height = 521

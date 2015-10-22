@@ -150,6 +150,8 @@ type
   private
     FCmd: TACBrPosComandos;
     FRazaoColunaFonte: TACBrPosRazaoColunaFonte;
+    FTagsNaoSuportadas: TStringList;
+
   protected
     fpModeloStr: String;
     fpPosPrinter: TACBrPosPrinter;
@@ -177,6 +179,8 @@ type
     property RazaoColunaFonte: TACBrPosRazaoColunaFonte read FRazaoColunaFonte;
     property Cmd: TACBrPosComandos read FCmd;
     property ModeloStr: String read fpModeloStr;
+
+    property TagsNaoSuportadas: TStringList read FTagsNaoSuportadas;
   end;
 
   { TACBrConfigQRCode }
@@ -274,6 +278,7 @@ type
     function GetColunas: Integer;
     function GetIgnorarTags: Boolean;
     function GetPorta: String;
+    function GetTagsNaoSuportadas: TStringList;
     function GetTraduzirTags: Boolean;
     procedure SetAtivo(AValue: Boolean);
     procedure SetIgnorarTags(AValue: Boolean);
@@ -332,6 +337,8 @@ type
     property FonteStatus: TACBrPosFonte read FFonteStatus;
     property Alinhamento: TACBrPosTipoAlinhamento read FTipoAlinhamento;
     property Inicializada: Boolean read FInicializada;
+
+    property TagsNaoSuportadas: TStringList read GetTagsNaoSuportadas;
 
   published
     property Modelo: TACBrPosPrinterModelo read FModelo write SetModelo default ppTexto;
@@ -436,12 +443,14 @@ begin
 
   FCmd := TACBrPosComandos.Create;
   FRazaoColunaFonte := TACBrPosRazaoColunaFonte.Create;
+  FTagsNaoSuportadas := TStringList.Create;
 end;
 
 destructor TACBrPosPrinterClass.Destroy;
 begin
   FCmd.Free;
   FRazaoColunaFonte.Free;
+  FTagsNaoSuportadas.Free;
 
   inherited;
 end;
@@ -949,8 +958,6 @@ procedure TACBrPosPrinter.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString
   var BlocoTraduzido: AnsiString);
 var
   ACodBar: String;
-  Code128c: AnsiString;
-  i, s: Integer;
 begin
   BlocoTraduzido := FPosPrinterClass.TraduzirTagBloco(ATag, ConteudoBloco);
 
@@ -1060,27 +1067,8 @@ begin
         ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 7, '0')
 
       else if ATag = cTagBarraCode128c then
-      begin
         // Apenas números,
-        ACodBar := OnlyNumber(ConteudoBloco);
-
-        s := Length(ACodBar);
-        if s mod 2 <> 0 then  // Tamanho deve ser Par
-        begin
-          ACodBar := '0'+ACodBar;
-          Inc(s);
-        end;
-
-        Code128c := '';
-        i := 1;
-        while i < s do
-        begin
-          Code128c := Code128c + chr(StrToInt(copy(ACodBar,i,2)));
-          i := i + 2;
-        end;
-
-        ACodBar := Code128c;
-      end
+        ACodBar := OnlyNumber(ConteudoBloco)
 
       else if ATag = cTagBarraCode39 then
         // Qualquer tamanho.. Aceita: 0~9, A~Z, ' ', '$', '%', '*', '+', '-', '.', '/'
@@ -1240,6 +1228,11 @@ end;
 function TACBrPosPrinter.GetPorta: String;
 begin
   Result := FDevice.Porta;
+end;
+
+function TACBrPosPrinter.GetTagsNaoSuportadas: TStringList;
+begin
+  Result := FPosPrinterClass.TagsNaoSuportadas;
 end;
 
 function TACBrPosPrinter.LerStatusImpressora: TACBrPosPrinterStatus;

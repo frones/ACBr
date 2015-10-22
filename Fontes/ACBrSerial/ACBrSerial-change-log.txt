@@ -44,6 +44,13 @@ Data: 22/10/2015
 [*] Ajuste para correta impressão de CODE128c   (por: DSA)
     http://www.projetoacbr.com.br/forum/topic/25385-tm-t81-sat-c%C3%B3digo-barra/
 
+[+] Adicionada a propriedade TagsNaoSuportadas: TStringList readonly.
+    Permite verificar quais as tags o modelo selecionado não suporta.
+
+-- EscBematech, EscDiebold, EscDaruma --
+[*] Ajustes para traduzir Tag de <code128a>, <code128b>, <code128c> para <code128>
+[+] Adicionada <code128c> em TagsNaoSuportadas
+
 Data: 21/10/2015
 -- ACBrECFVirtual --
 [-] Alterado o codigo que estava copiando o GTAtual para a Venda Bruta

@@ -108,20 +108,28 @@ begin
     CorteParcial            := ESC + 'm';
   end;
   {*)}
+
+  TagsNaoSuportadas.Add( cTagBarraCode128c );
 end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
   ACodigo: AnsiString): AnsiString;
 var
   P: Integer;
+  BTag: String;
 begin
-  Result := inherited ComandoCodBarras(ATag, ACodigo);
-
-  // Bematech não suporta notação para COD128 A, B e C
-  if (ATag = cTagBarraCode128)  or
-     (ATag = cTagBarraCode128a) or
+  // EscBema não suporta Code128C
+  if (ATag = cTagBarraCode128a) or
      (ATag = cTagBarraCode128b) or
      (ATag = cTagBarraCode128c) then
+    BTag := cTagBarraCode128
+  else
+    BTag := ATag;
+
+  Result := inherited ComandoCodBarras(BTag, ACodigo);
+
+  // EscBema não suporta notação para COD128 A, B e C do padrão EscPos
+  if (BTag = cTagBarraCode128) then
   begin
     P := pos('{',Result);
     if P > 0 then

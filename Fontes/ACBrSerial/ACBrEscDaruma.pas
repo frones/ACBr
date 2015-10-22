@@ -114,6 +114,8 @@ begin
     Beep                    := BELL;
   end;
   {*)}
+
+  TagsNaoSuportadas.Add( cTagBarraCode128c );
 end;
 
 function TACBrEscDaruma.ComandoCodBarras(const ATag: String; ACodigo: AnsiString

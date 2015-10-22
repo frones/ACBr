@@ -113,6 +113,8 @@ begin
     Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
   end;
   {*)}
+
+  TagsNaoSuportadas.Add( cTagBarraMSI );
 end;
 
 function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
@@ -120,7 +122,8 @@ function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
 var
   L, A, M : Integer ;
   CmdBarCode: Char;
-  ACodBar, Cmd128: AnsiString;
+  ACodBar, Cmd128, Code128c: AnsiString;
+  i, s: Integer;
 begin
   if ATag = cTagBarraUPCA then
     CmdBarCode := 'A'
@@ -152,6 +155,26 @@ begin
   begin
     CmdBarCode := 'I';
     Cmd128 := '{C';
+
+    // Apenas números,
+    ACodigo := OnlyNumber(ACodigo);
+
+    s := Length(ACodigo);
+    if s mod 2 <> 0 then  // Tamanho deve ser Par
+    begin
+      ACodigo := '0'+ACodigo;
+      Inc(s);
+    end;
+
+    Code128c := '';
+    i := 1;
+    while i < s do
+    begin
+      Code128c := Code128c + chr(StrToInt(copy(ACodigo,i,2)));
+      i := i + 2;
+    end;
+
+    ACodigo := Code128c;
   end
   else if ATag = cTagBarraMSI then     // Apenas Bematech suporta
     CmdBarCode := 'R'

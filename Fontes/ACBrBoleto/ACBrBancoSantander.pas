@@ -442,7 +442,7 @@ begin
         Instrucao1 := '1' // Protestar Dias Corridos
       else
       begin
-        if not MatchText(Instrucao2, ['0', '1', '2', '3', '9']) then
+        if not MatchText(Instrucao1, ['0', '1', '2', '3', '9']) then
           raise Exception.Create('Código de protesto informado incorretamente!');
       end;
       // Calcular os dias para protesto

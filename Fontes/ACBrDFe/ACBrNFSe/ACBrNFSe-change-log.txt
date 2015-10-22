@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2015
+[+] Criado o arquivo INI para o provedor RJ
+    Por: Roberto Rocha
+
 19/10/2015
 -- ACBrNFSeWebServices --
 [*] No Tratamento do Retorno do WebService foi acrescentado a TAG <s:Body>.

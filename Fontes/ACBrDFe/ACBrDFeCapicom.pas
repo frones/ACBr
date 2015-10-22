@@ -521,6 +521,7 @@ begin
   Resp := TMemoryStream.Create;
   try
     Executar(ConteudoXML, Resp);
+    Resp.Position := 0;
     Result := ReadStrFromStream(Resp, Resp.Size);
     // DEBUG //
     //Resp.SaveToFile('c:\temp\ReqResp.xml');

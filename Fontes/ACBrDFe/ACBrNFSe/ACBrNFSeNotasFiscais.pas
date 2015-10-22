@@ -722,9 +722,7 @@ begin
     ArquivoXML.LoadFromFile(CaminhoArquivo);
     XMLOriginal := ArquivoXML.Text;
 
-    // Converte de UTF8 para a String nativa da IDE //
-    XML := RetirarPrefixos(DecodeToString(XMLOriginal, True));
-    LoadFromString(XML, AGerarNFSe);
+    LoadFromString(XMLOriginal, AGerarNFSe);
 
     for i := 0 to Self.Count - 1 do
       Self.Items[i].NomeArq := CaminhoArquivo;
@@ -775,6 +773,11 @@ var
 
 begin
   VersaoNFSe := StrToVersaoNFSe(Ok, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConfigXML.VersaoXML);
+
+  AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+  // Converte de UTF8 para a String nativa da IDE //
+  AXMLString := RetirarPrefixos(DecodeToString(AXMLString, True));
+
   Result := False;
   N := PosNFSe;
   if N > 0 then

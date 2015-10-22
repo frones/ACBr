@@ -1894,7 +1894,7 @@ end;
 
 function TNFSeGerarNFSe.GerarPrefixoArquivo: String;
 begin
-  Result := inttoStr(NumeroRPS);
+  Result := IntToStr(NumeroRPS);
 end;
 
 { TNFSeConsultarSituacaoLoteRPS }

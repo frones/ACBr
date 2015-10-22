@@ -279,6 +279,7 @@ var
   ProtocoloTemp, NumeroLoteTemp: String;
   DataRecebimentoTemp:Tdatetime;
   i, j, k, Nivel: Integer;
+  Nivel1: Boolean;
 begin
   Result := True;
 
@@ -288,13 +289,21 @@ begin
     k := 0;
     Leitor.Grupo := Leitor.Arquivo;
 
-    if (leitor.rExtrai(1, 'GerarNfseResposta') <> '') or
-       (leitor.rExtrai(1, 'GerarNfseResponse') <> '') or
-       (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
-       (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '') or
-       (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '') or
-       (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '') or
-       (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '') then
+    Nivel1 := (leitor.rExtrai(1, 'GerarNfseResposta') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'GerarNfseResponse') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '');
+
+    if Nivel1 then
     begin
       // =======================================================================
       // Extrai a Lista de Notas
@@ -313,156 +322,155 @@ begin
         Nivel := 3
       else
         Nivel := 2;
-    //  begin
-        i := 0;
-        while (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
-              (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
-              ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) do
-        begin
-          NFSe := TNFSe.Create;
-          NFSeLida := TNFSeR.Create(NFSe);
-          try
-            NFSeLida.VersaoXML := VersaodoXML;
-            NFSeLida.Provedor := Provedor;
-            NFSeLida.TabServicosExt := TabServicosExt;
-            NFSeLida.Leitor.Arquivo := Leitor.Grupo;
 
-            Result := NFSeLida.LerXml;
+      i := 0;
+      while (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
+            (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
+            ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) do
+      begin
+        NFSe := TNFSe.Create;
+        NFSeLida := TNFSeR.Create(NFSe);
+        try
+          NFSeLida.VersaoXML := VersaodoXML;
+          NFSeLida.Provedor := Provedor;
+          NFSeLida.TabServicosExt := TabServicosExt;
+          NFSeLida.Leitor.Arquivo := Leitor.Grupo;
 
-            if Result then
+          Result := NFSeLida.LerXml;
+
+          if Result then
+          begin
+            with ListaNFSe.FCompNFSe.Add do
             begin
-              with ListaNFSe.FCompNFSe.Add do
+              FNFSe.NumeroLote    := NumeroLoteTemp;
+              FNFSe.dhRecebimento := DataRecebimentoTemp;
+              FNFSe.Protocolo     := ProtocoloTemp;
+
+              FNFSe.InfID.ID := NFSeLida.NFSe.InfID.ID;
+              FNFSe.Numero   := NFSeLida.NFSe.Numero;
+              FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;
+              FNFSe.DataEmissao := NFSeLida.NFSe.DataEmissao;
+              FNFSe.dhRecebimento := NFSeLida.NFSe.dhRecebimento;
+
+              FNFSe.NaturezaOperacao         := NFSeLida.NFSe.NaturezaOperacao;
+              FNFSe.RegimeEspecialTributacao := NFSeLida.NFSe.RegimeEspecialTributacao;
+              FNFSe.OptanteSimplesNacional   := NFSeLida.NFSe.OptanteSimplesNacional;
+              FNFSe.IncentivadorCultural     := NFSeLida.NFSe.IncentivadorCultural;
+
+              FNFSe.Competencia       := NFSeLida.NFSe.Competencia;
+              FNFSe.NFSeSubstituida   := NFSeLida.NFSe.NFSeSubstituida;
+              FNFSe.OutrasInformacoes := NFSeLida.NFSe.OutrasInformacoes;
+              FNFSe.ValorCredito      := NFSeLida.NFSe.ValorCredito;
+
+              FNFSe.IdentificacaoRps.Numero := NFSeLida.NFSe.IdentificacaoRps.Numero;
+              FNFSe.IdentificacaoRps.Serie  := NFSeLida.NFSe.IdentificacaoRps.Serie;
+              FNFSe.IdentificacaoRps.Tipo   := NFSeLida.NFSe.IdentificacaoRps.Tipo;
+
+              FNFSe.RpsSubstituido.Numero := NFSeLida.NFSe.RpsSubstituido.Numero;
+              FNFSe.RpsSubstituido.Serie  := NFSeLida.NFSe.RpsSubstituido.Serie;
+              FNFSe.RpsSubstituido.Tipo   := NFSeLida.NFSe.RpsSubstituido.Tipo;
+
+              FNFSe.Servico.ItemListaServico          := NFSeLida.NFSe.Servico.ItemListaServico;
+              FNFSe.Servico.xItemListaServico         := NFSeLida.NFSe.Servico.xItemListaServico;
+              FNFSe.Servico.CodigoCnae                := NFSeLida.NFSe.Servico.CodigoCnae;
+              FNFSe.Servico.CodigoTributacaoMunicipio := NFSeLida.NFSe.Servico.CodigoTributacaoMunicipio;
+              FNFSe.Servico.Discriminacao             := NFSeLida.NFSe.Servico.Discriminacao;
+              FNFSe.Servico.CodigoMunicipio           := NFSeLida.NFSe.Servico.CodigoMunicipio;
+
+              FNFSe.Servico.Valores.ValorServicos          := NFSeLida.NFSe.Servico.Valores.ValorServicos;
+              FNFSe.Servico.Valores.ValorDeducoes          := NFSeLida.NFSe.Servico.Valores.ValorDeducoes;
+              FNFSe.Servico.Valores.ValorPis               := NFSeLida.NFSe.Servico.Valores.ValorPis;
+              FNFSe.Servico.Valores.ValorCofins            := NFSeLida.NFSe.Servico.Valores.ValorCofins;
+              FNFSe.Servico.Valores.ValorInss              := NFSeLida.NFSe.Servico.Valores.ValorInss;
+              FNFSe.Servico.Valores.ValorIr                := NFSeLida.NFSe.Servico.Valores.ValorIr;
+              FNFSe.Servico.Valores.ValorCsll              := NFSeLida.NFSe.Servico.Valores.ValorCsll;
+              FNFSe.Servico.Valores.IssRetido              := NFSeLida.NFSe.Servico.Valores.IssRetido;
+              FNFSe.Servico.Valores.ValorIss               := NFSeLida.NFSe.Servico.Valores.ValorIss;
+              FNFSe.Servico.Valores.OutrasRetencoes        := NFSeLida.NFSe.Servico.Valores.OutrasRetencoes;
+              FNFSe.Servico.Valores.BaseCalculo            := NFSeLida.NFSe.Servico.Valores.BaseCalculo;
+              FNFSe.Servico.Valores.Aliquota               := NFSeLida.NFSe.Servico.Valores.Aliquota;
+              FNFSe.Servico.Valores.ValorLiquidoNFSe       := NFSeLida.NFSe.Servico.Valores.ValorLiquidoNFSe;
+              FNFSe.Servico.Valores.ValorIssRetido         := NFSeLida.NFSe.Servico.Valores.ValorIssRetido;
+              FNFSe.Servico.Valores.DescontoCondicionado   := NFSeLida.NFSe.Servico.Valores.DescontoCondicionado;
+              FNFSe.Servico.Valores.DescontoIncondicionado := NFSeLida.NFSe.Servico.Valores.DescontoIncondicionado;
+
+              FNFSe.Prestador.Cnpj               := NFSeLida.NFSe.Prestador.Cnpj;
+              FNFSe.Prestador.InscricaoMunicipal := NFSeLida.NFSe.Prestador.InscricaoMunicipal;
+
+              FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := NFSeLida.NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+              FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSeLida.NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
+
+              FNFSe.PrestadorServico.RazaoSocial  := NFSeLida.NFSe.PrestadorServico.RazaoSocial;
+              FNFSe.PrestadorServico.NomeFantasia := NFSeLida.NFSe.PrestadorServico.NomeFantasia;
+
+              FNFSe.PrestadorServico.Endereco.Endereco    := NFSeLida.NFSe.PrestadorServico.Endereco.Endereco;
+              FNFSe.PrestadorServico.Endereco.Numero      := NFSeLida.NFSe.PrestadorServico.Endereco.Numero;
+              FNFSe.PrestadorServico.Endereco.Complemento := NFSeLida.NFSe.PrestadorServico.Endereco.Complemento;
+              FNFSe.PrestadorServico.Endereco.Bairro      := NFSeLida.NFSe.PrestadorServico.Endereco.Bairro;
+
+              FNFSe.PrestadorServico.Endereco.CodigoMunicipio := NFSeLida.NFSe.PrestadorServico.Endereco.CodigoMunicipio;
+              FNFSe.PrestadorServico.Endereco.xMunicipio := NFSeLida.NFSe.PrestadorServico.Endereco.xMunicipio;
+
+              FNFSe.PrestadorServico.Endereco.UF  := NFSeLida.NFSe.PrestadorServico.Endereco.UF;
+              FNFSe.PrestadorServico.Endereco.CEP := NFSeLida.NFSe.PrestadorServico.Endereco.CEP;
+
+              FNFSe.PrestadorServico.Contato.Telefone := NFSeLida.NFSe.PrestadorServico.Contato.Telefone;
+              FNFSe.PrestadorServico.Contato.Email    := NFSeLida.NFSe.PrestadorServico.Contato.Email;
+
+              FNFSe.Tomador.IdentificacaoTomador.CpfCnpj := NFSeLida.NFSe.Tomador.IdentificacaoTomador.CpfCnpj;
+              FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := NFSeLida.NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal;
+
+              FNFSe.Tomador.RazaoSocial := NFSeLida.NFSe.Tomador.RazaoSocial;
+
+              FNFSe.Tomador.Endereco.Endereco    := NFSeLida.NFSe.Tomador.Endereco.Endereco;
+              FNFSe.Tomador.Endereco.Numero      := NFSeLida.NFSe.Tomador.Endereco.Numero;
+              FNFSe.Tomador.Endereco.Complemento := NFSeLida.NFSe.Tomador.Endereco.Complemento;
+              FNFSe.Tomador.Endereco.Bairro      := NFSeLida.NFSe.Tomador.Endereco.Bairro;
+
+              FNFSe.Tomador.Endereco.CodigoMunicipio := NFSeLida.NFSe.Tomador.Endereco.CodigoMunicipio;
+              FNFSe.Tomador.Endereco.xMunicipio      := NFSeLida.NFSe.Tomador.Endereco.xMunicipio;
+              FNFSe.Tomador.Endereco.UF              := NFSeLida.NFSe.Tomador.Endereco.UF;
+
+              FNFSe.Tomador.Endereco.CEP := NFSeLida.NFSe.Tomador.Endereco.CEP;
+
+              FNFSe.Tomador.Contato.Telefone := NFSeLida.NFSe.Tomador.Contato.Telefone;
+              FNFSe.Tomador.Contato.Email    := NFSeLida.NFSe.Tomador.Contato.Email;
+
+              FNFSe.IntermediarioServico.CpfCnpj := NFSeLida.NFSe.IntermediarioServico.CpfCnpj;
+              FNFSe.IntermediarioServico.InscricaoMunicipal := NFSeLida.NFSe.IntermediarioServico.InscricaoMunicipal;
+              FNFSe.IntermediarioServico.RazaoSocial := NFSeLida.NFSe.IntermediarioServico.RazaoSocial;
+
+              FNFSe.OrgaoGerador.CodigoMunicipio := NFSeLida.NFSe.OrgaoGerador.CodigoMunicipio;
+              FNFSe.OrgaoGerador.Uf              := NFSeLida.NFSe.OrgaoGerador.Uf;
+
+              FNFSe.ConstrucaoCivil.CodigoObra := NFSeLida.NFSe.ConstrucaoCivil.CodigoObra;
+              FNFSe.ConstrucaoCivil.Art        := NFSeLida.NFSe.ConstrucaoCivil.Art;
+
+              FNFSe.CondicaoPagamento.Condicao   := NFSeLida.NFSe.CondicaoPagamento.Condicao;
+              FNFSe.CondicaoPagamento.QtdParcela := NFSeLida.NFSe.CondicaoPagamento.QtdParcela;
+
+              FNFSe.NFSeCancelamento.DataHora := NFSeLida.NFSe.NFSeCancelamento.DataHora;
+
+              FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
+            end;
+
+            for j := 0 to NFSeLida.NFSe.CondicaoPagamento.Parcelas.Count -1 do
+            begin
+              with ListaNFSe.FCompNFSe[i].FNFSe.CondicaoPagamento.Parcelas.Add do
               begin
-                FNFSe.NumeroLote    := NumeroLoteTemp;
-                FNFSe.dhRecebimento := DataRecebimentoTemp;
-                FNFSe.Protocolo     := ProtocoloTemp;
-
-                FNFSe.InfID.ID := NFSeLida.NFSe.InfID.ID;
-                FNFSe.Numero   := NFSeLida.NFSe.Numero;
-                FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;
-                FNFSe.DataEmissao := NFSeLida.NFSe.DataEmissao;
-                FNFSe.dhRecebimento := NFSeLida.NFSe.dhRecebimento;
-
-                FNFSe.NaturezaOperacao         := NFSeLida.NFSe.NaturezaOperacao;
-                FNFSe.RegimeEspecialTributacao := NFSeLida.NFSe.RegimeEspecialTributacao;
-                FNFSe.OptanteSimplesNacional   := NFSeLida.NFSe.OptanteSimplesNacional;
-                FNFSe.IncentivadorCultural     := NFSeLida.NFSe.IncentivadorCultural;
-
-                FNFSe.Competencia       := NFSeLida.NFSe.Competencia;
-                FNFSe.NFSeSubstituida   := NFSeLida.NFSe.NFSeSubstituida;
-                FNFSe.OutrasInformacoes := NFSeLida.NFSe.OutrasInformacoes;
-                FNFSe.ValorCredito      := NFSeLida.NFSe.ValorCredito;
-
-                FNFSe.IdentificacaoRps.Numero := NFSeLida.NFSe.IdentificacaoRps.Numero;
-                FNFSe.IdentificacaoRps.Serie  := NFSeLida.NFSe.IdentificacaoRps.Serie;
-                FNFSe.IdentificacaoRps.Tipo   := NFSeLida.NFSe.IdentificacaoRps.Tipo;
-
-                FNFSe.RpsSubstituido.Numero := NFSeLida.NFSe.RpsSubstituido.Numero;
-                FNFSe.RpsSubstituido.Serie  := NFSeLida.NFSe.RpsSubstituido.Serie;
-                FNFSe.RpsSubstituido.Tipo   := NFSeLida.NFSe.RpsSubstituido.Tipo;
-
-                FNFSe.Servico.ItemListaServico          := NFSeLida.NFSe.Servico.ItemListaServico;
-                FNFSe.Servico.xItemListaServico         := NFSeLida.NFSe.Servico.xItemListaServico;
-                FNFSe.Servico.CodigoCnae                := NFSeLida.NFSe.Servico.CodigoCnae;
-                FNFSe.Servico.CodigoTributacaoMunicipio := NFSeLida.NFSe.Servico.CodigoTributacaoMunicipio;
-                FNFSe.Servico.Discriminacao             := NFSeLida.NFSe.Servico.Discriminacao;
-                FNFSe.Servico.CodigoMunicipio           := NFSeLida.NFSe.Servico.CodigoMunicipio;
-
-                FNFSe.Servico.Valores.ValorServicos          := NFSeLida.NFSe.Servico.Valores.ValorServicos;
-                FNFSe.Servico.Valores.ValorDeducoes          := NFSeLida.NFSe.Servico.Valores.ValorDeducoes;
-                FNFSe.Servico.Valores.ValorPis               := NFSeLida.NFSe.Servico.Valores.ValorPis;
-                FNFSe.Servico.Valores.ValorCofins            := NFSeLida.NFSe.Servico.Valores.ValorCofins;
-                FNFSe.Servico.Valores.ValorInss              := NFSeLida.NFSe.Servico.Valores.ValorInss;
-                FNFSe.Servico.Valores.ValorIr                := NFSeLida.NFSe.Servico.Valores.ValorIr;
-                FNFSe.Servico.Valores.ValorCsll              := NFSeLida.NFSe.Servico.Valores.ValorCsll;
-                FNFSe.Servico.Valores.IssRetido              := NFSeLida.NFSe.Servico.Valores.IssRetido;
-                FNFSe.Servico.Valores.ValorIss               := NFSeLida.NFSe.Servico.Valores.ValorIss;
-                FNFSe.Servico.Valores.OutrasRetencoes        := NFSeLida.NFSe.Servico.Valores.OutrasRetencoes;
-                FNFSe.Servico.Valores.BaseCalculo            := NFSeLida.NFSe.Servico.Valores.BaseCalculo;
-                FNFSe.Servico.Valores.Aliquota               := NFSeLida.NFSe.Servico.Valores.Aliquota;
-                FNFSe.Servico.Valores.ValorLiquidoNFSe       := NFSeLida.NFSe.Servico.Valores.ValorLiquidoNFSe;
-                FNFSe.Servico.Valores.ValorIssRetido         := NFSeLida.NFSe.Servico.Valores.ValorIssRetido;
-                FNFSe.Servico.Valores.DescontoCondicionado   := NFSeLida.NFSe.Servico.Valores.DescontoCondicionado;
-                FNFSe.Servico.Valores.DescontoIncondicionado := NFSeLida.NFSe.Servico.Valores.DescontoIncondicionado;
-
-                FNFSe.Prestador.Cnpj               := NFSeLida.NFSe.Prestador.Cnpj;
-                FNFSe.Prestador.InscricaoMunicipal := NFSeLida.NFSe.Prestador.InscricaoMunicipal;
-
-                FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := NFSeLida.NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
-                FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSeLida.NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-
-                FNFSe.PrestadorServico.RazaoSocial  := NFSeLida.NFSe.PrestadorServico.RazaoSocial;
-                FNFSe.PrestadorServico.NomeFantasia := NFSeLida.NFSe.PrestadorServico.NomeFantasia;
-
-                FNFSe.PrestadorServico.Endereco.Endereco    := NFSeLida.NFSe.PrestadorServico.Endereco.Endereco;
-                FNFSe.PrestadorServico.Endereco.Numero      := NFSeLida.NFSe.PrestadorServico.Endereco.Numero;
-                FNFSe.PrestadorServico.Endereco.Complemento := NFSeLida.NFSe.PrestadorServico.Endereco.Complemento;
-                FNFSe.PrestadorServico.Endereco.Bairro      := NFSeLida.NFSe.PrestadorServico.Endereco.Bairro;
-
-                FNFSe.PrestadorServico.Endereco.CodigoMunicipio := NFSeLida.NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-                FNFSe.PrestadorServico.Endereco.xMunicipio := NFSeLida.NFSe.PrestadorServico.Endereco.xMunicipio;
-
-                FNFSe.PrestadorServico.Endereco.UF  := NFSeLida.NFSe.PrestadorServico.Endereco.UF;
-                FNFSe.PrestadorServico.Endereco.CEP := NFSeLida.NFSe.PrestadorServico.Endereco.CEP;
-
-                FNFSe.PrestadorServico.Contato.Telefone := NFSeLida.NFSe.PrestadorServico.Contato.Telefone;
-                FNFSe.PrestadorServico.Contato.Email    := NFSeLida.NFSe.PrestadorServico.Contato.Email;
-
-                FNFSe.Tomador.IdentificacaoTomador.CpfCnpj := NFSeLida.NFSe.Tomador.IdentificacaoTomador.CpfCnpj;
-                FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := NFSeLida.NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal;
-
-                FNFSe.Tomador.RazaoSocial := NFSeLida.NFSe.Tomador.RazaoSocial;
-
-                FNFSe.Tomador.Endereco.Endereco    := NFSeLida.NFSe.Tomador.Endereco.Endereco;
-                FNFSe.Tomador.Endereco.Numero      := NFSeLida.NFSe.Tomador.Endereco.Numero;
-                FNFSe.Tomador.Endereco.Complemento := NFSeLida.NFSe.Tomador.Endereco.Complemento;
-                FNFSe.Tomador.Endereco.Bairro      := NFSeLida.NFSe.Tomador.Endereco.Bairro;
-
-                FNFSe.Tomador.Endereco.CodigoMunicipio := NFSeLida.NFSe.Tomador.Endereco.CodigoMunicipio;
-                FNFSe.Tomador.Endereco.xMunicipio      := NFSeLida.NFSe.Tomador.Endereco.xMunicipio;
-                FNFSe.Tomador.Endereco.UF              := NFSeLida.NFSe.Tomador.Endereco.UF;
-
-                FNFSe.Tomador.Endereco.CEP := NFSeLida.NFSe.Tomador.Endereco.CEP;
-
-                FNFSe.Tomador.Contato.Telefone := NFSeLida.NFSe.Tomador.Contato.Telefone;
-                FNFSe.Tomador.Contato.Email    := NFSeLida.NFSe.Tomador.Contato.Email;
-
-                FNFSe.IntermediarioServico.CpfCnpj := NFSeLida.NFSe.IntermediarioServico.CpfCnpj;
-                FNFSe.IntermediarioServico.InscricaoMunicipal := NFSeLida.NFSe.IntermediarioServico.InscricaoMunicipal;
-                FNFSe.IntermediarioServico.RazaoSocial := NFSeLida.NFSe.IntermediarioServico.RazaoSocial;
-
-                FNFSe.OrgaoGerador.CodigoMunicipio := NFSeLida.NFSe.OrgaoGerador.CodigoMunicipio;
-                FNFSe.OrgaoGerador.Uf              := NFSeLida.NFSe.OrgaoGerador.Uf;
-
-                FNFSe.ConstrucaoCivil.CodigoObra := NFSeLida.NFSe.ConstrucaoCivil.CodigoObra;
-                FNFSe.ConstrucaoCivil.Art        := NFSeLida.NFSe.ConstrucaoCivil.Art;
-
-                FNFSe.CondicaoPagamento.Condicao   := NFSeLida.NFSe.CondicaoPagamento.Condicao;
-                FNFSe.CondicaoPagamento.QtdParcela := NFSeLida.NFSe.CondicaoPagamento.QtdParcela;
-
-                FNFSe.NFSeCancelamento.DataHora := NFSeLida.NFSe.NFSeCancelamento.DataHora;
-
-                FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
-              end;
-
-              for j := 0 to NFSeLida.NFSe.CondicaoPagamento.Parcelas.Count -1 do
-              begin
-                with ListaNFSe.FCompNFSe[i].FNFSe.CondicaoPagamento.Parcelas.Add do
-                begin
-                  Parcela        := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].Parcela;
-                  DataVencimento := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].DataVencimento;
-                  Valor          := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].Valor;
-                end;
+                Parcela        := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].Parcela;
+                DataVencimento := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].DataVencimento;
+                Valor          := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].Valor;
               end;
             end;
-          finally
-             NFSeLida.Free;
-             NFSe.Free;
           end;
-
-          inc(i); // Incrementa o contador de notas.
+        finally
+           NFSeLida.Free;
+           NFSe.Free;
         end;
-    //  end;
+
+        inc(i); // Incrementa o contador de notas.
+      end;
     end
     else begin
       // =======================================================================

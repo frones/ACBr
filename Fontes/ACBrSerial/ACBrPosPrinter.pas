@@ -949,6 +949,8 @@ procedure TACBrPosPrinter.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString
   var BlocoTraduzido: AnsiString);
 var
   ACodBar: String;
+  Code128c: AnsiString;
+  i, s: Integer;
 begin
   BlocoTraduzido := FPosPrinterClass.TraduzirTagBloco(ATag, ConteudoBloco);
 
@@ -1056,6 +1058,29 @@ begin
       else if ATag = cTagBarraEAN8 then
         // Apenas números, sempre 7 digitos, e 1 digito verificador
         ACodBar := PadLeft(OnlyNumber(ConteudoBloco), 7, '0')
+
+      else if ATag = cTagBarraCode128c then
+      begin
+        // Apenas números,
+        ACodBar := OnlyNumber(ConteudoBloco);
+
+        s := Length(ACodBar);
+        if s mod 2 <> 0 then  // Tamanho deve ser Par
+        begin
+          ACodBar := '0'+ACodBar;
+          Inc(s);
+        end;
+
+        Code128c := '';
+        i := 1;
+        while i < s do
+        begin
+          Code128c := Code128c + chr(StrToInt(copy(ACodBar,i,2)));
+          i := i + 2;
+        end;
+
+        ACodBar := Code128c;
+      end
 
       else if ATag = cTagBarraCode39 then
         // Qualquer tamanho.. Aceita: 0~9, A~Z, ' ', '$', '%', '*', '+', '-', '.', '/'

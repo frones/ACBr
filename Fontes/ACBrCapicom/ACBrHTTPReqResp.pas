@@ -422,8 +422,6 @@ begin
 
           if Resp.Size > 0 then
           begin
-            aBuffer[0] := #0;
-            Resp.Write(aBuffer, 1);   // Grava #0 no final da Stream, para definir finalizador de String
             Resp.Position := 0;
 
             //DEBUG
@@ -434,14 +432,6 @@ begin
             //WriteToTXT('c:\temp\httpreqresp.log', FData);
 
             Ok := True;
-
-            //TODO: Tratar a resposta abaixo, ler o conteudo do documento... Precisa ????
-            //if Pos('<TITLE',UpperCase(Result)) > 0 then
-            //begin
-            //  PosError := Pos('<TITLE>',UpperCase(Result))+7;
-            //  ErrorMsg := trim(copy(Result, PosError, (pos('</TITLE>', UpperCase(Result)) - PosError)));
-            //  raise EACBrHTTPReqResp.Create('Erro: Requisição não enviada.'+sLineBreak+ErrorMsg);
-            //end;
           end;
         end;
 

@@ -507,7 +507,7 @@ end;
 function TDFeCapicom.Enviar(const ConteudoXML: String; const URL: String;
   const SoapAction: String; const MimeType: String): String;
 var
-  Resp: TStringStream;
+  Resp: TMemoryStream;
 begin
   Result := '';
 
@@ -518,10 +518,10 @@ begin
 
   ConfiguraReqResp(URL, SoapAction);
 
-  Resp := TStringStream.Create('');
+  Resp := TMemoryStream.Create;
   try
     Executar(ConteudoXML, Resp);
-    Result := String(Resp.DataString);
+    Result := ReadStrFromStream(Resp, Resp.Size);
     // DEBUG //
     //Resp.SaveToFile('c:\temp\ReqResp.xml');
   finally

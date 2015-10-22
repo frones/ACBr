@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2015
+-- ACBrDFeCapicom --
+[*] Modificando TDFeCapicom.Enviar para usar TMemoryStream ao invez de
+    TStringStream    (por: DSA)
+
+-- ACBrHTTPReqResp --
+[*] Removida a inclusão do caractere #0 no final do Stream recebido.
+    Remoção de comentários  (por: DSA)
+
 21/10/2015
 -- ACBrDFeConfiguracoes --
 [*] Remoção da propriedade não utilizada Geral.CodModeloDF   (por: DSA)

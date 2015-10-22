@@ -55,6 +55,49 @@ Símbolo : Significado
     muito altos acontecia um erro de conversão de tipo.
     por: regys.silveira.
 
+-- ACBrNFe --
+[*] Método "Consultar" modificado para permitir informar a Chave por parâmetro.
+    Se parâmetro "AChave" for informado, ele será utilizado ao invez da
+    informação das Notas carregadas.
+[*] Método "EnviarEvento" modificado, para:
+    - considerar o Ambiente definido em: Configuracoes.WebServices.Ambiente;
+    - Verificar equivalencia de chaves entre NFes carregadas e Eventos
+    - Corrigida possibilidade de A.V. em Loop
+(por: DSA)
+
+-- ACBrNFeNotasFiscais --
+[*] Limpeza de variavel interna (FXML) não necessária
+[*] Atribuir conteudo a "XML", faz o componente transferir os dados lido para as
+    propriedades internas e "XMLAssinado"
+[*] Atribuir conteudo a "XMLOriginal", reflete em "XMLAssinado", (se existir a
+    tag de assinatura)
+[*] Refatoração do Nome de váriaveis para melhor compreensão do Fonte, e para
+    evitar colisão de variaves e propriedades com o mesmo nome.
+[*] Método "Assinar" agora sempre verifica se o CNPJ do XML e do Certificado
+    possuem a mesma raiz.
+[*] Método "LoadFromFile" modificado para usar TMemoryStream para evitar problemas
+    com quebra de linhas diferente do utilizado pelo S.O.
+[*] Método "LoadFromString" não mais ajusta valores de:
+    Configuracoes.Geral.ModeloDF e Configuracoes.Geral.VersaoDF pois isso poderia
+    causar efeitos colaterais
+(por: DSA)
+
+-- ACBrNFeWebServices --
+[+] Adicionado o método Protected ExtrairUFChaveAcesso
+[*] "TNFeRecepcao" modificado para considerar as informações de "Modelo, Versao,
+    UF, e Ambiente" da NFe carregada em memória.
+[*] "TNFeRetRecepcao" modificado para considerar as informações de "Modelo, Versao,
+    UF, e Ambiente" da NFe carregada em memória.
+[*] "TNFeRecibo" modificado para considerar as informações de "Modelo, Versao,
+    UF, e Ambiente" da NFe carregada em memória.
+[*] "TNFeConsulta" modificado para considerar as informações de "Versao, Ambiente"
+    da NFe carregada em memória e "Modelo, UF" da Chave da NFe
+[*] "TNFeConsultaCadastro" modificado para considerar "Configuracoes.WebServices.UF"
+    se a UF não for previamente informada
+[*] "TNFeEnvEvento" modificado para considerar: "Versao, Ambiente, UF" do Evento
+    carregado na memória
+(por: DSA)
+
 16/10/2015
 [-] contribuição: http://www.projetoacbr.com.br/forum/topic/25243-danfe-fastreport-fatura-correção/
     Correção na impressão de informações da fatura.

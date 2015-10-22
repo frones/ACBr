@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2015
+-- ACBrDFeConfiguracoes --
+[*] Remoção da propriedade não utilizada Geral.CodModeloDF   (por: DSA)
+
 06/10/2015
 -- ACBrDFeCapicom --
 [-] Ajuste para permitir o uso de TDFeCapicom, em threads diferentes, da mesma

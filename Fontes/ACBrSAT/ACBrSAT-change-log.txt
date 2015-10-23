@@ -54,6 +54,8 @@ Data: 23/10/2015
     suportar.    (por: DSA)
 [*] Ajustes para correta impressão de CODE128 C ou B de acordo com as
     caracteristicas da Impressora
+[*] Ajustes para impressão do CODE128C em 1 ou 2 linhas no Cancelamento...
+    (por: Luis Arruda)
 
 Data: 13/10/2015
 -- ACBrSAT --

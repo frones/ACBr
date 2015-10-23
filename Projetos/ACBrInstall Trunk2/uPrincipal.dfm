@@ -1183,7 +1183,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object rdgDLL: TRadioGroup
         Left = 41
-        Top = 284
+        Top = 224
         Width = 350
         Height = 107
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1197,7 +1197,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbCopiarTodasDll: TCheckBox
         Left = 17
-        Top = 256
+        Top = 196
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
@@ -1219,6 +1219,16 @@ object frmPrincipal: TfrmPrincipal
         Height = 17
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
         TabOrder = 4
+      end
+      object ckbRemoverArquivosAntigos: TCheckBox
+        Left = 17
+        Top = 173
+        Width = 379
+        Height = 17
+        Caption = 
+          'Remover arquivos antigos das unidades de disco (pode demorar bas' +
+          'tante)'
+        TabOrder = 7
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -2770,5 +2780,11 @@ object frmPrincipal: TfrmPrincipal
         OnClick = URLClick
       end
     end
+  end
+  object JvCreateProcess1: TJvCreateProcess
+    Priority = ppHigh
+    ConsoleOptions = [coOwnerData, coRedirect, coSeparateError]
+    Left = 50
+    Top = 320
   end
 end

@@ -48,7 +48,7 @@ uses
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
   JvExControls, JvAnimatedImage, JvGIFCtrl, JvWizard, JvWizardRouteMapNodes,
   JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista, System.IOUtils,
-  System.Types;
+  System.Types, JvComponentBase, JvCreateProcess;
 
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
@@ -109,6 +109,8 @@ type
     Label8: TLabel;
     chkDeixarSomenteLIB: TCheckBox;
     btnWCInfo: TButton;
+    ckbRemoverArquivosAntigos: TCheckBox;
+    JvCreateProcess1: TJvCreateProcess;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -166,6 +168,10 @@ type
     procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
     procedure FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
     procedure DeixarSomenteLib;
+    procedure RemoverArquivosAntigosDoDisco;
+    procedure RemoverDiretoriosEPacotesAntigos;
+    function RunAsAdminAndWaitForCompletion(hWnd: HWND; filename: string): Boolean;
+    procedure GetDriveLetters(AList: TStrings);
   public
 
   end;
@@ -179,6 +185,33 @@ uses
   SVN_Class, FileCtrl, ShellApi, IniFiles, StrUtils, Math, Registry;
 
 {$R *.dfm}
+
+function TfrmPrincipal.RunAsAdminAndWaitForCompletion(hWnd: HWND; filename: string): Boolean;
+{
+    See Step 3: Redesign for UAC Compatibility (UAC)
+    http://msdn.microsoft.com/en-us/library/bb756922.aspx
+}
+var
+  sei: TShellExecuteInfo;
+  ExitCode: DWORD;
+begin
+  ZeroMemory(@sei, SizeOf(sei));
+  sei.cbSize       := SizeOf(TShellExecuteInfo);
+  sei.Wnd          := hwnd;
+  sei.fMask        := SEE_MASK_FLAG_DDEWAIT or SEE_MASK_FLAG_NO_UI or SEE_MASK_NOCLOSEPROCESS;
+  sei.lpVerb       := PWideChar('runas');
+  sei.lpFile       := PWideChar(Filename);
+  sei.lpParameters := PWideChar('');
+  sei.nShow        := SW_HIDE;
+
+  if ShellExecuteEx(@sei) then
+  begin
+    repeat
+      Application.ProcessMessages;
+      GetExitCodeProcess(sei.hProcess, ExitCode) ;
+    until (ExitCode <> STILL_ACTIVE) or  Application.Terminated;
+  end;
+end;
 
 procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
 
@@ -681,7 +714,7 @@ begin
   // remover a warnings de conversão de string (delphi 2010 em diante)
   // as diretivas -W e -H não removem estas mensagens
   if (pos('Warning: W1057', Text) <= 0) and ((pos('Warning: W1058', Text) <= 0)) then
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString(Text));
+    WriteToTXT(PathArquivoLog, Text);
 end;
 
 // evento para setar os parâmetros do compilador antes de compilar
@@ -832,6 +865,116 @@ begin
   oACBr.Free;
 end;
 
+procedure TfrmPrincipal.RemoverDiretoriosEPacotesAntigos;
+var
+  ListaPaths: TStringList;
+  I: Integer;
+begin
+  ListaPaths := TStringList.Create;
+  try
+    ListaPaths.StrictDelimiter := True;
+    ListaPaths.Delimiter := ';';
+    with oACBr.Installations[iVersion] do
+    begin
+      // remover do search path
+      ListaPaths.Clear;
+      ListaPaths.DelimitedText := RawLibrarySearchPath[tPlatform];
+      for I := ListaPaths.Count - 1 downto 0 do
+      begin
+        if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
+          ListaPaths.Delete(I);
+      end;
+      RawLibrarySearchPath[tPlatform] := ListaPaths.DelimitedText;
+      // remover do browse path
+      ListaPaths.Clear;
+      ListaPaths.DelimitedText := RawLibraryBrowsingPath[tPlatform];
+      for I := ListaPaths.Count - 1 downto 0 do
+      begin
+        if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
+          ListaPaths.Delete(I);
+      end;
+      RawLibraryBrowsingPath[tPlatform] := ListaPaths.DelimitedText;
+      // remover do Debug DCU path
+      ListaPaths.Clear;
+      ListaPaths.DelimitedText := RawDebugDCUPath[tPlatform];
+      for I := ListaPaths.Count - 1 downto 0 do
+      begin
+        if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
+          ListaPaths.Delete(I);
+      end;
+      RawDebugDCUPath[tPlatform] := ListaPaths.DelimitedText;
+      // remover pacotes antigos
+      for I := IdePackages.Count - 1 downto 0 do
+      begin
+        if Pos('ACBR', AnsiUpperCase(IdePackages.PackageFileNames[I])) > 0 then
+          IdePackages.RemovePackage(IdePackages.PackageFileNames[I]);
+      end;
+    end;
+  finally
+    ListaPaths.Free;
+  end;
+end;
+
+procedure TfrmPrincipal.GetDriveLetters(AList: TStrings);
+var
+  vDrivesSize: Cardinal;
+  vDrives: array[0..128] of Char;
+  vDrive: PChar;
+  vDriveType: Cardinal;
+begin
+  AList.BeginUpdate;
+  try
+    // clear the list from possible leftover from prior operations
+    AList.Clear;
+    vDrivesSize := GetLogicalDriveStrings(SizeOf(vDrives), vDrives);
+    if vDrivesSize = 0 then
+      Exit;
+
+    vDrive := vDrives;
+    while vDrive^ <> #0 do
+    begin
+      // adicionar somente drives fixos
+      vDriveType := GetDriveType(vDrive);
+      if vDriveType = DRIVE_FIXED then
+        AList.Add(StrPas(vDrive));
+
+      Inc(vDrive, SizeOf(vDrive));
+    end;
+  finally
+	  AList.EndUpdate;
+  end;
+end;
+
+procedure TfrmPrincipal.RemoverArquivosAntigosDoDisco;
+var
+  PathBat: String;
+  DriverList: TStringList;
+  ConteudoArquivo: String;
+  I: Integer;
+begin
+  PathBat := ExtractFilePath(ParamStr(0)) + 'apagarACBr.bat';
+
+  // listar driver para montar o ConteudoArquivo
+  DriverList := TStringList.Create;
+  try
+    GetDriveLetters(DriverList);
+    ConteudoArquivo := '@echo off' + sLineBreak;
+    for I := 0 to DriverList.Count -1 do
+    begin
+      ConteudoArquivo := ConteudoArquivo + DriverList[I].Replace('\', '') + sLineBreak;
+      ConteudoArquivo := ConteudoArquivo + 'cd\' + sLineBreak;
+      ConteudoArquivo := ConteudoArquivo + 'del ACBr*.bpl ACBr*.dcp ACBr*.dcu PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl SYNA*.dcp SYNA*.dcu pnfs*.dcu pcte*.bpl pcte*.dcp pcte*.dcu pmdfe*.bpl pmdfe*.dcp pmdfe*.dcu /s' + sLineBreak;
+      ConteudoArquivo := ConteudoArquivo + sLineBreak;
+    end;
+
+    WriteToTXT(PathBat, ConteudoArquivo, False);
+  finally
+    DriverList.Free;
+  end;
+
+  RunAsAdminAndWaitForCompletion(Handle, PathBat);
+end;
+
 // botão de compilação e instalação dos pacotes selecionados no treeview
 procedure TfrmPrincipal.btnInstalarACBrClick(Sender: TObject);
 var
@@ -839,8 +982,15 @@ var
   bRunOnly: Boolean;
   NomePacote: String;
   Cabecalho: String;
-  ListaPaths: TStringList;
-  I: Integer;
+
+  procedure Logar(const AString: String);
+  begin
+    lstMsgInstalacao.Items.Add(AString);
+    lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+    Application.ProcessMessages;
+
+    WriteToTXT(PathArquivoLog, AString);
+  end;
 
   procedure MostrarMensagemInstalado(const aMensagem: String; const aErro: String = '');
   var
@@ -866,11 +1016,14 @@ var
       end;
     end;
 
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
-    WriteToTXT(AnsiString(PathArquivoLog), Msg);
+    WriteToTXT(PathArquivoLog, '');
+    Logar(Msg);
+  end;
 
-    lstMsgInstalacao.Items.Add(Msg);
-    lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+  procedure IncrementaBarraProgresso;
+  begin
+    pgbInstalacao.Position := pgbInstalacao.Position + 1;
+    Application.ProcessMessages;
   end;
 
 begin
@@ -888,92 +1041,69 @@ begin
 
     // limpar o log
     lstMsgInstalacao.Clear;
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString(Cabecalho), False);
+    WriteToTXT(PathArquivoLog, Cabecalho, False);
 
     // setar barra de progresso
     pgbInstalacao.Position := 0;
-    pgbInstalacao.Max := (frameDpk.Pacotes.Count * 2) + 5;
+    pgbInstalacao.Max := (frameDpk.Pacotes.Count * 2) + 6;
 
+
+    // *************************************************************************
+    // removendo arquivos antigos se configurado
+    // *************************************************************************
+    if ckbRemoverArquivosAntigos.Checked then
+    begin
+      if Application.MessageBox(
+        'você optou por limpar arquivos antigos do ACBr do seu computador, essa ação pode demorar vários minutos, deseja realmente continuar com está ação?',
+        'Limpar',
+        MB_YESNO + MB_DEFBUTTON2
+      ) = ID_YES then
+      begin
+        Logar('Removendo arquivos antigos do disco...');
+        RemoverArquivosAntigosDoDisco;
+        IncrementaBarraProgresso;
+      end;
+    end;
+
+
+    // *************************************************************************
     // Seta a plataforna selecionada
+    // *************************************************************************
+    Logar('Setando parâmetros de plataforma...');
     SetPlatformSelected;
-    pgbInstalacao.Position := pgbInstalacao.Position + 1;
-    lstMsgInstalacao.Items.Add('Setando parâmetros de plataforma...');
-    Application.ProcessMessages;
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Setando parâmetros de plataforma...'));
+    IncrementaBarraProgresso;
 
+
+    // *************************************************************************
     // Cria diretório de biblioteca da versão do delphi selecionada,
     // só será criado se não existir
+    // *************************************************************************
+    Logar('Criando diretórios de bibliotecas...');
     CreateDirectoryLibrarysNotExist;
-    pgbInstalacao.Position := pgbInstalacao.Position + 1;
-    lstMsgInstalacao.Items.Add('Criando diretórios de bibliotecas...');
-    Application.ProcessMessages;
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Criando diretórios de bibliotecas...'));
+    IncrementaBarraProgresso;
 
 
+    // *************************************************************************
     // remover paths do delphi
-    lstMsgInstalacao.Items.Add('Removendo diretorios antigos...');
-    Application.ProcessMessages;
-    WriteToTXT(AnsiString(PathArquivoLog), 'Removendo diretorios e pacotes antigos...');
-    ListaPaths := TStringList.Create;
-    try
-      ListaPaths.StrictDelimiter := True;
-      ListaPaths.Delimiter := ';';
-
-      with oACBr.Installations[iVersion] do
-      begin
-       // remover do search path
-        ListaPaths.Clear;
-        ListaPaths.DelimitedText := RawLibrarySearchPath[tPlatform];
-        for I := ListaPaths.Count - 1 downto 0 do
-        begin
-         if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
-           ListaPaths.Delete(I);
-        end;
-        RawLibrarySearchPath[tPlatform] := ListaPaths.DelimitedText;
-
-        // remover do browse path
-        ListaPaths.Clear;
-        ListaPaths.DelimitedText := RawLibraryBrowsingPath[tPlatform];
-        for I := ListaPaths.Count - 1 downto 0 do
-        begin
-         if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
-           ListaPaths.Delete(I);
-        end;
-        RawLibraryBrowsingPath[tPlatform] := ListaPaths.DelimitedText;
+    // *************************************************************************
+    Logar('Removendo diretorios e pacotes antigos instalados...');
+    RemoverDiretoriosEPacotesAntigos;
+    IncrementaBarraProgresso;
 
 
-        // remover do Debug DCU path
-        ListaPaths.Clear;
-        ListaPaths.DelimitedText := RawDebugDCUPath[tPlatform];
-        for I := ListaPaths.Count - 1 downto 0 do
-        begin
-         if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
-           ListaPaths.Delete(I);
-        end;
-        RawDebugDCUPath[tPlatform] := ListaPaths.DelimitedText;
-
-        // remover pacotes antigos
-        for I := IdePackages.Count - 1 downto 0 do
-        begin
-          if Pos('ACBR', AnsiUpperCase(IdePackages.PackageFileNames[I])) > 0 then
-            IdePackages.RemovePackage(IdePackages.PackageFileNames[I]);
-        end;
-      end;
-    finally
-      ListaPaths.Free
-    end;
-    pgbInstalacao.Position := pgbInstalacao.Position + 1;
-
+    // *************************************************************************
     // Adiciona os paths dos fontes na versão do delphi selecionada
+    // *************************************************************************
+    Logar('Adicionando library paths...');
     AddLibrarySearchPath;
-    pgbInstalacao.Position := pgbInstalacao.Position + 1;
-    lstMsgInstalacao.Items.Add('Adicionando library paths...');
-    Application.ProcessMessages;
-    WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Adicionando library paths...'));
+    IncrementaBarraProgresso;
 
+
+    // *************************************************************************
     // compilar os pacotes primeiramente
-    lstMsgInstalacao.Items.Add('');
-    lstMsgInstalacao.Items.Add('COMPILANDO OS PACOTES...');
+    // *************************************************************************
+    Logar('');
+    Logar('COMPILANDO OS PACOTES...');
     for iDpk := 0 to frameDpk.Pacotes.Count - 1 do
     begin
       NomePacote := frameDpk.Pacotes[iDpk].Caption;
@@ -983,33 +1113,34 @@ begin
 
       if (IsDelphiPackage(NomePacote)) and (frameDpk.Pacotes[iDpk].Checked) then
       begin
-        WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+        WriteToTXT(PathArquivoLog, '');
 
         if oACBr.Installations[iVersion].CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-        begin
-          lstMsgInstalacao.Items.Add(Format('Pacote "%s" compilado com sucesso.', [NomePacote]));
-          lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
-        end
+          Logar(Format('Pacote "%s" compilado com sucesso.', [NomePacote]))
         else
         begin
           Inc(FCountErros);
-          lstMsgInstalacao.Items.Add(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
-          lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+          Logar(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
+
+          // parar no primeiro erro para evitar de compilar outros pacotes que
+          // precisam do pacote que deu erro
+          Break
         end;
       end;
 
-      pgbInstalacao.Position := pgbInstalacao.Position + 1;
-      Application.ProcessMessages;
+      IncrementaBarraProgresso;
     end;
 
+
+    // *************************************************************************
     // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
+    // *************************************************************************
     if (edtPlatform.ItemIndex = 0) then
     begin
       if (FCountErros <= 0) then
       begin
-        lstMsgInstalacao.Items.Add('');
-        lstMsgInstalacao.Items.Add('INSTALANDO OS PACOTES...');
-        lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+        Logar('');
+        Logar('INSTALANDO OS PACOTES...');
 
         for iDpk := 0 to frameDpk.Pacotes.Count - 1 do
         begin
@@ -1027,104 +1158,114 @@ begin
               // se o pacote estiver marcado instalar, senão desinstalar
               if frameDpk.Pacotes[iDpk].Checked then
               begin
-                WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+                WriteToTXT(PathArquivoLog, '');
 
                 if oACBr.Installations[iVersion].InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-                begin
-                  lstMsgInstalacao.Items.Add(Format('Pacote "%s" instalado com sucesso.', [NomePacote]));
-                  lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
-                end
+                  Logar(Format('Pacote "%s" instalado com sucesso.', [NomePacote]))
                 else
                 begin
                   Inc(FCountErros);
-                  lstMsgInstalacao.Items.Add(Format('Ocorreu um erro ao instalar o pacote "%s".', [NomePacote]));
-                  lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+                  Logar(Format('Ocorreu um erro ao instalar o pacote "%s".', [NomePacote]));
+
+                  Break;
                 end;
               end
               else
               begin
-                WriteToTXT(AnsiString(PathArquivoLog), AnsiString(''));
+                WriteToTXT(PathArquivoLog, '');
 
                 if oACBr.Installations[iVersion].UninstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-                begin
-                  lstMsgInstalacao.Items.Add(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
-                  lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
-                end;
+                  Logar(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
               end;
             end;
           end;
 
-          pgbInstalacao.Position := pgbInstalacao.Position + 1;
-          Application.ProcessMessages;
+          IncrementaBarraProgresso;
         end;
       end
       else
       begin
-        lstMsgInstalacao.Items.Add('');
-        lstMsgInstalacao.Items.Add('Abortando... Ocorreram erros na compilação dos pacotes.');
-        lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+        Logar('');
+        Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
       end;
     end
     else
     begin
-      lstMsgInstalacao.Items.Add('');
-      lstMsgInstalacao.Items.Add('Para a plataforma de 64 bits os pacotes são somente compilados.');
-      lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+      Logar('');
+      Logar('Para a plataforma de 64 bits os pacotes são somente compilados.');
     end;
 
 
-    lstMsgInstalacao.Items.Add('');
-    lstMsgInstalacao.Items.Add('INSTALANDO OUTROS REQUISITOS...');
-    lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
-
-    // instalar capicom
-		try
-			InstalarCapicom;
-			MostrarMensagemInstalado('CAPICOM instalado com sucesso');
-		except
-			on E: Exception do
-			begin
-				MostrarMensagemInstalado('Ocorreu erro ao instalar a CAPICOM', E.Message);
-			end;
-		end;
-
-    // instalar OpenSSL
-		try
-			InstalarOpenSSL;
-			MostrarMensagemInstalado('OPENSSL instalado com sucesso');
-		except
-			on E: Exception do
-			begin
-				MostrarMensagemInstalado('Ocorreu erro ao instalar a OPENSSL', E.Message);
-			end;
-		end;
-
-    //instalar todas as "OUTRAS" DLLs
-    if ckbCopiarTodasDll.Checked then
+    // *************************************************************************
+    // não instalar outros requisitos se ocorreu erro anteriormente
+    // *************************************************************************
+    if FCountErros <= 0 then
     begin
+      Logar('');
+      Logar('INSTALANDO OUTROS REQUISITOS...');
+
+
+      // *************************************************************************
+      // instalar capicom
+      // *************************************************************************
       try
-        InstalarXMLSec;
-        InstalarDiversos;
-        MostrarMensagemInstalado('Outras DLL´s instaladas com sucesso');
+        InstalarCapicom;
+        MostrarMensagemInstalado('CAPICOM instalado com sucesso');
       except
         on E: Exception do
         begin
-          MostrarMensagemInstalado('Ocorreu erro ao instalar Outras DLL´s', E.Message)
+          MostrarMensagemInstalado('Ocorreu erro ao instalar a CAPICOM', E.Message);
         end;
       end;
-    end;
 
-    if chkDeixarSomenteLIB.Checked then
-    begin
+
+      // *************************************************************************
+      // instalar OpenSSL
+      // *************************************************************************
       try
-        DeixarSomenteLib;
-
-        MostrarMensagemInstalado('Limpeza library path com sucesso');
-        MostrarMensagemInstalado('Copia dos arquivos necessário.');
+        InstalarOpenSSL;
+        MostrarMensagemInstalado('OPENSSL instalado com sucesso');
       except
         on E: Exception do
         begin
-          MostrarMensagemInstalado('Ocorreu erro ao limpas os path e copiar arquivos' + sLineBreak +E.Message )
+          MostrarMensagemInstalado('Ocorreu erro ao instalar a OPENSSL', E.Message);
+        end;
+      end;
+
+
+      // *************************************************************************
+      //instalar todas as "OUTRAS" DLLs
+      // *************************************************************************
+      if ckbCopiarTodasDll.Checked then
+      begin
+        try
+          InstalarXMLSec;
+          InstalarDiversos;
+          MostrarMensagemInstalado('Outras DLL´s instaladas com sucesso');
+        except
+          on E: Exception do
+          begin
+            MostrarMensagemInstalado('Ocorreu erro ao instalar Outras DLL´s', E.Message)
+          end;
+        end;
+      end;
+
+
+      // *************************************************************************
+      // deixar somente a pasta lib se for configurado assim
+      // *************************************************************************
+      if chkDeixarSomenteLIB.Checked then
+      begin
+        try
+          DeixarSomenteLib;
+
+          MostrarMensagemInstalado('Limpeza library path com sucesso');
+          MostrarMensagemInstalado('Copia dos arquivos necessário.');
+        except
+          on E: Exception do
+          begin
+            MostrarMensagemInstalado('Ocorreu erro ao limpas os path e copiar arquivos' + sLineBreak +E.Message )
+          end;
         end;
       end;
     end;
@@ -1161,10 +1302,7 @@ begin
       btnVisualizarLogCompilacao.Click;
     end;
   end;
-  //-- Copiar todas as BPLs para a pasta SYSTEM do windows, isso é necessário
-  //-- por motivo do delphi ao iniciar buscar as BPLs nas pastas SYSTEM
-  //-- se não tiver na poasta padrão dele.
-//  CopiarArquivosBPLsSystem;
+
 end;
 
 // chama a caixa de dialogo para selecionar o diretório de instalação

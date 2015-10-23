@@ -349,52 +349,52 @@ begin
 
       with ACBrBoleto do
       begin
-         wLinha:= '7' +                                                         // ID Registro
-                  ATipoCendente +                                               // Tipo de inscrição da empresa 01-CPF / 02-CNPJ
-                  PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0') +                    // Inscrição da empresa
-                  aAgencia +                                                    // Prefixo da agência
-                  PadRight( Cedente.AgenciaDigito, 1)  +                            // DV-prefixo da agencia
-                  aConta +                                                      // Código do cendete/nr. conta corrente da empresa
-                  PadRight( Cedente.ContaDigito, 1)  +                              // DV-código do cedente
-                  PadLeft(OnlyNumber(Cedente.Convenio),7,'0') +                    // Número do convênio
-                  PadRight( SeuNumero, 25 ) +                                       // Número de Controle do Participante
-                  PadLeft( ANossoNumero, 17, '0') +                                // Nosso número
-                  '0000' +                                                      // Zeros
-                  '   ' +                                                       // Complemento do Registro: “Brancos”
-                  ' ' +                                                         // Indic. Mensagem ou Sac.Avalista
-                  '   ' +                                                       // Prefixo do título “Brancos”
-                  aModalidade +                                                 // Variação da carteira
-                  IntToStrZero(0,7) +                                           // Zero + Zeros
-                  aTipoCobranca +                                               // Tipo de cobrança
-                  Carteira +                                                    // Carteira
-                  ATipoOcorrencia +                                             // Ocorrência "Comando"
-                  PadRight( NumeroDocumento, 10, ' ') +                             // Seu Número - Nr. titulo dado pelo cedente
-                  FormatDateTime( 'ddmmyy', Vencimento ) +                      // Data de vencimento
-                  IntToStrZero( Round( ValorDocumento * 100 ), 13) +            // Valor do titulo
-                  '085' + '0000' + ' ' +                                        // Numero do Banco - 085 + Prefixo da agência cobradora + DV-pref. agência cobradora
-                  PadLeft(ATipoEspecieDoc, 2, '0') +                               // Especie de titulo
-                  ATipoAceite +                                                 // Aceite
-                  FormatDateTime( 'ddmmyy', DataDocumento ) +                   // Data de Emissão
-                  PadLeft(AInstrucao, 2, '0') +                                                  // 1ª e 2ª instrução codificada
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13) +             // Juros de mora por dia
-                  IntToStrZero(0,6) +                                           // Zeros
-                  IntToStrZero( round( ValorDesconto * 100), 13) +              // Valor do desconto
-                  IntToStrZero(0,13) +                                           // Zeros
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13) +           // Valor do abatimento permitido
-                  ATipoSacado +                                                 // Tipo de inscricao do sacado
-                  PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +                     // CNPJ ou CPF do sacado
-                  PadRight( Sacado.NomeSacado, 37) +                                // Nome do sacado
-                  '   '  +                                                      // Brancos
+         wLinha:= '7' +                                                         // 001 a 001 - ID Registro
+                  ATipoCendente +                                               // 002 a 003 - Tipo de inscrição da empresa 01-CPF / 02-CNPJ
+                  PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0') +                 // 004 a 017 - Inscrição da empresa
+                  aAgencia +                                                    // 018 a 021 - Prefixo da agência
+                  PadRight( Cedente.AgenciaDigito, 1)  +                        // 022 a 022 - DV-prefixo da agencia
+                  aConta +                                                      // 023 a 030 - Código do cendete/nr. conta corrente da empresa
+                  PadRight( Cedente.ContaDigito, 1)  +                          // 031 a 031 - DV-código do cedente
+                  PadLeft(OnlyNumber(Cedente.Convenio),7,'0') +                 // 032 a 038 - Número do convênio
+                  PadRight( SeuNumero, 25 ) +                                   // 039 a 063 - Número de Controle do Participante
+                  PadLeft( ANossoNumero, 17, '0') +                             // 064 a 080 - Nosso número
+                  '0000' +                                                      // 081 a 084 - Zeros
+                  '   ' +                                                       // 085 a 087 - Complemento do Registro: “Brancos”
+                  ' ' +                                                         // 088 a 088 - Indic. Mensagem ou Sac.Avalista
+                  '   ' +                                                       // 089 a 091 - Prefixo do título “Brancos”
+                  aModalidade +                                                 // 092 a 094 - Variação da carteira
+                  IntToStrZero(0,7) +                                           // 095 a 101 - Zero + Zeros
+                  aTipoCobranca +                                               // 102 a 106 - Tipo de cobrança
+                  Carteira +                                                    // 107 a 108 - Carteira
+                  ATipoOcorrencia +                                             // 109 a 110 - Ocorrência "Comando"
+                  PadRight( NumeroDocumento, 10, ' ') +                         // 111 a 120 - Seu Número - Nr. titulo dado pelo cedente
+                  FormatDateTime( 'ddmmyy', Vencimento ) +                      // 121 a 126 - Data de vencimento
+                  IntToStrZero( Round( ValorDocumento * 100 ), 13) +            // 127 a 139 - Valor do titulo
+                  '085' + '0000' + ' ' +                                        // 140 a 147 - Numero do Banco - 085 + Prefixo da agência cobradora + DV-pref. agência cobradora
+                  PadLeft(ATipoEspecieDoc, 2, '0') +                            // 148 a 149 - Especie de titulo
+                  ATipoAceite +                                                 // 150 a 150 - Aceite
+                  FormatDateTime( 'ddmmyy', DataDocumento ) +                   // 151 a 156 - Data de Emissão
+                  PadLeft(AInstrucao, 4, '0') +                                 // 157 a 158 - Instrução codificada (cód. Protesto)
+                  IntToStrZero( round(ValorMoraJuros * 100 ), 13) +             // 161 a 173 - Juros de mora por dia
+                  IntToStrZero(0,6) +                                           // 174 a 179 - Zeros
+                  IntToStrZero( round( ValorDesconto * 100), 13) +              // 180 a 192 - Valor do desconto
+                  IntToStrZero(0,13) +                                          // 193 a 205 - Zeros
+                  IntToStrZero( round( ValorAbatimento * 100 ), 13) +           // 206 a 218 - Valor do abatimento permitido
+                  ATipoSacado +                                                 // 219 a 220 - Tipo de inscricao do sacado
+                  PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +                  // 221 a 234 - CNPJ ou CPF do sacado
+                  PadRight( Sacado.NomeSacado, 37) +                            // 235 a 271 - Nome do sacado
+                  '   '  +                                                      // 272 a 274 - Brancos
                   PadRight(trim(Sacado.Logradouro) + ', ' +
-                       trim(Sacado.Numero) + ' '+ trim(Sacado.Bairro),
-                       52) +                                                    // Endereço do sacado
-                  PadLeft( OnlyNumber(Sacado.CEP), 8 ) +                           // CEP do endereço do sacado
-                  PadRight( trim(Sacado.Cidade), 15) +                              // Cidade do sacado
-                  PadRight( Sacado.UF, 2 ) +                                        // UF da cidade do sacado
-                  PadRight( AMensagem, 40) +                                        // Observações
-                  PadLeft(DiasProtesto,2,'0') +                                    // Número de dias para protesto
-                  ' ' +                                                         // Branco
-                  IntToStrZero( aRemessa.Count + 1, 6 );
+                    trim(Sacado.Numero), 40) +                                  // 275 a 314 - Endereço do sacado
+                  PadRight(trim(Sacado.Bairro), 12) +                           // 315 a 326 - Bairro do Sacado
+                  PadLeft( OnlyNumber(Sacado.CEP), 8 ) +                        // 327 a 334 - CEP do endereço do sacado
+                  PadRight( trim(Sacado.Cidade), 15) +                          // 335 a 349 - Cidade do sacado
+                  PadRight( Sacado.UF, 2 ) +                                    // 350 a 351 - UF da cidade do sacado
+                  PadRight( AMensagem, 40) +                                    // 352 a 391 - Observações
+                  PadLeft(DiasProtesto,2,' ') +                                 // 392 a 393 - Número de dias para protesto (deixar em branco se não houver instrução de protesto)
+                  ' ' +                                                         // 394 a 394 - Branco
+                  IntToStrZero( aRemessa.Count + 1, 6 );                        // 395 a 400 - Sequencial de Registro 
 
 
          wLinha:= wLinha + sLineBreak +

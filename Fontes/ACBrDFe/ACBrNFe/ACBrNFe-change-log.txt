@@ -60,6 +60,11 @@ Símbolo : Significado
     (não estava considerando a área de cabeçalho dos itens)
     por: André Moraes
 
+-- ACBrDANFCeFortesFr -- ACBrNFeDANFeESCPOS --
+[*] Alterado para imprimir apenas uma vez o campo "Valor Líquido" quando tiver
+    desconto e acréscimo no mesmo item
+    por: André Moraes
+
 22/10/2015
 -- ACBrDANFCeFR --
 [-] Corrigida a impressão do troco no DANFC-e para FastReport.

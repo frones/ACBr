@@ -490,7 +490,19 @@ begin
     if PrintIt then
     begin
       lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-#,###,##0.00');
-      lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
+      if (Prod.vOutro > 0) then
+      begin
+        lTitDescValLiq.Visible := False;
+        lDescValLiq.Visible := False;
+        rlbDescItem.Height := 12;
+      end
+      else
+      begin
+        rlbDescItem.Height := 24;
+        lTitDescValLiq.Visible := True;
+        lDescValLiq.Visible := True;
+        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
+      end;
     end;
   end;
 end;

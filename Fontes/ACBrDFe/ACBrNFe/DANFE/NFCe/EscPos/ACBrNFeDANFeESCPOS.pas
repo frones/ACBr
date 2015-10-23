@@ -300,12 +300,13 @@ begin
         if ImprimeDescAcrescItem then
         begin
           VlrLiquido := (Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc;
+
           // desconto
           if Prod.vDesc > 0 then
           begin
             LinhaCmd := '</ae><c>' + padSpace(
                 'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-0.00'), 15, ' ')
-                + '|' + FormatFloatBr(VlrLiquido, '0.00'),
+                +IIf((Prod.vOutro > 0),'','|' + FormatFloatBr(VlrLiquido, '0.00')) ,
                 FPosPrinter.ColunasFonteCondensada, '|');
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
           end;

@@ -500,8 +500,12 @@ begin
                  exit ;
                end ;
 
-              RLFiltro.FileName := NomeArquivo ;
-              RLFiltro.FilterPages( RLLayout.Pages );
+               if RLFiltro = RLPDFFilter1 then
+                  RLPDFFilter1.DocumentInfo.Title := RLLayout.Title;
+
+               RLFiltro.ShowProgress := MostrarProgresso;
+               RLFiltro.FileName := NomeArquivo ;
+               RLFiltro.FilterPages( RLLayout.Pages );
             end;
          end;
      end;

@@ -42,8 +42,10 @@ Símbolo : Significado
 23/10/2015
 [+] Adicionada limpeza de diretorios (browse path, library path e dcu debug) antes 
     instalar os novos, evitando problemas de diretórios antigos no path.
-    Adicionada remoção de pacotes que contenham ACBR no nome, evitando que fiquem 
+[+] Adicionada remoção de pacotes que contenham ACBR no nome, evitando que fiquem 
     pacotes acbr antigos carregados no delphi.
+[+] Remoção de arquivos desnecessários e configuração da execução com previlegios 
+    de administrador.
     por: regys.silveira
 
 16/10/2015

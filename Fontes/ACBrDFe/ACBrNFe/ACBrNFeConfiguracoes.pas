@@ -215,7 +215,7 @@ begin
   FModeloDF := moNFe;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
   FVersaoDF := ve310;
-  FAtualizarXMLCancelado := True;
+  FAtualizarXMLCancelado := False;
   FIdCSC := '';
   FCSC := '';
   FIncluirQRCodeXMLNFCe := False;

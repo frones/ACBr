@@ -409,9 +409,9 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
-  QRCode, Chave: String;
+  QRCode, Chave, TagCode128: String;
   ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
-  ChaveEmUmaLinha: Boolean;
+  ChaveEmUmaLinha, Suporta128c: Boolean;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   if Cancelamento then
@@ -425,17 +425,19 @@ begin
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFe.ide.dEmi + CFe.ide.hEmi));
   FPosPrinter.Buffer.Add('<c>'+Chave+'</fn>');
 
-  ChaveEmUmaLinha := (ImprimeChaveEmUmaLinha = rSim);
-  if (ImprimeChaveEmUmaLinha = rAuto) then
-    ChaveEmUmaLinha := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
+  Suporta128c := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
+  TagCode128 := IfThen(Suporta128c,'code128c', 'code128' );
+
+  ChaveEmUmaLinha := (ImprimeChaveEmUmaLinha = rSim) or
+                     ((ImprimeChaveEmUmaLinha = rAuto) and Suporta128c);
 
   if not ChaveEmUmaLinha then
   begin
-    FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
-    FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');
+    FPosPrinter.Buffer.Add('<'+TagCode128+'>'+copy(CFe.infCFe.ID,1,22)+'</'+TagCode128+'>');
+    FPosPrinter.Buffer.Add('<'+TagCode128+'>'+copy(CFe.infCFe.ID,23,22)+'</'+TagCode128+'>');
   end
   else
-    FPosPrinter.Buffer.Add('<code128c>'+CFe.infCFe.ID+'</code128c>');
+    FPosPrinter.Buffer.Add('<'+TagCode128+'>'+CFe.infCFe.ID+'</'+TagCode128+'>');
 
   if ImprimeQRCode then
   begin

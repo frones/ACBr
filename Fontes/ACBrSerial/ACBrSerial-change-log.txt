@@ -47,9 +47,14 @@ Data: 22/10/2015
 [+] Adicionada a propriedade TagsNaoSuportadas: TStringList readonly.
     Permite verificar quais as tags o modelo selecionado não suporta.
 
--- EscBematech, EscDiebold, EscDaruma --
+-- ACBrEscPosEpson --
+[*] Ajuste para considerar valor Default da largura da Barra como 2 (0=2)
+    (por: DSA)
+
+-- ACBrEscBematech, ACBrEscDiebold, ACBrEscDaruma --
 [*] Ajustes para traduzir Tag de <code128a>, <code128b>, <code128c> para <code128>
 [+] Adicionada <code128c> em TagsNaoSuportadas
+    (por: DSA)
 
 Data: 21/10/2015
 -- ACBrECFVirtual --

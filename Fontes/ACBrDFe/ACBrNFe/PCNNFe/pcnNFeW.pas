@@ -586,12 +586,10 @@ begin
 
   if nfe.infNFe.Versao >= 3 then
    begin
-    if (nfe.Dest.enderDest.cPais = 1058) and (nfe.Dest.CNPJCPF <> '') then
-      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais)
+    if (nfe.Dest.idEstrangeiro <> '') or ((nfe.Dest.enderDest.cPais <> 0) and (nfe.Dest.enderDest.cPais <> 1058)) then
+      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 00, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
     else
-      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 00, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
-//      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 05, 20, 0, nfe.Dest.idEstrangeiro, DSC_IDESTR);
-//      Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 01, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR);
+      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
    end
   else
      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);

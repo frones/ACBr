@@ -73,7 +73,12 @@ Símbolo : Significado
 -- ACBrNFeNotasFiscais --
 [-] Corrigido para enviar corretamente o destinatário ao calcular o QRCode que será
     adicionado ao XML.
+[*] Alterado para atribuir valores defaults ao País no endereço do destinatário
     por: André Moraes
+
+-- pcnNFeW --
+[-] Alterado para o CNPJ e CPF ser gerado com prioridade ao campo IdEstrangeiro
+   por: André Moraes
 
 22/10/2015
 -- ACBrDANFCeFR --

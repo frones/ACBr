@@ -204,6 +204,9 @@ begin
     FNFe.Emit.EnderEmit.xPais := 'BRASIL';
     FNFe.Emit.EnderEmit.cPais := 1058;
     FNFe.Emit.EnderEmit.nro := 'SEM NUMERO';
+
+    FNFe.Dest.EnderDest.xPais := 'BRASIL';
+    FNFe.Dest.EnderDest.cPais := 1058;
   end;
 end;
 

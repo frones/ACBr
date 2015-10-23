@@ -472,16 +472,22 @@ begin
 end;
 
 function Manifesto.GerarXML: String;
+var
+  IdAnterior : String;
 begin
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
+    IdAnterior := MDFe.infMDFe.ID;
     FMDFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;
 
   FMDFeW.GerarXml;
   XMLOriginal := FMDFeW.Gerador.ArquivoFormatoXML;
-  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
+
+  // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FMDFe.infMDFe.ID)) then
+    FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
   FAlertas := FMDFeW.Gerador.ListaDeAlertas.Text;
   Result := FXMLOriginal;

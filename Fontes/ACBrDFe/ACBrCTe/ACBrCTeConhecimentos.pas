@@ -503,16 +503,22 @@ begin
 end;
 
 function Conhecimento.GerarXML: String;
+var
+  IdAnterior : String;
 begin
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
+    IdAnterior := CTe.infCTe.ID;
     FCTeW.Gerador.Opcoes.FormatoAlerta   := Configuracoes.Geral.FormatoAlerta;
     FCTeW.Gerador.Opcoes.RetirarAcentos  := Configuracoes.Geral.RetirarAcentos;
   end;
 
   FCTeW.GerarXml;
   XMLOriginal := FCTeW.Gerador.ArquivoFormatoXML;
-  FNomeArq := '';       // XML gerado pode ter nova Chave e ID, zerando nome anterior, para ser novamente calculado
+
+  // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FCTe.infCTe.ID)) then
+    FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
   FAlertas := FCTeW.Gerador.ListaDeAlertas.Text;
   Result := FXMLOriginal;

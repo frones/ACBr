@@ -1311,7 +1311,7 @@ function TMDFeConsulta.TratarResposta: Boolean;
 var
   MDFeRetorno: TRetConsSitMDFe;
   SalvarXML, MDFCancelado, Atualiza: Boolean;
-  aEventos, aMsg, NomeArquivo, aMDFe, aMDFeDFe: String;
+  aEventos, aMsg, NomeArquivo, aMDFe: String;
   AProcMDFe: TProcMDFe;
   I, J, K, Inicio, Fim: Integer;
   Data: TDateTime;
@@ -1514,17 +1514,16 @@ begin
 
                 aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                           '<MDFeDFe>' +
-                            '<procMDFe versao="' + FVersao + '">' +
-                              SeparaDados(XML, 'mdfeProc') +
-                            '</procMDFe>' +
-                            '<procEventoMDFe versao="' + FVersao + '">' +
-                              aEventos +
-                            '</procEventoMDFe>' +
-                           '</MDFeDFe>';
+                FRetMDFeDFe := '<' + ENCODING_UTF8 + '>' +
+                               '<MDFeDFe>' +
+                                '<procMDFe versao="' + FVersao + '">' +
+                                  SeparaDados(XML, 'mdfeProc') +
+                                '</procMDFe>' +
+                                '<procEventoMDFe versao="' + FVersao + '">' +
+                                  aEventos +
+                                '</procEventoMDFe>' +
+                               '</MDFeDFe>';
 
-                FRetMDFeDFe := aMDFeDFe;
               end;
             finally
               AProcMDFe.Free;
@@ -1549,7 +1548,7 @@ begin
               // Salva o XML do MDF-e assinado, protocolado e com os eventos
               if SalvarXML  and (FRetMDFeDFe <> '') then
                 FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml',
-                                  aMDFeDFe,
+                                  FRetMDFeDFe,
                                   PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
 
             end;
@@ -1559,7 +1558,7 @@ begin
         end;
       end;
     end;
-
+    (*
     if (TACBrMDFe(FPDFeOwner).Manifestos.Count <= 0) then
     begin
       if FPConfiguracoesMDFe.Arquivos.Salvar then
@@ -1588,17 +1587,16 @@ begin
 
               aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-              aMDFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                          '<MDFeDFe>' +
-                           '<procMDFe versao="' + FVersao + '">' +
-                             SeparaDados(aMDFe, 'MDFeProc') +
-                           '</procMDFe>' +
-                           '<procEventoMDFe versao="' + FVersao + '">' +
-                             aEventos +
-                           '</procEventoMDFe>' +
-                          '</MDFeDFe>';
+              FRetMDFeDFe := '<' + ENCODING_UTF8 + '>' +
+                             '<MDFeDFe>' +
+                              '<procMDFe versao="' + FVersao + '">' +
+                                SeparaDados(aMDFe, 'MDFeProc') +
+                              '</procMDFe>' +
+                              '<procEventoMDFe versao="' + FVersao + '">' +
+                                aEventos +
+                              '</procEventoMDFe>' +
+                             '</MDFeDFe>';
 
-              FRetMDFeDFe := aMDFeDFe;
             end;
 
           finally
@@ -1613,11 +1611,12 @@ begin
           else
             Data := Now;
 
-          FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml', aMDFeDFe,
+          FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml', FRetMDFeDFe,
                                 PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
         end;
       end;
     end;
+    *)
   finally
     MDFeRetorno.Free;
   end;
@@ -1787,7 +1786,7 @@ begin
     end;
 
     // Separa o XML especifico do Evento para ser Validado.
-    AXMLEvento := '<?xml version="1.0" encoding="UTF-8" ?>' +
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
                   SeparaDados(FPDadosMsg, 'detEvento');
 
     with TACBrMDFe(FPDFeOwner) do

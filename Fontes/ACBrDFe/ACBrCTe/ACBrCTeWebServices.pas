@@ -1449,7 +1449,7 @@ function TCTeConsulta.TratarResposta: Boolean;
 var
   CTeRetorno: TRetConsSitCTe;
   SalvarXML, CTCancelado, Atualiza: Boolean;
-  aEventos, aMsg, NomeArquivo, aCTe, aCTeDFe, NomeXML: String;
+  aEventos, aMsg, NomeArquivo, aCTe, NomeXML: String;
   AProcCTe: TProcCTe;
   I, J, K, Inicio, Fim: Integer;
   Data: TDateTime;
@@ -1687,17 +1687,16 @@ begin
 
                 aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                           '<CTeDFe>' +
-                            '<procCTe versao="' + FVersao + '">' +
-                              SeparaDados(XML, 'cteProc') +
-                            '</procCTe>' +
-                            '<procEventoCTe versao="' + FVersao + '">' +
-                              aEventos +
-                            '</procEventoCTe>' +
-                           '</CTeDFe>';
+                FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
+                               '<CTeDFe>' +
+                                '<procCTe versao="' + FVersao + '">' +
+                                  SeparaDados(XML, 'cteProc') +
+                                '</procCTe>' +
+                                '<procEventoCTe versao="' + FVersao + '">' +
+                                  aEventos +
+                                '</procEventoCTe>' +
+                               '</CTeDFe>';
 
-                FRetCTeDFe := aCTeDFe;
               end;
             finally
               AProcCTe.Free;
@@ -1722,7 +1721,7 @@ begin
               // Salva o XML do CT-e assinado, protocolado e com os eventos
               if SalvarXML  and (FRetCTeDFe <> '') then
                 FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                  aCTeDFe,
+                                  FRetCTeDFe,
                                   PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
 
             end;
@@ -1732,7 +1731,7 @@ begin
         end;
       end;
     end;
-
+    (*
     if (TACBrCTe(FPDFeOwner).Conhecimentos.Count <= 0) then
     begin
       if FPConfiguracoesCTe.Arquivos.Salvar then
@@ -1758,17 +1757,16 @@ begin
 
               aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-              aCTeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                         '<CTeDFe>' +
-                          '<procCTe versao="' + FVersao + '">' +
-                            SeparaDados(aCTe, 'cteProc') +
-                          '</procCTe>' +
-                          '<procEventoCTe versao="' + FVersao + '">' +
-                            aEventos +
-                          '</procEventoCTe>' +
-                         '</CTeDFe>';
+              FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
+                             '<CTeDFe>' +
+                              '<procCTe versao="' + FVersao + '">' +
+                                SeparaDados(aCTe, 'cteProc') +
+                              '</procCTe>' +
+                              '<procEventoCTe versao="' + FVersao + '">' +
+                                aEventos +
+                              '</procEventoCTe>' +
+                             '</CTeDFe>';
 
-              FRetCTeDFe := aCTeDFe;
             end;
           finally
             AProcCTe.Free;
@@ -1783,12 +1781,12 @@ begin
             Data := Now;
 
           FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                     aCTeDFe,
+                                     FRetCTeDFe,
                                      PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
         end;
       end;
     end;
-
+    *)
   finally
     CTeRetorno.Free;
   end;
@@ -2112,7 +2110,7 @@ procedure TCTeConsultaCadastro.DefinirEnvelopeSoap;
 var
   Texto: AnsiString;
 begin
-  Texto := '<?xml version="1.0" encoding="utf-8"?>';
+  Texto := '<' + ENCODING_UTF8 + '>';
   Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                    ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                    ' xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -2352,7 +2350,7 @@ begin
     end;
 
     // Separa o XML especifico do Evento para ser Validado.
-    AXMLEvento := '<?xml version="1.0" encoding="UTF-8" ?>' +
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
                   SeparaDados(FPDadosMsg, 'detEvento');
 
     with TACBrCTe(FPDFeOwner) do
@@ -2381,7 +2379,7 @@ begin
   // UF = 51 = MT não esta aceitando SOAP 1.2
   if FPConfiguracoes.WebServices.UFCodigo <> 51 then
   begin
-    Texto := '<?xml version="1.0" encoding="utf-8"?>';
+    Texto := '<' + ENCODING_UTF8 + '>';
     Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                      ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                      ' xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">';
@@ -2399,7 +2397,7 @@ begin
     Texto := Texto + '</soap12:Envelope>';
   end
   else begin
-    Texto := '<?xml version="1.0" encoding="utf-8"?>';
+    Texto := '<' + ENCODING_UTF8 + '>';
     Texto := Texto + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                    ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                    ' xmlns:soap="http://www.w3.org/2003/05/soap-envelope">';

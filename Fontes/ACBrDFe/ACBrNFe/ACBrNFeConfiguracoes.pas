@@ -70,7 +70,7 @@ type
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
     property AtualizarXMLCancelado: Boolean
-      read FAtualizarXMLCancelado write FAtualizarXMLCancelado default True;
+      read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
     property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe;

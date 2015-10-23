@@ -52,11 +52,12 @@ uses Classes, SysUtils,
 
 type
 
-   TACBrSATMarcaImpressora = (iEpson, iBematech);
+  TAutoSimNao = (rAuto, rSim, rNao);
 
   { TACBrSATExtratoESCPOS }
   TACBrSATExtratoESCPOS = class( TACBrSATExtratoClass )
   private
+    FImprimeChaveEmUmaLinha: TAutoSimNao;
     FImprimeDescAcrescItem: Boolean;
     FImprimeEmUmaLinha: Boolean;
     FPosPrinter : TACBrPosPrinter ;
@@ -92,6 +93,9 @@ type
       write FImprimeDescAcrescItem default True;
     property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao
       write FUsaCodigoEanImpressao default False;
+    property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha
+      write FImprimeChaveEmUmaLinha default rAuto;
+
   end ;
 
 procedure Register;
@@ -100,7 +104,7 @@ implementation
 
 uses
   strutils, math,
-  ACBrValidador, ACBrUtil, ACBrDFeUtil;
+  ACBrValidador, ACBrUtil, ACBrConsts, ACBrDFeUtil;
 
 {$IFNDEF FPC}
    {$R ACBrSATExtratoESCPOS.dcr}
@@ -122,6 +126,7 @@ begin
   FImprimeEmUmaLinha := True;
   FImprimeDescAcrescItem := True;
   FUsaCodigoEanImpressao := False;
+  FImprimeChaveEmUmaLinha := rAuto;
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho(Cancelamento: Boolean);
@@ -406,6 +411,7 @@ procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelam
 var
   QRCode, Chave: String;
   ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
+  ChaveEmUmaLinha: Boolean;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   if Cancelamento then
@@ -419,8 +425,17 @@ begin
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFe.ide.dEmi + CFe.ide.hEmi));
   FPosPrinter.Buffer.Add('<c>'+Chave+'</fn>');
 
-  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
-  FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');
+  ChaveEmUmaLinha := (ImprimeChaveEmUmaLinha = rSim);
+  if (ImprimeChaveEmUmaLinha = rAuto) then
+    ChaveEmUmaLinha := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
+
+  if not ChaveEmUmaLinha then
+  begin
+    FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,1,22)+'</code128>');
+    FPosPrinter.Buffer.Add('<code128>'+copy(CFe.infCFe.ID,23,22)+'</code128>');
+  end
+  else
+    FPosPrinter.Buffer.Add('<code128c>'+CFe.infCFe.ID+'</code128c>');
 
   if ImprimeQRCode then
   begin

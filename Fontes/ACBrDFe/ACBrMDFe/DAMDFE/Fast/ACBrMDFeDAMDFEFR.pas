@@ -148,8 +148,7 @@ begin
   begin
     for I := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
     begin
-      TITULO_PDF := copy(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID,
-        (length(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID) - 44) + 1, 44);
+      TITULO_PDF := OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID);
 
       dmDAMDFe.frxPDFExport.Author     := Sistema;
       dmDAMDFe.frxPDFExport.Creator    := Sistema;
@@ -160,7 +159,7 @@ begin
       OldShowDialog := dmDAMDFe.frxPDFExport.ShowDialog;
 	    try
         dmDAMDFe.frxPDFExport.ShowDialog := False;
-        dmDAMDFe.frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '.pdf';
+        dmDAMDFe.frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '-mdfe.pdf';
 
         if not DirectoryExists(ExtractFileDir(dmDAMDFe.frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(dmDAMDFe.frxPDFExport.FileName));

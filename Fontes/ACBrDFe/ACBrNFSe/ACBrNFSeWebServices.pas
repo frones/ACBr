@@ -2779,7 +2779,7 @@ begin
     FCNPJ               := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.CNPJ;
     FInscMun            := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
     FCodigoMunicipio    := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-    if FCodigoMunicipio = '' then
+    if StrToIntDef(FCodigoMunicipio, 0) = 0 then
       FCodigoMunicipio := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio;
 
     FMotivoCancelamento := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
@@ -3945,7 +3945,7 @@ begin
     if (FSubNfse.MotivoCancelamento = '') then
       FSubNfse.MotivoCancelamento := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.MotivoCancelamento;
 
-    if (FSubNfse.FCodigoMunicipio = '') then
+    if StrToIntDef(FSubNfse.FCodigoMunicipio, 0) = 0 then
     begin
      if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proISSNet) and
         (TACBrNFSe(FACBrNFSe).Configuracoes.WebServices.AmbienteCodigo = 2) then

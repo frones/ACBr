@@ -149,7 +149,7 @@ implementation
 
 Uses typinfo, IniFiles,
   ConfiguraSerial,
-  ACBrUtil;
+  ACBrUtil, ACBrConsts;
 
 {$R *.lfm}
 
@@ -323,10 +323,14 @@ end;
 
 procedure TFrPosPrinterTeste.bTagsCodBarrasClick(Sender: TObject);
 begin
+
+  if not ACBrPosPrinter1.Ativo then
+    ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
+
   mImp.Lines.Add('</zera>');
-  mImp.Lines.Add('<barra_mostrar>'+ifthen(ACBrPosPrinter1.ConfigBarras.MostrarCodigo,'1','0')+'</barra_mostrar>');
-  mImp.Lines.Add('<barra_largura>'+IntToStr(ACBrPosPrinter1.ConfigBarras.LarguraLinha)+'</barra_largura>');
-  mImp.Lines.Add('<barra_altura>'+IntToStr(ACBrPosPrinter1.ConfigBarras.Altura)+'</barra_altura>');
+  mImp.Lines.Add('<barra_mostrar>'+ifthen(cbHRI.Checked,'1','0')+'</barra_mostrar>');
+  mImp.Lines.Add('<barra_largura>'+IntToStr(seBarrasLargura.Value)+'</barra_largura>');
+  mImp.Lines.Add('<barra_altura>'+IntToStr(seBarrasAltura.Value)+'</barra_altura>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('EAN 8: 1234567');
@@ -354,8 +358,19 @@ begin
   mImp.Lines.Add('<code128>$-=+ABC123abc</code128>');
   mImp.Lines.Add('CODE128C: 3515071111111111111159');
   mImp.Lines.Add('<code128c>3515071111111111111159</code128c>');
-  mImp.Lines.Add('CODE128C: 1234567890001135408700');
-  mImp.Lines.Add('<code128c>1234567890001135408700</code128c>');
+  if ACBrPosPrinter1.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) >= 0 then
+  begin
+    mImp.Lines.Add('<c>CODE128C: 3515071111111111111159</c>');
+    mImp.Lines.Add('<code128c>3515071111111111111159</code128c>');
+    mImp.Lines.Add('<c>CODE128C: 1234567890001135408700</c>');
+    mImp.Lines.Add('<code128c>1234567890001135408700</code128c>');
+  end
+  else
+  begin
+    mImp.Lines.Add('<c>CODE128C: 35150711111111111111591234567890001135408700</c>');
+    mImp.Lines.Add('<code128c>35150711111111111111591234567890001135408700</code128c>');
+  end;
+
   mImp.Lines.Add('</Linha_Simples>');
   mImp.Lines.Add('UPCA: 12345678901');
   mImp.Lines.Add('<upca>12345678901</upca>');

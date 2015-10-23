@@ -1,7 +1,7 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 326
+  Left = 235
   Height = 521
-  Top = 128
+  Top = 93
   Width = 841
   Caption = 'ACBrPosPrinter - Teste'
   ClientHeight = 521

@@ -1921,7 +1921,7 @@ end;
 procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
-  CpTituloReport, CpLogomarca, CpQrCode, CpDescrProtocolo: TfrxComponent;
+  CpTituloReport, CpLogomarca, CpQrCode, CpDescrProtocolo, CpTotTrib: TfrxComponent;
 begin
   qrCode := '';
   if Assigned(NFe) then
@@ -1966,10 +1966,13 @@ begin
               if Assigned(CpQrCode) then
                 PintarQRCode( qrcode, TfrxPictureView(CpQrCode).Picture );
 
-
               CpDescrProtocolo := frxReport.FindObject('Memo5');
               if Assigned(CpDescrProtocolo) then
-                CpDescrProtocolo.Visible := cdsParametros.FieldByName('Contingencia_Valor').AsString <> ''
+                CpDescrProtocolo.Visible := cdsParametros.FieldByName('Contingencia_Valor').AsString <> '';
+
+              CpTotTrib := frxReport.FindObject('ValorTributos');
+              if Assigned(CpTotTrib) then
+                CpDescrProtocolo.Visible := cdsCalculoImposto.FieldByName('VTotTrib').AsFloat > 0;
             end;
     end;
   end;

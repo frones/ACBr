@@ -51,6 +51,7 @@ Símbolo : Significado
 -- ACBrNFeDANFeRL --
 [-] Ajuste para não exibir a janela de Progresso na geração do PDF, quando
     MostrarStatus = False
+    http://www.projetoacbr.com.br/forum/topic/25163-impressao-nfe/
 [-] Ajuste para utilizar o Diretório da aplicação se no do PDF não contiver Path
     (por: DSA)
 

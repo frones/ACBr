@@ -549,11 +549,16 @@ begin
         raise EACBrNFeException.Create('Erro ao gerar PDF. Arquivo não informado');
 
       ADir := ExtractFilePath(AFile);
-      if not DirectoryExists(ADir) then
-        ForceDirectories(ADir);
+      if EstaVazio(ADir) then
+        AFile := ApplicationPath + ExtractFileName(AFile)
+      else
+      begin
+        if not DirectoryExists(ADir) then
+          ForceDirectories(ADir);
 
-      if not DirectoryExists(ADir) then
-        raise EACBrNFeException.Create('Erro ao gerar PDF. Diretório: '+ADir+' não pode ser criado');
+        if not DirectoryExists(ADir) then
+          raise EACBrNFeException.Create('Erro ao gerar PDF. Diretório: '+ADir+' não pode ser criado');
+      end;
 
       with RLPDFFilter1.DocumentInfo do
       begin
@@ -567,7 +572,10 @@ begin
       end;
 
       RLPDFFilter1.ShowProgress := FMostrarStatus;
-      RLNFe.SaveToFile(AFile);
+      RLPDFFilter1.FileName := AFile;
+      RLNFe.ShowProgress := FMostrarStatus;
+      RLNFe.Prepare;
+      RLPDFFilter1.FilterPages(RLNFe.Pages);
     finally
      Destroy;
     end ;

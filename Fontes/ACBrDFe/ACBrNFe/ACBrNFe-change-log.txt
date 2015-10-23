@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2015
+-- ACBrNFeDANFeRL --
+[-] Ajuste para não exibir a janela de Progresso na geração do PDF, quando
+    MostrarStatus = False
+[-] Ajuste para utilizar o Diretório da aplicação se no do PDF não contiver Path
+    (por: DSA)
+
 22/10/2015
 -- ACBrDANFCeFR --
 [-] Corrigida a impressão do troco no DANFC-e para FastReport.

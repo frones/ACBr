@@ -55,6 +55,11 @@ Símbolo : Significado
 [-] Ajuste para utilizar o Diretório da aplicação se no do PDF não contiver Path
     (por: DSA)
 
+-- ACBrDANFCeFortesFr --
+[-] Ajuste para calcular corretamente o tamanho da página no DANFCe em Fortes
+    (não estava considerando a área de cabeçalho dos itens)
+    por: André Moraes
+
 22/10/2015
 -- ACBrDANFCeFR --
 [-] Corrigida a impressão do troco no DANFC-e para FastReport.
@@ -64,18 +69,18 @@ Símbolo : Significado
 [*] Retornado propriedade AtualizarXMLCancelado.
 [*] Criado métodos SetCSC e SetIdCSC para atribuir os valores corretamente 
     FCSC(Sem espaços no final) e FIdCSC(Com 6 dígitos numéricos).
-	por: André Moraes
+    por: André Moraes
 	
 -- ACBrNFeNotasFiscais --
 [*] Alterado método GerarXML para recalcular o valor da variável FNomeArq 
     respeitando o Path do arquivo carregado e apenas quando o ID carregado
-	for diferente do ID calculado pelo componente.
-	por: André Moraes
+    for diferente do ID calculado pelo componente.
+    por: André Moraes
 	
 -- ACBrNFeServicos.ini --	
 [*] Alterado o valor das chaves URL-QRCode e URL-ConsultaNFCe para usar HTTPS
     conforme validação do esquema.
-	por: André Moraes
+    por: André Moraes
 	
 -- ACBrNFeWebServices --	
 [*] Alterado método TNFeConsulta.TratarResposta para atualizar o XML consultado

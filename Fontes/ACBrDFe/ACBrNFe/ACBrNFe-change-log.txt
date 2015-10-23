@@ -65,6 +65,11 @@ Símbolo : Significado
     desconto e acréscimo no mesmo item
     por: André Moraes
 
+-- ACBrNFeWebServices --	
+[-] Corrigido para atualizar XML mesmo quando não estiver configurado para salvar 
+    o XML em disco.
+    por: André Moraes
+
 22/10/2015
 -- ACBrDANFCeFR --
 [-] Corrigida a impressão do troco no DANFC-e para FastReport.

@@ -1921,8 +1921,30 @@ begin
             (not FPConfiguracoesNFe.Geral.AtualizarXMLCancelado)) then
             Atualiza := False;
 
+          if (FPConfiguracoesNFe.Geral.ValidarDigest) and
+            (NFeRetorno.protNFe.digVal <> '') and (NFe.signature.DigestValue <> '') and
+            (UpperCase(NFe.signature.DigestValue) <> UpperCase(NFeRetorno.protNFe.digVal)) then
+          begin
+            raise EACBrNFeException.Create('DigestValue do documento ' +
+              NumID + ' não confere.');
+          end;
+
           // Atualiza o Status da NFe interna //
           NFe.procNFe.cStat := NFeRetorno.cStat;
+
+          if Atualiza then
+          begin
+            NFe.procNFe.tpAmb := NFeRetorno.tpAmb;
+            NFe.procNFe.verAplic := NFeRetorno.verAplic;
+            NFe.procNFe.chNFe := NFeRetorno.chNfe;
+            NFe.procNFe.dhRecbto := FDhRecbto;
+            NFe.procNFe.nProt := FProtocolo;
+            NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
+            NFe.procNFe.cStat := NFeRetorno.cStat;
+            NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
+
+            GerarXML;
+          end;
 
           SalvarXML := FPConfiguracoesNFe.Arquivos.Salvar and
                       ((not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
@@ -1939,8 +1961,6 @@ begin
               AProcNFe.Versao := FPVersaoServico;
               AProcNFe.GerarXML;
 
-              XML := AProcNFe.Gerador.ArquivoFormatoXML;
-
               FRetNFeDFe := '';
 
               if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
@@ -1953,7 +1973,7 @@ begin
                 FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
                            '<NFeDFe>' +
                             '<procNFe versao="' + FVersao + '">' +
-                              SeparaDados(XML, 'nfeProc') +
+                              SeparaDados(AProcNFe.Gerador.ArquivoFormatoXML, 'nfeProc') +
                             '</procNFe>' +
                             '<procEventoNFe versao="' + FVersao + '">' +
                               aEventos +
@@ -1970,37 +1990,11 @@ begin
                                  FRetNFeDFe,
                                  ExtractFilePath(NomeArq));
 
-            if Atualiza then
-            begin
-              if (FPConfiguracoesNFe.Geral.ValidarDigest) and
-                (NFeRetorno.protNFe.digVal <> '') and (NFe.signature.DigestValue <> '') and
-                (UpperCase(NFe.signature.DigestValue) <> UpperCase(NFeRetorno.protNFe.digVal)) then
-              begin
-                raise EACBrNFeException.Create('DigestValue do documento ' +
-                  NumID + ' não confere.');
-              end;
+            // Salva o XML da NF-e assinado e protocolado
+            if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+              FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
 
-              // Salva o XML da NF-e assinado e protocolado
-              if SalvarXML then
-              begin
-                NFe.procNFe.tpAmb := NFeRetorno.tpAmb;
-                NFe.procNFe.verAplic := NFeRetorno.verAplic;
-                NFe.procNFe.chNFe := NFeRetorno.chNfe;
-                NFe.procNFe.dhRecbto := FDhRecbto;
-                NFe.procNFe.nProt := FProtocolo;
-                NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
-                NFe.procNFe.cStat := NFeRetorno.cStat;
-                NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
-
-                GerarXML;
-
-                if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                  FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
-
-                GravarXML; // Salva na pasta baseado nas configurações do PathNFe
-              end;
-            end;
-
+            GravarXML; // Salva na pasta baseado nas configurações do PathNFe
           end;
 
           break;

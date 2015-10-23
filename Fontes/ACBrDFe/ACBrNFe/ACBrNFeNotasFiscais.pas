@@ -285,7 +285,7 @@ begin
       with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
       begin
         NFe.infNFeSupl.qrCode := GetURLQRCode(NFe.Ide.cUF, NFe.Ide.tpAmb,
-                                  onlyNumber(NFe.infNFe.ID), NFe.Dest.CNPJCPF,
+                                  onlyNumber(NFe.infNFe.ID), IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF),
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
                                   NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
         GerarXML;

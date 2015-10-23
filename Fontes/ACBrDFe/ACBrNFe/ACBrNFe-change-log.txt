@@ -70,6 +70,11 @@ Símbolo : Significado
     o XML em disco.
     por: André Moraes
 
+-- ACBrNFeNotasFiscais --
+[-] Corrigido para enviar corretamente o destinatário ao calcular o QRCode que será
+    adicionado ao XML.
+    por: André Moraes
+
 22/10/2015
 -- ACBrDANFCeFR --
 [-] Corrigida a impressão do troco no DANFC-e para FastReport.

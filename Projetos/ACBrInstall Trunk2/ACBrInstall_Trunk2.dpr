@@ -7,6 +7,7 @@ uses
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame};
 
 {$R *.res}
+{$R UAC.res}
 
 begin
   Application.Initialize;

@@ -42,7 +42,7 @@ unit uPrincipal;
 interface
 
 uses
-  JclIDEUtils, JclCompilerUtils,
+  JclIDEUtils, JclCompilerUtils, ACBrUtil,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
@@ -161,10 +161,8 @@ type
     function PathSystem: String;
     function RegistrarActiveXServer(const AServerLocation: string;
       const ARegister: Boolean): Boolean;
-    procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);//    procedure CopiarArquivoToSystem(const ANomeArquivo: String);
+    procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
     procedure ExtrairDiretorioPacote(NomePacote: string);
-    procedure WriteToTXT( const ArqTXT, AString : AnsiString;
-      const AppendIfExists : Boolean = True; AddLineBreak : Boolean = True );
     procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
     procedure FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
     procedure DeixarSomenteLib;
@@ -178,35 +176,9 @@ var
 implementation
 
 uses
-  SVN_Class,
-  {$WARNINGS off} FileCtrl, {$WARNINGS on} ShellApi, IniFiles, StrUtils, Math,
-  Registry;
+  SVN_Class, FileCtrl, ShellApi, IniFiles, StrUtils, Math, Registry;
 
 {$R *.dfm}
-{$R UAC.res}
-
-procedure TfrmPrincipal.WriteToTXT(const ArqTXT, AString : AnsiString ;
-   const AppendIfExists: Boolean; AddLineBreak : Boolean) ;
-var
-  FS : TFileStream ;
-  LineBreak : AnsiString ;
-begin
-  FS := TFileStream.Create( ArqTXT,
-               IfThen( AppendIfExists and FileExists(ArqTXT),
-                       Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
-  try
-     FS.Seek(0, soFromEnd);  // vai para EOF
-     FS.Write(Pointer(AString)^,Length(AString));
-
-     if AddLineBreak then
-     begin
-        LineBreak := sLineBreak;
-        FS.Write(Pointer(LineBreak)^,Length(LineBreak));
-     end ;
-  finally
-     FS.Free ;
-  end;
-end;
 
 procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
 
@@ -560,11 +532,12 @@ begin
     // manipular as strings
     ListaPaths := TStringList.Create;
     try
+      ListaPaths.Clear;
       ListaPaths.Delimiter       := ';';
       ListaPaths.StrictDelimiter := True;
       ListaPaths.DelimitedText   := PathsAtuais;
 
-      // verificar se existe algo do ACBr e remover
+      // verificar se existe algo do ACBr e remover do environment variable PATH do delphi
       if Trim(AProcurarRemover) <> '' then
       begin
         for I := ListaPaths.Count - 1 downto 0 do
@@ -590,30 +563,40 @@ begin
       ListaPaths.Free;
     end;
   end;
-
-
 end;
 
 procedure TfrmPrincipal.FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
 var
   oDirList: TSearchRec;
-  iRet: Integer;
+
+  function EProibido(const ADir: String): Boolean;
+  const
+    LISTA_PROIBIDOS: ARRAY[0..4] OF STRING = (
+      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history'
+    );
+  var
+    Str: String;
+  begin
+    Result := False;
+    for str in LISTA_PROIBIDOS do
+    begin
+      Result := Pos(AnsiUpperCase(str), AnsiUpperCase(ADir)) > 0;
+      if Result then
+        Break;
+    end;
+  end;
+
 begin
   ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
 
-  iRet := FindFirst(ADirRoot + '*.*', faDirectory, oDirList);
-  if iRet = 0 then
+  if FindFirst(ADirRoot + '*.*', faDirectory, oDirList) = 0 then
   begin
      try
        repeat
           if ((oDirList.Attr and faDirectory) <> 0) and
               (oDirList.Name <> '.')                and
               (oDirList.Name <> '..')               and
-              NOT(SameText(oDirList.Name, 'quick')) and
-              NOT(SameText(oDirList.Name, 'rave'))  and
-              NOT(SameText(oDirList.Name, 'laz'))   and
-              NOT(SameText(oDirList.Name, 'VerificarNecessidade')) and
-              (oDirList.Name <> '__history')        then
+              (not EProibido(oDirList.Name)) then
           begin
              with oACBr.Installations[iVersion] do
              begin
@@ -628,8 +611,7 @@ begin
              //-- Procura subpastas
              FindDirs(ADirRoot + oDirList.Name, bAdicionar);
           end;
-          iRet := FindNext(oDirList);
-       until iRet <> 0;
+       until FindNext(oDirList) <> 0;
      finally
        SysUtils.FindClose(oDirList)
      end;
@@ -857,6 +839,8 @@ var
   bRunOnly: Boolean;
   NomePacote: String;
   Cabecalho: String;
+  ListaPaths: TStringList;
+  I: Integer;
 
   procedure MostrarMensagemInstalado(const aMensagem: String; const aErro: String = '');
   var
@@ -908,7 +892,7 @@ begin
 
     // setar barra de progresso
     pgbInstalacao.Position := 0;
-    pgbInstalacao.Max := (frameDpk.Pacotes.Count * 2) + 4;
+    pgbInstalacao.Max := (frameDpk.Pacotes.Count * 2) + 5;
 
     // Seta a plataforna selecionada
     SetPlatformSelected;
@@ -924,6 +908,61 @@ begin
     lstMsgInstalacao.Items.Add('Criando diretórios de bibliotecas...');
     Application.ProcessMessages;
     WriteToTXT(AnsiString(PathArquivoLog), AnsiString('Criando diretórios de bibliotecas...'));
+
+
+    // remover paths do delphi
+    lstMsgInstalacao.Items.Add('Removendo diretorios antigos...');
+    Application.ProcessMessages;
+    WriteToTXT(AnsiString(PathArquivoLog), 'Removendo diretorios e pacotes antigos...');
+    ListaPaths := TStringList.Create;
+    try
+      ListaPaths.StrictDelimiter := True;
+      ListaPaths.Delimiter := ';';
+
+      with oACBr.Installations[iVersion] do
+      begin
+       // remover do search path
+        ListaPaths.Clear;
+        ListaPaths.DelimitedText := RawLibrarySearchPath[tPlatform];
+        for I := ListaPaths.Count - 1 downto 0 do
+        begin
+         if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
+           ListaPaths.Delete(I);
+        end;
+        RawLibrarySearchPath[tPlatform] := ListaPaths.DelimitedText;
+
+        // remover do browse path
+        ListaPaths.Clear;
+        ListaPaths.DelimitedText := RawLibraryBrowsingPath[tPlatform];
+        for I := ListaPaths.Count - 1 downto 0 do
+        begin
+         if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
+           ListaPaths.Delete(I);
+        end;
+        RawLibraryBrowsingPath[tPlatform] := ListaPaths.DelimitedText;
+
+
+        // remover do Debug DCU path
+        ListaPaths.Clear;
+        ListaPaths.DelimitedText := RawDebugDCUPath[tPlatform];
+        for I := ListaPaths.Count - 1 downto 0 do
+        begin
+         if Pos('ACBR', AnsiUpperCase(ListaPaths[I])) > 0 then
+           ListaPaths.Delete(I);
+        end;
+        RawDebugDCUPath[tPlatform] := ListaPaths.DelimitedText;
+
+        // remover pacotes antigos
+        for I := IdePackages.Count - 1 downto 0 do
+        begin
+          if Pos('ACBR', AnsiUpperCase(IdePackages.PackageFileNames[I])) > 0 then
+            IdePackages.RemovePackage(IdePackages.PackageFileNames[I]);
+        end;
+      end;
+    finally
+      ListaPaths.Free
+    end;
+    pgbInstalacao.Position := pgbInstalacao.Position + 1;
 
     // Adiciona os paths dos fontes na versão do delphi selecionada
     AddLibrarySearchPath;

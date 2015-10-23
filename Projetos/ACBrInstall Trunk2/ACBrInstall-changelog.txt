@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2015
+[+] Adicionada limpeza de diretorios (browse path, library path e dcu debug) antes 
+    instalar os novos, evitando problemas de diretórios antigos no path.
+    Adicionada remoção de pacotes que contenham ACBR no nome, evitando que fiquem 
+    pacotes acbr antigos carregados no delphi.
+    por: regys.silveira
+
 16/10/2015
 [-] adicionada a diretiva de compilação utilizando o UAC.res para forçar a 
     abertura em modo administrador

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/10/2015
+-- ACBrNFeServicos --
+[-] Acrescentado o https:// no inicio da URL do QR-Code homologação e produção.
+    por: Daniel Carus / Italo Jurisato Junior
 -- pcnNFeW --
 [-] Possivel correção na geração do XML quando é informado o grupo ICMSUFDest.
     por: Italo Jurisato Junior

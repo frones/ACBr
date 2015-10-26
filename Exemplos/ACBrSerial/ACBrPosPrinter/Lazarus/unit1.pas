@@ -172,12 +172,13 @@ begin
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('LPT2') ;
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
   cbxPorta.Items.Add('/dev/ttyS0') ;
   cbxPorta.Items.Add('/dev/ttyS1') ;
   cbxPorta.Items.Add('/dev/ttyUSB0') ;
   cbxPorta.Items.Add('/dev/ttyUSB1') ;
-  cbxPorta.Items.Add('\\localhost\Epson') ;
-  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
 
   PageControl1.ActivePageIndex := 0;
@@ -681,6 +682,9 @@ end;
 
 procedure TFrPosPrinterTeste.bLerInfoClick(Sender: TObject);
 begin
+  if bAtivar.Caption = 'Ativar' then
+    bAtivar.Click;
+
   mImp.Lines.Add( ACBrPosPrinter1.LerInfoImpressora );
 end;
 
@@ -690,6 +694,9 @@ var
   i: TACBrPosTipoStatus;
   AStr: String;
 begin
+  if bAtivar.Caption = 'Ativar' then
+    bAtivar.Click;
+
   Status := ACBrPosPrinter1.LerStatusImpressora;
 
   if Status = [] then

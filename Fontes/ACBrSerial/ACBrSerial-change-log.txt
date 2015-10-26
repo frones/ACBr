@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/10/2015
+-- ACBrPosPrinter --
+[*] Refatoração nos métodos LerInfo e LerStatus para melhor suporte a portas TCP
+    (por: DSA)
+
+-- ACBrEscPosEpson --
+[-] Correção em LerInfo, para detecção da presença de Guilhotina
+    (por: DSA)
+
 Data: 22/10/2015
 -- ACBrPosPrinter --
 [*] Ajuste para correta impressão de CODE128c   (por: DSA)

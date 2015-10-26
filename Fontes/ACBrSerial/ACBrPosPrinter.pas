@@ -1236,28 +1236,47 @@ begin
 end;
 
 function TACBrPosPrinter.LerStatusImpressora: TACBrPosPrinterStatus;
+var
+  OldAtivo: Boolean;
 begin
   Result := [];
 
-  if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
-    Result := Result + [stNaoSerial];
+  OldAtivo := Ativo;
+  try
+    Ativo := True;
 
-  if Result = [] then
-  begin
-    FPosPrinterClass.LerStatus( Result );
+    if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
+      Result := Result + [stNaoSerial];
 
-    if (stGavetaAberta in Result) and ConfigGaveta.SinalInvertido then
-      Result := Result - [stGavetaAberta];
+    if Result = [] then
+    begin
+      FPosPrinterClass.LerStatus( Result );
+
+      if (stGavetaAberta in Result) and ConfigGaveta.SinalInvertido then
+        Result := Result - [stGavetaAberta];
+    end;
+  finally
+    Ativo := OldAtivo;
   end;
 end;
 
 function TACBrPosPrinter.LerInfoImpressora: String;
+var
+  OldAtivo: Boolean;
 begin
   Result := '';
-  if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
-    raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais ou TCP');
 
-  Result := FPosPrinterClass.LerInfo;
+  OldAtivo := Ativo;
+  try
+    Ativo := True;
+
+    if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
+      raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais ou TCP');
+
+    Result := FPosPrinterClass.LerInfo;
+  finally
+    Ativo := OldAtivo;
+  end;
 end;
 
 function TACBrPosPrinter.GetTraduzirTags: Boolean;

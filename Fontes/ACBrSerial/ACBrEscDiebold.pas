@@ -189,7 +189,6 @@ function TACBrEscDiebold.LerInfo: String;
 var
   //Ret: AnsiString;
   Info: String;
-  OldAtivo: Boolean;
   //B: Byte;
 
   Procedure AddInfo( Titulo: String; AInfo: AnsiString);
@@ -198,31 +197,23 @@ var
   end;
 
 begin
-  if not fpPosPrinter.Device.IsSerialPort then exit;
+  Info := '';
 
-  OldAtivo := fpPosPrinter.Ativo;
-  try
-    fpPosPrinter.Ativo := True;
-    Info := '';
+  AddInfo('Fabricante', 'Diebold');
 
-    AddInfo('Fabricante', 'Diebold');
+  // Aparentemente, Diebold não tem comandos para retornar Informações sobre o equipamento
+  //
+  //Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
+  //AddInfo('Firmware', Ret);
+  //
+  //Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
+  //AddInfo('Modelo', Ret);
+  //
+  //Ret := fpPosPrinter.TxRx( GS + 'I1', 1, 500 );
+  //B := Ord(Ret[1]);
+  //Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
 
-    // Aparentemente, Diebold não tem comandos para retornar Informações sobre o equipamento
-    //
-    //Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
-    //AddInfo('Firmware', Ret);
-    //
-    //Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
-    //AddInfo('Modelo', Ret);
-    //
-    //Ret := fpPosPrinter.TxRx( GS + 'I1', 1, 500 );
-    //B := Ord(Ret[1]);
-    //Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
-
-    Result := Info;
-  finally
-    fpPosPrinter.Ativo := OldAtivo;
-  end;
+  Result := Info;
 end;
 
 end.

@@ -79,39 +79,28 @@ end;
 procedure TACBrEscElgin.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
-  OldAtivo: Boolean;
   Ret: AnsiString;
 begin
-  if not fpPosPrinter.Device.IsSerialPort then
-    exit;
-
-  OldAtivo := fpPosPrinter.Ativo;
   try
-    try
-      fpPosPrinter.Ativo := True;
+    Ret := fpPosPrinter.TxRx(ENQ, 1, 500);
+    B := Ord(Ret[1]);
 
-      Ret := fpPosPrinter.TxRx(ENQ, 1, 500);
-      B := Ord(Ret[1]);
+    if not TestBit(B, 0) then
+      AStatus := AStatus + [stOffLine];
 
-      if not TestBit(B, 0) then
-        AStatus := AStatus + [stOffLine];
+    if TestBit(B, 1) then
+      AStatus := AStatus + [stSemPapel];
 
-      if TestBit(B, 1) then
-        AStatus := AStatus + [stSemPapel];
+    if TestBit(B, 2) then
+      AStatus := AStatus + [stGavetaAberta];
 
-      if TestBit(B, 2) then
-        AStatus := AStatus + [stGavetaAberta];
+    if not TestBit(B, 3) then
+      AStatus := AStatus + [stTampaAberta];
 
-      if not TestBit(B, 3) then
-        AStatus := AStatus + [stTampaAberta];
-
-      if TestBit(B, 4) then
-        AStatus := AStatus + [stPoucoPapel];
-    except
-      AStatus := AStatus + [stErro];
-    end;
-  finally
-    fpPosPrinter.Ativo := OldAtivo;
+    if TestBit(B, 4) then
+      AStatus := AStatus + [stPoucoPapel];
+  except
+    AStatus := AStatus + [stErro];
   end;
 end;
 

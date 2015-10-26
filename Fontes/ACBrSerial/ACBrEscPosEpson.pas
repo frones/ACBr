@@ -274,46 +274,41 @@ end;
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
-  OldAtivo: Boolean;
 begin
-  if not fpPosPrinter.Device.IsSerialPort then exit;
+  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+    exit;
 
-  OldAtivo := fpPosPrinter.Ativo;
   try
-    try
-      fpPosPrinter.Ativo := True;
+    fpPosPrinter.Ativo := True;
 
-      B := Ord(fpPosPrinter.TxRx( DLE + EOT + #1 )[1]);
-      if not TestBit(B, 2) then
-        AStatus := AStatus + [stGavetaAberta];
-      if TestBit(B, 3) then
-        AStatus := AStatus + [stOffLine];
-      if TestBit(B, 5) then
-        AStatus := AStatus + [stErro];  // Waiting for online recovery
-      if TestBit(B, 6) then
-        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #1 )[1]);
+    if not TestBit(B, 2) then
+      AStatus := AStatus + [stGavetaAberta];
+    if TestBit(B, 3) then
+      AStatus := AStatus + [stOffLine];
+    if TestBit(B, 5) then
+      AStatus := AStatus + [stErro];  // Waiting for online recovery
+    if TestBit(B, 6) then
+      AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
 
-      B := Ord(fpPosPrinter.TxRx( DLE + EOT + #2 )[1]);
-      if TestBit(B, 2) then
-        AStatus := AStatus + [stTampaAberta];
-      if TestBit(B, 3) then
-        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
-      if TestBit(B, 5) then
-        AStatus := AStatus + [stSemPapel];
-      if TestBit(B, 6) then
-        AStatus := AStatus + [stErro];
-
-      B := Ord(fpPosPrinter.TxRx( DLE + EOT + #4 )[1]);
-      if TestBit(B, 2) and TestBit(B, 3) then
-        AStatus := AStatus + [stPoucoPapel];
-      if TestBit(B, 5) and TestBit(B, 6) then
-        AStatus := AStatus + [stSemPapel];
-
-    except
+    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #2 )[1]);
+    if TestBit(B, 2) then
+      AStatus := AStatus + [stTampaAberta];
+    if TestBit(B, 3) then
+      AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+    if TestBit(B, 5) then
+      AStatus := AStatus + [stSemPapel];
+    if TestBit(B, 6) then
       AStatus := AStatus + [stErro];
-    end;
-  finally
-    fpPosPrinter.Ativo := OldAtivo ;
+
+    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #4 )[1]);
+    if TestBit(B, 2) and TestBit(B, 3) then
+      AStatus := AStatus + [stPoucoPapel];
+    if TestBit(B, 5) and TestBit(B, 6) then
+      AStatus := AStatus + [stSemPapel];
+
+  except
+    AStatus := AStatus + [stErro];
   end;
 end;
 
@@ -321,7 +316,6 @@ function TACBrEscPosEpson.LerInfo: String;
 var
   Ret: AnsiString;
   Info: String;
-  OldAtivo: Boolean;
   B: Byte;
 
   Procedure AddInfo( Titulo: String; AInfo: AnsiString);
@@ -330,33 +324,25 @@ var
   end;
 
 begin
-  if not fpPosPrinter.Device.IsSerialPort then exit;
+  Info := '';
 
-  OldAtivo := fpPosPrinter.Ativo;
-  try
-    fpPosPrinter.Ativo := True;
-    Info := '';
+  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 500, True );
+  AddInfo('Fabricante', Ret);
 
-    Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 500, True );
-    AddInfo('Fabricante', Ret);
+  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
+  AddInfo('Firmware', Ret);
 
-    Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
-    AddInfo('Firmware', Ret);
+  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
+  AddInfo('Modelo', Ret);
 
-    Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
-    AddInfo('Modelo', Ret);
+  Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
+  AddInfo('Serial', Ret);
 
-    Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
-    AddInfo('Serial', Ret);
+  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500 );
+  B := Ord(Ret[1]);
+  Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
 
-    Ret := fpPosPrinter.TxRx( GS + 'I1', 1, 500 );
-    B := Ord(Ret[1]);
-    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
-
-    Result := Info;
-  finally
-    fpPosPrinter.Ativo := OldAtivo;
-  end;
+  Result := Info;
 end;
 
 (*

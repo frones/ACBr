@@ -211,44 +211,34 @@ end;
 procedure TACBrEscBematech.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
-  OldAtivo: Boolean;
   Ret: AnsiString;
 begin
-  if not fpPosPrinter.Device.IsSerialPort then exit;
-
-  OldAtivo := fpPosPrinter.Ativo;
   try
-    try
-      fpPosPrinter.Ativo := True;
+    Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
+    B := Ord(Ret[1]);
 
-      Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
-      B := Ord(Ret[1]);
+    if TestBit(B, 2) then
+      AStatus := AStatus + [stImprimindo];  // Overrun
+    if TestBit(B, 3) then
+      AStatus := AStatus + [stOffLine];
+    if TestBit(B, 4) then
+      AStatus := AStatus + [stImprimindo];
 
-      if TestBit(B, 2) then
-        AStatus := AStatus + [stImprimindo];  // Overrun
-      if TestBit(B, 3) then
-        AStatus := AStatus + [stOffLine];
-      if TestBit(B, 4) then
-        AStatus := AStatus + [stImprimindo];
-
-      B := Ord(Ret[2]);
-      if TestBit(B, 1) then
-        AStatus := AStatus + [stPoucoPapel];
-      if TestBit(B, 2) then
-        AStatus := AStatus + [stSemPapel];
-      if not TestBit(B, 4) then
-        AStatus := AStatus + [stGavetaAberta];
-      if TestBit(B, 5) then
-        AStatus := AStatus + [stSemPapel];
-      if TestBit(B, 6) then
-        AStatus := AStatus + [stErro];
-      if not TestBit(B, 7) then
-        AStatus := AStatus + [stTampaAberta];
-    except
+    B := Ord(Ret[2]);
+    if TestBit(B, 1) then
+      AStatus := AStatus + [stPoucoPapel];
+    if TestBit(B, 2) then
+      AStatus := AStatus + [stSemPapel];
+    if not TestBit(B, 4) then
+      AStatus := AStatus + [stGavetaAberta];
+    if TestBit(B, 5) then
+      AStatus := AStatus + [stSemPapel];
+    if TestBit(B, 6) then
       AStatus := AStatus + [stErro];
-    end;
-  finally
-    fpPosPrinter.Ativo := OldAtivo ;
+    if not TestBit(B, 7) then
+      AStatus := AStatus + [stTampaAberta];
+  except
+    AStatus := AStatus + [stErro];
   end;
 end;
 
@@ -256,7 +246,6 @@ function TACBrEscBematech.LerInfo: String;
 var
   Ret: AnsiString;
   InfoCmd, Info: String;
-  OldAtivo: Boolean;
   B: Byte;
 
   Procedure AddInfo( Titulo: String; AInfo: AnsiString);
@@ -265,32 +254,24 @@ var
   end;
 
 begin
-  if not fpPosPrinter.Device.IsSerialPort then exit;
+  Info := '';
 
-  OldAtivo := fpPosPrinter.Ativo;
-  try
-    fpPosPrinter.Ativo := True;
-    Info := '';
+  InfoCmd := GS + #249 + #39;
 
-    InfoCmd := GS + #249 + #39;
+  Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10, 500 );
+  AddInfo('Modelo', Ret);
 
-    Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10, 500 );
-    AddInfo('Modelo', Ret);
+  Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0, 500 );
+  AddInfo('Serial', Ret);
 
-    Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0, 500 );
-    AddInfo('Serial', Ret);
+  Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3, 500 );
+  AddInfo('Firmware', Ret);
 
-    Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3, 500 );
-    AddInfo('Firmware', Ret);
+  Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
+  B := Ord(Ret[3]);
+  Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
 
-    Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
-    B := Ord(Ret[3]);
-    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
-
-    Result := Info;
-  finally
-    fpPosPrinter.Ativo := OldAtivo;
-  end;
+  Result := Info;
 end;
 
 end.

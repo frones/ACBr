@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/10/2015
+-- pcnNFeW --
+[*] Possivel correção na geração do XML quando o CST é 51 para a UF - SP devemos
+    gerar a TAG vICMS mesmo com o valor zero.
+    por: Italo Jurisato Junior
 -- ACBrNFeServicos --
 [-] Acrescentado o https:// no inicio da URL do QR-Code homologação e produção.
     por: Daniel Carus / Italo Jurisato Junior

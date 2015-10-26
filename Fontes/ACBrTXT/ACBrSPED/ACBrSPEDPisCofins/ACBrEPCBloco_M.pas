@@ -46,10 +46,6 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrEPCBlocos;
 
 type
-  TRegistroM400 = class;
-  TRegistroM410 = class;
-  TRegistroM800 = class;
-  TRegistroM810 = class;
   TRegistroM100List = class;
   TRegistroM105List = class;
   TRegistroM110List = class;
@@ -95,10 +91,7 @@ type
   public
     constructor Create;  virtual;              /// Create
     destructor  Destroy; override;             /// Destroy
-    function LocalizaRegistroM400(ACST_PIS : TACBrCstPis; ACOD_CTA: String='';
-    ADESC_COMPL : String='') : TRegistroM400;
-    function LocalizaRegistroM800(ACST_COFINS: TACBrCstCofins;
-    ACOD_CTA: String=''; ADESC_COMPL : String='') : TRegistroM800;
+
     property RegistroM100 : TRegistroM100List read FRegistroM100 write FRegistroM100;
     property RegistroM200 : TRegistroM200     read FRegistroM200 write FRegistroM200;
     property RegistroM300 : TRegistroM300List read FRegistroM300 write FRegistroM300;
@@ -551,9 +544,7 @@ type
   public
     constructor Create;  virtual;              /// Create
     destructor  Destroy; override;             /// Destroy
-    function LocalizaRegistroM410(ANAT_REC: String;
-                                  ACOD_CTA: String='';
-                                  ADESC_COMPL : String=''): TRegistroM410;
+
     property CST_PIS      : TACBrCstPis read FCST_PIS      write FCST_PIS;
     property VL_TOT_REC   : currency    read FVL_TOT_REC   write FVL_TOT_REC;
     property COD_CTA      : string      read FCOD_CTA      write FCOD_CTA;
@@ -1017,8 +1008,7 @@ type
   public
     constructor Create; virtual;               /// Create
     destructor Destroy; override;              /// Destroy
-    function LocalizaRegistroM810(ANAT_REC: String;
-    ACOD_CTA: String=''; ADESC_COMPL : String=''): TRegistroM810;
+
     property CST_COFINS   : TACBrSituacaoTribCOFINS read FCST_COFINS   write FCST_COFINS;
     property VL_TOT_REC   : currency                read FVL_TOT_REC   write FVL_TOT_REC;
     property COD_CTA      : string                  read FCOD_CTA      write FCOD_CTA;
@@ -1256,66 +1246,6 @@ begin
   inherited;
 end;
 
-function TRegistroM001.LocalizaRegistroM400(ACST_PIS: TACBrCstPis;
-  ACOD_CTA: String=''; ADESC_COMPL : String=''): TRegistroM400;
- var
-  I : Integer;
-  VReg : TRegistroM400;
-begin
-  result := nil;
-  for I := 0 to pred( FRegistroM400.Count ) do
-   begin
-    VReg := FRegistroM400.Items[I];
-    if ((VReg.CST_PIS = ACST_PIS) and
-        (VReg.COD_CTA = ACOD_CTA) and
-        (VReg.DESC_COMPL = ADESC_COMPL)) then
-     begin
-      result := VReg;
-      Break;
-     end;
-   end;
-end;
-
-function TRegistroM800.LocalizaRegistroM810(ANAT_REC: String;
-                                            ACOD_CTA: String='';
-                                            ADESC_COMPL : String=''): TRegistroM810;
- var
-  I : Integer;
-  VReg : TRegistroM810;
-begin
-  result := nil;
-  for I := 0 to pred( FRegistroM810.Count ) do
-   begin
-    VReg := FRegistroM810.Items[I];
-    if ((VReg.NAT_REC = ANAT_REC) and
-        (VReg.COD_CTA = ACOD_CTA) and
-        (VReg.DESC_COMPL = ADESC_COMPL)) then
-     begin
-      result := VReg;
-      Break;
-     end;
-   end;
-end;
-
-function TRegistroM001.LocalizaRegistroM800(ACST_COFINS: TACBrCstCofins;
-  ACOD_CTA: String=''; ADESC_COMPL : String=''): TRegistroM800;
- var
-  I : Integer;
-  VReg : TRegistroM800;
-begin
-  result := nil;
-  for I := 0 to pred( FRegistroM800.Count ) do
-   begin
-    VReg := FRegistroM800.Items[I];
-    if ((VReg.CST_COFINS = ACST_COFINS) and (VReg.COD_CTA = ACOD_CTA) and
-     (VReg.DESC_COMPL = ADESC_COMPL)) then
-     begin
-      result := VReg;
-      Break;
-     end;
-   end;
-end;
-
 {TRegistroM100}
 
 function TRegistroM100List.GetItem(Index: Integer): TRegistroM100;
@@ -1503,27 +1433,6 @@ destructor TRegistroM400.Destroy;
 begin
   FRegistroM410.Free;
   inherited;
-end;
-
-function TRegistroM400.LocalizaRegistroM410(ANAT_REC: String;
-                                            ACOD_CTA: String='';
-                                            ADESC_COMPL : String=''): TRegistroM410;
- var
-  I : Integer;
-  VReg : TRegistroM410;
-begin
-  result := nil;
-  for I := 0 to pred( FRegistroM410.Count ) do
-   begin
-    VReg := FRegistroM410.Items[I];
-    if ((VReg.NAT_REC = ANAT_REC) and
-        (VReg.COD_CTA = ACOD_CTA) and
-        (VReg.DESC_COMPL = ADESC_COMPL)) then
-     begin
-      result := VReg;
-      Break;
-     end;
-   end;
 end;
 
 {TRegistroM410}

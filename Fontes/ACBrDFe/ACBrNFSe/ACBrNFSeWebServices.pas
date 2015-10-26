@@ -733,18 +733,18 @@ var
   Texto: String;
   Ok: Boolean;
 begin
-  FvNotas    := '';
-  FURI       := '';
-  FURISig    := '';
-  FURIRef    := '';
+  FvNotas := '';
+  FURI    := '';
+  FURISig := '';
+  FURIRef := '';
 
-  FNameSpace := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
-  FVersaoXML := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML;
+  FNameSpace  := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
+  FVersaoXML  := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML;
   FVersaoNFSe := StrToVersaoNFSe(Ok, FVersaoXML);
-  FDefTipos  := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
+  FDefTipos   := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
 
   if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
-    FDefTipos  := 'tipos_v02.xsd';
+    FDefTipos := 'tipos_v02.xsd';
 
   FCabecalho := FPConfiguracoesNFSe.Geral.ConfigSchemas.Cabecalho;
   FPrefixo2  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo2;
@@ -1026,7 +1026,7 @@ begin
 
   // Lista de Mensagem de Retorno
   FPMsg := '';
-  FaMsg:='';
+  FaMsg := '';
   if FRetornoNFSe.ListaNFSe.MsgRetorno.Count > 0 then
   begin
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
@@ -1462,7 +1462,7 @@ begin
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
-    FaMsg:='';
+    FaMsg := '';
     if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
     begin
       for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
@@ -1670,6 +1670,8 @@ end;
 
 function TNFSeEnviarSincrono.TratarResposta: Boolean;
 begin
+  FPMsg := '';
+  FaMsg := '';
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'EnviarLoteRpsSincronoResposta');
   Result := ExtrairNotasRetorno;
 end;
@@ -1875,6 +1877,8 @@ end;
 
 function TNFSeGerarNFSe.TratarResposta: Boolean;
 begin
+  FPMsg := '';
+  FaMsg := '';
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'GerarNfseResposta');
   Result := ExtrairNotasRetorno;
 end;
@@ -2068,6 +2072,8 @@ end;
 
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
 begin
+  FPMsg := '';
+  FaMsg := '';
   FRetSitLote.Free;
   FRetSitLote := TretSitLote.Create;
 
@@ -2102,9 +2108,9 @@ var
   i: Integer;
   Ok: Boolean;
 begin
-  // Lista de Mensagem de Retorno
   FPMsg := '';
-  FaMsg:='';
+  FaMsg := '';
+  // Lista de Mensagem de Retorno
   if RetSitLote.InfSit.MsgRetorno.Count > 0 then
   begin
     for i := 0 to RetSitLote.InfSit.MsgRetorno.Count - 1 do
@@ -2296,6 +2302,8 @@ end;
 
 function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
 begin
+  FPMsg := '';
+  FaMsg := '';
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarLoteRpsResposta');
   Result := ExtrairNotasRetorno;
 end;
@@ -2509,6 +2517,8 @@ end;
 
 function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
 begin
+  FPMsg := '';
+  FaMsg := '';
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarNfseRpsResposta');
   Result := ExtrairNotasRetorno;
 end;
@@ -2707,6 +2717,8 @@ end;
 
 function TNFSeConsultarNfse.TratarResposta: Boolean;
 begin
+  FPMsg := '';
+  FaMsg := '';
   FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarNfseResposta');
   Result := ExtrairNotasRetorno;
 end;
@@ -3015,7 +3027,7 @@ begin
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
-    FaMsg:='';
+    FaMsg := '';
     if RetCancNFSe.InfCanc.MsgRetorno.Count > 0 then
     begin
       for i := 0 to RetCancNFSe.InfCanc.MsgRetorno.Count - 1 do
@@ -3381,7 +3393,7 @@ begin
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
-    FaMsg:='';
+    FaMsg := '';
     if FNFSeRetorno.MsgRetorno.Count > 0 then
     begin
       for i := 0 to FNFSeRetorno.MsgRetorno.Count - 1 do

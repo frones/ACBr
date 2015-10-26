@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2015
+-- ACBrNFSeWebServices --
+[-] Não extava limpando a Variável FaMsg no método ConsultarSituacaoLoteRPS.
+    Por: Italo Jurisato Junior
+
 23/10/2015
 -- ACBrNFSeWebServices --
 [*] Melhorias para a checabem do código do municipio.

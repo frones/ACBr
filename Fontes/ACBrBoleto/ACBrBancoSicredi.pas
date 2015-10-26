@@ -311,9 +311,9 @@ begin
                      IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(1)                                                           +  // 073 a 073 - Filler Brancos
                      TipoBoleto                                                         +  // 074 a 074 - Emissão do bloqueto = "A" Impressão pelo SICREDI "B" Impressão pelo Cedente
-                     IfThen(Parcela > 0, PadLeft(IntToStr(Parcela),2,'0'), '00')        +  // 075 a 076 - Número da parcela do carnê --Anderson
+                     IfThen(Parcela > 0, PadLeft(IntToStr(Parcela),2,'0'), '  ')        +  // 075 a 076 - Número da parcela do carnê --Anderson
                      IfThen(TotalParcelas > 0,
-                            PadLeft(IntToStr(TotalParcelas),2,'0'), '00')                  // 077 a 078 - Número total de parcelas do carnê -- Anderson
+                            PadLeft(IntToStr(TotalParcelas),2,'0'), '  ')                  // 077 a 078 - Número total de parcelas do carnê -- Anderson
          else
             wLinha:= wLinha +
                      Space(1)                                                           +  // 057 a 057 - Filler - Brancos
@@ -322,9 +322,9 @@ begin
                      IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(2)                                                           +  // 073 a 074 - Filler Brancos
                      IfThen((TipoBoleto = 'B') and (Parcela > 0),
-                             PadLeft(IntToStr(Parcela),2,'0'), '00')                    +  // 075 a 076 - Número da parcela do carnê --Anderson
+                             PadLeft(IntToStr(Parcela),2,'0'), '  ')                    +  // 075 a 076 - Número da parcela do carnê --Anderson
                      IfThen((TipoBoleto = 'B') and (TotalParcelas > 0),
-                            PadLeft(IntToStr(TotalParcelas),2,'0'), '00');                 // 077 a 078 - Número total de parcelas do carnê -- Anderson
+                            PadLeft(IntToStr(TotalParcelas),2,'0'), '  ');                 // 077 a 078 - Número total de parcelas do carnê -- Anderson
 
 
          wLinha:= wLinha +

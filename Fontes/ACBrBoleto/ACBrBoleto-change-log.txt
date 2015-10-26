@@ -72,6 +72,13 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 19/10/2015 ver. 0.0.152a
+-- ACBrBancoSicredi --
+[-] Correção remessa CNAB400 (Gabriel.DutraVila)
+
+-- ACBrBancoItau --
+[-] Correção retorno CNAB400 (acgubamg)
+
 Data: 19/10/2015 ver. 0.0.151a
 -- ACBrBancoCecredi --
 [-] Correção remessa CNAB400 (lucasjrnany)

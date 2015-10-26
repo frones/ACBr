@@ -120,7 +120,6 @@ type
     function GetOnError: TErrorEvent; /// Método do evento OnError
     procedure SetOnError(const Value: TErrorEvent); /// Método SetError
 
-    procedure LimpaRegistros;
   protected
     /// BLOCO 0
     procedure WriteRegistro0000;
@@ -155,7 +154,7 @@ type
   public
     constructor Create(AOwner: TComponent); override; /// Create
     destructor Destroy; override; /// Destroy
-
+    procedure LimpaRegistros;
     procedure SaveFileTXT;
 
     procedure IniciaGeracao;

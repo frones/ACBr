@@ -584,7 +584,8 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistro0450);
   public
     function New(AOwner: TRegistro0001): TRegistro0450;
-    function LocalizaRegistro(pCOD_INF :string): Boolean;
+    function LocalizaRegistro(pCOD_INF :string): Boolean; overload;
+    function LocalizaRegistro(AValue : string; ABuscaTxt : Boolean): String; overload;
     property Items[Index: Integer]: TRegistro0450 read GetItem write SetItem;
   end;
 
@@ -609,7 +610,8 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistro0460);
   public
     function New(AOwner: TRegistro0001): TRegistro0460;
-    function LocalizaRegistro(pCOD_OBS: String): boolean;
+    function LocalizaRegistro(pCOD_OBS: String): boolean; overload;
+    function LocalizaRegistro(AValue : String; ABuscaTxt : Boolean): String; overload;
     property Items[Index: Integer]: TRegistro0460 read GetItem write SetItem;
   end;
 
@@ -1014,6 +1016,31 @@ begin
   end;
 end;
 
+function TRegistro0450List.LocalizaRegistro(AValue: string;
+  ABuscaTxt: Boolean): String;
+  var
+    iI: Integer;
+    VAchou : Boolean;
+begin
+  Result := '';
+  for iI := 0 to Pred(Self.Count) do
+  begin
+   if ABuscaTxt then
+   begin
+   VAchou := Self.Items[iI].TXT = AValue;
+   end
+   else
+   VAchou := Self.Items[iI].COD_INF = AValue;
+
+   if VAchou then
+   begin
+    result := IntToStr( iI+1 );
+    Break;
+   end;
+
+    end;
+end;
+
 function TRegistro0450List.New(AOwner: TRegistro0001): TRegistro0450;
 begin
   Result := TRegistro0450.Create(AOwner);
@@ -1045,6 +1072,28 @@ begin
          Break;
       end;
    end;
+end;
+
+function TRegistro0460List.LocalizaRegistro(AValue : String; ABuscaTxt : Boolean): String;
+var
+intFor: integer;
+VAchou : Boolean;
+begin
+   Result := '';
+   for intFor := 0 to Self.Count - 1 do
+   begin
+     if ABuscaTxt then
+     begin
+      VAchou := Self.Items[intFor].TXT = AValue;
+      end
+      else
+      VAchou := Self.Items[intFor].COD_OBS = AValue;
+      if VAchou then
+      begin
+       result := IntToStr(intFor+1);
+       Break;
+      end;
+     end;
 end;
 
 function TRegistro0460List.New(AOwner: TRegistro0001): TRegistro0460;

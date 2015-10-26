@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2015
+-- pcnNFeW --
+[-] Possivel correção na geração do XML quando é informado o grupo ICMSUFDest.
+    por: Italo Jurisato Junior
+
 23/10/2015
 -- ACBrNFeDANFeRL --
 [-] Ajuste para não exibir a janela de Progresso na geração do PDF, quando

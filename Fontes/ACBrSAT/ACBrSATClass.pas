@@ -50,6 +50,7 @@ uses
 const
   cACBrSAT_Versao      = '0.2.0' ;
   cLIBSAT              = 'SAT.DLL';
+  CUTF8CodPage         = 65001;
   cversaoDadosEnt      = 0.06;
   CPREFIXO_ArqCFe = 'AD';
   CPREFIXO_ArqCFeCanc = 'ADC';
@@ -593,16 +594,16 @@ end ;
 
 function TACBrSATConfig.GetEhUTF8: Boolean;
 begin
-  Result := (fsPaginaDeCodigo = 65001);
+  Result := (fsPaginaDeCodigo = CUTF8CodPage);
 end;
 
 procedure TACBrSATConfig.SetEhUTF8(AValue: Boolean);
 begin
    if AValue then
-     fsPaginaDeCodigo := 65001
+     fsPaginaDeCodigo := CUTF8CodPage
    else
    begin
-     if fsPaginaDeCodigo = 65001 then
+     if fsPaginaDeCodigo = CUTF8CodPage then
        fsPaginaDeCodigo := 0;
    end ;
 

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/10/2015
+-- ACBrSATClass --
+[*] Criação de constante para valor da página de código do UTF8
+    (por: DSA)
+
+-- ACBrSATExtratoESCPOS --
+[-] Ajuste na impressão da Chave do Cancelamento para impressoras que suportam
+    menos que 56 colunas em modo condensado
+[*] Ajuste para não imprimir a Chave sob o código de barras, se ACBrPosPrinter
+    estiver configurado para exibir o código HRI
+    (por: DSA)
+
 Data: 23/10/2015
 -- ACBrSATExtratoESCPOS --
 [+] Adicionada a propriedade "ImprimeChaveEmUmaLinha: TAutoSimNao default rAuto"

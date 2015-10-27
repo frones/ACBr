@@ -423,7 +423,9 @@ begin
 
   FPosPrinter.Buffer.Add('</ce>SAT No. <n>'+IntToStr(CFe.ide.nserieSAT)+'</n>');
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFe.ide.dEmi + CFe.ide.hEmi));
-  FPosPrinter.Buffer.Add('<c>'+Chave+'</fn>');
+
+  if not FPosPrinter.ConfigBarras.MostrarCodigo then
+    FPosPrinter.Buffer.Add('<c>'+Chave+'</fn>');
 
   Suporta128c := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
   TagCode128 := IfThen(Suporta128c,'code128c', 'code128' );
@@ -470,17 +472,20 @@ procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
 Var
   ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
   ChaveEmUmaLinha, Suporta128c : Boolean;
-  TagCode128 : String;
+  Chave, TagCode128 : String;
   QRCode: AnsiString;
 begin
   FPosPrinter.Buffer.Add('</fn></linha_simples>');
   FPosPrinter.Buffer.Add(ACBrStr('<n>DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO</n>'));
   FPosPrinter.Buffer.Add('</ce>SAT No. <n>'+IntToStr(CFe.ide.nserieSAT)+'</n>');
   FPosPrinter.Buffer.Add(FormatDateTimeBr(CFeCanc.ide.dEmi + CFeCanc.ide.hEmi));
-  FPosPrinter.Buffer.Add('<c>'+FormatarChaveAcesso((CFeCanc.infCFe.ID))+'</fn>');
 
-  Suporta128c := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
-  TagCode128 := IfThen(Suporta128c,'code128c', 'code128' );
+  Chave := FormatarChaveAcesso(CFeCanc.infCFe.ID);
+  if Length(Chave) > FPosPrinter.ColunasFonteCondensada then
+    Chave := OnlyNumber(Chave);
+
+  if not FPosPrinter.ConfigBarras.MostrarCodigo then
+    FPosPrinter.Buffer.Add('<c>'+Chave+'</fn>');
 
   Suporta128c := (FPosPrinter.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) < 0);
   TagCode128 := IfThen(Suporta128c,'code128c', 'code128' );

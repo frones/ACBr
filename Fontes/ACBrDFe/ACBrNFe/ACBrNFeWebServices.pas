@@ -1676,7 +1676,7 @@ end;
 procedure TNFeConsulta.DefinirURL;
 var
   VerServ: Double;
-  Modelo: String;
+  Modelo, xUF: String;
   ok: Boolean;
 begin
   FPVersaoServico := '';
@@ -1698,13 +1698,15 @@ begin
   // Se a nota foi enviada para o SVC a consulta tem que ser realizada no SVC e
   // não na SEFAZ-Autorizadora
   case FPConfiguracoesNFe.Geral.FormaEmissao of
-    teSVCAN: FcUF := 'SVC-AN';
-    teSVCRS: FcUF := 'SVC-RS';
+    teSVCAN: xUF := 'SVC-AN';
+    teSVCRS: xUF := 'SVC-RS';
+  else
+    xUF := CUFtoUF(FcUF);
   end;
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,

@@ -1518,14 +1518,14 @@ begin
       Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao',          01, 10,  1, CodCidadeToCodSiafi(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
       Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacaoDescricao', 01, 30,  1, CodCidadeToCidade(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
 
-      if (NFSe.NaturezaOperacao in [noTributacaoNoMunicipio, noTributacaoForaMunicipio]) then begin
+      if (NFSe.NaturezaOperacao in [no1, no2]) then begin
 
          Gerador.wCampoNFSe(tcStr, '', 'Operacao', 01, 01, 1, EnumeradoToStr( NFSe.DeducaoMateriais, ['B','A'], [snSim, snNao]), '');
 
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','T'], [snSim, snNao]), '');
 
       end
-      else if(NFSe.NaturezaOperacao = noTributacaoForaMunicipio) then begin
+      else if(NFSe.NaturezaOperacao = no2) then begin
 
          Gerador.wCampoNFSe(tcStr, '', 'Operacao', 01, 01, 1, EnumeradoToStr( NFSe.DeducaoMateriais, ['B','A'], [snSim, snNao]), '');
 
@@ -2299,7 +2299,7 @@ begin
   Gerador.wCampoNFSe(tcStr   , '#01', FIdentificador  , 001, 015, 1, NFSe.InfID.ID, '');
 
   LocPrest := '2';
-  if NFSe.NaturezaOperacao = noTributacaoForaMunicipio then
+  if NFSe.NaturezaOperacao = no2 then
   LocPrest := '1';
 
   Gerador.wCampoNFSe(tcStr   , '#02', 'LocalPrestacao', 001, 001, 1, LocPrest, ''); //Código para identificação do local de prestação do serviço 1-Fora do município 2-No município

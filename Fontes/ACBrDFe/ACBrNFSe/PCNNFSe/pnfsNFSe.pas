@@ -777,7 +777,7 @@ begin
  FIdentificacaoRps             := TIdentificacaoRps.Create;
  FIdentificacaoRps.FTipo       := trRPS;
  FDataEmissao                  := 0;
- FNaturezaOperacao             := noTributacaoNoMunicipio;
+ FNaturezaOperacao             := no1;
  FRegimeEspecialTributacao     := retNenhum;
  FOptanteSimplesNacional       := snNao;
  FIncentivadorCultural         := snNao;

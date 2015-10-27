@@ -59,7 +59,7 @@ type
   TnfseStatusRPS = ( srNormal, srCancelado );
 
   TnfseStatusNFSe = ( snNormal, snCancelado );
-
+(*
   TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune,
                             noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo,
                             noNaoIncidencia,
@@ -73,14 +73,14 @@ type
                             noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
                             noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN
                             );
-(*
+*)
   TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
                             no70, no71, no72, no78, no79,
                             no101, no111, no121, no201, no301,
                             no501, no511, no541, no551, no601, no701 );
-*)
+
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
 
@@ -269,7 +269,7 @@ begin
 end;
 
 // Natureza Operação ***********************************************************
-
+(*
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
 begin
   result := EnumeradoToStr(t,
@@ -316,8 +316,7 @@ begin
                            noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
                            noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN]);
 end;
-
-(*
+*)
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
 begin
   result := EnumeradoToStr(t,
@@ -352,7 +351,7 @@ begin
                            no101, no111, no121, no201, no301,
                            no501, no511, no541, no551, no601, no701]);
 end;
-*)
+
 // Exigibilidade ISS ***********************************************************
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS):string;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2015
+-- pnfsConversao --
+[-] Simplificação nos nomes dos valores do tipo TnfseNaturezaOperacao.
+    Por: Italo Jurisato Junior
+
 26/10/2015
 -- ACBrNFSeDANFSeFRDM --
 [*] Incluidos campos para impressão do DANFSE em fastreport no mesmo formato

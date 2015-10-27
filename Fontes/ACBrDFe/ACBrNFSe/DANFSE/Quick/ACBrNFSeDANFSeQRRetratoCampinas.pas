@@ -312,25 +312,23 @@ begin
   msg := '';
 
   case FNFSe.NaturezaOperacao of
-    noTributacaoNoMunicipio   : msg := 'NATUREZA DE OPERAÇÃO: 1 - Tributação no município';
-    noTributacaoForaMunicipio : msg := 'NATUREZA DE OPERAÇÃO: 2 - Tributação fora do município';
-    noIsencao                 : msg := 'NATUREZA DE OPERAÇÃO: 3 - Isenção';
-    noImune                   : msg := 'NATUREZA DE OPERAÇÃO: 4 - Imune';
-    noSuspensaDecisaoJudicial : msg := 'NATUREZA DE OPERAÇÃO: 5 - Exigibilidade suspensa por decisão judicial';
-
-    noSuspensaProcedimentoAdministrativo : msg := 'NATUREZA DE OPERAÇÃO: 6 - Exigibilidade suspensa por procedimento administrativo';
-
-    noTributacaoNoMunicipio51         : msg := 'NATUREZA DE OPERAÇÃO: 51- Imposto devido no município, com obrigação de retenção na fonte';
-    noTributacaoNoMunicipioSemISS52   : msg := 'NATUREZA DE OPERAÇÃO: 52 - Imposto devido no município, sem obrigação de retenção na fonte';
-    noNaoTributa58                    : msg := 'NATUREZA DE OPERAÇÃO: 58 - Não tributável';
-    noSimplesNacional59               : msg := 'NATUREZA DE OPERAÇÃO: 59 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
-    noTributacaoNoMunicipio61         : msg := 'NATUREZA DE OPERAÇÃO: 61 - Imposto devido no município, com obrigação de retenção na fonte';
-    noTributacaoNoMunicipioSemISS62   : msg := 'NATUREZA DE OPERAÇÃO: 62 - Imposto devido no município, sem obrigação de retenção na fonte';
-    noTributacaoForaMunicipio63       : msg := 'NATUREZA DE OPERAÇÃO: 63 - Imposto devido fora do município, com obrigação de retenção na fonte';
-    noTributacaoForaMunicipioSemISS64 : msg := 'NATUREZA DE OPERAÇÃO: 64 - Imposto devido fora do município, sem obrigação de retenção na fonte';
-    noNaoTributa68                    : msg := 'NATUREZA DE OPERAÇÃO: 68 - Não tributável';
-    noSimplesNacional69               : msg := 'NATUREZA DE OPERAÇÃO: 69 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
-    noNaoTributa78                    : msg := 'NATUREZA DE OPERAÇÃO: 78 - Não tributável';
+   no1: msg := 'NATUREZA DE OPERAÇÃO: 1 - Tributação no município';
+   no2: msg := 'NATUREZA DE OPERAÇÃO: 2 - Tributação fora do município';
+   no3: msg := 'NATUREZA DE OPERAÇÃO: 3 - Isenção';
+   no4: msg := 'NATUREZA DE OPERAÇÃO: 4 - Imune';
+   no5: msg := 'NATUREZA DE OPERAÇÃO: 5 - Exigibilidade susp. por decisão judicial';
+   no6: msg := 'NATUREZA DE OPERAÇÃO: 6 - Exigibilidade susp. por proced. adm.';
+   no51: msg := 'NATUREZA DE OPERAÇÃO: 51- Imposto devido no município, com obrigação de retenção na fonte';
+   no52: msg := 'NATUREZA DE OPERAÇÃO: 52 - Imposto devido no município, sem obrigação de retenção na fonte';
+   no58: msg := 'NATUREZA DE OPERAÇÃO: 58 - Não tributável';
+   no59: msg := 'NATUREZA DE OPERAÇÃO: 59 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
+   no61: msg := 'NATUREZA DE OPERAÇÃO: 61 - Imposto devido no município, com obrigação de retenção na fonte';
+   no62: msg := 'NATUREZA DE OPERAÇÃO: 62 - Imposto devido no município, sem obrigação de retenção na fonte';
+   no63: msg := 'NATUREZA DE OPERAÇÃO: 63 - Imposto devido fora do município, com obrigação de retenção na fonte';
+   no64: msg := 'NATUREZA DE OPERAÇÃO: 64 - Imposto devido fora do município, sem obrigação de retenção na fonte';
+   no68: msg := 'NATUREZA DE OPERAÇÃO: 68 - Não tributável';
+   no69: msg := 'NATUREZA DE OPERAÇÃO: 69 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
+   no78: msg := 'NATUREZA DE OPERAÇÃO: 78 - Não tributável';
   end;
 
   case FNFSe.RegimeEspecialTributacao of

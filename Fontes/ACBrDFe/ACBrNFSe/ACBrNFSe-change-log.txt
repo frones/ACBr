@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2015
+[-] Correções nos DANFSE em Quick Report.
+    Por: Italo Jurisato Junior
 -- pnfsConversao --
 [-] Simplificação nos nomes dos valores do tipo TnfseNaturezaOperacao.
     Por: Italo Jurisato Junior

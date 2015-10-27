@@ -556,29 +556,27 @@ begin
  qrmNatOperacao.Lines.Clear;
 
  case FNFSe.NaturezaOperacao of
-  noTributacaoNoMunicipio   : sNatOperacao := '1 - Tributação no município';
-  noTributacaoForaMunicipio : sNatOperacao := '2 - Tributação fora do município';
-  noIsencao                 : sNatOperacao := '3 - Isenção';
-  noImune                   : sNatOperacao := '4 - Imune';
-  noSuspensaDecisaoJudicial : sNatOperacao := '5 - Exigibilidade susp. por decisão judicial';
-
-  noSuspensaProcedimentoAdministrativo : sNatOperacao := '6 - Exigibilidade susp. por proced. adm.';
-
-  noTributacaoNoMunicipio51         : sNatOperacao := '51- Imposto devido ' + Municipio1 + ', com obrigação de retenção na fonte';     // alterado por Rafael Müller para o provedor thema
-  noTributacaoNoMunicipioSemISS52   : sNatOperacao := '52 - Imposto devido ' + Municipio1 + ', sem obrigação de retenção na fonte';
-  noNaoTributa58                    : sNatOperacao := '58 - Não tributável';
-  noSimplesNacional59               : sNatOperacao := '59 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
-  noTributacaoNoMunicipio61         : sNatOperacao := '61 - Imposto devido ' + Municipio1 + ', com obrigação de retenção na fonte';
-  noTributacaoNoMunicipioSemISS62   : sNatOperacao := '62 - Imposto devido ' + Municipio1 + ', sem obrigação de retenção na fonte';
-  noTributacaoForaMunicipio63       : sNatOperacao := '63 - Imposto devido ' + Municipio2 + ', com obrigação de retenção na fonte';
-  noTributacaoForaMunicipioSemISS64 : sNatOperacao := '64 - Imposto devido ' + Municipio2 + ', sem obrigação de retenção na fonte';
-  noNaoTributa68                    : sNatOperacao := '68 - Não tributável';
-  noSimplesNacional69               : sNatOperacao := '69 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
-  noNaoTributa78                    : sNatOperacao := '78 - Não tributável';
+  no1: sNatOperacao := '1 - Tributação no município';
+  no2: sNatOperacao := '2 - Tributação fora do município';
+  no3: sNatOperacao := '3 - Isenção';
+  no4: sNatOperacao := '4 - Imune';
+  no5: sNatOperacao := '5 - Exigibilidade susp. por decisão judicial';
+  no6: sNatOperacao := '6 - Exigibilidade susp. por proced. adm.';
+  no51: sNatOperacao := '51- Imposto devido ' + Municipio1 + ', com obrigação de retenção na fonte';
+  no52: sNatOperacao := '52 - Imposto devido ' + Municipio1 + ', sem obrigação de retenção na fonte';
+  no58: sNatOperacao := '58 - Não tributável';
+  no59: sNatOperacao := '59 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
+  no61: sNatOperacao := '61 - Imposto devido ' + Municipio1 + ', com obrigação de retenção na fonte';
+  no62: sNatOperacao := '62 - Imposto devido ' + Municipio1 + ', sem obrigação de retenção na fonte';
+  no63: sNatOperacao := '63 - Imposto devido ' + Municipio2 + ', com obrigação de retenção na fonte';
+  no64: sNatOperacao := '64 - Imposto devido ' + Municipio2 + ', sem obrigação de retenção na fonte';
+  no68: sNatOperacao := '68 - Não tributável';
+  no69: sNatOperacao := '69 - Imposto recolhido pelo regime único de arrecadação Simples Nacional';
+  no78: sNatOperacao := '78 - Não tributável';
  end;
 
  qrmNatOperacao.Lines.Add(sNatOperacao);
- 
+
  // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP )
  case FNFSe.RegimeEspecialTributacao of
   retNenhum                    : qrlRegimeEspecial.Caption := '0 - Nenhum';

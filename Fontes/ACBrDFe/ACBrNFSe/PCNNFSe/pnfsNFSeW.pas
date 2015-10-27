@@ -1532,15 +1532,15 @@ begin
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','G'], [snSim, snNao]), '');
 
       end
-      else if (NFSe.NaturezaOperacao = noIsencao) then begin
+      else if (NFSe.NaturezaOperacao = no3) then begin
          Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, 'C', '');
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, 'C', '');
       end
-      else if (NFSe.NaturezaOperacao = noImune) then begin
+      else if (NFSe.NaturezaOperacao = no4) then begin
          Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, 'C', '');
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, 'F', '');
       end
-      else if ( NFSe.NaturezaOperacao in [noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo] ) then begin
+      else if ( NFSe.NaturezaOperacao in [no5, no6] ) then begin
          if NFSe.DeducaoMateriais = snSim then
             Gerador.wCampoNFSe(tcStr, '', 'Operacao', 01, 01, 1, 'B', '')
          else
@@ -1548,7 +1548,7 @@ begin
 
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, 'K', '');
       end
-      else if ( NFSe.NaturezaOperacao = noNaoIncidencia) then begin
+      else if ( NFSe.NaturezaOperacao = no7) then begin
          Gerador.wCampoNFSe(tcStr, '', 'Operacao', 01, 01,  1, 'A', '');
          Gerador.wCampoNFSe(tcStr, '', 'Tributacao',01, 01,  1, 'N', '');
       end;

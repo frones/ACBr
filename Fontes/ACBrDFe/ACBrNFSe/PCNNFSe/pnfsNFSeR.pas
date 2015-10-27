@@ -586,20 +586,20 @@ begin
       if sOperacao[1] in ['A', 'B'] then begin
 
          if (sOperacao = 'A') and (sTributacao = 'N') then
-            NFSe.NaturezaOperacao := noNaoIncidencia
+            NFSe.NaturezaOperacao := no7
          else if sTributacao = 'G' then
-            NFSe.NaturezaOperacao := noTributacaoForaMunicipio
+            NFSe.NaturezaOperacao := no2
          else if sTributacao = 'T' then
-            NFSe.NaturezaOperacao := noTributacaoNoMunicipio;
+            NFSe.NaturezaOperacao := no1;
       end
       else if (sOperacao = 'C') and (sTributacao = 'C') then begin
-         NFSe.NaturezaOperacao := noIsencao;
+         NFSe.NaturezaOperacao := no3;
       end
       else if (sOperacao = 'C') and (sTributacao = 'F') then begin
-         NFSe.NaturezaOperacao := noImune;
+         NFSe.NaturezaOperacao := no4;
       end;
 
-      NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, noSuspensaDecisaoJudicial ]);
+      NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, no5 ]);
 
       NFSe.OptanteSimplesNacional := StrToEnumerado( ok,sTributacao, ['T','H'], [ snNao, snSim ]);
 
@@ -1488,21 +1488,21 @@ begin
 
    if sOperacao[1] in ['A', 'B'] then begin
       if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
-         NFSe.NaturezaOperacao := noTributacaoNoMunicipio      // ainda estamos
+         NFSe.NaturezaOperacao := no1      // ainda estamos
       else                                                    // em análise sobre
-         NFSe.NaturezaOperacao := noTributacaoForaMunicipio;   // este ponto
+         NFSe.NaturezaOperacao := no2;   // este ponto
    end
    else if (sOperacao = 'C') and (sTributacao = 'C') then begin
-      NFSe.NaturezaOperacao := noIsencao;
+      NFSe.NaturezaOperacao := no3;
    end
    else if (sOperacao = 'C') and (sTributacao = 'F') then begin
-      NFSe.NaturezaOperacao := noImune;
+      NFSe.NaturezaOperacao := no4;
    end
    else if (sOperacao = 'A') and (sTributacao = 'N') then begin
-      NFSe.NaturezaOperacao := noNaoIncidencia;
+      NFSe.NaturezaOperacao := no7;
    end;
 
-   NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, noSuspensaDecisaoJudicial ]);
+   NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, no5 ]);
 
    NFSe.OptanteSimplesNacional := StrToEnumerado( ok,sTributacao, ['T','H'], [ snNao, snSim ]);
 

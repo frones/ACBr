@@ -782,24 +782,24 @@ begin
           if sOperacao[1] in ['A', 'B'] then
           begin
             if (sOperacao = 'A') and (sTributacao = 'N') then
-              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noNaoIncidencia
+              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := no7
             else if sTributacao = 'G' then
-              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noTributacaoForaMunicipio
+              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := no2
             else if sTributacao = 'T' then
-              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noTributacaoNoMunicipio;
+              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := no1;
           end
           else
             if (sOperacao = 'C') and (sTributacao = 'C') then
             begin
-              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noIsencao;
+              ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := no3;
             end
             else
               if (sOperacao = 'C') and (sTributacao = 'F') then
               begin
-                ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := noImune;
+                ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := no4;
               end;
 
-          ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao, noSuspensaDecisaoJudicial ]);
+          ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ ListaNfse.FCompNfse[i].NFSe.NaturezaOperacao, no5 ]);
           ListaNfse.FCompNfse[i].NFSe.OptanteSimplesNacional := StrToEnumerado( ok,sTributacao, ['T','H'], [ snNao, snSim ]);
           ListaNfse.FCompNfse[i].NFSe.DeducaoMateriais := StrToEnumerado( ok,sOperacao, ['A','B'], [ snNao, snSim ]);
           ListaNfse.FCompNfse[i].NFse.RegimeEspecialTributacao := StrToEnumerado( ok,sTributacao, ['T','M'], [ retNenhum, retMicroempresarioIndividual ]);

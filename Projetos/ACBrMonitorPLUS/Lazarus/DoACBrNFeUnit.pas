@@ -3029,6 +3029,12 @@ begin
                     INIRec.WriteFloat( sSecao,'vAliqProd',CIDE.vAliqProd) ;
                     INIRec.WriteFloat( sSecao,'vCIDE'    ,CIDE.vCIDE) ;
 
+                    sSecao := 'encerrante'+IntToStrZero(I,3) ;
+                    INIRec.WriteInteger( sSecao,'nBico'  , encerrante.nBico) ;
+                    INIRec.WriteInteger( sSecao,'nBomba' , encerrante.nBomba) ;
+                    INIRec.WriteInteger( sSecao,'nTanque', encerrante.nTanque) ;
+                    INIRec.WriteString( sSecao,'vEncIni', encerrante.vEncIni) ;
+                    INIRec.WriteString( sSecao,'vEncFin', encerrante.vEncFin) ;
 
                     if infNFe.Versao < 2 then
                      begin

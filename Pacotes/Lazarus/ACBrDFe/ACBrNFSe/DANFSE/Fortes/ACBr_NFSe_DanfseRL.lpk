@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_NFSe_DanfseRL"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -11,9 +12,6 @@
         <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes"/>
         <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
@@ -36,13 +34,12 @@
         <UnitName Value="ACBrNFSeDANFSeRLRetrato"/>
       </Item4>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBr_NFSe"/>
+        <PackageName Value="frce"/>
       </Item1>
       <Item2>
-        <PackageName Value="fortes324forlaz"/>
+        <PackageName Value="ACBr_NFSe"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>

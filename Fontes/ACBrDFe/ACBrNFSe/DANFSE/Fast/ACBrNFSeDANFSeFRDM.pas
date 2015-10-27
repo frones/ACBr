@@ -437,7 +437,11 @@ begin
         FieldByName('ValorInss').AsFloat                := ValorInss;
         FieldByName('ValorIr').AsFloat                  := ValorIr;
         FieldByName('ValorCsll').AsFloat                := ValorCsll;
-//        FieldByName('IssRetido').AsString               := IfThen(IssRetido = stRetencao,'0', IfThen(IssRetido = stNormal,'2','3'));
+        case IssRetido of
+          stRetencao    : FieldByName('IssRetido').AsString := '1 - Sim' ;
+          stNormal      : FieldByName('IssRetido').AsString := '2 - Não' ;
+          stSubstituicao: FieldByName('IssRetido').AsString := '3 - Subst.' ;
+        end;
         FieldByName('ValorIss').AsFloat                 := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat          := OutrasRetencoes;
         FieldByName('BaseCalculo').AsFloat              := BaseCalculo;

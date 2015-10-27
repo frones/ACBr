@@ -216,6 +216,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       FieldName = 'ValorCsll'
     end
     object cdsServicosIssRetido: TStringField
+      DisplayWidth = 10
       FieldName = 'IssRetido'
       Size = 1
     end
@@ -428,21 +429,21 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     object cdsParametrosUsuario: TStringField
       FieldName = 'Usuario'
     end
-    object cdsParametrosIncentivadorCultural: TStringField
-      FieldName = 'IncentivadorCultural'
-      Size = 3
-    end
-    object cdsParametrosOptanteSimplesNacional: TStringField
-      FieldName = 'OptanteSimplesNacional'
-      Size = 3
+    object cdsParametrosNaturezaOperacao: TStringField
+      FieldName = 'NaturezaOperacao'
+      Size = 50
     end
     object cdsParametrosRegimeEspecialTributacao: TStringField
       FieldName = 'RegimeEspecialTributacao'
       Size = 50
     end
-    object cdsParametrosNaturezaOperacao: TStringField
-      FieldName = 'NaturezaOperacao'
-      Size = 50
+    object cdsParametrosOptanteSimplesNacional: TStringField
+      FieldName = 'OptanteSimplesNacional'
+      Size = 10
+    end
+    object cdsParametrosIncentivadorCultural: TStringField
+      FieldName = 'IncentivadorCultural'
+      Size = 10
     end
   end
   object frxParametros: TfrxDBDataset

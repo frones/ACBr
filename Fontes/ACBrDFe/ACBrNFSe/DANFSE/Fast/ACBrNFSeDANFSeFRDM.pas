@@ -226,15 +226,15 @@ begin
         FieldByName('Mensagem0').AsString := '';
 
       case FNFSe.NaturezaOperacao of
-        noTributacaoNoMunicipio   : FieldByName('NaturezaOperacao').AsString := '1 - Tributação no município';
-        noTributacaoForaMunicipio : FieldByName('NaturezaOperacao').AsString := '2 - Tributação fora do município';
-        noIsencao                 : FieldByName('NaturezaOperacao').AsString := '3 - Isenção';
-        noImune                   : FieldByName('NaturezaOperacao').AsString := '4 - Imune';
-        noSuspensaDecisaoJudicial : FieldByName('NaturezaOperacao').AsString := '5 - Exigibilidade susp. por decisão judicial';
-        noSuspensaProcedimentoAdministrativo : FieldByName('NaturezaOperacao').AsString := '6 - Exigibilidade susp. por proced. adm.';
-        noSimplesNacional59       : FieldByName('NaturezaOperacao').AsString := '7 - Simples Nacional (Dentro Estado)';
-        noSimplesNacional69       : FieldByName('NaturezaOperacao').AsString := '8 - Simples Nacional (Fora Estado)';
-        noTributacaoNoMunicipioSemISS52 : FieldByName('NaturezaOperacao').AsString := '9 - Tributacao No Municipio Sem Retenção de ISS';
+        no1  : FieldByName('NaturezaOperacao').AsString := '1 - Tributação no município';
+        no2  : FieldByName('NaturezaOperacao').AsString := '2 - Tributação fora do município';
+        no3  : FieldByName('NaturezaOperacao').AsString := '3 - Isenção';
+        no4  : FieldByName('NaturezaOperacao').AsString := '4 - Imune';
+        no5  : FieldByName('NaturezaOperacao').AsString := '5 - Exigibilidade susp. por decisão judicial';
+        no6  : FieldByName('NaturezaOperacao').AsString := '6 - Exigibilidade susp. por proced. adm.';
+        no59 : FieldByName('NaturezaOperacao').AsString := '7 - Simples Nacional (Dentro Estado)';
+        no69 : FieldByName('NaturezaOperacao').AsString := '8 - Simples Nacional (Fora Estado)';
+        no52 : FieldByName('NaturezaOperacao').AsString := '9 - Tributacao No Municipio Sem Retenção de ISS';
       end;
 
       // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP )

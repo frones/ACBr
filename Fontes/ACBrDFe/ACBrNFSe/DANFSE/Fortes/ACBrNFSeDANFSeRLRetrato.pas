@@ -452,15 +452,15 @@ begin
 
  // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
  case FNFSe.NaturezaOperacao of
-  noTributacaoNoMunicipio   : rllNatOperacao.Caption := '1 - Tributação no município';
-  noTributacaoForaMunicipio : rllNatOperacao.Caption := '2 - Tributação fora do município';
-  noIsencao                 : rllNatOperacao.Caption := '3 - Isenção';
-  noImune                   : rllNatOperacao.Caption := '4 - Imune';
-  noSuspensaDecisaoJudicial : rllNatOperacao.Caption := '5 - Exigibilidade susp. por decisão judicial';
-  noSuspensaProcedimentoAdministrativo : rllNatOperacao.Caption := '6 - Exigibilidade susp. por proced. adm.';
-  noSimplesNacional59       : rllNatOperacao.Caption := '7 - Simples Nacional (Dentro Estado)';
-  noSimplesNacional69       : rllNatOperacao.Caption := '8 - Simples Nacional (Fora Estado)';
-  noTributacaoNoMunicipioSemISS52 : rllNatOperacao.Caption := '9 - Tributacao No Municipio Sem Retenção de ISS';
+  no1  : rllNatOperacao.Caption := '1 - Tributação no município';
+  no2  : rllNatOperacao.Caption := '2 - Tributação fora do município';
+  no3  : rllNatOperacao.Caption := '3 - Isenção';
+  no4  : rllNatOperacao.Caption := '4 - Imune';
+  no5  : rllNatOperacao.Caption := '5 - Exigibilidade susp. por decisão judicial';
+  no6  : rllNatOperacao.Caption := '6 - Exigibilidade susp. por proced. adm.';
+  no59 : rllNatOperacao.Caption := '7 - Simples Nacional (Dentro Estado)';
+  no69 : rllNatOperacao.Caption := '8 - Simples Nacional (Fora Estado)';
+  no52 : rllNatOperacao.Caption := '9 - Tributacao No Municipio Sem Retenção de ISS';
  end;
 
  // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP )

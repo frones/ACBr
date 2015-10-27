@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2015
+-- pcnNFeW --
+[-] Alterado a posição do grupo ICMSUFDest no XML, agora será gerado após o COFINSST
+    conforme consta no Schema.
+    por: Italo Jurisato Junior
 -- ACBrNFeServicos --
 [-] Incluido as URLs de homologação NFC-e UF-CE.
     por: Evenildo / Italo Jurisato Junior

@@ -1118,8 +1118,6 @@ begin
   else
    begin
      (**)GerarDetImpostoICMS(i);
-     if nfe.Det[i].Imposto.ICMSUFDest.vBCUFDest > 0 then
-       (**)GerarDetImpostoICMSUFDest(i);
      (**)GerarDetImpostoIPI(i);
      (**)GerarDetImpostoII(i);
    end;
@@ -1127,6 +1125,8 @@ begin
   (**)GerarDetImpostoPISST(i);
   (**)GerarDetImpostoCOFINS(i);
   (**)GerarDetImpostoCOFINSST(i);
+  if nfe.Det[i].Imposto.ICMSUFDest.vBCUFDest > 0 then
+    (**)GerarDetImpostoICMSUFDest(i);
 
   Gerador.wGrupo('/imposto');
 end;

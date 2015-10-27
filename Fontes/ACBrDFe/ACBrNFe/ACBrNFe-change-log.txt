@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/10/2015
+-- ACBrNFeWebSerices --
+[*] Possível correção ao realizar uma consulta de uma NF-e enviada para o SVC.
+    por: Italo Jurisato Junior
 -- pcnNFeW --
 [-] Alterado a posição do grupo ICMSUFDest no XML, agora será gerado após o COFINSST
     conforme consta no Schema.

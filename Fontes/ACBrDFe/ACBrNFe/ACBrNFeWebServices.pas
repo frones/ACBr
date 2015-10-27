@@ -1695,6 +1695,13 @@ begin
     VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
 
+  // Se a nota foi enviada para o SVC a consulta tem que ser realizada no SVC e
+  // não na SEFAZ-Autorizadora
+  case FPConfiguracoesNFe.Geral.FormaEmissao of
+    teSVCAN: FcUF := 'SVC-AN';
+    teSVCRS: FcUF := 'SVC-RS';
+  end;
+
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     CUFtoUF(FcUF),

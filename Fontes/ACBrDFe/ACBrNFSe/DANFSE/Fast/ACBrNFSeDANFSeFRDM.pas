@@ -107,6 +107,10 @@ type
     cdsItensServicoValorTotal: TFloatField;
     cdsItensServicoTributavel: TStringField;
     cdsParametrosUsuario: TStringField;
+    cdsParametrosNaturezaOperacao: TStringField;
+    cdsParametrosRegimeEspecialTributacao: TStringField;
+    cdsParametrosOptanteSimplesNacional: TStringField;
+    cdsParametrosIncentivadorCultural: TStringField;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   private
@@ -213,14 +217,49 @@ begin
     CreateDataSet;
     Append;
 
-	with FNFse do
-	begin
-	  FieldByName('OutrasInformacoes').AsString			:= OutrasInformacoes;
-   if DANFSeClassOwner.NFSeCancelada then
-     FieldByName('Mensagem0').AsString := 'NFSe CANCELADA'
-   else
-     FieldByName('Mensagem0').AsString := '';
-	end;
+    with FNFse do
+    begin
+      FieldByName('OutrasInformacoes').AsString			:= OutrasInformacoes;
+      if DANFSeClassOwner.NFSeCancelada then
+        FieldByName('Mensagem0').AsString := 'NFSe CANCELADA'
+      else
+        FieldByName('Mensagem0').AsString := '';
+
+      case FNFSe.NaturezaOperacao of
+        noTributacaoNoMunicipio   : FieldByName('NaturezaOperacao').AsString := '1 - Tributação no município';
+        noTributacaoForaMunicipio : FieldByName('NaturezaOperacao').AsString := '2 - Tributação fora do município';
+        noIsencao                 : FieldByName('NaturezaOperacao').AsString := '3 - Isenção';
+        noImune                   : FieldByName('NaturezaOperacao').AsString := '4 - Imune';
+        noSuspensaDecisaoJudicial : FieldByName('NaturezaOperacao').AsString := '5 - Exigibilidade susp. por decisão judicial';
+        noSuspensaProcedimentoAdministrativo : FieldByName('NaturezaOperacao').AsString := '6 - Exigibilidade susp. por proced. adm.';
+        noSimplesNacional59       : FieldByName('NaturezaOperacao').AsString := '7 - Simples Nacional (Dentro Estado)';
+        noSimplesNacional69       : FieldByName('NaturezaOperacao').AsString := '8 - Simples Nacional (Fora Estado)';
+        noTributacaoNoMunicipioSemISS52 : FieldByName('NaturezaOperacao').AsString := '9 - Tributacao No Municipio Sem Retenção de ISS';
+      end;
+
+      // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP )
+      case FNFSe.RegimeEspecialTributacao of
+        retNenhum                    : FieldByName('RegimeEspecialTributacao').AsString := '0 - Nenhum';
+        retMicroempresaMunicipal     : FieldByName('RegimeEspecialTributacao').AsString := '1 - Microempresa municipal';
+        retEstimativa                : FieldByName('RegimeEspecialTributacao').AsString := '2 - Estimativa';
+        retSociedadeProfissionais    : FieldByName('RegimeEspecialTributacao').AsString := '3 - Sociendade de profissionais';
+        retCooperativa               : FieldByName('RegimeEspecialTributacao').AsString := '4 - Cooperativa';
+        retMicroempresarioIndividual : FieldByName('RegimeEspecialTributacao').AsString := '5 - Microempresário Individual (MEI)';
+        retMicroempresarioEmpresaPP  : FieldByName('RegimeEspecialTributacao').AsString := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+      end;
+
+      // TnfseSimNao = ( snSim, snNao )
+      case FNFSe.OptanteSimplesNacional of
+        snSim : FieldByName('OptanteSimplesNacional').AsString := 'Sim';
+        snNao : FieldByName('OptanteSimplesNacional').AsString := 'Não';
+      end;
+
+      // TnfseSimNao = ( snSim, snNao )
+      case FNFSe.IncentivadorCultural of
+        snSim : FieldByName('IncentivadorCultural').AsString := 'Sim';
+        snNao : FieldByName('IncentivadorCultural').AsString := 'Não';
+      end;
+    end;
 
     with FNFSe.Servico do
     begin
@@ -228,22 +267,25 @@ begin
        FieldByName('CodigoMunicipio').AsString          := CodCidadeToCidade(StrToInt(CodigoMunicipio))
       else
        FieldByName('CodigoMunicipio').AsString          := '';
-      FieldByName('ExigibilidadeISS').AsString          := IfThen(ExigibilidadeISS = exiExigivel,               'Exigível',
-                                                           IfThen(ExigibilidadeISS = exiNaoIncidencia,          'Não Incidência',
-                                                           IfThen(ExigibilidadeISS = exiIsencao,                'Isenção',
-                                                           IfThen(ExigibilidadeISS = exiExportacao,             'Exportação',
-                                                           IfThen(ExigibilidadeISS = exiImunidade,              'Imunidade',
-                                                           IfThen(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Decisao Judicial',
-                                                           IfThen(ExigibilidadeISS = exiSuspensaDecisaoJudicial,'Suspensa Processo Administrativo',
-                                                           '' )))))));
+
+      case ExigibilidadeISS of
+        exiExigivel                       : FieldByName('ExigibilidadeISS').AsString := 'Exigível';
+        exiNaoIncidencia                  : FieldByName('ExigibilidadeISS').AsString := 'Não Incidência';
+        exiIsencao                        : FieldByName('ExigibilidadeISS').AsString := 'Isenção';
+        exiExportacao                     : FieldByName('ExigibilidadeISS').AsString := 'Exportação';
+        exiImunidade                      : FieldByName('ExigibilidadeISS').AsString := 'Imunidade';
+        exiSuspensaDecisaoJudicial        : FieldByName('ExigibilidadeISS').AsString := 'Suspensa Decisao Judicial';
+        exiSuspensaProcessoAdministrativo : FieldByName('ExigibilidadeISS').AsString := 'Suspensa Processo Administrativo';
+      end;
+
       FieldByName('MunicipioIncidencia').AsString       := CodCidadeToCidade(StrToIntDef(CodigoMunicipio,0)); // MunicipioIncidencia // removido pois sempre vem em branco.. (Oneide)
     end;
 
-	with FNFSe.ConstrucaoCivil do
-	begin
-	  FieldByName('CodigoObra').AsString				:= CodigoObra;
-	  FieldByName('Art').AsString					    	:= Art;
-	end;
+    with FNFSe.ConstrucaoCivil do
+    begin
+      FieldByName('CodigoObra').AsString				:= CodigoObra;
+      FieldByName('Art').AsString					    	:= Art;
+    end;
 
     // Carrega a Logo Prefeitura
     if NaoEstaVazio(DANFSeClassOwner.Logo) then

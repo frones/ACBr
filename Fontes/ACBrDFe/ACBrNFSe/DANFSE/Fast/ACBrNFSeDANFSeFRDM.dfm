@@ -1,5 +1,7 @@
 object dmACBrNFSeFR: TdmACBrNFSeFR
   OldCreateOrder = False
+  Left = 236
+  Top = 198
   Height = 363
   Width = 580
   object frxReport: TfrxReport
@@ -30,6 +32,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     Background = True
     HTMLTags = True
     Quality = 95
+    Transparency = False
     Author = 'FastReport'
     Subject = 'Exportando o DANFSe para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -53,7 +56,7 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     end
     object cdsIdentificacaoNumero: TStringField
       FieldName = 'Numero'
-      Size = 15
+      Size = 16
     end
     object cdsIdentificacaoSerie: TStringField
       FieldName = 'Serie'
@@ -425,6 +428,22 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
     object cdsParametrosUsuario: TStringField
       FieldName = 'Usuario'
     end
+    object cdsParametrosIncentivadorCultural: TStringField
+      FieldName = 'IncentivadorCultural'
+      Size = 3
+    end
+    object cdsParametrosOptanteSimplesNacional: TStringField
+      FieldName = 'OptanteSimplesNacional'
+      Size = 3
+    end
+    object cdsParametrosRegimeEspecialTributacao: TStringField
+      FieldName = 'RegimeEspecialTributacao'
+      Size = 50
+    end
+    object cdsParametrosNaturezaOperacao: TStringField
+      FieldName = 'NaturezaOperacao'
+      Size = 50
+    end
   end
   object frxParametros: TfrxDBDataset
     UserName = 'Parametros'
@@ -445,7 +464,11 @@ object dmACBrNFSeFR: TdmACBrNFSeFR
       'Nome_Prefeitura=Nome_Prefeitura'
       'Mensagem0=Mensagem0'
       'Sistema=Sistema'
-      'Usuario=Usuario')
+      'Usuario=Usuario'
+      'IncentivadorCultural=IncentivadorCultural'
+      'OptanteSimplesNacional=OptanteSimplesNacional'
+      'RegimeEspecialTributacao=RegimeEspecialTributacao'
+      'NaturezaOperacao=NaturezaOperacao')
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False

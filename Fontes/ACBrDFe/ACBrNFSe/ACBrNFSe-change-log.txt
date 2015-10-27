@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/10/2015
+-- ACBrNFSeDANFSeFRDM --
+[*] Incluidos campos para impressão do DANFSE em fastreport no mesmo formato
+		Já utilizado no FortesReport
+		Por: Gilson Inácio do Carmo
+		
+26/10/2015
 -- ACBrNFSeWebServices --
 [-] Não extava limpando a Variável FaMsg no método ConsultarSituacaoLoteRPS.
     Por: Italo Jurisato Junior

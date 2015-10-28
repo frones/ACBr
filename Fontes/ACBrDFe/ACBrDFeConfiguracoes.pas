@@ -179,7 +179,7 @@ type
     property FormaEmissaoCodigo: integer read FFormaEmissaoCodigo;
     // Geral.Salvar - trata-se de arquivos gerais, ou seja, arquivos de envio e
     // de retorno sem validade jurídica.
-    property Salvar: Boolean read FSalvar write FSalvar default False;
+    property Salvar: Boolean read FSalvar write FSalvar default True;
     property ExibirErroSchema: Boolean read FExibirErroSchema
       write FExibirErroSchema default True;
     property FormatoAlerta: String read GetFormatoAlerta write FFormatoAlerta;
@@ -220,7 +220,7 @@ type
     property PathSchemas: String read GetPathSchemas write FPathSchemas;
     property IniServicos: String read GetIniServicos write FIniServicos;
     // Arquivos.Salvar - trata-se de arquivos com validade jurídica.
-    property Salvar: Boolean read FSalvar write FSalvar default False;
+    property Salvar: Boolean read FSalvar write FSalvar default True;
     property AdicionarLiteral: Boolean read FAdicionarLiteral
       write FAdicionarLiteral default False;
     property SepararPorCNPJ: Boolean read FSepararPorCNPJ write FSepararPorCNPJ default False;
@@ -369,7 +369,7 @@ begin
   {$ENDIF}
   FFormaEmissao := teNormal;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
-  FSalvar := False;
+  FSalvar := True;
   FExibirErroSchema := True;
   FFormatoAlerta := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
   // O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
@@ -671,7 +671,7 @@ begin
   inherited Create(AConfiguracoes);
 
   FConfiguracoes := AConfiguracoes;
-  FSalvar := False;
+  FSalvar := True;
   FPathSalvar := '';
   FPathSchemas := '';
   FIniServicos := '';

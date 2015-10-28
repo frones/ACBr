@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2015
+-- ACBrDFeConfiguracoes --
+[*] Alterado o valor padrão de False para True das propriedades:
+    Configuracoes.Geral.Salvar e Configuracoes.Arquivos.Salvar
+    por: Italo Jurisato Junior
+
 22/10/2015
 -- ACBrDFeCapicom --
 [*] Modificando TDFeCapicom.Enviar para usar TMemoryStream ao invez de

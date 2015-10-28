@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2015 
+-- ACBrDANFCeFortesFrA4 --
+[+] Adição do modelo em Fortes
+	por : Marciano Bandeira
+	
 28/10/2015
 -- ACBrNFeDANFEFRDM --
 [*] Correção na impressão do DANFE em FastReport para notas à vista.

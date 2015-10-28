@@ -91,6 +91,7 @@ contains
   ACBrNFeDANFeEventoRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRL.pas' {frlDANFeEventoRL},
   ACBrNFeDANFeEventoRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRLRetrato.pas' {frlDANFeEventoRLRetrato},
   ACBrNFeDANFeRLSimplificado in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLSimplificado.pas',
-  ACBrDANFCeFortesFr in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas' {ACBrNFeDANFCeFortesFr};
+  ACBrDANFCeFortesFr in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas' {ACBrNFeDANFCeFortesFr},
+	ACBrDANFCeFortesFrA4 in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas' {ACBrNFeDANFCeFortesFrA4};
 
 end.

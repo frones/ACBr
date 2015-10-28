@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - DANFe NFCe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="2">
+    <Files Count="4">
       <Item1>
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.lfm"/>
         <Type Value="LFM"/>
@@ -30,6 +30,15 @@
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrDANFCeFortesFr"/>
       </Item2>
+			<Item3>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.lfm"/>
+        <Type Value="LFM"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrDANFCeFortesFrA4"/>
+      </Item4>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

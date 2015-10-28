@@ -145,7 +145,6 @@ type
     rlsLinhaV07: TRLDraw;
     rlLabel74: TRLLabel;
     rllChave: TRLLabel;
-    rliBarCode: TRLImage;
     rllTituloEvento: TRLLabel;
     RLDraw48: TRLDraw;
     rlLabel9: TRLLabel;
@@ -199,6 +198,7 @@ type
     rllMsgTeste: TRLLabel;
     rlLabel15: TRLLabel;
     rllblSistema: TRLLabel;
+    rliBarCode: TRLBarcode;
     procedure rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -282,8 +282,8 @@ begin
     rllSerie.Caption := IntToStr(FCTe.ide.serie);
     rllNumCTe.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
     rllEmissao.Caption := FormatDateTimeBr(FCTe.Ide.dhEmi);
-    SetBarCodeImage(Copy(FCTe.InfCTe.Id, 4, 44), rliBarCode);
-    rllChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+    rliBarCode.Caption := OnlyNumber(FCTe.InfCTe.Id);
+    rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
   end;
 end;
 

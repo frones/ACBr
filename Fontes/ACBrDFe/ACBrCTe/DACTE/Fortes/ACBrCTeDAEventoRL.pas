@@ -89,7 +89,6 @@ type
     cdsDocumentos: {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigDataSet;
 
-    procedure SetBarCodeImage(ACode: string; RLImage: TRLImage);
   public
     class procedure Imprimir(AEventoCTe: TInfEventoCollectionItem; ALogo: string = '';
       ANumCopias: integer = 1; ASistema: string = '';
@@ -199,19 +198,6 @@ begin
     finally
       Free;
     end;
-end;
-
-procedure TfrmCTeDAEventoRL.SetBarCodeImage(ACode: string; RLImage: TRLImage);
-//var
-//b : TBarCode128c;
-begin
-  //b := TBarCode128c.Create;
-  //try
-  //  b.Code := ACode;
-  //  b.PaintCodeToCanvas(ACode, RLImage.Canvas, RLImage.ClientRect);
-  //finally
-  //  b.free;
-  //end;
 end;
 
 procedure TfrmCTeDAEventoRL.FormDestroy(Sender: TObject);

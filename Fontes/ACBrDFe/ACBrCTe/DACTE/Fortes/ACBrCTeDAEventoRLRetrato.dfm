@@ -1,6 +1,6 @@
 inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
-  Left = 320
-  Top = 124
+  Left = 274
+  Top = 83
   Width = 845
   Height = 784
   Caption = 'Evento - Retrato'
@@ -11,7 +11,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
   TextHeight = 10
   inherited RLCTeEvento: TRLReport
     Left = 18
-    Top = 12
+    Top = 20
     Font.Height = -8
     Font.Name = 'Courier New'
     Margins.LeftMargin = 7.000000000000000000
@@ -1335,6 +1335,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       Top = 693
       Width = 742
       Height = 352
+      BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_07_CorrecaoBeforePrint
@@ -1776,13 +1777,6 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rliBarCode: TRLImage
-        Left = 373
-        Top = 24
-        Width = 361
-        Height = 49
-        Center = True
-      end
       object RLDraw2: TRLDraw
         Left = 1
         Top = 15
@@ -1790,6 +1784,17 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Height = 1
         HelpContext = 1
         Brush.Style = bsClear
+      end
+      object rliBarCode: TRLBarcode
+        Left = 376
+        Top = 24
+        Width = 357
+        Height = 48
+        Alignment = taCenter
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
     end
   end

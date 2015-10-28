@@ -1100,8 +1100,8 @@ begin
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [RLCTe.rlPrinter.PageCount]);
   rllEmissao.Caption      := FormatDateTimeBr(FCTe.Ide.dhEmi);
-  rlbCodigoBarras.Caption := Copy(FCTe.InfCTe.Id, 4, 44);
-  rllChave.Caption        := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  rlbCodigoBarras.Caption := OnlyNumber(FCTe.InfCTe.Id);
+  rllChave.Caption        := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
   if not FExpandirLogoMarca then
   begin
@@ -1853,24 +1853,8 @@ begin
 
   rlmObs.Lines.BeginUpdate;
   rlmObs.Lines.Clear;
-  //rlmObs.Lines.Text := FCTe.Compl.xObs;
-  //rlmObs.Lines.Add(FCTe.Compl.xObs);
 
   rlmObs.Lines.Add(StringReplace(FCTe.Compl.xObs, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
-  //  for i := 0 to FCTe.Compl.ObsCont.Count-1 do
-  //   with FCTe.Compl.ObsCont.Items[i] do
-  //    begin
-  //     rlmObs.Lines.Add( StringReplace( xCampo, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] )+': '+
-  //                       StringReplace( xTexto, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
-  //    end;
-  //  if FCTe.Compl.ObsFisco.Count>0
-  //   then rlmObs.Lines.Add('INFORMAÇÕES ADICIONAIS DE INTERESSE DO FISCO:');
-  //  for i := 0 to FCTe.Compl.ObsFisco.Count-1 do
-  //   with FCTe.Compl.ObsFisco.Items[i] do
-  //    begin
-  //     rlmObs.Lines.Add( StringReplace( xCampo, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] )+': '+
-  //                       StringReplace( xTexto, '&lt;BR&gt;', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
-  //    end;
 
   if FCTe.Ide.tpEmis in [teContingencia, teFSDA, teDPEC] then
   begin

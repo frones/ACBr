@@ -943,8 +943,8 @@ begin
   rllNumCte.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );
   rllPageNumber.Caption := format('%2.2d', [rlCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   rllEmissao.Caption := FormatDateTimeBr(FCTe.Ide.dhEmi);
-  rliBarCode.Caption := Copy(FCTe.InfCTe.Id, 4, 44);
-  rllChave.Caption := FormatarChaveAcesso(Copy(FCTe.InfCTe.Id, 4, 44));
+  rliBarCode.Caption := OnlyNumber(FCTe.InfCTe.Id);
+  rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
 
   if not FExpandirLogoMarca then
    begin

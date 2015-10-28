@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2015
+[*] Melhorias aplicadas as DACTe e Eventos em Fortes Report!
+		por : Jose Geraldo
+
 14/10/2015
 (ACBrCTeServicos)
 [*] Atualizados as URLs do SVC-RS.

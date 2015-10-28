@@ -202,7 +202,7 @@ begin
   begin
     for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
     begin
-      NomeArq := StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase]);
+      NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe.infCTe.ID);
       NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-cte.pdf';
 
       frmDACTeRLRetrato.SavePDF(NomeArq
@@ -229,7 +229,7 @@ begin
   end
   else
   begin
-    NomeArq := StringReplace(CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase]);
+    NomeArq := OnlyNumber(CTe.infCTe.ID);
     NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-cte.pdf';
     frmDACTeRLRetrato.SavePDF(NomeArq
       , CTe
@@ -271,8 +271,7 @@ begin
       Impresso := False;
       for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
       begin
-//        if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
-        if StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+        if OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
         begin
           frmCTeDAEventoRL.Imprimir(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
             FLogo,
@@ -341,17 +340,12 @@ begin
     for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
     begin
       sFile := TACBrCTe(ACBrCTe).DACTE.PathPDF +
-               StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) + 
+               OnlyNumber(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.Id) + 
 			   '-procEventoCTe.pdf';
-//        Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 09, 44) +
-//        Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 03, 06) +
-//        Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
       Impresso := False;
-
       for j := 0 to (TACBrCTe(ACBrCTe).Conhecimentos.Count - 1) do
       begin
-//        if Copy(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.ID, 4, 44) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
-        if StringReplace(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id, 'CTe', '', [rfIgnoreCase]) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
+        if OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[j].CTe.infCTe.Id) = TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.chCTe then
         begin
           frmCTeDAEventoRL.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
             FLogo,
@@ -387,12 +381,8 @@ begin
     for i := 0 to (TACBrCTe(ACBrCTe).EventoCTe.Evento.Count - 1) do
     begin
       sFile := TACBrCTe(ACBrCTe).DACTE.PathPDF +
-               StringReplace(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+               OnlyNumber(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.Id) +
                '-procEventoCTe.pdf';
-//        Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 09, 44) +
-//        Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 03, 06) +
-//        Copy(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i].InfEvento.id, 53, 02) + 'evento.pdf';
-
       frmCTeDAEventoRL.SavePDF(TACBrCTe(ACBrCTe).EventoCTe.Evento.Items[i],
         FLogo,
         sFile,

@@ -7,13 +7,14 @@ unit ACBr_NFCe_DanfeRL;
 interface
 
 uses
-  ACBrDANFCeFortesFr, LazarusPackageIntf;
+  ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
   RegisterUnit('ACBrDANFCeFortesFr', @ACBrDANFCeFortesFr.Register);
+  RegisterUnit('ACBrDANFCeFortesFrA4', @ACBrDANFCeFortesFrA4.Register);
 end;
 
 initialization

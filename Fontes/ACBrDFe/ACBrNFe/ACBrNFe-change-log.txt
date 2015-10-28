@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2015
+-- ACBrNFeDANFEFRDM --
+[*] Correção na impressão do DANFE em FastReport para notas à vista.
+		por: Gilson Inácio do Carmo
 27/10/2015
 -- ACBrNFeWebSerices --
 [*] Possível correção ao realizar uma consulta de uma NF-e enviada para o SVC.

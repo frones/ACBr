@@ -553,14 +553,13 @@ procedure TACBrNFeFRClass.CarregaDuplicatas;
 var
   i: Integer;
 begin
+  cdsDuplicatas.Close;
+  cdsDuplicatas.CreateDataSet;
   if Not ( fExibeCampoFatura and (FNFe.Ide.indPag = ipVista) ) then
   Begin
 
     with cdsDuplicatas do
     begin
-      Close;
-      CreateDataSet;
-
       for i := 0 to NFe.Cobr.Dup.Count - 1 do
       begin
         Append;

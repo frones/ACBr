@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 234
   Top = 104
-  Width = 862
-  Height = 600
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
+  ClientHeight = 561
+  ClientWidth = 846
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 297
-    Height = 569
+    Height = 561
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -96,8 +96,6 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -112,10 +110,12 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 8
-      Top = 8
+      Top = 9
       Width = 283
       Height = 465
       ActivePage = TabSheet1
@@ -127,15 +127,35 @@ object Form1: TForm1
           Top = 0
           Width = 275
           Height = 437
-          ActivePage = TabSheet13
+          ActivePage = TabSheet3
           Align = alClient
           MultiLine = True
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
+            ExplicitLeft = 9
+            ExplicitTop = 36
+            object Label43: TLabel
+              Left = 9
+              Top = 8
+              Width = 78
+              Height = 13
+              Caption = 'Tipo de Emiss'#227'o'
+            end
+            object Label44: TLabel
+              Left = 9
+              Top = 59
+              Width = 216
+              Height = 65
+              Caption = 
+                'Informe o n'#250'mero de s'#233'rie do certificado'#13#10'Dispon'#237'vel no Internet' +
+                ' Explorer no menu'#13#10'Ferramentas - Op'#231#245'es da Internet - Conte'#250'do '#13 +
+                #10'Certificados - Exibir - Detalhes - '#13#10'N'#250'mero do certificado'
+              Visible = False
+            end
             object gbCertificado: TGroupBox
-              Left = 0
-              Top = 4
+              Left = 2
+              Top = 130
               Width = 265
               Height = 144
               Caption = 'Certificado'
@@ -225,6 +245,15 @@ object Form1: TForm1
                 Height = 21
                 TabOrder = 2
               end
+            end
+            object cbTipoEmissao: TComboBox
+              Left = 9
+              Top = 27
+              Width = 238
+              Height = 21
+              Style = csDropDownList
+              TabOrder = 1
+              OnChange = cbTipoEmissaoChange
             end
           end
           object TabSheet4: TTabSheet
@@ -354,7 +383,6 @@ object Form1: TForm1
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -385,7 +413,6 @@ object Form1: TForm1
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -401,7 +428,6 @@ object Form1: TForm1
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -475,7 +501,6 @@ object Form1: TForm1
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -1272,21 +1297,21 @@ object Form1: TForm1
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 557
-    Height = 569
+    Width = 549
+    Height = 561
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 555
+      Width = 547
       Height = 300
       Align = alTop
       TabOrder = 0
       object PageControl3: TPageControl
         Left = 1
         Top = 1
-        Width = 553
+        Width = 545
         Height = 298
         ActivePage = tsNFe
         Align = alClient
@@ -1537,8 +1562,8 @@ object Form1: TForm1
     object pgRespostas: TPageControl
       Left = 1
       Top = 301
-      Width = 555
-      Height = 267
+      Width = 547
+      Height = 259
       ActivePage = TabSheet10
       Align = alClient
       TabOrder = 1
@@ -1547,8 +1572,8 @@ object Form1: TForm1
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 555
-          Height = 247
+          Width = 539
+          Height = 231
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1560,14 +1585,16 @@ object Form1: TForm1
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
-          Width = 555
-          Height = 247
+          Width = 539
+          Height = 231
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 555
+          ExplicitHeight = 247
           ControlData = {
-            4C0000005C390000871900000000000000000000000000000000000000000000
-            000000004C000000000000000000000000000000000000000000000000000000
-            0000000000000000000000004C0000000114020000000000C000000000000046
+            4C000000B5370000E01700000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
             00000000000000000100000000000000000000000000000000000000}
         end
@@ -1578,8 +1605,8 @@ object Form1: TForm1
         object memoLog: TMemo
           Left = 0
           Top = 0
-          Width = 555
-          Height = 247
+          Width = 539
+          Height = 231
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1591,8 +1618,8 @@ object Form1: TForm1
         object trvwNFe: TTreeView
           Left = 0
           Top = 0
-          Width = 547
-          Height = 239
+          Width = 539
+          Height = 231
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1604,8 +1631,8 @@ object Form1: TForm1
         object memoRespWS: TMemo
           Left = 0
           Top = 0
-          Width = 547
-          Height = 239
+          Width = 539
+          Height = 231
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1617,8 +1644,8 @@ object Form1: TForm1
         object MemoDados: TMemo
           Left = 0
           Top = 0
-          Width = 555
-          Height = 247
+          Width = 539
+          Height = 231
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1630,8 +1657,8 @@ object Form1: TForm1
         object TreeViewRetornoConsulta: TTreeView
           Left = 0
           Top = 0
-          Width = 547
-          Height = 239
+          Width = 539
+          Height = 231
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1655,6 +1682,7 @@ object Form1: TForm1
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
+    Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
@@ -1674,8 +1702,11 @@ object Form1: TForm1
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -1713,8 +1744,11 @@ object Form1: TForm1
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000
     MargemDireita = 0.700000000000000000
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 4
     CasasDecimais._vUnCom = 4
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -1727,6 +1761,8 @@ object Form1: TForm1
     TributosSeparadamente = False
     LarguraCodProd = 54
     ExibirEAN = False
+    QuebraLinhaEmVeiculos = True
+    ExibeCampoFatura = False
     Left = 462
     Top = 413
   end

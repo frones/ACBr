@@ -1,5 +1,4 @@
 {$I ACBr.inc}
-{$DEFINE ACBrNFeOpenSSL}
 
 unit Unit1;
 
@@ -26,6 +25,9 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
+    cbTipoEmissao: TComboBox;
+    Label39: TLabel;
+    Label40: TLabel;
     Panel1: TPanel;
     OpenDialog1: TOpenDialog;
     btnSalvarConfig: TBitBtn;
@@ -208,6 +210,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure cbTipoEmissaoChange(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -259,8 +262,6 @@ type
     procedure GerarNFe(NumNFe : String);
     procedure GerarNFCe(NumNFe : String);
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TSynMemo);
-
-    procedure LoadConsulta201(XML: AnsiString);
   public
     { Public declarations }
   end;
@@ -289,6 +290,7 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
+      Ini.WriteInteger( 'Certificado','TipoEmissao' , cbTipoEmissao.ItemIndex) ;
       Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text) ;
       Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text) ;
       Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text) ;
@@ -375,35 +377,14 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
-      {$IFDEF ACBrNFeOpenSSL}
-         Label2.Top     := 56;
-         edtSenha.Top   := 72;
-         gbCertificado.Height := 144;
-         edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
-         edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
-         ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
-         ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
-         edtNumSerie.Visible := False;
-         Label25.Visible := False;
-         sbtnGetCert.Visible := False;
-      {$ELSE}
-         edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
-         edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
-         ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-         edtNumSerie.Text := ACBrNFe1.Configuracoes.Certificados.NumeroSerie;
-         Label1.Caption := 'Informe o número de série do certificado'#13+
-                           'Disponível no Internet Explorer no menu'#13+
-                           'Ferramentas - Opções da Internet - Conteúdo '#13+
-                           'Certificados - Exibir - Detalhes - '#13+
-                           'Número do certificado';
-         Label2.Top     := 136;
-         edtSenha.Top   := 152;
-         gbCertificado.Height := 184;
-         Label2.Visible := True;
-         edtSenha.Visible   := True;
-         edtCaminho.Visible := False;
-         sbtnCaminhoCert.Visible := False;
-      {$ENDIF}
+
+     cbTipoEmissao.ItemIndex:= Ini.ReadInteger( 'Certificado','TipoEmissao' ,0) ;
+     edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
+     edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
+     edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
+     ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+     ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+     ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
       cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True) ;
       edtFormatoAlerta.Text    := Ini.ReadString( 'Geral','FormatoAlerta'  ,'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.') ;
@@ -533,59 +514,6 @@ begin
 
 end;
 
-procedure TForm1.LoadConsulta201(XML: AnsiString);
-//var
-//  DOM: IXMLDocument;
-//  lXML: AnsiString;
-//
-//  procedure AddNodes(XMLNode: IXMLNode; TreeNode: TTreeNode);
-//  var
-//    Index: Integer;
-//    NewNode: TTreeNode;
-//    Value: string;
-//  begin
-//    if XMLNode.nodeType in [ntTEXT, ntCDATA, ntCOMMENT] then
-//      Value := XMLNode.text
-//    else
-//      Value := XMLNode.nodeName;
-//    NewNode := TreeViewRetornoConsulta.Items.AddChild(TreeNode, {XMLNode.NodeName +} ' ' + Value);
-//    for Index := 0 to XMLNode.childNodes.Count - 1 do
-//      AddNodes(XMLNode.childNodes[Index], NewNode);
-//  end;
-//
-//  function ReplaceStr( Fonte, De, Para:AnsiString ):AnsiString;
-//  begin
-//    result:=fonte;
-//    while pos(de,result) <> 0 do
-//      result:=copy(result, 1, pos(de,result)-1 )+Para+copy(result,pos(de,result)+length(de),length(result) );
-//  end;
-//
-//  function LimpaXML(XML: AnsiString; TagRemover:AnsiString): AnsiString;
-//  begin
-//    Result := XML;
-//    while pos('<'+TagRemover,Result) <> 0 do
-//    begin
-//      Result := ReplaceStr(Result,
-//                           '<'+TagRemover+
-//                              RetornarConteudoEntre(Result,'<'+TagRemover,'</'+TagRemover+'>')+
-//                           '</'+TagRemover+'>','');
-//    end;
-//  end;
-begin
-  //DOM := TXMLDocument.Create(nil);
-  //try
-  //  lXML := LimpaXML(UTF8Decode(XML),'Signature');
-  //  DOM.LoadFromXML(lXML);
-  //  DOM.Active := True;
-  //  TreeViewRetornoConsulta.Items.BeginUpdate;
-  //  TreeViewRetornoConsulta.Items.Clear;
-  //  AddNodes(dom.DocumentElement, nil);
-  //  TreeViewRetornoConsulta.TopItem := TreeViewRetornoConsulta.Items[0];
-  //finally
-  //  TreeViewRetornoConsulta.Items.EndUpdate;
-  //end;
-end;
-
 procedure TForm1.LoadXML(MyMemo: TMemo; MyWebBrowser: TSynMemo);
 var
   vText: String;
@@ -674,6 +602,14 @@ begin
   ShowMessage( ACBrNFe1.SSL.CertCNPJ );
 end;
 
+procedure TForm1.cbTipoEmissaoChange(Sender: TObject);
+begin
+  if cbTipoEmissao.ItemIndex <> -1 then
+    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbTipoEmissao.ItemIndex);
+
+  Label40.Visible :=  ACBrNFe1.Configuracoes.Geral.SSLLib = libCapicom;
+end;
+
 procedure TForm1.sbtnLogoMarcaClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o Logo';
@@ -693,10 +629,16 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
+ T : TSSLLib;
  I : TpcnTipoEmissao ;
  J : TpcnModeloDF;
  K : TpcnVersaoDF;
 begin
+  cbTipoEmissao.Items.Clear ;
+  For T := Low(TSSLLib) to High(TSSLLib) do
+    cbTipoEmissao.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
+  cbTipoEmissao.ItemIndex := 0 ;
+
   cbFormaEmissao.Items.Clear ;
   For I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
      cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) ) ;
@@ -720,11 +662,9 @@ begin
  pgRespostas.ActivePageIndex := 2;
 
  ACBrNFe1.Configuracoes.WebServices.Salvar := true;
- {$IFDEF ACBrNFeOpenSSL}
- ACBrNFe1.Configuracoes.Geral.SSLLib := libOpenSSL;
- {$else}
-  ACBrNFe1.Configuracoes.Geral.SSLLib := libCapicomDelphiSoap;
-{$endif}
+
+ if cbTipoEmissao.ItemIndex <> -1 then
+  ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbTipoEmissao.ItemIndex);
 
 end;
 
@@ -773,7 +713,6 @@ begin
     MemoResp.Lines.Text := ACBrNFe1.WebServices.Consulta.RetWS;
     memoRespWS.Lines.Text := ACBrNFe1.WebServices.Consulta.RetornoWS;
     LoadXML(MemoResp, WBResposta);
-    LoadConsulta201(ACBrNFe1.WebServices.Consulta.RetWS);
   end;
 end;
 
@@ -2846,7 +2785,6 @@ begin
   MemoResp.Lines.Text := ACBrNFe1.WebServices.Consulta.RetWS;
   memoRespWS.Lines.Text := ACBrNFe1.WebServices.Consulta.RetornoWS;
   LoadXML(MemoResp, WBResposta);
-  LoadConsulta201(ACBrNFe1.WebServices.Consulta.RetWS);
 end;
 
 procedure TForm1.btnCancelarChaveClick(Sender: TObject);

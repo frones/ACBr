@@ -1,5 +1,4 @@
 {$I ACBr.inc}
-{.$DEFINE ACBrNFeOpenSSL}
 
 unit Unit1;
 
@@ -206,6 +205,9 @@ type
     spPathSchemas: TSpeedButton;
     ACBrMail1: TACBrMail;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    cbTipoEmissao: TComboBox;
+    Label43: TLabel;
+    Label44: TLabel;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -253,6 +255,7 @@ type
     procedure sbPathDPECClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
+    procedure cbTipoEmissaoChange(Sender: TObject);
     
   private
     { Private declarations }
@@ -291,6 +294,7 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
+      Ini.WriteInteger( 'Certificado','TipoEmissao' , cbTipoEmissao.ItemIndex) ;
       Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text) ;
       Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text) ;
       Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text) ;
@@ -381,35 +385,13 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
-      {$IFDEF ACBrNFeOpenSSL}
-         Label2.Top     := 56;
-         edtSenha.Top   := 72;
-         gbCertificado.Height := 144;
-         edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
-         edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
-         ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
-         ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
-         edtNumSerie.Visible := False;
-         Label25.Visible := False;
-         sbtnGetCert.Visible := False;
-      {$ELSE}
-         edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
-         edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
-         ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-         edtNumSerie.Text := ACBrNFe1.Configuracoes.Certificados.NumeroSerie;
-         Label1.Caption := 'Informe o número de série do certificado'#13+
-                           'Disponível no Internet Explorer no menu'#13+
-                           'Ferramentas - Opções da Internet - Conteúdo '#13+
-                           'Certificados - Exibir - Detalhes - '#13+
-                           'Número do certificado';
-         Label2.Top     := 136;
-         edtSenha.Top   := 152;
-         gbCertificado.Height := 184;
-         Label2.Visible := True;
-         edtSenha.Visible   := True;
-         edtCaminho.Visible := False;
-         sbtnCaminhoCert.Visible := False;
-      {$ENDIF}
+     cbTipoEmissao.ItemIndex:= Ini.ReadInteger( 'Certificado','TipoEmissao' ,0) ;
+     edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
+     edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
+     edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
+     ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+     ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+     ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
       cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True) ;
       cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True) ;
@@ -636,10 +618,16 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
+ T : TSSLLib;
  I : TpcnTipoEmissao ;
  J : TpcnModeloDF;
  K : TpcnVersaoDF;
 begin
+  cbTipoEmissao.Items.Clear ;
+  For T := Low(TSSLLib) to High(TSSLLib) do
+    cbTipoEmissao.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
+  cbTipoEmissao.ItemIndex := 0 ;
+
   cbFormaEmissao.Items.Clear ;
   For I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
      cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) ) ;
@@ -663,12 +651,9 @@ begin
   pgRespostas.ActivePageIndex := 2;
 
   ACBrNFe1.Configuracoes.WebServices.Salvar := true;
-  {$IFDEF ACBrNFeOpenSSL}
-  ACBrNFe1.Configuracoes.Geral.SSLLib := libOpenSSL;
-  {$else}
-  ACBrNFe1.Configuracoes.Geral.SSLLib := libCapicomDelphiSoap;
-  {$endif}
 
+  if cbTipoEmissao.ItemIndex <> -1 then
+    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbTipoEmissao.ItemIndex);
 end;
 
 
@@ -790,6 +775,14 @@ begin
         end;
      end;
    end;
+end;
+
+procedure TForm1.cbTipoEmissaoChange(Sender: TObject);
+begin
+  if cbTipoEmissao.ItemIndex <> -1 then
+    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbTipoEmissao.ItemIndex);
+
+  Label44.Visible :=  ACBrNFe1.Configuracoes.Geral.SSLLib = libCapicom;
 end;
 
 procedure TForm1.btnManifDestConfirmacaoClick(Sender: TObject);

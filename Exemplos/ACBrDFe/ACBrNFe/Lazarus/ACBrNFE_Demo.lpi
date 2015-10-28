@@ -134,6 +134,7 @@
       <Unit0>
         <Filename Value="ACBrNFe_demo.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="ACBrNFE_Demo"/>
       </Unit0>
       <Unit1>
         <Filename Value="Unit1.pas"/>

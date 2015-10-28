@@ -13,11 +13,11 @@ uses
 {$R *.res}
 
 var
-   HeapTraceFile : String ;
+  HeapTraceFile : String ;
 begin
-   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
-   DeleteFile( HeapTraceFile );
-   SetHeapTraceOutput( HeapTraceFile );
+  HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
+  DeleteFile( HeapTraceFile );
+  SetHeapTraceOutput( HeapTraceFile );
 
   RequireDerivedFormResource := True;
   Application.Initialize;

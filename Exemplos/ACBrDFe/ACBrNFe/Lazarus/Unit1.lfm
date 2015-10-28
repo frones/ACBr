@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 380
+  Left = 310
   Height = 632
-  Top = 50
+  Top = 74
   Width = 894
   Caption = 'ACBrNFe - Demonstração'
   ClientHeight = 632
@@ -12,7 +12,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.4.0'
   object Panel1: TPanel
     Left = 0
     Height = 632
@@ -131,10 +131,10 @@ object Form1: TForm1
           Height = 439
           Top = 0
           Width = 275
-          ActivePage = TabSheet13
+          ActivePage = TabSheet3
           Align = alClient
           MultiLine = True
-          TabIndex = 4
+          TabIndex = 0
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -144,7 +144,7 @@ object Form1: TForm1
             object gbCertificado: TGroupBox
               Left = 0
               Height = 144
-              Top = 4
+              Top = 120
               Width = 265
               Caption = 'Certificado'
               ClientHeight = 126
@@ -285,6 +285,33 @@ object Form1: TForm1
               Width = 99
               Caption = 'Hash SHA1'
               TabOrder = 5
+            end
+            object cbTipoEmissao: TComboBox
+              Left = 8
+              Height = 21
+              Top = 24
+              Width = 224
+              ItemHeight = 13
+              OnChange = cbTipoEmissaoChange
+              Style = csDropDownList
+              TabOrder = 6
+            end
+            object Label39: TLabel
+              Left = 8
+              Height = 13
+              Top = 8
+              Width = 78
+              Caption = 'Tipo de Emissão'
+              ParentColor = False
+            end
+            object Label40: TLabel
+              Left = 9
+              Height = 65
+              Top = 48
+              Width = 216
+              Caption = 'Informe o número de série do certificado'#13#10'Disponível no Internet Explorer no menu'#13#10'Ferramentas - Opções da Internet - Conteúdo '#13#10'Certificados - Exibir - Detalhes - '#13#10'Número do certificado'
+              ParentColor = False
+              Visible = False
             end
           end
           object TabSheet4: TTabSheet
@@ -2142,6 +2169,7 @@ object Form1: TForm1
     Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
+    Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
     Configuracoes.Arquivos.Salvar = True
     Configuracoes.Arquivos.AdicionarLiteral = True
     Configuracoes.Arquivos.SepararPorCNPJ = True
@@ -2168,8 +2196,11 @@ object Form1: TForm1
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -2210,8 +2241,11 @@ object Form1: TForm1
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
     MargemDireita = 0.7
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 4
     CasasDecimais._vUnCom = 4
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -2228,6 +2262,8 @@ object Form1: TForm1
     vTribMun = 0
     LarguraCodProd = 54
     ExibirEAN = False
+    QuebraLinhaEmDetalhamentoEspecifico = True
+    ExibeCampoFatura = False
     left = 688
     top = 440
   end
@@ -2271,8 +2307,11 @@ object Form1: TForm1
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10

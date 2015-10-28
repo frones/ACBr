@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2015
+[+] Acrescentado o INI para o provedor FISSLex.
+    Por: Italo Jurisato Junior
+
 27/10/2015
 [-] Correções nos DANFSE em Quick / Fast / Fortes Report.
     Por: Italo Jurisato Junior

@@ -471,48 +471,47 @@ begin
 
         inc(i); // Incrementa o contador de notas.
       end;
-    end
-    else begin
-      // =======================================================================
-      // Extrai a Lista de Mensagens de Erro
-      // =======================================================================
+    end;
 
-      if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
-         (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
-      begin
-        i := 0;
-        while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
-        begin
-          ListaNFSe.FMsgRetorno.Add;
-          ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-          ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-          ListaNFSe.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+    // =======================================================================
+    // Extrai a Lista de Mensagens de Erro
+    // =======================================================================
 
-          inc(i);
-        end;
-      end;
-
+    if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
+       (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
+    begin
       i := 0;
-      while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+      while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
       begin
         ListaNFSe.FMsgRetorno.Add;
-        ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
-        ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
-        ListaNFSe.FMsgRetorno[i].FCorrecao := '';
+        ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+        ListaNFSe.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
         inc(i);
       end;
+    end;
 
-      if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+    begin
+      ListaNFSe.FMsgRetorno.Add;
+      ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+      ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+      ListaNFSe.FMsgRetorno[i].FCorrecao := '';
+
+      inc(i);
+    end;
+
+    if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
+    begin
+      if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
       begin
-        if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
+        with ListaNFSe.FCompNFSe.Add do
         begin
-          with ListaNFSe.FCompNFSe.Add do
-          begin
-            FNFSe.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
-            Protocolo       := Leitor.rCampo(tcStr, 'b:Autenticador');
-            FNFSe.Protocolo := Protocolo;
-          end;
+          FNFSe.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
+          Protocolo       := Leitor.rCampo(tcStr, 'b:Autenticador');
+          FNFSe.Protocolo := Protocolo;
         end;
       end;
     end;

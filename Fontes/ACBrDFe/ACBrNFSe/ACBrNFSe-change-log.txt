@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2015
+[*] Ao ler o retorno ao consultar o lote não estava capturando a lista de 
+    mensagens de erro.
+    Por: Gilson Inácio do Carmo
+
 28/10/2015
 [+] Acrescentado o INI para o provedor FISSLex.
     Por: Italo Jurisato Junior

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2015
+-- ACBrValidador --
+[-] Ajusta para Modulo11 atribuir corretamente o valor do parâmetro "Documento"
+    http://www.projetoacbr.com.br/forum/topic/25603-acbrvalidador-fun%C3%A7%C3%A3o-modulo11/
+
 14/05/2015
 -- ACBrValidador -- (por: Graziele Rocha Serafim)
 [-] Correção FormatarFone() quando os primeiros digitos são 0.

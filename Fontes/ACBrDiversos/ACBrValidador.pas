@@ -489,15 +489,12 @@ Var
 begin
   ACBrVal := TACBrValidador.Create(nil);
   try
-    with ACBrVal.Modulo do
-    begin
-      Documento            := Documento ;
-      MultiplicadorInicial := Peso  ;
-      MultiplicadorFinal   := Base ;
-      FormulaDigito        := frModulo11 ;
-      Calcular ;
-      Result := IntToStr( DigitoFinal ) ;
-    end;
+    ACBrVal.Modulo.Documento            := Documento ;
+    ACBrVal.Modulo.MultiplicadorInicial := Peso  ;
+    ACBrVal.Modulo.MultiplicadorFinal   := Base ;
+    ACBrVal.Modulo.FormulaDigito        := frModulo11 ;
+    ACBrVal.Modulo.Calcular ;
+    Result := IntToStr( ACBrVal.Modulo.DigitoFinal ) ;
   finally
     ACBrVal.Free;
   end;

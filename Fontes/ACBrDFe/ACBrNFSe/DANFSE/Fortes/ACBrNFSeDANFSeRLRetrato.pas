@@ -181,6 +181,7 @@ type
   private
     { Private declarations }
     procedure Itens;
+    function ManterAliquota(dAliquota: Double): String;
   public
     { Public declarations }
     procedure QuebradeLinha(const sQuebradeLinha: String);
@@ -192,7 +193,7 @@ var
 implementation
 
 uses
- StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrDFeUtil, ACBrValidador; //Astrogildo em 13/12/12
+ StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrDFeUtil, ACBrValidador;
 
 {$R *.dfm}
 
@@ -271,7 +272,6 @@ begin
         end;
       end;
 
-//      rlImgQrCode.Assign(QRCodeBitmap);
       rlImgQrCode.Picture.Bitmap.Assign(QRCodeBitmap);
     finally
       QRCode.Free;
@@ -280,15 +280,10 @@ begin
   end;
 
   rlmDadosAdicionais.Lines.EndUpdate;
-
-  // imprime data e hora da impressao
   rllDataHoraImpressao.Caption := Format('DATA E HORA DA IMPRESSÃO: %s' , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
 
-  // imprime usuario
   if FUsuario <> '' then
-  begin
     rllDataHoraImpressao.Caption := Format('%s   USUÁRIO: %s', [rllDataHoraImpressao.Caption, FUsuario]);
-  end;
 
   // imprime sistema
   if FSistema <> '' then
@@ -304,51 +299,44 @@ end;
 procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
- t: integer;
  vStringStream: TStringStream;
 begin
   inherited;
- (*
- if (FLogo <> '') and FilesExists(FLogo)
-  then begin
-   rliLogo.Picture.LoadFromFile(FLogo);
-  end;
- *)
- // Alterado por Augusto Fontana - 17/09/2013
- if (FLogo <> '') then
-   begin
-     if FilesExists(FLogo) then
+  if (FLogo <> '') then
+  begin
+    if FilesExists(FLogo) then
        rliLogo.Picture.LoadFromFile(FLogo)
-     else
-       begin
-         vStringStream := TStringStream.Create(FLogo);
-         try
-           try
-             rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
-           except
-           end;
-         finally
+    else
+      begin
+        vStringStream := TStringStream.Create(FLogo);
+        try
+          try
+            rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+          except
+          end;
+        finally
            vStringStream.Free;
-         end;
-       end;
-   end;
+        end;
+    end;
+  end;
 
- rlmPrefeitura.Lines.Clear;
+  rlmPrefeitura.Lines.Clear;
+  rlmPrefeitura.Lines.Add(StringReplace( FPrefeitura, ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 
- rlmPrefeitura.Lines.Add(StringReplace( FPrefeitura,
-                         ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
+  With FNFSe do
+  begin
+    rllNumNF0.Caption             := FormatFloat('00000000000'        , StrToFloat(Numero));
+    rllEmissao.Caption            := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
+    rllCodVerificacao.Caption     := CodigoVerificacao;
 
- rllNumNF0.Caption  := {FormatDateTime('yyyy', FNFSe.DataEmissao)+}
-                       FormatFloat('00000000000', StrToFloat(FNFSe.Numero));
- rllEmissao.Caption :=FormatDateTime('dd/mm/yyyy hh:nn',FNFSe.DataEmissao);
-                      {FormatDateTime(DateTimeToStr(FNFSe.DataEmissao));  //Astrogildo em 13/12/12}
- rllCodVerificacao.Caption := FNFSe.CodigoVerificacao;
- t:=length(FNFSe.Competencia);
- if t=6
-  then rllCompetencia.Caption := Copy(FNFSe.Competencia, 5, 2) + '/' + Copy(FNFSe.Competencia, 1, 4)
-  else rllCompetencia.Caption := Copy(FNFSe.Competencia, 6, 2) + '/' + Copy(FNFSe.Competencia, 1, 4);
- rllNumeroRPS.Caption := FNFSe.IdentificacaoRps.Numero;
- rllNumNFSeSubstituida.Caption := FNFSe.NfseSubstituida;
+    if length( Competencia )  = 6 then
+      rllCompetencia.Caption      := Copy(Competencia, 5, 2) + '/' + Copy(Competencia, 1, 4)
+    else
+      rllCompetencia.Caption      := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);
+
+    rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
+    rllNumNFSeSubstituida.Caption := NfseSubstituida;
+  end;
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject;
@@ -357,160 +345,72 @@ var
  MostrarObra: Boolean;
 begin
   inherited;
+  RLLabel16.Visible := False;
 
-// rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
-//    NotaUtil.FormatFloat( FNFSe.Servico.Valores.ValorLiquidoNfse );
+  With FNFSe do
+  begin
 
- rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+
-    FormatFloat('#,##0.00',FNFSe.Servico.Valores.ValorServicos ); //Astrogildo em 13/12/12
+    rllNatOperacao.Caption            := NaturezaOperacaoDescricao( NaturezaOperacao );
+    rllRegimeEspecial.Caption         := nfseRegimeEspecialTributacaoDescricao( RegimeEspecialTributacao );
+    rllOpcaoSimples.Caption           := SimNao( Integer ( OptanteSimplesNacional ) );
+    rllIncentivador.Caption           := SimNao( Integer ( IncentivadorCultural ) );
+    rllCodObra.Caption                := ConstrucaoCivil.CodigoObra;
+    rllCodART.Caption                 := ConstrucaoCivil.Art;
 
- rlmCodServico.Lines.Clear;
+    MostrarObra                       := (rllCodObra.Caption<>'') or (rllCodART.Caption<>'');
+    rlsLinhaH1.Visible                := MostrarObra;
+    rllTituloConstCivil.Visible       := MostrarObra;
+    rllCodigoObra.Visible             := MostrarObra;
+    rllCodObra.Visible                := MostrarObra;
+    rllCodigoArt.Visible              := MostrarObra;
+    rllCodART.Visible                 := MostrarObra;
 
- If FNFSe.Servico.xItemListaServico <> '' Then Begin
+    with Servico.Valores  do
+    begin
+      rllValorTotal.Caption := 'VALOR TOTAL DA NOTA = R$ '+ FormatFloat('#,##0.00' , ValorServicos );
+      rlmCodServico.Lines.Clear;
 
-   RLLabel16.Visible := True;
-   rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
-   rlmCodServico.Lines.Append(FNFSe.Servico.ItemListaServico + ' - '+ FNFSe.Servico.xItemListaServico);
- End Else Begin
+      If Servico.xItemListaServico <> '' Then
+      Begin
+        RLLabel16.Visible := True;
+        rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
+        rlmCodServico.Lines.Append( Servico.ItemListaServico + ' - '+ Servico.xItemListaServico);
+      End
+      Else
+      Begin
+        If FAtividade <> '' Then
+        Begin
+          RLLabel16.Visible := True;
+          RLLabel16.Caption := 'Atividade:';
+          rlmCodServico.Lines.Append(FAtividade);
+        End
+      End;
+      rllValorPIS.Caption             := FormatFloat('#,##0.00', ValorPis );
+      rllValorCOFINS.Caption          := FormatFloat('#,##0.00', ValorCofins );
+      rllValorIR.Caption              := FormatFloat('#,##0.00', ValorIr );
+      rllValorINSS.Caption            := FormatFloat('#,##0.00', ValorInss );
+      rllValorCSLL.Caption            := FormatFloat('#,##0.00', ValorCsll );
+      rllValorServicos1.Caption       := FormatFloat('#,##0.00', ValorServicos );
+      rllDescIncondicionado1.Caption  := FormatFloat('#,##0.00', DescontoIncondicionado );
+      rllDescCondicionado.Caption     := FormatFloat('#,##0.00', DescontoCondicionado );
+      rllRetencoesFederais.Caption    := FormatFloat('#,##0.00', ValorPis +
+                                                                 ValorCofins +
+                                                                 ValorInss +
+                                                                 ValorIr +
+                                                                 ValorCsll );
+      rllOutrasRetencoes.Caption      := FormatFloat('#,##0.00', OutrasRetencoes );
+      rllValorIssRetido.Caption       := FormatFloat('#,##0.00', ValorIssRetido );
+      rllValorLiquido.Caption         := FormatFloat('#,##0.00', ValorLiquidoNfse );
+      rllValorServicos2.Caption       := FormatFloat('#,##0.00', ValorServicos );
+      rllValorDeducoes.Caption        := FormatFloat('#,##0.00', ValorDeducoes );
+      rllDescIncondicionado2.Caption  := FormatFloat('#,##0.00', DescontoIncondicionado );
+      rllBaseCalc.Caption             := FormatFloat('#,##0.00', BaseCalculo );
+      rllAliquota.Caption             := ManterAliquota ( Aliquota );
+      rllISSReter.Caption             := SituacaoTributariaDescricao( IssRetido );
+      rllValorISS.Caption             := FormatFloat('#,##0.00',ValorIss);
 
-   If FAtividade <> '' Then Begin
-
-     RLLabel16.Visible := True;
-     RLLabel16.Caption := 'Atividade:';
-
-     rlmCodServico.Lines.Append(FAtividade);
-   End Else Begin
-
-     RLLabel16.Visible := False;
-   End;
-
- End;
-
- rllCodObra.Caption := FNFSe.ConstrucaoCivil.CodigoObra;
- rllCodART.Caption  := FNFSe.ConstrucaoCivil.Art;
-
- MostrarObra := (rllCodObra.Caption<>'') or (rllCodART.Caption<>'');
- rlsLinhaH1.Visible:=MostrarObra;
- rllTituloConstCivil.Visible:=MostrarObra;
- rllCodigoObra.Visible:=MostrarObra;
- rllCodObra.Visible:=MostrarObra;
- rllCodigoArt.Visible:=MostrarObra;
- rllCodART.Visible:=MostrarObra;
-
- rllValorPIS.Caption    := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorPis );//Astrogildo em 13/12/12
- rllValorCOFINS.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCofins );//Astrogildo em 13/12/12
- rllValorIR.Caption     := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorIr );//Astrogildo em 13/12/12
- rllValorINSS.Caption   := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorInss );//Astrogildo em 13/12/12
- rllValorCSLL.Caption   := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorCsll );//Astrogildo em 13/12/12
-
- rllValorServicos1.Caption      := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorServicos );//Astrogildo em 13/12/12
- rllDescIncondicionado1.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.DescontoIncondicionado );//Astrogildo em 13/12/12
- rllDescCondicionado.Caption    := FormatFloat('#,##0.00', FNFSe.Servico.Valores.DescontoCondicionado );//Astrogildo em 13/12/12
- rllRetencoesFederais.Caption   := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorPis +//Astrogildo em 13/12/12
-                                     FNFSe.Servico.Valores.ValorCofins + FNFSe.Servico.Valores.ValorInss +
-                                     FNFSe.Servico.Valores.ValorIr + FNFSe.Servico.Valores.ValorCsll );
- rllOutrasRetencoes.Caption     := FormatFloat('#,##0.00', FNFSe.Servico.Valores.OutrasRetencoes );//Astrogildo em 13/12/12
-
- rllValorIssRetido.Caption      := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorIssRetido );//Astrogildo em 13/12/12
-
- rllValorLiquido.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorLiquidoNfse );//Astrogildo em 13/12/12
-
- {
- If FNFSe.Servico.Valores.ValorIssRetido > 0 Then Begin
-
-   rllValorIssRetido.Caption := FormatFloat(FNFSe.Servico.Valores.ValorIssRetido);
-
-   rllValorLiquido.Caption   := FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse -
-                                                    FNFSe.Servico.Valores.ValorIssRetido);
- End Else Begin
-
-   Case FNFSe.Servico.Valores.IssRetido Of
-   stRetencao     : Begin
-
-                      rllValorIssRetido.Caption := FormatFloat(FNFSe.Servico.Valores.ValorIss);
-
-                      rllValorLiquido.Caption   := FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse -
-                                                                       FNFSe.Servico.Valores.ValorIss);
-                    End;
-
-   stNormal       : Begin
-
-                      rllValorIssRetido.Caption := FormatFloat(0);
-
-                      rllValorLiquido.Caption   := FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse);
-                    End;
-
-   stSubstituicao : Begin
-
-                      rllValorIssRetido.Caption := FormatFloat(0);
-
-                      rllValorLiquido.Caption   := FormatFloat(FNFSe.Servico.Valores.ValorLiquidoNfse);
-                    End;
-   end;
- End;
- }
-
- // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo )
- case FNFSe.NaturezaOperacao of
-  no1  : rllNatOperacao.Caption := '1 - Tributação no município';
-  no2  : rllNatOperacao.Caption := '2 - Tributação fora do município';
-  no3  : rllNatOperacao.Caption := '3 - Isenção';
-  no4  : rllNatOperacao.Caption := '4 - Imune';
-  no5  : rllNatOperacao.Caption := '5 - Exigibilidade susp. por decisão judicial';
-  no6  : rllNatOperacao.Caption := '6 - Exigibilidade susp. por proced. adm.';
-  no59 : rllNatOperacao.Caption := '7 - Simples Nacional (Dentro Estado)';
-  no69 : rllNatOperacao.Caption := '8 - Simples Nacional (Fora Estado)';
-  no52 : rllNatOperacao.Caption := '9 - Tributacao No Municipio Sem Retenção de ISS';
- end;
-
- // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP )
- case FNFSe.RegimeEspecialTributacao of
-  retNenhum                    : rllRegimeEspecial.Caption := '0 - Nenhum';
-  retMicroempresaMunicipal     : rllRegimeEspecial.Caption := '1 - Microempresa municipal';
-  retEstimativa                : rllRegimeEspecial.Caption := '2 - Estimativa';
-  retSociedadeProfissionais    : rllRegimeEspecial.Caption := '3 - Sociendade de profissionais';
-  retCooperativa               : rllRegimeEspecial.Caption := '4 - Cooperativa';
-  retMicroempresarioIndividual : rllRegimeEspecial.Caption := '5 - Microempresário Individual (MEI)';
-  retMicroempresarioEmpresaPP  : rllRegimeEspecial.Caption := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
- end;
-
- // TnfseSimNao = ( snSim, snNao )
- case FNFSe.OptanteSimplesNacional of
-  snSim : rllOpcaoSimples.Caption := 'Sim';
-  snNao : rllOpcaoSimples.Caption := 'Não';
- end;
-
- // TnfseSimNao = ( snSim, snNao )
- case FNFSe.IncentivadorCultural of
-  snSim : rllIncentivador.Caption := 'Sim';
-  snNao : rllIncentivador.Caption := 'Não';
- end;
-
- rllValorServicos2.Caption      := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorServicos );//Astrogildo em 13/12/12
- rllValorDeducoes.Caption       := FormatFloat('#,##0.00', FNFSe.Servico.Valores.ValorDeducoes );//Astrogildo em 13/12/12
- rllDescIncondicionado2.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.DescontoIncondicionado );//Astrogildo em 13/12/12
- rllBaseCalc.Caption            := FormatFloat('#,##0.00', FNFSe.Servico.Valores.BaseCalculo );//Astrogildo em 13/12/12
-
- // thema precisa ser desta forma pois usa aliquota 2,5 => 0,025
- if (FNFSe.Servico.Valores.Aliquota > 0) and (FNFSe.Servico.Valores.Aliquota < 1) then
-   rllAliquota.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.Aliquota * 100 )
- else
-   rllAliquota.Caption := FormatFloat('#,##0.00', FNFSe.Servico.Valores.Aliquota );
-
- // rllAliquota.Caption            := FormatFloat( FNFSe.Servico.Valores.Aliquota );//Astrogildo em 13/12/12
-
- // TnfseSimNao = ( snSim, snNao )
- case FNFSe.Servico.Valores.IssRetido of
-  stRetencao     : rllISSReter.Caption := 'Sim';//Astrogildo em 13/12/12
-  stNormal       : rllISSReter.Caption := 'Não';//Astrogildo em 13/12/12
-  stSubstituicao : rllISSReter.Caption := 'ST';//Astrogildo em 13/12/12
- end;
-
- case FNFSe.OptanteSimplesNacional of
- snSim : rllValorISS.Caption := FormatFloat('#,##0.00',0);
- snNao : rllValorISS.Caption := FormatFloat('#,##0.00',FNFSe.Servico.Valores.ValorIss);
- end;
-// rllValorCredito.Caption := NotaUtil.FormatFloat( FNFSe.ValorCredito );
+    end;
+  end;
 
 end;
 
@@ -521,7 +421,7 @@ begin
 
   rlmDescricao.Lines.Clear;
   rlmDescricao.Lines.Add( StringReplace( FNFSe.Servico.Discriminacao,
-                         FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
+                          FQuebradeLinha, #13#10, [rfReplaceAll, rfIgnoreCase] ) );
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject;
@@ -530,168 +430,122 @@ var
   vStringStream: TStringStream;
 begin
   inherited;
-
- (*if (FPrestLogo <> '') and FilesExists(FPrestLogo) then
- begin
-   rliPrestLogo.Picture.LoadFromFile(FPrestLogo);
- end;*)
-
- // Alterado por Augusto Fontana - 18/09/2013
- if (FPrestLogo <> '') then
-   begin
-     if FilesExists(FPrestLogo) then
+  if (FPrestLogo <> '') then
+  begin
+    if FilesExists(FPrestLogo) then
        rliPrestLogo.Picture.LoadFromFile(FPrestLogo)
-     else
-       begin
-         vStringStream := TStringStream.Create(FPrestLogo);
-         try
-           try
-             rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
-           except
-           end;
-         finally
-           vStringStream.Free;
-         end;
-       end;
-   end;
+    else
+    begin
+      vStringStream := TStringStream.Create(FPrestLogo);
+      try
+        try
+          rliPrestLogo.Picture.Bitmap.LoadFromStream(vStringStream);
+        except
+        end;
+      finally
+        vStringStream.Free;
+      end;
+    end;
+  end;
 
+  With FNFSe do
+  begin
+    with PrestadorServico do
+    begin
+      with IdentificacaoPrestador do
+      begin
+        rllPrestCNPJ.Caption          := FormatarCNPJ( Cnpj );
+        rllPrestInscMunicipal.Caption := IfThen( InscricaoMunicipal <> '' , InscricaoMunicipal  , FInscMunicipal );
+        rllPrestNome.Caption          := IfThen( RazaoSocial <> ''        , RazaoSocial         , FRazaoSocial);
+        with Tomador.IdentificacaoTomador do
+          rllTomaInscEstadual.Caption := IfThen( InscricaoEstadual <> ''  , InscricaoEstadual   , FT_InscEstadual );
+      end;
 
- rllPrestCNPJ.Caption := FormatarCNPJ( FNFSe.PrestadorServico.IdentificacaoPrestador.Cnpj );//Astrogildo em 13/12/12
+      With Endereco do
+      begin
+        rllPrestEndereco.Caption      := IfThen( Endereco <> '' , Trim( Endereco )+', '+
+                                                                  Trim( Numero )+' - '+
+                                                                  Trim( Bairro )+
+                                                                  ' - CEP: '+
+                                                                  FormatarCEP( Poem_Zeros( CEP, 8 ) ) ,
+                                                                                                  Trim(FEndereco) ) ;
+        rllPrestComplemento.Caption   := IfThen( Complemento <> '', Complemento , FComplemento);
+        rllPrestMunicipio.Caption     := IfThen( xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , FMunicipio);
+        rllPrestUF.Caption            := IfThen( UF <> ''         , UF  , FUF);
+      end;
+      With Contato do
+      begin
+        rllPrestTelefone.Caption      := IfThen( Telefone <> '' , FormatarFone( Telefone) , FormatarFone(FFone) );
+        rllPrestEmail.Caption         := IfThen( Email <> '' , Email , FEMail_Prestador);
+      end;
 
- If FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '' Then
-   rllTomaInscEstadual.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual
- Else rllTomaInscEstadual.Caption := FT_InscEstadual;
-
- If FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal <> '' Then
-   rllPrestInscMunicipal.Caption := FNFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal
- Else rllPrestInscMunicipal.Caption := FInscMunicipal;
-
- If FNFSe.PrestadorServico.RazaoSocial <> '' Then
-   rllPrestNome.Caption := FNFSe.PrestadorServico.RazaoSocial
- Else rllPrestNome.Caption := FRazaoSocial;
-
- If FNFSe.PrestadorServico.Endereco.Endereco <> '' Then Begin
-
-   rllPrestEndereco.Caption := Trim( FNFSe.PrestadorServico.Endereco.Endereco )+', '+
-                               Trim( FNFSe.PrestadorServico.Endereco.Numero )+' - '+
-                               Trim( FNFSe.PrestadorServico.Endereco.Bairro )+
-                               ' - CEP: '+
-                               FormatarCEP( Poem_Zeros( FNFSe.PrestadorServico.Endereco.CEP, 8 ) );//Astrogildo em 13/12/12
- End Else Begin
-
-   rllPrestEndereco.Caption := Trim(FEndereco);
- End;
-
- If FNFSe.PrestadorServico.Endereco.Complemento <> '' Then
-   rllPrestComplemento.Caption := FNFSe.PrestadorServico.Endereco.Complemento
- Else rllPrestComplemento.Caption := FComplemento;
-
- If FNFSe.PrestadorServico.Contato.Telefone <> '' Then
-   rllPrestTelefone.Caption := FormatarFone(FNFSe.PrestadorServico.Contato.Telefone)
- Else rllPrestTelefone.Caption := FormatarFone(FFone);
-
- If FNFSe.PrestadorServico.Endereco.xMunicipio <> '' Then
-   rllPrestMunicipio.Caption := FNFSe.PrestadorServico.Endereco.CodigoMunicipio + ' - ' + FNFSe.PrestadorServico.Endereco.xMunicipio
- Else rllPrestMunicipio.Caption := FMunicipio;
-
- If FNFSe.PrestadorServico.Endereco.UF <> '' Then
-   rllPrestUF.Caption := FNFSe.PrestadorServico.Endereco.UF
- Else rllPrestUF.Caption := FUF;
-
- If FNFSe.PrestadorServico.Contato.Email <> '' Then
-   rllPrestEmail.Caption := FNFSe.PrestadorServico.Contato.Email
- Else rllPrestEmail.Caption := FEMail_Prestador;
-
- rllPrestNomeEnt.Caption := FRazaoSocial;
- rllNumNF0Ent.Caption    := FormatFloat('00000000000', StrToFloat(FNFSe.Numero));
- rllTomadorNomeEnt.Caption := 'Emissão:' + FormatDateTime('dd/mm/yy',FNFSe.DataEmissao) + '-Tomador:'+FNFSe.Tomador.RazaoSocial+'-Total:' + FormatFloat('##,##0.00',FNFSe.Servico.Valores.ValorLiquidoNfse) ;
+      rllPrestNomeEnt.Caption         := FRazaoSocial;
+      rllNumNF0Ent.Caption            := FormatFloat('00000000000', StrToFloat(Numero));
+      rllTomadorNomeEnt.Caption       := 'Emissão:' + FormatDateTime('dd/mm/yy',DataEmissao) +
+                                         '-Tomador:'+Tomador.RazaoSocial+
+                                         '-Total:' + FormatFloat('##,##0.00', Servico.Valores.ValorLiquidoNfse) ;
+    end;
+  end;
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbTomadorBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
+  With FNFSe do
+  begin
+    With Tomador do
+    begin
+      rllTomaNome.Caption := RazaoSocial;
+      with IdentificacaoTomador do
+      begin
+        if Length( CpfCnpj)<=11
+        then
+          rllTomaCNPJ.Caption := FormatarCPF( CpfCnpj )
+        else
+          rllTomaCNPJ.Caption := FormatarCNPJ( CpfCnpj );
 
- if Length(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj)<=11
-  then rllTomaCNPJ.Caption := FormatarCPF( FNFSe.Tomador.IdentificacaoTomador.CpfCnpj ) //Astrogildo em 13/12/12
-  else rllTomaCNPJ.Caption := FormatarCNPJ( FNFSe.Tomador.IdentificacaoTomador.CpfCnpj );//Astrogildo em 13/12/12
+         rllTomaInscMunicipal.Caption := IfThen( InscricaoMunicipal <> '' , InscricaoMunicipal , FT_InscMunicipal);
 
- If FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '' Then
-   rllTomaInscMunicipal.Caption := FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal
- Else rllTomaInscMunicipal.Caption := FT_InscMunicipal;
+      end;
+      With Endereco do
+      begin
+        If Endereco <> '' Then
+        Begin
 
- rllTomaNome.Caption := FNFSe.Tomador.RazaoSocial;
+          rllTomaEndereco.Caption :=  Trim(Endereco) + ', '  +
+                                      Trim(Numero )  + ' - ' +
+                                      Trim(Bairro )  + ' - CEP: ' +
+                                      FormatarCEP(Poem_Zeros(CEP, 8 ));
+        End
+        Else
+         rllTomaEndereco.Caption := Trim(FT_Endereco) + ' - CEP: ' +
+                                    FormatarCEP(Poem_Zeros(CEP, 8 ));
 
- If FNFSe.Tomador.Endereco.Endereco <> '' Then Begin
+        rllTomaComplemento.Caption := IfThen( Complemento <> '' , Complemento , FT_Complemento);
 
-   rllTomaEndereco.Caption := Trim(FNFSe.Tomador.Endereco.Endereco) + ', '  +
-                              Trim(FNFSe.Tomador.Endereco.Numero )  + ' - ' +
-                              Trim(FNFSe.Tomador.Endereco.Bairro )  + ' - CEP: ' +
-                              FormatarCEP(Poem_Zeros(FNFSe.Tomador.Endereco.CEP, 8 ));
- End Else Begin
-
-   rllTomaEndereco.Caption := Trim(FT_Endereco) + ' - CEP: ' +
-                              FormatarCEP(Poem_Zeros(FNFSe.Tomador.Endereco.CEP, 8 ));
- End;
-
- If FNFSe.Tomador.Endereco.Complemento <> '' Then
-   rllTomaComplemento.Caption := FNFSe.Tomador.Endereco.Complemento
- Else rllTomaComplemento.Caption := FT_Complemento;
-
- If FNFSe.Tomador.Contato.Telefone <> '' Then
-   rllTomaTelefone.Caption := FormatarFone(FNFSe.Tomador.Contato.Telefone)
- Else rllTomaTelefone.Caption := FormatarFone(FT_Fone);
-
- rllTomaMunicipio.Caption := FNFSe.Tomador.Endereco.CodigoMunicipio + ' - ' + FNFSe.Tomador.Endereco.xMunicipio;
- rllTomaUF.Caption        := FNFSe.Tomador.Endereco.UF;
-
- If FNFSe.Tomador.Contato.Email <> '' Then
-   rllTomaEmail.Caption := FNFSe.Tomador.Contato.Email
- Else rllTomaEmail.Caption := FT_Email;
-
- // Mensagem para modo Homologacao.
- rllMsgTeste.Visible := False;
- rllMsgTeste.Enabled := False;
- if FNFSe.NfseCancelamento.DataHora<>0
-  then begin
-   rllMsgTeste.Caption  := 'NFS-e CANCELADA';
-   rllMsgTeste.Visible  := True;
-   rllMsgTeste.Enabled := True;
-  end;
- rllMsgTeste.Repaint;
-(*
- if FNFSe.Ide.tpAmb = taHomologacao
-  then begin
-   rllMsgTeste.Caption := 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL';
-   rllMsgTeste.Enabled := True;
-   rllMsgTeste.Visible := True;
-  end
-  else begin
-   if FNFSe.procNFSe.cStat > 0
-    then begin
-
-     if FNFSe.procNFSe.cStat = 102
-      then begin
-       rllMsgTeste.Caption  := 'NFS-e DENEGADA';
-       rllMsgTeste.Visible  := True;
-       rllMsgTeste.Enabled := True;
+        rllTomaMunicipio.Caption := CodigoMunicipio + ' - ' + xMunicipio;
+        rllTomaUF.Caption        := UF;
       end;
 
-     if not FNFSe.procNFSe.cStat in [101, 102, 100]
-      then begin
-       rllMsgTeste.Caption:=  FNFSe.procNFSe.xMotivo;
-       rllMsgTeste.Visible := True;
-       rllMsgTeste.Enabled := True;
+      with Contato do
+      begin
+        rllTomaTelefone.Caption := IfThen( Telefone <> '' , FormatarFone(Telefone) , FormatarFone(FT_Fone));
+        rllTomaEmail.Caption    := IfThen( Email    <> '' , Email , FT_Email);
       end;
-    end
-    else begin
-     rllMsgTeste.Caption  := 'NF-E NÃO ENVIADA PARA SEFAZ';
-     rllMsgTeste.Visible  := True;
-     rllMsgTeste.Enabled  := True;
+
+     rllMsgTeste.Visible := False;
+     rllMsgTeste.Enabled := False;
     end;
-  end;
 
-*)
+   if NfseCancelamento.DataHora<>0 then
+   begin
+    rllMsgTeste.Caption := 'NFS-e CANCELADA';
+    rllMsgTeste.Visible := True;
+    rllMsgTeste.Enabled := True;
+   end;
+   rllMsgTeste.Repaint;
+  end;
 
 end;
 
@@ -710,6 +564,17 @@ begin
   RLNFSe.Margins.RightMargin  := FMargemDireita * 10;
 
 end;
+
+
+Function TfrlDANFSeRLRetrato.ManterAliquota( dAliquota : Double ) : String;
+begin
+  // thema precisa ser desta forma pois usa aliquota 2,5 => 0,025
+  if (dAliquota > 0) and (dAliquota < 1) then
+    Result := FormatFloat('#,##0.00', dAliquota * 100 )
+  else
+    Result := FormatFloat('#,##0.00', dAliquota );
+end;
+
 
 end.
 {$HINTS ON}

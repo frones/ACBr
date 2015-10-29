@@ -127,6 +127,7 @@ function StrToEnumerado(var ok: boolean; const s: string; const AString: array o
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
 
+function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS):string;
 function StrToStatusRPS(var ok: boolean; const s: string):TnfseStatusRPS;
 
@@ -135,12 +136,15 @@ function StrToStatusNFSe(var ok: boolean; const s: string):TnfseStatusNFSe;
 
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
 function StrToNaturezaOperacao(var ok: boolean; const s: string):TnfseNaturezaOperacao;
+function NaturezaOperacaoDescricao( const t : TnfseNaturezaOperacao ): String;
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS):string;
 function StrToExigibilidadeISS(var ok: boolean; const s: string):TnfseExigibilidadeISS;
+function ExigibilidadeISSDescricao( const t : TnfseExigibilidadeISS ): String;
 
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao):string;
 function StrToRegimeEspecialTributacao(var ok: boolean; const s: string):TnfseRegimeEspecialTributacao;
+function nfseRegimeEspecialTributacaoDescricao( const t : TnfseRegimeEspecialTributacao ): String;
 
 function SimNaoToStr(const t: TnfseSimNao):string;
 function StrToSimNao(var ok: boolean; const s: string):TnfseSimNao;
@@ -165,6 +169,7 @@ function CodSiafiToCodCidade(const ACodigo: string): string;
 
 function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria):string;
 function StrToSituacaoTributaria(var ok: boolean; const s: string):TnfseSituacaoTributaria;
+function SituacaoTributariaDescricao( const t : TnfseSituacaoTributaria ): String;
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao):string;
 function StrToResponsavelRetencao(var ok: boolean; const s: string):TnfseResponsavelRetencao;
@@ -18898,6 +18903,69 @@ begin
     ve201: Result := 2.01;
   else
     Result := 0;
+  end;
+end;
+
+
+
+function NaturezaOperacaoDescricao( const t : TnfseNaturezaOperacao ): String;
+begin
+  case t of
+    no1  : Result := '1 - Tributação no município';
+    no2  : Result := '2 - Tributação fora do município';
+    no3  : Result := '3 - Isenção';
+    no4  : Result := '4 - Imune';
+    no5  : Result := '5 - Exigibilidade susp. por decisão judicial';
+    no6  : Result := '6 - Exigibilidade susp. por proced. adm.';
+    no59 : Result := '7 - Simples Nacional (Dentro Estado)';
+    no69 : Result := '8 - Simples Nacional (Fora Estado)';
+    no52 : Result := '9 - Tributacao No Municipio Sem Retenção de ISS';
+  end;
+end;
+
+function nfseRegimeEspecialTributacaoDescricao( const t : TnfseRegimeEspecialTributacao ): String;
+begin
+  case t of
+    retNenhum                    : Result := '0 - Nenhum';
+    retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
+    retEstimativa                : Result := '2 - Estimativa';
+    retSociedadeProfissionais    : Result := '3 - Sociendade de profissionais';
+    retCooperativa               : Result := '4 - Cooperativa';
+    retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
+    retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+  end;
+end;
+
+
+function ExigibilidadeISSDescricao( const t : TnfseExigibilidadeISS ): String;
+begin
+  case t of
+    exiExigivel                       : Result := 'Exigível';
+    exiNaoIncidencia                  : Result := 'Não Incidência';
+    exiIsencao                        : Result := 'Isenção';
+    exiExportacao                     : Result := 'Exportação';
+    exiImunidade                      : Result := 'Imunidade';
+    exiSuspensaDecisaoJudicial        : Result := 'Suspensa Decisao Judicial';
+    exiSuspensaProcessoAdministrativo : Result := 'Suspensa Processo Administrativo';
+  end;
+end;
+
+
+function SituacaoTributariaDescricao( const t : TnfseSituacaoTributaria ): String;
+begin
+  case t of
+    stRetencao    : result := '1 - Sim' ;
+    stNormal      : result := '2 - Não' ;
+    stSubstituicao: result := '3 - Subst.' ;
+  end;
+end;
+
+
+function SimNao( const t : Integer ): String;
+begin
+  case t of
+    0 : result := 'Sim' ;
+    1 : result := 'Não' ;
   end;
 end;
 

@@ -117,6 +117,14 @@ type
     FViaConsumidor : Boolean;  // Destinado exclusivamente ao DANFE da NFC-e
     FvTroco: Currency;
 
+    FTamanhoLogoHeight: Integer;
+    FTamanhoLogoWidth: Integer;
+    FRecuoEndereco: Integer;
+    FRecuoEmpresa: Integer;
+    FLogoEmCima: Boolean;
+    FTamanhoFonteEndereco: Integer;
+    FRecuoLogo: Integer;
+
     FTributosSeparadamente : Boolean; //informação dos tributos separadamente
     FvTribFed: Currency; //total tributos federais
     FvTribEst: Currency; //total tributos estaduais
@@ -175,6 +183,14 @@ type
     property ImprimirItens: Boolean                  read FImprimeItens                   write FImprimeItens;
     property vTroco: Currency                        read FvTroco                         write FvTroco;
     property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
+
+    property TamanhoLogoHeight: Integer              read FTamanhoLogoHeight              write FTamanhoLogoHeight;
+    property TamanhoLogoWidth: Integer               read FTamanhoLogoWidth               write FTamanhoLogoWidth;
+    property RecuoEndereco: Integer                  read FRecuoEndereco                  write FRecuoEndereco;
+    property RecuoEmpresa: Integer                   read FRecuoEmpresa                   write FRecuoEmpresa;
+    property LogoemCima: Boolean                     read FLogoEmCima                     write FLogoEmCima;
+    property TamanhoFonteEndereco: Integer           read FTamanhoFonteEndereco           write FTamanhoFonteEndereco;
+    property RecuoLogo: Integer                      read FRecuoLogo                      write FRecuoLogo;
 
     // Incluido por Leandro da Silva Alves em 17/04/2015
     property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;

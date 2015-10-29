@@ -641,6 +641,10 @@ begin
   ConfigureDataSource;
   InitDados;
 
+    if FNFe.Cobr.Dup.Count > 0 then
+      rlbFatura.Visible := True
+    else
+      rlbFatura.Visible := False;
   RLNFe.Title := Copy(FNFe.InfNFe.Id, 4, 44);
   if FNumCopias > 0 then
     RLPrinters.RLPrinter.Copies := FNumCopias
@@ -1118,7 +1122,7 @@ end;
 procedure TfrlDANFeRLRetrato.Emitente;
 begin
   //emit
-  with FNFe.Emit do
+ { with FNFe.Emit do
   begin
     if FRecebemoDe = '' then
       FRecebemoDe := rllRecebemosDe.Caption;
@@ -1175,7 +1179,143 @@ begin
     rlmSiteEmail.Visible := False;
     rlmEndereco.Top := 58;
     rllFone.Top := 96;
-  end;
+  end;     }
+
+    // alterado por rodrigo em 17/09/2015
+      with FNFe.Emit do
+    begin
+      if FRecebemoDe = '' then
+        FRecebemoDe := rllRecebemosDe.Caption;
+
+      rllRecebemosDe.Caption := Format (FRecebemoDe, [ XNome ]);
+      rllCNPJ.Caption := FormatarCNPJ(CNPJCPF );
+      rllInscrEstSubst.caption := IEST;
+      rllInscricaoEstadual.Caption := IE;
+      rlmEmitente.Lines.Text   := XNome;
+      with EnderEmit do
+        begin
+
+          rlmEndereco.Lines.Clear;
+          if xCpl > '' then
+            rlmEndereco.Lines.add (XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
+                                                ' ' + XCpl + ' - ' + XBairro)
+          else
+            rlmEndereco.Lines.add (XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
+                                                              ' - ' + XBairro);
+
+          rlmEndereco.Lines.add ('CEP: ' + FormatarCEP(IntToStr(CEP)) +
+                                                    ' - ' + XMun + ' - ' + UF);
+
+          // aqui rodrigo alterou
+          rlmEndereco.Lines.Clear;
+          rlmEndereco.Lines.Add(XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
+                                                ' ' + XCpl + ' - ' + XBairro + ' - ' + XMun + ' - ' + UF + ' - ' + FormatarCEP(IntToStr(CEP)) + ' - ' + FormatarFone(Fone) + ' ' + FSite + ' ' + FEmail);
+
+
+
+        if FFax <> '' then
+          begin
+            rllFone.Caption := 'TEL: ' + FormatarFone(Fone) +
+                                      ' - FAX: ' + FormatarFone(FFax);
+            rllFone.Font.Size := 7;
+          end
+        else
+          begin
+            rllFone.Caption := 'TEL: ' + FormatarFone(Fone);
+            rllFone.Font.Size := 8;
+          end;
+      end;
+    end;
+
+    if (FSite <> '') or (FEmail <> '') then
+      begin
+        rlmSiteEmail.Lines.BeginUpdate;
+        rlmSiteEmail.Lines.Clear;
+        IF (FSite <> '') and (FEmail <> '') then
+        rlmSiteEmail.Lines.Add(FSite + '  ' + FEmail) else
+        if FSite <> '' then
+          rlmSiteEmail.Lines.Add(FSite) else
+        if FEmail <> '' then
+          rlmSiteEmail.Lines.Add(FEmail);
+        rlmSiteEmail.Lines.EndUpdate;
+        rlmSiteEmail.Visible := True;
+        rlmEndereco.Top := 80;
+        rllFone.Top := 102;
+        rlmSiteEmail.Top := 112;
+      end
+    else
+      begin
+        rlmSiteEmail.Visible := False;
+        rlmEndereco.Top := 80;
+        rllFone.Top := 102;
+      end;
+
+     rlmsiteemail.Visible:= false;
+     rllfone.Visible:= FALSE;
+
+     // aqui a minha alteração
+     RLILogo.Left:= 4;
+     RLILogo.Top:= 3;
+     RLMEmitente.Top:= 3;
+     RLMEmitente.Left:= 148;
+     RLMEndereco.Top:= 80;
+     RLMEndereco.Left:= 3;
+     rllfone.Top:= 107;
+     rllfone.Left:= 3;
+     rlmsiteemail.Top:= 120;
+     rlmsiteemail.Left:= 3;
+
+     RLILogo.Width:=  FTamanhoLogoWidth;
+     RLILogo.Height:= FTamanhoLogoHeigth;
+
+     RLMEmitente.Left:= RLILogo.Left + RLILogo.Width + 2;
+     RLMEmitente.Width:= RLIEmitente.Width - 8 - RLILogo.Width;
+
+     RLMEndereco.Font.Size:= FTamanhoFonteEndereco;
+
+     RLMEndereco.Top:= RLILogo.Top + RLILogo.Height + 1;
+
+     if RLILogo.Width = 0 then
+     RLMEndereco.Top:= RLMEmitente.Top + RLMEmitente.Height + 1;
+
+     if FRecuoEmpresa > 0 then
+     RLMEmitente.Top:= RLMEmitente.Top + FRecuoEmpresa;
+
+     if FRecuoEndereco > 0 then
+     RLMEndereco.Top:= RLMEndereco.Top + FRecuoEndereco;
+
+
+     if FLogoemCima = true then begin
+     RLILogo.Left:= StrToInt( CurrToStr(Trunc(RLIEmitente.Width / 2) - Trunc(RLILogo.Width /2)));
+     RLILogo.Top:= RLILogo.Top + (FRecuoLogo);
+
+     RlmEmitente.Left:= RLIEmitente.Left + 2;
+     RLMEmitente.Width:= RLIEmitente.Width-4;
+
+     rlmEmitente.Top:= RLILogo.Top + RLILogo.Height + 3;
+
+     rlmEndereco.Top:= RLMEmitente.Top + RLMEmitente.Height - FRecuoEndereco;
+     end;
+
+
+
+     if FLogoemCima = False then begin
+
+     rlmemitente.Left:= 4;
+     rlmemitente.Top:= 12;
+     RLILogo.Left:= 4;
+     RLILogo.Top:= RLMEmitente.Top + RLMEmitente.Height + fRecuoLogo + 5;
+
+
+     RLMEmitente.Width:= RLIEmitente.Width - 4;
+     RLMEmitente.Top:= RLMEmitente.Top  + FRecuoEmpresa;
+//     RLMEmitente.Left:= RLILogo.Left;
+     RLMEndereco.Left:= RLILogo.Left + RLILOGO.Width + 5;
+     rlmEndereco.Top:= RLMEmitente.Top + RLMEmitente.Height - FRecuoEndereco;
+     RLMEndereco.Width:= RLIEmitente.Width - RLMEndereco.Left - 4;
+
+     end;
+
 end;
 
 procedure TfrlDANFeRLRetrato.Destinatario;

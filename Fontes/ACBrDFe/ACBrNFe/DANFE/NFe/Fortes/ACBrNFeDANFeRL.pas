@@ -181,6 +181,14 @@ type
     fMask_vUnCom : String;
     fExibeCampoFatura: Boolean;
 
+    FTamanhoLogoHeigth: Integer;
+    FTamanhoLogoWidth: Integer;
+    FRecuoEndereco: Integer;
+    FRecuoEmpresa: Integer;
+    FLogoemCima: Boolean;
+    FTamanhoFonteEndereco: Integer;
+    FRecuoLogo: Integer;
+
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
     procedure ConfigDataSet;
@@ -222,7 +230,14 @@ type
                     AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
-                    AdExibeCampoFatura: Boolean = False );
+                    AdExibeCampoFatura: Boolean = False;
+                    ATamanhoLogoHeight: Integer = 200;
+                    ATamanhoLogoWidth: Integer = 200;
+                    ARecuoEndereco: Integer = 10;
+                    ARecuoEmpresa: Integer = 10;
+                    ALogoemCima: Boolean = False;
+                    ATamanhoFonteEndereco: Integer = 10;
+                    ARecuoLogo: Integer = 0);
 
     class procedure SavePDF(ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -258,7 +273,14 @@ type
                     AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
-                    AdExibeCampoFatura: Boolean = False );
+                    AdExibeCampoFatura: Boolean = False;
+		    ATamanhoLogoHeight: Integer = 200;
+                    ATamanhoLogoWidth: Integer = 200;
+                    ARecuoEndereco: Integer = 10;
+                    ARecuoEmpresa: Integer = 10;
+                    ALogoemCima: Boolean = False;
+                    ATamanhoFonteEndereco: Integer = 10;
+                    ARecuoLogo: Integer = 0);
 
 
   end;
@@ -395,7 +417,14 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 AdCasasDecimaisFormato : Integer = 0;
                 AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                 AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
-                AdExibeCampoFatura: Boolean = False );
+                AdExibeCampoFatura: Boolean = False;
+                ATamanhoLogoHeight: Integer = 200;
+                ATamanhoLogoWidth: Integer = 200;
+                ARecuoEndereco: Integer = 10;
+                ARecuoEmpresa: Integer = 10;
+                ALogoemCima: Boolean = False;
+                ATamanhoFonteEndereco: Integer = 10;
+                ARecuoLogo: Integer = 0);
 
 
 begin
@@ -443,6 +472,13 @@ begin
       fMask_qCom   := AdCasasDecimais_Mask_qCom;
       fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
       fExibeCampoFatura := AdExibeCampoFatura;
+      FTamanhoLogoHeigth := ATamanhoLogoHeight;
+      FTamanhoLogoWidth := ATamanhoLogoWidth;
+      FRecuoEndereco := ARecuoEndereco;
+      FRecuoEmpresa := ARecuoEmpresa;
+      FLogoemCima := ALogoemCima;
+      FTamanhoFonteEndereco := ATamanhoFonteEndereco;
+      FRecuoLogo := ARecuoLogo;
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
@@ -496,8 +532,14 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     AdCasasDecimaisFormato : Integer = 0;
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
-                    AdExibeCampoFatura: Boolean = False );
-
+                    AdExibeCampoFatura: Boolean = False;
+                    ATamanhoLogoHeight: Integer = 200;
+                    ATamanhoLogoWidth: Integer = 200;
+                    ARecuoEndereco: Integer = 10;
+                    ARecuoEmpresa: Integer = 10;
+                    ALogoemCima: Boolean = False;
+                    ATamanhoFonteEndereco: Integer = 10;
+                    ARecuoLogo: Integer = 0);
 
 var
   ADir: String;
@@ -544,6 +586,14 @@ begin
       fMask_qCom    := AdCasasDecimais_Mask_qCom;
       fMask_vUnCom  := AdCasasDecimais_Mask_vUnCom;
       fExibeCampoFatura := AdExibeCampoFatura;
+
+      FTamanhoLogoHeigth := ATamanhoLogoHeight;
+      FTamanhoLogoWidth := ATamanhoLogoWidth;
+      FRecuoEndereco := ARecuoEndereco;
+      FRecuoEmpresa := ARecuoEmpresa;
+      FLogoemCima := ALogoemCima;
+      FTamanhoFonteEndereco := ATamanhoFonteEndereco;
+      FRecuoLogo := ARecuoLogo;
 
       if Trim(AFile) = '' then
         raise EACBrNFeException.Create('Erro ao gerar PDF. Arquivo não informado');

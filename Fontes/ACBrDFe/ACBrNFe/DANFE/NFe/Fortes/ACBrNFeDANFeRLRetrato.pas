@@ -1122,7 +1122,7 @@ end;
 procedure TfrlDANFeRLRetrato.Emitente;
 begin
   //emit
- { with FNFe.Emit do
+  with FNFe.Emit do
   begin
     if FRecebemoDe = '' then
       FRecebemoDe := rllRecebemosDe.Caption;
@@ -1179,9 +1179,9 @@ begin
     rlmSiteEmail.Visible := False;
     rlmEndereco.Top := 58;
     rllFone.Top := 96;
-  end;     }
+  end;     
 
-    // alterado por rodrigo em 17/09/2015
+{ // comentado para rever posterior
       with FNFe.Emit do
     begin
       if FRecebemoDe = '' then
@@ -1315,7 +1315,7 @@ begin
      RLMEndereco.Width:= RLIEmitente.Width - RLMEndereco.Left - 4;
 
      end;
-
+}
 end;
 
 procedure TfrlDANFeRLRetrato.Destinatario;

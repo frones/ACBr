@@ -1927,6 +1927,7 @@ function TCTeInutilizacao.TratarResposta: Boolean;
 var
   CTeRetorno: TRetInutCTe;
   wProc: TStringList;
+  Texto: String;
 begin
   CTeRetorno := TRetInutCTe.Create;
   try
@@ -1952,21 +1953,23 @@ begin
     begin
       wProc := TStringList.Create;
       try
+        Texto := '<' + ENCODING_UTF8 + '>';
+        Texto := Texto + '<ProcInutCTe versao="' + FPVersaoServico + '" xmlns="http://www.portalfiscal.inf.br/cte">';
+        Texto := Texto + FPDadosMsg;
+        Texto := Texto + FPRetWS;
+        Texto := Texto + '</ProcInutCTe>';
+        (*
         wProc.Add('<' + ENCODING_UTF8 + '>');
         wProc.Add('<ProcInutCTe versao="' + FPVersaoServico +
           '" xmlns="http://www.portalfiscal.inf.br/cte">');
-
         wProc.Add(FPDadosMsg);
         wProc.Add(FPRetWS);
         wProc.Add('</ProcInutCTe>');
-        FXML_ProcInutCTe := wProc.Text;
+        *)
+        FXML_ProcInutCTe := Texto; // wProc.Text;
       finally
         wProc.Free;
       end;
-
-//      if FPConfiguracoesCTe.Geral.Salvar then
-//        FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
-//          FXML_ProcInutCTe);
 
       if FPConfiguracoesCTe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
@@ -2423,7 +2426,7 @@ var
   Leitor: TLeitor;
   I, J: Integer;
   wProc: TStringList;
-  NomeArq, VersaoEvento: String;
+  NomeArq, VersaoEvento, Texto: String;
 begin
   FEvento.idLote := idLote;
 
@@ -2472,6 +2475,26 @@ begin
             try
               VersaoEvento := TACBrCTe(FPDFeOwner).LerVersaoDeParams(LayCTeEvento);
 
+              Texto := '<' + ENCODING_UTF8 + '>';
+              Texto := Texto + '<procEventoCTe versao="' + VersaoEvento + '" xmlns="http://www.portalfiscal.inf.br/cte">';
+              Texto := Texto + '<eventoCTe versao="' + VersaoEvento + '">';
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'infEvento', '', I + 1);
+              Texto := Texto + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">';
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'SignedInfo', '', I + 1);
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'SignatureValue', '', I + 1);
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'KeyInfo', '', I + 1);
+              Texto := Texto + '</Signature>';
+              Texto := Texto + '</eventoCTe>';
+              Texto := Texto + '<retEventoCTe versao="' + VersaoEvento + '">';
+              Leitor.Arquivo := FPRetWS;
+              Texto := Texto + Leitor.rExtrai(1, 'infEvento', '', J + 1);
+              Texto := Texto + '</retEventoCTe>';
+              Texto := Texto + '</procEventoCTe>';
+              (*
               wProc.Add('<' + ENCODING_UTF8 + '>');
               wProc.Add('<procEventoCTe versao="' + VersaoEvento +
                 '" xmlns="http://www.portalfiscal.inf.br/cte">');
@@ -2496,19 +2519,16 @@ begin
               wProc.Add(Leitor.rExtrai(1, 'infEvento', '', J + 1));
               wProc.Add('</retEventoCTe>');
               wProc.Add('</procEventoCTe>');
+              *)
+              EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto; // wProc.Text;
 
-              EventoRetorno.retEvento.Items[J].RetInfEvento.XML := wProc.Text;
-
-              FEvento.Evento.Items[I].RetInfEvento.XML := wProc.Text;
+              FEvento.Evento.Items[I].RetInfEvento.XML := Texto; // wProc.Text;
 
               NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) +
                 '-procEventoCTe.xml';
 
-//              if FPConfiguracoesCTe.Arquivos.Salvar then
-//                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
-
               if FPConfiguracoesCTe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+                FPDFeOwner.Gravar(NomeArq, Texto {wProc.Text}, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
             finally
               wProc.Free;
             end;
@@ -2537,8 +2557,8 @@ begin
   inherited SalvarResposta;
 
   if FPConfiguracoesCTe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento(FCNPJ));
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
+      FPRetWS, GerarPathEvento(FCNPJ));
 end;
 
 function TCTeEnvEvento.GerarMsgLog: String;

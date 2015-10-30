@@ -1501,6 +1501,7 @@ begin
   if not Assigned(FMAIL) then
     raise Exception.Create( ACBrStr('Componente ACBrMail não associado') );
 
+  FMAIL.Clear;
   FMAIL.AddAddress(sPara);
   FMAIL.Subject := sAssunto;
 
@@ -1509,7 +1510,8 @@ begin
     MAIL.Body.Assign(sMensagem);
     MAIL.AltBody.Text := (StripHTML(sMensagem.Text));
   end;
-
+  
+  FMAIL.ClearAttachments;
   if (EnviaPDF) then
   begin
     if ACBrBoletoFC.NomeArquivo = '' then

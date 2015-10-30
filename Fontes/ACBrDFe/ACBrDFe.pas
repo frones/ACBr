@@ -250,6 +250,8 @@ begin
   if not Assigned(MAIL) then
     raise EACBrDFeException.Create('Componente ACBrMail não associado');
 
+  MAIL.Clear;	
+	
   EMails := TStringList.Create;
   try
     if Pos( ';', sPara) > 0 then

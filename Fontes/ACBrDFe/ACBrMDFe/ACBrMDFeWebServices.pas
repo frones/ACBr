@@ -1813,7 +1813,7 @@ var
   Leitor: TLeitor;
   I, J: Integer;
   wProc: TStringList;
-  NomeArq, VersaoEvento: String;
+  NomeArq, VersaoEvento, Texto: String;
 begin
   FEvento.idLote := idLote;
 
@@ -1860,6 +1860,26 @@ begin
             try
               VersaoEvento := TACBrMDFe(FPDFeOwner).LerVersaoDeParams(LayMDFeEvento);
 
+              Texto := '<' + ENCODING_UTF8 + '>';
+              Texto := Texto + '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="http://www.portalfiscal.inf.br/mdfe">';
+              Texto := Texto + '<eventoMDFe versao="' + VersaoEvento + '">';
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'infEvento', '', I + 1);
+              Texto := Texto + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">';
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'SignedInfo', '', I + 1);
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'SignatureValue', '', I + 1);
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := Texto + Leitor.rExtrai(1, 'KeyInfo', '', I + 1);
+              Texto := Texto + '</Signature>';
+              Texto := Texto + '</eventoMDFe>';
+              Texto := Texto + '<retEventoMDFe versao="' + VersaoEvento + '">';
+              Leitor.Arquivo := FPRetWS;
+              Texto := Texto + Leitor.rExtrai(1, 'infEvento', '', J + 1);
+              Texto := Texto + '</retEventoMDFe>';
+              Texto := Texto + '</procEventoMDFe>';
+              (*
               wProc.Add('<' + ENCODING_UTF8 + '>');
               wProc.Add('<procEventoMDFe versao="' + VersaoEvento +
                 '" xmlns="http://www.portalfiscal.inf.br/mdfe">');
@@ -1884,19 +1904,16 @@ begin
               wProc.Add(Leitor.rExtrai(1, 'infEvento', '', J + 1));
               wProc.Add('</retEventoMDFe>');
               wProc.Add('</procEventoMDFe>');
+              *)
+              EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto; // wProc.Text;
 
-              EventoRetorno.retEvento.Items[J].RetInfEvento.XML := wProc.Text;
-
-              FEvento.Evento.Items[I].RetInfEvento.XML := wProc.Text;
+              FEvento.Evento.Items[I].RetInfEvento.XML := Texto; // wProc.Text;
 
               NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) +
                 '-procEventoMDFe.xml';
 
-//              if FPConfiguracoesMDFe.Arquivos.Salvar then
-//                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento);
-
               if FPConfiguracoesMDFe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, wProc.Text, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+                FPDFeOwner.Gravar(NomeArq, Texto {wProc.Text}, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
             finally
               wProc.Free;
             end;
@@ -1925,8 +1942,8 @@ begin
   inherited SalvarResposta;
 
   if FPConfiguracoesMDFe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento(FCNPJ));
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
+      FPRetWS, GerarPathEvento(FCNPJ));
 end;
 
 function TMDFeEnvEvento.GerarMsgLog: String;

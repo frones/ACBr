@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2015
+[+] Acrescentado o INI para o provedor ISSIntel.
+    Por: Italo Jurisato Junior
+
 29/10/2015
 [*] Ao ler o retorno ao consultar o lote não estava capturando a lista de 
     mensagens de erro.

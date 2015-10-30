@@ -1057,6 +1057,8 @@ var
   Texto: String;
 begin
   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.RetornoNFSe;
+  // %NomeURL_P% : Representa o Nome da cidade na URL
+  Texto := StringReplace(Texto, '%NomeURL_P%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
   // %DadosNFSe% : Representa a NFSe
   Texto := StringReplace(Texto, '%DadosNFSe%', ARetNFSe, [rfReplaceAll]);
 

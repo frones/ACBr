@@ -766,7 +766,7 @@ end;
 
 procedure TCTeRecepcao.DefinirURL;
 var
-  Modelo: String;
+  Modelo, xUF: String;
   ok: Boolean;
   VerServ: Double;
 begin
@@ -791,9 +791,16 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  case FPConfiguracoesCTe.Geral.FormaEmissao of
+    teSVCRS: xUF := 'SVC-RS';
+    teSVCSP: xUF := 'SVC-SP';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,

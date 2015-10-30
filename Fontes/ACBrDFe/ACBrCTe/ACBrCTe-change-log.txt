@@ -49,6 +49,9 @@ Símbolo : Significado
 
 30/10/2015
 (ACBrCTeWebServices)
+[-] Correção, não estava levando em consideração o envio para o SVC.
+    por: Italo Jurisato Junior
+(ACBrCTeWebServices)
 [-] Correção não estava salvando o retorno ao enviar um evento.
     por: Italo Jurisato Junior
 

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+30/10/2015
+-- pcnConversao --
+[-] Corrigido retorno de função onde enumadores estavam errados	
+	Por : SisComp
+	
 21/10/2015
 -- pcnGerador --
 [+] Adicionado novas mensagens para as novas TAGs conforme NT 2015/003 v 1.10.

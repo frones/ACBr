@@ -1401,13 +1401,13 @@ end;
 
 function SituacaoDFeToStr(const t: TSituacaoDFe): String;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '3'], [snAutorizado,
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4'], [snAutorizado,
     snDenegado, snCancelado, snEncerrado]);
 end;
 
 function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '3'], [snAutorizado,
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'], [snAutorizado,
     snDenegado, snCancelado, snEncerrado]);
 end;
 

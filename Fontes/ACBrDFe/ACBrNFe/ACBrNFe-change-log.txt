@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2015
+-- ACBrNFeWebServices --
+[-] Correção não estava salvando o retorno ao enviar um evento.
+    por: Italo Jurisato Junior
+
 28/10/2015 
 -- ACBrDANFCeFortesFrA4 --
 [+] Adição do modelo em Fortes

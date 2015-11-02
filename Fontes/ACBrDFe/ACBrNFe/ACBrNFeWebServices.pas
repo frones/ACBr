@@ -961,7 +961,7 @@ begin
     vNotas := vNotas + '<NFe' + RetornarConteudoEntre(
       FNotasFiscais.Items[I].XMLAssinado, '<NFe', '</NFe>') + '</NFe>';
 
-  FPDadosMsg := '<enviNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="' +
+  FPDadosMsg := '<enviNFe xmlns="'+ACBRNFE_NAMESPACE+'" versao="' +
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +
     vNotas + '</enviNFe>';
 
@@ -2226,8 +2226,6 @@ end;
 function TNFeInutilizacao.TratarResposta: Boolean;
 var
   NFeRetorno: TRetInutNFe;
-  wProc: TStringList;
-  Texto: String;
 begin
   NFeRetorno := TRetInutNFe.Create;
   try
@@ -2253,25 +2251,12 @@ begin
     //gerar arquivo proc de inutilizacao
     if ((NFeRetorno.cStat = 102) or (NFeRetorno.cStat = 563)) then
     begin
-      wProc := TStringList.Create;
-      try
-        Texto := '<' + ENCODING_UTF8 + '>';
-        Texto := Texto + '<ProcInutNFe versao="' + FPVersaoServico + '" xmlns="http://www.portalfiscal.inf.br/nfe">';
-        Texto := Texto + FPDadosMsg;
-        Texto := Texto + FPRetWS;
-        Texto := Texto + '</ProcInutNFe>';
-        (*
-        wProc.Add('<' + ENCODING_UTF8 + '>');
-        wProc.Add('<ProcInutNFe versao="' + FPVersaoServico +
-          '" xmlns="http://www.portalfiscal.inf.br/nfe">');
-        wProc.Add(FPDadosMsg);
-        wProc.Add(FPRetWS);
-        wProc.Add('</ProcInutNFe>');
-        *)
-        FXML_ProcInutNFe := Texto; // wProc.Text;
-      finally
-        wProc.Free;
-      end;
+      FXML_ProcInutNFe := '<' + ENCODING_UTF8 + '>' +
+                           '<ProcInutNFe versao="' + FPVersaoServico +
+                             '" xmlns="'+ACBRNFE_NAMESPACE+'">' +
+                            FPDadosMsg +
+                            FPRetWS +
+                           '</ProcInutNFe>';
 
       if FPConfiguracoesNFe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
@@ -2666,7 +2651,6 @@ function TNFeEnvEvento.TratarResposta: Boolean;
 var
   Leitor: TLeitor;
   I, J: integer;
-  wProc: TStringList;
   NomeArq, VersaoEvento, Texto: String;
 begin
   FEvento.idLote := idLote;
@@ -2711,67 +2695,35 @@ begin
             FEvento.Evento.Items[I].RetInfEvento.xMotivo :=
               EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
 
-            wProc := TStringList.Create;
-            try
-              VersaoEvento := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeEvento);
+            VersaoEvento := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeEvento);
 
-              Texto := '<' + ENCODING_UTF8 + '>';
-              Texto := Texto + '<procEventoNFe versao="' + VersaoEvento + '" xmlns="http://www.portalfiscal.inf.br/nfe">';
-              Texto := Texto + '<evento versao="' + VersaoEvento + '">';
-              Leitor.Arquivo := FPDadosMsg;
-              Texto := Texto + Leitor.rExtrai(1, 'infEvento', '', I + 1);
-              Texto := Texto + '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">';
-              Leitor.Arquivo := FPDadosMsg;
-              Texto := Texto + Leitor.rExtrai(1, 'SignedInfo', '', I + 1);
-              Leitor.Arquivo := FPDadosMsg;
-              Texto := Texto + Leitor.rExtrai(1, 'SignatureValue', '', I + 1);
-              Leitor.Arquivo := FPDadosMsg;
-              Texto := Texto + Leitor.rExtrai(1, 'KeyInfo', '', I + 1);
-              Texto := Texto + '</Signature>';
-              Texto := Texto + '</evento>';
-              Texto := Texto + '<retEvento versao="' + VersaoEvento + '">';
-              Leitor.Arquivo := FPRetWS;
-              Texto := Texto + Leitor.rExtrai(1, 'infEvento', '', J + 1);
-              Texto := Texto + '</retEvento>';
-              Texto := Texto + '</procEventoNFe>';
-              (*
-              wProc.Add('<' + ENCODING_UTF8 + '>');
-              wProc.Add('<procEventoNFe versao="' + VersaoEvento +
-                '" xmlns="http://www.portalfiscal.inf.br/nfe">');
-              wProc.Add('<evento versao="' + VersaoEvento + '">');
-              Leitor.Arquivo := FPDadosMsg;
-              wProc.Add(Leitor.rExtrai(1, 'infEvento', '', I + 1));
-              wProc.Add('<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">');
+            Leitor.Arquivo := FPDadosMsg;
+            Texto := '<' + ENCODING_UTF8 + '>' +
+                      '<procEventoNFe versao="' + VersaoEvento + '" xmlns="'+ACBRNFE_NAMESPACE+'">'+
+                       '<evento versao="' + VersaoEvento + '">'+
+                        Leitor.rExtrai(1, 'infEvento', '', I + 1)+
+                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">'+
+                         Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
+                         Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
+                         Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
+                        '</Signature>'+
+                       '</evento>';
 
-              Leitor.Arquivo := FPDadosMsg;
-              wProc.Add(Leitor.rExtrai(1, 'SignedInfo', '', I + 1));
+            Leitor.Arquivo := FPRetWS;
+            Texto := Texto +
+                       '<retEvento versao="' + VersaoEvento + '">'+
+                        Leitor.rExtrai(1, 'infEvento', '', J + 1)+
+                       '</retEvento>'+
+                      '</procEventoNFe>';
 
-              Leitor.Arquivo := FPDadosMsg;
-              wProc.Add(Leitor.rExtrai(1, 'SignatureValue', '', I + 1));
+            EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
+            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 
-              Leitor.Arquivo := FPDadosMsg;
-              wProc.Add(Leitor.rExtrai(1, 'KeyInfo', '', I + 1));
-              wProc.Add('</Signature>');
-              wProc.Add('</evento>');
-              wProc.Add('<retEvento versao="' + VersaoEvento + '">');
-
-              Leitor.Arquivo := FPRetWS;
-              wProc.Add(Leitor.rExtrai(1, 'infEvento', '', J + 1));
-              wProc.Add('</retEvento>');
-              wProc.Add('</procEventoNFe>');
-              *)
-              EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto; // wProc.Text;
-
-              FEvento.Evento.Items[I].RetInfEvento.XML := Texto; // wProc.Text;
-
-              NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
+            NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
                 '-procEventoNFe.xml';
 
-              if FPConfiguracoesNFe.Arquivos.Salvar then
-                FPDFeOwner.Gravar(NomeArq, Texto {wProc.Text}, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
-            finally
-              wProc.Free;
-            end;
+            if FPConfiguracoesNFe.Arquivos.Salvar then
+              FPDFeOwner.Gravar(NomeArq, Texto, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
 
             break;
           end;

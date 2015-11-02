@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/11/2015
+-- ACBrNFeWebServices --
+[*] Refatoração, simplificação de código em TNFeInutilizacao.TratarResposta e
+    TNFeEnvEvento.TratarResposta
+
 30/10/2015
 -- ACBrNFeWebServices --
 [-] Correção não estava salvando o retorno ao enviar um evento.
@@ -92,6 +97,7 @@ Símbolo : Significado
     http://www.projetoacbr.com.br/forum/topic/25163-impressao-nfe/
 [-] Ajuste para utilizar o Diretório da aplicação se no do PDF não contiver Path
     (por: DSA)
+
 --ACBrDANFEFR --
 [-] Acerto para não imprimir o totalizar de impostos aproximados quando ele for 
     igual a zero.

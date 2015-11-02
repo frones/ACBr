@@ -507,6 +507,7 @@ type
     function FormatQuantidade(dValor: Double): String;
     function FormatValorUnitario(dValor: Double): String;
     procedure AddFaturaReal;
+    function ManterDuplicatas: Integer;
   public
 
   end;
@@ -528,17 +529,19 @@ procedure TfrlDANFeRLPaisagem.RLNFeBeforePrint(Sender: TObject;
 begin
   q := 0;
   with RLNFe.Margins do
-    begin
-      TopMargin := FMargemSuperior * 10;
-      BottomMargin := FMargemInferior * 10;
-      LeftMargin := FMargemEsquerda * 10;
-      RightMargin := FMargemDireita * 10;
-    end;
+  begin
+    TopMargin     := FMargemSuperior * 10;
+    BottomMargin  := FMargemInferior * 10;
+    LeftMargin    := FMargemEsquerda * 10;
+    RightMargin   := FMargemDireita * 10;
+  end;
 
   ConfigureDataSource;
   InitDados;
 
-  RLNFe.Title := Copy (FNFe.InfNFe.Id, 4, 44);
+  rlbFatura.Visible := ( FNFe.Cobr.Dup.Count > 0 );
+  RLNFe.Title       := Copy (FNFe.InfNFe.Id, 4, 44);
+
   if FNumCopias > 0 then
     RLPrinters.RLPrinter.Copies := FNumCopias
   else
@@ -1600,7 +1603,6 @@ begin
     exit;
   end;
 
-  //zera
   iQuantDup := 0;
   for x := 1 to 15 do
     begin
@@ -1610,68 +1612,46 @@ begin
     end;
 
   case FNFe.Ide.indPag of
-  ipVista:
-    begin
-      TRLLabel (FindComponent('rllFatNum1')).AutoSize := True;
-      TRLLabel (FindComponent('rllFatNum1')).Caption  := 'PAGAMENTO A VISTA';
-      iQuantDup := 1;
+    ipVista:  begin
+                TRLLabel (FindComponent('rllFatNum1')).AutoSize := True;
+                TRLLabel (FindComponent('rllFatNum1')).Caption  := 'PAGAMENTO A VISTA';
+                iQuantDup := 1;
 
-      for x := 0 to 14 do
-        TRLLabel(FindComponent('rllCabFatura' + intToStr (x + 1))).Visible := False;
+                for x := 0 to 14 do
+                  TRLLabel(FindComponent('rllCabFatura' + intToStr (x + 1))).Visible := False;
 
-      rliFatura2.Visible := False;
-      rliFatura3.Visible := False;
-      rliFatura4.Visible := False;
-      rliFatura5.Visible := False;
-    end;  // ipVista
+                rliFatura2.Visible := False;
+                rliFatura3.Visible := False;
+                rliFatura4.Visible := False;
+                rliFatura5.Visible := False;
+              end;
+    ipPrazo:  begin
+                if FNFe.Cobr.Dup.Count < 6 then
+                  TRLLabel (FindComponent('rllFatura')).Caption := 'DUPL.';
 
-  ipPrazo:
-    begin
-      if FNFe.Cobr.Dup.Count < 6 then
-        TRLLabel (FindComponent('rllFatura')).Caption := 'DUPL.';
+                if FNFe.Cobr.Dup.Count = 0 then
+                  begin
+                    TRLLabel (FindComponent('rllFatNum1')).AutoSize := True;
+                    TRLLabel (FindComponent('rllFatNum1')).Caption  := 'PAGAMENTO A PRAZO';
 
-      if FNFe.Cobr.Dup.Count = 0 then
-        begin
-          TRLLabel (FindComponent('rllFatNum1')).AutoSize := True;
-          TRLLabel (FindComponent('rllFatNum1')).Caption  := 'PAGAMENTO A PRAZO';
+                    iQuantDup := 1;
 
-          iQuantDup := 1;
+                    for x := 0 to 14 do
+                      TRLLabel(FindComponent('rllCabFatura' + intToStr (x + 1))).Visible := False;
 
-          for x := 0 to 14 do
-            TRLLabel(FindComponent('rllCabFatura' + intToStr (x + 1))).Visible := False;
+                    rliFatura2.Visible := False;
+                    rliFatura3.Visible := False;
+                    rliFatura4.Visible := False;
+                    rliFatura5.Visible := False;
+                  end
+                else
+                  iQuantDup:= ManterDuplicatas;
+              end;
 
-          rliFatura2.Visible := False;
-          rliFatura3.Visible := False;
-          rliFatura4.Visible := False;
-          rliFatura5.Visible := False;
-        end
-      else
-        begin
-          if FNFe.Cobr.Dup.Count > 15 then
-            iQuantDup := 15
-
-          else
-            iQuantDup := FNFe.Cobr.Dup.Count;
-
-          //adiciona
-          for x := 0 to (iQuantDup - 1) do
-            with FNFe.Cobr.Dup[ x ] do
-             begin
-               TRLLabel (FindComponent ('rllFatNum'   + intToStr (x + 1))).Caption :=
-                                                                              NDup;
-               TRLLabel (FindComponent ('rllFatData'  + intToStr (x + 1))).Caption :=
-                                              FormatDateBr(DVenc);
-               TRLLabel (FindComponent ('rllFatValor' + intToStr (x + 1))).Caption :=
-                                                        FormatFloatBr(VDup);
-             end;
-        end; // if FNFe.Cobr.Dup.Count = 0
-    end;  // ipPrazo
-
-  ipOutras:
-    begin
-      rlbFatura.Visible := False;
-    end;  // ipOutras
-  end; // case FNFe.Ide.indPag
+    ipOutras: begin
+                iQuantDup:= ManterDuplicatas;
+              end;
+  end;
 
  {=============== Ajusta o tamanho do quadro das faturas ===============}
   if iQuantDup > 0 then
@@ -2111,6 +2091,30 @@ begin
       RlbDadoValorOriginal.caption  := '';
       RlbDadoValorDesconto.caption  := '';
       RlbDadoValorLiquido.caption   := '';
+    end;
+  end;
+end;
+
+
+Function TfrlDANFeRLPaisagem.ManterDuplicatas : Integer;
+Var
+  x : Integer;
+begin
+  with FNFe.Cobr do
+  begin
+    if Dup.Count > 15 then
+      Result := 15
+    else
+      Result := Dup.Count;
+
+    for x := 0 to (Result - 1) do
+    begin
+      with Dup[x] do
+      begin
+        TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
+        TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
+        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,'###,###,###,##0.00');
+      end;
     end;
   end;
 end;

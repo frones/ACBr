@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/11/2015
+--- ACBrNFeDANFeRLRetrato --
+[*] Ajustes para impressão de duplicatas no caso da forma de pagamento igual a outros;
+	por : Henrique Leonardo
+
+--- ACBrNFeDANFeRLPaisagem --
+[*] Ajustes para impressão de duplicatas no caso da forma de pagamento igual a outros;
+	por : Henrique Leonardo
+
 -- ACBrNFeWebServices --
 [*] Refatoração, simplificação de código em TNFeInutilizacao.TratarResposta e
     TNFeEnvEvento.TratarResposta

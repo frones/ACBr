@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/11/2015
+-- ACBrECF --
+[-] Aplicado correção para quebra de linha do GetRodapePaf deixando #10
+   (por: Juliomar)
+	 
 Data: 26/10/2015
 -- ACBrPosPrinter --
 [*] Refatoração nos métodos LerInfo e LerStatus para melhor suporte a portas TCP

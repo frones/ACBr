@@ -3368,10 +3368,10 @@ begin
   if Trim(InfoRodapeCupom.NF) <> EmptyStr then
     Result := Result + GetQuebraLinha('NF:' + Trim(InfoRodapeCupom.NF));
 
-  Result := Trim(Result) + sLineBreak + Trim(GetRodapePostos);
-  Result := Trim(Result) + sLineBreak + Trim(GetRodapeRestaurante);
-  Result := Trim(Result) + sLineBreak + Trim(GetRodapeUF);
-  Result := Trim(Result) + sLineBreak + Trim(GetRodapeImposto);
+  Result := Trim(Result) + #10 + Trim(GetRodapePostos);
+  Result := Trim(Result) + #10 + Trim(GetRodapeRestaurante);
+  Result := Trim(Result) + #10 + Trim(GetRodapeUF);
+  Result := Trim(Result) + #10 + Trim(GetRodapeImposto);
   Result := Trim(Result);
   InfoRodapeCupom.PostoCombustivel.Clear;
   InfoRodapeCupom.PostoCombustivel.Imprimir := False;
@@ -3599,7 +3599,7 @@ begin
               FormatFloat(',#0.00', VlImpostoFederal)   + ' Fed, '+
               FormatFloat(',#0.00', VlImpostoEstadual)  + ' Est e '+
               FormatFloat(',#0.00', VlImpostoMunicipal) + ' Mun'+
-              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
           end
           else
           begin
@@ -3607,7 +3607,7 @@ begin
               FormatFloat(',#0.00', VlImpostoFederal) + ' Federal e '+
               IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoEstadual) + ' Estadual', '') +
               IfThen(InformouValorAproxMunicipal, FormatFloat(',#0.00', VlImpostoMunicipal) + ' Municipal', '') +
-              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
           end;
         end
         else
@@ -3615,15 +3615,15 @@ begin
           // IBPT opção 1
           SubtotalSemImpostos := Subtotal - (VlImpostoFederal + VlImpostoEstadual + VlImpostoMunicipal);
 
-          Result := 'Você pagou aproximadamente:' + sLineBreak +
+          Result := 'Você pagou aproximadamente:' + #10 +
             'R$ ' + FormatFloat(',#0.00', VlImpostoFederal) + ' de tributos federais'+
             // FormatFloat(' (,#0.00%)', VlPercentualFederal)
-            IfThen(InformouValorAproxEstadual,  sLineBreak + 'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais', '') +
+            IfThen(InformouValorAproxEstadual,  #10 + 'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais', '') +
             // FormatFloat(' (,#0.00%)', VlPercentualEstadual)
-            IfThen(InformouValorAproxMunicipal, sLineBreak + 'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais', '') +
+            IfThen(InformouValorAproxMunicipal, #10 + 'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais', '') +
             // FormatFloat(' (,#0.00%)', VlPercentualMunicipal)
-            sLineBreak + 'R$ ' + FormatFloat(',#0.00', SubtotalSemImpostos) + ' pelos produtos/serviços'+
-            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', sLineBreak + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+            #10 + 'R$ ' + FormatFloat(',#0.00', SubtotalSemImpostos) + ' pelos produtos/serviços'+
+            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
         end;
       end;
     end;

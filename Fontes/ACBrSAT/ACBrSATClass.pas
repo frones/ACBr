@@ -400,8 +400,7 @@ function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;
   Data: TDateTime): String;
 var
   wDia, wMes, wAno: word;
-  Dir, Modelo, AnoMes: String;
-  LenLiteral: integer;
+  Dir, AnoMes: String;
 begin
   if EstaVazio(APath) then
     Dir := PastaCFeVenda

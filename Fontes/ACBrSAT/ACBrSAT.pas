@@ -931,7 +931,7 @@ end ;
 function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
 var
-  XMLRecebido, NomeCFe: String;
+  NomeCFe: String;
   Retorno: String;
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
@@ -1566,7 +1566,6 @@ end;
 procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
 var
-  NomeArq : String;
   AnexosEmail:TStrings;
   StreamCFe : TMemoryStream;
 begin

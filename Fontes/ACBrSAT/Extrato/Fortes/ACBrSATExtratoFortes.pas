@@ -50,7 +50,7 @@ interface
 uses 
   Classes, SysUtils, Forms, 
   ACBrSATExtratoClass,
-  pcnCFe, pcnCFeCanc, pcnConversao;
+  pcnConversao;
 
 const
   CACBrSATExtratoFortes_Versao = '0.1.0' ;

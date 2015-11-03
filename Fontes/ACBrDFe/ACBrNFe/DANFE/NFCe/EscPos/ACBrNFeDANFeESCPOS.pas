@@ -563,8 +563,6 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
   const AResumido: Boolean);
-var
-  I: Integer;
 begin
   if NFE = nil then
   begin

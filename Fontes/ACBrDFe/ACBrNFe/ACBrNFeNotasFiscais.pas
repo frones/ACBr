@@ -311,7 +311,6 @@ var
   Erro, AXML: String;
   NotaEhValida: Boolean;
   ALayout: TLayOut;
-  CNPJEmitente, CNPJCertificado: String;
 begin
   AXML := XMLAssinado;
 
@@ -1562,7 +1561,6 @@ function TNotasFiscais.LoadFromString(AXMLString: String;
 var
   AXML: AnsiString;
   P, N: integer;
-  OK: Boolean;
 
   function PosNFe: integer;
   begin

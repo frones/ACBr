@@ -241,6 +241,7 @@ type
     function GerarMsgLog: String; override;
   public
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
     destructor Destroy; override;
 
     property versao: String read Fversao;
@@ -286,6 +287,7 @@ type
     function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
     destructor Destroy; override;
 
     property NFeChave: String read FNFeChave write FNFeChave;
@@ -1778,10 +1780,9 @@ function TNFeConsulta.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsSitNFe;
   SalvarXML, NFCancelada, Atualiza: Boolean;
-  aEventos, NomeArquivo, aNFe: String;
+  aEventos: String;
   AProcNFe: TProcNFe;
   I, J, Inicio, Fim: integer;
-  Data: TDateTime;
 begin
   NFeRetorno := TRetConsSitNFe.Create;
 

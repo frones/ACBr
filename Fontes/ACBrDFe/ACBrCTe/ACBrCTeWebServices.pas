@@ -984,7 +984,7 @@ end;
 
 procedure TCTeRetRecepcao.DefinirURL;
 var
-  Modelo: String;
+  Modelo, xUF: String;
   VerServ: Double;
   ok: Boolean;
 begin
@@ -1009,9 +1009,16 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  case FPConfiguracoesCTe.Geral.FormaEmissao of
+    teSVCRS: xUF := 'SVC-RS';
+    teSVCSP: xUF := 'SVC-SP';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1261,7 +1268,7 @@ end;
 
 procedure TCTeRecibo.DefinirURL;
 var
-  Modelo: String;
+  Modelo, xUF: String;
   VerServ: Double;
   ok: Boolean;
 begin
@@ -1286,9 +1293,16 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  case FPConfiguracoesCTe.Geral.FormaEmissao of
+    teSVCRS: xUF := 'SVC-RS';
+    teSVCSP: xUF := 'SVC-SP';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1393,7 +1407,7 @@ end;
 procedure TCTeConsulta.DefinirURL;
 var
   VerServ: Double;
-  Modelo: String;
+  Modelo, xUF: String;
   ok: Boolean;
 begin
   FPVersaoServico := '';
@@ -1412,9 +1426,16 @@ begin
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
+  case FPConfiguracoesCTe.Geral.FormaEmissao of
+    teSVCRS: xUF := 'SVC-RS';
+    teSVCSP: xUF := 'SVC-SP';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,

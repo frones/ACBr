@@ -49,6 +49,8 @@ Símbolo : Significado
 
 03/11/2015
 -- ACBrCTeWebServices --
+[*] Possível correção ao realizar a consulta e o retorno ao enviar um CT-e para o SVC.
+    por: Italo Jurisato Junior
 [*] Refatoração, simplificação de código em TCTeInutilizacao.TratarResposta e
     TCTeEnvEvento.TratarResposta
     por: Italo Jurisato Junior

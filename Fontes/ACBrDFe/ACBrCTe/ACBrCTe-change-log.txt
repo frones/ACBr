@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2015
+-- ACBrCTeWebServices --
+[*] Refatoração, simplificação de código em TCTeInutilizacao.TratarResposta e
+    TCTeEnvEvento.TratarResposta
+    por: Italo Jurisato Junior
+
 30/10/2015
 (ACBrCTeWebServices)
 [-] Correção, não estava levando em consideração o envio para o SVC.

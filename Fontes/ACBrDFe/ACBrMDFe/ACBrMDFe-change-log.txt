@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2015
+-- ACBrMDFeWebServices --
+[*] Refatoração, simplificação de código em TMDFeEnvEvento.TratarResposta
+    por: Italo Jurisato Junior
+
 30/10/2015
 -- ACBrMDFeWebServices --
 [-] Correção não estava salvando o retorno ao enviar um evento.

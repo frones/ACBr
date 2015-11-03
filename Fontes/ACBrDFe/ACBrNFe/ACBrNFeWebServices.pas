@@ -893,7 +893,7 @@ end;
 
 procedure TNFeRecepcao.DefinirURL;
 var
-  Modelo: String;
+  Modelo, xUF: String;
   ok: Boolean;
   VerServ: Double;
 begin
@@ -922,9 +922,17 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  // Configuração correta ao enviar para o SVC
+  case FPConfiguracoesNFe.Geral.FormaEmissao of
+    teSVCAN: xUF := 'SVC-AN';
+    teSVCRS: xUF := 'SVC-RS';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1254,7 +1262,7 @@ end;
 
 procedure TNFeRetRecepcao.DefinirURL;
 var
-  Modelo: String;
+  Modelo, xUF: String;
   VerServ: Double;
   ok: Boolean;
 begin
@@ -1283,9 +1291,17 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  // Configuração correta ao enviar para o SVC
+  case FPConfiguracoesNFe.Geral.FormaEmissao of
+    teSVCAN: xUF := 'SVC-AN';
+    teSVCRS: xUF := 'SVC-RS';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1539,7 +1555,7 @@ end;
 
 procedure TNFeRecibo.DefinirURL;
 var
-  Modelo: String;
+  Modelo, xUF: String;
   VerServ: Double;
   ok: Boolean;
 begin
@@ -1568,9 +1584,17 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
+  // Configuração correta ao enviar para o SVC
+  case FPConfiguracoesNFe.Geral.FormaEmissao of
+    teSVCAN: xUF := 'SVC-AN';
+    teSVCRS: xUF := 'SVC-RS';
+  else
+    xUF := CUFtoUF(FcUF);
+  end;
+
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,

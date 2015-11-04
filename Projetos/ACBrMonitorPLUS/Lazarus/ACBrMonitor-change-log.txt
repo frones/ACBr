@@ -70,7 +70,7 @@ Símbolo : Significado
 
 07/05/2015
 -- ACBrMonitorPLUS --
-[+] Adicionada a opção para converter Entrada e Saida de TCP de e para ANSI
+[+] Adicionada a opção para converter Entrada e Saida de TCP de e para ANSI (por: DSA)
 
 06/05/2015
 -- ACBrMonitorPLUS --

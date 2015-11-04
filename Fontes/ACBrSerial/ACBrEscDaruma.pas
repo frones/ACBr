@@ -180,7 +180,7 @@ begin
 
   with fpPosPrinter.ConfigQRCode do
   begin
-    L := IfThen( LarguraModulo = 0, 5, max(min(LarguraModulo,7),4) );
+    L := IfThen( LarguraModulo = 0, 5, max(min(LarguraModulo,7),3) );
 
     case ErrorLevel of
       1: E := 'M';

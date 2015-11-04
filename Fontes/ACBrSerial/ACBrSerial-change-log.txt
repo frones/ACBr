@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/11/2015
+-- ACBrEscDaruma --
+[*] Ajuste para QRCode suportar Largura de Módulo = 3  (por: DSA)
+
 Data: 01/11/2015
 -- ACBrECF --
 [-] Aplicado correção para quebra de linha do GetRodapePaf deixando #10

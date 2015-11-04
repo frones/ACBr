@@ -309,14 +309,21 @@ end;
 procedure NotaFiscal.Validar;
 var
   Erro, AXML: String;
-  NotaEhValida: Boolean;
+  NotaEhValida, ok: Boolean;
   ALayout: TLayOut;
+  VerServ: Real;
+  Modelo: TpcnModeloDF;
+  cUF: Integer;
 begin
   AXML := XMLAssinado;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-    if EhAutorizacao then
+    VerServ := FNFe.infNFe.Versao;
+    Modelo  := StrToModeloDF(ok, IntToStr(FNFe.Ide.modelo));
+    cUF     := FNFe.Ide.cUF;
+
+    if EhAutorizacao( DblToVersaoDF(ok, VerServ), Modelo, cUF) then
       ALayout := LayNfeAutorizacao
     else
       ALayout := LayNfeRecepcao;
@@ -324,7 +331,7 @@ begin
     // Extraindo apenas os dados da NFe (sem nfeProc)
     AXML := '<NFe xmlns' + RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>') + '</NFe>';
 
-    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, FNFe.infNFe.Versao), Erro);
+    NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
 
     if not NotaEhValida then
     begin

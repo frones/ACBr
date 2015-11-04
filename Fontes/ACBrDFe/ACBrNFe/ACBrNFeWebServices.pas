@@ -895,18 +895,14 @@ end;
 
 procedure TNFeRecepcao.DefinirURL;
 var
-  Modelo, xUF: String;
+  xUF: String;
   ok: Boolean;
   VerServ: Double;
+  Modelo: TpcnModeloDF;
 begin
-  if TACBrNFe(FPDFeOwner).EhAutorizacao then
-    FPLayout := LayNfeAutorizacao
-  else
-    FPLayout := LayNfeRecepcao;
-
   if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
   begin
-    Modelo  := ModeloDFToPrefixo( StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo)) );
+    Modelo  := StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo));
     FcUF    := FNotasFiscais.Items[0].NFe.Ide.cUF;
     VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
 
@@ -915,7 +911,7 @@ begin
   end
   else
   begin                              // Se não tem NFe, use as configurações do componente
-    Modelo  := ModeloDFToPrefixo(FPConfiguracoesNFe.Geral.ModeloDF);
+    Modelo  := FPConfiguracoesNFe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
     VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
@@ -923,6 +919,11 @@ begin
   FTpAmb  := FPConfiguracoesNFe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
+
+  if TACBrNFe(FPDFeOwner).EhAutorizacao( DblToVersaoDF(ok,VerServ), Modelo, FcUF) then
+    FPLayout := LayNfeAutorizacao
+  else
+    FPLayout := LayNfeRecepcao;
 
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesNFe.Geral.FormaEmissao of
@@ -933,7 +934,7 @@ begin
   end;
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloDFToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1264,18 +1265,14 @@ end;
 
 procedure TNFeRetRecepcao.DefinirURL;
 var
-  Modelo, xUF: String;
+  xUF: String;
   VerServ: Double;
   ok: Boolean;
+  Modelo: TpcnModeloDF;
 begin
-  if TACBrNFe(FPDFeOwner).EhAutorizacao then
-    FPLayout := LayNfeRetAutorizacao
-  else
-    FPLayout := LayNfeRetRecepcao;
-
   if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
   begin
-    Modelo  := ModeloDFToPrefixo( StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo)) );
+    Modelo  := StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo));
     FcUF    := FNotasFiscais.Items[0].NFe.Ide.cUF;
     VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
 
@@ -1284,7 +1281,7 @@ begin
   end
   else
   begin                              // Se não tem NFe, use as configurações do componente
-    Modelo  := ModeloDFToPrefixo(FPConfiguracoesNFe.Geral.ModeloDF);
+    Modelo  := FPConfiguracoesNFe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
     VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
@@ -1292,6 +1289,11 @@ begin
   FTpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
+
+  if TACBrNFe(FPDFeOwner).EhAutorizacao( DblToVersaoDF(ok, VerServ), Modelo, FcUF) then
+    FPLayout := LayNfeRetAutorizacao
+  else
+    FPLayout := LayNfeRetRecepcao;
 
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesNFe.Geral.FormaEmissao of
@@ -1302,7 +1304,7 @@ begin
   end;
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloDFToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1557,18 +1559,14 @@ end;
 
 procedure TNFeRecibo.DefinirURL;
 var
-  Modelo, xUF: String;
+  xUF: String;
   VerServ: Double;
   ok: Boolean;
+  Modelo: TpcnModeloDF;
 begin
-  if TACBrNFe(FPDFeOwner).EhAutorizacao then
-    FPLayout := LayNfeRetAutorizacao
-  else
-    FPLayout := LayNfeRetRecepcao;
-
   if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
   begin
-    Modelo  := ModeloDFToPrefixo( StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo)) );
+    Modelo  := StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo));
     FcUF    := FNotasFiscais.Items[0].NFe.Ide.cUF;
     VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
 
@@ -1577,7 +1575,7 @@ begin
   end
   else
   begin                              // Se não tem NFe, use as configurações do componente
-    Modelo  := ModeloDFToPrefixo(FPConfiguracoesNFe.Geral.ModeloDF);
+    Modelo  := FPConfiguracoesNFe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
     VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
@@ -1585,6 +1583,11 @@ begin
   FTpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
+
+  if TACBrNFe(FPDFeOwner).EhAutorizacao( DblToVersaoDF(ok, VerServ), Modelo, FcUF) then
+    FPLayout := LayNfeRetAutorizacao
+  else
+    FPLayout := LayNfeRetRecepcao;
 
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesNFe.Geral.FormaEmissao of
@@ -1595,7 +1598,7 @@ begin
   end;
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloDFToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),

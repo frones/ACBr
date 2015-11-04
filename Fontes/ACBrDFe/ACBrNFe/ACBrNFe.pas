@@ -119,7 +119,8 @@ type
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
-    function EhAutorizacao: Boolean;
+    function EhAutorizacao(AVersao: TpcnVersaoDF; AModelo: TpcnModeloDF;
+      AUFCodigo: Integer): Boolean;
 
     function CstatConfirmada(AValue: integer): Boolean;
     function CstatProcessado(AValue: integer): Boolean;
@@ -308,12 +309,13 @@ begin
   end;
 end;
 
-function TACBrNFe.EhAutorizacao: Boolean;
+function TACBrNFe.EhAutorizacao( AVersao: TpcnVersaoDF; AModelo: TpcnModeloDF;
+  AUFCodigo: Integer ): Boolean;
 begin
-  Result := (Configuracoes.Geral.VersaoDF = ve310);
+  Result := (AVersao = ve310);
 
-  if Configuracoes.Geral.ModeloDF = moNFCe then
-    Result := not (Configuracoes.WebServices.UFCodigo in [13]); // AM
+  if AModelo = moNFCe then
+    Result := not (AUFCodigo in [13]); // AM
 end;
 
 function TACBrNFe.IdentificaSchema(const AXML: String): TSchemaNFe;

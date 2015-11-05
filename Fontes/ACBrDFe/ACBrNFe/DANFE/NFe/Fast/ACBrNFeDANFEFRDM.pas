@@ -1492,10 +1492,10 @@ begin
         FieldDefs.Add('UTrib'     , ftString, 6);
         FieldDefs.Add('QTrib'     , ftFloat);
         FieldDefs.Add('vUnTrib'   , ftFloat);
-        FieldDefs.Add('vFrete'    , ftString, 18);
-        FieldDefs.Add('vOutro'    , ftString, 18);
-        FieldDefs.Add('vSeg'      , ftString, 18);
-        FieldDefs.Add('vDesc'     , ftString, 18);
+        FieldDefs.Add('vFrete'    , ftFloat);
+        FieldDefs.Add('vOutro'    , ftFloat);
+        FieldDefs.Add('vSeg'      , ftFloat);
+        FieldDefs.Add('vDesc'     , ftFloat);
         FieldDefs.Add('ORIGEM'    , ftString, 1);
         FieldDefs.Add('CST'       , ftString, 3);
         FieldDefs.Add('vBC'       , ftString, 18);

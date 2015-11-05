@@ -2119,20 +2119,20 @@ end;
 (*
 procedure TDistribuicaoDFe.DefinirURL;
 var
-  UF : String;
+  UF, Modelo: String;
   Versao: Double;
 begin
   { Esse método é tratado diretamente pela RFB }
 
   UF := 'AN';
-
+  Modelo := 'MDFe';
   Versao := 0;
   FPVersaoServico := '';
   FPURL := '';
   Versao := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
-    TACBrNFe(FPDFeOwner).GetNomeModeloDFe,
+    Modelo,
     UF ,
     FPConfiguracoesMDFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),

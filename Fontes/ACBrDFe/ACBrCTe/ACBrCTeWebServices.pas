@@ -2166,7 +2166,7 @@ end;
 
 procedure TCTeEnvEvento.DefinirURL;
 var
-  UF, Modelo : String;
+  UF, Modelo: String;
   VerServ: Double;
   ok: Boolean;
 begin

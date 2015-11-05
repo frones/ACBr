@@ -47,7 +47,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-12/11/2015
+05/11/2015
 -- ACBrCTeWebServices --
 [*] Remoção de variáveis e códigos não utilizados.
     por: Italo Jurisato Junior

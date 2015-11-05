@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2015
+-- ACBrMDFeWebServices --
+[*] Remoção de variáveis e códigos não utilizados.
+    por: Italo Jurisato Junior
+
 03/11/2015
 -- ACBrMDFeWebServices --
 [*] Refatoração, simplificação de código em TMDFeEnvEvento.TratarResposta

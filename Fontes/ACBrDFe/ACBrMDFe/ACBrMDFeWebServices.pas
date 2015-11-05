@@ -239,6 +239,7 @@ type
     function GerarMsgLog: String; override;
   public
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
+      reintroduce; overload;
     destructor Destroy; override;
 
     property versao: String read Fversao;
@@ -283,6 +284,7 @@ type
     function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
+      reintroduce; overload;
     destructor Destroy; override;
 
     property MDFeChave: String read FMDFeChave write FMDFeChave;
@@ -326,7 +328,8 @@ type
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe; AEvento: TEventoMDFe); reintroduce; overload;
+    constructor Create(AOwner: TACBrDFe; AEvento: TEventoMDFe);
+      reintroduce; overload;
     destructor Destroy; override;
 
     property idLote: Integer read FidLote write FidLote;
@@ -1311,11 +1314,10 @@ function TMDFeConsulta.TratarResposta: Boolean;
 var
   MDFeRetorno: TRetConsSitMDFe;
   SalvarXML, MDFCancelado, Atualiza: Boolean;
-  aEventos, aMsg, NomeArquivo, aMDFe: String;
+  aEventos: String;
   AProcMDFe: TProcMDFe;
   I, J, K, Inicio, Fim: Integer;
   Data: TDateTime;
-  LocMDFeW: TMDFeW;
 begin
   MDFeRetorno := TRetConsSitMDFe.Create;
 
@@ -1451,14 +1453,7 @@ begin
       FPMsg := MDFeRetorno.protMDFe.xMotivo;
     end;
 
-    //TODO: Verificar porque monta "aMsg", pois ela não está sendo usada em lugar nenhum
-    aMsg := GerarMsgLog;
-    if aEventos <> '' then
-      aMsg := aMsg + sLineBreak + aEventos;
-
     Result := (MDFeRetorno.CStat in [100, 101, 110, 150, 151, 155]);
-
-    NomeArquivo := PathWithDelim(FPConfiguracoesMDFe.Arquivos.PathSalvar) + FMDFeChave;
 
     for i := 0 to TACBrMDFe(FPDFeOwner).Manifestos.Count - 1 do
     begin
@@ -1558,65 +1553,6 @@ begin
         end;
       end;
     end;
-    (*
-    if (TACBrMDFe(FPDFeOwner).Manifestos.Count <= 0) then
-    begin
-      if FPConfiguracoesMDFe.Arquivos.Salvar then
-      begin
-        if FileExists(NomeArquivo + '-mdfe.xml') then
-        begin
-          AProcMDFe := TProcMDFe.Create;
-          try
-            AProcMDFe.PathMDFe := NomeArquivo + '-mdfe.xml';
-            AProcMDFe.PathRetConsSitMDFe := NomeArquivo + '-sit.xml';
-
-            AProcMDFe.Versao := TACBrMDFe(FPDFeOwner).LerVersaoDeParams(LayMDFeRecepcao);
-
-            AProcMDFe.GerarXML;
-
-            aMDFe := AProcMDFe.Gerador.ArquivoFormatoXML;
-
-            if NaoEstaVazio(AProcMDFe.Gerador.ArquivoFormatoXML) then
-              AProcMDFe.Gerador.SalvarArquivo(AProcMDFe.PathMDFe);
-
-            if (NaoEstaVazio(aMDFe)) and
-               (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoMDFe'))) then
-            begin
-              Inicio := Pos('<procEventoMDFe', FPRetWS);
-              Fim    := Pos('</retConsSitMDFe', FPRetWS) -1;
-
-              aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-              FRetMDFeDFe := '<' + ENCODING_UTF8 + '>' +
-                             '<MDFeDFe>' +
-                              '<procMDFe versao="' + FVersao + '">' +
-                                SeparaDados(aMDFe, 'MDFeProc') +
-                              '</procMDFe>' +
-                              '<procEventoMDFe versao="' + FVersao + '">' +
-                                aEventos +
-                              '</procEventoMDFe>' +
-                             '</MDFeDFe>';
-
-            end;
-
-          finally
-            AProcMDFe.Free;
-          end;
-        end;
-
-        if FRetMDFeDFe <> '' then
-        begin
-          if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
-            Data := TACBrMDFe(FPDFeOwner).Manifestos.Items[i].MDFe.Ide.dhEmi
-          else
-            Data := Now;
-
-          FPDFeOwner.Gravar(FMDFeChave + '-MDFeDFe.xml', FRetMDFeDFe,
-                                PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
-        end;
-      end;
-    end;
-    *)
   finally
     MDFeRetorno.Free;
   end;

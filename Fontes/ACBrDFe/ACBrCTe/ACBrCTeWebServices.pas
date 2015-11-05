@@ -242,6 +242,7 @@ type
     function GerarMsgLog: String; override;
   public
     constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
+      reintroduce; overload;
     destructor Destroy; override;
 
     procedure Clear;
@@ -289,6 +290,7 @@ type
     function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
+      reintroduce; overload;
     destructor Destroy; override;
 
     procedure Clear;
@@ -444,7 +446,8 @@ type
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe; AEvento: TEventoCTe); reintroduce; overload;
+    constructor Create(AOwner: TACBrDFe; AEvento: TEventoCTe);
+      reintroduce; overload;
     destructor Destroy; override;
 
     procedure Clear;
@@ -1477,7 +1480,7 @@ function TCTeConsulta.TratarResposta: Boolean;
 var
   CTeRetorno: TRetConsSitCTe;
   SalvarXML, CTCancelado, Atualiza: Boolean;
-  aEventos, aMsg, NomeArquivo, aCTe, NomeXML: String;
+  aEventos, NomeXML: String;
   AProcCTe: TProcCTe;
   I, J, K, Inicio, Fim: Integer;
   Data: TDateTime;
@@ -1636,21 +1639,14 @@ begin
       end;
     end;
 
-    if not CTCancelado then
+    if not CTCancelado and (NaoEstaVazio(CTeRetorno.protCTe.nProt)) then
     begin
       FProtocolo := CTeRetorno.protCTe.nProt;
       FDhRecbto := CTeRetorno.protCTe.dhRecbto;
       FPMsg := CTeRetorno.protCTe.xMotivo;
     end;
 
-    //TODO: Verificar porque monta "aMsg", pois ela não está sendo usada em lugar nenhum
-    aMsg := GerarMsgLog;
-    if aEventos <> '' then
-      aMsg := aMsg + sLineBreak + aEventos;
-
     Result := (CTeRetorno.CStat in [100, 101, 110, 150, 151, 155]);
-
-    NomeArquivo := PathWithDelim(FPConfiguracoesCTe.Arquivos.PathSalvar) + FCTeChave;
 
     for i := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
     begin
@@ -1759,62 +1755,6 @@ begin
         end;
       end;
     end;
-    (*
-    if (TACBrCTe(FPDFeOwner).Conhecimentos.Count <= 0) then
-    begin
-      if FPConfiguracoesCTe.Arquivos.Salvar then
-      begin
-        if FileExists(NomeArquivo + '-cte.xml') then
-        begin
-          AProcCTe := TProcCTe.Create;
-          try
-            AProcCTe.PathCTe := NomeArquivo + '-cte.xml';
-            AProcCTe.PathRetConsSitCTe := NomeArquivo + '-sit.xml';
-
-            AProcCTe.GerarXML;
-
-            aCTe := AProcCTe.Gerador.ArquivoFormatoXML;
-
-            if NaoEstaVazio(AProcCTe.Gerador.ArquivoFormatoXML) then
-              AProcCTe.Gerador.SalvarArquivo(AProcCTe.PathCTe);
-
-            if (NaoEstaVazio(aCTe)) and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
-            begin
-              Inicio := Pos('<procEventoCTe', FPRetWS);
-              Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
-
-              aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-              FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
-                             '<CTeDFe>' +
-                              '<procCTe versao="' + FVersao + '">' +
-                                SeparaDados(aCTe, 'cteProc') +
-                              '</procCTe>' +
-                              '<procEventoCTe versao="' + FVersao + '">' +
-                                aEventos +
-                              '</procEventoCTe>' +
-                             '</CTeDFe>';
-
-            end;
-          finally
-            AProcCTe.Free;
-          end;
-        end;
-
-        if FRetCTeDFe <> '' then
-        begin
-          if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
-            Data := TACBrCTe(FPDFeOwner).Conhecimentos.Items[i].CTe.Ide.dhEmi
-          else
-            Data := Now;
-
-          FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                     FRetCTeDFe,
-                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-        end;
-      end;
-    end;
-    *)
   finally
     CTeRetorno.Free;
   end;

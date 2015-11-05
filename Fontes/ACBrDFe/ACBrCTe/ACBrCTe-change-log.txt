@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2015
+-- ACBrCTeWebServices --
+[*] Remoção de variáveis e códigos não utilizados.
+    por: Italo Jurisato Junior
+
 03/11/2015
 -- ACBrCTeWebServices --
 [*] Possível correção ao realizar a consulta e o retorno ao enviar um CT-e para o SVC.

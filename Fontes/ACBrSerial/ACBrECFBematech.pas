@@ -1413,7 +1413,7 @@ begin
             if DataMov <> copy(DataHora,1,6) then
               fpEstado := estRequerZ ;
           end
-         else
+//         else
 //          fpEstado :=  estRequerX ;
             { OBS.: comentado pois a Leitura X na Bematech não abre o Movimento,
               apenas a abertura de cupom, inicializa a DataMov }

@@ -7023,16 +7023,16 @@ begin
     TextoRel.Add(
       strQuant + ' ' +
       PadRight(AUnid, 3, ' ') +
-      Format('%10.2f', [AVlrUnitario]) +
-      Format('%11.2f', [ValorTotal]) +
+      Format('R$ %10.2f', [AVlrUnitario]) +
+      Format('R$ %11.2f', [ValorTotal]) +
       IfThen(ACancelado, ' Cancelado', '')
     );
 
     if AVlrDesconto > 0 then
-      TextoRel.Add(Format('desconto item %3.3d: %.2f', [FDAVItemCount, AVlrDesconto]));
+      TextoRel.Add(Format('desconto item %3.3d: R$ %.2f', [FDAVItemCount, AVlrDesconto]));
 
     if AVlrAcrescimo > 0 then
-      TextoRel.Add(Format('acréscimo item %3.3d: %.2f', [FDAVItemCount, AVlrAcrescimo]));
+      TextoRel.Add(Format('acréscimo item %3.3d: R$ %.2f', [FDAVItemCount, AVlrAcrescimo]));
 
     LinhaRelatorioGerencial( ACBrStr(TextoRel.Text) );
   finally
@@ -7062,13 +7062,13 @@ begin
       DescrItem := PadRight(IntToStr(FDAVItemCount) + ' item', 12, ' ');
 
     TextoRel.Add('</linha_simples>');
-    TextoRel.Add(DescrItem + PadLeft('Valor Total: ' + Format('%11.2f', [FDAVTotal]), 36, ' '));
+    TextoRel.Add(DescrItem + PadLeft('Valor Total: ' + Format('R$ %11.2f', [FDAVTotal]), 36, ' '));
 
     if AVlrDesconto > 0 then
-     TextoRel.Add(PadLeft('Total Desc.: ' + Format('%11.2f', [AVlrDesconto]), 48, ' '));
+     TextoRel.Add(PadLeft('Total Desc.: ' + Format('R$ %11.2f', [AVlrDesconto]), 48, ' '));
 
     if AVlrAcrescimo > 0 then
-     TextoRel.Add(PadLeft('Total Acre.: ' + Format('%11.2f', [AVlrAcrescimo]), 48, ' '));
+     TextoRel.Add(PadLeft('Total Acre.: ' + Format('R$ %11.2f', [AVlrAcrescimo]), 48, ' '));
 
     TextoRel.Add('');
     TextoRel.Add('');

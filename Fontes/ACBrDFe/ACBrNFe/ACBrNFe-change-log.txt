@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2015
+-- pcnNFeW --
+[-] Correção na geração do Grupo "pag"    (por: Leonardo de Biasi)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=25714
+
+03/11/2015
+-- ACBrNFeWebSerices --
+[*] Possivel correção para definição de URL no WebService de AM em:
+    TNFeRecepcao, TNFeRetRecepcao, TNFeRecibo    (por: DSA)
+
 03/11/2015
 -- ACBrNFeWebSerices --
 [*] Possível correção ao realizar o envio de uma NF-e para o SVC.

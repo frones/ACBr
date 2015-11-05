@@ -2302,15 +2302,18 @@ begin
     Gerador.wGrupo('pag', 'YA01');
     Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, DSC_VPAG);
-    if nfe.pag[i].CNPJ <> '' then
-     begin
-       Gerador.wGrupo('card', 'YA04');
-       Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 0, tpIntegraToStr(nfe.pag[i].tpIntegra), DSC_TPINTEGRA);
-       Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, nfe.pag[i].CNPJ, DSC_CNPJ);
-       Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
-       Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, nfe.pag[i].cAut, DSC_CAUT);
-       Gerador.wGrupo('/card');
-     end;
+    if(NFe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) then
+      begin
+        Gerador.wGrupo('card', 'YA04');
+        Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 0, tpIntegraToStr(nfe.pag[i].tpIntegra), DSC_TPINTEGRA);
+        if nfe.pag[i].CNPJ <> '' then
+         begin
+           Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, nfe.pag[i].CNPJ, DSC_CNPJ);
+           Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(nfe.pag[i].tBand), DSC_TBAND);
+           Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, nfe.pag[i].cAut, DSC_CAUT);
+         end;
+        Gerador.wGrupo('/card');
+      end;
     Gerador.wGrupo('/pag');
   end;
   if nfe.pag.Count > 100 then

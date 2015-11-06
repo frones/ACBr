@@ -732,6 +732,7 @@ begin
     FieldDefs.Add('XPais', ftString, 60);
     FieldDefs.Add('Fone', ftString, 15);
     FieldDefs.Add('IE', ftString, 20);
+    FieldDefs.Add('ISUF', ftString, 9);
 
     CreateDataSet;
     Append;
@@ -755,6 +756,7 @@ begin
         FieldByName('Fone').AsString := FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
+      FieldByName('ISUF').AsString := ISUF;
     end;
     Post;
   end;

@@ -275,7 +275,7 @@ begin
            if NaoEstaVazio(Cmd.Params(3)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(3);
 
-           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
+           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') and (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1) then
             begin
               Restaurar1.Click;
               Application.BringToFront;
@@ -313,7 +313,7 @@ begin
 
            ACBrNFe1.NotasFiscais.Imprimir;
            Cmd.Resposta := 'Danfe Impresso com sucesso';
-           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') then
+           if ACBrNFe1.DANFE.MostrarPreview or (Cmd.Params(4) = '1') and (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1) then
             begin
               ACBrNFe1.DANFE.MostrarPreview := OldMostrarPreview;
               Ocultar1.Click;

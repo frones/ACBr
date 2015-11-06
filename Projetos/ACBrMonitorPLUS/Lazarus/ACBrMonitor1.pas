@@ -2916,6 +2916,9 @@ begin
 
   if Erro <> '' then
     raise Exception.Create(Erro);
+
+  //fsLinesLog := mResp.Lines.Text;
+  //AddLinesLog;
 end;
 
 procedure TFrmACBrMonitor.DesInicializar;
@@ -6566,6 +6569,11 @@ end ;
 
 procedure TFrmACBrMonitor.PrepararImpressaoSAT;
 begin
+  if cbUsarFortes.Checked then
+    ACBrSAT1.Extrato := ACBrSATExtratoFortes1
+  else
+    ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+
   if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
   begin
     ConfiguraPosPrinter;

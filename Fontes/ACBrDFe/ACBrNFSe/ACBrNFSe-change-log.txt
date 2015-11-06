@@ -48,7 +48,7 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/11/2015
-[+] Acrescentado o INI para os provedores SimplISS e SpeedGov.
+[+] Acrescentado o INI para os provedores: SimplISS, SpeedGov, Thema e Tiplan.
     Por: Italo Jurisato Junior
 
 30/10/2015

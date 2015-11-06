@@ -176,7 +176,7 @@ begin
 
   FPosPrinter.Buffer.Add('</linha_simples>');
   FPosPrinter.Buffer.Add('</ae><c>CPF/CNPJ do Consumidor: '+
-                         FormatarCNPJouCPF(CFe.Dest.CNPJCPF));
+                          ifthen(Trim(CFe.Dest.CNPJCPF)<>'',FormatarCNPJouCPF(CFe.Dest.CNPJCPF),ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')));
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarItens;
@@ -318,8 +318,8 @@ procedure TACBrSATExtratoESCPOS.GerarPagamentos(Resumido : Boolean = False );
 var
   i : integer;
 begin
-  if not Resumido then
-    FPosPrinter.Buffer.Add('');
+  {if not Resumido then
+    FPosPrinter.Buffer.Add('');  }
 
   for i:=0 to CFe.Pagto.Count - 1 do
   begin
@@ -340,7 +340,7 @@ var
 begin
   if (CFe.InfAdic.obsFisco.Count > 0) or
      (CFe.Emit.cRegTrib = RTSimplesNacional) then
-     FPosPrinter.Buffer.Add('');
+     FPosPrinter.Buffer.Add('<c> ');
 
   if CFe.Emit.cRegTrib = RTSimplesNacional then
      FPosPrinter.Buffer.Add('<c>' + Msg_ICMS_123_2006 );
@@ -361,11 +361,19 @@ begin
    begin
      FPosPrinter.Buffer.Add('</fn></linha_simples>');
      FPosPrinter.Buffer.Add('DADOS PARA ENTREGA');
-     FPosPrinter.Buffer.Add('<c>'+Trim(CFe.Entrega.xLgr)+' '+
-                                  Trim(CFe.Entrega.nro)+' '+
-                                  Trim(CFe.Entrega.xCpl)+' '+
-                                  Trim(CFe.Entrega.xBairro)+' '+
-                                  Trim(CFe.Entrega.xMun));
+
+     if Trim(CFe.Entrega.xLgr)+
+        Trim(CFe.Entrega.nro)+
+        Trim(CFe.Entrega.xCpl)+
+        Trim(CFe.Entrega.xBairro)+
+        Trim(CFe.Entrega.xMun) <> '' then
+     begin
+        FPosPrinter.Buffer.Add('<c>'+Trim(CFe.Entrega.xLgr)+' '+
+                                     Trim(CFe.Entrega.nro)+' '+
+                                     Trim(CFe.Entrega.xCpl)+' '+
+                                     Trim(CFe.Entrega.xBairro)+' '+
+                                     Trim(CFe.Entrega.xMun));
+     end;
      FPosPrinter.Buffer.Add(CFe.Dest.xNome);
    end;
 end;
@@ -393,9 +401,9 @@ begin
   if CFe.Total.vCFeLei12741 > 0 then
   begin
     if not CabecalhoGerado then
-      GerarCabecalhoObsContribuinte
-    else
-      FPosPrinter.Buffer.Add(' ');
+      GerarCabecalhoObsContribuinte;
+//    else
+//      FPosPrinter.Buffer.Add(' ');
 
     if not Resumido then
       FPosPrinter.Buffer.Add('<c>*Valor aproximado dos tributos do item');
@@ -457,6 +465,20 @@ begin
                            '<qrcode>'+QRCode+'</qrcode>'+
                            '<qrcode_tipo>'+IntToStr(ConfigQRCodeTipo)+'</qrcode_tipo>'+
                            '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
+  end;
+
+
+  if not Cancelamento then
+  begin
+    if (SoftwareHouse <> '') or (Site <> '') then
+      FPosPrinter.Buffer.Add('</linha_simples>');
+
+    // SoftwareHouse
+    if SoftwareHouse <> '' then
+      FPosPrinter.Buffer.Add('</ce><c>' + SoftwareHouse);
+
+    if Site <> '' then
+      FPosPrinter.Buffer.Add('</ce><c>' + Site);
   end;
 
   if CortaPapel then

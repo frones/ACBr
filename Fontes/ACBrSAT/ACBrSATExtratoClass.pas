@@ -101,6 +101,7 @@ type
      fPictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF};
     {$ENDIF}
     fSoftwareHouse: String;
+    fSite: String;
 
     procedure ErroAbstract(NomeProcedure : String) ;
     function GetAbout: String;
@@ -151,6 +152,7 @@ type
     property NumCopias      : Integer  read fNumCopias      write SetNumCopias    default 1;
     property NomeArquivo    : String   read GetNomeArquivo  write fNomeArquivo ;
     property SoftwareHouse  : String   read fSoftwareHouse  write fSoftwareHouse;
+    property Site           : String   read fSite           write fSite;
     property Filtro         : TACBrSATExtratoFiltro read fFiltro write fFiltro default fiNenhum ;
   end ;
 

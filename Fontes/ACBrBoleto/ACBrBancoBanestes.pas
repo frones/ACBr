@@ -99,13 +99,13 @@ var
   nResult, nResultTemp, nDigAsbace01 : Integer;
 begin
   { Banestes não usa digitos verificadores para agência e conta }
-  cLivreAsbace := copy(ACBrTitulo.NossoNumero,2,8)+
-                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 2, 10)+
-                            ACBrtitulo.ACBrBoleto.Cedente.ContaDigito+
-//                  PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta)+
-//                       trim(ACBrTitulo.ACBrBoleto.Cedente.ContaDigito),11,'0')+
-                  '4'+
+  cLivreAsbace := copy(ACBrTitulo.NossoNumero,2,8)                       +
+                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 2, 10) +
+                  ACBrtitulo.ACBrBoleto.Cedente.ContaDigito              +
+                  IfThen(ACBrtitulo.ACBrBoleto.Cedente.Modalidade = '',
+                         '4', ACBrtitulo.ACBrBoleto.Cedente.Modalidade)  +
                   IntToStrZero(fpNumero,3);
+
   cIndice      := '21212121212121212121212';
   nResult      := 0;
   for nContAsbace := 23 downto 1 do

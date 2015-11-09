@@ -1977,7 +1977,7 @@ begin
 
               CpTotTrib := frxReport.FindObject('ValorTributos');
               if Assigned(CpTotTrib) then
-                CpDescrProtocolo.Visible := cdsCalculoImposto.FieldByName('VTotTrib').AsFloat > 0;
+                CpTotTrib.Visible := cdsCalculoImposto.FieldByName('VTotTrib').AsFloat > 0;
             end;
     end;
   end;

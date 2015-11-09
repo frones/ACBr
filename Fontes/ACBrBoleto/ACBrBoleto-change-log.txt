@@ -72,6 +72,15 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 09/11/2015 ver. 0.0.154a
+-- ACBrBancoBradesco --
+[-] Correção remessa CNAB400. (Diego Oliveira)
+http://www.projetoacbr.com.br/forum/topic/25591-homologa%C3%A7%C3%A3o-remessa-bradesco-altera%C3%A7%C3%A3o-acbrbancobradesco/
+
+-- ACBrBancoSicredi --
+[-] Correção remessa CNAB400 (CertaSolucoes)
+http://www.projetoacbr.com.br/forum/topic/22043-valor-dias-antecipa%C3%A7%C3%A3o/
+
 Data: 06/11/2015 ver. 0.0.153a
 -- ACBrBancoHSBC --
 [-] Correção remessa CNAB400 (Juliana Tamizou)

@@ -329,9 +329,7 @@ begin
 
          wLinha:= wLinha +
                   Space(4)                                                              +  // 079 a 082 - Filler - Brancos
-                  IfThen(ValorDescontoAntDia > 0,
-                         IntToStrZero(round(ValorDescontoAntDia * 100), 10),
-                         IntToStrZero(round(ValorDesconto * 100), 10))                  +  // 083 a 092 - Valor de desconto por dia de antecipação
+                  IntToStrZero(round(ValorDescontoAntDia * 100), 10)                    +  // 083 a 092 - Valor de desconto por dia de antecipação
                   IntToStrZero( round( PercentualMulta * 100 ), 4)                      +  // 093 a 096 - % multa por pagamento em atraso
                   Space(12)                                                             +  // 097 a 108 - Filler - Brancos
                   Ocorrencia                                                            +  // 109 a 110 - Instrução = "01" Cadastro de título ... ---Anderson

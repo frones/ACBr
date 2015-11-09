@@ -608,7 +608,6 @@ type
     function FormatQuantidade(dValor: Double): String;
     function FormatValorUnitario(dValor: Double): String;
     procedure AddFaturaReal;
-    function ManterDuplicatas: Integer;
   public
 
   end;
@@ -633,10 +632,10 @@ begin
 
   with RLNFe.Margins do
   begin
-    TopMargin     := FMargemSuperior * 10;
-    BottomMargin  := FMargemInferior * 10;
-    LeftMargin    := FMargemEsquerda * 10;
-    RightMargin   := FMargemDireita * 10;
+    TopMargin := FMargemSuperior * 10;
+    BottomMargin := FMargemInferior * 10;
+    LeftMargin := FMargemEsquerda * 10;
+    RightMargin := FMargemDireita * 10;
   end;
 
   ConfigureDataSource;
@@ -1062,58 +1061,79 @@ begin
     rllEntradaSaida.Caption := tpNFToStr( tpNF );
     rllEmissao.Caption      := FormatDateBr(dEmi);
     rllSaida.Caption        := IfThen(DSaiEnt <> 0,FormatDateBr(dSaiEnt));
-    //    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));
-    //    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
+
     if versao = 2.00 then
       rllHoraSaida.Caption := ifthen(hSaiEnt = 0, '', TimeToStr(hSaiEnt))
     else
       rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt) = 0, '', TimeToStr(dSaiEnt));
 
-    if FNFe.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS, teSVCSP] then
-    begin
-      if FNFe.procNFe.cStat > 0 then
-      begin
-        rllDadosVariaveis1a.Visible := True;
-        rllDadosVariaveis1b.Visible := True;
-        rllDadosVariaveis1c.Visible := True;
-      end
-      else
-      begin
-        rllDadosVariaveis1a.Visible := False;
-        rllDadosVariaveis1b.Visible := False;
-        rllDadosVariaveis1c.Visible := False;
-      end;
-      rlbCodigoBarrasFS.Visible := False;
+    // Configuração inicial
+    rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
+    rlbCodigoBarras.Visible       := True;
+    rlbCodigoBarrasFS.Visible     := False;
+    rllAvisoContingencia.Visible  := True;
+    rlbAvisoContingencia.Visible  := True;
+    rllAvisoContingencia.Caption  := ACBrStr( 'DANFE em Contingência - Impresso em decorrência de problemas técnicos');
 
-      if FProtocoloNFe <> '' then
-        rllDadosVariaveis3.Caption := FProtocoloNFe
-      else
-        rllDadosVariaveis3.Caption :=
-          FNFe.procNFe.nProt + ' ' + DateTimeToStr(FNFe.procNFe.dhRecbto);
-      rllAvisoContingencia.Visible := False;
-      rlbAvisoContingencia.Visible := False;
-    end
-    else if FNFe.Ide.tpEmis in [teContingencia, teFSDA] then
-    begin
-      sChaveContingencia := FACBrNFe.GerarChaveContingencia(FNFe);
-      rllDadosVariaveis1a.Visible := False;
-      rllDadosVariaveis1b.Visible := False;
-      rllDadosVariaveis1c.Visible := False;
-      rlbCodigoBarras.Visible     := True;
-      rlbCodigoBarrasFS.Caption   := sChaveContingencia;
-      rlbCodigoBarrasFS.Visible   := True;
-      rllDadosVariaveis3_Descricao.Caption := 'DADOS DA NF-E';
-      rllDadosVariaveis3.Caption    := FormatarChaveAcesso(sChaveContingencia);
-      rllAvisoContingencia.Caption  := ACBrStr(
-        'DANFE em Contingência - ' +
-        'Impresso em decorrência de problemas técnicos');
-      if (dhCont > 0) and (xJust > '') then
-        rllContingencia.Caption := ACBrStr(
-          'Data / Hora da entrada em contingência: ') +
-          FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
-          '   Motivo: ' + xJust;
-      rllAvisoContingencia.Visible := True;
-      rlbAvisoContingencia.Visible := True;
+    rllDadosVariaveis1a.Visible   := False;
+    rllDadosVariaveis1b.Visible   := False;
+    rllDadosVariaveis1c.Visible   := False;
+
+    case FNFe.Ide.tpEmis of
+      teNormal,
+      teSCAN,
+      teSVCAN,
+      teSVCRS,
+      teSVCSP         : begin
+                          rllAvisoContingencia.Visible        := False;
+                          rlbAvisoContingencia.Visible        := False;
+
+                          rllDadosVariaveis1a.Visible         := ( FNFe.procNFe.cStat > 0 );
+                          rllDadosVariaveis1b.Visible         := rllDadosVariaveis1a.Visible;
+                          rllDadosVariaveis1c.Visible         := rllDadosVariaveis1a.Visible;
+
+                          if FProtocoloNFe <> '' then
+                            rllDadosVariaveis3.Caption        := FProtocoloNFe
+                          else
+                            rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
+                                                                  DateTimeToStr(FNFe.procNFe.dhRecbto);
+                        end;
+      teContingencia,
+      teFSDA          : begin
+                          sChaveContingencia                  := FACBrNFe.GerarChaveContingencia(FNFe);
+                          rlbCodigoBarrasFS.Caption           := sChaveContingencia;
+                          rlbCodigoBarrasFS.Visible           := True;
+
+                          rllDadosVariaveis3_Descricao.Caption:= 'DADOS DA NF-E';
+                          rllDadosVariaveis3.Caption          := FormatarChaveAcesso(sChaveContingencia);
+
+                          if (dhCont > 0) and (xJust > '') then
+                            rllContingencia.Caption           := ACBrStr( 'Data / Hora da entrada em contingência: ') +
+                                                                          FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
+                                                                          ' Motivo contingência: ' + xJust;
+                        end;
+
+      teDPEC          : begin
+                          rllDadosVariaveis1a.Visible         := True;
+                          rllDadosVariaveis1b.Visible         := True;
+
+                          if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
+                            rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
+                                                                  IfThen(FNFe.procNFe.dhRecbto <> 0,
+                                                                  DateTimeToStr(FNFe.procNFe.dhRecbto), '')
+                          else
+                          begin
+                            rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'NÚMERO DE REGISTRO DO EPEC');
+                            if NaoEstaVazio( FProtocoloNFe) then
+                              rllDadosVariaveis3.Caption        := FProtocoloNFe
+                          end;
+
+                          if (dhCont > 0) and (xJust > '') then
+                            rllContingencia.Caption             := ACBrStr( 'Data / Hora da entrada em contingência: ') +
+                                                                            FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
+                                                                            ' Motivo contingência: ' + xJust;
+                        end;
+
     end;
   end;
 end;
@@ -1569,11 +1589,11 @@ begin
   end
   else
   begin
-    rllTransQTDE.Caption := '';
-    rllTransEspecie.Caption := '';
-    rllTransMarca.Caption := '';
+    rllTransQTDE.Caption      := '';
+    rllTransEspecie.Caption   := '';
+    rllTransMarca.Caption     := '';
     rllTransNumeracao.Caption := '';
-    rllTransPesoLiq.Caption := '';
+    rllTransPesoLiq.Caption   := '';
     rllTransPesoBruto.Caption := '';
   end;
 end;
@@ -1834,8 +1854,8 @@ begin
     ipPrazo:  begin
                 if FNFe.Cobr.Dup.Count = 0 then
                 begin
-                  TRLLabel(FindComponent('rllFatNum1')).AutoSize  := True;
-                  TRLLabel(FindComponent('rllFatNum1')).Caption   := 'PAGAMENTO A PRAZO';
+                  TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
+                  TRLLabel(FindComponent('rllFatNum1')).Caption := 'PAGAMENTO A PRAZO';
                   iQuantDup := 1;
 
                   for x := 0 to 11 do
@@ -1846,20 +1866,52 @@ begin
                   rliFatura3.Visible := False;
                 end
                 else
-                  iQuantDup := ManterDuplicatas;
+                begin
+                  if FNFe.Cobr.Dup.Count > 60 then
+                    iQuantDup := 60
+                  else
+                    iQuantDup := FNFe.Cobr.Dup.Count;
+
+                  //adiciona
+                  for x := 0 to (iQuantDup - 1) do
+                    with FNFe.Cobr.Dup[x] do
+                    begin
+                      TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption   := NDup;
+                      TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption  := FormatDateBr(DVenc);
+                      TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup,'###,###,###,##0.00');
+                    end;
+                end;
               end;
     ipOutras: begin
-                iQuantDup := ManterDuplicatas;
+                if FNFe.Cobr.Dup.Count > 0 then
+                begin
+                  TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
+                  TRLLabel(FindComponent('rllFatNum1')).Caption := 'OUTRAS FORMA DE PAGAMENTO';
+                  if FNFe.Cobr.Dup.Count > 60 then
+                    iQuantDup := 60
+                  else
+                    iQuantDup := FNFe.Cobr.Dup.Count;
+
+                  for x := 0 to (iQuantDup - 1) do
+                  begin
+                    with FNFe.Cobr.Dup[x] do
+                    begin
+                      TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption   := NDup;
+                      TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption  := FormatDateBr(DVenc);
+                      TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup,'###,###,###,##0.00');
+                    end;
+                  end;
+                end;
               end;
   end;
   {=============== Ajusta o tamanho do quadro das faturas ===============}
   if iQuantDup > 0 then
   begin
-    iColunas          := 4;   // Quantidade de colunas
-    iAltLinha         := 13;  // Altura de cada linha
-    iPosQuadro        := 12;  // Posição (Top) do Quadro
-    iAltQuadro1Linha  := 27;  // Altura do quadro com 1 linha
-    iFolga            := 5;   // Distância entre o final da Band e o final do quadro
+    iColunas := 4; // Quantidade de colunas
+    iAltLinha := 13;  // Altura de cada linha
+    iPosQuadro := 12; // Posição (Top) do Quadro
+    iAltQuadro1Linha := 27; // Altura do quadro com 1 linha
+    iFolga := 5; // Distância entre o final da Band e o final do quadro
 
     if (iQuantDup mod iColunas) = 0 then // Quantidade de linhas
       iLinhas := iQuantDup div iColunas
@@ -1873,8 +1925,8 @@ begin
 
     iAltBand := iPosQuadro + iAltQuadro + iFolga;
 
-    rlbFatura.Height  := iAltBand;
-    rliFatura.Height  := iAltQuadro;
+    rlbFatura.Height := iAltBand;
+    rliFatura.Height := iAltQuadro;
     rliFatura1.Height := iAltQuadro;
     rliFatura2.Height := iAltQuadro;
     rliFatura3.Height := iAltQuadro;
@@ -2223,29 +2275,5 @@ begin
     end;
   end;
 end;
-
-Function TfrlDANFeRLRetrato.ManterDuplicatas : Integer;
-Var
-  x : Integer;
-begin
-  with FNFe.Cobr do
-  begin
-    if Dup.Count > 60 then
-      Result := 60
-    else
-      Result := Dup.Count;
-
-    for x := 0 to (Result - 1) do
-    begin
-      with Dup[x] do
-      begin
-        TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
-        TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
-        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,'###,###,###,##0.00');
-      end;
-    end;
-  end;
-end;
-
 
 end.

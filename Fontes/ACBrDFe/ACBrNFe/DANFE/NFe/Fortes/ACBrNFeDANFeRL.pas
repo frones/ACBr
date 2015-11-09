@@ -638,8 +638,10 @@ end;
 
 procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
-	self.Scaled := false;   
-	self.ScaleBy( 96,Screen.PixelsPerInch);
+  {$IfNDef FPC}
+   Self.Scaled := false;
+   Self.ScaleBy( 96,Screen.PixelsPerInch);
+  {$EndIf}
   ConfigDataSet;
 end;
 

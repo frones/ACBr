@@ -1,50 +1,10 @@
 object dmACBrNFSeFR: TdmACBrNFSeFR
   OldCreateOrder = False
+  OnDestroy = DataModuleDestroy
   Left = 236
   Top = 198
   Height = 363
   Width = 580
-  object frxReport: TfrxReport
-    Tag = 1
-    Version = '5.1.1'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Padr'#227'o'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 41401.601407893500000000
-    ReportOptions.LastChange = 41940.448342789350000000
-    ScriptLanguage = 'PascalScript'
-    StoreInDFM = False
-    OnBeforePrint = frxReportBeforePrint
-    OnReportPrint = 'frxReportOnReportPrint'
-    Left = 65
-    Top = 49
-  end
-  object frxPDFExport: TfrxPDFExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    PrintOptimized = True
-    Outline = False
-    Background = True
-    HTMLTags = True
-    Quality = 95
-    Transparency = False
-    Author = 'FastReport'
-    Subject = 'Exportando o DANFSe para PDF'
-    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
-    HideToolbar = False
-    HideMenubar = False
-    HideWindowUI = False
-    FitWindow = False
-    CenterWindow = False
-    PrintScaling = False
-    Left = 64
-    Top = 104
-  end
   object cdsIdentificacao: TClientDataSet
     Aggregates = <>
     Params = <>

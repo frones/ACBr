@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2015
+[-] Não estava checando se as URLs para o ambiente de homologação era unica ou
+    diferente para cada cidade.
+    Por: Liandro Costa
+
 06/11/2015
 [+] Acrescentado o INI para os provedores: SimplISS, SpeedGov, Thema e Tiplan.
     Por: Italo Jurisato Junior

@@ -638,6 +638,8 @@ end;
 
 procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
+	self.Scaled := false;   
+	self.ScaleBy( 96,Screen.PixelsPerInch);
   ConfigDataSet;
 end;
 

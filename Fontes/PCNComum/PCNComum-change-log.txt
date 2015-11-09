@@ -40,6 +40,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+09/11/2015          (
+-- pcnGerador --
+[*] Ajuste para a conversão de quebras de Linhas por ';' respeitar o valor do
+    parâmetro "ParseTextoXML", (se o mesmo for False não faz a conversão)
+    (por: DSA)
+
+-- pcnAuxiliar --
+[*] Assinatura do método: "FiltrarTextoXML" modificada, incluindo o parâmetro:
+    SubstituirQuebrasLinha: Boolean = True
+    (por: DSA)
+
+-- pcnSignature --
+[*] Modificada para que as Tags "DigestValue", "SignatureValue", "X509Certificate"
+    não tentem efetuar o ParseTextoXML
+    (por: DSA)
+
 30/10/2015
 -- pcnConversao --
 [-] Corrigido retorno de função onde enumadores estavam errados	

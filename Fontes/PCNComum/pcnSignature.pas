@@ -116,13 +116,13 @@ begin
   (**********)Gerador.wGrupo('Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/', 'SX12');
   (********)Gerador.wGrupo('/Transforms');
   (********)Gerador.wGrupo('DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/', 'XS15');
-  (********)Gerador.wCampo(tcStr, 'XS17', 'DigestValue', 000, 999, 1, FDigestValue, DSC_DigestValue);
+  (********)Gerador.wCampo(tcStr, 'XS17', 'DigestValue', 000, 999, 1, FDigestValue, DSC_DigestValue, False);
   (******)Gerador.wGrupo('/Reference');
   (****)Gerador.wGrupo('/SignedInfo');
-  (****)Gerador.wCampo(tcStr, 'XS18', 'SignatureValue', 000, 999, 1, FSignatureValue, DSC_SignatureValue);
+  (****)Gerador.wCampo(tcStr, 'XS18', 'SignatureValue', 000, 999, 1, FSignatureValue, DSC_SignatureValue, False);
   (****)Gerador.wGrupo('KeyInfo', 'XS19');
   (******)Gerador.wGrupo('X509Data', 'XS20');
-  (********)Gerador.wCampo(tcStr, 'XS21', 'X509Certificate', 000, 999, 1, FX509Certificate, DSC_X509Certificate);
+  (********)Gerador.wCampo(tcStr, 'XS21', 'X509Certificate', 000, 999, 1, FX509Certificate, DSC_X509Certificate, False);
   (******)Gerador.wGrupo('/X509Data');
   (****)Gerador.wGrupo('/KeyInfo');
   (**)Gerador.wGrupo('/Signature');

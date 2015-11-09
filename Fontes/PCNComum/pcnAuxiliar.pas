@@ -59,7 +59,7 @@ uses
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
-function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True): AnsiString;
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True): AnsiString;
 function IIf(const condicao: Boolean; const Verdadeiro, Falso: Variant): Variant;
 function IntToStrZero(const Numero: integer; const tamanho: integer): string;
 function GerarCodigoNumerico(numero: integer): integer;
@@ -145,7 +145,8 @@ begin
     Result := '0' + Nro;
 end;
 
-function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True): AnsiString;
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString;
+  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean): AnsiString;
 begin
   if RetirarAcentos then
      aTexto := AnsiString(TiraAcentos(String(aTexto)));
@@ -157,6 +158,9 @@ begin
     while pos('  ', aTexto) > 0 do
       aTexto := StringReplace(aTexto, '  ', ' ', [rfReplaceAll]);
   end;
+
+  if SubstituirQuebrasLinha then
+    aTexto := ChangeLineBreak( aTexto, ';');
 
   Result := Trim(aTexto);
 end;

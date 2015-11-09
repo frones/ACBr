@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TfrxReport Version="5.2.3" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="40401,475989294" ReportOptions.Description.Text="" ReportOptions.LastChange="42315,1596671181" ScriptLanguage="PascalScript" ScriptText.Text="procedure ReportTitle1OnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  ReportTitle1.Visible := &#60;Parametros.&#34;LogoCarregado&#34;&#62; &#60;&#62; '';&#13;&#10;end;&#13;&#10;&#13;&#10;procedure ValorTributosOnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  ValorTributos.Visible := &#60;CalculoImposto.&#34;VTotTrib&#34;&#62; &#62; 0;&#13;&#10;end;&#13;&#10;&#13;&#10;begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
+  <Datasets>
+    <item DataSetName="CalculoImposto"/>
+    <item DataSetName="DadosProdutos"/>
+    <item DataSetName="Destinatario"/>
+    <item DataSetName="Duplicatas"/>
+    <item DataSetName="Emitente"/>
+    <item DataSetName="Eventos"/>
+    <item DataSetName="Fatura"/>
+    <item DataSetName="Identificacao"/>
+    <item DataSetName="InformacoesAdicionais"/>
+    <item DataSetName="ISSQN"/>
+    <item DataSetName="LocalEntrega"/>
+    <item DataSetName="LocalRetirada"/>
+    <item DataSetName="Pagamento"/>
+    <item DataSetName="Parametros"/>
+    <item DataSetName="Transportador"/>
+    <item DataSetName="Veiculo"/>
+    <item DataSetName="Volumes"/>
+  </Datasets>
+  <Variables>
+    <item Name=" User"/>
+    <item Name="LinhasImpressas"/>
+  </Variables>
+  <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
+  <TfrxReportPage Name="Page1" PaperWidth="72" PaperHeight="297" PaperSize="256" LeftMargin="0" RightMargin="0" TopMargin="0,5" BottomMargin="0" ColumnWidth="0" ColumnPositions.Text="" EndlessHeight="True" LargeDesignHeight="True" PrintIfEmpty="False" HGuides.Text="" VGuides.Text="" OnBeforePrint="Page1OnBeforePrint">
+    <TfrxMasterData Name="ValorTributos" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="32,01575291" Left="0" Top="631,18151" Width="272,12616" OnBeforePrint="ValorTributosOnBeforePrint" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxMemoView Name="Memo17" Align="baWidth" Left="0" Top="3,77953000000002" Width="177,63793441" Height="26,45669047" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="4" GapY="2" ParentFont="False" Text="Informação dos Tributos Totais Incidentes &#13;&#10;(Lei Federal 12.741/2012): "/>
+      <TfrxMemoView Name="Memo23" Align="baRight" Left="177,63793441" Top="3,77953000000002" Width="94,48822559" Height="26,45669047" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="4" GapY="2" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;vTotTrib&#34; #n%2,2f] [CalculoImposto.&#34;VTribFonte&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="MensagemFiscal" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="111,38588291" Left="0" Top="729,44929" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1" Stretched="True">
+      <TfrxMemoView Name="Memo3" Align="baWidth" Left="0" Top="48,89765" Width="272,12616" Height="26,45671" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="4" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="Consulte pela chave de acesso em:&#13;&#10;[Identificacao.&#34;URL&#34;]"/>
+      <TfrxMemoView Name="Memo1" Align="baWidth" Left="0" Top="77,47248" Width="272,12616" Height="11,33859" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="CHAVE DE ACESSO"/>
+      <TfrxMemoView Name="Memo13" Align="baWidth" Left="0" Top="18,55906" Width="272,12616" Height="26,45671" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" WordWrap="False" Text="Número: [Identificacao.&#34;NNF&#34;] - Série: [Identificacao.&#34;Serie&#34; #n#000]&#13;&#10;Emissão [Identificacao.&#34;DEmi&#34;] - [Parametros.&#34;DescricaoViaEstabelec&#34;]"/>
+      <TfrxMemoView Name="Memo8" Align="baWidth" Left="0" Top="91,26776291" Width="272,12616" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="8" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="[Identificacao.&#34;Chave&#34;]"/>
+      <TfrxMemoView Name="Memo6" Align="baWidth" Left="0" Top="1,22046999999998" Width="272,12616" Height="15,11812" StretchMode="smActualHeight" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Typ="4" HAlign="haCenter" ParentFont="False" WordBreak="True" Text="[Identificacao.&#34;MensagemFiscal&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="Consumidor" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="41,57476898" Left="0" Top="865,51237" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1" Stretched="True">
+      <TfrxMemoView Name="Memo58" Align="baWidth" Left="0" Top="0,779530000000023" Width="272,12616" Height="16,25197094" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="CONSUMIDOR"/>
+      <TfrxMemoView Name="Memo46" Align="baWidth" Left="0" Top="20,78736984" Width="272,12616" Height="17,00783984" StretchMode="smActualHeight" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="8" GapX="5" HAlign="haCenter" ParentFont="False" Text="[Destinatario.&#34;Consumidor&#34;]"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="Rodape" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="175,63789291" Left="0" Top="929,76438" Width="272,12616" ColumnWidth="0" ColumnGap="0" RowCount="1">
+      <TfrxPictureView Name="ImgQrCode" Align="baWidth" Left="0" Top="20,32283465" Width="272,12616" Height="117,1653226" Center="True" Frame.Color="16711935" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+      <TfrxMemoView Name="Memo22" Align="baWidth" Left="0" Top="158,1812" Width="272,12616" Height="13,22834402" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="8" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="[Parametros.&#34;Contingencia_Valor&#34;]"/>
+      <TfrxMemoView Name="Memo4" Align="baWidth" Left="0" Top="3,77953000000002" Width="272,12616" Height="15,11812" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="Consulta via leitor de QR Code"/>
+      <TfrxMemoView Name="Memo5" Align="baWidth" Left="0" Top="141,40167" Width="272,12616" Height="13,22834402" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaBottom" Text="Protocolo de Autorização"/>
+    </TfrxMasterData>
+    <TfrxMasterData Name="DadosProdutos" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="26,45670268" Left="0" Top="325,03958" Width="272,12616" OnBeforePrint="DadosProdutosOnBeforePrint" ColumnWidth="0" ColumnGap="0" DataSetName="DadosProdutos" RowCount="0" Stretched="True">
+      <TfrxMemoView Name="Memo131" ShiftMode="smDontShift" Left="0" Top="0" Width="75,59056094" Height="11,33858268" StretchMode="smMaxHeight" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" WordWrap="False" Text="[DadosProdutos.&#34;CProd&#34;]"/>
+      <TfrxMemoView Name="Memo132" ShiftMode="smDontShift" Left="76,03150094" Top="0" Width="196,53559906" Height="11,33858268" StretchMode="smMaxHeight" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" ParentFont="False" Text="[DadosProdutos.&#34;DescricaoProduto&#34;]"/>
+      <TfrxMemoView Name="memqCom" Left="0" Top="13,49606543" Width="79,37009339" Height="11,33858268" StretchMode="smMaxHeight" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[DadosProdutos.&#34;QCom&#34;] [DadosProdutos.&#34;UCom&#34;]"/>
+      <TfrxMemoView Name="memvUnCom" Left="79,37007874" Top="13,49606543" Width="94,48818898" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[DadosProdutos.&#34;VUnTrib&#34;]"/>
+      <TfrxMemoView Name="Memo140" Left="173,85826772" Top="13,49606543" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[DadosProdutos.&#34;VProd&#34;]"/>
+    </TfrxMasterData>
+    <TfrxGroupHeader Name="DadosProdutosHeader" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="27,59056094" Left="0" Top="275,90569" Width="272,12616" Condition="DadosProdutos.&#34;ChaveNFe&#34;">
+      <TfrxMemoView Name="Memo121" Left="56,69291339" Top="14,47244827" Width="22,67716535" Height="11,33858268" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Typ="8" GapY="2" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="UN"/>
+      <TfrxMemoView Name="Memo123" Left="79,37007874" Top="14,47244827" Width="94,48818898" Height="11,33858268" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Typ="8" GapY="2" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="VL.UNIT"/>
+      <TfrxMemoView Name="Memo116" Left="0" Top="1,35432827" Width="68,03150094" Height="13,22834646" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Typ="4" GapY="2" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="CÓDIGO"/>
+      <TfrxMemoView Name="Memo117" Left="68,47244094" Top="1,35432827" Width="204,09465906" Height="13,22834646" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Typ="4" GapY="2" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="DESCRIÇÃO"/>
+      <TfrxMemoView Name="Memo122" Left="0" Top="14,47244827" Width="56,69291339" Height="11,33858268" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Typ="8" GapY="2" HAlign="haRight" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="QTD"/>
+      <TfrxMemoView Name="Memo125" Left="173,85826772" Top="14,47244827" Width="98,26789228" Height="11,33857291" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="1" Frame.Typ="8" GapY="2" HAlign="haRight" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="VL.TOTAL"/>
+    </TfrxGroupHeader>
+    <TfrxGroupHeader Name="DadosPagamentoHeader" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="98,40163094" Left="0" Top="472,44125" Width="272,12616" Condition="DadosProdutos.&#34;ChaveNFe&#34;" ReprintOnNewPage="True">
+      <TfrxMemoView Name="memTitDadosPagamento" Left="0" Top="6,33859000000001" Width="128,50402" Height="91,84257094" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" GapX="3" ParentFont="False" WordWrap="False" Text="QTD. TOTAL DE ITENS&#13;&#10;&#13;&#10;Valor Produtos&#13;&#10;Descontos&#13;&#10;Acréscimos&#13;&#10;VALOR A PAGAR&#13;&#10;&#13;&#10;FORMA DE PAGAMENTO  "/>
+      <TfrxMemoView Name="memDadosPagamento" Left="128,50402" Top="6,33859000000001" Width="143,62214" Height="91,84257094" DataSetName="Parametros" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" GapX="3" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[Parametros.&#34;QtdeItens&#34;]&#13;&#10;&#13;&#10;[CalculoImposto.&#34;VProd&#34; #n%2.2f]&#13;&#10;[CalculoImposto.&#34;VDesc&#34; #n%2.2f]&#13;&#10;[CalculoImposto.&#34;VOutro&#34; #n%2.2f]&#13;&#10;[&#60;CalculoImposto.&#34;ValorApagar&#34;&#62; #n%2.2f]&#13;&#10;&#13;&#10;VALOR">
+        <Formats>
+          <item/>
+          <item/>
+          <item/>
+          <item/>
+          <item/>
+        </Formats>
+      </TfrxMemoView>
+      <TfrxLineView Name="Line3" Align="baWidth" Left="0" Top="3,77953000000002" Width="272,12616" Height="0" Color="0" Diagonal="True"/>
+    </TfrxGroupHeader>
+    <TfrxMasterData Name="DadosPagamento" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="14,74015992" Left="0" Top="593,38621" Width="272,12616" ColumnWidth="0" ColumnGap="0" DataSetName="Pagamento" RowCount="0" Stretched="True">
+      <TfrxMemoView Name="Memo19" Left="0" Top="2" Width="128,50402" Height="12,47244094" DataSetName="Pagamento" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2m" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" GapX="3" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="[Pagamento.&#34;tPag&#34;]"/>
+      <TfrxMemoView Name="Memo18" Left="128,50402" Top="2,11023378000004" Width="143,62214" Height="12,47244094" DataSetName="Pagamento" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" GapX="3" HAlign="haRight" ParentFont="False" WordWrap="False" VAlign="vaCenter" Text="[Pagamento.&#34;vPag&#34;]"/>
+    </TfrxMasterData>
+    <TfrxReportTitle Name="ReportTitle1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="71,81107" Left="0" Top="18,89765" Width="272,12616" OnBeforePrint="ReportTitle1OnBeforePrint" PrintChildIfInvisible="True" Stretched="True">
+      <TfrxPictureView Name="ImgLogo" Left="45,35436" Top="2,67718" Width="177,63791" Height="64,25201" Center="True" DataField="LogoCarregado" DataSetName="Parametros" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+    </TfrxReportTitle>
+    <TfrxDetailData Name="DadosDesconto" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="26,45671" Left="0" Top="374,17347" Width="272,12616" ColumnWidth="0" ColumnGap="0" Filter="&#60;DadosProdutos.&#34;vDesc&#34;&#62; &#62; 0" RowCount="1">
+      <TfrxMemoView Name="Memo7" Left="173,85838" Top="0" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="- [DadosProdutos.&#34;vDesc&#34;]"/>
+      <TfrxMemoView Name="Memo10" Left="71,81107" Top="0" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="Desconto"/>
+      <TfrxMemoView Name="Memo14" Left="173,85838" Top="11,33859" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[&#60;DadosProdutos.&#34;Valorliquido&#34;&#62;]"/>
+      <TfrxMemoView Name="Memo15" Left="71,81107" Top="11,33859" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="Valor líquido"/>
+    </TfrxDetailData>
+    <TfrxDetailData Name="DadosAcrescimo" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="26,45671" Left="0" Top="423,30736" Width="272,12616" ColumnWidth="0" ColumnGap="0" Filter="&#60;DadosProdutos.&#34;VOutro&#34;&#62; &#62; 0" RowCount="1">
+      <TfrxMemoView Name="Memo11" Left="173,85838" Top="0" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="+ [DadosProdutos.&#34;VOutro&#34;]"/>
+      <TfrxMemoView Name="Memo12" Left="71,81107" Top="0" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="Acréscimo"/>
+      <TfrxMemoView Name="Memo16" Left="173,85838" Top="11,33859" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[&#60;DadosProdutos.&#34;ValorAcrescimos&#34;&#62;]"/>
+      <TfrxMemoView Name="Memo20" Left="71,81107" Top="11,33859" Width="98,26789228" Height="11,33858268" StretchMode="smMaxHeight" DisplayFormat.DecimalSeparator="," DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="Valor líquido"/>
+    </TfrxDetailData>
+    <TfrxMasterData Name="Observacoes" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="18,89765" Left="0" Top="687,87446" Width="272,12616" ColumnWidth="0" ColumnGap="0" Filter="&#60;InformacoesAdicionais.&#34;OBS&#34;&#62; &#60;&#62; ''" RowCount="1" Stretched="True">
+      <TfrxMemoView Name="Memo21" Align="baWidth" Left="0" Top="0" Width="272,12616" Height="15,11812" StretchMode="smActualHeight" Font.Charset="1" Font.Color="-16777208" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="4" GapY="2" ParentFont="False" Text="[InformacoesAdicionais.&#34;OBS&#34;]"/>
+    </TfrxMasterData>
+    <TfrxPageHeader Name="PageHeader1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="102,04731" Left="0" Top="113,3859" Width="272,12616">
+      <TfrxMemoView Name="Memo9" Align="baWidth" ShiftMode="smWhenOverlapped" Left="0" Top="60,92919" Width="272,12616" Height="22,67718" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="1" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="DANFE NFC-e - Documento Auxiliar &#13;&#10;da Nota Fiscal de Consumidor Eletrônica"/>
+      <TfrxMemoView Name="Memo37" Align="baWidth" ShiftMode="smWhenOverlapped" Left="0" Top="85,37013" Width="272,12616" Height="15,11812" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="Não permite aproveitamento de crédito do ICMS"/>
+      <TfrxMemoView Name="Memo2" Align="baWidth" ShiftMode="smWhenOverlapped" Left="0" Top="0" Width="272,12616" Height="58,58269181" Font.Charset="0" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" Frame.Typ="8" HAlign="haCenter" LineSpacing="4" ParentFont="False" Text="[Emitente.&#34;XNome&#34;]&#13;&#10;CNPJ: [Emitente.&#34;CNPJ&#34;] - IE: [Emitente.&#34;IE&#34;] - IM: [Emitente.&#34;IM&#34;]&#13;&#10;[Emitente.&#34;XLgr&#34;], [Emitente.&#34;nro&#34;] - [Emitente.&#34;xBairro&#34;]&#13;&#10;[Emitente.&#34;XMun&#34;] - [Emitente.&#34;UF&#34;]"/>
+    </TfrxPageHeader>
+  </TfrxReportPage>
+</TfrxReport>

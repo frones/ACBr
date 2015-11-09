@@ -358,22 +358,23 @@ begin
 
     with FNFe.Total.ICMSTot do
     begin
-      FieldByName('VBC').AsFloat        := VBC;
-      FieldByName('VICMS').AsFloat      := VICMS;
-      FieldByName('VBCST').AsFloat      := VBCST;
-      FieldByName('VST').AsFloat        := VST;
-      FieldByName('VProd').AsFloat      := VProd;
-      FieldByName('VFrete').AsFloat     := VFrete;
-      FieldByName('VSeg').AsFloat       := VSeg;
-      FieldByName('VDesc').AsFloat      := VDesc;
-      FieldByName('VII').AsFloat        := VII;
-      FieldByName('VIPI').AsFloat       := VIPI;
-      FieldByName('VPIS').AsFloat       := VPIS;
-      FieldByName('VCOFINS').AsFloat    := VCOFINS;
-      FieldByName('VOutro').AsFloat     := VOutro;
-      FieldByName('VNF').AsFloat        := VNF;
-      FieldByName('VTotTrib').AsFloat   := VTotTrib;
-      FieldByName('VTribPerc').AsFloat  := ManterVTribPerc( VTotTrib , VProd ,VNF );
+      FieldByName('VBC').AsFloat          := VBC;
+      FieldByName('VICMS').AsFloat        := VICMS;
+      FieldByName('VBCST').AsFloat        := VBCST;
+      FieldByName('VST').AsFloat          := VST;
+      FieldByName('VProd').AsFloat        := VProd;
+      FieldByName('VFrete').AsFloat       := VFrete;
+      FieldByName('VSeg').AsFloat         := VSeg;
+      FieldByName('VDesc').AsFloat        := VDesc;
+      FieldByName('VII').AsFloat          := VII;
+      FieldByName('VIPI').AsFloat         := VIPI;
+      FieldByName('VPIS').AsFloat         := VPIS;
+      FieldByName('VCOFINS').AsFloat      := VCOFINS;
+      FieldByName('VOutro').AsFloat       := VOutro;
+      FieldByName('VNF').AsFloat          := VNF;
+      FieldByName('VTotTrib').AsFloat     := VTotTrib;
+      FieldByName('ValorApagar').AsFloat  := VProd- VDesc + VOutro;
+      FieldByName('VTribPerc').AsFloat    := ManterVTribPerc( VTotTrib , VProd ,VNF );
       if NaoEstaVazio(TributosFonte) then
         FieldByName('VTribFonte').AsString := '(Fonte: '+TributosFonte+')';
     end;
@@ -460,6 +461,8 @@ begin
           FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI ,'###,###,##0.00');
           FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN ,'###,###,##0.00');
           FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC ,'###,###,##0.00');
+          FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - StrToFloat( FieldByName('vDesc').AsString ) ,'###,###,##0.00');
+          FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro ,'###,###,##0.00');
 
           case FImprimirUnQtVlComercial of
           true:
@@ -1492,10 +1495,10 @@ begin
         FieldDefs.Add('UTrib'     , ftString, 6);
         FieldDefs.Add('QTrib'     , ftFloat);
         FieldDefs.Add('vUnTrib'   , ftFloat);
-        FieldDefs.Add('vFrete'    , ftFloat);
-        FieldDefs.Add('vOutro'    , ftFloat);
-        FieldDefs.Add('vSeg'      , ftFloat);
-        FieldDefs.Add('vDesc'     , ftFloat);
+        FieldDefs.Add('vFrete'    , ftString, 18);
+        FieldDefs.Add('vOutro'    , ftString, 18);
+        FieldDefs.Add('vSeg'      , ftString, 18);
+        FieldDefs.Add('vDesc'     , ftString, 18);
         FieldDefs.Add('ORIGEM'    , ftString, 1);
         FieldDefs.Add('CST'       , ftString, 3);
         FieldDefs.Add('vBC'       , ftString, 18);
@@ -1516,7 +1519,9 @@ begin
         FieldDefs.Add('DescricaoProduto', ftString, 2000);
         FieldDefs.Add('Unidade'   , ftString, 6);
         FieldDefs.Add('Quantidade', ftString, 18);
-        FieldDefs.Add('ValorUnitario', ftString, 18);
+        FieldDefs.Add('ValorUnitario'   , ftString, 18);
+        FieldDefs.Add('Valorliquido'    , ftString, 18);
+        FieldDefs.Add('ValorAcrescimos' , ftString, 18);
         CreateDataSet;
      end;
    end;
@@ -1601,25 +1606,26 @@ begin
      end;
      with cdsCalculoImposto do
      begin
-        FieldDefs.Add('VBC', ftFloat);
-        FieldDefs.Add('VICMS', ftFloat);
-        FieldDefs.Add('VBCST', ftFloat);
-        FieldDefs.Add('VST', ftFloat);
-        FieldDefs.Add('VProd', ftFloat);
-        FieldDefs.Add('VFrete', ftFloat);
-        FieldDefs.Add('VSeg', ftFloat);
-        FieldDefs.Add('VDesc', ftFloat);
-        FieldDefs.Add('VII', ftFloat);
-        FieldDefs.Add('VIPI', ftFloat);
-        FieldDefs.Add('VPIS', ftFloat);
-        FieldDefs.Add('VCOFINS', ftFloat);
-        FieldDefs.Add('VOutro', ftFloat);
-        FieldDefs.Add('VNF', ftFloat);
-        FieldDefs.Add('VTotTrib', ftFloat);
-        FieldDefs.Add('VTribPerc', ftFloat);
-        FieldDefs.Add('VTribFonte', ftString, 100);
-        FieldDefs.Add('vTotPago', ftFloat);
-        FieldDefs.Add('vTroco', ftFloat);
+        FieldDefs.Add('VBC'         , ftFloat);
+        FieldDefs.Add('VICMS'       , ftFloat);
+        FieldDefs.Add('VBCST'       , ftFloat);
+        FieldDefs.Add('VST'         , ftFloat);
+        FieldDefs.Add('VProd'       , ftFloat);
+        FieldDefs.Add('VFrete'      , ftFloat);
+        FieldDefs.Add('VSeg'        , ftFloat);
+        FieldDefs.Add('VDesc'       , ftFloat);
+        FieldDefs.Add('VII'         , ftFloat);
+        FieldDefs.Add('VIPI'        , ftFloat);
+        FieldDefs.Add('VPIS'        , ftFloat);
+        FieldDefs.Add('VCOFINS'     , ftFloat);
+        FieldDefs.Add('VOutro'      , ftFloat);
+        FieldDefs.Add('VNF'         , ftFloat);
+        FieldDefs.Add('VTotTrib'    , ftFloat);
+        FieldDefs.Add('VTribPerc'   , ftFloat);
+        FieldDefs.Add('VTribFonte'  , ftString, 100);
+        FieldDefs.Add('vTotPago'    , ftFloat);
+        FieldDefs.Add('vTroco'      , ftFloat);
+        FieldDefs.Add('ValorApagar' , ftFloat);
         CreateDataSet;
      end;
    end;
@@ -2009,7 +2015,7 @@ begin
   else
     dValor := dvDesc;
 
-    Result := FormatFloatBr( dValor,'###,###,##0.00');
+  Result := FormatFloatBr( dValor,'###,###,##0.00');
 end;
 
 Function TACBrNFeFRClass.ManterCst( dCRT: TpcnCRT;  dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms ) : String;

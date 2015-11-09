@@ -47,7 +47,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2015
+-- ACBrNFeDANFEFRDM --
+[-] Correção dos FieldDefs , aplicada na revisao 10404 
+        FieldDefs.Add('vFrete'    , ftString, 18);
+        FieldDefs.Add('vOutro'    , ftString, 18);
+        FieldDefs.Add('vSeg'      , ftString, 18);
+        FieldDefs.Add('vDesc'     , ftString, 18);
 
+[*] Novos campos em cdsDadosProdutos
+        FieldDefs.Add('Valorliquido'    , ftString, 18);
+        FieldDefs.Add('ValorAcrescimos' , ftString, 18);
+
+[*] Novo campo em cdsCalculoImposto
+       FieldDefs.Add('ValorApagar' , ftFloat);
+
+[*] Refatoração para aplicar os novos campos.
+    Os novos campos serão aplicados no arquivo de DAnfe DANFeNFCe_dc.fr3
+    O arquivo DANFeNFCe.fr3 ficara obsoleto com esta atualização.
+
+	por : Henrique Leonardo
+	
 09/11/2015
 -- ACBrNFeDANFeRLRetrato --
 [-] Ajuste na geração de Duplicatas ( outras ).

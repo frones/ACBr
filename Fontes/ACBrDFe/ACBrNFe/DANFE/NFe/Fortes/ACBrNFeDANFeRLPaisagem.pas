@@ -991,65 +991,88 @@ var sChaveContingencia: String;
 begin
   with FNFe.InfNFe, FNFe.Ide do
   begin
-     rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
-     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
+    rllChave.Caption        := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
+    rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
     rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
     rllNumNF1.Caption       := rllNumNF0.Caption;
     rllSERIE0.Caption       := ACBrStr('SÉRIE ') + IntToStr(Serie);
     rllSERIE1.Caption       := rllSERIE0.Caption;
     rllNatOperacao.Caption  := NatOp;
     rllEntradaSaida.Caption := tpNFToStr( tpNF );
-    rllEmissao.Caption   := FormatDateBr(dEmi);
-    rllSaida.Caption     := IfThen(DSaiEnt <> 0, FormatDateBr(dSaiEnt));
-//    rllHoraSaida.Caption := IfThen(hSaiEnt <> 0, FormatDateTime('hh:nn:ss', hSaiEnt));                                      
-//    rllHoraSaida.Caption := IfThen(dSaiEnt <> 0, FormatDateTime('hh:nn:ss', dSaiEnt));     //..Rodrigo - substitui campo hSaiEnt por DSaiEnt
+    rllEmissao.Caption      := FormatDateBr(dEmi);
+    rllSaida.Caption        := IfThen(DSaiEnt <> 0, FormatDateBr(dSaiEnt));
+
     if versao = 2.00 then
-      rllHoraSaida.Caption := ifthen(hSaiEnt = 0, '', TimeToStr(hSaiEnt))
+      rllHoraSaida.Caption  := ifthen(hSaiEnt = 0, '', TimeToStr(hSaiEnt))
     else
-      rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt)=0, '', TimeToStr(dSaiEnt));
+      rllHoraSaida.Caption  := ifthen(TimeOf(dSaiEnt)=0, '', TimeToStr(dSaiEnt));
 
-    if FNFe.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS, teSVCSP] then
-      begin
-        if FNFe.procNFe.cStat > 0 then
-          begin
-            rllDadosVariaveis1a.Visible := True;
-            rllDadosVariaveis1b.Visible := True;
-          end
-        else
-          begin
-            rllDadosVariaveis1a.Visible := False;
-            rllDadosVariaveis1b.Visible := False;
-          end;
-        rlbCodigoBarrasFS.Visible := False;
+    // Configuração inicial
+    rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
+    rlbCodigoBarras.Visible       := True;
+    rlbCodigoBarrasFS.Visible     := False;
+    rllAvisoContingencia.Visible  := True;
+    rlbAvisoContingencia.Visible  := True;
+    rllAvisoContingencia.Caption  := ACBrStr( 'DANFE em Contingência - Impresso em decorrência de problemas técnicos');
 
-        if FProtocoloNFe <> '' then
-           rllDadosVariaveis3.Caption:= FProtocoloNFe
-        else
-          rllDadosVariaveis3.Caption := FNFe.procNFe.nProt + ' ' +DateTimeToStr(FNFe.procNFe.dhRecbto);
-        rllAvisoContingencia.Visible := False;
-        rlbAvisoContingencia.Visible := False;
-      end
-    else if FNFe.Ide.tpEmis in [teContingencia, teFSDA] then
-      begin
-        sChaveContingencia := FACBrNFe.GerarChaveContingencia(FNFe);
-        rllDadosVariaveis1a.Visible := False;
-        rllDadosVariaveis1b.Visible := False;
-        rlbCodigoBarras.Visible := True;
-        rlbCodigoBarrasFS.Caption := sChaveContingencia;
-        rlbCodigoBarrasFS.Visible := True;
-        rllDadosVariaveis3_Descricao.Caption := 'DADOS DA NF-E';
-        rllDadosVariaveis3.Caption :=
-                          FormatarChaveAcesso(sChaveContingencia);
-        rllAvisoContingencia.Caption := ACBrStr('DANFE em Contingência - ' +
-                                'Impresso em decorrência de problemas técnicos');
-        if (dhCont > 0) and (xJust > '') then
-          rllContingencia.Caption := ACBrStr(
-                    'Data / Hora da entrada em contingência: ') +
-                    FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
-                    '   Motivo: ' + xJust;
-        rllAvisoContingencia.Visible := True;
-        rlbAvisoContingencia.Visible := True;
-      end;
+    rllDadosVariaveis1a.Visible   := False;
+    rllDadosVariaveis1b.Visible   := False;
+
+    case FNFe.Ide.tpEmis of
+      teNormal,
+      teSCAN,
+      teSVCAN,
+      teSVCRS,
+      teSVCSP         : begin
+                          rllAvisoContingencia.Visible        := False;
+                          rlbAvisoContingencia.Visible        := False;
+
+                          rllDadosVariaveis1a.Visible         := ( FNFe.procNFe.cStat > 0 );
+                          rllDadosVariaveis1b.Visible         := rllDadosVariaveis1a.Visible;
+
+                          if FProtocoloNFe <> '' then
+                            rllDadosVariaveis3.Caption        := FProtocoloNFe
+                          else
+                            rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
+                                                                  DateTimeToStr(FNFe.procNFe.dhRecbto);
+                        end;
+      teContingencia,
+      teFSDA          : begin
+                          sChaveContingencia                  := FACBrNFe.GerarChaveContingencia(FNFe);
+                          rlbCodigoBarrasFS.Caption           := sChaveContingencia;
+                          rlbCodigoBarrasFS.Visible           := True;
+
+                          rllDadosVariaveis3_Descricao.Caption:= 'DADOS DA NF-E';
+                          rllDadosVariaveis3.Caption          := FormatarChaveAcesso(sChaveContingencia);
+
+                          if (dhCont > 0) and (xJust > '') then
+                            rllContingencia.Caption           := ACBrStr( 'Data / Hora da entrada em contingência: ') +
+                                                                          FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
+                                                                          ' Motivo contingência: ' + xJust;
+                        end;
+
+      teDPEC          : begin
+                          rllDadosVariaveis1a.Visible         := True;
+                          rllDadosVariaveis1b.Visible         := True;
+
+                          if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
+                            rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
+                                                                  IfThen(FNFe.procNFe.dhRecbto <> 0,
+                                                                  DateTimeToStr(FNFe.procNFe.dhRecbto), '')
+                          else
+                          begin
+                            rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'NÚMERO DE REGISTRO DO EPEC');
+                            if NaoEstaVazio( FProtocoloNFe) then
+                              rllDadosVariaveis3.Caption        := FProtocoloNFe
+                          end;
+
+                          if (dhCont > 0) and (xJust > '') then
+                            rllContingencia.Caption             := ACBrStr( 'Data / Hora da entrada em contingência: ') +
+                                                                            FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
+                                                                            ' Motivo contingência: ' + xJust;
+                        end;
+
+    end;
   end;
 end;
 

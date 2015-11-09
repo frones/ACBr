@@ -608,6 +608,7 @@ type
     function FormatQuantidade(dValor: Double): String;
     function FormatValorUnitario(dValor: Double): String;
     procedure AddFaturaReal;
+    function ManterDuplicatas: Integer;
   public
 
   end;
@@ -1051,7 +1052,7 @@ var
 begin
   with FNFe.InfNFe, FNFe.Ide do
   begin
-    rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
+    rllChave.Caption        := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
     rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
     rllNumNF1.Caption       := rllNumNF0.Caption;
@@ -1866,52 +1867,20 @@ begin
                   rliFatura3.Visible := False;
                 end
                 else
-                begin
-                  if FNFe.Cobr.Dup.Count > 60 then
-                    iQuantDup := 60
-                  else
-                    iQuantDup := FNFe.Cobr.Dup.Count;
-
-                  //adiciona
-                  for x := 0 to (iQuantDup - 1) do
-                    with FNFe.Cobr.Dup[x] do
-                    begin
-                      TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption   := NDup;
-                      TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption  := FormatDateBr(DVenc);
-                      TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup,'###,###,###,##0.00');
-                    end;
-                end;
+                iQuantDup := ManterDuplicatas;
               end;
     ipOutras: begin
-                if FNFe.Cobr.Dup.Count > 0 then
-                begin
-                  TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
-                  TRLLabel(FindComponent('rllFatNum1')).Caption := 'OUTRAS FORMA DE PAGAMENTO';
-                  if FNFe.Cobr.Dup.Count > 60 then
-                    iQuantDup := 60
-                  else
-                    iQuantDup := FNFe.Cobr.Dup.Count;
-
-                  for x := 0 to (iQuantDup - 1) do
-                  begin
-                    with FNFe.Cobr.Dup[x] do
-                    begin
-                      TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption   := NDup;
-                      TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption  := FormatDateBr(DVenc);
-                      TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup,'###,###,###,##0.00');
-                    end;
-                  end;
-                end;
+                iQuantDup := ManterDuplicatas;
               end;
   end;
   {=============== Ajusta o tamanho do quadro das faturas ===============}
   if iQuantDup > 0 then
   begin
-    iColunas := 4; // Quantidade de colunas
-    iAltLinha := 13;  // Altura de cada linha
-    iPosQuadro := 12; // Posição (Top) do Quadro
-    iAltQuadro1Linha := 27; // Altura do quadro com 1 linha
-    iFolga := 5; // Distância entre o final da Band e o final do quadro
+    iColunas          := 4;   // Quantidade de colunas
+    iAltLinha         := 13;  // Altura de cada linha
+    iPosQuadro        := 12;  // Posição (Top) do Quadro
+    iAltQuadro1Linha  := 27;  // Altura do quadro com 1 linha
+    iFolga            := 5;   // Distância entre o final da Band e o final do quadro
 
     if (iQuantDup mod iColunas) = 0 then // Quantidade de linhas
       iLinhas := iQuantDup div iColunas
@@ -1925,8 +1894,8 @@ begin
 
     iAltBand := iPosQuadro + iAltQuadro + iFolga;
 
-    rlbFatura.Height := iAltBand;
-    rliFatura.Height := iAltQuadro;
+    rlbFatura.Height  := iAltBand;
+    rliFatura.Height  := iAltQuadro;
     rliFatura1.Height := iAltQuadro;
     rliFatura2.Height := iAltQuadro;
     rliFatura3.Height := iAltQuadro;
@@ -2272,6 +2241,29 @@ begin
       RlbDadoValorOriginal.caption  := '';
       RlbDadoValorDesconto.caption  := '';
       RlbDadoValorLiquido.caption   := '';
+    end;
+  end;
+end;
+
+Function TfrlDANFeRLRetrato.ManterDuplicatas : Integer;
+Var
+  x : Integer;
+begin
+  with FNFe.Cobr do
+  begin
+    if Dup.Count > 60 then
+      Result := 60
+    else
+      Result := Dup.Count;
+
+    for x := 0 to (Result - 1) do
+    begin
+      with Dup[x] do
+      begin
+        TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
+        TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
+        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,'###,###,###,##0.00');
+      end;
     end;
   end;
 end;

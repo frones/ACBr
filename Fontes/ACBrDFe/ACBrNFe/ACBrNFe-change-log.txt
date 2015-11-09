@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2015
+-- pcnNFeW --
+[-] Ajuste na geração do Grupo "pag".
+    por: João Elson
+
 05/11/2015
 -- pcnNFeW --
 [-] Correção na geração do Grupo "pag"    (por: Leonardo de Biasi)

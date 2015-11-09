@@ -2302,7 +2302,7 @@ begin
     Gerador.wGrupo('pag', 'YA01');
     Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, DSC_VPAG);
-    if(NFe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) then
+    if(NFe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and (NFe.pag[i].tpIntegra <> tiNaoInformado) then
       begin
         Gerador.wGrupo('card', 'YA04');
         Gerador.wCampo(tcStr, 'YA04a', 'tpIntegra', 01, 01, 0, tpIntegraToStr(nfe.pag[i].tpIntegra), DSC_TPINTEGRA);

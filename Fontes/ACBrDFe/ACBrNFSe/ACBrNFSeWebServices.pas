@@ -478,34 +478,6 @@ type
     property NFSeRetorno: TretSubsNFSe  read FNFSeRetorno        write FNFSeRetorno;
   end;
 
-{ TNFSeLinkNFSe }
-  (*
-  TNFSeLinkNFSe = Class(TNFSeWebService)
-  private
-    FNumeroNFSe: Integer;
-    FCodVerif: String;
-    FLink: String;
-    FIM: String;
-
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-    procedure FinalizarServico; override;
-    function GerarMsgLog: String; override;
-    function GerarPrefixoArquivo: String; override;
-  public
-    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
-      reintroduce; overload;
-    destructor Destroy; override;
-
-    property NumeroNFSe: Integer read FNumeroNFSe;
-    property CodVerif: String read FCodVerif;
-    property Link: String read FLink;
-    property IM: String read FIM;
-  end;
-  *)
   { TNFSeEnvioWebService }
 
   TNFSeEnvioWebService = class(TNFSeWebService)
@@ -547,7 +519,6 @@ type
     FConsNFSe: TNFSeConsultarNFSe;
     FCancNFSe: TNFSeCancelarNFSe;
     FSubNFSe: TNFSeSubstituirNFSe;
-//    FLinkNFSe: TNFSeLinkNFSe;
     FEnvioWebService: TNFSeEnvioWebService;
 
   public
@@ -599,8 +570,6 @@ type
 
     function SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 
-//    function LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
-
     property ACBrNFSe: TACBrDFe read FACBrNFSe write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
     property EnviarLoteRPS: TNFSeEnviarLoteRPS read FEnviarLoteRPS write FEnviarLoteRPS;
@@ -612,7 +581,6 @@ type
     property ConsNFSe: TNFSeConsultarNFSe read FConsNFSe write FConsNFSe;
     property CancNFSe: TNFSeCancelarNFSe read FCancNFSe write FCancNFSe;
     property SubNFSe: TNFSeSubstituirNFSe read FSubNFSe write FSubNFSe;
-//    property LinkNFSe: TNFSeLinkNFSe read FLinkNFSe write FLinkNFSe;
     property EnvioWebService: TNFSeEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -2314,8 +2282,8 @@ procedure TNFSeConsultarLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeConsultarLoteRPS.GerarMsgLog: String;
@@ -2529,8 +2497,8 @@ procedure TNFSeConsultarNfseRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeConsultarNfseRPS.GerarMsgLog: String;
@@ -2729,8 +2697,8 @@ procedure TNFSeConsultarNfse.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeConsultarNfse.GerarMsgLog: String;
@@ -3435,86 +3403,6 @@ begin
   Result := NumeroNFSe;
 end;
 
-{ TNFSeLinkNFSe }
-(*
-constructor TNFSeLinkNFSe.Create(AOwner: TACBrDFe;
-  ANotasFiscais: TNotasFiscais);
-begin
-  inherited Create(AOwner);
-
-  FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeRecepcao;
-  FPLayout := LayNfseRecepcaoLote;
-  FPArqEnv := '';
-  FPArqResp := '';
-end;
-
-destructor TNFSeLinkNFSe.Destroy;
-begin
-  inherited Destroy;
-end;
-
-procedure TNFSeLinkNFSe.DefinirURL;
-begin
-  FPLayout := LayNfseRecepcaoLote;
-  inherited DefinirURL;
-end;
-
-procedure TNFSeLinkNFSe.DefinirServicoEAction;
-begin
-  FPServico := 'NFSeLinkNfse';
-  FPSoapAction := 'NFSeLinkNfse';
-end;
-
-procedure TNFSeLinkNFSe.DefinirDadosMsg;
-var
-  Texto, xNumeroNFSe, xNomeMunic: String;
-begin
- if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
- begin
-   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.ProLinkNFSe;
-   xNomeMunic := FPConfiguracoesNFSe.Geral.xNomeURL_P;
- end
- else begin
-   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.HomLinkNFSe;
-   xNomeMunic := FPConfiguracoesNFSe.Geral.xNomeURL_H;
- end;
-  // %CodVerif%      : Representa o Código de Verificação da NFS-e
-  // %NumeroNFSe%    : Representa o Numero da NFS-e
-  // %NomeMunicipio% : Representa o Nome do Municipio
-  // %InscMunic%     : Representa a Inscrição Municipal do Emitente
-
-  xNumeroNFSe := IntToStr(FNumeroNFSe);
-
-  Texto := StringReplace(Texto, '%CodVerif%', FCodVerif, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%InscMunic%', FIM, [rfReplaceAll]);
-
-  FLink := Texto;
-end;
-
-function TNFSeLinkNFSe.TratarResposta: Boolean;
-begin
-  Result := True; 
-end;
-
-procedure TNFSeLinkNFSe.FinalizarServico;
-begin
-  inherited FinalizarServico;
-end;
-
-function TNFSeLinkNFSe.GerarMsgLog: String;
-begin
-  Result := '';
-end;
-
-function TNFSeLinkNFSe.GerarPrefixoArquivo: String;
-begin
-  Result := '';
-end;
-*)
 { TNFSeEnvioWebService }
 
 constructor TNFSeEnvioWebService.Create(AOwner: TACBrDFe);
@@ -3594,8 +3482,7 @@ begin
   FConsNfse       := TNFSeConsultarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   FCancNfse       := TNFSeCancelarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   FSubNfse        := TNFSeSubstituirNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
-//  FLinkNfse       := TNFSeLinkNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
-  
+
   FEnvioWebService := TNFSeEnvioWebService.Create(FACBrNFSe);
 end;
 
@@ -3611,7 +3498,6 @@ begin
   FConsNfse.Free;
   FCancNfse.Free;
   FSubNfse.Free;
-//  FLinkNfse.Free;
   FEnvioWebService.Free;
 
   inherited Destroy;
@@ -3974,21 +3860,6 @@ begin
       FSubNfse.GerarException( FSubNfse.Msg );
   end;
 end;
-(*
-function TWebServices.LinkNFSeGerada(ANumeroNFSe: Integer; ACodVerificacao,
-  AInscricaoM: String): String;
-begin
-  FLinkNfse.FNumeroNFSe := ANumeroNFSe;
-  FLinkNFSe.FCodVerif   := ACodVerificacao;
-  FLinkNfse.FIM         := AInscricaoM;
 
-  Result := '';
-
-  if not (FLinkNfse.Executar) then
-    FLinkNfse.GerarException( FLinkNfse.Msg );
-
-  Result := FLinkNFSe.FLink;
-end;
-*)
 end.
 

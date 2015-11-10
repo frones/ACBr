@@ -1295,20 +1295,26 @@ end;
 
 procedure TACBrDevice.EnviaStringSerial(const AString : AnsiString) ;
 Var
-  I, Max, NBytes : Integer ;
+  I, Max, BytesToSend, BytesSent : Integer ;
+  Buffer: AnsiString;
 begin
   I   := 1 ;
   Max := Length(AString) ;
-  NBytes := fsSendBytesCount ;
-  if NBytes = 0 then
-     NBytes := Max ;
 
   while I <= Max do
   begin
-     Serial.SendString( copy(AString, I, NBytes ) ) ;    { Envia para Porta Serial }
+     BytesToSend := fsSendBytesCount ;
+     if BytesToSend = 0 then
+        BytesToSend := Max ;
+
+     Buffer := copy(AString, I, BytesToSend );
+     BytesToSend := min(Length(Buffer), BytesToSend);
+     BytesSent := Serial.SendBuffer(Pointer(Buffer), BytesToSend);
+
      if fsSendBytesInterval > 0 then
         Sleep( fsSendBytesInterval ) ;
-     I := I + NBytes ;
+
+     I := I + BytesSent ;
   end ;
 end ;
 

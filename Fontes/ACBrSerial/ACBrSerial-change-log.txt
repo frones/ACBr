@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/11/2015
+-- ACBrDevice --
+[*] Ajuste para método "EnviaStringSerial" considerar os Bytes realmente
+    enviados.   (por: DSA)
+
+-- ACBrECFEscECF --
+[-] Ajuste para problema de Loop infinito em Daruma FS800I
+    http://www.projetoacbr.com.br/forum/topic/25830-loop-daruma-fs800i/
+[*] Diminuindo constante tempo de espera WAK de 200 para 50
+
 Data: 04/11/2015
 -- ACBrEscDaruma --
 [*] Ajuste para QRCode suportar Largura de Módulo = 3  (por: DSA)

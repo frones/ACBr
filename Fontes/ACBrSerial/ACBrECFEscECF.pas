@@ -50,7 +50,7 @@ uses Classes,
 const
     cEscECFMaxBuffer = 1024 ;
     cNumFalhasMax = 5;
-    cEsperaWAK = 200;
+    cEsperaWAK = 50;
 
 type
 
@@ -694,7 +694,7 @@ begin
       if not fsSincronizou then
       begin
         Inc( fsFalhas ) ;
-        GravaLog('         Falha: '+IntToStr(fsFalhas));
+        GravaLog('     Falha SYN: '+IntToStr(fsFalhas));
         Device.Serial.Purge;
         Sleep(100);
       end;
@@ -974,16 +974,23 @@ begin
     end
     else
     begin
-      // Se ECF não respondeu a status... Envia comando novamente
+      // Se ECF não respondeu a status... Envia comando novamente ou solicite status
       if (fsTimeOutStatus > 0) and (fsTimeOutStatus < Now) and (fsFalhas < cNumFalhasMax) then
       begin
-        Inc( fsFalhas ) ;
-        Sleep( cEsperaWAK );
+        Inc(fsFalhas);
         GravaLog('         Falha: '+IntToStr(fsFalhas));
         Device.Serial.Purge;
-        GravaLog('        Reenvio TX -> '+ComandoEnviado, True);
-        Device.EnviaString( ComandoEnviado ) ;
-        fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+        Sleep( cEsperaWAK );
+
+        // Se for leitura de informações e Falha 1, Primeiro vamos tentar um novo pedido de Status
+        if (fsFalhas = 1) and (EscECFComando.fsCMD = 26) then
+          PedeStatus
+        else
+        begin
+          GravaLog('        Reenvio TX -> '+ComandoEnviado, True);
+          Device.EnviaString( ComandoEnviado ) ;
+          fsTimeOutStatus := IncMilliSecond(now,1000);  // Espera Status por 1 seg..
+        end;
       end;
     end;
   end;

@@ -928,7 +928,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw6
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -944,7 +943,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw6
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -1060,7 +1058,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-        Transparent = False
       end
       object rllInscricaoEstadual: TRLLabel
         Tag = 703
@@ -1372,7 +1369,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -1402,7 +1398,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -1432,7 +1427,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -1717,7 +1711,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Height = 1
         DrawKind = dkLine
-        Holder = RLDraw15
         HoldStyle = hsRelatively
       end
       object RLDraw17: TRLDraw
@@ -1726,7 +1719,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Height = 1
         DrawKind = dkLine
-        Holder = RLDraw15
         HoldStyle = hsRelatively
       end
       object RLDraw22: TRLDraw
@@ -4738,7 +4730,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw29
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -4769,7 +4760,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = RLDraw29
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -5034,7 +5024,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Height = 1
         DrawKind = dkLine
-        Holder = RLDraw29
         HoldStyle = hsRelatively
       end
       object rliDivImposto1: TRLDraw
@@ -5229,7 +5218,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -5259,7 +5247,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -5289,7 +5276,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -5320,7 +5306,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Height = -7
         Font.Name = 'Arial'
         Font.Style = []
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
       end
@@ -5650,7 +5635,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Height = 1
         DrawKind = dkLine
-        Holder = rliTransp
         HoldStyle = hsRelatively
       end
       object RLDraw39: TRLDraw
@@ -5659,7 +5643,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Height = 1
         DrawKind = dkLine
-        Holder = rliTransp
         HoldStyle = hsRelatively
       end
       object rliTransp1: TRLDraw
@@ -5669,7 +5652,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 31
         Angle = 90.000000000000000000
         DrawKind = dkLine
-        Holder = rliTransp
         HoldStyle = hsRelatively
       end
       object rliTransp2: TRLDraw
@@ -5807,6 +5789,18 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Background.Width = 865
       AfterPrint = rlbItensAfterPrint
       BeforePrint = rlbItensBeforePrint
+      object FundoItem: TRLLabel
+        Left = 0
+        Top = 0
+        Width = 740
+        Height = 12
+        AutoSize = False
+        Caption = '  '
+        Color = 16316664
+        ParentColor = False
+        Transparent = False
+        Visible = False
+      end
       object txtCodigo: TRLDBText
         Tag = 705
         Left = 2
@@ -6434,6 +6428,17 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Top = 955
       Width = 742
       Height = 20
+      object FundoObsItem: TRLLabel
+        Left = 0
+        Top = 0
+        Width = 740
+        Height = 12
+        AutoSize = False
+        Caption = '  '
+        Color = 16316664
+        ParentColor = False
+        Transparent = False
+      end
       object LinhaFimObsItem: TRLDraw
         Left = 0
         Top = 14

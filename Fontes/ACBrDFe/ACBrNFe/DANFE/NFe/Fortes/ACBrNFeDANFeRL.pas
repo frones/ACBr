@@ -189,6 +189,11 @@ type
     FTamanhoFonteEndereco: Integer;
     FRecuoLogo: Integer;
 
+    fMostraDadosISSQN: Boolean;
+    fAltLinhaComun: Integer;
+    fEspacoEntreProdutos: Integer;
+    fAlternaCoresProdutos: Boolean;
+    fCorDestaqueProdutos: TColor;
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
     procedure ConfigDataSet;
@@ -231,6 +236,11 @@ type
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
+                    AMostraDadosISSQN: Boolean = True;
+                    AAltLinhaComun: Integer = 30;
+                    AEspacoEntreProdutos: Integer = 7;
+                    AAlternaCoresProdutos: Boolean = False;
+                    ACorDestaqueProdutos: TColor = clWhite;
                     ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
@@ -274,6 +284,11 @@ type
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
+                    AMostraDadosISSQN: Boolean = True;
+                    AAltLinhaComun: Integer = 30;
+                    AEspacoEntreProdutos: Integer = 7;
+                    AAlternaCoresProdutos: Boolean = False;
+                    ACorDestaqueProdutos: TColor = clWhite;
 		    ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
@@ -418,6 +433,11 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                 AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                 AdExibeCampoFatura: Boolean = False;
+                AMostraDadosISSQN: Boolean = True;
+                AAltLinhaComun: Integer = 30;
+                AEspacoEntreProdutos: Integer = 7;
+                AAlternaCoresProdutos: Boolean = False;
+                ACorDestaqueProdutos: TColor = clWhite;
                 ATamanhoLogoHeight: Integer = 200;
                 ATamanhoLogoWidth: Integer = 200;
                 ARecuoEndereco: Integer = 10;
@@ -479,6 +499,11 @@ begin
       FLogoemCima := ALogoemCima;
       FTamanhoFonteEndereco := ATamanhoFonteEndereco;
       FRecuoLogo := ARecuoLogo;
+      fMostraDadosISSQN := AMostraDadosISSQN;
+      fAltLinhaComun := AAltLinhaComun;
+      fEspacoEntreProdutos := AEspacoEntreProdutos;
+      fAlternaCoresProdutos := AAlternaCoresProdutos;
+      fCorDestaqueProdutos := ACorDestaqueProdutos;
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
@@ -533,6 +558,11 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
+                    AMostraDadosISSQN: Boolean = True;
+                    AAltLinhaComun: Integer = 30;
+                    AEspacoEntreProdutos: Integer = 7;
+                    AAlternaCoresProdutos: Boolean = False;
+                    ACorDestaqueProdutos: TColor = clWhite;
                     ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
@@ -595,6 +625,11 @@ begin
       FTamanhoFonteEndereco := ATamanhoFonteEndereco;
       FRecuoLogo := ARecuoLogo;
 
+      fMostraDadosISSQN := AMostraDadosISSQN;
+      fAltLinhaComun := AAltLinhaComun;
+      fEspacoEntreProdutos := AEspacoEntreProdutos;
+      fAlternaCoresProdutos := AAlternaCoresProdutos;
+      fCorDestaqueProdutos := ACorDestaqueProdutos;
       if Trim(AFile) = '' then
         raise EACBrNFeException.Create('Erro ao gerar PDF. Arquivo não informado');
 

@@ -1161,7 +1161,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw6
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -1179,7 +1178,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw6
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -1322,7 +1320,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        Transparent = False
       end
       object rllInscricaoEstadual: TRLLabel
         Tag = 703
@@ -1709,7 +1706,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -1744,7 +1740,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -1779,7 +1774,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -2117,7 +2111,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Angle = 0
         DrawKind = dkLine
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -2131,7 +2124,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Angle = 0
         DrawKind = dkLine
-        Holder = RLDraw15
         HoldStyle = hsRelatively
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5606,7 +5598,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw29
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -5642,7 +5633,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = RLDraw29
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -5955,7 +5945,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Angle = 0
         DrawKind = dkLine
-        Holder = RLDraw29
         HoldStyle = hsRelatively
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -6214,7 +6203,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -6249,7 +6237,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -6284,7 +6271,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -6320,7 +6306,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Holder = rliTransp
         HoldStyle = hsRelatively
         ParentFont = False
         RealBounds.Left = 0
@@ -6710,7 +6695,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Angle = 0
         DrawKind = dkLine
-        Holder = rliTransp
         HoldStyle = hsRelatively
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -6724,7 +6708,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 740
         Angle = 0
         DrawKind = dkLine
-        Holder = rliTransp
         HoldStyle = hsRelatively
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -6738,7 +6721,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 1
         Angle = 90
         DrawKind = dkLine
-        Holder = rliTransp
         HoldStyle = hsRelatively
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -6928,6 +6910,22 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Height = 0
       AfterPrint = rlbItensAfterPrint
       BeforePrint = rlbItensBeforePrint
+      object FundoItem: TRLLabel
+        Left = 0
+        Height = 12
+        Top = 0
+        Width = 740
+        AutoSize = False
+        Caption = '  '
+        Color = 16316664
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+        Visible = False
+      end
       object txtCodigo: TRLDBText
         Tag = 705
         Left = 2
@@ -7709,6 +7707,21 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      object FundoObsItem: TRLLabel
+        Left = 0
+        Height = 12
+        Top = 0
+        Width = 740
+        AutoSize = False
+        Caption = '  '
+        Color = 16316664
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
       object LinhaFimObsItem: TRLDraw
         Left = 0
         Height = 1

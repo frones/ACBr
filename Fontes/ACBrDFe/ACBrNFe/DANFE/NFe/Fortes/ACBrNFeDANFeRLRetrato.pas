@@ -574,6 +574,8 @@ type
     RLLabelLIQ: TRLLabel;
     RlbDadoValorLiquido: TRLLabel;
     RLDraw12: TRLDraw;
+    FundoItem: TRLLabel;
+    FundoObsItem: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -609,6 +611,7 @@ type
     function FormatValorUnitario(dValor: Double): String;
     procedure AddFaturaReal;
     function ManterDuplicatas: Integer;
+	procedure AplicaParametros;
   public
 
   end;
@@ -1044,6 +1047,8 @@ begin
     rlbContinuacaoInformacoesComplementares.Visible := False;
 
   iQuantItens := FNFe.Det.Count;
+
+  AplicaParametros; // Aplica os parâmetros escolhidos
 end;
 
 procedure TfrlDANFeRLRetrato.Header;
@@ -1907,6 +1912,21 @@ var
   h: integer;
   str: WideString;
 begin
+  //// Alterna produtos com fundo colorido e fundo branco
+  FundoItem.Color := fCorDestaqueProdutos;
+  FundoObsItem.Color := fCorDestaqueProdutos;
+
+  if fAlternaCoresProdutos = False then
+  begin
+     FundoItem.Visible := False;
+     FundoObsItem.Visible := False;
+  end
+  else
+  begin
+     FundoItem.Visible := not (FundoItem.Visible);
+     FundoObsItem.Visible := not (FundoObsItem.Visible);
+  end;
+
   q := q + 1;
   if FNFe.Det.Items[q - 1].infAdProd > '' then
   begin
@@ -1923,6 +1943,8 @@ begin
     h := h + 1;
     LinhaObsItemEsquerda.Height := h;
     LinhaObsItemDireita.Height := h;
+    FundoObsItem.Height := h;
+
     if iQuantItens > q then
       LinhaInicioItem.Visible := True
     else
@@ -2268,4 +2290,244 @@ begin
   end;
 end;
 
+// Aplica parametros para formatar o Danfe
+procedure TfrlDANFeRLRetrato.AplicaParametros;
+var
+  base: Integer;
+  AltLinhaComun: Integer;
+begin
+
+  if (fMostraDadosISSQN = False) then
+    rlbISSQN.Visible := False;
+
+  AltLinhaComun := fAltLinhaComun;
+
+  // ******** Cabeçalho ********
+  base := RLDraw6.Top;
+  RLDraw6.Height := 2*AltLinhaComun + 1;
+  RLDraw8.Top    := base + AltLinhaComun;
+  RLDraw9.Height := AltLinhaComun + 1;
+
+  RLDraw10.Top := base + AltLinhaComun;
+  RLDraw10.Height := AltLinhaComun + 1;
+  RLDraw11.Top    := base + AltLinhaComun;
+  RLDraw11.Height := AltLinhaComun + 1;
+
+  RLLabel28.Top := base + 1;
+  rllDadosVariaveis3_Descricao.Top:= base + 1;
+
+  RLLabel29.Top := base + AltLinhaComun + 1;
+  RLLabel30.Top := base + AltLinhaComun + 1;
+  RLLabel31.Top := base + AltLinhaComun + 1;
+
+  rllNatOperacao.Top     := base + AltLinhaComun - 13;
+  rllDadosVariaveis3.Top := base + AltLinhaComun - 13;
+
+  rllInscricaoEstadual.Top := base + 2*AltLinhaComun - 13;
+  rllInscrEstSubst.Top     := base + 2*AltLinhaComun - 13;
+  rllCNPJ.Top              := base + 2*AltLinhaComun - 13;
+
+  // Bands remetente
+  rlbEmitente.Height     := 182 + (2*AltLinhaComun - 60);
+
+  // ******** Destinatario ********
+  base := RLDraw15.Top;
+  RLDraw15.Height := 3*AltLinhaComun + 1;
+
+  RLDraw16.Top := base + AltLinhaComun;
+  RLDraw17.Top := base + 2*AltLinhaComun;
+
+  RLDraw18.Height := 3*AltLinhaComun;
+  RLDraw19.Height := AltLinhaComun;
+
+  RLDraw20.Top    := base + AltLinhaComun;
+  RLDraw20.Height := AltLinhaComun;
+  RLDraw21.Top    := base + AltLinhaComun;
+  RLDraw21.Height := AltLinhaComun;
+
+  RLDraw22.Top    := base + 2*AltLinhaComun;
+  RLDraw22.Height := AltLinhaComun;
+  RLDraw23.Top    := base + 2*AltLinhaComun;
+  RLDraw23.Height := AltLinhaComun;
+  RLDraw24.Top    := base + 2*AltLinhaComun;
+  RLDraw24.Height := AltLinhaComun;
+
+  // Linha 1
+  RLLabel32.Top := base + 1;
+  RLLabel33.Top := base + 1;
+  RLLabel34.Top := base + 1;
+
+  rllDestNome.Top := base + AltLinhaComun - 13;
+  rllDestCNPJ.Top := base + AltLinhaComun - 13;
+  rllEmissao.Top  := base + AltLinhaComun - 13;
+
+  // Linha 2
+  RLLabel35.Top := base + AltLinhaComun + 1;
+  RLLabel36.Top := base + AltLinhaComun + 1;
+  RLLabel37.Top := base + AltLinhaComun + 1;
+  RLLabel38.Top := base + AltLinhaComun + 1;
+
+  rllDestEndereco.Top := base + 2*AltLinhaComun - 13;
+  rllDestBairro.Top   := base + 2*AltLinhaComun - 13;
+  rllDestCEP.Top := base + 2*AltLinhaComun - 13;
+  rllSaida.Top   := base + 2*AltLinhaComun - 13;
+
+  // Linha 3
+  RLLabel39.Top := base + 2*AltLinhaComun + 1;
+  RLLabel40.Top := base + 2*AltLinhaComun + 1;
+  RLLabel41.Top := base + 2*AltLinhaComun + 1;
+  RLLabel42.Top := base + 2*AltLinhaComun + 1;
+  RLLabel43.Top := base + 2*AltLinhaComun + 1;
+
+  rllDestCidade.Top := base + 3*AltLinhaComun - 13;
+  rllDestFone.Top   := base + 3*AltLinhaComun - 13;
+  rllDestUF.Top     := base + 3*AltLinhaComun - 13;
+  rllDestIE.Top     := base + 3*AltLinhaComun - 13;
+  rllHoraSaida.Top  := base + 3*AltLinhaComun - 13;
+
+  // Band destinatario
+  rlbDestinatario.Height := 108 + (3*AltLinhaComun - 90);
+
+  // ******** Cálculo do imposto ********
+  base := RLDraw29.Top;
+  RLDraw29.Height := 2*AltLinhaComun + 1;
+
+  RLDraw30.Top := base + AltLinhaComun;
+
+  rliDivImposto1.Height := AltLinhaComun;
+  rliDivImposto2.Height := AltLinhaComun;
+  rliDivImposto3.Height := AltLinhaComun;
+  rliDivImposto4.Height := AltLinhaComun;
+  rliDivImposto5.Height := AltLinhaComun;
+  rliDivImposto1.Top := base;
+  rliDivImposto2.Top := base;
+  rliDivImposto3.Top := base;
+  rliDivImposto4.Top := base;
+  rliDivImposto5.Top := base;
+
+  RLDraw33.Height := AltLinhaComun;
+  RLDraw34.Height := AltLinhaComun;
+  RLDraw35.Height := AltLinhaComun;
+  RLDraw3.Height := AltLinhaComun;
+  RLDraw5.Height := AltLinhaComun;
+  RLDraw33.Top   := base + AltLinhaComun;
+  RLDraw34.Top   := base + AltLinhaComun;
+  RLDraw35.Top   := base + AltLinhaComun;
+  RLDraw3.Top    := base + AltLinhaComun;
+  RLDraw5.Top    := base + AltLinhaComun;
+
+  // Linha 1
+  rllTituloBaseICMS.Top   := base + 1;
+  rllTituloValorICMS.Top  := base + 1;
+  rllTituloBaseICMSST.Top := base + 1;
+  rllTituloValorICMSST.Top   := base + 1;
+  rllTituloTotalTributos.Top := base + 1;
+  rlLabel48.Top := base + 1;
+
+  rllBaseICMS.Top   := base + AltLinhaComun - 13;
+  rllValorICMS.Top  := base + AltLinhaComun - 13;
+  rllBaseICMSST.Top := base + AltLinhaComun - 13;
+  rllValorICMSST.Top   := base + AltLinhaComun - 13;
+  rllTotalTributos.Top := base + AltLinhaComun - 13;
+  rllTotalProdutos.Top := base + AltLinhaComun - 13;
+
+  // Linha 2
+  RLLabel49.Top := base + AltLinhaComun + 1;
+  RLLabel50.Top := base + AltLinhaComun + 1;
+  RLLabel51.Top := base + AltLinhaComun + 1;
+  RLLabel52.Top := base + AltLinhaComun + 1;
+  RLLabel53.Top := base + AltLinhaComun + 1;
+  RLLabel54.Top := base + AltLinhaComun + 1;
+
+  rllValorFrete.Top  := base + 2*AltLinhaComun - 13;
+  rllValorSeguro.Top := base + 2*AltLinhaComun - 13;
+  rllDescontos.Top   := base + 2*AltLinhaComun - 13;
+  rllAcessorias.Top  := base + 2*AltLinhaComun - 13;
+  rllValorIPI.Top    := base + 2*AltLinhaComun - 13;
+  rllTotalNF.Top     := base + 2*AltLinhaComun - 13;
+
+  RLLabel25.Top := base + AltLinhaComun;
+  RLLabel25.Height := AltLinhaComun-1;
+
+  // Band Calculo do imposto
+  rlbImposto.Height      := 79  + (2*AltLinhaComun - 60);
+
+  // ******** Transportadora ********
+  base := rliTransp.Top;
+  rliTransp.Height := 3*AltLinhaComun;
+
+  RLDraw38.Top := base + AltLinhaComun;
+  RLDraw39.Top := base + 2*AltLinhaComun;
+
+  RLDraw41.Top := base;
+  RLDraw47.Top := base;
+  RLDraw48.Top := base;
+  RLDraw49.Top := base;
+  rliTransp5.Top := base;
+
+  RLDraw41.Height := AltLinhaComun;
+  RLDraw47.Height := AltLinhaComun;
+  RLDraw48.Height := AltLinhaComun;
+  RLDraw49.Height := 2*AltLinhaComun;
+  rliTransp5.Height := 3*AltLinhaComun;
+
+  RLDraw70.Top    := base + AltLinhaComun;
+  RLDraw70.Height := AltLinhaComun;
+
+  rliTransp1.Top := base + 2*AltLinhaComun;
+  rliTransp2.Top := base + 2*AltLinhaComun;
+  rliTransp3.Top := base + 2*AltLinhaComun;
+  rliTransp4.Top := base + 2*AltLinhaComun;
+  rliTransp1.Height := AltLinhaComun;
+  rliTransp2.Height := AltLinhaComun;
+  rliTransp3.Height := AltLinhaComun;
+  rliTransp4.Height := AltLinhaComun;
+
+  //Linha 1
+  RLLabel55.Top := base + 1;
+  RLLabel56.Top := base + 1;
+  RLLabel59.Top := base + 1;
+  RLLabel60.Top := base + 1;
+  RLLabel61.Top := base + 1;
+  RLLabel62.Top := base + 1;
+
+  rllTransNome.Top       := base + AltLinhaComun - 13;
+  rllTransModFrete.Top   := base + AltLinhaComun - 13;
+  rllTransCodigoANTT.Top := base + AltLinhaComun - 13;
+  rllTransPlaca.Top      := base + AltLinhaComun - 13;
+  rllTransUFPlaca.Top    := base + AltLinhaComun - 13;
+  rllTransCNPJ.Top       := base + AltLinhaComun - 13;
+
+  //Linha 2
+  RLLabel63.Top := base + AltLinhaComun + 1;
+  RLLabel64.Top := base + AltLinhaComun + 1;
+  RLLabel65.Top := base + AltLinhaComun + 1;
+  RLLabel66.Top := base + AltLinhaComun + 1;
+
+  rllTransEndereco.Top := base + 2*AltLinhaComun - 13;
+  rllTransCidade.Top   := base + 2*AltLinhaComun - 13;
+  rllTransUF.Top := base + 2*AltLinhaComun - 13;
+  rllTransIE.Top := base + 2*AltLinhaComun - 13;
+
+  //Linha 3
+  RLLabel67.Top := base + 2*AltLinhaComun + 1;
+  RLLabel68.Top := base + 2*AltLinhaComun + 1;
+  RLLabel69.Top := base + 2*AltLinhaComun + 1;
+  RLLabel70.Top := base + 2*AltLinhaComun + 1;
+  RLLabel71.Top := base + 2*AltLinhaComun + 1;
+  RLLabel72.Top := base + 2*AltLinhaComun + 1;
+
+  rllTransQTDE.Top      := base + 3*AltLinhaComun - 13;
+  rllTransEspecie.Top   := base + 3*AltLinhaComun - 13;
+  rllTransMarca.Top     := base + 3*AltLinhaComun - 13;
+  rllTransNumeracao.Top := base + 3*AltLinhaComun - 13;
+  rllTransPesoBruto.Top := base + 3*AltLinhaComun - 13;
+  rllTransPesoLiq.Top   := base + 3*AltLinhaComun - 13;
+
+  // Band Transportadora
+  rlbTransp.Height       := 110 + (3*AltLinhaComun - 90);
+
+  // ******** Produtos ********
+  rlbObsItem.Height      := 12 + fEspacoEntreProdutos; // Remove espaço entre produtos com EspacoEntreProdutos = 0
+end;
 end.

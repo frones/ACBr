@@ -45,7 +45,7 @@ uses SysUtils, Classes,
   {$ELSE}
   Forms, Dialogs,
   {$ENDIF}
-  RLConsts, pcnNFe, pcnConversao, ACBrNFeDANFEClass;
+  Graphics, RLConsts, pcnNFe, pcnConversao, ACBrNFeDANFEClass;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);
@@ -96,6 +96,11 @@ type
     FDetArmamentos: TDetArmamentos;
     FDetCombustiveis: TDetCombustiveis;
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
+    fMostraDadosISSQN: Boolean;
+    fAltLinhaComun: Integer;
+    fEspacoEntreProdutos: Integer;
+    fAlternaCoresProdutos: Boolean;
+    fCorDestaqueProdutos: TColor;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -124,6 +129,11 @@ type
                             [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
     property ExibeCampoFatura: Boolean        read fExibeCampoFatura      write fExibeCampoFatura;
+    property MostraDadosISSQN: Boolean read FMostraDadosISSQN write FMostraDadosISSQN default True; // Oculta o campo ISSQN mesmo possuindo inscrição municipal
+    property AltLinhaComun: Integer read FAltLinhaComun write FAltLinhaComun default 30; // Alturas das linhas mais comuns do Danfe
+    property EspacoEntreProdutos: Integer read FEspacoEntreProdutos write FEspacoEntreProdutos default 7; // Altura dos espaços entre os produtos
+    property AlternaCoresProdutos: Boolean read FAlternaCoresProdutos write FAlternaCoresProdutos default False; // Alterna as cores de fundo dos produtos para destaca-los
+    property CorDestaqueProdutos: TColor read FCorDestaqueProdutos write FCorDestaqueProdutos default clWhite; // Cor usada para destacar produtos na lista alternando entre fundo coloridos e não colorido
   end;
 
 implementation
@@ -175,6 +185,11 @@ begin
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
   fExibeCampoFatura       := False;
+  fMostraDadosISSQN     := True;
+  fAltLinhaComun        := 30;
+  fEspacoEntreProdutos  := 7;
+  fAlternaCoresProdutos := False;
+  fCorDestaqueProdutos  := clWhite;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -215,7 +230,12 @@ try
           Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
           fCasasDecimais._Mask_vUnCom,
-          fExibeCampoFatura );
+          fExibeCampoFatura,
+          fMostraDadosISSQN,
+          fAltLinhaComun,
+          fEspacoEntreProdutos,
+          fAlternaCoresProdutos,
+          fCorDestaqueProdutos);
         end;
     end
   else
@@ -235,7 +255,12 @@ try
       Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
       fCasasDecimais._Mask_vUnCom,
-      fExibeCampoFatura );
+      fExibeCampoFatura,
+      fMostraDadosISSQN,
+      fAltLinhaComun,
+      fEspacoEntreProdutos,
+      fAlternaCoresProdutos,
+      fCorDestaqueProdutos );
     end;
 
   finally
@@ -282,7 +307,12 @@ begin
           Integer ( fCasasDecimais.Formato ),
           fCasasDecimais._Mask_qCom,
           fCasasDecimais._Mask_vUnCom,
-          fExibeCampoFatura );
+          fExibeCampoFatura,
+          fMostraDadosISSQN,
+          fAltLinhaComun,
+          fEspacoEntreProdutos,
+          fAlternaCoresProdutos,
+          fCorDestaqueProdutos );
         end;
     end
   else
@@ -306,7 +336,12 @@ begin
       Integer ( fCasasDecimais.Formato ),
       fCasasDecimais._Mask_qCom,
       fCasasDecimais._Mask_vUnCom,
-      fExibeCampoFatura );
+      fExibeCampoFatura,
+      fMostraDadosISSQN,
+      fAltLinhaComun,
+      fEspacoEntreProdutos,
+      fAlternaCoresProdutos,
+      fCorDestaqueProdutos );
     end;
  finally
    FreeAndNil(frlDANFeRL);

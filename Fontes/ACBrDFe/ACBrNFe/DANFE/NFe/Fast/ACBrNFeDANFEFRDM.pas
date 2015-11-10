@@ -164,7 +164,7 @@ type
      function Explode(sPart, sInput: String): ArrOfStr;
     function ManterVprod(dVProd, dvDesc: Double): String;
     function ManterdvTotTrib(dvTotTrib: Double):  String;
-    function ManterVDesc(dvDesc: Currency; dVUnCom , dQCom : double ) : String;
+    function ManterVDesc(dvDesc: Currency; dVUnCom , dQCom : double ) : Double;
     function ManterCst(dCRT: TpcnCRT; dCSOSN: TpcnCSOSNIcms;
       dCST: TpcnCSTIcms): String;
     function ManterArma(inItem: integer): String;
@@ -449,7 +449,7 @@ begin
           FieldByName('vFrete').AsString            := FormatFloatBr( Prod.vFrete ,'###,###,##0.00');
           FieldByName('vSeg').AsString              := FormatFloatBr( Prod.vSeg ,'###,###,##0.00');
           FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,'###,###,##0.00');
-          FieldByName('vDesc').AsString             := ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom);
+          FieldByName('vDesc').AsString             := FormatFloatBr( ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
           FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
           FieldByName('CST').AsString               := ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
           FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC ,'###,###,##0.00');
@@ -461,7 +461,7 @@ begin
           FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI ,'###,###,##0.00');
           FieldByName('vISSQN').AsString            := FormatFloatBr( Imposto.ISSQN.vISSQN ,'###,###,##0.00');
           FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC ,'###,###,##0.00');
-          FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - StrToFloat( FieldByName('vDesc').AsString ) ,'###,###,##0.00');
+          FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
           FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro ,'###,###,##0.00');
 
           case FImprimirUnQtVlComercial of
@@ -2006,16 +2006,12 @@ begin
   Result := FormatFloatBr( dValor,'###,###,##0.00');
 end;
 
-Function TACBrNFeFRClass.ManterVDesc( dvDesc: Currency; dVUnCom , dQCom : double ) : String;
-Var
-  dValor : Double;
+Function TACBrNFeFRClass.ManterVDesc( dvDesc: Currency; dVUnCom , dQCom : double ) : Double;
 begin
   if ( FDANFEClassOwner.ImprimirDescPorc ) and ( dvDesc > 0 ) then
-    dValor := (( dvDesc*100 ) / (dVUnCom * dQCom) )
+    Result := (( dvDesc*100 ) / (dVUnCom * dQCom) )
   else
-    dValor := dvDesc;
-
-  Result := FormatFloatBr( dValor,'###,###,##0.00');
+    Result := dvDesc;
 end;
 
 Function TACBrNFeFRClass.ManterCst( dCRT: TpcnCRT;  dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms ) : String;

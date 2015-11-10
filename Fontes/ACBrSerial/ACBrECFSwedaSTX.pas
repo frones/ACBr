@@ -1286,7 +1286,7 @@ begin
     // MFD baixada da impressora fiscal
     DataArquivo := DataInicial;
     repeat
-      Dia := FormatDateTime('dd/mm/yyyy', DataInicial);
+      Dia := FormatDateTime('dd/mm/yyyy', DataArquivo);
 
       Resp := xECF_GeraRegistrosCAT52MFD( FileMF, Dia ) ;
       if (Resp <> 1) then

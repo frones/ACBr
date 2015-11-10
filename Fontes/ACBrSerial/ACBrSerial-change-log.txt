@@ -49,6 +49,10 @@ Data: 10/11/2015
     http://www.projetoacbr.com.br/forum/topic/25830-loop-daruma-fs800i/
 [*] Diminuindo constante tempo de espera WAK de 200 para 50
 
+-- ACBrECFSwedaStx --
+[-] Correção na atribuição de Data de geração no método: "PafMF_GerarCAT52"
+    http://www.projetoacbr.com.br/forum/topic/14569-erro-ao-gerar-cat52-ecfswedastx/
+
 Data: 04/11/2015
 -- ACBrEscDaruma --
 [*] Ajuste para QRCode suportar Largura de Módulo = 3  (por: DSA)

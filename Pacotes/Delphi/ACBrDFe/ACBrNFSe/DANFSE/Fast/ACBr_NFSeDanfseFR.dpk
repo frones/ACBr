@@ -50,7 +50,6 @@ requires
 
 contains
   ACBrNFSeDANFSeFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFRReg.pas',
-  ACBrNFSeDANFSeFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFR.pas',
-  ACBrNFSeDANFSeFRDM in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFRDM.pas';
+  ACBrNFSeDANFSeFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fast\ACBrNFSeDANFSeFR.pas';
 
 end.

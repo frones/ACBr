@@ -1248,7 +1248,7 @@ begin
 
   FNFeW.GerarXml;
   //DEBUG
-  //WriteToTXT('c:\temp\Notafiscal.txt', FNFeW.Gerador.ArquivoFormatoXML);
+  //WriteToTXT('c:\temp\Notafiscal.xml', FNFeW.Gerador.ArquivoFormatoXML, False, False);
   XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;
 
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado

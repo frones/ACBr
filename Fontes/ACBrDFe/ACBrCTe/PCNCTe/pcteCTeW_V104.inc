@@ -340,7 +340,7 @@ begin
     Gerador.wCampo(tcStr, '#038', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma4.Toma), DSC_TOMA);
 
     if CTe.Ide.Toma4.EnderToma.cPais = 1058 then
-      Gerador.wCampoCNPJCPF('#039', '#040', CTe.ide.Toma4.CNPJCPF, CTe.Ide.Toma4.EnderToma.cPais)
+      Gerador.wCampoCNPJCPF('#039', '#040', CTe.ide.Toma4.CNPJCPF)
      else
       Gerador.wCampo(tcStr, '#039', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
@@ -577,7 +577,7 @@ begin
       Gerador.wGrupo('rem', '#112');
 
       if CTe.Rem.enderReme.cPais = 1058 then
-        Gerador.wCampoCNPJCPF('#113', '#114', CTe.Rem.CNPJCPF, CTe.Rem.enderReme.cPais)
+        Gerador.wCampoCNPJCPF('#113', '#114', CTe.Rem.CNPJCPF)
        else
         Gerador.wCampo(tcStr, '#113', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
@@ -664,7 +664,7 @@ begin
        (CTe.Rem.InfNF[i].locRet.xNome <> '') then
     begin
       Gerador.wGrupo('locRet', '#147');
-      Gerador.wCampoCNPJCPF('#148', '#149', CTe.Rem.InfNF[i].locRet.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#148', '#149', CTe.Rem.InfNF[i].locRet.CNPJCPF);
       Gerador.wCampo(tcStr, '#150', 'xNome   ', 01, 60, 1, CTe.Rem.InfNF[i].locRet.xNome, DSC_XNOME);
       Gerador.wCampo(tcStr, '#151', 'xLgr    ', 01, 255, 1, CTe.Rem.InfNF[i].locRet.xLgr, DSC_XLGR);
       Gerador.wCampo(tcStr, '#152', 'nro     ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Rem.InfNF[i].locRet.nro), DSC_NRO);
@@ -736,7 +736,7 @@ begin
     Gerador.wGrupo('exped', '#167');
 
     if CTe.Exped.EnderExped.cPais = 1058 then
-      Gerador.wCampoCNPJCPF('#168', '#169', CTe.Exped.CNPJCPF, CTe.Exped.EnderExped.cPais)
+      Gerador.wCampoCNPJCPF('#168', '#169', CTe.Exped.CNPJCPF)
      else
       Gerador.wCampo(tcStr, '#168', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
@@ -797,7 +797,7 @@ begin
     Gerador.wGrupo('receb', '#185');
 
     if CTe.Receb.EnderReceb.cPais = 1058 then
-      Gerador.wCampoCNPJCPF('#186', '#187', CTe.Receb.CNPJCPF, CTe.Receb.EnderReceb.cPais)
+      Gerador.wCampoCNPJCPF('#186', '#187', CTe.Receb.CNPJCPF)
      else
       Gerador.wCampo(tcStr, '#186', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
@@ -857,7 +857,7 @@ begin
     begin
       Gerador.wGrupo('dest', '#203');
       if CTe.Dest.EnderDest.cPais = 1058 then
-        Gerador.wCampoCNPJCPF('#204', '#205', CTe.Dest.CNPJCPF, CTe.Dest.EnderDest.cPais)
+        Gerador.wCampoCNPJCPF('#204', '#205', CTe.Dest.CNPJCPF)
        else
         Gerador.wCampo(tcStr, '#204', 'CNPJ', 00, 14, 1, '00000000000000', 'erro');
 
@@ -924,7 +924,7 @@ begin
      (CTe.Dest.locEnt.xNome <> '') then
   begin
     Gerador.wGrupo('locEnt', '#222');
-    Gerador.wCampoCNPJCPF('#223', '#224', CTe.Dest.locEnt.CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#223', '#224', CTe.Dest.locEnt.CNPJCPF);
     Gerador.wCampo(tcStr, '#225', 'xNome  ', 01, 60, 1, CTe.Dest.locEnt.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, '#226', 'xLgr   ', 01, 255, 1, CTe.Dest.locEnt.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, '#227', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Dest.locEnt.nro), DSC_NRO);
@@ -1175,7 +1175,7 @@ begin
   for i := 0 to CTe.infCTeNorm.emiDocAnt.Count - 1 do
   begin
     Gerador.wGrupo('emiDocAnt', '#291');
-    Gerador.wCampoCNPJCPF('#292', '#293', CTe.infCTeNorm.emiDocAnt[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#292', '#293', CTe.infCTeNorm.emiDocAnt[i].CNPJCPF);
 
     if Trim(CTe.infCTeNorm.emiDocAnt[i].IE) = 'ISENTO' then
       Gerador.wCampo(tcStr, '#294', 'IE ', 00, 14, 1, CTe.infCTeNorm.emiDocAnt[i].IE, DSC_IE)
@@ -1356,7 +1356,7 @@ begin
        (CTe.Rodo.veic[i].Prop.xNome <> '') then
     begin
       Gerador.wGrupo('prop', '#32');
-      Gerador.wCampoCNPJCPF('#33', '#34', CTe.Rodo.veic[i].Prop.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#33', '#34', CTe.Rodo.veic[i].Prop.CNPJCPF);
       Gerador.wCampo(tcStr, '#35', 'RNTRC ', 08, 08, 1, SomenteNumeros(CTe.Rodo.veic[i].Prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#36', 'xNome ', 01, 60, 1, CTe.Rodo.veic[i].Prop.xNome, DSC_XNOME);
 

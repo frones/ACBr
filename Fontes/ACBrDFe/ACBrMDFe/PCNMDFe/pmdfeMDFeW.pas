@@ -374,7 +374,7 @@ begin
   begin
     Gerador.wGrupo('prop', '#32');
 
-    Gerador.wCampoCNPJCPF('#11', '#12', MDFe.Rodo.veicTracao.Prop.CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#11', '#12', MDFe.Rodo.veicTracao.Prop.CNPJCPF);
     Gerador.wCampo(tcStr, '#13', 'RNTRC ', 08, 08, 1, OnlyNumber(MDFe.Rodo.veicTracao.Prop.RNTRC), DSC_RNTRC);
     Gerador.wCampo(tcStr, '#14', 'xNome ', 02, 60, 1, MDFe.Rodo.veicTracao.Prop.xNome, DSC_XNOME);
 
@@ -432,7 +432,7 @@ begin
     begin
       Gerador.wGrupo('prop', '#30');
 
-      Gerador.wCampoCNPJCPF('#31', '#32', MDFe.Rodo.veicReboque[i].Prop.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#31', '#32', MDFe.Rodo.veicReboque[i].Prop.CNPJCPF);
       Gerador.wCampo(tcStr, '#33', 'RNTRC ', 08, 08, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#34', 'xNome ', 02, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
 
@@ -899,7 +899,7 @@ begin
   for i := 0 to MDFe.autXML.Count - 1 do
   begin
     Gerador.wGrupo('autXML', '#140');
-    Gerador.wCampoCNPJCPF('#141', '#142', MDFe.autXML[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#141', '#142', MDFe.autXML[i].CNPJCPF);
     Gerador.wGrupo('/autXML');
   end;
   if MDFe.autXML.Count > 10 then

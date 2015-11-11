@@ -332,7 +332,7 @@ begin
   begin
     Gerador.wGrupo('toma4', '#037');
     Gerador.wCampo(tcStr, '#038', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma4.Toma), DSC_TOMA);
-    Gerador.wCampoCNPJCPF('#039', '#040', CTe.ide.Toma4.CNPJCPF, CTe.Ide.Toma4.EnderToma.cPais);
+    Gerador.wCampoCNPJCPF('#039', '#040', CTe.ide.Toma4.CNPJCPF);
 
     if CTe.Ide.Toma4.IE <> ''
      then begin
@@ -559,7 +559,7 @@ begin
      (CTe.Rem.xNome <> '') then
     begin
       Gerador.wGrupo('rem', '#112');
-      Gerador.wCampoCNPJCPF('#113', '#114', CTe.Rem.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#113', '#114', CTe.Rem.CNPJCPF);
 
       if Trim(CTe.Rem.IE) = 'ISENTO'
        then Gerador.wCampo(tcStr, '#115', 'IE ', 00, 14, 1, CTe.Rem.IE, DSC_IE)
@@ -640,7 +640,7 @@ begin
        (CTe.Rem.InfNF[i].locRet.xNome <> '') then
     begin
       Gerador.wGrupo('locRet', '#147');
-      Gerador.wCampoCNPJCPF('#148', '#149', CTe.Rem.InfNF[i].locRet.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#148', '#149', CTe.Rem.InfNF[i].locRet.CNPJCPF);
       Gerador.wCampo(tcStr, '#150', 'xNome   ', 01, 60, 1, CTe.Rem.InfNF[i].locRet.xNome, DSC_XNOME);
       Gerador.wCampo(tcStr, '#151', 'xLgr    ', 01, 255, 1, CTe.Rem.InfNF[i].locRet.xLgr, DSC_XLGR);
       Gerador.wCampo(tcStr, '#152', 'nro     ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Rem.InfNF[i].locRet.nro), DSC_NRO);
@@ -710,7 +710,7 @@ begin
      (CTe.Exped.xNome <> '') then
   begin
     Gerador.wGrupo('exped', '#167');
-    Gerador.wCampoCNPJCPF('#168', '#169', CTe.Exped.CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#168', '#169', CTe.Exped.CNPJCPF);
 
     if Trim(CTe.Exped.IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#170', 'IE ', 00, 14, 1, CTe.Exped.IE, DSC_IE)
@@ -764,7 +764,7 @@ begin
      (CTe.Receb.xNome <> '') then
   Begin
     Gerador.wGrupo('receb', '#185');
-    Gerador.wCampoCNPJCPF('#186', '#187', CTe.Receb.CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#186', '#187', CTe.Receb.CNPJCPF);
 
     if Trim(CTe.Receb.IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#188', 'IE ', 00, 14, 1, CTe.Receb.IE, DSC_IE)
@@ -818,7 +818,7 @@ begin
      (CTe.Dest.xNome <> '') then
     begin
       Gerador.wGrupo('dest', '#203');
-      Gerador.wCampoCNPJCPF('#204', '#205', CTe.Dest.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#204', '#205', CTe.Dest.CNPJCPF);
 
       if CTe.Dest.IE <> ''
        then begin
@@ -880,7 +880,7 @@ begin
      (CTe.Dest.locEnt.xNome <> '') then
   begin
     Gerador.wGrupo('locEnt', '#222');
-    Gerador.wCampoCNPJCPF('#223', '#224', CTe.Dest.locEnt.CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#223', '#224', CTe.Dest.locEnt.CNPJCPF);
     Gerador.wCampo(tcStr, '#225', 'xNome  ', 01, 60, 1, CTe.Dest.locEnt.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, '#226', 'xLgr   ', 01, 255, 1, CTe.Dest.locEnt.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, '#227', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CTe.Dest.locEnt.nro), DSC_NRO);
@@ -1113,7 +1113,7 @@ begin
   for i := 0 to CTe.infCTeNorm.emiDocAnt.Count - 1 do
   begin
     Gerador.wGrupo('emiDocAnt', '#291');
-    Gerador.wCampoCNPJCPF('#292', '#293', CTe.infCTeNorm.emiDocAnt[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('#292', '#293', CTe.infCTeNorm.emiDocAnt[i].CNPJCPF);
 
     if Trim(CTe.infCTeNorm.emiDocAnt[i].IE) = 'ISENTO'
      then Gerador.wCampo(tcStr, '#294', 'IE ', 00, 14, 1, CTe.infCTeNorm.emiDocAnt[i].IE, DSC_IE)
@@ -1312,7 +1312,7 @@ begin
        (CTe.Rodo.veic[i].Prop.xNome <> '') then
     begin
       Gerador.wGrupo('prop', '#32');
-      Gerador.wCampoCNPJCPF('#33', '#34', CTe.Rodo.veic[i].Prop.CNPJCPF, CODIGO_BRASIL);
+      Gerador.wCampoCNPJCPF('#33', '#34', CTe.Rodo.veic[i].Prop.CNPJCPF);
       Gerador.wCampo(tcStr, '#35', 'RNTRC ', 14, 14, 1, SomenteNumeros(CTe.Rodo.veic[i].Prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#36', 'xNome ', 01, 60, 1, CTe.Rodo.veic[i].Prop.xNome, DSC_XNOME);
 

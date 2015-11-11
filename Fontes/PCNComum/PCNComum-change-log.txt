@@ -39,15 +39,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2015
+-- pcnGerador --
+[*] Ajuste no método: wCampoCNPJCPF para preencher corretamente tags onde o CNPJ
+    é opcional. Refatoração para não exigir o CPais para preencher a tag como
+    vazia   (por: André Moraes e DSA)
 
-09/11/2015          (
+09/11/2015
 -- pcnGerador --
 [*] Ajuste para a conversão de quebras de Linhas por ';' respeitar o valor do
     parâmetro "ParseTextoXML", (se o mesmo for False não faz a conversão)
     (por: DSA)
 
 -- pcnAuxiliar --
-[*] Assinatura do método: "FiltrarTextoXML" modificada, incluindo o parâmetro:
+[*] Assinatura do método: "FiltrarTextoXML" modificada, incluindo o parâmertro:
     SubstituirQuebrasLinha: Boolean = True
     (por: DSA)
 

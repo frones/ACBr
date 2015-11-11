@@ -173,8 +173,6 @@ begin
     Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, FEvento.Items[i].FInfEvento.cOrgao);
     Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
 
-    // OnlyNumber ..estava executando 5 vezes na versao anterior
-    // no techo de verificar se era cnpj ou cpf.
     sDoc := OnlyNumber( Evento.Items[i].InfEvento.CNPJ );
     case Length( sDoc ) of
      14: begin

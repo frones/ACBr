@@ -453,7 +453,7 @@ begin
   if not ValidarCodigoUF(nfe.Ide.NFref[i].RefNF.cUF) then Gerador.wAlerta('B15', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcEsp, 'B16', 'AAMM  ', 04, 04, 1, nfe.Ide.NFref[i].RefNF.AAMM, DSC_AAMM);
   if not ValidarAAMM(nfe.Ide.NFref[i].RefNF.AAMM) then  Gerador.wAlerta('B16', 'AAMM', DSC_AAMM, 'Periodo inválido');
-  Gerador.wCampoCNPJCPF('B17', 'B17', nfe.Ide.NFref[i].RefNF.CNPJ, CODIGO_BRASIL);
+  Gerador.wCampoCNPJCPF('B17', 'B17', nfe.Ide.NFref[i].RefNF.CNPJ);
   Gerador.wCampo(tcInt, 'B18', 'mod   ', 02, 02, 1, nfe.Ide.NFref[i].RefNF.Modelo, DSC_MOD);
   if not ValidarMod(nfe.Ide.NFref[i].RefNF.Modelo) then Gerador.wAlerta('B18', 'mod', DSC_MOD, 'Modelo de documento inválido');
   Gerador.wCampo(tcInt, 'B19', 'serie ', 01, 03, 1, nfe.ide.NFref[i].RefNF.serie, DSC_SERIE);
@@ -468,7 +468,7 @@ begin
   if not ValidarCodigoUF(nfe.Ide.NFref[i].RefNFP.cUF) then Gerador.wAlerta('B20b', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcEsp, 'B20c', 'AAMM  ', 04, 04, 1, nfe.Ide.NFref[i].RefNFP.AAMM, DSC_AAMM);
   if not ValidarAAMM(nfe.Ide.NFref[i].RefNFP.AAMM) then  Gerador.wAlerta('B20c', 'AAMM', DSC_AAMM, 'Periodo inválido');
-  Gerador.wCampoCNPJCPF('B20d', 'B20e', nfe.Ide.NFref[i].RefNFP.CNPJCPF, nfe.Emit.EnderEmit.cPais);
+  Gerador.wCampoCNPJCPF('B20d', 'B20e', nfe.Ide.NFref[i].RefNFP.CNPJCPF);
   Gerador.wCampo(tcStr, 'B20f', 'IE   ', 01, 14, 1, nfe.Ide.NFref[i].RefNFP.IE, DSC_MOD);
   Gerador.wCampo(tcInt, 'B20f', 'mod   ', 02, 02, 1, nfe.Ide.NFref[i].RefNFP.Modelo, DSC_MOD);
   Gerador.wCampo(tcInt, 'B20g', 'serie ', 01, 03, 1, nfe.ide.NFref[i].RefNFP.serie, DSC_SERIE);
@@ -495,7 +495,7 @@ end;
 procedure TNFeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', 'C01');
-  Gerador.wCampoCNPJCPF('C02', 'C02a', nfe.Emit.CNPJCPF, nfe.Emit.enderEmit.cPais);
+  Gerador.wCampoCNPJCPF('C02', 'C02a', nfe.Emit.CNPJCPF);
   Gerador.wCampo(tcStr, 'C03', 'xNome  ', 02, 60, 1, nfe.Emit.xNome, DSC_XNOME);
   Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, nfe.Emit.xFant, DSC_XFANT);
   (**)GerarEmitEnderEmit;
@@ -589,10 +589,10 @@ begin
     if (nfe.Dest.idEstrangeiro <> '') or ((nfe.Dest.enderDest.cPais <> 0) and (nfe.Dest.enderDest.cPais <> 1058)) then
       Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 00, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
     else
-      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF);
    end
   else
-     Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, nfe.Dest.enderDest.cPais);
+     Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF);
 
   if nfe.Ide.tpAmb = taProducao then
     Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, IIf((nfe.Ide.modelo = 55),1,0), nfe.Dest.xNome, DSC_XNOME)
@@ -680,7 +680,7 @@ begin
   begin
     AjustarMunicipioUF(xUF, xMun, cMun, nfe.Emit.EnderEmit.cPais, nfe.Retirada.UF, nfe.Retirada.xMun, nfe.Retirada.cMun);
     Gerador.wGrupo('retirada', 'F01');
-    Gerador.wCampoCNPJCPF('F02', 'F02a', nfe.Retirada.CNPJCPF, nfe.Emit.EnderEmit.cPais);
+    Gerador.wCampoCNPJCPF('F02', 'F02a', nfe.Retirada.CNPJCPF);
     Gerador.wCampo(tcStr, 'F03', 'xLgr   ', 02, 60, 1, nfe.Retirada.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'F04', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, nfe.Retirada.nro), DSC_NRO);
     Gerador.wCampo(tcStr, 'F05', 'xCpl   ', 01, 60, 0, nfe.Retirada.xCpl, DSC_XCPL);
@@ -701,7 +701,7 @@ begin
   if trim(nfe.Entrega.xLgr) <> '' then
   begin
     Gerador.wGrupo('entrega', 'G01');
-    Gerador.wCampoCNPJCPF('G02', 'G02a', nfe.Entrega.CNPJCPF, 1058);
+    Gerador.wCampoCNPJCPF('G02', 'G02a', nfe.Entrega.CNPJCPF);
     Gerador.wCampo(tcStr, 'G03', 'xLgr   ', 02, 60, 1, nfe.Entrega.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'G04', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, nfe.Entrega.nro), DSC_NRO);
     Gerador.wCampo(tcStr, 'G05', 'xCpl   ', 01, 60, 0, nfe.Entrega.xCpl, DSC_XCPL);
@@ -724,7 +724,7 @@ begin
   for i := 0 to NFe.autXML.Count - 1 do
   begin
     Gerador.wGrupo('autXML', 'G50');
-    Gerador.wCampoCNPJCPF('G51', 'G52', NFe.autXML[i].CNPJCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('G51', 'G52', NFe.autXML[i].CNPJCPF);
     Gerador.wGrupo('/autXML');
   end;
   if NFe.autXML.Count > 10 then
@@ -1981,7 +1981,7 @@ begin
   begin
     Gerador.wGrupo('transporta', 'X03');
     if trim(nfe.Transp.Transporta.CNPJCPF) <> '' then
-       Gerador.wCampoCNPJCPF('X04', 'X05', nfe.Transp.Transporta.CNPJCPF, CODIGO_BRASIL);
+       Gerador.wCampoCNPJCPF('X04', 'X05', nfe.Transp.Transporta.CNPJCPF);
     Gerador.wCampo(tcStr, 'X06', 'xNome   ', 01, 60, 0, nfe.Transp.Transporta.xNome, DSC_XNOME);
     if trim(nfe.Transp.Transporta.IE) = 'ISENTO' then
        Gerador.wCampo(tcStr, 'X07', 'IE      ', 02, 14, 0, nfe.Transp.Transporta.IE, DSC_IE)

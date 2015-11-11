@@ -176,7 +176,7 @@ begin
      Gerador.wCampo(tcStr, 'B10', 'tpAmb  ', 01, 01, 0, tpAmbToStr(CFe.Ide.tpAmb), DSC_TPAMB);
   end;
 
-  Gerador.wCampoCNPJCPF('B11', 'B11', CFe.Ide.CNPJ, 1058);
+  Gerador.wCampoCNPJCPF('B11', 'B11', CFe.Ide.CNPJ);
   Gerador.wCampo(tcStr, 'B12', 'signAC ',1, 344, 1, CFe.Ide.signAC, DSC_SIGNAC);
 
   if not FApenasTagsAplicacao then
@@ -189,7 +189,7 @@ end;
 procedure TCFeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', 'C01');
-  Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJ, 1058);
+  Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJ);
   if not FApenasTagsAplicacao then
   begin
      Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 0, CFe.Emit.xNome, DSC_XNOME);
@@ -231,7 +231,7 @@ end;
 procedure TCFeW.GerarDest;
 begin
   Gerador.wGrupo('dest', 'E01');
-  Gerador.wCampoCNPJCPF('E02', 'E03', CFe.Dest.CNPJCPF, 1058);
+  Gerador.wCampoCNPJCPF('E02', 'E03', CFe.Dest.CNPJCPF);
   Gerador.wCampo(tcStr, 'E04', 'xNome  ', 01, 60, 0, CFe.Dest.xNome, DSC_XNOME);
   Gerador.wGrupo('/dest');
 end;

@@ -169,8 +169,8 @@ begin
     Gerador.wCampo(tcStr, 'O07', 'UF', 002, 002, 1, Emissor[i].FUF, DSC_UF);
     if not ValidarUF(Emissor[i].FUF) then
       Gerador.wAlerta('O07', 'UF', DSC_UF, ERR_MSG_INVALIDO);
-    Gerador.wCampoCNPJCPF('O08', 'CNPJ', Emissor[i].FCNPJEmissor, Emissor[i].FPaisEmissor);
-    Gerador.wCampoCNPJCPF('O09', 'CNPJMatriz', Emissor[i].FCNPJMatriz, Emissor[i].FPaisMatriz);
+    Gerador.wCampoCNPJCPF('O08', 'CNPJ', Emissor[i].FCNPJEmissor);
+    Gerador.wCampoCNPJCPF('O09', 'CNPJMatriz', Emissor[i].FCNPJMatriz);
     Gerador.wCampo(tcStr, 'O10', 'IE', 002, 014, 1, Emissor[i].IEEmissor, DSC_IE);
     GeraDFe(I);
     Gerador.wGrupo('/emissor');

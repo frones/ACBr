@@ -64,6 +64,8 @@ type
 
   TGeradorOpcoes = class;
 
+  { TGerador }
+
   TGerador = class(TPersistent)
   private
     FArquivoFormatoXML: AnsiString;
@@ -84,7 +86,7 @@ type
     procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
     procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
     procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
-    procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; const cPais: Integer);
+    procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string);
     procedure wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wCampoCPF(const ID: string; CPF: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wAlerta(const ID, TAG, Descricao, Alerta: string);
@@ -744,15 +746,10 @@ begin
     Inc(FOpcoes.FNivelIdentacao);
 end;
 
-procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; const cPais: Integer);
+procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string);
 var
   Tamanho: integer;
 begin
-  if cPais <> 1058 then
-  begin
-    wCampo(tcStr, ID1, 'CNPJ', 00, 00, 1, '');
-    exit;
-  end;
   CNPJCPF := SomenteNumeros(trim(CNPJCPF));
   Tamanho := length(CNPJCPF);
   if Tamanho = 11 then
@@ -761,14 +758,21 @@ begin
     if not ValidarCPF(CNPJCPF) then
       wAlerta(ID2, 'CPF', 'CPF', ERR_MSG_INVALIDO);
   end
-  else if Tamanho = 14 then
+  else
   begin
-    wCampo(tcStr, ID1, 'CNPJ', 14, 14, 1, CNPJCPF);
-    if not ValidarCNPJ(CNPJCPF) then
+    if (Tamanho <> 14) and (Tamanho > 11) then
+    begin
+      CNPJCPF := PadLeft(CNPJCPF,14,'0');
+      Tamanho := 14;
+    end;
+
+    wCampo(tcStr, ID1, 'CNPJ', 0, 14, 1, CNPJCPF);
+    if (Tamanho > 0) and (not ValidarCNPJ(CNPJCPF)) then
       wAlerta(ID1, 'CNPJ', 'CNPJ', ERR_MSG_INVALIDO);
   end;
-  if ((Tamanho <> 11) and (Tamanho <> 14)) then
-    wAlerta(ID1 + '-' + ID2, 'CNPJ-CPF', 'CNPJ/CPF', ERR_MSG_VAZIO);
+
+  if (not (Tamanho in[0,11,14])) then
+    wAlerta(ID1 + '-' + ID2, 'CNPJ-CPF', 'CNPJ/CPF', ERR_MSG_INVALIDO);
 end;
 
 procedure TGerador.wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);

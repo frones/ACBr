@@ -104,7 +104,7 @@ begin
   Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
 //  Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
-  Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF, 1058);
+  Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF);
 
   if FNSU = '' then
   begin

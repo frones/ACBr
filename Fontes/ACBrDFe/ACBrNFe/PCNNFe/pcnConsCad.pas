@@ -117,10 +117,10 @@ begin
   if (FCNPJ <> EmptyStr) and (i = 0) then
    begin
      i := 1;
-     Gerador.wCampoCNPJCPF('GP07', 'CNPJ', FCNPJ, CODIGO_BRASIL);
+     Gerador.wCampoCNPJCPF('GP07', 'CNPJ', FCNPJ);
    end;
   if (FCPF <> EmptyStr) and (i = 0) then
-    Gerador.wCampoCNPJCPF('GP08', 'CPF ', FCPF, CODIGO_BRASIL);
+    Gerador.wCampoCNPJCPF('GP08', 'CPF ', FCPF);
   Gerador.wGrupo('/infCons');
   Gerador.wGrupo('/ConsCad');
 

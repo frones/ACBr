@@ -221,7 +221,7 @@ begin
        Gerador.wCampo(tcStr, 'EP10', 'UF  ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UF, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UF) then
          Gerador.wAlerta('EP10', 'UF', DSC_UF, ERR_MSG_INVALIDO);
-       Gerador.wCampoCNPJCPF('EP11', 'EP12', Evento.Items[0].InfEvento.detEvento.CNPJCPF, CODIGO_BRASIL);
+       Gerador.wCampoCNPJCPF('EP11', 'EP12', Evento.Items[0].InfEvento.detEvento.CNPJCPF);
 
        if Evento.Items[0].InfEvento.detEvento.IE <> ''
          then begin

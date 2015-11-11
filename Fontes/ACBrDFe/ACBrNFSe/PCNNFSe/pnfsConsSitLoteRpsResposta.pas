@@ -201,6 +201,7 @@ begin
     // Incluido por Ricardo Miranda em 14/03/2013
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
     // Alterado por Akai - L. Massao Aihara 31/10/2013

@@ -266,6 +266,8 @@ begin
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if Provedor = proGinfes then
@@ -315,6 +317,8 @@ begin
           InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento id=');
 
         InfCanc.FPedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
+        If Provedor = proSimpliss then
+          InfCanc.Sucesso := InfCanc.FPedido.CodigoCancelamento;
 
         if Leitor.rExtrai(2, 'IdentificacaoNfse') <> '' then
         begin

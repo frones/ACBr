@@ -741,6 +741,7 @@ begin
     case FProvedor of
       proIssDSF: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
       proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
+      proSimplIss: FNameSpaceDad := '';
       else begin
         if (FSeparador = '') then
         begin
@@ -2808,7 +2809,11 @@ begin
   end
   else begin
     FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad +
-              '<' + FPrefixo3 + 'Pedido>' +
+              '<' + FPrefixo3 + 'Pedido' +
+               ifThen(FProvedor = proSimplISS,
+                               ' ' + 'xmlns=' + '"' + NameSpace + '">',
+                               '>'
+                              ) +
                '<' + FPrefixo4 + 'InfPedidoCancelamento' +
                 ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
                        FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';

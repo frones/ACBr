@@ -285,6 +285,8 @@ begin
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
     VersaodoXML := VersaoXML(Leitor.Arquivo);
     k := 0;
     Leitor.Grupo := Leitor.Arquivo;
@@ -302,6 +304,14 @@ begin
       Nivel1 := (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResult') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RecepcionarLoteRpsResult') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'CancelarNfseResult') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '');
 
     if Nivel1 then
     begin

@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/11/2015
+[-] Correções visando fazer funcionar para o provedor SimplISS.
+    Por: Paulo Henrique Panico
 [+] Acrescentado o INI para o provedor: WebISS.
     Por: Italo Jurisato Junior
 [+] Acrescentado o INI para o provedor: ISSCuritiba.

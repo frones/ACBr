@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2015
+[+] Acrescentado o INI para o provedor: ISSCuritiba.
+    Por: ELJAK / Italo Jurisato Junior
+
 10/11/2015
 [*] Promovido a remoção do DM para o DANFSe em Fast Report!
 		por : acgubamg

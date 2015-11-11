@@ -55,7 +55,6 @@ type
     FNFSeW: TNFSeW;
     FNFSeR: TNFSeR;
 
-    FXML: String;
     FXMLNFSe: String;
     FXMLAssinado: String;
     FXMLOriginal: String;
@@ -75,6 +74,9 @@ type
       PathArquivo: String = ''): String;
 
     procedure Assinar(Assina: Boolean);
+    function GetXMLAssinado: String;
+    procedure SetXML(const Value: String);
+    procedure SetXMLOriginal(const Value: String);
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -98,10 +100,14 @@ type
 
     property NFSe: TNFSe read FNFSe;
 
-    property XML: String read FXML;
+    // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
+    property XML: String         read FXMLOriginal   write SetXML;
+    // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
+    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
+    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
+
     property XMLNFSe: String read FXMLNFSe write FXMLNFSe;
-    property XMLOriginal: String read FXMLOriginal write FXMLOriginal;
-    property XMLAssinado: String read FXMLAssinado write FXMLAssinado;
+
     property Confirmada: Boolean read FConfirmada write FConfirmada;
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;
@@ -179,24 +185,6 @@ begin
   FNFSe := TNFSe.Create;
   FNFSeW := TNFSeW.Create(FNFSe);
   FNFSeR := TNFSeR.Create(FNFSe);
-
-  (*
-  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
-  begin
-    FNFSe.Ide.tpNF := tnSaida;
-    FNFSe.Ide.indPag := ipVista;
-    FNFSe.Ide.verProc := 'ACBrNFSe';
-    FNFSe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
-    FNFSe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
-
-    if Assigned(DANFSE) then
-      FNFSe.Ide.tpImp := DANFSE.TipoDANFSE;
-
-    FNFSe.Emit.EnderEmit.xPais := 'BRASIL';
-    FNFSe.Emit.EnderEmit.cPais := 1058;
-    FNFSe.Emit.EnderEmit.nro := 'SEM NUMERO';
-  end;
-  *)
 end;
 
 destructor NotaFiscal.Destroy;
@@ -231,46 +219,46 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLAss: String;
-  ArqXML: String;
+  XMLStr: String;
+  XMLUTF8: AnsiString;
   Leitor: TLeitor;
+  CNPJEmitente, CNPJCertificado: String;
 begin
-  ArqXML := GerarXML;
+  // VErificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
+  CNPJEmitente    := OnlyNumber(NSFe.Prestador.CNPJ);
+  CNPJCertificado := OnlyNumber(TACBrNSFe(TNotasFiscais(Collection).ACBrNFSe).SSL.CertCNPJ);
+
+  // verificar somente os 8 primeiros digitos, para evitar problemas quando
+  // a filial estiver utilizando o certificado da matriz
+  if Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8) then
+    raise EACBrNFSeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+
+  // Gera novamente, para processar propriedades que podem ter sido modificadas
+  XMLStr := GerarXML;
 
   // XML já deve estar em UTF8, para poder ser assinado //
-  ArqXML := ConverteXMLtoUTF8(ArqXML);
-  FXMLOriginal := ArqXML;
+  XMLUTF8 := ConverteXMLtoUTF8(XMLStr);
+  FXMLOriginal := XMLUTF8;
 
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
-    if Assina then
-    begin
-      XMLAss := SSL.Assinar(ArqXML, 'Rps',
+    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps',
                            Configuracoes.Geral.ConfigGeral.Prefixo3 + 'InfRps');
-      FXMLAssinado := XMLAss;
+//    FXMLOriginal := FXMLAssinado;
 
-      // Remove header, pois podem existir várias Notas no XML //
-      //TODO: Verificar se precisa
-      //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
-      //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
-
-      Leitor := TLeitor.Create;
-      try
-        leitor.Grupo := XMLAss;
-        NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
-        NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-        NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-        NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-      finally
-        Leitor.Free;
-      end;
+    Leitor := TLeitor.Create;
+    try
+      leitor.Grupo := FXMLAssinado;
+      NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
+      NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+      NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+      NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+    finally
+      Leitor.Free;
     end;
 
     if Configuracoes.Arquivos.Salvar then
       Gravar(CalcularNomeArquivoCompleto(), ifThen(Assina, FXMLAssinado, FXMLOriginal));
-
-//    if NaoEstaVazio(NomeArq) then
-//      Gravar(NomeArq, XMLAss);
   end;
 end;
 
@@ -346,25 +334,29 @@ begin
   FNFSeR.Leitor.Arquivo := AXML;
   FNFSeR.LerXml;
 
-  FXML := string(AXML);
-  FXMLOriginal := FXML;
+  FXMLOriginal := string(AXML);
+
   Result := True;
 end;
 
 function NotaFiscal.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
+  if EstaVazio(FXMLOriginal) then
+    GerarXML;
+
   FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  GerarXML;
-  Result := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Gravar(FNomeArq, FXML);
+  Result := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
 function NotaFiscal.GravarStream(AStream: TStream): Boolean;
 begin
   Result := False;
-  GerarXML;
+
+  if EstaVazio(FXMLOriginal) then
+    GerarXML;
 
   AStream.Size := 0;
-  WriteStrToStream(AStream, AnsiString(FXML) );
+  WriteStrToStream(AStream, AnsiString(FXMLOriginal));
   Result := True;
 end;
 
@@ -428,10 +420,11 @@ begin
   end;
 
   FNFSeW.GerarXml;
-  FXML := FNFSeW.Gerador.ArquivoFormatoXML;
+  XMLOriginal := FNFSeW.Gerador.ArquivoFormatoXML;
   FXMLAssinado := '';
+
   FAlertas := FNFSeW.Gerador.ListaDeAlertas.Text;
-  Result := FXML;
+  Result := XMLOriginal;
 end;
 
 function NotaFiscal.CalcularNomeArquivo: String;
@@ -530,6 +523,29 @@ begin
   end;
 end;
 
+function NotaFiscal.GetXMLAssinado: String;
+begin
+//  if EstaVazio(FXMLAssinado) then
+//    Assinar;
+
+  Result := FXMLAssinado;
+end;
+
+procedure NotaFiscal.SetXML(const Value: String);
+begin
+  LerXML(AValue);
+end;
+
+procedure NotaFiscal.SetXMLOriginal(const Value: String);
+begin
+  FXMLOriginal := AValue;
+
+  if XmlEstaAssinado(FXMLOriginal) then
+    FXMLAssinado := FXMLOriginal
+  else
+    FXMLAssinado := '';
+end;
+
 { TNotasFiscais }
 
 constructor TNotasFiscais.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -573,31 +589,9 @@ begin
   begin
     if Assina then
     begin
-      XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento);
+      XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;
-
-      // Remove header, pois podem existir várias Notas no XML //
-      //TODO: Verificar se precisa
-      //XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
-      //XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
-(*
-      Leitor := TLeitor.Create;
-      try
-        leitor.Grupo := XMLAss;
-        NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
-        NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-        NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-        NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-      finally
-        Leitor.Free;
-      end;
-*)
-//      if Configuracoes.Geral.Salvar then
-//        Gravar(CalcularNomeArquivoCompleto(), XMLAss);
-
-//      if NaoEstaVazio(NomeArq) then
-//        Gravar(NomeArq, XMLAss);
     end;
   end;
 end;
@@ -711,38 +705,41 @@ end;
 function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
   AGerarNFSe: Boolean = True): Boolean;
 var
-  ArquivoXML: TStringList;
-  XML: String;
-  XMLOriginal: AnsiString;
+  XMLStr: String;
+  XMLUTF8: AnsiString;
   i: integer;
+  MS: TMemoryStream;
 begin
   Result := False;
-  ArquivoXML := TStringList.Create;
+
+  MS := TMemoryStream.Create;
   try
-    ArquivoXML.LoadFromFile(CaminhoArquivo);
-    XMLOriginal := ArquivoXML.Text;
-
-    LoadFromString(XMLOriginal, AGerarNFSe);
-
-    for i := 0 to Self.Count - 1 do
-      Self.Items[i].NomeArq := CaminhoArquivo;
-
-    Result := True;
+    MS.LoadFromFile(CaminhoArquivo);
+    XMLUTF8 := ReadStrFromStream(MS, MS.Size);
   finally
-    ArquivoXML.Free;
+    MS.Free;
   end;
+
+  // Converte de UTF8 para a String nativa da IDE //
+  XMLStr := DecodeToString(XMLUTF8, True);
+  LoadFromString(XMLStr, AGerarNFSe);
+
+  for i := 0 to Self.Count - 1 do
+    Self.Items[i].NomeArq := CaminhoArquivo;
+
+  Result := True;
 end;
 
 function TNotasFiscais.LoadFromStream(AStream: TStringStream;
   AGerarNFSe: Boolean = True): Boolean;
 var
-  XMLOriginal: AnsiString;
+  AXML: AnsiString;
 begin
   Result := False;
   AStream.Position := 0;
-  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
+  AXML := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(String(XMLOriginal), AGerarNFSe);
+  Result := Self.LoadFromString(String(AXML), AGerarNFSe);
 end;
 
 function TNotasFiscais.LoadFromString(AXMLString: String;
@@ -775,9 +772,11 @@ begin
   VersaoNFSe := StrToVersaoNFSe(Ok, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConfigXML.VersaoXML);
 
   AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+  AXMLString := RetirarPrefixos(AXMLString);
+(*
   // Converte de UTF8 para a String nativa da IDE //
   AXMLString := RetirarPrefixos(DecodeToString(AXMLString, True));
-
+*)
   Result := False;
   N := PosNFSe;
   if N > 0 then

@@ -231,7 +231,7 @@ end;
 procedure TCFeW.GerarDest;
 begin
   Gerador.wGrupo('dest', 'E01');
-  Gerador.wCampoCNPJCPF('E02', 'E03', CFe.Dest.CNPJCPF);
+  Gerador.wCampoCNPJCPF('E02', 'E03', CFe.Dest.CNPJCPF, False);
   Gerador.wCampo(tcStr, 'E04', 'xNome  ', 01, 60, 0, CFe.Dest.xNome, DSC_XNOME);
   Gerador.wGrupo('/dest');
 end;

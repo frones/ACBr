@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/11/2015
+-- pcnCFeW --
+[-] Correção para não gerar a tag de cpf/cnpj do destinatario em branco
+    (por: regys.silveira)
+
 Data: 27/10/2015
 -- ACBrSATClass --
 [*] Criação de constante para valor da página de código do UTF8

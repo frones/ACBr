@@ -45,6 +45,8 @@ Símbolo : Significado
     é opcional. Refatoração para não exigir o CPais para preencher a tag como
     vazia   (por: André Moraes e DSA)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=21734
+[-] Correção para não gerar tags de cpf/cnpj em branco quando não são obrigatórias
+    por: regys.silveira
 
 09/11/2015
 -- pcnGerador --

@@ -86,7 +86,7 @@ type
     procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
     procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
     procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
-    procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string);
+    procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True);
     procedure wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wCampoCPF(const ID: string; CPF: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wAlerta(const ID, TAG, Descricao, Alerta: string);
@@ -746,15 +746,18 @@ begin
     Inc(FOpcoes.FNivelIdentacao);
 end;
 
-procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string);
+procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean);
 var
   Tamanho: integer;
+  Ocorrencia: Integer;
 begin
-  CNPJCPF := SomenteNumeros(trim(CNPJCPF));
-  Tamanho := length(CNPJCPF);
+  CNPJCPF    := SomenteNumeros(trim(CNPJCPF));
+  Tamanho    := length(CNPJCPF);
+  Ocorrencia := Integer(obrigatorio);
+
   if Tamanho = 11 then
   begin
-    wCampo(tcStr, ID2, 'CPF  ', 11, 11, 1, CNPJCPF);
+    wCampo(tcStr, ID2, 'CPF  ', 11, 11, Ocorrencia, CNPJCPF);
     if not ValidarCPF(CNPJCPF) then
       wAlerta(ID2, 'CPF', 'CPF', ERR_MSG_INVALIDO);
   end
@@ -766,7 +769,7 @@ begin
       Tamanho := 14;
     end;
 
-    wCampo(tcStr, ID1, 'CNPJ', 0, 14, 1, CNPJCPF);
+    wCampo(tcStr, ID1, 'CNPJ', 0, 14, Ocorrencia, CNPJCPF);
     if (Tamanho > 0) and (not ValidarCNPJ(CNPJCPF)) then
       wAlerta(ID1, 'CNPJ', 'CNPJ', ERR_MSG_INVALIDO);
   end;

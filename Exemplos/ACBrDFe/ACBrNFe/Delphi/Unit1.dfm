@@ -133,8 +133,6 @@ object Form1: TForm1
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 9
-            ExplicitTop = 36
             object Label43: TLabel
               Left = 9
               Top = 8
@@ -1589,8 +1587,6 @@ object Form1: TForm1
           Height = 231
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 555
-          ExplicitHeight = 247
           ControlData = {
             4C000000B5370000E01700000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1761,7 +1757,7 @@ object Form1: TForm1
     TributosSeparadamente = False
     LarguraCodProd = 54
     ExibirEAN = False
-    QuebraLinhaEmVeiculos = True
+    QuebraLinhaEmDetalhamentoEspecifico = True
     ExibeCampoFatura = False
     Left = 462
     Top = 413

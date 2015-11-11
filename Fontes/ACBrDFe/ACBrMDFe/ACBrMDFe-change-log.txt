@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2015
+-- ACBrMDFe / ACBrMDFeWebServices --
+[*] Ajsutes conforme a nova NT 2015/002 - WS Distribuicao DFe.
+    por: Italo Jurisato Junior
+
 05/11/2015
 -- ACBrMDFeWebServices --
 [*] Remoção de variáveis e códigos não utilizados.

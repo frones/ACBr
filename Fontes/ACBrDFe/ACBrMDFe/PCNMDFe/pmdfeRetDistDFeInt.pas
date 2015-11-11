@@ -440,7 +440,7 @@ begin
           begin
             FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
-            FdocZip.Items[i].FresMDFe.chMDFe    := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
+            FdocZip.Items[i].FresMDFe.chMDFe   := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
             FdocZip.Items[i].FresMDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
 
             if FdocZip.Items[i].FresMDFe.FCNPJCPF = '' then
@@ -454,7 +454,7 @@ begin
             FdocZip.Items[i].FresMDFe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
             FdocZip.Items[i].FresMDFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
             FdocZip.Items[i].FresMDFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-            FdocZip.Items[i].FresMDFe.FcSitMDFe  := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitMDFe'));
+            FdocZip.Items[i].FresMDFe.FcSitMDFe := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitMDFe'));
           end;
 
           if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
@@ -467,7 +467,7 @@ begin
             if FdocZip.Items[i].FresEvento.FCNPJCPF = '' then
               FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
 
-            FdocZip.Items[i].FresEvento.chMDFe       := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
+            FdocZip.Items[i].FresEvento.chMDFe      := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
             FdocZip.Items[i].FresEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
             FdocZip.Items[i].FresEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
             FdocZip.Items[i].FresEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
@@ -520,7 +520,7 @@ begin
             FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
             FdocZip.Items[i].FprocEvento.FtpAmb      := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
             FdocZip.Items[i].FprocEvento.FCNPJ       := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-            FdocZip.Items[i].FprocEvento.FchMDFe      := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
+            FdocZip.Items[i].FprocEvento.FchMDFe     := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
             FdocZip.Items[i].FprocEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
             FdocZip.Items[i].FprocEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
             FdocZip.Items[i].FprocEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
@@ -558,7 +558,7 @@ begin
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcOrgao      := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcStat       := oLeitorInfZip.rCampo(tcInt, 'cStat');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FxMotivo     := oLeitorInfZip.rCampo(tcStr, 'xMotivo');
-              FdocZip.Items[i].FprocEvento.RetinfEvento.FchMDFe       := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FchMDFe      := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpEvento    := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
               FdocZip.Items[i].FprocEvento.RetinfEvento.FxEvento     := oLeitorInfZip.rCampo(tcStr, 'xEvento');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FnSeqEvento  := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');

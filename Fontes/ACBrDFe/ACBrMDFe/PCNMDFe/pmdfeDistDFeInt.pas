@@ -44,7 +44,7 @@ type
     FGerador: TGerador;
     FVersao: String;
     FtpAmb: TpcnTipoAmbiente;
-    FcUFAutor: Integer;
+//    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
@@ -57,7 +57,7 @@ type
     property Gerador: TGerador       read FGerador  write FGerador;
     property Versao: String          read FVersao   write FVersao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
-    property cUFAutor: Integer       read FcUFAutor write FcUFAutor;
+//    property cUFAutor: Integer       read FcUFAutor write FcUFAutor;
     property CNPJCPF: String         read FCNPJCPF  write FCNPJCPF;
     property ultNSU: String          read FultNSU   write FultNSU;
     // Usado no Grupo de informações para consultar um DF-e a partir de um
@@ -103,7 +103,7 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
+//  Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
   Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF, 1058);
 
   if FNSU = '' then

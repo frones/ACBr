@@ -121,8 +121,7 @@ type
     procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
-    function DistribuicaoDFe(AcUFAutor: integer;
-      ACNPJCPF, AultNSU, ANSU: String): Boolean;
+    function DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesMDFe
@@ -623,10 +622,9 @@ begin
      DAMDFE.ImprimirEVENTOPDF(nil);
 end;
 
-function TACBrMDFe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
-  ANSU: String): Boolean;
+function TACBrMDFe.DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
 begin
-  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+//  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;

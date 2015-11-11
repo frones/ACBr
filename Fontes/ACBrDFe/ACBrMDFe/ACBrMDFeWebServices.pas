@@ -384,7 +384,7 @@ type
   private
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
-    FcUFAutor: Integer;
+//    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
@@ -406,7 +406,7 @@ type
 
     property versao: String read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
-    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
+//    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
@@ -2019,7 +2019,7 @@ begin
   DistDFeInt := TDistDFeInt.Create;
   try
     DistDFeInt.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
-    DistDFeInt.cUFAutor := FcUFAutor;
+//    DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;

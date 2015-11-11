@@ -14,11 +14,6 @@
 2 - Homologação            </xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="cUFAutor" type="TCodUfIBGE">
-					<xs:annotation>
-						<xs:documentation>Código da UF do Autor</xs:documentation>
-					</xs:annotation>
-				</xs:element>
 				<xs:choice>
 					<xs:element name="CNPJ" type="TCnpj">
 						<xs:annotation>

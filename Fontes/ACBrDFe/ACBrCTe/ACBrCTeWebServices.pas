@@ -770,7 +770,6 @@ end;
 procedure TCTeRecepcao.DefinirURL;
 var
   Modelo, xUF: String;
-  ok: Boolean;
   VerServ: Double;
 begin
   FPLayout := LayCTeRecepcao;
@@ -989,7 +988,6 @@ procedure TCTeRetRecepcao.DefinirURL;
 var
   Modelo, xUF: String;
   VerServ: Double;
-  ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
@@ -1273,7 +1271,6 @@ procedure TCTeRecibo.DefinirURL;
 var
   Modelo, xUF: String;
   VerServ: Double;
-  ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
@@ -1411,7 +1408,6 @@ procedure TCTeConsulta.DefinirURL;
 var
   VerServ: Double;
   Modelo, xUF: String;
-  ok: Boolean;
 begin
   FPVersaoServico := '';
   FPURL  := '';
@@ -2168,7 +2164,6 @@ procedure TCTeEnvEvento.DefinirURL;
 var
   UF, Modelo: String;
   VerServ: Double;
-  ok: Boolean;
 begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }

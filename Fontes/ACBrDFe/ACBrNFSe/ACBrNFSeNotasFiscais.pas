@@ -225,8 +225,8 @@ var
   CNPJEmitente, CNPJCertificado: String;
 begin
   // VErificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
-  CNPJEmitente    := OnlyNumber(NSFe.Prestador.CNPJ);
-  CNPJCertificado := OnlyNumber(TACBrNSFe(TNotasFiscais(Collection).ACBrNFSe).SSL.CertCNPJ);
+  CNPJEmitente    := OnlyNumber(NFSe.Prestador.CNPJ);
+  CNPJCertificado := OnlyNumber(TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.CertCNPJ);
 
   // verificar somente os 8 primeiros digitos, para evitar problemas quando
   // a filial estiver utilizando o certificado da matriz
@@ -533,12 +533,12 @@ end;
 
 procedure NotaFiscal.SetXML(const Value: String);
 begin
-  LerXML(AValue);
+  LerXML(Value);
 end;
 
 procedure NotaFiscal.SetXMLOriginal(const Value: String);
 begin
-  FXMLOriginal := AValue;
+  FXMLOriginal := Value;
 
   if XmlEstaAssinado(FXMLOriginal) then
     FXMLAssinado := FXMLOriginal

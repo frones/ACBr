@@ -685,7 +685,6 @@ end;
 procedure TMDFeRecepcao.DefinirURL;
 var
   Modelo: String;
-  ok: Boolean;
   VerServ: Double;
 begin
   FPLayout := LayMDFeRecepcao;
@@ -868,7 +867,6 @@ end;
 procedure TMDFeRetRecepcao.DefinirURL;
 var
   Modelo: String;
-  ok: Boolean;
   VerServ: Double;
 begin
   FPLayout := LayMDFeRetRecepcao;
@@ -1130,7 +1128,6 @@ end;
 procedure TMDFeRecibo.DefinirURL;
 var
   Modelo: String;
-  ok: Boolean;
   VerServ: Double;
 begin
   FPLayout := LayMDFeRetRecepcao;
@@ -1252,7 +1249,6 @@ procedure TMDFeConsulta.DefinirURL;
 var
   VerServ: Double;
   Modelo: String;
-  ok: Boolean;
 begin
   FPVersaoServico := '';
   FPURL  := '';
@@ -1316,7 +1312,7 @@ var
   SalvarXML, MDFCancelado, Atualiza: Boolean;
   aEventos: String;
   AProcMDFe: TProcMDFe;
-  I, J, K, Inicio, Fim: Integer;
+  I, J, Inicio, Fim: Integer;
   Data: TDateTime;
 begin
   MDFeRetorno := TRetConsSitMDFe.Create;
@@ -1615,7 +1611,6 @@ procedure TMDFeEnvEvento.DefinirURL;
 var
   UF, Modelo : String;
   VerServ: Double;
-  ok: Boolean;
 begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }

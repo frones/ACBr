@@ -40,9 +40,51 @@ type
     procedure LFill_StringZero_ResultadoNaoVazio;
   end;
 
+  { TTACBrTXTClass_MetodosVLFill_Numericos }
+
+  TTACBrTXTClass_MetodosVLFill_Numericos = class(TTestCase)
+  private
+    fACBrTXTClass: TACBrTXTClass;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure VLFill_Inteiro;
+    procedure VLFill_InteiroZerosEsquerdaSemDecimais;
+  end;
+
 implementation
 
 uses variants;
+
+{ TTACBrTXTClass_MetodosVLFill_Numericos }
+
+procedure TTACBrTXTClass_MetodosVLFill_Numericos.SetUp;
+begin
+  fACBrTXTClass := TACBrTXTClass.Create;
+  fACBrTXTClass.Delimitador := '|';
+end;
+
+procedure TTACBrTXTClass_MetodosVLFill_Numericos.TearDown;
+begin
+  FreeAndNil(fACBrTXTClass);
+end;
+
+procedure TTACBrTXTClass_MetodosVLFill_Numericos.VLFill_Inteiro;
+var
+  vValue: Variant;
+begin
+  vValue := 123;
+  CheckEquals('|012300', fACBrTXTClass.VLFill(vValue, 6), 'Não tratou Variant Inteiro corretamente.');
+end;
+
+procedure TTACBrTXTClass_MetodosVLFill_Numericos.VLFill_InteiroZerosEsquerdaSemDecimais;
+var
+  vValue: Variant;
+begin
+  vValue := 0200;
+  CheckEquals('|00200', fACBrTXTClass.VLFill(vValue, 5, 0), 'Não tratou Variant Inteiro com Zeros a esquerda corretamente.');
+end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.VDFill_VariantNula;
 var
@@ -153,7 +195,6 @@ procedure TTACBrTXTClass_MetodosFill_CasosVazios.SetUp;
 begin
   fACBrTXTClass := TACBrTXTClass.Create;
   fACBrTXTClass.Delimitador := '|';
-
 end;
 
 procedure TTACBrTXTClass_MetodosFill_CasosVazios.TearDown;
@@ -164,5 +205,7 @@ end;
 initialization
 
   RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosFill_CasosVazios{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrTXTClass', TTACBrTXTClass_MetodosVLFill_Numericos{$ifndef FPC}.Suite{$endif});
+
 end.
 

@@ -109,6 +109,8 @@ type
     procedure AsIntegerPar;
     procedure TresParaDuasCasasDecimais;
     procedure QuatroParaDuasCasasDecimais;
+    procedure ExpressaoCurrDuasCasasDecimais;
+    procedure ExpressaoDblDuasCasasDecimais;
   end;
 
   { padRightTest }
@@ -2022,6 +2024,34 @@ begin
   CheckEquals( 5.11, RoundABNT(5.1097, 2));
   CheckEquals( 5.11, RoundABNT(5.1098, 2));
   CheckEquals( 5.11, RoundABNT(5.1099, 2));
+end;
+
+procedure RoundABNTTest.ExpressaoCurrDuasCasasDecimais;
+var
+  currValorUnit, currQtde, currTotal: Currency;
+begin
+  currValorUnit :=0.99;
+  currQtde :=0.995;
+  currTotal := currValorUnit * currQtde;
+
+  // 0.99 x 0.995 = 0,98505, porém "currTotal" é um currency, que somente usa 4 casas decimais, portanto será: 0,9850
+  CheckEquals( 0.98, RoundABNT(currTotal, 2));
+  // RoundABNT tem um parâmetro do tipo "Double", portanto aqui todas as casas decimais serão utilizadas
+  CheckEquals( 0.99, RoundABNT(currValorUnit * currQtde, 2));
+end;
+
+procedure RoundABNTTest.ExpressaoDblDuasCasasDecimais;
+var
+  dblValorUnit, dblQtde, dblTotal: Double;
+begin
+  dblValorUnit :=0.99;
+  dblQtde :=0.995;
+  dblTotal := dblValorUnit * dblQtde;
+  CheckEquals( 0.98, RoundABNT(0.9849, 2));
+  CheckEquals( 0.98, RoundABNT(0.9850, 2));
+  CheckEquals( 0.99, RoundABNT(0.98505, 2));
+  CheckEquals( 0.99, RoundABNT(dblTotal, 2));
+  CheckEquals( 0.99, RoundABNT(dblValorUnit * dblQtde, 2));
 end;
 
 { TruncFixTest }

@@ -212,7 +212,7 @@ type
       var ItemSelecionado: Integer; var VoltarMenu: Boolean);
     procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
       TamanhoMaximo, TipoCampo: Integer;
-      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: String;
+      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
       var Digitado, VoltarMenu: Boolean);
   private
      fCancelado : Boolean ;
@@ -1399,7 +1399,7 @@ end;
 
 procedure TForm1.ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
   TamanhoMaximo, TipoCampo: Integer;
-  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: String;
+  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString;
   var Digitado, VoltarMenu: Boolean);
 Var
   AForm : TForm5 ;

@@ -66,17 +66,8 @@ type
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
   private
     FPosPrinter : TACBrPosPrinter ;
-
-    FImprimeEmUmaLinha: Boolean;
-    FImprimeDescAcrescItem: Boolean;
-    FUsaCodigoEanImpressao: Boolean;
-
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
-    function FormatQuantidade(dValor: Double): String;
-    function FormatValorUnitario(dValor: Double): String;
-    function ManterCodigo(scEAN, scProd: String): String;
-
   protected
     FpNFe: TNFe;
     FpEvento: TEventoNFe;
@@ -108,20 +99,9 @@ type
       const ACortaPapel: Boolean = True; const ALogo : Boolean = True);
   published
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
-
-    property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha
-      write FImprimeEmUmaLinha default True;
-    property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem
-      write FImprimeDescAcrescItem default True;
-    property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao
-      write FUsaCodigoEanImpressao default False;
   end;
 
 procedure Register;
-
-  const
-    sDisplayFormat = '###,###,###,##0.%.*d';
-
 
 implementation
 
@@ -142,10 +122,6 @@ begin
   inherited Create(AOwner);
 
   FPosPrinter := Nil;
-
-  FImprimeEmUmaLinha := True;
-  FImprimeDescAcrescItem := True;
-  FUsaCodigoEanImpressao := False;
 end;
 
 destructor TACBrNFeDANFeESCPOS.Destroy;
@@ -715,43 +691,6 @@ begin
   FPosPrinter.Imprimir('', True, True, True, AVias);
 end;
 
-
-Function TACBrNFeDANFeESCPOS.FormatQuantidade( dValor : Double ) : String;
-begin
-  // formatar conforme configurado somente quando houver decimais
-  if Frac( dValor) > 0 then
-  begin
-    case CasasDecimais.Formato of
-      tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
-      tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
-      else
-        Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
-    end
-  end
-  else
-    // caso contrário mostrar somente o número inteiro
-    Result := FloatToStr( dValor );
-end;
-
-
-Function TACBrNFeDANFeESCPOS.FormatValorUnitario( dValor : Double ) : String;
-begin
-  // formatar conforme configurado
-  case CasasDecimais.Formato of
-    tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
-    tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_vUnCom);
-    else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
-  end;
-end;
-
-Function TACBrNFeDANFeESCPOS.ManterCodigo( scEAN , scProd : String ) : String;
-begin
-  if (Length( scEAN ) > 0) and (UsaCodigoEanImpressao) then
-    Result := Trim(scEAN)
-  else
-    Result := Trim(scProd);
-end;
 
 {$IFDEF FPC}
 

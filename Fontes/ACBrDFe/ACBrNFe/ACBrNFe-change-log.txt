@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2015
+-- ACBrDANFCeFortes --
+[-] Refatoração para usar os métodos de formatação de valor unitário, valor total 
+    e outros também para o DANFCe Fortes.
+    por: regys.silveira
+
 10/11/2015
 -- ACBrNFeDANFEFRDM --
 [-] Correção do desconto no item valor acima de 999,99

@@ -519,14 +519,14 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
     mLinhaItem.Lines.Add(IntToStrZero(Prod.nItem,3) + ' ' +
-                             Trim(Prod.cProd) + ' ' +
+                             ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
                              Trim(Prod.xProd));
 
     //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
-    LinhaTotal  := PadLeft(FormatFloat('#,###,##0.00', Prod.qCom), 12) +
+    LinhaTotal  := PadLeft( ACBrNFeDANFCeFortes.FormatQuantidade(Prod.qCom), 12) +
                    PadCenter(Trim(Prod.uCom), 5) + ' X ' +
-                   PadLeft(FormatFloat('#,###,##0.00', Prod.vUnCom), 12) +
-                   PadLeft(FormatFloat('#,###,##0.00', Prod.vProd), 12);
+                   PadLeft(ACBrNFeDANFCeFortes.FormatValorUnitario(Prod.vUnCom), 12) +
+                   PadLeft(FormatFloatBr(Prod.vProd, '###,###,##0.00'), 12);
 
     mLinhaItem.Lines.Add(LinhaTotal);
   end;

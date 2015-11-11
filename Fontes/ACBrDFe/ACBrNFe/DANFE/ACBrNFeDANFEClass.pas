@@ -116,6 +116,9 @@ type
     FImprimeItens: Boolean;    // Destinado exclusivamente ao DANFE da NFC-e
     FViaConsumidor : Boolean;  // Destinado exclusivamente ao DANFE da NFC-e
     FvTroco: Currency;
+    FImprimeEmUmaLinha: Boolean;
+    FUsaCodigoEanImpressao: Boolean;
+    FImprimeDescAcrescItem: Boolean;
 
     FTamanhoLogoHeight: Integer;
     FTamanhoLogoWidth: Integer;
@@ -135,6 +138,10 @@ type
     FPosCanhoto: TPosRecibo;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+  
+    function FormatQuantidade(dValor: Double): String;
+    function FormatValorUnitario(dValor: Double): String;
+    function ManterCodigo(scEAN, scProd: String): String;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -201,12 +208,16 @@ type
     property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
 
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto; // default prCabecalho;
+
+    property ImprimeEmUmaLinha: Boolean              read FImprimeEmUmaLinha              write FImprimeEmUmaLinha default True;
+    property ImprimeDescAcrescItem: Boolean          read FImprimeDescAcrescItem          write FImprimeDescAcrescItem default True;
+    property UsaCodigoEanImpressao: Boolean          read FUsaCodigoEanImpressao          write FUsaCodigoEanImpressao default False;
   end;
 
 implementation
 
 uses
-  ACBrNFe, ACBrUtil;
+  ACBrNFe, ACBrUtil, ACBrConsts;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);
@@ -287,6 +298,10 @@ begin
   FvTribFed:= 0.0;
   FvTribEst:= 0.0;
   FvTribMun:= 0.0;
+
+  FImprimeEmUmaLinha     := True;
+  FImprimeDescAcrescItem := True;
+  FUsaCodigoEanImpressao := False;
 
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
@@ -392,6 +407,43 @@ end;
 procedure TACBrNFeDANFEClass.ImprimirINUTILIZACAOPDF(NFE: TNFe);
 begin
   ErroAbstract('ImprimirPDF');
+end;
+
+function TACBrNFeDANFEClass.FormatQuantidade( dValor : Double ) : String;
+begin
+  // formatar conforme configurado somente quando houver decimais
+  if Frac( dValor) > 0 then
+  begin
+    case CasasDecimais.Formato of
+      tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
+      else
+        Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+    end
+  end
+  else
+    // caso contrário mostrar somente o número inteiro
+    Result := FloatToStr( dValor );
+end;
+
+
+function TACBrNFeDANFEClass.FormatValorUnitario( dValor : Double ) : String;
+begin
+  // formatar conforme configurado
+  case CasasDecimais.Formato of
+    tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+    tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_vUnCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+  end;
+end;
+
+function TACBrNFeDANFEClass.ManterCodigo( scEAN , scProd : String ) : String;
+begin
+  if (Length( scEAN ) > 0) and (UsaCodigoEanImpressao) then
+    Result := Trim(scEAN)
+  else
+    Result := Trim(scProd);
 end;
 
 end.

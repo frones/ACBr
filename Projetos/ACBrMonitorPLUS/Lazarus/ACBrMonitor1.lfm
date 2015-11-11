@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 411
+  Left = 426
   Height = 689
-  Top = 12
+  Top = 148
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -18,7 +18,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnShortCut = FormShortCut
   Position = poScreenCenter
   ShowHint = True
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsDFe
+        ActivePage = tsSat
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 17
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -9189,9 +9189,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsDadosSAT
+            ActivePage = Impressao
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               Caption = 'Dados do SAT CFe'
@@ -9993,8 +9993,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object Impressao: TTabSheet
               Caption = 'Impressao'
-              ClientHeight = 307
-              ClientWidth = 619
+              ClientHeight = 281
+              ClientWidth = 615
               object GroupBox7: TGroupBox
                 Left = 0
                 Height = 281
@@ -10025,7 +10025,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 96
                   Height = 17
                   Top = 0
-                  Width = 31
+                  Width = 30
                   Caption = 'Topo'
                   ParentColor = False
                 end
@@ -11008,7 +11008,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11123,14 +11122,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
     PosCanhoto = prCabecalho
-    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
+    PosPrinter = ACBrPosPrinter1
     left = 619
     top = 448
   end
@@ -11160,6 +11166,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
@@ -11195,6 +11208,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0

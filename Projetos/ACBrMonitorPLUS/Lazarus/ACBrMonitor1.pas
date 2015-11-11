@@ -6570,21 +6570,9 @@ end ;
 procedure TFrmACBrMonitor.PrepararImpressaoSAT;
 begin
   if cbUsarFortes.Checked then
-    ACBrSAT1.Extrato := ACBrSATExtratoFortes1
-  else
-    ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+  begin
+    ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
 
-  if ACBrSAT1.Extrato = ACBrSATExtratoESCPOS1 then
-  begin
-    ConfiguraPosPrinter;
-    ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemSAT.Checked;
-    ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaSAT.Checked;
-    ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
-    ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
-    ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-  end
-  else
-  begin
     ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
     ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
     ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
@@ -6597,6 +6585,19 @@ begin
         ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
     except
     end;
+  end
+  else
+  begin
+    ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+
+    ConfiguraPosPrinter;
+
+    ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem   := cbxImprimirDescAcresItemSAT.Checked;
+    ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
+    ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
+
+    ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
+    ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
   end;
 end;
 

@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2015
+[-] Tentativa de correção:
+    http://www.projetoacbr.com.br/forum/topic/25881-acbrmonitorplus-01111-em-escpos/
+    por: regys.silveira
+
 23/10/2015
 [+] Incluido comando para setar a propriedade incluirqrcodexmlnfce, facilitando 
     para quem usa o monitor automatizar essa configuração nos clientes.

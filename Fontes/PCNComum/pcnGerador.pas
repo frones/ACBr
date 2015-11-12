@@ -86,7 +86,7 @@ type
     procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
     procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
     procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
-    procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True);
+    procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True; PreencheZeros: Boolean = True);
     procedure wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wCampoCPF(const ID: string; CPF: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wAlerta(const ID, TAG, Descricao, Alerta: string);
@@ -746,7 +746,8 @@ begin
     Inc(FOpcoes.FNivelIdentacao);
 end;
 
-procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean);
+procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string;
+  obrigatorio: Boolean; PreencheZeros: Boolean);
 var
   Tamanho: integer;
   Ocorrencia: Integer;
@@ -755,15 +756,21 @@ begin
   Tamanho    := length(CNPJCPF);
   Ocorrencia := Integer(obrigatorio);
 
-  if Tamanho = 11 then
+  if (Tamanho <= 11) and (Tamanho > 0) then    // Se Vazio dá preferencia a CNPJ
   begin
-    wCampo(tcStr, ID2, 'CPF  ', 11, 11, Ocorrencia, CNPJCPF);
+    if PreencheZeros and (Tamanho <> 11) then
+    begin
+      CNPJCPF := PadLeft(CNPJCPF,11,'0');
+      Tamanho := 14;
+    end;
+
+    wCampo(tcStr, ID2, 'CPF  ', 0, 11, Ocorrencia, CNPJCPF);
     if not ValidarCPF(CNPJCPF) then
       wAlerta(ID2, 'CPF', 'CPF', ERR_MSG_INVALIDO);
   end
   else
   begin
-    if (Tamanho <> 14) and (Tamanho > 11) then
+    if PreencheZeros and (obrigatorio or (Tamanho > 0))  and (Tamanho <> 14) then
     begin
       CNPJCPF := PadLeft(CNPJCPF,14,'0');
       Tamanho := 14;

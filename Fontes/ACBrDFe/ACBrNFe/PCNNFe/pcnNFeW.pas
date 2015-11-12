@@ -584,17 +584,17 @@ const
 begin
   UF := '';
   Gerador.wGrupo('dest', 'E01');
-  IsNFe := nfe.Ide.modelo = 55;
+  IsNFe := (nfe.Ide.modelo = 55);
 
   if nfe.infNFe.Versao >= 3 then
   begin
     if (nfe.Dest.idEstrangeiro <> '') or ((nfe.Dest.enderDest.cPais <> 0) and (nfe.Dest.enderDest.cPais <> 1058)) then
       Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 00, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
     else
-      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, IIF(IsNFe, True, False));
+      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, IsNFe);
   end
   else
-     Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, IIF(IsNFe, True, False));
+     Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, IsNFe);
 
   if nfe.Ide.tpAmb = taProducao then
     Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, IIf(IsNFe,1,0), nfe.Dest.xNome, DSC_XNOME)
@@ -683,7 +683,7 @@ begin
   begin
     AjustarMunicipioUF(xUF, xMun, cMun, nfe.Emit.EnderEmit.cPais, nfe.Retirada.UF, nfe.Retirada.xMun, nfe.Retirada.cMun);
     Gerador.wGrupo('retirada', 'F01');
-    Gerador.wCampoCNPJCPF('F02', 'F02a', nfe.Retirada.CNPJCPF);
+    Gerador.wCampoCNPJCPF('F02', 'F02a', nfe.Retirada.CNPJCPF, True, False);
     Gerador.wCampo(tcStr, 'F03', 'xLgr   ', 02, 60, 1, nfe.Retirada.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'F04', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, nfe.Retirada.nro), DSC_NRO);
     Gerador.wCampo(tcStr, 'F05', 'xCpl   ', 01, 60, 0, nfe.Retirada.xCpl, DSC_XCPL);
@@ -704,7 +704,7 @@ begin
   if trim(nfe.Entrega.xLgr) <> '' then
   begin
     Gerador.wGrupo('entrega', 'G01');
-    Gerador.wCampoCNPJCPF('G02', 'G02a', nfe.Entrega.CNPJCPF);
+    Gerador.wCampoCNPJCPF('G02', 'G02a', nfe.Entrega.CNPJCPF, True, False);
     Gerador.wCampo(tcStr, 'G03', 'xLgr   ', 02, 60, 1, nfe.Entrega.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'G04', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, nfe.Entrega.nro), DSC_NRO);
     Gerador.wCampo(tcStr, 'G05', 'xCpl   ', 01, 60, 0, nfe.Entrega.xCpl, DSC_XCPL);

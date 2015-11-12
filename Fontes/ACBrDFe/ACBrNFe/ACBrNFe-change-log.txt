@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2015
+-- pcnNFeW --
+[-] Acerto para não obrigar o CPF/CNPJ quando for NFC-e
+    por: regys.silveira
+
 11/11/2015
 -- ACBrDANFCeFortes --
 [-] Refatoração para usar os métodos de formatação de valor unitário, valor total 

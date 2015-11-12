@@ -578,40 +578,43 @@ end;
 procedure TNFeW.GerarDest;
 var
   UF: String;
+  IsNFe: Boolean;
 const
   HOM_NOME_DEST = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 begin
   UF := '';
   Gerador.wGrupo('dest', 'E01');
+  IsNFe := nfe.Ide.modelo = 55;
 
   if nfe.infNFe.Versao >= 3 then
-   begin
+  begin
     if (nfe.Dest.idEstrangeiro <> '') or ((nfe.Dest.enderDest.cPais <> 0) and (nfe.Dest.enderDest.cPais <> 1058)) then
       Gerador.wCampo(tcStr, 'E03a', 'idEstrangeiro', 00, 20, 1, nfe.Dest.idEstrangeiro, DSC_IDESTR)
     else
-      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF);
-   end
+      Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, IIF(IsNFe, True, False));
+  end
   else
-     Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF);
+     Gerador.wCampoCNPJCPF('E02', 'E03', nfe.Dest.CNPJCPF, IIF(IsNFe, True, False));
 
   if nfe.Ide.tpAmb = taProducao then
-    Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, IIf((nfe.Ide.modelo = 55),1,0), nfe.Dest.xNome, DSC_XNOME)
+    Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, IIf(IsNFe,1,0), nfe.Dest.xNome, DSC_XNOME)
   else
-    Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, IIf((nfe.Ide.modelo = 55),1,0), HOM_NOME_DEST, DSC_XNOME);
+    Gerador.wCampo(tcStr, 'E04', 'xNome  ', 02, 60, IIf(IsNFe,1,0), HOM_NOME_DEST, DSC_XNOME);
 
-  if nfe.Ide.modelo = 55 then
+  if IsNFe then
     (**)GerarDestEnderDest(UF)
   else
-   begin
-     if nfe.Dest.EnderDest.xLgr <> '' then
-       (**)GerarDestEnderDest(UF)
-   end;
+  begin
+    if nfe.Dest.EnderDest.xLgr <> '' then
+      (**)GerarDestEnderDest(UF)
+  end;
 
   Gerador.IDNivel := 'E01';
 
   if nfe.infNFe.Versao >= 3.10 then
     Gerador.wCampo(tcStr, 'E16a', 'indIEDest', 01, 01, 1, indIEDestToStr(nfe.Dest.indIEDest), DSC_INDIEDEST)
-  else nfe.Dest.indIEDest := inContribuinte;
+  else
+    nfe.Dest.indIEDest := inContribuinte;
 
   if nfe.Dest.indIEDest <> inIsento then
    begin

@@ -158,6 +158,8 @@ begin
 end;
 
 procedure TCFeW.GerarIde;
+var
+  sCNPJ: String;
 begin
   Gerador.wGrupo('ide', 'B01');
   if not FApenasTagsAplicacao then
@@ -176,7 +178,11 @@ begin
      Gerador.wCampo(tcStr, 'B10', 'tpAmb  ', 01, 01, 0, tpAmbToStr(CFe.Ide.tpAmb), DSC_TPAMB);
   end;
 
-  Gerador.wCampoCNPJCPF('B11', 'B11', CFe.Ide.CNPJ);
+  sCNPJ := CFe.Ide.CNPJ;
+  if sCNPJ = '' then     // "Nos casos de teste fim-a-fim de ativação, completar com 14 dígitos “0” (zero).
+    sCNPJ := StringOfChar('0',14);
+
+  Gerador.wCampoCNPJCPF('B11', 'B11', sCNPJ);
   Gerador.wCampo(tcStr, 'B12', 'signAC ',1, 344, 1, CFe.Ide.signAC, DSC_SIGNAC);
 
   if not FApenasTagsAplicacao then

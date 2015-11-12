@@ -48,9 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 11/11/2015
--- pcnCFeW --
+-- pcnCFeW, pcnCFeCancW --
 [-] Correção para não gerar a tag de cpf/cnpj do destinatario em branco
-    (por: regys.silveira)
+    (por: regys.silveira, DSA)
 
 Data: 27/10/2015
 -- ACBrSATClass --

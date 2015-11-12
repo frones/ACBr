@@ -195,7 +195,7 @@ end;
 procedure TCFeCancW.GerarDest;
 begin
   Gerador.wGrupo('dest', 'E01');
-  Gerador.wCampoCNPJCPF('E02', 'E03', CFeCanc.Dest.CNPJCPF);
+  Gerador.wCampoCNPJCPF('E02', 'E03', CFeCanc.Dest.CNPJCPF, False);
   Gerador.wGrupo('/dest');
 end;
 

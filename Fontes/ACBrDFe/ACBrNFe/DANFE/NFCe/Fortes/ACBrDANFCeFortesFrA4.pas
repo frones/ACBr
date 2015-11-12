@@ -329,10 +329,24 @@ end;
 
 procedure TfrmACBrDANFCeFortesFrA4.imgLogoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  LogoStream: TStringStream;
 begin
   PrintIt := self.FACBrNFeDANFCeFortesA4.Logo <> '';
   if PrintIt then
-    imgLogo.Picture.LoadFromFile(self.FACBrNFeDANFCeFortesA4.Logo);
+    begin
+      if FileExists (self.FACBrNFeDANFCeFortesA4.Logo) then
+        imgLogo.Picture.LoadFromFile(self.FACBrNFeDANFCeFortesA4.Logo)
+      else
+      begin
+        LogoStream := TStringStream.Create(self.FACBrNFeDANFCeFortesA4.Logo);
+        try
+          imgLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        finally
+          LogoStream.Free;
+        end;
+      end;
+    end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand10BeforePrint(Sender: TObject;

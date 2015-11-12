@@ -425,9 +425,11 @@ begin
            wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
                      'E'                                                         + // 002 a 002 - Tipo de informativo
                      PadLeft( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')+ // 003 a 004 - Codigo do Cedente
+                     ifthen(wModalidade = 'A', PadRight(NumeroDocumento, 10), 
+                            padLeft(wNossoNumeroCompleto,10,'0'))                + // 008 a 017 - Seu numero
                      PadRight( NumeroDocumento,  10)                             + // 008 a 017 - Seu numero
                      Space(1)                                                    + // 018 a 018 - Filler
-                     'A'                                                         + // 019 a 019 - "A"-Com registro  "C"-Sem registro
+                     wModalidade                                                 + // 019 a 019 - "A"-Com registro  "C"-Sem registro
                      TextoRegInfo                                                + // 020 a 347
                      Space(47)                                                   + // 348 a 394 - Filler
                      IntToStrZero( ARemessa.Count + 1, 6);                         // 395 a 400 - Número sequencial do registro
@@ -459,7 +461,8 @@ begin
              wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
                        'E'                                                         + // 002 a 002 - Tipo de informativo
                        PadLeft( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')+ // 003 a 004 - Codigo do Cedente
-                       PadRight( NumeroDocumento,  10)                             + // 008 a 017 - Seu numero
+                       ifthen(wModalidade = 'A', padRight(NumeroDocumento, 10), 
+                              padLeft(wNossoNumeroCompleto, 10,'0'))                                  +// 008 a 017 - Seu numero
                        Space(1)                                                    + // 018 a 018 - Filler
                        'A'                                                         + // 019 a 019 - "A"-Com registro  "C"-Sem registro
                        TextoRegInfo                                                + // 020 a 347
@@ -820,10 +823,10 @@ begin
 
         toRetornoRegistroRecusado: //03
           case AnsiIndexStr(CodMotivo,
-                           ['A1','A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C6','D5',
-                           'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7',
-                           'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9',
-                           'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 'L2', 'L3', 'L4']) of
+                           ['A1', 'A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C5', 'C6',
+                            'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7',
+                            'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9',
+                            'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 'L2', 'L3', 'L4']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2: Result:= 'A3-Agência depositária divergente: atualiza o cadastro de praças da agência cedente';
@@ -870,6 +873,7 @@ begin
             43: Result:= 'L2-Sacado consta na lista de falência';
             44: Result:= 'L3-Apresentante não aceita publicação de edital';
             45: Result:= 'L4-Dados do sacado em branco ou inválido';
+            46: Result:= 'C5-Título rejeitado pela centralizadora';
           else
             case StrToInt(CodMotivo) of
               02: Result:= '02-Código do registro detalhe inválido';
@@ -1017,10 +1021,11 @@ begin
           end;
 
         toRetornoBaixaRejeitada: //27
-          case AnsiIndexStr(CodMotivo,['A1', 'C6', 'C7']) of
+          case AnsiIndexStr(CodMotivo,['A1', 'C6', 'C5', 'C7']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'C6-Título já liquidado';
             2: Result:= 'C7-Título já baixado';
+            3: Result:= 'C5-Título rejeitado pela centralizadora';
           else
             case StrToInt(CodMotivo) of
               00: Result:= '00-Ocorrência aceita, baixa rejeitada';
@@ -1061,9 +1066,10 @@ begin
           end;
 
         toRetornoAlteracaoDadosRejeitados: //30
-          case AnsiIndexStr(CodMotivo,['C6','C7']) of
-            0 : Result:= 'C6-Título já liquidado';
-            1 : Result:= 'C7-Título já baixado';
+          case AnsiIndexStr(CodMotivo,['C5','C6','C7']) of
+            0 : Result:= 'C5-Título rejeitado pela centralizadora';
+            1 : Result:= 'C6-Título já liquidado';
+            2 : Result:= 'C7-Título já baixado';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';
@@ -1086,8 +1092,8 @@ begin
         toRetornoInstrucaoRejeitada: //32
           case AnsiIndexStr(CodMotivo,
                             ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
-                             'B8', 'B9', 'C6', 'C7', 'D2', 'F7', 'F8', 'F9', 'G1',
-                             'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8', 'I9']) of
+                             'B8', 'B9', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8', 'F9',
+                             'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';
@@ -1113,7 +1119,7 @@ begin
             22 : Result:= 'L3-Apresentante não aceita publicação de edital';
             23 : Result:= 'L4-Dados do sacado em branco ou inválido';
             24 : Result:= 'J8-Erro de preenchimento do título';
-            25 : Result:= 'I9-Não previsto no manual'; 
+            25 : Result:= 'C5-Título rejeitado pela centralizadora';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';

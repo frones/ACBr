@@ -72,6 +72,12 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 11/11/2015 ver. 0.0.155a
+-- ACBrBancoSicredi --
+[*] Adicionado suporte a novos tipos de rejeição.(CertaSolucoes)
+[-] Correção remessa CNAB240. (CertaSolucoes)
+http://www.projetoacbr.com.br/forum/topic/22430-remessa-sicredi/
+
 Data: 09/11/2015 ver. 0.0.154a
 -- ACBrBancoBradesco --
 [-] Correção remessa CNAB400. (Diego Oliveira)

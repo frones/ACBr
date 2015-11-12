@@ -761,7 +761,7 @@ begin
     if PreencheZeros and (Tamanho <> 11) then
     begin
       CNPJCPF := PadLeft(CNPJCPF,11,'0');
-      Tamanho := 14;
+      Tamanho := 11;
     end;
 
     wCampo(tcStr, ID2, 'CPF  ', 0, 11, Ocorrencia, CNPJCPF);

@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/11/2015
+[+] Acrescentado o INI para o provedor: SJP.
+    Por: Lutzem Massao Aihara
+-- ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
+[*] Melhorias na montagem da mensagem Soap, foi acrescentando para cada tipo de
+    mensagem a configuração que defini se será incluido o Encoding no cabeçalho
+    e Dados.
+    Por: Italo Jurisato Junior
 -- ACBrNFSeConfiguracoes --
 [-] Correções, não estava gerando a URL de homologação/produção corretamente.
     Por: Italo Jurisato Junior

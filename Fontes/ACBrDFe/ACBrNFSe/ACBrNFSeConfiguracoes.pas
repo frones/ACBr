@@ -143,14 +143,32 @@ type
  TConfigEnvelope = record
     CabecalhoMsg: String;
     Recepcionar: String;
+    Recepcionar_IncluiEncodingCab: Boolean;
+    Recepcionar_IncluiEncodingDados: Boolean;
     ConsSit: String;
+    ConsSit_IncluiEncodingCab: Boolean;
+    ConsSit_IncluiEncodingDados: Boolean;
     ConsLote: String;
+    ConsLote_IncluiEncodingCab: Boolean;
+    ConsLote_IncluiEncodingDados: Boolean;
     ConsNFSeRps: String;
+    ConsNFSeRps_IncluiEncodingCab: Boolean;
+    ConsNFSeRps_IncluiEncodingDados: Boolean;
     ConsNFSe: String;
+    ConsNFSe_IncluiEncodingCab: Boolean;
+    ConsNFSe_IncluiEncodingDados: Boolean;
     Cancelar: String;
+    Cancelar_IncluiEncodingCab: Boolean;
+    Cancelar_IncluiEncodingDados: Boolean;
     Gerar: String;
+    Gerar_IncluiEncodingCab: Boolean;
+    Gerar_IncluiEncodingDados: Boolean;
     RecSincrono: String;
+    RecSincrono_IncluiEncodingCab: Boolean;
+    RecSincrono_IncluiEncodingDados: Boolean;
     Substituir: String;
+    Substituir_IncluiEncodingCab: Boolean;
+    Substituir_IncluiEncodingDados: Boolean;
  end;
 
   { TGeralConfNFSe }
@@ -501,6 +519,9 @@ begin
   end;
   FConfigEnvelope.Recepcionar := Texto;
 
+  FConfigEnvelope.Recepcionar_IncluiEncodingCab := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingCab', True);
+  FConfigEnvelope.Recepcionar_IncluiEncodingDados := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingDados', True);
+
   Texto := '';
   I := 1;
   while true do
@@ -513,6 +534,9 @@ begin
     Inc(I);
   end;
   FConfigEnvelope.ConsSit := Texto;
+
+  FConfigEnvelope.ConsSit_IncluiEncodingCab := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingCab', True);
+  FConfigEnvelope.ConsSit_IncluiEncodingDados := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingDados', True);
 
   Texto := '';
   I := 1;
@@ -527,6 +551,9 @@ begin
   end;
   FConfigEnvelope.ConsLote := Texto;
 
+  FConfigEnvelope.ConsLote_IncluiEncodingCab := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingCab', True);
+  FConfigEnvelope.ConsLote_IncluiEncodingDados := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingDados', True);
+
   Texto := '';
   I := 1;
   while true do
@@ -539,6 +566,9 @@ begin
     Inc(I);
   end;
   FConfigEnvelope.ConsNFSeRps := Texto;
+
+  FConfigEnvelope.ConsNFSeRps_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingCab', True);
+  FConfigEnvelope.ConsNFSeRps_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingDados', True);
 
   Texto := '';
   I := 1;
@@ -553,6 +583,9 @@ begin
   end;
   FConfigEnvelope.ConsNFSe := Texto;
 
+  FConfigEnvelope.ConsNFSe_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingCab', True);
+  FConfigEnvelope.ConsNFSe_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingDados', True);
+
   Texto := '';
   I := 1;
   while true do
@@ -565,6 +598,9 @@ begin
     Inc(I);
   end;
   FConfigEnvelope.Cancelar := Texto;
+
+  FConfigEnvelope.Cancelar_IncluiEncodingCab := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingCab', True);
+  FConfigEnvelope.Cancelar_IncluiEncodingDados := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingDados', True);
 
   Texto := '';
   I := 1;
@@ -579,6 +615,9 @@ begin
   end;
   FConfigEnvelope.Gerar := Texto;
 
+  FConfigEnvelope.Gerar_IncluiEncodingCab := FPIniParams.ReadBool('Gerar', 'IncluiEncodingCab', True);
+  FConfigEnvelope.Gerar_IncluiEncodingDados := FPIniParams.ReadBool('Gerar', 'IncluiEncodingDados', True);
+
   Texto := '';
   I := 1;
   while true do
@@ -592,6 +631,9 @@ begin
   end;
   FConfigEnvelope.RecSincrono := Texto;
 
+  FConfigEnvelope.RecSincrono_IncluiEncodingCab := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingCab', True);
+  FConfigEnvelope.RecSincrono_IncluiEncodingDados := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingDados', True);
+
   Texto := '';
   I := 1;
   while true do
@@ -604,6 +646,9 @@ begin
     Inc(I);
   end;
   FConfigEnvelope.Substituir := Texto;
+
+  FConfigEnvelope.Substituir_IncluiEncodingCab := FPIniParams.ReadBool('Substituir', 'IncluiEncodingCab', True);
+  FConfigEnvelope.Substituir_IncluiEncodingDados := FPIniParams.ReadBool('Substituir', 'IncluiEncodingDados', True);
 
   Texto := '';
   I := 1;

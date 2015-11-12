@@ -99,7 +99,7 @@ type
     procedure InicializarServico; override;
     function GerarVersaoDadosSoap: String; override;
     function GerarCabecalhoSoap: String; override;
-    procedure InicializarDadosMsg;
+    procedure InicializarDadosMsg(AIncluiEncodingCab: Boolean);
     procedure FinalizarServico; override;
     function ExtrairRetorno(TAGResposta: String): String;
     function ExtrairNotasRetorno: Boolean;
@@ -634,6 +634,27 @@ begin
   // %CabMsg%    : Representa a Mensagem de Cabeçalho
   // %DadosMsg%  : Representa a Mensagem de Dados
 
+  if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+    NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
+  else
+    NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
+
+  CabMsg := FPCabMsg;
+  if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
+    CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  DadosMsg := FPDadosMsg;
+  if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
+    DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  // Alterações no conteudo de DadosMsg especificas para alguns provedores  
+  if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
+    DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  if (FProvedor = proPronim) and (FPLayout = LayNfseRecepcaoLote) then
+    DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+
+  (*
   DadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
@@ -648,15 +669,7 @@ begin
     DadosMsg := '&lt;' + ENCODING_UTF8 + '&gt;' + DadosMsg;
     DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
   end;
-
-  CabMsg := FPCabMsg;
-  if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
-    CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
-
-  if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
-    NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
-  else
-    NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
+  *)
 
   Texto := StringReplace(Texto, '%SenhaMsg%', FDadosSenha, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NameSpace%', NameSpace, [rfReplaceAll]);
@@ -696,7 +709,7 @@ begin
   Result := FPCabMsg;
 end;
 
-procedure TNFSeWebService.InicializarDadosMsg;
+procedure TNFSeWebService.InicializarDadosMsg(AIncluiEncodingCab: Boolean);
 var
   Texto: String;
   Ok: Boolean;
@@ -719,6 +732,9 @@ begin
   FPrefixo3  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo3;
   FPrefixo4  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4;
   FPCabMsg   := FPConfiguracoesNFSe.Geral.ConfigEnvelope.CabecalhoMsg;
+
+  if AIncluiEncodingCab then
+    FPCabMsg := '<' + ENCODING_UTF8 + '>' + FPCabMsg;
 
   if RightStr(FNameSpace, 1) = '/' then
     FSeparador := ''
@@ -1077,7 +1093,7 @@ var
 begin
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingCab);
 
   if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
   begin
@@ -1207,6 +1223,10 @@ begin
     GerarException(ACBrStr('A funcionalidade [Gerar Lote] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
 
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
   // Lote tem mais de 500kb ? //
@@ -1290,7 +1310,7 @@ var
 begin
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingCab);
 
   if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
   begin
@@ -1407,6 +1427,10 @@ begin
   else
     GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' +
       FPConfiguracoesNFSe.Geral.xProvedor));
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
@@ -1525,7 +1549,7 @@ var
 begin
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_IncluiEncodingCab);
 
   if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
   begin
@@ -1637,6 +1661,10 @@ begin
    else
      GerarException(ACBrStr('A funcionalidade [Enviar Sincrono] não foi disponibilizada pelo provedor: ' +
       FPConfiguracoesNFSe.Geral.xProvedor));
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 end;
 
 function TNFSeEnviarSincrono.TratarResposta: Boolean;
@@ -1708,7 +1736,7 @@ var
 begin
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_IncluiEncodingCab);
 
   if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS or FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar then
   begin
@@ -1844,6 +1872,10 @@ begin
    else
      GerarException(ACBrStr('A funcionalidade [Gerar NFSe] não foi disponibilizada pelo provedor: ' +
       FPConfiguracoesNFSe.Geral.xProvedor));
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 end;
 
 function TNFSeGerarNFSe.TratarResposta: Boolean;
@@ -1920,7 +1952,7 @@ begin
 
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConSit;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingCab);
 
   FTagI := '<' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
@@ -1988,6 +2020,10 @@ begin
                                                        FProvedor);
     end;
   end;
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit;
 
@@ -2192,7 +2228,7 @@ begin
 
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConLot;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingCab);
 
   FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
@@ -2263,6 +2299,10 @@ begin
                                                    TNFSeConsultarLoteRPS(Self).FRazaoSocial);
     end;
   end;
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote;
 
@@ -2350,7 +2390,7 @@ begin
 
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConRps;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingCab);
 
   FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio' + FNameSpaceDad;
   FTagF := '</' + FPrefixo3 + 'ConsultarNfseRpsEnvio>';
@@ -2479,6 +2519,10 @@ begin
     end;
   end;
 
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps;
 
   if FPDadosMsg = '' then
@@ -2562,7 +2606,7 @@ begin
 
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConNfse;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingCab);
 
   if (FProvedor = proDigifred) then begin
     FTagI := '<' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + FNameSpaceDad;
@@ -2679,6 +2723,10 @@ begin
    end;
   end;
 
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe;
 
   if FPDadosMsg = '' then
@@ -2774,7 +2822,7 @@ begin
 
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoCancelar;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingCab);
 
   case FProvedor of
     proEquiplano,
@@ -2967,6 +3015,10 @@ begin
     end;
   end;
 
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar;
 
   if FPDadosMsg = '' then
@@ -3100,7 +3152,7 @@ var
 begin
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
 
-  InicializarDadosMsg;
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingCab);
 
   if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
   begin
@@ -3338,6 +3390,10 @@ begin
                                                          FProvedor);
    end;
   end;
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir;
 

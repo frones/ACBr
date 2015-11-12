@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2015
+-- ACBrNFSeConfiguracoes --
+[-] Correções, não estava gerando a URL de homologação/produção corretamente.
+    Por: Italo Jurisato Junior
+
 11/11/2015
 [-] Correções visando fazer funcionar para o provedor SimplISS.
     Por: Paulo Henrique Panico

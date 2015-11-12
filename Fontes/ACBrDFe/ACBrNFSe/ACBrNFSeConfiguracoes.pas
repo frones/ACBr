@@ -427,15 +427,15 @@ begin
 
   if FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS', '') = '*******' then
   begin
-    FConfigURL.HomRecepcaoLoteRPS := FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS_' + CodIBGE, '');
-    FConfigURL.HomConsultaLoteRPS := FPIniParams.ReadString('URL_H', 'ConsultaLoteRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomConsultaSitLoteRPS := FPIniParams.ReadString('URL_H', 'ConsultaSitLoteRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomConsultaNFSeRPS := FPIniParams.ReadString('URL_H', 'ConsultaNFSeRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomConsultaNFSe := FPIniParams.ReadString('URL_H', 'ConsultaNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomCancelaNFSe := FPIniParams.ReadString('URL_H', 'CancelaNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomGerarNFSe := FPIniParams.ReadString('URL_H', 'GerarNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomRecepcaoSincrono := FPIniParams.ReadString('URL_H', 'RecepcaoSincrono_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
-    FConfigURL.HomSubstituiNFSe := FPIniParams.ReadString('URL_H', 'SubstituiNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS);
+    FConfigURL.HomRecepcaoLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS_' + CodIBGE, ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomConsultaLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaLoteRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomConsultaSitLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaSitLoteRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomConsultaNFSeRPS := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaNFSeRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomConsultaNFSe := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomCancelaNFSe := StringReplace(FPIniParams.ReadString('URL_H', 'CancelaNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomGerarNFSe := StringReplace(FPIniParams.ReadString('URL_H', 'GerarNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomRecepcaoSincrono := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoSincrono_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomSubstituiNFSe := StringReplace(FPIniParams.ReadString('URL_H', 'SubstituiNFSe_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   end
   else
   begin
@@ -452,15 +452,15 @@ begin
 
   if FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS', '') = '*******' then
   begin
-    FConfigURL.ProRecepcaoLoteRPS := FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS_' + CodIBGE, '');
-    FConfigURL.ProConsultaLoteRPS := FPIniParams.ReadString('URL_P', 'ConsultaLoteRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProConsultaSitLoteRPS := FPIniParams.ReadString('URL_P', 'ConsultaSitLoteRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProConsultaNFSeRPS := FPIniParams.ReadString('URL_P', 'ConsultaNFSeRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProConsultaNFSe := FPIniParams.ReadString('URL_P', 'ConsultaNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProCancelaNFSe := FPIniParams.ReadString('URL_P', 'CancelaNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProGerarNFSe := FPIniParams.ReadString('URL_P', 'GerarNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProRecepcaoSincrono := FPIniParams.ReadString('URL_P', 'RecepcaoSincrono_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
-    FConfigURL.ProSubstituiNFSe := FPIniParams.ReadString('URL_P', 'SubstituiNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS);
+    FConfigURL.ProRecepcaoLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS_' + CodIBGE, ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProConsultaLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaLoteRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProConsultaSitLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaSitLoteRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProConsultaNFSeRPS := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaNFSeRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProConsultaNFSe := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProCancelaNFSe := StringReplace(FPIniParams.ReadString('URL_P', 'CancelaNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProGerarNFSe := StringReplace(FPIniParams.ReadString('URL_P', 'GerarNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProRecepcaoSincrono := StringReplace(FPIniParams.ReadString('URL_P', 'RecepcaoSincrono_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProSubstituiNFSe := StringReplace(FPIniParams.ReadString('URL_P', 'SubstituiNFSe_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   end
   else
   begin

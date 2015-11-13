@@ -1783,9 +1783,10 @@ function TNFeConsulta.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsSitNFe;
   SalvarXML, NFCancelada, Atualiza: Boolean;
-  aEventos: String;
+  aEventos, sPathNFe: String;
   AProcNFe: TProcNFe;
   I, J, Inicio, Fim: integer;
+  dhEmissao: TDateTime;
 begin
   NFeRetorno := TRetConsSitNFe.Create;
 
@@ -2021,11 +2022,16 @@ begin
               AProcNFe.Free;
             end;
 
-            // Salva o XML do NF-e assinado, protocolado e com os eventos
+            // Salva o XML da NF-e assinado, protocolado e com os eventos
+            if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
+              dhEmissao := NFe.Ide.dEmi
+            else
+              dhEmissao := Now;
+
+            sPathNFe := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(dhEmissao, NFe.Emit.CNPJCPF, NFe.Ide.modelo));
+
             if (FRetNFeDFe <> '') and FPConfiguracoesNFe.Geral.Salvar then
-              FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml',
-                                 FRetNFeDFe,
-                                 ExtractFilePath(NomeArq));
+              FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml', FRetNFeDFe, sPathNFe);
 
             // Salva o XML da NF-e assinado e protocolado
             if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then

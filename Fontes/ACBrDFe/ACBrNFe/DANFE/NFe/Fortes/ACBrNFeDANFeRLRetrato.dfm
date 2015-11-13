@@ -806,11 +806,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rllNumNF1: TRLLabel
-        Left = 280
+        Left = 277
         Top = 82
-        Width = 93
+        Width = 85
         Height = 16
-        Caption = 'N'#186' 000.000.000'
+        Caption = 'N'#186' 999999999'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -1171,9 +1171,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         BarcodeType = bcCode128C
       end
       object rllPageNumber: TRLSystemInfo
-        Left = 368
+        Left = 365
         Top = 82
-        Width = 41
+        Width = 37
         Height = 16
         Alignment = taRightJustify
         AutoSize = False
@@ -1181,7 +1181,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Text = 'FL. '
       end
       object rllLastPage: TRLSystemInfo
-        Left = 404
+        Left = 402
         Top = 82
         Width = 24
         Height = 16
@@ -5815,6 +5815,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtNCM: TRLDBText
         Tag = 705
@@ -5831,6 +5832,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtCST: TRLDBText
         Tag = 705
@@ -5847,6 +5849,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtCFOP: TRLDBText
         Tag = 705
@@ -5862,6 +5865,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtUnidade: TRLDBText
         Tag = 705
@@ -5877,6 +5881,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtQuantidade: TRLDBText
         Tag = 705
@@ -5893,6 +5898,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtValorUnitario: TRLDBText
         Tag = 705
@@ -5909,6 +5915,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtValorTotal: TRLDBText
         Tag = 705
@@ -5925,6 +5932,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtValorIPI: TRLDBText
         Tag = 705
@@ -5941,6 +5949,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtAliqICMS: TRLDBText
         Tag = 705
@@ -5957,6 +5966,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtAliqIPI: TRLDBText
         Tag = 705
@@ -5973,6 +5983,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object LinhaCST: TRLDraw
         Left = 283
@@ -6163,6 +6174,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtValorICMS: TRLDBText
         Tag = 705
@@ -6179,6 +6191,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object txtValorDesconto: TRLDBText
         Tag = 705
@@ -6195,6 +6208,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object RLDraw2: TRLDraw
         Left = 508

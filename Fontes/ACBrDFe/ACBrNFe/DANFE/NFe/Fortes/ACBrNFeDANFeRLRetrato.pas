@@ -1059,9 +1059,9 @@ begin
   begin
     rllChave.Caption        := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
-    rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
+    rllNumNF0.Caption       := ACBrStr('Nº ') + PadLeft(IntToStr(nNF), 9, '0');
     rllNumNF1.Caption       := rllNumNF0.Caption;
-    rllSERIE0.Caption       := ACBrStr('SÉRIE ') + IntToStr(Serie);
+    rllSERIE0.Caption       := ACBrStr('SÉRIE ') + PadLeft(IntToStr(Serie), 3, '0');
     rllSERIE1.Caption       := rllSERIE0.Caption;
     rllNatOperacao.Caption  := NatOp;
     rllEntradaSaida.Caption := tpNFToStr( tpNF );

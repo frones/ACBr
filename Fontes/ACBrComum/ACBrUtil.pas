@@ -1312,7 +1312,8 @@ begin
   TS := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}ThousandSeparator;
 
   // Removendo Separador de milhar //
-  Result := StringReplace(Result, TS, '', [rfReplaceAll]);
+  if ( DS <> TS ) then
+    Result := StringReplace(Result, TS, '', [rfReplaceAll]);
 
   // Verificando se precisa mudar Separador decimal //
   if DS <> SeparadorDecimal then

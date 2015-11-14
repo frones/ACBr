@@ -87,7 +87,7 @@ begin
    fpTamanhoMaximoNossoNum := 7;
    fpTamanhoCarteira   := 1;
    fpTamanhoConta      := 8;
-   fpCodigosMoraAceitos:= '2';
+   fpCodigosMoraAceitos:= '123';
 end;
 
 function TACBrBancoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -829,7 +829,7 @@ begin
                          PadRight(AEspecieTitulo, 2)                          + // 107 a 108 - Espécie do documento
                          ATipoAceite                                      + // 109 - Identificação de título Aceito / Não aceito
                          FormatDateTime('ddmmyyyy', DataDocumento)        + // 110 a 117 - Data da emissão do documento
-                         '0'                                              + // 118 - Zeros
+                         CodigoMora                                       + // 118 - Codigo Mora (juros) - 1) Por dia, 2) Taxa mensal e 3) Isento
                          ADataMoraJuros                                             + //119 a 126 - Data a partir da qual serão cobrados juros
                          IfThen(ValorMoraJuros > 0, IntToStrZero( round(ValorMoraJuros * 100), 15),
                          PadLeft('', 15, '0'))                                        + //127 a 141 - Valor de juros de mora por dia
@@ -908,9 +908,11 @@ begin
                '1'                                                        +//42
                PadLeft('0', 8, '0')                                          +//43-50 data do desconto 3
                PadLeft('0', 15, '0')                                         +//51-65 Valor ou percentual a ser concedido
-               '1'                                                        +//66 Código da multa
-               PadLeft('0', 8, '0')                                          +//67-74 Data da multa
-               PadLeft('0', 15, '0')                                         +//75-89 Valor/Percentual a ser aplicado
+               '2'                                                        +//66 Código da multa - 1) valor fixo e 2) valor percentual
+               IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
+                  FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')               + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+               IfThen(PercentualMulta > 0, IntToStrZero(round(PercentualMulta * 100), 15),
+                  PadLeft('', 15, '0'))                                                 + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
                space(10)                                                  +//90-99 Informações do sacado
                space(40)                                                  +//100-139 Menssagem livre
                space(40)                                                  +//140-179 Menssagem livre

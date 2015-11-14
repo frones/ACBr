@@ -191,7 +191,7 @@ begin
     else if (Length(AConvenio) > 4) and (Length(AConvenio) <= 6) then
       ANossoNumero := PadLeft(AConvenio, 6, '0') + PadLeft(ANossoNumero, 5, '0')
     else if (Length(AConvenio) = 7) then
-      ANossoNumero := PadLeft(AConvenio, 7, '0') + PadLeft(ANossoNumero, 10, '0');
+      ANossoNumero := PadLeft(AConvenio, 7, '0') + RightStr(ANossoNumero, 10);
   end;
   Result := ANossoNumero;
 end;

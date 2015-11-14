@@ -72,6 +72,21 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 12/11/2015 ver. 0.0.156a
+-- ACBrBancoBrasil --
+[-] Correção leitura campo NossoNumero para Convenio de 7 posições no retorno CNAB240 e CNAB400 .(brsamn)
+http://www.projetoacbr.com.br/forum/topic/23809-retorno-banco-do-brasil-conv%C3%AAnio-de-7-posi%C3%A7%C3%B5es-e-nosso-n%C3%BAmero-com-17/
+
+-- ACBrBancoBancoob --
+[*] Adição ao suporte a juros e multa na remessa CNAB240.(marcoanjos)
+http://www.projetoacbr.com.br/forum/topic/15678-erro-ao-gerar-remessa-de-boleto-sicoob/
+
+-- ACBrBancoSicredi --
+[-] Correção remessa CNAB240. (informatte)
+http://www.projetoacbr.com.br/forum/topic/25593-erro-remessa-sicredi-cnab240-campo-nosso-numero-038-a-57/
+
+
+
 Data: 11/11/2015 ver. 0.0.155a
 -- ACBrBancoSicredi --
 [*] Adicionado suporte a novos tipos de rejeição.(CertaSolucoes)

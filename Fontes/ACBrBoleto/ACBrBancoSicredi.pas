@@ -1555,49 +1555,49 @@ begin
     end;
 
     {SEGMENTO P}
-    Result:= '748'                                                          + // 001 a 003 - Código do banco na compensação
-             '0001'                                                         + // 004 a 007 - Lote de serviço = "0001"
-             '3'                                                            + // 008 a 008 - Tipo de registro = "3" DETALHE
+    Result:= '748'                                                            + // 001 a 003 - Código do banco na compensação
+             '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
+             '3'                                                              + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5) + // 009 a 013 - Nº sequencial do registro do lote
-             'P'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
-             Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
-             '01'                                                           + // 016 a 017 - Código de movimento remessa
-             PadLeft(OnlyNumber(Agencia), 5,'0')                            + // 018 a 022 - Agência mantenedora da conta
-             Space(1)                                                       + // 023 a 023 - Dígito verificador da agência
-             PadLeft(OnlyNumber(Conta), 12, '0')                            + // 024 a 035 - Número da conta corrente
-             PadLeft(OnlyNumber(ContaDigito), 1)                            + // 036 a 036 - Dígito verificador da conta
-             Space(1)                                                       + // 037 a 037 - Dígito verificador da coop/ag/conta
-             PadRight(NossoNumero + DigitoNossoNumero, 20, '0')             + // 038 a 057 - Identificação do título no banco
-             '1'                                                            + // 058 a 058 - Código da carteira
-             '1'                                                            + // 059 a 059 - Forma de cadastro do título no banco
-             '2'                                                            + // 060 a 060 - Tipo de documento
-             '2'                                                            + // 061 a 061 - Identificação de emissão do bloqueto
-             '2'                                                            + // 062 a 062 - Identificação da distribuição
-             PadRight(NumeroDocumento, 15)                                  + // 063 a 077 - Nº do documento de cobrança
-             FormatDateTime('ddmmyyyy', Vencimento)                         + // 078 a 085 - Data de vencimento do título
-             IntToStrZero(Round(ValorDocumento * 100), 15)                  + // 086 a 100 - Valor nominal do título
-             '00000'                                                        + // 101 a 105 - Coop./Ag. encarregada da cobrança
-             Space(1)                                                       + // 106 a 106 - Dígito verificador da coop./agência
-             PadLeft(Especie, 2, '0')                                       + // 107 a 108 - Espécie do título
-             AceiteStr                                                      + // 109 a 109 - Identificação de título aceito/não aceito
-             FormatDateTime('ddmmyyyy', DataDocumento)                      + // 110 a 117 - Data da emissão do título
-             IfThen(ValorMoraJuros = 0, '3', '1')                           + // 118 a 118 - Código do juro de mora
-             '00000000'                                                     + // 119 a 126 - Data do juro de mora
-             IntToStrZero(Round(ValorMoraJuros * 100), 15)                  + // 127 a 141 - Juros de mora por dia/taxa
-             '1'                                                            + // 142 a 142 - Código do desconto 1
+               (2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5)   + // 009 a 013 - Nº sequencial do registro do lote
+             'P'                                                              + // 014 a 014 - Cód. segmento do registro detalhe
+             Space(1)                                                         + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
+             '01'                                                             + // 016 a 017 - Código de movimento remessa
+             PadLeft(OnlyNumber(Agencia), 5,'0')                              + // 018 a 022 - Agência mantenedora da conta
+             Space(1)                                                         + // 023 a 023 - Dígito verificador da agência
+             PadLeft(OnlyNumber(Conta), 12, '0')                              + // 024 a 035 - Número da conta corrente
+             PadLeft(OnlyNumber(ContaDigito), 1)                              + // 036 a 036 - Dígito verificador da conta
+             Space(1)                                                         + // 037 a 037 - Dígito verificador da coop/ag/conta
+             PadRight(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 20, '0')+ // 038 a 057 - Identificação do título no banco
+             '1'                                                              + // 058 a 058 - Código da carteira
+             '1'                                                              + // 059 a 059 - Forma de cadastro do título no banco
+             '2'                                                              + // 060 a 060 - Tipo de documento
+             '2'                                                              + // 061 a 061 - Identificação de emissão do bloqueto
+             '2'                                                              + // 062 a 062 - Identificação da distribuição
+             PadRight(NumeroDocumento, 15)                                    + // 063 a 077 - Nº do documento de cobrança
+             FormatDateTime('ddmmyyyy', Vencimento)                           + // 078 a 085 - Data de vencimento do título
+             IntToStrZero(Round(ValorDocumento * 100), 15)                    + // 086 a 100 - Valor nominal do título
+             '00000'                                                          + // 101 a 105 - Coop./Ag. encarregada da cobrança
+             Space(1)                                                         + // 106 a 106 - Dígito verificador da coop./agência
+             PadLeft(Especie, 2, '0')                                         + // 107 a 108 - Espécie do título
+             AceiteStr                                                        + // 109 a 109 - Identificação de título aceito/não aceito
+             FormatDateTime('ddmmyyyy', DataDocumento)                        + // 110 a 117 - Data da emissão do título
+             IfThen(ValorMoraJuros = 0, '3', '1')                             + // 118 a 118 - Código do juro de mora
+             '00000000'                                                       + // 119 a 126 - Data do juro de mora
+             IntToStrZero(Round(ValorMoraJuros * 100), 15)                    + // 127 a 141 - Juros de mora por dia/taxa
+             '1'                                                              + // 142 a 142 - Código do desconto 1
              IfThen(ValorDesconto = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento))                         + // 143 a 150 - Data do desconto 1
-             IntToStrZero(Round(ValorDesconto * 100), 15)                   + // 151 a 165 - Valor percentual a ser concedido
-             IntToStrZero(Round(ValorIOF * 100), 15)                        + // 166 a 180 - Valor do IOF a ser recolhido
-             IntToStrZero(Round(ValorAbatimento * 100), 15)                 + // 181 a 195 - Valor do abatimento
-             PadRight(NumeroDocumento, 25)                                  + // 196 a 220 - Identificação do título na empresa
-             CodProtesto                                                    + // 221 a 221 - Código para protesto
-             DiasProtesto                                                   + // 222 a 223 - Número de dias para protesto
-             '1'                                                            + // 224 a 224 - Código para baixa/devolução
-             '060'                                                          + // 225 a 227 - Nº de dias para baixa/devolução
-             '09'                                                           + // 228 a 229 - Código da moeda = "09"
-             PadRight('', 10, '0')                                          + // 230 a 239 - Nº do contrato da operação de crédito
-             Space(1);                                                        // 240 a 240 - Uso exclusivo FEBRABAN/CNAB
+             IntToStrZero(Round(ValorDesconto * 100), 15)                     + // 151 a 165 - Valor percentual a ser concedido
+             IntToStrZero(Round(ValorIOF * 100), 15)                          + // 166 a 180 - Valor do IOF a ser recolhido
+             IntToStrZero(Round(ValorAbatimento * 100), 15)                   + // 181 a 195 - Valor do abatimento
+             PadRight(NumeroDocumento, 25)                                    + // 196 a 220 - Identificação do título na empresa
+             CodProtesto                                                      + // 221 a 221 - Código para protesto
+             DiasProtesto                                                     + // 222 a 223 - Número de dias para protesto
+             '1'                                                              + // 224 a 224 - Código para baixa/devolução
+             '060'                                                            + // 225 a 227 - Nº de dias para baixa/devolução
+             '09'                                                             + // 228 a 229 - Código da moeda = "09"
+             PadRight('', 10, '0')                                            + // 230 a 239 - Nº do contrato da operação de crédito
+             Space(1);                                                          // 240 a 240 - Uso exclusivo FEBRABAN/CNAB
 
     {SEGMENTO Q}
     Result:= Result + #13#10 +

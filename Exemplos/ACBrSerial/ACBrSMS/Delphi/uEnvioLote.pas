@@ -47,7 +47,7 @@ begin
       // cada linha do arquivo é uma mensagem, seguinte o padrão:
       // 1122223333|Mensagem que deseja enviar
       //
-      LoteMsgs.LoadFromFrile(OpenDialog1.FileName);
+      LoteMsgs.LoadFromFile(OpenDialog1.FileName);
 
       {
         Pode ser populada a mão utilizado o método Add, assim o usuário pode

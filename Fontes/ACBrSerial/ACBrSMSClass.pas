@@ -67,7 +67,11 @@ type
   private
     FMensagem: String;
     FTelefone: String;
+    FDataHora: TDateTime;
+    FCodigo: Integer;
   public
+    property Codigo : Integer read FCodigo write FCodigo;
+    property DataHora : TDateTime read FDataHora write FDataHora;
     property Telefone: String read FTelefone write FTelefone;
     property Mensagem: String read FMensagem write FMensagem;
   end;
@@ -78,7 +82,7 @@ type
     function GetObject (Index: Integer): TACBrSMSMensagem;
     procedure Insert (Index: Integer; Obj: TACBrSMSMensagem);
   public
-    procedure LoadFromFrile(const APath: String);
+    procedure LoadFromFile(const APath: String);
     procedure CarregaSMS(const APath : string);
     function Add: TACBrSMSMensagem; overload;
     function Add (Obj: TACBrSMSMensagem): Integer; overload;
@@ -159,8 +163,17 @@ begin
 end;
 
 procedure TACBrSMSMensagens.CarregaSMS(const APath: string);
+function FormaDataHora(ADataHora : String) : TDateTime;
+begin
+  Result := StrToDateTimeDef(Copy(ADataHora, 7, 2) + '/' +
+                             Copy(ADataHora, 4, 2) + '/' +
+                             Copy(ADataHora, 1, 2) +
+                             Copy(ADataHora, 9, Length(ADataHora) -8),
+                             StrToDate('01/01/1990'));
+end;
 const
-  Delimitador = 'READ","';
+  DelimitadorSMS = 'READ","';
+  DelimitadorID = '+CMGL:';  
 var
   ListaSMS : TStringList;
   Conteudo : string;
@@ -179,15 +192,22 @@ begin
     for I := 0 to ListaSMS.Count -1 do
     begin
       Conteudo := ListaSMS[I];
-      if Pos(Delimitador, Conteudo) > 0 then
+      if Pos(DelimitadorSMS, Conteudo) > 0 then
       begin
         with Self.Add do
         begin
-          System.Delete(Conteudo, 1, Pos(Delimitador, Conteudo) + Length(Delimitador) -1);
+          Codigo := StrToInt64Def(Trim(Copy(Conteudo, Pos(DelimitadorID, Conteudo) +
+            Length(DelimitadorID), Pos(',', Conteudo) - (Pos(DelimitadorID, Conteudo) +
+            Length(DelimitadorID)))), -1);
+          System.Delete(Conteudo, 1, Pos(DelimitadorSMS, Conteudo) + Length(DelimitadorSMS) -1);
           Telefone := Copy(Conteudo, 1, Pos('"', Conteudo) -1);
+          Conteudo := StringReplace(Conteudo, Telefone, '', [rfReplaceAll]);
+          Conteudo := StringReplace(Conteudo, '"', '', [rfReplaceAll]);
+          Conteudo := StringReplace(Conteudo, ',', ' ', [rfReplaceAll]);
+          DataHora := FormaDataHora(Trim(Copy(Conteudo, 1, 19))); 
           Mensagem := '';
           J := I +1;
-          while (Pos(Delimitador, ListaSMS[J]) = 0) and
+          while (Pos(DelimitadorSMS, ListaSMS[J]) = 0) and
             (J < ListaSMS.Count -1) do
           begin
             Mensagem := Mensagem + IfThen(Mensagem <> '', sLineBreak) + ListaSMS[J];
@@ -211,7 +231,7 @@ begin
   inherited Insert(Index, Obj);
 end;
 
-procedure TACBrSMSMensagens.LoadFromFrile(const APath: String);
+procedure TACBrSMSMensagens.LoadFromFile(const APath: String);
 var
   F: TStringList;
   R: TStringList;

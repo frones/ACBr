@@ -13,6 +13,7 @@ object frmListaMensagem: TfrmListaMensagem
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -24,8 +25,8 @@ object frmListaMensagem: TfrmListaMensagem
     Align = alTop
     TabOrder = 0
     object btnListarMensagens: TButton
-      Left = 470
-      Top = 42
+      Left = 445
+      Top = 71
       Width = 145
       Height = 25
       Caption = 'Listar mensagens'
@@ -60,30 +61,24 @@ object frmListaMensagem: TfrmListaMensagem
       TabOrder = 2
     end
   end
-  object lstMensagens: TListView
+  object dbgMensagens: TDBGrid
     Left = 0
     Top = 106
     Width = 790
     Height = 344
     Align = alClient
-    Columns = <
-      item
-        Caption = 'Data/Hora'
-        Width = 150
-      end
-      item
-        Caption = 'N'#250'mero'
-        Width = 150
-      end
-      item
-        Caption = 'Mensagem'
-        Width = 350
-      end>
-    Items.ItemData = {
-      034E0000000300000000000000FFFFFFFFFFFFFFFF00000000FFFFFFFF000000
-      000000000000FFFFFFFFFFFFFFFF00000000FFFFFFFF000000000000000000FF
-      FFFFFFFFFFFFFF00000000FFFFFFFF0000000000}
+    DataSource = dsMensagens
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 1
-    ViewStyle = vsReport
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object dsMensagens: TDataSource
+    AutoEdit = False
+    Left = 40
+    Top = 152
   end
 end

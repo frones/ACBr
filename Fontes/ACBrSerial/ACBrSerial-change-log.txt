@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/11/2015
+[*] melhoria da leitura de mensagens no ACBrSMS, contribuição: Duarte
+    acerto no demo do ACBrSMS para as novas melhorias
+    http://www.projetoacbr.com.br/forum/topic/25928-sms-trunk2/#comment-168444
+    por: Duarte
+
 14/11/2015
 -- ACBrSMS -- 
 [+] Implementação da leitura de mensagens no ACBrSMS, contribuição

@@ -61,7 +61,6 @@ type
     fsSMS: TACBrSMSClass;
     fsModelo: TACBrSMSModelo;
     fsOnProgresso: TACBrSMSProgresso;
-
     procedure SetAtivo(const Value: Boolean);
     procedure SetModelo(const Value: TACBrSMSModelo);
     procedure SetRecebeConfirmacao(const Value: Boolean);
@@ -106,7 +105,6 @@ type
       var AIndice: String);
     procedure ListarMensagens(const AFiltro: TACBrSMSFiltro;
       const APath: String);
-
     procedure EnviarComando(ACmd: String; ATimeOut: Integer = 0);
   published
     property Ativo: Boolean read fsAtivo write SetAtivo;
@@ -337,6 +335,7 @@ procedure TACBrSMS.ListarMensagens(const AFiltro: TACBrSMSFiltro;
 begin
   TestaAtivo;
   fsSMS.ListarMensagens(AFiltro, APath);
+  fsSMS.Mensagens.CarregaSMS(APath); 
 end;
 
 function TACBrSMS.ModeloModem: String;

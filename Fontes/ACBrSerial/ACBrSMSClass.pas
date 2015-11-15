@@ -41,7 +41,7 @@ unit ACBrSMSClass;
 interface
 
 uses
-  ACBrDevice, Classes, SysUtils, Contnrs;
+  ACBrDevice, Classes, SysUtils, Contnrs, strUtils;
 
 const
   CTRL_Z = #26;
@@ -79,6 +79,7 @@ type
     procedure Insert (Index: Integer; Obj: TACBrSMSMensagem);
   public
     procedure LoadFromFrile(const APath: String);
+    procedure CarregaSMS(const APath : string);
     function Add: TACBrSMSMensagem; overload;
     function Add (Obj: TACBrSMSMensagem): Integer; overload;
     property Objects [Index: Integer]: TACBrSMSMensagem read GetObject write SetObject; default;
@@ -91,6 +92,7 @@ type
     fpQuebraMensagens: Boolean;
     fpATTimeOut: Integer;
     fpIntervaloEntreMensagens: Integer;
+    fpMensagens: TACBrSMSMensagens;
     procedure SetAtivo(const Value: Boolean);
   protected
     fpDevice: TACBrDevice;
@@ -135,6 +137,7 @@ type
     property BandejasSimCard: Integer read fpBandejasSimCard;
     property UltimaResposta: String read fpUltimaResposta write fpUltimaResposta;
     property UltimoComando: String read fpUltimoComando write fpUltimoComando;
+    property Mensagens: TACBrSMSMensagens read fpMensagens write fpMensagens;
   end;
 
 implementation
@@ -153,6 +156,49 @@ end;
 function TACBrSMSMensagens.Add(Obj: TACBrSMSMensagem): Integer;
 begin
   Result := inherited Add(Obj);
+end;
+
+procedure TACBrSMSMensagens.CarregaSMS(const APath: string);
+const
+  Delimitador = 'READ","';
+var
+  ListaSMS : TStringList;
+  Conteudo : string;
+  I, J : Integer;
+begin
+  try
+    if not FileExists(APath) then
+      raise EACBrSMSException.CreateFmt('Arquivo "%s" não encontrado.', [APath]);
+    ListaSMS := TStringList.Create;
+    ListaSMS.LoadFromFile(APath);
+    if (Pos('AT+CMGL', ListaSMS[0]) > 0) then
+      ListaSMS.Delete(0);
+    if (Pos('O', ListaSMS[ListaSMS.Count -1]) > 0) then
+      ListaSMS.Delete(ListaSMS.Count -1);
+    Self.Clear;
+    for I := 0 to ListaSMS.Count -1 do
+    begin
+      Conteudo := ListaSMS[I];
+      if Pos(Delimitador, Conteudo) > 0 then
+      begin
+        with Self.Add do
+        begin
+          System.Delete(Conteudo, 1, Pos(Delimitador, Conteudo) + Length(Delimitador) -1);
+          Telefone := Copy(Conteudo, 1, Pos('"', Conteudo) -1);
+          Mensagem := '';
+          J := I +1;
+          while (Pos(Delimitador, ListaSMS[J]) = 0) and
+            (J < ListaSMS.Count -1) do
+          begin
+            Mensagem := Mensagem + IfThen(Mensagem <> '', sLineBreak) + ListaSMS[J];
+            Inc(J);
+          end;
+        end;
+      end
+    end;
+  finally
+    FreeAndNil(ListaSMS);
+  end;
 end;
 
 function TACBrSMSMensagens.GetObject(Index: Integer): TACBrSMSMensagem;
@@ -222,6 +268,7 @@ begin
   fpBandejasSimCard := 1;
   fpUltimaResposta := EmptyStr;
   fpUltimoComando := String(EmptyStr);
+  fpMensagens := TACBrSMSMensagens.Create;
 end;
 
 destructor TACBrSMSClass.Destroy;
@@ -229,6 +276,9 @@ begin
   if Assigned(fpDevice) then
     fpDevice := nil;
 
+  if Assigned(fpMensagens) then
+    FreeAndNil(fpMensagens); 
+  
   inherited Destroy;
 end;
 
@@ -303,7 +353,6 @@ begin
     fltLidas:    cmd := 'AT+CMGL="REC READ"';
     fltNaoLidas: cmd := 'AT+CMGL="REC UNREAD"';
   end;
-
   Self.EnviarComando(cmd);
   if Self.ATResult then
   begin
@@ -316,7 +365,7 @@ begin
 
     fpUltimaResposta := Trim(Retorno);
     WriteToTXT(AnsiString(APath), AnsiString(fpUltimaResposta), False, True);
-  end;
+  end;   
 end;
 
 function TACBrSMSClass.ModeloModem: String;

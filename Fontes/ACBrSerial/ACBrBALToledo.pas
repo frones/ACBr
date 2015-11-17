@@ -102,7 +102,9 @@ begin
      fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
      GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
 
-     if Length(fpUltimaResposta) > 20 then
+     PI := PosLast(STX, fpUltimaResposta) ;
+
+     if copy(fpUltimaResposta, PI+21, 1) = CR then
       begin
         { Protocolo A
           [ STX ] [ S1 ] [ PPPPPP ] [ S2 ] [ TTTTTT ] [ UUUUUU ] [ CR ] [ CS ]
@@ -137,7 +139,7 @@ begin
         if TestBit(Ord(St2),3) then   { Bit 3 de ST2 ligado = 2 casas decimais }
            Decimais := 100 ;
 
-        Resposta := Trim(Copy(fpUltimaResposta,3,6));
+        Resposta := Trim(Copy(fpUltimaResposta, PI+2, 6));
         Protocolo := 'Protocolo A';
       end
      else
@@ -149,39 +151,49 @@ begin
                           [ STX ] [ NNNNN ] [ ETX ]  - Peso Negativo;
                           [ STX ] [ SSSSS ] [ ETX ]  - Peso Acima (Sobrecarga) }
 
-        PI := pos(STX, fpUltimaResposta) ;
-        PF := pos(ETX, fpUltimaResposta) ;
-        if PF = 0 then                       { Não achou ETX, procura por CR }
-           PF := pos(CR, fpUltimaResposta)
+        PF := PosEx(ETX, fpUltimaResposta, PI+1) ;
+        if PF > 0 then
+           Protocolo := 'Protocolo B'
         else
-           Protocolo := 'Protocolo B' ;
+        begin
+           { Não achou ETX, procura por CR (Protocolo C) }
+           PF := PosEx(CR, fpUltimaResposta, PI+1);
 
-        if PF = 0 then                       { Não achou CR, usa toda a String } 
-           PF := Length(fpUltimaResposta) + 1
-        else
-           Protocolo := 'Protocolo C' ;
+           if PF > 0 then
+              Protocolo := 'Protocolo C'
+           else
+           begin
+              { Não achou CR, usa toda a String }
+              PF := Length(fpUltimaResposta) + 1
+           end;
+        end;
 
         Resposta := Trim( copy( fpUltimaResposta, PI+1, PF-PI-1 )) ;
       end ;
 
-     { Ajustando o separador de Decimal corretamente }
-     Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-     Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
+     if Length(Resposta) > 0 then
+      begin
+        { Ajustando o separador de Decimal corretamente }
+        Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
+        Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
 
-     try
-        if pos(DecimalSeparator,Resposta) > 0 then  { Já existe ponto decimal ? }
-           fpUltimoPesoLido := StrToFloat(Resposta)
-        else
-           fpUltimoPesoLido := StrToInt(Resposta) / Decimais ;
-     except
-        case Resposta[1] of
-          'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-          'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-          'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-        else
-           fpUltimoPesoLido := 0 ;
+        try
+           if pos(DecimalSeparator,Resposta) > 0 then  { Já existe ponto decimal ? }
+              fpUltimoPesoLido := StrToFloat(Resposta)
+           else
+              fpUltimoPesoLido := StrToInt(Resposta) / Decimais ;
+        except
+           case Resposta[1] of
+             'I' : fpUltimoPesoLido := -1  ;  { Instavel }
+             'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
+             'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
+           else
+              fpUltimoPesoLido := 0 ;
+           end;
         end;
-     end;
+      end
+     else
+        fpUltimoPesoLido := 0;
   except
      { Peso não foi recebido (TimeOut) }
      fpUltimoPesoLido := -9 ;

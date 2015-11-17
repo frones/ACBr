@@ -1041,7 +1041,10 @@ end;
 
 procedure TACBrECFVirtualBufferClass.AbreGaveta ;
 begin
-  Imprimir( '</abre_gaveta>' );
+  try
+    Imprimir( '</abre_gaveta>' );
+  except
+  end;
 end ;
 
 end.

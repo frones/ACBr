@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/11/2015
+-- ACBrBALToledo --
+[*] Refatoração no método de Leitura de Peso, para melhor suporte aos diversos
+    protocolos da Toledo, e correta interpretação de respostas múltiplas
+    (por: DSA)
+
+-- ACBrECFVirtual --
+[*] Ajuste para evitar exception no comando de abertura de Gaveta
+    (por: DSA)
+
 15/11/2015
 [*] melhoria da leitura de mensagens no ACBrSMS, contribuição: Duarte
     acerto no demo do ACBrSMS para as novas melhorias

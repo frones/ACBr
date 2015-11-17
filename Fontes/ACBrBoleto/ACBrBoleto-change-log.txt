@@ -72,6 +72,16 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 12/11/2015 ver. 0.0.157a
+-- ACBrBoleto --
+[+] Adicionado propriedade MultaValorFixo para tratamento da mensagem referente a multa nos
+    boletos. (Alexsander)
+http://www.projetoacbr.com.br/forum/topic/25727-classe-tacbrtitulo-n%C3%A3o-suporta-multa-fixa/
+
+-- ACBrBancoBancoob --
+[*] Ajuste remessa CNAB400 para enviar o campo SeuNumero. (volmir)
+http://www.projetoacbr.com.br/forum/topic/25987-bancoob/#comment-168560
+
 Data: 12/11/2015 ver. 0.0.156a
 -- ACBrBancoBrasil --
 [-] Correção leitura campo NossoNumero para Convenio de 7 posições no retorno CNAB240 e CNAB400 .(brsamn)

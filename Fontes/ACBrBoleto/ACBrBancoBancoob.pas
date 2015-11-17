@@ -341,14 +341,14 @@ begin
 
          wLinha:= '1'                                                     +  // ID Registro
                   TipoCedente                                             +  // Identificação do Tipo de Inscrição do Sacado 01 - CPF 02 - CNPJ
-                  PadLeft(onlyNumber(Cedente.CNPJCPF),14,'0')                +  // Número de Inscrição do Cedente
-                  PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')               +  // Agência
-                  PadLeft( Cedente.AgenciaDigito, 1, '0')                    +  // Agência digito
-                  PadLeft( OnlyNumber(Cedente.Conta)                         +  // Conta Corrente
+                  PadLeft(onlyNumber(Cedente.CNPJCPF),14,'0')             +  // Número de Inscrição do Cedente
+                  PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')            +  // Agência
+                  PadLeft( Cedente.AgenciaDigito, 1, '0')                 +  // Agência digito
+                  PadLeft( OnlyNumber(Cedente.Conta)                      +  // Conta Corrente
                   Cedente.ContaDigito, 9, '0')                            +  // Dígito Conta Corrente
-                  PadLeft( '0', 6, '0')                                      +  // Número do Convênio de Cobrança do Cedente fixo zeros: "000000"
-                  Space(25)                                               +  // Brancos
-                  PadLeft( NossoNumero + DigitoNossoNumero, 12, '0')         +  // Nosso Número + //nosso numero com digito
+                  PadLeft( '0', 6, '0')                                   +  // Número do Convênio de Cobrança do Cedente fixo zeros: "000000"
+                  PadRight(trim(SeuNumero),  25)                          +  // Seu Numero (antes etava indo Brancos)
+                  PadLeft( NossoNumero + DigitoNossoNumero, 12, '0')      +  // Nosso Número + //nosso numero com digito
                   IntToStrZero(ifthen(Parcela > 0, Parcela,1),2)          +  // Número da Parcela: "01" se parcela única
                   '00'                                                    +  // Grupo de Valor: "00"
                   Space(3)                                                +  // Brancos
@@ -361,19 +361,19 @@ begin
                   IntToStrZero( 0, 6)                                     +  // Numero do borderô: “000000”
                   Space(4)                                                +  // Brancos
                   wRespEntrega                                            +  // Tipo de Emissão 1-Cooperativa - 2-Cliente
-                  PadLeft( trim(Cedente.Modalidade), 2, '0')                 +  // Carteira/Modalidade
+                  PadLeft( trim(Cedente.Modalidade), 2, '0')              +  // Carteira/Modalidade
                   Ocorrencia                                              +  // Ocorrencia (remessa)
-                  PadRight(trim(NumeroDocumento),  10)                        +  // Número do Documento
+                  PadRight(trim(NumeroDocumento),  10)                    +  // Número do Documento
                   FormatDateTime( 'ddmmyy', Vencimento)                   +  // Data de Vencimento do Título
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)        +  // Valor do Título
                   IntToStrZero( Banco.Numero, 3)                          +  // Número Banco: "756"
-                  PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')               +  // Prefixo da Agência Cobradora: “0000”
-                  PadLeft( Cedente.AgenciaDigito, 1, ' ')                    +  // Dígito Verificador do Prefixo da Agência Cobradora: Brancos
-                  PadRight(aEspecie,2)                                        +  // Espécie do Título
+                  PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')            +  // Prefixo da Agência Cobradora: “0000”
+                  PadLeft( Cedente.AgenciaDigito, 1, ' ')                 +  // Dígito Verificador do Prefixo da Agência Cobradora: Brancos
+                  PadRight(aEspecie,2)                                    +  // Espécie do Título
                   ATipoAceite                                             +  // Identificação
                   FormatDateTime( 'ddmmyy', DataDocumento )               +  // 32 Data de Emissão
-                  PadLeft(AInstrucao1, 2, '0')                               +  // 33 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
-                  PadLeft(AInstrucao2, 2, '0')                               +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
+                  PadLeft(AInstrucao1, 2, '0')                            +  // 33 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
+                  PadLeft(AInstrucao2, 2, '0')                            +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
                   IntToStrZero( Round( (ValorMoraJuros * 30) *10000 ), 6) +  // Taxa de mora mês
                   IntToStrZero( Round( PercentualMulta * 10000 ), 6)      +  // Taxa de multa
                   wRespEntrega                                            +  // Responsabilidade Distribuição
@@ -383,14 +383,14 @@ begin
                   IntToStrZero( 0, 12)                                    +  // Valor IOF / Quantidade Monetária: "0000000000000"
                   IntToStrZero( 0, 13)                                    +  // Valor Abatimento
                   TipoSacado                                              +  // Tipo de Inscrição do Sacado: 01 - CPF 02 - CNPJ
-                  PadLeft(onlyNumber(Sacado.CNPJCPF),14,'0')                 +  // Número de Inscrição do Sacado
-                  PadRight( Sacado.NomeSacado, 40, ' ')                       +  // Nome do Sacado
-                  PadRight( Sacado.Logradouro +' '+ Sacado.Numero,37,' ')     +  // Endereço Completo
-                  PadRight( Sacado.Bairro,15,' ')                             +  // Endereço Bairro
-                  PadRight( Sacado.CEP,8,' ')                                 +  // Endereço CEP
-                  PadRight( Sacado.Cidade,15,' ')                             +  // Endereço cidade
-                  PadRight( Sacado.UF,2,' ')                                  +  // Endereço uf
-                  PadRight( trim(MensagemCedente) ,40,' ')                    +  // Observações/Mensagem ou Sacador/Avalista:
+                  PadLeft(onlyNumber(Sacado.CNPJCPF),14,'0')              +  // Número de Inscrição do Sacado
+                  PadRight( Sacado.NomeSacado, 40, ' ')                   +  // Nome do Sacado
+                  PadRight( Sacado.Logradouro +' '+ Sacado.Numero,37,' ') +  // Endereço Completo
+                  PadRight( Sacado.Bairro,15,' ')                         +  // Endereço Bairro
+                  PadRight( Sacado.CEP,8,' ')                             +  // Endereço CEP
+                  PadRight( Sacado.Cidade,15,' ')                         +  // Endereço cidade
+                  PadRight( Sacado.UF,2,' ')                              +  // Endereço uf
+                  PadRight( trim(MensagemCedente) ,40,' ')                +  // Observações/Mensagem ou Sacador/Avalista:
                   DiasProtesto                                            +  // Número de Dias Para Protesto
                   Space(1)                                                +  // Brancos
                   IntToStrZero( aRemessa.Count + 1, 6 );                     // Contador de Registros;

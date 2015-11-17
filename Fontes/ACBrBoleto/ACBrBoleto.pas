@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.156a';
+  CACBrBoleto_Versao = '0.0.157a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -794,6 +794,7 @@ type
     fOcorrenciaOriginal: TACBrOcorrencia;
     fParcela           : Integer;
     fPercentualMulta   : Double;
+    fMultaValorFixo    : Boolean;
     fSeuNumero         : String;
     fTipoDiasProtesto: TACBrTipoDiasIntrucao;
     fTipoImpressao     : TACBrTipoImpressao;
@@ -908,6 +909,7 @@ type
      property Versao               : String   read fVersao                write fVersao;
      property SeuNumero            : String   read fSeuNumero             write fSeuNumero;
      property PercentualMulta      : Double   read fPercentualMulta       write fPercentualMulta;
+     property MultaValorFixo       : Boolean   read fMultaValorFixo       write fMultaValorFixo;
      property ValorDescontoAntDia  : Currency read fValorDescontoAntDia  write  fValorDescontoAntDia;
      property TextoLivre : String read fTextoLivre write fTextoLivre;
      property CodigoMora : String read fCodigoMora write SetCodigoMora;
@@ -1334,6 +1336,7 @@ begin
    fValorRecebido        := 0;
    fValorDescontoAntDia  := 0;
    fPercentualMulta      := 0;
+   fMultaValorFixo       := false;
    fReferencia           := '';
    fVersao               := '';
 
@@ -1604,8 +1607,8 @@ begin
       end;
 
       if PercentualMulta <> 0 then
-         AStringList.Add(ACBrStr('Cobrar Multa de ' +
-                         FormatCurr('R$ #,##0.00',ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento) +
+         AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
+           IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
                          ' após o vencimento.'));
    end;
 end;

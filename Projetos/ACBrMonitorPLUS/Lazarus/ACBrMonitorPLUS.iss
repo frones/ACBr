@@ -104,7 +104,9 @@ Source: {#ACBrDIR}\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components:
 Source: {#ACBrDIR}\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
 Source: {#ACBrDIR}\DLLs\XMLSec\iconv.dll; DestDir: {app}; Flags: ; Components: programa
 ;Schemas da NFe
-Source: Schemas\*.*; DestDir: {app}\Schemas; Components: programa;
+Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\CTe\*.*; DestDir: {app}\Schemas; Components: programa;
+Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\MDFe\*.*; DestDir: {app}\Schemas; Components: programa;
+Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\NFe\*.*; DestDir: {app}\Schemas; Components: programa;
 ;Lista de municípios do IBGE
 Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
 ;DLLs de Fabricantes SAT

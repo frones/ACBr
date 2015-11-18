@@ -1064,8 +1064,8 @@ begin
   Gerador.wCampo(tcInt, 'LA12', 'nBico  ', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nBico, DSC_NBICO);
   Gerador.wCampo(tcInt, 'LA13', 'nBomba ', 01, 03, 0, nfe.Det[i].Prod.comb.encerrante.nBomba, DSC_NBOMBA);
   Gerador.wCampo(tcInt, 'LA14', 'nTanque', 01, 03, 1, nfe.Det[i].Prod.comb.encerrante.nTanque, DSC_NTANQUE);
-  Gerador.wCampo(tcStr, 'LA15', 'vEncIni', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncIni, DSC_VENCINI);
-  Gerador.wCampo(tcStr, 'LA16', 'vEncFin', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncFin, DSC_VENCFIN);
+  Gerador.wCampo(tcDe3, 'LA15', 'vEncIni', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncIni, DSC_VENCINI);
+  Gerador.wCampo(tcDe3, 'LA16', 'vEncFin', 01, 15, 1, nfe.Det[i].Prod.comb.encerrante.vEncFin, DSC_VENCFIN);
   Gerador.wGrupo('/encerrante');
 end;
 

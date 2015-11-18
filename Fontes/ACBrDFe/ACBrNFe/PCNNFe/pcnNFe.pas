@@ -794,16 +794,16 @@ type
     FnBico: Integer;
     FnBomba: Integer;
     FnTanque: Integer;
-    FvEncIni: String;
-    FvEncFin: String;
+    FvEncIni: Currency;
+    FvEncFin: Currency;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property nBico: Integer read FnBico write FnBico;
     property nBomba: Integer read FnBomba write FnBomba;
     property nTanque: Integer read FnTanque write FnTanque;
-    property vEncIni: String read FvEncIni write FvEncIni;
-    property vEncFin: String read FvEncFin write FvEncFin;
+    property vEncIni: Currency read FvEncIni write FvEncIni;
+    property vEncFin: Currency read FvEncFin write FvEncFin;
   end;
 
   Tcomb = class(TPersistent)

@@ -574,8 +574,8 @@ begin
         (*LA12*)NFe.Det[i].Prod.comb.encerrante.nBico   := Leitor.rCampo(tcInt, 'nBico');
         (*LA13*)NFe.Det[i].Prod.comb.encerrante.nBomba  := Leitor.rCampo(tcInt, 'nBomba');
         (*LA14*)NFe.Det[i].Prod.comb.encerrante.nTanque := Leitor.rCampo(tcInt, 'nTanque');
-        (*LA15*)NFe.Det[i].Prod.comb.encerrante.vEncIni := Leitor.rCampo(tcStr, 'vEncIni');
-        (*LA16*)NFe.Det[i].Prod.comb.encerrante.vEncFin := Leitor.rCampo(tcStr, 'vEncFin');
+        (*LA15*)NFe.Det[i].Prod.comb.encerrante.vEncIni := Leitor.rCampo(tcDe3, 'vEncIni');
+        (*LA16*)NFe.Det[i].Prod.comb.encerrante.vEncFin := Leitor.rCampo(tcDe3, 'vEncFin');
       end;
 
       if Leitor.rExtrai(4, 'ICMSComb') <> '' then

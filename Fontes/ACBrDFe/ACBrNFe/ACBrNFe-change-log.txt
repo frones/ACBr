@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2015
+-- pcnNFe / pcnNFeW / pcnNFeR --
+[*] Trocado o tipo dos campos vEncIni e vEncFim de String para Currency para que
+    possa ser informado um valor decimal com até 3 casas decimais conforme Nota
+    Técnica 2015/002 versão 1.10
+    por: Italo Jurisato Junior
+
 13/11/2015
 -- ACBrNFeWebServices --
 [-] Acerto na montagem do Path ao salvar o arquivo *-NFeDFe.xml

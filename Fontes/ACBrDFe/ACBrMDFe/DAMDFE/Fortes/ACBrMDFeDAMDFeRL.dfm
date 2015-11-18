@@ -1,6 +1,8 @@
 object frlDAMDFeRL: TfrlDAMDFeRL
-  Left = 214
-  Top = 269
+  Left = 238
+  Top = 216
+  Width = 683
+  Height = 395
   Caption = 'frlDAMDFeRL'
   ClientHeight = 339
   ClientWidth = 650

@@ -2217,8 +2217,8 @@ begin
                     encerrante.nBico    := INIRec.ReadInteger( sSecao,'nBico'  ,0) ;
                     encerrante.nBomba   := INIRec.ReadInteger( sSecao,'nBomba' ,0) ;
                     encerrante.nTanque  := INIRec.ReadInteger( sSecao,'nTanque',0) ;
-                    encerrante.vEncIni  := INIRec.ReadString( sSecao,'vEncIni','') ;
-                    encerrante.vEncFin  := INIRec.ReadString( sSecao,'vEncFin','') ;
+                    encerrante.vEncIni  := INIRec.ReadFloat( sSecao,'vEncIni',0) ;
+                    encerrante.vEncFin  := INIRec.ReadFloat( sSecao,'vEncFin',0) ;
 
                     sSecao := 'ICMSComb'+IntToStrZero(I,3) ;
                     ICMS.vBCICMS   := StringToFloatDef(INIRec.ReadString( sSecao,'vBCICMS'  ,''),0) ;
@@ -3033,8 +3033,8 @@ begin
                     INIRec.WriteInteger( sSecao,'nBico'  , encerrante.nBico) ;
                     INIRec.WriteInteger( sSecao,'nBomba' , encerrante.nBomba) ;
                     INIRec.WriteInteger( sSecao,'nTanque', encerrante.nTanque) ;
-                    INIRec.WriteString( sSecao,'vEncIni', encerrante.vEncIni) ;
-                    INIRec.WriteString( sSecao,'vEncFin', encerrante.vEncFin) ;
+                    INIRec.WriteFloat( sSecao,'vEncIni', encerrante.vEncIni) ;
+                    INIRec.WriteFloat( sSecao,'vEncFin', encerrante.vEncFin) ;
 
                     if infNFe.Versao < 2 then
                      begin

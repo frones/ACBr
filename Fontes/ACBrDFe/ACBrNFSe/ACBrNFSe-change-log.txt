@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2015
+[+] Acrescentado o INI para o provedor: Tecnos.
+    Por: Italo Jurisato Junior
+
 12/11/2015
 [+] Acrescentado o INI para o provedor: SJP.
     Por: Lutzem Massao Aihara

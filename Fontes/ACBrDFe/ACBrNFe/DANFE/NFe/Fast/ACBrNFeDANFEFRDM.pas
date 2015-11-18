@@ -2154,8 +2154,11 @@ begin
         Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + ';';
         Result := Result + IfThen( comb.encerrante.nBomba > 0, 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + ';' , '');
         Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + ';';
-        Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + ';';
-        Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + ';';
+
+        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + ';';
+        Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + ';'; 
+//        Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + ';';
+//        Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + ';';
       end;
     end;
   end;

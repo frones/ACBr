@@ -358,7 +358,7 @@ begin
 
   With FNFSe do
   begin
-    rllNumNF0.Caption             := FormatFloat('00000000000'        , StrToFloat(Numero));
+    rllNumNF0.Caption             := FormatFloat('00000000000'        , StrToFloatDef(Numero, 0));
     rllEmissao.Caption            := FormatDateTime('dd/mm/yyyy hh:nn', DataEmissao);
     rllCodVerificacao.Caption     := CodigoVerificacao;
 
@@ -513,7 +513,7 @@ begin
       end;
 
       rllPrestNomeEnt.Caption         := FRazaoSocial;
-      rllNumNF0Ent.Caption            := FormatFloat('00000000000', StrToFloat(Numero));
+      rllNumNF0Ent.Caption            := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
       rllTomadorNomeEnt.Caption       := 'Emissão:' + FormatDateTime('dd/mm/yy',DataEmissao) +
                                          '-Tomador:'+Tomador.RazaoSocial+
                                          '-Total:' + FormatFloat('##,##0.00', Servico.Valores.ValorLiquidoNfse) ;

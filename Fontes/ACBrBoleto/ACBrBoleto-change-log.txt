@@ -72,7 +72,13 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
-Data: 12/11/2015 ver. 0.0.157a
+Data: 16/11/2015 ver. 0.0.158a
+-- ACBrBancoBancoob --
+[-] Ajuste remessa CNAB240 para enviar corretamente diferentes ocorrencias. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/25896-remessa-cancelamento-sicoob/
+
+
+Data: 16/11/2015 ver. 0.0.157a
 -- ACBrBoleto --
 [+] Adicionado propriedade MultaValorFixo para tratamento da mensagem referente a multa nos
     boletos. (Alexsander)

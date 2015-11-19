@@ -158,13 +158,14 @@ begin
     dmDacte.frxPDFExport.Title      := TITULO_PDF;
     dmDacte.frxPDFExport.Subject    := TITULO_PDF;
     dmDacte.frxPDFExport.Keywords   := TITULO_PDF;
-	OldShowDialog := dmDacte.frxPDFExport.ShowDialog;
-  	try
+    OldShowDialog := dmDacte.frxPDFExport.ShowDialog;
+    try
       dmDacte.frxPDFExport.ShowDialog := False;
 
       for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
       begin
-        dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + dmDacte.CTe.procCTe.chCTe + '-cte.pdf';
+        dmDacte.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + OnlyNumber(dmDacte.CTE.infCTe.Id) + '-cte.pdf';
+
         if not DirectoryExists(ExtractFileDir(FdmDacte.frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(FdmDacte.frxPDFExport.FileName));
         dmDacte.frxReport.Export(dmDacte.frxPDFExport);
@@ -203,7 +204,7 @@ begin
     dmDacte.frxPDFExport.Subject    := TITULO_PDF;
     dmDacte.frxPDFExport.Keywords   := TITULO_PDF;
     OldShowDialog := dmDacte.frxPDFExport.ShowDialog;
-	try
+    try
       dmDacte.frxPDFExport.ShowDialog := False;
 
 //    for I := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do

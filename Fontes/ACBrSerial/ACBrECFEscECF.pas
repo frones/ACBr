@@ -1009,7 +1009,13 @@ begin
     if not EmLinha( TimeOut ) then
     begin
        if Device.HandShake <> hsDTR_DSR then
-          Device.HandShake := hsDTR_DSR
+          Device.HandShake := hsDTR_DSR;
+
+       if not EmLinha( TimeOut ) then
+       begin
+          if Device.HandShake <> hsNenhum then
+             Device.HandShake := hsNenhum;
+       end;
     end;
 
     fsSincronizou       := False;

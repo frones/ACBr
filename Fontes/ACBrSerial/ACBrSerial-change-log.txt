@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2015
+-- ACBrECFEscECF --
+[*] Ajuste para tentar conexão sem Handshake, para detectar mais facilmente a
+    Daruma FS800i  (por: Rafael Vivan)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=25183
+
 17/11/2015
 -- ACBrBALToledo --
 [*] Refatoração no método de Leitura de Peso, para melhor suporte aos diversos

@@ -40,6 +40,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/11/2015
+-- ACBrECF --
+[+] Adicionado o método: "GerarNotaGaucha"  (por: Rafael Sartori)
+    http://www.projetoacbr.com.br/forum/topic/26094-gerar-arquivo-nota-gaucha-acbrecfpas/
+
 -- ACBrECFEscECF --
 [*] Ajuste para tentar conexão sem Handshake, para detectar mais facilmente a
     Daruma FS800i  (por: Rafael Vivan)

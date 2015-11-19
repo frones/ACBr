@@ -884,6 +884,9 @@ TACBrECF = class( TACBrComponent )
     procedure PafMF_ArqMF(const APathArquivo: String);
     procedure PafMF_ArqMFD(const APathArquivo: String);
 
+    procedure GerarNotaGaucha(const DataInicial, DataFinal: TDateTime;
+      const PathArquivo: String);
+
     procedure DoVerificaValorGT ;
     procedure DoAtualizarValorGT ;
     function AssinaArquivoComEAD(Arquivo: String): Boolean;
@@ -7087,6 +7090,13 @@ begin
 
   FDAVItemCount := 0;
   FDAVTotal     := 0.00;
+end;
+
+procedure TACBrECF.GerarNotaGaucha(const DataInicial, DataFinal: TDateTime;
+  const PathArquivo: String);
+begin
+  Self.ArquivoMFD_DLL(DataInicial, DataFinal, PathArquivo, [docTodos], finTDM);
+  Self.AssinaArquivoComEAD(PathArquivo);
 end;
 
 {$IFDEF FRAMEWORK}

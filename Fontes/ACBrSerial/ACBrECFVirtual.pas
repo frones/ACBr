@@ -247,6 +247,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpLeiturasX  : Integer ;
     fpCuponsCancelados : Integer ;
     fpCuponsCanceladosTotal : Double;
+    fpCuponsCanceladosNaoTransmitidos : Integer ;
+    fpCuponsCanceladosTotalNaoTransmitidos : Double;
     fpCOOInicial : Integer ;
     fpCOOFinal   : Integer ;
     fpNumCRO     : Integer ;
@@ -317,6 +319,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetTotalNaoTributado: Double; override ;
     function GetTotalIsencao: Double; override ;
     function GetNumReducoesZRestantes: String; override ;
+    function GetTotalCancelamentosNaoTransmitidos: Double; override ;
+
 
     function GetNumECF: String; override ;
     function GetCNPJ: String; override ;
@@ -863,6 +867,8 @@ begin
   fpVendaBruta := 0 ;
   fpCuponsCancelados      := 0 ;
   fpCuponsCanceladosTotal := 0 ;
+  fpCuponsCanceladosNaoTransmitidos      := 0 ;
+  fpCuponsCanceladosTotalNaoTransmitidos := 0 ;
 
   ZeraCupom;
 end ;
@@ -878,7 +884,7 @@ end ;
 
 procedure TACBrECFVirtualClass.Ativar;
 begin
-  if not Assigned(ECFVirtual) then  
+  if not Assigned(ECFVirtual) then
     inherited Ativar;
 
   try
@@ -989,6 +995,12 @@ function TACBrECFVirtualClass.GetTotalNaoTributado: Double;
 begin
   Result := RoundTo( fpAliquotas[1].Total,-2 ) ;
   GravaLog('GetTotalNaoTributado: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalCancelamentosNaoTransmitidos: Double;
+begin
+   result := RoundTo(fpCuponsCanceladosTotalNaoTransmitidos,-2);
+   GravaLog('GetTotalCancelamentosNaoTransmitidos: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalIsencao: Double;
@@ -1455,9 +1467,17 @@ begin
       fpNumCupom := fpNumCupom + 1 ;
 
     CancelaCupomVirtual;
-
-    fpCuponsCancelados      := fpCuponsCancelados + 1 ;
-    fpCuponsCanceladosTotal := fpCuponsCanceladosTotal + Subtotal;
+    if Estado in estCupomAberto then
+    begin
+      fpCuponsCanceladosNaoTransmitidos      := fpCuponsCanceladosNaoTransmitidos + 1 ;
+      fpCuponsCanceladosTotalNaoTransmitidos := fpCuponsCanceladosTotalNaoTransmitidos + Subtotal;
+      fpVendaBruta := fpVendaBruta - SubTotal;
+    end
+    else
+    begin
+      fpCuponsCancelados      := fpCuponsCancelados + 1 ;
+      fpCuponsCanceladosTotal := fpCuponsCanceladosTotal + Subtotal;
+    end;
 
     { Removendo do TotalDiario por Aliquotas }
     For A := 0 to fpItensCupom.Count - 1 do
@@ -1552,6 +1572,9 @@ begin
 
     fpCuponsCancelados      := 0 ;
     fpCuponsCanceladosTotal := 0;
+    fpCuponsCanceladosNaoTransmitidos      := 0 ;
+    fpCuponsCanceladosTotalNaoTransmitidos := 0;
+
     fpVendaBruta            := 0 ;
     fpNumCER                := 0 ;
 
@@ -1865,6 +1888,11 @@ begin
     fpCuponsCanceladosTotal := Ini.ReadFloat('Variaveis', 'CuponsCanceladosTotal',
                                              fpCuponsCanceladosTotal);
 
+    fpCuponsCanceladosNaoTransmitidos      := Ini.ReadInteger('Variaveis','CuponsCanceladosNaoTransmitidos',
+                                               fpCuponsCanceladosNaoTransmitidos) ;
+    fpCuponsCanceladosTotalNaoTransmitidos := Ini.ReadFloat('Variaveis', 'CuponsCanceladosTotalNaoTransmitidos',
+                                             fpCuponsCanceladosTotalNaoTransmitidos);
+
     fpItensCupom.Clear ;
     S := 'Items_Cupom';
     A := 0 ;
@@ -2100,6 +2128,8 @@ begin
     Ini.WriteFloat('Variaveis','TotalPago',TotalPago) ;
     Ini.WriteInteger('Variaveis','CuponsCancelados',fpCuponsCancelados) ;
     Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotal', fpCuponsCanceladosTotal);
+    Ini.WriteInteger('Variaveis','CuponsCanceladosNaoTransmitidos',fpCuponsCanceladosNaoTransmitidos) ;
+    Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotalNaoTransmitidos', fpCuponsCanceladosTotalNaoTransmitidos);
     Ini.WriteString('Variaveis','Operador',Operador) ;
     Ini.WriteString('Variaveis','PAF',fpPAF) ;
 

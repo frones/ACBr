@@ -186,7 +186,7 @@ begin
            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
            StrToIntDef(NFSe.Numero, 0))
         else
-          NomeArqXML := NFSe.Numero;
+          NomeArqXML := NFSe.Numero + NFSe.IdentificacaoRps.Serie;
       end;
 
       frxPDFExport.FileName := PathPDF + NomeArqXML + '-nfse.pdf'; // Correção aplicada do nome do arquivo para o envio de e-mail

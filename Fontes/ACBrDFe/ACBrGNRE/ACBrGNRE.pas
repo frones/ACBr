@@ -44,7 +44,7 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-unit ACBrGNRE2;
+unit ACBrGNRE;
 
 interface
 
@@ -65,9 +65,11 @@ uses
   ACBrUtil, ACBrGNREUtil;
 
 const
-  ACBrGNRE_VERSAO = '0.1.0';
+  ACBRGNRE_VERSAO = '0.1.0a';
 
 type
+	EACBrNFeException = class(EACBrDFeException);
+	
   TACBrGNREAboutInfo = (ACBrGNREAbout);
 
   // Evento para gerar log das mensagens do Componente

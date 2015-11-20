@@ -70,14 +70,14 @@ package ACBr_GNRE;
 {$IMPLICITBUILD OFF}
 
 requires
-  ACBr_DFeComum,
+	vcl,
   rtl,
-  vcl,
   designide,
-  soaprtl,
   xmlrtl,
+  dbrtl,
   inet,
-  dbrtl;
+  soaprtl,
+  ACBr_DFeComum;
 
 contains
   ACBrGNRE2 in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE2.pas',

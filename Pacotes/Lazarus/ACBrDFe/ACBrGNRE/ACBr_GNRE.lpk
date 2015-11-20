@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrGNRE"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
@@ -100,22 +100,10 @@
       </Item19>
     </Files>
     <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="5">
+    <RequiredPkgs Count="1">
       <Item1>
-        <PackageName Value="PCN2"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item1>
-      <Item2>
-        <PackageName Value="ACBrOpenSSL"/>
-      </Item2>
-      <Item3>
-        <PackageName Value="laz_synapse"/>
-      </Item3>
-      <Item4>
-        <PackageName Value="ACBrComum"/>
-      </Item4>
-      <Item5>
-        <PackageName Value="FCL"/>
-      </Item5>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

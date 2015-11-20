@@ -49,35 +49,15 @@ unit ACBrGNREWebServices;
 interface
 
 uses
-  {$IFDEF FPC}
-    LResources, Controls, Graphics,
-  {$ELSE}
-    StrUtils,
-  {$ENDIF}
-    Classes, SysUtils,
-  {$IF DEFINED(VisualCLX)}
-     QDialog,
-  {$ELSEIF DEFINED(FMX)}
-     FMX.Dialogs,
-  {$ELSE}
-     Dialogs,
-  {$IFEND}
-  {$IFDEF ACBrGNREOpenSSL}
-    HTTPSend,
-  {$ELSE}
-     {$IFDEF SoapHTTP}
-     SoapHTTPClient, SOAPHTTPTrans, SOAPConst, JwaWinCrypt, WinInet, ACBrCAPICOM_TLB,
-     {$ELSE}
-        ACBrHTTPReqResp,
-     {$ENDIF}
-  {$ENDIF}
-    pcnCabecalho,pcnGerador, pcnConversao,pcnAuxiliar,pgnreGNRE, pgnreConsConfigUF,
-    pgnreConsResLoteGNRE, pgnreConversao, ACBrGNREGuias, ACBrGNREConfiguracoes,
-    pgnreRetEnvLoteGNRE, pgnreRetConsResLoteGNRE, pgnreRetConsConfigUF;
+  Classes, SysUtils,
+  ACBrDFe, ACBrDFeWebService,
+  pcnCabecalho,pcnGerador, pcnConversao,pcnAuxiliar,pgnreGNRE, pgnreConsConfigUF,
+  pgnreConsResLoteGNRE, pgnreConversao, ACBrGNREGuias, ACBrGNREConfiguracoes,
+  pgnreRetEnvLoteGNRE, pgnreRetConsResLoteGNRE, pgnreRetConsConfigUF;
 
 type
 
-  TWebServicesBase = Class
+  TWebServicesBase = Class(TDFeWebService)
   private
     procedure DoGNRERecepcaoLote;
     procedure DoGNRERetRecepcaoLote;

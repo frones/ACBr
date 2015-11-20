@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ Projeto: Componente ACBrCTe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimen-}
+{ to transporte eletrônica - CTe - http://www.nfe.fazenda.gov.br               }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -93,8 +93,7 @@ requires
   ACBr_CTe;
 
 contains
-  ACBrCTeDACTEFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fast\ACBrCTeDACTEFR.pas',
-  ACBrCTeDACTEFRDM in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fast\ACBrCTeDACTEFRDM.pas' {dmACBrCTeFR: TDataModule},
+  ACBrCTeDACTEFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fast\ACBrCTeDACTEFR.pas',  
   ACBrCTeDACTEFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fast\ACBrCTeDACTEFRReg.pas';
 
 end.

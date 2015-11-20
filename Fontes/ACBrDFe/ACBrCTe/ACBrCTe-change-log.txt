@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/11/2015
+[*] Melhoria para o DACTe em Fast Report
+    Adição do modelo em paisagem e remoção dos datamodules
+    por : Juliomar Marchetti
+
 11/11/2015
 -- ACBrCTeWebServices --
 [*] Remoção de variáveis e códigos não utilizados.

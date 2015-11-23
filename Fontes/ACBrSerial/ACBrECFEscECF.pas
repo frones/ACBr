@@ -1016,6 +1016,9 @@ begin
           if Device.HandShake <> hsNenhum then
              Device.HandShake := hsNenhum;
        end;
+       if not EmLinha( TimeOut ) then
+          if Device.HandShake <> hsNenhum then
+             Device.HandShake := hsNenhum
     end;
 
     fsSincronizou       := False;
@@ -1715,9 +1718,11 @@ begin
 
   if IsBematech then
     Result := TACBrECFBematech.create(fpOwner)
-  else if IsDaruma then
-    Result := TACBrECFDaruma.create(fpOwner)
-  else if IsEpson then
+  else if IsDaruma then 
+  begin
+    Result := TACBrECFDaruma.create(fpOwner);
+    Result.Device.Baud  := 115200;
+  end else if IsEpson then
   begin
     Result := TACBrECFEpson.create(fpOwner);
     Result.Device.Desativar;

@@ -5193,7 +5193,7 @@ Var
   Resp: Integer ;
   {$IFDEF LINUX}
    ComNr : Integer ;
-  {$ENDIF} 
+  {$ENDIF}
   Porta, Velocidade : AnsiString ;
 begin
   if Trim(Path) = '' then
@@ -5223,7 +5223,7 @@ begin
        'xeDefinirModoRegistro_Daruma( "2" )') );
 
   // Configurações gerais de funcionamento da DLL
-  Resp := xregAlterarValor_Daruma( 'START\Produto', 'FISCAL' );
+  Resp := xregAlterarValor_Daruma( 'START\Produto', 'ECF' );
   if Resp <> 1 then
      raise EACBrECFERRO.Create( ACBrStr('Erro: '+IntToStr(Resp)+' '+GetDescricaoErroDLL(Resp)+sLineBreak+
        'ao chamar: '+sLineBreak+
@@ -5240,6 +5240,15 @@ begin
      raise EACBrECFERRO.Create( ACBrStr('Erro: '+IntToStr(Resp)+' '+GetDescricaoErroDLL(Resp)+sLineBreak+
        'ao chamar: '+sLineBreak+
        'xregAlterarValor_Daruma( "ECF\PortaSerial", "'+Porta+'" ) ') );
+
+  if TACBrECF(fpOwner).Modelo = ecfEscECF then 
+  begin
+    Resp := xregAlterarValor_Daruma( 'ECF\SCU\Habilitar', '1' );
+    if Resp <> 1 then
+       raise EACBrECFERRO.Create( ACBrStr('Erro: '+IntToStr(Resp)+' '+GetDescricaoErroDLL(Resp)+sLineBreak+
+         'ao chamar: '+sLineBreak+
+         'xregAlterarValor_Daruma( "ECF\SCU\Habilitar", "1" ) ') );
+  end;
 
   Resp := xregAlterarValor_Daruma( 'ECF\Velocidade', Velocidade );
   if Resp <> 1 then
@@ -5258,6 +5267,7 @@ begin
      raise EACBrECFERRO.Create( ACBrStr('Erro: '+IntToStr(Resp)+' '+GetDescricaoErroDLL(Resp)+sLineBreak+
        'ao chamar:'+sLineBreak+
        'xregAlterarValor_Daruma( "START\LocalArquivos", "'+Path+'" ) ') );
+
 end;
 
 function TACBrECFDaruma.GetDescricaoErroDLL(const ACodigo: Integer): String;

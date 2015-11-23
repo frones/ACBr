@@ -1835,7 +1835,7 @@ procedure TACBrTEFDClass.IniciarRequisicao( AHeader : String;
    AID : Integer = 0);
 begin
   if fpAguardandoResposta then
-     raise Exception.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
 
   GravaLog( Name +' IniciarRequisicao: '+AHeader );
 
@@ -2668,13 +2668,13 @@ begin
   Valor := RoundTo( Valor, -2);
 
   if (Valor <= 0) then
-     raise Exception.Create( ACBrStr( 'Valor inválido' ) );
+     raise EACBrTEFDErro.Create( ACBrStr( 'Valor inválido' ) );
 
   { Lendo o SubTotal do ECF }
   with TACBrTEFD(Owner) do
   begin
     if not (EstadoECF in ['V','P','N']) then
-       raise Exception.Create(
+       raise EACBrTEFDErro.Create(
           ACBrStr('ECF deve estar em Estado de "Venda", "Pagamento" ou "Não Fiscal"') );
 
     SaldoAPagar := InfoECFAsDouble(ineSubTotal) ;
@@ -2684,19 +2684,19 @@ begin
     if TrocoMaximo <= 0 then
      begin
        if (Valor > RespostasPendentes.SaldoRestante ) then
-          raise Exception.Create( ACBrStr( 'Operação TEF deve ser limitada ao '+
+          raise EACBrTEFDErro.Create( ACBrStr( 'Operação TEF deve ser limitada ao '+
                                            'Saldo restante a Pagar' ) );
      end
     else
      begin
        if CompareValue(Valor, RespostasPendentes.SaldoRestante + TrocoMaximo, 0.01) = GreaterThanValue then
-          raise Exception.Create( ACBrStr( 'Operação TEF permite '+
+          raise EACBrTEFDErro.Create( ACBrStr( 'Operação TEF permite '+
                                            'Troco Máximo de R$ '+FormatCurr('0.00',TrocoMaximo) ) );
      end ;
 
     if MultiplosCartoes and (NumeroMaximoCartoes > 0) and      // Tem multiplos Cartoes ?
        (RespostasPendentes.Count >= NumeroMaximoCartoes) then  // Já informou todos cartões ?
-       raise Exception.Create( ACBrStr( 'Multiplos Cartões Limitado a '+
+       raise EACBrTEFDErro.Create( ACBrStr( 'Multiplos Cartões Limitado a '+
              IntToStr(NumeroMaximoCartoes)+' operações.' ) );
 
     if Self is TACBrTEFDClassTXT then   // Limita Saldo Restante se for derivado de TEF discado
@@ -2704,7 +2704,7 @@ begin
       if MultiplosCartoes and (NumeroMaximoCartoes > 0) and   // Tem multiplos Cartoes ?
          (Valor <> RespostasPendentes.SaldoRestante) and      // Valor é diferente do Saldo Restante a Pagar ?
          ((NumeroMaximoCartoes - RespostasPendentes.Count) <= 1) then  // Está no último cartão ?
-         raise Exception.Create( ACBrStr( 'Multiplos Cartões Limitado a '+
+         raise EACBrTEFDErro.Create( ACBrStr( 'Multiplos Cartões Limitado a '+
                IntToStr(NumeroMaximoCartoes)+' operações.'+sLineBreak+
                'Esta Operação TEF deve ser igual ao Saldo a Pagar' ) );
     end ;

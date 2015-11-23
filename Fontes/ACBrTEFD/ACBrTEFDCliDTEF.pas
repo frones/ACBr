@@ -418,7 +418,7 @@ procedure TACBrTEFDCliDTEF.LoadDLLFunctions ;
      if not FunctionDetect( CACBrTEFD_CliDTEF_Lib, FuncName, LibPointer) then
      begin
         LibPointer := NIL ;
-        raise Exception.Create( ACBrStr( 'Erro ao carregar a função:'+FuncName+
+        raise EACBrTEFDErro.Create( ACBrStr( 'Erro ao carregar a função:'+FuncName+
                                          ' de: '+CACBrTEFD_CliDTEF_Lib ) ) ;
      end ;
    end ;
@@ -460,10 +460,10 @@ begin
   if Inicializado then exit ;
 
   if not Assigned( OnExibeMenu ) then
-     raise Exception.Create( ACBrStr('Evento "OnExibeMenu" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnExibeMenu" não programado' ) ) ;
 
   if not Assigned( OnObtemInformacao ) then
-     raise Exception.Create( ACBrStr('Evento "OnObtemInformacao" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnObtemInformacao" não programado' ) ) ;
 
   LoadDLLFunctions;
 
@@ -501,7 +501,7 @@ end;
 
 procedure TACBrTEFDCliDTEF.AtivarGP;
 begin
-   raise Exception.Create( ACBrStr( 'CliDTEF não pode ser ativado localmente' )) ;
+   raise EACBrTEFDErro.Create( ACBrStr( 'CliDTEF não pode ser ativado localmente' )) ;
 end;
 
 procedure TACBrTEFDCliDTEF.VerificaAtivo;
@@ -647,7 +647,7 @@ Var
   ItemSelecionado : integer;
 begin
   if fpAguardandoResposta then
-    raise Exception.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
+    raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
 
   if AHeader = 'CRT' then
   begin

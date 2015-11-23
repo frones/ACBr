@@ -571,28 +571,28 @@ Var
   Erros : String ;
 begin
   if not Assigned( OnExibeMsg ) then
-     raise Exception.Create( ACBrStr('Evento "OnExibeMsg" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnExibeMsg" não programado' ) ) ;
 
   if not Assigned( OnComandaECF )  then
-     raise Exception.Create( ACBrStr('Evento "OnComandaECF" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECF" não programado' ) ) ;
 
   //if not Assigned( OnComandaECFPagamento )  then
-  //   raise Exception.Create( ACBrStr('Evento "OnComandaECFPagamento" não programado' ) ) ;
+  //   raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFPagamento" não programado' ) ) ;
 
   if not Assigned( OnComandaECFAbreVinculado )  then
-     raise Exception.Create( ACBrStr('Evento "OnComandaECFAbreVinculado" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFAbreVinculado" não programado' ) ) ;
 
   if not Assigned( OnComandaECFImprimeVia )  then
-     raise Exception.Create( ACBrStr('Evento "OnComandaECFImprimeVia" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFImprimeVia" não programado' ) ) ;
 
   if not Assigned( OnInfoECF )  then
-     raise Exception.Create( ACBrStr('Evento "OnInfoECF" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnInfoECF" não programado' ) ) ;
 
   if not DirectoryExists( PathBackup ) then
      ForceDirectories( PathBackup );
 
   if not DirectoryExists( PathBackup ) then
-     raise Exception.Create( ACBrStr('Diretório de Backup não existente:'+sLineBreak+PathBackup) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Diretório de Backup não existente:'+sLineBreak+PathBackup) ) ;
 
   if GP = gpNenhum then
    begin
@@ -615,7 +615,7 @@ begin
      end;
 
      if Erros <> '' then
-        raise Exception.Create( ACBrStr( Erros ) ) ;
+        raise EACBrTEFDErro.Create( ACBrStr( Erros ) ) ;
    end
   else
    begin
@@ -1426,7 +1426,7 @@ begin
                           ComandarECF( opeFechaCupom )
                         end ;
                     else
-                      raise Exception.Create(
+                      raise EACBrTEFDErro.Create(
                          ACBrStr('ECF deve estar em Venda ou Pagamento'));
                     end;
                  except
@@ -1595,9 +1595,9 @@ begin
    if fEsperaSleep = AValue then exit;
 
    if AValue < 10 then
-      raise Exception.Create( ACBrStr('Valor mínimo de EsperaSleep deve ser: 10' )) ;
+      raise EACBrTEFDErro.Create( ACBrStr('Valor mínimo de EsperaSleep deve ser: 10' )) ;
    if AValue > 500 then
-      raise Exception.Create( ACBrStr('Valor máximo de EsperaSleep deve ser: 500' )) ;
+      raise EACBrTEFDErro.Create( ACBrStr('Valor máximo de EsperaSleep deve ser: 500' )) ;
 
    fEsperaSleep := AValue;
 end;
@@ -1608,7 +1608,7 @@ begin
      exit;
 
   if RespostasPendentes.Count > 0 then
-     raise Exception.Create( ACBrStr( 'Existem Respostas Pendentes. '+
+     raise EACBrTEFDErro.Create( ACBrStr( 'Existem Respostas Pendentes. '+
                               'Não é possível alterar "MultiplosCartoes"') ) ;
 
    fMultiplosCartoes := AValue;
@@ -1625,7 +1625,7 @@ begin
      exit;
 
   if RespostasPendentes.Count > 0 then
-     raise Exception.Create( ACBrStr( 'Existem Respostas Pendentes. '+
+     raise EACBrTEFDErro.Create( ACBrStr( 'Existem Respostas Pendentes. '+
                              'Não é possível alterar "AutoEfetuarPagamento"') ) ;
 
   fAutoEfetuarPagamento := AValue;
@@ -1637,7 +1637,7 @@ begin
      exit ;
 
   if RespostasPendentes.Count > 0 then
-     raise Exception.Create( ACBrStr( 'Existem Respostas Pendentes. '+
+     raise EACBrTEFDErro.Create( ACBrStr( 'Existem Respostas Pendentes. '+
                              'Não é possível alterar "AutoFinalizarCupom"') ) ;
 
   fAutoFinalizarCupom := AValue;
@@ -1827,7 +1827,7 @@ begin
   if fPathBackup = AValue then exit ;
 
   if Inicializado then
-     raise Exception.Create(ACBrStr('PathBackup não pode ser modificado com o ACBrTEFD Inicializado'));
+     raise EACBrTEFDErro.Create(ACBrStr('PathBackup não pode ser modificado com o ACBrTEFD Inicializado'));
 
   fPathBackup := Trim(AValue) ;
 

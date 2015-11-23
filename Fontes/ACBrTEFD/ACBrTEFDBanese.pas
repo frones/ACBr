@@ -311,7 +311,7 @@ end;
 
 procedure TACBrTEFDBanese.AtivarGP;
 begin
-   raise Exception.Create( ACBrStr( 'CliBanese não pode ser ativado localmente' )) ;
+   raise EACBrTEFDErro.Create( ACBrStr( 'CliBanese não pode ser ativado localmente' )) ;
 end;
 
 procedure TACBrTEFDBanese.VerificaAtivo;
@@ -444,7 +444,7 @@ begin
   ApagaEVerifica( ArqResp );  // Apagando Arquivo de Resposta anterior //
 
   if fpAguardandoResposta then
-    raise Exception.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
+    raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
 
   {Cria um NSU}
   aNSU := FormatDateTime('HHNNSS', Now );;

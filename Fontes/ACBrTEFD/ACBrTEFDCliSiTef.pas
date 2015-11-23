@@ -513,7 +513,7 @@ begin
    if Assigned(xEscreveMensagemPermanentePinPad) then  
       Result := xEscreveMensagemPermanentePinPad(PAnsiChar(Mensagem))
    else
-      raise Exception.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
+      raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
 end;
 
 destructor TACBrTEFDCliSiTef.Destroy;
@@ -542,7 +542,7 @@ procedure TACBrTEFDCliSiTef.LoadDLLFunctions ;
      if not FunctionDetect( sLibName, FuncName, LibPointer) then
      begin
         LibPointer := NIL ;
-        raise Exception.Create( ACBrStr( 'Erro ao carregar a função:'+FuncName+
+        raise EACBrTEFDErro.Create( ACBrStr( 'Erro ao carregar a função:'+FuncName+
                                          ' de: '+CACBrTEFD_CliSiTef_Lib ) ) ;
      end ;
    end ;
@@ -597,10 +597,10 @@ begin
   if Inicializado then exit ;
 
   if not Assigned( OnExibeMenu ) then
-     raise Exception.Create( ACBrStr('Evento "OnExibeMenu" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnExibeMenu" não programado' ) ) ;
 
   if not Assigned( OnObtemCampo ) then
-     raise Exception.Create( ACBrStr('Evento "OnObtemCampo" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnObtemCampo" não programado' ) ) ;
 
   LoadDLLFunctions;
 
@@ -690,7 +690,7 @@ end;
 
 procedure TACBrTEFDCliSiTef.AtivarGP;
 begin
-   raise Exception.Create( ACBrStr( 'CliSiTef não pode ser ativado localmente' )) ;
+   raise EACBrTEFDErro.Create( ACBrStr( 'CliSiTef não pode ser ativado localmente' )) ;
 end;
 
 procedure TACBrTEFDCliSiTef.VerificaAtivo;
@@ -868,7 +868,7 @@ begin
    if Assigned(xObtemQuantidadeTransacoesPendentes) then  
       Result := xObtemQuantidadeTransacoesPendentes(sDate,CupomFiscal)
    else
-      raise Exception.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
+      raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
 end;
 
 function TACBrTEFDCliSiTef.EnviaRecebeSiTefDireto(RedeDestino: SmallInt;
@@ -921,7 +921,7 @@ begin
    Req.ValorTotal          := Valor;
 
    if fpAguardandoResposta then
-      raise Exception.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoConcluido ) ) ;
+      raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoConcluido ) ) ;
 
    if (pos('{TipoTratamento=4}',ListaRestricoes) = 0) and
       (pos(AHeader,'CRT,CHQ') > 0 ) and

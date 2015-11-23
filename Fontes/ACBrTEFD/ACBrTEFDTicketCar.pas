@@ -336,7 +336,7 @@ end;
 
 procedure TACBrTEFDTicketCar.AtivarGP;
 begin
-   raise Exception.Create( ACBrStr( 'CliDTEF não pode ser ativado localmente' )) ;
+   raise EACBrTEFDErro.Create( ACBrStr( 'CliDTEF não pode ser ativado localmente' )) ;
 end;
 
 procedure TACBrTEFDTicketCar.VerificaAtivo;
@@ -456,7 +456,7 @@ begin
   ApagaEVerifica( ArqResp );  // Apagando Arquivo de Resposta anterior //
 
   if fpAguardandoResposta then
-    raise Exception.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
+    raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
 
   aNSU := FormatDateTime('HHNNSS', Now );;
 

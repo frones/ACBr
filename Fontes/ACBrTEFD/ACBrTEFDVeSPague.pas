@@ -709,7 +709,7 @@ begin
   if AValue = fTimeOut then exit ;
 
   if AValue < 100 then
-     raise Exception.Create( ACBrStr('Valor mínimo deve ser 100') ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Valor mínimo deve ser 100') ) ;
 
   fTimeOut := AValue;
 end;
@@ -739,10 +739,10 @@ begin
   if Inicializado then exit ;
 
   if not Assigned( OnExibeMenu ) then
-     raise Exception.Create( ACBrStr('Evento "OnExibeMenu" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnExibeMenu" não programado' ) ) ;
 
   if not Assigned( OnObtemCampo ) then
-     raise Exception.Create( ACBrStr('Evento "OnObtemCampo" não programado' ) ) ;
+     raise EACBrTEFDErro.Create( ACBrStr('Evento "OnObtemCampo" não programado' ) ) ;
 
   Erro := Conectar;
   if (Erro = 10061) and AutoAtivarGP and (GPExeName <> '') and (GPExeParams <> '') then
@@ -1093,7 +1093,7 @@ Function TACBrTEFDVeSPague.FazerRequisicao( Transacao : String;
    ListaParams : AnsiString = '') : Integer ;
 begin
    if fpAguardandoResposta then
-      raise Exception.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
+      raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
 
    fCancelandoTransacao := (AnsiUpperCase(Transacao) = 'ADMINISTRACAO CANCELAR');
 
@@ -1259,7 +1259,7 @@ begin
      TACBrTEFD(Owner).DoExibeMsg( opmOK, Mensagem ) ;
 
   if Retorno = 9 then
-    raise Exception.Create('A operação de desfazimento será reiniciada.');
+    raise EACBrTEFDErro.Create('A operação de desfazimento será reiniciada.');
 end;
 
 procedure TACBrTEFDVeSPague.ProcessarColeta ;

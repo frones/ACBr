@@ -1,38 +1,38 @@
-{ ****************************************************************************** }
-{ Projeto: Componente ACBrCTe }
-{ Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimento }
-{ Transporte eletrônica - CTe - http://www.cte.fazenda.gov.br }
-{ }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto }
-{ Daniel Simoes de Almeida }
-{ André Ferreira de Moraes }
-{ }
-{ Colaboradores nesse arquivo: }
-{ }
-{ Você pode obter a última versão desse arquivo na pagina do Projeto ACBr }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr }
-{ }
-{ }
-{ Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela }
+{******************************************************************************}
+{ Projeto: Componente ACBrCTe                                                  }
+{ Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimento}
+{ Transporte eletrônica - CTe - http://www.cte.fazenda.gov.br                  }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       André Ferreira de Moraes               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior. }
-{ }
-{ Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT) }
-{ }
-{ Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc., }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
-{ Você também pode obter uma copia da licença em: }
-{ http://www.opensource.org/licenses/lgpl-license.php }
-{ }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br }
-{ Praça Anita Costa, 34 - Tatuí - SP - 18270-410 }
-{ }
-{ ****************************************************************************** }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
 
 { *******************************************************************************
   |* Historico
@@ -87,6 +87,7 @@ type
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior; // Adicionado por NCC - 04/04/2014
     procedure CarregaCTeAnuladoComplementado; // Adicionado por NCC - 24/04/2014
+    procedure LimpaDados;
   protected
     procedure CarregaDados;
     procedure CarregaDadosEventos;
@@ -1147,6 +1148,33 @@ begin
   end;
 end;
 
+procedure TACBrCTeDACTEFR.LimpaDados;
+begin
+  cdsIdentificacao.EmptyDataSet;
+  cdsEmitente.EmptyDataSet;
+  cdsDestinatario.EmptyDataSet;
+  cdsDadosNotasFiscais.EmptyDataSet;
+  cdsParametros.EmptyDataSet;
+  cdsInformacoesAdicionais.EmptyDataSet;
+  cdsVolumes.EmptyDataSet;
+  cdsTomador.EmptyDataSet;
+  cdsExpedidor.EmptyDataSet;
+  cdsRecebedor.EmptyDataSet;
+  cdsRemetente.EmptyDataSet;
+  cdsCalculoImposto.EmptyDataSet;
+  cdsComponentesPrestacao.EmptyDataSet;
+  cdsSeguro.EmptyDataSet;
+  cdsModalRodoviario.EmptyDataSet;
+  cdsModalAereo.EmptyDataSet;
+  cdsRodoVeiculos.EmptyDataSet;
+  cdsRodoValePedagio.EmptyDataSet;
+  cdsRodoMotorista.EmptyDataSet;
+  cdsDocAnterior.EmptyDataSet;
+  cdsAnuladoComple.EmptyDataSet;
+  cdsEventos.EmptyDataSet;
+
+end;
+
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;
 var
   i: Integer;
@@ -1418,6 +1446,8 @@ end;
 
 procedure TACBrCTeDACTEFR.CarregaDados;
 begin
+  LimpaDados;
+
   CarregaIdentificacao;
   CarregaTomador;
   CarregaEmitente;
@@ -1446,7 +1476,7 @@ var
 begin
   with cdsEventos do
   begin
-
+    EmptyDataSet;
     for i := 0 to FEvento.Evento.Count - 1 do
     begin
       with Evento.Evento[i] do
@@ -1656,6 +1686,7 @@ begin
   { destinatário }
   with cdsDestinatario do
   begin
+
     Append;
 
     with FCTe.Dest do
@@ -1764,7 +1795,7 @@ begin
   { emitente }
   with cdsEmitente do
   begin
-    EmptyDataSet;
+
     Append;
 
     with FCTe.Emit do
@@ -1831,7 +1862,7 @@ procedure TACBrCTeDACTEFR.CarregaIdentificacao;
 begin
   with cdsIdentificacao do
   begin
-    EmptyDataSet;
+
     Append;
     with FCTe.infCTe do
     begin

@@ -72,6 +72,15 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 23/11/2015 ver. 0.0.159a
+-- ACBrBancoBancoBrasil --
+[-] Ajuste remessa CNAB240 para enviar corretamente o NossoNumero para todas as carteiras.(Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/25751-remessa-banco-brasil-erro-na-formata%C3%A7%C3%A3o-de-anossonumero/
+
+[*] Ajuste remessa CNAB240 para enviar os dias para baixa automática. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/26045-boleto-santander/
+
+
 Data: 16/11/2015 ver. 0.0.158a
 -- ACBrBancoBancoob --
 [-] Ajuste remessa CNAB240 para enviar corretamente diferentes ocorrencias. (Juliana Tamizou)

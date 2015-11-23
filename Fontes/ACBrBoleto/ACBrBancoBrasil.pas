@@ -367,9 +367,10 @@ begin
                                                   ACBrTitulo.NossoNumero);
 
      wCarteira:= StrToIntDef(Carteira, 0);
-     if ((wCarteira = 11) or (wCarteira= 31) or (wCarteira = 51)) or
-        (((wCarteira = 12) or (wCarteira = 15) or (wCarteira = 17)) and
-         (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite)) then
+     if (((wCarteira = 11) or (wCarteira= 31) or (wCarteira = 51)) or
+         ((wCarteira = 12) or (wCarteira = 15) or (wCarteira = 17))) and
+        ((ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite) and
+         (StrToIntDef(NossoNumero,0) = 0)) then
      begin
        ANossoNumero := StringOfChar('0', 20);
        aDV          := ' ';

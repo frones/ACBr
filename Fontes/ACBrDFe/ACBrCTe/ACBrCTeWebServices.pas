@@ -1644,110 +1644,113 @@ begin
 
     Result := (CTeRetorno.CStat in [100, 101, 110, 150, 151, 155]);
 
-    for i := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
+    if Result then
     begin
-      with TACBrCTe(FPDFeOwner).Conhecimentos.Items[i] do
+      for i := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
       begin
-        // Se verdadeiro significa que o componente esta carregado com todos os
-        // dados do CT-e
-        if (OnlyNumber(FCTeChave) = NumID) then
+        with TACBrCTe(FPDFeOwner).Conhecimentos.Items[i] do
         begin
-          Atualiza := True;
-          if (CTeRetorno.CStat in [101, 151, 155]) then
-            Atualiza := False;
-          if (CTeRetorno.cUF = 51) and (CTeRetorno.CStat = 101) then
-            Atualiza := True;
-
-          // Atualiza o Status da CTe interna //
-          CTe.procCTe.cStat := CTeRetorno.cStat;
-
-          if Atualiza then
+          // Se verdadeiro significa que o componente esta carregado com todos os
+          // dados do CT-e
+          if (OnlyNumber(FCTeChave) = NumID) then
           begin
-            if (FPConfiguracoesCTe.Geral.ValidarDigest) and
-              (CTeRetorno.protCTe.digVal <> '') and (CTe.signature.DigestValue <> '') and
-              (UpperCase(CTe.signature.DigestValue) <> UpperCase(CTeRetorno.protCTe.digVal)) then
-            begin
-              raise EACBrCTeException.Create('DigestValue do documento ' +
-                NumID + ' não confere.');
-            end;
+            Atualiza := True;
+            if (CTeRetorno.CStat in [101, 151, 155]) then
+              Atualiza := False;
+            if (CTeRetorno.cUF = 51) and (CTeRetorno.CStat = 101) then
+              Atualiza := True;
 
-            CTe.procCTe.Id := CTeRetorno.protCTe.Id;
-            CTe.procCTe.tpAmb := CTeRetorno.tpAmb;
-            CTe.procCTe.verAplic := CTeRetorno.verAplic;
-            CTe.procCTe.chCTe := CTeRetorno.chCTe;
-            CTe.procCTe.dhRecbto := FDhRecbto;
-            CTe.procCTe.nProt := FProtocolo;
-            CTe.procCTe.digVal := CTeRetorno.protCTe.digVal;
+            // Atualiza o Status da CTe interna //
             CTe.procCTe.cStat := CTeRetorno.cStat;
-            CTe.procCTe.xMotivo := CTeRetorno.xMotivo;
 
-            NomeXML := '-cte.xml';
-            if (CTeRetorno.protCTe.cStat = 110) or (CTeRetorno.protCTe.cStat = 301) then
-              NomeXML := '-den.xml';
-
-            AProcCTe := TProcCTe.Create;
-            try
-              AProcCTe.XML_CTe := StringReplace(XMLAssinado,
-                                         '<' + ENCODING_UTF8 + '>', '',
-                                         [rfReplaceAll]);
-              AProcCTe.XML_Prot := CTeRetorno.XMLprotCTe;
-              AProcCTe.Versao := FPVersaoServico;
-              AProcCTe.GerarXML;
-
-              XML := AProcCTe.Gerador.ArquivoFormatoXML;
-              XMLOriginal := XML;
-              XMLAssinado := XML;
-
-              FRetCTeDFe := '';
-
-              if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
+            if Atualiza then
+            begin
+              if (FPConfiguracoesCTe.Geral.ValidarDigest) and
+                (CTeRetorno.protCTe.digVal <> '') and (CTe.signature.DigestValue <> '') and
+                (UpperCase(CTe.signature.DigestValue) <> UpperCase(CTeRetorno.protCTe.digVal)) then
               begin
-                Inicio := Pos('<procEventoCTe', FPRetWS);
-                Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
+                raise EACBrCTeException.Create('DigestValue do documento ' +
+                  NumID + ' não confere.');
+              end;
 
-                aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+              CTe.procCTe.Id := CTeRetorno.protCTe.Id;
+              CTe.procCTe.tpAmb := CTeRetorno.tpAmb;
+              CTe.procCTe.verAplic := CTeRetorno.verAplic;
+              CTe.procCTe.chCTe := CTeRetorno.chCTe;
+              CTe.procCTe.dhRecbto := FDhRecbto;
+              CTe.procCTe.nProt := FProtocolo;
+              CTe.procCTe.digVal := CTeRetorno.protCTe.digVal;
+              CTe.procCTe.cStat := CTeRetorno.cStat;
+              CTe.procCTe.xMotivo := CTeRetorno.xMotivo;
 
-                FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
-                               '<CTeDFe>' +
-                                '<procCTe versao="' + FVersao + '">' +
-                                  SeparaDados(XML, 'cteProc') +
-                                '</procCTe>' +
-                                '<procEventoCTe versao="' + FVersao + '">' +
-                                  aEventos +
-                                '</procEventoCTe>' +
-                               '</CTeDFe>';
+              NomeXML := '-cte.xml';
+              if (CTeRetorno.protCTe.cStat = 110) or (CTeRetorno.protCTe.cStat = 301) then
+                NomeXML := '-den.xml';
+
+              AProcCTe := TProcCTe.Create;
+              try
+                AProcCTe.XML_CTe := StringReplace(XMLAssinado,
+                                           '<' + ENCODING_UTF8 + '>', '',
+                                           [rfReplaceAll]);
+                AProcCTe.XML_Prot := CTeRetorno.XMLprotCTe;
+                AProcCTe.Versao := FPVersaoServico;
+                AProcCTe.GerarXML;
+
+                XML := AProcCTe.Gerador.ArquivoFormatoXML;
+                XMLOriginal := XML;
+                XMLAssinado := XML;
+
+                FRetCTeDFe := '';
+
+                if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
+                begin
+                  Inicio := Pos('<procEventoCTe', FPRetWS);
+                  Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
+
+                  aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+                  FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
+                                 '<CTeDFe>' +
+                                  '<procCTe versao="' + FVersao + '">' +
+                                    SeparaDados(XML, 'cteProc') +
+                                  '</procCTe>' +
+                                  '<procEventoCTe versao="' + FVersao + '">' +
+                                    aEventos +
+                                  '</procEventoCTe>' +
+                                 '</CTeDFe>';
+
+                end;
+              finally
+                AProcCTe.Free;
+              end;
+
+              if FPConfiguracoesCTe.Arquivos.Salvar then
+              begin
+                if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
+                  Data := CTe.Ide.dhEmi
+                else
+                  Data := Now;
+
+                SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
+                             Processado;
+
+                // Salva o XML do CT-e assinado e protocolado
+                if SalvarXML then
+                  FPDFeOwner.Gravar(FCTeChave + NomeXML,
+                                    XML,
+                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
+
+                // Salva o XML do CT-e assinado, protocolado e com os eventos
+                if SalvarXML  and (FRetCTeDFe <> '') then
+                  FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
+                                    FRetCTeDFe,
+                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
 
               end;
-            finally
-              AProcCTe.Free;
             end;
 
-            if FPConfiguracoesCTe.Arquivos.Salvar then
-            begin
-              if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
-                Data := CTe.Ide.dhEmi
-              else
-                Data := Now;
-
-              SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
-                           Processado;
-
-              // Salva o XML do CT-e assinado e protocolado
-              if SalvarXML then
-                FPDFeOwner.Gravar(FCTeChave + NomeXML,
-                                  XML,
-                                  PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-
-              // Salva o XML do CT-e assinado, protocolado e com os eventos
-              if SalvarXML  and (FRetCTeDFe <> '') then
-                FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                  FRetCTeDFe,
-                                  PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-
-            end;
+            break;
           end;
-
-          break;
         end;
       end;
     end;

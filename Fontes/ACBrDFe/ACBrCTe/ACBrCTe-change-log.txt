@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2015
+-- ACBrCTeWebServices --
+[*] Ao Consultar só vai atualizar o XML caso o CT-e consta na base de dados
+    da SEFAZ.
+    por: Italo Jurisato Junior
+
 20/11/2015
 [*] Melhoria para o DACTe em Fast Report
     Adição do modelo em paisagem e remoção dos datamodules

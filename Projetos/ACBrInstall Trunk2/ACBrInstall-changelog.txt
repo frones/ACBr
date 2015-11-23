@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2015
+[-] Acerto no ACBrInstall para encontar o diretório de pacotes corretamente
+[+] Adicionadas algumas linhas de log para facilitar encontrar problemas com diretórios e arquivos.
+
 23/10/2015
 [+] Adicionada limpeza de diretorios (browse path, library path e dcu debug) antes 
     instalar os novos, evitando problemas de diretórios antigos no path.

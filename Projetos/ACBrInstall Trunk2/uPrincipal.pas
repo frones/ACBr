@@ -221,35 +221,44 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
     iRet: Integer;
     sDirDpk: string;
   begin
+    WriteToTXT(PathArquivoLog, 'FindDirPackage - sDir: ' + QuotedStr(sDir) + ', sPacote: ' + QuotedStr(sPacote));
+
     sDir := IncludeTrailingPathDelimiter(sDir);
     if not DirectoryExists(sDir) then
-       Exit;
-
-    iRet := FindFirst(sDir + '*.*', faAnyFile, oDirList);
-    try
-      while (iRet = 0) do
-      begin
-        iRet := FindNext(oDirList);
-        if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') then
-          Continue;
-
-        //if oDirList.Attr = faDirectory then
-        if DirectoryExists(sDir + oDirList.Name) then
-          FindDirPackage(sDir + oDirList.Name, sPacote)
-        else
-        begin
-          if oDirList.Name = sPacote then
-            sDirPackage := IncludeTrailingPathDelimiter(sDir);
-        end;
-      end;
-    finally
-      SysUtils.FindClose(oDirList);
+    begin
+      WriteToTXT(PathArquivoLog, 'FindDirPackage - Diretorio não existe: ' + QuotedStr(sDir));
+      Exit;
     end;
+
+    if SysUtils.FindFirst(sDir + '*.*', faAnyFile, oDirList) = 0 then
+    begin
+      try
+        repeat
+
+          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') then
+            Continue;
+
+          //if oDirList.Attr = faDirectory then
+          if DirectoryExists(sDir + oDirList.Name) then
+            FindDirPackage(sDir + oDirList.Name, sPacote)
+          else
+          begin
+            if oDirList.Name = sPacote then
+              sDirPackage := IncludeTrailingPathDelimiter(sDir);
+          end;
+
+        until SysUtils.FindNext(oDirList) <> 0;
+      finally
+        SysUtils.FindClose(oDirList);
+      end;
+    end
+    else
+      WriteToTXT(PathArquivoLog, 'SysUtils.FindFirst: Não encontrou nada.');
   end;
 
 begin
    sDirPackage := '';
-   FindDirPackage(sDirRoot + 'Pacotes\Delphi', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
 end;
 
 // retornar o path do aplicativo
@@ -1541,17 +1550,27 @@ begin
   // verificar se os pacotes existem antes de seguir para o próximo paso
   for I := 0 to frameDpk.Pacotes.Count - 1 do
   begin
+    WriteToTXT(PathArquivoLog, 'Analisando se o pacote existe: ' + frameDpk.Pacotes[I].Caption + ' Marcado: ' + frameDpk.Pacotes[I].Checked.ToString(True));
+
     if frameDpk.Pacotes[I].Checked then
     begin
-      sDirRoot := edtDirDestino.Text;
+      sDirRoot   := IncludeTrailingPathDelimiter(edtDirDestino.Text);
       NomePacote := frameDpk.Pacotes[I].Caption;
 
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);
 
+      WriteToTXT(PathArquivoLog, 'Nome do pacotes....: ' + NomePacote);
+      WriteToTXT(PathArquivoLog, 'Diretório do pacote: ' + sDirPackage);
+
+      if sDirPackage.Trim = '' then
+        raise Exception.Create('Não foi possível retornar o diretório do pacote!');
+
       if IsDelphiPackage(NomePacote) then
       begin
-        if not FileExists(sDirPackage + NomePacote) then
+        WriteToTXT(PathArquivoLog, 'verificando existência do pacote: ' + sDirPackage + NomePacote);
+
+        if not FileExists(IncludeTrailingPathDelimiter(sDirPackage) + NomePacote) then
         begin
           Stop := True;
           Application.MessageBox(PWideChar(Format(
@@ -1560,7 +1579,9 @@ begin
             MB_ICONERROR + MB_OK
           );
           Break;
-        end;
+        end
+        else
+
       end;
     end;
   end;

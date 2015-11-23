@@ -563,36 +563,13 @@ begin
 end ;
 
 function TACBrEAD.GerarXMLeECFc(const NomeSwHouse, Diretorio: String): Boolean;
-Var
-  Modulo, Expoente : AnsiString ;
-  SL : TStringList ;
 begin
-  Modulo   := '';
-  Expoente := '';
-  CalcularModuloeExpoente( Modulo, Expoente );
-
-  SL := TStringList.Create;
-  try
-    SL.Add( '<?xml version="1.0"?>' ) ;
-    SL.Add( '' );
-    SL.Add( '<empresa_desenvolvedora>' ) ;
-    SL.Add( '  <nome>'+NomeSwHouse+'</nome>' ) ;
-    SL.Add( '  <chave>' ) ;
-    SL.Add( '    <modulo>'+String(Modulo)+'</modulo>' ) ;
-    SL.Add( '    <expoente_publico>'+String(Expoente)+'</expoente_publico>' ) ;
-    SL.Add( '  </chave>' );
-    SL.Add( '</empresa_desenvolvedora>' ) ;
-
-    try
-       SL.SaveToFile( PathWithDelim(Diretorio)+NomeSwHouse+'.xml' );
-       Result := True;
-    except
-       Result := False;
-    end ;
-  finally
-     SL.Free;
-  end ;
-end ;
+  WriteToTXT(
+    PathWithDelim(Diretorio) + NomeSwHouse + '.xml',
+    GerarXMLeECFc(NomeSwHouse),
+    False
+  );
+end;
 
 function TACBrEAD.GerarXMLeECFc(const NomeSwHouse: String): AnsiString;
 Var

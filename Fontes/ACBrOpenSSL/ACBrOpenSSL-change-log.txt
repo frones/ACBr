@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/11/0105
+[*] pequena otimização do método GerarXMLeECFc quando passar o parâmetro de arquivo, 
+    estava sendo duplicado a montagem do arquivo nos dois métodos que fazem overload.
+
+
 Data: 08/09/2015
 [*] Carregamento atrasado da dll, funciona somente do Delphi 2010 em diante, por isso existe uma diretiva de compilação.
     http://www.projetoacbr.com.br/forum/topic/24183-sugestão-de-alteração-de-carregamento-openssl/#comment-156102

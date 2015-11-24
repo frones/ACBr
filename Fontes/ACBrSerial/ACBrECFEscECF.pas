@@ -1016,9 +1016,6 @@ begin
           if Device.HandShake <> hsNenhum then
              Device.HandShake := hsNenhum;
        end;
-       if not EmLinha( TimeOut ) then
-          if Device.HandShake <> hsNenhum then
-             Device.HandShake := hsNenhum
     end;
 
     fsSincronizou       := False;
@@ -3310,16 +3307,26 @@ var
   function AchaValorRegistrador(Registrador: String; Aliq: Double = 0): Double ;
   var
     I: Integer;
+    AliqStr: String;
+    AliqDbl: Double;
   begin
     I := 0 ; Result := 0;
     while  (I+2 < EscECFResposta.Params.Count) do
     begin
-      if (EscECFResposta.Params[I] = Registrador) and
-         (StringToFloatDef(EscECFResposta.Params[I+1],0) = Aliq) then
+      if (EscECFResposta.Params[I] = Registrador) then
       begin
-         Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ],0)/100, -2);
-         Break;
-      end ;
+         AliqStr := EscECFResposta.Params[I+1];
+         if (pos('.',AliqStr) = 0) and (pos(',',AliqStr) = 0) then  // Não tem ponto decimal ?
+           AliqDbl := StrToIntDef(AliqStr,0) / 100
+         else
+           AliqDbl := StringToFloatDef(AliqStr, 0);
+
+         if (AliqDbl = Aliq) then
+         begin
+           Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ],0)/100, -2);
+           Break;
+        end ;
+      end;
 
       Inc( I ) ;
     end ;

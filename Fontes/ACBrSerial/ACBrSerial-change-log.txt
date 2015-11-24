@@ -39,10 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/11/2015
+-- ACBrEscECF --
+[-] Ajuste na leitura de DadosUltimaReducaoZ dos ECFs Epson TM-800/900, onde as
+    aliquotas de ICMS não eram corretamente identificadas, devido o fato do ECF
+    retornar as aliquotas sem o ponto decimal   (por: DSA)
+
 23/11/2015
--- ACBrECFDaruma --
--- ACBrECFEscPos --
-[-] http://www.projetoacbr.com.br/forum/topic/25972-erro-na-geração-de-arquivo-na-daruma-fs800i/#comment-169655
+-- ACBrECFDaruma, ACBrECFEscECF --
+[-] http://www.projetoacbr.com.br/forum/topic/25972-erro-na-geração-de-arquivo-na-daruma-fs800i/
 
 19/11/2015
 -- ACBrECF --

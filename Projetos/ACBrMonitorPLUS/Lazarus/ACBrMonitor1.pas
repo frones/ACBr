@@ -2205,8 +2205,8 @@ begin
       exit;
 
     try
-      ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(vPara, edtEmailAssuntoNFe.Text,
-        mmEmailMsgNFe.Lines
+      ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(vPara, edtEmailAssuntoCTe.Text,
+        mmEmailMsgCTe.Lines
         , True  // Enviar PDF junto
         ,
         nil    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
@@ -2241,8 +2241,8 @@ begin
       exit;
 
     try
-      ACBrMDFe1.Manifestos.Items[0].EnviarEmail(vPara, edtEmailAssuntoNFe.Text,
-        mmEmailMsgNFe.Lines
+      ACBrMDFe1.Manifestos.Items[0].EnviarEmail(vPara, edtEmailAssuntoMDFe.Text,
+        mmEmailMsgMDFe.Lines
         , True  // Enviar PDF junto
         ,
         nil    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
@@ -3496,8 +3496,12 @@ begin
     ACBrMDFe1.DAMDFe.MostrarStatus        := cbxMostraStatus.Checked;
     ACBrMDFe1.DAMDFe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
 
-    edtEmailAssuntoNFe.Text := Ini.ReadString('Email', 'Assunto', '');
-    mmEmailMsgNFe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'Mensagem', '') );
+    edtEmailAssuntoNFe.Text := Ini.ReadString('Email', 'AssuntoNFe', '');
+    mmEmailMsgNFe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'MensagemNFe', '') );
+    edtEmailAssuntoCTe.Text := Ini.ReadString('Email', 'AssuntoCTe', '');
+    mmEmailMsgCTe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'MensagemCTe', '') );
+    edtEmailAssuntoMDFe.Text := Ini.ReadString('Email', 'AssuntoMDFe', '');
+    mmEmailMsgMDFe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'MensagemMDFe', '') );
 
     cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', True);
     cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
@@ -4187,8 +4191,12 @@ begin
     Ini.WriteString('NFCe', 'Token', edtToken.Text);
     Ini.WriteBool('NFCe', 'TagQrCode', chbTagQrCode.Checked);
 
-    Ini.WriteString('Email', 'Assunto', edtEmailAssuntoNFe.Text);
-    Ini.WriteString('Email', 'Mensagem', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );
+    Ini.WriteString('Email', 'AssuntoNFe', edtEmailAssuntoNFe.Text);
+    Ini.WriteString('Email', 'MensagemNFe', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );
+    Ini.WriteString('Email', 'AssuntoCTe', edtEmailAssuntoCTe.Text);
+    Ini.WriteString('Email', 'MensagemCTe', BinaryStringToString(mmEmailMsgCTe.Lines.Text) );
+    Ini.WriteString('Email', 'AssuntoMDFe', edtEmailAssuntoMDFe.Text);
+    Ini.WriteString('Email', 'MensagemMDFe', BinaryStringToString(mmEmailMsgMDFe.Lines.Text) );
 
     Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
 //    Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);

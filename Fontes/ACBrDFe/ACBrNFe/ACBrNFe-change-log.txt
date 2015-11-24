@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2015
+-- pcnNFeW --
+[*] Fixado em 2 casas decimais a geração da TAG pICMSInter conforme o novo Schema
+    pacote PL_008h1
+    por: Italo Jurisato Junior
+
 18/11/2015
 -- pcnNFe / pcnNFeW / pcnNFeR --
 [*] Trocado o tipo dos campos vEncIni e vEncFim de String para Currency para que

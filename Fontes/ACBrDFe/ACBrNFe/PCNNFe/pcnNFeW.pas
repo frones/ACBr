@@ -1802,7 +1802,9 @@ begin
     Gerador.wCampo(tcDe2, 'NA03', 'vBCUFDest', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vBCUFDest, DSC_VBCUFDEST);
     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA05', 'pFCPUFDest', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pFCPUFDest, DSC_PFCPUFDEST);
     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA07', 'pICMSUFDest', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSUFDest, DSC_PICMSUFDEST);
-    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA09', 'pICMSInter ', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInter, DSC_PICMSINTER);
+    // Alterado para ficar em conformidade com o novo Schema
+    Gerador.wCampo(tcDe2, 'NA09', 'pICMSInter ', 01, 05, 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInter, DSC_PICMSINTER);
+//    Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA09', 'pICMSInter ', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInter, DSC_PICMSINTER);
     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA11', 'pICMSInterPart', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInterPart, DSC_PICMSINTERPART);
     Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST);
     Gerador.wCampo(tcDe2, 'NA15', 'vICMSUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFDest, DSC_VICMSUFDEST);

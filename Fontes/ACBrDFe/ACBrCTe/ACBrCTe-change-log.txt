@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2015
+-- pcteCTe / pcteCTeW / pcteCTeR --
+[*] Incluido as TAGs: pFCPUFFim e vFCPUFFim conforme NT 2015/004 publicada em
+    23/12/2015.
+    por: Italo Jurisato Junior
+
 23/11/2015
 -- ACBrCTeWebServices --
 [*] Ao Consultar só vai atualizar o XML caso o CT-e consta na base de dados

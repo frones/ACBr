@@ -1010,16 +1010,20 @@ type
   TICMSUFFim = class(TPersistent)
   private
     FvBCUFFim: Currency;
+    FpFCPUFFim: Currency;
     FpICMSUFFim: Currency;
     FpICMSInter: Currency;
     FpICMSInterPart: Currency;
+    FvFCPUFFim: Currency;
     FvICMSUFFim: Currency;
     FvICMSUFIni: Currency;
   published
     property vBCUFFim: Currency       read FvBCUFFim       write FvBCUFFim;
+    property pFCPUFFim: Currency      read FpFCPUFFim      write FpFCPUFFim;
     property pICMSUFFim: Currency     read FpICMSUFFim     write FpICMSUFFim;
     property pICMSInter: Currency     read FpICMSInter     write FpICMSInter;
     property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
+    property vFCPUFFim: Currency      read FvFCPUFFim      write FvFCPUFFim;
     property vICMSUFFim: Currency     read FvICMSUFFim     write FvICMSUFFim;
     property vICMSUFIni: Currency     read FvICMSUFIni     write FvICMSUFIni;
   end;

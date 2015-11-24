@@ -1090,11 +1090,16 @@ end;
 
 procedure TCTeW.GerarICMSUFFim;
 begin
+// Descomentar as 2 linhas comentadas a partir de:
+// 01/12/2015 - Homologação
+// 15/12/2015 - Produção
   Gerador.wGrupo('ICMSUFFim', '#248a');
   Gerador.wCampo(tcDe2, '#', 'vBCUFFim      ', 01, 15, 1, CTe.Imp.ICMSUFFim.vBCUFFim, DSC_VBC);
+//  Gerador.wCampo(tcDe2, '#', 'pFCPUFFim     ', 01, 05, 1, CTe.Imp.ICMSUFFim.pFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSUFFim    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSInter    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInter, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
+//  Gerador.wCampo(tcDe2, '#', 'vFCPUFFim     ', 01, 15, 1, CTe.Imp.ICMSUFFim.vFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFFim    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFFim, DSC_VICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFIni    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFIni, DSC_VICMS);
   Gerador.wGrupo('/ICMSUFFim');

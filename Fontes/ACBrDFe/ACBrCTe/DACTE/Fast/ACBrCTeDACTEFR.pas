@@ -84,6 +84,7 @@ type
     procedure CarregaComponentesPrestacao;
     procedure CarregaSeguro;
     procedure CarregaModalRodoviario;
+    procedure CarregaModalAereo;
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior; // Adicionado por NCC - 04/04/2014
     procedure CarregaCTeAnuladoComplementado; // Adicionado por NCC - 24/04/2014
@@ -677,6 +678,25 @@ begin
     CreateDataSet;
   end;
 
+  cdsModalAereo := TClientDataSet.Create(nil);
+  with cdsModalAereo, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('nMinu', ftInteger);
+    Add('nOCA', ftString, 11);
+    Add('dPrevAereo', ftDateTime);
+    Add('xLAgEmi', ftString, 20);
+    Add('IdT', ftString, 14);
+    Add('CL', ftString, 1);
+    Add('cTar', ftString, 4);
+    Add('vTar', ftCurrency);
+    Add('xDime', ftString, 14);
+    Add('cInfManu', ftInteger);
+    Add('cIMP', ftString, 3);
+    CreateDataSet;
+  end;
+
   cdsDocAnterior := TClientDataSet.Create(nil);
   with cdsDocAnterior, FieldDefs do
   begin
@@ -929,6 +949,7 @@ begin
   cdsComponentesPrestacao.Free;
   cdsSeguro.Free;
   cdsModalRodoviario.Free;
+  cdsModalAereo.Free;
   cdsRodoVeiculos.Free;
   cdsRodoValePedagio.Free;
   cdsRodoMotorista.Free;
@@ -1165,10 +1186,10 @@ begin
   cdsComponentesPrestacao.EmptyDataSet;
   cdsSeguro.EmptyDataSet;
   cdsModalRodoviario.EmptyDataSet;
-  cdsModalAereo.EmptyDataSet;
   cdsRodoVeiculos.EmptyDataSet;
   cdsRodoValePedagio.EmptyDataSet;
   cdsRodoMotorista.EmptyDataSet;
+  cdsModalAereo.EmptyDataSet;
   cdsDocAnterior.EmptyDataSet;
   cdsAnuladoComple.EmptyDataSet;
   cdsEventos.EmptyDataSet;
@@ -1463,7 +1484,7 @@ begin
   CarregaInformacoesAdicionais;
   CarregaSeguro;
   CarregaModalRodoviario;
-
+  CarregaModalAereo;
   CarregaDocumentoAnterior;
   CarregaCTeAnuladoComplementado;
 
@@ -2102,13 +2123,38 @@ begin
 
 end;
 
+procedure TACBrCTeDACTEFR.CarregaModalAereo;
+begin
+  if FCTe.ide.modal <> mdAereo then
+    Exit;
+
+  with cdsModalAereo, CTE.infCTeNorm do
+  begin
+    Append;
+    FieldByName('nMinu').AsInteger := aereo.nMinu;
+    FieldByName('nOCA').AsString := aereo.nOCA;
+    FieldByName('dPrevAereo').AsDateTime := aereo.dPrevAereo;
+    FieldByName('xLAgEmi').AsString := aereo.xLAgEmi;
+    FieldByName('IdT').AsString := aereo.IdT;
+    FieldByName('CL').AsString := aereo.tarifa.CL;
+    FieldByName('cTar').AsString := aereo.tarifa.cTar;
+    FieldByName('vTar').AsCurrency := aereo.tarifa.vTar;
+    FieldByName('xDime').AsString := aereo.natCarga.xDime;
+    FieldByName('cInfManu').AsInteger := aereo.natCarga.cinfManu;
+    FieldByName('cIMP').AsString := aereo.natCarga.cIMP;
+    Post;
+  end;
+end;
+
 procedure TACBrCTeDACTEFR.CarregaModalRodoviario;
 var
   i: Integer;
 begin
+  if FCTe.ide.modal <> mdRodoviario then
+    Exit;
+
   with cdsModalRodoviario do
   begin
-
     Append;
     //
 {$IFDEF PL_200}

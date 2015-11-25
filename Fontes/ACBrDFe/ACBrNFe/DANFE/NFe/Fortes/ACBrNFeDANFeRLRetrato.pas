@@ -576,6 +576,8 @@ type
     RLDraw12: TRLDraw;
     FundoItem: TRLLabel;
     FundoObsItem: TRLLabel;
+    rlbCancelada: TRLBand;
+    RLLCancelada: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -765,11 +767,13 @@ begin
   // Exibe a informação correta no label da chave de acesso
   if FNFeCancelada then
   begin
-    rllXmotivo.Caption := 'NF-e CANCELADA';
-    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-    rlbCodigoBarras.Visible := False;
-    rllXmotivo.Visible := True;
-    rllDadosVariaveis3_Descricao.Visible := True;
+    rllXmotivo.Caption                    := 'NF-e CANCELADA';
+    rllDadosVariaveis3_Descricao.Caption  := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+    rlbCodigoBarras.Visible               := False;
+    rllXmotivo.Visible                    := True;
+    rllDadosVariaveis3_Descricao.Visible  := True;
+    rlbCancelada.Visible                  := True;
+    RLLCancelada.Caption                  := 'NF-e CANCELADA';
   end
   else
   begin

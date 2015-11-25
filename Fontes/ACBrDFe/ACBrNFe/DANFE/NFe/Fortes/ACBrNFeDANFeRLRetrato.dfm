@@ -7,7 +7,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -114
+    Left = 0
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -30,7 +31,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbContinuacaoInformacoesComplementares: TRLBand
       Left = 26
-      Top = 975
+      Top = 1005
       Width = 742
       Height = 41
       AutoSize = True
@@ -102,7 +103,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbCabecalhoItens: TRLBand
       Left = 26
-      Top = 912
+      Top = 942
       Width = 742
       Height = 31
       AutoSize = True
@@ -1200,7 +1201,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbDadosAdicionais: TRLBand
       Left = 26
-      Top = 1068
+      Top = 1098
       Width = 742
       Height = 169
       AlignToBottom = True
@@ -5782,7 +5783,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbItens: TRLBand
       Left = 26
-      Top = 943
+      Top = 973
       Width = 742
       Height = 12
       Background.Height = 487
@@ -6223,7 +6224,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 26
-      Top = 1016
+      Top = 1046
       Width = 742
       Height = 52
       BandType = btFooter
@@ -6399,7 +6400,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbAvisoContingencia: TRLBand
       Left = 26
-      Top = 876
+      Top = 906
       Width = 742
       Height = 36
       BandType = btColumnHeader
@@ -6439,7 +6440,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbObsItem: TRLBand
       Left = 26
-      Top = 955
+      Top = 985
       Width = 742
       Height = 20
       object FundoObsItem: TRLLabel
@@ -6874,6 +6875,30 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         Holder = RLLabelLIQ
         ParentFont = False
+      end
+    end
+    object rlbCancelada: TRLBand
+      Left = 26
+      Top = 876
+      Width = 742
+      Height = 30
+      BandType = btColumnHeader
+      Visible = False
+      object RLLCancelada: TRLLabel
+        Left = 296
+        Top = 3
+        Width = 118
+        Height = 19
+        Alignment = taCenter
+        Color = clGray
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
       end
     end
   end

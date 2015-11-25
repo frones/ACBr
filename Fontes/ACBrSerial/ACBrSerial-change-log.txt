@@ -40,6 +40,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+25/11/2015
+-- ACBrECFEpson --        (por: Amarildo Lacerda)
+[+] Implementado o método "CancelaItemNaoFiscal"
+[+] Implementado a Impressão de Cheques, usando as cordenadas do arquivo
+    "poscheque.dat"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=26206
+
 24/11/2015
 -- ACBrEscECF --
 [-] Ajuste na leitura de DadosUltimaReducaoZ dos ECFs Epson TM-800/900, onde as

@@ -48,6 +48,37 @@ const
 
 type
 
+  TPosicaoChequeUnit = record
+    case Boolean of
+      True:
+        (
+          tox: Array[0..2] of Ansichar;
+          toy: Array[0..2] of Ansichar;
+          citx: Array[0..2] of Ansichar;
+          city: Array[0..2] of Ansichar;
+          daof: Array[0..1] of Ansichar;
+          moof: Array[0..1] of Ansichar;
+          yoff: Array[0..1] of Ansichar;
+          addx: Array[0..2] of Ansichar;
+          addy: Array[0..2] of Ansichar;
+          valx: Array[0..2] of Ansichar;
+          valy: Array[0..2] of Ansichar;
+          fexx: Array[0..2] of Ansichar;
+          fexy: Array[0..2] of Ansichar;
+          sex: Array[0..2] of Ansichar;
+          sey: Array[0..2] of Ansichar;
+        );
+      false:
+        (Texto: Array[0..44] of Ansichar)
+  end;
+
+  TPosicaoCheque = class
+    Posicao: TPosicaoChequeUnit;
+  public
+    function getEE18: Ansistring;
+    function getEE1A: Ansistring;
+  end;
+
 TACBrECFEpson = class ;
 
 { TACBrECFEpsonComando }
@@ -145,6 +176,7 @@ TACBrECFEpson = class( TACBrECFClass )
     fsVerificaChecksum: Boolean;
     fsPAF1, fsPAF2 : String ;
     fsEmPagamento : Boolean ;
+    fsArquivoPosCheque: String;
 
     xEPSON_Serial_Abrir_Porta : function (dwVelocidade:Integer;
        wPorta:Integer):Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
@@ -266,6 +298,9 @@ TACBrECFEpson = class( TACBrECFClass )
     property EpsonComando : TACBrECFEpsonComando  read fsEpsonComando ;
     property EpsonResposta: TACBrECFEpsonResposta read fsEpsonResposta ;
 
+    Property ArquivoPosCheque : String read fsArquivoPosCheque
+       write fsArquivoPosCheque ;
+
     Function EnviaComando_ECF( cmd : AnsiString = '') : AnsiString ; override ;
 
     Procedure AbreCupom ; override ;
@@ -331,6 +366,7 @@ TACBrECFEpson = class( TACBrECFClass )
        Endereco: String = '' ) ; override ;
     Procedure RegistraItemNaoFiscal( CodCNF : String; Valor : Double;
        Obs : AnsiString = '' ) ; override ;
+    Procedure CancelaItemNaoFiscal(const AItem: Integer); override;
     Procedure SubtotalizaNaoFiscal( DescontoAcrescimo : Double = 0;
        MensagemRodape: AnsiString = '') ; override ;
     Procedure EfetuaPagamentoNaoFiscal( CodFormaPagto : String; Valor : Double;
@@ -835,6 +871,20 @@ begin
   end ;
 end ;
 
+{ -----------------------------  TPosicaoCheque ------------------------------ }
+
+function TPosicaoCheque.getEE1A: Ansistring;
+begin
+   with posicao do
+     result := tox+FS+toy+FS+toy+FS+citx+FS+city+FS+daof+FS+moof+FS+yoff+FS+addx+FS+addy;
+end;
+
+function TPosicaoCheque.getEE18: Ansistring;
+begin
+   with posicao do
+     result := valx+FS+valy+FS+fexx+FS+fexy+FS+sex+FS+sey;
+end;
+
 { -------------------------  TACBrECFEpsonComando -------------------------- }
 constructor TACBrECFEpsonComando.create;
 begin
@@ -1145,6 +1195,7 @@ begin
   fsLeituraCMC7   := False ;
   fsVerificaChecksum := True ;
   fsEmPagamento := false ;
+  fsArquivoPosCheque := 'poscheque.dat';
 
   fpMFD       := True ;
   fpTermica   := True ;
@@ -3031,6 +3082,14 @@ begin
   RespostasComando.AddField( 'ValorCancelado', EpsonResposta.Params[1] );
 end;
 
+procedure TACBrECFEpson.CancelaItemNaoFiscal(const AItem: Integer);
+begin
+  EpsonComando.Comando  := '0E18' ;
+  EpsonComando.Extensao := '0004' ;
+  EpsonComando.AddParamInteger( AItem );   //
+  EnviaComando ;
+end;
+
 procedure TACBrECFEpson.RegistraItemNaoFiscal(CodCNF: String;
   Valor: Double; Obs: AnsiString);
 begin
@@ -3196,45 +3255,157 @@ begin
   end;
 end;
 
+{
+// relacao fornecida pela epson (arquivo: poscheque.dat)
+// ;bank tox  toy  citx city daof moof yoff addx addy valx valy fexx fexy sex  sey
+[PosicaoCheque_TM-H6000FBIII]
+237=840,290,500,330,14,19,37,840,476,240,150,840,205,840,247
+001=840,260,515,310,15,21,36,840,460,220,150,800,172,840,220
+033=840,265,480,300,15,23,36,840,470,260,150,800,200,840,235
+151=840,260,610,300,22,30,45,840,470,190,130,800,180,840,220
+237=840,290,500,330,14,19,37,840,476,240,150,840,205,840,247
+341=840,265,500,315,16,23,36,840,496,220,150,800,195,840,230
+353=840,255,450,300,14,20,33,840,470,210,130,850,185,840,220
+356=840,270,515,320,16,22,38,840,440,230,140,840,205,840,240
+399=840,265,470,305,15,19,34,840,470,250,130,800,185,840,220
+409=840,250,500,320,18,26,37,840,470,210,150,800,195,840,230
+479=830,275,530,310,23,26,39,840,470,200,140,800,195,840,235
+745=840,280,530,326,18,23,40,840,476,210,150,840,205,840,237
+}
+
 // Andre Bohn - Segundo suporte da epson é mais seguro imprimir o cheque com
 // o cupom fechado, eu fiz um teste com o cupom aberto e tive que trocar a MFD.
 // Ele disse que futuramente vão preparar a impressão do cheque para ter
 // o mesmo funcionamento das outras ECFs.
 procedure TACBrECFEpson.ImprimeCheque(Banco: String; Valor: Double;
   Favorecido, Cidade: String; Data: TDateTime; Observacao: String);
-begin
-  if fsImprimeCheque then
+var
+  lista:TStringList;
+  posicao:TPosicaoCheque;
+  s:string;
+
+  procedure StringToArray(var AArray: array of AnsiChar; ATexto: string);
+  var
+    Li, Lx: Integer;
   begin
+    FillChar(AArray, SizeOf(AArray), #32);
+    Lx := length(ATexto);
+    for Li := 0 to High(AArray) do
+      if Li < Lx then
+        AArray[Li] := AnsiChar(ATexto[Li + 1]);
+  end;
+
+begin
+  if not fsImprimeCheque then
+    exit;
+
+  posicao := TPosicaoCheque.Create;
+  try
+    // Amarildo Lacerda (AL) - Antes de imprimir o cheque é preciso enviar para a impressora
+    // o posicionamento do cheque que deseja imprimir
+    // A Epson não tem um banco de dados com as posições do cheque.
+    lista:=TStringList.create;
+    try
+       if FileExists(fsArquivoPosCheque) then
+          lista.LoadFromFile(fsArquivoPosCheque); // carrega arquivo de layout de existir no disco
+
+       if lista.Values['000']='' then // se nao existir, define um padrão
+          lista.Values['000']:='840,290,500,330,14,19,37,840,476,240,150,840,205,840,247';
+
+       Banco := Poem_Zeros( Banco, 3);
+       s := lista.Values[Banco];
+       if s='' then
+          s := lista.Values['000'];
+
+       StringToArray(posicao.Posicao.Texto,StringReplace(s,',','',[rfReplaceAll])); // carrega as posicoes do cheque
+    finally
+       lista.Free;
+    end;
+
+    // pre: requer que o simbolo de moeda esteja carregado na impressora
+    // comando para destravar a impressora de cheque e permitir impressao de mais de um cheque para um documento
+    // corrige bug no firmaware da impressora em acordo com orientação da PEPS.
+
+    EpsonComando.Comando := '0502';
+    EnviaComando;
+
+    // comando envio posicao do cheque. EE18
+     with EpsonComando do
+    begin
+      Comando := 'EE18';
+      Extensao := '0000';
+      AddParamString('01');
+      with posicao do
+      begin
+        AddParamString(posicao.valx);
+        AddParamString(posicao.valy);
+        AddParamString(posicao.fexx);
+        AddParamString(posicao.fexy);
+        AddParamString(posicao.sex);
+        AddParamString(posicao.sey);
+      end;
+    end;
+    EnviaComando; // configura posicao do valor
+
+    // comando. EE1A -- configuraçao posicao do cheque
     with EpsonComando do
     begin
-       Comando := 'EE10' ;
-       AddParamString( LeftStr(Banco,2) ) ;
-       AddParamDouble( Valor, fpDecimaisPreco ) ;
-       AddParamString( LeftStr(Favorecido,40) ) ;
-       AddParamString( LeftStr(Cidade,30) ) ;
-       AddParamString( Observacao ) ;
-       AddParamString( '' ) ;
-       AddParamDateTime( Data ) ;
-    end ;
-    EnviaComando ;         // Envia comando para imprimir o Cheque
+      Comando := 'EE1A';
+      Extensao := '0000';
+      AddParamString('01');
+      with posicao do
+      begin
+        AddParamString(posicao.tox);
+        AddParamString(posicao.toy);
+        AddParamString(posicao.citx);
+        AddParamString(posicao.city);
+        AddParamString(posicao.daof);
+        AddParamString(posicao.moof);
+        AddParamString(posicao.yoff);
+        AddParamString(posicao.addx);
+        AddParamString(posicao.addy);
+      end;
+    end;
+    EnviaComando;  // configura posicao
+  finally
+     posicao.Free;
+  end;
 
-    EpsonComando.Comando := '0001' ;
-    EnviaComando ;
-    while TestBit(EpsonResposta.StatusPrinter,9) and
-          (not TestBit(EpsonResposta.StatusPrinter,10)) do // Aguarda a Impressão e retirar o cheque
-    begin
-      Sleep(300) ;
-      EpsonComando.Comando := '0001' ;
-      EnviaComando ;
-      
-      if (not TestBit(EpsonResposta.StatusPrinter,5)) and
-         (not TestBit(EpsonResposta.StatusPrinter,6)) then
-         break ;
-    end ;
-  end ;
+  with EpsonComando do // envia os dados do cheque
+  begin
+    Comando := 'EE10';
+    extensao := '0000';
+    AddParamString('01');
+    AddParamDouble(Valor, fpDecimaisPreco);
+    AddParamString(LeftStr(Favorecido, 40));
+    AddParamString(LeftStr(Cidade, 30));
+    AddParamString(Observacao);
+    AddParamString('');
+    AddParamDateTime(Data);
+  end;
+  EnviaComando; // Envia comando para imprimir o Cheque
+
+
+  // AL - a checagem se o cheque esta na posicao, só funciona depois de enviar o comando de impressão
+  // testar se o cheque foi inserido na impressora.
+  Sleep(300);
+  EpsonComando.Comando := '0001';
+  EnviaComando;
+
+  while TestBit(EpsonResposta.StatusPrinter, 9) and
+    (not TestBit(EpsonResposta.StatusPrinter, 10)) do
+  // Aguarda a Impressão e retirar o cheque
+  begin
+    Sleep(300);
+    EpsonComando.Comando := '0001';
+    EnviaComando;
+
+    if (not TestBit(EpsonResposta.StatusFiscal, 5)) and
+      (not TestBit(EpsonResposta.StatusFiscal, 6)) then
+      break;
+  end;
 end;
 
-// Andre Bohn - Comando para fazer a leitura do CMC7
 function TACBrECFEpson.LeituraCMC7 : AnsiString ;
 begin
   Result :=  '';

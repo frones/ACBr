@@ -53,7 +53,8 @@ uses
 Const
    CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante = False ;
    CACBrTEFD_CliSiTef_PressioneEnter = 'PRESSIONE <ENTER>' ;
-   CACBrTEFD_CliSiTef_TransacaoNaoEfetuada =
+   CACBrTEFD_CliSiTef_TransacaoNaoEfetuada = 'Transação não efetuada.' ;
+   CACBrTEFD_CliSiTef_TransacaoNaoEfetuadaReterCupom =
       'Transação não efetuada.'+sLineBreak+'Favor reter o Cupom' ;
    CACBrTEFD_CliSiTef_TransacaoEfetuadaReImprimir =
       'Transação TEF efetuada.'        + sLineBreak+
@@ -106,6 +107,7 @@ type
 
    TACBrTEFDCliSiTef = class( TACBrTEFDClass )
    private
+      fExibirErroRetorno: Boolean;
       fIniciouRequisicao: Boolean;
       fReimpressao: Boolean; {Indica se foi selecionado uma reimpressão no ADM}
       fCancelamento: Boolean; {Indica se foi selecionado Cancelamento no ADM}
@@ -285,6 +287,7 @@ type
         write fOnExibeMenu ;
      property OnObtemCampo : TACBrTEFDCliSiTefObtemCampo read fOnObtemCampo
         write fOnObtemCampo ;
+     property ExibirErroRetorno: Boolean read fExibirErroRetorno write fExibirErroRetorno;
    end;
 
 implementation
@@ -486,6 +489,7 @@ begin
                                 // transação de débito ou crédito, sem ser necessário
                                 // passar antes pelo menu de transações administrativas
   fDocumentosProcessados := '' ;
+  fExibirErroRetorno     := False;
 
   fParametrosAdicionais := TStringList.Create;
   fRespostas            := TStringList.Create;
@@ -855,7 +859,6 @@ procedure TACBrTEFDCliSiTef.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
   // CliSiTEF não usa Rede, NSU, Finalizacao e Valor
-
   FinalizarTransacao( False, DocumentoVinculado );
 end;
 
@@ -1367,6 +1370,8 @@ procedure TACBrTEFDCliSiTef.FinalizarTransacao( Confirma : Boolean;
 Var
    DataStr, HoraStr : AnsiString;
    Finalizacao : Integer;
+   AMsg: String;
+   Est: AnsiChar;
 begin
    fRespostas.Clear;
    fIniciouRequisicao := False;
@@ -1398,18 +1403,33 @@ begin
 
   if not Confirma then
   begin
-     if fCancelamento  then
-        TACBrTEFD(Owner).DoExibeMsg( opmOK, Format( CACBrTEFD_CliSiTef_TransacaoEfetuadaReImprimir, [Resp.NSU]) )
+     if fCancelamento then
+        AMsg := Format( CACBrTEFD_CliSiTef_TransacaoEfetuadaReImprimir, [Resp.NSU])
      else
-        TACBrTEFD(Owner).DoExibeMsg( opmOK, CACBrTEFD_CliSiTef_TransacaoNaoEfetuada );
-  end;
+     begin
+        try
+           Est := TACBrTEFD(Owner).EstadoECF;
+        except
+           Est := 'O' ;
+        end;
 
+        if (Est = 'O') then
+           AMsg := CACBrTEFD_CliSiTef_TransacaoNaoEfetuada
+        else
+           AMsg := CACBrTEFD_CliSiTef_TransacaoNaoEfetuadaReterCupom;
+     end;
+
+     TACBrTEFD(Owner).DoExibeMsg( opmOK, AMsg );
+  end;
 end;
 
 procedure TACBrTEFDCliSiTef.AvaliaErro( Sts : Integer );
 var
    Erro : String;
 begin
+   if not fExibirErroRetorno then
+     Exit;
+
    Erro := '' ;
    Case Sts of
         -1 : Erro := 'Módulo não inicializado' ;

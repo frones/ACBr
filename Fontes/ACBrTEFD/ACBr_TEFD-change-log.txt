@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/11/2015
+-- ACBrTEFDCliSiTEF --    (por: DSA)
+[+] Adicionada a propriedade: ExibirErroRetorno: Boolean, default False
+    Se for ligada, serão exibidas mensagens com a tradução dos Erros de Retorno
+    da CliSiTef. (Ela fica desligada pois o SiTef já envia mensagens de erro,
+    antes de encerrar)
+[*] Método "FinalizarTransacao", modificado para exibir a mensagem apropriada,
+    caso o Cupom Fiscal não tenha sequer sido aberto (usado em Recarga de Celular)
+
 Data: 08/09/2015
 -- ACBrTEFDClass, ACBrTEFDCliSiTEF -
 [*] Ajustes para permitir chamadas a CRT e CHQ com Transações que não tem Valor

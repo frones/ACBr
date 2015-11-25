@@ -262,7 +262,7 @@ begin
                '0'                           + // Zero
                wAgencia                      + // Agencia cedente
                '55'                          + // Sub-Conta
-               wConta                        + // Conta Corrente //Removi agencia repetido //ALFEU MOTA //
+               wAgencia + wConta             + // Conta Corrente
                PadRight( '', 2,' ')          + // Uso do banco
                PadRight( Nome, 30,' ')       + // Nome da Empresa
                '399'                         + // Número do Banco na compensação
@@ -284,6 +284,9 @@ var
   Ocorrencia, aEspecie, wLinha :String;
   TipoSacado, MensagemCedente, TipoBoleto :String;
   I :Integer;
+  wAgencia: String;
+  wConta: String;
+  teste: String;
 begin
 
    with ACBrTitulo do
@@ -347,16 +350,20 @@ begin
          if length(MensagemCedente) > 60 then
             MensagemCedente:= copy(MensagemCedente,1,60);
 
+         wAgencia := PadLeft(OnlyNumber(Cedente.Agencia), 4, '0');
+         wConta   := PadLeft(OnlyNumber(Cedente.Conta) + Cedente.ContaDigito, 7, '0');
+         teste:=  OnlyNumber(MontarCampoNossoNumero(ACBrTitulo));
          wLinha:= '1'                                                             + // ID Registro
                   '02'                                                            + //Código de Inscrição
                   PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0')                     + //Número de inscrição do Cliente (CPF/CNPJ)
                   '0'                                                             + // Zero
-                  PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')                    + // Agencia cedente
+                  wAgencia                                                        + // Agencia cedente
                  '55'                                                             + // Sub-Conta
-                  PadLeft(OnlyNumber(Cedente.Conta)+Cedente.ContaDigito, 11, '0') +
+                  wAgencia + wConta                                               +
                   PadRight('',2,' ')                                              + // uso banco
                   PadRight( SeuNumero,25,' ')                                     + // Numero de Controle do Participante
                   OnlyNumber(MontarCampoNossoNumero(ACBrTitulo))                  + // Nosso Numero tam 10 + digito tam 1
+
                   IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
                          FormatDateTime( 'ddmmyy', DataDesconto))                 + // data limite para desconto (2)
                   IntToStrZero( round( ValorDesconto * 100 ), 11)                 + // valor desconto (2)

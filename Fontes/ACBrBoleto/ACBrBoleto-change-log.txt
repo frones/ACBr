@@ -72,6 +72,11 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 23/11/2015 ver. 0.0.160a
+-- ACBrBancoHSBC --
+[-] Ajuste remessa CNAB400.(Valdemir Jacon Sanches)
+http://www.projetoacbr.com.br/forum/topic/25647-remessa-banco-hsbc-composi%C3%A7%C3%A3o-campo-conta-corrente/
+
 Data: 23/11/2015 ver. 0.0.159a
 -- ACBrBancoBancoBrasil --
 [-] Ajuste remessa CNAB240 para enviar corretamente o NossoNumero para todas as carteiras.(Juliana Tamizou)

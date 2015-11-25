@@ -50,7 +50,7 @@ uses
      {$IFDEF FPC}
        LResources,
      {$ENDIF}	
-  Windows, Messages, Variants, Graphics,
+  Messages, Variants, Graphics,
   Controls, Forms, Dialogs, ACBrNFeDANFEClass, RLReport, pcnNFe, ACBrNFe,
   RLHTMLFilter, RLFilters, RLPDFFilter, ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador,
   ACBrDelphiZXingQRCode;

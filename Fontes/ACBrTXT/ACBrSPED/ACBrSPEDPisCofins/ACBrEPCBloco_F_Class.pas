@@ -1386,13 +1386,13 @@ begin
                   LFill( VL_REC,0,2 )     +
                   LFill( strIND_REC )     +
                   LFill( CNPJ_CPF   )     +
-                  LFill( NUM_DOC, 60)     +
+                  LFill( NUM_DOC )     +
                   LFill( COD_ITEM   )     +
                   LFill( VL_REC_DET,0,2 ) +
                   LFill( CstPisToStr(CST_PIS) ) +
                   LFill( CstCofinsToStr(CST_COFINS)) +
                   LFill( INFO_COMPL)      +
-                  LFill( COD_CTA, 60) ) ;
+                  LFill( COD_CTA ) ) ;
            end;
            ///
            RegistroF990.QTD_LIN_F := RegistroF990.QTD_LIN_F + 1;

@@ -69,7 +69,9 @@ Const
    CACBrTEFD_CliSiTef_Erro6  = 'Erro na inicialização do TCP/IP' ;
    CACBrTEFD_CliSiTef_Erro7  = 'Falta de memória' ;
    CACBrTEFD_CliSiTef_Erro8  = 'Não encontrou a CliSiTef ou ela está com problemas' ;
-   CACBrTEFD_CliSiTef_Erro10 = 'O PinPad não está devidamente configurado no arquivo CliSiTef.ini' ;
+   CACBrTEFD_CliSiTef_Erro10 = 'Erro de acesso na pasta CliSiTef (possível falta de permissão para escrita) ' + sLineBreak+
+                               'ou o PinPad não está devidamente configurado no arquivo CliSiTef.ini ' + sLineBreak+
+                               'ou parâmetros IdLoja e IdTerminal inválidos';
    CACBrTEFD_CliSiTef_Erro11 = 'Dados inválidos passados pela automação.';
    CACBrTEFD_CliSiTef_Erro12 = 'Modo seguro não ativo (possível falta de configuração no servidor SiTef do arquivo .cha).';
    CACBrTEFD_CliSiTef_Erro13 = 'Caminho da DLL inválido (o caminho completo das bibliotecas está muito grande).';

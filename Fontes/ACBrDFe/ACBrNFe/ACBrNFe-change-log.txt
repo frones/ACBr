@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2015
+[*] Acerto na geração de PDF, antes ao enviar por email as letras ficavam estranhas, 
+    também foi removida opção que deixa o arquivo maior.
+    por: regys.silveira
+
 24/11/2015
 -- pcnNFeW --
 [*] Fixado em 2 casas decimais a geração da TAG pICMSInter conforme o novo Schema

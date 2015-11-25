@@ -1351,9 +1351,9 @@ begin
   FfrxPDFExport := TfrxPDFExport.Create(nil);
   with FfrxPDFExport do
   begin
-     Background := True;
-     PrintOptimized := True;
-     Subject := 'Exportando DANFE para PDF';
+     Background    := True;
+     EmbeddedFonts := True;
+     Subject       := 'Exportando DANFE para PDF';
   end;
 
   // cdsIdentificacao

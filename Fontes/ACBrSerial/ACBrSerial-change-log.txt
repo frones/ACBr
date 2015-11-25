@@ -47,6 +47,10 @@ Símbolo : Significado
     "poscheque.dat"
     http://www.projetoacbr.com.br/forum/index.php?showtopic=26206
 
+-- ACBrECFVirtual --
+[-] Corrigida a Sequencia de programação de II e NN em CriarMemoriaInicial
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=26215
+
 24/11/2015
 -- ACBrEscECF --
 [-] Ajuste na leitura de DadosUltimaReducaoZ dos ECFs Epson TM-800/900, onde as

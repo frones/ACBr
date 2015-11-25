@@ -2025,12 +2025,12 @@ begin
   fpAliquotas.Add( AliqICMS ) ;
 
   AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'NN' ;
+  AliqICMS.Indice   := 'II' ;
   AliqICMS.Tipo     := 'T' ;
   fpAliquotas.Add( AliqICMS ) ;
 
   AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'II' ;
+  AliqICMS.Indice   := 'NN' ;
   AliqICMS.Tipo     := 'T' ;
   fpAliquotas.Add( AliqICMS ) ;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2015
+-- ACBrMDFeWebServices --
+[*] Comentado a linha que definia um BodyElemente diferente do padrão.
+    por: Italo Jurisato Junior
+
 11/11/2015
 -- ACBrMDFeWebServices --
 [*] Remoção de variáveis e códigos não utilizados.

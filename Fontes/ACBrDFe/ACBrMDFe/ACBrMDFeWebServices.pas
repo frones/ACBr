@@ -1990,8 +1990,8 @@ begin
   FPLayout := LayMDFeDistDFeInt;
   FPArqEnv := 'con-dist-dfe';
   FPArqResp := 'dist-dfe';
-  FPBodyElement := 'mdfeDistDFeInteresse';
-  FPHeaderElement := '';
+//  FPBodyElement := 'mdfeDistDFeInteresse';
+//  FPHeaderElement := '';
 end;
 
 destructor TDistribuicaoDFe.Destroy;

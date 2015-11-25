@@ -190,7 +190,7 @@ begin
    then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
  if not (FProvedor in [proIssDsf, proInfisc, proEquiplano, proEgoverneISS, proNFSEBrasil]) then
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, {proFiorilli,} proVirtual, proPublica{, proSystemPro}])
       or ((FProvedor = proGovDigital) and (not ASincrono)) then   // Alterado por Nilton Olher - 11/02/2015
      begin
       Gerador.wGrupo('GerarNfseEnvio' + Atributo);
@@ -315,7 +315,7 @@ begin
    end;
 
  if not (FProvedor in [proIssDsf, proInfisc, proEquiplano, proEgoverneISS]) then
-   if (FProvedor in [proGoiania, proProdata, proVitoria, proFiorilli, proVirtual, proPublica{, proSystemPro}])
+   if (FProvedor in [proGoiania, proProdata, proVitoria, {proFiorilli,} proVirtual, proPublica{, proSystemPro}])
       or ((FProvedor = proGovDigital) and (not ASincrono)) then // Alterado por Nilton Olher - 11/02/2015
      begin
       Gerador.wGrupo('/Rps');

@@ -468,6 +468,8 @@ type
     RlbDadoValorDesconto: TRLLabel;
     RlbDadoValorLiquido: TRLLabel;
     RLDrawFaturareal: TRLDraw;
+    rlbCancelada: TRLBand;
+    RLLCancelada: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -659,11 +661,13 @@ begin
   // Exibe a informação correta no label da chave de acesso
   if FNFeCancelada then
   begin
-      rllXmotivo.Caption := 'NF-e CANCELADA';
-      rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-      rlbCodigoBarras.Visible := False;
-      rllXmotivo.Visible := True;
-      rllDadosVariaveis3_Descricao.Visible := True;
+    rllXmotivo.Caption := 'NF-e CANCELADA';
+    rllDadosVariaveis3_Descricao.Caption  := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+    rlbCodigoBarras.Visible               := False;
+    rllXmotivo.Visible                    := True;
+    rllDadosVariaveis3_Descricao.Visible  := True;
+    rlbCancelada.Visible                  := True;
+    RLLCancelada.Caption                  := 'NF-e CANCELADA';
   end
   else
   begin
@@ -2038,8 +2042,6 @@ begin
         Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + #13#10;
         Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + #13#10;
         Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + #13#10;
-//        Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + #13#10;
-//        Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + #13#10;
       end;
     end;
   end;

@@ -7,7 +7,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Left = 2
+    Left = 0
+    Top = 0
     Width = 1123
     Height = 794
     Margins.LeftMargin = 7.000000000000000000
@@ -23,9 +24,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
     object rliMarcaDagua1: TRLImage
-      Left = 361
+      Left = 352
       Top = 430
-      Width = 327
+      Width = 336
       Height = 234
       Center = True
       HoldStyle = hsHorizontally
@@ -33,7 +34,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbContinuacaoInformacoesComplementares: TRLBand
       Left = 99
-      Top = 583
+      Top = 613
       Width = 998
       Height = 35
       AutoSize = True
@@ -105,7 +106,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCabecalhoItens: TRLBand
       Left = 99
-      Top = 528
+      Top = 558
       Width = 998
       Height = 26
       AutoSize = True
@@ -1315,7 +1316,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbDadosAdicionais: TRLBand
       Left = 99
-      Top = 647
+      Top = 677
       Width = 998
       Height = 124
       AlignToBottom = True
@@ -4062,7 +4063,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbItens: TRLBand
       Left = 99
-      Top = 554
+      Top = 584
       Width = 998
       Height = 13
       Background.Height = 487
@@ -4607,7 +4608,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbISSQN: TRLBand
       Left = 99
-      Top = 618
+      Top = 648
       Width = 998
       Height = 29
       BandType = btFooter
@@ -4791,7 +4792,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbAvisoContingencia: TRLBand
       Left = 99
-      Top = 500
+      Top = 530
       Width = 998
       Height = 28
       BandType = btColumnHeader
@@ -5019,7 +5020,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbObsItem: TRLBand
       Left = 99
-      Top = 567
+      Top = 597
       Width = 998
       Height = 16
       BeforePrint = rlbObsItemBeforePrint
@@ -5282,6 +5283,31 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Style = []
         Holder = RLLabelLIQ
         ParentFont = False
+      end
+    end
+    object rlbCancelada: TRLBand
+      Left = 99
+      Top = 500
+      Width = 998
+      Height = 30
+      BandType = btColumnHeader
+      Visible = False
+      object RLLCancelada: TRLLabel
+        Left = 440
+        Top = 5
+        Width = 118
+        Height = 19
+        Align = faCenter
+        Alignment = taCenter
+        Color = clGray
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
       end
     end
   end

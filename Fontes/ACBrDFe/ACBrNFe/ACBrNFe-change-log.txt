@@ -48,6 +48,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/11/2015
+[+]     : Nova Banda ( rlbCancelada ), para apresentar Nfe. Cancelada em
+           ACBrNFeDANFeRLRetrato  e ACBrNFeDANFeRLPaisagem.
+	  Quando a propriedade NfeCancelada estiver habilitada, sera
+           apresentada a banda rlbCancelada.
+[-]     : Remoção de algumas linhas comentadas;
+          Por: Henrique Leonardo
+     
+
+
+
+
 [*] Acerto na geração de PDF, antes ao enviar por email as letras ficavam estranhas, 
     também foi removida opção que deixa o arquivo maior.
     por: regys.silveira

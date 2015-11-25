@@ -2190,8 +2190,6 @@ begin
         Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + #13#10;
         Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + #13#10;
         Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + #13#10;
-//        Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + #13#10;
-//        Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + #13#10;
       end;
     end;
   end;

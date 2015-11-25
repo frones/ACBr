@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2015
+[-] Acertos nas impressões para Fortes Report utilizarem corretamente o .lfm
+    alguns relatórios estavam apontando somente para o .dfm gerando problemas
+    de acentuação.
+
 28/10/2015
 -- ACBrDFeConfiguracoes --
 [*] Alterado o valor padrão de False para True das propriedades:

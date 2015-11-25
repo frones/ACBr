@@ -221,7 +221,11 @@ implementation
 uses
   DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 var
   FProtocoloCTe: string;

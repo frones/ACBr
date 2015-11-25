@@ -616,7 +616,12 @@ implementation
 uses
   DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
+
 
 var
   FProtocoloCTe: string;

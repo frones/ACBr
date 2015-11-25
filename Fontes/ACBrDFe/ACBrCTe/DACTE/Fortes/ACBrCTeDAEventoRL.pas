@@ -109,7 +109,11 @@ implementation
 uses
   MaskUtils, ACBrUtil;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 class procedure TfrmCTeDAEventoRL.Imprimir(AEventoCTe: TInfEventoCollectionItem;
   ALogo: string = '';

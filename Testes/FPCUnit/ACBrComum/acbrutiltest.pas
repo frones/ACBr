@@ -456,7 +456,8 @@ type
 
   StringToDateTimeTest = class(TTestCase)
   published
-   procedure Data;
+   procedure DataAno4Digitos;
+   procedure DataAno2Digitos;
    procedure Hora;
    procedure DataEHora;
    procedure ComFormatSettingsDiferente;
@@ -2519,12 +2520,24 @@ end;
 
 { StringToDateTimeTest }
 
-procedure StringToDateTimeTest.Data;
+procedure StringToDateTimeTest.DataAno4Digitos;
 var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDate(2015,02,03);
   CheckEquals(ADateTime, StringToDateTime('03/02/2015'));
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd/mm/yyyy'));
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd-mm-yyyy'));
+end;
+
+procedure StringToDateTimeTest.DataAno2Digitos;
+var
+  ADateTime: TDateTime;
+begin
+  ADateTime := EncodeDate(2015,02,28);
+  CheckEquals(ADateTime, StringToDateTime('28/02/15'));
+  CheckEquals(ADateTime, StringToDateTime('28/02/15', 'dd/mm/yy'));
+  CheckEquals(ADateTime, StringToDateTime('28/02/15', 'dd-mm-yy'));
 end;
 
 procedure StringToDateTimeTest.Hora;

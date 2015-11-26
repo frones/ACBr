@@ -2202,7 +2202,7 @@ begin
 
   if Trim(Obs) <> '' then
   begin
-     Obs := AjustaLinhas(Obs,50) ;
+     Obs := AjustaLinhas(Obs,fpColunas) ;
      SL := TStringList.create ;
      try
         SL.Text := Obs ;

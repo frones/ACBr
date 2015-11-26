@@ -178,6 +178,7 @@ var
   ListaSMS : TStringList;
   Conteudo : string;
   I, J : Integer;
+  FimSMS : Boolean;
 begin
   try
     if not FileExists(APath) then
@@ -186,8 +187,9 @@ begin
     ListaSMS.LoadFromFile(APath);
     if (Pos('AT+CMGL', ListaSMS[0]) > 0) then
       ListaSMS.Delete(0);
-    if (Pos('O', ListaSMS[ListaSMS.Count -1]) > 0) then
-      ListaSMS.Delete(ListaSMS.Count -1);
+    if (Pos('O', ListaSMS[ListaSMS.Count -1]) > 0) and
+      (Length(Trim(ListaSMS[ListaSMS.Count -1])) = 1) then
+        ListaSMS.Delete(ListaSMS.Count -1);
     Self.Clear;
     for I := 0 to ListaSMS.Count -1 do
     begin
@@ -204,14 +206,21 @@ begin
           Conteudo := StringReplace(Conteudo, Telefone, '', [rfReplaceAll]);
           Conteudo := StringReplace(Conteudo, '"', '', [rfReplaceAll]);
           Conteudo := StringReplace(Conteudo, ',', ' ', [rfReplaceAll]);
-          DataHora := FormaDataHora(Trim(Copy(Conteudo, 1, 19))); 
+          DataHora := FormaDataHora(Trim(Copy(Conteudo, 1, 19)));
           Mensagem := '';
-          J := I +1;
-          while (Pos(DelimitadorSMS, ListaSMS[J]) = 0) and
-            (J < ListaSMS.Count -1) do
+          J := I + 1;
+          FimSMS := (J > ListaSMS.Count -1);
+          if not FimSMS then
+            FimSMS := Pos(DelimitadorSMS, ListaSMS[J]) > 0
+          else if Pos(DelimitadorSMS, ListaSMS[I]) = 0 then
+            Mensagem := Mensagem + IfThen(Mensagem <> '', sLineBreak) + ListaSMS[I];
+          while not FimSMS do
           begin
             Mensagem := Mensagem + IfThen(Mensagem <> '', sLineBreak) + ListaSMS[J];
             Inc(J);
+            FimSMS := (J > ListaSMS.Count -1);
+            if not FimSMS then
+              FimSMS := Pos(DelimitadorSMS, ListaSMS[J]) > 0;
           end;
         end;
       end

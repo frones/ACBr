@@ -181,16 +181,22 @@ var
   FimSMS : Boolean;
 begin
   try
+    Self.Clear;
     if not FileExists(APath) then
       raise EACBrSMSException.CreateFmt('Arquivo "%s" não encontrado.', [APath]);
     ListaSMS := TStringList.Create;
     ListaSMS.LoadFromFile(APath);
+    if ListaSMS.Count = 0 then
+      Exit;
     if (Pos('AT+CMGL', ListaSMS[0]) > 0) then
       ListaSMS.Delete(0);
     if (Pos('O', ListaSMS[ListaSMS.Count -1]) > 0) and
       (Length(Trim(ListaSMS[ListaSMS.Count -1])) = 1) then
         ListaSMS.Delete(ListaSMS.Count -1);
-    Self.Clear;
+    if ListaSMS.Count = 0 then
+      Exit;
+    if trim(ListaSMS[ListaSMS.Count -1]) = '' then
+      ListaSMS.Delete(ListaSMS.Count -1);
     for I := 0 to ListaSMS.Count -1 do
     begin
       Conteudo := ListaSMS[I];

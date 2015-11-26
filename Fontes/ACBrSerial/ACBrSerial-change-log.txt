@@ -39,10 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
 26/11/2015
 -- ACBrSMS --
 [-] acertos para quebrar as mensagens corretamente
     http://www.projetoacbr.com.br/forum/topic/25928-sms-trunk2/
+-- ACBrSMS --
+[-] http://www.projetoacbr.com.br/forum/topic/25928-sms-trunk2/#comment-170671
 
 -- ACBrECFSwedaStx --
 [+] Adicionado o código de retorno 54-Emitindo Leitura de Memória Fiscal,

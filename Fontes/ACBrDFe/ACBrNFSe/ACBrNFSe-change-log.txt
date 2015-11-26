@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2015
+[+] Acrescentado o INI para os provedores: ISSe, Goiania e Coplan.
+    Por: Italo Jurisato Junior
+
 24/11/2015
 [+] Acrescentado o INI para o provedor: Publica.
     Por: Lutzem Massao Aihara

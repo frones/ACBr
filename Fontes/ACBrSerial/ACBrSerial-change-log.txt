@@ -40,8 +40,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/11/2015
-[-] acertos no ACBrSMS para quebrar as mensagens corretamente
-    http://www.projetoacbr.com.br/forum/topic/25928-sms-trunk2/#comment-170478
+-- ACBrSMS --
+[-] acertos para quebrar as mensagens corretamente
+    http://www.projetoacbr.com.br/forum/topic/25928-sms-trunk2/
+
+-- ACBrECFSwedaStx --
+[+] Adicionado o código de retorno 54-Emitindo Leitura de Memória Fiscal,
+    aguarde... Na lista de Erros a serem ignorados
+    http://www.projetoacbr.com.br/forum/topic/26247-redu%C3%A7%C3%A3o-z-swedastx/
 
 25/11/2015
 -- ACBrECFEpson --        (por: Amarildo Lacerda)

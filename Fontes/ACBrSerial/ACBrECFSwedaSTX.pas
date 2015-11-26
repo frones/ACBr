@@ -614,6 +614,7 @@ begin
     043 : Result := 'Valor do estorno excede a soma dos pagamentos registrados no meio indicado' ;
     044 : Result := 'Valor efetivado é insuficiente para o pagamento!' ;
     050 : Result := 'Campo de Descrição não informado' ;
+    054 : Result := 'Emitindo Leitura de Memória Fiscal, aguarde...';
     058 : Result := 'Comando ou operação inválida!' ;
     059 : Result := 'As operação de circulação de mercadoria e operações não fiscais na data atual já estão encerradas!';
     060 : Result := 'É necessária a emissão do documento de Redução Z!' ;
@@ -769,6 +770,7 @@ begin
      // TODO: Mapear mudanças de estado, que não são erros
      Result := not (Erro in [0,
                              40,  // Abertura de Movimento
+							 54,  // Emitindo LMFC da primeira Z do mês
                              74,  // Ejetando a Folha
                              98,  // Processando
                              99,  // Confirme

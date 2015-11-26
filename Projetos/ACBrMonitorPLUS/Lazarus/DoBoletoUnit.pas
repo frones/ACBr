@@ -133,6 +133,22 @@ begin
          Cmd.Resposta := IntToStr(Banco.CalcularTamMaximoNossoNumero(Cmd.Params(0)))
       else if cmd.Metodo = 'codigosmoraaceitos' then
          Cmd.Resposta := Banco.CodigosMoraAceitos
+      else if cmd.Metodo = 'selecionabanco' then
+       begin
+          case StrToInt64Def(Trim(Cmd.Params(0)),0) of
+            001: Banco.TipoCobranca:= cobBancoDoBrasil;
+            008,033,353: Banco.TipoCobranca:= cobSantander;
+            021: Banco.TipoCobranca:= cobBanestes;
+            041: Banco.TipoCobranca:= cobBanrisul;
+            104: Banco.TipoCobranca:= cobCaixaEconomica;
+            237: Banco.TipoCobranca:= cobBradesco;
+            341: Banco.TipoCobranca:= cobItau;
+            389: Banco.TipoCobranca:= cobBancoMercantil;
+            748: Banco.TipoCobranca:= cobSicred;
+            756: Banco.TipoCobranca:= cobBancoob;
+            399: Banco.TipoCobranca:= cobHSBC;
+          end;
+       end
       else
          raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')'));
    end;

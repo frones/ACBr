@@ -941,7 +941,7 @@ begin
     rlmDadosEmitente.Enabled:=False;
    end;
 
-  rllModal.Caption := TpModalToStrText(FCTe.Ide.modal);
+  rllModal.Caption := ACBrStr( TpModalToStrText(FCTe.Ide.modal) );
   rllModelo.Caption := FCTe.Ide.modelo;
   rllSerie.Caption := FormatFloat( '000', FCTe.Ide.serie);
   rllNumCte.Caption := FormatFloat( '000,000,000', FCTe.Ide.nCT );

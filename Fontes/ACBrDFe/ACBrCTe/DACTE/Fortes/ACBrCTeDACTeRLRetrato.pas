@@ -693,12 +693,12 @@ begin
          tdDeclaracao: begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'DECLAR';
                         cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-                        cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := 'Declaração Doc.: ' + nDoc;
+                        cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := ACBrStr( 'Declaração Doc.: ' ) + nDoc;
                        end;
          tdDutoviario: begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'DUTO';
                         cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-                        cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := 'Dutoviário Doc.: ' + nDoc;
+                        cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := ACBrStr( 'Dutoviário Doc.: ' ) + nDoc;
                        end;
          tdOutros:     begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'Outros';
@@ -716,12 +716,12 @@ begin
          tdDeclaracao: begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'DECLAR';
                         cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-                        cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := 'Declaração Doc.: ' + nDoc;
+                        cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := ACBrStr( 'Declaração Doc.: ' ) + nDoc;
                        end;
          tdDutoviario: begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'DUTO';
                         cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-                        cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := 'Dutoviário Doc.: ' + nDoc;
+                        cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := ACBrStr( 'Dutoviário Doc.: ' ) + nDoc;
                        end;
          tdOutros:     begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'Outros';
@@ -1098,7 +1098,7 @@ begin
     rliLogo.Width   := 324;//321
   end;
 
-  rllModal.Caption   := TpModalToStrText(FCTe.Ide.modal);
+  rllModal.Caption   := ACBrStr( TpModalToStrText(FCTe.Ide.modal) );
   rllModelo.Caption  := FCTe.Ide.modelo;
   rllSerie.Caption   := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
   rllNumCte.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);

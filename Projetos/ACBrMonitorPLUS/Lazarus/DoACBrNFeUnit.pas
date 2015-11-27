@@ -1422,12 +1422,15 @@ begin
               end;
             end;
 
+           sMensagemEmail := TStringList.Create;
+           CC:=TstringList.Create;
+           Anexos:=TstringList.Create;
            try
-             CC:=TstringList.Create;
+             sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsgNFe.Lines.Text );
+
              CC.DelimitedText := sLineBreak;
              CC.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
 
-             Anexos:=TstringList.Create;
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(6),';',sLineBreak,[rfReplaceAll]);
 
@@ -1436,7 +1439,13 @@ begin
                 Anexos.Add(ArqPDF);
 
              try
-                ACBrNFe1.EnviarEmail(Cmd.Params(0),IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text),mmEmailMsgNFe.Lines,CC,Anexos);
+                ACBrNFe1.EnviarEmail(
+                  Cmd.Params(0),
+                  SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text) ),
+                  sMensagemEmail,
+                  CC,
+                  Anexos
+                );
 
                 Cmd.Resposta := 'Email enviado com sucesso';
              except
@@ -1449,6 +1458,7 @@ begin
            finally
              CC.Free;
              Anexos.Free;
+             sMensagemEmail.Free;
            end;
          end
 

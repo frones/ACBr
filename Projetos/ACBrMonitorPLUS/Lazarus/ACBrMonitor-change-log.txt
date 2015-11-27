@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2015
+[*] Adicionada substituição de variaveis no envio de email de eventos, assim 
+    como é feito no envio da NF-e.
+
 13/11/2015
 [-] inclusão do CT-e na lista de objetos que recebem .ini
     Antes ele lia somente a primeira linha do .ini do CT-e, causando erros

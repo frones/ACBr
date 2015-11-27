@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2015
+-- pcnConversao --
+[*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 
+    Confirmacao de Internalizacao da Mercadoria na SUFRAMA
+    por: Italo Jurisato Junior
+
 11/11/2015
 -- pcnGerador --
 [*] Ajuste no método: wCampoCNPJCPF para preencher corretamente tags onde o CNPJ

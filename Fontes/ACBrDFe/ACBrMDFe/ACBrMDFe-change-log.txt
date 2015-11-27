@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2015
+-- pmdfeEventoMDFe --
+[*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 
+    Confirmacao de Internalizacao da Mercadoria na SUFRAMA
+    por: Italo Jurisato Junior
+
 25/11/2015
 -- ACBrMDFeWebServices --
 [*] Comentado a linha que definia um BodyElemente diferente do padrão.

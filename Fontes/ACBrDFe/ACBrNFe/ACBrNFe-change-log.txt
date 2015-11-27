@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2015
+-- pcnEventoNFe --
+[*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 
+    Confirmacao de Internalizacao da Mercadoria na SUFRAMA
+    por: Italo Jurisato Junior
+
 25/11/2015
 [+]     : Nova Banda ( rlbCancelada ), para apresentar Nfe. Cancelada em
            ACBrNFeDANFeRLRetrato  e ACBrNFeDANFeRLPaisagem.
@@ -54,10 +60,6 @@ Símbolo : Significado
            apresentada a banda rlbCancelada.
 [-]     : Remoção de algumas linhas comentadas;
           Por: Henrique Leonardo
-     
-
-
-
 
 [*] Acerto na geração de PDF, antes ao enviar por email as letras ficavam estranhas, 
     também foi removida opção que deixa o arquivo maior.

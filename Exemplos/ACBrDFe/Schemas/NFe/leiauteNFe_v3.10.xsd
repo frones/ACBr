@@ -3908,10 +3908,18 @@ Substituição Tributaria;</xs:documentation>
 																	<xs:documentation>Alíquota adotada nas operações internas na UF do destinatário para o produto / mercadoria.</xs:documentation>
 																</xs:annotation>
 															</xs:element>
-															<xs:element name="pICMSInter" type="TDec_0302a04">
+															<xs:element name="pICMSInter">
 																<xs:annotation>
 																	<xs:documentation>Alíquota interestadual das UF envolvidas: - 4% alíquota interestadual para produtos importados; - 7% para os Estados de origem do Sul e Sudeste (exceto ES), destinado para os Estados do Norte e Nordeste  ou ES; - 12% para os demais casos.</xs:documentation>
 																</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="preserve"/>
+																			<xs:enumeration value="4.00"/>
+																			<xs:enumeration value="7.00"/>
+																			<xs:enumeration value="12.00"/>
+																			</xs:restriction>
+																		</xs:simpleType>
 															</xs:element>
 															<xs:element name="pICMSInterPart" type="TDec_0302a04">
 																<xs:annotation>

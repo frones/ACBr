@@ -1519,7 +1519,10 @@ begin
 
               case InfEvento.tpAmb of
                 taProducao:
-                  FieldByName('tpAmb').AsString := 'PRODUÇÃO';
+                  begin
+                    FieldByName('tpAmb').AsString := 'PRODUÇÃO';
+                    frxReport.Variables['HOMOLOGACAO'] := False;
+                  end;
                 taHomologacao:
                   begin
                     FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';

@@ -46,6 +46,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+27/11/2015
+-- ACBrCTeDACTEFR --
+[-] Correção na impressão do evento em fastreport 
+    http://www.projetoacbr.com.br/forum/topic/20062-te-impressão-de-eventos-com-fastreport-variável-homologação-não-existe/
+    por: Gilson Inácio do Carmo
 
 27/11/2015
 -- pcteEventoCTe --

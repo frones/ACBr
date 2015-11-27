@@ -46,6 +46,8 @@ Símbolo : Significado
 26/11/2015
 [*] Adicionada substituição de variaveis no envio de email de eventos, assim 
     como é feito no envio da NF-e.
+[+] Adicionado configuração para ACBrPosPrinter1.ConfigLogo.IgnorarLogo na aba
+    "PosPrinter"  (por: DSA)
 
 13/11/2015
 [-] inclusão do CT-e na lista de objetos que recebem .ini

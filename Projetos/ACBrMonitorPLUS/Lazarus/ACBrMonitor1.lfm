@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 481
+  Left = 407
   Height = 689
-  Top = 191
+  Top = 137
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsDFe
+        ActivePage = tsEscPos
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 18
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -10255,7 +10255,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object gbQRCode: TGroupBox
               Left = 361
               Height = 81
-              Top = 177
+              Top = 192
               Width = 258
               Caption = 'QRCode'
               ClientHeight = 59
@@ -10314,80 +10314,93 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object gbLogotipo: TGroupBox
               Left = 361
-              Height = 81
+              Height = 97
               Top = 95
               Width = 258
               Caption = 'Logotipo'
-              ClientHeight = 59
+              ClientHeight = 75
               ClientWidth = 254
               TabOrder = 2
               object seLogoKC1: TSpinEdit
-                Left = 7
+                Left = 8
                 Height = 25
-                Top = 27
-                Width = 50
-                TabOrder = 0
-                Value = 32
-              end
-              object seLogoKC2: TSpinEdit
-                Left = 70
-                Height = 25
-                Top = 27
+                Top = 41
                 Width = 50
                 TabOrder = 1
                 Value = 32
               end
-              object seLogoFatorY: TSpinEdit
-                Left = 199
+              object seLogoKC2: TSpinEdit
+                Left = 71
                 Height = 25
-                Top = 27
+                Top = 41
                 Width = 50
                 TabOrder = 2
-                Value = 1
+                Value = 32
               end
-              object seLogoFatorX: TSpinEdit
-                Left = 136
+              object seLogoFatorY: TSpinEdit
+                Left = 200
                 Height = 25
-                Top = 27
+                Top = 41
                 Width = 50
                 TabOrder = 3
                 Value = 1
               end
+              object seLogoFatorX: TSpinEdit
+                Left = 137
+                Height = 25
+                Top = 41
+                Width = 50
+                TabOrder = 4
+                Value = 1
+              end
               object lbLogoKC1: TLabel
-                Left = 7
+                Left = 8
                 Height = 15
-                Top = 10
+                Top = 24
                 Width = 20
                 Caption = 'KC1'
                 ParentColor = False
                 ParentFont = False
               end
               object lbLogoKC2: TLabel
-                Left = 70
+                Left = 71
                 Height = 15
-                Top = 10
+                Top = 24
                 Width = 20
                 Caption = 'KC2'
                 ParentColor = False
                 ParentFont = False
               end
               object lbLogoFatorX: TLabel
-                Left = 136
+                Left = 137
                 Height = 15
-                Top = 10
+                Top = 24
                 Width = 34
                 Caption = 'FatorX'
                 ParentColor = False
                 ParentFont = False
               end
               object lbLogoFatorY: TLabel
-                Left = 199
+                Left = 200
                 Height = 15
-                Top = 10
+                Top = 24
                 Width = 34
                 Caption = 'FatorY'
                 ParentColor = False
                 ParentFont = False
+              end
+              object cbEscPosImprimirLogo: TCheckBox
+                AnchorSideLeft.Control = gbLogotipo
+                AnchorSideLeft.Side = asrCenter
+                AnchorSideTop.Control = gbLogotipo
+                Left = 76
+                Height = 21
+                Top = 0
+                Width = 103
+                Caption = 'Imprimir Logo'
+                Checked = True
+                State = cbChecked
+                TabOrder = 0
               end
             end
             object bbAtivar: TBitBtn
@@ -11008,6 +11021,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

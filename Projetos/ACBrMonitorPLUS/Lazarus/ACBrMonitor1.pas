@@ -246,6 +246,7 @@ type
     cbxUTF8: TCheckBox;
     chbTCPANSI: TCheckBox;
     chbTagQrCode: TCheckBox;
+    cbEscPosImprimirLogo: TCheckBox;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
@@ -3276,21 +3277,22 @@ begin
       Ini.ReadBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', False);
     rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', 0);
     ckSalvar.Checked := Ini.ReadBool('Geral', 'Salvar', True);
-    edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',
-      PathApplication + 'Logs');
-    cbxImpressora.ItemIndex :=
-      cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
+    edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',PathApplication + 'Logs');
+    cbxImpressora.ItemIndex := cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
 
     ACBrNFe1.Configuracoes.Geral.AtualizarXMLCancelado := True;
     ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+    ACBrNFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
 
     ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+    ACBrCTe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrCTe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrCTe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
 
     ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+    ACBrMDFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrMDFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrMDFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
 
@@ -3651,6 +3653,7 @@ begin
     seQRCodeLargMod.Value    := INI.ReadInteger('QRCode', 'LarguraModulo', ACBrPosPrinter1.ConfigQRCode.LarguraModulo);
     seQRCodeErrorLevel.Value := INI.ReadInteger('QRCode', 'ErrorLevel', ACBrPosPrinter1.ConfigQRCode.ErrorLevel);
 
+    cbEscPosImprimirLogo.Checked := INI.ReadBool('Logo', 'Imprimir', not ACBrPosPrinter1.ConfigLogo.IgnorarLogo);
     seLogoKC1.Value    := INI.ReadInteger('Logo', 'KC1', ACBrPosPrinter1.ConfigLogo.KeyCode1);
     seLogoKC2.Value    := INI.ReadInteger('Logo', 'KC2', ACBrPosPrinter1.ConfigLogo.KeyCode2);
     seLogoFatorX.Value := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
@@ -4334,6 +4337,7 @@ begin
     INI.WriteInteger('QRCode', 'LarguraModulo', seQRCodeLargMod.Value);
     INI.WriteInteger('QRCode', 'ErrorLevel', seQRCodeErrorLevel.Value);
 
+    INI.WriteBool('Logo', 'Imprimir', cbEscPosImprimirLogo.Checked);
     INI.WriteInteger('Logo', 'KC1', seLogoKC1.Value);
     INI.WriteInteger('Logo', 'KC2', seLogoKC2.Value);
     INI.WriteInteger('Logo', 'FatorX', seLogoFatorX.Value);
@@ -7144,6 +7148,7 @@ begin
     ACBrPosPrinter1.ConfigQRCode.LarguraModulo := seQRCodeLargMod.Value;
     ACBrPosPrinter1.ConfigQRCode.Tipo          := seQRCodeTipo.Value;
 
+    ACBrPosPrinter1.ConfigLogo.IgnorarLogo := not cbEscPosImprimirLogo.Checked;
     ACBrPosPrinter1.ConfigLogo.FatorX   := seLogoFatorX.Value;
     ACBrPosPrinter1.ConfigLogo.FatorY   := seLogoFatorY.Value;
     ACBrPosPrinter1.ConfigLogo.KeyCode1 := seLogoKC1.Value;

@@ -819,7 +819,7 @@ begin
   with ACBrBanco.ACBrBoleto do
   begin
     if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-    (rConta <> OnlyNumber(Cedente.Conta))) then
+    (rConta <> OnlyNumber(Cedente.CodigoCedente))) then
       raise Exception.Create(ACBrStr('Agência\Conta do arquivo inválido'));
 
     Cedente.Nome   := rCedente;

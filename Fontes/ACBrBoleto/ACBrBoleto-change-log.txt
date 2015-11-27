@@ -72,6 +72,11 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 27/11/2015 ver. 0.0.161a
+-- ACBrBancoBanrisul --
+[-] Correção leitura arquivo retorno CNAB400. (Denis Queiros)
+http://www.projetoacbr.com.br/forum/topic/25823-banrisul-cnab-400-validado-atualiza%C3%A7%C3%A3o-acbr/
+
 Data: 23/11/2015 ver. 0.0.160a
 -- ACBrBancoHSBC --
 [-] Ajuste remessa CNAB400.(Valdemir Jacon Sanches)

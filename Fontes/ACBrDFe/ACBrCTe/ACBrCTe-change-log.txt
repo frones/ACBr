@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2015
+-- pcteEventoCTe --
+[*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 
+    Confirmacao de Internalizacao da Mercadoria na SUFRAMA
+    por: Italo Jurisato Junior
+
 24/11/2015
 -- pcteCTe / pcteCTeW / pcteCTeR --
 [*] Incluido as TAGs: pFCPUFFim e vFCPUFFim conforme NT 2015/004 publicada em

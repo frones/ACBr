@@ -306,7 +306,8 @@ begin
     teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
     teCTeCancelado                : Result := 'CT-e Cancelado';
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria Suframa';
+    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
+    teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -347,7 +348,8 @@ begin
     teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
     teCTeCancelado                : Result := 'CT-e Cancelado';
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria Suframa';
+    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
+    teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
   else
     Result := 'Não Definido';
   end;

@@ -1418,8 +1418,8 @@ begin
         end;
 
         // Monta o XML da NF-e assinado e com o protocolo de Autorização ou Denegação
-        if (AInfProt.Items[I].cStat = 100) or
-           (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
+        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
+           (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) then
         begin
           AProcNFe := TProcNFe.Create;
           try

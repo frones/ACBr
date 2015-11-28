@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/11/2015
+-- ACBrNFeWebServices --
+[*] Acrescenta o protocolo de autorização quando é autorizado fora do prazo
+    Status = 150.
+    por: Italo Jurisato Junior
+
 -- pcnEventoNFe --
 [*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 
     Confirmacao de Internalizacao da Mercadoria na SUFRAMA

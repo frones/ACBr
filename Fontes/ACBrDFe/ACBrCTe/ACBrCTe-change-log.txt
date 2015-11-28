@@ -46,6 +46,14 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+27/11/2015
+-- ACBrCTeWebServices --
+[*] Acrescenta o protocolo de autorização quando é autorizado fora do prazo
+    Status = 150.
+    E salva o XML protocolo também na pasta definida em PathCTe.
+    por: Italo Jurisato Junior
+
 27/11/2015
 -- ACBrCTeDACTEFR --
 [-] Correção na impressão do evento em fastreport 

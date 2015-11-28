@@ -1128,7 +1128,7 @@ begin
 
         // Monta o XML do CT-e assinado e com o protocolo de Autorização ou Denegação
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
-           (AInfProt.Items[I].cStat = 301) then
+           (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) then
         begin
           AProcCTe := TProcCTe.Create;
           try
@@ -1152,9 +1152,13 @@ begin
 
                 // Salva o XML do CT-e assinado e protocolado
                 if SalvarXML then
+                begin
                   FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML,
                                     XML,
                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(0)));
+
+                  GravarXML; // Salva na pasta baseado nas configurações do PathCTe
+                end;
               end;
             end;
           finally
@@ -1746,6 +1750,7 @@ begin
                                     FRetCTeDFe,
                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
 
+                GravarXML; // Salva na pasta baseado nas configurações do PathCTe
               end;
             end;
 

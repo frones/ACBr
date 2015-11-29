@@ -3017,7 +3017,6 @@ var
   wNomeArquivo: string;
   OK: boolean;
 begin
-  Ini := TIniFile.Create(ACBrMonitorINI);
   PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
 
   ECFAtivado := ACBrECF1.Ativo;
@@ -3028,6 +3027,7 @@ begin
   ETQAtivado := ACBrETQ1.Ativo;
   ESCPOSAtivado := ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo;
 
+  Ini := TIniFile.Create(ACBrMonitorINI);
   try
     { Lendo Senha }
     //     Ini.ReadString('ACBrMonitor','TXT_Saida','SAI.TXT');

@@ -2725,7 +2725,6 @@ var
   IniNFe : TStringList;
   LocNFeR : TNFeR;
 begin
- INIRec := TMemIniFile.create( 'nfe.ini' ) ;
  FrmACBrMonitor.ACBrNFe1.NotasFiscais.Clear;
  if FilesExists(XML) then
     FrmACBrMonitor.ACBrNFe1.NotasFiscais.LoadFromFile(XML)
@@ -2743,7 +2742,8 @@ begin
   end;
 
  with FrmACBrMonitor do
-  begin
+ begin
+   INIRec := TMemIniFile.create( '' ) ;
    try
       with ACBrNFe1.NotasFiscais.Items[0].NFe do
        begin
@@ -3424,7 +3424,7 @@ begin
       Result := StringReplace(IniNFe.Text,sLineBreak+sLineBreak,sLineBreak,[rfReplaceAll]);
       IniNFe.Free;
    end;
-  end;
+ end;
 end;
 
 function SubstituirVariaveis(const ATexto: String): String;

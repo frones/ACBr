@@ -1611,7 +1611,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
       Left = 26
       Top = 824
       Width = 742
-      Height = 292
+      Height = 252
       BandType = btTitle
       object RLLabel6: TRLLabel
         Tag = 30

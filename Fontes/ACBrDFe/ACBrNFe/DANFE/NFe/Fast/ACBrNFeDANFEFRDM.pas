@@ -408,7 +408,6 @@ end;
 procedure TACBrNFeFRClass.CarregaDadosProdutos;
 var
   inItem : Integer;
-
 begin
   if not cdsParametros.Active then
     CarregaParametros;
@@ -496,58 +495,54 @@ begin
 
     with FNFe.Dest do
     begin
-      if NaoEstaVazio(CNPJCPF) then
-       begin
-         if Length(CNPJCPF) > 11 then
-            FieldByName('CNPJCPF').AsString := FormatarCNPJ(CNPJCPF)
-         else
-            FieldByName('CNPJCPF').AsString := FormatarCPF(CNPJCPF);
-       end
+      if NaoEstaVazio(idEstrangeiro) then
+        FieldByName('CNPJCPF').AsString := idEstrangeiro
       else
-         FieldByName('CNPJCPF').AsString := '';
+        FieldByName('CNPJCPF').AsString := FormatarCNPJouCPF(CNPJCPF);
 
-      FieldByName('XNome').AsString := XNome;
+      FieldByName('IE').AsString        := IE;
+      FieldByName('XNome').AsString     := XNome;
       with EnderDest do
       begin
-        FieldByName('XLgr').AsString  := XLgr;
-        FieldByName('Nro').AsString   := Nro;
-        FieldByName('XCpl').AsString  := XCpl;
+        FieldByName('XLgr').AsString    := XLgr;
+        FieldByName('Nro').AsString     := Nro;
+        FieldByName('XCpl').AsString    := XCpl;
         FieldByName('XBairro').AsString := XBairro;
-        FieldByName('CMun').AsString  := IntToStr(CMun);
-        FieldByName('XMun').AsString  := CollateBr(XMun);
-        FieldByName('UF').AsString    := UF;
-        FieldByName('CEP').AsString   := FormatarCEP(Poem_Zeros(CEP, 8));
-        FieldByName('CPais').AsString := IntToStr(CPais);
-        FieldByName('XPais').AsString := XPais;
-        FieldByName('Fone').AsString  := FormatarFone(Fone);
+        FieldByName('CMun').AsString    := IntToStr(CMun);
+        FieldByName('XMun').AsString    := CollateBr(XMun);
+        FieldByName('UF').AsString      := UF;
+        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CPais').AsString   := IntToStr(CPais);
+        FieldByName('XPais').AsString   := XPais;
+        FieldByName('Fone').AsString    := FormatarFone(Fone);
       end;
-      FieldByName('IE').AsString := IE;
+
+      FieldByName('Consumidor').AsString := '';
+
       if (cdsIdentificacao.FieldByName('Mod_').AsString = '65') then
       begin
-        if (FieldByName('CNPJCPF').AsString = '') then
-          FieldByName('Consumidor').AsString :=ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')
+        if NaoEstaVazio(idEstrangeiro) then
+          FieldByName('Consumidor').AsString := 'ESTRANGEIRO: ' + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString)
         else
-          FieldByName('Consumidor').AsString :=
-            IfThen(Length(CNPJCPF) = 11, 'CPF: ', 'CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
+        begin
+          if (FieldByName('CNPJCPF').AsString = '') then
+            FieldByName('Consumidor').AsString := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')
+          else
+            FieldByName('Consumidor').AsString :=
+              IfThen(Length(CNPJCPF) = 11, 'CPF: ', 'CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
+        end;
 
-          if Trim(FieldByName('XLgr').AsString) <> '' then
-          begin
-            FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
-               Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
-          end;
+        if Trim(FieldByName('XLgr').AsString) <> '' then
+          FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
+            Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
 
-          if Trim(FieldByName('XMun').AsString) <> '' then
-          begin
-            FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
-              Trim(FieldByName('XBairro').AsString) + ' - ' +
-              Trim(FieldByName('XMun').AsString) + '/' +
-              Trim(FieldByName('UF').AsString);
-          end;
-      end
-      else
-        FieldByName('Consumidor').AsString := '';
+        if Trim(FieldByName('XMun').AsString) <> '' then
+          FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
+            Trim(FieldByName('XBairro').AsString) + ' - ' +
+            Trim(FieldByName('XMun').AsString) + '/' +
+            Trim(FieldByName('UF').AsString);
+      end;
     end;
-
     Post;
   end;
 end;
@@ -899,16 +894,7 @@ begin
 
       with FNFe.Entrega do
       begin
-        if NaoEstaVazio(CNPJCPF) then
-        begin
-          if Length(CNPJCPF) > 11 then
-             FieldByName('CNPJ').AsString := FormatarCNPJ(CNPJCPF)
-          else
-             FieldByName('CNPJ').AsString := FormatarCPF(CNPJCPF);
-        end
-        else
-           FieldByName('CNPJ').AsString := FormatarCNPJ(Poem_Zeros(0, 18));
-
+        FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(CNPJCPF);;
         FieldByName('Xlgr').AsString    := XLgr;
         FieldByName('Nro').AsString     := Nro;
         FieldByName('XCpl').AsString    := XCpl;
@@ -936,16 +922,7 @@ begin
 
       with FNFe.Retirada do
       begin
-        if NaoEstaVazio(CNPJCPF) then
-        begin
-          if Length(CNPJCPF) > 11 then
-             FieldByName('CNPJ').AsString := FormatarCNPJ(CNPJCPF)
-          else
-             FieldByName('CNPJ').AsString := FormatarCPF(CNPJCPF);
-        end
-        else
-           FieldByName('CNPJ').AsString := FormatarCNPJ(Poem_Zeros(0, 18));
-
+        FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(CNPJCPF);
         FieldByName('Xlgr').AsString    := XLgr;
         FieldByName('Nro').AsString     := Nro;
         FieldByName('XCpl').AsString    := XCpl;
@@ -1074,7 +1051,7 @@ begin
     else
       FieldByName('Fax').AsString := '';
 
-    FieldByName('Site').AsString := FDANFEClassOwner.Site;
+    FieldByName('Site').AsString  := FDANFEClassOwner.Site;
     FieldByName('Email').AsString := FDANFEClassOwner.Email;
 
     if FDANFEClassOwner.ImprimirDescPorc then
@@ -1155,13 +1132,13 @@ begin
       FieldByName('ExpandirDadosAdicionaisAuto').AsString := 'S'
     else
       FieldByName('ExpandirDadosAdicionaisAuto').AsString := 'N';
+
     FieldByName('sDisplayFormat').AsString:= '###,###,###,##0.%.*d';
     FieldByName('iFormato').AsInteger     := integer( FDANFEClassOwner.CasasDecimais.Formato );
     FieldByName('Mask_qCom').AsString     := FDANFEClassOwner.CasasDecimais._Mask_qCom;
     FieldByName('Mask_vUnCom').AsString   := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
     FieldByName('Casas_qCom').AsInteger   := FDANFEClassOwner.CasasDecimais._qCom;
     FieldByName('Casas_vUnCom').AsInteger := FDANFEClassOwner.CasasDecimais._vUnCom;
-
     FieldByName('QtdeItens').AsInteger    := NFe.Det.Count;
     FieldByName('DescricaoViaEstabelec').AsString := FDescricaoViaEstabelec;
     Post;
@@ -1181,16 +1158,7 @@ begin
       FieldByName('ModFrete').AsString :=modFreteToDesStr( ModFrete );
       with Transporta do
       begin
-        if NaoEstaVazio(CNPJCPF) then
-        begin
-          if Length(CNPJCPF) > 11 then
-            FieldByName('CNPJCPF').AsString := FormatarCNPJ(CNPJCPF)
-          else
-            FieldByName('CNPJCPF').AsString := FormatarCPF(CNPJCPF);
-        end
-        else
-          FieldByName('CNPJCPF').AsString := '';
-
+        FieldByName('CNPJCPF').AsString := FormatarCNPJouCPF(CNPJCPF);
         FieldByName('XNome').AsString   := XNome;
         FieldByName('IE').AsString      := IE;
         FieldByName('XEnder').AsString  := XEnder;
@@ -2157,8 +2125,7 @@ begin
 
         Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + ';';
         Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + ';'; 
-//        Result := Result + ACBrStr('NO INÍCIO: ' ) + comb.encerrante.vEncIni  + ';';
-//        Result := Result + 'NO FINAL: ' + comb.encerrante.vEncFin + ';';
+
       end;
     end;
   end;

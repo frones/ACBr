@@ -47,6 +47,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2015
+-- ACBrNFeDANFEFRDM --
+[+] Tratamento para IDEstrangeiro
+[*] Refatoracao para Utilizar a Função FormatarCNPJouCPF
+    por: Henrique Leonardo
+
+-- ACBrNFeDANFeRLRetrato / ACBrNFeDANFeRLPaisagem --
+[+] Tratamento para IDEstrangeiro
+[*] Refatoracao para Utilizar a Função FormatarCNPJouCPF
+[*] Refatoracao de EnderecoEntrega e EnderecoRetirada : 
+     para apresentar CNPJ ou CPF;
+[*] Funçao TrataDocumento( sCNPJCPF : String ) : String;
+[*] Remoção de IF,  variaveis. Algumas novas tabulações;
+
+    por: Henrique Leonardo
+
+
+
+
+
 27/11/2015
 -- ACBrNFeWebServices --
 [*] Acrescenta o protocolo de autorização quando é autorizado fora do prazo

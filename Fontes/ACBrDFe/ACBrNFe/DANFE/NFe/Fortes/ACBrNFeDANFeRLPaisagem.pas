@@ -510,6 +510,7 @@ type
     function FormatValorUnitario(dValor: Double): String;
     procedure AddFaturaReal;
     function ManterDuplicatas: Integer;
+    function TrataDocumento(sCNPJCPF: String): String;
   public
 
   end;
@@ -1088,11 +1089,11 @@ begin
       if FRecebemoDe = '' then
         FRecebemoDe := rllRecebemosDe.Caption;
 
-      rllRecebemosDe.Caption := Format (FRecebemoDe, [ XNome ]);
-      rllInscricaoEstadual.Caption := IE;
-      rllInscrEstSubst.caption := IEST;
-      rllCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF );
-      rlmEmitente.Lines.Text   := XNome;
+      rllRecebemosDe.Caption        := Format (FRecebemoDe, [ XNome ]);
+      rllInscricaoEstadual.Caption  := IE;
+      rllInscrEstSubst.caption      := IEST;
+      rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF );
+      rlmEmitente.Lines.Text        := XNome;
       with EnderEmit do
         begin
           rlmEndereco.Lines.Clear;
@@ -1144,67 +1145,67 @@ procedure TfrlDANFeRLPaisagem.Destinatario;
 begin
   // destinatario
   with FNFe.Dest do
-    begin
-      rllDestCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF);
+  begin
+    if NaoEstaVazio(idEstrangeiro) then
+      rllDestCNPJ.Caption   := idEstrangeiro
+    else
+      rllDestCNPJ.Caption   := FormatarCNPJouCPF(CNPJCPF);
 
-      rllDestIE.Caption   := IE;
-      rllDestNome.Caption := XNome;
-      with EnderDest do
-        begin
-          if xCpl > '' then
-            rllDestEndereco.Caption := XLgr + IfThen (Nro = '0', '', ', ' + Nro)
-                                                                  + ' ' + xCpl
-          else
-            rllDestEndereco.Caption := XLgr + IfThen (Nro = '0', '', ', ' + Nro);
-          rllDestBairro.Caption := XBairro;
-          rllDestCidade.Caption := XMun;
-          rllDestUF.Caption := UF;
-          rllDestCEP.Caption := FormatarCEP(IntToStr(CEP));
-          rllDestFONE.Caption := FormatarFone(Fone);
-        end;
+    rllDestIE.Caption       := IE;
+    rllDestNome.Caption     := XNome;
+    with EnderDest do
+    begin
+      rllDestEndereco.Caption := XLgr +
+                                  IfThen(Nro = '0', '', ', ' + Nro) +
+                                  IfThen(xCpl > '', ' ' + xCpl, '' );
+      rllDestBairro.Caption := XBairro;
+      rllDestCidade.Caption := XMun;
+      rllDestUF.Caption     := UF;
+      rllDestCEP.Caption    := FormatarCEP(IntToStr(CEP));
+      rllDestFONE.Caption   := FormatarFone(Fone);
     end;
+  end;
 end;
 
 procedure TfrlDANFeRLPaisagem.EnderecoEntrega;
-var sEndereco: WideString;
-sCNPJ: String;
+var
+  sEndereco: WideString;
 begin
   if FNFe.Entrega.xLgr > '' then
+  begin
+    with FNFe.Entrega do
     begin
-      with FNFe.Entrega do
-        begin
-          sCNPJ := FormatarCNPJouCPF(CNPJCPF);
+      sEndereco := XLgr +
+                    IfThen(Nro = '0', '', ', ' + Nro) +
+                    IfThen(xCpl > '','', ' - ' + xCpl );
 
-          if xCpl > '' then
-            sEndereco := XLgr + IfThen (Nro = '0', '', ', ' + Nro) + ' - ' + xCpl
-          else
-            sEndereco := XLgr + IfThen (Nro = '0', '', ', ' + Nro);
 
-          sEntrega := 'LOCAL DE ENTREGA: ' + sEndereco + ' - ' + xBairro +
-                      ' - ' + xMun + '-' + UF + '  CNPJ: ' + sCNPJ;
-        end;
+      sEntrega := 'LOCAL DE ENTREGA: ' + sEndereco + ' - ' +
+                    xBairro + ' - ' + xMun + '-' + UF +
+                    TrataDocumento( CNPJCPF );
+
     end;
+  end;
 end;
 
 procedure TfrlDANFeRLPaisagem.EnderecoRetirada;
-var sEndereco: WideString;
-sCNPJ: String;
+var
+  sEndereco : WideString;
 begin
   if FNFe.Retirada.xLgr > '' then
+  begin
+    with FNFe.Retirada do
     begin
-      with FNFe.Retirada do
-        begin
-          sCNPJ := FormatarCNPJouCPF(CNPJCPF);
 
-          if xCpl > '' then
-            sEndereco := XLgr + IfThen (Nro = '0', '', ', ' + Nro) + ' - ' + xCpl
-          else
-            sEndereco := XLgr + IfThen (Nro = '0', '', ', ' + Nro);
+      sEndereco := XLgr +
+                    IfThen(Nro = '0', '', ', ' + Nro) +
+                    IfThen(xCpl > '','', ' - ' + xCpl );
 
-          sRetirada := 'LOCAL DE RETIRADA: ' + sEndereco + ' - ' + xBairro +
-                      ' - ' + xMun + '-' + UF + '  CNPJ: ' + sCNPJ;
-        end;
+      sRetirada := 'LOCAL DE RETIRADA: ' + sEndereco + ' - ' +
+                    xBairro + ' - ' + xMun + '-' + UF +
+                    TrataDocumento( CNPJCPF );
     end;
+  end;
 end;
 
 procedure TfrlDANFeRLPaisagem.Imposto;
@@ -2145,5 +2146,20 @@ begin
     end;
   end;
 end;
+
+Function TfrlDANFeRLPaisagem.TrataDocumento( sCNPJCPF : String ) : String;
+begin
+  Result := sCNPJCPF;
+  if NaoEstaVazio( Result ) then
+  begin
+    if Length( Result ) = 14 then
+      Result := ' CNPJ: '
+    else
+      Result := ' CPF: ';
+
+    Result := Result + FormatarCNPJouCPF( sCNPJCPF );
+  end;
+end;
+
 
 end.

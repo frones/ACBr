@@ -427,7 +427,7 @@ end;
 function FormatarCEP(const AValue: String): String;
 Var S : String ;
 begin
-  S := PadLeft( OnlyNumber(AValue), 8, '0') ; { Prenche zeros a direita }
+  S := PadRight( OnlyNumber(AValue), 8, '0') ; { Prenche zeros a direita }
   Result := copy(S,1,5) + '-' + copy(S,6,3) ;
 end;
 

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2015
+-- ACBrValidador --
+[-] Correção em FormatarCEP, para adicionar Zeros a direita
+    http://www.projetoacbr.com.br/forum/topic/26328-formatarcep-padleft-para-padright/
+
 29/10/2015
 -- ACBrValidador --
 [-] Ajusta para Modulo11 atribuir corretamente o valor do parâmetro "Documento"

@@ -3303,6 +3303,7 @@ var
   DataStr, ECFCRZ  : String ;
   I: Integer;
   AliqZ : TACBrECFAliquota ;
+  ValReg: Double;
 
   function AchaValorRegistrador(Registrador: String; Aliq: Double = 0): Double ;
   var
@@ -3310,7 +3311,8 @@ var
     AliqStr: String;
     AliqDbl: Double;
   begin
-    I := 0 ; Result := 0;
+    I := 0 ;
+    Result := -1;
     while  (I+2 < EscECFResposta.Params.Count) do
     begin
       if (EscECFResposta.Params[I] = Registrador) then
@@ -3323,7 +3325,7 @@ var
 
          if (AliqDbl = Aliq) then
          begin
-           Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ],0)/100, -2);
+           Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ], -100)/100, -2);
            Break;
         end ;
       end;
@@ -3388,34 +3390,90 @@ begin
       AliqZ := TACBrECFAliquota.Create ;
       AliqZ.Assign( fpAliquotas[I] );
       {Procura pela aliquota no formato T/Snnnn na string}
-      AliqZ.Total := AchaValorRegistrador( AliqZ.Tipo, AliqZ.Aliquota ) ;
+      ValReg := AchaValorRegistrador( AliqZ.Tipo, AliqZ.Aliquota ) ;
+      if ValReg >= 0 then
+        AliqZ.Total := ValReg;
 
       AdicionaAliquota( AliqZ );
     end ;
 
-    SubstituicaoTributariaICMS := AchaValorRegistrador('F1') +
-                                  AchaValorRegistrador('F2') +
-                                  AchaValorRegistrador('F3') ;
+    ValReg := AchaValorRegistrador('F1');
+    if ValReg >= 0 then
+      SubstituicaoTributariaICMS := ValReg;
 
-    NaoTributadoICMS           := AchaValorRegistrador('N1') +
-                                  AchaValorRegistrador('N2') +
-                                  AchaValorRegistrador('N3') ;
+    ValReg := AchaValorRegistrador('F2');
+    if ValReg >= 0 then
+      SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
 
-    IsentoICMS                 := AchaValorRegistrador('I1') +
-                                  AchaValorRegistrador('I2') +
-                                  AchaValorRegistrador('I3') ;
+    ValReg := AchaValorRegistrador('F3');
+    if ValReg >= 0 then
+      SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
 
-    SubstituicaoTributariaISSQN:= AchaValorRegistrador('FS1') +
-                                  AchaValorRegistrador('FS2') +
-                                  AchaValorRegistrador('FS3') ;
 
-    NaoTributadoISSQN          := AchaValorRegistrador('NS1') +
-                                  AchaValorRegistrador('NS2') +
-                                  AchaValorRegistrador('NS3') ;
+    ValReg := AchaValorRegistrador('N1');
+    if ValReg >= 0 then
+      NaoTributadoICMS := ValReg;
 
-    IsentoISSQN                := AchaValorRegistrador('IS1') +
-                                  AchaValorRegistrador('IS2') +
-                                  AchaValorRegistrador('IS3') ;
+    ValReg := AchaValorRegistrador('N2');
+    if ValReg >= 0 then
+      NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
+
+    ValReg := AchaValorRegistrador('N3');
+    if ValReg >= 0 then
+      NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
+
+
+    ValReg := AchaValorRegistrador('I1');
+    if ValReg >= 0 then
+      IsentoICMS := ValReg;
+
+    ValReg := AchaValorRegistrador('I2');
+    if ValReg >= 0 then
+      IsentoICMS := max(IsentoICMS,0) + ValReg;
+
+    ValReg := AchaValorRegistrador('I3');
+    if ValReg >= 0 then
+      IsentoICMS := max(IsentoICMS,0) + ValReg;
+
+
+    ValReg := AchaValorRegistrador('FS1');
+    if ValReg >= 0 then
+      SubstituicaoTributariaISSQN := ValReg;
+
+    ValReg := AchaValorRegistrador('FS2');
+    if ValReg >= 0 then
+      SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
+
+    ValReg := AchaValorRegistrador('FS3');
+    if ValReg >= 0 then
+      SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
+
+
+    ValReg := AchaValorRegistrador('NS1');
+    if ValReg >= 0 then
+      NaoTributadoISSQN := ValReg;
+
+    ValReg := AchaValorRegistrador('NS2');
+    if ValReg >= 0 then
+      NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
+
+    ValReg := AchaValorRegistrador('NS3');
+    if ValReg >= 0 then
+      NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
+
+
+    ValReg := AchaValorRegistrador('IS1');
+    if ValReg >= 0 then
+      IsentoISSQN := ValReg;
+
+    ValReg := AchaValorRegistrador('IS2');
+    if ValReg >= 0 then
+      IsentoISSQN := max(IsentoISSQN,0) + ValReg;
+
+    ValReg := AchaValorRegistrador('IS3');
+    if ValReg >= 0 then
+      IsentoISSQN := max(IsentoISSQN,0) + ValReg;
+
 
     { EscESC não retorna o GT em leitura de Dados da Ultima Reducao Z,
       Usando o GTInicial deste movimento }

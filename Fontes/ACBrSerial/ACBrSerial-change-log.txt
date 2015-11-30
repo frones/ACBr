@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2015
+-- ACBrECFEscECF --
+[-] Ajuste em GetDadosUltimaReducaoZ para o caso de ECFs que não retornam os
+    Totalizadores não Tributados (Epson TM-T800F).. Nesse caso o valor do
+    Registrador será -1 ou não existirá no .INI        (por: DSA)
 
 26/11/2015
 -- ACBrSMS --

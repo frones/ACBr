@@ -1123,8 +1123,8 @@ begin
 
         NomeXML := '-cte.xml';
 
-        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
-          NomeXML := '-den.xml';
+//        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
+//          NomeXML := '-den.xml';
 
         // Monta o XML do CT-e assinado e com o protocolo de Autorização ou Denegação
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
@@ -1141,9 +1141,9 @@ begin
 
             with FConhecimentos.Items[J] do
             begin
-              XML := AProcCTe.Gerador.ArquivoFormatoXML;
-              XMLOriginal := XML;
-              XMLAssinado := XML;
+              FXML := AProcCTe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := FXML;
+              XMLAssinado := FXML;
 
               if FPConfiguracoesCTe.Arquivos.Salvar then
               begin
@@ -1154,7 +1154,7 @@ begin
                 if SalvarXML then
                 begin
                   FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML,
-                                    XML,
+                                    FXML,
                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(0)));
 
                   GravarXML; // Salva na pasta baseado nas configurações do PathCTe
@@ -1688,8 +1688,8 @@ begin
               CTe.procCTe.xMotivo := CTeRetorno.xMotivo;
 
               NomeXML := '-cte.xml';
-              if (CTeRetorno.protCTe.cStat = 110) or (CTeRetorno.protCTe.cStat = 301) then
-                NomeXML := '-den.xml';
+//              if (CTeRetorno.protCTe.cStat = 110) or (CTeRetorno.protCTe.cStat = 301) then
+//                NomeXML := '-den.xml';
 
               AProcCTe := TProcCTe.Create;
               try
@@ -1700,9 +1700,9 @@ begin
                 AProcCTe.Versao := FPVersaoServico;
                 AProcCTe.GerarXML;
 
-                XML := AProcCTe.Gerador.ArquivoFormatoXML;
-                XMLOriginal := XML;
-                XMLAssinado := XML;
+                FXML := AProcCTe.Gerador.ArquivoFormatoXML;
+                XMLOriginal := FXML;
+                XMLAssinado := FXML;
 
                 FRetCTeDFe := '';
 
@@ -1716,7 +1716,7 @@ begin
                   FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
                                  '<CTeDFe>' +
                                   '<procCTe versao="' + FVersao + '">' +
-                                    SeparaDados(XML, 'cteProc') +
+                                    SeparaDados(FXML, 'cteProc') +
                                   '</procCTe>' +
                                   '<procEventoCTe versao="' + FVersao + '">' +
                                     aEventos +
@@ -1741,7 +1741,7 @@ begin
                 // Salva o XML do CT-e assinado e protocolado
                 if SalvarXML then
                   FPDFeOwner.Gravar(FCTeChave + NomeXML,
-                                    XML,
+                                    FXML,
                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
 
                 // Salva o XML do CT-e assinado, protocolado e com os eventos

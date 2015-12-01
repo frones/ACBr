@@ -899,7 +899,7 @@ begin
   begin
     UserName       := 'Motorista';
     OpenDataSource := False;
-    DataSet        := cdsEmitente;
+    DataSet        := cdsRodoMotorista;
   end;
 
   frxDocAnterior := TfrxDBDataset.Create(nil);

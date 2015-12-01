@@ -1141,9 +1141,7 @@ begin
 
             with FConhecimentos.Items[J] do
             begin
-              FXML := AProcCTe.Gerador.ArquivoFormatoXML;
-              XMLOriginal := FXML;
-              XMLAssinado := FXML;
+              XML := AProcCTe.Gerador.ArquivoFormatoXML;
 
               if FPConfiguracoesCTe.Arquivos.Salvar then
               begin
@@ -1154,7 +1152,7 @@ begin
                 if SalvarXML then
                 begin
                   FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML,
-                                    FXML,
+                                    XML,
                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(0)));
 
                   GravarXML; // Salva na pasta baseado nas configurações do PathCTe
@@ -1700,9 +1698,7 @@ begin
                 AProcCTe.Versao := FPVersaoServico;
                 AProcCTe.GerarXML;
 
-                FXML := AProcCTe.Gerador.ArquivoFormatoXML;
-                XMLOriginal := FXML;
-                XMLAssinado := FXML;
+                XML := AProcCTe.Gerador.ArquivoFormatoXML;
 
                 FRetCTeDFe := '';
 
@@ -1716,7 +1712,7 @@ begin
                   FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
                                  '<CTeDFe>' +
                                   '<procCTe versao="' + FVersao + '">' +
-                                    SeparaDados(FXML, 'cteProc') +
+                                    SeparaDados(XML, 'cteProc') +
                                   '</procCTe>' +
                                   '<procEventoCTe versao="' + FVersao + '">' +
                                     aEventos +
@@ -1741,7 +1737,7 @@ begin
                 // Salva o XML do CT-e assinado e protocolado
                 if SalvarXML then
                   FPDFeOwner.Gravar(FCTeChave + NomeXML,
-                                    FXML,
+                                    XML,
                                     PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
 
                 // Salva o XML do CT-e assinado, protocolado e com os eventos

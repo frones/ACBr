@@ -105,6 +105,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
+			<xs:maxLength value="44"/>
 			<xs:pattern value="[0-9]{44}"/>
 		</xs:restriction>
 	</xs:simpleType>

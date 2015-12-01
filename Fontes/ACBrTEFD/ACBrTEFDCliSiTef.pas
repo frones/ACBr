@@ -194,6 +194,12 @@ type
         Operador: AnsiString;
         TipoTransacao: SmallInt): Integer;
         {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+
+     xValidaCampoCodigoEmBarras: function(
+        Dados: AnsiString;
+        var Tipo: SmallInt): Integer;
+        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+
         
      procedure AvaliaErro(Sts : Integer);
      function GetDataHoraFiscal: TDateTime;
@@ -259,6 +265,8 @@ type
         Confirmar: Boolean): Integer;
      procedure FinalizarTransacao( Confirma : Boolean;
         DocumentoVinculado : AnsiString);
+     function ValidaCampoCodigoEmBarras(Dados: AnsiString;
+        var Tipo: SmallInt): Integer;
 
    published
      property EnderecoIP     : AnsiString read fEnderecoIP     write fEnderecoIP ;
@@ -496,13 +504,14 @@ begin
   fParametrosAdicionais := TStringList.Create;
   fRespostas            := TStringList.Create;
 
-  xConfiguraIntSiTefInterativoEx    := nil ;
-  xIniciaFuncaoSiTefInterativo      := nil ;
-  xContinuaFuncaoSiTefInterativo    := nil ;
-  xFinalizaTransacaoSiTefInterativo := nil ;
-  xEscreveMensagemPermanentePinPad  := nil; 
+  xConfiguraIntSiTefInterativoEx      := nil;
+  xIniciaFuncaoSiTefInterativo        := nil;
+  xContinuaFuncaoSiTefInterativo      := nil;
+  xFinalizaTransacaoSiTefInterativo   := nil;
+  xEscreveMensagemPermanentePinPad    := nil;
   xObtemQuantidadeTransacoesPendentes := nil;
-  xEnviaRecebeSiTefDireto := nil;
+  xValidaCampoCodigoEmBarras          := nil;
+  xEnviaRecebeSiTefDireto             := nil;
 
   fOnExibeMenu  := nil ;
   fOnObtemCampo := nil ;
@@ -560,6 +569,7 @@ begin
    CliSiTefFunctionDetect('FinalizaTransacaoSiTefInterativo', @xFinalizaTransacaoSiTefInterativo);
    CliSiTefFunctionDetect('EscreveMensagemPermanentePinPad',@xEscreveMensagemPermanentePinPad);
    CliSiTefFunctionDetect('ObtemQuantidadeTransacoesPendentes',@xObtemQuantidadeTransacoesPendentes);
+   CliSiTefFunctionDetect('ValidaCampoCodigoEmBarras',@xValidaCampoCodigoEmBarras);
    CliSiTefFunctionDetect('EnviaRecebeSiTefDireto',@xEnviaRecebeSiTefDireto);
 end ;
 
@@ -579,6 +589,7 @@ begin
   xFinalizaTransacaoSiTefInterativo   := Nil;
   xEscreveMensagemPermanentePinPad    := Nil;
   xObtemQuantidadeTransacoesPendentes := Nil;
+  xValidaCampoCodigoEmBarras          := Nil;
   xEnviaRecebeSiTefDireto             := Nil;
 end;
 
@@ -1423,6 +1434,27 @@ begin
 
      TACBrTEFD(Owner).DoExibeMsg( opmOK, AMsg );
   end;
+end;
+
+{ Valores de Retorno:
+  0 - se o código estiver correto;
+  1 a 4 - Indicando qual o bloco que está com erro
+  5 - Um ou mais blocos com erro
+
+  Tipo: tipo de documento sendo coletado:
+        -1: Ainda não identificado
+        0: Arrecadação
+        1: Titulo
+}
+function TACBrTEFDCliSiTef.ValidaCampoCodigoEmBarras(Dados: AnsiString;
+  var Tipo: SmallInt): Integer;
+begin
+  GravaLog('ValidaCodigoEmBarras -> Dados:' + Dados, True);
+
+  if Assigned(xValidaCampoCodigoEmBarras) then
+    Result := xValidaCampoCodigoEmBarras(Dados,Tipo)
+  else
+    raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFD_CliSiTef_NaoInicializado));
 end;
 
 procedure TACBrTEFDCliSiTef.AvaliaErro( Sts : Integer );

@@ -144,7 +144,8 @@ type
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
 
     procedure Assinar(Assina: Boolean);
-    function AssinarLote(XMLLote, docElemento, infElemento: String; Assina: Boolean): String;
+    function AssinarLote(XMLLote, docElemento, infElemento: String;
+      Assina: Boolean; SignatureNode: String = ''; DSIGNSLote: String = '' ): String;
     procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
     procedure ImprimirPDF;
@@ -242,9 +243,11 @@ begin
 
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
-    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps',
-                           Configuracoes.Geral.ConfigGeral.Prefixo3 + 'InfRps');
-//    FXMLOriginal := FXMLAssinado;
+    if Assina then
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps',
+                           Configuracoes.Geral.ConfigGeral.Prefixo3 + 'InfRps')
+    else
+      FXMLAssinado := XMLOriginal;
 
     Leitor := TLeitor.Create;
     try
@@ -437,7 +440,6 @@ begin
     raise EACBrNFSeException.Create('ID Inválido. Impossível Salvar XML');
 
   Result := xID + '-rps.xml';
-//  Result := xID + '-nfse.xml';
 end;
 
 function NotaFiscal.CalcularPathArquivo: String;
@@ -573,12 +575,11 @@ begin
     Self.Items[i].Assinar(Assina);
 end;
 
-function TNotasFiscais.AssinarLote(XMLLote, docElemento,
-  infElemento: String; Assina: Boolean): String;
+function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;
+  Assina: Boolean; SignatureNode: String; DSIGNSLote: String ): String;
 var
   XMLAss: String;
   ArqXML: String;
-//  Leitor: TLeitor;
 begin
   // XMLLote já deve estar em UTF8, para poder ser assinado //
   ArqXML := ConverteXMLtoUTF8(XMLLote);
@@ -589,6 +590,11 @@ begin
   begin
     if Assina then
     begin
+      // A linha abaixo deverá substituir a outra quando for liberado as alterações
+      // nas classes do ACBrDFe onde preve a inclusão dos novos parâmetros na
+      // função Assinar, visando a realizar a assinatura do Lote quando se tem
+      // RPS assinado.
+//      XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento, SignatureNode, DSIGNSLote);
       XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;

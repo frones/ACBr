@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2015
+-- ACBrNFSeNotasFiscais / ACBrNFSeWebServices --
+[*] Melhorias na leitura do retorno de consultas e preparação de parâmetros
+    necessários para a assinatura do Lote quando o RPS esta assinado.
+    Remoção dos arquivos INI referente aos provedores da pasta dos fontes do
+    componente, ficando apenas nas pastas: ...\Exemplos\ACBrDFe\ACBrNFSe\ArqINI
+    e ...\Exemplos\ACBrDFe\ACBrNFSe\Delphi
+    Por: Italo Jurisato Junior
+
 26/11/2015
 [+] Acrescentado o INI para os provedores: ISSe, Goiania, Coplan, SisPMJP, Agili,
     Actcon, Recife e LexSom.

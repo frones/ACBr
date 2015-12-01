@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/12/2015
+-- ACBrSATExtratoESCPOS --
+[*] Ajuste para impressão com suporte ao parâmetro "MaxLinhasBuffer"
+    http://www.projetoacbr.com.br/forum/topic/26371-escpos-com-daruma-para-de-imprimir-extrato/
+    (por: Amarildo Lacerda)
+
 Data: 11/11/2015
 -- pcnCFeW, pcnCFeCancW --
 [-] Correção para não gerar a tag de cpf/cnpj do destinatario em branco

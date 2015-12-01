@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.161a';
+  CACBrBoleto_Versao = '0.0.162a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -986,7 +986,7 @@ type
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
     function GerarRemessa(NumeroRemessa : Integer) : String;
-    procedure LerRetorno();
+    procedure LerRetorno(stream : TMemoryStream = nil);
     procedure ChecarDadosObrigatorios;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
@@ -2165,7 +2165,7 @@ begin
    end;
 end;
 
-procedure TACBrBoleto.LerRetorno( ) ;
+procedure TACBrBoleto.LerRetorno(stream : TMemoryStream) ;
 var
   SlRetorno: TStringList;
   NomeArq  : String;
@@ -2174,15 +2174,22 @@ begin
    try
      Self.ListadeBoletos.Clear;
 
-     if NomeArqRetorno = '' then
-        raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
+     if not Assigned(stream) then 
+     begin
+         
+       if NomeArqRetorno = '' then
+          raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
-     NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno;
+       NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno;
 
-     if not FilesExists( NomeArq ) then
-       raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
+       if not FilesExists( NomeArq ) then
+         raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
 
-     SlRetorno.LoadFromFile( NomeArq );
+       SlRetorno.LoadFromFile( NomeArq );
+     end
+     else 
+       SlRetorno.LoadFromStream(stream);
+
 
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+

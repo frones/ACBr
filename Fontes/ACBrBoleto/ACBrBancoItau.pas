@@ -1030,6 +1030,7 @@ begin
          NossoNumero          := Copy(Linha,63,8);
          Carteira             := Copy(Linha,83,3);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+         CodigoLiquidacao     := Copy(Linha,393,2);
 
          if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
             DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+

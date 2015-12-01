@@ -66,6 +66,7 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+
   end;
 
 implementation
@@ -286,7 +287,6 @@ var
   I :Integer;
   wAgencia: String;
   wConta: String;
-  teste: String;
 begin
 
    with ACBrTitulo do
@@ -352,7 +352,6 @@ begin
 
          wAgencia := PadLeft(OnlyNumber(Cedente.Agencia), 4, '0');
          wConta   := PadLeft(OnlyNumber(Cedente.Conta) + Cedente.ContaDigito, 7, '0');
-         teste:=  OnlyNumber(MontarCampoNossoNumero(ACBrTitulo));
          wLinha:= '1'                                                             + // ID Registro
                   '02'                                                            + //Código de Inscrição
                   PadLeft(OnlyNumber(Cedente.CNPJCPF),14,'0')                     + //Número de inscrição do Cliente (CPF/CNPJ)

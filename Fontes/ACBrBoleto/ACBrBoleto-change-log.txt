@@ -72,6 +72,16 @@ Data: 10/09/2015
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
 
+Data: 01/12/2015 ver. 0.0.162a
+-- ACBrBoleto --
+[+] Adicionado recurso para realizar leitura do arquivo retorno passando um stream. (Henrique Paraiba)
+http://www.projetoacbr.com.br/forum/topic/26183-lerretorno-sugest%C3%A3o/
+
+-- ACBrBancoItau --
+[*] Ajuste leitura arquivo retorno CNAB400 para tratar o campo Codigo Liquidação. (delipeedelman)
+http://www.projetoacbr.com.br/forum/topic/26189-leitura-retorno-itau/
+ 
+
 Data: 27/11/2015 ver. 0.0.161a
 -- ACBrBancoBanrisul --
 [-] Correção leitura arquivo retorno CNAB400. (Denis Queiros)

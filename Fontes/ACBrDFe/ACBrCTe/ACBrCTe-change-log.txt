@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2015
+-- pcteCTeW --
+[*] Descomentado as TAGs: pFCPUFFim e vFCPUFFim conforme NT 2015/004 publicada em
+    23/12/2015 a fim de testes no ambiente de homologação, para o de produção tem
+    que manter essas TAGs comentadas.
+    por: Italo Jurisato Junior
+
 27/11/2015
 -- ACBrCTeWebServices --
 [*] Acrescenta o protocolo de autorização quando é autorizado fora do prazo

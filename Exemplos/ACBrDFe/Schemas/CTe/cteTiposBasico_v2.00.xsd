@@ -1245,6 +1245,12 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 														<xs:documentation>Valor da BC do ICMS na UF de término da prestação do serviço de transporte</xs:documentation>
 													</xs:annotation>
 												</xs:element>
+												<xs:element name="pFCPUFFim" type="TDec_0302">
+													<xs:annotation>
+														<xs:documentation>Percentual do ICMS relativo ao Fundo de Combate à pobreza (FCP) na UF de término da prestação do serviço de transporte</xs:documentation>
+														<xs:documentation>Alíquota adotada nas operações internas na UF do destinatário</xs:documentation>
+													</xs:annotation>
+												</xs:element>
 												<xs:element name="pICMSUFFim" type="TDec_0302">
 													<xs:annotation>
 														<xs:documentation>Alíquota interna da UF de término da prestação do serviço de transporte</xs:documentation>
@@ -1266,6 +1272,11 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 - 60% em 2017;
 - 80% em 2018;
 - 100% a partir de 2019.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="vFCPUFFim" type="TDec_1302">
+													<xs:annotation>
+														<xs:documentation>Valor do ICMS relativo ao Fundo de Combate á Pobreza (FCP) da UF de término da prestação</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="vICMSUFFim" type="TDec_1302">
@@ -3124,7 +3135,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 						<xs:element name="CST">
 							<xs:annotation>
 								<xs:documentation>Classificação Tributária do Serviço</xs:documentation>
-								<xs:documentation> 90 - ICMS outros</xs:documentation>
+								<xs:documentation> 90 - Outros</xs:documentation>
 							</xs:annotation>
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
@@ -3170,7 +3181,7 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 						<xs:element name="CST">
 							<xs:annotation>
 								<xs:documentation>Classificação Tributária do Serviço</xs:documentation>
-								<xs:documentation>90 - ICMS outros</xs:documentation>
+								<xs:documentation>90 - ICMS Outra UF</xs:documentation>
 							</xs:annotation>
 							<xs:simpleType>
 								<xs:restriction base="xs:string">

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2015
+-- pmdfeConsMDFeNaoEnc --
+[-] Correção no encoding na geração do envelope de: TConsMDFeNaoEnc
+    http://www.projetoacbr.com.br/forum/topic/26240-consulta-mdfe-n%C3%A3o-encerrados/
+    (por: DSA)
+
 27/11/2015
 -- pmdfeEventoMDFe --
 [*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 

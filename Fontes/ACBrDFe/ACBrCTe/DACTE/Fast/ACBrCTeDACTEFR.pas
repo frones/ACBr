@@ -849,7 +849,7 @@ begin
   frxCalculoImposto := TfrxDBDataset.Create(nil);
   with frxCalculoImposto do
   begin
-    UserName       := 'CalculoImposto';
+    UserName       := 'LocalEntrega';
     OpenDataSource := False;
     DataSet        := cdsCalculoImposto;
   end;
@@ -876,6 +876,14 @@ begin
     UserName       := 'ModalRodoviario';
     OpenDataSource := False;
     DataSet        := cdsModalRodoviario;
+  end;
+
+  frxModalAereo := TfrxDBDataset.Create(nil);
+  with frxModalAereo do
+  begin
+    UserName       := 'ModalAereo';
+    OpenDataSource := False;
+    DataSet := cdsModalAereo;
   end;
 
   frxRodoVeiculos := TfrxDBDataset.Create(nil);

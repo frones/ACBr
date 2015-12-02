@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/12/2015
+-- ACBrNFeWebServices --
+[*] Removido na montagem de alguns XML a linha '<' + ENCODING_UTF8 + '>' para 
+    o componente forçar a conversão ao salvar o XML.
+    por: Italo Jurisato Junior
+
 -- ACBrNFeNotasFiscais --
 [*] Alterado o valor da propriedade verProc para 'ACBrNFe' para não confundir,
     pois 'ACBrNFe2' alguem pode achar que se trata da versão 2.00 do XML.

@@ -2010,15 +2010,15 @@ begin
 
                 aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
-                           '<NFeDFe>' +
-                            '<procNFe versao="' + FVersao + '">' +
-                              SeparaDados(XMLOriginal, 'nfeProc') +
-                            '</procNFe>' +
-                            '<procEventoNFe versao="' + FVersao + '">' +
-                              aEventos +
-                            '</procEventoNFe>' +
-                           '</NFeDFe>';
+                FRetNFeDFe := // '<' + ENCODING_UTF8 + '>' +
+                              '<NFeDFe>' +
+                               '<procNFe versao="' + FVersao + '">' +
+                                 SeparaDados(XMLOriginal, 'nfeProc') +
+                               '</procNFe>' +
+                               '<procEventoNFe versao="' + FVersao + '">' +
+                                 aEventos +
+                               '</procEventoNFe>' +
+                              '</NFeDFe>';
               end;
             finally
               AProcNFe.Free;
@@ -2287,12 +2287,12 @@ begin
     //gerar arquivo proc de inutilizacao
     if ((NFeRetorno.cStat = 102) or (NFeRetorno.cStat = 563)) then
     begin
-      FXML_ProcInutNFe := '<' + ENCODING_UTF8 + '>' +
-                           '<ProcInutNFe versao="' + FPVersaoServico +
-                             '" xmlns="'+ACBRNFE_NAMESPACE+'">' +
-                            FPDadosMsg +
-                            FPRetWS +
-                           '</ProcInutNFe>';
+      FXML_ProcInutNFe := // '<' + ENCODING_UTF8 + '>' +
+                          '<ProcInutNFe versao="' + FPVersaoServico +
+                            '" xmlns="'+ACBRNFE_NAMESPACE+'">' +
+                           FPDadosMsg +
+                           FPRetWS +
+                          '</ProcInutNFe>';
 
       if FPConfiguracoesNFe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
@@ -2734,22 +2734,22 @@ begin
             VersaoEvento := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeEvento);
 
             Leitor.Arquivo := FPDadosMsg;
-            Texto := '<' + ENCODING_UTF8 + '>' +
-                      '<procEventoNFe versao="' + VersaoEvento + '" xmlns="'+ACBRNFE_NAMESPACE+'">'+
-                       '<evento versao="' + VersaoEvento + '">'+
-                        Leitor.rExtrai(1, 'infEvento', '', I + 1)+
-                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">'+
-                         Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                         Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                         Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                        '</Signature>'+
-                       '</evento>';
+            Texto := // '<' + ENCODING_UTF8 + '>' +
+                     '<procEventoNFe versao="' + VersaoEvento + '" xmlns="' + ACBRNFE_NAMESPACE + '">' +
+                      '<evento versao="' + VersaoEvento + '">' +
+                       Leitor.rExtrai(1, 'infEvento', '', I + 1) +
+                       '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                        Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
+                        Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
+                        Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
+                       '</Signature>'+
+                      '</evento>';
 
             Leitor.Arquivo := FPRetWS;
             Texto := Texto +
-                       '<retEvento versao="' + VersaoEvento + '">'+
-                        Leitor.rExtrai(1, 'infEvento', '', J + 1)+
-                       '</retEvento>'+
+                       '<retEvento versao="' + VersaoEvento + '">' +
+                        Leitor.rExtrai(1, 'infEvento', '', J + 1) +
+                       '</retEvento>' +
                       '</procEventoNFe>';
 
             EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;

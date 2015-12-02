@@ -986,7 +986,7 @@ type
     procedure AdicionarMensagensPadroes(Titulo : TACBrTitulo; AStringList: TStrings);
 
     function GerarRemessa(NumeroRemessa : Integer) : String;
-    procedure LerRetorno(stream : TMemoryStream = nil);
+    procedure LerRetorno(AStream : TStream = Nil);
     procedure ChecarDadosObrigatorios;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
@@ -2165,7 +2165,7 @@ begin
    end;
 end;
 
-procedure TACBrBoleto.LerRetorno(stream : TMemoryStream) ;
+procedure TACBrBoleto.LerRetorno(AStream: TStream);
 var
   SlRetorno: TStringList;
   NomeArq  : String;
@@ -2174,9 +2174,8 @@ begin
    try
      Self.ListadeBoletos.Clear;
 
-     if not Assigned(stream) then 
+     if not Assigned(AStream) then 
      begin
-         
        if NomeArqRetorno = '' then
           raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
@@ -2188,7 +2187,7 @@ begin
        SlRetorno.LoadFromFile( NomeArq );
      end
      else 
-       SlRetorno.LoadFromStream(stream);
+       SlRetorno.LoadFromStream(AStream);
 
 
      if SlRetorno.Count < 1 then

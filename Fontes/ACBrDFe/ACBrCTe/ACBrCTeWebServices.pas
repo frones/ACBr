@@ -1712,15 +1712,15 @@ begin
 
                   aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                  FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
-                                 '<CTeDFe>' +
-                                  '<procCTe versao="' + FVersao + '">' +
-                                    SeparaDados(XMLOriginal, 'cteProc') +
-                                  '</procCTe>' +
-                                  '<procEventoCTe versao="' + FVersao + '">' +
-                                    aEventos +
-                                  '</procEventoCTe>' +
-                                 '</CTeDFe>';
+                  FRetCTeDFe := // '<' + ENCODING_UTF8 + '>' +
+                                '<CTeDFe>' +
+                                 '<procCTe versao="' + FVersao + '">' +
+                                   SeparaDados(XMLOriginal, 'cteProc') +
+                                 '</procCTe>' +
+                                 '<procEventoCTe versao="' + FVersao + '">' +
+                                   aEventos +
+                                 '</procEventoCTe>' +
+                                '</CTeDFe>';
 
                 end;
               finally
@@ -1925,7 +1925,7 @@ begin
     //gerar arquivo proc de inutilizacao
     if ((CTeRetorno.cStat = 102) or (CTeRetorno.cStat = 563)) then
     begin
-      FXML_ProcInutCTe := '<' + ENCODING_UTF8 +
+      FXML_ProcInutCTe := // '<' + ENCODING_UTF8 +
                           '<ProcInutCTe versao="' + FPVersaoServico +
                               '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
                             FPDadosMsg +
@@ -2433,16 +2433,16 @@ begin
             VersaoEvento := TACBrCTe(FPDFeOwner).LerVersaoDeParams(LayCTeEvento);
 
             Leitor.Arquivo := FPDadosMsg;
-            Texto := '<' + ENCODING_UTF8 + '>' +
-                      '<procEventoCTe versao="' + VersaoEvento + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                       '<eventoCTe versao="' + VersaoEvento + '">' +
-                        Leitor.rExtrai(1, 'infEvento', '', I + 1) +
-                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                         Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                         Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                         Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                        '</Signature>' +
-                       '</eventoCTe>';
+            Texto := // '<' + ENCODING_UTF8 + '>' +
+                     '<procEventoCTe versao="' + VersaoEvento + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      '<eventoCTe versao="' + VersaoEvento + '">' +
+                       Leitor.rExtrai(1, 'infEvento', '', I + 1) +
+                       '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                        Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
+                        Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
+                        Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
+                       '</Signature>' +
+                      '</eventoCTe>';
 
             Leitor.Arquivo := FPRetWS;
             Texto := Texto +

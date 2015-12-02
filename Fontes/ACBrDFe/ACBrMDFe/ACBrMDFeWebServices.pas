@@ -1501,7 +1501,7 @@ begin
 
                 aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                FRetMDFeDFe := '<' + ENCODING_UTF8 + '>' +
+                FRetMDFeDFe := // '<' + ENCODING_UTF8 + '>' +
                                '<MDFeDFe>' +
                                 '<procMDFe versao="' + FVersao + '">' +
                                   SeparaDados(XMLOriginal, 'mdfeProc') +
@@ -1786,16 +1786,16 @@ begin
 
 
             Leitor.Arquivo := FPDadosMsg;
-            Texto := '<' + ENCODING_UTF8 + '>' +
-                      '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                       '<eventoMDFe versao="' + VersaoEvento + '">' +
-                        Leitor.rExtrai(1, 'infEvento', '', I + 1) +
-                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                         Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                         Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                         Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                        '</Signature>' +
-                       '</eventoMDFe>';
+            Texto := // '<' + ENCODING_UTF8 + '>' +
+                     '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                      '<eventoMDFe versao="' + VersaoEvento + '">' +
+                       Leitor.rExtrai(1, 'infEvento', '', I + 1) +
+                       '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                        Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
+                        Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
+                        Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
+                       '</Signature>' +
+                      '</eventoMDFe>';
 
             Leitor.Arquivo := FPRetWS;
             Texto := Texto +

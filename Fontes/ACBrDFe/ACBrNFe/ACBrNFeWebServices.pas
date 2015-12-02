@@ -1083,7 +1083,7 @@ begin
               AProcNFe.Versao := FPVersaoServico;
               AProcNFe.GerarXML;
 
-              XML := AProcNFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
 
               if FPConfiguracoesNFe.Arquivos.Salvar then
               begin
@@ -1094,7 +1094,7 @@ begin
                 if SalvarXML then
                 begin
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                    FPDFeOwner.Gravar( NomeArq, XML ); // Atualiza o XML carregado
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal ); // Atualiza o XML carregado
 
                   GravarXML; // Salva na pasta baseado nas configurações do PathNFe
                 end;
@@ -1432,7 +1432,7 @@ begin
 
             with FNotasFiscais.Items[J] do
             begin
-              XML := AProcNFe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
 
               if FPConfiguracoesNFe.Arquivos.Salvar then
               begin
@@ -1443,7 +1443,7 @@ begin
                 if SalvarXML then
                 begin
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                    FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
 
                   GravarXML; // Salva na pasta baseado nas configurações do PathNFe
                 end;
@@ -1999,6 +1999,8 @@ begin
               AProcNFe.Versao := FPVersaoServico;
               AProcNFe.GerarXML;
 
+              XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
+
               FRetNFeDFe := '';
 
               if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
@@ -2011,7 +2013,7 @@ begin
                 FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
                            '<NFeDFe>' +
                             '<procNFe versao="' + FVersao + '">' +
-                              SeparaDados(AProcNFe.Gerador.ArquivoFormatoXML, 'nfeProc') +
+                              SeparaDados(XMLOriginal, 'nfeProc') +
                             '</procNFe>' +
                             '<procEventoNFe versao="' + FVersao + '">' +
                               aEventos +
@@ -2035,7 +2037,7 @@ begin
 
             // Salva o XML da NF-e assinado e protocolado
             if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-              FPDFeOwner.Gravar( NomeArq, XML );  // Atualiza o XML carregado
+              FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
 
             GravarXML; // Salva na pasta baseado nas configurações do PathNFe
           end;

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2015
+-- ACBrMDFeWebServices --
+[*] Ao protocolar o XML após um envio ou consulta estava provocando uma nova
+    leitura do XML, agora o XML assinado e protocolado é armazenado da propriedade
+    XMLOriginal em vez de XML.
+    por: Italo Jurisato Junior
+
 01/12/2015
 -- pmdfeConsMDFeNaoEnc --
 [-] Correção no encoding na geração do envelope de: TConsMDFeNaoEnc

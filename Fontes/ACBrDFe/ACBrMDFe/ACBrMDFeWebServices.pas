@@ -1007,9 +1007,7 @@ begin
 
             with FManifestos.Items[J] do
             begin
-              XML := AProcMDFe.Gerador.ArquivoFormatoXML;
-              XMLOriginal := XML;
-              XMLAssinado := XML;
+              XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
 
               if FPConfiguracoesMDFe.Arquivos.Salvar then
               begin
@@ -1019,7 +1017,7 @@ begin
                 // Salva o XML do MDF-e assinado e protocolado
                 if SalvarXML then
                   FPDFeOwner.Gravar(AInfProt.Items[I].chMDFe + '-mdfe.xml',
-                                    XML,
+                                    XMLOriginal,
                                     PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(0)));
               end;
             end;
@@ -1492,9 +1490,7 @@ begin
               AProcMDFe.Versao := FPVersaoServico;
               AProcMDFe.GerarXML;
 
-              XML := AProcMDFe.Gerador.ArquivoFormatoXML;
-              XMLOriginal := XML;
-              XMLAssinado := XML;
+              XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
 
               FRetMDFeDFe := '';
 
@@ -1508,7 +1504,7 @@ begin
                 FRetMDFeDFe := '<' + ENCODING_UTF8 + '>' +
                                '<MDFeDFe>' +
                                 '<procMDFe versao="' + FVersao + '">' +
-                                  SeparaDados(XML, 'mdfeProc') +
+                                  SeparaDados(XMLOriginal, 'mdfeProc') +
                                 '</procMDFe>' +
                                 '<procEventoMDFe versao="' + FVersao + '">' +
                                   aEventos +
@@ -1533,7 +1529,7 @@ begin
               // Salva o XML do MDF-e assinado e protocolado
               if SalvarXML then
                 FPDFeOwner.Gravar(FMDFeChave + '-mdfe.xml',
-                                  XML,
+                                  XMLOriginal,
                                   PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(Data)));
 
               // Salva o XML do MDF-e assinado, protocolado e com os eventos

@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/12/2015
+-- pcnRetDownloadNFe --
+[*] Removido na montagem do XML a linha '<' + ENCODING_UTF8 + '>' para 
+    o componente forçar a conversão ao salvar o XML.
+    por: Italo Jurisato Junior
+
 -- ACBrNFeWebServices --
 [*] Removido na montagem de alguns XML a linha '<' + ENCODING_UTF8 + '>' para 
     o componente forçar a conversão ao salvar o XML.

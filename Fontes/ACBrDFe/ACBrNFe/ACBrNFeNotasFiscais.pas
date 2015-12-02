@@ -194,7 +194,7 @@ begin
 
     FNFe.Ide.tpNF := tnSaida;
     FNFe.Ide.indPag := ipVista;
-    FNFe.Ide.verProc := 'ACBrNFe2';
+    FNFe.Ide.verProc := 'ACBrNFe';
     FNFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FNFe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
 

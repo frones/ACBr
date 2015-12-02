@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/12/2015
+-- ACBrNFeNotasFiscais --
+[*] Alterado o valor da propriedade verProc para 'ACBrNFe' para não confundir,
+    pois 'ACBrNFe2' alguem pode achar que se trata da versão 2.00 do XML.
+    por: Italo Jurisato Junior
+
 -- ACBrNFeWebServices --
 [*] Ao protocolar o XML após um envio ou consulta estava provocando uma nova
     leitura do XML, agora o XML assinado e protocolado é armazenado da propriedade

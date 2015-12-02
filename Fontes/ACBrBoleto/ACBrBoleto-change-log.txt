@@ -47,6 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/12/2015 ver. 0.0.163a
+-- ACBrBancoItau --
+[*] Ajuste leitura retorno CNAB240 para ler os dados do cedente. (Henrique Paraiba)
+http://www.projetoacbr.com.br/forum/topic/26184-sugest%C3%A3o-retorno-com-agencia-e-conta/
+
+-- ACBrBancoBrasil --
+[*] Ajuste leitura retorno CNAB240 para ler os dados do cedente. (Henrique Paraiba)
+http://www.projetoacbr.com.br/forum/topic/26184-sugest%C3%A3o-retorno-com-agencia-e-conta/
+
+-- ACBrBancoBancoob --
+[*] Ajuste leitura retorno CNAB400 para ler os dados do cedente. (Henrique Paraiba)
+http://www.projetoacbr.com.br/forum/topic/26184-sugest%C3%A3o-retorno-com-agencia-e-conta/
+
+-- ACBrBancoBradesco --
+[-] Correção remessa CNAB400. (duiliolobianco)
+http://www.projetoacbr.com.br/forum/topic/26199-indicador-para-d%C3%A9bito-autom%C3%A1tico-bradesco/
+
+
 Data: 01/12/2015 ver. 0.0.162a
 -- ACBrBoleto --
 [+] Adicionado recurso para realizar leitura do arquivo retorno passando um stream. (Henrique Paraiba)

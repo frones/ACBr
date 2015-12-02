@@ -803,16 +803,25 @@ begin
       if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
          raise Exception.create(ACBrStr('CNPJ\CPF do arquivo inválido'));
 
-      case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
-        01:
-          Cedente.TipoInscricao := pFisica;
-        else
-          Cedente.TipoInscricao := pJuridica;
-      end;
-	  
-	  Cedente.Nome := rCedente;
-      Cedente.CNPJCPF := rCNPJCPF;
+      if LeCedenteRetorno then
+      begin
+        Cedente.Nome          := rCedente;
+        Cedente.CNPJCPF       := rCNPJCPF;
+        Cedente.Agencia       := trim(copy(ARetorno[0], 53, 5));
+        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 58, 1));
+        Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
+        Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
 
+        case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
+          01:
+            Cedente.TipoInscricao := pFisica;
+          else
+            Cedente.TipoInscricao := pJuridica;
+        end;
+	  
+	    Cedente.Nome := rCedente;
+        Cedente.CNPJCPF := rCNPJCPF;
+      end;
       
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;

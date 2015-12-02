@@ -931,9 +931,13 @@ begin
 
       if LeCedenteRetorno then
       begin
-        Cedente.Nome := rCedente;
-        Cedente.CNPJCPF := rCNPJCPF;
-        Cedente.Convenio:= rConvenioCedente;
+        Cedente.Nome          := rCedente;
+        Cedente.CNPJCPF       := rCNPJCPF;
+        Cedente.Convenio      := rConvenioCedente;
+        Cedente.Agencia       := trim(copy(ARetorno[0], 53, 5));
+        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 58, 1));
+        Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
+        Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
       end;
 
       case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of

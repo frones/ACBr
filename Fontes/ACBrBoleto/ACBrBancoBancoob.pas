@@ -602,15 +602,21 @@ begin
 
    with ACBrBanco.ACBrBoleto do
    begin
-      Cedente.Nome    := rCedente;
-      Cedente.CNPJCPF := rCNPJCPF;
+      if LeCedenteRetorno then
+      begin
+        Cedente.Nome          := rCedente;
+        Cedente.CNPJCPF       := rCNPJCPF;
+        Cedente.Agencia       := trim(copy(ARetorno[0], 18, 4));
+        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 22, 1));
+        Cedente.Conta         := trim(copy(ARetorno[0], 23, 8));
+        Cedente.ContaDigito   := trim(copy(ARetorno[0], 31, 1));
 
-      case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-         11: Cedente.TipoInscricao:= pFisica;
-         else
-            Cedente.TipoInscricao:= pJuridica;
-      end;
-
+        case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+           11: Cedente.TipoInscricao:= pFisica;
+           else
+              Cedente.TipoInscricao:= pJuridica;
+        end;
+      end;  
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 

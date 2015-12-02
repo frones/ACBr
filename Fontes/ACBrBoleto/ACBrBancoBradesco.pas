@@ -307,7 +307,7 @@ begin
                   IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // Percentual de Multa formatado com 2 casas decimais
                   NossoNumero + DigitoNossoNumero                         +
                   IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +
-                  TipoBoleto + ' ' + Space(10)                            +  // Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático.                  
+                  TipoBoleto + 'N' + Space(10)                            +  // Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático.                  
                   ' ' + '2' + '  ' + Ocorrencia                           +  // Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + Ocorrência
                   PadRight( NumeroDocumento,  10)                             +
                   FormatDateTime( 'ddmmyy', Vencimento)                   +

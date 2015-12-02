@@ -47,31 +47,6 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-23/10/2015
--- ACBrBoletoFCFortes --
-[*] Ajuste para não exibir a janela de Progresso na geração de PDF se
-    MostrarStatus = False
-
-18/09/2015
--- ACBrBoletoFCFortes --
-[-] layout Carne - Ajuste para imprimir 3 boletos por página. (por: Emerson Teixeira)
-    http://www.projetoacbr.com.br/forum/index.php?showtopic=24460
-
-10/09/2015
--- ACBrBoletoFR --
-[+] Adicionadas as orientações do Banco.
-[*] Acerto na data de vencimento da remessa Caixa.
-    http://www.projetoacbr.com.br/forum/topic/24039-remessa-240-cef/#comment-156598
-
-Data: 10/09/2015
--- ACBrBoletoFCFortesFr --  (por: DSA)
-[*] Ajuste para nomear o Título de Relatório
-
--- ACBrBoletoFCLazReport --  (por: DSA)
-[*] Ajuste para nomear o Título de Relatório
-[-] Correção para impressão sem Preview e Setup
-[-] Correção para configurar a Impressora especificada
-
 Data: 01/12/2015 ver. 0.0.162a
 -- ACBrBoleto --
 [+] Adicionado recurso para realizar leitura do arquivo retorno passando um stream. (Henrique Paraiba)
@@ -308,11 +283,6 @@ Data: 02/06/2015 ver. 0.0.132a
 http://www.projetoacbr.com.br/forum/index.php?/topic/21762-boleto-corre%C3%A7%C3%A3o-de-fontes-banco-do-brasil/
 
 
--- ACBrBoletoFCFortes --
-[*] Ajuste para imprimir 3 carnes por página.
-    (Juliana Tamizou)
-
-
 Data: 02/06/2015 ver. 0.0.131a
 -- ACBrBancoCaixa --
 [-]Ajuste retorno CNAB240. (Jacinto Junior)
@@ -368,22 +338,10 @@ Data: 06/05/2015 ver. 0.0.126a
     (adrianoa)
 
 
-Data: 23/04/2015 ver. 0.0.28a
--- ACBrBoletoFCFortes --
-[*] Ajuste para imprimir mensagem ao pagador conforme solicitação do Itau.
-    (Juliana Tamizou)
-
-
 Data: 16/04/2015 ver. 0.0.125a
 -- ACBrBancoCaixa --
 [*] Ajuste na calculo do DV do Código do Cedente para garantir que este campo
     tenha o tamanho máximo permitido pelo banco. (emanuels_ces)
-
-
-Data: 14/04/2015 ver. 0.0.26a
--- ACBrBoletoFCFortes --
-[*] Ajuste para que a linha pontilhada não seja cortada ao imprimir com layout carnê. 
-    (Juliana Tamizou)
 
 
 Data: 10/04/2015 ver. 0.0.124a
@@ -404,22 +362,11 @@ Data: 27/03/2015 ver. 0.0.122a
 -- ACBrBancoCaixa --
 [-] Correção no leitura do arquivo retorno CNAB240 (Pedro Peixoto)
 
-Data: 26/03/2015 ver. 0.0.26a
--- ACBrBoletoFCFortes --
-
-[*] Compatibilização dos campos restantes com a nova nomeclatura para 
-    o Cedente que passou a ser Beneficiário. (Juliana Tamizou)
 
 ACBrBoleto ver. 0.0.121a
 -- ACBrBancoSicredi --
 [-] Correção no arquivo remessa CNAB240 (marcianobandeira)
 
-
-Data: 20/03/2015 ver. 0.0.25a
--- ACBrBoletoFCFortes --
-
-[*] Ajuste para que seja possível imprimir 3 boletos por página ao utilizar o
-    layout carnê. (adilsonpazzini)
 
 Data: 20/03/2015 ver. 0.0.121a
 -- Diversos --
@@ -618,10 +565,6 @@ Data: 06/01/2014
 [-] correção de geração do numero do banestes
     http://www.projetoacbr.com.br/forum/index.php?/topic/19359-atualiza%C3%A7%C3%A3o-da-unit-banestes/
 		
-Data: 18/11/2014
-[*] Modificação do boleto em fortes para trocar de pagador para sacador
-    http://www.projetoacbr.com.br/forum/index.php?/topic/18680-trocar-pagador-avalista-por-sacadoravalista/
-	
 Data: 28/10/2014
 [+] Envio de HTML  no corpo do e-mail do Boleto
 http://www.projetoacbr.com.br/forum/index.php?/topic/18308-implementa%C3%A7%C3%A3o-de-envio-de-e-mail-normal/#entry115602
@@ -640,13 +583,6 @@ Data: 15/10/2014
 [+] Adicionado Banco CeCred com a unit ACBrBancoCecred.pas (por:Roberto Godinho)
 http://www.projetoacbr.com.br/forum/index.php?/topic/17914-rodocr%C3%A9dito-implementado-boleto-para-cecrede/
 
-Data: 28/09/2014
--- ACBrBoletoFCClass --
-[+] Adicionada a propriedade "PrinterName"
-
--- ACBrBoletoFcFortes --
-[*] Adicionado tratamento para a propriedade: "PrinterName"
-[-] Correção de exception ao listar o relatorio
 
 Data: 17/09/2014 ver. 0.0.97a
 --ACBrBancoSantander
@@ -782,11 +718,6 @@ Data: 29/08/2013
 [*] Remessa CNAB400 - Modificado verificação do tipo de Inscrição do Sacado para verificar
     o campo CNPJ/CPF para decidir qual valor informar.(Juliana Tamizou)
 
-Data: 29/08/2013
--- ACBrBoletoFCFortesFr ver. 0.0.22 --
-[*] Modificado tamanho do espaço para impressão do local de pagamento dos boletos e
-    reduzida a fonte do mesmo para suportar um texto maior.(Juliana Tamizou)
-
 
 Data: 28/08/2013
 -- ACBrBoleto ver. 0.0.82 --
@@ -799,10 +730,6 @@ Data: 27/08/2013
 -- ACBrBoleto ver. 0.0.81 --
 --ACBrBancoBanrisul --
 [*] Corrigido montagem do campo Código Cedente.(Reginaldo Costa)
-
---ACBrBoletoFCFR -- 
-[-] Passado a utilizar a função MontarCampoCedente na impressão dos boletos.
-    (OsvaldoKalvaitir)
 
 
 Data: 22/08/2013
@@ -860,19 +787,6 @@ Data: 30/07/2013
 [+] Adicionado propriedade LinhaDigitada para os Titulos para armazenar o conteúdo
     da linha digitável calculado pela função MontarLinhaDigitável.
    (Juliana Tamizou)
-
-
-Data: 08/07/2013
-
--- ACBrBoletoFCFortesFR 0.0.21a --
-[-] Aplicados modificações para os textos Cedente e Sacado conforme exigência do Itau.
-    (por: Carlos Nascimento)
-
-
-Data: 14/06/2013
-
--- ACBrBoletoFCFR ver. 0.0.13a --
-[-] Corrigido problema com a impressão das logomarcas dos bancos. (por: Solivan Araujo)
 
 -- ACBrBoleto ver. 0.0.73 --
 --ACBrBancoBradesco --
@@ -955,19 +869,11 @@ Data: 10/04/2013
 [-] Alterado geração do arquivo remessa CNAB400 para formatar corretamente o campo
     Dias Protesto.(AndersonH) 
 
--- ACBrBoletoFCFortesFR ver. 0.0.20a --
-[*] Alterado impressão do boleto em carnê para imprimir as mensagens.(AndersonH) 
-
-
 
 Data: 02/04/2013
 -- ACBrBoleto ver. 0.0.66 --
 -- ACBrBancoItau --
 [*] Adicionado leitura do arquivo retorno CNAB240.(Alberto)
-
--- ACBrBoletoFC_Quick ver. 0.0.14a --
-[*] Alterado rotina de impressão do boleto para considerar o valor informado na propriedade
-    EspecieMod ao imprimir esta informação.
 
 
 Data: 25/03/2013
@@ -988,14 +894,6 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/8044-envio-de-boletos-por-e
 http://www.projetoacbr.com.br/forum/index.php?/topic/9551-altera%C3%A7%C3%B5es-na-unit-acbrcaixaeconomicasicobpas/
 
 Data: 05/03/13
--- ACBrBoletoFC_Fortes ver. 0.0.19a --
-[-] Adicionado impressão do bairro do sacado nos dados do endereço. (por: Juliana Tamizou)
-http://www.projetoacbr.com.br/forum/index.php?/topic/9256-campo-bairro-n%C3%A3o-aparece-acbrboletofcfortesfr/
-
-[-] Efetuado correção para que seja impresso no boleto o conteúdo dos campos EspecieMOD e DataProcessamento
-    informados para o titulo, caso nada seja informado continuam sendo impressas as informações padrão.
-    (por: Juliana Tamizou)
-
 -- ACBrBoleto ver. 0.0.64 --
 -- ACBrBancoHSBC --
 [*] Corrigido campo utilizado para cálculo do NossoNúmero(Antes estava sendo utilizado o 
@@ -1097,20 +995,6 @@ Data: 14/01/13
 
 	
 Data: 11/01/13
--- ACBrBoletoFCFortes ver 0.0.17a -- 
-[*] Removido propriedade fDirArqPDF_HTML e alterado a propriedade NomeArquivo
-    para receber o path completo do arquivo a ser gerado.
-	
--- ACBrBoletoFCQuick ver 0.0.14a -- 
-[*] Removido propriedade fDirArqPDF_HTML e alterado a propriedade NomeArquivo
-    para receber o path completo do arquivo a ser gerado.	
-	
--- ACBrBoletoFCLazReport ver 0.1.16a -- 
-[*] Removido propriedade fDirArqPDF_HTML e alterado a propriedade NomeArquivo
-    para receber o path completo do arquivo a ser gerado.
-[*] Modificado rotinas de geração do boleto em pdf e HTML para utilizar 
-    corretamente a propriedade NomeArquivo.(Juliana Tamizou)
-
 -- ACBrBoleto ver 0.0.58a --
 -- ACBrCaixaEconomicaSicob  --
 [-] Efetuado ajustes para que seja possível utilizar carteiras com tamanho 
@@ -1130,13 +1014,7 @@ Data: 10/01/13
 [-] Corrigido rotina de envio de boletos por email ao anexar os pdfs gerados.
     (Embrati)
 	
--- ACBrBoletoFCFortes ver 0.0.16a --
-[-] Corrigida impressão do número da parcela atual no layout carnê.(Daniel simões)	
-
 Data: 09/01/13
--- ACBrBoletoFCFR ver 0.0.12a --
-[-] Alterado componente para respeitar a propriedade MostrarSetup.(NazarenoNeto)
-
 -- ACBrBoleto ver 0.0.56a --
 -- ACBrBancoBarisul --
 [-] Corrigida função MontarCodigoBarras.(José)
@@ -1176,11 +1054,6 @@ Data: 09/01/13
     remessa para respeitar o tamanho de cada campo, na maioria das units a alteração foi feita 
     nos campos Agencia e Conta.(Juliana Tamizou)	
 
-Data: 08/01/13
--- ACBrBoletoFCFR ver 0.0.11a -
-[*] Adicionado impressão do complemento do endereço do sacado.(Juliana Tamizou)	
-
-	
 Alterações anteriores a 01/01/2013
 	
 -- ACBrBancoHSBC -- 
@@ -1189,88 +1062,6 @@ Alterações anteriores a 01/01/2013
 [-] Acertos para remoção de alguns warnings.
 
 
--- ACBrBoletoFC --
-[+] Adicionado novo tipo de Layout: lPadraoEntrega, para substituir a
-    propriedade: ComprovanteEntrega   (DSA)
-
--- ACBrBoletoFCLazReport --
-[*] Layouts de relatório corrigidos para suportar a versão do Trunk do LazReport
-    (DSA)
-
-04/04/2012
--- ACBrBoletoFCLazReport --
-[*] Modificado para permitir ler os relatórios (FCLazReport_Carne.lrf,
-    FCLazReport_CompEntrega.lrf, FCLazReport_Padrao.lrf) do disco caso os mesmos
-    estejam na mesma pasta do aplicativo.   (DSA)
-
-Versao 0.0.1 do FastReport 05/08/11
-[-] Lançado a 1a versão para impressão dos boletos em FastReport.
-    (por: Isaque Pinheiro)
-
-Versao 0.0.10a do FastReport 13/08/12
-[+] Adicionado suporte a impressão de boletos em carnê.(Rodrigo Rodrigues)
-[*] Efetuado ajuste para que todas as versões do Delphi consigam ler corretamente
-    a propriedade displayformat dos componentes utilizados para data.(Fábio)
-
-	
-Versao 0.0.10a do FastReport 13/10/12
-[+] Corrigida impressão do DV da Agência quando o mesmo for superior a 9.(Leonardo)	
-
-Versao 0.0.09a do FastReport 02/07/12
-[+] Lançado a 1a versão para impressão dos boletos em FastReport.
-    (por: Isaque Pinheiro)	
-
-
-Versao 0.0.13a do QuickReport 26/11/12
-[*] Corrigido layout Carnê para imprimir o Local de Pagamento.(José)
-
-Versao 0.0.12a do QuickReport 05/08/12
-[*] Efetuado pequenos ajustes para atender a Caixa Econômica Federal(Juliana Tamizou)
-
-Versao 0.0.11a do QuickReport 17/07/12
-[+] Implementado layout Padrão com Comprovante de Entrega.(Ivomar)	
-	
-Versao 0.0.10a do QuickReport 10/07/12
-[-] Corrigido impressão do código de barras.(Rogerio Pett)
-	
-Versao 0.0.9a do QuickReport 07/07/12
-[-] Corrigido impressão do digito verificador do Numero do Banco para bancos com digito maior que 9.(André Luiz)
-
-Versao 0.1.15a do LazReport 05/08/12
-[*] Efetuado pequenos ajustes para atender a Caixa Econômica Federal(Juliana Tamizou)
-
-Versao 0.1.15a do LazReport 02/08/11
-[+] Adicionado campos Outras Deduções e Outros Acréscimos ao boleto, conforme
-    solicitação da Caixa Econômica Federal(Juliana Tamizou)
-
-Versao 0.0.16a do FortesReport 27/11/12
-[-] Efetuado ajustes para corrigir problema da geração dos PDFs no Fortes4Lazarus. (Luiz Americo)
-
-Versao 0.0.15a do FortesReport 05/08/12
-[*] Efetuado pequenos ajustes para atender a Caixa Econômica Federal(Juliana Tamizou)
-
-Versao 0.0.14a do FortesReport 17/07/12
-[-] Removido label Sacador/Avalista duplicado.(Juliana Tamizou)	
-
-Versao 0.0.13a do FortesReport 15/06/12
-[-] Corrigido bug ao gerar boletos em PDF.(Juliana Tamizou)
-	
-Versao 0.0.12a do FortesReport 06/02/12
-[+] Corrigido problema com o tipo de Código de Barras impresso, alterado
-    propriedade Ratio do componente para 3, corrigindo o problema da não
-    homologação dos boletos impressos através deste gerador.(Markapollo)
-
-Versao 0.0.11a do FortesReport 02/08/11
-[+] Adicionado campos Outras Deduções e Outros Acréscimos ao boleto, conforme
-    solicitação da Caixa Econômica Federal(Giuliano Naspolini Ribeiro)
-
-[*] Alterado propriedade Scaled para True, para evitar problemas com  as 
-    imagens dos logos dos bancos.(Juliana Tamizou
-
-Versao 0.0.10a do FortesReport 06/07/11
-[-] Corrigido problema com componentes não encontrados no dfm do Fortes.
-    (Juliana Tamizou)
-	
 	
 [*] Acertos na classe do HSBC, testado e funcionando para 
     cobrança não registrada.
@@ -1596,9 +1387,6 @@ Versao 0.0.27a 24/06/2011
 [-] Corrigido rotina de geração do arquivo remessa 240 colunas para o Banco do
     Brasil.(Argus)
 
-[-] Corrigido impressão das mensagens no boleto impresso em Carnê, para o Fortes.
-    (Dionatan)
-
 
 Versao 0.0.26a 14/05/2011
 
@@ -1660,10 +1448,6 @@ Versão 0.0.23a 19/02/2011
 
 
 Versão 0.0.22a 12/02/2011
-
-[+] Adicionado ao ACBrBoletoFCLazReport a opção de imprimir Carnês.
-    (Juliana Tamizou)
-
 [+] Adicionado classe para o banco Bancoob.(DOUGLAS TYBEL)
 
 [*] Adicionado formatação dos campos Instrução1 e Instrução2 na geração da 
@@ -1672,16 +1456,7 @@ Versão 0.0.22a 12/02/2011
 [*] Adicionado função para remover os caracteres de formatação do CPF\CNPJ 
     para geração dos arquivos remessa e leitura do arquivo retorno.(Juliana Tamizou)
 
-[*] Corrigido impressão dos textos no ACBrBoletoFCFortes no Lazurus. 
-    (Juliana Tamizou)
-
 Versão 0.0.21a 29/01/2011
-[*] Alterado impressão da mensagem do desconto, para que caso seja informado a 
-    data limite seja impressa a mensagem "Conceder desconto de R$xx.xx até 
-    data limite ", caso não seja informado mantém o texto normal "Conceder 
-    desconto de R$XX.Xx até o vencimento". Modificação necessária devido ao 
-    Santander poder receber este campo das duas maneiras.(Juliana Tamizou)
-
 [+] Adicionado as propriedades NumeroArquivo,DataArquivo e DataCredLanc no
     ACBrBoleto, todas referentes ao arquivo Retorno.(Carlos Fitl)
 
@@ -1716,14 +1491,6 @@ Versão 0.0.20a 10/01/2010
 Versão 0.0.19a 30/12/2010
 [-] Corrigido bug ao gerar a linha do cabealho do arquivo de remessa 240 colunas
     do Banco do Brasil. (Reginaldo Costa)
-
-[+] Adicionado opção de imprimir o Comprovante de Entrega no boleto para o 
-    FortesReport(Carlos) e para o LazReport(Juliana Tamizou)
-
-Versão 0.0.18a 23/12/2010
-[-] Corrigido bug na impressão dos boletos no fortes e quickreport, estava sendo
-    ignorado o valor retornado pela função MontarCampoCodigoCedente.(Juliana Tamizou)
-
 
 Versão 0.017a  24/09/2010
 [+] Adicionado classe para a Caixa Economica (João Elson)
@@ -1854,9 +1621,6 @@ Versão 0.0.7.a 25/05/2010
 [-] Adicionado função para montar o campo nosso numero a ser impresso no boleto(varia para cada banco). Juliana Tamizou
 
 Versão 0.0.6a 04/05/10
-[-] Adicionado Logos dos bancos no formato '.BMP', corrigindo o problema 
-    ao imprimir o boleto, onde o logo não era encontrado, mesmo sendo informado
-    o diretório dos arquivos. EMBarbosa 
 [+] Adicionado verificação das propriedades obrigatórias do componente ACBrBoleto,
     para evitar erros devido a falta de preenchimento destas propriedades. Juliana Tamizou
 

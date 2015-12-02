@@ -82,7 +82,7 @@ type
 
 implementation
 
-uses ACBrTXTUtils;
+uses ACBrTXTUtils, ACBrUtil, ACBrValidador;
 
 { TPAF_Z }
 
@@ -146,10 +146,10 @@ begin
       Check(funChecaIE(IE, UF), '(Z1) IDENTIFICAÇÃO DO USUÁRIO DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
       ///
       Add(LFill('Z1') +
-          LFill(limpaCampo(CNPJ)       , 14) +
-          RFill(limpaCampo(IE)         , 14) +
-          RFill(limpaCampo(IM)         , 14) +
-          RFill(RAZAOSOCIAL, 50));
+          LFill(limpaCampo(CNPJ)        , 14) +
+          RFill(limpaCampo(IE)          , 14) +
+          RFill(limpaCampo(IM)          , 14) +
+          RFill(TiraAcentos(RAZAOSOCIAL), 50));
     end;
     WriteRegistroZ2;
     WriteRegistroZ3;
@@ -168,10 +168,10 @@ begin
       Check(funChecaIE(IE, UF), '(Z2) IDENTIFICAÇÃO DA EMPRESA DESENVOLVEDORA DO PAF-ECF: A Inscrição Estadual "%s" digitada é inválida!', [IE]);
       ///
       Add(LFill('Z2') +
-          LFill(limpaCampo(CNPJ)       , 14) +
-          RFill(limpaCampo(IE)         , 14) +
-          RFill(limpaCampo(IM)         , 14) +
-          RFill(RAZAOSOCIAL, 50));
+          LFill(limpaCampo(CNPJ)        , 14) +
+          RFill(limpaCampo(IE)          , 14) +
+          RFill(limpaCampo(IM)          , 14) +
+          RFill(TiraAcentos(RAZAOSOCIAL), 50));
     end;
   end;
 end;
@@ -199,18 +199,12 @@ begin
   begin
     dataAtual:= Now();
 
-    if FRegistroZ4.Count > 0 then
-    begin
-      with FRegistroZ4.Items[0] do
-      begin
-        Check(funChecaCNPJ(CNPJ), '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CNPJ]);
-      end;
-    end;
-
     for intFor := 0 to FRegistroZ4.Count - 1 do
     begin
       with FRegistroZ4.Items[intFor] do
       begin
+        Check(ValidarCNPJouCPF(CNPJ) = '', '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+
         Add( LFill('Z4') +
              LFill(limpaCampo(CNPJ)      , 14) +
              LFill(VL_TOTAL  , 14, 2) +

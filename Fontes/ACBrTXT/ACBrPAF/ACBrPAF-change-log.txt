@@ -47,7 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+02/12/2015
+-- ACBrPAF_Z_Class --
+[-] acertos na geração do arquivo Z do Paf-ECF
+    por: regys.silveira
 
 28/08/2015
 -- ACBrPAF_Z_Class --

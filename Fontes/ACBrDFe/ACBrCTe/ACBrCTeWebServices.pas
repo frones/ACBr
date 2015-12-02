@@ -1141,7 +1141,7 @@ begin
 
             with FConhecimentos.Items[J] do
             begin
-              XML := AProcCTe.Gerador.ArquivoFormatoXML;
+              XMLOriginal := AProcCTe.Gerador.ArquivoFormatoXML;
 
               if FPConfiguracoesCTe.Arquivos.Salvar then
               begin
@@ -1151,9 +1151,12 @@ begin
                 // Salva o XML do CT-e assinado e protocolado
                 if SalvarXML then
                 begin
-                  FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML,
-                                    XML,
-                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(0)));
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+
+//                  FPDFeOwner.Gravar(AInfProt.Items[I].chCTe + NomeXML,
+//                                    XMLOriginal,
+//                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(0)));
 
                   GravarXML; // Salva na pasta baseado nas configurações do PathCTe
                 end;
@@ -1698,7 +1701,7 @@ begin
                 AProcCTe.Versao := FPVersaoServico;
                 AProcCTe.GerarXML;
 
-                XML := AProcCTe.Gerador.ArquivoFormatoXML;
+                XMLOriginal := AProcCTe.Gerador.ArquivoFormatoXML;
 
                 FRetCTeDFe := '';
 
@@ -1712,7 +1715,7 @@ begin
                   FRetCTeDFe := '<' + ENCODING_UTF8 + '>' +
                                  '<CTeDFe>' +
                                   '<procCTe versao="' + FVersao + '">' +
-                                    SeparaDados(XML, 'cteProc') +
+                                    SeparaDados(XMLOriginal, 'cteProc') +
                                   '</procCTe>' +
                                   '<procEventoCTe versao="' + FVersao + '">' +
                                     aEventos +
@@ -1736,17 +1739,22 @@ begin
 
                 // Salva o XML do CT-e assinado e protocolado
                 if SalvarXML then
-                  FPDFeOwner.Gravar(FCTeChave + NomeXML,
-                                    XML,
-                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
+                begin
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
 
-                // Salva o XML do CT-e assinado, protocolado e com os eventos
-                if SalvarXML  and (FRetCTeDFe <> '') then
-                  FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                    FRetCTeDFe,
-                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
+//                  FPDFeOwner.Gravar(FCTeChave + NomeXML,
+//                                    XMLOriginal,
+//                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
 
-                GravarXML; // Salva na pasta baseado nas configurações do PathCTe
+                  // Salva o XML do CT-e assinado, protocolado e com os eventos
+                  if FRetCTeDFe <> '' then
+                    FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
+                                      FRetCTeDFe,
+                                      PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
+
+                  GravarXML; // Salva na pasta baseado nas configurações do PathCTe
+                end;
               end;
             end;
 

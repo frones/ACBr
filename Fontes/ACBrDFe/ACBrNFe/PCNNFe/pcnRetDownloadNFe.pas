@@ -233,8 +233,7 @@ begin
         if pos('procNFe', Leitor.Grupo) > 0 then
         begin
           FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(Leitor.Grupo, '<dhEmi>', '</dhEmi'));
-          FretNFe.Items[i].FprocNFe := SeparaDados(Leitor.Grupo, 'procNFe');
-          FretNFe.Items[i].FprocNFe := StringReplace(FretNFe.Items[i].FNFeZip,
+          FretNFe.Items[i].FprocNFe := StringReplace(SeparaDados(Leitor.Grupo, 'procNFe'),
                                          '<' + ENCODING_UTF8 + '>', '',
                                          [rfReplaceAll]);
         end;

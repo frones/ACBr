@@ -11,8 +11,7 @@
     <item DataSetName="Expedidor"/>
     <item DataSetName="Identificacao"/>
     <item DataSetName="InformacoesAdicionais"/>
-    <item DataSetName="CalculoImposto"/>
-    <item DataSetName="ModalAereo"/>
+    <item DataSetName="CalculoImposto"/>    
     <item DataSetName="ModalRodoviario"/>
     <item DataSetName="Motorista"/>
     <item DataSetName="Parametros"/>

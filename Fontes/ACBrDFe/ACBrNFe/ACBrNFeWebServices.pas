@@ -2687,7 +2687,7 @@ function TNFeEnvEvento.TratarResposta: Boolean;
 var
   Leitor: TLeitor;
   I, J: integer;
-  NomeArq, VersaoEvento, Texto: String;
+  NomeArq, PathArq, VersaoEvento, Texto: String;
 begin
   FEvento.idLote := idLote;
 
@@ -2755,11 +2755,14 @@ begin
             EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
             FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 
-            NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) +
-                '-procEventoNFe.xml';
-
             if FPConfiguracoesNFe.Arquivos.Salvar then
-              FPDFeOwner.Gravar(NomeArq, Texto, GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+            begin
+              NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFe.xml';
+              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+
+              FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+              FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
+            end;
 
             break;
           end;

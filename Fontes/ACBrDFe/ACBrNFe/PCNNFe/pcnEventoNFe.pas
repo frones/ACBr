@@ -201,9 +201,12 @@ type
     property ChavePend: String read FChavePend write FChavePend;
   end;
 
+  { TRetInfEvento }
+
   TRetInfEvento = class // (TPersistent)
   private
     FId: String;
+    FNomeArquivo: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
     FcOrgao: Integer;
@@ -241,6 +244,7 @@ type
     property nProt: String                      read FnProt       write FnProt;
     property chNFePend: TRetchNFePendCollection read FchNFePend   write FchNFePend;
     property XML: AnsiString                    read FXML         write FXML;
+    property NomeArquivo: String                read FNomeArquivo write FNomeArquivo;
   end;
 
 implementation

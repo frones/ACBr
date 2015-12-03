@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2015
+-- ACBrNFSeWebServices --
+[*] Melhorias no método ExtrairNotasRetorno pois não estava lendo os valores
+    do grupo IdentificacaoRPS.
+    Por: Jorge de Souza Santos
+
 01/12/2015
 -- ACBrNFSeNotasFiscais / ACBrNFSeWebServices --
 [*] Melhorias na leitura do retorno de consultas e preparação de parâmetros

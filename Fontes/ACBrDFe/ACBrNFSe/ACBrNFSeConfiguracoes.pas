@@ -196,6 +196,8 @@ type
     FSenhaWeb: String;
     FUserWeb: String;
     FConsultaLoteAposEnvio: Boolean;
+    FPathIniCidades: String;
+    FPathIniProvedor: String;
 
     procedure SetCodigoMunicipio(const Value: Integer);
 
@@ -221,10 +223,11 @@ type
     // Alguns provedores possui o nome da cidade na URL dos WebServer
     property xNomeURL_H: String read FxNomeURL_H;
     property xNomeURL_P: String read FxNomeURL_P;
-
     property SenhaWeb: String read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
+    property PathIniCidades: String read FPathIniCidades write FPathIniCidades;
+    property PathIniProvedor: String read FPathIniProvedor write FPathIniProvedor;
   end;
 
   { TArquivosConfNFSe }
@@ -294,7 +297,6 @@ begin
   inherited Create(AOwner);
 
   WebServices.ResourceName := 'ACBrNFSeServicos';
-//  Geral.CodModeloDF := 99;
 end;
 
 procedure TConfiguracoesNFSe.Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe);
@@ -332,6 +334,8 @@ begin
   inherited Create(AOwner);
 
   FProvedor := proNenhum;
+  FPathIniCidades := '';
+  FPathIniProvedor := '';
 end;
 
 procedure TGeralConfNFSe.Assign(DeGeralConfNFSe: TGeralConfNFSe);
@@ -358,12 +362,17 @@ begin
   // Verifica se o código IBGE consta no arquivo de paramêtros: Cidades.ini
   // se encontrar retorna o nome do Provedor
   // ===========================================================================
-  NomeArqParams := ApplicationPath + 'Cidades.ini';
-  CodIBGE := IntToStr(FCodigoMunicipio);
+
+  if PathIniCidades <> '' then
+    NomeArqParams := PathWithDelim(PathIniCidades)
+  else
+    NomeArqParams := ApplicationPath + 'Cidades.ini';
 
   if not FileExists(NomeArqParams) then
     raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
       NomeArqParams);
+
+  CodIBGE := IntToStr(FCodigoMunicipio);
 
   FPIniParams := TMemIniFile.Create(NomeArqParams);
 
@@ -382,7 +391,11 @@ begin
   // ===========================================================================
   // Le as configurações especificas do Provedor referente a cidade desejada
   // ===========================================================================
-  NomeArqParams := ApplicationPath + FxProvedor +'.ini';
+
+  if PathIniProvedor <> '' then
+    NomeArqParams := PathWithDelim(PathIniProvedor)
+  else
+    NomeArqParams := ApplicationPath + FxProvedor +'.ini';
 
   if not FileExists(NomeArqParams) then
     raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +

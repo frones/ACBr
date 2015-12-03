@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/12/2015
+-- ACBrNFSeNotasFiscais --
+[*] Se o ambiente for de homologação não será checado se o CNPJEmitnte é igual
+    ao CNPJCertificado, pois tem provedore que requerem um CNPJ ficticio para 
+    este ambiente.
+    Por: Italo Jurisato Junior
 -- ACBrNFSeWebServices --
 [*] Melhorias no método ExtrairNotasRetorno pois não estava lendo os valores
     do grupo IdentificacaoRPS.

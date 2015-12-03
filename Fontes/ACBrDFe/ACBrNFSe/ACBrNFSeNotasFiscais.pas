@@ -228,7 +228,9 @@ begin
   // VErificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
   CNPJEmitente    := OnlyNumber(NFSe.Prestador.CNPJ);
   CNPJCertificado := OnlyNumber(TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.CertCNPJ);
-
+  if TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.WebServices.Ambiente = taHomologacao then
+    CNPJCertificado := CNPJEmitente;
+    
   // verificar somente os 8 primeiros digitos, para evitar problemas quando
   // a filial estiver utilizando o certificado da matriz
   if Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8) then

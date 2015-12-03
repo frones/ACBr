@@ -849,7 +849,7 @@ begin
   frxCalculoImposto := TfrxDBDataset.Create(nil);
   with frxCalculoImposto do
   begin
-    UserName       := 'LocalEntrega';
+    UserName       := 'CalculoImposto';
     OpenDataSource := False;
     DataSet        := cdsCalculoImposto;
   end;

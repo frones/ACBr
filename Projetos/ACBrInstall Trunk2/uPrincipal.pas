@@ -46,9 +46,9 @@ uses
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
-  JvExControls, JvAnimatedImage, JvGIFCtrl, JvWizard, JvWizardRouteMapNodes,
-  JvExComCtrls, JvComCtrls, JvCheckTreeView, uFrameLista, System.IOUtils,
-  System.Types, JvComponentBase, JvCreateProcess;
+  uFrameLista, System.IOUtils,
+  System.Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
+  JvGIFCtrl, JvWizard, JvWizardRouteMapNodes;
 
 type
   TDestino = (tdSystem, tdDelphi, tdNone);

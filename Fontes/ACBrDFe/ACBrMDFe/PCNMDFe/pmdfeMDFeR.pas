@@ -83,6 +83,11 @@ function TMDFeR.LerXml: Boolean;
 var
   ok: Boolean;
   i01, i02, i03, i04, i05: Integer;
+  // as variáveis abaixo são utilizadas para identificar as várias ocorrências
+  // da tag qtdRat.
+  sAux: String;
+  pos1, pos2, pos3: Integer;
+  qtdRat_UnidTransp: Currency;
 begin
   Leitor.Grupo := Leitor.Arquivo;
 
@@ -356,7 +361,28 @@ begin
           MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp.Add;
           MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
           i04 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
@@ -366,6 +392,7 @@ begin
             inc(i04);
           end;
 
+          is_qtdRat_UnidCarga := False;
           i04 := 0;
           while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
           begin
@@ -407,7 +434,28 @@ begin
           MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp.Add;
           MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
           i04 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
@@ -455,7 +503,28 @@ begin
           MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp.Add;
           MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
           i04 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
@@ -508,7 +577,28 @@ begin
           MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp.Add;
           MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
           i04 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do
@@ -555,7 +645,28 @@ begin
           MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp.Add;
           MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp[i03].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp[i03].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp[i03].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
           i04 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i04 + 1) <> '' do

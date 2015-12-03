@@ -109,6 +109,11 @@ var
   ok: Boolean;
   i, j, i01, i02, i03, i04: Integer;
   sCST, Aspas: String;
+  // as variáveis abaixo são utilizadas para identificar as várias ocorrências
+  // da tag qtdRat.
+  sAux: String;
+  pos1, pos2, pos3: Integer;
+  qtdRat_UnidTransp: Currency;
 begin
   Leitor.Grupo := Leitor.Arquivo;
 
@@ -662,7 +667,28 @@ begin
           CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp.Add;
           CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
 
           i03 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
@@ -732,7 +758,28 @@ begin
           CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp.Add;
           CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          CTe.infCTeNorm.infDoc.infNFE[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
 
           i03 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
@@ -805,7 +852,28 @@ begin
           CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp.Add;
           CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].qtdRat       := Leitor.rCampo(tcDe2, 'qtdRat');
+
+          // Dentro do grupo <infUnidTransp> podemos ter até duas tags <qtdRat>
+          // uma pertencente ao grupo <infUnidCarga> filha de <infUnidTransp> e
+          // a outra pertencente ao grupo <infUnidTransp> e ambas são opcionais.
+          // precisamos saber se existe uma ocorrência ou duas dessa tag para
+          // efetuar a leitura correta das informações.
+
+          sAux := Leitor.Grupo;
+          pos1 := PosLast('</infUnidCarga>', sAux);
+          pos2 := PosLast('<qtdRat>', sAux);
+          pos3 := PosLast('</qtdRat>', sAux);
+
+          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 > pos3) then
+            qtdRat_UnidTransp := 0.0;
+
+          if (pos1 < pos3) then
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+
+          CTe.infCTeNorm.infDoc.infOutros[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
 
           i03 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do

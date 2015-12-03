@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2015
+-- pcteCTeR --
+[*] Tentativa de conseguir ler corretamente todas as ocorrências da tag
+    <qtdRat>.
+    por: Italo Jurisato Junior
+
 02/12/2015
 -- ACBrCTeWebServices --
 [*] Removido na montagem de alguns XML a linha '<' + ENCODING_UTF8 + '>' para 

@@ -364,7 +364,7 @@ begin
   // ===========================================================================
 
   if PathIniCidades <> '' then
-    NomeArqParams := PathWithDelim(PathIniCidades)
+    NomeArqParams := PathIniCidades
   else
     NomeArqParams := ApplicationPath + 'Cidades.ini';
 
@@ -393,7 +393,7 @@ begin
   // ===========================================================================
 
   if PathIniProvedor <> '' then
-    NomeArqParams := PathWithDelim(PathIniProvedor)
+    NomeArqParams := PathIniProvedor
   else
     NomeArqParams := ApplicationPath + FxProvedor +'.ini';
 

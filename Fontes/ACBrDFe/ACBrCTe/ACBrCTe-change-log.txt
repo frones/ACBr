@@ -53,6 +53,11 @@ Símbolo : Significado
     <qtdRat>.
     por: Italo Jurisato Junior
 
+-- ACBrDACTEFR --
+[-] acerto para que o DACTe não use os datasets de forma global no FastReport, 
+    isso estava gerando problemas para quem tem nfe e cte na mesma aplicação.
+    por: regys.silveira
+
 02/12/2015
 -- ACBrCTeWebServices --
 [*] Removido na montagem de alguns XML a linha '<' + ENCODING_UTF8 + '>' para 

@@ -304,6 +304,7 @@ end;
 procedure TACBrCTeDACTEFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
+  frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin
     ScriptLanguage := 'PascalScript';

@@ -111,6 +111,7 @@ type
     procedure QuatroParaDuasCasasDecimais;
     procedure ExpressaoCurrDuasCasasDecimais;
     procedure ExpressaoDblDuasCasasDecimais;
+    procedure TestesEstouro;
   end;
 
   { padRightTest }
@@ -2053,6 +2054,13 @@ begin
   CheckEquals( 0.99, RoundABNT(0.98505, 2));
   CheckEquals( 0.99, RoundABNT(dblTotal, 2));
   CheckEquals( 0.99, RoundABNT(dblValorUnit * dblQtde, 2));
+end;
+
+procedure RoundABNTTest.TestesEstouro;
+begin
+  CheckEquals( 12334234.46, RoundABNT(12334234.4567567567567567567,-2) );
+  CheckEquals( 12334234.4568, RoundABNT(12334234.4567567567567567567,-4) );
+  CheckEquals( 5233.456757, RoundABNT(5233.4567567567567567567,-6) );
 end;
 
 { TruncFixTest }

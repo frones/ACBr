@@ -232,8 +232,8 @@ begin
   // Verificar somente os 8 primeiros digitos, para evitar problemas quando
   // a filial estiver utilizando o certificado da matriz,
   // Mas faz a verificação só se for ambiente de produção.
-  if TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.WebServices.Ambiente = taProdcao then
-    if Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8) then
+  if TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.WebServices.Ambiente = taProducao then
+    if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
       raise EACBrNFSeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas

@@ -3300,8 +3300,8 @@ end;
 
 function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;
 var
-  DataStr, ECFCRZ  : String ;
-  I: Integer;
+  DataStr, ECFCRZ, Reg : String ;
+  I, J, N : Integer;
   AliqZ : TACBrECFAliquota ;
   ValReg: Double;
 
@@ -3475,11 +3475,73 @@ begin
       IsentoISSQN := max(IsentoISSQN,0) + ValReg;
 
 
-    { EscESC não retorna o GT em leitura de Dados da Ultima Reducao Z,
-      Usando o GTInicial deste movimento }
+    { Epson não retorna Totalizadores não tributados no comando padrão, usando
+      comando específico do Fabricante }
+    if IsEpson then
+    begin
+      RetornaInfoECF('99|30&'+ECFCRZ);
 
-    RetornaInfoECF( '8' ) ;
-    ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[3],0)/100, -2);
+      // Calculando a posição do "Total de alíquotas não tributadas"
+      I := 4 + (StrToIntDef( EscECFResposta.Params[4], 0) * 3) + 1;
+      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
+      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
+      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 2) + 2;
+
+      GNF := StrToIntDef( EscECFResposta.Params[I], 0) ;
+      I := I + 3;
+      CCF := StrToIntDef( EscECFResposta.Params[I], 0) ;
+      I := I + 1;
+      CFD := StrToIntDef( EscECFResposta.Params[I], 0) ;
+      I := I + 1;
+      CCDC := StrToIntDef( EscECFResposta.Params[I], 0) ;
+      I := I + 1;
+      GRG := StrToIntDef( EscECFResposta.Params[I], 0) ;
+      I := I + 2;
+      CFC := StrToIntDef( EscECFResposta.Params[I], 0) ;
+      I := I + 3;
+      ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[I],0)/100, -2);
+      I := I + 14;
+      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
+      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 3;
+
+      N := StrToIntDef( EscECFResposta.Params[I], 0);
+      for J := 1 to N do
+      begin
+        Reg    := Copy( EscECFResposta.Params[I+J], 1, 1);
+        ValReg := RoundTo( StrToFloatDef(EscECFResposta.Params[I+J+N],0)/100, -2);
+
+        if (Reg = 'F') then
+          SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg
+        else if (Reg = 'N') then
+          NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg
+        else if (Reg = 'I') then
+          IsentoICMS := max(IsentoICMS,0) + ValReg
+      end ;
+
+      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 2) + 1;
+
+      N := StrToIntDef( EscECFResposta.Params[I], 0);
+      for J := 1 to N do
+      begin
+        Reg    := Copy( EscECFResposta.Params[I+J], 1, 2);
+        ValReg := RoundTo( StrToFloatDef(EscECFResposta.Params[I+J+N],0)/100, -2);
+
+        if (Reg = 'FS') then
+          SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg
+        else if (Reg = 'NS') then
+          NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg
+        else if (Reg = 'IS') then
+          IsentoISSQN := max(IsentoISSQN,0) + ValReg
+      end ;
+    end
+    else
+    begin
+      { EscESC não retorna o GT em leitura de Dados da Ultima Reducao Z,
+        Usando o GTInicial deste movimento }
+
+      RetornaInfoECF( '8' ) ;
+      ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[3],0)/100, -2);
+    end;
 
     CalculaValoresVirtuais;
     Result := MontaDadosReducaoZ;

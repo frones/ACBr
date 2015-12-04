@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/12/2015
+-- ACBrECFEscECF --
+[*] Ajuste em GetDadosUltimaReducaoZ para Epson TM-T800/900F. Usado comando
+    específico do fabricante, para ler Dados da Ultima Redução Z   (por: DSA)
+
 30/11/2015
 -- ACBrECFEscECF --
 [-] Ajuste em GetDadosUltimaReducaoZ para o caso de ECFs que não retornam os

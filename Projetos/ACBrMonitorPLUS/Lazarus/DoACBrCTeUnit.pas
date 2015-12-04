@@ -40,16 +40,13 @@ Procedure DoACBrCTe( Cmd : TACBrCmd );
 procedure GerarIniCTe( AStr: WideString );
 function GerarCTeIni( XML : WideString ) : WideString;
 procedure GerarCTeIniEvento( AStr: WideString );
-function SubstituirVariaveis(const ATexto: String): String;
-Function ConvertStrRecived( AStr: String ) : String ;
-function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 
 implementation
 
 Uses IniFiles, DateUtils, strutils,
   Forms, ACBrUtil, ACBrMonitor1,
   pcnConversao, pcteConversaoCTe,
-  pcteCTeR, pcnAuxiliar, DoACBrUnit;
+  pcteCTeR, pcnAuxiliar, DoACBrUnit, DoACBrNFeUnit;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
 var
@@ -2797,85 +2794,6 @@ begin
       INIRec.Free;
    end;
  end;
-end;
-
-function SubstituirVariaveis(const ATexto: String): String;
-var
-  TextoStr: String;
-begin
-  if Trim(ATexto) = '' then
-    Result := ''
-  else
-  begin
-    TextoStr := ATexto;
-
-    if FrmACBrMonitor.ACBrCTe1.Conhecimentos.Count > 0 then
-    begin
-      with FrmACBrMonitor.ACBrCTe1.Conhecimentos.Items[0].CTe do
-      begin
-        TextoStr := StringReplace(TextoStr,'[EmitNome]',     Emit.xNome,   [rfReplaceAll, rfIgnoreCase]);
-        TextoStr := StringReplace(TextoStr,'[EmitFantasia]', Emit.xFant,   [rfReplaceAll, rfIgnoreCase]);
-        TextoStr := StringReplace(TextoStr,'[EmitCNPJ]',     Emit.CNPJ, [rfReplaceAll, rfIgnoreCase]);
-        TextoStr := StringReplace(TextoStr,'[EmitIE]',       Emit.IE,      [rfReplaceAll, rfIgnoreCase]);
-
-        TextoStr := StringReplace(TextoStr,'[DestNome]',     Dest.xNome,   [rfReplaceAll, rfIgnoreCase]);
-        TextoStr := StringReplace(TextoStr,'[DestCNPJCPF]',  Dest.CNPJCPF, [rfReplaceAll, rfIgnoreCase]);
-        TextoStr := StringReplace(TextoStr,'[DestIE]',       Dest.IE,      [rfReplaceAll, rfIgnoreCase]);
-
-        TextoStr := StringReplace(TextoStr,'[ChaveCTe]',     procCTe.chCTe, [rfReplaceAll, rfIgnoreCase]);
-
-        TextoStr := StringReplace(TextoStr,'[NumeroCT]',     FormatFloat('000000000',     Ide.nCT),           [rfReplaceAll, rfIgnoreCase]);
-      end;
-    end;
-    Result := TextoStr;
-  end;
-end;
-
-Function ConvertStrRecived( AStr: String ) : String ;
- Var P   : Integer ;
-     Hex : String ;
-     CharHex : Char ;
-begin
-  { Verificando por codigos em Hexa }
-  Result := AStr ;
-
-  P := pos('\x',Result) ;
-  while P > 0 do
-  begin
-     Hex := copy(Result,P+2,2) ;
-
-     try
-        CharHex := Chr(StrToInt('$'+Hex)) ;
-     except
-        CharHex := ' ' ;
-     end ;
-
-     Result := StringReplace(Result,'\x'+Hex,CharHex,[rfReplaceAll]) ;
-     P      := pos('\x',Result) ;
-  end ;
-end ;
-
-function ObterCodigoMunicipio(const xMun, xUF: string): integer;
-var
-  i: integer;
-  PathArquivo: string;
-  List: TstringList;
-begin
-  result := 0;
-  PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'MunIBGE'+PathDelim+'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
-  if FileExists(PathArquivo) then
-   begin
-     List := TstringList.Create;
-     List.LoadFromFile(PathArquivo);
-     i := 0;
-     while (i < list.count) and (result = 0) do
-      begin
-       if pos(UpperCase(TiraAcentos(xMun)), UpperCase(TiraAcentos(UTF8Encode(List[i])))) > 0 then
-          result := StrToInt(Trim(copy(list[i],1,7)));
-       inc(i);
-      end;
-     List.free;
-   end;
 end;
 
 end.

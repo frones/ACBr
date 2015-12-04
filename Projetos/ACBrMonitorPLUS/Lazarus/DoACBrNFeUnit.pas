@@ -1749,22 +1749,29 @@ var
   i: integer;
   PathArquivo: string;
   List: TstringList;
+  UpMun, UpMunList: String;
 begin
   result := 0;
   PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'MunIBGE'+PathDelim+'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
   if FileExists(PathArquivo) then
-   begin
-     List := TstringList.Create;
-     List.LoadFromFile(PathArquivo);
-     i := 0;
-     while (i < list.count) and (result = 0) do
+  begin
+    UpMun := UpperCase(TiraAcentos(xMun));
+    List := TstringList.Create;
+    try
+      List.LoadFromFile(PathArquivo);
+      i := 0;
+      while (i < list.count) and (result = 0) do
       begin
-       if pos(UpperCase(TiraAcentos(xMun)), UpperCase(TiraAcentos(UTF8Encode(List[i])))) > 0 then
+        UpMunList := UpperCase(TiraAcentos(UTF8Encode(List[i])));
+        if pos(UpMun, UpMunList ) = 9 then
           result := StrToInt(Trim(copy(list[i],1,7)));
-       inc(i);
+
+        inc(i);
       end;
-     List.free;
-   end;
+    finally
+      List.free;
+    end;
+  end;
 end;
 
 procedure GerarIniNFe( AStr: WideString ) ;

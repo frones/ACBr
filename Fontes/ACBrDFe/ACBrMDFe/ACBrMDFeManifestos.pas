@@ -226,7 +226,7 @@ begin
 
   // verificar somente os 8 primeiros digitos, para evitar problemas quando
   // a filial estiver utilizando o certificado da matriz
-  if Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8) then
+  if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
     raise EACBrMDFeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas

@@ -47,6 +47,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2015
+-- ACBrCTeNotasFiscais --
+[*] método "Assinar", modificado para só validar CNPJ se conseguir ler o mesmo
+    com sucesso, do Certificado.
+    por: Italo Jurisato Junior
+
+-- ACBrCTeWebServices --
+[*] WebService: "TCTeEnvEvento", modificado, para salvar o "NomeArquivo", se o
+    XML for salvo após a consulta (depende da configuração).
+    por: Italo Jurisato Junior
+
+-- pcteEventoCTe --
+[+] Tipo: TRetInfEvento, adicionada a propriedade: "NomeArquivo: String", que
+    conterá o nome do arquivo XML criado, após o retorno, e se estiver
+    configurado para salvar o XML.
+    por: Italo Jurisato Junior
+
 03/12/2015
 -- pcteCTeR --
 [*] Tentativa de conseguir ler corretamente todas as ocorrências da tag

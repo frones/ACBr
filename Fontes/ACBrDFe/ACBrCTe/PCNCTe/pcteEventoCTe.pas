@@ -180,6 +180,8 @@ type
     property nroItemAlterado: Integer read FnroItemAlterado write FnroItemAlterado;
   end;
 
+  { TRetInfEvento }
+
   TRetInfEvento = class
   private
     FId: String;
@@ -197,6 +199,7 @@ type
     FdhRegEvento: TDateTime;
     FnProt: String;
     FXML: AnsiString;
+    FNomeArquivo: String;
   public
   published
     property Id: String              read FId          write FId;
@@ -214,6 +217,7 @@ type
     property dhRegEvento: TDateTime  read FdhRegEvento write FdhRegEvento;
     property nProt: String           read FnProt       write FnProt;
     property XML: AnsiString         read FXML         write FXML;
+    property NomeArquivo: String     read FNomeArquivo write FNomeArquivo;
   end;
 
 implementation

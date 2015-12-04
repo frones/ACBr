@@ -1449,10 +1449,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsEscPos
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 18
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6770,7 +6770,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Visible = False
               end
               object gbxCertificado: TGroupBox
-                Left = 6
+                Left = 8
                 Height = 157
                 Top = 0
                 Width = 595
@@ -7489,9 +7489,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsImpNFCe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 2
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -7870,9 +7870,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Text = '0'
                   end
                   object cbxExibirEAN: TCheckBox
-                    Left = 316
+                    Left = 456
                     Height = 21
-                    Top = 142
+                    Top = 124
                     Width = 81
                     Caption = 'Exibir EAN'
                     TabOrder = 10
@@ -7885,6 +7885,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     MinValue = 1
                     TabOrder = 12
                     Value = 1
+                  end
+                  object cbxQuebrarLinhasDetalhesItens: TCheckBox
+                    Left = 316
+                    Height = 21
+                    Top = 141
+                    Width = 241
+                    Caption = 'Quebrar linhas em '#13#10'detalhe dos itens'
+                    TabOrder = 22
                   end
                 end
                 object tsDadosEmpresa: TTabSheet
@@ -11021,7 +11029,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

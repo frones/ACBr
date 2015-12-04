@@ -204,6 +204,7 @@ type
     cbxCNAB: TComboBox;
     cbxEmissaoPathNFe: TCheckBox;
     cbxExibeResumo: TCheckBox;
+    cbxQuebrarLinhasDetalhesItens: TCheckBox;
     cbxExpandirLogo: TCheckBox;
     cbxFormatXML: TCheckBox;
     cbxFormCont: TCheckBox;
@@ -3441,6 +3442,7 @@ begin
     cbxExpandirLogo.Checked := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
     rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
+    cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
 
     if rgModeloDanfe.ItemIndex = 0 then
     begin
@@ -4232,6 +4234,7 @@ begin
     Ini.WriteBool('DANFE', 'ExpandirLogo', cbxExpandirLogo.Checked);
     Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
     Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
+    ini.WriteBool('DANFE','QuebrarLinhasDetalheItens', cbxQuebrarLinhasDetalhesItens.Checked) ;
 
     Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
@@ -6863,6 +6866,7 @@ begin
       ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(rgTipoFonte.ItemIndex);
       ACBrNFeDANFeRL1.LarguraCodProd := StrToIntDef(edtLargCodProd.Text, 54);
       ACBrNFeDANFeRL1.ExibirEAN := cbxExibirEAN.Checked;
+      ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico := cbxQuebrarLinhasDetalhesItens.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/12/2015
+-- ACBrUtil --
+[-] Correção em RoundABNT, para evitar Erro de oveerflow em valores grandes
+    (por: DSA)
+
 Data: 13/11/2015
 -- ACBrUtil --
 [*] Ajuste em "FloatToString", para não remover o ThousandSeparator se ele for

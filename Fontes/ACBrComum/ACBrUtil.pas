@@ -449,33 +449,37 @@ end;
  -----------------------------------------------------------------------------}
 function RoundABNT(const AValue: Double; const Digits: SmallInt):Double;
 var
-   Pow, PowValue, RestPart : Extended;
-   IntPart, FracPart, LastNumber : Integer;
+   Pow, PowValue, RestPart, FracValue : Extended;
+   IntCalc, FracCalc, LastNumber, IntValue : Int64;
 Begin
-   Pow      := intpower(10, abs(Digits) );
-   PowValue := SimpleRoundTo( AValue * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
-   IntPart  := trunc( PowValue );
-   FracPart := trunc( frac( PowValue ) * 100);
+   Pow       := intpower(10, abs(Digits) );
+   PowValue  := AValue / 10 ;
+   IntValue  := trunc(PowValue);
+   FracValue := frac(PowValue);
 
-   if (FracPart > 50) then
-      Inc( IntPart )
+   PowValue := SimpleRoundTo( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
+   IntCalc  := trunc( PowValue );
+   FracCalc := trunc( frac( PowValue ) * 100);
 
-   else if (FracPart = 50) then
+   if (FracCalc > 50) then
+      Inc( IntCalc )
+
+   else if (FracCalc = 50) then
     begin
-      LastNumber := round( frac( IntPart / 10) * 10);
+      LastNumber := round( frac( IntCalc / 10) * 10);
 
       if odd(LastNumber) then
-         Inc( IntPart )
+         Inc( IntCalc )
       else
        begin
          RestPart := frac( PowValue * 10 ) ;
 
          if RestPart > 0 then
-            Inc( IntPart );
+            Inc( IntCalc );
        end ;
     end ;
 
-   Result := (IntPart / Pow);
+   Result := ((IntValue*10) + (IntCalc / Pow));
 end;
 
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;

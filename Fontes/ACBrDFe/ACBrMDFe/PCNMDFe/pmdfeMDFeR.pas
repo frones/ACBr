@@ -392,7 +392,6 @@ begin
             inc(i04);
           end;
 
-          is_qtdRat_UnidCarga := False;
           i04 := 0;
           while Leitor.rExtrai(5, 'infUnidCarga', '', i04 + 1) <> '' do
           begin

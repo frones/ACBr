@@ -447,11 +447,10 @@ end ;
 
 procedure TACBrECFVirtualBufferClass.AddBufferRelatorio;
 Var
-  TotalAliq, BrutaDia : Double;
+  TotalAliq : Double;
   A : Integer ;
 begin
   TotalAliq := 0 ;
-  BrutaDia  := 0 ;
   if fpAliquotas.Count > 2 then
   begin
     For A := 0 to 2 do
@@ -472,10 +471,18 @@ begin
     Add( PadCenter(' Totalizadores ',Colunas,'-') ) ;
     Add( PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|') ) ;
 
-    For A := 0 To fpAliquotas.Count - 1 do
-      BrutaDia := RoundTo(BrutaDia + fpAliquotas[A].Total, -2);
+    Add( PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
 
-    Add( PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', BrutaDia), Colunas, '|'));
+    if fpCuponsCanceladosTotalNaoTransmitidos>0 then
+       Add( PadSpace('Cancelado Nao Transm:|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosTotalNaoTransmitidos ), Colunas,'|') ) ;
+
+    if fpTotalDescontos > 0 then
+       Add( PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontos), Colunas, '|'));
+
+    if fpTotalAcrescimos > 0 then
+       Add( PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimos), Colunas, '|'));
+
+    Add( PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosTotal), Colunas,'|') ) ;
 
     Add( PadCenter('Total Vendido por Aliquota',Colunas,'-') ) ;
     Add( PadSpace('Substituicao Tributaria (FF)|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;
@@ -492,7 +499,6 @@ begin
       end ;
     end;
 
-    Add( PadSpace('Total Cancelado R$|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosTotal), Colunas,'|') ) ;
     Add( PadSpace('T O T A L   R$|'+FormatFloat('###,###,##0.00',TotalAliq), Colunas,'|') ) ;
 
 
@@ -686,6 +692,7 @@ begin
                   FormatFloat('#,###,##0.00',SubTotal), Colunas,'|') ) ;
     fsBuffer.Add( PadSpace(S+'  R$|'+FormatFloat('#,###,##0.00',DescontoAcrescimo),
                        Colunas,'|') ) ;
+
   end ;
 
   fsBuffer.Add(  '<e>' +

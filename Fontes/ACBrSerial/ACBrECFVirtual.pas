@@ -260,6 +260,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpNumCER     : Integer ;
     fpGrandeTotal: Double ;
     fpVendaBruta : Double ;
+    fpTotalDescontos  : Double ;
+    fpTotalAcrescimos : Double ;
     fpNumCCF     : Integer ;
     fpSubTotal   : Double ;
     fpTotalPago  : Double ;
@@ -320,6 +322,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetTotalIsencao: Double; override ;
     function GetNumReducoesZRestantes: String; override ;
     function GetTotalCancelamentosNaoTransmitidos: Double; override ;
+    function GetTotalCancelamentos: Double; override ;
+    function GetTotalAcrescimos: Double; override ;
+    function GetTotalDescontos: Double; override ;
 
 
     function GetNumECF: String; override ;
@@ -997,10 +1002,30 @@ begin
   GravaLog('GetTotalNaoTributado: '+FloatToStr(Result));
 end;
 
+function TACBrECFVirtualClass.GetTotalAcrescimos: Double;
+begin
+   result := RoundTO(fpTotalAcrescimos,-2);
+   GravaLog('GetTotalAcrescimos: '+FloatToStr(Result));
+
+end;
+
+function TACBrECFVirtualClass.GetTotalCancelamentos: Double;
+begin
+   result := RoundTo(fpCuponsCanceladosTotal,-2);
+   GravaLog('GetTotalCancelamentos: '+FloatToStr(Result));
+
+end;
+
 function TACBrECFVirtualClass.GetTotalCancelamentosNaoTransmitidos: Double;
 begin
    result := RoundTo(fpCuponsCanceladosTotalNaoTransmitidos,-2);
    GravaLog('GetTotalCancelamentosNaoTransmitidos: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalDescontos: Double;
+begin
+   result := RoundTO(fpTotalDescontos,-2);
+   GravaLog('GetTotalDescontos: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalIsencao: Double;
@@ -1343,6 +1368,11 @@ begin
     fpEstado    := estPagamento ;
     fpTotalPago := 0 ;
 
+    if DescontoAcrescimo < 0 then
+      fpTotalDescontos := fpTotalDescontos + (-DescontoAcrescimo)
+    else
+      fpTotalAcrescimos := fpTotalAcrescimos + DescontoAcrescimo;
+
     SubtotalizaCupomVirtual( DescontoAcrescimo, MensagemRodape );
 
     GravaArqINI ;
@@ -1574,9 +1604,10 @@ begin
     fpCuponsCanceladosTotal := 0;
     fpCuponsCanceladosNaoTransmitidos      := 0 ;
     fpCuponsCanceladosTotalNaoTransmitidos := 0;
-
-    fpVendaBruta            := 0 ;
-    fpNumCER                := 0 ;
+    fpTotalDescontos  := 0;
+    fpTotalAcrescimos := 0;
+    fpVendaBruta      := 0 ;
+    fpNumCER          := 0 ;
 
     For A := 0 to fpAliquotas.Count - 1 do
       fpAliquotas[A].Total := 0 ;
@@ -1893,6 +1924,9 @@ begin
     fpCuponsCanceladosTotalNaoTransmitidos := Ini.ReadFloat('Variaveis', 'CuponsCanceladosTotalNaoTransmitidos',
                                              fpCuponsCanceladosTotalNaoTransmitidos);
 
+    fpTotalDescontos := Ini.ReadFloat('Variaveis', 'TotalDescontos',fpTotalDescontos);
+    fpTotalAcrescimos :=Ini.ReadFloat('Variaveis', 'TotalAcrescimos',fpTotalAcrescimos);
+
     fpItensCupom.Clear ;
     S := 'Items_Cupom';
     A := 0 ;
@@ -2130,6 +2164,8 @@ begin
     Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotal', fpCuponsCanceladosTotal);
     Ini.WriteInteger('Variaveis','CuponsCanceladosNaoTransmitidos',fpCuponsCanceladosNaoTransmitidos) ;
     Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotalNaoTransmitidos', fpCuponsCanceladosTotalNaoTransmitidos);
+    Ini.WriteFloat('Variaveis', 'TotalDescontos',fpTotalDescontos);
+    Ini.WriteFloat('Variaveis', 'TotalAcrescimos',fpTotalAcrescimos);
     Ini.WriteString('Variaveis','Operador',Operador) ;
     Ini.WriteString('Variaveis','PAF',fpPAF) ;
 

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2015
+-- ACBrECFVirtual, ACBrECFVirtualBuffer --
+[*] Adicionado controle para TotalDescontos e TotalAcrescimos, na Redução Z
+[*] Ajustes para Redução Z ficar mais próxima da real
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=26477
+    (por: Amarildo Lacerda)
+
 03/12/2015
 -- ACBrECFEscECF --
 [*] Ajuste em GetDadosUltimaReducaoZ para Epson TM-T800/900F. Usado comando

@@ -60,7 +60,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 13
         Width = 195
         Height = 7
-        Caption = 'CONTINUA'#199#195'O DAS INFORMA'#199#213'ES COMPLEMENTARES'
+        Caption = 'CONTINUAÇÃO DAS INFORMAÇÕES COMPLEMENTARES'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -146,7 +146,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Top = 0
           Width = 117
           Height = 7
-          Caption = 'DADOS DO PRODUTO / SERVI'#199'OS'
+          Caption = 'DADOS DO PRODUTO / SERVIÇOS'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -170,7 +170,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           Lines.Strings = (
-            'C'#211'DIGO DO PROD. / SERV.')
+            'CÓDIGO DO PROD. / SERV.')
           ParentFont = False
         end
         object rlsDivProd1: TRLDraw
@@ -197,7 +197,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Font.Name = 'Arial'
           Font.Style = []
           Lines.Strings = (
-            'DESCRI'#199#195'O DO PRODUTO / SERVI'#199'O')
+            'DESCRIÇÃO DO PRODUTO / SERVIÇO')
           ParentFont = False
         end
         object rllEAN: TRLLabel
@@ -458,7 +458,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 7
           Alignment = taCenter
           AutoSize = False
-          Caption = 'UNIT'#193'RIO'
+          Caption = 'UNITÁRIO'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -467,15 +467,15 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
-        object RLLabel86: TRLLabel
+        object lblValorTotal: TRLLabel
           Tag = 10
           Left = 217
-          Top = 13
+          Top = 16
           Width = 50
           Height = 7
           Alignment = taCenter
           AutoSize = False
-          Caption = 'VALOR TOTAL'
+          Caption = 'TOTAL'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -501,7 +501,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
-        object RLLabel11: TRLLabel
+        object lblPercValorDesc1: TRLLabel
           Tag = 10
           Left = 269
           Top = 16
@@ -543,7 +543,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 7
           Alignment = taCenter
           AutoSize = False
-          Caption = 'C'#193'LC. ICMS'
+          Caption = 'CÁLC. ICMS'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -628,7 +628,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Height = 7
           Alignment = taCenter
           AutoSize = False
-          Caption = 'AL'#205'QUOTAS'
+          Caption = 'ALÍQUOTAS'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -772,6 +772,23 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
+        object RLLabel6: TRLLabel
+          Tag = 10
+          Left = 220
+          Top = 9
+          Width = 44
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'VALOR'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
+        end
       end
     end
     object rlbEmitente: TRLBand
@@ -878,7 +895,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 10
         Alignment = taCenter
         AutoSize = False
-        Caption = 'NOTA FISCAL ELETR'#212'NICA'
+        Caption = 'NOTA FISCAL ELETRÔNICA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -904,7 +921,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 56
         Width = 51
         Height = 14
-        Caption = '1 - SA'#205'DA'
+        Caption = '1 - SAÍDA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -937,7 +954,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 72
         Width = 93
         Height = 16
-        Caption = 'N'#186' 000.000.000'
+        Caption = 'N° 000.000.000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -952,7 +969,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 16
         Alignment = taCenter
         AutoSize = False
-        Caption = 'S'#201'RIE 000'
+        Caption = 'SÉRIE 000'
       end
       object rliChave2: TRLDraw
         Left = 636
@@ -1033,7 +1050,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 107
         Width = 140
         Height = 7
-        Caption = 'PROTOCOLO DE AUTORIZA'#199#195'O DE USO'
+        Caption = 'PROTOCOLO DE AUTORIZAÇÃO DE USO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1048,7 +1065,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 107
         Width = 95
         Height = 7
-        Caption = 'NATUREZA DE OPERA'#199#195'O'
+        Caption = 'NATUREZA DE OPERAÇÃO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1064,7 +1081,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 133
         Width = 82
         Height = 7
-        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1079,7 +1096,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 133
         Width = 144
         Height = 7
-        Caption = 'INSCRI'#199#195'O ESTADUAL DO SUBST. TRIB.'
+        Caption = 'INSCRIÇÃO ESTADUAL DO SUBST. TRIB.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1245,7 +1262,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 108
         Height = 7
-        Caption = 'IDENTIFICA'#199'AO DO EMITENTE'
+        Caption = 'IDENTIFICAÇAO DO EMITENTE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1336,7 +1353,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 7
         Width = 124
         Height = 7
-        Caption = 'INFORMA'#199#213'ES COMPLEMENTARES'
+        Caption = 'INFORMAÇÕES COMPLEMENTARES'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1396,7 +1413,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 117
         Width = 212
         Height = 7
-        Caption = 'DATA / HORA DA IMPRESS'#195'O: 00/00/0000 00:00:00 - USUARIO'
+        Caption = 'DATA / HORA DA IMPRESSÃO: 00/00/0000 00:00:00 - USUARIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1472,7 +1489,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 80
         Height = 7
-        Caption = 'NOME / RAZ'#195'O SOCIAL'
+        Caption = 'NOME / RAZÃO SOCIAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1501,7 +1518,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 29
         Width = 42
         Height = 7
-        Caption = 'ENDERE'#199'O'
+        Caption = 'ENDEREÇO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1530,7 +1547,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 55
         Width = 38
         Height = 7
-        Caption = 'MUNIC'#205'PIO'
+        Caption = 'MUNICÍPIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1704,7 +1721,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 55
         Width = 82
         Height = 7
-        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1733,7 +1750,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 68
         Height = 7
-        Caption = 'DATA DA EMISS'#195'O'
+        Caption = 'DATA DA EMISSÃO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1762,7 +1779,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 29
         Width = 87
         Height = 7
-        Caption = 'DATA SA'#205'DA / ENTRADA'
+        Caption = 'DATA SAÍDA / ENTRADA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1791,7 +1808,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 55
         Width = 58
         Height = 7
-        Caption = 'HORA DA SA'#205'DA'
+        Caption = 'HORA DA SAÍDA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1899,7 +1916,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 10
         Height = 61
         Angle = 90.000000000000000000
-        Caption = 'DESTINAT'#193'RIO'
+        Caption = 'DESTINATÁRIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2677,7 +2694,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 54
         Height = 7
         Alignment = taCenter
-        Caption = 'N'#186' DUPLICATA'
+        Caption = 'N° DUPLICATA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -2722,7 +2739,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 54
         Height = 7
         Alignment = taCenter
-        Caption = 'N'#186' DUPLICATA'
+        Caption = 'N° DUPLICATA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -2767,7 +2784,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 54
         Height = 7
         Alignment = taCenter
-        Caption = 'N'#186' DUPLICATA'
+        Caption = 'N° DUPLICATA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -2812,7 +2829,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 54
         Height = 7
         Alignment = taCenter
-        Caption = 'N'#186' DUPLICATA'
+        Caption = 'N° DUPLICATA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -2857,7 +2874,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 54
         Height = 7
         Alignment = taCenter
-        Caption = 'N'#186' DUPLICATA'
+        Caption = 'N° DUPLICATA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -2941,7 +2958,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 100
         Height = 7
-        Caption = 'BASE DE C'#193'LCULO DO ICMS'
+        Caption = 'BASE DE CÁLCULO DO ICMS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3091,7 +3108,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 120
         Height = 7
-        Caption = 'BASE C'#193'LC. ICMS SUBSTITUI'#199#195'O'
+        Caption = 'BASE CÁLC. ICMS SUBSTITUIÇÃO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3121,7 +3138,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 31
         Width = 123
         Height = 7
-        Caption = 'OUTRAS DESPESAS ACESS'#211'RIAS'
+        Caption = 'OUTRAS DESPESAS ACESSÓRIAS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3151,7 +3168,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 113
         Height = 7
-        Caption = 'VALOR DO ICMS SUBSTITUI'#199#195'O'
+        Caption = 'VALOR DO ICMS SUBSTITUIÇÃO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3333,7 +3350,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 10
         Height = 42
         Angle = 90.000000000000000000
-        Caption = 'C'#193'LCULO'
+        Caption = 'CÁLCULO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3453,7 +3470,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 54
         Height = 7
-        Caption = 'RAZ'#195'O SOCIAL'
+        Caption = 'RAZÃO SOCIAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3482,7 +3499,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 29
         Width = 42
         Height = 7
-        Caption = 'ENDERE'#199'O'
+        Caption = 'ENDEREÇO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3541,7 +3558,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 55
         Width = 34
         Height = 7
-        Caption = 'ESP'#201'CIE'
+        Caption = 'ESPÉCIE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3614,7 +3631,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 29
         Width = 38
         Height = 7
-        Caption = 'MUNIC'#205'PIO'
+        Caption = 'MUNICÍPIO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3643,7 +3660,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 55
         Width = 47
         Height = 7
-        Caption = 'NUMERA'#199#195'O'
+        Caption = 'NUMERAÇÃO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3672,7 +3689,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 51
         Height = 7
-        Caption = 'C'#211'DIGO ANTT'
+        Caption = 'CÓDIGO ANTT'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3701,7 +3718,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 71
         Height = 7
-        Caption = 'PLACA DO VE'#205'CULO'
+        Caption = 'PLACA DO VEÍCULO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3847,7 +3864,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 29
         Width = 82
         Height = 7
-        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -3978,7 +3995,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 55
         Width = 52
         Height = 7
-        Caption = 'PESO L'#205'QUIDO'
+        Caption = 'PESO LÍQUIDO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -4624,7 +4641,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 81
         Height = 7
-        Caption = 'INSCRI'#199#195'O MUNICIPAL'
+        Caption = 'INSCRIÇÃO MUNICIPAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -4639,7 +4656,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 108
         Height = 7
-        Caption = 'VALOR TOTAL DOS SERVI'#199'OS'
+        Caption = 'VALOR TOTAL DOS SERVIÇOS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -4654,7 +4671,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Top = 3
         Width = 105
         Height = 7
-        Caption = 'BASE DE C'#193'LCULO DO ISSQN'
+        Caption = 'BASE DE CÁLCULO DO ISSQN'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -4803,7 +4820,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 12
         Alignment = taCenter
         Caption = 
-          'Data / Hora da entrada em conting'#234'ncia: 00/00/0000 00:00:00  Mot' +
+          'Data / Hora da entrada em contingência: 00/00/0000 00:00:00  Mot' +
           'ivo: '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4905,9 +4922,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Left = 22
         Top = 22
         Width = 16
-        Height = 93
+        Height = 94
         Angle = 90.000000000000000000
-        Caption = 'N'#186' 000.000.000'
+        Caption = 'N° 000.000.000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -4923,7 +4940,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 16
         Height = 68
         Angle = 90.000000000000000000
-        Caption = 'S'#201'RIE 000'
+        Caption = 'SÉRIE 000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -4939,7 +4956,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 7
         Height = 172
         Angle = 90.000000000000000000
-        Caption = 'IDENTIFICA'#199#195'O E ASSINATURA DO RECEBEDOR'
+        Caption = 'IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -4972,7 +4989,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 350
         Angle = 90.000000000000000000
         Caption = 
-          'RECEBEMOS DE %s OS PRODUTOS / SERVI'#199'OS CONSTANTES DA NOTA FISCAL' +
+          'RECEBEMOS DE %s OS PRODUTOS / SERVIÇOS CONSTANTES DA NOTA FISCAL' +
           ' INDICADO AO LADO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4990,7 +5007,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 486
         Angle = 90.000000000000000000
         Caption = 
-          'DATA DE EMISS'#195'O: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXX' +
+          'DATA DE EMISSÃO: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXX' +
           'XXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5138,7 +5155,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 56
         Height = 7
         Alignment = taCenter
-        Caption = 'VALOR L'#205'QUIDO'
+        Caption = 'VALOR LÍQUIDO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -5183,7 +5200,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 32
         Height = 7
         Alignment = taCenter
-        Caption = 'N'#218'MERO'
+        Caption = 'NÚMERO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7

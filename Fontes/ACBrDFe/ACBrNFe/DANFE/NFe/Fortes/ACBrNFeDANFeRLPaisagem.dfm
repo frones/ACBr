@@ -467,15 +467,15 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
-        object RLLabel86: TRLLabel
+        object lblValorTotal: TRLLabel
           Tag = 10
           Left = 217
-          Top = 13
+          Top = 16
           Width = 50
           Height = 7
           Alignment = taCenter
           AutoSize = False
-          Caption = 'VALOR TOTAL'
+          Caption = 'TOTAL'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -501,7 +501,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
-        object RLLabel11: TRLLabel
+        object lblPercValorDesc1: TRLLabel
           Tag = 10
           Left = 269
           Top = 16
@@ -764,6 +764,23 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Alignment = taCenter
           AutoSize = False
           Caption = 'ICMS S.T.'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          HoldStyle = hsRelatively
+          ParentFont = False
+        end
+        object RLLabel6: TRLLabel
+          Tag = 10
+          Left = 220
+          Top = 9
+          Width = 44
+          Height = 7
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'VALOR'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4905,7 +4922,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Left = 22
         Top = 22
         Width = 16
-        Height = 93
+        Height = 94
         Angle = 90.000000000000000000
         Caption = 'N'#186' 000.000.000'
         Font.Charset = DEFAULT_CHARSET

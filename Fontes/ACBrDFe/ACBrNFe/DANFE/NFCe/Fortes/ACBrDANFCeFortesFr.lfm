@@ -12,7 +12,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.4.0'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
@@ -706,7 +706,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbMsgDANFe: TRLBand
         Left = 0
         Height = 42
-        Top = 81
+        Top = 96
         Width = 276
         AutoSize = True
         RealBounds.Left = 0
@@ -773,7 +773,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbDadosCliche: TRLBand
         Left = 0
-        Height = 81
+        Height = 96
         Top = 0
         Width = 276
         AutoSize = True
@@ -783,7 +783,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
         object pLogoeCliche: TRLPanel
           Left = 0
-          Height = 81
+          Height = 96
           Top = 0
           Width = 276
           Align = faTop
@@ -796,7 +796,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lRazaoSocial: TRLLabel
             Left = 0
             Height = 12
-            Top = 19
+            Top = 34
             Width = 276
             Align = faTop
             Alignment = taCenter
@@ -813,7 +813,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lEmitCNPJ_IE_IM: TRLLabel
             Left = 0
             Height = 12
-            Top = 31
+            Top = 46
             Width = 276
             Align = faTop
             Alignment = taCenter
@@ -831,7 +831,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lEndereco: TRLMemo
             Left = 0
             Height = 30
-            Top = 43
+            Top = 58
             Width = 276
             Align = faTop
             Alignment = taCenter
@@ -851,7 +851,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object RLDraw1: TRLDraw
             Left = 0
             Height = 8
-            Top = 73
+            Top = 88
             Width = 276
             Align = faTop
             Angle = 0
@@ -865,7 +865,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lNomeFantasia: TRLLabel
             Left = 0
             Height = 18
-            Top = 1
+            Top = 16
             Width = 276
             Align = faTop
             Alignment = taCenter
@@ -883,11 +883,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           end
           object imgLogo: TRLImage
             Left = 0
-            Height = 1
+            Height = 16
             Top = 0
             Width = 276
             Align = faTop
-            AutoSize = True
             Center = True
             RealBounds.Left = 0
             RealBounds.Top = 0
@@ -901,7 +900,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbLegenda: TRLBand
         Left = 0
         Height = 28
-        Top = 123
+        Top = 138
         Width = 276
         AutoSize = True
         RealBounds.Left = 0

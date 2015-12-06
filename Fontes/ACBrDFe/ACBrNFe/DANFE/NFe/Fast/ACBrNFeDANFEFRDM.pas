@@ -1999,9 +1999,9 @@ begin
   begin
     if (FImprimirDadosArma) and ( arma.Count > 0) then
     begin
+      Result := sQuebraLinha;
       for i := 0 to arma.Count - 1 do
       begin
-		    Result := sQuebraLinha;
         Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
         Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
         Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
@@ -2021,13 +2021,13 @@ begin
   begin
     if med.Count > 0 then
     begin
+      Result := sQuebraLinha;
       for i := 0 to med.Count - 1 do
       begin
-        Result := sQuebraLinha;
-        Result := Result + 'LOTE: '    + med.Items[i].nLote+ sQuebraLinha;
-        Result := Result + 'QTDADE: '  + FormatFloatBr(med.Items[i].qLote)+ sQuebraLinha;
-        Result := Result + 'FABR.: '   + FormatDateBr(med.Items[i].dFab)+ sQuebraLinha;
-        Result := Result + 'VAL.: '    + FormatDateBr(med.Items[i].dVal)+ sQuebraLinha;
+        Result := Result + 'LOTE: ' + med.Items[i].nLote+ sQuebraLinha;
+        Result := Result + 'QTD: '  + FormatFloatBr(med.Items[i].qLote)+ sQuebraLinha;
+        Result := Result + 'FAB: '  + FormatDateBr(med.Items[i].dFab)+ sQuebraLinha;
+        Result := Result + 'VAL: '  + FormatDateBr(med.Items[i].dVal)+ sQuebraLinha;
         Result := Result + IfThen( med.Items[i].vPMC  > 0, 'PMC: ' + FormatFloatBr(med.Items[i].vPMC) + ';' , '');
       end;
     end;
@@ -2104,28 +2104,25 @@ begin
   begin
     if comb.cProdANP > 0 then
     begin
-      Result := ';';
-      Result := Result + ACBrStr( 'CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + ';';
-      if comb.CODIF > '' then
-      Result := Result + ACBrStr( 'AUTORIZAÇÃO/CODIF: ') + comb.CODIF + ';';
-      Result := Result + IfThen( comb.qTemp > 0 , ACBrStr( 'QTD. FATURADA TEMP. AMBIENTE: ' )+ FormatFloat('###,##0.0000', comb.qTemp) + ';' , '');
-      Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + ';';
+      Result := sQuebraLinha;
+      Result := Result + ACBrStr( 'CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + sQuebraLinha;
+      Result := Result + IfThen( comb.CODIF > '', ACBrStr( 'AUTORIZAÇÃO/CODIF: ') + comb.CODIF + sQuebraLinha , '');
+      Result := Result + IfThen( comb.qTemp > 0 , ACBrStr( 'QTD. FATURADA TEMP. AMBIENTE: ' )+ FormatFloat('###,##0.0000', comb.qTemp) + sQuebraLinha , '');
+      Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + sQuebraLinha;
       if comb.CIDE.qBCProd > 0 then
       begin
-        Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + ';';
-        Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + ';';
+        Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + sQuebraLinha;
+        Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + sQuebraLinha;
         Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat('###,##0.00', comb.CIDE.vCIDE);
       end;
       if comb.encerrante.nBico > 0  then
       begin
-        Result := Result + 'ENCERRANTE' + ';';
-        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + ';';
-        Result := Result + IfThen( comb.encerrante.nBomba > 0, 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + ';' , '');
-        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + ';';
-
-        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + ';';
-        Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + ';'; 
-
+        Result := Result + 'ENCERRANTE' + sQuebraLinha;
+        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + sQuebraLinha;
+        Result := Result + IfThen( comb.encerrante.nBomba > 0, 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + sQuebraLinha , '');
+        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + sQuebraLinha;
+        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + sQuebraLinha;
+        Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + sQuebraLinha;
       end;
     end;
   end;

@@ -3,12 +3,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Top = 119
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 881
-  ClientWidth = 911
+  ClientWidth = 916
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
     Left = 0
-    Top = 0
+    Top = -312
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -390,15 +390,15 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object RLLabel86: TRLLabel
+      object lblValorTotal: TRLLabel
         Tag = 10
         Left = 457
-        Top = 18
+        Top = 21
         Width = 50
         Height = 7
         Alignment = taCenter
         AutoSize = False
-        Caption = 'VALOR TOTAL'
+        Caption = 'TOTAL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -611,7 +611,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object RLLabel11: TRLLabel
+      object lblPercValorDesc1: TRLLabel
         Tag = 10
         Left = 509
         Top = 21
@@ -636,6 +636,23 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Angle = 90.000000000000000000
         DrawKind = dkLine
         HoldStyle = hsRelatively
+      end
+      object RLLabel2: TRLLabel
+        Tag = 10
+        Left = 459
+        Top = 14
+        Width = 44
+        Height = 7
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
       end
     end
     object rlbEmitente: TRLBand
@@ -5802,39 +5819,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Transparent = False
         Visible = False
       end
-      object txtCodigo: TRLDBText
-        Tag = 705
-        Left = 2
-        Top = 1
-        Width = 51
-        Height = 11
-        AutoSize = False
-        DataField = 'CODIGO'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Text = ''
-      end
-      object txtNCM: TRLDBText
-        Tag = 705
-        Left = 245
-        Top = 1
-        Width = 38
-        Height = 11
-        Alignment = taCenter
-        AutoSize = False
-        DataField = 'NCM'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Text = ''
-      end
       object txtCST: TRLDBText
         Tag = 705
         Left = 284
@@ -6138,7 +6122,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rlmDescricao: TRLDBMemo
         Tag = 705
-        Left = 56
+        Left = 54
         Top = 1
         Width = 185
         Height = 10
@@ -6220,6 +6204,40 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Angle = 90.000000000000000000
         DrawKind = dkLine
         HoldStyle = hsRelatively
+      end
+      object txtNCM: TRLDBMemo
+        Tag = 705
+        Left = 245
+        Top = 1
+        Width = 38
+        Height = 11
+        Alignment = taCenter
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        DataField = 'NCM'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txtCodigo: TRLDBText
+        Tag = 705
+        Left = 2
+        Top = 1
+        Width = 51
+        Height = 11
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        DataField = 'CODIGO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Text = ''
       end
     end
     object rlbISSQN: TRLBand

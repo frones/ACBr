@@ -171,6 +171,7 @@ type
     sRetirada : String;
     sEntrega : String;
     FImprimirDescPorc: Boolean;
+    fImprimirTotalLiquido : Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
@@ -227,6 +228,7 @@ type
                     ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
+                    AImprimirTotalLiquido : Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
@@ -275,6 +277,7 @@ type
                     ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
+                    AImprimirTotalLiquido : Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
@@ -289,7 +292,7 @@ type
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;
                     ACorDestaqueProdutos: TColor = clWhite;
-		    ATamanhoLogoHeight: Integer = 200;
+                    ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
                     ARecuoEmpresa: Integer = 10;
@@ -354,6 +357,7 @@ begin
     FieldDefs.Add('QTDE',ftString,18);
     FieldDefs.Add('VALOR',ftString,18);
     FieldDefs.Add('VALORDESC',ftString,18);
+    FieldDefs.Add('Valorliquido',ftString,18);
     FieldDefs.Add('TOTAL',ftString,18);
     FieldDefs.Add('CST',ftString,3);
     FieldDefs.Add('CSOSN',ftString,4);
@@ -424,6 +428,7 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 ANFECancelada: Boolean = False;
                 AImprimirDetalhamentoEspecifico: Boolean = True;
                 AImprimirDescPorc: Boolean = False;
+                AImprimirTotalLiquido : Boolean = False;
                 ADetVeiculos: TDetVeiculos = [];
                 ADetMedicamentos: TDetMedicamentos = [];
                 ADetArmamentos: TDetArmamentos = [];
@@ -483,10 +488,11 @@ begin
       FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
       FImprimirDescPorc := AImprimirDescPorc;
-      FDetVeiculos := ADetVeiculos;
-      FDetMedicamentos := ADetMedicamentos;
-      FDetArmamentos := ADetArmamentos;
-      FDetCombustiveis := ADetCombustiveis;
+      fImprimirTotalLiquido := AImprimirTotalLiquido;
+      FDetVeiculos          := ADetVeiculos;
+      FDetMedicamentos      := ADetMedicamentos;
+      FDetArmamentos        := ADetArmamentos;
+      FDetCombustiveis      := ADetCombustiveis;
       FQuebraLinhaEmDetalhamentoEspecifico := ADQuebraLinhaEmDetalhamentoEspecifico;
       fFormato      := AdCasasDecimaisFormato;
       fMask_qCom   := AdCasasDecimais_Mask_qCom;
@@ -549,6 +555,7 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
                     ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
+                    AImprimirTotalLiquido : Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
                     ADetArmamentos: TDetArmamentos = [];
@@ -607,16 +614,16 @@ begin
       FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
       FImprimirDescPorc := AImprimirDescPorc;
+      fImprimirTotalLiquido := AImprimirTotalLiquido;
       FDetVeiculos := ADetVeiculos;
       FDetMedicamentos := ADetMedicamentos;
       FDetArmamentos := ADetArmamentos;
       FDetCombustiveis := ADetCombustiveis;
       FQuebraLinhaEmDetalhamentoEspecifico := ADQuebraLinhaEmDetalhamentoEspecifico;
-      fFormato      := AdCasasDecimaisFormato;
-      fMask_qCom    := AdCasasDecimais_Mask_qCom;
-      fMask_vUnCom  := AdCasasDecimais_Mask_vUnCom;
+      fFormato := AdCasasDecimaisFormato;
+      fMask_qCom := AdCasasDecimais_Mask_qCom;
+      fMask_vUnCom := AdCasasDecimais_Mask_vUnCom;
       fExibeCampoFatura := AdExibeCampoFatura;
-
       FTamanhoLogoHeigth := ATamanhoLogoHeight;
       FTamanhoLogoWidth := ATamanhoLogoWidth;
       FRecuoEndereco := ARecuoEndereco;
@@ -624,7 +631,6 @@ begin
       FLogoemCima := ALogoemCima;
       FTamanhoFonteEndereco := ATamanhoFonteEndereco;
       FRecuoLogo := ARecuoLogo;
-
       fMostraDadosISSQN := AMostraDadosISSQN;
       fAltLinhaComun := AAltLinhaComun;
       fEspacoEntreProdutos := AEspacoEntreProdutos;

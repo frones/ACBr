@@ -117,7 +117,7 @@ type
     lblCST: TRLLabel;
     RLLabel84: TRLLabel;
     RLLabel85: TRLLabel;
-    RLLabel86: TRLLabel;
+    lblValorTotal: TRLLabel;
     RLLabel87: TRLLabel;
     RLLabel88: TRLLabel;
     RLLabel89: TRLLabel;
@@ -328,8 +328,6 @@ type
     LinhaCodigo: TRLDraw;
     LinhaFinal: TRLDraw;
     rliMarcaDagua1: TRLImage;
-    txtCodigo: TRLDBText;
-    txtNCM: TRLDBText;
     txtCST: TRLDBText;
     txtCFOP: TRLDBText;
     txtUnidade: TRLDBText;
@@ -389,7 +387,7 @@ type
     rllCabFatura11: TRLLabel;
     rllCabFatura12: TRLLabel;
     lblPercValorDesc: TRLLabel;
-    RLLabel11: TRLLabel;
+    lblPercValorDesc1: TRLLabel;
     RLDraw1: TRLDraw;
     txtValorDesconto: TRLDBText;
     RLDraw2: TRLDraw;
@@ -578,6 +576,9 @@ type
     FundoObsItem: TRLLabel;
     rlbCancelada: TRLBand;
     RLLCancelada: TRLLabel;
+    txtNCM: TRLDBMemo;
+    txtCodigo: TRLDBText;
+    RLLabel2: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -604,7 +605,7 @@ type
     procedure AddFatura;
     procedure ConfigureDataSource;
     function ManterVeiculos(inItem: integer): String;
-    function ManterMedicamentos(inItem: integer): String;
+    function ManterMedicamentos(inItem: integer ) : String;
     Function ManterArma( inItem:  integer  ) : String;
     Function ManterCombustivel( inItem:  integer  ) : String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
@@ -681,7 +682,7 @@ begin
 end;
 
 procedure TfrlDANFeRLRetrato.InitDados;
-var 
+var
   i, b, h, iAlturaCanhoto: Integer;
   LogoStream: TStringStream;
 begin
@@ -1794,6 +1795,7 @@ begin
       cdsItens.FieldByName('VALOR').AsString        := FormatValorUnitario(  Prod.vUnCom);
       cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', Prod.vProd);
       cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
+      cdsItens.FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),'###,###,##0.00');
       cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);
       cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', Imposto.ICMS.PICMS);
       cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VICMS);
@@ -2054,6 +2056,15 @@ begin
     lblPercValorDesc.Caption := 'PERC.(%)'
   else
     lblPercValorDesc.Caption := 'VALOR';
+
+
+  if fImprimirTotalLiquido then
+  begin
+    lblValorTotal.Caption       := 'DESCONTO';
+    txtValorTotal.DataField     := 'VALORDESC';
+    lblPercValorDesc1.Caption   := 'LÍQUIDO';
+    txtValorDesconto.DataField  := 'valorliquido';
+  end;
 end;
 
 procedure TfrlDANFeRLRetrato.FormCreate(Sender: TObject);
@@ -2074,6 +2085,7 @@ begin
   begin
     if veicProd.chassi > '' then
     begin
+      Result := sQuebraLinha;
       if dv_tpOp in FDetVeiculos          then Result := Result + ACBrStr('TIPO DA OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + sQuebraLinha;
       if dv_Chassi in FDetVeiculos        then Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + sQuebraLinha;
       if dv_cCor in FDetVeiculos          then Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + sQuebraLinha;
@@ -2102,10 +2114,7 @@ begin
   end;
 end;
 
-
-
-
-Function TfrlDANFeRLRetrato.ManterMedicamentos( inItem:  integer  ) : String;
+Function TfrlDANFeRLRetrato.ManterMedicamentos( inItem:  integer ) : String;
 Var
   i : Integer;
 begin
@@ -2114,24 +2123,16 @@ begin
   begin
     if med.Count > 0 then
     begin
+      Result := sQuebraLinha;
       for i := 0 to med.Count - 1 do
       begin
-        if fQuebraLinhaEmDetalhamentoEspecifico then
-        begin
-          if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('NÚMERO DO LOTE: ') + med.Items[i].nLote + sQuebraLinha;
-          if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QUANTIDADE DO LOTE: ' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + sQuebraLinha;
-          if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE FABRICAÇÃO: ') + DateToStr(med.Items[i].dFab) + sQuebraLinha;
-          if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('DATA DE VALIDADE: ')   + DateToStr(med.Items[i].dVal) + sQuebraLinha;
-          if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
-        end
-        else
-        begin
-          if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE:') + med.Items[i].nLote + ' ';
-          if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD:' )+ FormatFloat('###,##0.000', med.Items[i].qLote) + ' ';
-          if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB:') + DateToStr(med.Items[i].dFab) + ' ';
-          if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL:')   + DateToStr(med.Items[i].dVal) + ' ';
-          if dm_vPMC  in FDetMedicamentos then Result := Result + ACBrStr('PREÇO MÁX. CONSUMIDOR: R$ ') + FormatFloat('###,##0.00', med.Items[i].vPMC) + #13#10;
-        end;
+        if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE: ') + med.Items[i].nLote + sQuebraLinha;
+        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD: ' ) + FormatFloat('###,##0.000', med.Items[i].qLote) + sQuebraLinha;
+        if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB: ' ) + DateToStr(med.Items[i].dFab) + sQuebraLinha;
+        if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL: ' ) + DateToStr(med.Items[i].dVal) + sQuebraLinha;
+        if dm_vPMC  in FDetMedicamentos then Result := Result + IfThen( med.Items[i].vPMC > 0,
+                                                                  ACBrStr('PMC: R$') + FormatFloat('###,##0.00', med.Items[i].vPMC),'' )
+                                                                  + #13#10;
       end;
     end;
   end;
@@ -2146,6 +2147,7 @@ begin
   begin
     if arma.Count > 0 then
     begin
+      Result := sQuebraLinha;
       for i := 0 to arma.Count - 1 do
       begin
         if da_tpArma in FDetArmamentos then Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
@@ -2165,29 +2167,31 @@ begin
   begin
     if comb.cProdANP > 0 then
     begin
-      if dc_cProdANP    in FDetCombustiveis then Result := Result + ACBrStr('CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + #13#10;
+      Result := sQuebraLinha;
+      if dc_cProdANP    in FDetCombustiveis then Result := Result + ACBrStr('CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + sQuebraLinha;
       if dc_CODIF       in FDetCombustiveis then
-                        if comb.CODIF > ''  then Result := Result + ACBrStr('AUTORIZAÇÃO/CODIF: ') + comb.CODIF + #13#10;
+                        if comb.CODIF > ''  then Result := Result + ACBrStr('AUTORIZAÇÃO/CODIF: ') + comb.CODIF + sQuebraLinha;
       if dc_qTemp       in FDetCombustiveis then
-                          if comb.qTemp > 0 then Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloat('###,##0.0000', comb.qTemp) + #13#10;
-      if dc_UFCons      in FDetCombustiveis then Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + #13#10;
+                          if comb.qTemp > 0 then Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloat('###,##0.0000', comb.qTemp) + sQuebraLinha;
+      if dc_UFCons      in FDetCombustiveis then Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + sQuebraLinha;
       if comb.CIDE.qBCProd > 0 then
       begin
-        if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + #13#10;
-        if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + #13#10;
-        if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat('###,##0.00', comb.CIDE.vCIDE);
+        if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + sQuebraLinha;
+        if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + sQuebraLinha;
+        if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat('###,##0.00', comb.CIDE.vCIDE) + sQuebraLinha;
       end;
-
       if comb.encerrante.nBico > 0  then
       begin
-        Result := Result + 'ENCERRANTE' + #13#10;
-        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + #13#10;
+        Result := Result + 'ENCERRANTE' + sQuebraLinha;
+        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + sQuebraLinha;
         if comb.encerrante.nBomba > 0 then
-          Result := Result + 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + #13#10;
-        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + #13#10;
-        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + #13#10;
-        Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + #13#10;
-      end;
+          Result := Result + 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + sQuebraLinha;
+        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + sQuebraLinha;
+        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + sQuebraLinha;
+        Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin)+ #13#10;
+      end
+      else
+        Result := Result + #13#10;
     end;
   end;
 end;
@@ -2206,7 +2210,6 @@ begin
   if FImprimirDetalhamentoEspecifico = true then
   begin
     sQuebraLinha := QuebraLinha;
-    Result := Result + #13#10;
     Result := Result + ManterVeiculos( inItem );
     Result := Result + ManterMedicamentos( inItem );
     Result := Result + ManterArma( inItem );

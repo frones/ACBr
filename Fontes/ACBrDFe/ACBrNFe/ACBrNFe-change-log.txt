@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2015
+-- ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato / ACBrNFeDANFeRL ACBrNFeDANFeRLClass --
+[+] Implantaçao da Coluna Valor Liquido e refatoração para impressão
+[+] Novo campo em cdsItens :  FieldDefs.Add('Valorliquido',ftString,18);
+[*] Novo padrão para Impressao de Medicamentos
+[*] Melhoria no Quebralinhas;
+	por : Henrique Leonardo    
+
+06/12/2015
+-- ACBrNFeDANFEFRDM --
+[*] Novo padrão para Impressao de Medicamentos
+[*] Melhoria no Quebralinhas;
+	por : Henrique Leonardo    
+
+
 03/12/2015
 -- ACBrNFeNotasFiscais --
 [*] método "Assinar", modificado para só validar CNPJ se conseguir ler o mesmo

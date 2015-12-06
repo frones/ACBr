@@ -17,8 +17,8 @@ object frlDANFeRL: TfrlDANFeRL
   PixelsPerInch = 96
   TextHeight = 13
   object RLNFe: TRLReport
-    Left = 0
-    Top = -2
+    Left = -32
+    Top = -18
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET
@@ -34,11 +34,11 @@ object frlDANFeRL: TfrlDANFeRL
     DocumentInfo.Author = 'FortesReport 3.23 - Copyright '#194#169' 1999-2009 Fortes Inform'#195#161'tica'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
-    Left = 368
-    Top = 152
+    Left = 272
+    Top = 96
   end
   object DataSource1: TDataSource
-    Left = 400
-    Top = 152
+    Left = 392
+    Top = 96
   end
 end

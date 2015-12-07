@@ -97,7 +97,7 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
   protected
     procedure AddBufferLinhas( AString: AnsiString) ;
 
-    function AjustaLinhaColunas( Linha: AnsiString ): AnsiString;
+    function AjustaLinhaColunas( Linha: AnsiString ): AnsiString; virtual;
     function ColunasExpandido(): Integer; virtual;
 
     procedure AtivarVirtual ; override;

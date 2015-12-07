@@ -48,7 +48,7 @@ unit ACBrSATExtratoFortes;
 interface
 
 uses 
-  Classes, SysUtils, Forms, 
+  Classes, SysUtils,
   ACBrSATExtratoClass,
   pcnConversao;
 

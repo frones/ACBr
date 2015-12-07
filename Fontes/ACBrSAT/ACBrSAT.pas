@@ -176,7 +176,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String; NomeArq: String = '';
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil); overload;
+      StreamCFe: TStream = nil); overload;
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil); overload;
@@ -1514,7 +1514,7 @@ begin
 end;
 
 procedure TACBrSAT.EnviarEmail(sPara, sAssunto, NomeArq: String; sMensagem, sCC,
-  Anexos: TStrings; StreamNFe: TStream);
+  Anexos: TStrings; StreamCFe: TStream);
 var
   i : Integer;
   EMails : TStringList;
@@ -1545,8 +1545,8 @@ begin
     MAIL.AltBody.Text := (StripHTML(sMensagem.Text));
   end;
 
-  if Assigned(StreamNFe) then
-    MAIL.AddAttachment(StreamNFe, NomeArq);
+  if Assigned(StreamCFe) then
+    MAIL.AddAttachment(StreamCFe, NomeArq);
 
   if Assigned(Anexos) then
   begin

@@ -55,7 +55,7 @@ uses Classes, SysUtils,
      ACBrSATExtratoClass, ACBrSATExtratoFortes,
      pcnCFe, pcnCFeCanc, pcnConversao,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
-     RLFilters, RLPrinters, Controls;
+     RLFilters, RLPrinters, Controls, StrUtils;
 
 type
 
@@ -590,7 +590,7 @@ begin
                  Descricao+' '+
                  FormatFloatBr(Prod.qCom, ACBrSATExtrato.Mask_qCom)+' '+
                  Trim(Prod.uCom)+' X '+
-                 FormatFloatBr(Prod.vUnCom, ACBrSATExtrato.Mask_vUnCom)+' ';
+                 FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, '#,###,##0.000', ACBrSATExtrato.Mask_vUnCom))+' ';
 
     if Imposto.vItem12741 > 0 then
       LinhaItem := LinhaItem + '('+FormatFloatBr(Imposto.vItem12741,'0.00')+') ';

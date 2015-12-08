@@ -49,8 +49,7 @@ unit ACBrIBPTax;
 interface
 
 uses
-  Contnrs,  SysUtils, Variants, Classes,
-  ACBrSocket;
+  Contnrs,  SysUtils, Variants, Classes, ACBrSocket;
 
 type
   EACBrIBPTax = class(Exception);
@@ -60,6 +59,29 @@ type
   TACBrIBPTaxTabela = (tabNCM, tabNBS, tabLST);
 
   TACBrIBPTaxErroImportacao = procedure(const ALinha: String; const AErro: String) of object;
+
+  TACBrIBPTaxProdutoDTO = record
+    Codigo    : String;
+    UF        : String;
+    EX        : Integer;
+    Descricao : String;
+    Nacional  : Double;
+    Estadual  : Double;
+    Importado : Double;
+    JSON      : String;
+  end;
+
+  TACBrIBPTaxServicoDTO = record
+    Codigo    : String;
+    UF        : String;
+    Descricao : String;
+    Tipo      : String;
+    Nacional  : Double;
+    Estadual  : Double;
+    Municipal : Double;
+    Importado : Double;
+    JSON      : String;
+  end;
 
   TACBrIBPTaxRegistro = class
   private
@@ -104,6 +126,8 @@ type
     FVigenciaInicio: TDateTime;
     FOnErroImportacao: TACBrIBPTaxErroImportacao;
     FFonte: string;
+    FToken: String;
+    FCNPJEmpresa: String;
     procedure ExportarCSV(const AArquivo: String);
     procedure ExportarDSV(const AArquivo: String);
     procedure ExportarHTML(const AArquivo: String);
@@ -126,6 +150,15 @@ type
       var tabela: Integer; var aliqFedNac, aliqFedImp, aliqEstadual,
       aliqMunicipal: Double ; const BuscaParcial: Boolean = False): Boolean;
 
+    function API_ConsultarProduto(const ANCM: String; const AUF: String;
+      const AExcecao: Integer = 0; const ACodigoProprio: String = '';
+      const ADescricaoProduto: String = ''; const AUnidadeMedida: String = '';
+      const AValorUnitario: Double = 0.00; const AGtin: String = ''): TACBrIBPTaxProdutoDTO;
+
+    function API_ConsultarServico(const ANBS_LC116: String; const AUF: String;
+      const ADescricaoServico: String = ''; const AUnidadeMedida: String = '';
+      const AValorUnitario: Double = 0.00): TACBrIBPTaxServicoDTO;
+
     property Itens: TACBrIBPTaxRegistros read FItens;
   published
     property OnErroImportacao: TACBrIBPTaxErroImportacao read FOnErroImportacao write FOnErroImportacao;
@@ -136,6 +169,8 @@ type
     property VigenciaFim: TDateTime read FVigenciaFim;
     property URLDownload: String read FURLDownload write FURLDownload;
     property Arquivo: TStringList read FArquivo write FArquivo;
+    property Token: String read FToken write FToken;
+    property CNPJEmpresa: String read FCNPJEmpresa write FCNPJEmpresa;
   end;
 
   function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
@@ -144,7 +179,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil, ACBrValidador;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin
@@ -165,6 +200,22 @@ begin
     Result := TACBrIBPTaxTabela(TabelaTmp)
   else
     raise EACBrIBPTax.CreateFmt('Tipo de tabela desconhecido "%s".', [ATabela]);
+end;
+
+function SimpleJSONToList(const AJSONString: String): TStringList;
+var
+  Texto: String;
+begin
+  Result := TStringList.Create;
+
+  Texto := AJSONString;
+  Texto := RemoveStrings(Texto, ['{', '}']);
+  Texto := StringReplace(Texto, ',"', sLineBreak + '"', [rfReplaceAll]);
+  Texto := StringReplace(Texto, '"', '', [rfReplaceAll]);
+  Texto := StringReplace(Texto, ':', '=', [rfReplaceAll]);
+  Texto := StringReplace(Texto, '.', ',', [rfReplaceAll]);
+
+  Result.Text := Texto;
 end;
 
 { TACBrIBPTaxRegistros }
@@ -353,6 +404,132 @@ begin
     raise EFilerError.Create('TStringList não pode ser vazio!');
 
   Result := PopularItens > 0;
+end;
+
+function TACBrIBPTax.API_ConsultarProduto(const ANCM, AUF: String;
+  const AExcecao: Integer; const ACodigoProprio, ADescricaoProduto,
+  AUnidadeMedida: String; const AValorUnitario: Double;
+  const AGtin: String): TACBrIBPTaxProdutoDTO;
+var
+  UrlConsulta: String;
+  json: TStringList;
+begin
+  if Trim(FToken) = '' then
+    raise EACBrIBPTax.Create('Token não foi configurado no componente ACBrIBPTax.');
+
+  if Trim(FCNPJEmpresa) = '' then
+    raise EACBrIBPTax.Create('CNPJ não foi configurado no componente ACBrIBPTax.');
+
+  if ValidarCNPJ(FCNPJEmpresa) <> '' then
+    raise EACBrIBPTax.Create('CNPJ configurado é inválido.');
+
+  if Trim(ANCM) = '' then
+    raise EACBrIBPTax.Create('NCM não foi informado.');
+
+  if Trim(AUF) = '' then
+    raise EACBrIBPTax.Create('UF não foi informado.');
+
+  if AExcecao < 0 then
+    raise EACBrIBPTax.Create('Informe 0 quando não houver exceção ou o código da exceção.');
+
+  UrlConsulta := 'http://iws.ibpt.org.br/api/deolhonoimposto/produto' +
+                   '?token='  + Self.AjustaParam(FToken) +
+                   '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
+                   '&codigo=' + Self.AjustaParam(ANCM) +
+                   '&uf='     + Self.AjustaParam(AUF) +
+                   '&ex='     + Self.AjustaParam(IntToStr(AExcecao));
+
+  // parâmetros opcionais
+  if Trim(ACodigoProprio) <> '' then
+    UrlConsulta := UrlConsulta + '&codigoInterno=' + Self.AjustaParam(ACodigoProprio);
+
+  if Trim(ADescricaoProduto) <> '' then
+    UrlConsulta := UrlConsulta + '&descricao=' + Self.AjustaParam(ADescricaoProduto);
+
+  if Trim(AUnidadeMedida) <> '' then
+    UrlConsulta := UrlConsulta + '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida);
+
+  if AValorUnitario > 0 then
+    UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario));
+
+  if Trim(AGtin) <> '' then
+    UrlConsulta := UrlConsulta + '&gtin=' + Self.AjustaParam(AGtin);
+
+  // enviar consulta
+  Self.HTTPGet(ACBrStrToAnsi(UrlConsulta));
+
+  // retorno em JSON
+  Result.JSON := ACBrStrToAnsi(Self.RespHTTP.Text);
+  json := SimpleJSONToList(Result.JSON);
+  try
+    Result.Codigo    := json.Values['Codigo'];
+    Result.UF        := json.Values['UF'];
+    Result.EX        := StrToIntDef(json.Values['EX'], 0);
+    Result.Descricao := json.Values['Descricao'];
+    Result.Nacional  := StrToFloatDef(json.Values['Nacional'], 0);
+    Result.Estadual  := StrToFloatDef(json.Values['Estadual'], 0);
+    Result.Importado := StrToFloatDef(json.Values['Importado'], 0);
+  finally
+    json.Free;
+  end;
+end;
+
+function TACBrIBPTax.API_ConsultarServico(const ANBS_LC116, AUF,
+  ADescricaoServico, AUnidadeMedida: String;
+  const AValorUnitario: Double): TACBrIBPTaxServicoDTO;
+var
+  UrlConsulta: String;
+  json: TStringList;
+begin
+  if Trim(FToken) = '' then
+    raise EACBrIBPTax.Create('Token não foi configurado no componente ACBrIBPTax.');
+
+  if Trim(FCNPJEmpresa) = '' then
+    raise EACBrIBPTax.Create('CNPJ não foi configurado no componente ACBrIBPTax.');
+
+  if ValidarCNPJ(FCNPJEmpresa) <> '' then
+    raise EACBrIBPTax.Create('CNPJ configurado é inválido.');
+
+  if Trim(ANBS_LC116) = '' then
+    raise EACBrIBPTax.Create('Código NBS/LC-116 não foi informado.');
+
+  if Trim(AUF) = '' then
+    raise EACBrIBPTax.Create('UF não foi informado.');
+
+  UrlConsulta := 'http://iws.ibpt.org.br/api/deolhonoimposto/servico' +
+                   '?token='  + Self.AjustaParam(FToken) +
+                   '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
+                   '&codigo=' + Self.AjustaParam(ANBS_LC116) +
+                   '&uf='     + Self.AjustaParam(AUF);
+
+  // parâmetros opcionais
+  if Trim(ADescricaoServico) <> '' then
+    UrlConsulta := UrlConsulta + '&descricao=' + Self.AjustaParam(ADescricaoServico);
+
+  if Trim(AUnidadeMedida) <> '' then
+    UrlConsulta := UrlConsulta + '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida);
+
+  if AValorUnitario > 0 then
+    UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario));
+
+  // enviar consulta
+  Self.HTTPGet(ACBrStrToAnsi(UrlConsulta));
+
+  // retorno em JSON
+  Result.JSON := ACBrStrToAnsi(Self.RespHTTP.Text);
+  json := SimpleJSONToList(Result.JSON);
+  try
+    Result.Codigo    := json.Values['Codigo'];
+    Result.UF        := json.Values['UF'];
+    Result.Descricao := json.Values['Descricao'];
+    Result.Tipo      := json.Values['Tipo'];
+    Result.Nacional  := StrToFloatDef(json.Values['Nacional'], 0);
+    Result.Estadual  := StrToFloatDef(json.Values['Estadual'], 0);
+    Result.Municipal := StrToFloatDef(json.Values['Municipal'], 0);
+    Result.Importado := StrToFloatDef(json.Values['Importado'], 0);
+  finally
+    json.Free;
+  end;
 end;
 
 function TACBrIBPTax.Procurar(const ACodigo: String; var ex, descricao: String;

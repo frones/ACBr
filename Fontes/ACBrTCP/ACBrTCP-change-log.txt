@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2015
+-- ACBrIBPTax --
+[+] Adicionado método para consulta de alíquotas de imposto aproximado via API do site
+    para produto é serviço.
+    por: regys.silveira
+
 05/10/2015
 -- ACBrCEP --
 [+] http://www.projetoacbr.com.br/forum/topic/24940-novo-provedor-para-acbrcep-viacep

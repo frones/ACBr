@@ -48,6 +48,13 @@ type
     lbVigencia: TLabel;
     lblChave: TLabel;
     lblFonte: TLabel;
+    TabSheet3: TTabSheet;
+    btnAPIConsultarProduto: TButton;
+    edtCNPJ: TEdit;
+    edtToken: TEdit;
+    Label2: TLabel;
+    Label5: TLabel;
+    Memo2: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btExportarClick(Sender: TObject);
     procedure btSairClick(Sender: TObject);
@@ -55,6 +62,7 @@ type
     procedure btProxyClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure ACBrIBPTax1ErroImportacao(const ALinha, AErro: string);
+    procedure btnAPIConsultarProdutoClick(Sender: TObject);
   private
 
   public
@@ -205,6 +213,29 @@ begin
     [mbOK],
     0
   );
+end;
+
+procedure TForm1.btnAPIConsultarProdutoClick(Sender: TObject);
+var
+  Retorno: TACBrIBPTaxProdutoDTO;
+begin
+  ACBrIBPTax1.CNPJEmpresa := edtCNPJ.Text;
+  ACBrIBPTax1.Token       := edtToken.Text;
+
+  Retorno := ACBrIBPTax1.API_ConsultarProduto(
+    InputBox('NCM', 'Informe o NCM (8 dígitos):', ''),
+    InputBox('UF', 'Informe a UF (Sigla):', '')
+  );
+
+  Memo2.Clear;
+  Memo2.Lines.Add('Codigo : ' + Retorno.Codigo);
+  Memo2.Lines.Add('UF : ' + Retorno.UF);
+  Memo2.Lines.Add('EX : ' + IntToStr(Retorno.EX));
+  Memo2.Lines.Add('Descricao : ' + Retorno.Descricao);
+  Memo2.Lines.Add('Aliq. Nacional : ' + FloatToStr(Retorno.Nacional));
+  Memo2.Lines.Add('Aliq. Estadual : ' + FloatToStr(Retorno.Estadual));
+  Memo2.Lines.Add('Aliq. Importado : ' + FloatToStr(Retorno.Importado));
+  Memo2.Lines.Add('JSON : ' + Retorno.JSON);
 end;
 
 procedure TForm1.btnPesquisarClick(Sender: TObject);

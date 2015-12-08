@@ -25,7 +25,7 @@ object Form1: TForm1
     object Label3: TLabel
       Left = 12
       Top = 19
-      Width = 69
+      Width = 169
       Height = 13
       Caption = 'C'#243'digo (NCM, '
       Color = clBtnFace
@@ -339,14 +339,11 @@ object Form1: TForm1
     Top = 91
     Width = 822
     Height = 303
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 4
-    ExplicitTop = 141
-    ExplicitHeight = 253
     object TabSheet1: TTabSheet
       Caption = 'Dados importados'
-      ExplicitHeight = 225
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -366,7 +363,6 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'Erros'
       ImageIndex = 1
-      ExplicitHeight = 225
       object Memo1: TMemo
         Left = 0
         Top = 0
@@ -377,7 +373,57 @@ object Form1: TForm1
           'Memo1')
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitHeight = 225
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'API Consulta produto'
+      ImageIndex = 2
+      object Label2: TLabel
+        Left = 25
+        Top = 9
+        Width = 84
+        Height = 13
+        Caption = 'CNPJ da Empresa'
+      end
+      object Label5: TLabel
+        Left = 217
+        Top = 9
+        Width = 73
+        Height = 13
+        Caption = 'Token Empresa'
+      end
+      object btnAPIConsultarProduto: TButton
+        Left = 655
+        Top = 21
+        Width = 141
+        Height = 25
+        Caption = 'Consultar'
+        TabOrder = 0
+        OnClick = btnAPIConsultarProdutoClick
+      end
+      object edtCNPJ: TEdit
+        Left = 25
+        Top = 25
+        Width = 186
+        Height = 21
+        TabOrder = 1
+      end
+      object edtToken: TEdit
+        Left = 217
+        Top = 25
+        Width = 432
+        Height = 21
+        TabOrder = 2
+      end
+      object Memo2: TMemo
+        Left = 25
+        Top = 72
+        Width = 771
+        Height = 184
+        Lines.Strings = (
+          'Memo2')
+        ReadOnly = True
+        TabOrder = 3
       end
     end
   end
@@ -386,14 +432,14 @@ object Form1: TForm1
     Filter = 'Tabela IBPTax|*.csv'
     Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
     Title = 'Abrir arquivo'
-    Left = 138
-    Top = 185
+    Left = 613
+    Top = 160
   end
   object tmpCadastro: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 45
-    Top = 190
+    Left = 515
+    Top = 140
     object tmpCadastroNCM: TStringField
       DisplayWidth = 10
       FieldName = 'NCM'
@@ -439,18 +485,18 @@ object Form1: TForm1
   end
   object dtsCadastro: TDataSource
     DataSet = tmpCadastro
-    Left = 59
-    Top = 204
+    Left = 529
+    Top = 154
   end
   object SaveDialog1: TSaveDialog
     Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
-    Left = 227
-    Top = 185
+    Left = 697
+    Top = 135
   end
   object ACBrIBPTax1: TACBrIBPTax
     ProxyPort = '8080'
     OnErroImportacao = ACBrIBPTax1ErroImportacao
-    Left = 305
-    Top = 185
+    Left = 770
+    Top = 150
   end
 end

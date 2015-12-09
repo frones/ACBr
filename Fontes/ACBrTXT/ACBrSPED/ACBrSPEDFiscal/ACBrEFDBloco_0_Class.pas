@@ -691,7 +691,7 @@ begin
                       LFill( EX_IPI ) +
                       LFill( COD_GEN ) +
                       LFill( COD_LST ) +
-                      VLFill( ALIQ_ICMS, 0, 2 );
+                     VLFill( ALIQ_ICMS, 0, 2 );
           //-- Write
           if Assigned(FOnWriteRegistro0200) then
              FOnWriteRegistro0200(strLinha);
@@ -802,7 +802,7 @@ begin
           strLinha := LFill('0210') +
                       LFill( COD_ITEM_COMP ) +
                       DFill( QTD_COMP, 6) +
-                      LFill( PERDA, 0, 4);
+                      DFill( PERDA, 4);
 
           Add(strLinha);
         end;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+09/12/2015
+-- ACBrNFeDANFEFRDM --
+[*] Novo campo em cdsParametros :  FieldDefs.Add('ImprimeDescAcrescItem', ftInteger);
+     	por : Henrique Leonardo   
+
 06/12/2015
 -- ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato / ACBrNFeDANFeRL ACBrNFeDANFeRLClass --
 [+] Implantaçao da Coluna Valor Liquido e refatoração para impressão

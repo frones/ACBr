@@ -1127,20 +1127,17 @@ begin
                   end;
     end;
 
-    FieldByName('LinhasPorPagina').AsInteger := FDANFEClassOwner.ProdutosPorPagina;
-    if ExpandirDadosAdicionaisAuto then
-      FieldByName('ExpandirDadosAdicionaisAuto').AsString := 'S'
-    else
-      FieldByName('ExpandirDadosAdicionaisAuto').AsString := 'N';
-
-    FieldByName('sDisplayFormat').AsString:= '###,###,###,##0.%.*d';
-    FieldByName('iFormato').AsInteger     := integer( FDANFEClassOwner.CasasDecimais.Formato );
-    FieldByName('Mask_qCom').AsString     := FDANFEClassOwner.CasasDecimais._Mask_qCom;
-    FieldByName('Mask_vUnCom').AsString   := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
-    FieldByName('Casas_qCom').AsInteger   := FDANFEClassOwner.CasasDecimais._qCom;
-    FieldByName('Casas_vUnCom').AsInteger := FDANFEClassOwner.CasasDecimais._vUnCom;
-    FieldByName('QtdeItens').AsInteger    := NFe.Det.Count;
-    FieldByName('DescricaoViaEstabelec').AsString := FDescricaoViaEstabelec;
+    FieldByName('LinhasPorPagina').AsInteger            := FDANFEClassOwner.ProdutosPorPagina;
+    FieldByName('ExpandirDadosAdicionaisAuto').AsString := IfThen( ExpandirDadosAdicionaisAuto , 'S' , 'N');
+    FieldByName('sDisplayFormat').AsString              := '###,###,###,##0.%.*d';
+    FieldByName('iFormato').AsInteger                   := integer( FDANFEClassOwner.CasasDecimais.Formato );
+    FieldByName('Mask_qCom').AsString                   := FDANFEClassOwner.CasasDecimais._Mask_qCom;
+    FieldByName('Mask_vUnCom').AsString                 := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
+    FieldByName('Casas_qCom').AsInteger                 := FDANFEClassOwner.CasasDecimais._qCom;
+    FieldByName('Casas_vUnCom').AsInteger               := FDANFEClassOwner.CasasDecimais._vUnCom;
+    FieldByName('QtdeItens').AsInteger                  := NFe.Det.Count;
+    FieldByName('DescricaoViaEstabelec').AsString       := FDescricaoViaEstabelec;
+    FieldByName('ImprimeDescAcrescItem').AsInteger      := IfThen( FDANFEClassOwner.ImprimeDescAcrescItem, 1 , 0 );
     Post;
   end;
 end;
@@ -1307,7 +1304,7 @@ constructor TACBrNFeFRClass.Create(AOwner: TComponent);
 begin
   FDANFEClassOwner := TACBrNFeDANFEClass(AOwner);
 
-  FfrxReport := TfrxReport.Create(nil);
+  FfrxReport := TfrxReport.Create( nil);
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
   with FfrxReport do
   begin
@@ -1501,9 +1498,9 @@ begin
      FfrxParametros := TfrxDBDataset.Create(nil);
      with FfrxParametros do
      begin
-        DataSet := cdsParametros;
-        OpenDataSource := False;
-        UserName := 'Parametros';
+        DataSet         := cdsParametros;
+        OpenDataSource  := False;
+        UserName        := 'Parametros';
      end;
      with cdsParametros do
      begin
@@ -1536,6 +1533,7 @@ begin
         FieldDefs.Add('DescricaoViaEstabelec', ftString, 30);
         FieldDefs.Add('QtdeItens', ftInteger);
         FieldDefs.Add('ExpandirDadosAdicionaisAuto', ftString, 1);
+        FieldDefs.Add('ImprimeDescAcrescItem', ftInteger);
         CreateDataSet;
      end;
    end;
@@ -2032,6 +2030,8 @@ begin
       end;
     end;
   end;
+
+
 end;
 
 Function TACBrNFeFRClass.ManterVeiculos( inItem:  integer  ) : String;

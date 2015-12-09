@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+9/12/2015
+[-] acerto na geração de PDF por email quando o monitor está configurado como impressão EscPOS
+    por: regys.silveira
+    http://www.projetoacbr.com.br/forum/topic/26253-comando-que-envia-email-do-cupom-sat-cfe-pelo-acbrmonitor-plus/#comment-171069
+
 04/12/2015
 [-] Correção em ObterCodigoMunicipio, para não localizar Municípios com o nome
     parcialmente igual

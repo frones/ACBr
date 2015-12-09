@@ -328,15 +328,15 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           ConfiguraDANFe;
            MudouDANFe := False;
            if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
             begin
               MudouDANFe := True;
               OldDANFe := ACBrNFe1.DANFE;
               ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
-              ACBrNFeDANFCeFortes1.PathPDF := PathWithDelim(FrmACBrMonitor.edtPathPDF.Text);
             end;
+
+           ConfiguraDANFe;
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
@@ -376,9 +376,9 @@ begin
                begin
                  MudouDANFe := False;
                  ACBrNFe1.DANFE := OldDANFe;
+                 ConfiguraDANFe;
                end;
-              Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) +
-                              ArqPDF ;
+              Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
            end;
@@ -1325,7 +1325,6 @@ begin
            if ACBrNFe1.NotasFiscais.Count = 0 then
              raise Exception.Create('Nenhuma NFe encontrada no arquivo: '+ArqNFe);
 
-           ConfiguraDANFe;
            MudouDANFe := False;
 
            if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
@@ -1334,6 +1333,8 @@ begin
               OldDANFe := ACBrNFe1.DANFE;
               ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
             end;
+
+           ConfiguraDANFe;
 
            sMensagemEmail := TStringList.Create;
            CC := TstringList.Create;
@@ -1366,6 +1367,14 @@ begin
              CC.Free;
              Anexos.Free;
              sMensagemEmail.Free;
+
+             // retornar o DANFE ao que era antes
+             if MudouDANFe then
+              begin
+                MudouDANFe := False;
+                ACBrNFe1.DANFE := OldDANFe;
+                ConfiguraDANFe;
+              end;
            end;
         end
 

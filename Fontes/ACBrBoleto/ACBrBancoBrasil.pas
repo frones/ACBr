@@ -975,8 +975,11 @@ begin
                Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYY');
 
             ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
-
-            NossoNumero := copy(Linha, 45, 10);
+           
+            if Length(ACBrBoleto.Cedente.Convenio) = 6 then
+              NossoNumero := copy(Linha, 44, 10)
+            else
+              NossoNumero := copy(Linha, 45, 10);
             ValorDespesaCobranca := StrToFloatDef(copy(Linha, 199, 15), 0) / 100;
 
             OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));

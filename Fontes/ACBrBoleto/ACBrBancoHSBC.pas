@@ -61,6 +61,7 @@ type
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroTrailler400(ARemessa:TStringList);  override;
     Procedure LerRetorno400(ARetorno:TStringList); override;
+    procedure LerRetorno240(ARetorno: TStringList); override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
@@ -1076,6 +1077,185 @@ Begin
     Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
   End;
 End;
+
+
+
+procedure TACBrBancoHSBC.LerRetorno240(ARetorno: TStringList);  // CLAUDIO TENTANDO IMPLEMENTAR
+var
+  ContLinha: Integer;
+  Titulo   : TACBrTitulo;
+  Linha, rContrato, rCedente, rCNPJCPF: String;
+  rAgencia, rConta,rDigitoConta, rDigitoAgCta: String;
+  IdxMotivo, I, CodMotivo: Integer;
+  wSeuNumero: String;
+begin
+   ContLinha := 0;
+
+   if (copy(ARetorno.Strings[0],1,3) <> '399') then
+      raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                             'não é um arquivo de retorno do '+ Nome));
+
+
+   rAgencia     := trim(Copy(ARetorno[0],53,5));
+   rConta       := trim(Copy(ARetorno[0],59,12));
+   rDigitoConta := Copy(ARetorno[0],71,1);
+   rDigitoAgCta := Copy(ARetorno[0],72,1);
+
+   rContrato    := trim(Copy(ARetorno[0],40,13));
+   rCedente     := trim(Copy(ARetorno[0],73,30));
+
+   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 158, 6), 0);
+
+
+   ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0],144,2)+'/'+
+                                                           Copy(ARetorno[0],146,2)+'/'+
+                                                           Copy(ARetorno[0],148,4),0, 'DD/MM/YYYY' );
+
+
+   if StrToIntDef(Copy(ARetorno[1],200,6),0) <> 0 then
+      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[1],200,2)+'/'+
+                                                                  Copy(ARetorno[1],202,2)+'/'+
+                                                                  Copy(ARetorno[1],204,4),0, 'DD/MM/YYYY' );
+
+
+   rCNPJCPF := trim( Copy(ARetorno[0],19,14)) ;
+
+   if ACBrBanco.ACBrBoleto.Cedente.TipoInscricao = pJuridica then
+    begin
+      rCNPJCPF := trim( Copy(ARetorno[1],19,15));
+      rCNPJCPF := RightStr(rCNPJCPF,14) ;
+    end
+   else
+    begin
+      rCNPJCPF := trim( Copy(ARetorno[1],23,11));
+      rCNPJCPF := RightStr(rCNPJCPF,11) ;
+    end;
+
+
+   with ACBrBanco.ACBrBoleto do
+   begin
+
+      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
+         raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
+
+      if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
+          (rConta+rDigitoConta  <> OnlyNumber(Cedente.CodigoCedente))) then
+         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
+
+      if LeCedenteRetorno then
+      begin
+         Cedente.Nome         := rCedente;
+         Cedente.CNPJCPF      := rCNPJCPF;
+         Cedente.Agencia      := rAgencia;
+         Cedente.AgenciaDigito:= '0';
+         Cedente.Conta        := rConta;
+         Cedente.ContaDigito  := rDigitoConta;
+         Cedente.CodigoCedente:= rConta+rDigitoConta;
+
+         case StrToIntDef(Copy(ARetorno[1],18,1),0) of
+            1: Cedente.TipoInscricao:= pFisica;
+            2: Cedente.TipoInscricao:= pJuridica;
+            else
+               Cedente.TipoInscricao:= pJuridica;
+         end;
+      end;
+
+      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+   end;
+
+   for ContLinha := 1 to ARetorno.Count - 2 do
+   begin
+      Linha := ARetorno[ContLinha] ;
+
+      {Segmento T - Só cria após passar pelo seguimento T depois U}
+      if Copy(Linha,14,1)= 'T' then
+         Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+      with Titulo do
+      begin
+         {Segmento T}
+         if Copy(Linha,14,1)= 'T' then
+          begin
+            SeuNumero                   := Trim(copy(Linha,59,15));
+            NumeroDocumento             := copy(Linha,59,15);
+            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
+
+            //05 = Liquidação Sem Registro
+            Vencimento := StringToDateTimeDef( Copy(Linha,74,2)+'/'+
+                                               Copy(Linha,76,2)+'/'+
+                                               Copy(Linha,80,4),0, 'DD/MM/YYYY' );
+
+            ValorDocumento            := StrToFloatDef(Copy(Linha,82,15),0)/100;
+            ValorDespesaCobranca      := StrToFloatDef(Copy(Linha,199,15),0)/100;
+            Carteira                  := Copy(Linha,58,1);
+            NossoNumero               := Copy(Linha,38,13);
+            CodigoLiquidacao          := Copy(Linha,214,10);
+//            CodigoLiquidacaoDescricao := CodigoLiquidacaoDescricao(StrToIntDef(CodigoLiquidacao,0) );
+
+            // prevenir quando o seunumero não vem informado no arquivo, altera para NossoNumero do banco
+            wSeuNumero := StringReplace(SeuNumero, '0','',[rfReplaceAll]);
+            if (AnsiSameText(wSeuNumero, EmptyStr)) then
+            begin
+              SeuNumero       := NossoNumero;
+              NumeroDocumento := NossoNumero
+            end;
+
+            // codigos motivos de ocorrencias
+            IdxMotivo := 214;
+
+            while (IdxMotivo < 223) do
+            begin
+               if (trim(Copy(Linha, IdxMotivo, 2)) <> '') then
+               begin
+                  MotivoRejeicaoComando.Add(Copy(Linha, IdxMotivo, 2));
+                  DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, StrToIntDef(Copy(Linha, IdxMotivo, 2), 0)));
+               end;
+               Inc(IdxMotivo, 2);
+            end;
+
+            // informações do local de pagamento
+            Liquidacao.Banco      := StrToIntDef(Copy(Linha,97,3), -1);
+            Liquidacao.Agencia    := Copy(Linha,100,5);
+            Liquidacao.Origem     := '';
+            Liquidacao.FormaPagto := '';
+
+            // quando a liquidação ocorre nos canais do HSBC o banco vem zero
+            // então acertar
+            if Liquidacao.Banco = 0 then
+              Liquidacao.Banco := 399;
+          end
+
+
+         {Segmento U}
+         else if Copy(Linha,14,1)= 'U' then
+          begin
+
+            if StrToIntDef(Copy(Linha,138,6),0) <> 0 then
+               DataOcorrencia := StringToDateTimeDef( Copy(Linha,138,2)+'/'+
+                                                      Copy(Linha,140,2)+'/'+
+                                                      Copy(Linha,142,4),0, 'DD/MM/YYYY' );
+
+            if StrToIntDef(Copy(Linha,146,6),0) <> 0 then
+               DataCredito:= StringToDateTimeDef( Copy(Linha,146,2)+'/'+
+                                                  Copy(Linha,148,2)+'/'+
+                                                  Copy(Linha,150,4),0, 'DD/MM/YYYY' );
+
+            ValorMoraJuros       := StrToFloatDef(Copy(Linha,18,15),0)/100;
+            ValorDesconto        := StrToFloatDef(Copy(Linha,33,15),0)/100;
+            ValorAbatimento      := StrToFloatDef(Copy(Linha,48,15),0)/100;
+            ValorIOF             := StrToFloatDef(Copy(Linha,63,15),0)/100;
+            ValorPago            := StrToFloatDef(Copy(Linha,78,15),0)/100;
+            ValorRecebido        := StrToFloatDef(Copy(Linha,93,15),0)/100;
+            ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,108,15),0)/100;
+            ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,123,15),0)/100;
+         end;
+      end;
+   end;
+
+end;
+
+
+
 
 End.
 

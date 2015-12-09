@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/12/2015 ver. 0.0.164a
+-- ACBrBancoHSBC --
+[+] Adição leitura retorno CNAB240. (icozeira)
+http://www.projetoacbr.com.br/forum/topic/26323-leitura-do-arquivo-de-retorno-c240-hsbc-e-bradesco/
+
+-- ACBrBancoBrasil --
+[*] Ajuste leitura retorno CNAB240. (icozeira)
+http://www.projetoacbr.com.br/forum/topic/26565-lerretorno240-banco-do-brasil/
+
+-- ACBrBancoBradesco --
+[+] Adição leitura retorno CNAB240. (icozeira)
+http://www.projetoacbr.com.br/forum/topic/26323-leitura-do-arquivo-de-retorno-c240-hsbc-e-bradesco/
+
+
+
 Data: 02/12/2015 ver. 0.0.163a
 -- ACBrBancoItau --
 [*] Ajuste leitura retorno CNAB240 para ler os dados do cedente. (Henrique Paraiba)

@@ -221,14 +221,9 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
     iRet: Integer;
     sDirDpk: string;
   begin
-    WriteToTXT(PathArquivoLog, 'FindDirPackage - sDir: ' + QuotedStr(sDir) + ', sPacote: ' + QuotedStr(sPacote));
-
     sDir := IncludeTrailingPathDelimiter(sDir);
     if not DirectoryExists(sDir) then
-    begin
-      WriteToTXT(PathArquivoLog, 'FindDirPackage - Diretorio não existe: ' + QuotedStr(sDir));
       Exit;
-    end;
 
     if SysUtils.FindFirst(sDir + '*.*', faAnyFile, oDirList) = 0 then
     begin
@@ -251,9 +246,7 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
       finally
         SysUtils.FindClose(oDirList);
       end;
-    end
-    else
-      WriteToTXT(PathArquivoLog, 'SysUtils.FindFirst: Não encontrou nada.');
+    end;
   end;
 
 begin
@@ -279,8 +272,7 @@ end;
 // retornar o caminho completo para o arquivo de logs
 function TfrmPrincipal.PathArquivoLog: String;
 begin
-  Result := PathApp +
-    'log_' + StringReplace(edtDelphiVersion.Text, ' ', '_', [rfReplaceAll]) + '.txt';
+  Result := PathApp + 'log_' + StringReplace(edtDelphiVersion.Text, ' ', '_', [rfReplaceAll]) + '.txt';
 end;
 
 // verificar se no caminho informado já existe o .svn indicando que o
@@ -1550,8 +1542,6 @@ begin
   // verificar se os pacotes existem antes de seguir para o próximo paso
   for I := 0 to frameDpk.Pacotes.Count - 1 do
   begin
-    WriteToTXT(PathArquivoLog, 'Analisando se o pacote existe: ' + frameDpk.Pacotes[I].Caption + ' Marcado: ' + frameDpk.Pacotes[I].Checked.ToString(True));
-
     if frameDpk.Pacotes[I].Checked then
     begin
       sDirRoot   := IncludeTrailingPathDelimiter(edtDirDestino.Text);
@@ -1559,17 +1549,11 @@ begin
 
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);
-
-      WriteToTXT(PathArquivoLog, 'Nome do pacotes....: ' + NomePacote);
-      WriteToTXT(PathArquivoLog, 'Diretório do pacote: ' + sDirPackage);
-
       if sDirPackage.Trim = '' then
         raise Exception.Create('Não foi possível retornar o diretório do pacote!');
 
       if IsDelphiPackage(NomePacote) then
       begin
-        WriteToTXT(PathArquivoLog, 'verificando existência do pacote: ' + sDirPackage + NomePacote);
-
         if not FileExists(IncludeTrailingPathDelimiter(sDirPackage) + NomePacote) then
         begin
           Stop := True;

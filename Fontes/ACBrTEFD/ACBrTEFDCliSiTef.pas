@@ -132,6 +132,7 @@ type
       fDataHoraFiscal: TDateTime;
       fDocumentosProcessados : AnsiString ;
       fPathDLL: string;
+      fPortaPinPad: Integer;
 
      xConfiguraIntSiTefInterativoEx : function (
                 pEnderecoIP: PAnsiChar;
@@ -200,7 +201,6 @@ type
         var Tipo: SmallInt): Integer;
         {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
 
-        
      procedure AvaliaErro(Sts : Integer);
      function GetDataHoraFiscal: TDateTime;
      function GetDocumentoFiscal: AnsiString;
@@ -269,35 +269,24 @@ type
         var Tipo: SmallInt): Integer;
 
    published
-     property EnderecoIP     : AnsiString read fEnderecoIP     write fEnderecoIP ;
-     property CodigoLoja     : AnsiString read fCodigoLoja     write fCodigoLoja ;
-     property NumeroTerminal : AnsiString read fNumeroTerminal write fNumeroTerminal ;
-     property Operador       : AnsiString read fOperador       write fOperador ;
-     property ParametrosAdicionais : TStringList read fParametrosAdicionais
-        write SetParametrosAdicionais ;
-     property Restricoes : AnsiString read fRestricoes write fRestricoes ;
-     property DocumentoFiscal  : AnsiString read GetDocumentoFiscal
-        write fDocumentoFiscal ;
-     property DataHoraFiscal  : TDateTime read GetDataHoraFiscal
-        write fDataHoraFiscal ;
-     property OperacaoATV : Integer read fOperacaoATV write fOperacaoATV
-        default 111 ;
-     property OperacaoADM : Integer read fOperacaoADM write fOperacaoADM
-        default 110 ;
-     property OperacaoCRT : Integer read fOperacaoCRT write fOperacaoCRT
-        default 0 ;
-     property OperacaoCHQ : Integer read fOperacaoCHQ write fOperacaoCHQ
-        default 1 ;
-     property OperacaoCNC : Integer read fOperacaoCNC write fOperacaoCNC
-        default 200 ;
-     property OperacaoReImpressao : Integer read fOperacaoReImpressao
-        write fOperacaoReImpressao default 112 ;
-
-     property OnExibeMenu : TACBrTEFDCliSiTefExibeMenu read fOnExibeMenu
-        write fOnExibeMenu ;
-     property OnObtemCampo : TACBrTEFDCliSiTefObtemCampo read fOnObtemCampo
-        write fOnObtemCampo ;
-     property ExibirErroRetorno: Boolean read fExibirErroRetorno write fExibirErroRetorno;
+     property EnderecoIP: AnsiString                    read fEnderecoIP           write fEnderecoIP;
+     property CodigoLoja: AnsiString                    read fCodigoLoja           write fCodigoLoja;
+     property NumeroTerminal: AnsiString                read fNumeroTerminal       write fNumeroTerminal;
+     property Operador: AnsiString                      read fOperador             write fOperador;
+     property PortaPinPad: Integer                      read fPortaPinPad          write fPortaPinPad default 0;
+     property ParametrosAdicionais: TStringList         read fParametrosAdicionais write SetParametrosAdicionais;
+     property Restricoes: AnsiString                    read fRestricoes           write fRestricoes;
+     property DocumentoFiscal: AnsiString               read GetDocumentoFiscal    write fDocumentoFiscal;
+     property DataHoraFiscal: TDateTime                 read GetDataHoraFiscal     write fDataHoraFiscal;
+     property OperacaoATV: Integer                      read fOperacaoATV          write fOperacaoATV default 111;
+     property OperacaoADM: Integer                      read fOperacaoADM          write fOperacaoADM default 110;
+     property OperacaoCRT: Integer                      read fOperacaoCRT          write fOperacaoCRT default 0;
+     property OperacaoCHQ: Integer                      read fOperacaoCHQ          write fOperacaoCHQ default 1;
+     property OperacaoCNC: Integer                      read fOperacaoCNC          write fOperacaoCNC default 200;
+     property OperacaoReImpressao: Integer              read fOperacaoReImpressao  write fOperacaoReImpressao default 112;
+     property OnExibeMenu: TACBrTEFDCliSiTefExibeMenu   read fOnExibeMenu          write fOnExibeMenu;
+     property OnObtemCampo: TACBrTEFDCliSiTefObtemCampo read fOnObtemCampo         write fOnObtemCampo;
+     property ExibirErroRetorno: Boolean                read fExibirErroRetorno    write fExibirErroRetorno;
    end;
 
 implementation
@@ -621,20 +610,25 @@ begin
 
   LoadDLLFunctions;
 
-  ParamAdic := StringReplace( Trim(ParametrosAdicionais.Text), sLineBreak, ';',
-                              [rfReplaceAll] ) ;
-
-  if (pos('VersaoAutomacaoCielo',ParamAdic) = 0) then
+  // configuração da porta do pin-pad
+  if PortaPinPad > 0 then
   begin
-     if SuportaDesconto then
-     begin
-        if ParamAdic <> '' then
-           ParamAdic := ParamAdic + ';' ;
-
-        ParamAdic := ParamAdic + '[VersaoAutomacaoCielo='+
-                     PadRight( TACBrTEFD(Owner).Identificacao.SoftwareHouse, 8 ) + '10]';
-     end ;
+    if ParametrosAdicionais.Values['PortaPinPad'] = '' then
+      ParametrosAdicionais.Add('PortaPinPad=' + IntToStr(PortaPinPad))
+    else
+      ParametrosAdicionais.Values['PortaPinPad'] := IntToStr(PortaPinPad);
   end;
+
+  // cielo premia
+  if ParametrosAdicionais.Values['VersaoAutomacaoCielo'] = '' then
+  begin
+    if SuportaDesconto then
+      ParametrosAdicionais.Add('VersaoAutomacaoCielo=' + PadRight( TACBrTEFD(Owner).Identificacao.SoftwareHouse, 8 ) + '10');
+  end;
+
+  // acertar quebras de linhas e abertura e fechamento da lista de parametros
+  ParamAdic := StringReplace(Trim(ParametrosAdicionais.Text), sLineBreak, ';', [rfReplaceAll]);
+  ParamAdic := '['+ ParamAdic + ']';
 
   GravaLog( '*** ConfiguraIntSiTefInterativoEx. EnderecoIP: '   +fEnderecoIP+
                                             ' CodigoLoja: '     +fCodigoLoja+

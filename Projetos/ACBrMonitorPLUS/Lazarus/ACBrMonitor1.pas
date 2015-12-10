@@ -43,10 +43,10 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
-  pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrSATClass, pcnRede, types, ACBrDFeSSL, ACBrMDFe, ACBrMDFeDAMDFeRLClass,
-  ACBrCTe, ACBrCTeDACTeRLClass, ACBrBase;
+  ACBrBoletoFCLazReportDm, Printers, SynHighlighterXML, SynMemo, PrintersDlgs,
+  pcnConversao, pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
+  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, types, ACBrDFeSSL, ACBrMDFe,
+  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, ACBrBase;
 
 const
   {$I versao.txt}
@@ -64,7 +64,7 @@ type
 
   TFrmACBrMonitor = class(TForm)
     ACBrBoleto1: TACBrBoleto;
-    ACBrBoletoFCFortes1: TACBrBoletoFCFortes;
+    ACBrBoletoFCLazReport1: TACBrBoletoFCLazReport;
     ACBrCEP1: TACBrCEP;
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
@@ -3883,7 +3883,7 @@ begin
     LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
   end;
 
-  with ACBrBoletoFCFortes1 do
+  with ACBrBoleto1.ACBrBoletoFC do
   begin
     Filtro := TACBrBoletoFCFiltro(cbxBOLFiltro.ItemIndex);
     LayOut := TACBrBolLayOut(cbxBOLLayout.ItemIndex);

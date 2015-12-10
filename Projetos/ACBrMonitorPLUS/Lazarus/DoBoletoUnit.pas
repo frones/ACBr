@@ -70,7 +70,7 @@ begin
       else if cmd.Metodo = 'imprimir' then
        begin
          if Cmd.Params(0) <> '' then
-            ACBrMonitor1.FrmACBrMonitor.ACBrBoletoFCFortes1.PrinterName := Cmd.Params(0);
+            ACBrMonitor1.FrmACBrMonitor.ACBrBoleto1.ACBrBoletoFC.PrinterName := Cmd.Params(0);
 
          Imprimir
        end
@@ -228,9 +228,9 @@ begin
                    cbxBOLLayout.ItemIndex := wLayoutBoleto;
 
                  try
-                   ACBrBoletoFCFortes1.LayOut:= TACBrBolLayOut(cbxBOLLayout.ItemIndex);
+                   ACBrBoleto1.ACBrBoletoFC.LayOut:= TACBrBolLayOut(cbxBOLLayout.ItemIndex);
                  except
-                   ACBrBoletoFCFortes1.LayOut:= lPadrao;
+                   ACBrBoleto1.ACBrBoletoFC.LayOut:= lPadrao;
                  end;
               end;
            end;

@@ -1105,7 +1105,7 @@ begin
             rlmEndereco.Lines.add (XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
                                                               ' - ' + XBairro);
 
-          rlmEndereco.Lines.add ('CEP: ' + FormatarCEP(IntToStr(CEP)) +
+          rlmEndereco.Lines.add ('CEP: ' + FormatarCEP(Poem_Zeros(CEP, 8)) +
                                                     ' - ' + XMun + ' - ' + UF);
 
         if FFax <> '' then
@@ -1162,7 +1162,7 @@ begin
       rllDestBairro.Caption := XBairro;
       rllDestCidade.Caption := XMun;
       rllDestUF.Caption     := UF;
-      rllDestCEP.Caption    := FormatarCEP(IntToStr(CEP));
+      rllDestCEP.Caption    := FormatarCEP(Poem_Zeros(CEP, 8));
       rllDestFONE.Caption   := FormatarFone(Fone);
     end;
   end;

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2015
+--  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
+[-] Correção da Formataçao do Cep. 
+     	por : Henrique Leonardo 
 
 09/12/2015
 -- ACBrNFeDANFEFRDM --

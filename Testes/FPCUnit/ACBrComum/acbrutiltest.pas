@@ -306,6 +306,7 @@ type
   published
     procedure Simples;
     procedure Reverso;
+    procedure NaoHexa;
   end;
 
   { IfEmptyThenTest }
@@ -1682,6 +1683,11 @@ begin
   end;
 
   CheckTrue(AllChars = StringToBinaryString(Resp) ) ;
+end;
+
+procedure StringToBinaryStringTest.NaoHexa;
+begin
+  CheckEquals('\xml\xA\\A\ab', StringToBinaryString('\xml\xA\\\x41\ab'));
 end;
 
 { BinaryStringToStringTest }

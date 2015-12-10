@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2015
+[-] Acerto para salvar corretamente o CSC e IdCSC quando é enviado o comando SetXXX.
+    por: regys.silveira
+
 9/12/2015
 [-] acerto na geração de PDF por email quando o monitor está configurado como impressão EscPOS
     por: regys.silveira

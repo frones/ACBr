@@ -1528,16 +1528,28 @@ begin
         else if (Cmd.Metodo = 'settoken') or (Cmd.Metodo = 'setcsc') then //NFe.SetCSC(cCSC)
          begin
            ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(0);
+           edtToken.Text := ACBrNFe1.Configuracoes.Geral.CSC;
+
            if (Cmd.Params(1) <> '') then
+            begin
               ACBrNFe1.Configuracoes.Geral.IdCSC := Cmd.Params(1);
+              edtIdToken.Text := ACBrNFe1.Configuracoes.Geral.IdCSC;
+            end;
+
            SalvarIni;
          end
 
         else if (Cmd.Metodo = 'setidtoken') or (Cmd.Metodo = 'setidcsc') then  //NFe.SetIdCSC(cIdCSC)
          begin
            ACBrNFe1.Configuracoes.Geral.IdCSC := Cmd.Params(0);
+           edtIdToken.Text := ACBrNFe1.Configuracoes.Geral.IdCSC;
+
            if (Cmd.Params(1) <> '') then
+            begin
               ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(1);
+              edtToken.Text := ACBrNFe1.Configuracoes.Geral.CSC;
+            end;
+
            SalvarIni;
          end
 

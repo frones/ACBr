@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2015
+-- ACBrNFSeWebServices --
+[*] Melhorias no método ExtrairNotasRetorno pois não estava separando as notas
+    da lista corretamente.
+    Por: Cleiver Batista
+
 03/12/2015
 -- ACBrNFSeConfiguracoes --
 [*] Criado duas novas propriedades:

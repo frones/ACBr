@@ -851,7 +851,7 @@ end;
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
 var
   FRetListaNFSe, FRetNFSe, PathArq, NomeArq, xCNPJ: String;
-  i, j, k, p, ii: Integer;
+  i, j, x, k, l, p, ii: Integer;
   xData: TDateTime;
   NovoRetorno: Boolean;
 begin
@@ -925,16 +925,23 @@ begin
       begin
         // Considerar o retorno sempre como novo, avaliar abaixo se o RPS está na lista
         NovoRetorno := True;
-        for J := 0 to FNotasFiscais.Count -1 do
+        for l := 0 to FNotasFiscais.Count -1 do
         begin
+          // Alterado por cleiver em 10/12/2015
+          // Provedor de goinaia em modo de homologação sempre retorna o mesmo dados
+          if (FProvedor = proGoiania) and (FPConfiguracoes.WebServices.Ambiente = taHomologacao) then
+          begin
+            FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero := '14';
+            FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Serie  := 'UNICA';
+          end;
           // Se o RPS na lista de NFS-e consultado está na lista de FNotasFiscais, então atualiza os dados da mesma. A não existencia, implica em adcionar novo ponteiro em FNotasFiscais
           // foi alterado para testar o Numero, serie e tipo, pois o numero pode voltar ao terminar a seriação.
-          if (FNotasFiscais.Items[J].NFSe.IdentificacaoRps.Numero = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero) and
-             (FNotasFiscais.Items[J].NFSe.IdentificacaoRps.Serie = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Serie) and
-             (FNotasFiscais.Items[J].NFSe.IdentificacaoRps.Tipo = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Tipo) then
+          if (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero) and
+             (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Serie = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Serie) and
+             (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Tipo = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Tipo) then
           begin
             NovoRetorno := False;
-            ii := J;
+            ii := l;
           end;
         end;
 

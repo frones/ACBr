@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/12/2015
+-- ACBrUtil --     (por: DSA)
+[+] Adicionado os métodos:
+    function StrIsHexa(const S: String): Boolean;
+    function CharIsHexa(const C: Char): Boolean;
+[-] Correção em "StringToBinaryString" para não se confundir com Strings não
+    Hexa (Ex: '\xml')
+
 Data: 04/12/2015
 -- ACBrUtil --
 [-] Correção em RoundABNT, para evitar Erro de oveerflow em valores grandes

@@ -196,9 +196,11 @@ function DTtoS( ADateTime : TDateTime) : String;
 function StrIsAlpha(const S: String): Boolean;
 function StrIsAlphaNum(const S: String): Boolean;
 function StrIsNumber(const S: String): Boolean;
+function StrIsHexa(const S: String): Boolean;
 function CharIsAlpha(const C: Char): Boolean;
 function CharIsAlphaNum(const C: Char): Boolean;
 function CharIsNum(const C: Char): Boolean;
+function CharIsHexa(const C: Char): Boolean;
 function OnlyNumber(const AValue: String): String;
 function OnlyAlpha(const AValue: String): String;
 function OnlyAlphaNum(const AValue: String): String;
@@ -1529,6 +1531,22 @@ begin
 end ;
 
 {-----------------------------------------------------------------------------
+  Retorna <True> se <S> contem apenas caracteres em Hexa decimal
+ ---------------------------------------------------------------------------- }
+function StrIsHexa(const S: String): Boolean;
+Var
+  A : Integer ;
+begin
+  Result := True ;
+  A      := 1 ;
+  while Result and ( A <= Length( S ) )  do
+  begin
+     Result := CharIsHexa( S[A] ) ;
+     Inc(A) ;
+  end;
+end;
+
+{-----------------------------------------------------------------------------
  *** Extraido de JclStrings.pas  - Project JEDI Code Library (JCL) ***
   Retorna <True> se <C> é Alpha maiusculo/minusculo 
  ---------------------------------------------------------------------------- }
@@ -1554,6 +1572,14 @@ function CharIsAlphaNum(const C: Char): Boolean;
 begin
   Result := ( CharIsAlpha( C ) or CharIsNum( C ) );
 end ;
+
+{-----------------------------------------------------------------------------
+  Retorna <True> se <C> é um char hexa válido
+ ---------------------------------------------------------------------------- }
+function CharIsHexa(const C: Char): Boolean;
+begin
+  Result := ( C in ['0'..'9','A'..'F','a'..'f'] ) ;
+end;
 
 {-----------------------------------------------------------------------------
   Retorna uma String apenas com os char Numericos contidos em <Value>
@@ -1999,7 +2025,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function StringToBinaryString(const AString: AnsiString): AnsiString;
 var
-   P : LongInt;
+   P, I : LongInt;
    Hex : String;
    CharHex : AnsiChar;
 begin
@@ -2010,14 +2036,21 @@ begin
   begin
      Hex := copy(String(Result),P+2,2) ;
 
-     try
-        CharHex := AnsiChr(StrToInt('$'+Hex));
-     except
-        CharHex := ' ' ;
-     end ;
+     if (Length(Hex) = 2) and StrIsHexa(Hex) then
+     begin
+       try
+          CharHex := AnsiChr(StrToInt('$'+Hex));
+       except
+          CharHex := ' ' ;
+       end ;
 
-     Result := AnsiString( StringReplace(String(Result),'\x'+Hex,String(CharHex),[rfReplaceAll]) );
-     P      := pos('\x',String(Result)) ;
+       Result := AnsiString( StringReplace(String(Result),'\x'+Hex,String(CharHex),[rfReplaceAll]) );
+       I := 1;
+     end
+     else
+       I := 4;
+
+     P := PosEx('\x', String(Result), P + I) ;
   end ;
 end ;
 

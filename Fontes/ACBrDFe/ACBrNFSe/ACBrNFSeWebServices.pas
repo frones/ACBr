@@ -103,7 +103,7 @@ type
     function GerarCabecalhoSoap: String; override;
     procedure InicializarDadosMsg(AIncluiEncodingCab: Boolean);
     procedure FinalizarServico; override;
-    function ExtrairRetorno(TAGResposta: String): String;
+    function ExtrairRetorno: String;
     function ExtrairNotasRetorno: Boolean;
     function GerarRetornoNFSe(ARetNFSe: String): String;
     procedure DefinirSignatureNode(TipoEnvio:String);
@@ -821,13 +821,16 @@ begin
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
 end;
 
-function TNFSeWebService.ExtrairRetorno(TAGResposta: String): String;
+function TNFSeWebService.ExtrairRetorno: String;
 begin
   // A função ExtrairRetorno possui um parâmetro que seria o nome do grupo que
   // contem o retorno desejado, no momento a função não faz uso dela.
   // Será avaliado a real necessidade desse parâmetro.
   
   Result := SeparaDados(FPRetornoWS, 'return');
+
+  if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 'outputXML');
 
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'soap:Body');
@@ -841,11 +844,6 @@ begin
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then
     Result := FPRetornoWS;
-
-(*
-  Result := SeparaDados(FPRetornoWS, TAGResposta);
-  Result := Result + '</' + TAGResposta + '>';
-*)
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
@@ -1549,7 +1547,7 @@ function TNFSeEnviarLoteRPS.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'EnviarLoteRpsResposta');
+  FPRetWS := ExtrairRetorno;
 
   FRetEnvLote := TRetEnvLote.Create;
   try
@@ -1779,7 +1777,7 @@ function TNFSeEnviarSincrono.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'EnviarLoteRpsSincronoResposta');
+  FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
 end;
 
@@ -1990,7 +1988,7 @@ function TNFSeGerarNFSe.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'GerarNfseResposta');
+  FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2192,7 +2190,7 @@ begin
   FRetSitLote.Free;
   FRetSitLote := TretSitLote.Create;
 
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarSituacaoLoteRpsResposta');
+  FPRetWS := ExtrairRetorno;
 
   FRetSitLote.Leitor.Arquivo := FPRetWS;
 
@@ -2423,7 +2421,7 @@ function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarLoteRpsResposta');
+  FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2642,7 +2640,7 @@ function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarNfseRpsResposta');
+  FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
 end;
 
@@ -2846,7 +2844,7 @@ function TNFSeConsultarNfse.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'ConsultarNfseResposta');
+  FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
 end;
 
@@ -3088,7 +3086,7 @@ begin
         proGinfes: AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
                                          'Falha ao Assinar - Cancelar NFS-e: ');
       else
-        AssinarXML(FPDadosMsg, FPrefixo3 + 'CancelarNfseEnvio', '',
+        AssinarXML(FPDadosMsg, 'Pedido></' + FPrefixo3 + 'CancelarNfseEnvio', '',
                                          'Falha ao Assinar - Cancelar NFS-e: ');
       end;
     end;
@@ -3153,7 +3151,7 @@ function TNFSeCancelarNfse.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'CancelarNfseResposta');
+  FPRetWS := ExtrairRetorno;
   i := pos('?>', FPRetWS);
   if (i > 0) then FPRetWS := copy(FPRetWS, i+2, length(FPRetWS));
 
@@ -3529,7 +3527,7 @@ function TNFSeSubstituirNFSe.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno(FPrefixo3 + 'SubstituirNfseResposta');
+  FPRetWS := ExtrairRetorno;
 
   FNFSeRetorno := TRetSubsNfse.Create;
   try

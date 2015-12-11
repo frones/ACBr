@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2015
+-- ACBrNFSeWebServices --
+[*] Alterado o valor do parâmetro AssinarXML no caso do cancelamento.
+    Por: Italo Jurisato Junior
+
 10/12/2015
 -- ACBrNFSeWebServices --
 [*] Melhorias no método ExtrairNotasRetorno pois não estava separando as notas

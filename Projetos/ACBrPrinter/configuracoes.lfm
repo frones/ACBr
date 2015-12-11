@@ -9,15 +9,15 @@ object frConfiguracoes: TfrConfiguracoes
   FormStyle = fsStayOnTop
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.4.4.0'
   object PageControl1: TPageControl
     Left = 0
     Height = 366
     Top = 66
     Width = 709
-    ActivePage = tsPosPrinter
+    ActivePage = tsDANFE
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 1
     object tsPosPrinter: TTabSheet
       Caption = 'Pos Printer'
@@ -30,7 +30,7 @@ object frConfiguracoes: TfrConfiguracoes
         Width = 701
         Align = alClient
         Caption = 'Configuração'
-        ClientHeight = 320
+        ClientHeight = 318
         ClientWidth = 697
         TabOrder = 0
         object gbCodBarras: TGroupBox
@@ -39,7 +39,7 @@ object frConfiguracoes: TfrConfiguracoes
           Top = 8
           Width = 258
           Caption = 'Código de Barras'
-          ClientHeight = 63
+          ClientHeight = 61
           ClientWidth = 254
           TabOrder = 0
           object seCodBarrasLargura: TSpinEdit
@@ -90,7 +90,7 @@ object frConfiguracoes: TfrConfiguracoes
           Top = 177
           Width = 258
           Caption = 'QRCode'
-          ClientHeight = 63
+          ClientHeight = 61
           ClientWidth = 254
           TabOrder = 1
           object seQRCodeTipo: TSpinEdit
@@ -150,7 +150,7 @@ object frConfiguracoes: TfrConfiguracoes
           Top = 95
           Width = 258
           Caption = 'Logotipo'
-          ClientHeight = 63
+          ClientHeight = 61
           ClientWidth = 254
           TabOrder = 2
           object seLogoKC1: TSpinEdit
@@ -189,7 +189,7 @@ object frConfiguracoes: TfrConfiguracoes
             Left = 7
             Height = 15
             Top = 10
-            Width = 21
+            Width = 20
             Caption = 'KC1'
             ParentColor = False
             ParentFont = False
@@ -198,7 +198,7 @@ object frConfiguracoes: TfrConfiguracoes
             Left = 70
             Height = 15
             Top = 10
-            Width = 21
+            Width = 20
             Caption = 'KC2'
             ParentColor = False
             ParentFont = False
@@ -276,7 +276,7 @@ object frConfiguracoes: TfrConfiguracoes
           Top = 8
           Width = 344
           Caption = 'Geral'
-          ClientHeight = 214
+          ClientHeight = 212
           ClientWidth = 340
           TabOrder = 4
           object lbModelo: TLabel
@@ -520,7 +520,7 @@ object frConfiguracoes: TfrConfiguracoes
           object Label141: TLabel
             Left = 6
             Height = 13
-            Top = 167
+            Top = 216
             Width = 108
             Caption = 'Largura Cód.Produto'
             Font.Height = -11
@@ -530,7 +530,7 @@ object frConfiguracoes: TfrConfiguracoes
           object Label142: TLabel
             Left = 117
             Height = 13
-            Top = 167
+            Top = 216
             Width = 85
             Caption = 'Espessura Borda'
             Font.Height = -11
@@ -540,7 +540,7 @@ object frConfiguracoes: TfrConfiguracoes
           object Label143: TLabel
             Left = 208
             Height = 13
-            Top = 167
+            Top = 216
             Width = 97
             Caption = 'Fonte Razão Social'
             Font.Height = -11
@@ -550,7 +550,7 @@ object frConfiguracoes: TfrConfiguracoes
           object Label144: TLabel
             Left = 311
             Height = 13
-            Top = 167
+            Top = 216
             Width = 114
             Caption = 'Fonte Demais Campos'
             Font.Height = -11
@@ -560,8 +560,8 @@ object frConfiguracoes: TfrConfiguracoes
           object Label145: TLabel
             Left = 136
             Height = 15
-            Top = 208
-            Width = 123
+            Top = 257
+            Width = 122
             Caption = 'Decimais Valor Unitário'
             ParentColor = False
           end
@@ -579,7 +579,7 @@ object frConfiguracoes: TfrConfiguracoes
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 2
-            ClientHeight = 26
+            ClientHeight = 24
             ClientWidth = 293
             Columns = 2
             ItemIndex = 0
@@ -619,7 +619,7 @@ object frConfiguracoes: TfrConfiguracoes
             Top = 90
             Width = 299
             Caption = 'Margens'
-            ClientHeight = 46
+            ClientHeight = 44
             ClientWidth = 295
             TabOrder = 3
             object Label146: TLabel
@@ -726,7 +726,7 @@ object frConfiguracoes: TfrConfiguracoes
           object rgTipoFonte: TRadioGroup
             Left = 316
             Height = 42
-            Top = 208
+            Top = 257
             Width = 285
             AutoFill = True
             Caption = 'Tipo de Fonte(Rave CB)'
@@ -737,7 +737,7 @@ object frConfiguracoes: TfrConfiguracoes
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 3
-            ClientHeight = 24
+            ClientHeight = 22
             ClientWidth = 281
             Columns = 3
             ItemIndex = 0
@@ -767,7 +767,7 @@ object frConfiguracoes: TfrConfiguracoes
           object spedtDecimaisVUnit: TSpinEdit
             Left = 136
             Height = 23
-            Top = 225
+            Top = 274
             Width = 121
             MaxValue = 10
             TabOrder = 5
@@ -776,7 +776,7 @@ object frConfiguracoes: TfrConfiguracoes
             Left = 432
             Height = 43
             Hint = 'Funcionalidade disponível somente no Rave'
-            Top = 167
+            Top = 216
             Width = 169
             AutoFill = True
             Caption = 'Local Canhoto'
@@ -787,7 +787,7 @@ object frConfiguracoes: TfrConfiguracoes
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 2
-            ClientHeight = 25
+            ClientHeight = 23
             ClientWidth = 165
             Columns = 2
             ItemIndex = 0
@@ -824,7 +824,7 @@ object frConfiguracoes: TfrConfiguracoes
           object spedtDecimaisQtd: TSpinEdit
             Left = 8
             Height = 23
-            Top = 225
+            Top = 274
             Width = 113
             MaxValue = 4
             MinValue = 2
@@ -834,7 +834,7 @@ object frConfiguracoes: TfrConfiguracoes
           object Label154: TLabel
             Left = 8
             Height = 15
-            Top = 208
+            Top = 257
             Width = 113
             Caption = 'Decimais Quantidade'
             ParentColor = False
@@ -842,30 +842,38 @@ object frConfiguracoes: TfrConfiguracoes
           object edtLargCodProd: TSpinEdit
             Left = 6
             Height = 23
-            Top = 183
+            Top = 232
             Width = 106
             TabOrder = 17
           end
           object edtEspBorda: TSpinEdit
             Left = 117
             Height = 23
-            Top = 183
+            Top = 232
             Width = 85
             TabOrder = 18
           end
           object edtFonteRazao: TSpinEdit
             Left = 208
             Height = 23
-            Top = 183
+            Top = 232
             Width = 97
             TabOrder = 19
           end
           object edtFonteCampos: TSpinEdit
             Left = 311
             Height = 23
-            Top = 183
+            Top = 232
             Width = 114
             TabOrder = 20
+          end
+          object cbxQuebraLinhaDetalhe: TCheckBox
+            Left = 316
+            Height = 19
+            Top = 160
+            Width = 238
+            Caption = 'Quebra linha no detalhemento específico'
+            TabOrder = 21
           end
         end
         object tsNFCe: TTabSheet
@@ -886,7 +894,7 @@ object frConfiguracoes: TfrConfiguracoes
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 2
-            ClientHeight = 26
+            ClientHeight = 24
             ClientWidth = 199
             Columns = 2
             ItemIndex = 0
@@ -910,7 +918,7 @@ object frConfiguracoes: TfrConfiguracoes
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 2
-            ClientHeight = 26
+            ClientHeight = 24
             ClientWidth = 199
             Columns = 2
             Items.Strings = (
@@ -925,7 +933,7 @@ object frConfiguracoes: TfrConfiguracoes
             Top = 8
             Width = 384
             Caption = 'Configurações ESCPOS'
-            ClientHeight = 59
+            ClientHeight = 57
             ClientWidth = 380
             TabOrder = 2
             object cbxImprimirItem1LinhaESCPOS: TCheckBox
@@ -1077,7 +1085,7 @@ object frConfiguracoes: TfrConfiguracoes
         Top = 56
         Width = 280
         Caption = 'Fortes'
-        ClientHeight = 150
+        ClientHeight = 148
         ClientWidth = 276
         TabOrder = 0
         object seLargura: TSpinEdit
@@ -1100,7 +1108,7 @@ object frConfiguracoes: TfrConfiguracoes
           Left = 96
           Height = 15
           Top = 0
-          Width = 28
+          Width = 27
           Caption = 'Topo'
           ParentColor = False
         end
@@ -1199,7 +1207,7 @@ object frConfiguracoes: TfrConfiguracoes
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 26
+        ClientHeight = 24
         ClientWidth = 276
         Columns = 2
         ItemIndex = 0

@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="9"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Release"/>
     <Units Count="15">
       <Unit0>
         <Filename Value="ACBrPrinter.lpr"/>
@@ -18,9 +18,8 @@
         <ComponentName Value="DataModule1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="134"/>
-        <CursorPos X="89" Y="154"/>
+        <TopLine Value="210"/>
+        <CursorPos X="106" Y="242"/>
         <UsageCount Value="36"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -29,11 +28,15 @@
         <Filename Value="configuracoes.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frConfiguracoes"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="507"/>
-        <CursorPos X="35" Y="522"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="407"/>
+        <CursorPos X="91" Y="428"/>
         <UsageCount Value="36"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="ConfiguraSerial.pas"/>
@@ -126,7 +129,7 @@
         <UsageCount Value="10"/>
       </Unit14>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="ACBrPrinter1.pas"/>
         <Caret Line="154" Column="89" TopLine="134"/>
@@ -135,6 +138,69 @@
         <Filename Value="ACBrPrinter1.pas"/>
         <Caret Line="154" Column="89" TopLine="134"/>
       </Position2>
+      <Position3>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="524" Column="30" TopLine="507"/>
+      </Position3>
+      <Position4>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="525" Column="30" TopLine="508"/>
+      </Position4>
+      <Position5>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="297" Column="3" TopLine="294"/>
+      </Position5>
+      <Position6>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="165" Column="25" TopLine="144"/>
+      </Position6>
+      <Position7>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="297" Column="13" TopLine="260"/>
+      </Position7>
+      <Position8>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="588" Column="84" TopLine="504"/>
+      </Position8>
+      <Position9>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="163" Column="22" TopLine="144"/>
+      </Position9>
+      <Position10>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="232" Column="13" TopLine="195"/>
+      </Position10>
+      <Position11>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="239" Column="13" TopLine="228"/>
+      </Position11>
+      <Position12>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="363" Column="13" TopLine="326"/>
+      </Position12>
+      <Position13>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="428" Column="83" TopLine="402"/>
+      </Position13>
+      <Position14>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="589" Column="42" TopLine="553"/>
+      </Position14>
+      <Position15>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="428" Column="83" TopLine="407"/>
+      </Position15>
+      <Position16>
+        <Filename Value="configuracoes.pas"/>
+      </Position16>
+      <Position17>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="428" Column="83" TopLine="392"/>
+      </Position17>
+      <Position18>
+        <Filename Value="configuracoes.pas"/>
+        <Caret Line="589" Column="49" TopLine="553"/>
+      </Position18>
     </JumpHistory>
   </ProjectSession>
   <Debugging>

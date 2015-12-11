@@ -239,6 +239,7 @@ begin
         ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(Ini.ReadInteger('DANFE', 'Fonte', 0));
         ACBrNFeDANFeRL1.LarguraCodProd := Ini.ReadInteger('DANFE', 'LarguraCodigoProduto', 54);
         ACBrNFeDANFeRL1.ExibirEAN := Ini.ReadBool('DANFE', 'ExibirEAN', False);
+        ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico:= Ini.ReadBool('DANFE', 'QuebraLinhaEmDetalhe', False);
       end
       else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
       begin

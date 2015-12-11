@@ -534,6 +534,12 @@ procedure TfrmACBrDANFCeFortesFrA4.RLLabel37BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   Text := FormatarChaveAcesso(OnlyNumber(self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID));
+
+  if FACBrNFeDANFCeFortesA4.FpNFe.procNFe.cStat = 0 then
+  begin
+    Text  := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
+    RLLabel37.Font.Color := clRed;
+  end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel4BeforePrint(Sender: TObject;

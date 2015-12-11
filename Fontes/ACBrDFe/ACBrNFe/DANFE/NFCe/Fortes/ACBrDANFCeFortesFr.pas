@@ -290,6 +290,12 @@ begin
        TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
 
     lChaveDeAcesso.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
+
+    if procNFe.cStat = 0 then
+    begin
+      lChaveDeAcesso.Caption    := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
+      lChaveDeAcesso.Font.Color := clRed;
+    end;
   end;
 end;
 

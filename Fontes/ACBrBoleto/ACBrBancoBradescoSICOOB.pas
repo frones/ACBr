@@ -101,10 +101,8 @@ function TACBrBancoBradescoSICOOB.CalcularDigitoVerificador(const ACBrTitulo: TA
 begin
    Modulo.CalculoPadrao;
    Modulo.MultiplicadorInicial := 2;
-   Modulo.MultiplicadorFinal   := 9;
-   Modulo.Documento := FormatDateTime('yy',ACBrTitulo.DataDocumento)+
-                       PadLeft( ACBrTitulo.ACBrBoleto.Cedente.Convenio, 3, '0')+
-                       FormataNossoNumero( ACBrTitulo );
+   Modulo.MultiplicadorFinal   := 7;
+   Modulo.Documento := '9' + FormataNossoNumero( ACBrTitulo );
    Modulo.Calcular;
 
    if Modulo.ModuloFinal = 11 then
@@ -380,11 +378,11 @@ begin
 
    rCedente := trim(Copy(ARetorno[0],47,30));
 
-   rAgencia := trim(Copy(ARetorno[1], 101, ACBrBanco.TamanhoAgencia));
-   rConta   := trim(Copy(ARetorno[1], 106, ACBrBanco.TamanhoConta));
+   rAgencia := trim(Copy(ARetorno[0], 101, ACBrBanco.TamanhoAgencia));
+   rConta   := trim(Copy(ARetorno[0], 106, ACBrBanco.TamanhoConta));
 
-   rDigitoAgencia := Copy(ARetorno[1],105,1);
-   rDigitoConta   := Copy(ARetorno[1],113,1);
+   rDigitoAgencia := Copy(ARetorno[0],105,1);
+   rDigitoConta   := Copy(ARetorno[0],113,1);
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],109,5),0);
 
@@ -516,8 +514,8 @@ begin
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := Copy(Linha,71,12);
          Carteira             := Copy(Linha,108,1);
+         NossoNumero          := Copy(Linha,71,12);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 
@@ -831,7 +829,7 @@ end;
 function TACBrBancoBradescoSICOOB.CalcularTamMaximoNossoNumero(
   const Carteira: String; NossoNumero: String): Integer;
 begin
-  Result := ACBrBanco.TamanhoMaximoNossoNum + 5
+  Result := ACBrBanco.TamanhoMaximoNossoNum  + 5;
 end;
 
 function TACBrBancoBradescoSICOOB.FormataNossoNumero(

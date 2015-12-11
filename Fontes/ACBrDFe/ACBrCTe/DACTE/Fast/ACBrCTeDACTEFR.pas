@@ -981,12 +981,15 @@ begin
   frxComponentesPrestacao.Free;
   frxSeguro.Free;
   frxModalRodoviario.Free;
+  frxModalAereo.Free;
   frxRodoVeiculos.Free;
   frxRodoValePedagio.Free;
   frxRodoMotorista.Free;
   frxDocAnterior.Free;
   frxAnuladoComple.Free;
   frxEventos.Free;
+
+  frxBarCodeObject.Free;
 
   inherited Destroy;
 end;
@@ -1286,6 +1289,8 @@ end;
 
 procedure TACBrCTeDACTEFR.SetDataSetsToFrxReport;
 begin
+  frxReport.DataSets.Clear;
+
   with frxReport.EnabledDataSets do
   begin
     Clear;
@@ -1304,6 +1309,7 @@ begin
     Add(frxComponentesPrestacao);
     Add(frxSeguro);
     Add(frxModalRodoviario);
+    Add(frxModalAereo);
     Add(frxRodoVeiculos);
     Add(frxRodoValePedagio);
     Add(frxRodoMotorista);
@@ -1496,7 +1502,6 @@ begin
   CarregaModalAereo;
   CarregaDocumentoAnterior;
   CarregaCTeAnuladoComplementado;
-
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosEventos;

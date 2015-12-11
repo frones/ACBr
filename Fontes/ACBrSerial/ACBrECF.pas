@@ -3296,6 +3296,10 @@ begin
   if RodapePafECF <> EmptyStr then
     Observacao := RodapePafECF + #10 + Observacao;
 
+  { Todos ECFs suportam no máximo 8 Linhas no Rodapé. Ajusta se necessário,
+    para evitar erro na Impressão, no caso de mais linhas serem enviadas }
+  Observacao:= AjustaLinhas(Observacao, Colunas, 8);
+
   ComandoLOG := 'FechaCupom( '+Observacao+' )' ;
 
   if Assigned( fsAAC ) then

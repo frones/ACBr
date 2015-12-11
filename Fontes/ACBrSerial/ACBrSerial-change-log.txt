@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2015
+-- ACBrECF --
+[*] FechaCupom modificado para ajustar as Linhas do Cupom, limitando-as em 8
+    linhas, se necessário. Isso evita erros em alguns ECFs.
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=26640  (por: DSA)
+
 04/12/2015
 -- ACBrECFVirtual, ACBrECFVirtualBuffer --
 [*] Adicionado controle para TotalDescontos e TotalAcrescimos, na Redução Z

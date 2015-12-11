@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2015
+[*] Acerto na importação do layout txt para a norma técnica 2015/003
+
 10/12/2015
 --  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
 [-] Correção da Formataçao do Cep. 

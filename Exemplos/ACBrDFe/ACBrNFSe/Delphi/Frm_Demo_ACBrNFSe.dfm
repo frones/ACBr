@@ -1,6 +1,6 @@
 object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
-  Left = 201
-  Top = 132
+  Left = 209
+  Top = 130
   Width = 870
   Height = 568
   Caption = 'Demo ACBrNFSe'
@@ -93,7 +93,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 368
-        ActivePage = TabSheet7
+        ActivePage = TabSheet4
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -368,6 +368,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Guaratingueta/3518404/SP'
               'Guarulhos/3518800/SP'
               'Hortolandia/3519071/SP'
+              'Ibate/3519303/SP'
               'Ijui/4310207/RS'
               'Indaial/4207502/SC'
               'Ipatinga/3131307/MG'
@@ -1359,7 +1360,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object ACBrNFSe1: TACBrNFSe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFSe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
+    Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = True
@@ -1369,6 +1370,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.WebServices.IntervaloTentativas = 3000
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.Certificados.ArquivoPFX = 'C:\Erp\Certificados\ErloPneus - Ibate - Fiorilli\erlopneus.pfx'
+    Configuracoes.Certificados.Senha = 'italo'
     DANFSE = ACBrNFSeDANFSeQR1
     Left = 360
     Top = 248

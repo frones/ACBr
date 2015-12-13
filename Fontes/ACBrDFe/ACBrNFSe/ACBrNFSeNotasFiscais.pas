@@ -145,7 +145,8 @@ type
 
     procedure Assinar(Assina: Boolean);
     function AssinarLote(XMLLote, docElemento, infElemento: String;
-      Assina: Boolean; SignatureNode: String = ''; DSIGNSLote: String = '' ): String;
+      Assina: Boolean; SignatureNode: String = ''; DSIGNSLote: String = '';
+      IdSignature: String = ''  ): String;
     procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
     procedure ImprimirPDF;
@@ -578,7 +579,8 @@ begin
 end;
 
 function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;
-  Assina: Boolean; SignatureNode: String; DSIGNSLote: String ): String;
+  Assina: Boolean; SignatureNode: String; DSIGNSLote: String;
+  IdSignature: String ): String;
 var
   XMLAss: String;
   ArqXML: String;
@@ -592,11 +594,13 @@ begin
   begin
     if Assina then
     begin
-      // A linha abaixo deverá substituir a outra quando for liberado as alterações
-      // nas classes do ACBrDFe onde preve a inclusão dos novos parâmetros na
-      // função Assinar, visando a realizar a assinatura do Lote quando se tem
-      // RPS assinado.
-//      XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento, SignatureNode, DSIGNSLote);
+      // As linhas abaixo só podem ser descomentadas depois das alterações nos
+      // fontes das classes ACBrDFe forem aprovadas.
+      (*
+      SSL.SSLClass.SignatureNode := SignatureNode;
+      SSL.SSLClass.DSIGNSLote    := DSIGNSLote;
+      SSL.SSLClass.IdSignature   := IdSignature;
+      *)
       XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;

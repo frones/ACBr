@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2015
+-- ACBrNFSeWebServices / ACBrNFSeNotas Fiscais --
+[*] Alterações visando correções e implementações futuras.
+    Por: Italo Jurisato Junior
+
 11/12/2015
 -- ACBrNFSeWebServices --
 [*] Alterado o valor do parâmetro AssinarXML no caso do cancelamento.

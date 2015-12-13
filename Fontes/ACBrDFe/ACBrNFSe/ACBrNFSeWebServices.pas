@@ -87,6 +87,7 @@ type
     FVersaoNFSe: TVersaoNFSe;
     FxSignatureNode: String;
     FxDSIGNSLote: String;
+    FxIdSignature: String;
 
     FvNotas: String;
     FXML_NFSe: String;
@@ -135,6 +136,7 @@ type
     property VersaoNFSe: TVersaoNFSe read FVersaoNFSe;
     property xSignatureNode: String read FxSignatureNode;
     property xDSIGNSLote: String read FxDSIGNSLote;
+    property xIdSignature: String read FxIdSignature;
 
     property vNotas: String read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
@@ -693,9 +695,25 @@ begin
   FProvedor := FPConfiguracoesNFSe.Geral.Provedor;
 
   if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '1.2' then
-    FPMimeType := 'application/soap+xml'
+  begin
+    FPMimeType := 'application/soap+xml';
+    // As linhas abaixo só podem ser descomentadas depois das alterações nos
+    // fontes das classes ACBrDFe forem aprovadas.
+    (*
+    FPDFeOwner.SSL.UseCertificate := True;
+    FPDFeOwner.SSL.UseSSL := True;
+    *)
+  end
   else
+  begin
     FPMimeType := 'text/xml';
+    // As linhas abaixo só podem ser descomentadas depois das alterações nos
+    // fontes das classes ACBrDFe forem aprovadas.
+    (*
+    FPDFeOwner.SSL.UseCertificate := False;
+    FPDFeOwner.SSL.UseSSL := False;
+    *)
+  end;
 
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
 end;
@@ -986,6 +1004,11 @@ begin
           FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.xMunicipio      := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.xMunicipio;
           FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.CodigoMunicipio := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.CodigoMunicipio;
 
+          FNotasFiscais.Items[ii].NFSe.Cancelada := snNao;
+
+          if FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NFSeCancelamento.DataHora > 0 then
+            FNotasFiscais.Items[ii].NFSe.Cancelada := snSim;
+
           FRetNFSe := Copy(FRetListaNFSe, 1, j - 1);
           k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNFSe);
           FRetNFSe := Copy(FRetNFSe, k, length(FRetNFSe));
@@ -1121,6 +1144,7 @@ begin
 
    FxSignatureNode := '';
    FxDSIGNSLote := '';
+   FxIdSignature := '';
 
    if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) then
    begin
@@ -1130,9 +1154,13 @@ begin
        if (URI <> '') and not (FProvedor in [proRecife, proRJ, proAbaco,
                                              proIssCuritiba, proFISSLex,
                                              proBetha, proPublica]) then
+       begin
          FxSignatureNode := './/ds:Signature[@' +
                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
-                    '="AssLote_' + URI + '"]'
+                    '="AssLote_' + URI + '"]';
+         FxIdSignature := ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
+                    '="AssLote_' + URI;
+       end
        else
          if (URI <> '') and (FProvedor = proBetha) then
            FxSignatureNode := './/ns3:' + EnviarLoteRps + '/ds:Signature'
@@ -1311,7 +1339,7 @@ begin
                                   FPrefixo3 + 'EnviarLoteRpsEnvio',
                                   FPrefixo3 + 'LoteRps',
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                  xSignatureNode, FxDSIGNSLote);
+                                  xSignatureNode, xDSIGNSLote, xIdSignature);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -1519,7 +1547,7 @@ begin
                                   FPrefixo3 + 'EnviarLoteRpsEnvio',
                                   FPrefixo3 + 'LoteRps',
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                  xSignatureNode, FxDSIGNSLote);
+                                  xSignatureNode, xDSIGNSLote, xIdSignature);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -1757,7 +1785,7 @@ begin
                                   FPrefixo3 + 'EnviarLoteRpsSincronoEnvio',
                                   FPrefixo3 + 'LoteRps',
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                  xSignatureNode, FxDSIGNSLote);
+                                  xSignatureNode, xDSIGNSLote, xIdSignature);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3191,7 +3219,7 @@ begin
     else FaMsg := 'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
                   'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
-    Result := (RetCancNFSe.InfCanc.Sucesso <> '');
+    Result := (FDataHora > 0);
   finally
 //    FRetCancNFSe.Free;
   end;
@@ -3714,7 +3742,7 @@ begin
   if not (Result) then
     FEnviarLoteRPS.GerarException( FEnviarLoteRPS.Msg );
 
-  FConsSitLoteRPS.FCNPJ       := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.CNPJ;
+  FConsSitLoteRPS.FCNPJ       := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.CNPJ);
   FConsSitLoteRPS.FInscMun    := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
   FConsSitLoteRPS.FProtocolo  := FEnviarLoteRPS.Protocolo;
   FConsSitLoteRPS.FNumeroLote := FEnviarLoteRPS.NumeroLote;
@@ -3725,7 +3753,7 @@ begin
     FConsSitLoteRPS.FFraseSecreta := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.FraseSecreta;
   end;
 
-  FConsLote.FCNPJ      := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.CNPJ;
+  FConsLote.FCNPJ      := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.CNPJ);
   FConsLote.FInscMun   := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
   FConsLote.FProtocolo := FEnviarLoteRPS.Protocolo;
 

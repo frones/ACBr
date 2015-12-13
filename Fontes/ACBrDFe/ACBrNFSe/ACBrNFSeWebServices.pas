@@ -1148,29 +1148,30 @@ begin
 
    if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) then
    begin
-     if (FProvedor in [proEquiplano, proPronim, proIssDSF, proInfisc]) then
-       FxSignatureNode := ''
-     else
-       if (URI <> '') and not (FProvedor in [proRecife, proRJ, proAbaco,
-                                             proIssCuritiba, proFISSLex,
-                                             proBetha, proPublica]) then
+     if (URI <> '') then
+     begin
+       if not (FProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba,
+                             proFISSLex, proBetha, proPublica]) then
        begin
          FxSignatureNode := './/ds:Signature[@' +
                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
                     '="AssLote_' + URI + '"]';
          FxIdSignature := ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
                     '="AssLote_' + URI;
-       end
-       else
-         if (URI <> '') and (FProvedor = proBetha) then
-           FxSignatureNode := './/ns3:' + EnviarLoteRps + '/ds:Signature'
-         else begin
-           FxSignatureNode := './/ds1:' + EnviarLoteRps + '/ds:Signature';
-           i := pos(EnviarLoteRps + ' xmlns=', FPDadosMsg);
-           i := i + Length(EnviarLoteRps + ' xmlns=');
-           j := Pos('">', FPDadosMsg) + 1;
-           FxDSIGNSLote := ' xmlns:ds1=' + Copy(FPDadosMsg, i, j - i);
-         end;
+       end;
+
+       if (FProvedor = proBetha) then
+         FxSignatureNode := './/ns3:' + EnviarLoteRps + '/ds:Signature';
+
+     end
+     else
+     begin
+       FxSignatureNode := './/ds1:' + EnviarLoteRps + '/ds:Signature';
+       i := pos(EnviarLoteRps + ' xmlns=', FPDadosMsg);
+       i := i + Length(EnviarLoteRps + ' xmlns=');
+       j := Pos('">', FPDadosMsg) + 1;
+       FxDSIGNSLote := ' xmlns:ds1=' + Copy(FPDadosMsg, i, j - i);
+     end;
    end;
 end;
 

@@ -947,6 +947,8 @@ begin
     end;
   end;
 
+  AplicaParametros; // Aplica os parâmetros escolhidos
+
   DadosAdicionais;
   Header;
   Emitente;
@@ -1053,8 +1055,6 @@ begin
     rlbContinuacaoInformacoesComplementares.Visible := False;
 
   iQuantItens := FNFe.Det.Count;
-
-  AplicaParametros; // Aplica os parâmetros escolhidos
 end;
 
 procedure TfrlDANFeRLRetrato.Header;

@@ -425,9 +425,8 @@ begin
            wLinha:=  '5'                                                         + // 001 a 001 - Identificação do registro Informativo
                      'E'                                                         + // 002 a 002 - Tipo de informativo
                      PadLeft( ACBrBanco.ACBrBoleto.Cedente.CodigoCedente, 5, '0')+ // 003 a 004 - Codigo do Cedente
-                     ifthen(wModalidade = 'A', PadRight(NumeroDocumento, 10), 
+                     ifthen(wModalidade = 'A', PadRight(NumeroDocumento, 10),
                             padLeft(wNossoNumeroCompleto,10,'0'))                + // 008 a 017 - Seu numero
-                     PadRight( NumeroDocumento,  10)                             + // 008 a 017 - Seu numero
                      Space(1)                                                    + // 018 a 018 - Filler
                      wModalidade                                                 + // 019 a 019 - "A"-Com registro  "C"-Sem registro
                      TextoRegInfo                                                + // 020 a 347

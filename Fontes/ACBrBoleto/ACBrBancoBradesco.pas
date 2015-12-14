@@ -150,7 +150,7 @@ begin
          pFisica  : ATipoInscricao := '1';
          pJuridica: ATipoInscricao := '2';
       else
-         ATipoInscricao := '';
+         ATipoInscricao := ' ';
       end;
 
       wLinha:= '0'                                             + // ID do Registro

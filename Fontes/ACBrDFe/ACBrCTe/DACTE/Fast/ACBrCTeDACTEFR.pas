@@ -1267,6 +1267,12 @@ begin
   // preparar relatorio
   if Assigned(ACBrCTe) then
   begin
+    if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+    begin
+      FCTe := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTE;
+      CarregaDados;
+    end;
+
     if Assigned(TACBrCTe(ACBrCTe).EventoCTe) then
     begin
       Evento := TACBrCTe(ACBrCTe).EventoCTe;
@@ -1274,12 +1280,6 @@ begin
     end
     else
       raise EACBrCTeDACTEFR.Create('Evento não foi assinalado.');
-
-    if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
-    begin
-      FCTe := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTE;
-      CarregaDados;
-    end;
 
     Result := frxReport.PrepareReport;
   end

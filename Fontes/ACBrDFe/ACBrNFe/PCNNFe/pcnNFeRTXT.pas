@@ -937,22 +937,25 @@ begin
 
   if ID = 'W02' then (* Grupo da TAG <total><ICMSTot> *************************)
   begin
-    (*W03*)NFe.Total.ICMSTot.vBC := LerCampo(tcDe2, 'vBC');
-    (*W04*)NFe.Total.ICMSTot.vICMS := LerCampo(tcDe2, 'vICMS');
-           NFe.Total.ICMSTot.vICMSDeson := LerCampo(tcDe2, 'vICMSDeson');
-    (*W05*)NFe.Total.ICMSTot.vBCST := LerCampo(tcDe2, 'vBCST');
-    (*W06*)NFe.Total.ICMSTot.vST := LerCampo(tcDe2, 'vST');
-    (*W07*)NFe.Total.ICMSTot.vProd := LerCampo(tcDe2, 'vProd');
-    (*W08*)NFe.Total.ICMSTot.vFrete := LerCampo(tcDe2, 'vFrete');
-    (*W09*)NFe.Total.ICMSTot.vSeg := LerCampo(tcDe2, 'vSeg');
-    (*W10*)NFe.Total.ICMSTot.vDesc := LerCampo(tcDe2, 'vDesc');
-    (*W11*)NFe.Total.ICMSTot.vII := LerCampo(tcDe2, 'vII');
-    (*W12*)NFe.Total.ICMSTot.vIPI := LerCampo(tcDe2, 'vIPI');
-    (*W13*)NFe.Total.ICMSTot.vPIS := LerCampo(tcDe2, 'vPIS');
-    (*W14*)NFe.Total.ICMSTot.vCOFINS := LerCampo(tcDe2, 'vCOFINS');
-    (*W15*)NFe.Total.ICMSTot.vOutro := LerCampo(tcDe2, 'vOutro');
-    (*W16*)NFe.Total.ICMSTot.vNF := LerCampo(tcDe2, 'vNF');
-    (*W16a*)NFe.Total.ICMSTot.vTotTrib := LerCampo(tcDe2, 'vTotTrib');    
+    (*W03*)NFe.Total.ICMSTot.vBC          := LerCampo(tcDe2, 'vBC');
+    (*W04*)NFe.Total.ICMSTot.vICMS        := LerCampo(tcDe2, 'vICMS');
+           NFe.Total.ICMSTot.vICMSDeson   := LerCampo(tcDe2, 'vICMSDeson');
+           NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
+           NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
+           NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
+    (*W05*)NFe.Total.ICMSTot.vBCST        := LerCampo(tcDe2, 'vBCST');
+    (*W06*)NFe.Total.ICMSTot.vST          := LerCampo(tcDe2, 'vST');
+    (*W07*)NFe.Total.ICMSTot.vProd        := LerCampo(tcDe2, 'vProd');
+    (*W08*)NFe.Total.ICMSTot.vFrete       := LerCampo(tcDe2, 'vFrete');
+    (*W09*)NFe.Total.ICMSTot.vSeg         := LerCampo(tcDe2, 'vSeg');
+    (*W10*)NFe.Total.ICMSTot.vDesc        := LerCampo(tcDe2, 'vDesc');
+    (*W11*)NFe.Total.ICMSTot.vII          := LerCampo(tcDe2, 'vII');
+    (*W12*)NFe.Total.ICMSTot.vIPI         := LerCampo(tcDe2, 'vIPI');
+    (*W13*)NFe.Total.ICMSTot.vPIS         := LerCampo(tcDe2, 'vPIS');
+    (*W14*)NFe.Total.ICMSTot.vCOFINS      := LerCampo(tcDe2, 'vCOFINS');
+    (*W15*)NFe.Total.ICMSTot.vOutro       := LerCampo(tcDe2, 'vOutro');
+    (*W16*)NFe.Total.ICMSTot.vNF          := LerCampo(tcDe2, 'vNF');
+    (*W16a*)NFe.Total.ICMSTot.vTotTrib    := LerCampo(tcDe2, 'vTotTrib');
   end;
 
   if ID = 'W17' then (* Grupo da TAG <total><ISSQNtot> ************************)

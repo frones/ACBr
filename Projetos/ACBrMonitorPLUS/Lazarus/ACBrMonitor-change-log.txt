@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2015
+[+] Adicionadas as tags do fundo de amparo a pobreza, pFCPUFDest e vFCPUFDest
+    por: regys.silveira
+
 10/12/2015
 [-] Acerto para salvar corretamente o CSC e IdCSC quando é enviado o comando SetXXX.
     por: regys.silveira

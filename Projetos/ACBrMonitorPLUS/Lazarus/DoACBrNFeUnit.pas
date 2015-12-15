@@ -2333,6 +2333,8 @@ begin
                         pICMSInterPart := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSInterPart','') ,0);
                         vICMSUFDest    := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSUFDest','') ,0);
                         vICMSUFRemet   := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSUFRemet','') ,0);
+                        pFCPUFDest     := StringToFloatDef( INIRec.ReadString(sSecao,'pFCPUFDest','') ,0);
+                        vFCPUFDest     := StringToFloatDef( INIRec.ReadString(sSecao,'vFCPUFDest','') ,0);
                       end;
                     end;
 
@@ -2477,6 +2479,7 @@ begin
          Total.ICMSTot.vICMSDeson := StringToFloatDef( INIRec.ReadString('Total','vICMSDeson',''),0) ;
          Total.ICMSTot.vICMSUFDest := StringToFloatDef( INIRec.ReadString('Total','vICMSUFDest',''),0) ;
          Total.ICMSTot.vICMSUFRemet := StringToFloatDef( INIRec.ReadString('Total','vICMSUFRemet',''),0) ;
+         Total.ICMSTot.vFCPUFDest :=  StringToFloatDef( INIRec.ReadString('Total','vFCPUFDest',''),0) ;
          Total.ICMSTot.vBCST   := StringToFloatDef( INIRec.ReadString('Total','BaseICMSSubstituicao' ,INIRec.ReadString('Total','vBCST','')) ,0) ;
          Total.ICMSTot.vST     := StringToFloatDef( INIRec.ReadString('Total','ValorICMSSubstituicao',INIRec.ReadString('Total','vST'  ,'')) ,0) ;
          Total.ICMSTot.vProd   := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0) ;

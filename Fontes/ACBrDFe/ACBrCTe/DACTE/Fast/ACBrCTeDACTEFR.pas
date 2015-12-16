@@ -1555,6 +1555,13 @@ begin
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosEventos;
+  Function MantertpAmb( s : TpcnTipoAmbiente ) : String;
+  begin
+    case s of
+      taProducao    : Result := 'PRODUÇÃO';
+      taHomologacao : Result := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+    end;
+  end;
 var
   i: Integer;
   J: Integer;
@@ -1580,37 +1587,24 @@ begin
               FieldByName('ChaveAcesso').AsString         := FormatarChaveAcesso(InfEvento.chCTe);
               FieldByName('cOrgao').AsInteger             := InfEvento.cOrgao;
               FieldByName('nSeqEvento').AsInteger         := InfEvento.nSeqEvento;
-
-              case InfEvento.tpAmb of
-                taProducao:
-                  begin
-                    FieldByName('tpAmb').AsString := 'PRODUÇÃO';
-                    frxReport.Variables['HOMOLOGACAO'] := False;
-                  end;
-                taHomologacao:
-                  begin
-                    FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
-                    frxReport.Variables['HOMOLOGACAO'] := True;
-                  end;
-              end;
-
-              FieldByName('dhEvento').AsDateTime    := InfEvento.dhEvento;
-              FieldByName('TipoEvento').AsString    := InfEvento.TipoEvento;
-              FieldByName('DescEvento').AsString    := InfEvento.DescEvento;
-              FieldByName('versaoEvento').AsString  := InfEvento.versaoEvento;
-              FieldByName('cStat').AsInteger        := RetInfEvento.cStat;
-              FieldByName('xMotivo').AsString       := RetInfEvento.xMotivo;
-              FieldByName('nProt').AsString         := RetInfEvento.nProt;
-              FieldByName('dhRegEvento').AsDateTime := RetInfEvento.dhRegEvento;
-              FieldByName('xJust').AsString         := 'Protocolo do CTe Cancelado:' + InfEvento.detEvento.nProt +sLineBreak+InfEvento.detEvento.xJust;
-              FieldByName('xCondUso').AsString      := InfEvento.detEvento.xCondUso;
-
+              FieldByName('tpAmb').AsString               := MantertpAmb( InfEvento.tpAmb );
+              FieldByName('dhEvento').AsDateTime          := InfEvento.dhEvento;
+              FieldByName('TipoEvento').AsString          := InfEvento.TipoEvento;
+              FieldByName('DescEvento').AsString          := InfEvento.DescEvento;
+              FieldByName('versaoEvento').AsString        := InfEvento.versaoEvento;
+              FieldByName('cStat').AsInteger              := RetInfEvento.cStat;
+              FieldByName('xMotivo').AsString             := RetInfEvento.xMotivo;
+              FieldByName('nProt').AsString               := RetInfEvento.nProt;
+              FieldByName('dhRegEvento').AsDateTime       := RetInfEvento.dhRegEvento;
+              FieldByName('xJust').AsString               := 'Protocolo do CTe Cancelado:' + InfEvento.detEvento.nProt +sLineBreak+InfEvento.detEvento.xJust;
+              FieldByName('xCondUso').AsString            := InfEvento.detEvento.xCondUso;
+              frxReport.Variables['HOMOLOGACAO']          := ( InfEvento.tpAmb = taHomologacao);
               Post;
             end;
           teCCe:
             begin
               TipoEvento := teCCe;
-              for J      := 0 to InfEvento.detEvento.infCorrecao.Count - 1 do
+              for J := 0 to InfEvento.detEvento.infCorrecao.Count - 1 do
               begin
                 Append;
                 FieldByName('DescricaoTipoEvento').AsString := InfEvento.DescricaoTipoEvento(InfEvento.tpEvento);
@@ -1622,27 +1616,18 @@ begin
                 FieldByName('ChaveAcesso').AsString         := FormatarChaveAcesso(InfEvento.chCTe);
                 FieldByName('cOrgao').AsInteger             := InfEvento.cOrgao;
                 FieldByName('nSeqEvento').AsInteger         := InfEvento.nSeqEvento;
-
-                case InfEvento.tpAmb of
-                  taProducao:
-                    FieldByName('tpAmb').AsString := 'PRODUÇÃO';
-                  taHomologacao:
-                    begin
-                      FieldByName('tpAmb').AsString      := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
-                      frxReport.Variables['HOMOLOGACAO'] := True;
-                    end;
-                end;
-
-                FieldByName('dhEvento').AsDateTime    := InfEvento.dhEvento;
-                FieldByName('TipoEvento').AsString    := InfEvento.TipoEvento;
-                FieldByName('DescEvento').AsString    := InfEvento.DescEvento;
-                FieldByName('versaoEvento').AsString  := InfEvento.versaoEvento;
-                FieldByName('cStat').AsInteger        := RetInfEvento.cStat;
-                FieldByName('xMotivo').AsString       := RetInfEvento.xMotivo;
-                FieldByName('nProt').AsString         := RetInfEvento.nProt;
-                FieldByName('dhRegEvento').AsDateTime := RetInfEvento.dhRegEvento;
-                FieldByName('xJust').AsString         := InfEvento.detEvento.xJust;
-                FieldByName('xCondUso').AsString      := InfEvento.detEvento.xCondUso;
+                FieldByName('tpAmb').AsString               := MantertpAmb( InfEvento.tpAmb );
+                FieldByName('dhEvento').AsDateTime          := InfEvento.dhEvento;
+                FieldByName('TipoEvento').AsString          := InfEvento.TipoEvento;
+                FieldByName('DescEvento').AsString          := InfEvento.DescEvento;
+                FieldByName('versaoEvento').AsString        := InfEvento.versaoEvento;
+                FieldByName('cStat').AsInteger              := RetInfEvento.cStat;
+                FieldByName('xMotivo').AsString             := RetInfEvento.xMotivo;
+                FieldByName('nProt').AsString               := RetInfEvento.nProt;
+                FieldByName('dhRegEvento').AsDateTime       := RetInfEvento.dhRegEvento;
+                FieldByName('xJust').AsString               := InfEvento.detEvento.xJust;
+                FieldByName('xCondUso').AsString            := InfEvento.detEvento.xCondUso;
+                frxReport.Variables['HOMOLOGACAO']          := ( InfEvento.tpAmb = taHomologacao);
 
                 with InfEvento.detEvento.infCorrecao.Items[J] do
                 begin
@@ -1740,7 +1725,7 @@ begin
 
         case tpDoc of
           tdDeclaracao: FieldByName('TextoImpressao').AsString := 'Declaração          ' + DoctoRem + '                                        ' + nDoc;
-          tdOutros: FieldByName('TextoImpressao').AsString     := 'Outros              ' + DoctoRem + '                                        ' + nDoc;
+          tdOutros    : FieldByName('TextoImpressao').AsString := 'Outros              ' + DoctoRem + '                                        ' + nDoc;
           tdDutoviario: FieldByName('TextoImpressao').AsString := 'Dutoviário          ' + DoctoRem + '                                        ' + nDoc;
         else
           FieldByName('TextoImpressao').AsString := 'Não informado       ' + DoctoRem + '                                        ' + nDoc;
@@ -1818,20 +1803,20 @@ begin
               FieldByName('xNome').AsString   := xNome;
               FieldByName('UF').AsString      := UF;
               case tpDoc of
-                daCTRC: FieldByName('Tipo').AsString   := 'CTRC';
-                daCTAC: FieldByName('Tipo').AsString   := 'CTAC';
-                daACT: FieldByName('Tipo').AsString    := 'ACT';
-                daNF7: FieldByName('Tipo').AsString    := 'NF 7';
-                daNF27: FieldByName('Tipo').AsString   := 'NF 27';
-                daCAN: FieldByName('Tipo').AsString    := 'CAN';
-                daCTMC: FieldByName('Tipo').AsString   := 'CTMC';
-                daATRE: FieldByName('Tipo').AsString   := 'ATRE';
-                daDTA: FieldByName('Tipo').AsString    := 'DTA';
-                daCAI: FieldByName('Tipo').AsString    := 'CAI';
-                daCCPI: FieldByName('Tipo').AsString   := 'CCPI';
-                daCA: FieldByName('Tipo').AsString     := 'CA';
-                daTIF: FieldByName('Tipo').AsString    := 'TIF';
-                daOutros: FieldByName('Tipo').AsString := 'OUTROS';
+                daCTRC  : FieldByName('Tipo').AsString  := 'CTRC';
+                daCTAC  : FieldByName('Tipo').AsString  := 'CTAC';
+                daACT   : FieldByName('Tipo').AsString  := 'ACT';
+                daNF7   : FieldByName('Tipo').AsString  := 'NF 7';
+                daNF27  : FieldByName('Tipo').AsString  := 'NF 27';
+                daCAN   : FieldByName('Tipo').AsString  := 'CAN';
+                daCTMC  : FieldByName('Tipo').AsString  := 'CTMC';
+                daATRE  : FieldByName('Tipo').AsString  := 'ATRE';
+                daDTA   : FieldByName('Tipo').AsString  := 'DTA';
+                daCAI   : FieldByName('Tipo').AsString  := 'CAI';
+                daCCPI  : FieldByName('Tipo').AsString  := 'CCPI';
+                daCA    : FieldByName('Tipo').AsString  := 'CA';
+                daTIF   : FieldByName('Tipo').AsString  := 'TIF';
+                daOutros: FieldByName('Tipo').AsString  := 'OUTROS';
               end;
               FieldByName('Serie').AsString := idDocAnt.Items[ii].idDocAntPap.Items[iii].serie;
               FieldByName('nDoc').AsString  := IntToStr(idDocAnt.Items[ii].idDocAntPap.Items[iii].nDoc);
@@ -1882,7 +1867,7 @@ begin
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
         FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
-        FieldByName('Fone').AsString := FormatarFone(Fone);
+        FieldByName('Fone').AsString    := FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
     end;
@@ -1941,9 +1926,9 @@ begin
       FieldByName('NatOp').AsString := NatOp;
 
       case forPag of
-        fpPago: FieldByName('forPag').AsString   := 'Pago';
-        fpAPagar: FieldByName('forPag').AsString := 'A Pagar';
-        fpOutros: FieldByName('forPag').AsString := 'Outros';
+        fpPago  : FieldByName('forPag').AsString  := 'Pago';
+        fpAPagar: FieldByName('forPag').AsString  := 'A Pagar';
+        fpOutros: FieldByName('forPag').AsString  := 'Outros';
       end;
 
       FieldByName('Mod_').AsString    := modelo;
@@ -2622,11 +2607,11 @@ begin
 {$ENDIF}
           Append;
           case respSeg of
-            rsRemetente: FieldByName('RESPONSAVEL').AsString      := 'Remetente';
-            rsExpedidor: FieldByName('RESPONSAVEL').AsString      := 'Expedidor';
-            rsRecebedor: FieldByName('RESPONSAVEL').AsString      := 'Recebedor';
-            rsDestinatario: FieldByName('RESPONSAVEL').AsString   := 'Destinatário';
-            rsEmitenteCTe: FieldByName('RESPONSAVEL').AsString    := 'Emitente';
+            rsRemetente     : FieldByName('RESPONSAVEL').AsString := 'Remetente';
+            rsExpedidor     : FieldByName('RESPONSAVEL').AsString := 'Expedidor';
+            rsRecebedor     : FieldByName('RESPONSAVEL').AsString := 'Recebedor';
+            rsDestinatario  : FieldByName('RESPONSAVEL').AsString := 'Destinatário';
+            rsEmitenteCTe   : FieldByName('RESPONSAVEL').AsString := 'Emitente';
             rsTomadorServico: FieldByName('RESPONSAVEL').AsString := 'Tomador';
           end;
           FieldByName('NOMESEGURADORA').AsString  := xSeg;
@@ -2806,12 +2791,12 @@ begin
           QdtMedida[J - 1]  := infQ.Items[i].qCarga;
 
           case infQ.Items[i].cUnid of
-            uKG: UnidMedida[J - 1]      := 'KG';
-            uTON: UnidMedida[J - 1]     := 'TON';
-            uLITROS: UnidMedida[J - 1]  := 'LT';
-            uMMBTU: UnidMedida[J - 1]   := 'MMBTU';
+            uKG     : UnidMedida[J - 1] := 'KG';
+            uTON    : UnidMedida[J - 1] := 'TON';
+            uLITROS : UnidMedida[J - 1] := 'LT';
+            uMMBTU  : UnidMedida[J - 1] := 'MMBTU';
             uUNIDADE: UnidMedida[J - 1] := 'UND';
-            uM3: UnidMedida[J - 1]      := 'M3';
+            uM3     : UnidMedida[J - 1] := 'M3';
           end;
         end;
       end;

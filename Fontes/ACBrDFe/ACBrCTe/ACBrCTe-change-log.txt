@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2015
+-- ACBrCTeDACTEFR --
+[*] Refatoração para corrigir erros 
+       Function MantertpAmb( s : TpcnTipoAmbiente ) : String; 
+[-] Novos alinhamentos 
+
+    por: Henrique Leonardo
+
+
 04/12/2015
 -- ACBrCTeNotasFiscais --
 [*] método "Assinar", modificado para só validar CNPJ se conseguir ler o mesmo

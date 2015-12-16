@@ -953,7 +953,7 @@ begin
                LFill( QUANT_DOC,0 )                +
                LFill( CstPisToStr(CST_PIS) )       +
                LFill( CstCofinsToStr(CST_COFINS) ) +
-               LFill( CFOP, 4 )  +
+               LFill( CFOP, 4, True )  +
                LFill( INF_COMPL )      +
                LFill( COD_CTA ) )      ;
 

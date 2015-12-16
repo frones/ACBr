@@ -1291,9 +1291,9 @@ begin
   if EstaVazio(xID) then
     raise EACBrNFeException.Create('ID Inválido. Impossível Salvar XML');
 
-  if (Self.NFe.procNFe.cStat = 110) or (Self.NFe.procNFe.cStat = 301) then
-    NomeXML := '-den.xml'
-  else
+//  if (Self.NFe.procNFe.cStat = 110) or (Self.NFe.procNFe.cStat = 301) then
+//    NomeXML := '-den.xml'
+//  else
     NomeXML := '-nfe.xml';
 
   Result := xID + NomeXML;

@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/12/2015
+-- ACBrNFeWebServices / ACBrNFeNotasFiscais --
+[*] Incluido o status 302 para que seja acrescentado o protocolo de denegação
+    ao XML.
+    por: Italo Jurisato Junior
+
 -- ACBrNFeServicos --
 [-] URL-QRCode da UF: PA ambiente de produção estava igual a de homologação.
     por: Cleiver / Italo Jurisato Junior

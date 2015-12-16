@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/12/2015
+-- ACBrNFeServicos --
+[-] URL-QRCode da UF: PA ambiente de produção estava igual a de homologação.
+    por: Cleiver / Italo Jurisato Junior
+
+16/12/2015
 -- pcnNFe --
 [-] Remoção de valores default para a tag "nro", o componente atribuia o valor
     "SEM NUMERO", causando problemas quando o endereço não possuía valor na tag,

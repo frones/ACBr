@@ -715,12 +715,16 @@ begin
   if (ID = 'NA') then
   begin
     NFe.Det[i].Imposto.ICMSUFDest.vBCUFDest := LerCampo(tcDe2, 'vBCUFDest');
+
     NFe.Det[i].Imposto.ICMSUFDest.pFCPUFDest := LerCampo(tcDe2, 'pFCPUFDest');
+    NFe.Det[i].Imposto.ICMSUFDest.vFCPUFDest := LerCampo(tcDe2, 'vFCPUFDest');
+
     NFe.Det[i].Imposto.ICMSUFDest.pICMSUFDest := LerCampo(tcDe2, 'pICMSUFDest');
     NFe.Det[i].Imposto.ICMSUFDest.pICMSInter := LerCampo(tcDe2, 'pICMSInter');
     NFe.Det[i].Imposto.ICMSUFDest.pICMSInterPart := LerCampo(tcDe2, 'pICMSInterPart');
-    NFe.Det[i].Imposto.ICMSUFDest.vFCPUFDest := LerCampo(tcDe2, 'vFCPUFDest');
+
     NFe.Det[i].Imposto.ICMSUFDest.vICMSUFDest := LerCampo(tcDe2, 'vICMSUFDest');
+    NFe.Det[i].Imposto.ICMSUFDest.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
   end;
 
   if ID = 'O' then (* Grupo da TAG <det><imposto><IPI> **********************)

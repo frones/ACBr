@@ -64,7 +64,9 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
+    function CarteiraToTipoOperacao(const Carteira: string):String; 
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+    function MotivoRejeicaoColuna(const Coluna: integer):string;
   end;
 
 implementation
@@ -85,7 +87,7 @@ begin
    fpTamanhoMaximoNossoNum := 7;
    fpTamanhoAgencia := 4;
    fpTamanhoConta   := 7;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoCarteira:= 1;
    fSequencia := 1;
 end;
 
@@ -117,7 +119,7 @@ begin
                       PadLeft(Cedente.ContaDigito,1,'0') +
                       ACBrTitulo.NossoNumero +
                       CalcularDigitoVerificador(ACBrTitulo) +
-                      ACBrTitulo.Carteira + '000';
+                      CarteiraToTipoOperacao(ACBrTitulo.Carteira) + '000';
 
       DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
    end;
@@ -288,8 +290,8 @@ end;
 Procedure TACBrBancoNordeste.LerRetorno400 ( ARetorno: TStringList );
 var
   Titulo : TACBrTitulo;
-  ContLinha, CodOcorrencia, CodMotivo, i, MotivoLinha : Integer;
-  CodMotivo_19, rAgencia, rConta, rDigitoConta, Linha, rCedente, rCNPJCPF: String;
+  ContLinha, i: integer;
+  rAgencia, rConta, rDigitoConta, Linha, rCedente, rCNPJCPF: String;
 begin
    ContLinha := 0;
 
@@ -299,20 +301,21 @@ begin
 
    rCedente := trim(Copy(ARetorno[0],47,30));
 
-   rAgencia := trim(Copy(ARetorno[1], 26, ACBrBanco.TamanhoAgencia));
-   rConta := trim(Copy(ARetorno[1], 31, ACBrBanco.TamanhoConta));
+   rAgencia := trim(Copy(ARetorno[0], 27, ACBrBanco.TamanhoAgencia));   // alterado de linha 1 para 0 e posição 26 p/ 27 p/ LP Sistemas em 01/12/2015
+   rConta   := trim(Copy(ARetorno[0], 33, ACBrBanco.TamanhoConta));       // alterado de linha 1 para 0 e posição 31 p/ 33 p/ LP Sistemas em 01/12/2015
 
-   rDigitoConta := Copy(ARetorno[1],37,1);
+   rDigitoConta := Copy(ARetorno[0],40,1);                              // alterado de linha 1 para 0 e posição 37 p/ 40 p/ LP Sistemas em 01/12/2015
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],109,5),0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+            //|
-                                                             Copy(ARetorno[0],97,2)+'/'+            //|Implementado por Carlos Fitl - 27/12/2010
-                                                             Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );//|
-
-   ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],380,2)+'/'+            //|
-                                                               Copy(ARetorno[0],382,2)+'/'+            //|Implementado por Carlos Fitl - 27/12/2010
-                                                               Copy(ARetorno[0],384,2),0, 'DD/MM/YY' );//|
+   if Copy(ARetorno[0],95,2) <> '00' then
+     ACBrBanco.ACBrBoleto.DataArquivo:= StringToDateTimeDef( Copy(ARetorno[0],95,2)+'/'+
+                                                             Copy(ARetorno[0],97,2)+'/'+
+                                                             Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
+   if Copy(ARetorno[0],120,2) <> '00' then
+     ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef( Copy(ARetorno[0],120,2)+'/'+
+                                                                  Copy(ARetorno[0],122,2)+'/'+
+                                                                  Copy(ARetorno[0],124,2),0, 'DD/MM/YY' );
 
    case StrToIntDef(Copy(ARetorno[1],2,2),0) of
       11: rCNPJCPF := Copy(ARetorno[1],7,11);
@@ -338,8 +341,8 @@ begin
       Cedente.ContaDigito:= rDigitoConta;
 
       case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-         11: Cedente.TipoInscricao:= pFisica;
-         14: Cedente.TipoInscricao:= pJuridica;
+         11,01: Cedente.TipoInscricao:= pFisica;    
+         14,02: Cedente.TipoInscricao:= pJuridica;  
       end;
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
@@ -360,86 +363,35 @@ begin
          NumeroDocumento             := copy(Linha,117,10);
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
+         
+         for i := 0 to 76 do
+           if (copy(Linha,280+i,1)='1') then
+             DescricaoMotivoRejeicaoComando.Add(MotivoRejeicaoColuna(280+i));
 
-         CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
-
-         //-|Se a ocorrencia for igual a 19 - Confirmação de Receb. de Protesto
-         //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
-         if(CodOcorrencia = 19)then
-          begin
-            CodMotivo_19:= copy(Linha,295,1);
-            if(CodMotivo_19 = 'A')then
-             begin
-               MotivoRejeicaoComando.Add(copy(Linha,295,1));
-               DescricaoMotivoRejeicaoComando.Add('A - Aceito');
-             end
-            else
-             begin
-               MotivoRejeicaoComando.Add(copy(Linha,295,1));
-               DescricaoMotivoRejeicaoComando.Add('D - Desprezado');
-             end;
-          end
-         else
-          begin
-            MotivoLinha := 319;
-            for i := 0 to 4 do
-            begin
-               CodMotivo := StrToInt(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
-               if(i = 0)then
-                begin
-                  if(CodOcorrencia in [02, 06, 09, 10, 15, 17])then //Somente estas ocorrencias possuem motivos 00
-                   begin
-                     MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
-                     DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
-                   end
-                  else
-                   begin
-                     if(CodMotivo = 0)then
-                      begin
-                        MotivoRejeicaoComando.Add('00');
-                        DescricaoMotivoRejeicaoComando.Add('Sem Motivo');
-                      end
-                     else
-                      begin
-                        MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
-                        DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
-                      end;
-                   end;
-                end
-               else
-                begin
-                  if CodMotivo <> 0 then //Apos o 1º motivo os 00 significam que não existe mais motivo
-                  begin
-                     MotivoRejeicaoComando.Add(IfThen(copy(Linha,MotivoLinha,2) = '00','00',copy(Linha,MotivoLinha,2)));
-                     DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));
-                  end;
-                end;
-
-               MotivoLinha := MotivoLinha + 2; //Incrementa a coluna dos motivos
-            end;
-         end;
-
-         DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                                Copy(Linha,113,2)+'/'+
-                                                Copy(Linha,115,2),0, 'DD/MM/YY' );
-         if Copy(Linha,147,2)<>'00' then
+         
+         if Copy(Linha,111,2) <> '00' then
+           DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                                  Copy(Linha,113,2)+'/'+
+                                                  Copy(Linha,115,2),0, 'DD/MM/YY' );
+         if Copy(Linha,147,2 )<>'00' then
             Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
                                                Copy(Linha,149,2)+'/'+
                                                Copy(Linha,151,2),0, 'DD/MM/YY' );
 
          ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
          ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
          ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
          ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-         ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := Copy(Linha,71,11);
-         Carteira             := Copy(Linha,22,3);
-         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-         ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
+         ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+         NossoNumero          := Copy(Linha,63,7); 
+         Carteira             := Copy(Linha,108,1); 
+         
 
-         if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
+         if (OcorrenciaOriginal.Tipo = toRetornoLiquidado) and 
+            (StrToIntDef(Copy(Linha,296,6),0) <> 0) then
             DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
                                                Copy(Linha,298,2)+'/'+
                                                Copy(Linha,300,2),0, 'DD/MM/YY' );
@@ -465,7 +417,7 @@ begin
     13: Result:='13-Abatimento Cancelado' ;
     14: Result:='14-Vencimento Alterado' ;
     15: Result:='15-Liquidação em Cartório' ;
-    16: Result:= '16-Titulo Pago em Cheque - Vinculado';
+    16: Result:='16-Titulo Pago em Cheque - Vinculado';
     17: Result:='17-Liquidação após baixa ou Título não registrado' ;
     18: Result:='18-Acerto de Depositária' ;
     19: Result:='19-Confirmação Recebimento Instrução de Protesto' ;
@@ -550,7 +502,7 @@ begin
       toRetornoEncaminhadoACartorio               : Result := '23';
       toRetornoEntradaRejeitaCEPIrregular         : Result := '24';
       toRetornoBaixaRejeitada                     : Result := '27';
-      toRetornoDebitoTarifas      : Result:='28';
+      toRetornoDebitoTarifas                      : Result  :='28';
       toRetornoOcorrenciasdoSacado                : Result := '29';
       toRetornoALteracaoOutrosDadosRejeitada      : Result := '30';
       toRetornoComandoRecusado                    : Result := '32';
@@ -559,6 +511,21 @@ begin
       Result:= '02';
    end;
 end;
+
+function TACBrBancoNordeste.CarteiraToTipoOperacao(const Carteira: string):String; 
+begin
+  if Carteira = '1' then
+    Result:= '21'
+  else if Carteira = '2' then
+    Result:= '41'
+  else if Carteira = '4' then
+    Result:= '21'
+  else if Carteira = '5' then
+    Result:= '41'
+  else if Carteira = 'I' then
+    Result:= '51';
+end;
+
 
 function TACBrBancoNordeste.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
 begin
@@ -914,6 +881,88 @@ begin
    end;
 end;
 
+function TACBrBancoNordeste.MotivoRejeicaoColuna(const Coluna: integer):string; //override;
+begin
+  case Coluna of
+    280: result:= '01-Falta valor do IOC.';
+    281: result:= '02-Não permite desconto/ abatimento.';
+    282: result:= '03-Código do serviço inválido' ;
+    283: result:= '04-Novo vencimento igual/ menor que o da entrada.';
+    284: result:= '05-Novo vencimento igual ao do Título.';
+    285: result:= '06-Espécie Documento Inválida.';
+    286: result:= '07-Espécie Documento Inexistente.';
+    287: result:= '08-Tipo Operação Inválida.';
+    288: result:= '09-Tipo Operação Inexistente.';
+    289: result:= '10-Contrato Proibido para esta Carteira.';
+    290: result:= '11-Falta Número do Contrato.';
+    291: result:= '12-Proibido Informar Tipo de Conta.';
+    292: result:= '13-Tipo de Conta do Contrato Inexistente.';
+    293: result:= '14-Dígito de Contrato não confere.';
+    294: result:= '15-Contrato Inexistente.';
+    295: result:= '16-Data de Emissão Inválida.';
+    296: result:= '17-Falta Valor do Título.';
+    297: result:= '18-Vencimento Inválido.';
+    298: result:= '19-Data Vencimento Anterior a Emissão.';
+    299: result:= '20-Falta Vencimento Desconto.';
+    300: result:= '21-Data Desconto Inválida.';
+    301: result:= '22-Data Desconto Posterior ao Vencimento.';
+    302: result:= '23-Falta Valor Desconto.';
+    303: result:= '24-Falta Mora-1-Dia.';
+    304: result:= '25-Banco/Agência Cobrador Inexistente.';
+    305: result:= '26-BCO/AGE Cobrador não Cadastrado.';
+    306: result:= '27-Código Pessoa Inválido.';
+    307: result:= '28-Falta CEP, Banco e Agência Cobrador.';
+    308: result:= '29-Falta Nome Sacado.';
+    309: result:= '30-Falta Endereço.';
+    310: result:= '31-Falta Cidade.';
+    311: result:= '32-Falta Estado.';
+    312: result:= '33-Estado Inválido.';
+    313: result:= '34-Falta CPF/ CGC do Sacado.';
+    314: result:= '35-Falta numeração - Bloquete emitido.';
+    315: result:= '36-Título Pré-Numerado já Existente.';
+    316: result:= '37-Dígito do Título Não Confere.';
+    317: result:= '38-Proibido Protestar.';
+    318: result:= '39-Proibido título pré-numerado p/ Correspondente.';
+    319: result:= '40-Dígito Cliente/ Contrato com Erro.';
+    320: result:= '41-Dígito Nosso Número com Erro.';
+    321: result:= '42-Título Inexistente.';
+    322: result:= '43-Título Liquidado.';
+    323: result:= '44-Título Não Pode Ser Baixado.';
+    324: result:= '45-Valor Nominal Incorreto.';
+    325: result:= '46-Proibido Taxa – Multa p/ Correspondente.';
+    326: result:= '47-Falta Tipo de Conta do Contrato.';
+    327: result:= '48-Tipo de Conta Inexistente.';
+    328: result:= '49-Dígito Contrato Não Confere.';
+    329: result:= '50-Dígito do Título Não Confere.';
+    330: result:= '51-Título Inexistente ou Liquidado.';
+    331: result:= '52-Valor Abatimento Inválido.';
+    332: result:= '53-Data Vencimento Inválida.';
+    333: result:= '54-Estado Inválido.';
+    334: result:= '55-Falta Tipo de Pessoa P/ Alteração de CGC/ CPF.';
+    335: result:= '56-CPF/ CGC com Erro.';
+    336: result:= '57-Data Emissão Inválida.';
+    337: result:= '58-Data Vencimento Desconto Inválida.';
+    338: result:= '59-Aceite Inválido para Espécie Documento.';
+    339: result:= '60-Não Aceite Inválido para Espécie Documento.';
+    340: result:= '61-Banco/ Agência Cobrador Inválido.';
+    341: result:= '62-Limite Operacional Não Cadastrado.';
+    342: result:= '63-Título já em situação de protesto.';
+    343: result:= '64-Proibido alterar vencimento título descontado.';
+    344: result:= '65-Proibido informar nosso número p/ cod. carteira.';
+    345: result:= '66-Falta vencimento desconto-2.';
+    346: result:= '67-Data desconto-2 inválida.';
+    347: result:= '68-Data desconto-2 posterior ao vencimento.';
+    348: result:= '69-Falta valor desconto-2.';
+    349: result:= '70-Data vencimento desconto-2 inválida.';
+    350: result:= '71-IOC maior que valor do título.';
+    351: result:= '72-CEP não pertence ao Estado.';
+    352: result:= '73-Seu número já existente.';
+    353: result:= '74-Moeda Inválida para o tipo de Operação.';
+    354: result:= '75-Moeda inexistente.';
+    355: result:= '76-Nosso número/ dígito com erro.';
+    356: result:= '77-Dias vencidos superior ao prazo de devolução.';
+  end;
+end;
 
 end.
 

@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/12/2015 ver. 0.0.167a
+-- ACBrBancoNordeste --
+[-] Ajuste remessa CNAB400 e impressão boleto. (Luciano Rodrigues Pereira)
+http://www.projetoacbr.com.br/forum/topic/26304-bnb-remessa-cnab-400/
+http://www.projetoacbr.com.br/forum/topic/26526-erro-retorno-nosso-numero-bnb-cnab400/
+
+-- ACBrBancoCaixa --
+[-] Ajuste leitura retorno CNAB240. (Marcos Mentz)
+http://www.projetoacbr.com.br/forum/topic/26519-retorno-cobran%C3%A7a-104-cef/#comment-172418
+
+
 Data: 14/12/2015 ver. 0.0.166a
 -- ACBrBancoBradesco --
 [-] Ajuste remessa CNAB400 Bradesco. (trcsistemas)

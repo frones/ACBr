@@ -676,7 +676,7 @@ begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := Trim(copy(Linha,59,11));
+            SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,11);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 

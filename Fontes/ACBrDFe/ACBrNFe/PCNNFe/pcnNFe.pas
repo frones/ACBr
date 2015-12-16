@@ -1939,11 +1939,9 @@ begin
 
   FEmit.EnderEmit.xPais := 'BRASIL';
   FEmit.EnderEmit.cPais := 1058;
-  FEmit.EnderEmit.nro   := 'SEM NUMERO';
 
   FDest.EnderDest.xPais := 'BRASIL';
   FDest.EnderDest.cPais := 1058;
-  FDest.EnderDest.nro   := 'SEM NUMERO';
 end;
 
 destructor TNFe.Destroy;

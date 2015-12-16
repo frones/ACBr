@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2015
+-- pcnNFe --
+[-] Remoção de valores default para a tag "nro", o componente atribuia o valor
+    "SEM NUMERO", causando problemas quando o endereço não possuía valor na tag,
+    quando vai imprimir aparecia a string mesmo não existindo no XML.
+    por: regys.silveira
+
 11/12/2015
 [*] Acerto na importação do layout txt para a norma técnica 2015/003
 

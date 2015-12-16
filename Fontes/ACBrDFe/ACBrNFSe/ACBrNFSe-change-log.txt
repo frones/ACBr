@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2015
+-- ACBrNFSeWebServices / ACBrNFSeNotas Fiscais --
+[*] Correção na montagem do NameSpace do lote para realizar a assinatura.
+    Por: Italo Jurisato Junior
+
 13/12/2015
 -- ACBrNFSeWebServices / ACBrNFSeNotas Fiscais --
 [*] Melhorias troca de IF por CASE.

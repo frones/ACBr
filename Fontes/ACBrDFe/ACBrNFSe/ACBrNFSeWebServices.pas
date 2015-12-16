@@ -699,20 +699,18 @@ begin
     FPMimeType := 'application/soap+xml';
     // As linhas abaixo só podem ser descomentadas depois das alterações nos
     // fontes das classes ACBrDFe forem aprovadas.
-    (*
-    FPDFeOwner.SSL.UseCertificate := True;
-    FPDFeOwner.SSL.UseSSL := True;
-    *)
+
+//    FPDFeOwner.SSL.UseCertificate := True;
+//    FPDFeOwner.SSL.UseSSL := True;
   end
   else
   begin
     FPMimeType := 'text/xml';
     // As linhas abaixo só podem ser descomentadas depois das alterações nos
     // fontes das classes ACBrDFe forem aprovadas.
-    (*
-    FPDFeOwner.SSL.UseCertificate := False;
-    FPDFeOwner.SSL.UseSSL := False;
-    *)
+
+//    FPDFeOwner.SSL.UseCertificate := False;
+//    FPDFeOwner.SSL.UseSSL := False;
   end;
 
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
@@ -1111,7 +1109,7 @@ end;
 
 procedure TNFSeWebService.DefinirSignatureNode(TipoEnvio: String);
 var
-  EnviarLoteRps, LoteURI: String;
+  EnviarLoteRps, LoteURI, xmlns, xPrefixo: String;
   i, j: Integer;
 begin
    case FProvedor of
@@ -1160,17 +1158,23 @@ begin
                     '="AssLote_' + URI;
        end;
 
-       if (FProvedor = proBetha) then
-         FxSignatureNode := './/ns3:' + EnviarLoteRps + '/ds:Signature';
-
      end
      else
      begin
-       FxSignatureNode := './/ds1:' + EnviarLoteRps + '/ds:Signature';
-       i := pos(EnviarLoteRps + ' xmlns=', FPDadosMsg);
-       i := i + Length(EnviarLoteRps + ' xmlns=');
+       if FPrefixo3 = '' then
+         xPrefixo := 'ds1:'
+       else
+         xPrefixo := FPrefixo3;
+
+       FxSignatureNode := './/' + xPrefixo + EnviarLoteRps + '/ds:Signature';
+
+       xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
+       i := pos(EnviarLoteRps + xmlns, FPDadosMsg);
+       i := i + Length(EnviarLoteRps + xmlns);
        j := Pos('">', FPDadosMsg) + 1;
-       FxDSIGNSLote := ' xmlns:ds1=' + Copy(FPDadosMsg, i, j - i);
+
+       FxDSIGNSLote := ' xmlns:' + StringReplace(xPrefixo, ':', '', []) + '="' +
+                       Copy(FPDadosMsg, i, j - i);
      end;
    end;
 end;

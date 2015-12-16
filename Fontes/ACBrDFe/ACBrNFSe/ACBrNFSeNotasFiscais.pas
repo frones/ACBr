@@ -248,11 +248,10 @@ begin
   begin
     // As linhas abaixo só podem ser descomentadas depois das alterações nos
     // fontes das classes ACBrDFe forem aprovadas.
-    (*
-    SSL.SSLClass.SignatureNode := '';
-    SSL.SSLClass.DSIGNSLote    := '';
-    SSL.SSLClass.IdSignature   := '';
-    *)
+
+//    SSL.SSLClass.SignatureNode := '';
+//    SSL.SSLClass.DSIGNSLote    := '';
+//    SSL.SSLClass.IdSignature   := '';
 
     if Assina then
       FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps',
@@ -604,11 +603,11 @@ begin
     begin
       // As linhas abaixo só podem ser descomentadas depois das alterações nos
       // fontes das classes ACBrDFe forem aprovadas.
-      (*
-      SSL.SSLClass.SignatureNode := SignatureNode;
-      SSL.SSLClass.DSIGNSLote    := DSIGNSLote;
-      SSL.SSLClass.IdSignature   := IdSignature;
-      *)
+
+//      SSL.SSLClass.SignatureNode := SignatureNode;
+//      SSL.SSLClass.DSIGNSLote    := DSIGNSLote;
+//      SSL.SSLClass.IdSignature   := IdSignature;
+      
       XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;

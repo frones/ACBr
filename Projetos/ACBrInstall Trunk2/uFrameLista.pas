@@ -43,8 +43,8 @@ interface
 
 uses
   Generics.Collections, Generics.Defaults,
-  
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
+
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Buttons, ExtCtrls, StdCtrls, ComCtrls;
 
 type
@@ -115,6 +115,7 @@ type
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
+    ACBr_BlocoX_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -218,103 +219,114 @@ procedure TframePacotes.VerificarCheckboxes(Sender: TObject);
 begin
   // pacotes base não podem ser desmarcados
   // instalação mínima do ACBr
-  ACBr_synapse_dpk.Checked  := True;
-  ACBr_Comum_dpk.Checked    := True;
+  ACBr_synapse_dpk.Checked := True;
+  ACBr_Comum_dpk.Checked := True;
   ACBr_Diversos_dpk.Checked := True;
 
   if not FUtilizarBotoesMarcar then
   begin
-	FUtilizarBotoesMarcar := True;/// caso algum evento abaixo dispare novamente
-	try
-  		// quando não for selecionado o NFe devemos desmarcar
-		if not ACBr_NFe_dpk.Checked then
-		begin
-    	  ACBr_NFeDanfeFR_dpk.Checked := False;
-    	  ACBr_NFeDanfeRL_dpk.Checked := False;
-		end;
-  		// quando não for selecionado o CTe devemos desmarcar
-		if not ACBr_CTe_dpk.Checked then
-		begin
-    	  ACBr_CTeDacteFR_dpk.Checked := False;
-    	  ACBr_CTeDacteRL_dpk.Checked := False;
-		end;
-  		// quando não for selecionado o NFSe devemos desmarcar
-		if not ACBr_NFSe_dpk.Checked then
-		begin
-    	  ACBr_NFSeDanfseFR_dpk.Checked := False;
-    	  ACBr_NFSeDanfseRL_dpk.Checked := False;
-		end;
-		// quando não for selecionado o Boleto devemos desmarcar
-		if not ACBr_Boleto_dpk.Checked then
-		begin
-		  ACBr_BoletoFR_dpk.Checked := False;
-		  ACBr_BoletoRL_dpk.Checked := False;
-		end;
-		// quando não for selecionado o MDF-e devemos desmarcar
-		if not ACBr_MDFe_dpk.Checked then
-		begin
-		  ACBr_MDFeDamdfeFR_dpk.Checked := False;
-		  ACBr_MDFeDamdfeRL_dpk.Checked := False;
-		end;
-		// quando não for selecionado o SAT devemos desmarcar
-		if not ACBr_SAT_dpk.Checked then
-		begin
-		  ACBr_SATExtratoRL_dpk.Checked := False;
-		end;
-		// quando não for selecionado o GNRE devemos desmarcar
-		if not ACBr_GNRE_dpk.Checked then
-		begin
-		  ACBr_GNREGuiaFR_dpk.Checked := False;
-      ACBr_GNREGuiaRL_dpk.Checked := False;
-		end;
+    FUtilizarBotoesMarcar := True;
 
-		  // dependencia do NFe
-		if ACBr_NFeDanfeESCPOS_dpk.Checked and (not (ACBr_NFe_dpk.Checked) or not(ACBr_Serial_dpk.Checked))  then
-		begin
-		  ACBr_Serial_dpk.Checked := true;
-		  ACBr_NFe_dpk.Checked := true;
-		end;
+    /// caso algum evento abaixo dispare novamente
+    try
+      // quando não for selecionado o NFe devemos desmarcar
+      if not ACBr_NFe_dpk.Checked then
+      begin
+        ACBr_NFeDanfeFR_dpk.Checked := False;
+        ACBr_NFeDanfeRL_dpk.Checked := False;
+      end;
 
-		  // dependencia do SAT
-		if ACBr_SATExtratoESCPOS_dpk.Checked and (not(ACBr_SAT_dpk.Checked) or not(ACBr_Serial_dpk.Checked)) then
-		begin
-		  ACBr_Serial_dpk.Checked := true;
-		  ACBr_SAT_dpk.Checked := true;
-		end;
+      // quando não for selecionado o CTe devemos desmarcar
+      if not ACBr_CTe_dpk.Checked then
+      begin
+        ACBr_CTeDacteFR_dpk.Checked := False;
+        ACBr_CTeDacteRL_dpk.Checked := False;
+      end;
 
-		if (ACBr_SATExtratoRL_dpk.Checked) and not(ACBr_SAT_dpk.Checked) then
-		  ACBr_SAT_dpk.Checked := true;
+      // quando não for selecionado o NFSe devemos desmarcar
+      if not ACBr_NFSe_dpk.Checked then
+      begin
+        ACBr_NFSeDanfseFR_dpk.Checked := False;
+        ACBr_NFSeDanfseRL_dpk.Checked := False;
+      end;
 
-    if ACBr_SAT_dpk.Checked and not(ACBr_PCNComum_dpk.Checked) then
-      ACBr_PCNComum_dpk.Checked := True;
+      // quando não for selecionado o Boleto devemos desmarcar
+      if not ACBr_Boleto_dpk.Checked then
+      begin
+        ACBr_BoletoFR_dpk.Checked := False;
+        ACBr_BoletoRL_dpk.Checked := False;
+      end;
 
-		// dependencias da NFe e CTe
-		if (ACBr_NFe_dpk.Checked) or (ACBr_CTe_dpk.Checked) or (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
-		begin
-		  ACBr_PCNComum_dpk.Checked := True;
-		  ACBr_Capicom_dpk.Checked  := True;
-		  ACBr_OpenSSL_dpk.Checked  := True;
-		end;
+      // quando não for selecionado o MDF-e devemos desmarcar
+      if not ACBr_MDFe_dpk.Checked then
+      begin
+        ACBr_MDFeDamdfeFR_dpk.Checked := False;
+        ACBr_MDFeDamdfeRL_dpk.Checked := False;
+      end;
 
-		// dependencias do ACBrTEFD
-		if not(ACBr_TCP_dpk.Checked) and ACBr_TEFD_dpk.Checked  then
-		  ACBr_TCP_dpk.Checked := True;
+      // quando não for selecionado o SAT devemos desmarcar
+      if not ACBr_SAT_dpk.Checked then
+      begin
+        ACBr_SATExtratoRL_dpk.Checked := False;
+      end;
 
-		// Dependencias do ACBrPaf
-		if not(ACBr_SPED_dpk.Checked) and ACBr_PAF_dpk.Checked then
-		  ACBr_SPED_dpk.Checked := True;
+      // quando não for selecionado o GNRE devemos desmarcar
+      if not ACBr_GNRE_dpk.Checked then
+      begin
+        ACBr_GNREGuiaFR_dpk.Checked := False;
+        ACBr_GNREGuiaRL_dpk.Checked := False;
+      end;
 
-	finally
-	  FUtilizarBotoesMarcar := false;
-	end;
+      // dependencia do NFe
+      if ACBr_NFeDanfeESCPOS_dpk.Checked and
+        (not(ACBr_NFe_dpk.Checked) or not(ACBr_Serial_dpk.Checked)) then
+      begin
+        ACBr_Serial_dpk.Checked := True;
+        ACBr_NFe_dpk.Checked := True;
+      end;
+
+      // dependencia do SAT
+      if ACBr_SATExtratoESCPOS_dpk.Checked and
+        (not(ACBr_SAT_dpk.Checked) or not(ACBr_Serial_dpk.Checked)) then
+      begin
+        ACBr_Serial_dpk.Checked := True;
+        ACBr_SAT_dpk.Checked := True;
+      end;
+
+      if (ACBr_SATExtratoRL_dpk.Checked) and not(ACBr_SAT_dpk.Checked) then
+        ACBr_SAT_dpk.Checked := True;
+
+      if ACBr_SAT_dpk.Checked and not(ACBr_PCNComum_dpk.Checked) then
+        ACBr_PCNComum_dpk.Checked := True;
+
+      // dependencias da NFe e CTe
+      if (ACBr_NFe_dpk.Checked) or (ACBr_CTe_dpk.Checked) or
+        (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
+      begin
+        ACBr_PCNComum_dpk.Checked := True;
+        ACBr_Capicom_dpk.Checked := True;
+        ACBr_OpenSSL_dpk.Checked := True;
+      end;
+
+      // dependencias do ACBrTEFD
+      if not(ACBr_TCP_dpk.Checked) and ACBr_TEFD_dpk.Checked then
+        ACBr_TCP_dpk.Checked := True;
+
+      // Dependencias do ACBrPaf
+      if not(ACBr_SPED_dpk.Checked) and ACBr_PAF_dpk.Checked then
+        ACBr_SPED_dpk.Checked := True;
+
+    finally
+      FUtilizarBotoesMarcar := False;
+    end;
   end;
 end;
 
 end.
 
 {
-Hierarquia de dependência dos Packages
-• ACBrComum → Synapse
+  Hierarquia de dependência dos Packages
+  • ACBrComum → Synapse
 • ACBrDiversos → ACBrComum
 • PCNComum → ACBrDiversos
 • ACBrOpenSSL → ACBrComum

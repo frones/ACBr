@@ -55,10 +55,10 @@ procedure Register;
 begin
   RegisterComponents('ACBrBlocoX', [TACBrBlocoX]);
 
-  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoesBlocoX, 'Certificados',
+  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
     TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoesBlocoX, 'WebServices',
+  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
     TClassProperty);
 
 

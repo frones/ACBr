@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrBlocoX                                               }
 { Biblioteca multiplataforma de componentes Delphi para Geração de arquivos    }
 { do Bloco X                                                                   }
@@ -24,6 +24,8 @@
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
 {******************************************************************************}
+
+{$I ACBr.inc}
 
 unit ACBrBlocoX_ReducaoZ;
 

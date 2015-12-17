@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+17/12/2015
+-- ACBrCTeDACTEFR --
+[*] Refatoração para corrigir erros 
+       Function TACBrCTeDACTEFR.ManterCep( iCep : Integer ) : String;
+       Criado para ter um unico tratamento para os CEP.
+         		
+[*] Adcionado : PreviewOptions.Buttons :=[pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
+	Para o bloqueio dos botões na visualização no fast report.
+    por: Henrique Leonardo
+
 16/12/2015
 -- ACBrCTeDACTEFR --
 [*] Refatoração para corrigir erros 

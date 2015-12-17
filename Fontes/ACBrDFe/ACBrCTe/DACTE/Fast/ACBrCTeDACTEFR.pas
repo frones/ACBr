@@ -1,4 +1,4 @@
-{******************************************************************************}
+{******************************************************************************
 { Projeto: Componente ACBrCTe                                                  }
 { Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimento}
 { Transporte eletrônica - CTe - http://www.cte.fazenda.gov.br                  }
@@ -91,6 +91,7 @@ type
     procedure CarregaDocumentoAnterior;
     procedure CarregaCTeAnuladoComplementado;
     procedure LimpaDados;
+    function ManterCep(iCep: Integer): String;
   protected
     procedure CarregaDados;
     procedure CarregaDadosEventos;
@@ -317,6 +318,7 @@ begin
     StoreInDFM     := False;
     OnBeforePrint  := frxReportBeforePrint;
     OnReportPrint  := 'frxReportOnReportPrint';
+    PreviewOptions.Buttons :=[pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
   end;
 
   frxPDFExport := TfrxPDFExport.Create(nil);
@@ -1375,6 +1377,7 @@ begin
   end;
 end;
 
+
 procedure TACBrCTeDACTEFR.CarregaCalculoImposto;
 begin
   with cdsCalculoImposto do
@@ -1761,7 +1764,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := ManterCep( CEP );
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -1866,7 +1869,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := ManterCep( CEP );
         FieldByName('Fone').AsString    := FormatarFone(Fone);
       end;
       FieldByName('IE').AsString := IE;
@@ -1895,7 +1898,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := ManterCep( CEP );
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -2538,7 +2541,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := ManterCep( CEP );
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -2572,7 +2575,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := ManterCep( CEP );
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -2657,7 +2660,7 @@ begin
           FieldByName('CMun').AsString    := IntToStr(FCTe.Rem.EnderReme.CMun);
           FieldByName('XMun').AsString    := FCTe.Rem.EnderReme.XMun;
           FieldByName('UF').AsString      := FCTe.Rem.EnderReme.UF;
-          FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(FCTe.Rem.EnderReme.CEP, 8));
+          FieldByName('CEP').AsString     := ManterCep( FCTe.Rem.EnderReme.CEP );
           FieldByName('CPais').AsString   := IntToStr(FCTe.Rem.EnderReme.CPais);
           FieldByName('XPais').AsString   := FCTe.Rem.EnderReme.XPais;
           FieldByName('Fone').AsString    := FormatarFone(FCTe.Rem.Fone);
@@ -2675,7 +2678,7 @@ begin
           FieldByName('CMun').AsString    := IntToStr(FCTe.Dest.EnderDest.CMun);
           FieldByName('XMun').AsString    := FCTe.Dest.EnderDest.XMun;
           FieldByName('UF').AsString      := FCTe.Dest.EnderDest.UF;
-          FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(FCTe.Dest.EnderDest.CEP, 8));
+          FieldByName('CEP').AsString     := ManterCep( FCTe.Dest.EnderDest.CEP );
           FieldByName('CPais').AsString   := IntToStr(FCTe.Dest.EnderDest.CPais);
           FieldByName('XPais').AsString   := FCTe.Dest.EnderDest.XPais;
           FieldByName('Fone').AsString    := FormatarFone(FCTe.Dest.Fone);
@@ -2693,7 +2696,7 @@ begin
           FieldByName('CMun').AsString    := IntToStr(FCTe.Exped.EnderExped.CMun);
           FieldByName('XMun').AsString    := FCTe.Exped.EnderExped.XMun;
           FieldByName('UF').AsString      := FCTe.Exped.EnderExped.UF;
-          FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(FCTe.Exped.EnderExped.CEP, 8));
+          FieldByName('CEP').AsString     := ManterCep( FCTe.Exped.EnderExped.CEP );
           FieldByName('CPais').AsString   := IntToStr(FCTe.Exped.EnderExped.CPais);
           FieldByName('XPais').AsString   := FCTe.Exped.EnderExped.XPais;
           FieldByName('Fone').AsString    := FormatarFone(FCTe.Exped.Fone);
@@ -2711,7 +2714,7 @@ begin
           FieldByName('CMun').AsString    := IntToStr(FCTe.Receb.EnderReceb.CMun);
           FieldByName('XMun').AsString    := FCTe.Receb.EnderReceb.XMun;
           FieldByName('UF').AsString      := FCTe.Receb.EnderReceb.UF;
-          FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(FCTe.Receb.EnderReceb.CEP, 8));
+          FieldByName('CEP').AsString     := ManterCep( FCTe.Receb.EnderReceb.CEP);
           FieldByName('CPais').AsString   := IntToStr(FCTe.Receb.EnderReceb.CPais);
           FieldByName('XPais').AsString   := FCTe.Receb.EnderReceb.XPais;
           FieldByName('Fone').AsString    := FormatarFone(FCTe.Receb.Fone);
@@ -2731,7 +2734,7 @@ begin
           FieldByName('CMun').AsString    := IntToStr(FCTe.ide.Toma4.EnderToma.CMun);
           FieldByName('XMun').AsString    := FCTe.ide.Toma4.EnderToma.XMun;
           FieldByName('UF').AsString      := FCTe.ide.Toma4.EnderToma.UF;
-          FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(FCTe.ide.Toma4.EnderToma.CEP, 8));
+          FieldByName('CEP').AsString     := ManterCep( FCTe.ide.Toma4.EnderToma.CEP );
           FieldByName('CPais').AsString   := IntToStr(FCTe.ide.Toma4.EnderToma.CPais);
           FieldByName('XPais').AsString   := FCTe.ide.Toma4.EnderToma.XPais;
           FieldByName('Fone').AsString    := FormatarFone(FCTe.ide.Toma4.Fone);
@@ -2828,5 +2831,15 @@ begin
       end;
   end;
 end;
+
+Function TACBrCTeDACTEFR.ManterCep( iCep : Integer ) : String;
+begin
+  Result := '';
+  if iCep > 0 then
+    Result := FormatarCEP(Poem_Zeros(iCEP, 8));
+
+end;
+
+
 
 end.

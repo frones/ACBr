@@ -136,6 +136,7 @@ type
     edtPathSchemas: TEdit;
     sbPathSchemas: TSpeedButton;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
+    Button1: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -163,6 +164,7 @@ type
     procedure btnEnviarMDFeEmailClick(Sender: TObject);
     procedure btnGerarPDFEventoClick(Sender: TObject);
     procedure sbPathSchemasClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -798,6 +800,22 @@ begin
    ACBrMDFe1.Manifestos.Validar;
    showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
   end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.Button1Click(Sender: TObject);
+var
+  vCNPJ: String;
+begin
+  vCNPJ := '';
+
+  if not(InputQuery('WebServices Consultar não encerrados', 'Informe o CNPJ:', vCNPJ)) then
+    exit;
+
+  ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc( vCNPJ );
+
+  MemoResp.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetWS);
+  memoRespWS.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetornoWS);
+  LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnCriarEnviarClick(Sender: TObject);

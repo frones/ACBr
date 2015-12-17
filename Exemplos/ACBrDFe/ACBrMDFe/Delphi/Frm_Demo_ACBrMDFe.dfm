@@ -93,7 +93,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet1
+        ActivePage = TabSheet7
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -107,7 +107,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             Caption = 'Caminho dos Schemas'
           end
           object sbPathSchemas: TSpeedButton
-            Left = 227
+            Left = 234
             Top = 168
             Width = 23
             Height = 24
@@ -221,8 +221,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             end
           end
           object edtPathSchemas: TEdit
-            Left = 0
-            Top = 168
+            Left = 8
+            Top = 171
             Width = 225
             Height = 21
             TabOrder = 1
@@ -844,7 +844,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       Left = 1
       Top = 1
       Width = 556
-      Height = 176
+      Height = 194
       Align = alTop
       TabOrder = 0
       object btnImprimir: TButton
@@ -982,12 +982,21 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         TabOrder = 14
         OnClick = btnGerarPDFEventoClick
       end
+      object Button1: TButton
+        Left = 376
+        Top = 166
+        Width = 177
+        Height = 25
+        Caption = 'Consultar N'#227'o Encerrados'
+        TabOrder = 15
+        OnClick = Button1Click
+      end
     end
     object PageControl2: TPageControl
       Left = 1
-      Top = 177
+      Top = 195
       Width = 556
-      Height = 351
+      Height = 333
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -997,7 +1006,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 323
+          Height = 305
           Align = alClient
           TabOrder = 0
         end
@@ -1009,11 +1018,12 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 323
+          Height = 305
           Align = alClient
           TabOrder = 0
+          ExplicitHeight = 323
           ControlData = {
-            4C000000A3380000622100000000000000000000000000000000000000000000
+            4C000000A3380000861F00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1027,7 +1037,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 323
+          Height = 305
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1040,7 +1050,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 323
+          Height = 305
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1053,7 +1063,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 323
+          Height = 305
           Align = alClient
           TabOrder = 0
         end
@@ -1065,7 +1075,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           Left = 0
           Top = 0
           Width = 548
-          Height = 323
+          Height = 305
           Align = alClient
           TabOrder = 0
         end
@@ -1086,6 +1096,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     OnStatusChange = ACBrMDFe1StatusChange
     Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

@@ -83,7 +83,7 @@ type
     destructor Destroy; override;
     function SalvarArquivo(const CaminhoArquivo: string; const FormatoGravacao: TpcnFormatoGravacao = fgXML): Boolean;
     procedure wGrupo(const TAG: string; ID: string = ''; const Identar: Boolean = True);
-    procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
+    procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True; Atributo: String = '');
     procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
     procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
     procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True; PreencheZeros: Boolean = True);
@@ -817,7 +817,7 @@ begin
     wAlerta(ID, 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
 end;
 
-procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True);
+procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True; Atributo: String = '');
 
   function IsEmptyDate( wAno, wMes, wDia: Word): Boolean;
   begin
@@ -834,6 +834,7 @@ var
 begin
   ID                  := Trim(ID);
   Tag                 := Trim(TAG);
+  Atributo            := Trim(Atributo);
   EstaVazio           := False;
   NumeroDecimais      := 0;
   ConteudoProcessado  := '';
@@ -989,9 +990,9 @@ begin
     else
     begin
       if FOpcoes.FTagVaziaNoFormatoResumido then
-        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '/>'
+        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + ' ' + Atributo + '/>'
       else
-        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '></' + tag + '>';
+        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + ' ' + Atributo +  '></' + tag + '>';
     end;
     exit;
   end;
@@ -1000,11 +1001,11 @@ begin
   if ((ocorrencias = 1) or (not EstaVazio)) then
   begin
     if ParseTextoXML then
-       ATag := '<' + tag + '>' +
+       ATag := '<' + tag + ' ' + Atributo +  '>' +
                FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) +
                '</' + tag + '>'
     else
-       ATag := '<' + tag + '>' +
+       ATag := '<' + tag + ' ' + Atributo +  '>' +
                ConteudoProcessado +
                '</' + tag + '>';
 

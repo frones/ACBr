@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBrDiversos"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simoes de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -17,17 +18,11 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
-      <Other>
-        <CompilerMessages>
-          <UseMsgFile Value="True"/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Minor="9"/>
-    <Files Count="16">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrBarCode.pas"/>
         <UnitName Value="ACBrBarCode"/>
@@ -93,8 +88,11 @@
         <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrInStore.pas"/>
         <UnitName Value="ACBrInStore"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrDiversos\ACBrCargaBal.pas"/>
+        <UnitName Value="ACBrCargaBal"/>
+      </Item17>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrComum"/>

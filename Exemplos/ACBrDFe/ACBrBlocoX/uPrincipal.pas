@@ -56,37 +56,40 @@ begin
       PafECF.NomeComercial                := 'NOME COMERCIAL';
       PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
       PafECF.CnpjDesenvolvedor            := '88888888888888';
-    end;
 
-    // arquivo de Estoque
-    for I := 1 to 10 do
-    begin
-      ACBrBlocoX1.Estoque.DataReferenciaInicial := DATE;
-      ACBrBlocoX1.Estoque.DataReferenciaFinal   := DATE;
-
-      with ACBrBlocoX1.Estoque.Add do
+      // arquivo de Estoque
+      with Estoque do
       begin
-        Codigo.Tipo             := tpcGTIN;
-        Codigo.Numero           := '7891234567891';
-        Descricao               := 'PRODUTO TESTE ' + IntToStr(I);
-        ValorUnitario           := 1.23;
-        Ippt                    := ipptTerceiros;
-        SituacaoTributaria      := stTributado;
-        Aliquota                := 12;
-        Unidade                 := 'UN';
-        Quantidade              := 1234;
-        IndicadorArredondamento := False;
+        DataReferenciaInicial := DATE;
+        DataReferenciaFinal   := DATE;
+
+        for I := 1 to 10 do
+        begin
+          with Produtos.Add do
+          begin
+            Codigo.Tipo             := tpcGTIN;
+            Codigo.Numero           := '7891234567891';
+            Descricao               := 'PRODUTO TESTE ' + IntToStr(I);
+            ValorUnitario           := 1.23;
+            Ippt                    := ipptTerceiros;
+            SituacaoTributaria      := stTributado;
+            Aliquota                := 12;
+            Unidade                 := 'UN';
+            Quantidade              := 1234;
+            IndicadorArredondamento := False;
+          end;
+        end;
+
+        SaveToFile(SaveDialog1.FileName);
+        ShowMessage('terminado');
       end;
     end;
-
-    ACBrBlocoX1.Estoque.SaveToFile(SaveDialog1.FileName);
-    ShowMessage('terminado');
   end;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 var
-  I: Integer;
+  I, X: Integer;
 begin
   if SaveDialog1.Execute then
   begin
@@ -110,17 +113,54 @@ begin
       ECF.Marca            := 'MARCA ECF';
       ECF.Modelo           := 'MODELO ECF';
       ECF.Versao           := '010101';
+
+      with ReducoesZ do
+      begin
+        ReducoesZ.DataReferencia   := DATE;
+        ReducoesZ.CRZ              := 12;
+        ReducoesZ.CRO              := 12345679;
+        ReducoesZ.VendaBrutaDiaria := 3456.78;
+        ReducoesZ.GT               := 123456789.45;
+
+        for I := 1 to 2 do
+        begin
+          with TotalizadoresParciais.Add do
+          begin
+            Identificao := '00T1234';
+            Valor       := 1234.56;
+
+            for X := 1 to 2 do
+            begin
+              with Produtos.Add do
+              begin
+                Codigo.Tipo   := tpcProprio;
+                Codigo.Numero := IntToStr(X);
+                Descricao     := 'PRODUTO ' + IntToStr(X);
+                Quantidade    := 1234556;
+                Unidade       := 'UN';
+                ValorUnitario := 1234.99;
+              end;
+            end;
+
+            for X := 1 to 2 do
+            begin
+              with Servicos.Add do
+              begin
+                Codigo.Tipo   := tpcProprio;
+                Codigo.Numero := IntToStr(X);
+                Descricao     := 'SERVICO ' + IntToStr(X);
+                Quantidade    := 1234556;
+                Unidade       := 'UN';
+                ValorUnitario := 1234.99;
+              end;
+            end;
+          end;
+        end;
+
+        SaveToFile(SaveDialog1.FileName);
+        ShowMessage('terminado');
+      end;
     end;
-
-    // arquivo de Estoque
-    for I := 0 to 10 do
-    begin
-
-
-    end;
-
-    ACBrBlocoX1.ReducoesZ.SaveToFile(SaveDialog1.FileName);
-    ShowMessage('terminado');
   end;
 end;
 

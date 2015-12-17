@@ -35,22 +35,21 @@ uses
   ACBrBlocoX_Comum, Classes, SysUtils, StrUtils;
 
 type
-  TACBrBlocoX_Estoque = class(TACBrBlocoX_Base)
+  TACBrBlocoX_Estoque = class(TACBrBlocoX_BaseFile)
   private
     FDataReferenciaFinal: TDateTime;
     FDataReferenciaInicial: TDateTime;
-    function GetItem(Index: integer): TACBrBlocoX_Produto;
-    procedure SetItem(Index: integer; const Value: TACBrBlocoX_Produto);
+    FProdutos: TACBrBlocoX_Produtos;
   public
-    function Add: TACBrBlocoX_Produto;
-    function Insert(Index: integer): TACBrBlocoX_Produto;
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
 
     procedure GerarXML(const Assinar: Boolean = True); override;
     procedure SaveToFile(const AXmlFileName: string); override;
 
     property DataReferenciaInicial: TDateTime read FDataReferenciaInicial write FDataReferenciaInicial;
     property DataReferenciaFinal: TDateTime read FDataReferenciaFinal write FDataReferenciaFinal;
-    property Items[Index: integer]: TACBrBlocoX_Produto read GetItem write SetItem; default;
+    property Produtos: TACBrBlocoX_Produtos read FProdutos write FProdutos;
   end;
 
 implementation
@@ -60,28 +59,19 @@ uses
 
 { TACBrBlocoX_Estoque }
 
-function TACBrBlocoX_Estoque.Add: TACBrBlocoX_Produto;
+constructor TACBrBlocoX_Estoque.Create(AOwner: TComponent);
 begin
-  Result := TACBrBlocoX_Produto(inherited Add);
+  inherited;
+  FProdutos := TACBrBlocoX_Produtos.Create(Self, TACBrBlocoX_Produto);
 end;
 
-function TACBrBlocoX_Estoque.GetItem(Index: integer): TACBrBlocoX_Produto;
+destructor TACBrBlocoX_Estoque.Destroy;
 begin
-  Result := TACBrBlocoX_Produto(inherited Items[Index]);
+  FProdutos.Free;
+  inherited;
 end;
 
-function TACBrBlocoX_Estoque.Insert(Index: integer): TACBrBlocoX_Produto;
-begin
-  Result := TACBrBlocoX_Produto(inherited Insert(Index));
-end;
-
-procedure TACBrBlocoX_Estoque.SetItem(Index: integer;
-  const Value: TACBrBlocoX_Produto);
-begin
-  Items[Index].Assign(Value);
-end;
-
-procedure TACBrBlocoX_Estoque.GerarXML(const Assinar: Boolean = True);
+procedure TACBrBlocoX_Estoque.GerarXML(const Assinar: Boolean);
 var
   I: Integer;
 begin
@@ -98,26 +88,24 @@ begin
 
   FGerador.wGrupo('DadosEstoque');
   FGerador.wCampo(tcStr, '', 'DataReferenciaInicial', 0, 0, 1, FormatDateBr(DataReferenciaInicial));
-  FGerador.wCampo(tcStr, '', 'DataReferenciaInicial', 0, 0, 1, FormatDateBr(DataReferenciaInicial));
+  FGerador.wCampo(tcStr, '', 'DataReferenciaFinal', 0, 0, 1, FormatDateBr(DataReferenciaFinal));
 
-  if Self.Count > 0 then
+  if Produtos.Count > 0 then
   begin
     FGerador.wGrupo('Produtos');
-    for I := 0 to Self.Count - 1 do
+    for I := 0 to Produtos.Count - 1 do
     begin
       FGerador.wGrupo('Produto');
-
-      FGerador.wCampo(tcStr, '', 'Descricao', 0, 0, 1, Self[I].Descricao);
-      FGerador.wCampo(tcStr, '', 'Codigo', 0, 0, 1, Self[I].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Self[I].Codigo.Tipo) + '"');
-      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, Self[I].Quantidade);
-      FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Self[I].Unidade);
-      FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, FloatToIntStr(Self[I].ValorUnitario, 2));
-      FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Self[I].SituacaoTributaria));
-      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FloatToIntStr(Self[I].Aliquota, 2));
-      FGerador.wCampo(tcStr, '', 'IndicadorArredondamento',   1, 1, 1, IfThen(Self[I].IndicadorArredondamento, '1', '0'));
-      FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Self[I].Ippt));
-      FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Self[I].Quantidade >= 0, 'P', 'N'));
-
+      FGerador.wCampo(tcStr, '', 'Descricao', 0, 0, 1, Produtos[I].Descricao);
+      FGerador.wCampo(tcStr, '', 'Codigo', 0, 0, 1, Produtos[I].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Produtos[I].Codigo.Tipo) + '"');
+      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, Produtos[I].Quantidade);
+      FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Produtos[I].Unidade);
+      FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, FloatToIntStr(Produtos[I].ValorUnitario, 2));
+      FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));
+      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FloatToIntStr(Produtos[I].Aliquota, 2));
+      FGerador.wCampo(tcStr, '', 'IndicadorArredondamento', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, '1', '0'));
+      FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Produtos[I].Ippt));
+      FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'P', 'N'));
       FGerador.wGrupo('/Produto');
     end;
     FGerador.wGrupo('/Produtos');
@@ -128,7 +116,6 @@ begin
   FGerador.wGrupo('/Estoque');
 
   FXMLOriginal := ConverteXMLtoUTF8(FGerador.ArquivoFormatoXML);
-
   if Assinar then
     FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'Estoque', '/Estoque');
 end;
@@ -140,3 +127,4 @@ begin
 end;
 
 end.
+

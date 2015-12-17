@@ -120,8 +120,8 @@ uses
 constructor TACBrBlocoX.Create(AOwner: TComponent);
 begin
   inherited;
-  FEstoque   := TACBrBlocoX_Estoque.Create(Self, TACBrBlocoX_Produto);
-  FReducoesZ := TACBrBlocoX_ReducaoZ.Create(Self, TACBrBlocoX_ReducaoZItem);
+  FEstoque   := TACBrBlocoX_Estoque.Create(Self);
+  FReducoesZ := TACBrBlocoX_ReducaoZ.Create(Self);
 
   FPafECF := TACBrBlocoX_PafECF.Create;
   FEstabelecimento := TACBrBlocoX_Estabelecimento.Create;

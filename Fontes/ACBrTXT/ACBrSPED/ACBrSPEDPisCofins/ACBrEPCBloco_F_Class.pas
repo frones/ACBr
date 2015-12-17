@@ -869,7 +869,8 @@ begin
         end;
 
         // Registros FILHOS
-        WriteRegistroF205( RegF010.RegistroF200.Items[intFor] );
+       if (Bloco_0.Registro0001.Registro0110.COD_INC_TRIB <> codEscrOpIncCumulativo) then
+          WriteRegistroF205( RegF010.RegistroF200.Items[intFor] );
         WriteRegistroF210( RegF010.RegistroF200.Items[intFor] );
         WriteRegistroF211( RegF010.RegistroF200.Items[intFor] );
         ///
@@ -1071,6 +1072,7 @@ begin
           case IND_NAT_REC of
             inrNaoCumulativa : strIND_NAT_REC := '0' ; // 0 // Receita de Natureza Não Cumulativa
             inrCumulativa    : strIND_NAT_REC := '1' ; // 1 // Receita de Natureza Cumulativa
+            inrNenhum        : strIND_NAT_REC := '' ;  // Vazio
           end;
 
           case IND_NAT_RET of

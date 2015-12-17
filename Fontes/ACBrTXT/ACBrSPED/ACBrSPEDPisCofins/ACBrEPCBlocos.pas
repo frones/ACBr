@@ -864,7 +864,8 @@ type
   //Indicador da Natureza da Receita
   TACBrIndNatRec = (
                     inrNaoCumulativa = 0, // 0 // Receita de Natureza Não Cumulativa
-                    inrCumulativa    = 1  // 1 // Receita de Natureza Cumulativa
+                    inrCumulativa    = 1, // 1 // Receita de Natureza Cumulativa
+                    inrNenhum        = 9  // 9 // Nenhum/Vazio
                    );
   //Natureza do Crédito Diferido, vinculado à receita tributada no mercado interno, a descontar
   TACBrNatCredDesc = (

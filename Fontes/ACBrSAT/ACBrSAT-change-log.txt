@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/12/2015
+-- ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
+[+] Adicionada a Impressão no Nome do Contribuintem após o CPF/CNPJ no cabeçalho
+    (se o mesmo não for vazio). De acordo com novo manual de orientações 2.15.04
+    (por: DSA)
+
 Data: 01/12/2015
 -- ACBrSATExtratoESCPOS --
 [*] Ajuste para impressão com suporte ao parâmetro "MaxLinhasBuffer"

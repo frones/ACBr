@@ -87,7 +87,7 @@ type
     lChaveAcessoCan: TRLLabel;
     lChaveAcessoCanl: TRLLabel;
     lCPF_CNPJ: TRLLabel;
-    lCPF_CNPJ1: TRLLabel;
+    lCabItem: TRLLabel;
     lCPF_CNPJCan: TRLLabel;
     lCupomFiscalEletronico: TRLLabel;
     lCupomFiscalEletronicoCan: TRLLabel;
@@ -116,6 +116,8 @@ type
     lOutroValLiq: TRLLabel;
     lRazaoSocial: TRLMemo;
     lRazaoSocialCan: TRLMemo;
+    lRazaoSocialNome: TRLMemo;
+    lRazaoSocialNomeCanc: TRLMemo;
     lTesteCan: TRLMemo;
     lTitCancelamento: TRLLabel;
     lTitCancelamento1: TRLLabel;
@@ -204,6 +206,7 @@ type
     RLPanel1: TRLPanel;
     RLPanel2: TRLPanel;
     RLPanel3: TRLPanel;
+    RLPanel4: TRLPanel;
     rlVenda: TRLReport;
     rlObsContrib: TRLBand;
     RLDraw2: TRLDraw;
@@ -229,6 +232,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure lCPF_CNPJBeforePrint(Sender: TObject; var OutputText: string;
       var PrintIt: boolean);
+    procedure lRazaoSocialNomeBeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure pLei12741BeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
@@ -551,6 +556,8 @@ begin
     // CPF_CNPJ do Consumidor //
     lCPF_CNPJ.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
                                        FormatarCNPJouCPF(Dest.CNPJCPF),[]);
+    lRazaoSocialNome.Lines.Text := StringReplace(lRazaoSocialNome.Lines.Text,
+                                       '<xNome>', Dest.xNome,[]);
 
     // Informações do Rodapé do Extrato //
     lNumSAT.Caption   := Trim(IntToStr( ide.nserieSAT ));
@@ -726,6 +733,12 @@ begin
   PrintIt := (ACBrSATExtrato.CFe.Dest.CNPJCPF <> '') ;
 end;
 
+procedure TACBrSATExtratoFortesFr.lRazaoSocialNomeBeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  PrintIt := (Trim(ACBrSATExtrato.CFe.Dest.xNome) <> '') ;
+end;
+
 procedure TACBrSATExtratoFortesFr.pAsteriscoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
@@ -798,6 +811,8 @@ begin
     // CPF_CNPJ do Consumidor //
     lCPF_CNPJCan.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
                                        FormatarCNPJouCPF(Dest.CNPJCPF),[]);
+    lRazaoSocialNomeCanc.Lines.Text := StringReplace(lRazaoSocialNomeCanc.Lines.Text,
+                                       '<xNome>', Dest.xNome,[]);
     lTotalCan.Caption := FormatFloatBr(Total.vCFe,'#,###,##0.00');
 
     // Informações do Rodapé do Extrato //

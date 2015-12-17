@@ -8,7 +8,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.4.0'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
@@ -36,7 +36,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlbRodape: TRLBand
       Left = 8
       Height = 265
-      Top = 620
+      Top = 668
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -194,8 +194,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlsbDetItem: TRLSubDetail
       Left = 8
-      Height = 172
-      Top = 256
+      Height = 204
+      Top = 272
       Width = 286
       AllowedBands = [btDetail, btSummary]
       Font.Color = clBlack
@@ -645,7 +645,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlsbPagamentos: TRLSubDetail
       Left = 8
       Height = 42
-      Top = 428
+      Top = 476
       Width = 286
       RealBounds.Left = 0
       RealBounds.Top = 0
@@ -733,7 +733,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlsbObsFisco: TRLSubDetail
       Left = 8
       Height = 20
-      Top = 470
+      Top = 518
       Width = 286
       Font.Color = clBlack
       Font.Height = -8
@@ -780,7 +780,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlDadosEntrega: TRLBand
       Left = 8
       Height = 46
-      Top = 490
+      Top = 538
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -915,7 +915,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlObsContrib: TRLBand
       Left = 8
       Height = 84
-      Top = 536
+      Top = 584
       Width = 286
       BandType = btSummary
       RealBounds.Left = 0
@@ -1060,7 +1060,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlbsCabecalho: TRLSubDetail
       Left = 8
-      Height = 248
+      Height = 264
       Top = 8
       Width = 286
       RealBounds.Left = 0
@@ -1348,7 +1348,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Height = 22
+        Height = 36
         Top = 200
         Width = 286
         AutoSize = True
@@ -1385,11 +1385,29 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           RealBounds.Height = 0
           BeforePrint = lCPF_CNPJBeforePrint
         end
+        object lRazaoSocialNome: TRLMemo
+          Left = 0
+          Height = 14
+          Top = 22
+          Width = 286
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Layout = tlBottom
+          Lines.Strings = (
+            'Razão Social/Nome: <xNome>'
+          )
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = lRazaoSocialNomeBeforePrint
+        end
       end
       object rlbLegenda: TRLBand
         Left = 0
         Height = 28
-        Top = 222
+        Top = 236
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -1411,7 +1429,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object lCPF_CNPJ1: TRLLabel
+        object lCabItem: TRLLabel
           Left = 0
           Height = 12
           Top = 8
@@ -1476,7 +1494,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     object rlbCanRodape: TRLBand
       Left = 8
       Height = 523
-      Top = 298
+      Top = 300
       Width = 286
       AutoSize = True
       BandType = btSummary
@@ -2000,7 +2018,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlbDadosCupomCancelado: TRLBand
       Left = 8
-      Height = 76
+      Height = 78
       Top = 222
       Width = 286
       RealBounds.Left = 0
@@ -2056,33 +2074,62 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         RealBounds.Height = 0
         BeforePrint = lCPF_CNPJBeforePrint
       end
-      object lTitTotalCan: TRLLabel
-        Left = 72
+      object lRazaoSocialNomeCanc: TRLMemo
+        Left = 0
         Height = 14
-        Top = 52
-        Width = 53
-        Caption = 'TOTAL R$'
+        Top = 36
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Layout = tlBottom
+        Lines.Strings = (
+          'Razão Social/Nome: <xNome>'
+        )
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        BeforePrint = lRazaoSocialNomeBeforePrint
       end
-      object lTotalCan: TRLLabel
-        Left = 162
-        Height = 14
-        Top = 52
-        Width = 51
-        Alignment = taRightJustify
-        Caption = '99.999,99'
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
+      object RLPanel4: TRLPanel
+        Left = 0
+        Height = 28
+        Top = 50
+        Width = 286
+        Align = faClient
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        object lTotalCan: TRLLabel
+          Left = 162
+          Height = 14
+          Top = 8
+          Width = 51
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lTitTotalCan: TRLLabel
+          Left = 72
+          Height = 14
+          Top = 8
+          Width = 53
+          Caption = 'TOTAL R$'
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
       end
     end
     object rlbTesteCan: TRLBand

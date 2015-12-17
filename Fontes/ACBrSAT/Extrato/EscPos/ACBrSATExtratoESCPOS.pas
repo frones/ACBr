@@ -185,6 +185,9 @@ begin
   FBuffer.Add('</linha_simples>');
   FBuffer.Add('</ae><c>CPF/CNPJ do Consumidor: '+
               ifthen(Trim(CFe.Dest.CNPJCPF)<>'',FormatarCNPJouCPF(CFe.Dest.CNPJCPF),ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')));
+
+  if Trim(CFe.Dest.xNome) <> '' then
+    FBuffer.Add( ACBrStr('Razão Social/Nome: ')+CFe.Dest.xNome );
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarItens;

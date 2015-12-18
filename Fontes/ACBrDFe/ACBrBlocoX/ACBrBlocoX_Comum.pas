@@ -38,7 +38,7 @@ type
   EACBrBlocoXException = class(Exception);
 
   TACBrBlocoX_TipoCodigo = (tpcGTIN, tpcEAN, tpcProprio);
-  TACBrBlocoX_SitTributaria = (stIsento, stNãoTributado, stSubstTributaria, stTributado, stISSQN);
+  TACBrBlocoX_SitTributaria = (stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN);
   TACBrBlocoX_Ippt = (ipptProprio, ipptTerceiros);
 
   TACBrBlocoX_Codigo = class
@@ -121,9 +121,9 @@ type
   function SituacaoTributariaToStr(const AValue: TACBrBlocoX_SitTributaria): String;
   function IpptToStr(const AValue: TACBrBlocoX_Ippt): String;
 
-  function StrToTipoCodigo(const AValue: String): TACBrBlocoX_TipoCodigo;
-  function StrToSituacaoTributaria(const AValue: String): TACBrBlocoX_SitTributaria;
-  function StrToIppt(const AValue: String): TACBrBlocoX_Ippt;
+  function StrToTipoCodigo(var OK: Boolean; const AValue: String): TACBrBlocoX_TipoCodigo;
+  function StrToSituacaoTributaria(var OK: Boolean; const AValue: String): TACBrBlocoX_SitTributaria;
+  function StrToIppt(var OK: Boolean; const AValue: String): TACBrBlocoX_Ippt;
 
 implementation
 
@@ -132,63 +132,41 @@ uses
 
 function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
 begin
-  case AValue of
-    tpcGTIN    : Result := 'GTIN';
-    tpcEAN     : Result := 'EAN';
-    tpcProprio : Result := 'Proprio';
-  end;
+  Result := EnumeradoToStr(AValue, ['GTIN', 'EAN', 'Proprio'], [tpcGTIN, tpcEAN, tpcProprio]);
 end;
 
 function SituacaoTributariaToStr(const AValue: TACBrBlocoX_SitTributaria): String;
 begin
-  case AValue of
-    stIsento          : Result := 'I';
-    stNãoTributado    : Result := 'N';
-    stSubstTributaria : Result := 'F';
-    stTributado       : Result := 'T';
-    stISSQN           : Result := 'S';
-  end;
+  Result := EnumeradoToStr(AValue, ['I', 'N', 'F', 'T', 'S'], [stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN]);
 end;
 
 function IpptToStr(const AValue: TACBrBlocoX_Ippt): String;
 begin
-  case AValue of
-    ipptProprio   : Result := 'P';
-    ipptTerceiros : Result := 'T';
-  end;
+  Result := EnumeradoToStr(AValue, ['P', 'T'], [ipptProprio, ipptTerceiros]);
 end;
 
-function StrToTipoCodigo(const AValue: String): TACBrBlocoX_TipoCodigo;
-var
-  I: Integer;
+function StrToTipoCodigo(var OK: Boolean; const AValue: String): TACBrBlocoX_TipoCodigo;
 begin
-  I := IndexText(AValue, ['GTIN', 'EAN', 'Proprio']);
-  if I < 0 then
-    raise EACBrBlocoXException.CreateFmt('Tipo de código inválido "%s", utilize GTIN, EAN ou Proprio', [AValue]);
-
-  Result := TACBrBlocoX_TipoCodigo(I);
+  Result := StrToEnumerado(OK, AValue,
+    ['GTIN', 'EAN', 'Proprio'],
+    [tpcGTIN, tpcEAN, tpcProprio]
+  );
 end;
 
-function StrToSituacaoTributaria(const AValue: String): TACBrBlocoX_SitTributaria;
-var
-  I: Integer;
+function StrToSituacaoTributaria(var OK: Boolean; const AValue: String): TACBrBlocoX_SitTributaria;
 begin
-  I := IndexText(AValue, ['I', 'N', 'F', 'T', 'S']);
-  if I < 0 then
-    raise EACBrBlocoXException.CreateFmt('Situação Tributária inválida "%s", utilize I, N, F, T ou S', [AValue]);
-
-  Result := TACBrBlocoX_SitTributaria(I);
+  Result := StrToEnumerado(OK, AValue,
+    ['I', 'N', 'F', 'T', 'S'],
+    [stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN]
+  );
 end;
 
-function StrToIppt(const AValue: String): TACBrBlocoX_Ippt;
-var
-  I: Integer;
+function StrToIppt(var OK: Boolean; const AValue: String): TACBrBlocoX_Ippt;
 begin
-  I := IndexText(AValue, ['P', 'T']);
-  if I < 0 then
-    raise EACBrBlocoXException.CreateFmt('IPPT inválido "%s", utilize P ou T', [AValue]);
-
-  Result := TACBrBlocoX_Ippt(I);
+  Result := StrToEnumerado(OK, AValue,
+    ['P', 'T'],
+    [ipptProprio, ipptTerceiros]
+  );
 end;
 
 { TACBrBlocoX_Produto }

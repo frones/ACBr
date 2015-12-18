@@ -977,6 +977,10 @@ begin
   else
     gtCampo(tag, '');
 
+  // adiciona o espaço ao inicio do atributo para não colar na tag se nao estiver vazio
+  if Atributo <> '' then
+    Atributo := ' ' + Atributo;
+
   // Grava a tag no arquivo - Quando não existir algum conteúdo
   if ((ocorrencias = 1) and (EstaVazio)) then
   begin
@@ -990,9 +994,9 @@ begin
     else
     begin
       if FOpcoes.FTagVaziaNoFormatoResumido then
-        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + ' ' + Atributo + '/>'
+        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + Atributo + '/>'
       else
-        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + ' ' + Atributo +  '></' + tag + '>';
+        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + Atributo +  '></' + tag + '>';
     end;
     exit;
   end;
@@ -1001,11 +1005,11 @@ begin
   if ((ocorrencias = 1) or (not EstaVazio)) then
   begin
     if ParseTextoXML then
-       ATag := '<' + tag + ' ' + Atributo +  '>' +
+       ATag := '<' + tag + Atributo +  '>' +
                FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) +
                '</' + tag + '>'
     else
-       ATag := '<' + tag + ' ' + Atributo +  '>' +
+       ATag := '<' + tag + Atributo +  '>' +
                ConteudoProcessado +
                '</' + tag + '>';
 

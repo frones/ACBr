@@ -64,9 +64,9 @@ begin
 
 end;
 
-{$ifdef FPC}
-initialization
-   {$i ACBrNFe.lrs}
-{$endif}
+//{$ifdef FPC}
+//initialization
+//   {$i ACBrNFe.lrs}
+//{$endif}
 
 end.

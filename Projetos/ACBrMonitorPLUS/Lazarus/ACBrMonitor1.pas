@@ -733,7 +733,7 @@ type
     mTCConexoes: TMemo;
     mResposta: TSynMemo;
     pgDFe: TPageControl;
-    PageControl3: TPageControl;
+    pgSAT: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
@@ -979,6 +979,7 @@ type
     procedure cbUsarFortesClick(Sender: TObject);
     procedure cbxBOLF_JChange(Sender: TObject);
     procedure cbCEPWebServiceChange(Sender: TObject);
+    procedure cbxImpDescPorcChange(Sender: TObject);
     procedure cbxModeloSATChange(Sender: TObject);
     procedure cbxPastaMensalClick(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
@@ -1299,6 +1300,9 @@ begin
   NewLines := '';
   DISWorking := False;
 
+  Top := max(Screen.Height - Height - 100,1);
+  Left := max(Screen.Width - Width - 50,1);
+
   pCanClose := False;
   fsRFDIni := '';
   fsRFDLeuParams := False;
@@ -1452,7 +1456,6 @@ begin
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 
   Caption := 'ACBrMonitorPLUS ' + Versao + ' - ACBr: ' + ACBR_VERSAO;
-  pgConfig.ActivePageIndex := 0;
 
   {$IFDEF LINUX}
   rbLCBTeclado.Caption := 'Dispositivo';
@@ -1480,8 +1483,15 @@ begin
   pgBoleto.ActivePageIndex := 0;
   cbxBOLF_JChange(Self);
 
+  pgConfig.ActivePageIndex := 0;
+  pgDFe.ActivePageIndex := 0;
+  pgImpressaoDFe.ActivePageIndex := 0;
+  pgTestes.ActivePageIndex := 0;
+  pgSAT.ActivePageIndex := 0;
+  pgECFParams.ActivePageIndex := 0;
   pgCadastro.ActivePageIndex := 0;
   pgSwHouse.ActivePageIndex := 0;
+  pgConRFD.ActivePageIndex := 0;
 
   Application.Title := Caption;
 
@@ -2501,6 +2511,13 @@ begin
   edCEPChaveBuscarCEP.Enabled := (ACBrCEP1.WebService in [wsBuscarCep, wsCepLivre]);
 end;
 
+procedure TFrmACBrMonitor.cbxImpDescPorcChange(Sender: TObject);
+begin
+  cbxImpValLiq.Enabled := not cbxImpDescPorc.Checked;
+  if not cbxImpValLiq.Enabled then
+    cbxImpValLiq.Checked := False;
+end;
+
 procedure TFrmACBrMonitor.cbxModeloSATChange(Sender: TObject);
 begin
   try
@@ -3443,6 +3460,8 @@ begin
     rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
     cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
+
+    cbxImpDescPorcChange(nil);
 
     if rgModeloDanfe.ItemIndex = 0 then
     begin

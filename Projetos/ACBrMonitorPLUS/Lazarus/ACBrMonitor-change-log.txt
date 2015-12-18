@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2015
+[*] Adicionada regra de exclusão para o Campo "Imprimir Valor Líquido do Produto"
+    quando "Imprimir Desconto em Porcentagem" está marcado
+[*] Ajuste para melhor posicionamento do Formulário na tela, durante a primeira
+    exibição
+[*] Ajuste para que todos os Pagecontrols fique na primeira página após a
+    inicialização
+    (por: DSA)
+
+
 15/12/2015
 [+] Adicionadas as tags do fundo de amparo a pobreza, pFCPUFDest e vFCPUFDest
     por: regys.silveira

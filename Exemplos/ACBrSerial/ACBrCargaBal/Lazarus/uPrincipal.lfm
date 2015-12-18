@@ -1,0 +1,105 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 422
+  Height = 209
+  Top = 332
+  Width = 457
+  BorderStyle = bsDialog
+  Caption = 'Demo ACBRCargaBal'
+  ClientHeight = 209
+  ClientWidth = 457
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.4.2.0'
+  object Label1: TLabel
+    Left = 15
+    Height = 13
+    Top = 14
+    Width = 34
+    Caption = 'Modelo'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 15
+    Height = 13
+    Top = 57
+    Width = 198
+    Caption = 'Diretório onde serão gerados os arquivos'
+    ParentColor = False
+  end
+  object lblStatus: TLabel
+    Left = 15
+    Height = 13
+    Top = 110
+    Width = 41
+    Caption = 'lblStatus'
+    ParentColor = False
+  end
+  object cbxModelo: TComboBox
+    Left = 15
+    Height = 21
+    Top = 30
+    Width = 145
+    ItemHeight = 13
+    Items.Strings = (
+      'Filizola'
+      'Toledo'
+      'Urano'
+      'ToledoMGV5'
+    )
+    Style = csDropDownList
+    TabOrder = 0
+  end
+  object edtDiretorio: TEdit
+    Left = 15
+    Height = 21
+    Top = 73
+    Width = 391
+    TabOrder = 1
+    Text = 'edtDiretorio'
+  end
+  object btnEscolherDiretorio: TButton
+    Left = 412
+    Height = 25
+    Top = 71
+    Width = 29
+    Caption = '...'
+    OnClick = btnEscolherDiretorioClick
+    TabOrder = 2
+  end
+  object btnGerarArquivo: TButton
+    Left = 233
+    Height = 25
+    Top = 170
+    Width = 101
+    Caption = 'Gerar arquivo'
+    OnClick = btnGerarArquivoClick
+    TabOrder = 3
+  end
+  object btnFechar: TButton
+    Left = 340
+    Height = 25
+    Top = 170
+    Width = 101
+    Cancel = True
+    Caption = 'Fechar'
+    OnClick = btnFecharClick
+    TabOrder = 4
+  end
+  object ProgressBar1: TProgressBar
+    Left = 15
+    Height = 17
+    Top = 125
+    Width = 426
+    TabOrder = 5
+  end
+  object ACBrCargaBal1: TACBrCargaBal
+    Modelo = modFilizola
+    OnProgresso = ACBrCargaBal1Progresso
+    left = 35
+    top = 160
+  end
+end

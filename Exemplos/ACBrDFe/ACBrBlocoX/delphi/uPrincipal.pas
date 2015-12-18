@@ -71,6 +71,7 @@ begin
         DataReferenciaInicial := DATE;
         DataReferenciaFinal   := DATE;
 
+        Produtos.Clear;
         for I := 1 to 10 do
         begin
           with Produtos.Add do
@@ -119,6 +120,7 @@ begin
         ReducoesZ.VendaBrutaDiaria := 3456.78;
         ReducoesZ.GT               := 123456789.45;
 
+        TotalizadoresParciais.Clear;
         for I := 1 to 2 do
         begin
           with TotalizadoresParciais.Add do

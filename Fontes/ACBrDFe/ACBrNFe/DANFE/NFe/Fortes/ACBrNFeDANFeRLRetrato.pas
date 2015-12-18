@@ -2062,7 +2062,7 @@ begin
   begin
     lblValorTotal.Caption       := 'DESCONTO';
     txtValorTotal.DataField     := 'VALORDESC';
-    lblPercValorDesc1.Caption   := 'LÍQUIDO';
+    lblPercValorDesc1.Caption   := ACBrStr('LÍQUIDO');
     txtValorDesconto.DataField  := 'valorliquido';
   end;
 end;

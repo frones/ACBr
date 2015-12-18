@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2015
+--  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
+[-] Correção quando FImprimirDescPorc = True
+	Nao imprimir o Total Liquido
+      	por : Henrique Leonardo 
+
 16/12/2015
 -- ACBrNFeWebServices / ACBrNFeNotasFiscais --
 [*] Incluido o status 302 para que seja acrescentado o protocolo de denegação

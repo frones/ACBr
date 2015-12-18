@@ -2130,8 +2130,13 @@ begin
         txtCST.DataField  := 'CSOSN';
       end;
   end;
+
   if FImprimirDescPorc = True then
-    lblPercValorDesc.Caption := 'PERC.(%)'
+  begin
+    lblPercValorDesc.Caption := 'PERC.';
+    lblPercValorDesc1.Caption:= '(%)';
+    fImprimirTotalLiquido    := false;
+  end
   else
     lblPercValorDesc.Caption := 'VALOR';
 

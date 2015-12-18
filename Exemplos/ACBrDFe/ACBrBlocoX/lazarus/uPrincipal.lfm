@@ -1,0 +1,78 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 503
+  Height = 240
+  Top = 268
+  Width = 701
+  Caption = 'ACBrBlocoX - Demonstração'
+  ClientHeight = 240
+  ClientWidth = 701
+  LCLVersion = '1.4.4.0'
+  object Button1: TButton
+    Left = 432
+    Height = 25
+    Top = 80
+    Width = 195
+    Caption = 'Gerar XML Estoque'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 432
+    Height = 25
+    Top = 118
+    Width = 195
+    Caption = 'Gerar XML Redução Z'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object Label1: TLabel
+    Left = 44
+    Height = 15
+    Top = 32
+    Width = 58
+    Caption = 'Certificado'
+    ParentColor = False
+  end
+  object Edit1: TEdit
+    Left = 44
+    Height = 23
+    Top = 48
+    Width = 252
+    TabOrder = 2
+  end
+  object Edit2: TEdit
+    Left = 44
+    Height = 23
+    Top = 96
+    Width = 252
+    TabOrder = 3
+  end
+  object Label2: TLabel
+    Left = 44
+    Height = 15
+    Top = 80
+    Width = 32
+    Caption = 'Senha'
+    ParentColor = False
+  end
+  object Button3: TButton
+    Left = 296
+    Height = 25
+    Top = 48
+    Width = 27
+    Caption = '...'
+    OnClick = Button3Click
+    TabOrder = 4
+  end
+  object ACBrBlocoX1: TACBrBlocoX
+    left = 288
+    top = 152
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '.XML'
+    Filter = 'Arquivos XML|*.XML'
+    Options = [ofNoChangeDir, ofEnableSizing, ofViewDetail]
+    left = 340
+    top = 118
+  end
+end

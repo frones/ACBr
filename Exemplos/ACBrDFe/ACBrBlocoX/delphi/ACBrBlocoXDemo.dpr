@@ -1,7 +1,7 @@
 program ACBrBlocoXDemo;
 
 uses
-  Vcl.Forms,
+  Forms,
   uPrincipal in 'uPrincipal.pas' {Form1};
 
 {$R *.res}

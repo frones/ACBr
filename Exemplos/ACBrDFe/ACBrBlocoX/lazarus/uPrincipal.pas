@@ -26,9 +26,9 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
   private
-    { private declarations }
+    procedure PreencherCabecalho(const AACBrBlocoX: TACBrBlocoX);
   public
-    { public declarations }
+
   end;
 
 var
@@ -39,6 +39,25 @@ implementation
 {$R *.lfm}
 
 { TfrmPrincipal }
+
+procedure TfrmPrincipal.PreencherCabecalho(const AACBrBlocoX: TACBrBlocoX);
+begin
+  with AACBrBlocoX do
+  begin
+    Configuracoes.Certificados.NumeroSerie := Edit1.Text;
+    Configuracoes.Certificados.Senha       := Edit2.Text;
+
+    Estabelecimento.Ie              := '123456789';
+    Estabelecimento.Cnpj            := '99999999999999';
+    Estabelecimento.NomeEmpresarial := 'NOME EMPRESARIAL';
+
+    PafECF.Versao                       := '01.01.01';
+    PafECF.NumeroCredenciamento         := '123456ABC';
+    PafECF.NomeComercial                := 'NOME COMERCIAL';
+    PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
+    PafECF.CnpjDesenvolvedor            := '88888888888888';
+  end;
+end;
 
 procedure TfrmPrincipal.Button3Click(Sender: TObject);
 begin
@@ -53,18 +72,7 @@ begin
   begin
     with ACBrBlocoX1 do
     begin
-      Configuracoes.Certificados.NumeroSerie := Edit1.Text;
-      Configuracoes.Certificados.Senha       := Edit2.Text;
-
-      Estabelecimento.Ie              := '123456789';
-      Estabelecimento.Cnpj            := '99999999999999';
-      Estabelecimento.NomeEmpresarial := 'NOME EMPRESARIAL';
-
-      PafECF.Versao                       := '01.01.01';
-      PafECF.NumeroCredenciamento         := '123456ABC';
-      PafECF.NomeComercial                := 'NOME COMERCIAL';
-      PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
-      PafECF.CnpjDesenvolvedor            := '88888888888888';
+      PreencherCabecalho(ACBrBlocoX1);
 
       // arquivo de Estoque
       with Estoque do
@@ -104,18 +112,7 @@ begin
   begin
     with ACBrBlocoX1 do
     begin
-      Configuracoes.Certificados.NumeroSerie := Edit1.Text;
-      Configuracoes.Certificados.Senha       := Edit2.Text;
-
-      Estabelecimento.Ie              := '123456789';
-      Estabelecimento.Cnpj            := '99999999999999';
-      Estabelecimento.NomeEmpresarial := 'NOME EMPRESARIAL';
-
-      PafECF.Versao                       := '01.01.01';
-      PafECF.NumeroCredenciamento         := '123456ABC';
-      PafECF.NomeComercial                := 'NOME COMERCIAL';
-      PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
-      PafECF.CnpjDesenvolvedor            := '88888888888888';
+      PreencherCabecalho(ACBrBlocoX1);
 
       ECF.NumeroFabricacao := 'BR1234567891234579';
       ECF.Tipo             := 'ECF-IF';

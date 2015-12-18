@@ -1,4 +1,4 @@
-object Form1: TForm1
+object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'ACBr Bloco X - Demonstra'#231#227'o'

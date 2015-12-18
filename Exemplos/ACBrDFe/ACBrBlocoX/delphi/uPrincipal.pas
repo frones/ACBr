@@ -7,7 +7,7 @@ uses
   Dialogs, Buttons, ACBrBase, ACBrDFe, ACBrBlocoX;
 
 type
-  TForm1 = class(TForm)
+  TfrmPrincipal = class(TForm)
     Button1: TButton;
     ACBrBlocoX1: TACBrBlocoX;
     Edit1: TEdit;
@@ -21,13 +21,13 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
   private
-    { Private declarations }
+    procedure PreencherCabecalho(const AACBrBlocoX: TACBrBlocoX);
   public
-    { Public declarations }
+
   end;
 
 var
-  Form1: TForm1;
+  frmPrincipal: TfrmPrincipal;
 
 implementation
 
@@ -36,7 +36,26 @@ uses
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfrmPrincipal.PreencherCabecalho(const AACBrBlocoX: TACBrBlocoX);
+begin
+  with AACBrBlocoX do
+  begin
+    Configuracoes.Certificados.NumeroSerie := Edit1.Text;
+    Configuracoes.Certificados.Senha       := Edit2.Text;
+
+    Estabelecimento.Ie              := '123456789';
+    Estabelecimento.Cnpj            := '99999999999999';
+    Estabelecimento.NomeEmpresarial := 'NOME EMPRESARIAL';
+
+    PafECF.Versao                       := '01.01.01';
+    PafECF.NumeroCredenciamento         := '123456ABC';
+    PafECF.NomeComercial                := 'NOME COMERCIAL';
+    PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
+    PafECF.CnpjDesenvolvedor            := '88888888888888';
+  end;
+end;
+
+procedure TfrmPrincipal.Button1Click(Sender: TObject);
 var
   I: Integer;
 begin
@@ -44,18 +63,7 @@ begin
   begin
     with ACBrBlocoX1 do
     begin
-      Configuracoes.Certificados.NumeroSerie := Edit1.Text;
-      Configuracoes.Certificados.Senha       := Edit2.Text;
-
-      Estabelecimento.Ie              := '123456789';
-      Estabelecimento.Cnpj            := '99999999999999';
-      Estabelecimento.NomeEmpresarial := 'NOME EMPRESARIAL';
-
-      PafECF.Versao                       := '01.01.01';
-      PafECF.NumeroCredenciamento         := '123456ABC';
-      PafECF.NomeComercial                := 'NOME COMERCIAL';
-      PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
-      PafECF.CnpjDesenvolvedor            := '88888888888888';
+      PreencherCabecalho(ACBrBlocoX1);
 
       // arquivo de Estoque
       with Estoque do
@@ -87,7 +95,7 @@ begin
   end;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TfrmPrincipal.Button2Click(Sender: TObject);
 var
   I, X: Integer;
 begin
@@ -95,18 +103,7 @@ begin
   begin
     with ACBrBlocoX1 do
     begin
-      Configuracoes.Certificados.NumeroSerie := Edit1.Text;
-      Configuracoes.Certificados.Senha       := Edit2.Text;
-
-      Estabelecimento.Ie              := '123456789';
-      Estabelecimento.Cnpj            := '99999999999999';
-      Estabelecimento.NomeEmpresarial := 'NOME EMPRESARIAL';
-
-      PafECF.Versao                       := '01.01.01';
-      PafECF.NumeroCredenciamento         := '123456ABC';
-      PafECF.NomeComercial                := 'NOME COMERCIAL';
-      PafECF.NomeEmpresarialDesenvolvedor := 'NOME EMPRESARIAL DO DESENVOLVEDOR';
-      PafECF.CnpjDesenvolvedor            := '88888888888888';
+      PreencherCabecalho(ACBrBlocoX1);
 
       ECF.NumeroFabricacao := 'BR1234567891234579';
       ECF.Tipo             := 'ECF-IF';
@@ -164,7 +161,7 @@ begin
   end;
 end;
 
-procedure TForm1.SpeedButton1Click(Sender: TObject);
+procedure TfrmPrincipal.SpeedButton1Click(Sender: TObject);
 begin
   Edit1.Text := ACBrBlocoX1.SSL.SelecionarCertificado;
 end;

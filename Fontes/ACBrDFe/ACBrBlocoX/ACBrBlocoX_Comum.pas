@@ -132,17 +132,26 @@ uses
 
 function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
 begin
-  Result := EnumeradoToStr(AValue, ['GTIN', 'EAN', 'Proprio'], [tpcGTIN, tpcEAN, tpcProprio]);
+  Result := EnumeradoToStr(AValue,
+    ['GTIN', 'EAN', 'Proprio'],
+    [tpcGTIN, tpcEAN, tpcProprio]
+  );
 end;
 
 function SituacaoTributariaToStr(const AValue: TACBrBlocoX_SitTributaria): String;
 begin
-  Result := EnumeradoToStr(AValue, ['I', 'N', 'F', 'T', 'S'], [stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN]);
+  Result := EnumeradoToStr(AValue,
+    ['I', 'N', 'F', 'T', 'S'],
+    [stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN]
+  );
 end;
 
 function IpptToStr(const AValue: TACBrBlocoX_Ippt): String;
 begin
-  Result := EnumeradoToStr(AValue, ['P', 'T'], [ipptProprio, ipptTerceiros]);
+  Result := EnumeradoToStr(AValue,
+    ['P', 'T'],
+    [ipptProprio, ipptTerceiros]
+  );
 end;
 
 function StrToTipoCodigo(var OK: Boolean; const AValue: String): TACBrBlocoX_TipoCodigo;

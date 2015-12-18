@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX;..\..\..\..\Fontes\PCNComum"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrBlocoX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>

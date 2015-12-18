@@ -46,8 +46,15 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+  
 18/12/2015
+--  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
+[-] Correção da funcao ManterDesc para trazer zero de percentual e nao o valor de desconto 
+   
+      	por : Henrique Leonardo 
+          
+   
+18/12/20157
 --  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
 [-] Correção quando FImprimirDescPorc = True
 	Nao imprimir o Total Liquido

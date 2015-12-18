@@ -2054,8 +2054,7 @@ begin
 
   if FImprimirDescPorc = True then
   begin
-    lblPercValorDesc.Caption := 'PERC.';
-    lblPercValorDesc1.Caption:= '(%)';
+    lblPercValorDesc.Caption := 'PERC.(%)';
     fImprimirTotalLiquido    := false;
   end
   else
@@ -2202,10 +2201,15 @@ end;
 
 Function TfrlDANFeRLRetrato.ManterDesPro( dvDesc ,dvProd : Double) : Double;
 begin
-  if (FImprimirDescPorc = True) and (dvProd > 0) then
-    Result := (dvDesc * 100) / dvProd
+  if (FImprimirDescPorc )  then
+  begin
+    if (dvDesc > 0)  then
+      Result := (dvDesc * 100) / dvProd
+    else
+      Result := 0;
+  end
   else
-    Result:= dvDesc;
+    Result := dvDesc;
 end;
 
 Function TfrlDANFeRLRetrato.ManterXpod( sXProd : String;  inItem : Integer ) : String;

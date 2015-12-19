@@ -2131,7 +2131,7 @@ begin
       end;
   end;
 
-  if FImprimirDescPorc = True then
+  if ( fImprimirDescPorc ) then
   begin
     lblPercValorDesc.Caption := 'PERC.(%)';
     fImprimirTotalLiquido    := false;
@@ -2139,7 +2139,7 @@ begin
   else
     lblPercValorDesc.Caption := 'VALOR';
 
-  if fImprimirTotalLiquido then
+  if ( fImprimirTotalLiquido ) then
   begin
     lblValorTotal.Caption       := 'DESCONTO';
     txtValorTotal.DataField     := 'VALORDESC';
@@ -2148,12 +2148,12 @@ begin
   end;
 
   if RLNFe.PageNumber > 1 then
-    begin
-      pnlDescricao1.Width := 472;
-      rlmDescricao.Width  := 386;
-      LinhaFimItens.Width := 1070;
-      pnlDescricao2.Left  := 472;
-    end;
+  begin
+    pnlDescricao1.Width :=  472;
+    rlmDescricao.Width  :=  386;
+    LinhaFimItens.Width := 1070;
+    pnlDescricao2.Left  :=  472;
+  end;
 end;
 
 procedure TfrlDANFeRLPaisagem.FormCreate(Sender: TObject);
@@ -2290,9 +2290,9 @@ end;
 
 Function TfrlDANFeRLPaisagem.ManterDesPro( dvDesc ,dvProd : Double) : Double;
 begin
-  if (FImprimirDescPorc )  then
+  if ( fImprimirDescPorc ) then
   begin
-    if (dvDesc > 0)  then
+    if (dvDesc > 0) and ( dvProd > 0 ) then
       Result := (dvDesc * 100) / dvProd
     else
       Result := 0;

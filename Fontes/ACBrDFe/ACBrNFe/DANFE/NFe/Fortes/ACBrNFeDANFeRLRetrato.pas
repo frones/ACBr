@@ -2052,7 +2052,7 @@ begin
       end;
   end;
 
-  if FImprimirDescPorc = True then
+  if ( fImprimirDescPorc )  then
   begin
     lblPercValorDesc.Caption := 'PERC.(%)';
     fImprimirTotalLiquido    := false;
@@ -2061,7 +2061,7 @@ begin
     lblPercValorDesc.Caption := 'VALOR';
 
 
-  if fImprimirTotalLiquido then
+  if ( fImprimirTotalLiquido ) then
   begin
     lblValorTotal.Caption       := 'DESCONTO';
     txtValorTotal.DataField     := 'VALORDESC';
@@ -2201,9 +2201,9 @@ end;
 
 Function TfrlDANFeRLRetrato.ManterDesPro( dvDesc ,dvProd : Double) : Double;
 begin
-  if (FImprimirDescPorc )  then
+  if ( fImprimirDescPorc ) then
   begin
-    if (dvDesc > 0)  then
+    if (dvDesc > 0) and ( dvProd > 0 ) then
       Result := (dvDesc * 100) / dvProd
     else
       Result := 0;

@@ -46,6 +46,16 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+
+18/12/2015
+--  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
+[*] Melhoria da funcao ManterDesc 
+        De :     if (dvDesc > 0)  then
+        Para :   if (dvDesc > 0) and ( dvProd > 0 ) then
+		
+      	por : Henrique Leonardo 
+
   
 18/12/2015
 --  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --

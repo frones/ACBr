@@ -47,6 +47,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2015
+--  ACBrNFeDANFEFRDM --
+[*] Novas Tabulações
+[*] Ajuste no valor liquido 
+     De  : FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
+     Para: FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - Prod.vDesc ,'###,###,##0.00');
+ 
+[*] Melhoria da funcao ManterDesc 
+     De :   if ( FDANFEClassOwner.ImprimirDescPorc ) and ( dvDesc > 0 ) then
+	  	Result := (( dvDesc*100 ) / (dVUnCom * dQCom) )
+	    else
+	  	Result := dvDesc;
+
+     Para : if ( FDANFEClassOwner.ImprimirDescPorc ) then
+	    begin
+             if ( ( dvDesc  > 0 ) and ( dVUnCom > 0 ) and ( dQCom   > 0 ) ) then
+             	Result := (( dvDesc*100 ) / (dVUnCom * dQCom) )
+	     else
+	        Result := 0;
+	    end
+	    else
+	     Result := dvDesc;
+		
+      	por : Henrique Leonardo 
 
 18/12/2015
 --  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
@@ -64,7 +88,7 @@ Símbolo : Significado
       	por : Henrique Leonardo 
           
    
-18/12/20157
+18/12/2015
 --  ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
 [-] Correção quando FImprimirDescPorc = True
 	Nao imprimir o Total Liquido

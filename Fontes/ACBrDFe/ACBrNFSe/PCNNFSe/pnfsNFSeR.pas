@@ -50,6 +50,7 @@ type
     FVersaoXML: String;
     FProvedor: TnfseProvedor;
     FTabServicosExt: Boolean;
+    FProvedorConf: TnfseProvedor;
 
     function LerRPS_ABRASF_V1: Boolean;
     function LerRPS_ABRASF_V2: Boolean;
@@ -71,12 +72,13 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property Leitor: TLeitor         read FLeitor         write FLeitor;
-    property NFSe: TNFSe             read FNFSe           write FNFSe;
-    property Opcoes: TLeitorOpcoes   read FOpcoes         write FOpcoes;
-    property VersaoXML: String       read FVersaoXML      write FVersaoXML;
-    property Provedor: TnfseProvedor read FProvedor       write FProvedor;
-    property TabServicosExt: Boolean read FTabServicosExt write FTabServicosExt;
+    property Leitor: TLeitor             read FLeitor         write FLeitor;
+    property NFSe: TNFSe                 read FNFSe           write FNFSe;
+    property Opcoes: TLeitorOpcoes       read FOpcoes         write FOpcoes;
+    property VersaoXML: String           read FVersaoXML      write FVersaoXML;
+    property Provedor: TnfseProvedor     read FProvedor       write FProvedor;
+    property ProvedorConf: TnfseProvedor read FProvedorConf   write FProvedorConf;
+    property TabServicosExt: Boolean     read FTabServicosExt write FTabServicosExt;
   end;
 
  TLeitorOpcoes = class(TPersistent)
@@ -772,9 +774,14 @@ begin
      else
        FProvedor := proNenhum;
    end;
+
+   if FProvedor = proNenhum then
+     FProvedor := FProvedorConf;
+   (*
    { Alterado Por Cleiver em - 22-08-2014 }
    if (FProvedor = proNenhum) and (Pos('https://nfse.goiania.go.gov.br/ws/', Leitor.Arquivo) > 0)  then
      FProvedor := proGoiania;
+   *)
  end;
 
  { Alterado Por Cleiver em - 22-08-2014 }
@@ -1949,9 +1956,14 @@ begin
      else
        FProvedor := proNenhum;
    end;
+
+   if FProvedor = proNenhum then
+     FProvedor := FProvedorConf;
+(*
    { Alterado Por Cleiver em - 22-08-2014 }
    if (FProvedor = proNenhum) and (Pos('https://nfse.goiania.go.gov.br/ws/', Leitor.Arquivo) > 0)  then
      FProvedor := proGoiania;
+*)     
  end;
 
  if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then

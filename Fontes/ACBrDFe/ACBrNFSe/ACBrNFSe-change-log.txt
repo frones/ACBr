@@ -47,18 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2015
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[*] Ao ler o XML de um RPS ou NFSe se não conseguir identificar o provedor será
+    utilizado o que esta em Configuracoes.Geral.Provedor.
+    Por: Italo Jurisato Junior
+
 15/12/2015
--- ACBrNFSeWebServices / ACBrNFSeNotas Fiscais --
+-- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
 [*] Correção na montagem do NameSpace do lote para realizar a assinatura.
     Por: Italo Jurisato Junior
 
 13/12/2015
--- ACBrNFSeWebServices / ACBrNFSeNotas Fiscais --
+-- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
 [*] Melhorias troca de IF por CASE.
     Por: Italo Jurisato Junior
 
 12/12/2015
--- ACBrNFSeWebServices / ACBrNFSeNotas Fiscais --
+-- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
 [*] Alterações visando correções e implementações futuras.
     Por: Italo Jurisato Junior
 

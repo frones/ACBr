@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2015
+-- ACBrECFEscECF --
+[*] Ajuste para correta impressão de Cod.Barras e Caracteres de Controle em
+    Epson TM-800/900F, e Bametech MP4200-THFI
+    (nota: Para a Impressão de Cod.barras usando a DLL da Epson como túnel, é
+     requer necessário uma atualização da mesma)
+    (por: DSA)
+
 11/12/2015
 -- ACBrECF --
 [*] FechaCupom modificado para ajustar as Linhas do Cupom, limitando-as em 8

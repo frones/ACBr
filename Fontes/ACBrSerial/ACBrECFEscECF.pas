@@ -48,7 +48,7 @@ uses Classes,
     ACBrECFClass, ACBrDevice;
 
 const
-    cEscECFMaxBuffer = 1024 ;
+    cEscECFMaxBuffer = 512 ;
     cNumFalhasMax = 5;
     cEsperaWAK = 50;
 
@@ -1354,12 +1354,7 @@ begin
         fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
                         Poem_Zeros( fsNumECF, 3 )+'.txt';
 
-     if IsBematech then
-     begin
-       if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
-          MaxLinhasBuffer := 5;
-     end
-     else if IsEpson then
+     if IsEpson then
      begin
        fpPaginaDeCodigo := 850;
        fpColunas := 57;
@@ -2082,8 +2077,31 @@ procedure TACBrECFEscECF.LinhaRelatorioGerencial(Linha: AnsiString;
 var
   P, Espera: Integer;
   Buffer   : AnsiString ;
+  EhControle: Boolean;
 begin
-  Linha := AjustaLinhas( Linha, Colunas, 0, (IsEpson or IsBematech) );  { Formata as Linhas de acordo com "Coluna" }
+  Linha := AjustaLinhas( Linha, Colunas, 0, False );  { Formata as Linhas de acordo com "Coluna" }
+
+  P := pos(LF, Linha);
+  while P > 0 do
+  begin
+    EhControle := Linha[max(P-1,1)] = ESC;
+
+    if not EhControle then
+    begin
+      Linha := StuffString(Linha, P, 0, CR );  // Adiciona CR antes de LF
+      Inc( P );
+    end
+    else
+    begin
+      if IsBematech then
+      begin
+        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
+        Dec( P );
+      end;
+    end;
+
+    P := PosEx( LF, Linha, P+1);
+  end;
 
   while Length( Linha ) > 0 do
   begin
@@ -2484,6 +2502,13 @@ begin
     Result := DarumaTraduzirTagBloco( ATag, Conteudo, Self)
   else
     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
+
+  // Carcateres de Controle, devem ser precedidos de ESC //
+  Result := StringReplace( Result, NUL, ESC+NUL, [rfReplaceAll]);
+  Result := StringReplace( Result, LF , ESC+LF , [rfReplaceAll]);
+
+  if IsEpson then
+    Result := StringReplace( Result, CR , ESC+CR , [rfReplaceAll]);
 end ;
 
 procedure TACBrECFEscECF.AbreCupom ;

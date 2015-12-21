@@ -634,7 +634,7 @@ implementation
 Uses
    SysUtils, IniFiles, math,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5,{$ENDIF}
-   ACBrConsts, ACBrECF, ACBrUtil;
+   ACBrConsts, ACBrECF, ACBrECFEscECF, ACBrUtil;
 
 function BematechTraduzirTag(const ATag : AnsiString) : AnsiString ;
 const
@@ -642,7 +642,7 @@ const
   C_OFF = #0 ;
 
   // <e></e>
-  cExpandidoOn   = ESC + SO;
+  cExpandidoOn   = SO;
   cExpandidoOff  = #20;
 
   // <n></n>
@@ -689,17 +689,15 @@ end;
 function BematechTraduzirTagBloco(const ATag, Conteudo : AnsiString;
   AECFClass: TACBrECFClass) : AnsiString ;
 const
-  C_BARRA = GS + 'k' ;
-
-  cEAN8     = C_BARRA + 'D' ; // <ean8></ean8>
-  cEAN13    = C_BARRA + 'C' ; // <ean13></ean13>
-  cINTER25  = C_BARRA + 'F' ; // <inter></inter>
-  cCODE39   = C_BARRA + 'E' ; // <code39></code39>
-  cCODE93   = C_BARRA + 'H' ; // <code93></code93>
-  cCODE128  = C_BARRA + 'I' ; // <code128></code128>
-  cUPCA     = C_BARRA + 'A' ; // <upca></upca>
-  cCODABAR  = C_BARRA + 'G' ; // <codabar></codabar>
-  cMSI      = C_BARRA + #130; // <msi></msi>
+  cEAN8     = 'D' ; // <ean8></ean8>
+  cEAN13    = 'C' ; // <ean13></ean13>
+  cINTER25  = 'F' ; // <inter></inter>
+  cCODE39   = 'E' ; // <code39></code39>
+  cCODE93   = 'H' ; // <code93></code93>
+  cCODE128  = 'I' ; // <code128></code128>
+  cUPCA     = 'A' ; // <upca></upca>
+  cCODABAR  = 'G' ; // <codabar></codabar>
+  cMSI      = #130; // <msi></msi>
 
   function MontaCodBarras(const ATipo: AnsiString; ACodigo: AnsiString;
     TamFixo: Integer = 0): AnsiString;
@@ -709,9 +707,9 @@ const
   begin
     with AECFClass.ConfigBarras do
     begin
-      L := IfThen( LarguraLinha = 0, 3, max(min(LarguraLinha,4),2) );
-      A := IfThen( Altura = 0, 162, max(min(Altura,255),1) );
-	  M1 := Byte(Margem SHR 0);
+      L  := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,4),2) );
+      A  := IfThen( Altura = 0, 50, max(min(Altura,255),1) );
+      M1 := Byte(Margem SHR 0);
       M2 := Byte(Margem SHR 8);
     end ;
 
@@ -721,9 +719,9 @@ const
 
     Result := GS + 'w' + chr( L ) + // Largura
               GS + 'h' + chr( A ) + // Altura
-			  GS + 'k' + #132 + char(M1) + char(M2) + // Margem
-              GS + 'H' + ifthen( AECFClass.ConfigBarras.MostrarCodigo, #1, #0 ) +
-              ATipo + chr( Length( ACodigo ) ) + ACodigo;
+	      GS + 'k' + #132 + char(M1) + char(M2) + // Margem
+              GS + 'H' + ifthen( AECFClass.ConfigBarras.MostrarCodigo, #2, #0 ) +
+              GS + 'k' + ATipo + chr( Length( ACodigo ) ) + ACodigo;
   end;
 
   Function AddStartStop( Conteudo: AnsiString ) : AnsiString ;
@@ -736,11 +734,12 @@ const
   end ;
 
 var
-   Is010000 : Boolean ;
+   Is010000, IsEscECF : Boolean ;
 
 begin
   // MP4000 ver 01.00.00 tem sérios problemas quando tenta imprimir CODE39 ou CODEBAR
-  Is010000 := (StrToIntDef( AECFClass.NumVersao,0 ) <= 10000) ;
+  IsEscECF := (AECFClass is TACBrECFEscECF);
+  Is010000 := (not IsEscECF) and (StrToIntDef( AECFClass.NumVersao,0 ) <= 10000) ;
 
   if ATag = cTagBarraEAN8 then
     Result := MontaCodBarras(cEAN8, Conteudo, 7)
@@ -749,8 +748,14 @@ begin
   else if ATag = cTagBarraInter then
     Result := MontaCodBarras(cINTER25, Conteudo)
   else if ATag = cTagBarraCode39 then
-    Result := ifthen( Is010000, '',
-                      MontaCodBarras(cCODE39, AddStartStop(Conteudo) ) )
+  begin
+    if Is010000 then
+      Result := ''
+    else if IsEscECF then
+      Result := MontaCodBarras(cCODE39, Conteudo )
+    else
+      Result := MontaCodBarras(cCODE39, AddStartStop(Conteudo) );
+  end
   else if ATag = cTagBarraCode93 then
     Result := MontaCodBarras(cCODE93, Conteudo)
   else if ATag = cTagBarraCode128 then
@@ -758,8 +763,14 @@ begin
   else if ATag = cTagBarraUPCA then
     Result := MontaCodBarras(cUPCA, Conteudo, 11)
   else if ATag = cTagBarraCodaBar then
-    Result := ifthen( Is010000, '',
-                      MontaCodBarras(cCODABAR, AddStartStop(Conteudo) ) )
+  begin
+    if Is010000 then
+      Result := ''
+    else if IsEscECF then
+      Result := MontaCodBarras(cCODABAR, Conteudo )
+    else
+      Result := MontaCodBarras(cCODABAR, AddStartStop(Conteudo) );
+  end
   else if ATag = cTagBarraMSI then
     Result := MontaCodBarras(cMSI, Conteudo)
   else

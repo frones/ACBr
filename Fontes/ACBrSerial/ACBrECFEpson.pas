@@ -436,7 +436,7 @@ implementation
 Uses
   Math, SysUtils,
   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
-  ACBrECF, ACBrConsts, ACBrUtil ;
+  ACBrECF, ACBrConsts, ACBrUtil, ACBrECFEscECF ;
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
 begin
@@ -812,26 +812,35 @@ const
   cCODE128  = 73; // <code128></code128>
   cUPCA     = 65; // <upca></upca>
   cCODABAR  = 71; // <codabar></codabar>
-  cBarraFim = '';
+
+var
+  IsEscECF: Boolean;
 
   function MontaCodBarras(const ATipo: Integer; ACodigo: AnsiString): AnsiString;
   Var
-    Altura, Largura, Mostrar : Integer ;
+    Altura, Largura : Integer ;
+    BarraFim: AnsiString;
+    Mostrar: AnsiChar;
   begin
+    BarraFim := '';
+    if IsEscECF then
+      BarraFim := #0;
+
     with AECFClass do
     begin
       Altura  := IfThen( ConfigBarras.Altura = 0, 32, max(min(ConfigBarras.Altura,255),1) );
       Largura := max(min(ConfigBarras.LarguraLinha,6),2);
-      Mostrar := IfThen(AECFClass.Device.IsDLLPort,2,0);
+      Mostrar := '0';
       if ConfigBarras.MostrarCodigo then
-         Mostrar := 2;
+         Mostrar := '2';
     end;
 
     Result := cBarras + chr(ATipo) + chr( Altura ) + chr( Largura ) +
-              chr( Mostrar ) + #48 + ACodigo + cBarraFim;
+              Mostrar + '0' + ACodigo + BarraFim;
   end;
 
 begin
+  IsEscECF := (AECFClass is TACBrECFEscECF);
 
   if ATag = cTagBarraEAN8 then
     Result := MontaCodBarras(cEAN8, Conteudo)
@@ -844,7 +853,12 @@ begin
   else if ATag = cTagBarraCode93 then
     Result := MontaCodBarras(cCODE93, Conteudo)
   else if ATag = cTagBarraCode128 then
-    Result := MontaCodBarras(cCODE128, Conteudo)
+  begin
+    if IsEscECF then
+      Result := MontaCodBarras(cCODE128, '{B'+Conteudo)
+    else
+      Result := MontaCodBarras(cCODE128, Conteudo);
+  end
   else if ATag = cTagBarraUPCA then
     Result := MontaCodBarras(cUPCA, Conteudo)
   else if ATag = cTagBarraCodaBar then

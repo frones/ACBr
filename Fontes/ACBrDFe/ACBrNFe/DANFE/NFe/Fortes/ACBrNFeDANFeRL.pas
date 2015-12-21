@@ -171,7 +171,7 @@ type
     sRetirada : String;
     sEntrega : String;
     FImprimirDescPorc: Boolean;
-	fImprimeNomeFantasia: Boolean;
+	  fImprimeNomeFantasia: Boolean;
     fImprimirTotalLiquido : Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
@@ -229,7 +229,7 @@ type
                     ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
-					AImprimeNomeFantasia: Boolean = False;
+					          AImprimeNomeFantasia: Boolean = False;
                     AImprimirTotalLiquido : Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
@@ -279,6 +279,7 @@ type
                     ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
+                    AImprimeNomeFantasia: Boolean = False;
                     AImprimirTotalLiquido : Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
@@ -430,7 +431,7 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: Stri
                 ANFECancelada: Boolean = False;
                 AImprimirDetalhamentoEspecifico: Boolean = True;
                 AImprimirDescPorc: Boolean = False;
-				AImprimeNomeFantasia: Boolean = False;
+                AImprimeNomeFantasia: Boolean = False;
                 AImprimirTotalLiquido : Boolean = False;
                 ADetVeiculos: TDetVeiculos = [];
                 ADetMedicamentos: TDetMedicamentos = [];
@@ -490,8 +491,8 @@ begin
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
       FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
-      FImprimirDescPorc := AImprimirDescPorc;
-	  fImprimeNomeFantasia  := AImprimeNomeFantasia;
+      FImprimirDescPorc     := AImprimirDescPorc;
+	    fImprimeNomeFantasia  := AImprimeNomeFantasia;
       fImprimirTotalLiquido := AImprimirTotalLiquido;
       FDetVeiculos          := ADetVeiculos;
       FDetMedicamentos      := ADetMedicamentos;
@@ -618,7 +619,7 @@ begin
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
       FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
-      FImprimirDescPorc := AImprimirDescPorc;
+      FImprimirDescPorc     := AImprimirDescPorc;
       fImprimeNomeFantasia  := AImprimeNomeFantasia;
       fImprimirTotalLiquido := AImprimirTotalLiquido;
       FDetVeiculos := ADetVeiculos;

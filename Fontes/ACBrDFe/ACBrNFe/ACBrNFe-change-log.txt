@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+21/12/2015
+--  ACBrNFeDANFeRL  --
+[-] Falta de Variavel 
+
+      	por : Henrique Leonardo 
+
 21/12/2015
 --  ACBrNFeDANFeRLClass / ACBrNFeDANFeRL / ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
 [+] Tratamento da nova Propriedade ImprimeNomeFantasia. Quando Selecionado Verdadeiro e a

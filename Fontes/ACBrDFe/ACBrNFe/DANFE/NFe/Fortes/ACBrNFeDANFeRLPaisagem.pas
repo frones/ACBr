@@ -1107,6 +1107,13 @@ begin
 end;
 
 procedure TfrlDANFeRLPaisagem.Emitente;
+  function ManterNomeImpresso(sXNome, sXFant: String): String;
+  begin
+    if ( fImprimeNomeFantasia ) and ( sXFant <> '' ) then
+      Result := sXFant
+    else
+      Result := sXNome;
+  end;
 begin
   //emit
   with FNFe.Emit do
@@ -1118,7 +1125,7 @@ begin
       rllInscricaoEstadual.Caption  := IE;
       rllInscrEstSubst.caption      := IEST;
       rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF );
-      rlmEmitente.Lines.Text        := XNome;
+      rlmEmitente.Lines.Text        := ManterNomeImpresso( XNome , XFant );
       with EnderEmit do
         begin
           rlmEndereco.Lines.Clear;

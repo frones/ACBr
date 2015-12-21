@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2015
+--  ACBrNFeDANFeRLClass / ACBrNFeDANFeRL / ACBrNFeDANFeRLPaisagem / ACBrNFeDANFeRLRetrato --
+[+] Tratamento da nova Propriedade ImprimeNomeFantasia. Quando Selecionado Verdadeiro e a
+      Tag XFantasia Preenchida : Imprime o Nome Fantasia.
+      	por : Henrique Leonardo 
 
 21/12/2015
 --  ACBrNFeDANFEFRDM --

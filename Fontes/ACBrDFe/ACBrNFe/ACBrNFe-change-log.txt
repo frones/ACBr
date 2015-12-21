@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+21/12/2015
+--  ACBrNFeDANFEClass --
+[+] Nova Propriedade ImprimeNomeFantasia. Quando Selecionado Verdadeiro e a
+      Tag XFantasia Preenchida : Imprime o Nome Fantasia.
+[+] Nova Função ManterNomeImpresso.
+		
+      	por : Henrique Leonardo 
+
 18/12/2015
 --  ACBrNFeDANFEFRDM --
 [*] Novas Tabulações

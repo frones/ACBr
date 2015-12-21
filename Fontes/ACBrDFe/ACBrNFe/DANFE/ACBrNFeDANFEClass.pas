@@ -89,6 +89,7 @@ type
     FUsuario: String;
     FPathPDF: String;
     FImpressora: String;
+    FImprimeNomeFantasia: Boolean;
     FImprimirTotalLiquido: Boolean;
     FMostrarPreview: Boolean;
     FMostrarStatus: Boolean;
@@ -154,6 +155,7 @@ type
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); virtual;
     procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); virtual;
     procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); virtual;
+    function ManterNomeImpresso(sXNome, sXFant: String): String; virtual;
   published
     property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
     property Logo: String                            read FLogo                           write FLogo;
@@ -168,6 +170,7 @@ type
     property Fax: String                             read FFax                            write FFax;
     property Site: String                            read FSite                           write FSite;
     property Email: String                           read FEmail                          write FEmail;
+    property ImprimeNomeFantasia: Boolean            read FImprimeNomeFantasia            write FImprimeNomeFantasia;
     property ImprimirDescPorc: Boolean               read FImprimeDescPorc                write FImprimeDescPorc;
     property ImprimirTotalLiquido: Boolean           read FImprimirTotalLiquido           write FImprimirTotalLiquido;
     property ProtocoloNFe: String                    read FProtocoloNFe                   write FProtocoloNFe;
@@ -283,6 +286,7 @@ begin
   FFormularioContinuo := false;
   FTamanhoFonte_DemaisCampos := 10;
   FProdutosPorPagina := 0;
+  FImprimeNomeFantasia            := False;
   FImprimirDetalhamentoEspecifico := true;
   FImprimirTotalLiquido:= True;
   FNFeCancelada := False;
@@ -444,6 +448,14 @@ begin
     Result := Trim(scEAN)
   else
     Result := Trim(scProd);
+end;
+
+function TACBrNFeDANFEClass.ManterNomeImpresso( sXNome , sXFant : String ) : String;
+begin
+  if ( fImprimeNomeFantasia ) and ( sXFant <> '' ) then
+    Result := sXFant
+  else
+    Result := sXNome;
 end;
 
 end.

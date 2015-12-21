@@ -586,7 +586,7 @@ begin
     with FNFe.Emit do
     begin
       FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJCPF);
-      FieldByName('XNome').AsString := XNome;
+      FieldByName('XNome').AsString := DANFEClassOwner.ManterNomeImpresso( XNome , XFant );
       FieldByName('XFant').AsString := XFant;
       with EnderEmit do
       begin

@@ -49,6 +49,13 @@ Símbolo : Significado
 
 
 21/12/2015
+--  ACBrNFeDANFEFRDM --
+[+] Tratamento da nova Propriedade ImprimeNomeFantasia. Quando Selecionado Verdadeiro e a
+      Tag XFantasia Preenchida : Imprime o Nome Fantasia.
+      	por : Henrique Leonardo 
+
+
+21/12/2015
 --  ACBrNFeDANFEClass --
 [+] Nova Propriedade ImprimeNomeFantasia. Quando Selecionado Verdadeiro e a
       Tag XFantasia Preenchida : Imprime o Nome Fantasia.

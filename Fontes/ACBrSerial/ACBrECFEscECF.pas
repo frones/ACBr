@@ -547,6 +547,7 @@ begin
       ACmd := ACmd + StringToBinaryString( AnsiString(EscECFComando.Params[I]) ) + '|';
 
     aLineOut[0] := #0; // Zera Buffer de Saida
+    ACmd := StringReplace(ACmd, NUL, '[NULL]', [rfReplaceAll]);
 
     GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
     Resp := xEPSON_Send_From_FileEX( ACmd, aLineOut ) ;

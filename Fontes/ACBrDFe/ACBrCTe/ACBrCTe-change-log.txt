@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2015
+-- ACBrCTeWebServices / pcteRetConsSitCTe --
+[*] Incluido o status 301 para que seja acrescentado o protocolo de denegação ao XML.
+    por: Italo Jurisato Junior
 
 17/12/2015
 -- ACBrCTeDACTEFR --

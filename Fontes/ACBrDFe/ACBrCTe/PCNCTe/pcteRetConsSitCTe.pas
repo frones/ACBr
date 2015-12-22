@@ -155,8 +155,8 @@ begin
       (*ER06 *)FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
       (*ER07 *)FcUF      := leitor.rCampo(tcInt, 'cUF');
 
-      // status 100 = Autorizado, 101 = Cancelado, 110 = Denegado
-      if FcStat in  [100, 101, 110] then
+      // status 100 = Autorizado, 101 = Cancelado, 110 = Denegado, 301 = Denegado
+      if (FcStat in  [100, 101, 110]) or (FcStat = 301) then
       begin
         if (Leitor.rExtrai(1, 'protCTe') <> '') then
         begin

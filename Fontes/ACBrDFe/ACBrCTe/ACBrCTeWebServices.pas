@@ -1647,7 +1647,8 @@ begin
       FPMsg := CTeRetorno.protCTe.xMotivo;
     end;
 
-    Result := (CTeRetorno.CStat in [100, 101, 110, 150, 151, 155]);
+    Result := (CTeRetorno.CStat in [100, 101, 110, 150, 151, 155]) or
+              (CTeRetorno.CStat = 301);
 
     if Result then
     begin

@@ -34,7 +34,7 @@
 unit DoACBrCTeUnit;
 
 interface
-Uses Classes, SysUtils, CmdUnit, ACBrDFeUtil;
+Uses Classes, SysUtils, CmdUnit;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
 procedure GerarIniCTe( AStr: WideString );
@@ -1129,7 +1129,7 @@ end;
 procedure GerarIniCTe( AStr: WideString );
 var
   I, J : Integer;
-  sSecao, sFim, sCampoAdic, sCodPro : String;
+  sSecao, sFim, sCampoAdic : String;
   INIRec : TMemIniFile;
   SL     : TStringList;
   OK     : boolean;
@@ -2341,10 +2341,8 @@ end;
 function GerarCTeIni( XML : WideString ) : WideString;
 var
   I : Integer;
-  sSecao,
-  sCodPro : String;
+  sSecao: String;
   INIRec : TMemIniFile;
-  OK     : Boolean;
   IniCTe : TStringList;
   LocCTeR : TCTeR;
 begin

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2015
+[*] Modificado para usar o Boleto em Fortes Report
+[*] Remoção de Hints e Warnings
+
 18/12/2015
 [*] Adicionada regra de exclusão para o Campo "Imprimir Valor Líquido do Produto"
     quando "Imprimir Desconto em Porcentagem" está marcado

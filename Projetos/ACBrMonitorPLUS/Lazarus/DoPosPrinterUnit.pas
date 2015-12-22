@@ -87,6 +87,7 @@ begin
       else if cmd.Metodo = 'lerstatusimpressora' then
       begin
         status := LerStatusImpressora;
+        astr := '';
 
         if status = [] then
           cmd.Resposta := 'Nenhum status encontrado'

@@ -17,7 +17,7 @@ procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True) ;
 implementation
 
 uses
-  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, ACBrSAT;
+  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar;
 
 procedure DoSAT(Cmd: TACBrCmd);
 var

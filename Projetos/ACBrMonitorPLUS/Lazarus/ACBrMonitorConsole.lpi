@@ -82,7 +82,7 @@
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="2"/>
         <TopLine Value="25"/>
-        <CursorPos X="28" Y="31"/>
+        <CursorPos X="35" Y="27"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -117,9 +117,12 @@
       <Unit6>
         <Filename Value="DoACBrUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="38"/>
-        <CursorPos X="27" Y="43"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="188"/>
+        <CursorPos X="18" Y="197"/>
         <UsageCount Value="40"/>
+        <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="DoECFBemafi32.pas"/>
@@ -393,15 +396,14 @@
       </Unit52>
       <Unit53>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="44"/>
-        <CursorPos X="35" Y="52"/>
+        <CursorPos X="28" Y="51"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit53>
     </Units>
-    <JumpHistory Count="25" HistoryIndex="24">
+    <JumpHistory Count="26" HistoryIndex="25">
       <Position1>
         <Filename Value="ACBrMonitorConsoleDM.pas"/>
         <Caret Line="386" Column="68" TopLine="61"/>
@@ -501,6 +503,10 @@
       <Position25>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrRFD.pas"/>
       </Position25>
+      <Position26>
+        <Filename Value="DoACBrUnit.pas"/>
+        <Caret Line="43" Column="27" TopLine="38"/>
+      </Position26>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

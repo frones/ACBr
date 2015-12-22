@@ -43,10 +43,10 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  ACBrBoletoFCLazReportDm, Printers, SynHighlighterXML, SynMemo, PrintersDlgs,
+  Printers, SynHighlighterXML, SynMemo, PrintersDlgs,
   pcnConversao, pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, types, ACBrDFeSSL, ACBrMDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, ACBrBase;
+  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrMDFe,
+  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass;
 
 const
   {$I versao.txt}
@@ -64,7 +64,7 @@ type
 
   TFrmACBrMonitor = class(TForm)
     ACBrBoleto1: TACBrBoleto;
-    ACBrBoletoFCLazReport1: TACBrBoletoFCLazReport;
+    ACBrBoletoFCFortes1: TACBrBoletoFCFortes;
     ACBrCEP1: TACBrCEP;
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
@@ -1980,6 +1980,7 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
     idLote := '1';
+    vAux := '';
     if not (InputQuery('WebServices Eventos: Cancelamento',
       'Identificador de controle do Lote de envio do Evento', idLote)) then
       exit;
@@ -2011,6 +2012,7 @@ begin
   OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
 
+  vAux := '';
   if OpenDialog1.Execute then
   begin
     ACBrMDFe1.Manifestos.Clear;
@@ -2049,6 +2051,7 @@ begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     idLote := '1';
+    vAux := '';
     if not (InputQuery('WebServices Eventos: Cancelamento',
       'Identificador de controle do Lote de envio do Evento', idLote)) then
       exit;
@@ -2124,6 +2127,7 @@ var
   vAux: string;
 begin
   LimparResp;
+  vAux := '';
   if not (InputQuery('WebServices Enviar', 'Numero do Lote', vAux)) then
     exit;
   OpenDialog1.Title := 'Selecione a NFE';
@@ -2145,6 +2149,7 @@ var
   vAux: string;
 begin
   LimparResp;
+  vAux := '';
   if not (InputQuery('WebServices Enviar', 'Numero do Lote', vAux)) then
     exit;
   OpenDialog1.Title := 'Selecione a CTE';
@@ -2177,6 +2182,7 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ConfiguraDANFe;
 
+    vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
       exit;
 
@@ -2213,6 +2219,7 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
+    vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
       exit;
 
@@ -2249,6 +2256,7 @@ begin
     ACBrMDFe1.Manifestos.Clear;
     ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
 
+    vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
       exit;
 
@@ -2276,6 +2284,7 @@ procedure TFrmACBrMonitor.btnEnviarMDFeClick(Sender: TObject);
   vAux: string;
 begin
   LimparResp;
+  vAux := '';
   if not (InputQuery('WebServices Enviar', 'Numero do Lote', vAux)) then
     exit;
   OpenDialog1.Title := 'Selecione o MDFe';
@@ -2343,6 +2352,14 @@ var
   CNPJ, Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: string;
 begin
   LimparResp;
+  CNPJ := '';
+  Ano := IntToStr(YearOf(Now));
+  Modelo := '55';
+  Serie := '1';
+  NumeroInicial := '0';
+  NumeroFinal := '0';
+  Justificativa := '';
+
   if not (InputQuery('WebServices Inutilização ', 'CNPJ', CNPJ)) then
     exit;
   if not (InputQuery('WebServices Inutilização ', 'Ano', Ano)) then
@@ -2367,19 +2384,27 @@ procedure TFrmACBrMonitor.btnInutilizarCTeClick(Sender: TObject);
 var
  CNPJ, Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa : String;
 begin
- if not(InputQuery('WebServices Inutilização ', 'CNPJ',   CNPJ)) then
+  CNPJ := '';
+  Ano := IntToStr(YearOf(Now));
+  Modelo := '55';
+  Serie := '1';
+  NumeroInicial := '0';
+  NumeroFinal := '0';
+  Justificativa := '';
+
+  if not(InputQuery('WebServices Inutilização ', 'CNPJ',   CNPJ)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano)) then
+  if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo)) then
+  if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie)) then
+  if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
+  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Número Final', NumeroFinal)) then
+  if not(InputQuery('WebServices Inutilização ', 'Número Final', NumeroFinal)) then
     exit;
- if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
+  if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
     exit;
 
   ACBrCTe1.WebServices.Inutiliza(CNPJ, Justificativa, StrToInt(Ano), StrToInt(Modelo), StrToInt(Serie), StrToInt(NumeroInicial), StrToInt(NumeroFinal));

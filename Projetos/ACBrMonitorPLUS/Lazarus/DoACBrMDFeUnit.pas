@@ -35,7 +35,7 @@ unit DoACBrMDFeUnit;
 
 interface
 Uses Classes, SysUtils, CmdUnit,
-     ACBrUtil, ACBrDFeUtil;
+     ACBrUtil;
 
 Procedure DoACBrMDFe( Cmd : TACBrCmd );
 procedure GerarIniMDFe( AStr: WideString );
@@ -44,10 +44,9 @@ function GerarMDFeIni( XML : WideString ) : WideString;
 implementation
 
 Uses IniFiles, DateUtils, Forms, strutils,
-  ACBrMonitor1, ACBrDFeWebService, ACBrDFeConfiguracoes,
+  ACBrMonitor1, ACBrDFeConfiguracoes,
   pcnConversao, pmdfeConversaoMDFe, DoACBrNFeUnit,
-  pcnAuxiliar, pmdfeMDFeR, pmdfeRetConsReciMDFe,
-  ACBrMDFeManifestos, DoACBrUnit, pmdfeMDFe;
+  pcnAuxiliar, pmdfeMDFeR, DoACBrUnit, pmdfeMDFe;
 
 Procedure DoACBrMDFe( Cmd : TACBrCmd );
 var
@@ -1007,7 +1006,7 @@ end;
 procedure GerarIniMDFe( AStr: WideString );
 var
   I, J : Integer;
-  sSecao, sFim, sCampoAdic, sCodPro : String;
+  sSecao, sFim : String;
   INIRec : TMemIniFile;
   SL     : TStringList;
   OK     : boolean;
@@ -1026,6 +1025,7 @@ begin
       ACBrMDFe1.Manifestos.Clear;
       with ACBrMDFe1.Manifestos.Add.MDFe do
        begin
+         OK := True;
          Ide.tpEmit  := StrToTpEmitente(OK, INIRec.ReadString('ide', 'tpEmit', '1'));
          Ide.modelo  := INIRec.ReadString('ide', 'mod', '58');
          Ide.serie   := INIRec.ReadInteger('ide', 'serie', 1);
@@ -1432,10 +1432,8 @@ end;
 function GerarMDFeIni( XML : WideString ) : WideString;
 var
   I, j : Integer;
-  sSecao,
-  sCodPro : String;
+  sSecao : String;
   INIRec : TMemIniFile;
-  OK     : Boolean;
   IniMDFe : TStringList;
   LocMDFeR : TMDFeR;
 begin

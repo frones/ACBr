@@ -74,7 +74,6 @@ Var wDescricao  : AnsiString ;
     CNF         : TACBrECFComprovanteNaoFiscal ;
     Finalidade  : TACBrECFFinalizaArqMFD;
     TipoDoc     : TACBrECFTipoDocumento;
-    TipoDocSet  : TACBrECFTipoDocumentoSet;
     TipoDocStr, FinalidadeStr: String;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do

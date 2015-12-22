@@ -474,7 +474,7 @@ begin
            RLLayout:= LayoutBoleto;
         end;
 
-        RLPrinter.Copies      := NumCopias ;  // Aparentemente isso está errado... :(
+        RLPrinter.Copies      := NumCopias ;
         RLLayout.PrintDialog  := MostrarSetup;
         RLLayout.ShowProgress := MostrarProgresso;
         RLLayout.Title        := TituloRelatorio;

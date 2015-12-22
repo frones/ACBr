@@ -294,24 +294,32 @@ begin
     Nivel1 := (leitor.rExtrai(1, 'GerarNfseResposta') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'GerarNfseResponse') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RecepcionarLoteRpsResult') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '');
+
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '');
     if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResult') <> '');
+
+    if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '');
+
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseResposta') <> '');
     if not Nivel1 then
-      Nivel1 := (leitor.rExtrai(1, 'EnviarLoteRpsSincronoResposta') <> '');
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseFaixaResposta') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '');
-    if not Nivel1 then
-      Nivel1 := (leitor.rExtrai(1, 'ConsultarLoteRpsResult') <> '');
-    if not Nivel1 then
-      Nivel1 := (leitor.rExtrai(1, 'RecepcionarLoteRpsResult') <> '');
+
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'CancelarNfseResult') <> '');
-    if not Nivel1 then
-      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '');
 
     if Nivel1 then
     begin

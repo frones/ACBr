@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/12/2015
+-- pnfsLerListaNFSe --
+[*] Acrescentado a TAG: ConsultarNFSeFaixaResposta na lista para extrar o 
+    retorno.
+    Por: Italo Jurisato Junior
+
 -- ACBrNFSeWebServices --
 [*] Condicionado a TAG do grupo de Consulta de NFS-e.
     Por: Italo Jurisato Junior

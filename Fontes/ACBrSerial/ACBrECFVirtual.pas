@@ -1284,6 +1284,8 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
+var 
+  ValorItem:Double;
 begin
   GravaLog( ComandoLOG );
 
@@ -1304,8 +1306,11 @@ begin
 
     with fpItensCupom[NumItem-1] do
     begin
-      fpSubTotal := RoundTo(Subtotal - ( RoundABNT( Qtd * ValorUnit,-2) + DescAcres ) ,-2);
-      Qtd        := 0;
+      ValorItem := ( RoundABNT( Qtd * ValorUnit,-2) + DescAcres ) ;
+      fpSubTotal := RoundTo(Subtotal - ValorItem,-2);
+      fpCuponsCanceladosTotalNaoTransmitidos:= RoundTo(fpCuponsCanceladosTotalNaoTransmitidos + ValorItem,-2); // Amarildo Lacerda ;
+      fpVendaBruta := RoundTo(fpVendaBruta - ValorItem,-2);  // retira o cncelado nao transmitido da venda bruta
+      Qtd := 0;
 
       with fpAliquotas[ PosAliq ] do
       begin

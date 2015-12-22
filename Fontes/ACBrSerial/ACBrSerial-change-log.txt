@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2015
+-- ACBrECFVirtual --
+[-] Correção de Bug no calculo do G.T., quando há cancelamento de Vendas em
+    aberto e de Cancelamento de Itens.  (por: Amarildo Lacerda)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=26685
+
 21/12/2015
 -- ACBrECFEscECF --
 [*] Ajuste para correta impressão de Cod.Barras e Caracteres de Controle em

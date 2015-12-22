@@ -104,6 +104,7 @@ type
   private
     FLeitor: TLeitor;
     FInfRec: TInfRec;
+    FProvedor: TnfseProvedor;
   public
     constructor Create;
     destructor Destroy; override;
@@ -116,8 +117,9 @@ type
     function LerXml_provedorNFSEBrasil: boolean;
 	
   published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property InfRec: TInfRec read FInfRec write FInfRec;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property InfRec: TInfRec         read FInfRec   write FInfRec;
+    property Provedor: TnfseProvedor read FProvedor write FProvedor;
   end;
 
 implementation

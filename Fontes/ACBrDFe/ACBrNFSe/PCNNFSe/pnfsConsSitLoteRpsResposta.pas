@@ -98,6 +98,7 @@ type
   private
     FLeitor: TLeitor;
     FInfSit: TInfSit;
+    FProvedor: TnfseProvedor;
   public
     constructor Create;
     destructor Destroy; override;
@@ -109,8 +110,9 @@ type
     function LerXml_provedorFissLex: boolean;
 
   published
-    property Leitor: TLeitor  read FLeitor   write FLeitor;
-    property InfSit: TInfSit  read FInfSit   write FInfSit;
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
+    property InfSit: TInfSit         read FInfSit   write FInfSit;
+    property Provedor: TnfseProvedor read FProvedor write FProvedor;
   end;
 
 implementation

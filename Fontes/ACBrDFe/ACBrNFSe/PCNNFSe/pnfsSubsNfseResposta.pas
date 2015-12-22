@@ -50,9 +50,10 @@ type
     FLeitor: TLeitor;
     FMsgRetorno: TMsgRetornoSubsCollection;
     FNotaSubstituidora: TNotaSubstituidoraCollection;
+    FProvedor: TnfseProvedor;
+
     procedure SetMsgRetorno(const Value: TMsgRetornoSubsCollection);
-    procedure SetNotaSubstituidora(
-      const Value: TNotaSubstituidoraCollection);
+    procedure SetNotaSubstituidora(const Value: TNotaSubstituidoraCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -60,9 +61,10 @@ type
     function LerXml_provedorIssDsf: boolean;
     function LerXML_provedorEquiplano: Boolean;
   published
-    property Leitor: TLeitor   read FLeitor   write FLeitor;
-    property MsgRetorno: TMsgRetornoSubsCollection read FMsgRetorno write SetMsgRetorno;
+    property Leitor: TLeitor                                 read FLeitor            write FLeitor;
+    property MsgRetorno: TMsgRetornoSubsCollection           read FMsgRetorno        write SetMsgRetorno;
     property NotaSubstituidora: TNotaSubstituidoraCollection read FNotaSubstituidora write SetNotaSubstituidora;
+    property Provedor: TnfseProvedor                         read FProvedor          write FProvedor;
   end;
 
  TMsgRetornoSubsCollection = class(TCollection)

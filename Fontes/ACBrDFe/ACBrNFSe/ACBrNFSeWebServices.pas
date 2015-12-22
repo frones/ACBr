@@ -1229,6 +1229,15 @@ begin
     for I := 0 to FNotasFiscais.Count - 1 do
     begin
       case FVersaoNFSe of
+        // RPS versão 2.01
+        ve201: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps>' +
+                                '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                    '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
+                                '</Signature>'+
+                               '</' + FPrefixo4 + 'Rps>';
+
         // RPS versão 2.00
         ve200: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
@@ -1238,6 +1247,14 @@ begin
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
 
+        // RPS versão 1.10
+        ve110: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps ' +
+                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                   '<' + FPrefixo4 + 'Rps', '</Signature>') +
+                                '</Signature>'+
+                               '</' + Prefixo4 + 'Rps>';
+
         // RPS versão 1.00
         else FvNotas := FvNotas +
                         '<' + FPrefixo4 + 'Rps>' +
@@ -1246,77 +1263,50 @@ begin
                          '<' + FPrefixo4 + 'InfRps', '</Rps>') +
                         '</' + FPrefixo4 + 'Rps>';
       end;
-      (*
-      case FProvedor of
-
-        profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, proSystemPro,
-        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proFreire, proLink3, proGovDigital, proMitra,
-        proGoiania: FvNotas := FvNotas +
-                               '<' + FPrefixo4 + 'Rps>' +
-                                '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                                '</Signature>'+
-                               '</' + FPrefixo4 + 'Rps>';
-
-        proDigifred: FvNotas := FvNotas +
-                                '<' + FPrefixo4 + 'Rps ' +
-                                   RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                     '<' + FPrefixo4 + 'Rps', '</Signature>') +
-                                 '</Signature>'+
-                                '</' + Prefixo4 + 'Rps>';
-
-        proTecnos: FvNotas := FvNotas +
-                              '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
-                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                   '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>'+
-                              '</' + FPrefixo4 + 'Rps>';
-
-        else FvNotas := FvNotas +
-                        '<' + FPrefixo4 + 'Rps>' +
-                         '<' + FPrefixo4 + 'InfRps' +
-                           RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                         '<' + FPrefixo4 + 'InfRps', '</Rps>') +
-                        '</' + FPrefixo4 + 'Rps>';
-      end;
-      *)
     end;
   end
   else begin
     for I := 0 to FNotasFiscais.Count - 1 do
     begin
-      case FProvedor of
-
-        profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe,
-        proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili,
-        proCoplan, proVirtual, proFreire, proLink3, proMitra,
-        proGovDigital: FvNotas := FvNotas +
-                                  '<' + FPrefixo4 + 'Rps>' +
-                                   '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                     RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
-                                     '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
-                                   '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
-                                  '</' + FPrefixo4 + 'Rps>';
-
-        proIssDSF,
-        proInfisc: FvNotas :=  FvNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal;
-
-        proTecnos: FvNotas := FvNotas +
-                              '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
-                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
+      case FVersaoNFSe of
+        // RPS versão 2.01
+        ve201: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps>' +
+                                '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
                                  '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>') +
                                '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>'+
                               '</' + FPrefixo4 + 'Rps>';
 
-        else FvNotas := FvNotas + '<' + FPrefixo4 + 'Rps>' +
-                                 '<' + FPrefixo4 + 'InfRps' +
-                                   RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
-                                     '<' + FPrefixo4 + 'InfRps', '</Rps>') +
-                                '</' + FPrefixo4 + 'Rps>';
+        // RPS versão 2.00
+        ve200: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps>' +
+                                '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                                  RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
+                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                                '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
+                               '</' + FPrefixo4 + 'Rps>';
+
+        (*
+        proIssDSF,
+        proInfisc: FvNotas :=  FvNotas + TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal;
+        *)
+
+        // RPS versão 1.10
+        ve110: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps ' +
+                                 RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
+                                   '<' + FPrefixo4 + 'Rps', '</Signature>') +
+                                '</Signature>'+
+                               '</' + Prefixo4 + 'Rps>';
+
+        // RPS versão 1.00
+        else FvNotas := FvNotas +
+                        '<' + FPrefixo4 + 'Rps>' +
+                         '<' + FPrefixo4 + 'InfRps' +
+                           RetornarConteudoEntre(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal,
+                         '<' + FPrefixo4 + 'InfRps', '</Rps>') +
+                        '</' + FPrefixo4 + 'Rps>';
       end;
     end;
   end;
@@ -1448,12 +1438,18 @@ begin
   begin
     for I := 0 to FNotasFiscais.Count - 1 do
     begin
-      case FProvedor of
+      case FVersaoNFSe of
+        // RPS versão 2.01
+        ve201: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps>' +
+                                '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                    '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
+                                '</Signature>'+
+                               '</' + FPrefixo4 + 'Rps>';
 
-        pro4R, proAgili, profintelISS, proFiorilli, proGoiania, proISSDigital,
-        proISSe, proSystemPro, proCoplan, proProdata, proVitoria, proPVH,
-        proSaatri, proSisPMJP, proFreire, proLink3, proGovDigital, proMitra,
-        proVirtual: FvNotas := FvNotas +
+        // RPS versão 2.00
+        ve200: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                   RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
@@ -1461,21 +1457,15 @@ begin
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
 
-        proDigifred: FvNotas := FvNotas +
-                                '<' + FPrefixo4 + 'Rps ' +
-                                   RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                     '<' + FPrefixo4 + 'Rps', '</Signature>') +
-                                 '</Signature>'+
-                                '</' + Prefixo4 + 'Rps>';
-
-        proTecnos: FvNotas := FvNotas +
-                              '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+        // RPS versão 1.10
+        ve110: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                   '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>'+
-                              '</' + FPrefixo4 + 'Rps>';
+                                   '<' + FPrefixo4 + 'Rps', '</Signature>') +
+                                '</Signature>'+
+                               '</' + Prefixo4 + 'Rps>';
 
+        // RPS versão 1.00
         else FvNotas := FvNotas +
                         '<' + FPrefixo4 + 'Rps>' +
                          '<' + FPrefixo4 + 'InfRps' +
@@ -1691,12 +1681,18 @@ begin
   begin
     for I := 0 to FNotasFiscais.Count - 1 do
     begin
-      case FProvedor of
+      case FVersaoNFSe of
+        // RPS versão 2.01
+        ve201: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps>' +
+                                '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                    '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
+                                '</Signature>'+
+                               '</' + FPrefixo4 + 'Rps>';
 
-        profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, proSystemPro,
-        pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proFreire, proLink3, proGovDigital, proMitra,
-        proGoiania: FvNotas := FvNotas +
+        // RPS versão 2.00
+        ve200: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                   RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLAssinado,
@@ -1704,21 +1700,15 @@ begin
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
 
-        proDigifred: FvNotas := FvNotas +
-                                '<' + FPrefixo4 + 'Rps ' +
-                                   RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                     '<' + FPrefixo4 + 'Rps', '</Signature>') +
-                                 '</Signature>'+
-                                '</' + Prefixo4 + 'Rps>';
-
-        proTecnos: FvNotas := FvNotas +
-                              '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+        // RPS versão 1.10
+        ve110: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                   '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>'+
-                              '</' + FPrefixo4 + 'Rps>';
+                                   '<' + FPrefixo4 + 'Rps', '</Signature>') +
+                                '</Signature>'+
+                               '</' + Prefixo4 + 'Rps>';
 
+        // RPS versão 1.00
         else FvNotas := FvNotas +
                         '<' + FPrefixo4 + 'Rps>' +
                          '<' + FPrefixo4 + 'InfRps' +
@@ -1881,12 +1871,18 @@ begin
   begin
     for I := 0 to FNotasFiscais.Count - 1 do
     begin
-      case FProvedor of
+      case FVersaoNFSe of
+        // RPS versão 2.01
+        ve201: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps>' +
+                                '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado,
+                                    '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
+                                '</Signature>'+
+                               '</' + FPrefixo4 + 'Rps>';
 
-        profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, pro4R,
-        proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proLink3, proGovDigital, proMitra,
-        proGoiania: FvNotas := FvNotas +
+        // RPS versão 2.00
+        ve200: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
                                   RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado,
@@ -1894,6 +1890,7 @@ begin
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
 
+        (*
         proSystemPro,
         proFreire: FvNotas := FvNotas +
                               '<' + FPrefixo4 + 'Rps>' +
@@ -1902,24 +1899,17 @@ begin
                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + FPrefixo4 + 'Rps>';
+        *)
 
-        proDigifred: FvNotas := FvNotas +
-                                '<' + FPrefixo4 + 'Rps ' +
-                                   RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                     '<' + FPrefixo4 + 'Rps', '</Signature>') +
-                                 '</Signature>'+
-                                '</' + Prefixo4 + 'Rps>';
-
-        proTecnos: FvNotas := FvNotas +
-                              '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+        // RPS versão 1.10
+        ve110: FvNotas := FvNotas +
+                               '<' + FPrefixo4 + 'Rps ' +
                                  RetornarConteudoEntre(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                   '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>'+
-                              '</' + FPrefixo4 + 'Rps>';
+                                   '<' + FPrefixo4 + 'Rps', '</Signature>') +
+                                '</Signature>'+
+                               '</' + Prefixo4 + 'Rps>';
 
-//        proSystemPro: FvNotas := FvNotas + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado;
-
+        // RPS versão 1.00
         else FvNotas := FvNotas +
                         '<' + FPrefixo4 + 'Rps>' +
                          '<' + FPrefixo4 + 'InfRps' +
@@ -3858,8 +3848,6 @@ begin
 
   if not (Result) then
     FConsLote.GerarException( FConsLote.Msg );
-
-//  Result := ConsultaLoteRPS(ANumLote, AProtocolo, False);
 end;
 
 function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACNPJ, AInscMun: String;
@@ -3908,27 +3896,6 @@ end;
 
 function TWebServices.CancelaNFSe(ACodigoCancelamento: String): Boolean;
 begin
-(*
-  if CarregaProps then
-  begin
-    FCancNfse.FNumeroNFSe      := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero;
-    FCancNfse.FCNPJ            := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.CNPJ;
-    FCancNfse.FInscMun         := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-    FCancNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-//    FCancNfse.FNumeroNFSe := '';
-//    FCancNfse.FCNPJ := '';
-//    FCancNfse.FIM := '';
-//    FCancNfse.FCodigoMunicipio := '';
-  end;
-
-  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
-  begin
-    FCancNfse.FNumeroNFSe      := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero;
-    FCancNfse.FCNPJ            := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.CNPJ;
-    FCancNfse.FInscMun         := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-    FCancNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-  end;
-*)
   FCancNfse.FCodigoCancelamento := ACodigoCancelamento;
 
   Result := FCancNfse.Executar;
@@ -3981,43 +3948,7 @@ begin
   FCancNfse.FInscMun            := AInscMun;
   FCancNfse.FCodigoMunicipio    := ACodigoMunicipio;
   FCancNfse.FMotivoCancelamento := AMotivoCancelamento;
-  (*
-  if (FCancNfse.FNumeroNFSe = '') then
-    FCancNfse.FNumeroNFSe := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero;
 
-  if (FCancNfse.FCNPJ = '') then
-  begin
-    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proDigifred, pro4R] then
-     FCancNfse.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.CNPJ)
-    else
-     FCancNfse.FCNPJ := OnlyNumber(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.CNPJ);
-  end;
-
-  if (FCancNfse.FInscMun = '') then
-  begin
-   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proDigifred, pro4R] then
-     FCancNfse.FInscMun := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal
-   else
-     FCancNfse.FInscMun := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal;
-  end;
-
-  if (FCancNfse.MotivoCancelamento = '') then
-    FCancNfse.MotivoCancelamento:= TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.MotivoCancelamento;
-
-  if (FCancNfse.FCodigoMunicipio = '') then
-  begin
-   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proISSNet) and
-      (TACBrNFSe(FACBrNFSe).Configuracoes.WebServices.AmbienteCodigo = 2) then
-    FCancNfse.FCodigoMunicipio := '999'
-   else
-   begin
-     if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proFiorilli then
-       FCancNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio
-     else
-       FCancNfse.FCodigoMunicipio := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio;
-   end;
-  end;
-  *)
   Result := CancelaNFSe(ACodigoCancelamento);
 end;
 

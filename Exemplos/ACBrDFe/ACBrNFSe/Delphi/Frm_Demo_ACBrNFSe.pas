@@ -258,6 +258,7 @@ begin
   Ini.WriteBool(   'Geral', 'Salvar'    , ckSalvar.Checked);
   Ini.WriteString( 'Geral', 'PathSalvar', edtPathLogs.Text);
   Ini.WriteString( 'Geral', 'Prefeitura', edtPrefeitura.Text);
+  Ini.WriteString( 'Geral', 'PathINI', edtArqINI.Text);
 
   Ini.WriteInteger( 'WebService', 'Ambiente'  , rgTipoAmb.ItemIndex);
   Ini.WriteBool(    'WebService', 'Visualizar', ckVisualizar.Checked);
@@ -344,6 +345,7 @@ begin
   ckSalvar.Checked   := Ini.ReadBool(   'Geral', 'Salvar'    , True);
   edtPathLogs.Text   := Ini.ReadString( 'Geral', 'PathSalvar', '');
   edtPrefeitura.Text := Ini.ReadString( 'Geral', 'Prefeitura', '');
+  edtArqINI.Text     := Ini.ReadString( 'Geral', 'PathINI', '');
 
   rgTipoAmb.ItemIndex  := Ini.ReadInteger( 'WebService', 'Ambiente'  , 0);
   ckVisualizar.Checked := Ini.ReadBool(    'WebService', 'Visualizar', False);
@@ -379,12 +381,12 @@ procedure TfrmDemo_ACBrNFSe.ConfiguraComponente;
 var
  PathMensal: String;
 begin
- {$IFDEF ACBrNFSeOpenSSL}
-   ACBrNFSe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
+// {$IFDEF ACBrNFSeOpenSSL}
+//   ACBrNFSe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
    ACBrNFSe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
- {$ELSE}
+// {$ELSE}
    ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
- {$ENDIF}
+// {$ENDIF}
 
  ACBrNFSe1.Configuracoes.Certificados.VerificarValidade :=True;
 
@@ -398,14 +400,16 @@ begin
 
  PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathGer(0);
 
- ACBrNFSe1.Configuracoes.Arquivos.PathCan          := PathMensal;
- ACBrNFSe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;
- ACBrNFSe1.Configuracoes.Arquivos.Salvar           := True;
+ ACBrNFSe1.Configuracoes.Arquivos.PathCan    := PathMensal;
+ ACBrNFSe1.Configuracoes.Arquivos.PathSalvar := PathMensal;
+ ACBrNFSe1.Configuracoes.Arquivos.Salvar     := True;
 
  ACBrNFSe1.Configuracoes.Geral.Salvar          := ckSalvar.Checked;
  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
  ACBrNFSe1.Configuracoes.Geral.SenhaWeb        := edtSenhaWeb.Text;
  ACBrNFSe1.Configuracoes.Geral.UserWeb         := edtUserWeb.Text;
+ ACBrNFSe1.Configuracoes.Geral.PathIniCidades  := edtArqINI.Text  + '\Cidades.ini';
+ ACBrNFSe1.Configuracoes.Geral.PathIniProvedor := edtArqINI.Text;
 
  ACBrNFSe1.Configuracoes.WebServices.Salvar     := ckSalvarSoap.Checked;
  ACBrNFSe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
@@ -472,9 +476,16 @@ begin
 
      DataEmissao := Now;
 
-     // TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune, noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo );
-     NaturezaOperacao := noTributacaoNoMunicipio;
-//     NaturezaOperacao := noTributacaoNoMunicipio51; 
+     (*
+     TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
+                               no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
+                               no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
+                               no70, no71, no72, no78, no79,
+                               no101, no111, no121, no201, no301,
+                               no501, no511, no541, no551, no601, no701 );
+     *)
+     NaturezaOperacao := no1;
+//     NaturezaOperacao := no51; 
 
      // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
 //     RegimeEspecialTributacao := retNenhum;
@@ -719,7 +730,6 @@ begin
  ACBrNFSe1.NotasFiscais.Clear;
  AlimentaComponente(vAux);
  ACBrNFSe1.Enviar(vNumLote);
-
  ACBrNFSe1.NotasFiscais.Clear;
 end;
 

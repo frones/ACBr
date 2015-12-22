@@ -93,7 +93,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 368
-        ActivePage = TabSheet4
+        ActivePage = TabSheet2
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -296,6 +296,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Text = 'Selecione uma Cidade'
             OnChange = cbCidadesChange
             Items.Strings = (
+              'Alfenas/3101607/MG'
               'Americana/3501608/SP'
               'Ananindeua/1500800/PA'
               'Anapolis/5201108/GO'

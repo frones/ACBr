@@ -45,6 +45,10 @@ Símbolo : Significado
     aberto e de Cancelamento de Itens.  (por: Amarildo Lacerda)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=26685
 
+-- ACBrPosPrinter --
+[*] Ajuste para permitir caracteres da faixa 0 a 127 para Cod.Barras CODE93
+    (por: DSA)
+
 21/12/2015
 -- ACBrECFEscECF --
 [*] Ajuste para correta impressão de Cod.Barras e Caracteres de Controle em

@@ -1076,9 +1076,8 @@ begin
           ['0'..'9', 'A'..'Z', ' ', '$', '%', '*', '+', '-', '.', '/'])
 
       else if ATag = cTagBarraCode93 then
-        // Qualquer tamanho.. Aceita: 0~9, A~Z, '-', '.', ' ', '$', '/', '+', '%'
-        ACodBar := OnlyCharsInSet(ConteudoBloco,
-          ['0'..'9', 'A'..'Z', '-', '.', ' ', '$', '/', '+', '%'])
+        // Qualquer tamanho.. Aceita: #0~#127
+        ACodBar := OnlyCharsInSet(ConteudoBloco, [#0..#127])
 
       else if ATag = cTagBarraInter then
       begin

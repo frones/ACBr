@@ -161,7 +161,7 @@ begin
       (*ER07b*)FchNFe    := leitor.rCampo(tcStr, 'chNFe');
 
       case FcStat of
-        100,101,104,110,150,151,155,301,302:
+        100,101,104,110,150,151,155,301,302,303:
            begin
              if (Leitor.rExtrai(1, 'protNFe') <> '') then
              begin

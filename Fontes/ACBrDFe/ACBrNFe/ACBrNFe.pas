@@ -303,7 +303,7 @@ end;
 function TACBrNFe.CstatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302: Result := True;
+    100, 110, 150, 301, 302, 303: Result := True;
     else
       Result := False;
   end;

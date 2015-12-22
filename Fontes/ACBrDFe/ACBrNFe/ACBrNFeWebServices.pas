@@ -1420,7 +1420,7 @@ begin
         // Monta o XML da NF-e assinado e com o protocolo de Autorização ou Denegação
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
            (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) or
-           (AInfProt.Items[I].cStat = 302) then
+           (AInfProt.Items[I].cStat = 302) or (AInfProt.Items[I].cStat = 303) then
         begin
           AProcNFe := TProcNFe.Create;
           try
@@ -1948,7 +1948,8 @@ begin
     end;
 
     Result := (NFeRetorno.CStat in [100, 101, 110, 150, 151, 155]) or
-              (NFeRetorno.CStat = 301) or (NFeRetorno.CStat = 302);
+              (NFeRetorno.CStat = 301) or (NFeRetorno.CStat = 302) or
+              (NFeRetorno.CStat = 303);
 
     for i := 0 to TACBrNFe(FPDFeOwner).NotasFiscais.Count - 1 do
     begin

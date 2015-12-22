@@ -1894,6 +1894,7 @@ begin
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
 
+        proSystemPro,
         proFreire: FvNotas := FvNotas +
                               '<' + FPrefixo4 + 'Rps>' +
                                '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id ="'+ TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].NFSe.InfID.ID +'"' +
@@ -1917,7 +1918,7 @@ begin
                                '</Signature>'+
                               '</' + FPrefixo4 + 'Rps>';
 
-        proSystemPro: FvNotas := FvNotas + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado;
+//        proSystemPro: FvNotas := FvNotas + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado;
 
         else FvNotas := FvNotas +
                         '<' + FPrefixo4 + 'Rps>' +
@@ -1934,7 +1935,7 @@ begin
       case FProvedor of
 
         profintelISS, proSaatri, proSisPMJP, proGoiania, proISSDigital, proISSe,
-        proSystemPro, pro4R, proFiorilli, proProdata, proVitoria, proPVH,
+        pro4R, proFiorilli, proProdata, proVitoria, proPVH,
         proAgili, proCoplan, proLink3, proGovDigital,
         proVirtual: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
@@ -1944,6 +1945,7 @@ begin
                                  '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                                 '</' + FPrefixo4 + 'Rps>';
 
+        proSystemPro,
         proFreire : FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id="' + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].NFSe.InfID.ID + '" '+
@@ -3316,7 +3318,7 @@ begin
 
         profintelISS, proSaatri, proSisPMJP, proISSDigital, proISSe, proSystemPro,
         pro4R, proFiorilli, proProdata, proVitoria, proPVH, proAgili, proCoplan,
-        proVirtual, proFreire, proLink3, proGovDigital,
+        proVirtual, proFreire, proLink3, proGovDigital, proMitra,
         proGoiania: FvNotas := FvNotas +
                                '<' + FPrefixo4 + 'Rps>' +
                                 '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
@@ -3324,14 +3326,6 @@ begin
                                     '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                 '</Signature>'+
                                '</' + FPrefixo4 + 'Rps>';
-
-        proMitra: FvNotas := FvNotas +
-                             '<' + FPrefixo4 + 'Rps>' +
-                              '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                                RetornarConteudoEntre(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XMLAssinado,
-                                  '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                              '</Signature>'+
-                             '</' + FPrefixo4 + 'Rps>';
 
         proDigifred: FvNotas := FvNotas +
                                 '<' + FPrefixo4 + 'Rps ' +

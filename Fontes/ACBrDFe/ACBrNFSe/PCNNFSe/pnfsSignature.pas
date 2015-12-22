@@ -41,20 +41,20 @@ type
   TSignature = class(TPersistent)
   private
     FGerador: TGerador;
-    FURI: string;
-    FDigestValue: string;
-    FSignatureValue: string;
-    FX509Certificate: string;
+    FURI: String;
+    FDigestValue: String;
+    FSignatureValue: String;
+    FX509Certificate: String;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXMLNFSe: boolean;
   published
     property Gerador: TGerador read FGerador write FGerador;
-    property URI: string read FURI write FURI;
-    property DigestValue: string read FDigestValue write FDigestValue;
-    property SignatureValue: string read FSignatureValue write FSignatureValue;
-    property X509Certificate: string read FX509Certificate write FX509Certificate;
+    property URI: String read FURI write FURI;
+    property DigestValue: String read FDigestValue write FDigestValue;
+    property SignatureValue: String read FSignatureValue write FSignatureValue;
+    property X509Certificate: String read FX509Certificate write FX509Certificate;
   end;
 
 implementation

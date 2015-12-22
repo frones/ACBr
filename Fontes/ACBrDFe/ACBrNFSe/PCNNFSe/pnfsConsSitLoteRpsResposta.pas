@@ -102,7 +102,9 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: boolean;
+    function LerXml_ABRASF: boolean;
     function LerXML_provedorInfisc: Boolean;
     function LerXML_provedorEquiplano: Boolean;
     function LerXML_provedorEL: Boolean;
@@ -193,6 +195,19 @@ begin
 end;
 
 function TretSitLote.LerXml: boolean;
+begin
+ case Provedor of
+   proInfIsc: Result := LerXml_provedorInfisc;
+   proEquiplano: Result := LerXML_provedorEquiplano;
+   proNFSeBrasil: Result := LerXml_provedorNFSEBrasil;
+   proEL: Result := LerXML_provedorEL;
+   proFISSLex: Result := LerXml_provedorFissLex;
+ else
+   Result := LerXml_ABRASF;
+ end;
+end;
+
+function TretSitLote.LerXml_ABRASF: boolean;
 var
   i: Integer;
   ok: Boolean;
@@ -230,7 +245,7 @@ begin
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
-          
+
           InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');

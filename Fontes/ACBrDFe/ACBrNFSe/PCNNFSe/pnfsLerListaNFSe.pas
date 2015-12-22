@@ -94,12 +94,12 @@ type
 
  TMsgRetornoNFSeIdentificacaoRps = class(TPersistent)
   private
-    FNumero: string;
-    FSerie: string;
+    FNumero: String;
+    FSerie: String;
     FTipo: TNFSeTipoRps;
   published
-    property Numero: string read FNumero write FNumero;
-    property Serie: string read FSerie write FSerie;
+    property Numero: String read FNumero write FNumero;
+    property Serie: String read FSerie write FSerie;
     property Tipo: TNFSeTipoRps read FTipo write FTipo;
   end;
 
@@ -114,15 +114,15 @@ type
     destructor Destroy; override;
   published
     property IdentificacaoRps: TMsgRetornoNFSeIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
-    property Codigo: string   read FCodigo   write FCodigo;
-    property Mensagem: string read FMensagem write FMensagem;
-    property Correcao: string read FCorrecao write FCorrecao;
+    property Codigo: String   read FCodigo   write FCodigo;
+    property Mensagem: String read FMensagem write FMensagem;
+    property Correcao: String read FCorrecao write FCorrecao;
   end;
 
  TRetornoNFSe = class(TPersistent)
   private
-    FPathArquivoMunicipios: string;
-    FPathArquivoTabServicos: string;
+    FPathArquivoMunicipios: String;
+    FPathArquivoTabServicos: String;
     FLeitor: TLeitor;
     FListaNFSe: TListaNFSe;
     FProvedor: TNFSeProvedor;
@@ -133,13 +133,13 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
   published
-    property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
-    property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
+    property PathArquivoMunicipios: String  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
+    property PathArquivoTabServicos: String read FPathArquivoTabServicos write FPathArquivoTabServicos;
     property Leitor: TLeitor                read FLeitor                 write FLeitor;
     property ListaNFSe: TListaNFSe          read FListaNFSe              write FListaNFSe;
     property Provedor: TNFSeProvedor        read FProvedor               write FProvedor;
     property TabServicosExt: Boolean        read FTabServicosExt         write FTabServicosExt;
-    property Protocolo: string              read FProtocolo              write FProtocolo;
+    property Protocolo: String              read FProtocolo              write FProtocolo;
   end;
 
 implementation

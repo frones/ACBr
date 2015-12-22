@@ -77,94 +77,94 @@ type
   private
     FID: string;
   published
-    property ID: string read FID write FID;
+    property ID: String read FID write FID;
   end;
 
  TIdentificacaoRps = class(TPersistent)
   private
-    FNumero: string;
-    FSerie: string;
+    FNumero: String;
+    FSerie: String;
     FTipo: TnfseTipoRps;
   published
-    property Numero: string read FNumero write FNumero;
-    property Serie: string read FSerie write FSerie;
+    property Numero: String read FNumero write FNumero;
+    property Serie: String read FSerie write FSerie;
     property Tipo: TnfseTipoRps read FTipo write FTipo;
   end;
 
  TIdentificacaoNfse = class(TPersistent)
   private
-    FNumero: string;
-    FCnpj: string;
-    FInscricaoMunicipal: string;
-    FCodigoMunicipio: string;
+    FNumero: String;
+    FCnpj: String;
+    FInscricaoMunicipal: String;
+    FCodigoMunicipio: String;
   published
-    property Numero: string read FNumero write FNumero;
-    property Cnpj: string read FCnpj write FCnpj;
-    property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
-    property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
+    property Numero: String read FNumero write FNumero;
+    property Cnpj: String read FCnpj write FCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
   end;
 
  TValoresNfse = class(TPersistent)
  private
-   FBaseCalculo: currency;
-   FAliquota: currency;
-   FValorIss: currency;
-   FValorLiquidoNfse: currency;
+   FBaseCalculo: Currency;
+   FAliquota: Currency;
+   FValorIss: Currency;
+   FValorLiquidoNfse: Currency;
  published
-   property BaseCalculo: currency read FBaseCalculo write FBaseCalculo;
-   property Aliquota: currency read FAliquota write FAliquota;
-   property ValorIss: currency read FValorIss write FValorIss;
-   property ValorLiquidoNfse: currency read FValorLiquidoNfse write FValorLiquidoNfse;
+   property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
+   property Aliquota: Currency read FAliquota write FAliquota;
+   property ValorIss: Currency read FValorIss write FValorIss;
+   property ValorLiquidoNfse: Currency read FValorLiquidoNfse write FValorLiquidoNfse;
  end;
 
  TValores = class(TPersistent)
   private
-    FValorServicos: currency;
-    FValorDeducoes: currency;
-    FValorPis: currency;
-    FValorCofins: currency;
-    FValorInss: currency;
-    FValorIr: currency;
-    FValorCsll: currency;
+    FValorServicos: Currency;
+    FValorDeducoes: Currency;
+    FValorPis: Currency;
+    FValorCofins: Currency;
+    FValorInss: Currency;
+    FValorIr: Currency;
+    FValorCsll: Currency;
     FIssRetido: TnfseSituacaoTributaria;
-    FValorIss: currency;
-    FOutrasRetencoes: currency;
-    FBaseCalculo: currency;
-    FAliquota: currency;
-    FAliquotaPis: currency;
-    FAliquotaCofins: currency;
-    FAliquotaInss: currency;
-    FAliquotaIr: currency;
-    FAliquotaCsll: currency;
-    FValorLiquidoNfse: currency;
-    FValorIssRetido: currency;
-    FDescontoCondicionado: currency;
-    FDescontoIncondicionado: currency;
+    FValorIss: Currency;
+    FOutrasRetencoes: Currency;
+    FBaseCalculo: Currency;
+    FAliquota: Currency;
+    FAliquotaPis: Currency;
+    FAliquotaCofins: Currency;
+    FAliquotaInss: Currency;
+    FAliquotaIr: Currency;
+    FAliquotaCsll: Currency;
+    FValorLiquidoNfse: Currency;
+    FValorIssRetido: Currency;
+    FDescontoCondicionado: Currency;
+    FDescontoIncondicionado: Currency;
     FJustificativaDeducao: String;
   published
-    property ValorServicos: currency read FValorServicos write FValorServicos;
-    property ValorDeducoes: currency read FValorDeducoes write FValorDeducoes;
-    property ValorPis: currency read FValorPis write FValorPis;
-    property ValorCofins: currency read FValorCofins write FValorCofins;
-    property ValorInss: currency read FValorInss write FValorInss;
-    property ValorIr: currency read FValorIr write FValorIr;
-    property ValorCsll: currency read FValorCsll write FValorCsll;
+    property ValorServicos: Currency read FValorServicos write FValorServicos;
+    property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
+    property ValorPis: Currency read FValorPis write FValorPis;
+    property ValorCofins: Currency read FValorCofins write FValorCofins;
+    property ValorInss: Currency read FValorInss write FValorInss;
+    property ValorIr: Currency read FValorIr write FValorIr;
+    property ValorCsll: Currency read FValorCsll write FValorCsll;
     property IssRetido: TnfseSituacaoTributaria read FIssRetido write FIssRetido;
-    property ValorIss: currency read FValorIss write FValorIss;
-    property OutrasRetencoes: currency read FOutrasRetencoes write FOutrasRetencoes;
-    property BaseCalculo: currency read FBaseCalculo write FBaseCalculo;
-    property Aliquota: currency read FAliquota write FAliquota;
+    property ValorIss: Currency read FValorIss write FValorIss;
+    property OutrasRetencoes: Currency read FOutrasRetencoes write FOutrasRetencoes;
+    property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
+    property Aliquota: Currency read FAliquota write FAliquota;
     // Aliquotas usadas pelo Provedor IssDsf
-    property AliquotaPis: currency read FAliquotaPis write FAliquotaPis;
-    property AliquotaCofins: currency read FAliquotaCofins write FAliquotaCofins;
-    property AliquotaInss: currency read FAliquotaInss write FAliquotaInss;
-    property AliquotaIr: currency read FAliquotaIr write FAliquotaIr;
-    property AliquotaCsll: currency read FAliquotaCsll write FAliquotaCsll;
+    property AliquotaPis: Currency read FAliquotaPis write FAliquotaPis;
+    property AliquotaCofins: Currency read FAliquotaCofins write FAliquotaCofins;
+    property AliquotaInss: Currency read FAliquotaInss write FAliquotaInss;
+    property AliquotaIr: Currency read FAliquotaIr write FAliquotaIr;
+    property AliquotaCsll: Currency read FAliquotaCsll write FAliquotaCsll;
 
-    property ValorLiquidoNfse: currency read FValorLiquidoNfse write FValorLiquidoNfse;
-    property ValorIssRetido: currency read FValorIssRetido write FValorIssRetido;
-    property DescontoCondicionado: currency read FDescontoCondicionado write FDescontoCondicionado;
-    property DescontoIncondicionado: currency read FDescontoIncondicionado write FDescontoIncondicionado;
+    property ValorLiquidoNfse: Currency read FValorLiquidoNfse write FValorLiquidoNfse;
+    property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;
+    property DescontoCondicionado: Currency read FDescontoCondicionado write FDescontoCondicionado;
+    property DescontoIncondicionado: Currency read FDescontoIncondicionado write FDescontoIncondicionado;
     //Just. usada pelo provedor Equiplano
     property JustificativaDeducao: String read FJustificativaDeducao write FJustificativaDeducao;
   end;
@@ -183,62 +183,62 @@ type
   private
     FDescricao : String;
 //    FQuantidade : Integer;
-    FQuantidade : currency; // Alterado pois o provedor SimplISS aceita quantidade de servico não inteira.
-    FValorUnitario : currency;
-    FValorTotal : currency;
-    FAliquota: currency;
-    FValorIss: currency;
-    FBaseCalculo: currency;
-    FValorDeducoes: currency;
-    FValorServicos: currency;
-    FDescontoCondicionado: currency;
-    FDescontoIncondicionado: currency;
-    FDiscriminacao: string;
+    FQuantidade : Currency; // Alterado pois o provedor SimplISS aceita quantidade de servico não inteira.
+    FValorUnitario : Currency;
+    FValorTotal : Currency;
+    FAliquota: Currency;
+    FValorIss: Currency;
+    FBaseCalculo: Currency;
+    FValorDeducoes: Currency;
+    FValorServicos: Currency;
+    FDescontoCondicionado: Currency;
+    FDescontoIncondicionado: Currency;
+    FDiscriminacao: String;
     FTributavel : TnfseSimNao;
     //Provedor: SystemPro
-    FValorCsll: currency;
-    FValorPis: currency;
-    FValorCofins: currency;
-    FValorInss: currency;
-    FValorIr: currency;
+    FValorCsll: Currency;
+    FValorPis: Currency;
+    FValorCofins: Currency;
+    FValorInss: Currency;
+    FValorIr: Currency;
     //Provedor: Infisc
-    FCodigo: string;
+    FCodigo: String;
 
     // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
-    FCodServ: string;
-    FCodLCServ: string;
-    FUnidade: string;
+    FCodServ: String;
+    FCodLCServ: String;
+    FUnidade: String;
 
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property Codigo: string read FCodigo write FCodigo;
-    property Descricao: string read FDescricao write FDescricao;
+    property Codigo: String read FCodigo write FCodigo;
+    property Descricao: String read FDescricao write FDescricao;
 //    property Quantidade: Integer read FQuantidade write FQuantidade;
-    property Quantidade: currency read FQuantidade write FQuantidade;
-    property ValorUnitario: currency read FValorUnitario write FValorUnitario;
-    property ValorTotal : currency read FValorTotal write FValorTotal;
-    property ValorServicos: currency read FValorServicos write FValorServicos;
-    property ValorDeducoes: currency read FValorDeducoes write FValorDeducoes;
-    property ValorIss: currency read FValorIss write FValorIss;
-    property Aliquota: currency read FAliquota write FAliquota;
-    property BaseCalculo: currency read FBaseCalculo write FBaseCalculo;
-    property DescontoCondicionado: currency read FDescontoCondicionado write FDescontoCondicionado;
-    property DescontoIncondicionado: currency read FDescontoIncondicionado write FDescontoIncondicionado;
-    property Discriminacao: string read FDiscriminacao write FDiscriminacao;
+    property Quantidade: Currency read FQuantidade write FQuantidade;
+    property ValorUnitario: Currency read FValorUnitario write FValorUnitario;
+    property ValorTotal : Currency read FValorTotal write FValorTotal;
+    property ValorServicos: Currency read FValorServicos write FValorServicos;
+    property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
+    property ValorIss: Currency read FValorIss write FValorIss;
+    property Aliquota: Currency read FAliquota write FAliquota;
+    property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
+    property DescontoCondicionado: Currency read FDescontoCondicionado write FDescontoCondicionado;
+    property DescontoIncondicionado: Currency read FDescontoIncondicionado write FDescontoIncondicionado;
+    property Discriminacao: String read FDiscriminacao write FDiscriminacao;
     property Tributavel : TnfseSimNao read FTributavel write FTributavel;
     //Provedor: SystemPro
-    property ValorPis: currency read FValorPis write FValorPis;
-    property ValorCofins: currency read FValorCofins write FValorCofins;
-    property ValorInss: currency read FValorInss write FValorInss;
-    property ValorIr: currency read FValorIr write FValorIr;
-    property ValorCsll: currency read FValorCsll write FValorCsll;
+    property ValorPis: Currency read FValorPis write FValorPis;
+    property ValorCofins: Currency read FValorCofins write FValorCofins;
+    property ValorInss: Currency read FValorInss write FValorInss;
+    property ValorIr: Currency read FValorIr write FValorIr;
+    property ValorCsll: Currency read FValorCsll write FValorCsll;
 
     // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
-    property CodServ     : string read FCodServ write FCodServ;
-    property CodLCServ   : string read FCodLCServ write FCodLCServ;
-    property Unidade     : string read FUnidade write FUnidade;
+    property CodServ     : String read FCodServ write FCodServ;
+    property CodLCServ   : String read FCodLCServ write FCodLCServ;
+    property Unidade     : String read FUnidade write FUnidade;
   end;
 
  TDeducaoCollection = class(TCollection)
@@ -256,40 +256,40 @@ type
   private
     FDeducaoPor : TnfseDeducaoPor;
     FTipoDeducao : TnfseTipoDeducao;
-    FCpfCnpjReferencia : string;
+    FCpfCnpjReferencia : String;
     FNumeroNFReferencia : String;
-    FValorTotalReferencia : currency;
-    FPercentualDeduzir: currency;
-    FValorDeduzir: currency;
+    FValorTotalReferencia : Currency;
+    FPercentualDeduzir: Currency;
+    FValorDeduzir: Currency;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property DeducaoPor : TnfseDeducaoPor read FDeducaoPor write FDeducaoPor;
     property TipoDeducao : TnfseTipoDeducao read FTipoDeducao write FTipoDeducao;
-    property CpfCnpjReferencia : string read FCpfCnpjReferencia write FCpfCnpjReferencia;
+    property CpfCnpjReferencia : String read FCpfCnpjReferencia write FCpfCnpjReferencia;
     property NumeroNFReferencia : String read FNumeroNFReferencia write FNumeroNFReferencia;
-    property ValorTotalReferencia : currency read FValorTotalReferencia write FValorTotalReferencia;
-    property PercentualDeduzir: currency read FPercentualDeduzir write FPercentualDeduzir;
-    property ValorDeduzir: currency read FValorDeduzir write FValorDeduzir;
+    property ValorTotalReferencia : Currency read FValorTotalReferencia write FValorTotalReferencia;
+    property PercentualDeduzir: Currency read FPercentualDeduzir write FPercentualDeduzir;
+    property ValorDeduzir: Currency read FValorDeduzir write FValorDeduzir;
   end;
 
  TDadosServico = class(TPersistent)
   private
     FValores: TValores;
-    FItemListaServico: string;
-    FCodigoCnae: string;
-    FCodigoTributacaoMunicipio: string;
-    FDiscriminacao: string;
-    FCodigoMunicipio: string;
+    FItemListaServico: String;
+    FCodigoCnae: String;
+    FCodigoTributacaoMunicipio: String;
+    FDiscriminacao: String;
+    FCodigoMunicipio: String;
     FCodigoPais: Integer;
     FExigibilidadeISS: TnfseExigibilidadeISS;
     FMunicipioIncidencia: Integer;
-    FNumeroProcesso: string;
-    FxItemListaServico: ansistring;
+    FNumeroProcesso: String;
+    FxItemListaServico: ansiString;
     FItemServico: TItemServicoCollection;
     FResponsavelRetencao: TnfseResponsavelRetencao;
-    FDescricao: string;
+    FDescricao: String;
     FDeducao : TDeducaoCollection;
 
     procedure SetItemServico(Value: TItemServicoCollection);
@@ -298,86 +298,86 @@ type
     destructor Destroy; override;
   published
     property Valores: TValores read FValores write FValores;
-    property ItemListaServico: string read FItemListaServico write FItemListaServico;
-    property CodigoCnae: string read FCodigoCnae write FCodigoCnae;
-    property CodigoTributacaoMunicipio: string read FCodigoTributacaoMunicipio write FCodigoTributacaoMunicipio;
-    property Discriminacao: string read FDiscriminacao write FDiscriminacao;
-    property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
+    property ItemListaServico: String read FItemListaServico write FItemListaServico;
+    property CodigoCnae: String read FCodigoCnae write FCodigoCnae;
+    property CodigoTributacaoMunicipio: String read FCodigoTributacaoMunicipio write FCodigoTributacaoMunicipio;
+    property Discriminacao: String read FDiscriminacao write FDiscriminacao;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
     property CodigoPais: Integer read FCodigoPais write FCodigoPais;
     property ExigibilidadeISS: TnfseExigibilidadeISS read FExigibilidadeISS write FExigibilidadeISS;
     property MunicipioIncidencia: Integer read FMunicipioIncidencia write FMunicipioIncidencia;
-    property NumeroProcesso: string read FNumeroProcesso write FNumeroProcesso;
-    property xItemListaServico: ansistring read FxItemListaServico write FxItemListaServico;
+    property NumeroProcesso: String read FNumeroProcesso write FNumeroProcesso;
+    property xItemListaServico: ansiString read FxItemListaServico write FxItemListaServico;
     property ItemServico: TItemServicoCollection read FItemServico write SetItemServico;
     property ResponsavelRetencao: TnfseResponsavelRetencao read FResponsavelRetencao write FResponsavelRetencao;
-    property Descricao: string read FDescricao write FDescricao;
+    property Descricao: String read FDescricao write FDescricao;
     // Deducao usada pelo Provedor IssDsf
     property Deducao : TDeducaoCollection read FDeducao write FDeducao;
   end;
 
  TIdentificacaoPrestador = class(TPersistent)
   private
-    FCnpj: string;
-    FInscricaoMunicipal: string;
-    FSenha: string;
-    FFraseSecreta: string;
-    FcUF: integer;
+    FCnpj: String;
+    FInscricaoMunicipal: String;
+    FSenha: String;
+    FFraseSecreta: String;
+    FcUF: Integer;
     //Alterado por Moro em 27/02/2015
-    FInscricaoEstadual: string;
+    FInscricaoEstadual: String;
   published
-    property Cnpj: string read FCnpj write FCnpj;
-    property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
+    property Cnpj: String read FCnpj write FCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     // As propriedades abaixo são Utilizadas pelo provedor ISSDigital
-    property Senha: string read FSenha write FSenha;
-    property FraseSecreta: string read FFraseSecreta write FFraseSecreta;
-    property cUF: integer read FcUF write FcUF;
+    property Senha: String read FSenha write FSenha;
+    property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
+    property cUF: Integer read FcUF write FcUF;
     //Alterado por Moro em 27/02/2015
-    property InscricaoEstadual: string read FInscricaoEstadual write FInscricaoEstadual;
+    property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
   end;
 
  TEndereco = class(TPersistent)
   private
-    FTipoLogradouro: string;
-    FEndereco: string;
-    FNumero: string;
-    FComplemento: string;
-    FTipoBairro : string;
-    FBairro: string;
-    FCodigoMunicipio: string;
-    FUF: string;
-    FCEP: string;
-    FxMunicipio: string;
-    FCodigoPais: integer;
+    FTipoLogradouro: String;
+    FEndereco: String;
+    FNumero: String;
+    FComplemento: String;
+    FTipoBairro : String;
+    FBairro: String;
+    FCodigoMunicipio: String;
+    FUF: String;
+    FCEP: String;
+    FxMunicipio: String;
+    FCodigoPais: Integer;
     FxPais: String;
   published
-    property TipoLogradouro: string read FTipoLogradouro write FTipoLogradouro;
-    property Endereco: string read FEndereco write FEndereco;
-    property Numero: string read FNumero write FNumero;
-    property Complemento: string read FComplemento write FComplemento;
-    property TipoBairro: string read FTipoBairro write FTipoBairro;
-    property Bairro: string read FBairro write FBairro;
-    property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
-    property UF: string read FUF write FUF;
-    property CEP: string read FCEP write FCEP;
-    property xMunicipio: string read FxMunicipio write FxMunicipio;
-    property CodigoPais: integer read FCodigoPais write FCodigoPais; 
+    property TipoLogradouro: String read FTipoLogradouro write FTipoLogradouro;
+    property Endereco: String read FEndereco write FEndereco;
+    property Numero: String read FNumero write FNumero;
+    property Complemento: String read FComplemento write FComplemento;
+    property TipoBairro: String read FTipoBairro write FTipoBairro;
+    property Bairro: String read FBairro write FBairro;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
+    property UF: String read FUF write FUF;
+    property CEP: String read FCEP write FCEP;
+    property xMunicipio: String read FxMunicipio write FxMunicipio;
+    property CodigoPais: Integer read FCodigoPais write FCodigoPais; 
     property xPais: String read FxPais write FxPais;
   end;
 
  TContato = class(TPersistent)
   private
-    FTelefone: string;
-    FEmail: string;
+    FTelefone: String;
+    FEmail: String;
   published
-    property Telefone: string read FTelefone write FTelefone;
-    property Email: string read FEmail write FEmail;
+    property Telefone: String read FTelefone write FTelefone;
+    property Email: String read FEmail write FEmail;
   end;
 
  TDadosPrestador = class(TPersistent)
   private
     FIdentificacaoPrestador: TIdentificacaoPrestador;
-    FRazaoSocial: string;
-    FNomeFantasia: string;
+    FRazaoSocial: String;
+    FNomeFantasia: String;
     FEndereco: TEndereco;
     FContato: TContato;
   public
@@ -385,29 +385,29 @@ type
     destructor Destroy; override;
   published
     property IdentificacaoPrestador: TIdentificacaoPrestador read FIdentificacaoPrestador write FIdentificacaoPrestador;
-    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
-    property NomeFantasia: string read FNomeFantasia write FNomeFantasia;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property NomeFantasia: String read FNomeFantasia write FNomeFantasia;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Contato: TContato read FContato write FContato;
   end;
 
   TIdentificacaoTomador = class(TPersistent)
   private
-    FCpfCnpj: string;
-    FInscricaoMunicipal: string;
-    FInscricaoEstadual: string;
-    FDocTomadorEstrangeiro: string;
+    FCpfCnpj: String;
+    FInscricaoMunicipal: String;
+    FInscricaoEstadual: String;
+    FDocTomadorEstrangeiro: String;
   published
-    property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
-    property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
-    property InscricaoEstadual: string read FInscricaoEstadual write FInscricaoEstadual;
-    property DocTomadorEstrangeiro: string read FDocTomadorEstrangeiro write FDocTomadorEstrangeiro;
+    property CpfCnpj: String read FCpfCnpj write FCpfCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
+    property DocTomadorEstrangeiro: String read FDocTomadorEstrangeiro write FDocTomadorEstrangeiro;
   end;
 
  TDadosTomador = class(TPersistent)
   private
     FIdentificacaoTomador: TIDentificacaoTomador;
-    FRazaoSocial: string;
+    FRazaoSocial: String;
     FEndereco: TEndereco;
     FContato: TContato;
   public
@@ -415,38 +415,38 @@ type
     destructor Destroy; override;
   published
     property IdentificacaoTomador: TIdentificacaoTomador read FIdentificacaoTomador write FIdentificacaoTomador;
-    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Contato: TContato read FContato write FContato;
   end;
 
  TIdentificacaoIntermediarioServico = class(TPersistent)
   private
-    FRazaoSocial: string;
-    FCpfCnpj: string;
-    FInscricaoMunicipal: string;
+    FRazaoSocial: String;
+    FCpfCnpj: String;
+    FInscricaoMunicipal: String;
   published
-    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
-    property CpfCnpj: string read FCpfCnpj write FCpfCnpj;
-    property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property CpfCnpj: String read FCpfCnpj write FCpfCnpj;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
   end;
 
  TIdentificacaoOrgaoGerador = class(TPersistent)
   private
-    FCodigoMunicipio: string;
-    FUf: string;
+    FCodigoMunicipio: String;
+    FUf: String;
   published
-    property CodigoMunicipio: string read FCodigoMunicipio write FCodigoMunicipio;
-    property Uf: string read FUf write FUf;
+    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
+    property Uf: String read FUf write FUf;
   end;
 
  TDadosConstrucaoCivil = class(TPersistent)
   private
-    FCodigoObra: string;
-    FArt: string;
+    FCodigoObra: String;
+    FArt: String;
   published
-    property CodigoObra: string read FCodigoObra write FCodigoObra;
-    property Art: string read FArt write FArt;
+    property CodigoObra: String read FCodigoObra write FCodigoObra;
+    property Art: String read FArt write FArt;
   end;
 
   TParcelasCollectionItem = class(TCollectionItem)
@@ -501,7 +501,7 @@ type
     FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
     FRpsSubstituido: TIdentificacaoRps;
-    FSeriePrestacao: string;
+    FSeriePrestacao: String;
     FServico: TDadosServico;
     FPrestador: TIdentificacaoPrestador;
     FTomador: TDadosTomador;
@@ -531,13 +531,13 @@ type
 
     FNfseCancelamento: TConfirmacaoCancelamento;
     FNfseSubstituidora: String;
-    FMotivoCancelamento: string; // para provedor ISSDSF
-    FChaveNFSe: string; // para provedor Infisc
+    FMotivoCancelamento: String; // para provedor ISSDSF
+    FChaveNFSe: String; // para provedor Infisc
 
     // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
     FTipoEmissao: TnfseTEmissao;
     FEmpreitadaGlobal: TnfseTEmpreitadaGlobal;
-    FModeloNFSe: string;
+    FModeloNFSe: String;
     FCancelada: TnfseSimNao;
 
   public
@@ -558,7 +558,7 @@ type
     property Status: TnfseStatusRps read FStatus write FStatus;
     property RpsSubstituido: TIdentificacaoRps read FRpsSubstituido write FRpsSubstituido;
     //SeriePrestacao usada no provedor IssDsf
-    property SeriePrestacao: string read FSeriePrestacao write FSeriePrestacao;
+    property SeriePrestacao: String read FSeriePrestacao write FSeriePrestacao;
     property Servico: TDadosServico read FServico write FServico;
     property Prestador: TIdentificacaoPrestador read FPrestador write FPrestador;
     property Tomador: TDadosTomador read FTomador write FTomador;
@@ -586,13 +586,13 @@ type
     property XML: AnsiString read FXML write FXML;
     property NfseCancelamento: TConfirmacaoCancelamento read FNfseCancelamento write FNfseCancelamento;
     property NfseSubstituidora: String read FNfseSubstituidora write FNfseSubstituidora;
-    property MotivoCancelamento: string read FMotivoCancelamento write FMotivoCancelamento; // para provedor ISSDSF
+    property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento; // para provedor ISSDSF
     property ChaveNFSe: String read FChaveNFSe write FChaveNFSe; // para provedor Infisc
 
     // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
     property TipoEmissao: TnfseTEmissao read FTipoEmissao write FTipoEmissao;
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
-    property ModeloNFSe: string read FModeloNFSe write FModeloNFSe;
+    property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
 
   end;
@@ -601,8 +601,8 @@ type
   private
     FInfID: TInfID;
     FNumeroLote: String;
-    FCnpj: string;
-    FInscricaoMunicipal: string;
+    FCnpj: String;
+    FInscricaoMunicipal: String;
     FQuantidadeRps: String;
     FSignature: TSignature;
   public
@@ -612,7 +612,7 @@ type
     property InfID: TInfID read FInfID write FInfID;
     property NumeroLote: String read FNumeroLote write FNumeroLote;
     property Cnpj: String read FCnpj write FCnpj;
-    property InscricaoMunicipal: string read FInscricaoMunicipal write FInscricaoMunicipal;
+    property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property QuantidadeRps: String read FQuantidadeRps write FQuantidadeRps;
     property signature: Tsignature read Fsignature write Fsignature;
   end;
@@ -664,9 +664,9 @@ type
   end;
 
 const
-  CMUN_EXTERIOR: integer = 9999999;
-  XMUN_EXTERIOR: string = 'EXTERIOR';
-  UF_EXTERIOR: string = 'EX';
+  CMUN_EXTERIOR: Integer = 9999999;
+  XMUN_EXTERIOR: String = 'EXTERIOR';
+  UF_EXTERIOR: String = 'EX';
 
 implementation
 

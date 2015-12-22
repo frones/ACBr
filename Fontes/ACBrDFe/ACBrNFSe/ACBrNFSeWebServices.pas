@@ -2222,15 +2222,9 @@ begin
   FPRetWS := ExtrairRetorno;
 
   FRetSitLote.Leitor.Arquivo := FPRetWS;
+  FRetSitLote.Provedor       := FProvedor;
 
-  case FProvedor of
-    proEquiplano: RetSitLote.LerXML_provedorEquiplano;
-    proInfisc: RetSitLote.LerXML_provedorInfisc;
-    proEL: RetSitLote.LerXML_provedorEL;
-    proFissLex: RetSitLote.LerXml_provedorFissLex;
-  else
-    RetSitLote.LerXml;
-  end;
+  RetSitLote.LerXml;
 
   FSituacao := RetSitLote.InfSit.Situacao;
   // FSituacao: 1 = Não Recebido
@@ -3199,15 +3193,10 @@ begin
   FRetCancNFSe := TRetCancNfse.Create;
   try
     FRetCancNFSe.Leitor.Arquivo := FPRetWS;
-    FRetCancNFSe.Provedor := FProvedor;
+    FRetCancNFSe.Provedor       := FProvedor;
+    FRetCancNFSe.VersaoXML      := FVersaoXML;
 
-    case FProvedor of
-      proEquiplano: FRetCancNFSe.LerXML_provedorEquiplano;
-      proIssDSF: FRetCancNFSe.LerXml_provedorIssDsf;
-      proInfisc: FRetCancNFSe.LerXml_provedorInfisc(FVersaoXML);
-    else
-      FRetCancNFSe.LerXml;
-    end;
+    FRetCancNFSe.LerXml;
 
     FDataHora := RetCancNFSe.InfCanc.DataHora;
 
@@ -3564,14 +3553,9 @@ begin
   FNFSeRetorno := TRetSubsNfse.Create;
   try
     FNFSeRetorno.Leitor.Arquivo := FPRetWS;
+    FNFSeRetorno.Provedor       := FProvedor;
 
-    case FProvedor of
-      proEquiplano: FNFSeRetorno.LerXML_provedorEquiplano;
-      proIssDSF: FNFSeRetorno.LerXml_provedorIssDsf;
-//      proInfisc: FNFSeRetorno.LerXml_provedorInfisc(FVersaoXML);
-    else
-      FNFSeRetorno.LerXml;
-    end;
+    FNFSeRetorno.LerXml;
 
 //      FDataHora := FNFSeRetorno.InfCanc.DataHora;
 

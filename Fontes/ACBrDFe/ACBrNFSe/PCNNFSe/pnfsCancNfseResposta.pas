@@ -122,19 +122,23 @@ type
     FLeitor: TLeitor;
     FInfCanc: TInfCanc;
     FProvedor: TnfseProvedor;
+    FVersaoXML: String;
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: boolean;
+    function LerXml_ABRASF: boolean;
     function LerXml_provedorIssDsf: boolean;
-    function LerXml_provedorInfisc(VersaoXML: string = '1'): Boolean;
-    function LerXML_provedorEquiplano: Boolean;    
+    function LerXml_provedorInfisc: Boolean;
+    function LerXML_provedorEquiplano: Boolean;
     function LerXml_provedorNFSEBrasil: boolean;
-	
+
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfCanc: TInfCanc       read FInfCanc  write FInfCanc;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
+    property VersaoXML: String       read FVersaoXML write FVersaoXML;
   end;
 
 implementation
@@ -259,6 +263,18 @@ begin
 end;
 
 function TretCancNFSe.LerXml: boolean;
+begin
+ case Provedor of
+   proISSDSF: Result := LerXml_provedorIssDsf;
+   proInfIsc: Result := LerXml_provedorInfisc;
+   proEquiplano: Result := LerXML_provedorEquiplano;
+   proNFSeBrasil: Result := LerXml_provedorNFSEBrasil;
+ else
+   Result := LerXml_ABRASF;
+ end;
+end;
+
+function TretCancNFSe.LerXml_ABRASF: boolean;
 var
   i: Integer;
 begin
@@ -442,7 +458,7 @@ begin
   end;
 end;
 
-function TretCancNFSe.LerXml_provedorInfisc(VersaoXML: string = '1'): boolean;
+function TretCancNFSe.LerXml_provedorInfisc: boolean;
 var
   sMotCod,sMotDes,sCancelaAnula: string;
 begin

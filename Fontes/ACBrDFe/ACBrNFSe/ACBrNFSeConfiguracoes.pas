@@ -393,7 +393,7 @@ begin
   // ===========================================================================
 
   if PathIniProvedor <> '' then
-    NomeArqParams := PathIniProvedor
+    NomeArqParams := PathIniProvedor  + '\' + FxProvedor +'.ini'
   else
     NomeArqParams := ApplicationPath + FxProvedor +'.ini';
 

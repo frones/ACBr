@@ -57,8 +57,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
-    function LerXml_provedorIssDsf: boolean;
+
+    function LerXml: Boolean;
+    function LerXml_ABRASF: Boolean;
+    function LerXml_provedorIssDsf: Boolean;
     function LerXML_provedorEquiplano: Boolean;
   published
     property Leitor: TLeitor                                 read FLeitor            write FLeitor;
@@ -86,9 +88,9 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property Codigo: string   read FCodigo   write FCodigo;
-    property Mensagem: string read FMensagem write FMensagem;
-    property Correcao: string read FCorrecao write FCorrecao;
+    property Codigo: String   read FCodigo   write FCodigo;
+    property Mensagem: String read FMensagem write FMensagem;
+    property Correcao: String read FCorrecao write FCorrecao;
   end;
 
  TNotaSubstituidoraCollection = class(TCollection)
@@ -110,9 +112,9 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property NumeroNota: string read FNumeroNota  write FNumeroNota;
-    property CodigoVerficacao: string read FCodigoVerficacao write FCodigoVerficacao;
-    property InscricaoMunicipalPrestador: string read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
+    property NumeroNota: String                  read FNumeroNota                  write FNumeroNota;
+    property CodigoVerficacao: String            read FCodigoVerficacao            write FCodigoVerficacao;
+    property InscricaoMunicipalPrestador: String read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
   end;
 
 implementation
@@ -210,7 +212,17 @@ begin
   inherited;
 end;
 
-function TretSubsNFSe.LerXml: boolean;
+function TretSubsNFSe.LerXml: Boolean;
+begin
+ case Provedor of
+   proISSDSF: Result := LerXml_provedorIssDsf;
+   proEquiplano: Result := LerXML_provedorEquiplano;
+ else
+   Result := LerXml_ABRASF;
+ end;
+end;
+
+function TretSubsNFSe.LerXml_ABRASF: Boolean;
 var
   i: Integer;
 begin
@@ -269,6 +281,16 @@ begin
   end;
 end;
 
+function TretSubsNFSe.LerXml_provedorIssDsf: Boolean; //falta homologar
+begin
+  result := False;
+end;
+
+function TretSubsNFSe.LerXML_provedorEquiplano: Boolean;
+begin
+  result := False;
+end;
+
 procedure TretSubsNFSe.SetMsgRetorno(const Value: TMsgRetornoSubsCollection);
 begin
   FMsgRetorno := Value;
@@ -277,16 +299,6 @@ end;
 procedure TretSubsNFSe.SetNotaSubstituidora(const Value: TNotaSubstituidoraCollection);
 begin
   FNotaSubstituidora := Value;
-end;
-
-function TretSubsNFSe.LerXml_provedorIssDsf: boolean; //falta homologar
-begin
-  result := False;
-end;
-
-function TretSubsNFSe.LerXML_provedorEquiplano: Boolean;
-begin
-  result := False;
 end;
 
 end.

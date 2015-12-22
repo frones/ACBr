@@ -92,38 +92,38 @@ type
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
-    function GerarXml(ASincrono: Boolean = False): boolean; // Alterado por Nilton Olher - 11/02/2015
-    function ObterNomeArquivo: string;
+    function GerarXml(ASincrono: Boolean = False): Boolean; // Alterado por Nilton Olher - 11/02/2015
+    function ObterNomeArquivo: String;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property NFSe: TNFSe read FNFSe write FNFSe;
-    property Provedor: TnfseProvedor read FProvedor write FProvedor;
-    property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
-    property Atributo: String read FAtributo write FAtributo;
-    property Prefixo4: String read FPrefixo4 write FPrefixo4;
-    property Identificador: String read FIdentificador write FIdentificador;
-    property URL: String read FURL write FURL;
-    property VersaoNFSe: TVersaoNFSe read FVersaoNFSe write FVersaoNFSe;
-    property DefTipos: String read FDefTipos write FDefTipos;
-    property ServicoEnviar: String read FServicoEnviar write FServicoEnviar;
-    property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
+    property Gerador: TGerador       read FGerador       write FGerador;
+    property NFSe: TNFSe             read FNFSe          write FNFSe;
+    property Provedor: TnfseProvedor read FProvedor      write FProvedor;
+    property Opcoes: TGeradorOpcoes  read FOpcoes        write FOpcoes;
+    property Atributo: String        read FAtributo      write FAtributo;
+    property Prefixo4: String        read FPrefixo4      write FPrefixo4;
+    property Identificador: String   read FIdentificador write FIdentificador;
+    property URL: String             read FURL           write FURL;
+    property VersaoNFSe: TVersaoNFSe read FVersaoNFSe    write FVersaoNFSe;
+    property DefTipos: String        read FDefTipos      write FDefTipos;
+    property ServicoEnviar: String   read FServicoEnviar write FServicoEnviar;
+    property QuebradeLinha: String   read FQuebradeLinha write FQuebradeLinha;
   end;
 
  TGeradorOpcoes = class(TPersistent)
   private
-    FAjustarTagNro: boolean;
-    FNormatizarMunicipios: boolean;
+    FAjustarTagNro: Boolean;
+    FNormatizarMunicipios: Boolean;
     FGerarTagAssinatura: TnfseTagAssinatura;
-    FPathArquivoMunicipios: string;
-    FValidarInscricoes: boolean;
-    FValidarListaServicos: boolean;
+    FPathArquivoMunicipios: String;
+    FValidarInscricoes: Boolean;
+    FValidarListaServicos: Boolean;
   published
-    property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
-    property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
-    property GerarTagAssinatura: TnfseTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
-    property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: boolean read FValidarInscricoes write FValidarInscricoes;
-    property ValidarListaServicos: boolean read FValidarListaServicos write FValidarListaServicos;
+    property AjustarTagNro: Boolean                 read FAjustarTagNro         write FAjustarTagNro;
+    property NormatizarMunicipios: Boolean          read FNormatizarMunicipios  write FNormatizarMunicipios;
+    property GerarTagAssinatura: TnfseTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
+    property PathArquivoMunicipios: String          read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: Boolean             read FValidarInscricoes     write FValidarInscricoes;
+    property ValidarListaServicos: Boolean          read FValidarListaServicos  write FValidarListaServicos;
   end;
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -158,14 +158,14 @@ end;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function TNFSeW.ObterNomeArquivo: string;
+function TNFSeW.ObterNomeArquivo: String;
 begin
  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
-function TNFSeW.GerarXml(ASincrono: Boolean = False): boolean;  // Alterado por Nilton Olher - 11/02/2015
+function TNFSeW.GerarXml(ASincrono: Boolean = False): Boolean;  // Alterado por Nilton Olher - 11/02/2015
 var
- Gerar : boolean;
+ Gerar : Boolean;
 begin
  Gerador.ArquivoFormatoXML := '';
  Gerador.Prefixo           := FPrefixo4;
@@ -182,7 +182,7 @@ begin
    then FDefTipos := '/' + FDefTipos;
 
  if Trim(FPrefixo4) <> ''
-   then Atributo := ' xmlns:' + stringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
+   then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
    else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
  // Jonatan ISS Nova Lima
@@ -1365,7 +1365,7 @@ end;
 procedure TNFSeW.GerarServico_Provedor_IssDsf;
 var
    i: integer;
-   sDeducaoPor, sTipoDeducao, sTributavel: string;
+   sDeducaoPor, sTipoDeducao, sTributavel: String;
 begin
 
    Gerador.wGrupoNFSe('Itens');
@@ -1411,7 +1411,7 @@ end;
 procedure TNFSeW.GerarXML_Provedor_IssDsf;
 var
    sAssinatura, sSituacao, sTipoRecolhimento, sValorServico_Assinatura,
-   sTipoRecolhimentoAssinaturaRPS: string;
+   sTipoRecolhimentoAssinaturaRPS: String;
 begin
    Gerador.Prefixo := '';
   // Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
@@ -1612,8 +1612,8 @@ procedure TNFSeW.GerarXML_Provedor_Infisc;
 var
    i:integer;
    dTotBCISS,dTotISS:double;
-   sChave,cNFSe,serie,nNFSe:string;
-   cServ,xServ:string;
+   sChave,cNFSe,serie,nNFSe:String;
+   cServ,xServ:String;
 begin
    sChave := NFSe.ChaveNFSe;
    serie  := NFSE.SeriePrestacao;
@@ -2156,7 +2156,7 @@ end;
 
 procedure TNFSeW.GerarXML_Provedor_Equiplano;
 var
-  sTpDoc: string;
+  sTpDoc: String;
   iAux, iSerItem, iSerSubItem: Integer;
 begin
   if (Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro) <> '') then

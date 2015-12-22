@@ -70,7 +70,7 @@ type
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
     property Leitor: TLeitor             read FLeitor         write FLeitor;
     property NFSe: TNFSe                 read FNFSe           write FNFSe;
@@ -86,7 +86,7 @@ type
     FPathArquivoMunicipios: string;
     FPathArquivoTabServicos: string;
   published
-    property PathArquivoMunicipios: string read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property PathArquivoMunicipios: string  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
     property PathArquivoTabServicos: string read FPathArquivoTabServicos write FPathArquivoTabServicos;
   end;
 
@@ -119,7 +119,7 @@ end;
 function TNFSeR.LerRPS_ABRASF_V1: Boolean;
 var
  item, i: Integer;
- ok  : Boolean;
+ ok: Boolean;
 begin
  if (Leitor.rExtrai(2, 'InfRps') <> '') or (Leitor.rExtrai(1, 'Rps') <> '')
   then begin
@@ -2075,7 +2075,7 @@ begin
   end;
 end;
 
-function TNFSeR.LerXml: boolean;
+function TNFSeR.LerXml: Boolean;
 begin
  Result := False;
 

@@ -2745,12 +2745,19 @@ begin
 
   InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingCab);
 
-  if (FProvedor = proDigifred) then begin
-    FTagI := '<' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + FNameSpaceDad;
-    FTagF := '</' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
-  end else begin
-    FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio' + FNameSpaceDad;
-    FTagF := '</' + FPrefixo3 + 'ConsultarNfseEnvio>';
+  case FProvedor of
+    proDigifred: begin
+                   FTagI := '<' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + FNameSpaceDad;
+                   FTagF := '</' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
+                 end;
+    proSystemPro: begin
+                    FTagI := '<' + FPrefixo3 + 'ConsultarNfseFaixaEnvio' + FNameSpaceDad;
+                    FTagF := '</' + FPrefixo3 + 'ConsultarNfseFaixaEnvio>';
+                  end;
+  else begin
+         FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio' + FNameSpaceDad;
+         FTagF := '</' + FPrefixo3 + 'ConsultarNfseEnvio>';
+       end;
   end;
 
  if FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSe

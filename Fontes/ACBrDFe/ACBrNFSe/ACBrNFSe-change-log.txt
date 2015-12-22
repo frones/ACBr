@@ -49,6 +49,10 @@ Símbolo : Significado
 
 22/12/2015
 -- ACBrNFSeWebServices --
+[*] Condicionado a TAG do grupo de Consulta de NFS-e.
+    Por: Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
 [*] Incluido nas mensagens o método executado.
     Por: Italo Jurisato Junior
 

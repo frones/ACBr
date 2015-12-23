@@ -58,6 +58,7 @@ type
     FOnWriteRegistroC111: TWriteRegistroEvent;
     FOnWriteRegistroC120: TWriteRegistroEvent;
     FOnWriteRegistroC170: TWriteRegistroEvent;
+    FOnWriteRegistroC460: TWriteRegistroEvent;
     FOnWriteRegistroC470: TWriteRegistroEvent;
     FOnWriteRegistroC510: TWriteRegistroEvent;
 
@@ -333,6 +334,7 @@ type
     property OnWriteRegistroC111: TWriteRegistroEvent read FOnWriteRegistroC111 write FOnWriteRegistroC111;
     property OnWriteRegistroC120: TWriteRegistroEvent read FOnWriteRegistroC120 write FOnWriteRegistroC120;
     property OnWriteRegistroC170: TWriteRegistroEvent read FOnWriteRegistroC170 write FOnWriteRegistroC170;
+    property OnWriteRegistroC460: TWriteRegistroEvent read FOnWriteRegistroC460 write FOnWriteRegistroC460;
     property OnWriteRegistroC470: TWriteRegistroEvent read FOnWriteRegistroC470 write FOnWriteRegistroC470;
     property OnWriteRegistroC510: TWriteRegistroEvent read FOnWriteRegistroC510 write FOnWriteRegistroC510;
 
@@ -2360,6 +2362,7 @@ procedure TBloco_C.WriteRegistroC460(RegC405: TRegistroC405);
 var
   intFor: integer;
   strCOD_SIT: AnsiString;
+  strLinha: AnsiString;
 begin
   if Assigned( RegC405.RegistroC460 ) then
   begin
@@ -2384,16 +2387,22 @@ begin
            sdRegimeEspecNEsp:       strCOD_SIT := '08';
           end;
 
-          Add( LFill('C460') +
-               LFill( COD_MOD ) +
-               LFill( strCOD_SIT ) +
-               IfThen( DT_INI >= EncodeDate(2013,10,01), LFill( NUM_DOC, 9) , LFill( NUM_DOC, 6) ) +
-               LFill( DT_DOC, 'ddmmyyyy' ) +
-               LFill( VL_DOC,0,2, true ) +
-               LFill( VL_PIS,0,2, true ) +
-               LFill( VL_COFINS,0,2, true ) +
-               LFill( CPF_CNPJ ) +
-               LFill( NOM_ADQ ) ) ;
+          strLinha := LFill('C460') +
+                      LFill( COD_MOD ) +
+                      LFill( strCOD_SIT ) +
+                      IfThen( DT_INI >= EncodeDate(2013,10,01), LFill( NUM_DOC, 9) , LFill( NUM_DOC, 6) ) +
+                      LFill( DT_DOC, 'ddmmyyyy' ) +
+                      LFill( VL_DOC,0,2, true ) +
+                      LFill( VL_PIS,0,2, true ) +
+                      LFill( VL_COFINS,0,2, true ) +
+                      LFill( CPF_CNPJ ) +
+                      LFill( NOM_ADQ )  ;
+
+          //-- Write
+          if Assigned(FOnWriteRegistroC460) then
+             FOnWriteRegistroC460(strLinha);
+
+          Add(strLinha);
         end;
         /// Registros FILHOS
         WriteRegistroC470( RegC405.RegistroC460.Items[intFor] );

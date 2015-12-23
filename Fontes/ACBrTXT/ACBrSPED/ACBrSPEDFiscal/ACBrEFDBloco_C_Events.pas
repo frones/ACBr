@@ -68,6 +68,7 @@ type
     FOnAfterWriteRegistroC170: TWriteRegistroEvent;
     FOnAfterWriteRegistroC470: TWriteRegistroEvent;
     FOnAfterWriteRegistroC510: TWriteRegistroEvent;
+    FOnWriteRegistroC460: TWriteRegistroEvent;
 
     function GetOnAfterWriteRegistroC111: TWriteRegistroEvent;
     function GetOnAfterWriteRegistroC120: TWriteRegistroEvent;
@@ -82,6 +83,7 @@ type
     function GetOnWriteRegistroC111: TWriteRegistroEvent;
     function GetOnWriteRegistroC120: TWriteRegistroEvent;
     function GetOnWriteRegistroC170: TWriteRegistroEvent;
+    function GetOnWriteRegistroC460: TWriteRegistroEvent;
     function GetOnWriteRegistroC470: TWriteRegistroEvent;
     function GetOnWriteRegistroC510: TWriteRegistroEvent;
     procedure SetOnAfterWriteRegistroC111(const Value: TWriteRegistroEvent);
@@ -97,6 +99,7 @@ type
     procedure SetOnWriteRegistroC111(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC120(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC170(const Value: TWriteRegistroEvent);
+    procedure SetOnWriteRegistroC460(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC470(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC510(const Value: TWriteRegistroEvent);
 
@@ -113,6 +116,7 @@ type
     property OnWriteRegistroC111: TWriteRegistroEvent read GetOnWriteRegistroC111 write SetOnWriteRegistroC111;
     property OnWriteRegistroC120: TWriteRegistroEvent read GetOnWriteRegistroC120 write SetOnWriteRegistroC120;
     property OnWriteRegistroC170: TWriteRegistroEvent read GetOnWriteRegistroC170 write SetOnWriteRegistroC170;
+    property OnWriteRegistroC460: TWriteRegistroEvent read FOnWriteRegistroC460 write SetOnWriteRegistroC460;
     property OnWriteRegistroC470: TWriteRegistroEvent read GetOnWriteRegistroC470 write SetOnWriteRegistroC470;
     property OnWriteRegistroC510: TWriteRegistroEvent read GetOnWriteRegistroC510 write SetOnWriteRegistroC510;
 
@@ -204,6 +208,11 @@ end;
 function TEventsBloco_C.GetOnWriteRegistroC170: TWriteRegistroEvent;
 begin
    Result := FOnWriteRegistroC170;
+end;
+
+function TEventsBloco_C.GetOnWriteRegistroC460: TWriteRegistroEvent;
+begin
+   Result := FOnWriteRegistroC460;
 end;
 
 function TEventsBloco_C.GetOnWriteRegistroC470: TWriteRegistroEvent;
@@ -318,6 +327,14 @@ begin
   FOnWriteRegistroC170 := Value;
 
   TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC170 := Value;
+end;
+
+procedure TEventsBloco_C.SetOnWriteRegistroC460(
+  const Value: TWriteRegistroEvent);
+begin
+  FOnWriteRegistroC460 := Value;
+
+  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC460 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC470(

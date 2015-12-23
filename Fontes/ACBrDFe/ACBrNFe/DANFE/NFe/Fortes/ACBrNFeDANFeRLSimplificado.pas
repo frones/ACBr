@@ -199,7 +199,7 @@ begin
     rlmEmitente.Lines.Clear;
     with FNFe.Emit do
      begin
-      rlmEmitente.Lines.Add(XNome);
+      rlmEmitente.Lines.Add(ManterNomeImpresso( XNome , XFant ));
       with EnderEmit do
        begin
         rlmEmitente.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro) +
@@ -365,185 +365,47 @@ end;
 
 procedure TfrlDANFeRLSimplificado.Itens;
 var
- nItem: Integer;
- sCST, sBCICMS, sALIQICMS, sVALORICMS, sALIQIPI, sVALORIPI: String;
+  nItem: Integer;
 begin
   cdsItens.Close;
   cdsItens.CreateDataSet;
   cdsItens.Open;
-  TotalItens := FNFe.Det.Count;
-
-  for nItem := 0 to (FNFe.Det.Count - 1) do
+  TotalItens  := FNFe.Det.Count;
+  for nItem   := 0 to (FNFe.Det.Count - 1) do
+  begin
+    with FNFe.Det.Items[nItem] do
     begin
-      with FNFe.Det.Items[nItem] do
+      with Prod do
+      begin
+        with Imposto.ICMS do
         begin
-          with Prod do
-            begin
-              with Imposto.ICMS do
-                begin
-                  sALIQIPI   := '0,00';
-                  sVALORIPI  := '0,00';
-
-                  cdsItens.Append;
-                  cdsItens.FieldByName('ITEM').AsString := FormatFloat('000', nItem );
-                  cdsItens.FieldByName('CODIGO').AsString := CProd;
-                  cdsItens.FieldByName('DESCRICAO').AsString := XProd;
-                  cdsItens.FieldByName('INFADIPROD').AsString := infAdProd;
-                  cdsItens.FieldByName('NCM').AsString := NCM;
-                  cdsItens.FieldByName('CFOP').AsString := CFOP;
-
-                  case FCasasDecimaisqCom of
-                    0: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0', QCom);
-                    1: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0', QCom);
-                    2: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00', QCom);
-                    3: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000', QCom);
-                    4: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000', QCom);
-                    5: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000', QCom);
-                    6: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000', QCom);
-                    7: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000', QCom);
-                    8: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.00000000', QCom);
-                    9: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.000000000', QCom);
-                   10: cdsItens.FieldByName('QTDE').AsString := FormatFloat('###,###,###,##0.0000000000', QCom);
-                  end;
-
-                  case FCasasDecimaisvUnCom of
-                    0: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0', vUnCom);
-                    1: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0', vUnCom);
-                    2: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00', vUnCom);
-                    3: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000', vUnCom);
-                    4: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000', vUnCom);
-                    5: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000', vUnCom);
-                    6: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000', vUnCom);
-                    7: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000', vUnCom);
-                    8: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.00000000', vUnCom);
-                    9: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.000000000', vUnCom);
-                   10: cdsItens.FieldByName('VALOR').AsString := FormatFloat('###,###,###,##0.0000000000', vUnCom);
-                  end;
-
-                  cdsItens.FieldByName('UNIDADE').AsString := UCom;
-                  cdsItens.FieldByName('TOTAL').AsString :=
-                                      FormatFloat('###,###,###,##0.00', vProd);
-                  //==============================================================================
-                  // Em contato com o pessoal da Receita Estadual, foi informado que Ambos os regimes
-                  // trabalham de mesma forma, deferenciando-se apensa em seus códigos
-                  //==============================================================================
-                  if FNFe.Emit.CRT in [crtRegimeNormal, crtSimplesExcessoReceita] then
-                    begin
-                      if CSTICMSToStr(CST) > '' then
-                        sCST := OrigToStr(orig) + CSTICMSToStr(CST)
-                      else
-                        sCST := '';
-                      sBCICMS    := '0,00';
-                      sALIQICMS  := '0,00';
-                      sVALORICMS := '0,00';
-
-                      if (CST = cst00) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst10) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst20) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst30) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMSST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
-                        end
-                      else if (CST = cst40) or (CST = cst41) or (CST = cst50) then
-                        begin
-                          // Campos vazios
-                        end
-                      else if (CST = cst51) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst60) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBCST);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMSST);
-                        end
-                      else if (CST = cst70) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                        end
-                      else if (CST = cst90) then
-                        begin
-                          sBCICMS    := FormatFloat('###,###,###,##0.00', VBC);
-                          sALIQICMS  := FormatFloat('###,###,###,##0.00', PICMS);
-                          sVALORICMS := FormatFloat('###,###,###,##0.00', VICMS);
-                       end;
-
-                      cdsItens.FieldByName('CST').AsString := sCST;
-                      cdsItens.FieldByName('BICMS').AsString := sBCICMS;
-                      cdsItens.FieldByName('ALIQICMS').AsString := sALIQICMS;
-                      cdsItens.FieldByName('VALORICMS').AsString := sVALORICMS;
-                    end; //FNFe.Emit.CRT = crtRegimeNormal
-
-                  if FNFe.Emit.CRT = crtSimplesNacional then
-                    begin
-                        //==============================================================================
-                        // Adicionado para imprimir alíquotas
-                        //==============================================================================
-                        if CSOSNIcmsToStr(Imposto.ICMS.CSOSN) > '' then
-                           cdsItens.FieldByName('CSOSN').AsString := OrigToStr(orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN)
-                        else
-                           cdsItens.FieldByName('CSOSN').AsString := '';
-
-                        //==============================================================================
-                        // Resetando valores das qlíquotas
-                        //==============================================================================
-                        sBCICMS    := '0,00';
-                        sALIQICMS  := '0,00';
-                        sVALORICMS := '0,00';
-
-                        case CSOSN of
-                           csosn900:
-                           begin
-                              sBCICMS    := FormatFloat('#,##0.00', VBC);
-                              sALIQICMS  := FormatFloat('#,##0.00', PICMS);
-                              sVALORICMS := FormatFloat('#,##0.00', VICMS);
-                           end;
-                        end;
-
-                        cdsItens.FieldByName('BICMS').AsString       := sBCICMS;
-                        cdsItens.FieldByName('ALIQICMS').AsString    := sALIQICMS;
-                        cdsItens.FieldByName('VALORICMS').AsString   := sVALORICMS;
-                    end; //FNFe.Emit.CRT = crtSimplesNacional
-                end; // with Imposto.ICMS do
-
-               with Imposto.IPI do
-                begin
-                  if (CST = ipi00) or (CST = ipi49) or
-                     (CST = ipi50) or (CST = ipi99) then
-                    begin
-                      sALIQIPI  := FormatFloat('##0.00', PIPI);
-                      sVALORIPI := FormatFloat('##0.00', VIPI);
-                    end
-                end;
-
-              cdsItens.FieldByName('ALIQIPI').AsString := sALIQIPI;
-              cdsItens.FieldByName('VALORIPI').AsString := sVALORIPI;
-              cdsItens.Post;
-            end; // with Prod do
-        end; //  with FNFe.Det.Items[nItem] do
-    end; //  for nItem := 0 to ( FNFe.Det.Count - 1 ) do
-
+          cdsItens.Append;
+          cdsItens.FieldByName('ITEM').AsString         := FormatFloat('000', nItem );
+          cdsItens.FieldByName('CODIGO').AsString       := CProd;
+          cdsItens.FieldByName('DESCRICAO').AsString    := XProd;
+          cdsItens.FieldByName('INFADIPROD').AsString   := infAdProd;
+          cdsItens.FieldByName('NCM').AsString          := NCM;
+          cdsItens.FieldByName('CST').AsString          := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
+          cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
+          cdsItens.FieldByName('CFOP').AsString         := CFOP;
+          cdsItens.FieldByName('QTDE').AsString         := FormatQuantidade( Prod.qCom);
+          cdsItens.FieldByName('VALOR').AsString        := FormatValorUnitario(  Prod.vUnCom);
+          cdsItens.FieldByName('UNIDADE').AsString      := UCom;
+          cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', vProd);
+          cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
+          cdsItens.FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),'###,###,##0.00');
+          cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);
+          cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', Imposto.ICMS.PICMS);
+          cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VICMS);
+          cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vBCST);
+          cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vICMSST);
+          cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.PIPI);
+          cdsItens.FieldByName('VALORIPI').AsString     := FormatFloat('##0.00', Imposto.IPI.VIPI);
+          cdsItens.Post;
+        end;
+      end;
+    end;
+  end;
   cdsItens.First;
 end;
 

@@ -125,6 +125,12 @@ type
     function BuscaDireita(Busca, Text: String): Integer;
     procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
     function QuebraLinha: String;
+    function ManterNomeImpresso(sXNome, sXFant: String): String;
+    function FormatQuantidade(dValor: Double): String;
+    function FormatValorUnitario(dValor: Double): String;
+    function ManterDesPro(dvDesc, dvProd: Double): Double;
+    function TrataDocumento(sCNPJCPF: String): String;
+
   private
     { Private declarations }
   protected
@@ -171,7 +177,7 @@ type
     sRetirada : String;
     sEntrega : String;
     FImprimirDescPorc: Boolean;
-	  fImprimeNomeFantasia: Boolean;
+    fImprimeNomeFantasia: Boolean;
     fImprimirTotalLiquido : Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
@@ -229,7 +235,7 @@ type
                     ANFECancelada: Boolean = False;
                     AImprimirDetalhamentoEspecifico: Boolean = True;
                     AImprimirDescPorc: Boolean = False;
-					          AImprimeNomeFantasia: Boolean = False;
+                    AImprimeNomeFantasia: Boolean = False;
                     AImprimirTotalLiquido : Boolean = False;
                     ADetVeiculos: TDetVeiculos = [];
                     ADetMedicamentos: TDetMedicamentos = [];
@@ -310,6 +316,8 @@ type
     sDisplayFormat = '###,###,###,##0.%.*d';
 
 implementation
+
+uses ACBrValidador;
 
 {$R *.dfm}
 
@@ -491,8 +499,8 @@ begin
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
       FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
-      FImprimirDescPorc     := AImprimirDescPorc;
-	    fImprimeNomeFantasia  := AImprimeNomeFantasia;
+      FImprimirDescPorc := AImprimirDescPorc;
+      fImprimeNomeFantasia  := AImprimeNomeFantasia;
       fImprimirTotalLiquido := AImprimirTotalLiquido;
       FDetVeiculos          := ADetVeiculos;
       FDetMedicamentos      := ADetMedicamentos;
@@ -619,7 +627,7 @@ begin
       FResumoCanhoto_Texto := AResumoCanhoto_Texto;
       FNFeCancelada := ANFeCancelada;
       FImprimirDetalhamentoEspecifico := AImprimirDetalhamentoEspecifico;
-      FImprimirDescPorc     := AImprimirDescPorc;
+      FImprimirDescPorc := AImprimirDescPorc;
       fImprimeNomeFantasia  := AImprimeNomeFantasia;
       fImprimirTotalLiquido := AImprimirTotalLiquido;
       FDetVeiculos := ADetVeiculos;
@@ -793,6 +801,68 @@ begin
   else
     Result := ' - ';
 end;
+
+
+Function TfrlDANFeRL.ManterNomeImpresso(sXNome, sXFant: String): String;
+begin
+  if ( fImprimeNomeFantasia ) and ( sXFant <> '' ) then
+    Result := sXFant
+  else
+    Result := sXNome;
+end;
+
+
+
+Function TfrlDANFeRL.FormatQuantidade( dValor : Double ) : String;
+begin
+  case fFormato of
+    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
+    1 : Result := FormatFloatBr( dValor , fMask_qCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
+  end;
+end;
+
+
+Function TfrlDANFeRL.FormatValorUnitario( dValor : Double ) : String;
+begin
+  case fFormato of
+    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
+    1 : Result := FormatFloatBr( dValor , fMask_vUnCom);
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
+  end;
+end;
+
+
+Function TfrlDANFeRL.ManterDesPro( dvDesc ,dvProd : Double) : Double;
+begin
+  if ( fImprimirDescPorc ) then
+  begin
+    if (dvDesc > 0) and ( dvProd > 0 ) then
+      Result := (dvDesc * 100) / dvProd
+    else
+      Result := 0;
+  end
+  else
+    Result := dvDesc;
+end;
+
+
+Function TfrlDANFeRL.TrataDocumento( sCNPJCPF : String ) : String;
+begin
+  Result := sCNPJCPF;
+  if NaoEstaVazio( Result ) then
+  begin
+    if Length( Result ) = 14 then
+      Result := ' CNPJ: '
+    else
+      Result := ' CPF: ';
+
+    Result := Result + FormatarCNPJouCPF( sCNPJCPF );
+  end;
+end;
+
 
 end.
 

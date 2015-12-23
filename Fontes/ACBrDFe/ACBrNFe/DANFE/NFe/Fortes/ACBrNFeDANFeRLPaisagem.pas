@@ -503,15 +503,11 @@ type
     procedure ConfigureDataSource;
     function ManterArma(inItem: integer): String;
     function ManterCombustivel(inItem: integer): String;
-    function ManterDesPro(dvDesc, dvProd: Double): Double;
     function ManterMedicamentos(inItem: integer) : String;
     function ManterVeiculos(inItem: integer): String;
     function ManterXpod(sXProd: String; inItem: Integer): String;
-    function FormatQuantidade(dValor: Double): String;
-    function FormatValorUnitario(dValor: Double): String;
     procedure AddFaturaReal;
     function ManterDuplicatas: Integer;
-    function TrataDocumento(sCNPJCPF: String): String;
   public
 
   end;
@@ -1107,13 +1103,6 @@ begin
 end;
 
 procedure TfrlDANFeRLPaisagem.Emitente;
-  function ManterNomeImpresso(sXNome, sXFant: String): String;
-  begin
-    if ( fImprimeNomeFantasia ) and ( sXFant <> '' ) then
-      Result := sXFant
-    else
-      Result := sXNome;
-  end;
 begin
   //emit
   with FNFe.Emit do
@@ -2295,19 +2284,6 @@ begin
   end;
 end;
 
-Function TfrlDANFeRLPaisagem.ManterDesPro( dvDesc ,dvProd : Double) : Double;
-begin
-  if ( fImprimirDescPorc ) then
-  begin
-    if (dvDesc > 0) and ( dvProd > 0 ) then
-      Result := (dvDesc * 100) / dvProd
-    else
-      Result := 0;
-  end
-  else
-    Result := dvDesc;
-end;
-
 Function TfrlDANFeRLPaisagem.ManterXpod( sXProd : String;  inItem : Integer ) : String;
 begin
   Result := sXProd;
@@ -2318,28 +2294,6 @@ begin
     Result := Result + ManterMedicamentos( inItem );
     Result := Result + ManterArma( inItem );
     Result := Result + ManterCombustivel( inItem );
-  end;
-end;
-
-Function TfrlDANFeRLPaisagem.FormatQuantidade( dValor : Double ) : String;
-begin
-  case fFormato of
-    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
-    1 : Result := FormatFloatBr( dValor , fMask_qCom);
-    else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
-  end;
-end;
-
-
-Function TfrlDANFeRLPaisagem.FormatValorUnitario( dValor : Double ) : String;
-begin
-  case fFormato of
-    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
-    1 : Result := FormatFloatBr( dValor , fMask_vUnCom);
-    else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
-
   end;
 end;
 
@@ -2395,20 +2349,6 @@ begin
         TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,'###,###,###,##0.00');
       end;
     end;
-  end;
-end;
-
-Function TfrlDANFeRLPaisagem.TrataDocumento( sCNPJCPF : String ) : String;
-begin
-  Result := sCNPJCPF;
-  if NaoEstaVazio( Result ) then
-  begin
-    if Length( Result ) = 14 then
-      Result := ' CNPJ: '
-    else
-      Result := ' CPF: ';
-
-    Result := Result + FormatarCNPJouCPF( sCNPJCPF );
   end;
 end;
 

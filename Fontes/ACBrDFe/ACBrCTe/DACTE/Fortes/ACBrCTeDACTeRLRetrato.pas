@@ -1130,7 +1130,7 @@ begin
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
       rlmDadosEmitente.Lines.Add(ACBrStr('INSCRIÇÃO ESTADUAL: ') + IE);
-      {rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));}
+      rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
 
       if Trim(FUrl) <> '' then
         rlmDadosEmitente.Lines.Add('SITE: ' + FUrl);

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2015
+-- pcnNFeW --
+[*] Alterado a condição para determinar se vai ser gerado o grupo <ICMSUFDest> ou
+    não.
+    por: Italo Jurisato Junior
+
 22/12/2015
 -- ACBrNFeWebServices / ACBrNFe / pcnRetConsSitNFe --
 [*] Incluido o status 303 para que seja acrescentado o protocolo de denegação ao XML.

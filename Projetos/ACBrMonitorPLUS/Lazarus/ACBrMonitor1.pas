@@ -2859,8 +2859,6 @@ begin
   try
     LerIni;
     cbxEmissaoPathNFe.Enabled := cbxPastaMensal.Checked;
-
-    Application.Minimize;
   except
     on E: Exception do
       Erro := Erro + sLineBreak + E.Message;
@@ -4993,6 +4991,7 @@ begin
   if Inicio then
   begin
     Inicializar;
+    Application.Minimize;
     exit;
   end;
 

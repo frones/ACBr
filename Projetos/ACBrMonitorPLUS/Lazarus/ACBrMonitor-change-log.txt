@@ -43,9 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/12/2015
+[*] Ajuste para não minimizar a aplicação, quando clicar no "Salvar" (por: DSA)
+
 22/12/2015
 [*] Modificado para usar o Boleto em Fortes Report
 [*] Remoção de Hints e Warnings
+    (por: DSA)
 
 18/12/2015
 [*] Adicionada regra de exclusão para o Campo "Imprimir Valor Líquido do Produto"
@@ -55,7 +59,6 @@ Símbolo : Significado
 [*] Ajuste para que todos os Pagecontrols fique na primeira página após a
     inicialização
     (por: DSA)
-
 
 15/12/2015
 [+] Adicionadas as tags do fundo de amparo a pobreza, pFCPUFDest e vFCPUFDest

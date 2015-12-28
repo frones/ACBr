@@ -714,6 +714,8 @@ begin
 
   if (ID = 'NA') then
   begin
+	i := NFe.Det.Count - 1;
+  
     NFe.Det[i].Imposto.ICMSUFDest.vBCUFDest := LerCampo(tcDe2, 'vBCUFDest');
 
     NFe.Det[i].Imposto.ICMSUFDest.pFCPUFDest := LerCampo(tcDe2, 'pFCPUFDest');

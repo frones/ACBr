@@ -35,8 +35,8 @@ interface
 
 uses
   SysUtils, Classes, Forms,
-  pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil, ACBrDFeUtil;
+  pcnConversao, pcnLeitor,
+  pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil;
 
 type
 
@@ -278,7 +278,7 @@ var
   VersaodoXML: String;
   ProtocoloTemp, NumeroLoteTemp: String;
   DataRecebimentoTemp:Tdatetime;
-  i, j, k, Nivel: Integer;
+  i, j, Nivel: Integer;
   Nivel1: Boolean;
 begin
   Result := True;
@@ -288,7 +288,6 @@ begin
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
     VersaodoXML := VersaoXML(Leitor.Arquivo);
-    k := 0;
     Leitor.Grupo := Leitor.Arquivo;
 
     Nivel1 := (leitor.rExtrai(1, 'GerarNfseResposta') <> '');

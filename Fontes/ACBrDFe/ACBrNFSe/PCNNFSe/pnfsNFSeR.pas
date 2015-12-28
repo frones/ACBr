@@ -36,7 +36,7 @@ interface
 uses
   SysUtils, Classes, Forms, DateUtils, Variants,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
-  ACBrUtil, ACBrDFeUtil{, ACBrNFSe};
+  ACBrUtil;
 
 type
 
@@ -1596,9 +1596,7 @@ end;
 function TNFSeR.LerNFSe_Infisc: Boolean;
 var
   ok  : Boolean;
-  Item, posI, count: integer;
-  sOperacao, sTributacao: string;
-  strItem: ansiString;
+  Item: integer;
   leitorAux: TLeitor;
   dEmi : String;
   hEmi : String;

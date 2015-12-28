@@ -38,7 +38,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pnfsNFSe, pnfsConversao, ACBrUtil, ACBrDFeUtil, StrUtils, DateUtils;
+  pnfsNFSe, pnfsConversao, ACBrUtil, StrUtils, DateUtils;
 
 type
 

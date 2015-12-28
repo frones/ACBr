@@ -42,7 +42,7 @@ uses
   SysUtils, Classes, StrUtils,
   pcnAuxiliar, pcnConversao, pcnGerador,
   pnfsNFSe, pnfsConversao, ACBrConsts,
-  ACBrNFSeConfiguracoes, synacode;
+  synacode;
 
 type
 

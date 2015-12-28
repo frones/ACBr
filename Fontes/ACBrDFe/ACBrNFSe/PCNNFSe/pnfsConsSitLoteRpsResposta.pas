@@ -368,16 +368,16 @@ begin
 end;
 
 function TretSitLote.LerXml_provedorNFSEBrasil: boolean;
-var
-  ok, nfseGerada: boolean;
-  i, Item, posI, count: Integer;
-  VersaoXML: String;
-  strAux,strAux2, strItem: AnsiString;
-  leitorAux, leitorItem:TLeitor;
+//var
+  //ok, nfseGerada: boolean;
+  //i, Item, posI, count: Integer;
+  //VersaoXML: String;
+  //strAux,strAux2, strItem: AnsiString;
+  //leitorAux, leitorItem:TLeitor;
 begin
   result      := False;
-  nfseGerada  := False;
   (*
+  nfseGerada  := False;
    // Luiz Baião 2014.12.03
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);

@@ -36,7 +36,7 @@ interface
 uses
   SysUtils, Classes, Forms, DateUtils,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, ACBrUtil, ACBrDFeUtil;
+  pnfsConversao, pnfsNFSe, ACBrUtil;
 
 type
 
@@ -718,7 +718,7 @@ function TretNfse.LerXml_provedorIssDsf: boolean; //falta homologar
 var
   ok: boolean;
   i, Item, posI, count: Integer;
-  sOperacao, sTributacao, VersaodoXML: String;
+  sOperacao, sTributacao: String;
   strAux, strItem: AnsiString;
   leitorAux, leitorItem:TLeitor;
 begin
@@ -726,7 +726,6 @@ begin
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    VersaodoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
     if leitor.rExtrai(1, 'RetornoConsultaNotas') <> '' then
     begin
@@ -919,9 +918,7 @@ end;
 function TretNfse.LerXml_provedorInfisc: boolean;
 var
   ok: boolean;
-  i, Item, PosI, count: Integer;
-  sOperacao, sTributacao, VersaodoXML: String;
-  strAux, strItem: AnsiString;
+  i, Item: Integer;
   leitorAux, leitorItem:TLeitor;
   sMotDes,sMotCod: String;
   dEmi, hEmi :string;
@@ -931,7 +928,6 @@ begin
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    VersaodoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
     
     if (Pos('<NFS-e>',Leitor.Arquivo)>0) and (Pos('</NFS-e>',Leitor.Arquivo)>0) then // Retorna Somente 1 NFS-e

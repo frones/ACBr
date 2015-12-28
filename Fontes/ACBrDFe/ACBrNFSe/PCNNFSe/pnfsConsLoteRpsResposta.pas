@@ -36,7 +36,7 @@ interface
 uses
   SysUtils, Classes, Forms,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, ACBrUtil, ACBrDFeUtil;
+  pnfsConversao, pnfsNFSe, ACBrUtil;
 
 type
 
@@ -774,16 +774,12 @@ end;
 
 function TretLote.LerXml_provedorIssDsf: boolean;  //falta homologar
 var
-  i{, posI, count}: Integer;
-  VersaodoXML: String;
-//  strAux: AnsiString;
-//  leitorAux: TLeitor;
+  i: Integer;
 begin
   result := False;
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    VersaodoXML    := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'RetornoConsultaLote') <> '' then
@@ -982,6 +978,7 @@ begin
 
     k      := 0; //length(Prefixo4);
     iNivel := 0;
+    VersaodoXML := '1';
 
     if (leitor.rExtrai(iNivel + 1, 'ListaNfse') <> '') or
           (leitor.rExtrai(iNivel + 1, 'CompNfse') <> '') then

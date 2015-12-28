@@ -35,8 +35,8 @@ interface
 
 uses
   SysUtils, Classes, Forms,
-  pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, ACBrUtil, ACBrDFeUtil;
+  pcnConversao, pcnLeitor,
+  pnfsConversao, pnfsNFSe, ACBrUtil;
 
 type
 
@@ -721,16 +721,13 @@ end;
 function TretNfseRps.LerXml_provedorIssDsf: boolean;  //falta homologar
 var
   ok: boolean;
-  i, Item{, posI, count}: Integer;
-  sOperacao, sTributacao, VersaodoXML: String;
-//  strAux, strItem: AnsiString;
-//  leitorAux, leitorItem:TLeitor;
+  i, Item: Integer;
+  sOperacao, sTributacao: String;
 begin
   result := true;
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    VersaodoXML    := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'RetornoConsultaNFSeRPS') <> '' then

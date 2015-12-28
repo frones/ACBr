@@ -394,16 +394,12 @@ end;
 
 function TretCancNFSe.LerXml_provedorIssDsf: boolean; //falta homologar
 var
-  i{, posI, count}: Integer;
-  VersaoXML: String;
-//  strAux: AnsiString;
-//  leitorAux: TLeitor;
+  i: Integer;
 begin
   result := False;
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    VersaoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'RetornoCancelamentoNFSe') <> '' then
@@ -554,12 +550,12 @@ end;
 
 // Luiz Baião 2014.12.09 
 function TretCancNFSe.LerXml_provedorNFSEBrasil: boolean;
-var
-  ok: boolean;
-  i, Item, posI, count: Integer;
-  VersaoXML: String;
-  strAux,strAux2, strItem: AnsiString;
-  leitorAux, leitorItem:TLeitor;
+//var
+  //ok: boolean;
+  //i, Item, posI, count: Integer;
+  //VersaoXML: String;
+  //strAux,strAux2, strItem: AnsiString;
+  //leitorAux, leitorItem:TLeitor;
 begin
   result := False;
   (*

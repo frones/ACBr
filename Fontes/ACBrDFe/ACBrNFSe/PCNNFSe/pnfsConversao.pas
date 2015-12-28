@@ -121,45 +121,39 @@ type
 
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
 
-function StrToHex(S: String): String;
-function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
-  const AEnumerados: array of variant): variant;
-function EnumeradoToStr(const t: variant; const AString:
-  array of string; const AEnumerados: array of variant): variant;
-
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS):string;
-function StrToStatusRPS(var ok: boolean; const s: string):TnfseStatusRPS;
+function StrToStatusRPS(out ok: boolean; const s: string):TnfseStatusRPS;
 
 function StatusNFSeToStr(const t: TnfseStatusNFSe):string;
-function StrToStatusNFSe(var ok: boolean; const s: string):TnfseStatusNFSe;
+function StrToStatusNFSe(out ok: boolean; const s: string):TnfseStatusNFSe;
 
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
-function StrToNaturezaOperacao(var ok: boolean; const s: string):TnfseNaturezaOperacao;
+function StrToNaturezaOperacao(out ok: boolean; const s: string):TnfseNaturezaOperacao;
 function NaturezaOperacaoDescricao( const t : TnfseNaturezaOperacao ): String;
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS):string;
-function StrToExigibilidadeISS(var ok: boolean; const s: string):TnfseExigibilidadeISS;
+function StrToExigibilidadeISS(out ok: boolean; const s: string):TnfseExigibilidadeISS;
 function ExigibilidadeISSDescricao( const t : TnfseExigibilidadeISS ): String;
 
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao):string;
-function StrToRegimeEspecialTributacao(var ok: boolean; const s: string):TnfseRegimeEspecialTributacao;
+function StrToRegimeEspecialTributacao(out ok: boolean; const s: string):TnfseRegimeEspecialTributacao;
 function nfseRegimeEspecialTributacaoDescricao( const t : TnfseRegimeEspecialTributacao ): String;
 
 function SimNaoToStr(const t: TnfseSimNao):string;
-function StrToSimNao(var ok: boolean; const s: string):TnfseSimNao;
+function StrToSimNao(out ok: boolean; const s: string):TnfseSimNao;
 
 function TipoRPSToStr(const t: TnfseTipoRPS):string;
-function StrToTipoRPS(var ok: boolean; const s: string):TnfseTipoRPS;
+function StrToTipoRPS(out ok: boolean; const s: string):TnfseTipoRPS;
 
 function IndicacaoCpfCnpjToStr(const t: TnfseIndicacaoCpfCnpj):string;
-function StrToIndicacaoCpfCnpj(var ok: boolean; const s: string):TnfseIndicacaoCpfCnpj;
+function StrToIndicacaoCpfCnpj(out ok: boolean; const s: string):TnfseIndicacaoCpfCnpj;
 
 function SituacaoLoteRPSToStr(const t: TnfseSituacaoLoteRPS):string;
-function StrToSituacaoLoteRPS(var ok: boolean; const s: string):TnfseSituacaoLoteRPS;
+function StrToSituacaoLoteRPS(out ok: boolean; const s: string):TnfseSituacaoLoteRPS;
 
 function ProvedorToStr(const t: TnfseProvedor):string;
-function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
+function StrToProvedor(out ok: boolean; const s: string):TnfseProvedor;
 
 function CodigoToDesc(const s: string): ansistring;
 function CodCidadeToProvedor(const ACodigo: Integer): string;
@@ -168,21 +162,21 @@ function CodCidadeToCodSiafi(const ACodigo: Integer): string;
 function CodSiafiToCodCidade(const ACodigo: string): string;
 
 function SituacaoTributariaToStr(const t: TnfseSituacaoTributaria):string;
-function StrToSituacaoTributaria(var ok: boolean; const s: string):TnfseSituacaoTributaria;
+function StrToSituacaoTributaria(out ok: boolean; const s: string):TnfseSituacaoTributaria;
 function SituacaoTributariaDescricao( const t : TnfseSituacaoTributaria ): String;
 
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao):string;
-function StrToResponsavelRetencao(var ok: boolean; const s: string):TnfseResponsavelRetencao;
+function StrToResponsavelRetencao(out ok: boolean; const s: string):TnfseResponsavelRetencao;
 
 // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
 function TipoEmissaoToStr(const t: TnfseTEmissao):string;
-function StrToTipoEmissao(var ok: boolean; const s: string):TnfseTEmissao;
+function StrToTipoEmissao(out ok: boolean; const s: string):TnfseTEmissao;
 
 function EmpreitadaGlobalToStr(const t: TnfseTEmpreitadaGlobal):string;
-function StrToEmpreitadaGlobal(var ok: boolean; const s: string):TnfseTEmpreitadaGlobal;
+function StrToEmpreitadaGlobal(out ok: boolean; const s: string):TnfseTEmpreitadaGlobal;
 
 function CondicaoToStr(const t: TnfseCondicaoPagamento): string;
-function StrToCondicao(var ok: boolean; const s: string): TnfseCondicaoPagamento;
+function StrToCondicao(out ok: boolean; const s: string): TnfseCondicaoPagamento;
 
 function ObterDescricaoServico(cCodigo: String): String;
 function ChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
@@ -208,38 +202,7 @@ function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 
 implementation
 
-function StrToHex(S: String): String;
-var I: Integer;
-begin
-  Result:= '';
-  for I := 1 to length (S) do
-    Result:= Result+IntToHex(ord(S[i]),2);
-end;
-
-function StrToEnumerado(var ok: boolean; const s: string; const AString:
-  array of string; const AEnumerados: array of variant): variant;
-var
-  i: integer;
-begin
-  result := -1;
-  for i := Low(AString) to High(AString) do
-    if AnsiSameText(s, AString[i]) then
-      result := AEnumerados[i];
-  ok := result <> -1;
-  if not ok then
-    result := AEnumerados[0];
-end;
-
-function EnumeradoToStr(const t: variant; const AString:
-  array of string; const AEnumerados: array of variant): variant;
-var
-  i: integer;
-begin
-  result := '';
-  for i := Low(AEnumerados) to High(AEnumerados) do
-    if t = AEnumerados[i] then
-      result := AString[i];
-end;
+uses pcnConversao;
 
 // Status RPS ******************************************************************
 
@@ -250,7 +213,7 @@ begin
                            [srNormal, srCancelado]);
 end;
 
-function StrToStatusRPS(var ok: boolean; const s: string):TnfseStatusRPS;
+function StrToStatusRPS(out ok: boolean; const s: string):TnfseStatusRPS;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2'],
@@ -266,7 +229,7 @@ begin
                            [srNormal, srCancelado]);
 end;
 
-function StrToStatusNFSe(var ok: boolean; const s: string):TnfseStatusNFSe;
+function StrToStatusNFSe(out ok: boolean; const s: string):TnfseStatusNFSe;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2'],
@@ -300,7 +263,7 @@ begin
                             ]);
 end;
 
-function StrToNaturezaOperacao(var ok: boolean; const s: string):TnfseNaturezaOperacao;
+function StrToNaturezaOperacao(out ok: boolean; const s: string):TnfseNaturezaOperacao;
 begin
   result := StrToEnumerado(ok, s,
                           ['1', '2', '3', '4', '5', '6', '7',
@@ -340,7 +303,8 @@ begin
                             no501, no511, no541, no551, no601, no701]);
 end;
 
-function StrToNaturezaOperacao(var ok: boolean; const s: string):TnfseNaturezaOperacao;
+function StrToNaturezaOperacao(out ok: boolean; const s: string
+  ): TnfseNaturezaOperacao;
 begin
   result := StrToEnumerado(ok, s,
                           ['1', '2', '3', '4', '5', '6', '7',
@@ -367,7 +331,7 @@ begin
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo]);
 end;
 
-function StrToExigibilidadeISS(var ok: boolean; const s: string):TnfseExigibilidadeISS;
+function StrToExigibilidadeISS(out ok: boolean; const s: string):TnfseExigibilidadeISS;
 begin
   result := StrToEnumerado(ok, s,
                           ['1','2','3','4','5','6','7'],
@@ -388,7 +352,7 @@ begin
                             retLucroReal, retLucroPresumido, retSimplesNacional]);
 end;
 
-function StrToRegimeEspecialTributacao(var ok: boolean; const s: string):TnfseRegimeEspecialTributacao;
+function StrToRegimeEspecialTributacao(out ok: boolean; const s: string):TnfseRegimeEspecialTributacao;
 begin
   result := StrToEnumerado(ok, s,
                           ['0','1','2','3','4','5','6','7','8','9'],
@@ -407,7 +371,7 @@ begin
                            [snSim, snNao]);
 end;
 
-function StrToSimNao(var ok: boolean; const s: string):TnfseSimNao;
+function StrToSimNao(out ok: boolean; const s: string):TnfseSimNao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2'],
@@ -423,7 +387,7 @@ begin
                            [trRPS, trNFConjugada, trCupom]);
 end;
 
-function StrToTipoRPS(var ok: boolean; const s: string):TnfseTipoRPS;
+function StrToTipoRPS(out ok: boolean; const s: string):TnfseTipoRPS;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2','3'],
@@ -432,14 +396,14 @@ end;
 
 // Indicacao CPF/CNPJ **********************************************************
 
-function IndicacaoCpfCnpjtoStr(const t: TnfseIndicacaoCpfCnpj):string;
+function IndicacaoCpfCnpjToStr(const t: TnfseIndicacaoCpfCnpj): string;
 begin
   result := EnumeradoToStr(t,
                            ['1','2','3'],
                            [iccCPF, iccCNPJ, iccNaoInformado]);
 end;
 
-function StrToIndicacaoCpfCnpj(var ok: boolean; const s: string):TnfseIndicacaoCpfCnpj;
+function StrToIndicacaoCpfCnpj(out ok: boolean; const s: string):TnfseIndicacaoCpfCnpj;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2','3'],
@@ -456,7 +420,7 @@ begin
                             slrProcessadoSucesso]);
 end;
 
-function StrToSituacaoLoteRPS(var ok: boolean; const s: string):TnfseSituacaoLoteRPS;
+function StrToSituacaoLoteRPS(out ok: boolean; const s: string):TnfseSituacaoLoteRPS;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2','3','4'],
@@ -488,7 +452,7 @@ begin
                             , proSJP, proCONAM]);
 end;
 
-function StrToProvedor(var ok: boolean; const s: string):TnfseProvedor;
+function StrToProvedor(out ok: boolean; const s: string): TnfseProvedor;
 begin
   result := StrToEnumerado(ok, s,
                            ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge', 'Abaco',
@@ -519,7 +483,7 @@ begin
                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito]);
 end;
 
-function StrToCondicao(var ok: boolean; const s: string): TnfseCondicaoPagamento;
+function StrToCondicao(out ok: boolean; const s: string): TnfseCondicaoPagamento;
 begin
   Result:= StrToEnumerado(ok, s,
                           ['A_VISTA', 'NA_APRESENTACAO', 'A_PRAZO', 'CARTAO_DEBITO', 'CARTAO_CREDITO'],
@@ -529,7 +493,7 @@ end;
 
 // Descrição do Serviço ********************************************************
 
-function CodigotoDesc(const s: string): ansistring;
+function CodigoToDesc(const s: string): ansistring;
 var
  i: Integer;
  r: ansistring;
@@ -18661,7 +18625,7 @@ begin
                            [stRetencao, stNormal, stSubstituicao]);
 end;
 
-function StrToSituacaoTributaria(var ok: boolean; const s: string):TnfseSituacaoTributaria;
+function StrToSituacaoTributaria(out ok: boolean; const s: string):TnfseSituacaoTributaria;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
@@ -18675,7 +18639,7 @@ begin
                            [ptTomador, rtPrestador]);
 end;
 
-function StrToResponsavelRetencao(var ok: boolean; const s: string):TnfseResponsavelRetencao;
+function StrToResponsavelRetencao(out ok: boolean; const s: string):TnfseResponsavelRetencao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', ''],
@@ -18692,7 +18656,7 @@ begin
                            [teNormalNFSe, teContigenciaNFSe]);
 end;
 
-function StrToTipoEmissao(var ok: boolean; const s: string):TnfseTEmissao;
+function StrToTipoEmissao(out ok: boolean; const s: string):TnfseTEmissao;
 begin
   result := StrToEnumerado(ok, s,
                            ['N', 'C'],
@@ -18707,7 +18671,7 @@ begin
                            [EgConstrucaoCivil, EgOutros]);
 end;
 
-function StrToEmpreitadaGlobal(var ok: boolean; const s: string):TnfseTEmpreitadaGlobal;
+function StrToEmpreitadaGlobal(out ok: boolean; const s: string):TnfseTEmpreitadaGlobal;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
@@ -18740,8 +18704,8 @@ begin
   end;
 end;
 
-function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime;
-  ACNPJ: String; ASerie, ANumero, ACodigo: Integer; AModelo: Integer): String;
+function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+  ASerie: Integer; ANumero, ACodigo: Integer; AModelo: Integer): String;
 var
   vUF, vDataEmissao, vSerie, vNumero,
   vCodigo, vModelo: String;

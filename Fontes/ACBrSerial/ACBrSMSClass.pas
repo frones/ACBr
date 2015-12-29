@@ -52,6 +52,7 @@ const
   FALHA_INDICE_MENSAGEM = 'Indice retornado inválido, mensagem não foi enviada.';
   FALHA_LEITURA_MENSAGEM = 'Não foi possível ler as mensagens do SimCard.';
   FALHA_APAGAR_MENSAGEM = 'Não foi possível apagar a mensagem de texto.';
+  FALHA_TROCAR_CENTROMENSAGEM = 'Não foi possível trocar o centro de mensagem.';
 
 type
   EACBrSMSException = class(Exception);
@@ -62,6 +63,8 @@ type
   TACBrSMSFiltro = (fltTudo, fltLidas, fltNaoLidas);
 
   TACBrSMSProgresso = procedure(const AAtual, ATotal: Integer) of object;
+  TACBrSMSAntesEnvio = procedure(const ATelefone, AMensagem: string) of object;
+  TACBrSMSAposEnvio = procedure(const ATelefone, AMensagem: string; ADataHora : TDateTime) of object;
 
   TACBrSMSMensagem = class
   private
@@ -122,6 +125,7 @@ type
     function Fabricante: String; virtual;
     function ModeloModem: String; virtual;
     function Firmware: String; virtual;
+    function CentroMensagem: String; virtual;
     function EstadoSincronismo: TACBrSMSSincronismo; virtual;
 
     procedure TrocarBandeja(const ASimCard: TACBrSMSSimCard); virtual;
@@ -130,6 +134,7 @@ type
     procedure ApagarSMS(const ANumeroMensagem: String); virtual;
     procedure ListarMensagens(const AFiltro: TACBrSMSFiltro;
       const APath: String); virtual;
+    procedure TrocaCentroMensagem(const ACentroMensagem : string); virtual;
 
     property Ativo: Boolean read fpAtivo write SetAtivo;
     property SimCard: TACBrSMSSimCard read fpSimCard write fpSimCard;
@@ -286,6 +291,20 @@ end;
 
 { TACBrSMSClass }
 
+function TACBrSMSClass.CentroMensagem: String;
+begin
+   Self.EnviarComando('AT+CSCA?');
+
+  if Self.ATResult then
+  begin
+    Result := fpUltimaResposta;
+    Delete(Result, 1, Pos('"', Result));
+    Result := Trim(Copy(Result, 1, Pos('"', Result) - 1));
+  end
+  else
+    Result := EmptyStr;
+end;
+
 constructor TACBrSMSClass.Create(AOwner: TComponent);
 begin
   fpDevice := (AOwner as TACBrSMS).Device;
@@ -397,7 +416,6 @@ begin
       if not(fpUltimaResposta[I] in [#0, #5, #$18, #$C]) then
         Retorno := Retorno + fpUltimaResposta[I];
     end;
-
     fpUltimaResposta := Trim(Retorno);
     WriteToTXT(AnsiString(APath), AnsiString(fpUltimaResposta), False, True);
   end;   
@@ -572,6 +590,16 @@ begin
   end
   else
     AIndice := '-1';
+end;
+
+procedure TACBrSMSClass.TrocaCentroMensagem(const ACentroMensagem: string);
+var
+  Cmd: String;
+begin
+  Cmd := 'AT+CSCA="'+ACentroMensagem+'",145';
+  Self.EnviarComando(Cmd);
+  if not Self.ATResult then
+    raise EACBrSMSException.Create(FALHA_TROCAR_CENTROMENSAGEM + sLineBreak + fpUltimaResposta);
 end;
 
 procedure TACBrSMSClass.TrocarBandeja(const ASimCard: TACBrSMSSimCard);

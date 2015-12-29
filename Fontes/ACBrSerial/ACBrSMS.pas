@@ -61,6 +61,7 @@ type
     fsSMS: TACBrSMSClass;
     fsModelo: TACBrSMSModelo;
     fsOnProgresso: TACBrSMSProgresso;
+    fsOnAposEnvio: TACBrSMSAposEnvio;
     procedure SetAtivo(const Value: Boolean);
     procedure SetModelo(const Value: TACBrSMSModelo);
     procedure SetRecebeConfirmacao(const Value: Boolean);
@@ -94,6 +95,7 @@ type
     function Fabricante: String;
     function ModeloModem: String;
     function Firmware: String;
+    function CentroMensagem: string;
     function EstadoSincronismo: TACBrSMSSincronismo;
 
     procedure TrocarBandeja(const ASimCard: TACBrSMSSimCard);
@@ -106,6 +108,7 @@ type
     procedure ListarMensagens(const AFiltro: TACBrSMSFiltro;
       const APath: String);
     procedure EnviarComando(ACmd: String; ATimeOut: Integer = 0);
+    procedure TrocaCentroMensagem(const ACentroMensagem : string);
   published
     property Ativo: Boolean read fsAtivo write SetAtivo;
     property Device: TACBrDevice read fsDevice;
@@ -121,6 +124,8 @@ type
     property UltimaResposta: String read GetUltimaReposta;
     property UltimoComando: String read GetUltimoComando;
     property OnProgresso: TACBrSMSProgresso read fsOnProgresso write fsOnProgresso;
+    property OnAntesEnvio : TACBrSMSAposEnvio read fsOnAposEnvio write fsOnAposEnvio;
+    property OnAposEnvio : TACBrSMSAposEnvio read fsOnAposEnvio write fsOnAposEnvio;
   end;
 
 implementation
@@ -129,6 +134,12 @@ uses
   ACBrUtil, ACBrSMSDaruma, ACBrSMSZTE;
 
 { TACBrSMS }
+
+function TACBrSMS.CentroMensagem: string;
+begin
+  TestaAtivo;
+  Result := fsSMS.CentroMensagem;
+end;
 
 constructor TACBrSMS.Create(AOwner: TComponent);
 begin
@@ -166,6 +177,12 @@ procedure TACBrSMS.TestaEmLinha;
 begin
   if not EmLinha then
     raise EACBrSMSException.Create('SMS não está em linha.');
+end;
+
+procedure TACBrSMS.TrocaCentroMensagem(const ACentroMensagem: string);
+begin
+  TestaAtivo;
+  fsSMS.TrocaCentroMensagem(ACentroMensagem);
 end;
 
 procedure TACBrSMS.TrocarBandeja(const ASimCard: TACBrSMSSimCard);
@@ -430,6 +447,9 @@ procedure TACBrSMS.Desativar;
 begin
   if not fsAtivo then
     Exit;
+
+  if fsModelo in [modZTE, modGenerico] then
+    fsSMS.EnviarComando('AT+CFUN=6');
 
   fsSMS.Desativar;
   fsAtivo := False;

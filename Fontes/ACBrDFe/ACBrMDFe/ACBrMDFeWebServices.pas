@@ -197,6 +197,7 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
+    procedure Clear;
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
@@ -241,6 +242,8 @@ type
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
       reintroduce; overload;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -287,6 +290,8 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
+    procedure Clear;
+
     property MDFeChave: String read FMDFeChave write FMDFeChave;
     property Protocolo: String read FProtocolo write FProtocolo;
     property DhRecbto: TDateTime read FDhRecbto write FDhRecbto;
@@ -331,6 +336,8 @@ type
     constructor Create(AOwner: TACBrDFe; AEvento: TEventoMDFe);
       reintroduce; overload;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property idLote: Integer read FidLote write FidLote;
     property versao: String read Fversao write Fversao;
@@ -837,6 +844,34 @@ begin
   Result := Trim(FRecibo);
 end;
 
+procedure TMDFeRetRecepcao.Clear;
+var
+  i, j: Integer;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+
+  // Limpa Dados dos retornos dos manifestos;
+  for i := 0 to FMDFeRetorno.ProtMDFe.Count - 1 do
+  begin
+    for j := 0 to FManifestos.Count - 1 do
+    begin
+      if OnlyNumber(FMDFeRetorno.ProtMDFe.Items[i].chMDFe) = FManifestos.Items[J].NumID then
+      begin
+        FManifestos.Items[j].MDFe.procMDFe.verAplic := '';
+        FManifestos.Items[j].MDFe.procMDFe.chMDFe   := '';
+        FManifestos.Items[j].MDFe.procMDFe.dhRecbto := 0;
+        FManifestos.Items[j].MDFe.procMDFe.nProt    := '';
+        FManifestos.Items[j].MDFe.procMDFe.digVal   := '';
+        FManifestos.Items[j].MDFe.procMDFe.cStat    := 0;
+        FManifestos.Items[j].MDFe.procMDFe.xMotivo  := '';
+      end;
+    end;
+  end;
+end;
+
 function TMDFeRetRecepcao.Executar: Boolean;
 var
   IntervaloTentativas, Tentativas: Integer;
@@ -1117,6 +1152,14 @@ begin
   inherited Destroy;
 end;
 
+procedure TMDFeRecibo.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+end;
+
 procedure TMDFeRecibo.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'MDFeRetRecepcao';
@@ -1241,6 +1284,14 @@ begin
     FprocEventoMDFe.Free;
 
   inherited Destroy;
+end;
+
+procedure TMDFeConsulta.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
 end;
 
 procedure TMDFeConsulta.DefinirURL;
@@ -1593,6 +1644,13 @@ begin
   FEventoRetorno.Free;
 
   inherited;
+end;
+
+procedure TMDFeEnvEvento.Clear;
+begin
+  FPMsg    := '';
+  FcStat   := 0;
+  FxMotivo := '';
 end;
 
 function TMDFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;

@@ -151,6 +151,8 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
+    procedure Clear;
+
     property Recibo: String read GetRecibo;
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -199,6 +201,7 @@ type
       reintroduce; overload;
     destructor Destroy; override;
 
+    procedure Clear;
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
@@ -243,6 +246,8 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -289,6 +294,8 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property NFeChave: String read FNFeChave write FNFeChave;
     property Protocolo: String read FProtocolo write FProtocolo;
@@ -343,6 +350,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
 
+    procedure Clear;
+
     property ID: String read FID write FID;
     property Protocolo: String read FProtocolo write FProtocolo;
     property Modelo: integer read FModelo write FModelo;
@@ -395,6 +404,8 @@ type
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
 
+    procedure Clear;
+
     property versao: String read Fversao;
     property verAplic: String read FverAplic;
     property cStat: integer read FcStat;
@@ -437,6 +448,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe; AEvento: TEventoNFe); reintroduce; overload;
     destructor Destroy; override;
+
+    procedure Clear;
 
     property idLote: integer read FidLote write FidLote;
     property versao: String read Fversao write Fversao;
@@ -883,6 +896,18 @@ begin
   inherited Destroy;
 end;
 
+procedure TNFeRecepcao.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+
+  FLote     := '';   // ????
+  FRecibo   := '';
+  FdhRecbto := 0;
+end;
+
 function TNFeRecepcao.GetLote: String;
 begin
   Result := Trim(FLote);
@@ -1236,6 +1261,34 @@ begin
   Result := Trim(FRecibo);
 end;
 
+procedure TNFeRetRecepcao.Clear;
+var
+  i, j: Integer;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+
+  // Limpa Dados dos retornos das notas Fiscais;
+  for i := 0 to FNFeRetorno.ProtNFe.Count - 1 do
+  begin
+    for j := 0 to FNotasFiscais.Count - 1 do
+    begin
+      if OnlyNumber(FNFeRetorno.ProtNFe.Items[i].chNFe) = FNotasFiscais.Items[J].NumID then
+      begin
+        FNotasFiscais.Items[j].NFe.procNFe.verAplic := '';
+        FNotasFiscais.Items[j].NFe.procNFe.chNFe    := '';
+        FNotasFiscais.Items[j].NFe.procNFe.dhRecbto := 0;
+        FNotasFiscais.Items[j].NFe.procNFe.nProt    := '';
+        FNotasFiscais.Items[j].NFe.procNFe.digVal   := '';
+        FNotasFiscais.Items[j].NFe.procNFe.cStat    := 0;
+        FNotasFiscais.Items[j].NFe.procNFe.xMotivo  := '';
+      end;
+    end;
+  end;
+end;
+
 function TNFeRetRecepcao.Executar: Boolean;
 var
   IntervaloTentativas, Tentativas: integer;
@@ -1548,6 +1601,14 @@ begin
   inherited Destroy;
 end;
 
+procedure TNFeRecibo.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+end;
+
 procedure TNFeRecibo.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
@@ -1701,6 +1762,14 @@ begin
     FprocEventoNFe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFeConsulta.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
 end;
 
 procedure TNFeConsulta.DefinirURL;
@@ -2159,6 +2228,14 @@ begin
   FPArqResp := 'inu';
 end;
 
+procedure TNFeInutilizacao.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+end;
+
 procedure TNFeInutilizacao.SetJustificativa(AValue: String);
 var
   TrimValue: String;
@@ -2348,6 +2425,14 @@ begin
   inherited Destroy;
 end;
 
+procedure TNFeConsultaCadastro.Clear;
+begin
+  FPMsg     := '';
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+end;
+
 procedure TNFeConsultaCadastro.SetCNPJ(const Value: String);
 begin
   if NaoEstaVazio(Value) then
@@ -2494,6 +2579,13 @@ begin
   inherited;
 end;
 
+procedure TNFeEnvEvento.Clear;
+begin
+  FPMsg    := '';
+  FcStat   := 0;
+  FxMotivo := '';
+end;
+
 function TNFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
 begin
   with FEvento.Evento.Items[0].InfEvento do
@@ -2516,7 +2608,14 @@ begin
   FCNPJ    := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb   := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo   := ModeloDFToPrefixo( StrToModeloDF(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe) ));
-  UF       := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe));
+
+  // Configuração correta ao enviar para o SVC
+  case FPConfiguracoesNFe.Geral.FormaEmissao of
+    teSVCAN: UF := 'SVC-AN';
+    teSVCRS: UF := 'SVC-RS';
+  else
+    UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe));
+  end;
 
   if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento]) then
   begin

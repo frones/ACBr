@@ -2160,9 +2160,9 @@ end;
 
 procedure TCTeEnvEvento.Clear;
 begin
-  FPMsg     := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  FPMsg    := '';
+  FcStat   := 0;
+  FxMotivo := '';
 end;
 
 function TCTeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
@@ -2185,7 +2185,13 @@ begin
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := 'CTe';
-  UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe));
+
+  case FPConfiguracoesCTe.Geral.FormaEmissao of
+    teSVCRS: UF := 'SVC-RS';
+    teSVCSP: UF := 'SVC-SP';
+  else
+    UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe));
+  end;
 
   if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, teMultiModal]) then
     FPLayout := LayCTeEventoAN

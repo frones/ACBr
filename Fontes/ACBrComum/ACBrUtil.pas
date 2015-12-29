@@ -315,8 +315,8 @@ Procedure para trocar a quebra de linha por um caracter separador
 -------------------------------------------------------------------------------}
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
 begin
-  Result := Trim(AText);
-  if Result <> '' then
+  Result := AText;
+  if Trim(Result) <> '' then
   begin
     if sLineBreak <> LF then
       Result := StringReplace(Result, sLineBreak, LF, [rfReplaceAll]);
@@ -1815,15 +1815,15 @@ function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
    NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
 Var
   Count,P,I : Integer ;
-  Linha, CRLF : AnsiString ;
+  Linha, CurrLineBreak : AnsiString ;
 begin
   { Trocando todos os #13+#10 por #10 }
-  CRLF := sLineBreak ;
-  if (CRLF <> #13+#10) then
+  CurrLineBreak := sLineBreak ;
+  if (CurrLineBreak <> #13+#10) then
      Texto := AnsiString(StringReplace(String(Texto), #13+#10, #10, [rfReplaceAll])) ;
 
-  if (CRLF <> #10) then
-     Texto := AnsiString(StringReplace(String(Texto), String(CRLF), #10, [rfReplaceAll])) ;
+  if (CurrLineBreak <> #10) then
+     Texto := AnsiString(StringReplace(String(Texto), String(CurrLineBreak), #10, [rfReplaceAll])) ;
 
   { Ajustando a largura das Linhas para o máximo permitido em  "Colunas"
     e limitando em "NumMaxLinhas" o total de Linhas}

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2015
+-- ACBrMDFeManifestos --
+[*] Ajuste no método "VerificarAssinatura", para informar o infElement (por: DSA)
+
 04/12/2015
 -- ACBrMDFeNotasFiscais --
 [*] método "Assinar", modificado para só validar CNPJ se conseguir ler o mesmo

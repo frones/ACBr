@@ -364,9 +364,11 @@ begin
   // ===========================================================================
 
   if PathIniCidades <> '' then
-    NomeArqParams := PathIniCidades
+    NomeArqParams := PathWithDelim(PathIniCidades)
   else
-    NomeArqParams := ApplicationPath + 'Cidades.ini';
+    NomeArqParams := ApplicationPath;
+
+  NomeArqParams := NomeArqParams + 'Cidades.ini';
 
   if not FileExists(NomeArqParams) then
     raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
@@ -393,9 +395,11 @@ begin
   // ===========================================================================
 
   if PathIniProvedor <> '' then
-    NomeArqParams := PathIniProvedor  + '\' + FxProvedor +'.ini'
+    NomeArqParams := PathWithDelim(PathIniProvedor)
   else
-    NomeArqParams := ApplicationPath + FxProvedor +'.ini';
+    NomeArqParams := ApplicationPath;
+
+  NomeArqParams := NomeArqParams + FxProvedor +'.ini';;
 
   if not FileExists(NomeArqParams) then
     raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +

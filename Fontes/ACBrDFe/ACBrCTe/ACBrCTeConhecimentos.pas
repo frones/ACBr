@@ -358,7 +358,7 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro);
+    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infCte');
 
     if not AssEhValida then
     begin

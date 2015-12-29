@@ -93,7 +93,8 @@ type
     function GetUrlWsd: String;
 
     procedure AssinarXML(const AXML, docElement, infElement: String;
-      MsgErro: String); virtual;
+      MsgErro: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''; IdSignature: String = '' ); virtual;
 
     function GerarMsgLog: String; virtual;
     function GerarMsgErro(E: Exception): String; virtual;
@@ -465,10 +466,12 @@ begin
 end;
 
 procedure TDFeWebService.AssinarXML(const AXML, docElement, infElement: String;
-  MsgErro: String);
+  MsgErro: String; SignatureNode: String; SelectionNamespaces: String;
+  IdSignature: String);
 begin
   try
-    FPDadosMsg := FPDFeOwner.SSL.Assinar(AXML, docElement, infElement);
+    FPDadosMsg := FPDFeOwner.SSL.Assinar(AXML, docElement, infElement,
+                     SignatureNode, SelectionNamespaces, IdSignature);
   except
     On E: Exception do
     begin
@@ -482,23 +485,4 @@ begin
 end;
 
 end.
-(*
 
-// TODO: Verificar onde fica...
-
-
-
-
-
-function TWebServicesBase.GerarVersaoDadosSoap: String;
-begin
-  { Sobrescrever apenas se necessário }
-
-  Result := '<versaoDados>' + GetVersaoNFe(FConfiguracoes.Geral.ModeloDF,
-                                           FConfiguracoes.Geral.VersaoDF,
-                                           Layout) +
-            '</versaoDados>';
-end;
-
-
-*)

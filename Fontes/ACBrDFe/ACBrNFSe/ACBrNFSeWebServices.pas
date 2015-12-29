@@ -47,9 +47,7 @@ uses
   pcnAuxiliar, pcnConversao, pnfsNFSe, pnfsConversao,
   pnfsLerListaNFSe,
   pnfsEnvLoteRpsResposta, pnfsConsSitLoteRpsResposta,
-  pnfsConsLoteRpsResposta, pnfsConsNFSeporRpsResposta,
-  pnfsConsNFSeResposta, pnfsCancNFSeResposta,
-  pnfsGerarNFSeResposta, pnfsSubsNFSeResposta;
+  pnfsCancNFSeResposta, pnfsSubsNFSeResposta;
 
 type
 
@@ -699,20 +697,14 @@ begin
   if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '1.2' then
   begin
     FPMimeType := 'application/soap+xml';
-    // As linhas abaixo só podem ser descomentadas depois das alterações nos
-    // fontes das classes ACBrDFe forem aprovadas.
-
-//    FPDFeOwner.SSL.UseCertificate := True;
-//    FPDFeOwner.SSL.UseSSL := True;
+    FPDFeOwner.SSL.UseCertificate := True;
+    FPDFeOwner.SSL.UseSSL := True;
   end
   else
   begin
     FPMimeType := 'text/xml';
-    // As linhas abaixo só podem ser descomentadas depois das alterações nos
-    // fontes das classes ACBrDFe forem aprovadas.
-
-//    FPDFeOwner.SSL.UseCertificate := False;
-//    FPDFeOwner.SSL.UseSSL := False;
+    FPDFeOwner.SSL.UseCertificate := False;
+    FPDFeOwner.SSL.UseSSL := False;
   end;
 
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
@@ -867,7 +859,7 @@ end;
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
 var
   FRetListaNFSe, FRetNFSe, PathArq, NomeArq, xCNPJ: String;
-  i, j, x, k, l, p, ii: Integer;
+  i, j, k, l, p, ii: Integer;
   xData: TDateTime;
   NovoRetorno: Boolean;
 begin
@@ -943,7 +935,6 @@ begin
         NovoRetorno := True;
         for l := 0 to FNotasFiscais.Count -1 do
         begin
-          // Alterado por cleiver em 10/12/2015
           // Provedor de goinaia em modo de homologação sempre retorna o mesmo dados
           if (FProvedor = proGoiania) and (FPConfiguracoes.WebServices.Ambiente = taHomologacao) then
           begin
@@ -1059,11 +1050,9 @@ begin
     FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.dhRecebimento;
     if FDataRecebimento = 0 then
       FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.DataEmissao;
-//    FProtocolo       := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else begin
     FDataRecebimento := 0;
-//    FProtocolo       := '';
   end;
 
   // Lista de Mensagem de Retorno
@@ -1113,35 +1102,23 @@ end;
 
 procedure TNFSeWebService.DefinirSignatureNode(TipoEnvio: String);
 var
-  EnviarLoteRps, LoteURI, xmlns, xPrefixo: String;
+  EnviarLoteRps, xmlns, xPrefixo: String;
   i, j: Integer;
 begin
    case FProvedor of
-    proActcon:    begin
-                    EnviarLoteRps := 'EnviarLoteRpsEnvio';
-                    LoteURI := 'LoteRps';
-                  end;
-    proIssDsf:    begin
-                    EnviarLoteRps := 'ReqEnvioLoteRPS';
-                    LoteURI := 'Lote';
-                  end;
-    proInfisc:    begin
-                    EnviarLoteRps := 'envioLote';
-                    LoteURI := 'Lote';
-                  end;
-    proEquiplano: begin
-                    EnviarLoteRps := 'enviarLoteRpsEnvio';
-                    LoteURI := 'lote';
-                  end;
-    else          begin
-                    {
-                    // Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
-                    if (ASincrono) or (AProvedor = proTecnos)
-                     then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
-                     else }
-                    EnviarLoteRps := 'EnviarLoteRpsEnvio';
-                    LoteURI := 'LoteRps';
-                  end;
+    proActcon: EnviarLoteRps := 'EnviarLoteRpsEnvio';
+    proIssDsf: EnviarLoteRps := 'ReqEnvioLoteRPS';
+    proInfisc: EnviarLoteRps := 'envioLote';
+    proEquiplano: EnviarLoteRps := 'enviarLoteRpsEnvio';
+    else
+      begin
+        {
+        // Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
+        if (ASincrono) or (AProvedor = proTecnos)
+         then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
+         else }
+        EnviarLoteRps := 'EnviarLoteRpsEnvio';
+      end;
    end;
 
    FxSignatureNode := '';
@@ -1177,7 +1154,7 @@ begin
        i := i + Length(EnviarLoteRps + xmlns);
        j := Pos('">', FPDadosMsg) + 1;
 
-       FxDSIGNSLote := ' xmlns:' + StringReplace(xPrefixo, ':', '', []) + '="' +
+       FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
                        Copy(FPDadosMsg, i, j - i);
      end;
    end;
@@ -1540,7 +1517,7 @@ begin
 
     FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
     FProtocolo       := RetEnvLote.InfRec.Protocolo;
-//    FNumeroLote      := RetEnvLote.InfRec.NumeroLote;
+//  FNumeroLote      := RetEnvLote.InfRec.NumeroLote;
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
@@ -1969,9 +1946,6 @@ end;
 procedure TNFSeConsultarSituacaoLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
-
-//  if Assigned(FRetSitLote) then
-//    FreeAndNil(FRetSitLote);
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.GerarMsgLog: String;
@@ -2140,8 +2114,6 @@ begin
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
-var
-  URISig, URIRef: String;
 begin
   if (FProvedor in [proEL, proGinfes]) and
      (OnlyNumber(TNFSeConsultarLoteRPS(Self).FCNPJ) = '') then
@@ -2252,9 +2224,6 @@ end;
 procedure TNFSeConsultarLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
-
-//  if Assigned(FRetornoNFSe) then
-//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeConsultarLoteRPS.GerarMsgLog: String;
@@ -2476,9 +2445,6 @@ end;
 procedure TNFSeConsultarNfseRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
-
-//  if Assigned(FRetornoNFSe) then
-//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeConsultarNfseRPS.GerarMsgLog: String;
@@ -2692,9 +2658,6 @@ end;
 procedure TNFSeConsultarNfse.FinalizarServico;
 begin
   inherited FinalizarServico;
-
-//  if Assigned(FRetornoNFSe) then
-//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeConsultarNfse.GerarMsgLog: String;
@@ -2727,8 +2690,8 @@ end;
 
 destructor TNFSeCancelarNfse.Destroy;
 begin
-//  if Assigned(FRetCancNFSe) then
-//    FRetCancNFSe.Free;
+  if Assigned(FRetCancNFSe) then
+    FRetCancNFSe.Free;
 
   inherited Destroy;
 end;
@@ -2748,7 +2711,6 @@ end;
 procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
   i: Integer;
-  URISig, URIRef: String;
   Gerador: TGerador;
 begin
   if TNFSeCancelarNfse(Self).FNotasFiscais.Count > 0 then
@@ -3007,39 +2969,35 @@ begin
     FRetCancNFSe.Free;
 
   FRetCancNFSe := TRetCancNfse.Create;
-  try
-    FRetCancNFSe.Leitor.Arquivo := FPRetWS;
-    FRetCancNFSe.Provedor       := FProvedor;
-    FRetCancNFSe.VersaoXML      := FVersaoXML;
+  FRetCancNFSe.Leitor.Arquivo := FPRetWS;
+  FRetCancNFSe.Provedor       := FProvedor;
+  FRetCancNFSe.VersaoXML      := FVersaoXML;
 
-    FRetCancNFSe.LerXml;
+  FRetCancNFSe.LerXml;
 
-    FDataHora := RetCancNFSe.InfCanc.DataHora;
+  FDataHora := RetCancNFSe.InfCanc.DataHora;
 
-    // Lista de Mensagem de Retorno
-    FPMsg := '';
-    FaMsg := '';
-    if RetCancNFSe.InfCanc.MsgRetorno.Count > 0 then
+  // Lista de Mensagem de Retorno
+  FPMsg := '';
+  FaMsg := '';
+  if RetCancNFSe.InfCanc.MsgRetorno.Count > 0 then
+  begin
+    for i := 0 to RetCancNFSe.InfCanc.MsgRetorno.Count - 1 do
     begin
-      for i := 0 to RetCancNFSe.InfCanc.MsgRetorno.Count - 1 do
-      begin
-        FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+      FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
 
-        FaMsg := FaMsg + 'Método..... : Cancelar NFS-e' + LineBreak +
-                         'Código Erro : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Codigo + LineBreak +
-                         'Mensagem... : ' + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak +
-                         'Correção... : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Correcao + LineBreak +
-                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
-      end;
-    end
-    else FaMsg := 'Método........ : Cancelar NFS-e' + LineBreak +
-                  'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
-                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
+      FaMsg := FaMsg + 'Método..... : Cancelar NFS-e' + LineBreak +
+                       'Código Erro : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Codigo + LineBreak +
+                       'Mensagem... : ' + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak +
+                       'Correção... : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Correcao + LineBreak +
+                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+    end;
+  end
+  else FaMsg := 'Método........ : Cancelar NFS-e' + LineBreak +
+                'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
+                'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
-    Result := (FDataHora > 0);
-  finally
-//    FRetCancNFSe.Free;
-  end;
+  Result := (FDataHora > 0);
 end;
 
 procedure TNFSeCancelarNFSe.SalvarResposta;
@@ -3058,9 +3016,6 @@ end;
 procedure TNFSeCancelarNfse.FinalizarServico;
 begin
   inherited FinalizarServico;
-
-//  if Assigned(FRetCancNFSe) then
-//    FreeAndNil(FRetCancNFSe);
 end;
 
 function TNFSeCancelarNfse.GerarMsgLog: String;
@@ -3113,7 +3068,6 @@ end;
 procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
 var
   i: Integer;
-  URISig, URIRef: String;
   Gerador: TGerador;
 begin
   FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
@@ -3570,6 +3524,7 @@ end;
 function TWebServices.ConsultaLoteRps(ANumLote, AProtocolo: String;
   const CarregaProps: boolean): Boolean;
 begin
+  Result := False;
 (*
   if CarregaProps then
   begin

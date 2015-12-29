@@ -44,6 +44,49 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2015
+-- ACBrDFeSSL --
+[*] Modificada a assinatura do método "Assinar", para permitir assinar documentos
+    diferentes do XML da NFe
+    function Assinar(const ConteudoXML, docElement, infElement: String;
+      SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = '')
+
+[*] Modificada a assinatura do método "VerificarAssinatura", para permitir verificar
+    documentos diferentes do XML da NFe
+    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
+      const infElement: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''): Boolean; virtual;
+
+[*] Adicionanda a propriedade "UseCertificate: Boolean Default True", que permite
+    desligar a comunicação suporte de comunicação com certificado
+
+[*] Adicionanda a propriedade "UseSSL: Boolean Default True", que permite
+    desligar a comunição por HTTPs, se necessário
+
+[*] Refatoração, criando os métodos:: "AdicionarSignatureElement" e
+    "AjustarXMLAssinado", removendo código semelhante de ACBrDFeCapicom e
+    ACBrDFeOpenSSL
+
+-- ACBrDFeOpenSSL --
+[*] Ajustes nos métodos "Assinar" e "VerificarAssinatura", para usar os novos
+    parâmettos
+[*] Mensagens de erro, movidas para constantes
+[*] Método "VerificarAssinatura", corrigido e funcionando
+
+-- ACBrDFeCapicom --
+[*] Ajustes nos métodos "Assinar" e "VerificarAssinatura", para usar os novos
+    parâmettos
+[*] Criadas novas constantes com as strings padrão da assinatura
+[*] Ajuste nas chamadas de CoInitialize e CoUninitialize,
+    http://www.projetoacbr.com.br/forum/topic/26901-coinitialize/
+
+-- ACBrDFeWebService --
+[*] Ajuste no método "AssinarXML" para usar os novos parâmettos de Assinatura
+[*] Remoção de comentários desnecessários
+
+
+
 25/11/2015
 [-] Acertos nas impressões para Fortes Report utilizarem corretamente o .lfm
     alguns relatórios estavam apontando somente para o .dfm gerando problemas

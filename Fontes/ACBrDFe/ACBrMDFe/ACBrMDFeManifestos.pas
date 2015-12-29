@@ -339,7 +339,7 @@ begin
 
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro);
+    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infMDFe');
 
     if not AssEhValida then
     begin

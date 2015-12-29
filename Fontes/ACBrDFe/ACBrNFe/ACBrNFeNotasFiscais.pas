@@ -355,7 +355,7 @@ begin
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro);
+    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infNFe');
 
     if not AssEhValida then
     begin
@@ -1369,7 +1369,7 @@ end;
 
 function NotaFiscal.GetNumID: String;
 begin
-  Result := Trim(OnlyNumber(NFe.infNFe.ID));
+  Result := OnlyNumber(NFe.infNFe.ID);
 end;
 
 function NotaFiscal.GetXMLAssinado: String;

@@ -65,19 +65,25 @@ type
     function GetInternalErrorCode: Integer; virtual;
     function GetCertTipo: TSSLTipoCertificado; virtual;
 
-    function SignatureElement(const URI: String; AddX509Data: Boolean): String;
+    function SignatureElement(const URI: String; AddX509Data: Boolean;
+      IdSignature: String = ''): String;
       virtual;
+    function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
+      docElement, IdSignature: String): String;
+    function AjustarXMLAssinado(const ConteudoXML: String): String;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
 
-    function Assinar(const ConteudoXML, docElement, infElement: String): String;
-      virtual;
+    function Assinar(const ConteudoXML, docElement, infElement: String;
+      SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = ''): String; virtual;
     function Enviar(const ConteudoXML: String; const URL: String;
       const SoapAction: String; const MimeType: String = ''): String; virtual;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; virtual;
-    function VerificarAssinatura(const ConteudoXML: String;
-      out MsgErro: String): Boolean; virtual;
+    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
+      const infElement: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''): Boolean; virtual;
 
     procedure CarregarCertificado; virtual;
     procedure DescarregarCertificado; virtual;
@@ -94,7 +100,6 @@ type
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
   end;
-
 
   TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap);
 
@@ -115,6 +120,8 @@ type
     FSSLClass: TDFeSSLClass;
     FSSLLib: TSSLLib;
     FTimeOut: Integer;
+    FUseCertificate: Boolean;
+    FUseSSL: Boolean;
 
     function GetCertCNPJ: String;
     function GetCertDataVenc: TDateTime;
@@ -139,7 +146,9 @@ type
     destructor Destroy; override;
 
     // Nota: ConteudoXML, DEVE estar em UTF8 //
-    function Assinar(const ConteudoXML, docElement, infElement: String): String;
+    function Assinar(const ConteudoXML, docElement, infElement: String;
+      SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = ''): String;
     // Envia por SoapAction o ConteudoXML para URL. Retorna a resposta do Servico //
     function Enviar(var ConteudoXML: String; const URL: String;
       const SoapAction: String; const MimeType: String = ''): String;
@@ -147,8 +156,9 @@ type
     function Validar(const ConteudoXML: String; ArqSchema: String;
       out MsgErro: String): Boolean;
     // Verifica se assinatura de um XML é válida. Retorna True se OK, preenche MsgErro se False //
-    function VerificarAssinatura(const ConteudoXML: String;
-      out MsgErro: String): Boolean;
+    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
+      const infElement: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''): Boolean;
 
     procedure CarregarCertificado;
     procedure DescarregarCertificado;
@@ -181,12 +191,15 @@ type
 
     property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
     property NameSpaceURI: String read FNameSpaceURI write FNameSpaceURI;
+
+    property UseCertificate: Boolean read FUseCertificate write FUseCertificate;
+    property UseSSL: Boolean read FUseSSL Write FUseSSL;
   end;
 
 
 implementation
 
-uses strutils, ACBrUtil, ACBrDFeException
+uses strutils, ACBrDFeUtil, ACBrUtil, ACBrDFeException
   {$IFNDEF DFE_SEM_OPENSSL}
    ,ACBrDFeOpenSSL
   {$ENDIF}
@@ -221,6 +234,11 @@ begin
   FTimeOut     := 5000;
   FNameSpaceURI:= '';
 
+  // Para emissão de NFS-e essas propriedades podem ter valores diferentes dos
+  // atribuidos abaixo, dependendo do provedor...
+  FUseCertificate := True;
+  FUseSSL := True;
+
   if Assigned(FSSLClass) then
     FSSLClass.Free;
 
@@ -238,7 +256,9 @@ begin
   inherited Destroy;
 end;
 
-function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String): String;
+function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String;
+  SignatureNode: String; SelectionNamespaces: String; IdSignature: String
+  ): String;
 Var
   XmlAss, xmlHeaderAntes, xmlHeaderDepois: String;
   I: integer;
@@ -250,7 +270,8 @@ begin
   if I > 0 then
     xmlHeaderAntes := copy(ConteudoXML, 1, I + 1);
 
-  XmlAss := FSSLClass.Assinar(ConteudoXML, docElement, infElement);
+  XmlAss := FSSLClass.Assinar( ConteudoXML, docElement, infElement,
+                               SignatureNode, SelectionNamespaces, IdSignature);
 
   // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
   if xmlHeaderAntes <> '' then
@@ -293,10 +314,12 @@ begin
   Result := FSSLClass.Validar(ConteudoXML, ArqSchema, MsgErro);
 end;
 
-function TDFeSSL.VerificarAssinatura(const ConteudoXML: String;
-  out MsgErro: String): Boolean;
+function TDFeSSL.VerificarAssinatura(const ConteudoXML: String; out
+  MsgErro: String; const infElement: String; SignatureNode: String;
+  SelectionNamespaces: String): Boolean;
 begin
-  Result := FSSLClass.VerificarAssinatura(ConteudoXML, MsgErro);
+  Result := FSSLClass.VerificarAssinatura(ConteudoXML, MsgErro,
+                              infElement, SignatureNode, SelectionNamespaces);
 end;
 
 procedure TDFeSSL.CarregarCertificado;
@@ -448,7 +471,9 @@ begin
   FpCertificadoLido := False;
 end;
 
-function TDFeSSLClass.Assinar(const ConteudoXML, docElement, infElement: String): String;
+function TDFeSSLClass.Assinar(const ConteudoXML, docElement,
+  infElement: String; SignatureNode: String; SelectionNamespaces: String;
+  IdSignature: String): String;
 begin
   Result := '';
   raise EACBrDFeException.Create(ClassName + '.Assinar, não implementado');
@@ -468,8 +493,9 @@ begin
   raise EACBrDFeException.Create('"Validar" não suportado em: ' + ClassName);
 end;
 
-function TDFeSSLClass.VerificarAssinatura(const ConteudoXML: String;
-  out MsgErro: String): Boolean;
+function TDFeSSLClass.VerificarAssinatura(const ConteudoXML: String; out
+  MsgErro: String; const infElement: String; SignatureNode: String;
+  SelectionNamespaces: String): Boolean;
 begin
   Result := False;
   raise EACBrDFeException.Create('"ValidarAssinatura" não suportado em: ' + ClassName);
@@ -527,11 +553,12 @@ begin
   Result := '';
 end;
 
-function TDFeSSLClass.SignatureElement(const URI: String; AddX509Data: Boolean): String;
+function TDFeSSLClass.SignatureElement(const URI: String; AddX509Data: Boolean;
+  IdSignature: String): String;
 begin
   {(*}
   Result :=
-  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + IdSignature + '>' +
     '<SignedInfo>' +
       '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
       '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
@@ -554,6 +581,47 @@ begin
     '</KeyInfo>'+
   '</Signature>';
   {*)}
+end;
+
+function TDFeSSLClass.AdicionarSignatureElement(ConteudoXML: String;
+  AddX509Data: Boolean; docElement, IdSignature: String): String;
+var
+  URI, TagEndDocElement: String;
+  I: Integer;
+begin
+  URI := ExtraiURI(ConteudoXML);
+
+  TagEndDocElement := '</' + docElement + '>';
+  I := PosLast(TagEndDocElement, ConteudoXML);
+  if I = 0 then
+    raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
+
+  Result := copy(ConteudoXML, 1, I - 1) +
+            SignatureElement(URI, AddX509Data, IdSignature) + TagEndDocElement;
+end;
+
+function TDFeSSLClass.AjustarXMLAssinado(const ConteudoXML: String): String;
+var
+  XmlAss: String;
+  PosIni, PosFim: Integer;
+begin
+  XmlAss := ConteudoXML;
+
+  // Removendo quebras de linha //
+  XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
+  XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
+
+  // Removendo espaços desnecessários, do Elemento da Assinatura //
+  PosIni := PosLast('<SignatureValue>', XmlAss) + length('<SignatureValue>');
+  XmlAss := copy(XmlAss, 1, PosIni - 1) + StringReplace(
+    copy(XmlAss, PosIni, length(XmlAss)), ' ', '', [rfReplaceAll]);
+
+  // Considerando apenas o último Certificado X509, da assinatura //
+  PosIni := PosEx('<X509Certificate>', XmlAss, PosIni) - 1;
+  PosFim := PosLast('<X509Certificate>', XmlAss);
+  XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+
+  Result := XmlAss;
 end;
 
 end.

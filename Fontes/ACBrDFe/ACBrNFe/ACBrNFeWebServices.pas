@@ -1270,23 +1270,8 @@ begin
   FcStat    := 0;
   FxMotivo  := '';
 
-  // Limpa Dados dos retornos das notas Fiscais;
-  for i := 0 to FNFeRetorno.ProtNFe.Count - 1 do
-  begin
-    for j := 0 to FNotasFiscais.Count - 1 do
-    begin
-      if OnlyNumber(FNFeRetorno.ProtNFe.Items[i].chNFe) = FNotasFiscais.Items[J].NumID then
-      begin
-        FNotasFiscais.Items[j].NFe.procNFe.verAplic := '';
-        FNotasFiscais.Items[j].NFe.procNFe.chNFe    := '';
-        FNotasFiscais.Items[j].NFe.procNFe.dhRecbto := 0;
-        FNotasFiscais.Items[j].NFe.procNFe.nProt    := '';
-        FNotasFiscais.Items[j].NFe.procNFe.digVal   := '';
-        FNotasFiscais.Items[j].NFe.procNFe.cStat    := 0;
-        FNotasFiscais.Items[j].NFe.procNFe.xMotivo  := '';
-      end;
-    end;
-  end;
+  FNFeRetorno.ProtNFe.Clear;
+  FNotasFiscais.Clear;
 end;
 
 function TNFeRetRecepcao.Executar: Boolean;

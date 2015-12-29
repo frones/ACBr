@@ -48,12 +48,11 @@ interface
 uses
   SysUtils, Variants, Classes, StrUtils,
   {$IFDEF CLX}
-  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
-      Graphics, Controls, Forms, Dialogs, ExtCtrls,
+   Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  MaskUtils, pnfsNFSe, ACBrNFSe, Printers,
+  pnfsNFSe, ACBrNFSe, Printers,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
   

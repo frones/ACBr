@@ -50,7 +50,12 @@ Símbolo : Significado
 23/12/2015
 -- ACBrNFSeWebServices --
 [*] Simplificação de código na montagem do Lote de RPS.
-    Por: Italo Jurisato Junior
+    (Por: Italo Jurisato Junior)
+
+[*] Remoção de Warnings e Hints de compilação
+[*] Remoção de Comentários desnecessários
+[*] Ajustes para usar os novos parâmetros de SSL.Assinar e SSL.VerificarAssinatura
+    (por: DSA)
 
 22/12/2015
 -- pnfsLerListaNFSe --

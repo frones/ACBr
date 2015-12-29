@@ -40,9 +40,9 @@ unit ACBrNFSeDANFSeRLRetrato;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB,
-  pnfsConversao, ACBrNFSeDANFSEClass, ACBrNFSeDANFSeRLClass, ACBrDelphiZXingQRCode ;
+  pnfsConversao, ACBrDelphiZXingQRCode ;
 
 type
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
@@ -226,7 +226,7 @@ var
 implementation
 
 uses
- StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrDFeUtil, ACBrValidador;
+ StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrValidador;
 
 {$R *.dfm}
 

@@ -48,6 +48,19 @@ uses
 const
   cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& Id ID #IMPLIED>]>';
 
+  cErrMngrCreate = 'Erro: Falha ao criar Gerenciador de Chaves "xmlSecKeysMngrCreate"';
+  cErrMngrInit = 'Erro: Falha ao inicializar o Gerenciador de Chaves "xmlSecCryptoAppDefaultKeysMngrInit"';
+  cErrCertLoad = 'Erro: Falha ao ler informação do Certificado no Gerenciador de Chaves';
+  cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
+  cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
+  cErrFindRootNode = 'Erro: Falha ao localizar o nó Raiz';
+  cErrCtxCreate = 'Erro: Falha ao criar Ctx "xmlSecDSigCtxCreate"';
+  cErrPrivKeyLoad = 'Erro: Falha ao ler a Chave Privada de DadosPFX';
+  cErrPubKeyLoad = 'Erro: Falha ao ler a Chave Publica do Certificado';
+  cErrDSigSign = 'Erro: Falha ao assinar o Documento';
+  cErrDSigVerify = 'Erro: Falha na verificação da Assinatura';
+
+
 type
   { TDFeOpenSSL }
 
@@ -62,9 +75,13 @@ type
 
     procedure Clear;
     procedure ConfiguraHTTP(const URL, SoapAction: String; MimeType: String);
+    function InserirDTD(AXml: String; const DTD: String): String;
     function LerPFXInfo(pfxdata: Ansistring): Boolean;
 
-    function XmlSecSign(const Axml: PAnsiChar): AnsiString;
+    procedure VerificarValoresPadrao(var SignatureNode: String;
+      var SelectionNamespaces: String);
+    function XmlSecSign(const ConteudoXML: String;
+      SignatureNode, SelectionNamespaces: String): AnsiString;
     procedure CreateCtx;
     procedure DestroyCtx;
   protected
@@ -80,14 +97,16 @@ type
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    function Assinar(const ConteudoXML, docElement, infElement: String): String;
-      override;
+    function Assinar(const ConteudoXML, docElement, infElement: String;
+      SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = ''): String; override;
     function Enviar(const ConteudoXML: String; const URL: String;
       const SoapAction: String; const MimeType: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; override;
-    function VerificarAssinatura(const ConteudoXML: String;
-      out MsgErro: String): Boolean; override;
+    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
+      const infElement: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''): Boolean; override;
 
     procedure CarregarCertificado; override;
     procedure DescarregarCertificado; override;
@@ -103,7 +122,8 @@ implementation
 
 uses Math, strutils, dateutils,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
-  synautil,
+  pcnAuxiliar,
+  synautil, synacode,
   {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
 
 procedure InitXmlSec;
@@ -186,50 +206,31 @@ begin
   inherited Destroy;
 end;
 
-function TDFeOpenSSL.Assinar(const ConteudoXML, docElement, infElement: String): String;
+function TDFeOpenSSL.Assinar(const ConteudoXML, docElement, infElement: String;
+  SignatureNode: String; SelectionNamespaces: String; IdSignature: String
+  ): String;
 var
-  I, PosIni, PosFim: integer;
-  URI, AXml, XmlAss, DTD, TagEndDocElement: String;
+  AXml, XmlAss, DTD: String;
 begin
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
-  AXml := ConteudoXML;
   XmlAss := '';
-
-  URI := ExtraiURI(AXml);
-
-  //// Adicionando Cabeçalho DTD, necessário para xmlsec encontrar o ID ////
-  I := pos('?>', AXml);
   DTD := StringReplace(cDTD, '&infElement&', infElement, []);
+  AXml := InserirDTD(ConteudoXML, DTD);
 
-  AXml := Copy(AXml, 1, IfThen(I > 0, I + 1, I)) + DTD +
-    Copy(AXml, IfThen(I > 0, I + 2, I), Length(AXml));
-
-  //// Inserindo Template da Assinatura digital ////
-  TagEndDocElement := '</' + docElement + '>';
-  I := pos('<signature', lowercase(AXml));
-  if I = 0 then
-    I := PosLast(TagEndDocElement, AXml);
-
-  if I = 0 then
-    raise EACBrDFeException.Create('Não encontrei final do elemento: ' +
-      TagEndDocElement);
-
-  AXml := copy(AXml, 1, I - 1) + SignatureElement(URI, True) + TagEndDocElement;
+  // Inserindo Template da Assinatura digital //
+  if (not XmlEstaAssinado(AXml)) or (SignatureNode <> '') then
+    AXml := AdicionarSignatureElement(AXml, True, docElement, IdSignature);
 
   // Assinando com XMLSec //
-  XmlAss := XmlSecSign(PAnsiChar(AnsiString(AXml)));
+  //DEBUG
+  //WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-  // Removendo quebras de linha //
-  XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
-  XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
+  XmlAss := XmlSecSign(AXml, SignatureNode, SelectionNamespaces);
+
+  XmlAss := AjustarXMLAssinado(XmlAss);
 
   // Removendo DTD //
-  XmlAss := StringReplace(XmlAss, DTD, '', []);
-
-  // Considerando apenas o último Certificado //
-  PosIni := Pos('<X509Certificate>', XmlAss) - 1;
-  PosFim := PosLast('<X509Certificate>', XmlAss);
-  Result := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+  Result := StringReplace(XmlAss, DTD, '', []);
 end;
 
 function TDFeOpenSSL.Enviar(const ConteudoXML: String; const URL: String;
@@ -353,22 +354,32 @@ begin
   end;
 end;
 
-function TDFeOpenSSL.VerificarAssinatura(const ConteudoXML: String;
-  out MsgErro: String): Boolean;
+function TDFeOpenSSL.VerificarAssinatura(const ConteudoXML: String; out
+  MsgErro: String; const infElement: String; SignatureNode: String;
+  SelectionNamespaces: String): Boolean;
 var
   doc: xmlDocPtr;
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
-  Publico: String;
+  X509Certificate, AXml, DTD: String;
   MS: TMemoryStream;
+
+const
+  xmlSecKeyDataTypeTrusted = $0100 ;
+
 begin
   InitXmlSec;
 
+  VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+
+  DTD := StringReplace(cDTD, '&infElement&', infElement, []);
+  AXml := InserirDTD(ConteudoXML, DTD);
+
   Result := False;
-  Publico := copy(ConteudoXML, pos('<X509Certificate>', ConteudoXML) + 17,
-                  pos('</X509Certificate>', ConteudoXML) -
-                  (pos('<X509Certificate>', ConteudoXML) + 17));
+  X509Certificate := copy(AXml, pos('<X509Certificate>', AXml) + 17,
+                  pos('</X509Certificate>', AXml) -
+                  (pos('<X509Certificate>', AXml) + 17));
 
   doc := nil;
   node := nil;
@@ -377,65 +388,68 @@ begin
 
   MS := TMemoryStream.Create;
   try
-    WriteStrToStream(MS, Publico);
+    WriteStrToStream(MS, DecodeBase64(X509Certificate) );
+    //DEBUG
+    //MS.Position := 0;
+    //MS.SaveToFile('c:\temp\cert.der');
 
-{    mngr := xmlSecKeysMngrCreate();
+    mngr := xmlSecKeysMngrCreate();
     if (mngr = nil) then
     begin
-      MsgErro := 'Error: failed to create keys manager';
+      MsgErro := cErrMngrCreate;
       exit;
     end;
 
     if xmlSecCryptoAppDefaultKeysMngrInit(mngr) < 0 then
     begin
-      MsgErro := 'Error: failed to initialize keys manager';
+      MsgErro := cErrMngrInit;
       exit;
     end;
 
-    //xmlSecCryptoAppKeyCertLoadMemory;
+    { Load the Certificate }
     MS.Position := 0;
     if (xmlSecCryptoAppKeysMngrCertLoadMemory(mngr, MS.Memory, MS.Size,
-      xmlSecKeyDataFormatCertPem, 1) < 0) then
+      xmlSecKeyDataFormatCertDer, xmlSecKeyDataTypeTrusted) < 0) then
     begin
-      MsgErro := 'Error: failed to load certificate';
+      MsgErro := cErrCertLoad;
       exit;
     end;
- }
-    //xmlSecOpenSSLAppKeyCertLoadMemory;
-    doc := xmlParseDoc(PAnsiChar(ConteudoXML));
+
+    doc := xmlParseDoc(PAnsiChar(AXml));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
-      MsgErro := 'Error: unable to parse';
+      MsgErro := cErrParseDoc;
       exit;
     end;
 
-    node := xmlSecFindNode(xmlDocGetRootElement(doc), xmlSecNodeSignature, xmlSecDSigNs);
+    node := xmlSecFindChild(xmlDocGetRootElement(doc),
+               xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
     if (node = nil) then
     begin
-      MsgErro := 'Error: start node not found';
+      MsgErro := cErrFindSignNode;
       exit;
     end;
 
-    dsigCtx := xmlSecDSigCtxCreate(nil);
+    dsigCtx := xmlSecDSigCtxCreate(mngr);
     if (dsigCtx = nil) then
     begin
-      MsgErro := 'Error :failed to create signature context';
+      MsgErro := cErrCtxCreate;
       exit;
     end;
 
     MS.Position := 0;
     dsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(MS.Memory, MS.Size,
-      xmlSecKeyDataFormatPem, nil, nil, nil);
+      xmlSecKeyDataFormatCertDer, nil, nil, nil);
     if (dsigCtx^.signKey = nil) then
     begin
-      MsgErro := 'Error: failed to load public pem key from XML';
+      MsgErro := cErrPubKeyLoad;
       exit;
     end;
 
     { Verify signature }
     if (xmlSecDSigCtxVerify(dsigCtx, node) < 0) then
     begin
-      MsgErro := 'Error: signature verify';
+      MsgErro := cErrDSigVerify;
       exit;
     end;
 
@@ -452,10 +466,11 @@ begin
   end;
 end;
 
-function TDFeOpenSSL.XmlSecSign(const Axml: PAnsiChar): AnsiString;
+function TDFeOpenSSL.XmlSecSign(const ConteudoXML: String; SignatureNode,
+  SelectionNamespaces: String): AnsiString;
 var
   doc: xmlDocPtr;
-  node: xmlNodePtr;
+  node, RootElement: xmlNodePtr;
   buffer: PAnsiChar;
   bufSize: integer;
 begin
@@ -464,25 +479,32 @@ begin
   doc := Nil;
   Result := '';
 
-  if (Axml = nil) then
+  if Trim(ConteudoXML) = '' then
     Exit;
 
   CreateCtx;
   try
+    VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+
     { load template }
-    doc := xmlParseDoc(Axml);
-    if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
-      raise EACBrDFeException.Create('Error: unable to parse');
+    doc := xmlParseDoc(PAnsiChar(ConteudoXML));
+    if (doc = nil) then
+      raise EACBrDFeException.Create(cErrParseDoc);
 
     { find start node }
-    node := xmlSecFindNode(xmlDocGetRootElement(doc),
-      PAnsiChar(xmlSecNodeSignature), PAnsiChar(xmlSecDSigNs));
+    RootElement := xmlDocGetRootElement(doc);
+    if (RootElement = nil) then
+      raise EACBrDFeException.Create(cErrFindRootNode);
+
+    { find Signature node }
+    node := xmlSecFindChild(RootElement,
+               xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
     if (node = nil) then
-      raise EACBrDFeException.Create('Error: start node not found');
+      raise EACBrDFeException.Create(cErrFindSignNode);
 
     { sign the template }
     if (xmlSecDSigCtxSign(FdsigCtx, node) < 0) then
-      raise EACBrDFeException.Create('Error: signature failed');
+      raise EACBrDFeException.Create(cErrDSigSign);
 
     { print signed document to stdout }
     // xmlDocDump(stdout, doc);
@@ -517,18 +539,19 @@ begin
     { create signature context }
     FdsigCtx := xmlSecDSigCtxCreate(nil);
     if (FdsigCtx = nil) then
-      raise EACBrDFeException.Create('Error :failed to create signature context');
+      raise EACBrDFeException.Create(cErrCtxCreate);
 
     MS := TMemoryStream.Create;
     try
       WriteStrToStream(MS, DadosPFX);
 
+      MS.Position := 0;
       FdsigCtx^.signKey := xmlSecCryptoAppKeyLoadMemory(
         MS.Memory, MS.Size, xmlSecKeyDataFormatPkcs12,
         PAnsiChar(Senha), nil, nil);
 
       if (FdsigCtx^.signKey = nil) then
-        raise EACBrDFeException.Create('Error: failed to load private pem key from DadosPFX');
+        raise EACBrDFeException.Create(cErrPrivKeyLoad);
     finally
       MS.Free;
     end;
@@ -770,6 +793,37 @@ begin
   end;
 end;
 
+procedure TDFeOpenSSL.VerificarValoresPadrao(var SignatureNode: String;
+  var SelectionNamespaces: String);
+var
+  DSigNs: String;
+begin
+  {
+    Não está funcionando adequadamente, pois não estamos fazendo uso dos
+    parâmetros enviados. Entretanto atualmente OpenSSL consegue assinar XMLs
+    com 2 assinaturas, mesmo sem essa informação, pois o comando
+    "xmlSecFindChild" consegue achar o NÓ de assinatura, imeditamente inferior
+    ao elemento raiz selecionado
+  }
+
+  //if SignatureNode = '' then
+    SignatureNode := xmlSecNodeSignature();
+  //else
+  //  SignatureNode := copy(SignatureNode, Pos(':',SignatureNode)+1, Length(SignatureNode));
+
+  DSigNs := xmlSecDSigNs();
+
+  //if SelectionNamespaces = '' then
+    SelectionNamespaces := DSigNs
+  //else
+  //begin
+  //  SelectionNamespaces := RetornarConteudoEntre( SelectionNamespaces, '"', '"');
+  //
+  //  if LeftStr(SelectionNamespaces, Length(DSigNs)) <> DSigNs then
+  //    SelectionNamespaces := DSigNs + ' ' + SelectionNamespaces;
+  //end;
+end;
+
 
 function TDFeOpenSSL.GetCertDataVenc: TDateTime;
 begin
@@ -846,6 +900,17 @@ begin
   FHTTP.Protocol := '1.1';
   FHTTP.AddPortNumberToHost := False;
   FHTTP.Headers.Add(SoapAction);
+end;
+
+function TDFeOpenSSL.InserirDTD(AXml: String; const DTD: String): String;
+var
+  I: integer;
+begin
+  // Adicionando Cabeçalho DTD, necessário para xmlsec encontrar o ID //
+  I := pos('?>', AXml);
+  Result := Copy(AXml, 1, IfThen(I > 0, I + 1, I)) +
+            DTD +
+            Copy(AXml, IfThen(I > 0, I + 2, I), Length(AXml));
 end;
 
 initialization

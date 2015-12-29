@@ -143,8 +143,7 @@ type
 implementation
 
 uses
-  strutils, dateutils,
-  pcnAuxiliar, synacode;
+  strutils, dateutils;
 
 {$IFDEF FPC}
  {$R ACBrNFSeServicos.rc}
@@ -255,7 +254,6 @@ end;
 
 function TACBrNFSe.IdentificaSchema(const AXML: String): TSchemaNFSe;
 var
-  lTipoEvento: String;
   I: integer;
 begin
 

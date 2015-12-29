@@ -145,7 +145,7 @@ type
 
     procedure Assinar(Assina: Boolean);
     function AssinarLote(XMLLote, docElemento, infElemento: String;
-      Assina: Boolean; SignatureNode: String = ''; DSIGNSLote: String = '';
+      Assina: Boolean; SignatureNode: String = ''; SelectionNamespaces: String = '';
       IdSignature: String = ''  ): String;
     procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
@@ -221,10 +221,10 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr: String;
+  XMLStr, CNPJEmitente, CNPJCertificado, InfElemento: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
-  CNPJEmitente, CNPJCertificado: String;
+  Ok: Boolean;
 begin
   // Verificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
   CNPJEmitente    := OnlyNumber(NFSe.Prestador.CNPJ);
@@ -249,13 +249,18 @@ begin
     // As linhas abaixo só podem ser descomentadas depois das alterações nos
     // fontes das classes ACBrDFe forem aprovadas.
 
-//    SSL.SSLClass.SignatureNode := '';
-//    SSL.SSLClass.DSIGNSLote    := '';
-//    SSL.SSLClass.IdSignature   := '';
+    case StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML) of
+      ve201,
+      ve200,
+      ve110: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
+
+    // Os RPS versão 1.00 tem como InfElement = InfRps
+    else
+      InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfRps';
+    end;
 
     if Assina then
-      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps',
-                           Configuracoes.Geral.ConfigGeral.Prefixo3 + 'InfRps')
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps', InfElemento)
     else
       FXMLAssinado := XMLOriginal;
 
@@ -276,9 +281,9 @@ begin
 end;
 
 function NotaFiscal.VerificarAssinatura: Boolean;
-var
-  Erro, AXML: String;
-  AssEhValida: Boolean;
+//var
+//  Erro, AXML: String;
+//  AssEhValida: Boolean;
 begin
 (*
   AXML := FXMLOriginal;
@@ -343,7 +348,6 @@ end;
 
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
 begin
-  Result := False;
   FNFSeR.Leitor.Arquivo := AXML;
   FNFSeR.ProvedorConf := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
   FNFSeR.LerXml;
@@ -364,8 +368,6 @@ end;
 
 function NotaFiscal.GravarStream(AStream: TStream): Boolean;
 begin
-  Result := False;
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
 
@@ -587,11 +589,10 @@ begin
 end;
 
 function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;
-  Assina: Boolean; SignatureNode: String; DSIGNSLote: String;
-  IdSignature: String ): String;
+  Assina: Boolean; SignatureNode: String; SelectionNamespaces: String;
+  IdSignature: String): String;
 var
-  XMLAss: String;
-  ArqXML: String;
+  XMLAss, ArqXML: String;
 begin
   // XMLLote já deve estar em UTF8, para poder ser assinado //
   ArqXML := ConverteXMLtoUTF8(XMLLote);
@@ -605,11 +606,8 @@ begin
       // As linhas abaixo só podem ser descomentadas depois das alterações nos
       // fontes das classes ACBrDFe forem aprovadas.
 
-//      SSL.SSLClass.SignatureNode := SignatureNode;
-//      SSL.SSLClass.DSIGNSLote    := DSIGNSLote;
-//      SSL.SSLClass.IdSignature   := IdSignature;
-      
-      XMLAss := SSL.Assinar(String(ArqXML), docElemento, infElemento);
+      XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
+                            SignatureNode, SelectionNamespaces, IdSignature);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;
     end;
@@ -620,7 +618,6 @@ procedure TNotasFiscais.ValidarLote(const XMLLote, NomeArqSchema: String);
 var
   Erro, AXML: String;
   NotaEhValida: Boolean;
-  ALayout: TLayOutNFSe;
 begin
   AXML := XMLLote;
 
@@ -688,12 +685,14 @@ begin
 end;
 
 function TNotasFiscais.VerificarAssinatura(out Erros: String): Boolean;
-var
-  i: integer;
+//var
+//  i: integer;
+//  Erro: String;
 begin
   Result := True;
+  (*
   Erros := '';
-(*
+
   for i := 0 to Self.Count - 1 do
   begin
     if not Self.Items[i].VerificarAssinatura then
@@ -730,8 +729,6 @@ var
   i: integer;
   MS: TMemoryStream;
 begin
-  Result := False;
-
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(CaminhoArquivo);
@@ -755,7 +752,6 @@ function TNotasFiscais.LoadFromStream(AStream: TStringStream;
 var
   AXML: AnsiString;
 begin
-  Result := False;
   AStream.Position := 0;
   AXML := ReadStrFromStream(AStream, AStream.Size);
 
@@ -768,7 +764,7 @@ var
   VersaoNFSe: TVersaoNFSe;
   Ok: Boolean;
   AXML: AnsiString;
-  P, N: integer;
+  N: integer;
 
   function PosNFSe: Integer;
   begin

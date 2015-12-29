@@ -48,6 +48,7 @@ uses
 const
   DSIGNS = 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';
   CAPICOM_STORE_NAME = 'My'; //My CA Root AddressBook
+  CAPICOM_SIGNATURE_NODE = './/ds:Signature';
 
 type
   { TDFeCapicom }
@@ -65,6 +66,8 @@ type
     procedure AtribuirSenhaA3;
     procedure CarregarCertificadoSeNecessario;
     procedure Clear;
+    procedure VerificarValoresPadrao(var SignatureNode: String;
+      var SelectionNamespaces: String);
 
   protected
     FMimeType: String;
@@ -84,14 +87,16 @@ type
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
-    function Assinar(const ConteudoXML, docElement, infElement: String): String;
-      override;
+    function Assinar(const ConteudoXML, docElement, infElement: String;
+      SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = ''): String; override;
     function Enviar(const ConteudoXML: String; const URL: String;
       const SoapAction: String; const MimeType: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; override;
-    function VerificarAssinatura(const ConteudoXML: String;
-      out MsgErro: String): Boolean; override;
+    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
+      const infElement: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''): Boolean; override;
 
     procedure CarregarCertificado; override;
     function SelecionarCertificado: String; override;
@@ -106,7 +111,9 @@ Var CertificadosA3ComPin: String;
 implementation
 
 uses
-  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts, synautil;
+  strutils,
+  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
+  synautil;
 
 { TDFeCapicom }
 
@@ -206,7 +213,7 @@ begin
     xmldoc.setProperty('SelectionNamespaces', DSIGNS);
 
     xmldsig := CoMXDigitalSignature50.Create;
-    xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+    xmldsig.signature := xmldoc.selectSingleNode(CAPICOM_SIGNATURE_NODE);
     xmldsig.store := FCertStoreMem;
 
     try
@@ -251,6 +258,21 @@ begin
   FCNPJ := '';
 end;
 
+procedure TDFeCapicom.VerificarValoresPadrao(var SignatureNode: String;
+  var SelectionNamespaces: String);
+begin
+  if SignatureNode = '' then
+    SignatureNode := CAPICOM_SIGNATURE_NODE;
+
+  if SelectionNamespaces = '' then
+    SelectionNamespaces := DSIGNS
+  else
+  begin
+    if LeftStr(SelectionNamespaces, Length(DSIGNS)) <> DSIGNS then
+      SelectionNamespaces := DSIGNS + ' ' + SelectionNamespaces;
+  end;
+end;
+
 procedure TDFeCapicom.CarregarCertificado;
 var
   Store: IStore3;
@@ -261,6 +283,7 @@ var
   Propriedades, Propriedade: String;
   Lista: TStringList;
   KeyLocation: Integer;
+  Inicializado: Boolean;
 
 begin
   // Certificado já foi carregado ??
@@ -270,7 +293,7 @@ begin
     exit;
   end;
 
-  CoInitialize(nil);
+  Inicializado := (CoInitialize(nil) in [ S_OK, S_FALSE ]);
   try
     if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
     begin
@@ -367,7 +390,8 @@ begin
       Extension := nil;
     end;
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 
   FpCertificadoLido := True;
@@ -415,32 +439,31 @@ begin
   Result := FReqResp.InternalErrorCode;
 end;
 
-function TDFeCapicom.Assinar(const ConteudoXML, docElement, infElement: String): String;
+function TDFeCapicom.Assinar(const ConteudoXML, docElement, infElement: String;
+  SignatureNode: String; SelectionNamespaces: String; IdSignature: String
+  ): String;
 var
-  PosIni, PosFim: integer;
-  URI, AXml, TagEndDocElement, XmlAss: String;
+  AXml, XmlAss: String;
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignature;
   dsigKey: IXMLDSigKey;
   signedKey: IXMLDSigKey;
   PrivateKey: IPrivateKey;
+  Inicializado: Boolean;
 begin
-  CoInitialize(nil);
+  Inicializado := (CoInitialize(nil) in [ S_OK, S_FALSE ]);
   try
     CarregarCertificadoSeNecessario;
 
     AXml := ConteudoXML;
     XmlAss := '';
 
-    if not XmlEstaAssinado(AXml) then
-    begin
-      URI := ExtraiURI(AXml);
+    // Usa valores default, se não foram informados //
+    VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 
-      TagEndDocElement := '</' + docElement + '>';
-      AXml := copy(AXml, 1, PosLast(TagEndDocElement, AXml) - 1);
-
-      AXml := AXml + SignatureElement(URI, False) + TagEndDocElement;
-    end;
+    // Inserindo Template da Assinatura digital //
+    if (not XmlEstaAssinado(AXml)) or (SignatureNode <> CAPICOM_SIGNATURE_NODE) then
+      AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature);
 
     try
       // Criando XMLDOC //
@@ -453,13 +476,13 @@ begin
       if (not xmldoc.loadXML(AXml)) then
         raise EACBrDFeException.Create('Não foi possível carregar o arquivo: ' + AXml);
 
-      xmldoc.setProperty('SelectionNamespaces', DSIGNS);
+      xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
 
       // Criando Elemento de assinatura //
       xmldsig := CoMXDigitalSignature50.Create;
 
       // Lendo elemento de Assinatura de XMLDOC //
-      xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+      xmldsig.signature := xmldoc.selectSingleNode( SignatureNode );
       if (xmldsig.signature = nil) then
         raise EACBrDFeException.Create('É preciso carregar o template antes de assinar.');
 
@@ -477,20 +500,7 @@ begin
         raise EACBrDFeException.Create('Assinatura Falhou.');
 
       XmlAss := xmldoc.xml;
-
-      // Removendo quebras de linha //
-      XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
-      XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
-
-      // Removendo espaços desnecessários, do Elemento da Assinatura //
-      PosIni := Pos('<SignatureValue>', XmlAss) + length('<SignatureValue>');
-      XmlAss := copy(XmlAss, 1, PosIni - 1) + StringReplace(
-        copy(XmlAss, PosIni, length(XmlAss)), ' ', '', [rfReplaceAll]);
-
-      // Considerando apenas o último Certificado //
-      PosIni := Pos('<X509Certificate>', XmlAss) - 1;
-      PosFim := PosLast('<X509Certificate>', XmlAss);
-      XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+      XmlAss := AjustarXMLAssinado(XmlAss);
     finally
       dsigKey := nil;
       signedKey := nil;
@@ -500,7 +510,8 @@ begin
 
     Result := XmlAss;
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 end;
 
@@ -553,9 +564,10 @@ var
   DOMDocument: IXMLDOMDocument2;
   ParseError: IXMLDOMParseError;
   Schema: XMLSchemaCache;
+  Inicializado: Boolean;
 begin
 
-  CoInitialize(nil);
+  Inicializado := (CoInitialize(nil) in [ S_OK, S_FALSE ]);
   try
     CarregarCertificadoSeNecessario;
 
@@ -589,12 +601,14 @@ begin
       Schema := nil;
     end;
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 end;
 
-function TDFeCapicom.VerificarAssinatura(const ConteudoXML: String;
-  out MsgErro: String): Boolean;
+function TDFeCapicom.VerificarAssinatura(const ConteudoXML: String; out
+  MsgErro: String; const infElement: String; SignatureNode: String;
+  SelectionNamespaces: String): Boolean;
 var
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignature;
@@ -602,6 +616,9 @@ var
   pKey, pKeyOut: IXMLDSigKey;
 begin
   CarregarCertificadoSeNecessario;
+
+  // Usa valores default, se não foram informados //
+  VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 
   xmldoc := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
@@ -616,11 +633,11 @@ begin
       exit;
     end;
 
-    xmldoc.setProperty('SelectionNamespaces', DSIGNS);
-    xmldsig.signature := xmldoc.selectSingleNode('.//ds:Signature');
+    xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
+    xmldsig.signature := xmldoc.selectSingleNode( SignatureNode );
     if (xmldsig.signature = nil) then
     begin
-      MsgErro := 'Não foi possível carregar ou ler a assinatura.';
+      MsgErro := 'Não foi possível carregar ou ler a assinatura ('+SignatureNode+')';
       exit;
     end;
 
@@ -671,6 +688,8 @@ begin
     end;
 
     FReqResp.TimeOut := TimeOut;
+    FReqResp.UseCertificate := UseCertificate;
+    FReqResp.UseSSL := UseSSL;
   end;
 
   FReqResp.SetCertificate(FCertificado);

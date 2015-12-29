@@ -986,7 +986,7 @@ begin
   Gerador.wCampo(tcStr, '#251', 'infAdFisco ', 01, 2000, 0, CTe.Imp.InfAdFisco, DSC_INFADFISCO);
   // Grupo a ser informado nas prestações de serviços de transporte interestaduais
   // para consumidor final, não contribuinte do ICMS.
-  if CTe.Imp.ICMSUFFim.vBCUFFim <> 0 then
+  if CTe.Imp.ICMSUFFim.pICMSInterPart <> 0 then
     GerarICMSUFFim;
   Gerador.wGrupo('/imp');
 end;
@@ -1090,17 +1090,12 @@ end;
 
 procedure TCTeW.GerarICMSUFFim;
 begin
-// Descomentar as 2 linhas comentadas a partir de:
-// 01/12/2015 - Homologação
-// 15/12/2015 - Produção
   Gerador.wGrupo('ICMSUFFim', '#248a');
   Gerador.wCampo(tcDe2, '#', 'vBCUFFim      ', 01, 15, 1, CTe.Imp.ICMSUFFim.vBCUFFim, DSC_VBC);
-  // A TAG abaixo só poderá constar no XML - Ambiente de Produção a partir de 15/12/2015
   Gerador.wCampo(tcDe2, '#', 'pFCPUFFim     ', 01, 05, 1, CTe.Imp.ICMSUFFim.pFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSUFFim    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSInter    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInter, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
-  // A TAG abaixo só poderá constar no XML - Ambiente de Produção a partir de 15/12/2015
   Gerador.wCampo(tcDe2, '#', 'vFCPUFFim     ', 01, 15, 1, CTe.Imp.ICMSUFFim.vFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFFim    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFFim, DSC_VICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFIni    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFIni, DSC_VICMS);

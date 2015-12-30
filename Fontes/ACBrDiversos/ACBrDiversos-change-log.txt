@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+
+30/12/2015
+-- ACBrCargaBal --
+[*] Adicionado tratamento com ACBrSTR nas mensagens com caracteres acentuados.
+(Jean Patrick)
+
 30/11/2015
 -- ACBrValidador --
 [-] Correção em FormatarCEP, para adicionar Zeros a direita

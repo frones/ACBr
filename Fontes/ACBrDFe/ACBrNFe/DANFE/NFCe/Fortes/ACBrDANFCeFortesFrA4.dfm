@@ -1,9 +1,9 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Left = 0
   Top = 0
-  Width = 1011
-  Height = 784
   Caption = 'frmACBrDANFCeFortesFrA4'
+  ClientHeight = 745
+  ClientWidth = 995
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -39,7 +39,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object imgLogo: TRLImage
         Left = 4
         Top = 4
-        Width = 70
+        Width = 75
         Height = 70
         Center = True
         Scaled = True
@@ -48,8 +48,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object lNomeFantasia: TRLLabel
         Left = 80
         Top = 8
-        Width = 387
+        Width = 629
         Height = 18
+        Alignment = taCenter
+        AutoSize = False
         Caption = 'Nome Fantasia'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -62,9 +64,11 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLLabel1: TRLLabel
         Left = 80
-        Top = 24
-        Width = 110
+        Top = 26
+        Width = 629
         Height = 16
+        Alignment = taCenter
+        AutoSize = False
         Caption = 'Raz'#227'o Social Ltda'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -77,7 +81,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLLabel2: TRLLabel
         Left = 80
-        Top = 40
+        Top = 58
         Width = 159
         Height = 16
         Caption = 'CNPJ: 12.345.789/0001.12'
@@ -91,8 +95,8 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel2BeforePrint
       end
       object RLLabel4: TRLLabel
-        Left = 488
-        Top = 24
+        Left = 255
+        Top = 58
         Width = 221
         Height = 16
         Alignment = taRightJustify
@@ -108,7 +112,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLLabel5: TRLLabel
         Left = 492
-        Top = 40
+        Top = 58
         Width = 217
         Height = 16
         Alignment = taRightJustify
@@ -124,9 +128,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLMemo3: TRLMemo
         Left = 80
-        Top = 56
+        Top = 42
         Width = 629
         Height = 16
+        Alignment = taCenter
         Behavior = [beSiteExpander]
         BeforePrint = RLMemo3BeforePrint
       end
@@ -469,11 +474,13 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         BeforePrint = RLLabel23BeforePrint
       end
       object RLLabel24: TRLLabel
-        Left = 478
+        Left = 422
         Top = 0
-        Width = 78
+        Width = 134
         Height = 16
-        Caption = 'Valor Total:'
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Subtotal :'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -485,7 +492,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail1: TRLSubDetail
       Left = 38
-      Top = 245
+      Top = 299
       Width = 718
       Height = 78
       Borders.Sides = sdCustom
@@ -507,9 +514,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawRight = True
         Borders.DrawBottom = False
         object RLLabel25: TRLLabel
-          Left = 423
+          Left = 419
           Top = -1
-          Width = 133
+          Width = 137
           Height = 18
           Alignment = taRightJustify
           Borders.Sides = sdCustom
@@ -517,7 +524,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Borders.DrawTop = False
           Borders.DrawRight = False
           Borders.DrawBottom = True
-          Caption = 'Forma de Pagamento:'
+          Caption = 'Forma de Pagamento :'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -559,12 +566,12 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawRight = True
         Borders.DrawBottom = False
         object RLLabel27: TRLLabel
-          Left = 422
+          Left = 418
           Top = 0
-          Width = 133
+          Width = 137
           Height = 16
           Alignment = taRightJustify
-          Caption = 'Forma de Pagamento:'
+          Caption = 'Forma de Pagamento :'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -605,12 +612,12 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawBottom = False
         BeforePrint = RLBand8BeforePrint
         object RLLabel29: TRLLabel
-          Left = 512
+          Left = 508
           Top = 0
-          Width = 44
+          Width = 48
           Height = 16
           Alignment = taRightJustify
-          Caption = 'Troco:'
+          Caption = 'Troco :'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -640,7 +647,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail2: TRLSubDetail
       Left = 38
-      Top = 323
+      Top = 377
       Width = 718
       Height = 446
       Borders.Sides = sdCustom
@@ -681,7 +688,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand10: TRLBand
         Left = 0
-        Top = 17
+        Top = 34
         Width = 718
         Height = 35
         Borders.Sides = sdCustom
@@ -717,7 +724,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand11: TRLBand
         Left = 0
-        Top = 52
+        Top = 69
         Width = 718
         Height = 73
         AutoSize = True
@@ -813,7 +820,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 125
+        Top = 142
         Width = 718
         Height = 44
         AutoSize = True
@@ -877,7 +884,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbRodape: TRLBand
         Left = 0
-        Top = 169
+        Top = 186
         Width = 718
         Height = 173
         AutoSize = True
@@ -965,6 +972,173 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Layout = tlBottom
           ParentFont = False
         end
+      end
+      object RLBand15: TRLBand
+        Left = 0
+        Top = 17
+        Width = 718
+        Height = 17
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
+        BeforePrint = RLBand15BeforePrint
+        object RLLabel43: TRLLabel
+          Left = 4
+          Top = 0
+          Width = 713
+          Height = 16
+          Alignment = taCenter
+          Caption = 
+            'Informa'#231#227'o dos Tributos Totais Incidentes (Lei Federal 12.741/20' +
+            '12):'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+          BeforePrint = RLLabel43BeforePrint
+        end
+      end
+    end
+    object RLBand12: TRLBand
+      Left = 38
+      Top = 245
+      Width = 718
+      Height = 18
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = False
+      BeforePrint = RLBand12BeforePrint
+      object RLLabel39: TRLLabel
+        Left = 560
+        Top = 0
+        Width = 154
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = '0000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlCenter
+        ParentFont = False
+        BeforePrint = RLLabel39BeforePrint
+      end
+      object RLLabel40: TRLLabel
+        Left = 422
+        Top = 0
+        Width = 134
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Valor Desconto :'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlCenter
+        ParentFont = False
+      end
+    end
+    object RLBand13: TRLBand
+      Left = 38
+      Top = 263
+      Width = 718
+      Height = 18
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = False
+      BeforePrint = RLBand13BeforePrint
+      object RLLabel3: TRLLabel
+        Left = 560
+        Top = 0
+        Width = 154
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = '0000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlCenter
+        ParentFont = False
+        BeforePrint = RLLabel3BeforePrint
+      end
+      object RLLabel38: TRLLabel
+        Left = 422
+        Top = 0
+        Width = 134
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Valor Acr'#233'scimo :'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlCenter
+        ParentFont = False
+      end
+    end
+    object RLBand14: TRLBand
+      Left = 38
+      Top = 281
+      Width = 718
+      Height = 18
+      BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = False
+      Borders.DrawRight = True
+      Borders.DrawBottom = False
+      object RLLabel41: TRLLabel
+        Left = 560
+        Top = 0
+        Width = 154
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = '0000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+        BeforePrint = RLLabel41BeforePrint
+      end
+      object RLLabel42: TRLLabel
+        Left = 422
+        Top = 0
+        Width = 134
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'VALOR TOTAL :'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
       end
     end
   end

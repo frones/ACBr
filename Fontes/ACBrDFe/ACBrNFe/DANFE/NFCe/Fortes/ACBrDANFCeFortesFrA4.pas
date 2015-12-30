@@ -49,7 +49,7 @@ uses
 	Classes, SysUtils,
      {$IFDEF FPC}
        LResources,
-     {$ENDIF}	
+     {$ENDIF}
   Messages, Variants, Graphics,
   Controls, Forms, Dialogs, ACBrNFeDANFEClass, RLReport, pcnNFe, ACBrNFe,
   RLHTMLFilter, RLFilters, RLPDFFilter, ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador,
@@ -141,6 +141,17 @@ type
     pGap05: TRLPanel;
     lSistema: TRLLabel;
     lProtocolo: TRLLabel;
+    RLBand12: TRLBand;
+    RLLabel39: TRLLabel;
+    RLLabel40: TRLLabel;
+    RLBand13: TRLBand;
+    RLLabel3: TRLLabel;
+    RLLabel38: TRLLabel;
+    RLBand14: TRLBand;
+    RLLabel41: TRLLabel;
+    RLLabel42: TRLLabel;
+    RLBand15: TRLBand;
+    RLLabel43: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLLabel1BeforePrint(Sender: TObject; var Text: string;
@@ -205,6 +216,17 @@ type
       var PrintIt: Boolean);
     procedure RLLabel32BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
+    procedure RLLabel39BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLLabel3BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLBand12BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLBand13BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLLabel41BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLBand15BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLLabel43BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
   private
     FNumItem: Integer;
     FNumPag: Integer;
@@ -219,8 +241,8 @@ type
   public
     { Public declarations }
   end;
-	
-procedure Register;	
+
+procedure Register;
 
 implementation
 
@@ -261,9 +283,10 @@ begin
       Endereco := Endereco + ' - '+copy(CEP,1,5)+'-'+copy(CEP,6,3);
     end;
     if (Emit.EnderEmit.fone <> '') then
-      Endereco := Endereco + ' - FONE: '+Emit.EnderEmit.fone;
+    begin
+      Endereco := Endereco + ' - TEL: '+FormatarFone(Emit.EnderEmit.fone);
+    end;
   end;
-
   Result := Endereco;
 end;
 
@@ -334,19 +357,19 @@ var
 begin
   PrintIt := self.FACBrNFeDANFCeFortesA4.Logo <> '';
   if PrintIt then
-    begin
-      if FileExists (self.FACBrNFeDANFCeFortesA4.Logo) then
+  begin
+    if FileExists (self.FACBrNFeDANFCeFortesA4.Logo) then
         imgLogo.Picture.LoadFromFile(self.FACBrNFeDANFCeFortesA4.Logo)
-      else
-      begin
-        LogoStream := TStringStream.Create(self.FACBrNFeDANFCeFortesA4.Logo);
-        try
-          imgLogo.Picture.Bitmap.LoadFromStream(LogoStream);
-        finally
-          LogoStream.Free;
-        end;
+    else
+    begin
+      LogoStream := TStringStream.Create(self.FACBrNFeDANFCeFortesA4.Logo);
+      try
+        imgLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+      finally
+        LogoStream.Free;
       end;
     end;
+  end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand10BeforePrint(Sender: TObject;
@@ -355,6 +378,24 @@ begin
   PrintIt := Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl) <> '';
 //  self.memDadosAdc.Lines.Clear;
 //  self.memDadosAdc.Lines.Add(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLBand12BeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vDesc > 0;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLBand13BeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vOutro > 0;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLBand15BeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := ( (self.FACBrNFeDANFCeFortesA4.vTribFed >0) or (self.FACBrNFeDANFCeFortesA4.vTribEst >0) or (self.FACBrNFeDANFCeFortesA4.vTribMun >0) );
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand8BeforePrint(Sender: TObject;
@@ -466,7 +507,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel23BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vNF);
+  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vProd);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel27BeforePrint(Sender: TObject;
@@ -496,10 +537,16 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := Text + ' ' + FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vTotTrib);
+  if( (self.FACBrNFeDANFCeFortesA4.vTribFed >0) or (self.FACBrNFeDANFCeFortesA4.vTribEst >0) or (self.FACBrNFeDANFCeFortesA4.vTribMun >0) )then
+   Text:='Informação dos Tributos Totais (Lei Federal 12.741/2012)'
+  else
+   begin
+    Text:='Informação dos Tributos Totais Incidentes (Lei Federal 12.741/2012): '+
+     FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vTotTrib);
 
-  if Trim(self.FACBrNFeDANFCeFortesA4.FonteTributos) <> '' then
-    Text := Text + ' - ' + self.FACBrNFeDANFCeFortesA4.FonteTributos
+    if Trim(self.FACBrNFeDANFCeFortesA4.FonteTributos) <> '' then
+     Text := Text + ' - Fonte : ' + self.FACBrNFeDANFCeFortesA4.FonteTributos+' - Chave : '+self.FACBrNFeDANFCeFortesA4.ChaveTributos;
+   end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel32BeforePrint(Sender: TObject;
@@ -539,6 +586,43 @@ begin
   begin
     Text  := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
     RLLabel37.Font.Color := clRed;
+  end;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel39BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vDesc);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel3BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vOutro);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel41BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vNF);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel43BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  if( (self.FACBrNFeDANFCeFortesA4.vTribFed >0) or
+      (self.FACBrNFeDANFCeFortesA4.vTribEst >0) or
+      (self.FACBrNFeDANFCeFortesA4.vTribMun >0) )then
+  begin
+    Text:='';
+    if self.FACBrNFeDANFCeFortesA4.vTribFed >0then
+      Text:=Text+'Tributos Federais '+FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribFed);
+    if self.FACBrNFeDANFCeFortesA4.vTribEst >0 then
+      Text:=Text+' - Tributos Estaduais '+FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribEst);
+    if self.FACBrNFeDANFCeFortesA4.vTribMun >0 then
+      Text:=Text+' - Tributos Municipais '+FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribMun);
+    if Trim(self.FACBrNFeDANFCeFortesA4.FonteTributos) <> '' then
+      Text := Text + ' - Fonte : ' + self.FACBrNFeDANFCeFortesA4.FonteTributos+' - Chave : '+self.FACBrNFeDANFCeFortesA4.ChaveTributos;
   end;
 end;
 

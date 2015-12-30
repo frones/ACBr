@@ -6876,6 +6876,11 @@ begin
       ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
       ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
     end;
+
+    if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
+       ACBrNFe1.DANFE.NFeCancelada := True
+    else
+       ACBrNFe1.DANFE.NFeCancelada := False;
   end;
 
   if ACBrNFe1.DANFE <> nil then

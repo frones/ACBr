@@ -196,11 +196,11 @@ begin
           for X := 0 to Servicos.Count - 1 do
           begin
             FGerador.wGrupo('Servico');
-            FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Produtos[X].Descricao);
-            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Produtos[X].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Produtos[X].Codigo.Tipo) + '"');
-            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, Produtos[X].Quantidade);
-            FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Produtos[X].Unidade);
-            FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FloatToIntStr(Produtos[X].ValorUnitario, 2));
+            FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Servicos[X].Descricao);
+            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Servicos[X].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Produtos[X].Codigo.Tipo) + '"');
+            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, Servicos[X].Quantidade);
+            FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Servicos[X].Unidade);
+            FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FloatToIntStr(Servicos[X].ValorUnitario, 2));
             FGerador.wGrupo('/Servico');
           end;
         end;

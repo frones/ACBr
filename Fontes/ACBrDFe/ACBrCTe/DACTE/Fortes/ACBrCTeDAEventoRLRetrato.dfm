@@ -1,9 +1,9 @@
 inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
   Left = 274
   Top = 83
-  Width = 845
-  Height = 784
   Caption = 'Evento - Retrato'
+  ClientHeight = 745
+  ClientWidth = 829
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -12,17 +12,17 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
   inherited RLCTeEvento: TRLReport
     Left = 18
     Top = 20
-    Font.Height = -8
-    Font.Name = 'Courier New'
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Font.Height = -8
+    Font.Name = 'Courier New'
     Title = 'DACTe CC'
     BeforePrint = RLCTeEventoBeforePrint
     object RLb_09_Itens: TRLBand
       Left = 26
-      Top = 1061
+      Top = 1054
       Width = 742
       Height = 13
       BandType = btColumnFooter
@@ -44,6 +44,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtTpDoc1: TRLDBText
@@ -61,6 +62,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
@@ -78,6 +80,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
@@ -95,6 +98,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
@@ -111,6 +115,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
@@ -127,6 +132,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
     end
@@ -204,7 +210,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
     end
     object rlb_08_HeaderItens: TRLBand
       Left = 26
-      Top = 1045
+      Top = 1038
       Width = 742
       Height = 16
       BandType = btColumnFooter
@@ -214,7 +220,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
     end
     object rlb_10_Sistema: TRLBand
       Left = 26
-      Top = 1074
+      Top = 1067
       Width = 742
       Height = 19
       AlignToBottom = True
@@ -1259,7 +1265,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       Left = 26
       Top = 549
       Width = 742
-      Height = 144
+      Height = 137
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
@@ -1268,14 +1274,14 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Left = 0
         Top = 0
         Width = 741
-        Height = 137
+        Height = 129
         Brush.Style = bsClear
       end
       object rlmCondicoes: TRLMemo
         Left = 5
         Top = 19
         Width = 732
-        Height = 110
+        Height = 103
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
@@ -1332,7 +1338,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
     end
     object rlb_07_Correcao: TRLBand
       Left = 26
-      Top = 693
+      Top = 686
       Width = 742
       Height = 352
       BandType = btColumnHeader
@@ -1790,11 +1796,11 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Top = 24
         Width = 357
         Height = 48
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
     end
   end

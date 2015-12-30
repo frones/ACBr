@@ -1692,6 +1692,7 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = False
     MargemInferior = 0.800000000000000000
@@ -1712,6 +1713,13 @@ object Form1: TForm1
     LocalImpCanhoto = 0
     ImprimirItens = True
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     PosCanhoto = prCabecalho
     Left = 526
@@ -1734,6 +1742,7 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.700000000000000000
@@ -1754,6 +1763,13 @@ object Form1: TForm1
     LocalImpCanhoto = 0
     ImprimirItens = True
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     LarguraCodProd = 54
     ExibirEAN = False

@@ -1649,6 +1649,19 @@ begin
                         trvwNFe.Items.AddChild(Node,'pCredSN='   +FloatToStr(ICMS.pCredSN));
                         trvwNFe.Items.AddChild(Node,'vCredICMSSN='   +FloatToStr(ICMS.vCredICMSSN));
                       end;
+
+                      Node := trvwNFe.Items.AddChild(NodePai,'ICMSUFDest');
+                      with ICMSUFDest do
+                      begin
+                        trvwNFe.Items.AddChild(Node,'vBCUFDest='   +FloatToStr(vBCUFDest));
+                        trvwNFe.Items.AddChild(Node,'pFCPUFDest='   +FloatToStr(pFCPUFDest));
+                        trvwNFe.Items.AddChild(Node,'pICMSUFDest='   +FloatToStr(pICMSUFDest));
+                        trvwNFe.Items.AddChild(Node,'pICMSInter='   +FloatToStr(pICMSInter));
+                        trvwNFe.Items.AddChild(Node,'pICMSInterPart='   +FloatToStr(pICMSInterPart));
+                        trvwNFe.Items.AddChild(Node,'vFCPUFDest='   +FloatToStr(vFCPUFDest));
+                        trvwNFe.Items.AddChild(Node,'vICMSUFDest='   +FloatToStr(vICMSUFDest));
+                        trvwNFe.Items.AddChild(Node,'vICMSUFRemet='   +FloatToStr(vICMSUFRemet));
+                      end;
                    end
                    else
                    begin
@@ -1794,6 +1807,9 @@ begin
        trvwNFe.Items.AddChild(Node,'vCOFINS=' +FloatToStr(Total.ICMSTot.vCOFINS)) ;
        trvwNFe.Items.AddChild(Node,'vOutro='  +FloatToStr(Total.ICMSTot.vOutro)) ;
        trvwNFe.Items.AddChild(Node,'vNF='     +FloatToStr(Total.ICMSTot.vNF)) ;
+       trvwNFe.Items.AddChild(Node,'vFCPUFDest='   +FloatToStr(Total.ICMSTot.vFCPUFDest)) ;
+       trvwNFe.Items.AddChild(Node,'vICMSUFDest='  +FloatToStr(Total.ICMSTot.vICMSUFDest)) ;
+       trvwNFe.Items.AddChild(Node,'vICMSUFRemet=' +FloatToStr(Total.ICMSTot.vICMSUFRemet)) ;
 
        if Total.ISSQNtot.vServ > 0 then
         begin
@@ -2115,6 +2131,8 @@ begin
          Prod.vSeg      := 0;
          Prod.vDesc     := 0;
 
+         Prod.CEST := '1111111';
+
          infAdProd      := 'Informacao Adicional do Produto';
 
 //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
@@ -2225,6 +2243,20 @@ begin
                ICMS.pICMSST := 0;
                ICMS.vICMSST := 0;
                ICMS.pRedBC  := 0;
+
+
+               // partilha do ICMS e fundo de probreza
+               with ICMSUFDest do
+                begin
+                  vBCUFDest      := 0.00;
+                  pFCPUFDest     := 0.00;
+                  pICMSUFDest    := 0.00;
+                  pICMSInter     := 0.00;
+                  pICMSInterPart := 0.00;
+                  vFCPUFDest     := 0.00;
+                  vICMSUFDest    := 0.00;
+                  vICMSUFRemet   := 0.00;
+                end;
              end;
 
     {        with IPI do
@@ -2361,6 +2393,12 @@ begin
 
       // lei da transparencia de impostos
       Total.ICMSTot.vTotTrib := 0;
+
+      // partilha do icms e fundo de probreza
+      Total.ICMSTot.vFCPUFDest   := 0.00;
+      Total.ICMSTot.vICMSUFDest  := 0.00;
+      Total.ICMSTot.vICMSUFRemet := 0.00;
+
 
   {    Total.ISSQNtot.vServ   := 100;
       Total.ISSQNTot.vBC     := 100;
@@ -2578,6 +2616,8 @@ begin
          Prod.vSeg      := 0;
          Prod.vDesc     := 0;
 
+         Prod.CEST := '1111111';
+
 //         infAdProd      := 'Informação Adicional do Produto';
 
          with Imposto do
@@ -2600,6 +2640,19 @@ begin
                ICMS.pICMSST := 0;
                ICMS.vICMSST := 0;
                ICMS.pRedBC  := 0;
+
+               // partilha do ICMS e fundo de probreza
+               with ICMSUFDest do
+                begin
+                  vBCUFDest      := 0.00;
+                  pFCPUFDest     := 0.00;
+                  pICMSUFDest    := 0.00;
+                  pICMSInter     := 0.00;
+                  pICMSInterPart := 0.00;
+                  vFCPUFDest     := 0.00;
+                  vICMSUFDest    := 0.00;
+                  vICMSUFRemet   := 0.00;
+                end;
              end;
 {            with PIS do
              begin
@@ -2708,6 +2761,11 @@ begin
       Total.ICMSTot.vCOFINS := 0;
       Total.ICMSTot.vOutro  := 0;
       Total.ICMSTot.vNF     := 100;
+
+      // partilha do icms e fundo de probreza
+      Total.ICMSTot.vFCPUFDest   := 0.00;
+      Total.ICMSTot.vICMSUFDest  := 0.00;
+      Total.ICMSTot.vICMSUFRemet := 0.00;
 
       Total.ISSQNtot.vServ   := 0;
       Total.ISSQNTot.vBC     := 0;

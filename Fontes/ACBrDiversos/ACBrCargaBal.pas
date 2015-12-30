@@ -45,7 +45,7 @@ unit ACBrCargaBal;
 interface
 
 uses
-  ACBrBase,
+  ACBrBase, ACBrUtil,
   SysUtils, Classes, Contnrs;
 
 type
@@ -695,13 +695,13 @@ var
   Total: integer;
 begin
   if Trim(ADiretorio) = EmptyStr then
-    raise EACBrCargaBal.Create('Informe o diretório onde serão gerados os arquivos de carga!');
+    raise EACBrCargaBal.Create(ACBrStr('Informe o diretório onde serão gerados os arquivos de carga!'));
 
   if not DirectoryExists(ADiretorio) then
-    raise EACBrCargaBal.Create('Diretorio informado não existe!');
+    raise EACBrCargaBal.Create(ACBrStr('Diretorio informado não existe!'));
 
   if Self.Produtos.Count = 0 then
-    raise EACBrCargaBal.Create('Não foram informados os produtos para a geração!');
+    raise EACBrCargaBal.Create(ACBrStr('Não foram informados os produtos para a geração!'));
 
   Produto := TStringList.Create;
   Produto.Clear;
@@ -717,7 +717,7 @@ begin
 
   try
     Total := Self.Produtos.Count;
-    Progresso('Iniciando a geração dos arquivos', 0, Total);
+    Progresso(ACBrStr('Iniciando a geração dos arquivos'), 0, Total);
 
     // Varre os registros gerando o arquivo em lista
     case FModelo of

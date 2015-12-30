@@ -1701,7 +1701,7 @@ procedure TMDFeEnvEvento.DefinirDadosMsg;
 var
   EventoMDFe: TEventoMDFe;
   I, F: Integer;
-  Lote, Evento, Eventos, EventosAssinados, AXMLEvento: String;
+  Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
   SchemaEventoMDFe: TSchemaMDFe;
 begin

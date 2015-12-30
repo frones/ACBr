@@ -114,8 +114,6 @@ function TConsNFeDest.GerarXML: Boolean;
 var
  sDoc, sNSU: String;
 begin
-  Result := False;
-
   Gerador.ArquivoFormatoXML := '';
   
   Gerador.wGrupo('consNFeDest ' + NAME_SPACE + ' versao="' + Versao + '"');

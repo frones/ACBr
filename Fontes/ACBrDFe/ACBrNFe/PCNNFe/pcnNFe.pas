@@ -645,7 +645,7 @@ type
     property cEAN: String read FcEAN write FcEAN;
     property xProd: String read FxProd write FxProd;
     property NCM: String read FNCM write FNCM;
-    property NVE : TNVECollection read FNVE write FNVE;
+    property NVE : TNVECollection read FNVE write SetNVE; //FNVE;
     property EXTIPI: String read FEXTIPI write FEXTIPI;
     //property genero: Integer read Fgenero write Fgenero;
     property CFOP: String read FCFOP write getCFOP;

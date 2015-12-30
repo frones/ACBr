@@ -98,8 +98,6 @@ function TDistDFeInt.GerarXML: boolean;
 var
  sNSU: String;
 begin
-  Result := False;
-
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);

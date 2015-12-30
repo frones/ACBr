@@ -585,7 +585,7 @@ begin
   except
     on e : Exception do
     begin
-      result := False;
+//      result := False;
       Raise Exception.Create(e.Message);
     end;
   end;

@@ -170,8 +170,6 @@ function TCCeNFe.GerarXML: boolean;
 var
  i : integer;
 begin
-  Result := False;
-
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');

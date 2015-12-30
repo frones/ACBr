@@ -2222,7 +2222,7 @@ procedure TCTeEnvEvento.DefinirDadosMsg;
 var
   EventoCTe: TEventoCTe;
   I, J, F: Integer;
-  Lote, Evento, Eventos, EventosAssinados, AXMLEvento: String;
+  Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
 begin

@@ -703,7 +703,6 @@ end;
 procedure TConhecimentos.Validar;
 var
   i: Integer;
-  FMsg: AnsiString;
 begin
   for i:= 0 to Self.Count-1 do
     Self.Items[i].Validar;

@@ -199,7 +199,6 @@ var
 begin
   Result := False;
   try
-    i := -1;
     FXML := Self.Leitor.Arquivo;
 
     if (Leitor.rExtrai(1, 'retDownloadNFe') <> '') then

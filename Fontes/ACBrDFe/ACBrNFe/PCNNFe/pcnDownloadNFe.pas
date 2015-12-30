@@ -164,8 +164,6 @@ var
  i: Integer;
  sDoc: String;
 begin
-  Result := False;
-
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('downloadNFe ' + NAME_SPACE + ' versao="' + Versao + '"');

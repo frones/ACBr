@@ -115,8 +115,6 @@ function TDistDFeInt.GerarXML: boolean;
 var
  sNSU: String;
 begin
-  Result := False;
-
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('nfeDadosMsg');
   Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');

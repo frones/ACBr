@@ -150,8 +150,6 @@ var
   i, j: Integer;
   sDoc, sModelo: String;
 begin
-  Result := False;
-
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('envEvento ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcInt, 'HP03', 'idLote', 001, 015, 1, FidLote, DSC_IDLOTE);

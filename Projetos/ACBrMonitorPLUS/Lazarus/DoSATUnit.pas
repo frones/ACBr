@@ -522,26 +522,20 @@ begin
                         end;
                      end;
 
-                    sSecao    := 'ISSQN'+IntToStrZero(I,3) ;
-                    sFim   := INIRec.ReadString( sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC'   ,'FIM')) ;
-                    if (sFim = 'FIM') then
-                       sFim   := INIRec.ReadString( sSecao,'vBC','FIM');
-                    if (sFim <> 'FIM') then
+                    sSecao  := 'ISSQN'+IntToStrZero(I,3) ;
+                    if INIRec.SectionExists(sSecao) then
                      begin
                       with ISSQN do
                        begin
-                         if StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC','')) ,0) > 0 then
-                          begin
-                            vDeducISSQN := StringToFloatDef( INIRec.ReadString(sSecao,'vDeducISSQN','') ,0) ;
-                            vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
-                            vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
-                            vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
-                            cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
-                            cListServ := INIRec.ReadInteger(sSecao,'CodigoServico',INIRec.ReadInteger(sSecao,'cListServ',0));
-                            cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
-                            cNatOp    := INIRec.ReadInteger(sSecao,'cNatOp',0);
-                            indIncFisc:= StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));
-                          end;
+                          vDeducISSQN := StringToFloatDef( INIRec.ReadString(sSecao,'vDeducISSQN','') ,0) ;
+                          vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
+                          vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
+                          vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
+                          cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
+                          cListServ := INIRec.ReadInteger(sSecao,'CodigoServico',INIRec.ReadInteger(sSecao,'cListServ',0));
+                          cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
+                          cNatOp    := INIRec.ReadInteger(sSecao,'cNatOp',0);
+                          indIncFisc:= StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));
                        end;
                      end;
                  end;

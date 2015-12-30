@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2015
+[-] Correção para ler campos da sessão ISSQN000, mesmo quando vBC não for
+    informado  (por: DSA)
+
 24/12/2015
 [*] Ajuste para não minimizar a aplicação, quando clicar no "Salvar" (por: DSA)
 

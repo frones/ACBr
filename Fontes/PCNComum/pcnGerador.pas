@@ -83,9 +83,9 @@ type
     destructor Destroy; override;
     function SalvarArquivo(const CaminhoArquivo: string; const FormatoGravacao: TpcnFormatoGravacao = fgXML): Boolean;
     procedure wGrupo(const TAG: string; ID: string = ''; const Identar: Boolean = True);
-    procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True; Atributo: String = '');
+    procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; Atributo: String = '');
     procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
-    procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = '');
+    procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; Atributo: String = '');
     procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True; PreencheZeros: Boolean = True);
     procedure wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wCampoCPF(const ID: string; CPF: string; const cPais: Integer; obrigatorio: Boolean);
@@ -1127,16 +1127,17 @@ end;
 
 procedure TGerador.wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string;
   const min, max, ocorrencias: smallint; const valor: variant;
-  const Descricao: string);
+  const Descricao: string; ParseTextoXML: Boolean; Atributo: String);
 begin
-  Self.wCampo(Tipo, ID, Self.Prefixo + TAG, min, max, ocorrencias, valor, Descricao);
+  Self.wCampo(Tipo, ID, Self.Prefixo + TAG, min, max, ocorrencias, valor,
+              Descricao, ParseTextoXML, Atributo);
 end;
 
 procedure TGerador.wGrupoNFSe(const TAG: string; ID: string;
   const Identar: Boolean);
 begin
-  if copy(TAG,1,1) = '/' then
-     Self.wGrupo('/'+Self.Prefixo + copy(TAG,2,length(TAG)), ID, Identar)
+  if copy(TAG, 1, 1) = '/' then
+     Self.wGrupo('/' + Self.Prefixo + copy(TAG, 2, length(TAG)), ID, Identar)
   else
      Self.wGrupo(Self.Prefixo + TAG, ID, Identar);
 end;

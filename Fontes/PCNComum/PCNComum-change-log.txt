@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2015
+-- pcnGerador --
+[*] Adicionado os parâmetros: ParseTextoXML e Atributo a procedure wCampoNFSe,
+    desta forma é possível gerar um campo com atributo.
+    por: Italo Jurisato Junior
+
 27/11/2015
 -- pcnConversao --
 [*] Adicionado o tipo de evento: teConfInternalizacao - (990910) 

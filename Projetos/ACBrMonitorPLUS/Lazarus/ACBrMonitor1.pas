@@ -248,6 +248,7 @@ type
     chbTCPANSI: TCheckBox;
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
+    cbxExibirCampoFatura: TCheckBox;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
@@ -3479,6 +3480,8 @@ begin
     cbxImpValLiq.Checked := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
     cbxFormCont.Checked := Ini.ReadBool('DANFE', 'PreImpresso', False);
     cbxMostraStatus.Checked := Ini.ReadBool('DANFE', 'MostrarStatus', True);
+    cbxExibirEAN.Checked := Ini.ReadBool('DANFE', 'ExibirEAN', False);
+    cbxExibirCampoFatura.Checked := Ini.ReadBool('DANFE', 'ExibirCampoFatura', True);
     cbxExpandirLogo.Checked := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
     rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
@@ -4273,6 +4276,8 @@ begin
     Ini.WriteBool('DANFE', 'ImprimirValLiq', cbxImpValLiq.Checked);
     Ini.WriteBool('DANFE', 'PreImpresso', cbxFormCont.Checked);
     Ini.WriteBool('DANFE', 'MostrarStatus', cbxMostraStatus.Checked);
+    Ini.WriteBool('DANFE', 'ExibirEAN', cbxExibirEAN.Checked);
+    Ini.WriteBool('DANFE', 'ExibirCampoFatura', cbxExibirCampoFatura.Checked);
     Ini.WriteBool('DANFE', 'ExpandirLogo', cbxExpandirLogo.Checked);
     Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
     Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
@@ -6914,6 +6919,7 @@ begin
       ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(rgTipoFonte.ItemIndex);
       ACBrNFeDANFeRL1.LarguraCodProd := StrToIntDef(edtLargCodProd.Text, 54);
       ACBrNFeDANFeRL1.ExibirEAN := cbxExibirEAN.Checked;
+      ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
       ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico := cbxQuebrarLinhasDetalhesItens.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then

@@ -1979,7 +1979,7 @@ begin
          Dest.EnderDest.xPais   := INIRec.ReadString(  'Destinatario','Pais'       ,INIRec.ReadString( 'Destinatario','xPais','BRASIL'));
          Dest.EnderDest.Fone    := INIRec.ReadString(  'Destinatario','Fone'       ,'');
 
-         if INIRec.ReadString(  'Retirada','CNPJ','') <> '' then
+         if INIRec.ReadString(  'Retirada','CNPJ',INIRec.ReadString(  'Entrega','CNPJCPF','')) <> '' then
           begin
             Retirada.CNPJCPF := INIRec.ReadString( 'Retirada','CNPJ',INIRec.ReadString( 'Retirada','CPF',INIRec.ReadString( 'Retirada','CNPJCPF',''))); //NFe2
             Retirada.xLgr    := INIRec.ReadString( 'Retirada','xLgr','');
@@ -1994,7 +1994,7 @@ begin
 
           end;
 
-         if INIRec.ReadString(  'Entrega','CNPJ','') <> '' then
+         if INIRec.ReadString(  'Entrega','CNPJ',INIRec.ReadString(  'Entrega','CNPJCPF','')) <> '' then
           begin
             Entrega.CNPJCPF := INIRec.ReadString(  'Entrega','CNPJ',INIRec.ReadString(  'Entrega','CPF',INIRec.ReadString(  'Entrega','CNPJCPF',''))); //NFe2
             Entrega.xLgr    := INIRec.ReadString(  'Entrega','xLgr','');

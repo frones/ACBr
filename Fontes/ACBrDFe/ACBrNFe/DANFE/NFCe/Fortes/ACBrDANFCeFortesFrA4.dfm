@@ -15,7 +15,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   PixelsPerInch = 96
   TextHeight = 13
   object rlReportA4: TRLReport
-    Left = 8
+    Left = 0
     Top = 0
     Width = 794
     Height = 1123
@@ -29,7 +29,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Left = 38
       Top = 38
       Width = 718
-      Height = 77
+      Height = 80
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -38,7 +38,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       Borders.DrawBottom = True
       object imgLogo: TRLImage
         Left = 4
-        Top = 4
+        Top = 5
         Width = 75
         Height = 70
         Center = True
@@ -81,7 +81,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLLabel2: TRLLabel
         Left = 80
-        Top = 58
+        Top = 43
         Width = 159
         Height = 16
         Caption = 'CNPJ: 12.345.789/0001.12'
@@ -96,7 +96,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLLabel4: TRLLabel
         Left = 255
-        Top = 58
+        Top = 43
         Width = 221
         Height = 16
         Alignment = taRightJustify
@@ -112,7 +112,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLLabel5: TRLLabel
         Left = 492
-        Top = 58
+        Top = 43
         Width = 217
         Height = 16
         Alignment = taRightJustify
@@ -128,17 +128,19 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLMemo3: TRLMemo
         Left = 80
-        Top = 42
-        Width = 629
+        Top = 60
+        Width = 630
         Height = 16
         Alignment = taCenter
         Behavior = [beSiteExpander]
+        Lines.Strings = (
+          'Linha 1')
         BeforePrint = RLMemo3BeforePrint
       end
     end
     object RLBand2: TRLBand
       Left = 38
-      Top = 115
+      Top = 118
       Width = 718
       Height = 36
       BandType = btTitle
@@ -180,7 +182,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand3: TRLBand
       Left = 38
-      Top = 151
+      Top = 154
       Width = 718
       Height = 18
       BandType = btColumnHeader
@@ -290,7 +292,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object subItens: TRLSubDetail
       Left = 38
-      Top = 169
+      Top = 172
       Width = 718
       Height = 58
       Borders.Sides = sdCustom
@@ -418,7 +420,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand5: TRLBand
       Left = 38
-      Top = 227
+      Top = 230
       Width = 718
       Height = 18
       BandType = btSummary
@@ -492,7 +494,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail1: TRLSubDetail
       Left = 38
-      Top = 299
+      Top = 302
       Width = 718
       Height = 78
       Borders.Sides = sdCustom
@@ -647,7 +649,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail2: TRLSubDetail
       Left = 38
-      Top = 377
+      Top = 380
       Width = 718
       Height = 446
       Borders.Sides = sdCustom
@@ -668,9 +670,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawRight = True
         Borders.DrawBottom = True
         object RLLabel31: TRLLabel
-          Left = 312
+          Left = 307
           Top = 0
-          Width = 399
+          Width = 407
           Height = 16
           Alignment = taRightJustify
           Caption = 
@@ -688,7 +690,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand10: TRLBand
         Left = 0
-        Top = 34
+        Top = 97
         Width = 718
         Height = 35
         Borders.Sides = sdCustom
@@ -724,7 +726,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand11: TRLBand
         Left = 0
-        Top = 69
+        Top = 132
         Width = 718
         Height = 73
         AutoSize = True
@@ -820,7 +822,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 142
+        Top = 205
         Width = 718
         Height = 44
         AutoSize = True
@@ -884,7 +886,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbRodape: TRLBand
         Left = 0
-        Top = 186
+        Top = 249
         Width = 718
         Height = 173
         AutoSize = True
@@ -977,22 +979,119 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 0
         Top = 17
         Width = 718
-        Height = 17
+        Height = 80
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
         BeforePrint = RLBand15BeforePrint
-        object RLLabel43: TRLLabel
-          Left = 4
-          Top = 0
-          Width = 713
+        object RLLabel44: TRLLabel
+          Left = 422
+          Top = 5
+          Width = 134
           Height = 16
-          Alignment = taCenter
-          Caption = 
-            'Informa'#231#227'o dos Tributos Totais Incidentes (Lei Federal 12.741/20' +
-            '12):'
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Tributos Federais :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+        end
+        object RLLabel45: TRLLabel
+          Left = 559
+          Top = 5
+          Width = 154
+          Height = 16
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0000'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+          BeforePrint = RLLabel45BeforePrint
+        end
+        object RLLabel46: TRLLabel
+          Left = 422
+          Top = 20
+          Width = 134
+          Height = 16
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Tributos Estaduais :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+        end
+        object RLLabel47: TRLLabel
+          Left = 559
+          Top = 20
+          Width = 154
+          Height = 16
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0000'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+          BeforePrint = RLLabel47BeforePrint
+        end
+        object RLLabel48: TRLLabel
+          Left = 422
+          Top = 37
+          Width = 134
+          Height = 16
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Tributos Municipais :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+        end
+        object RLLabel49: TRLLabel
+          Left = 559
+          Top = 37
+          Width = 154
+          Height = 16
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0000'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+          BeforePrint = RLLabel49BeforePrint
+        end
+        object RLLabel43: TRLLabel
+          Left = 531
+          Top = 58
+          Width = 183
+          Height = 16
+          Alignment = taRightJustify
+          Caption = 'Fonte de pesquisa dos tributos'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -1006,7 +1105,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand12: TRLBand
       Left = 38
-      Top = 245
+      Top = 248
       Width = 718
       Height = 18
       BandType = btSummary
@@ -1052,7 +1151,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand13: TRLBand
       Left = 38
-      Top = 263
+      Top = 266
       Width = 718
       Height = 18
       BandType = btSummary
@@ -1098,7 +1197,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand14: TRLBand
       Left = 38
-      Top = 281
+      Top = 284
       Width = 718
       Height = 18
       BandType = btSummary

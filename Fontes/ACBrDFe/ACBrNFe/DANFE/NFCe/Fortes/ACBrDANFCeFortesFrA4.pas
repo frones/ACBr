@@ -151,6 +151,12 @@ type
     RLLabel41: TRLLabel;
     RLLabel42: TRLLabel;
     RLBand15: TRLBand;
+    RLLabel44: TRLLabel;
+    RLLabel45: TRLLabel;
+    RLLabel46: TRLLabel;
+    RLLabel47: TRLLabel;
+    RLLabel48: TRLLabel;
+    RLLabel49: TRLLabel;
     RLLabel43: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
@@ -225,6 +231,12 @@ type
     procedure RLLabel41BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLBand15BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLLabel45BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLLabel47BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLLabel49BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
     procedure RLLabel43BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
   private
@@ -286,6 +298,7 @@ begin
     begin
       Endereco := Endereco + ' - TEL: '+FormatarFone(Emit.EnderEmit.fone);
     end;
+
   end;
   Result := Endereco;
 end;
@@ -395,7 +408,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLBand15BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := ( (self.FACBrNFeDANFCeFortesA4.vTribFed >0) or (self.FACBrNFeDANFCeFortesA4.vTribEst >0) or (self.FACBrNFeDANFCeFortesA4.vTribMun >0) );
+  PrintIt := self.FACBrNFeDANFCeFortesA4.TributosSeparadamente;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand8BeforePrint(Sender: TObject;
@@ -537,15 +550,14 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  if( (self.FACBrNFeDANFCeFortesA4.vTribFed >0) or (self.FACBrNFeDANFCeFortesA4.vTribEst >0) or (self.FACBrNFeDANFCeFortesA4.vTribMun >0) )then
-   Text:='Informação dos Tributos Totais (Lei Federal 12.741/2012)'
-  else
+  if self.FACBrNFeDANFCeFortesA4.TributosSeparadamente = false then
    begin
     Text:='Informação dos Tributos Totais Incidentes (Lei Federal 12.741/2012): '+
      FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vTotTrib);
-
-    if Trim(self.FACBrNFeDANFCeFortesA4.FonteTributos) <> '' then
-     Text := Text + ' - Fonte : ' + self.FACBrNFeDANFCeFortesA4.FonteTributos+' - Chave : '+self.FACBrNFeDANFCeFortesA4.ChaveTributos;
+   end
+  else
+   begin
+    Text:='Informação dos Tributos Totais (Lei Federal 12.741/2012)';
    end;
 end;
 
@@ -610,20 +622,26 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel43BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  if( (self.FACBrNFeDANFCeFortesA4.vTribFed >0) or
-      (self.FACBrNFeDANFCeFortesA4.vTribEst >0) or
-      (self.FACBrNFeDANFCeFortesA4.vTribMun >0) )then
-  begin
-    Text:='';
-    if self.FACBrNFeDANFCeFortesA4.vTribFed >0then
-      Text:=Text+'Tributos Federais '+FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribFed);
-    if self.FACBrNFeDANFCeFortesA4.vTribEst >0 then
-      Text:=Text+' - Tributos Estaduais '+FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribEst);
-    if self.FACBrNFeDANFCeFortesA4.vTribMun >0 then
-      Text:=Text+' - Tributos Municipais '+FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribMun);
-    if Trim(self.FACBrNFeDANFCeFortesA4.FonteTributos) <> '' then
-      Text := Text + ' - Fonte : ' + self.FACBrNFeDANFCeFortesA4.FonteTributos+' - Chave : '+self.FACBrNFeDANFCeFortesA4.ChaveTributos;
-  end;
+ PrintIt := (Trim(self.FACBrNFeDANFCeFortesA4.FonteTributos) <> '');
+ Text := 'Fonte : ' + self.FACBrNFeDANFCeFortesA4.FonteTributos+'           '+self.FACBrNFeDANFCeFortesA4.ChaveTributos;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel45BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+ Text:=FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribFed);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel47BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+ Text:=FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribEst);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel49BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+ Text:=FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTribMun);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel4BeforePrint(Sender: TObject;

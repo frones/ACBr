@@ -1152,7 +1152,7 @@ begin
  if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:', vAux))
   then exit;
 
- provedor := CodCidadeToProvedor(StrToIntDef(vAux, 0));
+// provedor := CodCidadeToProvedor(vAux);
 
  ShowMessage('Provedor: ' + provedor);
 end;

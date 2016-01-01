@@ -35,8 +35,9 @@ interface
 
 uses
   SysUtils, Classes, Forms,
+  ACBrUtil,
   pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil;
+  pnfsConversao, pnfsNFSe, pnfsNFSeR;
 
 type
 
@@ -128,6 +129,7 @@ type
     FProvedor: TNFSeProvedor;
     FTabServicosExt: Boolean;
     FProtocolo: String;
+    FPathIniCidades: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -140,6 +142,7 @@ type
     property Provedor: TNFSeProvedor        read FProvedor               write FProvedor;
     property TabServicosExt: Boolean        read FTabServicosExt         write FTabServicosExt;
     property Protocolo: String              read FProtocolo              write FProtocolo;
+    property PathIniCidades: String         read FPathIniCidades         write FPathIniCidades;
   end;
 
 implementation
@@ -348,9 +351,11 @@ begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
         try
-          NFSeLida.VersaoXML := VersaodoXML;
-          NFSeLida.Provedor := Provedor;
+          NFSeLida.VersaoXML      := VersaodoXML;
+          NFSeLida.Provedor       := Provedor;
           NFSeLida.TabServicosExt := TabServicosExt;
+          NFSeLida.PathIniCidades := PathIniCidades;
+
           NFSeLida.Leitor.Arquivo := Leitor.Grupo;
 
           Result := NFSeLida.LerXml;

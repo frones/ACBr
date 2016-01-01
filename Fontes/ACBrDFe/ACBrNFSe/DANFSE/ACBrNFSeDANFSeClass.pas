@@ -89,6 +89,7 @@ type
     FNFSeCancelada: boolean;
     FImprimeCanhoto: Boolean;
     FTipoDANFSE: TTipoDANFSE;
+    FProvedor: TNFSeProvedor;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -142,6 +143,7 @@ type
     property ImprimeCanhoto: Boolean read FImprimeCanhoto write FImprimeCanhoto default False;
 
     property TipoDANFSE: TTipoDANFSE read FTipoDANFSE write FTipoDANFSE default tpPadrao;
+    property Provedor: TNFSeProvedor read FProvedor   write FProvedor;
   end;
 
 implementation
@@ -190,7 +192,9 @@ begin
  FT_Complemento         := '';
  FT_Email               := '';
 
- FNFSeCancelada         := False;
+ FNFSeCancelada := False;
+
+ FProvedor := proNenhum;
 end;
 
 destructor TACBrNFSeDANFSeClass.Destroy;

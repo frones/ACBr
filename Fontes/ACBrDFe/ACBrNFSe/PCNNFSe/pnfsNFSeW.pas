@@ -40,9 +40,9 @@ uses
   
 {$ENDIF}
   SysUtils, Classes, StrUtils,
+  synacode, ACBrConsts,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao, ACBrConsts,
-  synacode;
+  pnfsNFSe, pnfsConversao;
 
 type
 
@@ -131,7 +131,7 @@ type
 implementation
 
 uses
- ACBrUtil{, ACBrNFSe};
+ ACBrUtil;
 
 { TNFSeW }
 

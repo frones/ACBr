@@ -41,13 +41,11 @@ unit ACBrNFSeWebServices;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, pcnAuxiliar, pcnConversao,
   ACBrDFe, ACBrDFeWebService,
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes,
-  pcnAuxiliar, pcnConversao, pnfsNFSe, pnfsConversao,
-  pnfsLerListaNFSe,
-  pnfsEnvLoteRpsResposta, pnfsConsSitLoteRpsResposta,
-  pnfsCancNFSeResposta, pnfsSubsNFSeResposta;
+  pnfsNFSe, pnfsConversao, pnfsLerListaNFSe, pnfsEnvLoteRpsResposta,
+  pnfsConsSitLoteRpsResposta, pnfsCancNFSeResposta, pnfsSubsNFSeResposta;
 
 type
 
@@ -868,6 +866,7 @@ begin
   FRetornoNFSe.Leitor.Arquivo := FPRetWS;
   FRetornoNFSe.Provedor       := FProvedor;
   FRetornoNFSe.TabServicosExt := FPConfiguracoesNFSe.Arquivos.TabServicosExt;
+  FRetornoNFSe.PathIniCidades := FPConfiguracoesNFSe.Geral.PathIniCidades;
   FRetornoNFSe.LerXml;
 
   FPrefixo3 := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo3;
@@ -1538,6 +1537,7 @@ begin
   FRetEnvLote := TRetEnvLote.Create;
   try
     FRetEnvLote.Leitor.Arquivo := FPRetWS;
+    FRetEnvLote.Provedor := FProvedor;
     FRetEnvLote.LerXml;
 
     FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;

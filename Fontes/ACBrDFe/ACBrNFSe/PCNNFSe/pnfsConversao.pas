@@ -59,21 +59,7 @@ type
   TnfseStatusRPS = ( srNormal, srCancelado );
 
   TnfseStatusNFSe = ( snNormal, snCancelado );
-(*
-  TnfseNaturezaOperacao = ( noTributacaoNoMunicipio, noTributacaoForaMunicipio, noIsencao, noImune,
-                            noSuspensaDecisaoJudicial, noSuspensaProcedimentoAdministrativo,
-                            noNaoIncidencia,
-                            noTributacaoNoMunicipio51, noTributacaoNoMunicipioSemISS52, noNaoTributa58,
-                            noSimplesNacional59, noTributacaoNoMunicipio61, noTributacaoNoMunicipioSemISS62,
-                            noTributacaoForaMunicipio63, noTributacaoForaMunicipioSemISS64,
-                            noNaoTributa68, noSimplesNacional69, noNaoTributa78,
-                            no50, no53, no57, no60, no67, no70, no79,
-                            //Itajai/SC
-                            noISSDevidoItajai, noISSDevidoOutroMunicipio, noISSFixo,
-                            noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
-                            noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN
-                            );
-*)
+
   TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
@@ -84,7 +70,6 @@ type
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
 
-  // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
   TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa,
                                     retMicroempresarioIndividual, retMicroempresarioEmpresaPP, retLucroReal, retLucroPresumido, retSimplesNacional);
   TnfseSimNao = ( snSim, snNao );
@@ -115,7 +100,6 @@ type
 
   TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
 
-  // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
   TnfseTEmissao = ( teNormalNFSe, teContigenciaNFSe );
   TnfseTEmpreitadaGlobal = ( EgConstrucaoCivil, EgOutros);
 
@@ -156,7 +140,6 @@ function ProvedorToStr(const t: TnfseProvedor):string;
 function StrToProvedor(out ok: boolean; const s: string):TnfseProvedor;
 
 function CodigoToDesc(const s: string): ansistring;
-function CodCidadeToProvedor(const ACodigo: Integer): string;
 function CodCidadeToCidade(const ACodigo: Integer): string;
 function CodCidadeToCodSiafi(const ACodigo: Integer): string;
 function CodSiafiToCodCidade(const ACodigo: string): string;
@@ -168,7 +151,6 @@ function SituacaoTributariaDescricao( const t : TnfseSituacaoTributaria ): Strin
 function ResponsavelRetencaoToStr(const t: TnfseResponsavelRetencao):string;
 function StrToResponsavelRetencao(out ok: boolean; const s: string):TnfseResponsavelRetencao;
 
-// Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
 function TipoEmissaoToStr(const t: TnfseTEmissao):string;
 function StrToTipoEmissao(out ok: boolean; const s: string):TnfseTEmissao;
 
@@ -202,7 +184,8 @@ function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 
 implementation
 
-uses pcnConversao;
+uses
+  pcnConversao;
 
 // Status RPS ******************************************************************
 
@@ -237,54 +220,7 @@ begin
 end;
 
 // Natureza Operação ***********************************************************
-(*
-function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
-begin
-  result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6', '7',
-                            '51', '52', '58', '59', '61', '62', '63', '64', '68', '69', '78',
-                            '50', '53', '57', '60', '67', '70', '79',
-                            '101', '111', '121', '201', '301', '501', '511', '541', '551', '601', '701'
-                           ],
 
-                           [noTributacaoNoMunicipio, noTributacaoForaMunicipio,
-                            noIsencao, noImune, noSuspensaDecisaoJudicial,
-                            noSuspensaProcedimentoAdministrativo,
-                            noNaoIncidencia,
-                            noTributacaoNoMunicipio51, noTributacaoNoMunicipioSemISS52,
-                            noNaoTributa58, noSimplesNacional59, noTributacaoNoMunicipio61,
-                            noTributacaoNoMunicipioSemISS62, noTributacaoForaMunicipio63,
-                            noTributacaoForaMunicipioSemISS64,
-                            noNaoTributa68, noSimplesNacional69, noNaoTributa78,
-                            no50, no53, no57, no60, no67, no70, no79,
-                            noISSDevidoItajai, noISSDevidoOutroMunicipio, noISSFixo,
-                            noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
-                            noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN
-                            ]);
-end;
-
-function StrToNaturezaOperacao(out ok: boolean; const s: string):TnfseNaturezaOperacao;
-begin
-  result := StrToEnumerado(ok, s,
-                          ['1', '2', '3', '4', '5', '6', '7',
-                           '51', '52', '58', '59', '61', '62', '63', '64', '68', '69', '78',
-                           '50', '53', '57', '60', '67', '70', '79',
-                           '101', '111', '121', '201', '301', '501', '511', '541', '551', '601', '701'],
-                          [noTributacaoNoMunicipio, noTributacaoForaMunicipio,
-                           noIsencao, noImune, noSuspensaDecisaoJudicial,
-                           noSuspensaProcedimentoAdministrativo,
-                           noNaoIncidencia,
-                           noTributacaoNoMunicipio51, noTributacaoNoMunicipioSemISS52,
-                           noNaoTributa58, noSimplesNacional59, noTributacaoNoMunicipio61,
-                           noTributacaoNoMunicipioSemISS62, noTributacaoForaMunicipio63,
-                           noTributacaoForaMunicipioSemISS64,
-                           noNaoTributa68, noSimplesNacional69, noNaoTributa78,
-                           no50, no53, no57, no60, no67, no70, no79,
-                           noISSDevidoItajai, noISSDevidoOutroMunicipio, noISSFixo,
-                           noISSRetido, noOperacaoImune, noISSDevidoItajaiSN, noISSDevidoOutroMunicipioSN,
-                           noMEISN, noEscritorioContabilSN, noISSRetidoSN, noOperacaoImuneSN]);
-end;
-*)
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao):string;
 begin
   result := EnumeradoToStr(t,
@@ -341,7 +277,6 @@ end;
 
 // Regime Especial de Tributação ***********************************************
 
-// Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao):string;
 begin
   result := EnumeradoToStr(t,
@@ -722,765 +657,6 @@ begin
   end;
 
   result := r;
-end;
-
-// Provedor com base ao código da cidade ***************************************
-
-function CodCidadeToProvedor(const ACodigo: Integer): string;
-var
- Provedor: String;
-begin
- Provedor := 'Nenhum';
- case ACodigo of
-
-        // Devemos informar aqui a lista de cidades que utilizam a versão 1
-        // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
-        // devemos apenas gerar o XML do RPS para ser lido pelo site da prefeitura
-
-  2607901  // Jaboatão dos Guararapes/PE
-         : Provedor := 'ABRASFv1';
-
-        // Devemos informar aqui a lista de cidades que utilizam a versão 2
-        // do layout da ABRASF mas ainda não possui um Web Service, ou seja,
-        // devemos apenas gerar o XML do RPS para ser lido pelo site da prefeitura
-       -2
-         : Provedor := 'ABRASFv2';
-
-//  3127701, // Governador Valadares/MG
-  3500105, // Adamantina/SP
-  3510203, // Capão Bonito/SP
-  3522109, // Itanhaem/SP
-  3523503, // Itatinga/SP
-  3554003, // Tatui/SP
-  3555109  // Tupi Paulista/SP
-         : Provedor := '4R';
-
-  1200401, // Rio Branco/AC
-  3201209, // Cachoeiro do Itapemirim/ES
-  4304606, // Canoas/RS
-  5107040, // Primavera do Leste/MT
-  5107602  // Rondonopolis/MT
-         : Provedor := 'Abaco';
-
-  3127701, // Governador Valadares/MG
-  3131307  // Ipatinga/MG
-         : Provedor := 'Actcon';
-
-//  5105150 // Juina/MT
-//  5106224  // Nova Mutum/MT
-//         : Provedor := 'Agili';
-
-  3101607, // Alfenas/MG
-  3108404, // Botelhos/MG
-  3118007, // Congonhas/MG
-  3302254, // Itatiaia/RJ
-  3303955, // Pinheiral/RJ
-  3304508, // Rio das Flores/RJ
-  3510104, // Candido Rodrigues/SP
-  3534302, // Orlandia/SP
-  3548005, // Santo Antonio De Posse/SP
-  4100301, // Agudos do Sul/PR
-  4100400, // Almirante Tamandaré/PR
-  4101002, // Ampére/PR
-  4102604, // Barracão/PR
-  4104253, // Campo Magro/PR
-  4106407, // Cornélio Procópio/PR
-  4107652, // Fazenda Rio Grande/PR
-  4108601, // Goioerê/PR
-  4114302, // Mandirituba/PR
-  4116307, // Munhoz de Melo/PR
-  4117305, // Ortigueira/PR
-  4118402, // Paranavaí/PR
-  4120853, // Quatro Pontes/PR
-  4125605, // São Mateus do Sul/PR
-  4127106, // Telemaco Borba/PR
-  4128203, // União da Vitória/PR
-  4200309, // Agronomica/SC
-  4201505, // Armazem/SC
-  4202131, // Bela Vista do Toldo/SC
-  4202305, // Biguaçu/SC
-  4202453, // Bombinhas/SC
-  4202537, // Bom Jesus/SC
-  4202800, // Braço do Norte/SC
-  4203006, // Cacador/SC
-  4203600, // Campos Novos/SC
-  4203808, // Canoinhas/SC
-  4203907, // Capinzal/SC
-  4204004, // Catanduvas/SC
-  4204202, // Chapecó/SC
-  4204251, // Cocal Do Sul/SC
-  4204350, // Cordilheira Alta/SC
-  4204509, // Corupá/SC
-  4204608, // Criciúma/SC
-  4204806, // Curitibanos (SC)
-  4205001, // Dionísio Cerqueira/SC
-  4205308, // Faxinal Dos Guedes/SC
-  4205555, // Frei Rogério/SC
-  4205704, // Garopaba/SC
-  4206207, // Gravatal/SC
-  4206405, // Guaraciaba/SC
-  4206702, // Herval D Oeste/SC
-  4206900, // Ibirama/SC
-  4207304, // Imbituba/SC
-  4207684, // Ipuaçu/SC
-  4207700, // Ipumirim/SC
-  4208302, // Itapema/SC
-  4208401, // Itapiranga/SC
-  4208500, // Ituporanga/SC
-  4209003, // Joaçaba/SC
-  4209300, // Lages/SC
-  4209409, // Laguna/SC
-  4209458, // Lajeado Grande/SC
-  4210001, // Luiz Alves/SC
-  4210035, // Luzerna (SC)
-  4210555, // Marema/SC
-  4211058, // Monte Carlo/SC
-  4211306, // Navegantes/SC
-  4211702, // Orleans/SC
-  4211801, // Ouro/SC
-  4211900, // Palhoça/SC
-  4212106, // Palmitos/SC
-  4212502, // Penha/SC
-  4212908, // Pinhalzinho/SC
-  4213104, // Piratuba/SC
-  4213153, // Planalto Alegre/SC
-  4213401, // Ponte Serrada/SC
-  4213609, // Porto União/SC
-  4213708, // Pouso Redondo/SC
-  4214805, // Rio do Sul/SC
-  4215000, // Rio Negrinho/SC
-  4215505, // Santa Cecília/SC
-  4215802, // São Bento do Sul/SC
-  4216008, // São Carlos/SC
-  4216255, // Sao Joao Do Oeste/SC
-  4216305, // São João Batista/SC
-  4216503, // Sao Joaquim/SC
-  4216909, // São Lourenço do Oeste/SC
-  4217204, // São Miguel do Oeste/SC
-  4217402, // Schroeder/SC
-  4217501, // Seara (SC)
-  4217600, // Siderópolis/SC
-  4217808, // Taió/SC
-  4217907, // Tangará/SC
-  4218004, // Tijucas/SC
-  4218509, // Treze Tilias (sc)
-  4219002, // Urussanga/SC
-  4219101, // Vargeao/SC
-  4219507, // Xanxere/SC
-  4219606, // Xavantina/SC
-  4219705, // Xaxim/SC
-  4219176, // Vargem Bonita/SC
-  4302105, // Bento Gonçalves/RS
-  4304630, // Capao Da Canoa/RS
-  4305801, // Constantina/RS
-  4309100, // Gramado/RS
-  4318002, // São Borja/RS
-  4320206, // Seberi/RS
-  4321501, // Torres/RS
-  4321907, // Tres Passos/RS
-  5006200, // Nova Andradina/MS
-  5100201, // Água Boa/MT
-  5102686, // Campos de Júlio/MT
-  5103379, // Cotriguacu/MT
-  5103502, // Diamantino/MT
-  4200051 // Abdon Batista/SC
-
-         : Provedor := 'Betha';
-
-//  3106705  // Betim/MG
-//         : Provedor := 'Betim';
-
-  3106200, // Belo Horizonte/MG
-  3136702, // Juiz de Fora/MG
-  4314902  // Porto Alegre/RS
-         : Provedor := 'BHISS';
-
-  5102637, // Campo Novo do Parecis/MT
-  5102678, // Campo Verde/MT
-  5103205, // Colider/MT
-  5104104, // Guarantã Do Norte/MT
-  5104542, // Itanhanga/MT
-  5105606, // Matupá/MT
-  5105903, // Nobres/MT
-  5106208, // Nova Brasilândia/MT
-  5106224, // Nova Mutum/MT
-  5106307, // Paranatinga/MT
-  5106455, // Planalto da Serra/MT
-  5100250, // Alta Floresta/MT
-  5108006  // Tapurah/MT
-         : Provedor := 'Coplan';
-
-  2111300 // Sao Luis/MA
-         : Provedor := 'CTA';
-
-  4300406, // Alegrete/RS
-  4310603, // Itaqui/RS
-  4304705  // Carazinho/RS
-         : Provedor := 'DBSeller';
-
-  4308508, // Frederico Westphalen/RS
-  4310009  // Ibiruba/RS
-         : Provedor := 'Digifred';
-
-  3128006, // Guanhães/MG
-  3202603, // Iconha/ES
-  3203205  // Linhares/ES
-         : Provedor := 'EL';
-
-  3534401  // Osasco/SP
-         : Provedor := 'EgoverneISS';
-
-  4102307, // Balsa Nova/PR
-  4104501, // Capanema/PR
-  4104659, // Carambei/PR
-  4107207, // Dois Vizinhos/PR
-  4108403, // Francisco Beltrao/PR
-  4109807, // Ibipora/PR
-  4120606, // Prudentopolis/PR
-  4122008, // Rio Azul/PR
-  4123501, // Santa Helena/PR
-  4126306, // Senges/PR
-//  4127106, // Telemaco Borba/PR
-  4127700  // Toledo/PR
-         : Provedor := 'Equiplano';
-
-  4119905  // Ponta Grossa/PR
-         : Provedor := 'fintelISS';
-
-  1100114, // Jaru/RO
-  1100122, // Ji-Parana/RO
-  1508407, // Xinguara/PA
-  1600303, // Macapá/AP
-  2101202, // Bacabal/MA
-  2103000, // Caxias/MA
-  3305505, // Saquarema/RJ
-  3504503, // Avare/SP
-  3504800, // Balsamo/SP
-  3505203, // Bariri/SP
-  3512902, // Cosmorama/SP
-  3514502, // Duartina/SP
-  3515509, // Fernandopolis/SP
-  3516705, // Garca/SP
-  3518206, // Guararapes/SP
-  3519303, // Ibaté/SP
-  3520103, // Igarapava/SP
-  3540200, // Pontal/SP
-  3549409, // Sao Joaquim Da Barra/SP
-  3551603, // Serra Negra/SP
-  3555000, // Tupã/SP
-  5003207, // Corumba/MS
-  3511300,  // Cedral / SP        Daniel Jr - Mirassol-SP
-  3544905  // Sales Oliveira/SP
-
-  //  5102637  // Campo Novo Do Parecis/MT
-
-         : Provedor := 'Fiorilli';
-
-  1100304, // Vilhena/RO
-//  5101704, // Barra do Bugres/MT
-  5102504, // Cáceres/MT
-//  5102702, // Canarana/MT
-  5103007, // Chapada dos Guimarães/MT
-  5104559, // Itaúba/MT
-  5104609, // Itiquira/MT
-  5105150, // Juina/MT
-  5107248, // Santa Carmen/MT
-  5107800, // Santo Antônio do Leverger/MT
-  5107875, // Sapezal/MT
-  5107909  // Sinop/MT
-//  5107958  // Tangara da Serra/MT
-         : Provedor := 'FISSLEX';
-
-//  2919553  // Luis Eduardo Magalhaes/BA
-//         : Provedor := 'Freire';
-
-  1302603, // Manaus/AM
-  1500800, // Ananindeua/PA
-  1505536, // Parauapebas/PA
-  1506807, // Santarem/PA
-  2304285, // Eusebio/PA
-  2304400, // Fortaleza/CE
-  2307650, // Maracanau/CE
-//  2507507, // Joao Pessoa/PB
-  2513653, // Santarem/PB
-  2604106, // Caruaru/PE
-  2700300, // Arapiraca/AL
-  2704302, // Maceio/AL
-  2704708, // Marechal Deodoro/AL
-//  2910727, // Eunapolis/BA
-  2933307, // Vitoria da Conquista/BA
-//  3101607, // Alfenas/MG
-  3104007, // Araxá/MG
-  3106705, // Betim/MG
-  3115300, // Cataguases/MG
-  3117504, // Conceicao do Mato Dentro/MG
-  3131703, // Itabira/MG
-  3137601, // Lagoa Santa/MG
-  3143906, // Muriae/MG
-  3145604, // Oliveira/MG
-  3147105, // Para de Minas/MG
-  3152501, // Pouso Alegre/MG
-  3154606, // Ribeirao das Neves/MG
-  3156908, // Sacramento/MG
-  3169901, // Uba/MG
-  3170701, // Varginha/MG
-  3300456, // Belford Roxo/RJ
-  3301009, // Campos dos Goytacazes/RJ
-  3301900, // Itaborai/RJ
-  3302700, // Marica/RJ
-  3304300, // Rio Bonito/RJ
-  3503208, // Araraquara/SP
-  3506359, // Bertioga/SP
-  3510401, // Capivari/SP
-//  3511300, // Cedral/SP
-  3512001, // Colina/SP
-  3513009, // Cotia/SP
-  3513801, // Diadema/SP
-//  3515509, // Fernandopolis/SP
-  3516200, // Franca/SP
-  3518305, // Guararema/SP
-  3518404, // Guaratinguetá/SP
-  3518701, // Guaruja/SP
-  3518800, // Guarulhos/SP
-  3519071, // Hortolandia/SP
-  3523909, // Itu/SP
-//  3524709, // Jaguariuna/SP
-  3525102, // Jardinopolis/SP
-  3525300, // Jau/SP
-  3525904, // Jundiai/SP
-  3529401, // Maua/SP
-  3530508, // Mococa/SP
-  3533908, // Olimpia/SP
-  3536505, // Paulinia/SP
-  3538006, // Pindamonhangaba/SP
-  3542602, // Registro/SP
-  3543303, // Ribeirao Pires/SP
-  3543402, // Ribeirao Preto/SP
-  3543907, // Rio Claro/SP
-  3545209, // Salto/SP
-  3547809, // Santo Andre/SP
-  3548500, // Santos/SP
-  3548708, // Sao Bernardo do Campos/SP
-  3548807, // Sao Caetano do Sul/SP
-  3548906, // Sao Carlos/SP
-  3549805, // Sao Jose do Rio Preto/SP
-  3549904, // Sao Jose dos Campos/SP
-  3550605, // Sao Roque/SP
-  3550704, // Sao Sebastiao/SP
-  3552502, // Suzano/SP
-  3553708, // Taquaritinga/SP
-  3555406, // Ubatuba/SP
-  3557105, // Votuporanga/SP
-  3704708, // Marechal Deodoro/AL
-  4118204, // Paranagua/PR
-//  4125506, // Sao Jose dos Pinhais/PR
-  4128104, // Umuarama/PR
-  4202404, // Blumenau/SC
-  4309308, // Guaiba/RS
-  4314407, // Pelotas/RS
-  5220454  // Senador Canedo/GO
-  //5213103  // Mineiros/GO
-         : Provedor := 'GINFES';
-
-    25300, // Goiânia/GO
-  5208707  // Goiania/GO
-         : Provedor := 'Goiania';
-
-//  3118601, // Contagem/MG
-//  3205309, // Vitória/ES
-//  3304706, // Sto Antonio de Padua/RJ
-//  3511102, // Catanduva/SP
-//  3530300, // Mirassol/SP
-  3541505, // Presidente Venceslau/SP
-//  4204004, // Catanduvas/SC
-  4101408, // Apucarana/PR
-//  4102000, // Assis Chateaubriand/PR
-//  4205902, // Gaspar/SC
-//  4309407, // Guapore/RS
-//  4310207, // Ijui/RS
-//  4320800, // Soledade/RS
-//  4322400, // Uruguaiana/RS
-//  3143302, // Montes Claros/MG
-//  3305505, // Saquarema/RJ
-//  3504008, // Assis/SP
-  //4210506, // Maravilha/SC
-  4321709  // Tres Coroas/RS
-         : Provedor := 'GovBR';
-
-  3122306, // Divinopolis/MG
-  3132404, // Itajubá/MG
-  3138203, // Lavras/MG
-  3147006, // Paracatu/MG
-  3151800, // Poços de Caldas/MG
-  3162955, // Sao Jose Da Lapa/MG
-  3149309  // Pedro Leopoldo/MG
-//  3522307  // Itapetininga/SP
-         : Provedor := 'GovDigital';
-
-  4106902  // Curitiba/PR
-         : Provedor := 'IssCuritiba';
-
-  3144805, // Nova Lima/MG
-  3157807, // Santa Luzia/MG
-  3300704  // Cabo Frio/RJ
-         : Provedor := 'ISSDigital';
-
-  1501402, // Belem/PA
-//  2111300, // Sao Luis/MA
-  2211001, // Teresina/PI
-  3170206, // Uberlandia/MG
-  3303500, // Nova Iguacu/RJ
-  3509502, // Campinas/SP
-  3552205, // Sorocaba/SP
-  5002704  // Campo Grande/MS
-         : Provedor := 'IssDSF';
-
-  4115200  // Maringa/PR
-         : Provedor := 'ISSe';
-
-  4101804, // Araucaria/PR
-  4108304  // Foz Do Iguacu/PR
-         : Provedor := 'Lexsom';
-
-  3118601, // Contagem/MG
-  3143302, // Montes Claros/MG
-  3202405, // Guarapari/ES
-  3304706, // Sto Antonio de Padua/RJ
-  3504008, // Assis/SP
-  3505609, // Barrinha/SP
-  3511102, // Catanduva/SP
-  3530300, // Mirassol/SP
-  3545407, // Salto Grande/SP
-  4102000, // Assis Chateaubriand/PR
-  4118501, // Pato Branco/PR
-  4122404, // Rolandia/PR
-  4201307, // Araquari/SC
-  4210506, // Maravilha/SC
-  4216602, // São José/SC
-  4303509, // Camaqua/RS
-  4308102, // Feliz/RS
-  4309407, // Guapore/RS
-  4310207, // Ijui/RS
-  4320800, // Soledade/RS
-  4322400  // Uruguaiana/RS
-         : Provedor := 'Pronim';
-
-  4307005, // Erechim/RS
-  4304408  // Canela/RS
-         : Provedor := 'SystemPro';
-
-  4303905, // Campo Bom / RS -  15/04/2015 - Leandro do Couto
-  4305108, // Caxias do Sul/RS  - Alterado Por Cleiver em 21/01/2015
-  4307906, // Farroupilha/RS
-  4314050, // Parobe/RS         - Alterado Por Cleiver em 21/01/2015
-  4317400  // Santiago/RS       - Alterado Por Cleiver em 21/01/2015
-         : Provedor := 'Infisc';
-
-  1709500, // Gurupi/TO
-  2112209, // Timon/MA
-  2207009, // Oeiras/PI
-  2208007, // Picos/PI
-  2211209, // Uruçuí/PI
-  2307304, // Juazeiro do Norte/CE
-  2504009, // Campina Grande/PB
-  2910727, // Eunapolis/BA
-  2925303, // Porto Seguro/BA
-  3107109, // Boa Esperança/MG
-  3112505, // Capim Branco/MG
-  3113305, // Carangola/MG
-  3114402, // Carmo do Rio Claro/MG
-  3116605, // Cláudio/MG
-//  3128006, // Guanhães/MG
-  3128105, // Guapé/MG
-//  3131307, // Ipatinga/MG
-//  3147907, // Passos/MG
-  3148004, // Patos de Minas/MG
-  3149903, // Perdões/MG
-  3151503, // Piumhi/MG
-  3152600, // Pouso Alto/MG
-  3153905, // Raposos/MG
-  3170800, // Várzea da Palma/MG
-  3171303, // Viçosa/MG
-  3200102, // Afonso Cláudio/ES
-  3200300, // Alfredo Chaves/ES
-  3204708, // São Gabriel da Palha/ES
-  4109609, // Guaratuba/PR
-//  4300406, // Alegrete/RS
-  4313953, // Pantano Grande/RS
-  5106505, // Poconé/MT
-  5106778, // Porto Alegre do Norte/MT
-  5107107  // São José dos Quatro Marcos/MT
-         : Provedor := 'ISSIntel';
-
-      999, // Adicionado por ronnei, esse código é usado na homologação
-  1702109, // Araguaína/TO
-  3139607, // Mantena/MG
-  3169307, // Três Corações/MG
-  3502101, // Andradina/SP
-  3502507, // Aparecida/SP
-  3522307, // Itapetininga/SP
-  3524402, // Jacareí/SP
-  3524709, // Jaguariuna/SP
-  3527207, // Lorena/SP
-  3530607, // Mogi das Cruzes/SP
-  3541000, // Praia Grande/SP
-  3551009, // São Vicente/SP
-  3551504, // Serrana/SP
-  4104808, // Cascavel/PR
-//  4219507, // Xanxerê/SC passou para o provedor Betha
-  4306106, // Cruz Alta/RS
-  4313409, // Novo Hamburgo/RS
-  4316907, // Santa Maria/RS
-  5002209, // Bonito/MS
-  5003702, // Dourados/MT
-  5005707, // Naviraí/MS
-  5006002, // Nova Alvorada do Sul/MS
-  5006309, // Paranaiba/MS
-  5007208, // Rio Brilhante/MS
-  5007901, // Sidrolândia/MS
-  5103403, // Cuiaba/MT
-  5105101, // Juara/MT
-//  5105903, // Nobres/MT
-  5106232, // Nova Olimpia/MT
-  5107925, // Sorriso/MT
-  5108402, // Várzea Grande/MT
-  5201108, // Anapolis/GO
-  5201405  // Aparecida de Goiania/GO
-         : Provedor := 'ISSNET';
-
-  2911709  // Guanambi/BA
-         : Provedor := 'Link3';
-
-  3513405 // Cruzeiro/SP
-         : Provedor := 'Mitra';
-         
-  2408102  // Natal/RN
-         : Provedor := 'Natal';
-
-  5208004, // Formosa/GO
-  5211503, // Itumbiara/GO
-  5213103, // Mineiros/GO
-  5217302, // Pirenopolis/GO
-  5218805  // Rio Verde/GO
-         : Provedor := 'Prodata';
-
-  4208203  // Itajai/SC
-         : Provedor := 'Publica';
-
-  1100205 // Porto Velho/RO
-         : Provedor := 'PVH';
-
-  2611606  // Recife/PE
-         : Provedor := 'Recife';
-
-  3304557  // Rio de Janeiro/RJ
-         : Provedor := 'RJ';
-
-  2927408  // Salvador/BA
-         : Provedor := 'Salvador';
-
-  1400100, // Boa Vista/RR
-  1400209, // Caracarai/RR
-  2900801, // Alcobaca/BA
-  2902708, // Barra/BA
-  2903201, // Barreiras/BA
-  2903904, // Bom Jesus Da Lapa/BA
-  2905602, // Camacan/BA
-  2906006, // Campo Formoso/BA
-  2907202, // Casa Nova/BA
-  2909307, // Correntina/BA
-  2910057, // Dias D Avila/BA
-  2910602, // Esplanada/BA
-  2913200, // Ibotirama/BA
-  2913903, // Ipiau/BA
-  2914505, // Irara/BA
-  2914653, // Itabela/BA
-  2914703, // Itaberaba/BA
-  2917003, // Itiuba/BA
-  2917508, // Jacobina/BA
-  2917706, // Jaguarari/BA
-  2919157, // Lapao/BA
-  2919926, // Madre De Deus/BA
-  2922003, // Mucuri/BA
-  2922656, // Nordestina/BA
-  2927705, // Santa Cruz Cabralia/BA
-  2928901, // Sao Desiderio/BA
-  2931350, // Teixeira De Freitas/BA
-  2932804, // Utinga/BA
-  2933208, // Vera Cruz/BA
-  4201653, // Arvoredo/SC
-  4204558  // Correia Pinto/SC
-         : Provedor := 'Saatri';
-
-  2507507  // Joao Pessoa/PB
-         : Provedor := 'SisPMJP';
-
-  3103504, // Araguari/MG
-  3105103, // Bambuí/MG
-  3137205, // Lagoa Da Prata/MG
-  3148103, // Patrocinio/MG
-  3503307, // Araras/SP
-  3521408, // Iracemapolis/SP;
-  3511508, // Cerquilho/SP
-  3514106, // Dois Corregos/SP
-  3519006, // Herculandia/SP
-  3520608, // Indiana/SP
-  3524808, // Jales/SP
-  3530201, // Mirante Do Paranapanema/SP
-  3534609, // Osvaldo Cruz/SP
-  3538709, // Piracicaba/SP
-  3541406, // Presidente Prudente/SP
-  3549102, // São João da Boa Vista/SP
-  3549706, // São José do Rio Pardo/SP
-  3556404, // Vargem Grande do Sul/SP
-  4202008, // Balneario Camboriu/SC
-  4126504  // Sertanopolis/PR
-         : Provedor := 'SimplISS';
-
-  4125506  // Sao Jose dos Pinhais/PR
-         : Provedor := 'SJP';
-
-  2301000, // Aquiraz/CE
-  2611101  // Petrolina/PE
-         : Provedor := 'SpeedGov';
-
-  4306403, // Dois Irmãos/RS
-  4306809, // Encantado/RS
-  4307609, // Estância Velha/RS
-  4307807, // Estrela/RS
-  4308201, // Flores da Cunha/RS
-  4310801, // Ivoti/RS
-  4313300, // Nova Prata/RS
-  4314803, // Portao/RS
-  4319505, // Sao Sebastiao Do Cai/RS
-  4320404, // Serafina Correa/RS
-  4322806  // Veranopolis/RS
-         : Provedor := 'Tecnos';
-
-  4205902, // Gaspar/SC
-  4303103, // Cachoeirinha/RS
-  4307708, // Esteio/RS
-  4311403, // Lajeado/RS
-  4312401, // Montenegro/RS
-  4312658, // Nao-Me-Toque/RS
-  4314100, // Passo Fundo/RS
-  4316808, // Santa Cruz Do Sul/RS
-  4318705, // Sao Leopoldo/RS
-  4321204, // Taquara/RS
-  4322608  // Venancio Aires/RS
-         : Provedor := 'Thema';
-
-  3300100, // Angra dos Reis/RJ
-  3300407, // Barra Mansa/RJ
-  3301702, // Duque de Caxias/RJ
-  3302007, // Itaguaí/RJ
-  3302403, // Macaé/RJ
-  3302601, // Mangaratiba/RJ
-  3304201, // Resende/RJ
-  3304524, // Rio das Ostras/RJ
-  3501608  // Americana/SP
-         : Provedor := 'Tiplan';
-
-  2408003  // Mossoro/RN
-         : Provedor := 'Tinus';
-
-  5101803  // Barra do Garcas/MT
-         : Provedor := 'Virtual';
-
-  3205200, // Vila Velha/ES
-  3205309  // Vitória/ES
-         : Provedor := 'Vitoria';
-
-  1100049, // Cacoal/RO
-  1500958, // Aurora Do Para/PA
-  1507003, // Santo Antonio do Taua/PA
-  1507102, // Sao Caetano De Odivelas/PA
-  1721000, // Palmas/TO
-  2100204, // Alcantara/MA
-  2110005, // Santa Luzia/MA
-  2211308, // Valenca do Piaui/PI
-  2800308, // Aracaju/SE
-  2801009, // Campo do Brito/SE
-  2802106, // Estância/SE
-  2803302, // Japaratuba/SE
-  2803500, // Lagarto/SE
-  2901007, // Amargosa/BA
-  2901106, // Amelia Rodrigues/BA
-  2906501, // Candeias/BA
-  2910800, // Feira de Santana/BA
-  2914802, // Itabuna/BA
-  2916401, // Itapetinga/BA
-  2932606, // Urandi/BA
-  3104205, // Arcos/MG
-  3107406, // Bom Despacho/MG
-  3134608, // Jaboticatubas/MG
-  3138807, // Luz/MG
-  3141108, // Matozinhos/MG
-  3153608, // Prudente de Morais/MG
-  3159001, // Santana do Riacho/MG
-  3171105, // Verissimo/MG
-  2907509, // Catu/BA
-  2919553, // Luiz Eduardo Magalhães/BA
-  2925204, // Pojuca/BA
-  3101508, // Alem Paraiba/MG
-  3105608, // Barbacena/MG
-  3105905, // Barroso/MG
-  3110202, // Cajuri/MG
-  3110509, // Camanducaia/MG
-  3111200, // Campo Belo/MG
-  3119401, // Coronel Fabriciano/MG
-  3126109, // Formiga/MG
-  3127107, // Frutal/MG
-  3133808, // Itaúna/MG
-  3136207, // João Monlevade/MG
-  3145208, // Nova Serrana/MG
-  3147907, // Passos/MG
-  3150703, // Pirajuba/MG
-  3152303, // Porto Firme/MG
-  3155702, // Rio Piracicaba/MG
-  3157203, // Santa Bárbara/MG
-  3159605, // Santa Rita do Sapucaí/MG
-  3162104, // São Gotardo/MG
-  3170107, // Uberaba/MG
-  3300209, // Araruama/RJ
-  3300803, // Cachoeiras de Macacu/RJ
-  3301207, // Carmo/RJ
-  3301306, // Casimiro de Abreu/RJ
-  3301504, // Cordeiro/RJ
-  3302908, // Miguel Pereira/RJ
-  3303302, // Niteroi/RJ
-  3303401, // Nova Friburgo/RJ
-  3303856, // Paty do Alferes/RJ
-  3304110, // Porto Real/RJ
-  3304144, // Queimados/RJ
-  3304607, // Santa Maria Madalena/RJ
-  3305000, // São João da Barra/RJ
-  3305604, // Silva Jardim/RJ
-  3305802, // Teresópolis/RJ
-  3305901, // Trajano de Moraes/RJ
-  4209607, // Lauro Muller/SC
-  4210100, // Mafra/SC
-  4211108, // Monte Castelo/SC
-  4212205, // Papanduva/SC
-  4301602, // Bage/RS
-  5101308, // Arenapolis/MT
-  5101704, // Barra do Bugres/MT
-  5105259, // Lucas do Rio Verde/MT
-//  5107909, // Sinop/MT
-  5107305, // Sao Jose do Rio Claro/MT
-  5107958, // Tangara da Serra/MT
-  5204508  // Caldas Novas/GO
-         : Provedor := 'WebISS';
-
-  3118304, // Conselheiro Lafaiete/MG
-  3120904, // Curvelo/MG
-  3169356, // Três Marias/MG
-  3171204  // Vespasiano/MG
-         : Provedor := 'NFSEBrasil';
-  3539301  // Pirassununga/SP
-         : Provedor := 'CONAM';
- end;
- Result := Provedor;
 end;
 
 // Nome da cidade com base ao código da cidade *********************************
@@ -12816,7 +11992,7 @@ var
       5206305: CodSiafi := '9327'; // Cristianopolis/GO';         
       5206404: CodSiafi := '9329'; // Crixas/GO';                 
       5206503: CodSiafi := '9331'; // Crominia/GO';               
-      5206602: CodSiafi := '9333'; // Cumari/GO';                 
+      5206602: CodSiafi := '9333'; // Cumari/GO';
       5206701: CodSiafi := '9335'; // Damianopolis/GO';           
       5206800: CodSiafi := '9337'; // Damolandia/GO';             
       5206909: CodSiafi := '9339'; // Davinopolis/GO';            
@@ -12845,7 +12021,7 @@ var
       5209291: CodSiafi := '0065'; // Guaraita/GO';                   
       5209408: CodSiafi := '9383'; // Guarani De Goias/GO';
       5209457: CodSiafi := '9993'; // Guarinos/GO';                   
-      5209606: CodSiafi := '9387'; // Heitorai/GO';                       
+      5209606: CodSiafi := '9387'; // Heitorai/GO';
       5209705: CodSiafi := '9389'; // Hidrolandia/GO';
       5209804: CodSiafi := '9391'; // Hidrolina/GO';                  
       5209903: CodSiafi := '9393'; // Iaciara/GO';                    
@@ -12874,7 +12050,7 @@ var
       5212055: CodSiafi := '0049'; // Jesupolis/GO';                  
       5212105: CodSiafi := '9437'; // Joviania/GO';                   
       5212204: CodSiafi := '9439'; // Jussara/GO';                    
-      5212253: CodSiafi := '1076'; // Lagoa Santa/GO';                
+      5212253: CodSiafi := '1076'; // Lagoa Santa/GO';
       5212303: CodSiafi := '9443'; // Leopoldo De Bulhoes/GO';        
       5212501: CodSiafi := '9445'; // Luziania/GO';
       5212600: CodSiafi := '9447'; // Mairipotaba/GO';                    
@@ -13089,7 +12265,7 @@ begin
       0012: CodCidade := 1101450; // Parecis/RO  
       0014: CodCidade := 1101468; // Pimenteiras Do Oeste/RO  
       0016: CodCidade := 1101476; // Primavera De Rondonia/RO  
-      0018: CodCidade := 1101484; // Sao Felipe D Oeste/RO  
+      0018: CodCidade := 1101484; // Sao Felipe D Oeste/RO
       0020: CodCidade := 1101492; // Sao Francisco Do Guapore/RO  
       0699: CodCidade := 1101500; // Seringueiras/RO  
       0022: CodCidade := 1101559; // Teixeiropolis/RO  
@@ -13176,7 +12352,7 @@ begin
       0277: CodCidade := 1304005; // Silves/AM  
       9847: CodCidade := 1304062; // Tabatinga/AM  
       0279: CodCidade := 1304104; // Tapaua/AM  
-      0281: CodCidade := 1304203; // Tefe/AM  
+      0281: CodCidade := 1304203; // Tefe/AM
       9851: CodCidade := 1304237; // Tonantins/AM  
       9849: CodCidade := 1304260; // Uarini/AM  
       0285: CodCidade := 1304302; // Urucara/AM  
@@ -13234,7 +12410,7 @@ begin
       0447: CodCidade := 1502400; // Castanhal/PA  
       0449: CodCidade := 1502509; // Chaves/PA  
       0451: CodCidade := 1502608; // Colares/PA  
-      0453: CodCidade := 1502707; // Conceicao Do Araguaia/PA  
+      0453: CodCidade := 1502707; // Conceicao Do Araguaia/PA
       0579: CodCidade := 1502756; // Concordia Do Para/PA  
       0385: CodCidade := 1502764; // Cumaru Do Norte/PA  
       0581: CodCidade := 1502772; // Curionopolis/PA
@@ -13263,7 +12439,7 @@ begin
       0481: CodCidade := 1504109; // Magalhaes Barata/PA  
       0483: CodCidade := 1504208; // Maraba/PA  
       0485: CodCidade := 1504307; // Maracana/PA  
-      0487: CodCidade := 1504406; // Marapanim/PA  
+      0487: CodCidade := 1504406; // Marapanim/PA
       0054: CodCidade := 1504422; // Marituba/PA  
       0589: CodCidade := 1504455; // Medicilandia/PA  
       0489: CodCidade := 1504505; // Melgaco/PA  
@@ -13292,7 +12468,7 @@ begin
       0513: CodCidade := 1505700; // Ponta De Pedras/PA  
       0515: CodCidade := 1505809; // Portel/PA  
       0517: CodCidade := 1505908; // Porto De Moz/PA  
-      0519: CodCidade := 1506005; // Prainha/PA  
+      0519: CodCidade := 1506005; // Prainha/PA
       0521: CodCidade := 1506104; // Primavera/PA  
       0062: CodCidade := 1506112; // Quatipuru/PA  
       0567: CodCidade := 1506138; // Redencao/PA
@@ -13321,7 +12497,7 @@ begin
       0393: CodCidade := 1507474; // Sao Joao De Pirabas/PA  
       0549: CodCidade := 1507508; // Sao Joao Do Araguaia/PA
       0551: CodCidade := 1507607; // Sao Miguel Do Guama/PA  
-      0553: CodCidade := 1507706; // Sao Sebastiao Da Boa Vista/PA  
+      0553: CodCidade := 1507706; // Sao Sebastiao Da Boa Vista/PA
       0066: CodCidade := 1507755; // Sapucaia/PA  
       0555: CodCidade := 1507805; // Senador Jose Porfirio/PA  
       0557: CodCidade := 1507904; // Soure/PA  
@@ -13350,7 +12526,7 @@ begin
       0605: CodCidade := 1600303; // Macapa/AP  
       0607: CodCidade := 1600402; // Mazagao/AP  
       0609: CodCidade := 1600501; // Oiapoque/AP  
-      0671: CodCidade := 1600535; // Porto Grande/AP  
+      0671: CodCidade := 1600535; // Porto Grande/AP
       0673: CodCidade := 1600550; // Pracuuba/AP  
       0615: CodCidade := 1600600; // Santana/AP  
       0617: CodCidade := 1600709; // Tartarugalzinho/AP  
@@ -13379,7 +12555,7 @@ begin
       0076: CodCidade := 1703073; // Barra Do Ouro/TO  
       9693: CodCidade := 1703107; // Barrolandia/TO  
       9695: CodCidade := 1703206; // Bernardo Sayao/TO  
-      0341: CodCidade := 1703305; // Bom Jesus Do Tocantins/TO  
+      0341: CodCidade := 1703305; // Bom Jesus Do Tocantins/TO
       0339: CodCidade := 1703602; // Brasilandia Do Tocantins/TO  
       9273: CodCidade := 1703701; // Brejinho De Nazare/TO  
       9715: CodCidade := 1703800; // Buriti Do Tocantins/TO  
@@ -13408,7 +12584,7 @@ begin
       9667: CodCidade := 1707652; // Figueiropolis/TO  
       9355: CodCidade := 1707702; // Filadelfia/TO  
       9365: CodCidade := 1708205; // Formoso Do Araguaia/TO  
-      0345: CodCidade := 1708254; // Fortaleza Do Tabocao/TO  
+      0345: CodCidade := 1708254; // Fortaleza Do Tabocao/TO
       9699: CodCidade := 1708304; // Goianorte/TO  
       9533: CodCidade := 1709005; // Goiatins/TO  
       9627: CodCidade := 1709302; // Guarai/TO  
@@ -13437,7 +12613,7 @@ begin
       0187: CodCidade := 1713957; // Muricilandia/TO  
       9481: CodCidade := 1714203; // Natividade/TO  
       9483: CodCidade := 1714302; // Nazare/TO
-      9663: CodCidade := 1714880; // Nova Olinda/TO  
+      9663: CodCidade := 1714880; // Nova Olinda/TO
       9721: CodCidade := 1715002; // Nova Rosalandia/TO  
       9499: CodCidade := 1715101; // Novo Acordo/TO  
       9703: CodCidade := 1715150; // Novo Alegre/TO  
@@ -13466,7 +12642,7 @@ begin
       0193: CodCidade := 1718550; // Riachinho/TO  
       0323: CodCidade := 1718659; // Rio Da Conceicao/TO  
       0359: CodCidade := 1718709; // Rio Dos Bois/TO  
-      9679: CodCidade := 1718758; // Rio Sono/TO  
+      9679: CodCidade := 1718758; // Rio Sono/TO
       9727: CodCidade := 1718808; // Sampaio/TO  
       0331: CodCidade := 1718840; // Sandolandia/TO  
       0195: CodCidade := 1718865; // Santa Fe Do Araguaia/TO  
@@ -13495,7 +12671,7 @@ begin
       9665: CodCidade := 1722081; // Wanderlandia/TO  
       9643: CodCidade := 1722107; // Xambioa/TO  
       0961: CodCidade := 2100055; // Acailandia/MA  
-      0701: CodCidade := 2100105; // Afonso Cunha/MA  
+      0701: CodCidade := 2100105; // Afonso Cunha/MA
       0104: CodCidade := 2100154; // Agua Doce Do Maranhao/MA  
       0703: CodCidade := 2100204; // Alcantara/MA  
       0705: CodCidade := 2100303; // Aldeias Altas/MA  
@@ -13524,7 +12700,7 @@ begin
       0120: CodCidade := 2101731; // Belagua/MA  
       0122: CodCidade := 2101772; // Bela Vista Do Maranhao/MA  
       0735: CodCidade := 2101806; // Benedito Leite/MA
-      0737: CodCidade := 2101905; // Bequimao/MA  
+      0737: CodCidade := 2101905; // Bequimao/MA
       0124: CodCidade := 2101939; // Bernardo Do Mearim/MA  
       0126: CodCidade := 2101970; // Boa Vista Do Gurupi/MA  
       0955: CodCidade := 2102002; // Bom Jardim/MA  
@@ -13582,7 +12758,7 @@ begin
       0797: CodCidade := 2105005; // Humberto De Campos/MA  
       0799: CodCidade := 2105104; // Icatu/MA  
       0170: CodCidade := 2105153; // Igarape Do Meio/MA  
-      0801: CodCidade := 2105203; // Igarape Grande/MA  
+      0801: CodCidade := 2105203; // Igarape Grande/MA
       0803: CodCidade := 2105302; // Imperatriz/MA  
       0172: CodCidade := 2105351; // Itaipava Do Grajau/MA  
       0807: CodCidade := 2105401; // Itapecuru Mirim/MA  
@@ -13611,7 +12787,7 @@ begin
       0831: CodCidade := 2106607; // Matoes/MA  
       0196: CodCidade := 2106631; // Matoes Do Norte/MA  
       0198: CodCidade := 2106672; // Milagres Do Maranhao/MA
-      0833: CodCidade := 2106706; // Mirador/MA  
+      0833: CodCidade := 2106706; // Mirador/MA
       1283: CodCidade := 2106755; // Miranda Do Norte/MA  
       0835: CodCidade := 2106805; // Mirinzal/MA
       0837: CodCidade := 2106904; // Moncao/MA  
@@ -13640,7 +12816,7 @@ begin
       0869: CodCidade := 2108603; // Pinheiro/MA  
       0871: CodCidade := 2108702; // Pio Xii/MA  
       0873: CodCidade := 2108801; // Pirapemas/MA  
-      0875: CodCidade := 2108900; // Pocao De Pedras/MA  
+      0875: CodCidade := 2108900; // Pocao De Pedras/MA
       0877: CodCidade := 2109007; // Porto Franco/MA  
       0212: CodCidade := 2109056; // Porto Rico Do Maranhao/MA
       0879: CodCidade := 2109106; // Presidente Dutra/MA  
@@ -13669,7 +12845,7 @@ begin
       0909: CodCidade := 2110609; // Sao Bernardo/MA  
       0228: CodCidade := 2110658; // Sao Domingos Do Azeitao/MA  
       0911: CodCidade := 2110708; // Sao Domingos Do Maranhao/MA  
-      0913: CodCidade := 2110807; // Sao Felix De Balsas/MA  
+      0913: CodCidade := 2110807; // Sao Felix De Balsas/MA
       0230: CodCidade := 2110856; // Sao Francisco Do Brejao/MA
       0915: CodCidade := 2110906; // Sao Francisco Do Maranhao/MA  
       0917: CodCidade := 2111003; // Sao Joao Batista/MA  
@@ -13698,7 +12874,7 @@ begin
       0933: CodCidade := 2112001; // Tasso Fragoso/MA  
       0935: CodCidade := 2112100; // Timbiras/MA  
       0937: CodCidade := 2112209; // Timon/MA  
-      0258: CodCidade := 2112233; // Trizidela Do Vale/MA  
+      0258: CodCidade := 2112233; // Trizidela Do Vale/MA
       0260: CodCidade := 2112274; // Tufilandia/MA  
       0939: CodCidade := 2112308; // Tuntum/MA
       0941: CodCidade := 2112407; // Turiacu/MA  
@@ -13727,7 +12903,7 @@ begin
     //  : CodCidade := 2200954; //  roeiras Do Itaim/PI/A
       1019: CodCidade := 2201002; // Arraial/PI  
       0270: CodCidade := 2201051; // Assuncao Do Piaui/PI  
-      1021: CodCidade := 2201101; // Avelino Lopes/PI  
+      1021: CodCidade := 2201101; // Avelino Lopes/PI
       2245: CodCidade := 2201150; // Baixa Grande Do Ribeiro/PI  
       0272: CodCidade := 2201176; // Barra D Alcantara/PI  
       1023: CodCidade := 2201200; // Barras/PI  
@@ -13756,7 +12932,7 @@ begin
       1041: CodCidade := 2202109; // Campinas Do Piaui/PI  
       0290: CodCidade := 2202117; // Campo Alegre Do Fidalgo/PI  
       0292: CodCidade := 2202133; // Campo Grande Do Piaui/PI  
-      0294: CodCidade := 2202174; // Campo Largo Do Piaui/PI  
+      0294: CodCidade := 2202174; // Campo Largo Do Piaui/PI
       1043: CodCidade := 2202208; // Campo Maior/PI  
       2247: CodCidade := 2202251; // Canavieira/PI  
       1045: CodCidade := 2202307; // Canto Do Buriti/PI  
@@ -13785,7 +12961,7 @@ begin
       1065: CodCidade := 2203305; // Demerval Lobao/PI  
       1229: CodCidade := 2203354; // Dirceu Arcoverde/PI  
       1067: CodCidade := 2203404; // Dom Expedito Lopes/PI  
-      1141: CodCidade := 2203420; // Domingos Mourao/PI  
+      1141: CodCidade := 2203420; // Domingos Mourao/PI
       1289: CodCidade := 2203453; // Dom Inocencio/PI  
       1069: CodCidade := 2203503; // Elesbao Veloso/PI
       1071: CodCidade := 2203602; // Eliseu Martins/PI  
@@ -13814,7 +12990,7 @@ begin
       1103: CodCidade := 2205201; // Jaicos/PI  
       0997: CodCidade := 2205250; // Jardim Do Mulato/PI  
       0324: CodCidade := 2205276; // Jatoba Do Piaui/PI  
-      1105: CodCidade := 2205300; // Jerumenha/PI  
+      1105: CodCidade := 2205300; // Jerumenha/PI
       0326: CodCidade := 2205359; // Joao Costa/PI  
       1107: CodCidade := 2205409; // Joaquim Pires/PI  
       0328: CodCidade := 2205458; // Joca Marques/PI  
@@ -13843,7 +13019,7 @@ begin
       1127: CodCidade := 2206407; // Monsenhor Gil/PI  
       1129: CodCidade := 2206506; // Monsenhor Hipolito/PI  
       1131: CodCidade := 2206605; // Monte Alegre Do Piaui/PI  
-      0350: CodCidade := 2206654; // Morro Cabeca No Tempo/PI  
+      0350: CodCidade := 2206654; // Morro Cabeca No Tempo/PI
       0352: CodCidade := 2206670; // Morro Do Chapeu Do Piaui/PI  
       0354: CodCidade := 2206696; // Murici Dos Portelas/PI  
       1133: CodCidade := 2206704; // Nazare Do Piaui/PI  
@@ -13872,7 +13048,7 @@ begin
       1159: CodCidade := 2208007; // Picos/PI  
       1161: CodCidade := 2208106; // Pimenteiras/PI  
       1163: CodCidade := 2208205; // Pio Ix/PI  
-      1165: CodCidade := 2208304; // Piracuruca/PI  
+      1165: CodCidade := 2208304; // Piracuruca/PI
       1167: CodCidade := 2208403; // Piripiri/PI  
       1169: CodCidade := 2208502; // Porto/PI  
       0372: CodCidade := 2208551; // Porto Alegre Do Piaui/PI  
@@ -13901,7 +13077,7 @@ begin
       1195: CodCidade := 2209807; // Sao Goncalo Do Piaui/PI  
       1291: CodCidade := 2209856; // Sao Joao Da Canabrava/PI  
       0384: CodCidade := 2209872; // Sao Joao Da Fronteira/PI  
-      1197: CodCidade := 2209906; // Sao Joao Da Serra/PI  
+      1197: CodCidade := 2209906; // Sao Joao Da Serra/PI
       0386: CodCidade := 2209955; // Sao Joao Da Varjota/PI  
       0388: CodCidade := 2209971; // Sao Joao Do Arraial/PI
       1199: CodCidade := 2210003; // Sao Joao Do Piaui/PI
@@ -13959,7 +13135,7 @@ begin
       1233: CodCidade := 2301851; // Banabuiu/CE  
       1337: CodCidade := 2301901; // Barbalha/CE  
       1235: CodCidade := 2301950; // Barreira/CE  
-      1339: CodCidade := 2302008; // Barro/CE  
+      1339: CodCidade := 2302008; // Barro/CE
       1237: CodCidade := 2302057; // Barroquinha/CE  
       1341: CodCidade := 2302107; // Baturite/CE  
       1343: CodCidade := 2302206; // Beberibe/CE  
@@ -13988,7 +13164,7 @@ begin
       1385: CodCidade := 2304202; // Crato/CE  
       1241: CodCidade := 2304236; // Croata/CE  
       1589: CodCidade := 2304251; // Cruz/CE  
-      1243: CodCidade := 2304269; // Deputado Irapuan Pinheiro/CE  
+      1243: CodCidade := 2304269; // Deputado Irapuan Pinheiro/CE
       1245: CodCidade := 2304277; // Erere/CE  
       1247: CodCidade := 2304285; // Eusebio/CE  
       1387: CodCidade := 2304301; // Farias Brito/CE  
@@ -14017,7 +13193,7 @@ begin
       1415: CodCidade := 2305704; // Ipaumirim/CE  
       1417: CodCidade := 2305803; // Ipu/CE
       1419: CodCidade := 2305902; // Ipueiras/CE  
-      1421: CodCidade := 2306009; // Iracema/CE  
+      1421: CodCidade := 2306009; // Iracema/CE
       1423: CodCidade := 2306108; // Iraucuba/CE
       1425: CodCidade := 2306207; // Itaicaba/CE  
       0991: CodCidade := 2306256; // Itaitinga/CE  
@@ -14046,7 +13222,7 @@ begin
       1463: CodCidade := 2308104; // Mauriti/CE  
       1465: CodCidade := 2308203; // Meruoca/CE  
       1467: CodCidade := 2308302; // Milagres/CE  
-      1597: CodCidade := 2308351; // Milha/CE  
+      1597: CodCidade := 2308351; // Milha/CE
       1263: CodCidade := 2308377; // Miraima/CE  
       1469: CodCidade := 2308401; // Missao Velha/CE  
       1471: CodCidade := 2308500; // Mombaca/CE  
@@ -14075,7 +13251,7 @@ begin
       1513: CodCidade := 2310605; // Penaforte/CE  
       1515: CodCidade := 2310704; // Pentecoste/CE  
       1517: CodCidade := 2310803; // Pereiro/CE  
-      1267: CodCidade := 2310852; // Pindoretama/CE  
+      1267: CodCidade := 2310852; // Pindoretama/CE
       1519: CodCidade := 2310902; // Piquet Carneiro/CE  
       1269: CodCidade := 2310951; // Pires Ferreira/CE  
       1521: CodCidade := 2311009; // Poranga/CE  
@@ -14104,7 +13280,7 @@ begin
       1559: CodCidade := 2312908; // Sobral/CE  
       1561: CodCidade := 2313005; // Solonopole/CE  
       1563: CodCidade := 2313104; // Tabuleiro Do Norte/CE  
-      1565: CodCidade := 2313203; // Tamboril/CE  
+      1565: CodCidade := 2313203; // Tamboril/CE
       1275: CodCidade := 2313252; // Tarrafas/CE
       1567: CodCidade := 2313302; // Taua/CE  
       1277: CodCidade := 2313351; // Tejucuoca/CE  
@@ -14133,7 +13309,7 @@ begin
       1623: CodCidade := 2401206; // Ares/RN  
       1625: CodCidade := 2401305; // Augusto Severo/RN  
       1627: CodCidade := 2401404; // Baia Formosa/RN  
-      3003: CodCidade := 2401453; // Barauna/RN  
+      3003: CodCidade := 2401453; // Barauna/RN
       1629: CodCidade := 2401503; // Barcelona/RN  
       1631: CodCidade := 2401602; // Bento Fernandes/RN  
       0412: CodCidade := 2401651; // Bodo/RN  
@@ -14162,7 +13338,7 @@ begin
       1673: CodCidade := 2403707; // Felipe Guerra/RN  
       0416: CodCidade := 2403756; // Fernando Pedroza/RN  
       1675: CodCidade := 2403806; // Florania/RN  
-      1677: CodCidade := 2403905; // Francisco Dantas/RN  
+      1677: CodCidade := 2403905; // Francisco Dantas/RN
       1751: CodCidade := 2404002; // Frutuoso Gomes/RN  
       1679: CodCidade := 2404101; // Galinhos/RN  
       1681: CodCidade := 2404200; // Goianinha/RN  
@@ -14191,7 +13367,7 @@ begin
       1725: CodCidade := 2406304; // Lagoa De Pedras/RN  
       1727: CodCidade := 2406403; // Lagoa De Velhos/RN  
       1729: CodCidade := 2406502; // Lagoa Nova/RN  
-      1731: CodCidade := 2406601; // Lagoa Salgada/RN  
+      1731: CodCidade := 2406601; // Lagoa Salgada/RN
       1733: CodCidade := 2406700; // Lajes/RN  
       1735: CodCidade := 2406809; // Lajes Pintadas/RN  
       1737: CodCidade := 2406908; // Lucrecia/RN  
@@ -14220,7 +13396,7 @@ begin
       1781: CodCidade := 2409100; // Passa E Fica/RN  
       1783: CodCidade := 2409209; // Passagem/RN
       1785: CodCidade := 2409308; // Patu/RN  
-      0424: CodCidade := 2409332; // Santa Maria/RN  
+      0424: CodCidade := 2409332; // Santa Maria/RN
       1787: CodCidade := 2409407; // Pau Dos Ferros/RN  
       1789: CodCidade := 2409506; // Pedra Grande/RN  
       1791: CodCidade := 2409605; // Pedra Preta/RN  
@@ -14249,7 +13425,7 @@ begin
       1833: CodCidade := 2411700; // Sao Bento Do Trairi/RN  
       1835: CodCidade := 2411809; // Sao Fernando/RN  
       1821: CodCidade := 2411908; // Sao Francisco Do Oeste/RN  
-      1837: CodCidade := 2412005; // Sao Goncalo Do Amarante/RN  
+      1837: CodCidade := 2412005; // Sao Goncalo Do Amarante/RN
       1839: CodCidade := 2412104; // Sao Joao Do Sabugi/RN  
       1841: CodCidade := 2412203; // Sao Jose De Mipibu/RN  
       1843: CodCidade := 2412302; // Sao Jose Do Campestre/RN  
@@ -14278,7 +13454,7 @@ begin
       1881: CodCidade := 2414209; // Tibau Do Sul/RN  
       1883: CodCidade := 2414308; // Timbauba Dos Batistas/RN  
       1885: CodCidade := 2414407; // Touros/RN  
-      0436: CodCidade := 2414456; // Triunfo Potiguar/RN  
+      0436: CodCidade := 2414456; // Triunfo Potiguar/RN
       1887: CodCidade := 2414506; // Umarizal/RN  
       1889: CodCidade := 2414605; // Upanema/RN  
       1891: CodCidade := 2414704; // Varzea/RN  
@@ -14307,7 +13483,7 @@ begin
       0450: CodCidade := 2501351; // Assuncao/PB  
       1929: CodCidade := 2501401; // Baia Da Traicao/PB  
       1931: CodCidade := 2501500; // Bananeiras/PB  
-      0452: CodCidade := 2501534; // Barauna/PB  
+      0452: CodCidade := 2501534; // Barauna/PB
       0454: CodCidade := 2501575; // Barra De Santana/PB
       1933: CodCidade := 2501609; // Barra De Santa Rosa/PB  
       1935: CodCidade := 2501708; // Barra De Sao Miguel/PB  
@@ -14336,7 +13512,7 @@ begin
       1975: CodCidade := 2503704; // Cajazeiras/PB
       0462: CodCidade := 2503753; // Cajazeirinhas/PB  
       1977: CodCidade := 2503803; // Caldas Brandao/PB  
-      1979: CodCidade := 2503902; // Camalau/PB  
+      1979: CodCidade := 2503902; // Camalau/PB
       1981: CodCidade := 2504009; // Campina Grande/PB  
       0464: CodCidade := 2504033; // Capim/PB  
       0466: CodCidade := 2504074; // Caraubas/PB  
@@ -14365,7 +13541,7 @@ begin
       2015: CodCidade := 2505709; // Dona Ines/PB  
       2017: CodCidade := 2505808; // Duas Estradas/PB  
       2019: CodCidade := 2505907; // Emas/PB  
-      2021: CodCidade := 2506004; // Esperanca/PB  
+      2021: CodCidade := 2506004; // Esperanca/PB
       2023: CodCidade := 2506103; // Fagundes/PB  
       2025: CodCidade := 2506202; // Frei Martinho/PB  
       0480: CodCidade := 2506251; // Gado Bravo/PB  
@@ -14394,7 +13570,7 @@ begin
       2071: CodCidade := 2508505; // Livramento/PB  
       0482: CodCidade := 2508554; // Logradouro/PB  
       2073: CodCidade := 2508604; // Lucena/PB  
-      2075: CodCidade := 2508703; // Mae D Agua/PB  
+      2075: CodCidade := 2508703; // Mae D Agua/PB
       2077: CodCidade := 2508802; // Malta/PB  
       2079: CodCidade := 2508901; // Mamanguape/PB  
       2081: CodCidade := 2509008; // Manaira/PB  
@@ -14452,7 +13628,7 @@ begin
       2159: CodCidade := 2512903; // Rio Tinto/PB  
       2161: CodCidade := 2513000; // Salgadinho/PB
       2163: CodCidade := 2513109; // Salgado De Sao Felix/PB  
-      0510: CodCidade := 2513158; // Santa Cecilia/PB  
+      0510: CodCidade := 2513158; // Santa Cecilia/PB
       2165: CodCidade := 2513208; // Santa Cruz/PB  
       2167: CodCidade := 2513307; // Santa Helena/PB  
       0512: CodCidade := 2513356; // Santa Ines/PB  
@@ -14481,7 +13657,7 @@ begin
       2195: CodCidade := 2514701; // Sao Jose Do Sabugi/PB  
       2197: CodCidade := 2514800; // Sao Jose Dos Cordeiros/PB  
       2199: CodCidade := 2514909; // Sao Mamede/PB  
-      2201: CodCidade := 2515005; // Sao Miguel De Taipu/PB  
+      2201: CodCidade := 2515005; // Sao Miguel De Taipu/PB
       2203: CodCidade := 2515104; // Sao Sebastiao De Lagoa De Roca/PB  
       2205: CodCidade := 2515203; // Sao Sebastiao Do Umbuzeiro/PB  
       2207: CodCidade := 2515302; // Sape/PB  
@@ -14539,7 +13715,7 @@ begin
       2351: CodCidade := 2602605; // Brejo Da Madre De Deus/PE  
       2353: CodCidade := 2602704; // Buenos Aires/PE  
       2355: CodCidade := 2602803; // Buique/PE  
-      2357: CodCidade := 2602902; // Cabo De Santo Agostinho/PE  
+      2357: CodCidade := 2602902; // Cabo De Santo Agostinho/PE
       2359: CodCidade := 2603009; // Cabrobo/PE  
       2361: CodCidade := 2603108; // Cachoeirinha/PE  
       2363: CodCidade := 2603207; // Caetes/PE  
@@ -14568,7 +13744,7 @@ begin
       2299: CodCidade := 2605152; // Dormentes/PE  
       2403: CodCidade := 2605202; // Escada/PE  
       2405: CodCidade := 2605301; // Exu/PE
-      2407: CodCidade := 2605400; // Feira Nova/PE  
+      2407: CodCidade := 2605400; // Feira Nova/PE
     //    : CodCidade := 2605459; // Fernando De Noronha/PE/F
       2409: CodCidade := 2605509; // Ferreiros/PE  
       2411: CodCidade := 2605608; // Flores/PE  
@@ -14597,7 +13773,7 @@ begin
       2633: CodCidade := 2607752; // Itapissuma/PE  
       2455: CodCidade := 2607802; // Itaquitinga/PE  
       2457: CodCidade := 2607901; // Jaboatao Dos Guararapes/PE  
-      0548: CodCidade := 2607950; // Jaqueira/PE  
+      0548: CodCidade := 2607950; // Jaqueira/PE
       2459: CodCidade := 2608008; // Jatauba/PE  
       0550: CodCidade := 2608057; // Jatoba/PE  
       2461: CodCidade := 2608107; // Joao Alfredo/PE
@@ -14626,7 +13802,7 @@ begin
       2499: CodCidade := 2610004; // Palmares/PE
       2501: CodCidade := 2610103; // Palmeirina/PE  
       2503: CodCidade := 2610202; // Panelas/PE  
-      2505: CodCidade := 2610301; // Paranatama/PE  
+      2505: CodCidade := 2610301; // Paranatama/PE
       2507: CodCidade := 2610400; // Parnamirim/PE  
       2509: CodCidade := 2610509; // Passira/PE  
       2511: CodCidade := 2610608; // Paudalho/PE  
@@ -14655,7 +13831,7 @@ begin
       0556: CodCidade := 2612554; // Santa Filomena/PE  
       2551: CodCidade := 2612604; // Santa Maria Da Boa Vista/PE  
       2553: CodCidade := 2612703; // Santa Maria Do Cambuca/PE  
-      2555: CodCidade := 2612802; // Santa Terezinha/PE  
+      2555: CodCidade := 2612802; // Santa Terezinha/PE
       2557: CodCidade := 2612901; // Sao Benedito Do Sul/PE  
       2559: CodCidade := 2613008; // Sao Bento Do Una/PE  
       2561: CodCidade := 2613107; // Sao Caitano/PE  
@@ -14742,7 +13918,7 @@ begin
       2783: CodCidade := 2704203; // Limoeiro De Anadia/AL  
       2785: CodCidade := 2704302; // Maceio/AL  
       2787: CodCidade := 2704401; // Major Isidoro/AL  
-      2789: CodCidade := 2704500; // Maragogi/AL  
+      2789: CodCidade := 2704500; // Maragogi/AL
       2791: CodCidade := 2704609; // Maravilha/AL  
       2793: CodCidade := 2704708; // Marechal Deodoro/AL  
       2795: CodCidade := 2704807; // Maribondo/AL  
@@ -14771,7 +13947,7 @@ begin
       2837: CodCidade := 2706901; // Pilar/AL  
       2839: CodCidade := 2707008; // Pindoba/AL  
       2841: CodCidade := 2707107; // Piranhas/AL  
-      2843: CodCidade := 2707206; // Poco Das Trincheiras/AL  
+      2843: CodCidade := 2707206; // Poco Das Trincheiras/AL
       2845: CodCidade := 2707305; // Porto Calvo/AL  
       2847: CodCidade := 2707404; // Porto De Pedras/AL  
       2849: CodCidade := 2707503; // Porto Real Do Colegio/AL  
@@ -14800,7 +13976,7 @@ begin
       3103: CodCidade := 2800209; // Aquidaba/SE  
       3105: CodCidade := 2800308; // Aracaju/SE  
       3107: CodCidade := 2800407; // Araua/SE  
-      3109: CodCidade := 2800506; // Areia Branca/SE  
+      3109: CodCidade := 2800506; // Areia Branca/SE
       3111: CodCidade := 2800605; // Barra Dos Coqueiros/SE
       3115: CodCidade := 2800670; // Boquim/SE  
       3113: CodCidade := 2800704; // Brejo Grande/SE
@@ -14829,7 +14005,7 @@ begin
       3165: CodCidade := 2803302; // Japaratuba/SE  
       3167: CodCidade := 2803401; // Japoata/SE  
       3169: CodCidade := 2803500; // Lagarto/SE
-      3171: CodCidade := 2803609; // Laranjeiras/SE  
+      3171: CodCidade := 2803609; // Laranjeiras/SE
       3173: CodCidade := 2803708; // Macambira/SE  
       3175: CodCidade := 2803807; // Malhada Dos Bois/SE  
       3177: CodCidade := 2803906; // Malhador/SE  
@@ -14858,7 +14034,7 @@ begin
       3221: CodCidade := 2806107; // Rosario Do Catete/SE  
       3223: CodCidade := 2806206; // Salgado/SE  
       3225: CodCidade := 2806305; // Santa Luzia Do Itanhy/SE  
-      2647: CodCidade := 2806404; // Santana Do Sao Francisco/SE  
+      2647: CodCidade := 2806404; // Santana Do Sao Francisco/SE
       3229: CodCidade := 2806503; // Santa Rosa De Lima/SE  
       3231: CodCidade := 2806602; // Santo Amaro Das Brotas/SE  
       3233: CodCidade := 2806701; // Sao Cristovao/SE  
@@ -14887,7 +14063,7 @@ begin
       3323: CodCidade := 2901205; // Anage/BA  
       3325: CodCidade := 2901304; // Andarai/BA  
       3255: CodCidade := 2901353; // Andorinha/BA  
-      3327: CodCidade := 2901403; // Angical/BA  
+      3327: CodCidade := 2901403; // Angical/BA
       3329: CodCidade := 2901502; // Anguera/BA  
       3331: CodCidade := 2901601; // Antas/BA  
       3333: CodCidade := 2901700; // Antonio Cardoso/BA  
@@ -14916,7 +14092,7 @@ begin
       3367: CodCidade := 2903409; // Belmonte/BA  
       3369: CodCidade := 2903508; // Belo Campo/BA  
       3371: CodCidade := 2903607; // Biritinga/BA
-      3373: CodCidade := 2903706; // Boa Nova/BA  
+      3373: CodCidade := 2903706; // Boa Nova/BA
       3375: CodCidade := 2903805; // Boa Vista Do Tupim/BA  
       3377: CodCidade := 2903904; // Bom Jesus Da Lapa/BA
       3263: CodCidade := 2903953; // Bom Jesus Da Serra/BA  
@@ -14945,7 +14121,7 @@ begin
       3415: CodCidade := 2905800; // Camamu/BA  
       3417: CodCidade := 2905909; // Campo Alegre De Lourdes/BA  
       3419: CodCidade := 2906006; // Campo Formoso/BA  
-      3421: CodCidade := 2906105; // Canapolis/BA  
+      3421: CodCidade := 2906105; // Canapolis/BA
       3423: CodCidade := 2906204; // Canarana/BA  
       3425: CodCidade := 2906303; // Canavieiras/BA  
       3427: CodCidade := 2906402; // Candeal/BA  
@@ -14974,7 +14150,7 @@ begin
       3463: CodCidade := 2908200; // Conceicao Da Feira/BA  
       3465: CodCidade := 2908309; // Conceicao Do Almeida/BA  
       3467: CodCidade := 2908408; // Conceicao Do Coite/BA  
-      3469: CodCidade := 2908507; // Conceicao Do Jacuipe/BA  
+      3469: CodCidade := 2908507; // Conceicao Do Jacuipe/BA
       3471: CodCidade := 2908606; // Conde/BA  
       3473: CodCidade := 2908705; // Condeuba/BA  
       3475: CodCidade := 2908804; // Contendas Do Sincora/BA  
@@ -15003,7 +14179,7 @@ begin
       3275: CodCidade := 2910776; // Feira Da Mata/BA  
       3515: CodCidade := 2910800; // Feira De Santana/BA  
       3091: CodCidade := 2910859; // Filadelfia/BA  
-      3517: CodCidade := 2910909; // Firmino Alves/BA  
+      3517: CodCidade := 2910909; // Firmino Alves/BA
       3519: CodCidade := 2911006; // Floresta Azul/BA  
       3521: CodCidade := 2911105; // Formosa Do Rio Preto/BA
       3523: CodCidade := 2911204; // Gandu/BA  
@@ -15032,7 +14208,7 @@ begin
       3565: CodCidade := 2913200; // Ibotirama/BA  
       3567: CodCidade := 2913309; // Ichu/BA  
       3569: CodCidade := 2913408; // Igapora/BA  
-      3277: CodCidade := 2913457; // Igrapiuna/BA  
+      3277: CodCidade := 2913457; // Igrapiuna/BA
       3571: CodCidade := 2913507; // Iguai/BA  
       3573: CodCidade := 2913606; // Ilheus/BA  
       3575: CodCidade := 2913705; // Inhambupe/BA
@@ -15061,7 +14237,7 @@ begin
       3617: CodCidade := 2915809; // Itambe/BA  
       3619: CodCidade := 2915908; // Itanagra/BA  
       3621: CodCidade := 2916005; // Itanhem/BA  
-      3623: CodCidade := 2916104; // Itaparica/BA  
+      3623: CodCidade := 2916104; // Itaparica/BA
       3625: CodCidade := 2916203; // Itape/BA  
       3627: CodCidade := 2916302; // Itapebi/BA  
       3629: CodCidade := 2916401; // Itapetinga/BA  
@@ -15090,7 +14266,7 @@ begin
       3099: CodCidade := 2918357; // Joao Dourado/BA  
       3669: CodCidade := 2918407; // Juazeiro/BA  
       3287: CodCidade := 2918456; // Jucurucu/BA  
-      3671: CodCidade := 2918506; // Jussara/BA  
+      3671: CodCidade := 2918506; // Jussara/BA
       3069: CodCidade := 2918555; // Jussari/BA  
       3673: CodCidade := 2918605; // Jussiape/BA  
       3675: CodCidade := 2918704; // Lafaiete Coutinho/BA  
@@ -15119,7 +14295,7 @@ begin
       3709: CodCidade := 2920403; // Manoel Vitorino/BA  
       3977: CodCidade := 2920452; // Mansidao/BA  
       3711: CodCidade := 2920502; // Maracas/BA
-      3713: CodCidade := 2920601; // Maragogipe/BA  
+      3713: CodCidade := 2920601; // Maragogipe/BA
       3715: CodCidade := 2920700; // Marau/BA  
       3717: CodCidade := 2920809; // Marcionilio Souza/BA  
       3719: CodCidade := 2920908; // Mascote/BA  
@@ -15148,7 +14324,7 @@ begin
       3755: CodCidade := 2922706; // Nova Canaa/BA  
       3007: CodCidade := 2922730; // Nova Fatima/BA  
       3009: CodCidade := 2922755; // Nova Ibia/BA  
-      3757: CodCidade := 2922805; // Nova Itarana/BA  
+      3757: CodCidade := 2922805; // Nova Itarana/BA
       3011: CodCidade := 2922854; // Nova Redencao/BA  
       3759: CodCidade := 2922904; // Nova Soure/BA  
       3761: CodCidade := 2923001; // Nova Vicosa/BA  
@@ -15177,7 +14353,7 @@ begin
       3795: CodCidade := 2924702; // Piripa/BA  
       3797: CodCidade := 2924801; // Piritiba/BA  
       3799: CodCidade := 2924900; // Planaltino/BA  
-      3801: CodCidade := 2925006; // Planalto/BA  
+      3801: CodCidade := 2925006; // Planalto/BA
       3803: CodCidade := 2925105; // Pocoes/BA  
       3805: CodCidade := 2925204; // Pojuca/BA  
       3021: CodCidade := 2925253; // Ponto Novo/BA  
@@ -15206,7 +14382,7 @@ begin
       3843: CodCidade := 2927101; // Rodelas/BA  
       3845: CodCidade := 2927200; // Ruy Barbosa/BA  
       3847: CodCidade := 2927309; // Salinas Da Margarida/BA  
-      3849: CodCidade := 2927408; // Salvador/BA  
+      3849: CodCidade := 2927408; // Salvador/BA
       3851: CodCidade := 2927507; // Santa Barbara/BA  
       3853: CodCidade := 2927606; // Santa Brigida/BA
       3855: CodCidade := 2927705; // Santa Cruz Cabralia/BA  
@@ -15235,7 +14411,7 @@ begin
       3887: CodCidade := 2929404; // Sao Miguel Das Matas/BA  
       3889: CodCidade := 2929503; // Sao Sebastiao Do Passe/BA
       3891: CodCidade := 2929602; // Sapeacu/BA  
-      3893: CodCidade := 2929701; // Satiro Dias/BA  
+      3893: CodCidade := 2929701; // Satiro Dias/BA
       3037: CodCidade := 2929750; // Saubara/BA  
       3895: CodCidade := 2929800; // Saude/BA  
       3897: CodCidade := 2929909; // Seabra/BA  
@@ -15264,7 +14440,7 @@ begin
       3931: CodCidade := 2931608; // Teolandia/BA  
       3933: CodCidade := 2931707; // Terra Nova/BA  
       3935: CodCidade := 2931806; // Tremedal/BA  
-      3937: CodCidade := 2931905; // Tucano/BA  
+      3937: CodCidade := 2931905; // Tucano/BA
       3939: CodCidade := 2932002; // Uaua/BA  
       3941: CodCidade := 2932101; // Ubaira/BA  
       3943: CodCidade := 2932200; // Ubaitaba/BA  
@@ -15293,7 +14469,7 @@ begin
       4005: CodCidade := 3100302; // Abre Campo/MG  
       4007: CodCidade := 3100401; // Acaiaca/MG  
       4009: CodCidade := 3100500; // Acucena/MG  
-      4011: CodCidade := 3100609; // Agua Boa/MG  
+      4011: CodCidade := 3100609; // Agua Boa/MG
       4013: CodCidade := 3100708; // Agua Comprida/MG  
       4015: CodCidade := 3100807; // Aguanil/MG  
       4017: CodCidade := 3100906; // Aguas Formosas/MG  
@@ -15322,7 +14498,7 @@ begin
       4057: CodCidade := 3102902; // Antonio Carlos/MG  
       4059: CodCidade := 3103009; // Antonio Dias/MG
       4061: CodCidade := 3103108; // Antonio Prado De Minas/MG  
-      4063: CodCidade := 3103207; // Aracai/MG  
+      4063: CodCidade := 3103207; // Aracai/MG
       4065: CodCidade := 3103306; // Aracitaba/MG
       4067: CodCidade := 3103405; // Aracuai/MG  
       4069: CodCidade := 3103504; // Araguari/MG  
@@ -15351,7 +14527,7 @@ begin
       4111: CodCidade := 3105608; // Barbacena/MG  
       4113: CodCidade := 3105707; // Barra Longa/MG  
       4117: CodCidade := 3105905; // Barroso/MG  
-      4119: CodCidade := 3106002; // Bela Vista De Minas/MG  
+      4119: CodCidade := 3106002; // Bela Vista De Minas/MG
       4121: CodCidade := 3106101; // Belmiro Braga/MG  
       4123: CodCidade := 3106200; // Belo Horizonte/MG  
       4125: CodCidade := 3106309; // Belo Oriente/MG  
@@ -15380,7 +14556,7 @@ begin
       4167: CodCidade := 3108404; // Botelhos/MG  
       4169: CodCidade := 3108503; // Botumirim/MG  
       0574: CodCidade := 3108552; // Brasilandia De Minas/MG  
-      4171: CodCidade := 3108602; // Brasilia De Minas/MG  
+      4171: CodCidade := 3108602; // Brasilia De Minas/MG
       4173: CodCidade := 3108701; // Bras Pires/MG  
       4175: CodCidade := 3108800; // Braunas/MG  
       4177: CodCidade := 3108909; // Brasopolis/MG  
@@ -15409,7 +14585,7 @@ begin
       4219: CodCidade := 3111002; // Campestre/MG  
       4221: CodCidade := 3111101; // Campina Verde/MG  
       0580: CodCidade := 3111150; // Campo Azul/MG  
-      4223: CodCidade := 3111200; // Campo Belo/MG  
+      4223: CodCidade := 3111200; // Campo Belo/MG
       4225: CodCidade := 3111309; // Campo Do Meio/MG
       4227: CodCidade := 3111408; // Campo Florido/MG  
       4229: CodCidade := 3111507; // Campos Altos/MG  
@@ -15438,7 +14614,7 @@ begin
       4271: CodCidade := 3113602; // Careacu/MG  
       4273: CodCidade := 3113701; // Carlos Chagas/MG  
       4275: CodCidade := 3113800; // Carmesia/MG  
-      4277: CodCidade := 3113909; // Carmo Da Cachoeira/MG  
+      4277: CodCidade := 3113909; // Carmo Da Cachoeira/MG
       4279: CodCidade := 3114006; // Carmo Da Mata/MG  
       4281: CodCidade := 3114105; // Carmo De Minas/MG  
       4283: CodCidade := 3114204; // Carmo Do Cajuru/MG  
@@ -15467,7 +14643,7 @@ begin
       4321: CodCidade := 3116100; // Chapada Do Norte/MG
       0588: CodCidade := 3116159; // Chapada Gaucha/MG  
       4323: CodCidade := 3116209; // Chiador/MG  
-      4325: CodCidade := 3116308; // Cipotanea/MG  
+      4325: CodCidade := 3116308; // Cipotanea/MG
       4327: CodCidade := 3116407; // Claraval/MG  
       4329: CodCidade := 3116506; // Claro Dos Pocoes/MG  
       4331: CodCidade := 3116605; // Claudio/MG  
@@ -15496,7 +14672,7 @@ begin
       4373: CodCidade := 3118700; // Coqueiral/MG  
       4375: CodCidade := 3118809; // Coracao De Jesus/MG  
       4377: CodCidade := 3118908; // Cordisburgo/MG  
-      4379: CodCidade := 3119005; // Cordislandia/MG  
+      4379: CodCidade := 3119005; // Cordislandia/MG
       4381: CodCidade := 3119104; // Corinto/MG  
       4383: CodCidade := 3119203; // Coroaci/MG  
       4385: CodCidade := 3119302; // Coromandel/MG  
@@ -15525,7 +14701,7 @@ begin
       4423: CodCidade := 3121209; // Delfinopolis/MG  
       0602: CodCidade := 3121258; // Delta/MG
       4425: CodCidade := 3121308; // Descoberto/MG  
-      4427: CodCidade := 3121407; // Desterro De Entre Rios/MG  
+      4427: CodCidade := 3121407; // Desterro De Entre Rios/MG
       4429: CodCidade := 3121506; // Desterro Do Melo/MG  
       4431: CodCidade := 3121605; // Diamantina/MG  
       4433: CodCidade := 3121704; // Diogo De Vasconcelos/MG  
@@ -15554,7 +14730,7 @@ begin
       4471: CodCidade := 3123601; // Eloi Mendes/MG  
       4473: CodCidade := 3123700; // Engenheiro Caldas/MG  
       4475: CodCidade := 3123809; // Engenheiro Navarro/MG  
-      2663: CodCidade := 3123858; // Entre Folhas/MG  
+      2663: CodCidade := 3123858; // Entre Folhas/MG
       4477: CodCidade := 3123908; // Entre Rios De Minas/MG  
       4479: CodCidade := 3124005; // Ervalia/MG  
       4481: CodCidade := 3124104; // Esmeraldas/MG  
@@ -15583,7 +14759,7 @@ begin
       4525: CodCidade := 3126307; // Fortaleza De Minas/MG  
       4527: CodCidade := 3126406; // Fortuna De Minas/MG
       4529: CodCidade := 3126505; // Francisco Badaro/MG  
-      4531: CodCidade := 3126604; // Francisco Dumont/MG  
+      4531: CodCidade := 3126604; // Francisco Dumont/MG
       4533: CodCidade := 3126703; // Francisco Sa/MG  
       0608: CodCidade := 3126752; // Franciscopolis/MG  
       4535: CodCidade := 3126802; // Frei Gaspar/MG  
@@ -15612,7 +14788,7 @@ begin
       4565: CodCidade := 3128303; // Guaranesia/MG  
       4567: CodCidade := 3128402; // Guarani/MG  
       4569: CodCidade := 3128501; // Guarara/MG  
-      4571: CodCidade := 3128600; // Guarda-Mor/MG  
+      4571: CodCidade := 3128600; // Guarda-Mor/MG
       4573: CodCidade := 3128709; // Guaxupe/MG
       4575: CodCidade := 3128808; // Guidoval/MG  
       4577: CodCidade := 3128907; // Guimarania/MG  
@@ -15641,7 +14817,7 @@ begin
       4615: CodCidade := 3130804; // Ingai/MG
       4617: CodCidade := 3130903; // Inhapim/MG  
       4619: CodCidade := 3131000; // Inhauma/MG  
-      4621: CodCidade := 3131109; // Inimutaba/MG  
+      4621: CodCidade := 3131109; // Inimutaba/MG
       2665: CodCidade := 3131158; // Ipaba/MG  
       4623: CodCidade := 3131208; // Ipanema/MG  
       4625: CodCidade := 3131307; // Ipatinga/MG  
@@ -15670,7 +14846,7 @@ begin
       4671: CodCidade := 3133600; // Itapeva/MG  
       4673: CodCidade := 3133709; // Itatiaiucu/MG  
       5731: CodCidade := 3133758; // Itau De Minas/MG  
-      4675: CodCidade := 3133808; // Itauna/MG  
+      4675: CodCidade := 3133808; // Itauna/MG
       4677: CodCidade := 3133907; // Itaverava/MG  
       4679: CodCidade := 3134004; // Itinga/MG  
       4681: CodCidade := 3134103; // Itueta/MG  
@@ -15699,7 +14875,7 @@ begin
       4719: CodCidade := 3136009; // Joaima/MG  
       4721: CodCidade := 3136108; // Joanesia/MG  
       4723: CodCidade := 3136207; // Joao Monlevade/MG
-      4725: CodCidade := 3136306; // Joao Pinheiro/MG  
+      4725: CodCidade := 3136306; // Joao Pinheiro/MG
       4727: CodCidade := 3136405; // Joaquim Felicio/MG  
       4729: CodCidade := 3136504; // Jordania/MG  
       0634: CodCidade := 3136520; // Jose Goncalves De Minas/MG  
@@ -15757,7 +14933,7 @@ begin
       4809: CodCidade := 3140506; // Martinho Campos/MG  
       0650: CodCidade := 3140530; // Martins Soares/MG  
       2659: CodCidade := 3140555; // Mata Verde/MG  
-      4811: CodCidade := 3140605; // Materlandia/MG  
+      4811: CodCidade := 3140605; // Materlandia/MG
       4813: CodCidade := 3140704; // Mateus Leme/MG  
       4815: CodCidade := 3140803; // Matias Barbosa/MG  
       2897: CodCidade := 3140852; // Matias Cardoso/MG  
@@ -15786,7 +14962,7 @@ begin
       4859: CodCidade := 3143005; // Monte Belo/MG  
       4861: CodCidade := 3143104; // Monte Carmelo/MG  
       0654: CodCidade := 3143153; // Monte Formoso/MG  
-      4863: CodCidade := 3143203; // Monte Santo De Minas/MG  
+      4863: CodCidade := 3143203; // Monte Santo De Minas/MG
       4865: CodCidade := 3143302; // Montes Claros/MG  
       4867: CodCidade := 3143401; // Monte Siao/MG  
       2697: CodCidade := 3143450; // Montezuma/MG  
@@ -15844,7 +15020,7 @@ begin
       4947: CodCidade := 3147402; // Paraopeba/MG  
       4949: CodCidade := 3147501; // Passabem/MG  
       4951: CodCidade := 3147600; // Passa Quatro/MG  
-      4953: CodCidade := 3147709; // Passa Tempo/MG  
+      4953: CodCidade := 3147709; // Passa Tempo/MG
       4955: CodCidade := 3147808; // Passa-Vinte/MG  
       4957: CodCidade := 3147907; // Passos/MG  
       0680: CodCidade := 3147956; // Patis/MG  
@@ -15873,7 +15049,7 @@ begin
       0684: CodCidade := 3149952; // Periquito/MG  
       4999: CodCidade := 3150000; // Pescador/MG  
       5001: CodCidade := 3150109; // Piau/MG  
-      0686: CodCidade := 3150158; // Piedade De Caratinga/MG  
+      0686: CodCidade := 3150158; // Piedade De Caratinga/MG
       5003: CodCidade := 3150208; // Piedade De Ponte Nova/MG  
       5005: CodCidade := 3150307; // Piedade Do Rio Grande/MG  
       5007: CodCidade := 3150406; // Piedade Dos Gerais/MG  
@@ -15902,7 +15078,7 @@ begin
       5045: CodCidade := 3152303; // Porto Firme/MG  
       5047: CodCidade := 3152402; // Pote/MG  
       5049: CodCidade := 3152501; // Pouso Alegre/MG  
-      5051: CodCidade := 3152600; // Pouso Alto/MG  
+      5051: CodCidade := 3152600; // Pouso Alto/MG
       5053: CodCidade := 3152709; // Prados/MG  
       5055: CodCidade := 3152808; // Prata/MG  
       5057: CodCidade := 3152907; // Pratapolis/MG
@@ -15931,7 +15107,7 @@ begin
       5099: CodCidade := 3155009; // Rio Doce/MG
       5101: CodCidade := 3155108; // Rio Do Prado/MG  
       5103: CodCidade := 3155207; // Rio Espera/MG  
-      5105: CodCidade := 3155306; // Rio Manso/MG  
+      5105: CodCidade := 3155306; // Rio Manso/MG
       5107: CodCidade := 3155405; // Rio Novo/MG
       5109: CodCidade := 3155504; // Rio Paranaiba/MG  
       5111: CodCidade := 3155603; // Rio Pardo De Minas/MG  
@@ -15960,7 +15136,7 @@ begin
       5147: CodCidade := 3157401; // Santa Cruz Do Escalvado/MG  
       5149: CodCidade := 3157500; // Santa Efigenia De Minas/MG  
       5151: CodCidade := 3157609; // Santa Fe De Minas/MG  
-      0706: CodCidade := 3157658; // Santa Helena De Minas/MG  
+      0706: CodCidade := 3157658; // Santa Helena De Minas/MG
       5153: CodCidade := 3157708; // Santa Juliana/MG  
       5155: CodCidade := 3157807; // Santa Luzia/MG  
       5157: CodCidade := 3157906; // Santa Margarida/MG  
@@ -15989,7 +15165,7 @@ begin
       5199: CodCidade := 3160009; // Santo Antonio Do Aventureiro/MG  
       5201: CodCidade := 3160108; // Santo Antonio Do Grama/MG  
       5203: CodCidade := 3160207; // Santo Antonio Do Itambe/MG  
-      5205: CodCidade := 3160306; // Santo Antonio Do Jacinto/MG  
+      5205: CodCidade := 3160306; // Santo Antonio Do Jacinto/MG
       5207: CodCidade := 3160405; // Santo Antonio Do Monte/MG  
       0708: CodCidade := 3160454; // Santo Antonio Do Retiro/MG  
       5209: CodCidade := 3160504; // Santo Antonio Do Rio Abaixo/MG  
@@ -16047,7 +15223,7 @@ begin
       0728: CodCidade := 3164472; // Sao Sebastiao Do Anta/MG  
       5289: CodCidade := 3164506; // Sao Sebastiao Do Maranhao/MG  
       5291: CodCidade := 3164605; // Sao Sebastiao Do Oeste/MG  
-      5293: CodCidade := 3164704; // Sao Sebastiao Do Paraiso/MG  
+      5293: CodCidade := 3164704; // Sao Sebastiao Do Paraiso/MG
       5295: CodCidade := 3164803; // Sao Sebastiao Do Rio Preto/MG  
       5297: CodCidade := 3164902; // Sao Sebastiao Do Rio Verde/MG
       5299: CodCidade := 3165008; // Sao Tiago/MG  
@@ -16076,7 +15252,7 @@ begin
       5337: CodCidade := 3166907; // Serrania/MG  
       0736: CodCidade := 3166956; // Serranopolis De Minas/MG  
       5339: CodCidade := 3167004; // Serranos/MG  
-      5341: CodCidade := 3167103; // Serro/MG  
+      5341: CodCidade := 3167103; // Serro/MG
       5343: CodCidade := 3167202; // Sete Lagoas/MG  
       5345: CodCidade := 3167301; // Silveirania/MG  
       5347: CodCidade := 3167400; // Silvianopolis/MG  
@@ -16105,7 +15281,7 @@ begin
       5387: CodCidade := 3169406; // Tres Pontas/MG  
       5389: CodCidade := 3169505; // Tumiritinga/MG  
       5391: CodCidade := 3169604; // Tupaciguara/MG  
-      5393: CodCidade := 3169703; // Turmalina/MG  
+      5393: CodCidade := 3169703; // Turmalina/MG
       5395: CodCidade := 3169802; // Turvolandia/MG  
       5397: CodCidade := 3169901; // Uba/MG  
       5399: CodCidade := 3170008; // Ubai/MG
@@ -16134,7 +15310,7 @@ begin
       5427: CodCidade := 3171303; // Vicosa/MG  
       5429: CodCidade := 3171402; // Vieiras/MG  
       5431: CodCidade := 3171501; // Mathias Lobato/MG
-      5433: CodCidade := 3171600; // Virgem Da Lapa/MG  
+      5433: CodCidade := 3171600; // Virgem Da Lapa/MG
       5435: CodCidade := 3171709; // Virginia/MG  
       5437: CodCidade := 3171808; // Virginopolis/MG  
       5439: CodCidade := 3171907; // Virgolandia/MG  
@@ -16163,7 +15339,7 @@ begin
       5631: CodCidade := 3201605; // Conceicao Da Barra/ES  
       5633: CodCidade := 3201704; // Conceicao Do Castelo/ES  
       5635: CodCidade := 3201803; // Divino De Sao Lourenco/ES  
-      5637: CodCidade := 3201902; // Domingos Martins/ES  
+      5637: CodCidade := 3201902; // Domingos Martins/ES
       5639: CodCidade := 3202009; // Dores Do Rio Preto/ES  
       5641: CodCidade := 3202108; // Ecoporanga/ES  
       5643: CodCidade := 3202207; // Fundao/ES
@@ -16192,7 +15368,7 @@ begin
       5669: CodCidade := 3203502; // Montanha/ES  
       5671: CodCidade := 3203601; // Mucurici/ES  
       5673: CodCidade := 3203700; // Muniz Freire/ES  
-      5675: CodCidade := 3203809; // Muqui/ES  
+      5675: CodCidade := 3203809; // Muqui/ES
       5677: CodCidade := 3203908; // Nova Venecia/ES  
       5679: CodCidade := 3204005; // Pancas/ES  
       5715: CodCidade := 3204054; // Pedro Canario/ES  
@@ -16221,7 +15397,7 @@ begin
       5705: CodCidade := 3205309; // Vitoria/ES  
       5801: CodCidade := 3300100; // Angra Dos Reis/RJ  
       2919: CodCidade := 3300159; // Aperibe/RJ
-      5803: CodCidade := 3300209; // Araruama/RJ  
+      5803: CodCidade := 3300209; // Araruama/RJ
       2925: CodCidade := 3300225; // Areal/RJ  
       0770: CodCidade := 3300233; // Armacao Dos Buzios/RJ
       5927: CodCidade := 3300258; // Arraial Do Cabo/RJ  
@@ -16250,7 +15426,7 @@ begin
       5837: CodCidade := 3301900; // Itaborai/RJ  
       5839: CodCidade := 3302007; // Itaguai/RJ  
       5929: CodCidade := 3302056; // Italva/RJ  
-      5841: CodCidade := 3302106; // Itaocara/RJ  
+      5841: CodCidade := 3302106; // Itaocara/RJ
       5843: CodCidade := 3302205; // Itaperuna/RJ  
       6003: CodCidade := 3302254; // Itatiaia/RJ  
       2913: CodCidade := 3302270; // Japeri/RJ  
@@ -16279,7 +15455,7 @@ begin
       5881: CodCidade := 3304102; // Porciuncula/RJ  
       0780: CodCidade := 3304110; // Porto Real/RJ  
       2923: CodCidade := 3304128; // Quatis/RJ  
-      2911: CodCidade := 3304144; // Queimados/RJ  
+      2911: CodCidade := 3304144; // Queimados/RJ
       6007: CodCidade := 3304151; // Quissama/RJ  
       5883: CodCidade := 3304201; // Resende/RJ  
       5885: CodCidade := 3304300; // Rio Bonito/RJ  
@@ -16308,7 +15484,7 @@ begin
       5917: CodCidade := 3305901; // Trajano De Morais/RJ  
       5919: CodCidade := 3306008; // Tres Rios/RJ  
       5921: CodCidade := 3306107; // Valenca/RJ  
-      2917: CodCidade := 3306156; // Varre-Sai/RJ  
+      2917: CodCidade := 3306156; // Varre-Sai/RJ
       5923: CodCidade := 3306206; // Vassouras/RJ  
       5925: CodCidade := 3306305; // Volta Redonda/RJ
       6101: CodCidade := 3500105; // Adamantina/SP  
@@ -16337,7 +15513,7 @@ begin
       6141: CodCidade := 3502101; // Andradina/SP  
       6143: CodCidade := 3502200; // Angatuba/SP  
       6145: CodCidade := 3502309; // Anhembi/SP  
-      6147: CodCidade := 3502408; // Anhumas/SP  
+      6147: CodCidade := 3502408; // Anhumas/SP
       6149: CodCidade := 3502507; // Aparecida/SP  
       6151: CodCidade := 3502606; // Aparecida D Oeste/SP  
       6153: CodCidade := 3502705; // Apiai/SP  
@@ -16366,7 +15542,7 @@ begin
       6191: CodCidade := 3504602; // Bady Bassitt/SP  
       6193: CodCidade := 3504701; // Balbinos/SP  
       6195: CodCidade := 3504800; // Balsamo/SP  
-      6197: CodCidade := 3504909; // Bananal/SP  
+      6197: CodCidade := 3504909; // Bananal/SP
       6201: CodCidade := 3505005; // Barao De Antonina/SP  
       6199: CodCidade := 3505104; // Barbosa/SP  
       6203: CodCidade := 3505203; // Bariri/SP  
@@ -16395,7 +15571,7 @@ begin
       6243: CodCidade := 3507209; // Bora/SP  
       6245: CodCidade := 3507308; // Boraceia/SP  
       6247: CodCidade := 3507407; // Borborema/SP  
-      7247: CodCidade := 3507456; // Borebi/SP  
+      7247: CodCidade := 3507456; // Borebi/SP
       6249: CodCidade := 3507506; // Botucatu/SP  
       6251: CodCidade := 3507605; // Braganca Paulista/SP  
       6255: CodCidade := 3507704; // Brauna/SP  
@@ -16424,7 +15600,7 @@ begin
       6295: CodCidade := 3509700; // Campos Do Jordao/SP  
       6297: CodCidade := 3509809; // Campos Novos Paulista/SP  
       6299: CodCidade := 3509908; // Cananeia/SP
-      0794: CodCidade := 3509957; // Canas/SP  
+      0794: CodCidade := 3509957; // Canas/SP
       6301: CodCidade := 3510005; // Candido Mota/SP  
       6303: CodCidade := 3510104; // Candido Rodrigues/SP  
       2947: CodCidade := 3510153; // Canitar/SP  
@@ -16453,7 +15629,7 @@ begin
       6351: CodCidade := 3512506; // Coroados/SP  
       6353: CodCidade := 3512605; // Coronel Macedo/SP  
       6355: CodCidade := 3512704; // Corumbatai/SP  
-      6357: CodCidade := 3512803; // Cosmopolis/SP  
+      6357: CodCidade := 3512803; // Cosmopolis/SP
       6359: CodCidade := 3512902; // Cosmorama/SP  
       6361: CodCidade := 3513009; // Cotia/SP  
       6363: CodCidade := 3513108; // Cravinhos/SP  
@@ -16482,7 +15658,7 @@ begin
       6403: CodCidade := 3515103; // Embu-Guacu/SP  
       2961: CodCidade := 3515129; // Emilianopolis/SP  
       2949: CodCidade := 3515152; // Engenheiro Coelho/SP  
-      6865: CodCidade := 3515186; // Espirito Santo Do Pinhal/SP  
+      6865: CodCidade := 3515186; // Espirito Santo Do Pinhal/SP
       7253: CodCidade := 3515194; // Espirito Santo Do Turvo/SP  
       6405: CodCidade := 3515202; // Estrela D Oeste/SP  
       6407: CodCidade := 3515301; // Estrela Do Norte/SP  
@@ -16511,7 +15687,7 @@ begin
       6447: CodCidade := 3517307; // Guaimbe/SP  
       6449: CodCidade := 3517406; // Guaira/SP  
       6451: CodCidade := 3517505; // Guapiacu/SP  
-      6453: CodCidade := 3517604; // Guapiara/SP  
+      6453: CodCidade := 3517604; // Guapiara/SP
       6455: CodCidade := 3517703; // Guara/SP  
       6457: CodCidade := 3517802; // Guaracai/SP
       6459: CodCidade := 3517901; // Guaraci/SP  
@@ -16540,7 +15716,7 @@ begin
       6497: CodCidade := 3519808; // Icem/SP  
       6499: CodCidade := 3519907; // Iepe/SP
       6501: CodCidade := 3520004; // Igaracu Do Tiete/SP  
-      6503: CodCidade := 3520103; // Igarapava/SP  
+      6503: CodCidade := 3520103; // Igarapava/SP
       6505: CodCidade := 3520202; // Igarata/SP  
       6507: CodCidade := 3520301; // Iguape/SP  
       6509: CodCidade := 3520400; // Ilhabela/SP  
@@ -16569,7 +15745,7 @@ begin
       6547: CodCidade := 3522307; // Itapetininga/SP  
       6549: CodCidade := 3522406; // Itapeva/SP  
       6551: CodCidade := 3522505; // Itapevi/SP  
-      6553: CodCidade := 3522604; // Itapira/SP  
+      6553: CodCidade := 3522604; // Itapira/SP
       3055: CodCidade := 3522653; // Itapirapua Paulista/SP  
       6555: CodCidade := 3522703; // Itapolis/SP  
       6557: CodCidade := 3522802; // Itaporanga/SP  
@@ -16598,7 +15774,7 @@ begin
       6603: CodCidade := 3525102; // Jardinopolis/SP
       6605: CodCidade := 3525201; // Jarinu/SP  
       6607: CodCidade := 3525300; // Jau/SP  
-      6609: CodCidade := 3525409; // Jeriquara/SP  
+      6609: CodCidade := 3525409; // Jeriquara/SP
       6611: CodCidade := 3525508; // Joanopolis/SP  
       6613: CodCidade := 3525607; // Joao Ramalho/SP  
       6615: CodCidade := 3525706; // Jose Bonifacio/SP  
@@ -16627,7 +15803,7 @@ begin
       6657: CodCidade := 3527801; // Lupercio/SP  
       6659: CodCidade := 3527900; // Lutecia/SP
       6661: CodCidade := 3528007; // Macatuba/SP  
-      6663: CodCidade := 3528106; // Macaubal/SP  
+      6663: CodCidade := 3528106; // Macaubal/SP
       6665: CodCidade := 3528205; // Macedonia/SP
       6667: CodCidade := 3528304; // Magda/SP  
       6669: CodCidade := 3528403; // Mairinque/SP  
@@ -16656,7 +15832,7 @@ begin
       6711: CodCidade := 3530508; // Mococa/SP  
       6713: CodCidade := 3530607; // Mogi Das Cruzes/SP  
       6715: CodCidade := 3530706; // Mogi Guacu/SP  
-      6717: CodCidade := 3530805; // Mogi Mirim/SP  
+      6717: CodCidade := 3530805; // Mogi Mirim/SP
       6719: CodCidade := 3530904; // Mombuca/SP  
       6721: CodCidade := 3531001; // Moncoes/SP  
       6723: CodCidade := 3531100; // Mongagua/SP  
@@ -16685,7 +15861,7 @@ begin
       6759: CodCidade := 3532900; // Nova Europa/SP  
       6761: CodCidade := 3533007; // Nova Granada/SP  
       6763: CodCidade := 3533106; // Nova Guataporanga/SP  
-      6765: CodCidade := 3533205; // Nova Independencia/SP  
+      6765: CodCidade := 3533205; // Nova Independencia/SP
       2979: CodCidade := 3533254; // Novais/SP  
       6767: CodCidade := 3533304; // Nova Luzitania/SP  
       6769: CodCidade := 3533403; // Nova Odessa/SP  
@@ -16714,7 +15890,7 @@ begin
       6813: CodCidade := 3535606; // Paraibuna/SP  
       6815: CodCidade := 3535705; // Paraiso/SP
       6817: CodCidade := 3535804; // Paranapanema/SP  
-      6819: CodCidade := 3535903; // Paranapua/SP  
+      6819: CodCidade := 3535903; // Paranapua/SP
       6821: CodCidade := 3536000; // Parapua/SP
       6823: CodCidade := 3536109; // Pardinho/SP  
       6825: CodCidade := 3536208; // Pariquera-Acu/SP  
@@ -16743,7 +15919,7 @@ begin
       6867: CodCidade := 3538204; // Pinhalzinho/SP  
       6869: CodCidade := 3538303; // Piquerobi/SP  
       6871: CodCidade := 3538501; // Piquete/SP  
-      6873: CodCidade := 3538600; // Piracaia/SP  
+      6873: CodCidade := 3538600; // Piracaia/SP
       6875: CodCidade := 3538709; // Piracicaba/SP  
       6877: CodCidade := 3538808; // Piraju/SP  
       6879: CodCidade := 3538907; // Pirajui/SP  
@@ -16772,7 +15948,7 @@ begin
       6919: CodCidade := 3540903; // Pradopolis/SP  
       6921: CodCidade := 3541000; // Praia Grande/SP  
       0814: CodCidade := 3541059; // Pratania/SP  
-      6923: CodCidade := 3541109; // Presidente Alves/SP  
+      6923: CodCidade := 3541109; // Presidente Alves/SP
       6925: CodCidade := 3541208; // Presidente Bernardes/SP  
       6927: CodCidade := 3541307; // Presidente Epitacio/SP  
       6929: CodCidade := 3541406; // Presidente Prudente/SP  
@@ -16801,7 +15977,7 @@ begin
       6969: CodCidade := 3543402; // Ribeirao Preto/SP  
       6971: CodCidade := 3543501; // Riversul/SP  
       6973: CodCidade := 3543600; // Rifaina/SP  
-      6975: CodCidade := 3543709; // Rincao/SP  
+      6975: CodCidade := 3543709; // Rincao/SP
       6977: CodCidade := 3543808; // Rinopolis/SP  
       6979: CodCidade := 3543907; // Rio Claro/SP  
       6981: CodCidade := 3544004; // Rio Das Pedras/SP  
@@ -16830,7 +16006,7 @@ begin
       7025: CodCidade := 3546207; // Santa Cruz Da Conceicao/SP  
       0820: CodCidade := 3546256; // Santa Cruz Da Esperanca/SP
       7027: CodCidade := 3546306; // Santa Cruz Das Palmeiras/SP
-      7029: CodCidade := 3546405; // Santa Cruz Do Rio Pardo/SP  
+      7029: CodCidade := 3546405; // Santa Cruz Do Rio Pardo/SP
       7031: CodCidade := 3546504; // Santa Ernestina/SP  
       7033: CodCidade := 3546603; // Santa Fe Do Sul/SP  
       7035: CodCidade := 3546702; // Santa Gertrudes/SP  
@@ -16859,7 +16035,7 @@ begin
       7077: CodCidade := 3548807; // Sao Caetano Do Sul/SP  
       7079: CodCidade := 3548906; // Sao Carlos/SP  
       7081: CodCidade := 3549003; // Sao Francisco/SP  
-      7083: CodCidade := 3549102; // Sao Joao Da Boa Vista/SP  
+      7083: CodCidade := 3549102; // Sao Joao Da Boa Vista/SP
       7085: CodCidade := 3549201; // Sao Joao Das Duas Pontes/SP  
       2941: CodCidade := 3549250; // Sao Joao De Iracema/SP  
       7087: CodCidade := 3549300; // Sao Joao Do Pau D Alho/SP  
@@ -16888,7 +16064,7 @@ begin
       7131: CodCidade := 3551504; // Serrana/SP  
       7133: CodCidade := 3551603; // Serra Negra/SP  
       7135: CodCidade := 3551702; // Sertaozinho/SP  
-      7137: CodCidade := 3551801; // Sete Barras/SP  
+      7137: CodCidade := 3551801; // Sete Barras/SP
       7139: CodCidade := 3551900; // Severinia/SP  
       7141: CodCidade := 3552007; // Silveiras/SP  
       7143: CodCidade := 3552106; // Socorro/SP  
@@ -16917,7 +16093,7 @@ begin
       7181: CodCidade := 3554003; // Tatui/SP  
       7183: CodCidade := 3554102; // Taubate/SP  
       7185: CodCidade := 3554201; // Tejupa/SP  
-      7187: CodCidade := 3554300; // Teodoro Sampaio/SP  
+      7187: CodCidade := 3554300; // Teodoro Sampaio/SP
       7189: CodCidade := 3554409; // Terra Roxa/SP
       7191: CodCidade := 3554508; // Tiete/SP  
       7193: CodCidade := 3554607; // Timburi/SP  
@@ -16975,7 +16151,7 @@ begin
       7425: CodCidade := 4101408; // Apucarana/PR  
       7427: CodCidade := 4101507; // Arapongas/PR  
       7429: CodCidade := 4101606; // Arapoti/PR  
-      0830: CodCidade := 4101655; // Arapua/PR  
+      0830: CodCidade := 4101655; // Arapua/PR
       7431: CodCidade := 4101705; // Araruna/PR  
       7435: CodCidade := 4101804; // Araucaria/PR  
       0832: CodCidade := 4101853; // Ariranha Do Ivai/PR  
@@ -17004,7 +16180,7 @@ begin
       5521: CodCidade := 4103370; // Brasilandia Do Sul/PR  
       7465: CodCidade := 4103404; // Cafeara/PR  
       7985: CodCidade := 4103453; // Cafelandia/PR  
-      5491: CodCidade := 4103479; // Cafezal Do Sul/PR  
+      5491: CodCidade := 4103479; // Cafezal Do Sul/PR
       7467: CodCidade := 4103503; // California/PR  
       7469: CodCidade := 4103602; // Cambara/PR  
       7471: CodCidade := 4103701; // Cambe/PR  
@@ -17062,7 +16238,7 @@ begin
       0850: CodCidade := 4107520; // Esperanca Nova/PR  
       5529: CodCidade := 4107538; // Entre Rios Do Oeste/PR  
       0852: CodCidade := 4107546; // Espigao Alto Do Iguacu/PR  
-      5511: CodCidade := 4107553; // Farol/PR  
+      5511: CodCidade := 4107553; // Farol/PR
       7549: CodCidade := 4107603; // Faxinal/PR
       9983: CodCidade := 4107652; // Fazenda Rio Grande/PR  
       7551: CodCidade := 4107702; // Fenix/PR  
@@ -17091,7 +16267,7 @@ begin
       7579: CodCidade := 4109203; // Guaraci/PR  
       7581: CodCidade := 4109302; // Guaraniacu/PR  
       7583: CodCidade := 4109401; // Guarapuava/PR  
-      7585: CodCidade := 4109500; // Guaraquecaba/PR  
+      7585: CodCidade := 4109500; // Guaraquecaba/PR
       7587: CodCidade := 4109609; // Guaratuba/PR  
       9981: CodCidade := 4109658; // Honorio Serpa/PR  
       7589: CodCidade := 4109708; // Ibaiti/PR  
@@ -17149,7 +16325,7 @@ begin
       7667: CodCidade := 4113700; // Londrina/PR  
       8481: CodCidade := 4113734; // Luiziana/PR  
       8459: CodCidade := 4113759; // Lunardelli/PR  
-      7669: CodCidade := 4113809; // Lupionopolis/PR  
+      7669: CodCidade := 4113809; // Lupionopolis/PR
       7671: CodCidade := 4113908; // Mallet/PR  
       7673: CodCidade := 4114005; // Mambore/PR  
       7675: CodCidade := 4114104; // Mandaguacu/PR  
@@ -17178,7 +16354,7 @@ begin
       5531: CodCidade := 4115853; // Mercedes/PR  
       7703: CodCidade := 4115903; // Mirador/PR  
       7705: CodCidade := 4116000; // Miraselva/PR  
-      8469: CodCidade := 4116059; // Missal/PR  
+      8469: CodCidade := 4116059; // Missal/PR
       7707: CodCidade := 4116109; // Moreira Sales/PR  
       7709: CodCidade := 4116208; // Morretes/PR
       7711: CodCidade := 4116307; // Munhoz De Melo/PR  
@@ -17207,7 +16383,7 @@ begin
       7737: CodCidade := 4117800; // Palmital/PR  
       7739: CodCidade := 4117909; // Palotina/PR  
       7741: CodCidade := 4118006; // Paraiso Do Norte/PR  
-      7743: CodCidade := 4118105; // Paranacity/PR  
+      7743: CodCidade := 4118105; // Paranacity/PR
       7745: CodCidade := 4118204; // Paranagua/PR  
       7747: CodCidade := 4118303; // Paranapoema/PR  
       7749: CodCidade := 4118402; // Paranavai/PR
@@ -17236,7 +16412,7 @@ begin
       7781: CodCidade := 4120101; // Porto Amazonas/PR
       0872: CodCidade := 4120150; // Porto Barreiro/PR  
       7783: CodCidade := 4120200; // Porto Rico/PR  
-      7785: CodCidade := 4120309; // Porto Vitoria/PR  
+      7785: CodCidade := 4120309; // Porto Vitoria/PR
       0874: CodCidade := 4120333; // Prado Ferreira/PR  
       7991: CodCidade := 4120358; // Pranchita/PR  
       7787: CodCidade := 4120408; // Presidente Castelo Branco/PR  
@@ -17265,7 +16441,7 @@ begin
       5481: CodCidade := 4122156; // Rio Bonito Do Iguacu/PR  
       0880: CodCidade := 4122172; // Rio Branco Do Ivai/PR  
       7821: CodCidade := 4122206; // Rio Branco Do Sul/PR  
-      7823: CodCidade := 4122305; // Rio Negro/PR  
+      7823: CodCidade := 4122305; // Rio Negro/PR
       7825: CodCidade := 4122404; // Rolandia/PR  
       7827: CodCidade := 4122503; // Roncador/PR  
       7829: CodCidade := 4122602; // Rondon/PR  
@@ -17294,7 +16470,7 @@ begin
       7863: CodCidade := 4124301; // Santo Antonio Do Paraiso/PR  
       7857: CodCidade := 4124400; // Santo Antonio Do Sudoeste/PR  
       7865: CodCidade := 4124509; // Santo Inacio/PR  
-      7867: CodCidade := 4124608; // Sao Carlos Do Ivai/PR  
+      7867: CodCidade := 4124608; // Sao Carlos Do Ivai/PR
       7869: CodCidade := 4124707; // Sao Jeronimo Da Serra/PR  
       7871: CodCidade := 4124806; // Sao Joao/PR  
       7873: CodCidade := 4124905; // Sao Joao Do Caiua/PR
@@ -17352,7 +16528,7 @@ begin
       7945: CodCidade := 4128609; // Vere/PR  
       5523: CodCidade := 4128625; // Alto Paraiso/PR  
       5449: CodCidade := 4128633; // Doutor Ulysses/PR  
-      5483: CodCidade := 4128658; // Virmond/PR  
+      5483: CodCidade := 4128658; // Virmond/PR
       7947: CodCidade := 4128708; // Vitorino/PR  
       7949: CodCidade := 4128807; // Xambre/PR  
       9939: CodCidade := 4200051; // Abdon Batista/SC  
@@ -17381,7 +16557,7 @@ begin
       8035: CodCidade := 4201802; // Atalanta/SC  
       8037: CodCidade := 4201901; // Aurora/SC  
       0888: CodCidade := 4201950; // Balneario Arroio Do Silva/SC  
-      8039: CodCidade := 4202008; // Balneario Camboriu/SC  
+      8039: CodCidade := 4202008; // Balneario Camboriu/SC
       5549: CodCidade := 4202057; // Balneario Barra Do Sul/SC  
       0890: CodCidade := 4202073; // Balneario Gaivota/SC  
       0892: CodCidade := 4202081; // Bandeirante/SC  
@@ -17410,7 +16586,7 @@ begin
       0906: CodCidade := 4203253; // Capao Alto/SC  
       8063: CodCidade := 4203303; // Campo Alegre/SC  
       8065: CodCidade := 4203402; // Campo Belo Do Sul/SC  
-      8067: CodCidade := 4203501; // Campo Ere/SC  
+      8067: CodCidade := 4203501; // Campo Ere/SC
       8069: CodCidade := 4203600; // Campos Novos/SC  
       8071: CodCidade := 4203709; // Canelinha/SC  
       8073: CodCidade := 4203808; // Canoinhas/SC
@@ -17439,7 +16615,7 @@ begin
       9945: CodCidade := 4205159; // Doutor Pedrinho/SC  
       0912: CodCidade := 4205175; // Entre Rios/SC  
       0914: CodCidade := 4205191; // Ermo/SC
-      8101: CodCidade := 4205209; // Erval Velho/SC  
+      8101: CodCidade := 4205209; // Erval Velho/SC
       8103: CodCidade := 4205308; // Faxinal Dos Guedes/SC  
       0916: CodCidade := 4205357; // Flor Do Sertao/SC  
       8105: CodCidade := 4205407; // Florianopolis/SC  
@@ -17468,7 +16644,7 @@ begin
       8141: CodCidade := 4207205; // Imarui/SC  
       8143: CodCidade := 4207304; // Imbituba/SC  
       8145: CodCidade := 4207403; // Imbuia/SC  
-      8147: CodCidade := 4207502; // Indaial/SC  
+      8147: CodCidade := 4207502; // Indaial/SC
       0922: CodCidade := 4207577; // Iomere/SC  
       8149: CodCidade := 4207601; // Ipira/SC  
       9951: CodCidade := 4207650; // Ipora Do Oeste/SC  
@@ -17497,7 +16673,7 @@ begin
       8181: CodCidade := 4209201; // Lacerdopolis/SC  
       8183: CodCidade := 4209300; // Lages/SC  
       8185: CodCidade := 4209409; // Laguna/SC  
-      5739: CodCidade := 4209458; // Lajeado Grande/SC  
+      5739: CodCidade := 4209458; // Lajeado Grande/SC
       8187: CodCidade := 4209508; // Laurentino/SC  
       8189: CodCidade := 4209607; // Lauro Muller/SC  
       8191: CodCidade := 4209706; // Lebon Regis/SC  
@@ -17526,7 +16702,7 @@ begin
       8221: CodCidade := 4211306; // Navegantes/SC  
       8223: CodCidade := 4211405; // Nova Erechim/SC  
       5589: CodCidade := 4211454; // Nova Itaberaba/SC
-      8225: CodCidade := 4211504; // Nova Trento/SC  
+      8225: CodCidade := 4211504; // Nova Trento/SC
       8227: CodCidade := 4211603; // Nova Veneza/SC  
       5591: CodCidade := 4211652; // Novo Horizonte/SC
       8229: CodCidade := 4211702; // Orleans/SC  
@@ -17555,7 +16731,7 @@ begin
       5593: CodCidade := 4213153; // Planalto Alegre/SC  
       8259: CodCidade := 4213203; // Pomerode/SC  
       8261: CodCidade := 4213302; // Ponte Alta/SC  
-      5569: CodCidade := 4213351; // Ponte Alta Do Norte/SC  
+      5569: CodCidade := 4213351; // Ponte Alta Do Norte/SC
       8263: CodCidade := 4213401; // Ponte Serrada/SC  
       8265: CodCidade := 4213500; // Porto Belo/SC  
       8267: CodCidade := 4213609; // Porto Uniao/SC
@@ -17584,7 +16760,7 @@ begin
       5547: CodCidade := 4215455; // Sangao/SC  
       8305: CodCidade := 4215505; // Santa Cecilia/SC  
       5751: CodCidade := 4215554; // Santa Helena/SC  
-      8307: CodCidade := 4215604; // Santa Rosa De Lima/SC  
+      8307: CodCidade := 4215604; // Santa Rosa De Lima/SC
       9967: CodCidade := 4215653; // Santa Rosa Do Sul/SC  
       5555: CodCidade := 4215679; // Santa Terezinha/SC  
       0938: CodCidade := 4215687; // Santa Terezinha Do Progresso/SC  
@@ -17613,7 +16789,7 @@ begin
       0944: CodCidade := 4217253; // Sao Pedro De Alcantara/SC  
       8341: CodCidade := 4217303; // Saudades/SC  
       8343: CodCidade := 4217402; // Schroeder/SC  
-      8345: CodCidade := 4217501; // Seara/SC  
+      8345: CodCidade := 4217501; // Seara/SC
       9989: CodCidade := 4217550; // Serra Alta/SC  
       8347: CodCidade := 4217600; // Sideropolis/SC
       8349: CodCidade := 4217709; // Sombrio/SC  
@@ -17642,7 +16818,7 @@ begin
       5565: CodCidade := 4219176; // Vargem Bonita/SC  
       8377: CodCidade := 4219200; // Vidal Ramos/SC  
       8379: CodCidade := 4219309; // Videira/SC  
-      9977: CodCidade := 4219358; // Vitor Meireles/SC  
+      9977: CodCidade := 4219358; // Vitor Meireles/SC
       8381: CodCidade := 4219408; // Witmarsum/SC  
       8383: CodCidade := 4219507; // Xanxere/SC  
       8385: CodCidade := 4219606; // Xavantina/SC  
@@ -17671,7 +16847,7 @@ begin
       8519: CodCidade := 4301008; // Arroio Do Meio/RS  
       8489: CodCidade := 4301057; // Arroio Do Sal/RS  
       1122: CodCidade := 4301073; // Arroio Do Padre/RS  
-      8521: CodCidade := 4301107; // Arroio Dos Ratos/RS  
+      8521: CodCidade := 4301107; // Arroio Dos Ratos/RS
       8523: CodCidade := 4301206; // Arroio Do Tigre/RS  
       8525: CodCidade := 4301305; // Arroio Grande/RS  
       8527: CodCidade := 4301404; // Arvorezinha/RS  
@@ -17700,7 +16876,7 @@ begin
       9823: CodCidade := 4302352; // Bom Principio/RS  
       6071: CodCidade := 4302378; // Bom Progresso/RS  
       8547: CodCidade := 4302402; // Bom Retiro Do Sul/RS  
-      8483: CodCidade := 4302451; // Boqueirao Do Leao/RS  
+      8483: CodCidade := 4302451; // Boqueirao Do Leao/RS
       8549: CodCidade := 4302501; // Bossoroca/RS  
       1128: CodCidade := 4302584; // Bozano/RS  
       8551: CodCidade := 4302600; // Braga/RS  
@@ -17729,7 +16905,7 @@ begin
       8587: CodCidade := 4304507; // Cangucu/RS
       8589: CodCidade := 4304606; // Canoas/RS  
       1130: CodCidade := 4304614; // Canudos Do Vale/RS
-      1132: CodCidade := 4304622; // Capao Bonito Do Sul/RS  
+      1132: CodCidade := 4304622; // Capao Bonito Do Sul/RS
       8915: CodCidade := 4304630; // Capao Da Canoa/RS  
       1134: CodCidade := 4304655; // Capao Do Cipo/RS  
       8973: CodCidade := 4304663; // Capao Do Leao/RS  
@@ -17758,7 +16934,7 @@ begin
       0970: CodCidade := 4305447; // Chuvisca/RS  
       8433: CodCidade := 4305454; // Cidreira/RS  
       8607: CodCidade := 4305504; // Ciriaco/RS  
-      6029: CodCidade := 4305587; // Colinas/RS  
+      6029: CodCidade := 4305587; // Colinas/RS
       8609: CodCidade := 4305603; // Colorado/RS  
       8611: CodCidade := 4305702; // Condor/RS  
       8613: CodCidade := 4305801; // Constantina/RS  
@@ -17787,7 +16963,7 @@ begin
       8629: CodCidade := 4306601; // Dom Pedrito/RS  
       8631: CodCidade := 4306700; // Dona Francisca/RS  
       8425: CodCidade := 4306734; // Doutor Mauricio Cardoso/RS  
-      0978: CodCidade := 4306759; // Doutor Ricardo/RS  
+      0978: CodCidade := 4306759; // Doutor Ricardo/RS
       8423: CodCidade := 4306767; // Eldorado Do Sul/RS  
       8633: CodCidade := 4306809; // Encantado/RS  
       8635: CodCidade := 4306908; // Encruzilhada Do Sul/RS  
@@ -17816,7 +16992,7 @@ begin
       0984: CodCidade := 4308078; // Fazenda Vilanova/RS  
       8659: CodCidade := 4308102; // Feliz/RS  
       8661: CodCidade := 4308201; // Flores Da Cunha/RS  
-      0986: CodCidade := 4308250; // Floriano Peixoto/RS  
+      0986: CodCidade := 4308250; // Floriano Peixoto/RS
       8663: CodCidade := 4308300; // Fontoura Xavier/RS  
       8665: CodCidade := 4308409; // Formigueiro/RS
       1142: CodCidade := 4308433; // Forquetinha/RS  
@@ -17845,7 +17021,7 @@ begin
       8695: CodCidade := 4309704; // Humaita/RS  
       8401: CodCidade := 4309753; // Ibarama/RS
       8697: CodCidade := 4309803; // Ibiaca/RS  
-      8699: CodCidade := 4309902; // Ibiraiaras/RS  
+      8699: CodCidade := 4309902; // Ibiraiaras/RS
       7299: CodCidade := 4309951; // Ibirapuita/RS  
       8701: CodCidade := 4310009; // Ibiruba/RS  
       8703: CodCidade := 4310108; // Igrejinha/RS  
@@ -17874,7 +17050,7 @@ begin
       7391: CodCidade := 4311122; // Jaquirana/RS  
       0992: CodCidade := 4311130; // Jari/RS  
       9829: CodCidade := 4311155; // Joia/RS  
-      8725: CodCidade := 4311205; // Julio De Castilhos/RS  
+      8725: CodCidade := 4311205; // Julio De Castilhos/RS
       1148: CodCidade := 4311239; // Lagoa Bonita Do Sul/RS  
       7389: CodCidade := 4311254; // Lagoao/RS  
       5951: CodCidade := 4311270; // Lagoa Dos Tres Cantos/RS  
@@ -17903,7 +17079,7 @@ begin
       8745: CodCidade := 4312203; // Maximiliano De Almeida/RS  
       5773: CodCidade := 4312252; // Minas Do Leao/RS  
       8747: CodCidade := 4312302; // Miraguai/RS  
-      7387: CodCidade := 4312351; // Montauri/RS  
+      7387: CodCidade := 4312351; // Montauri/RS
       1000: CodCidade := 4312377; // Monte Alegre Dos Campos/RS  
       5993: CodCidade := 4312385; // Monte Belo Do Sul/RS  
       8749: CodCidade := 4312401; // Montenegro/RS  
@@ -17932,7 +17108,7 @@ begin
       8769: CodCidade := 4313300; // Nova Prata/RS  
       1006: CodCidade := 4313334; // Nova Ramada/RS
       7377: CodCidade := 4313359; // Nova Roma Do Sul/RS  
-      5757: CodCidade := 4313375; // Nova Santa Rita/RS  
+      5757: CodCidade := 4313375; // Nova Santa Rita/RS
       1008: CodCidade := 4313391; // Novo Cabrais/RS
       8771: CodCidade := 4313409; // Novo Hamburgo/RS  
       6057: CodCidade := 4313425; // Novo Machado/RS  
@@ -17961,7 +17137,7 @@ begin
       8791: CodCidade := 4314407; // Pelotas/RS  
       6021: CodCidade := 4314423; // Picada Cafe/RS  
       7369: CodCidade := 4314456; // Pinhal/RS
-      1158: CodCidade := 4314464; // Pinhal Da Serra/RS  
+      1158: CodCidade := 4314464; // Pinhal Da Serra/RS
       5787: CodCidade := 4314472; // Pinhal Grande/RS  
       5975: CodCidade := 4314498; // Pinheirinho Do Vale/RS  
       8793: CodCidade := 4314506; // Pinheiro Machado/RS  
@@ -17990,7 +17166,7 @@ begin
       7355: CodCidade := 4315453; // Relvado/RS  
       8813: CodCidade := 4315503; // Restinga Seca/RS  
       5955: CodCidade := 4315552; // Rio Dos Indios/RS  
-      8815: CodCidade := 4315602; // Rio Grande/RS  
+      8815: CodCidade := 4315602; // Rio Grande/RS
       8817: CodCidade := 4315701; // Rio Pardo/RS  
       7353: CodCidade := 4315750; // Riozinho/RS  
       8819: CodCidade := 4315800; // Roca Sales/RS  
@@ -18019,7 +17195,7 @@ begin
       8847: CodCidade := 4317202; // Santa Rosa/RS  
       5995: CodCidade := 4317251; // Santa Tereza/RS  
       8849: CodCidade := 4317301; // Santa Vitoria Do Palmar/RS  
-      8851: CodCidade := 4317400; // Santiago/RS  
+      8851: CodCidade := 4317400; // Santiago/RS
       8853: CodCidade := 4317509; // Santo Angelo/RS
       5941: CodCidade := 4317558; // Santo Antonio Do Palma/RS  
       8855: CodCidade := 4317608; // Santo Antonio Da Patrulha/RS  
@@ -18048,7 +17224,7 @@ begin
       8877: CodCidade := 4318705; // Sao Leopoldo/RS  
       8879: CodCidade := 4318804; // Sao Lourenco Do Sul/RS  
       8881: CodCidade := 4318903; // Sao Luiz Gonzaga/RS  
-      8883: CodCidade := 4319000; // Sao Marcos/RS  
+      8883: CodCidade := 4319000; // Sao Marcos/RS
       8885: CodCidade := 4319109; // Sao Martinho/RS  
       5793: CodCidade := 4319125; // Sao Martinho Da Serra/RS  
       7341: CodCidade := 4319158; // Sao Miguel Das Missoes/RS  
@@ -18106,7 +17282,7 @@ begin
       8937: CodCidade := 4321709; // Tres Coroas/RS  
       8939: CodCidade := 4321808; // Tres De Maio/RS  
       5777: CodCidade := 4321832; // Tres Forquilhas/RS  
-      7327: CodCidade := 4321857; // Tres Palmeiras/RS  
+      7327: CodCidade := 4321857; // Tres Palmeiras/RS
       8941: CodCidade := 4321907; // Tres Passos/RS  
       7325: CodCidade := 4321956; // Trindade Do Sul/RS  
       8943: CodCidade := 4322004; // Triunfo/RS  
@@ -18135,7 +17311,7 @@ begin
       8965: CodCidade := 4323101; // Vicente Dutra/RS  
       8969: CodCidade := 4323200; // Victor Graeff/RS
       7311: CodCidade := 4323309; // Vila Flores/RS  
-      1030: CodCidade := 4323358; // Vila Langaro/RS  
+      1030: CodCidade := 4323358; // Vila Langaro/RS
       7309: CodCidade := 4323408; // Vila Maria/RS  
       5795: CodCidade := 4323457; // Vila Nova Do Sul/RS  
       7307: CodCidade := 4323507; // Vista Alegre/RS  
@@ -18164,7 +17340,7 @@ begin
       9055: CodCidade := 5002407; // Caarapo/MS  
       9049: CodCidade := 5002605; // Camapua/MS  
       9051: CodCidade := 5002704; // Campo Grande/MS  
-      9053: CodCidade := 5002803; // Caracol/MS  
+      9053: CodCidade := 5002803; // Caracol/MS
       9057: CodCidade := 5002902; // Cassilandia/MS  
       9787: CodCidade := 5002951; // Chapadao Do Sul/MS  
       9061: CodCidade := 5003108; // Corguinho/MS  
@@ -18193,7 +17369,7 @@ begin
       9923: CodCidade := 5005152; // Juti/MS  
       9103: CodCidade := 5005202; // Ladario/MS  
       0163: CodCidade := 5005251; // Laguna Carapa/MS  
-      9107: CodCidade := 5005400; // Maracaju/MS  
+      9107: CodCidade := 5005400; // Maracaju/MS
       9111: CodCidade := 5005608; // Miranda/MS
       9179: CodCidade := 5005681; // Mundo Novo/MS  
       9113: CodCidade := 5005707; // Navirai/MS  
@@ -18222,7 +17398,7 @@ begin
       9159: CodCidade := 5008008; // Terenos/MS  
       9165: CodCidade := 5008305; // Tres Lagoas/MS  
       9187: CodCidade := 5008404; // Vicentina/MS  
-      9001: CodCidade := 5100102; // Acorizal/MT  
+      9001: CodCidade := 5100102; // Acorizal/MT
       9191: CodCidade := 5100201; // Agua Boa/MT  
       8987: CodCidade := 5100250; // Alta Floresta/MT  
       9005: CodCidade := 5100300; // Alto Araguaia/MT  
@@ -18251,7 +17427,7 @@ begin
       1034: CodCidade := 5102793; // Carlinda/MT
       9783: CodCidade := 5102850; // Castanheira/MT  
       9059: CodCidade := 5103007; // Chapada Dos Guimaraes/MT  
-      9789: CodCidade := 5103056; // Claudia/MT  
+      9789: CodCidade := 5103056; // Claudia/MT
       9865: CodCidade := 5103106; // Cocalinho/MT  
       8979: CodCidade := 5103205; // Colider/MT  
       1080: CodCidade := 5103254; // Colniza/MT  
@@ -18309,7 +17485,7 @@ begin
       9885: CodCidade := 5106299; // Paranaita/MT  
       8983: CodCidade := 5106307; // Paranatinga/MT  
       1090: CodCidade := 5106315; // Novo Santo Antonio/MT  
-      9181: CodCidade := 5106372; // Pedra Preta/MT  
+      9181: CodCidade := 5106372; // Pedra Preta/MT
       9891: CodCidade := 5106422; // Peixoto De Azevedo/MT  
       0091: CodCidade := 5106455; // Planalto Da Serra/MT
       9129: CodCidade := 5106505; // Pocone/MT  
@@ -18367,7 +17543,7 @@ begin
       9201: CodCidade := 5200100; // Abadiania/GO  
       9645: CodCidade := 5200134; // Acreuna/GO  
       9769: CodCidade := 5200159; // Adelandia/GO  
-      9771: CodCidade := 5200175; // Agua Fria De Goias/GO  
+      9771: CodCidade := 5200175; // Agua Fria De Goias/GO
       9203: CodCidade := 5200209; // Agua Limpa/GO  
       1052: CodCidade := 5200258; // Aguas Lindas De Goias/GO  
       9205: CodCidade := 5200308; // Alexania/GO  
@@ -18396,7 +17572,7 @@ begin
       9263: CodCidade := 5203203; // Barro Alto/GO                     
       9265: CodCidade := 5203302; // Bela Vista De Goias/GO  
       9267: CodCidade := 5203401; // Bom Jardim De Goias/GO  
-      9269: CodCidade := 5203500; // Bom Jesus De Goias/GO  
+      9269: CodCidade := 5203500; // Bom Jesus De Goias/GO
       9775: CodCidade := 5203559; // Bonfinopolis/GO  
       1056: CodCidade := 5203575; // Bonopolis/GO  
       9271: CodCidade := 5203609; // Brazabrantes/GO  
@@ -18425,7 +17601,7 @@ begin
       9303: CodCidade := 5205208; // Caturai/GO  
       9305: CodCidade := 5205307; // Cavalcante/GO  
       9307: CodCidade := 5205406; // Ceres/GO  
-      9785: CodCidade := 5205455; // Cezarina/GO  
+      9785: CodCidade := 5205455; // Cezarina/GO
       0073: CodCidade := 5205471; // Chapadao Do Ceu/GO  
       0077: CodCidade := 5205497; // Cidade Ocidental/GO         
       0055: CodCidade := 5205513; // Cocalzinho De Goias/GO
@@ -18454,7 +17630,7 @@ begin
       9363: CodCidade := 5208103; // Formoso/GO                    
       1072: CodCidade := 5208152; // Gameleira De Goias/GO         
       9309: CodCidade := 5208301; // Divinopolis De Goias/GO  
-      9367: CodCidade := 5208400; // Goianapolis/GO                
+      9367: CodCidade := 5208400; // Goianapolis/GO
       9369: CodCidade := 5208509; // Goiandira/GO                  
       9371: CodCidade := 5208608; // Goianesia/GO                  
       9373: CodCidade := 5208707; // Goiania/GO                    
@@ -18646,9 +17822,8 @@ begin
                            [ptTomador, rtPrestador, rtPrestador]);
 end;
 
-
-// Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
 // Tipo de Emissão *********************************************************
+
 function TipoEmissaoToStr(const t: TnfseTEmissao):string;
 begin
   result := EnumeradoToStr(t,
@@ -18664,6 +17839,7 @@ begin
 end;
 
 // Empreitada Global *********************************************************
+
 function EmpreitadaGlobalToStr(const t: TnfseTEmpreitadaGlobal):string;
 begin
   result := EnumeradoToStr(t,
@@ -18870,8 +18046,6 @@ begin
   end;
 end;
 
-
-
 function NaturezaOperacaoDescricao( const t : TnfseNaturezaOperacao ): String;
 begin
   case t of
@@ -18900,7 +18074,6 @@ begin
   end;
 end;
 
-
 function ExigibilidadeISSDescricao( const t : TnfseExigibilidadeISS ): String;
 begin
   case t of
@@ -18914,7 +18087,6 @@ begin
   end;
 end;
 
-
 function SituacaoTributariaDescricao( const t : TnfseSituacaoTributaria ): String;
 begin
   case t of
@@ -18923,7 +18095,6 @@ begin
     stSubstituicao: result := '3 - Subst.' ;
   end;
 end;
-
 
 function SimNao( const t : Integer ): String;
 begin

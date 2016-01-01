@@ -34,11 +34,12 @@ unit pnfsNFSeG;
 interface
 
 uses
-  SysUtils, Classes, Forms, pcnAuxiliar, pcnGerador, pcnConversao,
+  SysUtils, Classes, Forms, StrUtils, DateUtils,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pnfsNFSe, pnfsConversao, ACBrUtil, StrUtils, DateUtils;
+  pcnAuxiliar, pcnGerador, pcnConversao,
+  pnfsNFSe, pnfsConversao, ACBrUtil;
 
 type
 

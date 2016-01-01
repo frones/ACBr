@@ -183,7 +183,7 @@ type
   private
     FDescricao : String;
 //    FQuantidade : Integer;
-    FQuantidade : Currency; // Alterado pois o provedor SimplISS aceita quantidade de servico não inteira.
+    FQuantidade : Currency; 
     FValorUnitario : Currency;
     FValorTotal : Currency;
     FAliquota: Currency;
@@ -203,8 +203,7 @@ type
     FValorIr: Currency;
     //Provedor: Infisc
     FCodigo: String;
-
-    // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
+    // Provedor Infisc Versão XML 1.1
     FCodServ: String;
     FCodLCServ: String;
     FUnidade: String;
@@ -234,8 +233,7 @@ type
     property ValorInss: Currency read FValorInss write FValorInss;
     property ValorIr: Currency read FValorIr write FValorIr;
     property ValorCsll: Currency read FValorCsll write FValorCsll;
-
-    // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
+    // Provedor Infisc Versão XML 1.1
     property CodServ     : String read FCodServ write FCodServ;
     property CodLCServ   : String read FCodLCServ write FCodLCServ;
     property Unidade     : String read FUnidade write FUnidade;
@@ -322,7 +320,6 @@ type
     FSenha: String;
     FFraseSecreta: String;
     FcUF: Integer;
-    //Alterado por Moro em 27/02/2015
     FInscricaoEstadual: String;
   published
     property Cnpj: String read FCnpj write FCnpj;
@@ -331,7 +328,6 @@ type
     property Senha: String read FSenha write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     property cUF: Integer read FcUF write FcUF;
-    //Alterado por Moro em 27/02/2015
     property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
   end;
 
@@ -533,8 +529,7 @@ type
     FNfseSubstituidora: String;
     FMotivoCancelamento: String; // para provedor ISSDSF
     FChaveNFSe: String; // para provedor Infisc
-
-    // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
+    // Provedor Infisc Versão XML 1.1
     FTipoEmissao: TnfseTEmissao;
     FEmpreitadaGlobal: TnfseTEmpreitadaGlobal;
     FModeloNFSe: String;
@@ -588,8 +583,7 @@ type
     property NfseSubstituidora: String read FNfseSubstituidora write FNfseSubstituidora;
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento; // para provedor ISSDSF
     property ChaveNFSe: String read FChaveNFSe write FChaveNFSe; // para provedor Infisc
-
-    // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
+    // Provedor Infisc Versão XML 1.1
     property TipoEmissao: TnfseTEmissao read FTipoEmissao write FTipoEmissao;
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
@@ -732,7 +726,6 @@ begin
   begin
    Cnpj               := '';
    InscricaoMunicipal := '';
-   //Alterado por Moro em 27/02/2015
    InscricaoEstadual  := '';
   end;
 end;
@@ -809,7 +802,7 @@ begin
  FNfseCancelamento.DataHora    := 0;
  FNfseSubstituidora            := '';
 
-// Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
+// Provedor Infisc Versão XML 1.1
  FTipoEmissao                  := teNormalNFSe;
  FEmpreitadaGlobal             := EgOutros;
  FModeloNFSe                   := '55';
@@ -966,7 +959,7 @@ end;
 
 constructor TItemServicoCollectionItem.Create;
 begin
-  // Alterado Por Moro em 18/02/2015 - Provedor Infisc Versão XML 1.1
+  // Provedor Infisc Versão XML 1.1
   FCodigo  := '';
   FCodServ := '';
   FUnidade := 'UN'; 

@@ -201,6 +201,7 @@ procedure NotaFiscal.Imprimir;
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
+    DANFSE.Provedor := FNFSeR.Provedor;
     if not Assigned(DANFSE) then
       raise EACBrNFSeException.Create('Componente DANFSE não associado.')
     else
@@ -212,6 +213,7 @@ procedure NotaFiscal.ImprimirPDF;
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
+    DANFSE.Provedor := FNFSeR.Provedor;
     if not Assigned(DANFSE) then
       raise EACBrNFSeException.Create('Componente DANFSE não associado.')
     else
@@ -246,9 +248,6 @@ begin
 
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
-    // As linhas abaixo só podem ser descomentadas depois das alterações nos
-    // fontes das classes ACBrDFe forem aprovadas.
-
     case StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML) of
       ve201,
       ve200,
@@ -349,10 +348,11 @@ end;
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
 begin
   FNFSeR.Leitor.Arquivo := AXML;
-  FNFSeR.ProvedorConf := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
+  FNFSeR.ProvedorConf   := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
+  FNFSeR.PathIniCidades := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.PathIniCidades;
   FNFSeR.LerXml;
 
-  FXMLOriginal := string(AXML);
+  FXMLOriginal := String(AXML);
 
   Result := True;
 end;
@@ -603,9 +603,6 @@ begin
   begin
     if Assina then
     begin
-      // As linhas abaixo só podem ser descomentadas depois das alterações nos
-      // fontes das classes ACBrDFe forem aprovadas.
-
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
                             SignatureNode, SelectionNamespaces, IdSignature);
       FXMLLoteAssinado := XMLAss;

@@ -49,7 +49,7 @@ type
   private
     FPedido: TPedidoCancelamento;
     FDataHora: TDateTime;
-    FConfirmacao : string;  // Alterado por Nilton Olher - 20/02/2015
+    FConfirmacao : string;
     FSucesso: String;
     FMsgCanc: String;
     FMsgRetorno : TMsgRetornoCancCollection;
@@ -62,7 +62,7 @@ type
     destructor Destroy; override;
     property Pedido: TPedidocancelamento           read FPedido      write FPedido;
     property DataHora: TDateTime                   read FDataHora    write FDataHora;
-    property Confirmacao: String                   read FConfirmacao write FConfirmacao;  // Alterado por Nilton Olher - 20/02/2015
+    property Confirmacao: String                   read FConfirmacao write FConfirmacao;
     property Sucesso: String                       read FSucesso     write FSucesso;
     property MsgCanc: String                       read FMsgCanc     write FMsgCanc;
     property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno write SetMsgRetorno;
@@ -293,8 +293,8 @@ begin
         if AnsiLowerCase(Leitor.rCampo(tcStr, 'Sucesso')) = 'true' then
         begin
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
-          InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');  //Incluido por jrJunior82 09/05/2013
-          InfCanc.MsgCanc  := Leitor.rCampo(tcStr,    'Mensagem'); //Incluido por jrJunior82 09/05/2013
+          InfCanc.Sucesso  := Leitor.rCampo(tcStr,    'Sucesso');
+          InfCanc.MsgCanc  := Leitor.rCampo(tcStr,    'Mensagem');
         end
         else
           infCanc.DataHora := 0;
@@ -462,15 +462,13 @@ begin
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
-    // Alterado por Moro em 27/02/2015
-    // Trocado resAnulaNFSe por resCancelaNFSe
+
     if VersaoXML = '1.1' then
       sCancelaAnula := 'resCancelaNFSe' // Caxias do Sul Versão XML 1.1
     else
       sCancelaAnula := 'resAnulaNFSe';  // Demais Cidades
 
     if leitor.rExtrai(1, sCancelaAnula) <> '' then
-    //if leitor.rExtrai(1, 'resAnulaNFSe') <> '' then
     begin
       InfCanc.FSucesso := Leitor.rCampo(tcStr, 'sit');
       if (InfCanc.FSucesso = '100') then // 100-Aceito
@@ -548,7 +546,6 @@ begin
 
 end;
 
-// Luiz Baião 2014.12.09 
 function TretCancNFSe.LerXml_provedorNFSEBrasil: boolean;
 //var
   //ok: boolean;

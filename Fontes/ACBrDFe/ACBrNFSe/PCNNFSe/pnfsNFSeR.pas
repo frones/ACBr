@@ -34,7 +34,7 @@ unit pnfsNFSeR;
 interface
 
 uses
-  SysUtils, Classes, Forms, DateUtils, Variants,
+  SysUtils, Classes, Forms, DateUtils, Variants, IniFiles,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
   ACBrUtil;
 
@@ -51,6 +51,7 @@ type
     FProvedor: TnfseProvedor;
     FTabServicosExt: Boolean;
     FProvedorConf: TnfseProvedor;
+    FPathIniCidades: String;
 
     function LerRPS_ABRASF_V1: Boolean;
     function LerRPS_ABRASF_V2: Boolean;
@@ -67,6 +68,8 @@ type
 
     function LerRPS: Boolean;
     function LerNFSe: Boolean;
+
+    function CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
@@ -79,6 +82,7 @@ type
     property Provedor: TnfseProvedor     read FProvedor       write FProvedor;
     property ProvedorConf: TnfseProvedor read FProvedorConf   write FProvedorConf;
     property TabServicosExt: Boolean     read FTabServicosExt write FTabServicosExt;
+    property PathIniCidades: String      read FPathIniCidades write FPathIniCidades;
   end;
 
  TLeitorOpcoes = class(TPersistent)
@@ -111,9 +115,6 @@ begin
  inherited Destroy;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 function TNFSeR.LerRPS_ABRASF_V1: Boolean;
@@ -153,10 +154,7 @@ begin
    if (Leitor.rExtrai(3, 'Servico') <> '') or (Leitor.rExtrai(2, 'Servico') <> '')
     then begin
      NFSe.Servico.ItemListaServico          := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
-
-     // ALTERTADO POR TÚLIO DAPPER EM 25/03
      NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
-
      NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
      NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
      NFSe.Servico.Descricao                 := '';
@@ -433,7 +431,7 @@ begin
        NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe3, 'DescontoIncondicionado');
        NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
 
-       if (FProvedor = proISSe) then  // Joel Takei 10/12/2014
+       if (FProvedor = proISSe) then
        begin
          if NFSe.Servico.Valores.IssRetido = stRetencao then
            NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -743,7 +741,7 @@ begin
    if (Leitor.rExtrai(1, 'OrgaoGerador') <> '') then
    begin
      CM := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-     FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+     FProvedor := CodCidadeToProvedor(CM);
    end;
 
    if (CM = '') or (CM = '0') then
@@ -751,15 +749,15 @@ begin
      if (Leitor.rExtrai(1, 'Servico') <> '') then
      begin
        CM := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-       FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+       FProvedor := CodCidadeToProvedor(CM);
      end;
    end;
 
-    { Alterado Por Cleiver em - 22-08-2014 } // ISSDSF
+    // ISSDSF
    if (Leitor.rExtrai(1, 'Cabecalho') <> '') then
    begin
      CM := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CodCidade') );
-     FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+     FProvedor := CodCidadeToProvedor(CM);
    end;
 
    if (CM = '') or (CM = '0') then
@@ -769,7 +767,7 @@ begin
        CM := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoMunicipio'));
        if CM = '' then
          CM := Leitor.rCampo(tcStr, 'Cidade');
-       FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+       FProvedor := CodCidadeToProvedor(CM);
      end
      else
        FProvedor := proNenhum;
@@ -778,13 +776,11 @@ begin
    if FProvedor = proNenhum then
      FProvedor := FProvedorConf;
    (*
-   { Alterado Por Cleiver em - 22-08-2014 }
    if (FProvedor = proNenhum) and (Pos('https://nfse.goiania.go.gov.br/ws/', Leitor.Arquivo) > 0)  then
      FProvedor := proGoiania;
    *)
  end;
 
- { Alterado Por Cleiver em - 22-08-2014 }
  if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') then
  begin
 
@@ -851,9 +847,6 @@ begin
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 
 function TNFSeR.LerNFSe_ABRASF_V1: Boolean;
 var
@@ -916,7 +909,6 @@ begin
       NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
      end;
 
-    // Incluido por Italo em 29/09/2014
     if NFSe.Servico.Valores.ValorLiquidoNfse = 0 then
       NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                                NFSe.Servico.Valores.DescontoIncondicionado -
@@ -1081,7 +1073,6 @@ begin
     NFSe.ConstrucaoCivil.Art        := Leitor.rCampo(tcStr, 'Art');
    end;
 
-   // adicionado por Tailan Bonassi
    if FProvedor in [proBetha] then
      if Leitor.rExtrai(3, 'CondicaoPagamento') <> ''
      then begin
@@ -1317,7 +1308,7 @@ begin
 //        NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
         NFSe.Servico.Valores.Aliquota        := Leitor.rCampo(tcDe3, 'Aliquota');
 
-        if (FProvedor = proISSe) then // Joel Takei 10/12/2014
+        if (FProvedor = proISSe) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -1331,8 +1322,6 @@ begin
         NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
         NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
 
-        { Alterado Por Cleiver em - 22-08-2014 }
-        // Alterado por Italo em 10/09/2014
         if NFSe.Servico.Valores.ValorLiquidoNfse = 0 then
           NFSe.Servico.Valores.ValorLiquidoNfse     := NFSe.Servico.Valores.ValorServicos -
                                                        NFSe.Servico.Valores.DescontoIncondicionado -
@@ -1606,7 +1595,6 @@ begin
 
   if (Pos('<NFS-e>', Leitor.Arquivo) > 0) then
   begin
-     // Alterado Por Moro em 18/02/2015
      VersaoXML:= Leitor.rAtributo('versao');
      if VersaoXML = '1.1' then begin //if Caxias do Sul versão XML 1.1
 
@@ -1645,7 +1633,7 @@ begin
 
           NFSe.Prestador.Cnpj                                             := leitorAux.rCampo(tcStr, 'CNPJ');
           NFSe.Prestador.InscricaoMunicipal                               := leitorAux.rCampo(tcStr, 'IM');
-          NFSe.Prestador.InscricaoEstadual                                := leitorAux.rCampo(tcStr, 'IE'); //Alterado por Moro em 27/02/2015
+          NFSe.Prestador.InscricaoEstadual                                := leitorAux.rCampo(tcStr, 'IE'); 
           NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj               := NFSe.Prestador.Cnpj;
           NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSe.Prestador.InscricaoMunicipal;
           NFSe.PrestadorServico.RazaoSocial                               := leitorAux.rCampo(tcStr, 'xNome');
@@ -1673,7 +1661,7 @@ begin
           NFSe.Tomador.IdentificacaoTomador.CpfCnpj := leitorAux.rCampo(tcStr, 'CNPJ') + leitorAux.rCampo(tcStr, 'CPF');
           NFSe.Tomador.RazaoSocial                  := leitorAux.rCampo(tcStr, 'xNome');
           NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := leitorAux.rCampo(tcStr, 'IM');
-          NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual  := leitorAux.rCampo(tcStr, 'IE'); //Alterado por Moro em 27/02/2015
+          NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual  := leitorAux.rCampo(tcStr, 'IE'); 
           NFSe.Tomador.Endereco.Endereco                       := leitorAux.rCampo(tcStr, 'xLgr');
           NFSe.Tomador.Endereco.Numero                         := leitorAux.rCampo(tcStr, 'nro');
           NFSe.Tomador.Endereco.Complemento                    := leitorAux.rCampo(tcStr, 'xCpl');
@@ -1706,7 +1694,6 @@ begin
             Nfse.Servico.ItemServico[Item].BaseCalculo := Leitor.rCampo(tcDe2, 'vBCISS');
             Nfse.Servico.ItemServico[Item].Aliquota    := Leitor.rCampo(tcDe2, 'pISS');
             Nfse.Servico.ItemServico[Item].ValorIss    := Leitor.rCampo(tcDe2, 'vISS');
-            //Alterado por Moro em 27/02/2015
             // Retenções
             NFSe.Servico.ItemServico.Items[Item].ValorIr     := Leitor.rCampo(tcDe2, 'vRetIR');
             NFSe.Servico.ItemServico.Items[Item].ValorPis    := Leitor.rCampo(tcDe2, 'vRetPISPASEP');
@@ -1736,7 +1723,6 @@ begin
             NFSe.Servico.Valores.IssRetido   := stRetencao;
             NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio,0);
           end;
-          //Alterado por Moro em 27/02/2015
           // Retenções
           NFSe.Servico.Valores.ValorIr     := Leitor.rCampo(tcDe2, 'vRetIR');
           NFSe.Servico.Valores.ValorPis    := Leitor.rCampo(tcDe2, 'vRetPISPASEP');
@@ -1747,7 +1733,6 @@ begin
           leitorAux.Free;
         end;
 
-        //Alterado por Moro em 27/02/2015
         //duplicatas
         Item := 0 ;
         while (Leitor.rExtrai(1, 'faturas', '', Item + 1) <> '') do
@@ -1783,8 +1768,6 @@ begin
 
         hora   := strToInt( Copy( hEmi , 0 , 2 ) );
         minuto := strToInt( copy( hEmi , 4 , 2 ) );
-
-        // Leandro do Couto em 19/1/2015
 
         Nfse.DataEmissao := EncodeDateTime( ano, mes, dia, hora,minuto,0,0);
      //   NFSe.DataEmissao       := StrToDateTimeDef(dEmi + ' ' + hEmi, 0);
@@ -1930,7 +1913,7 @@ begin
    if (Leitor.rExtrai(1, 'OrgaoGerador') <> '') then
    begin
      CM := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-     FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+     FProvedor := CodCidadeToProvedor(CM);
    end;
 
    if (CM = '') or (CM = '0') then
@@ -1938,7 +1921,7 @@ begin
      if (Leitor.rExtrai(1, 'Servico') <> '') then
      begin
        CM := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-       FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+       FProvedor := CodCidadeToProvedor(CM);
      end;
    end;
 
@@ -1949,7 +1932,7 @@ begin
        CM := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoMunicipio'));
        if CM = '' then
          CM := Leitor.rCampo(tcStr, 'Cidade');
-       FProvedor := StrToProvedor(Ok, CodCidadeToProvedor(StrToIntDef(CM, 0)));
+       FProvedor := CodCidadeToProvedor(CM);
      end
      else
        FProvedor := proNenhum;
@@ -1958,7 +1941,6 @@ begin
    if FProvedor = proNenhum then
      FProvedor := FProvedorConf;
 (*
-   { Alterado Por Cleiver em - 22-08-2014 }
    if (FProvedor = proNenhum) and (Pos('https://nfse.goiania.go.gov.br/ws/', Leitor.Arquivo) > 0)  then
      FProvedor := proGoiania;
 *)     
@@ -1975,7 +1957,7 @@ begin
       then NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
       else NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
-     // Alterado por Leonardo Gregianin 11/01/2014: Tratar erro de conversão de tipo no Provedor Ábaco
+     // Tratar erro de conversão de tipo no Provedor Ábaco
   	 if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
 	     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
 
@@ -2078,7 +2060,7 @@ begin
  Result := False;
 
  if Pos('<Nfse', Leitor.Arquivo) > 0
-  then Result := LerNFSe                                              { Alterado Por Cleiver em - 22-08-2014 }
+  then Result := LerNFSe
   else if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or (Pos('<RPS', Leitor.Arquivo) > 0)
         then Result := LerRPS
         else if (Pos('<Notas>', Leitor.Arquivo) > 0) or (Pos('<Nota>', Leitor.Arquivo) > 0)
@@ -2372,7 +2354,6 @@ begin
       if (Leitor.rExtrai(3, 'Servico') <> '')
       then begin
         NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
-//        NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
 
         with NFSe.Servico.ItemServico.Add
         do begin
@@ -2409,6 +2390,25 @@ begin
   end; // fim Rps
 
  Result := True;
+end;
+
+function TNFSeR.CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
+var
+  Ok: Boolean;
+  NomeArqParams: String;
+  IniParams: TMemIniFile;
+begin
+  NomeArqParams := PathIniCidades + '\Cidades.ini';
+
+  if not FileExists(NomeArqParams) then
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
+      NomeArqParams);
+
+  IniParams := TMemIniFile.Create(NomeArqParams);
+
+  Result := StrToProvedor(Ok, IniParams.ReadString(CodCidade, 'Provedor', ''));
+
+  IniParams.Free;
 end;
 
 end.

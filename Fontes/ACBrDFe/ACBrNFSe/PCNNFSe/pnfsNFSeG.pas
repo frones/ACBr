@@ -34,7 +34,7 @@ unit pnfsNFSeG;
 interface
 
 uses
-  SysUtils, Classes, Forms, pcnAuxiliar,
+  SysUtils, Classes, Forms, pcnAuxiliar, pcnGerador, pcnConversao,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
@@ -42,909 +42,141 @@ uses
 
 type
 
-  TNFSeG = class
-   private
-     class function GetIdEntidadeEquiplano(const IBGE: Integer): String;
-   protected
+  TNFSeG = class(TPersistent)
+  private
+    aVersao: String;
+    aIdentificador: String;
+    aNameSpace: String;
+    IdLote: String;
 
-   public
-     class function Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador,
-                                    NameSpaceDad, VersaoDados, VersaoXML,
-                                    NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                    Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+    FGerador: TGerador;
 
-     class function Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                     VersaoXML, Protocolo, CNPJ, IM: String;
-                                     TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+    FProvedor: TnfseProvedor;
+    FVersaoNFSe: TVersaoNFSe;
 
-     class function Gera_DadosMsgConsLote(Prefixo3, Prefixo4, NameSpaceDad,
-                                  VersaoXML, Protocolo, CNPJ, IM, senha, frase_secreta: String;
-                                  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
+    // Layout - ABRASF
+    FPrefixo3: String;
+    FPrefixo4: String;
+    FIdentificador: String;
+    FNameSpaceDad: String;
+    FVersaoDados: String;
+    FNumeroLote: String;
+    FCNPJ: String;
+    FIM: String;
+    FQtdeNotas: Integer;
+    FNotas: String;
 
-     class function Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                     NumeroRps, SerieRps, TipoRps, CNPJ, IM, senha, frase_secreta: String;
-                                     TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
+    FProtocolo: String;
 
-     class function Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                          CNPJ, IM: String;
-                                          DataInicial, DataFinal: TDateTime;
-                                          TagI, TagF: AnsiString; NumeroNFSe: string = '';
-                                          Senha : string = ''; FraseSecreta : string = '';
-                                          AProvedor: TnfseProvedor = proNenhum;
-                                          APagina: Integer = 1; CNPJTomador: String = ''; IMTomador: String = '';
-                                          NomeInter: String = ''; CNPJInter: String = ''; IMInter: String = ''): AnsiString;
+    FSenha: String;
+    FFraseSecreta: String;
+    FRazaoSocial: String;
 
-     // Alterado por Augusto Fontana - 28/04/2014. Inclusão do parametromo motivo do cancelamento
-     class function Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                      CodMunicipio, CodCancelamento: String;
-                                      TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum;
-                                      MotivoCancelamento: String = ''): AnsiString;
+    FNumeroRps: String;
+    FSerieRps: String;
+    FTipoRps: String;
 
-     class function Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4, Identificador,
-                                   NameSpaceDad, VersaoDados, VersaoXML,
-                                   NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                   Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+    FDataInicial: TDateTime;
+    FDataFinal: TDateTime;
+    FNumeroNFSe: String;
+    FSerieNFSe: String;
+    FPagina: Integer;
+    FCNPJTomador: String;
+    FIMTomador: String;
+    FCNPJInter: String;
+    FIMInter: String;
+    FNomeInter: String;
 
-     class function Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4, Identificador,
-                                        NameSpaceDad, VersaoDados, VersaoXML,
-                                        NumeroLote, CNPJ, IM, QtdeNotas: String;
-                                        Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
+    FCodMunicipio: Integer;
+    FCodigoCanc: String;
+    FMotivoCanc: String;
 
-     class function Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4, Identificador,
-                                   NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                   CodMunicipio, CodCancelamento,
-                                   MotivoCancelamento, VersaoDados, VersaoXML,
-                                   NumeroLote, QtdeNotas: String;
-                                   Notas, TagI, TagF: AnsiString;
-                                   AProvedor: TnfseProvedor = proNenhum): AnsiString;
+    // Layout - ISSDSF
+    FVersaoXML: String;
+    FTransacao: Boolean;
+    FSeriePrestacao: String;
+    FValorTotalServicos: Currency;
+    FValorTotalDeducoes: Currency;
 
-     //-------------------------------------------------------------------------
-     // As classes abaixo são exclusivas para o provedor DSF
-     //-------------------------------------------------------------------------
-     class function Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,Identificador, NameSpaceDad, VersaoXML,
-                                               NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao,
-                                               QtdeNotas, ValorTotalServicos, ValorTotalDeducoes: String;
-                                               DataInicial, DataFinal: TDateTime;
-                                               Notas, TagI, TagF: AnsiString): AnsiString;
+    // Layout - Equiplano
+    FOptanteSimples: TnfseSimNao;
 
-     class function Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4, NameSpaceDad,
-                                             VersaoXML, CodCidade, CNPJ, NumeroLote: String;
-                                             TagI, TagF: AnsiString): AnsiString;
+    procedure SetAtributos;
+    function GetIdEntidadeEquiplano(const IBGE: Integer): String;
+    procedure SetCNPJ(const Value: String);
+    procedure SetCNPJTomador(const Value: String);
+    procedure SetCNPJInter(const Value: String);
+  public
+    constructor Create;
+    destructor Destroy; override;
 
-     class function Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4, NameSpaceDad,VersaoXML,
-                                                CodCidade, CNPJ, Transacao, NumeroLote: String;
-                                                Notas, TagI, TagF: AnsiString): AnsiString;
+    function Gera_DadosMsgEnviarLote: String;
+    function Gera_DadosMsgConsSitLote: String;
+    function Gera_DadosMsgConsLote: String;
+    function Gera_DadosMsgConsNFSeRPS: String;
+    function Gera_DadosMsgConsNFSe: String;
+    function Gera_DadosMsgCancelarNFSe: String;
+    function Gera_DadosMsgGerarNFSe: String;
+    function Gera_DadosMsgEnviarSincrono: String;
+    function Gera_DadosMsgSubstituirNFSe: String;
+  published
+    property Gerador: TGerador read FGerador write FGerador;
 
-     class function Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML, CodCidade,
-                                             CNPJ, IM, NotaInicial: String; DataInicial, DataFinal: TDateTime;
-                                             TagI, TagF: AnsiString): AnsiString;
+    property Provedor: TnfseProvedor read FProvedor   write FProvedor;
+    property VersaoNFSe: TVersaoNFSe read FVersaoNFSe write FVersaoNFSe;
 
-     class function Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                                 CNPJ, Transacao, CodMunicipio, NumeroLote: String;
-                                                 Notas, TagI, TagF: AnsiString): AnsiString;
+    // Layout - ABRASF
+    property Prefixo3: String      read FPrefixo3      write FPrefixo3;
+    property Prefixo4: String      read FPrefixo4      write FPrefixo4;
+    property Identificador: String read FIdentificador write FIdentificador;
+    property NameSpaceDad: String  read FNameSpaceDad  write FNameSpaceDad;
+    property VersaoDados: String   read FVersaoDados   write FVersaoDados;
+    property NumeroLote: String    read FNumeroLote    write FNumeroLote;
+    property CNPJ: String          read FCNPJ          write SetCNPJ;
+    property IM: String            read FIM            write FIM;
+    property QtdeNotas: Integer    read FQtdeNotas     write FQtdeNotas;
+    property Notas: String         read FNotas         write FNotas;
 
-     class function Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString; VersaoXML, CodCidade,
-                                               IM, CNPJ, SeriePrestacao: String): AnsiString;
+    property Protocolo: String     read FProtocolo     write FProtocolo;
 
-     //-------------------------------------------------------------------------
-     // As classes abaixo são exclusivas para o provedor Infisc
-     //-------------------------------------------------------------------------
-     class function Gera_DadosMsgEnviarLoteInfisc(Prefixo3, Prefixo4,Identificador, NameSpaceDad, VersaoXML,
-                                               NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao,
-                                               QtdeNotas, ValorTotalServicos, ValorTotalDeducoes: String;
-                                               DataInicial, DataFinal: TDateTime;
-                                               Notas, TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsSitLoteInfisc(CodCidade: Integer;
-                                                   CNPJ, IM, Protocolo, NumeroLote: String;
-                                                   TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsNFSeInfisc(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML, CodCidade,
-                                                CNPJ, IM, NotaInicial, Serie: String; DataInicial, DataFinal: TDateTime;
-                                                TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgCancelarNFSeInfisc(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-                                                    CNPJ, Transacao, CodMunicipio, NumeroLote: String;
-                                                    Notas, TagI, TagF: AnsiString): AnsiString;
+    property Senha: String         read FSenha         write FSenha;
+    property FraseSecreta: String  read FFraseSecreta  write FFraseSecreta;
+    property RazaoSocial: String   read FRazaoSocial   write FRazaoSocial;
 
-     //As classes abaixos são exclusivas do provedor Equiplano
-     class function Gera_DadosMsgEnviarLoteEquiplano(VersaoXML, NumeroLote, QtdeRPS, CNPJ, IM: String;
-                                                     CodCidade: Integer;
-                                                     OptanteSimples: Boolean;
-                                                     Notas, TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsLoteEquiplano(CodCidade: Integer;
-                                                   CNPJ, IM, Protocolo, NumeroLote: String;
-                                                   TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsNFSeRPSEquiplano(CodCidade: Integer;
-                                                      NumeroRps, CNPJ, IM: String;
-                                                      TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgCancelarNFSeEquiplano(CodCidade: Integer;
-                                                       CNPJ, IM, NumeroNFSe, MotivoCancelamento: String;
-                                                       TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsSitLoteEquiplano(CodCidade: Integer;
-                                                      CNPJ, IM, Protocolo, NumeroLote: String;
-                                                      TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgCancelarNFSeFreire(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                                    CodMunicipio, CodCancelamento, MotivoCancelamento: String;
-                                                    TagI, TagF: AnsiString): AnsiString;
+    property NumeroRps: String     read FNumeroRps     write FNumeroRps;
+    property SerieRps: String      read FSerieRps      write FSerieRps;
+    property TipoRps: String       read FTipoRps       write FTipoRps;
 
-     //As classes abaixos são exclusivas do provedor EL
-     class function Gera_DadosMsgEnviarLoteEL(NameSpaceDad, NumeroLote,
-       QtdeRPS, CNPJ, IM: String; CodCidade: Integer;
-       OptanteSimples: Boolean; Id, Notas, TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsSitLoteEL(CodCidade: Integer; CNPJ, IM,
-       Protocolo, NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsLoteEL(CodCidade: Integer; CNPJ, IM,
-       Protocolo, NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsNFSeRPSEL(CodCidade: Integer;
-       NumeroRps, CNPJ, IM: String; TagI, TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsNFSeEL(Prefixo3, Prefixo4,
-       NameSpaceDad, VersaoXML, NumeroNFSe, CNPJ, IM, CNPJTomador,
-       CNPJITermediarioServ: String; DataInicial, DataFinal: TDateTime; TagI,
-       TagF: AnsiString): AnsiString;
-     class function Gera_DadosMsgConsSeqRPSEL(TagI, TagF: AnsiString;
-       VersaoXML, CodCidade, IM, CNPJ, SeriePrestacao: String): AnsiString;
-     class function Gera_DadosMsgCancelarNFSeEL(CodCidade: Integer; CNPJ,
-       IM, NumeroNFSe, MotivoCancelamento: String; TagI,
-       TagF: AnsiString): AnsiString;
-   published
+    property DataInicial: TDateTime read FDataInicial write FDataInicial;
+    property DataFinal: TDateTime   read FDataFinal   write FDataFinal;
+    property NumeroNFSe: String     read FNumeroNFSe  write FNumeroNFSe;
+    property SerieNFSe: String      read FSerieNFSe   write FSerieNFSe;
+    property Pagina: Integer        read FPagina      write FPagina;
+    property CNPJTomador: String    read FCNPJTomador write SetCNPJTomador;
+    property IMTomador: String      read FIMTomador   write FIMTomador;
+    property CNPJInter: String      read FCNPJInter   write SetCNPJInter;
+    property IMInter: String        read FIMInter     write FIMInter;
+    property NomeInter: String      read FNomeInter   write FNomeInter;
 
+    property CodMunicipio: Integer read FCodMunicipio write FCodMunicipio;
+    property CodigoCanc: String    read FCodigoCanc   write FCodigoCanc;
+    property MotivoCanc: String    read FMotivoCanc   write FMotivoCanc;
+
+    // Layout - ISSDSF
+    property VersaoXML: String            read FVersaoXML          write FVersaoXML;
+    property Transacao: Boolean           read FTransacao          write FTransacao;
+    property SeriePrestacao: String       read FSeriePrestacao     write FSeriePrestacao;
+    property ValorTotalServicos: Currency read FValorTotalServicos write FValorTotalServicos;
+    property ValorTotalDeducoes: Currency read FValorTotalDeducoes write FValorTotalDeducoes;
+
+    // Layout - Equiplano
+    property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
    end;
 
 implementation
 
-//uses
-// IniFiles, Variants, ACBrConsts;
-
-class function TNFSeG.Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
-var
- DadosMsg: AnsiString;
- IdLote,tagCabecalhoCodigoMunicipio: String;
-begin
- if AProvedor = proBetha then Prefixo3 := '';
- if AProvedor in [proGovBR, proPronim, proISSDigital] then Identificador := '';
-
-
-
- case AProvedor of
-  proTecnos : IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
-                        Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
-                        IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
-  else IdLote := NumeroLote;
- end;
-
- DadosMsg := '<' + Prefixo3 + 'LoteRps' +
-
-               // Inclui a versão antes do Id para proCoplan
-               ifThen(AProvedor in [proCoplan],
-                               ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"', '' ),
-                               '') +
-
-               // Inclui o Identificador ou não
-               ifThen(Identificador <> '', ' ' + Identificador + '="' + IdLote + '"', '') +
-
-               // Não Incluir a versão para os provedores abaixo
-               ifThen(AProvedor in [proAbaco, proBetha, proDBSeller,
-                                             proGinfes, proGoiania, proGovBR, proIssCuritiba,
-                                             proISSNET, proLexsom, proNatal, proTinus, proRecife, proRJ,
-                                             proSimplISS, proThema, proTiplan, proAgili,
-                                             proFISSLex, proSpeedGov, proPronim, proCoplan,
-                                             proSalvador, proSJP, proFintelISS],
-                               '',
-                               ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"', '')
-                              ) +
-
-               // Inclui a versão com V em maiusculo
-               ifThen(AProvedor in [proFintelISS],
-                               ifThen(VersaoDados <> '', ' Versao="' + VersaoDados + '"', '' ),
-                               '') +
-
-               // Inclui o Name Space ou não
-               ifThen(AProvedor = proSimplISS,
-                               ' ' + NameSpaceDad,
-                               '>'
-                              ) +
-                              
-              '<' + Prefixo4 + 'NumeroLote>' +
-                NumeroLote +
-              '</' + Prefixo4 + 'NumeroLote>' +
-
-              ifThen((VersaoXML = '2.00') or
-                              (AProvedor in [proISSNet, proActcon]),
-
-                '<' + Prefixo4 + 'CpfCnpj>' +
-                ifThen(Length(OnlyNumber(Cnpj)) <= 11,
-                 '<' + Prefixo4 + 'Cpf>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cpf>',
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-                '</' + Prefixo4 + 'CpfCnpj>',
-
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>') +
-
-              '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-              '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '<' + Prefixo4 + 'QuantidadeRps>' +
-                QtdeNotas +
-              '</' + Prefixo4 + 'QuantidadeRps>' +
-              '<' + Prefixo4 + 'ListaRps>' +
-               Notas +
-              '</' + Prefixo4 + 'ListaRps>' +
-             '</' + Prefixo3 + 'LoteRps>';
-
- Result := TagI + DadosMsg + TagF;
- 
-
- tagCabecalhoCodigoMunicipio := RetornarConteudoEntre(Notas,'<CodigoMunicipio>','</CodigoMunicipio>');
- tagCabecalhoCodigoMunicipio := ' codMunicipio="'+tagCabecalhoCodigoMunicipio+'"';
-
-  // Luiz Baião 2014.11.24 -
- if  AProvedor = proNFSEBrasil then begin
-                   DadosMsg := '<' + Prefixo3 + 'LoteRps'+ tagCabecalhoCodigoMunicipio +
-//                       ifThen(codMunicipio <> '', ' codMunicipio="' + codMunicipio + '"','') +
-                       ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"','') +
-                       ifThen(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
-
-                        '>' +
-                      '<' + Prefixo4 + 'NumeroLote>' +
-                        NumeroLote +
-                      '</' + Prefixo4 + 'NumeroLote>' +
-
-                      ifThen(VersaoXML = '1.00',
-
-                        '<' + Prefixo4 + 'CpfCnpj>' +
-                        '<' + Prefixo4 + 'Cnpj>' +
-                          Cnpj +
-                        '</' + Prefixo4 + 'Cnpj>' +
-                        '</' + Prefixo4 + 'CpfCnpj>',
-
-                        '<' + Prefixo4 + 'Cnpj>' +
-                          Cnpj +
-                        '</' + Prefixo4 + 'Cnpj>') +
-
-                      '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                        IM +
-                      '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                      '<' + Prefixo4 + 'QuantidadeRps>' +
-                        QtdeNotas +
-                      '</' + Prefixo4 + 'QuantidadeRps>' +
-                      '<' + Prefixo4 + 'ListaRps>' +
-                       Notas +
-                      '</' + Prefixo4 + 'ListaRps>' +
-                     '</' + Prefixo3 + 'LoteRps>';
-
-         Result := TagI + DadosMsg + TagF;
- end;		 
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgConsSitLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM: String; TagI,
-  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- if AProvedor = proBetha then Prefixo3 := '';
-
- DadosMsg := '<' + Prefixo3 + 'Prestador' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               ifThen((VersaoXML = '2.00') or
-                               (AProvedor in [proISSNet, proActcon]),
-
-                 '<' + Prefixo4 + 'CpfCnpj>' +
-                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
-                  '<' + Prefixo4 + 'Cpf>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cpf>',
-                  '<' + Prefixo4 + 'Cnpj>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cnpj>') +
-                 '</' + Prefixo4 + 'CpfCnpj>',
-
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-
-               '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                 IM +
-               '</' + Prefixo4 + 'InscricaoMunicipal>' +
-              '</' + Prefixo3 + 'Prestador>' +
-              '<' + Prefixo3 + 'Protocolo' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-                Protocolo +
-              '</' + Prefixo3 + 'Protocolo>';
-
- if AProvedor = proDBSeller then
-   DadosMsg := '<ConsultarSituacaoLoteRpsEnvio>' + DadosMsg + '</ConsultarSituacaoLoteRpsEnvio>';
-
- Result := TagI + DadosMsg + TagF;
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
-                  proCoplan, profintelISS, proFiorilli, proGoiania, proGovDigital,
-                  proISSDigital, proISSe, proProdata, proVirtual, proSaatri,
-                  proFreire, proPVH, proVitoria, proTecnos, proSisPMJP,
-                  proSystemPro] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgConsLote(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, Protocolo, CNPJ, IM, senha, frase_secreta: String; TagI,
-  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- if AProvedor = proBetha then Prefixo3 := '';
-
- DadosMsg := '<' + Prefixo3 + 'Prestador' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-
-               ifThen((VersaoXML = '2.00') or
-                               (AProvedor in [proISSNet, proActcon]),
-
-                 '<' + Prefixo4 + 'CpfCnpj>' +
-                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
-                  '<' + Prefixo4 + 'Cpf>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cpf>',
-                  '<' + Prefixo4 + 'Cnpj>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cnpj>') +
-                 '</' + Prefixo4 + 'CpfCnpj>',
-
-                 '<' + Prefixo4 + 'Cnpj>' +
-                   Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-               ifThen(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>' , '') +
-               '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                 IM +
-               '</' + Prefixo4 + 'InscricaoMunicipal>' +
-
-              ifThen(AProvedor = proISSDigital,
-               '<' + Prefixo4 + 'Senha>' +
-                 Senha +
-               '</' + Prefixo4 + 'Senha>' +
-               '<' + Prefixo4 + 'FraseSecreta>' +
-                 frase_secreta +
-               '</' + Prefixo4 + 'FraseSecreta>', '') +
-
-              '</' + Prefixo3 + 'Prestador>' +
-              '<' + Prefixo3 + 'Protocolo' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-                Protocolo +
-              '</' + Prefixo3 + 'Protocolo>';
-
- Result := TagI + DadosMsg + TagF;
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgConsNFSeRPS(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, NumeroRps, SerieRps, TipoRps, CNPJ, IM,
-  senha, frase_secreta: String;
-  TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; ARazaoSocial: String = ''): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- if AProvedor = proBetha then Prefixo3 := '';
-
- DadosMsg := '<' + Prefixo3 + 'IdentificacaoRps' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-              '<' + Prefixo4 + 'Numero>' +
-                NumeroRps +
-              '</' + Prefixo4 + 'Numero>' +
-              '<' + Prefixo4 + 'Serie>' +
-                SerieRps +
-              '</' + Prefixo4 + 'Serie>' +
-              '<' + Prefixo4 + 'Tipo>' +
-                TipoRps +
-              '</' + Prefixo4 + 'Tipo>' +
-             '</' + Prefixo3 + 'IdentificacaoRps>' +
-             '<' + Prefixo3 + 'Prestador' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-
-              ifThen((VersaoXML = '2.00') or
-                              (AProvedor in [proISSNet, proActcon]),
-
-                '<' + Prefixo4 + 'CpfCnpj>' +
-                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
-                  '<' + Prefixo4 + 'Cpf>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cpf>',
-                  '<' + Prefixo4 + 'Cnpj>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cnpj>') +
-                '</' + Prefixo4 + 'CpfCnpj>',
-
-                '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                '</' + Prefixo4 + 'Cnpj>') +
-              ifThen(AProvedor = proTecnos, '<RazaoSocial>' + ARazaoSocial + '</RazaoSocial>', '') +
-              '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-              '</' + Prefixo4 + 'InscricaoMunicipal>' +
-
-              ifThen(AProvedor = proISSDigital,
-               '<' + Prefixo4 + 'Senha>' +
-                 Senha +
-               '</' + Prefixo4 + 'Senha>' +
-               '<' + Prefixo4 + 'FraseSecreta>' +
-                 frase_secreta +
-               '</' + Prefixo4 + 'FraseSecreta>', '') +
-
-             '</' + Prefixo3 + 'Prestador>';
-
- if AProvedor = proDBSeller then
-   DadosMsg := '<ConsultarNfseRpsEnvio>' + DadosMsg + '</ConsultarNfseRpsEnvio>';
-
- Result := TagI + DadosMsg + TagF;
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgConsNFSe(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CNPJ, IM: String; DataInicial, DataFinal: TDateTime; TagI,
-  TagF: AnsiString; NumeroNFSe: string = ''; Senha : string = '';
-  FraseSecreta : string = ''; AProvedor: TnfseProvedor = proNenhum;
-  APagina: Integer = 1; CNPJTomador: String = ''; IMTomador: String = '';
-  NomeInter: String = ''; CNPJInter: String = ''; IMInter: String = ''): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- if AProvedor = proBetha then Prefixo3 := '';
-
- DadosMsg := '<' + Prefixo3 + 'Prestador' +
-               ifThen(AProvedor = proSimplISS, ' ' + NameSpaceDad, '>') +
-               ifThen((VersaoXML = '2.00') or
-                               (AProvedor in [proISSNet, proActcon]),
-
-                 '<' + Prefixo4 + 'CpfCnpj>' +
-                  ifThen(Length(OnlyNumber(Cnpj)) <= 11,
-                  '<' + Prefixo4 + 'Cpf>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cpf>',
-                  '<' + Prefixo4 + 'Cnpj>' +
-                    Cnpj +
-                  '</' + Prefixo4 + 'Cnpj>') +
-                 '</' + Prefixo4 + 'CpfCnpj>',
-
-                 '<' + Prefixo4 + 'Cnpj>' +
-                  Cnpj +
-                 '</' + Prefixo4 + 'Cnpj>') +
-
-               '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                IM +
-               '</' + Prefixo4 + 'InscricaoMunicipal>' +
-
-              ifThen(AProvedor = proISSDigital,
-               '<' + Prefixo4 + 'Senha>' +
-                 Senha +
-               '</' + Prefixo4 + 'Senha>' +
-               '<' + Prefixo4 + 'FraseSecreta>' +
-                 FraseSecreta +
-               '</' + Prefixo4 + 'FraseSecreta>', '') +
-
-              '</' + Prefixo3 + 'Prestador>';
-
- if NumeroNFSe <> '' then
- begin
-  if AProvedor in [proPVH, proSystemPro, proPublica, proSisPMJP] then
-    DadosMsg := DadosMsg + '<Faixa>' +
-                             '<NumeroNfseInicial>' + NumeroNFSe + '</NumeroNfseInicial>' +
-                             '<NumeroNfseFinal>' + NumeroNFSe + '</NumeroNfseFinal>' +
-                           '</Faixa>'
-  else
-    DadosMsg := DadosMsg + '<' + Prefixo3 + 'NumeroNfse>' +
-                             NumeroNFSe +
-                           '</' + Prefixo3 + 'NumeroNfse>';
- end;
-
- if (DataInicial>0) and (DataFinal>0)
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'PeriodoEmissao>' +
-                               '<' + Prefixo3 + 'DataInicial>' +
-                                 FormatDateTime('yyyy-mm-dd', DataInicial) +
-                               '</' + Prefixo3 + 'DataInicial>' +
-                               '<' + Prefixo3 + 'DataFinal>' +
-                                 FormatDateTime('yyyy-mm-dd', DataFinal) +
-                               '</' + Prefixo3 + 'DataFinal>' +
-                              '</' + Prefixo3 + 'PeriodoEmissao>';
-
- if (CNPJTomador <> '') or (IMTomador <> '')
-  then begin
-    DadosMsg := DadosMsg + '<Tomador>' +
-                            '<' + Prefixo4 + 'CpfCnpj>' +
-                             ifThen(Length(OnlyNumber(CnpjTomador)) <= 11,
-                             '<' + Prefixo4 + 'Cpf>' +
-                               CnpjTomador +
-                             '</' + Prefixo4 + 'Cpf>',
-                             '<' + Prefixo4 + 'Cnpj>' +
-                               CnpjTomador +
-                             '</' + Prefixo4 + 'Cnpj>') +
-                            '</' + Prefixo4 + 'CpfCnpj>' +
-                            '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                             IMTomador +
-                            '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                           '</Tomador>'
 (*
-    DadosMsg := DadosMsg + '<Tomador>' +
-                            ifThen((VersaoXML = '2') or
-                                            (AProvedor in [proThema]),
-
-                            '<' + Prefixo4 + 'CpfCnpj>' +
-                             ifThen(Length(OnlyNumber(CnpjTomador)) <= 11,
-                             '<' + Prefixo4 + 'Cpf>' +
-                               CnpjTomador +
-                             '</' + Prefixo4 + 'Cpf>',
-                             '<' + Prefixo4 + 'Cnpj>' +
-                               CnpjTomador +
-                             '</' + Prefixo4 + 'Cnpj>') +
-                            '</' + Prefixo4 + 'CpfCnpj>',
-
-                            '<' + Prefixo4 + 'Cnpj>' +
-                             CnpjTomador +
-                            '</' + Prefixo4 + 'Cnpj>') +
-
-                            '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                             IMTomador +
-                            '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                           '</Tomador>'
-*)
-  end;
-
- if (NomeInter <> '') and (CNPJInter <> '')
-  then begin
-    DadosMsg := DadosMsg + '<IntermediarioServico>' +
-                            '<' + Prefixo4 + 'RazaoSocial>' +
-                             NomeInter +
-                            '</' + Prefixo4 + 'RazaoSocial>' +
-
-                            ifThen(VersaoXML = '2.00',
-
-                            '<' + Prefixo4 + 'CpfCnpj>' +
-                             ifThen(Length(OnlyNumber(CnpjInter)) <= 11,
-                             '<' + Prefixo4 + 'Cpf>' +
-                               CnpjInter +
-                             '</' + Prefixo4 + 'Cpf>',
-                             '<' + Prefixo4 + 'Cnpj>' +
-                               CnpjInter +
-                             '</' + Prefixo4 + 'Cnpj>') +
-                            '</' + Prefixo4 + 'CpfCnpj>',
-
-                            '<' + Prefixo4 + 'Cnpj>' +
-                             CnpjInter +
-                            '</' + Prefixo4 + 'Cnpj>') +
-
-                            '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                             IMInter +
-                            '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                           '</IntermediarioServico>'
-  end;
-
- if AProvedor in [proFiorilli, profintelISS, proPVH, proSystemPro, proSisPMJP, proDigifred]
-  then DadosMsg := DadosMsg + '<' + Prefixo3 + 'Pagina>' +
-                                IntToStr(APagina) +
-                              '</' + Prefixo3 + 'Pagina>';
-
- Result := TagI + DadosMsg + TagF;
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe,
-  CNPJ, IM, CodMunicipio, CodCancelamento: String; TagI,
-  TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum; MotivoCancelamento: String = ''): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- case AProvedor of
-  proGinfes: DadosMsg := '<Prestador>' +
-                          '<' + Prefixo4 + 'Cnpj>' +
-                            Cnpj +
-                          '</' + Prefixo4 + 'Cnpj>' +
-                          '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                            IM +
-                          '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                         '</Prestador>' +
-                         '<NumeroNfse>' +
-                           NumeroNFSe +
-                         '</NumeroNfse>';
-
-
-  // Adicionado por Akai - L. Massao Aihara 31/10/2013
-  proIssCuritiba: DadosMsg := '<InfPedidoCancelamento>' +
-                               '<IdentificacaoNfse>' +
-                                '<Cnpj>' + Cnpj + '</Cnpj>' +
-                                '<InscricaoMunicipal>' + IM + '</InscricaoMunicipal>' +
-                                '<Numero>' + NumeroNFse + '</Numero>' +
-                               '</IdentificacaoNfse>' +
-                              '</InfPedidoCancelamento>';
-
-
-  else
-    begin
-      DadosMsg :=  '<' + Prefixo4 + 'IdentificacaoNfse>' +
-                    '<' + Prefixo4 + 'Numero>' +
-                      NumeroNFse +
-                    '</' + Prefixo4 + 'Numero>' +
-
-                    // alterado por Akai - L. Massao Aihara 12/11/2013
-                   ifThen(AProvedor in [pro4R, proISSe, profintelISS, proFiorilli,
-                                                 proDigifred, proSystempro, proVirtual,
-                                                 proISSDigital, proSaatri, proCoplan,
-                                                 proVitoria, proTecnos, proPVH,
-                                                 proSisPMJP, proActcon, proGovDigital],
-
-                    //Adicionei o IfThen para poder cancelar nota onde o pretador é pessoa física (Cartório em Vitória-ES). - Eduardo Silva dos Santos - 11/01/2014 - DRD SISTEMAS
-                    ifThen( length(Cnpj)=14,
-                                                 ('<' + Prefixo4 + 'CpfCnpj>' +
-                                                   '<' + Prefixo4 + 'Cnpj>' +
-                                                    Cnpj +
-                                                   '</' + Prefixo4 + 'Cnpj>' +
-                                                  '</' + Prefixo4 + 'CpfCnpj>')
-                                                    ,
-                                                 ('<' + Prefixo4 + 'CpfCnpj>' +
-                                                   '<' + Prefixo4 + 'Cpf>' +
-                                                    Cnpj +
-                                                   '</' + Prefixo4 + 'Cpf>' +
-                                                  '</' + Prefixo4 + 'CpfCnpj>')
-                                   ),
-
-                    '<' + Prefixo4 + 'Cnpj>' +
-                      Cnpj +
-                    '</' + Prefixo4 + 'Cnpj>') +
-
-                    '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                      IM +
-                    '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                    '<' + Prefixo4 + 'CodigoMunicipio>' +
-                      CodMunicipio +
-                    '</' + Prefixo4 + 'CodigoMunicipio>' +
-                   '</' + Prefixo4 + 'IdentificacaoNfse>' +
-                   '<' + Prefixo4 + 'CodigoCancelamento>' +
-
-                     // Codigo de Cancelamento
-                     // 1 - Erro de emissão
-                     // 2 - Serviço não concluido
-                     // 3 - RPS Cancelado na Emissão
-
-                     CodCancelamento +
-
-                   '</' + Prefixo4 + 'CodigoCancelamento>';
-                  // Alterado por Augusto Fontana - 28/04/2014. Incluir do motivo do cancelamento
-                  if (AProvedor in [proPublica, proTecnos]) and (MotivoCancelamento <> '') then
-                    begin
-                      DadosMsg := DadosMsg + '<' + Prefixo4 + 'MotivoCancelamento>';
-                      DadosMsg := DadosMsg + MotivoCancelamento;
-                      DadosMsg := DadosMsg + '</' + Prefixo4 + 'MotivoCancelamento>';
-                    end;
-                  DadosMsg := DadosMsg + '</' + Prefixo4 + 'InfPedidoCancelamento>';
-    end;
- end;
-
- Result := TagI + DadosMsg + TagF;
-
- if AProvedor = proDBSeller then
-   Result := '<CancelarNfse>' + Result + '</CancelarNfse>';
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgGerarNFSe(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- if AProvedor = proBetha then Prefixo3 := '';
-
- case AProvedor of
-  proWebISS: begin
-               DadosMsg := '<' + Prefixo3 + 'LoteRps'+
-                              ifThen(Identificador <> '', ' ' + Identificador + '="' + NumeroLote + '"', '') +
-                              ifThen(VersaoDados <> '', ' versao="' + VersaoDados + '"', '') + '>' +
-                             '<' + Prefixo4 + 'NumeroLote>' +
-                               NumeroLote +
-                             '</' + Prefixo4 + 'NumeroLote>' +
-
-                             ifThen((VersaoXML = '2.00') or (AProvedor = proISSNet),
-
-                             '<' + Prefixo4 + 'CpfCnpj>' +
-                                ifThen(Length(OnlyNumber(Cnpj)) <= 11,
-                               '<' + Prefixo4 + 'Cpf>' +
-                                  Cnpj +
-                               '</' + Prefixo4 + 'Cpf>',
-                               '<' + Prefixo4 + 'Cnpj>' +
-                                  Cnpj +
-                               '</' + Prefixo4 + 'Cnpj>') +
-                             '</' + Prefixo4 + 'CpfCnpj>',
-
-                             '<' + Prefixo4 + 'Cnpj>' +
-                                Cnpj +
-                             '</' + Prefixo4 + 'Cnpj>') +
-
-                             '<' + Prefixo4 + 'InscricaoMunicipal>' +
-                                IM +
-                             '</' + Prefixo4 + 'InscricaoMunicipal>' +
-                             '<' + Prefixo4 + 'QuantidadeRps>' +
-                                QtdeNotas +
-                             '</' + Prefixo4 + 'QuantidadeRps>' +
-                             '<' + Prefixo4 + 'ListaRps>' +
-                                Notas +
-                             '</' + Prefixo4 + 'ListaRps>' +
-                           '</' + Prefixo3 + 'LoteRps>';
-
-               Result := TagI + DadosMsg + TagF;
-             end;
-  else Result := TagI + Notas + TagF;
- end;
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco,
-                  proBetha, proBetim, proBHIss, proDBSeller, {proDigifred,}
-                  proEquiplano, proFIssLex, proGinfes, proGovBR, proIssCuritiba,
-                  proIssIntel, proIssNet, proLexsom, proNatal, proTinus, proProdemge,
-                  proRJ, proSimplIss, proThema, proTiplan, proIssDSF, proInfisc, proAgili,
-                  proSpeedGov, proPronim, proActcon,
-                  proSalvador, proNFSEBrasil] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgEnviarSincrono(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoDados, VersaoXML, NumeroLote, CNPJ,
-  IM, QtdeNotas: String; Notas, TagI, TagF: AnsiString; AProvedor: TnfseProvedor = proNenhum): AnsiString;
-begin
- Result := Gera_DadosMsgEnviarLote(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
-                                   VersaoDados, VersaoXML, NumeroLote, CNPJ, IM,
-                                   QtdeNotas, Notas, TagI, TagF, AProvedor);
-
- if AProvedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco,
-                  proBetha, proBetim, proBHISS, proDBSeller, {proDigifred,}
-                  proEquiplano, profintelISS, proFISSLex, proGinfes, proGoiania,
-                  proGovBR, {proGovDigital,} proIssCuritiba, proISSDigital,
-                  proISSIntel, proISSNet, proLexsom, proNatal, proTinus, proProdemge,
-                  proPublica, proRecife, proRJ, proSaatri, proFreire,
-                  proSimplISS, proThema, proTiplan, proWebISS, proProdata,
-                  proAgili, proSpeedGov, proPronim,
-                  proSalvador,proNFSEBrasil] then Result := '';
-end;
-
-class function TNFSeG.Gera_DadosMsgSubstituirNFSe(Prefixo3, Prefixo4, Identificador,
-                                   NameSpaceDad, NumeroNFSe, CNPJ, IM,
-                                   CodMunicipio, CodCancelamento,
-                                   MotivoCancelamento, VersaoDados,
-                                   VersaoXML, NumeroLote, QtdeNotas: String;
-                                   Notas, TagI, TagF: AnsiString;
-                                   AProvedor: TnfseProvedor = proNenhum): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := Gera_DadosMsgCancelarNFSe(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ,
-                                     IM, CodMunicipio, CodCancelamento, '', '',
-                                     AProvedor, MotivoCancelamento);
- DadosMsg := DadosMsg + '</' + Prefixo3 + 'Pedido>';
- DadosMsg := DadosMsg + Notas;
- 
- Result := TagI + DadosMsg + TagF;
-
- if AProvedor in [proNenhum] then Result := '';
-end;
-
-//-------------------------------------------------------------------------
-// As classes abaixo são exclusivas para o provedor DSF
-//-------------------------------------------------------------------------
-class function TNFSeG.Gera_DadosMsgEnviarLoteDSF(Prefixo3, Prefixo4,
-  Identificador, NameSpaceDad, VersaoXML, NumeroLote, CodCidade, CNPJ, IM,
-  RazaoSocial, Transacao, QtdeNotas, ValorTotalServicos,
-  ValorTotalDeducoes: String; DataInicial, DataFinal: TDateTime; Notas,
-  TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<Cabecalho>' +
-               '<CodCidade>'            + CodCidade   + '</CodCidade>' +
-               '<CPFCNPJRemetente>'     + Cnpj        + '</CPFCNPJRemetente>' +
-               '<RazaoSocialRemetente>' + RazaoSocial + '</RazaoSocialRemetente>' +
-               '<transacao>'            + Transacao   + '</transacao>' +
-               '<dtInicio>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dtInicio>' +
-               '<dtFim>'    + FormatDateTime('yyyy-mm-dd', DataFinal) + '</dtFim>' +
-               '<QtdRPS>'               + QtdeNotas               + '</QtdRPS>' +
-               '<ValorTotalServicos>'   + StringReplace(ValorTotalServicos, ',', '.', [rfReplaceAll]) + '</ValorTotalServicos>' +
-               '<ValorTotalDeducoes>'   + StringReplace(ValorTotalDeducoes, ',', '.', [rfReplaceAll]) + '</ValorTotalDeducoes>' +
-               '<Versao>'               + VersaoXML          + '</Versao>' +
-               '<MetodoEnvio>'          + 'WS'               + '</MetodoEnvio>' +
-             '</Cabecalho>' +
-             //'<Lote ' + Identificador + '="Lote:' + NumeroLote + '">' +        //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
-             '<Lote ' + Identificador + '="' + NumeroLote + '">' +
-                Notas +
-             '</Lote>';
-
-  Result := TagI + DadosMsg + TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsLoteDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CodCidade, CNPJ, NumeroLote: String; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<Cabecalho>' +
-               '<CodCidade>' + CodCidade + '</CodCidade>' +
-               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
-               '<Versao>' + VersaoXML + '</Versao>' +
-               '<NumeroLote>' + NumeroLote + '</NumeroLote>' +
-             '</Cabecalho>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsNFSeRPSDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CodCidade, CNPJ, Transacao, NumeroLote: String;
-  Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
-  DadosMsg := '<Cabecalho>' +
-               '<CodCidade>' + CodCidade + '</CodCidade>' +
-               '<CPFCNPJRemetente>' + Cnpj + '</CPFCNPJRemetente>' +
-               '<transacao>' + Transacao + '</transacao>' +
-               '<Versao>' + VersaoXML + '</Versao>' +
-             '</Cabecalho>' +
-             '<Lote  Id="lote:' + NumeroLote + '">' +
-                Notas +
-             '</Lote>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsNFSeDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CodCidade, CNPJ, IM, NotaInicial: String;
-  DataInicial, DataFinal: TDateTime; TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<Cabecalho Id="Consulta:notas">' +
-               '<CodCidade>'         + CodCidade    + '</CodCidade>' +
-               '<CPFCNPJRemetente>'  + CNPJ         + '</CPFCNPJRemetente>' +
-               '<InscricaoMunicipalPrestador>' + IM + '</InscricaoMunicipalPrestador>' +
-
-               '<dtInicio>' +
-                 FormatDateTime('yyyy-mm-dd', DataInicial) +
-               '</dtInicio>' +
-
-               '<dtFim>' +
-                 FormatDateTime('yyyy-mm-dd', DataFinal) +
-               '</dtFim>' +
-
-               '<NotaInicial>' + NotaInicial + '</NotaInicial>' +
-               '<Versao>'      + VersaoXML   + '</Versao>' +
-             '</Cabecalho>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgCancelarNFSeDSF(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CNPJ, Transacao, CodMunicipio,
-  NumeroLote: String; Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
-
- DadosMsg := '<Cabecalho>' +
-		         '<CodCidade>'        + CodMunicipio + '</CodCidade>' +
-		         '<CPFCNPJRemetente>' + CNPJ      + '</CPFCNPJRemetente> ' +
-		         '<transacao>'        + Transacao + '</transacao>' +
-		         '<Versao>'           + VersaoXML + '</Versao>' +
-	          '</Cabecalho>' +
-            // '<Lote Id="Lote:' + NumeroLote + '">' +
-            '<Lote  Id="' + NumeroLote + '">' + //Alterado por Ailton 28/07/2017 Retirado o item "Lote" no provedor DSF da erro
-                Notas +
-             '</Lote>';
-
- Result := TagI + DadosMsg + TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString;
+class function TNFSeG2.Gera_DadosMsgConsSeqRPSDSF(TagI, TagF: AnsiString;
   VersaoXML, CodCidade, IM, CNPJ, SeriePrestacao: String): AnsiString;
 var
  DadosMsg: AnsiString;
@@ -961,7 +193,81 @@ begin
  Result := TagI + DadosMsg + TagF;
 end;
 
-class function TNFSeG.GetIdEntidadeEquiplano(const IBGE: Integer): String;
+class function TNFSeG2.Gera_DadosMsgConsSeqRPSEL(TagI, TagF: AnsiString;
+  VersaoXML, CodCidade, IM, CNPJ, SeriePrestacao: String): AnsiString;
+begin
+ //consultar sequencial RPS
+  Result:= '<wsn:ConsultarUltimaRps>' +
+              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
+           '<wsn:ConsultarUltimaRps>';
+end;
+*)
+
+{ TNFSeG }
+
+constructor TNFSeG.Create;
+begin
+  FGerador := TGerador.Create;
+end;
+
+destructor TNFSeG.Destroy;
+begin
+  FGerador.Free;
+  inherited;
+end;
+
+procedure TNFSeG.SetAtributos;
+begin
+  // Atributo versao ===========================================================
+  if VersaoDados <> '' then
+  begin
+    if Provedor in [proFintelISS] then
+      aVersao := ' Versao="' + VersaoDados + '"'
+    else
+      aVersao := ' versao="' + VersaoDados + '"';
+
+    if Provedor in [proAbaco, proBetha, proDBSeller, proGinfes, proGoiania,
+                    proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
+                    proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
+                    proAgili, proFISSLex, proSpeedGov, proPronim, proSalvador,
+                    proSJP] then
+      aVersao := '';
+  end
+  else
+    aVersao := '';
+
+  // Atributo NameSapce ========================================================
+  if Provedor = proSimplISS then
+    aNameSpace := ' ' + NameSpaceDad
+  else
+    aNameSpace := '';
+
+  // Valor do atributo Id ======================================================
+  case Provedor of
+    proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
+                         Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
+                         IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
+
+  else IdLote := NumeroLote;
+  end;
+
+  // Atributo Id ===============================================================
+  if Identificador <> '' then
+  begin
+    aIdentificador := ' ' + Identificador + '="' + IdLote + '"';
+
+    if Provedor in [proGovBR, proPronim, proISSDigital] then
+      aIdentificador := '';
+  end
+  else
+    aIdentificador := '';
+
+  // Redefine o Profixo 3 ======================================================
+  if Provedor = proBetha then
+    Prefixo3 := '';
+end;
+
+function TNFSeG.GetIdEntidadeEquiplano(const IBGE: Integer): String;
 begin
   case IBGE of
     4102307: Result:= '23'; // Balsa Nova/PR
@@ -981,265 +287,778 @@ begin
   end;
 end;
 
-class function TNFSeG.Gera_DadosMsgEnviarLoteEquiplano(VersaoXML, NumeroLote, QtdeRPS, CNPJ,
-  IM: String; CodCidade: Integer; OptanteSimples: Boolean; Notas, TagI, TagF: AnsiString): AnsiString;
+procedure TNFSeG.SetCNPJ(const Value: String);
 begin
-  Result:= TagI +
-             '<lote>' +
-               '<nrLote>' + NumeroLote + '</nrLote>' +
-               '<qtRps>' + QtdeRPS + '</qtRps>' +
-               '<nrVersaoXml>' + VersaoXML + '</nrVersaoXml>' +
-               '<prestador>' +
-                 '<nrCnpj>' + CNPJ + '</nrCnpj>' +
-                 '<nrInscricaoMunicipal>' +  IM + '</nrInscricaoMunicipal>' +
-                 '<isOptanteSimplesNacional>' + IfThen(OptanteSimples, '1', '2') + '</isOptanteSimplesNacional>' +
-                 '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
-               '</prestador>' +
-               '<listaRps>' +
-                 Notas +
-               '</listaRps>' +
-             '</lote>' +
-           TagF;
+  FCNPJ := OnlyNumber(Value);
 end;
 
-class function TNFSeG.Gera_DadosMsgConsLoteEquiplano(CodCidade: Integer;
-  CNPJ, IM, Protocolo, NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
+procedure TNFSeG.SetCNPJTomador(const Value: String);
 begin
-  Result:= TagI +
-             '<prestador>' +
-               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
-               '<cnpj>' + CNPJ + '</cnpj>' +
-               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
-             '</prestador>' +
-             '<nrLoteRps>' + NumeroLote + '</nrLoteRps>' +
-             //'<nrProtocolo>' + Protocolo + '</nrProtocolo>' +
-           TagF;
+  FCNPJTomador := OnlyNumber(Value);
 end;
 
-class function TNFSeG.Gera_DadosMsgConsNFSeRPSEquiplano(CodCidade: Integer;
-  NumeroRps, CNPJ, IM: String; TagI, TagF: AnsiString): AnsiString;
+procedure TNFSeG.SetCNPJInter(const Value: String);
 begin
-  Result:= TagI +
-             '<rps>' +
-               '<nrRps>' + NumeroRps + '</nrRps>' +
-               '<nrEmissorRps>1</nrEmissorRps>' +
-             '</rps>' +
-             '<prestador>' +
-               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
-               '<cnpj>' + CNPJ + '</cnpj>' +
-               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
-             '</prestador>' +
-           TagF;
+  FCNPJInter := OnlyNumber(Value);
 end;
 
-class function TNFSeG.Gera_DadosMsgCancelarNFSeEquiplano(
-  CodCidade: Integer; CNPJ, IM, NumeroNFSe, MotivoCancelamento: String;
-  TagI, TagF: AnsiString): AnsiString;
-begin
-  Result:= TagI +
-             '<prestador>' +
-               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
-               '<cnpj>' + CNPJ + '</cnpj>' +
-               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
-             '</prestador>' +
-             '<nrNfse>' + NumeroNFSe + '</nrNfse>' +
-             '<dsMotivoCancelamento>' + MotivoCancelamento + '</dsMotivoCancelamento>' +
-           TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgCancelarNFSeFreire(Prefixo4, NameSpaceDad, NumeroNFSe, CNPJ, IM, CodMunicipio, CodCancelamento,
-  MotivoCancelamento: String; TagI, TagF: AnsiString): AnsiString;
+function TNFSeG.Gera_DadosMsgEnviarLote: String;
 var
- DadosMsg: AnsiString;
+  tagCabecalhoCodigoMunicipio: String;
 begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
 
-   DadosMsg := '<' + Prefixo4 + 'IdentificacaoNfse>' +
-           '<' + Prefixo4 + 'Numero>' +
-             NumeroNFse +
-           '</' + Prefixo4 + 'Numero>' +
-           '<' + Prefixo4 + 'CpfCnpj>' +
-            '<' + Prefixo4 + 'Cnpj>' +
-             Cnpj +
-            '</' + Prefixo4 + 'Cnpj>' +
-           '</' + Prefixo4 + 'CpfCnpj>' +
-           '<' + Prefixo4 + 'InscricaoMunicipal>' +
-             IM +
-           '</' + Prefixo4 + 'InscricaoMunicipal>' +
-           '<' + Prefixo4 + 'CodigoMunicipio>' +
-             CodMunicipio +
-           '</' + Prefixo4 + 'CodigoMunicipio>' +
-          '</' + Prefixo4 + 'IdentificacaoNfse>' +
-          '<' + Prefixo4 + 'CodigoCancelamento>' +
-            CodCancelamento +
-          '</' + Prefixo4 + 'CodigoCancelamento>' +
-          '<' + Prefixo4 + 'MotivoCancelamento>' +
-            MotivoCancelamento +
-          '</' + Prefixo4 + 'MotivoCancelamento>'+
-         '</' + Prefixo4 + 'InfPedidoCancelamento>';
+  case Provedor of
+    proInfisc: begin
+                 Gerador.ArquivoFormatoXML := Notas;
+               end;
 
-   Result := TagI + DadosMsg + TagF;
+    proEquiplano: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wGrupoNFSe('lote');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrLote', 01, 15, 1, NumeroLote, '');
+                    Gerador.wCampoNFSe(tcInt, '#1', 'qtRps', 01, 14, 1, QtdeNotas, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrVersaoXml', 01, 14, 1, VersaoXML, '');
+                    Gerador.wGrupoNFSe('pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 01, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 14, 1, IM, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'isOptanteSimplesNacional', 01, 14, 1, SimNaoToStr(OptanteSimples), '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 14, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
+                    Gerador.wGrupoNFSe('/pretador');
+
+                    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                                 '<listaRps>' +
+                                                   Notas +
+                                                 '</listaRps>';
+
+                    Gerador.wGrupoNFSe('/lote');
+                  end;
+
+    proEL: begin
+             Gerador.Prefixo := '';
+             Gerador.wGrupoNFSe('LoteRps' + aNameSpace);
+             Gerador.wCampoNFSe(tcStr, '#1', 'Id', 01, 15, 1, IdLote, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
+             Gerador.wCampoNFSe(tcInt, '#1', 'QuantidadeRps', 01, 14, 1, QtdeNotas, '');
+             Gerador.wGrupoNFSe('IdentificacaoPrestador');
+             Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 01, 14, 1, CNPJ, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 14, 1, IM, '');
+             Gerador.wGrupoNFSe('/IdentificacaoPrestador');
+
+             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                          '<listaRps>' +
+                                            Notas +
+                                          '</listaRps>';
+
+             Gerador.wGrupoNFSe('/LoteRps');
+           end;
+
+    proISSDSF: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Cabecalho');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 01, 15, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 01, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'RazaoSocialRemetente', 01, 14, 1, RazaoSocial, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
+                 Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
+                 Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
+                 Gerador.wCampoNFSe(tcInt, '#1', 'QtdRPS', 01, 14, 1, QtdeNotas, '');
+                 Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalServicos', 01, 14, 1, ValorTotalServicos, '');
+                 Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalDeducoes', 01, 14, 1, ValorTotalDeducoes, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 14, 1, VersaoXML, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'MetodoEnvio', 01, 02, 1, 'WS', '');
+                 Gerador.wGrupoNFSe('/Cabecalho');
+
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                              '<Lote' + aIdentificador + '>' +
+                                                Notas +
+                                              '</Lote>';
+               end;
+
+    proNFSEBrasil: begin
+                     tagCabecalhoCodigoMunicipio := RetornarConteudoEntre(Notas, '<CodigoMunicipio>', '</CodigoMunicipio>');
+                     tagCabecalhoCodigoMunicipio := ' codMunicipio="' + tagCabecalhoCodigoMunicipio + '"';
+
+                     Gerador.Prefixo := Prefixo3;
+                     Gerador.wGrupoNFSe('LoteRps' + tagCabecalhoCodigoMunicipio + aVersao + aIdentificador);
+
+                     Gerador.Prefixo := Prefixo4;
+                     Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, IdLote, '');
+
+                     if VersaoNFSe = ve100 then
+                     begin
+                       Gerador.wGrupoNFSe('CpfCnpj');
+                       if Length(OnlyNumber(Cnpj)) <= 11 then
+                         Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+                       else
+                         Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+                       Gerador.wGrupoNFSe('/CpfCnpj');
+                     end
+                     else
+                       Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+                     Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+                     Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 15, 1, QtdeNotas, '');
+
+                     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                                  '<' + Prefixo4 + 'ListaRps>' +
+                                                    Notas +
+                                                  '</' + Prefixo4 + 'ListaRps>';
+
+                     Gerador.Prefixo := Prefixo3;
+                     Gerador.wGrupoNFSe('/LoteRps');
+                   end;
+
+  else begin
+         Gerador.Prefixo := Prefixo3;
+         if Provedor in [proCoplan] then
+           Gerador.wGrupoNFSe('LoteRps' + aVersao + aIdentificador)
+         else
+           Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao + aNameSpace);
+
+         Gerador.Prefixo := Prefixo4;
+         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, IdLote, '');
+
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         begin
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(Cnpj)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+         end
+         else
+           Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+         Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 15, 1, QtdeNotas, '');
+
+         Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                      '<' + Prefixo4 + 'ListaRps>' +
+                                        Notas +
+                                      '</' + Prefixo4 + 'ListaRps>';
+
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('/LoteRps');
+       end;
+  end;
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  if (Gerador.ListaDeAlertas.Count <> 0) or
+     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+    Result := '';
 end;
 
-class function TNFSeG.Gera_DadosMsgConsSitLoteEquiplano(CodCidade: Integer;
-  CNPJ, IM, Protocolo, NumeroLote: String; TagI,
-  TagF: AnsiString): AnsiString;
+function TNFSeG.Gera_DadosMsgConsSitLote: String;
 begin
-  Result:= TagI +
-             '<prestador>' +
-               '<nrInscricaoMunicipal>' + IM + '</nrInscricaoMunicipal>' +
-               '<cnpj>' + CNPJ + '</cnpj>' +
-               '<idEntidade>' + GetIdEntidadeEquiplano(CodCidade) + '</idEntidade>' +
-             '</prestador>' +
-             '<nrLoteRps>' + NumeroLote + '</nrLoteRps>' +
-             //'<nrProtocolo>' + Protocolo + '</nrProtocolo>' +
-           TagF;
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proInfisc: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 01, 15, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'cLote', 01, 15, 1, Protocolo, '');
+               end;
+
+    proEquiplano: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wGrupoNFSe('pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 14, 1, IM, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 01, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 14, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
+                    Gerador.wGrupoNFSe('/pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrLoteRps', 01, 14, 1, NumeroLote, '');
+                  end;
+
+    proEL: begin
+             Gerador.Prefixo := '';
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoPrestador', 01, 14, 1, CNPJ, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'numeroProtocolo', 01, 14, 1, Protocolo, '');
+           end;
+
+    proISSDSF: begin
+                 // Não possui 
+               end;
+
+  else begin
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('Prestador' + aNameSpace);
+
+         Gerador.Prefixo := Prefixo4;
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         begin
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(Cnpj)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+         end
+         else
+           Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+         Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('/Prestador');
+
+         Gerador.wCampoNFSe(tcStr, '#4', 'Protocolo', 01, 15, 1, Protocolo, '', True, aNameSpace);
+       end;
+  end;
+
+  if Provedor = proDBSeller then
+    Gerador.ArquivoFormatoXML := '<ConsultarSituacaoLoteRpsEnvio>' +
+                                   Gerador.ArquivoFormatoXML +
+                                 '</ConsultarSituacaoLoteRpsEnvio>';
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  if(Gerador.ListaDeAlertas.Count <> 0) or
+    (Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
+                  proCoplan, profintelISS, proFiorilli, proGoiania, proGovDigital,
+                  proISSDigital, proISSe, proProdata, proVirtual, proSaatri,
+                  proFreire, proPVH, proVitoria, proTecnos, proSisPMJP,
+                  proSystemPro]) then
+    Result := '';
 end;
 
-class function TNFSeG.Gera_DadosMsgEnviarLoteInfisc(Prefixo3, Prefixo4, Identificador, NameSpaceDad,
-  VersaoXML, NumeroLote, CodCidade, CNPJ, IM, RazaoSocial, Transacao, QtdeNotas, ValorTotalServicos,
-  ValorTotalDeducoes: String; DataInicial, DataFinal: TDateTime; Notas, TagI,
-  TagF: AnsiString): AnsiString;
+function TNFSeG.Gera_DadosMsgConsLote: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proInfisc: begin
+                 // Não Possui 
+               end;
+
+    proEquiplano: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wGrupoNFSe('pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 14, 1, IM, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 01, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 14, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
+                    Gerador.wGrupoNFSe('/pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrLoteRps', 01, 14, 1, NumeroLote, '');
+                  end;
+
+    proEL: begin
+             Gerador.Prefixo := '';
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoPrestador', 01, 14, 1, CNPJ, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'numeroProtocolo', 01, 14, 1, Protocolo, '');
+           end;
+
+    proISSDSF: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Cabecalho');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 01, 15, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 01, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 14, 1, VersaoXML, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
+                 Gerador.wGrupoNFSe('/Cabecalho');
+               end;
+
+  else begin
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('Prestador' + aNameSpace);
+
+         Gerador.Prefixo := Prefixo4;
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         begin
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(Cnpj)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+         end
+         else
+           Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+         if Provedor = proTecnos then
+           Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 40, 1, RazaoSocial, '');
+
+         Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+         if Provedor = proISSDigital then
+         begin
+           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 01, 40, 1, Senha, '');
+           Gerador.wCampoNFSe(tcStr, '#6', 'FraseSecreta', 01, 40, 1, FraseSecreta, '');
+         end;
+
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('/Prestador');
+
+         Gerador.wCampoNFSe(tcStr, '#4', 'Protocolo', 01, 15, 1, Protocolo, '', True, aNameSpace);
+       end;
+  end;
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  if (Gerador.ListaDeAlertas.Count <> 0) or
+     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+    Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgConsNFSeRPS: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proInfisc: begin
+                 // Não Possui
+               end;
+
+    proEquiplano: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wGrupoNFSe('rps');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrRps', 01, 14, 1, NumeroRps, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrEmissorRps', 01, 01, 1, '1', '');
+                    Gerador.wGrupoNFSe('/rps');
+                    Gerador.wGrupoNFSe('pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 14, 1, IM, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 01, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 14, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
+                    Gerador.wGrupoNFSe('/pretador');
+                  end;
+
+    proEL: begin
+             Gerador.Prefixo := '';
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoPrestador', 01, 14, 1, CNPJ, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoRps', 01, 14, 1, NumeroRps, '');
+           end;
+
+    proISSDSF: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Cabecalho');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 01, 15, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 01, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 14, 1, VersaoXML, '');
+                 Gerador.wGrupoNFSe('/Cabecalho');
+
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                              '<Lote' + aIdentificador + '>' +
+                                                Notas +
+                                              '</Lote>';
+               end;
+
+  else begin
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('IdentificacaoRps' + aNameSpace);
+
+         Gerador.Prefixo := Prefixo4;
+         Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 40, 1, NumeroRps, '');
+         Gerador.wCampoNFSe(tcStr, '#2', 'Serie', 01, 40, 1, SerieRps, '');
+         Gerador.wCampoNFSe(tcStr, '#3', 'Tipo', 01, 40, 1, TipoRps, '');
+
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('/IdentificacaoRps');
+
+         Gerador.wGrupoNFSe('Prestador' + aNameSpace);
+
+         Gerador.Prefixo := Prefixo4;
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         begin
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(Cnpj)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+         end
+         else
+           Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+         if Provedor = proTecnos then
+           Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 40, 1, RazaoSocial, '');
+
+         Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+         if Provedor = proISSDigital then
+         begin
+           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 01, 40, 1, Senha, '');
+           Gerador.wCampoNFSe(tcStr, '#6', 'FraseSecreta', 01, 40, 1, FraseSecreta, '');
+         end;
+
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('/Prestador');
+       end;
+  end;
+
+  if Provedor = proDBSeller then
+    Gerador.ArquivoFormatoXML := '<ConsultarNfseRpsEnvio>' +
+                                   Gerador.ArquivoFormatoXML +
+                                 '</ConsultarNfseRpsEnvio>';
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  if (Gerador.ListaDeAlertas.Count <> 0) or
+     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+    Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgConsNFSe: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proInfisc: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 01, 15, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'notaInicial', 01, 15, 1, NumeroNFSe, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'notafinal', 01, 15, 1, NumeroNFSe, '');
+                 Gerador.wCampoNFSe(tcDat, '#1', 'emissaoInicial', 01, 15, 1, DataInicial, '');
+                 Gerador.wCampoNFSe(tcDat, '#1', 'emissaofinal', 01, 15, 1, DataFinal, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'serieNotaFiscal', 01, 15, 1, SerieNFSe, '');
+               end;
+
+    proEquiplano: begin
+                    // Nao Possui
+                  end;
+
+    proEL: begin
+             Gerador.Prefixo := '';
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoPrestador', 01, 14, 1, CNPJ, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'numeroNfse', 01, 14, 1, NumeroNFSe, '');
+             Gerador.wCampoNFSe(tcDat, '#1', 'dataInicial', 01, 10, 1, DataInicial, '');
+             Gerador.wCampoNFSe(tcDat, '#1', 'dataFinal', 01, 10, 1, DataFinal, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoTomador', 01, 14, 1, CNPJTomador, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoIntermediarioServico', 01, 14, 1, CNPJInter, '');
+           end;
+
+    proISSDSF: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Cabecalho');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 01, 15, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 01, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipalPrestador', 01, 14, 1, IM, '');
+                 Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
+                 Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'NotaInicial', 01, 14, 1, NumeroNFSe, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 14, 1, VersaoXML, '');
+                 Gerador.wGrupoNFSe('/Cabecalho');
+               end;
+
+  else begin
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('Prestador' + aNameSpace);
+
+         Gerador.Prefixo := Prefixo4;
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         begin
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(Cnpj)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+         end
+         else
+           Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+         if Provedor = proTecnos then
+           Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 40, 1, RazaoSocial, '');
+
+         Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+         if Provedor = proISSDigital then
+         begin
+           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 01, 40, 1, Senha, '');
+           Gerador.wCampoNFSe(tcStr, '#6', 'FraseSecreta', 01, 40, 1, FraseSecreta, '');
+         end;
+
+         Gerador.Prefixo := Prefixo3;
+         Gerador.wGrupoNFSe('/Prestador');
+
+         if NumeroNFSe <> '' then
+         begin
+           if Provedor in [proPVH, proSystemPro, proPublica, proSisPMJP] then
+           begin
+             Gerador.wGrupoNFSe('Faixa');
+             Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfseInicial', 01, 40, 1, NumeroNFSe, '');
+             Gerador.wCampoNFSe(tcStr, '#6', 'NumeroNfseFinal', 01, 40, 1, NumeroNFSe, '');
+             Gerador.wGrupoNFSe('/Faixa');
+           end
+           else
+             Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfse', 01, 40, 1, NumeroNFSe, '');
+         end;
+
+         if (DataInicial>0) and (DataFinal>0) then
+         begin
+           Gerador.wGrupoNFSe('PeriodoEmissao');
+           Gerador.wCampoNFSe(tcDat, '#5', 'DataInicial', 01, 10, 1, DataInicial, '');
+           Gerador.wCampoNFSe(tcDat, '#6', 'DataFinal', 01, 10, 1, DataFinal, '');
+           Gerador.wGrupoNFSe('/PeriodoEmissao');
+         end;
+
+         if (CNPJTomador <> '') or (IMTomador <> '')then
+         begin
+           Gerador.Prefixo := Prefixo3;
+           Gerador.wGrupoNFSe('Tomador');
+
+           Gerador.Prefixo := Prefixo4;
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(CnpjTomador)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, CnpjTomador, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, CnpjTomador, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+
+           Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IMTomador, '');
+
+           Gerador.Prefixo := Prefixo3;
+           Gerador.wGrupoNFSe('/Tomador');
+         end;
+
+         if (NomeInter <> '') and (CNPJInter <> '') then
+         begin
+           Gerador.Prefixo := Prefixo3;
+           Gerador.wGrupoNFSe('IntermediarioServico');
+
+           Gerador.Prefixo := Prefixo4;
+           Gerador.wCampoNFSe(tcStr, '#4', 'RazaoSocial', 01, 15, 1, NomeInter, '');
+
+           if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+           begin
+             Gerador.wGrupoNFSe('CpfCnpj');
+             if Length(OnlyNumber(CnpjInter)) <= 11 then
+               Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, CnpjInter, '')
+             else
+               Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, CnpjInter, '');
+             Gerador.wGrupoNFSe('/CpfCnpj');
+           end
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, CnpjInter, '');
+
+           Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IMInter, '');
+
+           Gerador.Prefixo := Prefixo3;
+           Gerador.wGrupoNFSe('/IntermediarioServico');
+         end;
+
+         if Provedor in [proFiorilli, profintelISS, proPVH, proSystemPro,
+                         proSisPMJP, proDigifred] then
+           Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 5, 1, Pagina, '');
+       end;
+  end;
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  if (Gerador.ListaDeAlertas.Count <> 0) or
+     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+    Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgCancelarNFSe: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proInfisc: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 01, 15, 1, Cnpj, '');
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+               end;
+
+    proEquiplano: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wGrupoNFSe('pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 14, 1, IM, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 01, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 14, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
+                    Gerador.wGrupoNFSe('/pretador');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'nrNfse', 01, 14, 1, NumeroNFSe, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'dsMotivoCancelamento', 01, 01, 1, MotivoCanc, '');
+                  end;
+
+    proEL: begin
+             Gerador.Prefixo := '';
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoPrestador', 01, 14, 1, CNPJ, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'numeroNfse', 01, 14, 1, NumeroNFSe, '');
+           end;
+
+    proISSDSF: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Cabecalho');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 01, 15, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 01, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 14, 1, VersaoXML, '');
+                 Gerador.wGrupoNFSe('/Cabecalho');
+
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                              '<Lote' + aIdentificador + '>' +
+                                                Notas +
+                                              '</Lote>';
+               end;
+
+    proGinfes: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Prestador');
+
+                 Gerador.Prefixo := Prefixo4;
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Cnpj', 01, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 40, 1, IM, '');
+
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('/Prestador');
+                 Gerador.wCampoNFSe(tcStr, '#3', 'NumeroNfse', 01, 40, 1, NumeroNfse, '');
+               end;
+
+    proIssCuritiba: begin
+                      Gerador.Prefixo := '';
+                      Gerador.wGrupoNFSe('InfPedidoCancelamento');
+                      Gerador.wGrupoNFSe('IdentificacaoNfse');
+                      Gerador.wCampoNFSe(tcStr, '#1', 'Cnpj', 01, 14, 1, Cnpj, '');
+                      Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 40, 1, IM, '');
+                      Gerador.wCampoNFSe(tcStr, '#3', 'Numero', 01, 40, 1, NumeroNfse, '');
+                      Gerador.wGrupoNFSe('/IdentificacaoNfse');
+                      Gerador.wGrupoNFSe('/InfPedidoCancelamento');
+                    end;
+  else begin
+         Gerador.Prefixo := Prefixo4;
+         Gerador.wGrupoNFSe('IdentificacaoNfse');
+         Gerador.wCampoNFSe(tcStr, '#3', 'Numero', 01, 40, 1, NumeroNfse, '');
+
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         begin
+           Gerador.wGrupoNFSe('CpfCnpj');
+           if Length(OnlyNumber(Cnpj)) <= 11 then
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+           else
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+           Gerador.wGrupoNFSe('/CpfCnpj');
+         end
+         else
+           Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+         Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 40, 1, IM, '');
+         Gerador.wCampoNFSe(tcInt, '#2', 'CodigoMunicipio', 01, 40, 1, CodMunicipio, '');
+
+         Gerador.wGrupoNFSe('/IdentificacaoNfse');
+
+         Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 01, 14, 1, CodigoCanc, '');
+
+         if (Provedor in [proPublica, proTecnos]) and (MotivoCanc <> '') then
+           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 14, 1, MotivoCanc, '');
+
+         Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                      '</' + Prefixo4 + 'InfPedidoCancelamento>';
+       end;
+  end;
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  if Provedor = proDBSeller then
+    Result := '<CancelarNfse>' + Result + '</CancelarNfse>';
+
+  if (Gerador.ListaDeAlertas.Count <> 0) or
+     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+    Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgGerarNFSe: String;
 var
-  DadosMsg: AnsiString;
+  tagCabecalhoCodigoMunicipio: String;
 begin
-  DadosMsg := Notas;
-  Result := TagI + DadosMsg + TagF;
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proInfisc: begin
+                 // Nao Possui
+               end;
+
+    proEquiplano: begin
+                    // Nao Possui
+                  end;
+
+    proEL: begin
+             // Nao Possui
+           end;
+
+    proISSDSF: begin
+                 // Nao Possui
+               end;
+
+    proWebISS: begin
+                 Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
+
+                 Gerador.Prefixo := Prefixo4;
+                 Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, IdLote, '');
+
+                 if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+                 begin
+                   Gerador.wGrupoNFSe('CpfCnpj');
+                   if Length(OnlyNumber(Cnpj)) <= 11 then
+                     Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 01, 11, 1, Cnpj, '')
+                   else
+                     Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+                   Gerador.wGrupoNFSe('/CpfCnpj');
+                 end
+                 else
+                   Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 01, 14, 1, Cnpj, '');
+
+                 Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+                 Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 15, 1, QtdeNotas, '');
+
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                              '<' + Prefixo4 + 'ListaRps>' +
+                                                Notas +
+                                              '</' + Prefixo4 + 'ListaRps>';
+
+                 Gerador.Prefixo := Prefixo3;
+                 Gerador.wGrupoNFSe('/LoteRps');
+
+                 Result := Gerador.ArquivoFormatoXML;
+               end;
+
+  else Result := Notas;
+  end;
+
+  if (Gerador.ListaDeAlertas.Count <> 0) or
+     (Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
+                   proBetim, proBHIss, proDBSeller, proEquiplano, proFIssLex,
+                   proGinfes, proGovBR, proIssCuritiba, proIssIntel, proIssNet,
+                   proLexsom, proNatal, proTinus, proProdemge, proRJ, proSimplIss,
+                   proThema, proTiplan, proIssDSF, proInfisc, proAgili,
+                   proSpeedGov, proPronim, proActcon, proSalvador,
+                   proNFSEBrasil]) then
+    Result := '';
 end;
 
-class function TNFSeG.Gera_DadosMsgConsNFSeInfisc(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-  CodCidade, CNPJ, IM, NotaInicial,Serie: String; DataInicial, DataFinal: TDateTime; TagI,
-  TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
+function TNFSeG.Gera_DadosMsgEnviarSincrono: String;
 begin
-// DadosMsg := '<CNPJ>'+CNPJ+'</CNPJ>'+
-//             '<chvAcessoNFS-e>'+NotaInicial+'</chvAcessoNFS-e>';
+ Result := Gera_DadosMsgEnviarLote;
 
-DadosMsg := '<CNPJ>'            + CNPJ                                        + '</CNPJ>'+
-            '<notaInicial>'     + NotaInicial                                 + '</notaInicial>' +
-            '<notaFinal>'       + NotaInicial                                 + '</notaFinal>' +
-            '<emissaoInicial>'  + FormatDateTime( 'yyyy-mm-dd', dataInicial ) + '</emissaoInicial>'+
-            '<emissaoFinal>'    + FormatDateTime( 'yyyy-mm-dd', dataFinal )   + '</emissaoFinal>'+
-            '<serieNotaFiscal>' + Serie                                       + '</serieNotaFiscal>';
-
- Result := TagI + DadosMsg + TagF;
+ if (Gerador.ListaDeAlertas.Count <> 0) or
+    (Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
+                  proBetim, proBHISS, proDBSeller, proEquiplano, profintelISS,
+                  proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
+                  proISSDigital, proISSIntel, proISSNet, proLexsom, proNatal,
+                  proTinus, proProdemge, proPublica, proRecife, proRJ, proSaatri,
+                  proFreire, proSimplISS, proThema, proTiplan, proWebISS,
+                  proProdata, proAgili, proSpeedGov, proPronim, proSalvador,
+                  proNFSEBrasil]) then
+   Result := '';
 end;
 
-class function TNFSeG.Gera_DadosMsgConsSitLoteInfisc(CodCidade: Integer; CNPJ, IM, Protocolo,
-  NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
+function TNFSeG.Gera_DadosMsgSubstituirNFSe: String;
 begin
- DadosMsg := '<CNPJ>'+CNPJ+'</CNPJ>'+
-             '<cLote>'+Protocolo+'</cLote>';
- Result := TagI + DadosMsg + TagF;
-end;
+ Result := Gera_DadosMsgCancelarNFSe + '</' + Prefixo3 + 'Pedido>' + Notas;
 
-class function TNFSeG.Gera_DadosMsgCancelarNFSeInfisc(Prefixo3, Prefixo4,
-  NameSpaceDad, VersaoXML, CNPJ, Transacao, CodMunicipio,
-  NumeroLote: String; Notas, TagI, TagF: AnsiString): AnsiString;
-var
- DadosMsg: AnsiString;
-begin
- DadosMsg := '<CNPJ>'+CNPJ+'</CNPJ>'+Notas;
- Result := TagI + DadosMsg + TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgEnviarLoteEL(NameSpaceDad, NumeroLote, QtdeRPS, CNPJ,
-  IM: String; CodCidade: Integer; OptanteSimples: Boolean; Id, Notas, TagI, TagF: AnsiString): AnsiString;
-begin
-  Result:= '<LoteRps ' + NameSpaceDad +
-            '<Id>' + Id + '</Id>' +
-            '<NumeroLote>' + NumeroLote + '</NumeroLote>' +
-            '<QuantidadeRps>' + QtdeRPS + '</QuantidadeRps>' +
-            '<IdentificacaoPrestador>' +
-              '<CpfCnpj>' + CNPJ + '</CpfCnpj>' +
-              '<IndicacaoCpfCnpj>' + IfThen(Length(CNPJ)<>14, '1', '2') + '</IndicacaoCpfCnpj>' +
-              '<InscricaoMunicipal>' +  IM + '</InscricaoMunicipal>' +
-            '</IdentificacaoPrestador>' +
-            '<ListaRps>' +
-              Notas +
-            '</ListaRps>' +
-           '</LoteRps>';
-{  // #HASH# = é alterado por StringReplace() posteriormente em TNFSeEnviarLoteRPS.Executar
-  Result:= TagI +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-              '<hashIdentificador>' + '#HASH#' + '</hashIdentificador>' +
-              '<arquivo>' +
-               '<Id>' + Id + '</Id>' +
-               '<NumeroLote>' + NumeroLote + '</NumeroLote>' +
-               '<QuantidadeRps>' + QtdeRPS + '</QuantidadeRps>' +
-               '<IdentificacaoPrestador>' +
-                 '<CpfCnpj>' + CNPJ + '</CpfCnpj>' +
-                 '<IndicacaoCpfCnpj>' + IfThen(Length(CNPJ)<>14, '1', '2') + '</IndicacaoCpfCnpj>' +
-                 '<InscricaoMunicipal>' +  IM + '</InscricaoMunicipal>' +
-               '</IdentificacaoPrestador>' +
-               '<ListaRps>' +
-                 Notas +
-               '</ListaRps>' +
-              '</arquivo>' +
-           TagF;}
-end;
-
-class function TNFSeG.Gera_DadosMsgConsSitLoteEL(CodCidade: Integer;
-  CNPJ, IM, Protocolo, NumeroLote: String; TagI,
-  TagF: AnsiString): AnsiString;
-begin
-  Result:= TagI +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-              '<numeroProtocolo>' + Protocolo + '</numeroProtocolo>' +
-           TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsLoteEL(CodCidade: Integer;
-  CNPJ, IM, Protocolo, NumeroLote: String; TagI, TagF: AnsiString): AnsiString;
-begin
-  Result:= TagI +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-              '<numeroProtocolo>' + Protocolo + '</numeroProtocolo>' +
-           TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsNFSeRPSEL(CodCidade: Integer;
-  NumeroRps, CNPJ, IM: String; TagI, TagF: AnsiString): AnsiString;
-begin
-  Result:= TagI +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-              '<identificacaoRps>' + NumeroRps + '</identificacaoRps>' +
-           TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsNFSeEL(Prefixo3, Prefixo4, NameSpaceDad, VersaoXML,
-  NumeroNFSe, CNPJ, IM, CNPJTomador, CNPJITermediarioServ: String; DataInicial,
-  DataFinal: TDateTime; TagI, TagF: AnsiString): AnsiString;
-begin
-  Result:= TagI +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-              '<numeroNfse>' + NumeroNFSe + '</numeroNfse>' +
-              '<dataInicial>' + FormatDateTime('yyyy-mm-dd', DataInicial) + '</dataInicial>' +
-              '<dataFinal>' + FormatDateTime('yyyy-mm-dd', DataFinal) + '</dataFinal>' +
-              '<identificacaoTomador>' + CNPJTomador + '</identificacaoTomador>' +
-              '<identificacaoItermediarioServico>' + CNPJITermediarioServ + '</identificacaoItermediarioServico>' +
-           TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgCancelarNFSeEL(
-  CodCidade: Integer; CNPJ, IM, NumeroNFSe, MotivoCancelamento: String;
-  TagI, TagF: AnsiString): AnsiString;
-begin
-  Result:= TagI +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-              '<numeroNfse>' + NumeroNFSe + '</numeroNfse>' +
-           TagF;
-end;
-
-class function TNFSeG.Gera_DadosMsgConsSeqRPSEL(TagI, TagF: AnsiString;
-  VersaoXML, CodCidade, IM, CNPJ, SeriePrestacao: String): AnsiString;
-begin
- //consultar sequencial RPS
-  Result:= '<wsn:ConsultarUltimaRps>' +
-              '<identificacaoPrestador>' + CNPJ + '</identificacaoPrestador>' +
-           '<wsn:ConsultarUltimaRps>';
+ if (Gerador.ListaDeAlertas.Count <> 0) or
+    (Provedor in [proNenhum]) then
+   Result := '';
 end;
 
 end.

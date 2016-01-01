@@ -405,11 +405,11 @@ begin
  ACBrNFSe1.Configuracoes.Arquivos.Salvar     := True;
 
  ACBrNFSe1.Configuracoes.Geral.Salvar          := ckSalvar.Checked;
+ ACBrNFSe1.Configuracoes.Geral.PathIniCidades  := edtArqINI.Text;
+ ACBrNFSe1.Configuracoes.Geral.PathIniProvedor := edtArqINI.Text;
  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
  ACBrNFSe1.Configuracoes.Geral.SenhaWeb        := edtSenhaWeb.Text;
  ACBrNFSe1.Configuracoes.Geral.UserWeb         := edtUserWeb.Text;
- ACBrNFSe1.Configuracoes.Geral.PathIniCidades  := edtArqINI.Text  + '\Cidades.ini';
- ACBrNFSe1.Configuracoes.Geral.PathIniProvedor := edtArqINI.Text;
 
  ACBrNFSe1.Configuracoes.WebServices.Salvar     := ckSalvarSoap.Checked;
  ACBrNFSe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));

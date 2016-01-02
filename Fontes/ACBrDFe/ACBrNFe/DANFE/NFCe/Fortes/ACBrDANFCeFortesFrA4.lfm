@@ -1,10 +1,10 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
-  Left = 5
-  Height = 745
-  Top = 2
+  Left = 11
+  Height = 741
+  Top = 5
   Width = 995
   Caption = 'frmACBrDANFCeFortesFrA4'
-  ClientHeight = 745
+  ClientHeight = 741
   ClientWidth = 995
   Color = clBtnFace
   Font.Color = clWindowText
@@ -13,7 +13,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   OnCreate = FormCreate
   LCLVersion = '1.4.4.0'
   object rlReportA4: TRLReport
-    Left = 8
+    Left = 0
     Height = 1123
     Top = 0
     Width = 794
@@ -27,7 +27,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     OnDataRecord = rlReportA4DataRecord
     object RLBand1: TRLBand
       Left = 38
-      Height = 77
+      Height = 80
       Top = 38
       Width = 718
       BandType = btTitle
@@ -43,7 +43,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object imgLogo: TRLImage
         Left = 4
         Height = 70
-        Top = 4
+        Top = 5
         Width = 75
         Center = True
         RealBounds.Left = 0
@@ -95,7 +95,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLLabel2: TRLLabel
         Left = 80
         Height = 16
-        Top = 58
+        Top = 43
         Width = 159
         Caption = 'CNPJ: 12.345.789/0001.12'
         Font.Color = clBlack
@@ -112,7 +112,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLLabel4: TRLLabel
         Left = 255
         Height = 16
-        Top = 58
+        Top = 43
         Width = 221
         Alignment = taRightJustify
         Caption = 'Inscrição Municipal: 12345678900123'
@@ -130,7 +130,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLLabel5: TRLLabel
         Left = 492
         Height = 16
-        Top = 58
+        Top = 43
         Width = 217
         Alignment = taRightJustify
         Caption = 'Inscrição Estadual: 12345678900123'
@@ -148,10 +148,13 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLMemo3: TRLMemo
         Left = 80
         Height = 16
-        Top = 42
+        Top = 60
         Width = 630
         Alignment = taCenter
         Behavior = [beSiteExpander]
+        Lines.Strings = (
+          'Linha 1'
+        )
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -162,7 +165,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand2: TRLBand
       Left = 38
       Height = 36
-      Top = 115
+      Top = 118
       Width = 718
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -212,7 +215,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand3: TRLBand
       Left = 38
       Height = 18
-      Top = 151
+      Top = 154
       Width = 718
       BandType = btColumnHeader
       Borders.Sides = sdCustom
@@ -340,7 +343,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object subItens: TRLSubDetail
       Left = 38
       Height = 58
-      Top = 169
+      Top = 172
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -492,7 +495,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand5: TRLBand
       Left = 38
       Height = 18
-      Top = 227
+      Top = 230
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -580,7 +583,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLSubDetail1: TRLSubDetail
       Left = 38
       Height = 78
-      Top = 299
+      Top = 302
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -765,7 +768,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLSubDetail2: TRLSubDetail
       Left = 38
       Height = 446
-      Top = 377
+      Top = 380
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -793,10 +796,10 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Width = 0
         RealBounds.Height = 0
         object RLLabel31: TRLLabel
-          Left = 312
+          Left = 307
           Height = 16
           Top = 0
-          Width = 399
+          Width = 407
           Alignment = taRightJustify
           Caption = 'Informação dos Tributos Totais Incidentes (Lei Federal 12.741/2012):'
           Font.Color = clBlack
@@ -814,7 +817,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand10: TRLBand
         Left = 0
         Height = 35
-        Top = 34
+        Top = 97
         Width = 718
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -861,7 +864,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand11: TRLBand
         Left = 0
         Height = 73
-        Top = 69
+        Top = 132
         Width = 718
         AutoSize = True
         Borders.Sides = sdCustom
@@ -973,7 +976,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object rlbConsumidor: TRLBand
         Left = 0
         Height = 44
-        Top = 142
+        Top = 205
         Width = 718
         AutoSize = True
         Borders.Sides = sdCustom
@@ -1048,7 +1051,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object rlbRodape: TRLBand
         Left = 0
         Height = 173
-        Top = 186
+        Top = 249
         Width = 718
         AutoSize = True
         BandType = btSummary
@@ -1154,7 +1157,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand15: TRLBand
         Left = 0
-        Height = 17
+        Height = 80
         Top = 17
         Width = 718
         Borders.Sides = sdCustom
@@ -1167,13 +1170,124 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Width = 0
         RealBounds.Height = 0
         BeforePrint = RLBand15BeforePrint
-        object RLLabel43: TRLLabel
-          Left = 4
+        object RLLabel44: TRLLabel
+          Left = 422
           Height = 16
-          Top = 0
-          Width = 713
-          Alignment = taCenter
-          Caption = 'Informação dos Tributos Totais Incidentes (Lei Federal 12.741/2012):'
+          Top = 5
+          Width = 134
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Tributos Federais :'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel45: TRLLabel
+          Left = 559
+          Height = 16
+          Top = 5
+          Width = 154
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0000'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = RLLabel45BeforePrint
+        end
+        object RLLabel46: TRLLabel
+          Left = 422
+          Height = 16
+          Top = 20
+          Width = 134
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Tributos Estaduais :'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel47: TRLLabel
+          Left = 559
+          Height = 16
+          Top = 20
+          Width = 154
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0000'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = RLLabel47BeforePrint
+        end
+        object RLLabel48: TRLLabel
+          Left = 422
+          Height = 16
+          Top = 37
+          Width = 134
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Tributos Municipais :'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel49: TRLLabel
+          Left = 559
+          Height = 16
+          Top = 37
+          Width = 154
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0000'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = RLLabel49BeforePrint
+        end
+        object RLLabel43: TRLLabel
+          Left = 531
+          Height = 16
+          Top = 58
+          Width = 183
+          Alignment = taRightJustify
+          Caption = 'Fonte de pesquisa dos tributos'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
@@ -1190,7 +1304,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand12: TRLBand
       Left = 38
       Height = 18
-      Top = 245
+      Top = 248
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1244,7 +1358,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand13: TRLBand
       Left = 38
       Height = 18
-      Top = 263
+      Top = 266
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1298,7 +1412,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand14: TRLBand
       Left = 38
       Height = 18
-      Top = 281
+      Top = 284
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom

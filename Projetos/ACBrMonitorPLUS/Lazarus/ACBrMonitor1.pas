@@ -4214,6 +4214,8 @@ begin
     Ini.WriteInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', sedLogLinhasComp.Value);
     Ini.WriteInteger('ACBrNFeMonitor', 'VersaoSSL', rgVersaoSSL.ItemIndex);
     Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServices', edtArquivoWebServicesNFe.Text );
+    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServicesCTe', edtArquivoWebServicesCTe.Text );
+    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServicesMDFe', edtArquivoWebServicesMDFe.Text );
     Ini.WriteBool('ACBrNFeMonitor', 'ValidarDigest', cbValidarDigest.Checked);
     Ini.WriteInteger('ACBrNFeMonitor', 'TimeoutWebService', edtTimeoutWebServices.Value);
 

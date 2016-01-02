@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2016
+-- ACBrECFFiscNET --
+[*] Simplificação do método FechaCupom, para evitar erros na sequencia de envio
+    dos comandos
+    http://www.projetoacbr.com.br/forum/topic/26441-fechamento-cupom-ecffiscnet/
+
 22/12/2015
 -- ACBrECFVirtual --
 [-] Correção de Bug no calculo do G.T., quando há cancelamento de Vendas em

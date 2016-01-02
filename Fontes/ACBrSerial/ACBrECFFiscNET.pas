@@ -1161,18 +1161,18 @@ begin
        Obs := fsPAF + #10 + Obs ;
   end ;
 
+  { Se tiver Observações no rodape, deve enviar antes do consumidor }
+  if Obs <> '' then
+  begin
+     FiscNETComando.NomeComando := 'ImprimeTexto' ;
+     FiscNETComando.AddParamString('TextoLivre',Obs);
+     EnviaComando ;
+     Obs := '' ;
+  end ;
+
   if not Consumidor.Enviado then
   begin
      try
-        { Se tiver Observações no rodape, deve enviar antes do consumidor }
-        if Obs <> '' then
-        begin
-           FiscNETComando.NomeComando := 'ImprimeTexto' ;
-           FiscNETComando.AddParamString('TextoLivre',Obs);
-           EnviaComando ;
-           Obs := '' ;
-        end ;
-
         FiscNETComando.NomeComando := 'IdentificaConsumidor' ;
         FiscNETComando.AddParamString('IdConsumidor',LeftStr(Consumidor.Documento,29)) ;
         if Consumidor.Nome <> '' then
@@ -1182,41 +1182,13 @@ begin
         EnviaComando ;
         Consumidor.Enviado := True ;
      except
-//        Obs := Observacao ;
      end ;
   end ;
 
-  try
-     FiscNETComando.NomeComando := 'EncerraDocumento' ;
-     if (Obs <> '') then
-        FiscNETComando.AddParamString('TextoPromocional',Obs);
-     FiscNETComando.TimeOut     := 5 ;
-     FiscNETComando.AddParamString('Operador',Operador) ;
-     EnviaComando ;
-
-  except
-     on E : Exception do
-     begin
-        if (pos('ErroProtSequenciaComando',E.Message) <> 0) or
-           (pos('ErroCMDForaDeSequencia',E.Message) <> 0) then
-        begin
-           if (Obs <> '') then
-           begin
-              FiscNETComando.NomeComando := 'ImprimeTexto' ;
-              FiscNETComando.AddParamString('TextoLivre',Obs);
-              EnviaComando ;
-           end ;
-
-           FiscNETComando.NomeComando := 'EncerraDocumento' ;
-           FiscNETComando.TimeOut     := 5 ;
-           FiscNETComando.AddParamString('Operador',Operador) ;
-           EnviaComando ;
-        end else
-        begin
-          raise;
-        end;
-     end ;
-  end ;
+  FiscNETComando.NomeComando := 'EncerraDocumento' ;
+  FiscNETComando.TimeOut     := 5 ;
+  FiscNETComando.AddParamString('Operador',Operador) ;
+  EnviaComando ;
 
   fsEmPagamento := false ;
 end;

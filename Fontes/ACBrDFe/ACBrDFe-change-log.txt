@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2016
+-- ACBrDFeWebService --
+[+] Adicionado o método: procedure Clear; virtual; que sempre será chamado em
+    "TDFeWebService.Create" e "TDFeWebService.InicializarServico".
+    Isso garantirá que não haverá informações de consultas anteriores, nas
+    propriedades de Retorno do WebService.   (por: DSA)
+
 23/12/2015
 -- ACBrDFeSSL --
 [*] Modificada a assinatura do método "Assinar", para permitir assinar documentos

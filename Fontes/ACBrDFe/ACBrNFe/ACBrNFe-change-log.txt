@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2016
+-- ACBrNFeWebServices --
+[+] Adicionada sobrecarga no método "Clear" de todos os WebServices
+[*] Remoção de propriedades sem uso.
+[*] Ajuste de acesso (write) em propriedades que podem ser ReadOnly
+    (por: DSA)
+
 23/12/2015
 -- pcnNFeW --
 [*] Alterado a condição para determinar se vai ser gerado o grupo <ICMSUFDest> ou

@@ -104,6 +104,7 @@ type
     function GerarPrefixoArquivo: String; virtual;
   public
     constructor Create(AOwner: TACBrDFe); virtual;
+    procedure Clear; virtual;
 
     function Executar: Boolean; virtual;
 
@@ -149,10 +150,6 @@ begin
     'xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"';
 
   FPCabMsg := '';
-  FPDadosMsg := '';
-  FPRetornoWS := '';
-  FPRetWS := '';
-  FPMsg := '';
   FPURL := '';
   FPVersaoServico := '';
   FPArqEnv := '';
@@ -160,6 +157,16 @@ begin
   FPServico := '';
   FPSoapAction := '';
   FPMimeType := '';  // Vazio, usará por default: 'application/soap+xml'
+
+  Clear;
+end;
+
+procedure TDFeWebService.Clear;
+begin
+  FPDadosMsg := '';
+  FPRetornoWS := '';
+  FPRetWS := '';
+  FPMsg := '';
 end;
 
 function TDFeWebService.Executar: Boolean;
@@ -195,6 +202,7 @@ end;
 procedure TDFeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
+  Clear;
 
   DefinirURL;
   if URL = '' then

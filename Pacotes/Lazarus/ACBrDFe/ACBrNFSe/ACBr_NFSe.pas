@@ -8,11 +8,10 @@ interface
 
 uses
   ACBrNFSe, ACBrNFSeConfiguracoes, ACBrNFSeNotasFiscais, ACBrNFSeReg, 
-  ACBrNFSeWebServices, pnfsCancNfseResposta, pnfsConsLoteRpsResposta, 
-  pnfsConsNfseporRpsResposta, pnfsConsNfseResposta, 
-  pnfsConsSitLoteRpsResposta, pnfsConversao, pnfsEnvLoteRpsResposta, 
-  pnfsGerarNfseResposta, pnfsNFSe, pnfsNFSeG, pnfsNFSeR, pnfsNFSeW, 
-  pnfsSignature, pnfsSubsNfseResposta, ACBrNFSeDANFSeClass, LazarusPackageIntf;
+  ACBrNFSeWebServices, pnfsCancNfseResposta, pnfsConsSitLoteRpsResposta, 
+  pnfsConversao, pnfsEnvLoteRpsResposta, pnfsNFSe, pnfsNFSeG, pnfsNFSeR, 
+  pnfsNFSeW, pnfsSignature, pnfsSubsNfseResposta, ACBrNFSeDANFSeClass, 
+  LazarusPackageIntf;
 
 implementation
 

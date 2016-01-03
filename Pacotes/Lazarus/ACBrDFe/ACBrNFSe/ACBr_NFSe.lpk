@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="20">
+    <Files Count="16">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas"/>
         <UnitName Value="ACBrNFSe"/>
@@ -42,61 +42,45 @@
         <UnitName Value="pnfsCancNfseResposta"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsLoteRpsResposta.pas"/>
-        <UnitName Value="pnfsConsLoteRpsResposta"/>
-      </Item7>
-      <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsNfseporRpsResposta.pas"/>
-        <UnitName Value="pnfsConsNfseporRpsResposta"/>
-      </Item8>
-      <Item9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsNfseResposta.pas"/>
-        <UnitName Value="pnfsConsNfseResposta"/>
-      </Item9>
-      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsSitLoteRpsResposta.pas"/>
         <UnitName Value="pnfsConsSitLoteRpsResposta"/>
-      </Item10>
-      <Item11>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConversao.pas"/>
         <UnitName Value="pnfsConversao"/>
-      </Item11>
-      <Item12>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsEnvLoteRpsResposta.pas"/>
         <UnitName Value="pnfsEnvLoteRpsResposta"/>
-      </Item12>
-      <Item13>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsGerarNfseResposta.pas"/>
-        <UnitName Value="pnfsGerarNfseResposta"/>
-      </Item13>
-      <Item14>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSe.pas"/>
         <UnitName Value="pnfsNFSe"/>
-      </Item14>
-      <Item15>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeG.pas"/>
         <UnitName Value="pnfsNFSeG"/>
-      </Item15>
-      <Item16>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeR.pas"/>
         <UnitName Value="pnfsNFSeR"/>
-      </Item16>
-      <Item17>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW.pas"/>
         <UnitName Value="pnfsNFSeW"/>
-      </Item17>
-      <Item18>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSignature.pas"/>
         <UnitName Value="pnfsSignature"/>
-      </Item18>
-      <Item19>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSubsNfseResposta.pas"/>
         <UnitName Value="pnfsSubsNfseResposta"/>
-      </Item19>
-      <Item20>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\ACBrNFSeDANFSeClass.pas"/>
         <UnitName Value="ACBrNFSeDANFSeClass"/>
-      </Item20>
+      </Item16>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

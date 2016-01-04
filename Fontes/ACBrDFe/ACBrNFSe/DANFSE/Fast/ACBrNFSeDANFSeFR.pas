@@ -263,7 +263,7 @@ begin
     // Version := '5.2.3'
     DotMatrixReport           := False;
     IniFile                   := '\Software\Fast Reports';
-    PreviewOptions.Buttons    := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick];
+    PreviewOptions.Buttons    := [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
     PreviewOptions.Zoom       := 1.000000000000000000;
     PrintOptions.Printer      := 'Padrão';
     PrintOptions.PrintOnSheet := 0;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2016
+-- ACBrNFSeDANFSeFR
+[*] Modificação visando compatibilizar com os demais componentes que usam FastReport
+http://www.projetoacbr.com.br/forum/topic/26942-melhoria-nfs-e-bloqueio-da-edi%C3%A7%C3%A3o-do-relat%C3%B3rio/
+
 01/01/2016
 -- ACBrNFSeWebServices / pnfsNFSeG --
 [*] Simplificação de código na montagem dos Envelopes.

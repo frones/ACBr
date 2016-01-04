@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2016
+-- ACBrCTeWebServices --
+[+] Adicionada sobrecarga no método "Clear" de todos os WebServices
+[*] Remoção de propriedades sem uso.
+[*] Ajuste de acesso (write) em propriedades que podem ser ReadOnly
+    por: Italo Jurisato Junior
+
 30/12/2015
 -- ACBrDACTeFR --
 [-] Correção na impressão da CC-e do CT-e, estava gerando uma página extra.

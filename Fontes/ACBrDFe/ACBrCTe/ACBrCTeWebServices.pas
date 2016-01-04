@@ -77,6 +77,7 @@ type
 
   public
     constructor Create(AOwner: TACBrDFe); override;
+    procedure Clear; override;
 
     property Status: TStatusACBrCTe read FPStatus;
     property Layout: TLayOutCTe read FPLayout;
@@ -105,6 +106,7 @@ type
     function GerarMsgErro(E: Exception): String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
+    procedure Clear; override;
 
     property versao: String          read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
@@ -138,12 +140,12 @@ type
 
     function GetLote: String;
     function GetRecibo: String;
+    procedure FinalizarServico;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
-    procedure FinalizarServico; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -151,6 +153,7 @@ type
     constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property Recibo: String read GetRecibo;
     property versao: String read Fversao;
@@ -198,8 +201,8 @@ type
     constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
-    procedure Clear;
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
@@ -244,8 +247,7 @@ type
     constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
       reintroduce; overload;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -264,6 +266,7 @@ type
 
   TCTeConsulta = class(TCTeWebService)
   private
+    FOwner: TACBrDFe;
     FConhecimentos: TConhecimentos;
     FCTeChave: String;
     FProtocolo: String;
@@ -292,13 +295,12 @@ type
     constructor Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos);
       reintroduce; overload;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property CTeChave: String read FCTeChave write FCTeChave;
-    property Protocolo: String read FProtocolo write FProtocolo;
-    property DhRecbto: TDateTime read FDhRecbto write FDhRecbto;
-    property XMotivo: String read FXMotivo write FXMotivo;
+    property Protocolo: String read FProtocolo;
+    property DhRecbto: TDateTime read FDhRecbto;
+    property XMotivo: String read FXMotivo;
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
@@ -347,8 +349,7 @@ type
     function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property ID: String read FID write FID;
     property Protocolo: String read FProtocolo write FProtocolo;
@@ -366,7 +367,6 @@ type
     property xMotivo: String read FxMotivo;
     property cUF: Integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
-
     property XML_procInutCTe: String read FXML_ProcInutCTe write FXML_ProcInutCTe;
   end;
 
@@ -402,8 +402,7 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property versao: String read Fversao;
     property verAplic: String read FverAplic;
@@ -424,7 +423,6 @@ type
   TCTeEnvEvento = class(TCTeWebService)
   private
     FidLote: Integer;
-    Fversao: String;
     FEvento: TEventoCTe;
     FcStat: Integer;
     FxMotivo: String;
@@ -449,11 +447,9 @@ type
     constructor Create(AOwner: TACBrDFe; AEvento: TEventoCTe);
       reintroduce; overload;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property idLote: Integer read FidLote write FidLote;
-    property versao: String read Fversao write Fversao;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -465,8 +461,6 @@ type
 
   TDistribuicaoDFe = class(TCTeWebService)
   private
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
     FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
@@ -485,9 +479,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+    procedure Clear; override;
 
-    property versao: String read Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb;
     property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
@@ -515,8 +508,11 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+    procedure Clear; override;
+
     function Executar: Boolean; override;
 
+    property Versao: String read FVersao;
     property XMLEnvio: String read FXMLEnvio write FXMLEnvio;
     property URLEnvio: String read FPURLEnvio write FPURLEnvio;
     property SoapActionEnvio: String read FSoapActionEnvio write FSoapActionEnvio;
@@ -576,10 +572,16 @@ begin
 
   FPConfiguracoesCTe := TConfiguracoesCTe(FPConfiguracoes);
   FPLayout := LayCTeStatusServico;
-  FPStatus := stCTeIdle;
 
   FPHeaderElement := 'cteCabecMsg';
   FPBodyElement := 'cteDadosMsg';
+end;
+
+procedure TCTeWebService.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stCTeIdle;
 end;
 
 function TCTeWebService.ExtrairModeloChaveAcesso(AChaveCTe: String): String;
@@ -615,7 +617,6 @@ begin
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-
 function TCTeWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
@@ -648,6 +649,26 @@ begin
   FPLayout := LayCTeStatusServico;
   FPArqEnv := 'ped-sta';
   FPArqResp := 'sta';
+end;
+
+procedure TCTeStatusServico.Clear;
+begin
+  inherited Clear;
+
+  Fversao := '';
+  FverAplic := '';
+  FcStat := 0;
+  FxMotivo := '';
+  FdhRecbto := 0;
+  FTMed := 0;
+  FdhRetorno := 0;
+  FxObs := '';
+
+  if Assigned(FPConfiguracoesCTe) then
+  begin
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+  end
 end;
 
 procedure TCTeStatusServico.DefinirServicoEAction;
@@ -745,16 +766,37 @@ begin
   FPLayout := LayCTeRecepcao;
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
-
-  FCTeRetorno := nil;
 end;
 
 destructor TCTeRecepcao.Destroy;
 begin
+  FCTeRetorno.Free;
+
+  inherited Destroy;
+end;
+
+procedure TCTeRecepcao.Clear;
+begin
+  inherited Clear;
+
+  Fversao := '';
+  FTMed := 0;
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+  FRecibo   := '';
+  FdhRecbto := 0;
+
+  if Assigned(FPConfiguracoesCTe) then
+  begin
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+  end;
+
   if Assigned(FCTeRetorno) then
     FCTeRetorno.Free;
 
-  inherited Destroy;
+  FCTeRetorno := TretEnvCTe.Create;
 end;
 
 function TCTeRecepcao.GetLote: String;
@@ -844,8 +886,6 @@ function TCTeRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoLoteResult');
 
-  FCTeRetorno := TretEnvCTe.Create;
-
   FCTeRetorno.Leitor.Arquivo := FPRetWS;
   FCTeRetorno.LerXml;
 
@@ -863,26 +903,17 @@ begin
   Result := (FCTeRetorno.CStat = 103);
 end;
 
-procedure TCTeRecepcao.FinalizarServico;
-begin
-  inherited FinalizarServico;
-
-  if Assigned(FCTeRetorno) then
-    FreeAndNil(FCTeRetorno);
-end;
-
 function TCTeRecepcao.GerarMsgLog: String;
 begin
-  if Assigned(FCTeRetorno) then
-    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                             'Ambiente: %s ' + LineBreak +
-                             'Versão Aplicativo: %s ' + LineBreak +
-                             'Status Código: %s ' + LineBreak +
-                             'Status Descrição: %s ' + LineBreak +
-                             'UF: %s ' + sLineBreak +
-                             'Recibo: %s ' + LineBreak +
-                             'Recebimento: %s ' + LineBreak +
-                             'Tempo Médio: %s ' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'UF: %s ' + sLineBreak +
+                           'Recibo: %s ' + LineBreak +
+                           'Recebimento: %s ' + LineBreak +
+                           'Tempo Médio: %s ' + LineBreak),
                      [FCTeRetorno.versao,
                       TpAmbToStr(FCTeRetorno.TpAmb),
                       FCTeRetorno.verAplic,
@@ -892,9 +923,7 @@ begin
                       FCTeRetorno.infRec.nRec,
                       IfThen(FCTeRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FCTeRetorno.InfRec.dhRecbto)),
-                      IntToStr(FCTeRetorno.InfRec.TMed)])
-  else
-    Result := '';
+                      IntToStr(FCTeRetorno.InfRec.TMed)]);
 end;
 
 function TCTeRecepcao.GerarPrefixoArquivo: String;
@@ -909,7 +938,6 @@ begin
   inherited Create(AOwner);
 
   FConhecimentos := AConhecimentos;
-  FCTeRetorno := TRetConsReciCTe.Create;
 
   FPStatus := stCTeRetRecepcao;
   FPLayout := LayCTeRetRecepcao;
@@ -928,28 +956,45 @@ procedure TCTeRetRecepcao.Clear;
 var
   i, j: Integer;
 begin
-  FPMsg     := '';
-  FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  inherited Clear;
 
-  // Limpa Dados dos retornos dos conhecimentos;
-  for i := 0 to FCTeRetorno.ProtCTe.Count - 1 do
+  FverAplic := '';
+  FcStat := 0;
+  FxMotivo := '';
+  Fversao := '';
+  FxMsg := '';
+  FcMsg := 0;
+
+  if Assigned(FPConfiguracoesCTe) then
   begin
-    for j := 0 to FConhecimentos.Count - 1 do
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FCTeRetorno) and Assigned(FConhecimentos) then
+  begin
+    // Limpa Dados dos retornos dos conhecimentos
+    for i := 0 to FCTeRetorno.ProtCTe.Count - 1 do
     begin
-      if OnlyNumber(FCTeRetorno.ProtCTe.Items[i].chCTe) = FConhecimentos.Items[J].NumID then
+      for j := 0 to FConhecimentos.Count - 1 do
       begin
-        FConhecimentos.Items[j].CTe.procCTe.verAplic := '';
-        FConhecimentos.Items[j].CTe.procCTe.chCTe    := '';
-        FConhecimentos.Items[j].CTe.procCTe.dhRecbto := 0;
-        FConhecimentos.Items[j].CTe.procCTe.nProt    := '';
-        FConhecimentos.Items[j].CTe.procCTe.digVal   := '';
-        FConhecimentos.Items[j].CTe.procCTe.cStat    := 0;
-        FConhecimentos.Items[j].CTe.procCTe.xMotivo  := '';
+        if OnlyNumber(FCTeRetorno.ProtCTe.Items[i].chCTe) = FConhecimentos.Items[J].NumID then
+        begin
+          FConhecimentos.Items[j].CTe.procCTe.verAplic := '';
+          FConhecimentos.Items[j].CTe.procCTe.chCTe    := '';
+          FConhecimentos.Items[j].CTe.procCTe.dhRecbto := 0;
+          FConhecimentos.Items[j].CTe.procCTe.nProt    := '';
+          FConhecimentos.Items[j].CTe.procCTe.digVal   := '';
+          FConhecimentos.Items[j].CTe.procCTe.cStat    := 0;
+          FConhecimentos.Items[j].CTe.procCTe.xMotivo  := '';
+        end;
       end;
     end;
+
+    FreeAndNil(FCTeRetorno);
   end;
+
+  FCTeRetorno := TRetConsReciCTe.Create;
 end;
 
 function TCTeRetRecepcao.GetRecibo: String;
@@ -1055,10 +1100,6 @@ end;
 function TCTeRetRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRetRecepcaoResult');
-
-  // Limpando variaveis internas
-  FCTeRetorno.Free;
-  FCTeRetorno := TRetConsReciCTe.Create;
 
   FCTeRetorno.Leitor.Arquivo := FPRetWS;
   FCTeRetorno.LerXML;
@@ -1260,10 +1301,25 @@ end;
 
 procedure TCTeRecibo.Clear;
 begin
-  FPMsg     := '';
+  inherited Clear;
+
+  Fversao := '';
+  FxMsg := '';
+  FcMsg := 0;
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
+
+  if Assigned(FPConfiguracoesCTe) then
+  begin
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FCTeRetorno) then
+    FCTeRetorno.Free;
+
+  FCTeRetorno := TRetConsReciCTe.Create;
 end;
 
 procedure TCTeRecibo.DefinirServicoEAction;
@@ -1338,10 +1394,6 @@ function TCTeRecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRetRecepcaoResult');
 
-  // Limpando variaveis internas
-  FCTeRetorno.Free;
-  FCTeRetorno := TRetConsReciCTe.Create;
-
   FCTeRetorno.Leitor.Arquivo := FPRetWS;
   FCTeRetorno.LerXML;
 
@@ -1370,7 +1422,7 @@ begin
                    [FCTeRetorno.versao, TpAmbToStr(FCTeRetorno.TpAmb),
                    FCTeRetorno.verAplic, FCTeRetorno.nRec,
                    IntToStr(FCTeRetorno.cStat),
-                   FCTeRetorno.ProtCTe.Items[0].xMotivo,
+                   FCTeRetorno.xMotivo,
                    CodigoParaUF(FCTeRetorno.cUF)]);
 end;
 
@@ -1380,10 +1432,8 @@ constructor TCTeConsulta.Create(AOwner: TACBrDFe; AConhecimentos: TConhecimentos
 begin
   inherited Create(AOwner);
 
+  FOwner := AOwner;
   FConhecimentos := AConhecimentos;
-  FprotCTe := TProcCTe.Create;
-  FretCancCTe := TRetCancCTe.Create;
-  FprocEventoCTe := TRetEventoCTeCollection.Create(AOwner);
 
   FPStatus := stCTeConsulta;
   FPLayout := LayCTeConsulta;
@@ -1395,18 +1445,42 @@ destructor TCTeConsulta.Destroy;
 begin
   FprotCTe.Free;
   FretCancCTe.Free;
-  if Assigned(FprocEventoCTe) then
-    FprocEventoCTe.Free;
+  FprocEventoCTe.Free;
 
   inherited Destroy;
 end;
 
 procedure TCTeConsulta.Clear;
 begin
-  FPMsg     := '';
+  inherited Clear;
+
+  FPMsg := '';
   FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  FcStat := 0;
+  FxMotivo := '';
+  FProtocolo := '';
+  FDhRecbto := 0;
+  Fversao := '';
+  FRetCTeDFe := '';
+
+  if Assigned(FPConfiguracoesCTe) then
+  begin
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FprotCTe) then
+    FprotCTe.Free;
+
+  if Assigned(FretCancCTe) then
+    FretCancCTe.Free;
+
+  if Assigned(FprocEventoCTe) then
+    FprocEventoCTe.Free;
+
+  FprotCTe := TProcCTe.Create;
+  FretCancCTe := TRetCancCTe.Create;
+  FprocEventoCTe := TRetEventoCTeCollection.Create(FOwner);
 end;
 
 procedure TCTeConsulta.DefinirURL;
@@ -1806,10 +1880,21 @@ end;
 
 procedure TCTeInutilizacao.Clear;
 begin
-  FPMsg     := '';
+  inherited Clear;
+
+  FPMsg := '';
   FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  FcStat := 0;
+  FxMotivo := '';
+  Fversao := '';
+  FdhRecbto := 0;
+  FXML_ProcInutCTe := '';
+
+  if Assigned(FPConfiguracoesCTe) then
+  begin
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+  end
 end;
 
 procedure TCTeInutilizacao.SetJustificativa(AValue: String);
@@ -1967,8 +2052,6 @@ constructor TCTeConsultaCadastro.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-  FRetConsCad := TRetConsCad.Create;
-
   FPStatus := stCTeCadastro;
   FPLayout := LayCTeCadastro;
   FPArqEnv := 'ped-cad';
@@ -1984,10 +2067,21 @@ end;
 
 procedure TCTeConsultaCadastro.Clear;
 begin
-  FPMsg     := '';
+  inherited Clear;
+
   FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  FcStat := 0;
+  FxMotivo := '';
+  Fversao := '';
+  FdhCons := 0;
+
+  if Assigned(FPConfiguracoesCTe) then
+    FcUF := FPConfiguracoesCTe.WebServices.UFCodigo;
+
+  if Assigned(FRetConsCad) then
+    FRetConsCad.Free;
+
+  FRetConsCad := TRetConsCad.Create;
 end;
 
 procedure TCTeConsultaCadastro.SetCNPJ(const Value: String);
@@ -2099,10 +2193,6 @@ function TCTeConsultaCadastro.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'consultaCadastro2Result');
 
-  // Limpando variaveis internas
-  FRetConsCad.Free;
-  FRetConsCad := TRetConsCad.Create;
-
   FRetConsCad.Leitor.Arquivo := FPRetWS;
   FRetConsCad.LerXml;
 
@@ -2142,7 +2232,6 @@ constructor TCTeEnvEvento.Create(AOwner: TACBrDFe; AEvento: TEventoCTe);
 begin
   inherited Create(AOwner);
 
-  FEventoRetorno := TRetEventoCTe.Create;
   FEvento := AEvento;
 
   FPStatus := stCTeEvento;
@@ -2160,9 +2249,19 @@ end;
 
 procedure TCTeEnvEvento.Clear;
 begin
-  FPMsg    := '';
+  inherited Clear;
+
   FcStat   := 0;
   FxMotivo := '';
+  FCNPJ := '';
+
+  if Assigned(FPConfiguracoesCTe) then
+    FtpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+
+  if Assigned(FEventoRetorno) then
+    FEventoRetorno.Free;
+
+  FEventoRetorno := TRetEventoCTe.Create;
 end;
 
 function TCTeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
@@ -2398,10 +2497,6 @@ begin
 
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoEventoResult');
 
-  // Limpando variaveis internas
-  FEventoRetorno.Free;
-  FEventoRetorno := TRetEventoCTe.Create;
-
   EventoRetorno.Leitor.Arquivo := FPRetWS;
   EventoRetorno.LerXml;
 
@@ -2530,8 +2625,6 @@ constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-  FretDistDFeInt := TretDistDFeInt.Create;
-
   FPStatus        := stCTeDistDFeInt;
   FPLayout        := LayCTeDistDFeInt;
   FPArqEnv        := 'con-dist-dfe';
@@ -2545,6 +2638,16 @@ begin
   FretDistDFeInt.Free;
 
   inherited;
+end;
+
+procedure TDistribuicaoDFe.Clear;
+begin
+  inherited Clear;
+
+  if Assigned(FretDistDFeInt) then
+    FretDistDFeInt.Free;
+
+  FretDistDFeInt := TRetDistDFeInt.Create;
 end;
 
 procedure TDistribuicaoDFe.DefinirServicoEAction;
@@ -2579,10 +2682,6 @@ var
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
-
-  // Limpando variaveis internas
-  FretDistDFeInt.Free;
-  FretDistDFeInt := TRetDistDFeInt.Create;
 
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;
   FretDistDFeInt.LerXml;
@@ -2665,12 +2764,18 @@ begin
   inherited Create(AOwner);
 
   FPStatus := stCTeEnvioWebService;
-  FVersao := '';
 end;
 
 destructor TCTeEnvioWebService.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TCTeEnvioWebService.Clear;
+begin
+  inherited Clear;
+
+  FVersao := '';
 end;
 
 function TCTeEnvioWebService.Executar: Boolean;

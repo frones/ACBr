@@ -75,6 +75,7 @@ type
 
   public
     constructor Create(AOwner: TACBrDFe); override;
+    procedure Clear; override;
 
     property Status: TStatusACBrMDFe read FPStatus;
     property Layout: TLayOutMDFe read FPLayout;
@@ -103,6 +104,7 @@ type
     function GerarMsgErro(E: Exception): String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
+    procedure Clear; override;
 
     property versao: String read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
@@ -136,12 +138,12 @@ type
 
     function GetLote: String;
     function GetRecibo: String;
+    procedure FinalizarServico;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
-    procedure FinalizarServico; override;
 
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
@@ -149,6 +151,7 @@ type
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property Recibo: String read GetRecibo;
     property versao: String read Fversao;
@@ -196,8 +199,8 @@ type
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
-    procedure Clear;
     function Executar: Boolean; override;
 
     property versao: String read Fversao;
@@ -242,8 +245,7 @@ type
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
       reintroduce; overload;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -262,6 +264,7 @@ type
 
   TMDFeConsulta = class(TMDFeWebService)
   private
+    FOwner: TACBrDFe;
     FManifestos: TManifestos;
     FMDFeChave: String;
     FProtocolo: String;
@@ -289,13 +292,12 @@ type
     constructor Create(AOwner: TACBrDFe; AManifestos: TManifestos);
       reintroduce; overload;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property MDFeChave: String read FMDFeChave write FMDFeChave;
-    property Protocolo: String read FProtocolo write FProtocolo;
-    property DhRecbto: TDateTime read FDhRecbto write FDhRecbto;
-    property XMotivo: String read FXMotivo write FXMotivo;
+    property Protocolo: String read FProtocolo;
+    property DhRecbto: TDateTime read FDhRecbto;
+    property XMotivo: String read FXMotivo;
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
@@ -312,7 +314,6 @@ type
   TMDFeEnvEvento = class(TMDFeWebService)
   private
     FidLote: Integer;
-    Fversao: String;
     FEvento: TEventoMDFe;
     FcStat: Integer;
     FxMotivo: String;
@@ -336,11 +337,9 @@ type
     constructor Create(AOwner: TACBrDFe; AEvento: TEventoMDFe);
       reintroduce; overload;
     destructor Destroy; override;
-
-    procedure Clear;
+    procedure Clear; override;
 
     property idLote: Integer read FidLote write FidLote;
-    property versao: String read Fversao write Fversao;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
@@ -389,8 +388,6 @@ type
 
   TDistribuicaoDFe = class(TMDFeWebService)
   private
-    Fversao: String;
-    FtpAmb: TpcnTipoAmbiente;
 //    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
@@ -410,9 +407,8 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+    procedure Clear; override;
 
-    property versao: String read Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb;
 //    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
@@ -440,8 +436,11 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+    procedure Clear; override;
+
     function Executar: Boolean; override;
 
+    property Versao: String read FVersao;
     property XMLEnvio: String read FXMLEnvio write FXMLEnvio;
     property URLEnvio: String read FPURLEnvio write FPURLEnvio;
     property SoapActionEnvio: String read FSoapActionEnvio write FSoapActionEnvio;
@@ -498,10 +497,16 @@ begin
 
   FPConfiguracoesMDFe := TConfiguracoesMDFe(FPConfiguracoes);
   FPLayout := LayMDFeStatusServico;
-  FPStatus := stMDFeIdle;
 
   FPHeaderElement := 'mdfeCabecMsg';
   FPBodyElement := 'mdfeDadosMsg';
+end;
+
+procedure TMDFeWebService.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stMDFeIdle;
 end;
 
 function TMDFeWebService.ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
@@ -537,7 +542,6 @@ begin
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-
 function TMDFeWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
@@ -570,6 +574,26 @@ begin
   FPLayout := LayMDFeStatusServico;
   FPArqEnv := 'ped-sta';
   FPArqResp := 'sta';
+end;
+
+procedure TMDFeStatusServico.Clear;
+begin
+  inherited Clear;
+
+  Fversao := '';
+  FverAplic := '';
+  FcStat := 0;
+  FxMotivo := '';
+  FdhRecbto := 0;
+  FTMed := 0;
+  FdhRetorno := 0;
+  FxObs := '';
+
+  if Assigned(FPConfiguracoesMDFe) then
+  begin
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
+  end
 end;
 
 procedure TMDFeStatusServico.DefinirServicoEAction;
@@ -667,16 +691,37 @@ begin
   FPLayout := LayMDFeRecepcao;
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
-
-  FMDFeRetorno := nil;
 end;
 
 destructor TMDFeRecepcao.Destroy;
 begin
+  FMDFeRetorno.Free;
+
+  inherited Destroy;
+end;
+
+procedure TMDFeRecepcao.Clear;
+begin
+  inherited Clear;
+
+  Fversao := '';
+  FTMed := 0;
+  FverAplic := '';
+  FcStat    := 0;
+  FxMotivo  := '';
+  FRecibo   := '';
+  FdhRecbto := 0;
+
+  if Assigned(FPConfiguracoesMDFe) then
+  begin
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
+  end;
+
   if Assigned(FMDFeRetorno) then
     FMDFeRetorno.Free;
 
-  inherited Destroy;
+  FMDFeRetorno := TretEnvMDFe.Create;
 end;
 
 function TMDFeRecepcao.GetLote: String;
@@ -759,8 +804,6 @@ function TMDFeRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoLoteResult');
 
-  FMDFeRetorno := TretEnvMDFe.Create;
-
   FMDFeRetorno.Leitor.Arquivo := FPRetWS;
   FMDFeRetorno.LerXml;
 
@@ -778,26 +821,17 @@ begin
   Result := (FMDFeRetorno.CStat = 103);
 end;
 
-procedure TMDFeRecepcao.FinalizarServico;
-begin
-  inherited FinalizarServico;
-
-  if Assigned(FMDFeRetorno) then
-    FreeAndNil(FMDFeRetorno);
-end;
-
 function TMDFeRecepcao.GerarMsgLog: String;
 begin
-  if Assigned(FMDFeRetorno) then
-    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                             'Ambiente: %s ' + LineBreak +
-                             'Versão Aplicativo: %s ' + LineBreak +
-                             'Status Código: %s ' + LineBreak +
-                             'Status Descrição: %s ' + LineBreak +
-                             'UF: %s ' + sLineBreak +
-                             'Recibo: %s ' + LineBreak +
-                             'Recebimento: %s ' + LineBreak +
-                             'Tempo Médio: %s ' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'UF: %s ' + sLineBreak +
+                           'Recibo: %s ' + LineBreak +
+                           'Recebimento: %s ' + LineBreak +
+                           'Tempo Médio: %s ' + LineBreak),
                      [FMDFeRetorno.versao,
                       TpAmbToStr(FMDFeRetorno.TpAmb),
                       FMDFeRetorno.verAplic,
@@ -807,9 +841,7 @@ begin
                       FMDFeRetorno.infRec.nRec,
                       IfThen(FMDFeRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FMDFeRetorno.InfRec.dhRecbto)),
-                      IntToStr(FMDFeRetorno.InfRec.TMed)])
-  else
-    Result := '';
+                      IntToStr(FMDFeRetorno.InfRec.TMed)]);
 end;
 
 function TMDFeRecepcao.GerarPrefixoArquivo: String;
@@ -824,7 +856,6 @@ begin
   inherited Create(AOwner);
 
   FManifestos := AManifestos;
-  FMDFeRetorno := TRetConsReciMDFe.Create;
 
   FPStatus := stMDFeRetRecepcao;
   FPLayout := LayMDFeRetRecepcao;
@@ -848,28 +879,45 @@ procedure TMDFeRetRecepcao.Clear;
 var
   i, j: Integer;
 begin
-  FPMsg     := '';
-  FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  inherited Clear;
 
-  // Limpa Dados dos retornos dos manifestos;
-  for i := 0 to FMDFeRetorno.ProtMDFe.Count - 1 do
+  FverAplic := '';
+  FcStat := 0;
+  FxMotivo := '';
+  Fversao := '';
+  FxMsg := '';
+  FcMsg := 0;
+
+  if Assigned(FPConfiguracoesMDFe) then
   begin
-    for j := 0 to FManifestos.Count - 1 do
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FMDFeRetorno) and Assigned(FManifestos) then
+  begin
+    // Limpa Dados dos retornos dos manifestos
+    for i := 0 to FMDFeRetorno.ProtMDFe.Count - 1 do
     begin
-      if OnlyNumber(FMDFeRetorno.ProtMDFe.Items[i].chMDFe) = FManifestos.Items[J].NumID then
+      for j := 0 to FManifestos.Count - 1 do
       begin
-        FManifestos.Items[j].MDFe.procMDFe.verAplic := '';
-        FManifestos.Items[j].MDFe.procMDFe.chMDFe   := '';
-        FManifestos.Items[j].MDFe.procMDFe.dhRecbto := 0;
-        FManifestos.Items[j].MDFe.procMDFe.nProt    := '';
-        FManifestos.Items[j].MDFe.procMDFe.digVal   := '';
-        FManifestos.Items[j].MDFe.procMDFe.cStat    := 0;
-        FManifestos.Items[j].MDFe.procMDFe.xMotivo  := '';
+        if OnlyNumber(FMDFeRetorno.ProtMDFe.Items[i].chMDFe) = FManifestos.Items[J].NumID then
+        begin
+          FManifestos.Items[j].MDFe.procMDFe.verAplic := '';
+          FManifestos.Items[j].MDFe.procMDFe.chMDFe   := '';
+          FManifestos.Items[j].MDFe.procMDFe.dhRecbto := 0;
+          FManifestos.Items[j].MDFe.procMDFe.nProt    := '';
+          FManifestos.Items[j].MDFe.procMDFe.digVal   := '';
+          FManifestos.Items[j].MDFe.procMDFe.cStat    := 0;
+          FManifestos.Items[j].MDFe.procMDFe.xMotivo  := '';
+        end;
       end;
     end;
+
+    FreeAndNil(FMDFeRetorno);
   end;
+
+  FMDFeRetorno := TRetConsReciMDFe.Create;
 end;
 
 function TMDFeRetRecepcao.Executar: Boolean;
@@ -963,10 +1011,6 @@ end;
 function TMDFeRetRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
-
-  // Limpando variaveis internas
-  FMDFeRetorno.Free;
-  FMDFeRetorno := TRetConsReciMDFe.Create;
 
   FMDFeRetorno.Leitor.Arquivo := FPRetWS;
   FMDFeRetorno.LerXML;
@@ -1154,10 +1198,25 @@ end;
 
 procedure TMDFeRecibo.Clear;
 begin
-  FPMsg     := '';
+  inherited Clear;
+
+  Fversao := '';
+  FxMsg := '';
+  FcMsg := 0;
   FverAplic := '';
   FcStat    := 0;
   FxMotivo  := '';
+
+  if Assigned(FPConfiguracoesMDFe) then
+  begin
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FMDFeRetorno) then
+    FMDFeRetorno.Free;
+
+  FMDFeRetorno := TRetConsReciMDFe.Create;
 end;
 
 procedure TMDFeRecibo.DefinirServicoEAction;
@@ -1225,10 +1284,6 @@ function TMDFeRecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
 
-  // Limpando variaveis internas
-  FMDFeRetorno.Free;
-  FMDFeRetorno := TRetConsReciMDFe.Create;
-
   FMDFeRetorno.Leitor.Arquivo := FPRetWS;
   FMDFeRetorno.LerXML;
 
@@ -1257,7 +1312,7 @@ begin
                    [FMDFeRetorno.versao, TpAmbToStr(FMDFeRetorno.TpAmb),
                    FMDFeRetorno.verAplic, FMDFeRetorno.nRec,
                    IntToStr(FMDFeRetorno.cStat),
-                   FMDFeRetorno.ProtMDFe.Items[0].xMotivo,
+                   FMDFeRetorno.xMotivo,
                    CodigoParaUF(FMDFeRetorno.cUF)]);
 end;
 
@@ -1267,9 +1322,8 @@ constructor TMDFeConsulta.Create(AOwner: TACBrDFe; AManifestos: TManifestos);
 begin
   inherited Create(AOwner);
 
+  FOwner := AOwner;
   FManifestos := AManifestos;
-  FprotMDFe := TProcMDFe.Create;
-  FprocEventoMDFe := TRetEventoMDFeCollection.Create(AOwner);
 
   FPStatus := stMDFeConsulta;
   FPLayout := LayMDFeConsulta;
@@ -1280,18 +1334,38 @@ end;
 destructor TMDFeConsulta.Destroy;
 begin
   FprotMDFe.Free;
-  if Assigned(FprocEventoMDFe) then
-    FprocEventoMDFe.Free;
+  FprocEventoMDFe.Free;
 
   inherited Destroy;
 end;
 
 procedure TMDFeConsulta.Clear;
 begin
-  FPMsg     := '';
+  inherited Clear;
+
+  FPMsg := '';
   FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
+  FcStat := 0;
+  FxMotivo := '';
+  FProtocolo := '';
+  FDhRecbto := 0;
+  Fversao := '';
+  FRetMDFeDFe := '';
+
+  if Assigned(FPConfiguracoesMDFe) then
+  begin
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FprotMDFe) then
+    FprotMDFe.Free;
+
+  if Assigned(FprocEventoMDFe) then
+    FprocEventoMDFe.Free;
+
+  FprotMDFe := TProcMDFe.Create;
+  FprocEventoMDFe := TRetEventoMDFeCollection.Create(FOwner);
 end;
 
 procedure TMDFeConsulta.DefinirURL;
@@ -1630,7 +1704,6 @@ constructor TMDFeEnvEvento.Create(AOwner: TACBrDFe; AEvento: TEventoMDFe);
 begin
   inherited Create(AOwner);
 
-  FEventoRetorno := TRetEventoMDFe.Create;
   FEvento := AEvento;
 
   FPStatus := stMDFeEvento;
@@ -1648,9 +1721,19 @@ end;
 
 procedure TMDFeEnvEvento.Clear;
 begin
-  FPMsg    := '';
+  inherited Clear;
+
   FcStat   := 0;
   FxMotivo := '';
+  FCNPJ := '';
+
+  if Assigned(FPConfiguracoesMDFe) then
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+
+  if Assigned(FEventoRetorno) then
+    FEventoRetorno.Free;
+
+  FEventoRetorno := TRetEventoMDFe.Create;
 end;
 
 function TMDFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
@@ -1802,10 +1885,6 @@ begin
   FEvento.idLote := idLote;
 
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoEventoResult');
-
-  // Limpando variaveis internas
-  FEventoRetorno.Free;
-  FEventoRetorno := TRetEventoMDFe.Create;
 
   EventoRetorno.Leitor.Arquivo := FPRetWS;
   EventoRetorno.LerXml;
@@ -2041,8 +2120,6 @@ constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-  FretDistDFeInt := TretDistDFeInt.Create;
-
   FPStatus := stMDFeDistDFeInt;
   FPLayout := LayMDFeDistDFeInt;
   FPArqEnv := 'con-dist-dfe';
@@ -2056,6 +2133,16 @@ begin
   FretDistDFeInt.Free;
 
   inherited;
+end;
+
+procedure TDistribuicaoDFe.Clear;
+begin
+  inherited Clear;
+
+  if Assigned(FretDistDFeInt) then
+    FretDistDFeInt.Free;
+
+  FretDistDFeInt := TRetDistDFeInt.Create;
 end;
 
 procedure TDistribuicaoDFe.DefinirServicoEAction;
@@ -2090,10 +2177,6 @@ var
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeDistDFeInteresseResult');
-
-  // Limpando variaveis internas
-  FretDistDFeInt.Free;
-  FretDistDFeInt := TRetDistDFeInt.Create;
 
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;
   FretDistDFeInt.LerXml;
@@ -2201,12 +2284,18 @@ begin
   inherited Create(AOwner);
 
   FPStatus := stMDFeEnvioWebService;
-  FVersao := '';
 end;
 
 destructor TMDFeEnvioWebService.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TMDFeEnvioWebService.Clear;
+begin
+  inherited Clear;
+
+  FVersao := '';
 end;
 
 function TMDFeEnvioWebService.Executar: Boolean;

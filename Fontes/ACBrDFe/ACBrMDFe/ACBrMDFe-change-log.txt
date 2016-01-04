@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2016
+-- ACBrMDFeWebServices --
+[+] Adicionada sobrecarga no método "Clear" de todos os WebServices
+[*] Remoção de propriedades sem uso.
+[*] Ajuste de acesso (write) em propriedades que podem ser ReadOnly
+    por: Italo Jurisato Junior
+
 23/12/2015
 -- ACBrMDFeManifestos --
 [*] Ajuste no método "VerificarAssinatura", para informar o infElement (por: DSA)

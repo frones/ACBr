@@ -654,7 +654,7 @@ begin
         ipVista : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À VISTA');
         ipPrazo : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À PRAZO');
       else
-        FieldByName('Pagamento').AsString := '';
+        FieldByName('Pagamento').AsString := 'OUTROS';
       end;
 
       if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then

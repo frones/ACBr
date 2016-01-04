@@ -102,7 +102,6 @@ type
     function GerarMsgLog: String; override;
     function GerarMsgErro(E: Exception): String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
 
     property versao: String read Fversao;
@@ -347,7 +346,6 @@ type
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
 
     property ID: String read FID write FID;
@@ -748,14 +746,29 @@ end;
 
 { TNFeStatusServico }
 
-constructor TNFeStatusServico.Create(AOwner: TACBrDFe);
+procedure TNFeStatusServico.Clear;
 begin
-  inherited Create(AOwner);
+  inherited Clear;
 
   FPStatus := stNFeStatusServico;
   FPLayout := LayNfeStatusServico;
   FPArqEnv := 'ped-sta';
   FPArqResp := 'sta';
+
+  Fversao := '';
+  FverAplic := '';
+  FcStat := 0;
+  FxMotivo := '';
+  FdhRecbto := 0;
+  FTMed := 0;
+  FdhRetorno := 0;
+  FxObs := '';
+
+  if Assigned(FPConfiguracoesNFe) then
+  begin
+    FtpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesNFe.WebServices.UFCodigo;
+  end
 end;
 
 procedure TNFeStatusServico.DefinirServicoEAction;
@@ -828,26 +841,6 @@ begin
   end;
 end;
 
-procedure TNFeStatusServico.Clear;
-begin
-  inherited Clear;
-
-  Fversao := '';
-  FverAplic := '';
-  FcStat := 0;
-  FxMotivo := '';
-  FdhRecbto := 0;
-  FTMed := 0;
-  FdhRetorno := 0;
-  FxObs := '';
-
-  if Assigned(FPConfiguracoesNFe) then
-  begin
-    FtpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
-    FcUF := FPConfiguracoesNFe.WebServices.UFCodigo;
-  end
-end;
-
 function TNFeStatusServico.GerarMsgLog: String;
 begin
   {(*}
@@ -884,11 +877,6 @@ begin
 
   FNotasFiscais := ANotasFiscais;
   FSincrono := False;
-
-  FPStatus := stNFeRecepcao;
-  FPLayout := LayNfeRecepcao;
-  FPArqEnv := 'env-lot';
-  FPArqResp := 'rec';
 end;
 
 destructor TNFeRecepcao.Destroy;
@@ -902,6 +890,11 @@ end;
 procedure TNFeRecepcao.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stNFeRecepcao;
+  FPLayout := LayNfeRecepcao;
+  FPArqEnv := 'env-lot';
+  FPArqResp := 'rec';
 
   Fversao := '';
   FTMed := 0;
@@ -1237,10 +1230,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-  FPStatus := stNFeRetRecepcao;
-  FPLayout := LayNfeRetRecepcao;
-  FPArqEnv := 'ped-rec';
-  FPArqResp := 'pro-rec';
 end;
 
 destructor TNFeRetRecepcao.Destroy;
@@ -1260,6 +1249,11 @@ var
   i, j: Integer;
 begin
   inherited Clear;
+
+  FPStatus := stNFeRetRecepcao;
+  FPLayout := LayNfeRetRecepcao;
+  FPArqEnv := 'ped-rec';
+  FPArqResp := 'pro-rec';
 
   FverAplic := '';
   FcStat := 0;
@@ -1594,11 +1588,6 @@ begin
 
   FNotasFiscais := ANotasFiscais;
   FNFeRetorno := TRetConsReciNFe.Create;
-
-  FPStatus := stNFeRecibo;
-  FPLayout := LayNfeRetRecepcao;
-  FPArqEnv := 'ped-rec';
-  FPArqResp := 'pro-rec';
 end;
 
 destructor TNFeRecibo.Destroy;
@@ -1611,6 +1600,11 @@ end;
 procedure TNFeRecibo.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stNFeRecibo;
+  FPLayout := LayNfeRetRecepcao;
+  FPArqEnv := 'ped-rec';
+  FPArqResp := 'pro-rec';
 
   Fversao := '';
   FxMsg := '';
@@ -1763,11 +1757,6 @@ begin
 
   FOwner := AOwner;
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNfeConsulta;
-  FPLayout := LayNfeConsulta;
-  FPArqEnv := 'ped-sit';
-  FPArqResp := 'sit';
 end;
 
 destructor TNFeConsulta.Destroy;
@@ -1783,7 +1772,11 @@ procedure TNFeConsulta.Clear;
 begin
   inherited Clear;
 
-  FPMsg := '';
+  FPStatus := stNfeConsulta;
+  FPLayout := LayNfeConsulta;
+  FPArqEnv := 'ped-sit';
+  FPArqResp := 'sit';
+
   FverAplic := '';
   FcStat := 0;
   FxMotivo := '';
@@ -2258,21 +2251,15 @@ end;
 
 { TNFeInutilizacao }
 
-constructor TNFeInutilizacao.Create(AOwner: TACBrDFe);
+procedure TNFeInutilizacao.Clear;
 begin
-  inherited Create(AOwner);
+  inherited Clear;
 
   FPStatus := stNFeInutilizacao;
   FPLayout := LayNfeInutilizacao;
   FPArqEnv := 'ped-inu';
   FPArqResp := 'inu';
-end;
 
-procedure TNFeInutilizacao.Clear;
-begin
-  inherited Clear;
-
-  FPMsg := '';
   FverAplic := '';
   FcStat := 0;
   FxMotivo := '';
@@ -2460,11 +2447,6 @@ end;
 constructor TNFeConsultaCadastro.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
-  FPStatus := stNFeCadastro;
-  FPLayout := LayNfeCadastro;
-  FPArqEnv := 'ped-cad';
-  FPArqResp := 'cad';
 end;
 
 destructor TNFeConsultaCadastro.Destroy;
@@ -2477,6 +2459,11 @@ end;
 procedure TNFeConsultaCadastro.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stNFeCadastro;
+  FPLayout := LayNfeCadastro;
+  FPArqEnv := 'ped-cad';
+  FPArqResp := 'cad';
 
   FverAplic := '';
   FcStat := 0;
@@ -2620,11 +2607,6 @@ begin
   inherited Create(AOwner);
 
   FEvento := AEvento;
-
-  FPStatus := stNFeEvento;
-  FPLayout := LayNFeEvento;
-  FPArqEnv := 'ped-eve';
-  FPArqResp := 'eve';
 end;
 
 destructor TNFeEnvEvento.Destroy;
@@ -2637,6 +2619,11 @@ end;
 procedure TNFeEnvEvento.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stNFeEvento;
+  FPLayout := LayNFeEvento;
+  FPArqEnv := 'ped-eve';
+  FPArqResp := 'eve';
 
   FcStat   := 0;
   FxMotivo := '';
@@ -2988,11 +2975,6 @@ end;
 constructor TNFeConsNFeDest.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
-  FPStatus := stConsNFeDest;
-  FPLayout := LayNFeConsNFeDest;
-  FPArqEnv := 'con-nfe-dest';
-  FPArqResp := 'nfe-dest';
 end;
 
 destructor TNFeConsNFeDest.Destroy;
@@ -3005,6 +2987,11 @@ end;
 procedure TNFeConsNFeDest.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stConsNFeDest;
+  FPLayout := LayNFeConsNFeDest;
+  FPArqEnv := 'con-nfe-dest';
+  FPArqResp := 'nfe-dest';
 
   if Assigned(FretConsNFeDest) then
     FretConsNFeDest.Free;
@@ -3108,10 +3095,6 @@ begin
   inherited Create(AOwner);
 
   FDownload := ADownload;
-  FPStatus := stDownloadNFe;
-  FPLayout := LayNFeDownloadNFe;
-  FPArqEnv := 'ped-down-nfe';
-  FPArqResp := 'down-nfe';
 end;
 
 destructor TNFeDownloadNFe.Destroy;
@@ -3124,6 +3107,11 @@ end;
 procedure TNFeDownloadNFe.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stDownloadNFe;
+  FPLayout := LayNFeDownloadNFe;
+  FPArqEnv := 'ped-down-nfe';
+  FPArqResp := 'down-nfe';
 
   if Assigned(FretDownloadNFe) then
     FretDownloadNFe.Free;
@@ -3256,11 +3244,6 @@ end;
 constructor TAdministrarCSCNFCe.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
-  FPStatus := stAdmCSCNFCe;
-  FPLayout := LayAdministrarCSCNFCe;
-  FPArqEnv := 'ped-csc';
-  FPArqResp := 'csc';
 end;
 
 destructor TAdministrarCSCNFCe.Destroy;
@@ -3273,6 +3256,11 @@ end;
 procedure TAdministrarCSCNFCe.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stAdmCSCNFCe;
+  FPLayout := LayAdministrarCSCNFCe;
+  FPArqEnv := 'ped-csc';
+  FPArqResp := 'csc';
 
   if Assigned(FretAdmCSCNFCe) then
     FretAdmCSCNFCe.Free;
@@ -3342,13 +3330,6 @@ end;
 constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
-  FPStatus := stDistDFeInt;
-  FPLayout := LayDistDFeInt;
-  FPArqEnv := 'con-dist-dfe';
-  FPArqResp := 'dist-dfe';
-  FPBodyElement := 'nfeDistDFeInteresse';
-  FPHeaderElement := '';
 end;
 
 destructor TDistribuicaoDFe.Destroy;
@@ -3361,6 +3342,13 @@ end;
 procedure TDistribuicaoDFe.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stDistDFeInt;
+  FPLayout := LayDistDFeInt;
+  FPArqEnv := 'con-dist-dfe';
+  FPArqResp := 'dist-dfe';
+  FPBodyElement := 'nfeDistDFeInteresse';
+  FPHeaderElement := '';
 
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;

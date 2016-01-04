@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2016
+-- ACBrNFeWebServices --
+[*] Ajustes em "Create" e "Clear" de todos os WebServices, para garantir que
+    após o "Clear" os valores necessários, para as propriedades internas, do
+    WebService esteja corretos.  (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27079
+
 03/01/2016
 -- ACBrNFeWebServices --
 [+] Adicionada sobrecarga no método "Clear" de todos os WebServices

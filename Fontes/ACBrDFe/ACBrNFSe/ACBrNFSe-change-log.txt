@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2016
+-- pnfsNFSeG --
+[*] Criado a propriedade: PossuiAlerta do tipo Boolean que é setada após gerar o
+    XML da mensagem de dados.
+    Por: Italo Jurisato Junior
+
+04/01/2016
 -- ACBrNFSeDANFSeFR
 [*] Modificação visando compatibilizar com os demais componentes que usam FastReport
 http://www.projetoacbr.com.br/forum/topic/26942-melhoria-nfs-e-bloqueio-da-edi%C3%A7%C3%A3o-do-relat%C3%B3rio/

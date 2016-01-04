@@ -102,6 +102,8 @@ type
     // Layout - Equiplano
     FOptanteSimples: TnfseSimNao;
 
+    FPossuiAlertas: Boolean;
+
     procedure SetAtributos;
     function GetIdEntidadeEquiplano(const IBGE: Integer): String;
     procedure SetCNPJ(const Value: String);
@@ -172,6 +174,8 @@ type
 
     // Layout - Equiplano
     property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
+
+    property PossuiAlertas: Boolean read FPossuiAlertas write FPossuiAlertas;
    end;
 
 implementation
@@ -449,8 +453,9 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
-  if (Gerador.ListaDeAlertas.Count <> 0) or
-     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
     Result := '';
 end;
 
@@ -519,12 +524,13 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
-  if(Gerador.ListaDeAlertas.Count <> 0) or
-    (Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
                   proCoplan, profintelISS, proFiorilli, proGoiania, proGovDigital,
                   proISSDigital, proISSe, proProdata, proVirtual, proSaatri,
                   proFreire, proPVH, proVitoria, proTecnos, proSisPMJP,
-                  proSystemPro]) then
+                  proSystemPro] then
     Result := '';
 end;
 
@@ -601,8 +607,9 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
-  if (Gerador.ListaDeAlertas.Count <> 0) or
-     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
     Result := '';
 end;
 
@@ -700,8 +707,9 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
-  if (Gerador.ListaDeAlertas.Count <> 0) or
-     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
     Result := '';
 end;
 
@@ -853,8 +861,9 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
-  if (Gerador.ListaDeAlertas.Count <> 0) or
-     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
     Result := '';
 end;
 
@@ -962,8 +971,9 @@ begin
   if Provedor = proDBSeller then
     Result := '<CancelarNfse>' + Result + '</CancelarNfse>';
 
-  if (Gerador.ListaDeAlertas.Count <> 0) or
-     (Provedor in [proNenhum, proABRASFv1, proABRASFv2]) then
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
     Result := '';
 end;
 
@@ -1026,40 +1036,43 @@ begin
   else Result := Notas;
   end;
 
-  if (Gerador.ListaDeAlertas.Count <> 0) or
-     (Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
-                   proBetim, proBHIss, proDBSeller, proEquiplano, proFIssLex,
-                   proGinfes, proGovBR, proIssCuritiba, proIssIntel, proIssNet,
-                   proLexsom, proNatal, proTinus, proProdemge, proRJ, proSimplIss,
-                   proThema, proTiplan, proIssDSF, proInfisc, proAgili,
-                   proSpeedGov, proPronim, proActcon, proSalvador,
-                   proNFSEBrasil]) then
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
+                  proBetim, proBHIss, proDBSeller, proEquiplano, proFIssLex,
+                  proGinfes, proGovBR, proIssCuritiba, proIssIntel, proIssNet,
+                  proLexsom, proNatal, proTinus, proProdemge, proRJ, proSimplIss,
+                  proThema, proTiplan, proIssDSF, proInfisc, proAgili,
+                  proSpeedGov, proPronim, proActcon, proSalvador,
+                  proNFSEBrasil] then
     Result := '';
 end;
 
 function TNFSeG.Gera_DadosMsgEnviarSincrono: String;
 begin
- Result := Gera_DadosMsgEnviarLote;
+  Result := Gera_DadosMsgEnviarLote;
 
- if (Gerador.ListaDeAlertas.Count <> 0) or
-    (Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
                   proBetim, proBHISS, proDBSeller, proEquiplano, profintelISS,
                   proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
                   proISSDigital, proISSIntel, proISSNet, proLexsom, proNatal,
                   proTinus, proProdemge, proPublica, proRecife, proRJ, proSaatri,
                   proFreire, proSimplISS, proThema, proTiplan, proWebISS,
                   proProdata, proAgili, proSpeedGov, proPronim, proSalvador,
-                  proNFSEBrasil]) then
-   Result := '';
+                  proNFSEBrasil] then
+    Result := '';
 end;
 
 function TNFSeG.Gera_DadosMsgSubstituirNFSe: String;
 begin
- Result := Gera_DadosMsgCancelarNFSe + '</' + Prefixo3 + 'Pedido>' + Notas;
+  Result := Gera_DadosMsgCancelarNFSe + '</' + Prefixo3 + 'Pedido>' + Notas;
 
- if (Gerador.ListaDeAlertas.Count <> 0) or
-    (Provedor in [proNenhum]) then
-   Result := '';
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum] then
+    Result := '';
 end;
 
 end.

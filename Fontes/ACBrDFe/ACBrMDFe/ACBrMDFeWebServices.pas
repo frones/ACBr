@@ -138,7 +138,6 @@ type
 
     function GetLote: String;
     function GetRecibo: String;
-    procedure FinalizarServico;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;

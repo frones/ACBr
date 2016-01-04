@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2016
+-- ACBRNFeNotasFiscais --
+[-] Correção para atribuição de "ACBrNFe.NotasFiscais[x].NomeArq" em
+    "TNotasFiscais.LoadFromFile". A rotina anterior atribuia o ultimo NomeArq
+    a todas as Notas carregadas na memória  (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/27074-xml-sendo-sobrescrito/
+
 -- ACBrNFeWebServices --
 [*] Ajustes em "Create" e "Clear" de todos os WebServices, para garantir que
     após o "Clear" os valores necessários, para as propriedades internas, do

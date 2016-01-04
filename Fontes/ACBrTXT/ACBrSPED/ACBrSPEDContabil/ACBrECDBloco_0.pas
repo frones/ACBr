@@ -50,6 +50,9 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrECDBlocos;
 
 type
+
+  TRegistro0180List = class;
+
   /// Registro 0000 - ABERTURA  DO  ARQUIVO  DIGITAL  E  IDENTIFICAÇÃO  DO
   ///                 EMPRESÁRIO OU DA SOCIEDADE EMPRESÁRIA
 
@@ -192,7 +195,10 @@ type
     fCOD_MUN: integer;        /// Código do município:
     fIM: String;          /// Inscrição Municipal do participante.
     fSUFRAMA: String;     /// Número de inscrição na Suframa:
+    FRegistro0180: TRegistro0180List; /// BLOCO 0 - Lista de Registro0180 (FILHO)
   public
+    constructor Create; virtual;
+    destructor Destroy; override;
     property COD_PART: String read fCOD_PART write fCOD_PART;
     property NOME: String read fNOME write fNOME;
     property COD_PAIS: String read fCOD_PAIS write fCOD_PAIS;
@@ -205,6 +211,7 @@ type
     property COD_MUN: integer read fCOD_MUN write fCOD_MUN;
     property IM: String read fIM write fIM;
     property SUFRAMA: String read fSUFRAMA write fSUFRAMA;
+    property Registro0180: TRegistro0180List read FRegistro0180 write FRegistro0180;
   end;
 
   /// Registro 0150 - Lista
@@ -357,6 +364,19 @@ end;
 procedure TRegistro0035List.SetItem(Index: Integer; const Value: TRegistro0035);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistro0150 }
+
+constructor TRegistro0150.Create;
+begin
+FRegistro0180 := TRegistro0180List.Create;
+end;
+
+destructor TRegistro0150.Destroy;
+begin
+  FRegistro0180.Free;
+inherited;
 end;
 
 end.

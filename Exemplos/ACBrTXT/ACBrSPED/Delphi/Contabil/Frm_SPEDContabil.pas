@@ -110,6 +110,24 @@ begin
          end;
       end;
 
+      with Registro0150.New do
+      begin
+         COD_PART := '5-OS2328-PFJ005';
+         NOME := 'PFJ 005';
+         COD_PAIS := '00105';
+         CNPJ := '';
+         UF := 'SP';
+         IE := '';
+         COD_MUN := 3550308;
+         IM := '1122';
+         SUFRAMA := '';
+         with Registro0180.New do
+         begin
+            COD_REL := '09';
+            DT_INI_REL := StrToDate('15/02/2004');
+         end;
+      end;
+
    end;
 end;
 
@@ -173,7 +191,7 @@ begin
          CTA := 'ESTOQUES - MATERIA-PRIMA';
          with RegistroI051.New do
          begin
-            COD_ENT_REF := '10';
+            COD_PLAN_REF := '10';
             COD_CCUS := '';
             COD_CTA_REF := '1.01.03.01.00';
          end;
@@ -318,11 +336,14 @@ begin
    // Limpa a lista de erros.
    memoError.Lines.Clear;
 
-   // Informa o pata onde será salvo o arquivo TXT.
+   // Informa o path onde será salvo o arquivo TXT.
    ACBrSPEDContabil1.Path := '.\';
 
+   // Informa o nome do arquivo TXT
+   ACBrSPEDContabil1.Arquivo:=edtFile.Text;
+
    // Método que gera o arquivo TXT.
-   ACBrSpedContabil1.SaveFileTXT(edtFile.Text) ;
+   ACBrSpedContabil1.SaveFileTXT() ;
 
    // Habilita os botões
    btnB_0.Enabled := true;
@@ -347,8 +368,10 @@ begin
    // Informa o pata onde será salvo o arquivo TXT.
    ACBrSPEDContabil1.Path := '.\';
 
+   ACBrSPEDContabil1.Arquivo:=edtFile.Text;
+
    // Método que gera o arquivo TXT.
-   ACBrSPEDContabil1.SaveFileTXT(edtFile.Text) ;
+   ACBrSPEDContabil1.SaveFileTXT() ;
 
    memoTXT.Lines.LoadFromFile(edtFile.Text);
 

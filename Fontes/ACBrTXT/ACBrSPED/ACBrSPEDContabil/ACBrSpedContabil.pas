@@ -116,7 +116,7 @@ type
     procedure WriteRegistro0020;
     procedure WriteRegistro0035;
     procedure WriteRegistro0150;
-    procedure WriteRegistro0180;
+    //procedure WriteRegistro0180;
     procedure WriteRegistro0990;
     /// BLOCO I
     procedure WriteRegistroI001;
@@ -428,6 +428,9 @@ end;
 
 procedure TACBrSPEDContabil.WriteRegistro0150;
 begin
+
+   Bloco_0.WriteRegistro0150;
+
    if Bloco_0.Registro0150.Count > 0 then
    begin
       with Bloco_9.Registro9900.New do
@@ -436,9 +439,19 @@ begin
          QTD_REG_BLC := Bloco_0.Registro0150.Count;
       end;
    end;
-   Bloco_0.WriteRegistro0150;
+
+   if Bloco_0.Registro0180Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := '0180';
+         QTD_REG_BLC := Bloco_0.Registro0180Count;
+      end;
+   end;
+
 end;
 
+{
 procedure TACBrSPEDContabil.WriteRegistro0180;
 begin
    if Bloco_0.Registro0180.Count > 0 then
@@ -451,6 +464,7 @@ begin
    end;
    Bloco_0.WriteRegistro0180;
 end;
+}
 
 procedure TACBrSPEDContabil.WriteRegistro0990;
 begin
@@ -986,7 +1000,7 @@ begin
   WriteRegistro0035;
   WriteRegistro0020;
   WriteRegistro0150;
-  WriteRegistro0180;
+  //WriteRegistro0180;
   WriteRegistro0990;
 
   Bloco_0.WriteBuffer;

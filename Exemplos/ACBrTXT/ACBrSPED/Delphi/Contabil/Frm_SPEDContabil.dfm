@@ -41,6 +41,7 @@ object FrmSPEDContabil: TFrmSPEDContabil
     Width = 637
     Height = 83
     Anchors = [akLeft, akTop, akRight]
+    ScrollBars = ssBoth
     TabOrder = 0
   end
   object memoTXT: TMemo
@@ -55,6 +56,7 @@ object FrmSPEDContabil: TFrmSPEDContabil
     Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
+    ScrollBars = ssBoth
     TabOrder = 1
     WantReturns = False
     WordWrap = False
@@ -116,11 +118,12 @@ object FrmSPEDContabil: TFrmSPEDContabil
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 341
     end
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 296
+      Width = 292
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -154,7 +157,8 @@ object FrmSPEDContabil: TFrmSPEDContabil
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentColor = False
-      ParentFont = False      
+      ParentFont = False
+      ExplicitWidth = 450
     end
     object btnB_0: TButton
       Left = 15

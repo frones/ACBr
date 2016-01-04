@@ -78,10 +78,10 @@ type
     function InserirDTD(AXml: String; const DTD: String): String;
     function LerPFXInfo(pfxdata: Ansistring): Boolean;
 
-    procedure VerificarValoresPadrao(var SignatureNode: String;
-      var SelectionNamespaces: String);
-    function XmlSecSign(const ConteudoXML: String;
-      SignatureNode, SelectionNamespaces: String): AnsiString;
+    procedure VerificarValoresPadrao(var SignatureNode: AnsiString;
+      var SelectionNamespaces: AnsiString);
+    function XmlSecSign(const ConteudoXML: AnsiString;
+      SignatureNode, SelectionNamespaces: AnsiString): AnsiString;
     procedure CreateCtx;
     procedure DestroyCtx;
   protected
@@ -225,8 +225,7 @@ begin
   //DEBUG
   //WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-  XmlAss := XmlSecSign(AXml, SignatureNode, SelectionNamespaces);
-
+  XmlAss := XmlSecSign(AXml, AnsiString(SignatureNode), AnsiString(SelectionNamespaces));
   XmlAss := AjustarXMLAssinado(XmlAss);
 
   // Removendo DTD //
@@ -362,7 +361,8 @@ var
   node: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
-  X509Certificate, AXml, DTD: String;
+  X509Certificate, DTD: String;
+  AXml, SigNode, SelName: AnsiString;
   MS: TMemoryStream;
 
 const
@@ -371,7 +371,9 @@ const
 begin
   InitXmlSec;
 
-  VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+  SigNode := AnsiString(SignatureNode);
+  SelName := AnsiString(SelectionNamespaces);
+  VerificarValoresPadrao(SigNode, SelName);
 
   DTD := StringReplace(cDTD, '&infElement&', infElement, []);
   AXml := InserirDTD(ConteudoXML, DTD);
@@ -423,7 +425,7 @@ begin
     end;
 
     node := xmlSecFindChild(xmlDocGetRootElement(doc),
-               xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
+               xmlCharPtr(SigNode), xmlCharPtr(SelName) );
     if (node = nil) then
     begin
       MsgErro := cErrFindSignNode;
@@ -466,8 +468,8 @@ begin
   end;
 end;
 
-function TDFeOpenSSL.XmlSecSign(const ConteudoXML: String; SignatureNode,
-  SelectionNamespaces: String): AnsiString;
+function TDFeOpenSSL.XmlSecSign(const ConteudoXML: AnsiString; SignatureNode,
+  SelectionNamespaces: AnsiString): AnsiString;
 var
   doc: xmlDocPtr;
   node, RootElement: xmlNodePtr;
@@ -793,8 +795,8 @@ begin
   end;
 end;
 
-procedure TDFeOpenSSL.VerificarValoresPadrao(var SignatureNode: String;
-  var SelectionNamespaces: String);
+procedure TDFeOpenSSL.VerificarValoresPadrao(var SignatureNode: AnsiString;
+  var SelectionNamespaces: AnsiString);
 var
   DSigNs: String;
 begin

@@ -103,7 +103,6 @@ type
     function GerarMsgLog: String; override;
     function GerarMsgErro(E: Exception): String; override;
   public
-    constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
 
     property versao: String read Fversao;
@@ -350,6 +349,7 @@ type
 
   TMDFeConsultaMDFeNaoEnc = Class(TMDFeWebService)
   private
+    FOwner: TACBrDFe;
     FCNPJ: String;
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
@@ -371,6 +371,7 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property CNPJ: String                   read FCNPJ write FCNPJ;
     property versao: String                 read Fversao;
@@ -565,19 +566,14 @@ end;
 
 { TMDFeStatusServico }
 
-constructor TMDFeStatusServico.Create(AOwner: TACBrDFe);
+procedure TMDFeStatusServico.Clear;
 begin
-  inherited Create(AOwner);
+  inherited Clear;
 
   FPStatus := stMDFeStatusServico;
   FPLayout := LayMDFeStatusServico;
   FPArqEnv := 'ped-sta';
   FPArqResp := 'sta';
-end;
-
-procedure TMDFeStatusServico.Clear;
-begin
-  inherited Clear;
 
   Fversao := '';
   FverAplic := '';
@@ -685,11 +681,6 @@ begin
   inherited Create(AOwner);
 
   FManifestos := AManifestos;
-
-  FPStatus := stMDFeRecepcao;
-  FPLayout := LayMDFeRecepcao;
-  FPArqEnv := 'env-lot';
-  FPArqResp := 'rec';
 end;
 
 destructor TMDFeRecepcao.Destroy;
@@ -702,6 +693,11 @@ end;
 procedure TMDFeRecepcao.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stMDFeRecepcao;
+  FPLayout := LayMDFeRecepcao;
+  FPArqEnv := 'env-lot';
+  FPArqResp := 'rec';
 
   Fversao := '';
   FTMed := 0;
@@ -855,11 +851,6 @@ begin
   inherited Create(AOwner);
 
   FManifestos := AManifestos;
-
-  FPStatus := stMDFeRetRecepcao;
-  FPLayout := LayMDFeRetRecepcao;
-  FPArqEnv := 'ped-rec';
-  FPArqResp := 'pro-rec';
 end;
 
 destructor TMDFeRetRecepcao.Destroy;
@@ -869,16 +860,16 @@ begin
   inherited Destroy;
 end;
 
-function TMDFeRetRecepcao.GetRecibo: String;
-begin
-  Result := Trim(FRecibo);
-end;
-
 procedure TMDFeRetRecepcao.Clear;
 var
   i, j: Integer;
 begin
   inherited Clear;
+
+  FPStatus := stMDFeRetRecepcao;
+  FPLayout := LayMDFeRetRecepcao;
+  FPArqEnv := 'ped-rec';
+  FPArqResp := 'pro-rec';
 
   FverAplic := '';
   FcStat := 0;
@@ -917,6 +908,11 @@ begin
   end;
 
   FMDFeRetorno := TRetConsReciMDFe.Create;
+end;
+
+function TMDFeRetRecepcao.GetRecibo: String;
+begin
+  Result := Trim(FRecibo);
 end;
 
 function TMDFeRetRecepcao.Executar: Boolean;
@@ -1181,11 +1177,6 @@ begin
 
   FManifestos := AManifestos;
   FMDFeRetorno := TRetConsReciMDFe.Create;
-
-  FPStatus := stMDFeRecibo;
-  FPLayout := LayMDFeRetRecepcao;
-  FPArqEnv := 'ped-rec';
-  FPArqResp := 'pro-rec';
 end;
 
 destructor TMDFeRecibo.Destroy;
@@ -1198,6 +1189,11 @@ end;
 procedure TMDFeRecibo.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stMDFeRecibo;
+  FPLayout := LayMDFeRetRecepcao;
+  FPArqEnv := 'ped-rec';
+  FPArqResp := 'pro-rec';
 
   Fversao := '';
   FxMsg := '';
@@ -1323,11 +1319,6 @@ begin
 
   FOwner := AOwner;
   FManifestos := AManifestos;
-
-  FPStatus := stMDFeConsulta;
-  FPLayout := LayMDFeConsulta;
-  FPArqEnv := 'ped-sit';
-  FPArqResp := 'sit';
 end;
 
 destructor TMDFeConsulta.Destroy;
@@ -1342,7 +1333,11 @@ procedure TMDFeConsulta.Clear;
 begin
   inherited Clear;
 
-  FPMsg := '';
+  FPStatus := stMDFeConsulta;
+  FPLayout := LayMDFeConsulta;
+  FPArqEnv := 'ped-sit';
+  FPArqResp := 'sit';
+
   FverAplic := '';
   FcStat := 0;
   FxMotivo := '';
@@ -1704,11 +1699,6 @@ begin
   inherited Create(AOwner);
 
   FEvento := AEvento;
-
-  FPStatus := stMDFeEvento;
-  FPLayout := LayMDFeEvento;
-  FPArqEnv := 'ped-eve';
-  FPArqResp := 'eve';
 end;
 
 destructor TMDFeEnvEvento.Destroy;
@@ -1721,6 +1711,11 @@ end;
 procedure TMDFeEnvEvento.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stMDFeEvento;
+  FPLayout := LayMDFeEvento;
+  FPArqEnv := 'ped-eve';
+  FPArqResp := 'eve';
 
   FcStat   := 0;
   FxMotivo := '';
@@ -2013,12 +2008,7 @@ constructor TMDFeConsultaMDFeNaoEnc.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-  FInfMDFe := TRetInfMDFeCollection.Create(AOwner);
-
-  FPStatus  := stMDFeConsulta;
-  FPLayout  := LayMDFeConsNaoEnc;
-  FPArqEnv  := 'ped-cons';
-  FPArqResp := 'cons';
+  FOwner := AOwner;
 end;
 
 destructor TMDFeConsultaMDFeNaoEnc.Destroy;
@@ -2026,6 +2016,31 @@ begin
   FinfMDFe.Free;
 
   inherited;
+end;
+
+procedure TMDFeConsultaMDFeNaoEnc.Clear;
+begin
+  inherited Clear;
+
+  FPStatus  := stMDFeConsulta;
+  FPLayout  := LayMDFeConsNaoEnc;
+  FPArqEnv  := 'ped-cons';
+  FPArqResp := 'cons';
+
+  if Assigned(FPConfiguracoesMDFe) then
+  begin
+    FtpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FinfMDFe) then
+    FinfMDFe.Free;
+
+  if Assigned(FRetConsMDFeNaoEnc) then
+    FRetConsMDFeNaoEnc.Free;
+
+  FInfMDFe := TRetInfMDFeCollection.Create(FOwner);
+  FRetConsMDFeNaoEnc := TRetConsMDFeNaoEnc.Create;
 end;
 
 procedure TMDFeConsultaMDFeNaoEnc.DefinirServicoEAction;
@@ -2118,13 +2133,6 @@ end;
 constructor TDistribuicaoDFe.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
-  FPStatus := stMDFeDistDFeInt;
-  FPLayout := LayMDFeDistDFeInt;
-  FPArqEnv := 'con-dist-dfe';
-  FPArqResp := 'dist-dfe';
-//  FPBodyElement := 'mdfeDistDFeInteresse';
-//  FPHeaderElement := '';
 end;
 
 destructor TDistribuicaoDFe.Destroy;
@@ -2137,6 +2145,13 @@ end;
 procedure TDistribuicaoDFe.Clear;
 begin
   inherited Clear;
+
+  FPStatus := stMDFeDistDFeInt;
+  FPLayout := LayMDFeDistDFeInt;
+  FPArqEnv := 'con-dist-dfe';
+  FPArqResp := 'dist-dfe';
+//  FPBodyElement := 'mdfeDistDFeInteresse';
+//  FPHeaderElement := '';
 
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;

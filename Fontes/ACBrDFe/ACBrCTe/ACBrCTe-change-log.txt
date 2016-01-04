@@ -48,6 +48,19 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2016
+-- ACBRCTeConhecimentos --
+[-] Correção para atribuição de "ACBrCTe.Conhecimentos[x].NomeArq" em
+    "TConhecimentos.LoadFromFile". A rotina anterior atribuia o ultimo NomeArq
+    a todos os Conhecimentos carregados na memória  
+    por: Italo Jurisato Junior
+    http://www.projetoacbr.com.br/forum/topic/27074-xml-sendo-sobrescrito/
+
+-- ACBrCTeWebServices --
+[*] Ajustes em "Create" e "Clear" de todos os WebServices, para garantir que
+    após o "Clear" os valores necessários, para as propriedades internas, do
+    WebService esteja corretos.  
+    por: Italo Jurisato Junior
+
 -- ACBrCTeWebServices --
 [+] Adicionada sobrecarga no método "Clear" de todos os WebServices
 [*] Remoção de propriedades sem uso.

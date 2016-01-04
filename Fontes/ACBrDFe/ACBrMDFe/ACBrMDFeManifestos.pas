@@ -716,7 +716,7 @@ function TManifestos.LoadFromFile(CaminhoArquivo: String;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
-  i: integer;
+  i, l: integer;
   MS: TMemoryStream;
 begin
   Result := False;
@@ -729,11 +729,14 @@ begin
     MS.Free;
   end;
 
+  l := Self.Count; // Indice do último manifesto já existente
+
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
   LoadFromString(XMLStr, AGerarMDFe);
 
-  for i := 0 to Self.Count - 1 do
+  // Atribui Nome do arquivo a novos manifestos inseridos //
+  for i := l to Self.Count - 1 do
     Self.Items[i].NomeArq := CaminhoArquivo;
 
   Result := True;

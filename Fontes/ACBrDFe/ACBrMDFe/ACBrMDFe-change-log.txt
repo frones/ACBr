@@ -48,6 +48,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2016
+-- ACBRMDFeManifestos --
+[-] Correção para atribuição de "ACBrMDFe.Manifestos[x].NomeArq" em
+    "TManifestos.LoadFromFile". A rotina anterior atribuia o ultimo NomeArq
+    a todos os Manifestos carregados na memória  
+    por: Italo Jurisato Junior
+
+-- ACBrMDFeWebServices --
+[*] Ajustes em "Create" e "Clear" de todos os WebServices, para garantir que
+    após o "Clear" os valores necessários, para as propriedades internas, do
+    WebService esteja corretos.  
+    por: Italo Jurisato Junior
+
 -- ACBrMDFeWebServices --
 [+] Adicionada sobrecarga no método "Clear" de todos os WebServices
 [*] Remoção de propriedades sem uso.

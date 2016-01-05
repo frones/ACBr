@@ -999,6 +999,7 @@ begin
                  // Nao Possui
                end;
 
+    proBHISS,
     proWebISS: begin
                  Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
 

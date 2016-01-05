@@ -1037,12 +1037,11 @@ begin
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
-                  proBetim, proBHIss, proDBSeller, proEquiplano, proFIssLex,
-                  proGinfes, proGovBR, proIssCuritiba, proIssIntel, proIssNet,
-                  proLexsom, proNatal, proTinus, proProdemge, proRJ, proSimplIss,
-                  proThema, proTiplan, proIssDSF, proInfisc, proAgili,
-                  proSpeedGov, proPronim, proActcon, proSalvador,
-                  proNFSEBrasil] then
+                  proBetim, proDBSeller, proEquiplano, proFIssLex, proGinfes,
+                  proGovBR, proIssCuritiba, proIssIntel, proIssNet, proLexsom,
+                  proNatal, proTinus, proProdemge, proRJ, proSimplIss, proThema,
+                  proTiplan, proIssDSF, proInfisc, proAgili, proSpeedGov,
+                  proPronim, proActcon, proSalvador, proNFSEBrasil] then
     Result := '';
 end;
 

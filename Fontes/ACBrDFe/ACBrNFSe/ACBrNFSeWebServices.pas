@@ -149,6 +149,7 @@ type
 
   TNFSeGerarLoteRPS = Class(TNFSeWebService)
   private
+    // Entrada
     FNumeroLote: String;
 
   protected
@@ -173,8 +174,9 @@ type
 
   TNFSeEnviarLoteRPS = class(TNFSeWebService)
   private
+    // Entrada
     FNumeroLote: String;
-
+    // Retorno
     FRetEnvLote: TRetEnvLote;
 
   protected
@@ -200,7 +202,9 @@ type
 
   TNFSeEnviarSincrono = Class(TNFSeWebService)
   private
+    // Entrada
     FNumeroLote: String;
+    // Retorno
     FSituacao: String;
 
   protected
@@ -225,7 +229,9 @@ type
 
   TNFSeGerarNFSe = Class(TNFSeWebService)
   private
+    // Entrada
     FNumeroRps: Integer;
+    // Retorno
     FSituacao: String;
 
   protected
@@ -250,13 +256,14 @@ type
 
   TNFSeConsultarSituacaoLoteRPS = Class(TNFSeWebService)
   private
+    // Entrada
     FCNPJ: String;
     FInscMun: String;
     FNumeroLote: String;
-    FSituacao: String;
     FSenha: String;
     FFraseSecreta: String;
-
+    // Retorno
+    FSituacao: String;
     FRetSitLote: TRetSitLote;
 
   protected
@@ -279,9 +286,9 @@ type
     property CNPJ: String         read FCNPJ         write FCNPJ;
     property InscMun: String      read FInscMun      write FInscMun;
     property NumeroLote: String   read FNumeroLote   write FNumeroLote;
-    property Situacao: String     read FSituacao;
     property Senha: String        read FSenha        write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
+    property Situacao: String     read FSituacao;
 
     property RetSitLote: TRetSitLote read FRetSitLote write FRetSitLote;
   end;
@@ -290,6 +297,7 @@ type
 
   TNFSeConsultarLoteRPS = Class(TNFSeWebService)
   private
+    // Entrada
     FNumeroLote: String;
     FCNPJ: String;
     FInscMun: String;
@@ -325,6 +333,7 @@ type
 
   TNFSeConsultarNFSeRPS = Class(TNFSeWebService)
   private
+    // Entrada
     FNumero: String;
     FSerie: String;
     FTipo: String;
@@ -362,6 +371,7 @@ type
 
   TNFSeConsultarNFSe = Class(TNFSeWebService)
   private
+    // Entrada
     FCNPJ: String;
     FInscMun: String;
     FDataInicial: TDateTime;
@@ -411,14 +421,15 @@ type
 
   TNFSeCancelarNFSe = Class(TNFSeWebService)
   private
-    FCodigoCancelamento: String;
-    FMotivoCancelamento: String;
-    FDataHora: TDateTime;
+    // Entrada
     FCNPJ: String;
     FInscMun: String;
     FNumeroNFSe: String;
     FCodigoMunicipio: String;
-
+    FCodigoCancelamento: String;
+    FMotivoCancelamento: String;
+    // Retorno
+    FDataHora: TDateTime;
     FRetCancNFSe: TRetCancNFSe;
 
   protected
@@ -436,13 +447,14 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
-    property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
-    property DataHora: TDateTime        read FDataHora           write FDataHora;
-    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
     property CNPJ: String               read FCNPJ               write FCNPJ;
     property InscMun: String            read FInscMun            write FInscMun;
+    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
     property CodigoMunicipio: String    read FCodigoMunicipio    write FCodigoMunicipio;
+    property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
+    property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
+
+    property DataHora: TDateTime        read FDataHora           write FDataHora;
 
     property RetCancNFSe: TRetCancNFSe read FRetCancNFSe write FRetCancNFSe;
   end;
@@ -451,15 +463,16 @@ type
 
  TNFSeSubstituirNFSe = Class(TNFSeWebService)
   private
-    FCodigoCancelamento: String;
-    FMotivoCancelamento: String;
-    FDataHora: TDateTime;
-    FNumeroNFSe: String;
+    // Entrada
     FCNPJ: String;
     FInscMun: String;
+    FNumeroNFSe: String;
     FCodigoMunicipio: String;
-
+    FCodigoCancelamento: String;
+    FMotivoCancelamento: String;
     FNumeroRps: Integer;
+    // Retorno
+    FDataHora: TDateTime;
     FSituacao: String;
 
     FNFSeRetorno: TretSubsNFSe;
@@ -1464,6 +1477,8 @@ procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
 var
   I: Integer;
   GerarDadosMsg: TNFSeG;
+  DataInicial, DataFinal : TDateTime;
+  TotalServicos, TotalDeducoes: Double;
 begin
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -1484,6 +1499,20 @@ begin
     FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad;
     FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
 
+    DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
+    DataFinal   := DataInicial;
+
+    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
+    begin
+      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao < dataInicial then
+        DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dataFinal then
+        DataFinal := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+      TotalServicos := TotalServicos + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
+      TotalDeducoes := TotalDeducoes + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+    end;
+
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -1495,11 +1524,22 @@ begin
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
     GerarDadosMsg.NumeroLote     := TNFSeEnviarLoteRps(Self).NumeroLote;
-    GerarDadosMsg.QtdeNotas      := TNFSeEnviarLoteRps(Self).FNotasFiscais.Count;
     GerarDadosMsg.CNPJ           := TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Prestador.CNPJ;
     GerarDadosMsg.IM             := TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
-    GerarDadosMsg.OptanteSimples := TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
+    GerarDadosMsg.QtdeNotas      := TNFSeEnviarLoteRps(Self).FNotasFiscais.Count;
     GerarDadosMsg.Notas          := FvNotas;
+
+    // Necessário para o provedor ISSDSF
+    GerarDadosMsg.RazaoSocial  := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
+    GerarDadosMsg.Transacao    := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao;
+    GerarDadosMsg.DataInicial  := DataInicial;
+    GerarDadosMsg.DataFinal    := DataFinal;
+
+    GerarDadosMsg.ValorTotalServicos := TotalServicos;
+    GerarDadosMsg.ValorTotalDeducoes := TotalDeducoes;
+
+    // Necessário para o provedor Equiplano - EL
+    GerarDadosMsg.OptanteSimples := TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
   finally
@@ -1634,6 +1674,8 @@ begin
   FPArqEnv := 'env-lotS';
   FPArqResp := 'lista-nfse';
 
+  FSituacao := '';
+
   FRetornoNFSe := nil;
 end;
 
@@ -1673,6 +1715,7 @@ begin
     FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad;
     FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -1684,9 +1727,9 @@ begin
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
     GerarDadosMsg.NumeroLote := TNFSeEnviarSincrono(Self).NumeroLote;
-    GerarDadosMsg.QtdeNotas  := TNFSeEnviarSincrono(Self).FNotasFiscais.Count;
     GerarDadosMsg.CNPJ       := TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.CNPJ;
     GerarDadosMsg.IM         := TNFSeEnviarSincrono(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+    GerarDadosMsg.QtdeNotas  := TNFSeEnviarSincrono(Self).FNotasFiscais.Count;
     GerarDadosMsg.Notas      := FvNotas;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarSincrono + FTagF;
@@ -1773,6 +1816,8 @@ begin
   FPArqEnv := 'ger-nfse';
   FPArqResp := 'lista-nfse';
 
+  FSituacao := '';
+
   FRetornoNFSe := nil;
 end;
 
@@ -1812,6 +1857,7 @@ begin
     FTagI := '<' + FPrefixo3 + 'GerarNfseEnvio' + FNameSpaceDad;
     FTagF := '</' + FPrefixo3 + 'GerarNfseEnvio>';
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -1822,9 +1868,10 @@ begin
     GerarDadosMsg.Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
-    GerarDadosMsg.QtdeNotas := TNFSeGerarNFSe(Self).FNotasFiscais.Count;
+    GerarDadosMsg.NumeroRps := TNFSeGerarNfse(Self).FNumeroRps;
     GerarDadosMsg.CNPJ      := TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.CNPJ;
     GerarDadosMsg.IM        := TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
+    GerarDadosMsg.QtdeNotas := TNFSeGerarNFSe(Self).FNotasFiscais.Count;
     GerarDadosMsg.Notas     := FvNotas;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgGerarNFSe + FTagF;
@@ -1908,6 +1955,8 @@ begin
   FPArqEnv := 'con-sit';
   FPArqResp := 'sit';
 
+  FSituacao := '';
+
   FRetornoNFSe := nil;
 end;
 
@@ -1942,6 +1991,7 @@ begin
     FTagI := '<' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + FNameSpaceDad;
     FTagF := '</' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -1955,6 +2005,8 @@ begin
     GerarDadosMsg.CNPJ       := ACNPJ;
     GerarDadosMsg.IM         := TNFSeConsultarSituacaoLoteRPS(Self).InscMun;
     GerarDadosMsg.Protocolo  := TNFSeConsultarSituacaoLoteRPS(Self).Protocolo;
+
+    // Necessário para o provedor Equiplano - Infisc
     GerarDadosMsg.NumeroLote := TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsSitLote + FTagF;
@@ -2182,6 +2234,7 @@ begin
     FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad;
     FTagF := '</' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -2193,12 +2246,14 @@ begin
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
     GerarDadosMsg.Protocolo    := TNFSeConsultarLoteRPS(Self).Protocolo;
-    GerarDadosMsg.NumeroLote   := TNFSeConsultarLoteRPS(Self).NumeroLote;
     GerarDadosMsg.CNPJ         := TNFSeConsultarLoteRPS(Self).CNPJ;
     GerarDadosMsg.IM           := TNFSeConsultarLoteRPS(Self).InscMun;
     GerarDadosMsg.Senha        := TNFSeConsultarLoteRPS(Self).FSenha;
     GerarDadosMsg.FraseSecreta := TNFSeConsultarLoteRPS(Self).FFraseSecreta;
     GerarDadosMsg.RazaoSocial  := TNFSeConsultarLoteRPS(Self).FRazaoSocial;
+
+    // Necessário para o provedor Equiplano - EL
+    GerarDadosMsg.NumeroLote   := TNFSeConsultarLoteRPS(Self).NumeroLote;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote + FTagF;
   finally
@@ -2362,6 +2417,7 @@ begin
       end;
     end;
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -2373,17 +2429,20 @@ begin
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
     GerarDadosMsg.CNPJ         := ACNPJ;
+    GerarDadosMsg.NumeroRps    := TNFSeConsultarNfseRPS(Self).Numero;
+    GerarDadosMsg.SerieRps     := TNFSeConsultarNfseRPS(Self).Serie;
+    GerarDadosMsg.TipoRps      := TNFSeConsultarNfseRPS(Self).Tipo;
     GerarDadosMsg.IM           := TNFSeConsultarNfseRPS(Self).InscMun;
     GerarDadosMsg.Senha        := TNFSeConsultarNfseRPS(Self).FSenha;
     GerarDadosMsg.FraseSecreta := TNFSeConsultarNfseRPS(Self).FFraseSecreta;
     GerarDadosMsg.RazaoSocial  := TNFSeConsultarNfseRPS(Self).FRazaoSocial;
+
+    // Necessário para o provedor ISSDSF
     GerarDadosMsg.Transacao    := TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao;
-    GerarDadosMsg.Protocolo    := TNFSeConsultarNfseRPS(Self).Protocolo;
-    GerarDadosMsg.NumeroNFSe   := TNFSeConsultarNfseRPS(Self).Numero;
-    GerarDadosMsg.NumeroRps    := TNFSeConsultarNfseRPS(Self).Numero;
-    GerarDadosMsg.SerieRps     := TNFSeConsultarNfseRPS(Self).Serie;
-    GerarDadosMsg.TipoRps      := TNFSeConsultarNfseRPS(Self).Tipo;
     GerarDadosMsg.Notas        := FvNotas;
+
+//    GerarDadosMsg.Protocolo    := TNFSeConsultarNfseRPS(Self).Protocolo;
+//    GerarDadosMsg.NumeroNFSe   := TNFSeConsultarNfseRPS(Self).Numero;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSeRPS + FTagF;
   finally
@@ -2507,6 +2566,7 @@ begin
          end;
     end;
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -2519,21 +2579,24 @@ begin
 
     GerarDadosMsg.CNPJ         := ACNPJ;
     GerarDadosMsg.IM           := TNFSeConsultarNfse(Self).InscMun;
-    GerarDadosMsg.Senha        := TNFSeConsultarNfse(Self).FSenha;
-    GerarDadosMsg.FraseSecreta := TNFSeConsultarNfse(Self).FFraseSecreta;
-    GerarDadosMsg.Transacao    := TNFSeConsultarNfse(Self).FNotasFiscais.Transacao;
-    GerarDadosMsg.Protocolo    := TNFSeConsultarNfse(Self).Protocolo;
-    GerarDadosMsg.NumeroNFSe   := TNFSeConsultarNfse(Self).NumeroNFSe;
-    GerarDadosMsg.SerieNFSe    := TNFSeConsultarNfse(Self).Serie;
     GerarDadosMsg.DataInicial  := TNFSeConsultarNfse(Self).DataInicial;
     GerarDadosMsg.DataFinal    := TNFSeConsultarNfse(Self).DataFinal;
+    GerarDadosMsg.NumeroNFSe   := TNFSeConsultarNfse(Self).NumeroNFSe;
+    GerarDadosMsg.Senha        := TNFSeConsultarNfse(Self).FSenha;
+    GerarDadosMsg.FraseSecreta := TNFSeConsultarNfse(Self).FFraseSecreta;
     GerarDadosMsg.Pagina       := TNFSeConsultarNfse(Self).FPagina;
     GerarDadosMsg.CNPJTomador  := TNFSeConsultarNfse(Self).FCNPJTomador;
     GerarDadosMsg.IMTomador    := TNFSeConsultarNfse(Self).FIMTomador;
     GerarDadosMsg.NomeInter    := TNFSeConsultarNfse(Self).FNomeInter;
     GerarDadosMsg.CNPJInter    := TNFSeConsultarNfse(Self).FCNPJInter;
     GerarDadosMsg.IMInter      := TNFSeConsultarNfse(Self).FIMInter;
-    GerarDadosMsg.Notas        := FvNotas;
+
+    // Necessario para o provedor Infisc
+    GerarDadosMsg.SerieNFSe    := TNFSeConsultarNfse(Self).Serie;
+
+//    GerarDadosMsg.Transacao    := TNFSeConsultarNfse(Self).FNotasFiscais.Transacao;
+//    GerarDadosMsg.Protocolo    := TNFSeConsultarNfse(Self).Protocolo;
+//    GerarDadosMsg.Notas        := FvNotas;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSe + FTagF;
   finally
@@ -2609,6 +2672,8 @@ begin
   FPLayout := LayNfseCancelaNfse;
   FPArqEnv := 'ped-can';
   FPArqResp := 'can';
+
+  FDataHora := 0;
 
   FRetornoNFSe := nil;
 end;
@@ -2758,7 +2823,7 @@ begin
         Gerador.Free;
       end;
     end;
-
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -2769,15 +2834,14 @@ begin
     GerarDadosMsg.Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
-    GerarDadosMsg.Protocolo  := TNFSeCancelarNfse(Self).Protocolo;
-    GerarDadosMsg.NumeroLote := TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote;
+    GerarDadosMsg.NumeroNFSe := TNFSeCancelarNfse(Self).NumeroNFSe;
     GerarDadosMsg.CNPJ       := TNFSeCancelarNfse(Self).FCNPJ;
     GerarDadosMsg.IM         := TNFSeCancelarNfse(Self).InscMun;
-    GerarDadosMsg.Transacao  := TNFSeCancelarNfse(Self).FNotasFiscais.Transacao;
-    GerarDadosMsg.NumeroNFSe := TNFSeCancelarNfse(Self).NumeroNFSe;
-    GerarDadosMsg.NumeroLote := TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote;
-    GerarDadosMsg.MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
     GerarDadosMsg.CodigoCanc := TNFSeCancelarNfse(Self).FCodigoCancelamento;
+    GerarDadosMsg.MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
+    // Necessário para o provedor ISSDSF
+    GerarDadosMsg.Transacao  := TNFSeCancelarNfse(Self).FNotasFiscais.Transacao;
+    GerarDadosMsg.NumeroLote := TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote;
     GerarDadosMsg.Notas      := FvNotas;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
@@ -2909,6 +2973,9 @@ begin
   FPArqEnv := 'ped-sub';
   FPArqResp := 'sub';
 
+  FDataHora := 0;
+  FSituacao := '';
+
   FRetornoNFSe := nil;
 end;
 
@@ -3002,6 +3069,7 @@ begin
       end;
     end;
 
+    // Geral
     GerarDadosMsg.Provedor      := FProvedor;
     GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
     GerarDadosMsg.Prefixo3      := FPrefixo3;
@@ -3012,17 +3080,19 @@ begin
     GerarDadosMsg.Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
-    GerarDadosMsg.Protocolo  := TNFSeSubstituirNfse(Self).Protocolo;
-    GerarDadosMsg.NumeroLote := TNFSeSubstituirNfse(Self).FNotasFiscais.NumeroLote;
+    GerarDadosMsg.NumeroNFSe := TNFSeSubstituirNfse(Self).NumeroNFSe;
     GerarDadosMsg.CNPJ       := TNFSeSubstituirNfse(Self).FCNPJ;
     GerarDadosMsg.IM         := TNFSeSubstituirNfse(Self).InscMun;
-    GerarDadosMsg.Transacao  := TNFSeSubstituirNfse(Self).FNotasFiscais.Transacao;
-    GerarDadosMsg.NumeroNFSe := TNFSeSubstituirNfse(Self).NumeroNFSe;
-    GerarDadosMsg.NumeroLote := TNFSeSubstituirNfse(Self).FNotasFiscais.NumeroLote;
-    GerarDadosMsg.MotivoCanc := TNFSeSubstituirNfse(Self).FMotivoCancelamento;
     GerarDadosMsg.CodigoCanc := TNFSeSubstituirNfse(Self).FCodigoCancelamento;
+    GerarDadosMsg.MotivoCanc := TNFSeSubstituirNfse(Self).FMotivoCancelamento;
+    GerarDadosMsg.NumeroRps  := TNFSeSubstituirNfse(Self).FNumeroRps;
     GerarDadosMsg.QtdeNotas  := TNFSeSubstituirNfse(Self).FNotasFiscais.Count;
     GerarDadosMsg.Notas      := FvNotas;
+
+    // Necessário para o provedor ISSDSF - CTA
+    GerarDadosMsg.NumeroLote := TNFSeSubstituirNfse(Self).FNotasFiscais.NumeroLote;
+    GerarDadosMsg.Transacao  := TNFSeSubstituirNfse(Self).FNotasFiscais.Transacao;
+//    GerarDadosMsg.Protocolo  := TNFSeSubstituirNfse(Self).Protocolo;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgSubstituirNFSe + FTagF;
   finally

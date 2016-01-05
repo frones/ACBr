@@ -310,14 +310,14 @@ begin
 
   if not Resumido then
   begin
-    if (FpNFe.Total.ICMSTot.vDesc > 0) or (FpNFe.Total.ICMSTot.vOutro > 0) or (FpNFe.Total.ISSQNtot.vDescIncond > 0) then
+    if (FpNFe.Total.ICMSTot.vDesc > 0) or (FpNFe.Total.ICMSTot.vOutro > 0) then
       FPosPrinter.Buffer.Add('<c>' + PadSpace('Subtotal|' +
          FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vProd + FpNFe.Total.ISSQNtot.vServ),
          FPosPrinter.ColunasFonteCondensada, '|'));
 
-    if (FpNFe.Total.ICMSTot.vDesc > 0) or (FpNFe.Total.ISSQNtot.vDescIncond > 0) then
+    if (FpNFe.Total.ICMSTot.vDesc > 0) then
       FPosPrinter.Buffer.Add('<c>' + PadSpace('Descontos|' +
-         FormatFloat('-#,###,##0.00', FpNFe.Total.ICMSTot.vDesc + FpNFe.Total.ISSQNtot.vDescIncond),
+         FormatFloat('-#,###,##0.00', FpNFe.Total.ICMSTot.vDesc),
          FPosPrinter.ColunasFonteCondensada, '|'));
 
     if FpNFe.Total.ICMSTot.vOutro > 0 then

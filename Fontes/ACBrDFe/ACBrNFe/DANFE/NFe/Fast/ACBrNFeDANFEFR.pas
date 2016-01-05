@@ -228,9 +228,9 @@ begin
   FdmDanfe.frxReport.PrintOptions.ShowDialog := FShowDialog;
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
 
-  if Assigned(ACBrNFe) then
-   if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFCe)then
-     FdmDanfe.frxReport.PrintOptions.PrintMode := pmSplit; 
+//  if Assigned(ACBrNFe) then
+//   if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFCe)then
+//     FdmDanfe.frxReport.PrintOptions.PrintMode := pmSplit; 
 
   // Define a impressora
   if Length(Impressora) > 0 then

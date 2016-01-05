@@ -206,6 +206,7 @@ type
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
+
   end;
 
 
@@ -1330,6 +1331,7 @@ begin
      begin
         DataSet := cdsIdentificacao;
         OpenDataSource := False;
+        Enabled := False; 
         UserName := 'Identificacao';
      end;
      with cdsIdentificacao do
@@ -1370,6 +1372,7 @@ begin
      begin
         DataSet := cdsEmitente;
         OpenDataSource := False;
+        Enabled := False;
         UserName := 'Emitente';
      end;
      with cdsEmitente do
@@ -1407,6 +1410,7 @@ begin
      begin
         DataSet := cdsDestinatario;
         OpenDataSource := False;
+        Enabled := False; 
         UserName := 'Destinatario';
      end;
      with cdsDestinatario do
@@ -1440,6 +1444,7 @@ begin
         Name := 'frxDadosProdutos';
         DataSet := cdsDadosProdutos;
         OpenDataSource := False;
+        Enabled := False; 
         UserName := 'DadosProdutos';
      end;
      with cdsDadosProdutos do
@@ -1500,6 +1505,7 @@ begin
      begin
         DataSet         := cdsParametros;
         OpenDataSource  := False;
+        Enabled := False; 
         UserName        := 'Parametros';
      end;
      with cdsParametros do
@@ -1547,6 +1553,7 @@ begin
      begin
         DataSet := cdsDuplicatas;
         OpenDataSource := False;
+        Enabled := False; 
         UserName := 'Duplicatas';
      end;
      with cdsDuplicatas do
@@ -1568,6 +1575,7 @@ begin
      begin
         DataSet := cdsCalculoImposto;
         OpenDataSource := False;
+        Enabled := False;
         UserName := 'CalculoImposto';
      end;
      with cdsCalculoImposto do
@@ -1605,6 +1613,7 @@ begin
      begin
         DataSet := cdsTransportador;
         OpenDataSource := False;
+        Enabled := False;
         UserName := 'Transportador';
      end;
      with cdsTransportador do
@@ -1629,6 +1638,7 @@ begin
      begin
         DataSet := cdsVeiculo;
         OpenDataSource := False;
+        Enabled := False;
         UserName := 'Veiculo';
      end;
      with cdsVeiculo do
@@ -1649,6 +1659,7 @@ begin
      begin
         DataSet := cdsVolumes;
         OpenDataSource := False;
+        Enabled := False;
         UserName := 'Volumes';
      end;
      with cdsVolumes do
@@ -1672,6 +1683,7 @@ begin
       begin
          DataSet := cdsEventos;
          OpenDataSource := False;
+         Enabled := False;
          UserName := 'Eventos';
       end;
    end;
@@ -1685,6 +1697,7 @@ begin
       begin
          DataSet := cdsISSQN;
          OpenDataSource := False;
+         Enabled := False;
          UserName := 'ISSQN';
       end;
       with cdsISSQN do
@@ -1705,6 +1718,7 @@ begin
       begin
          DataSet        := cdsFatura;
          OpenDataSource := False;
+         Enabled := False;
          UserName       := 'Fatura';
       end;
       with cdsFatura do
@@ -1728,6 +1742,7 @@ begin
       begin
          DataSet := cdsLocalRetirada;
          OpenDataSource := False;
+         Enabled := False;
          UserName := 'LocalRetirada';
       end;
       with cdsLocalRetirada do
@@ -1753,6 +1768,7 @@ begin
       begin
          DataSet := cdsLocalEntrega;
          OpenDataSource := False;
+         Enabled := False;
          UserName := 'LocalEntrega';
       end;
       with cdsLocalEntrega do
@@ -1778,6 +1794,7 @@ begin
       begin
          DataSet := cdsInformacoesAdicionais;
          OpenDataSource := False;
+         Enabled := False;
          UserName := 'InformacoesAdicionais';
       end;
       with cdsInformacoesAdicionais do
@@ -1797,6 +1814,7 @@ begin
       begin
          DataSet := cdsPagamento;
          OpenDataSource := False;
+         Enabled := False;
          UserName := 'Pagamento';
       end;
       with cdsPagamento do

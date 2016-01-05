@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2016
+-- ACBrMDFeWebServices --
+[*] Adicionada verificação de Chave na atribuição de TNFeConsulta.MDFeChave
+    Por: Italo Jurisato Junior
+
 04/01/2016
 -- ACBRMDFeManifestos --
 [-] Correção para atribuição de "ACBrMDFe.Manifestos[x].NomeArq" em

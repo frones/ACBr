@@ -277,6 +277,7 @@ type
 
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
+    procedure SetMDFeChave(const Value: String);
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -292,7 +293,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property MDFeChave: String read FMDFeChave write FMDFeChave;
+    property MDFeChave: String read FMDFeChave write SetMDFeChave;
     property Protocolo: String read FProtocolo;
     property DhRecbto: TDateTime read FDhRecbto;
     property XMotivo: String read FXMotivo;
@@ -1360,6 +1361,19 @@ begin
 
   FprotMDFe := TProcMDFe.Create;
   FprocEventoMDFe := TRetEventoMDFeCollection.Create(FOwner);
+end;
+
+procedure TMDFeConsulta.SetMDFeChave(const Value: String);
+var
+  NumChave: String;
+begin
+  if FMDFeChave = AValue then Exit;
+  NumChave := OnlyNumber(AValue);
+
+  if not ValidarChave(NumChave) then
+     raise EACBrMDFeException.Create('Chave "'+AValue+'" inválida.');
+
+  FMDFeChave := NumChave;
 end;
 
 procedure TMDFeConsulta.DefinirURL;

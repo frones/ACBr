@@ -39,7 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+04/01/2016
+-- ACBrCargaBal --
+[+] Geração de arquivo para Urano no padrão topmax S (acrescentado modelo)
+    http://www.projetoacbr.com.br/forum/topic/27051-acbrcargabal-urano-topmax-s/
+    por: regys.silveira
 
 30/12/2015
 -- ACBrCargaBal --

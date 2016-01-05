@@ -36,14 +36,21 @@ var
 implementation
 
 uses
-  FileCtrl;
+  FileCtrl, TypInfo;
 
 {$R *.dfm}
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
+var
+  I: TACBrCargaBalModelo;
 begin
-  cbxModelo.ItemIndex := 0;
   edtDiretorio.Clear;
+
+  cbxModelo.Items.Clear ;
+  for I := Low(TACBrCargaBalModelo) to High(TACBrCargaBalModelo) do
+    cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrCargaBalModelo), integer(I) ) ) ;
+
+  cbxModelo.ItemIndex := 0;
 end;
 
 procedure TfrmPrincipal.btnEscolherDiretorioClick(Sender: TObject);

@@ -43,7 +43,6 @@ object frmPrincipal: TfrmPrincipal
     Width = 145
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 0
     Items.Strings = (
       'Filizola'

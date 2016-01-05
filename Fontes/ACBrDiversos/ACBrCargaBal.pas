@@ -51,7 +51,7 @@ uses
 type
   EACBrCargaBal = class(Exception);
   TACBrCargaBalTipoVenda = (tpvPeso, tpvUnidade, tpvEAN13);
-  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modToledoMGV5);
+  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5);
   TACBrCargaBalProgresso = procedure(Mensagem: String; ProgressoAtual, ProgressoTotal: Integer) of object;
 
   // nutricional
@@ -176,6 +176,7 @@ type
     procedure PreencherFilizola(Arquivo, Setor, Nutricional, Receita: TStringList);
     procedure PreencherToledo(Arquivo, Nutricional, Receita: TStringList; Versao: integer = 0);
     procedure PreencherUrano(Arquivo: TStringList);
+    procedure PreencherUranoS(Arquivo: TStringList);
 
     function GetNutriUndPorcaoToledo(Tipo: TACBrCargaBalNutriUndPorcao): String;
     function GetNutriPartDecimalToledo(Tipo: TACBrCargaBalNutriPartdecimal): String;
@@ -192,6 +193,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrConsts;
 
 { TACBrCargaBalSetor }
 
@@ -338,10 +342,11 @@ end;
 function TACBrCargaBal.GetNomeArquivoProduto: String;
 begin
   case FModelo of
-    modFilizola : Result := 'CADTXT.TXT';
-    modToledo   : Result := 'TXITENS.TXT';
-    modUrano    : Result := 'PRODUTOS.TXT';
-    modToledoMGV5   : Result := 'ITENSMGV.TXT';
+    modFilizola   : Result := 'CADTXT.TXT';
+    modToledo     : Result := 'TXITENS.TXT';
+    modUrano      : Result := 'PRODUTOS.TXT';
+    modUranoS     : Result := 'PRODUTOS.TXT';
+    modToledoMGV5 : Result := 'ITENSMGV.TXT';
   end;
 end;
 
@@ -681,6 +686,83 @@ begin
   end;
 end;
 
+procedure TACBrCargaBal.PreencherUranoS(Arquivo: TStringList);
+var
+  i, Total, xtam: Integer;
+  xnutric: string;
+  inform : string;
+begin
+  //modelo do arquivo: serve somente para as novas balanças urano (linha top e topmax)
+  //0x10+0x02+codigo[5]+pesagem[35]+chksum[4]+0x03+0x13+0x10
+                //      pesagem[35]=tipoproduto[1]+descricao[20]+preco[9]+validade[4]+tipovalidade[1]
+
+  DecimalSeparator := '.';
+  Total := Produtos.Count;
+
+  for i := 0 to Total - 1 do
+  begin
+    //linha do produto
+    inform := LFIll(Produtos[i].Codigo, 6) +
+    GetTipoProdutoUrano(Produtos[i].Tipo) +
+    RFIll(Produtos[i].Descricao, 30) +
+    FormatCurr('000000.00', Produtos[i].ValorVenda) +
+    LFIll(Produtos[i].Validade, 4) + 'D0000                            ';
+    xtam := CalcularSoma(inform);
+    Arquivo.Add( ^P + ^B + inform + LowerCase(IntToHex(xtam, 4)) + ^C);
+
+    if Produtos[i].Nutricional.FQtd>0 then
+    begin
+      //linha da informação nutricional
+      //0x11+0x02+codigo[5]+pesagem[35]+informacoes nutricionais[258]+chksum[4]+0x03+0x13+0x10
+                                      //informacoes nutricionais[258]=1 linha de 41 caracteres para porção
+                                      // e 8 linhas de 21 caracteres para [calorias,carboidratos,proteínas,gorduras totais,
+                                      //                                   gorduras saturadas,gordura trans,fibra alimentar,
+                                      //                                   sódio].
+
+      Arquivo.Add(#11#02 +
+        LFIll(Produtos[i].Codigo, 5) +
+        GetTipoProdutoUrano(Produtos[i].Tipo) +
+        RFIll(Produtos[i].Descricao, 20) +
+        FormatCurr('000000.00', Produtos[i].ValorVenda) +
+        LFIll(Produtos[i].Validade, 4) +
+        'D' +
+        RFIll('' {Produtos[i].Nutricional.FUndPorcao}, 209)
+        );
+
+      xtam := CalcularSoma(Arquivo[Arquivo.Count-1]);
+      Arquivo[Arquivo.Count-1] := Arquivo[Arquivo.Count-1] + IntToHex(xtam, 4) + #03;
+    end;
+
+    if Produtos[i].Receita <> '' then
+    begin
+    //linha da receita
+    //0x12+0x02+codigo[5]+pesagem[35]+informacoes adicionais[615]+chksum[4]+0x03+0x13+0x10
+                                    //informacoes adicionais[615]=15 linhas de 41 caracteres.
+
+      xnutric:='';
+
+      if Produtos[i].Nutricional.FQtd<=0 then
+        xnutric := RFill('', 209);
+
+      Arquivo.Add(#12#02 +
+        LFIll(Produtos[i].Codigo, 5) +
+        GetTipoProdutoUrano(Produtos[i].Tipo) +
+        RFIll(Produtos[i].Descricao, 20) +
+        FormatCurr('000000.00', Produtos[i].ValorVenda) +
+        LFIll(Produtos[i].Validade, 4) +
+        'D' +
+        xnutric +
+        RFIll(Produtos[i].Receita, 615)
+        );
+
+      xtam := CalcularSoma(Arquivo[Arquivo.Count-1]);
+      Arquivo[Arquivo.Count-1] := Arquivo[Arquivo.Count-1] + IntToHex(xtam, 4) + #03;
+    end;
+
+    Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, Total);
+  end;
+end;
+
 procedure TACBrCargaBal.Progresso(const AMensagem: String; const AContAtual,
   AContTotal: Integer);
 begin
@@ -721,10 +803,11 @@ begin
 
     // Varre os registros gerando o arquivo em lista
     case FModelo of
-      modFilizola: PreencherFilizola(Produto, Setor, Nutricional, Receita);
-      modToledo  : PreencherToledo(Produto, Nutricional, Receita);
-      modUrano   : PreencherUrano(Produto);
-      modToledoMGV5  : PreencherToledo(Produto, Nutricional, Receita ,1);
+      modFilizola   : PreencherFilizola(Produto, Setor, Nutricional, Receita);
+      modToledo     : PreencherToledo(Produto, Nutricional, Receita);
+      modUrano      : PreencherUrano(Produto);
+      modUranoS     : PreencherUranoS(Produto);
+      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita ,1);
     end;
 
     // Monta o nome do arquivo de produtos seguindo o padrao da balanca
@@ -767,10 +850,11 @@ end;
 function TACBrCargaBal.GetModeloStr: string;
 begin
  case fModelo of
-   modFilizola : result := 'Filizola';
-   modToledo : result := 'Toledo';
-   modUrano : result := 'Urano';
-   modToledoMGV5 : result :='ToledoMGV5';
+   modFilizola   : result := 'Filizola';
+   modToledo     : result := 'Toledo';
+   modUrano      : result := 'Urano';
+   modUranoS     : result := 'Urano (S)';
+   modToledoMGV5 : result := 'ToledoMGV5';
  end;
 end;
 

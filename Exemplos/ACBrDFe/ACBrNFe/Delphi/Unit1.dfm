@@ -1692,7 +1692,6 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
-    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = False
     MargemInferior = 0.800000000000000000
@@ -1722,8 +1721,8 @@ object Form1: TForm1
     RecuoLogo = 0
     TributosSeparadamente = False
     PosCanhoto = prCabecalho
-    Left = 526
-    Top = 421
+    Left = 556
+    Top = 426
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1733,8 +1732,8 @@ object Form1: TForm1
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 525
-    Top = 375
+    Left = 555
+    Top = 380
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     ACBrNFe = ACBrNFe1
@@ -1742,7 +1741,6 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
-    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.700000000000000000
@@ -1775,7 +1773,7 @@ object Form1: TForm1
     ExibirEAN = False
     QuebraLinhaEmDetalhamentoEspecifico = True
     ExibeCampoFatura = False
-    Left = 462
-    Top = 413
+    Left = 452
+    Top = 428
   end
 end

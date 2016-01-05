@@ -280,6 +280,7 @@ type
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
     FprocEventoCTe: TRetEventoCTeCollection;
+    procedure SetCTeChave(AValue: String);
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -295,7 +296,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property CTeChave: String read FCTeChave write FCTeChave;
+    property CTeChave: String read FCTeChave write SetCTeChave;
     property Protocolo: String read FProtocolo;
     property DhRecbto: TDateTime read FDhRecbto;
     property XMotivo: String read FXMotivo;
@@ -1472,6 +1473,19 @@ begin
   FprotCTe := TProcCTe.Create;
   FretCancCTe := TRetCancCTe.Create;
   FprocEventoCTe := TRetEventoCTeCollection.Create(FOwner);
+end;
+
+procedure TCTeConsulta.SetCTeChave(AValue: String);
+var
+  NumChave: String;
+begin
+  if FCTeChave = AValue then Exit;
+  NumChave := OnlyNumber(AValue);
+
+  if not ValidarChave(NumChave) then
+     raise EACBrCTeException.Create('Chave "'+AValue+'" inválida.');
+
+  FCTeChave := NumChave;
 end;
 
 procedure TCTeConsulta.DefinirURL;

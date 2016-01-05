@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2016
+-- ACBrNFeWebServices --
+[*] Adicionada verificação de Chave na atribuição de TCTeConsulta.NFeChave
+    (por: DSA)
+
 04/01/2016
 -- ACBRCTeConhecimentos --
 [-] Correção para atribuição de "ACBrCTe.Conhecimentos[x].NomeArq" em

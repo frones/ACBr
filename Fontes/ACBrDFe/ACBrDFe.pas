@@ -440,20 +440,32 @@ var
   Sessao, NomeSchema, ArqSchema: String;
   VersaoAchada, VersaoSchema: Double;
 begin
+  if EstaVazio(ModeloDFe) then
+    raise EACBrDFeException.Create('ModeloDFe não pode ser vazio');
+
+  if EstaVazio(UF) then
+    raise EACBrDFeException.Create('UF não pode ser vazia');
+
   Sessao := ModeloDFe + '_' + UF + '_' + IfThen(TipoAmbiente = taProducao, 'P', 'H');
   VersaoAchada := Versao;
 
   LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
 
   // Se não achou, verifique se está fazendo redirecionamento "Usar="
-  if EstaVazio(URL) and FPIniParams.SectionExists(Sessao) then
+  if EstaVazio(URL) then
   begin
-    Sessao := FPIniParams.ReadString(Sessao, 'Usar', '');
-    if NaoEstaVazio(Sessao) then
+    if FPIniParams.SectionExists(Sessao) then
     begin
-      VersaoAchada := Versao;
-      LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
-    end;
+      Sessao := FPIniParams.ReadString(Sessao, 'Usar', '');
+      if NaoEstaVazio(Sessao) then
+      begin
+        VersaoAchada := Versao;
+        LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+      end;
+    end
+    else
+      raise EACBrDFeException.Create('Sessão "'+Sessao+'", não encontrada no arquivo "'+
+                                     Configuracoes.WebServices.ResourceName+'"');
   end;
 
   // tenta procura por Versão na pasta de Schemas //

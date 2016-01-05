@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2016
+-- ACBrDFe --
+[*] Ajuste para melhor exibição de erros em "LerServicoDeParams" (por: DSA)
+
 04/01/2016
 -- ACBrDFeOpenSSL --
 [-] Correção para os métodos "Assinar" e "VerificarAssinatura", que não

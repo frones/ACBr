@@ -1868,7 +1868,7 @@ begin
     GerarDadosMsg.Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     GerarDadosMsg.VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
-    GerarDadosMsg.NumeroRps := TNFSeGerarNfse(Self).FNumeroRps;
+    GerarDadosMsg.NumeroRps := IntToStr(TNFSeGerarNfse(Self).FNumeroRps);
     GerarDadosMsg.CNPJ      := TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.CNPJ;
     GerarDadosMsg.IM        := TNFSeGerarNFSe(Self).FNotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
     GerarDadosMsg.QtdeNotas := TNFSeGerarNFSe(Self).FNotasFiscais.Count;
@@ -3085,7 +3085,7 @@ begin
     GerarDadosMsg.IM         := TNFSeSubstituirNfse(Self).InscMun;
     GerarDadosMsg.CodigoCanc := TNFSeSubstituirNfse(Self).FCodigoCancelamento;
     GerarDadosMsg.MotivoCanc := TNFSeSubstituirNfse(Self).FMotivoCancelamento;
-    GerarDadosMsg.NumeroRps  := TNFSeSubstituirNfse(Self).FNumeroRps;
+    GerarDadosMsg.NumeroRps  := IntToStr(TNFSeSubstituirNfse(Self).FNumeroRps);
     GerarDadosMsg.QtdeNotas  := TNFSeSubstituirNfse(Self).FNotasFiscais.Count;
     GerarDadosMsg.Notas      := FvNotas;
 

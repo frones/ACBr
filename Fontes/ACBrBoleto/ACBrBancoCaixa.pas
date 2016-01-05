@@ -84,6 +84,7 @@ begin
    fpNumero:= 104;
    fpTamanhoAgencia :=  5;
    fpTamanhoMaximoNossoNum := 15;
+   fpTamanhoCarteira := 2;
 
    fValorTotalDocs:= 0;
 
@@ -506,29 +507,30 @@ begin
 
       {SEGMENTO Q}
       Result:= Result + #13#10 +
-               IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
-               '0001'                                                     + //4 a 7 - Número do lote
-               '3'                                                        + //8 - Tipo do registro: Registro detalhe
+               IntToStrZero(ACBrBanco.Numero, 3)                                       + //1 a 3 - Código do banco
+               '0001'                                                                  + //4 a 7 - Número do lote
+               '3'                                                                     + //8 - Tipo do registro: Registro detalhe
                IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 2 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
-               'Q'                                                        + //14 - Código do segmento do registro detalhe
-               ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
-               ATipoOcorrencia                                            + //16 a 17 - Código de movimento
+               'Q'                                                                     + //14 - Código do segmento do registro detalhe
+               ' '                                                                     + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
+               ATipoOcorrencia                                                         + //16 a 17 - Código de movimento
                    {Dados do sacado}
-               IfThen(Sacado.Pessoa = pJuridica,'2','1')                  + //18 - Tipo inscricao
-               PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')                  + //19 a 33 - Número de Inscrição
-               PadRight(Sacado.NomeSacado, 40, ' ')                           + //34 a 73 - Nome sacado
-               PadRight(Sacado.Logradouro +' '+ Sacado.Numero +' '+ Sacado.Complemento , 40, ' ') + //74 a 113 - Endereço
-               PadRight(Sacado.Bairro, 15, ' ')                               + // 114 a 128 - bairro sacado
-               PadLeft(OnlyNumber(Sacado.CEP), 8, '0')                                   + // 129 a 133 e 134 a 136- cep sacado prefixo e sufixo sem o traço"-" somente numeros
-               PadRight(Sacado.Cidade, 15, ' ')                               + // 137 a 151 - cidade sacado
-               PadRight(Sacado.UF, 2, ' ')                                    + // 152 a 153 - UF sacado
-                        {Dados do sacador/avalista}
-               '0'                                                                            + // 154 a 154 - Tipo de inscrição: Não informado
-               PadRight('', 15, '0')                                                              + // 155 a 169 - Número de inscrição
-               PadRight('', 40, ' ')                                                              + // 170 a 209 - Nome do sacador/avalista
-               PadRight('', 3, ' ')                                                               + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
-               PadRight('',20, ' ')                                                               + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
-               PadRight('', 8, ' ');                                                                // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
+               IfThen(Sacado.Pessoa = pJuridica,'2','1')                               + //18 - Tipo inscricao
+               PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')                            + //19 a 33 - Número de Inscrição
+               PadRight(Sacado.NomeSacado, 40, ' ')                                    + //34 a 73 - Nome sacado
+               PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' ' + 
+                        Sacado.Complemento , 40, ' ')                                  + //74 a 113 - Endereço
+               PadRight(Sacado.Bairro, 15, ' ')                                        + // 114 a 128 - bairro sacado
+               PadLeft(OnlyNumber(Sacado.CEP), 8, '0')                                 + // 129 a 133 e 134 a 136- cep sacado prefixo e sufixo sem o traço"-" somente numeros
+               PadRight(Sacado.Cidade, 15, ' ')                                        + // 137 a 151 - cidade sacado
+               PadRight(Sacado.UF, 2, ' ')                                             + // 152 a 153 - UF sacado
+                   {Dados do sacador/avalista}
+               IfThen(Sacado.SacadoAvalista.Pessoa = pJuridica,'2','1')                +
+               PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')             + // 155 a 169 - Número de inscrição
+               PadRight(Sacado.SacadoAvalista.NomeAValista, 40, ' ')                   + // 170 a 209 - Nome do sacador/avalista
+               PadRight('', 3, ' ')                                                    + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
+               PadRight('',20, ' ')                                                    + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
+               PadRight('', 8, ' ');                                                     // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 
  {SEGMENTO R}
       Result:= Result + #13#10 +

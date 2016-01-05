@@ -39,7 +39,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 2
-      Top = 506
+      Top = 519
       Width = 276
       Height = 222
       AutoSize = True
@@ -851,7 +851,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Left = 2
       Top = 420
       Width = 276
-      Height = 86
+      Height = 99
       AutoSize = True
       BandType = btSummary
       BeforePrint = rlbMensagemFiscalBeforePrint
@@ -964,6 +964,20 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Align = faTop
         DrawKind = dkLine
         Pen.Width = 2
+      end
+      object lCancelada: TRLLabel
+        Left = 0
+        Top = 86
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
     end
     object rlbMensagemContribuinte: TRLBand

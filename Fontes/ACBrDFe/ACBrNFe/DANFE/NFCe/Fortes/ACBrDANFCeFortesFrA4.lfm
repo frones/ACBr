@@ -1,7 +1,7 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
-  Left = 3
+  Left = 151
   Height = 745
-  Top = 3
+  Top = 163
   Width = 995
   Caption = 'frmACBrDANFCeFortesFrA4'
   ClientHeight = 745
@@ -863,7 +863,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand11: TRLBand
         Left = 0
-        Height = 73
+        Height = 89
         Top = 142
         Width = 718
         AutoSize = True
@@ -876,6 +876,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        BeforePrint = RLBand11BeforePrint
         object RLLabel32: TRLLabel
           Left = 1
           Height = 12
@@ -972,11 +973,28 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           RealBounds.Height = 0
           BeforePrint = RLLabel37BeforePrint
         end
+        object lCancelada: TRLLabel
+          Left = 1
+          Height = 16
+          Top = 72
+          Width = 716
+          Align = faTop
+          Alignment = taCenter
+          Font.Color = clRed
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
       end
       object rlbConsumidor: TRLBand
         Left = 0
         Height = 44
-        Top = 215
+        Top = 231
         Width = 718
         AutoSize = True
         Borders.Sides = sdCustom
@@ -1051,7 +1069,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object rlbRodape: TRLBand
         Left = 0
         Height = 173
-        Top = 259
+        Top = 275
         Width = 718
         AutoSize = True
         BandType = btSummary

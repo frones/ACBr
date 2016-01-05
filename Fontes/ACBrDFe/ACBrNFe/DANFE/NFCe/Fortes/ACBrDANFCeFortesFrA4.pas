@@ -161,6 +161,7 @@ type
     RLLabel50: TRLLabel;
     RlPelosProdutos: TRLLabel;
     RLLabel51: TRLLabel;
+    lCancelada: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLLabel1BeforePrint(Sender: TObject; var Text: string;
@@ -246,6 +247,7 @@ type
       var PrintIt: Boolean);
     procedure RLLabel51BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
+    procedure RLBand11BeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     FNumItem: Integer;
     FNumPag: Integer;
@@ -398,6 +400,13 @@ begin
   PrintIt := Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl) <> '';
 //  self.memDadosAdc.Lines.Clear;
 //  self.memDadosAdc.Lines.Add(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLBand11BeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  if self.FACBrNFeDANFCeFortesA4.NFeCancelada then
+    lCancelada.Caption    := ACBrStr('NF-e CANCELADA');
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand12BeforePrint(Sender: TObject;

@@ -728,13 +728,14 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 0
         Top = 142
         Width = 718
-        Height = 73
+        Height = 93
         AutoSize = True
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
+        BeforePrint = RLBand11BeforePrint
         object RLLabel32: TRLLabel
           Left = 1
           Top = 0
@@ -819,10 +820,25 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           ParentFont = False
           BeforePrint = RLLabel37BeforePrint
         end
+        object lCancelada: TRLLabel
+          Left = 1
+          Top = 72
+          Width = 716
+          Height = 16
+          Align = faTop
+          Alignment = taCenter
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+        end
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 215
+        Top = 235
         Width = 718
         Height = 44
         AutoSize = True
@@ -886,7 +902,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbRodape: TRLBand
         Left = 0
-        Top = 259
+        Top = 279
         Width = 718
         Height = 173
         AutoSize = True

@@ -162,6 +162,7 @@ type
     RLPDFFilter1: TRLPDFFilter;
     lEmissaoVia: TRLLabel;
     RLDraw8: TRLDraw;
+    lCancelada: TRLLabel;
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -296,6 +297,9 @@ begin
       lChaveDeAcesso.Caption    := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
       lChaveDeAcesso.Font.Color := clRed;
     end;
+
+    if ACBrNFeDANFCeFortes.NFeCancelada then
+      lCancelada.Caption := ACBrStr('NF-e CANCELADA');
   end;
 end;
 

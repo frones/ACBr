@@ -48,6 +48,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/01/2016
+-- ACBrDANFCeFortesFrA4 --
+[*] Tratamentos para apresentação dos tributos ( Federal / Estadual e Municipal ).
+       conforme o manual de olho no imposto
+        http://www.afrac.org.br/wp-content/uploads/2014/11/MANUAL-DE-OLHO-NO-IMPOSTO-0-0-8-2.pdf
+	
+	por: Henrique Leonardo 
+
+
+
+
+04/01/2016
 -- ACBRNFeNotasFiscais --
 [-] Correção para atribuição de "ACBrNFe.NotasFiscais[x].NomeArq" em
     "TNotasFiscais.LoadFromFile". A rotina anterior atribuia o ultimo NomeArq

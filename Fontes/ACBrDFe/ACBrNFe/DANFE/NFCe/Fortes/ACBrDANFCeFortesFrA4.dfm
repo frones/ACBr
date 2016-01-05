@@ -15,7 +15,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   PixelsPerInch = 96
   TextHeight = 13
   object rlReportA4: TRLReport
-    Left = 0
+    Left = 8
     Top = 0
     Width = 794
     Height = 1123
@@ -670,9 +670,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawRight = True
         Borders.DrawBottom = True
         object RLLabel31: TRLLabel
-          Left = 307
+          Left = 312
           Top = 0
-          Width = 407
+          Width = 402
           Height = 16
           Alignment = taRightJustify
           Caption = 
@@ -690,7 +690,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand10: TRLBand
         Left = 0
-        Top = 97
+        Top = 107
         Width = 718
         Height = 35
         Borders.Sides = sdCustom
@@ -726,7 +726,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object RLBand11: TRLBand
         Left = 0
-        Top = 132
+        Top = 142
         Width = 718
         Height = 73
         AutoSize = True
@@ -822,7 +822,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 205
+        Top = 215
         Width = 718
         Height = 44
         AutoSize = True
@@ -886,7 +886,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbRodape: TRLBand
         Left = 0
-        Top = 249
+        Top = 259
         Width = 718
         Height = 173
         AutoSize = True
@@ -979,7 +979,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 0
         Top = 17
         Width = 718
-        Height = 80
+        Height = 73
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
         Borders.DrawTop = False
@@ -987,9 +987,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawBottom = True
         BeforePrint = RLBand15BeforePrint
         object RLLabel44: TRLLabel
-          Left = 422
+          Left = 393
           Top = 5
-          Width = 134
+          Width = 165
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -1005,7 +1005,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel45: TRLLabel
           Left = 559
           Top = 5
-          Width = 154
+          Width = 155
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -1020,9 +1020,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel45BeforePrint
         end
         object RLLabel46: TRLLabel
-          Left = 422
+          Left = 393
           Top = 20
-          Width = 134
+          Width = 165
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -1038,7 +1038,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel47: TRLLabel
           Left = 559
           Top = 20
-          Width = 154
+          Width = 155
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -1053,9 +1053,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           BeforePrint = RLLabel47BeforePrint
         end
         object RLLabel48: TRLLabel
-          Left = 422
+          Left = 393
           Top = 37
-          Width = 134
+          Width = 165
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -1071,7 +1071,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel49: TRLLabel
           Left = 559
           Top = 37
-          Width = 154
+          Width = 155
           Height = 16
           Alignment = taRightJustify
           AutoSize = False
@@ -1085,13 +1085,14 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           ParentFont = False
           BeforePrint = RLLabel49BeforePrint
         end
-        object RLLabel43: TRLLabel
-          Left = 531
-          Top = 58
-          Width = 183
+        object RlPelosProdutos: TRLLabel
+          Left = 559
+          Top = 54
+          Width = 155
           Height = 16
           Alignment = taRightJustify
-          Caption = 'Fonte de pesquisa dos tributos'
+          AutoSize = False
+          Caption = '0000'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -1099,7 +1100,51 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Font.Style = []
           Layout = tlCenter
           ParentFont = False
-          BeforePrint = RLLabel43BeforePrint
+          BeforePrint = RlPelosProdutosBeforePrint
+        end
+        object RLLabel51: TRLLabel
+          Left = 393
+          Top = 54
+          Width = 165
+          Height = 16
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'pelos produtos/servi'#231'os :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+          BeforePrint = RLLabel51BeforePrint
+        end
+      end
+      object RLBand16: TRLBand
+        Left = 0
+        Top = 90
+        Width = 718
+        Height = 17
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
+        object RLLabel50: TRLLabel
+          Left = 602
+          Top = 0
+          Width = 112
+          Height = 16
+          Alignment = taRightJustify
+          Caption = 'Fonte dos Tributos'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+          BeforePrint = RLLabel50BeforePrint
         end
       end
     end

@@ -277,7 +277,7 @@ type
 
     FprotMDFe: TProcMDFe;
     FprocEventoMDFe: TRetEventoMDFeCollection;
-    procedure SetMDFeChave(const Value: String);
+    procedure SetMDFeChave(const AValue: String);
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -1363,15 +1363,15 @@ begin
   FprocEventoMDFe := TRetEventoMDFeCollection.Create(FOwner);
 end;
 
-procedure TMDFeConsulta.SetMDFeChave(const Value: String);
+procedure TMDFeConsulta.SetMDFeChave(const AValue: String);
 var
   NumChave: String;
 begin
   if FMDFeChave = AValue then Exit;
-  NumChave := OnlyNumber(AValue);
+    NumChave := OnlyNumber(AValue);
 
   if not ValidarChave(NumChave) then
-     raise EACBrMDFeException.Create('Chave "'+AValue+'" inválida.');
+    raise EACBrMDFeException.Create(Format('Chave "%s" inválida.',[AValue]));
 
   FMDFeChave := NumChave;
 end;

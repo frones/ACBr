@@ -111,36 +111,36 @@ type
 
     property Provedor: TNFSeProvedor read FProvedor;
     property Status: TStatusACBrNFSe read FPStatus;
-    property Layout: TLayOutNFSe read FPLayout;
-    property NameSpaceCab: String read FNameSpaceCab;
-    property NameSpaceDad: String read FNameSpaceDad;
-    property URI: String read FURI;
-    property URISig: String read FURISig;
-    property URIRef: String read FURIRef;
-    property TagI: String read FTagI;
-    property TagF: String read FTagF;
-    property DadosSenha: String read FDadosSenha;
-    property DadosEnvelope: String read FDadosEnvelope;
-    property aMsg: String read FaMsg;
-    property Separador: String read FSeparador;
-    property Prefixo2: String read FPrefixo2;
-    property Prefixo3: String read FPrefixo3;
-    property Prefixo4: String read FPrefixo4;
-    property NameSpace: String read FNameSpace;
-    property DefTipos: String read FDefTipos;
-    property Cabecalho: String read FCabecalho;
-    property xsdServico: String read FxsdServico;
-    property VersaoXML: String read FVersaoXML;
+    property Layout: TLayOutNFSe     read FPLayout;
+    property NameSpaceCab: String    read FNameSpaceCab;
+    property NameSpaceDad: String    read FNameSpaceDad;
+    property URI: String             read FURI;
+    property URISig: String          read FURISig;
+    property URIRef: String          read FURIRef;
+    property TagI: String            read FTagI;
+    property TagF: String            read FTagF;
+    property DadosSenha: String      read FDadosSenha;
+    property DadosEnvelope: String   read FDadosEnvelope;
+    property aMsg: String            read FaMsg;
+    property Separador: String       read FSeparador;
+    property Prefixo2: String        read FPrefixo2;
+    property Prefixo3: String        read FPrefixo3;
+    property Prefixo4: String        read FPrefixo4;
+    property NameSpace: String       read FNameSpace;
+    property DefTipos: String        read FDefTipos;
+    property Cabecalho: String       read FCabecalho;
+    property xsdServico: String      read FxsdServico;
+    property VersaoXML: String       read FVersaoXML;
     property VersaoNFSe: TVersaoNFSe read FVersaoNFSe;
-    property xSignatureNode: String read FxSignatureNode;
-    property xDSIGNSLote: String read FxDSIGNSLote;
-    property xIdSignature: String read FxIdSignature;
+    property xSignatureNode: String  read FxSignatureNode;
+    property xDSIGNSLote: String     read FxDSIGNSLote;
+    property xIdSignature: String    read FxIdSignature;
 
-    property vNotas: String read FvNotas;
+    property vNotas: String   read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
 
     property DataRecebimento: TDateTime read FDataRecebimento;
-    property Protocolo: String read FProtocolo;
+    property Protocolo: String          read FProtocolo;
 
     property RetornoNFSe: TRetornoNFSe read FRetornoNFSe write FRetornoNFSe;
   end;
@@ -164,6 +164,7 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property NumeroLote: String read FNumeroLote;
   end;
@@ -176,8 +177,6 @@ type
 
     FRetEnvLote: TRetEnvLote;
 
-    function GetLote: String;
-    function GetProtocolo: String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -190,6 +189,7 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property NumeroLote: String read FNumeroLote;
 
@@ -215,9 +215,10 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property NumeroLote: String read FNumeroLote;
-    property Situacao: String read FSituacao;
+    property Situacao: String   read FSituacao;
   end;
 
 { TNFSeGerarNFSe }
@@ -239,9 +240,10 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property NumeroRps: Integer read FNumeroRps;
-    property Situacao: String read FSituacao;
+    property Situacao: String   read FSituacao;
   end;
 
 { TNFSeConsultarSituacaoLoteRPS }
@@ -270,14 +272,15 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     function Executar: Boolean; override;
 
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property InscMun: String read FInscMun write FInscMun;
-    property NumeroLote: String read FNumeroLote write FNumeroLote;
-    property Situacao: String read FSituacao;
-    property Senha: String read FSenha write FSenha;
+    property CNPJ: String         read FCNPJ         write FCNPJ;
+    property InscMun: String      read FInscMun      write FInscMun;
+    property NumeroLote: String   read FNumeroLote   write FNumeroLote;
+    property Situacao: String     read FSituacao;
+    property Senha: String        read FSenha        write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
 
     property RetSitLote: TRetSitLote read FRetSitLote write FRetSitLote;
@@ -306,15 +309,16 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     //usado pelo provedor IssDsf
-    property NumeroLote: String read FNumeroLote write FNumeroLote;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property InscMun: String read FInscMun write FInscMun;
-    property Senha: String read FSenha write FSenha;
+    property NumeroLote: String   read FNumeroLote   write FNumeroLote;
+    property CNPJ: String         read FCNPJ         write FCNPJ;
+    property InscMun: String      read FInscMun      write FInscMun;
+    property Senha: String        read FSenha        write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     //usado pelo provedor Tecnos
-    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property RazaoSocial: String  read FRazaoSocial  write FRazaoSocial;
   end;
 
 { TNFSeConsultarNFSeRPS }
@@ -342,15 +346,16 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
-    property Numero: String read FNumero write FNumero;
-    property Serie: String read FSerie write FSerie;
-    property Tipo: String read FTipo write FTipo;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property InscMun: String read FInscMun write FInscMun;
-    property Senha: String read FSenha write FSenha;
+    property Numero: String       read FNumero       write FNumero;
+    property Serie: String        read FSerie        write FSerie;
+    property Tipo: String         read FTipo         write FTipo;
+    property CNPJ: String         read FCNPJ         write FCNPJ;
+    property InscMun: String      read FInscMun      write FInscMun;
+    property Senha: String        read FSenha        write FSenha;
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
-    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property RazaoSocial: String  read FRazaoSocial  write FRazaoSocial;
   end;
 
 { TNFSeConsultarNFSe }
@@ -384,21 +389,22 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
-    property CNPJ: String               read FCNPJ               write FCNPJ;
-    property InscMun: String read FInscMun write FInscMun;
-    property DataInicial: TDateTime     read FDataInicial        write FDataInicial;
-    property DataFinal: TDateTime       read FDataFinal          write FDataFinal;
-    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
-    property Pagina: Integer            read FPagina             write FPagina;
-    property Senha: String              read FSenha              write FSenha;
-    property FraseSecreta: String       read FFraseSecreta       write FFraseSecreta;
-    property CNPJTomador: String        read FCNPJTomador        write FCNPJTomador;
-    property IMTomador: String          read FIMTomador          write FIMTomador;
-    property NomeInter: String          read FNomeInter          write FNomeInter;
-    property CNPJInter: String          read FCNPJInter          write FCNPJInter;
-    property IMInter: String            read FIMInter            write FIMInter;
-    property Serie: String              read FSerie              write FSerie;
+    property CNPJ: String           read FCNPJ         write FCNPJ;
+    property InscMun: String        read FInscMun      write FInscMun;
+    property DataInicial: TDateTime read FDataInicial  write FDataInicial;
+    property DataFinal: TDateTime   read FDataFinal    write FDataFinal;
+    property NumeroNFSe: String     read FNumeroNFSe   write FNumeroNFSe;
+    property Pagina: Integer        read FPagina       write FPagina;
+    property Senha: String          read FSenha        write FSenha;
+    property FraseSecreta: String   read FFraseSecreta write FFraseSecreta;
+    property CNPJTomador: String    read FCNPJTomador  write FCNPJTomador;
+    property IMTomador: String      read FIMTomador    write FIMTomador;
+    property NomeInter: String      read FNomeInter    write FNomeInter;
+    property CNPJInter: String      read FCNPJInter    write FCNPJInter;
+    property IMInter: String        read FIMInter      write FIMInter;
+    property Serie: String          read FSerie        write FSerie;
   end;
 
 { TNFSeCancelarNFSe }
@@ -428,14 +434,15 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
-    property DataHora: TDateTime read FDataHora write FDataHora;
-    property NumeroNFSe: String read FNumeroNFSe write FNumeroNFSe;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property InscMun: String read FInscMun write FInscMun;
-    property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
+    property DataHora: TDateTime        read FDataHora           write FDataHora;
+    property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
+    property CNPJ: String               read FCNPJ               write FCNPJ;
+    property InscMun: String            read FInscMun            write FInscMun;
+    property CodigoMunicipio: String    read FCodigoMunicipio    write FCodigoMunicipio;
 
     property RetCancNFSe: TRetCancNFSe read FRetCancNFSe write FRetCancNFSe;
   end;
@@ -469,6 +476,7 @@ type
     constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
       reintroduce; overload;
     destructor Destroy; override;
+    procedure Clear; override;
 
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
@@ -481,7 +489,7 @@ type
     property NumeroRps: Integer         read FNumeroRps;
     property Situacao: String           read FSituacao;
 
-    property NFSeRetorno: TretSubsNFSe  read FNFSeRetorno        write FNFSeRetorno;
+    property NFSeRetorno: TretSubsNFSe read FNFSeRetorno write FNFSeRetorno;
   end;
 
   { TNFSeEnvioWebService }
@@ -503,10 +511,12 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+    procedure Clear; override;
+
     function Executar: Boolean; override;
 
-    property XMLEnvio: String read FXMLEnvio write FXMLEnvio;
-    property URLEnvio: String read FPURLEnvio write FPURLEnvio;
+    property XMLEnvio: String        read FXMLEnvio        write FXMLEnvio;
+    property URLEnvio: String        read FPURLEnvio       write FPURLEnvio;
     property SoapActionEnvio: String read FSoapActionEnvio write FSoapActionEnvio;
   end;
 
@@ -576,18 +586,18 @@ type
 
     function SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 
-    property ACBrNFSe: TACBrDFe read FACBrNFSe write FACBrNFSe;
-    property GerarLoteRPS: TNFSeGerarLoteRPS read FGerarLoteRPS write FGerarLoteRPS;
-    property EnviarLoteRPS: TNFSeEnviarLoteRPS read FEnviarLoteRPS write FEnviarLoteRPS;
-    property EnviarSincrono: TNFSeEnviarSincrono read FEnviarSincrono write FEnviarSincrono;
-    property GerarNFSe: TNFSeGerarNFSe read FGerarNFSe write FGerarNFSe;
-    property ConsSitLoteRPS: TNFSeConsultarSituacaoLoteRPS read FConsSitLoteRPS write FConsSitLoteRPS;
-    property ConsLote: TNFSeConsultarLoteRPS read FConsLote write FConsLote;
-    property ConsNFSeRps: TNFSeConsultarNFSeRps read FConsNFSeRps write FConsNFSeRps;
-    property ConsNFSe: TNFSeConsultarNFSe read FConsNFSe write FConsNFSe;
-    property CancNFSe: TNFSeCancelarNFSe read FCancNFSe write FCancNFSe;
-    property SubNFSe: TNFSeSubstituirNFSe read FSubNFSe write FSubNFSe;
-    property EnvioWebService: TNFSeEnvioWebService read FEnvioWebService write FEnvioWebService;
+    property ACBrNFSe: TACBrDFe                            read FACBrNFSe        write FACBrNFSe;
+    property GerarLoteRPS: TNFSeGerarLoteRPS               read FGerarLoteRPS    write FGerarLoteRPS;
+    property EnviarLoteRPS: TNFSeEnviarLoteRPS             read FEnviarLoteRPS   write FEnviarLoteRPS;
+    property EnviarSincrono: TNFSeEnviarSincrono           read FEnviarSincrono  write FEnviarSincrono;
+    property GerarNFSe: TNFSeGerarNFSe                     read FGerarNFSe       write FGerarNFSe;
+    property ConsSitLoteRPS: TNFSeConsultarSituacaoLoteRPS read FConsSitLoteRPS  write FConsSitLoteRPS;
+    property ConsLote: TNFSeConsultarLoteRPS               read FConsLote        write FConsLote;
+    property ConsNFSeRps: TNFSeConsultarNFSeRps            read FConsNFSeRps     write FConsNFSeRps;
+    property ConsNFSe: TNFSeConsultarNFSe                  read FConsNFSe        write FConsNFSe;
+    property CancNFSe: TNFSeCancelarNFSe                   read FCancNFSe        write FCancNFSe;
+    property SubNFSe: TNFSeSubstituirNFSe                  read FSubNFSe         write FSubNFSe;
+    property EnvioWebService: TNFSeEnvioWebService         read FEnvioWebService write FEnvioWebService;
   end;
 
 implementation
@@ -1276,16 +1286,21 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeRecepcao;
-  FPLayout := LayNFSeRecepcaoLote;
-  FPArqEnv := 'lot-rps';
-  FPArqResp := ''; // O lote é apenas gerado não há retorno de envio.
 end;
 
 destructor TNFSeGerarLoteRPS.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TNFSeGerarLoteRPS.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNFSeRecepcaoLote;
+  FPArqEnv := 'lot-rps';
+  FPArqResp := ''; // O lote é apenas gerado não há retorno de envio.
 end;
 
 procedure TNFSeGerarLoteRPS.EnviarDados;
@@ -1411,13 +1426,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeRecepcao;
-  FPLayout := LayNFSeRecepcaoLote;
-  FPArqEnv := 'env-lot';
-  FPArqResp := 'rec';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeEnviarLoteRPS.Destroy;
@@ -1428,14 +1436,16 @@ begin
   inherited Destroy;
 end;
 
-function TNFSeEnviarLoteRPS.GetLote: String;
+procedure TNFSeEnviarLoteRPS.Clear;
 begin
-  Result := Trim(FNumeroLote);
-end;
+  inherited Clear;
 
-function TNFSeEnviarLoteRPS.GetProtocolo: String;
-begin
-  Result := Trim(FProtocolo);
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNFSeRecepcaoLote;
+  FPArqEnv := 'env-lot';
+  FPArqResp := 'rec';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeEnviarLoteRPS.DefinirURL;
@@ -1605,13 +1615,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeRecepcao;
-  FPLayout := LayNFSeRecepcaoLoteSincrono;
-  FPArqEnv := 'env-lotS';
-  FPArqResp := 'lista-nfse';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeEnviarSincrono.Destroy;
@@ -1620,6 +1623,18 @@ begin
     FRetornoNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeEnviarSincrono.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNFSeRecepcaoLoteSincrono;
+  FPArqEnv := 'env-lotS';
+  FPArqResp := 'lista-nfse';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeEnviarSincrono.DefinirURL;
@@ -1739,13 +1754,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeRecepcao;
-  FPLayout := LayNFSeGerar;
-  FPArqEnv := 'ger-nfse';
-  FPArqResp := 'lista-nfse';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeGerarNFSe.Destroy;
@@ -1754,6 +1762,18 @@ begin
     FRetornoNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeGerarNFSe.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeRecepcao;
+  FPLayout := LayNFSeGerar;
+  FPArqEnv := 'ger-nfse';
+  FPArqResp := 'lista-nfse';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeGerarNFSe.DefinirURL;
@@ -1869,13 +1889,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeConsulta;
-  FPLayout := LayNFSeConsultaSitLoteRps;
-  FPArqEnv := 'con-sit';
-  FPArqResp := 'sit';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeConsultarSituacaoLoteRPS.Destroy;
@@ -1884,6 +1897,18 @@ begin
     FRetSitLote.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeConsultarSituacaoLoteRPS.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNFSeConsultaSitLoteRps;
+  FPArqEnv := 'con-sit';
+  FPArqResp := 'sit';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirURL;
@@ -2097,13 +2122,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeConsulta;
-  FPLayout := LayNfseConsultaLote;
-  FPArqEnv := 'con-lot';
-  FPArqResp := 'lista-nfse';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeConsultarLoteRPS.Destroy;
@@ -2112,6 +2130,18 @@ begin
     FRetornoNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeConsultarLoteRPS.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaLote;
+  FPArqEnv := 'con-lot';
+  FPArqResp := 'lista-nfse';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirURL;
@@ -2225,13 +2255,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeConsulta;
-  FPLayout := LayNfseConsultaNfseRps;
-  FPArqEnv := 'con-nfse-rps';
-  FPArqResp := 'comp-nfse';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeConsultarNfseRPS.Destroy;
@@ -2240,6 +2263,18 @@ begin
     FRetornoNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeConsultarNFSeRPS.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaNfseRps;
+  FPArqEnv := 'con-nfse-rps';
+  FPArqResp := 'comp-nfse';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirURL;
@@ -2405,13 +2440,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeConsulta;
-  FPLayout := LayNfseConsultaNfse;
-  FPArqEnv := 'con-nfse';
-  FPArqResp := 'lista-nfse';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeConsultarNfse.Destroy;
@@ -2420,6 +2448,18 @@ begin
     FRetornoNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeConsultarNFSe.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeConsulta;
+  FPLayout := LayNfseConsultaNfse;
+  FPArqEnv := 'con-nfse';
+  FPArqResp := 'lista-nfse';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeConsultarNfse.DefinirURL;
@@ -2551,13 +2591,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeCancelamento;
-  FPLayout := LayNfseCancelaNfse;
-  FPArqEnv := 'ped-can';
-  FPArqResp := 'can';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeCancelarNfse.Destroy;
@@ -2566,6 +2599,18 @@ begin
     FRetCancNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeCancelarNFSe.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeCancelamento;
+  FPLayout := LayNfseCancelaNfse;
+  FPArqEnv := 'ped-can';
+  FPArqResp := 'can';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeCancelarNfse.DefinirURL;
@@ -2845,13 +2890,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-
-  FPStatus := stNFSeSubstituicao;
-  FPLayout := LayNfseSubstituiNfse;
-  FPArqEnv := 'ped-sub';
-  FPArqResp := 'sub';
-
-  FRetornoNFSe := nil;
 end;
 
 destructor TNFSeSubstituirNFSe.Destroy;
@@ -2860,6 +2898,18 @@ begin
     FRetornoNFSe.Free;
 
   inherited Destroy;
+end;
+
+procedure TNFSeSubstituirNFSe.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeSubstituicao;
+  FPLayout := LayNfseSubstituiNfse;
+  FPArqEnv := 'ped-sub';
+  FPArqResp := 'sub';
+
+  FRetornoNFSe := nil;
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirURL;
@@ -3061,14 +3111,19 @@ end;
 constructor TNFSeEnvioWebService.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
-  FPStatus := stNFSeEnvioWebService;
-  FVersao := '';
 end;
 
 destructor TNFSeEnvioWebService.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TNFSeEnvioWebService.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeEnvioWebService;
+  FVersao := '';
 end;
 
 function TNFSeEnvioWebService.Executar: Boolean;
@@ -3411,6 +3466,8 @@ end;
 
 function TWebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 begin
+  Result := False;
+  
   FSubNfse.FNumeroNFSe         := ANumeroNFSe;
   FSubNfse.FCodigoCancelamento := ACodigoCancelamento;
   FSubNfse.FMotivoCancelamento := '';

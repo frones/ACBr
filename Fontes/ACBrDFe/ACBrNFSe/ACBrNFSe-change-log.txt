@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2016
+-- ACBrNFSeWebServices / pnfsNFSeG / pnfsNFSeR --
+[+] Adicionada sobrecarga no método "Clear" de todos os WebServices
+[*] Remoção de propriedades e Variáveis sem uso.
+    Por: Italo Jurisato Junior
+
 04/01/2016
 -- pnfsNFSeG --
 [*] Criado a propriedade: PossuiAlerta do tipo Boolean que é setada após gerar o

@@ -978,8 +978,6 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgGerarNFSe: String;
-var
-  tagCabecalhoCodigoMunicipio: String;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';

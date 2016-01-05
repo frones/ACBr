@@ -67,7 +67,6 @@ type
 
     function GetMsg: String;
     function GetNumID: String;
-    function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -323,13 +322,8 @@ begin
   begin
     Erros := '';
     (*
-    if not ValidarConcatChave then  //A03-10
-      AdicionaErro(
-        '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
-
       if (NFSe.Ide.indPres = pcEntregaDomicilio) then //B25b-10
         AdicionaErro('794-Rejeição: NF-e com indicativo de NFC-e com entrega a domicílio');
-    end;
     *)
   end;
 
@@ -482,26 +476,6 @@ begin
     PathArquivo := PathWithDelim(PathArquivo);
 
   Result := PathArquivo + NomeArquivo;
-end;
-
-function NotaFiscal.ValidarConcatChave: Boolean;
-var
-  wAno, wMes, wDia: word;
-begin
-  DecodeDate(NFSe.DataEmissaoRps, wAno, wMes, wDia);
-(*
-  Result := not
-    ((Copy(NFSe.infNFSe.ID, 4, 2) <> IntToStrZero(NFSe.Ide.cUF, 2)) or
-    (Copy(NFSe.infNFSe.ID, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-    (Copy(NFSe.infNFSe.ID, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(NFSe.infNFSe.ID, 10, 14)<> PadLeft(OnlyNumber(NFSe.Emit.CNPJCPF), 14, '0')) or
-    (Copy(NFSe.infNFSe.ID, 24, 2) <> IntToStrZero(NFSe.Ide.modelo, 2)) or
-    (Copy(NFSe.infNFSe.ID, 26, 3) <> IntToStrZero(NFSe.Ide.serie, 3)) or
-    (Copy(NFSe.infNFSe.ID, 29, 9) <> IntToStrZero(NFSe.Ide.nNF, 9)) or
-    (Copy(NFSe.infNFSe.ID, 38, 1) <> TpEmisToStr(NFSe.Ide.tpEmis)) or
-    (Copy(NFSe.infNFSe.ID, 39, 8) <> IntToStrZero(NFSe.Ide.cNF, 8)));
-*)
- Result := True;
 end;
 
 function NotaFiscal.GetProcessada: Boolean;

@@ -731,7 +731,6 @@ end;
 function TNFSeR.LerRPS: Boolean;
 var
  CM: String;
- Ok: Boolean;
 begin
 
  Result := False;

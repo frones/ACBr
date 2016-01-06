@@ -124,9 +124,6 @@ type
     FInfCanc: TInfCanc;
     FProvedor: TnfseProvedor;
     FVersaoXML: String;
-    function LerXML_provedorEquiplano: Boolean;
-    function LerXml_provedorInfisc: Boolean;
-    function LerXml_provedorNFSEBrasil: Boolean;
   public
     constructor Create;
     destructor Destroy; override;

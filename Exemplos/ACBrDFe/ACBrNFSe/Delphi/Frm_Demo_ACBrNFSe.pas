@@ -411,6 +411,14 @@ begin
  ACBrNFSe1.Configuracoes.Geral.SenhaWeb        := edtSenhaWeb.Text;
  ACBrNFSe1.Configuracoes.Geral.UserWeb         := edtUserWeb.Text;
 
+ ACBrNFSe1.Configuracoes.Geral.Emitente.CNPJ      := edtEmitCNPJ.Text;
+ ACBrNFSe1.Configuracoes.Geral.Emitente.InscMun   := edtEmitIM.Text;
+ ACBrNFSe1.Configuracoes.Geral.Emitente.RazSocial := edtEmitRazao.Text;
+
+ ACBrNFSe1.Configuracoes.Geral.Emitente.WebUser      := edtUserWeb.Text;
+ ACBrNFSe1.Configuracoes.Geral.Emitente.WebSenha     := edtSenhaWeb.Text;
+ ACBrNFSe1.Configuracoes.Geral.Emitente.WebFraseSecr := '';
+
  ACBrNFSe1.Configuracoes.WebServices.Salvar     := ckSalvarSoap.Checked;
  ACBrNFSe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
  ACBrNFSe1.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
@@ -763,7 +771,8 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
- Codigo, Motivo : String;
+  Codigo: String;
+//  Motivo: String;
 begin
 
  OpenDialog1.Title := 'Selecione a NFSe';
@@ -813,7 +822,7 @@ begin
  if not(InputQuery('Consultar Situação do Lote', 'Número do Protocolo', Protocolo))
   then exit;
 
- ACBrNFSe1.ConsultarSituacao(edtEmitCNPJ.Text, edtEmitIM.Text, Protocolo);
+ ACBrNFSe1.ConsultarSituacao(Protocolo);
 
  MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
  memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
@@ -946,9 +955,7 @@ begin
 
    ACBrNFSe1.ConsultarNFSeporRps(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero,
                                 ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie,
-                                TipoRPSToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo),
-                                ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.Cnpj,
-                                ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal);
+                                TipoRPSToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo));
 
    MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
    memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
@@ -965,7 +972,7 @@ begin
  if not(InputQuery('Consultar NFSe por Período', 'Data Final (DD/MM/AAAA):', DataFinal))
   then exit;
 
- ACBrNFSe1.ConsultarNFSe(edtEmitCNPJ.Text, edtEmitIM.Text, StrToDate(DataInicial), StrToDate(DataFinal));
+ ACBrNFSe1.ConsultarNFSe(StrToDate(DataInicial), StrToDate(DataFinal));
 
  MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
  memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
@@ -1080,16 +1087,14 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnLinkNFSeClick(Sender: TObject);
 var
- vNumNFSe, sCodVerif, sIM, sLink : String;
+ vNumNFSe, sCodVerif, sLink : String;
 begin
  if not(InputQuery('Gerar o Link da NFSe', 'Numero da NFSe', vNumNFSe))
   then exit;
  if not(InputQuery('Gerar o Link da NFSe', 'Codigo de Verificacao', sCodVerif))
   then exit;
- if not(InputQuery('Gerar o Link da NFSe', 'Inscrição Municipal', sIM))
-  then exit;
 
- sLink := ACBrNFSe1.LinkNFSe(StrToIntDef(vNumNFSe, 0), sCodVerif, sIM);
+ sLink := ACBrNFSe1.LinkNFSe(StrToIntDef(vNumNFSe, 0), sCodVerif);
 
  MemoResp.Lines.Add('Link Gerado: ' + sLink);
  PageControl2.ActivePageIndex := 0;

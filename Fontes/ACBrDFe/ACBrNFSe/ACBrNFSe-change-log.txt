@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2016
+-- pnfsNFSeG --
+[*] Correções e nomes, tamanhos minimos e máximos das TAGs.
+    Por: Italo Jurisato Junior
+
 05/01/2016
 -- ACBrNFSeWebServices / ACBrNFSe / ACBrNFSeConfiguracoes --
 [*] Simplificação de código e de quantidade de parâmetros passados para os métodos.

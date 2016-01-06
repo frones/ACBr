@@ -153,8 +153,7 @@ type
     property Items[Index: Integer]: TRegistroG125 read GetItem write SetItem;
   end;
 
-  /// Registro G126 - OUTROS CRÉDITOS CIAP
-  //  Por: Edilson Alves de oliveira
+  /// Registro G126 - OUTROS CRÉDITOS CIAP  
   TRegistroG126 = class
   private
     FDT_INI       : TDateTime;

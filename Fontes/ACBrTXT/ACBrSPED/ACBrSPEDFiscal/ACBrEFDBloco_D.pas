@@ -47,6 +47,9 @@ uses
 
 type
   TRegistroD100List = class;
+
+  TRegistroD101List = class; 
+
   TRegistroD110List = class;
   TRegistroD120List = class;
   TRegistroD130List = class;
@@ -57,9 +60,9 @@ type
   TRegistroD162List = class;
   TRegistroD170List = class;
   TRegistroD180List = class;
-  TRegistroD190List = class; {Márcio Lopes 21Dez2009}
-  TRegistroD195List = class; {Cilleni Caetano 16Jan2012}
-  TRegistroD197List = class; {Cilleni Caetano 16Jan2012} 
+  TRegistroD190List = class; 
+  TRegistroD195List = class; 
+  TRegistroD197List = class; 
   TRegistroD300List = class;
   TRegistroD301List = class;
   TRegistroD310List = class;
@@ -76,7 +79,7 @@ type
   TRegistroD500List = class;
   TRegistroD510List = class;
   TRegistroD530List = class;
-  TRegistroD590List = class; {Jean Barreiros 04Dez2009}
+  TRegistroD590List = class; 
   TRegistroD600List = class;
   TRegistroD610List = class;
   TRegistroD690List = class;
@@ -135,6 +138,7 @@ type
     fCOD_INF: String;               /// Valor do ICMS retido por substituição tributária
     fCOD_CTA: String;               /// Código da conta analitica contabil debitada/creditada
 
+    FRegistroD101: TRegistroD101List;
     FRegistroD110: TRegistroD110List;
     FRegistroD130: TRegistroD130List;
     FRegistroD140: TRegistroD140List;
@@ -142,7 +146,7 @@ type
     FRegistroD160: TRegistroD160List;
     FRegistroD170: TRegistroD170List;
     FRegistroD180: TRegistroD180List;
-    FRegistroD190: TRegistroD190List; /// BLOCO D - Lista de RegistroD190 (FILHO) {Márcio Lopes 21Dez2009}
+    FRegistroD190: TRegistroD190List; /// BLOCO D - Lista de RegistroD190 (FILHO)
     FRegistroD195: TRegistroD195List;
   public
     constructor Create(AOwner: TRegistroD001); virtual; /// Create
@@ -171,6 +175,7 @@ type
     property COD_INF: String read FCOD_INF write FCOD_INF;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
 
+    property RegistroD101: TRegistroD101List read FRegistroD101 write FRegistroD101;
     property RegistroD110: TRegistroD110List read FRegistroD110 write FRegistroD110;
     property RegistroD130: TRegistroD130List read FRegistroD130 write FRegistroD130;
     property RegistroD140: TRegistroD140List read FRegistroD140 write FRegistroD140;
@@ -178,7 +183,7 @@ type
     property RegistroD160: TRegistroD160List read FRegistroD160 write FRegistroD160;
     property RegistroD170: TRegistroD170List read FRegistroD170 write FRegistroD170;
     property RegistroD180: TRegistroD180List read FRegistroD180 write FRegistroD180;
-    property RegistroD190: TRegistroD190List read FRegistroD190 write FRegistroD190;  {Márcio Lopes 04Dez2009}
+    property RegistroD190: TRegistroD190List read FRegistroD190 write FRegistroD190; 
     property RegistroD195: TRegistroD195List read FRegistroD195 write FRegistroD195;
   end;
 
@@ -193,6 +198,30 @@ type
     property Items[Index: Integer]: TRegistroD100 read GetItem write SetItem;
   end;
 
+  /// Registro D101 - EC 87/2015 - INFORMACAO COMPLEMENTAR DE OPERACOES INTERESTADUAIS
+
+  TRegistroD101 = class
+  private
+    fVL_FCP_UF_DEST : currency;                  /// VALOR TOTAL FUNDO DE COMBATE A POBREZA
+    fVL_ICMS_UF_DEST: currency;                  /// VALOR TOTAL DO ICMS DA UF DE DESTINO
+    fVL_ICMS_UF_REM: currency;                   /// VALOR TOTAL DO ICMS DA UF DE ORIGEM
+  public
+    property VL_FCP_UF_DEST: currency read fVL_FCP_UF_DEST write fVL_FCP_UF_DEST;
+    property VL_ICMS_UF_DEST: currency read fVL_ICMS_UF_DEST write fVL_ICMS_UF_DEST;
+    property VL_ICMS_UF_REM: currency read fVL_ICMS_UF_REM write fVL_ICMS_UF_REM;
+  end;
+
+  /// Registro D101 - Lista
+
+  TRegistroD101List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroD101; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroD101); /// SetItem
+  public
+    function New: TRegistroD101;
+    property Items[Index: Integer]: TRegistroD101 read GetItem write SetItem;
+  end;
+  
   /// Registro D110 - COMPLEMENTO DOS BILHETES (CÓDIGO 13, CÓDIGO 14 E CÓDIGO 16)
 
   TRegistroD110 = class
@@ -1520,6 +1549,24 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroD101List }
+
+function TRegistroD101List.GetItem(Index: Integer): TRegistroD101;
+begin
+  Result := TRegistroD101(Inherited Items[Index]);
+end;
+
+function TRegistroD101List.New: TRegistroD101;
+begin
+  Result := TRegistroD101.Create;
+  Add(Result);
+end;
+
+procedure TRegistroD101List.SetItem(Index: Integer; const Value: TRegistroD101);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroD110List }
 
 function TRegistroD590List.GetItem(Index: Integer): TRegistroD590;
@@ -2177,7 +2224,7 @@ constructor TRegistroD500.Create;
 begin
   FRegistroD510 := TRegistroD510List.Create;
   FRegistroD530 := TRegistroD530List.Create;
-  FRegistroD590 := TRegistroD590List.Create;  /// BLOCO D - Lista de RegistroD590 (FILHO) {Jean Barreiros 04Dez2009}
+  FRegistroD590 := TRegistroD590List.Create;  /// BLOCO D - Lista de RegistroD590 (FILHO)
 end;
 
 destructor TRegistroD500.Destroy;
@@ -2205,6 +2252,7 @@ end;
 
 constructor TRegistroD100.Create(AOwner: TRegistroD001);
 begin
+  FRegistroD101 := TRegistroD101List.Create;
   FRegistroD110 := TRegistroD110List.Create;
   FRegistroD130 := TRegistroD130List.Create;
   FRegistroD140 := TRegistroD140List.Create;
@@ -2212,12 +2260,13 @@ begin
   FRegistroD160 := TRegistroD160List.Create;
   FRegistroD170 := TRegistroD170List.Create;
   FRegistroD180 := TRegistroD180List.Create;
-  FRegistroD190 := TRegistroD190List.Create;  /// BLOCO D - Lista de RegistroD190 (FILHO) {Márcio Lopes 21Dez2009}
-  FRegistroD195 := TRegistroD195List.Create;  /// BLOCO D - Lista de RegistroD195 {Leonardo Silva Barbosa 28Mai2012}
+  FRegistroD190 := TRegistroD190List.Create;  /// BLOCO D - Lista de RegistroD190 (FILHO)
+  FRegistroD195 := TRegistroD195List.Create;  /// BLOCO D - Lista de RegistroD195 
 end;
 
 destructor TRegistroD100.Destroy;
 begin
+  FRegistroD101.Free;
   FRegistroD110.Free;
   FRegistroD130.Free;
   FRegistroD140.Free;

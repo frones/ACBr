@@ -67,7 +67,7 @@ type
     FRegistroD990: TRegistroD990;      /// BLOCO D - RegistroD990
 
     FRegistroD100Count: integer;
-    FRegistroD110Count: integer;
+    FRegistroD101Count: integer;
     FRegistroD120Count: integer;
     FRegistroD130Count: integer;
     FRegistroD140Count: integer;
@@ -105,6 +105,7 @@ type
     FRegistroD697Count: integer;
 
     procedure WriteRegistroD100(RegD001: TRegistroD001) ;
+    procedure WriteRegistroD101(RegD100: TRegistroD100) ; 
     procedure WriteRegistroD110(RegD100: TRegistroD100) ;
     procedure WriteRegistroD120(RegD110: TRegistroD110) ;
     procedure WriteRegistroD130(RegD100: TRegistroD100) ;
@@ -115,7 +116,7 @@ type
     procedure WriteRegistroD162(RegD160: TRegistroD160) ;
     procedure WriteRegistroD170(RegD100: TRegistroD100) ;
     procedure WriteRegistroD180(RegD100: TRegistroD100) ;
-    procedure WriteRegistroD190(RegD100: TRegistroD100) ; {Márcio Lopes 21Dez2009}
+    procedure WriteRegistroD190(RegD100: TRegistroD100) ; 
     procedure WriteRegistroD195(RegD100: TRegistroD100) ;
     procedure WriteRegistroD197(RegD195: TRegistroD195) ;
     procedure WriteRegistroD300(RegD001: TRegistroD001) ;
@@ -134,7 +135,7 @@ type
     procedure WriteRegistroD500(RegD001: TRegistroD001) ;
     procedure WriteRegistroD510(RegD500: TRegistroD500) ;
     procedure WriteRegistroD530(RegD500: TRegistroD500) ;
-    procedure WriteRegistroD590(RegD500: TRegistroD500) ; {Jean Barreiros 04Dez2009}
+    procedure WriteRegistroD590(RegD500: TRegistroD500) ; 
     procedure WriteRegistroD600(RegD001: TRegistroD001) ;
     procedure WriteRegistroD610(RegD600: TRegistroD600) ;
     procedure WriteRegistroD690(RegD600: TRegistroD600) ;
@@ -151,6 +152,7 @@ type
 
     function RegistroD001New: TRegistroD001;
     function RegistroD100New: TRegistroD100;
+    function RegistroD101New: TRegistroD101;
     function RegistroD110New: TRegistroD110;
     function RegistroD120New: TRegistroD120;
     function RegistroD130New: TRegistroD130;
@@ -196,6 +198,7 @@ type
     property RegistroD990: TRegistroD990 read FRegistroD990 write FRegistroD990;
 
     property RegistroD100Count: integer read FRegistroD100Count write FRegistroD100Count;
+    property RegistroD101Count: integer read FRegistroD101Count write FRegistroD101Count;
     property RegistroD110Count: integer read FRegistroD110Count write FRegistroD110Count;
     property RegistroD120Count: integer read FRegistroD120Count write FRegistroD120Count;
     property RegistroD130Count: integer read FRegistroD130Count write FRegistroD130Count;
@@ -206,7 +209,7 @@ type
     property RegistroD162Count: integer read FRegistroD162Count write FRegistroD162Count;
     property RegistroD170Count: integer read FRegistroD170Count write FRegistroD170Count;
     property RegistroD180Count: integer read FRegistroD180Count write FRegistroD180Count;
-    property RegistroD190Count: Integer read FRegistroD190Count write FRegistroD190Count; {Márcio Lopes 21DezN2009}
+    property RegistroD190Count: Integer read FRegistroD190Count write FRegistroD190Count; 
     property RegistroD195Count: Integer read FRegistroD195Count write FRegistroD195Count;
     property RegistroD197Count: Integer read FRegistroD197Count write FRegistroD197Count;
     property RegistroD300Count: integer read FRegistroD300Count write FRegistroD300Count;
@@ -225,7 +228,7 @@ type
     property RegistroD500Count: integer read FRegistroD500Count write FRegistroD500Count;
     property RegistroD510Count: integer read FRegistroD510Count write FRegistroD510Count;
     property RegistroD530Count: integer read FRegistroD530Count write FRegistroD530Count;
-    property RegistroD590Count: Integer read FRegistroD590Count write FRegistroD590Count; {Jean Barreiros 17Nov2009}
+    property RegistroD590Count: Integer read FRegistroD590Count write FRegistroD590Count; 
     property RegistroD600Count: integer read FRegistroD600Count write FRegistroD600Count;
     property RegistroD610Count: integer read FRegistroD610Count write FRegistroD610Count;
     property RegistroD690Count: integer read FRegistroD690Count write FRegistroD690Count;
@@ -270,6 +273,7 @@ begin
   FRegistroD990 := TRegistroD990.Create;
 
   FRegistroD100Count := 0;
+  FRegistroD101Count := 0;
   FRegistroD110Count := 0;
   FRegistroD120Count := 0;
   FRegistroD130Count := 0;
@@ -280,7 +284,7 @@ begin
   FRegistroD162Count := 0;
   FRegistroD170Count := 0;
   FRegistroD180Count := 0;
-  FRegistroD190Count := 0; {Márcio Lopes 21Dez2009}
+  FRegistroD190Count := 0; 
   FRegistroD195Count := 0;
   FRegistroD197Count := 0;
   FRegistroD300Count := 0;
@@ -299,7 +303,7 @@ begin
   FRegistroD500Count := 0;
   FRegistroD510Count := 0;
   FRegistroD530Count := 0;
-  FRegistroD590Count := 0; {Jean Barreiros 04Dez2009}
+  FRegistroD590Count := 0; 
   FRegistroD600Count := 0;
   FRegistroD610Count := 0;
   FRegistroD690Count := 0;
@@ -334,6 +338,12 @@ end;
 function TBloco_D.RegistroD100New: TRegistroD100;
 begin
    Result := FRegistroD001.RegistroD100.New(FRegistroD001);
+end;
+
+// EC 87/2015 
+function TBloco_D.RegistroD101New: TRegistroD101;
+begin
+   Result := FRegistroD001.RegistroD100.Items[FRegistroD001.RegistroD100.Count -1].RegistroD101.New;
 end;
 
 function TBloco_D.RegistroD110New: TRegistroD110;
@@ -705,6 +715,7 @@ begin
         end;
         /// Registros FILHOS
         WriteRegistroD110( RegD001.RegistroD100.Items[intFor] ) ;
+        WriteRegistroD101( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD130( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD140( RegD001.RegistroD100.Items[intFor] ) ;
         WriteRegistroD150( RegD001.RegistroD100.Items[intFor] ) ;
@@ -726,6 +737,29 @@ begin
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroD100Count := FRegistroD100Count + RegD001.RegistroD100.Count;
+  end;
+end;
+
+procedure TBloco_D.WriteRegistroD101(RegD100: TRegistroD100) ;
+var
+  intFor: integer;
+begin
+  if Assigned( RegD100.RegistroD101 ) then
+  begin
+     for intFor := 0 to RegD100.RegistroD101.Count - 1 do
+     begin
+        with RegD100.RegistroD101.Items[intFor] do
+        begin
+
+          Add( LFill('D101') +
+               LFill( VL_FCP_UF_DEST,0,2 ) +
+               LFill( VL_ICMS_UF_DEST,0,2 ) +
+               LFill( VL_ICMS_UF_REM,0,2 ) ) ;
+        end;
+       RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroD101Count := FRegistroD101Count + RegD100.RegistroD101.Count;
   end;
 end;
 
@@ -776,6 +810,7 @@ begin
      FRegistroD110Count := FRegistroD110Count + RegD100.RegistroD110.Count;
   end;
 end;
+
 
 procedure TBloco_D.WriteRegistroD120(RegD110: TRegistroD110) ;
 var

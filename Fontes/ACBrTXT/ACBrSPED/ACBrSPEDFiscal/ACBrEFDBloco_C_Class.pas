@@ -74,6 +74,7 @@ type
     FRegistroC990: TRegistroC990;      /// BLOCO C - RegistroC990
 
     FRegistroC100Count: Integer;
+    FRegistroC101Count: Integer; 
     FRegistroC110Count: Integer;
     FRegistroC105Count: Integer;
     FRegistroC112Count: Integer;
@@ -133,6 +134,7 @@ type
     FRegistroC890Count: Integer;
 
     procedure WriteRegistroC100(RegC001: TRegistroC001) ;
+    procedure WriteRegistroC101(RegC100: TRegistroC100); 
     procedure WriteRegistroC105(RegC100: TRegistroC100);
     procedure WriteRegistroC110(RegC100: TRegistroC100);
     procedure WriteRegistroC111(RegC110: TRegistroC110);
@@ -200,6 +202,9 @@ type
 
     function RegistroC001New: TRegistroC001;
     function RegistroC100New: TRegistroC100;
+
+    function RegistroC101New: TRegistroC101; 
+	
     function RegistroC110New: TRegistroC110;
 
     function RegistroC105New: TRegistroC105;
@@ -267,6 +272,9 @@ type
     property RegistroC990: TRegistroC990 read FRegistroC990 write FRegistroC990;
 
     property RegistroC100Count: Integer read FRegistroC100Count write FRegistroC100Count;
+
+    property RegistroC101Count: Integer read FRegistroC101Count write FRegistroC101Count;
+	
     property RegistroC105Count: Integer read FRegistroC105Count write FRegistroC105Count;
     property RegistroC110Count: Integer read FRegistroC110Count write FRegistroC110Count;
     property RegistroC112Count: Integer read FRegistroC112Count write FRegistroC112Count;
@@ -369,6 +377,7 @@ begin
   FRegistroC990 := TRegistroC990.Create;
 
   FRegistroC100Count := 0;
+  FRegistroC101Count := 0;
   FRegistroC105Count := 0;
   FRegistroC110Count := 0;
   FRegistroC112Count := 0;
@@ -455,6 +464,12 @@ function TBloco_C.RegistroC100New: TRegistroC100;
 begin
    Result := FRegistroC001.RegistroC100.New(FRegistroC001);
 end;
+
+function TBloco_C.RegistroC101New: TRegistroC101;
+begin
+   Result := FRegistroC001.RegistroC100.Items[FRegistroC001.RegistroC100.Count -1].RegistroC101.New;
+end;
+
 
 function TBloco_C.RegistroC105New: TRegistroC105;
 var
@@ -948,7 +963,7 @@ var
   strIND_FRT: AnsiString;
   strIND_PGTO: AnsiString;
   strCOD_SIT: AnsiString;
-  booNFCancelada: Boolean; /// Variavél p/ tratamento de NFs canceladas, denegadas ou inutilizada - Jean Barreiros 25Nov2009
+  booNFCancelada: Boolean; /// Variavél p/ tratamento de NFs canceladas, denegadas ou inutilizada 
 begin
   if Assigned( RegC001.RegistroC100 ) then
   begin
@@ -975,8 +990,8 @@ begin
            sdRegimeEspecNEsp:       strCOD_SIT := '08';
           end;
 
-          /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05 - Jean Barreiros 25Nov2009
-          /// Invertido a posição do teste condicional pois o ACBr por padrão adiciona IND_FRT=2 - Ederson Selvati
+          /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05 
+          /// Invertido a posição do teste condicional pois o ACBr por padrão adiciona IND_FRT=2 
           if Pos(strCOD_SIT,'02, 03, 04, 05') > 0 then
           begin
             DT_DOC   := 0;
@@ -1097,6 +1112,8 @@ begin
           end;
         end;
         /// Registros FILHOS
+		
+		WriteRegistroC101( RegC001.RegistroC100.Items[intFor] ) ; // EC 87/2015 - Marcio Meneguzzi 06jan2016
         WriteRegistroC105( RegC001.RegistroC100.Items[intFor] ) ;
         WriteRegistroC110( RegC001.RegistroC100.Items[intFor] ) ;
         WriteRegistroC120( RegC001.RegistroC100.Items[intFor] ) ;
@@ -1116,6 +1133,30 @@ begin
      RegC001.RegistroC100.Clear;
   end;
 end;
+
+procedure TBloco_C.WriteRegistroC101(RegC100: TRegistroC100);
+var
+  intFor: integer;
+begin
+  if Assigned( RegC100.RegistroC101 ) then
+  begin
+     for intFor := 0 to RegC100.RegistroC101.Count - 1 do
+     begin
+       with RegC100.RegistroC101.Items[intFor] do
+       begin
+         ///
+         Add( LFill('C101') +
+              LFill( VL_FCP_UF_DEST,0,2, booNFCancelada ) +
+              LFill( VL_ICMS_UF_DEST,0,2, booNFCancelada ) +
+              LFill( VL_ICMS_UF_REM,0,2, booNFCancelada ) );
+       end;
+       RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     end;
+     /// Variável para armazenar a quantidade de registro do tipo.
+     FRegistroC101Count := FRegistroC101Count + RegC100.RegistroC101.Count;
+  end;
+end;
+
 
 procedure TBloco_C.WriteRegistroC105(RegC100: TRegistroC100);
 var

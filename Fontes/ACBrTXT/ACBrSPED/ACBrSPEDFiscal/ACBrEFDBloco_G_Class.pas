@@ -407,7 +407,6 @@ begin
    Result := G125.RegistroG126.New(G125);
 end;
 
-(*Por: Edilson Alves de oliveira*)
 procedure TBloco_G.WriteRegistroG126(RegG125: TRegistroG125);
 var
   intFor: integer;

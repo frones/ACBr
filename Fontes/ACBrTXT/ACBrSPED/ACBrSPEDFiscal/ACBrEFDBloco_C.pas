@@ -49,6 +49,7 @@ uses
 
 type
   TRegistroC100List = class;
+  TRegistroC101List = class; 
   TRegistroC105List = class;
   TRegistroC110List = class;
   TRegistroC111List = class;
@@ -56,11 +57,11 @@ type
   TRegistroC113List = class;
   TRegistroC114List = class;
   TRegistroC115List = class;
-  TRegistroC116List = class; {Alteração Versão 2.0.4 03Mar2011}
+  TRegistroC116List = class; 
   TRegistroC120List = class;
   TRegistroC130List = class;
-  TRegistroC140List = class; {Márcio Lopes 30Nov2009}
-  TRegistroC141List = class; {Márcio Lopes 30Nov2009}
+  TRegistroC140List = class;
+  TRegistroC141List = class;
   TRegistroC160List = class;
   TRegistroC165List = class;
   TRegistroC170List = class;
@@ -93,8 +94,8 @@ type
   TRegistroC490List = class;
   TRegistroC495List = class;
   TRegistroC500List = class;
-  TRegistroC510List = class; {Márcio Lopes 30Nov2009}
-  TRegistroC590List = class; {Márcio Lopes 30Nov2009}
+  TRegistroC510List = class;
+  TRegistroC590List = class;
   TRegistroC600List = class;
   TRegistroC601List = class;
   TRegistroC610List = class;
@@ -170,15 +171,16 @@ type
     fVL_PIS_ST: currency;               /// Valor total do PIS retido por substituição tributária
     fVL_COFINS_ST: currency;            /// Valor total da COFINS retido por substituição tributária
 
-    FRegistroC105: TRegistroC105List;  /// BLOCO C - Lista de RegistroC105 (FILHO)
+    FRegistroC101: TRegistroC101List;  /// BLOCO C - Lista de RegistroC105 (FILHO) 
+	FRegistroC105: TRegistroC105List;  /// BLOCO C - Lista de RegistroC105 (FILHO)
     FRegistroC110: TRegistroC110List;  /// BLOCO C - Lista de RegistroC110 (FILHO)
     FRegistroC120: TRegistroC120List;  /// BLOCO C - Lista de RegistroC120 (FILHO)
     FRegistroC130: TRegistroC130List;  /// BLOCO C - Lista de RegistroC130 (FILHO)
-    FRegistroC140: TRegistroC140List;  /// BLOCO C - Lista de RegistroC140 (FILHO) {Márcio Lopes 30Nov2009}
+    FRegistroC140: TRegistroC140List;  /// BLOCO C - Lista de RegistroC140 (FILHO) 
     FRegistroC160: TRegistroC160List;  /// BLOCO C - Lista de RegistroC160 (FILHO)
     FRegistroC165: TRegistroC165List;  /// BLOCO C - Lista de RegistroC165 (FILHO)
     FRegistroC170: TRegistroC170List;  /// BLOCO C - Lista de RegistroC170 (FILHO)
-    FRegistroC190: TRegistroC190List;  /// BLOCO C - Lista de RegistroC190 (FILHO) {Jean Barreiros 17Nov2009}
+    FRegistroC190: TRegistroC190List;  /// BLOCO C - Lista de RegistroC190 (FILHO) 
     FRegistroC195: TRegistroC195List;  /// BLOCO C - Lista de RegistroC195 (FILHO)
   public
     constructor Create(AOwner: TRegistroC001); virtual; /// Create
@@ -213,15 +215,18 @@ type
     property VL_PIS_ST: currency read FVL_PIS_ST write FVL_PIS_ST;
     property VL_COFINS_ST: currency read FVL_COFINS_ST write FVL_COFINS_ST;
     /// Registros FILHOS
+	
+    property RegistroC101: TRegistroC101List read FRegistroC101 write FRegistroC101; 
+	
     property RegistroC105: TRegistroC105List read FRegistroC105 write FRegistroC105;
     property RegistroC110: TRegistroC110List read FRegistroC110 write FRegistroC110;
     property RegistroC120: TRegistroC120List read FRegistroC120 write FRegistroC120;
     property RegistroC130: TRegistroC130List read FRegistroC130 write FRegistroC130;
-    property RegistroC140: TRegistroC140List read FRegistroC140 write FRegistroC140; {Márcio Lopes 30Nov2009}
+    property RegistroC140: TRegistroC140List read FRegistroC140 write FRegistroC140; 
     property RegistroC160: TRegistroC160List read FRegistroC160 write FRegistroC160;
     property RegistroC165: TRegistroC165List read FRegistroC165 write FRegistroC165;
     property RegistroC170: TRegistroC170List read FRegistroC170 write FRegistroC170;
-    property RegistroC190: TRegistroC190List read FRegistroC190 write FRegistroC190;  {Jean Barreiros 17Nov2009}
+    property RegistroC190: TRegistroC190List read FRegistroC190 write FRegistroC190;  
     property RegistroC195: TRegistroC195List read FRegistroC195 write FRegistroC195;
   end;
 
@@ -235,6 +240,33 @@ type
     function New(AOwner: TRegistroC001): TRegistroC100;
     property Items[Index: Integer]: TRegistroC100 read GetItem write SetItem;
   end;
+  
+  // REGISTRO C101 - EC 87/2015 -
+
+  TRegistroC101 = class
+  private
+    fVL_FCP_UF_DEST : currency; // VLR FUNDO DE COMBATE A POBREZA UF DE DESTINO
+    fVL_ICMS_UF_DEST : currency; // VLR TOTAL ICMS INTERESTADUAL PARA A UF DE DESTINO
+    fVL_ICMS_UF_REM : currency; // VLR TOTAL ICMS INTERESTADUAL PARA A UF DO REMETENTE
+
+  public
+    property VL_FCP_UF_DEST: currency read fVL_FCP_UF_DEST write fVL_FCP_UF_DEST;
+	property VL_ICMS_UF_DEST: currency read fVL_ICMS_UF_DEST write fVL_ICMS_UF_DEST;	
+	property VL_ICMS_UF_REM: currency read fVL_ICMS_UF_REM write fVL_ICMS_UF_REM;		
+	
+  end;
+
+  /// Registro C101 - EC 87/2015
+  
+  TRegistroC101List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC101; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC101); /// SetItem
+  public
+    function New: TRegistroC101;
+    property Items[Index: Integer]: TRegistroC101 read GetItem write SetItem;
+  end;
+ 
 
   /// Registro C105 - OPERAÇÕES COM ICMS ST RECOLHIDO PARA UF DIVERSA DO DESTINATÁRIO DO DOCUMENTO FISCAL (CÓDIGO 55).
 
@@ -562,7 +594,7 @@ type
     property QTD_PARC: Integer read FQTD_PARC write FQTD_PARC;
     property VL_TIT: currency read FVL_TIT write FVL_TIT;
     /// Registros FILHOS
-    property RegistroC141: TRegistroC141List read FRegistroC141 write FRegistroC141; {Márcio Lopes 30Nov2009}
+    property RegistroC141: TRegistroC141List read FRegistroC141 write FRegistroC141; 
   end;
 
   /// Registro C140 - Lista
@@ -1738,8 +1770,8 @@ type
     fTP_LIGACAO: TACBrTipoLigacao;       /// Código de tipo de Ligação [ 1 - Monofásico 2 - Bifásico 3 - Trifásico ]
     fCOD_GRUPO_TENSAO: TACBrGrupoTensao; /// Código de grupo de tensão: Vide Manual Registro C500 Campo 27
 
-    FRegistroC510: TRegistroC510List;  /// BLOCO C - Lista de RegistroC510 (FILHO) {Márcio Lopes 20Dez2009}
-    FRegistroC590: TRegistroC590List;  /// BLOCO C - Lista de RegistroC590 (FILHO) {Márcio Lopes 20Dez2009}
+    FRegistroC510: TRegistroC510List;  /// BLOCO C - Lista de RegistroC510 (FILHO) 
+    FRegistroC590: TRegistroC590List;  /// BLOCO C - Lista de RegistroC590 (FILHO) 
 
   public
     constructor Create; virtual; /// Create
@@ -2360,6 +2392,25 @@ procedure TRegistroC100List.SetItem(Index: Integer; const Value: TRegistroC100);
 begin
   Put(Index, Value);
 end;
+
+{ TRegistroC101List -- EC 87/2015}
+
+function TRegistroC101List.GetItem(Index: Integer): TRegistroC101;
+begin
+  Result := TRegistroC101(Inherited Items[Index]);
+end;
+
+function TRegistroC101List.New: TRegistroC101;
+begin
+  Result := TRegistroC101.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC101List.SetItem(Index: Integer; const Value: TRegistroC101);
+begin
+  Put(Index, Value);
+end;
+{ FIM --- TRegistroC101List -- EC 87/2015}
 
 { TRegistroC105List }
 
@@ -3408,6 +3459,7 @@ end;
 
 constructor TRegistroC100.Create(AOwner: TRegistroC001);
 begin
+  FRegistroC101 := TRegistroC101List.Create;  /// BLOCO C - Lista de RegistroC105 (FILHO) 
   FRegistroC105 := TRegistroC105List.Create;  /// BLOCO C - Lista de RegistroC105 (FILHO)
   FRegistroC110 := TRegistroC110List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
   FRegistroC120 := TRegistroC120List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
@@ -3416,12 +3468,13 @@ begin
   FRegistroC160 := TRegistroC160List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
   FRegistroC165 := TRegistroC165List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
   FRegistroC170 := TRegistroC170List.Create;  /// BLOCO C - Lista de RegistroC170 (FILHO)
-  FRegistroC190 := TRegistroC190List.Create;  /// BLOCO C - Lista de RegistroC190 (FILHO) {Jean Barreiros 19Nov2009}
+  FRegistroC190 := TRegistroC190List.Create;  /// BLOCO C - Lista de RegistroC190 (FILHO) 
   FRegistroC195 := TRegistroC195List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
 end;
 
 destructor TRegistroC100.Destroy;
 begin
+  FRegistroC101.Free;
   FRegistroC105.Free;
   FRegistroC110.Free;
   FRegistroC120.Free;

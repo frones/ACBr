@@ -1146,9 +1146,9 @@ begin
        begin
          ///
          Add( LFill('C101') +
-              LFill( VL_FCP_UF_DEST,0,2, booNFCancelada ) +
-              LFill( VL_ICMS_UF_DEST,0,2, booNFCancelada ) +
-              LFill( VL_ICMS_UF_REM,0,2, booNFCancelada ) );
+              LFill( VL_FCP_UF_DEST,0,2 ) +
+              LFill( VL_ICMS_UF_DEST,0,2 ) +
+              LFill( VL_ICMS_UF_REM,0,2 ) );
        end;
        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;

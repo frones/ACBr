@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/01/2016
+-- ACBrNFSeWebServices / ACBrNFSe / ACBrNFSeConfiguracoes --
+[*] Simplificação de código e de quantidade de parâmetros passados para os métodos.
+[+] Implementado o grupo de propriedades chamado Emitente
+    ( Configuracoes.Geral.Emitente.xxx ).
+    A configuração dessas propriedades é obrigatório para que o componente
+    funcione de forma correta. 
+    Por: Italo Jurisato Junior
+
 -- pnfsNFSeG --
 [*] No método Gerar o provedor BHISS aceita até 3 RPS.
     Por: Italo Jurisato Junior

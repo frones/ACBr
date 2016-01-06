@@ -93,25 +93,23 @@ type
 
     function Gerar(ARps: Integer): Boolean;
 
-    function ConsultarSituacao(ACnpj, AInscMun, AProtocolo: String;
+    function ConsultarSituacao(AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
-    function ConsultarLoteRps(ANumLote, AProtocolo: string; ACNPJ: String = '';
-      AInscMun: String = ''; ASenha: string = '';
-      AFraseSecreta: string =''; ARazaoSocial: string = ''): Boolean;
-    function ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-      AInscMun: String; ASenha: String = '';
-      AFraseSecreta: String = ''; ARazaoSocial: String = ''): Boolean;
-    function ConsultarNFSe(ACnpj, AInscMun: String; ADataInicial,
-      ADataFinal: TDateTime; ANumeroNFSe: String = ''; APagina: Integer = 1;
-      ASenha : String = ''; AFraseSecreta : String = '';
+    function ConsultarLoteRps(ANumLote, AProtocolo: string): Boolean;
+    function ConsultarNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
+    function ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;
+      ANumeroNFSe: String = ''; APagina: Integer = 1;
       ACNPJTomador: String = ''; AIMTomador: String = '';
       ANomeInter: String = ''; ACNPJInter: String = ''; AIMInter: String = '';
       ASerie: String = ''): Boolean;
 
-    function CancelarNFSe(ACodigoCancelamento: String): Boolean;
+    function CancelarNFSe(ACodigoCancelamento: String;
+                          ANumeroNFSe: String = '';
+                          AMotivoCancelamento: String = ''): Boolean;
+
     function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 
-    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AInscricaoM: String): String;
+    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -445,56 +443,41 @@ begin
   Result := WebServices.Gera(ARps);
 end;
 
-function TACBrNFSe.ConsultarSituacao(ACnpj, AInscMun,
-  AProtocolo: String; const ANumLote: String): Boolean;
+function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;
 begin
-  Result := WebServices.ConsultaSituacao(ACnpj, AInscMun,
-                                         AProtocolo, ANumLote);
+  Result := WebServices.ConsultaSituacao(AProtocolo, ANumLote);
 end;
 
-function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo, ACNPJ,
-  AInscMun, ASenha, AFraseSecreta: string;
-  ARazaoSocial: string): Boolean;
+function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: string): Boolean;
 begin
-  if NotasFiscais.Count > 0 then
-  begin
-    ACNPJ := OnlyNumber(NotasFiscais.Items[0].NFSe.Prestador.CNPJ);
-    AInscMun := NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal;
-    ARazaoSocial := NotasFiscais.Items[0].NFSe.PrestadorServico.RazaoSocial;
-  end;
-
-  Result := WebServices.ConsultaLoteRps(ANumLote, AProtocolo, ACNPJ,
-                                        AInscMun, ASenha,
-                                        AFraseSecreta, ARazaoSocial);
+  Result := WebServices.ConsultaLoteRps(ANumLote, AProtocolo);
 end;
 
-function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-  AInscMun, ASenha, AFraseSecreta,
-  ARazaoSocial: String): Boolean;
+function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
 begin
   if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
-  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ACnpj,
-                AInscMun, ASenha, AFraseSecreta, ARazaoSocial);
+  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo);
 end;
 
-function TACBrNFSe.ConsultarNFSe(ACnpj, AInscMun: String;
-  ADataInicial, ADataFinal: TDateTime; ANumeroNFSe: String;
-  APagina: Integer; ASenha, AFraseSecreta, ACNPJTomador, AIMTomador,
+function TACBrNFSe.ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;
+  ANumeroNFSe: String; APagina: Integer; ACNPJTomador, AIMTomador,
   ANomeInter, ACNPJInter, AIMInter, ASerie: String): Boolean;
 begin
-  Result := WebServices.ConsultaNFSe(ACnpj, AInscMun, ADataInicial,
-            ADataFinal, ANumeroNFSe, APagina, ASenha, AFraseSecreta,
-            ACNPJTomador, AIMTomador, ANomeInter, ACNPJInter, AIMInter, ASerie);
+  Result := WebServices.ConsultaNFSe(ADataInicial, ADataFinal, ANumeroNFSe,
+            APagina, ACNPJTomador, AIMTomador, ANomeInter, ACNPJInter, AIMInter,
+            ASerie);
 end;
 
-function TACBrNFSe.CancelarNFSe(ACodigoCancelamento: String): Boolean;
+function TACBrNFSe.CancelarNFSe(ACodigoCancelamento, ANumeroNFSe,
+  AMotivoCancelamento: String): Boolean;
 begin
   if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
-  Result := WebServices.CancelaNFSe(ACodigoCancelamento);
+  Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
+            AMotivoCancelamento);
 end;
 
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,
@@ -514,8 +497,7 @@ begin
   Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe);
 end;
 
-function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao,
-  AInscricaoM: String): String;
+function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
 var
   Texto, xNumeroNFSe, xNomeMunic: String;
 begin
@@ -538,10 +520,9 @@ begin
   Texto := StringReplace(Texto, '%CodVerif%', ACodVerificacao, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%InscMunic%', AInscricaoM, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%InscMunic%', Configuracoes.Geral.Emitente.InscMun, [rfReplaceAll]);
 
   Result := Texto;
-//  Result := WebServices.LinkNFSeGerada(ANumeroNFSe, ACodVerificacao, AInscricaoM);
 end;
 
 end.

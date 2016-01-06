@@ -171,6 +171,29 @@ type
     Substituir_IncluiEncodingDados: Boolean;
  end;
 
+ { TEmitenteConfNFSe }
+
+ TEmitenteConfNFSe = class(TPersistent)
+  private
+    FCNPJ: String;
+    FInscMun: String;
+    FRazSocial: String;
+    FWebUser: String;
+    FWebSenha: String;
+    FWebFraseSecr: String;
+
+  public
+    Constructor Create;
+    procedure Assign(Source: TPersistent); override;
+  published
+    property CNPJ: String         read FCNPJ         write FCNPJ;
+    property InscMun: String      read FInscMun      write FInscMun;
+    property RazSocial: String    read FRazSocial    write FRazSocial;
+    property WebUser: String      read FWebUser      write FWebUser;
+    property WebSenha: String     read FWebSenha     write FWebSenha;
+    property WebFraseSecr: String read FWebFraseSecr write FWebFraseSecr;
+  end;
+
   { TGeralConfNFSe }
 
   TGeralConfNFSe = class(TGeralConf)
@@ -198,11 +221,13 @@ type
     FConsultaLoteAposEnvio: Boolean;
     FPathIniCidades: String;
     FPathIniProvedor: String;
+    FEmitente: TEmitenteConfNFSe;
 
     procedure SetCodigoMunicipio(const Value: Integer);
 
   public
     constructor Create(AOwner: TConfiguracoes); override;
+    destructor Destroy; override;
     procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); overload;
     procedure SetConfigMunicipio;
 
@@ -228,6 +253,8 @@ type
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
     property PathIniCidades: String read FPathIniCidades write FPathIniCidades;
     property PathIniProvedor: String read FPathIniProvedor write FPathIniProvedor;
+
+    property Emitente: TEmitenteConfNFSe read FEmitente write FEmitente;
   end;
 
   { TArquivosConfNFSe }
@@ -290,6 +317,33 @@ uses
   ACBrUtil,
   DateUtils;
 
+{ TEmitenteConfNFSe }
+
+constructor TEmitenteConfNFSe.Create;
+begin
+  FCNPJ := '';
+  FInscMun := '';
+  FRazSocial := '';
+  FWebUser := '';
+  FWebSenha := '';
+  FWebFraseSecr := '';
+end;
+
+procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
+begin
+  if Source is TEmitenteConfNFSe then
+  begin
+    FCNPJ := TEmitenteConfNFSe(Source).CNPJ;
+    FInscMun := TEmitenteConfNFSe(Source).InscMun;
+    FRazSocial := TEmitenteConfNFSe(Source).RazSocial;
+    FWebUser := TEmitenteConfNFSe(Source).WebUser;
+    FWebSenha := TEmitenteConfNFSe(Source).WebSenha;
+    FWebFraseSecr := TEmitenteConfNFSe(Source).WebFraseSecr;
+  end
+  else
+    inherited Assign(Source);
+end;
+
 { TConfiguracoesNFSe }
 
 constructor TConfiguracoesNFSe.Create(AOwner: TComponent);
@@ -333,9 +387,18 @@ constructor TGeralConfNFSe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
+  FEmitente := TEmitenteConfNFSe.Create;
+
   FProvedor := proNenhum;
   FPathIniCidades := '';
   FPathIniProvedor := '';
+end;
+
+destructor TGeralConfNFSe.Destroy;
+begin
+  FEmitente.Free;
+
+  inherited;
 end;
 
 procedure TGeralConfNFSe.Assign(DeGeralConfNFSe: TGeralConfNFSe);
@@ -343,6 +406,8 @@ begin
   inherited Assign(DeGeralConfNFSe);
 
   FProvedor := DeGeralConfNFSe.Provedor;
+
+  FEmitente.Assign(DeGeralConfNFSe.Emitente);
 end;
 
 procedure TGeralConfNFSe.SetCodigoMunicipio(const Value: Integer);

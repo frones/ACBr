@@ -48,8 +48,8 @@ type
 
  TListaNFSe = class(TPersistent)
   private
-    FCompNFSe : TLerListaNFSeCollection;
-    FMsgRetorno : TMsgRetornoNFSeCollection;
+    FCompNFSe: TLerListaNFSeCollection;
+    FMsgRetorno: TMsgRetornoNFSeCollection;
     procedure SetCompNFSe(Value: TLerListaNFSeCollection);
     procedure SetMsgRetorno(Value: TMsgRetornoNFSeCollection);
   public
@@ -99,17 +99,17 @@ type
     FSerie: String;
     FTipo: TNFSeTipoRps;
   published
-    property Numero: String read FNumero write FNumero;
-    property Serie: String read FSerie write FSerie;
-    property Tipo: TNFSeTipoRps read FTipo write FTipo;
+    property Numero: String     read FNumero write FNumero;
+    property Serie: String      read FSerie  write FSerie;
+    property Tipo: TNFSeTipoRps read FTipo   write FTipo;
   end;
 
  TMsgRetornoNFSeCollectionItem = class(TCollectionItem)
   private
     FIdentificacaoRps: TMsgRetornoNFSeIdentificacaoRps;
-    FCodigo : String;
-    FMensagem : String;
-    FCorrecao : String;
+    FCodigo: String;
+    FMensagem: String;
+    FCorrecao: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -122,8 +122,6 @@ type
 
  TRetornoNFSe = class(TPersistent)
   private
-    FPathArquivoMunicipios: String;
-    FPathArquivoTabServicos: String;
     FLeitor: TLeitor;
     FListaNFSe: TListaNFSe;
     FProvedor: TNFSeProvedor;
@@ -133,16 +131,14 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
   published
-    property PathArquivoMunicipios: String  read FPathArquivoMunicipios  write FPathArquivoMunicipios;
-    property PathArquivoTabServicos: String read FPathArquivoTabServicos write FPathArquivoTabServicos;
-    property Leitor: TLeitor                read FLeitor                 write FLeitor;
-    property ListaNFSe: TListaNFSe          read FListaNFSe              write FListaNFSe;
-    property Provedor: TNFSeProvedor        read FProvedor               write FProvedor;
-    property TabServicosExt: Boolean        read FTabServicosExt         write FTabServicosExt;
-    property Protocolo: String              read FProtocolo              write FProtocolo;
-    property PathIniCidades: String         read FPathIniCidades         write FPathIniCidades;
+    property Leitor: TLeitor         read FLeitor         write FLeitor;
+    property ListaNFSe: TListaNFSe   read FListaNFSe      write FListaNFSe;
+    property Provedor: TNFSeProvedor read FProvedor       write FProvedor;
+    property TabServicosExt: Boolean read FTabServicosExt write FTabServicosExt;
+    property Protocolo: String       read FProtocolo      write FProtocolo;
+    property PathIniCidades: String  read FPathIniCidades write FPathIniCidades;
   end;
 
 implementation
@@ -260,10 +256,8 @@ end;
 
 constructor TRetornoNFSe.Create;
 begin
-  FLeitor                 := TLeitor.Create;
-  FListaNfse              := TListaNfse.Create;
-  FPathArquivoMunicipios  := '';
-  FPathArquivoTabServicos := '';
+  FLeitor    := TLeitor.Create;
+  FListaNfse := TListaNfse.Create;
 end;
 
 destructor TRetornoNFSe.Destroy;
@@ -274,13 +268,13 @@ begin
   inherited;
 end;
 
-function TRetornoNFSe.LerXml: boolean;
+function TRetornoNFSe.LerXml: Boolean;
 var
   NFSe: TNFSe;
   NFSeLida: TNFSeR;
   VersaodoXML: String;
   ProtocoloTemp, NumeroLoteTemp: String;
-  DataRecebimentoTemp:Tdatetime;
+  DataRecebimentoTemp: TDateTime;
   i, j, Nivel: Integer;
   Nivel1: Boolean;
 begin
@@ -290,8 +284,8 @@ begin
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
-    VersaodoXML := VersaoXML(Leitor.Arquivo);
-    Leitor.Grupo := Leitor.Arquivo;
+    VersaodoXML    := VersaoXML(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
 
     Nivel1 := (leitor.rExtrai(1, 'GerarNfseResposta') <> '');
     if not Nivel1 then
@@ -332,7 +326,9 @@ begin
       NumeroLoteTemp:= Leitor.rCampo(tcStr, 'NumeroLote');
       if trim(NumeroLoteTemp) = '' then
         NumeroLoteTemp := '0';
+
       DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+
       ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
       if trim(ProtocoloTemp) = '' then
         ProtocoloTemp := '0';

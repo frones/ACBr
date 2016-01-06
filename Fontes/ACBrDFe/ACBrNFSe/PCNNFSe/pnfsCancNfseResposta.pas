@@ -49,10 +49,10 @@ type
   private
     FPedido: TPedidoCancelamento;
     FDataHora: TDateTime;
-    FConfirmacao : string;
+    FConfirmacao: String;
     FSucesso: String;
     FMsgCanc: String;
-    FMsgRetorno : TMsgRetornoCancCollection;
+    FMsgRetorno: TMsgRetornoCancCollection;
     FNotasCanceladas: TNotasCanceladasCollection;
 
     procedure SetMsgRetorno(Value: TMsgRetornoCancCollection);
@@ -65,7 +65,8 @@ type
     property Confirmacao: String                   read FConfirmacao write FConfirmacao;
     property Sucesso: String                       read FSucesso     write FSucesso;
     property MsgCanc: String                       read FMsgCanc     write FMsgCanc;
-    property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno write SetMsgRetorno;
+    property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno  write SetMsgRetorno;
+
     property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas write SetNotasCanceladas;
   end;
 
@@ -81,16 +82,16 @@ type
 
  TMsgRetornoCancCollectionItem = class(TCollectionItem)
   private
-    FCodigo : String;
-    FMensagem : String;
-    FCorrecao : String;
+    FCodigo: String;
+    FMensagem: String;
+    FCorrecao: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property Codigo: string   read FCodigo   write FCodigo;
-    property Mensagem: string read FMensagem write FMensagem;
-    property Correcao: string read FCorrecao write FCorrecao;
+    property Codigo: String   read FCodigo   write FCodigo;
+    property Mensagem: String read FMensagem write FMensagem;
+    property Correcao: String read FCorrecao write FCorrecao;
   end;
 
  TNotasCanceladasCollection = class(TCollection)
@@ -105,16 +106,16 @@ type
 
  TNotasCanceladasCollectionItem = class(TCollectionItem)
   private
-    FNumeroNota : String;
-    FCodigoVerficacao : String;
-    FInscricaoMunicipalPrestador : String;
+    FNumeroNota: String;
+    FCodigoVerficacao: String;
+    FInscricaoMunicipalPrestador: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property NumeroNota: string read FNumeroNota  write FNumeroNota;
-    property CodigoVerficacao: string read FCodigoVerficacao write FCodigoVerficacao;
-    property InscricaoMunicipalPrestador: string read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
+    property NumeroNota: String       read FNumeroNota       write FNumeroNota;
+    property CodigoVerficacao: String read FCodigoVerficacao write FCodigoVerficacao;
+    property InscricaoMunicipalPrestador: String read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
   end;
 
  TretCancNFSe = class(TPersistent)
@@ -123,16 +124,20 @@ type
     FInfCanc: TInfCanc;
     FProvedor: TnfseProvedor;
     FVersaoXML: String;
+    function LerXML_provedorEquiplano: Boolean;
+    function LerXml_provedorInfisc: Boolean;
+    function LerXml_provedorNFSEBrasil: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function LerXml: boolean;
-    function LerXml_ABRASF: boolean;
-    function LerXml_provedorIssDsf: boolean;
-    function LerXml_provedorInfisc: Boolean;
-    function LerXML_provedorEquiplano: Boolean;
-    function LerXml_provedorNFSEBrasil: boolean;
+    function LerXml: Boolean;
+    function LerXml_ABRASF: Boolean;
+    function LerXml_proISSDSF: Boolean;
+    function LerXML_proEquiplano: Boolean;
+    function LerXml_proInfisc: Boolean;
+    function LerXml_proEL: Boolean;
+    function LerXml_proNFSeBrasil: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -147,8 +152,8 @@ implementation
 
 constructor TInfCanc.Create;
 begin
-  FPedido     := TPedidoCancelamento.Create;
-  FMsgRetorno := TMsgRetornoCancCollection.Create(Self);
+  FPedido          := TPedidoCancelamento.Create;
+  FMsgRetorno      := TMsgRetornoCancCollection.Create(Self);
   FNotasCanceladas := TNotasCanceladasCollection.Create(Self);
 end;
 
@@ -262,23 +267,24 @@ begin
   inherited;
 end;
 
-function TretCancNFSe.LerXml: boolean;
+function TretCancNFSe.LerXml: Boolean;
 begin
  case Provedor of
-   proISSDSF: Result := LerXml_provedorIssDsf;
-   proInfIsc: Result := LerXml_provedorInfisc;
-   proEquiplano: Result := LerXML_provedorEquiplano;
-   proNFSeBrasil: Result := LerXml_provedorNFSEBrasil;
+   proISSDSF:     Result := LerXml_proISSDSF;
+   proEquiplano:  Result := LerXML_proEquiplano;
+   proInfIsc:     Result := LerXml_proInfisc;
+   proEL:         Result := LerXml_proEL;
+   proNFSeBrasil: Result := LerXml_proNFSeBrasil;
  else
    Result := LerXml_ABRASF;
  end;
 end;
 
-function TretCancNFSe.LerXml_ABRASF: boolean;
+function TretCancNFSe.LerXml_ABRASF: Boolean;
 var
   i: Integer;
 begin
-  result := True;
+  Result := True;
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
@@ -313,7 +319,6 @@ begin
           end;
         end;
       end;
-
     end
     else
     begin
@@ -326,7 +331,7 @@ begin
         if infCanc.DataHora = 0 then
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
         InfCanc.FConfirmacao := Leitor.rAtributo('Confirmacao Id=');
-        InfCanc.Sucesso := Leitor.rCampo(tcStr,    'Sucesso');
+        InfCanc.Sucesso := Leitor.rCampo(tcStr, 'Sucesso');
 
         InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento Id=');
         if InfCanc.FPedido.InfID.ID = '' then
@@ -388,15 +393,15 @@ begin
     end;
 
   except
-    result := False;
+    Result := False;
   end;
 end;
 
-function TretCancNFSe.LerXml_provedorIssDsf: boolean; //falta homologar
+function TretCancNFSe.LerXml_proISSDSF: Boolean; //falta homologar
 var
   i: Integer;
 begin
-  result := False;
+  Result := False;
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
@@ -404,13 +409,10 @@ begin
 
     if leitor.rExtrai(1, 'RetornoCancelamentoNFSe') <> '' then
     begin
-
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
-      begin
-         FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
-      end;
+        FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
 
-      i := 0 ;
+      i := 0;
       if (leitor.rExtrai(2, 'NotasCanceladas') <> '') then
       begin
         while (Leitor.rExtrai(2, 'Nota', '', i + 1) <> '') do
@@ -423,26 +425,28 @@ begin
         end;
       end;
 
-      i := 0 ;
+      i := 0;
       if (leitor.rExtrai(2, 'Alertas') <> '') then
       begin
         while (Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '') do
         begin
           InfCanc.FMsgRetorno.Add;
-          InfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Codigo');
-          InfCanc.FMsgRetorno[i].Mensagem := Leitor.rCampo(tcStr, 'Descricao');
+          InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+          InfCanc.FMsgRetorno[i].FCorrecao := '';
           inc(i);
         end;
       end;
 
-      i := 0 ;
+      i := 0;
       if (leitor.rExtrai(2, 'Erros') <> '') then
       begin
         while (Leitor.rExtrai(2, 'Erro', '', i + 1) <> '') do
         begin
           InfCanc.FMsgRetorno.Add;
-          InfCanc.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'Codigo');
-          InfCanc.FMsgRetorno[i].Mensagem := Leitor.rCampo(tcStr, 'Descricao');
+          InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+          InfCanc.FMsgRetorno[i].FCorrecao := '';
           inc(i);
         end;
       end;
@@ -450,13 +454,58 @@ begin
       Result := True;
     end;
   except
-    result := False;
+    Result := False;
   end;
 end;
 
-function TretCancNFSe.LerXml_provedorInfisc: boolean;
+function TretCancNFSe.LerXML_proEquiplano: Boolean;
 var
-  sMotCod,sMotDes,sCancelaAnula: string;
+  i: Integer;
+begin
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    InfCanc.FSucesso  := Leitor.rCampo(tcStr, 'Sucesso');
+    InfCanc.FDataHora := Leitor.rCampo(tcDatHor, 'dtCancelamento');
+
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+    begin
+      i := 0;
+      if (leitor.rExtrai(2, 'listaErros') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+        begin
+          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+          InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+          InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+          inc(i);
+        end;
+      end;
+
+      if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+        begin
+          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+          InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+          InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+          inc(i);
+        end;
+      end;
+    end;
+
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_proInfisc: Boolean;
+var
+  sMotCod, sMotDes, sCancelaAnula: String;
 begin
   Result := False;
   try
@@ -473,22 +522,22 @@ begin
       InfCanc.FSucesso := Leitor.rCampo(tcStr, 'sit');
       if (InfCanc.FSucesso = '100') then // 100-Aceito
       begin
-         InfCanc.FPedido.IdentificacaoNfse.Cnpj := Leitor.rCampo(tcStr, 'CNPJ');
+         InfCanc.FPedido.IdentificacaoNfse.Cnpj   := Leitor.rCampo(tcStr, 'CNPJ');
          InfCanc.FPedido.IdentificacaoNfse.Numero := Leitor.rCampo(tcStr, 'chvAcessoNFS-e');
-         InfCanc.FDataHora := Leitor.rCampo(tcDatHor, 'dhRecbto');
+         InfCanc.FDataHora                        := Leitor.rCampo(tcDatHor, 'dhRecbto');
       end
       else if (InfCanc.FSucesso = '200') then // 200-Rejeitado
       begin
-        sMotDes:=Leitor.rCampo(tcStr, 'mot');
-        if Pos('Error',sMotDes)>0 then
-          sMotCod:=SomenteNumeros(copy(sMotDes,1,Pos(' ',sMotDes)))
+        sMotDes := Leitor.rCampo(tcStr, 'mot');
+        if Pos('Error', sMotDes) > 0 then
+          sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))
         else
-          sMotCod:='';
+          sMotCod := '';
         InfCanc.MsgRetorno.Add;
         InfCanc.MsgRetorno[0].FCodigo   := sMotCod;
-        InfCanc.MsgRetorno[0].FMensagem := sMotDes+' '+
-                                          'CNPJ '+Leitor.rCampo(tcStr, 'CNPJ')+' '+
-                                          'DATA '+Leitor.rCampo(tcStr, 'dhRecbto');
+        InfCanc.MsgRetorno[0].FMensagem := sMotDes + ' ' +
+                                          'CNPJ ' + Leitor.rCampo(tcStr, 'CNPJ') + ' ' +
+                                          'DATA ' + Leitor.rCampo(tcStr, 'dhRecbto');
         InfCanc.MsgRetorno[0].FCorrecao := '';
       end;
       Result := True;
@@ -498,63 +547,20 @@ begin
   end;
 end;
 
-function TretCancNFSe.LerXML_provedorEquiplano: Boolean;
-var
-  i: Integer;
+function TretCancNFSe.LerXml_proEL: Boolean;
 begin
-  try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
-    InfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
-    InfCanc.FDataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
-
-    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
-      begin
-        i := 0;
-        if (leitor.rExtrai(2, 'listaErros') <> '') then
-          begin
-            while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
-              begin
-                InfCanc.FMsgRetorno.Add;
-                InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
-                InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
-                InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
-
-                inc(i);
-              end;
-          end;
-
-        if (leitor.rExtrai(2, 'listaAlertas') <> '') then
-          begin
-            while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
-              begin
-                InfCanc.FMsgRetorno.Add;
-                InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
-                InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
-                InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
-
-                inc(i);
-              end;
-          end;
-      end;
-
-    Result := True;
-  except
-    result := False;
-  end;
-
+  Result := False;
 end;
 
-function TretCancNFSe.LerXml_provedorNFSEBrasil: boolean;
+function TretCancNFSe.LerXml_proNFSeBrasil: Boolean;
 //var
-  //ok: boolean;
+  //ok: Boolean;
   //i, Item, posI, count: Integer;
   //VersaoXML: String;
   //strAux,strAux2, strItem: AnsiString;
   //leitorAux, leitorItem:TLeitor;
 begin
-  result := False;
+  Result := False;
   (*
    // Luiz Baião 2014.12.03 
   try

@@ -74,13 +74,13 @@ type
 
  TMsgRetornoEnvIdentificacaoRps = class(TPersistent)
   private
-    FNumero: string;
-    FSerie: string;
+    FNumero: String;
+    FSerie: String;
     FTipo: TnfseTipoRps;
   published
-    property Numero: string read FNumero write FNumero;
-    property Serie: string read FSerie write FSerie;
-    property Tipo: TnfseTipoRps read FTipo write FTipo;
+    property Numero: String     read FNumero write FNumero;
+    property Serie: String      read FSerie  write FSerie;
+    property Tipo: TnfseTipoRps read FTipo   write FTipo;
   end;
 
  TMsgRetornoEnvCollectionItem = class(TCollectionItem)
@@ -110,11 +110,11 @@ type
 
     function LerXml: Boolean;
     function LerXml_ABRASF: Boolean;
-    function LerXml_provedorIssDsf: Boolean;
-    function LerXml_provedorInfisc: Boolean;
-    function LerXML_provedorEquiplano: Boolean;
-    function LerXML_provedorEL: Boolean;
-    function LerXml_provedorNFSEBrasil: boolean;
+    function LerXml_proISSDSF: Boolean;
+    function LerXML_proEquiplano: Boolean;
+    function LerXML_proInfisc: Boolean;
+    function LerXML_proEL: Boolean;
+	  function LerXml_proNFSeBrasil: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -172,14 +172,12 @@ end;
 
 constructor TMsgRetornoEnvCollectionItem.Create;
 begin
-  // Alterado por Nilton Olher - 20/02/2015
   FIdentificacaoRps       := TMsgRetornoEnvIdentificacaoRps.Create;
   FIdentificacaoRps.FTipo := trRPS;
 end;
 
 destructor TMsgRetornoEnvCollectionItem.Destroy;
 begin
-  // Alterado por Nilton Olher - 20/02/2015
   FIdentificacaoRps.Free;
   inherited;
 end;
@@ -199,20 +197,91 @@ begin
   inherited;
 end;
 
-function TretEnvLote.LerXml: boolean;
+function TretEnvLote.LerXml: Boolean;
 begin
  case Provedor of
-   proISSDSF:     Result := LerXml_provedorIssDsf;
-   proEquiplano:  Result := LerXML_provedorEquiplano;
-   proInfisc:     Result := LerXml_provedorInfisc;
-   proEL:         Result := LerXML_provedorEL;
-   proNFSeBrasil: Result := LerXml_provedorNFSEBrasil;
+   proISSDSF:     Result := LerXml_proISSDSF;
+   proEquiplano:  Result := LerXML_proEquiplano;
+   proInfIsc:     Result := LerXml_proInfisc;
+   proEL:         Result := LerXML_proEL;
+   proNFSeBrasil: Result := LerXml_proNFSeBrasil;
  else
    Result := LerXml_ABRASF;
  end;
 end;
 
-function TretEnvLote.LerXml_provedorIssDsf: boolean;
+function TretEnvLote.LerXml_ABRASF: Boolean;
+var
+  i: Integer;
+  iNivel: Integer;
+  Ok: Boolean;
+begin
+  Result := True;
+
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
+    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    infRec.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
+    infRec.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
+
+    // Alguns provedores retornam apenas a data, sem o horário
+    if Length(Leitor.rCampo(tcStr, 'DataRecebimento')) > 10
+     then infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento')
+     else infRec.FDataRecebimento := Leitor.rCampo(tcDat, 'DataRecebimento');
+
+    iNivel := 1;
+    if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
+      iNivel := 3
+    else
+      if leitor.rExtrai(1, 'ListaMensagemRetorno') <> '' then
+        iNivel := 2;
+
+    i := 0;
+    while Leitor.rExtrai(iNivel, 'MensagemRetorno', '', i + 1) <> '' do
+    begin
+      InfRec.FMsgRetorno.Add;
+      InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+      InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+      InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(Ok, Leitor.rCampo(tcStr, 'Tipo'));
+
+      InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+      InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+      InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+      inc(i);
+    end;
+
+    i := 0;
+    while Leitor.rExtrai(iNivel, 'ErroWebServiceResposta', '', i + 1) <> '' do
+    begin
+      InfRec.FMsgRetorno.Add;
+      InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'CodigoErro');
+      InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
+      InfRec.FMsgRetorno[i].FCorrecao := '';
+
+      inc(i);
+    end;
+
+    i := 0;
+    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+    begin
+      InfRec.FMsgRetorno.Add;
+      InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+      InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+      InfRec.FMsgRetorno[i].FCorrecao := '';
+
+      inc(i);
+    end;
+
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXml_proISSDSF: Boolean;
 var
   i, posI, count: Integer;
   strAux: AnsiString;
@@ -228,72 +297,77 @@ begin
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
       begin
-         FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
-         if (FInfRec.FSucesso = 'true') then
-         begin
-            FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
-            FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'NumeroLote');
-            FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataEnvioLote')
-         end;
+        FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+        if (FInfRec.FSucesso = 'true') then
+        begin
+          FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'NumeroLote');
+          FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataEnvioLote')
+        end;
       end;
 
       i := 0;
       if (leitor.rExtrai(1, 'Alertas') <> '') then
       begin
-         strAux := leitor.rExtrai(1, 'Alertas');
-         if (strAux <> '') then
-         begin
+        strAux := leitor.rExtrai(1, 'Alertas');
+        if (strAux <> '') then
+        begin
+          posI := pos('<Alerta>', strAux);
+
+          while ( posI > 0 ) do
+          begin
+            count := pos('</Alerta>', strAux) + 7;
+
+            FInfRec.FMsgRetorno.Add;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'Codigo');
+            FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Descricao');
+            FInfRec.FMsgRetorno[i].FCorrecao := '';
+
+            inc(i);
+            LeitorAux.free;
+
+            Delete(strAux, PosI, count);
             posI := pos('<Alerta>', strAux);
-
-            while ( posI > 0 ) do begin
-               count := pos('</Alerta>', strAux) + 7;
-
-               FInfRec.FMsgRetorno.Add;
-               inc(i);
-
-               LeitorAux := TLeitor.Create;
-               leitorAux.Arquivo := copy(strAux, PosI, count);
-               leitorAux.Grupo   := leitorAux.Arquivo;
-
-               FInfRec.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
-               FInfRec.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
-
-               LeitorAux.free;
-
-               Delete(strAux, PosI, count);
-               posI := pos('<Alerta>', strAux);
-            end;
-         end;
+          end;
+        end;
       end;
 
       if (leitor.rExtrai(1, 'Erros') <> '') then
       begin
-         strAux := leitor.rExtrai(1, 'Erros');
-         if (strAux <> '') then
-         begin
+        strAux := leitor.rExtrai(1, 'Erros');
+        if (strAux <> '') then
+        begin
             //i := 0 ;
+          posI := pos('<Erro>', strAux);
+
+          while (posI > 0) do
+          begin
+            count := pos('</Erro>', strAux) + 6;
+
+            FInfRec.FMsgRetorno.Add;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'Codigo');
+            FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Descricao');
+            FInfRec.FMsgRetorno[i].FCorrecao := '';
+
+            inc(i);
+            LeitorAux.free;
+
+            Delete(strAux, PosI, count);
             posI := pos('<Erro>', strAux);
-
-            while (posI > 0) do begin
-               count := pos('</Erro>', strAux) + 6;
-
-               FInfRec.FMsgRetorno.Add;
-               inc(i);
-
-               LeitorAux := TLeitor.Create;
-               leitorAux.Arquivo := copy(strAux, PosI, count);
-               leitorAux.Grupo   := leitorAux.Arquivo;
-
-               FInfRec.FMsgRetorno[i].FCodigo  := leitorAux.rCampo(tcStr, 'Codigo');
-               FInfRec.FMsgRetorno[i].Mensagem := leitorAux.rCampo(tcStr, 'Descricao');
-
-               LeitorAux.free;
-
-               Delete(strAux, PosI, count);
-               posI := pos('<Erro>', strAux);
-            end;
-         end;
+          end;
+        end;
       end;
+
       Result := True;
     end;
   except
@@ -301,45 +375,7 @@ begin
   end;
 end;
 
-function TretEnvLote.LerXml_provedorInfisc: boolean;
-var
-  sMotCod,sMotDes: string;
-begin
-  Result := False;
-  try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-    if leitor.rExtrai(1, 'confirmaLote') <> '' then
-    begin
-      FInfRec.FSucesso := Leitor.rCampo(tcStr, 'sit');
-      if (FInfRec.FSucesso = '100') then // 100-Aceito
-      begin
-         FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'cLote');
-         FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'cLote');
-         FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dhRecbto')
-      end
-      else if (FInfRec.FSucesso = '200') then // 200-Rejeitado
-      begin
-        sMotDes:=Leitor.rCampo(tcStr, 'mot');
-        if Pos('Error',sMotDes)>0 then
-          sMotCod:=SomenteNumeros(copy(sMotDes,1,Pos(' ',sMotDes)))
-        else
-          sMotCod:='';
-        InfRec.MsgRetorno.Add;
-        InfRec.MsgRetorno[0].FCodigo   := sMotCod;
-        InfRec.MsgRetorno[0].FMensagem := sMotDes+' '+
-                                          'CNPJ '+Leitor.rCampo(tcStr, 'CNPJ')+' '+
-                                          'DATA '+Leitor.rCampo(tcStr, 'dhRecbto');
-        InfRec.MsgRetorno[0].FCorrecao := '';
-      end;
-      Result := True;
-    end;
-  except
-    Result := False;
-  end;
-end;
-
-function TretEnvLote.LerXML_provedorEquiplano: Boolean;
+function TretEnvLote.LerXML_proEquiplano: Boolean;
 var
   i: Integer;
 begin
@@ -387,8 +423,87 @@ begin
   end;
 end;
 
+function TretEnvLote.LerXml_proInfisc: Boolean;
+var
+  sMotCod, sMotDes: String;
+begin
+  Result := False;
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if leitor.rExtrai(1, 'confirmaLote') <> '' then
+    begin
+      FInfRec.FSucesso := Leitor.rCampo(tcStr, 'sit');
+      if (FInfRec.FSucesso = '100') then // 100-Aceito
+      begin
+        FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'cLote');
+        FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'cLote');
+        FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dhRecbto')
+      end
+      else if (FInfRec.FSucesso = '200') then // 200-Rejeitado
+      begin
+        sMotDes:=Leitor.rCampo(tcStr, 'mot');
+        if Pos('Error', sMotDes) > 0 then
+          sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))
+        else
+          sMotCod := '';
+        InfRec.MsgRetorno.Add;
+        InfRec.MsgRetorno[0].FCodigo   := sMotCod;
+        InfRec.MsgRetorno[0].FMensagem := sMotDes + ' ' +
+                                          'CNPJ ' + Leitor.rCampo(tcStr, 'CNPJ') + ' ' +
+                                          'DATA ' + Leitor.rCampo(tcStr, 'dhRecbto');
+        InfRec.MsgRetorno[0].FCorrecao := '';
+      end;
 
-function TretEnvLote.LerXml_provedorNFSEBrasil: boolean;
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proEL: Boolean;
+var
+  i: Integer;
+  Cod, Msg: String;
+  strAux: AnsiString;
+begin
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numeroLote');
+    infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dataRecebimento');
+    infRec.FProtocolo       := Leitor.rCampo(tcStr, 'numeroProtocolo');
+
+    if (Leitor.rExtrai(1, 'mensagens') <> '') then
+    begin
+      i := 0;
+      while Leitor.rExtrai(1, 'mensagens', '', i + 1) <> '' do
+      begin
+        strAux := Leitor.rCampo(tcStr, 'mensagens');
+        Cod    := Copy(strAux, 1, 4);
+        Msg    := Copy(strAux, 8, Length(strAux));
+        if Trim(Msg) <> '' then
+        begin
+          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno[i].FCodigo   := Cod;
+          InfRec.FMsgRetorno[i].FMensagem := Msg;
+          InfRec.FMsgRetorno[i].FCorrecao := '';
+          Inc(i);
+        end
+        else
+          Break;
+      end;
+    end;
+
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXml_proNFSeBrasil: Boolean;
 //var
   //Item, posI, count: Integer;
   //VersaoXML: String;
@@ -466,113 +581,4 @@ begin
   *)
 end;
 
-function TretEnvLote.LerXML_provedorEL: Boolean;
-var
-  i: Integer;
-  Cod, Msg: String;
-  strAux: AnsiString;
-begin
-  try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
-    infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numeroLote');
-    infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dataRecebimento');
-    infRec.FProtocolo       := Leitor.rCampo(tcStr, 'numeroProtocolo');
-
-    if (Leitor.rExtrai(1, 'mensagens') <> '') then
-    begin
-      i:= 0;
-      while Leitor.rExtrai(1, 'mensagens', '', i + 1) <> '' do
-      begin
-        strAux := Leitor.rCampo(tcStr, 'mensagens');
-        Cod    := Copy(strAux, 1, 4);
-        Msg    := Copy(strAux, 8, Length(strAux));
-        if Trim(Msg) <> '' then begin
-          InfRec.FMsgRetorno.Add;
-          InfRec.FMsgRetorno[i].Codigo   := Cod;
-          InfRec.FMsgRetorno[i].Mensagem := Msg;
-          Inc(i);
-        end else
-          Break;
-      end;
-    end;
-
-    Result := True;
-  except
-    Result := False;
-  end;
-end;
-
-function TretEnvLote.LerXml_ABRASF: Boolean;
-var
-  i: Integer;
-  iNivel: Integer;
-  Ok: Boolean;
-begin
-  Result := True;
-
-  try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
-    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
-    Leitor.Grupo   := Leitor.Arquivo;
-
-    infRec.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
-    infRec.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
-
-    // Alguns provedores retornam apenas a data, sem o horário
-    if Length(Leitor.rCampo(tcStr, 'DataRecebimento')) > 10
-     then infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento')
-     else infRec.FDataRecebimento := Leitor.rCampo(tcDat, 'DataRecebimento');
-
-    iNivel := 1;
-    if leitor.rExtrai(2, 'ListaMensagemRetorno') <> ''
-     then iNivel := 3
-     else if leitor.rExtrai(1, 'ListaMensagemRetorno') <> ''
-           then iNivel := 2;
-
-    i := 0;
-    while Leitor.rExtrai(iNivel, 'MensagemRetorno', '', i + 1) <> '' do
-     begin
-       InfRec.FMsgRetorno.Add;
-       InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
-       InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
-       InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(Ok, Leitor.rCampo(tcStr, 'Tipo'));
-
-       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-       InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
-
-       inc(i);
-     end;
-
-    i := 0;
-    while Leitor.rExtrai(iNivel, 'ErroWebServiceResposta', '', i + 1) <> '' do
-     begin
-       InfRec.FMsgRetorno.Add;
-       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'CodigoErro');
-       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
-       InfRec.FMsgRetorno[i].FCorrecao := '';
-
-       inc(i);
-     end;
-
-    i := 0;
-    while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
-     begin
-       InfRec.FMsgRetorno.Add;
-       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
-       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
-       InfRec.FMsgRetorno[i].FCorrecao := '';
-
-       inc(i);
-     end;
-
-  except
-    Result := False;
-  end;
-end;
-
 end.
-

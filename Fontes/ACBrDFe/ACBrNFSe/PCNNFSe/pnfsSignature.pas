@@ -49,12 +49,12 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXMLNFSe: boolean;
+    function GerarXMLNFSe: Boolean;
   published
-    property Gerador: TGerador read FGerador write FGerador;
-    property URI: String read FURI write FURI;
-    property DigestValue: String read FDigestValue write FDigestValue;
-    property SignatureValue: String read FSignatureValue write FSignatureValue;
+    property Gerador: TGerador       read FGerador         write FGerador;
+    property URI: String             read FURI             write FURI;
+    property DigestValue: String     read FDigestValue     write FDigestValue;
+    property SignatureValue: String  read FSignatureValue  write FSignatureValue;
     property X509Certificate: String read FX509Certificate write FX509Certificate;
   end;
 
@@ -73,11 +73,12 @@ begin
   inherited;
 end;
 
-function TSignature.GerarXMLNFSe: boolean;
+function TSignature.GerarXMLNFSe: Boolean;
 begin
   FGerador.ArquivoFormatoXML := '';
-  FGerador.Opcoes.TagVaziaNoFormatoResumido := false;
+  FGerador.Opcoes.TagVaziaNoFormatoResumido := False;
   FGerador.FIgnorarTagIdentacao := '|Reference URI|SignatureMethod|Transform Algorithm="http://www.w3.org/TR|/Transforms|/Reference|';
+
   (**)Gerador.wGrupo('Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="Ass_rps:' + FURI + '"', 'XS01');
   (****)Gerador.wGrupo('SignedInfo', 'XS02');
   (******)Gerador.wGrupo('CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/', 'XS03');
@@ -97,6 +98,7 @@ begin
   (******)Gerador.wGrupo('/X509Data');
   (****)Gerador.wGrupo('/KeyInfo');
   (**)Gerador.wGrupo('/Signature');
+
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 

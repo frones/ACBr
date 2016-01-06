@@ -59,8 +59,11 @@ type
 
     function LerXml: Boolean;
     function LerXml_ABRASF: Boolean;
-    function LerXml_provedorIssDsf: Boolean;
-    function LerXML_provedorEquiplano: Boolean;
+    function LerXml_proISSDSF: Boolean;
+    function LerXML_proEquiplano: Boolean;
+    function LerXML_proInfisc: Boolean;
+    function LerXML_proEL: Boolean;
+	  function LerXml_proNFSeBrasil: Boolean;
   published
     property Leitor: TLeitor                                 read FLeitor            write FLeitor;
     property MsgRetorno: TMsgRetornoSubsCollection           read FMsgRetorno        write SetMsgRetorno;
@@ -80,9 +83,9 @@ type
 
  TMsgRetornoSubsCollectionItem = class(TCollectionItem)
   private
-    FCodigo : String;
-    FMensagem : String;
-    FCorrecao : String;
+    FCodigo: String;
+    FMensagem: String;
+    FCorrecao: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -104,9 +107,9 @@ type
 
  TNotaSubstituidoraCollectionItem = class(TCollectionItem)
   private
-    FNumeroNota : String;
-    FCodigoVerficacao : String;
-    FInscricaoMunicipalPrestador : String;
+    FNumeroNota: String;
+    FCodigoVerficacao: String;
+    FInscricaoMunicipalPrestador: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -211,11 +214,24 @@ begin
   inherited;
 end;
 
+procedure TretSubsNFSe.SetMsgRetorno(const Value: TMsgRetornoSubsCollection);
+begin
+  FMsgRetorno := Value;
+end;
+
+procedure TretSubsNFSe.SetNotaSubstituidora(const Value: TNotaSubstituidoraCollection);
+begin
+  FNotaSubstituidora := Value;
+end;
+
 function TretSubsNFSe.LerXml: Boolean;
 begin
  case Provedor of
-   proISSDSF: Result := LerXml_provedorIssDsf;
-   proEquiplano: Result := LerXML_provedorEquiplano;
+   proISSDSF:     Result := LerXml_proISSDSF;
+   proEquiplano:  Result := LerXML_proEquiplano;
+   proInfIsc:     Result := LerXml_proInfisc;
+   proEL:         Result := LerXML_proEL;
+   proNFSeBrasil: Result := LerXml_proNFSeBrasil;
  else
    Result := LerXml_ABRASF;
  end;
@@ -225,79 +241,85 @@ function TretSubsNFSe.LerXml_ABRASF: Boolean;
 var
   i: Integer;
 begin
-  result := True;
+  Result := True;
 
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'SubstituirNfseResposta') <> '') then
+    begin
+      if (leitor.rExtrai(2, 'RetSubstituicao') <> '') then
       begin
-        if (leitor.rExtrai(2, 'RetSubstituicao') <> '') then
+        if (leitor.rExtrai(2, 'NfseSubstituidora') <> '') then
         begin
-          if (leitor.rExtrai(2, 'NfseSubstituidora') <> '') then
-          begin
-           // contem a nova NFS-e.
-           // Falta implementar
-          end;
+          // contem a nova NFS-e.
+          // Falta implementar
         end;
-        if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') then
-        begin
-          i := 0;
-          while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
-          begin
-            FMsgRetorno.Add;
-            FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-            FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-            FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
-            inc(i);
-          end;
-        end;
+      end;
 
-        if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then
+      if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
         begin
           FMsgRetorno.Add;
-          FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-          FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
-          FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+          FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+          FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+          inc(i);
         end;
-
       end;
+
+      if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then
+      begin
+        FMsgRetorno.Add;
+        FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+        FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+      end;
+
+    end;
 
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
-     begin
-       FMsgRetorno.Add;
-       FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
-       FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
-       FMsgRetorno[i].FCorrecao := '';
+    begin
+      FMsgRetorno.Add;
+      FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+      FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+      FMsgRetorno[i].FCorrecao := '';
 
-       inc(i);
-     end;
+      inc(i);
+    end;
 
   except
-    result := False;
+    Result := False;
   end;
 end;
 
-function TretSubsNFSe.LerXml_provedorIssDsf: Boolean; //falta homologar
+function TretSubsNFSe.LerXml_proISSDSF: Boolean; //falta homologar
 begin
-  result := False;
+  Result := False;
 end;
 
-function TretSubsNFSe.LerXML_provedorEquiplano: Boolean;
+function TretSubsNFSe.LerXML_proEquiplano: Boolean;
 begin
-  result := False;
+  Result := False;
 end;
 
-procedure TretSubsNFSe.SetMsgRetorno(const Value: TMsgRetornoSubsCollection);
+function TretSubsNFSe.LerXML_proInfisc: Boolean;
 begin
-  FMsgRetorno := Value;
+  Result := False;
 end;
 
-procedure TretSubsNFSe.SetNotaSubstituidora(const Value: TNotaSubstituidoraCollection);
+function TretSubsNFSe.LerXML_proEL: Boolean;
 begin
-  FNotaSubstituidora := Value;
+  Result := False;
+end;
+
+function TretSubsNFSe.LerXml_proNFSeBrasil: Boolean;
+begin
+  Result := False;
 end;
 
 end.

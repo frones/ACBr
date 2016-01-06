@@ -68,6 +68,7 @@ type
 
     FRegistroD100Count: integer;
     FRegistroD101Count: integer;
+    FRegistroD110Count: integer;
     FRegistroD120Count: integer;
     FRegistroD130Count: integer;
     FRegistroD140Count: integer;

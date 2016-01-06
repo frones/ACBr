@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 391
+  Left = 422
   Height = 689
-  Top = 25
+  Top = 87
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.4.2.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -1909,9 +1909,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsCadSwDados
+                ActivePage = tsCadSwChaveRSA
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object tsCadSwDados: TTabSheet
                   Caption = 'Dados Cadastrais'
@@ -2156,8 +2156,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsCadSwChaveRSA: TTabSheet
                   Caption = 'Chave RSA'
-                  ClientHeight = 277
-                  ClientWidth = 611
+                  ClientHeight = 251
+                  ClientWidth = 607
                   ImageIndex = 18
                   object mRSAKey: TMemo
                     Left = 0
@@ -2184,7 +2184,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object bRSAPrivKey: TButton
                     AnchorSideTop.Side = asrCenter
-                    Left = 174
+                    Left = 170
                     Height = 27
                     Top = 146
                     Width = 145
@@ -2197,7 +2197,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object bRSAPubKey: TButton
                     AnchorSideTop.Side = asrCenter
-                    Left = 333
+                    Left = 329
                     Height = 27
                     Top = 146
                     Width = 137
@@ -2210,7 +2210,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object bRSAeECFc: TButton
                     AnchorSideTop.Side = asrCenter
-                    Left = 474
+                    Left = 470
                     Height = 27
                     Top = 146
                     Width = 121
@@ -2226,8 +2226,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsCadUsuario: TTabSheet
               Caption = 'Usuário'
-              ClientHeight = 307
-              ClientWidth = 619
+              ClientHeight = 281
+              ClientWidth = 615
               ImageIndex = 20
               object Label46: TLabel
                 AnchorSideLeft.Control = edUSURazaoSocial
@@ -2245,14 +2245,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 7
                 Height = 25
                 Top = 24
-                Width = 416
+                Width = 412
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 0
               end
               object Label47: TLabel
                 AnchorSideLeft.Control = edUSUCNPJ
                 AnchorSideTop.Control = Label46
-                Left = 433
+                Left = 429
                 Height = 17
                 Top = 7
                 Width = 29
@@ -2264,7 +2264,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideTop.Control = edUSURazaoSocial
                 Cursor = crIBeam
-                Left = 433
+                Left = 429
                 Height = 25
                 Top = 24
                 Width = 150
@@ -2292,14 +2292,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 7
                 Height = 25
                 Top = 67
-                Width = 416
+                Width = 412
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 2
               end
               object Label48: TLabel
                 AnchorSideLeft.Control = edUSUIE
                 AnchorSideTop.Control = Label49
-                Left = 433
+                Left = 429
                 Height = 17
                 Top = 50
                 Width = 74
@@ -2313,7 +2313,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideRight.Control = edUSUCNPJ
                 AnchorSideRight.Side = asrBottom
                 Cursor = crIBeam
-                Left = 433
+                Left = 429
                 Height = 25
                 Top = 67
                 Width = 150
@@ -2443,7 +2443,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsECF: TTabSheet
           Caption = '&ECF'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 1
           object sbECFSerial: TSpeedButton
@@ -2704,13 +2704,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 136
             Top = 58
             Width = 489
-            ActivePage = tsECFParamII
-            TabIndex = 1
+            ActivePage = tsECFParamI
+            TabIndex = 0
             TabOrder = 8
             object tsECFParamI: TTabSheet
               Caption = 'Parâmetros I'
-              ClientHeight = 132
-              ClientWidth = 485
+              ClientHeight = 106
+              ClientWidth = 481
               object chECFArredondaPorQtd: TCheckBox
                 Left = 26
                 Height = 21
@@ -2770,8 +2770,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsECFParamII: TTabSheet
               Caption = 'Parâmetros II'
-              ClientHeight = 132
-              ClientWidth = 485
+              ClientHeight = 106
+              ClientWidth = 481
               object Label55: TLabel
                 AnchorSideTop.Control = edECFLog
                 AnchorSideTop.Side = asrCenter
@@ -2792,7 +2792,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 64
                 Height = 25
                 Top = 73
-                Width = 339
+                Width = 335
                 Anchors = [akTop, akLeft, akRight]
                 OnChange = edECFLogChange
                 TabOrder = 0
@@ -2800,7 +2800,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbECFLog: TSpeedButton
                 AnchorSideTop.Control = edECFLog
                 AnchorSideTop.Side = asrCenter
-                Left = 410
+                Left = 406
                 Height = 23
                 Top = 74
                 Width = 23
@@ -2870,7 +2870,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsCHQ: TTabSheet
           Caption = 'Imp.&Cheque'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 2
           object sbCHQBemafiINI: TSpeedButton
@@ -3129,7 +3129,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsGAV: TTabSheet
           Caption = '&Gaveta'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 3
           OnShow = tsGAVShow
@@ -3363,7 +3363,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsDIS: TTabSheet
           Caption = '&Display'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 4
           object Label17: TLabel
@@ -3606,7 +3606,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsLCB: TTabSheet
           Hint = 'SE NAO LEU O CÓDIGO DE BARRAS:'#13#10#13#10'1 - Verifique se a Porta estÃ¡ correta'#13#10'2 - Experimente deixar o SUFIXO vazio. ApÃ³s uma leitura '#13#10'verifique o Sufixo correto no final de "Ultima Leitura"'
           Caption = 'Leitor Serial'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 10
           OnShow = tsLCBShow
@@ -4146,8 +4146,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsRFDINI: TTabSheet
               Caption = 'Arquivos'
-              ClientHeight = 307
-              ClientWidth = 619
+              ClientHeight = 281
+              ClientWidth = 615
               OnShow = tsRFDINIShow
               object Panel4: TPanel
                 Left = 0
@@ -4214,7 +4214,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsBAL: TTabSheet
           Caption = 'Balança'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 14
           object Label56: TLabel
@@ -4416,7 +4416,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsETQ: TTabSheet
           Caption = 'Etiqueta'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 15
           object Label60: TLabel
@@ -4479,7 +4479,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsTC: TTabSheet
           Caption = 'Terminal Consulta'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 13
           OnShow = tsTCShow
@@ -4608,7 +4608,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object mTCConexoes: TMemo
             Left = 375
-            Height = 298
+            Height = 306
             Top = 26
             Width = 225
             Anchors = [akTop, akRight, akBottom]
@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 2
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6880,6 +6880,24 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 583
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 1
+                Visible = False
+              end
+              object edtCNPJContador: TEdit
+                Left = 6
+                Height = 25
+                Top = 224
+                Width = 583
+                Anchors = [akTop, akLeft, akRight]
+                TabOrder = 2
+                Visible = False
+              end
+              object Label188: TLabel
+                Left = 8
+                Height = 17
+                Top = 208
+                Width = 141
+                Caption = 'CNPJ Contador(AutXML)'
+                ParentColor = False
                 Visible = False
               end
             end
@@ -7904,8 +7922,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsDadosEmpresa: TTabSheet
                   Caption = 'Dados Empresa'
-                  ClientHeight = 277
-                  ClientWidth = 611
+                  ClientHeight = 251
+                  ClientWidth = 607
                   ImageIndex = 1
                   object Label150: TLabel
                     Left = 6
@@ -7992,8 +8010,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
-                  ClientHeight = 277
-                  ClientWidth = 611
+                  ClientHeight = 251
+                  ClientWidth = 607
                   ImageIndex = 2
                   object rgModeloDANFeNFCE: TRadioGroup
                     Left = 6
@@ -11036,7 +11054,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11125,6 +11142,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -11169,6 +11187,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -11211,6 +11230,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.7

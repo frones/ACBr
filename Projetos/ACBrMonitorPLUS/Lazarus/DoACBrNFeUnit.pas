@@ -2008,6 +2008,12 @@ begin
                Entrega.cMun := ObterCodigoMunicipio(Entrega.xMun,Entrega.UF);
           end;
 
+         if NaoEstaVazio(OnlyNumber(edtCNPJContador.Text)) then
+         begin
+          with autXML.Add do
+            CNPJCPF := OnlyNumber(edtCNPJContador.Text);
+         end;
+
         I := 1 ;
          while true do
           begin
@@ -2016,10 +2022,13 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
                break ;
 
-            with autXML.Add do
-             begin
-               CNPJCPF := sFim;
-             end;
+            if OnlyNumber(edtCNPJContador.Text) <> OnlyNumber(sFim) then
+            begin
+              with autXML.Add do
+               begin
+                 CNPJCPF := sFim;
+               end;
+            end;
             Inc(I);
           end;
 

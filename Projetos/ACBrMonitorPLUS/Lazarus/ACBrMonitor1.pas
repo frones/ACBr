@@ -260,6 +260,7 @@ type
     edtNFCeMargemInf: TEdit;
     edtNFCeMargemSup: TEdit;
     edtNumCopia: TSpinEdit;
+    edtCNPJContador: TEdit;
     edtTimeoutWebServices: TSpinEdit;
     gbxMargem1: TGroupBox;
     GroupBox4: TGroupBox;
@@ -282,6 +283,7 @@ type
     Label185: TLabel;
     Label186: TLabel;
     Label187: TLabel;
+    Label188: TLabel;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
@@ -3414,6 +3416,8 @@ begin
     edtToken.Text := Ini.ReadString('NFCe', 'Token', '');
     chbTagQrCode.Checked := Ini.ReadBool('NFCe', 'TagQrCode', True);
 
+    edtCNPJContador.Text := Ini.ReadString('NFe', 'CNPJContador', '');
+
     edtArquivoPFX.Text := Ini.ReadString('Certificado', 'ArquivoPFX', '');
     ACBrNFe1.Configuracoes.Certificados.ArquivoPFX := edtArquivoPFX.Text;
     ACBrCTe1.Configuracoes.Certificados.ArquivoPFX := edtArquivoPFX.Text;
@@ -4242,6 +4246,8 @@ begin
     Ini.WriteString('NFCe', 'IdToken', edtIdToken.Text);
     Ini.WriteString('NFCe', 'Token', edtToken.Text);
     Ini.WriteBool('NFCe', 'TagQrCode', chbTagQrCode.Checked);
+
+    Ini.WriteString('NFe', 'CNPJContador', edtCNPJContador.Text);
 
     Ini.WriteString('Email', 'AssuntoNFe', edtEmailAssuntoNFe.Text);
     Ini.WriteString('Email', 'MensagemNFe', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );

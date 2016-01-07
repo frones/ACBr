@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 06/01/2016
+-- pcnNFeW -- 
+[-] Acerto para gerar a tag de totalização do FCP mesmo quando zerada, não
+    estava passando em alguns webservices.
+    http://www.projetoacbr.com.br/forum/topic/27137-tag-sumindo/#comment-177203
+    por: regys.silveira
+
+06/01/2016
 -- ACBRNFeNotasFiscais --
 [-] Conforme nota técnica 2015.003 v1.20 foi removida a validação 739 para NFc-e
     com grupo de combustíveis.

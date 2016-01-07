@@ -933,10 +933,6 @@ begin
           if (Prod.arma.Count > 0) then
             AdicionaErro('738-Rejeição: NFC-e com grupo de Armamentos');
 
-          GravaLog('Validar: 739-'+IntToStr(I)+'-NFCe grupo combustível');
-          if (NaoEstaVazio(Prod.comb.UFcons)) then
-            AdicionaErro('739-Rejeição: NFC-e com grupo de Combustível');
-
           GravaLog('Validar: 348-'+IntToStr(I)+'-NFCe grupo RECOPI');
           if (NaoEstaVazio(Prod.nRECOPI)) then
             AdicionaErro('348-Rejeição: NFC-e com grupo RECOPI');

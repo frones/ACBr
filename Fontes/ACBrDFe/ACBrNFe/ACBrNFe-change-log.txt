@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2016
+-- ACBRNFeNotasFiscais --
+[-] Conforme nota técnica 2015.003 v1.20 foi removida a validação 739 para NFc-e
+    com grupo de combustíveis.
+    por: regys.silveira.
+
 05/01/2016
 -- ACBrNFeWebServices --
 [*] Adicionada verificação de Chave na atribuição de TNFeConsulta.NFeChave
@@ -57,7 +63,7 @@ Símbolo : Significado
 [*] Tratamentos para apresentação dos tributos ( Federal / Estadual e Municipal ).
     conforme o manual de olho no imposto
     http://www.afrac.org.br/wp-content/uploads/2014/11/MANUAL-DE-OLHO-NO-IMPOSTO-0-0-8-2.pdf
-	por: Henrique Leonardo 
+    por: Henrique Leonardo 
 
 -- ACBRNFeNotasFiscais --
 [-] Correção para atribuição de "ACBrNFe.NotasFiscais[x].NomeArq" em

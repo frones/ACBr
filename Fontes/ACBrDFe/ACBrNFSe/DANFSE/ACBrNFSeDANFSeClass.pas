@@ -90,6 +90,7 @@ type
     FImprimeCanhoto: Boolean;
     FTipoDANFSE: TTipoDANFSE;
     FProvedor: TNFSeProvedor;
+    FTamanhoFonte: Integer;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -144,6 +145,7 @@ type
 
     property TipoDANFSE: TTipoDANFSE read FTipoDANFSE write FTipoDANFSE default tpPadrao;
     property Provedor: TNFSeProvedor read FProvedor   write FProvedor;
+    property TamanhoFonte: Integer read FTamanhoFonte write FTamanhoFonte;
   end;
 
 implementation
@@ -180,6 +182,8 @@ begin
  FComplemento    := '';
  FFone           := '';
  FMunicipio      := '';
+ FTamanhoFonte   := 6;
+
  FOutrasInformacaoesImp := '';
  FInscMunicipal         := '';
  FEMail_Prestador       := '';

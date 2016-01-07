@@ -64,6 +64,8 @@ type
  TParcelasCollectionItem            = class;
  TParcelasCollection                = class;
  TCondicaoPagamento                 = class;
+ TemailCollection                   = class;
+ TemailCollectionItem               = class;
 
  TNFSe                              = class;
 
@@ -482,6 +484,26 @@ type
     property Parcelas: TParcelasCollection read FParcelas write SetParcelas;
  end;
 
+ TemailCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TemailCollectionItem;
+    procedure SetItem(Index: Integer; Value: TemailCollectionItem);
+  public
+    constructor Create(AOwner: TNFSe);
+    function Add: TemailCollectionItem;
+    property Items[Index: Integer]: TemailCollectionItem read GetItem write SetItem; default;
+  end;
+
+ TemailCollectionItem = class(TCollectionItem)
+  private
+    FemailCC: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property emailCC: String read FemailCC write FemailCC;
+  end;
+
  TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -534,6 +556,8 @@ type
     FEmpreitadaGlobal: TnfseTEmpreitadaGlobal;
     FModeloNFSe: String;
     FCancelada: TnfseSimNao;
+    Femail: TemailCollection;
+    procedure Setemail(const Value: TemailCollection);
 
   public
     constructor Create;
@@ -589,6 +613,7 @@ type
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
 
+    property email: TemailCollection read Femail write Setemail;
   end;
 
  TLoteRps = class(TPersistent)
@@ -808,6 +833,7 @@ begin
  FModeloNFSe                   := '55';
  FCancelada                    := snNao;
 
+ Femail                        := TemailCollection.Create(Self);
 end;
 
 destructor TNFSe.Destroy;
@@ -821,7 +847,7 @@ begin
  FTomador.Free;
  FIntermediarioServico.Free;
  FConstrucaoCivil.Free;
- FCondicaoPagamento.Free; 
+ FCondicaoPagamento.Free;
  // NFSe
  FPrestadorServico.Free;
  FOrgaoGerador.Free;
@@ -829,8 +855,14 @@ begin
  // RPS e NFSe
  Fsignature.Free;
  FNfseCancelamento.Free;
+ Femail.Free;
 
  inherited Destroy;
+end;
+
+procedure TNFSe.Setemail(const Value: TemailCollection);
+begin
+  Femail := Value;
 end;
 
 { TLoteRps }
@@ -1022,6 +1054,43 @@ end;
 procedure TCondicaoPagamento.SetParcelas(const Value: TParcelasCollection);
 begin
   FParcelas.Assign(Value);
+end;
+
+{ TemailCollection }
+
+function TemailCollection.Add: TemailCollectionItem;
+begin
+  Result := TemailCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TemailCollection.Create(AOwner: TNFSe);
+begin
+  inherited Create(TemailCollectionItem);
+end;
+
+function TemailCollection.GetItem(Index: Integer): TemailCollectionItem;
+begin
+  Result := TemailCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TemailCollection.SetItem(Index: Integer;
+  Value: TemailCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TemailCollectionItem }
+
+constructor TemailCollectionItem.Create;
+begin
+
+end;
+
+destructor TemailCollectionItem.Destroy;
+begin
+
+  inherited;
 end;
 
 end.

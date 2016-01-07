@@ -1937,8 +1937,14 @@ begin
 end;
 
 procedure TFrmACBrMonitor.btAtivarsatClick(Sender: TObject);
+var
+  ACNPJ: String;
 begin
-  ACBrSAT1.AtivarSAT(StrToInt(edtCodigoAtivacao.Text), edtEmitCNPJ.Text, StrToInt(edtCodUF.Text) );
+  ACNPJ := OnlyNumber(edtEmitCNPJ.Text);
+  if ACNPJ = '' then
+    raise Exception.Create('CNPJ inválido. Configure a aba "Dados Emitente"');
+
+  ACBrSAT1.AtivarSAT(1, ACNPJ, StrToInt(edtCodUF.Text) );
 end;
 
 procedure TFrmACBrMonitor.btConsultarStatusOPSATClick(Sender: TObject);

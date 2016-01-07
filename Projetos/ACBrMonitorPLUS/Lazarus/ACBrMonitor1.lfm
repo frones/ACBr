@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.4.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -1448,10 +1448,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsDFe
+        ActivePage = tsSat
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 17
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -9222,9 +9222,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsDadosSAT
+            ActivePage = tsDadosEmit
             Align = alClient
-            TabIndex = 0
+            TabIndex = 1
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               Caption = 'Dados do SAT CFe'
@@ -9302,6 +9302,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Top = 72
                 Width = 61
+                NumbersOnly = True
                 TabOrder = 3
               end
               object Label117: TLabel
@@ -9526,8 +9527,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsDadosEmit: TTabSheet
               Caption = 'Dados Emitente'
-              ClientHeight = 307
-              ClientWidth = 619
+              ClientHeight = 281
+              ClientWidth = 615
               object Label134: TLabel
                 Left = 12
                 Height = 17
@@ -11054,6 +11055,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

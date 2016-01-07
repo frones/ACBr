@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/01/2016
+-- ACBrNFSeWebServices --
+[-] Ao determinar a URL para assinatura estava desconsiderando a aspas de inicio.
+    Por: Rafael Marcelo dos Santos / Italo Jurisato Junior
+
 -- ACBrNFSeDANFSeClass / pnfsNFSe --
 [+] Incluido a propriedade TamanhoFonte para o quadro Discriminação do Serviço.
 [+] Incluido uma lista de e-mail que tem por finalidade facilitar o envio com

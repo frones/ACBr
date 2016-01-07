@@ -1118,7 +1118,7 @@ begin
 
        xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
        i := pos(EnviarLoteRps + xmlns, FPDadosMsg);
-       i := i + Length(EnviarLoteRps + xmlns);
+       i := i + Length(EnviarLoteRps + xmlns) - 1;
        j := Pos('">', FPDadosMsg) + 1;
 
        FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +

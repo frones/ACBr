@@ -99,9 +99,8 @@ var
   nResult, nResultTemp, nDigAsbace01 : Integer;
 begin
   { Banestes não usa digitos verificadores para agência e conta }
-  cLivreAsbace := copy(ACBrTitulo.NossoNumero,2,8)                       +
-                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 2, 10) +
-                  ACBrtitulo.ACBrBoleto.Cedente.ContaDigito              +
+  cLivreAsbace := copy(ACBrTitulo.NossoNumero,1,8)                       +
+                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 1, 11) +
                   IfThen(ACBrtitulo.ACBrBoleto.Cedente.Modalidade = '',
                          '4', ACBrtitulo.ACBrBoleto.Cedente.Modalidade)  +
                   IntToStrZero(fpNumero,3);
@@ -218,20 +217,20 @@ var
   wLinha: String;
 begin
    with ACBrBanco.ACBrBoleto.Cedente do begin
-      wLinha:= '0'                             + // ID do Registro
-               '1'                             + // ID do Arquivo( 1 - Remessa)
-               'REMESSA'                       + // Literal de Remessa
-               '01'                            + // Código do Tipo de Serviço
-               PadRight('COBRANCA', 15 )           +
-               PadLeft(OnlyNumber(Copy(Trim(Conta),2,10)+trim(ContaDigito)), 11, '0')+ // Codigo da Empresa no Banco
-               space(9)                        + // COMPLEMENTO DO REGISTRO
-               PadRight(Nome, 30)                  + // Nome da Empresa
-               IntToStrzero(Numero,3)          +
-               PadRight('BANESTES', 8)             + // Código e Nome do Banco(237 - Bradesco)
-               space(7)                        + // COMPLEMENTO DO REGISTRO
-               FormatDateTime('ddmmyy',Now)    +
-               Space(294)                      + // Data de geração do arquivo + brancos
-               IntToStrZero(1,6);                // Nr. Sequencial de Remessa + brancos + Contador
+      wLinha:= '0'                                                + // ID do Registro
+               '1'                                                + // ID do Arquivo( 1 - Remessa)
+               'REMESSA'                                          + // Literal de Remessa
+               '01'                                               + // Código do Tipo de Serviço
+               PadRight('COBRANCA', 15 )                          +
+               PadLeft(OnlyNumber(Copy(Trim(Conta),1,11)), 11,'0')+ // Codigo da Empresa no Banco
+               space(9)                                           + // COMPLEMENTO DO REGISTRO
+               PadRight(Nome, 30)                                 + // Nome da Empresa
+               IntToStrzero(Numero,3)                             +
+               PadRight('BANESTES', 8)                            + // Código e Nome do Banco(237 - Bradesco)
+               space(7)                                           + // COMPLEMENTO DO REGISTRO
+               FormatDateTime('ddmmyy',Now)                       +
+               Space(294)                                         + // Data de geração do arquivo + brancos
+               IntToStrZero(1,6);                                   // Nr. Sequencial de Remessa + brancos + Contador
 
       aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
    end;
@@ -332,44 +331,47 @@ begin
          atNao :  ATipoAceite := 'N';
       end;
 
-      with ACBrBoleto do BEGIN
-        if Mensagem.Text<>'' then MensagemCedente:= Mensagem[0];
+      with ACBrBoleto do
+      begin
+        if Mensagem.Text<> ''then
+          MensagemCedente:= Mensagem[0];
 
-
-        wLinha := '1'                                                     +  // ID Registro
-                  ATipoInscricao                                          +  // TIPO INSCRICAO EMPRESA(CNPJ, CPF);
+        wLinha := '1'                                                         +  // ID Registro
+                  ATipoInscricao                                              +  // TIPO INSCRICAO EMPRESA(CNPJ, CPF);
                   PadRight(OnlyNumber(Cedente.CNPJCPF), 14, '0')              +
-                  PadLeft(OnlyNumber(Copy(Trim(Cedente.Conta),2,10)+trim(cedente.ContaDigito)), 11, '0')+ // Codigo da Empresa no Banco
-                  Space(9)                                                +
-                  PadLeft(SeuNumero, 10, '0') + Space(15)                    +  // identificacao da operacao na empresa
-                  PadRight(Copy(NossoNumero, 2, 8) + DigitoNossoNumero, 10, '0')          +
-                  IfThen(PercentualMulta > 0, '1', '0')                   +  // Indica se exite Multa ou não
-                  IntToStrZero( round( PercentualMulta * 100 ), 9)        +  // Percentual de Multa formatado com 2 casas decimais
-                  Space(06)                                               +  // identificação do carnê
-                  '00'                                                    +  // número da parcela do carnê
-                  '00'                                                    +  // quantidade de parcelas no carnê
-                  TipoAvalista                                            +  // tipo do sacador avalista
-                  PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')  +  // sacador avalista. não pode ser o proprio sacado
-                  aCarteira                                               +
-                  Ocorrencia                                              +
-                  PadLeft(SeuNumero, 10, '0')                                +
-                  FormatDateTime('ddmmyy', Vencimento)                    +
-                  '000'                                                   +
-                  IntToStrZero(Round(ValorDocumento * 100 ), 10)          +
-                  IntToStrzero(Numero, 3)                                 +  // código do banco
-                  PracaPostagem                                           +
-                  TipoBoleto                                              +
-                  ATipoAceite                                             +
-                  FormatDateTime('ddmmyy', DataDocumento )                +  // Data de Emissão
-                  Protesto                                                +
-                  IfThen(ValorMoraJuros > 0, '0', '9')                    +  // Indica se exite Multa ou não
-                  IntToStrZero(Round(ValorMoraJuros * 100 ), 12)          +
-                  IfThen(DataDesconto < EncodeDate(2000, 01, 01), '000000', FormatDateTime('ddmmyy', DataDesconto)) +
-                  IntToStrZero(Round( ValorDesconto * 100 ), 13)          +
-                  IntToStrZero(Round( ValorIOF * 100 ), 13)               +
-                  IntToStrZero(Round( ValorAbatimento * 100 ), 13)        +
-                  TipoSacado                                              +
-                  PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')                 +
+                  PadLeft(OnlyNumber(Copy(Trim(Cedente.Conta),1,11)), 11, '0')+ // Codigo da Empresa no Banco
+                  Space(9)                                                    +
+                  PadLeft(SeuNumero, 10, '0') + Space(15)                     +  // identificacao da operacao na empresa
+                  PadRight(Copy(NossoNumero, 1, 8) +
+                           DigitoNossoNumero, 10, '0')                        +
+                  IfThen(PercentualMulta > 0, '1', '0')                       +  // Indica se exite Multa ou não
+                  IntToStrZero( round( PercentualMulta * 100 ), 9)            +  // Percentual de Multa formatado com 2 casas decimais
+                  Space(06)                                                   +  // identificação do carnê
+                  '00'                                                        +  // número da parcela do carnê
+                  '00'                                                        +  // quantidade de parcelas no carnê
+                  TipoAvalista                                                +  // tipo do sacador avalista
+                  PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')   +  // sacador avalista. não pode ser o proprio sacado
+                  aCarteira                                                   +
+                  Ocorrencia                                                  +
+                  PadLeft(SeuNumero, 10, '0')                                 +
+                  FormatDateTime('ddmmyy', Vencimento)                        +
+                  '000'                                                       +
+                  IntToStrZero(Round(ValorDocumento * 100 ), 10)              +
+                  IntToStrzero(Numero, 3)                                     +  // código do banco
+                  PracaPostagem                                               +
+                  TipoBoleto                                                  +
+                  ATipoAceite                                                 +
+                  FormatDateTime('ddmmyy', DataDocumento )                    +  // Data de Emissão
+                  Protesto                                                    +
+                  IfThen(ValorMoraJuros > 0, '0', '9')                        +  // Indica se exite Multa ou não
+                  IntToStrZero(Round(ValorMoraJuros * 100 ), 12)              +
+                  IfThen(DataDesconto < EncodeDate(2000, 01, 01), '000000',
+                         FormatDateTime('ddmmyy', DataDesconto))              +
+                  IntToStrZero(Round( ValorDesconto * 100 ), 13)              +
+                  IntToStrZero(Round( ValorIOF * 100 ), 13)                   +
+                  IntToStrZero(Round( ValorAbatimento * 100 ), 13)            +
+                  TipoSacado                                                  +
+                  PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')                  +
                   PadRight(Sacado.NomeSacado, 40, ' ')                        +
                   PadRight(Sacado.Logradouro + Sacado.Numero, 40)             +
                   PadRight(Sacado.Bairro, 12)                                 +
@@ -377,7 +379,7 @@ begin
                   PadRight(Sacado.Cidade,15)                                  +
                   PadRight(Sacado.UF, 2)                                      +
                   PadRight(MensagemCedente, 40)                               +
-                  '00'                                                    +
+                  '00'                                                        +
                   '0';
 
         wLinha := wLinha + IntToStrZero(aRemessa.Count + 1 {ListadeBoletos.IndexOf(ACBrTitulo) +
@@ -402,7 +404,7 @@ var
   Titulo   : TACBrTitulo;
 
   Linha,rCedente: String ;
-  rCNPJCPF,rAgencia,rConta,rDigitoConta: String;
+  rCNPJCPF,rAgencia,rConta: String;
 
   CodOCorrencia: Integer;
   i, MotivoLinha : Integer;
@@ -414,9 +416,8 @@ begin
                              'não é um arquivo de retorno do '+ Nome));
 
    rCedente := trim(Copy(ARetorno[0],47,30));
-   rAgencia := trim(Copy(ARetorno[0],27,4));
-   rConta   := trim(Copy(ARetorno[0],33,5));
-   rDigitoConta := Copy(ARetorno[0],38,1);
+   rConta   := trim(Copy(ARetorno[0],27,11));
+
 
    ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
                                                              Copy(ARetorno[0],97,2)+'/'+
@@ -438,16 +439,13 @@ begin
       if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
          raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
 
-      if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-          (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta)))) then
+      if (not LeCedenteRetorno) and
+          (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta))) then
          raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
       Cedente.Nome    := rCedente;
       Cedente.CNPJCPF := rCNPJCPF;
-      Cedente.Agencia := rAgencia;
-      Cedente.AgenciaDigito:= '0';
       Cedente.Conta   := rConta;
-      Cedente.ContaDigito:= rDigitoConta;
 
       case StrToIntDef(Copy(ARetorno[1],2,2),0) of
          01: Cedente.TipoInscricao:= pFisica;
@@ -532,7 +530,7 @@ begin
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := Copy(Linha,64,9);
+         NossoNumero          := Copy(Linha,63,10);
          Carteira             := Copy(Linha,108,1);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
 

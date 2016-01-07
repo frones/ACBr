@@ -47,13 +47,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/01/2016 ver. 0.0.169a
+-- ACBrBancoBanestes --
+[-] Ajustes remessa CNAB240  e CNAB400.
+[-] Ajuste campo AsBace
+http://www.projetoacbr.com.br/forum/topic/19435-ajuste-function-calcularcampoasbace-banestes/?page=2
+(por denerbuzato)
+
+-- ACBrBancoSicredi --
+[-] Ajustes remessa CNAB240.(marcosanjos)
+http://www.projetoacbr.com.br/forum/topic/14553-sicredi-cnab-240/
+
 Data: 04/01/2016 ver. 0.0.168a
 -- ACBrBancoCaixa --
 [*] Ajuste remessa CNAB240. (Marcos Mentz)
 http://www.projetoacbr.com.br/forum/topic/26559-remessa-cef-com-sacadoravalista/
 [*] Adicionado tamanho da carteira no método create. (OlavoJr)
 http://www.projetoacbr.com.br/forum/topic/26563-erro-na-leitura-do-retorno-da-caixa/
-
 
 
 Data: 16/12/2015 ver. 0.0.167a

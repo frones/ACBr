@@ -1565,8 +1565,7 @@ begin
              PadLeft(OnlyNumber(Agencia), 5,'0')                              + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                         + // 023 a 023 - Dígito verificador da agência
              PadLeft(OnlyNumber(Conta), 12, '0')                              + // 024 a 035 - Número da conta corrente
-             PadLeft(OnlyNumber(ContaDigito), 1)                              + // 036 a 036 - Dígito verificador da conta
-             Space(1)                                                         + // 037 a 037 - Dígito verificador da coop/ag/conta
+             Space(2)                                                         + // 037 a 037 - Dígito verificador da coop/ag/conta
              PadRight(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 20, '0')+ // 038 a 057 - Identificação do título no banco
              '1'                                                              + // 058 a 058 - Código da carteira
              '1'                                                              + // 059 a 059 - Forma de cadastro do título no banco
@@ -1644,11 +1643,11 @@ begin
 
    rCedente       := Trim(Copy(ARetorno[0],73,30));
    rCNPJCPF       := Copy(ARetorno[0],19,14);
-   rCodCedente    := Copy(ARetorno[0],59,12);
-   rAgencia       := Copy(ARetorno[0],53,5);
+   rCodCedente    := Copy(ARetorno[0],33,5);
+   rAgencia       := Copy(ARetorno[0],54,4);
    rDigitoAgencia := Copy(ARetorno[0],58,1);
-   rConta         := ''; // não existe essa info no arquivo de retorno do Sicredi;
-   rDigitoConta   := ''; // não existe essa info no arquivo de retorno do Sicredi;
+   rConta         := Copy(ARetorno[0],59,12);
+   rDigitoConta   := Copy(ARetorno[0],71,1);
 
    with ACBrBanco.ACBrBoleto do
    begin
@@ -1657,10 +1656,14 @@ begin
                                               Copy(ARetorno[0],146,2) +'/'+
                                               Copy(ARetorno[0],148,4),
                                               0, 'dd/mm/yyyy' );
-      DataCreditoLanc := StringToDateTimeDef( Copy(ARetorno[1], 200, 2) +'/'+
-                                              Copy(ARetorno[1], 202, 2) +'/'+
-                                              Copy(ARetorno[1], 204, 4),
-                                              0, 'dd/mm/yyyy' );
+      if (Copy(ARetorno[1], 200, 2) <> '00') and (Trim(Copy(ARetorno[1], 200, 2)) <> '') then
+        begin
+        DataCreditoLanc := StringToDateTimeDef( Copy(ARetorno[1], 200, 2) +'/'+
+                                                Copy(ARetorno[1], 202, 2) +'/'+
+                                                Copy(ARetorno[1], 204, 4),
+                                                0, 'dd/mm/yyyy' );
+        end;
+
    end;
 
    with ACBrBanco.ACBrBoleto do
@@ -1715,7 +1718,7 @@ begin
         NumeroDocumento      := Trim(Copy(SegT,59,15));
         SeuNumero            := NumeroDocumento;
         Carteira             := Copy(SegT,58,1);
-        NossoNumero          := Trim(Copy(SegT,38,20));
+        NossoNumero          := Trim(Copy(SegT,38,8));
         Vencimento           := StringToDateTimeDef( Copy(SegT,74,2) +'/'+
                                                      Copy(SegT,76,2) +'/'+
                                                      Copy(SegT,78,4),
@@ -1733,10 +1736,17 @@ begin
                                                      Copy(SegU,140,2) +'/'+
                                                      Copy(SegU,142,4),
                                                      0, 'dd/mm/yyyy' );
-        DataCredito          := StringToDateTimeDef( Copy(SegU,146,2) +'/'+
-                                                     Copy(SegU,148,2) +'/'+
-                                                     Copy(SegU,150,4),
-                                                     0, 'dd/mm/yyyy' );
+        if Trim(Copy(SegU,146,2))<>'' then
+          begin
+          DataCredito          := StringToDateTimeDef( Copy(SegU,146,2) +'/'+
+                                                      Copy(SegU,148,2) +'/'+
+                                                      Copy(SegU,150,4),
+                                                      0, 'dd/mm/yyyy' );
+          end
+        else
+          begin
+          DataCredito          := DataOcorrencia;
+          end;
 
         OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(SegT, 16, 2), 0));
 
@@ -1745,8 +1755,10 @@ begin
         begin
           if (trim(Copy(SegT, IdxMotivo, 2)) <> '') then begin
             MotivoRejeicaoComando.Add(Copy(SegT, IdxMotivo, 2));
-            DescricaoMotivoRejeicaoComando.Add(
-               CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, Copy(SegT, IdxMotivo, 2)));
+          if Length(Trim(OnlyNumber(Copy(SegT, IdxMotivo, 2))))>0 then
+            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, '99'))
+              else
+                DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, Copy(SegT, IdxMotivo, 2)));
           end;
           Inc(IdxMotivo, 2);
         end;

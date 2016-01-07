@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2016
+-- pcnLeitor --
+[*] Melhorado a detecção do tipo de caracter utilizado para determinar o inicio
+    e fim de um valor de atributo.
+    por: Alexandre Eduardo / Italo Jurisato Junior
+
 30/12/2015
 -- pcnGerador --
 [*] Adicionado os parâmetros: ParseTextoXML e Atributo a procedure wCampoNFSe,

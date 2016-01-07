@@ -1998,7 +1998,11 @@ begin
     else
       rlbItens.PageBreaking := pbNone;
   end;
-
+  // mostra o codigo do produto ou EAN conforme configuração
+  if FExibirEAN then
+    txtCodigo.DataField := 'EAN'
+  else
+    txtCodigo.DataField := 'CODIGO';
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteAfterPrint(Sender: TObject);

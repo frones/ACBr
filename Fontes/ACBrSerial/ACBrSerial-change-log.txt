@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2016
+-- ACBrECFVirtualBuffer --
+[*] Ajuste de layout do comprovante de venda, para melhor compatibilidade com o
+    antigo ecfNaoFical
+[-] Correção para não imprimir o consumidor no Cabeçalho e Rodapé
+[*] Ajuste para que cabeçalho dos Itens não seja impresso antes da identificação
+    do consumidor no cabeçalho do cupom
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27218
+
 02/01/2016
 -- ACBrECFFiscNET --
 [*] Simplificação do método FechaCupom, para evitar erros na sequencia de envio

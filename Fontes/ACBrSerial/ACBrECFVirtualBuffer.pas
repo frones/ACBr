@@ -573,6 +573,8 @@ begin
 
   For A := 0 to fsCabecalhoItem.Count - 1 do
     fsBuffer.Add( fsCabecalhoItem[A] ) ;
+
+  fsBuffer.Add('</linha_simples>');
 end;
 
 procedure TACBrECFVirtualBufferClass.AddBufferRodape;
@@ -651,7 +653,7 @@ end;
 
 procedure TACBrECFVirtualBufferClass.EnviaConsumidorVirtual;
 begin
-  if Consumidor.Documento <> '' then
+  if (Consumidor.Documento <> '') and (not Consumidor.Enviado) then
   begin
     fsBuffer.Add( '</linha_simples>' ) ;
     fsBuffer.Add(PadRight('CPF/CNPJ consumidor: '+Consumidor.Documento,Colunas)) ;
@@ -681,6 +683,8 @@ var
   S: String;
 begin
   ZeraBuffer;
+  fsBuffer.Add('</linha_simples>');
+
   if DescontoAcrescimo <> 0 then
   begin
     if DescontoAcrescimo < 0 then
@@ -848,9 +852,11 @@ end ;
 procedure TACBrECFVirtualBufferClass.AbreCupom ;
 begin
   ZeraBuffer ;
-  AddBufferCabecalho_Item ;
-
   inherited ;
+
+  AddBufferCabecalho_Item;
+  GravaBuffer;
+  ImprimeBuffer;
 end;
 
 procedure TACBrECFVirtualBufferClass.VendeItemVirtual(

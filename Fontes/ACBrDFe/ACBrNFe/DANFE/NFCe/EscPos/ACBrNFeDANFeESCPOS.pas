@@ -247,7 +247,7 @@ begin
         sVlrProduto  :=       FormatFloatBr( Prod.vProd, '###,###,##0.00');
         sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
         sVlrUnitario := FormatValorUnitario( Prod.VUnCom );
-        sQuantidade  :=    FormatQuantidade( Prod.QCom );
+        sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
 
         if ImprimeEmUmaLinha then
         begin

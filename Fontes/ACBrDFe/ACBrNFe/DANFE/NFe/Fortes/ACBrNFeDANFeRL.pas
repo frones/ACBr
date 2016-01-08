@@ -125,17 +125,11 @@ type
     function BuscaDireita(Busca, Text: String): Integer;
     procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
     function QuebraLinha: String;
-    function ManterNomeImpresso(sXNome, sXFant: String): String;
-    function FormatQuantidade(dValor: Double): String;
-    function FormatValorUnitario(dValor: Double): String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
     function TrataDocumento(sCNPJCPF: String): String;
-    Function ManterCodigo( sCodigo,sEan  : String ) : String;
-
   private
     { Private declarations }
   protected
-    FACBrNFe: TACBrNFe;
     FNFe: TNFe;
     FLogo: String;
     FMarcaDagua: String;
@@ -803,39 +797,6 @@ begin
     Result := ' - ';
 end;
 
-
-Function TfrlDANFeRL.ManterNomeImpresso(sXNome, sXFant: String): String;
-begin
-  if ( fImprimeNomeFantasia ) and ( sXFant <> '' ) then
-    Result := sXFant
-  else
-    Result := sXNome;
-end;
-
-
-
-Function TfrlDANFeRL.FormatQuantidade( dValor : Double ) : String;
-begin
-  case fFormato of
-    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
-    1 : Result := FormatFloatBr( dValor , fMask_qCom);
-    else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [FCasasDecimaisqCom, 0]));
-  end;
-end;
-
-
-Function TfrlDANFeRL.FormatValorUnitario( dValor : Double ) : String;
-begin
-  case fFormato of
-    0 : Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
-    1 : Result := FormatFloatBr( dValor , fMask_vUnCom);
-    else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat, [FCasasDecimaisvUnCom, 0]));
-  end;
-end;
-
-
 Function TfrlDANFeRL.ManterDesPro( dvDesc ,dvProd : Double) : Double;
 begin
   if ( fImprimirDescPorc ) then
@@ -863,16 +824,6 @@ begin
     Result := Result + FormatarCNPJouCPF( sCNPJCPF );
   end;
 end;
-
-
-Function TfrlDANFeRL.ManterCodigo( sCodigo,sEan  : String ) : String;
-begin
-  if ( fExibirEAN ) and NaoEstaVazio( sEan ) then
-    result := sEan
-  else
-    result := sCODIGO;
-end;
-
 
 end.
 

@@ -381,7 +381,7 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('ITEM').AsString         := FormatFloat('000', nItem );
-          cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo( CProd,cEAN);
+          cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo(cEAN, CProd);
           cdsItens.FieldByName('DESCRICAO').AsString    := XProd;
           cdsItens.FieldByName('INFADIPROD').AsString   := infAdProd;
           cdsItens.FieldByName('NCM').AsString          := NCM;

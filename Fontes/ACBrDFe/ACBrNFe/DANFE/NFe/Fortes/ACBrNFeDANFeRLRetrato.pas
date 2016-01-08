@@ -1779,7 +1779,7 @@ begin
     with FNFe.Det.Items[nItem] do
     begin
       cdsItens.Append;
-      cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo( Prod.CProd,Prod.cEAN);
+      cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo(Prod.cEAN, Prod.CProd);
       cdsItens.FieldByName('EAN').AsString          := Prod.cEAN;
       cdsItens.FieldByName('DESCRICAO').AsString    := ManterXpod( Prod.XProd , nItem );
       cdsItens.FieldByName('NCM').AsString          := Prod.NCM;

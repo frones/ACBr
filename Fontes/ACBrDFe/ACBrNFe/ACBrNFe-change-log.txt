@@ -47,12 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2016
+-- Danfes Fortes -- 
+[*] Refatoriação para utilizar os metodos da classe pai do DANFE
+
 07/01/2016
 -- frlDANFeRL ACBrNFeDANFeRLPaisagem ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLSimplificado -- 
 [*] Tratamento para imprimir codigo ou Ean conforme configuração 
-	da Propriedade ExibeEan
+    da Propriedade ExibeEan
     por: Henrique Leonardo
-
 
 06/01/2016
 -- pcnNFeW -- 

@@ -123,7 +123,7 @@ implementation
 uses
  StrUtils, DateUtils,
  ACBrUtil, ACBrValidador, ACBrDFeUtil,
- pcnNFe, pcnConversaoNFe;
+ pcnNFe, pcnConversaoNFe, ACBrNFeDANFeRLClass;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -199,7 +199,7 @@ begin
     rlmEmitente.Lines.Clear;
     with FNFe.Emit do
      begin
-      rlmEmitente.Lines.Add(ManterNomeImpresso( XNome , XFant ));
+      rlmEmitente.Lines.Add(TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant ));
       with EnderEmit do
        begin
         rlmEmitente.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro) +
@@ -381,15 +381,15 @@ begin
         begin
           cdsItens.Append;
           cdsItens.FieldByName('ITEM').AsString         := FormatFloat('000', nItem );
-          cdsItens.FieldByName('CODIGO').AsString       := ManterCodigo( CProd,cEAN);
+          cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo( CProd,cEAN);
           cdsItens.FieldByName('DESCRICAO').AsString    := XProd;
           cdsItens.FieldByName('INFADIPROD').AsString   := infAdProd;
           cdsItens.FieldByName('NCM').AsString          := NCM;
           cdsItens.FieldByName('CST').AsString          := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
           cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
           cdsItens.FieldByName('CFOP').AsString         := CFOP;
-          cdsItens.FieldByName('QTDE').AsString         := FormatQuantidade( Prod.qCom);
-          cdsItens.FieldByName('VALOR').AsString        := FormatValorUnitario(  Prod.vUnCom);
+          cdsItens.FieldByName('QTDE').AsString         := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
+          cdsItens.FieldByName('VALOR').AsString        := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
           cdsItens.FieldByName('UNIDADE').AsString      := UCom;
           cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', vProd);
           cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));

@@ -620,7 +620,7 @@ implementation
 
 uses DateUtils,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador, ACBrUtil,
-  pcnNFe, pcnConversaoNFe;
+  pcnNFe, pcnConversaoNFe, ACBrNFe;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -1108,7 +1108,7 @@ begin
                         end;
       teContingencia,
       teFSDA          : begin
-                          sChaveContingencia                  := FACBrNFe.GerarChaveContingencia(FNFe);
+                          sChaveContingencia                  := TACBrNFe(TACBrNFeDANFeRL(Owner).ACBrNFe).GerarChaveContingencia(FNFe);
                           rlbCodigoBarrasFS.Caption           := sChaveContingencia;
                           rlbCodigoBarrasFS.Visible           := True;
 
@@ -1158,7 +1158,7 @@ begin
     rllInscricaoEstadual.Caption  := IE;
     rllInscrEstSubst.Caption      := IEST;
     rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF);
-    rlmEmitente.Lines.Text        := ManterNomeImpresso( XNome , XFant );
+    rlmEmitente.Lines.Text        := TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant );
     with EnderEmit do
     begin
       rlmEndereco.Lines.Clear;
@@ -1779,7 +1779,7 @@ begin
     with FNFe.Det.Items[nItem] do
     begin
       cdsItens.Append;
-      cdsItens.FieldByName('CODIGO').AsString       := ManterCodigo( Prod.CProd,Prod.cEAN);
+      cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo( Prod.CProd,Prod.cEAN);
       cdsItens.FieldByName('EAN').AsString          := Prod.cEAN;
       cdsItens.FieldByName('DESCRICAO').AsString    := ManterXpod( Prod.XProd , nItem );
       cdsItens.FieldByName('NCM').AsString          := Prod.NCM;
@@ -1787,8 +1787,8 @@ begin
       cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
       cdsItens.FieldByName('CFOP').AsString         := Prod.CFOP;
       cdsItens.FieldByName('UNIDADE').AsString      := Prod.UCom;
-      cdsItens.FieldByName('QTDE').AsString         := FormatQuantidade( Prod.qCom);
-      cdsItens.FieldByName('VALOR').AsString        := FormatValorUnitario(  Prod.vUnCom);
+      cdsItens.FieldByName('QTDE').AsString         := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
+      cdsItens.FieldByName('VALOR').AsString        := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
       cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', Prod.vProd);
       cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
       cdsItens.FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),'###,###,##0.00');

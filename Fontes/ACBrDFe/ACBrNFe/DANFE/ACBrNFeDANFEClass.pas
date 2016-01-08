@@ -139,10 +139,6 @@ type
     FPosCanhoto: TPosRecibo;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-  
-    function FormatQuantidade(dValor: Double): String;
-    function FormatValorUnitario(dValor: Double): String;
-    function ManterCodigo(scEAN, scProd: String): String;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -155,7 +151,11 @@ type
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); virtual;
     procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); virtual;
     procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); virtual;
-    function ManterNomeImpresso(sXNome, sXFant: String): String; virtual;
+
+    function ManterCodigo(scEAN, scProd: String): String;
+    function ManterNomeImpresso(sXNome, sXFant: String): String;
+    function FormatQuantidade(dValor: Double): String;
+    function FormatValorUnitario(dValor: Double): String;
   published
     property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
     property Logo: String                            read FLogo                           write FLogo;

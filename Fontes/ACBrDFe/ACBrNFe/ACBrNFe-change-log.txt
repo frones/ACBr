@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2016
+-- frlDANFeRL ACBrNFeDANFeRLPaisagem ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLSimplificado -- 
+[*] Tratamento para imprimir codigo ou Ean conforme configuração 
+	da Propriedade ExibeEan
+    por: Henrique Leonardo
+
+
 06/01/2016
 -- pcnNFeW -- 
 [-] Acerto para gerar a tag de totalização do FCP mesmo quando zerada, não

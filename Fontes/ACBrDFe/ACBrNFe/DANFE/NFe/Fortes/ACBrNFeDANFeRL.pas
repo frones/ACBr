@@ -130,6 +130,7 @@ type
     function FormatValorUnitario(dValor: Double): String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
     function TrataDocumento(sCNPJCPF: String): String;
+    Function ManterCodigo( sCodigo,sEan  : String ) : String;
 
   private
     { Private declarations }
@@ -861,6 +862,15 @@ begin
 
     Result := Result + FormatarCNPJouCPF( sCNPJCPF );
   end;
+end;
+
+
+Function TfrlDANFeRL.ManterCodigo( sCodigo,sEan  : String ) : String;
+begin
+  if ( fExibirEAN ) and NaoEstaVazio( sEan ) then
+    result := sEan
+  else
+    result := sCODIGO;
 end;
 
 

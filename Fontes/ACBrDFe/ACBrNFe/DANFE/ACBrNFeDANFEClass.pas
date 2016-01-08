@@ -154,7 +154,7 @@ type
 
     function ManterCodigo(scEAN, scProd: String): String;
     function ManterNomeImpresso(sXNome, sXFant: String): String;
-    function FormatQuantidade(dValor: Double): String;
+    function FormatQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String;
     function FormatValorUnitario(dValor: Double): String;
   published
     property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
@@ -413,16 +413,15 @@ begin
   ErroAbstract('ImprimirPDF');
 end;
 
-function TACBrNFeDANFEClass.FormatQuantidade( dValor : Double ) : String;
+function TACBrNFeDANFEClass.FormatQuantidade(dValor: Double; dForcarDecimais: Boolean) : String;
 begin
-  // formatar conforme configurado somente quando houver decimais
-  if Frac( dValor) > 0 then
+  if (Frac(dValor) > 0) or (dForcarDecimais) then
   begin
     case CasasDecimais.Formato of
       tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
       tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
-      else
-        Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+    else
+      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
     end
   end
   else

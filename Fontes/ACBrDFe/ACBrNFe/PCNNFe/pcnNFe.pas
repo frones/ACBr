@@ -243,7 +243,6 @@ type
     FidDest: TpcnDestinoOperacao;
     FcMunFG: Integer;
     FNFref: TNFrefCollection;
-    FrefNFP: TRefNFP;    
     FtpImp: TpcnTipoImpressao;
     FtpEmis: TpcnTipoEmissao;
     FcDV: Integer;
@@ -277,7 +276,6 @@ type
     property idDest: TpcnDestinoOperacao read FidDest write FidDest;
     property cMunFG: Integer read FcMunFG write FcMunFG;
     property NFref: TNFrefCollection read FNFref write SetNFref;
-    property refNFP: TRefNFP read FrefNFP write FrefNFP;
     property tpImp: TpcnTipoImpressao read FtpImp write FtpImp default tiPaisagem;
     property tpEmis: TpcnTipoEmissao read FtpEmis write FtpEmis default teNormal;
     property cDV: Integer read FcDV write FcDV;
@@ -2050,7 +2048,6 @@ begin
     idDest := TIde(Source).idDest;
     cMunFG := TIde(Source).cMunFG;
     NFref.Assign(TIde(Source).NFref);
-    refNFP.Assign(TIde(Source).refNFP);
     tpImp := TIde(Source).tpImp;
     tpEmis := TIde(Source).tpEmis;
     cDV := TIde(Source).cDV;
@@ -2071,13 +2068,11 @@ constructor TIde.Create(AOwner: TNFe);
 begin
   inherited Create;
   FNFref := TNFrefCollection.Create(Self);
-  FrefNFP := TRefNFP.Create;
 end;
 
 destructor TIde.Destroy;
 begin
   FNFref.Free;
-	FrefNFP.Free;
   inherited;
 end;
 

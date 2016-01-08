@@ -427,7 +427,7 @@ begin
   // Gera TAGs se NÃO for uma NFe referência
   for i := 0 to nfe.ide.NFref.Count - 1 do
   begin
-    Gerador.wGrupo('NFref', 'B12a');
+    Gerador.wGrupo('NFref', IIf(FNFe.infNFe.Versao >= 3.10, 'BA', 'B12a'));
     if nfe.ide.NFref[i].refNFe      <> '' then (**)GerarIdeNFrerefNFe(i);
     if nfe.Ide.NFref[i].RefNF.nNF    >  0 then (**)GerarIdeNFrefRefNF(i);
     if nfe.ide.NFref[i].RefNFP.nNF   >  0 then (**)GerarRefNFP(i);
@@ -448,7 +448,7 @@ end;
 
 procedure TNFeW.GerarIdeNFrefRefNF(const i: Integer);
 begin
-  Gerador.wGrupo('refNF', 'B14');
+  Gerador.wGrupo('refNF', IIf(nfe.infNFe.Versao > 3.10, 'BA03', 'B14'));
   Gerador.wCampo(tcInt, 'B15', 'cUF   ', 02, 02, 1, nfe.Ide.NFref[i].RefNF.cUF, DSC_CUF);
   if not ValidarCodigoUF(nfe.Ide.NFref[i].RefNF.cUF) then Gerador.wAlerta('B15', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcEsp, 'B16', 'AAMM  ', 04, 04, 1, nfe.Ide.NFref[i].RefNF.AAMM, DSC_AAMM);
@@ -463,7 +463,7 @@ end;
 
 procedure TNFeW.GerarRefNFP(const i: Integer);
 begin
-  Gerador.wGrupo('refNFP', 'B20a');
+  Gerador.wGrupo('refNFP', IIf(nfe.infNFe.Versao >= 3.10, 'BA10', 'B20a'));
   Gerador.wCampo(tcInt, 'B20b', 'cUF   ', 02, 02, 1, nfe.Ide.NFref[i].RefNFP.cUF, DSC_CUF);
   if not ValidarCodigoUF(nfe.Ide.NFref[i].RefNFP.cUF) then Gerador.wAlerta('B20b', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcEsp, 'B20c', 'AAMM  ', 04, 04, 1, nfe.Ide.NFref[i].RefNFP.AAMM, DSC_AAMM);
@@ -485,7 +485,7 @@ end;
 
 procedure TNFeW.GerarRefECF(const i: Integer);
 begin
-  Gerador.wGrupo('refECF', 'B20j');
+  Gerador.wGrupo('refECF', IIf(nfe.infNFe.Versao >= 3.10, 'BA20', 'B20j'));
   Gerador.wCampo(tcStr, 'B20k', 'mod   ', 02, 02, 1, ECFModRefToStr( nfe.Ide.NFref[i].RefECF.modelo ) , DSC_MOD);
   Gerador.wCampo(tcInt, 'B20l', 'nECF  ', 03, 03, 1, nfe.Ide.NFref[i].RefECF.nECF, DSC_NECF);
   Gerador.wCampo(tcInt, 'B20m', 'nCOO  ', 06, 06, 1, nfe.Ide.NFref[i].RefECF.nCOO, DSC_NCOO);
@@ -726,12 +726,12 @@ var
 begin
   for i := 0 to NFe.autXML.Count - 1 do
   begin
-    Gerador.wGrupo('autXML', 'G50');
+    Gerador.wGrupo('autXML', 'GA');
     Gerador.wCampoCNPJCPF('G51', 'G52', NFe.autXML[i].CNPJCPF);
     Gerador.wGrupo('/autXML');
   end;
   if NFe.autXML.Count > 10 then
-    Gerador.wAlerta('G50', 'autXML', DSC_LACR, ERR_MSG_MAIOR_MAXIMO + '10');
+    Gerador.wAlerta('GA', 'autXML', DSC_LACR, ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 procedure TNFeW.GerarDet;
@@ -769,7 +769,7 @@ begin
     Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08,   IIf(NFe.infNFe.Versao >= 2,1,0), nfe.Det[i].Prod.NCM, DSC_NCM);
   {**}GerarDetProdNVE(i);
-  Gerador.wCampo(tcStr, 'I05w', 'CEST    ', 07, 07, 0, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);
+  Gerador.wCampo(tcStr, 'I05c', 'CEST    ', 07, 07, 0, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);
   Gerador.wCampo(tcStr, 'I06 ', 'EXTIPI  ', 02, 03, 0, nfe.Det[i].Prod.EXTIPI, DSC_EXTIPI);
   //Gerador.wCampo(tcInt, 'I07 ', 'genero  ', 02, 02, 0, nfe.Det[i].Prod.genero, DSC_GENERO);
   Gerador.wCampo(tcEsp, 'I08 ', 'CFOP    ', 04, 04, 1, OnlyNumber(nfe.Det[i].Prod.CFOP), DSC_CFOP);
@@ -843,7 +843,7 @@ begin
 
     Gerador.wCampo(tcStr, 'I24', 'cExportador', 01, 60, 1, nfe.Det[i].Prod.DI[j].cExportador, DSC_CEXPORTADOR);
     (**)GerarDetProdDIadi(i, j);
-    Gerador.wGrupo('/DI');
+    Gerador.wGrupo('/DI', 'I01');
   end;
   if nfe.Det[i].Prod.DI.Count > 100 then
     Gerador.wAlerta('I18', 'DI', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '100');
@@ -868,7 +868,7 @@ begin
     if trim(nfe.Det[i].Prod.DI[j].adi[k].nDraw) <> '' then
       if not ValidaDrawback(nfe.Det[i].Prod.DI[j].adi[k].nDraw) then
         Gerador.wAlerta('I29a', 'nDraw', DSC_NDRAW, ERR_MSG_INVALIDO);
-    Gerador.wGrupo('/adi');
+    Gerador.wGrupo('/adi', 'I18');
   end;
   if nfe.Det[i].Prod.DI[j].adi.Count > 100 then
     Gerador.wAlerta('I25', 'adi', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '100');
@@ -903,7 +903,7 @@ begin
       Gerador.wGrupo('/exportInd');
     end;
 
-    Gerador.wGrupo('/detExport');
+    Gerador.wGrupo('/detExport', 'I01');
   end;
   if nfe.Det[i].Prod.detExport.Count > 500 then
     Gerador.wAlerta('I50', 'detExport', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
@@ -1496,7 +1496,7 @@ begin
 
     if (nfe.Det[i].Imposto.IPI.qUnid + nfe.Det[i].Imposto.IPI.vUnid > 0) then
     begin
-      Gerador.wGrupo('IPITrib', 'O07');
+      Gerador.wGrupo('IPITrib', 'O11');
       Gerador.wCampo(tcStr, 'O09', 'CST     ', 02, 02, 1, CSTIPITOStr(nfe.Det[i].Imposto.IPI.CST), DSC_CST);
       Gerador.wCampo(tcDe4, 'O11', 'qUnid   ', 01, 16, 1, nfe.Det[i].Imposto.IPI.qUnid, DSC_QUNID);
       Gerador.wCampo(tcDe4, 'O12', 'vUnid   ', 01, 15, 1, nfe.Det[i].Imposto.IPI.vUnid, DSC_VUNID);
@@ -1505,7 +1505,7 @@ begin
     end
     else
     begin
-      Gerador.wGrupo('IPITrib', 'O07');
+      Gerador.wGrupo('IPITrib', 'O10');
       Gerador.wCampo(tcStr, 'O09', 'CST     ', 02, 02, 1, CSTIPITOStr(nfe.Det[i].Imposto.IPI.CST), DSC_CST);
       Gerador.wCampo(tcDe2, 'O10', 'vBC     ', 01, 15, 1, nfe.Det[i].Imposto.IPI.vBC, DSC_VBC);
       Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'O13', 'pIPI    ', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.IPI.pIPI, DSC_PIPI);

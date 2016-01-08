@@ -94,6 +94,7 @@ type
     procedure gtNivel(ID: string);
     procedure gtCampo(const Tag, ConteudoProcessado: string);
     procedure gtAjustarRegistros(const ID: string);
+    procedure gtEliminarRegistros;
   published
     property ArquivoFormatoXML: AnsiString read FArquivoFormatoXML write FArquivoFormatoXML;
     property ArquivoFormatoTXT: AnsiString read FArquivoFormatoTXT write FArquivoFormatoTXT;
@@ -733,6 +734,8 @@ begin
       FTagNivel := StringReplace(FTagNivel, '<' + Copy(TAG, 2, MaxInt) + '>', '', []);
   end;
   //
+  if TAG[1] = '/' then
+    gtEliminarRegistros;
   if (Identar) and (TAG[1] = '/') then
     Dec(FOpcoes.FNivelIdentacao);
   if SubStrEmSubStr(TAG, FIgnorarTagIdentacao) then
@@ -1063,7 +1066,7 @@ end;
 
 procedure TGerador.gtAjustarRegistros(const ID: string);
 var
-  i, j, k: integer;
+  i, j: integer;
   s, idLocal: string;
   ListArquivo: TstringList;
   ListCorrigido: TstringList;
@@ -1075,17 +1078,9 @@ begin
   ListArquivo := TStringList.Create;
   ListCorrigido := TStringList.Create;
   // Elimina registros não utilizados
+  gtEliminarRegistros;
   ListArquivo.Text := FArquivoFormatoTXT;
-  for i := 0 to ListArquivo.count - 1 do
-  begin
-    k := 0;
-    for j := 0 to FLayoutArquivoTXT.count - 1 do
-      if listArquivo[i] = FLayoutArquivoTXT[j] then
-        if pos('¨', listArquivo[i]) > 0 then
-          k := 1;
-    if k = 0 then
-      ListCorrigido.add(ListArquivo[i]);
-  end;
+  ListCorrigido.Text := FArquivoFormatoTXT;
   // Insere dados da chave da Nfe
   for i := 0 to ListCorrigido.count - 1 do
     if pos('^ID^', ListCorrigido[i]) > 1 then
@@ -1140,6 +1135,35 @@ begin
      Self.wGrupo('/' + Self.Prefixo + copy(TAG, 2, length(TAG)), ID, Identar)
   else
      Self.wGrupo(Self.Prefixo + TAG, ID, Identar);
+end;
+
+procedure TGerador.gtEliminarRegistros;
+var
+  i, j, k: integer;
+  ListArquivo: TstringList;
+  ListCorrigido: TstringList;
+begin
+  ListArquivo := TStringList.Create;
+  ListCorrigido := TStringList.Create;
+  try
+    // Elimina registros não utilizados
+    ListArquivo.Text := FArquivoFormatoTXT;
+    for i := 0 to ListArquivo.count - 1 do
+    begin
+      k := 0;
+      for j := 0 to FLayoutArquivoTXT.count - 1 do
+        if listArquivo[i] = FLayoutArquivoTXT[j] then
+          if pos('¨', listArquivo[i]) > 0 then
+            k := 1;
+      if k = 0 then
+        ListCorrigido.add(ListArquivo[i]);
+    end;
+
+    FArquivoFormatoTXT := ListCorrigido.Text;
+  finally
+    ListArquivo.Free;
+    ListCorrigido.Free;
+  end;
 end;
 
 end.

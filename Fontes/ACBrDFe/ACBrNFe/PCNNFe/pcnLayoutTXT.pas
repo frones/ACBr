@@ -268,14 +268,16 @@ begin
   end
   else if versao = '3.10' then
   begin
-    LoadLayout('<B>       NOTA FISCAL|1');
+    LoadLayout('<B01>       NOTA FISCAL|1');
     LoadLayout('<B01>     A|3.10|^id^');
     LoadLayout('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dhSaiEnt¨|tpNF¨|idDest¨|cMunFG¨|tpImp¨|tpEmis¨|CDV¨|tpAmb¨|finNFe¨|indFinal¨|indPres¨|procEmi¨|verProc¨|dhCont¨|xJust¨');
+    LoadLayout('<BA>     BA|');
     LoadLayout('<BA>   BA02|refNFe¨');
+    LoadLayout('<BA>   BA19|refCTe¨');
     LoadLayout('<BA03> BA03|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨');
-    LoadLayout('<BA10> BA10|cUF¨|AAMM¨|IE¨|Mod¨|serie¨|nNF¨|refCTe¨');
-    LoadLayout('<BA13> BA13|CNPJ¨');
-    LoadLayout('<BA14> BA14|CPF¨');
+    LoadLayout('<BA10> BA10|cUF¨|AAMM¨|IE¨|Mod¨|serie¨|nNF¨');
+    LoadLayout('<BA10> BA13|CNPJ¨');
+    LoadLayout('<BA10> BA14|CPF¨');
     LoadLayout('<BA20> BA20|mod¨|nECF¨|nCOO¨');
     LoadLayout('<C01>     C|XNome¨|XFant¨|IE¨|IEST¨|IM¨|CNAE¨|CRT¨'); 
     LoadLayout('<C01>   C02|CNPJ¨');
@@ -293,11 +295,13 @@ begin
     LoadLayout('<G01>     G|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨');
     LoadLayout('<G01>   G02|CNPJ¨');
     LoadLayout('<G01>  G02a|CPF¨');
-    LoadLayout('<G01>  GA02|CNPJ¨');
-    LoadLayout('<G01>  GA03|CPF¨');
+    LoadLayout('<GA>     GA|');
+    LoadLayout('<GA>   GA02|CNPJ¨');
+    LoadLayout('<GA>   GA03|CPF¨');
     LoadLayout('<H01>     H|NItem¨|InfAdProd¨'); 
-    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|NVE¨|CEST¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨');
-    LoadLayout('<I05A> I05a|NVE¨');
+    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨');
+    LoadLayout('<I01>  I05a|NVE¨');
+    LoadLayout('<I01>  I05c|CEST¨');
     LoadLayout('<I18>   I18|NDI¨|DDI¨|XLocDesemb¨|UFDesemb¨|DDesemb¨|tpViaTransp¨|vAFRMM¨|tpIntermedio¨|CNPJ¨|UFTerceiro¨|CExportador¨');
     LoadLayout('<I25>   I25|NAdicao¨|NSeqAdic¨|CFabricante¨|VDescDI¨|nDraw¨');
     LoadLayout('<I50>   I50|nDraw¨');
@@ -329,9 +333,10 @@ begin
     LoadLayout('<N10h> N10h|Orig¨|CSOSN¨|modBC¨|vBC¨|pRedBC¨|pICMS¨|vICMS¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨|pCredSN¨|vCredICMSSN¨');
     LoadLayout('<NA>     NA|vBCUFDest¨|pFCPUFDest¨|pICMSUFDest¨|pICMSInter¨|pICMSInterPart¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨');
     LoadLayout('<O01>     O|ClEnq¨|CNPJProd¨|CSelo¨|QSelo¨|CEnq¨');
-    LoadLayout('<O07>   O07|CST¨|VIPI¨');
-    LoadLayout('<O07>   O10|VBC¨|PIPI¨|VIPI¨');
-    LoadLayout('<O07>   O11|QUnid¨|VUnid¨|VIPI¨');
+    LoadLayout('<O10>   O07|CST¨|VIPI¨');
+    LoadLayout('<O10>   O10|VBC¨|PIPI¨|VIPI¨');
+    LoadLayout('<O11>   O07|CST¨|VIPI¨');
+    LoadLayout('<O11>   O11|QUnid¨|VUnid¨|VIPI¨');
     LoadLayout('<O08>   O08|CST¨');
     LoadLayout('<P01>     P|VBC¨|VDespAdu¨|VII¨|VIOF¨');
     LoadLayout('<Q01>     Q'); //ok

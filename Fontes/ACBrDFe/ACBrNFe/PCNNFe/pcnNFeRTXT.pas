@@ -280,7 +280,7 @@ begin
   end;
 
   (* Grupo da TAG <ide><NFref><refNFe> ****************************************)
-  if (ID = 'B13') or (ID = 'BA') or (ID = 'BA02') then
+  if (ID = 'B13') or (ID = 'BA02') then
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
@@ -309,8 +309,6 @@ begin
     (*B20f*)NFe.Ide.NFref[i].refNFP.modelo := LerCampo(tcStr, 'mod');
     (*B20g*)NFe.ide.NFref[i].refNFP.serie := LerCampo(tcInt, 'serie');
     (*B20h*)NFe.Ide.NFref[i].refNFP.nNF := LerCampo(tcInt, 'nNF');
-    if (NFe.infNFe.Versao >= 3.10) then
-        NFe.ide.NFref[i].refCTe := LerCampo(tcEsp, 'refCTe'); 
   end;
 
   if ((ID = 'B20D') or (ID = 'B13') or (ID = 'BA13')) and  (NFe.ide.NFref.Count > 0) then
@@ -326,7 +324,7 @@ begin
    end;
 
   (* Grupo da TAG <ide><NFref><refCTe> ****************************************)
-  if ID = 'B20I' then
+  if (ID = 'B20I') or (ID = 'BA19') then
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
@@ -485,7 +483,7 @@ begin
     (*I04*)NFe.Det[i].Prod.xProd := LerCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM := LerCampo(tcStr, 'NCM');
 //           NFe.Det[i].Prod.NVE := LerCampo(tcStr, 'NVE');
-           NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
+//           NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
     (*I06*)NFe.Det[i].Prod.EXTIPI := LerCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := LerCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP := LerCampo(tcEsp, 'CFOP');
@@ -507,7 +505,7 @@ begin
    (*128p*)NFe.Det[i].Prod.nFCI := LerCampo(tcStr, 'nFCI');
   end;
 
-  if ID = 'I05a' then
+  if ID = 'I05A' then
   begin
     i := NFe.Det.Count - 1;
     NFe.Det[i].Prod.NVE.Add;
@@ -515,6 +513,11 @@ begin
     (*I05a*)NFe.Det[i].Prod.NVE[j].NVE := LerCampo(tcStr, 'NVE');
   end;
 
+  if ID = 'I05C' then
+  begin
+    i := NFe.Det.Count - 1;
+    (*I05c*)NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
+  end;
 
   if ID = 'I18' then (* Grupo da TAG <det><prod><DI> **************************)
   begin
@@ -529,7 +532,7 @@ begin
            NFe.Det[i].Prod.DI[j].tpViaTransp := StrToTipoViaTransp(ok, LerCampo(tcStr, 'tpViaTransp'));
            if (NFe.infNFe.Versao >= 3.10) then
            begin
-             NFe.Det[i].Prod.DI[j].vAFRMM := LerCampo(tcStr, 'vAFRMM');
+             NFe.Det[i].Prod.DI[j].vAFRMM := LerCampo(tcDe2, 'vAFRMM');
              NFe.Det[i].Prod.DI[j].tpIntermedio := StrToTipoIntermedio(ok, LerCampo(tcStr, 'tpIntermedio'));
              NFe.Det[i].Prod.DI[j].CNPJ := LerCampo(tcStr, 'CNPJ');
              NFe.Det[i].Prod.DI[j].UFTerceiro := LerCampo(tcStr, 'UFTerceiro');
@@ -706,10 +709,10 @@ begin
     (*N30*)NFe.Det[i].Imposto.ICMS.vCredICMSSN := LerCampo(tcDe2, 'vCredICMSSN');
     (*N31*)NFe.Det[i].Imposto.ICMS.vBCSTDest := LerCampo(tcDe2, 'vBCSTDest');
     (*N32*)NFe.Det[i].Imposto.ICMS.vICMSDeson := LerCampo(tcDe2, 'vICMSDeson');
-{           NFe.Det[i].Imposto.ICMS.motDesICMS := StrToModBC(ok, LerCampo(tcStr, 'motDesICMS'));
+           NFe.Det[i].Imposto.ICMS.motDesICMS := StrTomotDesICMS(ok, LerCampo(tcStr, 'motDesICMS'));
            NFe.Det[i].Imposto.ICMS.pDif := LerCampo(tcDe4, 'pDif');
            NFe.Det[i].Imposto.ICMS.vICMSDif := LerCampo(tcDe2, 'vICMSDif');
-           NFe.Det[i].Imposto.ICMS.vICMSOp := LerCampo(tcDe2, 'vICMSOp');}
+           NFe.Det[i].Imposto.ICMS.vICMSOp := LerCampo(tcDe2, 'vICMSOp');
   end;
 
   if (ID = 'NA') then

@@ -1,7 +1,6 @@
 package ACBr_SPED;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -24,7 +23,6 @@ package ACBr_SPED;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 

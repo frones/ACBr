@@ -116,6 +116,7 @@ type
     Label19: TLabel;
     Label20: TLabel;
     ACBr_BlocoX_dpk: TCheckBox;
+    ACBR_DeSTDA_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

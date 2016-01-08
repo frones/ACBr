@@ -1,0 +1,45 @@
+package ACBR_DeSTDA;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DESCRIPTION 'ACBr - DeSTDA - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  ACBr_TXTComum;
+
+contains
+  ACBrDeSTDA in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDA.pas',
+  ACBrDeSTDABlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABlocos.pas',
+  ACBrDeSTDABloco_G_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_G_Class.pas',
+  ACBrDeSTDABloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_0_Class.pas',
+  ACBrDeSTDABloco_9_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_9_Class.pas',
+  ACBrDeSTDA4715 in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDA4715.pas',
+  ACBrDeSTDABloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_0.pas',
+  ACBrDeSTDABloco_9 in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_9.pas',
+  ACBrDeSTDABloco_G in '..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_G.pas';
+
+end.

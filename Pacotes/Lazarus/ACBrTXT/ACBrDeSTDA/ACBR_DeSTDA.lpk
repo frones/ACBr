@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBR_DeSTDA"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDeSTDA\$(TargetCPU)-$(TargetOS)\"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - DeSTDA - (http://www.projetoacbr.com.br/)
+Declaração de Substituição Tributária, Diferencial de Alíquota e Antecipação"/>
+    <License Value="LGPL"/>
+    <Version Major="1"/>
+    <Files Count="9">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDA.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrDeSTDA"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDA4715.pas"/>
+        <UnitName Value="ACBrDeSTDA4715"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_0.pas"/>
+        <UnitName Value="ACBrDeSTDABloco_0"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_0_Class.pas"/>
+        <UnitName Value="ACBrDeSTDABloco_0_Class"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_9.pas"/>
+        <UnitName Value="ACBrDeSTDABloco_9"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_9_Class.pas"/>
+        <UnitName Value="ACBrDeSTDABloco_9_Class"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_G.pas"/>
+        <UnitName Value="ACBrDeSTDABloco_G"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABloco_G_Class.pas"/>
+        <UnitName Value="ACBrDeSTDABloco_G_Class"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA\ACBrDeSTDABlocos.pas"/>
+        <UnitName Value="ACBrDeSTDABlocos"/>
+      </Item9>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

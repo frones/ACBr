@@ -1,8 +1,8 @@
 object framePacotes: TframePacotes
   Left = 0
   Top = 0
-  Width = 554
-  Height = 758
+  Width = 582
+  Height = 787
   HorzScrollBar.Range = 535
   VertScrollBar.ButtonSize = 15
   VertScrollBar.Range = 800
@@ -56,7 +56,7 @@ object framePacotes: TframePacotes
   end
   object Label4: TLabel
     Left = 276
-    Top = 307
+    Top = 325
     Width = 168
     Height = 13
     Margins.Left = 5
@@ -70,7 +70,7 @@ object framePacotes: TframePacotes
   end
   object Label8: TLabel
     Left = 276
-    Top = 288
+    Top = 306
     Width = 114
     Height = 13
     Margins.Left = 5
@@ -84,7 +84,7 @@ object framePacotes: TframePacotes
   end
   object Label9: TLabel
     Left = 3
-    Top = 496
+    Top = 514
     Width = 200
     Height = 13
     Caption = 'Gerador de Relat'#243'rios (FastReport)'
@@ -174,7 +174,7 @@ object framePacotes: TframePacotes
   end
   object Label5: TLabel
     Left = 276
-    Top = 513
+    Top = 531
     Width = 83
     Height = 13
     Margins.Left = 5
@@ -188,7 +188,7 @@ object framePacotes: TframePacotes
   end
   object Label6: TLabel
     Left = 276
-    Top = 530
+    Top = 548
     Width = 83
     Height = 13
     Margins.Left = 5
@@ -202,7 +202,7 @@ object framePacotes: TframePacotes
   end
   object Label7: TLabel
     Left = 276
-    Top = 547
+    Top = 565
     Width = 89
     Height = 13
     Margins.Left = 5
@@ -216,7 +216,7 @@ object framePacotes: TframePacotes
   end
   object Label10: TLabel
     Left = 276
-    Top = 564
+    Top = 582
     Width = 94
     Height = 13
     Margins.Left = 5
@@ -230,7 +230,7 @@ object framePacotes: TframePacotes
   end
   object Label11: TLabel
     Left = 276
-    Top = 581
+    Top = 599
     Width = 91
     Height = 13
     Margins.Left = 5
@@ -244,7 +244,7 @@ object framePacotes: TframePacotes
   end
   object Label12: TLabel
     Left = 276
-    Top = 598
+    Top = 616
     Width = 91
     Height = 13
     Margins.Left = 5
@@ -259,7 +259,7 @@ object framePacotes: TframePacotes
   end
   object Label13: TLabel
     Left = 276
-    Top = 630
+    Top = 648
     Width = 93
     Height = 13
     Margins.Left = 5
@@ -273,7 +273,7 @@ object framePacotes: TframePacotes
   end
   object Label14: TLabel
     Left = 276
-    Top = 647
+    Top = 665
     Width = 93
     Height = 13
     Margins.Left = 5
@@ -287,7 +287,7 @@ object framePacotes: TframePacotes
   end
   object Label15: TLabel
     Left = 276
-    Top = 664
+    Top = 682
     Width = 99
     Height = 13
     Margins.Left = 5
@@ -301,7 +301,7 @@ object framePacotes: TframePacotes
   end
   object Label16: TLabel
     Left = 276
-    Top = 681
+    Top = 699
     Width = 104
     Height = 13
     Margins.Left = 5
@@ -315,7 +315,7 @@ object framePacotes: TframePacotes
   end
   object Label17: TLabel
     Left = 276
-    Top = 698
+    Top = 716
     Width = 101
     Height = 13
     Margins.Left = 5
@@ -329,7 +329,7 @@ object framePacotes: TframePacotes
   end
   object Label18: TLabel
     Left = 276
-    Top = 732
+    Top = 750
     Width = 101
     Height = 13
     Margins.Left = 5
@@ -344,7 +344,7 @@ object framePacotes: TframePacotes
   end
   object Label19: TLabel
     Left = 276
-    Top = 715
+    Top = 733
     Width = 93
     Height = 13
     Margins.Left = 5
@@ -358,7 +358,7 @@ object framePacotes: TframePacotes
   end
   object Label20: TLabel
     Left = 3
-    Top = 615
+    Top = 633
     Width = 212
     Height = 13
     Caption = 'Gerador de Relat'#243'rios (FortesReport)'
@@ -460,7 +460,7 @@ object framePacotes: TframePacotes
   object ACBr_TCP_dpk: TCheckBox
     Tag = 4
     Left = 50
-    Top = 255
+    Top = 273
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -474,13 +474,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 15
+    TabOrder = 16
     OnClick = VerificarCheckboxes
   end
   object ACBr_TEFD_dpk: TCheckBox
     Tag = 4
     Left = 50
-    Top = 476
+    Top = 494
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -494,13 +494,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 28
+    TabOrder = 29
     OnClick = VerificarCheckboxes
   end
   object ACBr_Boleto_dpk: TCheckBox
     Tag = 4
     Left = 66
-    Top = 272
+    Top = 290
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -514,7 +514,7 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 16
+    TabOrder = 17
     OnClick = VerificarCheckboxes
   end
   object ACBr_Sintegra_dpk: TCheckBox
@@ -640,7 +640,7 @@ object framePacotes: TframePacotes
   object ACBr_NFe_dpk: TCheckBox
     Tag = 4
     Left = 66
-    Top = 306
+    Top = 324
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -654,13 +654,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 18
+    TabOrder = 19
     OnClick = VerificarCheckboxes
   end
   object ACBr_CTe_dpk: TCheckBox
     Tag = 4
     Left = 65
-    Top = 357
+    Top = 375
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -674,13 +674,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 21
+    TabOrder = 22
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFSe_dpk: TCheckBox
     Tag = 4
     Left = 65
-    Top = 374
+    Top = 392
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -694,13 +694,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 22
+    TabOrder = 23
     OnClick = VerificarCheckboxes
   end
   object ACBr_MDFe_dpk: TCheckBox
     Tag = 4
     Left = 65
-    Top = 391
+    Top = 409
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -714,13 +714,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 23
+    TabOrder = 24
     OnClick = VerificarCheckboxes
   end
   object ACBr_GNRE_dpk: TCheckBox
     Tag = 4
     Left = 273
-    Top = 408
+    Top = 426
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -734,7 +734,7 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 24
+    TabOrder = 25
     Visible = False
     OnClick = VerificarCheckboxes
   end
@@ -781,7 +781,7 @@ object framePacotes: TframePacotes
   object ACBr_SAT_dpk: TCheckBox
     Tag = 4
     Left = 65
-    Top = 408
+    Top = 426
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -795,13 +795,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 25
+    TabOrder = 26
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFeDanfeESCPOS_dpk: TCheckBox
     Tag = 5
     Left = 81
-    Top = 340
+    Top = 358
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -815,13 +815,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 20
+    TabOrder = 21
     OnClick = VerificarCheckboxes
   end
   object ACBr_SATExtratoESCPOS_dpk: TCheckBox
     Tag = 5
     Left = 81
-    Top = 442
+    Top = 460
     Width = 180
     Height = 17
     Margins.Left = 25
@@ -835,7 +835,7 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 27
+    TabOrder = 28
     OnClick = VerificarCheckboxes
   end
   object ACBr_LFD_dpk: TCheckBox
@@ -881,7 +881,7 @@ object framePacotes: TframePacotes
   object ACBr_DFeComum_dpk: TCheckBox
     Tag = 3
     Left = 50
-    Top = 289
+    Top = 307
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -895,13 +895,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 17
+    TabOrder = 18
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFCeECFVirtual_dpk: TCheckBox
     Tag = 5
     Left = 81
-    Top = 323
+    Top = 341
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -915,13 +915,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 19
+    TabOrder = 20
     OnClick = VerificarCheckboxes
   end
   object ACBr_SATECFVirtual_dpk: TCheckBox
     Tag = 5
     Left = 81
-    Top = 425
+    Top = 443
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -935,7 +935,7 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 26
+    TabOrder = 27
     OnClick = VerificarCheckboxes
   end
   object ACBr_TXTComum_dpk: TCheckBox
@@ -961,7 +961,7 @@ object framePacotes: TframePacotes
   object ACBr_NFeDanfeFR_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 512
+    Top = 530
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -975,13 +975,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 29
+    TabOrder = 30
     OnClick = VerificarCheckboxes
   end
   object ACBr_CTeDacteFR_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 529
+    Top = 547
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -995,13 +995,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 30
+    TabOrder = 31
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFSeDanfseFR_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 546
+    Top = 564
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1015,13 +1015,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 31
+    TabOrder = 32
     OnClick = VerificarCheckboxes
   end
   object ACBr_BoletoFR_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 563
+    Top = 581
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1035,13 +1035,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 32
+    TabOrder = 33
     OnClick = VerificarCheckboxes
   end
   object ACBr_MDFeDamdfeFR_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 580
+    Top = 598
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1055,13 +1055,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 33
+    TabOrder = 34
     OnClick = VerificarCheckboxes
   end
   object ACBr_GNREGuiaFR_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 597
+    Top = 615
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1075,14 +1075,14 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 34
+    TabOrder = 35
     Visible = False
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFeDanfeRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 629
+    Top = 647
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1096,13 +1096,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 35
+    TabOrder = 36
     OnClick = VerificarCheckboxes
   end
   object ACBr_CTeDacteRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 646
+    Top = 664
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1116,13 +1116,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 36
+    TabOrder = 37
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFSeDanfseRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 663
+    Top = 681
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1136,13 +1136,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 37
+    TabOrder = 38
     OnClick = VerificarCheckboxes
   end
   object ACBr_BoletoRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 680
+    Top = 698
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1156,13 +1156,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 38
+    TabOrder = 39
     OnClick = VerificarCheckboxes
   end
   object ACBr_MDFeDamdfeRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 697
+    Top = 715
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1176,13 +1176,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 39
+    TabOrder = 40
     OnClick = VerificarCheckboxes
   end
   object ACBr_SATExtratoRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 714
+    Top = 732
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1196,13 +1196,13 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 40
+    TabOrder = 41
     OnClick = VerificarCheckboxes
   end
   object ACBr_GNREGuiaRL_dpk: TCheckBox
     Tag = 9
     Left = 50
-    Top = 731
+    Top = 749
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1216,14 +1216,14 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 41
+    TabOrder = 42
     Visible = False
     OnClick = VerificarCheckboxes
   end
   object ACBr_BlocoX_dpk: TCheckBox
     Tag = 4
     Left = 66
-    Top = 459
+    Top = 477
     Width = 163
     Height = 17
     Margins.Left = 25
@@ -1237,7 +1237,27 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 42
+    TabOrder = 43
+    OnClick = VerificarCheckboxes
+  end
+  object ACBR_DeSTDA_dpk: TCheckBox
+    Tag = 4
+    Left = 66
+    Top = 254
+    Width = 163
+    Height = 17
+    Margins.Left = 25
+    Margins.Top = 0
+    Margins.Right = 0
+    Margins.Bottom = 0
+    Caption = 'ACBR_DeSTDA.dpk'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 15
     OnClick = VerificarCheckboxes
   end
 end

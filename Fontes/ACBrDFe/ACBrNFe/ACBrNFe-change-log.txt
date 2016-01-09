@@ -48,6 +48,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+
+09/01/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[*] Refataraçao na apresentação de Fatura(s) e Duplicata(s).
+    Por causa da possibilidade de existir as Tag Fat e Dup num xml.
+    http://www.projetoacbr.com.br/forum/topic/27249-impressao-danfe-vencimento-a-vista-com-erro/
+    http://www.projetoacbr.com.br/forum/topic/26554-campo-duplicatas-errado-danfe/
+    por: Henrique Leonardo
+
+
 08/01/2016
 -- ACBrNFeDANFeRLPaisagem -- 
 [*] Remoçao do ManterCodigo, não existe necessidade

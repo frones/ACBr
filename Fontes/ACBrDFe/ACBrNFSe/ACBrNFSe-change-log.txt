@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2016
+-- ACBrNFSeWebServices / pnfsNFSeR--
+[-] Corrigido o erro de estar salvando apenas uma de várias notas enviadas no 
+    lote.
+[*] Remoção de linhas desnecessarias.
+    Por: Italo Jurisato Junior
+
 07/01/2016
 -- ACBrNFSeWebServices --
 [-] Ao determinar a URL para assinatura estava desconsiderando a aspas de inicio.

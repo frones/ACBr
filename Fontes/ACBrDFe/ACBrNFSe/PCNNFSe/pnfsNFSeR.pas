@@ -859,8 +859,6 @@ var
   ok: Boolean;
   CM: String;
 begin
-  Result := False;
-
   if FProvedor = proNenhum then
   begin
     if (Leitor.rExtrai(1, 'OrgaoGerador') <> '') then
@@ -953,7 +951,8 @@ begin
 
     proEquiplano: Result := LerNFSe_Equiplano;
 
-  else Result := False;
+  else
+    Result := False;
   end;
 
   if Leitor.rExtrai(1, 'NfseCancelamento') <> '' then
@@ -1708,6 +1707,7 @@ var
   hEmi : String;
   dia, mes, ano, hora, minuto: word;
 begin
+  Result := False;
   Leitor.Grupo := Leitor.Arquivo;
 
   if (Pos('<NFS-e>', Leitor.Arquivo) > 0) then

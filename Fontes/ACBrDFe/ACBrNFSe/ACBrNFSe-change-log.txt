@@ -47,8 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2016
+-- pnfsNFSeW --
+[*] Remoção de linhas desnecessarias e a geração da TAG GerarNfseEnvio que só 
+    deve ser gerado ao gerar a mensagem de dados.
+    Por: Italo Jurisato Junior
+
 08/01/2016
--- ACBrNFSeWebServices / pnfsNFSeR--
+-- ACBrNFSeWebServices / pnfsNFSeR --
 [-] Corrigido o erro de estar salvando apenas uma de várias notas enviadas no 
     lote.
 [*] Remoção de linhas desnecessarias.

@@ -383,7 +383,7 @@ begin
     LoadLayout('<Z04>   Z04|XCampo¨|XTexto¨');
     LoadLayout('<Z07>   Z07|XCampo¨|XTexto¨');
     LoadLayout('<Z10>   Z10|NProc¨|IndProc¨');
-    LoadLayout('<ZA>     ZA|UFSaidaPais¨|XLocExporta¨|XLocDespacho¨');
+    LoadLayout('<ZA01>   ZA|UFSaidaPais¨|XLocExporta¨|XLocDespacho¨');
     LoadLayout('<ZB>     ZB|XNEmp¨|XPed¨|XCont¨');
     LoadLayout('<ZC>     ZB|Safra¨|Ref¨|QTotMes¨|QTotAnt¨|QTotGer¨|VFor¨|VTotDed¨|VLiqFor¨');
     LoadLayout('<ZC04> ZC04|Dia¨|Qtde¨');

@@ -133,7 +133,8 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proFIntelISS,
     proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe, proLink3,
     proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    ProVirtual, proVitoria: FVersaoNFSe := ve200;
+    proVirtual, proVitoria,
+    proEReceita: FVersaoNFSe := ve200;
 
     proTecnos: FVersaoNFSe := ve201;
   else
@@ -942,8 +943,8 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proFIntelISS,
     proFiorilli, proFreire, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proNFSeBrasil, proProdata, proPVH, proSaatri, proSisPMJP,
-    proSystemPro, proTecnos, ProVirtual,
-    proVitoria: Result := LerNFSe_ABRASF_V2;
+    proSystemPro, proTecnos, proVirtual, proVitoria,
+    proEReceita: Result := LerNFSe_ABRASF_V2;
 
     proInfisc:  Result := LerNFSe_Infisc;
 

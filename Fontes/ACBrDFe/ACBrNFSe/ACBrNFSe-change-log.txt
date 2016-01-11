@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2016
+-- pnfsConversao / pnfsNFSeR / pnfsNFSeW --
+[+] Inclusão do provedor EReceita (Cidade de Montes Calros/MG).
+-- ACBrDFeCapicomDelphiSoap --
+[*] Incluida a condição de uso de certificado antes de setar as opções de Intert.
+    Por: Leandro / Italo Jurisato Junior
+
 10/01/2016
 -- pnfsNFSeW --
 [*] Remoção de linhas desnecessarias e a geração da TAG GerarNfseEnvio que só 

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 422
+  Left = 455
   Height = 689
-  Top = 87
+  Top = 114
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -11055,7 +11055,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -11144,7 +11143,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
-    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -11189,7 +11187,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
-    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -11232,7 +11229,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
-    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.7

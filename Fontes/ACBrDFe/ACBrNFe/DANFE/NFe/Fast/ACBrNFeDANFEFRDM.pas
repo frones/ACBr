@@ -138,6 +138,8 @@ type
     FfrxInformacoesAdicionais: TfrxDBDataset;
     cdsPagamento: TClientDataSet;
     FfrxPagamento: TfrxDBDataset;
+    FIncorporarFontesPdf: Boolean;
+    FIncorporarBackgroundPdf: Boolean;
 
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
     procedure CarregaIdentificacao;
@@ -201,6 +203,8 @@ type
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
     property sQuebraLinha : String read fsQuebraLinha Write    fsQuebraLinha;
+    property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
+    property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
 
     procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
@@ -1317,8 +1321,8 @@ begin
   FfrxPDFExport := TfrxPDFExport.Create(nil);
   with FfrxPDFExport do
   begin
-     Background    := True;
-     EmbeddedFonts := True;
+     Background    := IncorporarBackgroundPdf;
+     EmbeddedFonts := IncorporarFontesPdf;
      Subject       := 'Exportando DANFE para PDF';
   end;
 

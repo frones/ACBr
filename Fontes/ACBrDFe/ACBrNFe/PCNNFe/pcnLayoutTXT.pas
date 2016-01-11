@@ -344,7 +344,7 @@ begin
     LoadLayout('<Q03>   Q03|CST¨|QBCProd¨|VAliqProd¨|VPIS¨');
     LoadLayout('<Q04>   Q04|CST¨');
     LoadLayout('<Q05>   Q05|CST¨|VPIS¨');
-    LoadLayout('<Q05>   Q07|VBC¨|PPIS¨|VPIS¨');
+    LoadLayout('<Q05>   Q07|VBC¨|PPIS¨');
     LoadLayout('<Q05>   Q10|QBCProd¨|VAliqProd¨');
     LoadLayout('<R01>     R|VPIS¨');
     LoadLayout('<R01>   R02|VBC¨|PPIS¨');
@@ -362,7 +362,8 @@ begin
     LoadLayout('<U01>     U|VBC¨|VAliq¨|VISSQN¨|CMunFG¨|CListServ¨|VDeducao¨|VOutro¨|VDescIncond¨|VDescCond¨|VISSRet¨|IndISS¨|CServico¨|CMun¨|CPais¨|NProcesso¨|IndIncentivo¨'); //ok
     LoadLayout('<UA>     UA|ImpostoDevol¨|PDevol¨|IPI¨|VIPIDevol¨');  //VERIFICAR
     LoadLayout('<W01>     W'); //ok
-    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨|vBCST¨|vST¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
+//    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨|vBCST¨|vST¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
+    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vBCST¨|vST¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
     LoadLayout('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨|dCompet¨|vDeducao¨|vOutro¨|vDescIncond¨|vDescCond¨|vISSRet¨|cRegTrib¨');
     LoadLayout('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨');
     LoadLayout('<X01>     X|ModFrete¨');

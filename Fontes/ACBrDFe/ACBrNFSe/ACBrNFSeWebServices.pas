@@ -882,20 +882,6 @@ begin
     p := Length(trim(Prefixo3));
     if j > 0 then
     begin
-//      FRetNFSe := Copy(FRetListaNFSe, 1, j - 1);
-//      k :=  Pos('<' + Prefixo4 + 'Nfse', FRetNFSe);
-//      FRetNFSe := Copy(FRetNFSe, k, length(FRetNFSe));
-
-//      FRetNFSe := FProvedorClass.GeraRetornoNFSe(Prefixo3, FRetNFSe, FNomeCidade);
-
-//      PathSalvar := FPConfiguracoesNFSe.Arquivos.GetPathNFSe(0);
-//      FPConfiguracoesNFSe.Geral.Save(NFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero + '-nfse.xml',
-//                                NotaUtil.RetirarPrefixos(FRetNFSe), PathSalvar);
-//      if FNotasFiscais.Count>0
-//       then FNotasFiscais.Items[i].NomeArq := PathWithDelim(PathSalvar) + NFSeRetorno.ListaNFSe.CompNFSe.Items[i].NFSe.Numero + '-nfse.xml';
-
-//      FRetListaNFSe := Copy(FRetListaNFSe, j + 11 + p, length(FRetListaNFSe));
-
       for i := 0 to FRetornoNFSe.ListaNFSe.CompNFSe.Count -1 do
       begin
         // Considerar o retorno sempre como novo, avaliar abaixo se o RPS está na lista
@@ -916,6 +902,7 @@ begin
           begin
             NovoRetorno := False;
             ii := l;
+            break;
           end;
         end;
 
@@ -1001,8 +988,6 @@ begin
           FRetListaNFSe := Copy(FRetListaNFSe, j + 11 + p, length(FRetListaNFSe));
 
           FNotasFiscais.Items[ii].XMLNFSe := FRetNFSe;
-
-          break;
         end;
       end;
 
@@ -1073,19 +1058,12 @@ var
   i, j: Integer;
 begin
    case FProvedor of
-    proActcon: EnviarLoteRps := 'EnviarLoteRpsEnvio';
+    proActcon: EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
     proIssDsf: EnviarLoteRps := 'ReqEnvioLoteRPS';
     proInfisc: EnviarLoteRps := 'envioLote';
-    proEquiplano: EnviarLoteRps := 'enviarLoteRpsEnvio';
+    proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
     else
-      begin
-        {
-        // Tecnos utiliza apenas metodo sincrono com mesmo mais de 3 notas
-        if (ASincrono) or (AProvedor = proTecnos)
-         then EnviarLoteRps := 'EnviarLoteRpsSincronoEnvio'
-         else }
-        EnviarLoteRps := 'EnviarLoteRpsEnvio';
-      end;
+      EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
    end;
 
    FxSignatureNode := '';
@@ -1332,7 +1310,7 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-    DefinirSignatureNode('EnviarLoteRpsEnvio');
+    DefinirSignatureNode('');
 
     FPDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                   FPrefixo3 + 'EnviarLoteRpsEnvio',
@@ -1452,6 +1430,8 @@ begin
 
     DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
     DataFinal   := DataInicial;
+    TotalServicos := 0.0;
+    TotalDeducoes := 0.0;
 
     for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
@@ -1487,7 +1467,7 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-    DefinirSignatureNode('EnviarLoteRpsEnvio');
+    DefinirSignatureNode('');
 
     FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                   FPrefixo3 + 'EnviarLoteRpsEnvio',
@@ -1668,7 +1648,7 @@ begin
 
   if FPDadosMsg <> '' then
   begin
-    DefinirSignatureNode('EnviarLoteRpsSincronoEnvio');
+    DefinirSignatureNode('Sincrono');
 
     FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                   FPrefixo3 + 'EnviarLoteRpsSincronoEnvio',

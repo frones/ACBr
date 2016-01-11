@@ -100,10 +100,11 @@ begin
 
   with FpDFeSSL do
   begin
-    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-      PCertContext, SizeOf(CERT_CONTEXT)) then
-      raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
-                                     IntToStr(GetLastError));
+    if (UseCertificate) then
+      if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+        PCertContext, SizeOf(CERT_CONTEXT)) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
+                                       IntToStr(GetLastError));
 
     if trim(ProxyUser) <> '' then
       if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME,

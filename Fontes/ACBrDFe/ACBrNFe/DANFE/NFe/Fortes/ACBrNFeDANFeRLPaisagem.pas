@@ -1804,7 +1804,7 @@ begin
     with FNFe.Det.Items[nItem] do
     begin
       cdsItens.Append;
-      cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo(Prod.cEAN, Prod.CProd);
+      cdsItens.FieldByName('CODIGO').AsString       := Prod.CProd;
       cdsItens.FieldByName('EAN').AsString          := Prod.cEAN;
       cdsItens.FieldByName('DESCRICAO').AsString    := ManterXpod( Prod.XProd , nItem );
       cdsItens.FieldByName('NCM').AsString          := Prod.NCM;
@@ -1851,65 +1851,28 @@ procedure TfrlDANFeRLPaisagem.AddFatura;
 var x, iQuantDup, iLinhas, iColunas, iPosQuadro, iAltLinha,
     iAltQuadro1Linha, iAltQuadro, iAltBand, iFolga: Integer;
 begin
-  if fExibeCampoFatura and (FNFe.Ide.indPag = ipVista) then
-  begin
-    rlbFatura.Visible := False;
-    exit;
-  end;
 
-  iQuantDup := 0;
-  for x := 1 to 15 do
+  rlbFatura.Visible := ( FNFe.Cobr.Dup.Count > 0 );
+
+  if FNFe.Cobr.Dup.Count > 0 then
+  begin
+    if FNFe.Cobr.Dup.Count < 6 then
+      TRLLabel (FindComponent('rllFatura')).Caption := 'DUPL';
+
+    for x := 1 to 15 do
     begin
       TRLLabel (FindComponent ('rllFatNum'   + intToStr (x))).Caption := '';
       TRLLabel (FindComponent ('rllFatData'  + intToStr (x))).Caption := '';
       TRLLabel (FindComponent ('rllFatValor' + intToStr (x))).Caption := '';
     end;
 
-  case FNFe.Ide.indPag of
-    ipVista:  begin
-                TRLLabel (FindComponent('rllFatNum1')).AutoSize := True;
-                TRLLabel (FindComponent('rllFatNum1')).Caption  := 'PAGAMENTO A VISTA';
-                iQuantDup := 1;
+    TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
 
-                for x := 0 to 14 do
-                  TRLLabel(FindComponent('rllCabFatura' + intToStr (x + 1))).Visible := False;
 
-                rliFatura2.Visible := False;
-                rliFatura3.Visible := False;
-                rliFatura4.Visible := False;
-                rliFatura5.Visible := False;
-              end;
-    ipPrazo:  begin
-                if FNFe.Cobr.Dup.Count < 6 then
-                  TRLLabel (FindComponent('rllFatura')).Caption := 'DUPL.';
+    iQuantDup := ManterDuplicatas;
 
-                if FNFe.Cobr.Dup.Count = 0 then
-                  begin
-                    TRLLabel (FindComponent('rllFatNum1')).AutoSize := True;
-                    TRLLabel (FindComponent('rllFatNum1')).Caption  := 'PAGAMENTO A PRAZO';
+    {=============== Ajusta o tamanho do quadro das faturas ===============}
 
-                    iQuantDup := 1;
-
-                    for x := 0 to 14 do
-                      TRLLabel(FindComponent('rllCabFatura' + intToStr (x + 1))).Visible := False;
-
-                    rliFatura2.Visible := False;
-                    rliFatura3.Visible := False;
-                    rliFatura4.Visible := False;
-                    rliFatura5.Visible := False;
-                  end
-                else
-                  iQuantDup:= ManterDuplicatas;
-              end;
-
-    ipOutras: begin
-                iQuantDup:= ManterDuplicatas;
-              end;
-  end;
-
- {=============== Ajusta o tamanho do quadro das faturas ===============}
-  if iQuantDup > 0 then
-  begin
     iColunas          := 5;   // Quantidade de colunas
     iAltLinha         := 12;  // Altura de cada linha
     iPosQuadro        := 0;   // Posição (Top) do Quadro
@@ -1917,14 +1880,14 @@ begin
     iFolga            := 1;   // Distância entre o final da Band e o final do quadro
 
     if (iQuantDup mod iColunas) = 0 then // Quantidade de linhas
-        iLinhas := iQuantDup div iColunas
+      iLinhas := iQuantDup div iColunas
     else
-        iLinhas := (iQuantDup div iColunas) + 1;
+      iLinhas := (iQuantDup div iColunas) + 1;
 
     if iLinhas = 1 then
-        iAltQuadro := iAltQuadro1Linha
+      iAltQuadro := iAltQuadro1Linha
     else
-        iAltQuadro := iAltQuadro1Linha + ((iLinhas - 1) * iAltLinha);
+      iAltQuadro := iAltQuadro1Linha + ((iLinhas - 1) * iAltLinha);
 
     iAltBand := iPosQuadro + iAltQuadro + iFolga;
 
@@ -1938,8 +1901,7 @@ begin
 
     {=============== Centraliza o label "DUPLICATA" ===============}
     rllFatura.Top := (rlbFatura.Height - rllFatura.Height) div 2;
-
-  end;  // if iQuantDup > 0
+  end;
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensAfterPrint(Sender: TObject);
@@ -2299,15 +2261,30 @@ end;
 
 Procedure TfrlDANFeRLPaisagem.AddFaturaReal;
 begin
-  rlbFaturaReal.Visible := fExibeCampoFatura;
+
+  case FNFe.Ide.indPag of
+    ipVista : RlbDadoPagamento.caption := ACBrStr('PAGAMENTO À VISTA');
+    ipPrazo : RlbDadoPagamento.caption := ACBrStr('PAGAMENTO À PRAZO');
+    ipOutras: RlbDadoPagamento.caption := 'OUTROS';
+  end;
+
+  RLLabelNUmero.Caption         := '';
+  RLLabelValor.Caption          := '';
+  RLLabelDupl.Caption           := '';
+  RLLabelLIQ.Caption            := '';
+  RlbDadoNumero.caption         := '';
+  RlbDadoValorOriginal.caption  := '';
+  RlbDadoValorDesconto.caption  := '';
+  RlbDadoValorLiquido.caption   := '';
+
   if fExibeCampoFatura then
   begin
-    case FNFe.Ide.indPag of
-      ipVista : RlbDadoPagamento.caption := ACBrStr('PAGAMENTO À VISTA');
-      ipPrazo : RlbDadoPagamento.caption := ACBrStr('PAGAMENTO À PRAZO');
-    else
-      RlbDadoPagamento.caption := '';
-    end;
+
+    RLLabelNUmero.Caption := ACBrStr( 'NÚMERO' );
+    RLLabelValor.Caption  := ACBrStr( 'VALOR ORIGINAL' );
+    RLLabelDupl.Caption   := ACBrStr( 'VALOR DESCONTO' );
+    RLLabelLIQ.Caption    := ACBrStr( 'VALOR LÍQUIDO' );
+
     if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
     begin
       with FNFe.Cobr.Fat do
@@ -2317,13 +2294,6 @@ begin
         RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,'###,###,###,##0.00');
         RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,'###,###,###,##0.00');
       end;
-    end
-    else
-    begin
-      RlbDadoNumero.caption         := '';
-      RlbDadoValorOriginal.caption  := '';
-      RlbDadoValorDesconto.caption  := '';
-      RlbDadoValorLiquido.caption   := '';
     end;
   end;
 end;

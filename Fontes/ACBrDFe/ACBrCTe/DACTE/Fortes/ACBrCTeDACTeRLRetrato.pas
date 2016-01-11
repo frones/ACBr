@@ -106,7 +106,7 @@ type
     rlLabel100: TRLLabel;
     rlLabel106: TRLLabel;
     rlLabel109: TRLLabel;
-    RLDraw34: TRLDraw;
+    rld_07_headerItens: TRLDraw;
     rlb_09_Obs: TRLBand;
     rlb_02_Cabecalho: TRLBand;
     rlLabel29: TRLLabel;
@@ -291,7 +291,6 @@ type
     rlsQuadro02: TRLDraw;
     rlsQuadro04: TRLDraw;
     rlsQuadro05: TRLDraw;
-    rlsQuadro07: TRLDraw;
     rlsQuadro08: TRLDraw;
     rlsQuadro09: TRLDraw;
     rlsLinhaV10: TRLDraw;
@@ -1819,6 +1818,12 @@ var
 begin
   inherited;
 
+  if cdsDocumentos.RecordCount > 4  then
+  begin
+    i := cdsDocumentos.RecordCount - 4;
+    rlb_07_HeaderItens.Height := rlb_07_HeaderItens.Height + (i * 10);
+    rld_07_headerItens.Height := rld_07_headerItens.Height + (i * 10);
+  end;
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
   rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);

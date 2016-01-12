@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/01/2016
+-- ACBrNFSeWebServices --
+[-] Correção definição do valor de SelectionNameSpace para realizar a assinatura
+    do lote, para alguns provedores estava sendo acrescentado um "=" a mais.
+    Por: Italo Jurisato Junior
+
 11/01/2016
 -- pnfsConversao / pnfsNFSeR / pnfsNFSeW --
 [+] Inclusão do provedor EReceita (Cidade de Montes Calros/MG).

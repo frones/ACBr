@@ -1088,13 +1088,17 @@ begin
      else
      begin
        if FPrefixo3 = '' then
+       begin
          xPrefixo := 'ds1:'
-       else
+         xmlns := ' xmlns="';
+       end
+       else begin
          xPrefixo := FPrefixo3;
+         xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
+       end;
 
        FxSignatureNode := './/' + xPrefixo + EnviarLoteRps + '/ds:Signature';
 
-       xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
        i := pos(EnviarLoteRps + xmlns, FPDadosMsg);
        i := i + Length(EnviarLoteRps + xmlns) - 1;
        j := Pos('">', FPDadosMsg) + 1;

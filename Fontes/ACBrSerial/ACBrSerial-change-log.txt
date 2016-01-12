@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/01/2016
+-- ACBrECFVirtualBuffer --
+[-] Correção de Bugs introduzidos acidentalmente em 08/01/2016. (Não permtia
+    sobrescrever, por completo, o método "AbreCupom".
+[*] Remoção da Linha tracejada inserida no final de "AddBufferCabecalho_Item",
+    pois a Linha é inserida na criação do valor Default da propriedade
+    "CabecalhoItem"     (por: DSA)
+
+-- ACBrEscPosEpson --
+[*] Ajuste para permitir tolerância de falhas na leitura de Status  (por: DSA)
+
 08/01/2016
 -- ACBrECFVirtualBuffer --
 [*] Ajuste de layout do comprovante de venda, para melhor compatibilidade com o

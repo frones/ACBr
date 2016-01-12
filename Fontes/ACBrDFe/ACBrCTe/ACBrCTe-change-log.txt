@@ -47,9 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/01/2016
+-- ACBrCTeWebServices --
+[*] Correção de leak de memória causado pela criação em duplicidade o objeto
+    CTeRetorno.
+    Por: Italo Jurisato Junior
+
 05/01/2016
--- ACBrNFeWebServices --
-[*] Adicionada verificação de Chave na atribuição de TCTeConsulta.NFeChave
+-- ACBrCTeWebServices --
+[*] Adicionada verificação de Chave na atribuição de TCTeConsulta.CTeChave
     (por: DSA)
 
 04/01/2016

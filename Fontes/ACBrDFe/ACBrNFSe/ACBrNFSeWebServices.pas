@@ -1089,7 +1089,7 @@ begin
      begin
        if FPrefixo3 = '' then
        begin
-         xPrefixo := 'ds1:'
+         xPrefixo := 'ds1:';
          xmlns := ' xmlns="';
        end
        else begin

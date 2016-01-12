@@ -152,7 +152,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 0, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),3), '')
   else
     if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 10 then
-      Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 1, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),2), '');
+      Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 1, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),2), '')
     else
       Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 1, '', '');
 

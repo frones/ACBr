@@ -49,6 +49,21 @@ Símbolo : Significado
 
 12/01/2016
 -- ACBrNFSeWebServices --
+[*] Alteração visando ao uso da propriedade UseSSL que determina se a conexão 
+    será segura ou não.
+-- ACBrNFSeConfiguracoes --
+[*] Alteração visando a leitura da propriedade UseSSL nos arquivos INI.
+-- ACBrNFSeNotasFiscais --
+[*] Alteração visando o refactoring da unit que gera o XML do RPS.
+-- pnfsConversao --
+[+] Inclusão do tipo TLayoutXML para determinar qual unit de layout a ser utiliza
+    para gerar o XML do RPS.
+-- pnfsNFSeW --
+[*] Refactoring, criação de uma Unit para cada Layout.
+    ATENÇÃO: não é para criar uma unit para cada provedor e sim para cada Layout.
+    Por: Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
 [-] Correção definição do valor de SelectionNameSpace para realizar a assinatura
     do lote, para alguns provedores estava sendo acrescentado um "=" a mais.
     Por: Italo Jurisato Junior

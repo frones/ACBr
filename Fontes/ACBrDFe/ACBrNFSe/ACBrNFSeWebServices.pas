@@ -661,17 +661,12 @@ begin
   FProvedor := FPConfiguracoesNFSe.Geral.Provedor;
 
   if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '1.2' then
-  begin
-    FPMimeType := 'application/soap+xml';
-    FPDFeOwner.SSL.UseCertificate := True;
-    FPDFeOwner.SSL.UseSSL := True;
-  end
+    FPMimeType := 'application/soap+xml'
   else
-  begin
     FPMimeType := 'text/xml';
-    FPDFeOwner.SSL.UseCertificate := False;
-    FPDFeOwner.SSL.UseSSL := False;
-  end;
+
+  FPDFeOwner.SSL.UseCertificate := FPConfiguracoesNFSe.Geral.ConfigGeral.UseSSL;
+  FPDFeOwner.SSL.UseSSL := FPConfiguracoesNFSe.Geral.ConfigGeral.UseSSL;
 
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);
 end;

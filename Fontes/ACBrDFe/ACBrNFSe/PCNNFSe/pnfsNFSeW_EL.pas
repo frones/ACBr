@@ -121,6 +121,8 @@ begin
 end;
 
 procedure TNFSeW_EL.GerarPrestador;
+var
+  xMun: String;
 begin
   Gerador.wGrupoNFSe('DadosPrestador');
 
@@ -319,7 +321,7 @@ begin
     then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
     else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
-  Gerador.wGrupo('Rps')
+  Gerador.wGrupo('Rps');
 
   FNFSe.InfID.ID := StringOfChar('0', 15) +
                     OnlyNumber(FNFSe.IdentificacaoRps.Numero) +

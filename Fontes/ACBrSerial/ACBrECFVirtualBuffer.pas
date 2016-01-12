@@ -573,8 +573,6 @@ begin
 
   For A := 0 to fsCabecalhoItem.Count - 1 do
     fsBuffer.Add( fsCabecalhoItem[A] ) ;
-
-  fsBuffer.Add('</linha_simples>');
 end;
 
 procedure TACBrECFVirtualBufferClass.AddBufferRodape;
@@ -647,6 +645,10 @@ end;
 procedure TACBrECFVirtualBufferClass.AbreDocumentoVirtual;
 begin
   InsertBufferCabecalho ;
+
+  if Estado = estVenda then
+    AddBufferCabecalho_Item ;
+
   GravaBuffer ;
   ImprimeBuffer;
 end;
@@ -852,11 +854,8 @@ end ;
 procedure TACBrECFVirtualBufferClass.AbreCupom ;
 begin
   ZeraBuffer ;
-  inherited ;
 
-  AddBufferCabecalho_Item;
-  GravaBuffer;
-  ImprimeBuffer;
+  inherited ;
 end;
 
 procedure TACBrECFVirtualBufferClass.VendeItemVirtual(

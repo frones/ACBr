@@ -80,6 +80,8 @@ type
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
+    FIncorporarFontesPdf: Boolean;
+    FIncorporarBackgroundPdf: Boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
@@ -115,6 +117,8 @@ type
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
     property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico Write fQuebraLinhaEmDetalhamentoEspecifico;
+    property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
+    property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
   end;
 
 implementation
@@ -142,6 +146,8 @@ begin
   FURLConsultaPublica:= ''; //NFCe
   FImprimirDadosArma := True;
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
+  FIncorporarFontesPdf := True;
+  FIncorporarBackgroundPdf := True;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -202,6 +208,8 @@ begin
   FdmDanfe.URLConsultaPublica    := FURLConsultaPublica;
   FdmDanfe.ImprimirDadosArma := FImprimirDadosArma;
   FdmDanfe.QuebraLinhaEmDetalhamentoEspecifico := fQuebraLinhaEmDetalhamentoEspecifico;
+  FdmDanfe.IncorporarBackgroundPdf := FIncorporarFontesPdf;
+  FdmDanfe.IncorporarFontesPdf := FIncorporarBackgroundPdf;
 
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFile) <> '' then
@@ -268,6 +276,9 @@ function TACBrNFeDANFEFR.PrepareReportEvento: Boolean;
 var
  wProjectStream: TStringStream;
 begin
+  FdmDanfe.IncorporarBackgroundPdf := FIncorporarFontesPdf;
+  FdmDanfe.IncorporarFontesPdf := FIncorporarBackgroundPdf;
+
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFileEvento) <> '' then
   begin

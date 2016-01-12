@@ -1256,11 +1256,11 @@ begin
 
           Add( LFill('D600')           +
                LFill( COD_MOD )        +
-               LFill( COD_MUN )        +
+               LFill( COD_MUN, 7 )     +
                LFill( SER )            +
                LFill( SUB )            +
-               LFill( strIND_REC )     + 
-               LFill( QTD_CONS )       +
+               LFill( strIND_REC )     +
+               LFill( QTD_CONS, 10 )   +
                LFill( DT_DOC_INI )     +
                LFill( DT_DOC_FIN )     +
                LFill( VL_DOC,0,2 )     +
@@ -1299,7 +1299,7 @@ begin
       begin
 
         Add( LFill('D601')          +
-             LFill( COD_CLASS )     + //Verificar criação da tabela
+             LFill( COD_CLASS, 4 )  + //Verificar criação da tabela
              LFill( VL_ITEM,0,2 )   +
              LFill( VL_DESC,0,2 )   +
              LFill( CstPisToStr(CST_PIS) )    +
@@ -1327,7 +1327,7 @@ begin
       with RegD600.RegistroD605.Items[intFor] do
       begin
         Add( LFill('D605')             +
-             LFill( COD_CLASS )        + //Verificar criação da tabela
+             LFill( COD_CLASS, 4 )        + //Verificar criação da tabela
              LFill( VL_ITEM,0,2 )      +
              LFill( VL_DESC,0,2 )      +
              LFill( CstCofinsToStr(CST_COFINS) )    +

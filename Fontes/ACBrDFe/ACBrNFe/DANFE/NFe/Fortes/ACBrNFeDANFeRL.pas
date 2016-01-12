@@ -254,7 +254,7 @@ type
                     ATamanhoFonteEndereco: Integer = 10;
                     ARecuoLogo: Integer = 0);
 
-    class procedure SavePDF(ANFe: TNFe; ALogo: String = '';
+    class procedure SavePDF(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
                     AEmail: String = ''; AResumoCanhoto: Boolean = False;
                     AFax: String = ''; ANumCopias: Integer = 1;
@@ -537,7 +537,8 @@ begin
     end ;
 end;
 
-class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
+class procedure TfrlDANFeRL.SavePDF(AOwner: TComponent;
+										ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
                     AEmail: String = ''; AResumoCanhoto: Boolean = False;
                     AFax: String = ''; ANumCopias: Integer = 1;
@@ -590,7 +591,7 @@ class procedure TfrlDANFeRL.SavePDF(ANFe: TNFe; ALogo: String = '';
 var
   ADir: String;
 begin
-  with Create ( nil ) do
+  with Create ( AOwner ) do
     try
       FNFe := ANFe;
       FLogo := ALogo;

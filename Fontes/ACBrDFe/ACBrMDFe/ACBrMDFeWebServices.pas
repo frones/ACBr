@@ -1177,7 +1177,6 @@ begin
   inherited Create(AOwner);
 
   FManifestos := AManifestos;
-  FMDFeRetorno := TRetConsReciMDFe.Create;
 end;
 
 destructor TMDFeRecibo.Destroy;

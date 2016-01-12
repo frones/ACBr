@@ -1588,7 +1588,6 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := ANotasFiscais;
-  FNFeRetorno := TRetConsReciNFe.Create;
 end;
 
 destructor TNFeRecibo.Destroy;

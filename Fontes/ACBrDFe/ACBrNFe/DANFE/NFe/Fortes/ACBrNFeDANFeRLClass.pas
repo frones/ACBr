@@ -293,7 +293,7 @@ begin
                    StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase])
                    + '-nfe.pdf';
 
-          frlDANFeRL.SavePDF(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
+          frlDANFeRL.SavePDF(Self, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
           FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
           FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
           FExpandirLogoMarca, FMostrarStatus, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
@@ -322,7 +322,7 @@ begin
                StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) +
                '-nfe.pdf';
 
-      frlDANFeRL.SavePDF(NFe,
+      frlDANFeRL.SavePDF(Self, NFe,
       FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
       FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
       FExpandirLogoMarca, FMostrarStatus, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,

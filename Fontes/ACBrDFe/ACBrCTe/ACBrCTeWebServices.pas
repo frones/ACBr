@@ -1277,7 +1277,6 @@ begin
   inherited Create(AOwner);
 
   FConhecimentos := AConhecimentos;
-  FCTeRetorno := TRetConsReciCTe.Create;
 end;
 
 destructor TCTeRecibo.Destroy;

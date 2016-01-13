@@ -432,7 +432,10 @@ begin
   if PathIniCidades <> '' then
     NomeArqParams := PathWithDelim(PathIniCidades)
   else
-    NomeArqParams := ApplicationPath;
+    begin
+    NomeArqParams  := ApplicationPath;
+    PathIniCidades := NomeArqParams;
+    end;
 
   NomeArqParams := NomeArqParams + 'Cidades.ini';
 

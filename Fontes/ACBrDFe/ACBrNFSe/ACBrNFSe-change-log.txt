@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/01/2016
+-- ACBrNFSeWebServices --
+[*] Correção na passagem de parâmetros ao cancelar um cancelamento.
+    Por: Italo Jurisato Junior
 -- pnfsNFSeW_ABRASFv2 --
 [*] Para o provedor Goiania estava gerando indevidamente a data de competencia com a hora.
     Por: Cleiver Batista

@@ -2694,7 +2694,7 @@ begin
       proGinfes: AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
                                        'Falha ao Assinar - Cancelar NFS-e: ');
     else
-      AssinarXML(FPDadosMsg, 'Pedido></' + FPrefixo3 + 'CancelarNfseEnvio', '',
+      AssinarXML(FPDadosMsg, FPrefixo3 +'Pedido></' + FPrefixo3 + 'CancelarNfseEnvio', '',
                                        'Falha ao Assinar - Cancelar NFS-e: ');
     end;
   end;

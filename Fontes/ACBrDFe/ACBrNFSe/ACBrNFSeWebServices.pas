@@ -793,11 +793,12 @@ begin
 end;
 
 function TNFSeWebService.ExtrairRetorno: String;
+var
+  Encoding: String;
 begin
-  // A função ExtrairRetorno possui um parâmetro que seria o nome do grupo que
-  // contem o retorno desejado, no momento a função não faz uso dela.
-  // Será avaliado a real necessidade desse parâmetro.
-  
+  Encoding := '<?xml version=' + '''' + '1.0' + '''' +
+                   ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
+
   Result := SeparaDados(FPRetornoWS, 'return');
 
   if Result = '' then
@@ -815,6 +816,10 @@ begin
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then
     Result := FPRetornoWS;
+
+  Result := StringReplace(Result, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
+  //italo
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;

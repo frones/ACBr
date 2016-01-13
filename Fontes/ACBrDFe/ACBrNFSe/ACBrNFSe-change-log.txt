@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/01/2016
+-- ACBrNFSeWebServices --
+[*] Remoção do Encoding na mensagem de resposta.
+    Por: Italo Jurisato Junior
 [+] Criação dos arquivos INI para os provedores: EGoverneISS, EL, Equiplano e ISSDSF.
 -- ACBrNFSeWebServices --
 [*] Alteração visando a adição dos provedores: EGoverneISS, EL, Equiplano e ISSDSF.

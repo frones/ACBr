@@ -18114,11 +18114,16 @@ end;
 function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
 begin
   case t of
-    proABRASFv1,
-    proGINFES: Result := loABRASFv1;
+    proABRASFv1, proAbaco, proBetha, ProBHISS, proDBSeller, proFISSLex,
+    proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
+    proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
+    proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan,
+    proWebISS: Result := loABRASFv1;
 
-    proABRASFv2,
-    pro4R: Result := loABRASFv2;
+    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
+    proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
+    proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
+    proTecnos, proVirtual, proVitoria: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
 
@@ -18133,17 +18138,7 @@ begin
     Result := loNone;
   end;
 (*
-  TnfseProvedor = ( proTiplan, proISSNET, proWebISS, , ,
-                    proProdemge, proAbaco, proBetha, , proISSIntel, proProdam,
-                    proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
-                    profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
-                    proGoiania, proIssCuritiba, proBHISS, proNatal, proISSDigital,
-                    proISSe, , proGovDigital, proFiorilli, proCoplan, proProdata,
-                    proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
-                    proVitoria, proMitra, ProTecnos, proPronim, proActcon, ,
-                    , proSisPMJP, proSystemPro, , proSalvador,
-                    proDBSeller, proLexsom, proNFSEBrasil,
-                    proTinus, proSJP, proCONAM, proEReceita);
+  TnfseProvedor = ( proProdam, proNFSEBrasil, proCONAM);
 *)
 end;
 

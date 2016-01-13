@@ -1,8 +1,9 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 244
   Top = 56
-  Width = 863
-  Height = 668
+  Width = 838
+  Height = 920
+  AutoScroll = True
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -11,14 +12,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   TextHeight = 10
   inherited RLMDFe: TRLReport
     Tag = 1
-    Left = 24
-    Top = -312
-    Font.Height = -8
-    Font.Name = 'Courier New'
+    Left = 3
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Font.Height = -8
+    Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     object rlb_1_DadosManifesto: TRLBand
       Left = 26
@@ -32,21 +33,21 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlsQuadro4: TRLDraw
         Left = 0
         Top = 200
-        Width = 752
+        Width = 742
         Height = 62
         Brush.Style = bsClear
       end
       object rlsQuadro3: TRLDraw
         Left = 352
         Top = 0
-        Width = 400
+        Width = 390
         Height = 169
         Brush.Style = bsClear
       end
       object rlsQuadro2: TRLDraw
-        Left = 0
+        Left = 1
         Top = 168
-        Width = 752
+        Width = 740
         Height = 33
         Brush.Style = bsClear
       end
@@ -60,14 +61,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlsHorizontal1: TRLDraw
         Left = 0
         Top = 218
-        Width = 752
+        Width = 742
         Height = 1
       end
       object rlLabel8: TRLLabel
-        Left = 456
-        Top = 4
-        Width = 273
-        Height = 29
+        Left = 455
+        Top = 3
+        Width = 281
+        Height = 15
         AutoSize = False
         Caption = 'Documento Auxiliar de Manifesto Eletr'#244'nico de Documentos Fiscais'
         Color = clWhite
@@ -76,7 +77,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = []
-        ParentColor = False
         ParentFont = False
       end
       object rlLabel17: TRLLabel
@@ -145,7 +145,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape1: TRLDraw
         Left = 352
         Top = 35
-        Width = 400
+        Width = 390
         Height = 1
       end
       object rlLabel74: TRLLabel
@@ -167,7 +167,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape2: TRLDraw
         Left = 352
         Top = 120
-        Width = 400
+        Width = 390
         Height = 1
       end
       object rlLabel1: TRLLabel
@@ -189,7 +189,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllChave: TRLLabel
         Left = 358
         Top = 148
-        Width = 386
+        Width = 380
         Height = 14
         Alignment = taCenter
         AutoSize = False
@@ -290,9 +290,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rllNumMDFe: TRLLabel
-        Left = 62
+        Left = 64
         Top = 182
-        Width = 72
+        Width = 70
         Height = 15
         Alignment = taRightJustify
         Caption = '999.999.999'
@@ -307,9 +307,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rlLabel25: TRLLabel
-        Left = 138
+        Left = 136
         Top = 171
-        Width = 42
+        Width = 32
         Height = 9
         Alignment = taCenter
         AutoSize = False
@@ -325,9 +325,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rllPageNumber: TRLLabel
-        Left = 138
+        Left = 136
         Top = 182
-        Width = 42
+        Width = 32
         Height = 15
         Alignment = taCenter
         AutoSize = False
@@ -343,9 +343,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rlLabel33: TRLLabel
-        Left = 182
+        Left = 172
         Top = 171
-        Width = 124
+        Width = 104
         Height = 9
         Alignment = taCenter
         AutoSize = False
@@ -361,12 +361,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rllEmissao: TRLLabel
-        Left = 182
+        Left = 172
         Top = 182
-        Width = 124
+        Width = 104
         Height = 15
         Alignment = taCenter
         AutoSize = False
+        Caption = '99/99/9999 99:99:99'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -378,7 +379,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rlLabel77: TRLLabel
-        Left = 312
+        Left = 279
         Top = 171
         Width = 35
         Height = 8
@@ -394,7 +395,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
       object rllUFCarrega: TRLLabel
-        Left = 312
+        Left = 279
         Top = 182
         Width = 34
         Height = 15
@@ -410,21 +411,21 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rlsLinhaV09: TRLDraw
-        Left = 308
+        Left = 277
         Top = 168
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
       object rlsLinhaV08: TRLDraw
-        Left = 180
+        Left = 169
         Top = 168
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
       object rlsLinhaV07: TRLDraw
-        Left = 136
+        Left = 135
         Top = 168
         Width = 1
         Height = 33
@@ -470,7 +471,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllProtocolo: TRLLabel
         Left = 358
         Top = 180
-        Width = 386
+        Width = 380
         Height = 19
         Alignment = taCenter
         AutoSize = False
@@ -486,7 +487,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllModal: TRLLabel
         Left = 8
         Top = 202
-        Width = 738
+        Width = 729
         Height = 15
         Alignment = taCenter
         AutoSize = False
@@ -500,24 +501,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel6: TRLLabel
-        Left = 4
-        Top = 222
-        Width = 117
-        Height = 15
-        AutoSize = False
-        Caption = 'CIOT'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
       object rlLabel5: TRLLabel
-        Left = 130
+        Left = 8
         Top = 222
         Width = 87
         Height = 15
@@ -532,24 +517,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel7: TRLLabel
-        Left = 224
-        Top = 222
-        Width = 87
-        Height = 15
-        AutoSize = False
-        Caption = 'QTDE CTRC'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
       object rlLabel10: TRLLabel
-        Left = 318
+        Left = 210
         Top = 222
         Width = 87
         Height = 15
@@ -564,24 +533,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel11: TRLLabel
-        Left = 412
-        Top = 222
-        Width = 87
-        Height = 15
-        AutoSize = False
-        Caption = 'QTDE NF'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
       object rlLabel12: TRLLabel
-        Left = 600
+        Left = 590
         Top = 222
         Width = 96
         Height = 14
@@ -595,75 +548,22 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rlShape3: TRLDraw
-        Left = 126
-        Top = 218
-        Width = 1
-        Height = 44
-        Brush.Style = bsClear
-      end
       object rlShape4: TRLDraw
-        Left = 220
-        Top = 218
-        Width = 1
-        Height = 44
-        Brush.Style = bsClear
-      end
-      object rlShape5: TRLDraw
-        Left = 314
-        Top = 218
-        Width = 1
-        Height = 44
-        Brush.Style = bsClear
-      end
-      object rlShape6: TRLDraw
-        Left = 408
+        Left = 200
         Top = 218
         Width = 1
         Height = 44
         Brush.Style = bsClear
       end
       object rlShape7: TRLDraw
-        Left = 596
+        Left = 580
         Top = 218
         Width = 1
         Height = 44
         Brush.Style = bsClear
       end
-      object rllCIOT: TRLLabel
-        Left = 4
-        Top = 240
-        Width = 118
-        Height = 16
-        Alignment = taCenter
-        AutoSize = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
       object rllqCTe: TRLLabel
-        Left = 130
-        Top = 240
-        Width = 88
-        Height = 16
-        Alignment = taCenter
-        AutoSize = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
-      object rllqCT: TRLLabel
-        Left = 224
+        Left = 8
         Top = 240
         Width = 88
         Height = 16
@@ -679,23 +579,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllqNFe: TRLLabel
-        Left = 318
-        Top = 240
-        Width = 88
-        Height = 16
-        Alignment = taCenter
-        AutoSize = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
-      object rllqNF: TRLLabel
-        Left = 412
+        Left = 210
         Top = 240
         Width = 88
         Height = 16
@@ -711,9 +595,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllPesoTotal: TRLLabel
-        Left = 600
+        Left = 590
         Top = 240
-        Width = 146
+        Width = 147
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -727,7 +611,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rlLabel23: TRLLabel
-        Left = 506
+        Left = 410
         Top = 222
         Width = 87
         Height = 15
@@ -743,7 +627,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllqMDFe: TRLLabel
-        Left = 506
+        Left = 410
         Top = 240
         Width = 88
         Height = 16
@@ -759,7 +643,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rlShape19: TRLDraw
-        Left = 502
+        Left = 400
         Top = 218
         Width = 1
         Height = 44
@@ -770,9 +654,62 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 53
         Width = 99
         Height = 57
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        BarcodeType = bcCode128C
+      end
+      object RLLabel6: TRLLabel
+        Left = 455
+        Top = 19
+        Width = 281
+        Height = 15
+        AutoSize = False
+        Caption = 'Documentos Fiscais'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLDraw3: TRLDraw
+        Left = 315
+        Top = 167
+        Width = 1
+        Height = 33
+        Brush.Style = bsClear
+      end
+      object rllUFDescarrega: TRLLabel
+        Left = 317
+        Top = 181
+        Width = 34
+        Height = 15
+        Alignment = taCenter
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel11: TRLLabel
+        Left = 317
+        Top = 170
+        Width = 34
+        Height = 8
+        Caption = 'UF Descar.'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
       end
     end
     object rlb_2_Rodo: TRLBand
@@ -786,8 +723,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       BeforePrint = rlb_2_RodoBeforePrint
       object rlShape8: TRLDraw
         Left = 1
-        Top = 0
-        Width = 752
+        Top = 1
+        Width = 741
         Height = 201
         Brush.Style = bsClear
       end
@@ -824,7 +761,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape9: TRLDraw
         Left = 0
         Top = 20
-        Width = 752
+        Width = 742
         Height = 1
       end
       object rlLabel13: TRLLabel
@@ -890,7 +827,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape10: TRLDraw
         Left = 0
         Top = 40
-        Width = 752
+        Width = 742
         Height = 1
       end
       object rlShape11: TRLDraw
@@ -980,7 +917,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlmCondutor: TRLMemo
         Left = 412
         Top = 45
-        Width = 333
+        Width = 325
         Height = 148
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -1172,7 +1109,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape20: TRLDraw
         Left = 0
         Top = 0
-        Width = 752
+        Width = 742
         Height = 113
         Brush.Style = bsClear
       end
@@ -1215,7 +1152,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape22: TRLDraw
         Left = 0
         Top = 20
-        Width = 752
+        Width = 742
         Height = 1
       end
       object rllCodEmbar: TRLLabel
@@ -1236,7 +1173,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllNomeEmbar: TRLLabel
         Left = 322
         Top = 2
-        Width = 423
+        Width = 415
         Height = 16
         AutoSize = False
         Color = clWhite
@@ -1269,7 +1206,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape26: TRLDraw
         Left = 0
         Top = 40
-        Width = 752
+        Width = 742
         Height = 1
       end
       object rlLabel27: TRLLabel
@@ -1402,7 +1339,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlmNomeDescarreg: TRLMemo
         Left = 454
         Top = 45
-        Width = 291
+        Width = 284
         Height = 62
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -1444,7 +1381,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlShape18: TRLDraw
         Left = 0
         Top = 0
-        Width = 752
+        Width = 742
         Height = 137
         Brush.Style = bsClear
       end
@@ -1466,7 +1403,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlmObservacao: TRLMemo
         Left = 4
         Top = 21
-        Width = 735
+        Width = 734
         Height = 108
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -1539,15 +1476,19 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Width = 742
       Height = 22
       Borders.Sides = sdCustom
-      Borders.DrawLeft = True
+      Borders.DrawLeft = False
       Borders.DrawTop = False
-      Borders.DrawRight = True
-      Borders.DrawBottom = True
-      Borders.FixedLeft = True
-      Borders.FixedRight = True
-      Borders.FixedBottom = True
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
+      object RLDraw1: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 742
+        Height = 22
+        Brush.Style = bsClear
+      end
       object rlmChave1: TRLDBText
         Left = 5
         Top = 2
@@ -1596,16 +1537,23 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Height = 32
       BandType = btColumnHeader
       Borders.Sides = sdCustom
-      Borders.DrawLeft = True
+      Borders.DrawLeft = False
       Borders.DrawTop = False
-      Borders.DrawRight = True
-      Borders.DrawBottom = True
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
-      object rlsQuadrado5: TRLDraw
-        Left = 1
+      object RLDraw2: TRLDraw
+        Left = 0
         Top = 0
-        Width = 751
+        Width = 742
+        Height = 33
+        Brush.Style = bsClear
+      end
+      object rlsQuadrado5: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 742
         Height = 20
         Brush.Style = bsClear
       end
@@ -1723,5 +1671,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
     end
+  end
+  inherited dsItens: TDataSource
+    Left = 387
+    Top = 2
   end
 end

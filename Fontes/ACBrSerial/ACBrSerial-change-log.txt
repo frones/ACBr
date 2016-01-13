@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/01/2015
+-- ACBrPosPrinter --
+[+] Adicionado o evento: "OnEnviarStringDevice", que permite capturar todas as
+    saídas de Impressão, e decidir se as envia ou não para o Device
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27350
+
 12/01/2016
 -- ACBrECFVirtualBuffer --
 [-] Correção de Bugs introduzidos acidentalmente em 08/01/2016. (Não permtia

@@ -254,6 +254,7 @@ type
     FConfigGaveta: TACBrConfigGaveta;
     FModelo: TACBrPosPrinterModelo;
     FOnGravarLog: TACBrGravarLog;
+    FOnEnviarStringDevice: TACBrGravarLog;
     FTagProcessor: TACBrTagProcessor;
 
     FCortaPapel: Boolean;
@@ -369,6 +370,7 @@ type
 
     property OnGravarLog: TACBrGravarLog read FOnGravarLog write FOnGravarLog;
     property ArqLOG: String read FArqLog write FArqLog;
+    property OnEnviarStringDevice: TACBrGravarLog read FOnEnviarStringDevice write FOnEnviarStringDevice;
   end;
 
 implementation
@@ -673,6 +675,7 @@ begin
 
   FArqLog := '';
   FOnGravarLog := nil;
+  FOnEnviarStringDevice := nil;
 end;
 
 destructor TACBrPosPrinter.Destroy;
@@ -762,7 +765,6 @@ begin
 
   FModelo := AValue;
 end;
-
 
 procedure TACBrPosPrinter.DoLinesChange(Sender: TObject);
 begin
@@ -1141,6 +1143,7 @@ end;
 procedure TACBrPosPrinter.EnviarStringDevice(AString: AnsiString);
 var
   CmdInit: AnsiString;
+  Tratado:boolean;
 begin
   if AString = '' then
     exit;
@@ -1160,8 +1163,17 @@ begin
     end;
   end;
 
-  GravarLog('EnviarStringDevice( ' + AString + ')', True);
-  FDevice.EnviaString(AString);
+  Tratado := False;
+  if Assigned(FOnEnviarStringDevice) then
+     FOnEnviarStringDevice(AString, Tratado);
+
+  if not Tratado then
+  begin
+    GravarLog('EnviarStringDevice( ' + AString + ')', True);
+    FDevice.EnviaString(AString);
+  end
+  else
+    GravarLog('OnEnviarStringDevice( ' + AString + ')', True);
 
   if ControlePorta then
     DesativarPorta;

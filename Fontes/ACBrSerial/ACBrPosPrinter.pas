@@ -1220,8 +1220,12 @@ end;
 function TACBrPosPrinter.TxRx(ACmd: AnsiString; BytesToRead: Byte;
   ATimeOut: Integer; WaitForTerminator: Boolean): AnsiString;
 begin
+  FDevice.Limpar;
+
   GravarLog('TX -> '+ACmd, True);
   FDevice.EnviaString( ACmd );
+
+  Sleep(10);  // Aguarda equipamento ficar pronto para responder
 
   if WaitForTerminator then
     Result := FDevice.LeString(ATimeOut, 0, chr(BytesToRead))

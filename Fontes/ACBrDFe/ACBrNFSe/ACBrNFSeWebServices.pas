@@ -1424,9 +1424,17 @@ begin
         GerarLoteRPSsemAssinatura(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal);
     end;
 
-    FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad;
-    FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
-
+    case FProvedor of
+      proISSDSF: begin
+                   FTagI := '<' + FPrefixo3 + 'ReqEnvioLoteRPS' + FNameSpaceDad;
+                   FTagF := '</' + FPrefixo3 + 'ReqEnvioLoteRPS>';
+                 end;
+    else begin
+           FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad;
+           FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
+         end;
+    end;
+    
     DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
     DataFinal   := DataInicial;
     TotalServicos := 0.0;
@@ -1759,8 +1767,16 @@ begin
         GerarLoteRPSsemAssinatura(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLOriginal);
     end;
 
-    FTagI := '<' + FPrefixo3 + 'GerarNfseEnvio' + FNameSpaceDad;
-    FTagF := '</' + FPrefixo3 + 'GerarNfseEnvio>';
+    case FProvedor of
+      proEGoverneISS: begin
+                        FTagI := '<' + FPrefixo3 + 'request' + FNameSpaceDad;
+                        FTagF :=  '</' + FPrefixo3 + 'request>';
+                      end;
+    else begin
+           FTagI := '<' + FPrefixo3 + 'GerarNfseEnvio' + FNameSpaceDad;
+           FTagF := '</' + FPrefixo3 + 'GerarNfseEnvio>';
+         end;
+    end;
 
     InicializarGerarDadosMsg;
 
@@ -2091,9 +2107,17 @@ begin
 
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingCab);
 
-    FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad;
-    FTagF := '</' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
-
+    case FProvedor of
+      proISSDSF: begin
+                   FTagI := '<' + FPrefixo3 + 'ReqConsultaLote' + FNameSpaceDad;
+                   FTagF := '</' + FPrefixo3 + 'ReqConsultaLote>';
+                 end;
+    else begin
+           FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad;
+           FTagF := '</' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
+         end;
+    end;
+    
     InicializarGerarDadosMsg;
 
     GerarDadosMsg.Protocolo := TNFSeConsultarLoteRPS(Self).Protocolo;
@@ -2201,8 +2225,16 @@ begin
 
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingCab);
 
-    FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio' + FNameSpaceDad;
-    FTagF := '</' + FPrefixo3 + 'ConsultarNfseRpsEnvio>';
+    case FProvedor of
+      proISSDSF: begin
+                   FTagI := '<' + FPrefixo3 + 'ReqConsultaNFSeRPS' + FNameSpaceDad;
+                   FTagF := '</' + FPrefixo3 + 'ReqConsultaNFSeRPS>';
+                 end;
+    else begin
+           FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio' + FNameSpaceDad;
+           FTagF := '</' + FPrefixo3 + 'ConsultarNfseRpsEnvio>';
+         end;
+    end;
 
     if FProvedor in [proIssDSF] then
     begin
@@ -2364,6 +2396,10 @@ begin
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingCab);
 
     case FProvedor of
+      proISSDSF: begin
+                   FTagI := '<' + FPrefixo3 + 'ReqConsultaNotas' + FNameSpaceDad;
+                   FTagF := '</' + FPrefixo3 + 'ReqConsultaNotas>';
+                 end;
       proDigifred: begin
                      FTagI := '<' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio' + FNameSpaceDad;
                      FTagF := '</' + FPrefixo3 + 'ConsultarNfseServicoPrestadoEnvio>';
@@ -2532,6 +2568,14 @@ begin
     end;
 
     case FProvedor of
+      proISSDSF: begin
+                   FTagI := '<' + FPrefixo3 + 'ReqCancelamentoNFSe' + FNameSpaceDad;
+                   FTagF := '</' + FPrefixo3 + 'ReqCancelamentoNFSe>';
+                 end;
+      proEGoverneISS: begin
+                        FTagI := '<' + FPrefixo3 + 'request' + FNameSpaceDad;
+                        FTagF :=  '</' + FPrefixo3 + 'request>';
+                      end;
       proGinfes: begin
                    FTagI := '<CancelarNfseEnvio' +
                             ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +

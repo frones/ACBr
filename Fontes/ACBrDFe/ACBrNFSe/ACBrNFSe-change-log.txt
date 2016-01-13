@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/01/2016
+[+] Criação dos arquivos INI para os provedores: EGoverneISS, EL, Equiplano e ISSDSF.
+-- ACBrNFSeWebServices --
+[*] Alteração visando a adição dos provedores: EGoverneISS, EL, Equiplano e ISSDSF.
+    Por: Italo Jurisato Junior
+
 12/01/2016
 -- ACBrNFSeWebServices --
 [*] Alteração visando ao uso da propriedade UseSSL que determina se a conexão 

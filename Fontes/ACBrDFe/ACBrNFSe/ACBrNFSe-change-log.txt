@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/01/2016
+-- pnfsNFSeR / pnfsNFSeW_ABRASFv1 / pnfsNFSeW_ABRASFv2 --
+[*] Correções na leitura de algumas TAGs e remoção de códigos não utilizados
+    na geração do XML do RPS.
+    Por: Italo Jurisato Junior
+
 13/01/2016
 -- ACBrNFSeWebServices / ACBrNFSeConfiguracoes --
 [*] Alteração visando mostrar os resultados após consultar a situação do lote.

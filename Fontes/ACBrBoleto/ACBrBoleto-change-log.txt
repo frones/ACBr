@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/01/2016 ver. 0.0.170a
+-- ACBrBancoBradesco --
+[-] Correção arquivo remessa CNAB400. (por: Datilas)
+http://www.projetoacbr.com.br/forum/topic/26909-campo-instru%C3%A7%C3%A3o-bradesco/#comment-175347
+
+-- ACBrBancoSantander --
+[-] Correção arquivo remessa CNAB240. (por: Valdirdill)
+http://www.projetoacbr.com.br/forum/topic/26794-erro-remessa-santander/
+
 Data: 06/01/2016 ver. 0.0.169a
 -- ACBrBancoBanestes --
 [-] Ajustes remessa CNAB240  e CNAB400.

@@ -30,7 +30,7 @@ begin
     begin
       if (EstaVazio(Trim(Cmd.Params(0))) and
           EstaVazio(Trim(Cmd.Params(1)))) then
-        Cmd.Resposta := ACBrSAT1.AtivarSAT(1,edtEmitCNPJ.Text, StrToInt(edtCodUF.Text))
+        Cmd.Resposta := ACBrSAT1.AtivarSAT(1, OnlyNumber(edtEmitCNPJ.Text), StrToInt(edtCodUF.Text))
       else
       begin
         if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and

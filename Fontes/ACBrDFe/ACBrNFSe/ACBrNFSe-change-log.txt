@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/01/2016
+-- ACBrNFSeWebServices / ACBrNFSeConfiguracoes --
+[*] Alteração visando mostrar os resultados após consultar a situação do lote.
+[*] Alteração visando atender a cidade de Fortaleza/CE que se utiliza do 
+    provedor Ginfes mas possui algumas diferenças em NameSpace e URLs.
+    Por: Italo Jurisato Junior
+
 -- ACBrNFSeWebServices --
 [*] Correção na passagem de parâmetros ao cancelar um cancelamento.
     Por: Italo Jurisato Junior

@@ -1947,6 +1947,7 @@ end;
 function TNFSeConsultarSituacaoLoteRPS.Executar: Boolean;
 var
   IntervaloTentativas, Tentativas: integer;
+  cSituacao: String;
 begin
   Result := False;
 
@@ -1967,7 +1968,13 @@ begin
     TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
   end;
 
-  if (FSituacao = '3') or (FSituacao = '4') then  // Lote processado ?
+  if (FProvedor in [proEquiplano, proEL]) then
+    cSituacao := '2'  // Não Processado, lote com erro
+  else
+    cSituacao := '1'; // Lote Não Recebido
+
+  // Lote processado ?
+  if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') then
     Result := TratarRespostaFinal;
 end;
 
@@ -1994,7 +2001,7 @@ begin
   if (FProvedor in [proEquiplano, proEL]) then
     Result := (FSituacao = '1')  // Aguardando processamento
   else
-    Result := (FSituacao = '2'); // Não Processado
+    Result := (FSituacao = '2'); // Lote não Processado
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.TratarRespostaFinal: Boolean;
@@ -2028,8 +2035,8 @@ begin
                       case FSituacao[1] of
                         '1' : xSituacao := 'Aguardando processamento';
                         '2' : xSituacao := 'Não Processado, lote com erro';
-                        '3' : xSituacao := 'Processado com sucesso';
-                        '4' : xSituacao := 'Processado com avisos';
+                        '3' : xSituacao := 'Lote Processado com sucesso';
+                        '4' : xSituacao := 'Lote Processado com avisos';
                       end;
                     end;
 
@@ -2037,8 +2044,8 @@ begin
                case FSituacao[1] of
                  '1' : xSituacao := 'Aguardando processamento';
                  '2' : xSituacao := 'Não Processado, lote com erro';
-                 '3' : xSituacao := 'Processado com avisos';
-                 '4' : xSituacao := 'Processado com sucesso';
+                 '3' : xSituacao := 'Lote Processado com avisos';
+                 '4' : xSituacao := 'LOte Processado com sucesso';
                end;
              end;
 
@@ -2046,10 +2053,10 @@ begin
 
     else begin
            case StrToSituacaoLoteRPS(Ok, FSituacao) of
-            slrNaoRecibo        : xSituacao := 'Não Recebido.';
-            slrNaoProcessado    : xSituacao := 'Não Processado.';
-            slrProcessadoErro   : xSituacao := 'Processado com Erro.';
-            slrProcessadoSucesso: xSituacao := 'Processado com Sucesso.';
+            slrNaoRecibo        : xSituacao := 'Lote não Recebido.';
+            slrNaoProcessado    : xSituacao := 'Lote não Processado.';
+            slrProcessadoErro   : xSituacao := 'Lote Processado com Erro.';
+            slrProcessadoSucesso: xSituacao := 'Lote Processado com Sucesso.';
            end;
          end;
     end;

@@ -360,6 +360,9 @@ begin
           begin
             with ListaNFSe.FCompNFSe.Add do
             begin
+              // Armazena o XML da NFS-e
+              FNFSe.XML := Leitor.Grupo;
+
               FNFSe.NumeroLote    := NumeroLoteTemp;
               FNFSe.dhRecebimento := DataRecebimentoTemp;
               FNFSe.Protocolo     := ProtocoloTemp;

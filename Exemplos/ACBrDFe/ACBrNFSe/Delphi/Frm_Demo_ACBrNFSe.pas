@@ -749,6 +749,14 @@ begin
  end;
 
  ACBrNFSe1.Enviar(vNumLote);
+
+ for i := 0 to iQtde -1 do
+ begin
+   MemoDados.Lines.Add('Nome XML: '+ACBrNFSe1.NotasFiscais.Items[i].NomeArq);
+   MemoDados.Lines.Add('Nota Numero: '+ACBrNFSe1.NotasFiscais.Items[i].NFSe.Numero);
+   MemoDados.Lines.Add('Código de Verificação: '+ACBrNFSe1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
+ end;
+
  ACBrNFSe1.NotasFiscais.Clear;
 end;
 

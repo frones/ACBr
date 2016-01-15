@@ -123,8 +123,6 @@ begin
 end;
 
 procedure TNFSeW_ABRASFv2.GerarPrestador;
-var
-  xMun: String;
 begin
   Gerador.wGrupoNFSe('Prestador');
 
@@ -162,8 +160,6 @@ begin
 end;
 
 procedure TNFSeW_ABRASFv2.GerarTomador;
-var
-  xMun: String;
 begin
   if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
      (NFSe.Tomador.RazaoSocial <> '') or

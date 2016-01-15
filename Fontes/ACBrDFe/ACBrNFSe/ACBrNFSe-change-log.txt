@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2016
+-- ACBrNFSeWebServices --
+[*] Remoção de códigos sem necessidade para a obtenção dos dos dados na NFS-e.
+-- pnfsNFSeW_ABRASFv1 / pnfsNFSeW_ABRASFv2 --
+[*] Remoção de definição de variaveis que não são mais utilizadas.
+-- pnfsNFSeR --
+[*] Melhorias na leitura do XML do RPS e NFS-e.
+-- pnfsLerListaNFSe --
+[*] Inluido a linha para armazenar na propriedade o XML da NFS-e.
+    Por: Italo Jurisato Junior
+
 14/01/2016
 -- pnfsNFSeR / pnfsNFSeW_ABRASFv1 / pnfsNFSeW_ABRASFv2 --
 [*] Correções na leitura de algumas TAGs e remoção de códigos não utilizados

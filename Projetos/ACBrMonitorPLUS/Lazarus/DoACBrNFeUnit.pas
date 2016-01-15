@@ -264,7 +264,7 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           ConfiguraDANFe;
+           ConfiguraDANFe(False);
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.Impressora := Cmd.Params(1);
@@ -328,15 +328,7 @@ begin
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           MudouDANFe := False;
-           if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
-            begin
-              MudouDANFe := True;
-              OldDANFe := ACBrNFe1.DANFE;
-              ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
-            end;
-
-           ConfiguraDANFe;
+           ConfiguraDANFe(True);
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
@@ -372,12 +364,8 @@ begin
            try
               ACBrNFe1.NotasFiscais.ImprimirPDF;
               ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
-              if MudouDANFe then
-               begin
-                 MudouDANFe := False;
-                 ACBrNFe1.DANFE := OldDANFe;
-                 ConfiguraDANFe;
-               end;
+              ConfiguraDANFe(False);
+
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
@@ -420,17 +408,10 @@ begin
                  raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
             end;
 
-           ConfiguraDANFe;
+           ConfiguraDANFe(False);
 
-           if rgModoImpressaoEvento.ItemIndex = 0 then
-              ACBrNFe1.DANFE := ACBrNFeDANFeRL1
-           else
-            begin
-              if rgModeloDANFeNFCE.ItemIndex = 0 then
-                 ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
-              else
-                 ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
-            end;
+           if (rgModoImpressaoEvento.ItemIndex = 0) or (ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1) then  //Atualmente não existe impressão de eventos em Fortes para Bobina
+              ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
 
            if NaoEstaVazio(Cmd.Params(2)) then
               ACBrNFe1.DANFE.Impressora := Cmd.Params(2)
@@ -481,12 +462,10 @@ begin
                  raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
             end;
 
-           ConfiguraDANFe;
+           ConfiguraDANFe(True);
 
-           if rgModoImpressaoEvento.ItemIndex = 0 then
-              ACBrNFe1.DANFE := ACBrNFeDANFeRL1
-           else
-              ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+           if (rgModoImpressaoEvento.ItemIndex = 0) or (ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1) then  //Atualmente não existe impressão de eventos em Fortes para Bobina
+              ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
 
            try
               ACBrNFe1.ImprimirEventoPDF;
@@ -589,7 +568,7 @@ begin
                    end;
                  end;
 
-                ConfiguraDANFe;
+                ConfiguraDANFe(False);
 
                 if NaoEstaVazio(Cmd.Params(4)) then
                    ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
@@ -602,7 +581,7 @@ begin
             end
            else
             begin
-              ConfiguraDANFe;
+              ConfiguraDANFe(False);
 
               if NaoEstaVazio(Cmd.Params(4)) then
                  ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
@@ -725,7 +704,7 @@ begin
 
                  }
          begin
-           ConfiguraDANFe;
+           ConfiguraDANFe(False);
 
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
@@ -947,7 +926,7 @@ begin
                            Application.BringToFront;
                          end;
 
-                        ConfiguraDANFe;
+                        ConfiguraDANFe(False);
 
                         if nNumCopias > 0 then
                           ACBrNFe1.DANFE.NumCopias := nNumCopias;
@@ -1327,16 +1306,7 @@ begin
            if ACBrNFe1.NotasFiscais.Count = 0 then
              raise Exception.Create('Nenhuma NFe encontrada no arquivo: '+ArqNFe);
 
-           MudouDANFe := False;
-
-           if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
-            begin
-              MudouDANFe := True;
-              OldDANFe := ACBrNFe1.DANFE;
-              ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
-            end;
-
-           ConfiguraDANFe;
+           ConfiguraDANFe(True);
 
            sMensagemEmail := TStringList.Create;
            CC := TstringList.Create;
@@ -1371,12 +1341,7 @@ begin
              sMensagemEmail.Free;
 
              // retornar o DANFE ao que era antes
-             if MudouDANFe then
-              begin
-                MudouDANFe := False;
-                ACBrNFe1.DANFE := OldDANFe;
-                ConfiguraDANFe;
-              end;
+             ConfiguraDANFe(False);
            end;
         end
 
@@ -1419,7 +1384,7 @@ begin
                  raise Exception.Create('Arquivo '+Cmd.Params(2)+' não encontrado.');
             end;
 
-           ConfiguraDANFe; 
+           ConfiguraDANFe(True); 
 
            if (Cmd.Params(3) = '1') then
             begin
@@ -1673,7 +1638,7 @@ begin
 
         else if Cmd.Metodo = 'imprimirrelatorio' then //NFe.ImprimirRelatorio(cTexto)
          begin
-           ConfiguraDANFe;
+           ConfiguraDANFe(False);
 
            if rgModeloDANFeNFCE.ItemIndex <> 1  then
                raise Exception.Create('Comando disponível apenas para o DANFe modelo DANFe ESCPOS');

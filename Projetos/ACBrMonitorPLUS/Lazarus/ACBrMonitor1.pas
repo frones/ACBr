@@ -1232,7 +1232,7 @@ type
 
     procedure LerIni;
     procedure SalvarIni;
-    procedure ConfiguraDANFe;
+    procedure ConfiguraDANFe(PDF : Boolean);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -2191,7 +2191,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe;
+    ConfiguraDANFe(True);
 
     vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
@@ -2323,7 +2323,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe;
+    ConfiguraDANFe(False);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
@@ -3521,7 +3521,7 @@ begin
     cbxImpressoraNFCe.ItemIndex :=
       cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
 
-    ConfiguraDANFe;
+    ConfiguraDANFe(False);
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
@@ -6879,7 +6879,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.ConfiguraDANFe;
+procedure TFrmACBrMonitor.ConfiguraDANFe(PDF : Boolean);
 var
   OK: boolean;
 begin
@@ -6887,7 +6887,7 @@ begin
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      if rgModeloDANFeNFCE.ItemIndex = 0 then
+      if (rgModeloDANFeNFCE.ItemIndex = 0) or PDF then
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
@@ -6905,6 +6905,9 @@ begin
     else
        ACBrNFe1.DANFE.NFeCancelada := False;
   end;
+
+  if PDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
+    ForceDirectories(PathWithDelim(edtPathPDF.Text));
 
   if ACBrNFe1.DANFE <> nil then
   begin

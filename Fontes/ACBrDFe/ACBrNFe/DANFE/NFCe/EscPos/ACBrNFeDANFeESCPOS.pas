@@ -651,14 +651,17 @@ begin
     if not Assigned(ACBrNFe) then
       raise Exception.Create(ACBrStr('Componente ACBrNFe não atribuído'));
 
-    FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFE;
+    if TACBrNFe(ACBrNFe).NotasFiscais.Count <= 0 then
+      raise Exception.Create(ACBrStr('XML da NFe não informado, obrigatório para o modelo ESCPOS'))
+    else
+      FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFE;
   end
   else
     FpNFe := NFE;
 
   FpEvento := TACBrNFe(ACBrNFe).EventoNFe;
   if not Assigned(FpEvento) then
-    raise Exception.Create('Evento não foi assinalado!');
+    raise Exception.Create('Arquivo de Evento não informado!');
 
   AtivarPosPrinter;
   GerarClicheEmpresa;

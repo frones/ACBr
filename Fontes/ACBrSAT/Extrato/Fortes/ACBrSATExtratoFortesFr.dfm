@@ -1,8 +1,8 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 612
-  Top = 64
+  Left = 636
+  Top = 83
   Width = 763
-  Height = 784
+  Height = 789
   Caption = 'ACBrSATExtratoFortes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -836,118 +836,93 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Height = 88
         AutoSize = True
-        object pCNPJ_IE_IM: TRLPanel
-          Left = 0
-          Top = 66
-          Width = 286
-          Height = 22
-          Align = faTop
-          AutoSize = True
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
+        object lEndereco: TRLMemo
+          Left = 4
+          Top = 42
+          Width = 278
+          Height = 24
+          Align = faBottom
+          Alignment = taCenter
           Behavior = [beSiteExpander]
-          object lEmitCNPJ_IE_IM: TRLLabel
-            Left = 0
-            Top = 0
-            Width = 286
-            Height = 14
-            Align = faBottom
-            Alignment = taCenter
-            Caption = 
-              'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
-              '3'
-            Layout = tlBottom
-          end
-          object RLDraw1: TRLDraw
-            Left = 0
-            Top = 14
-            Width = 286
-            Height = 8
-            Align = faBottom
-            DrawKind = dkLine
-            Pen.Style = psDot
-          end
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Lines.Strings = (
+            'Endere'#231'o LINHA 1'
+            'Endere'#231'o LINHA 2')
+          ParentFont = False
         end
-        object pLogoeCliche: TRLPanel
-          Left = 0
-          Top = 0
-          Width = 286
-          Height = 66
+        object lRazaoSocial: TRLMemo
+          Left = 4
+          Top = 18
+          Width = 278
+          Height = 24
+          Align = faBottom
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Lines.Strings = (
+            'Raz'#227'o Social - Linha 1'
+            'Raz'#227'o Social - Linha 2')
+          ParentFont = False
+        end
+        object lNomeFantasia: TRLMemo
+          Left = 4
+          Top = 1
+          Width = 278
+          Height = 17
           Align = faTop
-          AutoExpand = True
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Layout = tlCenter
+          Lines.Strings = (
+            'Nome Fantasia')
+          ParentFont = False
+        end
+        object lEmitCNPJ_IE_IM: TRLLabel
+          Left = 4
+          Top = 66
+          Width = 278
+          Height = 14
+          Align = faBottom
+          Alignment = taCenter
+          Caption = 
+            'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
+            '3'
+          Layout = tlBottom
+        end
+        object RLDraw1: TRLDraw
+          Left = 4
+          Top = 80
+          Width = 278
+          Height = 8
+          Align = faBottom
+          DrawKind = dkLine
+          Pen.Style = psDot
+        end
+        object imgLogo: TRLImage
+          Left = 4
+          Top = 0
+          Width = 278
+          Height = 1
+          Align = faTop
           AutoSize = True
           Behavior = [beSiteExpander]
-          object imgLogo: TRLImage
-            Left = 0
-            Top = 0
-            Width = 1
-            Height = 66
-            Align = faLeft
-            AutoSize = True
-            Center = True
-            Scaled = True
-          end
-          object pCliche: TRLPanel
-            Left = 1
-            Top = 0
-            Width = 285
-            Height = 66
-            Align = faClient
-            AutoExpand = True
-            AutoSize = True
-            Behavior = [beSiteExpander]
-            object lNomeFantasia: TRLLabel
-              Left = 0
-              Top = 0
-              Width = 285
-              Height = 19
-              Align = faTop
-              Alignment = taCenter
-              Caption = 'Nome Fantasia'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Height = -16
-              Font.Name = 'Arial'
-              Font.Style = [fsBold]
-              Layout = tlCenter
-              ParentFont = False
-            end
-            object lEndereco: TRLMemo
-              Left = 0
-              Top = 43
-              Width = 285
-              Height = 23
-              Align = faClient
-              Alignment = taCenter
-              Behavior = [beSiteExpander]
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Height = -9
-              Font.Name = 'Arial'
-              Font.Style = []
-              Lines.Strings = (
-                'Endere'#231'o LINHA 1'
-                'Endere'#231'o LINHA 2'
-                '')
-              ParentFont = False
-            end
-            object lRazaoSocial: TRLMemo
-              Left = 0
-              Top = 19
-              Width = 285
-              Height = 24
-              Align = faTop
-              Alignment = taCenter
-              Behavior = [beSiteExpander]
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Height = -9
-              Font.Name = 'Arial'
-              Font.Style = []
-              Lines.Strings = (
-                'Raz'#227'o Social - Linha 1'
-                'Raz'#227'o Social - Linha 2')
-              ParentFont = False
-            end
-          end
+          Center = True
+          Scaled = True
         end
       end
       object rlbTeste: TRLBand
@@ -1111,7 +1086,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbCanRodape: TRLBand
       Left = 8
-      Top = 300
+      Top = 303
       Width = 286
       Height = 523
       AutoSize = True
@@ -1355,97 +1330,15 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 8
       Width = 286
-      Height = 130
+      Height = 133
       AutoSize = True
       BandType = btHeader
-      object pLogoeClicheCan: TRLPanel
-        Left = 0
-        Top = 0
-        Width = 286
-        Height = 66
-        Align = faTop
-        AutoExpand = True
-        AutoSize = True
-        Behavior = [beSiteExpander]
-        object imgLogoCan: TRLImage
-          Left = 0
-          Top = 0
-          Width = 1
-          Height = 66
-          Align = faLeft
-          AutoSize = True
-          Center = True
-          Scaled = True
-        end
-        object pClicheCan: TRLPanel
-          Left = 1
-          Top = 0
-          Width = 285
-          Height = 66
-          Align = faClient
-          AutoExpand = True
-          AutoSize = True
-          Behavior = [beSiteExpander]
-          object lNomeFantasiaCan: TRLLabel
-            Left = 0
-            Top = 0
-            Width = 285
-            Height = 19
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'Nome Fantasia'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -16
-            Font.Name = 'Arial'
-            Font.Style = [fsBold]
-            Layout = tlCenter
-            ParentFont = False
-          end
-          object lEnderecoCan: TRLMemo
-            Left = 0
-            Top = 43
-            Width = 285
-            Height = 23
-            Align = faClient
-            Alignment = taCenter
-            Behavior = [beSiteExpander]
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Arial'
-            Font.Style = []
-            Lines.Strings = (
-              'Endere'#231'o LINHA 1'
-              'Endere'#231'o LINHA 2')
-            ParentFont = False
-          end
-          object lRazaoSocialCan: TRLMemo
-            Left = 0
-            Top = 19
-            Width = 285
-            Height = 24
-            Align = faTop
-            Alignment = taCenter
-            Behavior = [beSiteExpander]
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Arial'
-            Font.Style = []
-            Lines.Strings = (
-              'Raz'#227'o Social Canc - Linha 1'
-              'Raz'#227'o Social Canc - Linha 2')
-            ParentFont = False
-          end
-        end
-      end
       object lEmitCNPJ_IE_IMCan: TRLLabel
         Left = 0
-        Top = 66
+        Top = 69
         Width = 286
         Height = 14
-        Align = faTop
+        Align = faBottom
         Alignment = taCenter
         Caption = 
           'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
@@ -1454,19 +1347,19 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object RLDraw11: TRLDraw
         Left = 0
-        Top = 80
+        Top = 83
         Width = 286
         Height = 8
-        Align = faTop
+        Align = faBottom
         DrawKind = dkLine
         Pen.Style = psDot
       end
       object lNumeroExtratoCan: TRLLabel
         Left = 0
-        Top = 88
+        Top = 91
         Width = 286
         Height = 14
-        Align = faTop
+        Align = faBottom
         Alignment = taCenter
         Caption = 'Extrato N'#176': <NUMERO>'
         Font.Charset = DEFAULT_CHARSET
@@ -1479,10 +1372,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lCupomFiscalEletronicoCan: TRLLabel
         Left = 0
-        Top = 102
+        Top = 105
         Width = 286
         Height = 14
-        Align = faTop
+        Align = faBottom
         Alignment = taCenter
         Caption = 'CUPOM FISCAL ELETR'#212'NICO - SAT'
         Font.Charset = DEFAULT_CHARSET
@@ -1495,10 +1388,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lTitCancelamento: TRLLabel
         Left = 0
-        Top = 116
+        Top = 119
         Width = 286
         Height = 14
-        Align = faTop
+        Align = faBottom
         Alignment = taCenter
         Caption = 'CANCELAMENTO'
         Font.Charset = DEFAULT_CHARSET
@@ -1509,10 +1402,74 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Layout = tlCenter
         ParentFont = False
       end
+      object lNomeFantasiaCan: TRLMemo
+        Left = 0
+        Top = 1
+        Width = 286
+        Height = 20
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        Lines.Strings = (
+          'Nome Fantasia')
+        ParentFont = False
+      end
+      object lEnderecoCan: TRLMemo
+        Left = 0
+        Top = 21
+        Width = 286
+        Height = 24
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Endere'#231'o LINHA 1'
+          'Endere'#231'o LINHA 2')
+        ParentFont = False
+      end
+      object lRazaoSocialCan: TRLMemo
+        Left = 0
+        Top = 45
+        Width = 286
+        Height = 24
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Raz'#227'o Social Canc - Linha 1'
+          'Raz'#227'o Social Canc - Linha 2')
+        ParentFont = False
+      end
+      object imgLogoCan: TRLImage
+        Left = 0
+        Top = 0
+        Width = 286
+        Height = 1
+        Align = faTop
+        AutoSize = True
+        Center = True
+        Scaled = True
+      end
     end
     object rlbDadosCupomCancelado: TRLBand
       Left = 8
-      Top = 222
+      Top = 225
       Width = 286
       Height = 78
       object RLDraw13: TRLDraw
@@ -1596,7 +1553,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlbTesteCan: TRLBand
       Left = 8
-      Top = 138
+      Top = 141
       Width = 286
       Height = 84
       AutoSize = True

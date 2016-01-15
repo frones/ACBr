@@ -106,8 +106,8 @@ type
     lFiller4: TRLLabel;
     lFiller5: TRLLabel;
     lFiller6: TRLLabel;
-    lNomeFantasia: TRLLabel;
-    lNomeFantasiaCan: TRLLabel;
+    lNomeFantasia: TRLMemo;
+    lNomeFantasiaCan: TRLMemo;
     lNumeroExtrato: TRLLabel;
     lNumeroExtratoCan: TRLLabel;
     lNumSATCan: TRLLabel;
@@ -162,12 +162,8 @@ type
     mEndEnt: TRLMemo;
     mObsContrib: TRLMemo;
     mLinhaItem: TRLMemo;
-    pCliche: TRLPanel;
-    pClicheCan: TRLPanel;
-    pCNPJ_IE_IM: TRLPanel;
     pGap6: TRLPanel;
     pGap7: TRLPanel;
-    pLogoeClicheCan: TRLPanel;
     pNumSATCan: TRLPanel;
     pNumSATCancl: TRLPanel;
     rlbDadosCupomCancelado: TRLBand;
@@ -200,7 +196,6 @@ type
     rlbsCabecalho: TRLSubDetail;
     RLDraw4: TRLDraw;
     RLDraw5: TRLDraw;
-    pLogoeCliche: TRLPanel;
     RLDraw8: TRLDraw;
     RLDraw9: TRLDraw;
     RLPanel1: TRLPanel;
@@ -539,7 +534,7 @@ begin
     if Emit.cRegTrib = RTSimplesNacional then
        fObsFisco.Add( Msg_ICMS_123_2006 );
 
-    lNomeFantasia.Caption   := Emit.xFant ;
+    lNomeFantasia.Lines.Text:= Emit.xFant ;
     lRazaoSocial.Lines.Text := Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
@@ -796,7 +791,7 @@ var
 begin
   with ACBrSATExtrato.CFe do
   begin
-    lNomeFantasiaCan.Caption   := Emit.xFant ;
+    lNomeFantasiaCan.Lines.Text:= Emit.xFant ;
     lRazaoSocialCan.Lines.Text := Emit.xNome ;
     lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;

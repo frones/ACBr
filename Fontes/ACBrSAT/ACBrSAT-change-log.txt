@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/01/2015
+-- ACBrSATExtratoFortes --
+[*] Ajuste para que todo o cabeçaho do Cliche seja impresso como "memo",
+    permitindo a quebra de linhas com nomes grandes  (por: DSA)
+
 Data: 17/12/2015
 -- ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
 [+] Adicionada a Impressão no Nome do Contribuintem após o CPF/CNPJ no cabeçalho

@@ -82,10 +82,13 @@ type
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
+    FFastFileInutilizacao: String;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
     function PrepareReportEvento: Boolean;
+    function PrepareReportInutilizacao: Boolean;
+    function GetPreparedReportInutilizacao: TfrxReport;
     procedure setTributosPercentual(const Value: TpcnPercentualTributos);
     procedure setTributosPercentualPersonalizado(const Value: double);
   public
@@ -96,9 +99,12 @@ type
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); override;
     procedure ImprimirEVENTO(NFE: TNFe = nil); override;
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
+    procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); override;
   published
     property FastFile: String read FFastFile write FFastFile;
     property FastFileEvento: String read FFastFileEvento write FFastFileEvento;
+    property FastFileInutilizacao: String read FFastFileInutilizacao write FFastFileInutilizacao;
     property dmDanfe: TACBrNFeFRClass read FdmDanfe write FdmDanfe;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport: TfrxReport read GetPreparedReport;
@@ -176,6 +182,19 @@ begin
   else
   begin
     if PrepareReportEvento then
+      Result := FdmDanfe.frxReport
+    else
+      Result := nil;
+  end;
+end;
+
+function TACBrNFeDANFEFR.GetPreparedReportInutilizacao: TfrxReport;
+begin
+  if Trim(FFastFileInutilizacao) = '' then
+    Result := nil
+  else
+  begin
+    if PrepareReportInutilizacao then
       Result := FdmDanfe.frxReport
     else
       Result := nil;
@@ -326,6 +345,51 @@ begin
     raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
 end;
 
+function TACBrNFeDANFEFR.PrepareReportInutilizacao: Boolean;
+var
+ wProjectStream: TStringStream;
+begin
+  FdmDanfe.SetDataSetsToFrxReport;
+  if Trim(FastFileInutilizacao) <> '' then
+  begin
+    if not (uppercase(copy(FastFileInutilizacao,length(FastFileInutilizacao)-3,4))='.FR3') then
+    begin
+      wProjectStream:=TStringStream.Create(FastFileInutilizacao);
+      FdmDanfe.frxReport.FileName := '';
+      FdmDanfe.frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
+    else
+    begin
+      if FileExists(FastFileInutilizacao) then
+        FdmDanfe.frxReport.LoadFromFile(FastFileInutilizacao)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão de INUTILIZAÇÃO "%s" inválido.', [FastFileInutilizacao]);
+    end
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão de INUTILIZAÇÃO não assinalado.');
+
+  FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
+
+  // preparar relatorio
+  if Assigned(ACBrNFe) then
+  begin
+    if assigned(TACBrNFe(ACBrNFe).InutNFe) then
+    begin
+      FdmDanfe.Inutilizacao := TACBrNFe(ACBrNFe).InutNFe.RetInutNFe;
+      FdmDanfe.CarregaDadosInutilizacao;
+    end
+    else
+      raise EACBrNFeDANFEFR.Create('INUTILIZAÇÃO não foi assinalada.');
+
+    Result := FdmDanfe.frxReport.PrepareReport;
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+
+end;
+
 procedure TACBrNFeDANFEFR.setTributosPercentual(
   const Value: TpcnPercentualTributos);
 begin
@@ -433,6 +497,44 @@ begin
     NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 
     FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procEventoNFe.pdf';
+
+    if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
+      ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));
+
+    FdmDanfe.frxReport.Export(FdmDanfe.frxPDFExport);
+  end;
+end;
+
+procedure TACBrNFeDANFEFR.ImprimirINUTILIZACAO(NFE: TNFe);
+begin
+  if PrepareReportInutilizacao then
+  begin
+    if MostrarPreview then
+      FdmDanfe.frxReport.ShowPreparedReport
+    else
+      FdmDanfe.frxReport.Print;
+  end;
+end;
+
+procedure TACBrNFeDANFEFR.ImprimirINUTILIZACAOPDF(NFE: TNFe);
+const
+  TITULO_PDF = 'Inutilização de Numeração';
+var
+  NomeArq: String;
+begin
+  if PrepareReportInutilizacao then
+  begin
+    FdmDanfe.frxPDFExport.Author     := Sistema;
+    FdmDanfe.frxPDFExport.Creator    := Sistema;
+    FdmDanfe.frxPDFExport.Producer   := Sistema;
+    FdmDanfe.frxPDFExport.Title      := TITULO_PDF;
+    FdmDanfe.frxPDFExport.Subject    := TITULO_PDF;
+    FdmDanfe.frxPDFExport.Keywords   := TITULO_PDF;
+    FdmDanfe.frxPDFExport.ShowDialog := False;
+
+    NomeArq := OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.RetInutNFe.Id);
+
+    FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-ped-inu.pdf';
 
     if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
       ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));

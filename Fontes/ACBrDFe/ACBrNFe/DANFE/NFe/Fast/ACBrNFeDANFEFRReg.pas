@@ -80,6 +80,8 @@ begin
      TACBrNFeDANFEFRFileNameProperty);
   RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFEFR, 'FastFileEvento',
      TACBrNFeDANFEFRFileNameProperty);
+  RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFEFR, 'FastFileInutilizacao',
+     TACBrNFeDANFEFRFileNameProperty);
 end;
 
 { TACBrNFeDANFERaveFileNameProperty }

@@ -73,6 +73,12 @@ type
     FRegistroE230Count: Integer;
     FRegistroE240Count: Integer;
     FRegistroE250Count: Integer;
+    FRegistroE300Count: Integer;
+    FRegistroE310Count: Integer;
+    FRegistroE311Count: Integer;
+    FRegistroE312Count: Integer;
+    FRegistroE313Count: Integer;
+    FRegistroE316Count: Integer;
     FRegistroE500Count: Integer;
     FRegistroE510Count: Integer;
     FRegistroE520Count: Integer;
@@ -91,6 +97,12 @@ type
     procedure WriteRegistroE230(RegE220: TRegistroE220);
     procedure WriteRegistroE240(RegE220: TRegistroE220);
     procedure WriteRegistroE250(RegE210: TRegistroE210);
+    procedure WriteRegistroE300(RegE001: TRegistroE001);
+    procedure WriteRegistroE310(RegE300: TRegistroE300);
+    procedure WriteRegistroE311(RegE310: TRegistroE310);
+    procedure WriteRegistroE312(RegE311: TRegistroE311);
+    procedure WriteRegistroE313(RegE311: TRegistroE311);
+    procedure WriteRegistroE316(RegE310: TRegistroE310);
     procedure WriteRegistroE500(RegE001: TRegistroE001);
     procedure WriteRegistroE510(RegE500: TRegistroE500);
     procedure WriteRegistroE520(RegE500: TRegistroE500);
@@ -117,6 +129,12 @@ type
     function RegistroE230New: TRegistroE230;
     function RegistroE240New: TRegistroE240;
     function RegistroE250New: TRegistroE250;
+    function RegistroE300New: TRegistroE300;
+    function RegistroE310New: TRegistroE310;
+    function RegistroE311New: TRegistroE311;
+    function RegistroE312New: TRegistroE312;
+    function RegistroE313New: TRegistroE313;
+    function RegistroE316New: TRegistroE316;
     function RegistroE500New: TRegistroE500;
     function RegistroE510New: TRegistroE510;
     function RegistroE520New: TRegistroE520;
@@ -142,6 +160,12 @@ type
     property RegistroE230Count: Integer read FRegistroE230Count write FRegistroE230Count;
     property RegistroE240Count: Integer read FRegistroE240Count write FRegistroE240Count;
     property RegistroE250Count: Integer read FRegistroE250Count write FRegistroE250Count;
+    property RegistroE300Count: Integer read FRegistroE300Count write FRegistroE300Count;
+    property RegistroE310Count: Integer read FRegistroE310Count write FRegistroE310Count;
+    property RegistroE311Count: Integer read FRegistroE311Count write FRegistroE311Count;
+    property RegistroE312Count: Integer read FRegistroE312Count write FRegistroE312Count;
+    property RegistroE313Count: Integer read FRegistroE313Count write FRegistroE313Count;
+    property RegistroE316Count: Integer read FRegistroE316Count write FRegistroE316Count;
     property RegistroE500Count: Integer read FRegistroE500Count write FRegistroE500Count;
     property RegistroE510Count: Integer read FRegistroE510Count write FRegistroE510Count;
     property RegistroE520Count: Integer read FRegistroE520Count write FRegistroE520Count;
@@ -188,6 +212,12 @@ begin
   RegistroE230Count := 0;
   RegistroE240Count := 0;
   RegistroE250Count := 0;
+  RegistroE300Count := 0;
+  RegistroE310Count := 0;
+  RegistroE311Count := 0;
+  RegistroE312Count := 0;
+  RegistroE313Count := 0;
+  RegistroE316Count := 0;
   RegistroE500Count := 0;
   RegistroE510Count := 0;
   RegistroE520Count := 0;
@@ -378,6 +408,88 @@ begin
    Result := E210.RegistroE250.New(E210);
 end;
 
+function TBloco_E.RegistroE300New: TRegistroE300;
+begin
+   Result := FRegistroE001.RegistroE300.New(FRegistroE001);
+end;
+
+function TBloco_E.RegistroE310New: TRegistroE310;
+var
+E300: TRegistroE300;
+E300Count: Integer;
+begin
+   E300Count := FRegistroE001.RegistroE300.Count -1;
+   if E300Count = -1 then
+      raise Exception.Create('O registro E310 deve ser filho do registro E300, e não existe nenhum E300 pai!');
+
+   E300   := FRegistroE001.RegistroE300.Items[E300Count];
+   Result := E300.RegistroE310.New(E300);
+end;
+
+function TBloco_E.RegistroE311New: TRegistroE311;
+var
+E300Count: integer;
+E310Count: integer;
+E310: TRegistroE310;
+begin
+   E300Count := FRegistroE001.RegistroE300.Count -1;
+   E310Count := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Count -1;
+   if E310Count = -1 then
+      raise Exception.Create('O registro E311 deve ser filho do registro E310, e não existe nenhum E310 pai!');
+
+   E310   := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count];
+   Result := E310.RegistroE311.New(E310);
+end;
+
+function TBloco_E.RegistroE312New: TRegistroE312;
+var
+E300Count: integer;
+E310Count: integer;
+E311Count: integer;
+E311: TRegistroE311;
+begin
+   E300Count := FRegistroE001.RegistroE300.Count -1;
+   E310Count := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Count -1;
+   E311Count := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count].RegistroE311.Count -1;
+   if E311Count = -1 then
+      raise Exception.Create('O registro E312 deve ser filho do registro E311, e não existe nenhum E311 pai!');
+
+   E311   := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count].RegistroE311.Items[E311Count];
+   Result := E311.RegistroE312.New(E311);
+end;
+
+function TBloco_E.RegistroE313New: TRegistroE313;
+var
+E300Count: integer;
+E310Count: integer;
+E311Count: integer;
+E311: TRegistroE311;
+begin
+   E300Count := FRegistroE001.RegistroE300.Count -1;
+   E310Count := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Count -1;
+   E311Count := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count].RegistroE311.Count -1;
+   if E311Count = -1 then
+      raise Exception.Create('O registro E313 deve ser filho do registro E311, e não existe nenhum E311 pai!');
+
+   E311   := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count].RegistroE311.Items[E311Count];
+   Result := E311.RegistroE313.New(E311);
+end;
+
+function TBloco_E.RegistroE316New: TRegistroE316;
+var
+E300Count: integer;
+E310Count: integer;
+E310: TRegistroE310;
+begin
+   E300Count := FRegistroE001.RegistroE300.Count -1;
+   E310Count := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Count -1;
+   if E310Count = -1 then
+      raise Exception.Create('O registro E316 deve ser filho do registro E310, e não existe nenhum E310 pai!');
+
+   E310   := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count];
+   Result := E310.RegistroE316.New(E310);
+end;
+
 function TBloco_E.RegistroE500New: TRegistroE500;
 begin
    Result := FRegistroE001.RegistroE500.New(FRegistroE001);
@@ -437,6 +549,10 @@ begin
        begin
           WriteRegistroE100(FRegistroE001) ;
           WriteRegistroE200(FRegistroE001) ;
+
+          if FBloco_0.Registro0000.COD_VER >= vlVersao109 then
+            WriteRegistroE300(FRegistroE001) ;
+
           WriteRegistroE500(FRegistroE001) ;
        end;
      end;
@@ -903,6 +1019,194 @@ begin
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroE250Count := FRegistroE250Count + RegE210.RegistroE250.Count;
+  end;
+end;
+
+procedure TBloco_E.WriteRegistroE300(RegE001: TRegistroE001);
+var
+  intFor: integer;
+begin
+  if Assigned( RegE001.RegistroE300 ) then
+  begin
+     for intFor := 0 to RegE001.RegistroE300.Count - 1 do
+     begin
+        with RegE001.RegistroE300.Items[intFor] do
+        begin
+          Add( LFill('E300') +
+               LFill( UF ) +
+               LFill( DT_INI ) +
+               LFill( DT_FIN ) ) ;
+        end;
+        /// Registros FILHOS
+        WriteRegistroE310(RegE001.RegistroE300.Items[intFor]);
+        //
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE300Count := FRegistroE300Count + RegE001.RegistroE300.Count;
+  end;
+end;
+
+procedure TBloco_E.WriteRegistroE310(RegE300: TRegistroE300);
+var
+  intFor: integer;
+begin
+  if Assigned( RegE300.RegistroE310 ) then
+  begin
+     for intFor := 0 to RegE300.RegistroE310.Count - 1 do
+     begin
+        with RegE300.RegistroE310.Items[intFor] do
+        begin
+          Add( LFill('E310') +
+               LFill( Integer(IND_MOV_DIFAL), 0 ) +
+               LFill( VL_SLD_CRED_ANT_DIF,0 ) +
+               LFill( VL_TOT_DEBITOS_DIFAL, 0 ) +
+               LFill( VL_OUT_DEB_DIFAL, 0 ) +
+               LFill( VL_TOT_DEB_FCP, 0 ) +
+               LFill( VL_TOT_CREDITOS_DIFAL, 0 ) +
+               LFill( VL_TOT_CRED_FCP, 0 ) +
+               LFill( VL_OUT_CRED_DIFAL, 0 ) +
+               LFill( VL_SLD_DEV_ANT_DIFAL, 0 ) +
+               LFill( VL_DEDUCOES_DIFAL, 0 ) +
+               LFill( VL_RECOL, 0 ) +
+               LFill( VL_SLD_CRED_TRANSPORTAR, 0 ) +
+               LFill( DEB_ESP_DIFAL, 0 ));
+        end;
+        /// Registros FILHOS
+        WriteRegistroE311(RegE300.RegistroE310.Items[intFor]) ;
+        WriteRegistroE316(RegE300.RegistroE310.Items[intFor]) ;
+        ///
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE310Count := FRegistroE310Count + RegE300.RegistroE310.Count;
+  end;
+end;
+
+procedure TBloco_E.WriteRegistroE311(RegE310: TRegistroE310);
+var
+  intFor: integer;
+begin
+  if Assigned( RegE310.RegistroE311 ) then
+  begin
+     for intFor := 0 to RegE310.RegistroE311.Count - 1 do
+     begin
+        with RegE310.RegistroE311.Items[intFor] do
+        begin
+          Add( LFill('E311') +
+               LFill( COD_AJ_APUR ) +
+               LFill( DESCR_COMPL_AJ ) +
+               LFill( VL_AJ_APUR,0 )) ;
+        end;
+        /// Registros FILHOS
+        WriteRegistroE312(RegE310.RegistroE311.Items[intFor]) ;
+        WriteRegistroE313(RegE310.RegistroE311.Items[intFor]) ;
+        //
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE311Count := FRegistroE311Count + RegE310.RegistroE311.Count;
+  end;
+end;
+
+procedure TBloco_E.WriteRegistroE312(RegE311: TRegistroE311);
+var
+  intFor: integer;
+  intIND_PROC: integer;
+begin
+  if Assigned( RegE311.RegistroE312 ) then
+  begin
+     for intFor := 0 to RegE311.RegistroE312.Count - 1 do
+     begin
+        with RegE311.RegistroE312.Items[intFor] do
+        begin
+          case IND_PROC of
+           opSefaz:           intIND_PROC := 0;
+           opJusticaFederal:  intIND_PROC := 1;
+           opJusticaEstadual: intIND_PROC := 2;
+           opSecexRFB:        intIND_PROC := 3;
+           opOutros:          intIND_PROC := 9;
+           else               intIND_PROC := 9;
+          end;
+
+          Add( LFill('E312') +
+               LFill( NUM_DA ) +
+               LFill( NUM_PROC ) +
+               LFill( intIND_PROC, 0 ) +
+               LFill( PROC ) +
+               LFill( TXT_COMPL ) ) ;
+        end;
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE312Count := FRegistroE312Count + RegE311.RegistroE312.Count;
+  end;
+
+end;
+
+procedure TBloco_E.WriteRegistroE313(RegE311: TRegistroE311);
+var
+  intFor: integer;
+begin
+  if Assigned( RegE311.RegistroE313 ) then
+  begin
+     for intFor := 0 to RegE311.RegistroE313.Count - 1 do
+     begin
+        with RegE311.RegistroE313.Items[intFor] do
+        begin
+           Add( LFill('E313') +
+                LFill( COD_PART ) +
+                LFill( COD_MOD ) +
+                LFill( SER ) +
+                LFill( SUB ) +
+                LFill( NUM_DOC ) +
+                LFill( CHV_DOCe ) +
+                LFill( DT_DOC ) +
+                LFill( COD_ITEM ) +
+                LFill( VL_AJ_ITEM,0 )) ;
+        end;
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE313Count := FRegistroE313Count + RegE311.RegistroE313.Count;
+  end;
+end;
+
+procedure TBloco_E.WriteRegistroE316(RegE310: TRegistroE310);
+var
+  intFor: integer;
+  strIND_PROC: AnsiString;
+begin
+  if Assigned( RegE310.RegistroE316 ) then
+  begin
+     for intFor := 0 to RegE310.RegistroE316.Count - 1 do
+     begin
+        with RegE310.RegistroE316.Items[intFor] do
+        begin
+           case IND_PROC of
+             opSefaz:           strIND_PROC := '0';
+             opJusticaFederal:  strIND_PROC := '1';
+             opJusticaEstadual: strIND_PROC := '2';
+             opSecexRFB:        strIND_PROC := '3';
+             opOutros:          strIND_PROC := '9';
+             opNenhum:          strIND_PROC := '';
+           end;
+
+           Add( LFill('E316') +
+                LFill( COD_OR ) +
+                LFill( VL_OR,0 ) +
+                LFill( DT_VCTO ) +
+                LFill( COD_REC ) +
+                LFill( NUM_PROC ) +
+                LFill( strIND_PROC ) +
+                LFill( PROC ) +
+                LFill( TXT_COMPL ) +
+                LFill( MES_REF ) );
+        end;
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE316Count := FRegistroE316Count + RegE310.RegistroE316.Count;
   end;
 end;
 

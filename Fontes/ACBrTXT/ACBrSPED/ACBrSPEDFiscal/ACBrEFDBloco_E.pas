@@ -59,6 +59,12 @@ type
   TRegistroE230List = class;
   TRegistroE240List = class;
   TRegistroE250List = class;
+  TRegistroE300List = class;
+  TRegistroE310List = class;
+  TRegistroE311List = class;
+  TRegistroE312List = class;
+  TRegistroE313List = class;
+  TRegistroE316List = class;
   TRegistroE500List = class;
   TRegistroE510List = class;
   TRegistroE520List = class;
@@ -70,6 +76,7 @@ type
   private
     FRegistroE100: TRegistroE100List;
     FRegistroE200: TRegistroE200List;
+    FRegistroE300: TRegistroE300List;
     FRegistroE500: TRegistroE500List;
   public
     constructor Create; virtual; /// Create
@@ -77,6 +84,7 @@ type
 
     property RegistroE100: TRegistroE100List read FRegistroE100 write FRegistroE100;
     property RegistroE200: TRegistroE200List read FRegistroE200 write FRegistroE200;
+    property RegistroE300: TRegistroE300List read FRegistroE300 write FRegistroE300;
     property RegistroE500: TRegistroE500List read FRegistroE500 write FRegistroE500;
   end;
 
@@ -541,8 +549,221 @@ type
     property Items[Index: Integer]: TRegistroE250 read GetItem write SetItem;
   end;
 
-  /// Registro E500 - PERÍODO DE APURAÇÃO DO IPI
 
+  /// Registro E300 - PERÍODO DA APURAÇÃO DO ICMS DIFERENCIAL DE ALÍQUOTA - UF ORIGEM/DESTINO EC 87/15
+  TRegistroE300 = class
+  private
+    fUF: String;      /// Sigla da unidade da federação a que se refere a apuração
+    fDT_INI: TDateTime;   /// Data inicial a que a apuração se refere
+    fDT_FIN: TDateTime;   /// Data final a que a apuração se refere
+
+    fRegistroE310: TRegistroE310List;
+  public
+    constructor Create(AOwner: TRegistroE001); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property UF: String read fUF write fUF;
+    property DT_INI: TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN: TDateTime read fDT_FIN write fDT_FIN;
+    // Registro FILHO
+    property RegistroE310:TRegistroE310List read fRegistroE310 write fRegistroE310;
+  end;
+
+  TRegistroE300List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroE300;              /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE300); /// SetItem
+  public
+    function New(AOwner: TRegistroE001): TRegistroE300;
+    property Items[Index: Integer]: TRegistroE300 read GetItem write SetItem;
+  end;
+
+  /// Registro E310 - APURAÇÃO DO ICMS DIFERENCIAL DE ALÍQUOTA - UF ORIGEM/DESTINO EC 87/15
+  TRegistroE310 = class
+  private
+    fIND_MOV_DIFAL: TACBrMovimentoDIFAL;
+    fVL_SLD_CRED_ANT_DIF: currency;
+    fVL_TOT_DEBITOS_DIFAL: currency;
+    fVL_OUT_DEB_DIFAL: currency;
+    fVL_TOT_DEB_FCP: currency;
+    fVL_TOT_CREDITOS_DIFAL: currency;
+    fVL_TOT_CRED_FCP: currency;
+    fVL_OUT_CRED_DIFAL: currency;
+    fVL_SLD_DEV_ANT_DIFAL: currency;
+    fVL_DEDUCOES_DIFAL: currency;
+    fVL_RECOL: currency;
+    fVL_SLD_CRED_TRANSPORTAR: currency;
+    fDEB_ESP_DIFAL: currency;
+    fRegistroE311: TRegistroE311List;
+    fRegistroE316: TRegistroE316List;
+  public
+    constructor Create(AOwner: TRegistroE300); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property IND_MOV_DIFAL: TACBrMovimentoDIFAL read fIND_MOV_DIFAL write fIND_MOV_DIFAL;
+    property VL_SLD_CRED_ANT_DIF: currency read fVL_SLD_CRED_ANT_DIF write fVL_SLD_CRED_ANT_DIF;
+    property VL_TOT_DEBITOS_DIFAL: currency read fVL_TOT_DEBITOS_DIFAL write fVL_TOT_DEBITOS_DIFAL;
+    property VL_OUT_DEB_DIFAL: currency read fVL_OUT_DEB_DIFAL write fVL_OUT_DEB_DIFAL;
+    property VL_TOT_DEB_FCP: currency read fVL_TOT_DEB_FCP write fVL_TOT_DEB_FCP;
+    property VL_TOT_CREDITOS_DIFAL: currency read fVL_TOT_CREDITOS_DIFAL write fVL_TOT_CREDITOS_DIFAL;
+    property VL_TOT_CRED_FCP: currency read fVL_TOT_CRED_FCP write fVL_TOT_CRED_FCP;
+    property VL_OUT_CRED_DIFAL: currency read fVL_OUT_CRED_DIFAL write fVL_OUT_CRED_DIFAL;
+    property VL_SLD_DEV_ANT_DIFAL: currency read fVL_SLD_DEV_ANT_DIFAL write fVL_SLD_DEV_ANT_DIFAL;
+    property VL_DEDUCOES_DIFAL: currency read fVL_DEDUCOES_DIFAL write fVL_DEDUCOES_DIFAL;
+    property VL_RECOL: currency read fVL_RECOL write fVL_RECOL;
+    property VL_SLD_CRED_TRANSPORTAR: currency read fVL_SLD_CRED_TRANSPORTAR write fVL_SLD_CRED_TRANSPORTAR;
+    property DEB_ESP_DIFAL: currency read fDEB_ESP_DIFAL write fDEB_ESP_DIFAL;
+
+    // Registro FILHO
+    property RegistroE311: TRegistroE311List read fRegistroE311 write fRegistroE311;
+    property RegistroE316: TRegistroE316List read fRegistroE316 write fRegistroE316;
+  end;
+
+  /// Registro E310 - Lista
+
+  TRegistroE310List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroE310; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE310); /// SetItem
+  public
+    function New(AOwner: TRegistroE300): TRegistroE310;
+    property Items[Index: Integer]: TRegistroE310 read GetItem write SetItem;
+  end;
+
+  /// Registro E311 - AJUSTE/BENEFÍCIO/INCENTIVO DA APURAÇÃO DO ICMS DIFERENCIAL DE ALÍQUOTA UF ORIGEM/DESTINO EC 87/15
+  TRegistroE311 = class
+  private
+    fCOD_AJ_APUR: String;     /// Código do ajuste da apuração e dedução, conforme a Tabela indicada no item 5.1.1
+    fDESCR_COMPL_AJ: String;  /// Descrição complementar do ajuste da apuração
+    fVL_AJ_APUR: currency;        /// Valor do ajuste da apuração
+
+    FRegistroE312: TRegistroE312List;
+    FRegistroE313: TRegistroE313List;
+  public
+    constructor Create(AOwner: TRegistroE310); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property COD_AJ_APUR: String read fCOD_AJ_APUR write fCOD_AJ_APUR;
+    property DESCR_COMPL_AJ: String read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
+    property VL_AJ_APUR: currency read fVL_AJ_APUR write fVL_AJ_APUR;
+
+    property RegistroE312: TRegistroE312List read FRegistroE312 write FRegistroE312;
+    property RegistroE313: TRegistroE313List read FRegistroE313 write FRegistroE313;
+  end;
+
+  /// Registro E312 - Lista
+
+  TRegistroE311List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroE311; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE311); /// SetItem
+  public
+    function New(AOwner: TRegistroE310): TRegistroE311;
+    property Items[Index: Integer]: TRegistroe311 read GetItem write SetItem;
+  end;
+
+  /// Registro E312 - INFORMAÇÕES ADICIONAIS DOS AJUSTES DA APURAÇÃO DO ICMS DIFERENCIAL DE ALÍQUOTA UF ORIGEM/DESTINO EC 87/15
+  TRegistroE312 = class
+  private
+    fNUM_DA: String;                /// Número do documento de arrecadação estadual, se houver
+    fNUM_PROC: String;              /// Número do processo ao qual o ajuste está vinculado, se houver
+    fIND_PROC: TACBrOrigemProcesso; /// Indicador da origem do processo: 0- Sefaz; 1- Justiça Federal; 2- Justiça Estadual; 9- Outros
+    fPROC: String;                  /// Descrição resumida do processo que embasou o lançamento
+    fTXT_COMPL: String;             /// Descrição Complementar
+  public
+    constructor Create(AOwner: TRegistroE311); virtual; /// Create
+
+    property NUM_DA: String read fNUM_DA write fNUM_DA;
+    property NUM_PROC: String read fNUM_PROC write fNUM_PROC;
+    property IND_PROC: TACBrOrigemProcesso read fIND_PROC write fIND_PROC;
+    property PROC: String read fPROC write fPROC;
+    property TXT_COMPL: String read fTXT_COMPL write fTXT_COMPL;
+  end;
+
+  /// Registro E312 - Lista
+  TRegistroE312List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroE312; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE312); /// SetItem
+  public
+    function New(AOwner: TRegistroE311): TRegistroE312;
+    property Items[Index: Integer]: TRegistroE312 read GetItem write SetItem;
+  end;
+
+  /// Registro E313 - INFORMAÇÕES ADICIONAIS DOS AJUSTES DA APURAÇÃO DO ICMS DIFERENCIAL DE ALÍQUOTA UF ORIGEM/DESTINO EC 87/15 - IDENTIFICAÇÃO DOS DOCUMENTOS FISCAIS
+  TRegistroE313 = class
+  private
+    fCOD_PART: String;     /// Código do participante (campo 02 do Registro 0150): Do emitente do documento ou do remetente das mercadorias, no caso de entradas; Do adquirente, no caso de saídas
+    fCOD_MOD: String;      /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
+    fSER: String;          /// Série do documento fiscal
+    fSUB: String;          /// Subserie do documento fiscal
+    fNUM_DOC: String;      /// Número do documento fiscal
+    fDT_DOC: TDateTime;    /// Data da emissão do documento fiscal
+    FCHV_DOCe: String;     /// Chave do Documento Eletrônico
+    fCOD_ITEM: String;     /// Código do item (campo 02 do Registro 0200)
+    fVL_AJ_ITEM: currency; /// Valor do ajuste para a operação/item
+  public
+    constructor Create(AOwner: TRegistroE311); virtual; /// Create
+
+    property COD_PART: String read fCOD_PART write fCOD_PART;
+    property COD_MOD: String read fCOD_MOD write fCOD_MOD;
+    property SER: String read fSER write fSER;
+    property SUB: String read fSUB write fSUB;
+    property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
+    property CHV_DOCe: String read fCHV_DOCe write fCHV_DOCe;
+    property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
+    property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
+    property VL_AJ_ITEM: currency read fVL_AJ_ITEM write fVL_AJ_ITEM;
+  end;
+
+  /// Registro E313 - Lista
+  TRegistroE313List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroE313; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE313); /// SetItem
+  public
+    function New(AOwner: TRegistroE311): TRegistroE313;
+    property Items[Index: Integer]: TRegistroE313 read GetItem write SetItem;
+  end;
+
+  /// Registro E316 - OBRIGAÇÕES DO ICMS A RECOLHER - DIFERENCIAL DE ALIQUOTA UF ORIGEM/DESTINO EC 87/15
+  TRegistroE316 = class
+  private
+    fCOD_OR: String;                /// Código da obrigação a recolher, conforme a Tabela 5.4
+    fVL_OR: currency;               /// Valor da obrigação ICMS ST a recolher
+    fDT_VCTO: TDateTime;            /// Data de vencimento da obrigação
+    fCOD_REC: String;               /// Código de receita referente à obrigação, próprio da unidade da federação
+    fNUM_PROC: String;              /// Número do processo ou auto de infração ao qual a obrigação está vinculada, se houver
+    fIND_PROC: TACBrOrigemProcesso; /// Indicador da origem do processo: 0- Sefaz; 1- Justiça Federal; 2- Justiça Estadual; 9- Outros
+    fPROC: String;                  /// Descrição resumida do processo que embasou o lançamento
+    fTXT_COMPL: String;             /// Descrição complementar das obrigações a recolher
+    fMES_REF: string;               /// Informe o mês de referência no formato “mmaaaa”
+  public
+    constructor Create(AOwner: TRegistroE310); virtual; /// Create
+
+    property COD_OR: String read fCOD_OR write fCOD_OR;
+    property VL_OR: currency read fVL_OR write fVL_OR;
+    property DT_VCTO: TDateTime read fDT_VCTO write fDT_VCTO;
+    property COD_REC: String read fCOD_REC write fCOD_REC;
+    property NUM_PROC: String read fNUM_PROC write fNUM_PROC;
+    property IND_PROC: TACBrOrigemProcesso read fIND_PROC write fIND_PROC;
+    property PROC: String read fPROC write fPROC;
+    property TXT_COMPL: String read fTXT_COMPL write fTXT_COMPL;
+    property MES_REF: String read fMES_REF write fMES_REF;
+  end;
+
+  /// Registro E316 - Lista
+
+  TRegistroE316List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroE316; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE316); /// SetItem
+  public
+    function New(AOwner: TRegistroE310): TRegistroE316;
+    property Items[Index: Integer]: TRegistroE316 read GetItem write SetItem;
+  end;
+
+  /// Registro E500 - PERÍODO DE APURAÇÃO DO IPI
   TRegistroE500 = class
   private
     fIND_APUR: TACBrApuracaoIPI;  /// Indicador de período de apuração do IPI: 0 - Mensal; 1 - Decendial
@@ -1089,6 +1310,7 @@ constructor TRegistroE001.Create;
 begin
    FRegistroE100 := TRegistroE100List.Create;
    FRegistroE200 := TRegistroE200List.Create;
+   FRegistroE300 := TRegistroE300List.Create;
    FRegistroE500 := TRegistroE500List.Create;
    //
    IND_MOV := imSemDados;
@@ -1098,6 +1320,7 @@ destructor TRegistroE001.Destroy;
 begin
   FRegistroE100.Free;
   FRegistroE200.Free;
+  FRegistroE300.Free;
   FRegistroE500.Free;
   inherited;
 end;
@@ -1167,6 +1390,178 @@ end;
 
 constructor TRegistroE530.Create(AOwner: TRegistroE520);
 begin
+end;
+
+{ TRegistroE310 }
+
+constructor TRegistroE310.Create(AOwner: TRegistroE300);
+begin
+  FRegistroE311 := TRegistroE311List.Create;   /// BLOCO E - Lista de RegistroE311 (FILHO)
+  FRegistroE316 := TRegistroE316List.Create;   /// BLOCO E - Lista de RegistroE316 (FILHO)
+end;
+
+destructor TRegistroE310.Destroy;
+begin
+  FRegistroE311.Free;
+  FRegistroE316.Free;
+
+  inherited;
+end;
+
+{ TRegistroE300List }
+
+function TRegistroE300List.GetItem(Index: Integer): TRegistroE300;
+begin
+  Result := TRegistroE300(Inherited Items[Index]);
+end;
+
+function TRegistroE300List.New(AOwner: TRegistroE001): TRegistroE300;
+begin
+  Result := TRegistroE300.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE300List.SetItem(Index: Integer; const Value: TRegistroE300);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroE300 }
+
+constructor TRegistroE300.Create(AOwner: TRegistroE001);
+begin
+  FRegistroE310 := TRegistroE310List.Create;   /// BLOCO E - Lista de RegistroE310 (FILHO)
+end;
+
+destructor TRegistroE300.Destroy;
+begin
+  FRegistroE310.Free;
+
+  inherited;
+end;
+
+{ TRegistroE310List }
+
+function TRegistroE310List.GetItem(Index: Integer): TRegistroE310;
+begin
+  Result := TRegistroE310(Inherited Items[Index]);
+end;
+
+function TRegistroE310List.New(AOwner: TRegistroE300): TRegistroE310;
+begin
+  Result := TRegistroE310.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE310List.SetItem(Index: Integer; const Value: TRegistroE310);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroE311 }
+
+constructor TRegistroE311.Create(AOwner: TRegistroE310);
+begin
+  FRegistroE312 := TRegistroE312List.Create;
+  FRegistroE313 := TRegistroE313List.Create;
+end;
+
+destructor TRegistroE311.Destroy;
+begin
+  FRegistroE312.Free;
+  FRegistroE313.Free;
+
+  inherited;
+end;
+
+{ TRegistroE311List }
+
+function TRegistroE311List.GetItem(Index: Integer): TRegistroE311;
+begin
+  Result := TRegistroE311(Inherited Items[Index]);
+end;
+
+function TRegistroE311List.New(AOwner: TRegistroE310): TRegistroE311;
+begin
+  Result := TRegistroE311.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE311List.SetItem(Index: Integer; const Value: TRegistroE311);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroE312 }
+
+constructor TRegistroE312.Create(AOwner: TRegistroE311);
+begin
+end;
+
+{ TRegistroE312List }
+
+function TRegistroE312List.GetItem(Index: Integer): TRegistroE312;
+begin
+  Result := TRegistroE312(Inherited Items[Index]);
+end;
+
+function TRegistroE312List.New(AOwner: TRegistroE311): TRegistroE312;
+begin
+  Result := TRegistroE312.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE312List.SetItem(Index: Integer; const Value: TRegistroE312);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroE313 }
+
+constructor TRegistroE313.Create(AOwner: TRegistroE311);
+begin
+end;
+
+{ TRegistroE313List }
+
+function TRegistroE313List.GetItem(Index: Integer): TRegistroE313;
+begin
+  Result := TRegistroE313(Inherited Items[Index]);
+end;
+
+function TRegistroE313List.New(AOwner: TRegistroE311): TRegistroE313;
+begin
+  Result := TRegistroE313.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE313List.SetItem(Index: Integer; const Value: TRegistroE313);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroE316 }
+
+constructor TRegistroE316.Create(AOwner: TRegistroE310);
+begin
+end;
+
+{ TRegistroE316List }
+
+function TRegistroE316List.GetItem(Index: Integer): TRegistroE316;
+begin
+  Result := TRegistroE316(Inherited Items[Index]);
+end;
+
+function TRegistroE316List.New(AOwner: TRegistroE310): TRegistroE316;
+begin
+  Result := TRegistroE316.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE316List.SetItem(Index: Integer; const Value: TRegistroE316);
+begin
+  Put(Index, Value);
 end;
 
 end.

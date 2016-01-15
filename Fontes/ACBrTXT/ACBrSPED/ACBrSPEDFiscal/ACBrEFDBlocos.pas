@@ -364,6 +364,7 @@ type
   TACBrMovimentoST = (mstSemOperacaoST,   // 0 - Sem operações com ST
                       mstComOperacaoST    // 1 - Com operações de ST
                       );
+
   /// Indicador do tipo de ajuste
   TACBrTipoAjuste = (ajDebito,            // 0 - Ajuste a débito;
                      ajCredito            // 1- Ajuste a crédito
@@ -610,8 +611,10 @@ type
                 );
   TACBrSituacaoTribICMS = TACBrCstIcms;
 
-
-
+  /// Indicador de movimento ICMS Diferencial Alíquota
+  TACBrMovimentoDIFAL = (mDifalSemOperacaoICMS,   // 0 - Sem operações com ICMS Diferencial de Alíquota da UF
+                      mDifalComOperacaoICMS    // 1 - Com operações com ICMS Diferencial de Alíquota da UF
+                      );
 
   TOpenBlocos = class
   private

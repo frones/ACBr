@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 15/01/2016
+[+] ACBrSpedFiscal registros 300 no bloco E100
+    http://www.projetoacbr.com.br/forum/topic/27274-registro-e300/
+	  por Juliomar Marchetti
+
 Data 26/08/2015
 [-] Registros 1101 e 1501 campo de chave da NF-e estava como integer e mudado para string para comportar os 44 digitos
 		por: Juliomar Marchetti

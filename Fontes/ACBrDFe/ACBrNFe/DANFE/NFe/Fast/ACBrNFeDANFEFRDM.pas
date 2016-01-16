@@ -1076,7 +1076,7 @@ begin
     end;
 
     if NaoEstaVazio(FieldByName('Mensagem0').AsString) then
-      FieldByName('Mensagem0').AsString  := FieldByName('Mensagem0').AsString+#10#13);
+      FieldByName('Mensagem0').AsString  := FieldByName('Mensagem0').AsString+#10#13;
 
     FieldByName('Mensagem0').AsString                   := FieldByName('Mensagem0').AsString + MarcaDaguaMSG;
     FieldByName('LogoExpandido').AsString               := IfThen( FDANFEClassOwner.ExpandirLogoMarca, '1' , '0' );

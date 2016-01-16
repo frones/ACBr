@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/01/2015
+-- ACBrECFVirtual, ACBrECFVirtualBuffer --
+[+] Implementado o método DescontoAcrescimoItemAnterior
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27414
+
 Data: 13/01/2015
 -- ACBrPosPrinter --
 [+] Adicionado o evento: "OnEnviarStringDevice", que permite capturar todas as

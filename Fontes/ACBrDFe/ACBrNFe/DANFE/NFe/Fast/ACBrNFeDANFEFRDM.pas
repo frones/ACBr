@@ -166,7 +166,7 @@ type
     function SubstrCount(const ASubString, AString: string): Integer;
     function Split(const ADelimiter, AString: string): TSplitResult;
     function CollateBr(Str: String): String;
-     function Explode(sPart, sInput: String): ArrOfStr;
+    function Explode(sPart, sInput: String): ArrOfStr;
     function ManterVprod(dVProd, dvDesc: Double): String;
     function ManterdvTotTrib(dvTotTrib: Double):  String;
     function ManterVDesc(dvDesc: Currency; dVUnCom , dQCom : double ) : Double;
@@ -664,8 +664,7 @@ begin
       case FNFe.Ide.indPag of
         ipVista : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À VISTA');
         ipPrazo : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À PRAZO');
-      else
-        FieldByName('Pagamento').AsString := 'OUTROS';
+        ipOutras: FieldByName('Pagamento').AsString := ACBrStr('OUTROS');
       end;
 
       if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
@@ -712,6 +711,7 @@ begin
       Append;
       FieldByName('tPag').AsString  := 'Troco R$';
       FieldByName('vPag').AsFloat   := vTroco;
+      Post;
     end;
   end;
 end;
@@ -949,10 +949,9 @@ end;
 
 procedure TACBrNFeFRClass.CarregaParametros;
 var
-  vChave_Contingencia: String;
-  vResumo: String;
-  vStream: TMemoryStream;
-  vStringStream: TStringStream;
+  vChave_Contingencia : String;
+  vStream             : TMemoryStream;
+  vStringStream       : TStringStream;
 begin
   { parâmetros }
   with cdsParametros do
@@ -961,186 +960,133 @@ begin
     CreateDataSet;
     Append;
 
-    //Carregar Resumo Canhoto
-    vResumo := '';
-    if Assigned(FNFe) and DANFEClassOwner.ExibirResumoCanhoto then
-    begin
-       if EstaVazio(DANFEClassOwner.ExibirResumoCanhoto_Texto) then
-          vResumo := ACBrStr('Emissão: ' )+ FormatDateBr(FNFe.Ide.DEmi) + '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' + FormatFloatBr(FNFe.Total.ICMSTot.VNF)
-       else
-          vResumo := DANFEClassOwner.ExibirResumoCanhoto_Texto;
-    end;
-    FieldByName('ResumoCanhoto').AsString := vResumo;
-
-    if Assigned(FNFe) and (FNFe.Ide.TpAmb = taHomologacao) then
-    begin
-      if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC, teSVCAN, teSVCRS, teSVCSP]) then
-      begin
-        if (FNFe.procNFe.cStat in [101,135, 151, 155]) then
-          FieldByName('Mensagem0').AsString := ACBrStr('NFe sem Valor Fiscal - HOMOLOGAÇÃO ' +
-                                                        #10#13+'NFe em Contingência - CANCELADA')
-        else
-          FieldByName('Mensagem0').AsString := ACBrStr('NFe sem Valor Fiscal - HOMOLOGAÇÃO'+
-                                                        #10#13+'NFe em Contingência');
-      end
-      else
-        FieldByName('Mensagem0').AsString :=ACBrStr( 'NFe sem Valor Fiscal - HOMOLOGAÇÃO')
-    end
-    else
-    begin
-      if Assigned(FNFe) and not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS, teSVCSP]) then
-      begin
-        //prioridade para opção NFeCancelada
-        if (FDANFEClassOwner.NFeCancelada) or
-           ((NaoEstaVazio(FNFe.procNFe.nProt)) and
-            (FNFe.procNFe.cStat in [101,135,151,155])) then
-          FieldByName('Mensagem0').AsString := 'NFe Cancelada'
-        else if ( FNFe.procNFe.cStat = 110 ) or
-                ( FNFe.procNFe.cStat = 301 ) or
-                ( FNFe.procNFe.cStat = 302 ) or
-                ( FNFe.procNFe.cStat = 303 ) then
-          FieldByName('Mensagem0').AsString := 'NFe denegada pelo Fisco'
-        else if ((EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
-                 (EstaVazio(FNFe.procNFe.nProt))) then
-          FieldByName('Mensagem0').AsString :=ACBrStr( 'NFe sem Autorização de Uso da SEFAZ')
-        else if (FNFe.Ide.tpImp = tiSimplificado) then
-           FieldByName('Mensagem0').AsString :=ACBrStr( 'EMISSÃO NORMAL' )
-        else
-          FieldByName('Mensagem0').AsString := '';
-      end
-      else
-        FieldByName('Mensagem0').AsString := '';
-    end;
-
-    //Marca Dagua
-    FieldByName('Mensagem0').AsString := IfThen(trim(FieldByName('Mensagem0').AsString) = '',
-                                                         '',
-                                                         FieldByName('Mensagem0').AsString+#10#13)+
-                                         MarcaDaguaMSG;
-
-    // Carregamento da imagem
-    if NaoEstaVazio(DANFEClassOwner.Logo) then
-    begin
-      FieldByName('Imagem').AsString := DANFEClassOwner.Logo;
-      vStream := TMemoryStream.Create;
-      try
-        if FileExists(DANFEClassOwner.Logo) then
-           vStream.LoadFromFile(DANFEClassOwner.Logo)
-        else
-        begin
-           vStringStream:= TStringStream.Create(DANFEClassOwner.Logo);
-           try
-              vStream.LoadFromStream(vStringStream);
-           finally
-              vStringStream.Free;
-           end;
-        end;
-        vStream.Position := 0;
-        TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(vStream);
-      finally
-        vStream.Free;
-      end;
-    end;
-
-    if DANFEClassOwner.ExpandirLogoMarca then
-      FieldByName('LogoExpandido').AsString := '1'
-    else
-      FieldByName('LogoExpandido').AsString := '0';
-
-    if FDANFEClassOwner.Sistema <> '' then
-      FieldByName('Sistema').AsString := FDANFEClassOwner.Sistema
-    else
-      FieldByName('Sistema').AsString := 'Projeto ACBr - http://acbr.sf.net';
-
-    if FDANFEClassOwner.Usuario <> '' then
-      FieldByName('Usuario').AsString := ' - ' + FDANFEClassOwner.Usuario
-    else
-      FieldByName('Usuario').AsString := '';
-
-    if FDANFEClassOwner.Fax <> '' then
-      FieldByName('Fax').AsString := ' - FAX ' + FDANFEClassOwner.Fax
-    else
-      FieldByName('Fax').AsString := '';
-
-    FieldByName('Site').AsString  := FDANFEClassOwner.Site;
-    FieldByName('Email').AsString := FDANFEClassOwner.Email;
-
-    if FDANFEClassOwner.ImprimirDescPorc then
-      FieldByName('Desconto').AsString := '%'
-    else
-      FieldByName('Desconto').AsString := 'VALOR';
-
-    if FDANFEClassOwner.ImprimirTotalLiquido then
-      FieldByName('TotalLiquido').AsString := ACBrStr('LÍQUIDO')
-    else
-      FieldByName('TotalLiquido').AsString := 'TOTAL';
-
-    FieldByName('Contingencia_ID').AsString := '';
+    FieldByName('ResumoCanhoto').AsString         := '';
+    FieldByName('Mensagem0').AsString             := '';
+    FieldByName('Contingencia_ID').AsString       := '';
     FieldByName('ConsultaAutenticidade').AsString := 'Consulta de autenticidade no portal nacional da NF-e'+#13+
                                                      'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
 
     if Assigned(FNFe) then
     begin
-       case FNFe.Ide.tpEmis of
-         teNormal,
-         teSVCAN,
-         teSCAN,
-         teSVCRS,
-         teSVCSP :   begin
-                       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
-                       FieldByName('Contingencia_ID').AsString := '';
+      if DANFEClassOwner.ExibirResumoCanhoto then
+      begin
+         if EstaVazio(DANFEClassOwner.ExibirResumoCanhoto_Texto) then
+          FieldByName('ResumoCanhoto').AsString := ACBrStr('Emissão: ' )+ FormatDateBr(FNFe.Ide.DEmi) + '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' + FormatFloatBr(FNFe.Total.ICMSTot.VNF)
+        else
+          FieldByName('ResumoCanhoto').AsString := DANFEClassOwner.ExibirResumoCanhoto_Texto;
+      end;
 
-                       if ((FDANFEClassOwner.NFeCancelada) or (FNFe.procNFe.cStat in [101,151,155])) then
-                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO' )
-                       else if ( FNFe.procNFe.cStat = 110 ) or
-                               ( FNFe.procNFe.cStat = 301 ) or
-                               ( FNFe.procNFe.cStat = 302 ) or
-                               ( FNFe.procNFe.cStat = 303 ) then
-                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO')
-                       else
-                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
+      if (FNFe.Ide.TpAmb = taHomologacao) then
+      begin
+        if (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSCAN, teDPEC, teSVCAN, teSVCRS, teSVCSP]) then
+        begin
+          if (FNFe.procNFe.cStat in [101,135, 151, 155]) then
+            FieldByName('Mensagem0').AsString := ACBrStr('NFe sem Valor Fiscal - HOMOLOGAÇÃO ' +
+                                                        #10#13+'NFe em Contingência - CANCELADA')
+          else
+            FieldByName('Mensagem0').AsString := ACBrStr('NFe sem Valor Fiscal - HOMOLOGAÇÃO'+
+                                                        #10#13+'NFe em Contingência');
+        end
+        else
+          FieldByName('Mensagem0').AsString :=ACBrStr( 'NFe sem Valor Fiscal - HOMOLOGAÇÃO')
+      end
+      else
+      begin
+        if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS, teSVCSP]) then
+        begin
+          //prioridade para opção NFeCancelada
+          if (FDANFEClassOwner.NFeCancelada) or
+             ((NaoEstaVazio(FNFe.procNFe.nProt)) and
+              (FNFe.procNFe.cStat in [101,135,151,155])) then
+            FieldByName('Mensagem0').AsString := 'NFe Cancelada'
+          else if ( FNFe.procNFe.cStat = 110 ) or
+                  ( FNFe.procNFe.cStat = 301 ) or
+                  ( FNFe.procNFe.cStat = 302 ) or
+                  ( FNFe.procNFe.cStat = 303 ) then
+            FieldByName('Mensagem0').AsString := 'NFe denegada pelo Fisco'
+          else if ((EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
+                   (EstaVazio(FNFe.procNFe.nProt))) then
+            FieldByName('Mensagem0').AsString := ACBrStr( 'NFe sem Autorização de Uso da SEFAZ')
+          else if (FNFe.Ide.tpImp = tiSimplificado) then
+            FieldByName('Mensagem0').AsString := ACBrStr( 'EMISSÃO NORMAL' );
+        end;
+      end;
 
-                       if EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
-                       begin
-                         if EstaVazio(FNFe.procNFe.nProt) then
-                           FieldByName('Contingencia_Valor').AsString := ACBrStr('NFe sem Autorização de Uso da SEFAZ')
-                         else
-                           FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
-                       end
-                       else
-                         FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
-                     end;
+      case FNFe.Ide.tpEmis of
+        teNormal,
+        teSVCAN,
+        teSCAN,
+        teSVCRS,
+        teSVCSP :   begin
+                      FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
+                      FieldByName('Contingencia_ID').AsString := '';
 
-         teContingencia ,
-         teFSDA :    begin
-                       vChave_Contingencia := TACBrNFe(DANFEClassOwner.ACBrNFe).GerarChaveContingencia(FNFe);
-                       FieldByName('ChaveAcesso_Descricao').AsString  := 'CHAVE DE ACESSO';
-                       FieldByName('Contingencia_ID').AsString        := vChave_Contingencia;
-                       FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
-                       FieldByName('Contingencia_Valor').AsString     := FormatarChaveAcesso(vChave_Contingencia);
-                       FieldByName('ConsultaAutenticidade').AsString  := '';
-                     end;
+                      if ((FDANFEClassOwner.NFeCancelada) or (FNFe.procNFe.cStat in [101,151,155])) then
+                        FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO' )
+                      else if ( FNFe.procNFe.cStat = 110 ) or
+                              ( FNFe.procNFe.cStat = 301 ) or
+                              ( FNFe.procNFe.cStat = 302 ) or
+                              ( FNFe.procNFe.cStat = 303 ) then
+                        FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO')
+                      else
+                        FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
 
-         teDPEC  :   begin
-                       if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
-                       begin
-                         FieldByName('Contingencia_Descricao').AsString :=ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
-                         FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
-                       end
-                       else
-                       begin
-                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('NÚMERO DE REGISTRO DPEC');
-                         if NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
-                           FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
-                       end;
-                     end;
+                      if EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+                      begin
+                        if EstaVazio(FNFe.procNFe.nProt) then
+                          FieldByName('Contingencia_Valor').AsString := ACBrStr('NFe sem Autorização de Uso da SEFAZ')
+                        else
+                          FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                      end
+                      else
+                        FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
+                    end;
 
-         teOffLine : begin
-                       FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
-                     end;
-       end;
+        teContingencia ,
+        teFSDA :    begin
+                      vChave_Contingencia := TACBrNFe(DANFEClassOwner.ACBrNFe).GerarChaveContingencia(FNFe);
+                      FieldByName('ChaveAcesso_Descricao').AsString  := 'CHAVE DE ACESSO';
+                      FieldByName('Contingencia_ID').AsString        := vChave_Contingencia;
+                      FieldByName('Contingencia_Descricao').AsString := 'DADOS DA NF-E';
+                      FieldByName('Contingencia_Valor').AsString     := FormatarChaveAcesso(vChave_Contingencia);
+                      FieldByName('ConsultaAutenticidade').AsString  := '';
+                    end;
+
+         teDPEC  :  begin
+                      if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
+                      begin
+                        FieldByName('Contingencia_Descricao').AsString := ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
+                        FieldByName('Contingencia_Valor').AsString     := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                      end
+                      else
+                      begin
+                        FieldByName('Contingencia_Descricao').AsString := ACBrStr('NÚMERO DE REGISTRO DPEC');
+                        if NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+                          FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
+                      end;
+                    end;
+
+         teOffLine: begin
+                      FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                    end;
+      end;
+
+      FieldByName('QtdeItens').AsInteger := NFe.Det.Count;
+
     end;
 
+    if NaoEstaVazio(FieldByName('Mensagem0').AsString) then
+      FieldByName('Mensagem0').AsString  := FieldByName('Mensagem0').AsString+#10#13);
+
+    FieldByName('Mensagem0').AsString                   := FieldByName('Mensagem0').AsString + MarcaDaguaMSG;
+    FieldByName('LogoExpandido').AsString               := IfThen( FDANFEClassOwner.ExpandirLogoMarca, '1' , '0' );
+    FieldByName('Sistema').AsString                     := IfThen( FDANFEClassOwner.Sistema <> '' , FDANFEClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString                     := IfThen( FDANFEClassOwner.Usuario <> '' , ' - ' + FDANFEClassOwner.Usuario , '' );
+    FieldByName('Fax').AsString                         := IfThen( FDANFEClassOwner.Fax     <> '' , ' - FAX ' + FDANFEClassOwner.Fax , '');
+    FieldByName('Site').AsString                        := FDANFEClassOwner.Site;
+    FieldByName('Email').AsString                       := FDANFEClassOwner.Email;
+    FieldByName('Desconto').AsString                    := IfThen( FDANFEClassOwner.ImprimirDescPorc , '%' , 'VALOR');
+    FieldByName('TotalLiquido').AsString                := IfThen( FDANFEClassOwner.ImprimirTotalLiquido ,ACBrStr('LÍQUIDO') ,'TOTAL');
     FieldByName('LinhasPorPagina').AsInteger            := FDANFEClassOwner.ProdutosPorPagina;
     FieldByName('ExpandirDadosAdicionaisAuto').AsString := IfThen( ExpandirDadosAdicionaisAuto , 'S' , 'N');
     FieldByName('sDisplayFormat').AsString              := '###,###,###,##0.%.*d';
@@ -1149,10 +1095,33 @@ begin
     FieldByName('Mask_vUnCom').AsString                 := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
     FieldByName('Casas_qCom').AsInteger                 := FDANFEClassOwner.CasasDecimais._qCom;
     FieldByName('Casas_vUnCom').AsInteger               := FDANFEClassOwner.CasasDecimais._vUnCom;
-    if Assigned(FNFe) then
-       FieldByName('QtdeItens').AsInteger               := NFe.Det.Count;
     FieldByName('DescricaoViaEstabelec').AsString       := FDescricaoViaEstabelec;
     FieldByName('ImprimeDescAcrescItem').AsInteger      := IfThen( FDANFEClassOwner.ImprimeDescAcrescItem, 1 , 0 );
+
+    // Carregamento da imagem
+    if NaoEstaVazio(DANFEClassOwner.Logo) then
+    begin
+      FieldByName('Imagem').AsString := DANFEClassOwner.Logo;
+      vStream := TMemoryStream.Create;
+      try
+        if FileExists(DANFEClassOwner.Logo) then
+          vStream.LoadFromFile(DANFEClassOwner.Logo)
+        else
+        begin
+          vStringStream:= TStringStream.Create(DANFEClassOwner.Logo);
+          try
+            vStream.LoadFromStream(vStringStream);
+          finally
+            vStringStream.Free;
+          end;
+        end;
+        vStream.Position := 0;
+        TBlobField(cdsParametros.FieldByName('LogoCarregado')).LoadFromStream(vStream);
+      finally
+        vStream.Free;
+      end;
+    end;
+
     Post;
   end;
 end;

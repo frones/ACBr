@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2016
+-- ACBrNFeDANFEFRDM -- 
+[*] Refataração do CarregaParametros.
+      Melhorando e removendo condições que se repetiam.
+[*] Refataração do CarregaFatura
+      por: Henrique Leonardo
+
+
+
 13/01/2016
 [+] Adição da impressão de inutilização em fast report
 		http://www.projetoacbr.com.br/forum/topic/22081-impress%C3%A3o-inutiliza%C3%A7%C3%A3o-fast-report/
@@ -55,7 +64,7 @@ Símbolo : Significado
 09/01/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
 [*] Refataraçao na apresentação de Fatura(s) e Duplicata(s).
-    Por causa da possibilidade de existir as Tag Fat e Dup num xml.
+    Por causa da possibilidade de existir as Tag Fat e Dup no xml.
     http://www.projetoacbr.com.br/forum/topic/27249-impressao-danfe-vencimento-a-vista-com-erro/
     http://www.projetoacbr.com.br/forum/topic/26554-campo-duplicatas-errado-danfe/
     por: Henrique Leonardo

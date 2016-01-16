@@ -302,6 +302,7 @@ begin
   FvTribFed:= 0.0;
   FvTribEst:= 0.0;
   FvTribMun:= 0.0;
+  FChaveTributos := '';
 
   FImprimeEmUmaLinha     := True;
   FImprimeDescAcrescItem := True;

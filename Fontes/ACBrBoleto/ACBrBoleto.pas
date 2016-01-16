@@ -2186,8 +2186,11 @@ begin
 
        SlRetorno.LoadFromFile( NomeArq );
      end
-     else 
+     else
+		 begin
+			 AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
+		 end;
 
 
      if SlRetorno.Count < 1 then

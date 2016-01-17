@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsDiretoriosDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 5
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'

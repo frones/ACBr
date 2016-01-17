@@ -4387,7 +4387,7 @@ begin
     INI.WriteInteger('PosPrinter', 'Modelo', cbxModelo.ItemIndex);
     INI.WriteString('PosPrinter', 'Porta', cbxPorta.Text);
     INI.WriteInteger('PosPrinter', 'Colunas', seColunas.Value);
-    INI.WriteInteger('PosPrinter', 'EspacosEntreLinhas', seEspacosLinhas.Value);
+    INI.WriteInteger('PosPrinter', 'EspacoEntreLinhas', seEspacosLinhas.Value);
     INI.WriteInteger('PosPrinter', 'LinhasBuffer', seBuffer.Value);
     INI.WriteInteger('PosPrinter', 'LinhasPular', seLinhasPular.Value);
     INI.WriteInteger('PosPrinter', 'PaginaDeCodigo', cbxPagCodigo.ItemIndex);

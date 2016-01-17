@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2015
+[-] Correção da gravação do parâmetro ACBrPosPrinter.EspacoEntreLinhas (por: DSA)
+
 14/04/2015
 [+] Impressão DANFE: Adicionado ajuste para Fonte da Razão Social e Altura Linha
     Comum.

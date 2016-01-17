@@ -2187,11 +2187,10 @@ begin
        SlRetorno.LoadFromFile( NomeArq );
      end
      else
-		 begin
-			 AStream.Position := 0;
+	 begin
+	   AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
-		 end;
-
+	 end;
 
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+

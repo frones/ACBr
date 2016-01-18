@@ -49,18 +49,24 @@ unit ACBrGNREReg;
 interface
 
 uses
- SysUtils, Classes,
-{$IFDEF FPC}
-  LResources,
-{$ENDIF}
- ACBrGNRE2;
+  SysUtils, Classes, ACBrGNRe, pcnConversao,
+  {$IFDEF FPC}
+     LResources, LazarusPackageIntf, PropEdits, componenteditors
+  {$ELSE}
+     {$IFNDEF COMPILER6_UP}
+        DsgnIntf
+     {$ELSE}
+        DesignIntf,
+        DesignEditors
+     {$ENDIF}
+  {$ENDIF} ;
 
 procedure Register;
 
 implementation
 
 uses
- ACBrReg, ACBrGNREConfiguracoes;
+  ACBrReg, ACBrDFe, ACBrDFeConfiguracoes, ACBrGNReConfiguracoes, ACBrDFeRegUtil;
 
 {$IFNDEF FPC}
    {$R ACBrGNRE.dcr}
@@ -68,33 +74,32 @@ uses
 
 procedure Register;
 begin
- RegisterComponents('ACBrGNRE', [TACBrGNRE]);
+  RegisterComponents('ACBrGNRE', [TACBrGNRE]);
 
- RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
+  RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrGNRE, 'Configuracoes',
+  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrGNRe, 'Configuracoes',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
+  RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
+  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
+  RegisterPropertyEditor(TypeInfo(String), TGeralConfGNRe, 'PathSalvar',
      TACBrDirProperty);
 
- RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
+  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
     TClassProperty);
 
- RegisterPropertyEditor(TypeInfo(String), TArquivosConf, 'PathGNRE',
+  RegisterPropertyEditor(TypeInfo(String), TArquivosConfGNRe, 'PathGNRe',
      TACBrDirProperty);
 end;
 
-initialization
-
 {$IFDEF FPC}
+initialization
    {$i ACBrGNRE.lrs}
 {$ENDIF}
 

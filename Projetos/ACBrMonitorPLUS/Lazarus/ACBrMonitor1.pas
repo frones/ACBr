@@ -1757,10 +1757,8 @@ begin
     SetTLS := cbEmailTls.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
-    ;
 
     AddAddress(edEmailEndereco.Text);
-
     Subject := 'ACBrMonitor : Teste de Configuração de Email';
 
     Body.Add('Se você consegue ler esta mensagem, significa que suas configurações');
@@ -1777,7 +1775,8 @@ begin
     Screen.Cursor := crHourGlass;
     Application.ProcessMessages;
     try
-      Send(True);
+      Send(False);
+      MessageDlg('EMAIL','Email enviado com sucesso',mtInformation,[mbOK],0);
     except
       bEmailTestarConf.Enabled := True;
       bCancelar.Enabled := True;
@@ -3939,6 +3938,8 @@ begin
     DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
     LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
+
+    MAIL := ACBrMail1;
   end;
 
   with ACBrBoleto1.ACBrBoletoFC do

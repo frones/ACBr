@@ -44,7 +44,6 @@ procedure DoBoleto(Cmd: TACBrCmd);
 procedure LerIniBoletos(aStr: AnsiString);
 procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
 procedure GravarIniRetorno(DirIniRetorno: String);
-function EnviarBoletosPorEmail(aAnexo: String; aEmail: String) : String;
 function ListaBancos() : String;
 
 implementation
@@ -70,7 +69,7 @@ begin
       else if cmd.Metodo = 'imprimir' then
        begin
          if Cmd.Params(0) <> '' then
-            ACBrMonitor1.FrmACBrMonitor.ACBrBoleto1.ACBrBoletoFC.PrinterName := Cmd.Params(0);
+            ACBrBoletoFC.PrinterName := Cmd.Params(0);
 
          Imprimir
        end
@@ -98,13 +97,11 @@ begin
 
       else if cmd.Metodo = 'enviaremail' then
        begin
-         GerarPDF;
-         EnvioResposta := EnviarBoletosPorEmail(FrmACBrMonitor.ACBrBoleto1.ACBrBoletoFC.NomeArquivo,
-                                                ListadeBoletos[0].Sacado.Email);
-         if ( EnvioResposta = 'OK' ) then
-            Cmd.Resposta := 'E-mail enviado com sucesso!'
-         else
-            raise Exception.Create(EnvioResposta);
+         EnviarEmail( IfEmptyThen(Cmd.Params(0), ListadeBoletos[0].Sacado.Email),
+                      FrmACBrMonitor.edtBOLEmailAssunto.Text,
+                      FrmACBrMonitor.edtBOLEmailMensagem.Lines,
+                      True);
+         Cmd.Resposta := 'E-mail enviado com sucesso!'
        end
 
       else if cmd.Metodo = 'incluirtitulos' then
@@ -116,13 +113,11 @@ begin
           GerarPDF
         else if Cmd.Params(1)= 'E' then
          begin
-           GerarPDF;
-           EnvioResposta := EnviarBoletosPorEmail(FrmACBrMonitor.ACBrBoleto1.ACBrBoletoFC.NomeArquivo,
-                                                  ListadeBoletos[0].Sacado.Email);
-           if ( EnvioResposta = 'OK' ) then
-              Cmd.Resposta := 'E-mail enviado com sucesso!'
-           else
-              raise Exception.Create(EnvioResposta);
+           EnviarEmail( ListadeBoletos[0].Sacado.Email,
+                        FrmACBrMonitor.edtBOLEmailAssunto.Text,
+                        FrmACBrMonitor.edtBOLEmailMensagem.Lines,
+                        True);
+           Cmd.Resposta := 'E-mail enviado com sucesso!'
          end;
        end
       else if cmd.Metodo = 'listabancos' then
@@ -220,18 +215,15 @@ begin
               TipoCarteira:= TACBrTipoCarteira(IniBoletos.ReadInteger('CEDENTE','TipoCarteira',0));    
               TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger('CEDENTE','TipoDocumento',1)); 
 
-              with FrmACBrMonitor do
-              begin
-                 wLayoutBoleto:= IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',-1);
+              wLayoutBoleto:= IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',-1);
 
-                 if wLayoutBoleto >= 0 then
-                   cbxBOLLayout.ItemIndex := wLayoutBoleto;
+              if wLayoutBoleto >= 0 then
+                FrmACBrMonitor.cbxBOLLayout.ItemIndex := wLayoutBoleto;
 
-                 try
-                   ACBrBoleto1.ACBrBoletoFC.LayOut:= TACBrBolLayOut(cbxBOLLayout.ItemIndex);
-                 except
-                   ACBrBoleto1.ACBrBoletoFC.LayOut:= lPadrao;
-                 end;
+              try
+                ACBrBoletoFC.LayOut:= TACBrBolLayOut(FrmACBrMonitor.cbxBOLLayout.ItemIndex);
+              except
+                ACBrBoletoFC.LayOut:= lPadrao;
               end;
            end;
 
@@ -490,48 +482,6 @@ begin
     end;
   finally
     IniRetorno.Free;
-  end;
-end;
-
-function EnviarBoletosPorEmail(aAnexo: String; aEmail: String): String;
-var
-  vEmails: TStringList;
-  i: Integer;
-begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
-  begin
-    try
-      ConfigurarEmailNovo;
-      RecuperarDadosIniciais;
-      Subject   := FrmACBrMonitor.edtBOLEmailAssunto.Text;
-      Body.Text := FrmACBrMonitor.edtBOLEmailMensagem.Text;
-
-      vEmails := TStringList.Create;
-
-      try
-        vEmails.Delimiter       := ';';
-        vEmails.StrictDelimiter := True;
-        vEmails.DelimitedText   := aEmail;
-
-        for i := 0 to vEmails.Count -1 do
-          AddAddress(vEmails.Strings[i]);
-
-      finally
-        vEmails.Free;
-      end;
-
-      if Trim(aAnexo) <> '' then
-         AddAttachment(aAnexo);
-
-      Send;
-      Result := 'OK';
-    except
-      on E: Exception do
-         Result := (e.Message);
-    end;
-
-    { Recupera dados iniciais }
-    RecuperarDadosIniciais;
   end;
 end;
 

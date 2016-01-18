@@ -1448,10 +1448,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsDFe
+        ActivePage = tsEmail
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 13
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4691,9 +4691,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsCedente
+            ActivePage = tsBoletoEmail
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsCedente: TTabSheet
               Caption = 'Cedente'
@@ -5502,23 +5502,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsBoletoEmail: TTabSheet
               Caption = 'E-mail Boleto'
-              ClientHeight = 307
-              ClientWidth = 619
+              ClientHeight = 281
+              ClientWidth = 615
               object GroupBox3: TGroupBox
                 Left = 8
-                Height = 259
+                Height = 233
                 Top = 11
-                Width = 594
+                Width = 590
                 Anchors = [akTop, akLeft, akRight, akBottom]
                 Caption = 'Padrão'
-                ClientHeight = 237
-                ClientWidth = 590
+                ClientHeight = 211
+                ClientWidth = 586
                 TabOrder = 0
                 object edtBOLEmailMensagem: TMemo
                   Left = 20
-                  Height = 148
+                  Height = 122
                   Top = 79
-                  Width = 552
+                  Width = 548
                   Anchors = [akTop, akLeft, akRight, akBottom]
                   ScrollBars = ssAutoVertical
                   TabOrder = 0
@@ -5527,7 +5527,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 20
                   Height = 25
                   Top = 28
-                  Width = 552
+                  Width = 548
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 1
                 end
@@ -5792,17 +5792,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsEmail: TTabSheet
           Caption = 'E-mail'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 7
-            Height = 318
+            Height = 326
             Top = 8
             Width = 623
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
-            ClientHeight = 296
+            ClientHeight = 304
             ClientWidth = 619
             TabOrder = 0
             object Label33: TLabel
@@ -5818,24 +5818,24 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'Seu nome da forma como será exibido aos outros'
               Top = 32
-              Width = 160
+              Width = 216
               ParentShowHint = False
               ShowHint = True
               TabOrder = 0
             end
             object Label34: TLabel
-              Left = 195
+              Left = 248
               Height = 17
-              Top = 14
+              Top = 16
               Width = 70
               Caption = 'Seu e-mail *'
               ParentColor = False
             end
             object edEmailEndereco: TEdit
-              Left = 195
+              Left = 248
               Height = 25
               Top = 32
-              Width = 619
+              Width = 351
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -5852,7 +5852,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 25
               Top = 88
-              Width = 160
+              Width = 216
               TabOrder = 2
             end
             object Label36: TLabel
@@ -5870,23 +5870,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 160
               EchoMode = emPassword
               PasswordChar = '*'
-              TabOrder = 3
+              TabOrder = 5
             end
             object Label37: TLabel
-              Left = 195
+              Left = 248
               Height = 17
-              Top = 70
+              Top = 72
               Width = 73
               Caption = 'Host SMTP *'
               ParentColor = False
             end
             object edEmailHost: TEdit
-              Left = 195
+              Left = 248
               Height = 25
-              Top = 88
-              Width = 619
+              Top = 89
+              Width = 240
               Anchors = [akTop, akLeft, akRight]
-              TabOrder = 4
+              TabOrder = 3
             end
             object Label38: TLabel
               Left = 195
@@ -5902,7 +5902,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Top = 144
               Width = 62
               MaxValue = 99999
-              TabOrder = 5
+              TabOrder = 6
             end
             object cbEmailSsl: TCheckBox
               Left = 270
@@ -5910,7 +5910,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Top = 148
               Width = 40
               Caption = 'SSL'
-              TabOrder = 6
+              TabOrder = 7
             end
             object cbEmailTls: TCheckBox
               Left = 328
@@ -5918,7 +5918,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Top = 148
               Width = 40
               Caption = 'TLS'
-              TabOrder = 7
+              TabOrder = 8
             end
             object bEmailTestarConf: TBitBtn
               Left = 386
@@ -5963,7 +5963,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
               }
               OnClick = bEmailTestarConfClick
-              TabOrder = 8
+              TabOrder = 9
             end
             object pbEmailTeste: TProgressBar
               Left = 19
@@ -5973,7 +5973,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
-              TabOrder = 9
+              TabOrder = 10
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
@@ -6095,7 +6095,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 'VISCII'
               )
               Style = csDropDownList
-              TabOrder = 10
+              TabOrder = 4
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
@@ -11113,7 +11113,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

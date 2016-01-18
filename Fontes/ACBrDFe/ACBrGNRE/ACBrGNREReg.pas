@@ -49,7 +49,7 @@ unit ACBrGNREReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrGNRe, pcnConversao,
+  SysUtils, Classes, ACBrGNRE, pcnConversao,
   {$IFDEF FPC}
      LResources, LazarusPackageIntf, PropEdits, componenteditors
   {$ELSE}
@@ -66,7 +66,7 @@ procedure Register;
 implementation
 
 uses
-  ACBrReg, ACBrDFe, ACBrDFeConfiguracoes, ACBrGNReConfiguracoes, ACBrDFeRegUtil;
+  ACBrReg, ACBrDFe, ACBrDFeConfiguracoes, ACBrGNREConfiguracoes, ACBrDFeRegUtil;
 
 {$IFNDEF FPC}
    {$R ACBrGNRE.dcr}
@@ -79,7 +79,7 @@ begin
   RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
     TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrGNRe, 'Configuracoes',
+  RegisterPropertyEditor(TypeInfo(TConfiguracoes), TACBrGNRE, 'Configuracoes',
     TClassProperty);
 
   RegisterPropertyEditor(TypeInfo(TWebServicesConf), TConfiguracoes, 'WebServices',
@@ -88,13 +88,13 @@ begin
   RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
     TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(String), TGeralConfGNRe, 'PathSalvar',
+  RegisterPropertyEditor(TypeInfo(String), TGeralConfGNRE, 'PathSalvar',
      TACBrDirProperty);
 
   RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
     TClassProperty);
 
-  RegisterPropertyEditor(TypeInfo(String), TArquivosConfGNRe, 'PathGNRe',
+  RegisterPropertyEditor(TypeInfo(String), TArquivosConfGNRE, 'PathGNRE',
      TACBrDirProperty);
 end;
 

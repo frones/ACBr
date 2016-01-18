@@ -51,7 +51,7 @@ interface
 uses
   Classes, SysUtils, Dialogs, StrUtils,
   ACBrDFeUtil, pcnConversao, pcnAuxiliar, pcnLeitor,
-  ACBrGNReConfiguracoes,
+  ACBrGNREConfiguracoes,
   pgnreGNRE, pgnreGNRER, pgnreGNREW;
 
 type
@@ -60,9 +60,9 @@ type
 
   Guia = class(TCollectionItem)
   private
-    FGNRe: TGNRe;
-    FGNReW: TGNReW;
-    FGNReR: TGNReR;
+    FGNRE: TGNRE;
+    FGNREW: TGNREW;
+    FGNRER: TGNRER;
 
     FXMLAssinado: String;
     FXMLOriginal: String;
@@ -109,7 +109,7 @@ type
 
     property NomeArq: String read FNomeArq write FNomeArq;
 
-    property GNRe: TGNRe read FGNRe;
+    property GNRE: TGNRE read FGNRE;
 
     // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
     property XML: String         read FXMLOriginal   write SetXML;
@@ -131,8 +131,8 @@ type
 
   TGuias = class(TOwnedCollection)
   private
-    FACBrGNRe: TComponent;
-    FConfiguracoes: TConfiguracoesGNRe;
+    FACBrGNRE: TComponent;
+    FConfiguracoes: TConfiguracoesGNRE;
 
     function GetItem(Index: integer): Guia;
     procedure SetItem(Index: integer; const Value: Guia);
@@ -141,7 +141,7 @@ type
   public
     constructor Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
 
-    procedure GerarGNRe;
+    procedure GerarGNRE;
     procedure Assinar;
     procedure Validar;
     function VerificarAssinatura(out Erros: String): Boolean;
@@ -154,81 +154,81 @@ type
     property Items[Index: integer]: Guia read GetItem write SetItem; default;
 
     function GetNamePath: String; override;
-    // Incluido o Parametro AGerarGNRe que determina se após carregar os dados da GNRe
-    // para o componente, será gerado ou não novamente o XML da GNRe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarGNRe: Boolean = True): Boolean;
-    function LoadFromStream(AStream: TStringStream; AGerarGNRe: Boolean = True): Boolean;
-    function LoadFromString(AXMLString: String; AGerarGNRe: Boolean = True): Boolean;
+    // Incluido o Parametro AGerarGNRE que determina se após carregar os dados da GNRE
+    // para o componente, será gerado ou não novamente o XML da GNRE.
+    function LoadFromFile(CaminhoArquivo: String; AGerarGNRE: Boolean = True): Boolean;
+    function LoadFromStream(AStream: TStringStream; AGerarGNRE: Boolean = True): Boolean;
+    function LoadFromString(AXMLString: String; AGerarGNRE: Boolean = True): Boolean;
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
-    property ACBrGNRe: TComponent read FACBrGNRe;
+    property ACBrGNRE: TComponent read FACBrGNRE;
   end;
 
 implementation
 
 uses
-  ACBrGNRe, ACBrUtil, pgnreConversao, synautil;
+  ACBrGNRE, ACBrUtil, pgnreConversao, synautil;
 
 { Guia }
 
 constructor Guia.Create(Collection2: TCollection);
 begin
   inherited Create(Collection2);
-  FGNRe := TGNRe.Create;
-  FGNReW := TGNReW.Create(FGNRe);
-  FGNReR := TGNReR.Create(FGNRe);
+  FGNRE := TGNRE.Create;
+  FGNREW := TGNREW.Create(FGNRE);
+  FGNRER := TGNRER.Create(FGNRE);
   (*
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    FGNRe.Ide.modelo := StrToInt(ModeloDFToStr(Configuracoes.Geral.ModeloDF));
-    FGNRe.infGNRe.Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
+    FGNRE.Ide.modelo := StrToInt(ModeloDFToStr(Configuracoes.Geral.ModeloDF));
+    FGNRE.infGNRE.Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
 
-    FGNRe.Ide.tpNF := tnSaida;
-    FGNRe.Ide.indPag := ipVista;
-    FGNRe.Ide.verProc := 'ACBrGNRe';
-    FGNRe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
-    FGNRe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
+    FGNRE.Ide.tpNF := tnSaida;
+    FGNRE.Ide.indPag := ipVista;
+    FGNRE.Ide.verProc := 'ACBrGNRE';
+    FGNRE.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
+    FGNRE.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
 
     if Assigned(FGNREGuia) then
-      FGNRe.Ide.tpImp := FGNREGuia.TipoDANFE;
+      FGNRE.Ide.tpImp := FGNREGuia.TipoDANFE;
 
-    FGNRe.Emit.EnderEmit.xPais := 'BRASIL';
-    FGNRe.Emit.EnderEmit.cPais := 1058;
-    FGNRe.Emit.EnderEmit.nro := 'SEM NUMERO';
+    FGNRE.Emit.EnderEmit.xPais := 'BRASIL';
+    FGNRE.Emit.EnderEmit.cPais := 1058;
+    FGNRE.Emit.EnderEmit.nro := 'SEM NUMERO';
 
-    FGNRe.Dest.EnderDest.xPais := 'BRASIL';
-    FGNRe.Dest.EnderDest.cPais := 1058;
+    FGNRE.Dest.EnderDest.xPais := 'BRASIL';
+    FGNRE.Dest.EnderDest.cPais := 1058;
   end;
   *)
 end;
 
 destructor Guia.Destroy;
 begin
-  FGNReW.Free;
-  FGNReR.Free;
-  FGNRe.Free;
+  FGNREW.Free;
+  FGNRER.Free;
+  FGNRE.Free;
   inherited Destroy;
 end;
 
 procedure Guia.Imprimir;
 begin
-  with TACBrGNRe(TNotasFiscais(Collection).ACBrGNRe) do
+  with TACBrGNRE(TNotasFiscais(Collection).ACBrGNRE) do
   begin
     if not Assigned(FGNREGuia) then
-      raise EACBrGNReException.Create('Componente FGNREGuia não associado.')
+      raise EACBrGNREException.Create('Componente FGNREGuia não associado.')
     else
-      FGNREGuia.ImprimirGuia(GNRe);
+      FGNREGuia.ImprimirGuia(GNRE);
   end;
 end;
 
 procedure Guia.ImprimirPDF;
 begin
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
     if not Assigned(FGNREGuia) then
-      raise EACBrGNReException.Create('Componente FGNREGuia não associado.')
+      raise EACBrGNREException.Create('Componente FGNREGuia não associado.')
     else
-      FGNREGuia.ImprimirGuiaPDF(GNRe);
+      FGNREGuia.ImprimirGuiaPDF(GNRE);
   end;
 end;
 
@@ -240,13 +240,13 @@ var
   CNPJEmitente, CNPJCertificado: String;
 begin
   // Verificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
-  CNPJEmitente    := OnlyNumber(GNRe.Emit.CNPJCPF);
-  CNPJCertificado := OnlyNumber(TACBrGNRe(TGuias(Collection).ACBrGNRe).SSL.CertCNPJ);
+  CNPJEmitente    := OnlyNumber(GNRE.Emit.CNPJCPF);
+  CNPJCertificado := OnlyNumber(TACBrGNRE(TGuias(Collection).ACBrGNRE).SSL.CertCNPJ);
 
   // verificar somente os 8 primeiros digitos, para evitar problemas quando
   // a filial estiver utilizando o certificado da matriz
   if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
-    raise EACBrGNReException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+    raise EACBrGNREException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -254,24 +254,24 @@ begin
   // XML já deve estar em UTF8, para poder ser assinado //
   XMLUTF8 := ConverteXMLtoUTF8(XMLStr);
 
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'GNRe', 'infGNRe');
+    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'GNRE', 'infGNRE');
     FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
     try
       leitor.Grupo := FXMLAssinado;
-      GNRe.signature.URI := Leitor.rAtributo('Reference URI=');
-      GNRe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-      GNRe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-      GNRe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      GNRE.signature.URI := Leitor.rAtributo('Reference URI=');
+      GNRE.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
+      GNRE.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
+      GNRE.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
     finally
       Leitor.Free;
     end;
 
     if Configuracoes.Arquivos.Salvar and
-       (not Configuracoes.Arquivos.SalvarApenasGNReProcessadas) then
+       (not Configuracoes.Arquivos.SalvarApenasGNREProcessadas) then
     begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, FXMLAssinado)
@@ -292,29 +292,29 @@ var
 begin
   AXML := XMLAssinado;
 
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    VerServ := FGNRe.infGNRe.Versao;
-    Modelo  := StrToModeloDF(ok, IntToStr(FGNRe.Ide.modelo));
-    cUF     := FGNRe.Ide.cUF;
+    VerServ := FGNRE.infGNRE.Versao;
+    Modelo  := StrToModeloDF(ok, IntToStr(FGNRE.Ide.modelo));
+    cUF     := FGNRE.Ide.cUF;
 
     if EhAutorizacao( DblToVersaoDF(ok, VerServ), Modelo, cUF) then
-      ALayout := LayGNReAutorizacao
+      ALayout := LayGNREAutorizacao
     else
-      ALayout := LayGNReRecepcao;
+      ALayout := LayGNRERecepcao;
 
-    // Extraindo apenas os dados da GNRe (sem GNReProc)
-    AXML := '<GNRe xmlns' + RetornarConteudoEntre(AXML, '<GNRe xmlns', '</GNRe>') + '</GNRe>';
+    // Extraindo apenas os dados da GNRE (sem GNREProc)
+    AXML := '<GNRE xmlns' + RetornarConteudoEntre(AXML, '<GNRE xmlns', '</GNRE>') + '</GNRE>';
 
     NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
 
     if not NotaEhValida then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados da nota: ') +
-        IntToStr(GNRe.Ide.nNF) + sLineBreak + FAlertas ;
+        IntToStr(GNRE.Ide.nNF) + sLineBreak + FAlertas ;
       FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
 
-      raise EACBrGNReException.CreateDef(
+      raise EACBrGNREException.CreateDef(
         IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
         ErroValidacao));
     end;
@@ -328,14 +328,14 @@ var
 begin
   AXML := XMLAssinado;
 
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infGNRe');
+    AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infGNRE');
 
     if not AssEhValida then
     begin
       FErroValidacao := ACBrStr('Falha na validação da assinatura da nota: ') +
-        IntToStr(GNRe.Ide.nNF) + sLineBreak + Erro;
+        IntToStr(GNRE.Ide.nNF) + sLineBreak + Erro;
     end;
   end;
 
@@ -350,8 +350,8 @@ end;
 function Guia.LerXML(AXML: AnsiString): Boolean;
 begin
   Result := False;
-  FGNReR.Leitor.Arquivo := AXML;
-  FGNReR.LerXml;
+  FGNRER.Leitor.Arquivo := AXML;
+  FGNRER.LerXml;
 
   XMLOriginal := string(AXML);
 
@@ -365,7 +365,7 @@ begin
 
   FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
 
-  Result := TACBrGNRe(TGuias(Collection).ACBrGNRe).Gravar(FNomeArq, FXMLOriginal);
+  Result := TACBrGNRE(TGuias(Collection).ACBrGNRE).Gravar(FNomeArq, FXMLOriginal);
 end;
 
 function Guia.GravarStream(AStream: TStream): Boolean;
@@ -385,38 +385,38 @@ procedure Guia.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
 var
   NomeArq : String;
   AnexosEmail:TStrings;
-  StreamGNRe : TMemoryStream;
+  StreamGNRE : TMemoryStream;
 begin
-  if not Assigned(TACBrGNRe(TGuias(Collection).ACBrGNRe).MAIL) then
-    raise EACBrGNReException.Create('Componente ACBrMail não associado');
+  if not Assigned(TACBrGNRE(TGuias(Collection).ACBrGNRE).MAIL) then
+    raise EACBrGNREException.Create('Componente ACBrMail não associado');
 
   AnexosEmail := TStringList.Create;
-  StreamGNRe := TMemoryStream.Create;
+  StreamGNRE := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
     if Assigned(Anexos) then
       AnexosEmail.Assign(Anexos);
 
-    with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+    with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
     begin
-      GravarStream(StreamGNRe);
+      GravarStream(StreamGNRE);
 
       if (EnviaPDF) then
       begin
         if Assigned(FGNREGuia) then
         begin
-          FGNREGuia.ImprimirGuiaPDF(FGNRe);
+          FGNREGuia.ImprimirGuiaPDF(FGNRE);
           NomeArq := PathWithDelim(FGNREGuia.PathPDF) + NumID + '-gnre.pdf';
           AnexosEmail.Add(NomeArq);
         end;
       end;
 
-      EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamGNRe,
+      EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamGNRE,
                    NumID + '-gnre.xml');
     end;
   finally
     AnexosEmail.Free;
-    StreamGNRe.Free;
+    StreamGNRE.Free;
   end;
 end;
 
@@ -424,26 +424,26 @@ function Guia.GerarXML: String;
 var
   IdAnterior : String;
 begin
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    IdAnterior := GNRe.infGNRe.ID;
-    FGNReW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
-    FGNReW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    IdAnterior := GNRE.infGNRE.ID;
+    FGNREW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
+    FGNREW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;
 
-  FGNReW.Opcoes.GerarTXTSimultaneamente := False;
+  FGNREW.Opcoes.GerarTXTSimultaneamente := False;
 
-  FGNReW.GerarXml;
+  FGNREW.GerarXml;
   //DEBUG
-  //WriteToTXT('c:\temp\Guia.xml', FGNReW.Gerador.ArquivoFormatoXML, False, False);
-  XMLOriginal := FGNReW.Gerador.ArquivoFormatoXML;
+  //WriteToTXT('c:\temp\Guia.xml', FGNREW.Gerador.ArquivoFormatoXML, False, False);
+  XMLOriginal := FGNREW.Gerador.ArquivoFormatoXML;
 
   // XML gerado pode ter nova Chave e ID, então devemos calcular novamente
   // o nome do arquivo, mantendo o PATH do arquivo carregado
-  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FGNRe.infGNRe.ID)) then
+  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FGNRE.infGNRE.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
-  FAlertas := ACBrStr( FGNReW.Gerador.ListaDeAlertas.Text );
+  FAlertas := ACBrStr( FGNREW.Gerador.ListaDeAlertas.Text );
   Result := FXMLOriginal;
 end;
 
@@ -455,7 +455,7 @@ begin
   xID := Self.NumID;
 
   if EstaVazio(xID) then
-    raise EACBrGNReException.Create('ID Inválido. Impossível Salvar XML');
+    raise EACBrGNREException.Create('ID Inválido. Impossível Salvar XML');
 
   NomeXML := '-gnre.xml';
 
@@ -466,14 +466,14 @@ function Guia.CalcularPathArquivo: String;
 var
   Data: TDateTime;
 begin
-  with TACBrGNRe(TGuias(Collection).ACBrGNRe) do
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    if Configuracoes.Arquivos.EmissaoPathGNRe then
-      Data := FGNRe.Ide.dEmi
+    if Configuracoes.Arquivos.EmissaoPathGNRE then
+      Data := FGNRE.Ide.dEmi
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathGNRe(Data, FGNRe.Emit.CNPJCPF, FGNRe.Ide.modelo));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathGNRE(Data, FGNRE.Emit.CNPJCPF, FGNRE.Ide.modelo));
   end;
 end;
 
@@ -494,45 +494,45 @@ end;
 function Guia.ValidarConcatChave: Boolean;
 var
   wAno, wMes, wDia: word;
-  chaveGNRe : String;
+  chaveGNRE : String;
 begin
-  DecodeDate(GNRe.ide.dEmi, wAno, wMes, wDia);
+  DecodeDate(GNRE.ide.dEmi, wAno, wMes, wDia);
 
-  chaveGNRe := 'GNRe' + OnlyNumber(GNRe.infGNRe.ID);
+  chaveGNRE := 'GNRE' + OnlyNumber(GNRE.infGNRE.ID);
   {(*}
   Result := not
-    ((Copy(chaveGNRe, 4, 2) <> IntToStrZero(GNRe.Ide.cUF, 2)) or
-    (Copy(chaveGNRe, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-    (Copy(chaveGNRe, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(chaveGNRe, 10, 14)<> PadLeft(OnlyNumber(GNRe.Emit.CNPJCPF), 14, '0')) or
-    (Copy(chaveGNRe, 24, 2) <> IntToStrZero(GNRe.Ide.modelo, 2)) or
-    (Copy(chaveGNRe, 26, 3) <> IntToStrZero(GNRe.Ide.serie, 3)) or
-    (Copy(chaveGNRe, 29, 9) <> IntToStrZero(GNRe.Ide.nNF, 9)) or
-    (Copy(chaveGNRe, 38, 1) <> TpEmisToStr(GNRe.Ide.tpEmis)) or
-    (Copy(chaveGNRe, 39, 8) <> IntToStrZero(GNRe.Ide.cNF, 8)));
+    ((Copy(chaveGNRE, 4, 2) <> IntToStrZero(GNRE.Ide.cUF, 2)) or
+    (Copy(chaveGNRE, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+    (Copy(chaveGNRE, 8, 2)  <> FormatFloat('00', wMes)) or
+    (Copy(chaveGNRE, 10, 14)<> PadLeft(OnlyNumber(GNRE.Emit.CNPJCPF), 14, '0')) or
+    (Copy(chaveGNRE, 24, 2) <> IntToStrZero(GNRE.Ide.modelo, 2)) or
+    (Copy(chaveGNRE, 26, 3) <> IntToStrZero(GNRE.Ide.serie, 3)) or
+    (Copy(chaveGNRE, 29, 9) <> IntToStrZero(GNRE.Ide.nNF, 9)) or
+    (Copy(chaveGNRE, 38, 1) <> TpEmisToStr(GNRE.Ide.tpEmis)) or
+    (Copy(chaveGNRE, 39, 8) <> IntToStrZero(GNRE.Ide.cNF, 8)));
   {*)}
 end;
 
 function Guia.GetConfirmada: Boolean;
 begin
-  Result := TACBrGNRe(TGuias(Collection).ACBrGNRe).CstatConfirmada(
-    FGNRe.procGNRe.cStat);
+  Result := TACBrGNRE(TGuias(Collection).ACBrGNRE).CstatConfirmada(
+    FGNRE.procGNRE.cStat);
 end;
 
 function Guia.GetProcessada: Boolean;
 begin
-  Result := TACBrGNRe(TGuias(Collection).ACBrGNRe).CstatProcessado(
-    FGNRe.procGNRe.cStat);
+  Result := TACBrGNRE(TGuias(Collection).ACBrGNRE).CstatProcessado(
+    FGNRE.procGNRE.cStat);
 end;
 
 function Guia.GetMsg: String;
 begin
-  Result := FGNRe.procGNRe.xMotivo;
+  Result := FGNRE.procGNRE.xMotivo;
 end;
 
 function Guia.GetNumID: String;
 begin
-  Result := OnlyNumber(GNRe.infGNRe.ID);
+  Result := OnlyNumber(GNRE.infGNRE.ID);
 end;
 
 function Guia.GetXMLAssinado: String;
@@ -563,13 +563,13 @@ end;
 constructor TGuias.Create(AOwner: TPersistent;
   ItemClass: TCollectionItemClass);
 begin
-  if not (AOwner is TACBrGNRe) then
-    raise EACBrGNReException.Create('AOwner deve ser do tipo TACBrGNRe');
+  if not (AOwner is TACBrGNRE) then
+    raise EACBrGNREException.Create('AOwner deve ser do tipo TACBrGNRE');
 
   inherited;
 
-  FACBrGNRe := TACBrGNRe(AOwner);
-  FConfiguracoes := TACBrGNRe(FACBrGNRe).Configuracoes;
+  FACBrGNRE := TACBrGNRE(AOwner);
+  FConfiguracoes := TACBrGNRE(FACBrGNRE).Configuracoes;
 end;
 
 function TGuias.Add: Guia;
@@ -585,7 +585,7 @@ begin
     Self.Items[i].Assinar;
 end;
 
-procedure TGuias.GerarGNRe;
+procedure TGuias.GerarGNRE;
 var
   i: integer;
 begin
@@ -606,20 +606,20 @@ end;
 procedure TGuias.VerificarGNREGuias;
 begin
 begin
-  if not Assigned(TACBrGNRe(FACBrGNRe).GNREGuia) then
-    raise EACBrGNReException.Create('Componente FGNREGuia não associado.');
+  if not Assigned(TACBrGNRE(FACBrGNRE).GNREGuia) then
+    raise EACBrGNREException.Create('Componente FGNREGuia não associado.');
 end;
 
 procedure TGuias.Imprimir;
 begin
   VerificarGNREGuias;
-  TACBrGNRe(FACBrGNRe).DANFE.ImprimirGuia(nil);
+  TACBrGNRE(FACBrGNRE).DANFE.ImprimirGuia(nil);
 end;
 
 procedure TGuias.ImprimirPDF;
 begin
   VerificarGNREGuias;
-  TACBrGNRe(FACBrGNRe).DANFE.ImprimirGuiaPDF(nil);
+  TACBrGNRE(FACBrGNRE).DANFE.ImprimirGuiaPDF(nil);
 end;
 
 function TGuias.Insert(Index: integer): Guia;
@@ -675,7 +675,7 @@ begin
 end;
 
 function TGuias.LoadFromFile(CaminhoArquivo: String;
-  AGerarGNRe: Boolean): Boolean;
+  AGerarGNRE: Boolean): Boolean;
   XMLStr: String;
   XMLUTF8: AnsiString;
   i, l: integer;
@@ -695,7 +695,7 @@ begin
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
-  LoadFromString(XMLStr, AGerarGNRe);
+  LoadFromString(XMLStr, AGerarGNRE);
 
   // Atribui Nome do arquivo a novas guias inseridas //
   for i := l to Self.Count - 1 do
@@ -705,7 +705,7 @@ begin
 end;
 
 function TGuias.LoadFromStream(AStream: TStringStream;
-  AGerarGNRe: Boolean): Boolean;
+  AGerarGNRE: Boolean): Boolean;
 var
   AXML: AnsiString;
 begin
@@ -713,25 +713,25 @@ begin
   AStream.Position := 0;
   AXML := ReadStrFromStream(AStream, AStream.Size);
 
-  Result := Self.LoadFromString(String(AXML), AGerarGNRe);
+  Result := Self.LoadFromString(String(AXML), AGerarGNRE);
 end;
 
 function TGuias.LoadFromString(AXMLString: String;
-  AGerarGNRe: Boolean): Boolean;
+  AGerarGNRE: Boolean): Boolean;
 var
   AXML: AnsiString;
   P, N: integer;
 
-  function PosGNRe: integer;
+  function PosGNRE: integer;
   begin
     Result := pos('</guias>', AXMLString);
   end;
 
 begin
-  N := PosGNRe;
+  N := PosGNRE;
   while N > 0 do
   begin
-    P := pos('</GNReProc>', AXMLString);
+    P := pos('</GNREProc>', AXMLString);
     if P > 0 then
     begin
       AXML := copy(AXMLString, 1, P + 10);
@@ -747,11 +747,11 @@ begin
     begin
       LerXML(AXML);
 
-      if AGerarGNRe then // Recalcula o XML
+      if AGerarGNRE then // Recalcula o XML
         GerarXML;
     end;
 
-    N := PosGNRe;
+    N := PosGNRE;
   end;
 
   Result := Self.Count > 0;

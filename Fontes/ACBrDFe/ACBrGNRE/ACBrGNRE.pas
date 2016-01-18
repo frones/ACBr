@@ -51,8 +51,8 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  ACBrGNReConfiguracoes, ACBrGNReWebServices, ACBrGNReGuias,
-  ACBrGNReGuiaClass,
+  ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
+  ACBrGNREGuiaClass,
   pgnreGNRE, pcnConversao, pgnreConversao,
   ACBrUtil;
 
@@ -65,21 +65,21 @@ const
                'configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
 type
-  EACBrGNReException = class(EACBrDFeException);
+  EACBrGNREException = class(EACBrDFeException);
 
-  { TACBrGNRe }
+  { TACBrGNRE }
 
-  TACBrGNRe = class(TACBrDFe)
+  TACBrGNRE = class(TACBrDFe)
   private
     FGNREGuia: TACBrGNREGuiaClass;
 
     FGuias: TGuias;
 //    FGuiasRetorno: TGuiasRetorno;
-    FStatus: TStatusACBrGNRe;
+    FStatus: TStatusACBrGNRE;
     FWebServices: TWebServices;
 
-    function GetConfiguracoes: TConfiguracoesGNRe;
-    procedure SetConfiguracoes(AValue: TConfiguracoesGNRe);
+    function GetConfiguracoes: TConfiguracoesGNRE;
+    procedure SetConfiguracoes(AValue: TConfiguracoesGNRE);
     procedure SetGNREGuia(const Value: TACBrGNREGuiaClass);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
@@ -92,7 +92,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamGNRe: TStream = nil; NomeArq: String = ''); override;
+      StreamGNRE: TStream = nil; NomeArq: String = ''); override;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -108,63 +108,21 @@ type
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
 
-    function IdentificaSchema(const AXML: String): TSchemaGNRe;
+    function IdentificaSchema(const AXML: String): TSchemaGNRE;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
       ): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Guias: TGuias read FGuias write FGuias;
 //    property GuiasRetorno: TGuiasRetorno read FGuiasRetorno write FGuiasRetorno;
-    property Status: TStatusACBrGNRe read FStatus;
+    property Status: TStatusACBrGNRE read FStatus;
 
-    procedure SetStatus(const stNewStatus: TStatusACBrGNRe);
+    procedure SetStatus(const stNewStatus: TStatusACBrGNRE);
   published
-    property Configuracoes: TConfiguracoesGNRe read GetConfiguracoes write SetConfiguracoes;
+    property Configuracoes: TConfiguracoesGNRE read GetConfiguracoes write SetConfiguracoes;
     property GNREGuia: TACBrGNREGuiaClass      read FGNREGuia        write SetGNREGuia;
   end;
 
-
-
-
-
-
-
-
-(*
-  TACBrGNRE = class(TComponent)
-  private
-    fsAbout: TACBrGNREAboutInfo;
-    FGuias: TGuias;
-    FGuiasRetorno: TGuiasRetorno;
-    FGNREGuia: TACBrGNREGuiaClass;
-    FWebServices: TWebServices;
-    FConfiguracoes: TConfiguracoes;
-    FStatus : TStatusACBrGNRE;
-    FOnStatusChange: TNotifyEvent;
-    FOnGerarLog : TACBrGNRELog;
-  protected
-    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-  public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
-    function Enviar: Boolean;
-    function ConsultarResultadoLote(ANumRecibo: String): Boolean;
-
-    property WebServices: TWebServices   read FWebServices  write FWebServices;
-    property Guias: TGuias read FGuias write FGuias;
-    property GuiasRetorno: TGuiasRetorno read FGuiasRetorno write FGuiasRetorno;
-    property Status: TStatusACBrGNRE     read FStatus;
-    procedure SetStatus( const stNewStatus : TStatusACBrGNRE );
-  published
-    property Configuracoes: TConfiguracoes     read FConfiguracoes  write FConfiguracoes;
-    property OnStatusChange: TNotifyEvent      read FOnStatusChange write FOnStatusChange;
-    property GNREGuia: TACBrGNREGuiaClass      read FGNREGuia       write FGNREGuia;
-    property AboutACBrGNRE: TACBrGNREAboutInfo read fsAbout         write fsAbout stored false;
-    property OnGerarLog: TACBrGNRELog          read FOnGerarLog     write FOnGerarLog;
-  end;
-
-procedure ACBrAboutDialog;
-*)
 implementation
 
 uses
@@ -172,14 +130,14 @@ uses
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
- {$R ACBrGNReServicos.rc}
+ {$R ACBrGNREServicos.rc}
 {$ELSE}
- {$R ACBrGNReServicos.res}
+ {$R ACBrGNREServicos.res}
 {$ENDIF}
 
-{ TACBrGNRe }
+{ TACBrGNRE }
 
-constructor TACBrGNRe.Create(AOwner: TComponent);
+constructor TACBrGNRE.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
@@ -187,7 +145,7 @@ begin
   FWebServices := TWebServices.Create(Self);
 end;
 
-destructor TACBrGNRe.Destroy;
+destructor TACBrGNRE.Destroy;
 begin
   FGuias.Free;
   FWebServices.Free;
@@ -195,19 +153,19 @@ begin
   inherited;
 end;
 
-procedure TACBrGNRe.EnviarEmail(sPara, sAssunto: String; sMensagem, sCC,
-  Anexos: TStrings; StreamGNRe: TStream; NomeArq: String);
+procedure TACBrGNRE.EnviarEmail(sPara, sAssunto: String; sMensagem, sCC,
+  Anexos: TStrings; StreamGNRE: TStream; NomeArq: String);
 begin
-  SetStatus( stGNReEmail );
+  SetStatus( stGNREEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRE, NomeArq);
   finally
     SetStatus( stIdle );
   end;
 end;
 
-procedure TACBrGNRe.Notification(AComponent: TComponent;
+procedure TACBrGNRE.Notification(AComponent: TComponent;
   Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
@@ -217,51 +175,51 @@ begin
     FGNREGuia := nil;
 end;
 
-function TACBrGNRe.GetAbout: String;
+function TACBrGNRE.GetAbout: String;
 begin
-  Result := 'ACBrGNRe Ver: ' + ACBRGNRE_VERSAO;
+  Result := 'ACBrGNRE Ver: ' + ACBRGNRE_VERSAO;
 end;
 
-function TACBrGNRe.CreateConfiguracoes: TConfiguracoes;
+function TACBrGNRE.CreateConfiguracoes: TConfiguracoes;
 begin
-  Result := TConfiguracoesGNRe.Create(Self);
+  Result := TConfiguracoesGNRE.Create(Self);
 end;
 
-procedure TACBrGNRe.SetGNREGuia(const Value: TACBrGNREGuiaClass);
+procedure TACBrGNRE.SetGNREGuia(const Value: TACBrGNREGuiaClass);
 var
   OldValue: TACBrGNREGuiaClass;
 begin
-  if Value <> FACBrGNRe then
+  if Value <> FACBrGNRE then
   begin
-    if Assigned(FACBrGNRe) then
-      FACBrGNRe.RemoveFreeNotification(Self);
+    if Assigned(FACBrGNRE) then
+      FACBrGNRE.RemoveFreeNotification(Self);
 
-    OldValue := FACBrGNRe; // Usa outra variavel para evitar Loop Infinito
-    FACBrGNRe := Value;    // na remoção da associação dos componentes
+    OldValue := FACBrGNRE; // Usa outra variavel para evitar Loop Infinito
+    FACBrGNRE := Value;    // na remoção da associação dos componentes
 
     if Assigned(OldValue) then
-      if Assigned(OldValue.ACBrGNRe) then
-        OldValue.ACBrGNRe := nil;
+      if Assigned(OldValue.ACBrGNRE) then
+        OldValue.ACBrGNRE := nil;
 
     if Value <> nil then
     begin
       Value.FreeNotification(Self);
-      Value.ACBrGNRe := Self;
+      Value.ACBrGNRE := Self;
     end;
   end;
 end;
 
-function TACBrGNRe.GetNomeModeloDFe: String;
+function TACBrGNRE.GetNomeModeloDFe: String;
 begin
   Result := 'GNRE';
 end;
 
-function TACBrGNRe.GetNameSpaceURI: String;
+function TACBrGNRE.GetNameSpaceURI: String;
 begin
   Result := ACBRGNRE_NAMESPACE;
 end;
 
-function TACBrGNRe.CstatConfirmada(AValue: integer): Boolean;
+function TACBrGNRE.CstatConfirmada(AValue: integer): Boolean;
 begin
   case AValue of
     100, 150: Result := True;
@@ -270,7 +228,7 @@ begin
   end;
 end;
 
-function TACBrGNRe.CstatProcessado(AValue: integer): Boolean;
+function TACBrGNRE.CstatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302, 303: Result := True;
@@ -279,19 +237,18 @@ begin
   end;
 end;
 
-function TACBrGNRe.IdentificaSchema(const AXML: String): TSchemaGNRe;
+function TACBrGNRE.IdentificaSchema(const AXML: String): TSchemaGNRE;
 var
   lTipoEvento: String;
   I: integer;
 begin
-
-  Result := schGNRe;
-  I := pos('<infGNRe', AXML);
+  Result := schGNRE;
+  I := pos('<infGNRE', AXML);
   if I = 0 then
     Result := schError;
 end;
 
-function TACBrGNRe.GerarNomeArqSchema(const ALayOut: TLayOut;
+function TACBrGNRE.GerarNomeArqSchema(const ALayOut: TLayOut;
   VersaoServico: Double): String;
 var
   NomeServico, NomeSchema, ArqSchema: String;
@@ -310,17 +267,17 @@ begin
   Result := ArqSchema;
 end;
 
-function TACBrGNRe.GetConfiguracoes: TConfiguracoesGNRe;
+function TACBrGNRE.GetConfiguracoes: TConfiguracoesGNRE;
 begin
-  Result := TConfiguracoesGNRe(FPConfiguracoes);
+  Result := TConfiguracoesGNRE(FPConfiguracoes);
 end;
 
-procedure TACBrGNRe.SetConfiguracoes(AValue: TConfiguracoesGNRe);
+procedure TACBrGNRE.SetConfiguracoes(AValue: TConfiguracoesGNRE);
 begin
   FPConfiguracoes := AValue;
 end;
 
-function TACBrGNRe.LerVersaoDeParams(LayOutServico: TLayOut): String;
+function TACBrGNRE.LerVersaoDeParams(LayOutServico: TLayOut): String;
 var
   Versao: Double;
 begin
@@ -331,7 +288,7 @@ begin
   Result := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TACBrGNRe.LerServicoDeParams(LayOutServico: TLayOut;
+procedure TACBrGNRE.LerServicoDeParams(LayOutServico: TLayOut;
   var Versao: Double; var URL: String);
 var
   AUF: String;
@@ -348,7 +305,7 @@ begin
                      URL);
 end;
 
-procedure TACBrGNRe.SetStatus(const stNewStatus: TStatusACBrGNRe);
+procedure TACBrGNRE.SetStatus(const stNewStatus: TStatusACBrGNRE);
 begin
   if stNewStatus <> FStatus then
   begin
@@ -358,7 +315,7 @@ begin
   end;
 end;
 
-function TACBrGNRe.NomeServicoToNomeSchema(const NomeServico: String): String;
+function TACBrGNRE.NomeServicoToNomeSchema(const NomeServico: String): String;
 Var
   ok: Boolean;
   ALayout: TLayOut;
@@ -370,13 +327,13 @@ begin
     Result := '';
 end;
 
-function TACBrGNRe.Enviar: Boolean;
+function TACBrGNRE.Enviar: Boolean;
 begin
   if Guias.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhuma GNRe adicionada ao Lote'));
+    GerarException(ACBrStr('ERRO: Nenhuma GNRE adicionada ao Lote'));
 
   if Guias.Count > 50 then
-    GerarException(ACBrStr('ERRO: Conjunto de GNRe transmitidas (máximo de 50 GNRe)' +
+    GerarException(ACBrStr('ERRO: Conjunto de GNRE transmitidas (máximo de 50 GNRE)' +
       ' excedido. Quantidade atual: ' + IntToStr(Guias.Count)));
 
   Result := WebServices.Envia;
@@ -392,7 +349,7 @@ begin
 
 end;
 
-function TACBrGNRe.ConsultarResultadoLote(ANumRecibo: String): Boolean;
+function TACBrGNRE.ConsultarResultadoLote(ANumRecibo: String): Boolean;
 begin
  Result := WebServices.ConsultaResultadoLote(ANumRecibo);
 end;

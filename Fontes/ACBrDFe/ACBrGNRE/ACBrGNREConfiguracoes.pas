@@ -54,58 +54,58 @@ uses
 
 type
 
-  { TGeralConfGNRe }
+  { TGeralConfGNRE }
 
-  TGeralConfGNRe = class(TGeralConf)
+  TGeralConfGNRE = class(TGeralConf)
   private
     FVersaoDF: TpcnVersaoDF;
 
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfGNRe: TGeralConfGNRe); overload;
+    procedure Assign(DeGeralConfGNRE: TGeralConfGNRE); overload;
 
   published
     property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve100;
   end;
 
-  { TArquivosConfGNRe }
+  { TArquivosConfGNRE }
 
-  TArquivosConfGNRe = class(TArquivosConf)
+  TArquivosConfGNRE = class(TArquivosConf)
   private
-    FEmissaoPathGNRe: boolean;
-    FSalvarApenasGNReProcessadas: boolean;
-    FPathGNRe: String;
+    FEmissaoPathGNRE: boolean;
+    FSalvarApenasGNREProcessadas: boolean;
+    FPathGNRE: String;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfGNRe: TArquivosConfGNRe); overload;
+    procedure Assign(DeArquivosConfGNRE: TArquivosConfGNRE); overload;
 
-    function GetPathGNRe(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathGNRE(Data: TDateTime = 0; CNPJ: String = ''): String;
   published
-    property EmissaoPathGNRe: boolean read FEmissaoPathGNRe
-      write FEmissaoPathGNRe default False;
-    property SalvarApenasGNReProcessadas: boolean
-      read FSalvarApenasGNReProcessadas write FSalvarApenasGNReProcessadas default False;
-    property PathGNRe: String read FPathGNRe write FPathGNRe;
+    property EmissaoPathGNRE: boolean read FEmissaoPathGNRE
+      write FEmissaoPathGNRE default False;
+    property SalvarApenasGNREProcessadas: boolean
+      read FSalvarApenasGNREProcessadas write FSalvarApenasGNREProcessadas default False;
+    property PathGNRE: String read FPathGNRE write FPathGNRE;
   end;
 
-  { TConfiguracoesGNRe }
+  { TConfiguracoesGNRE }
 
-  TConfiguracoesGNRe = class(TConfiguracoes)
+  TConfiguracoesGNRE = class(TConfiguracoes)
   private
-    function GetArquivos: TArquivosConfGNRe;
-    function GetGeral: TGeralConfGNRe;
+    function GetArquivos: TArquivosConfGNRE;
+    function GetGeral: TGeralConfGNRE;
   protected
     procedure CreateGeralConf; override;
     procedure CreateArquivosConf; override;
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesGNRe: TConfiguracoesGNRe); overload;
+    procedure Assign(DeConfiguracoesGNRE: TConfiguracoesGNRE); overload;
 
   published
-    property Geral: TGeralConfGNRe read GetGeral;
-    property Arquivos: TArquivosConfGNRe read GetArquivos;
+    property Geral: TGeralConfGNRE read GetGeral;
+    property Arquivos: TArquivosConfGNRE read GetArquivos;
     property WebServices;
     property Certificados;
   end;
@@ -116,88 +116,88 @@ uses
   ACBrUtil,
   DateUtils;
 
-{ TGeralConfGNRe }
+{ TGeralConfGNRE }
 
-constructor TGeralConfGNRe.Create(AOwner: TConfiguracoes);
+constructor TGeralConfGNRE.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
   FVersaoDF := ve100;
 end;
 
-procedure TGeralConfGNRe.Assign(DeGeralConfGNRe: TGeralConfGNRe);
+procedure TGeralConfGNRE.Assign(DeGeralConfGNRE: TGeralConfGNRE);
 begin
-  inherited Assign(DeGeralConfGNRe);
+  inherited Assign(DeGeralConfGNRE);
 
-  VersaoDF := DeGeralConfGNRe.VersaoDF;
+  VersaoDF := DeGeralConfGNRE.VersaoDF;
 end;
 
-procedure TGeralConfGNRe.SetVersaoDF(const Value: TpcnVersaoDF);
+procedure TGeralConfGNRE.SetVersaoDF(const Value: TpcnVersaoDF);
 begin
   FVersaoDF := Value;
 end;
 
-{ TArquivosConfGNRe }
+{ TArquivosConfGNRE }
 
-constructor TArquivosConfGNRe.Create(AOwner: TConfiguracoes);
+constructor TArquivosConfGNRE.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FEmissaoPathGNRe := False;
-  FSalvarApenasGNReProcessadas := False;
-  FPathGNRe := '';
+  FEmissaoPathGNRE := False;
+  FSalvarApenasGNREProcessadas := False;
+  FPathGNRE := '';
 end;
 
-procedure TArquivosConfGNRe.Assign(DeArquivosConfGNRe: TArquivosConfGNRe);
+procedure TArquivosConfGNRE.Assign(DeArquivosConfGNRE: TArquivosConfGNRE);
 begin
-  inherited Assign(DeArquivosConfGNRe);
+  inherited Assign(DeArquivosConfGNRE);
 
-  EmissaoPathGNRe             := DeArquivosConfGNRe.EmissaoPathGNRe;
-  SalvarApenasGNReProcessadas := DeArquivosConfGNRe.SalvarApenasGNReProcessadas;
-  PathGNRe                    := DeArquivosConfGNRe.PathGNRe;
+  EmissaoPathGNRE             := DeArquivosConfGNRE.EmissaoPathGNRE;
+  SalvarApenasGNREProcessadas := DeArquivosConfGNRE.SalvarApenasGNREProcessadas;
+  PathGNRE                    := DeArquivosConfGNRE.PathGNRE;
 end;
 
-function TArquivosConfGNRe.GetPathGNRe(Data: TDateTime;
+function TArquivosConfGNRE.GetPathGNRE(Data: TDateTime;
   CNPJ: String): String;
 begin
-  Result := GetPath(FPathGNRe, 'GNRe', CNPJ, Data);
+  Result := GetPath(FPathGNRE, 'GNRE', CNPJ, Data);
 end;
 
-{ TConfiguracoesGNRe }
+{ TConfiguracoesGNRE }
 
-constructor TConfiguracoesGNRe.Create(AOwner: TComponent);
+constructor TConfiguracoesGNRE.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  WebServices.ResourceName := 'ACBrGNReServicos';
+  WebServices.ResourceName := 'ACBrGNREServicos';
 end;
 
-procedure TConfiguracoesGNRe.Assign(DeConfiguracoesGNRe: TConfiguracoesGNRe);
+procedure TConfiguracoesGNRE.Assign(DeConfiguracoesGNRE: TConfiguracoesGNRE);
 begin
-  Geral.Assign(DeConfiguracoesGNRe.Geral);
-  WebServices.Assign(DeConfiguracoesGNRe.WebServices);
-  Certificados.Assign(DeConfiguracoesGNRe.Certificados);
-  Arquivos.Assign(DeConfiguracoesGNRe.Arquivos);
+  Geral.Assign(DeConfiguracoesGNRE.Geral);
+  WebServices.Assign(DeConfiguracoesGNRE.WebServices);
+  Certificados.Assign(DeConfiguracoesGNRE.Certificados);
+  Arquivos.Assign(DeConfiguracoesGNRE.Arquivos);
 end;
 
-function TConfiguracoesGNRe.GetArquivos: TArquivosConfGNRe;
+function TConfiguracoesGNRE.GetArquivos: TArquivosConfGNRE;
 begin
-  Result := TArquivosConfGNRe(FPArquivos);
+  Result := TArquivosConfGNRE(FPArquivos);
 end;
 
-function TConfiguracoesGNRe.GetGeral: TGeralConfGNRe;
+function TConfiguracoesGNRE.GetGeral: TGeralConfGNRE;
 begin
-  Result := TGeralConfGNRe(FPGeral);
+  Result := TGeralConfGNRE(FPGeral);
 end;
 
-procedure TConfiguracoesGNRe.CreateGeralConf;
+procedure TConfiguracoesGNRE.CreateGeralConf;
 begin
-  FPGeral := TGeralConfGNRe.Create(Self);
+  FPGeral := TGeralConfGNRE.Create(Self);
 end;
 
-procedure TConfiguracoesGNRe.CreateArquivosConf;
+procedure TConfiguracoesGNRE.CreateArquivosConf;
 begin
-  FPArquivos := TArquivosConfGNRe.Create(Self);
+  FPArquivos := TArquivosConfGNRE.Create(Self);
 end;
 
 end.

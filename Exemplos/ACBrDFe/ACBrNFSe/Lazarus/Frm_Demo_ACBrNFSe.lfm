@@ -25,9 +25,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblColaborador: TLabel
       Cursor = crHandPoint
       Left = 18
-      Height = 13
+      Height = 14
       Top = 446
-      Width = 261
+      Width = 284
       Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
       Font.Color = clNavy
       Font.Height = -11
@@ -40,9 +40,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblPatrocinador: TLabel
       Cursor = crHandPoint
       Left = 16
-      Height = 13
+      Height = 14
       Top = 470
-      Width = 265
+      Width = 288
       Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
       Font.Color = clGreen
       Font.Height = -11
@@ -55,9 +55,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblDoar1: TLabel
       Cursor = crHandPoint
       Left = 21
-      Height = 13
+      Height = 14
       Top = 494
-      Width = 255
+      Width = 276
       Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
       Font.Color = clRed
       Font.Height = -11
@@ -70,9 +70,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblDoar2: TLabel
       Cursor = crHandPoint
       Left = 117
-      Height = 13
+      Height = 14
       Top = 510
-      Width = 63
+      Width = 69
       Caption = 'clique aqui'
       Font.Color = clRed
       Font.Height = -11
@@ -87,12 +87,12 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       Top = 8
       Width = 281
       Caption = 'Configurações'
-      ClientHeight = 367
+      ClientHeight = 369
       ClientWidth = 277
       TabOrder = 0
       object PageControl1: TPageControl
         Left = 0
-        Height = 367
+        Height = 369
         Top = 0
         Width = 277
         ActivePage = TabSheet4
@@ -103,84 +103,84 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Options = [nboMultiLine]
         object TabSheet4: TTabSheet
           Caption = 'Emitente'
-          ClientHeight = 341
-          ClientWidth = 269
+          ClientHeight = 337
+          ClientWidth = 271
           ImageIndex = 3
           object Label12: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 8
-            Width = 27
+            Width = 26
             Caption = 'CNPJ'
             ParentColor = False
           end
           object Label13: TLabel
             Left = 136
-            Height = 13
+            Height = 14
             Top = 8
-            Width = 71
+            Width = 82
             Caption = 'Insc. Municipal'
             ParentColor = False
           end
           object Label14: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 48
-            Width = 63
+            Width = 72
             Caption = 'Razão Social'
             ParentColor = False
           end
           object Label15: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 88
-            Width = 40
+            Width = 46
             Caption = 'Fantasia'
             ParentColor = False
           end
           object Label16: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 168
-            Width = 54
+            Width = 65
             Caption = 'Logradouro'
             ParentColor = False
           end
           object Label17: TLabel
             Left = 208
-            Height = 13
+            Height = 14
             Top = 168
-            Width = 37
+            Width = 45
             Caption = 'Número'
             ParentColor = False
           end
           object Label18: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 208
-            Width = 64
+            Width = 79
             Caption = 'Complemento'
             ParentColor = False
           end
           object Label19: TLabel
             Left = 136
-            Height = 13
+            Height = 14
             Top = 208
-            Width = 27
+            Width = 35
             Caption = 'Bairro'
             ParentColor = False
           end
           object Label21: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 248
-            Width = 33
+            Width = 39
             Caption = 'Cidade'
             ParentColor = False
           end
           object Label22: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 288
             Width = 14
             Caption = 'UF'
@@ -188,101 +188,101 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object Label23: TLabel
             Left = 136
-            Height = 13
+            Height = 14
             Top = 128
-            Width = 21
+            Width = 22
             Caption = 'CEP'
             ParentColor = False
           end
           object Label24: TLabel
             Left = 8
-            Height = 13
+            Height = 14
             Top = 128
-            Width = 24
+            Width = 27
             Caption = 'Fone'
             ParentColor = False
           end
           object Label29: TLabel
             Left = 128
-            Height = 13
+            Height = 14
             Top = 288
-            Width = 58
+            Width = 69
             Caption = 'Cód. Cidade'
             ParentColor = False
           end
           object edtEmitCNPJ: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 24
             Width = 123
             TabOrder = 0
           end
           object edtEmitIM: TEdit
             Left = 136
-            Height = 21
+            Height = 24
             Top = 24
             Width = 123
             TabOrder = 1
           end
           object edtEmitRazao: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 64
             Width = 252
             TabOrder = 2
           end
           object edtEmitFantasia: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 104
             Width = 252
             TabOrder = 3
           end
           object edtEmitFone: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 144
             Width = 125
             TabOrder = 4
           end
           object edtEmitCEP: TEdit
             Left = 136
-            Height = 21
+            Height = 24
             Top = 144
             Width = 123
             TabOrder = 5
           end
           object edtEmitLogradouro: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 184
             Width = 196
             TabOrder = 6
           end
           object edtEmitNumero: TEdit
             Left = 208
-            Height = 21
+            Height = 24
             Top = 184
             Width = 50
             TabOrder = 7
           end
           object edtEmitComp: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 224
             Width = 123
             TabOrder = 8
           end
           object edtEmitBairro: TEdit
             Left = 136
-            Height = 21
+            Height = 24
             Top = 224
             Width = 123
             TabOrder = 9
           end
           object edtEmitCidade: TEdit
             Left = 72
-            Height = 21
+            Height = 24
             Top = 264
             Width = 142
             ReadOnly = True
@@ -292,7 +292,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object edtEmitUF: TEdit
             Left = 8
-            Height = 21
+            Height = 24
             Top = 304
             Width = 35
             Font.Color = clWindowText
@@ -306,10 +306,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object cbCidades: TComboBox
             Left = 8
-            Height = 21
+            Height = 27
             Top = 264
             Width = 257
-            ItemHeight = 13
+            ItemHeight = 0
             Items.Strings = (
               'Alfenas/3101607/MG'
               'Americana/3501608/SP'
@@ -493,7 +493,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object edtCodCidade: TEdit
             Left = 128
-            Height = 21
+            Height = 24
             Top = 304
             Width = 89
             Font.Color = clWindowText
@@ -508,15 +508,15 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet1: TTabSheet
           Caption = 'Certificado'
-          ClientHeight = 341
-          ClientWidth = 269
+          ClientHeight = 337
+          ClientWidth = 271
           object gbCertificado: TGroupBox
             Left = 0
             Height = 144
             Top = 4
             Width = 265
             Caption = 'Certificado'
-            ClientHeight = 126
+            ClientHeight = 128
             ClientWidth = 261
             TabOrder = 0
             object Label1: TLabel
@@ -614,8 +614,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet2: TTabSheet
           Caption = 'Geral'
-          ClientHeight = 341
-          ClientWidth = 269
+          ClientHeight = 337
+          ClientWidth = 271
           ImageIndex = 1
           object gbGeral: TGroupBox
             Left = 0
@@ -623,7 +623,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 4
             Width = 265
             Caption = 'Geral'
-            ClientHeight = 274
+            ClientHeight = 276
             ClientWidth = 261
             TabOrder = 0
             object Label7: TLabel
@@ -847,8 +847,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet3: TTabSheet
           Caption = 'WebService'
-          ClientHeight = 341
-          ClientWidth = 269
+          ClientHeight = 337
+          ClientWidth = 271
           ImageIndex = 2
           object Label6: TLabel
             Left = 8
@@ -872,7 +872,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 4
             Width = 265
             Caption = 'WebService'
-            ClientHeight = 91
+            ClientHeight = 93
             ClientWidth = 261
             TabOrder = 0
             object ckVisualizar: TCheckBox
@@ -901,7 +901,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               ChildSizing.ShrinkVertical = crsScaleChilds
               ChildSizing.Layout = cclLeftToRightThenTopToBottom
               ChildSizing.ControlsPerLine = 2
-              ClientHeight = 26
+              ClientHeight = 28
               ClientWidth = 245
               Columns = 2
               ItemIndex = 0
@@ -930,7 +930,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 128
             Width = 265
             Caption = 'Proxy'
-            ClientHeight = 87
+            ClientHeight = 89
             ClientWidth = 261
             TabOrder = 1
             object Label8: TLabel
@@ -1015,8 +1015,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet7: TTabSheet
           Caption = 'Email'
-          ClientHeight = 341
-          ClientWidth = 269
+          ClientHeight = 337
+          ClientWidth = 271
           ImageIndex = 4
           object gbEmail: TGroupBox
             Left = 1
@@ -1024,7 +1024,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 4
             Width = 264
             Caption = 'Email'
-            ClientHeight = 306
+            ClientHeight = 308
             ClientWidth = 260
             TabOrder = 0
             object Label3: TLabel
@@ -1347,21 +1347,21 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       TabOrder = 1
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ClientHeight = 332
-        ClientWidth = 563
+        ClientHeight = 326
+        ClientWidth = 565
         object MemoResp: TMemo
           Left = 0
-          Height = 332
+          Height = 326
           Top = 0
-          Width = 563
+          Width = 565
           Align = alClient
           TabOrder = 0
         end
       end
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
-        ClientHeight = 332
-        ClientWidth = 563
+        ClientHeight = 326
+        ClientWidth = 565
         ImageIndex = 1
         inline WBResposta: TSynMemo
           Cursor = crIBeam
@@ -1428,8 +1428,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       end
       object TabSheet8: TTabSheet
         Caption = 'Log'
-        ClientHeight = 332
-        ClientWidth = 563
+        ClientHeight = 326
+        ClientWidth = 565
         ImageIndex = 2
         object memoLog: TMemo
           Left = 0
@@ -1443,8 +1443,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       end
       object TabSheet9: TTabSheet
         Caption = 'NFSe'
-        ClientHeight = 332
-        ClientWidth = 563
+        ClientHeight = 326
+        ClientWidth = 565
         ImageIndex = 3
         object trvwNFSe: TTreeView
           Left = 0
@@ -1459,8 +1459,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       end
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
-        ClientHeight = 332
-        ClientWidth = 563
+        ClientHeight = 326
+        ClientWidth = 565
         ImageIndex = 4
         object memoRespWS: TMemo
           Left = 0
@@ -1473,8 +1473,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       end
       object Dados: TTabSheet
         Caption = 'Dados'
-        ClientHeight = 332
-        ClientWidth = 563
+        ClientHeight = 326
+        ClientWidth = 565
         ImageIndex = 5
         object MemoDados: TMemo
           Left = 0
@@ -1497,7 +1497,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object ACBrNFSe1: TACBrNFSe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFSe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = True

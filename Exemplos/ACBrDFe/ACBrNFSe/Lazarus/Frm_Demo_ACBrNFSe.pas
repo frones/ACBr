@@ -5,7 +5,7 @@ unit Frm_Demo_ACBrNFSe;
 interface
 
 uses
-  IniFiles, ShellAPI, SynMemo, SynHighlighterXML, 
+  IniFiles, {$IFDEF MSWINDOWS} ShellAPI,{$ENDIF} SynMemo, SynHighlighterXML,
   SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pnfsConversao,
@@ -303,7 +303,7 @@ begin
 
  Ini := TIniFile.Create( IniFile );
  try
-  {$IFDEF ACBrNFSeOpenSSL}
+  {$IFDEF DFE_SEM_CAPICOM}
    edtCaminho.Text := Ini.ReadString( 'Certificado', 'Caminho' , '');
    edtSenha.Text   := Ini.ReadString( 'Certificado', 'Senha'   , '');
 
@@ -383,12 +383,12 @@ procedure TfrmDemo_ACBrNFSe.ConfiguraComponente;
 var
  PathMensal: String;
 begin
-// {$IFDEF ACBrNFSeOpenSSL}
-//   ACBrNFSe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
+ {$IFDEF DFE_SEM_CAPICOM}
+   ACBrNFSe1.Configuracoes.Certificados.ArquivoPFX := edtCaminho.Text;
    ACBrNFSe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
-// {$ELSE}
+ {$ELSE}
    ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-// {$ENDIF}
+ {$ENDIF}
 
  ACBrNFSe1.Configuracoes.Certificados.VerificarValidade :=True;
 
@@ -406,12 +406,12 @@ begin
  ACBrNFSe1.Configuracoes.Arquivos.PathSalvar := PathMensal;
  ACBrNFSe1.Configuracoes.Arquivos.Salvar     := True;
 
+ ACBrNFSe1.Configuracoes.Geral.PathIniCidades  := edtArqINI.Text;
+ ACBrNFSe1.Configuracoes.Geral.PathIniProvedor := edtArqINI.Text;
  ACBrNFSe1.Configuracoes.Geral.Salvar          := ckSalvar.Checked;
  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
  ACBrNFSe1.Configuracoes.Geral.SenhaWeb        := edtSenhaWeb.Text;
  ACBrNFSe1.Configuracoes.Geral.UserWeb         := edtUserWeb.Text;
- ACBrNFSe1.Configuracoes.Geral.PathIniCidades  := edtArqINI.Text  + '\Cidades.ini';
- ACBrNFSe1.Configuracoes.Geral.PathIniProvedor := edtArqINI.Text;
 
  ACBrNFSe1.Configuracoes.WebServices.Salvar     := ckSalvarSoap.Checked;
  ACBrNFSe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
@@ -826,7 +826,7 @@ begin
  if not(InputQuery('Consultar Situação do Lote', 'Número do Protocolo', Protocolo))
   then exit;
 
- ACBrNFSe1.ConsultarSituacao(edtEmitCNPJ.Text, edtEmitIM.Text, Protocolo);
+ ACBrNFSe1.ConsultarSituacao(edtEmitCNPJ.Text, edtEmitIM.Text);
 
  MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
  memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
@@ -959,9 +959,7 @@ begin
 
    ACBrNFSe1.ConsultarNFSeporRps(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero,
                                 ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie,
-                                TipoRPSToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo),
-                                ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.Cnpj,
-                                ACBrNFSe1.NotasFiscais.Items[0].NFSe.Prestador.InscricaoMunicipal);
+                                TipoRPSToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo));
 
    MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
    memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
@@ -978,7 +976,7 @@ begin
  if not(InputQuery('Consultar NFSe por Período', 'Data Final (DD/MM/AAAA):', DataFinal))
   then exit;
 
- ACBrNFSe1.ConsultarNFSe(edtEmitCNPJ.Text, edtEmitIM.Text, StrToDate(DataInicial), StrToDate(DataFinal));
+ ACBrNFSe1.ConsultarNFSe(StrToDate(DataInicial), StrToDate(DataFinal));
 
  MemoResp.Lines.Text   := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
  memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
@@ -1102,7 +1100,7 @@ begin
  if not(InputQuery('Gerar o Link da NFSe', 'Inscrição Municipal', sIM))
   then exit;
 
- sLink := ACBrNFSe1.LinkNFSe(StrToIntDef(vNumNFSe, 0), sCodVerif, sIM);
+ sLink := ACBrNFSe1.LinkNFSe(StrToIntDef(vNumNFSe, 0), sCodVerif);
 
  MemoResp.Lines.Add('Link Gerado: ' + sLink);
  PageControl2.ActivePageIndex := 0;
@@ -1165,7 +1163,7 @@ begin
  if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:', vAux))
   then exit;
 
- provedor := CodCidadeToProvedor(StrToIntDef(vAux, 0));
+ //provedor := CodCidadeToProvedor(StrToIntDef(vAux, 0));
 
  ShowMessage('Provedor: ' + provedor);
 end;

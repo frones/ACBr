@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/01/2016
+-- ACBrNFSeWebServices --
+[*] Almimentação das propriedades: Situacao (ConsultarLoteRps), 
+    NumeroLote, DataRecebimento e Protocolo (EnviarLoteRpsSincrono).
+    Para os provedores que utilizam o layout ABRASF versão 2.
+-- pnfsLerListaNFSe --
+[*] Inluido a linha para ler a propriedade Situacao (ConsultarLoteRps).
+    Por: Italo Jurisato Junior
+
 15/01/2016
 -- ACBrNFSeWebServices --
 [*] Remoção de códigos sem necessidade para a obtenção dos dos dados na NFS-e.

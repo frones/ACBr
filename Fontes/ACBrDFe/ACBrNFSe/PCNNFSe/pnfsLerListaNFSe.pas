@@ -273,7 +273,7 @@ var
   NFSe: TNFSe;
   NFSeLida: TNFSeR;
   VersaodoXML: String;
-  ProtocoloTemp, NumeroLoteTemp: String;
+  ProtocoloTemp, NumeroLoteTemp, SituacaoTemp: String;
   DataRecebimentoTemp: TDateTime;
   i, j, Nivel: Integer;
   Nivel1: Boolean;
@@ -333,6 +333,10 @@ begin
       if trim(ProtocoloTemp) = '' then
         ProtocoloTemp := '0';
 
+      SituacaoTemp:= Leitor.rCampo(tcStr, 'Situacao');
+      if trim(SituacaoTemp) = '' then
+        SituacaoTemp := '4';
+
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
         Nivel := 3
@@ -363,15 +367,19 @@ begin
               // Armazena o XML da NFS-e
               FNFSe.XML := Leitor.Grupo;
 
+              // Retorno do EnviarLoteRpsSincrono
               FNFSe.NumeroLote    := NumeroLoteTemp;
               FNFSe.dhRecebimento := DataRecebimentoTemp;
               FNFSe.Protocolo     := ProtocoloTemp;
 
-              FNFSe.InfID.ID := NFSeLida.NFSe.InfID.ID;
-              FNFSe.Numero   := NFSeLida.NFSe.Numero;
+              // Retorno do ConsultarLoteRps
+              FNFSe.Situacao := SituacaoTemp;
+
+              FNFSe.InfID.ID          := NFSeLida.NFSe.InfID.ID;
+              FNFSe.Numero            := NFSeLida.NFSe.Numero;
               FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;
-              FNFSe.DataEmissao := NFSeLida.NFSe.DataEmissao;
-              FNFSe.dhRecebimento := NFSeLida.NFSe.dhRecebimento;
+              FNFSe.DataEmissao       := NFSeLida.NFSe.DataEmissao;
+              FNFSe.dhRecebimento     := NFSeLida.NFSe.dhRecebimento;
 
               FNFSe.NaturezaOperacao         := NFSeLida.NFSe.NaturezaOperacao;
               FNFSe.RegimeEspecialTributacao := NFSeLida.NFSe.RegimeEspecialTributacao;

@@ -47,7 +47,69 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/01/2016
+-- ACBrNFSeWebServices --
+[*] Almimentação das propriedades: Situacao (ConsultarLoteRps), 
+    NumeroLote, DataRecebimento e Protocolo (EnviarLoteRpsSincrono).
+    Para os provedores que utilizam o layout ABRASF versão 2.
+-- pnfsLerListaNFSe --
+[*] Inluido a linha para ler a propriedade Situacao (ConsultarLoteRps).
+    Por: Italo Jurisato Junior
+
+15/01/2016
+-- ACBrNFSeWebServices --
+[*] Remoção de códigos sem necessidade para a obtenção dos dos dados na NFS-e.
+-- pnfsNFSeW_ABRASFv1 / pnfsNFSeW_ABRASFv2 --
+[*] Remoção de definição de variaveis que não são mais utilizadas.
+-- pnfsNFSeR --
+[*] Melhorias na leitura do XML do RPS e NFS-e.
+-- pnfsLerListaNFSe --
+[*] Inluido a linha para armazenar na propriedade o XML da NFS-e.
+    Por: Italo Jurisato Junior
+
+14/01/2016
+-- pnfsNFSeR / pnfsNFSeW_ABRASFv1 / pnfsNFSeW_ABRASFv2 --
+[*] Correções na leitura de algumas TAGs e remoção de códigos não utilizados
+    na geração do XML do RPS.
+    Por: Italo Jurisato Junior
+
+13/01/2016
+-- ACBrNFSeWebServices / ACBrNFSeConfiguracoes --
+[*] Alteração visando mostrar os resultados após consultar a situação do lote.
+[*] Alteração visando atender a cidade de Fortaleza/CE que se utiliza do 
+    provedor Ginfes mas possui algumas diferenças em NameSpace e URLs.
+    Por: Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
+[*] Correção na passagem de parâmetros ao cancelar um cancelamento.
+    Por: Italo Jurisato Junior
+-- pnfsNFSeW_ABRASFv2 --
+[*] Para o provedor Goiania estava gerando indevidamente a data de competencia com a hora.
+    Por: Cleiver Batista
+-- ACBrNFSeWebServices --
+[*] Remoção do Encoding na mensagem de resposta.
+    Por: Italo Jurisato Junior
+[+] Criação dos arquivos INI para os provedores: EGoverneISS, EL, Equiplano e ISSDSF.
+-- ACBrNFSeWebServices --
+[*] Alteração visando a adição dos provedores: EGoverneISS, EL, Equiplano e ISSDSF.
+    Por: Italo Jurisato Junior
+
 12/01/2016
+-- ACBrNFSeWebServices --
+[*] Alteração visando ao uso da propriedade UseSSL que determina se a conexão 
+    será segura ou não.
+-- ACBrNFSeConfiguracoes --
+[*] Alteração visando a leitura da propriedade UseSSL nos arquivos INI.
+-- ACBrNFSeNotasFiscais --
+[*] Alteração visando o refactoring da unit que gera o XML do RPS.
+-- pnfsConversao --
+[+] Inclusão do tipo TLayoutXML para determinar qual unit de layout a ser utiliza
+    para gerar o XML do RPS.
+-- pnfsNFSeW --
+[*] Refactoring, criação de uma Unit para cada Layout.
+    ATENÇÃO: não é para criar uma unit para cada provedor e sim para cada Layout.
+    Por: Italo Jurisato Junior
+
 -- ACBrNFSeWebServices --
 [-] Correção definição do valor de SelectionNameSpace para realizar a assinatura
     do lote, para alguns provedores estava sendo acrescentado um "=" a mais.

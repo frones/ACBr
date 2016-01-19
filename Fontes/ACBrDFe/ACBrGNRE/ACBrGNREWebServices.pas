@@ -42,6 +42,7 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrGNREWebServices;
@@ -51,402 +52,805 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
-  pcnCabecalho,pcnGerador, pcnConversao,pcnAuxiliar,pgnreGNRE, pgnreConsConfigUF,
-  pgnreConsResLoteGNRE, pgnreConversao, ACBrGNREGuias, ACBrGNREConfiguracoes,
-  pgnreRetEnvLoteGNRE, pgnreRetConsResLoteGNRE, pgnreRetConsConfigUF;
+  pcnAuxiliar, pcnConversao,
+  pgnreGNRE, pgnreConversao, pgnreRetEnvLoteGNRE, pgnreConsResLoteGNRE,
+  pgnreRetConsResLoteGNRE, pgnreConsConfigUF, pgnreRetConsConfigUF,
+  ACBrGNREGuias, ACBrGNREConfiguracoes;
+
+const
+  CURL_WSDL = 'http://www.gnre.pe.gov.br/gnreWS/services/';
+  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
 
-  TWebServicesBase = Class(TDFeWebService)
-  private
-    procedure DoGNRERecepcaoLote;
-    procedure DoGNRERetRecepcaoLote;
-    procedure DoGNREConsultarResultadoLote;
-    procedure DoGNREConsultarConfigUF;
+  { TGNREWebService }
 
-    {$IFDEF ACBrGNREOpenSSL}
-      procedure ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
-    {$ELSE}
-     {$IFDEF SoapHTTP}
-      procedure ConfiguraReqResp( ReqResp : THTTPReqResp);
-      procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data:Pointer);
-     {$ELSE}
-      procedure ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
-     {$ENDIF}
-    {$ENDIF}
+  TGNREWebService = class(TDFeWebService)
+  private
   protected
-    FCabMsg: WideString;
-    FDadosMsg: AnsiString;
-    FDadosSenha: AnsiString;
-    FRetornoWS: AnsiString;
-    FRetWS: AnsiString;
-    FMsg: AnsiString;
-    FURL: WideString;
-    FConfiguracoes: TConfiguracoes;
-    FACBrGNRE : TComponent;
-    procedure LoadMsgEntrada;
-    procedure LoadURL;
-    function Confirma(AResultado: string): Boolean;
-    procedure GerarException(Msg: AnsiString);    
+    FPStatus: TStatusACBrGNRE;
+    FPLayout: TLayOutGNRE;
+    FPConfiguracoesGNRE: TConfiguracoesGNRE;
+
+    function ExtrairModeloChaveAcesso(AChaveGNRE: String): String;
+    function ExtrairUFChaveAcesso(AChaveGNRE: String): Integer;
+
+  protected
+    procedure InicializarServico; override;
+    procedure DefinirURL; override;
+    function GerarVersaoDadosSoap: String; override;
+    procedure FinalizarServico; override;
+
   public
-    function Executar: Boolean; virtual;
-    constructor Create(AOwner : TComponent); virtual;
-    property CabMsg: WideString read FCabMsg;
-    property DadosMsg: AnsiString read FDadosMsg;
-    property DadosSenha: AnsiString read FDadosSenha;
-    property RetornoWS: AnsiString read FRetornoWS;
-    property RetWS: AnsiString read FRetWS;
-    property Msg: AnsiString read FMsg;
+    constructor Create(AOwner: TACBrDFe); override;
+//    procedure Clear; override;
+
+    property Status: TStatusACBrGNRE read FPStatus;
+    property Layout: TLayOutGNRE read FPLayout;
   end;
 
-  TGNRERecepcaoLote = Class(TWebServicesBase)
+  { TGNRERecepcao }
+
+  TGNRERecepcao = class(TGNREWebService)
   private
-    Fnumero: string;
+    Fnumero: String;
     FtempoEstimadoProc: Integer;
     Fcodigo: Integer;
-    Fdescricao: string;
+    Fdescricao: String;
     FdataHoraRecibo: TDateTime;
-    Fambiente: TpcnTipoAmbiente;
+    FAmbiente: TpcnTipoAmbiente;
     FGuias: TGuias;
+
     FGNRERetorno: TTretLote_GNRE;
+
+    function GetLote: String;
+    function GetRecibo: String;
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
   public
-    function Executar: Boolean; override;
-    constructor Create(AOwner : TComponent; AGuias : TGuias); reintroduce;
-    property ambiente: TpcnTipoAmbiente read Fambiente write Fambiente;
+    constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
+      reintroduce; overload;
+    destructor Destroy; override;
+//    procedure Clear; override;
+
+    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property codigo: Integer read Fcodigo write Fcodigo;
-    property descricao: string read Fdescricao write Fdescricao;
-    property numero: string read Fnumero write Fnumero;
+    property descricao: String read Fdescricao write Fdescricao;
+    property numero: String read Fnumero write Fnumero;
     property dataHoraRecibo: TDateTime read FdataHoraRecibo write FdataHoraRecibo;
     property tempoEstimadoProc: Integer read FtempoEstimadoProc write FtempoEstimadoProc;
-    property GNRERetorno: TTretLote_GNRE read FGNRERetorno write FGNRERetorno;
   end;
 
-  TGNRERetRecepcaoLote = Class(TWebServicesBase)
+  { TGNRERetRecepcao }
+
+  TGNRERetRecepcao = class(TGNREWebService)
   private
-    Fambiente: TpcnTipoAmbiente;
-    FnumeroRecibo: string;
+    FAmbiente: TpcnTipoAmbiente;
+    FnumeroRecibo: String;
     Fcodigo: Integer;
-    Fresultado: string;
-    Fdescricao: string;
-    Fprotocolo: string;
+    Fresultado: String;
+    Fdescricao: String;
+    Fprotocolo: String;
     FGuias: TGuias;
+
     FGNRERetorno: TTResultLote_GNRE;
-  public
-    function Executar: Boolean; override;
-    constructor Create(AOwner : TComponent; AGuias : TGuias); reintroduce;
-    destructor Destroy; override;    
-    property ambiente: TpcnTipoAmbiente read Fambiente write Fambiente;
-    property numeroRecibo: string read FnumeroRecibo write FnumeroRecibo;
-    property codigo: Integer read Fcodigo write Fcodigo;
-    property descricao: string read Fdescricao write Fdescricao;
-    property protocolo: string read Fprotocolo write Fprotocolo;
-    property resultado: string read Fresultado write Fresultado;
-    property GNRERetorno: TTResultLote_GNRE read FGNRERetorno write FGNRERetorno;
-  end;
 
-  TGNREConsultarResultadoLote = Class(TWebServicesBase)
-  private
-    Fambiente: TpcnTipoAmbiente;  
-    FnumeroRecibo: string;
-    Fcodigo: Integer;
-    Fresultado: string;
-    Fdescricao: string;
-    Fprotocolo: string;    
-    FGuias: TGuias;
-    FGNRERetorno: TTResultLote_GNRE;    
-  public
-    function Executar: Boolean; override;
-    constructor Create(AOwner : TComponent; AGuias : TGuias); reintroduce;
-    property ambiente: TpcnTipoAmbiente read Fambiente write Fambiente;
-    property numeroRecibo: string read FnumeroRecibo write FnumeroRecibo;
-    property codigo: Integer read Fcodigo write Fcodigo;
-    property descricao: string read Fdescricao write Fdescricao;
-    property protocolo: string read Fprotocolo write Fprotocolo;
-    property resultado: string read Fresultado write Fresultado;
-    property GNRERetorno: TTResultLote_GNRE read FGNRERetorno write FGNRERetorno;
-  end;
+    function GetRecibo: String;
+    function TratarRespostaFinal: Boolean;
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
 
-  TGNREConsultarConfigUF = Class(TWebServicesBase)
-  private
-    Fcodigo: Integer;
-    Fdescricao: string;
-    Freceita: Integer;
-    FexigeReceita: string;        
-    FexigeDataVencimento: string;
-    FexigeDataPagamento: string;
-    FexigeContribuinteEmitente: string;
-    FexigeUfFavorecida: string;
-    FexigeConvenio: string;
-    FUf: string;
-    Fambiente: TpcnTipoAmbiente;
-    FGNRERetorno: TTConfigUf;
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
   public
-    function Executar: Boolean; override;
-    constructor Create(AOwner : TComponent); reintroduce;
+    constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
+      reintroduce; overload;
     destructor Destroy; override;
-    property ambiente: TpcnTipoAmbiente read Fambiente write Fambiente;
-    property Uf: string read FUf write FUf;
+//    procedure Clear; override;
+
+    function Executar: Boolean; override;
+
+    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
+    property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
     property codigo: Integer read Fcodigo write Fcodigo;
-    property descricao: string read Fdescricao write Fdescricao;
+    property descricao: String read Fdescricao write Fdescricao;
+    property protocolo: String read Fprotocolo write Fprotocolo;
+    property resultado: String read Fresultado write Fresultado;
+
+    property GNRERetorno: TTResultLote_GNRE read FGNRERetorno;
+  end;
+
+  { TGNRERecibo }
+
+  TGNRERecibo = class(TGNREWebService)
+  private
+    FAmbiente: TpcnTipoAmbiente;
+    FnumeroRecibo: String;
+    Fcodigo: Integer;
+    Fresultado: String;
+    Fdescricao: String;
+    Fprotocolo: String;
+    FGuias: TGuias;
+
+    FGNRERetorno: TTResultLote_GNRE;
+
+  protected
+    procedure DefinirServicoEAction; override;
+    procedure DefinirURL; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
+      reintroduce; overload;
+    destructor Destroy; override;
+//    procedure Clear; override;
+
+    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
+    property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
+    property codigo: Integer read Fcodigo write Fcodigo;
+    property descricao: String read Fdescricao write Fdescricao;
+    property protocolo: String read Fprotocolo write Fprotocolo;
+    property resultado: String read Fresultado write Fresultado;
+
+    property GNRERetorno: TTResultLote_GNRE read FGNRERetorno;
+  end;
+
+  { TGNREConsultaUF }
+
+  TGNREConsultaUF = class(TGNREWebService)
+  private
+    Fcodigo: Integer;
+    Fdescricao: String;
+    Freceita: Integer;
+    FexigeReceita: String;
+    FexigeDataVencimento: String;
+    FexigeDataPagamento: String;
+    FexigeContribuinteEmitente: String;
+    FexigeUfFavorecida: String;
+    FexigeConvenio: String;
+    FUf: String;
+    FAmbiente: TpcnTipoAmbiente;
+
+    FGNRERetorno: TTConfigUf;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgLog: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+    destructor Destroy; override;
+//    procedure Clear; override;
+
+    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
+    property Uf: String read FUf write FUf;
+    property codigo: Integer read Fcodigo write Fcodigo;
+    property descricao: String read Fdescricao write Fdescricao;
     property receita: Integer read Freceita write Freceita;
-    property exigeReceita: string read FexigeReceita write FexigeReceita;
-    property exigeUfFavorecida: string read FexigeUfFavorecida write FexigeUfFavorecida;
-    property exigeContribuinteEmitente: string read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
-    property exigeDataVencimento: string read FexigeDataVencimento write FexigeDataVencimento;
-    property exigeConvenio: string read FexigeConvenio write FexigeConvenio;
-    property exigeDataPagamento: string read FexigeDataPagamento write FexigeDataPagamento;
+    property exigeReceita: String read FexigeReceita write FexigeReceita;
+    property exigeUfFavorecida: String read FexigeUfFavorecida write FexigeUfFavorecida;
+    property exigeContribuinteEmitente: String read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
+    property exigeDataVencimento: String read FexigeDataVencimento write FexigeDataVencimento;
+    property exigeConvenio: String read FexigeConvenio write FexigeConvenio;
+    property exigeDataPagamento: String read FexigeDataPagamento write FexigeDataPagamento;
+
     property GNRERetorno: TTConfigUf read FGNRERetorno write FGNRERetorno;
   end;
 
-  TWebServices = Class(TWebServicesBase)
+  { TGNREEnvioWebService }
+
+  TGNREEnvioWebService = class(TGNREWebService)
   private
-    FACBrGNRE: TComponent;
-    FEnviar: TGNRERecepcaoLote;
-    FRetorno: TGNRERetRecepcaoLote;
-    FConsResLote: TGNREConsultarResultadoLote;
-    FConsConfigUF: TGNREConsultarConfigUF;
+    FXMLEnvio: String;
+    FPURLEnvio: String;
+    FVersao: String;
+    FSoapActionEnvio: String;
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+
+    function GerarMsgErro(E: Exception): String; override;
+    function GerarVersaoDadosSoap: String; override;
   public
-    constructor Create(AFGNRE: TComponent); reintroduce;
+    constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
+//    procedure Clear; override;
+
+    function Executar: Boolean; override;
+
+    property Versao: String read FVersao;
+    property XMLEnvio: String read FXMLEnvio write FXMLEnvio;
+    property URLEnvio: String read FPURLEnvio write FPURLEnvio;
+    property SoapActionEnvio: String read FSoapActionEnvio write FSoapActionEnvio;
+  end;
+
+  { TWebServices }
+
+  TWebServices = class
+  private
+    FACBrGNRE: TACBrDFe;
+    FEnviar: TGNRERecepcao;
+    FRetorno: TGNRERetRecepcao;
+    FRecibo: TGNRERecibo;
+    FConsultaUF: TGNREConsultaUF;
+    FEnvioWebService: TGNREEnvioWebService;
+  public
+    constructor Create(AOwner: TACBrDFe); overload;
+    destructor Destroy; override;
+
     function Envia: Boolean;
     function ConsultaResultadoLote(ANumRecibo: String): Boolean;
-  published
-    property ACBrGNRE: TComponent read FACBrGNRE write FACBrGNRE;
-    property Enviar: TGNRERecepcaoLote read FEnviar write FEnviar;
-    property Retorno: TGNRERetRecepcaoLote read FRetorno write FRetorno;
-    property ConsResLote: TGNREConsultarResultadoLote read FConsResLote write FConsResLote;
-    property ConsConfigUF: TGNREConsultarConfigUF read FConsConfigUF write FConsConfigUF;
+
+    property ACBrGNRE: TACBrDFe read FACBrGNRE write FACBrGNRE;
+    property Enviar: TGNRERecepcao read FEnviar write FEnviar;
+    property Retorno: TGNRERetRecepcao read FRetorno write FRetorno;
+    property Recibo: TGNRERecibo read FRecibo write FRecibo;
+    property ConsultaUF: TGNREConsultaUF read FConsultaUF write FConsultaUF;
+    property EnvioWebService: TGNREEnvioWebService read FEnvioWebService write FEnvioWebService;
   end;
 
 implementation
 
 uses
- {$IFDEF ACBrGNREOpenSSL}
-   ssl_openssl,
- {$ENDIF}
- Math, ACBrUtil, ACBrGNRE2, ACBrDFeUtil, ACBrGNREUtil, pgnreGNRERetorno;
+  StrUtils, Math,
+  ACBrUtil, ACBrGNRE,
+  pcnGerador, pcnLeitor;
 
-{$IFNDEF ACBrGNREOpenSSL}
-const
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
-{$ENDIF}
+{ TGNREWebService }
 
-{ TWebServicesBase }
-constructor TWebServicesBase.Create(AOwner: TComponent);
+constructor TGNREWebService.Create(AOwner: TACBrDFe);
 begin
- FConfiguracoes := TConfiguracoes( TACBrGNRE( AOwner ).Configuracoes );
- FACBrGNRE      := TACBrGNRE( AOwner );
+  inherited Create(AOwner);
+
+  FPConfiguracoesGNRE := TConfiguracoesGNRE(FPConfiguracoes);
+  FPLayout := LayGNRERecepcao;
+
+  FPHeaderElement := 'gnreCabecMsg';
+  FPBodyElement := 'gnreDadosMsg';
+end;
+(*
+procedure TGNREWebService.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stGNREIdle;
+end;
+*)
+procedure TGNREWebService.DefinirURL;
+var
+  Versao: Double;
+begin
+  { sobrescrever apenas se necessário.
+    Você também pode mudar apenas o valor de "FLayoutServico" na classe
+    filha e chamar: Inherited;     }
+
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrGNRE(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TWebServicesBase.GerarException(Msg: AnsiString);
+function TGNREWebService.ExtrairModeloChaveAcesso(
+  AChaveGNRE: String): String;
 begin
-  //FazerLog( 'ERRO: ' + Msg, False );
-  raise Exception.Create( Msg );
+  AChaveGNRE := OnlyNumber(AChaveGNRE);
+  if ValidarChave(AChaveGNRE) then
+    Result := copy(AChaveGNRE, 21, 2)
+  else
+    Result := '';
 end;
 
-{$IFDEF ACBrGNREOpenSSL}
- procedure TWebServicesBase.ConfiguraHTTP( HTTP : THTTPSend; Action : AnsiString);
- begin
-   if FileExists(FConfiguracoes.Certificados.Certificado) then
-     HTTP.Sock.SSL.PFXfile := FConfiguracoes.Certificados.Certificado
-   else
-     HTTP.Sock.SSL.PFX     := FConfiguracoes.Certificados.Certificado;
+function TGNREWebService.ExtrairUFChaveAcesso(AChaveGNRE: String): Integer;
+begin
+  Result := StrToIntDef(Copy(AChaveGNRE, 1, 2), 0);
+end;
 
-   HTTP.Sock.SSL.KeyPassword := FConfiguracoes.Certificados.Senha;
+procedure TGNREWebService.InicializarServico;
+begin
+  { Sobrescrever apenas se necessário }
+  inherited InicializarServico;
 
-   HTTP.ProxyHost := FConfiguracoes.WebServices.ProxyHost;
-   HTTP.ProxyPort := FConfiguracoes.WebServices.ProxyPort;
-   HTTP.ProxyUser := FConfiguracoes.WebServices.ProxyUser;
-   HTTP.ProxyPass := FConfiguracoes.WebServices.ProxyPass;
+  TACBrGNRE(FPDFeOwner).SetStatus(FPStatus);
+end;
 
-   if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
-      (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
-      HTTP.MimeType := 'application/soap+xml; charset=utf-8'
-   else
-      HTTP.MimeType := 'text/xml; charset=utf-8';
+function TGNREWebService.GerarVersaoDadosSoap: String;
+begin
+  { Sobrescrever apenas se necessário }
 
-   HTTP.UserAgent := '';
-   HTTP.Protocol := '1.1';
-   HTTP.AddPortNumberToHost := False;
-   HTTP.Headers.Add(Action);
- end;
-{$ELSE}
- {$IFDEF SoapHTTP}
-  procedure TWebServicesBase.ConfiguraReqResp( ReqResp : THTTPReqResp );
+  if EstaVazio(FPVersaoServico) then
+    FPVersaoServico := TACBrGNRE(FPDFeOwner).LerVersaoDeParams(FPLayout);
+
+  Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
+end;
+
+procedure TGNREWebService.FinalizarServico;
+begin
+  { Sobrescrever apenas se necessário }
+
+  TACBrGNRE(FPDFeOwner).SetStatus(stGNREIdle);
+end;
+
+{ TGNRERecepcao }
+
+constructor TGNRERecepcao.Create(AOwner: TACBrDFe; AGuias: TGuias);
+begin
+  inherited Create(AOwner);
+
+  FGuias := AGuias;
+end;
+
+destructor TGNRERecepcao.Destroy;
+begin
+  FGNRERetorno.Free;
+
+  inherited Destroy;
+end;
+(*
+procedure TGNRERecepcao.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stGNRERecepcao;
+  FPLayout := LayGNRERecepcao;
+  FPArqEnv := 'env-lot';
+  FPArqResp := 'rec';
+
+  Fnumero := '';
+  FtempoEstimadoProc := 0;
+  Fcodigo := 0;
+  Fdescricao := '';
+  FdataHoraRecibo := 0;
+
+  if Assigned(FPConfiguracoesGNRE) then
   begin
-    if FConfiguracoes.WebServices.ProxyHost <> '' then
-     begin
-       ReqResp.Proxy    := FConfiguracoes.WebServices.ProxyHost + ':' +
-                           FConfiguracoes.WebServices.ProxyPort;
-       ReqResp.UserName := FConfiguracoes.WebServices.ProxyUser;
-       ReqResp.Password := FConfiguracoes.WebServices.ProxyPass;
-     end;
-    ReqResp.OnBeforePost := OnBeforePost;
+    FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+    FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
   end;
 
-  procedure TWebServicesBase.OnBeforePost(const HTTPReqResp: THTTPReqResp;
-    Data: Pointer);
-  var
-    Cert: ICertificate2;
-    CertContext: ICertContext;
-    PCertContext: Pointer;
-    ContentHeader: string;
-  begin
-    Cert := FConfiguracoes.Certificados.GetCertificado;
-    CertContext :=  Cert as ICertContext;
-    CertContext.Get_CertContext(Integer(PCertContext));
+  if Assigned(FGNRERetorno) then
+    FGNRERetorno.Free;
 
-    if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-                             PCertContext, SizeOf(CERT_CONTEXT)) then
-      GerarException('OnBeforePost: ' + IntToStr(GetLastError));
-
-    if trim(FConfiguracoes.WebServices.ProxyUser) <> '' then
-      if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME,
-                               PChar(FConfiguracoes.WebServices.ProxyUser),
-                               Length(FConfiguracoes.WebServices.ProxyUser)) then
-        GerarException('OnBeforePost: ' + IntToStr(GetLastError));
-
-    if trim(FConfiguracoes.WebServices.ProxyPass) <> '' then
-      if not InternetSetOption(Data, INTERNET_OPTION_PROXY_PASSWORD,
-                               PChar(FConfiguracoes.WebServices.ProxyPass),
-                               Length(FConfiguracoes.WebServices.ProxyPass)) then
-        GerarException('OnBeforePost: ' + IntToStr(GetLastError));
-
-    if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
-       (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
-    begin
-       ContentHeader := Format(ContentTypeTemplate, ['application/soap+xml; charset=utf-8']);
-       HttpAddRequestHeaders(Data, PChar(ContentHeader),
-                             Length(ContentHeader), HTTP_ADDREQ_FLAG_REPLACE);
-    end;
-
-    HTTPReqResp.CheckContentType;
-  end;
- {$ELSE}
-  procedure TWebServicesBase.ConfiguraReqResp( ReqResp : TACBrHTTPReqResp);
-  begin
-    if FConfiguracoes.WebServices.ProxyHost <> '' then
-    begin
-      ReqResp.ProxyHost := FConfiguracoes.WebServices.ProxyHost;
-      ReqResp.ProxyPort := FConfiguracoes.WebServices.ProxyPort;
-      ReqResp.ProxyUser := FConfiguracoes.WebServices.ProxyUser;
-      ReqResp.ProxyPass := FConfiguracoes.WebServices.ProxyPass;
-    end;
-
-    ReqResp.SetCertificate(FConfiguracoes.Certificados.GetCertificado);
-
-    if (pos('SCERECEPCAORFB', UpperCase(FURL)) <= 0) and
-       (pos('SCECONSULTARFB', UpperCase(FURL)) <= 0) then
-      ReqResp.MimeType := 'application/soap+xml'
-    else
-      ReqResp.MimeType := 'text/xml';
-  end;
- {$ENDIF}
-{$ENDIF}
-
-function TWebServicesBase.Executar: Boolean;
-begin
-  Result := False;
-  LoadMsgEntrada;
-  LoadURL;
+  FGNRERetorno := TretEnvGNRE.Create;
 end;
-
-procedure TWebServicesBase.LoadMsgEntrada;
-begin
-  if Self is TGNRERecepcaoLote
-  then DoGNRERecepcaoLote
-  else if Self is TGNRERetRecepcaoLote
-  then DoGNRERetRecepcaoLote
-  else if Self is TGNREConsultarResultadoLote
-  then DoGNREConsultarResultadoLote
-  else if Self is TGNREConsultarConfigUF
-  then DoGNREConsultarConfigUF;
-end;
-
-procedure TWebServicesBase.LoadURL;
-begin
-  if Self is TGNRERecepcaoLote
-  then FURL := GNREUtil.GetURL(FConfiguracoes.WebServices.AmbienteCodigo, LayGNRERecepcao)
-  else if (Self is TGNREConsultarResultadoLote) or (Self is TGNRERetRecepcaoLote)
-  then FURL := GNREUtil.GetURL(FConfiguracoes.WebServices.AmbienteCodigo, LayGNRERetRecepcao)
-  else if Self is TGNREConsultarConfigUF
-  then FURL := GNREUtil.GetURL(FConfiguracoes.WebServices.AmbienteCodigo, LayGNREConsultaConfigUF);
-end;
-
-procedure TWebServicesBase.DoGNRERecepcaoLote;
-var i : Integer;
-  vGuias : WideString;
+*)
+procedure TGNRERecepcao.DefinirDadosMsg;
+var
+  i: Integer;
+  vGuias: WideString;
 begin
   vGuias := '';
-  for i := 0 to TGNRERecepcaoLote(Self).FGuias.Count - 1 do
-    vGuias := vGuias + TGNRERecepcaoLote(Self).FGuias.Items[i].XML;
+  for i := 0 to FGuias.Count - 1 do
+    vGuias := vGuias + FGuias.Items[i].XML;
 
-  FDadosMsg := '<TLote_GNRE xmlns="http://www.gnre.pe.gov.br">'+
-                '<guias>'+ vGuias + '</guias>' +'</TLote_GNRE>';
+  FPDadosMsg := '<TLote_GNRE xmlns="http://www.gnre.pe.gov.br">' +
+                '<guias>' + vGuias + '</guias>' +
+               '</TLote_GNRE>';
 
-  if Length(FDadosMsg) > (300 * 1024) then
+  if Length(FPDadosMsg) > (300 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 300 Kbytes. Tamanho atual: ' +
+      IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
+end;
+
+procedure TGNRERecepcao.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'GnreLoteRecepcao';
+
+  FPSoapAction := FPServico;
+end;
+
+procedure TGNRERecepcao.DefinirURL;
+var
+  xUF: String;
+  ok: Boolean;
+  VerServ: Double;
+begin
+  if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
-    if Assigned(TACBrGNRE(Self.FACBrGNRE).OnGerarLog) then
-      TACBrGNRE(Self.FACBrGNRE).OnGerarLog('ERRO: Tamanho do XML de Dados superior a 300 Kbytes. Tamanho atual: '+FloatToStr(Int(Length(FDadosMsg)/300))+' Kbytes');
-    raise Exception.Create('ERRO: Tamanho do XML de Dados superior a 300 Kbytes. Tamanho atual: '+FloatToStr(Int(Length(FDadosMsg)/300))+' Kbytes');
-    Exit;
+    VerServ := 1.00; //FGuias.Items[0].GNRE.infGNRE.Versao;
+
+//    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items.GNRE.Ide.Ambiente then
+//      raise EACBrGNREException.Create( CErroAmbienteDiferente );
+  end
+  else
+  begin                   // Se não tem GNRE, use as configurações do componente
+    VerServ := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+  end;
+
+  FAmbiente  := FPConfiguracoesGNRE.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+  FPLayout := LayGNRERecepcao;
+
+  TACBrGNRE(FPDFeOwner).LerServicoDeParams(
+    'GNRE',
+    'PE',
+    FAmbiente,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
+function TGNRERecepcao.GerarMsgLog: String;
+begin
+  {(*}
+  Result := Format(ACBrStr('Ambiente: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'Recibo: %s ' + LineBreak +
+                           'Recebimento: %s ' + LineBreak +
+                           'Tempo Médio: %s ' + LineBreak),
+                   [TpAmbToStr(FGNRERetorno.Ambiente),
+                    IntToStr(FGNRERetorno.codigo),
+                    FGNRERetorno.descricao,
+                    FGNRERetorno.numero,
+                    IfThen(FGNRERetorno.dataHoraRecibo = 0, '',
+                           FormatDateTimeBr(FGNRERetorno.dataHoraRecibo)),
+                    IntToStr(FGNRERetorno.tempoEstimadoProc)]);
+  {*)}
+end;
+
+function TGNRERecepcao.GerarPrefixoArquivo: String;
+begin
+  Result := numero;
+end;
+
+function TGNRERecepcao.GetLote: String;
+begin
+  Result := Trim(Numero);
+end;
+
+function TGNRERecepcao.GetRecibo: String;
+begin
+  Result := Trim(numero);
+end;
+
+function TGNRERecepcao.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'processarResponse');
+
+  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.LerXml;
+
+  Fcodigo            := FGNRERetorno.codigo;
+  Fdescricao         := FGNRERetorno.descricao;
+  Fnumero            := FGNRERetorno.numero;
+  FdataHoraRecibo    := FGNRERetorno.dataHoraRecibo;
+  FtempoEstimadoProc := FGNRERetorno.tempoEstimadoProc;
+  FPMsg              := FGNRERetorno.descricao;
+
+  Result := (FGNRERetorno.codigo = 100); //Lote recebido com Sucesso
+end;
+
+{ TGNRERetRecepcao }
+
+constructor TGNRERetRecepcao.Create(AOwner: TACBrDFe; AGuias: TGuias);
+begin
+  inherited Create(AOwner);
+
+  FGuias := AGuias;
+end;
+
+destructor TGNRERetRecepcao.Destroy;
+begin
+  FGNRERetorno.Free;
+
+  inherited Destroy;
+end;
+(*
+procedure TGNRERetRecepcao.Clear;
+var
+  i, j: Integer;
+begin
+  inherited Clear;
+
+  FPStatus := stGNRERetRecepcao;
+  FPLayout := LayGNRERetRecepcao;
+  FPArqEnv := 'ped-rec';
+  FPArqResp := 'pro-rec';
+
+  FnumeroRecibo := '';
+  Fcodigo := 0;
+  Fresultado := '';
+  Fdescricao := '';
+  Fprotocolo := '';
+
+  if Assigned(FPConfiguracoesGNRE) then
+  begin
+    FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+    FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FGNRERetorno) and Assigned(FGuias) then
+  begin
+    // Limpa Dados dos retornos das guias;
+    for i := 0 to FGNRERetorno.ProtGNRE.Count - 1 do
+    begin
+      for j := 0 to FGuias.Count - 1 do
+      begin
+        if OnlyNumber(FGNRERetorno.ProtGNRE.Items[i].chGNRE) = FGuias.Items[J].NumID then
+        begin
+          FGuias.Items[j].GNRE.procGNRE.verAplic := '';
+          FGuias.Items[j].GNRE.procGNRE.chGNRE   := '';
+          FGuias.Items[j].GNRE.procGNRE.dhRecbto := 0;
+          FGuias.Items[j].GNRE.procGNRE.nProt    := '';
+          FGuias.Items[j].GNRE.procGNRE.digVal   := '';
+          FGuias.Items[j].GNRE.procGNRE.cStat    := 0;
+          FGuias.Items[j].GNRE.procGNRE.xMotivo  := '';
+        end;
+      end;
+    end;
+
+    FreeAndNil(FGNRERetorno);
+  end;
+
+  FGNRERetorno := TRetConsReciGNRE.Create;
+end;
+*)
+procedure TGNRERetRecepcao.DefinirDadosMsg;
+var
+  ConsReciGNRE: TConsReciGNRE;
+begin
+  ConsReciGNRE := TConsReciGNRE.Create;
+  try
+    ConsReciGNRE.Ambiente := FAmbiente;
+    ConsReciGNRE.numeroRecibo := FnumeroRecibo;
+    ConsReciGNRE.GerarXML;
+
+    FPDadosMsg := ConsReciGNRE.Gerador.ArquivoFormatoXML;
+  finally
+    ConsReciGNRE.Free;
   end;
 end;
 
-procedure TWebServicesBase.DoGNREConsultarResultadoLote;
-var ConsResLoteGNRE : TConsResLoteGNRE;
+procedure TGNRERetRecepcao.DefinirServicoEAction;
 begin
-  ConsResLoteGNRE               := TConsResLoteGNRE.Create;
-  ConsResLoteGNRE.Ambiente      := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
-  ConsResLoteGNRE.numeroRecibo  := TGNREConsultarResultadoLote(Self).FnumeroRecibo;
+  FPServico := GetUrlWsd + 'GnreResultadoLote';
 
-  ConsResLoteGNRE.GerarXML;
-
-  FDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
-  ConsResLoteGNRE.Free;
+  FPSoapAction := FPServico;
 end;
 
-procedure TWebServicesBase.DoGNREConsultarConfigUF;
-var ConsConfigUF: TConsConfigUF;
+procedure TGNRERetRecepcao.DefinirURL;
+var
+  xUF: String;
+  VerServ: Double;
+  ok: Boolean;
+  Modelo: TpcnModeloDF;
 begin
-  ConsConfigUF           := TConsConfigUF.Create;
-  ConsConfigUF.UF        := FConfiguracoes.WebServices.UF;
-  ConsConfigUF.Ambiente  := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
-  ConsConfigUF.Receita   := TGNREConsultarConfigUF(Self).receita;
+  if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
+  begin
+    Modelo  := StrToModeloDF(ok, IntToStr(FGuias.Items[0].GNRE.Ide.modelo));
+    FcUF    := FGuias.Items[0].GNRE.Ide.cUF;
+    VerServ := FGuias.Items[0].GNRE.infGNRE.Versao;
 
-  ConsConfigUF.GerarXML;
+    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
+      raise EACBrGNREException.Create( CErroAmbienteDiferente );
+  end
+  else
+  begin                   // Se não tem GNRE, use as configurações do componente
+    Modelo  := FPConfiguracoesGNRE.Geral.ModeloDF;
+    FcUF    := FPConfiguracoesGNRE.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+  end;
 
-  FDadosMsg := ConsConfigUF.Gerador.ArquivoFormatoXML;
+  FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+  FPLayout := LayGNRERetRecepcao;
 
-  ConsConfigUF.Free;
+  xUF := CUFtoUF(FcUF);
+
+  TACBrGNRE(FPDFeOwner).LerServicoDeParams(
+    ModeloDFToPrefixo(Modelo),
+    xUF,
+    FAmbiente,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
-procedure TWebServicesBase.DoGNRERetRecepcaoLote;
-var ConsResLoteGNRE : TConsResLoteGNRE;
+function TGNRERetRecepcao.Executar: Boolean;
+var
+  IntervaloTentativas, Tentativas: Integer;
 begin
-  ConsResLoteGNRE               := TConsResLoteGNRE.Create;
-	try
-		ConsResLoteGNRE.ambiente      := TpcnTipoAmbiente(FConfiguracoes.WebServices.AmbienteCodigo-1);
-		ConsResLoteGNRE.numeroRecibo  := TGNRERetRecepcaoLote(Self).FnumeroRecibo;
+  Result := False;
 
-		ConsResLoteGNRE.GerarXML;
+  TACBrGNRE(FPDFeOwner).SetStatus(stGNRERetRecepcao);
+  try
+    Sleep(FPConfiguracoesGNRE.WebServices.AguardarConsultaRet);
 
-		FDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
-	finally
-		ConsResLoteGNRE.Free;
-	end;
+    Tentativas := 0;
+    IntervaloTentativas := max(FPConfiguracoesGNRE.WebServices.IntervaloTentativas, 1000);
+
+    while (inherited Executar) and
+      (Tentativas < FPConfiguracoesGNRE.WebServices.Tentativas) do
+    begin
+      Inc(Tentativas);
+      sleep(IntervaloTentativas);
+    end;
+  finally
+    TACBrGNRE(FPDFeOwner).SetStatus(stGNREIdle);
+  end;
+
+  if FGNRERetorno.codigo = 402 then  // Lote processado ?
+    Result := TratarRespostaFinal;
 end;
 
-function TWebServicesBase.Confirma(AResultado: string): Boolean;
+procedure TGNRERetRecepcao.FinalizarServico;
+begin
+  // Sobrescrito, para não liberar para stGNREIdle... não ainda...;
+end;
+
+function TGNRERetRecepcao.GerarMsgLog: String;
+begin
+  {(*}
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Recibo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'UF: %s ' + LineBreak +
+                           'cMsg: %s ' + LineBreak +
+                           'xMsg: %s ' + LineBreak),
+                   [FGNRERetorno.versao, TpAmbToStr(FGNRERetorno.Ambiente),
+                    FGNRERetorno.verAplic, FGNRERetorno.nRec,
+                    IntToStr(FGNRERetorno.cStat), FGNRERetorno.xMotivo,
+                    CodigoParaUF(FGNRERetorno.cUF), IntToStr(FGNRERetorno.cMsg),
+                    FGNRERetorno.xMsg]);
+  {*)}
+end;
+
+function TGNRERetRecepcao.GerarPrefixoArquivo: String;
+begin
+  Result := numeroRecibo;
+end;
+
+function TGNRERetRecepcao.GetRecibo: String;
+begin
+  Result := Trim(FRecibo);
+end;
+
+function TGNRERetRecepcao.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
+
+  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.LerXML;
+
+  FAmbiente  := FGNRERetorno.Ambiente;
+  Fcodigo    := FGNRERetorno.codigo;
+  Fdescricao := FGNRERetorno.descricao;
+  Fresultado := FGNRERetorno.resultado;
+  FPMsg      := FGNRERetorno.descricao;
+
+  Result := (FGNRERetorno.codigo = 401); // Lote em Processamento
+end;
+
+function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
+var
+  I, J: Integer;
+  AProcGNRE: TProcGNRE;
+  AInfProt: TProtGNRECollection;
+  SalvarXML: Boolean;
+begin
+  Result := False;
+
+  AInfProt := FGNRERetorno.ProtGNRE;
+
+  if (AInfProt.Count > 0) then
+  begin
+    FPMsg := FGNRERetorno.ProtGNRE.Items[0].xMotivo;
+    FxMotivo := FGNRERetorno.ProtGNRE.Items[0].xMotivo;
+  end;
+
+  //Setando os retornos das notas fiscais;
+  for I := 0 to AInfProt.Count - 1 do
+  begin
+    for J := 0 to FGuias.Count - 1 do
+    begin
+      if OnlyNumber(AInfProt.Items[I].chGNRE) = FGuias.Items[J].NumID then
+      begin
+        if (FPConfiguracoesGNRE.Geral.ValidarDigest) and
+           (AInfProt.Items[I].digVal <> '') and
+           (FGuias.Items[J].GNRE.signature.DigestValue <> AInfProt.Items[I].digVal) then
+        begin
+          raise EACBrGNREException.Create('DigestValue do documento ' +
+            FGuias.Items[J].NumID + ' não confere.');
+        end;
+
+        with FGuias.Items[J] do
+        begin
+          GNRE.procGNRE.Ambiente := AInfProt.Items[I].Ambiente;
+          GNRE.procGNRE.verAplic := AInfProt.Items[I].verAplic;
+          GNRE.procGNRE.chGNRE := AInfProt.Items[I].chGNRE;
+          GNRE.procGNRE.dhRecbto := AInfProt.Items[I].dhRecbto;
+          GNRE.procGNRE.nProt := AInfProt.Items[I].nProt;
+          GNRE.procGNRE.digVal := AInfProt.Items[I].digVal;
+          GNRE.procGNRE.cStat := AInfProt.Items[I].cStat;
+          GNRE.procGNRE.xMotivo := AInfProt.Items[I].xMotivo;
+        end;
+
+        // Monta o XML da Guia assinada e com o protocolo de Autorização ou Denegação
+        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
+           (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) or
+           (AInfProt.Items[I].cStat = 302) or (AInfProt.Items[I].cStat = 303) then
+        begin
+          AProcGNRE := TProcGNRE.Create;
+          try
+            AProcGNRE.XML_GNRE := StringReplace(FGuias.Items[J].XMLAssinado,
+                                       '<' + ENCODING_UTF8 + '>', '',
+                                       [rfReplaceAll]);
+            AProcGNRE.XML_Prot := AInfProt.Items[I].XMLprotGNRE;
+            AProcGNRE.Versao := FPVersaoServico;
+            AProcGNRE.GerarXML;
+
+            with FGuias.Items[J] do
+            begin
+              XMLOriginal := AProcGNRE.Gerador.ArquivoFormatoXML;
+
+              if FPConfiguracoesGNRE.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesGNRE.Arquivos.SalvarApenasGNREProcessadas) or
+                             Processada;
+
+                // Salva o XML da Guia assinada e protocolada
+                if SalvarXML then
+                begin
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+
+                  GravarXML; // Salva na pasta baseado nas configurações do PathGNRE
+                end;
+              end;
+            end;
+          finally
+            AProcGNRE.Free;
+          end;
+        end;
+
+        break;
+      end;
+    end;
+  end;
+
+
+(*
+function TWebServicesBase.Confirma(AResultado: String): Boolean;
 var SL, SLAux: TStringList;
   i, GuiasOk: Integer;
-  Cabec, RepresentacaoNumerica, SituacaoGuia: string;
+  Cabec, RepresentacaoNumerica, SituacaoGuia: String;
 begin
   SL := TStringList.Create;
   SLAux := TStringList.Create;
   SL.Text := AResultado;
   GuiasOk := 0;
-  
+
   try
     Cabec := SL.Strings[0];
     for i := 0 to SL.Count - 1 do
@@ -476,18 +880,427 @@ begin
     Result := GuiasOk > 0;
   end;
 end;
+*)
+
+
+
+  //Verificando se existe alguma guia confirmada
+  for I := 0 to FGuias.Count - 1 do
+  begin
+    if FGuias.Items[I].Confirmada then
+    begin
+      Result := True;
+      break;
+    end;
+  end;
+
+  //Verificando se existe alguma guia nao confirmada
+  for I := 0 to FGuias.Count - 1 do
+  begin
+    if not FGuias.Items[I].Confirmada then
+    begin
+      FPMsg := ACBrStr('Guia(s) não confirmadas:') + LineBreak;
+      break;
+    end;
+  end;
+
+  //Montando a mensagem de retorno para as guias nao confirmadas
+  for I := 0 to FGuias.Count - 1 do
+  begin
+    if not FGuias.Items[I].Confirmada then
+      FPMsg := FPMsg + IntToStr(FGuias.Items[I].GNRE.Ide.nNF) +
+        '->' + FGuias.Items[I].Msg + LineBreak;
+  end;
+
+  if AInfProt.Count > 0 then
+  begin
+    FChaveGNRE := AInfProt.Items[0].chGNRE;
+    FProtocolo := AInfProt.Items[0].nProt;
+    FcStat := AInfProt.Items[0].cStat;
+  end;
+end;
+
+{ TGNRERecibo }
+
+constructor TGNRERecibo.Create(AOwner: TACBrDFe; AGuias: TGuias);
+begin
+  inherited Create(AOwner);
+
+  FGuias := AGuias;
+end;
+
+destructor TGNRERecibo.Destroy;
+begin
+  FGNRERetorno.Free;
+
+  inherited Destroy;
+end;
+(*
+procedure TGNRERecibo.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stGNRERecibo;
+  FPLayout := LayGNRERetRecepcao;
+  FPArqEnv := 'ped-rec';
+  FPArqResp := 'pro-rec';
+
+  FnumeroRecibo := '';
+  Fcodigo := 0;
+  Fresultado := '';
+  Fdescricao := '';
+  Fprotocolo := '';
+
+  if Assigned(FPConfiguracoesGNRE) then
+  begin
+    FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+    FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FGNRERetorno) then
+    FGNRERetorno.Free;
+
+  FGNRERetorno := TRetConsReciGNRE.Create;
+end;
+*)
+procedure TGNRERecibo.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'GnreResultadoLote';
+  FPSoapAction := FPServico;
+end;
+
+procedure TGNRERecibo.DefinirURL;
+var
+  xUF: String;
+  VerServ: Double;
+  ok: Boolean;
+  Modelo: TpcnModeloDF;
+begin
+  if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
+  begin
+    Modelo  := StrToModeloDF(ok, IntToStr(FGuias.Items[0].GNRE.Ide.modelo));
+    FcUF    := FGuias.Items[0].GNRE.Ide.cUF;
+    VerServ := FGuias.Items[0].GNRE.infGNRE.Versao;
+
+    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
+      raise EACBrGNREException.Create( CErroAmbienteDiferente );
+  end
+  else
+  begin                   // Se não tem GNRE, use as configurações do componente
+    Modelo  := FPConfiguracoesGNRE.Geral.ModeloDF;
+    FcUF    := FPConfiguracoesGNRE.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+  end;
+
+  FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  FPLayout := LayGNRERetRecepcao;
+
+  xUF := CUFtoUF(FcUF);
+
+  TACBrGNRE(FPDFeOwner).LerServicoDeParams(
+    ModeloDFToPrefixo(Modelo),
+    xUF,
+    FAmbiente,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
+procedure TGNRERecibo.DefinirDadosMsg;
+var
+  ConsResLoteGNRE: TConsResLoteGNRE;
+begin
+  ConsResLoteGNRE := TConsResLoteGNRE.Create;
+  try
+    ConsResLoteGNRE.Ambiente := FAmbiente;
+    ConsResLoteGNRE.numeroRecibo := FnumeroRecibo;
+
+    ConsResLoteGNRE.GerarXML;
+
+    FPDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
+  finally
+    ConsResLoteGNRE.Free;
+  end;
+end;
+
+function TGNRERecibo.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
+
+  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.LerXML;
+
+  FAmbiente  := FGNRERetorno.Ambiente;
+  Fcodigo    := FGNRERetorno.codigo;
+  Fdescricao := FGNRERetorno.descricao;
+  Fresultado := FGNRERetorno.resultado;
+  FPMsg      := FGNRERetorno.descricao;
+
+  Result := (FGNRERetorno.codigo = 402); // 402 = Lote processado com sucesso.
+end;
+
+function TGNRERecibo.GerarMsgLog: String;
+begin
+  {(*}
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Recibo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'UF: %s ' + LineBreak),
+                   [FGNRERetorno.versao, TpAmbToStr(FGNRERetorno.Ambiente),
+                   FGNRERetorno.verAplic, FGNRERetorno.nRec,
+                   IntToStr(FGNRERetorno.codigo),
+                   FGNRERetorno.descricao,
+                   CodigoParaUF(FGNRERetorno.cUF)]);
+  {*)}
+end;
+
+function TGNRERecibo.GerarPrefixoArquivo: String;
+begin
+  Result := numeroRecibo;
+end;
+
+{ TGNREConsultaUF }
+
+constructor TGNREConsultaUF.Create(AOwner: TACBrDFe);
+begin
+  inherited Create(AOwner);
+
+end;
+
+destructor TGNREConsultaUF.Destroy;
+begin
+  FGNRERetorno.Free;
+
+  inherited Destroy;
+end;
+(*
+procedure TGNREConsultaUF.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stGNRERecibo;
+  FPLayout := LayGNRERetRecepcao;
+  FPArqEnv := 'ped-cfg';
+  FPArqResp := 'cfg';
+
+  Fcodigo := 0;
+  Fdescricao := '';
+  Freceita := 0;
+  FexigeReceita := '';
+  FexigeDataVencimento := '';
+  FexigeDataPagamento := '';
+  FexigeContribuinteEmitente := '';
+  FexigeUfFavorecida := '';
+  FexigeConvenio := '';
+  FUf := '';
+
+  if Assigned(FPConfiguracoesGNRE) then
+  begin
+    FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+    FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
+  end;
+
+  if Assigned(FGNRERetorno) then
+    FGNRERetorno.Free;
+
+  FGNRERetorno := TTConfigUf.Create;
+end;
+*)
+procedure TGNREConsultaUF.DefinirDadosMsg;
+var
+ ConsConfigUF: TConsConfigUF;
+begin
+  ConsConfigUF := TConsConfigUF.Create;
+  try
+    ConsConfigUF.UF       := FUF;
+    ConsConfigUF.Ambiente := FAmbiente;
+    ConsConfigUF.Receita  := Freceita;
+
+    ConsConfigUF.GerarXML;
+
+    FPDadosMsg := ConsConfigUF.Gerador.ArquivoFormatoXML;
+  finally
+    ConsConfigUF.Free;
+  end;
+end;
+
+procedure TGNREConsultaUF.DefinirServicoEAction;
+begin
+  FPServico := GetUrlWsd + 'GnreConfigUF';
+  FPSoapAction := FPServico;
+end;
+
+procedure TGNREConsultaUF.DefinirURL;
+var
+  xUF: String;
+  VerServ: Double;
+  ok: Boolean;
+  Modelo: TpcnModeloDF;
+begin
+  if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
+  begin
+    Modelo  := StrToModeloDF(ok, IntToStr(FGuias.Items[0].GNRE.Ide.modelo));
+    FcUF    := FGuias.Items[0].GNRE.Ide.cUF;
+    VerServ := FGuias.Items[0].GNRE.infGNRE.Versao;
+
+    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
+      raise EACBrGNREException.Create( CErroAmbienteDiferente );
+  end
+  else
+  begin                   // Se não tem GNRE, use as configurações do componente
+    Modelo  := FPConfiguracoesGNRE.Geral.ModeloDF;
+    FcUF    := FPConfiguracoesGNRE.WebServices.UFCodigo;
+    VerServ := VersaoDFToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+  end;
+
+  FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
+  FPVersaoServico := '';
+  FPURL := '';
+
+  FPLayout := LayGNRERetRecepcao;
+
+  xUF := CUFtoUF(FcUF);
+
+  TACBrGNRE(FPDFeOwner).LerServicoDeParams(
+    ModeloDFToPrefixo(Modelo),
+    xUF,
+    FAmbiente,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
+function TGNREConsultaUF.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
+
+  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.LerXML;
+
+  FAmbiente                   := FGNRERetorno.Ambiente;
+  Fcodigo                     := FGNRERetorno.codigo;
+  Fdescricao                  := UTF8Decode(FGNRERetorno.descricao);
+  FexigeReceita               := FGNRERetorno.exigeReceita;
+  FexigeDataVencimento        := FGNRERetorno.exigeDataVencimento;
+  FexigeDataPagamento         := FGNRERetorno.exigeDataPagamento;
+  FexigeContribuinteEmitente  := FGNRERetorno.exigeContribuinteEmitente;
+  FexigeUfFavorecida          := FGNRERetorno.exigeUfFavorecida;
+  FexigeConvenio              := FGNRERetorno.exigeConvenio;
+  FUf                         := FGNRERetorno.Uf;
+  FPMsg                       := UTF8Decode(FGNRERetorno.descricao);
+
+  Result := (FGNRERetorno.codigo = 450); // 450 = Consulta da configuração da UF realizada com sucesso.
+end;
+
+function TGNREConsultaUF.GerarMsgLog: String;
+begin
+  {(*}
+  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                           'Ambiente: %s ' + LineBreak +
+                           'Versão Aplicativo: %s ' + LineBreak +
+                           'Recibo: %s ' + LineBreak +
+                           'Status Código: %s ' + LineBreak +
+                           'Status Descrição: %s ' + LineBreak +
+                           'UF: %s ' + LineBreak),
+                   [FGNRERetorno.versao, TpAmbToStr(FGNRERetorno.Ambiente),
+                   FGNRERetorno.verAplic, FGNRERetorno.nRec,
+                   IntToStr(FGNRERetorno.codigo),
+                   FGNRERetorno.descricao,
+                   CodigoParaUF(FGNRERetorno.cUF)]);
+  {*)}
+end;
+
+{ TGNREEnvioWebService }
+
+constructor TGNREEnvioWebService.Create(AOwner: TACBrDFe);
+begin
+  inherited Create(AOwner);
+
+  FPStatus := stEnvioWebService;
+end;
+
+destructor TGNREEnvioWebService.Destroy;
+begin
+  inherited Destroy;
+end;
+(*
+procedure TGNREEnvioWebService.Clear;
+begin
+  inherited Clear;
+
+  FVersao := '';
+end;
+*)
+function TGNREEnvioWebService.Executar: Boolean;
+begin
+  Result := inherited Executar;
+end;
+
+procedure TGNREEnvioWebService.DefinirURL;
+begin
+  FPURL := FPURLEnvio;
+end;
+
+procedure TGNREEnvioWebService.DefinirServicoEAction;
+begin
+  FPServico := FPSoapAction;
+end;
+
+procedure TGNREEnvioWebService.DefinirDadosMsg;
+var
+  LeitorXML: TLeitor;
+begin
+  LeitorXML := TLeitor.Create;
+  try
+    LeitorXML.Arquivo := FXMLEnvio;
+    LeitorXML.Grupo := FXMLEnvio;
+    FVersao := LeitorXML.rAtributo('versao')
+  finally
+    LeitorXML.Free;
+  end;
+
+  FPDadosMsg := FXMLEnvio;
+end;
+
+function TGNREEnvioWebService.TratarResposta: Boolean;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body');
+  Result := True;
+end;
+
+function TGNREEnvioWebService.GerarMsgErro(E: Exception): String;
+begin
+  Result := ACBrStr('WebService: ' + FPServico + LineBreak +
+                    '- Inativo ou Inoperante tente novamente.');
+end;
+
+function TGNREEnvioWebService.GerarVersaoDadosSoap: String;
+begin
+  Result := '<versaoDados>' + FVersao + '</versaoDados>';
+end;
 
 { TWebServices }
 
-constructor TWebServices.Create(AFGNRE: TComponent);
+constructor TWebServices.Create(AOwner: TACBrDFe);
 begin
-  inherited Create( AFGNRE );
+  FACBrGNRE := TACBrGNRE(AOwner);
 
-  FACBrGNRE     := TACBrGNRE(AFGNRE);
-  FEnviar       := TGNRERecepcaoLote.Create(AFGNRE, TACBrGNRE(AFGNRE).Guias);
-  FRetorno      := TGNRERetRecepcaoLote.Create(AFGNRE, TACBrGNRE(AFGNRE).Guias);
-  FConsResLote  := TGNREConsultarResultadoLote.Create(AFGNRE, TACBrGNRE(AFGNRE).Guias);
-  FConsConfigUF := TGNREConsultarConfigUF.Create(AFGNRE);
+  FEnviar       := TGNRERecepcao.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
+  FRetorno      := TGNRERetRecepcao.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
+  FConsResLote  := TGNRERecibo.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
+  FConsConfigUF := TGNREConsultaUF.Create(FACBrGNRE);
 end;
 
 destructor TWebServices.Destroy;
@@ -496,729 +1309,30 @@ begin
   FRetorno.Free;
   FConsResLote.Free;
   FConsConfigUF.Free;
- inherited;
+
+  inherited Destroy;
 end;
 
 function TWebServices.Envia: Boolean;
 begin
-  if not(Self.Enviar.Executar) then
-  begin
-    if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-      TACBrGNRE( FACBrGNRE ).OnGerarLog(Self.Enviar.Msg);
-    raise Exception.Create(Self.Enviar.Msg);
-  end;
+  if not FEnviar.Executar then
+    FEnviar.GerarException( FEnviar.Msg );
 
-  Self.Retorno.numeroRecibo := Self.Enviar.numero;
-
-  if not(Self.Retorno.Executar) then
-  begin
-    if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-      TACBrGNRE( FACBrGNRE ).OnGerarLog(Self.Enviar.Msg);
-    raise Exception.Create(Self.Retorno.Msg);
-  end;
+  FRetorno.numeroRecibo := FEnviar.numeroRecibo;
+  if not FRetorno.Executar then
+    FRetorno.GerarException( FRetorno.Msg );
 
   Result := True;
 end;
 
 function TWebServices.ConsultaResultadoLote(ANumRecibo: String): Boolean;
 begin
-  Self.ConsResLote.numeroRecibo := ANumRecibo;
+  FConsResLote.numeroRecibo := ANumRecibo;
 
-  if not (Self.ConsResLote.Executar) then
-  begin
-    if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog)
-      then TACBrGNRE( FACBrGNRE ).OnGerarLog(Self.ConsResLote.Msg);
-    raise Exception.Create(Self.ConsResLote.Msg);
-  end;
+  if not FConsResLote.Executar then
+    FConsResLote.GerarException( FConsResLote.Msg );
 
   Result := true;
-end;
-
-{ TGNRERecepcaoLote }
-
-constructor TGNRERecepcaoLote.Create(AOwner : TComponent;
-  AGuias: TGuias);
-begin
-  inherited Create(AOwner);
-  FGuias := AGuias;
-end;
-
-function TGNRERecepcaoLote.Executar: Boolean;
-var
- aMsg        : String;
- Texto       : String;
- Acao        : TStringList;
- Stream      : TMemoryStream;
- StrStream   : TStringStream;
- {$IFDEF ACBrGNREOpenSSL}
-   HTTP    : THTTPSend;
- {$ELSE}
-  {$IFDEF SoapHTTP}
-    ReqResp: THTTPReqResp;
-   {$ELSE}
-    ReqResp: TACBrHTTPReqResp;
-   {$ENDIF}
- {$ENDIF}
-begin
-  inherited Executar;
-
-  if Assigned(GNRERetorno)
-    then GNRERetorno.Free;
-
-  Result := False;
-  Acao      := TStringList.Create;
-  Stream    := TMemoryStream.Create;
-
-  Texto := '<?xml version="1.0" encoding="utf-8" standalone="yes"?>';
-  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.gnre.pe.gov.br/webservice/GnreLoteRecepcao">';
-  Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<gnreCabecMsg>';
-  Texto := Texto +       '<versaoDados>'+GNREEnviGNRE+'</versaoDados>';
-  Texto := Texto +     '</gnreCabecMsg>';
-  Texto := Texto +   '</soap12:Header>';
-  Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<gnreDadosMsg>';
-  Texto := Texto + FDadosMsg;
-  Texto := Texto +     '</gnreDadosMsg>';
-  Texto := Texto +   '</soap12:Body>';
-  Texto := Texto + '</soap12:Envelope>';
-
-  Acao.Text := Texto;
-
- {$IFDEF ACBrGNREOpenSSL}
-   Acao.SaveToStream(Stream);
-   HTTP := THTTPSend.Create;
- {$ELSE}
-   {$IFDEF SoapHTTP}
-    ReqResp := THTTPReqResp.Create(nil);
-    ReqResp.UseUTF8InHeader := True;
-   {$ELSE}
-    ReqResp := TACBrHTTPReqResp.Create;
-   {$ENDIF}
-   ConfiguraReqResp( ReqResp );
-   ReqResp.URL := FURL;
-   ReqResp.SoapAction := 'https://www.gnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao';
- {$ENDIF}
-
-  try
-   TACBrGNRE( FACBrGNRE ).SetStatus( stGNRERecepcao );
-
-   if FConfiguracoes.Geral.Salvar then
-     FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+'-gnre-env-lot.xml', FDadosMsg);
-
-    try
-    {$IFDEF ACBrGNREOpenSSL}
-      HTTP.Document.LoadFromStream(Stream);
-      HTTP.HTTPMethod('POST', FURL);
-
-      StrStream := TStringStream.Create('');
-			try
-				StrStream.CopyFrom(HTTP.Document, 0);
-
-				FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-				FRetWS     := SeparaDados( FRetornoWS, 'processarResponse');
-			finally
-				StrStream.Free;
-			end;
-    {$ELSE}
-		  {$IFDEF SoapHTTP}
-        Stream := TMemoryStream.Create;
-        StrStream := TStringStream.Create('');
-        try
-          ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
-          StrStream.CopyFrom(Stream, 0);
-          FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-        finally
-          StrStream.Free;
-          Stream.Free;
-        end;
-      {$ELSE}
-        ReqResp.Data := Acao.Text;
-        FRetornoWS := ReqResp.Execute;
-      {$ENDIF}
-      FRetWS     := SeparaDados( FRetornoWS, 'processarResponse');
-
-    {$ENDIF}
-
-      GNRERetorno                := TTretLote_GNRE.Create;
-      GNRERetorno.Leitor.Arquivo := GNREUtil.RetirarPrefixos(FRetWS);
-      GNRERetorno.LerXml;
-
-      TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-
-      aMsg := 'Ambiente : '+TpAmbToStr(GNRERetorno.Ambiente)+LineBreak+
-                      'Status Código : '+IntToStr(GNRERetorno.codigo)+LineBreak+
-                      'Status Descrição : '+GNRERetorno.descricao+LineBreak+
-                      'Recebimento : '+IfThen(GNRERetorno.dataHoraRecibo = 0, '', DateTimeToStr(GNRERetorno.dataHoraRecibo))+LineBreak+
-                      'Tempo Médio : '+IntToStr(GNRERetorno.tempoEstimadoProc)+LineBreak+
-                      'Número Recibo: '+GNRERetorno.numero;
-
-      if FConfiguracoes.WebServices.Visualizar then
-        ShowMessage(aMsg);
-
-      Fcodigo             := GNRERetorno.codigo;
-      Fdescricao          := GNRERetorno.descricao;
-      Fnumero             := GNRERetorno.numero;
-      FdataHoraRecibo     := GNRERetorno.dataHoraRecibo;
-      FtempoEstimadoProc  := GNRERetorno.tempoEstimadoProc;
-      FMsg                := GNRERetorno.descricao;
-  
-      if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-        TACBrGNRE( FACBrGNRE ).OnGerarLog(aMsg);
-
-      Result := (GNRERetorno.codigo = 100); //Lote recebido com Sucesso
-
-      if FConfiguracoes.Geral.Salvar
-       then FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+'-gnre-rec.xml', FRetWS);
-    except
-      on E: Exception do
-      begin
-        if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-          TACBrGNRE( FACBrGNRE ).OnGerarLog(E.Message);
-        raise Exception.Create(E.Message);
-      end;
-    end;
-    
-  finally
-  {$IFDEF ACBrGNREOpenSSL}
-    HTTP.Free;
-  {$ELSE}
-    ReqResp.Free;
-  {$ENDIF}
-    Acao.Free;
-    Stream.Free;
-    ConfAmbiente;
-    TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-  end;
-end;
-
-{ TGNRERetRecepcaoLote }
-
-constructor TGNRERetRecepcaoLote.Create(AOwner: TComponent;
-  AGuias: TGuias);
-begin
-  inherited Create(AOwner);
-  FGuias := AGuias;
-end;
-
-destructor TGNRERetRecepcaoLote.Destroy;
-begin
-  if assigned(FGNRERetorno) then
-    FGNRERetorno.Free;
-  inherited;
-end;
-
-function TGNRERetRecepcaoLote.Executar: Boolean;
-
-  function Processando: Boolean;
-  var
-    aMsg  : string;
-    Texto : String;
-    Acao  : TStringList ;
-    Stream: TMemoryStream;
-    StrStream: TStringStream;
-    {$IFDEF ACBrGNREOpenSSL}
-       HTTP: THTTPSend;
-    {$ELSE}
-		 {$IFDEF SoapHTTP}
-			ReqResp: THTTPReqResp;
-		 {$ELSE}
-			ReqResp: TACBrHTTPReqResp;
-		 {$ENDIF}		
-    {$ENDIF}
-  begin
-    inherited Executar;
-
-    Result := False;
-
-    Acao   := TStringList.Create;
-    Stream := TMemoryStream.Create;
-
-    Texto := '<?xml version="1.0" encoding="utf-8" standalone="yes"?>';
-    Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.gnre.pe.gov.br/webservice/GnreResultadoLote">';
-    Texto := Texto +   '<soap12:Header>';
-    Texto := Texto +     '<gnreCabecMsg>';
-    Texto := Texto +       '<versaoDados>'+GNREConsResLote+'</versaoDados>';
-    Texto := Texto +     '</gnreCabecMsg>';
-    Texto := Texto +   '</soap12:Header>';
-    Texto := Texto +   '<soap12:Body>';
-    Texto := Texto +     '<gnreDadosMsg>';
-    Texto := Texto + FDadosMsg;
-    Texto := Texto +     '</gnreDadosMsg>';
-    Texto := Texto +   '</soap12:Body>';
-    Texto := Texto + '</soap12:Envelope>';
-
-    Acao.Text := Texto;
-
-    {$IFDEF ACBrGNREOpenSSL}
-       Acao.SaveToStream(Stream);
-       HTTP := THTTPSend.Create;
-    {$ELSE}
-			 {$IFDEF SoapHTTP}
-				ReqResp := THTTPReqResp.Create(nil);
-				ReqResp.UseUTF8InHeader := True;
-			 {$ELSE}
-				ReqResp := TACBrHTTPReqResp.Create;
-			 {$ENDIF}       
-       ConfiguraReqResp( ReqResp );
-       ReqResp.URL := Trim(FURL);
-       ReqResp.SoapAction := 'http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote';
-    {$ENDIF}
-
-    try
-      TACBrGNRE( FACBrGNRE ).SetStatus( stGNREConsulta );
-      if Assigned(FGNRERetorno) then
-        FGNRERetorno.Free;
-
-      if FConfiguracoes.Geral.Salvar then
-        FConfiguracoes.Geral.Save(numeroRecibo + '-ped-rec.xml', FDadosMsg);
-
-      try
-        {$IFDEF ACBrGNREOpenSSL}
-           HTTP.Document.LoadFromStream(Stream);
-           ConfiguraHTTP(HTTP,'SOAPAction: "http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote"');
-           HTTP.HTTPMethod('POST', FURL);
-           StrStream := TStringStream.Create('');
-					 try
-						 StrStream.CopyFrom(HTTP.Document, 0);
-
-						 FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-						 FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-					 finally
-						 StrStream.Free;
-					 end;
-        {$ELSE}
-					{$IFDEF SoapHTTP}
-						Stream := TMemoryStream.Create;
-						StrStream := TStringStream.Create('');
-						try
-							ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
-							StrStream.CopyFrom(Stream, 0);
-							FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-						finally
-							StrStream.Free;
-							Stream.Free;
-						end;
-					{$ELSE}
-						ReqResp.Data := Acao.Text;
-						FRetornoWS := ReqResp.Execute;
-					{$ENDIF}
-          FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-        {$ENDIF}
-
-      if FConfiguracoes.Geral.Salvar then
-         FConfiguracoes.Geral.Save(numeroRecibo + '-pro-rec.xml', FRetWS);
-
-        FGNRERetorno := TTResultLote_GNRE.Create;
-        FGNRERetorno.Leitor.Arquivo := GNREUtil.RetirarPrefixos(FRetWS);
-        FGNRERetorno.LerXml;
-
-        TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-        aMsg := 'Ambiente : '+TpAmbToStr(GNRERetorno.Ambiente)+LineBreak+
-                'Protocolo do Lote : '+GNRERetorno.resInfoCabec.NumeroProtocoloLote+LineBreak+
-                'Status Código : '+IntToStr(GNRERetorno.codigo)+LineBreak+
-                'Status Descrição : '+UTF8Decode(GNRERetorno.descricao)+LineBreak;
-
-        if FConfiguracoes.WebServices.Visualizar then
-          ShowMessage(aMsg);
-
-        if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-           TACBrGNRE( FACBrGNRE ).OnGerarLog(aMsg);
-
-        Fambiente  := GNRERetorno.Ambiente;
-        Fcodigo    := GNRERetorno.codigo;
-        Fdescricao := GNRERetorno.descricao;
-        Fresultado := GNRERetorno.resultado;
-        FMsg       := GNRERetorno.descricao;
-
-        Result := (GNRERetorno.codigo = 401); // 401 = Lote em Processamento.
-      except on E: Exception do
-        begin
-          if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-            TACBrGNRE( FACBrGNRE ).OnGerarLog('WebService Consulta Resultado Lote:'+LineBreak+
-                                            '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                                            '- '+E.Message);
-          raise Exception.Create('WebService Consulta Resultado Lote:'+LineBreak+
-                                '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                                '- '+E.Message);
-        end;
-      end;
-
-    finally
-      {$IFDEF ACBrGNREOpenSSL}
-         HTTP.Free;
-      {$ELSE}
-        ReqResp.Free;
-      {$ENDIF}
-      Acao.Free;
-      Stream.Free;
-      ConfAmbiente;
-      TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-    end;
-  end;
-
-var
-  vCont: Integer;
-begin
-  inherited Executar;
-  Result := False;
-  
-  TACBrGNRE( FACBrGNRE ).SetStatus( stGNRERetRecepcao );
-  Sleep(TACBrGNRE( FACBrGNRE ).Configuracoes.WebServices.AguardarConsultaRet);
-  vCont := 1000;
-  while Processando do
-  begin
-    if TACBrGNRE( FACBrGNRE ).Configuracoes.WebServices.IntervaloTentativas > 0 then
-       Sleep(TACBrGNRE( FACBrGNRE ).Configuracoes.WebServices.IntervaloTentativas)
-    else
-       Sleep(vCont);
-
-    if vCont > (TACBrGNRE( FACBrGNRE ).Configuracoes.WebServices.Tentativas * 1000) then
-      break;
-
-    vCont := vCont + 1000;
-  end;
-  TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-
-  if (GNRERetorno.codigo = 402) then
-  begin
-    Result := Confirma(resultado);
-    Fprotocolo := GNRERetorno.resInfoCabec.NumeroProtocoloLote;
-  end;
-end;
-
-{ TGNREConsultarSituacaoLote }
-
-constructor TGNREConsultarResultadoLote.Create(AOwner: TComponent;
-  AGuias : TGuias);
-begin
-  inherited Create(AOwner);
-  FGuias := AGuias;
-end;
-
-function TGNREConsultarResultadoLote.Executar: Boolean;
-var
-  aMsg  : string;
-  Texto : String;
-  Acao  : TStringList ;
-  Stream: TMemoryStream;
-  StrStream: TStringStream;
-  {$IFDEF ACBrGNREOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-		 {$IFDEF SoapHTTP}
-			ReqResp: THTTPReqResp;
-		 {$ELSE}
-			ReqResp: TACBrHTTPReqResp;
-		 {$ENDIF}		
-  {$ENDIF}
-begin
-  inherited Executar;
-
-  Result := False;
-
-  Acao   := TStringList.Create;
-  Stream := TMemoryStream.Create;
-
-  Texto := '<?xml version="1.0" encoding="utf-8" standalone="yes"?>';
-  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.gnre.pe.gov.br/webservice/GnreResultadoLote">';
-  Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<gnreCabecMsg>';
-  Texto := Texto +       '<versaoDados>'+GNREConsResLote+'</versaoDados>';
-  Texto := Texto +     '</gnreCabecMsg>';
-  Texto := Texto +   '</soap12:Header>';
-  Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<gnreDadosMsg>';
-  Texto := Texto + FDadosMsg;
-  Texto := Texto +     '</gnreDadosMsg>';
-  Texto := Texto +   '</soap12:Body>';
-  Texto := Texto + '</soap12:Envelope>';
-
-  Acao.Text := Texto;
-
-  {$IFDEF ACBrGNREOpenSSL}
-     Acao.SaveToStream(Stream);
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-		 {$IFDEF SoapHTTP}
-			ReqResp := THTTPReqResp.Create(nil);
-			ReqResp.UseUTF8InHeader := True;
-		 {$ELSE}
-			ReqResp := TACBrHTTPReqResp.Create;
-		 {$ENDIF}       
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := Trim(FURL);
-     ReqResp.SoapAction := 'http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote';
-  {$ENDIF}
-
-  try
-    TACBrGNRE( FACBrGNRE ).SetStatus( stGNREConsulta );
-    if Assigned(FGNRERetorno) then
-      FGNRERetorno.Free;
-
-    if FConfiguracoes.Geral.Salvar then
-      FConfiguracoes.Geral.Save(numeroRecibo + '-ped-res.xml', FDadosMsg);
-
-    try
-      {$IFDEF ACBrGNREOpenSSL}
-         HTTP.Document.LoadFromStream(Stream);
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.gnre.pe.gov.br/gnreWS/services/GnreResultadoLote"');
-         HTTP.HTTPMethod('POST', FURL);
-         StrStream := TStringStream.Create('');
-				 try
-					 StrStream.CopyFrom(HTTP.Document, 0);
-
-					 FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-					 FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-				 finally
-					 StrStream.Free;
-				 end;
-      {$ELSE}
-				{$IFDEF SoapHTTP}
-					Stream := TMemoryStream.Create;
-					StrStream := TStringStream.Create('');
-					try
-						ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
-						StrStream.CopyFrom(Stream, 0);
-						FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-					finally
-						StrStream.Free;
-						Stream.Free;
-					end;
-				{$ELSE}
-					ReqResp.Data := Acao.Text;
-					FRetornoWS := ReqResp.Execute;
-				{$ENDIF}
-         FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-      {$ENDIF}
-
-      if FConfiguracoes.Geral.Salvar then
-         FConfiguracoes.Geral.Save(numeroRecibo + '-pro-res.xml', FRetWS);
-
-      FGNRERetorno := TTResultLote_GNRE.Create;
-      FGNRERetorno.Leitor.Arquivo := GNREUtil.RetirarPrefixos(FRetWS);
-      FGNRERetorno.LerXml;
-
-      TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-      aMsg := 'Ambiente : '+TpAmbToStr(GNRERetorno.Ambiente)+LineBreak+
-              'Status Código : '+IntToStr(GNRERetorno.codigo)+LineBreak+
-              'Status Descrição : '+UTF8Decode(GNRERetorno.descricao)+LineBreak;
-
-      if FConfiguracoes.WebServices.Visualizar then
-        ShowMessage(aMsg);
-
-      if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-         TACBrGNRE( FACBrGNRE ).OnGerarLog(aMsg);
-
-      Fambiente  := GNRERetorno.Ambiente;
-      Fcodigo    := GNRERetorno.codigo;
-      Fdescricao := GNRERetorno.descricao;
-      Fresultado := GNRERetorno.resultado;
-      FMsg       := GNRERetorno.descricao;
-
-      Result := (GNRERetorno.codigo = 402); // 402 = Lote processado com sucesso.
-
-      if Result then
-      begin
-        Confirma(resultado);
-        Fprotocolo := GNRERetorno.resInfoCabec.NumeroProtocoloLote;
-      end;
-
-      if FConfiguracoes.Geral.Salvar then
-        FConfiguracoes.Geral.Save(numeroRecibo+'-res.xml', FRetWS);
-
-    except on E: Exception do
-      begin
-        if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-          TACBrGNRE( FACBrGNRE ).OnGerarLog('WebService Consulta Resultado Lote:'+LineBreak+
-                                          '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                                          '- '+E.Message);
-        raise Exception.Create('WebService Consulta Resultado Lote:'+LineBreak+
-                              '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                              '- '+E.Message);
-      end;
-    end;
-
-  finally
-    {$IFDEF ACBrGNREOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
-    Acao.Free;
-    Stream.Free;
-    ConfAmbiente;
-    TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-  end;
-end;
-
-{ TGNREConsultarConfigUF }
-
-constructor TGNREConsultarConfigUF.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner);
-end;
-
-destructor TGNREConsultarConfigUF.Destroy;
-begin
-  if assigned(FGNRERetorno) then
-    FGNRERetorno.Free;
-  inherited;
-end;
-
-function TGNREConsultarConfigUF.Executar: Boolean;
-var
-  aMsg  : string;
-  Texto : String;
-  Acao  : TStringList ;
-  Stream: TMemoryStream;
-  StrStream: TStringStream;
-
-  {$IFDEF ACBrGNREOpenSSL}
-     HTTP: THTTPSend;
-  {$ELSE}
-		 {$IFDEF SoapHTTP}
-			ReqResp: THTTPReqResp;
-		 {$ELSE}
-			ReqResp: TACBrHTTPReqResp;
-		 {$ENDIF}		
-  {$ENDIF}
-begin
-  if Assigned(FGNRERetorno) then
-    FGNRERetorno.Free;
-
-  inherited Executar;
-
-  Result := False;
-
-  Acao   := TStringList.Create;
-  Stream := TMemoryStream.Create;
-
-  Texto := '<?xml version="1.0" encoding="utf-8" standalone="yes"?>';
-  Texto := Texto + '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns="http://www.gnre.pe.gov.br/webservice/GnreConfigUF">';
-  Texto := Texto +   '<soap12:Header>';
-  Texto := Texto +     '<gnreCabecMsg>';
-  Texto := Texto +       '<versaoDados>'+GNREConsConfigUF+'</versaoDados>';
-  Texto := Texto +     '</gnreCabecMsg>';
-  Texto := Texto +   '</soap12:Header>';
-  Texto := Texto +   '<soap12:Body>';
-  Texto := Texto +     '<gnreDadosMsg>';
-  Texto := Texto + FDadosMsg;
-  Texto := Texto +     '</gnreDadosMsg>';
-  Texto := Texto +   '</soap12:Body>';
-  Texto := Texto + '</soap12:Envelope>';
-
-  Acao.Text := Texto;
-
-  {$IFDEF ACBrGNREOpenSSL}
-     Acao.SaveToStream(Stream);
-     HTTP := THTTPSend.Create;
-  {$ELSE}
-		 {$IFDEF SoapHTTP}
-			ReqResp := THTTPReqResp.Create(nil);
-			ReqResp.UseUTF8InHeader := True;
-		 {$ELSE}
-			ReqResp := TACBrHTTPReqResp.Create;
-		 {$ENDIF}       
-     ConfiguraReqResp( ReqResp );
-     ReqResp.URL := Trim(FURL);
-     ReqResp.SoapAction := 'http://www.gnre.pe.gov.br/gnreWS/services/GnreConfigUF';
-  {$ENDIF}
-
-  try
-    TACBrGNRE( FACBrGNRE ).SetStatus( stGNREConsultaConfigUF );
-
-    if FConfiguracoes.Geral.Salvar then
-      FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+'-ped-cfg.xml', FDadosMsg);
-
-    try
-      {$IFDEF ACBrGNREOpenSSL}
-         HTTP.Document.LoadFromStream(Stream);
-         ConfiguraHTTP(HTTP,'SOAPAction: "http://www.gnre.pe.gov.br/gnreWS/services/GnreConfigUF"');
-         HTTP.HTTPMethod('POST', FURL);
-         StrStream := TStringStream.Create('');
-				 try
-					 StrStream.CopyFrom(HTTP.Document, 0);
-
-					 FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-					 FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-				 finally
-					 StrStream.Free;
-				 end;
-      {$ELSE}
-				{$IFDEF SoapHTTP}
-					Stream := TMemoryStream.Create;
-					StrStream := TStringStream.Create('');
-					try
-						ReqResp.Execute(Acao.Text, Stream);  // Dispara exceptions no caso de erro
-						StrStream.CopyFrom(Stream, 0);
-						FRetornoWS := TiraAcentos(ParseText(StrStream.DataString, True));
-					finally
-						StrStream.Free;
-						Stream.Free;
-					end;
-				{$ELSE}
-					ReqResp.Data := Acao.Text;
-					FRetornoWS := ReqResp.Execute;
-				{$ENDIF}
-         FRetWS := SeparaDados( FRetornoWS, 'gnreRespostaMsg');
-      {$ENDIF}
-      FGNRERetorno := TTConfigUf.Create;
-      FGNRERetorno.Leitor.Arquivo := GNREUtil.RetirarPrefixos(FRetWS);
-      FGNRERetorno.LerXml;
-
-      TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-      aMsg := 'Ambiente : '+TpAmbToStr(GNRERetorno.Ambiente)+LineBreak+
-              'Status Código : '+IntToStr(GNRERetorno.codigo)+LineBreak+
-              'Status Descrição : '+UTF8Decode(GNRERetorno.descricao)+LineBreak+
-              'UF : '+GNRERetorno.Uf;
-
-      if FConfiguracoes.WebServices.Visualizar then
-        ShowMessage(aMsg);
-
-      if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-         TACBrGNRE( FACBrGNRE ).OnGerarLog(aMsg);
-
-      Fambiente                   := GNRERetorno.Ambiente;
-      Fcodigo                     := GNRERetorno.codigo;
-      Fdescricao                  := UTF8Decode(GNRERetorno.descricao);
-      FexigeReceita               := GNRERetorno.exigeReceita;
-      FexigeDataVencimento        := GNRERetorno.exigeDataVencimento;
-      FexigeDataPagamento         := GNRERetorno.exigeDataPagamento;
-      FexigeContribuinteEmitente  := GNRERetorno.exigeContribuinteEmitente;
-      FexigeUfFavorecida          := GNRERetorno.exigeUfFavorecida;
-      FexigeConvenio              := GNRERetorno.exigeConvenio;
-      FUf                         := GNRERetorno.Uf;
-      FMsg                        := UTF8Decode(GNRERetorno.descricao);
-
-      Result := (GNRERetorno.codigo = 450); // 450 = Consulta da configuração da UF realizada com sucesso.
-
-      if FConfiguracoes.Geral.Salvar then
-        FConfiguracoes.Geral.Save(FormatDateTime('yyyymmddhhnnss',Now)+'-cfg.xml', FRetWS);
-
-    except on E: Exception do
-      begin
-       if Assigned(TACBrGNRE( FACBrGNRE ).OnGerarLog) then
-          TACBrGNRE( FACBrGNRE ).OnGerarLog('WebService Consulta Configuração UF:'+LineBreak+
-                                          '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                                          '- '+E.Message);
-       raise Exception.Create('WebService Consulta Configuração UF:'+LineBreak+
-                              '- Inativo ou Inoperante tente novamente.'+LineBreak+
-                              '- '+E.Message);
-      end;
-    end;
-
-  finally
-    {$IFDEF ACBrGNREOpenSSL}
-       HTTP.Free;
-    {$ELSE}
-      ReqResp.Free;
-    {$ENDIF}
-    Acao.Free;
-    Stream.Free;
-    ConfAmbiente;
-    TACBrGNRE( FACBrGNRE ).SetStatus( stGNREIdle );
-  end;
 end;
 
 end.

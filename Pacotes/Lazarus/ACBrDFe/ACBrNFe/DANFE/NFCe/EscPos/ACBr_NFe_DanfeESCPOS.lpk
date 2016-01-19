@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos"/>
-        <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>

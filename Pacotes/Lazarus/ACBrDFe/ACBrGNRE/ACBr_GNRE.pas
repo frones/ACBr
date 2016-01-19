@@ -7,12 +7,12 @@ unit ACBr_GNRE;
 interface
 
 uses
-  ACBrGNRE2, ACBrGNREConfiguracoes, ACBrGNREGuias, ACBrGNREReg, ACBrGNREUtil, 
-  ACBrGNREWebServices, pgnreConfigUF, pgnreConsConfigUF, pgnreConversao, 
-  pgnreGNRE, pgnreRetCampoAdicional, pgnreRetConsConfigUF, 
-  pgnreRetDetalhamentoReceita, pgnreRetPeriodoApuracao, pgnreRetProduto, 
-  pgnreRetReceita, pgnreRetTipoDocumentoOrigem, pgnreRetConsResLoteGNRE, 
-  pgnreRetEnvLoteGNRE, LazarusPackageIntf;
+  ACBrGNRE, ACBrGNREConfiguracoes, ACBrGNREGuias, ACBrGNREReg, 
+  pgnreConsResLoteGNRE, ACBrGNREWebServices, pgnreConfigUF, pgnreConsConfigUF, 
+  pgnreConversao, pgnreGNRE, pgnreGNRER, pgnreGNRERetorno, pgnreGNREW, 
+  pgnreRetCampoAdicional, pgnreRetConsConfigUF, pgnreRetConsResLoteGNRE, 
+  pgnreRetDetalhamentoReceita, pgnreRetEnvLoteGNRE, pgnreRetPeriodoApuracao, 
+  LazarusPackageIntf;
 
 implementation
 

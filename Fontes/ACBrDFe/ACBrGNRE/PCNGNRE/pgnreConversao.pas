@@ -42,22 +42,85 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreConversao;
 
 interface
 
 uses
-  SysUtils,
-  {$IFNDEF VER130}
-    Variants,
-  {$ENDIF}
-  Classes, pcnConversao;
+  SysUtils, StrUtils, Classes, pcnConversao;
 
 type
-  TStatusACBrGNRE = ( stGNREIdle, stGNRERecepcao, stGNRERetRecepcao, stGNREConsulta, stGNREConsultaConfigUF );
-  TLayOut = ( LayGNRERecepcao, LayGNRERetRecepcao, LayGNREConsultaConfigUF );
+  TStatusACBrGNRE = ( stGNREIdle, stGNRERecepcao, stGNRERetRecepcao,
+                      stGNREConsulta, stGNREConsultaConfigUF, stGNREEmail );
+                      
+  TLayOutGNRE = ( LayGNRERecepcao, LayGNRERetRecepcao, LayGNREConsultaConfigUF );
+
+  TVersaoGNRE = (ve100);
+
+  TSchemaGNRE = ( schErro, schGNRE, schretGNRE, schprocGNRE, schconsReciGNRE );
+
+function LayOutToServico(const t: TLayOutGNRE): String;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutGNRE;
+
+function LayOutToSchema(const t: TLayOutGNRE): TSchemaGNRE;
+
+function SchemaGNREToStr(const t: TSchemaGNRE): String;
+
+function VersaoGNREToStr(const t: TVersaoGNRE): String;
+function VersaoGNREToDbl(const t: TVersaoGNRE): Double;
 
 implementation
+
+uses
+  typinfo, ACBrUtil;
+
+function LayOutToServico(const t: TLayOutGNRE): String;
+begin
+  Result := EnumeradoToStr(t,
+    ['GNRERecepcao', 'GNRERetRecepcao', 'GNREConsultaConfigUF'],
+    [LayGNRERecepcao, LayGNRERetRecepcao, LayGNREConsultaConfigUF]);
+end;
+
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutGNRE;
+begin
+  Result := StrToEnumerado(ok, s,
+    ['GNRERecepcao', 'GNRERetRecepcao', 'GNREConsultaConfigUF'],
+    [LayGNRERecepcao, LayGNRERetRecepcao, LayGNREConsultaConfigUF]);
+end;
+
+function LayOutToSchema(const t: TLayOutGNRE): TSchemaGNRE;
+begin
+  case t of
+    LayGNRERecepcao:         Result := schGNRE;
+    LayGNRERetRecepcao:      Result := schretGNRE;
+    LayGNREConsultaConfigUF: Result := schconsReciGNRE;
+  else
+    Result := schErro;
+  end;
+end;
+
+function SchemaGNREToStr(const t: TSchemaGNRE): String;
+begin
+  Result := GetEnumName(TypeInfo(TSchemaGNRE), Integer( t ) );
+  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
+end;
+
+function VersaoGNREToStr(const t: TVersaoGNRE): String;
+begin
+  Result := EnumeradoToStr(t, ['1.00'], [ve100]);
+end;
+
+function VersaoGNREToDbl(const t: TVersaoGNRE): Double;
+begin
+  case t of
+    ve100: Result := 1.0;
+  else
+    Result := 0;
+  end;
+end;
 
 end.
 

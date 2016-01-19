@@ -42,13 +42,15 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrGNREGuiaClass;
 
 interface
 
-uses Forms, SysUtils, Classes, pcnConversao, pgnreGNRERetorno;
+uses
+ Forms, SysUtils, Classes, pcnConversao, pgnreGNRERetorno;
 
 type
   TACBrGNREGuiaClass = class( TComponent )
@@ -100,7 +102,8 @@ type
 
 implementation
 
-uses ACBrGNRE2, ACBrGNREUtil, ACBrUtil, ACBrDFeUtil ;
+uses
+ ACBrGNRE, ACBrUtil, ACBrDFeUtil;
 
 constructor TACBrGNREGuiaClass.Create(AOwner: TComponent);
 begin
@@ -187,7 +190,7 @@ function TACBrGNREGuiaClass.GetPathArquivos: String;
 begin
   if EstaVazio(FPathArquivos) then
      if Assigned(FACBrGNRE) then
-        FPathArquivos := TACBrGNRE(FACBrGNRE).Configuracoes.Geral.PathSalvar;
+        FPathArquivos := TACBrGNRE(FACBrGNRE).Configuracoes.Arquivos.PathSalvar;
 
   if NaoEstaVazio(FPathArquivos) then
      if not DirectoryExists(FPathArquivos) then

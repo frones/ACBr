@@ -1448,10 +1448,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsSat
+        ActivePage = tsEmail
         Align = alClient
         Images = ImageList1
-        TabIndex = 17
+        TabIndex = 13
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4691,9 +4691,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsCedente
+            ActivePage = tsBoletoEmail
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsCedente: TTabSheet
               Caption = 'Cedente'
@@ -5502,23 +5502,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsBoletoEmail: TTabSheet
               Caption = 'E-mail Boleto'
-              ClientHeight = 307
-              ClientWidth = 619
+              ClientHeight = 281
+              ClientWidth = 615
               object GroupBox3: TGroupBox
                 Left = 8
-                Height = 259
+                Height = 233
                 Top = 11
-                Width = 594
+                Width = 590
                 Anchors = [akTop, akLeft, akRight, akBottom]
                 Caption = 'Padrão'
-                ClientHeight = 237
-                ClientWidth = 590
+                ClientHeight = 211
+                ClientWidth = 586
                 TabOrder = 0
                 object edtBOLEmailMensagem: TMemo
                   Left = 20
-                  Height = 148
+                  Height = 122
                   Top = 79
-                  Width = 552
+                  Width = 548
                   Anchors = [akTop, akLeft, akRight, akBottom]
                   ScrollBars = ssAutoVertical
                   TabOrder = 0
@@ -5527,7 +5527,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 20
                   Height = 25
                   Top = 28
-                  Width = 552
+                  Width = 548
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 1
                 end
@@ -5792,17 +5792,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsEmail: TTabSheet
           Caption = 'E-mail'
-          ClientHeight = 303
+          ClientHeight = 311
           ClientWidth = 623
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 7
-            Height = 318
+            Height = 326
             Top = 8
             Width = 623
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
-            ClientHeight = 296
+            ClientHeight = 304
             ClientWidth = 619
             TabOrder = 0
             object Label33: TLabel
@@ -5818,24 +5818,24 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'Seu nome da forma como será exibido aos outros'
               Top = 32
-              Width = 160
+              Width = 216
               ParentShowHint = False
               ShowHint = True
               TabOrder = 0
             end
             object Label34: TLabel
-              Left = 195
+              Left = 248
               Height = 17
-              Top = 14
+              Top = 16
               Width = 70
               Caption = 'Seu e-mail *'
               ParentColor = False
             end
             object edEmailEndereco: TEdit
-              Left = 195
+              Left = 248
               Height = 25
               Top = 32
-              Width = 619
+              Width = 351
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -5852,7 +5852,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 25
               Top = 88
-              Width = 160
+              Width = 216
               TabOrder = 2
             end
             object Label36: TLabel
@@ -5870,23 +5870,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Width = 160
               EchoMode = emPassword
               PasswordChar = '*'
-              TabOrder = 3
+              TabOrder = 5
             end
             object Label37: TLabel
-              Left = 195
+              Left = 248
               Height = 17
-              Top = 70
+              Top = 72
               Width = 73
               Caption = 'Host SMTP *'
               ParentColor = False
             end
             object edEmailHost: TEdit
-              Left = 195
+              Left = 248
               Height = 25
-              Top = 88
-              Width = 619
+              Top = 89
+              Width = 240
               Anchors = [akTop, akLeft, akRight]
-              TabOrder = 4
+              TabOrder = 3
             end
             object Label38: TLabel
               Left = 195
@@ -5902,7 +5902,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Top = 144
               Width = 62
               MaxValue = 99999
-              TabOrder = 5
+              TabOrder = 6
             end
             object cbEmailSsl: TCheckBox
               Left = 270
@@ -5910,7 +5910,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Top = 148
               Width = 40
               Caption = 'SSL'
-              TabOrder = 6
+              TabOrder = 7
             end
             object cbEmailTls: TCheckBox
               Left = 328
@@ -5918,7 +5918,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Top = 148
               Width = 40
               Caption = 'TLS'
-              TabOrder = 7
+              TabOrder = 8
             end
             object bEmailTestarConf: TBitBtn
               Left = 386
@@ -5963,7 +5963,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
               }
               OnClick = bEmailTestarConfClick
-              TabOrder = 8
+              TabOrder = 9
             end
             object pbEmailTeste: TProgressBar
               Left = 19
@@ -5973,7 +5973,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
-              TabOrder = 9
+              TabOrder = 10
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
@@ -6095,7 +6095,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 'VISCII'
               )
               Style = csDropDownList
-              TabOrder = 10
+              TabOrder = 4
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsWebServiceDFe
+            ActivePage = tsDiretoriosDFe
             Align = alClient
-            TabIndex = 2
+            TabIndex = 5
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7262,7 +7262,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 0
                     Height = 17
                     Top = 0
-                    Width = 62
+                    Width = 63
                     Caption = 'CSC/Token'
                     ParentColor = False
                   end
@@ -7270,7 +7270,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 0
                     Height = 17
                     Top = 40
-                    Width = 84
+                    Width = 85
                     Caption = 'IdCSC/IdToken'
                     ParentColor = False
                   end
@@ -7516,7 +7516,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label139: TLabel
                     Left = 6
                     Height = 17
-                    Top = 46
+                    Top = 40
                     Width = 112
                     Caption = 'Impressora Padrão'
                     ParentColor = False
@@ -7524,50 +7524,78 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object Label140: TLabel
                     Left = 231
                     Height = 17
-                    Top = 46
+                    Top = 40
                     Width = 75
                     Caption = 'Núm. Cópias'
                     ParentColor = False
                   end
                   object Label141: TLabel
+                    AnchorSideLeft.Control = edtLargCodProd
+                    AnchorSideRight.Control = edtLargCodProd
+                    AnchorSideRight.Side = asrBottom
                     Left = 6
-                    Height = 13
-                    Top = 167
-                    Width = 108
+                    Height = 27
+                    Top = 154
+                    Width = 70
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
                     Caption = 'Largura Cód.Produto'
                     Font.Height = -11
                     ParentColor = False
                     ParentFont = False
+                    WordWrap = True
                   end
                   object Label142: TLabel
-                    Left = 117
-                    Height = 13
-                    Top = 167
-                    Width = 85
+                    AnchorSideLeft.Control = edtEspBorda
+                    AnchorSideRight.Control = edtEspBorda
+                    AnchorSideRight.Side = asrBottom
+                    Left = 90
+                    Height = 27
+                    Top = 154
+                    Width = 70
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
                     Caption = 'Espessura Borda'
                     Font.Height = -11
                     ParentColor = False
                     ParentFont = False
+                    WordWrap = True
                   end
                   object Label143: TLabel
-                    Left = 208
-                    Height = 13
-                    Top = 167
-                    Width = 97
+                    AnchorSideLeft.Control = edtFonteRazao
+                    AnchorSideRight.Control = edtFonteRazao
+                    AnchorSideRight.Side = asrBottom
+                    Left = 174
+                    Height = 27
+                    Top = 154
+                    Width = 70
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
                     Caption = 'Fonte Razão Social'
                     Font.Height = -11
                     ParentColor = False
                     ParentFont = False
+                    WordWrap = True
                   end
                   object Label144: TLabel
-                    Left = 311
-                    Height = 13
-                    Top = 167
-                    Width = 114
+                    AnchorSideLeft.Control = edtFonteCampos
+                    AnchorSideRight.Control = edtFonteCampos
+                    AnchorSideRight.Side = asrBottom
+                    Left = 258
+                    Height = 27
+                    Top = 154
+                    Width = 70
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
                     Caption = 'Fonte Demais Campos'
                     Font.Height = -11
                     ParentColor = False
                     ParentFont = False
+                    WordWrap = True
                   end
                   object Label145: TLabel
                     Left = 168
@@ -7604,7 +7632,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpressora: TComboBox
                     Left = 6
                     Height = 25
-                    Top = 62
+                    Top = 56
                     Width = 219
                     ItemHeight = 17
                     TabOrder = 13
@@ -7621,7 +7649,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxMostrarPreview: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 18
+                    Top = 17
                     Width = 234
                     Caption = 'Mostrar Preview antes da impressão'
                     TabOrder = 3
@@ -7629,7 +7657,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object gbxMargem: TGroupBox
                     Left = 6
                     Height = 72
-                    Top = 90
+                    Top = 81
                     Width = 299
                     Caption = 'Margens'
                     ClientHeight = 50
@@ -7726,7 +7754,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibeResumo: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 36
+                    Top = 34
                     Width = 175
                     Caption = 'Exibir Resumo no Canhoto'
                     TabOrder = 4
@@ -7734,7 +7762,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpValLiq: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 54
+                    Top = 51
                     Width = 222
                     Caption = 'Imprimir Valor Líquido do Produto'
                     TabOrder = 5
@@ -7742,7 +7770,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxFormCont: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 72
+                    Top = 68
                     Width = 165
                     Caption = 'Formulario Pré-Impresso'
                     TabOrder = 6
@@ -7770,12 +7798,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       'Courier'
                       'Arial'
                     )
-                    TabOrder = 23
+                    TabOrder = 24
                   end
                   object cbxMostraStatus: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 107
+                    Top = 102
                     Width = 106
                     Caption = 'Mostrar Status'
                     TabOrder = 8
@@ -7783,24 +7811,26 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExpandirLogo: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 124
+                    Top = 119
                     Width = 109
                     Caption = 'Expandir Logo '
                     TabOrder = 10
                   end
                   object edtFonteRazao: TEdit
-                    Left = 208
+                    Left = 174
                     Height = 25
-                    Top = 183
-                    Width = 97
+                    Top = 181
+                    Width = 70
+                    NumbersOnly = True
                     TabOrder = 18
                     Text = '12'
                   end
                   object edtFonteCampos: TEdit
-                    Left = 311
+                    Left = 258
                     Height = 25
-                    Top = 183
-                    Width = 114
+                    Top = 181
+                    Width = 70
+                    NumbersOnly = True
                     TabOrder = 19
                     Text = '10'
                   end
@@ -7827,7 +7857,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       '3'
                       '4'
                     )
-                    TabOrder = 21
+                    TabOrder = 22
                   end
                   object spedtDecimaisVUnit: TSpinEdit
                     Left = 168
@@ -7835,7 +7865,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Top = 225
                     Width = 121
                     MaxValue = 10
-                    TabOrder = 22
+                    TabOrder = 23
                   end
                   object rgLocalCanhoto: TRadioGroup
                     Left = 432
@@ -7860,36 +7890,38 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       'Cabeçalho'
                       'Rodapé'
                     )
-                    TabOrder = 20
+                    TabOrder = 21
                   end
                   object cbxImprimirTributos: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 90
+                    Top = 85
                     Width = 236
                     Caption = 'Imprimir Valor dos Tributos por Item'
                     TabOrder = 7
                   end
                   object edtEspBorda: TEdit
-                    Left = 117
+                    Left = 90
                     Height = 25
-                    Top = 183
-                    Width = 85
+                    Top = 181
+                    Width = 70
+                    NumbersOnly = True
                     TabOrder = 17
                     Text = '1'
                   end
                   object edtLargCodProd: TEdit
                     Left = 6
                     Height = 25
-                    Top = 183
-                    Width = 106
+                    Top = 181
+                    Width = 70
+                    NumbersOnly = True
                     TabOrder = 16
                     Text = '0'
                   end
                   object cbxExibirEAN: TCheckBox
                     Left = 456
                     Height = 21
-                    Top = 124
+                    Top = 119
                     Width = 81
                     Caption = 'Exibir EAN'
                     TabOrder = 11
@@ -7897,7 +7929,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibirCampoFatura: TCheckBox
                     Left = 456
                     Height = 21
-                    Top = 107
+                    Top = 102
                     Width = 138
                     Caption = 'Exibir Campo Fatura'
                     TabOrder = 9
@@ -7905,7 +7937,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object edtNumCopia: TSpinEdit
                     Left = 231
                     Height = 25
-                    Top = 62
+                    Top = 56
                     Width = 74
                     MinValue = 1
                     TabOrder = 14
@@ -7914,10 +7946,36 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxQuebrarLinhasDetalhesItens: TCheckBox
                     Left = 316
                     Height = 21
-                    Top = 141
+                    Top = 136
                     Width = 241
                     Caption = 'Quebrar linhas em '#13#10'detalhe dos itens'
                     TabOrder = 12
+                  end
+                  object lblAlturaCampos: TLabel
+                    AnchorSideLeft.Control = edtAlturaCampos
+                    AnchorSideRight.Control = edtAlturaCampos
+                    AnchorSideRight.Side = asrBottom
+                    Left = 342
+                    Height = 27
+                    Top = 154
+                    Width = 70
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Altura Campos'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object edtAlturaCampos: TEdit
+                    Left = 342
+                    Height = 25
+                    Top = 181
+                    Width = 70
+                    NumbersOnly = True
+                    TabOrder = 20
+                    Text = '30'
                   end
                 end
                 object tsDadosEmpresa: TTabSheet
@@ -8471,9 +8529,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 279
                   Top = 1
                   Width = 175
-                  ActivePage = tsTesteCTe
+                  ActivePage = tsTesteNFe
                   Align = alClient
-                  TabIndex = 1
+                  TabIndex = 0
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
@@ -9533,7 +9591,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 12
                 Height = 17
                 Top = 10
-                Width = 29
+                Width = 30
                 Caption = 'CNPJ'
                 ParentColor = False
               end
@@ -9590,7 +9648,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 12
                 Height = 17
                 Top = 60
-                Width = 104
+                Width = 105
                 Caption = 'Regime Tributario'
                 ParentColor = False
               end
@@ -9607,7 +9665,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 192
                 Height = 17
                 Top = 60
-                Width = 114
+                Width = 115
                 Caption = 'Regime Trib. ISSQN'
                 ParentColor = False
               end
@@ -11143,6 +11201,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -11187,6 +11246,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -11229,6 +11289,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.7

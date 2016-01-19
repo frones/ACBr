@@ -286,6 +286,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure AbreDocumentoVirtual ; virtual;
     Procedure VendeItemVirtual( ItemCupom: TACBrECFVirtualClassItemCupom ) ; virtual ;
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; virtual ;
+    Procedure DescontoAcrescimoItemAnteriorVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; virtual ;
     Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; virtual ;
     Procedure EfetuaPagamentoVirtual( Pagto  : TACBrECFVirtualClassPagamentoCupom ) ; virtual ;
@@ -382,6 +384,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
        Unidade : String = ''; TipoDescontoAcrescimo : String = '%';
        DescontoAcrescimo : String = 'D'; CodDepartamento: Integer = -1 ) ; override ;
+    Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
+       DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
+       NumItem : Integer = 0 ) ;  override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
@@ -1283,6 +1288,87 @@ begin
   {}
 end;
 
+procedure TACBrECFVirtualClass.DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
+       DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
+       NumItem : Integer = 0 ) ;
+var
+  ValorItem, ValDesc, PorcDesc: Double;
+  StrDescAcre : String ;
+begin
+  GravaLog( ComandoLOG );
+
+  if Estado <> estVenda then
+    raise EACBrECFERRO.create(ACBrStr('O Estado nao é "VENDA"')) ;
+
+  if fpItensCupom.Count = 0 then
+    raise EACBrECFERRO.create(ACBrStr('Nenhum Item foi vendido ainda')) ;
+
+  if NumItem = 0 then
+    NumItem := fpItensCupom.Count;
+
+  if (NumItem < 1) or (NumItem > fpItensCupom.Count) then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') fora da Faixa.')) ;
+
+  if fpItensCupom[NumItem-1].DescAcres > 0 then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já recebeu Acrescimo.')) ;
+
+  if fpItensCupom[NumItem-1].DescAcres < 0 then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já recebeu Desconto.')) ;
+
+  ValDesc  := 0 ;
+  PorcDesc := 0 ;
+  with fpItensCupom[NumItem-1] do
+    ValorItem := RoundABNT(Qtd * ValorUnit, -2) ;
+
+  if TipoDescontoAcrescimo = '%' then
+  begin
+    PorcDesc := -ValorDescontoAcrescimo ;
+    ValDesc  := -RoundTo(ValorItem * (ValorDescontoAcrescimo / 100), -3) ;
+  end
+  else
+  begin
+    PorcDesc := -RoundTo( (ValorDescontoAcrescimo / ValorItem) * 100, -2) ;
+    ValDesc  := -ValorDescontoAcrescimo ;
+  end ;
+
+  StrDescAcre := 'DESCONTO' ;
+  if DescontoAcrescimo <> 'D' then  // default, DescontoAcrescimo = 'D'
+  begin
+    ValDesc     := -ValDesc ;
+    PorcDesc    := -PorcDesc ;
+    StrDescAcre := 'ACRESCIMO' ;
+  end ;
+
+  if Abs(PorcDesc) >= 100 then
+    raise EACBrECFERRO.create(ACBrStr(StrDescAcre+' maior do que 99,99%'));
+
+  if ValorDescontoAcrescimo > 0 then
+    ValorItem := RoundTo(ValorItem + ValDesc, -2) ;
+
+  try
+    fpSubTotal   := RoundTo(fpSubTotal   + ValDesc,-2);  // Atualiza SubTotal Cupom
+    fpVendaBruta := RoundTo(fpVendaBruta + ValDesc,-2);  // Atualiza a venda bruta
+
+    with fpItensCupom[NumItem-1] do
+    begin
+      DescAcres := ValDesc;
+
+      with fpAliquotas[PosAliq] do
+      begin
+        Total    := max( RoundTo(Total    + ValDesc, -2), 0) ;
+        BaseICMS := max( RoundTo(BaseICMS + ValDesc, -2), 0) ;
+      end ;
+    end ;
+
+    DescontoAcrescimoItemAnteriorVirtual( fpItensCupom[NumItem-1], PorcDesc );
+
+    GravaArqINI;
+  except
+    LeArqINI ;
+    raise;
+  end ;
+end;
+
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
 var 
   ValorItem:Double;
@@ -1306,10 +1392,10 @@ begin
 
     with fpItensCupom[NumItem-1] do
     begin
-      ValorItem := ( RoundABNT( Qtd * ValorUnit,-2) + DescAcres ) ;
+      ValorItem  := RoundABNT( Qtd * ValorUnit,-2) + DescAcres;
       fpSubTotal := RoundTo(Subtotal - ValorItem,-2);
-      fpCuponsCanceladosTotalNaoTransmitidos:= RoundTo(fpCuponsCanceladosTotalNaoTransmitidos + ValorItem,-2); // Amarildo Lacerda ;
-      fpVendaBruta := RoundTo(fpVendaBruta - ValorItem,-2);  // retira o cncelado nao transmitido da venda bruta
+      fpCuponsCanceladosTotalNaoTransmitidos := RoundTo(fpCuponsCanceladosTotalNaoTransmitidos + ValorItem,-2);
+      fpVendaBruta := RoundTo(fpVendaBruta - ValorItem,-2);  // retira o cancelado e nao transmitido da venda bruta
       Qtd := 0;
 
       with fpAliquotas[ PosAliq ] do
@@ -1327,6 +1413,12 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendidoVirtual(NumItem: Integer);
+begin
+  {}
+end;
+
+procedure TACBrECFVirtualClass.DescontoAcrescimoItemAnteriorVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
 begin
   {}
 end;
@@ -1502,6 +1594,7 @@ begin
       fpNumCupom := fpNumCupom + 1 ;
 
     CancelaCupomVirtual;
+
     if Estado in estCupomAberto then
     begin
       fpCuponsCanceladosNaoTransmitidos      := fpCuponsCanceladosNaoTransmitidos + 1 ;

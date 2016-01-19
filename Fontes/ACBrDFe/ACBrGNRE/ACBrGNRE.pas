@@ -49,163 +49,311 @@ unit ACBrGNRE;
 interface
 
 uses
-  Classes, Sysutils,
-  pgnreGNRE,
-  pgnreConversao,
-{$IFDEF CLX}
-  QDialogs,
-{$ELSE}
-  Dialogs,
-{$ENDIF}
-  ACBrGNREGuias,
-  ACBrGNREGuiasRetorno,
-  ACBrGNREWebServices,
-  ACBrGNREConfiguracoes,
+  Classes, SysUtils,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
   ACBrGNREGuiaClass,
-  ACBrUtil, ACBrGNREUtil;
+  pgnreGNRE, pcnConversao, pgnreConversao,
+  ACBrDFeUtil, ACBrUtil;
+
+//  ACBrGNREGuiasRetorno,
 
 const
-  ACBRGNRE_VERSAO = '0.1.0a';
+  ACBRGNRE_VERSAO = '1.0.0a';
+  ACBRGNRE_NAMESPACE = 'http://www.gnre.pe.gov.br';
+  ACBRGNRE_CErroAmbDiferente = 'Ambiente do XML (tpAmb) é diferente do ' +
+               'configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
 type
-	EACBrNFeException = class(EACBrDFeException);
-	
-  TACBrGNREAboutInfo = (ACBrGNREAbout);
+  EACBrGNREException = class(EACBrDFeException);
 
-  // Evento para gerar log das mensagens do Componente
-  TACBrGNRELog = procedure(const Mensagem : String) of object ;
+  { TACBrGNRE }
 
-  TACBrGNRE = class(TComponent)
+  TACBrGNRE = class(TACBrDFe)
   private
-    fsAbout: TACBrGNREAboutInfo;
-    FGuias: TGuias;
-    FGuiasRetorno: TGuiasRetorno;
     FGNREGuia: TACBrGNREGuiaClass;
+
+    FGuias: TGuias;
+//    FGuiasRetorno: TGuiasRetorno;
+    FStatus: TStatusACBrGNRE;
     FWebServices: TWebServices;
-    FConfiguracoes: TConfiguracoes;
-    FStatus : TStatusACBrGNRE;
-    FOnStatusChange: TNotifyEvent;
-    FOnGerarLog : TACBrGNRELog;
+
+    function GetConfiguracoes: TConfiguracoesGNRE;
+    procedure SetConfiguracoes(AValue: TConfiguracoesGNRE);
+    procedure SetGNREGuia(const Value: TACBrGNREGuiaClass);
   protected
+    function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+
+    function GetAbout: String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function Enviar: Boolean;
+
+    procedure EnviarEmail(sPara, sAssunto: String;
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+      StreamGNRE: TStream = nil; NomeArq: String = ''); override;
+
+    function GetNomeModeloDFe: String; override;
+    function GetNameSpaceURI: String; override;
+
+    function CstatConfirmada(AValue: integer): Boolean;
+    function CstatProcessado(AValue: integer): Boolean;
+
+    function Enviar(Imprimir: Boolean = True): Boolean;
     function ConsultarResultadoLote(ANumRecibo: String): Boolean;
 
-    property WebServices: TWebServices   read FWebServices  write FWebServices;
-    property Guias: TGuias read FGuias write FGuias;
-    property GuiasRetorno: TGuiasRetorno read FGuiasRetorno write FGuiasRetorno;
-    property Status: TStatusACBrGNRE     read FStatus;
-    procedure SetStatus( const stNewStatus : TStatusACBrGNRE );
-  published
-    property Configuracoes: TConfiguracoes     read FConfiguracoes  write FConfiguracoes;
-    property OnStatusChange: TNotifyEvent      read FOnStatusChange write FOnStatusChange;
-    property GNREGuia: TACBrGNREGuiaClass      read FGNREGuia       write FGNREGuia;
-    property AboutACBrGNRE: TACBrGNREAboutInfo read fsAbout         write fsAbout stored false;
-    property OnGerarLog: TACBrGNRELog          read FOnGerarLog     write FOnGerarLog;
-  end;
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    procedure LerServicoDeParams(LayOutServico: TLayOutGNRE; var Versao: Double;
+      var URL: String); reintroduce; overload;
+    function LerVersaoDeParams(LayOutServico: TLayOutGNRE): String; reintroduce; overload;
 
-procedure ACBrAboutDialog;
+    function IdentificaSchema(const AXML: String): TSchemaGNRE;
+    function GerarNomeArqSchema(const ALayOut: TLayOutGNRE; VersaoServico: Double
+      ): String;
+
+    property WebServices: TWebServices read FWebServices write FWebServices;
+    property Guias: TGuias read FGuias write FGuias;
+//    property GuiasRetorno: TGuiasRetorno read FGuiasRetorno write FGuiasRetorno;
+    property Status: TStatusACBrGNRE read FStatus;
+
+    procedure SetStatus(const stNewStatus: TStatusACBrGNRE);
+  published
+    property Configuracoes: TConfiguracoesGNRE read GetConfiguracoes write SetConfiguracoes;
+    property GNREGuia: TACBrGNREGuiaClass      read FGNREGuia        write SetGNREGuia;
+  end;
 
 implementation
 
-procedure ACBrAboutDialog;
-var
- Msg: String;
-begin
- Msg := 'Componente ACBrGNRE'+#10+
-        'Versão: '+ACBrGNRE_VERSAO+#10+#10+
-        'Automação Comercial Brasil'+#10+#10+
-        'http://acbr.sourceforge.net'+#10+#10+
-        'Projeto Cooperar - PCN'+#10+#10+
-        'http://www.projetocooperar.org/pcn/';
+uses
+  strutils, dateutils,
+  pcnAuxiliar, synacode;
 
- MessageDlg(Msg ,mtInformation ,[mbOk],0);
-end;
+{$IFDEF FPC}
+ {$R ACBrGNREServicos.rc}
+{$ELSE}
+ {$R ACBrGNREServicos.res}
+{$ENDIF}
 
 { TACBrGNRE }
 
-procedure TACBrGNRE.Notification(AComponent: TComponent; Operation: TOperation);
-begin
- inherited Notification(AComponent, Operation);
-end;
-
 constructor TACBrGNRE.Create(AOwner: TComponent);
 begin
- inherited Create(AOwner);
+  inherited Create(AOwner);
 
- FConfiguracoes      := TConfiguracoes.Create( self );
- FConfiguracoes.Name := 'Configuracoes';
-
- {$IFDEF COMPILER6_UP}
-   FConfiguracoes.SetSubComponent( true ); { para gravar no DFM/XFM }
- {$ENDIF}
-
- FGuias               := TGuias.Create(Self, Guia);
- FGuiasRetorno        := TGuiasRetorno.Create(Self, GuiaRetorno);
- FGuias.Configuracoes := FConfiguracoes;
- FWebServices         := TWebServices.Create(Self);
-
- if FConfiguracoes.WebServices.Tentativas <= 0
-  then FConfiguracoes.WebServices.Tentativas := 18;
-
- {$IFDEF ACBrGNREOpenSSL}
-   GNREUtil.InitXmlSec;
- {$ENDIF}
-
- FOnGerarLog := nil;
+  FGuias := TGuias.Create(Self, Guia);
+  FWebServices := TWebServices.Create(Self);
 end;
 
 destructor TACBrGNRE.Destroy;
 begin
- FConfiguracoes.Free;
- FGuias.Free;
- FGuiasRetorno.Free;
- FWebServices.Free;
+  FGuias.Free;
+  FWebServices.Free;
 
- {$IFDEF ACBrGNREOpenSSL}
-    GNREUtil.ShutDownXmlSec;
- {$ENDIF}
-
- inherited destroy;
+  inherited;
 end;
 
-function TACBrGNRE.Enviar: Boolean;
+procedure TACBrGNRE.EnviarEmail(sPara, sAssunto: String; sMensagem, sCC,
+  Anexos: TStrings; StreamGNRE: TStream; NomeArq: String);
+begin
+  SetStatus( stGNREEmail );
+
+  try
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRE, NomeArq);
+  finally
+    SetStatus( stGNREIdle );
+  end;
+end;
+
+procedure TACBrGNRE.Notification(AComponent: TComponent;
+  Operation: TOperation);
+begin
+  inherited Notification(AComponent, Operation);
+
+  if (Operation = opRemove) and (FGNREGuia <> nil) and
+    (AComponent is TACBrGNREGuiaClass) then
+    FGNREGuia := nil;
+end;
+
+function TACBrGNRE.GetAbout: String;
+begin
+  Result := 'ACBrGNRE Ver: ' + ACBRGNRE_VERSAO;
+end;
+
+function TACBrGNRE.CreateConfiguracoes: TConfiguracoes;
+begin
+  Result := TConfiguracoesGNRE.Create(Self);
+end;
+
+procedure TACBrGNRE.SetGNREGuia(const Value: TACBrGNREGuiaClass);
+var
+  OldValue: TACBrGNREGuiaClass;
+begin
+  if Value <> FGNREGuia then
+  begin
+    if Assigned(FGNREGuia) then
+      FGNREGuia.RemoveFreeNotification(Self);
+
+    OldValue := FGNREGuia; // Usa outra variavel para evitar Loop Infinito
+    FGNREGuia := Value;    // na remoção da associação dos componentes
+
+    if Assigned(OldValue) then
+      if Assigned(OldValue.ACBrGNRE) then
+        OldValue.ACBrGNRE := nil;
+
+    if Value <> nil then
+    begin
+      Value.FreeNotification(Self);
+      Value.ACBrGNRE := Self;
+    end;
+  end;
+end;
+
+function TACBrGNRE.GetNomeModeloDFe: String;
+begin
+  Result := 'GNRE';
+end;
+
+function TACBrGNRE.GetNameSpaceURI: String;
+begin
+  Result := ACBRGNRE_NAMESPACE;
+end;
+
+function TACBrGNRE.CstatConfirmada(AValue: integer): Boolean;
+begin
+  case AValue of
+    100, 150: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrGNRE.CstatProcessado(AValue: integer): Boolean;
+begin
+  case AValue of
+    100, 110, 150, 301, 302, 303: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrGNRE.IdentificaSchema(const AXML: String): TSchemaGNRE;
+var
+  lTipoEvento: String;
+  I: integer;
+begin
+  Result := schGNRE;
+  I := pos('<infGNRE', AXML);
+  if I = 0 then
+    Result := schErro;
+end;
+
+function TACBrGNRE.GerarNomeArqSchema(const ALayOut: TLayOutGNRE;
+  VersaoServico: Double): String;
+var
+  NomeServico, NomeSchema, ArqSchema: String;
+  Versao: Double;
+begin
+  // Procura por Versão na pasta de Schemas //
+  NomeServico := LayOutToServico(ALayOut);
+  NomeSchema := NomeServicoToNomeSchema(NomeServico);
+  ArqSchema := '';
+  if NaoEstaVazio(NomeSchema) then
+  begin
+    Versao := VersaoServico;
+    AchaArquivoSchema( NomeSchema, Versao, ArqSchema );
+  end;
+
+  Result := ArqSchema;
+end;
+
+function TACBrGNRE.GetConfiguracoes: TConfiguracoesGNRE;
+begin
+  Result := TConfiguracoesGNRE(FPConfiguracoes);
+end;
+
+procedure TACBrGNRE.SetConfiguracoes(AValue: TConfiguracoesGNRE);
+begin
+  FPConfiguracoes := AValue;
+end;
+
+function TACBrGNRE.LerVersaoDeParams(LayOutServico: TLayOutGNRE): String;
+var
+  Versao: Double;
+begin
+  Versao := LerVersaoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
+    Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
+    VersaoGNREToDbl(Configuracoes.Geral.VersaoDF));
+
+  Result := FloatToString(Versao, '.', '0.00');
+end;
+
+procedure TACBrGNRE.LerServicoDeParams(LayOutServico: TLayOutGNRE;
+  var Versao: Double; var URL: String);
+var
+  AUF: String;
+begin
+  Versao := VersaoGNREToDbl(Configuracoes.Geral.VersaoDF);
+  URL := '';
+  AUF := Configuracoes.WebServices.UF;
+
+  LerServicoDeParams(GetNomeModeloDFe,
+                     AUF,
+                     Configuracoes.WebServices.Ambiente,
+                     LayOutToServico(LayOutServico),
+                     Versao,
+                     URL);
+end;
+
+procedure TACBrGNRE.SetStatus(const stNewStatus: TStatusACBrGNRE);
+begin
+  if stNewStatus <> FStatus then
+  begin
+    FStatus := stNewStatus;
+    if Assigned(OnStatusChange) then
+      OnStatusChange(Self);
+  end;
+end;
+
+function TACBrGNRE.NomeServicoToNomeSchema(const NomeServico: String): String;
+Var
+  ok: Boolean;
+  ALayout: TLayOutGNRE;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaGNREToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
+end;
+
+function TACBrGNRE.Enviar(Imprimir: Boolean): Boolean;
+var
+  i: Integer;
 begin
   if Guias.Count <= 0 then
-  begin
-    if Assigned(Self.OnGerarLog) then
-      Self.OnGerarLog('ERRO: Nenhuma GNRE adicionado');
-    raise Exception.Create('ERRO: Nenhuma GNRE adicionado');
-    exit;
-  end;
+    GerarException(ACBrStr('ERRO: Nenhuma GNRE adicionada ao Lote'));
 
   if Guias.Count > 50 then
-  begin
-    if Assigned(Self.OnGerarLog) then
-      Self.OnGerarLog('ERRO: Conjunto de GNRE transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(Guias.Count));
-    raise Exception.Create('ERRO: Conjunto de GNRE transmitidos (máximo de 50) excedido. Quantidade atual: '+IntToStr(Guias.Count));
-    exit;
-  end;
+    GerarException(ACBrStr('ERRO: Conjunto de GNRE transmitidas (máximo de 50 GNRE)' +
+      ' excedido. Quantidade atual: ' + IntToStr(Guias.Count)));
 
   Result := WebServices.Envia;
+
+  if FGNREGuia <> nil then
+  begin
+    for i := 0 to Guias.Count - 1 do
+    begin
+      if Guias.Items[i].Confirmada and Imprimir then
+        Guias.Items[i].Imprimir;
+    end;
+  end;
+
 end;
 
 function TACBrGNRE.ConsultarResultadoLote(ANumRecibo: String): Boolean;
 begin
  Result := WebServices.ConsultaResultadoLote(ANumRecibo);
-end;
-
-procedure TACBrGNRE.SetStatus( const stNewStatus : TStatusACBrGNRE );
-begin
- if ( stNewStatus <> FStatus )
-  then begin
-   FStatus := stNewStatus;
-   if Assigned(fOnStatusChange)
-    then FOnStatusChange(Self);
-  end;
 end;
 
 end.

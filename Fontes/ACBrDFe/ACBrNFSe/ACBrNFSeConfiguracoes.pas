@@ -57,6 +57,7 @@ type
     ProLinkNFSe: String;
     HomLinkNFSe: String;
     DadosSenha: String;
+    UseSSL: Boolean;
  end;
 
  TConfigNameSpace = record
@@ -431,20 +432,27 @@ begin
   if PathIniCidades <> '' then
     NomeArqParams := PathWithDelim(PathIniCidades)
   else
-    NomeArqParams := ApplicationPath;
+    begin
+    NomeArqParams  := ApplicationPath;
+    PathIniCidades := NomeArqParams;
+  end;
 
   NomeArqParams := NomeArqParams + 'Cidades.ini';
 
   if not FileExists(NomeArqParams) then
-    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
-      NomeArqParams);
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' + NomeArqParams);
 
   CodIBGE := IntToStr(FCodigoMunicipio);
 
   FPIniParams := TMemIniFile.Create(NomeArqParams);
 
   FxProvedor := FPIniParams.ReadString(CodIBGE, 'Provedor', '');
-  FProvedor  := StrToProvedor(Ok, FxProvedor);
+
+  if FxProvedor = 'ISSFortaleza' then
+    FProvedor := StrToProvedor(Ok, 'GINFES')
+  else
+    FProvedor := StrToProvedor(Ok, FxProvedor);
+
   FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome', '');
   FxUF := FPIniParams.ReadString(CodIBGE, 'UF', '');
   FxNomeURL_H := FPIniParams.ReadString(CodIBGE, 'NomeURL_H', '');
@@ -452,8 +460,8 @@ begin
 
   FPIniParams.Free;
 
-  if FProvedor = proNenhum
-   then raise Exception.Create('Código do Municipio ['+ CodIBGE +'] não Encontrado.');
+  if FProvedor = proNenhum then
+    raise Exception.Create('Código do Municipio [' + CodIBGE + '] não Encontrado.');
 
   // ===========================================================================
   // Le as configurações especificas do Provedor referente a cidade desejada
@@ -464,11 +472,10 @@ begin
   else
     NomeArqParams := ApplicationPath;
 
-  NomeArqParams := NomeArqParams + FxProvedor +'.ini';;
+  NomeArqParams := NomeArqParams + FxProvedor + '.ini';;
 
   if not FileExists(NomeArqParams) then
-    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
-      NomeArqParams);
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' + NomeArqParams);
 
   FPIniParams := TMemIniFile.Create(NomeArqParams);
 
@@ -478,6 +485,7 @@ begin
   FConfigGeral.Prefixo4 := FPIniParams.ReadString('Geral', 'Prefixo4', '');
   FConfigGeral.Identificador := FPIniParams.ReadString('Geral', 'Identificador', '');
   FConfigGeral.QuebradeLinha := FPIniParams.ReadString('Geral', 'QuebradeLinha', '');
+  FConfigGeral.UseSSL := FPIniParams.ReadBool('Geral', 'UseSSL', False);
 
   FConfigNameSpace.Producao := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigNameSpace.Homologacao :=StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);

@@ -3,20 +3,15 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_Convenio115"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrConvenio115"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrConvenio115\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrConvenio115\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerMessages>
-          <MsgFileName Value=""/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)"/>
     <Files Count="1">
@@ -26,7 +21,6 @@
         <UnitName Value="ACBrConvenio115"/>
       </Item1>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBrTXTComum"/>

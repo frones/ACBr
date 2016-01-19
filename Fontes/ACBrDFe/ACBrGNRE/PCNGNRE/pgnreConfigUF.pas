@@ -43,11 +43,17 @@
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
 
+{$I ACBr.inc}
+
 unit pgnreConfigUF;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao, ACBrUtil;
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
+(*
+ pgnreConversao, ACBrUtil;
+*) 
 
 type
   TInfReceita = class;

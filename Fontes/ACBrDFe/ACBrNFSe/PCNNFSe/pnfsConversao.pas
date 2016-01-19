@@ -70,8 +70,10 @@ type
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
 
-  TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa,
-                                    retMicroempresarioIndividual, retMicroempresarioEmpresaPP, retLucroReal, retLucroPresumido, retSimplesNacional);
+  TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa,
+                                    retSociedadeProfissionais, retCooperativa,
+                                    retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
+                                    retLucroReal, retLucroPresumido, retSimplesNacional);
   TnfseSimNao = ( snSim, snNao );
   TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito, cpCartaoDebito);
   TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
@@ -104,6 +106,9 @@ type
   TnfseTEmpreitadaGlobal = ( EgConstrucaoCivil, EgOutros);
 
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
+
+  TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
+                loInfisc, loISSDSF);
 
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS):string;
@@ -181,6 +186,8 @@ function VersaoNFSeToStr(const t: TVersaoNFSe): String;
 
 function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
 function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
+
+function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
 
 implementation
 
@@ -18102,6 +18109,37 @@ begin
     0 : result := 'Sim' ;
     1 : result := 'Não' ;
   end;
+end;
+
+function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
+begin
+  case t of
+    proABRASFv1, proAbaco, proBetha, ProBHISS, proDBSeller, proFISSLex,
+    proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
+    proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
+    proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan,
+    proWebISS: Result := loABRASFv1;
+
+    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
+    proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
+    proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
+    proTecnos, proVirtual, proVitoria: Result := loABRASFv2;
+
+    proEgoverneISS: Result := loEGoverneISS;
+
+    proEL: Result := loEL;
+
+    proEquiplano: Result := loEquiplano;
+
+    proInfisc: Result := loInfisc;
+
+    proIssDSF: Result := loISSDSF;
+  else
+    Result := loNone;
+  end;
+(*
+  TnfseProvedor = ( proProdam, proNFSEBrasil, proCONAM);
+*)
 end;
 
 end.

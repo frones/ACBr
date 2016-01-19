@@ -39,6 +39,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/01/2015
+-- ACBrECFVirtual, ACBrECFVirtualBuffer --
+[+] Implementado o método DescontoAcrescimoItemAnterior
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27414
+
+Data: 13/01/2015
+-- ACBrPosPrinter --
+[+] Adicionado o evento: "OnEnviarStringDevice", que permite capturar todas as
+    saídas de Impressão, e decidir se as envia ou não para o Device
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27350
+[-] Correção em TACBrPosPrinter.TxRx, para leitura de status do Equipamento
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27194
+
 12/01/2016
 -- ACBrECFVirtualBuffer --
 [-] Correção de Bugs introduzidos acidentalmente em 08/01/2016. (Não permtia

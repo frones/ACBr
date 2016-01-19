@@ -42,12 +42,19 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreGNRERetorno;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao, pgnreRetConsResLoteGNRE;
-
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
+  pgnreRetConsResLoteGNRE;
+(*
+ pgnreConversao;
+*)
 type
   TGNRERetorno = class(TPersistent)
   private

@@ -42,19 +42,17 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreGNREW;
 
 interface
 
 uses
-{$IFDEF FPC}
-  LResources, Controls, Graphics, Dialogs,
-{$ELSE}
-  StrUtils,
-{$ENDIF}
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pgnreGNRE, ACBrGNREConfiguracoes;
+  pgnreGNRE, pgnreConversao;
 
 type
   TGNREW = class(TPersistent)

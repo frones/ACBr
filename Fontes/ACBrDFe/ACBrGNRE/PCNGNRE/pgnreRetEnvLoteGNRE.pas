@@ -42,12 +42,18 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreRetEnvLoteGNRE;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao;
-
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
+(*
+ pgnreConversao;
+*)
 type
   TTretLote_GNRE = class
   private

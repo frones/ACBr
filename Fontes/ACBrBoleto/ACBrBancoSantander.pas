@@ -225,11 +225,11 @@ function TACBrBancoSantander.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo):
 var
   ISequencia: Integer;
   iCarteira: Integer;
-  sCodMovimento, sAgencia, sCCorrente: string;
-  sDigitoNossoNumero, sTipoCobranca, sTipoDocto, sTipoCarteira: string;
-  sEspecie, sDataMoraJuros, sDataDesconto: string;
-  STipoJuros, sTipoDesconto, sDiasProtesto: string;
-  sTipoInscricao, sEndereco, sMensagem: string;
+  sCodMovimento, sAgencia, sCCorrente: String;
+  sDigitoNossoNumero, sTipoCobranca, sTipoDocto, sTipoCarteira: String;
+  sEspecie, sDataMoraJuros, sDataDesconto: String;
+  STipoJuros, sTipoDesconto, sDiasProtesto, sDiasBaixaDevol: String;
+  sTipoInscricao, sEndereco, sMensagem: String;
   aTipoInscricao: Char;
   function MontarInstrucoes1: string;
   begin
@@ -463,6 +463,10 @@ begin
         raise Exception.Create('Código de Baixa/Devolução informado incorretamente!');
     end;
 
+    sDiasBaixaDevol:= ifthen(DataBaixa > 0,
+                             IntToStrZero(DaysBetween(Vencimento,DataBaixa),2),
+                             '00');
+
     case Sacado.Pessoa of
        pFisica  : sTipoInscricao := '1';
        pJuridica: sTipoInscricao := '2';
@@ -529,7 +533,7 @@ begin
               sDiasProtesto                                           + // 222 - 223 / Número de dias para protesto
               Instrucao2                                              + // 224 - 224 / Código para Baixa/Devolução
               '0'                                                     + // 225 - 225 / Reservado (uso Banco)
-              IntToStrZero(DaysBetween(Vencimento,DataBaixa), 2)      + // 226 - 227 / Número de dias para Baixa/Devolução
+              sDiasBaixaDevol                                         + // 226 - 227 / Número de dias para Baixa/Devolução
               '00'                                                    + // 228 - 229 / Código da moeda
               Space(11)                                               ; // 230 – 240 / Reservado (uso Banco)
     {SEGMENTO P - FIM}

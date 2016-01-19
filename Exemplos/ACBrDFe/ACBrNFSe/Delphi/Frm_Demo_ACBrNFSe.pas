@@ -465,8 +465,6 @@ procedure TfrmDemo_ACBrNFSe.AlimentaComponente(NumNFSe: String);
 var
  ValorISS: Double;
 begin
- ACBrNFSe1.NotasFiscais.Clear;
-
  with ACBrNFSe1 do
   begin
    NotasFiscais.NumeroLote:='1';
@@ -727,17 +725,38 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnGerarEnviarLoteClick(Sender: TObject);
 var
- vAux, vNumLote : String;
+ sQtde, sAux, vNumLote: String;
+ iQtde, iAux, i: Integer;
 begin
- if not(InputQuery('Gerar e Enviar Lote', 'Numero do RPS', vAux))
+ if not(InputQuery('Gerar e Enviar Lote', 'Quantidade de RPS', sQtde))
+  then exit;
+
+ if not(InputQuery('Gerar e Enviar Lote', 'Numero do RPS', sAux))
   then exit;
 
  if not(InputQuery('Gerar e Enviar Lote', 'Numero do Lote', vNumLote))
   then exit;
 
+ iQtde := StrToIntDef(sQtde, 1);
+ iAux  := StrToIntDef(sAux, 1);
+
  ACBrNFSe1.NotasFiscais.Clear;
- AlimentaComponente(vAux);
+ for i := 1 to iQtde do
+ begin
+   sAux := IntToStr(iAux);
+   AlimentaComponente(sAux);
+   inc(iAux);
+ end;
+
  ACBrNFSe1.Enviar(vNumLote);
+
+ for i := 0 to iQtde -1 do
+ begin
+   MemoDados.Lines.Add('Nome XML: '+ACBrNFSe1.NotasFiscais.Items[i].NomeArq);
+   MemoDados.Lines.Add('Nota Numero: '+ACBrNFSe1.NotasFiscais.Items[i].NFSe.Numero);
+   MemoDados.Lines.Add('Código de Verificação: '+ACBrNFSe1.NotasFiscais.Items[i].NFSe.CodigoVerificacao);
+ end;
+
  ACBrNFSe1.NotasFiscais.Clear;
 end;
 

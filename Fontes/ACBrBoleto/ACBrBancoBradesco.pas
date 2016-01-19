@@ -194,19 +194,19 @@ var
                   '2'               +                                    // IDENTIFICAÇÃO DO LAYOUT PARA O REGISTRO
                   Copy(PadRight(Mensagem[1], 80, ' '), 1, 80);               // CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
 
-        if Mensagem.Count = 3 then
+        if Mensagem.Count >= 3 then
            Result := Result +
                      Copy(PadRight(Mensagem[2], 80, ' '), 1, 80)              // CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count = 4 then
+        if Mensagem.Count >= 4 then
            Result := Result +
                      Copy(PadRight(Mensagem[3], 80, ' '), 1, 80)              // CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count = 5 then
+        if Mensagem.Count >= 5 then
            Result := Result +
                      Copy(PadRight(Mensagem[4], 80, ' '), 1, 80)              // CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else

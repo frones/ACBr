@@ -3,20 +3,15 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_SEF2"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrSEF2"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrSEF2\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrSEF2\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerMessages>
-          <MsgFileName Value=""/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)"/>
     <Files Count="33">
@@ -66,7 +61,6 @@
         <UnitName Value="ACBrSEF2_BlocoH_1"/>
       </Item33>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBrTXTComum"/>

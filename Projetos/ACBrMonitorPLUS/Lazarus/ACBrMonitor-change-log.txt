@@ -43,6 +43,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/01/2015
+[-] Correções para o envio de Boletos por Email, fazendo uso de rotina interna
+    do componente ACBrBoleto  (por: DSA)
+
+17/01/2015
+[-] Correção da gravação do parâmetro ACBrPosPrinter.EspacoEntreLinhas (por: DSA)
+
+14/04/2015
+[+] Impressão DANFE: Adicionado ajuste para Fonte da Razão Social e Altura Linha
+    Comum.
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27390
+
 30/12/2015
 [-] Correção para ler campos da sessão ISSQN000, mesmo quando vBC não for
     informado  (por: DSA)

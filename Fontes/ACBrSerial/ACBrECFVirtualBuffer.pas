@@ -105,7 +105,10 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     procedure AbreDocumentoVirtual ; override;
     Procedure EnviaConsumidorVirtual ; override;
     procedure VendeItemVirtual( ItemCupom: TACBrECFVirtualClassItemCupom); override;
+    Procedure DescontoAcrescimoItemAnteriorVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; override ;
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; override ;
+
     Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
@@ -928,6 +931,28 @@ begin
 
   ImprimeBuffer ;
 end;
+
+procedure TACBrECFVirtualBufferClass.DescontoAcrescimoItemAnteriorVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
+var
+  StrDescAcre: String;
+  TotalItem: Double;
+begin
+  if ItemCupom.DescAcres > 0 then
+    StrDescAcre := 'ACRESCIMO'
+  else
+    StrDescAcre := 'DESCONTO';
+
+  TotalItem := RoundABNT(ItemCupom.Qtd * ItemCupom.ValorUnit, -2) + ItemCupom.DescAcres;
+
+  fsBuffer.Add( PadSpace('|'+StrDescAcre+' ITEM: '+IntToStrZero(ItemCupom.Sequencia,3)+'|'+
+                         FormatFloat('#0.00', PorcDesc)+'%|R$ '+
+                         FormatFloat('##,##0.00', ItemCupom.DescAcres)+'|'+
+                         FormatFloat('###,##0.00',TotalItem),
+                         Colunas, '|')) ;
+  ImprimeBuffer ;
+end;
+
 
 procedure TACBrECFVirtualBufferClass.LeituraX ;
 begin

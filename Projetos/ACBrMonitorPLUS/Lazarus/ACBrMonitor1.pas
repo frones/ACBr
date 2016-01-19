@@ -255,6 +255,7 @@ type
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
     edtEmailAssuntoCTe: TEdit;
+    edtAlturaCampos: TEdit;
     edtNFCeMargemDir: TEdit;
     edtNFCeMargemEsq: TEdit;
     edtNFCeMargemInf: TEdit;
@@ -284,6 +285,7 @@ type
     Label186: TLabel;
     Label187: TLabel;
     Label188: TLabel;
+    blAlturaCampos: TLabel;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
@@ -1230,7 +1232,7 @@ type
 
     procedure LerIni;
     procedure SalvarIni;
-    procedure ConfiguraDANFe;
+    procedure ConfiguraDANFe(PDF : Boolean);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -1755,10 +1757,8 @@ begin
     SetTLS := cbEmailTls.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
-    ;
 
     AddAddress(edEmailEndereco.Text);
-
     Subject := 'ACBrMonitor : Teste de Configuração de Email';
 
     Body.Add('Se você consegue ler esta mensagem, significa que suas configurações');
@@ -1775,7 +1775,8 @@ begin
     Screen.Cursor := crHourGlass;
     Application.ProcessMessages;
     try
-      Send(True);
+      Send(False);
+      MessageDlg('EMAIL','Email enviado com sucesso',mtInformation,[mbOK],0);
     except
       bEmailTestarConf.Enabled := True;
       bCancelar.Enabled := True;
@@ -2189,7 +2190,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe;
+    ConfiguraDANFe(True);
 
     vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
@@ -2321,7 +2322,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe;
+    ConfiguraDANFe(False);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
@@ -3472,6 +3473,7 @@ begin
     edtEspBorda.Text := Ini.ReadString('DANFE', 'EspessuraBorda', '1');
     edtFonteRazao.Text := Ini.ReadString('DANFE', 'FonteRazao', '12');
     edtFonteCampos.Text := Ini.ReadString('DANFE', 'FonteCampos', '10');
+    edtAlturaCampos.Text := Ini.ReadString('DANFE', 'AlturaCampos', '30');
     edtMargemInf.Text := Ini.ReadString('DANFE', 'Margem', '0,8');
     edtMargemSup.Text := Ini.ReadString('DANFE', 'MargemSup', '0,8');
     edtMargemDir.Text := Ini.ReadString('DANFE', 'MargemDir', '0,51');
@@ -3518,7 +3520,7 @@ begin
     cbxImpressoraNFCe.ItemIndex :=
       cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
 
-    ConfiguraDANFe;
+    ConfiguraDANFe(False);
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
@@ -3936,6 +3938,8 @@ begin
     DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
     LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
+
+    MAIL := ACBrMail1;
   end;
 
   with ACBrBoleto1.ACBrBoletoFC do
@@ -4274,6 +4278,7 @@ begin
     Ini.WriteString('DANFE', 'EspessuraBorda', edtEspBorda.Text);
     Ini.WriteString('DANFE', 'FonteRazao', edtFonteRazao.Text);
     Ini.WriteString('DANFE', 'FonteCampos', edtFonteCampos.Text);
+    Ini.WriteString('DANFE', 'AlturaCampos', edtAlturaCampos.Text);
     Ini.WriteString('DANFE', 'Margem', edtMargemInf.Text);
     Ini.WriteString('DANFE', 'MargemSup', edtMargemSup.Text);
     Ini.WriteString('DANFE', 'MargemDir', edtMargemDir.Text);
@@ -4383,7 +4388,7 @@ begin
     INI.WriteInteger('PosPrinter', 'Modelo', cbxModelo.ItemIndex);
     INI.WriteString('PosPrinter', 'Porta', cbxPorta.Text);
     INI.WriteInteger('PosPrinter', 'Colunas', seColunas.Value);
-    INI.WriteInteger('PosPrinter', 'EspacosEntreLinhas', seEspacosLinhas.Value);
+    INI.WriteInteger('PosPrinter', 'EspacoEntreLinhas', seEspacosLinhas.Value);
     INI.WriteInteger('PosPrinter', 'LinhasBuffer', seBuffer.Value);
     INI.WriteInteger('PosPrinter', 'LinhasPular', seLinhasPular.Value);
     INI.WriteInteger('PosPrinter', 'PaginaDeCodigo', cbxPagCodigo.ItemIndex);
@@ -6875,7 +6880,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.ConfiguraDANFe;
+procedure TFrmACBrMonitor.ConfiguraDANFe(PDF : Boolean);
 var
   OK: boolean;
 begin
@@ -6883,7 +6888,7 @@ begin
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      if rgModeloDANFeNFCE.ItemIndex = 0 then
+      if (rgModeloDANFeNFCE.ItemIndex = 0) or PDF then
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
@@ -6901,6 +6906,9 @@ begin
     else
        ACBrNFe1.DANFE.NFeCancelada := False;
   end;
+
+  if PDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
+    ForceDirectories(PathWithDelim(edtPathPDF.Text));
 
   if ACBrNFe1.DANFE <> nil then
   begin
@@ -6935,6 +6943,8 @@ begin
       ACBrNFeDANFeRL1.ExibirEAN := cbxExibirEAN.Checked;
       ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
       ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico := cbxQuebrarLinhasDetalhesItens.Checked;
+      ACBrNFeDANFeRL1.Fonte.TamanhoFonte_RazaoSocial := StrToIntDef(edtFonteRazao.Text, 12);
+      ACBrNFeDANFeRL1.AltLinhaComun := StrToIntDef(edtAlturaCampos.Text, 30);
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin

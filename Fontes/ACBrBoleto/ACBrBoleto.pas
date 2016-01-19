@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.169a';
+  CACBrBoleto_Versao = '0.0.170a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -2186,9 +2186,11 @@ begin
 
        SlRetorno.LoadFromFile( NomeArq );
      end
-     else 
+     else
+	 begin
+	   AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
-
+	 end;
 
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+

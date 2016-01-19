@@ -42,16 +42,19 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreGNRE;
 
 interface
 
 uses
   SysUtils, Classes,
-  {$IFNDEF VER130}
-    Variants,
-  {$ENDIF}
-  pgnreConversao;
+{$IFNDEF VER130}
+  Variants,
+{$ENDIF}
+  pcnConversao, pgnreConversao, pcnGerador;
 
 type
   TGNRE                     = class;
@@ -169,6 +172,9 @@ type
   end;
 
 implementation
+
+Uses
+  ACBrUtil;
 
 { TGNRE }
 

@@ -50,6 +50,8 @@ type
 
   TNFSeW_Infisc = class(TNFSeWClass)
   private
+    dTotBCISS: Double;
+    dTotISS: Double;
   protected
 
     procedure GerarIdentificacaoRPS; override;
@@ -128,7 +130,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'tpEmis', 01, 01, 1, TipoEmissaoToStr(NFSe.TipoEmissao), ''); // N- Normal C- Contigencia
 
   if versaoNFSe = ve100 then
-    Gerador.wCampoNFSe(tcStr, '', 'anulada', 01, 01, 1, 'N', '');
+    Gerador.wCampoNFSe(tcStr, '', 'anulada', 01, 01, 1, 'N', '')
   else begin
     if NFSe.Cancelada = snNao then
       Gerador.wCampoNFSe(tcStr, '', 'cancelada', 01, 01, 1, 'N', '')    // N- Não
@@ -260,7 +262,6 @@ procedure TNFSeW_Infisc.GerarListaServicos;
 var
   i: Integer;
   cServ, xServ: String;
-  dTotBCISS, dTotISS: Double;
 begin
   dTotBCISS := 0;
   dTotISS   := 0;

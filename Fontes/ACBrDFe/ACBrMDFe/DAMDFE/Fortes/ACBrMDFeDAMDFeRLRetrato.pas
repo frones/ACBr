@@ -87,22 +87,13 @@ type
     rllDescricao: TRLLabel;
     rllProtocolo: TRLLabel;
     rllModal: TRLLabel;
-    rlLabel6: TRLLabel;
     rlLabel5: TRLLabel;
-    rlLabel7: TRLLabel;
     rlLabel10: TRLLabel;
-    rlLabel11: TRLLabel;
     rlLabel12: TRLLabel;
-    rlShape3: TRLDraw;
     rlShape4: TRLDraw;
-    rlShape5: TRLDraw;
-    rlShape6: TRLDraw;
     rlShape7: TRLDraw;
-    rllCIOT: TRLLabel;
     rllqCTe: TRLLabel;
-    rllqCT: TRLLabel;
     rllqNFe: TRLLabel;
-    rllqNF: TRLLabel;
     rllPesoTotal: TRLLabel;
     rlb_2_Rodo: TRLBand;
     rlShape8: TRLDraw;
@@ -177,6 +168,12 @@ type
     rlmCodDescarreg: TRLMemo;
     rlmNomeCarreg: TRLMemo;
     rlmNomeDescarreg: TRLMemo;
+    RLLabel6: TRLLabel;
+    RLDraw1: TRLDraw;
+    RLDraw2: TRLDraw;
+    RLDraw3: TRLDraw;
+    rllUFDescarrega: TRLLabel;
+    RLLabel11: TRLLabel;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -309,7 +306,7 @@ begin
   begin
     rllProtocolo.Font.Size := 5;
     rllProtocolo.Font.Style := [];
-    rllProtocolo.Caption := ACBrStr('Impressão em contingência. Obrigatória a autorização em 24 horas' +
+    rllProtocolo.Caption := ACBrStr('Impressão em contingência. Obrigatória a autorização em 168 horas' +
       ' após esta impressão (') + FormatDateTimeBr(Now) + ')';
   end;
 
@@ -318,15 +315,14 @@ begin
   rllNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
   rllPageNumber.Caption := format('%2.2d', [RLMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   rllEmissao.Caption := FormatDateTimeBr(FMDFe.Ide.dhEmi);
-  rllUFCarrega.Caption := FMDFe.Ide.UFIni;
+  rllUFCarrega.Caption    := FMDFe.Ide.UFIni;
+  rllUFDescarrega.Caption := FMDFe.Ide.UFFim;
 
-  rllCIOT.Caption := '';
   // TMDFeModal = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
   case FMDFe.Ide.modal of
     moRodoviario:
     begin
       rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
-      rllCIOT.Caption := FMDFe.rodo.CIOT;
       rlb_3_Aereo.Visible := false;
       rlb_4_Aquav.Visible := false;
       rlb_5_Ferrov.Visible := false;
@@ -346,9 +342,7 @@ begin
   end;
 
   rllqCTe.Caption := FormatFloat('##0', FMDFe.tot.qCTe);
-  rllqCT.Caption := FormatFloat('##0', FMDFe.tot.qCT);
   rllqNFe.Caption := FormatFloat('##0', FMDFe.tot.qNFe);
-  rllqNF.Caption := FormatFloat('##0', FMDFe.tot.qNF);
   rllqMDFe.Caption := FormatFloat('##0', FMDFe.tot.qMDFe);
 
   // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);

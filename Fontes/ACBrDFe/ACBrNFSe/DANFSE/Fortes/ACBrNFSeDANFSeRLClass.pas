@@ -226,7 +226,7 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   end
   else begin
    NomeArq := StringReplace(NFSe.Numero,'NFSe', '', [rfIgnoreCase]);
-   NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+'.pdf';
+   NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+Trim(NFSe.IdentificacaoRps.Serie)+'-nfse.pdf';
 
    frlDANFSeRLRetrato.SavePDF( NomeArq
                              , NFSe

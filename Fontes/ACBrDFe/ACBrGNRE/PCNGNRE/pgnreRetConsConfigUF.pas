@@ -42,13 +42,20 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreRetConsConfigUF;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao,
-  pgnreRetReceita, ACBrUtil;
-
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
+  pgnreRetReceita,
+  ACBrUtil;
+(*
+ pgnreConversao;
+*)
 type
 
   TTConfigUf = class(TPersistent)

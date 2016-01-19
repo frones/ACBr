@@ -416,24 +416,26 @@ var
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
-    FNFSeW.Provedor      := Configuracoes.Geral.Provedor;
-    FNFSeW.Prefixo4      := Configuracoes.Geral.ConfigGeral.Prefixo4;
-    FNFSeW.Identificador := Configuracoes.Geral.ConfigGeral.Identificador;
-    FNFSeW.QuebradeLinha := Configuracoes.Geral.ConfigGeral.QuebradeLinha;
-    FNFSeW.URL           := Configuracoes.Geral.ConfigXML.NameSpace;
-    FNFSeW.VersaoNFSe    := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
-    FNFSeW.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
-    FNFSeW.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;
+    FNFSeW.LayOutXML := ProvedorToLayoutXML(Configuracoes.Geral.Provedor);
 
-    FNFSeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
-    FNFSeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    FNFSeW.NFSeWClass.Provedor      := Configuracoes.Geral.Provedor;
+    FNFSeW.NFSeWClass.Prefixo4      := Configuracoes.Geral.ConfigGeral.Prefixo4;
+    FNFSeW.NFSeWClass.Identificador := Configuracoes.Geral.ConfigGeral.Identificador;
+    FNFSeW.NFSeWClass.QuebradeLinha := Configuracoes.Geral.ConfigGeral.QuebradeLinha;
+    FNFSeW.NFSeWClass.URL           := Configuracoes.Geral.ConfigXML.NameSpace;
+    FNFSeW.NFSeWClass.VersaoNFSe    := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
+    FNFSeW.NFSeWClass.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
+    FNFSeW.NFSeWClass.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;
+
+    FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
+    FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
   end;
 
   FNFSeW.GerarXml;
-  XMLOriginal := FNFSeW.Gerador.ArquivoFormatoXML;
+  XMLOriginal := FNFSeW.NFSeWClass.Gerador.ArquivoFormatoXML;
   FXMLAssinado := '';
 
-  FAlertas := FNFSeW.Gerador.ListaDeAlertas.Text;
+  FAlertas := FNFSeW.NFSeWClass.Gerador.ListaDeAlertas.Text;
   Result := XMLOriginal;
 end;
 

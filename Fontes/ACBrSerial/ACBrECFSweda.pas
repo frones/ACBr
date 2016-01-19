@@ -304,7 +304,7 @@ TACBrECFSweda = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
 
     { Procedimentos de Cupom Não Fiscal }
@@ -1340,7 +1340,7 @@ begin
   EsperaEstado([estVenda]);
 end;
 
-procedure TACBrECFSweda.CancelaCupom;
+procedure TACBrECFSweda.CancelaCupom(NumCOOCancelar: Integer);
 Var Cmd, Erro : AnsiString ;
     SubTot    : Double ;
     Espera    : Integer ;

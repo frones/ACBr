@@ -1182,7 +1182,7 @@ TACBrECFClass = class
     { Para quebrar linhas nos parametros Observacao use #10 ou chr(10),
       Geralmente o ECF aceita no máximo 8 linhas }
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; virtual ;
-    Procedure CancelaCupom ; virtual ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; virtual ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; virtual ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
       Quantidade : Double) ; Virtual ; 
@@ -2699,7 +2699,7 @@ begin
   ErroAbstract('AbreCupom');
 end;
 
-procedure TACBrECFClass.CancelaCupom;
+procedure TACBrECFClass.CancelaCupom(NumCOOCancelar: Integer);
 begin
   ErroAbstract('CancelaCupom');
 end;

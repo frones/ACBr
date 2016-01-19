@@ -145,7 +145,7 @@ TACBrECFYanco = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
 
     Procedure LeituraX ; override ;
@@ -613,7 +613,7 @@ begin
   fsEmVenda := True;
 end;
 
-procedure TACBrECFYanco.CancelaCupom;
+procedure TACBrECFYanco.CancelaCupom(NumCOOCancelar: Integer);
 var RetCmd : Ansistring;
 begin
   RetCmd := EnviaComando('25');

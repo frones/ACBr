@@ -264,7 +264,7 @@ TACBrECFFiscNET = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
 
     { Procedimentos de Cupom Não Fiscal }
@@ -1076,7 +1076,7 @@ begin
   fsEmPagamento := false ;
 end;
 
-procedure TACBrECFFiscNET.CancelaCupom;
+procedure TACBrECFFiscNET.CancelaCupom(NumCOOCancelar: Integer);
 var
   Erro : string;
   CCD  : Integer ;

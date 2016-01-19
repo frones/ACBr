@@ -138,7 +138,7 @@ TACBrECFQuattro = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
 
     Procedure LeituraX ; override ;
@@ -857,7 +857,7 @@ begin
                         (Trim(Consumidor.Nome)+Trim(Consumidor.Endereco)='')
 end;
 
-procedure TACBrECFQuattro.CancelaCupom;
+procedure TACBrECFQuattro.CancelaCupom(NumCOOCancelar: Integer);
 Var RetCmd   : AnsiString ;
     Cancelou : Boolean ;
     SubTot   : Double ;

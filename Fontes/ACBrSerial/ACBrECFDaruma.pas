@@ -214,7 +214,7 @@ TACBrECFDaruma = class( TACBrECFClass )
       CodFormaPagtoEfetivar : String; const Valor: Double;
       Observacao : AnsiString = '') ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
       Quantidade : Double) ; override ; // Função implementada até o momento apenas para Daruma
@@ -2253,7 +2253,7 @@ begin
   ZeraTotalApagar;
 end;
 
-procedure TACBrECFDaruma.CancelaCupom;
+procedure TACBrECFDaruma.CancelaCupom(NumCOOCancelar: Integer);
 var
   RetCmd : String ;
   NumUltimoCupom : String ;

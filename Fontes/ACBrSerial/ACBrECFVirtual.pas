@@ -394,7 +394,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
 
     Procedure LeituraX ; override ;
     Procedure ReducaoZ(DataHora : TDateTime = 0 ) ; override ;
@@ -1582,11 +1582,13 @@ begin
   {}
 end;
 
-procedure TACBrECFVirtualClass.CancelaCupom;
+procedure TACBrECFVirtualClass.CancelaCupom(NumCOOCancelar: Integer);
 Var
   A : Integer ;
 begin
   GravaLog( ComandoLOG );
+
+  //TODO: Criar evento para recuperar dados do cupom a ser cancelado, se não for o último
 
   VerificaPodeCancelarCupom;
   try

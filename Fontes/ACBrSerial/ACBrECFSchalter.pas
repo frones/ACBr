@@ -166,7 +166,7 @@ TACBrECFSchalter = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
 
     Property CNPJ : String read GetCNPJ ;
@@ -815,7 +815,7 @@ begin
   fsDadosLeituraX := '' ;
 end;
 
-procedure TACBrECFSchalter.CancelaCupom;
+procedure TACBrECFSchalter.CancelaCupom(NumCOOCancelar: Integer);
 Var EstImp : TACBrECFEstado ;
     SubTot, TotPag : Double ;
     FPG : TACBrECFFormaPagamento ;

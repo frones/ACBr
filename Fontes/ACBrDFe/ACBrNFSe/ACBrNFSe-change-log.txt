@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/01/2016
+[*] Criado uma função que remove NameSpace da mensagem de retorno.
+    Por: Italo Jurisato Junior
+
 -- pnfsNFSeW_ABRASFv1 --
 [*] Algerado a geração do grupo <Prestador> o provedor ISSNet se utiliza do 
     layout versão 1.00 do ABRASF mas o grupo em questão tem que ser gerado 

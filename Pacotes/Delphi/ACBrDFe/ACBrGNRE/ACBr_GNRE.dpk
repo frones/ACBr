@@ -68,36 +68,41 @@ package ACBr_GNRE;
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Guia Nacional de Recolhimento de Tributos Estaduais - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
+{$DEFINE DEBUG}
 
 requires
-	vcl,
   rtl,
   designide,
+  vcl,
   xmlrtl,
-  dbrtl,
   inet,
+  dbrtl,
   soaprtl,
   ACBr_DFeComum;
 
 contains
-  ACBrGNRE2 in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE2.pas',
+  ACBrGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE.pas',
   ACBrGNREConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREConfiguracoes.pas',
   ACBrGNREGuias in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREGuias.pas',
   ACBrGNREReg in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREReg.pas',
-  ACBrGNREUtil in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREUtil.pas',
   ACBrGNREWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREWebServices.pas',
   pgnreConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConfigUF.pas',
   pgnreConsConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConsConfigUF.pas',
+  pgnreConsResLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConsResLoteGNRE.pas',
   pgnreConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConversao.pas',
   pgnreGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRE.pas',
+  pgnreGNRER in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRER.pas',
+  pgnreGNRERetorno in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRERetorno.pas',
+  pgnreGNREW in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNREW.pas',
   pgnreRetCampoAdicional in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetCampoAdicional.pas',
   pgnreRetConsConfigUF in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsConfigUF.pas',
+  pgnreRetConsResLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsResLoteGNRE.pas',
   pgnreRetDetalhamentoReceita in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetDetalhamentoReceita.pas',
+  pgnreRetEnvLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetEnvLoteGNRE.pas',
   pgnreRetPeriodoApuracao in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetPeriodoApuracao.pas',
   pgnreRetProduto in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetProduto.pas',
   pgnreRetReceita in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetReceita.pas',
   pgnreRetTipoDocumentoOrigem in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetTipoDocumentoOrigem.pas',
-  pgnreRetConsResLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsResLoteGNRE.pas',
-  pgnreRetEnvLoteGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetEnvLoteGNRE.pas';
+  ACBrGNREGuiaClass in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\ACBrGNREGuiaClass.pas';
 
 end.

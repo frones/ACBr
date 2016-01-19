@@ -18146,7 +18146,7 @@ end;
 
 function RemoverNameSpace(const AXML: String): String;
 var
-  XML: String
+  XML: String;
 begin
   XML := StringReplace(AXML, ' xmlns=""', '', [rfReplaceAll]);
   XML := StringReplace(XML, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);

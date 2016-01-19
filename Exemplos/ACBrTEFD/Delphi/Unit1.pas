@@ -661,6 +661,9 @@ end;
 
 procedure TForm1.bADMClick(Sender : TObject);
 begin
+  bCancelarResp.Visible := False;
+  fCancelado := False;
+
   VerificaECFAtivo;
 
   Memo1.Lines.Add('Inicio de ADM');
@@ -828,6 +831,7 @@ end;
 procedure TForm1.bCancelarRespClick(Sender : TObject);
 begin
    fCancelado := True ;
+   bCancelarResp.Visible := False;
 end;
 
 procedure TForm1.bPagamentoClick(Sender: TObject);
@@ -1026,6 +1030,8 @@ end;
 
 procedure TForm1.bCHQClick(Sender : TObject);
 begin
+  bCancelarResp.Visible := False;
+  fCancelado := False;
   ACBrTEFD1.CHQ( StringToFloatDef(edValorTEF.Text, 0) ,edFPGCheque.Text, ACBrECF1.NumCOO);
   MostraSaldoRestante;
 end;
@@ -1092,6 +1098,8 @@ end;
 
 procedure TForm1.bCRTClick(Sender : TObject);
 begin
+   bCancelarResp.Visible := False;
+   fCancelado := False;
    ACBrTEFD1.CRT( StringToFloatDef(edValorTEF.Text, 0) ,edFPGCartao.Text, ACBrECF1.NumCOO);
    MostraSaldoRestante;
 end;
@@ -1120,6 +1128,7 @@ begin
 
         Msg := 'Tecle "ESC" para cancelar.';
         bCancelarResp.Visible := True ;
+        fCancelado := False;
      end;
    end
   else

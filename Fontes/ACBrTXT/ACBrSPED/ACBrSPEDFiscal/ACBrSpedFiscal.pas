@@ -2182,6 +2182,30 @@ begin
                QTD_REG_BLC := Bloco_E.RegistroE310Count;
             end;
          end;
+         if Bloco_E.RegistroE311Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E311';
+               QTD_REG_BLC := Bloco_E.RegistroE311Count;
+            end;
+         end;
+         if Bloco_E.RegistroE312Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E312';
+               QTD_REG_BLC := Bloco_E.RegistroE312Count;
+            end;
+         end;
+         if Bloco_E.RegistroE313Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E313';
+               QTD_REG_BLC := Bloco_E.RegistroE313Count;
+            end;
+         end;
          if Bloco_E.RegistroE316Count > 0 then
          begin
             with New do

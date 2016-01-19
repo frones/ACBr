@@ -50,12 +50,7 @@ interface
 
 uses
   Classes, Sysutils, Dialogs, Forms,
-  ACBrGNREUtil,
-  //{$IFDEF FPC}
-     //ACBrGNREDMLaz,
-  //{$ELSE}
-     ACBrGNREGuiaClass,
-  //{$ENDIF}
+  ACBrGNREGuiaClass,
   pgnreGNRERetorno, pgnreConversao, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
@@ -99,7 +94,7 @@ type
 implementation
 
 uses
- ACBrGNRE2, ACBrUtil, ACBrDFeUtil, pcnGerador;
+ ACBrGNRE, ACBrUtil, ACBrDFeUtil, pcnGerador;
 
 { GuiaRetorno }
 

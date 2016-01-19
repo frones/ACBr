@@ -43,6 +43,8 @@
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
 
+{$I ACBr.inc}
+
 unit pgnreConsConfigUF;
 
 interface
@@ -72,7 +74,8 @@ type
 
 implementation
 
-uses StrUtils;
+uses
+  StrUtils;
 
 { TConsConfigUF }
 

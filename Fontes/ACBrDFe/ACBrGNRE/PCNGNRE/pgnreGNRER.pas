@@ -51,10 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-{$IFNDEF VER130}
-  Variants,
-{$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pgnreGNRE;
+  pcnConversao, pcnLeitor, pgnreGNRE;
 
 type
 
@@ -74,6 +71,10 @@ type
   ////////////////////////////////////////////////////////////////////////////////
 
 implementation
+
+uses
+  pcnAuxiliar, pgnreConversao,
+  ACBrConsts, ACBrUtil;
 
 { TGNRER }
 

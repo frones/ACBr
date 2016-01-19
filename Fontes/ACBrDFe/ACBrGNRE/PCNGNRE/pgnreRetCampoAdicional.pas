@@ -42,12 +42,19 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreRetCampoAdicional;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao, pgnreConfigUF, ACBrUtil;
-
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
+  pgnreConfigUF, ACBrUtil;
+(*
+ pgnreConversao;
+*)
 type
   TRetInfCampoAdicionalCollection = class;
   TRetInfCampoAdicionalCollectionItem = class;

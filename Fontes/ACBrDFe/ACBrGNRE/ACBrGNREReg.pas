@@ -74,7 +74,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBrGNRE', [TACBrGNRE]);
+  RegisterComponents('ACBrDFe', [TACBrGNRE]);
 
   RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
     TClassProperty);

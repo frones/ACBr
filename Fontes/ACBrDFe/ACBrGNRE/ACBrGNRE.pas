@@ -54,7 +54,7 @@ uses
   ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
   ACBrGNREGuiaClass,
   pgnreGNRE, pcnConversao, pgnreConversao,
-  ACBrUtil;
+  ACBrDFeUtil, ACBrUtil;
 
 //  ACBrGNREGuiasRetorno,
 
@@ -100,16 +100,16 @@ type
     function CstatConfirmada(AValue: integer): Boolean;
     function CstatProcessado(AValue: integer): Boolean;
 
-    function Enviar: Boolean;
+    function Enviar(Imprimir: Boolean = True): Boolean;
     function ConsultarResultadoLote(ANumRecibo: String): Boolean;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
-    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
+    procedure LerServicoDeParams(LayOutServico: TLayOutGNRE; var Versao: Double;
       var URL: String); reintroduce; overload;
-    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
+    function LerVersaoDeParams(LayOutServico: TLayOutGNRE): String; reintroduce; overload;
 
     function IdentificaSchema(const AXML: String): TSchemaGNRE;
-    function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
+    function GerarNomeArqSchema(const ALayOut: TLayOutGNRE; VersaoServico: Double
       ): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
@@ -161,7 +161,7 @@ begin
   try
     inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRE, NomeArq);
   finally
-    SetStatus( stIdle );
+    SetStatus( stGNREIdle );
   end;
 end;
 
@@ -189,13 +189,13 @@ procedure TACBrGNRE.SetGNREGuia(const Value: TACBrGNREGuiaClass);
 var
   OldValue: TACBrGNREGuiaClass;
 begin
-  if Value <> FACBrGNRE then
+  if Value <> FGNREGuia then
   begin
-    if Assigned(FACBrGNRE) then
-      FACBrGNRE.RemoveFreeNotification(Self);
+    if Assigned(FGNREGuia) then
+      FGNREGuia.RemoveFreeNotification(Self);
 
-    OldValue := FACBrGNRE; // Usa outra variavel para evitar Loop Infinito
-    FACBrGNRE := Value;    // na remoção da associação dos componentes
+    OldValue := FGNREGuia; // Usa outra variavel para evitar Loop Infinito
+    FGNREGuia := Value;    // na remoção da associação dos componentes
 
     if Assigned(OldValue) then
       if Assigned(OldValue.ACBrGNRE) then
@@ -245,10 +245,10 @@ begin
   Result := schGNRE;
   I := pos('<infGNRE', AXML);
   if I = 0 then
-    Result := schError;
+    Result := schErro;
 end;
 
-function TACBrGNRE.GerarNomeArqSchema(const ALayOut: TLayOut;
+function TACBrGNRE.GerarNomeArqSchema(const ALayOut: TLayOutGNRE;
   VersaoServico: Double): String;
 var
   NomeServico, NomeSchema, ArqSchema: String;
@@ -277,23 +277,23 @@ begin
   FPConfiguracoes := AValue;
 end;
 
-function TACBrGNRE.LerVersaoDeParams(LayOutServico: TLayOut): String;
+function TACBrGNRE.LerVersaoDeParams(LayOutServico: TLayOutGNRE): String;
 var
   Versao: Double;
 begin
   Versao := LerVersaoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
-    VersaoDFToDbl(Configuracoes.Geral.VersaoDF));
+    VersaoGNREToDbl(Configuracoes.Geral.VersaoDF));
 
   Result := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TACBrGNRE.LerServicoDeParams(LayOutServico: TLayOut;
+procedure TACBrGNRE.LerServicoDeParams(LayOutServico: TLayOutGNRE;
   var Versao: Double; var URL: String);
 var
   AUF: String;
 begin
-  Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
+  Versao := VersaoGNREToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
   AUF := Configuracoes.WebServices.UF;
 
@@ -318,16 +318,18 @@ end;
 function TACBrGNRE.NomeServicoToNomeSchema(const NomeServico: String): String;
 Var
   ok: Boolean;
-  ALayout: TLayOut;
+  ALayout: TLayOutGNRE;
 begin
   ALayout := ServicoToLayOut(ok, NomeServico);
   if ok then
-    Result := SchemaNFeToStr( LayOutToSchema( ALayout ) )
+    Result := SchemaGNREToStr( LayOutToSchema( ALayout ) )
   else
     Result := '';
 end;
 
-function TACBrGNRE.Enviar: Boolean;
+function TACBrGNRE.Enviar(Imprimir: Boolean): Boolean;
+var
+  i: Integer;
 begin
   if Guias.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma GNRE adicionada ao Lote'));
@@ -338,12 +340,12 @@ begin
 
   Result := WebServices.Envia;
 
-  if FGNREGuias <> nil then
+  if FGNREGuia <> nil then
   begin
     for i := 0 to Guias.Count - 1 do
     begin
       if Guias.Items[i].Confirmada and Imprimir then
-        Guais.Items[i].Imprimir;
+        Guias.Items[i].Imprimir;
     end;
   end;
 

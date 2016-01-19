@@ -43,11 +43,16 @@
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
 
+{$I ACBr.inc}
+
 unit pgnreRetTipoDocumentoOrigem;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao, pgnreConfigUF;
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
+  pgnreConfigUF;
+// pgnreConversao;
 
 type
   TRetInfTipoDocumentoOrigemCollection = class;

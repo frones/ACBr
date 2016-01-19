@@ -42,14 +42,22 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreRetReceita;
 
 interface
 
-uses SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao, pgnreConfigUF,
-  pgnreRetDetalhamentoReceita, pgnreRetProduto, pgnreRetPeriodoApuracao, pgnreRetTipoDocumentoOrigem,
-  pgnreRetCampoAdicional, ACBrUtil;
-
+uses
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
+  pgnreConfigUF, pgnreRetDetalhamentoReceita, pgnreRetProduto,
+  pgnreRetPeriodoApuracao, pgnreRetTipoDocumentoOrigem,
+  pgnreRetCampoAdicional,
+  ACBrUtil;
+(*
+ pgnreConversao;
+*)
 type
   TRetInfReceitaCollection = class;
   TRetInfReceitaCollectionItem = class;

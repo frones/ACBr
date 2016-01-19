@@ -42,6 +42,9 @@
 |* 09/12/2013 - Claudemir Vitor Pereira
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pgnreConsResLoteGNRE;
 
 interface

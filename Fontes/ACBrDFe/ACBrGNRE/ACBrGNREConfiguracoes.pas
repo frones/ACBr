@@ -58,15 +58,15 @@ type
 
   TGeralConfGNRE = class(TGeralConf)
   private
-    FVersaoDF: TpcnVersaoDF;
+    FVersaoDF: TVersaoGNRE;
 
-    procedure SetVersaoDF(const Value: TpcnVersaoDF);
+    procedure SetVersaoDF(const Value: TVersaoGNRE);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfGNRE: TGeralConfGNRE); overload;
 
   published
-    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve100;
+    property VersaoDF: TVersaoGNRE read FVersaoDF write SetVersaoDF default ve100;
   end;
 
   { TArquivosConfGNRE }
@@ -132,7 +132,7 @@ begin
   VersaoDF := DeGeralConfGNRE.VersaoDF;
 end;
 
-procedure TGeralConfGNRE.SetVersaoDF(const Value: TpcnVersaoDF);
+procedure TGeralConfGNRE.SetVersaoDF(const Value: TVersaoGNRE);
 begin
   FVersaoDF := Value;
 end;

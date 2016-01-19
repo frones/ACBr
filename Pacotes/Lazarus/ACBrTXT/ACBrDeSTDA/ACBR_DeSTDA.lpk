@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrDeSTDA"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDeSTDA\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrDeSTDA\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - DeSTDA - (http://www.projetoacbr.com.br/)

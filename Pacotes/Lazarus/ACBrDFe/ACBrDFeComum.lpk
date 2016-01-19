@@ -9,7 +9,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrCapicom;..\..\..\Fontes\Terceiros\JediWin32API"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFeComum\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

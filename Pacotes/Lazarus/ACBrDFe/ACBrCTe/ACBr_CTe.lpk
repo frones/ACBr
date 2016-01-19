@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>

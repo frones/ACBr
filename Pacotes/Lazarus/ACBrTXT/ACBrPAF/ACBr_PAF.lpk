@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrPAF\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrPAF\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)"/>

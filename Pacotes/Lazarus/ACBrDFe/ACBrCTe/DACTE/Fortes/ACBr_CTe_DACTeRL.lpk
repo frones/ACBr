@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes"/>
-        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrCTe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)"/>

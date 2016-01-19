@@ -3,103 +3,97 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_GNRE"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerMessages>
-          <MsgFileName Value=""/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Guia Nacional de Recolhimento de Tributos Estaduais - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Files Count="19">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNRE2.pas"/>
-        <UnitName Value="ACBrGNRE2"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE.pas"/>
+        <UnitName Value="ACBrGNRE"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREConfiguracoes.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREConfiguracoes.pas"/>
         <UnitName Value="ACBrGNREConfiguracoes"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREGuias.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREGuias.pas"/>
         <UnitName Value="ACBrGNREGuias"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREReg.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrGNREReg"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREUtil.pas"/>
-        <UnitName Value="ACBrGNREUtil"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConsResLoteGNRE.pas"/>
+        <UnitName Value="pgnreConsResLoteGNRE"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREWebServices.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREWebServices.pas"/>
         <UnitName Value="ACBrGNREWebServices"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreConfigUF.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConfigUF.pas"/>
         <UnitName Value="pgnreConfigUF"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreConsConfigUF.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConsConfigUF.pas"/>
         <UnitName Value="pgnreConsConfigUF"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreConversao.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreConversao.pas"/>
         <UnitName Value="pgnreConversao"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreGNRE.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRE.pas"/>
         <UnitName Value="pgnreGNRE"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetCampoAdicional.pas"/>
-        <UnitName Value="pgnreRetCampoAdicional"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRER.pas"/>
+        <UnitName Value="pgnreGNRER"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetConsConfigUF.pas"/>
-        <UnitName Value="pgnreRetConsConfigUF"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNRERetorno.pas"/>
+        <UnitName Value="pgnreGNRERetorno"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetDetalhamentoReceita.pas"/>
-        <UnitName Value="pgnreRetDetalhamentoReceita"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreGNREW.pas"/>
+        <UnitName Value="pgnreGNREW"/>
       </Item13>
       <Item14>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetPeriodoApuracao.pas"/>
-        <UnitName Value="pgnreRetPeriodoApuracao"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetCampoAdicional.pas"/>
+        <UnitName Value="pgnreRetCampoAdicional"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetProduto.pas"/>
-        <UnitName Value="pgnreRetProduto"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsConfigUF.pas"/>
+        <UnitName Value="pgnreRetConsConfigUF"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetReceita.pas"/>
-        <UnitName Value="pgnreRetReceita"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetConsResLoteGNRE.pas"/>
+        <UnitName Value="pgnreRetConsResLoteGNRE"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetTipoDocumentoOrigem.pas"/>
-        <UnitName Value="pgnreRetTipoDocumentoOrigem"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetDetalhamentoReceita.pas"/>
+        <UnitName Value="pgnreRetDetalhamentoReceita"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetConsResLoteGNRE.pas"/>
-        <UnitName Value="pgnreRetConsResLoteGNRE"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetEnvLoteGNRE.pas"/>
+        <UnitName Value="pgnreRetEnvLoteGNRE"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\pgnreRetEnvLoteGNRE.pas"/>
-        <UnitName Value="pgnreRetEnvLoteGNRE"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetPeriodoApuracao.pas"/>
+        <UnitName Value="pgnreRetPeriodoApuracao"/>
       </Item19>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

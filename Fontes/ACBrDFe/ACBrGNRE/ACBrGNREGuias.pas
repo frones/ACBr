@@ -325,7 +325,7 @@ begin
 
   with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    AssEhValida := SSL.VerificarAssinatura(AXML, Erro{, 'infGNRE'});
+    //AssEhValida := SSL.VerificarAssinatura(AXML, Erro{, 'infGNRE'});
 
     if not AssEhValida then
     begin

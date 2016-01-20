@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrGNRE;..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE;..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>

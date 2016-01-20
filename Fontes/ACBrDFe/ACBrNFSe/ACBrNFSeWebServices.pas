@@ -919,6 +919,8 @@ begin
       if FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NFSeCancelamento.DataHora > 0 then
         FNotasFiscais.Items[ii].NFSe.Cancelada := snSim;
 
+      FNotasFiscais.Items[ii].NFSe.NfseSubstituidora := FRetornoNFSe.ListaNfse.CompNfse.Items[i].NFSe.NfseSubstituidora;
+
       FRetNFSe := GerarRetornoNFSe(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML);
 
       if FPConfiguracoesNFSe.Arquivos.EmissaoPathNFSe then

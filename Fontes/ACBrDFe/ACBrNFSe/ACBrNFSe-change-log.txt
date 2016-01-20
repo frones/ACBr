@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2016
+-- ACBrNFSeWebServices --
+[*] Incluido a linha para ler a propriedade NfseSubstituidora.
+-- pnfsNFSeR --
+[*] Incluido a leitura da TAG <NfseSubstituidora>.
+    Por: Everson Torossi / Italo Jurisato Junior
+
 19/01/2016
 [*] Criado uma função que remove NameSpace da mensagem de retorno.
     Por: Italo Jurisato Junior

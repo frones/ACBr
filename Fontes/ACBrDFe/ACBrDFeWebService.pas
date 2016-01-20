@@ -312,10 +312,11 @@ begin
     Tentar := False;
     Tratado := False;
 
-    if FPConfiguracoes.Certificados.VerificarValidade and
-       (FPDFeOwner.SSL.CertDataVenc < Now) then
-      raise EACBrDFeException.Create('Data de Validade do Certificado já expirou: '+
-                                     FormatDateBr(FPDFeOwner.SSL.CertDataVenc));
+    if (FPConfiguracoes.Certificados.NumeroSerie <> '') then  // Tem Certificado carregado ?
+      if FPConfiguracoes.Certificados.VerificarValidade then
+         if (FPDFeOwner.SSL.CertDataVenc < Now) then
+           raise EACBrDFeException.Create('Data de Validade do Certificado já expirou: '+
+                                          FormatDateBr(FPDFeOwner.SSL.CertDataVenc));
 
     try
       FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);

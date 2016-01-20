@@ -95,8 +95,11 @@ var
   PCertContext: Pointer;
   ContentHeader: String;
 begin
-  CertContext := Certificado as ICertContext;
-  CertContext.Get_CertContext(integer(PCertContext));
+  if (FpDFeSSL.UseCertificate) then
+  begin
+    CertContext := Certificado as ICertContext;
+    CertContext.Get_CertContext(integer(PCertContext));
+  end;
 
   with FpDFeSSL do
   begin

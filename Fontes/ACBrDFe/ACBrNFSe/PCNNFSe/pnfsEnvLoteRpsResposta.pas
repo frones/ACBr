@@ -219,9 +219,7 @@ begin
   Result := True;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
-    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
     Leitor.Grupo   := Leitor.Arquivo;
 
     infRec.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');

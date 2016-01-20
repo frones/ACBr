@@ -126,19 +126,20 @@ end;
 procedure TNFSeW_ABRASFv1.GerarPrestador;
 begin
   Gerador.wGrupoNFSe('Prestador');
-(*
-  if ((VersaoNFSe = ve100) and not (FProvedor <> proISSNet)) or (FProvedor = proNFSeBrasil) then
-    Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), '')
-  else begin
-    Gerador.wGrupoNFSe('CpfCnpj');
-    if length(OnlyNumber(NFSe.Prestador.Cnpj)) <= 11 then
-      Gerador.wCampoNFSe(tcStr, '#34', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Prestador.Cnpj), '')
-    else
-      Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
-    Gerador.wGrupoNFSe('/CpfCnpj');
+
+  case FProvedor of
+    proISSNet: begin
+                 Gerador.wGrupoNFSe('CpfCnpj');
+                 if length(OnlyNumber(NFSe.Prestador.Cnpj)) <= 11 then
+                   Gerador.wCampoNFSe(tcStr, '#34', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Prestador.Cnpj), '')
+                 else
+                   Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
+                 Gerador.wGrupoNFSe('/CpfCnpj');
+               end;
+  else
+    Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
   end;
-*)
-  Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
+
   Gerador.wCampoNFSe(tcStr, '#35', 'InscricaoMunicipal', 01, 15, 0, NFSe.Prestador.InscricaoMunicipal, '');
 
   Gerador.wGrupoNFSe('/Prestador');

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2015
+[+] Impressão DANFE: Adicionado ajuste para Fonte do Endereço Emitente
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27521
+
 18/01/2015
 [-] Correções para o envio de Boletos por Email, fazendo uso de rotina interna
     do componente ACBrBoleto  (por: DSA)

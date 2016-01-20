@@ -52,11 +52,9 @@ uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
-  ACBrGNREGuiaClass,
+  ACBrGNREGuiasRetorno, ACBrGNREGuiaClass,
   pgnreGNRE, pcnConversao, pgnreConversao,
   ACBrDFeUtil, ACBrUtil;
-
-//  ACBrGNREGuiasRetorno,
 
 const
   ACBRGNRE_VERSAO = '1.0.0a';
@@ -74,7 +72,7 @@ type
     FGNREGuia: TACBrGNREGuiaClass;
 
     FGuias: TGuias;
-//    FGuiasRetorno: TGuiasRetorno;
+    FGuiasRetorno: TGuiasRetorno;
     FStatus: TStatusACBrGNRE;
     FWebServices: TWebServices;
 
@@ -114,7 +112,7 @@ type
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Guias: TGuias read FGuias write FGuias;
-//    property GuiasRetorno: TGuiasRetorno read FGuiasRetorno write FGuiasRetorno;
+    property GuiasRetorno: TGuiasRetorno read FGuiasRetorno write FGuiasRetorno;
     property Status: TStatusACBrGNRE read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrGNRE);

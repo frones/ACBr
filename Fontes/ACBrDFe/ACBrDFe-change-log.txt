@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2015
+-- ACBrDFeWebService --
+[*] Ajuste para não tentar verificar a validade do Certificado, se não há
+    certificado informado.
+-- ACBrDFeCapicomDelphiSoap --
+[*] Ajuste para considerar a propriedade "DFeSSL.UseCertificate", e não atribuir
+    o Certificado na conexão se a mesma for "False"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27492
+
 05/01/2016
 -- ACBrDFe --
 [*] Ajuste para melhor exibição de erros em "LerServicoDeParams" (por: DSA)

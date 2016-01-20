@@ -297,6 +297,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetHorarioVerao: Boolean; override ;
 
     function GetParamDescontoISSQN: Boolean; override;
+    function GetTipoUltimoDocumento : TACBrECFTipoDocumento ; override ;
 
     { TODO (não encontrado): function GetTipoUltimoDocumento : TACBrECFTipoDocumento ; override ; }
  public
@@ -375,7 +376,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     { Para quebrar linhas nos parametros Observacao use #10 ou chr(10),
       Geralmente o ECF aceita no máximo 8 linhas }
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
     procedure CancelaItemVendidoParcial( NumItem : Integer; Quantidade : Double) ; override ;
     procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; override ;
@@ -393,7 +394,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure Suprimento( const Valor: Double; Obs : AnsiString;
        DescricaoCNF: String; DescricaoFPG: String; IndiceBMP: Integer ) ; override ;
 
-    Function EstornaCCD( const Todos: Boolean = True) : Integer; override ;
+    Function EstornaCCD( const Todos: Boolean = True) : Integer; overload; override;
+    Function EstornaCCD( NumCupomFiscal: Integer; ADiante: Boolean = True ) : Integer; overload;
 
     { Gaveta de dinheiro }
     Procedure AbreGaveta  ; override ;
@@ -1980,6 +1982,33 @@ begin
   Result := True; // ESCEcf sempre permite Desconto de ISSQN
 end ;
 
+function TACBrECFEscECF.GetTipoUltimoDocumento: TACBrECFTipoDocumento;
+begin
+  if IsEpson then
+  begin
+    RetornaInfoECF( '99|09' );
+
+    case StrToIntDef(EscECFResposta.Params[0],0) of
+      01: Result := docCF;
+      02: Result := docRZ;
+      03: Result := docLX;
+      05: Result := docLMF;
+      22: Result := docCupomAdicional;
+      23: Result := docCFCancelamento;
+      24: Result := docCNF;
+      25: Result := docCNFCancelamento;
+      26: Result := docEstornoPagto;
+      27: Result := docCCD;
+      28: Result := docEstornoCCD;
+      29: Result := docRG;
+    else
+       Result := docNenhum;
+    end;
+  end
+  else
+    Result := inherited GetTipoUltimoDocumento;
+end;
+
 procedure TACBrECFEscECF.LeituraX ;
 begin
   EscECFComando.CMD := 20;
@@ -2592,10 +2621,13 @@ begin
   SalvaRespostasMemoria(False);
 end;
 
-procedure TACBrECFEscECF.CancelaCupom;
+procedure TACBrECFEscECF.CancelaCupom(NumCOOCancelar: Integer);
 var
-   UltimoCOO: Integer;
+   UltimoCOO, NumCCDEstornado: Integer;
    Est: TACBrECFEstado;
+   TipoUltDocto: TACBrECFTipoDocumento;
+   EhUltimoCupom: Boolean;
+   TentarEstornarCCDAnteriores, TentarEstornarCCDSeguintes: Boolean;
 begin
   RespostasComando.Clear;
   Est := TACBrECF( fpOwner ).Estado;
@@ -2620,29 +2652,62 @@ begin
       end;
   else
     begin
-      // Tenta cancelar todos os CCDs anteriores, gera exceção muda se não for CCD
+      NumCCDEstornado := 0;
       UltimoCOO := StrToInt( TACBrECF( fpOwner ).NumCOO );
+      EhUltimoCupom := (NumCOOCancelar = 0) or (UltimoCOO = NumCOOCancelar);
+
+      if EhUltimoCupom then
+      begin
+        TipoUltDocto := TACBrECF( fpOwner ).TipoUltimoDocumento;
+        if TipoUltDocto = docCCD then
+        begin
+          NumCCDEstornado := EstornaCCD( UltimoCOO, False );   // Estorna CCD para trás
+          UltimoCOO := UltimoCOO - NumCCDEstornado;
+        end;
+      end
+      else
+        UltimoCOO := NumCOOCancelar;
+
       try
-        repeat
-           with EscECFComando do
-           begin
-             CMD := 13;
-             AddParamInteger( UltimoCOO ) ;
-             AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
-             AddParamString(LeftStr(Consumidor.Nome,30)) ;
-             AddParamString(LeftStr(Consumidor.Endereco,79)) ;
-           end ;
-           EnviaComando;
-           FechaRelatorio;
-
-           Dec( UltimoCOO );
-        until UltimoCOO < 1;
+        EscECFComando.CMD := 7;
+        EscECFComando.AddParamInteger( UltimoCOO );
+        EnviaComando;
       except
-      end ;
+        on E: Exception do
+        begin
 
-      EscECFComando.CMD := 7;
-      EscECFComando.AddParamInteger( UltimoCOO );
-      EnviaComando;
+          TentarEstornarCCDSeguintes :=  // Erro específico de Cancelamento por Falta de Cancelamento de CCD //
+                         ((EscECFResposta.CAT = 05) and (EscECFResposta.RET.ECF = 10)) or
+             (IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 21));
+
+          TentarEstornarCCDAnteriores :=  // Erro genérico de Cancelamento //
+             (not TentarEstornarCCDSeguintes) and
+             ((IsBematech and (EscECFResposta.CAT = 02) and (EscECFResposta.RET.ECF = 02)) or
+              (IsEpson    and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 18)));
+
+          if TentarEstornarCCDAnteriores then
+          begin
+            try
+              NumCCDEstornado := EstornaCCD( UltimoCOO, False);   // Estorna CCD para trás
+              UltimoCOO := UltimoCOO - NumCCDEstornado;
+            except
+            end;
+          end;
+
+          if TentarEstornarCCDSeguintes then
+          begin
+            try
+              NumCCDEstornado := EstornaCCD(UltimoCOO+1, True);  // Estorna CCD para frente
+            except
+            end;
+          end;
+
+          if NumCCDEstornado > 0 then
+            CancelaCupom(UltimoCOO)
+          else
+            raise;
+        end;
+      end ;
     end;
   end;
 
@@ -3649,18 +3714,30 @@ end;
 
 function TACBrECFEscECF.EstornaCCD(const Todos: Boolean): Integer;
 var
-   UltimoCOO, AtualCOO: Integer;
+   UltimoCOO: Integer;
 begin
   Result := 0 ;
   UltimoCOO := StrToInt( TACBrECF( fpOwner ).NumCOO );
-  AtualCOO  := UltimoCOO;
+  EstornaCCD( UltimoCOO, False );
+  Consumidor.Enviado := True ;
+  fsEmPagamento := false ;
+end;
+
+function TACBrECFEscECF.EstornaCCD(NumCupomFiscal: Integer; ADiante: Boolean
+  ): Integer;
+var
+   ProximoCOO: Integer;
+begin
+  Result := 0 ;
+  ProximoCOO := NumCupomFiscal;
 
   try
-    repeat
+    while True do
+    begin
       with EscECFComando do
       begin
         CMD := 13;
-        AddParamInteger( UltimoCOO ) ;
+        AddParamInteger( ProximoCOO ) ;
         AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
         AddParamString(LeftStr(Consumidor.Nome,30)) ;
         AddParamString(LeftStr(Consumidor.Endereco,79)) ;
@@ -3677,15 +3754,17 @@ begin
 
       FechaRelatorio;
 
-      Dec( UltimoCOO );
-    until not Todos;
+      Inc( Result );
+
+      if ADiante then
+        Inc( ProximoCOO )
+      else
+        Dec( ProximoCOO );
+    end;
   except
-    if UltimoCOO = AtualCOO then  // Não cancelou nada ?
+    if Result = 0 then  // Não cancelou nada ?
       raise;
   end ;
-
-  Consumidor.Enviado := True ;
-  fsEmPagamento := false ;
 end;
 
 function TACBrECFEscECF.GetTotalAcrescimos: Double;

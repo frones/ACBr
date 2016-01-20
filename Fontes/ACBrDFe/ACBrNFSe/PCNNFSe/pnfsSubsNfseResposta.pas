@@ -244,7 +244,7 @@ begin
   Result := True;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'SubstituirNfseResposta') <> '') then

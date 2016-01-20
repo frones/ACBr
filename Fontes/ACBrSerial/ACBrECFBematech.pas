@@ -522,7 +522,7 @@ TACBrECFBematech = class( TACBrECFClass )
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; override ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    Procedure CancelaCupom ; override ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
 
     { Procedimentos de Cupom Não Fiscal }
@@ -1578,7 +1578,7 @@ begin
   fsTotalPago := 0 ;
 end;
 
-procedure TACBrECFBematech.CancelaCupom;
+procedure TACBrECFBematech.CancelaCupom(NumCOOCancelar: Integer);
  Var RetCmd : AnsiString ;
      B      : Byte ;
      TemRel : Boolean ;
@@ -3567,7 +3567,7 @@ end;
 procedure TACBrECFBematech.AbrePortaSerialDLL(const aPath: String);
 Var
   Resp : Integer ;
-  aPorta, IniFile : String ;
+  aPorta, PathIni, IniFile : String ;
 
   {$IFDEF MSWINDOWS}
   procedure ConfiguraBemaFI32ini(const aPorta, aPath : String ) ;
@@ -3582,6 +3582,12 @@ Var
        Ini.WriteString('Sistema','ControlePorta','1') ;
        if aPath <> '' then
           Ini.WriteString('Sistema','Path',aPath ) ;
+
+       if TACBrECF(fpOwner).Modelo = ecfEscECF then
+         Ini.WriteInteger('Sistema','ProtocoloUnico', 1)
+       else
+         Ini.WriteInteger('Sistema','ProtocoloUnico', 0) ;
+
     finally
        Ini.Free ;
     end ;
@@ -3596,11 +3602,16 @@ begin
   Sleep( 300 ) ;
 
   {$IFDEF MSWINDOWS}
+   PathIni := ExtractFilePath( PathDLL );
+   if PathIni = '' then
+     PathIni := ApplicationPath;
+
    {$IFDEF CPU64}
-    IniFile := ExtractFilePath( PathDLL )+'BemaFi64.INI' ;
+    IniFile := PathIni+'BemaFi64.INI' ;
    {$ELSE}
-    IniFile := ExtractFilePath( PathDLL )+'BemaFi32.INI' ;
+    IniFile := PathIni+'BemaFi32.INI' ;
    {$ENDIF}
+
    if FileExists( IniFile ) then
       ConfiguraBemaFI32ini(aPorta, aPath);
   {$ENDIF}

@@ -683,7 +683,7 @@ TACBrECF = class( TACBrComponent )
       CodFormaPagtoEfetivar : String; Valor: Double;
       Observacao : AnsiString = '') ;
     Procedure FechaCupom( Observacao : AnsiString = ''; IndiceBMP : Integer  = 0) ;
-    Procedure CancelaCupom ;
+    Procedure CancelaCupom( NumCOOCancelar: Integer = 0) ;
     Procedure CancelaItemVendido( NumItem : Integer ) ;
     procedure CancelaItemVendidoParcial( NumItem : Integer; Quantidade : Double);
     procedure CancelaDescontoAcrescimoItem( NumItem : Integer);
@@ -2576,7 +2576,7 @@ begin
   Result := fsECF.Consumidor ;
 end;
 
-procedure TACBrECF.CancelaCupom;
+procedure TACBrECF.CancelaCupom(NumCOOCancelar: Integer);
   Var Docto     : String ;
       OldEstado : TACBrECFEstado ;
       SubTot    : Double ;
@@ -2606,7 +2606,7 @@ begin
 
   try
     Tratado := False;
-    fsECF.CancelaCupom ;
+    fsECF.CancelaCupom( NumCOOCancelar ) ;
   except
      if Assigned( FOnErrorCancelaCupom ) then
         FOnErrorCancelaCupom(Tratado);

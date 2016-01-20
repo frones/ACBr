@@ -611,18 +611,18 @@ end;
 *)
 procedure TGNRERetRecepcao.DefinirDadosMsg;
 var
-  ConsReciGNRE: TConsReciGNRE;
+  ConsResLoteGNRE: TConsResLoteGNRE;
 begin
-  ConsReciGNRE := TConsReciGNRE.Create;
-  try
-    ConsReciGNRE.Ambiente := FAmbiente;
-    ConsReciGNRE.numeroRecibo := FnumeroRecibo;
-    ConsReciGNRE.GerarXML;
+  ConsResLoteGNRE := TConsResLoteGNRE.Create;
+	try
+		ConsResLoteGNRE.Ambiente     := FAmbiente;
+		ConsResLoteGNRE.numeroRecibo := FnumeroRecibo;
+		ConsResLoteGNRE.GerarXML;
 
-    FPDadosMsg := ConsReciGNRE.Gerador.ArquivoFormatoXML;
-  finally
-    ConsReciGNRE.Free;
-  end;
+		FPDadosMsg := ConsResLoteGNRE.Gerador.ArquivoFormatoXML;
+	finally
+		ConsResLoteGNRE.Free;
+	end;
 end;
 
 procedure TGNRERetRecepcao.DefinirServicoEAction;
@@ -634,25 +634,19 @@ end;
 
 procedure TGNRERetRecepcao.DefinirURL;
 var
-  xUF: String;
   VerServ: Double;
   ok: Boolean;
-  Modelo: TpcnModeloDF;
 begin
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloDF(ok, IntToStr(FGuias.Items[0].GNRE.Ide.modelo));
-    FcUF    := FGuias.Items[0].GNRE.Ide.cUF;
-    VerServ := FGuias.Items[0].GNRE.infGNRE.Versao;
+    VerServ := 1.00;
 
-    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
-      raise EACBrGNREException.Create( CErroAmbienteDiferente );
+//    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
+//      raise EACBrGNREException.Create( CErroAmbienteDiferente );
   end
   else
   begin                   // Se não tem GNRE, use as configurações do componente
-    Modelo  := FPConfiguracoesGNRE.Geral.ModeloDF;
-    FcUF    := FPConfiguracoesGNRE.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+    VerServ := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   end;
 
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
@@ -660,11 +654,9 @@ begin
   FPURL := '';
   FPLayout := LayGNRERetRecepcao;
 
-  xUF := CUFtoUF(FcUF);
-
   TACBrGNRE(FPDFeOwner).LerServicoDeParams(
-    ModeloDFToPrefixo(Modelo),
-    xUF,
+    'GNRE',
+    'PE',
     FAmbiente,
     LayOutToServico(FPLayout),
     VerServ,
@@ -709,20 +701,12 @@ end;
 function TGNRERetRecepcao.GerarMsgLog: String;
 begin
   {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
+  Result := Format(ACBrStr('Ambiente: %s ' + LineBreak +
                            'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'cMsg: %s ' + LineBreak +
-                           'xMsg: %s ' + LineBreak),
-                   [FGNRERetorno.versao, TpAmbToStr(FGNRERetorno.Ambiente),
-                    FGNRERetorno.verAplic, FGNRERetorno.nRec,
-                    IntToStr(FGNRERetorno.cStat), FGNRERetorno.xMotivo,
-                    CodigoParaUF(FGNRERetorno.cUF), IntToStr(FGNRERetorno.cMsg),
-                    FGNRERetorno.xMsg]);
+                           'Status Descrição: %s ' + LineBreak),
+                   [TpAmbToStr(FGNRERetorno.Ambiente),
+                    IntToStr(FGNRERetorno.codigo),
+                    FGNRERetorno.descricao]);
   {*)}
 end;
 
@@ -733,7 +717,7 @@ end;
 
 function TGNRERetRecepcao.GetRecibo: String;
 begin
-  Result := Trim(FRecibo);
+  Result := Trim(numeroRecibo);
 end;
 
 function TGNRERetRecepcao.TratarResposta: Boolean;
@@ -755,12 +739,12 @@ end;
 function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: Integer;
-  AProcGNRE: TProcGNRE;
-  AInfProt: TProtGNRECollection;
+//  AProcGNRE: TProcGNRE;
+//  AInfProt: TProtGNRECollection;
   SalvarXML: Boolean;
 begin
   Result := False;
-
+  (*
   AInfProt := FGNRERetorno.ProtGNRE;
 
   if (AInfProt.Count > 0) then
@@ -838,7 +822,7 @@ begin
       end;
     end;
   end;
-
+  *)
 
 (*
 function TWebServicesBase.Confirma(AResultado: String): Boolean;
@@ -908,16 +892,16 @@ end;
   for I := 0 to FGuias.Count - 1 do
   begin
     if not FGuias.Items[I].Confirmada then
-      FPMsg := FPMsg + IntToStr(FGuias.Items[I].GNRE.Ide.nNF) +
+      FPMsg := FPMsg + IntToStr(FGuias.Items[I].GNRE.c02_receita) +
         '->' + FGuias.Items[I].Msg + LineBreak;
   end;
 
-  if AInfProt.Count > 0 then
-  begin
-    FChaveGNRE := AInfProt.Items[0].chGNRE;
-    FProtocolo := AInfProt.Items[0].nProt;
-    FcStat := AInfProt.Items[0].cStat;
-  end;
+//  if AInfProt.Count > 0 then
+//  begin
+//    FChaveGNRE := AInfProt.Items[0].chGNRE;
+//    FProtocolo := AInfProt.Items[0].nProt;
+//    FcStat := AInfProt.Items[0].cStat;
+//  end;
 end;
 
 { TGNRERecibo }
@@ -971,25 +955,19 @@ end;
 
 procedure TGNRERecibo.DefinirURL;
 var
-  xUF: String;
   VerServ: Double;
   ok: Boolean;
-  Modelo: TpcnModeloDF;
 begin
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloDF(ok, IntToStr(FGuias.Items[0].GNRE.Ide.modelo));
-    FcUF    := FGuias.Items[0].GNRE.Ide.cUF;
-    VerServ := FGuias.Items[0].GNRE.infGNRE.Versao;
+    VerServ := 1.00;;
 
-    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
-      raise EACBrGNREException.Create( CErroAmbienteDiferente );
+//    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
+//      raise EACBrGNREException.Create( CErroAmbienteDiferente );
   end
   else
   begin                   // Se não tem GNRE, use as configurações do componente
-    Modelo  := FPConfiguracoesGNRE.Geral.ModeloDF;
-    FcUF    := FPConfiguracoesGNRE.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+    VerServ := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   end;
 
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
@@ -998,11 +976,9 @@ begin
 
   FPLayout := LayGNRERetRecepcao;
 
-  xUF := CUFtoUF(FcUF);
-
   TACBrGNRE(FPDFeOwner).LerServicoDeParams(
-    ModeloDFToPrefixo(Modelo),
-    xUF,
+    'GNRE',
+    'PE',
     FAmbiente,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1048,18 +1024,12 @@ end;
 function TGNRERecibo.GerarMsgLog: String;
 begin
   {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
+  Result := Format(ACBrStr('Ambiente: %s ' + LineBreak +
                            'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak),
-                   [FGNRERetorno.versao, TpAmbToStr(FGNRERetorno.Ambiente),
-                   FGNRERetorno.verAplic, FGNRERetorno.nRec,
-                   IntToStr(FGNRERetorno.codigo),
-                   FGNRERetorno.descricao,
-                   CodigoParaUF(FGNRERetorno.cUF)]);
+                           'Status Descrição: %s ' + LineBreak),
+                   [TpAmbToStr(FGNRERetorno.Ambiente),
+                    IntToStr(FGNRERetorno.codigo),
+                    FGNRERetorno.descricao]);
   {*)}
 end;
 
@@ -1141,38 +1111,19 @@ end;
 
 procedure TGNREConsultaUF.DefinirURL;
 var
-  xUF: String;
   VerServ: Double;
   ok: Boolean;
-  Modelo: TpcnModeloDF;
 begin
-  if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
-  begin
-    Modelo  := StrToModeloDF(ok, IntToStr(FGuias.Items[0].GNRE.Ide.modelo));
-    FcUF    := FGuias.Items[0].GNRE.Ide.cUF;
-    VerServ := FGuias.Items[0].GNRE.infGNRE.Versao;
-
-    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items[0].GNRE.Ide.Ambiente then
-      raise EACBrGNREException.Create( CErroAmbienteDiferente );
-  end
-  else
-  begin                   // Se não tem GNRE, use as configurações do componente
-    Modelo  := FPConfiguracoesGNRE.Geral.ModeloDF;
-    FcUF    := FPConfiguracoesGNRE.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
-  end;
-
+  VerServ := 1.00;
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
 
   FPLayout := LayGNRERetRecepcao;
 
-  xUF := CUFtoUF(FcUF);
-
   TACBrGNRE(FPDFeOwner).LerServicoDeParams(
-    ModeloDFToPrefixo(Modelo),
-    xUF,
+    'GNRE',
+    'PE',
     FAmbiente,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1207,18 +1158,12 @@ end;
 function TGNREConsultaUF.GerarMsgLog: String;
 begin
   {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
+  Result := Format(ACBrStr('Ambiente: %s ' + LineBreak +
                            'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak),
-                   [FGNRERetorno.versao, TpAmbToStr(FGNRERetorno.Ambiente),
-                   FGNRERetorno.verAplic, FGNRERetorno.nRec,
-                   IntToStr(FGNRERetorno.codigo),
-                   FGNRERetorno.descricao,
-                   CodigoParaUF(FGNRERetorno.cUF)]);
+                           'Status Descrição: %s ' + LineBreak),
+                   [TpAmbToStr(FGNRERetorno.Ambiente),
+                    IntToStr(FGNRERetorno.codigo),
+                    FGNRERetorno.descricao]);
   {*)}
 end;
 
@@ -1297,18 +1242,18 @@ constructor TWebServices.Create(AOwner: TACBrDFe);
 begin
   FACBrGNRE := TACBrGNRE(AOwner);
 
-  FEnviar       := TGNRERecepcao.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
-  FRetorno      := TGNRERetRecepcao.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
-  FConsResLote  := TGNRERecibo.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
-  FConsConfigUF := TGNREConsultaUF.Create(FACBrGNRE);
+  FEnviar     := TGNRERecepcao.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
+  FRetorno    := TGNRERetRecepcao.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
+  FRecibo     := TGNRERecibo.Create(FACBrGNRE, TACBrGNRE(FACBrGNRE).Guias);
+  FConsultaUF := TGNREConsultaUF.Create(FACBrGNRE);
 end;
 
 destructor TWebServices.Destroy;
 begin
   FEnviar.Free;
   FRetorno.Free;
-  FConsResLote.Free;
-  FConsConfigUF.Free;
+  FRecibo.Free;
+  FConsultaUF.Free;
 
   inherited Destroy;
 end;
@@ -1318,7 +1263,7 @@ begin
   if not FEnviar.Executar then
     FEnviar.GerarException( FEnviar.Msg );
 
-  FRetorno.numeroRecibo := FEnviar.numeroRecibo;
+  FRetorno.numeroRecibo := FEnviar.numero;
   if not FRetorno.Executar then
     FRetorno.GerarException( FRetorno.Msg );
 
@@ -1327,10 +1272,10 @@ end;
 
 function TWebServices.ConsultaResultadoLote(ANumRecibo: String): Boolean;
 begin
-  FConsResLote.numeroRecibo := ANumRecibo;
+  FRecibo.numeroRecibo := ANumRecibo;
 
-  if not FConsResLote.Executar then
-    FConsResLote.GerarException( FConsResLote.Msg );
+  if not FRecibo.Executar then
+    FRecibo.GerarException( FRecibo.Msg );
 
   Result := true;
 end;

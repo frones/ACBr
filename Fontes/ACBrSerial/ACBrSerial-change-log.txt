@@ -39,6 +39,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/01/2015
+-- ACBrECF --
+[*] Metodo "CancelaCupom" modificado para receber o Número do Cupom a ser cancelado.
+       Procedure CancelaCupom( NumCOOCancelar: Integer = 0 )
+    Isso permitirá informar o Número do COO a ser cancelado, pois Modelos de ECF
+    como ecfEscEcf e ecfECFVirtual, podem permir o cancelamento de Cupons que não
+    sejam apenas o último.
+
+-- ACBrECFEscECF --
+[*] Metodo "CancelaCupom", modificado para fazer uso do parâmetro "NumCOOCancelar"
+    - O ACBrECF cuidará para cancelar todos os CCD's vinculados ao COO Informado
+    - Se o NumCOOCancelar for um CCD, o ACBrECF cancelará todos os Vinculados e
+      o Cupom Fiscal de origem do mesmo.
+    Nota: Bematech MP4200-TH-FI v 01.01.00, não está permitindo cancelar Cupom
+          Fiscal, que não seja o último emitido.
+[+] Implementado o suporte a propriedade "TipoUltimoDocumento". Por enquanto,
+    penas para Epson TM800/900, pois depende de comando exclusivo do Fabricante.
+[+] Adicionado o método:
+    Function EstornaCCD( NumCupomFiscal: Integer; ADiante: Boolean = True ) : Integer;
+
+-- ACBrECFBematech --
+[-] Ajuste no calculo do Path do arquivo "Bemafi32.ini", quando PathDLL não for
+    informado.
+[+] Ajueste para configuração correta do "Bemafi32.ini", fazendo uso da chave:
+    "ProtocoloUnico"
+
 Data: 16/01/2015
 -- ACBrECFVirtual, ACBrECFVirtualBuffer --
 [+] Implementado o método DescontoAcrescimoItemAnterior

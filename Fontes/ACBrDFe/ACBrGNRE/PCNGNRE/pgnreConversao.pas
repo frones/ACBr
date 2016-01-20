@@ -54,7 +54,8 @@ uses
 
 type
   TStatusACBrGNRE = ( stGNREIdle, stGNRERecepcao, stGNRERetRecepcao,
-                      stGNREConsulta, stGNREConsultaConfigUF, stGNREEmail );
+                      stGNREConsulta, stGNREConsultaConfigUF, stGNREEmail,
+                      stEnvioWebService );
                       
   TLayOutGNRE = ( LayGNRERecepcao, LayGNRERetRecepcao, LayGNREConsultaConfigUF );
 

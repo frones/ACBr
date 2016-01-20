@@ -256,6 +256,7 @@ type
     edtEmailAssuntoNFe: TEdit;
     edtEmailAssuntoCTe: TEdit;
     edtAlturaCampos: TEdit;
+    edtFonteEndereco: TEdit;
     edtNFCeMargemDir: TEdit;
     edtNFCeMargemEsq: TEdit;
     edtNFCeMargemInf: TEdit;
@@ -285,7 +286,8 @@ type
     Label186: TLabel;
     Label187: TLabel;
     Label188: TLabel;
-    blAlturaCampos: TLabel;
+    lblAlturaCampos: TLabel;
+    lblFonteEndereco: TLabel;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
@@ -3472,6 +3474,7 @@ begin
     edtLargCodProd.Text := Ini.ReadString('DANFE', 'LarguraCodigoProduto', '54');
     edtEspBorda.Text := Ini.ReadString('DANFE', 'EspessuraBorda', '1');
     edtFonteRazao.Text := Ini.ReadString('DANFE', 'FonteRazao', '12');
+    edtFonteEndereco.Text := Ini.ReadString('DANFE', 'FonteEndereco', '10');
     edtFonteCampos.Text := Ini.ReadString('DANFE', 'FonteCampos', '10');
     edtAlturaCampos.Text := Ini.ReadString('DANFE', 'AlturaCampos', '30');
     edtMargemInf.Text := Ini.ReadString('DANFE', 'Margem', '0,8');
@@ -4277,6 +4280,7 @@ begin
     Ini.WriteString('DANFE', 'LarguraCodigoProduto', edtLargCodProd.Text);
     Ini.WriteString('DANFE', 'EspessuraBorda', edtEspBorda.Text);
     Ini.WriteString('DANFE', 'FonteRazao', edtFonteRazao.Text);
+    Ini.WriteString('DANFE', 'FonteEndereco', edtFonteEndereco.Text);
     Ini.WriteString('DANFE', 'FonteCampos', edtFonteCampos.Text);
     Ini.WriteString('DANFE', 'AlturaCampos', edtAlturaCampos.Text);
     Ini.WriteString('DANFE', 'Margem', edtMargemInf.Text);
@@ -6935,6 +6939,7 @@ begin
     ACBrNFe1.DANFE.MostrarStatus := cbxMostraStatus.Checked;
     ACBrNFe1.DANFE.ExpandirLogoMarca := cbxExpandirLogo.Checked;
     ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := StrToIntDef(edtFonteCampos.Text, 10);
+    ACBrNFe1.DANFE.TamanhoFonteEndereco:= StrToIntDef(edtFonteEndereco.Text, 10);
 
     if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
     begin

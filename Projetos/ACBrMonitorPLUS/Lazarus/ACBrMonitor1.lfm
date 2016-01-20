@@ -1448,10 +1448,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 631
-        ActivePage = tsEmail
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 13
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsDiretoriosDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 5
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7550,7 +7550,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideLeft.Control = edtEspBorda
                     AnchorSideRight.Control = edtEspBorda
                     AnchorSideRight.Side = asrBottom
-                    Left = 90
+                    Left = 78
                     Height = 27
                     Top = 154
                     Width = 70
@@ -7567,7 +7567,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideLeft.Control = edtFonteRazao
                     AnchorSideRight.Control = edtFonteRazao
                     AnchorSideRight.Side = asrBottom
-                    Left = 174
+                    Left = 150
                     Height = 27
                     Top = 154
                     Width = 70
@@ -7584,7 +7584,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideLeft.Control = edtFonteCampos
                     AnchorSideRight.Control = edtFonteCampos
                     AnchorSideRight.Side = asrBottom
-                    Left = 258
+                    Left = 293
                     Height = 27
                     Top = 154
                     Width = 70
@@ -7798,7 +7798,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       'Courier'
                       'Arial'
                     )
-                    TabOrder = 24
+                    TabOrder = 25
                   end
                   object cbxMostraStatus: TCheckBox
                     Left = 316
@@ -7817,7 +7817,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 10
                   end
                   object edtFonteRazao: TEdit
-                    Left = 174
+                    Left = 150
                     Height = 25
                     Top = 181
                     Width = 70
@@ -7826,12 +7826,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Text = '12'
                   end
                   object edtFonteCampos: TEdit
-                    Left = 258
+                    Left = 293
                     Height = 25
                     Top = 181
                     Width = 70
                     NumbersOnly = True
-                    TabOrder = 19
+                    TabOrder = 20
                     Text = '10'
                   end
                   object rgCasasDecimaisQtd: TRadioGroup
@@ -7857,7 +7857,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       '3'
                       '4'
                     )
-                    TabOrder = 22
+                    TabOrder = 23
                   end
                   object spedtDecimaisVUnit: TSpinEdit
                     Left = 168
@@ -7865,14 +7865,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Top = 225
                     Width = 121
                     MaxValue = 10
-                    TabOrder = 23
+                    TabOrder = 24
                   end
                   object rgLocalCanhoto: TRadioGroup
-                    Left = 432
+                    Left = 439
                     Height = 43
                     Hint = 'Funcionalidade disponível somente no Rave'
                     Top = 167
-                    Width = 169
+                    Width = 162
                     AutoFill = True
                     Caption = 'Local Canhoto'
                     ChildSizing.LeftRightSpacing = 6
@@ -7883,14 +7883,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ChildSizing.Layout = cclLeftToRightThenTopToBottom
                     ChildSizing.ControlsPerLine = 2
                     ClientHeight = 21
-                    ClientWidth = 165
+                    ClientWidth = 158
                     Columns = 2
                     ItemIndex = 0
                     Items.Strings = (
                       'Cabeçalho'
                       'Rodapé'
                     )
-                    TabOrder = 21
+                    TabOrder = 22
                   end
                   object cbxImprimirTributos: TCheckBox
                     Left = 316
@@ -7901,7 +7901,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 7
                   end
                   object edtEspBorda: TEdit
-                    Left = 90
+                    Left = 78
                     Height = 25
                     Top = 181
                     Width = 70
@@ -7955,7 +7955,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AnchorSideLeft.Control = edtAlturaCampos
                     AnchorSideRight.Control = edtAlturaCampos
                     AnchorSideRight.Side = asrBottom
-                    Left = 342
+                    Left = 364
                     Height = 27
                     Top = 154
                     Width = 70
@@ -7969,13 +7969,39 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     WordWrap = True
                   end
                   object edtAlturaCampos: TEdit
-                    Left = 342
+                    Left = 364
                     Height = 25
                     Top = 181
                     Width = 70
                     NumbersOnly = True
-                    TabOrder = 20
+                    TabOrder = 21
                     Text = '30'
+                  end
+                  object lblFonteEndereco: TLabel
+                    AnchorSideLeft.Control = edtFonteEndereco
+                    AnchorSideRight.Control = edtFonteEndereco
+                    AnchorSideRight.Side = asrBottom
+                    Left = 222
+                    Height = 27
+                    Top = 154
+                    Width = 70
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Fonte Endereço'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object edtFonteEndereco: TEdit
+                    Left = 222
+                    Height = 25
+                    Top = 181
+                    Width = 70
+                    NumbersOnly = True
+                    TabOrder = 19
+                    Text = '10'
                   end
                 end
                 object tsDadosEmpresa: TTabSheet

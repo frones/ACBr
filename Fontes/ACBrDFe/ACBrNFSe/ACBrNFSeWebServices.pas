@@ -2660,8 +2660,8 @@ begin
     // O procedimento recebe como parametro o XML a ser assinado e retorna o
     // mesmo assinado da propriedade FPDadosMsg
     case FProvedor of
-      proDigifred: AssinarXML(FPDadosMsg, FPrefixo3 + 'InfPedidoCancelamento', '',
-                                       'Falha ao Assinar - Cancelar NFS-e: ');
+//      proDigifred: AssinarXML(FPDadosMsg, FPrefixo4 + 'InfPedidoCancelamento', '',
+//                                       'Falha ao Assinar - Cancelar NFS-e: ');
       proGinfes: AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
                                        'Falha ao Assinar - Cancelar NFS-e: ');
       proBetha: AssinarXML(FPDadosMsg, 'Pedido></' + FPrefixo3 + 'CancelarNfseEnvio', '',

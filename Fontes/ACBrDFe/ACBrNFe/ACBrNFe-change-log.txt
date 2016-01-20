@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/01/2016
+-- ACBrNFeWebServices -- 
+[*] Adicionado o código IBGE 51 em TNFeConsulta.DefinirServicoEAction.
+    Desta forma a montagem da URL de serviço fica correta para a UF de MT.
+    Por: oxinformatica
+
+20/01/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
 [*] Refatoração da impressão do DANFE Fortes(TamanhoFonte_DemaisCampos, TamanhoFonteEndereco e AltLinhaComun não estavão implementados).
       http://www.projetoacbr.com.br/forum/topic/27389-formatar-danfe-fortes/

@@ -805,21 +805,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 465
         Height = 105
       end
-      object rlmSiteEmail: TRLMemo
-        Tag = 3
-        Left = 116
-        Top = 78
-        Width = 342
-        Height = 22
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object rliNatOpe: TRLDraw
         Left = 0
         Top = 104
@@ -1150,20 +1135,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object rllFone: TRLLabel
-        Tag = 3
-        Left = 116
-        Top = 64
-        Width = 342
-        Height = 14
-        AutoSize = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
       object rliLogo: TRLImage
         Left = 8
         Top = 16
@@ -1244,10 +1215,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllChave: TRLLabel
         Tag = 70
-        Left = 643
+        Left = 640
         Top = 51
-        Width = 334
+        Width = 354
         Height = 14
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1531,7 +1503,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 39
         Top = 37
-        Width = 537
+        Width = 542
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1589,7 +1561,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 507
         Top = 63
-        Width = 146
+        Width = 171
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1618,7 +1590,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 593
         Top = 37
-        Width = 192
+        Width = 194
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1647,7 +1619,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 688
         Top = 63
-        Width = 38
+        Width = 47
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1676,7 +1648,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 745
         Top = 11
-        Width = 112
+        Width = 132
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1705,7 +1677,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 797
         Top = 37
-        Width = 60
+        Width = 80
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1734,7 +1706,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 745
         Top = 63
-        Width = 112
+        Width = 132
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1763,7 +1735,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 886
         Top = 11
-        Width = 80
+        Width = 108
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1792,7 +1764,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 886
         Top = 37
-        Width = 80
+        Width = 108
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1821,7 +1793,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 886
         Top = 63
-        Width = 80
+        Width = 108
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3483,7 +3455,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 39
         Top = 11
-        Width = 458
+        Width = 460
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3512,7 +3484,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 39
         Top = 37
-        Width = 458
+        Width = 460
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3571,7 +3543,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 130
         Top = 63
-        Width = 151
+        Width = 158
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3600,7 +3572,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 297
         Top = 63
-        Width = 200
+        Width = 202
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3644,7 +3616,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 507
         Top = 37
-        Width = 262
+        Width = 265
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3702,7 +3674,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 623
         Top = 11
-        Width = 66
+        Width = 67
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3731,7 +3703,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 700
         Top = 11
-        Width = 66
+        Width = 71
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3790,7 +3762,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 780
         Top = 11
-        Width = 21
+        Width = 25
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3819,7 +3791,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 70
         Left = 780
         Top = 37
-        Width = 21
+        Width = 25
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3846,9 +3818,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllTransCNPJ: TRLLabel
         Tag = 70
-        Left = 813
+        Left = 812
         Top = 11
-        Width = 180
+        Width = 183
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -3875,9 +3847,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllTransIE: TRLLabel
         Tag = 70
-        Left = 813
+        Left = 812
         Top = 37
-        Width = 180
+        Width = 183
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -4006,7 +3978,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object rllTransPesoLiq: TRLLabel
         Tag = 70
-        Left = 813
+        Left = 812
         Top = 63
         Width = 178
         Height = 14
@@ -5224,6 +5196,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RlbDadoPagamento: TRLLabel
+        Tag = 70
         Left = 130
         Top = 22
         Width = 13
@@ -5238,6 +5211,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RlbDadoNumero: TRLLabel
+        Tag = 70
         Left = 300
         Top = 22
         Width = 32
@@ -5254,6 +5228,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RlbDadoValorOriginal: TRLLabel
+        Tag = 70
         Left = 384
         Top = 22
         Width = 62
@@ -5270,6 +5245,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RlbDadoValorDesconto: TRLLabel
+        Tag = 70
         Left = 518
         Top = 22
         Width = 68
@@ -5286,6 +5262,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object RlbDadoValorLiquido: TRLLabel
+        Tag = 70
         Left = 642
         Top = 22
         Width = 56

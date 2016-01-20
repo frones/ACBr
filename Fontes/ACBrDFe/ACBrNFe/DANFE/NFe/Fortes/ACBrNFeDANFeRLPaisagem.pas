@@ -94,7 +94,6 @@ type
     RLLabel78: TRLLabel;
     rlmEmitente: TRLMemo;
     rlmEndereco: TRLMemo;
-    rllFone: TRLLabel;
     rliLogo: TRLImage;
     rllNatOperacao: TRLLabel;
     rllDadosVariaveis3: TRLLabel;
@@ -291,7 +290,6 @@ type
     LinhaFimItens: TRLDraw;
     RLDraw70: TRLDraw;
     rliTransp3: TRLDraw;
-    rlmSiteEmail: TRLMemo;
     rllUsuario: TRLLabel;
     rllSistema: TRLLabel;
     rllCabFatura4: TRLLabel;
@@ -508,6 +506,7 @@ type
     function ManterXpod(sXProd: String; inItem: Integer): String;
     procedure AddFaturaReal;
     function ManterDuplicatas: Integer;
+    procedure AplicaParametros;
   public
 
   end;
@@ -572,8 +571,9 @@ begin
 end;
 
 procedure TfrlDANFeRLPaisagem.InitDados;
-var i, j, b, h, iAlturaCanhoto: Integer;
+var i, j, b, h, iAlturaCanhoto,vWidthAux, vLeftAux: Integer;
   LogoStream: TStringStream;
+  vAutoSizeAux : Boolean;
 begin
   // Carrega logomarca
   if (FLogo <> '') then
@@ -864,8 +864,6 @@ begin
       rliLogo.Visible := False;
       rlmEmitente.Visible := False;
       rlmEndereco.Visible := False;
-      rllFone.Visible := False;
-      rlmSiteEmail.Visible := False;
       rliEmitente.Visible := False;
       rllChaveAcesso.Visible := False;
       rliChave.Visible := False;
@@ -878,8 +876,6 @@ begin
     begin
       rlmEmitente.Visible := False;
       rlmEndereco.Visible := False;
-      rllFone.Visible := False;
-      rlmSiteEmail.Visible := False;
       with rliLogo do
         begin
           Width := 450;
@@ -888,78 +884,96 @@ begin
         end;
     end;
 
-  // Altera a fonde do DANFE
-  case FNomeFonte of
-    nfArial:
-      for b := 0 to (RLNFe.ControlCount - 1) do
-        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
-          begin
-            for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
-              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
-                                                                                          'Arial';
+  // Altera a fonte da Razão Social do Emitente
+  rlmEmitente.Font.Size := FTamanhoFonte_RazaoSocial;
 
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag
-                                                                     <> 20 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-                                                                      'Arial';
-
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-              (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
-          end;
-
-    nfCourierNew:
+  for b := 0 to (RLNFe.ControlCount - 1) do
+    for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
+    begin
+      //Altera o tamanho da fonte dos demais campos
+      if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag in [3,70] then
       begin
-        for b := 0 to (RLNFe.ControlCount - 1) do
-          for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
-            begin
-              for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
-                begin
-                  TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
-                                                                                     'Courier New';
-
-                  if TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Tag = 0 then
-                    TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size :=
-                    (TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size - 1);
-
-                end;
-
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-                                                                'Courier New';
-
-              if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 0) or
-                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3) then
-                TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-               (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
-
-              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 40 then
-                TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
-                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top) - 1;
-            end;
-
-        rllNumNF1.Font.Size := rllNumNF1.Font.Size -2;
-        rllNumNF1.Top := rllNumNF1.Top + 1;
+        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [];
+        if FNegrito then// Dados em negrito
+          TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [fsBold];
+        if Owner <> nil then
+          TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
+            TACBrNFeDANFeRL(Owner).TamanhoFonte_DemaisCampos + 1;
       end;
 
-    nfTimesNewRoman:
-      for b := 0 to (RLNFe.ControlCount - 1) do
-        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
+      // Altera a fonde do DANFE
+      case FNomeFonte of
+        nfArial:
           begin
             for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
               TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
-                                                                                'Times New Roman';
-
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag
-                                                                     <> 20 then
+                                                                      'Arial';
+            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag <> 20 then
               TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-                                                             'Times New Roman';
-
+                                                                      'Arial';
             if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3 then
               TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-              (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
+                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
           end;
+        nfCourierNew:
+          begin
+            for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
+            begin
+              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
+                                                                                 'Courier New';
+              if TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Tag = 0 then
+                TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size :=
+                  (TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size - 1);
+
+            end;
+            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
+                                                              'Courier New';
+            if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 0) or
+               (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3) then
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
+                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
+            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 40 then
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
+                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top) - 1;
+          end;
+        nfTimesNewRoman:
+          begin
+            for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
+              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
+                                                                'Times New Roman';
+              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag <> 20 then
+                TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
+                                                                'Times New Roman';
+              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3 then
+                TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
+                  (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
+          end;
+      end;
+      //copia o left e width do componente, alterar o size do fonte, com o autosize ajusta o height, depois retorna como estava
+      if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag in [3,70] then
+      begin
+        vWidthAux := TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Width;
+        vLeftAux  := TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Left;
+        vAutoSizeAux := TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).AutoSize;
+        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).AutoSize := True;
+        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).AutoSize := vAutoSizeAux;
+        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Left  := vLeftAux;
+        if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Alignment = taLeftJustify then
+           vWidthAux := vWidthAux - vAuxDiferencaPDF;//na hora de gerar o PDF vai ficar correto.
+        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Width := vWidthAux;
+      end;
+    end;
+  if FNomeFonte = nfCourierNew then
+  begin
+    rllNumNF1.Font.Size := rllNumNF1.Font.Size -2;
+    rllNumNF1.Top := rllNumNF1.Top + 1;
   end;
-  
+
+  if TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco > 0 then
+    RLMEndereco.Font.Size:= TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco;
+
+  AplicaParametros; // Aplica os parâmetros escolhidos
+
   DadosAdicionais;
   Header;
   Emitente;
@@ -971,29 +985,6 @@ begin
   AddFaturaReal;
   AddFatura;
   Observacoes;
-
-  // Dados em negrito
-  if FNegrito then
-    begin
-      for b := 0 to (RLNFe.ControlCount - 1) do
-        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
-          begin
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 70 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [fsBold];
-          end;
-    end
-  else
-    begin
-      for b := 0 to (RLNFe.ControlCount - 1) do
-        for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
-          begin
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 70 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [];
-          end;
-    end;
-
-  // Altera a fonte da Razão Social do Emitente
-  rlmEmitente.Font.Size := FTamanhoFonte_RazaoSocial;
 
   // Verifica se será exibida a 'continuação das informações complementares'
   if rlmDadosAdicionaisAuxiliar.Lines.Count > iLimiteLinhas then
@@ -1018,6 +1009,11 @@ begin
   with FNFe.InfNFe, FNFe.Ide do
   begin
     rllChave.Caption        := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
+    rllChave.AutoSize       := True;
+
+    while rliChave.Width <  (rllChave.Width + 10 + (rllChave.Left - rliChave.Left)) do
+      rllChave.Font.Size    := rllChave.Font.Size -1;//para nao truncar a chave vai diminuir o fonte
+
     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
     rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
     rllNumNF1.Caption       := rllNumNF0.Caption;
@@ -1100,66 +1096,53 @@ begin
 
     end;
   end;
+  if rlbCodigoBarras.Visible then
+    rllChave.Holder := rlbCodigoBarras;
+
 end;
 
 procedure TfrlDANFeRLPaisagem.Emitente;
+var
+  vWidthAux, vLeftAux : integer;
+  sTemp : String;
 begin
   //emit
   with FNFe.Emit do
+  begin
+    if FRecebemoDe = '' then
+      FRecebemoDe := rllRecebemosDe.Caption;
+
+    rllRecebemosDe.Caption        := Format (FRecebemoDe, [ XNome ]);
+    rllInscricaoEstadual.Caption  := IE;
+    rllInscrEstSubst.caption      := IEST;
+    rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF );
+    rlmEmitente.Lines.Text        := TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant );
+    vWidthAux                     := rlmEmitente.Width;
+    vLeftAux                      := rlmEmitente.Left;
+    rlmEmitente.AutoSize          := True;
+    rlmEmitente.AutoSize          := False;
+    rlmEmitente.Left              := vLeftAux;
+    rlmEmitente.Width             := vWidthAux;
+    rlmEndereco.Top               := rlmEmitente.Top + rlmEmitente.Height;
+    rlmEndereco.Lines.Clear;
+    with EnderEmit do
     begin
-      if FRecebemoDe = '' then
-        FRecebemoDe := rllRecebemosDe.Caption;
+      sTemp :=  Trim( XLgr ) +
+                IfThen(Nro = '0', '', ', ' + Nro) + ' ' +
+                IfThen( xCpl > '' , Trim( XCpl ) , '') +
+                ' - ' + Trim( XBairro );
 
-      rllRecebemosDe.Caption        := Format (FRecebemoDe, [ XNome ]);
-      rllInscricaoEstadual.Caption  := IE;
-      rllInscrEstSubst.caption      := IEST;
-      rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF );
-      rlmEmitente.Lines.Text        := TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant );
-      with EnderEmit do
-        begin
-          rlmEndereco.Lines.Clear;
-          if xCpl > '' then
-            rlmEndereco.Lines.add (XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
-                                                ' ' + XCpl + ' - ' + XBairro)
-          else
-            rlmEndereco.Lines.add (XLgr + IfThen (Nro = '0', '', ', ' + Nro) +
-                                                              ' - ' + XBairro);
-
-          rlmEndereco.Lines.add ('CEP: ' + FormatarCEP(Poem_Zeros(CEP, 8)) +
-                                                    ' - ' + XMun + ' - ' + UF);
-
-        if FFax <> '' then
-          begin
-            rllFone.Caption := 'TEL: ' + FormatarFone(Fone) +
-                                      ' - FAX: ' + FormatarFone(FFax);
-          end
-        else
-          begin
-            rllFone.Caption := 'TEL: ' + FormatarFone(Fone);
-          end;
-      end;
+      sTemp := sTemp + ' CEP:' + FormatarCEP(Poem_Zeros(CEP, 8)) + ' - ' + XMun + ' - ' + UF;
+      rlmEndereco.Lines.add(sTemp );
+      sTemp := 'TEL: ' + FormatarFone(Fone) + IfThen( FFax <> ''  ,  ' - FAX: ' + FormatarFone(FFax),'' );
+      rlmEndereco.Lines.add(sTemp );
     end;
-
-    if (FSite <> '') or (FEmail <> '') then
-      begin
-        rlmSiteEmail.Lines.BeginUpdate;
-        rlmSiteEmail.Lines.Clear;
-        if FSite <> '' then
-          rlmSiteEmail.Lines.Add(FSite);
-        if FEmail <> '' then
-          rlmSiteEmail.Lines.Add(FEmail);
-        rlmSiteEmail.Lines.EndUpdate;
-        rlmSiteEmail.Visible := True;
-        rlmEndereco.Top := 38;
-        rllFone.Top := 64;
-        rlmSiteEmail.Top := 78;
-      end
-    else
-      begin
-        rlmSiteEmail.Visible := False;
-        rlmEndereco.Top := 48;
-        rllFone.Top := 82;
-      end;
+  end;
+  if FSite <> '' then
+      rlmEndereco.Lines.Add(FSite);
+  if FEmail <> '' then
+      rlmEndereco.Lines.Add(FEmail);
+  rlmEndereco.Height:= rliEmitente.Height - rlmEndereco.Top - 15;
 end;
 
 procedure TfrlDANFeRLPaisagem.Destinatario;
@@ -1186,63 +1169,6 @@ begin
       rllDestFONE.Caption   := FormatarFone(Fone);
     end;
   end;
-  
-  case FNomeFonte of
-    nfTimesNewRoman, nfArial : RLDraw15.Height:= 69;
-    nfCourierNew             : RLDraw15.Height:= 59;
-  end;
-  //quadro detinatario
-  rlbDestinatario.Height := RLDraw15.Height + 2;
-  RLAngleLabel1.Top      := round((RLDraw15.Height - RLAngleLabel1.Height) / 2);
-  RLAngleLabel2.Top      := round((RLDraw15.Height - RLAngleLabel2.Height) / 2);
-  RLDraw13.top           := RLDraw15.Top;//rldraw anterior a nome, endereço, município
-  RLDraw13.Height        := RLDraw15.Height;
-  RLDraw18.Top           := RLDraw13.Top;//rldraw anterior a Data emissao, Data Saída, hora saída
-  RLDraw18.Height        := RLDraw13.Height;
-  //linha do nome
-  RLLabel32.Top   := RLDraw15.Top + 1; //label Nome/Razao Social
-  RLLabel33.Top   := RLLabel32.Top; //label CNPJ/CPF
-  RLLabel34.TOP   := RLLabel32.Top; //label Data Emissao
-  rllDestNome.Top := RLLabel32.Top + RLLabel32.Height;
-  rllDestCNPJ.Top := rllDestNome.Top;
-  rllEmissao.Top  := rllDestNome.Top;
-  //linha do endereco
-  RLDraw16.Top        := round(RLDraw15.Height / 3);//linha acima da linha endereco
-  RLLabel35.Top       := RLDraw16.Top + 1;//label endereço
-  RLLabel36.Top       := RLLabel35.Top;//label bairro/distrito
-  RLLabel37.Top       := RLLabel35.Top;//label cep
-  RLLabel38.Top       := RLLabel35.Top;//label data saída/entrada
-  rllDestEndereco.Top := RLLabel35.Top + RLLabel35.Height;
-  rllDestBairro.top   := rllDestEndereco.Top;
-  rllDestCEP.top      := rllDestEndereco.Top;
-  rllSaida.top        := rllDestEndereco.Top;
-  //linha da cidade
-  RLDraw17.Top      := round((RLDraw15.Height / 3) * 2);//linha acima da cidade
-  RLLabel39.Top     := RLDraw17.Top + 1;//label cidade
-  RLLabel40.Top     := RLLabel39.Top;//label fone/fax
-  RLLabel41.Top     := RLLabel39.Top;//label uf
-  RLLabel42.Top     := RLLabel39.Top;//label IE
-  RLLabel43.Top     := RLLabel39.Top;//label hora saída
-  rllDestCidade.Top := RLLabel39.Top + RLLabel39.Height;
-  rllDestFone.Top   :=rllDestCidade.Top;
-  rllDestUF.Top     :=rllDestCidade.Top;
-  rllDestIE.Top     :=rllDestCidade.Top;
-  rllHoraSaida.Top  :=rllDestCidade.Top;
-  //linha nome
-  RLDraw19.Top    :=RLDraw15.Top;//rldraw antes do CNPJ/CFP
-  RLDraw19.Height := RLDraw16.Top + 1;
-  //linha endereco
-  RLDraw20.Top    := RLDraw16.Top;//rbdraw antes do bairro
-  RLDraw20.Height := RLDraw17.Top - RLDraw16.Top  + 1;
-  RLDraw21.Top    := RLDraw20.Top;//rkdraw antes do cep
-  RLDraw21.Height := RLDraw20.Height;
-  //linha cidade
-  RLDraw22.Top    := RLDraw17.Top;//rbdraw antes do fone/fax
-  RLDraw22.Height := RLDraw15.Height - RLDraw17.Top;
-  RLDraw23.Top    := RLDraw22.Top;//rkdraw antes da UF
-  RLDraw23.Height := RLDraw22.Height;
-  RLDraw24.Top    := RLDraw22.Top;//rkdraw antes da IE
-  RLDraw24.Height := RLDraw22.Height;
 end;
 
 Function TfrlDANFeRLPaisagem.EnderecoEntrega : String;
@@ -1350,73 +1276,11 @@ begin
     rllBaseICMS.Left := rllTituloBaseICMS.Left + 4;
     rllBaseICMS.Width := (rliDivImposto1.Left - 7) - (rliDivImposto0.Left + 3);
   end;
- 
-  case FNomeFonte of
-    nfTimesNewRoman, nfArial: RLDraw29.Height := 57;
-    nfCourierNew            : RLDraw29.Height := 47;
-  end;
-  //quadro impostos
-  rlbImposto.Height := RLDraw29.Height + 2;
-  RLAngleLabel4.Top      := round((RLDraw29.Height - RLAngleLabel4.Height) / 2);//label vertical CALCULO
-  RLAngleLabel5.Top      := round((RLDraw29.Height - RLAngleLabel5.Height) / 2);//label vertical IMPOSTO
-  rliDivImposto0.top     := RLDraw29.Top;//rldraw anterior a BC ICMS e Valor Frete
-  rliDivImposto0.Height  := RLDraw29.Height;
-  //linha Base ICMS
-  rllTituloBaseICMS.Top      := RLDraw29.Top + 1; //label BC ICMS
-  rllTituloValorICMS.top     := rllTituloBaseICMS.Top; //label valor icms
-  rllTituloBaseICMSST.top    := rllTituloBaseICMS.Top;
-  rllTituloValorICMSST.top   := rllTituloBaseICMS.Top;
-  rllTituloTotalTributos.top := rllTituloBaseICMS.Top;
-  RLLabel48.top              := rllTituloBaseICMS.Top; //label valor dos produtos
-  rllBaseICMS.Top      := rllTituloBaseICMS.Top + rllTituloBaseICMS.Height;
-  rllValorICMS.top     := rllBaseICMS.Top;
-  rllBaseICMSST.top    := rllBaseICMS.Top;
-  rllValorICMSST.top   := rllBaseICMS.Top;
-  rllTotalTributos.top := rllBaseICMS.Top;
-  rllTotalProdutos.top := rllBaseICMS.Top;
-  //linha Valor Frete
-  RLDraw30.Top := round(RLDraw29.Height / 2);//linha entre BC ICMS e Valor Frete
-  RLLabel49.Top := RLDraw30.Top + 1;//label Valor Frete
-  RLLabel50.Top := RLLabel49.Top; //label valor seguro
-  RLLabel51.Top := RLLabel49.Top; //label valor desconto
-  RLLabel52.Top := RLLabel49.Top; //label outras desp. acessorias
-  RLLabel53.Top := RLLabel49.Top; //label valor ipi
-  RLLabel54.Top := RLLabel49.Top; //label valor total nf
-  RLLabel25.top    := RLDraw30.Top + 1; //sombra valor total nf
-  RLLabel25.Height := RLDraw29.Height - RLDraw30.Top -2;
-  rllValorFrete.Top  := RLLabel49.Top + RLLabel49.Height;
-  rllValorSeguro.top := rllValorFrete.Top;
-  rllDescontos.top   := rllValorFrete.Top;
-  rllAcessorias.top  := rllValorFrete.Top;
-  rllValorIPI.top    := rllValorFrete.Top;
-  rllTotalNF.top     := rllValorFrete.Top;
-  //linha bc icms
-  rliDivImposto1.Top    := RLDraw29.Top;//rldraw antes do valor ICMS
-  rliDivImposto1.Height := RLDraw30.Top + 1;
-  rliDivImposto2.Top    :=rliDivImposto1.Top;//rldraw antes do BC ST
-  rliDivImposto2.Height :=rliDivImposto1.Height;
-  rliDivImposto3.Top    :=rliDivImposto1.Top;//rldraw antes do valor ST
-  rliDivImposto3.Height :=rliDivImposto1.Height;
-  rliDivImposto4.Top    :=rliDivImposto1.Top;//rldraw antes do valor aprox. tributos
-  rliDivImposto4.Height :=rliDivImposto1.Height;
-  rliDivImposto5.Top    :=rliDivImposto1.Top;//rldraw antes do valor total produtos.
-  rliDivImposto5.Height :=rliDivImposto1.Height;
-  //linha valor frete
-  RLDraw33.Top    := RLDraw30.Top;//rbdraw antes do valor seguro
-  RLDraw33.Height := RLDraw29.Height - RLDraw30.Top;
-  RLDraw34.Top    := RLDraw33.Top;//rbdraw antes do desconto
-  RLDraw34.Height := RLDraw33.Height;
-  RLDraw35.Top    := RLDraw33.Top;//rbdraw antes do outras desp. acessorias
-  RLDraw35.Height := RLDraw33.Height;
-  RLDraw6.Top     := RLDraw33.Top;//rbdraw antes do valor ipi
-  RLDraw6.Height  := RLDraw33.Height;
-  RLDraw12.Top    := RLDraw33.Top;//rbdraw antes do total nf
-  RLDraw12.Height := RLDraw33.Height;
 end;
 
 procedure TfrlDANFeRLPaisagem.Transporte;
 var
-  i, j, iAltLinha{, iAltDiff}: Integer;
+  i, j: Integer;
   RLLabel, RLLabelModelo: TRLLabel;
 begin
   with FNFe.Transp do
@@ -1444,109 +1308,8 @@ begin
     rllTransUFPlaca.Caption :=  UF;
   end;
 
-  case FNomeFonte of
-    nfTimesNewRoman, nfArial : rliTransp.Height:= 79;
-    nfCourierNew             : rliTransp.Height:= 69;
-  end;
-  iAltLinha := 10;
-  //quadro transportadora
-  if FNFe.Transp.Vol.Count > 1 then
-  begin
-    rliTransp.Height := rliTransp.Height + (iAltLinha * (FNFe.Transp.Vol.Count - 1));//a quantidade de volumes pode variar, entao é feito um recalculo
-    if FNomeFonte = nfCourierNew then
-      rliTransp.Height := rliTransp.Height + 3
-    else
-      rliTransp.Height := rliTransp.Height - 3;
-  end;
-  rlbTransp.Height := rliTransp.Height + 2;
-  RLAngleLabel6.Top      := round((rliTransp.Height - RLAngleLabel6.Height) / 2);
-  RLAngleLabel7.Top      := round((rliTransp.Height - RLAngleLabel7.Height) / 2);
-  rliTransp6.top           := rliTransp.Top;//rldraw anterior a nome, endereço, município
-  rliTransp6.Height        := rliTransp.Height;
-  rliTransp5.Top           := rliTransp6.Top;//rldraw anterior a Data emissao, Data Saída, hora saída
-  rliTransp5.Height        := rliTransp6.Height;
-  //linha do Razão social
-  RLLabel55.Top   := rliTransp.Top + 1; //label Razao Social
-  RLLabel56.Top   := RLLabel55.Top; //label frete por conta
-  RLLabel59.TOP   := RLLabel55.Top; //label codigo ANTT
-  RLLabel60.TOP   := RLLabel55.Top; //label Placa Veículo
-  RLLabel61.TOP   := RLLabel55.Top; //label UF
-  RLLabel62.TOP   := RLLabel55.Top; //label CNPJ/CPF
-  rllTransNome.Top       := RLLabel55.Top + RLLabel55.Height;
-  rllTransModFrete.Top   := rllTransNome.Top;
-  rllTransCodigoANTT.Top := rllTransNome.Top;
-  rllTransPlaca.Top      := rllTransNome.Top;
-  rllTransUFPlaca.Top    := rllTransNome.Top;
-  rllTransCNPJ.Top       := rllTransNome.Top;
-  //linha Endereço
-  RLDraw38.Top        := round(rliTransp.Height / 3);//linha acima da linha endereco
-  if FNFe.Transp.Vol.Count > 1 then
-    RLDraw38.Top        := rllTransNome.top + rllTransNome.Height + 2; //linha acima da linha endereco
-  RLLabel63.Top       := RLDraw38.Top + 1;//label endereço
-  RLLabel64.Top       := RLLabel63.Top;//label município
-  RLLabel65.Top       := RLLabel63.Top;//label uf
-  RLLabel66.Top       := RLLabel63.Top;//label IE
-  rllTransEndereco.Top := RLLabel63.Top + RLLabel63.Height;
-  rllTransCidade.top   := rllTransEndereco.Top;
-  rllTransUF.top       := rllTransEndereco.Top;
-  rllTransIE.top       := rllTransEndereco.Top;
-  //linha quantidade
-  RLDraw39.Top      := round((rliTransp.Height / 3) * 2);//linha acima da cidade
-  if FNFe.Transp.Vol.Count > 1 then
-    RLDraw39.Top      := rllTransEndereco.Top + rllTransEndereco.Height + 2; //linha acima da cidade
-  RLLabel67.Top     := RLDraw39.Top + 1;//label quantidade
-  RLLabel68.Top     := RLLabel67.Top;//label espécie
-  RLLabel69.Top     := RLLabel67.Top;//label marca
-  RLLabel70.Top     := RLLabel67.Top;//label numeração
-  RLLabel71.Top     := RLLabel67.Top;//label peso bruto
-  RLLabel72.Top     := RLLabel67.Top;//label peso líquido
-  rllTransQTDE.Top      := RLLabel67.Top + RLLabel67.Height;
-  rllTransEspecie.Top   := rllTransQTDE.Top;
-  rllTransMarca.Top     := rllTransQTDE.Top;
-  rllTransNumeracao.Top := rllTransQTDE.Top;
-  rllTransPesoBruto.Top := rllTransQTDE.Top;
-  rllTransPesoLiq.Top   := rllTransQTDE.Top;
-
-  //linha Razão social
-  RLDraw41.Top    := rliTransp.Top;//rldraw antes do Frete por Conta
-  RLDraw41.Height := RLDraw38.Top + 1;
-  RLDraw47.Top    := RLDraw41.Top;//rldraw antes do codigo ANTT
-  RLDraw47.Height := RLDraw41.Height;
-  RLDraw48.Top    := RLDraw41.Top;//rldraw antes do placa do veículo
-  RLDraw48.Height := RLDraw41.Height;
-  RLDraw49.Top    := RLDraw41.Top;//rldraw antes do UF da Placa e UF da transportadora
-  RLDraw49.Height := RLDraw39.top + 1;
-  //linha Endereço
-  RLDraw70.Top    := RLDraw38.Top;//rbdraw antes do município
-  RLDraw70.Height := RLDraw39.Top - RLDraw38.Top + 1;
-  //linha quantidade
-  rliTransp1.Top    := RLDraw39.Top;//rbdraw antes da espécie
-  rliTransp1.Height := rliTransp.Height - RLDraw39.Top;
-  rliTransp2.Top    := rliTransp1.Top;//rkdraw antes da marca
-  rliTransp2.Height := rliTransp1.Height;
-  rliTransp3.Top    := rliTransp1.Top;//rkdraw antes do numeração
-  rliTransp3.Height := rliTransp1.Height;
-  rliTransp4.Top    := rliTransp1.Top;//rkdraw antes do peso bruto.
-  rliTransp4.Height := rliTransp1.Height;
-
   if FNFe.Transp.Vol.Count > 0 then
    begin
-    // Ajusta a altura do retangulo
-    // acima no ajuste do layout, vai realizar o redimencionamento comentado abaixo. sendo desnecessário este bloco
-    //iAltLinha := 15;
-    //if FNFe.Transp.Vol.Count = 1 then
-    //  iAltDiff := 0
-    //else
-    //  iAltDiff := (FNFe.Transp.Vol.Count - 1) * iAltLinha;
-
-    //rlbTransp .Height := rlbTransp .Height + iAltDiff; // Band
-    //rliTransp .Height := rliTransp .Height + iAltDiff; // Retangulo
-    //rliTransp1.Height := rliTransp1.Height + iAltDiff; // Coluna 1
-    //rliTransp2.Height := rliTransp2.Height + iAltDiff; // Coluna 2
-    //rliTransp3.Height := rliTransp3.Height + iAltDiff; // Coluna 3
-    //rliTransp4.Height := rliTransp4.Height + iAltDiff; // Coluna 4
-    //rliTransp5.Height := rliTransp5.Height + iAltDiff; // Coluna 5
-    //rliTransp6.Height := rliTransp6.Height + iAltDiff; // Coluna 0
     // Aproveita os labels criados em tempo de projeto (1ª linha)
      with FNFe.Transp.Vol[0] do
       begin
@@ -1610,7 +1373,7 @@ begin
             RLLabel.Height     := RLLabelModelo.Height;
             RLLabel.Width      := RLLabelModelo.Width;
             RLLabel.Left       := RLLabelModelo.Left;
-            RLLabel.Top        := RLLabelModelo.Top + i * iAltLinha;
+            RLLabel.Top        := RLLabelModelo.Top + (i * (RLLabelModelo.Height)) ;//iAltLinha;
           end;
         end;
       end;
@@ -2309,5 +2072,298 @@ begin
   end;
 end;
 
+// Aplica parametros para formatar o Danfe
+procedure TfrlDANFeRLPaisagem.AplicaParametros;
+var
+  base: Integer;
+  AltLinhaComun: Integer;
+begin
+  if (fMostraDadosISSQN = False) then
+    rlbISSQN.Visible := False;
+
+  AltLinhaComun := fAltLinhaComun;
+
+  // ******** Cabeçalho ********
+  base              := rliNatOpe.Top;//RLDraw6.Top;
+  rliNatOpe.Height  := 2*AltLinhaComun + 1;
+  rliNatOpe1.Top    := base + AltLinhaComun;
+  RLDraw9.Height    := AltLinhaComun + 1;
+
+  RLDraw10.Top      := base + AltLinhaComun;
+  RLDraw10.Height   := AltLinhaComun + 1;
+  RLDraw2.Top       := base + AltLinhaComun;
+  RLDraw2.Height    := AltLinhaComun + 1;
+  RLLabel28.Holder  := nil;//para o compando abaixo ter efeito.
+  RLLabel28.Top     := base + 1;
+  rllDadosVariaveis3_Descricao.Top:= base + 1;
+
+  RLLabel29.Top := base + AltLinhaComun + 1;
+  RLLabel30.Top := base + AltLinhaComun + 1;
+  RLLabel31.Top := base + AltLinhaComun + 1;
+
+  rllNatOperacao.Top        := base + AltLinhaComun - rllNatOperacao.Height;
+  rllDadosVariaveis3.Top    := base + AltLinhaComun - rllDadosVariaveis3.Height;
+
+  rllInscricaoEstadual.Top  := base + 2*AltLinhaComun - rllInscricaoEstadual.Height;
+  rllInscrEstSubst.Top      := base + 2*AltLinhaComun - rllInscrEstSubst.Height;
+  rllCNPJ.Top               := base + 2*AltLinhaComun - rllCNPJ.Height;
+
+  // Bands remetente
+  rlbEmitente.Height        := rliNatOpe.Height + rliEmitente.Height + 2; //168 + (2*AltLinhaComun - 60);
+
+  // ******** Destinatario ********
+  base := RLDraw15.Top;
+  RLDraw15.Height := 3*AltLinhaComun + 1;
+  RLDraw13.Height := 3*AltLinhaComun + 1;
+
+  RLDraw16.Top    := base + AltLinhaComun;
+  RLDraw17.Top    := base + 2*AltLinhaComun;
+  RLDraw16.Left   := RLDraw13.Left;
+  RLDraw17.Left   := RLDraw13.Left;
+
+  RLDraw18.Height := 3*AltLinhaComun + 1;
+  RLDraw19.Height := AltLinhaComun;
+
+  RLDraw20.Top    := base + AltLinhaComun;
+  RLDraw20.Height := AltLinhaComun;
+  RLDraw21.Top    := base + AltLinhaComun;
+  RLDraw21.Height := AltLinhaComun;
+
+  RLDraw22.Top    := base + 2*AltLinhaComun;
+  RLDraw22.Height := AltLinhaComun;
+  RLDraw23.Top    := base + 2*AltLinhaComun;
+  RLDraw23.Height := AltLinhaComun;
+  RLDraw24.Top    := base + 2*AltLinhaComun;
+  RLDraw24.Height := AltLinhaComun;
+
+  // Linha 1
+  RLLabel32.Top   := base + 1;
+  RLLabel33.Top   := base + 1;
+  RLLabel34.Top   := base + 1;
+
+  rllDestNome.Top := base + AltLinhaComun - rllDestNome.Height;
+  rllDestCNPJ.Top := base + AltLinhaComun - rllDestCNPJ.Height;
+  rllEmissao.Top  := base + AltLinhaComun - rllEmissao.Height;
+
+  // Linha 2
+  RLLabel35.Top   := base + AltLinhaComun + 1;
+  RLLabel36.Top   := base + AltLinhaComun + 1;
+  RLLabel37.Top   := base + AltLinhaComun + 1;
+  RLLabel38.Top   := base + AltLinhaComun + 1;
+
+  rllDestEndereco.Top := base + 2*AltLinhaComun - rllDestEndereco.Height;
+  rllDestBairro.Top   := base + 2*AltLinhaComun - rllDestBairro.Height;
+  rllDestCEP.Top := base + 2*AltLinhaComun - rllDestCEP.Height;
+  rllSaida.Top   := base + 2*AltLinhaComun - rllSaida.Height;
+
+  // Linha 3
+  RLLabel39.Top := base + 2*AltLinhaComun + 1;
+  RLLabel40.Top := base + 2*AltLinhaComun + 1;
+  RLLabel41.Top := base + 2*AltLinhaComun + 1;
+  RLLabel42.Top := base + 2*AltLinhaComun + 1;
+  RLLabel43.Top := base + 2*AltLinhaComun + 1;
+
+  rllDestCidade.Top := base + 3*AltLinhaComun - rllDestCidade.Height; //13;
+  rllDestFone.Top   := base + 3*AltLinhaComun - rllDestFone.Height;
+  rllDestUF.Top     := base + 3*AltLinhaComun - rllDestUF.Height;
+  rllDestIE.Top     := base + 3*AltLinhaComun - rllDestIE.Height;
+  rllHoraSaida.Top  := base + 3*AltLinhaComun - rllHoraSaida.Height;
+
+  RLAngleLabel1.Top   := RLDraw15.Top + 1;
+  RLAngleLabel1.Height:= RLDraw15.Height - 3;
+  RLAngleLabel2.Top   := RLDraw15.Top + 1;
+  RLAngleLabel2.Height:= RLDraw15.Height - 3;
+  RLAngleLabel1.AutoSize:= False;//vai ajustar o tamanho da fonte se necessário.
+  RLAngleLabel2.AutoSize:= False;
+  // Band destinatario
+  rlbDestinatario.Height := RLDraw15.Height + 2;// 92 + (3*AltLinhaComun - 90);
+
+  // ******** Fatura ********
+  base := RLDrawFaturareal.Top;
+  RLDrawFaturareal.Height:= AltLinhaComun + 1;
+  RLDraw8.Height:=RLDrawFaturareal.Height;
+
+  RLLabelPag.Top    := base + 1;
+  RLLabelNUmero.Top := RLLabelPag.Top;
+  RLLabelValor.Top  := RLLabelPag.Top;
+  RLLabelDupl.Top   := RLLabelPag.Top;
+  RLLabelLIQ.Top    := RLLabelPag.Top;
+
+  RLDraw27.Top := RLLabelPag.Top + RLLabelPag.Height ;
+  RLLabel5.Height:= RLDraw27.Top - base - 2;
+
+  RlbDadoPagamento.Top     := base + AltLinhaComun - RlbDadoPagamento.Height;
+  if RlbDadoPagamento.Top < RLDraw27.Top then
+    RlbDadoPagamento.Top := RLDraw27.Top + 1;
+  RlbDadoNumero.Top        := RlbDadoPagamento.Top;
+  RlbDadoValorOriginal.Top := RlbDadoPagamento.Top;
+  RlbDadoValorDesconto.Top := RlbDadoPagamento.Top;
+  RlbDadoValorLiquido.Top  := RlbDadoPagamento.Top;
+
+
+  RLAngleLabel3.Top   := RLDrawFaturareal.Top + 1;
+  RLAngleLabel3.Height:= RLDrawFaturareal.Height - 3;
+  RLAngleLabel3.AutoSize := False;
+  // Band fatura
+  RLBFaturaReal.Height:=RLDrawFaturareal.Top + RLDrawFaturareal.Height + 2;
+
+  // ******** Cálculo do imposto ********
+  base := RLDraw29.Top;
+  RLDraw29.Height := 2*AltLinhaComun + 1;
+  rliDivImposto0.Height := 2*AltLinhaComun + 1;
+
+  RLDraw30.Top := base + AltLinhaComun;
+
+  rliDivImposto1.Height := AltLinhaComun;
+  rliDivImposto2.Height := AltLinhaComun;
+  rliDivImposto3.Height := AltLinhaComun;
+  rliDivImposto4.Height := AltLinhaComun;
+  rliDivImposto5.Height := AltLinhaComun;
+  rliDivImposto1.Top := base;
+  rliDivImposto2.Top := base;
+  rliDivImposto3.Top := base;
+  rliDivImposto4.Top := base;
+  rliDivImposto5.Top := base;
+
+  RLDraw33.Height := AltLinhaComun;
+  RLDraw34.Height := AltLinhaComun;
+  RLDraw35.Height := AltLinhaComun;
+  RLDraw6.Height  := AltLinhaComun;
+  RLDraw12.Height := AltLinhaComun;
+  RLDraw33.Top   := base + AltLinhaComun;
+  RLDraw34.Top   := base + AltLinhaComun;
+  RLDraw35.Top   := base + AltLinhaComun;
+  RLDraw6.Top    := base + AltLinhaComun;
+  RLDraw12.Top   := base + AltLinhaComun;
+
+  // Linha 1
+  rllTituloBaseICMS.Top   := base + 1;
+  rllTituloValorICMS.Top  := base + 1;
+  rllTituloBaseICMSST.Top := base + 1;
+  rllTituloValorICMSST.Top   := base + 1;
+  rllTituloTotalTributos.Top := base + 1;
+  rlLabel48.Top := base + 1;
+
+  rllBaseICMS.Top   := base + AltLinhaComun - rllBaseICMS.Height;
+  rllValorICMS.Top  := base + AltLinhaComun - rllValorICMS.Height;
+  rllBaseICMSST.Top := base + AltLinhaComun - rllBaseICMSST.Height;
+  rllValorICMSST.Top   := base + AltLinhaComun - rllValorICMSST.Height;
+  rllTotalTributos.Top := base + AltLinhaComun - rllTotalTributos.Height;
+  rllTotalProdutos.Top := base + AltLinhaComun - rllTotalProdutos.Height;
+
+  // Linha 2
+  RLLabel49.Top := base + AltLinhaComun + 1;
+  RLLabel50.Top := base + AltLinhaComun + 1;
+  RLLabel51.Top := base + AltLinhaComun + 1;
+  RLLabel52.Top := base + AltLinhaComun + 1;
+  RLLabel53.Top := base + AltLinhaComun + 1;
+  RLLabel54.Top := base + AltLinhaComun + 1;
+
+  rllValorFrete.Top  := base + 2*AltLinhaComun - rllValorFrete.Height;
+  rllValorSeguro.Top := base + 2*AltLinhaComun - rllValorSeguro.Height;
+  rllDescontos.Top   := base + 2*AltLinhaComun - rllDescontos.Height;
+  rllAcessorias.Top  := base + 2*AltLinhaComun - rllAcessorias.Height;
+  rllValorIPI.Top    := base + 2*AltLinhaComun - rllValorIPI.Height;
+  rllTotalNF.Top     := base + 2*AltLinhaComun - rllTotalNF.Height;
+
+  RLLabel25.Top       := base + AltLinhaComun;
+  RLLabel25.Height    := AltLinhaComun-1;
+
+  RLAngleLabel4.Top   := RLDraw29.Top + 1;
+  RLAngleLabel4.Height:= RLDraw29.Height - 3;
+  RLAngleLabel5.Top   := RLDraw29.Top + 1;
+  RLAngleLabel5.Height:= RLDraw29.Height - 3;
+  RLAngleLabel4.AutoSize:= False;
+  RLAngleLabel5.AutoSize:= False;
+  // Band Calculo do imposto
+  rlbImposto.Height      := 62  + (2*AltLinhaComun - 60);
+
+  // ******** Transportadora ********
+  base := rliTransp.Top;
+  rliTransp.Height := 3*AltLinhaComun + 2;
+  if FNFe.Transp.Vol.Count > 1 then//contem mais volumes na DANFE
+    rliTransp.Height := rliTransp.Height + ((rllTransQTDE.Height) * (FNFe.Transp.Vol.Count - 1));//a quantidade de volumes pode variar, entao é feito um recalculo
+
+  RLDraw38.Top := base + AltLinhaComun;
+  RLDraw39.Top := base + 2*AltLinhaComun;
+
+  RLDraw41.Top := base;
+  RLDraw47.Top := base;
+  RLDraw48.Top := base;
+  RLDraw49.Top := base;
+  rliTransp5.Top := base;
+
+  RLDraw41.Height := AltLinhaComun;
+  RLDraw47.Height := AltLinhaComun;
+  RLDraw48.Height := AltLinhaComun;
+  RLDraw49.Height := 2*AltLinhaComun;
+  rliTransp5.Height := rliTransp.Height;
+  rliTransp6.Height := rliTransp.Height;
+
+  RLDraw70.Top    := base + AltLinhaComun;
+  RLDraw70.Height := AltLinhaComun;
+
+  rliTransp1.Top := base + 2*AltLinhaComun;
+  rliTransp2.Top := base + 2*AltLinhaComun;
+  rliTransp3.Top := base + 2*AltLinhaComun;
+  rliTransp4.Top := base + 2*AltLinhaComun;
+  rliTransp1.Height := rliTransp.Height - rliTransp1.Top;//AltLinhaComun;
+  rliTransp2.Height := rliTransp1.Height;
+  rliTransp3.Height := rliTransp1.Height;
+  rliTransp4.Height := rliTransp1.Height;
+
+  //Linha 1
+  RLLabel55.Top := base + 1;
+  RLLabel56.Top := base + 1;
+  RLLabel59.Top := base + 1;
+  RLLabel60.Top := base + 1;
+  RLLabel61.Top := base + 1;
+  RLLabel62.Top := base + 1;
+
+  rllTransNome.Top       := base + AltLinhaComun - rllTransNome.Height;
+  rllTransModFrete.Top   := base + AltLinhaComun - rllTransModFrete.Height;
+  rllTransCodigoANTT.Top := base + AltLinhaComun - rllTransCodigoANTT.Height;
+  rllTransPlaca.Top      := base + AltLinhaComun - rllTransPlaca.Height;
+  rllTransUFPlaca.Top    := base + AltLinhaComun - rllTransUFPlaca.Height;
+  rllTransCNPJ.Top       := base + AltLinhaComun - rllTransCNPJ.Height;
+
+  //Linha 2
+  RLLabel63.Top := base + AltLinhaComun + 1;
+  RLLabel64.Top := base + AltLinhaComun + 1;
+  RLLabel65.Top := base + AltLinhaComun + 1;
+  RLLabel66.Top := base + AltLinhaComun + 1;
+
+  rllTransEndereco.Top := base + 2*AltLinhaComun - rllTransEndereco.Height;
+  rllTransCidade.Top   := base + 2*AltLinhaComun - rllTransCidade.Height;
+  rllTransUF.Top := base + 2*AltLinhaComun - rllTransUF.Height;
+  rllTransIE.Top := base + 2*AltLinhaComun - rllTransIE.Height;
+
+  //Linha 3
+  RLLabel67.Top := base + 2*AltLinhaComun + 1;
+  RLLabel68.Top := base + 2*AltLinhaComun + 1;
+  RLLabel69.Top := base + 2*AltLinhaComun + 1;
+  RLLabel70.Top := base + 2*AltLinhaComun + 1;
+  RLLabel71.Top := base + 2*AltLinhaComun + 1;
+  RLLabel72.Top := base + 2*AltLinhaComun + 1;
+
+  rllTransQTDE.Top      := base + 3*AltLinhaComun - rllTransQTDE.Height;
+  rllTransEspecie.Top   := base + 3*AltLinhaComun - rllTransEspecie.Height;
+  rllTransMarca.Top     := base + 3*AltLinhaComun - rllTransMarca.Height;
+  rllTransNumeracao.Top := base + 3*AltLinhaComun - rllTransNumeracao.Height;
+  rllTransPesoBruto.Top := base + 3*AltLinhaComun - rllTransPesoBruto.Height;
+  rllTransPesoLiq.Top   := base + 3*AltLinhaComun - rllTransPesoLiq.Height;
+
+  RLAngleLabel6.Top   := rliTransp.Top + 1;
+  RLAngleLabel6.Height:= rliTransp.Height - 3;
+  RLAngleLabel7.Top   := rliTransp.Top + 1;
+  RLAngleLabel7.Height:= rliTransp.Height - 3;
+  RLAngleLabel6.AutoSize:= False;
+  RLAngleLabel7.AutoSize:= False;
+  // Band Transportadora
+  rlbTransp.Height       := rliTransp.Height + 2;// 110 + (3*AltLinhaComun - 90);
+
+  // ******** Produtos ********
+  rlbObsItem.Height      := 12 + fEspacoEntreProdutos; // Remove espaço entre produtos com EspacoEntreProdutos = 0
+end;
 
 end.

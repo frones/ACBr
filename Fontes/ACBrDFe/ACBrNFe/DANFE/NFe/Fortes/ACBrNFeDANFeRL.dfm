@@ -17,8 +17,8 @@ object frlDANFeRL: TfrlDANFeRL
   PixelsPerInch = 96
   TextHeight = 13
   object RLNFe: TRLReport
-    Left = -32
-    Top = -18
+    Left = 8
+    Top = -2
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET

@@ -198,6 +198,7 @@ type
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
+    vAuxDiferencaPDF : integer;
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
     procedure ConfigDataSet;
   public
@@ -525,7 +526,7 @@ begin
         RLPrinter.Copies := FNumCopias
       else
         RLPrinter.Copies := 1;
-
+      vAuxDiferencaPDF := 0;
       RLNFe.ShowProgress := FMostrarStatus;
 
       if FMostrarPreview then
@@ -672,7 +673,7 @@ begin
                     '; CNPJ: ' + FNFe.Dest.CNPJCPF +
                     '; Valor total: ' + FormatFloat('###,###,###,###,##0.00', FNFe.Total.ICMSTot.vNF));
       end;
-
+      vAuxDiferencaPDF := 10;
       RLPDFFilter1.ShowProgress := FMostrarStatus;
       RLPDFFilter1.FileName := AFile;
       RLNFe.ShowProgress := FMostrarStatus;

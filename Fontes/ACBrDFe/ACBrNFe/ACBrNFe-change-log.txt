@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[*] Refatoração da impressão do DANFE Fortes(TamanhoFonte_DemaisCampos, TamanhoFonteEndereco e AltLinhaComun não estavão implementados).
+      http://www.projetoacbr.com.br/forum/topic/27389-formatar-danfe-fortes/
+	por: RODRIGO_APOIOSIS
 
 20/01/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 

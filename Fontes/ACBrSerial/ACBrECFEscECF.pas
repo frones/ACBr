@@ -458,6 +458,9 @@ TACBrECFEscECF = class( TACBrECFClass )
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; overload ; override ;
 
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String); override;
+
     Procedure ArquivoMF_DLL(  NomeArquivo : AnsiString  ) ; overload ; override ;
     Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); overload ; override ;
 
@@ -2448,6 +2451,24 @@ begin
   try
     Self.Desativar;
     ECFClass.ArquivoMFD_DLL(ContInicial, ContFinal, NomeArquivo, Documentos, Finalidade, TipoContador);
+  finally
+    DestruirECFClass( ECFClass );
+  end;
+end;
+
+procedure TACBrECFEscECF.PafMF_GerarCAT52(const DataInicial,
+  DataFinal: TDateTime; const DirArquivos: String);
+var
+  ECFClass: TACBrECFClass;
+begin
+  ECFClass := CriarECFClassPorMarca;
+
+  if ECFClass = nil then
+    inherited;
+
+  try
+    Self.Desativar;
+    ECFClass.PafMF_GerarCAT52(DataInicial, DataFinal, DirArquivos);
   finally
     DestruirECFClass( ECFClass );
   end;

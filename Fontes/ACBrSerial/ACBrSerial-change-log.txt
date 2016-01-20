@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/01/2015
+-- ACBrECFEscECF --
+[+] Adicionada sobrecarga no método PafMF_GerarCAT52, para usar o método da
+    classe do Fabricante e não o genêrico (por: DSA)
+
 Data: 19/01/2015
 -- ACBrECF --
 [*] Metodo "CancelaCupom" modificado para receber o Número do Cupom a ser cancelado.

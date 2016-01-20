@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/01/2016
+-- pnfsLerListaNFSe --
+[*] Incluido a leitura do grupo <tcCompNfse>.
+    Por: Rubens / Italo Jurisato Junior
+
 -- ACBrNFSeWebServices --
 [*] Incluido a linha para ler a propriedade NfseSubstituidora.
 -- pnfsNFSeR --

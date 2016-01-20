@@ -62,7 +62,7 @@ Data: 19/01/2015
 -- ACBrECFBematech --
 [-] Ajuste no calculo do Path do arquivo "Bemafi32.ini", quando PathDLL não for
     informado.
-[+] Ajueste para configuração correta do "Bemafi32.ini", fazendo uso da chave:
+[+] Ajuste para configuração correta do "Bemafi32.ini", fazendo uso da chave:
     "ProtocoloUnico"
 
 Data: 16/01/2015

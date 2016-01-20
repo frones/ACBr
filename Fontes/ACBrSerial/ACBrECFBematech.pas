@@ -3497,6 +3497,7 @@ procedure TACBrECFBematech.LoadDLLFunctions;
    if not Assigned( LibPointer )  then
    begin
      // Verifica se exite o caminho das DLLs
+     sLibName := '';
      if Length(PathDLL) > 0 then
         sLibName := PathWithDelim(PathDLL);
 
@@ -3543,6 +3544,7 @@ procedure TACBrECFBematech.UnLoadDLLFunctions;
 var
   sLibName: String;
 begin
+  sLibName := '';
   // Verifica se exite o caminho das DLLs
   if Length(PathDLL) > 0 then
      sLibName := PathWithDelim(PathDLL);

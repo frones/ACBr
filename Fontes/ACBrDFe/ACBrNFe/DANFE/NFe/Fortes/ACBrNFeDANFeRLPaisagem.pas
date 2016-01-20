@@ -491,8 +491,8 @@ type
     procedure Header;
     procedure Emitente;
     procedure Destinatario;
-    procedure EnderecoRetirada;
-    procedure EnderecoEntrega;
+    Function EnderecoRetirada : String;
+    Function EnderecoEntrega : String;
     procedure Imposto;
     procedure Transporte;
     procedure DadosAdicionais;
@@ -1245,20 +1245,19 @@ begin
   RLDraw24.Height := RLDraw22.Height;
 end;
 
-procedure TfrlDANFeRLPaisagem.EnderecoEntrega;
-var
-  sEndereco: WideString;
+Function TfrlDANFeRLPaisagem.EnderecoEntrega : String;
 begin
+  Result := '';
   if FNFe.Entrega.xLgr > '' then
   begin
     with FNFe.Entrega do
     begin
-      sEndereco := XLgr +
+      Result := XLgr +
                     IfThen(Nro = '0', '', ', ' + Nro) +
                     IfThen(xCpl > '','', ' - ' + xCpl );
 
 
-      sEntrega := 'LOCAL DE ENTREGA: ' + sEndereco + ' - ' +
+      Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
                     xBairro + ' - ' + xMun + '-' + UF +
                     TrataDocumento( CNPJCPF );
 
@@ -1266,20 +1265,19 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.EnderecoRetirada;
-var
-  sEndereco : WideString;
+Function TfrlDANFeRLPaisagem.EnderecoRetirada : String;
 begin
+  Result := '';
   if FNFe.Retirada.xLgr > '' then
   begin
     with FNFe.Retirada do
     begin
 
-      sEndereco := XLgr +
+      Result := XLgr +
                     IfThen(Nro = '0', '', ', ' + Nro) +
                     IfThen(xCpl > '','', ' - ' + xCpl );
 
-      sRetirada := 'LOCAL DE RETIRADA: ' + sEndereco + ' - ' +
+      Result := 'LOCAL DE RETIRADA: ' + Result + ' - ' +
                     xBairro + ' - ' + xMun + '-' + UF +
                     TrataDocumento( CNPJCPF );
     end;
@@ -1640,42 +1638,31 @@ begin
   // Protocolo de autorização, nos casos de emissão em contingência
   if (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) and
                                               (FNFe.procNFe.cStat = 100) then
-    begin
-      sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
+  begin
+    sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
                      FNFe.procNFe.nProt + ' ' + DateTimeToStr(FNFe.procNFe.dhRecbto);
-      InsereLinhas(sProtocolo, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-    end;
+    InsereLinhas(sProtocolo, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+  end;
 
   // Inscrição Suframa
   if FNFe.Dest.ISUF > '' then
-    begin
-      sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ' ) + FNFe.Dest.ISUF;
-      InsereLinhas(sSuframa, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-    end;
+  begin
+    sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ' ) + FNFe.Dest.ISUF;
+    InsereLinhas(sSuframa, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+  end;
 
-  // Endereço de retirada
-  if FNFe.Retirada.xLgr > '' then
-    begin
-      EnderecoRetirada;
-      sRetirada := sRetirada;
-      InsereLinhas(sRetirada, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-    end;
+  InsereLinhas(EnderecoRetirada, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
 
-  // Endereço de entrega
-  if FNFe.Entrega.xLgr > '' then
-    begin
-      EnderecoEntrega;
-      sEntrega := sEntrega;
-      InsereLinhas(sEntrega, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-    end;
+  InsereLinhas(EnderecoEntrega, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+
 
   // Informações de interesse do fisco
   if FNFe.InfAdic.infAdFisco > '' then
-    begin
-      if FNFe.InfAdic.infCpl > '' then
-        sInfAdFisco := FNFe.InfAdic.infAdFisco + '; '
-      else
-        sInfAdFisco := FNFe.InfAdic.infAdFisco;
+  begin
+    if FNFe.InfAdic.infCpl > '' then
+      sInfAdFisco := FNFe.InfAdic.infAdFisco + '; '
+    else
+      sInfAdFisco := FNFe.InfAdic.infAdFisco;
     end
   else
     sInfAdFisco := '';
@@ -1688,18 +1675,18 @@ begin
 
   // Informações de uso livre do contribuinte com "xCampo" e "xTexto"
   if FNFe.InfAdic.obsCont.Count > 0 then
+  begin
+    sInfContr := '';
+    for i := 0 to (FNFe.InfAdic.obsCont.Count - 1) do
     begin
-      sInfContr := '';
-      for i := 0 to (FNFe.InfAdic.obsCont.Count - 1) do
-        begin
-          if FNFe.InfAdic.obsCont.Items[i].Index =
+      if FNFe.InfAdic.obsCont.Items[i].Index =
                                           (FNFe.InfAdic.obsCont.Count - 1) then
             sInfContr := sInfContr + FNFe.InfAdic.obsCont.Items[i].xCampo +
                               ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto
-          else
-            sInfContr := sInfContr + FNFe.InfAdic.obsCont.Items[i].xCampo +
+      else
+        sInfContr := sInfContr + FNFe.InfAdic.obsCont.Items[i].xCampo +
                             ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto + '; ';
-        end; // for i := 0 to (FNFe.InfAdic.obsCont.Count - 1)
+      end; // for i := 0 to (FNFe.InfAdic.obsCont.Count - 1)
       if (sInfCompl > '') or (sInfAdFisco > '') then
         sInfContr := sInfContr + '; '
     end // if FNFe.InfAdic.obsCont.Count > 0
@@ -1708,23 +1695,23 @@ begin
 
   // Informações de uso livre do fisco com "xCampo" e "xTexto"
   if FNFe.InfAdic.obsFisco.Count > 0 then
+  begin
+    sObsFisco := '';
+    for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1) do
     begin
-      sObsFisco := '';
-      for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1) do
-        begin
-          if FNFe.InfAdic.obsFisco.Items[i].Index =
+      if FNFe.InfAdic.obsFisco.Items[i].Index =
                                           (FNFe.InfAdic.obsFisco.Count - 1) then
-            sObsFisco := sObsFisco + FNFe.InfAdic.obsFisco.Items[i].xCampo +
+        sObsFisco := sObsFisco + FNFe.InfAdic.obsFisco.Items[i].xCampo +
                               ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto
-          else
-            sObsFisco := sObsFisco + FNFe.InfAdic.obsFisco.Items[i].xCampo +
+      else
+        sObsFisco := sObsFisco + FNFe.InfAdic.obsFisco.Items[i].xCampo +
                             ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto + '; ';
-        end; // for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1)
+      end; // for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1)
       if (sInfCompl > '') or (sInfAdFisco > '') then
         sObsFisco := sObsFisco + '; '
     end // if FNFe.InfAdic.obsFisco.Count > 0
   else
-    sObsFisco := '';
+  sObsFisco := '';
 
   // Informações do processo referenciado
   if FNFe.InfAdic.procRef.Count > 0 then
@@ -1747,7 +1734,7 @@ begin
     end; // for i := 0 to (FNFe.InfAdic.procRef.Count - 1)
     if (sInfCompl > '') or (sInfAdFisco > '') then
         sObsProcRef := sObsProcRef + '; '
-  end // if FNFe.InfAdic.procRef.Count > 0
+    end // if FNFe.InfAdic.procRef.Count > 0
   else
     sObsProcRef := '';
 

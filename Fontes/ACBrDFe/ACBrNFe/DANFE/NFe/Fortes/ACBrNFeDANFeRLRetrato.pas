@@ -594,8 +594,8 @@ type
     procedure Header;
     procedure Emitente;
     procedure Destinatario;
-    procedure EnderecoRetirada;
-    procedure EnderecoEntrega;
+    Function  EnderecoRetirada : String;
+    Function  EnderecoEntrega : String;
     procedure Imposto;
     procedure Transporte;
     procedure DadosAdicionais;
@@ -933,11 +933,11 @@ begin
     rlmSiteEmail.Visible := False;
     with rliLogo do
     begin
-      Height := 101;
-      Width := 268;
-      Top := 14;
-      Left := 2;
-      Scaled := False;
+      Height  := 101;
+      Width   := 268;
+      Top     := 14;
+      Left    := 2;
+      Scaled  := False;
       Stretch := True;
     end;
   end;
@@ -1371,20 +1371,19 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLRetrato.EnderecoEntrega;
-var
-  sEndereco : WideString;
+Function  TfrlDANFeRLRetrato.EnderecoEntrega : String;
 begin
+  Result := '';
   if FNFe.Entrega.xLgr > '' then
   begin
     with FNFe.Entrega do
     begin
-      sEndereco := XLgr +
+      Result := XLgr +
                     IfThen(Nro = '0', '', ', ' + Nro) +
                     IfThen(xCpl > '','', ' - ' + xCpl );
 
 
-      sEntrega := 'LOCAL DE ENTREGA: ' + sEndereco + ' - ' +
+      Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
                     xBairro + ' - ' + xMun + '-' + UF +
                     TrataDocumento(CNPJCPF);
 
@@ -1393,19 +1392,18 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLRetrato.EnderecoRetirada;
-var
-  sEndereco: WideString;
+Function TfrlDANFeRLRetrato.EnderecoRetirada : String;
 begin
+  Result := '';
   if FNFe.Retirada.xLgr > '' then
   begin
     with FNFe.Retirada do
     begin
-      sEndereco := XLgr +
+      Result  := XLgr +
                     IfThen(Nro = '0', '', ', ' + Nro) +
                     IfThen(xCpl > '','', ' - ' + xCpl );
 
-      sRetirada := 'LOCAL DE RETIRADA: ' + sEndereco + ' - ' +
+      Result  := 'LOCAL DE RETIRADA: ' + Result  + ' - ' +
                     xBairro + ' - ' + xMun + '-' + UF +
                     TrataDocumento(CNPJCPF);
 
@@ -1627,19 +1625,10 @@ begin
     InsereLinhas(sSuframa, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  // Endereço de retirada
-  if FNFe.Retirada.xLgr > '' then
-  begin
-    EnderecoRetirada;
-    InsereLinhas(sRetirada, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-  end;
+  InsereLinhas( EnderecoRetirada , iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
 
-  // Endereço de entrega
-  if FNFe.Entrega.xLgr > '' then
-  begin
-    EnderecoEntrega;
-    InsereLinhas(sEntrega, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-  end;
+  InsereLinhas( EnderecoEntrega  , iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+
 
   // Informações de interesse do fisco
   if FNFe.InfAdic.infAdFisco > '' then

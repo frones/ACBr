@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+20/01/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[-] Refataração de EnderecoRetirada e EnderecoEntrega
+      Para adicionar as Tag´s Retirada e Entrega em informações adicionais.
+      por: Henrique Leonardo
+
 16/01/2016
 -- ACBrNFeDANFEFRDM -- 
 [*] Refataração do CarregaParametros.

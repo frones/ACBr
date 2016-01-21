@@ -133,6 +133,7 @@ type
       fDocumentosProcessados : AnsiString ;
       fPathDLL: string;
       fPortaPinPad: Integer;
+      fUsaUTF8: Boolean;
 
      xConfiguraIntSiTefInterativoEx : function (
                 pEnderecoIP: PAnsiChar;
@@ -286,7 +287,8 @@ type
      property OperacaoReImpressao: Integer              read fOperacaoReImpressao  write fOperacaoReImpressao default 112;
      property OnExibeMenu: TACBrTEFDCliSiTefExibeMenu   read fOnExibeMenu          write fOnExibeMenu;
      property OnObtemCampo: TACBrTEFDCliSiTefObtemCampo read fOnObtemCampo         write fOnObtemCampo;
-     property ExibirErroRetorno: Boolean                read fExibirErroRetorno    write fExibirErroRetorno;
+     property ExibirErroRetorno: Boolean                read fExibirErroRetorno    write fExibirErroRetorno default False;
+     property UsaUTF8: Boolean                          read fUsaUTF8              write fUsaUTF8 default False;
    end;
 
 implementation
@@ -489,6 +491,7 @@ begin
                                 // passar antes pelo menu de transações administrativas
   fDocumentosProcessados := '' ;
   fExibirErroRetorno     := False;
+  fUsaUTF8               := False;
 
   fParametrosAdicionais := TStringList.Create;
   fRespostas            := TStringList.Create;
@@ -1044,6 +1047,9 @@ begin
             Resposta := '' ;
             Voltar   := False;
             Digitado := True ;
+
+            if fUsaUTF8 then
+              Mensagem := ACBrStrToAnsi(Mensagem);  // Será convertido para UTF8 em TACBrTEFD.DoExibeMsg
 
             GravaLog( 'ContinuaFuncaoSiTefInterativo, Retornos: STS = '+IntToStr(Result)+
                       ' ProximoComando = '+IntToStr(ProximoComando)+

@@ -2,7 +2,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 473
   Top = 85
   Caption = 'ACBrNFeDANFCeFortesFr'
-  ClientHeight = 751
+  ClientHeight = 749
   ClientWidth = 763
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -39,7 +39,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 2
-      Top = 519
+      Top = 518
       Width = 276
       Height = 222
       AutoSize = True
@@ -851,7 +851,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Left = 2
       Top = 420
       Width = 276
-      Height = 99
+      Height = 98
       AutoSize = True
       BandType = btSummary
       BeforePrint = rlbMensagemFiscalBeforePrint
@@ -1013,6 +1013,567 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Pen.Width = 2
       end
       object lObservacoes: TRLMemo
+        Left = 0
+        Top = 18
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+    end
+  end
+  object rlCancelamento: TRLReport
+    Left = 473
+    Top = 4
+    Width = 280
+    Height = 1512
+    Margins.LeftMargin = 0.610000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 0.610000000000000000
+    Margins.BottomMargin = 0.000000000000000000
+    AllowedBands = [btHeader, btDetail, btSummary, btFooter]
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -9
+    Font.Name = 'Arial'
+    Font.Style = []
+    PageSetup.PaperSize = fpCustom
+    PageSetup.PaperWidth = 74.000000000000000000
+    PageSetup.PaperHeight = 400.000000000000000000
+    PrintDialog = False
+    ShowProgress = False
+    BeforePrint = rlCancelamentoBeforePrint
+    OnDataRecord = rlVendaDataRecord
+    object rlbRodapeCanc: TRLBand
+      Left = 2
+      Top = 345
+      Width = 276
+      Height = 222
+      AutoSize = True
+      BandType = btSummary
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -9
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      object RLDraw9: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 276
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 2
+      end
+      object lConsultaQRCodeCanc: TRLLabel
+        Left = 0
+        Top = 8
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'Consulta via leitor de QR Code'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlBottom
+        ParentFont = False
+      end
+      object imgQRCodeCanc: TRLImage
+        Left = 0
+        Top = 20
+        Width = 276
+        Height = 137
+        Align = faTop
+        Center = True
+        Scaled = True
+      end
+      object RLPanel1: TRLPanel
+        Left = 0
+        Top = 167
+        Width = 276
+        Height = 17
+        Align = faTop
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        object lSistemaCanc: TRLLabel
+          Left = 0
+          Top = 0
+          Width = 276
+          Height = 10
+          Align = faTop
+          Alignment = taRightJustify
+          Caption = 'Projeto ACBr'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = [fsBold, fsItalic]
+          Layout = tlBottom
+          ParentFont = False
+          BeforePrint = lSistemaBeforePrint
+        end
+      end
+      object lProtocoloCanc: TRLLabel
+        Left = 0
+        Top = 157
+        Width = 276
+        Height = 10
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'Protocolo de Autoriza'#231#227'o: 999999999999999 DD/MM/AAAA HH:MM:SS'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlBottom
+        ParentFont = False
+      end
+      object RLPanel2: TRLPanel
+        Left = 0
+        Top = 184
+        Width = 276
+        Height = 38
+        Align = faTop
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+    end
+    object RLSubDetail3: TRLSubDetail
+      Left = 2
+      Top = 8
+      Width = 276
+      Height = 154
+      OnDataRecord = rlbsCabecalhoDataRecord
+      object RLBand10: TRLBand
+        Left = 0
+        Top = 68
+        Width = 276
+        Height = 42
+        AutoSize = True
+        object RLLabel26: TRLLabel
+          Left = 0
+          Top = 0
+          Width = 276
+          Height = 14
+          Align = faTop
+          Alignment = taCenter
+          Caption = 'DANFE NFC-e - Documento Auxiliar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Layout = tlCenter
+          ParentFont = False
+        end
+        object RLLabel27: TRLLabel
+          Left = 0
+          Top = 28
+          Width = 276
+          Height = 14
+          Align = faTop
+          Alignment = taCenter
+          Caption = 'DOCUMENTO CANCELADO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Layout = tlCenter
+          ParentFont = False
+        end
+        object RLLabel28: TRLLabel
+          Left = 0
+          Top = 14
+          Width = 276
+          Height = 14
+          Align = faTop
+          Alignment = taCenter
+          Caption = 'da Nota Fiscal Eletr'#244'nica para Consumidor Final'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Layout = tlCenter
+          ParentFont = False
+        end
+      end
+      object RLBand11: TRLBand
+        Left = 0
+        Top = 0
+        Width = 276
+        Height = 68
+        AutoSize = True
+        object RLPanel3: TRLPanel
+          Left = 0
+          Top = 0
+          Width = 276
+          Height = 68
+          Align = faTop
+          AutoExpand = True
+          AutoSize = True
+          object lRazaoSocialCanc: TRLLabel
+            Left = 0
+            Top = 24
+            Width = 276
+            Height = 12
+            Align = faTop
+            Alignment = taCenter
+            Caption = 'Raz'#195#163'o Social'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Font.Style = []
+            ParentFont = False
+          end
+          object lEmitCNPJ_IE_IM_Camc: TRLLabel
+            Left = 0
+            Top = 36
+            Width = 276
+            Height = 12
+            Align = faTop
+            Alignment = taCenter
+            Caption = 
+              'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
+              '3'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Font.Style = []
+            Layout = tlBottom
+            ParentFont = False
+          end
+          object lEnderecoCanc: TRLMemo
+            Left = 0
+            Top = 48
+            Width = 276
+            Height = 12
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Font.Style = []
+            Lines.Strings = (
+              'Endere'#231'o')
+            ParentFont = False
+          end
+          object RLDraw14: TRLDraw
+            Left = 0
+            Top = 60
+            Width = 276
+            Height = 8
+            Align = faTop
+            DrawKind = dkLine
+            Pen.Width = 2
+          end
+          object lNomeFantasiaCanc: TRLLabel
+            Left = 0
+            Top = 6
+            Width = 276
+            Height = 18
+            Align = faTop
+            Alignment = taCenter
+            Caption = 'Nome Fantasia'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -15
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            ParentFont = False
+          end
+          object RLImage2: TRLImage
+            Left = 0
+            Top = 0
+            Width = 276
+            Height = 6
+            Align = faTop
+            AutoSize = True
+            Center = True
+            Scaled = True
+            Transparent = False
+          end
+        end
+      end
+      object RLBand12: TRLBand
+        Left = 0
+        Top = 110
+        Width = 276
+        Height = 8
+        AutoSize = True
+        BeforePrint = rlbLegendaBeforePrint
+        object RLDraw15: TRLDraw
+          Left = 0
+          Top = 0
+          Width = 276
+          Height = 8
+          Align = faTop
+          DrawKind = dkLine
+          Pen.Width = 2
+        end
+      end
+    end
+    object rlbConsumidorCanc: TRLBand
+      Left = 2
+      Top = 192
+      Width = 276
+      Height = 55
+      AutoSize = True
+      BandType = btSummary
+      BeforePrint = rlbConsumidorCancBeforePrint
+      object RLDraw17: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 276
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 2
+      end
+      object lTitConsumidorCanc: TRLLabel
+        Left = 0
+        Top = 8
+        Width = 276
+        Height = 11
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'CONSUMIDOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lEnderecoConsumidorCanc: TRLMemo
+        Left = 0
+        Top = 43
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Endere'#231'o Consumidor (Logradouro, n'#186', bairro, Munic'#237#173'pio)')
+        ParentFont = False
+      end
+      object lCPF_CNPJ_ID_Canc: TRLMemo
+        Left = 0
+        Top = 19
+        Width = 276
+        Height = 24
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          
+            'CNPJ/CPF/ID Estrangeiro - CCCCCCCCCCCCCCCCCCCC NOME DO CONSUMIDO' +
+            'R')
+        ParentFont = False
+      end
+    end
+    object rlbMensagemFiscalCanc: TRLBand
+      Left = 2
+      Top = 247
+      Width = 276
+      Height = 98
+      AutoSize = True
+      BandType = btSummary
+      BeforePrint = rlbMensagemFiscalCancBeforePrint
+      object RLDraw18: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 276
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 2
+      end
+      object lMensagemFiscalCanc: TRLLabel
+        Left = 0
+        Top = 8
+        Width = 276
+        Height = 10
+        Align = faTop
+        Alignment = taCenter
+        Caption = #195#129'REA DE MENSAGEM FISCAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lChaveDeAcessoCanc: TRLLabel
+        Left = 0
+        Top = 74
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Caption = '9999 9999 9999 9999 9999 9999 9999 9999 9999 9999 9999'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTitChaveAcessoCanc: TRLLabel
+        Left = 0
+        Top = 62
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'CHAVE DE ACESSO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lNumeroSerieCanc: TRLLabel
+        Left = 0
+        Top = 18
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'N'#250'mero 999999999 S'#233'rie 999'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTitConsulteChaveCanc: TRLMemo
+        Left = 0
+        Top = 50
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Consulte pela Chave de Acesso em www.')
+        ParentFont = False
+      end
+      object lEmissaoViaCanc: TRLLabel
+        Left = 0
+        Top = 30
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'Emiss'#227'o DD/MM/AAAA HH:MM:SS  - Via Estabelecimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLDraw19: TRLDraw
+        Left = 0
+        Top = 42
+        Width = 276
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 2
+      end
+      object lCanceladaCanc: TRLLabel
+        Left = 0
+        Top = 86
+        Width = 276
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+    end
+    object rlbMensagemContribuinteCanc: TRLBand
+      Left = 2
+      Top = 162
+      Width = 276
+      Height = 30
+      AutoSize = True
+      BandType = btSummary
+      BeforePrint = rlbMensagemContribuinteCancBeforePrint
+      object lMensagemContribuinteCamc: TRLLabel
+        Left = 0
+        Top = 8
+        Width = 276
+        Height = 10
+        Align = faTop
+        Alignment = taCenter
+        Caption = 'AREA DE MENSAGEM DE INTERESSE DO CONTRIBUINTE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw20: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 276
+        Height = 8
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 2
+      end
+      object lObservacoesCanc: TRLMemo
         Left = 0
         Top = 18
         Width = 276

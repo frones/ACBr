@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/01/2015
+-- ACBrTEFDCliSiTEF --    
+[+] Adicionado nova propriedade "UsaUTF8: Boolean default False", 
+	que permite informar ao componente que as resposta do Servidor SiTef estão em UTF8
+
 Data: 09/12/2015
 -- ACBrTEFDCliSiTEF --    
 [+] Adicionado suporte a configuração da porta do Pin-PAD

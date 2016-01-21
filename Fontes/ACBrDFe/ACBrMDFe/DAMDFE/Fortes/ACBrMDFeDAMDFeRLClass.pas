@@ -92,7 +92,8 @@ begin
     begin
       for i := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
       begin
-        frlDAMDFeRLRetrato.Imprimir(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
+        frlDAMDFeRLRetrato.Imprimir(Self,
+          TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
           , Logo
           , Email
           , ExpandirLogoMarca
@@ -113,7 +114,8 @@ begin
       end;
     end
     else
-      frlDAMDFeRLRetrato.Imprimir(MDFe
+      frlDAMDFeRLRetrato.Imprimir(Self,
+        MDFe
         , Logo
         , Email
         , ExpandirLogoMarca
@@ -155,7 +157,8 @@ begin
         NomeArq := OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe.infMDFe.ID);
         NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-mdfe.pdf';
 
-        frlDAMDFeRLRetrato.SavePDF(NomeArq
+        frlDAMDFeRLRetrato.SavePDF(Self,
+          NomeArq
           , TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe
           , Logo
           , Email
@@ -178,7 +181,8 @@ begin
       NomeArq := OnlyNumber(MDFe.infMDFe.ID);
       NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-mdfe.pdf';
 
-      frlDAMDFeRLRetrato.SavePDF(NomeArq
+      frlDAMDFeRLRetrato.SavePDF(Self,
+        NomeArq
         , MDFe
         , Logo
         , Email
@@ -216,7 +220,8 @@ begin
         begin
           if OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
           begin
-            frmMDFeDAEventoRL.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+            frmMDFeDAEventoRL.Imprimir(Self,
+              TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
               FLogo,
               FNumCopias,
               FSistema,
@@ -235,7 +240,8 @@ begin
 
         if Impresso = False then
         begin
-          frmMDFeDAEventoRL.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+          frmMDFeDAEventoRL.Imprimir(Self,
+            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
             FLogo,
             FNumCopias,
             FSistema,
@@ -253,7 +259,8 @@ begin
     begin
       for i := 0 to (TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Count - 1) do
       begin
-        frmMDFeDAEventoRL.Imprimir(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+        frmMDFeDAEventoRL.Imprimir(Self,
+          TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
           FLogo,
           FNumCopias,
           FSistema,
@@ -292,7 +299,8 @@ begin
         begin
           if OnlyNumber(TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe.infMDFe.ID) = TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.chMDFe then
           begin
-            frmMDFeDAEventoRL.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+            frmMDFeDAEventoRL.SavePDF(Self,
+              TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
               FLogo,
               sFile,
               FSistema,
@@ -309,7 +317,8 @@ begin
 
         if Impresso = False then
         begin
-          frmMDFeDAEventoRL.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+          frmMDFeDAEventoRL.SavePDF(Self,
+            TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
             FLogo,
             sFile,
             FSistema,
@@ -329,7 +338,8 @@ begin
                  OnlyNumber(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i].InfEvento.ID) +
                  '-procEventoMDFe.pdf';
 
-        frmMDFeDAEventoRL.SavePDF(TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
+        frmMDFeDAEventoRL.SavePDF(Self,
+        TACBrMDFe(ACBrMDFe).EventoMDFe.Evento.Items[i],
           FLogo,
           sFile,
           FSistema,

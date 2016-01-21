@@ -113,7 +113,8 @@ type
     procedure SetBarCodeImage ( ACode : String ; RLImage : TRLImage ) ;
   public
     { Public declarations }
-    class procedure Imprimir(ANFSe           : TNFSe;
+    class procedure Imprimir(AOwner: TComponent;
+														 ANFSe           : TNFSe;
                              ALogo           : String  = '';
                              AEmail          : String  = '';
                              AFax            : String  = '';
@@ -149,7 +150,8 @@ type
                              // Augusto Fontana
                              APrintDialog    : Boolean = True);
 
-    class procedure SavePDF(AFile           : String;
+    class procedure SavePDF(AOwner: TComponent;
+														AFile           : String;
                             ANFSe           : TNFSe;
                             ALogo           : String  = '';
                             AEmail          : String  = '';
@@ -273,7 +275,7 @@ begin
   then Value := '';
 end;
 
-class procedure TfrlDANFSeRL.Imprimir(ANFSe: TNFSe; ALogo, AEmail, AFax: String;
+class procedure TfrlDANFSeRL.Imprimir(AOwner: TComponent; ANFSe: TNFSe; ALogo, AEmail, AFax: String;
   ANumCopias: Integer; ASistema, ASite, AUsuario: String; APreview: Boolean;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   AImpressora, APrestLogo, APrefeitura, ARazaoSocial, AEndereco,
@@ -281,7 +283,7 @@ class procedure TfrlDANFSeRL.Imprimir(ANFSe: TNFSe; ALogo, AEmail, AFax: String;
   AT_InscEstadual, AT_InscMunicipal, AOutrasInformacaoesImp, AAtividade, AT_Fone,
   AT_Endereco, AT_Complemento, AT_Email : String; APrintDialog: Boolean);
 begin
- with Create ( nil ) do
+ with Create ( AOwner ) do
   try
    FNFSe                  := ANFSe;
    FLogo                  := ALogo;
@@ -335,7 +337,7 @@ begin
   end ;
 end;
 
-class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
+class procedure TfrlDANFSeRL.SavePDF(AOwner: TComponent; AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AFax: String; ANumCopias: Integer; ASistema, ASite, AUsuario: String;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
@@ -343,7 +345,7 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AOutrasInformacaoesImp, AAtividade, AT_Fone,
   AT_Endereco, AT_Complemento, AT_Email : String);
 begin
-  with Create ( nil ) do
+  with Create ( AOwner ) do
    try
     FNFSe           := ANFSe;
     FLogo           := ALogo;

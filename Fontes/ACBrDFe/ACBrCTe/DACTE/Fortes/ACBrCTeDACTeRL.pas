@@ -106,7 +106,7 @@ type
     procedure rllSemValorFiscalPrint(Sender: TObject; var Value: string);
     function getTextoResumoCanhoto: string;
   public
-    class procedure Imprimir(ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
+    class procedure Imprimir(AOwner: TComponent; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
       AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
       AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
       ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True;
@@ -114,7 +114,7 @@ type
       AMargemDireita: double = 0.51; AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho;
       ACTeCancelada: boolean = False; AEPECEnviado: boolean = False; APrintDialog : Boolean = True);
 
-    class procedure SavePDF(AFile: string; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
+    class procedure SavePDF(AOwner: TComponent; AFile: string; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
       AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
       AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
       ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; AMargemSuperior: double = 0.8;
@@ -133,7 +133,7 @@ uses MaskUtils, ACBrDFeUtil, pcteConversaoCTe, ACBrUtil;
  {$R *.dfm}
 {$endif}
 
-class procedure TfrmDACTeRL.Imprimir(ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
+class procedure TfrmDACTeRL.Imprimir(AOwner: TComponent; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
   AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
   AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1; ASistema: string = '';
   AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMargemSuperior: double = 0.8;
@@ -141,7 +141,7 @@ class procedure TfrmDACTeRL.Imprimir(ACTe: TCTe; ALogo: string = ''; AEmail: str
   AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False;
   AEPECEnviado: boolean = False; APrintDialog: Boolean = True);
 begin
-  with Create(nil) do
+  with Create(AOwner) do
     try
       FCTe := ACTe;
       FLogo := ALogo;
@@ -184,14 +184,14 @@ begin
     end;
 end;
 
-class procedure TfrmDACTeRL.SavePDF(AFile: string; ACTe: TCTe; ALogo: string = '';
+class procedure TfrmDACTeRL.SavePDF(AOwner: TComponent; AFile: string; ACTe: TCTe; ALogo: string = '';
   AEmail: string = ''; AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False;
   AHoraSaida: string = ''; AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
   ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; AMargemSuperior: double = 0.8;
   AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
   APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False; AEPECEnviado: boolean = False);
 begin
-  with Create(nil) do
+  with Create(AOwner) do
     try
       FCTe := ACTe;
       FLogo := ALogo;

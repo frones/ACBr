@@ -120,7 +120,7 @@ begin
   if CTe = nil then
   begin
     for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
-      frmDACTeRLRetrato.Imprimir(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe
+      frmDACTeRLRetrato.Imprimir(Self, TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe
         , Logo
         , Email
         , ImprimirHoraSaida
@@ -144,7 +144,8 @@ begin
 		    , PrintDialog);
   end
   else
-    frmDACTeRLRetrato.Imprimir(CTe
+    frmDACTeRLRetrato.Imprimir(Self,
+       CTe
       , Logo
       , Email
       , ImprimirHoraSaida
@@ -205,7 +206,8 @@ begin
       NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe.infCTe.ID);
       NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-cte.pdf';
 
-      frmDACTeRLRetrato.SavePDF(NomeArq
+      frmDACTeRLRetrato.SavePDF(Self,
+        NomeArq
         , TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe
         , Logo
         , Email
@@ -231,7 +233,8 @@ begin
   begin
     NomeArq := OnlyNumber(CTe.infCTe.ID);
     NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-cte.pdf';
-    frmDACTeRLRetrato.SavePDF(NomeArq
+    frmDACTeRLRetrato.SavePDF(Self,
+      NomeArq
       , CTe
       , Logo
       , Email

@@ -2286,7 +2286,7 @@ begin
 
       except
       end;
-
+      AguardaImpressao := True;
       EnviaComando(FS + 'F' + #211, 15) ;  // Cancela Cupom
 
       RespostasComando.Clear;

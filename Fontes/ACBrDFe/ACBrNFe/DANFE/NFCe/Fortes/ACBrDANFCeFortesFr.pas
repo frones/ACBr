@@ -67,6 +67,7 @@ type
     FpNFe: TNFe;
 
     procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
+    procedure ImprimirCancelado(const DanfeResumido : Boolean = False; const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -75,6 +76,7 @@ type
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
+    procedure ImprimirDANFECancelado(NFE : TNFe = nil);
   published
   end ;
 
@@ -163,6 +165,49 @@ type
     lEmissaoVia: TRLLabel;
     RLDraw8: TRLDraw;
     lCancelada: TRLLabel;
+    rlCancelamento: TRLReport;
+    rlbRodapeCanc: TRLBand;
+    RLDraw9: TRLDraw;
+    lConsultaQRCodeCanc: TRLLabel;
+    imgQRCodeCanc: TRLImage;
+    RLPanel1: TRLPanel;
+    lSistemaCanc: TRLLabel;
+    lProtocoloCanc: TRLLabel;
+    RLPanel2: TRLPanel;
+    RLSubDetail3: TRLSubDetail;
+    RLBand10: TRLBand;
+    RLLabel26: TRLLabel;
+    RLLabel27: TRLLabel;
+    RLLabel28: TRLLabel;
+    RLBand11: TRLBand;
+    RLPanel3: TRLPanel;
+    lRazaoSocialCanc: TRLLabel;
+    lEmitCNPJ_IE_IM_Camc: TRLLabel;
+    lEnderecoCanc: TRLMemo;
+    RLDraw14: TRLDraw;
+    lNomeFantasiaCanc: TRLLabel;
+    RLImage2: TRLImage;
+    rlbConsumidorCanc: TRLBand;
+    RLDraw17: TRLDraw;
+    lTitConsumidorCanc: TRLLabel;
+    lEnderecoConsumidorCanc: TRLMemo;
+    lCPF_CNPJ_ID_Canc: TRLMemo;
+    rlbMensagemFiscalCanc: TRLBand;
+    RLDraw18: TRLDraw;
+    lMensagemFiscalCanc: TRLLabel;
+    lChaveDeAcessoCanc: TRLLabel;
+    lTitChaveAcessoCanc: TRLLabel;
+    lNumeroSerieCanc: TRLLabel;
+    lTitConsulteChaveCanc: TRLMemo;
+    lEmissaoViaCanc: TRLLabel;
+    RLDraw19: TRLDraw;
+    lCanceladaCanc: TRLLabel;
+    rlbMensagemContribuinteCanc: TRLBand;
+    lMensagemContribuinteCamc: TRLLabel;
+    RLDraw20: TRLDraw;
+    lObservacoesCanc: TRLMemo;
+    RLBand12: TRLBand;
+    RLDraw15: TRLDraw;
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -191,6 +236,13 @@ type
     procedure rlbDetItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbDescItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbOutroItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlCancelamentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbMensagemContribuinteCancBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure rlbConsumidorCancBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure rlbMensagemFiscalCancBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
   private
     fACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes;
     fNumItem : Integer;
@@ -300,6 +352,51 @@ begin
 
     if ACBrNFeDANFCeFortes.NFeCancelada then
       lCancelada.Caption := ACBrStr('NF-e CANCELADA');
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbMensagemFiscalCancBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+  with ACBrNFeDANFCeFortes.FpNFe do
+  begin
+    PrintIt := True ;
+
+    if Ide.tpAmb = taHomologacao then
+    begin
+      lMensagemFiscalCanc.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+    end
+    else
+    begin
+      if Ide.tpEmis <> teNormal then
+        lMensagemFiscalCanc.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
+      else
+        lMensagemFiscalCanc.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+    end;
+
+    lNumeroSerieCanc.Caption := ACBrStr(
+      'Número ' + IntToStrZero(Ide.nNF, 9) + ' - ' +
+      'Série ' + IntToStrZero(Ide.serie, 3)
+    );
+
+    lEmissaoViaCanc.Caption := ACBrStr(
+      'Emissão ' + DateTimeToStr(Ide.dEmi) + ' - ' +
+      'Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Estabelecimento')
+    );
+
+    lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
+       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
+
+    lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
+
+    if procNFe.cStat = 0 then
+    begin
+      lChaveDeAcessoCanc.Caption    := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
+      lChaveDeAcessoCanc.Font.Color := clRed;
+    end;
+
+    if ACBrNFeDANFCeFortes.NFeCancelada then
+      lCanceladaCanc.Caption := ACBrStr('NF-e CANCELADA');
   end;
 end;
 
@@ -615,6 +712,37 @@ begin
   end;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.rlbConsumidorCancBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  with ACBrNFeDANFCeFortes.FpNFe do
+  begin
+    if (Dest.idEstrangeiro = '') and
+       (Dest.CNPJCPF = '') then
+     begin
+        lCPF_CNPJ_ID_Canc.Lines.Text := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
+     end
+    else if Dest.idEstrangeiro <> '' then
+     begin
+       lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+Dest.idEstrangeiro+' '+Dest.xNome;
+     end
+    else
+     begin
+       if Length(trim(Dest.CNPJCPF)) > 11 then
+          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCNPJ(Dest.CNPJCPF)
+       else
+          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCPF(Dest.CNPJCPF);
+
+       lCPF_CNPJ_ID_Canc.Lines.Text  := lCPF_CNPJ_ID_Canc.Caption+' '+Dest.xNome;
+     end;
+     lEnderecoConsumidorCanc.Lines.Text := Trim(Dest.EnderDest.xLgr)+' '+
+                                           Trim(Dest.EnderDest.nro)+' '+
+                                           Trim(Dest.EnderDest.xCpl)+' '+
+                                           Trim(Dest.EnderDest.xBairro)+' '+
+                                           Trim(Dest.EnderDest.xMun);
+  end;
+end;
+
 procedure TACBrNFeDANFCeFortesFr.rlbLei12741BeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
@@ -647,6 +775,22 @@ begin
   end;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.rlbMensagemContribuinteCancBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+  Printit := False;
+
+  with ACBrNFeDANFCeFortes.FpNFe.InfAdic do
+  begin
+    if infCpl <> '' then
+    begin
+      PrintIt := True ;
+
+      lObservacoesCanc.Lines.Add( StringReplace( infCpl, ';', #13, [rfReplaceAll] ) );
+    end;
+  end;
+end;
+
 procedure TACBrNFeDANFCeFortesFr.rlbsCabecalhoDataRecord(Sender: TObject;
   RecNo: integer; CopyNo: integer; var Eof: boolean;
   var RecordAction: TRLRecordAction);
@@ -672,6 +816,77 @@ begin
 
   if PrintIt then
     lTroco.Caption := FormatFloatBr(fACBrNFeDANFCeFortes.vTroco,'#,###,##0.00');;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlCancelamentoBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  qrcode: String;
+  TotalPaginaPixel: Integer;
+  LogoStream: TStringStream;
+begin
+  fNumItem  := 0;
+  fNumPagto := 0;
+  fTotalPagto := 0;
+  fNumObs   := 0;
+  fObsFisco.Clear;
+
+  imgLogo.Height:=100;
+
+  with ACBrNFeDANFCeFortes.FpNFe do
+  begin
+    lNomeFantasiaCanc.Caption   := Emit.xFant ;
+    lRazaoSocialCanc.Caption    := Emit.xNome ;
+    lEmitCNPJ_IE_IM_Camc.Caption := CompoemCliche;
+    lEnderecoCanc.Lines.Text    := CompoemEnderecoCFe;
+
+    if ACBrNFeDANFCeFortes.Logo <> '' then
+    begin
+      if FileExists (ACBrNFeDANFCeFortes.Logo) then
+        imgLogo.Picture.LoadFromFile(ACBrNFeDANFCeFortes.Logo)
+      else
+      begin
+        LogoStream := TStringStream.Create(ACBrNFeDANFCeFortes.Logo);
+        try
+          imgLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        finally
+          LogoStream.Free;
+        end;
+      end;
+    end;
+
+    // QRCode  //
+    if EstaVazio(Trim(infNFeSupl.qrCode)) then
+      qrcode := TACBrNFe(ACBrNFeDANFCeFortes.ACBrNFe).GetURLQRCode( ide.cUF, ide.tpAmb,
+                                     OnlyNumber(InfNFe.ID),  //correcao para pegar somente numeros, estava indo junto o NFE
+                                     ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
+                                     ide.dEmi,
+                                     Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
+                                     signature.DigestValue)
+    else
+      qrcode := infNFeSupl.qrCode;
+
+    PintarQRCode( qrcode , imgQRCodeCanc.Picture );
+
+    lProtocoloCanc.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
+                           ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
+
+  end;
+
+
+  // Calculando o tamanho da Pagina em Pixels //
+  TotalPaginaPixel := rlbsCabecalho.Height +
+                      rlbRodape.Height +
+                      rlbLegenda.Height +
+                      rlbPagamento.Height +
+                      rlbLei12741.Height +
+                      rlbMensagemContribuinte.Height +
+                      rlbMensagemFiscal.Height +
+                      rlbConsumidor.Height +
+                      rlsbDetItem.Height +
+                      Trunc(rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
+  // Pixel para Milimitros //
+  rlVenda.PageSetup.PaperHeight := max( 100, 10+Trunc( TotalPaginaPixel / 3.75 ));
 end;
 
 { TACBrNFeDANFCeFortes }
@@ -701,6 +916,21 @@ begin
     FpNFe := NFE;
 
   Imprimir(False);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirDANFECancelado(NFE: TNFe);
+begin
+  if NFe = nil then
+   begin
+     if not Assigned(ACBrNFe) then
+        raise Exception.Create('Componente ACBrNFe não atribuí­do');
+
+     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+   end
+  else
+    FpNFe := NFE;
+
+  ImprimirCancelado(True);
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumido(NFE: TNFe);
@@ -762,6 +992,58 @@ begin
     begin
       Filtro := AFiltro;
       RLLayout := rlVenda;
+      Resumido := DanfeResumido;
+
+      RLPrinter.Copies := NumCopias ;
+
+      if ACBrNFeDANFCeFortes.Impressora <> '' then
+        RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
+
+      RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
+      RLLayout.ShowProgress:= ACBrNFeDANFCeFortes.MostrarStatus;
+
+      if Filtro = fiNenhum then
+      begin
+        if MostrarPreview then
+          RLLayout.PreviewModal
+        else
+          RLLayout.Print;
+      end
+      else
+      begin
+        if RLLayout.Prepare then
+        begin
+          case Filtro of
+            fiPDF  : RLFiltro := RLPDFFilter1;
+            fiHTML : RLFiltro := RLHTMLFilter1;
+          else
+            exit ;
+          end ;
+
+          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
+          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
+          RLFiltro.FilterPages( RLLayout.Pages );
+        end;
+      end;
+    end;
+  finally
+    frACBrNFeDANFCeFortesFr.Free ;
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirCancelado(const DanfeResumido: Boolean;
+  const AFiltro: TACBrSATExtratoFiltro);
+var
+  frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
+  RLLayout: TRLReport;
+  RLFiltro: TRLCustomSaveFilter;
+begin
+  frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
+  try
+    with frACBrNFeDANFCeFortesFr do
+    begin
+      Filtro := AFiltro;
+      RLLayout := rlCancelamento;
       Resumido := DanfeResumido;
 
       RLPrinter.Copies := NumCopias ;

@@ -1,10 +1,10 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 476
+  Left = 467
   Top = 119
   Caption = 'frlDANFeRLRetrato'
   inherited RLNFe: TRLReport
     Left = 0
-    Top = -312
+    Top = 8
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -828,23 +828,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rlmSiteEmail: TRLMemo
-        Tag = 703
-        Left = 80
-        Height = 18
-        Top = 96
-        Width = 185
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw6: TRLDraw
         Left = 0
         Height = 61
@@ -1036,7 +1019,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 16
         Top = 82
         Width = 85
-        Caption = 'N° 999999999'
+        Caption = 'Nº 999999999'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -1276,23 +1259,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rllFone: TRLLabel
-        Tag = 703
-        Left = 80
-        Height = 12
-        Top = 86
-        Width = 185
-        AutoSize = False
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object rliLogo: TRLImage
         Left = 8
         Height = 63
@@ -1397,7 +1363,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 436
         Height = 14
         Top = 61
-        Width = 298
+        Width = 300
+        Alignment = taCenter
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -1560,7 +1527,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object RLDraw51: TRLDraw
-        Left = 487
+        Left = 468
         Height = 136
         Top = 20
         Width = 1
@@ -1592,7 +1559,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLabel78: TRLLabel
         Tag = 10
-        Left = 495
+        Left = 471
         Height = 7
         Top = 23
         Width = 82
@@ -1612,7 +1579,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 8
         Height = 119
         Top = 34
-        Width = 473
+        Width = 417
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Color = clBlack
@@ -1627,8 +1594,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllHomologacao: TRLLabel
         Left = 295
-        Height = 30
-        Top = 69
+        Height = 22
+        Top = 73
         Width = 152
         Align = faCenter
         Alignment = taCenter
@@ -1908,7 +1875,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 480
         Height = 14
         Top = 85
-        Width = 38
+        Width = 40
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -1942,7 +1909,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 529
         Height = 14
         Top = 25
-        Width = 112
+        Width = 115
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -1976,7 +1943,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 581
         Height = 14
         Top = 55
-        Width = 60
+        Width = 63
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -2010,7 +1977,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 529
         Height = 14
         Top = 85
-        Width = 112
+        Width = 116
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -2044,7 +2011,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 654
         Height = 14
         Top = 25
-        Width = 80
+        Width = 83
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -2078,7 +2045,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 654
         Height = 14
         Top = 55
-        Width = 80
+        Width = 83
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -2112,7 +2079,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 654
         Height = 14
         Top = 85
-        Width = 80
+        Width = 83
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -5303,7 +5270,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N° DUPLICATA'
+        Caption = 'Nº DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5354,7 +5321,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N° DUPLICATA'
+        Caption = 'Nº DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5405,7 +5372,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N° DUPLICATA'
+        Caption = 'Nº DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -5456,7 +5423,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 14
         Width = 54
         Alignment = taCenter
-        Caption = 'N° DUPLICATA'
+        Caption = 'Nº DUPLICATA'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
@@ -6423,7 +6390,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 387
         Height = 14
         Top = 55
-        Width = 190
+        Width = 192
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -6525,7 +6492,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 508
         Height = 14
         Top = 25
-        Width = 66
+        Width = 70
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -6594,7 +6561,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 588
         Height = 14
         Top = 25
-        Width = 21
+        Width = 25
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -6628,7 +6595,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 588
         Height = 14
         Top = 55
-        Width = 21
+        Width = 25
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -7943,7 +7910,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 20
         Width = 94
         Alignment = taCenter
-        Caption = 'N° 000.000.000'
+        Caption = 'Nº 000.000.000'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -8070,6 +8037,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object RlbDadoPagamento: TRLLabel
+        Tag = 703
         Left = 10
         Height = 12
         Top = 26
@@ -8086,6 +8054,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object RlbDadoNumero: TRLLabel
+        Tag = 703
         Left = 180
         Height = 10
         Top = 26
@@ -8104,6 +8073,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object RlbDadoValorOriginal: TRLLabel
+        Tag = 703
         Left = 264
         Height = 10
         Top = 26
@@ -8223,6 +8193,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object RlbDadoValorDesconto: TRLLabel
+        Tag = 703
         Left = 398
         Height = 10
         Top = 26
@@ -8258,6 +8229,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object RlbDadoValorLiquido: TRLLabel
+        Tag = 703
         Left = 522
         Height = 10
         Top = 26

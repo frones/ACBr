@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/01/2015
+-- ACBrECFDaruma --
+[*] Melhoria para que rotina de Cancelamento não acuse TimeOut em cupons com muitos 
+	itens: (por: Luiz Fernando)
+	http://www.projetoacbr.com.br/forum/topic/27571-cancelamento-de-cupom-daruma-fs700/
+
 Data: 20/01/2015
 -- ACBrECFEscECF --
 [+] Adicionada sobrecarga no método PafMF_GerarCAT52, para usar o método da

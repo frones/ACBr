@@ -1,7 +1,7 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 598
+  Left = 244
   Height = 920
-  Top = 99
+  Top = 56
   Width = 838
   HorzScrollBar.Page = 797
   VertScrollBar.Page = 920
@@ -15,7 +15,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   inherited RLMDFe: TRLReport
     Tag = 1
     Left = 3
-    Top = 8
+    Top = 0
     Font.Height = -8
     Font.Name = 'Courier New'
     Margins.LeftMargin = 7
@@ -28,7 +28,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Height = 267
       Top = 26
       Width = 742
-      BandType = btTitle
+      BandType = btHeader
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -49,9 +49,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
       end
       object rlsQuadro3: TRLDraw
-        Left = 352
+        Left = 351
         Height = 169
-        Top = 0
+        Top = -4
         Width = 390
         Angle = 0
         Brush.Style = bsClear
@@ -399,27 +399,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Color = clWindowText
         Font.Height = -7
         Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
-      end
-      object rllPageNumber: TRLLabel
-        Left = 136
-        Height = 15
-        Top = 182
-        Width = 32
-        Alignment = taCenter
-        AutoSize = False
-        Caption = '00/00'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
         RealBounds.Left = 0
@@ -818,7 +797,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Left = 360
         Height = 57
         Top = 53
-        Width = 99
+        Width = 370
+        Alignment = taCenter
+        AutoSize = False
         BarcodeType = bcCode128C
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
@@ -891,6 +872,26 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
         Transparent = False
+      end
+      object RLSystemInfo1: TRLSystemInfo
+        Left = 136
+        Height = 13
+        Top = 182
+        Width = 32
+        Alignment = taCenter
+        AutoSize = False
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        Info = itPagePreview
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Text = '0#/0#'
       end
     end
     object rlb_2_Rodo: TRLBand[1]
@@ -1365,7 +1366,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_3_Aereo: TRLBand[2]
       Left = 26
-      Height = 40
+      Height = 1
       Top = 501
       Width = 742
       BandType = btColumnHeader
@@ -1375,12 +1376,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      Visible = False
       BeforePrint = rlb_3_AereoBeforePrint
     end
     object rlb_4_Aquav: TRLBand[3]
       Left = 26
-      Height = 120
-      Top = 541
+      Height = 1
+      Top = 502
       Width = 742
       BandType = btColumnHeader
       Color = clWhite
@@ -1389,6 +1391,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      Visible = False
       BeforePrint = rlb_4_AquavBeforePrint
       object rlShape20: TRLDraw
         Left = 0
@@ -1708,8 +1711,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_5_Ferrov: TRLBand[4]
       Left = 26
-      Height = 40
-      Top = 661
+      Height = 1
+      Top = 503
       Width = 742
       BandType = btColumnHeader
       Color = clWhite
@@ -1718,14 +1721,15 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      Visible = False
       BeforePrint = rlb_5_FerrovBeforePrint
     end
     object rlb_6_Observacao: TRLBand[5]
       Left = 26
       Height = 152
-      Top = 701
+      Top = 558
       Width = 742
-      BandType = btColumnHeader
+      BandType = btSummary
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -1806,9 +1810,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
       end
       object rllDataHoraImpressao: TRLLabel
-        Left = 2
+        Left = 1
         Height = 10
-        Top = 138
+        Top = 139
         Width = 77
         Color = clWhite
         Font.Color = clWindowText
@@ -1845,7 +1849,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_8_Documentos_Lista: TRLBand[6]
       Left = 26
       Height = 22
-      Top = 885
+      Top = 536
       Width = 742
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1923,7 +1927,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_7_Documentos_Titulos: TRLBand[7]
       Left = 26
       Height = 32
-      Top = 853
+      Top = 504
       Width = 742
       BandType = btColumnHeader
       Borders.Sides = sdCustom
@@ -2090,6 +2094,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
     end
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    left = 226
+    top = 0
   end
   inherited dsItens: TDataSource
     left = 387

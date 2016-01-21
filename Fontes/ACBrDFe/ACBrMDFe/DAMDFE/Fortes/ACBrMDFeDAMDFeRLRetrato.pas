@@ -73,7 +73,6 @@ type
     rlLabel4: TRLLabel;
     rllNumMDFe: TRLLabel;
     rlLabel25: TRLLabel;
-    rllPageNumber: TRLLabel;
     rlLabel33: TRLLabel;
     rllEmissao: TRLLabel;
     rlLabel77: TRLLabel;
@@ -174,6 +173,7 @@ type
     RLDraw3: TRLDraw;
     rllUFDescarrega: TRLLabel;
     RLLabel11: TRLLabel;
+    RLSystemInfo1: TRLSystemInfo;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -218,8 +218,15 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   vStringStream: TStringStream;
+  ImprimePagComp : Boolean;
 begin
   inherited;
+
+  ImprimePagComp                        := (RLMDFe.PageNumber = 1);
+  if ImprimePagComp then
+    rlb_1_DadosManifesto.Height         := 267
+  else
+    rlb_1_DadosManifesto.Height         := 200;
 
   {$IFNDEF BORLAND}
   rlLabel8.Layout := tlCenter;
@@ -307,13 +314,13 @@ begin
     rllProtocolo.Font.Size := 5;
     rllProtocolo.Font.Style := [];
     rllProtocolo.Caption := ACBrStr('Impressão em contingência. Obrigatória a autorização em 168 horas' +
-      ' após esta impressão (') + FormatDateTimeBr(Now) + ')';
+      ' após esta Emissão (') + FormatDateTime('dd/mm/yyyy hh:nn', Now) + ')';
   end;
 
   rllModelo.Caption := FMDFe.Ide.modelo;
   rllSerie.Caption := FormatFloat('000', FMDFe.Ide.serie);
   rllNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-  rllPageNumber.Caption := format('%2.2d', [RLMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
+//  rllPageNumber.Caption := format('%2.2d', [RLMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
   rllEmissao.Caption := FormatDateTimeBr(FMDFe.Ide.dhEmi);
   rllUFCarrega.Caption    := FMDFe.Ide.UFIni;
   rllUFDescarrega.Caption := FMDFe.Ide.UFFim;

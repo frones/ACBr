@@ -1068,18 +1068,15 @@ procedure TGerador.gtAjustarRegistros(const ID: string);
 var
   i, j: integer;
   s, idLocal: string;
-  ListArquivo: TstringList;
   ListCorrigido: TstringList;
   ListTAGs: TstringList;
 begin
   if FLayoutArquivoTXT.Count = 0 then
     exit;
   ListTAGs := TStringList.Create;
-  ListArquivo := TStringList.Create;
   ListCorrigido := TStringList.Create;
   // Elimina registros não utilizados
   gtEliminarRegistros;
-  ListArquivo.Text := FArquivoFormatoTXT;
   ListCorrigido.Text := FArquivoFormatoTXT;
   // Insere dados da chave da Nfe
   for i := 0 to ListCorrigido.count - 1 do
@@ -1116,7 +1113,6 @@ begin
   FArquivoFormatoTXT := ListCorrigido.Text;
   //
   ListTAGs.Free;
-  ListArquivo.Free;
   ListCorrigido.Free;
 end;
 

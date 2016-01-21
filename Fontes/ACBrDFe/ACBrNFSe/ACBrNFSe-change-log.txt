@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2016
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alterado a linha que gera a tag <Competencia> para o provedor GovDigital e
+    Tecnos.
+    Por: Hugo / Italo Jurisato Junior
+
 20/01/2016
 -- pnfsLerListaNFSe --
 [*] Incluido a leitura do grupo <tcCompNfse>.

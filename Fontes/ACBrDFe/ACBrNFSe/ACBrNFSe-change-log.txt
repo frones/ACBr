@@ -51,7 +51,7 @@ Símbolo : Significado
 -- ACBrNFSeNotasFiscais --
 [*] Incluida uma condição que só compara o CNPJ do XML com o do certificado,
     case tenha sido informado o numero de série do mesmo.
-    Por: Marcos Genere / Italo Jurisato Junior
+    Por: Marcos Gerene / Italo Jurisato Junior
 -- ACBrNFSeWebServices / pnfsLerListaNFSe / pnfsNFSeR --
 [*] Incluida as linhas para a leitura da data e codigo do cancelamento.
     Por: Italo Jurisato Junior

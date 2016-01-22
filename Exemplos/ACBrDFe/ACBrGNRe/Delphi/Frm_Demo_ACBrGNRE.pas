@@ -7,8 +7,8 @@ interface
 uses IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  pcnConversao, pgnreConversao, ACBrGNRE, ACBrGNREGuiaClass, ACBrGNREGuiaFR,
-  ACBrDFeUtil, frxClass;
+  pcnConversao, pgnreConversao, ACBrGNRE, ACBrGNREGuiaClass,
+  ACBrDFeUtil, ACBrBase, ACBrDFe;
 
 type
   TfrmDemo_ACBrGNRE = class(TForm)
@@ -113,7 +113,6 @@ type
     MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     ACBrGNRE1: TACBrGNRE;
-    ACBrGNREGuiaFR1: TACBrGNREGuiaFR;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -129,7 +128,8 @@ type
     procedure btnGerarPDFClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure ACBrGNRE1StatusChange(Sender: TObject);
-    procedure ACBrGNRE1GerarLog(const Mensagem: String);
+    procedure ACBrGNRE1GerarLog(const ALogLine: String;
+      var Tratado: Boolean);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -152,7 +152,7 @@ implementation
 uses
  FileCtrl, DateUtils,
  ufrmStatus,
- ACBrGNREGuias, ACBrGNREUtil, ACBrGNREConfiguracoes;
+ ACBrGNREGuias, ACBrGNREConfiguracoes, pcnAuxiliar;
 
 const
   SELDIRHELP = 1000;
@@ -267,7 +267,6 @@ begin
     edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
 
     ACBrGNRE1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
-    ACBrGNRE1.Configuracoes.Geral.PathSalvar   := edtPathLogs.Text;
 
     cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
     rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
@@ -277,12 +276,13 @@ begin
     ACBrGNRE1.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
 
     ACBrGNRE1.Configuracoes.Arquivos.Salvar           := True;
-    ACBrGNRE1.Configuracoes.Arquivos.PastaMensal      := True;
+    ACBrGNRE1.Configuracoes.Arquivos.SepararPorMes    := True;
     ACBrGNRE1.Configuracoes.Arquivos.AdicionarLiteral := True;
+    ACBrGNRE1.Configuracoes.Arquivos.PathGNRE         := edtPathLogs.Text;
 
     Caminho := ACBrGNRE1.Configuracoes.Arquivos.GetPathGNRE(0);
 
-    ACBrGNRE1.Configuracoes.Geral.PathSalvar := Caminho;
+    ACBrGNRE1.Configuracoes.Arquivos.PathSalvar := Caminho;
 
     edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'');
     edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'');
@@ -293,8 +293,8 @@ begin
     ACBrGNRE1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
     ACBrGNRE1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
 
-    if ACBrGNRE1.GNREGuia <> nil then
-      ACBrGNRE1.GNREGuia.PathPDF    := Caminho;
+//    if ACBrGNRE1.GNREGuia <> nil then
+//      ACBrGNRE1.GNREGuia.PathPDF    := Caminho;
 
     edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
     edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
@@ -392,9 +392,7 @@ end;
 
 procedure TfrmDemo_ACBrGNRE.sbtnGetCertClick(Sender: TObject);
 begin
-  {$IFNDEF ACBrGNREOpenSSL}
-    edtNumSerie.Text := ACBrGNRE1.Configuracoes.Certificados.SelecionarCertificado;
-  {$ENDIF}
+  edtNumSerie.Text := ACBrGNRE1.SSL.SelecionarCertificado;
 end;
 
 procedure TfrmDemo_ACBrGNRE.sbtnPathSalvarClick(Sender: TObject);
@@ -438,24 +436,24 @@ end;
 
 procedure TfrmDemo_ACBrGNRE.btnConsultaConfigUFClick(Sender: TObject);
 begin
-  ACBrGNRE1.WebServices.ConsConfigUF.Executar;
-  MemoResp.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsConfigUF.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsConfigUF.RetWS);
+  ACBrGNRE1.WebServices.ConsultaUF.Executar;
+  MemoResp.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsultaUF.RetWS);
+  memoRespWS.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsultaUF.RetWS);
   LoadXML(MemoResp, WBResposta);
 
   PageControl2.ActivePageIndex := 4;
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Consulta Configuração UF');
-  MemoDados.Lines.Add('ambiente: '    +TpAmbToStr(ACBrGNRE1.WebServices.ConsConfigUF.ambiente));
-  MemoDados.Lines.Add('codigo: '    +IntToStr(ACBrGNRE1.WebServices.ConsConfigUF.codigo));
-  MemoDados.Lines.Add('descricao: '  +ACBrGNRE1.WebServices.ConsConfigUF.descricao);
-  MemoDados.Lines.Add('Uf: '      +ACBrGNRE1.WebServices.ConsConfigUF.Uf);
-  MemoDados.Lines.Add('exigeUfFavorecida : ' + DFEUtil.SeSenao(ACBrGNRE1.WebServices.ConsConfigUF.exigeUfFavorecida = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeReceita: '     +DFEUtil.SeSenao(ACBrGNRE1.WebServices.ConsConfigUF.exigeReceita = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeContribuinteEmitente: '+DFEUtil.SeSenao(ACBrGNRE1.WebServices.ConsConfigUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeDataVencimento: '     +DFEUtil.SeSenao(ACBrGNRE1.WebServices.ConsConfigUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeConvenio: '+DFEUtil.SeSenao(ACBrGNRE1.WebServices.ConsConfigUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeDataPagamento: '+DFEUtil.SeSenao(ACBrGNRE1.WebServices.ConsConfigUF.exigeDataPagamento = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('ambiente: '    +TpAmbToStr(ACBrGNRE1.WebServices.ConsultaUF.ambiente));
+  MemoDados.Lines.Add('codigo: '    +IntToStr(ACBrGNRE1.WebServices.ConsultaUF.codigo));
+  MemoDados.Lines.Add('descricao: '  +ACBrGNRE1.WebServices.ConsultaUF.descricao);
+  MemoDados.Lines.Add('Uf: '      +ACBrGNRE1.WebServices.ConsultaUF.Uf);
+  MemoDados.Lines.Add('exigeUfFavorecida : ' + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeUfFavorecida = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('exigeReceita: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeReceita = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('exigeContribuinteEmitente: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('exigeDataVencimento: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('exigeConvenio: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
+  MemoDados.Lines.Add('exigeDataPagamento: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataPagamento = 'S', 'SIM', 'NÃO'));
 end;
 
 procedure TfrmDemo_ACBrGNRE.btnCriarEnviarClick(Sender: TObject);
@@ -487,11 +485,11 @@ begin
   if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux))
    then exit;
 
-  ACBrGNRE1.WebServices.ConsResLote.numeroRecibo := aux;
-  ACBrGNRE1.WebServices.ConsResLote.Executar;
+  ACBrGNRE1.WebServices.Retorno.numeroRecibo := aux;
+  ACBrGNRE1.WebServices.Retorno.Executar;
 
-  MemoResp.Lines.Text   := UTF8Encode(ACBrGNRE1.WebServices.ConsResLote.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsResLote.RetWS);
+  MemoResp.Lines.Text   := UTF8Encode(ACBrGNRE1.WebServices.Retorno.RetWS);
+  memoRespWS.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.Retorno.RetWS);
   LoadXML(MemoResp, WBResposta);
 end;
 
@@ -499,7 +497,7 @@ procedure TfrmDemo_ACBrGNRE.btnGerarGNREClick(Sender: TObject);
 begin
   ACBrGNRE1.Guias.Clear;
   GerarGNRE;
-  ACBrGNRE1.Guias.Items[0].SaveToFile('');
+  ACBrGNRE1.Guias.Items[0].GravarXML;
 
   ShowMessage('Arquivo gerado em: '+ACBrGNRE1.Guias.Items[0].NomeArq);
   MemoDados.Lines.Add('Arquivo gerado em: '+ACBrGNRE1.Guias.Items[0].NomeArq);
@@ -513,14 +511,14 @@ begin
   OpenDialog1.Title := 'Selecione o GNRE';
   OpenDialog1.DefaultExt := '*-gnre.txt';
   OpenDialog1.Filter := 'Arquivos GNRE (*-gnre.txt)|*-gnre.txt|Arquivos TXT (*.txt)|*.txt|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
     ACBrGNRE1.GuiasRetorno.Clear;
     ACBrGNRE1.GuiasRetorno.LoadFromFile(OpenDialog1.FileName);
-    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
-      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
+//    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
+//      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
     ACBrGNRE1.GuiasRetorno.ImprimirPDF;
   end;
 end;
@@ -530,14 +528,14 @@ begin
   OpenDialog1.Title := 'Selecione a Guia';
   OpenDialog1.DefaultExt := '*-gnre.txt';
   OpenDialog1.Filter := 'Arquivos GNRE (*-gnre.txt)|*-gnre.txt|Arquivos TXT (*.txt)|*.txt|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Geral.PathSalvar;
+  OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
     ACBrGNRE1.GuiasRetorno.Clear;
     ACBrGNRE1.GuiasRetorno.LoadFromFile(OpenDialog1.FileName);
-    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
-      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
+//    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
+//      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
     ACBrGNRE1.GuiasRetorno.Imprimir;
   end;
 end;
@@ -571,9 +569,10 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmDemo_ACBrGNRE.ACBrGNRE1GerarLog(const Mensagem: String);
+procedure TfrmDemo_ACBrGNRE.ACBrGNRE1GerarLog(const ALogLine: String;
+  var Tratado: Boolean);
 begin
-  memoLog.Lines.Add(Mensagem);
+  memoLog.Lines.Add(ALogLine);
 end;
 
 end.

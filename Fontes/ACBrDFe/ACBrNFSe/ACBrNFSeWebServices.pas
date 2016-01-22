@@ -1180,7 +1180,7 @@ begin
   GerarDadosMsg.VersaoNFSe    := FVersaoNFSe;
   GerarDadosMsg.Prefixo3      := FPrefixo3;
   GerarDadosMsg.Prefixo4      := FPrefixo4;
-  GerarDadosMsg.NameSpaceDad  := FNameSpace;
+  GerarDadosMsg.NameSpaceDad  := FNameSpaceDad;
   GerarDadosMsg.VersaoXML     := FVersaoXML;
   GerarDadosMsg.CodMunicipio  := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
   GerarDadosMsg.Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;

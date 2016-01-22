@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/01/2016
+-- ACBrNFSeWebServices --
+[*] Ao montar o envelopamento estava sendo informado o NameSpace sendo que o
+    correto é o NameSpace de Dados.
+    Por: Italo Jurisato Junior
 -- ACBrNFSeNotasFiscais --
 [*] Incluida uma condição que só compara o CNPJ do XML com o do certificado,
     case tenha sido informado o numero de série do mesmo.

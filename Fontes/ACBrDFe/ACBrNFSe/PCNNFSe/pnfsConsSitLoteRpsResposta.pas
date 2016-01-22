@@ -112,6 +112,8 @@ type
     function LerXML_proEL: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
 
+    procedure SeparaXMLRetorno;
+
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfSit: TInfSit         read FInfSit   write FInfSit;
@@ -197,17 +199,30 @@ begin
   inherited;
 end;
 
+procedure TretSitLote.SeparaXMLRetorno;
+begin
+  XML := SeparaDados(Leitor.Arquivo, 'ConsultaSituacaoLoteRPSResult');
+
+  if XML = '' then
+    XML := Leitor.Arquivo;
+end;
+
 function TretSitLote.LerXml: Boolean;
 begin
- case Provedor of
-   proISSDSF:     Result := LerXml_proISSDSF;
-   proEquiplano:  Result := LerXML_proEquiplano;
-   proInfIsc:     Result := LerXml_proInfisc;
-   proEL:         Result := LerXML_proEL;
-   proNFSeBrasil: Result := LerXml_proNFSeBrasil;
- else
-   Result := LerXml_ABRASF;
- end;
+  Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+
+  // Separa o XML de retorno para ser salvo em disco ou banco de dados
+  SeparaXMLRetorno;
+
+  case Provedor of
+    proISSDSF:     Result := LerXml_proISSDSF;
+    proEquiplano:  Result := LerXML_proEquiplano;
+    proInfIsc:     Result := LerXml_proInfisc;
+    proEL:         Result := LerXML_proEL;
+    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
+  else
+    Result := LerXml_ABRASF;
+  end;
 end;
 
 function TretSitLote.LerXml_ABRASF: Boolean;
@@ -218,11 +233,6 @@ begin
   Result := True;
 
   try
-    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
-
-    // Separa o XML de retorno para ser salvo em disco ou banco de dados
-    XML := SeparaDados(Leitor.Arquivo, 'ConsultaSituacaoLoteRPSResult');
-
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or
@@ -283,8 +293,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Arquivo := StringReplace(Leitor.Arquivo, ' xmlns=""', '', [rfReplaceAll]);
     Leitor.Grupo   := Leitor.Arquivo;
 
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'nrLoteRps');
@@ -334,8 +342,7 @@ var
   sMotCod, sMotDes: String;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
+    Leitor.Grupo := Leitor.Arquivo;
 
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'cLote');
     InfSit.FSituacao   := Leitor.rCampo(tcStr, 'sit');
@@ -375,8 +382,7 @@ var
   strAux: AnsiString;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
+    Leitor.Grupo := Leitor.Arquivo;
 
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'numeroLote');
     InfSit.FSituacao   := Leitor.rCampo(tcStr, 'situacaoLoteRps');
@@ -426,7 +432,6 @@ begin
   nfseGerada  := False;
    // Luiz Baião 2014.12.03
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 

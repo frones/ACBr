@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2016
+-- ACBrNFeServicos -- 
+[*] Adicionado a URL de Administracao de CSC de Homologação do Estado de Goias.
+    Por: Paulo Augusto / Italo Jurisato Junior
+
 20/01/2016
 -- ACBrNFeWebServices -- 
 [*] Adicionado o código IBGE 51 em TNFeConsulta.DefinirServicoEAction.

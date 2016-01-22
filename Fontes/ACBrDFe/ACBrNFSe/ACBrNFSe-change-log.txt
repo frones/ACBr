@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/01/2016
+[+] Inclusão do provedor NEAInformatica que atende a cidade de Três Lagoas/MS.
+    Por: Rodrigo de Carvalho Ribeiro / Italo Jurisato Junior
 -- ACBrNFSeWebServices --
 [*] Ao montar o envelopamento estava sendo informado o NameSpace sendo que o
     correto é o NameSpace de Dados.

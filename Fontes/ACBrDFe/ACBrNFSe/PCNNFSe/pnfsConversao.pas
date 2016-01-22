@@ -93,7 +93,7 @@ type
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil,
-                    proTinus, proSJP, proCONAM, proEReceita);
+                    proTinus, proSJP, proCONAM, proEReceita, proNEAInformatica);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -384,7 +384,7 @@ begin
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
                             'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita'], 
+                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita', 'NEAInformatica'], 
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -393,7 +393,7 @@ begin
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
                             proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus
-                            , proSJP, proCONAM, proEReceita]); 
+                            , proSJP, proCONAM, proEReceita, proNEAInformatica]); 
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -406,7 +406,7 @@ begin
                             '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
                             'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
                             'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita'], 
+                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita', 'NEAInformatica'], 
                            [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
                             proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
                             proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
@@ -415,7 +415,7 @@ begin
                             proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
                             proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
                             proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil, proTinus,
-                            proSJP, proCONAM, proEReceita]); 
+                            proSJP, proCONAM, proEReceita, proNEAInformatica]); 
 end;
 
 // Condição de pagamento ******************************************************
@@ -18125,7 +18125,7 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proTecnos, proVirtual, proVitoria: Result := loABRASFv2;
+    proTecnos, proVirtual, proVitoria, proNEAInformatica: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
 

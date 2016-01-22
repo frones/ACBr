@@ -133,8 +133,8 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proFIntelISS,
     proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe, proLink3,
     proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proVirtual, proVitoria,
-    proEReceita: FVersaoNFSe := ve200;
+    proVirtual, proVitoria, proEReceita,
+    proNEAInformatica: FVersaoNFSe := ve200;
 
     proTecnos: FVersaoNFSe := ve201;
   else
@@ -229,7 +229,8 @@ begin
       proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proFIntelISS,
       proFiorilli, proFreire, proGoiania, proGovDigital, proISSDigital, proISSe,
       proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-      proTecnos, ProVirtual, proVitoria: Result := LerRPS_ABRASF_V2;
+      proTecnos, ProVirtual, proVitoria,
+      proNEAInformatica: Result := LerRPS_ABRASF_V2;
 
       proISSDSF:  Result := LerRPS_ISSDSF;
 
@@ -552,7 +553,7 @@ begin
        NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe3, 'DescontoIncondicionado');
        NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
 
-       if (FProvedor = proISSe) then
+       if (FProvedor in [proISSe, proNEAInformatica]) then
        begin
          if NFSe.Servico.Valores.IssRetido = stRetencao then
            NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -939,8 +940,8 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proFIntelISS,
     proFiorilli, proFreire, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proNFSeBrasil, proProdata, proPVH, proSaatri, proSisPMJP,
-    proSystemPro, proTecnos, proVirtual, proVitoria,
-    proEReceita: Result := LerNFSe_ABRASF_V2;
+    proSystemPro, proTecnos, proVirtual, proVitoria, proEReceita,
+    proNEAInformatica: Result := LerNFSe_ABRASF_V2;
 
     proInfisc:  Result := LerNFSe_Infisc;
 
@@ -960,7 +961,10 @@ begin
     if NFSe.NfseCancelamento.DataHora = 0 then
       NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
     NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
-  end;
+    NFSe.Cancelada := snSim;
+  end
+  else
+    NFSe.Cancelada := snNao;
 
   if (Leitor.rExtrai(1, 'NfseSubstituicao') <> '') then
     if (FProvedor = proBetha) then
@@ -1415,7 +1419,7 @@ begin
 //        NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
         NFSe.Servico.Valores.Aliquota        := Leitor.rCampo(tcDe3, 'Aliquota');
 
-        if (FProvedor = proISSe) then
+        if (FProvedor in [proISSe, proNEAInformatica]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -1458,7 +1462,9 @@ begin
     then begin
      NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
 
-     if (VersaoNFSe = ve100) or (FProvedor in [proFiorilli, proGoiania, ProTecnos, proVirtual, proDigifred])
+     if (VersaoNFSe = ve100) or
+        (FProvedor in [proFiorilli, proGoiania, ProTecnos, proVirtual,
+                       proDigifred, proNEAInformatica])
       then begin
        NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
        if (FProvedor = proTecnos) then NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'RazaoSocial');
@@ -1587,21 +1593,25 @@ begin
    sOperacao                                            := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
    sTributacao                                          := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
 
-   if sOperacao[1] in ['A', 'B'] then begin
-      if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
-         NFSe.NaturezaOperacao := no1      // ainda estamos
-      else                                                    // em análise sobre
-         NFSe.NaturezaOperacao := no2;   // este ponto
+   if sOperacao[1] in ['A', 'B'] then
+   begin
+     if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
+       NFSe.NaturezaOperacao := no1      // ainda estamos
+     else                                                    // em análise sobre
+       NFSe.NaturezaOperacao := no2;   // este ponto
    end
-   else if (sOperacao = 'C') and (sTributacao = 'C') then begin
-      NFSe.NaturezaOperacao := no3;
-   end
-   else if (sOperacao = 'C') and (sTributacao = 'F') then begin
-      NFSe.NaturezaOperacao := no4;
-   end
-   else if (sOperacao = 'A') and (sTributacao = 'N') then begin
-      NFSe.NaturezaOperacao := no7;
-   end;
+   else if (sOperacao = 'C') and (sTributacao = 'C') then
+        begin
+          NFSe.NaturezaOperacao := no3;
+        end
+        else if (sOperacao = 'C') and (sTributacao = 'F') then
+             begin
+               NFSe.NaturezaOperacao := no4;
+             end
+             else if (sOperacao = 'A') and (sTributacao = 'N') then
+                  begin
+                    NFSe.NaturezaOperacao := no7;
+                  end;
 
    NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, no5 ]);
 

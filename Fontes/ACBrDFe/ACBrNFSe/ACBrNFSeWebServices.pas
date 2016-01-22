@@ -918,9 +918,7 @@ begin
 
       FNotasFiscais.Items[ii].NFSe.NfseCancelamento.DataHora := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NfseCancelamento.DataHora;
       FNotasFiscais.Items[ii].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento;
-
-      if FNotasFiscais.Items[ii].NFSe.NfseCancelamento.DataHora > 0 then
-        FNotasFiscais.Items[ii].NFSe.Cancelada := snSim;
+      FNotasFiscais.Items[ii].NFSe.Cancelada := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Cancelada;
 
       FNotasFiscais.Items[ii].NFSe.NfseSubstituidora := FRetornoNFSe.ListaNfse.CompNfse.Items[i].NFSe.NfseSubstituidora;
 
@@ -3116,9 +3114,7 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
-    if not (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proDigifred, proProdata,
-           proVitoria, proPVH, profintelISS, proSaatri, proSisPMJP, proCoplan,
-           proISSDigital, proISSDSF, proFiorilli, proFreire, proTecnos, proDBSeller]) then
+    if FConsSitLoteRPS.VersaoNFSe = ve100 then
      begin
        Result := FConsSitLoteRPS.Executar;
 

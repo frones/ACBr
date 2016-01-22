@@ -960,6 +960,7 @@ begin
     CreateDataSet;
     Append;
 
+    FieldByName('poscanhoto').AsString            := IntToStr( Ord(DANFEClassOwner.PosCanhoto));
     FieldByName('ResumoCanhoto').AsString         := '';
     FieldByName('Mensagem0').AsString             := '';
     FieldByName('Contingencia_ID').AsString       := '';
@@ -1549,6 +1550,7 @@ begin
      end;
      with cdsParametros do
      begin
+        FieldDefs.Add('poscanhoto', ftString, 1);
         FieldDefs.Add('ResumoCanhoto', ftString, 200);
         FieldDefs.Add('Mensagem0', ftString, 60);
         FieldDefs.Add('Imagem', ftString, 256);

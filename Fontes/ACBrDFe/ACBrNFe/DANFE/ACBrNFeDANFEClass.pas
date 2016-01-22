@@ -113,7 +113,6 @@ type
     FProdutosPorPagina: Integer;
     FImprimirDetalhamentoEspecifico: Boolean;
     FNFeCancelada: Boolean;
-    FLocalImpCanhoto: Integer;
     FImprimeItens: Boolean;    // Destinado exclusivamente ao DANFE da NFC-e
     FViaConsumidor : Boolean;  // Destinado exclusivamente ao DANFE da NFC-e
     FvTroco: Currency;
@@ -187,13 +186,9 @@ type
     property ProdutosPorPagina: Integer              read FProdutosPorPagina              write FProdutosPorPagina;
     property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
     property NFeCancelada: Boolean                   read FNFeCancelada                   write FNFeCancelada;
-    property LocalImpCanhoto: Integer                read FLocalImpCanhoto                write FLocalImpCanhoto;
-    // Incluido por Italo em 27/03/2014
-    // Destinado exclusivamente ao DANFE da NFC-e
     property ImprimirItens: Boolean                  read FImprimeItens                   write FImprimeItens;
     property vTroco: Currency                        read FvTroco                         write FvTroco;
     property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
-
     property TamanhoLogoHeight: Integer              read FTamanhoLogoHeight              write FTamanhoLogoHeight;
     property TamanhoLogoWidth: Integer               read FTamanhoLogoWidth               write FTamanhoLogoWidth;
     property RecuoEndereco: Integer                  read FRecuoEndereco                  write FRecuoEndereco;
@@ -201,17 +196,13 @@ type
     property LogoemCima: Boolean                     read FLogoEmCima                     write FLogoEmCima;
     property TamanhoFonteEndereco: Integer           read FTamanhoFonteEndereco           write FTamanhoFonteEndereco;
     property RecuoLogo: Integer                      read FRecuoLogo                      write FRecuoLogo;
-
-    // Incluido por Leandro da Silva Alves em 17/04/2015
     property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;
     property vTribFed: Currency                      read FvTribFed                       write FvTribFed;
     property vTribEst: Currency                      read FvTribEst                       write FvTribEst;
     property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
     property FonteTributos: String                   read FFonteTributos                  write FFonteTributos;
     property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
-
-    property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto; // default prCabecalho;
-
+    property PosCanhoto: TPosRecibo                  read FPosCanhoto                     write FPosCanhoto; // default prCabecalho;
     property ImprimeEmUmaLinha: Boolean              read FImprimeEmUmaLinha              write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean          read FImprimeDescAcrescItem          write FImprimeDescAcrescItem default True;
     property UsaCodigoEanImpressao: Boolean          read FUsaCodigoEanImpressao          write FUsaCodigoEanImpressao default False;
@@ -290,10 +281,9 @@ begin
   FImprimirDetalhamentoEspecifico := true;
   FImprimirTotalLiquido:= True;
   FNFeCancelada := False;
-  FLocalImpCanhoto := 0;
   FCasasDecimais := TCasasDecimais.Create(self);
   FCasasDecimais.Name:= 'CasasDecimais';
-
+  FPosCanhoto := prCabecalho;
   FImprimeItens := True;
   FViaConsumidor:= True;
   FvTroco       := 0.0;

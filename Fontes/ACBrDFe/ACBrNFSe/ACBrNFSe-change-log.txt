@@ -47,9 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2016
+-- ACBrNFSeWebServices / pnfsLerListaNFSe / pnfsNFSeR --
+[*] Incluida as linhas para a leitura da data e codigo do cancelamento.
+    Por: Italo Jurisato Junior
+
 21/01/2016
 -- ACBrNFSeWebServices --
-[*] Sera levantada uma excessão quando a propriedade FDadosEnvelope for vazia.
+[*] Sera levantada uma exceção quando a propriedade FDadosEnvelope for vazia.
     Isso significa que o Serviço que se pretente executar não esta disponível
     no provedor selecionado.
     Por: Italo Jurisato Junior

@@ -916,7 +916,10 @@ begin
 
       FNotasFiscais.Items[ii].NFSe.Cancelada := snNao;
 
-      if FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NFSeCancelamento.DataHora > 0 then
+      FNotasFiscais.Items[ii].NFSe.NfseCancelamento.DataHora := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NfseCancelamento.DataHora;
+      FNotasFiscais.Items[ii].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento;
+
+      if FNotasFiscais.Items[ii].NFSe.NfseCancelamento.DataHora > 0 then
         FNotasFiscais.Items[ii].NFSe.Cancelada := snSim;
 
       FNotasFiscais.Items[ii].NFSe.NfseSubstituidora := FRetornoNFSe.ListaNfse.CompNfse.Items[i].NFSe.NfseSubstituidora;
@@ -945,7 +948,6 @@ begin
 
       if FPConfiguracoesNFSe.Arquivos.Salvar then
         FPDFeOwner.Gravar(NomeArq, FRetNFSe, PathArq);
-
     end;
 
     inc(ii);

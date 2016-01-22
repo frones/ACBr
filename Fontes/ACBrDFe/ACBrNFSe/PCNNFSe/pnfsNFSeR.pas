@@ -952,6 +952,8 @@ begin
     Result := False;
   end;
 
+  Leitor.Grupo := Leitor.Arquivo;
+
   if Leitor.rExtrai(1, 'NfseCancelamento') <> '' then
   begin
     NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');

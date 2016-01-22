@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/01/2016 ver. 0.0.171a
+-- ACBrBancoNordeste --
+[-] Correção arquivo remessa CNAB400.
+    Correção cáculo DV Nosso Número.
+    Correção leitura retorno CNAB400(por:Luciano Rodrigues Pereira )
+
+-- ACBrBancoHSBC--
+[-] Correção arquivo remessa CNAB400. (denerbuzato)
+
+
 Data: 13/01/2016 ver. 0.0.170a
 -- ACBrBancoBradesco --
 [-] Correção arquivo remessa CNAB400. (por: Datilas)

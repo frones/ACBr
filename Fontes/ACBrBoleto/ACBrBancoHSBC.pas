@@ -118,7 +118,7 @@ begin
    fpNumero                := 399;
    fpTamanhoMaximoNossoNum := 13;
    fpTamanhoAgencia        := 4;
-   fpTamanhoConta          := 7;
+   fpTamanhoConta          := 5;
    fpTamanhoCarteira       := 3;
 end;
 
@@ -223,7 +223,7 @@ begin
                    IntToStrZero(Round(ValorDocumento * 100), 10) +
                    RightStr(PadLeft(ANossoNumero, 13, '0'),11) +       // precisa passar nosso numero + digito
                    PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4, '0') +
-                   PadLeft(IfThen(ACBrBoleto.Cedente.Conta[1] = '0', RightStr(OnlyNumber(ACBrBoleto.Cedente.Conta),6) +
+                   PadLeft(IfThen(ACBrBoleto.Cedente.Conta[1] = '0', RightStr(OnlyNumber(ACBrBoleto.Cedente.Conta),5) +
                         OnlyNumber(ACBrBoleto.Cedente.ContaDigito),OnlyNumber(ACBrBoleto.Cedente.Conta)) , 7, '0')+
                    '00'
 
@@ -433,10 +433,10 @@ Begin
       'não é um arquivo de retorno do ' + Nome));
 
   rCedente       := trim(Copy(ARetorno[0], 47, 30));
-  rCodigoCedente := Copy(ARetorno[0], 109, 10);
+  rCodigoCedente := Copy(ARetorno[0], 109, 11);
   rAgencia       := trim(Copy(ARetorno[0], 28, 4));
-  rConta         := trim(Copy(ARetorno[0], 38, 6));
-  rDigitoConta   := Copy(ARetorno[0], 44, 1);
+  rConta         := trim(Copy(ARetorno[0], 38, 5));
+  rDigitoConta   := Copy(ARetorno[0], 43, 2); 
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 389, 5), 0);
 

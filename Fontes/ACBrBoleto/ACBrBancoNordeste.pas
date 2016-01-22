@@ -98,10 +98,7 @@ begin
    Modulo.Documento := ACBrTitulo.NossoNumero;
    Modulo.Calcular;
 
-   if Modulo.DigitoFinal = 1 then
-      Result:= '0'
-   else
-      Result:= IntToStr(Modulo.DigitoFinal);
+   Result:= IntToStr(Modulo.DigitoFinal);
 end;
 
 function TACBrBancoNordeste.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;
@@ -247,7 +244,7 @@ begin
                   PadLeft( '0', 6, '0')                                      +  //Número do Contrato para cobrança caucionada/vinculada. Preencher com zeros para cobrança simples
                   IntToStrZero(round( ValorDesconto * 100), 13)           +
                   Space(8)                                                +  // Filler - Brancos
-                  IntToStr(StrToInt(Carteira))                            +  // Carteira a ser utilizada
+                  Carteira                                                +  // Carteira a ser utilizada
                   Ocorrencia                                              +  // Ocorrência
                   PadRight( NumeroDocumento,  10)                             +
                   FormatDateTime( 'ddmmyy', Vencimento)                   +
@@ -269,7 +266,7 @@ begin
                   PadRight( Sacado.Cidade, 15 )                               +
                   PadRight( Sacado.UF, 2 )                                    +
                   PadRight( MensagemCedente, 40 )                             +
-                  '991'                                                   +
+                  '990'                                                   +
                   IntToStrZero(aRemessa.Count + 1, 6); // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
          aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
@@ -363,10 +360,17 @@ begin
          NumeroDocumento             := copy(Linha,117,10);
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
-         
+
          for i := 0 to 76 do
+         begin
            if (copy(Linha,280+i,1)='1') then
+           begin
+             if ((i+280 < 296) or 
+                 (i+280 > 301) or 
+                 (OcorrenciaOriginal.Tipo <> toRetornoLiquidado)) then   
              DescricaoMotivoRejeicaoComando.Add(MotivoRejeicaoColuna(280+i));
+           end;
+         end; 
 
          
          if Copy(Linha,111,2) <> '00' then

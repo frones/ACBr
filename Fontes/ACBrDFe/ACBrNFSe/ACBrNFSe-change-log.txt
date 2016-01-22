@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/01/2016
+-- ACBrNFSeWebServices / pnfsConsSitLoteRpsResposta --
+[*] Criada a propriedade XML para conter o XML exato de retorno.
+    Por: Italo Jurisato Junior
 [+] Inclusão do provedor NEAInformatica que atende a cidade de Três Lagoas/MS.
     Por: Rodrigo de Carvalho Ribeiro / Italo Jurisato Junior
 -- ACBrNFSeWebServices --

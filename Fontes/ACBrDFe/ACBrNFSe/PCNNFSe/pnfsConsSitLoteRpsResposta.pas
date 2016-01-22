@@ -99,6 +99,7 @@ type
     FLeitor: TLeitor;
     FInfSit: TInfSit;
     FProvedor: TnfseProvedor;
+    FXML: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -115,10 +116,14 @@ type
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfSit: TInfSit         read FInfSit   write FInfSit;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
+    property XML: String             read FXML      write FXML;
   end;
 
 implementation
 
+uses
+  ACBrUtil;
+  
 { TInfSit }
 
 constructor TInfSit.Create;
@@ -214,6 +219,10 @@ begin
 
   try
     Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+
+    // Separa o XML de retorno para ser salvo em disco ou banco de dados
+    XML := SeparaDados(Leitor.Arquivo, 'ConsultaSituacaoLoteRPSResult');
+
     Leitor.Grupo   := Leitor.Arquivo;
 
     if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or

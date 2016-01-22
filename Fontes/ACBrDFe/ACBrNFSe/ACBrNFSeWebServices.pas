@@ -1946,6 +1946,8 @@ begin
 
   RetSitLote.LerXml;
 
+  FPRetWS := RetSitLote.XML;
+  
   FSituacao := RetSitLote.InfSit.Situacao;
   // FSituacao: 1 = Não Recebido
   //            2 = Não Processado

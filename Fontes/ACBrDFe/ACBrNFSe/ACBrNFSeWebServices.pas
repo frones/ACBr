@@ -108,6 +108,7 @@ type
     procedure GerarLoteRPScomAssinatura(RPS: String);
     procedure GerarLoteRPSsemAssinatura(RPS: String);
     procedure InicializarGerarDadosMsg;
+    function ExtrairGrupoMsgRet(AGrupo: String): String;
   public
     constructor Create(AOwner: TACBrDFe); override;
 
@@ -1190,6 +1191,21 @@ begin
   GerarDadosMsg.FraseSecreta  := FPConfiguracoesNFSe.Geral.Emitente.WebFraseSecr;
 end;
 
+function TNFSeWebService.ExtrairGrupoMsgRet(AGrupo: String): String;
+Var
+  aMsgRet: String;
+begin
+  Result := FPRetWS;
+
+  if AGrupo <> '' then
+  begin
+    aMsgRet := SeparaDados(FPRetWS, AGrupo);
+
+    if aMsgRet <> '' then
+      Result := aMsgRet;
+  end;
+end;
+
 { TNFSeGerarLoteRPS }
 
 constructor TNFSeGerarLoteRPS.Create(AOwner: TACBrDFe;
@@ -1474,6 +1490,8 @@ begin
     FRetEnvLote.Leitor.Arquivo := FPRetWS;
     FRetEnvLote.Provedor := FProvedor;
     FRetEnvLote.LerXml;
+
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar);
 
     FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
     FProtocolo       := RetEnvLote.InfRec.Protocolo;
@@ -1946,8 +1964,8 @@ begin
 
   RetSitLote.LerXml;
 
-  FPRetWS := RetSitLote.XML;
-  
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsSit);
+
   FSituacao := RetSitLote.InfSit.Situacao;
   // FSituacao: 1 = Não Recebido
   //            2 = Não Processado
@@ -2703,6 +2721,8 @@ begin
 
   FRetCancNFSe.LerXml;
 
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Cancelar);
+
   FDataHora := RetCancNFSe.InfCanc.DataHora;
 
   // Lista de Mensagem de Retorno
@@ -2929,6 +2949,8 @@ begin
     FNFSeRetorno.Provedor       := FProvedor;
 
     FNFSeRetorno.LerXml;
+
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Substituir);
 
 //      FDataHora := FNFSeRetorno.InfCanc.DataHora;
 

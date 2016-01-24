@@ -172,6 +172,13 @@ type
     Substituir_IncluiEncodingDados: Boolean;
  end;
 
+ TConfigGrupoMsgRet = record
+    Recepcionar: String;
+    ConsSit: String;
+    Cancelar: String;
+    Substituir: String;
+ end;
+
  { TEmitenteConfNFSe }
 
  TEmitenteConfNFSe = class(TPersistent)
@@ -209,6 +216,7 @@ type
     FConfigSoapAction: TConfigSoapAction;
     FConfigURL: TConfigURL;
     FConfigEnvelope: TConfigEnvelope;
+    FConfigGrupoMsgRet: TConfigGrupoMsgRet;
 
     FCodigoMunicipio: Integer;
     FProvedor: TnfseProvedor;
@@ -240,6 +248,7 @@ type
     property ConfigSoapAction: TConfigSoapAction read FConfigSoapAction;
     property ConfigURL: TConfigURL read FConfigURL;
     property ConfigEnvelope: TConfigEnvelope read FConfigEnvelope;
+    property ConfigGrupoMsgRet: TConfigGrupoMsgRet read FConfigGrupoMsgRet;
   published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
@@ -768,6 +777,11 @@ begin
     Inc(I);
   end;
   FConfigGeral.DadosSenha := Texto;
+
+  FConfigGrupoMsgRet.Recepcionar := FPIniParams.ReadString('GrupoMsgRet', 'Recepcionar', '');
+  FConfigGrupoMsgRet.ConsSit := FPIniParams.ReadString('GrupoMsgRet', 'ConsSit', '');
+  FConfigGrupoMsgRet.Cancelar := FPIniParams.ReadString('GrupoMsgRet', 'Cancelar', '');
+  FConfigGrupoMsgRet.Substituir := FPIniParams.ReadString('GrupoMsgRet', 'Substituir', '');
 
   FPIniParams.Free;
 end;

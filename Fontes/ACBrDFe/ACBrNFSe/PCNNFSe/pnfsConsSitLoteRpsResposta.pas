@@ -99,7 +99,6 @@ type
     FLeitor: TLeitor;
     FInfSit: TInfSit;
     FProvedor: TnfseProvedor;
-    FXML: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -112,13 +111,10 @@ type
     function LerXML_proEL: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
 
-    procedure SeparaXMLRetorno;
-
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfSit: TInfSit         read FInfSit   write FInfSit;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
-    property XML: String             read FXML      write FXML;
   end;
 
 implementation
@@ -199,20 +195,9 @@ begin
   inherited;
 end;
 
-procedure TretSitLote.SeparaXMLRetorno;
-begin
-  XML := SeparaDados(Leitor.Arquivo, 'ConsultaSituacaoLoteRPSResult');
-
-  if XML = '' then
-    XML := Leitor.Arquivo;
-end;
-
 function TretSitLote.LerXml: Boolean;
 begin
   Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
-
-  // Separa o XML de retorno para ser salvo em disco ou banco de dados
-  SeparaXMLRetorno;
 
   case Provedor of
     proISSDSF:     Result := LerXml_proISSDSF;

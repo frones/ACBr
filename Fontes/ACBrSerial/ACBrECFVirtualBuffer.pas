@@ -41,8 +41,8 @@ unit ACBrECFVirtualBuffer ;
 
 interface
 uses
-  Classes, SysUtils, IniFiles,
-  ACBrDevice, ACBrECFVirtual, ACBrECFClass, ACBrUtil, ACBrConsts ;
+  Classes, SysUtils,
+  ACBrDevice, ACBrECFVirtual, ACBrECFClass, ACBrConsts ;
 
 const
   ACBrECFVirtualBuffer_VERSAO = '0.1.0a';
@@ -109,8 +109,7 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
       ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; override ;
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; override ;
 
-    Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
-       MensagemRodape : AnsiString  = '' ) ; override ;
+    Procedure SubtotalizaCupomVirtual( MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     Procedure CancelaCupomVirtual ; override ;
@@ -120,8 +119,7 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
 
     procedure AbreNaoFiscalVirtual(CPF_CNPJ: String; Nome: String; Endereco: String
       ); override;
-    Procedure RegistraItemNaoFiscalVirtual( CNF : TACBrECFComprovanteNaoFiscal;
-       Valor : Double; Obs : AnsiString = '') ; override ;
+    Procedure RegistraItemNaoFiscalVirtual( CNFCupom: TACBrECFVirtualClassCNFCupom ); override ;
     procedure AbreRelatorioGerencialVirtual(Indice: Integer); override;
     procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
       CodComprovanteNaoFiscal: String; SubtotalCupomAnterior, ValorFPG: Double ); override;
@@ -167,7 +165,8 @@ Function StuffMascaraItem( Linha, MascaraItem : AnsiString; Letra : AnsiChar;
 implementation
 
 Uses
-  math;
+  math, strutils,
+  ACBrUtil;
 
 Function StuffMascaraItem( Linha, MascaraItem : AnsiString; Letra : AnsiChar;
    TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
@@ -476,8 +475,8 @@ begin
 
     Add( PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
 
-    if fpCuponsCanceladosTotalNaoTransmitidos>0 then
-       Add( PadSpace('Cancelado Nao Transm:|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosTotalNaoTransmitidos ), Colunas,'|') ) ;
+    if fpCuponsCanceladosEmAbertoTotal>0 then
+       Add( PadSpace('Cancelado Nao Transm:|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosEmAbertoTotal ), Colunas,'|') ) ;
 
     if fpTotalDescontos > 0 then
        Add( PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontos), Colunas, '|'));
@@ -565,7 +564,7 @@ begin
 
   fsBuffer.Insert( fsCabecalho.Count+1,
                    PadSpace( DateToStr(now)+' '+TimeToStr(now)+V+'|COO:'+
-                   IntToStrZero(fpNumCupom,6), Colunas, '|' ) ) ;
+                   IntToStrZero(fpNumCOO,6), Colunas, '|' ) ) ;
 end;
 
 procedure TACBrECFVirtualBufferClass.AddBufferCabecalho_Item;
@@ -683,30 +682,30 @@ begin
 end;
 
 procedure TACBrECFVirtualBufferClass.SubtotalizaCupomVirtual(
-  DescontoAcrescimo: Double; MensagemRodape: AnsiString);
+  MensagemRodape: AnsiString);
 var
   S: String;
 begin
   ZeraBuffer;
   fsBuffer.Add('</linha_simples>');
 
-  if DescontoAcrescimo <> 0 then
+  if fpCupom.DescAcresSubtotal <> 0 then
   begin
-    if DescontoAcrescimo < 0 then
+    if fpCupom.DescAcresSubtotal < 0 then
       S := 'Desconto '
     else
       S := 'Acrescimo' ;
 
     fsBuffer.Add( PadSpace('SUBTOTAL   R$|'+
-                  FormatFloat('#,###,##0.00',SubTotal), Colunas,'|') ) ;
-    fsBuffer.Add( PadSpace(S+'  R$|'+FormatFloat('#,###,##0.00',DescontoAcrescimo),
-                       Colunas,'|') ) ;
-
+                  FormatFloat('#,###,##0.00',fpCupom.SubTotal - fpCupom.DescAcresSubtotal),
+                  Colunas,'|') ) ;
+    fsBuffer.Add( PadSpace(S+'  R$|'+FormatFloat('#,###,##0.00',fpCupom.DescAcresSubtotal),
+                  Colunas,'|') ) ;
   end ;
 
   fsBuffer.Add(  '<e>' +
                  PadSpace( 'TOTAL  R$|'+
-                           FormatFloat('#,###,##0.00', SubTotal+DescontoAcrescimo),
+                           FormatFloat('#,###,##0.00', fpCupom.SubTotal),
 	                   ColunasExpandido() ,'|') + '</e>' ) ;
   ImprimeBuffer ;
 end;
@@ -733,12 +732,12 @@ begin
 
   if TotalPago >= SubTotal then   { Ultrapassou o Valor do Cupom }
   begin
-    if fpPagamentosCupom.Count > 0 then
+    if fpCupom.Pagamentos.Count > 1 then   { Tem mais de um pagamento ? }
       fsBuffer.Add( PadSpace('SOMA  R$|'+FormatFloat('#,###,##0.00', TotalPago), Colunas, '|') );
 
      if TotalPago > SubTotal then  { Tem TROCO ? }
      begin
-        Troco  := RoundTo(TotalPago - SubTotal,-2) ;
+        Troco := RoundTo(TotalPago - SubTotal,-2) ;
         fsBuffer.Add( '<e>' +
                       PadSpace( 'TROCO  R$|'+
                                FormatFloat('#,###,##0.00',Troco),
@@ -758,7 +757,7 @@ end;
 procedure TACBrECFVirtualBufferClass.FechaCupomVirtual(Observacao: AnsiString;
   IndiceBMP: Integer);
 begin
-  fsBuffer.Add( AjustaLinhaColunas(Observacao) ) ;
+  fsBuffer.Add( TrimRight(AjustaLinhaColunas(Observacao)) ) ;
   AddBufferRodape ;
 
   ImprimeBuffer ;
@@ -865,10 +864,10 @@ procedure TACBrECFVirtualBufferClass.VendeItemVirtual(
   ItemCupom: TACBrECFVirtualClassItemCupom);
 var
   Aliq: TACBrECFAliquota;
-  Linha, AliqStr, StrQtd, StrPreco, StrDescAcre : String;
-  Total, PorcDesc : Double;
+  Linha, AliqStr, StrQtd, StrPreco : String;
+  Total : Double;
 begin
-  Aliq := fpAliquotas[ ItemCupom.PosAliq ];
+  Aliq := fpAliquotas[ ItemCupom.AliqPos ];
 
   if Aliq.Aliquota > 0 then
     AliqStr := PadCenter(Aliq.Tipo + FormatFloat('#0.00',Aliq.Aliquota)+'%',7)
@@ -885,18 +884,7 @@ begin
   else
     StrPreco := FormatFloat('####0.000', ItemCupom.ValorUnit ) ;
 
-  Total   := RoundABNT( ItemCupom.Qtd * ItemCupom.ValorUnit, -2) ;
-  PorcDesc:= 0 ;
-  StrDescAcre := '';
-  if ItemCupom.DescAcres <> 0 then
-  begin
-    PorcDesc := abs( ItemCupom.DescAcres ) / Total * 100  ;
-
-    if ItemCupom.DescAcres > 0 then
-      StrDescAcre := 'ACRESCIMO'
-    else
-      StrDescAcre := 'DESCONTO' ;
-  end ;
+  Total := RoundABNT( ItemCupom.Qtd * ItemCupom.ValorUnit, -2) ;
 
   with ItemCupom do
   begin
@@ -921,14 +909,6 @@ begin
     Linha := copy(Linha,Colunas + 1, Length(Linha) ) ;
   end ;
 
-  if StrDescAcre <> '' then
-  begin
-    Total := RoundTo(Total + ItemCupom.DescAcres, -2) ;
-    fsBuffer.Add( PadSpace('|'+StrDescAcre+'|'+FormatFloat('#0.00', PorcDesc)+'%|R$ '+
-                  FormatFloat('##,##0.00', ItemCupom.DescAcres)+'|'+
-                  FormatFloat('###,##0.00',Total),Colunas,'|') ) ;
-  end ;
-
   ImprimeBuffer ;
 end;
 
@@ -946,8 +926,8 @@ begin
   TotalItem := RoundABNT(ItemCupom.Qtd * ItemCupom.ValorUnit, -2) + ItemCupom.DescAcres;
 
   fsBuffer.Add( PadSpace('|'+StrDescAcre+' ITEM: '+IntToStrZero(ItemCupom.Sequencia,3)+'|'+
-                         FormatFloat('#0.00', PorcDesc)+'%|R$ '+
-                         FormatFloat('##,##0.00', ItemCupom.DescAcres)+'|'+
+                         ifthen(PorcDesc > 0, FormatFloat('#0.00', PorcDesc)+'%','')+'|'+
+                         'R$ '+FormatFloat('##,##0.00', ItemCupom.DescAcres)+'|'+
                          FormatFloat('###,##0.00',TotalItem),
                          Colunas, '|')) ;
   ImprimeBuffer ;
@@ -1026,14 +1006,18 @@ begin
 end;
 
 procedure TACBrECFVirtualBufferClass.RegistraItemNaoFiscalVirtual(
-  CNF: TACBrECFComprovanteNaoFiscal; Valor: Double; Obs: AnsiString);
+  CNFCupom: TACBrECFVirtualClassCNFCupom);
+var
+  CNF: TACBrECFComprovanteNaoFiscal;
 begin
-  ZeraBuffer ;
-  fsBuffer.Add( PadSpace( IntToStrZero(fpCNFCupom.Count + 1,3) +'|'+
-                      CNF.Descricao +'|'+
-                      FormatFloat('#,###,##0.00',Valor), Colunas, '|'  ) ) ;
+  CNF := fpComprovantesNaoFiscais[ CNFCupom.PosCNF ];
 
-  AddBufferLinhas( Obs );
+  ZeraBuffer ;
+  fsBuffer.Add( PadSpace( IntToStrZero(CNFCupom.Sequencia, 3) +'|'+
+                CNF.Descricao +'|'+
+                FormatFloat('#,###,##0.00', CNFCupom.Valor), Colunas, '|'  ) ) ;
+
+  AddBufferLinhas( CNFCupom.Observacao );
   ImprimeBuffer ;
 end;
 

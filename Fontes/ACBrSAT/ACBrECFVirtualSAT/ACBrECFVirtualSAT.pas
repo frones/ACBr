@@ -106,11 +106,10 @@ type
     Procedure EnviaConsumidorVirtual ; override;
     procedure VendeItemVirtual( ItemCupom: TACBrECFVirtualClassItemCupom); override;
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; override ;
-    Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
-       MensagemRodape : AnsiString  = '' ) ; override ;
+    Procedure SubtotalizaCupomVirtual( MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
-    procedure VerificaPodeCancelarCupom; override;
+    procedure VerificaPodeCancelarCupom(NumCOOCancelar: Integer = 0); override;
     Procedure CancelaCupomVirtual ; override ;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -368,22 +367,22 @@ begin
     if EAN13Valido(ItemCupom.Codigo) then
       Det.Prod.cEAN := ItemCupom.Codigo;
 
-    AliqECF := fpAliquotas[ ItemCupom.PosAliq ];
+    AliqECF := fpAliquotas[ ItemCupom.AliqPos ];
 
     Det.Prod.CFOP          := '5102';
     Det.Imposto.ICMS.CST   := cst00;
     Det.Imposto.ICMS.pICMS := AliqECF.Aliquota;
 
-    if ItemCupom.PosAliq = 0 then       // FF
+    if ItemCupom.AliqPos = 0 then       // FF
     begin
       Det.Prod.CFOP        := '5405';
       Det.Imposto.ICMS.CST := cst60;
     end
-    else if ItemCupom.PosAliq = 1 then  // II
+    else if ItemCupom.AliqPos = 1 then  // II
     begin
       Det.Imposto.ICMS.CST := cst40;
     end
-    else if ItemCupom.PosAliq = 2 then  // NN
+    else if ItemCupom.AliqPos = 2 then  // NN
     begin
       Det.Imposto.ICMS.CST := cst41;
     end
@@ -421,14 +420,14 @@ begin
 end;
 
 procedure TACBrECFVirtualSATClass.SubtotalizaCupomVirtual(
-  DescontoAcrescimo: Double; MensagemRodape: AnsiString);
+  MensagemRodape: AnsiString);
 begin
   with fsACBrSAT do
   begin
-    if DescontoAcrescimo > 0 then
-      CFe.Total.DescAcrEntr.vAcresSubtot := DescontoAcrescimo
+    if fpCupom.DescAcresSubtotal > 0 then
+      CFe.Total.DescAcrEntr.vAcresSubtot := fpCupom.DescAcresSubtotal
     else
-      CFe.Total.DescAcrEntr.vDescSubtot  := DescontoAcrescimo*(-1); 
+      CFe.Total.DescAcrEntr.vDescSubtot  := -fpCupom.DescAcresSubtotal;
 
     CFe.InfAdic.infCpl := MensagemRodape;
   end;
@@ -495,7 +494,8 @@ begin
   fsEhVenda := False;
 end;
 
-procedure TACBrECFVirtualSATClass.VerificaPodeCancelarCupom;
+procedure TACBrECFVirtualSATClass.VerificaPodeCancelarCupom(
+  NumCOOCancelar: Integer);
 begin
  { nada aqui }
 end;

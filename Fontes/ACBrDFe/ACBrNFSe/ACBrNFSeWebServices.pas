@@ -2141,6 +2141,8 @@ begin
   FaMsg := '';
   FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
+
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsLote);
 end;
 
 procedure TNFSeConsultarLoteRPS.FinalizarServico;
@@ -2314,6 +2316,8 @@ begin
   FaMsg := '';
   FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
+
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSeRPS);
 end;
 
 procedure TNFSeConsultarNfseRPS.FinalizarServico;
@@ -2449,6 +2453,8 @@ begin
   FaMsg := '';
   FPRetWS := ExtrairRetorno;
   Result := ExtrairNotasRetorno;
+
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSe);
 end;
 
 procedure TNFSeConsultarNfse.FinalizarServico;

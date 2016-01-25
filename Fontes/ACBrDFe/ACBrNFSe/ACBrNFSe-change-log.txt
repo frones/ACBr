@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/01/2016
+-- ACBrNFSeWebServices / ACBrNFSeConfiguracoes --
+[*] Acrescentado o mesmo tratamento do ExtrairGrupoMsgRet para os métodos: 
+    Consultar Lote, Consultar NFS-e por RPS e Consultar NFS-e.
+    Por: Michel Ouriques / Italo Jurisato Junior
 -- pnfsMFSeG --
 [*] Correção na montagem do pedido de cancelamento para o provedor ISSNet.
     Por: Italo Jurisato Junior

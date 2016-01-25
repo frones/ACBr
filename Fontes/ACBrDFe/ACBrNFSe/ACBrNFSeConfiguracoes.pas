@@ -175,7 +175,12 @@ type
  TConfigGrupoMsgRet = record
     Recepcionar: String;
     ConsSit: String;
+    ConsLote: String;
+    ConsNFSeRps: String;
+    ConsNFSe: String;
     Cancelar: String;
+//    Gerar: String;
+//    RecSincrono: String;
     Substituir: String;
  end;
 
@@ -441,7 +446,7 @@ begin
   if PathIniCidades <> '' then
     NomeArqParams := PathWithDelim(PathIniCidades)
   else
-    begin
+  begin
     NomeArqParams  := ApplicationPath;
     PathIniCidades := NomeArqParams;
   end;
@@ -780,7 +785,12 @@ begin
 
   FConfigGrupoMsgRet.Recepcionar := FPIniParams.ReadString('GrupoMsgRet', 'Recepcionar', '');
   FConfigGrupoMsgRet.ConsSit := FPIniParams.ReadString('GrupoMsgRet', 'ConsSit', '');
+  FConfigGrupoMsgRet.ConsLote := FPIniParams.ReadString('GrupoMsgRet', 'ConsLote', '');
+  FConfigGrupoMsgRet.ConsNFSeRPS := FPIniParams.ReadString('GrupoMsgRet', 'ConsNFSeRPS', '');
+  FConfigGrupoMsgRet.ConsNFSe := FPIniParams.ReadString('GrupoMsgRet', 'ConsNFSe', '');
   FConfigGrupoMsgRet.Cancelar := FPIniParams.ReadString('GrupoMsgRet', 'Cancelar', '');
+//  FConfigGrupoMsgRet.Gerar := FPIniParams.ReadString('GrupoMsgRet', 'Gerar', '');
+//  FConfigGrupoMsgRet.RecSincrono := FPIniParams.ReadString('GrupoMsgRet', 'RecSincrono', '');
   FConfigGrupoMsgRet.Substituir := FPIniParams.ReadString('GrupoMsgRet', 'Substituir', '');
 
   FPIniParams.Free;

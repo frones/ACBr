@@ -53,7 +53,7 @@ uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit, strutils, typinfo,
 
 procedure DoBoleto ( Cmd: TACBrCmd ) ;
 var
-  EnvioResposta: String;
+  EnvioResposta, Destinatario: String;
 begin
    with FrmACBrMonitor.ACBrBoleto1 do
    begin
@@ -97,7 +97,11 @@ begin
 
       else if cmd.Metodo = 'enviaremail' then
        begin
-         EnviarEmail( IfEmptyThen(Cmd.Params(0), ListadeBoletos[0].Sacado.Email),
+         Destinatario := Trim(Cmd.Params(0));
+         if (Destinatario = '') and (ListadeBoletos.Count > 0) then
+           Destinatario := ListadeBoletos[0].Sacado.Email;
+
+         EnviarEmail( Destinatario,
                       FrmACBrMonitor.edtBOLEmailAssunto.Text,
                       FrmACBrMonitor.edtBOLEmailMensagem.Lines,
                       True);

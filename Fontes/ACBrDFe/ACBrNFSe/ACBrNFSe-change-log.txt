@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/01/2016
+-- ACBrNFSeWebServices / pnfsMFSeG --
+[*] Correções necessárias para efetuar o cancelamento de uma NFS-e provedor
+    ISSNet.
+    Por: Michel Ouriques
 -- ACBrNFSeWebServices / ACBrNFSeConfiguracoes --
 [*] Acrescentado o mesmo tratamento do ExtrairGrupoMsgRet para os métodos: 
     Consultar Lote, Consultar NFS-e por RPS e Consultar NFS-e.

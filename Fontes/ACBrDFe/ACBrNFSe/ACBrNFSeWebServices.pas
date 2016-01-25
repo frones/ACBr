@@ -2602,6 +2602,18 @@ begin
                   FTagF :=  '</Pedido>' +
                            '</' + FPrefixo3 + 'CancelarNfseEnvio>';
                 end;
+      proISSNet: begin
+                   FTagI := '<p1:CancelarNfseEnvio xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd" ' +
+                                                  'xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" ' +
+                                                  'xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd">' +
+                             '<' + FPrefixo3 + 'Pedido>' +
+                              '<' + FPrefixo4 + 'InfPedidoCancelamento' +
+                               ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
+                                    FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+
+                   FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
+                            '</p1:CancelarNfseEnvio>';
+                 end;
     else begin
            FTagI := '<' + FPrefixo3 + 'CancelarNfseEnvio' + FNameSpaceDad +
                      '<' + FPrefixo3 + 'Pedido>' +
@@ -2691,6 +2703,8 @@ begin
       proGinfes: AssinarXML(FPDadosMsg, 'CancelarNfseEnvio', '',
                                        'Falha ao Assinar - Cancelar NFS-e: ');
       proBetha: AssinarXML(FPDadosMsg, 'Pedido></' + FPrefixo3 + 'CancelarNfseEnvio', '',
+                                       'Falha ao Assinar - Cancelar NFS-e: ');
+      proISSNet: AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido></p1:CancelarNfseEnvio', '',
                                        'Falha ao Assinar - Cancelar NFS-e: ');
     else
       AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido></' + FPrefixo3 + 'CancelarNfseEnvio', '',

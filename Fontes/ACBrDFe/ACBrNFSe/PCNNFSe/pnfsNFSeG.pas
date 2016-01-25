@@ -990,7 +990,7 @@ begin
            Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
          Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
-         Gerador.wCampoNFSe(tcInt, '#2', 'CodigoMunicipio', 07, 07, 1, CodMunicipio, '');
+         Gerador.wCampoNFSe(tcInt, '#2', 'CodigoMunicipio', 01, 07, 1, CodMunicipio, '');
 
          Gerador.wGrupoNFSe('/IdentificacaoNfse');
 

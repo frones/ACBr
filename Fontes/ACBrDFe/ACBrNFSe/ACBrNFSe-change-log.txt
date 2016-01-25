@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/01/2016
+-- pnfsMFSeR --
+[*] Removido a condição de só ler o numero da NFSe substituidora do provedor Betha,
+    acora caso tenha a informação ela será lida independente do provedor.
+    Por: Italo Jurisato Junior
 -- ACBrNFSeWebServices / pnfsMFSeG --
 [*] Correções necessárias para efetuar o cancelamento de uma NFS-e provedor
     ISSNet.

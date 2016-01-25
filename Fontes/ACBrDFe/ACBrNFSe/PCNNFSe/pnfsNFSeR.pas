@@ -967,8 +967,7 @@ begin
     NFSe.Cancelada := snNao;
 
   if (Leitor.rExtrai(1, 'NfseSubstituicao') <> '') then
-    if (FProvedor = proBetha) then
-      NFSe.NfseSubstituidora := Leitor.rCampo(tcStr, 'NfseSubstituidora');
+    NFSe.NfseSubstituidora := Leitor.rCampo(tcStr, 'NfseSubstituidora');
 end;
 
 function TNFSeR.LerNFSe_ABRASF_V1: Boolean;

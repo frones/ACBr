@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2016
+-- pnfsMFSeG --
+[*] Correção na montagem do pedido de cancelamento para o provedor ISSNet.
+    Por: Italo Jurisato Junior
+
 24/01/2016
 -- ACBrNFSeWebServices / ACBrNFSeConfiguracoes / pnfsConsSitLoteRpsResposta --
 [*] Criada a Função ExtrairGrupoMsgRet que extrai o XML de retorno do Grupo de Retorno dos 

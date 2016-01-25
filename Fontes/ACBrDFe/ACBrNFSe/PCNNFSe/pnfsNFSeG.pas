@@ -977,7 +977,7 @@ begin
          Gerador.wGrupoNFSe('IdentificacaoNfse');
          Gerador.wCampoNFSe(tcStr, '#3', 'Numero', 01, 15, 1, NumeroNfse, '');
 
-         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         if (VersaoNFSe <> ve100) or (Provedor in [proActcon]) then
          begin
            Gerador.wGrupoNFSe('CpfCnpj');
            if Length(Cnpj) <= 11 then

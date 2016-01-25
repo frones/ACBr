@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/01/2016
+-- ACBrNFSeWebServices --
+[*] Removido do final de NameSpaceDat o caracter ">" pois estava gerando em 
+    duplicidade em alguns provedores.
+    Por: Italo Jurisato Junior
 -- pnfsMFSeR --
 [*] Removido a condição de só ler o numero da NFSe substituidora do provedor Betha,
     acora caso tenha a informação ela será lida independente do provedor.

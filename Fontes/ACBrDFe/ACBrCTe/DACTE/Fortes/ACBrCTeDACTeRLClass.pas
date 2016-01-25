@@ -133,6 +133,7 @@ begin
         , Site
         , Usuario
         , MostrarPreview
+        , MostrarStatus
         , MargemSuperior
         , MargemInferior
         , MargemEsquerda
@@ -158,6 +159,7 @@ begin
       , Site
       , Usuario
       , MostrarPreview
+      , MostrarStatus
       , MargemSuperior
       , MargemInferior
       , MargemEsquerda
@@ -216,6 +218,7 @@ begin
         , ImprimirHoraSaida_Hora
         , FResumoCanhoto
         , Fax
+        , MostrarStatus
         , NumCopias
         , Sistema
         , Site
@@ -243,6 +246,7 @@ begin
       , ImprimirHoraSaida_Hora
       , FResumoCanhoto
       , Fax
+      , MostrarStatus
       , NumCopias
       , Sistema
       , Site

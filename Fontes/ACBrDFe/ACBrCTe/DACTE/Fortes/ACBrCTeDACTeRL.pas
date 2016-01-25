@@ -87,6 +87,7 @@ type
     FUrl: string;
     FUsuario: string;
     FMostrarPreview: boolean;
+    FMostrarStatus: Boolean;
     FExpandirLogoMarca: boolean;
     ChangedPos: boolean;
     FSemValorFiscal: boolean;
@@ -109,14 +110,14 @@ type
     class procedure Imprimir(AOwner: TComponent; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
       AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
       AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
-      ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True;
+      ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMostrarStatus: Boolean = True;
       AMargemSuperior: double = 0.8; AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6;
       AMargemDireita: double = 0.51; AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho;
       ACTeCancelada: boolean = False; AEPECEnviado: boolean = False; APrintDialog : Boolean = True);
 
     class procedure SavePDF(AOwner: TComponent; AFile: string; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
       AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
-      AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
+      AResumoCanhoto: boolean = False; AFax: string = ''; AMostrarStatus: Boolean = True; ANumCopias: integer = 1;
       ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; AMargemSuperior: double = 0.8;
       AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
       APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False; AEPECEnviado: boolean = False);
@@ -136,7 +137,7 @@ uses MaskUtils, ACBrDFeUtil, pcteConversaoCTe, ACBrUtil;
 class procedure TfrmDACTeRL.Imprimir(AOwner: TComponent; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
   AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
   AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1; ASistema: string = '';
-  AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMargemSuperior: double = 0.8;
+  AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMostrarStatus: Boolean = True; AMargemSuperior: double = 0.8;
   AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
   AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False;
   AEPECEnviado: boolean = False; APrintDialog: Boolean = True);
@@ -163,7 +164,9 @@ begin
       FPosRecibo := APosRecibo;
       FCTeCancelada := ACTeCancelada;
       FEPECEnviado := AEPECEnviado;
+      FMostrarStatus := AMostrarStatus;
 
+      RLCTe.ShowProgress := FMostrarStatus;
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
@@ -186,7 +189,7 @@ end;
 
 class procedure TfrmDACTeRL.SavePDF(AOwner: TComponent; AFile: string; ACTe: TCTe; ALogo: string = '';
   AEmail: string = ''; AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False;
-  AHoraSaida: string = ''; AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
+  AHoraSaida: string = ''; AResumoCanhoto: boolean = False; AFax: string = ''; AMostrarStatus: Boolean = True; ANumCopias: integer = 1;
   ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; AMargemSuperior: double = 0.8;
   AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
   APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False; AEPECEnviado: boolean = False);
@@ -212,6 +215,9 @@ begin
       FPosRecibo := APosRecibo;
       FCTeCancelada := ACTeCancelada;
       FEPECEnviado := AEPECEnviado;
+      FMostrarStatus := AMostrarStatus;
+
+      RLCTe.ShowProgress := FMostrarStatus;
 
       with RLPDFFilter1.DocumentInfo do
       begin
@@ -223,8 +229,11 @@ begin
           '; CNPJ: ' + FCTe.Dest.CNPJCPF;
       end;
 
-      RLCTe.SaveToFile(AFile);
-
+      RLPDFFilter1.ShowProgress := FMostrarStatus;
+      RLPDFFilter1.FileName     := AFile;
+      RLCTe.ShowProgress        := FMostrarStatus;
+      RLCTe.Prepare;
+      RLPDFFilter1.FilterPages(RLCTe.Pages);
     finally
       Free;
     end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2016
+-- ACBrNFSeWebServices --
+[*] Alteração visando incluir o NameSpaceDad na TAG LoteRps do provedor SimplISS.
+    Por: Italo Jurisato Junior
+
 25/01/2016
 -- ACBrNFSeWebServices --
 [*] Removido do final de NameSpaceDat o caracter ">" pois estava gerando em 

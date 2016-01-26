@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/01/2016
+-- ACBrNFSeWebServices / pnfsNFSeR / pnfsNFSeW_ABRASFv2 --
+[*] Inclusão da leitura do atributo ID ao ler o XML da NFS-e.
+    Por: Italo Jurisato Junior
+
+26/01/2016
 -- ACBrNFSe
 [*] Aplicado alterações para gerar pdf e enviar por e-mail com o mesmo nome e usando propriedade nomelongenfse
    Por: Juliomar Marchetti

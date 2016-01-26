@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/01/2016
+-- ACBrNFSe
+[*] Aplicado alterações para gerar pdf e enviar por e-mail com o mesmo nome e usando propriedade nomelongenfse
+   Por: Juliomar Marchetti
+	 
+26/01/2016
 -- ACBrNFSeWebServices --
 [*] Alteração visando incluir o NameSpaceDad na TAG LoteRps do provedor SimplISS.
     Por: Italo Jurisato Junior

@@ -99,7 +99,6 @@ type
     procedure VisualizarDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSe(NFSe: TNFSe = nil); virtual;
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual;
-//    procedure ImprimirDANFSeCampinas(NFSe : TNFSe = nil); virtual;
   published
     property ACBrNFSe: TComponent  read FACBrNFSe write SetNFSe;
     property Logo: String read FLogo write FLogo;
@@ -222,11 +221,6 @@ begin
  ErroAbstract('Imprimir');
 end;
 
-//procedure TACBrNFSeDANFSeClass.ImprimirDANFSeCampinas(NFSe: TNFSe);
-//begin
-  //ErroAbstract('ImprimirCampinas');
-//end;
-
 procedure TACBrNFSeDANFSeClass.ImprimirDANFSePDF(NFSe: TNFSe);
 begin
  ErroAbstract('ImprimirPDF');
@@ -261,11 +255,11 @@ begin
     then if Assigned(OldValue.DANFSe)
           then OldValue.DANFSe := nil;
 
-   if Value <> nil
-    then begin
+   if Value <> nil then
+   begin
      Value.FreeNotification(self);
      TACBrNFSe(Value).DANFSe := self;
-    end;
+   end;
   end;
 end;
 

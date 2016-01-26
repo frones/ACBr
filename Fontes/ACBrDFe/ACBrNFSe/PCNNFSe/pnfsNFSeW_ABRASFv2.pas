@@ -651,7 +651,7 @@ begin
                                  OnlyNumber(FNFSe.Prestador.Cnpj) +
                                  IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
 
-    proSystemPro: FNFSe.InfID.ID := FNFSe.InfID.ID;
+//    proSystemPro: FNFSe.InfID.ID := FNFSe.InfID.ID;
 
     proRecife: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
 

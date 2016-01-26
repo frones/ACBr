@@ -1331,6 +1331,10 @@ begin
 
  if (Leitor.rExtrai(3, 'InfDeclaracaoPrestacaoServico') <> '') or (Leitor.rExtrai(3, 'DeclaracaoPrestacaoServico') <> '')
   then begin
+   NFSe.InfID.ID := Leitor.rAtributo('Id=');
+   if NFSe.InfID.ID = '' then
+     NFSe.InfID.ID := Leitor.rAtributo('id=');
+
    NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
    NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));

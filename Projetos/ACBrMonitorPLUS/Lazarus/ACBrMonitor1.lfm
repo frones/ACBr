@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsDiretoriosDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 5
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7505,9 +7505,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsImpCTe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 3
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -8259,6 +8259,36 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 3
                       Text = '0,6'
                     end
+                  end
+                end
+                object tsImpCTe: TTabSheet
+                  Caption = 'CT-e'
+                  ClientHeight = 251
+                  ClientWidth = 607
+                  object rgTamanhoPapelDacte: TRadioGroup
+                    Left = 6
+                    Height = 44
+                    Top = 0
+                    Width = 266
+                    AutoFill = True
+                    Caption = 'Modelo'
+                    ChildSizing.LeftRightSpacing = 6
+                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                    ChildSizing.ShrinkHorizontal = crsScaleChilds
+                    ChildSizing.ShrinkVertical = crsScaleChilds
+                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                    ChildSizing.ControlsPerLine = 3
+                    ClientHeight = 22
+                    ClientWidth = 262
+                    Columns = 3
+                    ItemIndex = 0
+                    Items.Strings = (
+                      'A4'
+                      'A4 2 vias'
+                      'A5'
+                    )
+                    TabOrder = 0
                   end
                 end
               end
@@ -11139,7 +11169,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

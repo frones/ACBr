@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2016
+[+] Adição da opção para selecionar o tamanho de papel no DACT
+	  por: Juliomar Marchetti
+		
 25/01/2015
 [-] Correção para evitar erro na obtenção do nome do destinatário no comando
     BOLETO.EnviarEmail

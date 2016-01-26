@@ -292,10 +292,12 @@ type
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
     pgEmailDFe: TPageControl;
+    rgTamanhoPapelDacte: TRadioGroup;
     rgTipoAmb: TRadioGroup;
     sbArquivoWebServicesMDFe: TSpeedButton;
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
+    tsImpCTe: TTabSheet;
     tsTesteMDFe: TTabSheet;
     tsEmailMDFe: TTabSheet;
     tsTesteCTe: TTabSheet;
@@ -3464,6 +3466,7 @@ begin
     rgTipoDanfe.ItemIndex := Ini.ReadInteger('Geral', 'DANFE', 0);
     edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');
     rgModeloDanfe.ItemIndex := Ini.ReadInteger('DANFE', 'Modelo', 0);
+    rgTamanhoPapelDacte.ItemIndex := Ini.ReadInteger('DACTE', 'TamanhoPapel', 0);
 //    edtSoftwareHouse.Text := Ini.ReadString('DANFE', 'SoftwareHouse', '');
     edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
     edtEmailEmpresa.Text := Ini.ReadString('DANFE', 'Email', '');
@@ -3511,6 +3514,7 @@ begin
       ACBrMDFe1.DAMDFE := ACBrMDFeDAMDFeRL1;
     end;
 
+    ACBrCTeDACTeRL1.TamanhoPapel := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
     //ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
 
     rgModeloDANFeNFCE.ItemIndex := Ini.ReadInteger('NFCe', 'Modelo', 0);
@@ -4268,6 +4272,7 @@ begin
     Ini.WriteString('Email', 'MensagemMDFe', BinaryStringToString(mmEmailMsgMDFe.Lines.Text) );
 
     Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
+    Ini.WriteInteger('DACTE', 'TamanhoPapel', rgTamanhoPapelDacte.ItemIndex);
 //    Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);
     Ini.WriteString('DANFE', 'Site', edtSiteEmpresa.Text);
     Ini.WriteString('DANFE', 'Email', edtEmailEmpresa.Text);

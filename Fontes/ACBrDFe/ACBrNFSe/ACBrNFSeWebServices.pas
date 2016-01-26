@@ -1266,7 +1266,11 @@ begin
         GerarLoteRPSsemAssinatura(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal);
     end;
 
-    FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad + '>';
+    case FProvedor of
+      proSimplISS: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
+    else
+      FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad + '>';
+    end;
     FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
 
     InicializarGerarDadosMsg;
@@ -1403,7 +1407,11 @@ begin
                    FTagF := '</' + FPrefixo3 + 'ReqEnvioLoteRPS>';
                  end;
     else begin
-           FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad + '>';
+           case FProvedor of
+             proSimplISS: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
+           else
+             FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad + '>';
+           end;
            FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
          end;
     end;
@@ -1743,6 +1751,10 @@ begin
     end;
 
     case FProvedor of
+      proSimplISS: begin
+                        FTagI := '<' + FPrefixo3 + 'GerarNovaNfseEnvio>';
+                        FTagF :=  '</' + FPrefixo3 + 'GerarNovaNfseEnvio>';
+                      end;
       proEGoverneISS: begin
                         FTagI := '<' + FPrefixo3 + 'request' + FNameSpaceDad + '>';
                         FTagF :=  '</' + FPrefixo3 + 'request>';
@@ -1865,7 +1877,11 @@ begin
 
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingCab);
 
-    FTagI := '<' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + FNameSpaceDad + '>';
+    case FProvedor of
+      proSimplISS: FTagI := '<' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
+    else
+      FTagI := '<' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio' + FNameSpaceDad + '>';
+    end;
     FTagF := '</' + FPrefixo3 + 'ConsultarSituacaoLoteRpsEnvio>';
 
     InicializarGerarDadosMsg;
@@ -2097,7 +2113,11 @@ begin
                    FTagF := '</' + FPrefixo3 + 'ReqConsultaLote>';
                  end;
     else begin
-           FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad + '>';
+           case FProvedor of
+             proSimplISS: FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
+           else
+             FTagI := '<' + FPrefixo3 + 'ConsultarLoteRpsEnvio' + FNameSpaceDad + '>';
+           end;
            FTagF := '</' + FPrefixo3 + 'ConsultarLoteRpsEnvio>';
          end;
     end;
@@ -2217,7 +2237,11 @@ begin
                    FTagF := '</' + FPrefixo3 + 'ReqConsultaNFSeRPS>';
                  end;
     else begin
-           FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio' + FNameSpaceDad + '>';
+           case FProvedor of
+             proSimplISS: FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio>';
+           else
+             FTagI := '<' + FPrefixo3 + 'ConsultarNfseRpsEnvio' + FNameSpaceDad + '>';
+           end;
            FTagF := '</' + FPrefixo3 + 'ConsultarNfseRpsEnvio>';
          end;
     end;
@@ -2397,7 +2421,11 @@ begin
                       FTagF := '</' + FPrefixo3 + 'ConsultarNfseFaixaEnvio>';
                     end;
     else begin
-           FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio' + FNameSpaceDad + '>';
+           case FProvedor of
+             proSimplISS: FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio>';
+           else
+             FTagI := '<' + FPrefixo3 + 'ConsultarNfseEnvio' + FNameSpaceDad + '>';
+           end;
            FTagF := '</' + FPrefixo3 + 'ConsultarNfseEnvio>';
          end;
     end;

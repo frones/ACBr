@@ -200,7 +200,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeFRClass.SetDataSetsToFrxReport;
+procedure TACBrNFSeDANFSeFR.SetDataSetsToFrxReport;
 begin
   frxReport.EnabledDataSets.Clear;
   frxReport.EnabledDataSets.Add(FfrxIdentificacao);

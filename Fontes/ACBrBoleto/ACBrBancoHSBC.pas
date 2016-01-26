@@ -642,10 +642,12 @@ Begin
     28: Result := '28-Débito de tarifas/custas';
     29: Result := '29-Ocorrências do Sacado';
     30: Result := '30-Alteração de Outros Dados Rejeitados';
+    31: Result := '31-Liquidação normal em Cheque/Compensação/Banco Correspondente';
     32: Result := '32-Instrução Rejeitada';
     33: Result := '33-Confirmação Pedido Alteração Outros Dados';
     34: Result := '34-Retirado de Cartório e Manutenção Carteira';
     35: Result := '35-Desagendamento do débito automático';
+    38: Result := '38-Liquidação de título não registrado - em dinheiro';
     40: Result := '40-Estorno de Pagamento';
     55: Result := '55-Sustado Judicial';
     68: Result := '68-Acerto dos dados do rateio de Crédito';
@@ -680,10 +682,12 @@ Begin
     28: Result := toRetornoDebitoTarifas;
     29: Result := toRetornoOcorrenciasdoSacado;
     30: Result := toRetornoALteracaoOutrosDadosRejeitada;
+    31: Result := toRetornoLiquidadoPorConta;  // utilizado para diferenciaro cód. 31 (verificar necessidade de criar tipo novo)
     32: Result := toRetornoComandoRecusado;
     33: Result := toRetornoRecebimentoInstrucaoAlterarDados;
     34: Result := toRetornoRetiradoDeCartorio;
     35: Result := toRetornoDesagendamentoDebitoAutomatico;
+    38: Result := toRetornoLiquidadoSemRegistro;
     99: Result := toRetornoRegistroRecusado;
   Else
     Result := toRetornoOutrasOcorrencias;
@@ -717,8 +721,10 @@ Begin
     toRetornoDebitoTarifas: Result := '28';
     toRetornoOcorrenciasdoSacado: Result := '29';
     toRetornoALteracaoOutrosDadosRejeitada: Result := '30';
+    toRetornoLiquidadoPorConta: Result := '31';
     toRetornoComandoRecusado: Result := '32';
     toRetornoDesagendamentoDebitoAutomatico: Result := '35';
+    toRetornoLiquidadoSemRegistro: Result := '38';
   Else
     Result := '02';
   End;

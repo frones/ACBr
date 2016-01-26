@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/01/2016 ver. 0.0.172a
+-- ACBrBancoHSBC --
+[*] Adicionados novos códigos de ocorrência na função TipoOcorrenciToDescricao.
+   (por: RobertoSFilho)
+
 Data: 22/01/2016 ver. 0.0.171a
 -- ACBrBancoNordeste --
 [-] Correção arquivo remessa CNAB400.

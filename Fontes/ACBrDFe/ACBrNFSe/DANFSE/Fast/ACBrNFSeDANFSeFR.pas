@@ -67,6 +67,7 @@ type
 
     function ManterDocumento(sCpfCnpj: String): string;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+		procedure SetDataSetsToFrxReport;		
   public
     frxReport   : TfrxReport; // Está como public, pois quando declarado em datamodule, tem acesso externo, e pode ser que alguem esteja usando.
     frxPDFExport: TfrxPDFExport;
@@ -199,28 +200,51 @@ begin
   end;
 end;
 
+procedure TACBrNFeFRClass.SetDataSetsToFrxReport;
+begin
+  frxReport.EnabledDataSets.Clear;
+  frxReport.EnabledDataSets.Add(FfrxIdentificacao);
+  frxReport.EnabledDataSets.Add(frxIdentificacao);
+  frxReport.EnabledDataSets.Add(frxPrestador);
+  frxReport.EnabledDataSets.Add(frxTomador);
+  frxReport.EnabledDataSets.Add(frxServicos);
+  frxReport.EnabledDataSets.Add(frxParametros);
+  frxReport.EnabledDataSets.Add(frxItensServico);
+end;
+
 function TACBrNFSeDANFSeFR.PrepareReport(NFSe: TNFSe): Boolean;
 var
   I: Integer;
+	wProjectStream: TStringStream;
 begin
   Result := False;
 
-  if Trim(FastFile) <> '' then
+	SetDataSetsToFrxReport;
+	if Trim(FastFile) <> '' then
   begin
-    if FileExists(FastFile) then
-      frxReport.LoadFromFile(FastFile)
+    if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then
+    begin
+      wProjectStream:=TStringStream.Create(FastFile);
+      frxReport.FileName := '';
+			wProjectStream.Position := 0;
+      frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
     else
-      raise EACBrNFSeDANFSeFR.CreateFmt('Caminho do arquivo de impressão do DANFSe "%s" inválido.', [FastFile]);
+    begin
+      if FileExists(FastFile) then
+        frxReport.LoadFromFile(FastFile)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do DANFSe "%s" inválido.', [FastFile]);
+    end;
   end
   else
-    raise EACBrNFSeDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
-
+    raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
+		
   frxReport.PrintOptions.Copies     := NumCopias;
   frxReport.PrintOptions.ShowDialog := MostrarPreview;
   frxReport.ShowProgress            := Self.MostrarStatus;
 
-  // Incluído por Luciano Enzweiler em 23/01/2013
-  // Define a impressora
   if Impressora > '' then
   begin
     frxReport.PrintOptions.ShowDialog := False;
@@ -229,9 +253,7 @@ begin
 
   if Assigned(NFSe) then
   begin
-    // NFSe := NFSe;
     CarregaDados(NFSe);
-
     Result := frxReport.PrepareReport;
   end
   else

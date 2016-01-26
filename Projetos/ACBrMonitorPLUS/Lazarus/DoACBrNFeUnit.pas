@@ -58,7 +58,7 @@ Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
 var
   I, J, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
-  Salva, OK, MudouDANFe, bImprimir, bMostrarPreview : Boolean;
+  Salva, OK, bImprimir, bMostrarPreview : Boolean;
   SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
@@ -76,7 +76,6 @@ var
   NFeRTXT   : TNFeRTXT;
   VersaoDF  : TpcnVersaoDF;
   ModeloDF  : TpcnModeloDF;
-  OldDANFe  : TACBrNFeDANFEClass;
 
   CC, Anexos: Tstrings;
   sTemMais,ErrosRegraNegocio: String;
@@ -2401,7 +2400,7 @@ begin
                            vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
                            vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
                            vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
-                           cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
+                           cMunFG    := INIRec.ReadInteger(sSecao,'MunicipioFatoGerador',INIRec.ReadInteger(sSecao,'cMunFG',0));
                            cListServ := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
                            cSitTrib  := StrToISSQNcSitTrib( OK,INIRec.ReadString(sSecao,'cSitTrib','')) ;
                            vDeducao    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDeducao'   ,INIRec.ReadString(sSecao,'vDeducao'   ,'')) ,0);

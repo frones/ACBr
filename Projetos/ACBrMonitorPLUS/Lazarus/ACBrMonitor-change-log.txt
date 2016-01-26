@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2015
+[-] Correção para evitar erro na obtenção do nome do destinatário no comando
+    BOLETO.EnviarEmail
+[-] Ajustes para a correta exibição do Preview do DANFE, nos diversos comandos
+    que suportam a impressão do mesmo
+[*] Remoção de Hints e Warnings de compilação
+[*] Ajuste para tratar o campo "cMunFG" como Inteiro e não String (evitando
+    erros de conversão)
+    (por: DSA)
+
 20/01/2015
 [+] Impressão DANFE: Adicionado ajuste para Fonte do Endereço Emitente
     http://www.projetoacbr.com.br/forum/index.php?showtopic=27521

@@ -531,7 +531,7 @@ begin
                           vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
                           vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
                           vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
-                          cMunFG    := StrToInt( INIRec.ReadString(sSecao,'MunicipioFatoGerador',INIRec.ReadString(sSecao,'cMunFG','')));
+                          cMunFG    := INIRec.ReadInteger(sSecao,'MunicipioFatoGerador', INIRec.ReadInteger(sSecao,'cMunFG',0));
                           cListServ := INIRec.ReadInteger(sSecao,'CodigoServico',INIRec.ReadInteger(sSecao,'cListServ',0));
                           cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
                           cNatOp    := INIRec.ReadInteger(sSecao,'cNatOp',0);

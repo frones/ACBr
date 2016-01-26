@@ -202,8 +202,7 @@ end;
 
 procedure TACBrNFSeDANFSeFR.SetDataSetsToFrxReport;
 begin
-  frxReport.EnabledDataSets.Clear;
-  frxReport.EnabledDataSets.Add(FfrxIdentificacao);
+  frxReport.EnabledDataSets.Clear;  
   frxReport.EnabledDataSets.Add(frxIdentificacao);
   frxReport.EnabledDataSets.Add(frxPrestador);
   frxReport.EnabledDataSets.Add(frxTomador);
@@ -235,11 +234,11 @@ begin
       if FileExists(FastFile) then
         frxReport.LoadFromFile(FastFile)
       else
-        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do DANFSe "%s" inválido.', [FastFile]);
+        raise EACBrNFSeDANFSeFR.CreateFmt('Caminho do arquivo de impressão do DANFSe "%s" inválido.', [FastFile]);
     end;
   end
   else
-    raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
+    raise EACBrNFSeDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
 		
   frxReport.PrintOptions.Copies     := NumCopias;
   frxReport.PrintOptions.ShowDialog := MostrarPreview;

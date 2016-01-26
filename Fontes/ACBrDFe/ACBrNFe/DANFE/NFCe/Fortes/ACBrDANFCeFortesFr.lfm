@@ -1,10 +1,10 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 473
-  Height = 749
+  Height = 741
   Top = 85
   Width = 763
   Caption = 'ACBrNFeDANFCeFortesFr'
-  ClientHeight = 749
+  ClientHeight = 741
   ClientWidth = 763
   Color = clBtnFace
   Font.Color = clWindowText
@@ -793,23 +793,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
-          object lRazaoSocial: TRLLabel
-            Left = 0
-            Height = 12
-            Top = 19
-            Width = 276
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'RazÃ£o Social'
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Arial'
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
           object lEmitCNPJ_IE_IM: TRLLabel
             Left = 0
             Height = 12
@@ -862,25 +845,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Width = 0
             RealBounds.Height = 0
           end
-          object lNomeFantasia: TRLLabel
-            Left = 0
-            Height = 18
-            Top = 1
-            Width = 276
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'Nome Fantasia'
-            Font.Color = clBlack
-            Font.Height = -15
-            Font.Name = 'Arial'
-            Font.Style = [fsBold]
-            Layout = tlCenter
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
           object imgLogo: TRLImage
             Left = 0
             Height = 1
@@ -895,6 +859,48 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Height = 0
             Scaled = True
             Transparent = False
+          end
+          object lNomeFantasia: TRLMemo
+            Left = 0
+            Height = 18
+            Top = 1
+            Width = 276
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -15
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            Lines.Strings = (
+              'Nome Fantasia'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lRazaoSocial: TRLMemo
+            Left = 0
+            Height = 12
+            Top = 19
+            Width = 276
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Lines.Strings = (
+              'Razão Social'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
           end
         end
       end
@@ -1521,23 +1527,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
-          object lRazaoSocialCanc: TRLLabel
-            Left = 0
-            Height = 12
-            Top = 19
-            Width = 276
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'RazÃ£o Social'
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Arial'
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
           object lEmitCNPJ_IE_IM_Camc: TRLLabel
             Left = 0
             Height = 12
@@ -1590,25 +1579,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Width = 0
             RealBounds.Height = 0
           end
-          object lNomeFantasiaCanc: TRLLabel
-            Left = 0
-            Height = 18
-            Top = 1
-            Width = 276
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'Nome Fantasia'
-            Font.Color = clBlack
-            Font.Height = -15
-            Font.Name = 'Arial'
-            Font.Style = [fsBold]
-            Layout = tlCenter
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
           object RLImage2: TRLImage
             Left = 0
             Height = 1
@@ -1623,6 +1593,48 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Height = 0
             Scaled = True
             Transparent = False
+          end
+          object lNomeFantasiaCanc: TRLMemo
+            Left = 0
+            Height = 18
+            Top = 1
+            Width = 276
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -15
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            Lines.Strings = (
+              'Nome Fantasia'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lRazaoSocialCanc: TRLMemo
+            Left = 0
+            Height = 12
+            Top = 19
+            Width = 276
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Lines.Strings = (
+              'Razão Social'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
           end
         end
       end

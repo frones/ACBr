@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2016
+-- ACBrNFeDANFCeFortes --
+[*] Campos "NomeFantasia" e "RazaoSocial", modificados para TRLMemo, para
+    permitir a quebra de linhas em nomes longos.  (por: DSA)
+
 21/01/2016
 -- ACBrNFeServicos -- 
 [*] Adicionado a URL de Administracao de CSC de Homologação do Estado de Goias.

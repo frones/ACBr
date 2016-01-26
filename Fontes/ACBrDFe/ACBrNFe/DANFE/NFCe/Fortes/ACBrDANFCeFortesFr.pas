@@ -84,6 +84,10 @@ type
 
   TACBrNFeDANFCeFortesFr = class(TForm)
     lFonteTributos: TRLLabel;
+    lNomeFantasia: TRLMemo;
+    lNomeFantasiaCanc: TRLMemo;
+    lRazaoSocial: TRLMemo;
+    lRazaoSocialCanc: TRLMemo;
     rlVenda: TRLReport;
     rlbRodape: TRLBand;
     RLDraw2: TRLDraw;
@@ -134,11 +138,9 @@ type
     lMsgDANFCe2: TRLLabel;
     rlbDadosCliche: TRLBand;
     pLogoeCliche: TRLPanel;
-    lRazaoSocial: TRLLabel;
     lEmitCNPJ_IE_IM: TRLLabel;
     lEndereco: TRLMemo;
     RLDraw1: TRLDraw;
-    lNomeFantasia: TRLLabel;
     imgLogo: TRLImage;
     rlbLegenda: TRLBand;
     RLDraw4: TRLDraw;
@@ -181,11 +183,9 @@ type
     RLLabel28: TRLLabel;
     RLBand11: TRLBand;
     RLPanel3: TRLPanel;
-    lRazaoSocialCanc: TRLLabel;
     lEmitCNPJ_IE_IM_Camc: TRLLabel;
     lEnderecoCanc: TRLMemo;
     RLDraw14: TRLDraw;
-    lNomeFantasiaCanc: TRLLabel;
     RLImage2: TRLImage;
     rlbConsumidorCanc: TRLBand;
     RLDraw17: TRLDraw;
@@ -533,8 +533,8 @@ begin
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
-    lNomeFantasia.Caption   := Emit.xFant ;
-    lRazaoSocial.Caption    := Emit.xNome ;
+    lNomeFantasia.Lines.Text:= Emit.xFant ;
+    lRazaoSocial.Lines.Text := Emit.xNome ;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
@@ -835,9 +835,9 @@ begin
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
-    lNomeFantasiaCanc.Caption   := Emit.xFant ;
-    lRazaoSocialCanc.Caption    := Emit.xNome ;
-    lEmitCNPJ_IE_IM_Camc.Caption := CompoemCliche;
+    lNomeFantasiaCanc.Lines.Text:= Emit.xFant ;
+    lRazaoSocialCanc.Lines.Text := Emit.xNome ;
+    lEmitCNPJ_IE_IM_Camc.Caption:= CompoemCliche;
     lEnderecoCanc.Lines.Text    := CompoemEnderecoCFe;
 
     if ACBrNFeDANFCeFortes.Logo <> '' then

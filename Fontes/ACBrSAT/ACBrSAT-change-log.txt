@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/01/2016
+-- ACBrSATExtratoESCPOS --
+[-] Ajuste para que não seja impresso o "Dados para Entrega" se apenas o Nome
+    do Consumidor é informado (o Nome do Consumidor já aparecerá no cabeçalho)
+    (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27591
+
 Data: 15/01/2015
 -- ACBrSATExtratoFortes --
 [*] Ajuste para que todo o cabeçaho do Cliche seja impresso como "memo",

@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 310
+  Left = 228
   Height = 632
-  Top = 74
+  Top = 28
   Width = 894
   Caption = 'ACBrNFe - Demonstração'
   ClientHeight = 632
@@ -131,10 +131,10 @@ object Form1: TForm1
           Height = 439
           Top = 0
           Width = 275
-          ActivePage = TabSheet3
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
-          TabIndex = 0
+          TabIndex = 3
           TabOrder = 0
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
@@ -2170,7 +2170,6 @@ object Form1: TForm1
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
-    Configuracoes.Arquivos.Salvar = True
     Configuracoes.Arquivos.AdicionarLiteral = True
     Configuracoes.Arquivos.SepararPorCNPJ = True
     Configuracoes.Arquivos.SepararPorModelo = True
@@ -2181,7 +2180,7 @@ object Form1: TForm1
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     Configuracoes.WebServices.QuebradeLinha = '|'
-    DANFE = ACBrNFeDANFeRL1
+    DANFE = ACBrNFeDANFCeFortes1
     left = 688
     top = 376
   end
@@ -2190,6 +2189,7 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = False
     MargemInferior = 0.8
@@ -2207,18 +2207,24 @@ object Form1: TForm1
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
     PosCanhoto = prCabecalho
-    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
+    PosPrinter = ACBrPosPrinter1
     left = 688
     top = 496
   end
@@ -2230,11 +2236,11 @@ object Form1: TForm1
     top = 368
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
-    ACBrNFe = ACBrNFe1
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.7
@@ -2252,10 +2258,16 @@ object Form1: TForm1
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
@@ -2297,10 +2309,12 @@ object Form1: TForm1
     top = 496
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    ACBrNFe = ACBrNFe1
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -2318,10 +2332,16 @@ object Form1: TForm1
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0

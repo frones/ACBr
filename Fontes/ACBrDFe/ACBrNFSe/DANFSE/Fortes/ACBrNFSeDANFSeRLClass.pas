@@ -88,7 +88,8 @@ begin
   then begin
    for i:= 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count-1 do
     begin
-     frlDANFSeRLRetrato.Imprimir(  TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
+     frlDANFSeRLRetrato.Imprimir(Self,
+                                 TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
                                  , Logo
                                  , Email
                                  , Fax
@@ -123,7 +124,8 @@ begin
                                  , PrintDialog);
     end;
   end
-  else frlDANFSeRLRetrato.Imprimir(  NFSe
+  else frlDANFSeRLRetrato.Imprimir( Self,
+                                    NFSe
                                    , Logo
                                    , Email
                                    , Fax
@@ -191,7 +193,8 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AOutrasInformacaoesImp, AAtividade : String);
 }
 
-     frlDANFSeRLRetrato.SavePDF( NomeArq
+     frlDANFSeRLRetrato.SavePDF( Self
+                               , NomeArq
                                , TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe
                                , Logo
                                , Email
@@ -228,7 +231,8 @@ class procedure TfrlDANFSeRL.SavePDF(AFile: String; ANFSe: TNFSe; ALogo, AEmail,
    NomeArq := StringReplace(NFSe.Numero,'NFSe', '', [rfIgnoreCase]);
    NomeArq := PathWithDelim(Self.PathPDF)+NomeArq+Trim(NFSe.IdentificacaoRps.Serie)+'-nfse.pdf';
 
-   frlDANFSeRLRetrato.SavePDF( NomeArq
+   frlDANFSeRLRetrato.SavePDF( Self
+                             , NomeArq
                              , NFSe
                              , Logo
                              , Email

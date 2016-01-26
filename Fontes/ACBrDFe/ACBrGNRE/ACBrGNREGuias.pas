@@ -217,7 +217,7 @@ begin
     if not Assigned(GNREGuia) then
       raise EACBrGNREException.Create('Componente FGNREGuia não associado.')
     else
-      GNREGuia.ImprimirGuia(nil {GuiasRetorno});
+      GNREGuia.ImprimirGuia( nil {GuiasRetorno});
   end;
 end;
 
@@ -228,7 +228,7 @@ begin
     if not Assigned(GNREGuia) then
       raise EACBrGNREException.Create('Componente FGNREGuia não associado.')
     else
-      GNREGuia.ImprimirGuiaPDF(nil {GNRE});
+      GNREGuia.ImprimirGuiaPDF( nil {GuiasRetorno});
   end;
 end;
 
@@ -400,7 +400,7 @@ begin
       begin
         if Assigned(GNREGuia) then
         begin
-          GNREGuia.ImprimirGuiaPDF(nil {FGNRE});
+          GNREGuia.ImprimirGuiaPDF( nil {GuiasRetorno});
           NomeArq := PathWithDelim(GNREGuia.PathPDF) + NumID + '-gnre.pdf';
           AnexosEmail.Add(NomeArq);
         end;

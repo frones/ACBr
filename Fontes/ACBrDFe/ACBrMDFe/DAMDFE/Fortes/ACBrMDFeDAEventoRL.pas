@@ -69,14 +69,16 @@ type
     FImpressora: string;
 
   public
-    class procedure Imprimir(AEventoMDFe: TInfEventoCollectionItem; ALogo: string = '';
+    class procedure Imprimir(AOwner: TComponent;
+		  AEventoMDFe: TInfEventoCollectionItem; ALogo: string = '';
       ANumCopias: integer = 1; ASistema: string = '';
       AUsuario: string = ''; AMostrarPreview: boolean = True;
       AMargemSuperior: double = 0.7; AMargemInferior: double = 0.7;
       AMargemEsquerda: double = 0.7; AMargemDireita: double = 0.7;
       AImpressora: string = ''; AMDFe: TMDFe = nil);
 
-    class procedure SavePDF(AEventoMDFe: TInfEventoCollectionItem; ALogo: string = '';
+    class procedure SavePDF(AOwner: TComponent;
+		  AEventoMDFe: TInfEventoCollectionItem; ALogo: string = '';
       AFile: string = ''; ASistema: string = '';
       AUsuario: string = ''; AMargemSuperior: double = 0.7;
       AMargemInferior: double = 0.7; AMargemEsquerda: double = 0.7;
@@ -94,7 +96,8 @@ uses
  {$R *.dfm}
 {$endif}
 
-class procedure TfrmMDFeDAEventorl.Imprimir(AEventoMDFe: TInfEventoCollectionItem;
+class procedure TfrmMDFeDAEventorl.Imprimir(AOwner: TComponent;
+  AEventoMDFe: TInfEventoCollectionItem;
   ALogo: string = '';
   ANumCopias: integer = 1;
   ASistema: string = '';
@@ -107,7 +110,7 @@ class procedure TfrmMDFeDAEventorl.Imprimir(AEventoMDFe: TInfEventoCollectionIte
   AImpressora: string = '';
   AMDFe: TMDFe = nil);
 begin
-  with Create ( nil ) do
+  with Create ( AOwner ) do
   //with TfrmMDFeDAEventoRL do
     try
       FEventoMDFe := AEventoMDFe;
@@ -144,7 +147,8 @@ begin
     end;
 end;
 
-class procedure TfrmMDFeDAEventorl.SavePDF(AEventoMDFe: TInfEventoCollectionItem;
+class procedure TfrmMDFeDAEventorl.SavePDF(AOwner: TComponent;
+  AEventoMDFe: TInfEventoCollectionItem;
   ALogo: string = ''; AFile: string = '';
   ASistema: string = '';
   AUsuario: string = '';
@@ -154,7 +158,7 @@ class procedure TfrmMDFeDAEventorl.SavePDF(AEventoMDFe: TInfEventoCollectionItem
   AMargemDireita: double = 0.7;
   AMDFe: TMDFe = nil);
 begin
-  with Create(nil) do
+  with Create(AOwner) do
     //with TfrmMDFeDAEventoRL do
     try
       FEventoMDFe := AEventoMDFe;

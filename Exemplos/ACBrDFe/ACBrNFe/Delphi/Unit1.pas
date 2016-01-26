@@ -9,7 +9,7 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib,
-  ACBrMail, ACBrNFeDANFeRLClass;
+  ACBrMail, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr;
 
 type
 
@@ -208,6 +208,7 @@ type
     cbTipoEmissao: TComboBox;
     Label43: TLabel;
     Label44: TLabel;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);

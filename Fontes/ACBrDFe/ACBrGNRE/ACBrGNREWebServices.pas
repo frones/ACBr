@@ -83,7 +83,7 @@ type
 
   public
     constructor Create(AOwner: TACBrDFe); override;
-//    procedure Clear; override;
+    procedure Clear; override;
 
     property Status: TStatusACBrGNRE read FPStatus;
     property Layout: TLayOutGNRE read FPLayout;
@@ -102,6 +102,7 @@ type
     FGuias: TGuias;
 
     FGNRERetorno: TTretLote_GNRE;
+    FcUF: Integer;
 
     function GetLote: String;
     function GetRecibo: String;
@@ -117,7 +118,7 @@ type
     constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
       reintroduce; overload;
     destructor Destroy; override;
-//    procedure Clear; override;
+    procedure Clear; override;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property codigo: Integer read Fcodigo write Fcodigo;
@@ -125,6 +126,7 @@ type
     property numero: String read Fnumero write Fnumero;
     property dataHoraRecibo: TDateTime read FdataHoraRecibo write FdataHoraRecibo;
     property tempoEstimadoProc: Integer read FtempoEstimadoProc write FtempoEstimadoProc;
+    property cUF: Integer read FcUF;
   end;
 
   { TGNRERetRecepcao }
@@ -140,6 +142,7 @@ type
     FGuias: TGuias;
 
     FGNRERetorno: TTResultLote_GNRE;
+    FcUF: Integer;
 
     function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
@@ -156,7 +159,7 @@ type
     constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
       reintroduce; overload;
     destructor Destroy; override;
-//    procedure Clear; override;
+    procedure Clear; override;
 
     function Executar: Boolean; override;
 
@@ -168,6 +171,7 @@ type
     property resultado: String read Fresultado write Fresultado;
 
     property GNRERetorno: TTResultLote_GNRE read FGNRERetorno;
+    property cUF: Integer read FcUF;
   end;
 
   { TGNRERecibo }
@@ -183,6 +187,7 @@ type
     FGuias: TGuias;
 
     FGNRERetorno: TTResultLote_GNRE;
+    FcUF: Integer;
 
   protected
     procedure DefinirServicoEAction; override;
@@ -196,7 +201,7 @@ type
     constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
       reintroduce; overload;
     destructor Destroy; override;
-//    procedure Clear; override;
+    procedure Clear; override;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
@@ -206,6 +211,7 @@ type
     property resultado: String read Fresultado write Fresultado;
 
     property GNRERetorno: TTResultLote_GNRE read FGNRERetorno;
+    property cUF: Integer read FcUF;
   end;
 
   { TGNREConsultaUF }
@@ -225,6 +231,7 @@ type
     FAmbiente: TpcnTipoAmbiente;
 
     FGNRERetorno: TTConfigUf;
+    FcUF: Integer;
 
   protected
     procedure DefinirURL; override;
@@ -236,7 +243,7 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
-//    procedure Clear; override;
+    procedure Clear; override;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property Uf: String read FUf write FUf;
@@ -251,6 +258,7 @@ type
     property exigeDataPagamento: String read FexigeDataPagamento write FexigeDataPagamento;
 
     property GNRERetorno: TTConfigUf read FGNRERetorno write FGNRERetorno;
+    property cUF: Integer read FcUF;
   end;
 
   { TGNREEnvioWebService }
@@ -272,7 +280,7 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
     destructor Destroy; override;
-//    procedure Clear; override;
+    procedure Clear; override;
 
     function Executar: Boolean; override;
 
@@ -326,14 +334,14 @@ begin
   FPHeaderElement := 'gnreCabecMsg';
   FPBodyElement := 'gnreDadosMsg';
 end;
-(*
+
 procedure TGNREWebService.Clear;
 begin
   inherited Clear;
 
   FPStatus := stGNREIdle;
 end;
-*)
+
 procedure TGNREWebService.DefinirURL;
 var
   Versao: Double;
@@ -405,7 +413,7 @@ begin
 
   inherited Destroy;
 end;
-(*
+
 procedure TGNRERecepcao.Clear;
 begin
   inherited Clear;
@@ -430,9 +438,9 @@ begin
   if Assigned(FGNRERetorno) then
     FGNRERetorno.Free;
 
-  FGNRERetorno := TretEnvGNRE.Create;
+  FGNRERetorno := TTretLote_GNRE.Create;
 end;
-*)
+
 procedure TGNRERecepcao.DefinirDadosMsg;
 var
   i: Integer;
@@ -559,7 +567,7 @@ begin
 
   inherited Destroy;
 end;
-(*
+
 procedure TGNRERetRecepcao.Clear;
 var
   i, j: Integer;
@@ -582,7 +590,7 @@ begin
     FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
     FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
   end;
-
+  (*
   if Assigned(FGNRERetorno) and Assigned(FGuias) then
   begin
     // Limpa Dados dos retornos das guias;
@@ -605,10 +613,10 @@ begin
 
     FreeAndNil(FGNRERetorno);
   end;
-
-  FGNRERetorno := TRetConsReciGNRE.Create;
+  *)
+  FGNRERetorno := TTResultLote_GNRE.Create;
 end;
-*)
+
 procedure TGNRERetRecepcao.DefinirDadosMsg;
 var
   ConsResLoteGNRE: TConsResLoteGNRE;
@@ -919,12 +927,12 @@ begin
 
   inherited Destroy;
 end;
-(*
+
 procedure TGNRERecibo.Clear;
 begin
   inherited Clear;
 
-  FPStatus := stGNRERecibo;
+  FPStatus := stGNRERetRecepcao;
   FPLayout := LayGNRERetRecepcao;
   FPArqEnv := 'ped-rec';
   FPArqResp := 'pro-rec';
@@ -944,9 +952,9 @@ begin
   if Assigned(FGNRERetorno) then
     FGNRERetorno.Free;
 
-  FGNRERetorno := TRetConsReciGNRE.Create;
+  FGNRERetorno := TTResultLote_GNRE.Create;
 end;
-*)
+
 procedure TGNRERecibo.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'GnreResultadoLote';
@@ -1052,12 +1060,12 @@ begin
 
   inherited Destroy;
 end;
-(*
+
 procedure TGNREConsultaUF.Clear;
 begin
   inherited Clear;
 
-  FPStatus := stGNRERecibo;
+  FPStatus := stGNRERetRecepcao;
   FPLayout := LayGNRERetRecepcao;
   FPArqEnv := 'ped-cfg';
   FPArqResp := 'cfg';
@@ -1084,7 +1092,7 @@ begin
 
   FGNRERetorno := TTConfigUf.Create;
 end;
-*)
+
 procedure TGNREConsultaUF.DefinirDadosMsg;
 var
  ConsConfigUF: TConsConfigUF;
@@ -1180,14 +1188,14 @@ destructor TGNREEnvioWebService.Destroy;
 begin
   inherited Destroy;
 end;
-(*
+
 procedure TGNREEnvioWebService.Clear;
 begin
   inherited Clear;
 
   FVersao := '';
 end;
-*)
+
 function TGNREEnvioWebService.Executar: Boolean;
 begin
   Result := inherited Executar;

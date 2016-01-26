@@ -130,11 +130,10 @@ type
     Procedure EnviaConsumidorVirtual ; override;
     procedure VendeItemVirtual( ItemCupom: TACBrECFVirtualClassItemCupom); override;
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; override ;
-    Procedure SubtotalizaCupomVirtual( DescontoAcrescimo : Double = 0;
-       MensagemRodape : AnsiString  = '' ) ; override ;
+    Procedure SubtotalizaCupomVirtual( MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override;
-    procedure VerificaPodeCancelarCupom; override;
+    procedure VerificaPodeCancelarCupom(NumCOOCancelar: Integer = 0); override;
     Procedure CancelaCupomVirtual ; override ;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -143,7 +142,7 @@ type
     property ECF: TACBrECF read GetACBrECF;
 
   public
-    Constructor Create( AECFVirtualPrinter : TACBrECFVirtualPrinter ); overload;
+    Constructor Create( AECFVirtualPrinter : TACBrECFVirtualPrinter ); overload; override;
     property ACBrNFCe: TACBrNFe read fsACBrNFCe write fsACBrNFCe;
 
     property QuandoAbrirDocumento : TACBrECFVirtualNFCeQuandoAbrirDocumento
@@ -499,7 +498,7 @@ begin
     if EAN13Valido(ItemCupom.Codigo) then
       Det.Prod.cEAN := ItemCupom.Codigo;
 
-    AliqECF := fpAliquotas[ ItemCupom.PosAliq ];
+    AliqECF := fpAliquotas[ ItemCupom.AliqPos ];
 
     Det.Prod.CFOP          := '5102';
     if NotasFiscais.Items[0].NFe.Emit.CRT = crtSimplesNacional then
@@ -544,15 +543,15 @@ begin
 end;
 
 procedure TACBrECFVirtualNFCeClass.SubtotalizaCupomVirtual(
-  DescontoAcrescimo: Double; MensagemRodape: AnsiString);
+  MensagemRodape: AnsiString);
 begin
   with fsACBrNFCe do
   begin
     //TODO: Precisa ratear desconto entre os itens
-    if DescontoAcrescimo > 0 then
-      NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro := DescontoAcrescimo
+    if fpCupom.DescAcresSubtotal > 0 then
+      NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro := fpCupom.DescAcresSubtotal
     else
-      NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  := DescontoAcrescimo;
+      NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  := -fpCupom.DescAcresSubtotal;
 
     NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
   end;
@@ -646,7 +645,8 @@ begin
   fsEhVenda := False;
 end;
 
-procedure TACBrECFVirtualNFCeClass.VerificaPodeCancelarCupom;
+procedure TACBrECFVirtualNFCeClass.VerificaPodeCancelarCupom(
+  NumCOOCancelar: Integer);
 begin
   { nada aqui }
 end;

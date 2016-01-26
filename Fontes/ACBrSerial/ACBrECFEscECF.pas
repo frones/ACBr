@@ -2615,7 +2615,7 @@ begin
 
   SalvaRespostasMemoria(True);
 
-  { Se o desconto é maior que zero dá o comando de desconto de item }
+  { Se o desconto é maior que zero envia o comando de desconto/acrescimo de item anterior }
 
   if ValorDescontoAcrescimo > 0 then
      DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo, DescontoAcrescimo,
@@ -2696,7 +2696,6 @@ begin
       except
         on E: Exception do
         begin
-
           TentarEstornarCCDSeguintes :=  // Erro específico de Cancelamento por Falta de Cancelamento de CCD //
                          ((EscECFResposta.CAT = 05) and (EscECFResposta.RET.ECF = 10)) or
              (IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 21));

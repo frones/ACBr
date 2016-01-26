@@ -342,9 +342,9 @@ begin
         Nivel := 2;
 
       i := 0;
-      while (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
+      while (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
+            (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
-            (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
@@ -478,7 +478,9 @@ begin
               FNFSe.CondicaoPagamento.QtdParcela := NFSeLida.NFSe.CondicaoPagamento.QtdParcela;
 
               FNFSe.NFSeCancelamento.DataHora := NFSeLida.NFSe.NFSeCancelamento.DataHora;
-
+              FNFSe.NFSeCancelamento.Pedido.CodigoCancelamento := NFSeLida.NFSe.NFSeCancelamento.Pedido.CodigoCancelamento;
+              FNFSe.Cancelada := NFSeLida.NFSe.Cancelada;
+              
               FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
             end;
 

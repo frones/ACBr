@@ -172,6 +172,18 @@ type
     Substituir_IncluiEncodingDados: Boolean;
  end;
 
+ TConfigGrupoMsgRet = record
+    Recepcionar: String;
+    ConsSit: String;
+    ConsLote: String;
+    ConsNFSeRps: String;
+    ConsNFSe: String;
+    Cancelar: String;
+//    Gerar: String;
+//    RecSincrono: String;
+    Substituir: String;
+ end;
+
  { TEmitenteConfNFSe }
 
  TEmitenteConfNFSe = class(TPersistent)
@@ -209,6 +221,7 @@ type
     FConfigSoapAction: TConfigSoapAction;
     FConfigURL: TConfigURL;
     FConfigEnvelope: TConfigEnvelope;
+    FConfigGrupoMsgRet: TConfigGrupoMsgRet;
 
     FCodigoMunicipio: Integer;
     FProvedor: TnfseProvedor;
@@ -240,6 +253,7 @@ type
     property ConfigSoapAction: TConfigSoapAction read FConfigSoapAction;
     property ConfigURL: TConfigURL read FConfigURL;
     property ConfigEnvelope: TConfigEnvelope read FConfigEnvelope;
+    property ConfigGrupoMsgRet: TConfigGrupoMsgRet read FConfigGrupoMsgRet;
   published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
@@ -432,7 +446,7 @@ begin
   if PathIniCidades <> '' then
     NomeArqParams := PathWithDelim(PathIniCidades)
   else
-    begin
+  begin
     NomeArqParams  := ApplicationPath;
     PathIniCidades := NomeArqParams;
   end;
@@ -768,6 +782,16 @@ begin
     Inc(I);
   end;
   FConfigGeral.DadosSenha := Texto;
+
+  FConfigGrupoMsgRet.Recepcionar := FPIniParams.ReadString('GrupoMsgRet', 'Recepcionar', '');
+  FConfigGrupoMsgRet.ConsSit := FPIniParams.ReadString('GrupoMsgRet', 'ConsSit', '');
+  FConfigGrupoMsgRet.ConsLote := FPIniParams.ReadString('GrupoMsgRet', 'ConsLote', '');
+  FConfigGrupoMsgRet.ConsNFSeRPS := FPIniParams.ReadString('GrupoMsgRet', 'ConsNFSeRPS', '');
+  FConfigGrupoMsgRet.ConsNFSe := FPIniParams.ReadString('GrupoMsgRet', 'ConsNFSe', '');
+  FConfigGrupoMsgRet.Cancelar := FPIniParams.ReadString('GrupoMsgRet', 'Cancelar', '');
+//  FConfigGrupoMsgRet.Gerar := FPIniParams.ReadString('GrupoMsgRet', 'Gerar', '');
+//  FConfigGrupoMsgRet.RecSincrono := FPIniParams.ReadString('GrupoMsgRet', 'RecSincrono', '');
+  FConfigGrupoMsgRet.Substituir := FPIniParams.ReadString('GrupoMsgRet', 'Substituir', '');
 
   FPIniParams.Free;
 end;

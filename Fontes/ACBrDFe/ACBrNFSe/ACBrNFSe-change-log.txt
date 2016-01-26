@@ -47,9 +47,59 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2016
+-- ACBrNFSeWebServices --
+[*] Alteração visando incluir o NameSpaceDad na TAG LoteRps do provedor SimplISS.
+    Por: Italo Jurisato Junior
+
+25/01/2016
+-- ACBrNFSeWebServices --
+[*] Removido do final de NameSpaceDat o caracter ">" pois estava gerando em 
+    duplicidade em alguns provedores.
+    Por: Italo Jurisato Junior
+-- pnfsMFSeR --
+[*] Removido a condição de só ler o numero da NFSe substituidora do provedor Betha,
+    acora caso tenha a informação ela será lida independente do provedor.
+    Por: Italo Jurisato Junior
+-- ACBrNFSeWebServices / pnfsMFSeG --
+[*] Correções necessárias para efetuar o cancelamento de uma NFS-e provedor
+    ISSNet.
+    Por: Michel Ouriques
+-- ACBrNFSeWebServices / ACBrNFSeConfiguracoes --
+[*] Acrescentado o mesmo tratamento do ExtrairGrupoMsgRet para os métodos: 
+    Consultar Lote, Consultar NFS-e por RPS e Consultar NFS-e.
+    Por: Michel Ouriques / Italo Jurisato Junior
+-- pnfsMFSeG --
+[*] Correção na montagem do pedido de cancelamento para o provedor ISSNet.
+    Por: Italo Jurisato Junior
+
+24/01/2016
+-- ACBrNFSeWebServices / ACBrNFSeConfiguracoes / pnfsConsSitLoteRpsResposta --
+[*] Criada a Função ExtrairGrupoMsgRet que extrai o XML de retorno do Grupo de Retorno dos 
+    métodos Recepcionar, Consultar Situação, Cancelar e Substituir.
+    Por: Italo Jurisato Junior
+
+22/01/2016
+-- ACBrNFSeWebServices / pnfsConsSitLoteRpsResposta --
+[*] Criada a propriedade XML para conter o XML exato de retorno.
+    Por: Italo Jurisato Junior
+[+] Inclusão do provedor NEAInformatica que atende a cidade de Três Lagoas/MS.
+    Por: Rodrigo de Carvalho Ribeiro / Italo Jurisato Junior
+-- ACBrNFSeWebServices --
+[*] Ao montar o envelopamento estava sendo informado o NameSpace sendo que o
+    correto é o NameSpace de Dados.
+    Por: Italo Jurisato Junior
+-- ACBrNFSeNotasFiscais --
+[*] Incluida uma condição que só compara o CNPJ do XML com o do certificado,
+    case tenha sido informado o numero de série do mesmo.
+    Por: Marcos Gerene / Italo Jurisato Junior
+-- ACBrNFSeWebServices / pnfsLerListaNFSe / pnfsNFSeR --
+[*] Incluida as linhas para a leitura da data e codigo do cancelamento.
+    Por: Italo Jurisato Junior
+
 21/01/2016
 -- ACBrNFSeWebServices --
-[*] Sera levantada uma excessão quando a propriedade FDadosEnvelope for vazia.
+[*] Sera levantada uma exceção quando a propriedade FDadosEnvelope for vazia.
     Isso significa que o Serviço que se pretente executar não esta disponível
     no provedor selecionado.
     Por: Italo Jurisato Junior

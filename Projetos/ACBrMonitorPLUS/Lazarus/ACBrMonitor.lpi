@@ -272,64 +272,10 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="19">
+    <Exceptions Count="1" IgnoreAll="True">
       <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-      <Item4>
-        <Name Value="ESynaSerError"/>
-      </Item4>
-      <Item5>
         <Name Value="Exception"/>
-      </Item5>
-      <Item6>
-        <Name Value="EACBrECFNaoInicializado"/>
-      </Item6>
-      <Item7>
-        <Name Value="EStringListError"/>
-      </Item7>
-      <Item8>
-        <Name Value="EInvalidOperation"/>
-      </Item8>
-      <Item9>
-        <Name Value="EACBrECFSemResposta"/>
-      </Item9>
-      <Item10>
-        <Name Value="EACBrCEPHTTPError"/>
-      </Item10>
-      <Item11>
-        <Name Value="EConvertError"/>
-      </Item11>
-      <Item12>
-        <Name Value="EACBrECFTimeOut"/>
-      </Item12>
-      <Item13>
-        <Name Value="EACBrSedexException"/>
-      </Item13>
-      <Item14>
-        <Name Value="EACBrDFeException"/>
-      </Item14>
-      <Item15>
-        <Name Value="EOleSysError"/>
-      </Item15>
-      <Item16>
-        <Name Value="EACBrHTTPReqResp"/>
-      </Item16>
-      <Item17>
-        <Name Value="EOleException"/>
-      </Item17>
-      <Item18>
-        <Name Value="EACBrNFeException"/>
-      </Item18>
-      <Item19>
-        <Name Value="EACBrSATErro"/>
-      </Item19>
+      </Item1>
     </Exceptions>
   </Debugging>
 </CONFIG>

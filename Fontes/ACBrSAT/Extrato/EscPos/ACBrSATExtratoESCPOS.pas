@@ -367,8 +367,7 @@ begin
      Trim(CFe.Entrega.nro)+
      Trim(CFe.Entrega.xCpl)+
      Trim(CFe.Entrega.xBairro)+
-     Trim(CFe.Entrega.xMun)+
-     Trim(CFe.Dest.xNome) <> '' then
+     Trim(CFe.Entrega.xMun) <> '' then
    begin
      FBuffer.Add('</fn></linha_simples>');
      FBuffer.Add('DADOS PARA ENTREGA');

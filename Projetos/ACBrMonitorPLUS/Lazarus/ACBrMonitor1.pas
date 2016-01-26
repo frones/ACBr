@@ -1234,7 +1234,7 @@ type
 
     procedure LerIni;
     procedure SalvarIni;
-    procedure ConfiguraDANFe(PDF : Boolean);
+    procedure ConfiguraDANFe(GerarPDF, MostrarPreview : Boolean);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -2192,7 +2192,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe(True);
+    ConfiguraDANFe(True, False);
 
     vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
@@ -2324,7 +2324,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe(False);
+    ConfiguraDANFe(False, False);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
 end;
@@ -3511,7 +3511,7 @@ begin
       ACBrMDFe1.DAMDFE := ACBrMDFeDAMDFeRL1;
     end;
 
-    ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
+    //ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
 
     rgModeloDANFeNFCE.ItemIndex := Ini.ReadInteger('NFCe', 'Modelo', 0);
     rgModoImpressaoEvento.ItemIndex :=
@@ -3522,8 +3522,6 @@ begin
       Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
     cbxImpressoraNFCe.ItemIndex :=
       cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
-
-    ConfiguraDANFe(False);
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
@@ -6884,7 +6882,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.ConfiguraDANFe(PDF : Boolean);
+procedure TFrmACBrMonitor.ConfiguraDANFe(GerarPDF, MostrarPreview: Boolean);
 var
   OK: boolean;
 begin
@@ -6892,7 +6890,7 @@ begin
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      if (rgModeloDANFeNFCE.ItemIndex = 0) or PDF then
+      if (rgModeloDANFeNFCE.ItemIndex = 0) or GerarPDF then
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
@@ -6911,7 +6909,7 @@ begin
        ACBrNFe1.DANFE.NFeCancelada := False;
   end;
 
-  if PDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
+  if GerarPDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
     ForceDirectories(PathWithDelim(edtPathPDF.Text));
 
   if ACBrNFe1.DANFE <> nil then
@@ -6923,7 +6921,6 @@ begin
     ACBrNFe1.DANFE.Email := edtEmailEmpresa.Text;
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
-    ACBrNFe1.DANFE.MostrarPreview := cbxMostrarPreview.Checked;
     ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
     ACBrNFe1.DANFE.ProdutosPorPagina := StrToIntDef(edtLargCodProd.Text, 0);
     ACBrNFe1.DANFE.MargemInferior := StrToFloatDef(edtMargemInf.Text, 0.8);
@@ -6972,6 +6969,16 @@ begin
         ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
     end;
   end;
+
+  ACBrNFe1.DANFE.MostrarPreview := (not GerarPDF) and
+                                   (MostrarPreview or cbxMostrarPreview.Checked) and
+                                   (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1);
+
+  if ACBrNFe1.DANFE.MostrarPreview then
+  begin
+     Restaurar1.Click;
+     Application.BringToFront;
+  end
 end;
 
 procedure TFrmACBrMonitor.VerificaDiretorios;

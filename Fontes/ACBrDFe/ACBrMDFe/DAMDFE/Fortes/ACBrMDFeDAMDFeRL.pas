@@ -83,7 +83,8 @@ type
     procedure rllSemValorFiscalPrint(Sender: TObject; var Value: string);
   public
     { Public declarations }
-    class procedure Imprimir(AMDFe: TMDFe; ALogo: string = '';
+    class procedure Imprimir(AOwner: TComponent; 
+		  AMDFe: TMDFe; ALogo: string = '';
       AEmail: string = '';
       AExpandirLogoMarca: boolean = False;
       AFax: string = '';
@@ -101,7 +102,8 @@ type
       AMDFeEncerrado: boolean = False;
       APrintDialog  : Boolean = True  );
 
-    class procedure SavePDF(AFile: string; AMDFe: TMDFe;
+    class procedure SavePDF(AOwner: TComponent; 
+		  AFile: string; AMDFe: TMDFe;
       ALogo: string = '';
       AEmail: string = '';
       AExpandirLogoMarca: boolean = False;
@@ -130,7 +132,8 @@ uses
  {$R *.dfm}
 {$endif}
 
-class procedure TfrlDAMDFeRL.Imprimir(AMDFe: TMDFe;
+class procedure TfrlDAMDFeRL.Imprimir(AOwner: TComponent; 
+  AMDFe: TMDFe;
   ALogo: string = '';
   AEmail: string = '';
   AExpandirLogoMarca: boolean = False;
@@ -149,7 +152,7 @@ class procedure TfrlDAMDFeRL.Imprimir(AMDFe: TMDFe;
   AMDFeEncerrado: boolean = False;
   APrintDialog: Boolean = True);
 begin
-  with Create(nil) do
+  with Create(AOwner) do
     //with TfrlDAMDFeRL do
     try
       FMDFe := AMDFe;
@@ -187,7 +190,8 @@ begin
     end;
 end;
 
-class procedure TfrlDAMDFeRL.SavePDF(AFile: string;
+class procedure TfrlDAMDFeRL.SavePDF(AOwner: TComponent; 
+  AFile: string;
   AMDFe: TMDFe;
   ALogo: string = '';
   AEmail: string = '';
@@ -204,7 +208,7 @@ class procedure TfrlDAMDFeRL.SavePDF(AFile: string;
   AMDFeCancelada: boolean = False;
   AMDFeEncerrado: boolean = False);
 begin
-  with Create(nil) do
+  with Create(AOwner) do
     //with TfrlDAMDFeRL do
     try
       FMDFe := AMDFe;

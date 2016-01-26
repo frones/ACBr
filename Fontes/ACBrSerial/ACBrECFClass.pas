@@ -1337,9 +1337,9 @@ end;
 
 function TACBrECFTotalizadorNaoTributado.GetAsString: String;
 begin
-  Result := Indice                  + '|' +
-            Tipo                    + '|' +
-            FloatToStr( Total )     + '|' ;
+  Result := Indice + '|' +
+            Tipo   + '|' +
+            FloatToStr( RoundTo(Total, -2) ) + '|' ;
 end;
 
 procedure TACBrECFTotalizadorNaoTributado.SetAsString(AValue: String);
@@ -1449,7 +1449,7 @@ begin
             Indice                  + '|' +
             FloatToStr( Aliquota )  + '|' +
             Tipo                    + '|' +
-            FloatToStr( Total )     + '|' ;
+            FloatToStr( RoundTo(Total, -2) )+ '|' ;
 end;
 
 procedure TACBrECFAliquota.SetAsString(AValue: String);
@@ -1462,11 +1462,11 @@ begin
 
     if SL.Count < 5 then exit ;
 
-    Sequencia       := StrToInt( SL[0] );
-    Indice          := SL[1];
-    Aliquota        := StrToFloat( SL[2] );
-    Tipo            := SL[3][1];
-    Total           := StrToFloat( SL[4] );
+    Sequencia := StrToInt( SL[0] );
+    Indice    := SL[1];
+    Aliquota  := StrToFloat( SL[2] );
+    Tipo      := SL[3][1];
+    Total     := StrToFloat( SL[4] );
   finally
     SL.Free;
   end;
@@ -1515,12 +1515,12 @@ end;
 
 function TACBrECFFormaPagamento.GetAsString: String;
 begin
-  Result := Indice                      + '|' +
-            Descricao                   + '|' +
-            BoolToStr(PermiteVinculado) + '|' +
-            FloatToStr( Total )         + '|' +
-            DateTimeToStr( Data )       + '|' +
-            TipoDoc                     + '|' ;
+  Result := Indice                           + '|' +
+            Descricao                        + '|' +
+            BoolToStr(PermiteVinculado)      + '|' +
+            FloatToStr( RoundTo(Total, -2) ) + '|' +
+            DateTimeToStr( Data )            + '|' +
+            TipoDoc                          + '|' ;
 end;
 
 procedure TACBrECFFormaPagamento.SetAsString(AValue: String);
@@ -1714,12 +1714,12 @@ end;
 
 function TACBrECFComprovanteNaoFiscal.GetAsString: String;
 begin
-  Result := Indice                        + '|' +
-            Descricao                     + '|' +
-            BoolToStr( PermiteVinculado ) + '|' +
-            FormaPagamento                + '|' +
-            FloatToStr( Total )           + '|' +
-            IntToStr( Contador )          + '|' ;
+  Result := Indice                           + '|' +
+            Descricao                        + '|' +
+            BoolToStr( PermiteVinculado )    + '|' +
+            FormaPagamento                   + '|' +
+            FloatToStr( RoundTo(Total, -2) ) + '|' +
+            IntToStr( Contador )             + '|' ;
 end;
 
 procedure TACBrECFComprovanteNaoFiscal.SetAsString(AValue: String);

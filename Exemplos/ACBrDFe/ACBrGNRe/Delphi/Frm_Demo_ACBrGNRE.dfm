@@ -19,7 +19,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Left = 0
     Top = 0
     Width = 297
-    Height = 529
+    Height = 530
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -729,7 +729,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Left = 297
     Top = 0
     Width = 558
-    Height = 529
+    Height = 530
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -798,7 +798,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
       Left = 1
       Top = 137
       Width = 556
-      Height = 391
+      Height = 392
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -808,7 +808,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
           Left = 0
           Top = 0
           Width = 548
-          Height = 363
+          Height = 364
           Align = alClient
           TabOrder = 0
         end
@@ -880,29 +880,14 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Top = 224
   end
   object ACBrGNRE1: TACBrGNRE
-    Configuracoes.Geral.PathSalvar = 'C:\Program Files (x86)\Borland\Delphi7\Bin\'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.IntervaloTentativas = 0
-    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
     OnStatusChange = ACBrGNRE1StatusChange
-    GNREGuia = ACBrGNREGuiaFR1
     OnGerarLog = ACBrGNRE1GerarLog
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
     Left = 406
-    Top = 225
-  end
-  object ACBrGNREGuiaFR1: TACBrGNREGuiaFR
-    ACBrGNRE = ACBrGNRE1
-    PathPDF = 'C:\Program Files (x86)\Borland\Delphi7\Bin\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TamanhoPapel = tpA4
-    NumCopias = 1
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    EspessuraBorda = 1
-    Left = 374
     Top = 225
   end
 end

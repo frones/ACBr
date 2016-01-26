@@ -4,11 +4,10 @@ unit Unit1;
 
 interface
 
-uses IniFiles,
-  SynMemo, SynHighlighterXML, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
-  ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass, pcnNFeRTXT,
-  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS;
+uses IniFiles, SynMemo, SynHighlighterXML, SysUtils, Variants, Classes,
+  Graphics, Controls, Forms, Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
+  ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass,
+  pcnNFeRTXT, ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS;
 
 type
 

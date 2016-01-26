@@ -98,37 +98,43 @@
         <LaunchingApplication PathPlusParams="\usr\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="10">
+    <RequiredPackages Count="12">
       <Item1>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBrSerial"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBrComum"/>
       </Item7>
       <Item8>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item8>
       <Item9>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item9>
       <Item10>
-        <PackageName Value="LCL"/>
+        <PackageName Value="SynEdit"/>
       </Item10>
+      <Item11>
+        <PackageName Value="TurboPowerIPro"/>
+      </Item11>
+      <Item12>
+        <PackageName Value="LCL"/>
+      </Item12>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>

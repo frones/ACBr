@@ -53,6 +53,7 @@ type
     FProvedorConf: TnfseProvedor;
     FPathIniCidades: String;
     FVersaoNFSe: TVersaoNFSe;
+    FLayoutXML: TLayoutXML;
 
     function LerRPS_ABRASF_V1: Boolean;
     function LerRPS_ABRASF_V2: Boolean;
@@ -72,7 +73,6 @@ type
     function LerNFSe: Boolean;
 
     function CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
-    procedure SetVersaoNFSe(Provedor: TnfseProvedor);
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
@@ -87,6 +87,7 @@ type
     property TabServicosExt: Boolean     read FTabServicosExt write FTabServicosExt;
     property PathIniCidades: String      read FPathIniCidades write FPathIniCidades;
     property VersaoNFSe: TVersaoNFSe     read FVersaoNFSe     write FVersaoNFSe;
+    property LayoutXML: TLayoutXML       read FLayoutXML      write FLayoutXML;
   end;
 
  TLeitorOpcoes = class(TPersistent)
@@ -117,29 +118,6 @@ begin
  FOpcoes.Free;
 
  inherited Destroy;
-end;
-
-procedure TNFSeR.SetVersaoNFSe(Provedor: TnfseProvedor);
-begin
-  case FProvedor of
-    proABRASFv1, proAbaco, proBetha, proBHISS, proDBSeller, proFISSLex,
-    proGinfes, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
-    proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ,
-    proSalvador, proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan,
-    proWebISS: FVersaoNFSe := ve100;
-
-    proDigifred: FVersaoNFSe := ve110;
-
-    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proFIntelISS,
-    proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe, proLink3,
-    proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proVirtual, proVitoria, proEReceita,
-    proNEAInformatica: FVersaoNFSe := ve200;
-
-    proTecnos: FVersaoNFSe := ve201;
-  else
-    FVersaoNFSe := ve100;
-  end;
 end;
 
 function TNFSeR.LerXml: Boolean;
@@ -215,28 +193,21 @@ begin
       FProvedor := FProvedorConf;
   end;
 
-  SetVersaoNFSe(FProvedor);
+  VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
+  LayoutXML := ProvedorToLayoutXML(FProvedor);
 
   if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') then
   begin
-    case FProvedor of
-      proABRASFv1, proAbaco, proBetha, proBHISS, proDBSeller, proFISSLex,
-      proGinfes, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
-      proNatal, proNFSeBrasil, proProdemge, proPronim, proPublica, proRecife,
-      proRJ, proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan,
-      proWebISS: Result := LerRPS_ABRASF_V1;
-
-      proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proFIntelISS,
-      proFiorilli, proFreire, proGoiania, proGovDigital, proISSDigital, proISSe,
-      proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-      proTecnos, ProVirtual, proVitoria,
-      proNEAInformatica: Result := LerRPS_ABRASF_V2;
-
-      proISSDSF:  Result := LerRPS_ISSDSF;
-
-      proEquiplano: Result := LerRPS_Equiplano;
-
-      proEL: Result := LerRps_EL;
+    case LayoutXML of
+      loABRASFv1:    Result := LerRPS_ABRASF_V1;
+      loABRASFv2:    Result := LerRPS_ABRASF_V2;
+      loISSDSF:      Result := LerRPS_ISSDSF;
+      loEquiplano:   Result := LerRPS_Equiplano;
+      loEL:          Result := LerRps_EL;
+      loInfisc:      Result := False; // Falta implementar
+      loEGoverneISS: Result := False; // Falta implementar
+    else
+      Result := False;
     end;
   end;
 end;
@@ -889,7 +860,8 @@ begin
       FProvedor := FProvedorConf;
   end;
 
-  SetVersaoNFSe(FProvedor);
+  VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
+  LayoutXML := ProvedorToLayoutXML(FProvedor);
 
   if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then
   begin
@@ -930,25 +902,14 @@ begin
     end;
   end;
 
-  case FProvedor of
-    proABRASFv1, proAbaco, proBetha, proBHISS, proDBSeller, proFISSLex,
-    proGinfes, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
-    proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSimplISS,
-    proSJP, proSpeedGov, proThema, proTinus, proTiplan,
-    proWebISS: Result := LerNFSe_ABRASF_V1;
-
-    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proFIntelISS,
-    proFiorilli, proFreire, proGoiania, proGovDigital, proISSDigital, proISSe,
-    proLink3, proMitra, proNFSeBrasil, proProdata, proPVH, proSaatri, proSisPMJP,
-    proSystemPro, proTecnos, proVirtual, proVitoria, proEReceita,
-    proNEAInformatica: Result := LerNFSe_ABRASF_V2;
-
-    proInfisc:  Result := LerNFSe_Infisc;
-
-    proISSDSF:  Result := LerNFSe_ISSDSF;
-
-    proEquiplano: Result := LerNFSe_Equiplano;
-
+  case LayoutXML of
+    loABRASFv1:    Result := LerNFSe_ABRASF_V1;
+    loABRASFv2:    Result := LerNFSe_ABRASF_V2;
+    loISSDSF:      Result := LerNFSe_ISSDSF;
+    loEquiplano:   Result := LerNFSe_Equiplano;
+    loEL:          Result := False; // Falta implementar
+    loInfisc:      Result := LerNFSe_Infisc;
+    loEGoverneISS: Result := False; // Falta implementar
   else
     Result := False;
   end;

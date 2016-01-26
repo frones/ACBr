@@ -188,7 +188,8 @@ function VersaoNFSeToStr(const t: TVersaoNFSe): String;
 function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
 function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 
-function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
+function ProvedorToLayoutXML(const AProvedor: TnfseProvedor): TLayoutXML;
+function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 
 function RemoverNameSpace(const AXML: String): String;
 
@@ -18113,9 +18114,9 @@ begin
   end;
 end;
 
-function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
+function ProvedorToLayoutXML(const AProvedor: TnfseProvedor): TLayoutXML;
 begin
-  case t of
+  case AProvedor of
     proABRASFv1, proAbaco, proBetha, ProBHISS, proDBSeller, proFISSLex,
     proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
     proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
@@ -18142,6 +18143,29 @@ begin
 (*
   TnfseProvedor = ( proProdam, proNFSEBrasil, proCONAM);
 *)
+end;
+
+function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
+begin
+  case AProvedor of
+    proABRASFv1, proAbaco, proBetha, proBHISS, proDBSeller, proFISSLex,
+    proGinfes, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
+    proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ,
+    proSalvador, proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan,
+    proWebISS: Result := ve100;
+
+    proDigifred: Result := ve110;
+
+    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proFIntelISS,
+    proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe, proLink3,
+    proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
+    proVirtual, proVitoria, proEReceita,
+    proNEAInformatica: Result := ve200;
+
+    proTecnos: Result := ve201;
+  else
+    Result := ve100;
+  end;
 end;
 
 function RemoverNameSpace(const AXML: String): String;

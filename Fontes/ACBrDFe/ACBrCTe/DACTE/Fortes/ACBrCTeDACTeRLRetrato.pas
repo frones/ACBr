@@ -1817,23 +1817,11 @@ var
   i : Integer;
 begin
   inherited;
-
-  if cdsDocumentos.RecordCount > 4  then
-  begin
-    i := cdsDocumentos.RecordCount - 4;
-    rlb_07_HeaderItens.Height := rlb_07_HeaderItens.Height + (i * 1);
-    rld_07_headerItens.Height := rld_07_headerItens.Height + (i * 1);
-  end;
-  // Imprime os Documentos Originários se o Tipo de CTe for Normal
-  rlb_07_HeaderItens.Visible := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
+  rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);
 
   rlDocOrig_tpDoc1.Lines.Clear;
   rlDocOrig_tpDoc2.Lines.Clear;
-  //rlDocOrig_cpf1.Lines.Clear;
-  //rlDocOrig_cpf2.Lines.Clear;
-  //rlDocOrig_serie1.Lines.Clear;
-  //rlDocOrig_serie2.Lines.Clear;
 
   cdsDocumentos.First;
   while not cdsDocumentos.Eof do
@@ -1852,6 +1840,10 @@ begin
     end;
     cdsDocumentos.Next;
   end;
+
+  rlDocOrig_tpDoc1.Height := Round( rlDocOrig_tpDoc1.Lines.Count * 12);
+  rlDocOrig_tpDoc2.Height := Round(rlDocOrig_tpDoc2.Lines.Count * 12);
+  rld_07_headerItens.Height := rlb_07_HeaderItens.Height - 12;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_09_ObsBeforePrint(Sender: TObject; var PrintIt: Boolean);

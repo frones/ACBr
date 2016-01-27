@@ -93,7 +93,8 @@ type
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil,
-                    proTinus, proSJP, proCONAM, proEReceita, proNEAInformatica);
+                    proTinus, proSJP, proCONAM, proEReceita, proGoverna,
+                    proNEAInformatica, proNotaInteligente);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -108,7 +109,7 @@ type
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
-                loInfisc, loISSDSF);
+                loInfisc, loISSDSF, loGoverna);
 
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
@@ -378,45 +379,53 @@ end;
 function ProvedorToStr(const t: TnfseProvedor): String;
 begin
   result := EnumeradoToStr(t,
-                           ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge', 'Abaco',
-                            'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
-                            'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita', 'NEAInformatica'], 
-                           [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
-                            proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
-                            proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
-                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
-                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus
-                            , proSJP, proCONAM, proEReceita, proNEAInformatica]); 
+        ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge',
+         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
+         'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim',
+         'Saatri', 'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal',
+         'ISSDigital', 'ISSe', '4R', 'GovDigital', 'Fiorilli', 'Coplan',
+         'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire', 'Link3', 'SpeedGov',
+         'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
+         'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
+         'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM',
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
+        [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+         proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
+         proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
+         profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
+         proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
+         proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
+         proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
+         proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
+         proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
+         proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus, proSJP, proCONAM,
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
 begin
   result := StrToEnumerado(ok, s,
-                           ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge', 'Abaco',
-                            'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
-                            'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita', 'NEAInformatica'], 
-                           [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
-                            proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
-                            proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
-                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
-                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil, proTinus,
-                            proSJP, proCONAM, proEReceita, proNEAInformatica]); 
+        ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge',
+         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
+         'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim',
+         'Saatri', 'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal',
+         'ISSDigital', 'ISSe', '4R', 'GovDigital', 'Fiorilli', 'Coplan',
+         'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire', 'Link3', 'SpeedGov',
+         'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
+         'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
+         'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM',
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
+        [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+         proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
+         proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
+         profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
+         proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
+         proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
+         proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
+         proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
+         proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
+         proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus, proSJP, proCONAM,
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18126,7 +18135,8 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proTecnos, proVirtual, proVitoria, proNEAInformatica: Result := loABRASFv2;
+    proTecnos, proVirtual, proVitoria, proNEAInformatica,
+    proNotaInteligente: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
 
@@ -18137,6 +18147,8 @@ begin
     proInfisc: Result := loInfisc;
 
     proIssDSF: Result := loISSDSF;
+
+    proGoverna: Result := loGoverna;
   else
     Result := loNone;
   end;
@@ -18148,19 +18160,13 @@ end;
 function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 begin
   case AProvedor of
-    proABRASFv1, proAbaco, proBetha, proBHISS, proDBSeller, proFISSLex,
-    proGinfes, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
-    proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ,
-    proSalvador, proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan,
-    proWebISS: Result := ve100;
-
     proDigifred: Result := ve110;
 
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proFIntelISS,
     proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe, proLink3,
     proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proVirtual, proVitoria, proEReceita,
-    proNEAInformatica: Result := ve200;
+    proVirtual, proVitoria, proEReceita, proNEAInformatica,
+    proNotaInteligente: Result := ve200;
 
     proTecnos: Result := ve201;
   else

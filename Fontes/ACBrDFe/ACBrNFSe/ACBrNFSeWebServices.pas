@@ -2452,7 +2452,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proDigifred: TAGGrupo 'ConsultarNfseServicoPrestadoEnvio';
+      proDigifred: TAGGrupo := 'ConsultarNfseServicoPrestadoEnvio';
       proISSDSF: TAGGrupo := 'ReqConsultaNotas';
       proSystemPro: TAGGrupo := 'ConsultarNfseFaixaEnvio';
     else

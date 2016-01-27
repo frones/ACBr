@@ -352,7 +352,7 @@ begin
        end;
   end;
 
-  if FProvedor in [proActcon, proAgili, proTecnos]) then
+  if FProvedor in [proActcon, proAgili, proTecnos] then
     Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
   if FProvedor in [proActcon, proVirtual] then

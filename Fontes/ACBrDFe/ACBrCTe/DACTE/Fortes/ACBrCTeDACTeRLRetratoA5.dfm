@@ -1,10 +1,9 @@
 inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   Left = 350
   Top = 152
-  Width = 860
-  Height = 784
-  VertScrollBar.Position = 95
   Caption = 'DACTe - Retrato A5'
+  ClientHeight = 745
+  ClientWidth = 844
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -12,13 +11,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   TextHeight = 10
   inherited RLCTe: TRLReport
     Left = 24
-    Top = -87
-    Font.Height = -8
-    Font.Name = 'Courier New'
+    Top = 8
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Font.Height = -8
+    Font.Name = 'Courier New'
     Title = 'DACTe Retrato A5'
     BeforePrint = RLCTeBeforePrint
     object rlb_08_Itens: TRLBand
@@ -65,6 +64,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtTpDoc1: TRLDBText
@@ -82,6 +82,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
@@ -99,6 +100,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
@@ -116,6 +118,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
@@ -132,6 +135,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
@@ -148,6 +152,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
         Transparent = False
       end
       object rlsFimItens: TRLDraw
@@ -1522,20 +1527,20 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 56
         Width = 398
         Height = 32
-        AutoSize = False
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        AutoSize = False
+        BarcodeType = bcCode128C
       end
       object RLBarcode1: TRLBarcode
         Left = 346
         Top = 117
         Width = 381
         Height = 28
-        AutoSize = False
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        AutoSize = False
+        BarcodeType = bcCode128C
       end
     end
     object rlb_03_DadosDACTe: TRLBand

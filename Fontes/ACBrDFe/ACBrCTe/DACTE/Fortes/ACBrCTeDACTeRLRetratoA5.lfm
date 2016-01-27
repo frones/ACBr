@@ -1,17 +1,13 @@
 inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   Left = 350
-  Height = 491
   Top = 152
-  Width = 862
   Caption = 'DACTe - Retrato A5'
-  ClientHeight = 491
-  ClientWidth = 862
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 16
-    Top = 16
+    Left = 24
+    Top = 0
     Font.Height = -8
     Font.Name = 'Courier New'
     Margins.LeftMargin = 7
@@ -372,7 +368,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 33
         Width = 14
-        Caption = 'NÂº '
+        Caption = 'No '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -468,7 +464,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 108
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SAÃDA DATA/HORA'
+        Caption = 'SAÍDA DATA/HORA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -748,7 +744,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 234
         Alignment = taCenter
         AutoSize = False
-        Caption = 'ObservaÃ§Ãµes - InformaÃ§Ãµes Complementares'
+        Caption = 'Observações - Informações Complementares'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -1312,7 +1308,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 278
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Documento Auxiliar do Conhecimento de Transporte EletrÃ´nico'
+        Caption = 'Documento Auxiliar do Conhecimento de Transporte Eletrônico'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -8
@@ -1748,7 +1744,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 149
         Width = 56
-        Caption = 'NÂ° PROTOCOLO'
+        Caption = 'N° PROTOCOLO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1786,7 +1782,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 30
         Width = 120
-        Caption = 'INSC. SUFRAMA DO DESTINATÃRIO'
+        Caption = 'INSC. SUFRAMA DO DESTINATÁRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2380,7 +2376,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 49
         Width = 38
-        Caption = 'MUNICÃPIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2434,7 +2430,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 25
         Width = 52
-        Caption = 'DESTINATÃRIO'
+        Caption = 'DESTINATÁRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2488,7 +2484,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 49
         Width = 38
-        Caption = 'MUNICÃPIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3110,7 +3106,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 135
-        Caption = 'OUTRAS CARACTERÃSTICAS DA CARGA'
+        Caption = 'OUTRAS CARACTERÍSTICAS DA CARGA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3146,7 +3142,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 51
-        Caption = 'RESPONSÃVEL'
+        Caption = 'RESPONSÁVEL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3166,7 +3162,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 76
         Alignment = taCenter
         AutoSize = False
-        Caption = 'PESO BASE CÃLC. (Kg)'
+        Caption = 'PESO BASE CÁLC. (Kg)'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3341,7 +3337,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 45
         Width = 66
-        Caption = 'BASE DE CÃLCULO'
+        Caption = 'BASE DE CÁLCULO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3359,7 +3355,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 45
         Width = 39
-        Caption = 'ALÃQ. ICMS'
+        Caption = 'ALÍQ. ICMS'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -4908,7 +4904,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 732
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DADOS ESPECÃFICOS DO MODAL AQUAVIÃRIO'
+        Caption = 'DADOS ESPECÍFICOS DO MODAL AQUAVIÁRIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -5421,7 +5417,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 17
         Width = 730
         AutoSize = False
-        Caption = 'O Transporte coberto por este conhecimento se rege pelo cÃ³digo Brasileiro de AeronÃ¡utica (Lei 7.565 de 19/12/1986), especificamente pelas regras relativas a responsabilidade Civil prevista nos artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Remetente declara concordar e ter plena ciÃªncia. O Expedidor / Remetente aceita como corretas todas as especificaÃ§Ãµes impressas, manuscritas, datilografadas ou carimbadas neste conhecimento, certificando que os artigos perigosos descritos pela regulamentaÃ§Ã£o da I.C.A.O. foram devidamente informados e acondicionados para transporte AÃ©reo.'
+        Caption = 'O Transporte coberto por este conhecimento se rege pelo código Brasileiro de Aeronáutica (Lei 7.565 de 19/12/1986), especificamente pelas regras relativas a responsabilidade Civil prevista nos artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Remetente declara concordar e ter plena ciência. O Expedidor / Remetente aceita como corretas todas as especificações impressas, manuscritas, datilografadas ou carimbadas neste conhecimento, certificando que os artigos perigosos descritos pela regulamentação da I.C.A.O. foram devidamente informados e acondicionados para transporte Aéreo.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -5485,7 +5481,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 68
         Width = 100
         Alignment = taCenter
-        Caption = 'DESTINATÃRIO / RECEBEDOR'
+        Caption = 'DESTINATÁRIO / RECEBEDOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5878,7 +5874,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 15
         Width = 70
-        Caption = 'CNPJ RESPONSÃVEL'
+        Caption = 'CNPJ RESPONSÁVEL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -6340,7 +6336,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 33
         Width = 14
-        Caption = 'NÂº '
+        Caption = 'N° '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -6436,7 +6432,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 108
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SAÃDA DATA/HORA'
+        Caption = 'SAÍDA DATA/HORA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7

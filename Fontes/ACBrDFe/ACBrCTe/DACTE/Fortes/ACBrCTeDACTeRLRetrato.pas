@@ -1821,11 +1821,11 @@ begin
   if cdsDocumentos.RecordCount > 4  then
   begin
     i := cdsDocumentos.RecordCount - 4;
-    rlb_07_HeaderItens.Height := rlb_07_HeaderItens.Height + (i * 10);
-    rld_07_headerItens.Height := rld_07_headerItens.Height + (i * 10);
+    rlb_07_HeaderItens.Height := rlb_07_HeaderItens.Height + (i * 1);
+    rld_07_headerItens.Height := rld_07_headerItens.Height + (i * 1);
   end;
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
-  rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
+  rlb_07_HeaderItens.Visible := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);
 
   rlDocOrig_tpDoc1.Lines.Clear;

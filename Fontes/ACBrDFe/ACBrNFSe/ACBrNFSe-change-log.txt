@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/01/2016
+[*] Alterações visando fazer funcionar o provedor Equiplano.
+    Por: Michel Ouriques / Italo Jurisato Junior
 [+] Inclusão do provedor NotaInteligente.
     Por: Luís / Italo Jurisato Junior
 

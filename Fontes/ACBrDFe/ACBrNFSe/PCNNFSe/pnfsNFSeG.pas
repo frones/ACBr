@@ -475,7 +475,7 @@ begin
                     Gerador.Prefixo := '';
                     Gerador.wGrupoNFSe('prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 15, 1, IM, '');
-                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 14, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'cnpj', 14, 14, 1, CNPJ, '');
                     Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 03, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
                     Gerador.wGrupoNFSe('/prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrLoteRps', 01, 14, 1, NumeroLote, '');
@@ -553,7 +553,7 @@ begin
                     Gerador.Prefixo := '';
                     Gerador.wGrupoNFSe('prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 15, 1, IM, '');
-                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 14, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'cnpj', 14, 14, 1, CNPJ, '');
                     Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 03, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
                     Gerador.wGrupoNFSe('/prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrLoteRps', 01, 14, 1, NumeroLote, '');
@@ -641,7 +641,7 @@ begin
                     Gerador.wGrupoNFSe('/rps');
                     Gerador.wGrupoNFSe('prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 15, 1, IM, '');
-                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 14, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'cnpj', 14, 14, 1, CNPJ, '');
                     Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 03, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
                     Gerador.wGrupoNFSe('/prestador');
                   end;
@@ -916,7 +916,7 @@ begin
                     Gerador.Prefixo := '';
                     Gerador.wGrupoNFSe('prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrInscricaoMunicipal', 01, 15, 1, IM, '');
-                    Gerador.wCampoNFSe(tcStr, '#1', 'nrCnpj', 14, 14, 1, CNPJ, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'cnpj', 14, 14, 1, CNPJ, '');
                     Gerador.wCampoNFSe(tcStr, '#1', 'idEntidade', 01, 03, 1, GetIdEntidadeEquiplano(CodMunicipio), '');
                     Gerador.wGrupoNFSe('/prestador');
                     Gerador.wCampoNFSe(tcStr, '#1', 'nrNfse', 01, 15, 1, NumeroNFSe, '');

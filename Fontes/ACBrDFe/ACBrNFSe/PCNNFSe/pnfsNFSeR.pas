@@ -123,7 +123,8 @@ end;
 function TNFSeR.LerXml: Boolean;
 begin
  if (Pos('<Nfse', Leitor.Arquivo) > 0) or (Pos('<Notas>', Leitor.Arquivo) > 0) or
-    (Pos('<Nota>', Leitor.Arquivo) > 0) or (Pos('<NFS-e>', Leitor.Arquivo) > 0) then
+    (Pos('<Nota>', Leitor.Arquivo) > 0) or (Pos('<NFS-e>', Leitor.Arquivo) > 0) or
+    (Pos('<nfse', Leitor.Arquivo) > 0) then
    Result := LerNFSe
  else
    if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or
@@ -1981,9 +1982,24 @@ end;
 
 function TNFSeR.LerNFSe_Equiplano: Boolean;
 begin
- // Falta Implementar
+  Result := False;
+  Leitor.Grupo := Leitor.Arquivo;
 
- Result := True;
+  if (Pos('<nfse>', Leitor.Arquivo) > 0) then
+  begin
+    NFSe.Numero                 := leitor.rCampo(tcStr, 'nrNfse');
+    NFSe.CodigoVerificacao      := leitor.rCampo(tcStr, 'cdAutenticacao');
+    NFSe.DataEmissao            := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
+    NFSe.IdentificacaoRps.Numero:= leitor.rCampo(tcStr, 'nrRps');
+    if Leitor.rExtrai(3, 'cancelamento') <> '' then
+    begin
+      NFSe.NfseCancelamento.DataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
+      NFSe.MotivoCancelamento       := Leitor.rCampo(tcStr, 'dsCancelamento');
+      NFSe.Status := srCancelado;
+    end;
+
+    Result := True;
+  end;
 end;
 
 function TNFSeR.LerRps_EL: Boolean;

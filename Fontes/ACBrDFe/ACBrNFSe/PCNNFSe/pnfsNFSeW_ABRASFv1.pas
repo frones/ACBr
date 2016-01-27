@@ -502,11 +502,8 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 
-  if (FProvedor in [pro4R, proActcon, proAgili, proCoplan, proDigifred, profintelISS,
-                    proFiorilli, proGoiania, proGovDigital, proISSDigital, proLink3,
-                    proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-                    proTecnos, proVirtual, proVitoria, proBHISS, proNatal,
-                    proProdemge, proPronim, proTinus, proNFSEBrasil]) then
+  if (FProvedor in [proBHISS, proNatal, proProdemge, proPronim, proTinus,
+                    proNFSEBrasil]) then
     FDefTipos := FServicoEnviar;
 
   if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -525,35 +522,7 @@ begin
     Gerador.wGrupo('Rps' + Atributo);
 
   case FProvedor of
-    proDigifred,
-    proFiorilli,
-    proISSe,
-    proSisPMJP,
-    proPVH,
-    proMitra:     NFSe.InfID.ID := 'rps' +
-                                   OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
-                                   FNFSe.IdentificacaoRps.Serie;
-
-    proISSDigital: FNFSe.InfID.ID := 'rps' + ChaveAcesso(FNFSe.Prestador.cUF,
-                                                 FNFSe.DataEmissao,
-                                                 OnlyNumber(FNFSe.Prestador.Cnpj),
-                                                 0, // Serie
-                                                 StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)),
-                                                 StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)));
-
-    proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
-//                                 FormatDateTime('yyyy', FNFSe.DataEmissao) +
-                                 OnlyNumber(FNFSe.Prestador.Cnpj) +
-                                 IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
-
-    proSystemPro: FNFSe.InfID.ID := FNFSe.InfID.ID;
-
     proRecife: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
-
-    proGovDigital: FNFSe.InfID.ID := 'Rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
-
-    proVirtual: FNFSe.InfID.ID := '';
-
   else
     FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                       FNFSe.IdentificacaoRps.Serie;

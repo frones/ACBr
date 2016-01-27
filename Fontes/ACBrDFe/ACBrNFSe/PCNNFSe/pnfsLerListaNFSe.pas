@@ -315,6 +315,11 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'CancelarNfseResult') <> '');
 
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'listaNfse') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -345,7 +350,8 @@ begin
       while (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
-            ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) do
+            ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
+            ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -542,6 +548,36 @@ begin
           FNFSe.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
           Protocolo       := Leitor.rCampo(tcStr, 'b:Autenticador');
           FNFSe.Protocolo := Protocolo;
+        end;
+      end;
+    end;
+
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+    begin
+      i := 0;
+      if (leitor.rExtrai(2, 'listaErros') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+          ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+          inc(i);
+        end;
+      end;
+
+      if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+          ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+          inc(i);
         end;
       end;
     end;

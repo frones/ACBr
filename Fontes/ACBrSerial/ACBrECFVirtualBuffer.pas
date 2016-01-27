@@ -449,16 +449,19 @@ end ;
 
 procedure TACBrECFVirtualBufferClass.AddBufferRelatorio;
 Var
-  TotalAliq : Double;
-  A : Integer ;
+  TotalAliq, wTotalCancelado, wVendaLiquida : Double;
+  I : Integer ;
 begin
   TotalAliq := 0 ;
   if fpAliquotas.Count > 2 then
   begin
-    For A := 0 to 2 do
-      with fpAliquotas[A] do
+    For I := 0 to 2 do
+      with fpAliquotas[I] do
         TotalAliq := RoundTo(TotalAliq + Total,-2) ;
   end;
+
+  wTotalCancelado := fpCuponsCanceladosEmAbertoTotal + fpCuponsCanceladosTotal;
+  wVendaLiquida   := fpVendaBruta - wTotalCancelado - fpTotalDescontos;
 
   with fsBuffer do
   begin
@@ -472,30 +475,31 @@ begin
     Add( PadSpace('Relatorios Gerenciais:|'+IntToStrZero(fpNumCER,6),Colunas,'|') ) ;
     Add( PadCenter(' Totalizadores ',Colunas,'-') ) ;
     Add( PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|') ) ;
-
     Add( PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
 
-    if fpCuponsCanceladosEmAbertoTotal>0 then
-       Add( PadSpace('Cancelado Nao Transm:|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosEmAbertoTotal ), Colunas,'|') ) ;
+    if fpCuponsCanceladosEmAbertoTotal > 0 then
+    begin
+      Add( PadSpace('Cancelados em Aberto:|'+FormatFloat('###,###,##0.00',
+           fpCuponsCanceladosEmAbertoTotal ), Colunas,'|') ) ;
+      Add( PadSpace('Cancelados:|'+FormatFloat('###,###,##0.00',
+           fpCuponsCanceladosTotal), Colunas,'|') ) ;
+    end;
 
-    if fpTotalDescontos > 0 then
-       Add( PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontos), Colunas, '|'));
-
-    if fpTotalAcrescimos > 0 then
-       Add( PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimos), Colunas, '|'));
-
-    Add( PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', fpCuponsCanceladosTotal), Colunas,'|') ) ;
+    Add( PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', wTotalCancelado), Colunas,'|') ) ;
+    Add( PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontos), Colunas, '|'));
+    Add( PadSpace('Venda Liquida:|'+FormatFloat('###,###,##0.00', wVendaLiquida), Colunas, '|'));
+    Add( PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimos), Colunas, '|'));
 
     Add( PadCenter('Total Vendido por Aliquota',Colunas,'-') ) ;
-    Add( PadSpace('Substituicao Tributaria (FF)|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;
-    Add( PadSpace('Isencao (II)|'+FormatFloat('###,###,##0.00', fpAliquotas[1].Total ), Colunas,'|') ) ;
-    Add( PadSpace('Nao Incidencia (NN)|'+FormatFloat('###,###,##0.00', fpAliquotas[2].Total ), Colunas,'|') ) ;
+    Add( PadSpace('F1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;
+    Add( PadSpace('I1|Isencao|'+FormatFloat('###,###,##0.00', fpAliquotas[1].Total ), Colunas,'|') ) ;
+    Add( PadSpace('N1|Nao Incidencia|'+FormatFloat('###,###,##0.00', fpAliquotas[2].Total ), Colunas,'|') ) ;
 
-    For A := 3 to fpAliquotas.Count - 1 do
+    For I := 3 to fpAliquotas.Count - 1 do
     begin
-      with fpAliquotas[A] do
+      with fpAliquotas[I] do
       begin
-        Add( PadSpace(IntToStrZero(A,2)+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
+        Add( PadSpace(Indice+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
              FormatFloat('###,###,##0.00',Total),Colunas,'|') ) ;
         TotalAliq := RoundTo(TotalAliq + Total,-2) ;
       end ;
@@ -506,9 +510,9 @@ begin
 
     Add( PadCenter(' Relatorio Gerencial ',Colunas,'-') ) ;
 
-    For A := 0 to fpRelatoriosGerenciais.Count - 1 do
+    For I := 0 to fpRelatoriosGerenciais.Count - 1 do
     begin
-      with fpRelatoriosGerenciais[A] do
+      with fpRelatoriosGerenciais[I] do
       begin
         Add( PadSpace(Indice+'  '+PadRight(Descricao,20)+'|'+
              IntToStrZero(Contador, 5), Colunas,'|') ) ;
@@ -517,9 +521,9 @@ begin
 
     Add( PadCenter('Formas de Pagamento',Colunas,'-') ) ;
 
-    For A := 0 to fpFormasPagamentos.Count - 1 do
+    For I := 0 to fpFormasPagamentos.Count - 1 do
     begin
-      with fpFormasPagamentos[A] do
+      with fpFormasPagamentos[I] do
       begin
         Add( PadSpace(Indice+'  '+PadRight(Descricao,20)+'|'+
              FormatFloat('###,###,##0.00',Total), Colunas,'|') ) ;
@@ -527,9 +531,9 @@ begin
     end ;
 
     Add( PadCenter('Comprovantes nao Fiscal',Colunas,'-') ) ;
-    For A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+    For I := 0 to fpComprovantesNaoFiscais.Count - 1 do
     begin
-      with fpComprovantesNaoFiscais[A] do
+      with fpComprovantesNaoFiscais[I] do
       begin
         Add( PadSpace(Indice+'  '+PadRight(Descricao,20)+'|'+
              FormatFloat('###,###,##0.00',Total), Colunas,'|') ) ;

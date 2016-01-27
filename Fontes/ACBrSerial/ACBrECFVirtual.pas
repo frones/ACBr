@@ -416,11 +416,10 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetTotalNaoTributado: Double; override ;
     function GetTotalIsencao: Double; override ;
     function GetNumReducoesZRestantes: String; override ;
-    function GetTotalCancelamentosNaoTransmitidos: Double; override ;
+    function GetTotalCancelamentosEmAberto: Double; override;
     function GetTotalCancelamentos: Double; override ;
     function GetTotalAcrescimos: Double; override ;
     function GetTotalDescontos: Double; override ;
-
 
     function GetNumECF: String; override ;
     function GetCNPJ: String; override ;
@@ -1558,10 +1557,10 @@ begin
 
 end;
 
-function TACBrECFVirtualClass.GetTotalCancelamentosNaoTransmitidos: Double;
+function TACBrECFVirtualClass.GetTotalCancelamentosEmAberto: Double;
 begin
    result := RoundTo(fpCuponsCanceladosEmAbertoTotal,-2);
-   GravaLog('GetTotalCancelamentosNaoTransmitidos: '+FloatToStr(Result));
+   GravaLog('GetTotalCancelamentosEmAberto: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalDescontos: Double;
@@ -1852,11 +1851,14 @@ begin
   try
     fpCupom.DescAresItem(NumItem, ValDescAcres);
 
-    { Se for Acréscimo, deve somar em GT e Venda Bruta }
-    if ValDescAcres > 0 then
+    if ValDescAcres < 0 then
+      fpTotalDescontos := fpTotalDescontos + (-ValDescAcres)
+    else
     begin
-      fpGrandeTotal := fpGrandeTotal + ValDescAcres;
-      fpVendaBruta  := fpVendaBruta  + ValDescAcres;
+      fpTotalAcrescimos := fpTotalAcrescimos + ValDescAcres;
+      { Se for Acréscimo, deve somar em GT e Venda Bruta }
+      fpGrandeTotal     := fpGrandeTotal     + ValDescAcres;
+      fpVendaBruta      := fpVendaBruta      + ValDescAcres;
     end;
 
     { Aplicando Desconto/Acrescimo no Total diário da Aliquota }
@@ -1880,7 +1882,7 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
 var 
-  ValorItem: Double;
+  ValorItem, DescAcresItem: Double;
   PosAliqItem: Integer;
 begin
   GravaLog( ComandoLOG );
@@ -1898,14 +1900,22 @@ begin
 
     with fpCupom.Itens[NumItem-1] do
     begin
-      ValorItem   := TotalLiquido;
-      PosAliqItem := AliqPos;
+      ValorItem     := TotalLiquido;
+      PosAliqItem   := AliqPos;
+      DescAcresItem := DescAcres;
     end;
 
     fpCupom.CancelaItem( NumItem );
 
     fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + ValorItem;
 
+    { Estornando do total de Acréscimos/Descontos. VendaBruta e GT nunca são estornadas }
+    if DescAcresItem < 0 then
+      fpTotalDescontos := fpTotalDescontos + DescAcresItem
+    else
+      fpTotalAcrescimos := fpTotalAcrescimos - DescAcresItem;
+
+    { Estornando do Total por aliquota }
     with fpAliquotas[ PosAliqItem ] do
       Total := max(Total - ValorItem, 0) ;
 
@@ -1948,6 +1958,7 @@ begin
     else
     begin
       fpTotalAcrescimos := fpTotalAcrescimos + DescontoAcrescimo;
+      { Se for Acréscimo, deve somar em GT e Venda Bruta }
       fpVendaBruta      := fpVendaBruta      + DescontoAcrescimo;
       fpGrandeTotal     := fpGrandeTotal     + DescontoAcrescimo;
     end;
@@ -2088,8 +2099,8 @@ end;
 procedure TACBrECFVirtualClass.CancelaCupom(NumCOOCancelar: Integer);
 Var
   I, PosAliq: Integer;
-  TotalAliq: Double;
-  PermiteCancelamento: Boolean;
+  TotalAliq, SubTotalBruto: Double;
+  PermiteCancelamento, CupomEstaAberto, AliquotasRemovidas: Boolean;
 begin
   GravaLog( ComandoLOG );
 
@@ -2119,25 +2130,30 @@ begin
     VerificaPodeCancelarCupom( NumCOOCancelar );
 
   try
-    if not (Estado in [estVenda, estPagamento, estNaoFiscal] ) then
+    CupomEstaAberto := (Estado in [estVenda, estPagamento, estNaoFiscal] );
+    if not CupomEstaAberto then  // Cria um novo documento de Cancelamento
       Inc( fpNumCOO );
 
     CancelaCupomVirtual;
 
-    if Estado in estCupomAberto then
+    { Aqui já temos todos os Descontos e Acrescimos. Os descontos devem ser
+      revertidos, para calcularmos o SubTotalBruto }
+    SubTotalBruto := fpCupom.SubTotal;
+
+    { Removendo Desconto/Acrescimo do Subtotal, dos Totalizadores }
+    if fpCupom.DescAcresSubtotal < 0 then
     begin
-      fpCuponsCanceladosEmAberto      := fpCuponsCanceladosEmAberto + 1 ;
-      fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + fpCupom.Subtotal;
+      fpTotalDescontos := fpTotalDescontos + fpCupom.DescAcresSubtotal;
+      SubTotalBruto    := SubTotalBruto    - fpCupom.DescAcresSubtotal;
     end
     else
-    begin
-      fpCuponsCancelados      := fpCuponsCancelados + 1 ;
-      fpCuponsCanceladosTotal := fpCuponsCanceladosTotal + fpCupom.SubTotal;
-    end;
+      fpTotalAcrescimos := fpTotalAcrescimos - fpCupom.DescAcresSubtotal;
 
     { Removendo do TotalDiario por Aliquotas }
+    AliquotasRemovidas := False;
     if fpCupom.Aliquotas.Count > 0 then
     begin
+      AliquotasRemovidas := True;
       For I := 0 to fpCupom.Aliquotas.Count - 1 do
       begin
         with fpCupom.Aliquotas[I] do
@@ -2149,13 +2165,37 @@ begin
         with fpAliquotas[ PosAliq ] do
           Total := Max( RoundTo(Total - TotalAliq,-2), 0) ;
       end;
+    end;
+
+    { Removendo Desconto/Acrescimo dos Itens dos Totalizadores }
+    For I := 0 to fpCupom.Itens.Count - 1 do
+    begin
+      with fpCupom.Itens[I] do
+      begin
+        if not AliquotasRemovidas then     // Já removeu Aliquotas no passo anterior ?
+          with fpAliquotas[ PosAliq ] do
+            Total := Max( RoundTo(Total - TotalLiquido,-2), 0) ;
+
+        if DescAcres < 0 then
+        begin
+          fpTotalDescontos := fpTotalDescontos + DescAcres;
+          SubTotalBruto    := SubTotalBruto    - DescAcres;
+        end
+        else
+          fpTotalAcrescimos := fpTotalAcrescimos - DescAcres;
+      end;
+    end;
+
+    { Adicionando o TotalBruto do Cupom, em Cancelamentos, conforme o Estado do Cupom }
+    if CupomEstaAberto then
+    begin
+      fpCuponsCanceladosEmAberto      := fpCuponsCanceladosEmAberto + 1 ;
+      fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + SubTotalBruto
     end
     else
     begin
-      For I := 0 to fpCupom.Itens.Count - 1 do
-        with fpCupom.Itens[I] do
-          with fpAliquotas[ PosAliq ] do
-            Total := Max( RoundTo(Total - TotalLiquido,-2), 0) ;
+      fpCuponsCancelados      := fpCuponsCancelados + 1 ;
+      fpCuponsCanceladosTotal := fpCuponsCanceladosTotal + SubTotalBruto;
     end;
 
     { Removendo do TotalDiario por Pagamento }

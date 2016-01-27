@@ -1817,6 +1817,8 @@ var
   i : Integer;
 begin
   inherited;
+	PrintIt := RLCTe.PageNumber = 1; 
+	
   rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);
 

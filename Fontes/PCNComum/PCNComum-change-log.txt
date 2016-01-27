@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2016
+-- pcnLeitor --
+[*] Melhorado a detecção do tipo de caracter utilizado para determinar o inicio
+    e fim de um valor de atributo. (por: DSA)
+
 07/01/2016
 -- pcnLeitor --
 [*] Melhorado a detecção do tipo de caracter utilizado para determinar o inicio

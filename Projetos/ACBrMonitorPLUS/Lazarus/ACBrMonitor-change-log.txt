@@ -44,7 +44,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/018/2016
-[*] Limitando o campo "Largura Cod.Produto", de 0 a 40 com SpinEdit (por: DSA)
+[*] Ajuste para que todos os Edits números da aba DFe/Impressão usem
+    TSpinEdit ou TFloatSpinEdit  (por: DSA)
 
 26/01/2016
 [+] Adição da opção para selecionar o tamanho de papel no DACT

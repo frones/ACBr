@@ -3515,7 +3515,7 @@ begin
     end;
 
     ACBrCTeDACTeRL1.TamanhoPapel := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
-    //ACBrNFe1.DANFE.LocalImpCanhoto := rgLocalCanhoto.ItemIndex;
+    
 
     rgModeloDANFeNFCE.ItemIndex := Ini.ReadInteger('NFCe', 'Modelo', 0);
     rgModoImpressaoEvento.ItemIndex :=

@@ -231,8 +231,7 @@ begin
       ACBrNFe1.DANFE.FormularioContinuo := Ini.ReadBool('DANFE', 'PreImpresso', False);
       ACBrNFe1.DANFE.MostrarStatus := Ini.ReadBool('DANFE', 'MostrarStatus', False);
       ACBrNFe1.DANFE.ExpandirLogoMarca := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
-      ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := Ini.ReadInteger('DANFE', 'FonteCampos', 10);
-      ACBrNFe1.DANFE.LocalImpCanhoto := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
+      ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := Ini.ReadInteger('DANFE', 'FonteCampos', 10);      
 
       if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
       begin

@@ -20,7 +20,7 @@
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
-                          <xs:element name="InscricaoMunicipal" type="xs:unsignedShort" />
+                          <xs:element name="InscricaoMunicipal" type="xs:unsignedInt" />
                           <xs:element name="CodigoMunicipio" type="xs:unsignedInt" />
                         </xs:sequence>
                       </xs:complexType>

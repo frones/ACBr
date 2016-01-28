@@ -4,8 +4,8 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="NumeroNota" type="xsd:unsignedInt" />
-        <xsd:element name="NumeroLote" type="xsd:unsignedByte" />
-        <xsd:element name="NumeroRPS" type="xsd:unsignedByte" />
+        <xsd:element name="NumeroLote" type="xsd:unsignedInt" />
+        <xsd:element name="NumeroRPS" type="xsd:unsignedInt" />
         <xsd:element name="Data" type="xsd:string" />
       </xsd:sequence>
     </xsd:complexType>

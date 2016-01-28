@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Teste de Impressora Fiscal'
-  ClientHeight = 420
+  ClientHeight = 429
   ClientWidth = 788
   Fill.Color = claGainsboro
   Fill.Kind = Solid
@@ -15,7 +15,7 @@ object Form1: TForm1
   object LForm1: TLayout
     Align = Client
     Size.Width = 788.000000000000000000
-    Size.Height = 420.000000000000000000
+    Size.Height = 429.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 26
     object Image1: TImage
@@ -539,7 +539,7 @@ object Form1: TForm1
           FileName = 'C:\Users\macga\Desktop\ACBRIMG.jpg'
         end>
       Align = Bottom
-      Position.Y = 361.000000000000000000
+      Position.Y = 370.000000000000000000
       Size.Width = 788.000000000000000000
       Size.Height = 40.000000000000000000
       Size.PlatformDefault = False
@@ -565,7 +565,7 @@ object Form1: TForm1
     object StatusBar1: TStatusBar
       Align = MostBottom
       Margins.Right = 1.000000000000000000
-      Position.Y = 401.000000000000000000
+      Position.Y = 410.000000000000000000
       ShowSizeGrip = True
       Size.Width = 787.000000000000000000
       Size.Height = 19.000000000000000000
@@ -595,21 +595,24 @@ object Form1: TForm1
     object TabControl1: TTabControl
       Align = Client
       Size.Width = 788.000000000000000000
-      Size.Height = 361.000000000000000000
+      Size.Height = 370.000000000000000000
       Size.PlatformDefault = False
-      TabIndex = 5
+      TabIndex = 0
       TabOrder = 2
       TabPosition = PlatformDefault
       object tbiECF: TTabItem
         CustomIcon = <
           item
           end>
-        IsSelected = False
+        IsSelected = True
         Size.Width = 39.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'ECF'
+        ExplicitSize.cx = 39.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object Label1: TLabel
           AutoSize = True
           Position.X = 20.000000000000000000
@@ -701,12 +704,12 @@ object Form1: TForm1
           Size.Width = 105.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 18
+          TabOrder = 24
           OnChange = cbxModeloChange
         end
         object seTimeOut: TSpinBox
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 24
+          TabOrder = 30
           Cursor = crIBeam
           DecimalDigits = 0
           Value = 10.000000000000000000
@@ -719,7 +722,7 @@ object Form1: TForm1
         end
         object seIntervaloAposComando: TSpinBox
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 23
+          TabOrder = 29
           Cursor = crIBeam
           DecimalDigits = 0
           Max = 1000.000000000000000000
@@ -733,7 +736,7 @@ object Form1: TForm1
         end
         object speLinBuf: TSpinBox
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 20
+          TabOrder = 26
           Cursor = crIBeam
           DecimalDigits = 0
           Max = 1000.000000000000000000
@@ -778,7 +781,7 @@ object Form1: TForm1
           Size.Width = 60.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 15
+          TabOrder = 21
           OnChange = cbxModeloChange
         end
         object chTentar: TCheckBox
@@ -787,7 +790,7 @@ object Form1: TForm1
           Size.Width = 121.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 11
+          TabOrder = 17
           Text = 'Tentar Novamente'
           OnChange = chTentarClick
           Left = 11
@@ -800,7 +803,7 @@ object Form1: TForm1
           Size.Width = 177.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 13
+          TabOrder = 19
           Text = 'Bloqueia Mouse Teclado'
           OnClick = chBloqueiaClick
           Left = 11
@@ -813,7 +816,7 @@ object Form1: TForm1
           Size.Width = 185.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 17
+          TabOrder = 23
           Text = 'Exibe Msg Aguarde...'
           OnClick = chExibeMsgClick
           Left = 11
@@ -826,7 +829,7 @@ object Form1: TForm1
           Size.Width = 187.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 19
+          TabOrder = 25
           Text = 'Descri'#231#227'o Grande'
           OnClick = chDescricaoGrandeClick
           Left = 195
@@ -838,7 +841,7 @@ object Form1: TForm1
           Size.Width = 187.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 7
+          TabOrder = 13
           Text = 'Gaveta Sinal Invertido'
           OnClick = chGavetaSinalInvertidoClick
           Left = 195
@@ -850,7 +853,7 @@ object Form1: TForm1
           Size.Width = 225.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 14
+          TabOrder = 20
           Text = 'Arredondamento por Quantidade'
           OnClick = chArredondaPorQtdClick
           Left = 195
@@ -862,7 +865,7 @@ object Form1: TForm1
           Size.Width = 193.000000000000000000
           Size.Height = 19.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 21
+          TabOrder = 27
           Text = 'Arredondamento Item MFD'
           OnClick = chArredondamentoItemMFDClick
           Left = 380
@@ -877,7 +880,7 @@ object Form1: TForm1
           Size.Width = 564.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 22
+          TabOrder = 28
           Viewport.Width = 560.000000000000000000
           Viewport.Height = 46.000000000000000000
         end
@@ -907,7 +910,7 @@ object Form1: TForm1
         end
         object edMsgTrabalhando: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 34
+          TabOrder = 53
           Text = 'Impressora est'#225' trabalhando'
           Position.X = 592.000000000000000000
           Position.Y = 168.000000000000000000
@@ -930,7 +933,7 @@ object Form1: TForm1
         end
         object edLog: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 25
+          TabOrder = 31
           Text = 'acbrlog.txt'
           Position.X = 72.000000000000000000
           Position.Y = 232.000000000000000000
@@ -945,7 +948,7 @@ object Form1: TForm1
           Size.Width = 23.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 37
+          TabOrder = 49
           Text = '...'
           OnClick = SbArqLogClick
         end
@@ -963,7 +966,7 @@ object Form1: TForm1
         end
         object edOperador: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
-          TabOrder = 26
+          TabOrder = 32
           Position.X = 72.000000000000000000
           Position.Y = 264.000000000000000000
           Size.Width = 101.000000000000000000
@@ -978,9 +981,8 @@ object Form1: TForm1
           Size.Width = 101.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 33
+          TabOrder = 39
           Text = 'Fontes do ECF'
-          OnClick = Button1Click
         end
         object btnIdentificaPafECF: TButton
           Position.X = 298.000000000000000000
@@ -988,7 +990,7 @@ object Form1: TForm1
           Size.Width = 108.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 29
+          TabOrder = 35
           Text = 'Identifica PAF-ECF'
           OnClick = btnIdentificaPafECFClick
         end
@@ -998,7 +1000,7 @@ object Form1: TForm1
           Size.Width = 121.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 9
+          TabOrder = 15
           Text = 'Cupom Mania'
           OnClick = chbCupomManiaClick
           Left = 11
@@ -1012,7 +1014,7 @@ object Form1: TForm1
           Size.Width = 60.000000000000000000
           Size.Height = 28.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 30
+          TabOrder = 36
           Text = 'Serial'
           TextSettings.HorzAlign = Leading
           OnClick = btSerialClick
@@ -1082,6 +1084,7 @@ object Form1: TForm1
               object DataHora1: TMenuItem
                 Locked = True
                 Text = 'Data Hora'
+                OnClick = DataHora1Click
               end
               object N42: TMenuItem
                 Locked = True
@@ -1090,50 +1093,62 @@ object Form1: TForm1
               object mModeloStr: TMenuItem
                 Locked = True
                 Text = 'ModeloStr'
+                OnClick = mModeloStrClick
               end
               object NumECF1: TMenuItem
                 Locked = True
                 Text = 'Num ECF'
+                OnClick = NumECF1Click
               end
               object NumLoja1: TMenuItem
                 Locked = True
                 Text = 'Num Loja'
+                OnClick = NumLoja1Click
               end
               object UsuarioAual1: TMenuItem
                 Locked = True
                 Text = 'Usuario Aual'
+                OnClick = UsuarioAual1Click
               end
               object NumSerieMFD: TMenuItem
                 Locked = True
                 Text = 'Num S'#233'rie MFD'
+                OnClick = NumSerieMFDClick
               end
               object NSrie1: TMenuItem
                 Locked = True
                 Text = 'Num S'#233'rie'
+                OnClick = NSrie1Click
               end
               object NVerso1: TMenuItem
                 Locked = True
                 Text = 'Num Vers'#227'o'
+                OnClick = NVerso1Click
               end
               object CNPJIE1: TMenuItem
                 Locked = True
                 Text = 'CNPJ'
+                OnClick = CNPJIE1Click
               end
               object IE1: TMenuItem
                 Locked = True
                 Text = 'IE'
+                OnClick = IE1Click
               end
               object Modelo1: TMenuItem
                 Locked = True
                 Text = 'Modelo'
+                OnClick = Modelo1Click
               end
               object SubModelo1: TMenuItem
                 Locked = True
                 Text = 'SubModelo'
+                OnClick = SubModelo1Click
               end
               object NumerodeReduesZrestantes1: TMenuItem
                 Locked = True
                 Text = 'Numero de Redu'#231#245'es Z restantes'
+                OnClick = NumerodeReduesZrestantes1Click
               end
             end
             object N19: TMenuItem
@@ -1146,26 +1161,32 @@ object Form1: TForm1
               object PoucoPapel1: TMenuItem
                 Locked = True
                 Text = 'Pouco Papel ?'
+                OnClick = PoucoPapel1Click
               end
               object HorarioVerao2: TMenuItem
                 Locked = True
                 Text = 'Horario Verao ?'
+                OnClick = HorarioVerao2Click
               end
               object Arredonda1: TMenuItem
                 Locked = True
                 Text = 'Arredonda ?'
+                OnClick = Arredonda1Click
               end
               object MFD1: TMenuItem
                 Locked = True
                 Text = #201' MFD ?'
+                OnClick = MFD1Click
               end
               object Termica1: TMenuItem
                 Locked = True
                 Text = #201' Termica ?'
+                OnClick = Termica1Click
               end
               object ParametroDescontoISSQN1: TMenuItem
                 Locked = True
                 Text = 'ParametroDescontoISSQN ?'
+                OnClick = ParametroDescontoISSQN1Click
               end
             end
             object N3: TMenuItem
@@ -1178,18 +1199,22 @@ object Form1: TForm1
               object DataMovimento1: TMenuItem
                 Locked = True
                 Text = 'Data Movimento'
+                OnClick = DataMovimento1Click
               end
               object DataHoraltimaReduoZ1: TMenuItem
                 Locked = True
                 Text = 'Data/Hora '#218'ltima Redu'#231#227'o Z'
+                OnClick = DataHoraltimaReduoZ1Click
               end
               object DadosReducaoZ1: TMenuItem
                 Locked = True
                 Text = 'Dados Reducao Z (60M)'
+                OnClick = DadosReducaoZ1Click
               end
               object DadosUltimaReduoZ1: TMenuItem
                 Locked = True
                 Text = 'Dados '#218'ltima Redu'#231#227'o Z'
+                OnClick = DadosUltimaReduoZ1Click
               end
               object N20: TMenuItem
                 Locked = True
@@ -1198,26 +1223,32 @@ object Form1: TForm1
               object NumCOO1: TMenuItem
                 Locked = True
                 Text = 'NumCOO'
+                OnClick = NumCOO1Click
               end
               object NumCRZ1: TMenuItem
                 Locked = True
                 Text = 'Num CRZ'
+                OnClick = NumCRZ1Click
               end
               object NumCRO1: TMenuItem
                 Locked = True
                 Text = 'Num CRO'
+                OnClick = NumCRO1Click
               end
               object NumCCF1: TMenuItem
                 Locked = True
                 Text = 'Num CCF'
+                OnClick = NumCCF1Click
               end
               object NumCOOInicial1: TMenuItem
                 Locked = True
                 Text = 'Num COO Inicial'
+                OnClick = NumCOOInicial1Click
               end
               object NumGNF1: TMenuItem
                 Locked = True
                 Text = 'Num GNF'
+                OnClick = NumGNF1Click
               end
               object N26: TMenuItem
                 Locked = True
@@ -1226,10 +1257,12 @@ object Form1: TForm1
               object VendaBruta1: TMenuItem
                 Locked = True
                 Text = 'Venda Bruta'
+                OnClick = VendaBruta1Click
               end
               object GrandeTotal1: TMenuItem
                 Locked = True
                 Text = 'Grande Total'
+                OnClick = GrandeTotal1Click
               end
               object N22: TMenuItem
                 Locked = True
@@ -1238,18 +1271,22 @@ object Form1: TForm1
               object TotalCancelamentos1: TMenuItem
                 Locked = True
                 Text = 'Total Cancelamentos'
+                OnClick = TotalCancelamentos1Click
               end
               object TotalDescontos1: TMenuItem
                 Locked = True
                 Text = 'Total Descontos'
+                OnClick = TotalDescontos1Click
               end
               object TotalAcrescimos1: TMenuItem
                 Locked = True
                 Text = 'Total Acrescimos'
+                OnClick = TotalAcrescimos1Click
               end
               object TotalNoFiscal1: TMenuItem
                 Locked = True
                 Text = 'Total N'#227'o Fiscal'
+                OnClick = TotalNoFiscal1Click
               end
               object N21: TMenuItem
                 Locked = True
@@ -1258,14 +1295,17 @@ object Form1: TForm1
               object TotalSubstituicaoTributaria1: TMenuItem
                 Locked = True
                 Text = 'Total Substituicao Tributaria'
+                OnClick = TotalSubstituicaoTributaria1Click
               end
               object TotalNaoTributado1: TMenuItem
                 Locked = True
                 Text = 'Total Nao Tributado'
+                OnClick = TotalNaoTributado1Click
               end
               object TotalIsencao1: TMenuItem
                 Locked = True
                 Text = 'Total Isencao'
+                OnClick = TotalIsencao1Click
               end
               object N40: TMenuItem
                 Locked = True
@@ -1274,14 +1314,17 @@ object Form1: TForm1
               object otalSubstituicaoTributariaISSQN1: TMenuItem
                 Locked = True
                 Text = 'Total Substituicao Tributaria ISSQN'
+                OnClick = otalSubstituicaoTributariaISSQN1Click
               end
               object otalNaoTributadoISSQN1: TMenuItem
                 Locked = True
                 Text = 'Total Nao Tributado ISSQN'
+                OnClick = otalNaoTributadoISSQN1Click
               end
               object otalIsencao1: TMenuItem
                 Locked = True
                 Text = 'Total Isencao ISSQN'
+                OnClick = otalIsencao1Click
               end
             end
             object N4: TMenuItem
@@ -1294,10 +1337,12 @@ object Form1: TForm1
               object AliquotasICMS1: TMenuItem
                 Locked = True
                 Text = 'Carrega Aliquotas (ICMS)'
+                OnClick = AliquotasICMS1Click
               end
               object LerTotaisAliquotas1: TMenuItem
                 Locked = True
                 Text = 'Ler Totais Aliquotas'
+                OnClick = LerTotaisAliquotas1Click
               end
               object N34: TMenuItem
                 Locked = True
@@ -1306,10 +1351,12 @@ object Form1: TForm1
               object AchaAliquotaporIndice1: TMenuItem
                 Locked = True
                 Text = 'Acha Aliquota por Indice'
+                OnClick = AchaAliquotaporIndice1Click
               end
               object AchaAliquotaporValor1: TMenuItem
                 Locked = True
                 Text = 'Acha Aliquota por Valor'
+                OnClick = AchaAliquotaporValor1Click
               end
             end
             object FormasdePagamento2: TMenuItem
@@ -1318,10 +1365,12 @@ object Form1: TForm1
               object FormasdePagamento1: TMenuItem
                 Locked = True
                 Text = 'Carrega Formas Pagamento'
+                OnClick = FormasdePagamento1Click
               end
               object LerTotaisFormadePagamento1: TMenuItem
                 Locked = True
                 Text = 'Ler Totais Forma de Pagamento'
+                OnClick = LerTotaisFormadePagamento1Click
               end
               object N35: TMenuItem
                 Locked = True
@@ -1330,10 +1379,12 @@ object Form1: TForm1
               object AcharMeioPagamentoporIndice1: TMenuItem
                 Locked = True
                 Text = 'Achar Formas Pagamento por Indice'
+                OnClick = AcharMeioPagamentoporIndice1Click
               end
               object AcharMeiodePagametoporDescrio1: TMenuItem
                 Locked = True
                 Text = 'Achar Formas Pagameto por Descri'#231#227'o'
+                OnClick = AcharMeiodePagametoporDescrio1Click
               end
               object N41: TMenuItem
                 Locked = True
@@ -1342,6 +1393,7 @@ object Form1: TForm1
               object LerTroco1: TMenuItem
                 Locked = True
                 Text = 'Ler Troco'
+                OnClick = LerTroco1Click
               end
             end
             object ComprovantesNaoFiscais1: TMenuItem
@@ -1350,10 +1402,12 @@ object Form1: TForm1
               object CarregaComprovantesNAOFiscais1: TMenuItem
                 Locked = True
                 Text = 'Carrega Comprovantes Nao Fiscais'
+                OnClick = CarregaComprovantesNAOFiscais1Click
               end
               object LerTotaisComprovanetNaoFiscal1: TMenuItem
                 Locked = True
                 Text = 'Ler Totais Comprovante Nao Fiscal'
+                OnClick = LerTotaisComprovanetNaoFiscal1Click
               end
               object N36: TMenuItem
                 Locked = True
@@ -1362,10 +1416,12 @@ object Form1: TForm1
               object AchaCNFporIndice1: TMenuItem
                 Locked = True
                 Text = 'Acha CNF por Indice'
+                OnClick = AchaCNFporIndice1Click
               end
               object AchaCNFporDescrio1: TMenuItem
                 Locked = True
                 Text = 'Acha CNF por Descri'#231#227'o'
+                OnClick = AchaCNFporDescrio1Click
               end
             end
             object RelatriosGerenciais1: TMenuItem
@@ -1374,6 +1430,7 @@ object Form1: TForm1
               object CarregaRelatriosGerenciais1: TMenuItem
                 Locked = True
                 Text = 'Carrega Relat'#243'rios Gerenciais'
+                OnClick = CarregaRelatriosGerenciais1Click
               end
               object N37: TMenuItem
                 Locked = True
@@ -1382,15 +1439,18 @@ object Form1: TForm1
               object AchaRGporIndice1: TMenuItem
                 Locked = True
                 Text = 'Acha RG por Indice '
+                OnClick = AchaRGporIndice1Click
               end
               object AchaRGporDescrio1: TMenuItem
                 Locked = True
                 Text = 'Acha RG por Descri'#231#227'o'
+                OnClick = AchaRGporDescrio1Click
               end
             end
             object CarregaUnidadesdeMedida1: TMenuItem
               Locked = True
               Text = 'Carrega Unidades de Medida'
+              OnClick = CarregaUnidadesdeMedida1Click
             end
             object N18: TMenuItem
               Locked = True
@@ -1399,6 +1459,7 @@ object Form1: TForm1
             object LerTodasasVariveis1: TMenuItem
               Locked = True
               Text = 'Ler Todas as Variveis'
+              OnClick = LerTodasasVariveis1Click
             end
           end
           object Relatrios1: TMenuItem
@@ -1506,18 +1567,22 @@ object Form1: TForm1
               object CapturaporNReduaoZ1: TMenuItem
                 Locked = True
                 Text = 'Captura por N.Redu'#231'aoZ'
+                OnClick = CapturaporNReduaoZ1Click
               end
               object CapturaporPeriodo1: TMenuItem
                 Locked = True
                 Text = 'Captura por Periodo'
+                OnClick = CapturaporPeriodo1Click
               end
               object ImprimeporNReduaoZ1: TMenuItem
                 Locked = True
                 Text = 'Imprime por N.Redu'#231'aoZ'
+                OnClick = ImprimeporNReduaoZ1Click
               end
               object ImprimeporPeriodo1: TMenuItem
                 Locked = True
                 Text = 'Imprime por Periodo'
+                OnClick = ImprimeporPeriodo1Click
               end
             end
             object N23: TMenuItem
@@ -1530,10 +1595,12 @@ object Form1: TForm1
               object PorCOO1: TMenuItem
                 Locked = True
                 Text = 'Por Intervalo de COO'
+                OnClick = PorCOO1Click
               end
               object PorPeriodo1: TMenuItem
                 Locked = True
                 Text = 'Por Intervalo de Periodo'
+                OnClick = PorPeriodo1Click
               end
               object N38: TMenuItem
                 Locked = True
@@ -1542,10 +1609,12 @@ object Form1: TForm1
               object PorCOO2: TMenuItem
                 Locked = True
                 Text = 'Por COO'
+                OnClick = PorCOO2Click
               end
               object PorDatadeMovimento1: TMenuItem
                 Locked = True
                 Text = 'Por Data de Movimento'
+                OnClick = PorDatadeMovimento1Click
               end
             end
             object N39: TMenuItem
@@ -1558,10 +1627,12 @@ object Form1: TForm1
               object PorCOO3: TMenuItem
                 Locked = True
                 Text = 'Por COO'
+                OnClick = PorCOO3Click
               end
               object PorPeriodo2: TMenuItem
                 Locked = True
                 Text = 'Por Periodo'
+                OnClick = PorPeriodo2Click
               end
             end
             object ArquivoMFDDLL1: TMenuItem
@@ -1570,10 +1641,12 @@ object Form1: TForm1
               object PorCOO4: TMenuItem
                 Locked = True
                 Text = 'Por COO'
+                OnClick = PorCOO4Click
               end
               object PorPeriodo3: TMenuItem
                 Locked = True
                 Text = 'Por Periodo'
+                OnClick = PorPeriodo3Click
               end
             end
             object N43: TMenuItem
@@ -1583,10 +1656,12 @@ object Form1: TForm1
             object DAV1: TMenuItem
               Locked = True
               Text = 'DAV'
+              OnClick = DAV1Click
             end
             object DAVOS1: TMenuItem
               Locked = True
               Text = 'DAV-OS'
+              OnClick = DAVOS1Click
             end
           end
           object Cupom1: TMenuItem
@@ -1594,10 +1669,12 @@ object Form1: TForm1
             object TestaPodeAbrirCupom1: TMenuItem
               Locked = True
               Text = 'Testa Pode Abrir Cupom'
+              OnClick = TestaPodeAbrirCupom1Click
             end
             object IdentificaConsumidor1: TMenuItem
               Locked = True
               Text = 'Identifica Consumidor'
+              OnClick = IdentificaConsumidor1Click
             end
             object N25: TMenuItem
               Locked = True
@@ -1606,6 +1683,7 @@ object Form1: TForm1
             object AbrirCupom1: TMenuItem
               Locked = True
               Text = 'Abre Cupom'
+              OnClick = AbrirCupom1Click
             end
             object N5: TMenuItem
               Locked = True
@@ -1614,10 +1692,12 @@ object Form1: TForm1
             object VenderItem1: TMenuItem
               Locked = True
               Text = 'Vende Item'
+              OnClick = VenderItem1Click
             end
             object LegendaInmetroproximoItem1: TMenuItem
               Locked = True
               Text = 'Legenda Inmetro proximo item '
+              OnClick = LegendaInmetroproximoItem1Click
             end
             object N30: TMenuItem
               Locked = True
@@ -1626,14 +1706,17 @@ object Form1: TForm1
             object CancelarItemVendido1: TMenuItem
               Locked = True
               Text = 'Cancela Item Vendido'
+              OnClick = CancelarItemVendido1Click
             end
             object CancelaItemVendidoParcial1: TMenuItem
               Locked = True
               Text = 'Cancela Item Vendido Parcial'
+              OnClick = CancelaItemVendidoParcial1Click
             end
             object CancelaDescontoAcrescimoItem1: TMenuItem
               Locked = True
               Text = 'Cancela DescontoAcrescimo Item'
+              OnClick = CancelaDescontoAcrescimoItem1Click
             end
             object N6: TMenuItem
               Locked = True
@@ -1642,10 +1725,12 @@ object Form1: TForm1
             object Sub1: TMenuItem
               Locked = True
               Text = 'SubTotaliza Cupom'
+              OnClick = Sub1Click
             end
             object CancelaDescontoAcrescimoSubTotal1: TMenuItem
               Locked = True
               Text = 'Cancela DescontoAcrescimo SubTotal'
+              OnClick = CancelaDescontoAcrescimoSubTotal1Click
             end
             object N31: TMenuItem
               Locked = True
@@ -1654,10 +1739,12 @@ object Form1: TForm1
             object EfetuarPagamento1: TMenuItem
               Locked = True
               Text = 'Efetua Pagamento'
+              OnClick = EfetuarPagamento1Click
             end
             object EstornaMeiodePagamento1: TMenuItem
               Locked = True
               Text = 'Estorna Meio de Pagamento'
+              OnClick = EstornaMeiodePagamento1Click
             end
             object N33: TMenuItem
               Locked = True
@@ -1666,6 +1753,7 @@ object Form1: TForm1
             object FecharCupom1: TMenuItem
               Locked = True
               Text = 'Fecha Cupom'
+              OnClick = FecharCupom1Click
             end
             object N10: TMenuItem
               Locked = True
@@ -1674,6 +1762,7 @@ object Form1: TForm1
             object CancelaCupom1: TMenuItem
               Locked = True
               Text = 'Cancela Cupom'
+              OnClick = CancelaCupom1Click
             end
             object N8: TMenuItem
               Locked = True
@@ -1685,18 +1774,22 @@ object Form1: TForm1
               object NUltimoCupom1: TMenuItem
                 Locked = True
                 Text = 'Num Cupom'
+                OnClick = NUltimoCupom1Click
               end
               object SubTotal1: TMenuItem
                 Locked = True
                 Text = 'SubTotal'
+                OnClick = SubTotal1Click
               end
               object TotalPago1: TMenuItem
                 Locked = True
                 Text = 'Total Pago'
+                OnClick = TotalPago1Click
               end
               object UltimoItemVendido1: TMenuItem
                 Locked = True
                 Text = 'Num.Ultimo Item'
+                OnClick = UltimoItemVendido1Click
               end
             end
             object N11: TMenuItem
@@ -1706,10 +1799,12 @@ object Form1: TForm1
             object TestedeVelocidade1: TMenuItem
               Locked = True
               Text = 'Teste de Velocidade'
+              OnClick = TestedeVelocidade1Click
             end
             object VendaFrentica1: TMenuItem
               Locked = True
               Text = 'Venda Fren'#233'tica'
+              OnClick = VendaFrentica1Click
             end
           end
           object NoFiscal1: TMenuItem
@@ -1717,6 +1812,7 @@ object Form1: TForm1
             object NoFiscalCompleto1: TMenuItem
               Locked = True
               Text = 'N'#227'o Fiscal Completo'
+              OnClick = NoFiscalCompleto1Click
             end
             object N16: TMenuItem
               Locked = True
@@ -1725,10 +1821,12 @@ object Form1: TForm1
             object Sangria1: TMenuItem
               Locked = True
               Text = 'Sangria'
+              OnClick = Sangria1Click
             end
             object Suprimento1: TMenuItem
               Locked = True
               Text = 'Suprimento'
+              OnClick = Suprimento1Click
             end
             object N29: TMenuItem
               Locked = True
@@ -1737,22 +1835,27 @@ object Form1: TForm1
             object AbreNoFiscal1: TMenuItem
               Locked = True
               Text = 'Abre N'#227'o Fiscal'
+              OnClick = AbreNoFiscal1Click
             end
             object RegistraItemNaoFiscal1: TMenuItem
               Locked = True
               Text = 'Registra Item N'#227'o Fiscal'
+              OnClick = RegistraItemNaoFiscal1Click
             end
             object SubTotalizaNaoFiscal1: TMenuItem
               Locked = True
               Text = 'SubTotaliza N'#227'o Fiscal'
+              OnClick = SubTotalizaNaoFiscal1Click
             end
             object EfetuaPagamentoNaoFiscal1: TMenuItem
               Locked = True
               Text = 'Efetua Pagamento N'#227'o Fiscal'
+              OnClick = EfetuaPagamentoNaoFiscal1Click
             end
             object FechaNoFiscal1: TMenuItem
               Locked = True
               Text = 'Fecha N'#227'o Fiscal'
+              OnClick = FechaNoFiscal1Click
             end
             object N24: TMenuItem
               Locked = True
@@ -1761,6 +1864,7 @@ object Form1: TForm1
             object CancelaNoFiscal1: TMenuItem
               Locked = True
               Text = 'Cancela N'#227'o Fiscal'
+              OnClick = CancelaNoFiscal1Click
             end
           end
           object Dispositivos1: TMenuItem
@@ -1771,10 +1875,12 @@ object Form1: TForm1
               object AbreGaveta1: TMenuItem
                 Locked = True
                 Text = 'Abre Gaveta'
+                OnClick = AbreGaveta1Click
               end
               object GavetaAberta1: TMenuItem
                 Locked = True
                 Text = 'Gaveta Aberta ?'
+                OnClick = GavetaAberta1Click
               end
             end
             object Cheque1: TMenuItem
@@ -1783,14 +1889,17 @@ object Form1: TForm1
               object ChequePronto1: TMenuItem
                 Locked = True
                 Text = 'Cheque Pronto ?'
+                OnClick = ChequePronto1Click
               end
               object ImprimeCheque1: TMenuItem
                 Locked = True
                 Text = 'Imprime Cheque'
+                OnClick = ImprimeCheque1Click
               end
               object CancelaImpressoCheque1: TMenuItem
                 Locked = True
                 Text = 'Cancela Impress'#227'o Cheque'
+                OnClick = CancelaImpressoCheque1Click
               end
             end
           end
@@ -1799,26 +1908,32 @@ object Form1: TForm1
             object ProgramaAliquota1: TMenuItem
               Locked = True
               Text = 'Programa Aliquota'
+              OnClick = ProgramaAliquota1Click
             end
             object ProgramaFormadePagamento1: TMenuItem
               Locked = True
               Text = 'Programa Forma de Pagamento'
+              OnClick = ProgramaFormadePagamento1Click
             end
             object ProgramaComprovanteNAOFiscal1: TMenuItem
               Locked = True
               Text = 'Programa Comprovante NAO Fiscal'
+              OnClick = ProgramaComprovanteNAOFiscal1Click
             end
             object ProgramaRelatrioGerencial1: TMenuItem
               Locked = True
               Text = 'Programa Relat'#243'rio Gerencial'
+              OnClick = ProgramaRelatrioGerencial1Click
             end
             object ProgramaUnidadeMedida1: TMenuItem
               Locked = True
               Text = 'Programa Unidade Medida'
+              OnClick = ProgramaUnidadeMedida1Click
             end
             object ProgramaIdentificaoPafECF1: TMenuItem
               Locked = True
               Text = 'Programa Identifica'#231#227'o Paf-ECF'
+              OnClick = ProgramaIdentificaoPafECF1Click
             end
             object N32: TMenuItem
               Locked = True
@@ -1827,10 +1942,12 @@ object Form1: TForm1
             object ConsultaRegistradorECF1: TMenuItem
               Locked = True
               Text = 'Consulta Registrador ECF'
+              OnClick = ConsultaRegistradorECF1Click
             end
             object DeCodificaTexto1: TMenuItem
               Locked = True
               Text = 'De/Codifica Texto'
+              OnClick = DeCodificaTexto1Click
             end
             object N13: TMenuItem
               Locked = True
@@ -1839,14 +1956,17 @@ object Form1: TForm1
             object HorarioVerao1: TMenuItem
               Locked = True
               Text = 'Muda Hor'#225'rio Ver'#227'o'
+              OnClick = HorarioVerao1Click
             end
             object MudaArredondamento1: TMenuItem
               Locked = True
               Text = 'Muda Arredondamento'
+              OnClick = MudaArredondamento1Click
             end
             object ImpactoAgulhas1: TMenuItem
               Locked = True
               Text = 'Impacto Agulhas'
+              OnClick = ImpactoAgulhas1Click
             end
             object N7: TMenuItem
               Locked = True
@@ -1855,6 +1975,7 @@ object Form1: TForm1
             object CorrigeEstadodeErro1: TMenuItem
               Locked = True
               Text = 'Corrige Estado de Erro'
+              OnClick = CorrigeEstadodeErro1Click
             end
             object N14: TMenuItem
               Locked = True
@@ -1863,6 +1984,7 @@ object Form1: TForm1
             object EnviaComando1: TMenuItem
               Locked = True
               Text = 'Envia Comando'
+              OnClick = EnviaComando1Click
             end
           end
         end
@@ -1873,10 +1995,13 @@ object Form1: TForm1
           end>
         IsSelected = False
         Size.Width = 75.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'Cmd/Resp'
+        ExplicitSize.cx = 75.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object Label9: TLabel
           Align = Top
           AutoSize = True
@@ -1885,7 +2010,7 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Position.X = 4.000000000000000000
           Position.Y = 4.000000000000000000
-          Size.Width = 780.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 16.000000000000000000
           Size.PlatformDefault = False
           TextSettings.WordWrap = False
@@ -1902,11 +2027,11 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Position.X = 4.000000000000000000
           Position.Y = 20.000000000000000000
-          Size.Width = 780.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 21
-          Viewport.Width = 776.000000000000000000
+          Viewport.Width = 38.000000000000000000
           Viewport.Height = 46.000000000000000000
         end
         object Label10: TLabel
@@ -1918,7 +2043,7 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Position.X = 4.000000000000000000
           Position.Y = 74.000000000000000000
-          Size.Width = 780.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 16.000000000000000000
           Size.PlatformDefault = False
           TextSettings.WordWrap = False
@@ -1933,12 +2058,12 @@ object Form1: TForm1
           Align = Client
           Margins.Left = 4.000000000000000000
           Margins.Right = 4.000000000000000000
-          Size.Width = 780.000000000000000000
-          Size.Height = 247.000000000000000000
+          Size.Width = 42.000000000000000000
+          Size.Height = -40.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 20
-          Viewport.Width = 776.000000000000000000
-          Viewport.Height = 243.000000000000000000
+          Viewport.Width = 38.000000000000000000
+          Viewport.Height = 0.000000000000000000
         end
       end
       object tbiCupom: TTabItem
@@ -1947,14 +2072,17 @@ object Form1: TForm1
           end>
         IsSelected = False
         Size.Width = 58.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'Cupom'
+        ExplicitSize.cx = 58.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object wbBobina: TWebBrowser
           Align = Client
           Size.Width = 788.000000000000000000
-          Size.Height = 287.000000000000000000
+          Size.Height = 294.000000000000000000
           Size.PlatformDefault = False
         end
         object Panel2: TLayout
@@ -1971,6 +2099,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TabOrder = 29
             Text = 'Parametros'
+            OnClick = bBobinaParamsClick
           end
           object bBobinaLimpar: TButton
             Position.X = 178.000000000000000000
@@ -1980,6 +2109,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TabOrder = 27
             Text = 'Limpar'
+            OnClick = bBobinaLimparClick
           end
           object cbMemoHTML: TCheckBox
             IsChecked = True
@@ -1990,6 +2120,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TabOrder = 6
             Text = 'HTML'
+            OnChange = cbMemoHTMLClick
             Left = 11
             Top = 68
           end
@@ -1999,11 +2130,11 @@ object Form1: TForm1
           DataDetectorTypes = []
           Align = Client
           Size.Width = 788.000000000000000000
-          Size.Height = 287.000000000000000000
+          Size.Height = 294.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 28
           Viewport.Width = 784.000000000000000000
-          Viewport.Height = 283.000000000000000000
+          Viewport.Height = 290.000000000000000000
         end
       end
       object tbiRFD: TTabItem
@@ -2012,10 +2143,13 @@ object Form1: TForm1
           end>
         IsSelected = False
         Size.Width = 41.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'RFD'
+        ExplicitSize.cx = 41.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object chRFD: TCheckBox
           Position.X = 21.000000000000000000
           Position.Y = 35.000000000000000000
@@ -2060,6 +2194,7 @@ object Form1: TForm1
           Size.PlatformDefault = False
           TabOrder = 30
           Text = '...'
+          OnClick = sbDirRFDClick
         end
         object TabControl2: TTabControl
           Align = Bottom
@@ -2068,23 +2203,26 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Position.X = 4.000000000000000000
-          Position.Y = 65.000000000000000000
-          Size.Width = 780.000000000000000000
+          Position.Y = -222.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 268.000000000000000000
           Size.PlatformDefault = False
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 31
           TabPosition = PlatformDefault
           object TabItem1: TTabItem
             CustomIcon = <
               item
               end>
-            IsSelected = False
+            IsSelected = True
             Size.Width = 71.000000000000000000
-            Size.Height = 24.000000000000000000
+            Size.Height = 26.000000000000000000
             Size.PlatformDefault = False
+            StyleLookup = ''
             TabOrder = 0
             Text = 'Sw.House'
+            ExplicitSize.cx = 71.000000000000000000
+            ExplicitSize.cy = 24.000000000000000000
             object edSH_RazaoSocial: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
@@ -2301,16 +2439,19 @@ object Form1: TForm1
             CustomIcon = <
               item
               end>
-            IsSelected = True
+            IsSelected = False
             Size.Width = 85.000000000000000000
-            Size.Height = 24.000000000000000000
+            Size.Height = 26.000000000000000000
             Size.PlatformDefault = False
+            StyleLookup = ''
             TabOrder = 0
             Text = 'ACBrRFD.INI'
+            ExplicitSize.cx = 85.000000000000000000
+            ExplicitSize.cy = 24.000000000000000000
             object Layout1: TLayout
               Align = Bottom
-              Position.Y = 200.000000000000000000
-              Size.Width = 780.000000000000000000
+              Position.Y = 6.000000000000000000
+              Size.Width = 50.000000000000000000
               Size.Height = 44.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -2322,6 +2463,7 @@ object Form1: TForm1
                 Size.PlatformDefault = False
                 TabOrder = 30
                 Text = 'Ler'
+                OnClick = bRFDLerClick
               end
               object bRFDSalvar: TButton
                 Position.X = 197.000000000000000000
@@ -2331,6 +2473,7 @@ object Form1: TForm1
                 Size.PlatformDefault = False
                 TabOrder = 29
                 Text = 'Salvar'
+                OnClick = bRFDSalvarClick
               end
             end
             object mRFDParam: TMemo
@@ -2340,12 +2483,12 @@ object Form1: TForm1
               Margins.Left = 4.000000000000000000
               Margins.Top = 4.000000000000000000
               Margins.Right = 4.000000000000000000
-              Size.Width = 772.000000000000000000
-              Size.Height = 196.000000000000000000
+              Size.Width = 42.000000000000000000
+              Size.Height = 2.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
-              Viewport.Width = 768.000000000000000000
-              Viewport.Height = 192.000000000000000000
+              Viewport.Width = 38.000000000000000000
+              Viewport.Height = 0.000000000000000000
             end
           end
         end
@@ -2356,13 +2499,16 @@ object Form1: TForm1
           end>
         IsSelected = False
         Size.Width = 71.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'Dados RZ'
+        ExplicitSize.cx = 71.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object Layout2: TLayout
           Align = Top
-          Size.Width = 788.000000000000000000
+          Size.Width = 50.000000000000000000
           Size.Height = 44.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -2374,6 +2520,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TabOrder = 30
             Text = 'Ler Dados RZ'
+            OnClick = btnDadosRZClick
           end
           object btnDadosUltimaRZ: TButton
             Position.X = 157.000000000000000000
@@ -2383,6 +2530,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TabOrder = 29
             Text = 'Ler Dados '#218'ltima RZ'
+            OnClick = btnDadosUltimaRZClick
           end
         end
         object mRZ: TMemo
@@ -2392,12 +2540,12 @@ object Form1: TForm1
           Margins.Left = 4.000000000000000000
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
-          Size.Width = 780.000000000000000000
-          Size.Height = 272.000000000000000000
+          Size.Width = 42.000000000000000000
+          Size.Height = -15.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
-          Viewport.Width = 776.000000000000000000
-          Viewport.Height = 268.000000000000000000
+          Viewport.Width = 38.000000000000000000
+          Viewport.Height = 0.000000000000000000
         end
         object Label23: TLabel
           Align = Top
@@ -2405,7 +2553,7 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Position.X = 4.000000000000000000
           Position.Y = 44.000000000000000000
-          Size.Width = 780.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
           Text = 'Resposta'
@@ -2415,20 +2563,22 @@ object Form1: TForm1
         CustomIcon = <
           item
           end>
-        IsSelected = True
+        IsSelected = False
         Size.Width = 79.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'MenuFiscal'
+        ExplicitSize.cx = 79.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object grpMenuFiscalOpcoes: TGroupBox
           Align = Client
           Margins.Left = 4.000000000000000000
           Margins.Top = 4.000000000000000000
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
-          Size.Width = 780.000000000000000000
-          Size.Height = 244.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.PlatformDefault = False
           Text = 'Op'#231#245'es do Menu fiscal'
           TabOrder = 0
@@ -2598,8 +2748,8 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Position.X = 4.000000000000000000
-          Position.Y = 256.000000000000000000
-          Size.Width = 780.000000000000000000
+          Position.Y = -31.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 77.000000000000000000
           Size.PlatformDefault = False
           TabIndex = 0
@@ -2611,14 +2761,17 @@ object Form1: TForm1
               end>
             IsSelected = True
             Size.Width = 176.000000000000000000
-            Size.Height = 24.000000000000000000
+            Size.Height = 26.000000000000000000
             Size.PlatformDefault = False
+            StyleLookup = ''
             TabOrder = 0
             Text = 'Emiss'#227'o por intervalo de data'
+            ExplicitSize.cx = 176.000000000000000000
+            ExplicitSize.cy = 24.000000000000000000
             object grptbsMenuFiscalTipoData: TLayout
               Align = Client
-              Size.Width = 780.000000000000000000
-              Size.Height = 53.000000000000000000
+              Size.Width = 42.000000000000000000
+              Size.Height = 51.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               object Label25: TLabel
@@ -2669,14 +2822,17 @@ object Form1: TForm1
               end>
             IsSelected = False
             Size.Width = 179.000000000000000000
-            Size.Height = 24.000000000000000000
+            Size.Height = 26.000000000000000000
             Size.PlatformDefault = False
+            StyleLookup = ''
             TabOrder = 0
             Text = 'Emiss'#227'o por intervalo de COO'
+            ExplicitSize.cx = 179.000000000000000000
+            ExplicitSize.cy = 24.000000000000000000
             object grptbsMenuFiscalTipoCOO: TLayout
               Align = Client
-              Size.Width = 780.000000000000000000
-              Size.Height = 53.000000000000000000
+              Size.Width = 50.000000000000000000
+              Size.Height = 50.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               object Label27: TLabel
@@ -2731,17 +2887,20 @@ object Form1: TForm1
           end>
         IsSelected = False
         Size.Width = 117.000000000000000000
-        Size.Height = 24.000000000000000000
+        Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
+        StyleLookup = ''
         TabOrder = 0
         Text = 'Tags de Impress'#227'o'
+        ExplicitSize.cx = 117.000000000000000000
+        ExplicitSize.cy = 24.000000000000000000
         object Label30: TLabel
           Align = Top
           StyledSettings = [FontColor]
           Margins.Top = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Position.Y = 4.000000000000000000
-          Size.Width = 788.000000000000000000
+          Size.Width = 50.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.Family = 'MS Sans Serif'
@@ -2820,9 +2979,9 @@ object Form1: TForm1
         end
         object chIgnorarTagsFormatacao: TCheckBox
           StyledSettings = [Family, Size, FontColor]
-          Position.X = 184.000000000000000000
-          Position.Y = 66.000000000000000000
-          Size.Width = 276.000000000000000000
+          Position.X = 344.000000000000000000
+          Position.Y = 42.000000000000000000
+          Size.Width = 201.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 6
@@ -2839,6 +2998,7 @@ object Form1: TForm1
           Size.PlatformDefault = False
           TabOrder = 36
           Text = 'Enviar Linha Gerencial'
+          OnClick = BitBtn6Click
         end
         object MemoTesteTags: TMemo
           Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
@@ -2894,13 +3054,13 @@ object Form1: TForm1
           Margins.Right = 4.000000000000000000
           Margins.Bottom = 4.000000000000000000
           Position.X = 4.000000000000000000
-          Position.Y = 96.000000000000000000
-          Size.Width = 780.000000000000000000
+          Position.Y = -191.000000000000000000
+          Size.Width = 42.000000000000000000
           Size.Height = 237.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 37
-          Viewport.Width = 760.000000000000000000
-          Viewport.Height = 233.000000000000000000
+          Viewport.Width = 22.000000000000000000
+          Viewport.Height = 217.000000000000000000
         end
       end
     end

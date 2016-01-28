@@ -61,6 +61,7 @@ type
     function LerRPS_ISSDSF: Boolean;
     function LerRPS_Equiplano: Boolean;
     function LerRps_EL: Boolean;
+    function LerRps_Governa: Boolean;
 
     function LerNFSe_ABRASF_V1: Boolean;
     function LerNFSe_ABRASF_V2: Boolean;
@@ -68,6 +69,7 @@ type
     function LerNFSe_ISSDSF: Boolean;
     function LerNFSe_Equiplano: Boolean;
     function LerNFSe_Infisc: Boolean;
+    function LerNFSe_Governa: Boolean;
 
     function LerRPS: Boolean;
     function LerNFSe: Boolean;
@@ -120,11 +122,30 @@ begin
  inherited Destroy;
 end;
 
+function TNFSeR.CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
+var
+  Ok: Boolean;
+  NomeArqParams: String;
+  IniParams: TMemIniFile;
+begin
+  NomeArqParams := PathIniCidades + '\Cidades.ini';
+
+  if not FileExists(NomeArqParams) then
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
+      NomeArqParams);
+
+  IniParams := TMemIniFile.Create(NomeArqParams);
+
+  Result := StrToProvedor(Ok, IniParams.ReadString(CodCidade, 'Provedor', ''));
+
+  IniParams.Free;
+end;
+
 function TNFSeR.LerXml: Boolean;
 begin
  if (Pos('<Nfse', Leitor.Arquivo) > 0) or (Pos('<Notas>', Leitor.Arquivo) > 0) or
     (Pos('<Nota>', Leitor.Arquivo) > 0) or (Pos('<NFS-e>', Leitor.Arquivo) > 0) or
-    (Pos('<nfse', Leitor.Arquivo) > 0) then
+    (Pos('<nfse', Leitor.Arquivo) > 0) or (Pos('NumNot', Leitor.Arquivo) > 0) then
    Result := LerNFSe
  else
    if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or
@@ -197,16 +218,18 @@ begin
   VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
   LayoutXML := ProvedorToLayoutXML(FProvedor);
 
-  if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') then
+  if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') or
+     (Leitor.rExtrai(1, 'LoteRps') <> '') then
   begin
     case LayoutXML of
       loABRASFv1:    Result := LerRPS_ABRASF_V1;
       loABRASFv2:    Result := LerRPS_ABRASF_V2;
-      loISSDSF:      Result := LerRPS_ISSDSF;
-      loEquiplano:   Result := LerRPS_Equiplano;
-      loEL:          Result := LerRps_EL;
-      loInfisc:      Result := False; // Falta implementar
       loEGoverneISS: Result := False; // Falta implementar
+      loEL:          Result := LerRps_EL;
+      loEquiplano:   Result := LerRPS_Equiplano;
+      loGoverna:     Result := LerRps_Governa;
+      loInfisc:      Result := False; // Falta implementar
+      loISSDSF:      Result := LerRPS_ISSDSF;
     else
       Result := False;
     end;
@@ -820,6 +843,16 @@ begin
   Result := True;
 end;
 
+function TNFSeR.LerRps_Governa: Boolean;
+begin
+  NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
+  NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
+  NFSe.Prestador.ChaveAcesso        := Leitor.rCampo(tcStr, 'ChvAcs');
+  NFSe.CodigoVerificacao            := Leitor.rCampo(tcStr, 'CodVer');
+  NFSe.IdentificacaoRps.Numero      := Leitor.rCampo(tcStr, 'NumRps');
+  Result := True;
+end;
+
 ////////////////////////////////////////////////////////////////////////////////
 //  Funções especificas para ler o XML de uma NFS-e                           //
 ////////////////////////////////////////////////////////////////////////////////
@@ -906,11 +939,12 @@ begin
   case LayoutXML of
     loABRASFv1:    Result := LerNFSe_ABRASF_V1;
     loABRASFv2:    Result := LerNFSe_ABRASF_V2;
-    loISSDSF:      Result := LerNFSe_ISSDSF;
-    loEquiplano:   Result := LerNFSe_Equiplano;
     loEL:          Result := False; // Falta implementar
-    loInfisc:      Result := LerNFSe_Infisc;
     loEGoverneISS: Result := False; // Falta implementar
+    loEquiplano:   Result := LerNFSe_Equiplano;
+    loGoverna:     Result := LerNFSe_Governa;
+    loInfisc:      Result := LerNFSe_Infisc;
+    loISSDSF:      Result := LerNFSe_ISSDSF;
   else
     Result := False;
   end;
@@ -1987,14 +2021,14 @@ begin
 
   if (Pos('<nfse>', Leitor.Arquivo) > 0) then
   begin
-    NFSe.Numero                 := leitor.rCampo(tcStr, 'nrNfse');
-    NFSe.CodigoVerificacao      := leitor.rCampo(tcStr, 'cdAutenticacao');
-    NFSe.DataEmissao            := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
-    NFSe.IdentificacaoRps.Numero:= leitor.rCampo(tcStr, 'nrRps');
+    NFSe.Numero                  := leitor.rCampo(tcStr, 'nrNfse');
+    NFSe.CodigoVerificacao       := leitor.rCampo(tcStr, 'cdAutenticacao');
+    NFSe.DataEmissao             := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
+    NFSe.IdentificacaoRps.Numero := leitor.rCampo(tcStr, 'nrRps');
     if Leitor.rExtrai(3, 'cancelamento') <> '' then
     begin
-      NFSe.NfseCancelamento.DataHora:= Leitor.rCampo(tcDatHor, 'dtCancelamento');
-      NFSe.MotivoCancelamento       := Leitor.rCampo(tcStr, 'dsCancelamento');
+      NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'dtCancelamento');
+      NFSe.MotivoCancelamento        := Leitor.rCampo(tcStr, 'dsCancelamento');
       NFSe.Status := srCancelado;
     end;
 
@@ -2133,23 +2167,55 @@ begin
  Result := True;
 end;
 
-function TNFSeR.CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
-var
-  Ok: Boolean;
-  NomeArqParams: String;
-  IniParams: TMemIniFile;
+function TNFSeR.LerNFSe_Governa: Boolean;
 begin
-  NomeArqParams := PathIniCidades + '\Cidades.ini';
+  NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
+  NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
+  NFSe.Prestador.ChaveAcesso        := Leitor.rCampo(tcStr, 'ChvAcs');
+  NFSe.Numero                       := Leitor.rCampo(tcStr, 'NumNot');
+  NFSe.IdentificacaoRps.Numero      := Leitor.rCampo(tcStr, 'NumRps');
 
-  if not FileExists(NomeArqParams) then
-    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
-      NomeArqParams);
+  if (Leitor.rExtrai(1, 'Nfse') <> '') then
+  begin
+    with NFSe do
+    begin
+      Numero := Leitor.rCampo(tcStr, 'NumNot');
+      NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
+      NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVer');
+      PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RzSocialPr');
+      PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CNPJPr');
+      PrestadorServico.IdentificacaoPrestador.InscricaoEstadual := Leitor.rCampo(tcStr, 'IEPr');
+      PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
+      PrestadorServico.Endereco.Endereco := Leitor.rCampo(tcStr, 'EndLogradouroPr');
+      PrestadorServico.Endereco.Numero :=  Leitor.rCampo(tcStr, 'EndNumeroPr');
+      PrestadorServico.Endereco.Bairro := Leitor.rCampo(tcStr, 'EndBairroPr');
+      PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'EndComplPr');
+      PrestadorServico.Endereco.xMunicipio := Leitor.rCampo(tcStr, 'EndCidadePr');
+      PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'EndCEPPr');
+      PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'EndUFPr');
+      Servico.Valores.ValorServicos := Leitor.rCampo(tcStr, 'VlrUnt');
+      Servico.Valores.ValorPis := Leitor.rCampo(tcStr, 'VlrPIS');
+      Servico.Valores.ValorCofins := Leitor.rCampo(tcStr, 'VlrCofins');
+      Servico.Valores.ValorCofins := Leitor.rCampo(tcStr, 'VlrINSS');
+      Servico.Valores.ValorInss := Leitor.rCampo(tcStr, 'VlrIR');
+      DataEmissao := Leitor.rCampo(tcDat, 'DtemiNfse');
+      Nfse.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'NomTmd');
+      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'NumDocTmd');
+      with  Nfse.Tomador.Endereco do
+      begin
+        Endereco := Leitor.rCampo(tcStr, 'DesEndTmd');
+        Bairro := Leitor.rCampo(tcStr, 'NomBaiTmd');
+        xMunicipio := Leitor.rCampo(tcStr, 'NomCidTmd');
+        UF := Leitor.rCampo(tcStr, 'CodEstTmd');
+        CEP := Leitor.rCampo(tcStr, 'CEPTmd');
+      end;
+      Competencia := Leitor.rCampo(tcStr, 'DtemiNfse');
+      Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodAti');
+      Servico.Discriminacao := Leitor.rCampo(tcStr, 'DesSvc');
+    end;
+  end;
 
-  IniParams := TMemIniFile.Create(NomeArqParams);
-
-  Result := StrToProvedor(Ok, IniParams.ReadString(CodCidade, 'Provedor', ''));
-
-  IniParams.Free;
+  Result := True;
 end;
 
 end.

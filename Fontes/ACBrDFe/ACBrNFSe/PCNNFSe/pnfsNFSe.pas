@@ -143,6 +143,8 @@ type
     FDescontoCondicionado: Currency;
     FDescontoIncondicionado: Currency;
     FJustificativaDeducao: String;
+    FvalorOutrasRetencoes: Currency;
+    FDescricaoOutrasRetencoes: String;
   published
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
@@ -169,6 +171,9 @@ type
     property DescontoIncondicionado: Currency read FDescontoIncondicionado write FDescontoIncondicionado;
     //Just. usada pelo provedor Equiplano
     property JustificativaDeducao: String read FJustificativaDeducao write FJustificativaDeducao;
+    //propriedade do Provedor Governa
+    property valorOutrasRetencoes: Currency read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
+    property DescricaoOutrasRetencoes: String read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;
   end;
 
   TItemServicoCollection = class(TCollection)
@@ -327,6 +332,7 @@ type
     FFraseSecreta: String;
     FcUF: Integer;
     FInscricaoEstadual: String;
+    FChaveAcesso: String;
   published
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
@@ -335,6 +341,8 @@ type
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     property cUF: Integer read FcUF write FcUF;
     property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
+    //Chave de Acesso usada no Provedor Governa
+    property ChaveAcesso: String read FChaveAcesso write FChaveAcesso;
   end;
 
  TEndereco = class(TPersistent)
@@ -585,6 +593,8 @@ type
     FModeloNFSe: String;
     FCancelada: TnfseSimNao;
     Femail: TemailCollection;
+    FTipoRecolhimento: String;
+    
     procedure Setemail(const Value: TemailCollection);
 
   public
@@ -640,6 +650,8 @@ type
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
+    //propriedade para provedor Governa
+    property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
     property email: TemailCollection read Femail write Setemail;
   end;

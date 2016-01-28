@@ -272,10 +272,9 @@ function TRetornoNFSe.LerXml: Boolean;
 var
   NFSe: TNFSe;
   NFSeLida: TNFSeR;
-  VersaodoXML: String;
-  ProtocoloTemp, NumeroLoteTemp, SituacaoTemp: String;
+  VersaodoXML, Msg, ProtocoloTemp, NumeroLoteTemp, SituacaoTemp: String;
   DataRecebimentoTemp: TDateTime;
-  i, j, Nivel: Integer;
+  i, j, Nivel, MsgErro: Integer;
   Nivel1: Boolean;
 begin
   Result := True;
@@ -316,6 +315,9 @@ begin
       Nivel1 := (leitor.rExtrai(1, 'CancelarNfseResult') <> '');
 
     if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaRPS') <> '');
+
+    if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'listaNfse') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
@@ -350,6 +352,7 @@ begin
       while (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
+            (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) do
       begin
@@ -579,6 +582,29 @@ begin
 
           inc(i);
         end;
+      end;
+    end;
+
+    j := 0;
+    MsgErro := 0;
+    while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
+    begin
+      Msg  := Leitor.rCampo(tcStr, 'DesOco');
+      if (Pos('OK!', Msg) = 0) and (Pos('RPS já Importado', Msg) = 0) and
+         (Pos('Sucesso', Msg) = 0) then
+      begin
+        ListaNFSe.FMsgRetorno.Add;
+        ListaNFSe.FMsgRetorno[MsgErro].FMensagem := Msg;
+        inc(MsgErro);
+      end;
+      inc(j);
+    end;
+
+    if ListaNFSe.FMsgRetorno.Count = 0 then
+    begin
+      with ListaNFSe.FCompNFSe.Add do
+      begin
+        FNFSe.Numero := Leitor.rCampo(tcStr, 'NumNot');
       end;
     end;
 

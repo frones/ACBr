@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/01/2016
+[+] Inclusão do provedor Governa.
+    Por: Gabriel Souza Lopes / Italo Jurisato Junior
 [*] Alterações visando fazer funcionar o provedor Infisc.
     Por: Moro / Italo Jurisato Junior
 

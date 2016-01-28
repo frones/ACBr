@@ -111,10 +111,11 @@ type
     function LerXml: Boolean;
     function LerXml_ABRASF: Boolean;
     function LerXml_proISSDSF: Boolean;
-    function LerXML_proEquiplano: Boolean;
-    function LerXML_proInfisc: Boolean;
-    function LerXML_proEL: Boolean;
+    function LerXml_proEquiplano: Boolean;
+    function LerXml_proInfisc: Boolean;
+    function LerXml_proEL: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
+    function LerXml_proGoverna: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -197,14 +198,50 @@ begin
   inherited;
 end;
 
+function TretEnvLote.LerXml_proGoverna: Boolean;
+var
+i,j, MsgErro: Integer;
+Cod, Msg, strAux: String;
+begin
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if (Leitor.rExtrai(1, 'RetornoLoteRps') <> '') then
+    begin
+      j := 0;
+      i := 0;
+      MsgErro := 0;
+      while Leitor.rExtrai(1, 'RetornoLoteRps', '', i + 1) <> '' do
+      begin
+        while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
+        begin
+          Msg  := Leitor.rCampo(tcStr, 'DesOco');
+          if (Pos('OK!', Msg) = 0) and (Pos('importado com sucesso', Msg) = 0) then
+          begin
+            InfRec.FMsgRetorno.Add;
+            InfRec.FMsgRetorno[MsgErro].FMensagem := Msg;
+            Inc(MsgErro);
+          end;
+          inc(j);
+        end;
+        inc(i);
+      end;
+    end;
+    Result := True;
+    except
+      Result := False;
+    end;
+end;
+
 function TretEnvLote.LerXml: Boolean;
 begin
  case Provedor of
    proISSDSF:     Result := LerXml_proISSDSF;
-   proEquiplano:  Result := LerXML_proEquiplano;
+   proEquiplano:  Result := LerXml_proEquiplano;
    proInfIsc:     Result := LerXml_proInfisc;
-   proEL:         Result := LerXML_proEL;
+   proEL:         Result := LerXml_proEL;
    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
+   proGoverna:    Result := LerXml_proGoverna;
  else
    Result := LerXml_ABRASF;
  end;
@@ -373,7 +410,7 @@ begin
   end;
 end;
 
-function TretEnvLote.LerXML_proEquiplano: Boolean;
+function TretEnvLote.LerXml_proEquiplano: Boolean;
 var
   i: Integer;
 begin
@@ -460,7 +497,7 @@ begin
   end;
 end;
 
-function TretEnvLote.LerXML_proEL: Boolean;
+function TretEnvLote.LerXml_proEL: Boolean;
 var
   i: Integer;
   Cod, Msg: String;

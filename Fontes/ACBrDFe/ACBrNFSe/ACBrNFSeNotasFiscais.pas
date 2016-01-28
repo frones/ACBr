@@ -422,6 +422,7 @@ begin
     FNFSeW.LayOutXML := ProvedorToLayoutXML(Configuracoes.Geral.Provedor);
 
     FNFSeW.NFSeWClass.Provedor      := Configuracoes.Geral.Provedor;
+    FNFSeW.NFSeWClass.Prefixo3      := Configuracoes.Geral.ConfigGeral.Prefixo3;
     FNFSeW.NFSeWClass.Prefixo4      := Configuracoes.Geral.ConfigGeral.Prefixo4;
     FNFSeW.NFSeWClass.Identificador := Configuracoes.Geral.ConfigGeral.Identificador;
     FNFSeW.NFSeWClass.QuebradeLinha := Configuracoes.Geral.ConfigGeral.QuebradeLinha;
@@ -758,8 +759,17 @@ var
 
   function PosRPS: Integer;
   begin
+    TamTAG := 5;
     if VersaoNFSe < ve200 then
-      Result := Pos('</Rps>', AXMLString)
+    begin
+      Result := Pos('</Rps>', AXMLString);
+      // Provedor Governa
+      if Result = 0 then
+      begin
+        Result := Pos('</LoteRps>', AXMLString);
+        TamTAG := 9;
+      end;
+    end
     else
     begin
       // Se a versão do XML do RPS for 2.00 ou posterior existem 2 TAGs <Rps>,
@@ -767,7 +777,6 @@ var
       Result := Pos('</Rps>', AXMLString);
       Result := PosEx('</Rps>', AXMLString, Result + 1);
     end;
-    TamTAG := 5;
   end;
 
 begin

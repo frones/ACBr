@@ -102,6 +102,10 @@ type
     // Layout - Equiplano
     FOptanteSimples: TnfseSimNao;
 
+    // Layout - Governa
+    FChaveAcessoPrefeitura: String;
+    FCodVerificacaoRPS: String;
+
     FPossuiAlertas: Boolean;
 
     procedure SetAtributos;
@@ -174,6 +178,10 @@ type
 
     // Layout - Equiplano
     property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
+
+    // Layout - Governa
+    property ChaveAcessoPrefeitura: String read FChaveAcessoPrefeitura write FChaveAcessoPrefeitura;
+    property CodVerificacaoRPS: String read FCodVerificacaoRPS write FCodVerificacaoRPS;
 
     property PossuiAlertas: Boolean read FPossuiAlertas write FPossuiAlertas;
    end;
@@ -253,7 +261,8 @@ begin
                          Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
 
-  else IdLote := NumeroLote;
+  else
+    IdLote := NumeroLote;
   end;
 
   // Atributo Id ===============================================================
@@ -390,7 +399,7 @@ begin
                      Gerador.wGrupoNFSe('LoteRps' + tagCabecalhoCodigoMunicipio + aVersao + aIdentificador);
 
                      Gerador.Prefixo := Prefixo4;
-                     Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, IdLote, '');
+                     Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
 
                      if VersaoNFSe = ve100 then
                      begin
@@ -416,6 +425,18 @@ begin
                      Gerador.wGrupoNFSe('/LoteRps');
                    end;
 
+    proGoverna: begin
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('LoteRps');
+                  Gerador.Prefixo := Prefixo3;
+                  Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 15, 1, IM, '');
+                  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+                  Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 30, 30, 1, ChaveAcessoPrefeitura, '');
+                  Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('/LoteRps');
+                end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          if Provedor in [proCoplan] then
@@ -424,7 +445,7 @@ begin
            Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao + aNameSpace);
 
          Gerador.Prefixo := Prefixo4;
-         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, IdLote, '');
+         Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
 
          if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
          begin
@@ -675,6 +696,23 @@ begin
                                                 Notas +
                                               '</Lote>';
                end;
+
+    proGoverna: begin
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('ConsultaRps');
+                  Gerador.Prefixo := Prefixo3;
+                  Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 10, 1, IM, '');
+                  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 10, 1, '1', ''); //fixo 1
+                  Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 01, 30, 1, ChaveAcessoPrefeitura, '');
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('InfConsultaRPS');
+                  Gerador.Prefixo := Prefixo3;
+                  Gerador.wCampoNFSe(tcStr, '', 'NumRPS', 01, 10, 1, NumeroRps, '');
+                  Gerador.wCampoNFSe(tcStr, '', 'CodVer', 01, 10, 1, CodVerificacaoRPS, '');
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('/InfConsultaRPS');
+                  Gerador.wGrupoNFSe('/ConsultaRps');
+                end;
 
   else begin
          Gerador.Prefixo := Prefixo3;
@@ -1042,7 +1080,7 @@ begin
                  Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
 
                  Gerador.Prefixo := Prefixo4;
-                 Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, IdLote, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
 
                  if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
                  begin

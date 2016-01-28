@@ -104,8 +104,11 @@ type
     property Prefixo: string read FPrefixo write FPrefixo;
   end;
 
+  { TGeradorOpcoes }
+
   TGeradorOpcoes = class(TPersistent)
   private
+    FDecimalChar: Char;
     FSomenteValidar: boolean;
     FIdentarXML: boolean;
     FRetirarEspacos: boolean;
@@ -115,15 +118,19 @@ type
     FSuprimirDecimais: boolean;
     FTagVaziaNoFormatoResumido: boolean;
     FFormatoAlerta: string;
+  public
+    constructor Create;
+
   published
-    property SomenteValidar: boolean read FSomenteValidar write FSomenteValidar;
-    property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos;
-    property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
-    property IdentarXML: boolean read FIdentarXML write FIdentarXML;
-    property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
-    property SuprimirDecimais: boolean read FSuprimirDecimais write FSuprimirDecimais;
-    property TagVaziaNoFormatoResumido: boolean read FTagVaziaNoFormatoResumido write FTagVaziaNoFormatoResumido;
+    property SomenteValidar: boolean read FSomenteValidar write FSomenteValidar default False;
+    property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos default True;
+    property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos default True;
+    property IdentarXML: boolean read FIdentarXML write FIdentarXML default False;
+    property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao default 3;
+    property SuprimirDecimais: boolean read FSuprimirDecimais write FSuprimirDecimais default False;
+    property TagVaziaNoFormatoResumido: boolean read FTagVaziaNoFormatoResumido write FTagVaziaNoFormatoResumido default True;
     property FormatoAlerta: string read FFormatoAlerta write FFormatoAlerta;
+    property DecimalChar: Char read FDecimalChar write FDecimalChar default '.';
   end;
 
 const
@@ -644,19 +651,30 @@ implementation
 uses
   DateUtils, ACBrConsts, ACBrUtil;
 
+{ TGeradorOpcoes }
+
+constructor TGeradorOpcoes.Create;
+begin
+  inherited;
+
+  FIdentarXML := False;
+  FTamanhoIdentacao := 3;
+  FFormatoAlerta := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'; // Vide comentário em wAlerta
+  FRetirarEspacos := True;
+  FRetirarAcentos := True;
+  FSuprimirDecimais := False;
+  FSomenteValidar := False;
+  FTagVaziaNoFormatoResumido := True;
+  FDecimalChar := '.';
+end;
+
 { TGerador }
 
 constructor TGerador.Create;
 begin
+  inherited;
+
   FOpcoes := TGeradorOpcoes.Create;
-  FOpcoes.FIdentarXML := False;
-  FOpcoes.FTamanhoIdentacao := 3;
-  FOpcoes.FFormatoAlerta := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'; // Vide comentário em wAlerta
-  FOpcoes.FRetirarEspacos := True;
-  FOpcoes.FRetirarAcentos := True;
-  FOpcoes.FSuprimirDecimais := False;
-  FOpcoes.FSomenteValidar := False;
-  FOpcoes.FTagVaziaNoFormatoResumido := True;
   FListaDeAlertas := TStringList.Create;
   FLayoutArquivoTXT := TStringList.Create;
 end;
@@ -904,7 +922,7 @@ begin
 
         try
           valorDbl := valor; // Converte Variant para Double
-          ConteudoProcessado := FloatToString( valorDbl, '.', FloatMask(NumeroDecimais));
+          ConteudoProcessado := FloatToString( valorDbl, FOpcoes.DecimalChar, FloatMask(NumeroDecimais));
         except
           valorDbl := 0;
           ConteudoProcessado := '0.00';
@@ -912,7 +930,7 @@ begin
 
         EstaVazio := (valorDbl = 0) and (ocorrencias = 0);
 
-        if StrToIntDef(Copy(ConteudoProcessado, pos('.', ConteudoProcessado) + NumeroDecimais + 1, 10),0) > 0 then
+        if StrToIntDef(Copy(ConteudoProcessado, pos(FOpcoes.DecimalChar, ConteudoProcessado) + NumeroDecimais + 1, 10),0) > 0 then
           walerta(ID, Tag, Descricao, ERR_MSG_MAXIMO_DECIMAIS + ' ' + IntToStr(NumeroDecimais));
 
         // Caso não seja um valor fracionário; retira os decimais.

@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/01/16 ver. 0.0.174a
+-- ACBrBancoBarisul --
+[-] Ajuste leitura arquivo retorno CNAB240.
+[-] Ajuste remessa CNAB400. (Volmir)
+http://www.projetoacbr.com.br/forum/topic/27714-banco-banrisul/
+
+-- ACBrBoleto --
+[*] Ajuste impressão mensagem multa/mora diária.(Volmir)
+http://www.projetoacbr.com.br/forum/topic/27714-banco-banrisul/
+
 Data: 22/01/2016 ver. 0.0.172a
 -- ACBrBancoHSBC --
 [*] Adicionados novos códigos de ocorrência na função TipoOcorrenciToDescricao.

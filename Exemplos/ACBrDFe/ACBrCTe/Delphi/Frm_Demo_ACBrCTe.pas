@@ -8,8 +8,7 @@ uses
   IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  ACBrCTe, ACBrCTeDACTEClass, ACBrCTeDACTeQRClass, ACBrMail,
-  ACBrBase, ACBrDFe;
+  ACBrCTe, ACBrCTeDACTEClass, ACBrMail, ACBrBase, ACBrDFe, ACBrCTeDACTeRLClass;
 
 type
   TfrmDemo_ACBrCTe = class(TForm)
@@ -131,12 +130,12 @@ type
     MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     ACBrCTe1: TACBrCTe;
-    ACBrCTeDACTeQR1: TACBrCTeDACTeQR;
     btnEnviarEventoEmail: TButton;
     btnGerarPDFEvento: TButton;
     btnImprimirInut: TButton;
     btnGerarPDFInut: TButton;
     ACBrMail1: TACBrMail;
+    ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);

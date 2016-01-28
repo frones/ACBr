@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/018/2016
+[*] Limitando o campo "Largura Cod.Produto", de 0 a 40 com SpinEdit (por: DSA)
+
 26/01/2016
 [+] Adição da opção para selecionar o tamanho de papel no DACT
 	  por: Juliomar Marchetti

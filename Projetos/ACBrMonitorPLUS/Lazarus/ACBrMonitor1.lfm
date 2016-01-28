@@ -7505,9 +7505,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsImpCTe
+                ActivePage = tsImpGeralDFe
                 Align = alClient
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -7530,8 +7530,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ParentColor = False
                   end
                   object Label141: TLabel
-                    AnchorSideLeft.Control = edtLargCodProd
-                    AnchorSideRight.Control = edtLargCodProd
+                    AnchorSideLeft.Control = speLargCodProd
+                    AnchorSideRight.Control = speLargCodProd
                     AnchorSideRight.Side = asrBottom
                     Left = 6
                     Height = 27
@@ -7909,15 +7909,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 17
                     Text = '1'
                   end
-                  object edtLargCodProd: TEdit
-                    Left = 6
-                    Height = 25
-                    Top = 181
-                    Width = 70
-                    NumbersOnly = True
-                    TabOrder = 16
-                    Text = '0'
-                  end
                   object cbxExibirEAN: TCheckBox
                     Left = 456
                     Height = 21
@@ -8002,6 +7993,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     NumbersOnly = True
                     TabOrder = 19
                     Text = '10'
+                  end
+                  object speLargCodProd: TSpinEdit
+                    Left = 6
+                    Height = 25
+                    Top = 181
+                    Width = 70
+                    MaxValue = 40
+                    TabOrder = 16
                   end
                 end
                 object tsDadosEmpresa: TTabSheet
@@ -11169,6 +11168,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

@@ -257,6 +257,7 @@ type
     edtEmailAssuntoCTe: TEdit;
     edtAlturaCampos: TEdit;
     edtFonteEndereco: TEdit;
+    speLargCodProd: TSpinEdit;
     edtNFCeMargemDir: TEdit;
     edtNFCeMargemEsq: TEdit;
     edtNFCeMargemInf: TEdit;
@@ -435,7 +436,6 @@ type
     edtPathLogs: TEdit;
     edtPathNFe: TEdit;
     edtPathPDF: TEdit;
-    edtLargCodProd: TEdit;
     edtProxyHost: TEdit;
     edtProxyPorta: TEdit;
     edtProxySenha: TEdit;
@@ -3474,7 +3474,7 @@ begin
     cbxImpDescPorc.Checked := Ini.ReadBool('DANFE', 'ImpDescPorc', True);
     cbxMostrarPreview.Checked := Ini.ReadBool('DANFE', 'MostrarPreview', False);
     edtNumCopia.Value := Ini.ReadInteger('DANFE', 'Copias', 1);
-    edtLargCodProd.Text := Ini.ReadString('DANFE', 'LarguraCodigoProduto', '54');
+    speLargCodProd.Value := Ini.ReadInteger('DANFE', 'LarguraCodigoProduto', 40);
     edtEspBorda.Text := Ini.ReadString('DANFE', 'EspessuraBorda', '1');
     edtFonteRazao.Text := Ini.ReadString('DANFE', 'FonteRazao', '12');
     edtFonteEndereco.Text := Ini.ReadString('DANFE', 'FonteEndereco', '10');
@@ -4280,7 +4280,7 @@ begin
     Ini.WriteBool('DANFE', 'ImpDescPorc', cbxImpDescPorc.Checked);
     Ini.WriteBool('DANFE', 'MostrarPreview', cbxMostrarPreview.Checked);
     Ini.WriteInteger('DANFE', 'Copias', edtNumCopia.Value);
-    Ini.WriteString('DANFE', 'LarguraCodigoProduto', edtLargCodProd.Text);
+    Ini.WriteInteger('DANFE', 'LarguraCodigoProduto', speLargCodProd.Value);
     Ini.WriteString('DANFE', 'EspessuraBorda', edtEspBorda.Text);
     Ini.WriteString('DANFE', 'FonteRazao', edtFonteRazao.Text);
     Ini.WriteString('DANFE', 'FonteEndereco', edtFonteEndereco.Text);
@@ -6927,7 +6927,7 @@ begin
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
     ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
-    ACBrNFe1.DANFE.ProdutosPorPagina := StrToIntDef(edtLargCodProd.Text, 0);
+    ACBrNFe1.DANFE.ProdutosPorPagina := speLargCodProd.Value;
     ACBrNFe1.DANFE.MargemInferior := StrToFloatDef(edtMargemInf.Text, 0.8);
     ACBrNFe1.DANFE.MargemSuperior := StrToFloatDef(edtMargemSup.Text, 0.8);
     ACBrNFe1.DANFE.MargemDireita := StrToFloatDef(edtMargemDir.Text, 0.51);
@@ -6946,7 +6946,7 @@ begin
     if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
     begin
       ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(rgTipoFonte.ItemIndex);
-      ACBrNFeDANFeRL1.LarguraCodProd := StrToIntDef(edtLargCodProd.Text, 54);
+      ACBrNFeDANFeRL1.LarguraCodProd := speLargCodProd.Value;
       ACBrNFeDANFeRL1.ExibirEAN := cbxExibirEAN.Checked;
       ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
       ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico := cbxQuebrarLinhasDetalhesItens.Checked;

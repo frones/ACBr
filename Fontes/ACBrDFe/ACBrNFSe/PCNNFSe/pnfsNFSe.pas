@@ -209,6 +209,8 @@ type
     FCodServ: String;
     FCodLCServ: String;
     FUnidade: String;
+    FAlicotaISSST: currency;
+    FValorISSST: currency;
 
   public
     constructor Create; reintroduce;
@@ -239,6 +241,8 @@ type
     property CodServ     : String read FCodServ write FCodServ;
     property CodLCServ   : String read FCodLCServ write FCodLCServ;
     property Unidade     : String read FUnidade write FUnidade;
+    property AlicotaISSST: currency read FAlicotaISSST write FAlicotaISSST;
+    property ValorISSST  : currency read FValorISSST write FValorISSST;
   end;
 
  TDeducaoCollection = class(TCollection)
@@ -442,9 +446,33 @@ type
   private
     FCodigoObra: String;
     FArt: String;
+    FLogradouroObra: string;
+    FComplementoObra: string;
+    FNumeroObra: string;
+    FBairroObra: string;
+    FCEPObra: string;
+    FCodigoMunicipioObra: string;
+    FUFObra: string;
+    FCodigoPaisObra: integer;
+    FxPaisObra: string;
+    FnCei: string;
+    FnProj: string;
+    FnMatri: string;
   published
     property CodigoObra: String read FCodigoObra write FCodigoObra;
     property Art: String read FArt write FArt;
+    property LogradouroObra: string read FLogradouroObra write FLogradouroObra;
+    property ComplementoObra: string read FComplementoObra write FComplementoObra;
+    property NumeroObra: string read FNumeroObra write FNumeroObra;
+    property BairroObra: string read FBairroObra write FBairroObra;
+    property CEPObra: string read FCEPObra write FCEPObra;
+    property CodigoMunicipioObra: string read FCodigoMunicipioObra write FCodigoMunicipioObra;
+    property UFObra: string read FUFObra write FUFObra;
+    property CodigoPaisObra: integer read FCodigoPaisObra write FCodigoPaisObra;
+    property xPaisObra: string read FxPaisObra write FxPaisObra;
+    property nCei: String read FnCei write FnCei;
+    property nProj: String read FnProj write FnProj;
+    property nMatri: String read FnMatri write FnMatri;
   end;
 
   TParcelasCollectionItem = class(TCollectionItem)

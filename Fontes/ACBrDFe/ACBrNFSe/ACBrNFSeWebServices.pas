@@ -733,9 +733,8 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
+      proInfisc,
       proIssDSF: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
-      proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
-//      proSimplIss: FNameSpaceDad := '';
       else begin
         if (FSeparador = '') then
         begin
@@ -958,6 +957,8 @@ begin
     FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.dhRecebimento;
     if FDataRecebimento = 0 then
       FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.DataEmissao;
+    if (FProvedor = proInfisc) then
+      FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else begin
     FDataRecebimento := 0;
@@ -1154,8 +1155,7 @@ begin
                                '</' + FPrefixo4 + 'Rps>';
 
         proIssDSF,
-        proEL
-        proInfisc: FvNotas :=  FvNotas + RPS;
+        proEL: FvNotas :=  FvNotas + RPS;
 
         proNFSeBrasil: begin
                          FvNotas := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]) + '</Rps>';
@@ -1169,6 +1169,8 @@ begin
                                      '<' + FPrefixo4 + 'NotaFiscal>', '</' + FPrefixo4 + 'NotaFiscal>') +
                                    '</' + FPrefixo4 + 'NotaFiscal>';
         *)
+
+    ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>'); //Infisc
 
     // RPS versão 1.00
     else
@@ -1405,6 +1407,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case Provedor of
+      proInfisc: TAGGrupo := 'envioLote';
       proISSDSF: TAGGrupo := 'ReqEnvioLoteRPS';
       proEquiplano: TAGGrupo := 'enviarLoteRpsEnvio';
     else
@@ -1434,6 +1437,12 @@ begin
       FTagI := '<' + FPrefixo3 + TAGGrupo + FNameSpaceDad + '>';
     end;
     FTagF := '</' + FPrefixo3 + TAGGrupo + '>';
+
+    if FProvedor =  proInfisc then
+    begin
+      FTagI := '';
+      FTagF := '';
+    end;
 
     DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
     DataFinal   := DataInicial;
@@ -1478,11 +1487,22 @@ begin
   begin
     DefinirSignatureNode('');
 
-    FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                                                     FPrefixo3 + TAGGrupo,
-                                                                     FPrefixo3 + 'LoteRps',
-                                                                     FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                                                     xSignatureNode, xDSIGNSLote, xIdSignature);
+    // TODO: Tentar simplificar
+    if FProvedor = proInfisc then
+    begin
+      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                                                       FPrefixo3 + TAGGrupo,
+                                                                       '',
+                                                                       FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
+                                                                       xSignatureNode, xDSIGNSLote, xIdSignature);
+    end
+    else begin
+      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                                                       FPrefixo3 + TAGGrupo,
+                                                                       FPrefixo3 + 'LoteRps',
+                                                                       FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
+                                                                       xSignatureNode, xDSIGNSLote, xIdSignature);
+    end;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -1897,6 +1917,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
+      proInfisc: TAGGrupo := 'pedidoStatusLote';
       proEquiplano: TAGGrupo := 'esConsultarSituacaoLoteRpsEnvio';
       proSimplISS: TAGGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     else
@@ -1911,6 +1932,7 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TAGGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd">';
+      proInfisc,                                                     
       proSimplISS: FTagI := '<' + FPrefixo3 + TAGGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TAGGrupo + FNameSpaceDad + '>';
@@ -2453,6 +2475,7 @@ begin
   try
     case FProvedor of
       proDigifred: TAGGrupo := 'ConsultarNfseServicoPrestadoEnvio';
+      proInfisc: TAGGrupo := 'pedidoLoteNFSe';
       proISSDSF: TAGGrupo := 'ReqConsultaNotas';
       proSystemPro: TAGGrupo := 'ConsultarNfseFaixaEnvio';
     else
@@ -2464,6 +2487,7 @@ begin
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingCab);
 
     case FProvedor of
+      proInfisc,
       proSimplISS: FTagI := '<' + FPrefixo3 + TAGGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TAGGrupo + FNameSpaceDad + '>';
@@ -2587,13 +2611,14 @@ procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
-  TAGGrupo: String;
+  TAGGrupo, docElemento: String;
 begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
       proEGoverneISS: TAGGrupo := 'request';
       proEquiplano: TAGGrupo := 'esCancelarNfseEnvio';
+      proInfisc: TAGGrupo := 'pedCancelaNFSe';
       proISSDSF: TAGGrupo := 'ReqCancelamentoNFSe';
     else
       TAGGrupo :=  'CancelarNfseEnvio';
@@ -2664,6 +2689,11 @@ begin
       proEGoverneISS,
       proISSDSF: begin
                    FTagI := '<' + FPrefixo3 + TAGGrupo + FNameSpaceDad + '>';
+                   FTagF :=  '</' + FPrefixo3 + TAGGrupo + '>';
+                 end;
+
+      proInfisc: begin
+                   FTagI := '<' + FPrefixo3 + TAGGrupo + '>';
                    FTagF :=  '</' + FPrefixo3 + TAGGrupo + '>';
                  end;
 
@@ -2782,18 +2812,16 @@ begin
     // O procedimento recebe como parametro o XML a ser assinado e retorna o
     // mesmo assinado da propriedade FPDadosMsg
     case FProvedor of
-      proBetha: AssinarXML(FPDadosMsg, 'Pedido></' + FPrefixo3 + TAGGrupo, '',
-                                       'Falha ao Assinar - Cancelar NFS-e: ');
-      proEquiplano: AssinarXML(FPDadosMsg, FPrefixo3 + TAGGrupo, '',
-                                       'Falha ao Assinar - Cancelar NFS-e: ');
-      proGinfes: AssinarXML(FPDadosMsg, TAGGrupo, '',
-                                       'Falha ao Assinar - Cancelar NFS-e: ');
-      proISSNet: AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido></p1:' + TAGGrupo, '',
-                                       'Falha ao Assinar - Cancelar NFS-e: ');
+      proBetha:  docElemento := 'Pedido></' + FPrefixo3 + TAGGrupo;
+      proEquiplano,
+      proInfisc: docElemento := FPrefixo3 + TAGGrupo;
+      proGinfes: docElemento := TAGGrupo;
+      proISSNet: docElemento := FPrefixo3 + 'Pedido></p1:' + TAGGrupo;
     else
-      AssinarXML(FPDadosMsg, FPrefixo3 + 'Pedido></' + FPrefixo3 + TAGGrupo, '',
-                                       'Falha ao Assinar - Cancelar NFS-e: ');
+      docElemento := FPrefixo3 + 'Pedido></' + FPrefixo3 + TAGGrupo;
     end;
+
+    AssinarXML(FPDadosMsg, docElemento, '', 'Falha ao Assinar - Cancelar NFS-e: ');
   end;
 
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
@@ -3371,7 +3399,11 @@ begin
       FConsNfseRps.FSerie     := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
       FConsNfseRps.FTipo      := TipoRPSToStr(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
 
-      Result := FConsNfseRps.Executar;
+      // Provedor Infisc não possui o método Consultar NFS-e por RPS
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc] then
+        Result := True
+      else
+        Result := FConsNfseRps.Executar;
     end;
 
     if not(Result) then

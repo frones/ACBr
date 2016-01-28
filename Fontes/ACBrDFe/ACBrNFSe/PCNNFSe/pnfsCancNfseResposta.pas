@@ -507,7 +507,7 @@ begin
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
-    if VersaoXML = '1.1' then
+    if VersaoXML = '1.10' then
       sCancelaAnula := 'resCancelaNFSe' // Caxias do Sul Versão XML 1.1
     else
       sCancelaAnula := 'resAnulaNFSe';  // Demais Cidades

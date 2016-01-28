@@ -251,9 +251,9 @@ begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
     case StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML) of
-      ve201,
+      ve110,
       ve200,
-      ve110: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
+      ve201: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
 
     // Os RPS versão 1.00 tem como InfElement = InfRps
     else
@@ -740,11 +740,20 @@ var
   VersaoNFSe: TVersaoNFSe;
   Ok: Boolean;
   AXML: AnsiString;
-  N: integer;
+  N, TamTAG: integer;
 
   function PosNFSe: Integer;
   begin
-    Result := Pos('</Nfse>', AXMLString);
+    if VersaoNFSe = ve110 then
+    begin
+      // Provedor Infisc
+      Result := Pos('</NFS-e>', AXMLString);
+      TamTAG := 7;
+    end  
+    else begin
+      Result := Pos('</Nfse>', AXMLString);
+      TamTAG := 6;
+    end;
   end;
 
   function PosRPS: Integer;
@@ -758,6 +767,7 @@ var
       Result := Pos('</Rps>', AXMLString);
       Result := PosEx('</Rps>', AXMLString, Result + 1);
     end;
+    TamTAG := 5;
   end;
 
 begin
@@ -776,8 +786,8 @@ begin
     // Ler os XMLs das NFS-e
     while N > 0 do
     begin
-      AXML := copy(AXMLString, 1, N + 6);
-      AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
+      AXML := copy(AXMLString, 1, N + TamTAG);
+      AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
 
       with Self.Add do
       begin
@@ -795,8 +805,8 @@ begin
     // Ler os XMLs dos RPS
     while N > 0 do
     begin
-      AXML := copy(AXMLString, 1, N + 5);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+      AXML := copy(AXMLString, 1, N + TamTAG);
+      AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
       with Self.Add do
       begin
         LerXML(AXML);

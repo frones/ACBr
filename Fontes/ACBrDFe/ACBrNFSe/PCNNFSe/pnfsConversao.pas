@@ -18134,21 +18134,17 @@ begin
 
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
-    proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proTecnos, proVirtual, proVitoria, proNEAInformatica,
-    proNotaInteligente: Result := loABRASFv2;
+    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
+    proSaatri, proSisPMJP, proSystemPro, proTecnos, proVirtual,
+    proVitoria: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
+    proEL:          Result := loEL;
+    proEquiplano:   Result := loEquiplano;
+    proGoverna:     Result := loGoverna;
+    proInfisc:      Result := loInfisc;
+    proIssDSF:      Result := loISSDSF;
 
-    proEL: Result := loEL;
-
-    proEquiplano: Result := loEquiplano;
-
-    proInfisc: Result := loInfisc;
-
-    proIssDSF: Result := loISSDSF;
-
-    proGoverna: Result := loGoverna;
   else
     Result := loNone;
   end;
@@ -18160,13 +18156,12 @@ end;
 function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 begin
   case AProvedor of
-    proDigifred: Result := ve110;
+//    proDigifred: Result := ve110;
 
-    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proFIntelISS,
-    proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe, proLink3,
-    proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proVirtual, proVitoria, proEReceita, proNEAInformatica,
-    proNotaInteligente: Result := ve200;
+    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
+    proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
+    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
+    proSaatri, proSisPMJP, proSystemPro, proVirtual, proVitoria: Result := ve200;
 
     proTecnos: Result := ve201;
   else

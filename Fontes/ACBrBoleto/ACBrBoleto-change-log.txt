@@ -52,6 +52,15 @@ Data: 22/01/2016 ver. 0.0.172a
 [*] Adicionados novos códigos de ocorrência na função TipoOcorrenciToDescricao.
    (por: RobertoSFilho)
 
+Data: 27/01/2016 ver. 0.0.172a
+-- ACBrBancoBradescoSicoob --
+[-] Ajuste calculo DV Nosso Numero, remessa e retorno CNAB400. (Joel)
+http://www.projetoacbr.com.br/forum/topic/11935-integra%C3%A7%C3%A3o-sicoob-correspondente-bradesco/?page=2 
+
+-- ACBrBancoBradesco --
+[-] Ajuste remessa CNAB400. (OlavoJr)
+http://www.projetoacbr.com.br/forum/topic/27374-remessa-do-bradesco-header-altera%C3%A7%C3%A3o-incorreta/
+
 Data: 22/01/2016 ver. 0.0.171a
 -- ACBrBancoNordeste --
 [-] Correção arquivo remessa CNAB400.

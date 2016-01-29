@@ -509,11 +509,13 @@ function TACBrNFe.GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoA
   const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String): String;
 var
   idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
-  sEntrada, cHashQRCode, urlUF: String;
+  sEntrada, cHashQRCode, urlUF, cDest: String;
 begin
   urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
 
   idNFe := OnlyNumber(AChaveNFe);
+
+  cDest := OnlyNumber(AChaveNFe);
 
   // Passo 1
   sdhEmi_HEX := AsciiToHex(DateTimeTodh(DataHoraEmissao) +
@@ -538,8 +540,8 @@ begin
   sICMS := StringReplace(FormatFloat('0.00', ValorTotalICMS), ',', '.', [rfReplaceAll]);
 
   sEntrada := 'chNFe=' + idNFe + '&nVersao=100&tpAmb=' +
-    TpAmbToStr(TipoAmbiente) + IfThen(Destinatario = '', '', '&cDest=' +
-    Destinatario) + '&dhEmi=' + sdhEmi_HEX + '&vNF=' + sNF + '&vICMS=' +
+    TpAmbToStr(TipoAmbiente) + IfThen(cDest = '', '', '&cDest=' +
+    cDest) + '&dhEmi=' + sdhEmi_HEX + '&vNF=' + sNF + '&vICMS=' +
     sICMS + '&digVal=' + sdigVal_HEX + '&cIdToken=';
 
   // Passo 5 calcular o SHA-1 da string sEntrada

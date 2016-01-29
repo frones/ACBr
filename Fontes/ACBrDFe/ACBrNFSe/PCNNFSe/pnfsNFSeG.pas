@@ -318,7 +318,7 @@ end;
 
 function TNFSeG.Gera_DadosMsgEnviarLote: String;
 var
-  tagCabecalhoCodigoMunicipio: String;
+  Atributo_cMun: String;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -392,11 +392,11 @@ begin
                end;
 
     proNFSEBrasil: begin
-                     tagCabecalhoCodigoMunicipio := RetornarConteudoEntre(Notas, '<CodigoMunicipio>', '</CodigoMunicipio>');
-                     tagCabecalhoCodigoMunicipio := ' codMunicipio="' + tagCabecalhoCodigoMunicipio + '"';
+                     Atributo_cMun := RetornarConteudoEntre(Notas, '<CodigoMunicipio>', '</CodigoMunicipio>');
+                     Atributo_cMun := ' codMunicipio="' + Atributo_cMun + '"';
 
                      Gerador.Prefixo := Prefixo3;
-                     Gerador.wGrupoNFSe('LoteRps' + tagCabecalhoCodigoMunicipio + aVersao + aIdentificador);
+                     Gerador.wGrupoNFSe('LoteRps' + Atributo_cMun + aVersao + aIdentificador);
 
                      Gerador.Prefixo := Prefixo4;
                      Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
@@ -517,6 +517,10 @@ begin
                  // Não possui 
                end;
 
+    proNFSEBrasil: begin
+                     Gerador.ArquivoFormatoXML := Protocolo;
+                   end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);
@@ -600,6 +604,10 @@ begin
                  Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
                  Gerador.wGrupoNFSe('/Cabecalho');
                end;
+
+    proNFSEBrasil: begin
+                     Gerador.ArquivoFormatoXML := Protocolo;
+                   end;
 
   else begin
          Gerador.Prefixo := Prefixo3;
@@ -1010,6 +1018,11 @@ begin
                       Gerador.wGrupoNFSe('/IdentificacaoNfse');
                       Gerador.wGrupoNFSe('/InfPedidoCancelamento');
                     end;
+
+    proNFSEBrasil: begin
+                     Gerador.ArquivoFormatoXML := NumeroRps;
+                   end;
+
   else begin
          Gerador.Prefixo := Prefixo4;
          Gerador.wGrupoNFSe('IdentificacaoNfse');

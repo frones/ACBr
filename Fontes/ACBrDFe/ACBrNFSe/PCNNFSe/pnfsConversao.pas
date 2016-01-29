@@ -92,7 +92,7 @@ type
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
-                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil,
+                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSeBrasil,
                     proTinus, proSJP, proCONAM, proEReceita, proGoverna,
                     proNEAInformatica, proNotaInteligente);
 
@@ -387,7 +387,7 @@ begin
          'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire', 'Link3', 'SpeedGov',
          'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
-         'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM',
+         'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
@@ -398,7 +398,7 @@ begin
          proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
          proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
-         proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus, proSJP, proCONAM,
+         proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
          proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
 end;
 
@@ -413,7 +413,7 @@ begin
          'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire', 'Link3', 'SpeedGov',
          'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
-         'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM',
+         'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
@@ -424,7 +424,7 @@ begin
          proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
          proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
-         proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus, proSJP, proCONAM,
+         proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
          proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
 end;
 
@@ -18139,7 +18139,8 @@ begin
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
     proSaatri, proSisPMJP, proSystemPro, proTecnos, proVirtual,
-    proVitoria: Result := loABRASFv2;
+    proVitoria,
+    proNFSEBrasil: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
     proEL:          Result := loEL;
@@ -18152,7 +18153,7 @@ begin
     Result := loNone;
   end;
 (*
-  TnfseProvedor = ( proProdam, proNFSEBrasil, proCONAM);
+  TnfseProvedor = ( proProdam, proCONAM);
 *)
 end;
 
@@ -18164,7 +18165,8 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
-    proSaatri, proSisPMJP, proSystemPro, proVirtual, proVitoria: Result := ve200;
+    proSaatri, proSisPMJP, proSystemPro, proVirtual, proVitoria,
+    proNFSEBrasil: Result := ve200;
 
     proTecnos: Result := ve201;
   else
@@ -18180,6 +18182,7 @@ begin
   XML := StringReplace(XML, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
   XML := StringReplace(XML, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_resposta.xsd"', '', [rfReplaceAll] );
   XML := StringReplace(XML, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"', '', [rfReplaceAll] );
+  XML := StringReplace(XML, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll] );
 
   Result := XML;
 end;

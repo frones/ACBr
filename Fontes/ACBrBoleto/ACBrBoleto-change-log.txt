@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/01/16 ver. 0.0.175a
+-- ACBrCaixa --
+[-] Correção leitura arquivo retorno CNAB240. 
+[-] Correção arquivo remessa CBAB240. (renato.pavan)
+http://www.projetoacbr.com.br/forum/topic/26563-erro-na-leitura-do-retorno-da-caixa/#comment-179660
+
+
 Data: 28/01/16 ver. 0.0.174a
 -- ACBrBancoBarisul --
 [-] Ajuste leitura arquivo retorno CNAB240.

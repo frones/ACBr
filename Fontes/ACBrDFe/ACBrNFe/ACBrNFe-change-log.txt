@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2016
+-- ACBrNFeNotasFiscais -- 
+[*] Incluido um Trim para remover possiveis espaços em branco do parâmetro
+    Destinatário ao gerar a URL do QR-code.
+    Por: Italo Jurisato Junior
+
 25/01/2016
 -- ACBrNFeDANFCeFortes --
 [*] Campos "NomeFantasia" e "RazaoSocial", modificados para TRLMemo, para

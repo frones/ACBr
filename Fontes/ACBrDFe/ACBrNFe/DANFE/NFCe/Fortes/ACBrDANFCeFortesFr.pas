@@ -319,7 +319,10 @@ begin
 
     if Ide.tpAmb = taHomologacao then
     begin
-      lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+      if Ide.tpEmis <> teNormal then
+        lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA - AMB. HOMOLOG. SEM VALOR FISCAL')
+      else
+        lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end
     else
     begin
@@ -344,7 +347,7 @@ begin
 
     lChaveDeAcesso.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
-    if procNFe.cStat = 0 then
+    if (Ide.tpEmis = teNormal ) and (procNFe.cStat = 0) then
     begin
       lChaveDeAcesso.Caption    := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
       lChaveDeAcesso.Font.Color := clRed;
@@ -566,8 +569,11 @@ begin
 
     PintarQRCode( qrcode, imgQRCode.Picture );
 
-    lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
-                           ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
+    if Ide.tpEmis <> teOffLine then
+       lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
+                              ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''))
+    else
+       lProtocolo.Caption := '';
 
   end;
 
@@ -1021,7 +1027,7 @@ begin
           end ;
 
           RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
+          RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
           RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;

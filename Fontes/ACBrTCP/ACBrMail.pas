@@ -51,8 +51,9 @@ unit ACBrMail;
 interface
 
 uses
-  SSL_OpenSSL, SMTPSend, MimePart, MimeMess, SynaChar, SynaUtil, Classes,
-  SysUtils, strutils, ACBrBase {$IFDEF FPC}, FileUtil {$ENDIF};
+  Classes, syncobjs, SysUtils,
+  SSL_OpenSSL, SMTPSend, MimePart, MimeMess, SynaChar, SynaUtil,
+  ACBrBase;
 
 type
 
@@ -212,10 +213,15 @@ type
     property OnMailException: TACBrOnMailException read fOnMailException write fOnMailException;
   end;
 
-
 procedure SendEmailByThread( MailToClone: TACBrMail);
 
+var
+  MailCriticalSection : TCriticalSection;
+
 implementation
+
+Uses
+  strutils{$IFDEF FPC}, FileUtil {$ENDIF};
 
 procedure SendEmailByThread(MailToClone: TACBrMail);
 var
@@ -366,6 +372,7 @@ end;
 constructor TACBrMail.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
   fSMTP := TSMTPSend.Create;
   fMIMEMess := TMimeMess.Create;
   fAltBody := TStringList.Create;
@@ -411,6 +418,7 @@ begin
   fReplyTo.Free;
   fMIMEMess.Free;
   fSMTP.Free;
+
   inherited Destroy;
 end;
 
@@ -868,8 +876,9 @@ begin
   FOnMailException := FACBrMail.OnMailException;
   FOnBeforeMailProcess := FACBrMail.OnBeforeMailProcess;
   FOnAfterMailProcess := FACBrMail.OnAfterMailProcess;
+  MailCriticalSection.Acquire;
   try
-    // Redirect events do Internal methods
+    // Redirect events to Internal methods, to use Synchronize
     FACBrMail.OnMailException := MailException;
     FACBrMail.OnMailProcess := MailProcess;
     FACBrMail.OnBeforeMailProcess := BeforeMailProcess;
@@ -882,6 +891,7 @@ begin
     // Discard ACBrMail copy
     FACBrMail.Free;
     Terminate;
+    MailCriticalSection.Release;
   end;
 end;
 
@@ -934,6 +944,12 @@ begin
   if Assigned(FOnMailException) then
     FOnMailException(FACBrMail, FException, FThrowIt);
 end;
+
+initialization
+  MailCriticalSection := TCriticalSection.Create;
+
+finalization;
+  MailCriticalSection.Free;
 
 end.
 

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2015
+-- ACBrMail --
+[+] Modificações no envio de email por Thread, para usar um TCriticalSection, a
+    fim de evitar várias conexões simultâneas  (por: DSA)
+
 08/12/2015
 -- ACBrIBPTax --
 [+] Adicionado método para consulta de alíquotas de imposto aproximado via API do site

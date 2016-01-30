@@ -1,10 +1,10 @@
 object F_Principal: TF_Principal
-  Left = 348
-  Top = 130
+  Left = 336
+  Top = 105
+  Width = 674
+  Height = 697
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Consulta de CNPJ'
-  ClientHeight = 615
-  ClientWidth = 649
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +20,7 @@ object F_Principal: TF_Principal
     Left = 8
     Top = 201
     Width = 633
-    Height = 405
+    Height = 456
     BevelInner = bvRaised
     BevelOuter = bvLowered
     TabOrder = 1
@@ -182,7 +182,7 @@ object F_Principal: TF_Principal
     end
     object Label15: TLabel
       Left = 8
-      Top = 201
+      Top = 249
       Width = 90
       Height = 16
       Caption = 'CNAE Principal'
@@ -194,11 +194,37 @@ object F_Principal: TF_Principal
       ParentFont = False
     end
     object Label16: TLabel
-      Left = 10
-      Top = 250
+      Left = 8
+      Top = 299
       Width = 120
       Height = 16
       Caption = 'CNAE Secund'#225'rio(s)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label17: TLabel
+      Left = 8
+      Top = 201
+      Width = 117
+      Height = 16
+      Caption = 'Endere'#231'o Eletr'#244'nico'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label18: TLabel
+      Left = 344
+      Top = 201
+      Width = 47
+      Height = 16
+      Caption = 'Telefone'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -364,16 +390,42 @@ object F_Principal: TF_Principal
     end
     object ListCNAE2: TListBox
       Left = 8
-      Top = 269
+      Top = 318
       Width = 616
       Height = 125
       ItemHeight = 13
-      TabOrder = 12
+      TabOrder = 15
     end
     object EditCNAE1: TEdit
-      Left = 9
-      Top = 220
-      Width = 615
+      Left = 8
+      Top = 269
+      Width = 616
+      Height = 24
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 14
+    end
+    object EditEmail: TEdit
+      Left = 8
+      Top = 219
+      Width = 330
+      Height = 24
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 12
+    end
+    object EditTelefone: TEdit
+      Left = 344
+      Top = 219
+      Width = 280
       Height = 24
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -429,6 +481,9 @@ object F_Principal: TF_Principal
       Font.Height = -16
       Font.Name = 'Tahoma'
       Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      OnClick = ButBuscarClick
       Glyph.Data = {
         E6040000424DE604000000000000360000002800000014000000140000000100
         180000000000B0040000120B0000120B00000000000000000000FFFFFFFDFDFD
@@ -470,9 +525,6 @@ object F_Principal: TF_Principal
         E5E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFAFAFAE6E6E6D9D8D8DADADAE4E3E4FCFCFCFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFF}
-      ParentFont = False
-      TabOrder = 2
-      OnClick = ButBuscarClick
     end
     object EditCaptcha: TEdit
       Left = 361
@@ -567,6 +619,7 @@ object F_Principal: TF_Principal
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
     ProxyPort = '8080'
+    PesquisarIBGE = False
     Left = 408
     Top = 162
   end

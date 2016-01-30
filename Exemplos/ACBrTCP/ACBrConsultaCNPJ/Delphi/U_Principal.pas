@@ -56,6 +56,10 @@ type
     Label15: TLabel;
     EditCNAE1: TEdit;
     Label16: TLabel;
+    EditEmail: TEdit;
+    Label17: TLabel;
+    EditTelefone: TEdit;
+    Label18: TLabel;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -107,6 +111,8 @@ begin
       EditCEP.Text         := ACBrConsultaCNPJ1.CEP;
       EditSituacao.Text    := ACBrConsultaCNPJ1.Situacao;
       EditCNAE1.Text       := ACBrConsultaCNPJ1.CNAE1;
+      EditEmail.Text       := ACBrConsultaCNPJ1.EndEletronico;
+      EditTelefone.Text    := ACBrConsultaCNPJ1.Telefone;
 
       ListCNAE2.Clear;
       for I := 0 to ACBrConsultaCNPJ1.CNAE2.Count - 1 do

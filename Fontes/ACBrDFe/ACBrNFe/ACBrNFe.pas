@@ -512,10 +512,8 @@ var
   sEntrada, cHashQRCode, urlUF, cDest: String;
 begin
   urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
-
   idNFe := OnlyNumber(AChaveNFe);
-
-  cDest := OnlyNumber(AChaveNFe);
+  cDest := OnlyNumber(Destinatario);
 
   // Passo 1
   sdhEmi_HEX := AsciiToHex(DateTimeTodh(DataHoraEmissao) +

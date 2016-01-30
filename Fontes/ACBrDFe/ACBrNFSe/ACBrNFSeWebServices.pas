@@ -794,6 +794,9 @@ function TNFSeWebService.ExtrairRetorno: String;
 var
   Encoding: String;
 begin
+  FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;', '', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;', '', [rfReplaceAll]);
+
   Encoding := '<?xml version=' + '''' + '1.0' + '''' +
                    ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
 
@@ -820,7 +823,6 @@ begin
 
   Result := StringReplace(Result, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
-  //italo
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
@@ -1557,8 +1559,6 @@ begin
     FRetEnvLote.LerXml;
 
     FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar);
-    if (Provedor = proEquiplano) then
-      FPRetWS := StringReplace(FPRetWS, '&#xd;', '', [rfReplaceAll]);
 
     FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
     FProtocolo       := RetEnvLote.InfRec.Protocolo;
@@ -2063,8 +2063,6 @@ begin
   RetSitLote.LerXml;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsSit);
-  if (Provedor = proEquiplano) then
-    FPRetWS := StringReplace(FPRetWS, '&#xd;', '', [rfReplaceAll]);
 
   FSituacao := RetSitLote.InfSit.Situacao;
   // FSituacao: 1 = Não Recebido
@@ -2254,8 +2252,6 @@ begin
   Result := ExtrairNotasRetorno;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsLote);
-  if (Provedor = proEquiplano) then
-    FPRetWS := StringReplace(FPRetWS, '&#xd;', '', [rfReplaceAll]);
 end;
 
 procedure TNFSeConsultarLoteRPS.FinalizarServico;
@@ -2448,8 +2444,6 @@ begin
   Result := ExtrairNotasRetorno;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSeRPS);
-  if (Provedor = proEquiplano) then
-    FPRetWS := StringReplace(FPRetWS, '&#xd;', '', [rfReplaceAll]);
 end;
 
 procedure TNFSeConsultarNfseRPS.FinalizarServico;
@@ -2896,8 +2890,6 @@ begin
   FRetCancNFSe.LerXml;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Cancelar);
-  if (Provedor = proEquiplano) then
-    FPRetWS := StringReplace(FPRetWS, '&#xd;', '', [rfReplaceAll]);
 
   FDataHora := RetCancNFSe.InfCanc.DataHora;
 

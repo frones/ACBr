@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2016
+[*] Remoção de sequencia ESCAPE do XML retornado pelo provedor.
+    Por: Italo Jurisato Junior
 [-] Correção de um bug, estava gerando uma segunda nota sem dados na lista.
     Por: Italo Jurisato Junior
 [+] Inclusão do provedor NFSeBrasil.

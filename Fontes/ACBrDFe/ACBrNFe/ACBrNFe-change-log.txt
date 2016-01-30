@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+29/01/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[*] Alteração nas propriedades dos campos de fatura. 
+    Para se ajustar aos dados informados.     
+    Por: Henrique Leonardo
+
+
 29/01/2016
 -- ACBrNFeNotasFiscais -- 
 [*] Incluido um Trim para remover possiveis espaços em branco do parâmetro

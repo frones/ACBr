@@ -796,6 +796,9 @@ var
 begin
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;', '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;', '', [rfReplaceAll]);
+  // Remover quebras de linha //
+  FPRetornoWS := StringReplace(FPRetornoWS, #10, '', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(FPRetornoWS, #13, '', [rfReplaceAll]);
 
   Encoding := '<?xml version=' + '''' + '1.0' + '''' +
                    ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
@@ -803,7 +806,10 @@ begin
   Result := SeparaDados(FPRetornoWS, 'return');
 
   if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'outputXML');
+    Result := SeparaDados(FPRetornoWS, 'ns:return');
+
+  if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 's:Body');
 
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'soap:Body');
@@ -812,10 +818,7 @@ begin
     Result := SeparaDados(FPRetornoWS, 'env:Body');
 
   if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'ns:return');
-
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 's:Body');
+    Result := SeparaDados(FPRetornoWS, 'outputXML');
 
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then

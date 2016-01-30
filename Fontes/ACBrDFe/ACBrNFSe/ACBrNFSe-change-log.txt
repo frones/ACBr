@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2016
+[*] Remoção de quebra de linha do XML retornado pelo provedor.
+    Por: Italo Jurisato Junior
+
 29/01/2016
 [*] Remoção de sequencia ESCAPE do XML retornado pelo provedor.
     Por: Italo Jurisato Junior

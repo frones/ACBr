@@ -198,41 +198,6 @@ begin
   inherited;
 end;
 
-function TretEnvLote.LerXml_proGoverna: Boolean;
-var
-i,j, MsgErro: Integer;
-Cod, Msg, strAux: String;
-begin
-  try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-    if (Leitor.rExtrai(1, 'RetornoLoteRps') <> '') then
-    begin
-      j := 0;
-      i := 0;
-      MsgErro := 0;
-      while Leitor.rExtrai(1, 'RetornoLoteRps', '', i + 1) <> '' do
-      begin
-        while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
-        begin
-          Msg  := Leitor.rCampo(tcStr, 'DesOco');
-          if (Pos('OK!', Msg) = 0) and (Pos('importado com sucesso', Msg) = 0) then
-          begin
-            InfRec.FMsgRetorno.Add;
-            InfRec.FMsgRetorno[MsgErro].FMensagem := Msg;
-            Inc(MsgErro);
-          end;
-          inc(j);
-        end;
-        inc(i);
-      end;
-    end;
-    Result := True;
-    except
-      Result := False;
-    end;
-end;
-
 function TretEnvLote.LerXml: Boolean;
 begin
  case Provedor of
@@ -614,6 +579,41 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretEnvLote.LerXml_proGoverna: Boolean;
+var
+i,j, MsgErro: Integer;
+Cod, Msg, strAux: String;
+begin
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if (Leitor.rExtrai(1, 'RetornoLoteRps') <> '') then
+    begin
+      j := 0;
+      i := 0;
+      MsgErro := 0;
+      while Leitor.rExtrai(1, 'RetornoLoteRps', '', i + 1) <> '' do
+      begin
+        while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
+        begin
+          Msg  := Leitor.rCampo(tcStr, 'DesOco');
+          if (Pos('OK!', Msg) = 0) and (Pos('importado com sucesso', Msg) = 0) then
+          begin
+            InfRec.FMsgRetorno.Add;
+            InfRec.FMsgRetorno[MsgErro].FMensagem := Msg;
+            Inc(MsgErro);
+          end;
+          inc(j);
+        end;
+        inc(i);
+      end;
+    end;
+    Result := True;
+    except
+      Result := False;
+    end;
 end;
 
 end.

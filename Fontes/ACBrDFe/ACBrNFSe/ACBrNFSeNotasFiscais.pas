@@ -222,7 +222,7 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, CNPJEmitente, CNPJCertificado, InfElemento: String;
+  XMLStr, CNPJEmitente, CNPJCertificado, InfElemento, NomeArq: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
@@ -276,8 +276,9 @@ begin
       Leitor.Free;
     end;
 
+    NomeArq := NFSe.IdentificacaoRps.Numero + NFSe.IdentificacaoRps.Serie + '-rps.xml';
     if Configuracoes.Arquivos.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+      Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
   end;
 end;
 
@@ -499,7 +500,7 @@ end;
 
 function NotaFiscal.GetNumID: String;
 var
-  NumDoc: String;
+  NumDoc, xCNPJ: String;
 begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
@@ -508,10 +509,15 @@ begin
     else
       NumDoc := NFSe.Numero;
 
+    if NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = '' then
+      xCNPJ := NFSe.Prestador.Cnpj
+    else
+      xCNPJ := NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+
     if Configuracoes.Arquivos.NomeLongoNFSe then
-      Result := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
+      Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
                               NFSe.DataEmissao,
-                              NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
+                              xCNPJ,
                               StrToIntDef(NumDoc, 0))
     else
       Result := NumDoc + NFSe.IdentificacaoRps.Serie;

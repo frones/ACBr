@@ -41,7 +41,7 @@ uses
   Classes, typinfo, StrUtils, ACBrUtil;
 
 type
-  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta,
+  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeConsultaSituacao,
                      stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
                      stNFSeSubstituicao, stNFSeEnvioWebService);
 

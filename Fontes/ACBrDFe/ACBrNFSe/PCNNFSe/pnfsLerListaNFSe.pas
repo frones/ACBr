@@ -599,7 +599,7 @@ begin
       end;
       inc(j);
     end;
-
+(*
     if ListaNFSe.FMsgRetorno.Count = 0 then
     begin
       with ListaNFSe.FCompNFSe.Add do
@@ -607,7 +607,7 @@ begin
         FNFSe.Numero := Leitor.rCampo(tcStr, 'NumNot');
       end;
     end;
-
+*)
   except
     Result := False;
   end;

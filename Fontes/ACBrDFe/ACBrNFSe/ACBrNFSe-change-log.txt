@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2016
+[-] Correção de um bug, estava gerando uma segunda nota sem dados na lista.
+    Por: Italo Jurisato Junior
 [+] Inclusão do provedor NFSeBrasil.
     Por: Italo Jurisato Junior
 

@@ -934,7 +934,8 @@ begin
     xCNPJ := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.CNPJ;
 
     if FPConfiguracoesNFSe.Arquivos.NomeLongoNFSe then
-      NomeArq := GerarNomeNFSe(UFparaCodigo(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF),
+      NomeArq := GerarNomeNFSe(FPConfiguracoesNFSe.WebServices.UFCodigo,
+//      NomeArq := GerarNomeNFSe(UFparaCodigo(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF),
                                FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao,
                                xCNPJ,
                                StrToIntDef(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Numero, 0)) + '-nfse.xml'
@@ -1913,7 +1914,7 @@ procedure TNFSeConsultarSituacaoLoteRPS.Clear;
 begin
   inherited Clear;
 
-  FPStatus := stNFSeConsulta;
+  FPStatus := stNFSeConsultaSituacao;
   FPLayout := LayNFSeConsultaSitLoteRps;
   FPArqEnv := 'con-sit';
   FPArqResp := 'sit';
@@ -2020,7 +2021,7 @@ var
 begin
   Result := False;
 
-  TACBrNFSe(FPDFeOwner).SetStatus(stNFSeConsulta);
+  TACBrNFSe(FPDFeOwner).SetStatus(stNFSeConsultaSituacao);
   try
     Sleep(FPConfiguracoesNFSe.WebServices.AguardarConsultaRet);
 

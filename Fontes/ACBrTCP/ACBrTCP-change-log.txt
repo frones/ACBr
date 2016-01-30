@@ -41,6 +41,10 @@ Símbolo : Significado
 -- ACBrMail --
 [+] Modificações no envio de email por Thread, para usar um TCriticalSection, a
     fim de evitar várias conexões simultâneas  (por: DSA)
+	
+-- ACBrConsultaCNPJ --
+[-]	Correção para consulta de Empresas sem e-mail cadastrado  (por: BigWings)
+    http://www.projetoacbr.com.br/forum/topic/27710-corre%C3%A7%C3%A3o-acbrconsultacnpj/
 
 08/12/2015
 -- ACBrIBPTax --

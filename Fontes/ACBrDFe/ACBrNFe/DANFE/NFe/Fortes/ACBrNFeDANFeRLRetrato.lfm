@@ -1,6 +1,6 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 467
-  Top = 119
+  Left = 476
+  Top = 109
   Caption = 'frlDANFeRLRetrato'
   inherited RLNFe: TRLReport
     Left = 0
@@ -8055,12 +8055,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoNumero: TRLLabel
         Tag = 703
-        Left = 180
-        Height = 10
+        Left = 172
+        Height = 12
         Top = 26
-        Width = 32
-        Alignment = taRightJustify
-        AutoSize = False
+        Width = 50
+        Alignment = taCenter
         Caption = '99/99/9999'
         Font.Color = clBlack
         Font.Height = -9
@@ -8074,12 +8073,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoValorOriginal: TRLLabel
         Tag = 703
-        Left = 264
-        Height = 10
+        Left = 269
+        Height = 12
         Top = 26
-        Width = 62
+        Width = 57
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
         Font.Height = -9
@@ -8133,7 +8131,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 180
         Height = 7
         Top = 15
-        Width = 32
+        Width = 33
         Alignment = taCenter
         Caption = 'NÚMERO'
         Font.Color = clBlack
@@ -8194,12 +8192,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoValorDesconto: TRLLabel
         Tag = 703
-        Left = 398
-        Height = 10
+        Left = 409
+        Height = 12
         Top = 26
-        Width = 68
+        Width = 57
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
         Font.Height = -9
@@ -8230,12 +8227,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoValorLiquido: TRLLabel
         Tag = 703
-        Left = 522
-        Height = 10
+        Left = 521
+        Height = 12
         Top = 26
-        Width = 56
+        Width = 57
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
         Font.Height = -9

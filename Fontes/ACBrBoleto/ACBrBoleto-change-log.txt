@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/02/16 ver. 0.0.176a
+-- ACBrBancoSantander --
+[*] Melhorias leitura do arquivo retorno CNAB400.(Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/11074-corre%C3%A7%C3%B5es-no-acbrbancosantanderpas/?page=2
+
+-- ACBrBancoBradesco --
+[-] Correção remessa CNAB400. (Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/26199-indicador-para-d%C3%A9bito-autom%C3%A1tico-bradesco/
+
+-- ACBrBancoBrasil
+[*] Ajustes tratamento motivos de ocorrencia. (Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/20022-altera%C3%A7%C3%B5es-na-unit-banco-do-brasil/
+
 Data: 29/01/16 ver. 0.0.175a
 -- ACBrCaixa --
 [-] Correção leitura arquivo retorno CNAB240. 

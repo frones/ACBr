@@ -1732,6 +1732,7 @@ begin
   FPMsg := '';
   FaMsg := '';
   FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
   Result := ExtrairNotasRetorno;
 end;
 
@@ -1874,6 +1875,7 @@ begin
   FPMsg := '';
   FaMsg := '';
   FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Gerar);
   Result := ExtrairNotasRetorno;
 end;
 

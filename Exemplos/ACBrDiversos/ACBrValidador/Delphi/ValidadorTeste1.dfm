@@ -6,6 +6,7 @@ object frValidador: TfrValidador
   HorzScrollBar.Range = 329
   VertScrollBar.Range = 243
   ActiveControl = edDocto
+  AutoScroll = False
   Caption = 'Validador de Documentos'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -70,6 +71,7 @@ object frValidador: TfrValidador
     Height = 21
     Style = csDropDownList
     DropDownCount = 20
+    ItemHeight = 13
     TabOrder = 2
     OnChange = cbTipoDoctoChange
     Items.Strings = (
@@ -82,7 +84,9 @@ object frValidador: TfrValidador
       'docCEP'
       'docCartaoCredito'
       'docSuframa'
-      'docGTIN')
+      'docGTIN'
+      'docRenavam'
+      'docEmail')
   end
   object mMsgErro: TMemo
     Left = 8

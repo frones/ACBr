@@ -1,34 +1,34 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-{          Rennes Moreira Pimentel - InforSystem - ValidaÁao do CEP            }              
+{          Rennes Moreira Pimentel - InforSystem - Valida√ßao do CEP            }              
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -38,25 +38,25 @@
 |* 17/08/2004: Daniel Simoes de Almeida
 |*  - Primeira Versao ACBrValidador
 |* 17/11/2004: Rennes Moreira Pimentel - InforSystem
-|*  - Adcionado ValidaÁao do CEP
+|*  - Adcionado Valida√ßao do CEP
 |* 07/02/2005: Daniel Simoes de Almeida
-|*  - Adcionado verificaÁao de CARTOES de CrÈdito, extraida do site:
+|*  - Adcionado verifica√ßao de CARTOES de Cr√©dito, extraida do site:
 |*    www.tcsystems.com.br
 |*  - Adcionada a propriedade: ExibeDigitoCorreto : Boolean ( default False )
 |* 24/05/2005: Daniel Simoes de Almeida
 |*  - Adicionada a propriedade Publica DigitoCalculado readonly, que assim como
-|*    MsgErro, ter· um valor definido apenas apÛs chamar o mÈtodo Validar 
+|*    MsgErro, ter√° um valor definido apenas ap√≥s chamar o m√©todo Validar 
 |* 21/12/2005: Daniel Simoes de Almeida
-|*  - InscriÁ„o Estadual de AL aparentemente tambÈm aceita o numero 6 no 3
-|*    dÌgito, apesar do site do sintegra informar o contr·rio... Corrigido
+|*  - Inscri√ß√£o Estadual de AL aparentemente tamb√©m aceita o numero 6 no 3
+|*    d√≠gito, apesar do site do sintegra informar o contr√°rio... Corrigido
 |* 30/08/2007: Carlos do Nascimento Filho
-|*  - InscriÁ„o Estadual de TO corrigida para suportar numeros com 10 digitos
+|*  - Inscri√ß√£o Estadual de TO corrigida para suportar numeros com 10 digitos
 |* 29/10/2008: Jhony Alceu Pereira
-|*  - InscriÁ„o Estadual de AL para permitir o digito 1 no tipo do contribuinte
+|*  - Inscri√ß√£o Estadual de AL para permitir o digito 1 no tipo do contribuinte
 |* 21/12/2008: Daniel Simoes de Almeida
-|*  - CNPJ 00000000000000 era aceito como v·lido
+|*  - CNPJ 00000000000000 era aceito como v√°lido
 |* 08/02/2009: Daniel Simoes de Almeida
-|*  - CorreÁ„o na validaÁ„o de CEPs de MG e ES
+|*  - Corre√ß√£o na valida√ß√£o de CEPs de MG e ES
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -73,7 +73,7 @@ const
 
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
-                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam ) ;
+                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, docEmail ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -139,6 +139,7 @@ type
     procedure ValidarSuframa ;
     procedure ValidarGTIN;
     procedure ValidarRenavam;
+    Procedure ValidarEmail;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -179,6 +180,7 @@ function ValidarIE(const AIE, AUF: String): String ;
 function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
 function ValidarRenavam( const Documento : String ) : String ;
+function ValidarEmail (const Documento : string ) : String;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -234,6 +236,11 @@ end;
 function ValidarRenavam( const Documento : String ) : String ;
 begin
   Result := ValidarDocumento( docRenavam, Documento );
+end;
+
+function ValidarEmail (const Documento : string ) : String;
+begin
+  Result := ValidarDocumento( docEmail, Documento );
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;
@@ -533,7 +540,7 @@ begin
   if fsDocumento = Value then exit ;
 
   fsDocumento := Value;
-  fsMsgErro   := 'FunÁ„o Validar n„o foi chamada' ;
+  fsMsgErro   := 'Fun√ß√£o Validar n√£o foi chamada' ;
   fsDigitoCalculado := '' ;
 
   fsDocto := LimpaDocto( fsDocumento ) ;
@@ -582,17 +589,18 @@ begin
           docCPF           : NomeDocto := 'CPF'  ;
           docCNPJ          : NomeDocto := 'CNPJ' ;
           docUF            : NomeDocto := 'UF' ;
-          docInscEst       : NomeDocto := 'InscriÁ„o Estadual' ;
-          docNumCheque     : NomeDocto := 'N˙mero de Cheque' ;
+          docInscEst       : NomeDocto := 'Inscri√ß√£o Estadual' ;
+          docNumCheque     : NomeDocto := 'N√∫mero de Cheque' ;
           docPIS           : NomeDocto := 'PIS' ;
           docCEP           : NomeDocto := 'CEP' ;
-          docCartaoCredito : NomeDocto := 'N˙mero de Cart„o' ;
+          docCartaoCredito : NomeDocto := 'N√∫mero de Cart√£o' ;
           docSuframa       : NomeDocto := 'SUFRAMA';
           docGTIN          : NomeDocto := 'GTIN';
           docRenavam       : NomeDocto := 'Renavam';
+          docEmail         : NomeDocto := 'E-Mail';
         end;
 
-        fsMsgErro := NomeDocto + ' n„o pode ser vazio.' ;
+        fsMsgErro := NomeDocto + ' n√£o pode ser vazio.' ;
       end ;
   end ;
 
@@ -609,6 +617,7 @@ begin
        docSuframa       : ValidarSuframa ;
        docGTIN          : ValidarGTIN ;
        docRenavam       : ValidarRenavam;
+       docEmail         : ValidarEmail;
      end;
 
   if fsMsgErro <> '' then
@@ -643,7 +652,7 @@ Procedure TACBrValidador.ValidarCheque ;
 begin
   if not StrIsNumber( fsDocto ) then
   begin
-     fsMsgErro := 'Digite apenas os n˙meros do Cheque' ;
+     fsMsgErro := 'Digite apenas os n√∫meros do Cheque' ;
      exit ;
   end ;
 
@@ -654,10 +663,10 @@ begin
 
   if fsDigitoCalculado <> copy(fsDocto, length(fsDocto), 1) then
   begin
-     fsMsgErro := 'N˙mero de Cheque inv·lido.' ;
+     fsMsgErro := 'N√∫mero de Cheque inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. DÌgito correto: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. D√≠gito correto: '+fsDigitoCalculado ;
   end ;
 end;
 
@@ -669,13 +678,13 @@ begin
 
   if (Length( fsDocto ) <> 14) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CNPJ deve ter 14 dÌgitos. (Apenas n˙meros)' ;
+     fsMsgErro := 'CNPJ deve ter 14 d√≠gitos. (Apenas n√∫meros)' ;
      exit
   end ;
 
-  if fsDocto = StringOfChar('0',14) then  // PrevenÁ„o contra 00000000000000
+  if fsDocto = StringOfChar('0',14) then  // Preven√ß√£o contra 00000000000000
   begin
-     fsMsgErro := 'CNPJ inv·lido.' ;
+     fsMsgErro := 'CNPJ inv√°lido.' ;
      exit ;
   end ;
 
@@ -692,7 +701,7 @@ begin
 
   if (DV1 <> fsDocto[13]) or (DV2 <> fsDocto[14]) then
   begin
-     fsMsgErro := 'CNPJ inv·lido.' ;
+     fsMsgErro := 'CNPJ inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro +  '.. Digito calculado: '+fsDigitoCalculado ;
@@ -707,14 +716,14 @@ begin
 
   if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CPF deve ter 11 dÌgitos. (Apenas n˙meros)' ;
+     fsMsgErro := 'CPF deve ter 11 d√≠gitos. (Apenas n√∫meros)' ;
      exit
   end ;
 
   if pos(fsDocto,'11111111111.22222222222.33333333333.44444444444.55555555555.'+
          '66666666666.77777777777.88888888888.99999999999.00000000000') > 0 then
   begin
-     fsMsgErro := 'CPF inv·lido !' ;
+     fsMsgErro := 'CPF inv√°lido !' ;
      exit ;
   end ;
 
@@ -733,11 +742,72 @@ begin
 
   if (DV1 <> fsDocto[10]) or (DV2 <> fsDocto[11]) then
   begin
-     fsMsgErro := 'CPF inv·lido.' ;
+     fsMsgErro := 'CPF inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. DÌgito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. D√≠gito calculado: '+fsDigitoCalculado ;
   end ;
+end;
+
+procedure TACBrValidador.ValidarEmail;
+const
+  InvalidChar = '√†√¢√™√¥√ª√£√µ√°√©√≠√≥√∫√ß√º√±√Ω√Ä√Ç√ä√î√õ√É√ï√Å√â√ç√ì√ö√á√ú√ë√ù*;:‚ÅÑ\|#$%&*¬ß!()][{}<>ÀúÀÜ¬¥¬™¬∫+¬π¬≤¬≥';
+var
+  i: Integer;
+  C: Integer;
+begin
+  // se estiver vazio
+  if Documento = '' then
+  begin
+    fsMsgErro := 'O e-mail n√£o pode ser vazio!' ;
+    exit;
+  end;
+
+  // N√£o existe email com menos de 8 caracteres.
+  if Length(Documento) < 8 then
+  begin
+    fsMsgErro := 'O e-mail n√£o conter menos do que 8 caracteres!' ;
+    exit;
+  end;
+
+  // Verificando se h√° somente um @
+  if ((Pos('@', Documento) = 0) or (PosEx('@', Documento, Pos('@', Documento) + 1) > 0)) then
+  begin
+    fsMsgErro := 'O e-mail digitado √© inv√°lido!' ;
+    exit;
+  end;
+
+  // Verificando se no mÔøΩnimo h√° um ponto
+  if (Pos('.', Documento) = 0) then
+  begin
+    fsMsgErro := 'O e-mail digitado √© inv√°lido!' ;
+    exit;
+  end;
+
+  // N√£o pode come√ßar ou terminar com @ ou ponto
+  if (Documento[1] in ['@', '.']) or (Documento[Length(Documento)] in ['@', '.']) then
+  begin
+    fsMsgErro := 'O e-mail digitado √© inv√°lido!' ;
+    exit;
+  end;
+
+  // O @ e o ponto n√£o podem estar juntos
+  if (Documento[Pos('@', Documento) + 1] = '.') or (Documento[Pos('@', Documento) - 1] = '.') then
+  begin
+    fsMsgErro := 'O e-mail digitado √© inv√°lido!' ;
+    exit;
+  end;
+
+  // Testa se tem algum caracter inv√°lido.
+  for i := 1 to Length(Documento) do
+  begin
+    for C := 0 to Length(InvalidChar) do
+      if (Documento[i] = InvalidChar[C]) then
+      begin
+        fsMsgErro := 'O e-mail digitado √© inv√°lido!' ;
+        exit;
+      end;
+  end;
 end;
 
 Procedure TACBrValidador.ValidarCEP ;
@@ -747,7 +817,7 @@ begin
 
   if (Length( fsDocto ) <> 8) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CEP deve ter 8 dÌgitos. (Apenas n˙meros)' ;
+     fsMsgErro := 'CEP deve ter 8 d√≠gitos. (Apenas n√∫meros)' ;
      exit
   end ;
 
@@ -853,9 +923,9 @@ begin
      ((fsComplemento = 'RS')  or  (fsComplemento = '')) then exit ;
 
   if fsComplemento <> '' then
-     fsMsgErro := 'CEP inv·lido para '+fsComplemento+' !' 
+     fsMsgErro := 'CEP inv√°lido para '+fsComplemento+' !' 
   else
-     fsMsgErro := 'CEP inv·lido !' ;
+     fsMsgErro := 'CEP inv√°lido !' ;
 
 end;
 
@@ -900,11 +970,11 @@ begin
      exit ;
 
   { Somente digitos ou letra P na primeira posicao }
-  { P È usado pela Insc.Estadual de Produtor Rural de SP }
+  { P √© usado pela Insc.Estadual de Produtor Rural de SP }
   if ( not StrIsNumber( copy(fsDocto,2,length(fsDocto) ))) or
      ( not CharIsNum(fsDocto[1]) and (fsDocto[1] <> 'P')) then
   begin
-     fsMsgErro := 'Caracteres inv·lidos na InscriÁ„o Estadual' ;
+     fsMsgErro := 'Caracteres inv√°lidos na Inscri√ß√£o Estadual' ;
      exit
   end ;
 
@@ -1215,15 +1285,15 @@ begin
       end;
   end ;
 
-  { Verificando se o tamanho Total est· correto }
+  { Verificando se o tamanho Total est√° correto }
   if fsAjustarTamanho then
      fsDocto := PadLeft( fsDocto, Tamanho, '0') ;
 
   OK := (Tamanho > 0) and (Length(fsDocto) = Tamanho) ;
   if not OK then
-     fsMsgErro := 'Tamanho Inv·lido' ;
+     fsMsgErro := 'Tamanho Inv√°lido' ;
 
-  { Verificando os digitos nas posicoes s„o permitidos }
+  { Verificando os digitos nas posicoes s√£o permitidos }
   fsDocto := PadLeft(fsDocto,14) ;
   DVX := 0  ;
   DVY := 0  ;
@@ -1257,7 +1327,7 @@ begin
         OK := ( D = vDigitos[I] ) ;
 
      if not OK then
-        fsMsgErro := Format('DÌgito %d deveria ser %s ',
+        fsMsgErro := Format('D√≠gito %d deveria ser %s ',
          [14-I-(14-Tamanho), vDigitos[I]]) ;
 
      I := I - 1 ;
@@ -1314,7 +1384,7 @@ begin
      fsDigitoCalculado := IntToStr(DV) ;
      if not OK then
      begin
-        fsMsgErro := 'DÌgito verificador inv·lido.' ;
+        fsMsgErro := 'D√≠gito verificador inv√°lido.' ;
 
         if fsExibeDigitoCorreto then
            fsMsgErro := fsMsgErro + '.. Calculado: '+fsDigitoCalculado ;
@@ -1333,14 +1403,14 @@ begin
 
   fsDocto := Trim( fsDocto ) ;
   if (fsMsgErro <> '') then
-     fsMsgErro := 'Insc.Estadual inv·lida para '+fsComplemento +' '+ fsMsgErro ;
+     fsMsgErro := 'Insc.Estadual inv√°lida para '+fsComplemento +' '+ fsMsgErro ;
 
 end;
 
 Procedure TACBrValidador.ValidarUF(UF: String) ;
 begin
  if pos( ','+UF+',', cUFsValidas) = 0 then
-    fsMsgErro := 'UF inv·lido: '+UF ;
+    fsMsgErro := 'UF inv√°lido: '+UF ;
 end;
 
 procedure TACBrValidador.ValidarPIS;
@@ -1350,7 +1420,7 @@ begin
 
   if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'PIS deve ter 11 dÌgitos. (Apenas n˙meros)' ;
+     fsMsgErro := 'PIS deve ter 11 d√≠gitos. (Apenas n√∫meros)' ;
      exit;
   end ;
 
@@ -1362,10 +1432,10 @@ begin
 
   if (fsDigitoCalculado <> fsDocto[11]) then
   begin
-     fsMsgErro := 'PIS inv·lido.' ;
+     fsMsgErro := 'PIS inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. DÌgito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. D√≠gito calculado: '+fsDigitoCalculado ;
   end ;
 end;
 
@@ -1380,7 +1450,7 @@ begin
 
   if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'RENAVAM deve ter 11 dÌgitos. (Apenas n˙meros)' ;
+     fsMsgErro := 'RENAVAM deve ter 11 d√≠gitos. (Apenas n√∫meros)' ;
      exit;
   end ;
 
@@ -1396,10 +1466,10 @@ begin
 
   if (fsDigitoCalculado <> fsDocto[11]) then
   begin
-     fsMsgErro := 'RENAVAM inv·lido.' ;
+     fsMsgErro := 'RENAVAM inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. DÌgito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. D√≠gito calculado: '+fsDigitoCalculado ;
   end ;
 end;
 
@@ -1407,7 +1477,7 @@ procedure TACBrValidador.ValidarSuframa;
 begin
   if ( Length( fsDocto ) < 9 ) or ( not StrIsNumber( fsDocto ) ) then
   begin
-     fsMsgErro := 'CÛdigo SUFRAMA deve ter no mÌnimo 9 dÌgitos. (Apenas n˙meros)' ;
+     fsMsgErro := 'C√≥digo SUFRAMA deve ter no m√≠nimo 9 d√≠gitos. (Apenas n√∫meros)' ;
      exit
   end ;
 
@@ -1419,10 +1489,10 @@ begin
   fsDigitoCalculado := IntToStr( Modulo.DigitoFinal ) ;
   if (fsDigitoCalculado <> fsDocto[9]) then
   begin
-     fsMsgErro := 'N˙mero SUFRAMA inv·lido.' ;
+     fsMsgErro := 'N√∫mero SUFRAMA inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + ' DÌgito calculado: ' + fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + ' D√≠gito calculado: ' + fsDigitoCalculado ;
   end;
 end;
 
@@ -1437,7 +1507,7 @@ var
     DV := 0;
     Result := '' ;
 
-    // adicionar os zeros a esquerda, se n„o fizer isso o c·lculo n„o bate
+    // adicionar os zeros a esquerda, se n√£o fizer isso o c√°lculo n√£o bate
     // limite = tamanho maior codigo (gtin14) - 1 (digito)
     ACodigoGTIN := PadLeft(ACodigoGTIN, 13, '0');
 
@@ -1454,13 +1524,13 @@ var
 begin
   if not StrIsNumber(fsDocto) then
   begin
-    fsMsgErro := 'CÛdigo GTIN inv·lido, o cÛdigo GTIN deve conter somente n˙meros.' ;
+    fsMsgErro := 'C√≥digo GTIN inv√°lido, o c√≥digo GTIN deve conter somente n√∫meros.' ;
     Exit;
   end;
 
   if not(Length(fsDocto) in [8, 12, 13, 14]) then
   begin
-    fsMsgErro := 'CÛdigo GTIN inv·lido, o cÛdigo GTIN deve ter 8, 12, 13 ou 14 caracteres.' ;
+    fsMsgErro := 'C√≥digo GTIN inv√°lido, o c√≥digo GTIN deve ter 8, 12, 13 ou 14 caracteres.' ;
     Exit;
   end;
 
@@ -1471,10 +1541,10 @@ begin
   fsDigitoCalculado := DigCalculado;
   if DigOriginal <> DigCalculado then
   begin
-   fsMsgErro := 'CÛdigo GTIN inv·lido.' ;
+   fsMsgErro := 'C√≥digo GTIN inv√°lido.' ;
 
    if fsExibeDigitoCorreto then
-     fsMsgErro := fsMsgErro + ' DÌgito calculado: ' + fsDigitoCalculado ;
+     fsMsgErro := fsMsgErro + ' D√≠gito calculado: ' + fsDigitoCalculado ;
   end;
 end;
 
@@ -1485,7 +1555,7 @@ Var
 begin
   if not StrIsNumber( fsDocto ) then
   begin
-     fsMsgErro := 'Cart„o deve ter apenas N˙meros' ;
+     fsMsgErro := 'Cart√£o deve ter apenas N√∫meros' ;
      exit
   end ;
 
@@ -1511,10 +1581,10 @@ begin
   fsDigitoCalculado := IntToStr((10 - (Soma mod 10)) mod 10) ;
   if fsDigitoCalculado <> Copy (fsDocto, Tamanho, 1) Then
   begin
-     fsMsgErro := 'Numero do Cart„o Inv·lido.' ;
+     fsMsgErro := 'Numero do Cart√£o Inv√°lido.' ;
 
      if fsExibeDigitoCorreto then
-        fsMsgErro := fsMsgErro + '.. DÌgito calculado: '+fsDigitoCalculado ;
+        fsMsgErro := fsMsgErro + '.. D√≠gito calculado: '+fsDigitoCalculado ;
   end ;
 end;
 

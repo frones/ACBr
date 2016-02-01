@@ -60,6 +60,10 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
+{$IfNDef FPC}
+  {$UnDef HAS_REGEXPR}   // Todo: Implementar usando "TRegEx"
+{$EndIf}
+
 unit ACBrValidador;
 
 interface
@@ -205,7 +209,10 @@ function Modulo11(const Documento: string; const Peso: Integer = 2; const Base: 
 
 implementation
 uses
- {$IFDEF COMPILER6_UP} Variants , Math, StrUtils, {$ENDIF}
+ {$IfDef COMPILER6_UP} Variants , Math, StrUtils, {$EndIf}
+ {$IfDef HAS_REGEXPR}
+  {$IfDef FPC} RegExpr, {$Else} RegularExpressions,{$EndIf}
+ {$EndIf}
   ACBrUtil;
 
 function ValidarCPF(const Documento : String) : String ;
@@ -756,6 +763,25 @@ begin
   end ;
 end;
 
+{$IfDef HAS_REGEXPR}
+procedure TACBrValidador.ValidarEmail;
+var
+  vRegex: TRegExpr;
+begin
+  vRegex := TRegExpr.Create;
+  try
+    vRegex.Expression := '^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}' +
+                         '\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\' +
+                         '.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$';
+    if not vRegex.Exec(Documento) then
+      fsMsgErro := 'e-mail inv·lido!'
+    else
+      fsMsgErro := '';
+  finally
+    vRegex.Free;
+  end;
+end;
+{$Else}
 procedure TACBrValidador.ValidarEmail;
 const
   InvalidChar = '‡‚ÍÙ˚„ı·ÈÌÛ˙Á¸Ò˝¿¬ ‘€√’¡…Õ”⁄«‹—›*;:\|#$%&*ß!()][{}<>òà¥™∫+π≤≥';
@@ -765,18 +791,18 @@ begin
   // se estiver vazio
   if Documento = '' then
   begin
-    fsMsgErro := 'O e-mail n„o pode ser vazio!' ;
+    fsMsgErro := 'e-mail n„o pode ser vazio!' ;
     exit;
   end;
 
   // N„o existe email com menos de 8 caracteres.
   if Length(Documento) < 8 then
   begin
-    fsMsgErro := 'O e-mail n„o conter menos do que 8 caracteres!' ;
+    fsMsgErro := 'e-mail n„o pode conter menos do que 8 caracteres!' ;
     exit;
   end;
 
-  fsMsgErro := 'O e-mail digitado È inv·lido!' ;
+  fsMsgErro := 'e-mail inv·lido!' ;
 
   // Verificando se h· somente um @
   if ((Pos('@', Documento) = 0) or (PosEx('@', Documento, Pos('@', Documento) + 1) > 0)) then
@@ -804,6 +830,7 @@ begin
   // Tudo OK
   fsMsgErro := '' ;
 end;
+{$EndIf}
 
 Procedure TACBrValidador.ValidarCEP ;
 begin

@@ -66,6 +66,7 @@ type
     FStatus: TStatusACBrNFSe;
     FWebServices: TWebServices;
 
+    function GetNumID(ANFSe : TNFSe): String;
     function GetConfiguracoes: TConfiguracoesNFSe;
     procedure SetConfiguracoes(AValue: TConfiguracoesNFSe);
     procedure SetDANFSE(const Value: TACBrNFSeDANFSEClass);
@@ -132,6 +133,7 @@ type
 
     procedure SetStatus(const stNewStatus: TStatusACBrNFSe);
 
+    property NumID[ANFSe : TNFSe] :  string read GetNumID;
   published
     property Configuracoes: TConfiguracoesNFSe
       read GetConfiguracoes write SetConfiguracoes;
@@ -282,6 +284,32 @@ begin
   end;
 
   Result := ArqSchema;
+end;
+
+function TACBrNFSe.GetNumID(ANFSe: TNFSe): String;
+var
+  NumDoc, xCNPJ: String;
+begin
+  if ANFSe = nil then
+    raise EACBrNFSeException.Create('Não foi informado o objeto TNFSe para gerar a chave!');
+
+  if ANFSe.Numero = '' then
+    NumDoc := ANFSe.IdentificacaoRps.Numero
+  else
+    NumDoc := ANFSe.Numero;
+
+  if ANFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = '' then
+    xCNPJ := ANFSe.Prestador.Cnpj
+  else
+    xCNPJ := ANFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+
+  if Configuracoes.Arquivos.NomeLongoNFSe then
+    Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
+                            ANFSe.DataEmissao,
+                            xCNPJ,
+                            StrToIntDef(NumDoc, 0))
+  else
+    Result := NumDoc + ANFSe.IdentificacaoRps.Serie;
 end;
 
 function TACBrNFSe.GetConfiguracoes: TConfiguracoesNFSe;

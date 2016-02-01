@@ -173,7 +173,7 @@ begin
 	  begin
       for i := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-        NomeArq := PathWithDelim(Self.PathPDF) + TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NumID + '-nfse.pdf';
+        NomeArq := PathWithDelim(Self.PathPDF) + TACBrNFSe(ACBrNFSe).NumID[TACBrNFSe(ACBrNFSe).NotasFiscais.Items[i].NFSe] + '-nfse.pdf';
 
 				frlDANFSeRLRetrato.SavePDF(Self
           , NomeArq
@@ -211,16 +211,7 @@ begin
 	  end
 	  else
 	  begin
-      TACBrNFSe(ACBrNFSe).NotasFiscais.Clear;
-      TACBrNFSe(ACBrNFSe).NotasFiscais.Assign(NFSe);
-      // pode ser que ocorra problemas , deve ser testado
-      NomeArq := PathWithDelim(Self.PathPDF) + TACBrNFSe(ACBrNFSe).NotasFiscais.Items[0].NumID + '-nfse.pdf';
-//
-//      NomeArq := PathWithDelim(PathPDF) + NFSe.;
-//      if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
-//        NomeArq := NomeArq + Trim(NFSe.IdentificacaoRps.Serie) + '-nfse.pdf'
-//      else
-//        NomeArq := NomeArq + '-nfse.pdf';
+      NomeArq := PathWithDelim(Self.PathPDF) + TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
 
 		   frlDANFSeRLRetrato.SavePDF(Self
         , NomeArq

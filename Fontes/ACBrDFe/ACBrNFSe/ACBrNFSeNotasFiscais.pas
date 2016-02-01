@@ -722,15 +722,16 @@ var
 
   function PosNFSe: Integer;
   begin
-    if VersaoNFSe = ve110 then
+    // Provedor Infisc
+    TamTAG := 7;
+    Result := Pos('</NFS-e>', AXMLString);
+    if Result = 0 then
     begin
-      // Provedor Infisc
-      Result := Pos('</NFS-e>', AXMLString);
-      TamTAG := 7;
-    end  
-    else begin
-      Result := Pos('</Nfse>', AXMLString);
       TamTAG := 6;
+      Result := Pos('</Nfse>', AXMLString);
+      // provedor ISSDSF
+      if Result = 0 then
+        Result := Pos('</Nota>', AXMLString);
     end;
   end;
 

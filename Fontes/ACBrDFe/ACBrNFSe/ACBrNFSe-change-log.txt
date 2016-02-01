@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2016
+[*] Melhorias na separação das NFS-e ao ler o XML, alteração feita para ler as
+    notas do provedor ISSDSF.
+    Por: Cleiver Batista / Italo Jurisato Junior
+
 30/01/2016
 [*] Remoção de quebra de linha do XML retornado pelo provedor.
     Por: Italo Jurisato Junior

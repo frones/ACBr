@@ -489,6 +489,7 @@ begin
               FNFSe.NFSeCancelamento.DataHora := NFSeLida.NFSe.NFSeCancelamento.DataHora;
               FNFSe.NFSeCancelamento.Pedido.CodigoCancelamento := NFSeLida.NFSe.NFSeCancelamento.Pedido.CodigoCancelamento;
               FNFSe.Cancelada := NFSeLida.NFSe.Cancelada;
+              FNFSe.Status := NFSeLida.NFSe.Status;
               
               FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
             end;

@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/02/2016
+[*] Incronização das propriedades Status e Cancelada.
+    Por: Marcos Gerene / Italo Jurisato Junior
 [*] Melhorias na separação das NFS-e ao ler o XML, alteração feita para ler as
     notas do provedor ISSDSF.
     Por: Cleiver Batista / Italo Jurisato Junior

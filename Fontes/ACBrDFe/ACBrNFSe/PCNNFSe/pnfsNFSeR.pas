@@ -951,6 +951,9 @@ begin
 
   Leitor.Grupo := Leitor.Arquivo;
 
+  NFSe.Cancelada := snNao;
+  NFSe.Status := srNormal;
+
   if Leitor.rExtrai(1, 'NfseCancelamento') <> '' then
   begin
     NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
@@ -958,9 +961,8 @@ begin
       NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
     NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
     NFSe.Cancelada := snSim;
-  end
-  else
-    NFSe.Cancelada := snNao;
+    NFSE.Status := srCancelado;
+  end;
 
   if (Leitor.rExtrai(1, 'NfseSubstituicao') <> '') then
     NFSe.NfseSubstituidora := Leitor.rCampo(tcStr, 'NfseSubstituidora');

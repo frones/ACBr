@@ -39,6 +39,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2016 
+[*] Retorno da opção do ACBrGNRE somente ele por enquanto as guias ainda não estão prontas
+
 23/11/2015
 [-] Acerto no ACBrInstall para encontar o diretório de pacotes corretamente
 [+] Adicionadas algumas linhas de log para facilitar encontrar problemas com diretórios e arquivos.

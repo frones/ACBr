@@ -1028,8 +1028,6 @@ var
   end;
 
 begin
-  //remover quando estiver Ok!
-  frameDpk.ACBr_GNRE_dpk.Checked := False;
 
   FCountErros := 0;
 

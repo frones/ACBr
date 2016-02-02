@@ -837,8 +837,11 @@ begin
   if Result = '' then
     Result := FPRetornoWS;
 
+  Result := StringReplace(Result, '<' + XML_V01 + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  Result := StringReplace(Result, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
+  Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;

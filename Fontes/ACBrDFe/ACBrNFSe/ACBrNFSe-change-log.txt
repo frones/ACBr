@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2016
+-- ACBrNFSeWebServices --
+[*] Remoção do Encoding na mensagem de resposta.
+    Por: Michel Ouriques / Italo Jurisato Junior
 [*] Alterações diversas para atender o provedor ISSDSF.
     Por: Michel Ouriques / Italo Jurisato Junior
 [*] Acrescentado o parâmetro Lote ao método Gerar ficando com a seguinte assinatura:

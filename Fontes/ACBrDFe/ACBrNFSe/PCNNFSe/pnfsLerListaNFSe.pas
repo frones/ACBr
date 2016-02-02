@@ -554,19 +554,6 @@ begin
       inc(i);
     end;
 
-    if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
-    begin
-      if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
-      begin
-        with ListaNFSe.FCompNFSe.Add do
-        begin
-          FNFSe.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
-          Protocolo       := Leitor.rCampo(tcStr, 'b:Autenticador');
-          FNFSe.Protocolo := Protocolo;
-        end;
-      end;
-    end;
-
     if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
     begin
       i := 0;
@@ -597,6 +584,32 @@ begin
       end;
     end;
 
+    i := 0;
+    if (leitor.rExtrai(2, 'Alertas') <> '') then
+    begin
+      while Leitor.rExtrai(3, 'Alerta', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+        inc(i);
+      end;
+    end;
+
+    i := 0;
+    if (leitor.rExtrai(2, 'Erros') <> '') then
+    begin
+      while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+        inc(i);
+      end;
+    end;
+
     j := 0;
     MsgErro := 0;
     while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
@@ -611,7 +624,21 @@ begin
       end;
       inc(j);
     end;
+
 (*
+    if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
+    begin
+      if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
+      begin
+        with ListaNFSe.FCompNFSe.Add do
+        begin
+          FNFSe.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
+          Protocolo       := Leitor.rCampo(tcStr, 'b:Autenticador');
+          FNFSe.Protocolo := Protocolo;
+        end;
+      end;
+    end;
+
     if ListaNFSe.FMsgRetorno.Count = 0 then
     begin
       with ListaNFSe.FCompNFSe.Add do
@@ -620,32 +647,6 @@ begin
       end;
     end;
 *)
-    i := 0 ;
-    if (leitor.rExtrai(2, 'Alertas') <> '') then
-    begin
-      while Leitor.rExtrai(3, 'Alerta', '', i + 1) <> '' do
-      begin
-        ListaNfse.FMsgRetorno.Add;
-        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
-
-        inc(i);
-      end;
-    end;
-
-    i := 0 ;
-    if (leitor.rExtrai(2, 'Erros') <> '') then
-    begin
-      while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
-      begin
-        ListaNfse.FMsgRetorno.Add;
-        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
-
-        inc(i);
-      end;
-    end;
-
   except
     Result := False;
   end;

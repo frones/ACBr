@@ -310,6 +310,9 @@ begin
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseFaixaResposta') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '');
+      
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'resPedidoLoteNFSe') <> '');
 
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'CancelarNfseResult') <> '');

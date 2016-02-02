@@ -18160,8 +18160,6 @@ end;
 function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 begin
   case AProvedor of
-//    proDigifred: Result := ve110;
-
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
@@ -18169,6 +18167,7 @@ begin
     proNFSEBrasil: Result := ve200;
 
     proTecnos: Result := ve201;
+    proInfisc: Result := ve110;
   else
     Result := ve100;
   end;

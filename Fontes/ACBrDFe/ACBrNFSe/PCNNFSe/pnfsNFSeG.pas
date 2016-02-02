@@ -1094,19 +1094,7 @@ begin
 
                  Gerador.Prefixo := Prefixo4;
                  Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
-
-                 if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
-                 begin
-                   Gerador.wGrupoNFSe('CpfCnpj');
-                   if Length(Cnpj) <= 11 then
-                     Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-                   else
-                     Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-                   Gerador.wGrupoNFSe('/CpfCnpj');
-                 end
-                 else
-                   Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-
+                 Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
                  Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
                  Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
 
@@ -1121,7 +1109,8 @@ begin
                  Result := Gerador.ArquivoFormatoXML;
                end;
 
-  else Result := Notas;
+  else
+    Result := Notas;
   end;
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);

@@ -235,6 +235,7 @@ type
   private
     // Entrada
     FNumeroRps: String;
+    FNumeroLote: String;
     // Retorno
     FSituacao: String;
 
@@ -253,6 +254,7 @@ type
     procedure Clear; override;
 
     property NumeroRps: String read FNumeroRps;
+    property NumeroLote: String read FNumeroLote;
     property Situacao: String   read FSituacao;
   end;
 
@@ -518,7 +520,7 @@ type
     function EnviaSincrono(ALote:Integer): Boolean; overload;
     function EnviaSincrono(ALote:String): Boolean; overload;
 
-    function Gera(ARps: Integer): Boolean;
+    function Gera(ARps: Integer; ALote: Integer = 1): Boolean;
 
     function ConsultaSituacao(AProtocolo: String;
                               const ANumLote: String = ''): Boolean;
@@ -1837,9 +1839,10 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroRps := TNFSeGerarNfse(Self).FNumeroRps;
-      QtdeNotas := TNFSeGerarNFSe(Self).FNotasFiscais.Count;
-      Notas     := FvNotas;
+      NumeroRps  := TNFSeGerarNfse(Self).FNumeroRps;
+      NumeroLote := TNFSeGerarNfse(Self).NumeroLote;
+      QtdeNotas  := TNFSeGerarNFSe(Self).FNotasFiscais.Count;
+      Notas      := FvNotas;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgGerarNFSe + FTagF;
@@ -3346,9 +3349,10 @@ begin
     FEnviarSincrono.GerarException( FEnviarSincrono.Msg );
 end;
 
-function TWebServices.Gera(ARps: Integer): Boolean;
+function TWebServices.Gera(ARps: Integer; ALote: Integer): Boolean;
 begin
- FGerarNfse.FNumeroRps := IntToStr(ARps);
+ FGerarNfse.FNumeroRps  := IntToStr(ARps);
+ FGerarNfse.FNumeroLote := IntToStr(ALote);
 
  Result := FGerarNfse.Executar;
 

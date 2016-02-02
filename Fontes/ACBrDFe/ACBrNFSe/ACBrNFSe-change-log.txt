@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2016
+[*] Acrescentado o parâmetro Lote ao método Gerar ficando com a seguinte assinatura:
+    function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
+    O motivo desse parâmetro é devido aos provedores BHISS e WebISS que aceitam no
+    método Gerar um lote com no máximo 3 RPS, os demais devemos informar apenas 1
+    RPS.
+    Por: Italo Jurisato Junior
+
 01/02/2016
 [*] Incronização das propriedades Status e Cancelada.
     Por: Marcos Gerene / Italo Jurisato Junior

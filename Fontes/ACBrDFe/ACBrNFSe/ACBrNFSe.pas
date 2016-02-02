@@ -92,7 +92,7 @@ type
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
-    function Gerar(ARps: Integer): Boolean;
+    function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
 
     function ConsultarSituacao(AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
@@ -457,18 +457,26 @@ begin
   Result := WebServices.EnviaSincrono(ALote);
 end;
 
-function TACBrNFSe.Gerar(ARps: Integer): Boolean;
+function TACBrNFSe.Gerar(ARps: Integer; ALote: Integer): Boolean;
 begin
   if NotasFiscais.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if NotasFiscais.Count > 1 then
-    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
-      ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  if Configuracoes.Geral.Provedor in [proBHISS, proWebISS] then
+  begin
+    if NotasFiscais.Count > 3 then
+      GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +
+        ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  end
+  else begin
+    if NotasFiscais.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
+        ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  end;
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Gerar);
 
-  Result := WebServices.Gera(ARps);
+  Result := WebServices.Gera(ARps, ALote);
 end;
 
 function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;
@@ -515,7 +523,7 @@ begin
     GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
 
   if ANumeroNFSe = '' then
-    GerarException(ACBrStr('ERRO: Numero da NFS-e não informado'));
+    GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
 
   if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));

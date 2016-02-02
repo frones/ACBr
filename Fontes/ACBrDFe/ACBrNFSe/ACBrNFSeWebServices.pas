@@ -1818,9 +1818,17 @@ end;
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
 var
   I: Integer;
+  TagGrupo: String;
 begin
   GerarDadosMsg := TNFSeG.Create;
   try
+    case FProvedor of
+      proSimplISS: TagGrupo := 'GerarNovaNfseEnvio';
+      proEGoverneISS: TagGrupo := 'request';
+    else
+      TagGrupo := 'GerarNfseEnvio';
+    end;
+
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar;
 
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_IncluiEncodingCab);
@@ -1836,19 +1844,11 @@ begin
     end;
 
     case FProvedor of
-      proSimplISS: begin
-                        FTagI := '<' + FPrefixo3 + 'GerarNovaNfseEnvio>';
-                        FTagF :=  '</' + FPrefixo3 + 'GerarNovaNfseEnvio>';
-                      end;
-      proEGoverneISS: begin
-                        FTagI := '<' + FPrefixo3 + 'request' + FNameSpaceDad + '>';
-                        FTagF :=  '</' + FPrefixo3 + 'request>';
-                      end;
-    else begin
-           FTagI := '<' + FPrefixo3 + 'GerarNfseEnvio' + FNameSpaceDad + '>';
-           FTagF := '</' + FPrefixo3 + 'GerarNfseEnvio>';
-         end;
+      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+    else
+      FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
+    FTagF := '</' + FPrefixo3 + TagGrupo + '>';
 
     InicializarGerarDadosMsg;
 
@@ -1869,10 +1869,23 @@ begin
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
-    FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                  FPrefixo3 + 'GerarNfseEnvio',
-                                  FPrefixo3 + 'Rps',
-                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar);
+    DefinirSignatureNode('');
+
+    // TODO: Tentar simplificar
+    if FProvedor = proBHISS then
+    begin
+      FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                  FPrefixo3 + TagGrupo,
+                                  FPrefixo3 + 'LoteRps',
+                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar,
+                                  xSignatureNode, xDSIGNSLote, xIdSignature);
+    end
+    else begin
+      FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                 FPrefixo3 + TagGrupo,
+                                 FPrefixo3 + 'Rps',
+                                 FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar);
+    end;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,

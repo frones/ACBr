@@ -145,7 +145,8 @@ function TNFSeR.LerXml: Boolean;
 begin
  if (Pos('<Nfse', Leitor.Arquivo) > 0) or (Pos('<Notas>', Leitor.Arquivo) > 0) or
     (Pos('<Nota>', Leitor.Arquivo) > 0) or (Pos('<NFS-e>', Leitor.Arquivo) > 0) or
-    (Pos('<nfse', Leitor.Arquivo) > 0) or (Pos('NumNot', Leitor.Arquivo) > 0) then
+    (Pos('<nfse', Leitor.Arquivo) > 0) or (Pos('NumNot', Leitor.Arquivo) > 0) or
+    (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) then
    Result := LerNFSe
  else
    if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or
@@ -1078,7 +1079,7 @@ begin
       NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
 
 //    NFSe.PrestadorServico.Endereco.CodigoPais := Leitor.rCampo(tcInt, 'CodigoPais');
-    NFSe.PrestadorServico.Endereco.CEP        := Leitor.rCampo(tcStr, 'Cep');
+    NFSe.PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'Cep');
 
     if length(NFSe.PrestadorServico.Endereco.CodigoMunicipio)<7
      then NFSe.PrestadorServico.Endereco.CodigoMunicipio := Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 1, 2) +
@@ -1206,7 +1207,7 @@ begin
       end;
      end;
 
- Result := True;
+  Result := True;
 end;
 
 function TNFSeR.LerNFSe_ABRASF_V2: Boolean;
@@ -1552,71 +1553,84 @@ var
 //    strItem: ansiString;
 //    leitorItem : TLeitor;
 begin
- Leitor.Grupo := Leitor.Arquivo;
- //provedorIssDSF
- if (Pos('<Notas>', Leitor.Arquivo) > 0) or (Pos('<Nota>', Leitor.Arquivo) > 0)
-  then begin
-   VersaoNFSe := ve100; // para este provedor usar padrão "1".
+  Leitor.Grupo := Leitor.Arquivo;
+  if (Pos('<Notas>', Leitor.Arquivo) > 0) or
+     (Pos('<Nota>', Leitor.Arquivo) > 0) or
+     (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) then
+  begin
+    VersaoNFSe := ve100; // para este provedor usar padrão "1".
 
-   FNFSe.Numero            := Leitor.rCampo(tcStr, 'NumeroNota');
-   FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+    FNFSe.Numero := Leitor.rCampo(tcStr, 'NumeroNota');
+    if (FNFSe.Numero = '') then
+      FNFSe.Numero := Leitor.rCampo(tcStr, 'NumeroNFe');
 
-   FNFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
-   FNFSe.Competencia    := Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),7,4) + Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),4,2);
-   FNFSe.DataEmissao    := Leitor.rCampo(tcDatHor, 'DataProcessamento');
-   FNFSe.Status         := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'SituacaoRPS'),['N','C'],[srNormal, srCancelado]);
+    FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
 
-   NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRPS');
-   NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');
-   NFSe.IdentificacaoRps.Tipo   := trRPS; //StrToTipoRPS(ok, leitorAux.rCampo(tcStr, 'Tipo'));
-   NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero);// + NFSe.IdentificacaoRps.Serie;
-   NFSe.SeriePrestacao          := Leitor.rCampo(tcStr, 'SeriePrestacao');
+    FNFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
+    FNFSe.Competencia    := Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),7,4) + Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),4,2);
+    FNFSe.DataEmissao    := Leitor.rCampo(tcDatHor, 'DataProcessamento');
+    if (FNFSe.DataEmissao = 0) then
+      FNFSe.DataEmissao  := FNFSe.DataEmissaoRps;
 
-   NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
-   NFSe.Tomador.IdentificacaoTomador.CpfCnpj            := Leitor.rCampo(tcStr, 'CPFCNPJTomador');
-   NFSe.Tomador.RazaoSocial                             := Leitor.rCampo(tcStr, 'RazaoSocialTomador');
-   NFSe.Tomador.Endereco.TipoLogradouro                 := Leitor.rCampo(tcStr, 'TipoLogradouroTomador');
-   NFSe.Tomador.Endereco.Endereco                       := Leitor.rCampo(tcStr, 'LogradouroTomador');
-   NFSe.Tomador.Endereco.Numero                         := Leitor.rCampo(tcStr, 'NumeroEnderecoTomador');
-   NFSe.Tomador.Endereco.Complemento                    := Leitor.rCampo(tcStr, 'ComplementoEnderecoTomador');
-   NFSe.Tomador.Endereco.TipoBairro                     := Leitor.rCampo(tcStr, 'TipoBairroTomador');
-   NFSe.Tomador.Endereco.Bairro                         := Leitor.rCampo(tcStr, 'BairroTomador');
-   NFSe.Tomador.Endereco.CodigoMunicipio                := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
-   NFSe.Tomador.Endereco.xMunicipio                     := CodCidadeToCidade( StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio) ) ;
-   NFSe.Tomador.Endereco.UF                             := CodigoParaUF( StrToInt(Copy(NFSe.Tomador.Endereco.CodigoMunicipio,1,2) ));
-   NFSe.Tomador.Endereco.CEP                            := Leitor.rCampo(tcStr, 'CEPTomador');
-   NFSe.Tomador.Contato.Email                           := Leitor.rCampo(tcStr, 'EmailTomador');
+    FNFSe.Status := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'SituacaoRPS'),['N','C'],[srNormal, srCancelado]);
 
-   NFSe.Servico.CodigoCnae                              := Leitor.rCampo(tcStr, 'CodigoAtividade');
-   NFSe.Servico.Valores.Aliquota                        := Leitor.rCampo(tcDe3, 'AliquotaAtividade');
+    NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRPS');
+    NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');
+    NFSe.IdentificacaoRps.Tipo   := trRPS; //StrToTipoRPS(ok, leitorAux.rCampo(tcStr, 'Tipo'));
+    NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero);// + NFSe.IdentificacaoRps.Serie;
+    NFSe.SeriePrestacao          := Leitor.rCampo(tcStr, 'SeriePrestacao');
 
-   NFSe.Servico.Valores.IssRetido                       := StrToEnumerado( ok, Leitor.rCampo(tcStr, 'TipoRecolhimento'),
-                                                           ['A','R'], [ stNormal, stRetencao{, stSubstituicao}]);
+    NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
+    NFSe.Tomador.IdentificacaoTomador.CpfCnpj            := Leitor.rCampo(tcStr, 'CPFCNPJTomador');
+    NFSe.Tomador.RazaoSocial                             := Leitor.rCampo(tcStr, 'RazaoSocialTomador');
+    NFSe.Tomador.Endereco.TipoLogradouro                 := Leitor.rCampo(tcStr, 'TipoLogradouroTomador');
+    NFSe.Tomador.Endereco.Endereco                       := Leitor.rCampo(tcStr, 'LogradouroTomador');
+    NFSe.Tomador.Endereco.Numero                         := Leitor.rCampo(tcStr, 'NumeroEnderecoTomador');
+    NFSe.Tomador.Endereco.Complemento                    := Leitor.rCampo(tcStr, 'ComplementoEnderecoTomador');
+    NFSe.Tomador.Endereco.TipoBairro                     := Leitor.rCampo(tcStr, 'TipoBairroTomador');
+    NFSe.Tomador.Endereco.Bairro                         := Leitor.rCampo(tcStr, 'BairroTomador');
+    if (Leitor.rCampo(tcStr, 'CidadeTomador') <> '') then
+    begin
+      NFSe.Tomador.Endereco.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'CidadeTomador')) ;
+      NFSe.Tomador.Endereco.xMunicipio      := CodCidadeToCidade( StrToInt(NFSe.Tomador.Endereco.CodigoMunicipio) ) ;
+      NFSe.Tomador.Endereco.UF              := CodigoParaUF( StrToInt(Copy(NFSe.Tomador.Endereco.CodigoMunicipio,1,2) ));
+    end;
+    NFSe.Tomador.Endereco.CEP  := Leitor.rCampo(tcStr, 'CEPTomador');
+    NFSe.Tomador.Contato.Email := Leitor.rCampo(tcStr, 'EmailTomador');
 
-   NFSe.Servico.CodigoMunicipio                         := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'MunicipioPrestacao'));
+   NFSe.Servico.CodigoCnae        := Leitor.rCampo(tcStr, 'CodigoAtividade');
+   NFSe.Servico.Valores.Aliquota  := Leitor.rCampo(tcDe3, 'AliquotaAtividade');
+   NFSe.Servico.Valores.IssRetido := StrToEnumerado( ok, Leitor.rCampo(tcStr, 'TipoRecolhimento'),
+                                                     ['A','R'], [ stNormal, stRetencao{, stSubstituicao}]);
 
-   sOperacao                                            := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
-   sTributacao                                          := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
+   if (Leitor.rCampo(tcStr, 'MunicipioPrestacao') <> '') then
+     NFSe.Servico.CodigoMunicipio := CodSiafiToCodCidade( Leitor.rCampo(tcStr, 'MunicipioPrestacao'));
 
-   if sOperacao[1] in ['A', 'B'] then
+   sOperacao   := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
+   sTributacao := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
+
+   if (sOperacao <> '') then
    begin
-     if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
-       NFSe.NaturezaOperacao := no1      // ainda estamos
-     else                                                    // em análise sobre
-       NFSe.NaturezaOperacao := no2;   // este ponto
-   end
-   else if (sOperacao = 'C') and (sTributacao = 'C') then
-        begin
-          NFSe.NaturezaOperacao := no3;
-        end
-        else if (sOperacao = 'C') and (sTributacao = 'F') then
-             begin
-               NFSe.NaturezaOperacao := no4;
-             end
-             else if (sOperacao = 'A') and (sTributacao = 'N') then
-                  begin
-                    NFSe.NaturezaOperacao := no7;
-                  end;
+     if sOperacao[1] in ['A', 'B'] then
+     begin
+       if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
+         NFSe.NaturezaOperacao := no1      // ainda estamos
+       else                                                    // em análise sobre
+         NFSe.NaturezaOperacao := no2;   // este ponto
+     end
+     else if (sOperacao = 'C') and (sTributacao = 'C') then
+          begin
+            NFSe.NaturezaOperacao := no3;
+          end
+          else if (sOperacao = 'C') and (sTributacao = 'F') then
+               begin
+                 NFSe.NaturezaOperacao := no4;
+               end
+               else if (sOperacao = 'A') and (sTributacao = 'N') then
+                    begin
+                      NFSe.NaturezaOperacao := no7;
+                    end;
+   end;
 
    NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, no5 ]);
 
@@ -1626,16 +1640,16 @@ begin
 
    NFse.RegimeEspecialTributacao := StrToEnumerado( ok,sTributacao, ['T','M'], [ retNenhum, retMicroempresarioIndividual ]);
 
-   NFSe.Servico.Valores.ValorPis        := Leitor.rCampo(tcDe2, 'ValorPIS');
-   NFSe.Servico.Valores.ValorCofins     := Leitor.rCampo(tcDe2, 'ValorCOFINS');
-   NFSe.Servico.Valores.ValorInss       := Leitor.rCampo(tcDe2, 'ValorINSS');
-   NFSe.Servico.Valores.ValorIr         := Leitor.rCampo(tcDe2, 'ValorIR');
-   NFSe.Servico.Valores.ValorCsll       := Leitor.rCampo(tcDe2, 'ValorCSLL');
-   NFSe.Servico.Valores.AliquotaPIS     := Leitor.rCampo(tcDe2, 'AliquotaPIS');
-   NFSe.Servico.Valores.AliquotaCOFINS  := Leitor.rCampo(tcDe2, 'AliquotaCOFINS');
-   NFSe.Servico.Valores.AliquotaINSS    := Leitor.rCampo(tcDe2, 'AliquotaINSS');
-   NFSe.Servico.Valores.AliquotaIR      := Leitor.rCampo(tcDe2, 'AliquotaIR');
-   NFSe.Servico.Valores.AliquotaCSLL    := Leitor.rCampo(tcDe2, 'AliquotaCSLL');
+   NFSe.Servico.Valores.ValorPis       := Leitor.rCampo(tcDe2, 'ValorPIS');
+   NFSe.Servico.Valores.ValorCofins    := Leitor.rCampo(tcDe2, 'ValorCOFINS');
+   NFSe.Servico.Valores.ValorInss      := Leitor.rCampo(tcDe2, 'ValorINSS');
+   NFSe.Servico.Valores.ValorIr        := Leitor.rCampo(tcDe2, 'ValorIR');
+   NFSe.Servico.Valores.ValorCsll      := Leitor.rCampo(tcDe2, 'ValorCSLL');
+   NFSe.Servico.Valores.AliquotaPIS    := Leitor.rCampo(tcDe2, 'AliquotaPIS');
+   NFSe.Servico.Valores.AliquotaCOFINS := Leitor.rCampo(tcDe2, 'AliquotaCOFINS');
+   NFSe.Servico.Valores.AliquotaINSS   := Leitor.rCampo(tcDe2, 'AliquotaINSS');
+   NFSe.Servico.Valores.AliquotaIR     := Leitor.rCampo(tcDe2, 'AliquotaIR');
+   NFSe.Servico.Valores.AliquotaCSLL   := Leitor.rCampo(tcDe2, 'AliquotaCSLL');
 
    NFSe.OutrasInformacoes                 := '';//Leitor.rCampo(tcStr, 'DescricaoRPS');
    NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'DescricaoRPS');
@@ -1644,14 +1658,13 @@ begin
    NFSe.PrestadorServico.Contato.Telefone := Leitor.rCampo(tcStr, 'DDDPrestador') + Leitor.rCampo(tcStr, 'TelefonePrestador');
    NFSe.Tomador.Contato.Telefone          := Leitor.rCampo(tcStr, 'DDDTomador') + Leitor.rCampo(tcStr, 'TelefoneTomador');
 
-   NFSE.MotivoCancelamento                := Leitor.rCampo(tcStr, 'MotCancelamento');
+   NFSE.MotivoCancelamento := Leitor.rCampo(tcStr, 'MotCancelamento');
 
-   NFSe.IntermediarioServico.CpfCnpj      := Leitor.rCampo(tcStr, 'CPFCNPJIntermediario');
-
+   NFSe.IntermediarioServico.CpfCnpj := Leitor.rCampo(tcStr, 'CPFCNPJIntermediario');
 
    if (Leitor.rExtrai(1, 'Deducoes') <> '') then
    begin
-     Item := 0 ;
+     Item := 0;
      while (Leitor.rExtrai(1, 'Deducao', '', Item + 1) <> '') do
      begin
        FNfse.Servico.Deducao.Add;
@@ -1665,18 +1678,18 @@ begin
                           ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
                           [ tdNenhum, tdMateriais, tdSubEmpreitada ]);
 
-       FNfse.Servico.Deducao[Item].CpfCnpjReferencia := Leitor.rCampo(tcStr, 'CPFCNPJReferencia');
-       FNfse.Servico.Deducao[Item].NumeroNFReferencia := Leitor.rCampo(tcStr, 'NumeroNFReferencia');
+       FNfse.Servico.Deducao[Item].CpfCnpjReferencia    := Leitor.rCampo(tcStr, 'CPFCNPJReferencia');
+       FNfse.Servico.Deducao[Item].NumeroNFReferencia   := Leitor.rCampo(tcStr, 'NumeroNFReferencia');
        FNfse.Servico.Deducao[Item].ValorTotalReferencia := Leitor.rCampo(tcDe2, 'ValorTotalReferencia');
-       FNfse.Servico.Deducao[Item].PercentualDeduzir := Leitor.rCampo(tcDe2, 'PercentualDeduzir');
-       FNfse.Servico.Deducao[Item].ValorDeduzir := Leitor.rCampo(tcDe2, 'ValorDeduzir');
+       FNfse.Servico.Deducao[Item].PercentualDeduzir    := Leitor.rCampo(tcDe2, 'PercentualDeduzir');
+       FNfse.Servico.Deducao[Item].ValorDeduzir         := Leitor.rCampo(tcDe2, 'ValorDeduzir');
        inc(Item);
      end;
    end;
 
    if (Leitor.rExtrai(1, 'Itens') <> '') then
    begin
-     Item := 0 ;
+     Item := 0;
      while (Leitor.rExtrai(1, 'Item', '', Item + 1) <> '') do
      begin
        FNfse.Servico.ItemServico.Add;
@@ -1691,24 +1704,24 @@ begin
    end;
   end;
 
-//  FNfse.Servico.Valores.ValorIss                          := (FNfse.Servico.Valores.ValorServicos * NFSe.Servico.Valores.Aliquota)/100;
-  FNFSe.Servico.Valores.ValorLiquidoNfse                  := (FNfse.Servico.Valores.ValorServicos -
-                                                             (FNfse.Servico.Valores.ValorDeducoes +
-                                                              FNfse.Servico.Valores.DescontoCondicionado+
-                                                              FNfse.Servico.Valores.DescontoIncondicionado+
-                                                              FNFSe.Servico.Valores.ValorIssRetido));
-  FNfse.Servico.Valores.BaseCalculo                       := NFSe.Servico.Valores.ValorLiquidoNfse;
+//  FNfse.Servico.Valores.ValorIss := (FNfse.Servico.Valores.ValorServicos * NFSe.Servico.Valores.Aliquota)/100;
+  FNFSe.Servico.Valores.ValorLiquidoNfse := (FNfse.Servico.Valores.ValorServicos -
+                                            (FNfse.Servico.Valores.ValorDeducoes +
+                                             FNfse.Servico.Valores.DescontoCondicionado+
+                                             FNfse.Servico.Valores.DescontoIncondicionado+
+                                             FNFSe.Servico.Valores.ValorIssRetido));
+  FNfse.Servico.Valores.BaseCalculo := NFSe.Servico.Valores.ValorLiquidoNfse;
 
- Result := True;
+  Result := True;
 end;
 
 function TNFSeR.LerNFSe_Infisc: Boolean;
 var
-  ok  : Boolean;
+  ok: Boolean;
   Item: integer;
   leitorAux: TLeitor;
-  dEmi : String;
-  hEmi : String;
+  dEmi: String;
+  hEmi: String;
   dia, mes, ano, hora, minuto: word;
 begin
   Result := False;
@@ -2034,7 +2047,7 @@ begin
       NFSe.Status := srCancelado;
     end;
 
-    Result := True;
+ Result := True;
   end;
 end;
 

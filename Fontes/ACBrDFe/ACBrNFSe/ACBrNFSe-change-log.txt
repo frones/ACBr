@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2016
+[*] Alterações diversas para atender o provedor ISSDSF.
+    Por: Michel Ouriques / Italo Jurisato Junior
 [*] Acrescentado o parâmetro Lote ao método Gerar ficando com a seguinte assinatura:
     function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
     O motivo desse parâmetro é devido aos provedores BHISS e WebISS que aceitam no

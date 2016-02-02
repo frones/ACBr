@@ -735,8 +735,16 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
-      proInfisc,
-      proIssDSF: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
+      proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
+
+      proIssDSF: begin
+                   FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' +
+                                    ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
+                                    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                                    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+                                    ' http://localhost:8080/WsNFe2/xsd/' + FxsdServico + '"';
+                   FPDFeOwner.SSL.NameSpaceURI := FNameSpace;
+                 end;  
       else begin
         if (FSeparador = '') then
         begin
@@ -818,6 +826,9 @@ begin
 
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'env:Body');
+
+  if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 'soapenv:Body');
 
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'outputXML');
@@ -1168,10 +1179,10 @@ begin
     else
     begin
       case FProvedor of
-        proIssDSF,
         proEL,
         proGoverna: FvNotas :=  FvNotas + RPS;
 
+        proIssDSF,
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
 
         proEgoverneISS: FvNotas := FvNotas +
@@ -1421,7 +1432,7 @@ end;
 procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
 var
   I: Integer;
-  DataInicial, DataFinal : TDateTime;
+  dDataInicial, dDataFinal : TDateTime;
   TotalServicos, TotalDeducoes: Double;
   TagGrupo: String;
 begin
@@ -1465,17 +1476,17 @@ begin
       FTagF := '';
     end;
 
-    DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
-    DataFinal   := DataInicial;
+    dDataInicial  := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
+    dDataFinal    := dDataInicial;
     TotalServicos := 0.0;
     TotalDeducoes := 0.0;
 
     for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
     begin
-      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao < dataInicial then
-        DataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
-      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dataFinal then
-        DataFinal := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao < dDataInicial then
+        dDataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
+      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dDataFinal then
+        dDataFinal := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
       TotalServicos := TotalServicos + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
       TotalDeducoes := TotalDeducoes + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
     end;
@@ -1490,8 +1501,8 @@ begin
 
       // Necessário para o provedor ISSDSF
       Transacao   := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao;
-      DataInicial := DataInicial;
-      DataFinal   := DataFinal;
+      DataInicial := dDataInicial;
+      DataFinal   := dDataFinal;
 
       ValorTotalServicos := TotalServicos;
       ValorTotalDeducoes := TotalDeducoes;
@@ -1567,7 +1578,8 @@ begin
 
     FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
     FProtocolo       := RetEnvLote.InfRec.Protocolo;
-//  FNumeroLote      := RetEnvLote.InfRec.NumeroLote;
+    if RetEnvLote.InfRec.NumeroLote <> '' then
+      FNumeroLote := RetEnvLote.InfRec.NumeroLote;
 
     // Lista de Mensagem de Retorno
     FPMsg := '';
@@ -2237,8 +2249,7 @@ begin
   begin
     // O procedimento recebe como parametro o XML a ser assinado e retorna o
     // mesmo assinado da propriedade FPDadosMsg
-    AssinarXML(FPDadosMsg, FPrefixo3 + TagGrupo, '',
-               'Falha ao Assinar - Consultar Lote de RPS: ');
+    AssinarXML(FPDadosMsg, FPrefixo3 + TagGrupo, '', 'Falha ao Assinar - Consultar Lote de RPS: ');
   end;
 
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
@@ -2780,7 +2791,7 @@ begin
 
            FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
                     '</' + FPrefixo3 + TagGrupo + '>';
-        end;
+         end;
     end;
 
     if FProvedor in [proIssDSF] then
@@ -2859,6 +2870,7 @@ begin
     // mesmo assinado da propriedade FPDadosMsg
     case FProvedor of
       proBetha:  docElemento := 'Pedido></' + FPrefixo3 + TagGrupo;
+      proISSDSF,
       proEquiplano,
       proInfisc: docElemento := FPrefixo3 + TagGrupo;
       proGinfes: docElemento := TagGrupo;
@@ -3317,20 +3329,20 @@ begin
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
     if FConsSitLoteRPS.VersaoNFSe = ve100 then
-     begin
-       Result := FConsSitLoteRPS.Executar;
+    begin
+      Result := FConsSitLoteRPS.Executar;
 
-       if not (Result) then
-         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
-     end;
+      if not (Result) then
+        FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+    end;
 
-     if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proInfisc then
-       Result := True
-     else
-       Result := FConsLote.Executar;
+    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proInfisc then
+      Result := True
+    else
+      Result := FConsLote.Executar;
 
-     if not (Result) then
-       FConsLote.GerarException( FConsLote.Msg );
+    if not (Result) then
+      FConsLote.GerarException( FConsLote.Msg );
   end;
 end;
 
@@ -3451,7 +3463,7 @@ begin
         Result := FConsNfseRps.Executar;
     end;
 
-    if not(Result) then
+    if not (Result) then
       FConsNfseRps.GerarException( FConsNfseRps.Msg );
   end;
 end;
@@ -3459,7 +3471,7 @@ end;
 function TWebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
 begin
   Result := False;
-  
+
   FSubNfse.FNumeroNFSe         := ANumeroNFSe;
   FSubNfse.FCodigoCancelamento := ACodigoCancelamento;
 

@@ -322,6 +322,12 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
 
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaLote') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaNFSeRPS') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -333,6 +339,8 @@ begin
         NumeroLoteTemp := '0';
 
       DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      if (DataRecebimentoTemp = 0) then
+        DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataEnvioLote');
 
       ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
       if trim(ProtocoloTemp) = '' then
@@ -354,7 +362,10 @@ begin
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
-            ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) do
+            ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
+            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     //ConsultaLote
+            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) do //ConsultaNFSePorRPS
+
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -609,6 +620,32 @@ begin
       end;
     end;
 *)
+    i := 0 ;
+    if (leitor.rExtrai(2, 'Alertas') <> '') then
+    begin
+      while Leitor.rExtrai(3, 'Alerta', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+        inc(i);
+      end;
+    end;
+
+    i := 0 ;
+    if (leitor.rExtrai(2, 'Erros') <> '') then
+    begin
+      while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+        inc(i);
+      end;
+    end;
+
   except
     Result := False;
   end;

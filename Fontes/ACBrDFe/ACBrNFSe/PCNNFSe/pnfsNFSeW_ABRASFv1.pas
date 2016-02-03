@@ -506,6 +506,9 @@ begin
                     proNFSEBrasil]) then
     FDefTipos := FServicoEnviar;
 
+  if (FProvedor in [proWebISS]) then
+    FDefTipos := '';
+
   if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
     then FDefTipos := '/' + FDefTipos;
 

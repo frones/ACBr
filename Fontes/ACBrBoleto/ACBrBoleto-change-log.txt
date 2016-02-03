@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/02/16 ver. 0.0.177a
+-- ACBrBancoSantander --
+[*] Melhorias leitura do arquivo retorno CNAB400 para suportar retornos 033/353.(Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/27871-retorno-santander-c400/
+
+-- ACBrBancoNordeste --
+[-] Ajuste montagem do código de barras.(Luciano Rodrigues Pereira)
+http://www.projetoacbr.com.br/forum/topic/26304-bnb-remessa-cnab-400/#comment-182775
+
 Data: 01/02/16 ver. 0.0.176a
 -- ACBrBancoSantander --
 [*] Melhorias leitura do arquivo retorno CNAB400.(Jacinto Junior)

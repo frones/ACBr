@@ -949,10 +949,11 @@ var
   Titulo : TACBrTitulo;
   ContLinha, CodOcorrencia, CodMotivo : Integer;
   Linha, rCedente, rAgencia, rConta, rDigitoConta, rCNPJCPF : String;
+  wCodBanco: Integer;
 begin
    ContLinha := 0;
-
-   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
+   wCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
+   if (wCodBanco <> Numero) and (wCodBanco <> 353) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
 

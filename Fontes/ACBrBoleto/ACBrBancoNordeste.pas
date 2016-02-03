@@ -526,8 +526,12 @@ begin
     Result:= '21'
   else if Carteira = '5' then
     Result:= '41'
+  else if Carteira = '6' then
+    Result:= '31'
   else if Carteira = 'I' then
-    Result:= '51';
+    Result:= '51'
+  else
+    Result:= Carteira;
 end;
 
 

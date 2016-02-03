@@ -624,29 +624,12 @@ begin
   if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
-  // Alterações no conteudo de DadosMsg especificas para alguns provedores  
+  // Alterações no conteudo de DadosMsg especificas para alguns provedores
   if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
   if FProvedor = proPronim then
     DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
-
-  (*
-  DadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
-  if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
-    DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
-
-  if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
-  begin
-    DadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
-    DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
-  end;
-
-  if (FProvedor = proPronim) and (FPLayout = LayNfseRecepcaoLote) then begin
-    DadosMsg := '&lt;' + ENCODING_UTF8 + '&gt;' + DadosMsg;
-    DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
-  end;
-  *)
 
   Texto := StringReplace(Texto, '%SenhaMsg%', FDadosSenha, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NameSpace%', NameSpace, [rfReplaceAll]);
@@ -732,23 +715,23 @@ begin
   else
     FNameSpaceCab := '>';
 
+  // Seta o NameSpace para realizar a validação do Lote.
+  FPDFeOwner.SSL.NameSpaceURI := FNameSpace;
+
   if FxsdServico <> '' then
   begin
     case FProvedor of
       proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"';
 
-      proIssDSF: begin
-                   FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' +
-                                    ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
-                                    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                                    ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
-                                    ' http://localhost:8080/WsNFe2/xsd/' + FxsdServico + '"';
-                   FPDFeOwner.SSL.NameSpaceURI := FNameSpace;
-                 end;  
+      proIssDSF: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' +
+                                  ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
+                                  ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                                  ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
+                                  ' http://localhost:8080/WsNFe2/xsd/' + FxsdServico + '"';
 
-      proWebISS: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"'; 
-//                                  'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                                  'xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
+      proWebISS: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' ;
+//                                  ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+//                                  ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 
       else begin
         if (FSeparador = '') then
@@ -765,8 +748,6 @@ begin
             FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"'
           else
             FNameSpaceDad := 'xmlns="' + FNameSpace + '"';
-
-          FPDFeOwner.SSL.NameSpaceURI := FNameSpace;
         end;
       end;
     end;
@@ -779,14 +760,11 @@ begin
 
   if FDefTipos <> '' then
   begin
-    if (FProvedor <> proWebISS) then
-    begin
-      if FPrefixo4 <> '' then
-        FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
-                         StringReplace(FPrefixo4, ':', '', []) + '="' + FNameSpace + FSeparador + FDefTipos + '"'
-      else
-        FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FNameSpace + FSeparador + FDefTipos + '"';
-    end;
+    if FPrefixo4 <> '' then
+      FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
+                       StringReplace(FPrefixo4, ':', '', []) + '="' + FNameSpace + FSeparador + FDefTipos + '"'
+    else
+      FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FNameSpace + FSeparador + FDefTipos + '"';
   end;
 
   if FNameSpaceDad <> '' then
@@ -964,7 +942,6 @@ begin
 
     if FPConfiguracoesNFSe.Arquivos.NomeLongoNFSe then
       NomeArq := GerarNomeNFSe(FPConfiguracoesNFSe.WebServices.UFCodigo,
-//      NomeArq := GerarNomeNFSe(UFparaCodigo(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Endereco.UF),
                                FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.DataEmissao,
                                xCNPJ,
                                StrToIntDef(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Numero, 0)) + '-nfse.xml'
@@ -1004,7 +981,7 @@ begin
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
          (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'A0000') then
       begin
-        FPMsg := FPMsg + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+        FPMsg := FPMsg + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : Consultar' + LineBreak +
                          'Código Erro : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -1051,56 +1028,54 @@ var
   EnviarLoteRps, xmlns, xPrefixo: String;
   i, j: Integer;
 begin
-   case FProvedor of
+  case FProvedor of
     proActcon: EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
     proIssDsf: EnviarLoteRps := 'ReqEnvioLoteRPS';
     proInfisc: EnviarLoteRps := 'envioLote';
     proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
-    else
-      EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
-   end;
+  else
+    EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
+  end;
 
-   FxSignatureNode := '';
-   FxDSIGNSLote := '';
-   FxIdSignature := '';
+  FxSignatureNode := '';
+  FxDSIGNSLote := '';
+  FxIdSignature := '';
 
-   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) then
-   begin
-     if (URI <> '') then
-     begin
-       if not (FProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba,
-                             proFISSLex, proBetha, proPublica]) then
-       begin
-         FxSignatureNode := './/ds:Signature[@' +
-                    FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
-                    '="AssLote_' + URI + '"]';
-         FxIdSignature := ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
-                    '="AssLote_' + URI;
-       end;
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) then
+  begin
+    if (URI <> '') then
+    begin
+      if not (FProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba,
+                            proFISSLex, proBetha, proPublica]) then
+      begin
+        FxSignatureNode := './/ds:Signature[@' +
+                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
+                   '="AssLote_' + URI + '"]';
+        FxIdSignature := ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
+                   '="AssLote_' + URI;
+      end;
+    end
+    else begin
+      if FPrefixo3 = '' then
+      begin
+        xPrefixo := 'ds1:';
+        xmlns := ' xmlns="';
+      end
+      else begin
+        xPrefixo := FPrefixo3;
+        xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
+      end;
 
-     end
-     else
-     begin
-       if FPrefixo3 = '' then
-       begin
-         xPrefixo := 'ds1:';
-         xmlns := ' xmlns="';
-       end
-       else begin
-         xPrefixo := FPrefixo3;
-         xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
-       end;
+      FxSignatureNode := './/' + xPrefixo + EnviarLoteRps + '/ds:Signature';
 
-       FxSignatureNode := './/' + xPrefixo + EnviarLoteRps + '/ds:Signature';
+      i := pos(EnviarLoteRps + xmlns, FPDadosMsg);
+      i := i + Length(EnviarLoteRps + xmlns) - 1;
+      j := Pos('">', FPDadosMsg) + 1;
 
-       i := pos(EnviarLoteRps + xmlns, FPDadosMsg);
-       i := i + Length(EnviarLoteRps + xmlns) - 1;
-       j := Pos('">', FPDadosMsg) + 1;
-
-       FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
+      FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
                        Copy(FPDadosMsg, i, j - i);
-     end;
-   end;
+    end;
+  end;
 end;
 
 procedure TNFSeWebService.GerarLoteRPScomAssinatura(RPS: String);
@@ -1174,17 +1149,8 @@ begin
                          '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                       '</' + FPrefixo4 + 'Rps>';
 
-        (*
-        proFreire : FvNotas := FvNotas +
-                               '<' + FPrefixo4 + 'Rps>' +
-                                '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id="' + TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].NFSe.InfID.ID + '" '+
-                                  RetornarConteudoEntre(RPS,
-                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
-                                '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
-                               '</' + FPrefixo4 + 'Rps>';
-        *)
-
-    ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>'); //Infisc
+    // RPS versão 1.10 - Infisc
+    ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>'); 
 
     // RPS versão 1.00
     else
@@ -1445,7 +1411,7 @@ var
   I: Integer;
   dDataInicial, dDataFinal : TDateTime;
   TotalServicos, TotalDeducoes: Double;
-  TagGrupo: String;
+  TagGrupo, TagElemento: String;
 begin
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -1455,6 +1421,12 @@ begin
       proEquiplano: TagGrupo := 'enviarLoteRpsEnvio';
     else
       TagGrupo := 'EnviarLoteRpsEnvio';
+    end;
+
+    case FProvedor of
+      proInfisc: TagElemento := '';
+    else
+      TagElemento := 'LoteRps';
     end;
 
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
@@ -1536,22 +1508,15 @@ begin
   begin
     DefinirSignatureNode('');
 
-    // TODO: Tentar simplificar
-    if FProvedor = proInfisc then
-    begin
-      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                                                       FPrefixo3 + TagGrupo,
-                                                                       '',
-                                                                       FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                                                       xSignatureNode, xDSIGNSLote, xIdSignature);
-    end
-    else begin
-      FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                                                       FPrefixo3 + TagGrupo,
-                                                                       FPrefixo3 + 'LoteRps',
-                                                                       FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                                                       xSignatureNode, xDSIGNSLote, xIdSignature);
-    end;
+    FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                                   FPrefixo3 + TagGrupo,
+                                   FPrefixo3 + TagElemento,
+                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
+                                   xSignatureNode, xDSIGNSLote, xIdSignature);
+
+    // Incluido a linha abaixo por após realizar a assinatura esta gerando o
+    // atributo xmlns vazio.
+    FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -1599,7 +1564,7 @@ begin
     begin
       for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
       begin
-        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : Enviar Lote RPS' + LineBreak +
                          'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -1826,7 +1791,7 @@ end;
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
 var
   I: Integer;
-  TagGrupo: String;
+  TagGrupo, TagElemento: String;
 begin
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -1835,6 +1800,12 @@ begin
       proEGoverneISS: TagGrupo := 'request';
     else
       TagGrupo := 'GerarNfseEnvio';
+    end;
+
+    case FProvedor of
+      proBHISS: TagElemento := 'LoteRps';
+    else
+      TagElemento := 'Rps';
     end;
 
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar;
@@ -1879,21 +1850,10 @@ begin
   begin
     DefinirSignatureNode('');
 
-    // TODO: Tentar simplificar
-    if FProvedor = proBHISS then
-    begin
-      FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                  FPrefixo3 + TagGrupo,
-                                  FPrefixo3 + 'LoteRps',
-                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar,
-                                  xSignatureNode, xDSIGNSLote, xIdSignature);
-    end
-    else begin
-      FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+    FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                  FPrefixo3 + TagGrupo,
-                                 FPrefixo3 + 'Rps',
+                                 FPrefixo3 + TagElemento,
                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar);
-    end;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -2133,7 +2093,7 @@ begin
   begin
     for i := 0 to RetSitLote.InfSit.MsgRetorno.Count - 1 do
     begin
-      FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+      FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak;
 
       FaMsg := FaMsg + 'Método..... : Consultar Situação do Lote de RPS' + LineBreak +
                        'Código Erro : ' + RetSitLote.infSit.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -2944,7 +2904,7 @@ begin
   begin
     for i := 0 to RetCancNFSe.InfCanc.MsgRetorno.Count - 1 do
     begin
-      FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+      FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak;
 
       FaMsg := FaMsg + 'Método..... : Cancelar NFS-e' + LineBreak +
                        'Código Erro : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -3175,7 +3135,7 @@ begin
     begin
       for i := 0 to FNFSeRetorno.MsgRetorno.Count - 1 do
       begin
-        FPMsg := FPMsg + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + IfThen(FPMsg = '', '', ' / ');
+        FPMsg := FPMsg + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : Substituir NFS-e' + LineBreak +
                          'Código Erro : ' + FNFSeRetorno.MsgRetorno.Items[i].Codigo + LineBreak +

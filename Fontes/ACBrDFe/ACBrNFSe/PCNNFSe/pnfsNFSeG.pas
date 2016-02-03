@@ -260,7 +260,7 @@ begin
     proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
                          Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
-    proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroRps;
+    proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
   else
     IdLote := NumeroLote;
   end;

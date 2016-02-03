@@ -2104,27 +2104,28 @@ var
   sl: TStringList;
   ms: TMemoryStream;
 begin
-{  WebBrowser.Navigate('about:blank');
-  while WebBrowser.ReadyState < READYSTATE_INTERACTIVE do
-   Application.ProcessMessages;
+  WebBrowser.Navigate('about:blank');
+//  while WebBrowser.ReadyState < READYSTATE_INTERACTIVE do
+//   Application.ProcessMessages;
 
-  if Assigned(WebBrowser.Document) then
-  begin
+//  if Assigned(WebBrowser.Document) then
+//  begin
     sl := TStringList.Create;
     try
-      ms := TMemoryStream.Create;
-      try
+//      ms := TMemoryStream.Create;
+//      try
         sl.Text := HTMLCode;
-        sl.SaveToStream(ms);
-        ms.Seek(0, 0);
-        (WebBrowser.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms));
-      finally
-        ms.Free;
-      end;
+//        sl.SaveToStream(ms);
+//        ms.Seek(0, 0);
+        WebBrowser.LoadFromStrings(HTMLCode, '');
+//        (WebBrowser.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms));
+//      finally
+//        ms.Free;
+//      end;
     finally
       sl.Free;
     end;
-  end;}
+//  end;}
 end;
 
 

@@ -18,7 +18,7 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element name="NumeroNfse" type="xsd:unsignedByte" />
+        <xsd:element name="NumeroNfse" type="xsd:unsignedShort" />
         <xsd:element name="Tomador">
           <xsd:complexType>
             <xsd:sequence>
@@ -29,7 +29,7 @@
                   </xsd:sequence>
                 </xsd:complexType>
               </xsd:element>
-              <xsd:element name="InscricaoMunicipal" type="xsd:unsignedByte" />
+              <xsd:element name="InscricaoMunicipal" type="xsd:unsignedInt" />
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

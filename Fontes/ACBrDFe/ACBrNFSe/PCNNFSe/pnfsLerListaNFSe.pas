@@ -272,10 +272,9 @@ function TRetornoNFSe.LerXml: Boolean;
 var
   NFSe: TNFSe;
   NFSeLida: TNFSeR;
-  VersaodoXML: String;
-  ProtocoloTemp, NumeroLoteTemp, SituacaoTemp: String;
+  VersaodoXML, Msg, ProtocoloTemp, NumeroLoteTemp, SituacaoTemp: String;
   DataRecebimentoTemp: TDateTime;
-  i, j, Nivel: Integer;
+  i, j, Nivel, MsgErro: Integer;
   Nivel1: Boolean;
 begin
   Result := True;
@@ -311,9 +310,26 @@ begin
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseFaixaResposta') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseServicoPrestadoResponse') <> '');
+      
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'resPedidoLoteNFSe') <> '');
 
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'CancelarNfseResult') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaRPS') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'listaNfse') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaLote') <> '');
+
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaNFSeRPS') <> '');
 
     if Nivel1 then
     begin
@@ -326,6 +342,8 @@ begin
         NumeroLoteTemp := '0';
 
       DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataRecebimento');
+      if (DataRecebimentoTemp = 0) then
+        DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataEnvioLote');
 
       ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
       if trim(ProtocoloTemp) = '' then
@@ -345,7 +363,12 @@ begin
       while (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
-            ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) do
+            (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
+            ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
+            ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
+            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     //ConsultaLote
+            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) do //ConsultaNFSePorRPS
+
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -480,6 +503,7 @@ begin
               FNFSe.NFSeCancelamento.DataHora := NFSeLida.NFSe.NFSeCancelamento.DataHora;
               FNFSe.NFSeCancelamento.Pedido.CodigoCancelamento := NFSeLida.NFSe.NFSeCancelamento.Pedido.CodigoCancelamento;
               FNFSe.Cancelada := NFSeLida.NFSe.Cancelada;
+              FNFSe.Status := NFSeLida.NFSe.Status;
               
               FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
             end;
@@ -502,7 +526,7 @@ begin
         inc(i); // Incrementa o contador de notas.
       end;
     end;
-
+    
     // =======================================================================
     // Extrai a Lista de Mensagens de Erro
     // =======================================================================
@@ -533,6 +557,78 @@ begin
       inc(i);
     end;
 
+    if leitor.rExtrai(1, 'mensagemRetorno') <> '' then
+    begin
+      i := 0;
+      if (leitor.rExtrai(2, 'listaErros') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+          ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+          inc(i);
+        end;
+      end;
+
+      if (leitor.rExtrai(2, 'listaAlertas') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
+          ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
+
+          inc(i);
+        end;
+      end;
+    end;
+
+    i := 0;
+    if (leitor.rExtrai(2, 'Alertas') <> '') then
+    begin
+      while Leitor.rExtrai(3, 'Alerta', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+        inc(i);
+      end;
+    end;
+
+    i := 0;
+    if (leitor.rExtrai(2, 'Erros') <> '') then
+    begin
+      while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.Add;
+        ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+
+        inc(i);
+      end;
+    end;
+
+    j := 0;
+    MsgErro := 0;
+    while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
+    begin
+      Msg  := Leitor.rCampo(tcStr, 'DesOco');
+      if (Pos('OK!', Msg) = 0) and (Pos('RPS já Importado', Msg) = 0) and
+         (Pos('Sucesso', Msg) = 0) then
+      begin
+        ListaNFSe.FMsgRetorno.Add;
+        ListaNFSe.FMsgRetorno[MsgErro].FMensagem := Msg;
+        inc(MsgErro);
+      end;
+      inc(j);
+    end;
+
+(*
     if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
     begin
       if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
@@ -546,6 +642,14 @@ begin
       end;
     end;
 
+    if ListaNFSe.FMsgRetorno.Count = 0 then
+    begin
+      with ListaNFSe.FCompNFSe.Add do
+      begin
+        FNFSe.Numero := Leitor.rCampo(tcStr, 'NumNot');
+      end;
+    end;
+*)
   except
     Result := False;
   end;

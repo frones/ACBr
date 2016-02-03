@@ -580,9 +580,9 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel33BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := 'Número '   + FormatFloat(',0', FACBrNFeDANFCeFortesA4.FpNFe.Ide.nNF) +
-          ' Série '   + FormatFloat('000', FACBrNFeDANFCeFortesA4.FpNFe.Ide.serie) +
-          ' Emissão ' + FormatDateTime('dd/MM/yyyy hh:mm:ss', FACBrNFeDANFCeFortesA4.FpNFe.Ide.dEmi);
+  Text := ACBrStr('Número ')   + FormatFloat(',0', FACBrNFeDANFCeFortesA4.FpNFe.Ide.nNF) +
+          ACBrStr(' Série ')   + FormatFloat('000', FACBrNFeDANFCeFortesA4.FpNFe.Ide.serie) +
+          ACBrStr(' Emissão ') + FormatDateTime('dd/MM/yyyy hh:mm:ss', FACBrNFeDANFCeFortesA4.FpNFe.Ide.dEmi);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel35BeforePrint(Sender: TObject;

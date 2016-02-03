@@ -60,6 +60,10 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
+{$IfNDef FPC}
+  {$UnDef HAS_REGEXPR}   // Todo: Implementar usando "TRegEx"
+{$EndIf}
+
 unit ACBrValidador;
 
 interface
@@ -73,7 +77,7 @@ const
 
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
-                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam ) ;
+                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, docEmail ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -139,6 +143,7 @@ type
     procedure ValidarSuframa ;
     procedure ValidarGTIN;
     procedure ValidarRenavam;
+    Procedure ValidarEmail;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -179,6 +184,7 @@ function ValidarIE(const AIE, AUF: String): String ;
 function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
 function ValidarRenavam( const Documento : String ) : String ;
+function ValidarEmail (const Documento : string ) : String;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -203,7 +209,10 @@ function Modulo11(const Documento: string; const Peso: Integer = 2; const Base: 
 
 implementation
 uses
- {$IFDEF COMPILER6_UP} Variants , Math, StrUtils, {$ENDIF}
+ {$IfDef COMPILER6_UP} Variants , Math, StrUtils, {$EndIf}
+ {$IfDef HAS_REGEXPR}
+  {$IfDef FPC} RegExpr, {$Else} RegularExpressions,{$EndIf}
+ {$EndIf}
   ACBrUtil;
 
 function ValidarCPF(const Documento : String) : String ;
@@ -234,6 +243,11 @@ end;
 function ValidarRenavam( const Documento : String ) : String ;
 begin
   Result := ValidarDocumento( docRenavam, Documento );
+end;
+
+function ValidarEmail (const Documento : string ) : String;
+begin
+  Result := ValidarDocumento( docEmail, Documento );
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;
@@ -547,12 +561,19 @@ end;
 Function TACBrValidador.LimpaDocto(const AString : String) : String ;
 Var A : Integer ;
 begin
+  if fsTipoDocto = docEmail then
+  begin
+    Result := Trim(AString);
+    exit;
+  end;
+
   Result := '' ;
   For A := 1 to length( AString ) do
   begin
      if pos(AString[A], fsIgnorarChar) = 0 then
         Result := Result + UpperCase(AString[A]) ;
   end ;
+
   Result := Trim(Result) ;
 end ;
 
@@ -590,6 +611,7 @@ begin
           docSuframa       : NomeDocto := 'SUFRAMA';
           docGTIN          : NomeDocto := 'GTIN';
           docRenavam       : NomeDocto := 'Renavam';
+          docEmail         : NomeDocto := 'E-Mail';
         end;
 
         fsMsgErro := NomeDocto + ' n„o pode ser vazio.' ;
@@ -609,6 +631,7 @@ begin
        docSuframa       : ValidarSuframa ;
        docGTIN          : ValidarGTIN ;
        docRenavam       : ValidarRenavam;
+       docEmail         : ValidarEmail;
      end;
 
   if fsMsgErro <> '' then
@@ -739,6 +762,75 @@ begin
         fsMsgErro := fsMsgErro + '.. DÌgito calculado: '+fsDigitoCalculado ;
   end ;
 end;
+
+{$IfDef HAS_REGEXPR}
+procedure TACBrValidador.ValidarEmail;
+var
+  vRegex: TRegExpr;
+begin
+  vRegex := TRegExpr.Create;
+  try
+    vRegex.Expression := '^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}' +
+                         '\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\' +
+                         '.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$';
+    if not vRegex.Exec(Documento) then
+      fsMsgErro := 'e-mail inv·lido!'
+    else
+      fsMsgErro := '';
+  finally
+    vRegex.Free;
+  end;
+end;
+{$Else}
+procedure TACBrValidador.ValidarEmail;
+const
+  InvalidChar = '‡‚ÍÙ˚„ı·ÈÌÛ˙Á¸Ò˝¿¬ ‘€√’¡…Õ”⁄«‹—›*;:\|#$%&*ß!()][{}<>òà¥™∫+π≤≥';
+var
+  i: Integer;
+begin
+  // se estiver vazio
+  if Documento = '' then
+  begin
+    fsMsgErro := 'e-mail n„o pode ser vazio!' ;
+    exit;
+  end;
+
+  // N„o existe email com menos de 8 caracteres.
+  if Length(Documento) < 8 then
+  begin
+    fsMsgErro := 'e-mail n„o pode conter menos do que 8 caracteres!' ;
+    exit;
+  end;
+
+  fsMsgErro := 'e-mail inv·lido!' ;
+
+  // Verificando se h· somente um @
+  if ((Pos('@', Documento) = 0) or (PosEx('@', Documento, Pos('@', Documento) + 1) > 0)) then
+    exit;
+
+  // Verificando se no mÌnimo h· um ponto
+  if (Pos('.', Documento) = 0) then
+    exit;
+
+  // N„o pode comeÁar ou terminar com @ ou ponto
+  if (Documento[1] in ['@', '.']) or (Documento[Length(Documento)] in ['@', '.']) then
+    exit;
+
+  // O @ e o ponto n„o podem estar juntos
+  if (Documento[Pos('@', Documento) + 1] = '.') or (Documento[Pos('@', Documento) - 1] = '.') then
+    exit;
+
+  // Testa se tem algum caracter inv·lido.
+  for i := 1 to Length(Documento) do
+  begin
+    if pos( Documento[i], InvalidChar ) > 0 then
+      exit;
+  end;
+
+  // Tudo OK
+  fsMsgErro := '' ;
+end;
+{$EndIf}
 
 Procedure TACBrValidador.ValidarCEP ;
 begin

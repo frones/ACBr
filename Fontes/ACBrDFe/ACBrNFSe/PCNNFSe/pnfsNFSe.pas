@@ -143,6 +143,8 @@ type
     FDescontoCondicionado: Currency;
     FDescontoIncondicionado: Currency;
     FJustificativaDeducao: String;
+    FvalorOutrasRetencoes: Currency;
+    FDescricaoOutrasRetencoes: String;
   published
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
@@ -169,6 +171,9 @@ type
     property DescontoIncondicionado: Currency read FDescontoIncondicionado write FDescontoIncondicionado;
     //Just. usada pelo provedor Equiplano
     property JustificativaDeducao: String read FJustificativaDeducao write FJustificativaDeducao;
+    //propriedade do Provedor Governa
+    property valorOutrasRetencoes: Currency read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
+    property DescricaoOutrasRetencoes: String read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;
   end;
 
   TItemServicoCollection = class(TCollection)
@@ -209,6 +214,8 @@ type
     FCodServ: String;
     FCodLCServ: String;
     FUnidade: String;
+    FAlicotaISSST: currency;
+    FValorISSST: currency;
 
   public
     constructor Create; reintroduce;
@@ -239,6 +246,8 @@ type
     property CodServ     : String read FCodServ write FCodServ;
     property CodLCServ   : String read FCodLCServ write FCodLCServ;
     property Unidade     : String read FUnidade write FUnidade;
+    property AlicotaISSST: currency read FAlicotaISSST write FAlicotaISSST;
+    property ValorISSST  : currency read FValorISSST write FValorISSST;
   end;
 
  TDeducaoCollection = class(TCollection)
@@ -323,6 +332,7 @@ type
     FFraseSecreta: String;
     FcUF: Integer;
     FInscricaoEstadual: String;
+    FChaveAcesso: String;
   published
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
@@ -331,6 +341,8 @@ type
     property FraseSecreta: String read FFraseSecreta write FFraseSecreta;
     property cUF: Integer read FcUF write FcUF;
     property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
+    //Chave de Acesso usada no Provedor Governa
+    property ChaveAcesso: String read FChaveAcesso write FChaveAcesso;
   end;
 
  TEndereco = class(TPersistent)
@@ -442,9 +454,33 @@ type
   private
     FCodigoObra: String;
     FArt: String;
+    FLogradouroObra: string;
+    FComplementoObra: string;
+    FNumeroObra: string;
+    FBairroObra: string;
+    FCEPObra: string;
+    FCodigoMunicipioObra: string;
+    FUFObra: string;
+    FCodigoPaisObra: integer;
+    FxPaisObra: string;
+    FnCei: string;
+    FnProj: string;
+    FnMatri: string;
   published
     property CodigoObra: String read FCodigoObra write FCodigoObra;
     property Art: String read FArt write FArt;
+    property LogradouroObra: string read FLogradouroObra write FLogradouroObra;
+    property ComplementoObra: string read FComplementoObra write FComplementoObra;
+    property NumeroObra: string read FNumeroObra write FNumeroObra;
+    property BairroObra: string read FBairroObra write FBairroObra;
+    property CEPObra: string read FCEPObra write FCEPObra;
+    property CodigoMunicipioObra: string read FCodigoMunicipioObra write FCodigoMunicipioObra;
+    property UFObra: string read FUFObra write FUFObra;
+    property CodigoPaisObra: integer read FCodigoPaisObra write FCodigoPaisObra;
+    property xPaisObra: string read FxPaisObra write FxPaisObra;
+    property nCei: String read FnCei write FnCei;
+    property nProj: String read FnProj write FnProj;
+    property nMatri: String read FnMatri write FnMatri;
   end;
 
   TParcelasCollectionItem = class(TCollectionItem)
@@ -557,6 +593,8 @@ type
     FModeloNFSe: String;
     FCancelada: TnfseSimNao;
     Femail: TemailCollection;
+    FTipoRecolhimento: String;
+    
     procedure Setemail(const Value: TemailCollection);
 
   public
@@ -612,6 +650,8 @@ type
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
+    //propriedade para provedor Governa
+    property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
     property email: TemailCollection read Femail write Setemail;
   end;

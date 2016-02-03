@@ -304,7 +304,6 @@ object frmPrincipal: TfrmPrincipal
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     ViaConsumidor = True
     TributosSeparadamente = False

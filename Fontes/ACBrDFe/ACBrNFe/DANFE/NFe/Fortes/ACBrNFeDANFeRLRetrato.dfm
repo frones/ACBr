@@ -6706,12 +6706,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoNumero: TRLLabel
         Tag = 703
-        Left = 180
+        Left = 172
         Top = 26
-        Width = 32
-        Height = 10
-        Alignment = taRightJustify
-        AutoSize = False
+        Width = 50
+        Height = 12
+        Alignment = taCenter
         Caption = '99/99/9999'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -6723,12 +6722,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoValorOriginal: TRLLabel
         Tag = 703
-        Left = 264
+        Left = 269
         Top = 26
-        Width = 62
-        Height = 10
+        Width = 57
+        Height = 12
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -6773,7 +6771,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 180
         Top = 15
-        Width = 32
+        Width = 33
         Height = 7
         Alignment = taCenter
         Caption = 'N'#218'MERO'
@@ -6824,12 +6822,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoValorDesconto: TRLLabel
         Tag = 703
-        Left = 398
+        Left = 409
         Top = 26
-        Width = 68
-        Height = 10
+        Width = 57
+        Height = 12
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -6856,12 +6853,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RlbDadoValorLiquido: TRLLabel
         Tag = 703
-        Left = 522
+        Left = 521
         Top = 26
-        Width = 56
-        Height = 10
+        Width = 57
+        Height = 12
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

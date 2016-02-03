@@ -278,6 +278,7 @@ end;
 procedure TACBrNFSeDANFSeFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
+	frxReport.EngineOptions.UseGlobalDataSetList := False; 
   with frxReport do
   begin
     Tag := 1;

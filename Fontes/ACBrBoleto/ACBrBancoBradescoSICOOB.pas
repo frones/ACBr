@@ -105,7 +105,7 @@ begin
    Modulo.Documento := '9' + FormataNossoNumero( ACBrTitulo );
    Modulo.Calcular;
 
-   if Modulo.ModuloFinal = 11 then
+   if Modulo.ModuloFinal = 1 then
       Result:= 'P'
    else
       Result:= IntToStr(Modulo.DigitoFinal);
@@ -201,19 +201,19 @@ var
                   '2'               +                                    // IDENTIFICAÇÃO DO LAYOUT PARA O REGISTRO
                   Copy(PadRight(Mensagem[1], 80, ' '), 1, 80);               // CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
 
-        if Mensagem.Count = 3 then
+        if Mensagem.Count > 2 then
            Result := Result +
                      Copy(PadRight(Mensagem[2], 80, ' '), 1, 80)              // CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count = 4 then
+        if Mensagem.Count > 3 then
            Result := Result +
                      Copy(PadRight(Mensagem[3], 80, ' '), 1, 80)              // CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count = 5 then
+        if Mensagem.Count > 4 then
            Result := Result +
                      Copy(PadRight(Mensagem[4], 80, ' '), 1, 80)              // CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
@@ -310,39 +310,40 @@ begin
          if Mensagem.Text <> '' then
             aMensagemCedente:= Mensagem[0];
 
-         wLinha:= '1'                                                     + // ID Registro
-                  StringOfChar( '0', 19)                                  + // Dados p/ Débito Automático
+         wLinha:= '1'                                                        + // ID Registro
+                  StringOfChar( '0', 19)                                     + // Dados p/ Débito Automático
                   PadLeft( Cedente.Agencia + Cedente.AgenciaDigito, 10, '0') + // Código da Cooperativa
                   PadLeft( Cedente.CodigoCedente, 7, '0')                    + // Código de Cobrança
-                  PadRight( SeuNumero, 25, ' ')                               + // Número de Controle de Participantes
-                  StringOfChar( '0', 8)                                   + // ZEROS
-                  PadRight(aNossoNumero , 11, '0')                            + // Nosso Número
-                  aDigitoNossoNumero                                      + // Digito Verificador do Nosso Número
-                  IntToStrZero( round( ValorDescontoAntDia * 100), 10)    + // Desconto bonificação por dia
-                  TipoBoleto + 'N' + Space(14)                            + // Tipo Boleto(Quem emite) + 'N'= Nao registrar p/ Débito automático
-                  aOcorrencia                                             + // Identificação da Instrução
-                  PadRight( NumeroDocumento,  10)                             + // Número do Documento
-                  FormatDateTime( 'ddmmyy', Vencimento)                   + // Data do Vencimento do Título
-                  IntToStrZero( Round( ValorDocumento * 100 ), 13)        + // Valor do Título
-                  StringOfChar('0',8) + PadRight(aEspecie,2) + 'N'            + // Zeros + Especie do documento + Idntificação(valor fixo N)
-                  FormatDateTime( 'ddmmyy', DataDocumento )               + // Data de Emissão
-                  aProtesto                                               + // 1ª Instrução + 2ª Instrução
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)         + // Valor a ser cobrado por dia de Atraso
+                  PadRight( SeuNumero, 25, ' ')                              + // Número de Controle de Participantes
+                  StringOfChar( '0', 8)                                      + // ZEROS
+                  PadRight(aNossoNumero , 11, '0')                           + // Nosso Número
+                  aDigitoNossoNumero                                         + // Digito Verificador do Nosso Número
+                  IntToStrZero( round( ValorDescontoAntDia * 100), 10)       + // Desconto bonificação por dia
+                  TipoBoleto + 'N' + Space(14)                               + // Tipo Boleto(Quem emite) + 'N'= Nao registrar p/ Débito automático
+                  aOcorrencia                                                + // Identificação da Instrução
+                  PadRight( NumeroDocumento,  10)                            + // Número do Documento
+                  FormatDateTime( 'ddmmyy', Vencimento)                      + // Data do Vencimento do Título
+                  IntToStrZero( Round( ValorDocumento * 100 ), 13)           + // Valor do Título
+                  StringOfChar('0',8) + PadRight(aEspecie,2) + 'N'           + // Zeros + Especie do documento + Idntificação(valor fixo N)
+                  FormatDateTime( 'ddmmyy', DataDocumento )                  + // Data de Emissão
+                  aProtesto                                                  + // 1ª Instrução + 2ª Instrução
+                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)            + // Valor a ser cobrado por dia de Atraso
                   IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
-                         FormatDateTime( 'ddmmyy', DataDesconto))         + // Data Limite para Concessão de Desconto
-                  IntToStrZero( round( ValorDesconto * 100 ), 13)         + // Valor do Desconto
-                  StringOfChar('0',13)                                    + // Zeros
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13)       + // Valor do Abatimento a ser concedido ou cancelado
+                         FormatDateTime( 'ddmmyy', DataDesconto))            + // Data Limite para Concessão de Desconto
+                  IntToStrZero( round( ValorDesconto * 100 ), 13)            + // Valor do Desconto
+                  StringOfChar('0',13)                                       + // Zeros
+                  IntToStrZero( round( ValorAbatimento * 100 ), 13)          + // Valor do Abatimento a ser concedido ou cancelado
                   aTipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')   + // Tipo de inscrição do sacado + Número de inscrição do sacado
-                  PadRight( Sacado.NomeSacado, 40, ' ')                       + // Nome do Sacado
-                  PadRight( Sacado.Logradouro + ' ' + Sacado.Numero + ' '     +
-                        Sacado.Bairro + ' ' + Sacado.Cidade + ' '         +
-                        Sacado.UF, 40)                                    + // Endereço Completo
-                  space(12) + PadRight( Sacado.CEP, 8 )                       + // 1ª Mensagem + CEP
-                  space(1)                                                + // Branco
+                  PadRight( Sacado.NomeSacado, 40, ' ')                      + // Nome do Sacado
+                  PadRight( Sacado.Logradouro + ' ' + Sacado.Numero + ' ' +
+                            Sacado.Bairro + ' ' + Sacado.Cidade + ' '     +
+                            Sacado.UF, 40)                                   + // Endereço Completo
+                  PadRight(aMensagemCedente, 12)                             + // 1ª Mensagem
+                  PadRight( Sacado.CEP, 8 )                                  + // CEP
+                  space(1)                                                   + // Branco
                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')  + // Inscrição do Sacador / Avalista
-                  aTipoSacador                                            + // Tipo do Documento do Sacador / Avalista
-                  PadRight( Sacado.SacadoAvalista.NomeAvalista , 43, ' ')     ; // Sacador / Avalista
+                  aTipoSacador                                               + // Tipo do Documento do Sacador / Avalista
+                  PadRight( Sacado.SacadoAvalista.NomeAvalista , 43, ' ');     // Sacador / Avalista
 
 
          wLinha := wLinha + IntToStrZero(aRemessa.Count + 1, 6); // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
@@ -515,7 +516,7 @@ begin
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
          Carteira             := Copy(Linha,108,1);
-         NossoNumero          := Copy(Linha,71,12);
+         NossoNumero          := Copy(Linha,76,6);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
          ValorOutrasDespesas  := StrToFloatDef(Copy(Linha,189,13),0)/100;
 
@@ -829,7 +830,7 @@ end;
 function TACBrBancoBradescoSICOOB.CalcularTamMaximoNossoNumero(
   const Carteira: String; NossoNumero: String): Integer;
 begin
-  Result := ACBrBanco.TamanhoMaximoNossoNum  + 5;
+  Result := ACBrBanco.TamanhoMaximoNossoNum;
 end;
 
 function TACBrBancoBradescoSICOOB.FormataNossoNumero(

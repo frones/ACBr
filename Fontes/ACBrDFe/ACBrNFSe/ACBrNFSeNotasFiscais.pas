@@ -2,36 +2,36 @@
 { Projeto: Componente ACBrNFSe                                                 }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
 {  de Serviço eletrônica - NFSe                                                }
-
+{                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
-
+{                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{                                                                              }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-
+{                                                                              }
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-
+{                                                                              }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -66,7 +66,6 @@ type
     function GetProcessada: Boolean;
 
     function GetMsg: String;
-    function GetNumID: String;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -110,8 +109,6 @@ type
     property Confirmada: Boolean read FConfirmada write FConfirmada;
     property Processada: Boolean read GetProcessada;
     property Msg: String read GetMsg;
-    property NumID: String read GetNumID;
-
     property Alertas: String read FAlertas;
     property ErroRegrasdeNegocios: String read FErroRegrasdeNegocios;
 
@@ -222,7 +219,7 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, CNPJEmitente, CNPJCertificado, InfElemento: String;
+  XMLStr, CNPJEmitente, CNPJCertificado, InfElemento, NomeArq: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
@@ -251,9 +248,9 @@ begin
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
   begin
     case StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML) of
-      ve201,
+      ve110,
       ve200,
-      ve110: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
+      ve201: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
 
     // Os RPS versão 1.00 tem como InfElement = InfRps
     else
@@ -276,8 +273,9 @@ begin
       Leitor.Free;
     end;
 
+    NomeArq := NFSe.IdentificacaoRps.Numero + NFSe.IdentificacaoRps.Serie + '-rps.xml';
     if Configuracoes.Arquivos.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+      Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
   end;
 end;
 
@@ -399,13 +397,13 @@ begin
         if Assigned(DANFSE) then
         begin
           DANFSE.ImprimirDANFSEPDF(FNFSe);
-          NomeArq := PathWithDelim(DANFSE.PathPDF) + NumID + '-nfse.pdf';
+          NomeArq := PathWithDelim(DANFSE.PathPDF) + NumID[FNFSe] + '-nfse.pdf';
           AnexosEmail.Add(NomeArq);
         end;
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFSe,
-                   NumID +'-nfse.xml');
+                   NumID[FNFSe] +'-nfse.xml');
     end;
   finally
     AnexosEmail.Free;
@@ -422,6 +420,7 @@ begin
     FNFSeW.LayOutXML := ProvedorToLayoutXML(Configuracoes.Geral.Provedor);
 
     FNFSeW.NFSeWClass.Provedor      := Configuracoes.Geral.Provedor;
+    FNFSeW.NFSeWClass.Prefixo3      := Configuracoes.Geral.ConfigGeral.Prefixo3;
     FNFSeW.NFSeWClass.Prefixo4      := Configuracoes.Geral.ConfigGeral.Prefixo4;
     FNFSeW.NFSeWClass.Identificador := Configuracoes.Geral.ConfigGeral.Identificador;
     FNFSeW.NFSeWClass.QuebradeLinha := Configuracoes.Geral.ConfigGeral.QuebradeLinha;
@@ -446,7 +445,7 @@ function NotaFiscal.CalcularNomeArquivo: String;
 var
   xID: String;
 begin
-  xID := Self.NumID;
+  xID := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).NumID[NFSe];
 
   if EstaVazio(xID) then
     raise EACBrNFSeException.Create('ID Inválido. Impossível Salvar XML');
@@ -494,27 +493,6 @@ function NotaFiscal.GetMsg: String;
 begin
 //  Result := FNFSe.procNFSe.xMotivo;
   Result := '';
-end;
-
-function NotaFiscal.GetNumID: String;
-var
-  NumDoc: String;
-begin
-  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
-  begin
-    if NFSe.Numero = '' then
-      NumDoc := NFSe.IdentificacaoRps.Numero
-    else
-      NumDoc := NFSe.Numero;
-
-    if Configuracoes.Arquivos.NomeLongoNFSe then
-      Result := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
-                              NFSe.DataEmissao,
-                              NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-                              StrToIntDef(NumDoc, 0))
-    else
-      Result := NumDoc + NFSe.IdentificacaoRps.Serie;
-  end;
 end;
 
 function NotaFiscal.GetXMLAssinado: String;
@@ -740,17 +718,36 @@ var
   VersaoNFSe: TVersaoNFSe;
   Ok: Boolean;
   AXML: AnsiString;
-  N: integer;
+  N, TamTAG: integer;
 
   function PosNFSe: Integer;
   begin
-    Result := Pos('</Nfse>', AXMLString);
+    // Provedor Infisc
+    TamTAG := 7;
+    Result := Pos('</NFS-e>', AXMLString);
+    if Result = 0 then
+    begin
+      TamTAG := 6;
+      Result := Pos('</Nfse>', AXMLString);
+      // provedor ISSDSF
+      if Result = 0 then
+        Result := Pos('</Nota>', AXMLString);
+    end;
   end;
 
   function PosRPS: Integer;
   begin
+    TamTAG := 5;
     if VersaoNFSe < ve200 then
-      Result := Pos('</Rps>', AXMLString)
+    begin
+      Result := Pos('</Rps>', AXMLString);
+      // Provedor Governa
+      if Result = 0 then
+      begin
+        Result := Pos('</LoteRps>', AXMLString);
+        TamTAG := 9;
+      end;
+    end
     else
     begin
       // Se a versão do XML do RPS for 2.00 ou posterior existem 2 TAGs <Rps>,
@@ -776,8 +773,8 @@ begin
     // Ler os XMLs das NFS-e
     while N > 0 do
     begin
-      AXML := copy(AXMLString, 1, N + 6);
-      AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
+      AXML := copy(AXMLString, 1, N + TamTAG);
+      AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
 
       with Self.Add do
       begin
@@ -795,8 +792,8 @@ begin
     // Ler os XMLs dos RPS
     while N > 0 do
     begin
-      AXML := copy(AXMLString, 1, N + 5);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+      AXML := copy(AXMLString, 1, N + TamTAG);
+      AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
       with Self.Add do
       begin
         LerXML(AXML);

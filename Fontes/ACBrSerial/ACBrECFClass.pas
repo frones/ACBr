@@ -792,7 +792,7 @@ TACBrECFClass = class
 
     function GetTotalAcrescimos: Double; virtual ;
     function GetTotalCancelamentos: Double; virtual ;
-    function GetTotalCancelamentosNaoTransmitidos: Double; virtual ;
+    function GetTotalCancelamentosEmAberto: Double; virtual ;
     function GetTotalDescontos: Double; virtual ;
     function GetTotalSubstituicaoTributaria: Double; virtual ;
     function GetTotalNaoTributado: Double; virtual ;
@@ -999,7 +999,7 @@ TACBrECFClass = class
     Property VendaBruta         : Double     read GetVendaBruta ;
     Property GrandeTotal        : Double     read GetGrandeTotal ;
     Property TotalCancelamentos : Double     read GetTotalCancelamentos ;
-    Property TotalCancelamentosNaoTransmitidos : Double     read GetTotalCancelamentosNaoTransmitidos ;
+    Property TotalCancelamentosEmAberto : Double     read GetTotalCancelamentosEmAberto ;
     Property TotalDescontos     : Double     read GetTotalDescontos ;
     Property TotalAcrescimos    : Double     read GetTotalAcrescimos ;
     Property TotalTroco         : Double     read GetTotalTroco ;
@@ -3066,9 +3066,9 @@ begin
   Result := 0;
 end;
 
-function TACBrECFClass.GetTotalCancelamentosNaoTransmitidos: Double;
+function TACBrECFClass.GetTotalCancelamentosEmAberto: Double;
 begin
-  result := 0;
+  Result := 0;
 end;
 
 function TACBrECFClass.GetTotalDescontosISSQN: Double;
@@ -3172,7 +3172,7 @@ begin
       { TOTALIZADORES }
       try ValorGrandeTotal  := GrandeTotal;             except end ;
       try ValorVendaBruta   := VendaBruta;              except end ;
-      try CancelamentoICMS  := TotalCancelamentos;      except end ;
+      try CancelamentoICMS  := TotalCancelamentos + TotalCancelamentosEmAberto; except end ;
       try DescontoICMS      := TotalDescontos;          except end ;
       try AcrescimoICMS     := TotalAcrescimos;         except end ;
       try CancelamentoISSQN := TotalCancelamentosISSQN; except end ;

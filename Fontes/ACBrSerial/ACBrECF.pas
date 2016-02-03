@@ -229,6 +229,7 @@ TACBrECF = class( TACBrComponent )
     function GetOnGravarLog: TACBrGravarLog;
     function GetPaginaDeCodigoClass : Word ;
     function GetTipoUltimoDocumentoClass : TACBrECFTipoDocumento ;
+    function GetTotalCancelamentosEmAbertoClass: Double;
 
     procedure SetArredondaItemMFD(const AValue : Boolean) ;
     procedure SetAtivo(const AValue: Boolean);
@@ -511,6 +512,7 @@ TACBrECF = class( TACBrComponent )
     Property VendaBruta         : Double     read GetVendaBrutaClass ;
     Property GrandeTotal        : Double     read GetGrandeTotalClass ;
     Property TotalCancelamentos : Double     read GetTotalCancelamentosClass ;
+    Property TotalCancelamentosEmAberto : Double  read GetTotalCancelamentosEmAbertoClass ;
     Property TotalDescontos     : Double     read GetTotalDescontosClass ;
     Property TotalAcrescimos    : Double     read GetTotalAcrescimosClass ;
     Property TotalTroco         : Double     read GetTotalTrocoClass ;
@@ -2370,6 +2372,12 @@ function TACBrECF.GetTotalCancelamentosClass: Double;
 begin
   ComandoLOG := 'TotalCancelamentos' ;
   Result := RoundTo( fsECF.TotalCancelamentos, -2) ;
+end;
+
+function TACBrECF.GetTotalCancelamentosEmAbertoClass: Double;
+begin
+  ComandoLOG := 'TotalCancelamentosEmAberto' ;
+  Result := RoundTo( fsECF.TotalCancelamentosEmAberto, -2) ;
 end;
 
 function TACBrECF.GetTotalDescontosClass: Double;

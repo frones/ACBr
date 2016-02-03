@@ -1,6 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 208
-  Top = 209
+  Left = 200
+  Top = 205
   Caption = 'frlDANFeRLPaisagem'
   inherited RLNFe: TRLReport
     Left = 0
@@ -6400,12 +6400,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoNumero: TRLLabel
         Tag = 70
-        Left = 300
-        Height = 10
+        Left = 291
+        Height = 12
         Top = 22
-        Width = 32
-        Alignment = taRightJustify
-        AutoSize = False
+        Width = 50
+        Alignment = taCenter
         Caption = '99/99/9999'
         Font.Color = clBlack
         Font.Height = -9
@@ -6419,12 +6418,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoValorOriginal: TRLLabel
         Tag = 70
-        Left = 384
-        Height = 10
+        Left = 389
+        Height = 12
         Top = 22
-        Width = 62
+        Width = 57
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
         Font.Height = -9
@@ -6438,12 +6436,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoValorDesconto: TRLLabel
         Tag = 70
-        Left = 518
-        Height = 10
+        Left = 529
+        Height = 12
         Top = 22
-        Width = 68
+        Width = 57
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
         Font.Height = -9
@@ -6457,12 +6454,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoValorLiquido: TRLLabel
         Tag = 70
-        Left = 642
-        Height = 10
+        Left = 641
+        Height = 12
         Top = 22
-        Width = 56
+        Width = 57
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Color = clBlack
         Font.Height = -9

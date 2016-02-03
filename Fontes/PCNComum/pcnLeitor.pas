@@ -285,22 +285,16 @@ begin
   inicio   := pos(Atributo, FGrupo);
   if inicio > 0 then
   begin
-     inicio := inicio + Length(Atributo);
+    inicio := inicio + Length(Atributo);
     ConteudoTag := trim(copy(FGrupo, inicio, maxInt));
 
-    {
-    if Pos('"', ConteudoTag) <> 0 then
-      Aspas := '"'
-     else
-      Aspas := '''';
-    }
     iPos1 := Pos('"' , ConteudoTag);
     iPos2 := Pos('''', ConteudoTag);
 
     if iPos1 <> 0 then
       Aspas := '"';
 
-    if (iPos2 <> 0) and (iPos2 < iPos1) then
+    if (iPos2 <> 0) and ((iPos1 = 0) or (iPos2 < iPos1)) then
       Aspas := '''';
 
     inicio := pos(Aspas, ConteudoTag) + 1;

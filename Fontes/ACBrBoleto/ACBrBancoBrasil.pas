@@ -702,6 +702,7 @@ begin
        toRemessaAlterarNomeEnderecoSacado      : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}
        toRemessaOutrasOcorrencias              : ATipoOcorrencia := '31'; {Alteração de Outros Dados}
        toRemessaCancelarDesconto               : ATipoOcorrencia := '32'; {Não conceder desconto}
+       toRemessaAlterarModalidade              : ATipoOcorrencia  := '40'; {Alterar modalidade (Vide Observações)}
      else
        ATipoOcorrencia := '01'; {Remessa}
      end;
@@ -1246,7 +1247,18 @@ begin
         63: Result:='63-DV do nosso número inválido' ;
         64: Result:='64-Título não passivel de debito/baixa - situação anormal' ;
         65: Result:='65-Título com ordem de não protestar-não pode ser encaminhado a cartorio' ;
+        66: Result:= '66-Número do documento do sacado (CNPJ/CPF) inválido';
         67: Result:='66-Título/carne rejeitado' ;
+        68: Result:= '68-Código/Data/Percentual de multa inválido';
+        69: Result:= '69-Valor/Percentual de Juros Inválido';
+        70: Result:= '70-Título já se encontra isento de juros';
+        71: Result:= '71-Código de Juros Inválido';
+        72: Result:= '72-Prefixo da Ag. cobradora inválido';
+        73: Result:= '73–Numero do controle do participante inválido';
+        74: Result:= '74–Cliente não cadastrado no CIOPE (Desconto/Vendor)';
+        75: Result:= '75–Qtde. de dias do prazo limite p/ recebimento de título vencido inválido';
+        76: Result:= '76–Titulo excluído automaticamente por decurso deprazo CIOPE (Desconto/Vendor)';
+        77: Result:= '77–Titulo vencido transferido para a conta 1 – Carteira vinculada'; 
         80: Result:='80-Nosso número inválido' ;
         81: Result:='81-Data para concessão do desconto inválida' ;
         82: Result:='82-CEP do sacado inválido' ;
@@ -1276,8 +1288,8 @@ begin
         16: Result:='16-Por alteração do código do cedente';
         17: Result:='17-Por alteração da variação';
         18: Result:='18-Por alteração de carteira';
-      end;
-    toRetornoBaixado, toRetornoBaixadoInstAgencia: //09,10 ou 20 (Baixa) ver ocorrencia 20 componente esta errado
+      end;    
+    toRetornoBaixado, toRetornoBaixaSolicitada, toRetornoDebitoEmConta: // 09, 10 ou 20 (Baixa)
       case CodMotivo of
         00: Result:='00-Solicitada pelo cliente';
         14: Result:='14-Protestado';
@@ -1319,7 +1331,12 @@ begin
         18: Result:='18-Tarifa Sobre Alteração de Abatimento/Desconto';
         19: Result:='19-Tarifa Sobre Arquivo mensal (Em Ser)';
         20: Result:='20-Tarifa Sobre Emissão de Bloqueto Pré-Emitido pelo Banco';
-      end;     
+      end;         
+    toRetornoTipoCobrancaAlterado:
+    case CodMotivo of
+      00: Result := '00-Transferência de título de cobrança simples para descontada ou vice-versa';
+      52: Result := '52-Reembolso de título vendor ou descontado';
+    end;
   end;
 end;
 

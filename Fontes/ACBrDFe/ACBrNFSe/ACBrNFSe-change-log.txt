@@ -47,6 +47,65 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2016
+-- ACBrNFSeWebServices --
+[*] Remoção do Encoding na mensagem de resposta.
+    Por: Michel Ouriques / Italo Jurisato Junior
+[*] Alterações diversas para atender o provedor ISSDSF.
+    Por: Michel Ouriques / Italo Jurisato Junior
+[*] Acrescentado o parâmetro Lote ao método Gerar ficando com a seguinte assinatura:
+    function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
+    O motivo desse parâmetro é devido aos provedores BHISS e WebISS que aceitam no
+    método Gerar um lote com no máximo 3 RPS, os demais devemos informar apenas 1
+    RPS.
+    Por: Italo Jurisato Junior
+
+01/02/2016
+[*] Incronização das propriedades Status e Cancelada.
+    Por: Marcos Gerene / Italo Jurisato Junior
+[*] Melhorias na separação das NFS-e ao ler o XML, alteração feita para ler as
+    notas do provedor ISSDSF.
+    Por: Cleiver Batista / Italo Jurisato Junior
+
+30/01/2016
+[*] Remoção de quebra de linha do XML retornado pelo provedor.
+    Por: Italo Jurisato Junior
+
+29/01/2016
+[*] Remoção de sequencia ESCAPE do XML retornado pelo provedor.
+    Por: Italo Jurisato Junior
+[-] Correção de um bug, estava gerando uma segunda nota sem dados na lista.
+    Por: Italo Jurisato Junior
+[+] Inclusão do provedor NFSeBrasil.
+    Por: Italo Jurisato Junior
+
+28/01/2016
+[+] Inclusão do provedor Governa.
+    Por: Gabriel Souza Lopes / Italo Jurisato Junior
+[*] Alterações visando fazer funcionar o provedor Infisc.
+    Por: Moro / Italo Jurisato Junior
+
+27/01/2016
+[*] Alterações visando fazer funcionar o provedor Equiplano.
+    Por: Michel Ouriques / Italo Jurisato Junior
+[+] Inclusão do provedor NotaInteligente.
+    Por: Luís / Italo Jurisato Junior
+
+26/01/2016
+-- pnfsNFSeR / pnfsConversao --
+[*] Simplificação de código.
+    Por: Italo Jurisato Junior
+
+26/01/2016
+-- ACBrNFSeWebServices / pnfsNFSeR / pnfsNFSeW_ABRASFv2 --
+[*] Inclusão da leitura do atributo ID ao ler o XML da NFS-e.
+    Por: Italo Jurisato Junior
+
+26/01/2016
+-- ACBrNFSe
+[*] Aplicado alterações para gerar pdf e enviar por e-mail com o mesmo nome e usando propriedade nomelongenfse
+   Por: Juliomar Marchetti
+	 
 26/01/2016
 -- ACBrNFSeWebServices --
 [*] Alteração visando incluir o NameSpaceDad na TAG LoteRps do provedor SimplISS.

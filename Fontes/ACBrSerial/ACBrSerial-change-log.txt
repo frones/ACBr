@@ -39,6 +39,82 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/01/2015   (por: DSA)
+-- ACBrECF --
+[+] Adicionada a propriedade "TotalCancelamentosEmAberto: Double"
+
+-- ACBrECFClass --
+[*] Renomeada a propriedade e métodos "TotalCancelamentosNaoTransmitidos" para
+    "TotalCancelamentosEmAberto"
+[*] Modificação em GetDadosReducaoZ para considerar o valor de
+    "TotalCancelamentosEmAberto" em "Total Cancelado ICMS"
+
+-- ACBrECFVirtual --
+[*] Renomeada a propriedade e métodos "TotalCancelamentosNaoTransmitidos" para
+    "TotalCancelamentosEmAberto"
+[-] Correção em "DescontoAcrescimoItemAnterior", para acumular valores de
+    Descontos e Acrescimos nos Totalizadores
+[-] Correção em "CancelaItemVendido", para estornar os Descontos e Acrescimos
+    efetuados no Item Cancelado, dos Totalizadores
+[-] Método "CancelaCupom", corrigido para considerar o SubTotal Bruto
+    (sem Descontos), quando acumular nos totalizadores de Cancelamento
+[-] Correção em "CancelaCupom", para estornar os Descontos e Acrescimos
+    efetuados no Subtotal do Cupom, dos Totalizadores
+
+-- ACBrECFVirtualBuffer --
+[-] Correções na montagem do Relatório X/Z.
+    - Descontos e Acrescimos sempre serão impressos
+    - Adicionada a Impressão da Venda Líquida
+    - Impressão de Total Cancelado considera "TotalCancelamentosNaoTransmitidos"
+    - Corrigida a impressão dos Indices das Aliquotas de ICMS e Não Tributados
+
+
+Data: 25/01/2015   (por: DSA)
+-- ACBrECFClass --
+[*] Ajuste em GetAsString, para que valores Decimais sempre usam apenas 2 casas
+
+-- ACBrECFVirtual --
+[*] Refactoring, criando uma nova classe: "TACBrECFVirtualClassCupom", que conterá
+    todos os Itens, Pagamentos e CNFs do Cupom Virtual. Facilitando a passagam
+    dessa classe por parâmetro.
+[*] Propriedades "SubTotal" e "TotalPago", passam a ser ReadOnly e dependem do
+    conteudo de "TACBrECFVirtualClassCupom"
+[+] Adicionado o evento "QuandoCancelarCupom(const NumCOOCancelar: Integer;
+    CupomVirtual: TACBrECFVirtualClassCupom; var PermiteCancelamento: Boolean)"
+    para permirir que a aplicação tenha um melhor controle sobre o Cupom a ser
+    cancelado (ou não), e informar os dados do Cupom a ser cancelado, caso o
+    mesmo não seja o último cupom (na memória do ECFVirtual)
+[+] Adicionado suporte a rateio de Desconto/Acrescimo no Subtotal, usando a
+    mesma regra do ECF real, para considerar o "Residuo"
+[*] Modificação na assinatura do método: "SubtotalizaCupomVirtual"
+[*] Modificação na assinatura do método: "VerificaPodeCancelarCupom"
+[*] Modificação na assinatura do método: "RegistraItemNaoFiscalVirtual"
+[+] Adicionada sobrecarga no método "CarregaTotalizadoresNaoTributados", para
+    retornar corretamente apenas F1, N1, I1
+[-] Ajuste em AchaICMSAliquota, para encontrar corretamente "F1, N1, I1" e
+    apenas esses.
+[*] Totalizador: "CuponsCanceladosNaoTransmitidos" renomeado para
+    "CuponsCanceladosEmAberto"
+[*] Totalizador: "CuponsCanceladosTotalNaoTransmitidos" renomeado para
+    "CuponsCanceladosEmAbertoTotal"
+[*] Método "VendeItem", modificado para fazer uso de "DescontoAcrescimoItemAnterior"
+[-] Método "DescontoAcrescimoItemAnterior", corrigido, para considerar acréscimos
+    em VendaBruta e GrandeTotal
+[-] Método "CancelaItemVendido", corrigido, para não subtrair Item cancelado de
+    VendaBruta
+[-] Método "SubtotalizaCupom", corrigido, para considerar acréscimos
+    em VendaBruta e GrandeTotal
+[-] Método "SubtotalizaCupom", modificado para considerar o Rateio de Desconto
+    ou Acréscimo nas Aliquotas do Cupom. (com suporte a resíduo)
+[-] Método "FechaCupom", modificado para não zerar Valor de "TotalPago"
+[*] Método "CancelaCupom", modificado para suportar o parâmetro: "NumCOOCancelar"
+    chamando o novo evento "QuandoCancelarCupom".
+[-] Método "CancelaCupom", modificado para não subtrair de VendaBruta ou GT
+
+
+-- ACBrECFVirtualBuffer --
+[*] Ajustes para compatibilização com o Refactoring
+
 Data: 21/01/2015
 -- ACBrECFDaruma --
 [*] Melhoria para que rotina de Cancelamento não acuse TimeOut em cupons com muitos 

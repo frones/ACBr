@@ -68,8 +68,7 @@ type
     procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
-  protected
-    //BarCode : TBarCode128c ;
+  protected    
     FACBrNFSe       : TACBrNFSe;
     FNFSe           : TNFSe;
     FLogo           : String;
@@ -106,11 +105,10 @@ type
     FT_Complemento   : String;
     FT_Email         : String;
 
-	cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
-	procedure ConfigDataSet;
+		cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
+		procedure ConfigDataSet;
 	
-    procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);
-    procedure SetBarCodeImage ( ACode : String ; RLImage : TRLImage ) ;
+    procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);    
   public
     { Public declarations }
     class procedure Imprimir(AOwner: TComponent;
@@ -145,9 +143,7 @@ type
                              AT_Fone                : String = '';
                              AT_Endereco            : String = '';
                              AT_Complemento         : String = '';
-                             AT_Email               : String = '';
-
-                             // Augusto Fontana
+                             AT_Email               : String = '';                             
                              APrintDialog    : Boolean = True);
 
     class procedure SavePDF(AOwner: TComponent;
@@ -324,8 +320,7 @@ begin
      RLPrinter.Copies := FNumCopias
    else
      RLPrinter.Copies := 1;
-
-   // Augusto Fontana
+   
    RLNFSe.PrintDialog := APrintDialog;
    if APreview = True then
      RLNFSe.PreviewModal
@@ -394,16 +389,5 @@ begin
     Free;
    end;
 end;
-
-procedure TfrlDANFSeRL.SetBarCodeImage(ACode: String; RLImage : TRLImage);
-begin
-
-end;
-
-// Descomentar este comando quando aparecer a mensagem do Fortes sobre
-// versão diferente
-
-{initialization
-RLConsts.SetVersion(3,71,'B');}
 
 end.

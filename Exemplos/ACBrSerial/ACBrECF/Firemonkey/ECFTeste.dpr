@@ -11,11 +11,13 @@ uses
   Relatorio in 'Relatorio.pas' {frRelatorio},
   Sobre in 'Sobre.pas' {frmSobre},
   uDAV in 'uDAV.pas' {frmDAV},
-  uDAVOS in 'uDAVOS.pas' {frmDAVOS};
+  uDAVOS in 'uDAVOS.pas' {frmDAVOS},
+  uVendaFrenetica in 'uVendaFrenetica.pas' {FrVendaFrenetica};
 
 {$R *.res}
 
 begin
+
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TfrmGerencialFormatado, frmGerencialFormatado);
@@ -25,5 +27,6 @@ begin
   Application.CreateForm(TfrmSobre, frmSobre);
   Application.CreateForm(TfrmDAV, frmDAV);
   Application.CreateForm(TfrmDAVOS, frmDAVOS);
+  Application.CreateForm(TFrVendaFrenetica, FrVendaFrenetica);
   Application.Run;
 end.

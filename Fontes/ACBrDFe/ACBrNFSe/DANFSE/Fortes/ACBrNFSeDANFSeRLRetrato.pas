@@ -344,6 +344,7 @@ begin
         vStringStream := TStringStream.Create(FLogo);
         try
           try
+            vStringStream.Position := 0;
             rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
           except
           end;
@@ -610,5 +611,3 @@ end;
 
 
 end.
-{$HINTS ON}
-{$WARNINGS ON}

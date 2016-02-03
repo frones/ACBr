@@ -83,7 +83,6 @@ object DataModule1: TDataModule1
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
@@ -127,7 +126,6 @@ object DataModule1: TDataModule1
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
@@ -168,7 +166,6 @@ object DataModule1: TDataModule1
     ProdutosPorPagina = 0
     ImprimirDetalhamentoEspecifico = True
     NFeCancelada = False
-    LocalImpCanhoto = 0
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True

@@ -74,7 +74,7 @@ implementation
 uses
   {$IFDEF COMPILER6_UP}dateutils{$ELSE}ACBrD5{$ENDIF},
   StrUtils,
-  ACBrUtil;
+  ACBrUtil, ACBrValidador;
 
 var
   aTotal: Extended;
@@ -385,7 +385,7 @@ begin
                PadLeft(trim(Instrucao2), 2)                                        + // 2ª Instrução
                PadLeft(trim(CodigoMora), 1)                                        + // Código de mora (0=Valor diário; 1=Taxa Mensal)
                IntToStrZero(Round(ValorMoraJuros*100), 12)                      + // Valor ao dia ou Taxa Mensal de juros
-               IfThen(DataDesconto = 0, '000000',
+               IfThen(DataDesconto = 0, '      ',                                 //volmir 27-01-16
                       FormatDateTime('ddmmyy', DataDesconto))                   + // Data para concessão de desconto
                IntToStrZero(Round(ValorDesconto*100), 13)                       + // Valor do desconto a ser concedido
                IntToStrZero(Round(ValorIOF*100), 13)                            + // Valor IOF (para carteira "X" é: taxa juros + IOF + zeros)
@@ -399,7 +399,9 @@ begin
                     Sacado.Complemento, 40)                                     + // Endereço Sacado
                space(7)                                                         + // Brancos
                IntToStrZero(Round( PercentualMulta * 10), 3)                    + // Taxa de multa após o Vencimento -- estava '000' é apenas uma casa decimal
-               '00'                                                             + // Nº dias para multa após o vencimento (00 considera-se Após Vencimento)
+               IfThen((DataMoraJuros <> 0) and (DataMoraJuros > Vencimento),      
+                      PadLeft(IntToStr(DaysBetween(DataMoraJuros, Vencimento)),
+                      2, '0'), '00')                                                + // Nº dias para multa após o vencimento (00 considera-se Após Vencimento)
                PadRight(OnlyNumber(Sacado.CEP), 8, '0')                             + // CEP
                PadRight(Sacado.Cidade, 15)                                          + // Cidade do Sacado
                PadRight(Sacado.UF, 2)                                               + // UF do Sacado
@@ -667,7 +669,7 @@ begin
                                                                Copy(ARetorno.Strings[1], 204, 4),
                                                                0, 'dd/mm/yyyy');
 
-  rCNPJCPF := OnlyNumber( copy(ARetorno[1], 19, 14) );
+  rCNPJCPF := FormatarCNPJouCPF(OnlyNumber(copy(ARetorno[1], 19, 14)));
 
   try
     with ACBrBanco.ACBrBoleto do

@@ -5212,12 +5212,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoNumero: TRLLabel
         Tag = 70
-        Left = 300
+        Left = 291
         Top = 22
-        Width = 32
-        Height = 10
-        Alignment = taRightJustify
-        AutoSize = False
+        Width = 50
+        Height = 12
+        Alignment = taCenter
         Caption = '99/99/9999'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5229,12 +5228,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoValorOriginal: TRLLabel
         Tag = 70
-        Left = 384
+        Left = 389
         Top = 22
-        Width = 62
-        Height = 10
+        Width = 57
+        Height = 12
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5246,12 +5244,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoValorDesconto: TRLLabel
         Tag = 70
-        Left = 518
+        Left = 529
         Top = 22
-        Width = 68
-        Height = 10
+        Width = 57
+        Height = 12
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5263,12 +5260,11 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RlbDadoValorLiquido: TRLLabel
         Tag = 70
-        Left = 642
+        Left = 641
         Top = 22
-        Width = 56
-        Height = 10
+        Width = 57
+        Height = 12
         Alignment = taRightJustify
-        AutoSize = False
         Caption = '9.999.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

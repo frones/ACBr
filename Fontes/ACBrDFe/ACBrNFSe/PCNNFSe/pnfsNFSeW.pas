@@ -55,10 +55,12 @@ type
     FpNFSeW: TNFSeW;
 
     FGerador: TGerador;
+    FOpcoes: TGeradorOpcoes;
+
     FNFSe: TNFSe;
     FProvedor: TnfseProvedor;
-    FOpcoes: TGeradorOpcoes;
     FAtributo: String;
+    FPrefixo3: String;
     FPrefixo4: String;
     FIdentificador: String;
     FURL: String;
@@ -88,10 +90,12 @@ type
     function GerarXml: Boolean; virtual;
 
     property Gerador: TGerador       read FGerador       write FGerador;
+    property Opcoes: TGeradorOpcoes  read FOpcoes        write FOpcoes;
+
     property NFSe: TNFSe             read FNFSe          write FNFSe;
     property Provedor: TnfseProvedor read FProvedor      write FProvedor;
-    property Opcoes: TGeradorOpcoes  read FOpcoes        write FOpcoes;
     property Atributo: String        read FAtributo      write FAtributo;
+    property Prefixo3: String        read FPrefixo3      write FPrefixo3;
     property Prefixo4: String        read FPrefixo4      write FPrefixo4;
     property Identificador: String   read FIdentificador write FIdentificador;
     property URL: String             read FURL           write FURL;
@@ -145,13 +149,8 @@ implementation
 
 uses
   ACBrDFeException,
-  pnfsNFSeW_ABRASFv1,
-  pnfsNFSeW_ABRASFv2,
-  pnfsNFSeW_EGoverneISS,
-  pnfsNFSeW_EL,
-  pnfsNFSeW_Equiplano,
-  pnfsNFSeW_Infisc,
-  pnfsNFSeW_ISSDSF;
+  pnfsNFSeW_ABRASFv1, pnfsNFSeW_ABRASFv2, pnfsNFSeW_EGoverneISS, pnfsNFSeW_EL,
+  pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsNFSeW_Governa;
 
 { TNFSeW }
 
@@ -201,8 +200,9 @@ begin
     loEGoverneISS: FNFSeWClass := TNFSeW_EGoverneISS.Create(Self);
     loEL:          FNFSeWClass := TNFSeW_EL.Create(Self);
     loEquiplano:   FNFSeWClass := TNFSeW_Equiplano.Create(Self);
+    loGoverna:     FNFSeWClass := TNFSeW_Governa.Create(Self);
     loInfisc:      FNFSeWClass := TNFSeW_Infisc.Create(Self);
-    loISSDSF:      FNFSeWClass := TNFSeW_ISSDSF.Create(Self);  
+    loISSDSF:      FNFSeWClass := TNFSeW_ISSDSF.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;
@@ -229,6 +229,7 @@ begin
   FOpcoes.FValidarListaServicos := False;
 
   FAtributo      := '';
+  FPrefixo3      := '';
   FPrefixo4      := '';
   FIdentificador := '';
   FURL           := '';

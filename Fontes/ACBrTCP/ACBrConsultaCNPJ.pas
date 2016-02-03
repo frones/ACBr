@@ -295,6 +295,8 @@ begin
         FDataSituacao := StrToDateDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
         FNaturezaJuridica := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA');
         FEndEletronico:= LerCampo(Resposta, 'ENDEREÇO ELETRÔNICO');
+        if Trim(FEndEletronico) = 'TELEFONE' then
+          FEndEletronico := '';
         FTelefone     := LerCampo(Resposta, 'TELEFONE');
         FEFR          := LerCampo(Resposta, 'ENTE FEDERATIVO RESPONSÁVEL (EFR)');
         FMotivoSituacaoCad := LerCampo(Resposta, 'MOTIVO DE SITUAÇÃO CADASTRAL');

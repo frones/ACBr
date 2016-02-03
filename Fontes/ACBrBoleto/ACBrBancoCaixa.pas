@@ -524,8 +524,14 @@ begin
                PadLeft(OnlyNumber(Sacado.CEP), 8, '0')                                 + // 129 a 133 e 134 a 136- cep sacado prefixo e sufixo sem o traço"-" somente numeros
                PadRight(Sacado.Cidade, 15, ' ')                                        + // 137 a 151 - cidade sacado
                PadRight(Sacado.UF, 2, ' ')                                             + // 152 a 153 - UF sacado
-                   {Dados do sacador/avalista}
-               IfThen(Sacado.SacadoAvalista.Pessoa = pJuridica,'2','1')                +
+               {Dados do sacador/avalista}
+               IfThen(EstaVazio(Sacado.SacadoAvalista.NomeAValista),
+                      '0',
+                      IfThen(Sacado.SacadoAvalista.Pessoa = pJuridica,
+                             '2',
+                             '1'
+                      )
+               )                                                                       + // 154 a 157 - Tipo de Inscrição
                PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')             + // 155 a 169 - Número de inscrição
                PadRight(Sacado.SacadoAvalista.NomeAValista, 40, ' ')                   + // 170 a 209 - Nome do sacador/avalista
                PadRight('', 3, ' ')                                                    + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
@@ -678,7 +684,7 @@ begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := Trim(copy(Linha,106,25));
+            SeuNumero                   := Trim(copy(Linha,59,11));
             NumeroDocumento             := copy(Linha,59,11);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 

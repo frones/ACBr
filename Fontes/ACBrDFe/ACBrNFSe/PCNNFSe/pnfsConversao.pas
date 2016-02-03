@@ -41,7 +41,7 @@ uses
   Classes, typinfo, StrUtils, ACBrUtil;
 
 type
-  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta,
+  TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeConsultaSituacao,
                      stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
                      stNFSeSubstituicao, stNFSeEnvioWebService);
 
@@ -92,8 +92,9 @@ type
                     proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov,
                     proVitoria, proMitra, ProTecnos, proPronim, proActcon, proEL,
                     proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
-                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil,
-                    proTinus, proSJP, proCONAM, proEReceita, proNEAInformatica);
+                    proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSeBrasil,
+                    proTinus, proSJP, proCONAM, proEReceita, proGoverna,
+                    proNEAInformatica, proNotaInteligente);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -108,7 +109,7 @@ type
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
-                loInfisc, loISSDSF);
+                loInfisc, loISSDSF, loGoverna);
 
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
@@ -188,7 +189,8 @@ function VersaoNFSeToStr(const t: TVersaoNFSe): String;
 function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
 function VersaoNFSeToDbl(const t: TVersaoNFSe): Real;
 
-function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
+function ProvedorToLayoutXML(const AProvedor: TnfseProvedor): TLayoutXML;
+function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 
 function RemoverNameSpace(const AXML: String): String;
 
@@ -377,45 +379,53 @@ end;
 function ProvedorToStr(const t: TnfseProvedor): String;
 begin
   result := EnumeradoToStr(t,
-                           ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge', 'Abaco',
-                            'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
-                            'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita', 'NEAInformatica'], 
-                           [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
-                            proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
-                            proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
-                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
-                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2,proNFSEBrasil, proTinus
-                            , proSJP, proCONAM, proEReceita, proNEAInformatica]); 
+        ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge',
+         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
+         'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim',
+         'Saatri', 'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal',
+         'ISSDigital', 'ISSe', '4R', 'GovDigital', 'Fiorilli', 'Coplan',
+         'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire', 'Link3', 'SpeedGov',
+         'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
+         'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
+         'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
+        [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+         proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
+         proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
+         profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
+         proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
+         proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
+         proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
+         proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
+         proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
+         proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
 begin
   result := StrToEnumerado(ok, s,
-                           ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge', 'Abaco',
-                            'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
-                            'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim', 'Saatri',
-                            'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal', 'ISSDigital', 'ISSe',
-                            '4R', 'GovDigital', 'Fiorilli', 'Coplan', 'Prodata', 'Agili', 'Virtual', 'PVH',
-                            'Freire', 'Link3', 'SpeedGov', 'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon',
-                            'EL', 'EgoverneISS', 'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller',
-                            'Lexsom', 'ABRASFv1', 'ABRASFv2', 'NFSEBrasil', 'Tinus', 'SJP', 'CONAM', 'EReceita', 'NEAInformatica'], 
-                           [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF, proProdemge, proAbaco,
-                            proBetha, proEquiplano, proISSIntel, proProdam, proGovBR, proRecife,
-                            proSimplISS, proThema, proRJ, proPublica, profintelISS, proDigifred, proBetim,
-                            proSaatri, proFISSLEX, proGoiania, proIssCuritiba, proBHISS, proNatal,
-                            proISSDigital, proISSe, pro4R, proGovDigital, proFiorilli, proCoplan, proProdata,
-                            proAgili, proVirtual, proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
-                            proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP, proSystemPro, proInfisc,
-                            proSalvador, proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSEBrasil, proTinus,
-                            proSJP, proCONAM, proEReceita, proNEAInformatica]); 
+        ['Nenhum', 'Tiplan', 'ISSNET', 'WebISS', 'GINFES', 'IssDSF', 'Prodemge',
+         'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
+         'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim',
+         'Saatri', 'FISSLEX', 'Goiania', 'IssCuritiba', 'BHISS', 'Natal',
+         'ISSDigital', 'ISSe', '4R', 'GovDigital', 'Fiorilli', 'Coplan',
+         'Prodata', 'Agili', 'Virtual', 'PVH', 'Freire', 'Link3', 'SpeedGov',
+         'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
+         'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
+         'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
+        [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+         proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
+         proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
+         profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
+         proIssCuritiba, proBHISS, proNatal, proISSDigital, proISSe, pro4R,
+         proGovDigital, proFiorilli, proCoplan, proProdata, proAgili, proVirtual,
+         proPVH, proFreire, proLink3, proSpeedGov, proVitoria, proMitra,
+         proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
+         proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
+         proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -17923,6 +17933,9 @@ begin
  XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
+ // Provedor Governa, os prefixos não tem ":" ????
+// XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );
+// XML := StringReplace( XML, 'ts', '', [rfReplaceAll] );
 
  result := XML;
 end;
@@ -18113,9 +18126,9 @@ begin
   end;
 end;
 
-function ProvedorToLayoutXML(const t: TnfseProvedor): TLayoutXML;
+function ProvedorToLayoutXML(const AProvedor: TnfseProvedor): TLayoutXML;
 begin
-  case t of
+  case AProvedor of
     proABRASFv1, proAbaco, proBetha, ProBHISS, proDBSeller, proFISSLex,
     proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
     proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
@@ -18124,24 +18137,40 @@ begin
 
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
-    proLink3, proMitra, proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-    proTecnos, proVirtual, proVitoria, proNEAInformatica: Result := loABRASFv2;
+    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
+    proSaatri, proSisPMJP, proSystemPro, proTecnos, proVirtual,
+    proVitoria,
+    proNFSEBrasil: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
+    proEL:          Result := loEL;
+    proEquiplano:   Result := loEquiplano;
+    proGoverna:     Result := loGoverna;
+    proInfisc:      Result := loInfisc;
+    proIssDSF:      Result := loISSDSF;
 
-    proEL: Result := loEL;
-
-    proEquiplano: Result := loEquiplano;
-
-    proInfisc: Result := loInfisc;
-
-    proIssDSF: Result := loISSDSF;
   else
     Result := loNone;
   end;
 (*
-  TnfseProvedor = ( proProdam, proNFSEBrasil, proCONAM);
+  TnfseProvedor = ( proProdam, proCONAM);
 *)
+end;
+
+function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
+begin
+  case AProvedor of
+    proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
+    proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
+    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
+    proSaatri, proSisPMJP, proSystemPro, proVirtual, proVitoria,
+    proNFSEBrasil: Result := ve200;
+
+    proTecnos: Result := ve201;
+    proInfisc: Result := ve110;
+  else
+    Result := ve100;
+  end;
 end;
 
 function RemoverNameSpace(const AXML: String): String;
@@ -18152,6 +18181,7 @@ begin
   XML := StringReplace(XML, ' xmlns="http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd"' , '', [rfReplaceAll]);
   XML := StringReplace(XML, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_resposta.xsd"', '', [rfReplaceAll] );
   XML := StringReplace(XML, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"', '', [rfReplaceAll] );
+  XML := StringReplace(XML, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll] );
 
   Result := XML;
 end;

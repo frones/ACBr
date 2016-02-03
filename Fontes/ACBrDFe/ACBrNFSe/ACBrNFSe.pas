@@ -66,6 +66,7 @@ type
     FStatus: TStatusACBrNFSe;
     FWebServices: TWebServices;
 
+    function GetNumID(ANFSe : TNFSe): String;
     function GetConfiguracoes: TConfiguracoesNFSe;
     procedure SetConfiguracoes(AValue: TConfiguracoesNFSe);
     procedure SetDANFSE(const Value: TACBrNFSeDANFSEClass);
@@ -91,7 +92,7 @@ type
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
-    function Gerar(ARps: Integer): Boolean;
+    function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
 
     function ConsultarSituacao(AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
@@ -132,6 +133,7 @@ type
 
     procedure SetStatus(const stNewStatus: TStatusACBrNFSe);
 
+    property NumID[ANFSe : TNFSe] :  string read GetNumID;
   published
     property Configuracoes: TConfiguracoesNFSe
       read GetConfiguracoes write SetConfiguracoes;
@@ -284,6 +286,32 @@ begin
   Result := ArqSchema;
 end;
 
+function TACBrNFSe.GetNumID(ANFSe: TNFSe): String;
+var
+  NumDoc, xCNPJ: String;
+begin
+  if ANFSe = nil then
+    raise EACBrNFSeException.Create('Não foi informado o objeto TNFSe para gerar a chave!');
+
+  if ANFSe.Numero = '' then
+    NumDoc := ANFSe.IdentificacaoRps.Numero
+  else
+    NumDoc := ANFSe.Numero;
+
+  if ANFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = '' then
+    xCNPJ := ANFSe.Prestador.Cnpj
+  else
+    xCNPJ := ANFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
+
+  if Configuracoes.Arquivos.NomeLongoNFSe then
+    Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
+                            ANFSe.DataEmissao,
+                            xCNPJ,
+                            StrToIntDef(NumDoc, 0))
+  else
+    Result := NumDoc + ANFSe.IdentificacaoRps.Serie;
+end;
+
 function TACBrNFSe.GetConfiguracoes: TConfiguracoesNFSe;
 begin
   Result := TConfiguracoesNFSe(FPConfiguracoes);
@@ -429,18 +457,26 @@ begin
   Result := WebServices.EnviaSincrono(ALote);
 end;
 
-function TACBrNFSe.Gerar(ARps: Integer): Boolean;
+function TACBrNFSe.Gerar(ARps: Integer; ALote: Integer): Boolean;
 begin
   if NotasFiscais.Count <= 0 then
-    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if NotasFiscais.Count > 1 then
-    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
-      ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  if Configuracoes.Geral.Provedor in [proBHISS, proWebISS] then
+  begin
+    if NotasFiscais.Count > 3 then
+      GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +
+        ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  end
+  else begin
+    if NotasFiscais.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
+        ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+  end;
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Gerar);
 
-  Result := WebServices.Gera(ARps);
+  Result := WebServices.Gera(ARps, ALote);
 end;
 
 function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;
@@ -487,7 +523,7 @@ begin
     GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
 
   if ANumeroNFSe = '' then
-    GerarException(ACBrStr('ERRO: Numero da NFS-e não informado'));
+    GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
 
   if Self.NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));

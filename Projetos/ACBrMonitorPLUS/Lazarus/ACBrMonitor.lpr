@@ -10,7 +10,7 @@ uses
   {$IFDEF MSWINDOWS}
    Windows, Dialogs,
   {$ENDIF}
-  Forms, UtilUnit, ACBrMonitor1, CmdUnit, ConfiguraSerial,
+  Forms, printer4lazarus, UtilUnit, ACBrMonitor1, CmdUnit, ConfiguraSerial,
   DoACBrUnit, DoBALUnit, DoCHQUnit, DoDISUnit, DoECFBemafi32, DoECFObserver,
   DoECFUnit, DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre, DoBoletoUnit, DoCEPUnit,
   DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,

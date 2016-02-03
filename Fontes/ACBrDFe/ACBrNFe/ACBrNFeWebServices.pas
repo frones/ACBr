@@ -1865,7 +1865,7 @@ procedure TNFeConsulta.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFe.WebServices.UFCodigo in [29, 51]) then // 29 = BA 51 = MT
+     (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA 
     FPServico := GetUrlWsd + 'NfeConsulta'
   else
     FPServico := GetUrlWsd + 'NfeConsulta2';

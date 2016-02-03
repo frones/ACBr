@@ -317,8 +317,6 @@ begin
     then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
     else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
-  Gerador.wGrupo('Rps' + Atributo);
-
   FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
 
   GerarXML_ISSDSF;
@@ -343,8 +341,6 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
-  Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);

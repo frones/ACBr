@@ -162,8 +162,7 @@ begin
                PadRight( Nome, 30)                                 + // Nome da Empresa
                IntToStr( Numero )+ PadRight('BRADESCO', 15)        + // Código e Nome do Banco(237 - Bradesco)
                FormatDateTime('ddmmyy',Now)  + Space(08)+'MX'  + // Data de geração do arquivo + brancos
-               IntToStrZero(NumeroRemessa,7) + Space(101)      + // Nr. Sequencial de Remessa + brancos
-               ATipoInscricao + Space(175)                     + // Cedente é pessoa Física ou Júrdica
+               IntToStrZero(NumeroRemessa,7) + Space(277)      + // Nr. Sequencial de Remessa + brancos
                IntToStrZero(1,6);                                // Nr. Sequencial de Remessa + brancos + Contador
 
       ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);

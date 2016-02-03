@@ -151,12 +151,16 @@ begin
         else if Cmd.Metodo = 'consultarnfe' then //NFe.ConsultarNFe(cArqXML)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+           if FileExists(Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml') then
             begin
-              if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+              if FileExists(Cmd.Params(0)) then
+                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
+              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
                  ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
               else
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0));
+                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml') ;
 
               ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]);
             end
@@ -251,12 +255,16 @@ begin
         else if Cmd.Metodo = 'imprimirdanfe' then //NFe.ImprimirDanfe(cArqXML,cImpressora,nNumCopias,cProtocolo,bMostrarPreview,cMarcaDaqgua,bViaConsumidor,bSimplificado)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+           if FileExists(Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml') then
             begin
               if FileExists(Cmd.Params(0)) then
                  ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
+              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
               else
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
             end
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
@@ -364,12 +372,16 @@ begin
         else if Cmd.Metodo = 'imprimirevento' then //NFe.ImprimirEvento(cPathXMLEvento,cPathXMLNFe,cImpressora,nNumCopias,bMostrarPreview)
          begin
            ACBrNFe1.EventoNFe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+           if FileExists(Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml') then
             begin
               if FileExists(Cmd.Params(0)) then
                  ACBrNFe1.EventoNFe.LerXML(Cmd.Params(0))
+              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
               else
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
             end
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
@@ -417,12 +429,16 @@ begin
         else if Cmd.Metodo = 'imprimireventopdf' then //NFe.ImprimirEventoPDF(cPathXMLEvento,cPathXMLNFe)
          begin
            ACBrNFe1.EventoNFe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+           if FileExists(Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml')  then
             begin
               if FileExists(Cmd.Params(0)) then
                  ACBrNFe1.EventoNFe.LerXML(Cmd.Params(0))
+              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
               else
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
             end
            else
               raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');

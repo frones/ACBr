@@ -56,7 +56,7 @@ Uses IniFiles, StrUtils, DateUtils, Forms,
 
 Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
 var
-  I, J, nNumCopias : Integer;
+  I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
   Salva, OK, bImprimir, bMostrarPreview : Boolean;
   SL     : TStringList;
@@ -186,6 +186,93 @@ begin
                               'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.DhRecbto)+sLineBreak+
                               'NProt='+ACBrNFe1.WebServices.Consulta.Protocolo+sLineBreak+
                               'DigVal='+ACBrNFe1.WebServices.Consulta.protNFe.digVal+sLineBreak;
+
+              if NaoEstaVazio(Trim(ACBrNFe1.WebServices.Consulta.retCancNFe.nProt)) then
+              begin
+                Cmd.Resposta := Cmd.Resposta +
+                              '[INFCANC]'+sLineBreak+
+                              'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Consulta.retCancNFe.TpAmb)+sLineBreak+
+                              'VerAplic='+ACBrNFe1.WebServices.Consulta.retCancNFe.VerAplic+sLineBreak+
+                              'CStat='+IntToStr(ACBrNFe1.WebServices.Consulta.retCancNFe.CStat)+sLineBreak+
+                              'XMotivo='+ACBrNFe1.WebServices.Consulta.retCancNFe.XMotivo+sLineBreak+
+                              'CUF='+IntToStr(ACBrNFe1.WebServices.Consulta.retCancNFe.CUF)+sLineBreak+
+                              'ChNFe='+ACBrNFe1.WebServices.Consulta.retCancNFe.chNFE+sLineBreak+
+                              'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.retCancNFe.DhRecbto)+sLineBreak+
+                              'NProt='+ACBrNFe1.WebServices.Consulta.retCancNFe.nProt+sLineBreak;
+              end;
+
+              for I:= 0 to ACBrNFe1.WebServices.Consulta.procEventoNFe.Count-1 do
+              begin
+                Cmd.Resposta := Cmd.Resposta +
+                              '[PROCEVENTONFE'+IntToStrZero(I+1,3)+']'+sLineBreak+
+                              'ID='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].ID)+sLineBreak+
+                              'cOrgao='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.cOrgao)+sLineBreak+
+                              'tpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.tpAmb)+sLineBreak+
+                              'CNPJ='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.CNPJ+sLineBreak+
+                              'chNFe='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.chNFe+sLineBreak+
+                              'dhEvento='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.dhEvento)+sLineBreak+
+                              'tpEvento='+TpEventoToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.tpEvento)+sLineBreak+
+                              'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.nSeqEvento)+sLineBreak+
+                              'verEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.versaoEvento+sLineBreak+
+                              '[detEvento'+IntToStrZero(I+1,3)+']'+sLineBreak+
+                              'versao='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.versao+sLineBreak+
+                              'descEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.descEvento+sLineBreak+
+                              'xCorrecao='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.xCorrecao+sLineBreak+
+                              'xCondUso='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.xCondUso+sLineBreak+
+                              'nProt='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.nProt+sLineBreak+
+                              'xJust='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.xJust+sLineBreak+
+                              'cOrgaoAutor='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.cOrgaoAutor)+sLineBreak+
+                              'tpAutor='+TipoAutorToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.tpAutor)+sLineBreak+
+                              'verAplic='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.verAplic+sLineBreak+
+                              'dhEmi='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.dhEmi)+sLineBreak+
+                              'tpNF='+tpNFToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.tpNF)+sLineBreak+
+                              'IE='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.IE+sLineBreak+
+                              'DESTCNPJCPF='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.dest.CNPJCPF+sLineBreak+
+                              'DESTidEstrangeiro='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.dest.idEstrangeiro+sLineBreak+
+                              'DESTIE='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.dest.IE+sLineBreak+
+                              'DESTUF='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.dest.UF+sLineBreak+
+                              'vNF='+FloatToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.vNF)+sLineBreak+
+                              'vICMS='+FloatToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.vICMS)+sLineBreak+
+                              'vST='+FloatToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.vST)+sLineBreak+
+                              'idPedidoCancelado='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.idPedidoCancelado+sLineBreak;
+                              for J:= 0 to ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.itemPedido.Count-1 do
+                              begin
+                                Cmd.Resposta := Cmd.Resposta +
+                                '[itemPedido'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3)+']'+sLineBreak+
+                                'numItem='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.itemPedido.Items[J].numItem)+sLineBreak+
+                                'qtdeItem='+FloatToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.InfEvento.detEvento.itemPedido.Items[J].qtdeItem)+sLineBreak;
+                              end;
+
+                              for J:= 0 to ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Count-1 do
+                              begin
+                                Cmd.Resposta := Cmd.Resposta +
+                                '[RETEVENTO'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3)+']'+sLineBreak+
+                                'Id='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].ID)+sLineBreak+
+                                'NomeArquivo='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.NomeArquivo+sLineBreak+
+                                'tpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.tpAmb)+sLineBreak+
+                                'verAplic='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.verAplic+sLineBreak+
+                                'cOrgao='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cOrgao)+sLineBreak+
+                                'cStat='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cStat)+sLineBreak+
+                                'xMotivo='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.xMotivo+sLineBreak+
+                                'chNFe='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.NomeArquivo+sLineBreak+
+                                'tpEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFe+sLineBreak+
+                                'xEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.xEvento+sLineBreak+
+                                'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.nSeqEvento)+sLineBreak+
+                                'CNPJDest='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.CNPJDest+sLineBreak+
+                                'emailDest='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.emailDest+sLineBreak+
+                                'cOrgaoAutor='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cOrgaoAutor)+sLineBreak+
+                                'dhRegEvento='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.dhRegEvento)+sLineBreak+
+                                'nProt='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.nProt+sLineBreak+
+                                'XML='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.XML+sLineBreak;
+
+                                for K:=0 to ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFePend.Count-1 do
+                                begin
+                                 Cmd.Resposta := Cmd.Resposta +
+                                '[chNFePend'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3)+IntToStrZero(K+1,3)+']'+sLineBreak+
+                                'chNFePend='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFePend.Items[K].ChavePend+sLineBreak;
+                                end;
+                              end;
+              end;
 
            except
                on E: Exception do

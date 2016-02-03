@@ -40,6 +40,8 @@
 |*  - Modificações para o layout 2
 |* 04/03/2015: Flavio Rubens Massaro Jr.
 |* - Modificação para contemplar layout 3 referente ao ano calendario 2014
+|* 03/02/2016: Anderson Nunes Kovaski
+|* - Modificação para contemplar layout 4 referente ao ano calendario 2015
 *******************************************************************************}
 
 unit ACBrECDBloco_0;
@@ -75,6 +77,7 @@ type
     fIND_EMP_GRD_PRT: String; /// Indicador de empresa de grande porte:
     fTIP_ECD: String;         /// Indicador do tipo de ECD: 0 – ECD de empresa não participante de SCP como sócio ostensivo. 1 – ECD de empresa participante de SCP como sócio ostensivo. 2 – ECD da SCP.
     fCOD_SCP: String;         /// Identificação da SCP.
+    fIDENT_MF: String;        /// Identificação de Moeda Funcional    
   public
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
@@ -93,6 +96,7 @@ type
     property IND_EMP_GRD_PRT: String read fIND_EMP_GRD_PRT write fIND_EMP_GRD_PRT;
     property TIP_ECD: String read fTIP_ECD write fTIP_ECD;
     property COD_SCP: String read fCOD_SCP write fCOD_SCP;
+    property IDENT_MF: String read fIDENT_MF write fIDENT_MF;    
   end;
 
   /// Registro 0001 - ABERTURA DO BLOCO 0

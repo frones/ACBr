@@ -243,7 +243,7 @@ begin
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgili, proFISSLex, proSpeedGov, proPronim, proSalvador,
-                    proSJP] then
+                    proSJP, proWebISS] then
       aVersao := '';
   end
   else
@@ -260,7 +260,7 @@ begin
     proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
                          Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
-
+    proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroRps;
   else
     IdLote := NumeroLote;
   end;

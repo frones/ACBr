@@ -735,7 +735,7 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
-      proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ';
+      proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"';
 
       proIssDSF: begin
                    FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' +
@@ -745,6 +745,11 @@ begin
                                     ' http://localhost:8080/WsNFe2/xsd/' + FxsdServico + '"';
                    FPDFeOwner.SSL.NameSpaceURI := FNameSpace;
                  end;  
+
+      proWebISS: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '" ' +
+                                  'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                                  'xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
+
       else begin
         if (FSeparador = '') then
         begin
@@ -774,11 +779,14 @@ begin
 
   if FDefTipos <> '' then
   begin
-    if FPrefixo4 <> '' then
-      FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
-                       StringReplace(FPrefixo4, ':', '', []) + '="' + FNameSpace + FSeparador + FDefTipos + '"'
-    else
-      FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FNameSpace + FSeparador + FDefTipos + '"';
+    if (FProvedor <> proWebISS) then
+    begin
+      if FPrefixo4 <> '' then
+        FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
+                         StringReplace(FPrefixo4, ':', '', []) + '="' + FNameSpace + FSeparador + FDefTipos + '"'
+      else
+        FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FNameSpace + FSeparador + FDefTipos + '"';
+    end;
   end;
 
   if FNameSpaceDad <> '' then

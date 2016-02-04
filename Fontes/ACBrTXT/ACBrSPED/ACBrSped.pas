@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2015   Isaque Pinheiro                      }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -46,6 +46,7 @@ uses SysUtils, Classes, DateUtils, ACBrTXTClass;
 
 type
   TWriteRegistroEvent = procedure(var ALinha: AnsiString) of object;
+  TCheckRegistroEvent = procedure(ARegistro: TObject; var AAbortar: Boolean) of object;
 
   EACBrSPEDException = class(Exception);
 

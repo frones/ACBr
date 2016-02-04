@@ -46,6 +46,22 @@ uses
   SysUtils, Classes, ACBrSped;
 
 type
+  TChecksBloco_C = class(TComponent)
+  private
+    FOwner: TComponent;
+
+    FOnCheckRegistroC100: TCheckRegistroEvent;
+
+    function GetOnCheckRegistroC100: TCheckRegistroEvent;
+    procedure SetOnCheckRegistroC100(const AValue: TCheckRegistroEvent);
+
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+  published
+    property OnCheckRegistroC100: TCheckRegistroEvent read GetOnCheckRegistroC100 write SetOnCheckRegistroC100;
+  end;
+
   { TEventsBloco_0 }
   TEventsBloco_C = class(TComponent)
   private
@@ -230,7 +246,7 @@ procedure TEventsBloco_C.SetOnAfterWriteRegistroC111(
 begin
   FOnAfterWriteRegistroC111 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC111 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC111 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnAfterWriteRegistroC120(
@@ -238,7 +254,7 @@ procedure TEventsBloco_C.SetOnAfterWriteRegistroC120(
 begin
   FOnAfterWriteRegistroC120 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC120 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC120 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnAfterWriteRegistroC170(
@@ -246,7 +262,7 @@ procedure TEventsBloco_C.SetOnAfterWriteRegistroC170(
 begin
   FOnAfterWriteRegistroC170 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC170 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC170 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnAfterWriteRegistroC470(
@@ -254,7 +270,7 @@ procedure TEventsBloco_C.SetOnAfterWriteRegistroC470(
 begin
   FOnAfterWriteRegistroC470 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC470 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC470 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnAfterWriteRegistroC510(
@@ -262,7 +278,7 @@ procedure TEventsBloco_C.SetOnAfterWriteRegistroC510(
 begin
   FOnAfterWriteRegistroC510 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC510 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC510 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC111(
@@ -270,7 +286,7 @@ procedure TEventsBloco_C.SetOnBeforeWriteRegistroC111(
 begin
   FOnBeforeWriteRegistroC111 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC111 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC111 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC120(
@@ -278,7 +294,7 @@ procedure TEventsBloco_C.SetOnBeforeWriteRegistroC120(
 begin
   FOnBeforeWriteRegistroC120 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC120 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC120 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC170(
@@ -286,7 +302,7 @@ procedure TEventsBloco_C.SetOnBeforeWriteRegistroC170(
 begin
   FOnBeforeWriteRegistroC170 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC170 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC170 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC470(
@@ -294,7 +310,7 @@ procedure TEventsBloco_C.SetOnBeforeWriteRegistroC470(
 begin
   FOnBeforeWriteRegistroC470 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC470 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC470 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC510(
@@ -302,7 +318,7 @@ procedure TEventsBloco_C.SetOnBeforeWriteRegistroC510(
 begin
   FOnBeforeWriteRegistroC510 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC510 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC510 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC111(
@@ -310,7 +326,7 @@ procedure TEventsBloco_C.SetOnWriteRegistroC111(
 begin
   FOnWriteRegistroC111 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC111 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC111 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC120(
@@ -318,7 +334,7 @@ procedure TEventsBloco_C.SetOnWriteRegistroC120(
 begin
   FOnWriteRegistroC120 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC120 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC120 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC170(
@@ -326,7 +342,7 @@ procedure TEventsBloco_C.SetOnWriteRegistroC170(
 begin
   FOnWriteRegistroC170 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC170 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC170 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC460(
@@ -334,7 +350,7 @@ procedure TEventsBloco_C.SetOnWriteRegistroC460(
 begin
   FOnWriteRegistroC460 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC460 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC460 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC470(
@@ -342,7 +358,7 @@ procedure TEventsBloco_C.SetOnWriteRegistroC470(
 begin
   FOnWriteRegistroC470 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC470 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC470 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC510(
@@ -350,7 +366,34 @@ procedure TEventsBloco_C.SetOnWriteRegistroC510(
 begin
   FOnWriteRegistroC510 := Value;
 
-  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC510 := Value;
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC510 := Value;
+end;
+
+{ TChecksBloco_C }
+
+constructor TChecksBloco_C.Create(AOwner: TComponent);
+begin
+  inherited;
+   inherited Create(AOwner);
+   FOwner := AOwner;
+end;
+
+destructor TChecksBloco_C.Destroy;
+begin
+   FOwner := nil;
+   inherited Destroy;
+end;
+
+function TChecksBloco_C.GetOnCheckRegistroC100: TCheckRegistroEvent;
+begin
+   Result := FOnCheckRegistroC100;
+end;
+
+procedure TChecksBloco_C.SetOnCheckRegistroC100(
+  const AValue: TCheckRegistroEvent);
+begin
+   FOnCheckRegistroC100 := AValue;
+//      TACBrSPEDFiscal(FOwner).Bloco_C.OnCheckRegistroC100 := Value;
 end;
 
 end.

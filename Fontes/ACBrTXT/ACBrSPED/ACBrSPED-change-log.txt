@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 04/02/2016
+[+] ACBrSpedFiscal registros C100
+    Adicionado evento para tratamento de regras impostas pela Lei definidas por 
+    situações de documentos e etc... 
+[*] Refectory de código de eventos.
+    (por Isaque Pinheiro)
+
 Data 03/02/2016
 [*] ACBrSPEDContabil Layout 4
 		http://www.projetoacbr.com.br/forum/topic/27681-sped-cont%C3%A1bil-layout-4/

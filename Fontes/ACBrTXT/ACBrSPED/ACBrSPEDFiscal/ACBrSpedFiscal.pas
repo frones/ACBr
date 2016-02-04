@@ -75,6 +75,8 @@ type
     FInicializado : boolean;
     FOnError: TErrorEvent;
 
+    FChecksBloco_C: TChecksBloco_C;
+
     FEventsBloco_0: TEventsBloco_0;
     FEventsBloco_C: TEventsBloco_C;
     FEventsBloco_D: TEventsBloco_D;
@@ -198,6 +200,8 @@ type
 
     property OnError: TErrorEvent read GetOnError write SetOnError;
 
+    property ChecksBloco_C: TChecksBloco_C read FChecksBloco_C; // write FOnChecksBloco_C;
+
     property EventsBloco_0: TEventsBloco_0 read FEventsBloco_0; // write FOnEventsBloco_0;
     property EventsBloco_C: TEventsBloco_C read FEventsBloco_C; // write FOnEventsBloco_C;
     property EventsBloco_D: TEventsBloco_D read FEventsBloco_D; // write FOnEventsBloco_D;
@@ -237,7 +241,7 @@ begin
 
   FBloco_0 := TBloco_0.Create;
   FBloco_1 := TBloco_1.Create;
-  FBloco_C := TBloco_C.Create;
+  FBloco_C := TBloco_C.Create(Self);
   FBloco_D := TBloco_D.Create;
   FBloco_E := TBloco_E.Create;
   FBloco_G := TBloco_G.Create;
@@ -273,6 +277,10 @@ begin
   FEventsBloco_C := TEventsBloco_C.Create(Self);
   FEventsBloco_C.Name := 'EventsBloco_C';
   FEventsBloco_C.SetSubComponent(True);
+
+  FChecksBloco_C := TChecksBloco_C.Create(Self);
+  FChecksBloco_C.Name := 'ChecksBloco_C';
+  FChecksBloco_C.SetSubComponent(True);
 
   FEventsBloco_D := TEventsBloco_D.Create(Self);
   FEventsBloco_D.Name := 'EventsBloco_D';

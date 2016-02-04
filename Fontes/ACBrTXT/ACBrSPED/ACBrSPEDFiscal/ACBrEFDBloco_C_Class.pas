@@ -49,24 +49,26 @@ type
   /// TBLOCO_C -
   TBloco_C = class(TACBrSPED)
   private
-    FOnBeforeWriteRegistroC111: TWriteRegistroEvent;
-    FOnBeforeWriteRegistroC120: TWriteRegistroEvent;
-    FOnBeforeWriteRegistroC170: TWriteRegistroEvent;
-    FOnBeforeWriteRegistroC470: TWriteRegistroEvent;
-    FOnBeforeWriteRegistroC510: TWriteRegistroEvent;
+    FOwner: TComponent;
 
-    FOnWriteRegistroC111: TWriteRegistroEvent;
-    FOnWriteRegistroC120: TWriteRegistroEvent;
-    FOnWriteRegistroC170: TWriteRegistroEvent;
-    FOnWriteRegistroC460: TWriteRegistroEvent;
-    FOnWriteRegistroC470: TWriteRegistroEvent;
-    FOnWriteRegistroC510: TWriteRegistroEvent;
+//    FOnBeforeWriteRegistroC111: TWriteRegistroEvent;
+//    FOnBeforeWriteRegistroC120: TWriteRegistroEvent;
+//    FOnBeforeWriteRegistroC170: TWriteRegistroEvent;
+//    FOnBeforeWriteRegistroC470: TWriteRegistroEvent;
+//    FOnBeforeWriteRegistroC510: TWriteRegistroEvent;
 
-    FOnAfterWriteRegistroC111: TWriteRegistroEvent;
-    FOnAfterWriteRegistroC120: TWriteRegistroEvent;
-    FOnAfterWriteRegistroC170: TWriteRegistroEvent;
-    FOnAfterWriteRegistroC470: TWriteRegistroEvent;
-    FOnAfterWriteRegistroC510: TWriteRegistroEvent;
+//    FOnWriteRegistroC111: TWriteRegistroEvent;
+//    FOnWriteRegistroC120: TWriteRegistroEvent;
+//    FOnWriteRegistroC170: TWriteRegistroEvent;
+//    FOnWriteRegistroC460: TWriteRegistroEvent;
+//    FOnWriteRegistroC470: TWriteRegistroEvent;
+//    FOnWriteRegistroC510: TWriteRegistroEvent;
+
+//    FOnAfterWriteRegistroC111: TWriteRegistroEvent;
+//    FOnAfterWriteRegistroC120: TWriteRegistroEvent;
+//    FOnAfterWriteRegistroC170: TWriteRegistroEvent;
+//    FOnAfterWriteRegistroC470: TWriteRegistroEvent;
+//    FOnAfterWriteRegistroC510: TWriteRegistroEvent;
 
     FBloco_0: TBloco_0;
 
@@ -134,7 +136,7 @@ type
     FRegistroC890Count: Integer;
 
     procedure WriteRegistroC100(RegC001: TRegistroC001) ;
-    procedure WriteRegistroC101(RegC100: TRegistroC100); 
+    procedure WriteRegistroC101(RegC100: TRegistroC100);
     procedure WriteRegistroC105(RegC100: TRegistroC100);
     procedure WriteRegistroC110(RegC100: TRegistroC100);
     procedure WriteRegistroC111(RegC110: TRegistroC110);
@@ -196,7 +198,7 @@ type
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
-    constructor Create;           /// Create
+    constructor Create(AOwner: TComponent); overload;
     destructor Destroy; override; /// Destroy
     procedure LimpaRegistros;
 
@@ -333,40 +335,42 @@ type
     property RegistroC860Count: Integer read FRegistroC860Count write FRegistroC860Count;
     property RegistroC890Count: Integer read FRegistroC890Count write FRegistroC890Count;
 
-    property OnBeforeWriteRegistroC111: TWriteRegistroEvent read FOnBeforeWriteRegistroC111 write FOnBeforeWriteRegistroC111;
-    property OnBeforeWriteRegistroC120: TWriteRegistroEvent read FOnBeforeWriteRegistroC120 write FOnBeforeWriteRegistroC120;
-    property OnBeforeWriteRegistroC170: TWriteRegistroEvent read FOnBeforeWriteRegistroC170 write FOnBeforeWriteRegistroC170;
-    property OnBeforeWriteRegistroC470: TWriteRegistroEvent read FOnBeforeWriteRegistroC470 write FOnBeforeWriteRegistroC470;
-    property OnBeforeWriteRegistroC510: TWriteRegistroEvent read FOnBeforeWriteRegistroC510 write FOnBeforeWriteRegistroC510;
+//    property OnBeforeWriteRegistroC111: TWriteRegistroEvent read FOnBeforeWriteRegistroC111 write FOnBeforeWriteRegistroC111;
+//    property OnBeforeWriteRegistroC120: TWriteRegistroEvent read FOnBeforeWriteRegistroC120 write FOnBeforeWriteRegistroC120;
+//    property OnBeforeWriteRegistroC170: TWriteRegistroEvent read FOnBeforeWriteRegistroC170 write FOnBeforeWriteRegistroC170;
+//    property OnBeforeWriteRegistroC470: TWriteRegistroEvent read FOnBeforeWriteRegistroC470 write FOnBeforeWriteRegistroC470;
+//    property OnBeforeWriteRegistroC510: TWriteRegistroEvent read FOnBeforeWriteRegistroC510 write FOnBeforeWriteRegistroC510;
 
-    property OnWriteRegistroC111: TWriteRegistroEvent read FOnWriteRegistroC111 write FOnWriteRegistroC111;
-    property OnWriteRegistroC120: TWriteRegistroEvent read FOnWriteRegistroC120 write FOnWriteRegistroC120;
-    property OnWriteRegistroC170: TWriteRegistroEvent read FOnWriteRegistroC170 write FOnWriteRegistroC170;
-    property OnWriteRegistroC460: TWriteRegistroEvent read FOnWriteRegistroC460 write FOnWriteRegistroC460;
-    property OnWriteRegistroC470: TWriteRegistroEvent read FOnWriteRegistroC470 write FOnWriteRegistroC470;
-    property OnWriteRegistroC510: TWriteRegistroEvent read FOnWriteRegistroC510 write FOnWriteRegistroC510;
+//    property OnWriteRegistroC111: TWriteRegistroEvent read FOnWriteRegistroC111 write FOnWriteRegistroC111;
+//    property OnWriteRegistroC120: TWriteRegistroEvent read FOnWriteRegistroC120 write FOnWriteRegistroC120;
+//    property OnWriteRegistroC170: TWriteRegistroEvent read FOnWriteRegistroC170 write FOnWriteRegistroC170;
+//    property OnWriteRegistroC460: TWriteRegistroEvent read FOnWriteRegistroC460 write FOnWriteRegistroC460;
+//    property OnWriteRegistroC470: TWriteRegistroEvent read FOnWriteRegistroC470 write FOnWriteRegistroC470;
+//    property OnWriteRegistroC510: TWriteRegistroEvent read FOnWriteRegistroC510 write FOnWriteRegistroC510;
 
-    property OnAfterWriteRegistroC111: TWriteRegistroEvent read FOnAfterWriteRegistroC111 write FOnAfterWriteRegistroC111;
-    property OnAfterWriteRegistroC120: TWriteRegistroEvent read FOnAfterWriteRegistroC120 write FOnAfterWriteRegistroC120;
-    property OnAfterWriteRegistroC170: TWriteRegistroEvent read FOnAfterWriteRegistroC170 write FOnAfterWriteRegistroC170;
-    property OnAfterWriteRegistroC470: TWriteRegistroEvent read FOnAfterWriteRegistroC470 write FOnAfterWriteRegistroC470;
-    property OnAfterWriteRegistroC510: TWriteRegistroEvent read FOnAfterWriteRegistroC510 write FOnAfterWriteRegistroC510;
+//    property OnAfterWriteRegistroC111: TWriteRegistroEvent read FOnAfterWriteRegistroC111 write FOnAfterWriteRegistroC111;
+//    property OnAfterWriteRegistroC120: TWriteRegistroEvent read FOnAfterWriteRegistroC120 write FOnAfterWriteRegistroC120;
+//    property OnAfterWriteRegistroC170: TWriteRegistroEvent read FOnAfterWriteRegistroC170 write FOnAfterWriteRegistroC170;
+//    property OnAfterWriteRegistroC470: TWriteRegistroEvent read FOnAfterWriteRegistroC470 write FOnAfterWriteRegistroC470;
+//    property OnAfterWriteRegistroC510: TWriteRegistroEvent read FOnAfterWriteRegistroC510 write FOnAfterWriteRegistroC510;
   end;
 
 implementation
 
-uses ACBrTXTUtils, ACBrUtil, strutils;
+uses ACBrSpedFiscal, ACBrTXTUtils, ACBrUtil, strutils;
 
 { TBloco_C }
 
-constructor TBloco_C.Create;
+constructor TBloco_C.Create(AOwner: TComponent);
 begin
-  inherited ;
-  CriaRegistros;
+   inherited Create;
+   FOwner := AOwner;
+   CriaRegistros;
 end;
 
 destructor TBloco_C.Destroy;
 begin
+  FOwner := nil;
   LiberaRegistros;
   inherited;
 end;
@@ -963,169 +967,178 @@ var
   strIND_FRT: AnsiString;
   strIND_PGTO: AnsiString;
   strCOD_SIT: AnsiString;
-  booNFCancelada: Boolean; /// Variavél p/ tratamento de NFs canceladas, denegadas ou inutilizada 
+  booNFCancelada: Boolean; /// Variavél p/ tratamento de NFs canceladas, denegadas ou inutilizada
+  booAborta: Boolean;
 begin
+  booAborta := False;
+
   if Assigned( RegC001.RegistroC100 ) then
   begin
      for intFor := 0 to RegC001.RegistroC100.Count - 1 do
      begin
-        with RegC001.RegistroC100.Items[intFor] do
+        if Assigned(TACBrSPEDFiscal(FOwner).ChecksBloco_C.OnCheckRegistroC100) then
+           TACBrSPEDFiscal(FOwner).ChecksBloco_C.OnCheckRegistroC100(RegC001.RegistroC100.Items[intFor], booAborta);
+
+        if not booAborta then
         begin
-          Check(not((COD_MOD = '55') and (COD_SIT <> sdDoctoNumInutilizada) and (Trim(CHV_NFE) = '')),
-                                                                '(C-C100) Nota: %s' +sLineBreak+
-                                                                '         Série: %s'+sLineBreak+
-                                                                '         Emitida no dia: %s'+sLineBreak+
-                                                                '         Modelo: %s'        +sLineBreak+
-                                                                '         ChaveNF: %s'+sLineBreak, [NUM_DOC, SER, FormatDateTime('dd/mm/yyyy', DT_DOC), COD_MOD, CHV_NFE]);		
-		
-          case COD_SIT of
-           sdRegular:               strCOD_SIT := '00';
-           sdExtempRegular:         strCOD_SIT := '01';
-           sdCancelado:             strCOD_SIT := '02';
-           sdCanceladoExtemp:       strCOD_SIT := '03';
-           sdDoctoDenegado:         strCOD_SIT := '04';
-           sdDoctoNumInutilizada:   strCOD_SIT := '05';
-           sdFiscalCompl:           strCOD_SIT := '06';
-           sdExtempCompl:           strCOD_SIT := '07';
-           sdRegimeEspecNEsp:       strCOD_SIT := '08';
-          end;
+           with RegC001.RegistroC100.Items[intFor] do
+           begin
+             Check(not((COD_MOD = '55') and (COD_SIT <> sdDoctoNumInutilizada) and (Trim(CHV_NFE) = '')),
+                                                                   '(C-C100) Nota: %s' +sLineBreak+
+                                                                   '         Série: %s'+sLineBreak+
+                                                                   '         Emitida no dia: %s'+sLineBreak+
+                                                                   '         Modelo: %s'        +sLineBreak+
+                                                                   '         ChaveNF: %s'+sLineBreak, [NUM_DOC, SER, FormatDateTime('dd/mm/yyyy', DT_DOC), COD_MOD, CHV_NFE]);
 
-          /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05 
-          /// Invertido a posição do teste condicional pois o ACBr por padrão adiciona IND_FRT=2 
-          if Pos(strCOD_SIT,'02, 03, 04, 05') > 0 then
-          begin
-            DT_DOC   := 0;
-            DT_E_S   := 0;
-            IND_FRT  := tfNenhum;
-            IND_PGTO := tpNenhum;
-            booNFCancelada := true
-          end
-          else
-            booNFCancelada := false;
+             case COD_SIT of
+              sdRegular:               strCOD_SIT := '00';
+              sdExtempRegular:         strCOD_SIT := '01';
+              sdCancelado:             strCOD_SIT := '02';
+              sdCanceladoExtemp:       strCOD_SIT := '03';
+              sdDoctoDenegado:         strCOD_SIT := '04';
+              sdDoctoNumInutilizada:   strCOD_SIT := '05';
+              sdFiscalCompl:           strCOD_SIT := '06';
+              sdExtempCompl:           strCOD_SIT := '07';
+              sdRegimeEspecNEsp:       strCOD_SIT := '08';
+             end;
 
-          //Obs.: A partir de 01/01/2012 passará a ser:
-          //Indicador do tipo do frete:
-          //0- Por conta do emitente;
-          //1- Por conta do destinatário/remetente;
-          //2- Por conta de terceiros;
-          //9- Sem cobrança de frete.
-          if DT_INI >= EncodeDate(2012,01,01) then
-          begin
-            strIND_FRT := IndFrtToStr(IND_FRT);
-          end
-          else
-          begin
-            case IND_FRT of
-             tfPorContaTerceiros:    strIND_FRT := '0';
-             tfPorContaEmitente:     strIND_FRT := '1';
-             tfPorContaDestinatario: strIND_FRT := '2';
-             tfSemCobrancaFrete:     strIND_FRT := '9';
-             tfNenhum:               strIND_FRT := '';
-            end;
-          end;
+             /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05
+             /// Invertido a posição do teste condicional pois o ACBr por padrão adiciona IND_FRT=2
+             if Pos(strCOD_SIT,'02, 03, 04, 05') > 0 then
+             begin
+               DT_DOC   := 0;
+               DT_E_S   := 0;
+               IND_FRT  := tfNenhum;
+               IND_PGTO := tpNenhum;
+               booNFCancelada := true
+             end
+             else
+               booNFCancelada := false;
 
-          if DT_INI >= EncodeDate(2012,07,01) then
-          begin
-            case IND_PGTO of
-             tpVista:        strIND_PGTO := '0';
-             tpPrazo:        strIND_PGTO := '1';
-             tpOutros:       strIND_PGTO := '2';
-             tpNenhum:       strIND_PGTO := '';
-            end
-          end
-          else
-          begin
-            case IND_PGTO of
-             tpVista:        strIND_PGTO := '0';
-             tpPrazo:        strIND_PGTO := '1';
-             tpSemPagamento: strIND_PGTO := '9';
-             tpNenhum:       strIND_PGTO := '';
-            end;
-          end;
+             //Obs.: A partir de 01/01/2012 passará a ser:
+             //Indicador do tipo do frete:
+             //0- Por conta do emitente;
+             //1- Por conta do destinatário/remetente;
+             //2- Por conta de terceiros;
+             //9- Sem cobrança de frete.
+             if DT_INI >= EncodeDate(2012,01,01) then
+             begin
+               strIND_FRT := IndFrtToStr(IND_FRT);
+             end
+             else
+             begin
+               case IND_FRT of
+                tfPorContaTerceiros:    strIND_FRT := '0';
+                tfPorContaEmitente:     strIND_FRT := '1';
+                tfPorContaDestinatario: strIND_FRT := '2';
+                tfSemCobrancaFrete:     strIND_FRT := '9';
+                tfNenhum:               strIND_FRT := '';
+               end;
+             end;
 
-          /// Para nota fiscal de consumidor final (COD_MOD = '65') não devem ser
-          /// informafo os campo:
-          /// COD_PAR, VL_BC_ICMS_ST, VL_ICMS_ST, VL_IPI, VL_PIS, VL_COFINS, VL_PIS_ST, VL_COFINS_ST.
-          if COD_MOD = '65' then
-          begin
-             Add( LFill('C100') +
-                  LFill( Integer(IND_OPER), 0 ) +
-                  LFill( Integer(IND_EMIT), 0 ) +
-                  LFill( COD_PART ) +
-                  LFill( COD_MOD  ) +
-                  LFill( strCOD_SIT  ) +
-                  LFill( SER  ) +
-                  LFill( NUM_DOC  ) +
-                  LFill( CHV_NFE  ) +
-                  LFill( DT_DOC, 'ddmmyyyy' ) +
-                  LFill( DT_E_S, 'ddmmyyyy' ) +
-                  LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
-                  LFill( strIND_PGTO ) +
-                  LFill( VL_DESC,0,2, booNFCancelada ) +
-                  LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
-                  LFill( VL_MERC,0,2, booNFCancelada ) +
-                  LFill( strIND_FRT ) +
-                  LFill( VL_FRT,0,2, booNFCancelada ) +
-                  LFill( VL_SEG,0,2, booNFCancelada ) +
-                  LFill( VL_OUT_DA,0,2, booNFCancelada ) +
-                  LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
-                  LFill( VL_ICMS,0,2, booNFCancelada ) +
-                  LFill( VL_BC_ICMS_ST,0,2, true ) +
-                  LFill( VL_ICMS_ST,0,2, true ) +
-                  LFill( VL_IPI,0,2, true ) +
-                  LFill( VL_PIS,0,2, true ) +
-                  LFill( VL_COFINS,0,2, true ) +
-                  LFill( VL_PIS_ST,0,2, true ) +
-                  LFill( VL_COFINS_ST,0,2, true ) ) ;
-          end
-          else
-          begin
-             Add( LFill('C100') +
-                  LFill( Integer(IND_OPER), 0 ) +
-                  LFill( Integer(IND_EMIT), 0 ) +
-                  LFill( COD_PART ) +
-                  LFill( COD_MOD  ) +
-                  LFill( strCOD_SIT  ) +
-                  LFill( SER  ) +
-                  LFill( NUM_DOC  ) +
-                  LFill( CHV_NFE  ) +
-                  LFill( DT_DOC, 'ddmmyyyy' ) +
-                  LFill( DT_E_S, 'ddmmyyyy' ) +
-                  LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
-                  LFill( strIND_PGTO ) +
-                  LFill( VL_DESC,0,2, booNFCancelada ) +
-                  LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
-                  LFill( VL_MERC,0,2, booNFCancelada ) +
-                  LFill( strIND_FRT ) +
-                  LFill( VL_FRT,0,2, booNFCancelada ) +
-                  LFill( VL_SEG,0,2, booNFCancelada ) +
-                  LFill( VL_OUT_DA,0,2, booNFCancelada ) +
-                  LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
-                  LFill( VL_ICMS,0,2, booNFCancelada ) +
-                  LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
-                  LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
-                  LFill( VL_IPI,0,2, booNFCancelada ) +
-                  LFill( VL_PIS,0,2,True ) +
-                  LFill( VL_COFINS,0,2,True) +
-                  LFill( VL_PIS_ST,0,2,True ) +
-                  LFill( VL_COFINS_ST,0,2, True) ) ;
-          end;
+             if DT_INI >= EncodeDate(2012,07,01) then
+             begin
+               case IND_PGTO of
+                tpVista:        strIND_PGTO := '0';
+                tpPrazo:        strIND_PGTO := '1';
+                tpOutros:       strIND_PGTO := '2';
+                tpNenhum:       strIND_PGTO := '';
+               end
+             end
+             else
+             begin
+               case IND_PGTO of
+                tpVista:        strIND_PGTO := '0';
+                tpPrazo:        strIND_PGTO := '1';
+                tpSemPagamento: strIND_PGTO := '9';
+                tpNenhum:       strIND_PGTO := '';
+               end;
+             end;
+
+             /// Para nota fiscal de consumidor final (COD_MOD = '65') não devem ser
+             /// informafo os campo:
+             /// COD_PAR, VL_BC_ICMS_ST, VL_ICMS_ST, VL_IPI, VL_PIS, VL_COFINS, VL_PIS_ST, VL_COFINS_ST.
+             if COD_MOD = '65' then
+             begin
+                Add( LFill('C100') +
+                     LFill( Integer(IND_OPER), 0 ) +
+                     LFill( Integer(IND_EMIT), 0 ) +
+                     LFill( COD_PART ) +
+                     LFill( COD_MOD  ) +
+                     LFill( strCOD_SIT  ) +
+                     LFill( SER  ) +
+                     LFill( NUM_DOC  ) +
+                     LFill( CHV_NFE  ) +
+                     LFill( DT_DOC, 'ddmmyyyy' ) +
+                     LFill( DT_E_S, 'ddmmyyyy' ) +
+                     LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
+                     LFill( strIND_PGTO ) +
+                     LFill( VL_DESC,0,2, booNFCancelada ) +
+                     LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
+                     LFill( VL_MERC,0,2, booNFCancelada ) +
+                     LFill( strIND_FRT ) +
+                     LFill( VL_FRT,0,2, booNFCancelada ) +
+                     LFill( VL_SEG,0,2, booNFCancelada ) +
+                     LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+                     LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
+                     LFill( VL_ICMS,0,2, booNFCancelada ) +
+                     LFill( VL_BC_ICMS_ST,0,2, true ) +
+                     LFill( VL_ICMS_ST,0,2, true ) +
+                     LFill( VL_IPI,0,2, true ) +
+                     LFill( VL_PIS,0,2, true ) +
+                     LFill( VL_COFINS,0,2, true ) +
+                     LFill( VL_PIS_ST,0,2, true ) +
+                     LFill( VL_COFINS_ST,0,2, true ) ) ;
+             end
+             else
+             begin
+                Add( LFill('C100') +
+                     LFill( Integer(IND_OPER), 0 ) +
+                     LFill( Integer(IND_EMIT), 0 ) +
+                     LFill( COD_PART ) +
+                     LFill( COD_MOD  ) +
+                     LFill( strCOD_SIT  ) +
+                     LFill( SER  ) +
+                     LFill( NUM_DOC  ) +
+                     LFill( CHV_NFE  ) +
+                     LFill( DT_DOC, 'ddmmyyyy' ) +
+                     LFill( DT_E_S, 'ddmmyyyy' ) +
+                     LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
+                     LFill( strIND_PGTO ) +
+                     LFill( VL_DESC,0,2, booNFCancelada ) +
+                     LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
+                     LFill( VL_MERC,0,2, booNFCancelada ) +
+                     LFill( strIND_FRT ) +
+                     LFill( VL_FRT,0,2, booNFCancelada ) +
+                     LFill( VL_SEG,0,2, booNFCancelada ) +
+                     LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+                     LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
+                     LFill( VL_ICMS,0,2, booNFCancelada ) +
+                     LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
+                     LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
+                     LFill( VL_IPI,0,2, booNFCancelada ) +
+                     LFill( VL_PIS,0,2,True ) +
+                     LFill( VL_COFINS,0,2,True) +
+                     LFill( VL_PIS_ST,0,2,True ) +
+                     LFill( VL_COFINS_ST,0,2, True) ) ;
+             end;
+           end;
+           /// Registros FILHOS
+
+           WriteRegistroC101( RegC001.RegistroC100.Items[intFor] ) ; // EC 87/2015 - Marcio Meneguzzi 06jan2016
+           WriteRegistroC105( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC110( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC120( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC130( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC140( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC160( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC165( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC170( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC190( RegC001.RegistroC100.Items[intFor] ) ;
+           WriteRegistroC195( RegC001.RegistroC100.Items[intFor] ) ;
+
+           RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
         end;
-        /// Registros FILHOS
-		
-		WriteRegistroC101( RegC001.RegistroC100.Items[intFor] ) ; // EC 87/2015 - Marcio Meneguzzi 06jan2016
-        WriteRegistroC105( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC110( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC120( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC130( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC140( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC160( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC165( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC170( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC190( RegC001.RegistroC100.Items[intFor] ) ;
-        WriteRegistroC195( RegC001.RegistroC100.Items[intFor] ) ;
-
-        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroC100Count := FRegistroC100Count + RegC001.RegistroC100.Count;
@@ -1225,9 +1238,9 @@ begin
   begin
      //-- Before
      strLinha := '';
-     if Assigned(FOnBeforeWriteRegistroC111) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC111) then
      begin
-        FOnBeforeWriteRegistroC111(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC111(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -1250,8 +1263,8 @@ begin
                       LFill( NUM_PROC ) +
                       LFill( intIND_PROC, 0 );
           //-- Write
-          if Assigned(FOnWriteRegistroC111) then
-             FOnWriteRegistroC111(strLinha);
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC111) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC111(strLinha);
 
           Add(strLinha);
         end;
@@ -1259,9 +1272,9 @@ begin
      end;
      //-- After
      strLinha := '';
-     if Assigned(FOnAfterWriteRegistroC111) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC111) then
      begin
-        FOnAfterWriteRegistroC111(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC111(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -1426,9 +1439,9 @@ begin
      end;
      //-- Before
      strLinha := '';
-     if Assigned(FOnBeforeWriteRegistroC120) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC120) then
      begin
-        FOnBeforeWriteRegistroC120(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC120(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -1443,8 +1456,8 @@ begin
                       LFill( COFINS_IMP,0,2 ) +
                       LFill( NUM_ACDRAW );
           //-- Write
-          if Assigned(FOnWriteRegistroC120) then
-             FOnWriteRegistroC120(strLinha);
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC120) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC120(strLinha);
 
           Add(strLinha);
         end;
@@ -1452,9 +1465,9 @@ begin
      end;
      //-- After
      strLinha := '';
-     if Assigned(FOnAfterWriteRegistroC120) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC120) then
      begin
-        FOnAfterWriteRegistroC120(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC120(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -1631,9 +1644,9 @@ begin
   begin
      //-- Before
      strLinha := '';
-     if Assigned(FOnBeforeWriteRegistroC170) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC170) then
      begin
-        FOnBeforeWriteRegistroC170(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC170(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -1696,8 +1709,8 @@ begin
                        LFill( VL_COFINS, 0, 2,True ) +
                        LFill( COD_CTA );
           //-- Write
-          if Assigned(FOnWriteRegistroC170) then
-             FOnWriteRegistroC170(strLinha);
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC170) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC170(strLinha);
 
           Add(strLinha);
         end;
@@ -1716,9 +1729,9 @@ begin
      end;
      //-- Before
      strLinha := '';
-     if Assigned(FOnAfterWriteRegistroC170) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC170) then
      begin
-        FOnAfterWriteRegistroC170(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC170(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -2440,8 +2453,8 @@ begin
                       LFill( NOM_ADQ )  ;
 
           //-- Write
-          if Assigned(FOnWriteRegistroC460) then
-             FOnWriteRegistroC460(strLinha);
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC460) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC460(strLinha);
 
           Add(strLinha);
         end;
@@ -2469,9 +2482,9 @@ begin
      end;
      //-- Before
      strLinha := '';
-     if Assigned(FOnBeforeWriteRegistroC470) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC470) then
      begin
-        FOnBeforeWriteRegistroC470(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC470(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -2491,18 +2504,18 @@ begin
                       LFill( VL_PIS,0,2 ) +
                       LFill( VL_COFINS,0,2 );
           //-- Write
-          if Assigned(FOnWriteRegistroC470) then
-             FOnWriteRegistroC470(strLinha);
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC470) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC470(strLinha);
 
           Add(strLinha);
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
-     //-- Before
+     //-- After
      strLinha := '';
-     if Assigned(FOnAfterWriteRegistroC470) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC470) then
      begin
-        FOnAfterWriteRegistroC470(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC470(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -2688,9 +2701,9 @@ begin
      end;
      //-- Before
      strLinha := '';
-     if Assigned(FOnBeforeWriteRegistroC510) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC510) then
      begin
-        FOnBeforeWriteRegistroC510(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC510(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;
@@ -2720,8 +2733,8 @@ begin
                       LFill( VL_COFINS,0,2 ) +
                       LFill( COD_CTA );
           //-- Write
-          if Assigned(FOnWriteRegistroC510) then
-             FOnWriteRegistroC510(strLinha);
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC510) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC510(strLinha);
 
           Add(strLinha);
         end;
@@ -2729,9 +2742,9 @@ begin
      end;
      //-- Before
      strLinha := '';
-     if Assigned(FOnAfterWriteRegistroC510) then
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC510) then
      begin
-        FOnAfterWriteRegistroC510(strLinha);
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC510(strLinha);
         if strLinha <> EmptyStr then
            Add(strLinha);
      end;

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data; 04/02/2016
+-- ACBrETQPpla --
+[*] Ajuste para permitir SubFontes até 999 em "ImprimirTexto"
+    http://www.projetoacbr.com.br/forum/topic/27887-subfonte-do-componente-acbretq/
+
 Data: 27/01/2015   (por: DSA)
 -- ACBrECF --
 [+] Adicionada a propriedade "TotalCancelamentosEmAberto: Double"

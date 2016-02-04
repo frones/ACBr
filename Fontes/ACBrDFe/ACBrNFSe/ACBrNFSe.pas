@@ -348,33 +348,33 @@ end;
 procedure TACBrNFSe.LerServicoDeParams(LayOutServico: TLayOutNFSe;
   var Versao: Double; var URL: String);
 begin
- if Configuracoes.WebServices.Ambiente = taHomologacao then
- begin
-   case LayOutServico of
-     LayNfseRecepcaoLote: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoLoteRPS;
-     LayNfseConsultaSitLoteRps: URL := Configuracoes.Geral.ConfigURL.HomConsultaSitLoteRPS;
-     LayNfseConsultaLote: URL := Configuracoes.Geral.ConfigURL.HomConsultaLoteRPS;
-     LayNfseConsultaNfseRps: URL := Configuracoes.Geral.ConfigURL.HomConsultaNFSeRPS;
-     LayNfseConsultaNfse: URL := Configuracoes.Geral.ConfigURL.HomConsultaNFSe;
-     LayNfseCancelaNfse: URL := Configuracoes.Geral.ConfigURL.HomCancelaNFSe;
-     LayNfseGerar: URL := Configuracoes.Geral.ConfigURL.HomGerarNFSe;
-     LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoSincrono;
-     LayNfseSubstituiNfse: URL := Configuracoes.Geral.ConfigURL.HomSubstituiNFSe;
-   end;
- end
- else begin
-   case LayOutServico of
-     LayNfseRecepcaoLote: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoLoteRPS;
-     LayNfseConsultaSitLoteRps: URL := Configuracoes.Geral.ConfigURL.ProConsultaSitLoteRPS;
-     LayNfseConsultaLote: URL := Configuracoes.Geral.ConfigURL.ProConsultaLoteRPS;
-     LayNfseConsultaNfseRps: URL := Configuracoes.Geral.ConfigURL.ProConsultaNFSeRPS;
-     LayNfseConsultaNfse: URL := Configuracoes.Geral.ConfigURL.ProConsultaNFSe;
-     LayNfseCancelaNfse: URL := Configuracoes.Geral.ConfigURL.ProCancelaNFSe;
-     LayNfseGerar: URL := Configuracoes.Geral.ConfigURL.ProGerarNFSe;
-     LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoSincrono;
-     LayNfseSubstituiNfse: URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
-   end;
- end;
+  if Configuracoes.WebServices.Ambiente = taHomologacao then
+  begin
+    case LayOutServico of
+      LayNfseRecepcaoLote:         URL := Configuracoes.Geral.ConfigURL.HomRecepcaoLoteRPS;
+      LayNfseConsultaSitLoteRps:   URL := Configuracoes.Geral.ConfigURL.HomConsultaSitLoteRPS;
+      LayNfseConsultaLote:         URL := Configuracoes.Geral.ConfigURL.HomConsultaLoteRPS;
+      LayNfseConsultaNfseRps:      URL := Configuracoes.Geral.ConfigURL.HomConsultaNFSeRPS;
+      LayNfseConsultaNfse:         URL := Configuracoes.Geral.ConfigURL.HomConsultaNFSe;
+      LayNfseCancelaNfse:          URL := Configuracoes.Geral.ConfigURL.HomCancelaNFSe;
+      LayNfseGerar:                URL := Configuracoes.Geral.ConfigURL.HomGerarNFSe;
+      LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoSincrono;
+      LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.HomSubstituiNFSe;
+    end;
+  end
+  else begin
+    case LayOutServico of
+      LayNfseRecepcaoLote:         URL := Configuracoes.Geral.ConfigURL.ProRecepcaoLoteRPS;
+      LayNfseConsultaSitLoteRps:   URL := Configuracoes.Geral.ConfigURL.ProConsultaSitLoteRPS;
+      LayNfseConsultaLote:         URL := Configuracoes.Geral.ConfigURL.ProConsultaLoteRPS;
+      LayNfseConsultaNfseRps:      URL := Configuracoes.Geral.ConfigURL.ProConsultaNFSeRPS;
+      LayNfseConsultaNfse:         URL := Configuracoes.Geral.ConfigURL.ProConsultaNFSe;
+      LayNfseCancelaNfse:          URL := Configuracoes.Geral.ConfigURL.ProCancelaNFSe;
+      LayNfseGerar:                URL := Configuracoes.Geral.ConfigURL.ProGerarNFSe;
+      LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoSincrono;
+      LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
+    end;
+  end;
 end;
 
 procedure TACBrNFSe.SetStatus(const stNewStatus: TStatusACBrNFSe);

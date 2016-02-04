@@ -493,13 +493,13 @@ begin
 
   FPIniParams := TMemIniFile.Create(NomeArqParams);
 
-  FConfigGeral.VersaoSoap := FPIniParams.ReadString('Geral', 'VersaoSoap', '');
-  FConfigGeral.Prefixo2 := FPIniParams.ReadString('Geral', 'Prefixo2', '');
-  FConfigGeral.Prefixo3 := FPIniParams.ReadString('Geral', 'Prefixo3', '');
-  FConfigGeral.Prefixo4 := FPIniParams.ReadString('Geral', 'Prefixo4', '');
-  FConfigGeral.Identificador := FPIniParams.ReadString('Geral', 'Identificador', '');
-  FConfigGeral.QuebradeLinha := FPIniParams.ReadString('Geral', 'QuebradeLinha', '');
-  FConfigGeral.UseSSL := FPIniParams.ReadBool('Geral', 'UseSSL', False);
+  FConfigGeral.VersaoSoap    := trim(FPIniParams.ReadString('Geral', 'VersaoSoap', ''));
+  FConfigGeral.Prefixo2      := trim(FPIniParams.ReadString('Geral', 'Prefixo2', ''));
+  FConfigGeral.Prefixo3      := trim(FPIniParams.ReadString('Geral', 'Prefixo3', ''));
+  FConfigGeral.Prefixo4      := trim(FPIniParams.ReadString('Geral', 'Prefixo4', ''));
+  FConfigGeral.Identificador := trim(FPIniParams.ReadString('Geral', 'Identificador', ''));
+  FConfigGeral.QuebradeLinha := trim(FPIniParams.ReadString('Geral', 'QuebradeLinha', ''));
+  FConfigGeral.UseSSL        := FPIniParams.ReadBool('Geral', 'UseSSL', False);
 
   FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);

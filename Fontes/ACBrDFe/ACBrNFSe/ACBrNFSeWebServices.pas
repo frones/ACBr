@@ -674,7 +674,7 @@ end;
 
 procedure TNFSeWebService.InicializarDadosMsg(AIncluiEncodingCab: Boolean);
 var
-  Texto: String;
+  Texto, xmlns2, xmlns3, xmlns4: String;
   Ok: Boolean;
 begin
   FvNotas := '';
@@ -696,6 +696,22 @@ begin
   FPrefixo4  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo4;
   FPCabMsg   := FPConfiguracoesNFSe.Geral.ConfigEnvelope.CabecalhoMsg;
 
+  if FPrefixo2 <> '' then
+    xmlns2 := ' xmlns:' + StringReplace(FPrefixo2, ':', '', []) + '="'
+  else
+    xmlns2 := ' xmlns="';
+
+  if FPrefixo3 <> '' then
+    xmlns3 := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="'
+  else
+    xmlns3 := ' xmlns="';
+
+  if FPrefixo4 <> '' then
+    xmlns4 := ' xmlns:' + StringReplace(FPrefixo4, ':', '', []) + '="'
+  else
+    xmlns4 := ' xmlns="';
+
+
   if AIncluiEncodingCab then
     FPCabMsg := '<' + ENCODING_UTF8 + '>' + FPCabMsg;
 
@@ -705,13 +721,7 @@ begin
     FSeparador := '/';
 
   if FCabecalho <> '' then
-  begin
-    if FPrefixo2 <> '' then
-      FNameSpaceCab := ' xmlns:' + StringReplace(FPrefixo2, ':', '', []) +
-                       '="' + FNameSpace + FSeparador + FCabecalho +'">'
-    else
-      FNameSpaceCab := ' xmlns="' + FNameSpace + FSeparador + FCabecalho +'">';
-  end
+    FNameSpaceCab := xmlns2 + FNameSpace + FSeparador + FCabecalho +'">'
   else
     FNameSpaceCab := '>';
 
@@ -721,51 +731,34 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
-      proInfisc: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"';
+      proInfisc: FNameSpaceDad := xmlns3 + FNameSpace + '"';
 
-      proIssDSF: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' +
+      proIssDSF: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
                                   ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                   ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
                                   ' http://localhost:8080/WsNFe2/xsd/' + FxsdServico + '"';
 
-      proWebISS: FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"' ;
+      proWebISS: FNameSpaceDad := xmlns3 + FNameSpace + '"' ;
 //                                  ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
 //                                  ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 
       else begin
         if (FSeparador = '') then
         begin
-          if FPrefixo3 <> '' then
-            FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + FSeparador + FxsdServico + '"'
-          else
-            FNameSpaceDad := 'xmlns="' + FNameSpace + FSeparador + FxsdServico + '"';
-
+          FNameSpaceDad := xmlns3 + FNameSpace + FSeparador + FxsdServico + '"';
           FPDFeOwner.SSL.NameSpaceURI := FNameSpace + FSeparador + FxsdServico;
         end
-        else begin
-          if FPrefixo3 <> '' then
-            FNameSpaceDad := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="' + FNameSpace + '"'
-          else
-            FNameSpaceDad := 'xmlns="' + FNameSpace + '"';
-        end;
+        else
+          FNameSpaceDad := xmlns3 + FNameSpace + '"';
       end;
     end;
   end
   else
     FNameSpaceDad := '';
 
-  if (DefTipos = '') and (NameSpaceDad <> '') then
-    FNameSpaceDad := FNameSpaceDad;
-
   if FDefTipos <> '' then
-  begin
-    if FPrefixo4 <> '' then
-      FNameSpaceDad := FNameSpaceDad + ' xmlns:' +
-                       StringReplace(FPrefixo4, ':', '', []) + '="' + FNameSpace + FSeparador + FDefTipos + '"'
-    else
-      FNameSpaceDad := FNameSpaceDad + ' xmlns="' + FNameSpace + FSeparador + FDefTipos + '"';
-  end;
+    FNameSpaceDad := FNameSpaceDad + xmlns4 + FNameSpace + FSeparador + FDefTipos + '"';
 
   if FNameSpaceDad <> '' then
     FNameSpaceDad := ' ' + FNameSpaceDad;
@@ -2719,7 +2712,7 @@ begin
       proGinfes: begin
                    FTagI := '<' + TagGrupo +
                             ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
-                            ' xmlns:' + stringReplace(FPrefixo4, ':', '', []) + '="http://www.ginfes.com.br/tipos">';
+                            ' xmlns:ns4="http://www.ginfes.com.br/tipos">';
 
                    FTagF := '</' + TagGrupo + '>';
                  end;

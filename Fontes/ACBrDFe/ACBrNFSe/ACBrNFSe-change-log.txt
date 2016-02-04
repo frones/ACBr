@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2016
+-- ACBrNFSe / ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
+[*] Alterações visando a montagem correta dos xmlns com ou sem prefixos.
+    Por: Italo Jurisato Junior
+
 02/02/2016
 -- ACBrNFSeWebServices --
 [*] Remoção do Encoding na mensagem de resposta.

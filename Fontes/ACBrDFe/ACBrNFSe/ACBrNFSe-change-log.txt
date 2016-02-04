@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/02/2016
+-- ACBrNFSeNotasFiscais --
+[*] Alterações visando a leitura completa do XML da NFS-e, não estava lendo o
+    grupo NfseCancelamento.
+    Por: Italo Jurisato Junior
 -- ACBrNFSe / ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
 [*] Alterações visando a montagem correta dos xmlns com ou sem prefixos.
     Por: Italo Jurisato Junior

@@ -727,11 +727,16 @@ var
     Result := Pos('</NFS-e>', AXMLString);
     if Result = 0 then
     begin
-      TamTAG := 6;
-      Result := Pos('</Nfse>', AXMLString);
-      // provedor ISSDSF
+      TamTAG := 10;
+      Result := Pos('</CompNfse>', AXMLString);
       if Result = 0 then
-        Result := Pos('</Nota>', AXMLString);
+      begin
+        TamTAG := 6;
+        Result := Pos('</Nfse>', AXMLString);
+        // provedor ISSDSF
+        if Result = 0 then
+          Result := Pos('</Nota>', AXMLString);
+      end;
     end;
   end;
 

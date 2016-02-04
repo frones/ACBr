@@ -228,8 +228,8 @@ begin
     rlb_1_DadosManifesto.Height         := 200;
 
   {$IFNDEF BORLAND}
-  rlLabel8.Layout := tlCenter;
-  rlLabel8.Font.Size := 6;
+  RLMemo1.Layout := tlCenter;
+  RLMemo1.Font.Size := 6;
   {$ENDIF}
 
   if (FLogo <> '') then

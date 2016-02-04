@@ -1,13 +1,13 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 244
-  Height = 920
-  Top = 56
+  Height = 788
+  Top = 82
   Width = 838
   HorzScrollBar.Page = 797
-  VertScrollBar.Page = 920
+  VertScrollBar.Page = 788
   AutoScroll = True
   Caption = 'Manifesto - Retrato'
-  ClientHeight = 920
+  ClientHeight = 788
   ClientWidth = 821
   Font.Height = -8
   Font.Name = 'Arial'
@@ -25,7 +25,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     BeforePrint = rlMDFeBeforePrint
     object rlb_1_DadosManifesto: TRLBand[0]
       Left = 26
-      Height = 267
+      Height = 301
       Top = 26
       Width = 742
       BandType = btHeader
@@ -95,28 +95,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rlLabel8: TRLLabel
-        Left = 455
-        Height = 15
-        Top = 3
-        Width = 281
-        AutoSize = False
-        Caption = 'Documento Auxiliar de Manifesto Eletrônico de Documentos Fiscais'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object rlLabel17: TRLLabel
         Left = 356
         Height = 22
-        Top = 6
+        Top = 4
         Width = 89
         Caption = 'DAMDFE'
         Color = clWhite
@@ -808,22 +790,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel6: TRLLabel
-        Left = 455
-        Height = 15
-        Top = 19
-        Width = 281
-        AutoSize = False
-        Caption = 'Documentos Fiscais'
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw3: TRLDraw
         Left = 315
         Height = 33
@@ -893,11 +859,29 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
         Text = '0#/0#'
       end
+      object RLMemo1: TRLMemo
+        Left = 455
+        Height = 30
+        Top = 4
+        Width = 284
+        Behavior = [beSiteExpander]
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'Documento Auxiliar de Manifesto Eletrônico de Documentos Fiscais'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
     object rlb_2_Rodo: TRLBand[1]
       Left = 26
       Height = 208
-      Top = 293
+      Top = 327
       Width = 742
       BandType = btTitle
       Color = clWhite
@@ -1367,7 +1351,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_3_Aereo: TRLBand[2]
       Left = 26
       Height = 1
-      Top = 501
+      Top = 535
       Width = 742
       BandType = btColumnHeader
       Color = clWhite
@@ -1382,7 +1366,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_4_Aquav: TRLBand[3]
       Left = 26
       Height = 1
-      Top = 502
+      Top = 536
       Width = 742
       BandType = btColumnHeader
       Color = clWhite
@@ -1712,7 +1696,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_5_Ferrov: TRLBand[4]
       Left = 26
       Height = 1
-      Top = 503
+      Top = 537
       Width = 742
       BandType = btColumnHeader
       Color = clWhite
@@ -1727,7 +1711,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_6_Observacao: TRLBand[5]
       Left = 26
       Height = 152
-      Top = 558
+      Top = 592
       Width = 742
       BandType = btSummary
       Color = clWhite
@@ -1849,7 +1833,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_8_Documentos_Lista: TRLBand[6]
       Left = 26
       Height = 22
-      Top = 536
+      Top = 570
       Width = 742
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1927,7 +1911,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_7_Documentos_Titulos: TRLBand[7]
       Left = 26
       Height = 32
-      Top = 504
+      Top = 538
       Width = 742
       BandType = btColumnHeader
       Borders.Sides = sdCustom

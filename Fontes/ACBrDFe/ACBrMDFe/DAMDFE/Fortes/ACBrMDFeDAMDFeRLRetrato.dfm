@@ -2,7 +2,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 244
   Top = 56
   Width = 838
-  Height = 920
+  Height = 788
   AutoScroll = True
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
@@ -25,7 +25,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Left = 26
       Top = 26
       Width = 742
-      Height = 267
+      Height = 301
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -64,24 +64,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Width = 742
         Height = 1
       end
-      object rlLabel8: TRLLabel
-        Left = 455
-        Top = 3
-        Width = 281
-        Height = 15
-        AutoSize = False
-        Caption = 'Documento Auxiliar de Manifesto Eletr'#244'nico de Documentos Fiscais'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-      end
       object rlLabel17: TRLLabel
         Left = 356
-        Top = 6
+        Top = 4
         Width = 89
         Height = 22
         Caption = 'DAMDFE'
@@ -642,20 +627,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         AutoSize = False
         BarcodeType = bcCode128C
       end
-      object RLLabel6: TRLLabel
-        Left = 455
-        Top = 19
-        Width = 281
-        Height = 15
-        AutoSize = False
-        Caption = 'Documentos Fiscais'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentFont = False
-      end
       object RLDraw3: TRLDraw
         Left = 315
         Top = 167
@@ -711,10 +682,25 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
         Text = '0#/0#'
       end
+      object RLMemo1: TRLMemo
+        Left = 455
+        Top = 4
+        Width = 284
+        Height = 30
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'Documento Auxiliar de Manifesto Eletr'#244'nico de Documentos Fiscais')
+        ParentFont = False
+      end
     end
     object rlb_2_Rodo: TRLBand
       Left = 26
-      Top = 293
+      Top = 327
       Width = 742
       Height = 208
       BandType = btTitle
@@ -1089,9 +1075,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_3_Aereo: TRLBand
       Left = 26
-      Top = 501
+      Top = 535
       Width = 742
-      Height = 0
+      Height = 1
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
@@ -1100,9 +1086,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_4_Aquav: TRLBand
       Left = 26
-      Top = 501
+      Top = 536
       Width = 742
-      Height = 0
+      Height = 1
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
@@ -1363,9 +1349,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_5_Ferrov: TRLBand
       Left = 26
-      Top = 501
+      Top = 537
       Width = 742
-      Height = 0
+      Height = 1
       BandType = btColumnHeader
       Color = clWhite
       ParentColor = False
@@ -1374,7 +1360,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_6_Observacao: TRLBand
       Left = 26
-      Top = 555
+      Top = 592
       Width = 742
       Height = 152
       BandType = btSummary
@@ -1475,7 +1461,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_8_Documentos_Lista: TRLBand
       Left = 26
-      Top = 533
+      Top = 570
       Width = 742
       Height = 22
       Borders.Sides = sdCustom
@@ -1508,6 +1494,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
       end
       object rls2: TRLDraw
         Left = 374
@@ -1531,11 +1518,12 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        Text = ''
       end
     end
     object rlb_7_Documentos_Titulos: TRLBand
       Left = 26
-      Top = 501
+      Top = 538
       Width = 742
       Height = 32
       BandType = btColumnHeader

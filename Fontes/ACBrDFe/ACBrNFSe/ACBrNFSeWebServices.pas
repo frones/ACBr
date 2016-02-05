@@ -697,19 +697,19 @@ begin
   FPCabMsg   := FPConfiguracoesNFSe.Geral.ConfigEnvelope.CabecalhoMsg;
 
   if FPrefixo2 <> '' then
-    xmlns2 := ' xmlns:' + StringReplace(FPrefixo2, ':', '', []) + '="'
+    xmlns2 := 'xmlns:' + StringReplace(FPrefixo2, ':', '', []) + '="'
   else
-    xmlns2 := ' xmlns="';
+    xmlns2 := 'xmlns="';
 
   if FPrefixo3 <> '' then
-    xmlns3 := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="'
+    xmlns3 := 'xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="'
   else
-    xmlns3 := ' xmlns="';
+    xmlns3 := 'xmlns="';
 
   if FPrefixo4 <> '' then
-    xmlns4 := ' xmlns:' + StringReplace(FPrefixo4, ':', '', []) + '="'
+    xmlns4 := 'xmlns:' + StringReplace(FPrefixo4, ':', '', []) + '="'
   else
-    xmlns4 := ' xmlns="';
+    xmlns4 := 'xmlns="';
 
 
   if AIncluiEncodingCab then

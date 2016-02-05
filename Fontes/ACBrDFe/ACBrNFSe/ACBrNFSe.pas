@@ -474,7 +474,7 @@ begin
         ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
   end;
 
-  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Gerar);
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RpsGerar);
 
   Result := WebServices.Gera(ARps, ALote);
 end;

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2016
+-- ACBrNFSe / ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
+[*] A propriedade de configuração ConfigAssinar.Gerar mudou para 
+    ConfigAssinar.RpsGerar caso seu valor for True o Rps a ser enviado pelo
+    Método Gerar será assinado, foi criado a propriedade de configuração:
+    ConfigAssinar.LoteGerar, o método Gerar do provedor BHISS é diferente
+    em vez de conter um RPS possui um LoteRps com 1 até 3 RPS e para esse
+    provedor tanto o RPS quanto o Lote devem ser assinados.
+[+] Foi incluido em DefinirDadosMsg de varias classes a checagem de qtde
+    de RPS / Notas carregadas no componente.
+    Por: Italo Jurisato Junior
+
 04/02/2016
 -- ACBrNFSeNotasFiscais --
 [*] Alterações visando a leitura completa do XML da NFS-e, não estava lendo o

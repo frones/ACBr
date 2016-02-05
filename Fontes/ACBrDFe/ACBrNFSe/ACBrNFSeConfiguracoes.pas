@@ -75,7 +75,8 @@ type
     ConsNFSeRps: Boolean;
     ConsNFSe: Boolean;
     Cancelar: Boolean;
-    Gerar: Boolean;
+    RpsGerar: Boolean;
+    LoteGerar: Boolean;
     RecSincrono: Boolean;
     Substituir: Boolean;
  end;
@@ -143,30 +144,39 @@ type
 
  TConfigEnvelope = record
     CabecalhoMsg: String;
+
     Recepcionar: String;
     Recepcionar_IncluiEncodingCab: Boolean;
     Recepcionar_IncluiEncodingDados: Boolean;
+
     ConsSit: String;
     ConsSit_IncluiEncodingCab: Boolean;
     ConsSit_IncluiEncodingDados: Boolean;
+
     ConsLote: String;
     ConsLote_IncluiEncodingCab: Boolean;
     ConsLote_IncluiEncodingDados: Boolean;
+
     ConsNFSeRps: String;
     ConsNFSeRps_IncluiEncodingCab: Boolean;
     ConsNFSeRps_IncluiEncodingDados: Boolean;
+
     ConsNFSe: String;
     ConsNFSe_IncluiEncodingCab: Boolean;
     ConsNFSe_IncluiEncodingDados: Boolean;
+
     Cancelar: String;
     Cancelar_IncluiEncodingCab: Boolean;
     Cancelar_IncluiEncodingDados: Boolean;
+
     Gerar: String;
     Gerar_IncluiEncodingCab: Boolean;
     Gerar_IncluiEncodingDados: Boolean;
+
     RecSincrono: String;
     RecSincrono_IncluiEncodingCab: Boolean;
     RecSincrono_IncluiEncodingDados: Boolean;
+
     Substituir: String;
     Substituir_IncluiEncodingCab: Boolean;
     Substituir_IncluiEncodingDados: Boolean;
@@ -513,7 +523,8 @@ begin
   FConfigAssinar.ConsNFSeRps := FPIniParams.ReadBool('Assinar', 'ConsNFSeRps', False);
   FConfigAssinar.ConsNFSe := FPIniParams.ReadBool('Assinar', 'ConsNFSe', False);
   FConfigAssinar.Cancelar := FPIniParams.ReadBool('Assinar', 'Cancelar', False);
-  FConfigAssinar.Gerar := FPIniParams.ReadBool('Assinar', 'Gerar', False);
+  FConfigAssinar.RpsGerar := FPIniParams.ReadBool('Assinar', 'RpsGerar', False);
+  FConfigAssinar.LoteGerar := FPIniParams.ReadBool('Assinar', 'LoteGerar', False);
   FConfigAssinar.RecSincrono := FPIniParams.ReadBool('Assinar', 'RecSincrono', False);
   FConfigAssinar.Substituir := FPIniParams.ReadBool('Assinar', 'Substituir', False);
 

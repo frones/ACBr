@@ -1021,20 +1021,28 @@ var
   EnviarLoteRps, xmlns, xPrefixo: String;
   i, j: Integer;
 begin
-  case FProvedor of
-    proActcon: EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
-    proIssDsf: EnviarLoteRps := 'ReqEnvioLoteRPS';
-    proInfisc: EnviarLoteRps := 'envioLote';
-    proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
-  else
-    EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
+
+  if FPLayout = LayNFSeGerar then
+  begin
+    EnviarLoteRps := 'GerarNfseEnvio';
+  end
+  else begin
+    case FProvedor of
+      proActcon: EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
+      proIssDsf: EnviarLoteRps := 'ReqEnvioLoteRPS';
+      proInfisc: EnviarLoteRps := 'envioLote';
+      proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
+    else
+      EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
+    end;
   end;
 
   FxSignatureNode := '';
   FxDSIGNSLote := '';
   FxIdSignature := '';
 
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) then
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) or
+     ((FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar) and (FPLayout = LayNFSeGerar)) then
   begin
     if (URI <> '') then
     begin
@@ -1096,7 +1104,7 @@ begin
         proSystemPro,
         proFreire: FvNotas := FvNotas +
                               '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id ="'+ TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].NFSe.InfID.ID +'"' +
+                               '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id ="'+ FNotasFiscais.Items[I].NFSe.InfID.ID +'"' +
                                  RetornarConteudoEntre(RPS,
                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
@@ -1261,6 +1269,13 @@ procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
 var
   I: Integer;
 begin
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+
+  if FNotasFiscais.Count > 50 then
+    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
+      ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+
   GerarDadosMsg := TNFSeG.Create;
   try
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
@@ -1270,11 +1285,11 @@ begin
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPScomAssinatura(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado);
+        GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
     end
     else begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPSsemAssinatura(TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal);
+        GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
     end;
 
     case FProvedor of
@@ -1295,7 +1310,7 @@ begin
     with GerarDadosMsg do
     begin
       NumeroLote := TNFSeGerarLoteRps(Self).NumeroLote;
-      QtdeNotas  := TNFSeGerarLoteRps(Self).FNotasFiscais.Count;
+      QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
 
@@ -1310,14 +1325,14 @@ begin
   begin
     DefinirSignatureNode('');
 
-    FPDadosMsg := TNFSeGerarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+    FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg,
                                   FPrefixo3 + 'EnviarLoteRpsEnvio',
                                   FPrefixo3 + 'LoteRps',
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-      TNFSeGerarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
+      FNotasFiscais.ValidarLote(FPDadosMsg,
                          FPConfiguracoes.Arquivos.PathSchemas +
                          FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
   end
@@ -1337,9 +1352,8 @@ end;
 
 function TNFSeGerarLoteRPS.TratarResposta: Boolean;
 begin
-  TNFSeGerarLoteRPS(Self).FNotasFiscais.Items[0].NomeArq :=
-    FPConfiguracoes.Arquivos.PathSalvar +
-    GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
+  FNotasFiscais.Items[0].NomeArq := FPConfiguracoes.Arquivos.PathSalvar +
+                                  GerarPrefixoArquivo + '-' + FPArqEnv + '.xml';
   Result := True;
 end;
 
@@ -1406,6 +1420,13 @@ var
   TotalServicos, TotalDeducoes: Double;
   TagGrupo, TagElemento: String;
 begin
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+
+  if FNotasFiscais.Count > 50 then
+    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
+      ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case Provedor of
@@ -1429,11 +1450,11 @@ begin
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPScomAssinatura(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLAssinado);
+        GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
     end
     else begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPSsemAssinatura(TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[I].XMLOriginal);
+        GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
     end;
 
     case FProvedor of
@@ -1452,19 +1473,19 @@ begin
       FTagF := '';
     end;
 
-    dDataInicial  := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[0].NFSe.DataEmissao;
+    dDataInicial  := FNotasFiscais.Items[0].NFSe.DataEmissao;
     dDataFinal    := dDataInicial;
     TotalServicos := 0.0;
     TotalDeducoes := 0.0;
 
-    for i := 0 to TNFSeEnviarLoteRPS(Self).FNotasFiscais.Count-1 do
+    for i := 0 to FNotasFiscais.Count-1 do
     begin
-      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao < dDataInicial then
-        dDataInicial := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
-      if TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao > dDataFinal then
-        dDataFinal := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Items[i].NFSe.DataEmissao;
-      TotalServicos := TotalServicos + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
-      TotalDeducoes := TotalDeducoes + TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+      if FNotasFiscais.Items[i].NFSe.DataEmissao < dDataInicial then
+        dDataInicial := FNotasFiscais.Items[i].NFSe.DataEmissao;
+      if FNotasFiscais.Items[i].NFSe.DataEmissao > dDataFinal then
+        dDataFinal := FNotasFiscais.Items[i].NFSe.DataEmissao;
+      TotalServicos := TotalServicos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
+      TotalDeducoes := TotalDeducoes + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
     end;
 
     InicializarGerarDadosMsg;
@@ -1472,11 +1493,11 @@ begin
     with GerarDadosMsg do
     begin
       NumeroLote := TNFSeEnviarLoteRps(Self).NumeroLote;
-      QtdeNotas  := TNFSeEnviarLoteRps(Self).FNotasFiscais.Count;
+      QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
 
       // Necessário para o provedor ISSDSF
-      Transacao   := TNFSeEnviarLoteRPS(Self).FNotasFiscais.Transacao;
+      Transacao   := FNotasFiscais.Transacao;
       DataInicial := dDataInicial;
       DataFinal   := dDataFinal;
 
@@ -1484,10 +1505,10 @@ begin
       ValorTotalDeducoes := TotalDeducoes;
 
       // Necessário para o provedor Equiplano - EL
-      OptanteSimples := TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
+      OptanteSimples := FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
 
       // Necessário para o provedor Governa
-      ChaveAcessoPrefeitura := TNFSeEnviarLoteRps(Self).FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
@@ -1501,6 +1522,21 @@ begin
   begin
     DefinirSignatureNode('');
 
+    FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg,
+                                   FPrefixo3 + TagGrupo,
+                                   FPrefixo3 + TagElemento,
+                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
+                                   xSignatureNode, xDSIGNSLote, xIdSignature);
+
+    // Incluido a linha abaixo por após realizar a assinatura esta gerando o
+    // atributo xmlns vazio.
+    FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+      FNotasFiscais.ValidarLote(FPDadosMsg,
+                         FPConfiguracoes.Arquivos.PathSchemas +
+                         FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
+    (*
     FPDadosMsg := TNFSeEnviarLoteRPS(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                    FPrefixo3 + TagGrupo,
                                    FPrefixo3 + TagElemento,
@@ -1515,7 +1551,7 @@ begin
       TNFSeEnviarLoteRPS(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                          FPConfiguracoes.Arquivos.PathSchemas +
                          FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
-
+    *)
   end
   else
     GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' +
@@ -1651,6 +1687,13 @@ procedure TNFSeEnviarSincrono.DefinirDadosMsg;
 var
   I: Integer;
 begin
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+
+  if FNotasFiscais.Count > 50 then
+    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
+      ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+
   GerarDadosMsg := TNFSeG.Create;
   try
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono;
@@ -1660,11 +1703,11 @@ begin
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPScomAssinatura(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLAssinado);
+        GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
     end
     else begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPSsemAssinatura(TNFSeEnviarSincrono(Self).FNotasFiscais.Items[I].XMLOriginal);
+        GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
     end;
 
     FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
@@ -1675,7 +1718,7 @@ begin
     with GerarDadosMsg do
     begin
       NumeroLote := TNFSeEnviarSincrono(Self).NumeroLote;
-      QtdeNotas  := TNFSeEnviarSincrono(Self).FNotasFiscais.Count;
+      QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
 
@@ -1786,6 +1829,21 @@ var
   I: Integer;
   TagGrupo, TagElemento: String;
 begin
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
+
+  if FProvedor in [proBHISS, proWebISS] then
+  begin
+    if FNotasFiscais.Count > 3 then
+      GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +
+        ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+  end
+  else begin
+    if FNotasFiscais.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
+        ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+  end;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
@@ -1805,14 +1863,14 @@ begin
 
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_IncluiEncodingCab);
 
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS or FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar then
+    if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS or FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPScomAssinatura(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLAssinado);
+        GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
     end
     else begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPSsemAssinatura(TNFSeGerarNFSe(Self).FNotasFiscais.Items[I].XMLOriginal);
+        GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
     end;
 
     case FProvedor of
@@ -1828,7 +1886,7 @@ begin
     begin
       NumeroRps  := TNFSeGerarNfse(Self).FNumeroRps;
       NumeroLote := TNFSeGerarNfse(Self).NumeroLote;
-      QtdeNotas  := TNFSeGerarNFSe(Self).FNotasFiscais.Count;
+      QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
 
@@ -1846,7 +1904,8 @@ begin
     FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                  FPrefixo3 + TagGrupo,
                                  FPrefixo3 + TagElemento,
-                                 FPConfiguracoesNFSe.Geral.ConfigAssinar.Gerar);
+                                 FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
+                                 xSignatureNode, xDSIGNSLote, xIdSignature);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -2313,6 +2372,9 @@ var
   Gerador: TGerador;
   TagGrupo: String;
 begin
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
@@ -2348,14 +2410,14 @@ begin
       try
         Gerador.ArquivoFormatoXML := '';
 
-        if TNFSeConsultarNfseRPS(Self).FNotasFiscais.Count > 0 then
+        if FNotasFiscais.Count > 0 then
         begin
-          if TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.Numero = '' then
+          if FNotasFiscais.Items[0].NFSe.Numero = '' then
           begin
             Gerador.wGrupoNFSe('RPSConsulta');
-            for i := 0 to TNFSeConsultarNfseRPS(Self).FNotasFiscais.Count-1 do
+            for i := 0 to FNotasFiscais.Count-1 do
             begin
-              with TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[I] do
+              with FNotasFiscais.Items[I] do
                 if NFSe.IdentificacaoRps.Numero <> '' then
                 begin
                   Gerador.wGrupoNFSe('RPS Id="rps:' + NFSe.Numero + '"');
@@ -2369,9 +2431,9 @@ begin
           end
           else begin
             Gerador.wGrupoNFSe('NotaConsulta');
-            for i := 0 to TNFSeConsultarNfseRPS(Self).FNotasFiscais.Count-1 do
+            for i := 0 to FNotasFiscais.Count-1 do
             begin
-              with TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[I] do
+              with FNotasFiscais.Items[I] do
                 if NFSe.Numero <> '' then
                 begin
                   Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
@@ -2400,12 +2462,12 @@ begin
       TipoRps   := TNFSeConsultarNfseRPS(Self).Tipo;
 
       // Necessário para o provedor ISSDSF
-      Transacao := TNFSeConsultarNfseRPS(Self).FNotasFiscais.Transacao;
+      Transacao := FNotasFiscais.Transacao;
       Notas     := FvNotas;
 
       // Necessário para o provedor Governa
-      ChaveAcessoPrefeitura := TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
-      CodVerificacaoRPS :=  TNFSeConsultarNfseRPS(Self).FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+      CodVerificacaoRPS     := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSeRPS + FTagF;
@@ -2644,6 +2706,9 @@ var
   Gerador: TGerador;
   TagGrupo, docElemento: String;
 begin
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
@@ -2655,10 +2720,10 @@ begin
       TagGrupo :=  'CancelarNfseEnvio';
     end;
 
-    if TNFSeCancelarNfse(Self).FNotasFiscais.Count > 0 then
+    if FNotasFiscais.Count > 0 then
     begin
-      FNumeroNFSe         := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.Numero;
-      FMotivoCancelamento := TNFSeCancelarNfse(Self).FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
+      FNumeroNFSe         := FNotasFiscais.Items[0].NFSe.Numero;
+      FMotivoCancelamento := FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
     end;
 
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoCancelar;
@@ -2777,9 +2842,9 @@ begin
       try
         Gerador.ArquivoFormatoXML := '';
 
-        for i := 0 to TNFSeCancelarNfse(Self).FNotasFiscais.Count-1 do
+        for i := 0 to FNotasFiscais.Count-1 do
         begin
-          with TNFSeCancelarNfse(Self).FNotasFiscais.Items[I] do
+          with FNotasFiscais.Items[I] do
           begin
             Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
             Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
@@ -2801,9 +2866,9 @@ begin
       Gerador := TGerador.Create;
       try
         Gerador.ArquivoFormatoXML := '';
-        for i := 0 to TNFSeCancelarNfse(Self).FNotasFiscais.Count-1 do
+        for i := 0 to FNotasFiscais.Count-1 do
         begin
-          with TNFSeCancelarNfse(Self).FNotasFiscais.Items[I] do
+          with FNotasFiscais.Items[I] do
           begin
             Gerador.wCampoNFSe(tcStr, '', 'chvAcessoNFS-e', 1, 39, 1, NFSe.ChaveNFSe, '');
             Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, NFSe.MotivoCancelamento, '');
@@ -2820,19 +2885,21 @@ begin
 
     with GerarDadosMsg do
     begin
-      if (FPConfiguracoesNFSe.Geral.Provedor = proISSNet) and
-         (FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2) then
-        CodMunicipio := 999
+      case FProvedor of
+        proISSNet: if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
+                     CodMunicipio := 999;
+        proBetha: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.Tomador.Endereco.CodigoMunicipio, 0);
       else
-        CodMunicipio  := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
+        CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
+      end;
 
       NumeroNFSe := TNFSeCancelarNfse(Self).NumeroNFSe;
       CodigoCanc := TNFSeCancelarNfse(Self).FCodigoCancelamento;
       MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
 
       // Necessário para o provedor ISSDSF
-      Transacao  := TNFSeCancelarNfse(Self).FNotasFiscais.Transacao;
-      NumeroLote := TNFSeCancelarNfse(Self).FNotasFiscais.NumeroLote;
+      Transacao  := FNotasFiscais.Transacao;
+      NumeroLote := FNotasFiscais.NumeroLote;
       Notas      := FvNotas;
     end;
 
@@ -3000,11 +3067,11 @@ begin
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPScomAssinatura(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XMLAssinado);
+        GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
     end
     else begin
       for I := 0 to FNotasFiscais.Count - 1 do
-        GerarLoteRPSsemAssinatura(TNFSeSubstituirNFSe(Self).FNotasFiscais.Items[I].XMLOriginal);
+        GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
     end;
 
     case FProvedor of
@@ -3045,9 +3112,9 @@ begin
       try
         Gerador.ArquivoFormatoXML := '';
 
-        for i := 0 to TNFSeSubstituirNfse(Self).FNotasFiscais.Count-1 do
+        for i := 0 to FNotasFiscais.Count-1 do
         begin
-          with TNFSeSubstituirNfse(Self).FNotasFiscais.Items[I] do
+          with FNotasFiscais.Items[I] do
           begin
             Gerador.wGrupoNFSe('Nota Id="nota:' + NFSe.Numero + '"');
             Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
@@ -3072,12 +3139,12 @@ begin
       CodigoCanc := TNFSeSubstituirNfse(Self).FCodigoCancelamento;
       MotivoCanc := TNFSeSubstituirNfse(Self).FMotivoCancelamento;
       NumeroRps  := TNFSeSubstituirNfse(Self).FNumeroRps;
-      QtdeNotas  := TNFSeSubstituirNfse(Self).FNotasFiscais.Count;
+      QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
 
       // Necessário para o provedor ISSDSF - CTA
-      NumeroLote := TNFSeSubstituirNfse(Self).FNotasFiscais.NumeroLote;
-      Transacao  := TNFSeSubstituirNfse(Self).FNotasFiscais.Transacao;
+      NumeroLote := FNotasFiscais.NumeroLote;
+      Transacao  := FNotasFiscais.Transacao;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgSubstituirNFSe + FTagF;
@@ -3452,8 +3519,8 @@ begin
   FSubNfse.FNumeroNFSe         := ANumeroNFSe;
   FSubNfse.FCodigoCancelamento := ACodigoCancelamento;
 
-  if TACBrNFSe(FACBrNFSe).NotasFiscais.Count <=0 then
-    FConsNfseRps.GerarException( 'ERRO: Nenhum RPS adicionado ao Lote' )
+  if TACBrNFSe(FACBrNFSe).NotasFiscais.Count <= 0 then
+    FSubNfse.GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'))
   else begin
     FSubNfse.FNumeroRps         := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
     FSubNfse.MotivoCancelamento := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.MotivoCancelamento;

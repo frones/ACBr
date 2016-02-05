@@ -179,7 +179,8 @@ type
 implementation
 
 uses
-  ACBrUtil, Math, StrUtils, ACBrValidador;
+  Math, StrUtils,
+  ACBrValidador, ACBrUtil;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin

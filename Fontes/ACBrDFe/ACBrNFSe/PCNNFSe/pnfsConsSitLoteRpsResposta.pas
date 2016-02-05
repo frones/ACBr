@@ -330,6 +330,8 @@ begin
     InfSit.FSituacao   := Leitor.rCampo(tcStr, 'sit');
     if InfSit.FSituacao = '100' then
       InfSit.FSituacao := '4' // 4 = Processado com Sucesso
+    else if InfSit.FSituacao = '217' then // 217 = Fila para processamento
+      InfSit.FSituacao := '1' // 1 = Aguardando processamento
     else if InfSit.FSituacao = '200' then
     begin
       InfSit.FSituacao := '3'; // 3 = Processado com Erro

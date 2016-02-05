@@ -373,15 +373,14 @@ end;
 
 constructor TChecksBloco_C.Create(AOwner: TComponent);
 begin
-  inherited;
-   inherited Create(AOwner);
-   FOwner := AOwner;
+  inherited Create(AOwner);
+  FOwner := AOwner;
 end;
 
 destructor TChecksBloco_C.Destroy;
 begin
-   FOwner := nil;
-   inherited Destroy;
+  FOwner := nil;
+  inherited Destroy;
 end;
 
 function TChecksBloco_C.GetOnCheckRegistroC100: TCheckRegistroEvent;

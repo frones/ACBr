@@ -234,6 +234,7 @@ end;
 constructor TACBrSPEDFiscal.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
   FACBrTXT := TACBrTXTClass.Create;
   FACBrTXT.LinhasBuffer := 1000 ;
 
@@ -297,6 +298,7 @@ begin
 
   FEventsBloco_0.Free;
   FEventsBloco_C.Free;
+  FChecksBloco_C.Free;
   FEventsBloco_D.Free;
   FEventsBloco_E.Free;
 

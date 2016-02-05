@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 05/02/2016
+-- ACBrSpedFiscal --
+[-] Correção de Memoryleak em "FChecksBloco_C"
+[-] Correção de A.V. em "TChecksBloco_C.Destroy"
+
 Data 04/02/2016
 [+] ACBrSpedFiscal registros C100
     Adicionado evento para tratamento de regras impostas pela Lei definidas por 

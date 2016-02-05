@@ -148,8 +148,8 @@ type
     procedure Exportar(const AArquivo, ADelimitador: String; const AQuoted: Boolean); overload;
     function Procurar(const ACodigo: String; var ex, descricao: String;
       var tabela: Integer; var aliqFedNac, aliqFedImp, aliqEstadual,
-      aliqMunicipal: Double ; const BuscaParcial: Boolean = False): Boolean;
-
+      aliqMunicipal: Double ; const BuscaParcial: Boolean = False): Boolean; overload;
+    function Procurar(const ACodigo, AEX: String; const ATabela: TACBrIBPTaxTabela; const BuscaParcial: Boolean): TACBrIBPTaxRegistro; overload;
     function API_ConsultarProduto(const ANCM: String; const AUF: String;
       const AExcecao: Integer = 0; const ACodigoProprio: String = '';
       const ADescricaoProduto: String = ''; const AUnidadeMedida: String = '';
@@ -179,7 +179,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador;
+  ACBrUtil, Math, StrUtils, ACBrValidador;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin
@@ -284,8 +284,8 @@ begin
     QuebrarLinha(Arquivo.Strings[1], Item);
     if Item.Count = COUNT_COLUN then
     begin
-      FVigenciaInicio := StrToDateDef(Item.Strings[8], 0.0);
-      FVigenciaFim    := StrToDateDef(Item.Strings[9], 0.0);
+      FVigenciaInicio := StringToDateTimeDef(Item.Strings[8], 0.0, 'dd/mm/yyyy');
+      FVigenciaFim    := StringToDateTimeDef(Item.Strings[9], 0.0, 'dd/mm/yyyy');
       FChaveArquivo   := Item.Strings[10];
       FVersaoArquivo  := Item.Strings[11];
       FFonte          := Item.Strings[12];
@@ -342,6 +342,38 @@ begin
   end;
 
   Result := Itens.Count;
+end;
+
+function TACBrIBPTax.Procurar(const ACodigo, AEX: String;
+  const ATabela: TACBrIBPTaxTabela; const BuscaParcial: Boolean): TACBrIBPTaxRegistro;
+var
+  I: Integer;
+  Igual: Boolean;
+begin
+
+  if Itens.Count <= 0 then
+    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+
+  Result := nil;
+  
+  for I := 0 to Itens.Count - 1 do
+  begin
+
+    if BuscaParcial then
+      Igual := Pos(Trim(ACodigo), Trim(Itens[I].NCM)) > 0
+    else
+      Igual := SameText(Trim(ACodigo), Trim(Itens[I].NCM));
+
+    Igual := Igual and SameText(Trim(AEX), Trim(Itens[I].Excecao)) and (ATabela = Itens[I].Tabela);
+
+    if Igual Then
+    begin
+      Result := TACBrIBPTaxRegistro(Itens[I]);
+      Exit;
+    end;
+    
+  end;
+
 end;
 
 function TACBrIBPTax.DownloadTabela: Boolean;

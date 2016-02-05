@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/02/2016
+-- pcnCFeR --
+[-] Correção para leitura de Itens com numeração com zeros a esquerda Ex: "001"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27910
+
 Data: 22/01/2016
 -- ACBrSATExtratoESCPOS --
 [-] Ajuste para que não seja impresso o "Dados para Entrega" se apenas o Nome

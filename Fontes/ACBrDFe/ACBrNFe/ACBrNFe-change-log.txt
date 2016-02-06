@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/01/2016
+-- ACBrNFeDANFeRLRetrato -- 
+[*] Definição de coluna via codigo dos campos de fatura. 
+    Por: Henrique Leonardo
+
 
 29/01/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 

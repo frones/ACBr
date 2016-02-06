@@ -2015,6 +2015,12 @@ begin
     RLLabelDupl.Caption   := ACBrStr( 'VALOR DESCONTO' );
     RLLabelLIQ.Caption    := ACBrStr( 'VALOR LÍQUIDO' );
 
+    // Define a Coluna dos label's
+	RLLabelNUmero.Left    := 264;
+	RLLabelValor.Left     := 439;
+	RLLabelDupl.Left      := 541;
+	RLLabelLIQ.Left       := 652;
+
     if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
     begin
       with FNFe.Cobr.Fat do

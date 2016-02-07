@@ -2098,7 +2098,7 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaCupom(NumCOOCancelar: Integer);
 Var
-  I, PosAliq: Integer;
+  I, PosAliq, OldCOO: Integer;
   TotalAliq, SubTotalBruto: Double;
   PermiteCancelamento, CupomEstaAberto, AliquotasRemovidas: Boolean;
 begin
@@ -2134,7 +2134,12 @@ begin
     if not CupomEstaAberto then  // Cria um novo documento de Cancelamento
       Inc( fpNumCOO );
 
+    OldCOO := fpNumCOO;
     CancelaCupomVirtual;
+
+    { CancelaCupomVirtual pode modificar o valor de fpNumCOO, se considerar que
+      o Documento já foi transmitido. Reavaliando valor de "CupomEstaAberto" }
+    CupomEstaAberto := CupomEstaAberto and (fpNumCOO = OldCOO);
 
     { Aqui já temos todos os Descontos e Acrescimos. Os descontos devem ser
       revertidos, para calcularmos o SubTotalBruto }

@@ -311,8 +311,10 @@ var
    LinStr: AnsiString ;
    wTipoOperacao: Integer;
    TemParcelas : Boolean ;
+   wValorTitulos : Double ;
 begin
-   fpValorTotal := 0 ;
+   fpValorTotal  := 0;
+   wValorTitulos := 0;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
    fpDebito    := False;
@@ -384,11 +386,13 @@ begin
        515 : fpDataHoraTransacaoCancelada  := Linha.Informacao.AsDate ;
        516 : fpNSUTransacaoCancelada       := LinStr;
        527 : fpDataVencimento              := Linha.Informacao.AsDate ; {Data Vencimento}
+       609 : wValorTitulos                 := Linha.Informacao.AsFloat ; {Valor total dos títulos efetivamente pagos no caso de pagamento em lote}
        613 :
         begin
           fpCheque                         := copy(LinStr, 21, 6);
           fpCMC7                           := LinStr;
         end;
+       623 : fpNSU                         := LinStr;  { NSU, correspondente Bancário }
        626 : fpBanco                       := LinStr;
        627 : fpAgencia                     := LinStr;
        628 : fpAgenciaDC                   := LinStr;
@@ -416,6 +420,9 @@ begin
 
      end;
    end ;
+
+   if wValorTitulos > 0 then
+     fpValorTotal := wValorTitulos;
 
    fpQtdLinhasComprovante := max( fpImagemComprovante1aVia.Count,
                                   fpImagemComprovante2aVia.Count ) ;

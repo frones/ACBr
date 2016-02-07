@@ -103,7 +103,7 @@ type
 implementation
 
 uses
- ACBrGNRE, ACBrUtil, ACBrDFeUtil;
+ ACBrGNRE2, ACBrUtil, ACBrDFeUtil;
 
 constructor TACBrGNREGuiaClass.Create(AOwner: TComponent);
 begin

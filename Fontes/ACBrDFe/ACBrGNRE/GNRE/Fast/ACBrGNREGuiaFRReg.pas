@@ -49,9 +49,9 @@ unit ACBrGNREGuiaFRReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrGNREGuiaFR, ACBrReg,
+  SysUtils, Classes, ACBrGNREGuiaFR, ACBrReg, DesignIntf
   {$IFDEF FPC}
-     LResources
+     ,LResources
   {$ENDIF} ;
 
 Type

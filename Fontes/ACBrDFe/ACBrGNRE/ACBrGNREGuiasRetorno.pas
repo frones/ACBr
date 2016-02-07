@@ -94,7 +94,7 @@ type
 implementation
 
 uses
- ACBrGNRE, ACBrUtil, ACBrDFeUtil, pcnGerador;
+ ACBrGNRE2, ACBrUtil, ACBrDFeUtil, pcnGerador;
 
 { GuiaRetorno }
 

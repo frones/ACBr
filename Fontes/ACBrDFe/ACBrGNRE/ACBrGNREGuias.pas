@@ -167,7 +167,7 @@ type
 implementation
 
 uses
-  ACBrGNRE, ACBrUtil, pgnreConversao, synautil;
+  ACBrGNRE2, ACBrUtil, pgnreConversao, synautil;
 
 { Guia }
 

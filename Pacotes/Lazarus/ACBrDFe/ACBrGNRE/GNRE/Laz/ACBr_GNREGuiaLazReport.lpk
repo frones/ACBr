@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_GNREGuiaLazReport"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -11,24 +12,17 @@
         <OtherUnitFiles Value="..\..\..\Fontes\ACBrGNRE"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerMessages>
-          <MsgFileName Value=""/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBrGNREGuiaLazReport
 Impressão da Guia gerada pelo ACBrGNRE"/>
     <Files Count="1">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaLazReportDm.pas"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Laz\ACBrGNREGuiaLazReportDm.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrGNREGuiaLazReportDm"/>
       </Item1>
     </Files>
-    <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="4">
+    <RequiredPkgs Count="3">
       <Item1>
         <PackageName Value="lazreportpdfexport"/>
       </Item1>
@@ -38,9 +32,6 @@ Impressão da Guia gerada pelo ACBrGNRE"/>
       <Item3>
         <PackageName Value="lazreport"/>
       </Item3>
-      <Item4>
-        <PackageName Value="FCL"/>
-      </Item4>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

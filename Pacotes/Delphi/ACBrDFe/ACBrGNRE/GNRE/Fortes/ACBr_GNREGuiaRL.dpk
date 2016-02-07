@@ -1,7 +1,6 @@
 package ACBr_GNREGuiaRL;
 
 {$I ACBr.inc}
-{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -27,23 +26,17 @@ package ACBr_GNREGuiaRL;
 {$IMPLICITBUILD ON}
 
 requires
-  soaprtl,
-  inet,
-  ACBr_Comum,
-  ACBr_synapse,
-  ACBr_PCNComum,
-  ACBr_Capicom,
   ACBr_GNRE,
+  ACBr_Comum,	
   frce,
   {$ifdef DELPHI2009_UP} 
     vclimg,
   {$else} 
     vcljpg,
   {$ENDIF}
-  designide,
   dsnap;
 
 contains
-  ACBrGNREGuiaFRFortes in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFRFortes.pas' {ACBrGNREGuiaFR_Fortes};
+  ACBrGNREGuiaFRFortes in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaFRFortes.pas' {ACBrGNREGuiaFR_Fortes};
 
 end.

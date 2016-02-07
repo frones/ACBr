@@ -7,7 +7,7 @@ unit ACBr_GNRE;
 interface
 
 uses
-  ACBrGNRE, ACBrGNREConfiguracoes, ACBrGNREGuias, ACBrGNREReg, 
+  ACBrGNRE2, ACBrGNREConfiguracoes, ACBrGNREGuias, ACBrGNREReg, 
   pgnreConsResLoteGNRE, ACBrGNREWebServices, pgnreConfigUF, pgnreConsConfigUF, 
   pgnreConversao, pgnreGNRE, pgnreGNRER, pgnreGNRERetorno, pgnreGNREW, 
   pgnreRetCampoAdicional, pgnreRetConsConfigUF, pgnreRetConsResLoteGNRE, 

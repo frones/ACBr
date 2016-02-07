@@ -319,7 +319,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrGNRE,
+  ACBrUtil, ACBrGNRE2,
   pcnGerador, pcnLeitor;
 
 { TGNREWebService }

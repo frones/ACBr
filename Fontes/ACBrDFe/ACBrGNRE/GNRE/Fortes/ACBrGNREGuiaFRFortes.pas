@@ -275,7 +275,7 @@ procedure Register;
 
 implementation
 
-uses ACBrGNRE2, ACBrGNREUtil, ACBrUtil, StrUtils, Dialogs, ACBrGNREGuiasRetorno;
+uses ACBrGNRE2, ACBrUtil, StrUtils, Dialogs, ACBrGNREGuiasRetorno;
 
 {$IFDEF FPC}
   {$R *.lfm}

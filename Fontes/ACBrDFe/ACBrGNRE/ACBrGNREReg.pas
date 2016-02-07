@@ -49,7 +49,7 @@ unit ACBrGNREReg;
 interface
 
 uses
-  SysUtils, Classes, ACBrGNRE, pcnConversao,
+  SysUtils, Classes, ACBrGNRE2, pcnConversao,
   {$IFDEF FPC}
      LResources, LazarusPackageIntf, PropEdits, componenteditors
   {$ELSE}

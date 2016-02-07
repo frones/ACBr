@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 07/02/2016
+-- ACBrECFEscECF --
+[-] Método DadosUltimaReducaoZ, ajuste para correta leitura dos totalizadores
+    Não Tributados em Daruma FS800I. Esse modelo não retorna o valor da alíquota
+    para Totalizadores não tributados
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27897
+
 -- ACBrECF --
 [*] Método FechaCupom, ajuste para não limitar em 8 linhas de observação, quando
     se tratar dos modelos ecfEscEcf ou ecfECFVirtual

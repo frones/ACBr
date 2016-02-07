@@ -3421,28 +3421,40 @@ var
     I: Integer;
     AliqStr: String;
     AliqDbl: Double;
+    Achou: Boolean;
   begin
-    I := 0 ;
+    I      := 0 ;
     Result := -1;
-    while  (I+2 < EscECFResposta.Params.Count) do
+    Achou  := False;
+    while (not Achou) and (I+2 < EscECFResposta.Params.Count) do
     begin
       if (EscECFResposta.Params[I] = Registrador) then
       begin
-         AliqStr := EscECFResposta.Params[I+1];
-         if (pos('.',AliqStr) = 0) and (pos(',',AliqStr) = 0) then  // Não tem ponto decimal ?
-           AliqDbl := StrToIntDef(AliqStr,0) / 100
-         else
-           AliqDbl := StringToFloatDef(AliqStr, 0);
+        if (Aliq = 0) and IsDaruma then
+        begin
+          { Daruma não retorna Linha com Aliquota "00.00", quando é um
+            Totalizador não Tributado, Portanto I+1 = Valor do Totalizador... }
+          Achou := True;
+          Dec( I );
+        end
+        else
+        begin
+          AliqStr := EscECFResposta.Params[I+1];
+          if (pos('.',AliqStr) = 0) and (pos(',',AliqStr) = 0) then  // Não tem ponto decimal ?
+            AliqDbl := StrToIntDef(AliqStr,0) / 100
+          else
+            AliqDbl := StringToFloatDef(AliqStr, 0);
 
-         if (AliqDbl = Aliq) then
-         begin
-           Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ], -100)/100, -2);
-           Break;
-        end ;
+          Achou := (AliqDbl = Aliq);
+        end;
       end;
 
-      Inc( I ) ;
+      if not Achou then
+        Inc( I ) ;
     end ;
+
+    if Achou then
+      Result := RoundTo( StrToFloatDef(EscECFResposta.Params[ I+2 ], -100)/100, -2);
   end ;
 begin
   // Zerar variaveis e inicializa Dados do ECF //
@@ -3459,7 +3471,7 @@ begin
   RetornaInfoECF( '17|'+ECFCRZ ) ;
 
   // DEBUG
-  //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text);
+  //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text, False, False);
   if (UpperCase(copy(EscECFResposta.Params.Text, 0, 5)) = 'ERRO:')  then
   begin
     raise EACBrECFERRO.Create(ACBrStr(EscECFResposta.Params.Text)) ;

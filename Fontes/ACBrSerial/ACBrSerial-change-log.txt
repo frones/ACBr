@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/02/2016
+-- ACBrECF --
+[*] Método FechaCupom, ajuste para não limitar em 8 linhas de observação, quando
+    se tratar dos modelos ecfEscEcf ou ecfECFVirtual
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27926
+
 Data; 04/02/2016
 -- ACBrETQPpla --
 [*] Ajuste para permitir SubFontes até 999 em "ImprimirTexto"

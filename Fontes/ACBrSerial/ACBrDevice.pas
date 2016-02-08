@@ -377,6 +377,7 @@ TACBrThreadEnviaLPT = class(TThread)
 
 const
   estCupomAberto = [estVenda, estPagamento];
+  CFailCount = 10;
 
 implementation
 Uses ACBrUtil ;
@@ -1295,13 +1296,14 @@ end;
 
 procedure TACBrDevice.EnviaStringSerial(const AString : AnsiString) ;
 Var
-  I, Max, BytesToSend, BytesSent : Integer ;
+  I, Max, BytesToSend, BytesSent, FailCount : Integer ;
   Buffer: AnsiString;
 begin
   I   := 1 ;
   Max := Length(AString) ;
+  FailCount := 0;
 
-  while I <= Max do
+  while (I <= Max) and (FailCount < CFailCount) do
   begin
      BytesToSend := fsSendBytesCount ;
      if BytesToSend = 0 then
@@ -1311,11 +1313,19 @@ begin
      BytesToSend := min(Length(Buffer), BytesToSend);
      BytesSent := Serial.SendBuffer(Pointer(Buffer), BytesToSend);
 
+     if BytesSent <= 0 then
+       Inc( FailCount )
+     else
+       FailCount := 0;
+
      if fsSendBytesInterval > 0 then
         Sleep( fsSendBytesInterval ) ;
 
      I := I + BytesSent ;
   end ;
+
+  if FailCount >= CFailCount then
+    raise Exception.CreateFmt(ACBrStr(cACBrDeviceEnviaStrFailCount), [Porta]);
 end ;
 
 procedure TACBrDevice.EnviaStringTCP(const AString: AnsiString);

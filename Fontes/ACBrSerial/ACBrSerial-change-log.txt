@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/02/2016
+-- ACBrDevice --
+[*] Adicionado controle de falhas em "EnviaStringSerial". Em algumas situações
+    específicas, o Device para de receber dados, e isso ocasionava um Loop
+    inifnito nesse método. (por: DSA)
+
 Data: 07/02/2016
 -- ACBrECFEscECF --
 [-] Método DadosUltimaReducaoZ, ajuste para correta leitura dos totalizadores

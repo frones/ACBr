@@ -47,12 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/02/2015
+-- ACBrTEFDCliSiTEF --    
+[*] Método "ConteudoToProperty", modificado para considerar o valor do registrador
+    "591-Valor selecionado para a recarga", como Valor Total da transação 
+    (por: Elias)
+
 Data: 07/02/2015
 -- ACBrTEFDCliSiTEF --    
 [*] Método "ConteudoToProperty", modificado para considerar o valor do registrador
     "623-NSU do correspondente Bancário", como NSU da transação 
 [*] Método "ConteudoToProperty", modificado para considerar o valor do registrador
     "609-Valor total dos títulos pagos (C.B.)", como Valor Total da transação 
+	(por: DSA)
 
 Data: 20/01/2015
 -- ACBrTEFDCliSiTEF --    

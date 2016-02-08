@@ -311,10 +311,11 @@ var
    LinStr: AnsiString ;
    wTipoOperacao: Integer;
    TemParcelas : Boolean ;
-   wValorTitulos : Double ;
+   wValorTitulos, wValorRecarga : Double ;
 begin
    fpValorTotal  := 0;
    wValorTitulos := 0;
+   wValorRecarga := 0;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
    fpDebito    := False;
@@ -386,6 +387,7 @@ begin
        515 : fpDataHoraTransacaoCancelada  := Linha.Informacao.AsDate ;
        516 : fpNSUTransacaoCancelada       := LinStr;
        527 : fpDataVencimento              := Linha.Informacao.AsDate ; {Data Vencimento}
+       591 : wValorRecarga                 := Linha.Informacao.AsFloat ; {Valor selecionado para a recarga}
        609 : wValorTitulos                 := Linha.Informacao.AsFloat ; {Valor total dos títulos efetivamente pagos no caso de pagamento em lote}
        613 :
         begin
@@ -422,7 +424,9 @@ begin
    end ;
 
    if wValorTitulos > 0 then
-     fpValorTotal := wValorTitulos;
+     fpValorTotal := wValorTitulos
+   else if wValorRecarga > 0 then
+     fpValorTotal := wValorRecarga;
 
    fpQtdLinhasComprovante := max( fpImagemComprovante1aVia.Count,
                                   fpImagemComprovante2aVia.Count ) ;

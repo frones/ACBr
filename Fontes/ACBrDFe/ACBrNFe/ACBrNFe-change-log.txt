@@ -47,11 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-05/02/01/2016
+08/02/2016
+-- ACBrECFVirtualNFCe --
+[-] Adicionada rotina de calculo de Rateio de Descontos/Acrescimos por Item em
+    SubtotalizaCupomVirtual
+[-] Correção do valor de "Det.Prod.vDesc" em "VendeItemVirtual"
+[-] Correção de "Det.Imposto.ICMS.vBC" em "VendeItemVirtual"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=25852  (por: Endrigo)
+
+05/02/2016
 -- ACBrNFeDANFeRLRetrato -- 
 [*] Definição de coluna via codigo dos campos de fatura. 
     Por: Henrique Leonardo
-
 
 29/01/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 

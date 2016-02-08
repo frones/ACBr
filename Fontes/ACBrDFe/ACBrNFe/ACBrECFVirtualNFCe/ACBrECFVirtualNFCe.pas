@@ -493,7 +493,7 @@ begin
     if ItemCupom.DescAcres > 0 then
        Det.Prod.vOutro := ItemCupom.DescAcres
     else
-       Det.Prod.vDesc  := ItemCupom.DescAcres;
+       Det.Prod.vDesc  := -ItemCupom.DescAcres;
 
     if EAN13Valido(ItemCupom.Codigo) then
       Det.Prod.cEAN := ItemCupom.Codigo;
@@ -516,7 +516,7 @@ begin
     else
     begin
       Det.Imposto.ICMS.CST   := cst00;
-      Det.Imposto.ICMS.vBC   := RoundABNT(ItemCupom.Qtd*ItemCupom.ValorUnit,2);
+      Det.Imposto.ICMS.vBC   := RoundABNT((ItemCupom.Qtd*ItemCupom.ValorUnit)+ItemCupom.DescAcres,2);
       Det.Imposto.ICMS.pICMS := AliqECF.Aliquota;
       Det.Imposto.ICMS.vICMS := RoundABNT( Det.Imposto.ICMS.vBC*(Det.Imposto.ICMS.pICMS/100),2);
 
@@ -544,14 +544,57 @@ end;
 
 procedure TACBrECFVirtualNFCeClass.SubtotalizaCupomVirtual(
   MensagemRodape: AnsiString);
+var
+  i, ItMaior: Integer;
+  ItDescAcre: Array of Extended;
+  Total, VlDescAcres, TotDescAcre, VlItMaior: Extended;
 begin
   with fsACBrNFCe do
   begin
-    //TODO: Precisa ratear desconto entre os itens
     if fpCupom.DescAcresSubtotal > 0 then
-      NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro := fpCupom.DescAcresSubtotal
+      VlDescAcres := fpCupom.DescAcresSubtotal
     else
-      NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  := -fpCupom.DescAcresSubtotal;
+      VlDescAcres := -fpCupom.DescAcresSubtotal;
+
+    if VlDescAcres <> 0 then
+    begin
+      Total       := 0;
+      ItMaior     := -1;
+      VlItMaior   := 0;
+      TotDescAcre := 0;
+      SetLength(ItDescAcre, NotasFiscais.Items[0].NFe.Det.Count);
+
+      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+        Total := Total + NotasFiscais.Items[0].NFe.Det[i].Prod.vProd;
+
+      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+      begin
+        ItDescAcre[i] := RoundABNT(VlDescAcres * (NotasFiscais.Items[0].NFe.Det[i].Prod.vProd / Total),2);
+        TotDescAcre   := TotDescAcre + ItDescAcre[i];
+
+        if ItDescAcre[i] > VlItMaior then
+        begin
+          VlItMaior := ItDescAcre[i];
+          ItMaior := i;
+        end;
+      end;
+
+      if TotDescAcre <> VlDescAcres then
+        ItDescAcre[ItMaior] := ItDescAcre[ItMaior] - (TotDescAcre - VlDescAcres);
+
+      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+      begin
+        if fpCupom.DescAcresSubtotal > 0 then
+           NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro := NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro + ItDescAcre[i]
+        else
+           NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc  := NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc  + ItDescAcre[i];
+      end;
+    end;
+
+    if fpCupom.DescAcresSubtotal > 0 then
+      NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro := NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro + VlDescAcres
+    else
+      NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  := NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  + VlDescAcres;
 
     NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
   end;

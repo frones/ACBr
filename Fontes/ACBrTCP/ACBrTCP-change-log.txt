@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/02/2015
+-- ACBrSedex --
+[-] Ajuste para valores Decimais sempre serem representados com Pontos na Decimal
+    http://www.projetoacbr.com.br/forum/topic/17388-correios-calculo-de-sedex-pac/?page=2
+
 30/01/2015
 -- ACBrMail --
 [+] Modificações no envio de email por Thread, para usar um TCriticalSection, a

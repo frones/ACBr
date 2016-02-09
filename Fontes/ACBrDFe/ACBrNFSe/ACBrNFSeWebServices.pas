@@ -721,7 +721,7 @@ begin
     FSeparador := '/';
 
   if FCabecalho <> '' then
-    FNameSpaceCab := xmlns2 + FNameSpace + FSeparador + FCabecalho +'">'
+    FNameSpaceCab := ' ' + xmlns2 + FNameSpace + FSeparador + FCabecalho +'">'
   else
     FNameSpaceCab := '>';
 
@@ -758,7 +758,7 @@ begin
     FNameSpaceDad := '';
 
   if FDefTipos <> '' then
-    FNameSpaceDad := FNameSpaceDad + xmlns4 + FNameSpace + FSeparador + FDefTipos + '"';
+    FNameSpaceDad := FNameSpaceDad + ' ' + xmlns4 + FNameSpace + FSeparador + FDefTipos + '"';
 
   if FNameSpaceDad <> '' then
     FNameSpaceDad := ' ' + FNameSpaceDad;

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2015
+-- ACBrDFeWebService --
+[-] Ajuste no método TDFeWebService.SalvarEnvio, para que a gravação dos
+    arquivos com os dados de envio, não seja indevidamente convertida para UTF8
+    (por: DSA)
+
 20/01/2015
 -- ACBrDFeWebService --
 [*] Ajuste para não tentar verificar a validade do Certificado, se não há

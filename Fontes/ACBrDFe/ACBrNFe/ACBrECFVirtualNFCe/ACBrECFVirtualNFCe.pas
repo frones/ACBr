@@ -129,6 +129,8 @@ type
     procedure AbreDocumentoVirtual ; override;
     Procedure EnviaConsumidorVirtual ; override;
     procedure VendeItemVirtual( ItemCupom: TACBrECFVirtualClassItemCupom); override;
+    procedure DescontoAcrescimoItemAnteriorVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double); override;
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; override ;
     Procedure SubtotalizaCupomVirtual( MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamentoVirtual( Pagto: TACBrECFVirtualClassPagamentoCupom) ; override ;
@@ -483,24 +485,17 @@ begin
     Det.Prod.qCom     := ItemCupom.Qtd;
     Det.Prod.vUnCom   := ItemCupom.ValorUnit;
     Det.Prod.uCom     := ItemCupom.Unidade;
-
     Det.Prod.qTrib    := ItemCupom.Qtd;
     Det.Prod.vUnTrib  := ItemCupom.ValorUnit;
     Det.Prod.uTrib    := ItemCupom.Unidade;
-
     Det.Prod.vProd    := RoundABNT(ItemCupom.Qtd*ItemCupom.ValorUnit,2);
-
-    if ItemCupom.DescAcres > 0 then
-       Det.Prod.vOutro := ItemCupom.DescAcres
-    else
-       Det.Prod.vDesc  := -ItemCupom.DescAcres;
 
     if EAN13Valido(ItemCupom.Codigo) then
       Det.Prod.cEAN := ItemCupom.Codigo;
 
     AliqECF := fpAliquotas[ ItemCupom.AliqPos ];
 
-    Det.Prod.CFOP          := '5102';
+    Det.Prod.CFOP := '5102';
     if NotasFiscais.Items[0].NFe.Emit.CRT = crtSimplesNacional then
     begin
       Det.Imposto.ICMS.CSOSN := csosn101;
@@ -528,6 +523,26 @@ begin
 
     if Assigned( fsQuandoVenderItem ) then
       fsQuandoVenderItem( Det );
+  end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.DescontoAcrescimoItemAnteriorVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
+var
+  Det: TDetCollectionItem;
+begin
+  // Achando o Item anterior //
+  Det := fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Items[fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count-1];
+
+  if ItemCupom.DescAcres > 0 then
+     Det.Prod.vOutro := ItemCupom.DescAcres
+  else
+     Det.Prod.vDesc  := -ItemCupom.DescAcres;
+
+  if fsACBrNFCe.NotasFiscais.Items[0].NFe.Emit.CRT <> crtSimplesNacional then
+  begin
+    Det.Imposto.ICMS.vBC   := RoundABNT((ItemCupom.Qtd*ItemCupom.ValorUnit)+ItemCupom.DescAcres,2);
+    Det.Imposto.ICMS.vICMS := RoundABNT( Det.Imposto.ICMS.vBC*(Det.Imposto.ICMS.pICMS/100),2);
   end;
 end;
 

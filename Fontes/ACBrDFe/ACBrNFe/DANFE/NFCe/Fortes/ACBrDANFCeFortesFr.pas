@@ -543,6 +543,10 @@ begin
 
     if ACBrNFeDANFCeFortes.Logo <> '' then
     begin
+      imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight ;
+      imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
+      imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;
+
       if FileExists (ACBrNFeDANFCeFortes.Logo) then
         imgLogo.Picture.LoadFromFile(ACBrNFeDANFCeFortes.Logo)
       else

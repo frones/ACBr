@@ -538,7 +538,6 @@ begin
   ConfigureDataSource;
   InitDados;
 
-  rlbFatura.Visible := ( FNFe.Cobr.Dup.Count > 0 );
   RLNFe.Title       := Copy (FNFe.InfNFe.Id, 4, 44);
 
   if FNumCopias > 0 then
@@ -1584,16 +1583,14 @@ procedure TfrlDANFeRLPaisagem.ISSQN;
 begin
   with FNFe.Total.ISSQNtot do
   begin
-    if FNFe.Emit.IM > '' then
+    rlbISSQN.Visible  := ( FNFe.Total.ISSQNtot.vISS > 0 ) and ( fMostraDadosISSQN = True );
+    if rlbISSQN.Visible then
     begin
-      rlbISSQN.Visible := True;
       rllISSQNInscricao.Caption     := FNFe.Emit.IM;
       rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ,'###,###,##0.00');
       rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC,'###,###,##0.00');
       rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS,'###,###,##0.00');
-    end
-    else
-      rlbISSQN.Visible := False;
+    end;
   end;
 end;
 
@@ -2078,10 +2075,8 @@ var
   base: Integer;
   AltLinhaComun: Integer;
 begin
-  if (fMostraDadosISSQN = False) then
-    rlbISSQN.Visible := False;
 
-  AltLinhaComun := fAltLinhaComun;
+  AltLinhaComun     := fAltLinhaComun;
 
   // ******** Cabeçalho ********
   base              := rliNatOpe.Top;//RLDraw6.Top;

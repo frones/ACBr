@@ -657,11 +657,11 @@ begin
   rlbCodigoBarras.BringToFront;
   if RLNFe.PageNumber > 1 then
   begin
-    rlbISSQN.Visible := False;
-    rlbDadosAdicionais.Visible := False;
-    rlbReciboHeader.Visible := False;
-    rlbReciboHeader.Height := 66;
-    rlbDivisaoRecibo.Visible := False;
+    rlbISSQN.Visible            := False;
+    rlbDadosAdicionais.Visible  := False;
+    rlbReciboHeader.Visible     := False;
+    rlbReciboHeader.Height      := 66;
+    rlbDivisaoRecibo.Visible    := False;
     if iQuantItens > q then
     begin
       rlbCabecalhoItens.Visible := True;
@@ -1625,16 +1625,14 @@ procedure TfrlDANFeRLRetrato.ISSQN;
 begin
   with FNFe.Total.ISSQNtot do
   begin
-    if FNFe.Emit.IM > '' then
+    rlbISSQN.Visible  := ( FNFe.Total.ISSQNtot.vISS > 0 ) and ( fMostraDadosISSQN = True );
+    if rlbISSQN.Visible then
     begin
-      rlbISSQN.Visible := True;
       rllISSQNInscricao.Caption     := FNFe.Emit.IM;
       rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ,'###,###,##0.00');
       rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC,'###,###,##0.00');
       rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS,'###,###,##0.00');
-    end
-    else
-      rlbISSQN.Visible := False;
+    end;
   end;
 end;
 
@@ -2063,9 +2061,6 @@ var
   base: Integer;
   AltLinhaComun: Integer;
 begin
-
-  if (fMostraDadosISSQN = False) then
-    rlbISSQN.Visible := False;
 
   AltLinhaComun := fAltLinhaComun;
 

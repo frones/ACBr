@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+10/02/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[*] Ajuste na critica do mostrar Dados ISSQN. 
+    Será apresentada quando a Propriedade MostraDadosISSQN igual True e
+    o valor do iss seja diferente maior que zero.
+    Por: Henrique Leonardo
+
 08/02/2016
 -- ACBrECFVirtualNFCe --
 [-] Adicionada rotina de calculo de Rateio de Descontos/Acrescimos por Item em

@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/02/2016
+-- ACBrNFSeWebServices --
+[*] Imposto condição quando se tratar de Envio Sincrono para 3 campos:
+    NumeroLote, dfRecebimento e Protocolo.
+    Por: Italo Jurisato Junior
 -- pnfsNFSeG --
 [*] Foi incluido o NameSpace na geração de alguns grupos visando a montagem
     correta do envelope para o provedor SimplISS.

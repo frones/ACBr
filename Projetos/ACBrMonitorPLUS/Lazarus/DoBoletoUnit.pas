@@ -45,6 +45,7 @@ procedure LerIniBoletos(aStr: AnsiString);
 procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
 procedure GravarIniRetorno(DirIniRetorno: String);
 function ListaBancos() : String;
+function ListaCaractTitulo() : String;
 
 implementation
 
@@ -125,9 +126,9 @@ begin
          end;
        end
       else if cmd.Metodo = 'listabancos' then
-       begin
-         Cmd.Resposta := ListaBancos();
-       end
+         Cmd.Resposta := ListaBancos()
+      else if cmd.Metodo = 'listacaracttitulo' then
+         Cmd.Resposta := ListaCaractTitulo()
       else if cmd.Metodo = 'tamnossonumero' then
          Cmd.Resposta := IntToStr(Banco.CalcularTamMaximoNossoNumero(Cmd.Params(0)))
       else if cmd.Metodo = 'codigosmoraaceitos' then
@@ -501,10 +502,30 @@ begin
    while IBanco <= High(TACBrTipoCobranca) do
    begin
      sBanco := GetEnumName( TypeInfo(TACBrTipoCobranca), Integer(IBanco) );
-     sBanco := copy(SBanco,4, Length(SBanco)); // Reovendo "cob" do nome do banco.
+     sBanco := copy(SBanco,4, Length(SBanco)); // Removendo "cob" do nome do banco.
      Result := Result + sBanco + '|';
 
      Inc(IBanco);
+   end;
+
+   if Result <> '' then
+      Result := copy(Result,1,Length(Result)-1) ;
+end;
+
+function ListaCaractTitulo: String;
+var
+   ICaractTitulo : TACBrCaracTitulo;
+   SCaractTitulo : AnsiString;
+begin
+   ICaractTitulo := Low(TACBrCaracTitulo);
+
+   while ICaractTitulo <= High(TACBrCaracTitulo) do
+   begin
+     SCaractTitulo := GetEnumName( TypeInfo(TACBrCaracTitulo), Integer(ICaractTitulo) );
+     SCaractTitulo := copy(SCaractTitulo, 3, Length(SCaractTitulo)); // Removendo "tc".
+     Result := Result + SCaractTitulo + '|';
+
+     Inc(ICaractTitulo);
    end;
 
    if Result <> '' then

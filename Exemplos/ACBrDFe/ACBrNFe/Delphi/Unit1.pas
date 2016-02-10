@@ -410,6 +410,7 @@ begin
       with ACBrNFe1.Configuracoes.Geral do
        begin
          ExibirErroSchema := cbxExibirErroSchema.Checked;
+         RetirarAcentos   := cbxRetirarAcentos.Checked;
          FormatoAlerta    := edtFormatoAlerta.Text;
          FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
          ModeloDF         := TpcnModeloDF(cbModeloDF.ItemIndex);
@@ -2927,7 +2928,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
 
  {   with ACBrNFe1.NotasFiscais.Items[0].NFe do
      begin
@@ -2954,7 +2955,8 @@ begin
                                     // a inclusão de serviços na NFe
        Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
     end;}
-    ACBrNFe1.NotasFiscais.GerarNFe;
+    //ACBrNFe1.NotasFiscais.GerarNFe;
+    //ACBrNFe1.NotasFiscais.GravarXML('c:\temp\teste.xml');
     ACBrNFe1.Enviar(1,True);
 
     MemoResp.Lines.Text := ACBrNFe1.WebServices.Retorno.RetWS;

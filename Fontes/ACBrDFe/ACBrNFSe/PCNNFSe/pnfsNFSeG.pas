@@ -876,12 +876,12 @@ begin
              Gerador.wGrupoNFSe('/Faixa');
            end
            else
-             Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfse', 01, 15, 1, NumeroNFSe, '');
+             Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfse', 01, 15, 1, NumeroNFSe, '', True, aNameSpace);
          end;
 
          if (DataInicial>0) and (DataFinal>0) then
          begin
-           Gerador.wGrupoNFSe('PeriodoEmissao');
+           Gerador.wGrupoNFSe('PeriodoEmissao' + aNameSpace);
            Gerador.wCampoNFSe(tcDat, '#5', 'DataInicial', 10, 10, 1, DataInicial, '');
            Gerador.wCampoNFSe(tcDat, '#6', 'DataFinal', 10, 10, 1, DataFinal, '');
            Gerador.wGrupoNFSe('/PeriodoEmissao');
@@ -890,7 +890,7 @@ begin
          if (CNPJTomador <> '') or (IMTomador <> '')then
          begin
            Gerador.Prefixo := Prefixo3;
-           Gerador.wGrupoNFSe('Tomador');
+           Gerador.wGrupoNFSe('Tomador' + aNameSpace);
 
            Gerador.Prefixo := Prefixo4;
            Gerador.wGrupoNFSe('CpfCnpj');
@@ -909,7 +909,7 @@ begin
          if (NomeInter <> '') and (CNPJInter <> '') then
          begin
            Gerador.Prefixo := Prefixo3;
-           Gerador.wGrupoNFSe('IntermediarioServico');
+           Gerador.wGrupoNFSe('IntermediarioServico' + aNameSpace);
 
            Gerador.Prefixo := Prefixo4;
            Gerador.wCampoNFSe(tcStr, '#4', 'RazaoSocial', 01, 115, 1, NomeInter, '');

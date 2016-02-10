@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2016
+-- pnfsNFSeG --
+[*] Foi incluido o NameSpace na geração de alguns grupos visando a montagem
+    correta do envelope para o provedor SimplISS.
+    Por: Italo Jurisato Junior
+
 05/02/2016
 -- ACBrNFSe / ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
 [*] A propriedade de configuração ConfigAssinar.Gerar mudou para 

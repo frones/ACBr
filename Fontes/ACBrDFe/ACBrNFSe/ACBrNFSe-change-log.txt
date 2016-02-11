@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2016
+-- ACBrNFSeWebServices / pnfsConsSitLoteRpsResposta --
+[*] Ao consultar a situação do Lote caso seja retornado uma lista de erros
+    a propriedade FSituacao vai conter o valor "Erro", desta forma a lista
+    de erros podera ser visualizada.
+    Por: Italo Jurisato Junior
+
 10/02/2016
 -- ACBrNFSeWebServices --
 [*] Imposto condição quando se tratar de Envio Sincrono para 3 campos:

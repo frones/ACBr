@@ -245,6 +245,9 @@ begin
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
+          if trim(InfSit.FMsgRetorno[i].FCodigo) <> '' then
+            InfSit.FSituacao := 'Erro';
+
           inc(i);
         end;
       end;
@@ -257,6 +260,8 @@ begin
        InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
        InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
        InfSit.FMsgRetorno[i].FCorrecao := '';
+
+       InfSit.FSituacao := 'Erro';
 
        inc(i);
      end;

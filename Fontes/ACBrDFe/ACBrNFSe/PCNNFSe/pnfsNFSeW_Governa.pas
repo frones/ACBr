@@ -195,8 +195,6 @@ begin
 end;
 
 function TNFSeW_Governa.GerarXml: Boolean;
-var
-  Gerar: Boolean;
 begin
   Gerador.Opcoes.DecimalChar := ',';
 

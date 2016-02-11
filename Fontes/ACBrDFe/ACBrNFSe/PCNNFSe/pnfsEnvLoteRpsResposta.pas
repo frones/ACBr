@@ -583,8 +583,8 @@ end;
 
 function TretEnvLote.LerXml_proGoverna: Boolean;
 var
-i,j, MsgErro: Integer;
-Cod, Msg, strAux: String;
+  i, j, MsgErro: Integer;
+  Msg: String;
 begin
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
@@ -611,9 +611,9 @@ begin
       end;
     end;
     Result := True;
-    except
-      Result := False;
-    end;
+  except
+    Result := False;
+  end;
 end;
 
 end.

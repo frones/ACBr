@@ -2104,7 +2104,8 @@ begin
     cSituacao := '1'; // Lote Não Recebido
 
   // Lote processado ?
-  if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') then
+  if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') or
+     (FSituacao = 'Erro') then
     Result := TratarRespostaFinal;
 end;
 

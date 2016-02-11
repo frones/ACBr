@@ -9,6 +9,7 @@ uses
 
 procedure DoSAT(Cmd: TACBrCmd);
 procedure CarregarDadosVenda(aStr: String);
+function ParamAsXML(AParam: String): String;
 procedure CarregarDadosCancelamento(aStr: String);
 function MontaDadosStatusSAT : AnsiString;
 function RespostaEnviarDadosVenda( Resultado: String): AnsiString;
@@ -167,10 +168,8 @@ begin
     else if Cmd.Metodo = 'enviarcfe' then
     begin
       AjustaACBrSAT;
-      ACBrSAT1.InicializaCFe;
-      CarregarDadosVenda(cmd.Params(0));
 
-      Resultado := ACBrSAT1.EnviarDadosVenda;
+      Resultado := ACBrSAT1.EnviarDadosVenda( ParamAsXML(Cmd.Params(0)) );
       Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
     end
 
@@ -250,6 +249,24 @@ begin
     FrmACBrMonitor.ACBrSAT1.CFe.LoadFromFile(aStr)
   else
     FrmACBrMonitor.ACBrSAT1.CFe.AsXMLString := ConvertStrRecived(aStr);
+end;
+
+function ParamAsXML(AParam: String): String;
+var
+  SL : TStringList;
+begin
+  if (pos(#10,AParam) = 0) and FileExists(AParam) then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile( AParam );
+      Result := SL.Text;
+    finally
+      SL.Free;
+    end;
+  end
+  else
+    Result := AParam;
 end;
 
 procedure CarregarDadosCancelamento(aStr: String);

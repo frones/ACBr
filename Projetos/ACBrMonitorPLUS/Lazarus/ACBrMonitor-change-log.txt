@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/02/2016
+[*] Ajuste para que o método "SAT.EnviarCFe", não tente interpretar o XML recebido
+
 28/018/2016
 [*] Ajuste para que todos os Edits números da aba DFe/Impressão usem
     TSpinEdit ou TFloatSpinEdit  (por: DSA)

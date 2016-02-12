@@ -547,14 +547,6 @@ begin
        end;
   end;
 
-  if Provedor = proDBSeller then
-    Gerador.ArquivoFormatoXML := '<ConsultarSituacaoLoteRpsEnvio>' +
-                                   Gerador.ArquivoFormatoXML +
-                                 '</ConsultarSituacaoLoteRpsEnvio>';
-
-  if Provedor = proFISSLex then
-    Gerador.ArquivoFormatoXML := SeparaDados(Gerador.ArquivoFormatoXML, 'ConsultarSituacaoLoteRpsEnvio');
-
   Result := Gerador.ArquivoFormatoXML;
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
@@ -646,9 +638,6 @@ begin
          Gerador.wCampoNFSe(tcStr, '#4', 'Protocolo', 01, 50, 1, Protocolo, '', True, aNameSpace);
        end;
   end;
-
-  if Provedor = proFISSLex then
-    Gerador.ArquivoFormatoXML := SeparaDados(Gerador.ArquivoFormatoXML, 'ConsultarLoteRpsEnvio');
 
   Result := Gerador.ArquivoFormatoXML;
 
@@ -770,14 +759,6 @@ begin
          Gerador.wGrupoNFSe('/Prestador');
        end;
   end;
-
-  if Provedor = proDBSeller then
-    Gerador.ArquivoFormatoXML := '<ConsultarNfseRpsEnvio>' +
-                                   Gerador.ArquivoFormatoXML +
-                                 '</ConsultarNfseRpsEnvio>';
-
-  if Provedor = proFISSLex then
-    Gerador.ArquivoFormatoXML := SeparaDados(Gerador.ArquivoFormatoXML, 'ConsultarNfseRpsEnvio');
 
   Result := Gerador.ArquivoFormatoXML;
 
@@ -946,9 +927,6 @@ begin
            Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 06, 1, Pagina, '');
        end;
   end;
-
-  if Provedor = proFISSLex then
-    Gerador.ArquivoFormatoXML := SeparaDados(Gerador.ArquivoFormatoXML, 'ConsultarNfseEnvio');
 
   Result := Gerador.ArquivoFormatoXML;
 

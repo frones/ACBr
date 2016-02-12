@@ -1465,6 +1465,7 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
+      proFISSLex,
       proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
@@ -2018,12 +2019,19 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd">';
-      proInfisc,                                                     
+      proDBSeller,
+      proInfisc,
       proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
     FTagF := '</' + FPrefixo3 + TagGrupo + '>';
+
+    if FProvedor = proFISSLex then
+    begin
+      FTagI := '';
+      FTagF := '';
+    end;
 
     InicializarGerarDadosMsg;
 
@@ -2271,6 +2279,12 @@ begin
     end;
     FTagF := '</' + FPrefixo3 + TagGrupo + '>';
 
+    if FProvedor = proFISSLex then
+    begin
+      FTagI := '';
+      FTagF := '';
+    end;
+
     InicializarGerarDadosMsg;
 
     with GerarDadosMsg do
@@ -2397,13 +2411,14 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd">';
+      proDBSeller,
       proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
     FTagF := '</' + FPrefixo3 + TagGrupo + '>';
 
-    if FProvedor = proGoverna then
+    if FProvedor in [proGoverna, proFISSLex] then
     begin
       FTagI := '';
       FTagF := '';
@@ -2592,6 +2607,12 @@ begin
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
     FTagF := '</' + FPrefixo3 + TagGrupo + '>';
+
+    if FProvedor = proFISSLex then
+    begin
+      FTagI := '';
+      FTagF := '';
+    end;
 
     InicializarGerarDadosMsg;
 

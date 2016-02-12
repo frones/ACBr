@@ -874,8 +874,8 @@ begin
 
     FNotasFiscais.Items[ii].NFSe.InfID.ID := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.InfID.ID;
 
-    // Retorno do EnviarLoteRpsSincrono
-    if FPLayout = LayNFSeRecepcaoLoteSincrono then
+    // Retorno do GerarNfse e EnviarLoteRpsSincrono
+    if FPLayout in [LayNFSeGerar, LayNFSeRecepcaoLoteSincrono] then
     begin
       FNotasFiscais.Items[ii].NFSe.NumeroLote    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote;
       FNotasFiscais.Items[ii].NFSe.dhRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.dhRecebimento;

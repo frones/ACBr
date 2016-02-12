@@ -400,7 +400,7 @@ begin
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'NotasConsultadas');
 
-              // Retorno do EnviarLoteRpsSincrono
+              // Retorno do GerarNfse e EnviarLoteRpsSincrono
               FNFSe.NumeroLote    := NumeroLoteTemp;
               FNFSe.dhRecebimento := DataRecebimentoTemp;
               FNFSe.Protocolo     := ProtocoloTemp;

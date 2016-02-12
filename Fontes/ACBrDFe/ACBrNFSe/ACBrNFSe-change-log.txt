@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/02/2016
+-- pnfsNFSeG --
+[*] Alterações visando atender o provedor FISSLex.
+    Por: Italo Jurisato Junior
 -- pnfsLerListaNFSe --
 [*] Incluida a TAG de consulta a NFSe - provedor SimplISS.
     Por: João Miler

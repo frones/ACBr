@@ -35,12 +35,16 @@ uses
   Classes, SysUtils, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque;
 
-type
+const
+  ACBRBLOCOX_VERSAO = '1.1.0a';
+
+  type
   TConfiguracoesBlocoX = class(TConfiguracoes)
   public
     constructor Create(AOwner: TComponent); override;
     procedure Assign(DeConfiguracoesBlocoX: TConfiguracoesBlocoX); overload;
   published
+    property Geral;
     property WebServices;
     property Certificados;
   end;
@@ -96,6 +100,9 @@ type
     FECF: TACBrBlocoX_ECF;
     function GetConfiguracoes: TConfiguracoesBlocoX;
     procedure SetConfiguracoes(const Value: TConfiguracoesBlocoX);
+  protected
+    function CreateConfiguracoes: TConfiguracoes; override;
+    function GetAbout: String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -137,6 +144,16 @@ begin
   FECF.Free;
 
   inherited;
+end;
+
+function TACBrBlocoX.CreateConfiguracoes: TConfiguracoes;
+begin
+  Result := TConfiguracoesBlocoX.Create(Self);
+end;
+
+function TACBrBlocoX.GetAbout: String;
+begin
+  Result := 'ACBrBlocoX Ver: ' + ACBRBLOCOX_VERSAO;
 end;
 
 function TACBrBlocoX.GetConfiguracoes: TConfiguracoesBlocoX;

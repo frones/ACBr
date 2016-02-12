@@ -218,7 +218,7 @@ begin
 
   FXMLOriginal := ConverteXMLtoUTF8(FGerador.ArquivoFormatoXML);
   if Assinar then
-    FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'ReducaoZ', '/ReducaoZ');
+    FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'ReducaoZ', 'Mensagem');
 end;
 
 procedure TACBrBlocoX_ReducaoZ.SaveToFile(const AXmlFileName: string);

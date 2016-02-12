@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2016
+-- pnfsLerListaNFSe --
+[*] Incluida a TAG de consulta a NFSe - provedor SimplISS.
+    Por: João Miler
+
 11/02/2016
 -- ACBrNFSeWebServices / pnfsConsSitLoteRpsResposta --
 [*] Ao consultar a situação do Lote caso seja retornado uma lista de erros

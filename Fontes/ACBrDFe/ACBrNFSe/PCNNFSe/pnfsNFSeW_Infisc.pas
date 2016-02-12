@@ -59,6 +59,7 @@ type
 
     procedure GerarPrestador;
     procedure GerarTomador;
+    procedure GerarTransportadora;
     procedure GerarIntermediarioServico;
 
     procedure GerarServicoValores;
@@ -285,6 +286,29 @@ begin
       Gerador.wCampoNFSe(tcStr, '', 'fone', 01, 100,  0, NFSe.Tomador.Contato.Telefone, '');
     Gerador.wGrupoNFSe('/TomS');
   end;//fim do if versao
+end;
+
+procedure TNFSeW_Infisc.GerarTransportadora;
+begin
+  if NFSe.Transportadora.xCpfCnpjTrans <> '' then
+  begin
+    Gerador.wGrupoNFSe('transportadora');
+
+    Gerador.wCampoNFSe(tcStr, '', 'xNomeTrans'   , 01, 100, 1, NFSe.Transportadora.xNomeTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xCpfCnpjTrans', 01, 014, 1, NFSe.Transportadora.xCpfCnpjTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xInscEstTrans', 01, 015, 1, NFSe.Transportadora.xInscEstTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xPlacaTrans'  , 01, 007, 1, NFSe.Transportadora.xPlacaTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xEndTrans'    , 01, 100, 1, NFSe.Transportadora.xEndTrans, '');
+    Gerador.wCampoNFSe(tcInt, '', 'cMunTrans'    , 01, 007, 1, NFSe.Transportadora.cMunTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xMunTrans'    , 01, 060, 1, NFSe.Transportadora.xMunTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xUFTrans'     , 01, 002, 1, NFSe.Transportadora.xUFTrans, '');
+    Gerador.wCampoNFSe(tcInt, '', 'cPaisTrans'   , 01, 004, 1, NFSe.Transportadora.cPaisTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xPaisTrans'   , 01, 100, 1, NFSe.Transportadora.xPaisTrans, '');
+
+    Gerador.wCampoNFSe(tcInt, '', 'vTipoFreteTrans', 01, 01,  1, TipoFreteToStr(NFSe.Transportadora.vTipoFreteTrans), '');
+
+    Gerador.wGrupoNFSe('/transportadora');
+  end;
 end;
 
 procedure TNFSeW_Infisc.GerarIntermediarioServico;
@@ -623,8 +647,12 @@ begin
   GerarIdentificacaoRPS;
   GerarPrestador;
   GerarTomador;
+
   //Dados da Obra caso empreitada global seja construção (1)
-  if EmpreitadaGlobalToStr(NFSe.EmpreitadaGlobal) = '1' then GerarConstrucaoCivil;
+  if EmpreitadaGlobalToStr(NFSe.EmpreitadaGlobal) = '1' then
+    GerarConstrucaoCivil;
+
+  GerarTransportadora;
   GerarListaServicos;
   GerarValoresServico;
   GerarCondicaoPagamento;

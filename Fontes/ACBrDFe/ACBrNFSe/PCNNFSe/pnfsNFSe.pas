@@ -66,6 +66,7 @@ type
  TCondicaoPagamento                 = class;
  TemailCollection                   = class;
  TemailCollectionItem               = class;
+ TDadosTransportadora               = class;
 
  TNFSe                              = class;
 
@@ -540,6 +541,33 @@ type
     property emailCC: String read FemailCC write FemailCC;
   end;
 
+ TDadosTransportadora = class(TPersistent)
+  private
+    FxNomeTrans: String;
+    FxCpfCnpjTrans: String;
+    FxInscEstTrans: String;
+    FxPlacaTrans: String;
+    FxEndTrans: String;
+    FcMunTrans: Integer;
+    FxMunTrans: String;
+    FxUFTrans: String;
+    FcPaisTrans: Integer;
+    FxPaisTrans: String;
+    FvTipoFreteTrans: TnfseFrete;
+  published
+    property xNomeTrans: String read FxNomeTrans write FxNomeTrans;
+    property xCpfCnpjTrans: String read FxCpfCnpjTrans write FxCpfCnpjTrans;
+    property xInscEstTrans: String read FxInscEstTrans write FxInscEstTrans;
+    property xPlacaTrans: String read FxPlacaTrans write FxPlacaTrans;
+    property xEndTrans: String read FxEndTrans write FxEndTrans;
+    property cMunTrans: Integer read FcMunTrans write FcMunTrans;
+    property xMunTrans: String read FxMunTrans write FxMunTrans;
+    property xUFTrans: String read FxUFTrans write FxUFTrans;
+    property cPaisTrans: Integer read FcPaisTrans write FcPaisTrans;
+    property xPaisTrans: String read FxPaisTrans write FxPaisTrans;
+    property vTipoFreteTrans: TnfseFrete read FvTipoFreteTrans write FvTipoFreteTrans;
+  end;
+
  TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -587,14 +615,17 @@ type
     FNfseSubstituidora: String;
     FMotivoCancelamento: String; // para provedor ISSDSF
     FChaveNFSe: String; // para provedor Infisc
+
     // Provedor Infisc Versão XML 1.1
     FTipoEmissao: TnfseTEmissao;
     FEmpreitadaGlobal: TnfseTEmpreitadaGlobal;
     FModeloNFSe: String;
     FCancelada: TnfseSimNao;
+    FTransportadora: TDadosTransportadora;
+
     Femail: TemailCollection;
     FTipoRecolhimento: String;
-    
+
     procedure Setemail(const Value: TemailCollection);
 
   public
@@ -650,6 +681,8 @@ type
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
+    property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
+
     //propriedade para provedor Governa
     property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
@@ -859,7 +892,7 @@ begin
  FValorCredito                 := 0;
  FPrestadorServico             := TDadosPrestador.Create(self);
  FOrgaoGerador                 := TIdentificacaoOrgaoGerador.Create;
- FValoresNfse                  := TValoresNfse.Create; 
+ FValoresNfse                  := TValoresNfse.Create;
  // RPS e NFSe
  Fsignature                    := Tsignature.create;
 
@@ -872,6 +905,7 @@ begin
  FEmpreitadaGlobal             := EgOutros;
  FModeloNFSe                   := '55';
  FCancelada                    := snNao;
+ FTransportadora               := TDadosTransportadora.Create;
 
  Femail                        := TemailCollection.Create(Self);
 end;

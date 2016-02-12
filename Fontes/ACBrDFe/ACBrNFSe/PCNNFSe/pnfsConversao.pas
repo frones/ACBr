@@ -111,6 +111,8 @@ type
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
                 loInfisc, loISSDSF, loGoverna);
 
+  TnfseFrete = ( tfPrestador, tfTomador );
+
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
 function StrToStatusRPS(out ok: boolean; const s: String): TnfseStatusRPS;
@@ -193,6 +195,9 @@ function ProvedorToLayoutXML(const AProvedor: TnfseProvedor): TLayoutXML;
 function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 
 function RemoverNameSpace(const AXML: String): String;
+
+function TipoFreteToStr(const t: TnfseFrete): String;
+function StrToTipoFrete(out ok: boolean; const s: String): TnfseFrete;
 
 implementation
 
@@ -18184,6 +18189,20 @@ begin
   XML := StringReplace(XML, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll] );
 
   Result := XML;
+end;
+
+function TipoFreteToStr(const t: TnfseFrete): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['0', '1'],
+                           [tfPrestador, tfTomador]);
+end;
+
+function StrToTipoFrete(out ok: boolean; const s: String): TnfseFrete;
+begin
+  result := StrToEnumerado(ok, s,
+                          ['0', '1'],
+                          [tfPrestador, tfTomador]);
 end;
 
 end.

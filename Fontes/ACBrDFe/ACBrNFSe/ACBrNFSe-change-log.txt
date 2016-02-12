@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/02/2016
+[+] Incluido o grupo <transportadora> para o provedor Infisc.
+    Por: Italo Jurisato Junior
 -- pnfsNFSeG --
 [*] Alterações visando atender o provedor FISSLex.
     Por: Italo Jurisato Junior

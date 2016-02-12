@@ -436,7 +436,7 @@ begin
         snNao: strIND_RI := '1';
       end;
 
-      Add( LFill('0005') +
+      Add( LFill('0030') +
            LFill(strIND_ED) +
            LFill(strIND_ARQ) +
            LFill(strPRF_ISS) +

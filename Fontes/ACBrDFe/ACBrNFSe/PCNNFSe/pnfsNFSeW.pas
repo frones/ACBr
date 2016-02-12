@@ -69,20 +69,6 @@ type
     FServicoEnviar: String;
     FQuebradeLinha: String;
 
-    procedure GerarIdentificacaoRPS; virtual;
-    procedure GerarRPSSubstituido; virtual;
-
-    procedure GerarPrestador; virtual;
-    procedure GerarTomador; virtual;
-    procedure GerarIntermediarioServico; virtual;
-
-    procedure GerarServicoValores; virtual;
-    procedure GerarListaServicos; virtual;
-    procedure GerarValoresServico; virtual;
-
-    procedure GerarConstrucaoCivil; virtual;
-    procedure GerarCondicaoPagamento; virtual;
-
   public
     constructor Create(ANFSeW: TNFSeW); virtual;
 
@@ -243,56 +229,6 @@ function TNFSeWClass.ObterNomeArquivo: String;
 begin
   Result := '';
   raise EACBrDFeException.Create(ClassName + '.ObterNomeArquivo, não implementado');
-end;
-
-procedure TNFSeWClass.GerarIdentificacaoRPS;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarRPSSubstituido;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarPrestador;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarTomador;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarIntermediarioServico;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarServicoValores;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarListaServicos;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarValoresServico;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarConstrucaoCivil;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TNFSeWClass.GerarCondicaoPagamento;
-begin
-  { nada aqui, método virtual}
 end;
 
 function TNFSeWClass.GerarXml: Boolean;

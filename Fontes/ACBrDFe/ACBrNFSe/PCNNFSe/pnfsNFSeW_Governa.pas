@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Governa;
 
@@ -88,33 +88,19 @@ uses
 
 { TNFSeW_Governa }
 
-constructor TNFSeW_Governa.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-end;
-
-function TNFSeW_Governa.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
-
 procedure TNFSeW_Governa.GerarIdentificacaoRPS;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarRPSSubstituido;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarPrestador;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarTomador;
@@ -133,14 +119,12 @@ end;
 
 procedure TNFSeW_Governa.GerarIntermediarioServico;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarServicoValores;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarListaServicos;
@@ -184,33 +168,12 @@ end;
 
 procedure TNFSeW_Governa.GerarConstrucaoCivil;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarCondicaoPagamento;
 begin
-  inherited;
-
-end;
-
-function TNFSeW_Governa.GerarXml: Boolean;
-begin
-  Gerador.Opcoes.DecimalChar := ',';
-
-  Gerador.Prefixo := Prefixo4;
-  Gerador.wGrupoNFSe('LoteRps');
-
-  Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 15, 1, NFSe.Prestador.InscricaoMunicipal, '');
-  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
-  Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 30, 30, 1, NFSe.Prestador.ChaveAcesso, '');
-
-  GerarXML_Governa;
-
-  Gerador.wGrupoNFSe('/LoteRps');
-
-  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+  // Não Definido
 end;
 
 procedure TNFSeW_Governa.GerarXML_Governa;
@@ -231,6 +194,37 @@ begin
 
   Gerador.wGrupoNFSe('/InfRps');
   Gerador.wGrupoNFSe('/Rps');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_Governa.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+end;
+
+function TNFSeW_Governa.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
+end;
+
+function TNFSeW_Governa.GerarXml: Boolean;
+begin
+  Gerador.Opcoes.DecimalChar := ',';
+
+  Gerador.Prefixo := Prefixo4;
+  Gerador.wGrupoNFSe('LoteRps');
+
+  Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 15, 1, NFSe.Prestador.InscricaoMunicipal, '');
+  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+  Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 30, 30, 1, NFSe.Prestador.ChaveAcesso, '');
+
+  GerarXML_Governa;
+
+  Gerador.wGrupoNFSe('/LoteRps');
+
+  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

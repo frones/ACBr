@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_EGoverneISS;
 
@@ -88,33 +88,19 @@ uses
 
 { TNFSeW_EGoverneISS }
 
-constructor TNFSeW_EGoverneISS.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-end;
-
-function TNFSeW_EGoverneISS.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
-
 procedure TNFSeW_EGoverneISS.GerarIdentificacaoRPS;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarRPSSubstituido;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarPrestador;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarTomador;
@@ -169,20 +155,17 @@ end;
 
 procedure TNFSeW_EGoverneISS.GerarIntermediarioServico;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarServicoValores;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarListaServicos;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarValoresServico;
@@ -201,14 +184,45 @@ end;
 
 procedure TNFSeW_EGoverneISS.GerarConstrucaoCivil;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_EGoverneISS.GerarCondicaoPagamento;
 begin
-  inherited;
+  // Não definido
+end;
 
+procedure TNFSeW_EGoverneISS.GerarXML_EGoverneISS;
+begin
+   Gerador.Prefixo := 'rgm:';
+   Gerador.wGrupoNFSe('NotaFiscal');
+   Gerador.Prefixo := 'rgm1:';
+   Gerador.wCampoNFSe(tcDe4, '', 'Aliquota',                       01,   15, 1, NFSe.Servico.Valores.Aliquota, '');
+   Gerador.wCampoNFSe(tcStr, '', 'Atividade',                      01,   09, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
+   Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao',              01,   36, 1, NFSe.Prestador.Senha, '');
+   Gerador.wCampoNFSe(tcStr, '', 'Homologacao',                    05,   05, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
+   Gerador.wCampoNFSe(tcStr, '', 'NotificarTomadorPorEmail',       05,   05, 1, 'false', '');
+   Gerador.wCampoNFSe(tcStr, '', 'SubstituicaoTributaria',         05,    5, 1, 'false', '');
+   Gerador.wCampoNFSe(tcStr, '', 'InformacoesAdicionais',          00, 2300, 0, NFSe.OutrasInformacoes, '');
+
+   GerarTomador;
+   GerarValoresServico;
+
+  Gerador.Prefixo := 'rgm:';
+  Gerador.wGrupoNFSe('/NotaFiscal');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_EGoverneISS.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+
+end;
+
+function TNFSeW_EGoverneISS.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
 function TNFSeW_EGoverneISS.GerarXml: Boolean;
@@ -257,26 +271,6 @@ begin
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
-end;
-
-procedure TNFSeW_EGoverneISS.GerarXML_EGoverneISS;
-begin
-   Gerador.Prefixo := 'rgm:';
-   Gerador.wGrupoNFSe('NotaFiscal');
-   Gerador.Prefixo := 'rgm1:';
-   Gerador.wCampoNFSe(tcDe4, '', 'Aliquota',                       01,   15, 1, NFSe.Servico.Valores.Aliquota, '');
-   Gerador.wCampoNFSe(tcStr, '', 'Atividade',                      01,   09, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
-   Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao',              01,   36, 1, NFSe.Prestador.Senha, '');
-   Gerador.wCampoNFSe(tcStr, '', 'Homologacao',                    05,   05, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
-   Gerador.wCampoNFSe(tcStr, '', 'NotificarTomadorPorEmail',       05,   05, 1, 'false', '');
-   Gerador.wCampoNFSe(tcStr, '', 'SubstituicaoTributaria',         05,    5, 1, 'false', '');
-   Gerador.wCampoNFSe(tcStr, '', 'InformacoesAdicionais',          00, 2300, 0, NFSe.OutrasInformacoes, '');
-
-   GerarTomador;
-   GerarValoresServico;
-
-  Gerador.Prefixo := 'rgm:';
-  Gerador.wGrupoNFSe('/NotaFiscal');
 end;
 
 end.

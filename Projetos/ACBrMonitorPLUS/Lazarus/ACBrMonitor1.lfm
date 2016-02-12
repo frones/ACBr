@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 441
+  Left = 871
   Height = 689
-  Top = 116
+  Top = 14
   Width = 835
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6515,11 +6515,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ClientHeight = 78
                 ClientWidth = 350
                 Enabled = False
-                TabOrder = 1
+                TabOrder = 2
                 object Label111: TLabel
                   Left = 26
                   Height = 17
-                  Top = 21
+                  Top = 16
                   Width = 48
                   Caption = 'Arquivo:'
                   ParentColor = False
@@ -6527,7 +6527,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object Label112: TLabel
                   Left = 7
                   Height = 17
-                  Top = 56
+                  Top = 51
                   Width = 67
                   Caption = 'Max.Linhas:'
                   ParentColor = False
@@ -6535,7 +6535,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object SpeedButton1: TSpeedButton
                   Left = 312
                   Height = 25
-                  Top = 13
+                  Top = 8
                   Width = 23
                   Glyph.Data = {
                     76010000424D7601000000000000760000002800000020000000100000000100
@@ -6557,14 +6557,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object edLogComp: TEdit
                   Left = 80
                   Height = 25
-                  Top = 13
+                  Top = 8
                   Width = 233
                   TabOrder = 0
                 end
                 object sedLogLinhasComp: TSpinEdit
                   Left = 80
                   Height = 25
-                  Top = 48
+                  Top = 43
                   Width = 65
                   MaxValue = 0
                   TabOrder = 1
@@ -6577,7 +6577,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 263
                 Caption = 'Log de Mensagens do Componentes DFe'
                 OnClick = cbLogCompClick
-                TabOrder = 2
+                TabOrder = 3
               end
               object rgVersaoSSL: TRadioGroup
                 Left = 368
@@ -6601,7 +6601,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   'OpenSSL'
                   'CAPICOM'
                 )
-                TabOrder = 3
+                TabOrder = 4
               end
               object cbValidarDigest: TCheckBox
                 Left = 368
@@ -6609,7 +6609,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 96
                 Width = 244
                 Caption = 'Validar Digest Value ao consultar XML'
-                TabOrder = 4
+                TabOrder = 5
               end
               object GroupBox4: TGroupBox
                 Left = 8
@@ -6619,7 +6619,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Caption = 'Arquivo com Endereços dos WebServices'
                 ClientHeight = 100
                 ClientWidth = 594
-                TabOrder = 5
+                TabOrder = 6
                 object edtArquivoWebServicesNFe: TEdit
                   Left = 55
                   Height = 25
@@ -6749,8 +6749,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 120
                 Width = 74
                 MinValue = 5
-                TabOrder = 6
+                TabOrder = 7
                 Value = 15
+              end
+              object cbRetirarAcentos: TCheckBox
+                Left = 368
+                Height = 21
+                Top = 8
+                Width = 159
+                Caption = 'Retirar Acentos do XML'
+                Checked = True
+                State = cbChecked
+                TabOrder = 1
               end
             end
             object tsCertificadoDFe: TTabSheet
@@ -6911,9 +6921,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 615
-                ActivePage = tsWSNFCe
+                ActivePage = tsWSNFe
                 Align = alClient
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
@@ -11198,7 +11208,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

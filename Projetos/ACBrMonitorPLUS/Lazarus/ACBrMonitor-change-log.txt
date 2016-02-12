@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2016
+[+] Adicionada configuração para permitir a criação de XMLs com acentos
+[-] Correção nas rotinas de geração de XML por INI, para usar "String"
+ (por: DSA)
+
 11/02/2016
 [*] Ajuste para que o método "SAT.EnviarCFe", não tente interpretar o XML recebido
 

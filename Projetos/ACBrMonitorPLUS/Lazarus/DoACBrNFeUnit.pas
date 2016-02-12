@@ -41,9 +41,9 @@ Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
 Function ConvertStrRecived( AStr: String ) : String ;
 function UFparaCodigo(const UF: string): integer;
 function ObterCodigoMunicipio(const xMun, xUF: string): integer;
-procedure GerarIniNFe( AStr: WideString ) ;
-function GerarNFeIni( XML : WideString ) : WideString;
-procedure GerarIniEvento( AStr: WideString; CCe : Boolean = False ) ;
+procedure GerarIniNFe( AStr: String ) ;
+function GerarNFeIni( XML : String ) : String;
+procedure GerarIniEvento( AStr: String; CCe : Boolean = False ) ;
 function SubstituirVariaveis(const ATexto: String): String;
 
 implementation
@@ -54,7 +54,7 @@ Uses IniFiles, StrUtils, DateUtils, Forms,
   pcnNFe, pcnConversao, pcnConversaoNFe,
   pcnAuxiliar, pcnNFeRTXT,  pcnNFeR;
 
-Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
+procedure DoACBrNFe(Cmd: TACBrCmd);
 var
   I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
@@ -1772,7 +1772,7 @@ begin
   end;
 end ;
 
-Function ConvertStrRecived( AStr: String ) : String ;
+function ConvertStrRecived(AStr: String): String;
  Var P   : Integer ;
      Hex : String ;
      CharHex : Char ;
@@ -1838,7 +1838,7 @@ begin
   end;
 end;
 
-procedure GerarIniNFe( AStr: WideString ) ;
+procedure GerarIniNFe(AStr: String);
 var
   I, J, K : Integer;
   versao, sSecao, sFim, sCodPro, sNumeroDI, sNumeroADI, sQtdVol,
@@ -2800,7 +2800,7 @@ begin
  end;
 end;
 
-function GerarNFeIni( XML : WideString ) : WideString;
+function GerarNFeIni(XML: String): String;
 var
   I, J, K : Integer;
   sSecao : String;
@@ -3547,7 +3547,7 @@ begin
   end;
 end;
 
-procedure GerarIniEvento( AStr: WideString; CCe : Boolean = False ) ;
+procedure GerarIniEvento(AStr: String; CCe: Boolean);
 var
   I      : Integer;
   sSecao, sFim : String;

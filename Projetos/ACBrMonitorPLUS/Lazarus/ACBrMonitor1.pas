@@ -182,6 +182,7 @@ type
     cbLogComp: TCheckBox;
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
+    cbRetirarAcentos: TCheckBox;
     cbMonitorarPasta: TCheckBox;
     cbPreview: TCheckBox;
     cbRFDModelo: TComboBox;
@@ -3300,10 +3301,9 @@ begin
     ACBrNFeDANFeESCPOS1.PosPrinter.Device.Desativar;
 
     cbModoXML.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ModoXML', False);
-    edLogComp.Text :=
-      Ini.ReadString('ACBrNFeMonitor', 'Arquivo_Log_Comp', 'LOG_COMP.TXT');
-    cbLogComp.Checked := Ini.ReadBool('ACBrNFeMonitor', 'Gravar_Log_Comp', False) and
-      (edLogComp.Text <> '');
+    cbRetirarAcentos.Checked := Ini.ReadBool('ACBrNFeMonitor', 'RetirarAcentos', True);
+    edLogComp.Text := Ini.ReadString('ACBrNFeMonitor', 'Arquivo_Log_Comp', 'LOG_COMP.TXT');
+    cbLogComp.Checked := Ini.ReadBool('ACBrNFeMonitor', 'Gravar_Log_Comp', False) and (edLogComp.Text <> '');
     sedLogLinhasComp.Value := Ini.ReadInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', 0);
     ArqLogCompTXT := AcertaPath(edLogComp.Text);
     rgVersaoSSL.ItemIndex := Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
@@ -3319,17 +3319,19 @@ begin
     ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesNFe.Text;
     ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
     ACBrNFe1.Configuracoes.Geral.ValidarDigest := cbValidarDigest.Checked;
+    ACBrNFe1.Configuracoes.Geral.RetirarAcentos := cbRetirarAcentos.Checked;
 
     ACBrCTe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesCTe.Text;
     ACBrCTe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
     ACBrCTe1.Configuracoes.Geral.ValidarDigest := cbValidarDigest.Checked;
+    ACBrCTe1.Configuracoes.Geral.RetirarAcentos := cbRetirarAcentos.Checked;
 
     ACBrMDFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesMDFe.Text;
     ACBrMDFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
     ACBrMDFe1.Configuracoes.Geral.ValidarDigest := cbValidarDigest.Checked;
+    ACBrMDFe1.Configuracoes.Geral.RetirarAcentos := cbRetirarAcentos.Checked;
 
-    cbModoEmissao.Checked :=
-      Ini.ReadBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', False);
+    cbModoEmissao.Checked := Ini.ReadBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', False);
     rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', 0);
     ckSalvar.Checked := Ini.ReadBool('Geral', 'Salvar', True);
     edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',PathApplication + 'Logs');
@@ -4228,6 +4230,7 @@ begin
 
     Ini.WriteBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', cbModoEmissao.Checked);
     Ini.WriteBool('ACBrNFeMonitor', 'ModoXML', cbModoXML.Checked);
+    Ini.WriteBool('ACBrNFeMonitor', 'RetirarAcentos', cbRetirarAcentos.Checked);
     Ini.WriteBool('ACBrNFeMonitor', 'Gravar_Log_Comp', cbLogComp.Checked);
     Ini.WriteString('ACBrNFeMonitor', 'Arquivo_Log_Comp', edLogComp.Text);
     Ini.WriteInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', sedLogLinhasComp.Value);

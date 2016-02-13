@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+13/02/2016
+-- ACBrNFeNotasFiscais --
+[-] Acerto para validar corretamente a regra 773 agora que foi introduzido o DIFAL
+    http://www.projetoacbr.com.br/forum/topic/28025-solicitação-de-alteração-no-acbrnfenotasfiscais-ref-ao-tratamento-da-regra-de-validação-773/#comment-184292
+
 10/02/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
 [*] Ajuste na critica do mostrar Dados ISSQN. 

@@ -855,8 +855,9 @@ begin
 
       GravaLog('Validar: 773-Op.Interna e UF diferente');
       if (nfe.Ide.idDest = doInterna) and
-         (NFe.Dest.EnderDest.UF <> NFe.Emit.EnderEmit.UF) then
-        AdicionaErro('773-Rejeição: Operação Interna e UF de destino difere da UF do emitente');
+         (NFe.Dest.EnderDest.UF <> NFe.Emit.EnderEmit.UF) and
+         (NFe.Ide.indPres <> pcPresencial) then
+        AdicionaErro('773-Rejeição: Operação Interna e UF de destino difere da UF do emitente - não presencial');
 
       GravaLog('Validar: 790-Op.Exterior e Destinatário ICMS');
       if (NFe.Ide.idDest = doExterior) and

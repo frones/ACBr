@@ -301,7 +301,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'xEndTrans'    , 01, 100, 1, NFSe.Transportadora.xEndTrans, '');
     Gerador.wCampoNFSe(tcInt, '', 'cMunTrans'    , 01, 007, 1, NFSe.Transportadora.cMunTrans, '');
     Gerador.wCampoNFSe(tcStr, '', 'xMunTrans'    , 01, 060, 1, NFSe.Transportadora.xMunTrans, '');
-    Gerador.wCampoNFSe(tcStr, '', 'xUFTrans'     , 01, 002, 1, NFSe.Transportadora.xUFTrans, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xUfTrans'     , 01, 002, 1, NFSe.Transportadora.xUFTrans, '');
     Gerador.wCampoNFSe(tcInt, '', 'cPaisTrans'   , 01, 004, 1, NFSe.Transportadora.cPaisTrans, '');
     Gerador.wCampoNFSe(tcStr, '', 'xPaisTrans'   , 01, 100, 1, NFSe.Transportadora.xPaisTrans, '');
 

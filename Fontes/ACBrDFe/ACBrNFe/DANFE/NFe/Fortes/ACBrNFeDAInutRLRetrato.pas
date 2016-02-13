@@ -71,12 +71,10 @@ type
     rllModelo: TRLLabel;
     rlb_07_Rodape: TRLBand;
     rlb_03_Inutilizacao: TRLBand;
-    rlsQuadro01: TRLDraw;
     rlsLinhaV10: TRLDraw;
     rlsLinhaV09: TRLDraw;
     rlsLinhaH04: TRLDraw;
     rlsLinhaV01: TRLDraw;
-    rlShape46: TRLDraw;
     rllLinha3: TRLLabel;
     rllLinha2: TRLLabel;
     rllLinha1: TRLLabel;
@@ -95,9 +93,7 @@ type
     rlShape50: TRLDraw;
     rlLabel18: TRLLabel;
     rllStatus: TRLLabel;
-    rlb_05_NaoUsado_Detalhe: TRLBand;
     rlb_02_Emitente: TRLBand;
-    rlsQuadro02: TRLDraw;
     rlsLinhaH07: TRLDraw;
     rlsLinhaH06: TRLDraw;
     rllRazaoEmitente: TRLLabel;
@@ -125,23 +121,15 @@ type
     rlShape109: TRLDraw;
     rllblSistema: TRLLabel;
     rlShape1: TRLDraw;
-    rlb_04_NaoUsado: TRLBand;
-    rlb_06_NaoUsado_Summary: TRLBand;
     rlLabel15: TRLLabel;
     rlShape2: TRLDraw;
     rlLabel1: TRLLabel;
-    rllJustificativa: TRLLabel;
+    rllJustificativa: TRLMemo;
     procedure RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
-    procedure rlb_02_EmitenteBeforePrint(Sender: TObject; var PrintBand: Boolean);
     procedure rlb_03_InutilizacaoBeforePrint(Sender: TObject; var PrintBand: Boolean);
-    procedure rlb_05_NaoUsado_DetalheBeforePrint(Sender: TObject; var PrintBand: Boolean);
-    procedure rlb_06_NaoUsado_SummaryBeforePrint(Sender: TObject; var PrintBand: Boolean);
     procedure rlb_07_RodapeBeforePrint(Sender: TObject; var PrintBand: Boolean);
-    procedure rldbtxtValorPrint(sender: TObject; var Value: String);
   private
-    procedure Itens;
   public
-    procedure ProtocoloNFe(const sProtocolo: String);
   end;
 
 implementation
@@ -149,79 +137,19 @@ implementation
 uses
   DateUtils, ACBrDFeUtil;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 var
   FProtocoloNFe : String;
 
-procedure TfrmNFeDAInutRLRetrato.Itens;
-var
-  i: Integer;
-begin
- // Itens
- (*
-  if ( cdsCorrecao.Active ) then
-  begin
-    cdsCorrecao.CancelUpdates;
-  end
-  else
-  begin
-    cdsCorrecao.CreateDataSet;
-  end;
-
-  for i := 0 to (FEventoNFe.InfEvento.detEvento.infCorrecao.Count -1) do
-  begin
-    cdsCorrecao.Append;
-    cdsCorrecaoItem.AsInteger := FEventoNFe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
-    cdsCorrecaoGrupo.AsString := FEventoNFe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
-    cdsCorrecaoCampo.AsString := FEventoNFe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
-    cdsCorrecaoValor.AsString := FEventoNFe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
-    cdsCorrecao.Post;
-  end;
-  *)
-end;
-
-procedure TfrmNFeDAInutRLRetrato.ProtocoloNFe(const sProtocolo: String);
-begin
-  FProtocoloNFe := sProtocolo;
-end;
-
 procedure TfrmNFeDAInutRLRetrato.RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
 begin
   inherited;
-
-  Itens;
-
   RLNFeInut.Title := 'Inutilização';
-
-  RLNFeInut.Margins.TopMargin    := FMargemSuperior * 100;
-  RLNFeInut.Margins.BottomMargin := FMargemInferior * 100;
-  RLNFeInut.Margins.LeftMargin   := FMargemEsquerda * 100;
-  RLNFeInut.Margins.RightMargin  := FMargemDireita  * 100;
-
-end;
-
-procedure TfrmNFeDAInutRLRetrato.rlb_02_EmitenteBeforePrint(
-  Sender: TObject; var PrintBand: Boolean);
-begin
-  inherited;
-  PrintBand := False;
-
- (*
-  if FNFe <> nil
-   then begin
-    PrintBand := True;
-
-    rllRazaoEmitente.Caption    := FNFe.emit.xNome;
-    rllCNPJEmitente.Caption     := DFeUtil.FormatarCNPJCPF(FNFe.emit.CNPJ);
-    rllEnderecoEmitente.Caption := FNFe.emit.EnderEmit.xLgr + ', ' + FNFe.emit.EnderEmit.nro;
-    rllBairroEmitente.Caption   := FNFe.emit.EnderEmit.xBairro;
-    rllCEPEmitente.Caption      := DFeUtil.FormatarCEP(FormatFloat('00000000', FNFe.emit.EnderEmit.CEP));
-    rllMunEmitente.Caption      := FNFe.emit.EnderEmit.xMun + ' - ' + FNFe.emit.EnderEmit.UF;
-    rllFoneEmitente.Caption     := DFeUtil.FormatarFone(FNFe.emit.enderEmit.fone);
-    rllInscEstEmitente.Caption  := FNFe.emit.IE;
-   end;
-   *)
 end;
 
 procedure TfrmNFeDAInutRLRetrato.rlb_03_InutilizacaoBeforePrint(Sender: TObject; var PrintBand: Boolean);
@@ -230,65 +158,32 @@ begin
 
   with FACBrNFe.InutNFe do
     begin
-      rllOrgao.Caption := IntToStr(cUF);
+      rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
 
       case tpAmb of
        taProducao:    rllTipoAmbiente.Caption := 'PRODUÇÃO';
        taHomologacao: rllTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
       end;
 
-      rllAno.Caption       := IntToStr(ano);
-      rllModelo.Caption    := IntToStr(Modelo);
-      rllSerie.Caption     := IntToStr(Serie);
-      rllNumeracao.Caption := IntToStr(nNFIni) + ' a ' + IntToStr(nNFFin);
+      rllAno.Caption       := IntToStr(RetInutNFe.ano);
+      rllModelo.Caption    := IntToStr(RetInutNFe.Modelo);
+      rllSerie.Caption     := IntToStr(RetInutNFe.Serie);
+      rllNumeracao.Caption := IntToStr(RetInutNFe.nNFIni) + ' a ' + IntToStr(RetInutNFe.nNFFin);
 
       rllStatus.Caption    := IntToStr(RetInutNFe.cStat) + ' - ' + RetInutNFe.xMotivo;
       rllProtocolo.Caption := RetInutNFe.nProt + ' ' +
                               DateTimeToStr(RetInutNFe.dhRecbto);
 
-      rllJustificativa.Caption := xJust;
+      rllJustificativa.Lines.Text := RetInutNFe.xJust;
     end;
-end;
-
-procedure TfrmNFeDAInutRLRetrato.rlb_05_NaoUsado_DetalheBeforePrint(Sender: TObject;
-  var PrintBand: Boolean);
-begin
-  inherited;
-//  PrintBand := True;
-end;
-
-procedure TfrmNFeDAInutRLRetrato.rlb_06_NaoUsado_SummaryBeforePrint(
-  Sender: TObject; var PrintBand: Boolean);
-begin
-  inherited;
-//  PrintBand := True;
 end;
 
 procedure TfrmNFeDAInutRLRetrato.rlb_07_RodapeBeforePrint(
   Sender: TObject; var PrintBand: Boolean);
 begin
   inherited;
-
-  rllblSistema.Caption := FSistema + ' - ' + FUsuario;
-end;
-
-procedure TfrmNFeDAInutRLRetrato.rldbtxtValorPrint(sender: TObject;
-  var Value: String);
-var
-  vLength: Integer;
-begin
-  inherited;
-  (*
-  vLength := 11 * ((Length(Value) div 90) + 1);
-
-  rlb_08_Correcao_Detalhe.Height := vLength;
-
-  rldbtxtValor.Height := vLength;
-  rlShape11.Height    := vLength;
-  rlShape3.Height     := vLength;
-  rlShape6.Height     := vLength;
-  rlShape4.Height     := vLength;
-  *)
+  if (FSistema <> EmptyStr) or (FUsuario <> EmptyStr) then
+    rllblSistema.Caption := FSistema + ' - ' + FUsuario;
 end;
 
 end.

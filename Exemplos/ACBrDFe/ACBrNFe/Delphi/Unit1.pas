@@ -209,6 +209,7 @@ type
     Label43: TLabel;
     Label44: TLabel;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    btnInutilizarImprimir: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -257,6 +258,7 @@ type
     procedure sbPathEventoClick(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
     procedure cbTipoEmissaoChange(Sender: TObject);
+    procedure btnInutilizarImprimirClick(Sender: TObject);
     
   private
     { Private declarations }
@@ -1007,6 +1009,29 @@ begin
   MemoDados.Lines.Add('dhRecbto: ' +DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.dhRecbto));
   MemoDados.Lines.Add('Protocolo: '      +ACBrNFe1.WebServices.Inutilizacao.Protocolo);
 
+end;
+
+procedure TForm1.btnInutilizarImprimirClick(Sender: TObject);
+begin
+//  OpenDialog1.Title := 'Selecione a NFE';
+//  OpenDialog1.DefaultExt := '*.XML';
+//  OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+//  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+//  if OpenDialog1.Execute then
+//  begin
+//    ACBrNFe1.NotasFiscais.Clear;
+//    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+//  end;
+
+  OpenDialog1.Title := 'Selecione o Inutilização';
+  OpenDialog1.DefaultExt := '*.XML';
+  OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.InutNFe.LerXML(OpenDialog1.FileName);
+    ACBrNFe1.ImprimirInutilizacao;
+  end;
 end;
 
 procedure TForm1.ACBrNFe1StatusChange(Sender: TObject);
@@ -3045,7 +3070,7 @@ begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
   end;
-    
+
   OpenDialog1.Title := 'Selecione o Evento';
   OpenDialog1.DefaultExt := '*.XML';
   OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';

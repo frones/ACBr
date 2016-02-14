@@ -67,11 +67,12 @@ type
 
   TACBrBlocoX_ReducaoZ = class(TACBrBlocoX_BaseFile)
   private
-    FDataReferencia: TDateTime;
     FVendaBrutaDiaria: Double;
     FCRO: Integer;
     FGT: Double;
     FCRZ: Integer;
+    FCOO: Integer;
+    FDataReferencia: TDateTime;
     FTotalizadoresParciais: TACBrBlocoX_Totalizadores;
   public
     constructor Create(AOwner: TComponent); override;
@@ -82,6 +83,7 @@ type
 
     property DataReferencia: TDateTime read FDataReferencia write FDataReferencia;
     property CRZ: Integer read FCRZ write FCRZ;
+    property COO: Integer read FCOO write FCOO;
     property CRO: Integer read FCRO write FCRO;
     property VendaBrutaDiaria: Double read FVendaBrutaDiaria write FVendaBrutaDiaria;
     property GT: Double read FGT write FGT;

@@ -9,16 +9,16 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFe\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBrGNREGuiaRL - Impressão da Guia gerada pelo ACBrGNRE"/>
-		<License Value="LGPL"/>
+    <License Value="LGPL"/>
     <Files Count="1">
       <Item1>
         <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaFRFortes.pas"/>
-				<HasRegisterProc Value="True"/>
+        <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrGNREGuiaFRFortes"/>
       </Item1>
     </Files>

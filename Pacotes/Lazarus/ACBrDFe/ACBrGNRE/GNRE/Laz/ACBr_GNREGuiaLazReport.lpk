@@ -9,8 +9,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrGNRE"/>
-        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE;..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Laz"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrGNRE\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBrGNREGuiaLazReport

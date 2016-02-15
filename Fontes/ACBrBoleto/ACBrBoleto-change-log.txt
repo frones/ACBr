@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/02/16 ver. 0.0.178a
+-- ACBrBancoHSBC --
+[-] Ajuste para montagem correta do código de barras para contas com primeiro digito
+    diferente de 0. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/25647-remessa-banco-hsbc-composi%C3%A7%C3%A3o-campo-conta-corrente/
+
 Data: 01/02/16 ver. 0.0.177a
 -- ACBrBancoSantander --
 [*] Melhorias leitura do arquivo retorno CNAB400 para suportar retornos 033/353.(Juliana Tamizou)

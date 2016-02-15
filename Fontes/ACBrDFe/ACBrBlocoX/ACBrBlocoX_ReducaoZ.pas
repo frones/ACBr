@@ -162,6 +162,7 @@ begin
   FGerador.wGrupo('DadosReducaoZ');
   FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FormatDateBr(DataReferencia));
   FGerador.wCampo(tcStr, '', 'CRZ', 1, 6, 1, CRZ);
+  FGerador.wCampo(tcStr, '', 'COO', 1, 6, 1, COO);
   FGerador.wCampo(tcStr, '', 'CRO', 1, 9, 1, CRO);
   FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, FloatToIntStr(VendaBrutaDiaria, 2));
   FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, FloatToIntStr(GT, 2));

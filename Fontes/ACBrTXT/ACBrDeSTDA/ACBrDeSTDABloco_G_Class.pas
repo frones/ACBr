@@ -262,7 +262,7 @@ begin
       begin
 
         Add( LFill('G605') +
-             LFill( Integer( IND_SIT ) ) +
+             LFill( Integer( IND_SIT ), 0 ) +
              VDFill( VL_TOT_ANTC_NF, 2) +
              VDFill( VL_TOT_AJ_ANTC, 2) +
              VDFill( VL_TOT_DA_ANTC, 2) ) ;
@@ -311,6 +311,7 @@ begin
       begin
 
         Add( LFill('G615') +
+             LFill(UF) +
              VDFill( VL_TOT_ST_UF_NF, 2) +
              VDFill( VL_TOT_AJ_ST_UF, 2) +
              VDFill( VL_TOT_ST_UF_DEC, 2) ) ;
@@ -363,7 +364,7 @@ begin
 
         Add( LFill('G625') +
              LFill( UF ) +
-             LFill( Integer( IND_TP_ST ) ) +
+             LFill( Integer( IND_TP_ST ), 0 ) +
              VDFill( VL_TOT_ST_NF, 2) +
              VDFill( VL_TOT_AJ_ST, 2) +
              VDFill( VL_TOT_DEC_ST, 2) ) ;

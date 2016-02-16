@@ -169,13 +169,12 @@ var
 begin
   if PrepareReport(NFSe) then
   begin
-    frxPDFExport.Author  := Sistema;
-    frxPDFExport.Creator := Sistema;
-    // dmDanfse.frxPDFExport.Producer      := Sistema;
-    // dmDanfse.frxPDFExport.Title         := TITULO_PDF;
-    frxPDFExport.Subject := TITULO_PDF;
-    // dmDanfse.frxPDFExport.Keywords      := TITULO_PDF;
-    frxPDFExport.ShowDialog := False;
+    frxPDFExport.Author        := Sistema;
+    frxPDFExport.Creator       := Sistema;
+    frxPDFExport.Subject       := TITULO_PDF;
+    frxPDFExport.ShowDialog    := False;
+    frxPDFExport.EmbeddedFonts := False;
+    frxPDFExport.Background    := False;
 
     for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
     begin
@@ -376,7 +375,7 @@ begin
       Add('Discriminacao', ftString, 500);
       Add('CodigoPais', ftString, 4);
       Add('NumeroProcesso', ftString, 10);
-      Add('xItemListaServico', ftString, 100);
+      Add('xItemListaServico', ftString, 300);
       Add('ResponsavelRetencao', ftString, 1);
       Add('Descricao', ftString, 80);
       Add('ValorServicos', ftCurrency);

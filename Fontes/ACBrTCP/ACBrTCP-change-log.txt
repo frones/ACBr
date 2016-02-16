@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2015
+-- ACBrMail --
+[-] Correção para Destruição de TACBrMail, não chamar "SMTP.Reset"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27427
+
 08/02/2015
 -- ACBrSedex --
 [-] Ajuste para valores Decimais sempre serem representados com Pontos na Decimal

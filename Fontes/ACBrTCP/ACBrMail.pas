@@ -411,7 +411,7 @@ end;
 
 destructor TACBrMail.Destroy;
 begin
-  Clear;
+  ClearAttachments;
   fAltBody.Free;
   fBody.Free;
   fBCC.Free;

@@ -6969,12 +6969,15 @@ begin
     begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
-      ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
 
-      if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
-        ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
+      if not ACBrPosPrinter1.ControlePorta then
+      begin
+        ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
+        if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
+          ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
+      end;
     end;
   end;
 

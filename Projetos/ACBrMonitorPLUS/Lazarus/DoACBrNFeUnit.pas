@@ -1073,8 +1073,6 @@ begin
                           nNumCopias := StrToIntDef(Cmd.Params(6), 0);
                          end;
 
-                        ConfiguraDANFe(False, bMostrarPreview);
-
                         if nNumCopias > 0 then
                           ACBrNFe1.DANFE.NumCopias := nNumCopias;
 
@@ -1083,6 +1081,7 @@ begin
 
                         if ACBrNFe1.NotasFiscais.Items[i].Confirmada and bImprimir then
                          begin
+                           ConfiguraDANFe(False, bMostrarPreview);
                            ACBrNFe1.NotasFiscais.Items[i].Imprimir;
                          end;
 

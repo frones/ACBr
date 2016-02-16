@@ -202,32 +202,22 @@ begin
 end;
 
 procedure TBloco_G.WriteRegistroG020(RegG001: TRegistroG001);
-var
-  strIND_GEF: string;
 begin
   if Assigned(RegG001.RegistroG020) then
   begin
     with RegG001.RegistroG020 do
     begin
-      case IND_GEF of
-        igISS         : strIND_GEF := '0';
-        igICMS        : strIND_GEF := '1';
-        igSimples     : strIND_GEF := '2';
-        igRecalcICMS  : strIND_GEF := '8';
-        igGuiaSemDados: strIND_GEF := '9';
-      end;
-
       Add( LFill('G020') +
-           LFill( strIND_GEF ) +
+           LFill( Integer (IND_GEF),0 ) +
            LFill( DT_INI ) +
            LFill( DT_FIN ) ) ;
       ///
       RegistroG990.QTD_LIN_G := RegistroG990.QTD_LIN_G + 1;
     end;
     /// Registros FILHOS
-    WriteRegistroG600( RegG001.RegistroG020 ) ;
-    WriteRegistroG610( RegG001.RegistroG020 ) ;
-    WriteRegistroG620( RegG001.RegistroG020 ) ;
+    WriteRegistroG600( RegG001.RegistroG020 );
+    WriteRegistroG610( RegG001.RegistroG020 );
+    WriteRegistroG620( RegG001.RegistroG020 );
   end;
 end;
 
@@ -260,9 +250,8 @@ begin
     begin
       with RegG600.RegistroG605.Items[intFor] do
       begin
-
         Add( LFill('G605') +
-             LFill( Integer( IND_SIT ), 0 ) +
+             LFill( Integer (IND_SIT),0 ) +
              VDFill( VL_TOT_ANTC_NF, 2) +
              VDFill( VL_TOT_AJ_ANTC, 2) +
              VDFill( VL_TOT_DA_ANTC, 2) ) ;
@@ -333,10 +322,9 @@ begin
     begin
       with RegG020.RegistroG620.Items[intFor] do
       begin
-
         Add( LFill('G620') +
-             LFill( Integer( IND_OPER ), 0 ) +
-             LFill( Integer( IND_EMIT ), 0 ) +
+             LFill(Integer (IND_OPER),0 ) +
+             LFill(Integer (IND_EMIT),0 ) +
              VDFill( VL_TOT_ST_NF, 2) +
              VDFill( VL_TOT_AJ_ST, 2) +
              VDFill( VL_TOT_ST_DEC, 2) +
@@ -361,10 +349,9 @@ begin
     begin
       with RegG620.RegistroG625.Items[intFor] do
       begin
-
         Add( LFill('G625') +
              LFill( UF ) +
-             LFill( Integer( IND_TP_ST ), 0 ) +
+             LFill(Integer (IND_TP_ST),0 ) +
              VDFill( VL_TOT_ST_NF, 2) +
              VDFill( VL_TOT_AJ_ST, 2) +
              VDFill( VL_TOT_DEC_ST, 2) ) ;

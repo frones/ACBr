@@ -38,7 +38,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnGerador, pcnConversao,
+  synacode, pcnAuxiliar, pcnGerador, pcnConversao,
   pnfsNFSe, pnfsConversao, ACBrUtil;
 
 type
@@ -234,7 +234,7 @@ begin
   // Atributo versao ===========================================================
   if VersaoDados <> '' then
   begin
-    if Provedor in [proFintelISS] then
+    if Provedor in [proFintelISS, proSP] then
       aVersao := ' Versao="' + VersaoDados + '"'
     else
       aVersao := ' versao="' + VersaoDados + '"';
@@ -437,6 +437,20 @@ begin
                   Gerador.wGrupoNFSe('/LoteRps');
                 end;
 
+    proSP: begin
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'Transacao', 01, 05, 0, LowerCase(BooltoStr(Transacao, True)), '');
+             Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
+             Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
+             Gerador.wCampoNFSe(tcInt, '#1', 'QtdRPS', 01, 14, 1, QtdeNotas, '');
+             Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalServicos', 01, 14, 1, ValorTotalServicos, '');
+             Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalDeducoes', 01, 14, 1, ValorTotalDeducoes, '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+
+             Result := Gerador.ArquivoFormatoXML + Notas;
+           end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          if Provedor in [proCoplan] then
@@ -521,6 +535,16 @@ begin
                      Gerador.ArquivoFormatoXML := Protocolo;
                    end;
 
+    proSP: begin
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wCampoNFSe(tcStr, '#3', 'NumeroLote', 01, 14, 1, NumeroLote, '');
+             Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoPrestador', 01, 15, 1, IM, '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+
+             Result := Gerador.ArquivoFormatoXML;
+           end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);
@@ -603,6 +627,15 @@ begin
     proNFSEBrasil: begin
                      Gerador.ArquivoFormatoXML := Protocolo;
                    end;
+
+    proSP: begin
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wCampoNFSe(tcStr, '#3', 'NumeroLote', 01, 14, 1, NumeroLote, '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+
+             Result := Gerador.ArquivoFormatoXML;
+           end;
 
   else begin
          Gerador.Prefixo := Prefixo3;
@@ -717,6 +750,21 @@ begin
                   Gerador.wGrupoNFSe('/ConsultaRps');
                 end;
 
+    proSP: begin
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+             Gerador.wGrupoNFSe('Detalhe');
+             Gerador.wGrupoNFSe('ChaveRPS');
+             Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 01, 11, 1, IM, '');
+             Gerador.wCampoNFSe(tcStr, '', 'SerieRPS', 01, 02, 1, SerieRPS, '');
+             Gerador.wCampoNFSe(tcStr, '', 'NumeroRPS', 01, 12, 1, NumeroRPS, '');
+             Gerador.wGrupoNFSe('/ChaveRPS');
+             Gerador.wGrupoNFSe('/Detalhe');
+
+             Result := Gerador.ArquivoFormatoXML;
+           end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('IdentificacaoRps' + aNameSpace);
@@ -824,6 +872,21 @@ begin
                  Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
                  Gerador.wGrupoNFSe('/Cabecalho');
                end;
+
+    proSP: begin
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+             Gerador.wGrupoNFSe('Detalhe');
+             Gerador.wGrupoNFSe('ChaveNFe');
+             Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 01, 11, 1, IM, '');
+             Gerador.wCampoNFSe(tcStr, '', 'Numero', 01, 12, 1, NumeroNFSe, '');
+//             Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 8, 0, CodVerificacaoRPS, '');
+             Gerador.wGrupoNFSe('/ChaveNFe');
+             Gerador.wGrupoNFSe('/Detalhe');
+
+             Result := Gerador.ArquivoFormatoXML;
+           end;
 
   else begin
          Gerador.Prefixo := Prefixo3;
@@ -937,6 +1000,8 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgCancelarNFSe: String;
+var
+  sAssinatura: String;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -1013,6 +1078,29 @@ begin
                      Gerador.ArquivoFormatoXML := NumeroRps;
                    end;
 
+    proSP: begin
+             sAssinatura := Poem_Zeros(IM, 8) + Poem_Zeros(NumeroNFSe, 12);
+
+             sAssinatura := AsciiToHex(SHA1(sAssinatura));
+             sAssinatura := LowerCase(sAssinatura);
+
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wCampoNFSe(tcStr, '#3', 'Transacao', 01, 05, 0, LowerCase(BooltoStr(Transacao, True)), '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+             Gerador.wGrupoNFSe('Detalhe');
+             Gerador.wGrupoNFSe('ChaveNFe');
+             Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 01, 11, 1, IM, '');
+             Gerador.wCampoNFSe(tcStr, '', 'Numero', 01, 12, 1, NumeroNFSe, '');
+//             Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 8, 0, CodVerificacaoRPS, '');
+             Gerador.wGrupoNFSe('/ChaveNFe');
+
+             Gerador.wCampoNFSe(tcStr, '', 'AssinaturaCancelamento', 01, 2000, 1, sAssinatura, '');
+
+             Gerador.wGrupoNFSe('/Detalhe');
+
+             Result := Gerador.ArquivoFormatoXML;
+           end;
   else begin
          Gerador.Prefixo := Prefixo4;
          Gerador.wGrupoNFSe('IdentificacaoNfse');
@@ -1098,6 +1186,14 @@ begin
 
                  Result := Gerador.ArquivoFormatoXML;
                end;
+
+    proSP: begin
+             Gerador.wGrupoNFSe('Cabecalho' + aVersao);
+             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
+             Gerador.wGrupoNFSe('/Cabecalho');
+
+             Result := Gerador.ArquivoFormatoXML + Notas;
+           end;
 
   else
     Result := Notas;

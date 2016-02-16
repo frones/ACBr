@@ -436,10 +436,14 @@ type
     FRazaoSocial: String;
     FCpfCnpj: String;
     FInscricaoMunicipal: String;
+    FIssRetido: TnfseSituacaoTributaria;
+    FEMail: String;
   published
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property CpfCnpj: String read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
+    property IssRetido: TnfseSituacaoTributaria read FIssRetido write FIssRetido;
+    property EMail: String read FEMail write FEMail;
   end;
 
  TIdentificacaoOrgaoGerador = class(TPersistent)
@@ -625,6 +629,7 @@ type
 
     Femail: TemailCollection;
     FTipoRecolhimento: String;
+    FTipoTributacaoRPS: TnfseTTributacaoRPS;
 
     procedure Setemail(const Value: TemailCollection);
 
@@ -687,6 +692,8 @@ type
     property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
     property email: TemailCollection read Femail write Setemail;
+
+    property TipoTributacaoRPS: TnfseTTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
   end;
 
  TLoteRps = class(TPersistent)

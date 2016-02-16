@@ -1437,12 +1437,14 @@ begin
       proInfisc: TagGrupo := 'envioLote';
       proISSDSF: TagGrupo := 'ReqEnvioLoteRPS';
       proEquiplano: TagGrupo := 'enviarLoteRpsEnvio';
+      proSP: TagGrupo := 'PedidoEnvioLoteRPS';
     else
       TagGrupo := 'EnviarLoteRpsEnvio';
     end;
 
     case FProvedor of
-      proInfisc: TagElemento := '';
+      proInfisc,
+      proSP: TagElemento := '';
     else
       TagElemento := 'LoteRps';
     end;
@@ -1466,7 +1468,8 @@ begin
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
       proFISSLex,
-      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS,
+      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -1854,12 +1857,14 @@ begin
     case FProvedor of
       proSimplISS: TagGrupo := 'GerarNovaNfseEnvio';
       proEGoverneISS: TagGrupo := 'request';
+      proSP: TagGrupo := 'PedidoEnvioRPS';
     else
       TagGrupo := 'GerarNfseEnvio';
     end;
 
     case FProvedor of
       proBHISS: TagElemento := 'LoteRps';
+      proSP: TagElemento := 'RPS';
     else
       TagElemento := 'Rps';
     end;
@@ -1879,7 +1884,8 @@ begin
     end;
 
     case FProvedor of
-      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS,
+      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -2007,6 +2013,7 @@ begin
       proInfisc: TagGrupo := 'pedidoStatusLote';
       proEquiplano: TagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
       proSimplISS: TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
+      proSP: TagGrupo := 'PedidoInformacoesLote';
     else
       TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     end;
@@ -2021,7 +2028,8 @@ begin
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd">';
       proDBSeller,
       proInfisc,
-      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS,
+      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -2260,7 +2268,8 @@ begin
   try
     case FProvedor of
       proEquiplano: TagGrupo := 'esConsultarLoteRpsEnvio';
-      proISSDSF: TagGrupo :='ReqConsultaLote'
+      proISSDSF: TagGrupo :='ReqConsultaLote';
+      proSP: TagGrupo := 'PedidoConsultaLote';
     else
       TagGrupo := 'ConsultarLoteRpsEnvio';
     end;
@@ -2273,7 +2282,8 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarLoteRpsEnvio_v01.xsd">';
-      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS,
+      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -2399,6 +2409,7 @@ begin
     case FProvedor of
       proISSDSF: TagGrupo := 'ReqConsultaNFSeRPS';
       proEquiplano: TagGrupo := 'esConsultarNfsePorRpsEnvio';
+      proSP: TagGrupo := 'PedidoConsultaNFe';
     else
       TagGrupo := 'ConsultarNfseRpsEnvio';
     end;
@@ -2412,7 +2423,8 @@ begin
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd">';
       proDBSeller,
-      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS,
+      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -2592,6 +2604,7 @@ begin
       proInfisc: TagGrupo := 'pedidoLoteNFSe';
       proISSDSF: TagGrupo := 'ReqConsultaNotas';
       proSystemPro: TagGrupo := 'ConsultarNfseFaixaEnvio';
+      proSP: TagGrupo := 'PedidoConsultaNFe';
     else
       TagGrupo := 'ConsultarNfseEnvio';
     end;
@@ -2602,7 +2615,8 @@ begin
 
     case FProvedor of
       proInfisc,
-      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS,
+      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -2742,6 +2756,7 @@ begin
       proEquiplano: TagGrupo := 'esCancelarNfseEnvio';
       proInfisc: TagGrupo := 'pedCancelaNFSe';
       proISSDSF: TagGrupo := 'ReqCancelamentoNFSe';
+      proSP: TagGrupo := 'PedidoCancelamentoNFe';
     else
       TagGrupo :=  'CancelarNfseEnvio';
     end;
@@ -2759,7 +2774,8 @@ begin
     case FProvedor of
       proEquiplano,
       proPublica,
-      proISSCuritiba: FURI:= '';
+      proISSCuritiba,
+      proSP: FURI:= '';
 
       proDigifred: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
@@ -2814,10 +2830,11 @@ begin
                    FTagF :=  '</' + FPrefixo3 + TagGrupo + '>';
                  end;
 
-      proInfisc: begin
-                   FTagI := '<' + FPrefixo3 + TagGrupo + '>';
-                   FTagF :=  '</' + FPrefixo3 + TagGrupo + '>';
-                 end;
+      proInfisc,
+      proSP: begin
+               FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+               FTagF :=  '</' + FPrefixo3 + TagGrupo + '>';
+             end;
 
       proISSCuritiba: begin
                         FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>' +

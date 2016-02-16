@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.prefeitura.sp.gov.br/nfe" 
+           xmlns:tipos="http://www.prefeitura.sp.gov.br/nfe/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://www.prefeitura.sp.gov.br/nfe/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="PedidoCancelamentoNFe">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para PEDIDO de Cancelamento de NFS-e.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelos Prestadores de serviços cancelarem NFS-e emitidas por eles.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do pedido.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1" >
+                <xs:annotation>
+                  <xs:documentation>Informe o CPF/CNPJ do Remetente autorizado a transmitir a mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="transacao" type="xs:boolean" minOccurs="1" maxOccurs="1" default="true">
+                <xs:annotation>
+                  <xs:documentation>Informe se as NFS-e a serem canceladas farão parte de uma mesma transação. True - As NFS-e só serão canceladas se não ocorrer nenhum evento de erro durante o processamento de todo o lote; False - As NFS-e aptas a serem canceladas serão canceladas, mesmo que ocorram eventos de erro durante processamento do cancelamento de outras NFS-e deste lote.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Informe a Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Detalhe" minOccurs="1" maxOccurs="50">
+          <xs:annotation>
+            <xs:documentation>Detalhe do pedido de cancelamento de NFS-e. Cada detalhe deverá conter a Chave de uma NFS-e e sua respectiva assinatura de cancelamento.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ChaveNFe" type="tipos:tpChaveNFe" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Chave da NFS-e a ser cancelada.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="AssinaturaCancelamento" type="tipos:tpAssinaturaCancelamento" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Assinatura da NFS-e a ser cancelada.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="ds:Signature"  minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Assinatura digital do CNPJ emissor das NFS-e</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

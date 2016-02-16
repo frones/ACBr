@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2016
+[+] Incluido o provedor SP (Cidade de São Paulo).
+    Por: Italo Jurisato Junior
+
 12/02/2016
 [+] Incluido o grupo <transportadora> para o provedor Infisc.
     Por: Italo Jurisato Junior

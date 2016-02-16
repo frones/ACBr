@@ -718,27 +718,26 @@ begin
                      break;
                    end;
                  end;
-
-                ConfiguraDANFe(False, False);
-
-                if NaoEstaVazio(Cmd.Params(4)) then
-                   ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
-
                 if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                  begin
+                   ConfiguraDANFe(False, False);
+
+                   if NaoEstaVazio(Cmd.Params(4)) then
+                     ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
+
                    ACBrNFe1.NotasFiscais.Items[0].Imprimir;
                  end;
                end;
             end
            else
             begin
-              ConfiguraDANFe(False, False);
-
-              if NaoEstaVazio(Cmd.Params(4)) then
-                 ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
-
               if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                begin
+                 ConfiguraDANFe(False, False);
+
+                 if NaoEstaVazio(Cmd.Params(4)) then
+                    ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
+
                  ACBrNFe1.NotasFiscais.Items[0].Imprimir;
                end;
             end;

@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 623
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7976,7 +7976,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Height = 25
                     Top = 181
                     Width = 68
-                    MaxValue = 50
+                    MaxValue = 60
                     MinValue = 10
                     TabOrder = 16
                     Value = 40
@@ -11208,6 +11208,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

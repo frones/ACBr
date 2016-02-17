@@ -774,9 +774,11 @@ end;
 
 procedure TNFeStatusServico.DefinirServicoEAction;
 begin
-  if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+  // BA usa uma notação de Serviços diferente das demais UFs
+  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+     (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFe.WebServices.UFCodigo = 29) then
+     (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
   begin
     FPServico := GetUrlWsd + 'NfeStatusServico';
     FPSoapAction := FPServico + '/NfeStatusServicoNF';
@@ -1863,9 +1865,11 @@ end;
 
 procedure TNFeConsulta.DefinirServicoEAction;
 begin
-  if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+  // BA usa uma notação de Serviços diferente das demais UFs
+  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+     (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA 
+     (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
     FPServico := GetUrlWsd + 'NfeConsulta'
   else
     FPServico := GetUrlWsd + 'NfeConsulta2';
@@ -2318,9 +2322,11 @@ end;
 
 procedure TNFeInutilizacao.DefinirServicoEAction;
 begin
-  if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+  // BA usa uma notação de Serviços diferente das demais UFs
+  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+     (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFe.WebServices.UFCodigo in [29]) then // 29 = BA
+     (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
   begin
     FPServico := GetUrlWsd + 'NfeInutilizacao';
     FPSoapAction := FPServico + '/NfeInutilizacao';

@@ -47,10 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2016
+-- ACBrNFeNotasFiscais --
+[*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)
+
+-- ACBrNFeWebServices --
+[-] Ajuste para que a correta nomenclatura dos servidos da "BA", quando usados
+    em contingência (por: theiller)
+    http://www.projetoacbr.com.br/forum/topic/28027-nfe-contigencia-ba-svcrs-ajustes/
+
 
 17/02/2016
 -- ACBrNFeNotasFiscais --
-[-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
+[-] Acerto para validar corretamente a raiz do certificado quando é o certificado
     é emitido para o CPF do responsável e não para o CNPJ da empresa.
     por: regys.silveria
 

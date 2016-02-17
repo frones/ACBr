@@ -111,7 +111,7 @@ begin
                            [trRPS, trNFConjugada, trCupom]);
 
   Gerador.wCampoNFSe(tcStr, '', 'TipoRPS', 01, 05, 1, TipoRPS, '');
-  Gerador.wCampoNFSe(tcDat, '', 'DataEmissao', 01, 10, 1, NFse.DataEmissaoRps, '');
+  Gerador.wCampoNFSe(tcDat, '', 'DataEmissao', 01, 10, 1, NFse.DataEmissao, '');
   Gerador.wCampoNFSe(tcStr, '', 'StatusRPS', 01, 01, 1, FSituacao, '');
   Gerador.wCampoNFSe(tcStr, '', 'TributacaoRPS', 01, 01, 1, TTributacaoRPSToStr(NFSe.TipoTributacaoRPS), '');
 end;
@@ -129,12 +129,12 @@ begin
   Gerador.wCampoNFSe(tcDe2, '', 'ValorCSLL',   01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
 
   Gerador.wCampoNFSe(tcStr, '', 'CodigoServico', 01, 05, 1, OnlyNumber(NFSe.Servico.ItemListaServico), '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaServico', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaServicos', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
 
   ISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
                                        ['false', 'true'], [stNormal, stRetencao]);
 
-  Gerador.wCampoNFSe(tcStr, '', 'IssRetido', 01, 05, 1, ISSRetido, '');
+  Gerador.wCampoNFSe(tcStr, '', 'ISSRetido', 01, 05, 1, ISSRetido, '');
 end;
 
 procedure TNFSeW_SP.GerarTomador;
@@ -155,7 +155,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'NumeroEndereco',      01, 09, 0, NFSe.Tomador.Endereco.Numero, '');
   Gerador.wCampoNFSe(tcStr, '', 'ComplementoEndereco', 01, 30, 0, NFSe.Tomador.Endereco.Complemento, '');
   Gerador.wCampoNFSe(tcStr, '', 'Bairro',              01, 50, 0, NFSe.Tomador.Endereco.Bairro, '');
-  Gerador.wCampoNFSe(tcStr, '', 'Cidade',              01, 10, 0, CodCidadeToCodSiafi(strtoint64(NFSe.Tomador.Endereco.CodigoMunicipio)), '');
+  Gerador.wCampoNFSe(tcStr, '', 'Cidade',              01, 10, 0, NFSe.Tomador.Endereco.CodigoMunicipio, '');
   Gerador.wCampoNFSe(tcStr, '', 'UF',                  01, 02, 0, NFSe.Tomador.Endereco.UF, '');
   Gerador.wCampoNFSe(tcStr, '', 'CEP',                 01, 08, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
   Gerador.wGrupoNFSe('/EnderecoTomador');
@@ -219,7 +219,8 @@ var
   sIndIntermediario, sISSRetidoInter: String;
 begin
   Gerador.Prefixo := '';
-  Gerador.wGrupoNFSe('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
+//  Gerador.wGrupoNFSe('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
+  Gerador.wGrupoNFSe('RPS');
 
   FSituacao := EnumeradoToStr( NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
 
@@ -251,7 +252,7 @@ begin
   sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 8) +
                  PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
                  Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
-                 FormatDateTime('yyyymmdd',NFse.DataEmissaoRps) +
+                 FormatDateTime('yyyymmdd',NFse.DataEmissao) +
                  TTributacaoRPSToStr(NFSe.TipoTributacaoRPS) +
                  Situacao +
                  sISSRetido +

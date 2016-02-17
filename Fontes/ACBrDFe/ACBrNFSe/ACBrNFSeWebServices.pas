@@ -1161,7 +1161,7 @@ begin
            end;
 
     // RPS versão 1.10 - Infisc
-    ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>'); 
+    ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>');
 
     // RPS versão 1.00
     else
@@ -1169,6 +1169,8 @@ begin
       case FProvedor of
         proEL,
         proGoverna: FvNotas :=  FvNotas + RPS;
+
+        proSP: FvNotas :=  FvNotas + '<RPS xmlns=""' + RetornarConteudoEntre(RPS,'<RPS','</RPS>') + '</RPS>';
 
         proIssDSF,
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
@@ -1914,8 +1916,7 @@ begin
     end;
 
     case FProvedor of
-      proSimplISS,
-      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -1942,11 +1943,16 @@ begin
   begin
     DefinirSignatureNode('');
 
-    FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                 FPrefixo3 + TagGrupo,
-                                 FPrefixo3 + TagElemento,
-                                 FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
-                                 xSignatureNode, xDSIGNSLote, xIdSignature);
+//    case FProvedor of
+//      proSP: AssinarXML(FPDadosMsg, FPrefixo3 + TagGrupo, '',
+//                             'Falha ao Assinar - Gerar NFS-e: ');
+//    else
+      FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+                              FPrefixo3 + TagGrupo,
+                              FPrefixo3 + TagElemento,
+                              FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
+                              xSignatureNode, xDSIGNSLote, xIdSignature);
+//    end;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,

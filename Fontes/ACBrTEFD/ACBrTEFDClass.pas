@@ -363,6 +363,7 @@ type
      fpCMC7 : String;
      fpCNFEnviado : Boolean;
      fpCodigoAutorizacaoTransacao : Integer;
+     fpCodigoOperadoraCelular: String;
      fpConta : String;
      fpContaDC : String;
      fpConteudo : TACBrTEFDArquivo;
@@ -372,16 +373,21 @@ type
      fpDataHoraTransacaoHost : TDateTime;
      fpDataHoraTransacaoLocal : TDateTime;
      fpDataPreDatado : TDateTime;
+     fpDataPagamentoCB: TDateTime;
      fpDocumentoPessoa : String;
+     fpDocumentoCB: String;
      fpFinalizacao : String;
      fpHeader : String;
      fpID : Integer;
      fpIndiceFPG_ECF : String;
      fpMoeda : Integer;
      fpNomeAdministradora : String;
+     fpNomeOperadoraCelular: String;
      fpNSU : String;
+     fpNSUTransacaoCB: String;
      fpNSUTransacaoCancelada : String;
      fpNumeroLoteTransacao : Integer;
+     fpNumeroRecargaCelular: String;
      fpOrdemPagamento : Integer;
      fpQtdLinhasComprovante : Integer;
      fpQtdParcelas : Integer;
@@ -395,10 +401,17 @@ type
      fpTrailer : String;
      fpValorTotal : Double;
      fpValorOriginal: Double;
+     fpValorAcrescimoCB: Double;
+     fpValorDescontoCB: Double;
+     fpValorPagoCB: Double;
+     fpValorRecargaCelular: Double;
+     fpValorTotalTitulosCB: Double;
+     fpValorTotalNaoPagoCB: Double;
      fpSaque: Double;
      fpDesconto: Double;
      fpTaxaServico: Double;
      fpDocumentoVinculado : String;
+     fpTipoDocumentoCB: Integer;
      fpTipoParcelamento : Integer;
      fpParcelas : TACBrTEFDRespParcelas ;
      fpImagemComprovante1aVia : TStringList ;
@@ -481,6 +494,21 @@ type
      property NomeAdministradora          : String    read fpNomeAdministradora ;
      property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante ;
      property Trailer                     : String    read fpTrailer ;
+
+     property DataPagamentoCB        : TDateTime read fpDataPagamentoCB;
+     property DocumentoCB            : String    read fpDocumentoCB;
+     property NSUTransacaoCB         : String    read fpNSUTransacaoCB;
+     property TipoDocumentoCB        : Integer   read fpTipoDocumentoCB;
+     property ValorPagoCB            : Double    read fpValorPagoCB;
+     property ValorAcrescimoCB       : Double    read fpValorAcrescimoCB;
+     property ValorDescontoCB        : Double    read fpValorDescontoCB;
+     property ValorTotalTitulosCB    : Double    read fpValorTotalTitulosCB;
+     property ValorTotalNaoPagoCB    : Double    read fpValorTotalNaoPagoCB;
+
+     property CodigoOperadoraCelular : String    read fpCodigoOperadoraCelular;
+     property NomeOperadoraCelular   : String    read fpNomeOperadoraCelular;
+     property ValorRecargaCelular    : Double    read fpValorRecargaCelular;
+     property NumeroRecargaCelular   : String    read fpNumeroRecargaCelular;
 
      property Parcelas : TACBrTEFDRespParcelas read fpParcelas ;
 
@@ -1204,6 +1232,21 @@ begin
    fpTipoParcelamento             := 0 ;
    fpValorEntradaCDC              := 0;
    fpDataEntradaCDC               := 0;
+
+   fpDataPagamentoCB        := 0;
+   fpDocumentoCB            := '';
+   fpNSUTransacaoCB         := '';
+   fpTipoDocumentoCB        := 0;
+   fpValorPagoCB            := 0;
+   fpValorAcrescimoCB       := 0;
+   fpValorDescontoCB        := 0;
+   fpValorTotalTitulosCB    := 0;
+   fpValorTotalNaoPagoCB    := 0;
+
+   fpCodigoOperadoraCelular := '';
+   fpNomeOperadoraCelular   := '';
+   fpNumeroRecargaCelular   := '';
+   fpValorRecargaCelular    := 0;
 
    fpParceladoPor := parcNenhum;
    fpTipoOperacao := opOutras;
@@ -2138,7 +2181,7 @@ procedure TACBrTEFDClass.CancelarTransacoesPendentesClass;
 Var
   ArquivosVerficar    : TStringList ;
   RespostaCancela     : TACBrTEFDResp ;
-  RespostasCanceladas : TObjectList ;
+  RespostasCanceladas : TACBrTEFDRespostasPendentes ;
   I, Topo             : Integer;
   JaCancelado         : Boolean ;
   ArqMask             : String;
@@ -2146,7 +2189,7 @@ begin
   GravaLog( Name +' CancelarTransacoesPendentesClass ');
 
   ArquivosVerficar    := TStringList.Create;
-  RespostasCanceladas := TObjectList.create(True);
+  RespostasCanceladas := TACBrTEFDRespostasPendentes.create(True);
 
   try
      ArquivosVerficar.Clear;
@@ -2195,7 +2238,7 @@ begin
            if (RespostasCanceladas[I] is TACBrTEFDRespTXT) or
               (Tipo = gpVeSPague) then
             begin
-              with TACBrTEFDResp( RespostasCanceladas[I] ) do
+              with RespostasCanceladas[I] do
               begin
                  JaCancelado := (Resp.Rede        = Rede)        and
                                 (Resp.NSU         = NSU)         and
@@ -2205,7 +2248,7 @@ begin
             end
            else
             begin
-              with TACBrTEFDResp( RespostasCanceladas[I] ) do
+              with RespostasCanceladas[I] do
               begin
                  JaCancelado := (Resp.DocumentoVinculado = DocumentoVinculado) ;
               end;
@@ -2255,10 +2298,16 @@ begin
          end;
      end;
 
-     { TEF Auttar deve emitir msg apenas no Final de todos Desfazimentos }
-     if Tipo = gpTefAuttar then
-        if RespostasCanceladas.count > 0 then
-           TACBrTEFD(Owner).DoExibeMsg( opmOK, 'Transação TEF não Efetuada Reter o Cupom Fiscal!' ) ;
+     with TACBrTEFD(Owner) do
+     begin
+       if Assigned( OnDepoisCancelarTransacoes ) then
+          OnDepoisCancelarTransacoes( RespostasCanceladas );
+
+       { TEF Auttar deve emitir msg apenas no Final de todos Desfazimentos }
+       if Tipo = gpTefAuttar then
+          if RespostasCanceladas.count > 0 then
+             DoExibeMsg( opmOK, 'Transação TEF não Efetuada Reter o Cupom Fiscal!' ) ;
+     end;
   finally
      ArquivosVerficar.Free;
      RespostasCanceladas.Free;

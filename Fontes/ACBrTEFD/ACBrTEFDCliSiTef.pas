@@ -311,11 +311,8 @@ var
    LinStr: AnsiString ;
    wTipoOperacao: Integer;
    TemParcelas : Boolean ;
-   wValorTitulos, wValorRecarga : Double ;
 begin
    fpValorTotal  := 0;
-   wValorTitulos := 0;
-   wValorRecarga := 0;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
    fpDebito    := False;
@@ -366,6 +363,7 @@ begin
        120 : fpAutenticacao                := LinStr;
        121 : fpImagemComprovante1aVia.Text := StringReplace( StringToBinaryString( Linha.Informacao.AsString ), #10, sLineBreak, [rfReplaceAll] );
        122 : fpImagemComprovante2aVia.Text := StringReplace( StringToBinaryString( Linha.Informacao.AsString ), #10, sLineBreak, [rfReplaceAll] );
+       123 : fpTipoTransacao               := Linha.Informacao.AsInteger;
        130 :
          begin
            fpSaque      := Linha.Informacao.AsFloat ;
@@ -386,15 +384,28 @@ begin
        511 : fpQtdParcelas                 := Linha.Informacao.AsInteger;  {Parcelas CDC - Neste caso o campo 505 não é retornado}
        515 : fpDataHoraTransacaoCancelada  := Linha.Informacao.AsDate ;
        516 : fpNSUTransacaoCancelada       := LinStr;
-       527 : fpDataVencimento              := Linha.Informacao.AsDate ; {Data Vencimento}
-       591 : wValorRecarga                 := Linha.Informacao.AsFloat ; {Valor selecionado para a recarga}
-       609 : wValorTitulos                 := Linha.Informacao.AsFloat ; {Valor total dos títulos efetivamente pagos no caso de pagamento em lote}
+       527 : fpDataVencimento              := Linha.Informacao.AsDate;    { Data Vencimento do Cheque }
+       589 : fpCodigoOperadoraCelular      := LinStr;                     { Código da Operadora de Celular }
+       590 : fpNomeOperadoraCelular        := LinStr;                     { Nome da Operadora de Celular }
+       591 : fpValorRecargaCelular         := Linha.Informacao.AsFloat;   { Valor selecionado para a Recarga }
+       592 : fpNumeroRecargaCelular        := LinStr;                     { Numero de Celular informado para Recarda }
+       600 : fpDataVencimento              := Linha.Informacao.AsDate;    { Data Vencimento do título - CB }
+       601 : fpValorPagoCB                 := Linha.Informacao.AsFloat;   { Valor Pago do título - CB }
+       602 : fpValorOriginal               := Linha.Informacao.AsFloat;   { Valor Original do título - CB }
+       603 : fpValorAcrescimoCB            := Linha.Informacao.AsFloat;   { Valor do Acréscimo - CB }
+       604 : fpValorDescontoCB             := Linha.Informacao.AsFloat;   { Valor do Desconto - CB }
+       605 : fpDataPagamentoCB             := Linha.Informacao.AsDate;    { Data contábil do Pagamento - CB }
+       609 : fpValorTotalTitulosCB         := Linha.Informacao.AsFloat;   { Valor total dos títulos efetivamente pagos no caso de pagamento em lote }
+       610 : fpValorTotalNaoPagoCB         := Linha.Informacao.AsFloat;   { Valor total dos títulos NÃO pagos no caso de pagamento em lote }
+       611 : fpNSUTransacaoCB              := LinStr;                     { NSU da Transação CB }
+       612 : fpTipoDocumentoCB             := Linha.Informacao.AsInteger; { Tipo Docto CB - 0:Arrecadação/ 1:Título/ 2:Tributo }
        613 :
         begin
           fpCheque                         := copy(LinStr, 21, 6);
           fpCMC7                           := LinStr;
         end;
-       623 : fpNSU                         := LinStr;  { NSU, correspondente Bancário }
+       623 : fpNSU                         := LinStr;  { NSU para cancelamento - CB }
+       624 : fpDocumentoCB                 := LinStr;  { Linha Digitável ou Código de Barras do documento pago - CB }
        626 : fpBanco                       := LinStr;
        627 : fpAgencia                     := LinStr;
        628 : fpAgenciaDC                   := LinStr;
@@ -422,11 +433,6 @@ begin
 
      end;
    end ;
-
-   if wValorTitulos > 0 then
-     fpValorTotal := wValorTitulos
-   else if wValorRecarga > 0 then
-     fpValorTotal := wValorRecarga;
 
    fpQtdLinhasComprovante := max( fpImagemComprovante1aVia.Count,
                                   fpImagemComprovante2aVia.Count ) ;

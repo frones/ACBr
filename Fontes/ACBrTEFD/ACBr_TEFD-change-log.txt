@@ -47,13 +47,41 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 08/02/2015
+Data: 17/02/2016
+-- ACBrTEFDClass --
+[+] Adicionadas as seguintes propriedades ao TACBrTEFDResp:
+    - DataPagamentoCB       : TDateTime
+    - DocumentoCB           : String   
+    - NSUTransacaoCB        : String   
+    - TipoDocumentoCB       : Integer  
+    - ValorPagoCB           : Double   
+    - ValorAcrescimoCB      : Double   
+    - ValorDescontoCB       : Double   
+    - ValorTotalTitulosCB   : Double   
+    - ValorTotalNaoPagoCB   : Double   
+    - CodigoOperadoraCelular: String    
+    - NomeOperadoraCelular  : String    
+    - ValorRecargaCelular   : Double    
+    - NumeroRecargaCelular  : String  
+    (por: Elias)
+
+[*] Método "CancelarTransacoesPendentesClass", modificado para permitir a
+    chamada do evento "OnDepoisCancelarTransacoes"  (por: DSA)
+
+-- ACBrTEFDCliSiTEF --
+[-] Revertidas alterações dos dias 07 e 08/02/2016, pois causariam problemas
+    na função GetSaldoRestante.
+[*] Ajuste em ConteudoToProperty para preencher novas propriedades.
+    (por: Elias)
+
+
+Data: 08/02/2016
 -- ACBrTEFDCliSiTEF --    
 [*] Método "ConteudoToProperty", modificado para considerar o valor do registrador
     "591-Valor selecionado para a recarga", como Valor Total da transação 
     (por: Elias)
 
-Data: 07/02/2015
+Data: 07/02/2016
 -- ACBrTEFDCliSiTEF --    
 [*] Método "ConteudoToProperty", modificado para considerar o valor do registrador
     "623-NSU do correspondente Bancário", como NSU da transação 
@@ -64,7 +92,8 @@ Data: 07/02/2015
 Data: 20/01/2015
 -- ACBrTEFDCliSiTEF --    
 [+] Adicionado nova propriedade "UsaUTF8: Boolean default False", 
-	que permite informar ao componente que as resposta do Servidor SiTef estão em UTF8
+    que permite informar ao componente que as resposta do Servidor SiTef estão
+    em UTF8
 
 Data: 09/12/2015
 -- ACBrTEFDCliSiTEF --    

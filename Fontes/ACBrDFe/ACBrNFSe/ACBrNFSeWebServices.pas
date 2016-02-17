@@ -3577,6 +3577,9 @@ begin
       FConsNfse.FPagina := 1;
 
       Result := FConsNfse.Executar;
+
+      if not (Result) then
+        FConsNfse.GerarException( FConsNfse.Msg );
     end
     else begin
       FConsNfseRps.FNumeroRps := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
@@ -3588,10 +3591,10 @@ begin
         Result := True
       else
         Result := FConsNfseRps.Executar;
-    end;
 
-    if not (Result) then
-      FConsNfseRps.GerarException( FConsNfseRps.Msg );
+      if not (Result) then
+        FConsNfseRps.GerarException( FConsNfseRps.Msg );
+    end;
   end;
 end;
 

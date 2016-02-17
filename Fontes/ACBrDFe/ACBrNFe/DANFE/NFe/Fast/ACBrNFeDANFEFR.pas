@@ -1,7 +1,7 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                          }
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
@@ -470,7 +470,6 @@ begin
 			end;
 			frxPDFExport.ShowDialog := fsShowDialog;
     end;		
-		end;
   end;
 end;
 

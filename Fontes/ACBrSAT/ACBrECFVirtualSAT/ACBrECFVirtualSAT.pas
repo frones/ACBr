@@ -111,6 +111,9 @@ type
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     procedure VerificaPodeCancelarCupom(NumCOOCancelar: Integer = 0); override;
     Procedure CancelaCupomVirtual ; override ;
+    Procedure DescontoAcrescimoItemAnteriorVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; override ;
+
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
     procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -350,15 +353,6 @@ begin
     Det.Prod.vUnCom   := ItemCupom.ValorUnit;
     Det.Prod.uCom     := ItemCupom.Unidade;
 
-    if ItemCupom.DescAcres > 0 then
-    begin
-      // Não há campo para Acréscimo... somando o Acréscimo no preço Unitário
-      Acres := RoundABNT(ItemCupom.DescAcres/ItemCupom.Qtd, ECF.DecimaisPreco);
-      Det.Prod.vUnCom := Det.Prod.vUnCom + Acres;
-    end
-    else
-      Det.Prod.vDesc := (ItemCupom.DescAcres * -1); 
-
     if ECF.Arredonda then
       Det.Prod.indRegra := irArredondamento
     else
@@ -396,6 +390,25 @@ begin
 
     if Assigned( fsQuandoVenderItem ) then
       fsQuandoVenderItem( Det );
+  end;
+end;
+
+procedure TACBrECFVirtualSATClass.DescontoAcrescimoItemAnteriorVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
+var Det:TDetCollectionItem;
+    Acres:double;
+begin
+  with fsACBrSAT do
+  begin
+    Det := CFe.det.Items[ itemCupom.Sequencia-1 ];
+    if ItemCupom.DescAcres > 0 then
+    begin
+      // Não há campo para Acréscimo... somando o Acréscimo no preço Unitário
+      Acres := RoundABNT(ItemCupom.DescAcres/ItemCupom.Qtd, ECF.DecimaisPreco);
+      Det.Prod.vUnCom := Det.Prod.vUnCom + Acres;
+    end
+    else
+      Det.Prod.vDesc := -ItemCupom.DescAcres;
   end;
 end;
 

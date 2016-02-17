@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/02/2016
+-- ACBrECFVirtualSAT --
+[+] Implementado o método "DescontoAcrescimoItemAnteriorVirtual" (Por: Amarildo)
+[-] Correção no método "VendeItemVirtual", para não considerar os descontos
+    pois serão tratados em "DescontoAcrescimoItemAnteriorVirtual"  (por: DSA)
+
 Data: 04/02/2016
 -- pcnCFeR --
 [-] Correção para leitura de Itens com numeração com zeros a esquerda Ex: "001"

@@ -139,6 +139,10 @@ begin
       FIndyReqResp.UserName := ProxyUser;
       FIndyReqResp.Password := ProxyPass;
     end;
+
+    FIndyReqResp.ConnectTimeout := TimeOut;
+    FIndyReqResp.SendTimeout    := TimeOut;
+    FIndyReqResp.ReceiveTimeout := TimeOut;
   end;
 
   FIndyReqResp.OnBeforePost := OnBeforePost;

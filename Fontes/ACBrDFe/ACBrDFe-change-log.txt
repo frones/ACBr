@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2016
+-- ACBrDFeCapicomDelphiSoap --
+[*] Ajuste para definir o TimeOut de DFeSSL para a Indy (por: DSA)
+
 10/02/2015
 -- ACBrDFeWebService --
 [-] Ajuste no método TDFeWebService.SalvarEnvio, para que a gravação dos

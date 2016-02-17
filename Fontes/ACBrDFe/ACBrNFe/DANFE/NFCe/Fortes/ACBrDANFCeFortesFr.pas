@@ -408,7 +408,7 @@ procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vOutro > 0) and (ACBrNFeDANFCeFortes.ImprimirDetalhamentoEspecifico);
+    PrintIt := (not Resumido) and (Prod.vOutro > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem);
 
     if PrintIt then
     begin
@@ -602,7 +602,7 @@ procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vDesc > 0) and (ACBrNFeDANFCeFortes.ImprimirDescPorc) ;
+    PrintIt := (not Resumido) and (Prod.vDesc > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem) ;
 
     if PrintIt then
     begin

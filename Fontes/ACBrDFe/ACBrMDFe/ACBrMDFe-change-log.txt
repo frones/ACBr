@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2016
+--ACBrMDFeDAMDFeRLEvento
+[*] Modificação para exibir ou não o preview também no imprimir evento
+    Por: Juliomar Marchetti
+
 12/01/2016
 -- ACBrMDFeWebServices --
 [*] Correção de leak de memória causado pela criação em duplicidade o objeto

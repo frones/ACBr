@@ -180,7 +180,7 @@ begin
       else
         RLPrinter.Copies := 1;
 
-      RLMDFe.PrintDialog := APrintDialog;		
+      RLMDFe.PrintDialog := APrintDialog;
       if APreview = True then
         RLMDFe.PreviewModal
       else

@@ -110,7 +110,7 @@ begin
           , Impressora
           , MDFeCancelada
           , MDFeEncerrado
-		  , PrintDialog   );
+    		  , PrintDialog   );
       end;
     end
     else
@@ -132,7 +132,7 @@ begin
         , Impressora
         , MDFeCancelada
         , MDFeEncerrado
-		, PrintDialog   );
+    		, PrintDialog   );
   finally
     frlDAMDFeRLRetrato.Free;
   end;

@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+17/02/2016
+-- ACBrNFeNotasFiscais --
+[-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
+    é emitido para o CPF do responsável e não para o CNPJ da empresa.
+    por: regys.silveria
+
 13/02/2016
 -- ACBrNFeNotasFiscais --
 [-] Acerto para validar corretamente a regra 773 agora que foi introduzido o DIFAL
